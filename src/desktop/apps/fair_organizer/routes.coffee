@@ -1,6 +1,6 @@
 _ = require 'underscore'
 moment = require 'moment'
-Profile = require '../../models/profile'
+{ Profile } = require '../../models/profile'
 { Fairs } = require '../../collections/fairs'
 { cache } = require('../../../lib/cache')
 { OrderedSets } = require '../../collections/ordered_sets'

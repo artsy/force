@@ -12,9 +12,8 @@
 let _Artist;
 const Backbone = require('backbone');
 const sd = require('sharify').data;
-const { Artworks } = require('../collections/artworks');
-const { FilterArtworks } = require('../collections/filter_artworks');
 const { Artists } = require('../collections/artists');
+const { FilterArtworks } = require('../collections/filter_artworks');
 const _ = require('underscore');
 const { Markdown } = require('@artsy/backbone-mixins');
 
@@ -61,6 +60,7 @@ export default (_Artist = (function() {
 
     fetchArtworks(options) {
       if (options == null) { options = {}; }
+      const { Artworks } = require('../collections/artworks')
       const artworks = new Artworks;
       artworks.url = this.url() + '/artworks';
       return artworks.fetch(options);

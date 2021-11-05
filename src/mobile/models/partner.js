@@ -21,19 +21,19 @@ const {
 } = require('@artsy/backbone-mixins').Fetch();
 const { PartnerRelations } = require('./mixins/relations/partner');
 
-const INSTITUTION        = 'institution';
-const GALLERY_DEFAULT    = 'gallery_default';
-const GALLERY_DEPRECATED = 'gallery_deprecated';
-const GALLERY_ONE        = 'gallery_one';
-const GALLERY_TWO        = 'gallery_two';
-const GALLERY_THREE      = 'gallery_three';
-const GALLERY_FOUR       = 'gallery_four';
-const GALLERY_FIVE       = 'gallery_five';
-const GALLERY_SIX        = 'gallery_six';
-const GALLERY_SEVEN      = 'gallery_seven';
-const GALLERY_EIGHT      = 'gallery_eight';
+export const INSTITUTION        = 'institution';
+export const GALLERY_DEFAULT    = 'gallery_default';
+export const GALLERY_DEPRECATED = 'gallery_deprecated';
+export const GALLERY_ONE        = 'gallery_one';
+export const GALLERY_TWO        = 'gallery_two';
+export const GALLERY_THREE      = 'gallery_three';
+export const GALLERY_FOUR       = 'gallery_four';
+export const GALLERY_FIVE       = 'gallery_five';
+export const GALLERY_SIX        = 'gallery_six';
+export const GALLERY_SEVEN      = 'gallery_seven';
+export const GALLERY_EIGHT      = 'gallery_eight';
 
-const ACTIVE_PARTNER_LAYOUTS = [ INSTITUTION, GALLERY_ONE, GALLERY_TWO, GALLERY_THREE, GALLERY_FOUR, GALLERY_FIVE, GALLERY_SIX, GALLERY_SEVEN, GALLERY_EIGHT ];
+export const ACTIVE_PARTNER_LAYOUTS = [ INSTITUTION, GALLERY_ONE, GALLERY_TWO, GALLERY_THREE, GALLERY_FOUR, GALLERY_FIVE, GALLERY_SIX, GALLERY_SEVEN, GALLERY_EIGHT ];
 
 export default (_Partner = (function() {
   _Partner = class Partner extends Backbone.Model {
@@ -176,20 +176,6 @@ export default (_Partner = (function() {
   _Partner.initClass();
   return _Partner;
 })());
-
-module.exports.INSTITUTION        = INSTITUTION;
-module.exports.GALLERY_DEFAULT    = GALLERY_DEFAULT;
-module.exports.GALLERY_DEPRECATED = GALLERY_DEPRECATED;
-module.exports.GALLERY_ONE        = GALLERY_ONE;
-module.exports.GALLERY_TWO        = GALLERY_TWO;
-module.exports.GALLERY_THREE      = GALLERY_THREE;
-module.exports.GALLERY_FOUR       = GALLERY_FOUR;
-module.exports.GALLERY_FIVE       = GALLERY_FIVE;
-module.exports.GALLERY_SIX        = GALLERY_SIX;
-module.exports.GALLERY_SEVEN      = GALLERY_SEVEN;
-module.exports.GALLERY_EIGHT      = GALLERY_EIGHT;
-
-module.exports.ACTIVE_PARTNER_LAYOUTS = ACTIVE_PARTNER_LAYOUTS;
 
 function __guard__(value, transform) {
   return (typeof value !== 'undefined' && value !== null) ? transform(value) : undefined;

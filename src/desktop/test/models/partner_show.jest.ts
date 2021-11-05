@@ -3,8 +3,7 @@ import { fabricate } from "@artsy/antigravity"
 const sd = require("sharify").data
 import Backbone from "backbone"
 const { PartnerShow } = require("../../models/partner_show")
-const PartnerLocation = require("../../models/partner_location")
-const FairLocation = require("../../models/partner_location")
+const { PartnerLocation } = require("../../models/partner_location")
 const { Fair } = require("../../models/fair")
 import sinon from "sinon"
 const moment = require("moment")
@@ -132,7 +131,7 @@ describe("PartnerShow", () => {
           },
         })
       )
-      show.location().should.be.instanceOf(FairLocation)
+      show.location().should.be.instanceOf(PartnerLocation)
     })
   })
 

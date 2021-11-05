@@ -1,6 +1,6 @@
 { NODE_ENV, APPLICATION_NAME, API_URL } = require('sharify').data
-InquiryOutcome = require '../../models/inquiry_outcome'
-Artwork = require '../../models/artwork'
+{ InquiryOutcome } = require '../../models/inquiry_outcome'
+{ Artwork } = require '../../models/artwork'
 map = require '../../components/inquiry_questionnaire/map'
 
 @index = (req, res) ->

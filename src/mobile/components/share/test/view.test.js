@@ -13,7 +13,7 @@ describe("ShareView", function () {
       benv.expose({ $: benv.require("jquery") })
       Backbone.$ = $
       const filename = path.resolve(__dirname, "../view")
-      const ShareView = benv.requireWithJadeify(filename, ["template"])
+      const { ShareView } = benv.requireWithJadeify(filename, ["template"])
       this.view = new ShareView({
         el: $("body"),
         imageUrl: "foo.jpg",

@@ -1,9 +1,9 @@
 Backbone = require 'backbone'
 moment = require 'moment'
 sd = require('sharify').data
-Fair = require '../../../models/fair'
-Profile = require '../../../models/profile'
-FairOrganizer = require '../../../models/fair_organizer'
+{ Fair } = require '../../../models/fair'
+{ Profile } = require '../../../models/profile'
+{ FairOrganizer } = require '../../../models/fair_organizer'
 { Articles } = require '../../../collections/articles'
 Clock = require '../../../components/clock/view.coffee'
 { resize, crop } = require '../../../components/resizer/index.coffee'

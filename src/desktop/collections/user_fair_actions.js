@@ -8,7 +8,7 @@
 let _UserFairActions
 const Backbone = require("backbone")
 const { API_URL } = require("sharify").data
-const UserFairAction = require("../models/user_fair_action")
+const { UserFairAction } = require("../models/user_fair_action")
 
 export default _UserFairActions = (function () {
   _UserFairActions = class UserFairActions extends Backbone.Collection {

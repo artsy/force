@@ -1,6 +1,6 @@
 const sd = require("sharify").data
 const benv = require("benv")
-const PartnerLocation = require("../../models/partner_location")
+const { PartnerLocation } = require("../../models/partner_location")
 
 describe("PartnerLocation", () => {
   let testContext

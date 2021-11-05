@@ -1,4 +1,4 @@
-bootstrap = require '../../../components/layout/bootstrap'
+{ bootstrap } = require '../../../components/layout/bootstrap'
 sd = require('sharify').data
 CurrentUser = require '../../../models/current_user'
 { Profile } = require '../../../models/profile'

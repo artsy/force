@@ -7,13 +7,17 @@ const { extend } = require("underscore")
 const rewire = require("rewire")
 
 const dispatch = rewire("../services/index")
-const embedly = rewire("../services/embedly")
-embedly.__set__("resizer", dispatch)
-const gemini = rewire("../services/gemini")
-gemini.__set__("resizer", dispatch)
 
-const resizer = rewire("../index")
-resizer.__set__("SERVICES", { EMBEDLY: embedly, GEMINI: gemini })
+const embedly = rewire("../services/embedly")
+embedly.__set__("resizer", dispatch.resizer)
+
+const gemini = rewire("../services/gemini")
+gemini.__set__("resizer", dispatch.resizer)
+
+const resizermod = rewire("../index")
+resizermod.__set__("SERVICES", { EMBEDLY: embedly.embedly, GEMINI: gemini.gemini })
+
+const { resizer } = resizermod
 
 describe("resizer", function () {
   before(function () {
@@ -25,15 +29,15 @@ describe("resizer", function () {
     before(function () {
       embedly.__set__("EMBEDLY_KEY", "xxx")
 
-      this.config = resizer.__get__("config")
-      return resizer.__set__(
+      this.config = resizermod.__get__("config")
+      return resizermod.__set__(
         "config",
         extend({}, this.config, { proxy: "EMBEDLY" })
       )
     })
 
     after(function () {
-      return resizer.__set__("config", this.config)
+      return resizermod.__set__("config", this.config)
     })
 
     describe("#resize", function () {
@@ -132,17 +136,17 @@ describe("resizer", function () {
 
   return describe("using the gemini proxy", function () {
     before(function () {
-      gemini.endpoint = "https://d7hftxdivxxvm.cloudfront.net"
+      gemini.gemini.endpoint = "https://d7hftxdivxxvm.cloudfront.net"
 
-      this.config = resizer.__get__("config")
-      return resizer.__set__(
+      this.config = resizermod.__get__("config")
+      return resizermod.__set__(
         "config",
         extend({}, this.config, { proxy: "GEMINI" })
       )
     })
 
     after(function () {
-      return resizer.__set__("config", this.config)
+      return resizermod.__set__("config", this.config)
     })
 
     describe("#resize", function () {

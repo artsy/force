@@ -1,4 +1,4 @@
-bootstrap = require '../../../components/layout/bootstrap'
+{ bootstrap } = require '../../../components/layout/bootstrap'
 sd = require('sharify').data
 Backbone = require 'backbone'
 { Artworks } = require '../../../collections/artworks'

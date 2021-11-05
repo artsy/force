@@ -61,3 +61,5 @@ export const PartnerShowRelations = {
     return showEvents.reset(this.get('events'), {silent: true});
   }
 };
+
+export default PartnerShowRelations

@@ -69,7 +69,7 @@ import { sharifyToCookie } from "lib/middleware/sharifyToCookie"
 
 // Find the v2 routes, we will not be testing memory caching for legacy pages.
 
-const CurrentUser = require("./lib/current_user.coffee")
+const { CurrentUser } = require("./lib/current_user")
 
 export function initializeMiddleware(app) {
   app.use(serverTimingHeaders)

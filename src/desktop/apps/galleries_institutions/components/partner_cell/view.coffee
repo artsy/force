@@ -3,7 +3,7 @@ _ = require 'underscore'
 { Cities } = require '../../../../components/partner_cities/index.coffee'
 FollowButtonView = require '../../../../components/follow_button/view.coffee'
 ViewHelpers = require './view_helpers.coffee'
-Profile = require '../../../../models/profile'
+{ Profile } = require '../../../../models/profile'
 template = -> require('./index.jade') arguments...
 
 module.exports = class PartnerCellView extends Backbone.View

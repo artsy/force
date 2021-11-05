@@ -1,6 +1,6 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-Artist = require '../../../models/artist'
+{ Artist } = require '../../../models/artist'
 template = -> require('../templates/image_set.jade') arguments...
 { Following, FollowButton } = Follow = require '../../follow_button/index'
 imagesLoaded = require 'imagesloaded'

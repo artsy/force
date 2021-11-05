@@ -4,7 +4,7 @@
  * DS207: Consider shorter variations of null checks
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/master/docs/suggestions.md
  */
-export default function(SECURE_IMAGES_URL) {
+export const DeepZoom = function(SECURE_IMAGES_URL) {
   return {
     canDeepZoom() {
       return (this.get('tile_base_url') != null) &&
@@ -42,3 +42,4 @@ export default function(SECURE_IMAGES_URL) {
     }
   };
 };
+export default DeepZoom

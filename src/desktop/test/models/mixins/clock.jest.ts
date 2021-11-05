@@ -3,11 +3,11 @@ import sinon from "sinon"
 import Backbone from "backbone"
 import moment from "moment"
 const { fabricate } = require("@artsy/antigravity")
-const { ClockMixin } = require("../../../models/mixins/clock")
+const { Clock } = require("../../../models/mixins/clock")
 
 class Model extends Backbone.Model {
   static initClass() {
-    _.extend(this.prototype, ClockMixin)
+    _.extend(this.prototype, Clock)
   }
 }
 Model.initClass()

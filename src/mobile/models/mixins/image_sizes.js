@@ -5,7 +5,7 @@
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/master/docs/suggestions.md
  */
 const _ = require("underscore")
-import resizer from "../../components/resizer/index"
+const { resizer } = require("../../components/resizer/index")
 
 // requires the image mixin
 export const ImageSizes = {

@@ -14,7 +14,7 @@ export const ModalView = (_ModalView = (function() {
   _ModalView = class ModalView extends Backbone.View {
     static initClass() {
       this.prototype.className = 'modal-view';
-  
+
       this.prototype.events =
         {"click .modal__close": "fadeOut"};
     }

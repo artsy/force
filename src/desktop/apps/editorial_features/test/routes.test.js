@@ -9,7 +9,7 @@ const sinon = require("sinon")
 const Backbone = require("backbone")
 const rewire = require("rewire")
 const routes = rewire("../routes")
-const fixtures = require("../../../test/helpers/fixtures.coffee")
+const fixtures = require("../../../test/helpers/fixtures")
 
 describe("EOY route", function () {
   beforeEach(function (done) {

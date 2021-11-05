@@ -1,5 +1,5 @@
-import { Component } from "react"
-import { Article } from "@artsy/reaction/dist/Components/Publishing/Article"
+import { Component } from "react";
+import { Article as PublishingArticle } from "@artsy/reaction/dist/Components/Publishing/Article"
 import { AppProps } from "../App"
 import { InfiniteScrollArticle } from "../InfiniteScrollArticle"
 import { shouldAdRender } from "desktop/apps/article/helpers"
@@ -7,7 +7,7 @@ import { handleScrollingAuthModal } from "desktop/lib/openAuthModal"
 import { ContextModule, Intent } from "@artsy/cohesion"
 import { mediator } from "lib/mediator"
 const SuperArticleView = require("desktop/components/article/client/super_article.coffee")
-const ArticleModel = require("desktop/models/article")
+import { Article } from "desktop/models/article"
 import Cookies from "desktop/components/cookies/index"
 
 export class ArticleLayout extends Component<AppProps> {
@@ -17,7 +17,8 @@ export class ArticleLayout extends Component<AppProps> {
       // @ts-ignore
       const _superArticleView = new SuperArticleView({
         el: document.querySelector("body"),
-        article: new ArticleModel(article),
+        // @ts-ignore
+        article: new Article(article),
       })
     }
 
@@ -78,7 +79,7 @@ export class ArticleLayout extends Component<AppProps> {
         )}
 
         {isStatic ? (
-          <Article
+          <PublishingArticle
             article={article}
             customEditorial={customEditorial}
             isMobile={isMobile}

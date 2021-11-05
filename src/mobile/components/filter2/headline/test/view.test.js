@@ -16,7 +16,7 @@ describe("Filter / Headline", function () {
     return benv.setup(() => {
       benv.expose({ $: benv.require("jquery") })
       Backbone.$ = $
-      const HeadlineView = benv.require(resolve(__dirname, "../view"))
+      const { HeadlineView } = benv.require(resolve(__dirname, "../view"))
       this.view = new HeadlineView({
         el: $("<div></div>"),
         params: new Backbone.Model(),

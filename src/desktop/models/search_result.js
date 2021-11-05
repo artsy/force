@@ -22,6 +22,11 @@ export default (_SearchResult = (function() {
   _SearchResult = class SearchResult extends Backbone.Model {
     static initClass() {
       _.extend(this.prototype, Image(sd.SECURE_IMAGES_URL));
+      this.prototype.imageUrl = function() {
+        let needle;
+        if ((needle = this.get('display_model'), ['Page', 'City'].includes(needle))) { return "/images/icon-70.png"; } // internal pages
+        return this.get('image_url');
+      }
     }
 
     initialize(options) {
@@ -94,12 +99,6 @@ export default (_SearchResult = (function() {
       } })();
 
       return _s.capitalize(model);
-    }
-
-    imageUrl() {
-      let needle;
-      if ((needle = this.get('display_model'), ['Page', 'City'].includes(needle))) { return "/images/icon-70.png"; } // internal pages
-      return this.get('image_url');
     }
 
     resultsPageTitle() {
@@ -240,6 +239,7 @@ export default (_SearchResult = (function() {
     href() {
       return this.get('location');
     }
+
   };
   _SearchResult.initClass();
   return _SearchResult;
@@ -248,4 +248,4 @@ export default (_SearchResult = (function() {
 function __guard__(value, transform) {
   return (typeof value !== 'undefined' && value !== null) ? transform(value) : undefined;
 }
-export default SearchResult = _SearchResult
+export const SearchResult = _SearchResult

@@ -1,5 +1,5 @@
 Analytics = require 'analytics-node'
-Sale = require '../../models/sale'
+{ Sale } = require '../../models/sale'
 buyersPremium = require '../../components/buyers_premium/index.coffee'
 
 registerAndRedirect = (sale, req, res, next) ->

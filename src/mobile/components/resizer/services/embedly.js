@@ -1,15 +1,10 @@
-/*
- * decaffeinate suggestions:
- * DS102: Remove unnecessary code created because of implicit returns
- * Full docs: https://github.com/decaffeinate/decaffeinate/blob/master/docs/suggestions.md
- */
 const { EMBEDLY_KEY } = require('sharify').data;
-import resizer from './index';
+const { resizer } = require ('./index');
 
-export default {
+export const embedly =  {
   endpoint: 'https://i.embed.ly/1/display',
 
-  resize: resizer.resize((url, width, height, quality) => resizer.exec(this.endpoint, 'resize', {
+  resize: resizer.resize((url, width, height, quality) => resizer.exec(embedly.endpoint, 'resize', {
     url,
     width,
     height,
@@ -18,7 +13,7 @@ export default {
   }
   )),
 
-  crop: resizer.crop((url, width, height, quality) => resizer.exec(this.endpoint, 'crop', {
+  crop: resizer.crop((url, width, height, quality) => resizer.exec(embedly.endpoint, 'crop', {
     url,
     width,
     height,
@@ -27,7 +22,7 @@ export default {
   }
   )),
 
-  fill: resizer.fill((url, width, height, quality, color) => resizer.exec(this.endpoint, 'fill', {
+  fill: resizer.fill((url, width, height, quality, color) => resizer.exec(embedly.endpoint, 'fill', {
     url,
     width,
     height,

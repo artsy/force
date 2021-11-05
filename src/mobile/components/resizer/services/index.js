@@ -7,7 +7,7 @@
 const { NODE_ENV } = require('sharify').data;
 const qs = require('qs');
 const { compact } = require('underscore');
-import config from '../config'
+const { config } = require('../config');
 
 const { defaults, enabled } = config
 
@@ -15,7 +15,7 @@ const warn = function(message) {
   if (NODE_ENV === 'development') { return console.warn(message); }
 };
 
-export default {
+export const resizer = {
   exec(endpoint, path, options) {
     if (options == null) { options = {}; }
     if (enabled) {

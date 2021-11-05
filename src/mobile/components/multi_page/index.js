@@ -4,6 +4,6 @@
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/master/docs/suggestions.md
  */
 const { MultiPageView } = require('./view');
-import config from './config';
+const { config } = require('./config');
 
-export default key => new MultiPageView(config[key]);
+export const openMultiPage = key => new MultiPageView(config[key]);

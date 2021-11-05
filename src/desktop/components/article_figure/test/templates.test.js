@@ -6,7 +6,7 @@
 const path = require("path")
 const jade = require("jade")
 const fs = require("fs")
-const Article = require("../../../models/article")
+const { Article } = require("../../../models/article")
 
 const render = function (templateName) {
   const filename = path.resolve(__dirname, `../${templateName}.jade`)

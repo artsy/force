@@ -11,7 +11,7 @@ const { Profile } = require("../../../../models/profile")
 const benv = require("benv")
 const { resolve } = require("path")
 const { fabricate } = require("@artsy/antigravity")
-const fixtures = require("../../../../test/helpers/fixtures.coffee")
+const fixtures = require("../../../../test/helpers/fixtures")
 
 describe("ArticlesAdapter", function () {
   beforeEach(function (done) {

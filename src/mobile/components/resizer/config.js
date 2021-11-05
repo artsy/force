@@ -1,6 +1,6 @@
 const { DISABLE_IMAGE_PROXY, IMAGE_PROXY } = require('sharify').data;
 
-export default {
+export const config = {
   enabled: DISABLE_IMAGE_PROXY !== 'true',
   proxy: IMAGE_PROXY || 'EMBEDLY', // Fallback for specs (sigh)
   defaults: {
@@ -8,3 +8,4 @@ export default {
     color: 'fff'
   }
 };
+export default config

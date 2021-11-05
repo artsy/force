@@ -6,7 +6,7 @@
 const sinon = require("sinon")
 const rewire = require("rewire")
 const Backbone = require("backbone")
-const { OrderedSet } = rewire("../../models/ordered_set")
+const OrderedSet = rewire("../../models/ordered_set")
 
 class Items extends Backbone.Model {}
 
@@ -22,7 +22,7 @@ describe("OrderedSet", function () {
     })
     this.spiedFetch = sinon.spy(fetch)
     Items.prototype.fetch = this.spiedFetch
-    return (this.orderedSet = new OrderedSet())
+    return (this.orderedSet = new OrderedSet.OrderedSet())
   })
 
   afterEach(() => Backbone.sync.restore())

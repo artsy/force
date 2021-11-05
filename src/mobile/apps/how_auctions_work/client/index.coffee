@@ -1,8 +1,8 @@
-openMultiPage = require '../../../components/multi_page/index'
+{ openMultiPage } = require '../../../components/multi_page/index'
 { ModalView } = require '../../../components/modal/view'
 { mediator } = require '../../../../lib/mediator'
-bootstrap = require '../../../components/layout/bootstrap'
-markdown = require  '../../../components/util/markdown'
+{ bootstrap } = require '../../../components/layout/bootstrap'
+{ markdown } = require  '../../../components/util/markdown'
 sd = require('sharify').data
 bidIncrements = require '../bid_increments.coffee'
 CurrentUser = require '../../../models/current_user'

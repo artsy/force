@@ -1,6 +1,6 @@
 _ = require 'underscore'
 { formatMoney } = require 'accounting'
-Page = require '../../models/page'
+{ Page } = require '../../models/page'
 
 module.exports = (auction, callback) ->
   round = (number) -> parseFloat(number.toFixed(5))

@@ -5,9 +5,9 @@
  */
 const { SpecialistsView } = require('./client/specialist_view');
 const { Representatives } = require('../../collections/representatives');
-const ModalView = require('../modal/view');
+const { ModalView } = require('../modal/view');
 
-export default function($el){
+export const openSpecialistModal = function($el){
   const collection = new Representatives;
   const specialists_view = new SpecialistsView({collection});
   collection.fetch();

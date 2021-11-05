@@ -1,6 +1,6 @@
 express = require 'express'
 routes = require './routes'
-{ resize, crop } = require '../../components/resizer'
+{ resizer: { resize, crop } } = require '../../components/resizer'
 { toSentence } = require 'underscore.string'
 { pluck } = require 'underscore'
 

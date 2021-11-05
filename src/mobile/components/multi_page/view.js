@@ -8,7 +8,7 @@
 let _MultiPageView;
 const _ = require('underscore');
 const Backbone = require('backbone');
-import markdown from '../util/markdown';
+import { markdown } from '../util/markdown';
 const { Page } = require('../../../desktop/models/page');
 const { mediator } = require('../../../lib/mediator');
 const template = function() { return require('./template.jade')(...arguments); };
@@ -17,6 +17,7 @@ export const MultiPageView = (_MultiPageView = (function() {
   _MultiPageView = class MultiPageView extends Backbone.View {
     constructor(...args) {
       super(...args);
+      this.fireScrollEvent = this.fireScrollEvent.bind(this);
     }
 
     static initClass() {
@@ -26,18 +27,13 @@ export const MultiPageView = (_MultiPageView = (function() {
         {'click .js-page': 'change'};
     }
 
-    preinitialize() {
-      this.fireScrollEvent = this.fireScrollEvent.bind(this);
-    }
-
-    initialize({ title, description, pages1 }) {
+    initialize({ title, description, pages }) {
       this.title = title;
       this.description = description;
-      this.pages = pages1;
-      const pages = _.map(this.pages, (id, title) => new Page({id, title}));
+      this.pages = pages;
 
-      this.collection = new Backbone.Collection(pages);
-
+      const pages1 = _.map(this.pages, (id, title) => new Page({id, title}));
+      this.collection = new Backbone.Collection(pages1);
       this.state = new Backbone.Model({active: this.collection.first().id});
       this.listenTo(this.state, 'change:active', this.render);
 
@@ -72,3 +68,4 @@ export const MultiPageView = (_MultiPageView = (function() {
   _MultiPageView.initClass();
   return _MultiPageView;
 })());
+export default MultiPageView

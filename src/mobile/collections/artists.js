@@ -1,3 +1,5 @@
+import Artwork from "v2/Components/Artwork"
+
 /*
  * decaffeinate suggestions:
  * DS102: Remove unnecessary code created because of implicit returns
@@ -19,7 +21,7 @@ export default _Artists = (function () {
     }
 
     initialize() {
-      return (this.model = require("../models/artist"))
+      return (this.model = require("../models/artist").default)
     }
 
     toSentence() {
@@ -29,4 +31,5 @@ export default _Artists = (function () {
   _Artists.initClass()
   return _Artists
 })()
+
 export const Artists = _Artists

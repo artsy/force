@@ -1,8 +1,8 @@
 _ = require 'underscore'
 { ARTWORK } = require('sharify').data
-User = require '../../../../models/user'
-Artwork = require '../../../../models/artwork'
-ArtworkInquiry = require '../../../../models/artwork_inquiry'
+{ User } = require '../../../../models/user'
+{ Artwork } = require '../../../../models/artwork'
+{ ArtworkInquiry } = require '../../../../models/artwork_inquiry'
 EmbeddedInquiryView = require '../../../../components/embedded_inquiry/view.coffee'
 openInquiryQuestionnaireFor = require '../../../../components/inquiry_questionnaire/index.coffee'
 Logger = require '../../../../components/logger/index.coffee'

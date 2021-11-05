@@ -20,7 +20,7 @@ describe("ModalView", function () {
       this.triggerSpy = sinon.stub()
       ModalView.__set__("mediator", { on: sinon.stub() })
 
-      this.view = new ModalView({
+      this.view = new ModalView.ModalView({
         el: $("body"),
       })
 

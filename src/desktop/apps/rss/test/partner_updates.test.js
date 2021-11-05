@@ -11,7 +11,7 @@ const articleTemplate = require("jade").compileFile(
   require.resolve("../templates/partner_updates_article.jade")
 )
 const sd = { APP_URL: "http://localhost" }
-const Article = require("../../../models/article")
+const { Article } = require("../../../models/article")
 const { Articles } = require("../../../collections/articles")
 const moment = require("moment")
 const { toSentence } = require("underscore.string")

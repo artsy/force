@@ -23,7 +23,7 @@ export const DeepZoomView = (_DeepZoomView = (function() {
   _DeepZoomView = class DeepZoomView extends Backbone.View {
     static initClass() {
       this.prototype.id = 'deep-zoom';
-  
+
       this.prototype.events =
         {'click #dz-close': 'close'};
     }

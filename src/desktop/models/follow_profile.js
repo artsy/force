@@ -13,4 +13,4 @@ export default (_FollowProfile = class FollowProfile extends Backbone.Model {
     return `${sd.API_URL}/api/v1/me/follow/profile`;
   }
 });
-export default FollowProfile = _FollowProfile
+export const FollowProfile = _FollowProfile

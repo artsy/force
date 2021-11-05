@@ -8,7 +8,7 @@
 #
 
 express = require 'express'
-Page = require '../../models/page'
+{ Page } = require '../../models/page'
 
 app = module.exports = express()
 app.set 'views', __dirname + '/templates'

@@ -7,7 +7,7 @@
 const _ = require("underscore")
 const Backbone = require("backbone")
 const { fabricate } = require("@artsy/antigravity")
-import DeepZoom from "../mixin"
+import { DeepZoom } from "../mixin"
 
 const SECURE_IMAGES_URL = "https://supersecure.foo.bar"
 class NotReallyAnArtworkImage extends Backbone.Model {

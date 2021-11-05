@@ -9,8 +9,8 @@ const _topParselyArticles = require("desktop/components/util/parsely.coffee")
   .topParselyArticles
 const magazineQuery = require("./queries/editorial_articles.coffee")
 const { Articles } = require("desktop/collections/articles")
-const Channel = require("desktop/models/channel")
-const Section = require("desktop/models/section")
+const { Channel } = require("desktop/models/channel")
+const { Section } = require("desktop/models/section")
 
 // FIXME: Rewire
 let positronql = _positronql

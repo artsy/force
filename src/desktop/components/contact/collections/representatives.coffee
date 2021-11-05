@@ -1,7 +1,7 @@
 Backbone = require 'backbone'
 { API_URL } = require('sharify').data
 
-Profile = require '../../../models/profile'
+{ Profile } = require '../../../models/profile'
 class Representative extends Profile
   idAttribute: 'default_profile_id'
 

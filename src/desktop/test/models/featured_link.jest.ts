@@ -1,5 +1,5 @@
 import _ from "underscore"
-const { FeaturedLink } = require("../../models/featured_link")
+import { FeaturedLink } from "../../models/featured_link"
 import { fabricate } from "@artsy/antigravity"
 
 describe("FeaturedLink", () => {
@@ -11,6 +11,7 @@ describe("FeaturedLink", () => {
 
   beforeEach(() => {
     testContext.featuredLink = new FeaturedLink(
+      // @ts-ignore
       fabricate("featured_link", {
         image_versions: ["wide", "large_rectangle", "medium_rectangle"],
       })

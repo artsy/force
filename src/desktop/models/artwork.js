@@ -14,7 +14,7 @@ const Backbone = require('backbone');
 const { Edition } = require('./edition');
 const { AdditionalImage } = require('./additional_image');
 const { compactObject } = require('./mixins/compact_object');
-const { Dimensions, Markdown, ArtworkHelpers } = require('@artsy/backbone-mixins');
+const { Dimensions, Markdown } = require('@artsy/backbone-mixins');
 const { ArtworkRelations } = require('./mixins/relations/artwork');
 
 export default (_Artwork = (function() {
@@ -24,7 +24,6 @@ export default (_Artwork = (function() {
       _.extend(this.prototype, Dimensions);
       _.extend(this.prototype, Markdown);
       _.extend(this.prototype, ArtworkRelations);
-      _.extend(this.prototype, ArtworkHelpers);
     }
 
     urlRoot() {
@@ -437,6 +436,55 @@ export default (_Artwork = (function() {
         (partner = this.related().partner).fetch(),
         (sales = this.related().sales).fetch()
       ]).catch(options.error).then(() => options.success(partner, sales));
+    }
+
+    // Returns the best image url it can find for the index and size.
+    //
+    // param {String} version
+    // param {Number} i
+    // return {String}
+    imageUrl(version, i) {
+      let img, v;
+      if (version == null) {
+        version = 'larger';
+      }
+      const imgs = this.get('images');
+      if (!(imgs != null ? imgs.length : undefined)) {
+        return;
+      }
+      if (i) {
+        img = _.findWhere(imgs, {
+          position: i
+        }) || imgs[i] || imgs[0];
+      } else {
+        img = _.findWhere(imgs, {
+          is_default: true
+        }) || imgs[0];
+      }
+      if (!img) {
+        return;
+      }
+      let url = img.image_urls != null ? img.image_urls[version] : undefined;
+      if (v = img.image_versions != null ? img.image_versions[version] : undefined) {
+        if (!url) {
+          url = img.image_url != null ? img.image_url.replace(':version', v) : undefined;
+        }
+      }
+      if (!url) {
+        url = _.values(img.image_urls)[0];
+      }
+      if (!url) {
+        url = img.image_url != null ? img.image_url.replace(':version', _.first(img.image_versions)) : undefined;
+      }
+      return url;
+    }
+
+    // Are there comparable artworks;
+    // such that we can display a link to auction results
+    //
+    // return {Boolean}
+    isComparable() {
+      return (this.get('comparables_count') > 0) && (this.get('category') !== 'Architecture');
     }
   };
   _Artwork.initClass();

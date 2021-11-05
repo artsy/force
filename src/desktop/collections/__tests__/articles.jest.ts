@@ -1,6 +1,6 @@
 import Backbone from "backbone"
 import { map } from "lodash"
-const fixtures = require("../../test/helpers/fixtures.coffee")
+const fixtures = require("../../test/helpers/fixtures")
 const { Articles } = require("../articles")
 
 describe("Articles", () => {

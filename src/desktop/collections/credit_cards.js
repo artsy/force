@@ -6,7 +6,7 @@
 let _CreditCards
 const Backbone = require("backbone")
 const { API_URL } = require("sharify").data
-const CreditCard = require("../models/credit_card")
+const { CreditCard } = require("../models/credit_card")
 
 export default _CreditCards = (function () {
   _CreditCards = class CreditCards extends Backbone.Collection {

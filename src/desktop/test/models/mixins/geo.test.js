@@ -86,28 +86,28 @@ const geoFormatter = {
   },
 }
 
-const { Geo } = rewire("../../../models/mixins/geo")
+const Geo = rewire("../../../models/mixins/geo")
 Geo.__set__("geo", {
   locate: (locateStub = sinon.stub().yieldsTo("success", geoFormatter)),
 })
 
 class User extends Backbone.Model {
   static initClass() {
-    _.extend(this.prototype, Geo)
+    _.extend(this.prototype, Geo.Geo)
   }
 }
 User.initClass()
 
 describe("Geo Mixin", function () {
   beforeEach(function () {
-    return (this.user = new User())
+    this.user = new User()
   })
 
   describe("#hasLocation", () =>
     it("determines whether or not there is a valid location", function () {
       this.user.hasLocation().should.be.false()
       this.user.set({ location: { city: "existy" } })
-      return this.user.hasLocation().should.be.true()
+      this.user.hasLocation().should.be.true()
     }))
 
   describe("#approximateLocation, #setGeo", function () {
@@ -115,18 +115,18 @@ describe("Geo Mixin", function () {
       this.user.approximateLocation()
       this.user.get("location").city.should.equal("My city")
       this.user.get("location").state.should.equal("My state")
-      return this.user.get("location").coordinates.should.eql([0, 0])
+      this.user.get("location").coordinates.should.eql([0, 0])
     })
 
-    return it("accepts a success callback", function (done) {
-      return this.user.approximateLocation({ success: done })
+    it("accepts a success callback", function (done) {
+      this.user.approximateLocation({ success: done })
     })
   })
 
-  return describe("#setLocation", function () {
+  describe("#setLocation", function () {
     it("should allow a user to set a location object that Google returns", function () {
       this.user.setLocation(googleyAddress)
-      return this.user
+      this.user
         .location()
         .cityStateCountry()
         .should.equal("New York, New York, United States")
@@ -134,12 +134,12 @@ describe("Geo Mixin", function () {
 
     it("should allow a user to set a non-standard name as their location", function () {
       this.user.setLocation({ name: "Foobar" })
-      return this.user.location().cityStateCountry().should.equal("Foobar")
+      this.user.location().cityStateCountry().should.equal("Foobar")
     })
 
-    return it("should allow a user to clear their location", function () {
+    it("should allow a user to clear their location", function () {
       this.user.setLocation({ name: "" })
-      return this.user.location().cityStateCountry().should.equal("")
+      this.user.location().cityStateCountry().should.equal("")
     })
   })
 })

@@ -9,12 +9,12 @@ let _OrderedSet;
 const _ = require('underscore');
 const Backbone = require('backbone');
 const Items = require('../collections/items');
-const { LayoutSyle } = require('./mixins/layout_style');
+const { LayoutStyle } = require('./mixins/layout_style');
 
 export default (_OrderedSet = (function() {
   _OrderedSet = class OrderedSet extends Backbone.Model {
     static initClass() {
-      _.extend(this.prototype, LayoutSyle);
+      _.extend(this.prototype, LayoutStyle);
     }
 
     fetchItems(cache, cacheTime) {

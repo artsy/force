@@ -5,4 +5,4 @@
  */
 const { Markdown } = require('@artsy/backbone-mixins');
 
-export default string => Markdown.mdToHtml.apply({ get() { return string; } }, [null, {sanitize: false}]);
+export const markdown = string => Markdown.mdToHtml.apply({ get() { return string; } }, [null, {sanitize: false}]);

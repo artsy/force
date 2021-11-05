@@ -8,7 +8,7 @@ _ = require 'underscore'
 { Article } = require '../../models/article'
 embed = require 'embed-video'
 { stringifyJSONForWeb } = require '../../components/util/json'
-{ crop, resize } = require '../../components/resizer/index'
+{ resizer: { crop, resize } } = require '../../components/resizer/index'
 
 partnerFromProfile = (req) ->
   if req.profile?.isPartner()

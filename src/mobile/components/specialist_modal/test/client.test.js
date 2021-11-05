@@ -17,7 +17,7 @@ describe("SpecialistView", function () {
       sinon.stub(Backbone, "sync")
       sinon.stub($, "ajax")
 
-      const SpecialistView = benv.requireWithJadeify(
+      const { SpecialistView } = benv.requireWithJadeify(
         resolve(__dirname, "../client/specialist_view"),
         ["template", "successTemplate"]
       )

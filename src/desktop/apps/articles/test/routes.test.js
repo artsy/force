@@ -1,8 +1,8 @@
 /* eslint-disable jest/valid-expect-in-promise */
 import Backbone from "backbone"
 import sinon from "sinon"
-import articlesJSON from "./fixtures.coffee"
-import fixtures from "desktop/test/helpers/fixtures.coffee"
+import articlesJSON from "./fixtures"
+const fixtures = require("desktop/test/helpers/fixtures")
 import { cloneDeep, extend } from "lodash"
 import { JSDOM } from "jsdom"
 

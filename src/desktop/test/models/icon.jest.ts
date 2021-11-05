@@ -1,6 +1,6 @@
 import sinon from "sinon"
 import Backbone from "backbone"
-const Icon = require("../../models/icon")
+const { Icon } = require("../../models/icon")
 const { Profile } = require("../../models/profile")
 import { fabricate } from "@artsy/antigravity"
 

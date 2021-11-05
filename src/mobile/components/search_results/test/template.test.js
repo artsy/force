@@ -6,7 +6,7 @@
 const fs = require("fs")
 const jade = require("jade")
 const path = require("path")
-const SearchResult = require("../../../models/search_result")
+const { SearchResult } = require("../../../models/search_result")
 
 describe("result.jade", function () {
   before(function () {

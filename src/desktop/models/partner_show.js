@@ -21,7 +21,7 @@ const { FairLocation } = require('./fair_location');
 const { PartnerLocation } = require('./partner_location');
 const { Artworks } = require('../collections/artworks');
 const { ImageSizes } = require('./mixins/image_sizes');
-const { PartnerRelations } = require('./mixins/relations/partner_show');
+const { PartnerShowRelations } = require('./mixins/relations/partner_show');
 
 export default (_PartnerShow = (function() {
   _PartnerShow = class PartnerShow extends Backbone.Model {
@@ -38,7 +38,7 @@ export default (_PartnerShow = (function() {
       _.extend(this.prototype, Image(sd.SECURE_IMAGES_URL));
       _.extend(this.prototype, ImageSizes);
       _.extend(this.prototype, Markdown);
-      _.extend(this.prototype, Relations);
+      _.extend(this.prototype, PartnerShowRelations);
     }
 
     url() {

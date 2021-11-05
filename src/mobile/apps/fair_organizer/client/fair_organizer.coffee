@@ -1,7 +1,7 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 CurrentUser = require '../../../models/current_user'
-bootstrap = require '../../../components/layout/bootstrap'
+{ bootstrap } = require '../../../components/layout/bootstrap'
 { AvantGardeTabsView } = require '../../../components/avant_garde_tabs/view'
 { Articles } = require '../../../collections/articles'
 { FollowProfiles } = require '../../../collections/follow_profiles'

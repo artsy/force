@@ -1,5 +1,5 @@
-bootstrap = require '../../components/layout/bootstrap'
-setupFilter = require '../../components/filter2/index'
+{ bootstrap } = require '../../components/layout/bootstrap'
+{ setupFilter } = require '../../components/filter2/index'
 aggregationParams = require './aggregations'
 
 module.exports.init = ->

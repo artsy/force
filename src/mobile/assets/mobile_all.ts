@@ -44,7 +44,7 @@ const routes = {
       return require("../apps/profile/client.coffee")
     } else {
       // Last resort
-      return require("../components/layout/bootstrap")()
+      return require("../components/layout/bootstrap").bootstrap()
     }
   },
 }

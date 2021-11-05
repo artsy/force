@@ -1,6 +1,6 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-PartnerShow = require '../../../../models/partner_show'
+{ PartnerShow } = require '../../../../models/partner_show'
 { PartnerShows } = require '../../../../collections/partner_shows'
 { PartnerShowEvents } = require '../../../../collections/partner_show_events'
 require '../../../../../lib/promiseDone'

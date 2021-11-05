@@ -7,7 +7,7 @@ let _DaySchedule;
 const moment = require('moment');
 const Backbone = require('backbone');
 
-export default (_DaySchedule = class DaySchedule extends Backbone.Model {
+export const DaySchedule = (_DaySchedule = class DaySchedule extends Backbone.Model {
 
   day() {
     return this.get('day_of_week');
@@ -35,3 +35,4 @@ export default (_DaySchedule = class DaySchedule extends Backbone.Model {
     }
   }
 });
+export default DaySchedule

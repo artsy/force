@@ -10,7 +10,7 @@ const _ = require("underscore")
 const MultiPageView = benv.requireWithJadeify(require.resolve("../view"), [
   "template",
 ])
-import config from "../config"
+const { config } = require("../config")
 
 describe("MultiPageView", function () {
   before(function (done) {
@@ -26,7 +26,7 @@ describe("MultiPageView", function () {
   after(() => benv.teardown())
 
   beforeEach(function () {
-    this.view = new MultiPageView(config["auction-faqs"])
+    this.view = new MultiPageView.MultiPageView(config["auction-faqs"])
     return this.view.render()
   })
 

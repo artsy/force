@@ -7,7 +7,7 @@ CurrentUser = require '../../../models/current_user'
 { PartnerArtistArtworks } = require '../../../collections/partner_artist_artworks'
 { FollowArtists } = require '../../../collections/follow_artists'
 { FollowButtonView } = require '../../../components/follow_button/view'
-bootstrap = require '../../../components/layout/bootstrap'
+{ bootstrap } = require '../../../components/layout/bootstrap'
 { ShareView } = require '../../../components/share/view'
 
 artworksTemplate = -> require('../../../components/artwork_columns/template.jade') arguments...

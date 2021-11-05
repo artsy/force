@@ -1,9 +1,9 @@
 { toSentence } = require 'underscore.string'
 sd = require('sharify').data
 request = require 'superagent'
-Article = require '../../models/article'
+{ Article } = require '../../models/article'
 { Articles } = require '../../collections/articles'
-Section = require '../../models/section'
+{ Section } = require '../../models/section'
 { stringifyJSONForWeb } = require '../../components/util/json'
 
 module.exports.article = (req, res, next) ->

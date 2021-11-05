@@ -8,10 +8,10 @@
 const _ = require("underscore")
 const sd = require("sharify").data
 const Backbone = require("backbone")
-const { OrderedSet } = require("../models/ordered_set")
 
 class OrderedSetsInner extends Backbone.Collection {
   static initClass() {
+    const { OrderedSet } = require("../models/ordered_set")
     this.prototype.url = `${sd.API_URL}/api/v1/sets`
     this.prototype.model = OrderedSet
   }

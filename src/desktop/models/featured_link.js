@@ -8,7 +8,7 @@
 let _FeaturedLink;
 const _ = require('underscore');
 const Backbone = require('backbone');
-const { LayoutSyle } = require('./mixins/layout_style');
+const { LayoutStyle } = require('./mixins/layout_style');
 const { Image, Markdown } = require('@artsy/backbone-mixins');
 const { SECURE_IMAGES_URL } = require('sharify').data;
 const { ImageSizes } = require('./mixins/image_sizes');
@@ -19,7 +19,7 @@ export default (_FeaturedLink = (function() {
       _.extend(this.prototype, Image(SECURE_IMAGES_URL));
       _.extend(this.prototype, ImageSizes);
       _.extend(this.prototype, Markdown);
-      _.extend(this.prototype, LayoutSyle);
+      _.extend(this.prototype, LayoutStyle);
     }
 
     imageUrlForLayout(collectionLength) {

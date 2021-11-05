@@ -1,17 +1,19 @@
 import { handleArtworkImageDownload } from "../handleArtworkImageDownload"
 
-jest.mock("desktop/models/artwork.coffee", () => {
-  return class {
-    fetch() {
-      return new Promise<void>(resolve => {
-        resolve()
-      })
-    }
-    isDownloadable(user) {
-      return user.canDownload
-    }
-    downloadableUrl() {
-      return ""
+jest.mock("desktop/models/artwork", () => {
+  return { 
+    Artwork: class {
+      fetch() {
+        return new Promise<void>(resolve => {
+          resolve()
+        })
+      }
+      isDownloadable(user) {
+        return user.canDownload
+      }
+      downloadableUrl() {
+        return ""
+      }
     }
   }
 })

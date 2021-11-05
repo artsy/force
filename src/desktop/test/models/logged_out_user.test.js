@@ -8,7 +8,7 @@ const benv = require("benv")
 const sinon = require("sinon")
 const Backbone = require("backbone")
 const rewire = require("rewire")
-const { LoggedOutUser } = rewire("../../models/logged_out_user")
+const LoggedOutUser = rewire("../../models/logged_out_user")
 
 describe("LoggedOutUser", function () {
   before(done =>
@@ -33,7 +33,7 @@ describe("LoggedOutUser", function () {
       it("logs the user in", function () {
         LoggedOutUser.__set__("sd", { AP: { loginPagePath: "/users/sign_in" } })
         LoggedOutUser.__set__("APP_URL", "artsy.net")
-        const user = new LoggedOutUser({
+        const user = new LoggedOutUser.LoggedOutUser({
           email: "foo@bar.com",
           password: "foobar",
         })
@@ -53,7 +53,7 @@ describe("LoggedOutUser", function () {
       })
 
       it("accepts options and overwrites the default success", function (done) {
-        const user = new LoggedOutUser({
+        const user = new LoggedOutUser.LoggedOutUser({
           email: "foo@bar.com",
           name: "Foo Bar",
         })
@@ -66,7 +66,7 @@ describe("LoggedOutUser", function () {
       })
 
       it("sets the accessToken in ajax settings", function () {
-        const user = new LoggedOutUser({
+        const user = new LoggedOutUser.LoggedOutUser({
           email: "foo@bar.com",
           password: "foobar",
         })
@@ -75,7 +75,7 @@ describe("LoggedOutUser", function () {
       })
 
       return it("passes through the supplied OTP attempt", function () {
-        const user = new LoggedOutUser({
+        const user = new LoggedOutUser.LoggedOutUser({
           email: "foo@bar.com",
           password: "foobar",
           otp_attempt: "123456",
@@ -92,7 +92,7 @@ describe("LoggedOutUser", function () {
         LoggedOutUser.__set__("sd", {
           AP: { signupPagePath: "/users/sign_in" },
         })
-        const user = new LoggedOutUser({
+        const user = new LoggedOutUser.LoggedOutUser({
           email: "foo@bar.com",
           name: "Foo Bar",
           password: "foobar",
@@ -111,7 +111,7 @@ describe("LoggedOutUser", function () {
         LoggedOutUser.__set__("sd", {
           AP: { signupPagePath: "/users/sign_in" },
         })
-        const user = new LoggedOutUser({
+        const user = new LoggedOutUser.LoggedOutUser({
           signupIntent: "baz",
           email: "foo@bar.com",
           name: "Foo Bar",
@@ -127,7 +127,7 @@ describe("LoggedOutUser", function () {
         LoggedOutUser.__set__("sd", {
           AP: { signupPagePath: "/users/sign_in" },
         })
-        const user = new LoggedOutUser({
+        const user = new LoggedOutUser.LoggedOutUser({
           signupReferer: "baz",
           email: "foo@bar.com",
           name: "Foo Bar",
@@ -140,7 +140,7 @@ describe("LoggedOutUser", function () {
       })
 
       it("accepts options and overwrites the default success", function (done) {
-        const user = new LoggedOutUser({
+        const user = new LoggedOutUser.LoggedOutUser({
           email: "foo@bar.com",
           name: "Foo Bar",
           password: "foobar",
@@ -154,7 +154,7 @@ describe("LoggedOutUser", function () {
       })
 
       it("sets the accessToken in ajax settings", function () {
-        const user = new LoggedOutUser({
+        const user = new LoggedOutUser.LoggedOutUser({
           email: "foo@bar.com",
           name: "Foo Bar",
           password: "foobar",
@@ -164,12 +164,12 @@ describe("LoggedOutUser", function () {
       })
 
       return it("aliases the method as #register", () =>
-        LoggedOutUser.prototype.register === LoggedOutUser.prototype.signup)
+      LoggedOutUser.LoggedOutUser.prototype.register === LoggedOutUser.LoggedOutUser.prototype.signup)
     })
 
     return describe("#forgot", function () {
       it("submits a request for a password reset", function () {
-        const user = new LoggedOutUser({ email: "foo@bar.com" })
+        const user = new LoggedOutUser.LoggedOutUser({ email: "foo@bar.com" })
         user.forgot()
         Backbone.sync.args[0][0].should.equal("create")
         Backbone.sync.args[0][2].url.should.containEql(
@@ -187,7 +187,7 @@ describe("LoggedOutUser", function () {
         LoggedOutUser.__set__("sd", {
           RESET_PASSWORD_REDIRECT_TO: "https://cms.artsy.net",
         })
-        const user = new LoggedOutUser({ email: "foo@bar.com" })
+        const user = new LoggedOutUser.LoggedOutUser({ email: "foo@bar.com" })
         user.forgot()
         const { attributes } = Backbone.sync.args[0][1]
         return attributes.should.containEql({
@@ -197,7 +197,7 @@ describe("LoggedOutUser", function () {
 
       it("sets the mode to fair_set_password when set password is true", function () {
         LoggedOutUser.__set__("sd", { SET_PASSWORD: "true" })
-        const user = new LoggedOutUser({ email: "foo@bar.com" })
+        const user = new LoggedOutUser.LoggedOutUser({ email: "foo@bar.com" })
         user.forgot()
         const { attributes } = Backbone.sync.args[0][1]
         return attributes.should.containEql({ mode: "fair_set_password" })
@@ -205,14 +205,14 @@ describe("LoggedOutUser", function () {
 
       it('passes value of SET_PASSWORD when present and not "true"', function () {
         LoggedOutUser.__set__("sd", { SET_PASSWORD: "reset" })
-        const user = new LoggedOutUser({ email: "foo@bar.com" })
+        const user = new LoggedOutUser.LoggedOutUser({ email: "foo@bar.com" })
         user.forgot()
         const { attributes } = Backbone.sync.args[0][1]
         return attributes.should.containEql({ mode: "reset" })
       })
 
       return it("accepts options and overwrites the default success", function (done) {
-        const user = new LoggedOutUser({ email: "foo@bar.com" })
+        const user = new LoggedOutUser.LoggedOutUser({ email: "foo@bar.com" })
         return user.forgot({
           success() {
             true.should.be.true()
@@ -230,7 +230,7 @@ describe("LoggedOutUser", function () {
 
     describe("default behavior", () =>
       it("saves to the anonymous session", function () {
-        const user = new LoggedOutUser()
+        const user = new LoggedOutUser.LoggedOutUser()
         user.save({ foo: "bar" })
         Backbone.sync.args[0][1]
           .url()
@@ -240,13 +240,13 @@ describe("LoggedOutUser", function () {
 
     return describe("behavior immediately following login", function () {
       beforeEach(() =>
-        sinon.stub(LoggedOutUser.prototype, "isLoggedIn").returns(true)
+        sinon.stub(LoggedOutUser.LoggedOutUser.prototype, "isLoggedIn").returns(true)
       )
 
-      afterEach(() => LoggedOutUser.prototype.isLoggedIn.restore())
+      afterEach(() => LoggedOutUser.LoggedOutUser.prototype.isLoggedIn.restore())
 
       return it("saves to the normal me endpoint", function () {
-        const user = new LoggedOutUser()
+        const user = new LoggedOutUser.LoggedOutUser()
         user.save({ foo: "bar" })
         Backbone.sync.args[0][1].url().should.containEql("/api/v1/me")
         return Backbone.sync.args[0][1].attributes.foo.should.eql("bar")
@@ -257,7 +257,7 @@ describe("LoggedOutUser", function () {
   describe("#fetch", function () {
     beforeEach(function () {
       sinon.stub(Backbone, "sync")
-      return (this.user = new LoggedOutUser({ email: "cab@example.com" }))
+      return (this.user = new LoggedOutUser.LoggedOutUser({ email: "cab@example.com" }))
     })
 
     afterEach(() => Backbone.sync.restore())
@@ -315,7 +315,7 @@ describe("LoggedOutUser", function () {
 
     return describe("after login", function () {
       beforeEach(() =>
-        sinon.stub(LoggedOutUser.prototype, "isLoggedIn").returns(true)
+        sinon.stub(LoggedOutUser.LoggedOutUser.prototype, "isLoggedIn").returns(true)
       )
 
       afterEach(function () {
@@ -338,7 +338,7 @@ describe("LoggedOutUser", function () {
   describe("#repossess", function () {
     beforeEach(function () {
       sinon.stub(Backbone, "sync")
-      this.user = new LoggedOutUser({
+      this.user = new LoggedOutUser.LoggedOutUser({
         id: "anonymous-session-id",
         email: "cab@example.com",
       })
@@ -347,25 +347,24 @@ describe("LoggedOutUser", function () {
 
     afterEach(() => Backbone.sync.restore())
 
-    return it("saves the anonymous_session explicitly setting the subsequent_user_id; returns a thennable", function (specDone) {
+    return it("saves the anonymous_session explicitly setting the subsequent_user_id; returns a thennable", function () {
       const promise = this.user.repossess("some-user-id")
 
       Backbone.sync.args[0][2].url.should.containEql(
-        "/api/v1/me/anonymous_session/anonymous-session-id"
+        "undefined/api/v1/me/anonymous_session/anonymous-session-id"
       )
 
       return promise
         .finally(function () {
           true.should.be.true()
-          return specDone()
+          return
         })
-        .done()
     })
   })
 
   return describe("#prepareForInquiry", function () {
     beforeEach(function () {
-      this.user = new LoggedOutUser()
+      this.user = new LoggedOutUser.LoggedOutUser()
 
       return sinon
         .stub(Backbone, "sync")

@@ -1,5 +1,5 @@
 ModalView = require './view.coffee'
-Page = require '../../models/page'
+{ Page } = require '../../models/page'
 
 module.exports = class ModalPageView extends ModalView
   className: 'page-modal'

@@ -14,7 +14,7 @@ import SlideshowsView  from './slideshows';
 export const ArticleView = (_ArticleView = (function() {
   _ArticleView = class ArticleView extends Backbone.View {
     static initClass() {
-  
+
       this.prototype.events =
         {'click .article-video-play-button' : 'clickPlay'};
     }

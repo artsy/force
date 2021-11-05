@@ -11,7 +11,7 @@ let _FilterView
 const _ = require("underscore")
 const _s = require("underscore.string")
 const { mediator } = require("../../../lib/mediator")
-import bootstrap from "../../components/layout/bootstrap"
+import { bootstrap } from "../../components/layout/bootstrap"
 const {
   PoliteInfiniteScrollView,
 } = require("../../components/polite_infinite_scroll/client/view")

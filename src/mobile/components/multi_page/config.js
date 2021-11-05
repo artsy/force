@@ -1,4 +1,4 @@
-export default {
+export const config = {
   'auction-faqs': {
     title: 'Auction FAQs',
     description: `\

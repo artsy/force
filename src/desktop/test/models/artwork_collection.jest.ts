@@ -2,7 +2,7 @@ import sinon from "sinon"
 import Backbone from "backbone"
 const { Artwork } = require("../../models/artwork")
 const { Artworks } = require("../../collections/artworks")
-const ArtworkCollection = require("../../models/artwork_collection")
+const { ArtworkCollection } = require("../../models/artwork_collection")
 const CurrentUser = require("../../models/current_user")
 const benv = require("benv")
 const sd = require("sharify").data

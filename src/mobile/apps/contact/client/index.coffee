@@ -1,4 +1,4 @@
-bootstrap = require '../../../components/layout/bootstrap'
+{ bootstrap } = require '../../../components/layout/bootstrap'
 ContactView = require './view.coffee'
 
 

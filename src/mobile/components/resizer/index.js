@@ -3,9 +3,9 @@
  * DS102: Remove unnecessary code created because of implicit returns
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/master/docs/suggestions.md
  */
-import config from './config';
-import embedly from './services/embedly'
-import gemini from './services/gemini'
+const { config } = require('./config');
+const { embedly } = require('./services/embedly')
+const { gemini } = require('./services/gemini')
 
 const SERVICES = {
   EMBEDLY: embedly,
@@ -14,7 +14,7 @@ const SERVICES = {
 
 const service = () => SERVICES[config.proxy];
 
-export default {
+export const resizer = {
   resize() {
     return service().resize(...arguments);
   },

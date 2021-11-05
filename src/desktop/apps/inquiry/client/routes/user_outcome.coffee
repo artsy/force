@@ -1,5 +1,5 @@
 { INQUIRY } = require('sharify').data
-InquiryOutcome = require '../../../../models/inquiry_outcome'
+{ InquiryOutcome } = require '../../../../models/inquiry_outcome'
 Form = require '../../../../components/form/index.coffee'
 FlashMessage = require '../../../../components/flash/index.coffee'
 

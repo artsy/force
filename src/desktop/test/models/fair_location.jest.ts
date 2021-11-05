@@ -1,4 +1,4 @@
-const FairLocation = require("../../models/partner_location")
+const { PartnerLocation: FairModel } = require("../../models/partner_location")
 
 describe("FairLocation", () => {
   let testContext
@@ -8,7 +8,7 @@ describe("FairLocation", () => {
   })
 
   beforeEach(() => {
-    testContext.location = new FairLocation({
+    testContext.location = new FairModel({
       address: "",
       address_2: "",
       city: "255 Front Street West, Toronto",

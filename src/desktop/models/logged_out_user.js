@@ -54,6 +54,10 @@ export default (_LoggedOutUser = (function() {
       this.prototype.register = this.prototype.signup;
     }
 
+    constructor(...args) {
+      super(...args)
+    }
+
     initialize() {
       return syncWithSessionId();
     }

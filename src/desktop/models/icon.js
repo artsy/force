@@ -22,26 +22,26 @@ export default (_Icon = (function() {
       // Upload validation constraints
       this.prototype.maxFileSize = 3000000; // 3MB
       this.prototype.acceptFileTypes = /(\.|\/)(gif|jpe?g|png|tiff)$/i;
+
+      // Override the imageUrl for icon unique situations
+      // For users:
+      //   - render a default icon if there is none instead of "missing_image"
+      //   - display an unprocessed original version if the image is waiting on a delayed job
+      this.prototype.imageUrl = function () {
+        if (this.hasImage('square140')) {
+          return this.sslUrl(this.get('image_url').replace(':version', 'square140').replace('.jpg', '.png'));
+        } else if (this.hasImage('square')) {
+          return this.sslUrl(this.get('image_url').replace(':version', 'square').replace('.jpg', '.png'));
+        } else if (this.has('image_filename') && _.isNull(this.get('versions'))) {
+          return this.sslUrl(this.get('image_url').replace(':version', 'original'));
+        } else {
+          return Icon.DefaultUserIconUrl;
+        }
+      }
     }
 
     url() {
       return `${sd.API_URL}/api/v1/profile/${this.get('profileId') }/icon`;
-    }
-
-    // Override the imageUrl for icon unique situations
-    // For users:
-    //   - render a default icon if there is none instead of "missing_image"
-    //   - display an unprocessed original version if the image is waiting on a delayed job
-    imageUrl() {
-      if (this.hasImage('square140')) {
-        return this.sslUrl(this.get('image_url').replace(':version', 'square140').replace('.jpg', '.png'));
-      } else if (this.hasImage('square')) {
-        return this.sslUrl(this.get('image_url').replace(':version', 'square').replace('.jpg', '.png'));
-      } else if (this.has('image_filename') && _.isNull(this.get('versions'))) {
-        return this.sslUrl(this.get('image_url').replace(':version', 'original'));
-      } else {
-        return Icon.DefaultUserIconUrl;
-      }
     }
 
     // Validates a client uploaded file before posting it

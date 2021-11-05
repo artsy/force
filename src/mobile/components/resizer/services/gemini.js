@@ -6,12 +6,11 @@
  */
 let crop;
 const { GEMINI_CLOUDFRONT_URL } = require('sharify').data;
-import config from '../config';
-import resizer from './index';
+const { config } = require('../config');
+const { resizer } = require('./index');
 
-export default {
+export const gemini =  {
   endpoint: GEMINI_CLOUDFRONT_URL,
-
   resize: resizer.resize(function(src, width, height, quality) {
     const resize_to = (width != null) && (height == null) ?
       'width'
@@ -20,7 +19,7 @@ export default {
     :
       'fit';
 
-    return resizer.exec(this.endpoint, null, {
+    return resizer.exec(gemini.endpoint, null, {
       resize_to,
       src,
       width: ((width != null) ? width : undefined),
@@ -30,7 +29,7 @@ export default {
     );
   }),
 
-  crop: (crop = resizer.crop((src, width, height, quality) => resizer.exec(this.endpoint, null, {
+  crop: (crop = resizer.crop((src, width, height, quality) => resizer.exec(gemini.endpoint, null, {
     resize_to: 'fill',
     src,
     width,

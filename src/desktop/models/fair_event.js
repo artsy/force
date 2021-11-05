@@ -9,13 +9,11 @@ const sd = require('sharify').data;
 const _ = require('underscore');
 const Backbone = require('backbone');
 const moment = require('moment');
-const { CalendarUrls, Markdown } = require('@artsy/backbone-mixins');
+const { Markdown } = require('@artsy/backbone-mixins');
 
 export default (_FairEvent = (function() {
   _FairEvent = class FairEvent extends Backbone.Model {
     static initClass() {
-
-      _.extend(this.prototype, CalendarUrls({address: 'venue_address', title: 'name'}));
       _.extend(this.prototype, Markdown);
     }
 

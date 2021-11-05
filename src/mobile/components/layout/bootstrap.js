@@ -28,7 +28,7 @@ const { mediator } = require('../../../lib/mediator');
 const syncAuth = require('../../../lib/syncAuth.ts').default;
 const { logoutEventHandler } = require('../../../desktop/lib/deprecated_global_client_setup.tsx');
 
-export default function() {
+export const bootstrap = function() {
   // Add the Gravity XAPP or access token to all ajax requests
   $.ajaxSettings.headers = {
     "X-XAPP-TOKEN": sd.ARTSY_XAPP_TOKEN,
@@ -62,13 +62,13 @@ export default function() {
   return handleNavBarScroll();
 };
 
-var mountStitch = () => hydrateStitch({
+const mountStitch = () => hydrateStitch({
   sharifyData: sd,
   modules: globalReactModules,
   wrapper: globalReactModules.StitchWrapper
 });
 
-var setupErrorReporting = () => init({ dsn: sd.SENTRY_PUBLIC_DSN });
+const setupErrorReporting = () => init({ dsn: sd.SENTRY_PUBLIC_DSN });
 
 const operations = {
   save(currentUser, objectId) {
@@ -81,21 +81,21 @@ const operations = {
   }
 };
 
-var checkForAfterSignUpAction = function() {
+const checkForAfterSignUpAction = function() {
   const afterSignUpAction = Cookies.get('afterSignUpAction');
-  this.currentUser = CurrentUser.orNull();
+  const currentUser = CurrentUser.orNull();
   if (afterSignUpAction) {
-    if (!this.currentUser) { return; }
+    if (!currentUser) { return; }
     const { action, objectId, kind } = JSON.parse(afterSignUpAction);
 
     const ops = operations[action];
-    ops && ops(this.currentUser, objectId, kind);
+    ops && ops(currentUser, objectId, kind);
 
     return Cookies.expire('afterSignUpAction');
   }
 };
 
-var handleNavBarScroll = function() {
+const handleNavBarScroll = function() {
   // We only need this special case when the user sees the "login/signup"
   // banner on mobile web.
   if (!CurrentUser.orNull()) {

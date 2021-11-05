@@ -14,7 +14,7 @@ const moment = require('moment');
 const Backbone = require('backbone');
 const { Partner } = require('./partner');
 const { Fair } = require('./fair');
-import resizer from '../components/resizer/index';
+const { resizer } = require('../components/resizer/index');
 const { compactObject } = require('./mixins/compact_object');
 
 export default (_Article = (function() {
