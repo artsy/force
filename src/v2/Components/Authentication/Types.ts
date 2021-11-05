@@ -48,31 +48,14 @@ export interface AfterSignUpAction {
 
 export interface ModalOptions {
   /**
-   * the subtitle of the form
+   * Hook to be called after the modal has closed
    */
-  copy?: string
+  afterClose?: () => void
   /**
-   * the type of modal to display.
+   * MOBILE ONLY
+   * Used to construct afterSignupAction from query params
    */
-  mode?: ModalType
-  /**
-   * the page path the user is redirected to after successfully
-   * login or account creation after onboarding.
-   */
-  destination?: string
-  /**
-   * the page path the user is redirected to after successfully
-   * login or account creation (skips onboarding).
-   */
-  redirectTo?: string
-  /**
-   * the action taken that prompted user to signup or login.
-   */
-  intent: AuthIntent
-  /**
-   * the page before the page on which the sign up was triggered.
-   */
-  signupReferer?: string
+  action?: AfterSignUpAction["action"]
   /**
    * defines an action to take after the user successfully signs up
    *
@@ -83,45 +66,63 @@ export interface ModalOptions {
    * }
    */
   afterSignUpAction?: AfterSignUpAction
+
   /*
    * the location where the modal was triggered.
    */
-  contextModule: AuthContextModule
+  contextModule?: AuthContextModule
   /**
-   * the number of seconds before a modal was triggered
+   * the subtitle of the form
    */
-  triggerSeconds?: number
+  copy?: string
   /**
-   * The form or modal title in case it needs to be customized
+   * the page path the user is redirected to after successfully
+   * login or account creation after onboarding.
    */
-  title?: string
+  destination?: string
+  /**
+   * Prevents users from clicking outside the modal to close it
+   */
+  disableCloseOnBackgroundClick?: boolean
   /**
    * The image rendered with the modal
    */
   image?: string
+  /**
+   * the action taken that prompted user to signup or login.
+   */
+  intent?: AuthIntent
   /**
    * MOBILE ONLY
    * Used to construct afterSignupAction from query params
    */
   kind?: AfterSignUpAction["kind"]
   /**
-   * MOBILE ONLY
-   * Used to construct afterSignupAction from query params
+   * the type of modal to display.
    */
-  action?: AfterSignUpAction["action"]
+  mode?: ModalType
   /**
    * MOBILE ONLY
    * Used to construct afterSignupAction from query params
    */
   objectId?: AfterSignUpAction["objectId"]
   /**
-   * Prevents users from clicking outside the modal to close it
+   * the page path the user is redirected to after successfully
+   * login or account creation (skips onboarding).
    */
-  disableCloseOnBackgroundClick?: boolean
+  redirectTo?: string
   /**
-   * Hook to be called after the modal has closed
+   * the page before the page on which the sign up was triggered.
    */
-  afterClose?: () => void
+  signupReferer?: string
+  /**
+   * The form or modal title in case it needs to be customized
+   */
+  title?: string
+  /**
+   * the number of seconds before a modal was triggered
+   */
+  triggerSeconds?: number
 }
 
 export type FormComponentType =

@@ -8436,11 +8436,14 @@ type Me implements Node {
     before: String
 
     # Exclude artworks that have been purchased on Artsy and automatically added to the collection.
-    excludePurchasedArtworks: Boolean = false
+    excludePurchasedArtworks: Boolean = true
     first: Int
     last: Int
     sort: MyCollectionArtworkSorts
   ): MyCollectionConnection
+
+  # Info about the current user's my-collection
+  myCollectionInfo: MyCollectionInfo
   name: String
 
   # A connection of new works by artists the user interacted with (sorted by publication date).
@@ -8987,6 +8990,7 @@ type MyCollectionConnection {
 
   # A list of edges.
   edges: [MyCollectionEdge]
+  includesPurchasedArtworks: Boolean!
   name: String!
   pageCursors: PageCursors!
 
@@ -9040,6 +9044,14 @@ type MyCollectionEdge {
 
   # The item at the end of the edge
   node: Artwork
+}
+
+type MyCollectionInfo {
+  default: Boolean!
+  description: String!
+  includesPurchasedArtworks: Boolean!
+  name: String!
+  private: Boolean!
 }
 
 input MyCollectionUpdateArtworkInput {
@@ -10722,7 +10734,14 @@ type Query {
 
     # Coordinates to find partners closest to
     near: String
+
+    #
+    #         Only return partners of the specified partner categories.
+    #         Accepts list of slugs.
+    #
+    partnerCategories: [String]
     sort: PartnersSortType
+    type: [PartnerClassification]
   ): PartnerConnection
 
   # Get all price insights for an artist.
@@ -13429,7 +13448,14 @@ type Viewer {
 
     # Coordinates to find partners closest to
     near: String
+
+    #
+    #         Only return partners of the specified partner categories.
+    #         Accepts list of slugs.
+    #
+    partnerCategories: [String]
     sort: PartnersSortType
+    type: [PartnerClassification]
   ): PartnerConnection
 
   # A requested location

@@ -1,5 +1,5 @@
 import { FormikProps } from "formik"
-import { Component } from "react";
+import { Component } from "react"
 import { TrackingProp } from "react-tracking"
 import { AuthenticationModal } from "v2/Components/Authentication/Components/AuthenticationModal"
 import { FormSwitcher } from "v2/Components/Authentication/FormSwitcher"
@@ -92,7 +92,6 @@ export class ModalManager extends Component<
 
     this.setState({
       currentType: type,
-      // @ts-expect-error STRICT_NULL_CHECK
       options: newOptions,
       switchedForms: true,
     })

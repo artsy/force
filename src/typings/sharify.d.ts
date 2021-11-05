@@ -25,6 +25,7 @@ declare module "sharify" {
       CURRENT_USER: User
       EIGEN: boolean
       readonly ENABLE_FAIR_PAGE_EXHIBITORS_TAB: boolean
+      readonly ENABLE_SAVED_SEARCH: boolean
       readonly ENABLE_NEW_AUCTIONS_FILTER: boolean
       readonly ENABLE_QUERY_BATCHING: boolean
       readonly ENABLE_SERVER_SIDE_CACHE: string
@@ -72,6 +73,8 @@ declare module "sharify" {
       ARTSY_XAPP_TOKEN: string
       ARTWORK?: any // mobile artist app data
       AUCTION?: any
+      AUTHENTICATION_REDIRECT_TO?: string
+      AUTHENTICATION_REFERER?: string
       CSRF_TOKEN: string
       CHANNEL?: { slug?: string } // Articles
       FAIR?: any // mobile fair app data

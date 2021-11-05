@@ -1,4 +1,6 @@
-import { FullPageAuthStatic } from "../components/FullPageAuthStatic"
+/* eslint-disable jest/no-done-callback */
+
+import { FullPageAuthStatic } from "v2/Apps/Authentication/Components/FullPageAuthStatic"
 import { login } from "../routes"
 
 jest.mock("@artsy/stitch", () => ({

@@ -21,11 +21,11 @@ jest.mock("v2/Components/Authentication/Views/SignUpForm", () => ({
   SignUpFormQueryRenderer: () => null,
 }))
 
-jest.mock("desktop/apps/authentication/helpers", () => ({
+jest.mock("v2/Apps/Authentication/Utils/helpers", () => ({
   handleSubmit: jest.fn(),
 }))
 
-const handleSubmitMock = require("desktop/apps/authentication/helpers")
+const handleSubmitMock = require("v2/Apps/Authentication/Utils/helpers")
   .handleSubmit as jest.Mock
 
 describe("React components", () => {
