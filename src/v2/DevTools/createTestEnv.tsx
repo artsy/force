@@ -2,8 +2,8 @@ import { ConnectedModalDialog } from "v2/Apps/Order/Dialogs"
 import { SystemContext, SystemContextProps } from "v2/System"
 import { MockBoot, createMockFetchQuery, renderRelayTree } from "v2/DevTools"
 import { merge } from "lodash"
-import { ReactElement, useContext } from "react"
-import * as React from "react"
+import { ReactElement, useContext } from "react";
+import * as React from "react";
 import { GraphQLTaggedNode } from "react-relay"
 import { Network } from "relay-runtime"
 import { Breakpoint } from "v2/Utils/Responsive"

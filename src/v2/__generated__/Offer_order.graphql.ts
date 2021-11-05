@@ -16,7 +16,6 @@ export type Offer_order = {
             readonly node: {
                 readonly artwork: {
                     readonly slug: string;
-                    readonly price: string | null;
                 } | null;
                 readonly artworkOrEditionSet: ({
                     readonly __typename: "Artwork";
@@ -47,15 +46,14 @@ export type Offer_order$key = {
 
 
 const node: ReaderFragment = (function(){
-var v0 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "price",
-  "storageKey": null
-},
-v1 = [
-  (v0/*: any*/),
+var v0 = [
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "price",
+    "storageKey": null
+  },
   {
     "alias": null,
     "args": null,
@@ -143,8 +141,7 @@ return {
                       "kind": "ScalarField",
                       "name": "slug",
                       "storageKey": null
-                    },
-                    (v0/*: any*/)
+                    }
                   ],
                   "storageKey": null
                 },
@@ -165,12 +162,12 @@ return {
                     },
                     {
                       "kind": "InlineFragment",
-                      "selections": (v1/*: any*/),
+                      "selections": (v0/*: any*/),
                       "type": "Artwork"
                     },
                     {
                       "kind": "InlineFragment",
-                      "selections": (v1/*: any*/),
+                      "selections": (v0/*: any*/),
                       "type": "EditionSet"
                     }
                   ],
@@ -212,5 +209,5 @@ return {
   "type": "CommerceOrder"
 };
 })();
-(node as any).hash = '04bf345b90df1c9bc3f1e30b6e1fa155';
+(node as any).hash = 'f824ba50f69378b1569b865e30f91196';
 export default node;

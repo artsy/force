@@ -24,7 +24,7 @@ import { track } from "v2/System"
 import * as Schema from "v2/System/Analytics/Schema"
 import { CountdownTimer } from "v2/Components/CountdownTimer"
 import { RouterState } from "found"
-import { Component } from "react"
+import { Component } from "react";
 import { RelayProp, createFragmentContainer, graphql } from "react-relay"
 import createLogger from "v2/Utils/logger"
 import { Media } from "v2/Utils/Responsive"
@@ -38,7 +38,6 @@ import {
 import { ShippingSummaryItemFragmentContainer as ShippingSummaryItem } from "../../Components/ShippingSummaryItem"
 import { BuyerGuarantee } from "../../Components/BuyerGuarantee"
 import { ContextModule, OwnerType } from "@artsy/cohesion"
-import { isNil } from "lodash"
 
 export interface RespondProps extends RouterState {
   order: Respond_order
@@ -118,9 +117,6 @@ export class RespondRoute extends Component<RespondProps, RespondState> {
     } = this.state
 
     const search = this.props.match?.location.search || ""
-    const artworkPrice = this?.props?.order?.lineItems?.edges?.[0]?.node
-      ?.artwork?.price
-    const isPriceHidden = isNil(artworkPrice) || artworkPrice === ""
 
     if (responseOption === "ACCEPT") {
       this.props.router.push(
@@ -154,8 +150,7 @@ export class RespondRoute extends Component<RespondProps, RespondState> {
 
     if (
       !highSpeedBumpEncountered &&
-      this.state.offerValue * 100 > currentOfferPrice! &&
-      !isPriceHidden
+      this.state.offerValue * 100 > currentOfferPrice!
     ) {
       this.showHighSpeedbump()
       return
@@ -370,7 +365,6 @@ export const RespondFragmentContainer = createFragmentContainer(
             node {
               artwork {
                 slug
-                price
               }
             }
           }
