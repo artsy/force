@@ -4,9 +4,14 @@ import {
   SavedSearchAleftFormValues,
   SavedSearchAlertFormPropsBase,
   SavedSearchAlertMutationResult,
+  SavedSearchAlertUserAlertSettings,
 } from "./SavedSearchAlertModel"
 import { Box, Button, Checkbox, Input, Text } from "@artsy/palette"
 import { getNamePlaceholder } from "./Utils/getNamePlaceholder"
+import { getSearchCriteriaFromFilters } from "../ArtworkFilter/SavedSearch/savedSearchCriteriaHelpers"
+import { createSavedSearchAlert } from "./Mutations/createSavedSearchAlert"
+import { useSystemContext } from "v2/System"
+import { extractPills } from "./Utils/extractPills"
 
 interface SavedSearchAlertFormProps extends SavedSearchAlertFormPropsBase {
   initialValues: SavedSearchAleftFormValues
@@ -17,15 +22,48 @@ export const SavedSearchAlertForm: React.FC<SavedSearchAlertFormProps> = ({
   artistId,
   artistName,
   initialValues,
+  filters,
+  aggregations,
   onComplete,
 }) => {
+  const { relayEnvironment } = useSystemContext()
+
+  const pills = extractPills(filters, aggregations)
+  const namePlaceholder = getNamePlaceholder(artistName, pills)
+
   const formik = useFormik<SavedSearchAleftFormValues>({
     initialValues,
     initialErrors: {},
-    onSubmit: values => {},
-  })
+    onSubmit: async values => {
+      if (!relayEnvironment) {
+        return null
+      }
 
-  const namePlaceholder = getNamePlaceholder(artistName)
+      const alertName = values.name || namePlaceholder
+
+      const userAlertSettings: SavedSearchAlertUserAlertSettings = {
+        name: alertName,
+        email: values.email,
+      }
+
+      try {
+        const criteria = getSearchCriteriaFromFilters(artistId, filters)
+        const response = await createSavedSearchAlert(
+          relayEnvironment,
+          userAlertSettings,
+          criteria
+        )
+
+        const result = {
+          id: response.createSavedSearch?.savedSearchOrErrors.internalID!,
+        }
+
+        onComplete?.(result)
+      } catch (error) {
+        console.error(error)
+      }
+    },
+  })
 
   const handleToggleEmailNotification = (enabled: boolean) => {
     formik.setFieldValue("email", enabled)

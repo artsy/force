@@ -1,7 +1,10 @@
 import React from "react"
 import { Modal, Text } from "@artsy/palette"
 import { SavedSearchAlertForm } from "./SavedSearchAlertForm"
-import { Aggregations } from "../ArtworkFilter/ArtworkFilterContext"
+import {
+  Aggregations,
+  ArtworkFilters,
+} from "../ArtworkFilter/ArtworkFilterContext"
 import { SavedSearchAlertMutationResult } from "./SavedSearchAlertModel"
 
 interface CreateSavedSearchModalProps {
@@ -9,7 +12,7 @@ interface CreateSavedSearchModalProps {
   artistName: string
   onClose: () => void
   onComplete: (response: SavedSearchAlertMutationResult) => void
-  filters: any // TODO: set filters type
+  filters: ArtworkFilters
   aggregations: Aggregations
   visible?: boolean
 }

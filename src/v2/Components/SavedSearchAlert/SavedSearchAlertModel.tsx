@@ -1,4 +1,7 @@
-import { Aggregations } from "../ArtworkFilter/ArtworkFilterContext"
+import {
+  Aggregations,
+  ArtworkFilters,
+} from "../ArtworkFilter/ArtworkFilterContext"
 
 export interface SavedSearchAleftFormValues {
   name: string
@@ -6,7 +9,7 @@ export interface SavedSearchAleftFormValues {
 }
 
 export interface SavedSearchAlertFormPropsBase {
-  filters: any // TODO: set filters type
+  filters: ArtworkFilters
   aggregations: Aggregations
   artistId: string
   artistName: string
@@ -16,7 +19,7 @@ export interface SavedSearchAlertMutationResult {
   id: string
 }
 
-export interface SavedSearchAlertUserSettings {
+export interface SavedSearchAlertUserAlertSettings {
   name: string
   email?: boolean
 }

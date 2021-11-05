@@ -4,11 +4,11 @@ import {
 } from "v2/__generated__/createSavedSearchAlertMutation.graphql"
 import { commitMutation, Environment, graphql } from "relay-runtime"
 import { SearchCriteriaAttributes } from "v2/Components/ArtworkFilter/SavedSearch/types"
-import { SavedSearchAlertUserSettings } from "../SavedSearchAlertModel"
+import { SavedSearchAlertUserAlertSettings } from "../SavedSearchAlertModel"
 
 export const createSavedSearchAlert = (
   environment: Environment,
-  userAlertSettings: SavedSearchAlertUserSettings,
+  userAlertSettings: SavedSearchAlertUserAlertSettings,
   attributes: SearchCriteriaAttributes
 ): Promise<createSavedSearchAlertMutationResponse> => {
   return new Promise((resolve, reject) => {
