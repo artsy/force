@@ -39,13 +39,22 @@ export type HomeFeaturedEventsRail_orderedSet$key = {
 
 const node: ReaderFragment = (function(){
 var v0 = {
+  "kind": "Literal",
+  "name": "version",
+  "value": [
+    "main",
+    "wide",
+    "large_rectangle"
+  ]
+},
+v1 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "src",
   "storageKey": null
 },
-v1 = {
+v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -120,6 +129,7 @@ return {
                       "name": "height",
                       "value": 63
                     },
+                    (v0/*: any*/),
                     {
                       "kind": "Literal",
                       "name": "width",
@@ -131,8 +141,8 @@ return {
                   "name": "cropped",
                   "plural": false,
                   "selections": [
-                    (v0/*: any*/),
                     (v1/*: any*/),
+                    (v2/*: any*/),
                     {
                       "alias": null,
                       "args": null,
@@ -148,7 +158,7 @@ return {
                       "storageKey": null
                     }
                   ],
-                  "storageKey": "cropped(height:63,width:95)"
+                  "storageKey": "cropped(height:63,version:[\"main\",\"wide\",\"large_rectangle\"],width:95)"
                 },
                 {
                   "alias": "large",
@@ -158,6 +168,7 @@ return {
                       "name": "height",
                       "value": 297
                     },
+                    (v0/*: any*/),
                     {
                       "kind": "Literal",
                       "name": "width",
@@ -169,10 +180,10 @@ return {
                   "name": "cropped",
                   "plural": false,
                   "selections": [
-                    (v0/*: any*/),
-                    (v1/*: any*/)
+                    (v1/*: any*/),
+                    (v2/*: any*/)
                   ],
-                  "storageKey": "cropped(height:297,width:445)"
+                  "storageKey": "cropped(height:297,version:[\"main\",\"wide\",\"large_rectangle\"],width:445)"
                 }
               ],
               "storageKey": null
@@ -187,5 +198,5 @@ return {
   "type": "OrderedSet"
 };
 })();
-(node as any).hash = 'a5ec8830f2f214d59a527aa593060498';
+(node as any).hash = '12d52ffc1a89ddb9b661fb39aed95546';
 export default node;
