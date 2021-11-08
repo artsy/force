@@ -53,6 +53,13 @@ jest.mock("../../Utils/createConsignSubmission", () => ({
   createConsignSubmission: jest.fn(),
 }))
 
+jest.mock("../../Utils/createConsignSubmission", () => ({
+  ...jest.requireActual("../../Utils/createConsignSubmission"),
+  createConsignSubmission: jest.fn(),
+}))
+
+const mockCreateConsignSubmission = createConsignSubmission as jest.Mock
+
 let sessionStore = {
   "submission-1": JSON.stringify({
     ...previousStepsData,
@@ -159,6 +166,20 @@ describe("Contact Information step", () => {
       wrapper.update()
       const button = wrapper.find(saveButtonSelector)
       expect(button.prop("disabled")).toBe(false)
+    })
+
+    it("show error modal if consingment submission fails", async () => {
+      mockCreateConsignSubmission.mockRejectedValueOnce("rejected")
+      const { getWrapper } = getWrapperWithProps(mockMe)
+      const wrapper = getWrapper({ Me: () => mockMe })
+
+      wrapper.find("Form").simulate("submit")
+
+      await flushPromiseQueue()
+      wrapper.update()
+
+      const errorModal = wrapper.find("ErrorModal")
+      expect(errorModal).toHaveLength(1)
     })
   })
 
