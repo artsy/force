@@ -10,6 +10,7 @@ import { Photo } from "../Utils/fileUtils"
 import { useRouter } from "v2/System/Router/useRouter"
 import { useSubmission } from "../Utils/useSubmission"
 import { BackLink } from "v2/Components/Links/BackLink"
+import { uploadPhotosValidationSchema } from "../Utils/validation"
 
 export const UploadPhotos: React.FC = () => {
   const {
@@ -67,11 +68,12 @@ export const UploadPhotos: React.FC = () => {
       <Formik<UploadPhotosFormModel>
         validateOnMount
         onSubmit={handleSubmit}
+        validationSchema={uploadPhotosValidationSchema}
         initialValues={{
           photos: [],
         }}
       >
-        {({ values, setFieldValue, isSubmitting }) => {
+        {({ values, setFieldValue, isValid, isSubmitting }) => {
           const handlePhotoDelete = (photo: Photo) => {
             photo.removed = true
             photo.abortUploading?.()
@@ -107,7 +109,7 @@ export const UploadPhotos: React.FC = () => {
 
               <Button
                 width={["100%", "auto"]}
-                disabled={isSubmitting || !values.photos.some(c => c.s3Key)}
+                disabled={isSubmitting || !isValid}
                 loading={isSubmitting || values.photos.some(c => c.loading)}
                 type="submit"
               >
