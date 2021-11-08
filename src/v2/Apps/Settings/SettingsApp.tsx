@@ -1,8 +1,9 @@
-import { Box, Text } from "@artsy/palette"
+import { Text } from "@artsy/palette"
 import React from "react"
 import { SettingsApp_me } from "v2/__generated__/SettingsApp_me.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouteTab, RouteTabs } from "v2/Components/RouteTabs"
+import { MetaTags } from "v2/Components/MetaTags"
 
 interface SettingsAppProps {
   me: SettingsApp_me
@@ -42,17 +43,23 @@ const tabs = [
 const SettingsApp: React.FC<SettingsAppProps> = ({ me, children }) => {
   return (
     <>
-      <Text variant="lg" mt={[2, 4]}>
+      <MetaTags title="Settings | Artsy" />
+
+      <Text variant="lg" mt={4}>
         Hi {me.name}!
       </Text>
 
       <RouteTabs my={4}>
-        {tabs.map((tab, index) => {
-          return <RouteTab to={tab.url}>{tab.name}</RouteTab>
+        {tabs.map(tab => {
+          return (
+            <RouteTab key={tab.url} to={tab.url}>
+              {tab.name}
+            </RouteTab>
+          )
         })}
       </RouteTabs>
 
-      <Box>{children}</Box>
+      {children}
     </>
   )
 }
