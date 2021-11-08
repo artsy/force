@@ -3,46 +3,14 @@
 
 !function(){var analytics=window.analytics=window.analytics||[];if(!analytics.initialize)if(analytics.invoked)window.console&&console.error&&console.error("Segment snippet included twice.");else{analytics.invoked=!0;analytics.methods=["trackSubmit","trackClick","trackLink","trackForm","pageview","identify","reset","group","track","ready","alias","debug","page","once","off","on","addSourceMiddleware","addIntegrationMiddleware","setAnonymousId","addDestinationMiddleware"];analytics.factory=function(t){return function(){var e=Array.prototype.slice.call(arguments);e.unshift(t);analytics.push(e);return analytics}};for(var t=0;t<analytics.methods.length;t++){var e=analytics.methods[t];analytics[e]=analytics.factory(e)}analytics.load=function(t,e){var n=document.createElement("script");n.type="text/javascript";n.async=!0;n.src="https://cdn.segment.com/analytics.js/v1/"+t+"/analytics.min.js";var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(n,a);analytics._loadOptions=e};analytics.SNIPPET_VERSION="4.1.0";
 
-// To get started, make sure you're using the latest version of the analytics.js snippet (4.1.0 or above)
-// and remove the `analytics.load("YOUR_WRITE_KEY")` call. then drop this script below the snippet. 
-
-// this is a standalone script for modern browsers. if you'd like to target older browsers, include 
-// a fetch polyfill and use that instead of window.fetch. This would require that you build and package the 
-// script somehow (rollup, webpack, browserify, etc). You may also want to transpile it to ES5 w eg Babel.
-
-// This script is configured to make all collection opt-in (rather than opt-out) for all users.
-// If you want to conditionally require whether or not to block data collection before affirmative consent, use something
-// like inEU below and pass that function into `conditionallyLoadAnalytics`. If you want to collect data until the user
-// opts out, just change OPT_IN to false.
-
-// import fetch from 'isomorphic-fetch'
-// import inEU from '@segment/in-eu'
-
-// CONFIG — EDIT ME!
-// CONFIG — EDIT ME!
-const OPT_IN = true; // false = only disable after opt out, can replace with a function such as inEU above
-const YOUR_DOMAIN = "domain.com"; // the hostname of your website
-const WEBSITE_WRITE_KEY = "<%%= sd.SEGMENT_WRITE_KEY %>"; // your segment website source write key
+const OPT_IN = true;
+const YOUR_DOMAIN = "domain.com";
+const WEBSITE_WRITE_KEY = "<%%= sd.SEGMENT_WRITE_KEY %>";
 const SEGMENT_MAPPING = 1;
-const OTHER_WRITE_KEYS = []; // any other sources w destinations that you want to include in config
+const OTHER_WRITE_KEYS = [];
 
-// gets enabled destination configurations from across your source (and optionally other sources in workspace)
 fetchDestinations([WEBSITE_WRITE_KEY, ...OTHER_WRITE_KEYS]).then(
   destinations => {
-    // KEY LOGIC HERE
-    // eg. could instead use trustArc's other APIs such as getConsentCategories
-    // and map between the returned vendor domains to specific Segment Integrationss, etc
-    // review this logic carefully, and edit per your business requirements
-    //
-    // in this case, we go with all when customer provides full consent
-    // remove Advertising tools when the customer provides functional
-    // and mark Segment as required (for data to flow to warehouse etc— if you make that clear in your policy)
-    // note that though Segment will receive data we wont forward (even server side) to other sources because we
-    // decorate the calls with the full set of integrations you have enabled with "false."
-    //
-    // no preference here goes with all on — you may want to flip that!
-
-    # get user consent through OneTrust. dummy value for now.
     consentDecision = [3]
 
     const destinationPreferences = destinations
@@ -71,7 +39,6 @@ fetchDestinations([WEBSITE_WRITE_KEY, ...OTHER_WRITE_KEYS]).then(
   }
 );
 
-// instructs trustarc to notify on changes to consent
 window.top.postMessage(JSON.stringify({
   PrivacyManagerAPI: { 
     action: "getConsent",
@@ -80,9 +47,6 @@ window.top.postMessage(JSON.stringify({
   } 
 }), "*");
 
-// registers listener for consent changes.
-// some care has been taken here to handle messages safely.
-// will reload window if they've "denied"... to reset tracking.
 window.addEventListener("message", function reload(e) {
   let data = e.data;
   if (typeof data === "string") {
@@ -97,16 +61,14 @@ window.addEventListener("message", function reload(e) {
   ) {
     return window.location.reload();
   }
-   // otherwise approved... carry on!
 },  false);  
 
-// helper functions below...
 function conditionallyLoadAnalytics({
   writeKey,
   destinations,
   destinationPreferences,
   isConsentRequired,
-  shouldReload = true // change if you dont want to reload on consent changes
+  shouldReload = true
 }) {
   let isAnythingEnabled = false;
 
@@ -115,7 +77,6 @@ function conditionallyLoadAnalytics({
       return;
     }
 
-    // Load a.js normally when consent isn't required and there's no preferences
     if (!window.analytics.initialized) {
       window.analytics.load(writeKey);
     }
@@ -129,8 +90,6 @@ function conditionallyLoadAnalytics({
     }
   }
 
-  // Reload the page if the trackers have already been initialized so that
-  // the user's new preferences can take effect
   if (window.analytics.initialized) {
     if (shouldReload) {
       window.location.reload();
@@ -138,7 +97,6 @@ function conditionallyLoadAnalytics({
     return;
   }
 
-  // Don't load a.js at all if nothing has been enabled
   if (isAnythingEnabled) {
     window.analytics.load(writeKey, { integrations: destinationPreferences });
   }
@@ -159,7 +117,6 @@ async function fetchDestinationForWriteKey(writeKey) {
 
   const destinations = await res.json();
 
-  // Rename creationName to id to abstract the weird data model
   for (const destination of destinations) {
     destination.id = destination.creationName;
     delete destination.creationName;
@@ -176,15 +133,14 @@ async function fetchDestinations(...writeKeys) {
 
   let destinations = await Promise.all(destinationsRequests);
 
-  // unique list of destination across all sources
   destinations = [
     ...destinations
-      .reduce((a, b) => a.concat(b), []) // flatten multi-d array
+      .reduce((a, b) => a.concat(b), [])
       .reduce((map, item) => {
-        if (item.id === "Repeater") return map; // remove repeater
+        if (item.id === "Repeater") return map;
         map.has(item["id"]) || map.set(item["id"], item);
         return map;
-      }, new Map()) // return object
+      }, new Map())
       .values()
   ];
 
