@@ -3,10 +3,145 @@
 
 !function(){var analytics=window.analytics=window.analytics||[];if(!analytics.initialize)if(analytics.invoked)window.console&&console.error&&console.error("Segment snippet included twice.");else{analytics.invoked=!0;analytics.methods=["trackSubmit","trackClick","trackLink","trackForm","pageview","identify","reset","group","track","ready","alias","debug","page","once","off","on","addSourceMiddleware","addIntegrationMiddleware","setAnonymousId","addDestinationMiddleware"];analytics.factory=function(t){return function(){var e=Array.prototype.slice.call(arguments);e.unshift(t);analytics.push(e);return analytics}};for(var t=0;t<analytics.methods.length;t++){var e=analytics.methods[t];analytics[e]=analytics.factory(e)}analytics.load=function(t,e){var n=document.createElement("script");n.type="text/javascript";n.async=!0;n.src="https://cdn.segment.com/analytics.js/v1/"+t+"/analytics.min.js";var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(n,a);analytics._loadOptions=e};analytics.SNIPPET_VERSION="4.1.0";
 
-loadSegment();
+const WRITE_KEY = "<%%= sd.SEGMENT_WRITE_KEY %>";
+const SEGMENT_MAPPING = 'C0001';
 
-function loadSegment() {
-  console.log('loading Segment');
+fetchDestinations(WRITE_KEY).then(
+  destinations => {
+    console.log('segment destinations');
+    console.log(destinations);
+
+    let oneTrustConsent = '';
+    if (oneTrustReady()) {
+      oneTrustConsent = window.OnetrustActiveGroups.split(',');
+    } else {
+      oneTrustConsent = ['C0001'];
+    }
+
+    console.log('onetrust consent');
+    console.log(oneTrustConsent);
+
+    console.log('setting segment destination preferences based on onetrust consent.');
+
+    const destinationPreferences = setSegmentDestinationPref(oneTrustConsent, destinations);
+
+    conditionallyLoadAnalytics({
+      writeKey: WRITE_KEY,
+      destinations,
+      destinationPreferences
+    });
+
+  }
+)
+
+function conditionallyLoadAnalytics({
+  writeKey,
+  destinations,
+  destinationPreferences,
+  shouldReload = true
+}) {
+  let isAnythingEnabled = false;
+
+  for (const destination in destinationPreferences) {
+    const isEnabled = destinationPreferences[destination];
+    if (isEnabled) {
+      isAnythingEnabled = true;
+    }
+  }
+
+  if (window.analytics.initialized) {
+    console.log('segment already initialized');
+    if (shouldReload) {
+      console.log('reloading');
+      window.location.reload();
+    }
+    return;
+  }
+
+  if (isAnythingEnabled) {
+    console.log('loading segment analytics js');
+    window.analytics.load(writeKey, { integrations: destinationPreferences });
+  }
+}
+
+function setSegmentDestinationPref(oneTrustConsent, destinations) {
+  const segmentToOneTrust= {
+    'SMS & Push Notifications': 'C0001',
+    'Analytics': 'C0002',
+    'Advertising': 'C0004'
+  }
+
+  const destinationPreferences = destinations
+    .map(function(dest) {
+      console.log(dest);
+      if ((dest.category in segmentToOneTrust) && oneTrustConsent.includes(segmentToOneTrust[dest.category])) {
+        console.log('is allowed by onetrust');
+        return { [dest.id]: true };
+      } else {
+        return { [dest.id]: false };
+      }
+    })
+    .reduce(
+      (acc, val) => {
+        return {
+          ...val,
+          ...acc
+        };
+      },
+      { "Segment.io": oneTrustConsent.some(d => d === SEGMENT_MAPPING) }
+    );
+
+  console.log('desination pref:');
+  console.log(destinationPreferences);
+
+  return destinationPreferences;
+}
+
+function oneTrustReady() {
+  if (typeof window.OnetrustActiveGroups === 'string') {
+    return true;
+  }
+  return false;
+}
+
+async function fetchDestinations(writeKey) {
+  let destinations = await fetchDestinationForWriteKey(writeKey);
+
+  destinations = [
+    ...destinations
+      .reduce((map, item) => {
+        if (item.id === "Repeater") return map; // remove Segment Repeater destinations
+        map.has(item["id"]) || map.set(item["id"], item);
+        return map;
+      }, new Map()) // return object
+      .values()
+  ];
+
+  return destinations;
+}
+
+async function fetchDestinationForWriteKey(writeKey) {
+  const res = await window.fetch(
+    `https://cdn.segment.com/v1/projects/${writeKey}/integrations`
+  );
+
+  if (!res.ok) {
+    throw new Error(
+      `Failed to fetch integrations for write key ${writeKey}: HTTP ${
+        res.status
+      } ${res.statusText}`
+    );
+  }
+
+  const destinations = await res.json();
+
+  // Rename creationName to id to abstract the weird data model
+  for (const destination of destinations) {
+    destination.id = destination.creationName;
+    delete destination.creationName;
+  }
+
+  return destinations;
 }
 
 }}();
