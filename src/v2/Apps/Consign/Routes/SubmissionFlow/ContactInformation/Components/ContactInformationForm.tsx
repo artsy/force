@@ -5,13 +5,6 @@ import { useRouter } from "v2/System/Router/useRouter"
 import { ContactInformation_me } from "v2/__generated__/ContactInformation_me.graphql"
 import { useSubmission } from "../../Utils/useSubmission"
 
-export const getContactInformationFormInitialValues = (
-  me: ContactInformation_me
-) => ({
-  name: me?.name || "",
-  email: me?.email || "",
-  phone: me?.phone || "",
-})
 export interface ContactInformationFormModel {
   name: string
   email: string
@@ -32,7 +25,6 @@ export const ContactInformationForm: React.FC<ContactInformationFormProps> = ({
     handleBlur,
     resetForm,
     validateForm,
-    setErrors,
   } = useFormikContext<ContactInformationFormModel>()
 
   const {
@@ -45,13 +37,7 @@ export const ContactInformationForm: React.FC<ContactInformationFormProps> = ({
   useEffect(() => {
     if (submission) {
       resetForm({ values: submission.contactInformationForm })
-      validateForm(submission.contactInformationForm).then(e => {
-        setErrors(e)
-      })
-    } else {
-      resetForm({
-        values: getContactInformationFormInitialValues(me),
-      })
+      validateForm(submission.contactInformationForm)
     }
   }, [submission])
 

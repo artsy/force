@@ -10,7 +10,6 @@ import { Form, Formik } from "formik"
 import {
   ContactInformationForm,
   ContactInformationFormModel,
-  getContactInformationFormInitialValues,
 } from "./Components/ContactInformationForm"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ContactInformation_me } from "v2/__generated__/ContactInformation_me.graphql"
@@ -19,6 +18,12 @@ import { contactInformationValidationSchema } from "../Utils/validation"
 import { BackLink } from "v2/Components/Links/BackLink"
 import { ErrorModal } from "v2/Components/Modal/ErrorModal"
 import { useState } from "react"
+
+const getContactInformationFormInitialValues = (me: ContactInformation_me) => ({
+  name: me?.name || "",
+  email: me?.email || "",
+  phone: me?.phone || "",
+})
 
 export interface ContactInformationProps {
   me: ContactInformation_me
