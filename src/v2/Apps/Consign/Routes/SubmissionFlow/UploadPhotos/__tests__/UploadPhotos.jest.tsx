@@ -7,7 +7,6 @@ import { flushPromiseQueue } from "v2/DevTools"
 import { SystemContextProvider } from "v2/System"
 import { MBSize, uploadPhoto } from "../../Utils/fileUtils"
 import * as openAuthModal from "v2/Utils/openAuthModal"
-import { createConsignSubmission } from "../../Utils/createConsignSubmission"
 
 jest.unmock("react-relay")
 
@@ -49,16 +48,9 @@ jest.mock("../../Utils/fileUtils", () => ({
   uploadPhoto: jest.fn(),
 }))
 
-jest.mock("../../Utils/createConsignSubmission", () => ({
-  ...jest.requireActual("../../Utils/createConsignSubmission"),
-  createConsignSubmission: jest.fn(),
-}))
-
 const openAuthModalSpy = jest.spyOn(openAuthModal, "openAuthModal")
-// let user: User = undefined
 
 const mockUploadPhoto = uploadPhoto as jest.Mock
-const mockCreateConsignSubmission = createConsignSubmission as jest.Mock
 
 const { getWrapper } = setupTestWrapper({
   Component: () => {
@@ -94,7 +86,6 @@ describe("UploadPhotos", () => {
   })
 
   afterEach(() => {
-    // user = undefined
     openAuthModalSpy.mockReset()
     mockUploadPhoto.mockClear()
   })
@@ -404,50 +395,6 @@ describe("UploadPhotos", () => {
       expect(wrapper.text()).toContain(
         "File format not supported. Please upload JPG or PNG files."
       )
-    })
-  })
-
-  // TODO: move to contact information step
-  describe.skip("show error modal", () => {
-    beforeEach(() => {
-      mockCreateConsignSubmission.mockRejectedValueOnce("rejected")
-    })
-
-    it("if consingment submission fails", async () => {
-      // user = {
-      //   email: "test@test.test",
-      // }
-
-      const wrapper = getWrapper()
-
-      const dropzoneInput = wrapper
-        .find(UploadPhotosForm)
-        .find("[data-test-id='image-dropzone']")
-        .find("input")
-
-      dropzoneInput.simulate("change", {
-        target: {
-          files: [
-            {
-              name: "foo.png",
-              path: "foo.png",
-              type: "image/png",
-              size: 40 * MBSize,
-            },
-          ],
-        },
-      })
-
-      await flushPromiseQueue()
-      wrapper.update()
-
-      wrapper.find("Form").simulate("submit")
-
-      await flushPromiseQueue()
-      wrapper.update()
-
-      const errorModal = wrapper.find("ErrorModal")
-      expect(errorModal).toHaveLength(1)
     })
   })
 })
