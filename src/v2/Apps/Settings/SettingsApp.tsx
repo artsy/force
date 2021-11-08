@@ -4,20 +4,15 @@ import { SettingsApp_me } from "v2/__generated__/SettingsApp_me.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouteTab, RouteTabs } from "v2/Components/RouteTabs"
 import { MetaTags } from "v2/Components/MetaTags"
-import { getENV } from "v2/Utils/getENV"
 
 interface SettingsAppProps {
   me: SettingsApp_me
 }
 
-const sourceTabs = [
+const tabs = [
   {
     name: "Saves & Follows",
     url: "/settings2/saves",
-  },
-  {
-    name: "Alerts",
-    url: "/settings2/alerts",
   },
   {
     name: "Collector Profile",
@@ -44,14 +39,6 @@ const sourceTabs = [
     url: "/settings2/shipping",
   },
 ]
-
-const tabs = sourceTabs.filter(tab => {
-  if (tab.name === "Alerts") {
-    return getENV("ENABLE_SAVED_SEARCH")
-  }
-
-  return true
-})
 
 const SettingsApp: React.FC<SettingsAppProps> = ({ me, children }) => {
   return (

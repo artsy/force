@@ -2,21 +2,16 @@ import * as React from "react"
 import { track } from "v2/System"
 import { RouteTab, RouteTabs } from "v2/Components/RouteTabs"
 import { Box, Text, TextVariant, useThemeConfig } from "@artsy/palette"
-import { getENV } from "v2/Utils/getENV"
 
 interface UserSettingsTabsProps {
   route?: string
   username: string | null
 }
 
-const sourceRoutes: Record<"name" | "url", string>[] = [
+const routes: Record<"name" | "url", string>[] = [
   {
     name: "Saves & Follows",
     url: "/user/saves",
-  },
-  {
-    name: "Alerts",
-    url: "/user/alerts",
   },
   {
     name: "Collector Profile",
@@ -61,13 +56,6 @@ export const UserSettingsTabs: React.FC<UserSettingsTabsProps> = track()(
         variant: "xl" as TextVariant,
       },
     })
-    const routes = sourceRoutes.filter(route => {
-      if (route.name === "Alerts") {
-        return getENV("ENABLE_SAVED_SEARCH")
-      }
-
-      return true
-    })
 
     return (
       <Box pt={1}>
@@ -78,7 +66,7 @@ export const UserSettingsTabs: React.FC<UserSettingsTabsProps> = track()(
         </Box>
 
         <RouteTabs>
-          {routes.map((route, index) => (
+          {routes.map(route => (
             <RouteTab
               key={route.name}
               className={tabClass(route.url, route)}

@@ -2,9 +2,7 @@ import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Title } from "react-head"
 import { AlertsRoute_me } from "v2/__generated__/AlertsRoute_me.graphql"
-import { data as sd } from "sharify"
-import { Box } from "@artsy/palette"
-import { UserSettingsTabs } from "v2/Components/UserSettings/UserSettingsTabs"
+import { Box, Text } from "@artsy/palette"
 import { AllAlertsPaginationContainer } from "../../components/AllAlertsSection"
 
 export interface AlertsRouteProps {
@@ -17,11 +15,10 @@ const AlertsRoute: React.FC<AlertsRouteProps> = props => {
   return (
     <>
       <Title>Saved alerts | Artsy</Title>
-      <Box mx={[1, 4]} pb={[2, 4]}>
-        <Box mb={2} mt={1}>
-          <UserSettingsTabs route={sd.CURRENT_PATH} username={me?.name} />
-        </Box>
-
+      <Text variant="lg" my={4}>
+        Saved alerts
+      </Text>
+      <Box pb={[2, 4]}>
         <AllAlertsPaginationContainer me={me} />
       </Box>
     </>

@@ -2,9 +2,7 @@ import { SystemContextProvider } from "v2/System"
 import { mount } from "enzyme"
 import { NavBarUserMenu } from "../NavBarUserMenu"
 import { mediator } from "lib/mediator"
-import { data as sd } from "sharify"
 
-jest.mock("sharify")
 jest.mock("v2/System/Analytics/useTracking", () => {
   return {
     useTracking: () => ({
@@ -24,10 +22,6 @@ describe("NavBarUserMenu", () => {
     )
   }
 
-  beforeEach(() => {
-    sd.ENABLE_SAVED_SEARCH = false
-  })
-
   it("renders correct menu items", () => {
     const wrapper = getWrapper()
     const links = wrapper.find("a")
@@ -41,22 +35,6 @@ describe("NavBarUserMenu", () => {
     ])
 
     expect(wrapper.find("button").last().text()).toContain("Log out")
-  })
-
-  it('render "Alerts" menu item only when ENABLE_SAVED_SEARCH flag is enabled', () => {
-    sd.ENABLE_SAVED_SEARCH = true
-
-    const wrapper = getWrapper()
-    const links = wrapper.find("a")
-
-    expect(links.map(a => [a.prop("href"), a.text()])).toEqual([
-      // Label also includes SVG image title
-      ["/user/purchases", "Pending Order History"],
-      ["/user/saves", "Save Saves & Follows"],
-      ["/user/alerts", "Watch lot Alerts"],
-      ["/profile/edit", "User Collector Profile"],
-      ["/user/edit", "Settings Settings"],
-    ])
   })
 
   it("calls logout auth action on logout menu click", () => {

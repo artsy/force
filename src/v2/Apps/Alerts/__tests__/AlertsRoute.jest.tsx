@@ -1,34 +1,32 @@
 import { graphql } from "react-relay"
 import { AlertsRoute_Test_Query } from "v2/__generated__/AlertsRoute_Test_Query.graphql"
-import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
+import { setupTestWrapperTL } from "v2/DevTools/setupTestWrapper"
 import { AlertsRouteFragmentContainer } from "../Routes/Alerts/AlertsRoute"
 import { HeadProvider } from "react-head"
+import { screen } from "@testing-library/react"
 
 jest.unmock("react-relay")
 
-const { getWrapper } = setupTestWrapper<AlertsRoute_Test_Query>({
-  Component: ({ me }) => {
-    return (
-      <HeadProvider>
-        <AlertsRouteFragmentContainer me={me!} />
-      </HeadProvider>
-    )
-  },
-  query: graphql`
-    query AlertsRoute_Test_Query {
-      me {
-        ...AlertsRoute_me
-      }
-    }
-  `,
-})
-
 describe("AlertsRoute", () => {
-  it("renders collector name and some menu routes", () => {
-    const wrapper = getWrapper({
-      Me: () => ({
-        name: "Rob Ross",
-      }),
+  const { renderWithRelay } = setupTestWrapperTL<AlertsRoute_Test_Query>({
+    Component: ({ me }) => {
+      return (
+        <HeadProvider>
+          <AlertsRouteFragmentContainer me={me!} />
+        </HeadProvider>
+      )
+    },
+    query: graphql`
+      query AlertsRoute_Test_Query {
+        me {
+          ...AlertsRoute_me
+        }
+      }
+    `,
+  })
+
+  it("renders without throwing an error", () => {
+    renderWithRelay({
       SearchCriteriaConnection: () => ({
         pageInfo: {
           endCursor: "cursor",
@@ -38,9 +36,6 @@ describe("AlertsRoute", () => {
       }),
     })
 
-    const userSettingsTabs = wrapper.find("UserSettingsTabs")
-
-    expect(userSettingsTabs.text()).toContain("Rob Ross")
-    expect(userSettingsTabs.find("RouteTab").length).toBeGreaterThan(1)
+    expect(screen.getByText("Saved alerts")).toBeInTheDocument()
   })
 })
