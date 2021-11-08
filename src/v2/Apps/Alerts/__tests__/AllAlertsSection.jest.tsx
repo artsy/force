@@ -60,7 +60,7 @@ describe("AllAlertsSection", () => {
 
     const emptyTitle = "You haven’t created any Alerts yet."
     const emptyDescription =
-      "Filter for the artworks you love on an Artist Page and tap ‘Create Alert’ to be notified when new works are added to Artsy."
+      "Filter for the artworks you love and tap ‘Create Alert’ to be notified when new works are added to Artsy."
 
     expect(screen.getByText(emptyTitle)).toBeInTheDocument()
     expect(screen.getByText(emptyDescription)).toBeInTheDocument()

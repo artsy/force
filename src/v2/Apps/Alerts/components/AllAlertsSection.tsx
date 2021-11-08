@@ -38,12 +38,12 @@ const AllAlertsSection: React.FC<AllAlertsSectionProps> = ({ me, relay }) => {
   if (nodes.length === 0) {
     return (
       <>
-        <Text variant={["sm", "lg"]} mt={4} mb={[2, 4]}>
+        <Text variant={["sm", "md"]} mt={4} mb={2}>
           You haven’t created any Alerts yet.
         </Text>
         <Text mb={2} color="black60" variant="sm">
-          Filter for the artworks you love on an Artist Page and tap ‘Create
-          Alert’ to be notified when new works are added to Artsy.
+          Filter for the artworks you love and tap ‘Create Alert’ to be notified
+          when new works are added to Artsy.
         </Text>
       </>
     )
