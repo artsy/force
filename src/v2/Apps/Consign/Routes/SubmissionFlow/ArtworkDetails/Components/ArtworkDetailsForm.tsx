@@ -14,6 +14,7 @@ import {
 } from "@artsy/palette"
 import { useFormikContext } from "formik"
 import { checkboxValues } from "v2/Components/ArtworkFilter/ArtworkFilters/AttributionClassFilter"
+import { ErrorModal } from "v2/Components/Modal/ErrorModal"
 import { ArtistAutosuggest } from "./ArtistAutosuggest"
 import { useRouter } from "v2/System/Router/useRouter"
 import { ArtworkSidebarClassificationsModalQueryRenderer } from "v2/Apps/Artwork/Components/ArtworkSidebarClassificationsModal"
@@ -86,6 +87,7 @@ export interface ArtworkDetailsFormModel {
 }
 
 export const ArtworkDetailsForm: React.FC = () => {
+  const [isAutosuggestError, setIsAutosuggestError] = useState(false)
   const {
     match: {
       params: { id },
@@ -120,8 +122,24 @@ export const ArtworkDetailsForm: React.FC = () => {
     }
   }, [submission])
 
+  const handleAutosuggestError = (isError: boolean) => {
+    setIsAutosuggestError(isError)
+
+    if (!isError) {
+      setFieldValue("artistName", "")
+      setFieldValue("artistId", "")
+    }
+  }
+
   return (
     <>
+      <ErrorModal
+        show={isAutosuggestError}
+        headerText="An error occurred"
+        contactEmail="consign@artsymail.com"
+        closeText="Close"
+        onClose={() => handleAutosuggestError(false)}
+      />
       <ArtworkSidebarClassificationsModalQueryRenderer
         onClose={() => setIsRarityModalOpen(false)}
         show={isRarityModalOpen}
@@ -129,7 +147,9 @@ export const ArtworkDetailsForm: React.FC = () => {
       />
       <GridColumns>
         <Column span={6}>
-          <ArtistAutosuggest />
+          <ArtistAutosuggest
+            onAutosuggestError={() => handleAutosuggestError(true)}
+          />
         </Column>
         <Column span={6} mt={[2, 0]}>
           <Input

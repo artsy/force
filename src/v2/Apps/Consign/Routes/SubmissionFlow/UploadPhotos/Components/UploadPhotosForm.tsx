@@ -57,30 +57,38 @@ export const UploadPhotosForm: React.FC<UploadPhotosFormProps> = ({
     setFieldValue("photos", values.photos)
   }
 
-  const handlePhotoUploaded = (photo: Photo) => key => {
-    photo.s3Key = key
-    photo.loading = false
+  const uploadImage = async photo => {
+    photo.loading = true
 
-    setFieldValue("photos", values.photos, true)
+    if (relayEnvironment) {
+      const uploadedPhotoKey = await uploadPhoto(
+        relayEnvironment,
+        photo,
+        handlePhotoUploadingProgress(photo)
+      )
+
+      photo.loading = false
+
+      if (!uploadedPhotoKey) {
+        photo.errorMessage = `Photo could not be added: ${photo.name}`
+        setFieldValue("photos", values.photos)
+        return
+      }
+
+      photo.s3Key = uploadedPhotoKey
+      setFieldValue("photos", values.photos, true)
+
+      if (onPhotoUploaded) {
+        onPhotoUploaded()
+      }
+    }
   }
 
   useEffect(() => {
     const imagesToUpload = values.photos.filter(c => !c.s3Key && !c.loading)
 
     if (imagesToUpload.length) {
-      imagesToUpload.forEach(photo => {
-        photo.loading = true
-
-        if (relayEnvironment) {
-          uploadPhoto(
-            relayEnvironment,
-            photo,
-            handlePhotoUploadingProgress(photo)
-          )
-            .then(handlePhotoUploaded(photo))
-            .then(onPhotoUploaded)
-        }
-      })
+      imagesToUpload.forEach(uploadImage)
       setFieldValue("photos", [...values.photos])
     }
   }, [values.photos])

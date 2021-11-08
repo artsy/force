@@ -23,7 +23,13 @@ type Suggestion =
 
 type Suggestions = readonly Suggestion[] | undefined | null
 
-export const ArtistAutosuggest: React.FC = () => {
+interface ArtistAutosuggestProps {
+  onAutosuggestError: () => void
+}
+
+export const ArtistAutosuggest: React.FC<ArtistAutosuggestProps> = ({
+  onAutosuggestError,
+}) => {
   const {
     values,
     setFieldValue,
@@ -38,8 +44,12 @@ export const ArtistAutosuggest: React.FC = () => {
   const updateSuggestions = async (value: string) => {
     setSuggestions([])
     if (relayEnvironment) {
-      const suggestions = await fetchSuggestions(value, relayEnvironment)
-      setSuggestions(suggestions)
+      try {
+        const suggestions = await fetchSuggestions(value, relayEnvironment)
+        setSuggestions(suggestions)
+      } catch (error) {
+        onAutosuggestError()
+      }
     }
   }
 
