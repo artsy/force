@@ -26,6 +26,7 @@ const validForm = {
   width: "4",
   depth: "5",
   units: "cm",
+  provenance: "provenance",
 }
 
 const validFormWithSpaces = {
@@ -41,6 +42,7 @@ const validFormWithSpaces = {
   width: " 4 ",
   depth: " 5 ",
   units: " cm ",
+  provenance: "  provenance  ",
 }
 
 const mockRouterPush = jest.fn()
@@ -141,6 +143,9 @@ describe("ArtworkDetails", () => {
       expect(wrapper.find("input[name='width']").prop("value")).toBe("4")
       expect(wrapper.find("input[name='depth']").prop("value")).toBe("5")
       expect(wrapper.find("Radio[value='cm']").prop("selected")).toBe(true)
+      expect(wrapper.find("input[name='provenance']").prop("value")).toBe(
+        "provenance"
+      )
     })
 
     describe("Correct steps", () => {

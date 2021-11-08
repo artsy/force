@@ -33,6 +33,7 @@ export const getArtworkDetailsFormInitialValues = () => ({
   width: "",
   depth: "",
   units: "in",
+  provenance: "",
 })
 
 const rarityOptions = checkboxValues.map(({ name, value }) => ({
@@ -84,6 +85,7 @@ export interface ArtworkDetailsFormModel {
   width: string
   depth: string
   units: string
+  provenance: string
 }
 
 export const ArtworkDetailsForm: React.FC = () => {
@@ -304,6 +306,26 @@ export const ArtworkDetailsForm: React.FC = () => {
               <Radio value="cm" label="cm" />
             </RadioGroup>
           </Flex>
+        </Column>
+      </GridColumns>
+      <GridColumns mt={[1, 2]}>
+        <Column span={6}>
+          <Flex>
+            <Text variant="xs" mb={0.5} mr={0.5} textTransform="uppercase">
+              Provenance
+            </Text>
+            <Text variant="xs" color="black60">
+              (Optional)
+            </Text>
+          </Flex>
+          <Input
+            name="provenance"
+            placeholder="Describe how you acquired the work"
+            maxLength={256}
+            onBlur={handleBlur}
+            onChange={handleChange}
+            value={values.provenance}
+          />
         </Column>
       </GridColumns>
     </>

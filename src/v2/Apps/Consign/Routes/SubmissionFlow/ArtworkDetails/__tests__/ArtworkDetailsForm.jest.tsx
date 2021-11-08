@@ -40,6 +40,7 @@ describe("ArtworkDetailsForm", () => {
     expect(wrapper.find("input[name='depth']")).toBeTruthy()
     expect(wrapper.find("Radio[value='in']")).toBeTruthy()
     expect(wrapper.find("Radio[value='cm']")).toBeTruthy()
+    expect(wrapper.find("input[name='provenance']")).toBeTruthy()
   })
 
   describe("Rarity", () => {

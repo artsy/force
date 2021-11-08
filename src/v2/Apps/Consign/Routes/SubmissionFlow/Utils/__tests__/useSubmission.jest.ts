@@ -80,6 +80,7 @@ describe("useSubmission", () => {
         title: "title",
         units: "in",
         year: "2020",
+        provenance: "provenance",
       },
     }
 

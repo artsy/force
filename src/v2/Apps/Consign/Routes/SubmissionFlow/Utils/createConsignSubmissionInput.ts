@@ -24,6 +24,7 @@ export const createConsignSubmissionInput = (
     width: submission.artworkDetailsForm.width,
     depth: submission.artworkDetailsForm.depth,
     dimensionsMetric: submission.artworkDetailsForm.units,
+    provenance: submission.artworkDetailsForm.provenance,
     state: "SUBMITTED",
     userEmail: user?.email,
     userName: user?.name,

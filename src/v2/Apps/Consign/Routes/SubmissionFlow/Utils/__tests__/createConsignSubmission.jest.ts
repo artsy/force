@@ -64,6 +64,7 @@ describe("createConsignSubmission", () => {
         editionNumber: "",
         editionSize: "",
         depth: "",
+        provenance: "provenance",
       },
       uploadPhotosForm: {
         photos: [
@@ -130,6 +131,7 @@ describe("createConsignSubmission", () => {
       userEmail: user.email,
       userName: undefined,
       userPhone: undefined,
+      provenance: "provenance",
     }
 
     expect(createConsignSubmissionMutation).toHaveBeenCalled()
