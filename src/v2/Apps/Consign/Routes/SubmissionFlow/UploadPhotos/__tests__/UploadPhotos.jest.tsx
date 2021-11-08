@@ -87,7 +87,7 @@ describe("UploadPhotos", () => {
 
   afterEach(() => {
     openAuthModalSpy.mockReset()
-    mockUploadPhoto.mockClear()
+    mockUploadPhoto.mockReset()
   })
 
   it("renders correct", async () => {
@@ -395,6 +395,54 @@ describe("UploadPhotos", () => {
       expect(wrapper.text()).toContain(
         "File format not supported. Please upload JPG or PNG files."
       )
+    })
+  })
+
+  describe("remove error message", () => {
+    it("if new uploading starts", async () => {
+      const wrapper = getWrapper()
+
+      const dropzoneInput = wrapper
+        .find(UploadPhotosForm)
+        .find("[data-test-id='image-dropzone']")
+        .find("input")
+
+      dropzoneInput.simulate("change", {
+        target: {
+          files: [
+            {
+              name: "foo.png",
+              path: "foo.png",
+              type: "image/png",
+              size: 40 * MBSize,
+            },
+          ],
+        },
+      })
+
+      await flushPromiseQueue()
+      wrapper.update()
+
+      dropzoneInput.simulate("change", {
+        target: {
+          files: [
+            {
+              name: "foo.png",
+              path: "foo.png",
+              type: "image/png",
+              size: 2 * MBSize,
+            },
+          ],
+        },
+      })
+
+      await flushPromiseQueue()
+      wrapper.update()
+
+      const thumbnailWithError = wrapper.find("PhotoThumbnailErrorState")
+      expect(thumbnailWithError).toHaveLength(0)
+      const successThumbnail = wrapper.find("PhotoThumbnailSuccessState")
+      expect(successThumbnail).toHaveLength(1)
     })
   })
 })
