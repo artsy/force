@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import {
   AlertCircleFillIcon,
@@ -88,14 +88,14 @@ export const OrderUpdateFragmentContainer = createFragmentContainer(
   OrderUpdate,
   {
     event: graphql`
-      fragment OrderUpdate_event on CommerceOrderEventUnion {
+      fragment OrderUpdate_event on ConversationEventUnion {
         __typename
-        ... on CommerceOrderStateChangedEvent {
+        ... on ConversationOrderStateChangedEvent {
           createdAt
           stateReason
           state
         }
-        ... on CommerceOfferSubmittedEvent {
+        ... on ConversationOfferSubmittedEvent {
           createdAt
           offer {
             amount

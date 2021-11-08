@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState } from "react";
-import * as React from "react";
+import { useEffect, useRef, useState } from "react"
+import * as React from "react"
 import {
   RelayPaginationProp,
   RelayRefetchProp,
@@ -313,13 +313,14 @@ export const ConversationPaginationContainer = createPaginationContainer(
               }
             }
           }
-          ...ConversationMessages_events
         }
 
         unread
-
-        messagesConnection(first: $count, after: $after, sort: DESC)
-          @connection(key: "Messages_messagesConnection", filters: []) {
+        conversationEventConnection(first: $count, after: $after)
+          @connection(
+            key: "Messages_conversationEventConnection"
+            filters: []
+          ) {
           pageInfo {
             startCursor
             endCursor
