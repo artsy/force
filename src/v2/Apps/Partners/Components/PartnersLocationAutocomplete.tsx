@@ -72,10 +72,8 @@ const PartnersLocationAutocomplete: FC<PartnersLocationAutocompleteProps> = ({
 
     if (!location) return
 
-    return options.find(({ value }) => {
-      return value === location
-    })?.text
-  }, [match.location.query, options])
+    return allCities.find(({ value }) => value === location)?.text
+  }, [allCities, match.location.query])
 
   return (
     <AutocompleteInput
