@@ -6,6 +6,9 @@ import {
   getGeminiCredentialsForEnvironment,
 } from "../Mutations"
 import { ErrorCode, FileRejection } from "react-dropzone"
+import createLogger from "v2/Utils/logger"
+
+const logger = createLogger("uploadFileToS3.ts")
 
 export const KBSize = 1000
 export const MBSize = Math.pow(KBSize, 2)
@@ -69,18 +72,25 @@ export const uploadPhoto = async (
   updateProgress: (progress: number) => void,
   acl: string = "private"
 ) => {
-  const convectionKey = await getConvectionGeminiKey(relayEnvironment)
+  try {
+    const convectionKey = await getConvectionGeminiKey(relayEnvironment)
 
-  // Get S3 Credentials from Gemini
-  let assetCredentials = await getGeminiCredentialsForEnvironment(
-    relayEnvironment,
-    {
-      acl: acl,
-      name: convectionKey,
-    }
-  )
+    if (!convectionKey) return
 
-  if (photo.removed) return
+    // Get S3 Credentials from Gemini
+    let assetCredentials = await getGeminiCredentialsForEnvironment(
+      relayEnvironment,
+      {
+        acl: acl,
+        name: convectionKey,
+      }
+    )
 
-  return await uploadFileToS3(photo, acl, assetCredentials, updateProgress)
+    if (photo.removed) return
+
+    return await uploadFileToS3(photo, acl, assetCredentials, updateProgress)
+  } catch (error) {
+    logger.error("Consign submission operation error", error)
+    return
+  }
 }
