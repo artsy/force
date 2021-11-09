@@ -1,8 +1,8 @@
 _ = require 'underscore'
 Profile = require '../../../../models/profile.coffee'
+FilterPartners = require './collections/filter_partners.coffee'
 { Profiles } = require '../../../../collections/profiles'
 { OrderedSets } = require '../../../../collections/ordered_sets'
-{ FilterPartners } = require './collections/filter_partners'
 
 key =
   gallery: 'galleries:carousel-galleries' # https://admin.artsy.net/set/5638fdfb7261690296000031
