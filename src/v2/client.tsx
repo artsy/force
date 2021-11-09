@@ -9,6 +9,7 @@ import { beforeAnalyticsReady, onAnalyticsReady } from "lib/analytics/helpers"
 import { getClientParam } from "./Utils/getClientParam"
 import { buildClientApp } from "v2/System/Router/client"
 import { syncNonCacheableData } from "./System/Client/syncSharify"
+import { fetchSegmentDestinationsAndLoad } from "lib/analytics/segmentOneTrustIntegration"
 
 async function setupClient() {
   syncNonCacheableData()
@@ -37,7 +38,9 @@ async function setupClient() {
       })
     }
 
-    initAuthModalContainer()
+    fetchSegmentDestinationsAndLoad()
+
+    initModalManager()
     setupArtistSignUpModal()
 
     // Logout handler
@@ -54,7 +57,7 @@ async function setupClient() {
   })
 }
 
-// Initialze clent
+// Initialze client
 ;(async () => {
   try {
     await setupClient()
