@@ -52,7 +52,7 @@ import type RelayModernEnvironment from "relay-runtime/lib/store/RelayModernEnvi
 import { TagArtworkFilter_tag } from "v2/__generated__/TagArtworkFilter_tag.graphql"
 import { Works_partner } from "v2/__generated__/Works_partner.graphql"
 import { CollectionArtworksFilter_collection } from "v2/__generated__/CollectionArtworksFilter_collection.graphql"
-import { FiltersPills } from "./FiltersPills"
+import { FiltersPills } from "./SavedSearch/FiltersPills"
 
 /**
  * Primary ArtworkFilter which is wrapped with a context and refetch container.
@@ -65,6 +65,8 @@ export const ArtworkFilter: React.FC<
   BoxProps &
     SharedArtworkFilterContextProps & {
       viewer: any // FIXME: We need to support multiple types implementing different viewer interfaces
+      artistId?: string
+      artistName?: string
     }
 > = ({
   viewer,
@@ -75,6 +77,8 @@ export const ArtworkFilter: React.FC<
   onFilterClick,
   onChange,
   ZeroState,
+  artistId,
+  artistName,
   ...rest
 }) => {
   return (
@@ -87,7 +91,12 @@ export const ArtworkFilter: React.FC<
       onChange={onChange}
       ZeroState={ZeroState}
     >
-      <ArtworkFilterRefetchContainer viewer={viewer} {...rest} />
+      <ArtworkFilterRefetchContainer
+        viewer={viewer}
+        artistId={artistId}
+        artistName={artistName}
+        {...rest}
+      />
     </ArtworkFilterContextProvider>
   )
 }
@@ -129,6 +138,8 @@ export const BaseArtworkFilter: React.FC<
     Filters?: JSX.Element
     offset?: number
     enableCreateAlert?: boolean
+    artistId?: string
+    artistName?: string
   }
 > = ({
   relay,
@@ -138,6 +149,8 @@ export const BaseArtworkFilter: React.FC<
   children,
   offset,
   enableCreateAlert = false,
+  artistId,
+  artistName,
   ...rest
 }) => {
   const tracking = useTracking()
@@ -354,7 +367,15 @@ export const BaseArtworkFilter: React.FC<
               </Box>
             )}
 
-            {enableCreateAlert && <FiltersPills show={showCreateAlert} />}
+            {enableCreateAlert && artistId && artistName && (
+              <FiltersPills
+                artistId={artistId}
+                artistName={artistName}
+                aggregations={filterContext.aggregations!}
+                filters={filterContext.currentlySelectedFilters?.() || {}}
+                show={showCreateAlert}
+              />
+            )}
 
             {children || (
               <ArtworkFilterArtworkGrid

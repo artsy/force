@@ -7,7 +7,7 @@ import {
 } from "../ArtworkFilter/ArtworkFilterContext"
 import { SavedSearchAlertMutationResult } from "./SavedSearchAlertModel"
 
-interface CreateSavedSearchModalProps {
+interface CreateSavedSearchAlertProps {
   artistId: string
   artistName: string
   onClose: () => void
@@ -17,7 +17,7 @@ interface CreateSavedSearchModalProps {
   visible?: boolean
 }
 
-export const CreateSavedSearchModal: React.FC<CreateSavedSearchModalProps> = ({
+export const CreateSavedSearchAlert: React.FC<CreateSavedSearchAlertProps> = ({
   artistId,
   artistName,
   filters,

@@ -3,7 +3,10 @@ import {
   Aggregations,
   ArtworkFilters,
 } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
-import { parseRange } from "v2/Components/ArtworkFilter/ArtworkFilters/SizeFilter"
+import {
+  isCustomSize,
+  parseRange,
+} from "v2/Components/ArtworkFilter/ArtworkFilters/SizeFilter"
 import { aggregationForFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/helpers"
 import { shouldExtractValueNamesFromAggregation } from "v2/Components/ArtworkFilter/SavedSearch/constants"
 
@@ -39,7 +42,7 @@ export const extractSizeLabel = (prefix: string, value: string) => {
 
   if (sizes[0] === "*") {
     label = `from ${sizes[0]}`
-  } else if (sizes[0].toString() === "*") {
+  } else if (sizes[1] === "*") {
     label = `to ${sizes[1]}`
   } else {
     label = `${sizes[0]}-${sizes[1]}`
@@ -52,21 +55,32 @@ export const extractPills = (
   filters: ArtworkFilters,
   aggregations: Aggregations
 ) => {
-  const pills = Object.values(filters).map(filter => {
+  const pills = Object.entries(filters).map(filter => {
     const [paramName, paramValue] = filter
 
+    // we shouldn't create pills for page and sort param
+    if (paramName === "page" || paramName === "sort") {
+      return null
+    }
+    // skip width/height if value is *-*
+    if (paramName === "width" && !isCustomSize(paramValue)) {
+      return null
+    }
+    if (paramName === "height" && !isCustomSize(paramValue)) {
+      return null
+    }
+
     if (paramName === "width") {
-      return extractSizeLabel("w", paramName)
+      return extractSizeLabel("w", paramValue)
     }
 
     if (paramName === "height") {
-      return extractSizeLabel("h", paramName)
+      return extractSizeLabel("h", paramValue)
     }
 
     // Extract label from aggregations
     if (shouldExtractValueNamesFromAggregation.includes(paramName)) {
-      console.log("extract for ", filter)
-      return extractPillFromAggregation(filter, aggregations)
+      return extractPillFromAggregation({ paramName, paramValue }, aggregations)
     }
 
     return paramValue

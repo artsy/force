@@ -3,10 +3,21 @@ import styled from "styled-components"
 import { Box, Flex, Spacer } from "@artsy/palette"
 import { growAndFadeIn, shrinkAndFadeOut } from "v2/Assets/Animations"
 import { CreateAlertButton } from "./CreateAlertButton"
+import { SavedSearchAlertFormPropsBase } from "v2/Components/SavedSearchAlert/SavedSearchAlertModel"
 
 const WRAPPER_HEIGHT = 70
 
-export const FiltersPills: React.FC<{ show: boolean }> = ({ show }) => {
+interface FilterPillsProps extends SavedSearchAlertFormPropsBase {
+  show: boolean
+}
+
+export const FiltersPills: React.FC<FilterPillsProps> = ({
+  show,
+  artistId,
+  artistName,
+  aggregations,
+  filters,
+}) => {
   const [showBlock, setShowBlock] = useState(show)
 
   useEffect(() => {
@@ -20,7 +31,12 @@ export const FiltersPills: React.FC<{ show: boolean }> = ({ show }) => {
       {showBlock && (
         <AnimatedBox show={show}>
           <Flex>
-            <CreateAlertButton />
+            <CreateAlertButton
+              artistId={artistId}
+              artistName={artistName}
+              aggregations={aggregations}
+              filters={filters}
+            />
           </Flex>
           <Spacer mt={4} />
         </AnimatedBox>

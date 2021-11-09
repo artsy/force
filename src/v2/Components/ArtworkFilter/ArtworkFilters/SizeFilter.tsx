@@ -74,7 +74,7 @@ const getValue = (value: CustomRange[number]) => {
   return value === "*" || value === 0 ? "" : value
 }
 
-const isCustomSize = (value?: string) => value !== "*-*"
+export const isCustomSize = (value?: string) => value !== "*-*"
 
 export interface SizeFilterProps {
   expanded?: boolean
