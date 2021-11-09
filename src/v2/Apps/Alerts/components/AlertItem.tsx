@@ -19,13 +19,16 @@ const FALLBACK_TITLE = "Untitled Alert"
 export const AlertItem: React.FC<AlertItemProps> = ({ item }) => {
   return (
     <Column span={[12, 12, 6]}>
-      <BorderBox>
-        <Flex flex={1} justifyContent="space-between" alignItems="center">
-          <Text color="black80" variant="sm">
-            {item.userAlertSettings.name ?? FALLBACK_TITLE}
-          </Text>
-        </Flex>
-        <Flex flexDirection="row">
+      <BorderBox
+        flex={1}
+        flexDirection="row"
+        justifyContent="space-between"
+        alignItems="center"
+      >
+        <Text color="black80" variant="sm">
+          {item.userAlertSettings.name ?? FALLBACK_TITLE}
+        </Text>
+        <Flex flexDirection="row" ml={2}>
           <Clickable textDecoration="underline">
             <Text variant="sm">Edit</Text>
           </Clickable>
