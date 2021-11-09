@@ -1,5 +1,9 @@
 import { Box, BoxProps, Input } from "@artsy/palette"
 import { useFormikContext } from "formik"
+import { useEffect } from "react"
+import { useRouter } from "v2/System/Router/useRouter"
+import { ContactInformation_me } from "v2/__generated__/ContactInformation_me.graphql"
+import { useSubmission } from "../../Utils/useSubmission"
 
 export interface ContactInformationFormModel {
   name: string
@@ -7,14 +11,35 @@ export interface ContactInformationFormModel {
   phone: string
 }
 
-export interface ContactInformationFormProps extends BoxProps {}
+export interface ContactInformationFormProps extends BoxProps {
+  me: ContactInformation_me
+}
 
 export const ContactInformationForm: React.FC<ContactInformationFormProps> = ({
+  me,
   ...rest
 }) => {
-  const { values, handleChange, handleBlur } = useFormikContext<
-    ContactInformationFormModel
-  >()
+  const {
+    values,
+    handleChange,
+    handleBlur,
+    resetForm,
+    validateForm,
+  } = useFormikContext<ContactInformationFormModel>()
+
+  const {
+    match: {
+      params: { id },
+    },
+  } = useRouter()
+  const { submission } = useSubmission(id)
+
+  useEffect(() => {
+    if (submission) {
+      resetForm({ values: submission.contactInformationForm })
+      validateForm(submission.contactInformationForm)
+    }
+  }, [submission])
 
   return (
     <Box {...rest}>

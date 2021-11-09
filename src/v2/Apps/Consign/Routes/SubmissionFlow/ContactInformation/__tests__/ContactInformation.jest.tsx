@@ -37,7 +37,12 @@ const previousStepsData = {
     ],
   },
 }
-const mockMe = { name: "Serge", email: "test@test.test", phone: "123456789" }
+const contactInformationForm = {
+  name: "Andy",
+  email: "andy@test.test",
+  phone: "111",
+}
+const mockMe = { name: "Serge", email: "serge@test.test", phone: "222" }
 const openAuthModalSpy = jest.spyOn(openAuthModal, "openAuthModal")
 const mockRouterPush = jest.fn()
 
@@ -146,15 +151,15 @@ describe("Contact Information step", () => {
 
       expect(wrapper.find(saveButtonSelector).prop("disabled")).toBe(true)
 
-      await simulateTyping(wrapper, "name", "Andy")
+      await simulateTyping(wrapper, "name", "Banksy")
 
       expect(wrapper.find(saveButtonSelector).prop("disabled")).toBe(true)
 
-      await simulateTyping(wrapper, "email", "test@test.test")
+      await simulateTyping(wrapper, "email", "banksy@test.test")
 
       expect(wrapper.find(saveButtonSelector).prop("disabled")).toBe(true)
 
-      await simulateTyping(wrapper, "phone", "123456789")
+      await simulateTyping(wrapper, "phone", "333")
 
       expect(wrapper.find(saveButtonSelector).prop("disabled")).toBe(false)
     })
@@ -194,15 +199,36 @@ describe("Contact Information step", () => {
       expect(wrapper.find("input[name='phone']").prop("value")).toBe("")
     })
 
+    it("fields are pre-populating from session storage", async () => {
+      sessionStore = {
+        "submission-1": JSON.stringify({
+          ...previousStepsData,
+          contactInformationForm,
+        }),
+      }
+      const { getWrapper } = getWrapperWithProps()
+      const wrapper = getWrapper({
+        Me: () => ({ name: null, email: null, phone: null }),
+      })
+      await flushPromiseQueue()
+      wrapper.update()
+
+      expect(wrapper.find("input[name='name']").prop("value")).toBe("Andy")
+      expect(wrapper.find("input[name='email']").prop("value")).toBe(
+        "andy@test.test"
+      )
+      expect(wrapper.find("input[name='phone']").prop("value")).toBe("111")
+    })
+
     it("submiting a valid form", async () => {
       const { getWrapper } = getWrapperWithProps()
       const wrapper = getWrapper()
       await flushPromiseQueue()
       wrapper.update()
 
-      await simulateTyping(wrapper, "name", "Andy")
-      await simulateTyping(wrapper, "email", "test@test.test")
-      await simulateTyping(wrapper, "phone", "123456789")
+      await simulateTyping(wrapper, "name", "Banksy")
+      await simulateTyping(wrapper, "email", "banksy@test.test")
+      await simulateTyping(wrapper, "phone", "333")
 
       wrapper.find("Form").simulate("submit")
       await flushPromiseQueue()
@@ -213,11 +239,15 @@ describe("Contact Information step", () => {
   })
 
   describe("If logged in", () => {
-    it("fields are pre-populating from user profile", async () => {
+    it("fields are pre-populating from user profile if session storage is clear", async () => {
+      sessionStore = {
+        "submission-1": JSON.stringify({ ...previousStepsData }),
+      }
       const { getWrapper } = getWrapperWithProps(mockMe)
       const wrapper = getWrapper({ Me: () => mockMe })
       await flushPromiseQueue()
       wrapper.update()
+
       expect(wrapper.find("input[name='name']").prop("value")).toBe(mockMe.name)
       expect(wrapper.find("input[name='email']").prop("value")).toBe(
         mockMe.email
@@ -225,6 +255,25 @@ describe("Contact Information step", () => {
       expect(wrapper.find("input[name='phone']").prop("value")).toBe(
         mockMe.phone
       )
+    })
+
+    it("data from session storage overrides data from user profile", async () => {
+      sessionStore = {
+        "submission-1": JSON.stringify({
+          ...previousStepsData,
+          contactInformationForm,
+        }),
+      }
+      const { getWrapper } = getWrapperWithProps(mockMe)
+      const wrapper = getWrapper({ Me: () => mockMe })
+      await flushPromiseQueue()
+      wrapper.update()
+
+      expect(wrapper.find("input[name='name']").prop("value")).toBe("Andy")
+      expect(wrapper.find("input[name='email']").prop("value")).toBe(
+        "andy@test.test"
+      )
+      expect(wrapper.find("input[name='phone']").prop("value")).toBe("111")
     })
 
     it("submiting a valid form", async () => {
@@ -251,9 +300,9 @@ describe("Contact Information step", () => {
     await flushPromiseQueue()
     wrapper.update()
 
-    await simulateTyping(wrapper, "name", " Andy  ")
-    await simulateTyping(wrapper, "email", "  test@test.test  ")
-    await simulateTyping(wrapper, "phone", "  123456789  ")
+    await simulateTyping(wrapper, "name", " Banksy  ")
+    await simulateTyping(wrapper, "email", "  banksy@test.test  ")
+    await simulateTyping(wrapper, "phone", "  333  ")
 
     wrapper.find("Form").simulate("submit")
     await flushPromiseQueue()
@@ -264,9 +313,9 @@ describe("Contact Information step", () => {
       JSON.stringify({
         ...previousStepsData,
         contactInformationForm: {
-          name: "Andy",
-          email: "test@test.test",
-          phone: "123456789",
+          name: "Banksy",
+          email: "banksy@test.test",
+          phone: "333",
         },
       })
     )
@@ -277,9 +326,9 @@ describe("Contact Information step", () => {
     expect(createConsignSubmissionData).toEqual({
       ...previousStepsData,
       contactInformationForm: {
-        name: "Andy",
-        email: "test@test.test",
-        phone: "123456789",
+        name: "Banksy",
+        email: "banksy@test.test",
+        phone: "333",
       },
     })
   })
