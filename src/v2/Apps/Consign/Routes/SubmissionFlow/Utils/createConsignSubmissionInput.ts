@@ -1,6 +1,5 @@
 import {
   ConsignmentAttributionClass,
-  ConsignmentSubmissionCategoryAggregation,
   CreateSubmissionMutationInput,
 } from "v2/__generated__/CreateConsignSubmissionMutation.graphql"
 import { SubmissionModel } from "./useSubmission"
@@ -13,8 +12,7 @@ export const createConsignSubmissionInput = (
     artistID: submission.artworkDetailsForm.artistId,
     year: submission.artworkDetailsForm.year,
     title: submission.artworkDetailsForm.title,
-    category: submission.artworkDetailsForm
-      .medium as ConsignmentSubmissionCategoryAggregation,
+    medium: submission.artworkDetailsForm.materials,
     attributionClass: submission.artworkDetailsForm.rarity
       .replace(" ", "_")
       .toUpperCase() as ConsignmentAttributionClass,

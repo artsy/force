@@ -18,7 +18,7 @@ const validForm = {
   artistName: "Banksy",
   year: "2021",
   title: "Some title",
-  medium: "PAINTING",
+  materials: "materials",
   rarity: "limited edition",
   editionNumber: "1",
   editionSize: "2",
@@ -34,7 +34,7 @@ const validFormWithSpaces = {
   artistName: "Banksy",
   year: " 2021 ",
   title: " Some title ",
-  medium: "PAINTING",
+  materials: "  materials  ",
   rarity: "limited edition",
   editionNumber: " 1 ",
   editionSize: " 2 ",
@@ -129,8 +129,8 @@ describe("ArtworkDetails", () => {
       expect(wrapper.find("input[name='title']").prop("value")).toBe(
         "Some title"
       )
-      expect(wrapper.find("select[name='medium']").prop("value")).toBe(
-        "PAINTING"
+      expect(wrapper.find("input[name='materials']").prop("value")).toBe(
+        "materials"
       )
       expect(wrapper.find("select[name='rarity']").prop("value")).toBe(
         "limited edition"
