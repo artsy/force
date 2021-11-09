@@ -34,6 +34,14 @@ fetchDestinations(WRITE_KEY).then(
   }
 )
 
+
+window.OptanonWrapper = optanonWrapper;
+
+function optanonWrapper() {
+  console.log('onetrust changed');
+  console.log(window.OnetrustActiveGroups);
+}
+
 function conditionallyLoadAnalytics({
   writeKey,
   destinations,
@@ -127,7 +135,7 @@ async function fetchDestinationForWriteKey(writeKey) {
 
   if (!res.ok) {
     throw new Error(
-      `Failed to fetch integrations for write key ${writeKey}: HTTP ${
+      `Failed to fetch Segment destinations: HTTP ${
         res.status
       } ${res.statusText}`
     );
