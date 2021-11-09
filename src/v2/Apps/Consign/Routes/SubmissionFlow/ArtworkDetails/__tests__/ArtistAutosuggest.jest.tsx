@@ -66,7 +66,7 @@ const renderArtistAutosuggest = (values: ArtworkDetailsFormModel) =>
 const simulateTyping = async (wrapper: ReactWrapper, text: string) => {
   const artistInput = wrapper.find("input[data-test-id='autosuggest-input']")
   artistInput.simulate("focus").simulate("change", { target: { value: text } })
-  await flushPromiseQueue()
+  await new Promise(r => setTimeout(r, 500))
   wrapper.update()
 }
 
@@ -204,7 +204,8 @@ describe("ArtistAutosuggest", () => {
       )
 
       wrapper.find("input[data-test-id='autosuggest-input']").simulate("focus")
-      await flushPromiseQueue()
+      await new Promise(r => setTimeout(r, 500))
+
       wrapper.update()
 
       expect(wrapper.find("div[data-test-id='artist-suggestion']").length).toBe(
