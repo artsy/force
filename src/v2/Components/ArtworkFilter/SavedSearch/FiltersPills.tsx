@@ -15,8 +15,6 @@ export const FiltersPills: React.FC<FilterPillsProps> = ({
   show,
   artistId,
   artistName,
-  aggregations,
-  filters,
 }) => {
   const [showBlock, setShowBlock] = useState(show)
 
@@ -31,12 +29,7 @@ export const FiltersPills: React.FC<FilterPillsProps> = ({
       {showBlock && (
         <AnimatedBox show={show}>
           <Flex>
-            <CreateAlertButton
-              artistId={artistId}
-              artistName={artistName}
-              aggregations={aggregations}
-              filters={filters}
-            />
+            <CreateAlertButton artistId={artistId} artistName={artistName} />
           </Flex>
           <Spacer mt={4} />
         </AnimatedBox>

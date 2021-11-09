@@ -30,8 +30,6 @@ const StyledCreateAlertButton = styled(Button).attrs({
 export const CreateAlertButton: React.FC<SavedSearchAlertFormPropsBase> = ({
   artistId,
   artistName,
-  filters,
-  aggregations,
 }) => {
   const [visibleForm, setVisibleForm] = useState(false)
 
@@ -50,8 +48,6 @@ export const CreateAlertButton: React.FC<SavedSearchAlertFormPropsBase> = ({
       <CreateSavedSearchAlert
         artistId={artistId}
         artistName={artistName}
-        aggregations={aggregations}
-        filters={filters}
         onClose={handleCloseForm}
         onComplete={handleCloseForm}
         visible={visibleForm}

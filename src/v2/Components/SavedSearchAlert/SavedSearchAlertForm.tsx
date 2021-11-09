@@ -4,7 +4,6 @@ import {
   SavedSearchAleftFormValues,
   SavedSearchAlertFormPropsBase,
   SavedSearchAlertMutationResult,
-  SavedSearchAlertUserAlertSettings,
 } from "./SavedSearchAlertModel"
 import { Box, Button, Checkbox, Input, Text } from "@artsy/palette"
 import { getNamePlaceholder } from "./Utils/getNamePlaceholder"
@@ -12,6 +11,7 @@ import { getSearchCriteriaFromFilters } from "../ArtworkFilter/SavedSearch/saved
 import { createSavedSearchAlert } from "./Mutations/createSavedSearchAlert"
 import { useSystemContext } from "v2/System"
 import { extractPills } from "./Utils/extractPills"
+import { useArtworkFilterContext } from "../ArtworkFilter/ArtworkFilterContext"
 
 interface SavedSearchAlertFormProps extends SavedSearchAlertFormPropsBase {
   initialValues: SavedSearchAleftFormValues
@@ -22,13 +22,14 @@ export const SavedSearchAlertForm: React.FC<SavedSearchAlertFormProps> = ({
   artistId,
   artistName,
   initialValues,
-  filters,
-  aggregations,
   onComplete,
 }) => {
   const { relayEnvironment } = useSystemContext()
+  const filterContext = useArtworkFilterContext()
 
-  const pills = extractPills(filters, aggregations)
+  const filters = filterContext.currentlySelectedFilters?.() || {}
+
+  const pills = extractPills(filters, filterContext.aggregations!)
   const namePlaceholder = getNamePlaceholder(artistName, pills)
 
   const formik = useFormik<SavedSearchAleftFormValues>({
@@ -41,7 +42,7 @@ export const SavedSearchAlertForm: React.FC<SavedSearchAlertFormProps> = ({
 
       const alertName = values.name || namePlaceholder
 
-      const userAlertSettings: SavedSearchAlertUserAlertSettings = {
+      const userAlertSettings: SavedSearchAleftFormValues = {
         name: alertName,
         email: values.email,
       }

@@ -52,8 +52,6 @@ const ArtistArtworkFilter: React.FC<ArtistArtworkFilterProps> = props => {
           aggregations: ["TOTAL"],
         }}
         enableCreateAlert={sd.ENABLE_SAVED_SEARCH}
-        artistId={artist.internalID}
-        artistName={artist.name!}
       >
         {artist.counts!.artworks === 0 && (
           <ZeroState artist={artist} isFollowed={artist.isFollowed} />
