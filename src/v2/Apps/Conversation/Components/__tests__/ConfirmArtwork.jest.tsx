@@ -1,8 +1,7 @@
 import { ConfirmArtworkModalFragmentContainer } from "../ConfirmArtworkModal"
-import { CollapsibleArtworkDetails } from "../CollapsibleArtworkDetails"
-import { EditionSelectBoxFragmentContainer } from "../EditionSelectBox"
-import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
+import { setupTestWrapperTL } from "v2/DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
+import { screen, fireEvent } from "@testing-library/react"
 
 jest.mock("@artsy/palette", () => {
   return {
@@ -13,7 +12,7 @@ jest.mock("@artsy/palette", () => {
 
 jest.unmock("react-relay")
 
-const { getWrapper } = setupTestWrapper({
+const { renderWithRelay } = setupTestWrapperTL({
   Component: ConfirmArtworkModalFragmentContainer,
   query: graphql`
     query ConfirmArtworkModal_Test_Query {
@@ -26,20 +25,17 @@ const { getWrapper } = setupTestWrapper({
 
 describe("ConfirmArtworkModal", () => {
   it("renders the correct artwork details", () => {
-    const wrapper = getWrapper({
+    renderWithRelay({
       Artwork: () => ({
         title: "Test Artwork",
+        date: "1967",
       }),
     })
-
-    expect(wrapper.find(CollapsibleArtworkDetails)).toHaveLength(1)
-    expect(wrapper.find(CollapsibleArtworkDetails).text()).toContain(
-      "Test Artwork"
-    )
+    expect(screen.getByText("Test Artwork, 1967")).toBeInTheDocument()
   })
 
   it("has expandable details and correctly parses labels", () => {
-    const wrapper = getWrapper({
+    renderWithRelay({
       Artwork: () => ({
         certificateOfAuthenticity: { details: "test" },
         dimensions: {
@@ -48,34 +44,37 @@ describe("ConfirmArtworkModal", () => {
         },
       }),
     })
-    // Expands collapse
-    const details = wrapper.find(CollapsibleArtworkDetails)
-    expect(details.text()).not.toContain("Certificate of Authenticity")
-    wrapper.find("button").simulate("click")
-    details.update()
-    expect(details.text()).toContain("Certificate of Authenticity")
-    expect(details.text()).toContain("33 x 33 in\n33 x 33 cm")
+
+    expect(screen.queryAllByText("Certificate of Authenticity")).toStrictEqual(
+      []
+    )
+    fireEvent.click(screen.getByRole("button"))
+
+    expect(screen.getByText("Certificate of Authenticity")).toBeInTheDocument()
+    expect(screen.getByText("33 x 33 in 33 x 33 cm")).toBeInTheDocument()
   })
 })
 
 describe("Artwork editions", () => {
-  const mockEditions = getWrapper({
+  const mockEditions = {
     Artwork: () => ({
       isEdition: true,
       editionSets: [
         {
           internalID: "edition-1",
+          editionOf: "test-edition-1",
           isOfferableFromInquiry: true,
         },
         {
           internalID: "edition-2",
+          editionOf: "test-edition-2",
           isOfferableFromInquiry: true,
         },
       ],
     }),
-  })
+  }
 
-  const mockSingleEdition = getWrapper({
+  const mockSingleEdition = {
     Artwork: () => ({
       isEdition: true,
       editionSets: [
@@ -93,9 +92,9 @@ describe("Artwork editions", () => {
         },
       ],
     }),
-  })
+  }
 
-  const unavailableEdition = getWrapper({
+  const unavailableEdition = {
     Artwork: () => ({
       editionSets: [
         {
@@ -103,9 +102,9 @@ describe("Artwork editions", () => {
         },
       ],
     }),
-  })
+  }
 
-  const nullListPriceEdition = getWrapper({
+  const nullListPriceEdition = {
     Artwork: () => ({
       editionSets: [
         {
@@ -115,58 +114,55 @@ describe("Artwork editions", () => {
         },
       ],
     }),
-  })
+  }
 
   it("An Edition renders correctly", () => {
-    const edition = mockSingleEdition.find(EditionSelectBoxFragmentContainer)
+    renderWithRelay(mockSingleEdition)
 
-    expect(edition).toHaveLength(1)
-    expect(edition.find("Radio")).toHaveLength(1)
-    expect(edition.find("Text").at(0).text()).toEqual(
-      "27 3/5 × 9 4/5 × 13 4/5 in"
-    )
-    expect(edition.find("Text").at(1).text()).toEqual("70 × 25 × 35 cm")
-    expect(edition.find("Text").at(2).text()).toEqual("Edition of 50")
-    expect(edition.find("Text").at(3).text()).toEqual("$100")
+    expect(screen.queryAllByRole("radio")[0]).toBeInTheDocument()
+    expect(screen.getByText("27 3/5 × 9 4/5 × 13 4/5 in")).toBeInTheDocument()
+    expect(screen.getByText("70 × 25 × 35 cm")).toBeInTheDocument()
+    expect(screen.getByText("Edition of 50")).toBeInTheDocument()
+    expect(screen.getByText("$100")).toBeInTheDocument()
   })
 
   it("One edition is always selected", () => {
-    const edition = mockSingleEdition.find(EditionSelectBoxFragmentContainer)
+    renderWithRelay(mockSingleEdition)
 
-    expect(edition.props().selected).toEqual(true)
-    expect(edition.find("Radio").props().selected).toEqual(true)
+    expect(screen.getByRole("radio")).toBeChecked()
   })
 
   it("Display edititon as disabled when it is not available", () => {
-    const edition = unavailableEdition.find(EditionSelectBoxFragmentContainer)
+    renderWithRelay(unavailableEdition)
 
-    expect(edition.find("Radio").props().disabled).toEqual(true)
-    expect(edition.find("Text").at(3).text()).toEqual("Unavailable")
+    // eslint-disable-next-line jest-dom/prefer-enabled-disabled
+    expect(screen.getByRole("radio")).toHaveAttribute("disabled")
+    expect(screen.getByText("Unavailable")).toBeInTheDocument()
   })
 
   it("Display 'Contact for price' if a price not set in listPrice", () => {
-    const edition = nullListPriceEdition.find(EditionSelectBoxFragmentContainer)
+    renderWithRelay(nullListPriceEdition)
 
-    expect(edition.find("Text").at(3).text()).toEqual("Contact for price")
+    expect(screen.getByText("Contact for price")).toBeInTheDocument()
   })
 
   it("Can select editions", () => {
-    const editions = mockEditions.find(EditionSelectBoxFragmentContainer)
-    const firstEdition = editions.find(EditionSelectBoxFragmentContainer).at(0)
-    const secondEdition = editions.find(EditionSelectBoxFragmentContainer).at(1)
+    renderWithRelay(mockEditions)
 
-    expect(firstEdition.props().selected).toEqual(false)
-    expect(secondEdition.props().selected).toEqual(false)
+    const radios = screen.getAllByRole("radio")
+    expect(radios).toHaveLength(2)
 
-    firstEdition.find("BorderBox").simulate("click")
-    setTimeout(() => {
-      expect(firstEdition.props().selected).toEqual(true)
-    })
+    const editions = screen.getAllByText(/test-edition-[12]/)
+    expect(editions).toHaveLength(2)
+    expect(editions[0]).toHaveTextContent("test-edition-1")
+    expect(editions[1]).toHaveTextContent("test-edition-2")
 
-    secondEdition.find("BorderBox").simulate("click")
-    setTimeout(() => {
-      expect(secondEdition.props().selected).toEqual(true)
-      expect(firstEdition.props().selected).toEqual(false)
-    })
+    fireEvent.click(editions[0])
+    expect(radios[0]).toBeChecked()
+    expect(radios[1]).not.toBeChecked()
+
+    fireEvent.click(editions[1])
+    expect(radios[0]).not.toBeChecked()
+    expect(radios[1]).toBeChecked()
   })
 })

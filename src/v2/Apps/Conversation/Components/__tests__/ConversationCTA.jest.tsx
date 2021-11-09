@@ -1,21 +1,24 @@
 import { graphql } from "react-relay"
-import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
+import { setupTestWrapperTL } from "v2/DevTools/setupTestWrapper"
 import { ConversationCTAFragmentContainer } from "../ConversationCTA"
 import { useTracking } from "react-tracking"
 import { useSystemContext as baseUseSystemContext } from "v2/System/useSystemContext"
+import { screen, fireEvent } from "@testing-library/react"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
 jest.mock("v2/System/useSystemContext")
 
 describe("ConversationCTA", () => {
-  const { getWrapper } = setupTestWrapper({
+  const openInquiryModalFn = jest.fn()
+  const openOrderModal = jest.fn()
+  const { renderWithRelay } = setupTestWrapperTL({
     Component: (props: any) => {
       return (
         <ConversationCTAFragmentContainer
           conversation={props.me.conversation}
-          openInquiryModal={jest.fn()}
-          openOrderModal={jest.fn()}
+          openInquiryModal={openInquiryModalFn}
+          openOrderModal={openOrderModal}
         />
       )
     },
@@ -54,7 +57,7 @@ describe("ConversationCTA", () => {
   })
 
   it("renders the correct CTA when an offer has been received", () => {
-    const wrapper = getWrapper({
+    renderWithRelay({
       Conversation: () => ({
         activeOrders: {
           edges: [{ node: { buyerAction: "OFFER_RECEIVED" } }],
@@ -62,12 +65,11 @@ describe("ConversationCTA", () => {
       }),
     })
 
-    expect(wrapper.find("ReviewOfferCTA").length).toBe(1)
-    expect(wrapper.text()).toContain("Offer Received")
+    expect(screen.getByText("Offer Received")).toBeInTheDocument()
   })
 
   it("renders the correct CTA when payment has failed", () => {
-    const wrapper = getWrapper({
+    renderWithRelay({
       Conversation: () => ({
         activeOrders: {
           edges: [{ node: { buyerAction: "PAYMENT_FAILED" } }],
@@ -75,12 +77,11 @@ describe("ConversationCTA", () => {
       }),
     })
 
-    expect(wrapper.find("ReviewOfferCTA").length).toBe(1)
-    expect(wrapper.text()).toContain("Payment Failed")
+    expect(screen.getByText("Payment Failed")).toBeInTheDocument()
   })
 
   it("renders the correct CTA when offer is accepted", () => {
-    const wrapper = getWrapper({
+    renderWithRelay({
       Conversation: () => ({
         activeOrders: {
           edges: [{ node: { buyerAction: "OFFER_ACCEPTED" } }],
@@ -88,12 +89,13 @@ describe("ConversationCTA", () => {
       }),
     })
 
-    expect(wrapper.find("ReviewOfferCTA").length).toBe(1)
-    expect(wrapper.text()).toContain("Congratulations! Offer Accepted")
+    expect(
+      screen.getByText("Congratulations! Offer Accepted")
+    ).toBeInTheDocument()
   })
 
   it("renders the correct CTA when offer is accepted but confirmation is needed", () => {
-    const wrapper = getWrapper({
+    renderWithRelay({
       Conversation: () => ({
         activeOrders: {
           edges: [{ node: { buyerAction: "OFFER_ACCEPTED_CONFIRM_NEEDED" } }],
@@ -101,12 +103,13 @@ describe("ConversationCTA", () => {
       }),
     })
 
-    expect(wrapper.find("ReviewOfferCTA").length).toBe(1)
-    expect(wrapper.text()).toContain("Offer Accepted - Confirm total")
+    expect(
+      screen.getByText("Offer Accepted - Confirm total")
+    ).toBeInTheDocument()
   })
 
   it("renders the correct CTA when offer is received but confirmation is needed", () => {
-    const wrapper = getWrapper({
+    renderWithRelay({
       Conversation: () => ({
         activeOrders: {
           edges: [{ node: { buyerAction: "OFFER_RECEIVED_CONFIRM_NEEDED" } }],
@@ -114,12 +117,13 @@ describe("ConversationCTA", () => {
       }),
     })
 
-    expect(wrapper.find("ReviewOfferCTA").length).toBe(1)
-    expect(wrapper.text()).toContain("Counteroffer Received - Confirm Total")
+    expect(
+      screen.getByText("Counteroffer Received - Confirm Total")
+    ).toBeInTheDocument()
   })
 
   it("renders the correct CTA when a provisional offer is accepted", () => {
-    const wrapper = getWrapper({
+    renderWithRelay({
       Conversation: () => ({
         activeOrders: {
           edges: [{ node: { buyerAction: "PROVISIONAL_OFFER_ACCEPTED" } }],
@@ -127,12 +131,11 @@ describe("ConversationCTA", () => {
       }),
     })
 
-    expect(wrapper.find("ReviewOfferCTA").length).toBe(1)
-    expect(wrapper.text()).toContain("Offer Accepted")
+    expect(screen.getByText("Offer Accepted")).toBeInTheDocument()
   })
 
   it("doesn't render the cta when there is no active offer", () => {
-    const wrapper = getWrapper({
+    renderWithRelay({
       Conversation: () => ({
         activeOrders: {
           edges: [],
@@ -140,21 +143,19 @@ describe("ConversationCTA", () => {
       }),
     })
 
-    expect(wrapper.find("ReviewOfferCTA").length).toBe(0)
+    expect(screen.queryAllByText(/.+/g)).toStrictEqual([])
   })
 
   it("clicking the review offer CTA opens the order modal", () => {
-    const wrapper = getWrapper({
+    renderWithRelay({
       Conversation: () => ({
         activeOrders: {
           edges: [{ node: { buyerAction: "OFFER_RECEIVED" } }],
         },
       }),
     })
-    wrapper.find("ReviewOfferCTA").simulate("click")
+    fireEvent.click(screen.getByText("Offer Received"))
 
-    setTimeout(() => {
-      expect(wrapper.find("StyledIframe").length).toBe(1)
-    }, 0)
+    expect(openOrderModal).toHaveBeenCalledTimes(1)
   })
 })
