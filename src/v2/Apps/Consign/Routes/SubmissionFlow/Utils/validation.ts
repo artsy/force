@@ -9,14 +9,7 @@ export const artworkDetailsValidationSchema = yup.object().shape({
     ),
   year: yup.string().required().trim(),
   title: yup.string().required().trim(),
-  medium: yup
-    .string()
-    .required()
-    .test(
-      "isDefault",
-      "Medium field not selected",
-      medium => medium !== "default"
-    ),
+  materials: yup.string().required().trim(),
   rarity: yup
     .string()
     .required()
@@ -42,6 +35,7 @@ export const artworkDetailsValidationSchema = yup.object().shape({
     )
     .trim(),
   units: yup.string().required(),
+  provenance: yup.string().trim(),
 })
 
 /*

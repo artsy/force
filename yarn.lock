@@ -39,10 +39,10 @@
   resolved "https://registry.yarnpkg.com/@artsy/detect-responsive-traits/-/detect-responsive-traits-0.0.5.tgz#abf85959f8567816babec6f582b744f58c98b726"
   integrity sha512-axgW5YuqSpPzHb27yo2jmPHz/N9eN2hh2E+Mub5BKuu/jHZI+iDTdw0OZ3I+z7Z9WKBh+FPVx4gpza5w7slJNA==
 
-"@artsy/eigen-web-association@1.2.0":
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/@artsy/eigen-web-association/-/eigen-web-association-1.2.0.tgz#904cad018cd99da8ce30c4f6875a45a63abede65"
-  integrity sha512-VPOoecp1lgkYe9bH5/5BXosYPejHJLHlE4wJiezsILgW2zSM3p7MxjsPGio2YGpoGNt1NpM9XJhK9TObq5N9Qg==
+"@artsy/eigen-web-association@^1.2.1":
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/@artsy/eigen-web-association/-/eigen-web-association-1.2.1.tgz#8b286b8fe15384dd53ad85dd90b7c7acf660115b"
+  integrity sha512-o9IWTgo595yKPDLCv3t7MqVsXgx1nLEnFjdBPZjZp2XgzQG7oJrLhi8EImn5rmjth/cR+3KOqgia5pTMQqCdWQ==
   dependencies:
     express "^4.15.0"
 
@@ -55,10 +55,10 @@
     chokidar "^3.0.0"
     decache "^4.4.0"
 
-"@artsy/fresnel@3.0.2":
-  version "3.0.2"
-  resolved "https://registry.yarnpkg.com/@artsy/fresnel/-/fresnel-3.0.2.tgz#c52d03dfa385627174ef03d28b0a1a61eef13bfb"
-  integrity sha512-nx4oIX5jgwdYXtPydkBK3ZGwJ9mCGxaV/CRn7DzLFeKxW9qQPj56H1OvtMEm43UGCshXnLEu2ID/B2ozioMLrQ==
+"@artsy/fresnel@3.1.0":
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/@artsy/fresnel/-/fresnel-3.1.0.tgz#e6bb59fb5d9a5e829189351bf7040e4975684da0"
+  integrity sha512-rQObBJQjYA/qCIcHDwQBg47du7CX8AyDLTWfrswa3s34q+HUmpyIiKTy2jYkMUMrZ2bWe9EHH/DdZg6wpxb+Ow==
 
 "@artsy/fresnel@^1.0.13":
   version "1.7.0"
@@ -15692,9 +15692,9 @@ pascalcase@^0.1.1:
   resolved "https://registry.yarnpkg.com/pascalcase/-/pascalcase-0.1.1.tgz#b363e55e8006ca6fe21784d2db22bd15d7917f14"
   integrity sha1-s2PlXoAGym/iF4TS2yK9FdeRfxQ=
 
-"passport-apple@git+https://github.com/artsy/passport-apple.git#f41adb7822c8344b72bc36a7d68312f6592cb14f":
+"passport-apple@https://github.com/artsy/passport-apple#f41adb7822c8344b72bc36a7d68312f6592cb14f":
   version "1.1.2"
-  resolved "git+https://github.com/artsy/passport-apple.git#f41adb7822c8344b72bc36a7d68312f6592cb14f"
+  resolved "https://github.com/artsy/passport-apple#f41adb7822c8344b72bc36a7d68312f6592cb14f"
   dependencies:
     jsonwebtoken "^8.5.1"
     passport-oauth2 "^1.5.0"

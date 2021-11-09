@@ -4,18 +4,13 @@
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type PartnersFilteredCells_viewer = {
-    readonly filterPartners: {
-        readonly total: number | null;
-        readonly aggregations: ReadonlyArray<{
-            readonly counts: ReadonlyArray<{
-                readonly name: string;
-                readonly value: string;
-                readonly count: number;
-            } | null> | null;
-        } | null> | null;
-        readonly hits: ReadonlyArray<{
-            readonly internalID: string;
-            readonly " $fragmentRefs": FragmentRefs<"PartnerCell_partner">;
+    readonly partnersConnection: {
+        readonly totalCount: number | null;
+        readonly edges: ReadonlyArray<{
+            readonly node: {
+                readonly internalID: string;
+                readonly " $fragmentRefs": FragmentRefs<"PartnerCell_partner">;
+            } | null;
         } | null> | null;
     } | null;
     readonly " $refType": "PartnersFilteredCells_viewer";
@@ -33,20 +28,26 @@ const node: ReaderFragment = {
     {
       "defaultValue": null,
       "kind": "LocalArgument",
+      "name": "after",
+      "type": "String"
+    },
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
       "name": "category",
       "type": "[String]"
+    },
+    {
+      "defaultValue": 12,
+      "kind": "LocalArgument",
+      "name": "first",
+      "type": "Int"
     },
     {
       "defaultValue": null,
       "kind": "LocalArgument",
       "name": "near",
       "type": "String"
-    },
-    {
-      "defaultValue": 1,
-      "kind": "LocalArgument",
-      "name": "page",
-      "type": "Int"
     },
     {
       "defaultValue": null,
@@ -56,19 +57,23 @@ const node: ReaderFragment = {
     }
   ],
   "kind": "Fragment",
-  "metadata": null,
+  "metadata": {
+    "connection": [
+      {
+        "count": "first",
+        "cursor": "after",
+        "direction": "forward",
+        "path": [
+          "partnersConnection"
+        ]
+      }
+    ]
+  },
   "name": "PartnersFilteredCells_viewer",
   "selections": [
     {
-      "alias": null,
+      "alias": "partnersConnection",
       "args": [
-        {
-          "kind": "Literal",
-          "name": "aggregations",
-          "value": [
-            "TOTAL"
-          ]
-        },
         {
           "kind": "Literal",
           "name": "defaultProfilePublic",
@@ -86,18 +91,8 @@ const node: ReaderFragment = {
         },
         {
           "kind": "Variable",
-          "name": "page",
-          "variableName": "page"
-        },
-        {
-          "kind": "Variable",
           "name": "partnerCategories",
           "variableName": "category"
-        },
-        {
-          "kind": "Literal",
-          "name": "size",
-          "value": 12
         },
         {
           "kind": "Literal",
@@ -110,56 +105,61 @@ const node: ReaderFragment = {
           "variableName": "type"
         }
       ],
-      "concreteType": "FilterPartners",
+      "concreteType": "PartnerConnection",
       "kind": "LinkedField",
-      "name": "filterPartners",
+      "name": "__PartnersFilteredCells_partnersConnection_connection",
       "plural": false,
       "selections": [
         {
           "alias": null,
           "args": null,
           "kind": "ScalarField",
-          "name": "total",
+          "name": "totalCount",
           "storageKey": null
         },
         {
           "alias": null,
           "args": null,
-          "concreteType": "PartnersAggregationResults",
+          "concreteType": "PartnerEdge",
           "kind": "LinkedField",
-          "name": "aggregations",
+          "name": "edges",
           "plural": true,
           "selections": [
             {
               "alias": null,
               "args": null,
-              "concreteType": "AggregationCount",
+              "concreteType": "Partner",
               "kind": "LinkedField",
-              "name": "counts",
-              "plural": true,
+              "name": "node",
+              "plural": false,
               "selections": [
                 {
                   "alias": null,
                   "args": null,
                   "kind": "ScalarField",
-                  "name": "name",
+                  "name": "internalID",
                   "storageKey": null
                 },
                 {
                   "alias": null,
                   "args": null,
                   "kind": "ScalarField",
-                  "name": "value",
+                  "name": "__typename",
                   "storageKey": null
                 },
                 {
-                  "alias": null,
                   "args": null,
-                  "kind": "ScalarField",
-                  "name": "count",
-                  "storageKey": null
+                  "kind": "FragmentSpread",
+                  "name": "PartnerCell_partner"
                 }
               ],
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "cursor",
               "storageKey": null
             }
           ],
@@ -168,22 +168,24 @@ const node: ReaderFragment = {
         {
           "alias": null,
           "args": null,
-          "concreteType": "Partner",
+          "concreteType": "PageInfo",
           "kind": "LinkedField",
-          "name": "hits",
-          "plural": true,
+          "name": "pageInfo",
+          "plural": false,
           "selections": [
             {
               "alias": null,
               "args": null,
               "kind": "ScalarField",
-              "name": "internalID",
+              "name": "endCursor",
               "storageKey": null
             },
             {
+              "alias": null,
               "args": null,
-              "kind": "FragmentSpread",
-              "name": "PartnerCell_partner"
+              "kind": "ScalarField",
+              "name": "hasNextPage",
+              "storageKey": null
             }
           ],
           "storageKey": null
@@ -194,5 +196,5 @@ const node: ReaderFragment = {
   ],
   "type": "Viewer"
 };
-(node as any).hash = 'da136d97d7ef75805c0a24dbda576aae';
+(node as any).hash = '2481c1769e31d61ea5e961c1ccb7d0fe';
 export default node;

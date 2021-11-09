@@ -21,6 +21,7 @@ describe("InquiryCommercialInterest", () => {
     ;(useInquiryContext as jest.Mock).mockImplementation(() => ({
       next: mockNext,
       setContext: () => {},
+      relayEnvironment: { current: null },
     }))
   })
 

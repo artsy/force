@@ -30,16 +30,19 @@ describe("ArtworkDetailsForm", () => {
   })
 
   it("renders correctly initial fields", () => {
-    expect(wrapper.find("input[name='artist']")).toBeTruthy()
-    expect(wrapper.find("input[name='year']")).toBeTruthy()
-    expect(wrapper.find("input[name='title']")).toBeTruthy()
-    expect(wrapper.find("select[name='medium']")).toBeTruthy()
-    expect(wrapper.find("select[name='rarity']")).toBeTruthy()
-    expect(wrapper.find("input[name='height']")).toBeTruthy()
-    expect(wrapper.find("input[name='width']")).toBeTruthy()
-    expect(wrapper.find("input[name='depth']")).toBeTruthy()
-    expect(wrapper.find("Radio[value='in']")).toBeTruthy()
-    expect(wrapper.find("Radio[value='cm']")).toBeTruthy()
+    expect(wrapper.find("input[data-test-id='autosuggest-input']").length).toBe(
+      1
+    )
+    expect(wrapper.find("input[name='year']").length).toBe(1)
+    expect(wrapper.find("input[name='title']").length).toBe(1)
+    expect(wrapper.find("input[name='materials']").length).toBe(1)
+    expect(wrapper.find("select[name='rarity']").length).toBe(1)
+    expect(wrapper.find("input[name='height']").length).toBe(1)
+    expect(wrapper.find("input[name='width']").length).toBe(1)
+    expect(wrapper.find("input[name='depth']").length).toBe(1)
+    expect(wrapper.find("Radio[value='in']").length).toBe(1)
+    expect(wrapper.find("Radio[value='cm']").length).toBe(1)
+    expect(wrapper.find("input[name='provenance']").length).toBe(1)
   })
 
   describe("Rarity", () => {

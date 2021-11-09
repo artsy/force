@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useMemo, useState } from "react"
 import { Environment, fetchQuery, graphql } from "react-relay"
 import { useSystemContext } from "v2/System"
 import { useFormikContext } from "formik"
@@ -9,6 +9,7 @@ import {
   ArtistAutosuggest_SearchConnection_Query,
   ArtistAutosuggest_SearchConnection_QueryResponse,
 } from "v2/__generated__/ArtistAutosuggest_SearchConnection_Query.graphql"
+import { debounce } from "lodash"
 
 type Suggestion =
   | NonNullable<
@@ -22,6 +23,8 @@ type Suggestion =
   | undefined
 
 type Suggestions = readonly Suggestion[] | undefined | null
+
+const DEBOUNCE_DELAY = 300
 
 interface ArtistAutosuggestProps {
   onAutosuggestError: () => void
@@ -40,7 +43,6 @@ export const ArtistAutosuggest: React.FC<ArtistAutosuggestProps> = ({
   } = useFormikContext<ArtworkDetailsFormModel>()
   const [suggestions, setSuggestions] = useState<Suggestions>([])
   const { relayEnvironment } = useSystemContext()
-
   const updateSuggestions = async (value: string) => {
     setSuggestions([])
     if (relayEnvironment) {
@@ -52,6 +54,11 @@ export const ArtistAutosuggest: React.FC<ArtistAutosuggestProps> = ({
       }
     }
   }
+
+  const handleSuggestionsFetchRequested = useMemo(
+    () => debounce(updateSuggestions, DEBOUNCE_DELAY),
+    []
+  )
 
   const inputProps = {
     onChange: (e: Event, { newValue }) => {
@@ -72,9 +79,9 @@ export const ArtistAutosuggest: React.FC<ArtistAutosuggestProps> = ({
       onSuggestionsClearRequested={() => {
         setSuggestions([])
       }}
-      onSuggestionsFetchRequested={({ value }) => {
-        updateSuggestions(value)
-      }}
+      onSuggestionsFetchRequested={({ value }) =>
+        handleSuggestionsFetchRequested(value)
+      }
       onSuggestionSelected={(e: Event, { suggestion, suggestionValue }) => {
         e.preventDefault()
         setFieldValue("artistId", suggestion.node.internalID)

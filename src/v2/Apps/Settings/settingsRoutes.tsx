@@ -131,6 +131,13 @@ export const settingsRoutes: AppRouteConfig[] = [
         onClientSideRender: () => {
           EditProfileRoute.preload()
         },
+        query: graphql`
+          query settingsRoutes_EditProfileRouteQuery {
+            me {
+              ...SettingsEditProfileRoute_me
+            }
+          }
+        `,
       },
       {
         path: "payments",
@@ -152,6 +159,13 @@ export const settingsRoutes: AppRouteConfig[] = [
         onClientSideRender: () => {
           PurchasesRoute.preload()
         },
+        query: graphql`
+          query settingsRoutes_PurchasesRouteQuery {
+            me {
+              ...SettingsPurchasesRoute_me
+            }
+          }
+        `,
       },
       {
         path: "saves",
@@ -159,6 +173,13 @@ export const settingsRoutes: AppRouteConfig[] = [
         onClientSideRender: () => {
           SavesRoute.preload()
         },
+        query: graphql`
+          query settingsRoutes_SavesRouteQuery {
+            me {
+              ...SettingsSavesRoute_me
+            }
+          }
+        `,
       },
       {
         path: "edit-settings",
@@ -166,6 +187,13 @@ export const settingsRoutes: AppRouteConfig[] = [
         onClientSideRender: () => {
           SettingsRoute.preload()
         },
+        query: graphql`
+          query settingsRoutes_SettingsRouteQuery {
+            me {
+              ...SettingsEditRoute_me
+            }
+          }
+        `,
       },
       {
         path: "shipping",

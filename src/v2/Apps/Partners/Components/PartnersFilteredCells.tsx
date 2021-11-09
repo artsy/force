@@ -1,5 +1,9 @@
-import { FC } from "react"
-import { createFragmentContainer, graphql } from "react-relay"
+import { FC, useState } from "react"
+import {
+  createPaginationContainer,
+  graphql,
+  RelayPaginationProp,
+} from "react-relay"
 import {
   PartnerCellFragmentContainer,
   PartnerCellPlaceholder,
@@ -17,88 +21,131 @@ import {
   SkeletonText,
   Text,
 } from "@artsy/palette"
-import { compact } from "lodash"
+import { extractNodes } from "v2/Utils/extractNodes"
 
 interface PartnersFilteredCellsProps {
   viewer: PartnersFilteredCells_viewer
+  relay: RelayPaginationProp
 }
 
-const PartnersFilteredCells: FC<PartnersFilteredCellsProps> = ({ viewer }) => {
-  const response = viewer.filterPartners
+const PartnersFilteredCells: FC<PartnersFilteredCellsProps> = ({
+  viewer,
+  relay,
+}) => {
+  const [loading, setLoading] = useState(false)
+
+  const partners = extractNodes(viewer.partnersConnection)
+  const total = viewer.partnersConnection?.totalCount ?? 0
 
   const handleClick = () => {
-    // TODO
+    if (!relay.hasMore() || relay.isLoading()) return
+
+    setLoading(true)
+
+    relay.loadMore(12, err => {
+      setLoading(false)
+
+      if (err) {
+        console.error(err)
+      }
+    })
   }
-
-  if (!response) return null
-
-  const partners = compact(response.hits)
 
   return (
     <>
       <Text variant="lg" mb={4}>
-        {response.total ?? 0} Result{response.total === 1 ? "" : "s"}
+        {total} Result{total === 1 ? "" : "s"}
       </Text>
 
-      <GridColumns gridRowGap={4}>
-        {partners.map(partner => {
-          return (
-            <Column
-              key={partner.internalID}
-              span={[6, 4, 3]}
-              display="flex"
-              alignItems="flex-end"
-            >
-              <PartnerCellFragmentContainer partner={partner} mode="GRID" />
-            </Column>
-          )
-        })}
-      </GridColumns>
+      {partners.length > 0 && (
+        <>
+          <GridColumns gridRowGap={4}>
+            {partners.map(partner => {
+              return (
+                <Column
+                  key={partner.internalID}
+                  span={[6, 4, 3]}
+                  display="flex"
+                  alignItems="flex-end"
+                >
+                  <PartnerCellFragmentContainer partner={partner} mode="GRID" />
+                </Column>
+              )
+            })}
+          </GridColumns>
 
-      <Box textAlign="center" mt={4}>
-        <Button onClick={handleClick}>Show More</Button>
-      </Box>
+          {relay.hasMore() && (
+            <Box textAlign="center" mt={4}>
+              <Button onClick={handleClick} loading={loading}>
+                Show More
+              </Button>
+            </Box>
+          )}
+        </>
+      )}
     </>
   )
 }
 
-const PartnersFilteredCellsFragmentContainer = createFragmentContainer(
+const PARTNERS_FILTERED_CELLS_QUERY = graphql`
+  query PartnersFilteredCellsQuery(
+    $after: String
+    $near: String
+    $category: [String]
+    $type: [PartnerClassification]
+  ) {
+    viewer {
+      ...PartnersFilteredCells_viewer
+        @arguments(after: $after, type: $type, near: $near, category: $category)
+    }
+  }
+`
+
+const PartnersFilteredCellsPaginationContainer = createPaginationContainer(
   PartnersFilteredCells,
   {
     viewer: graphql`
       fragment PartnersFilteredCells_viewer on Viewer
         @argumentDefinitions(
+          after: { type: "String" }
           category: { type: "[String]" }
+          first: { type: "Int", defaultValue: 12 }
           near: { type: "String" }
-          page: { type: "Int", defaultValue: 1 }
           type: { type: "[PartnerClassification]" }
         ) {
-        filterPartners(
-          aggregations: [TOTAL]
+        partnersConnection(
+          after: $after
           defaultProfilePublic: true
           eligibleForListing: true
+          first: $first
           near: $near
-          page: $page
           partnerCategories: $category
-          size: 12
           sort: RANDOM_SCORE_DESC
           type: $type
-        ) {
-          total
-          aggregations {
-            counts {
-              name
-              value
-              count
+        ) @connection(key: "PartnersFilteredCells_partnersConnection") {
+          totalCount
+          edges {
+            node {
+              internalID
+              ...PartnerCell_partner
             }
-          }
-          hits {
-            internalID
-            ...PartnerCell_partner
           }
         }
       }
     `,
+  },
+  {
+    direction: "forward",
+    getConnectionFromProps(props) {
+      return props.viewer.partnersConnection
+    },
+    getFragmentVariables(prevVars, totalCount) {
+      return { ...prevVars, totalCount }
+    },
+    getVariables(_, { cursor: after }, fragmentVariables) {
+      return { ...fragmentVariables, after }
+    },
+    query: PARTNERS_FILTERED_CELLS_QUERY,
   }
 )
 
@@ -121,19 +168,6 @@ const PartnersFilteredCellsPlaceholder: FC = () => {
     </Skeleton>
   )
 }
-
-const PARTNERS_FILTERED_CELLS_QUERY = graphql`
-  query PartnersFilteredCellsQuery(
-    $near: String
-    $category: [String]
-    $type: [PartnerClassification]
-  ) {
-    viewer {
-      ...PartnersFilteredCells_viewer
-        @arguments(type: $type, near: $near, category: $category)
-    }
-  }
-`
 
 interface PartnersFilteredCellsQueryRendererProps {
   near?: string
@@ -165,7 +199,9 @@ export const PartnersFilteredCellsQueryRenderer: FC<PartnersFilteredCellsQueryRe
           return <PartnersFilteredCellsPlaceholder />
         }
 
-        return <PartnersFilteredCellsFragmentContainer viewer={props.viewer} />
+        return (
+          <PartnersFilteredCellsPaginationContainer viewer={props.viewer} />
+        )
       }}
     />
   )

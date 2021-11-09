@@ -25,7 +25,7 @@ export const getArtworkDetailsFormInitialValues = () => ({
   artistName: "",
   year: "",
   title: "",
-  medium: "",
+  materials: "",
   rarity: "",
   editionNumber: "",
   editionSize: undefined,
@@ -33,6 +33,7 @@ export const getArtworkDetailsFormInitialValues = () => ({
   width: "",
   depth: "",
   units: "in",
+  provenance: "",
 })
 
 const rarityOptions = checkboxValues.map(({ name, value }) => ({
@@ -76,7 +77,7 @@ export interface ArtworkDetailsFormModel {
   artistId: string
   year: string
   title: string
-  medium: string
+  materials: string
   rarity: string
   editionNumber: string
   editionSize?: string
@@ -84,6 +85,7 @@ export interface ArtworkDetailsFormModel {
   width: string
   depth: string
   units: string
+  provenance: string
 }
 
 export const ArtworkDetailsForm: React.FC = () => {
@@ -175,18 +177,14 @@ export const ArtworkDetailsForm: React.FC = () => {
           />
         </Column>
         <Column span={6} mt={[1, 0]}>
-          <Text variant="xs" mb={0.5} textTransform="uppercase">
-            Medium
-          </Text>
-          <Select
-            name="medium"
-            options={mediumOptions}
-            selected={values.medium}
+          <Input
+            title="Materials"
+            placeholder="Add Materials"
+            name="materials"
+            maxLength={256}
             onBlur={handleBlur}
             onChange={handleChange}
-            onSelect={selected => {
-              setFieldValue("medium", selected)
-            }}
+            value={values.materials}
           />
         </Column>
       </GridColumns>
@@ -304,6 +302,26 @@ export const ArtworkDetailsForm: React.FC = () => {
               <Radio value="cm" label="cm" />
             </RadioGroup>
           </Flex>
+        </Column>
+      </GridColumns>
+      <GridColumns mt={[1, 2]}>
+        <Column span={6}>
+          <Flex>
+            <Text variant="xs" mb={0.5} mr={0.5} textTransform="uppercase">
+              Provenance
+            </Text>
+            <Text variant="xs" color="black60">
+              (Optional)
+            </Text>
+          </Flex>
+          <Input
+            name="provenance"
+            placeholder="Describe how you acquired the work"
+            maxLength={256}
+            onBlur={handleBlur}
+            onChange={handleChange}
+            value={values.provenance}
+          />
         </Column>
       </GridColumns>
     </>
