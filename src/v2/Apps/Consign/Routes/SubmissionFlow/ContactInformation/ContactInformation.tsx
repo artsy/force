@@ -19,6 +19,12 @@ import { BackLink } from "v2/Components/Links/BackLink"
 import { ErrorModal } from "v2/Components/Modal/ErrorModal"
 import { useState } from "react"
 
+const getContactInformationFormInitialValues = (me: ContactInformation_me) => ({
+  name: me?.name || "",
+  email: me?.email || "",
+  phone: me?.phone || "",
+})
+
 export interface ContactInformationProps {
   me: ContactInformation_me
 }
@@ -110,11 +116,7 @@ export const ContactInformation: React.FC<ContactInformationProps> = ({
       />
 
       <Formik<ContactInformationFormModel>
-        initialValues={{
-          name: me?.name || "",
-          email: me?.email || "",
-          phone: me?.phone || "",
-        }}
+        initialValues={getContactInformationFormInitialValues(me)}
         validateOnMount
         onSubmit={handleSubmit}
         validationSchema={contactInformationValidationSchema}
@@ -122,7 +124,7 @@ export const ContactInformation: React.FC<ContactInformationProps> = ({
         {({ isValid, isSubmitting }) => {
           return (
             <Form>
-              <ContactInformationForm my={6} />
+              <ContactInformationForm my={6} me={me} />
 
               <Button
                 data-test-id="save-button"
