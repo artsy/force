@@ -215,7 +215,6 @@ describe("AuctionResults", () => {
             ?.node
         expect(html).toContain("Artwork Info")
         expect(html).toContain(data?.dimension_text)
-        expect(html).toContain(data?.description)
       })
     })
 

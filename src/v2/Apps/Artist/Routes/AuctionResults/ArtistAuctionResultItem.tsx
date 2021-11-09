@@ -16,7 +16,7 @@ import { AnalyticsSchema, SystemContextProps } from "v2/System"
 import { SystemContext } from "v2/System"
 import { ModalType } from "v2/Components/Authentication/Types"
 import { DateTime, LocaleOptions } from "luxon"
-import { FC, useContext, useState } from "react";
+import { FC, useContext, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import styled from "styled-components"
@@ -304,7 +304,6 @@ export const ArtistAuctionResultItemFragmentContainer = createFragmentContainer(
         }
         mediumText
         categoryText
-        description
         date_text: dateText
         saleDate
         boughtIn
@@ -528,13 +527,7 @@ const renderRealizedPrice = (
 const renderLargeCollapse = (props, user, mediator, filtersAtDefault) => {
   const {
     expanded,
-    auctionResult: {
-      dimension_text,
-      description,
-      organization,
-      saleDate,
-      categoryText,
-    },
+    auctionResult: { dimension_text, organization, saleDate, categoryText },
     salePrice,
     estimatedPrice,
   } = getProps(props)
@@ -594,21 +587,6 @@ const renderLargeCollapse = (props, user, mediator, filtersAtDefault) => {
             {renderRealizedPrice(salePrice, user, mediator, filtersAtDefault)}
           </Col>
         </Row>
-
-        {description && (
-          <Row>
-            <Col sm={2}>
-              <Text variant="xs" fontWeight="bold">
-                Description
-              </Text>
-            </Col>
-            <Col sm={10} pr="4.5%">
-              <Box pl={1}>
-                <Text variant="xs">{description}</Text>
-              </Box>
-            </Col>
-          </Row>
-        )}
       </Box>
     </Collapse>
   )
@@ -619,7 +597,6 @@ const renderSmallCollapse = (props, user, mediator, filtersAtDefault) => {
     expanded,
     auctionResult: {
       dimension_text,
-      description,
       organization,
       categoryText,
       mediumText,
@@ -681,17 +658,6 @@ const renderSmallCollapse = (props, user, mediator, filtersAtDefault) => {
           <Col xs={8}>
             <Text variant="xs">{dateOfSale}</Text>
             <Text variant="xs">{organization}</Text>
-          </Col>
-        </Row>
-
-        <Row mb={2}>
-          <Col xs={4}>
-            <Text variant="xs" fontWeight="bold">
-              Description
-            </Text>
-          </Col>
-          <Col xs={8}>
-            <Text variant="xs">{description}</Text>
           </Col>
         </Row>
       </Box>
