@@ -17,6 +17,9 @@ declare global {
     grecaptcha: any
     // FIXME: Add real type
     analytics: any
+    analytics: {
+      load: () => void
+    }
     desktopPageTimeTrackers: [
       {
         path: string
