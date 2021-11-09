@@ -3,6 +3,7 @@ import { setupTestWrapperTL } from "v2/DevTools/setupTestWrapper"
 import { OrderUpdateFragmentContainer } from "../OrderUpdate"
 import { OrderUpdate_Test_Query } from "v2/__generated__/OrderUpdate_Test_Query.graphql"
 import { screen } from "@testing-library/react"
+import { DateTime } from "luxon"
 
 jest.unmock("react-relay")
 
@@ -35,6 +36,7 @@ const { renderWithRelay } = setupTestWrapperTL<OrderUpdate_Test_Query>({
 
 describe("testing different statuses", () => {
   it("render counteroffer", () => {
+    const createdAt = "2021-07-04T12:46:40Z"
     renderWithRelay({
       Conversation: () => ({
         orderConnection: {
@@ -44,7 +46,7 @@ describe("testing different statuses", () => {
                 orderHistory: [
                   {
                     __typename: "CommerceOfferSubmittedEvent",
-                    createdAt: "2021-07-04T12:46:40+03:00",
+                    createdAt,
                     offer: {
                       amount: "$40000",
                       definesTotal: true,
@@ -62,7 +64,9 @@ describe("testing different statuses", () => {
         },
       }),
     })
-    expect(screen.getByText("Sun, Jul 4, 11:46 AM")).toBeInTheDocument()
+
+    const date = DateTime.fromISO(createdAt)
+    expect(screen.getByText(date.toFormat("ccc, LLL d, t"))).toBeInTheDocument()
     expect(
       screen.getByText("You sent a counteroffer for $40000")
     ).toBeInTheDocument()
