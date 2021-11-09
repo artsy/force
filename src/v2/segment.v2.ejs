@@ -5,41 +5,41 @@
 
 const WRITE_KEY = "<%%= sd.SEGMENT_WRITE_KEY %>";
 const SEGMENT_MAPPING = 'C0001';
+let SEGMENT_DESTINATIONS = [];
 
 fetchDestinations(WRITE_KEY).then(
   destinations => {
     console.log('segment destinations');
     console.log(destinations);
 
-    let oneTrustConsent = '';
+    SEGMENT_DESTINATIONS = destinations;
+
+    waitForOneTrust();
+
     if (oneTrustReady()) {
-      oneTrustConsent = window.OnetrustActiveGroups.split(',');
-    } else {
-      oneTrustConsent = ['C0001'];
+      getConsentAndLoadSegment();
     }
-
-    console.log('onetrust consent');
-    console.log(oneTrustConsent);
-
-    console.log('setting segment destination preferences based on onetrust consent.');
-
-    const destinationPreferences = setSegmentDestinationPref(oneTrustConsent, destinations);
-
-    conditionallyLoadAnalytics({
-      writeKey: WRITE_KEY,
-      destinations,
-      destinationPreferences
-    });
-
   }
 )
 
+window.OptanonWrapper = getConsentAndLoadSegment;
 
-window.OptanonWrapper = optanonWrapper;
+function getConsentAndLoadSegment() {
+  let oneTrustConsent = '';
 
-function optanonWrapper() {
-  console.log('onetrust changed');
-  console.log(window.OnetrustActiveGroups);
+  oneTrustConsent = window.OnetrustActiveGroups.split(',');
+
+  console.log('onetrust consent');
+  console.log(oneTrustConsent);
+  console.log('setting segment destination preferences based on onetrust consent.');
+
+  const destinationPreferences = setSegmentDestinationPref(oneTrustConsent, SEGMENT_DESTINATIONS);
+
+  conditionallyLoadAnalytics({
+    writeKey: WRITE_KEY,
+    destinations: SEGMENT_DESTINATIONS,
+    destinationPreferences
+  });
 }
 
 function conditionallyLoadAnalytics({
@@ -55,15 +55,6 @@ function conditionallyLoadAnalytics({
     if (isEnabled) {
       isAnythingEnabled = true;
     }
-  }
-
-  if (window.analytics.initialized) {
-    console.log('segment already initialized');
-    if (shouldReload) {
-      console.log('reloading');
-      window.location.reload();
-    }
-    return;
   }
 
   if (isAnythingEnabled) {
@@ -105,11 +96,26 @@ function setSegmentDestinationPref(oneTrustConsent, destinations) {
   return destinationPreferences;
 }
 
-function oneTrustReady() {
-  if (typeof window.OnetrustActiveGroups === 'string') {
-    return true;
+function waitForOneTrust() {
+  let attempts = 0;
+  const maxAttempts = 100;
+
+  if (!oneTrustReady()) {
+    console.log('onetrust is NOT ready');
+
+    const interval = setInterval(() => {
+      console.log('waiting for onetrust');
+      if (oneTrustReady || attempts > maxAttempts) clearInterval(interval);
+      attempts++;
+    }, 10);
   }
-  return false;
+}
+
+function oneTrustReady() {
+    if ((typeof window.OnetrustActiveGroups === 'string') && (window.OnetrustActiveGroups.split(',').includes('C0001'))) {
+      return true;
+    }
+    return false;
 }
 
 async function fetchDestinations(writeKey) {
