@@ -1,7 +1,5 @@
 import { data as sd } from "sharify"
 
-console.log("hello world", window.analytics)
-
 const SEGMENT_WRITE_KEY = sd.SEGMENT_WRITE_KEY
 const SEGMENT_MAPPING = "C0001" // Segment itself assigned OneTrust Strictly Necessary category.
 let SEGMENT_DESTINATIONS = []
@@ -125,6 +123,9 @@ function conditionallyLoadAnalytics({
   }
 
   if (isAnythingEnabled) {
+    console.log("loading segment conditionally")
+
+    // @ts-expect-error STRICT_NULL_CHECK
     window.analytics.load(writeKey, { integrations: destinationPreferences })
   }
 
