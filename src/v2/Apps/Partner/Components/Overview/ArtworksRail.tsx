@@ -1,5 +1,5 @@
-import { useState } from "react";
-import * as React from "react";
+import { useState } from "react"
+import * as React from "react"
 import { Box, BoxProps, Flex, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtworksRail_partner } from "v2/__generated__/ArtworksRail_partner.graphql"
@@ -38,7 +38,12 @@ const ArtworksRail: React.FC<ArtworksRailProps> = ({ partner, ...rest }) => {
 
   return (
     <Box {...rest}>
-      <Flex mb={4} justifyContent="space-between" alignItems="center">
+      <Flex
+        mb={4}
+        justifyContent="space-between"
+        alignItems="center"
+        position="relative"
+      >
         <Text variant="title">Featured Artworks</Text>
 
         <ViewAllButton to={`/partner/${slug}/works`} />
