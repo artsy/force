@@ -5,6 +5,8 @@ const SEGMENT_MAPPING = "C0001" // Segment itself assigned OneTrust Strictly Nec
 let SEGMENT_DESTINATIONS = []
 
 export function fetchSegmentDestinationsAndLoad() {
+  console.log("starting to load segment conditionally")
+
   fetchDestinations(SEGMENT_WRITE_KEY).then(destinations => {
     SEGMENT_DESTINATIONS = destinations
 
@@ -125,7 +127,7 @@ function conditionallyLoadAnalytics({
   if (isAnythingEnabled) {
     console.log("loading segment conditionally")
 
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-ignore
     window.analytics.load(writeKey, { integrations: destinationPreferences })
   }
 
