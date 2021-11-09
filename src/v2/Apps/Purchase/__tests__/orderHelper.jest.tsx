@@ -1,93 +1,48 @@
 import {
-  getOrderStatus,
+  getOrderDisplayStateString,
   getOrderIcon,
   getOrderColor,
-} from "../Utils/orderHelper"
+} from "v2/Apps/Purchase/Utils/orderHelper"
 import {
   CheckCircleFillIcon,
   PendingCircleIcon,
   XCircleIcon,
 } from "@artsy/palette"
 
-describe("getOrderStatus", () => {
-  let mockLineItem: any
-  describe("without shipment status", () => {
-    mockLineItem = { shipment: null }
-    it("returns correct statuses", () => {
-      expect(getOrderStatus("SUBMITTED", mockLineItem)).toBe("pending")
-      expect(getOrderStatus("APPROVED", mockLineItem)).toBe("confirmed")
-      expect(getOrderStatus("FULFILLED", mockLineItem)).toBe("delivered")
-      expect(getOrderStatus("CANCELED", mockLineItem)).toBe("canceled")
-      expect(getOrderStatus("REFUNDED", mockLineItem)).toBe("refunded")
-    })
-  })
+import { CommerceOrderDisplayStateEnum } from "v2/__generated__/OrderRow_order.graphql"
 
-  describe("with shipment status", () => {
-    it("returns correct statuses", () => {
-      mockLineItem = { shipment: { status: "pending" } }
-      expect(getOrderStatus("APPROVED", mockLineItem)).toBe("processing")
-      mockLineItem = { shipment: { status: "confirmed" } }
-      expect(getOrderStatus("APPROVED", mockLineItem)).toBe("processing")
-      mockLineItem = { shipment: { status: "collected" } }
-      expect(getOrderStatus("APPROVED", mockLineItem)).toBe("in transit")
-      mockLineItem = { shipment: { status: "in_transit" } }
-      expect(getOrderStatus("APPROVED", mockLineItem)).toBe("in transit")
-      mockLineItem = { shipment: { status: "completed" } }
-      expect(getOrderStatus("APPROVED", mockLineItem)).toBe("delivered")
-      mockLineItem = { shipment: { status: "canceled" } }
-      expect(getOrderStatus("APPROVED", mockLineItem)).toBe("canceled")
-    })
-  })
-
-  describe("CANCELED/REFUNDED order states", () => {
-    it("CANCELED overrides any shipment status", () => {
-      mockLineItem = { shipment: { status: "pending" } }
-      expect(getOrderStatus("CANCELED", mockLineItem)).toBe("canceled")
-      mockLineItem = { shipment: { status: "confirmed" } }
-      expect(getOrderStatus("CANCELED", mockLineItem)).toBe("canceled")
-      mockLineItem = { shipment: { status: "collected" } }
-      expect(getOrderStatus("CANCELED", mockLineItem)).toBe("canceled")
-      mockLineItem = { shipment: { status: "in_transit" } }
-      expect(getOrderStatus("CANCELED", mockLineItem)).toBe("canceled")
-      mockLineItem = { shipment: { status: "completed" } }
-      expect(getOrderStatus("CANCELED", mockLineItem)).toBe("canceled")
-      mockLineItem = { shipment: { status: "canceled" } }
-      expect(getOrderStatus("CANCELED", mockLineItem)).toBe("canceled")
-    })
-
-    it("REFUNDED overrides any shipment status", () => {
-      mockLineItem = { shipment: { status: "pending" } }
-      expect(getOrderStatus("REFUNDED", mockLineItem)).toBe("refunded")
-      mockLineItem = { shipment: { status: "confirmed" } }
-      expect(getOrderStatus("REFUNDED", mockLineItem)).toBe("refunded")
-      mockLineItem = { shipment: { status: "collected" } }
-      expect(getOrderStatus("REFUNDED", mockLineItem)).toBe("refunded")
-      mockLineItem = { shipment: { status: "in_transit" } }
-      expect(getOrderStatus("REFUNDED", mockLineItem)).toBe("refunded")
-      mockLineItem = { shipment: { status: "completed" } }
-      expect(getOrderStatus("REFUNDED", mockLineItem)).toBe("refunded")
-      mockLineItem = { shipment: { status: "canceled" } }
-      expect(getOrderStatus("REFUNDED", mockLineItem)).toBe("refunded")
-    })
-  })
+describe("getOrderDisplayStateString", () => {
+  it.each([
+    ["SUBMITTED", "Pending"],
+    ["APPROVED", "Confirmed"],
+    ["PROCESSING", "Processing"],
+    ["IN_TRANSIT", "In transit"],
+    ["CANCELED", "Canceled"],
+    ["FULFILLED", "Delivered"],
+    ["REFUNDED", "Refunded"],
+  ])(
+    "returns correct string based on the display state. displayState: %d, display string: %d",
+    (displayState: CommerceOrderDisplayStateEnum, displayString: string) => {
+      expect(getOrderDisplayStateString(displayState)).toEqual(displayString)
+    }
+  )
 })
 
 describe("getOrderColor", () => {
   it("returns black60", () => {
-    expect(getOrderColor("pending")).toBe("black60")
-    expect(getOrderColor("processing")).toBe("black60")
-    expect(getOrderColor("confirmed")).toBe("black60")
+    expect(getOrderColor("SUBMITTED")).toBe("black60")
+    expect(getOrderColor("APPROVED")).toBe("black60")
+    expect(getOrderColor("PROCESSING")).toBe("black60")
   })
 
   it("returns red100", () => {
-    expect(getOrderColor("canceled")).toBe("red100")
-    expect(getOrderColor("refunded")).toBe("red100")
+    expect(getOrderColor("CANCELED")).toBe("red100")
+    expect(getOrderColor("REFUNDED")).toBe("red100")
   })
 
   it("returns black100", () => {
-    expect(getOrderColor("delivered")).toBe("black100")
-    expect(getOrderColor("completed")).toBe("black100")
-    expect(getOrderColor("in transit")).toBe("black100")
+    expect(getOrderColor("FULFILLED")).toBe("black100")
+    expect(getOrderColor("IN_TRANSIT")).toBe("black100")
   })
 })
 
@@ -97,18 +52,18 @@ describe("getOrderIcon", () => {
   const CheckIcon = <CheckCircleFillIcon />
 
   it("returns PendingCircleIcon", () => {
-    expect(getOrderIcon("pending")).toStrictEqual(PendingIcon)
-    expect(getOrderIcon("confirmed")).toStrictEqual(PendingIcon)
-    expect(getOrderIcon("processing")).toStrictEqual(PendingIcon)
-    expect(getOrderIcon("in transit")).toStrictEqual(PendingIcon)
+    expect(getOrderIcon("SUBMITTED")).toStrictEqual(PendingIcon)
+    expect(getOrderIcon("APPROVED")).toStrictEqual(PendingIcon)
+    expect(getOrderIcon("PROCESSING")).toStrictEqual(PendingIcon)
+    expect(getOrderIcon("IN_TRANSIT")).toStrictEqual(PendingIcon)
   })
 
   it("returns XCircleIcon", () => {
-    expect(getOrderIcon("canceled")).toStrictEqual(XIcon)
-    expect(getOrderIcon("refunded")).toStrictEqual(XIcon)
+    expect(getOrderIcon("CANCELED")).toStrictEqual(XIcon)
+    expect(getOrderIcon("REFUNDED")).toStrictEqual(XIcon)
   })
 
   it("returns CheckCircleFillIcon", () => {
-    expect(getOrderIcon("delivered")).toStrictEqual(CheckIcon)
+    expect(getOrderIcon("FULFILLED")).toStrictEqual(CheckIcon)
   })
 })
