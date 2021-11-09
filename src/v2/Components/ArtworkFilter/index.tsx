@@ -321,6 +321,18 @@ export const BaseArtworkFilter: React.FC<
 
           <Spacer mb={2} />
 
+          {enableCreateAlert && artistId && artistName && (
+            <FiltersPills
+              artistId={artistId}
+              artistName={artistName}
+              aggregations={filterContext.aggregations!}
+              filters={filterContext.currentlySelectedFilters?.() || {}}
+              show={showCreateAlert}
+            />
+          )}
+
+          <Spacer mb={2} />
+
           <ArtworkFilterArtworkGrid
             // @ts-expect-error STRICT_NULL_CHECK
             filtered_artworks={viewer.filtered_artworks}

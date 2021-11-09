@@ -83,7 +83,12 @@ export const extractPills = (
       return extractPillFromAggregation({ paramName, paramValue }, aggregations)
     }
 
-    return paramValue
+    // TODO: convert Ways to Buy options to displaying value (ex. offerable -> Make Offer)
+    if (Array.isArray(paramValue)) {
+      return paramValue
+    }
+
+    return paramName
   })
 
   return compact(flatten(pills))

@@ -47,7 +47,7 @@ const ArtistArtworkFilter: React.FC<ArtistArtworkFilterProps> = props => {
     >
       <BaseArtworkFilter
         relay={relay}
-        viewer={artist as any} // FIXME
+        viewer={artist}
         relayVariables={{
           aggregations: ["TOTAL"],
         }}
