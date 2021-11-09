@@ -16,9 +16,8 @@ declare global {
     __RELAY_BOOTSTRAP__: string
     grecaptcha: any
     // FIXME: Add real type
-    analytics: any
     analytics: {
-      load: () => void
+      load: (writeKey: string, options: any) => void
     }
     desktopPageTimeTrackers: [
       {
