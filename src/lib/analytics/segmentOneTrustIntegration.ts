@@ -62,10 +62,8 @@ async function fetchDestinations(writeKey) {
 }
 
 function getConsentAndLoadSegment() {
-  let oneTrustConsent = []
-
   // OneTrust stores consent in OnetrustActiveGroups.
-  oneTrustConsent = window.OnetrustActiveGroups.split(",")
+  const oneTrustConsent = window.OnetrustActiveGroups.split(",")
 
   const destinationPreferences = setSegmentDestinationPref(
     oneTrustConsent,
