@@ -75,7 +75,7 @@ describe("useSubmission", () => {
         editionNumber: "",
         height: "100",
         width: "100",
-        medium: "medium",
+        materials: "materials",
         rarity: "rarity",
         title: "title",
         units: "in",
