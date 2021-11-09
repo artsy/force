@@ -62,7 +62,7 @@ async function fetchDestinations(writeKey) {
 }
 
 function getConsentAndLoadSegment() {
-  let oneTrustConsent = ""
+  let oneTrustConsent = []
 
   // OneTrust stores consent in OnetrustActiveGroups.
   oneTrustConsent = window.OnetrustActiveGroups.split(",")
