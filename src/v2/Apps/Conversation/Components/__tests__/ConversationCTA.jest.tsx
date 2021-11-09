@@ -137,9 +137,7 @@ describe("ConversationCTA", () => {
   it("doesn't render the cta when there is no active offer", () => {
     renderWithRelay({
       Conversation: () => ({
-        activeOrders: {
-          edges: [],
-        },
+        activeOrders: {},
       }),
     })
 
