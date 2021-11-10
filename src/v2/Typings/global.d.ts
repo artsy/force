@@ -24,6 +24,7 @@ declare global {
       }
     ]
     OnetrustActiveGroups: string
+    Optanon: any
     OptanonWrapper: () => void
     // Zendesk integration for artwork app
     zEmbed: {

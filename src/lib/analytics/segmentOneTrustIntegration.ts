@@ -130,6 +130,7 @@ function conditionallyLoadAnalytics({
     }
   }
 
+  // @ts-ignore
   if (window.analytics.initialized) {
     // Segment has been initialized, a page reload is required to reload Segment.
     if (shouldReload) {
