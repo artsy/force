@@ -8383,6 +8383,7 @@ type Me implements Node {
   ): IdentityVerification
   identityVerified: Boolean
   initials(length: Int = 3): String
+  inquiryIntroduction: String
 
   # A type-specific ID.
   internalID: ID!
@@ -8489,6 +8490,9 @@ type Me implements Node {
   # The user's most current pending identity verification, if it exists
   pendingIdentityVerification: IdentityVerification
   phone: String
+  priceRange: String
+  priceRangeMax: Float
+  priceRangeMin: Float
   profession: String
 
   # This user should receive lot opening notifications
