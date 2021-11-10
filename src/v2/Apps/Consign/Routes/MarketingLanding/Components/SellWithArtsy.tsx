@@ -1,9 +1,15 @@
-import * as React from "react";
+import * as React from "react"
 import { Box, Button, Flex, Image, Link, Text, color } from "@artsy/palette"
 import { SectionContainer } from "./SectionContainer"
+import { useAnalyticsContext } from "v2/System"
 import { Media } from "v2/Utils/Responsive"
 import { useTracking } from "react-tracking"
-import { ContextModule, OwnerType, clickedAppDownload } from "@artsy/cohesion"
+import {
+  ActionType,
+  ContextModule,
+  OwnerType,
+  ClickedAppDownload,
+} from "@artsy/cohesion"
 
 const DOWNLOAD_URL =
   "https://apps.apple.com/us/app/artsy-buy-sell-original-art/id703796080"
@@ -11,15 +17,20 @@ const DOWNLOAD_URL =
 export const SellWithArtsy: React.FC = () => {
   const tracking = useTracking()
 
+  const { contextPageOwnerId, contextPageOwnerSlug } = useAnalyticsContext()
+
+  const clickedAppDownload: ClickedAppDownload = {
+    action: ActionType.clickedAppDownload,
+    context_module: ContextModule.sellFooter,
+    context_page_owner_type: OwnerType.consign,
+    context_page_owner_slug: contextPageOwnerSlug,
+    context_page_owner_id: contextPageOwnerId,
+    destination_path: DOWNLOAD_URL,
+    subject: "Download the app",
+  }
+
   const trackDownloadAppClick = () => {
-    tracking.trackEvent(
-      clickedAppDownload({
-        context_module: ContextModule.sellFooter,
-        context_page_owner_type: OwnerType.consign,
-        destination_path: DOWNLOAD_URL,
-        subject: "Download the app",
-      })
-    )
+    tracking.trackEvent(clickedAppDownload)
   }
 
   return (
