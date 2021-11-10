@@ -1,5 +1,5 @@
-import * as React from "react";
-import { Box, Flex, Image, Text, BorderBox } from "@artsy/palette"
+import React from "react"
+import { Box, Flex, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useAnalyticsContext, useSystemContext, useTracking } from "v2/System"
 import {
@@ -60,25 +60,13 @@ export const FairExhibitorCard: React.FC<FairExhibitorCardProps> = ({
 
   return (
     <RouterLink
-      // use this param to display navigation banner on show
+      // use from_fair param to display navigation banner on show
       to={`/show/${exhibitor.profileID}?from_fair=true`}
       textDecoration="none"
       display="block"
       onClick={() => tracking.trackEvent(tappedPartnerTrackingData)}
     >
       <Flex id={`jump--${exhibitor.partner?.internalID}`}>
-        <BorderBox width={52} height={52} p={0} mr={1}>
-          {profile?.icon?.cropped && (
-            <Image
-              lazyLoad
-              src={profile?.icon?.cropped?.src}
-              srcSet={profile?.icon?.cropped?.srcSet}
-              alt={`Logo of ${name}`}
-              width={50}
-              height={50}
-            />
-          )}
-        </BorderBox>
         <Box>
           <Text variant="md" overflow="clip">
             {name}
@@ -123,12 +111,6 @@ export const FairExhibitorCardFragmentContainer = createFragmentContainer(
           cities
           profile {
             ...FollowProfileButton_profile
-            icon {
-              cropped(width: 50, height: 50) {
-                src
-                srcSet
-              }
-            }
           }
         }
       }
