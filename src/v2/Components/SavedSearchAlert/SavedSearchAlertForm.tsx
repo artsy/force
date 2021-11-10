@@ -7,7 +7,7 @@ import {
 } from "./SavedSearchAlertModel"
 import { Box, Button, Checkbox, Input, Text } from "@artsy/palette"
 import { getNamePlaceholder } from "./Utils/getNamePlaceholder"
-import { getSearchCriteriaFromFilters } from "../ArtworkFilter/SavedSearch/savedSearchCriteriaHelpers"
+import { getSearchCriteriaFromFilters } from "../ArtworkFilter/SavedSearch/Utils"
 import { createSavedSearchAlert } from "./Mutations/createSavedSearchAlert"
 import { useSystemContext } from "v2/System"
 import { extractPills } from "./Utils/extractPills"

@@ -7,8 +7,10 @@ import {
   isCustomSize,
   parseRange,
 } from "v2/Components/ArtworkFilter/ArtworkFilters/SizeFilter"
-import { aggregationForFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/helpers"
-import { shouldExtractValueNamesFromAggregation } from "v2/Components/ArtworkFilter/SavedSearch/constants"
+import {
+  aggregationForFilter,
+  shouldExtractValueNamesFromAggregation,
+} from "v2/Components/ArtworkFilter/SavedSearch/Utils"
 
 export const extractPillFromAggregation = (
   filter: {

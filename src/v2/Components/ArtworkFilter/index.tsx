@@ -52,7 +52,7 @@ import type RelayModernEnvironment from "relay-runtime/lib/store/RelayModernEnvi
 import { TagArtworkFilter_tag } from "v2/__generated__/TagArtworkFilter_tag.graphql"
 import { Works_partner } from "v2/__generated__/Works_partner.graphql"
 import { CollectionArtworksFilter_collection } from "v2/__generated__/CollectionArtworksFilter_collection.graphql"
-import { FiltersPills } from "./SavedSearch/FiltersPills"
+import { FiltersPills } from "./SavedSearch/Components/FiltersPills"
 
 /**
  * Primary ArtworkFilter which is wrapped with a context and refetch container.
@@ -167,6 +167,12 @@ export const BaseArtworkFilter: React.FC<
 
   const { filtered_artworks } = viewer
   const hasFilter = filtered_artworks && filtered_artworks.id
+
+  console.log(
+    "enableCreateAlert && filterContext.hasFilters",
+    enableCreateAlert,
+    filterContext.hasFilters
+  )
 
   const showCreateAlert = enableCreateAlert && filterContext.hasFilters
 

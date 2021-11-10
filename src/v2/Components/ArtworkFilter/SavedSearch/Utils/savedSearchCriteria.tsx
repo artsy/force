@@ -1,5 +1,5 @@
 import { SearchCriteriaAttributes } from "v2/__generated__/createSavedSearchAlertMutation.graphql"
-import { ArtworkFilters } from "../ArtworkFilterContext"
+import { ArtworkFilters } from "../../ArtworkFilterContext"
 import { allowedSearchCriteriaKeys } from "./constants"
 
 export const getAllowedFiltersForSavedSearchInput = (

@@ -1,4 +1,4 @@
-import { Slice } from "../ArtworkFilterContext"
+import { Slice } from "../../ArtworkFilterContext"
 
 export const shouldExtractValueNamesFromAggregation = [
   "locationCities",
