@@ -66,6 +66,7 @@ describe("NavBarMobileMenu", () => {
         ["/shows", "Shows"],
         ["/institutions", "Museums"],
         ["/consign", "Sell"],
+        ["/price-database", "Price Database"],
         ["/articles", "Editorial"],
         ["/signup?intent=signup&contextModule=header", "Sign Up"],
         ["/login?intent=login&contextModule=header", "Log In"],
