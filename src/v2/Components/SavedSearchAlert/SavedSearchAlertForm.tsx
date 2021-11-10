@@ -12,6 +12,7 @@ import { createSavedSearchAlert } from "./Mutations/createSavedSearchAlert"
 import { useSystemContext } from "v2/System"
 import { extractPills } from "./Utils/extractPills"
 import { useArtworkFilterContext } from "../ArtworkFilter/ArtworkFilterContext"
+import createLogger from "v2/Utils/logger"
 
 interface SavedSearchAlertFormProps extends SavedSearchAlertFormPropsBase {
   initialValues: SavedSearchAleftFormValues
@@ -24,6 +25,9 @@ export const SavedSearchAlertForm: React.FC<SavedSearchAlertFormProps> = ({
   initialValues,
   onComplete,
 }) => {
+  const logger = createLogger(
+    "v2/Components/SavedSearchAlert/SavedSearchAlertForm"
+  )
   const { relayEnvironment } = useSystemContext()
   const filterContext = useArtworkFilterContext()
 
@@ -61,7 +65,7 @@ export const SavedSearchAlertForm: React.FC<SavedSearchAlertFormProps> = ({
 
         onComplete?.(result)
       } catch (error) {
-        console.error(error)
+        logger.error(error)
       }
     },
   })
