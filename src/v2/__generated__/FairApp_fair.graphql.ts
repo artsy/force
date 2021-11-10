@@ -7,11 +7,17 @@ export type FairApp_fair = {
     readonly internalID: string;
     readonly href: string | null;
     readonly slug: string;
+    readonly profile: {
+        readonly icon: {
+            readonly cropped: {
+                readonly src: string;
+                readonly srcSet: string;
+            } | null;
+        } | null;
+        readonly id: string;
+    } | null;
     readonly counts: {
         readonly artworks: number | null;
-    } | null;
-    readonly profile: {
-        readonly id: string;
     } | null;
     readonly " $fragmentRefs": FragmentRefs<"FairMeta_fair" | "FairHeader_fair" | "FairHeaderImage_fair">;
     readonly " $refType": "FairApp_fair";
@@ -54,6 +60,76 @@ const node: ReaderFragment = {
     {
       "alias": null,
       "args": null,
+      "concreteType": "Profile",
+      "kind": "LinkedField",
+      "name": "profile",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "Image",
+          "kind": "LinkedField",
+          "name": "icon",
+          "plural": false,
+          "selections": [
+            {
+              "alias": null,
+              "args": [
+                {
+                  "kind": "Literal",
+                  "name": "height",
+                  "value": 60
+                },
+                {
+                  "kind": "Literal",
+                  "name": "version",
+                  "value": "square140"
+                },
+                {
+                  "kind": "Literal",
+                  "name": "width",
+                  "value": 60
+                }
+              ],
+              "concreteType": "CroppedImageUrl",
+              "kind": "LinkedField",
+              "name": "cropped",
+              "plural": false,
+              "selections": [
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "src",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "srcSet",
+                  "storageKey": null
+                }
+              ],
+              "storageKey": "cropped(height:60,version:\"square140\",width:60)"
+            }
+          ],
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "id",
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
       "concreteType": "FairCounts",
       "kind": "LinkedField",
       "name": "counts",
@@ -64,24 +140,6 @@ const node: ReaderFragment = {
           "args": null,
           "kind": "ScalarField",
           "name": "artworks",
-          "storageKey": null
-        }
-      ],
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "concreteType": "Profile",
-      "kind": "LinkedField",
-      "name": "profile",
-      "plural": false,
-      "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "id",
           "storageKey": null
         }
       ],
@@ -105,5 +163,5 @@ const node: ReaderFragment = {
   ],
   "type": "Fair"
 };
-(node as any).hash = 'ea55e447dd97a5b0350728baebef7444';
+(node as any).hash = '6abe986e4e78ab1ae4b7687e47e09ba0';
 export default node;

@@ -28,14 +28,20 @@ fragment FairApp_fair on Fair {
   internalID
   href
   slug
+  profile {
+    icon {
+      cropped(width: 60, height: 60, version: "square140") {
+        src
+        srcSet
+      }
+    }
+    id
+  }
   ...FairMeta_fair
   ...FairHeader_fair
   ...FairHeaderImage_fair
   counts {
     artworks
-  }
-  profile {
-    id
   }
 }
 
@@ -93,6 +99,19 @@ v1 = {
 },
 v2 = [
   {
+    "kind": "Literal",
+    "name": "height",
+    "value": 60
+  },
+  (v1/*: any*/),
+  {
+    "kind": "Literal",
+    "name": "width",
+    "value": 60
+  }
+],
+v3 = [
+  {
     "alias": null,
     "args": null,
     "kind": "ScalarField",
@@ -107,7 +126,7 @@ v2 = [
     "storageKey": null
   }
 ],
-v3 = {
+v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -178,6 +197,71 @@ return {
           {
             "alias": null,
             "args": null,
+            "concreteType": "Profile",
+            "kind": "LinkedField",
+            "name": "profile",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "Image",
+                "kind": "LinkedField",
+                "name": "icon",
+                "plural": false,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": (v2/*: any*/),
+                    "concreteType": "CroppedImageUrl",
+                    "kind": "LinkedField",
+                    "name": "cropped",
+                    "plural": false,
+                    "selections": (v3/*: any*/),
+                    "storageKey": "cropped(height:60,version:\"square140\",width:60)"
+                  },
+                  {
+                    "alias": "desktop",
+                    "args": [
+                      {
+                        "kind": "Literal",
+                        "name": "height",
+                        "value": 100
+                      },
+                      (v1/*: any*/),
+                      {
+                        "kind": "Literal",
+                        "name": "width",
+                        "value": 100
+                      }
+                    ],
+                    "concreteType": "CroppedImageUrl",
+                    "kind": "LinkedField",
+                    "name": "cropped",
+                    "plural": false,
+                    "selections": (v3/*: any*/),
+                    "storageKey": "cropped(height:100,version:\"square140\",width:100)"
+                  },
+                  {
+                    "alias": "mobile",
+                    "args": (v2/*: any*/),
+                    "concreteType": "CroppedImageUrl",
+                    "kind": "LinkedField",
+                    "name": "cropped",
+                    "plural": false,
+                    "selections": (v3/*: any*/),
+                    "storageKey": "cropped(height:60,version:\"square140\",width:60)"
+                  }
+                ],
+                "storageKey": null
+              },
+              (v4/*: any*/)
+            ],
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
             "kind": "ScalarField",
             "name": "name",
             "storageKey": null
@@ -210,73 +294,6 @@ return {
                 "name": "url",
                 "storageKey": "url(version:\"large_rectangle\")"
               }
-            ],
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "concreteType": "Profile",
-            "kind": "LinkedField",
-            "name": "profile",
-            "plural": false,
-            "selections": [
-              {
-                "alias": null,
-                "args": null,
-                "concreteType": "Image",
-                "kind": "LinkedField",
-                "name": "icon",
-                "plural": false,
-                "selections": [
-                  {
-                    "alias": "desktop",
-                    "args": [
-                      {
-                        "kind": "Literal",
-                        "name": "height",
-                        "value": 100
-                      },
-                      (v1/*: any*/),
-                      {
-                        "kind": "Literal",
-                        "name": "width",
-                        "value": 100
-                      }
-                    ],
-                    "concreteType": "CroppedImageUrl",
-                    "kind": "LinkedField",
-                    "name": "cropped",
-                    "plural": false,
-                    "selections": (v2/*: any*/),
-                    "storageKey": "cropped(height:100,version:\"square140\",width:100)"
-                  },
-                  {
-                    "alias": "mobile",
-                    "args": [
-                      {
-                        "kind": "Literal",
-                        "name": "height",
-                        "value": 60
-                      },
-                      (v1/*: any*/),
-                      {
-                        "kind": "Literal",
-                        "name": "width",
-                        "value": 60
-                      }
-                    ],
-                    "concreteType": "CroppedImageUrl",
-                    "kind": "LinkedField",
-                    "name": "cropped",
-                    "plural": false,
-                    "selections": (v2/*: any*/),
-                    "storageKey": "cropped(height:60,version:\"square140\",width:60)"
-                  }
-                ],
-                "storageKey": null
-              },
-              (v3/*: any*/)
             ],
             "storageKey": null
           },
@@ -329,7 +346,7 @@ return {
             ],
             "storageKey": null
           },
-          (v3/*: any*/)
+          (v4/*: any*/)
         ],
         "storageKey": "fair(id:\"example\")"
       }
@@ -340,7 +357,7 @@ return {
     "metadata": {},
     "name": "FairApp_Test_Query",
     "operationKind": "query",
-    "text": "query FairApp_Test_Query {\n  fair(id: \"example\") {\n    ...FairApp_fair\n    id\n  }\n}\n\nfragment FairApp_fair on Fair {\n  internalID\n  href\n  slug\n  ...FairMeta_fair\n  ...FairHeader_fair\n  ...FairHeaderImage_fair\n  counts {\n    artworks\n  }\n  profile {\n    id\n  }\n}\n\nfragment FairHeaderIcon_fair on Fair {\n  name\n  profile {\n    icon {\n      desktop: cropped(width: 100, height: 100, version: \"square140\") {\n        src\n        srcSet\n      }\n      mobile: cropped(width: 60, height: 60, version: \"square140\") {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment FairHeaderImage_fair on Fair {\n  image {\n    url(version: \"wide\")\n  }\n}\n\nfragment FairHeader_fair on Fair {\n  ...FairHeaderIcon_fair\n  name\n  exhibitionPeriod\n}\n\nfragment FairMeta_fair on Fair {\n  name\n  slug\n  metaDescription: summary\n  metaImage: image {\n    src: url(version: \"large_rectangle\")\n  }\n}\n"
+    "text": "query FairApp_Test_Query {\n  fair(id: \"example\") {\n    ...FairApp_fair\n    id\n  }\n}\n\nfragment FairApp_fair on Fair {\n  internalID\n  href\n  slug\n  profile {\n    icon {\n      cropped(width: 60, height: 60, version: \"square140\") {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n  ...FairMeta_fair\n  ...FairHeader_fair\n  ...FairHeaderImage_fair\n  counts {\n    artworks\n  }\n}\n\nfragment FairHeaderIcon_fair on Fair {\n  name\n  profile {\n    icon {\n      desktop: cropped(width: 100, height: 100, version: \"square140\") {\n        src\n        srcSet\n      }\n      mobile: cropped(width: 60, height: 60, version: \"square140\") {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment FairHeaderImage_fair on Fair {\n  image {\n    url(version: \"wide\")\n  }\n}\n\nfragment FairHeader_fair on Fair {\n  ...FairHeaderIcon_fair\n  name\n  exhibitionPeriod\n}\n\nfragment FairMeta_fair on Fair {\n  name\n  slug\n  metaDescription: summary\n  metaImage: image {\n    src: url(version: \"large_rectangle\")\n  }\n}\n"
   }
 };
 })();
