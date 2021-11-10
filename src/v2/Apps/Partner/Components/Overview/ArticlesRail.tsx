@@ -1,5 +1,5 @@
-import { useState } from "react";
-import * as React from "react";
+import { useState } from "react"
+import * as React from "react"
 import { ResponsiveBox, Box, Flex, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Carousel } from "../Carousel"
@@ -23,7 +23,12 @@ const ArticlesRail: React.FC<ArticlesRailProps> = ({
   const [isSeeAllAvaliable, setIsSeeAllAvaliable] = useState<boolean>(undefined)
   return (
     <>
-      <Flex justifyContent="space-between" alignItems="center" mb={4}>
+      <Flex
+        justifyContent="space-between"
+        alignItems="center"
+        mb={4}
+        position="relative"
+      >
         <Text variant="title">Articles</Text>
 
         <ViewAllButton to={`/partner/${partnerSlug}/articles`} />
