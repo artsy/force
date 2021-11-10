@@ -1,12 +1,12 @@
 import { data as sd } from "sharify"
 
-const SEGMENT_WRITE_KEY = sd.SEGMENT_WRITE_KEY
 const SEGMENT_MAPPING = "C0001" // Segment itself assigned OneTrust Strictly Necessary category.
+const SEGMENT_WRITE_KEY = sd.SEGMENT_WRITE_KEY
+
+let ONETRUST_PREVIOUS_CONSENT = ""
 let SEGMENT_DESTINATIONS = []
 
 export function fetchSegmentDestinationsAndLoad() {
-  console.log("starting to load segment conditionally")
-
   fetchDestinations(SEGMENT_WRITE_KEY).then(destinations => {
     SEGMENT_DESTINATIONS = destinations
 
@@ -35,14 +35,10 @@ function waitForOneTrust() {
 }
 
 function oneTrustReady() {
-  // OneTrust is ready if OnetrustActiveGroups contains at least Strictly Necessary group.
-  if (
-    typeof window.OnetrustActiveGroups === "string" &&
-    window.OnetrustActiveGroups.split(",").includes("C0001")
-  ) {
-    return true
+  if (typeof window.Optanon === "undefined") {
+    return false
   }
-  return false
+  return true
 }
 
 async function fetchDestinations(writeKey) {
@@ -63,7 +59,14 @@ async function fetchDestinations(writeKey) {
 
 function getConsentAndLoadSegment() {
   // OneTrust stores consent in OnetrustActiveGroups.
-  const oneTrustConsent = window.OnetrustActiveGroups.split(",")
+  const oneTrustConsent = window.OnetrustActiveGroups
+
+  if (oneTrustConsent === ONETRUST_PREVIOUS_CONSENT) {
+    // consent didn't change, nothing to do.
+    return
+  }
+
+  ONETRUST_PREVIOUS_CONSENT = oneTrustConsent
 
   const destinationPreferences = setSegmentDestinationPref(
     oneTrustConsent,
@@ -78,18 +81,20 @@ function getConsentAndLoadSegment() {
 }
 
 function setSegmentDestinationPref(oneTrustConsent, destinations) {
-  // maps Segment destination's category to OneTrust cookie category.
+  // map Segment destination category to OneTrust cookie category.
   const segmentToOneTrust = {
     "SMS & Push Notifications": "C0001", // OneTrust Strictly Necessary
     Analytics: "C0002", // OneTrust Performance
     Advertising: "C0004", // OneTrust Targeting
   }
 
+  const consent = oneTrustConsent.split(",")
+
   const destinationPreferences = destinations
     .map(function (dest) {
       if (
         dest.category in segmentToOneTrust &&
-        oneTrustConsent.includes(segmentToOneTrust[dest.category])
+        consent.includes(segmentToOneTrust[dest.category])
       ) {
         return { [dest.id]: true }
       } else {
@@ -104,7 +109,7 @@ function setSegmentDestinationPref(oneTrustConsent, destinations) {
           ...acc,
         }
       },
-      { "Segment.io": oneTrustConsent.some(d => d === SEGMENT_MAPPING) }
+      { "Segment.io": consent.some(d => d === SEGMENT_MAPPING) }
     )
 
   return destinationPreferences
@@ -114,6 +119,7 @@ function conditionallyLoadAnalytics({
   writeKey,
   destinations,
   destinationPreferences,
+  shouldReload = true,
 }) {
   let isAnythingEnabled = false
 
@@ -124,9 +130,15 @@ function conditionallyLoadAnalytics({
     }
   }
 
-  if (isAnythingEnabled) {
-    console.log("loading segment conditionally")
+  if (window.analytics.initialized) {
+    // Segment has been initialized, a page reload is required to reload Segment.
+    if (shouldReload) {
+      window.location.reload()
+    }
+    return
+  }
 
+  if (isAnythingEnabled) {
     // @ts-ignore
     window.analytics.load(writeKey, { integrations: destinationPreferences })
   }
