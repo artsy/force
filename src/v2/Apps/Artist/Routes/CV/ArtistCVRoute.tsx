@@ -20,7 +20,7 @@ const ArtistCVRoute: React.FC<ArtistCVRouteProps> = ({ viewer }) => {
         />
         <ArtistCVGroupRefetchContainer
           artist={viewer.groupShows!}
-          title="Upcoming shows"
+          title="Group shows"
         />
         <ArtistCVGroupRefetchContainer
           artist={viewer.fairBooths!}
