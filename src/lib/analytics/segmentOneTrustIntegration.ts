@@ -7,6 +7,7 @@ let ONETRUST_PREVIOUS_CONSENT = ""
 let SEGMENT_DESTINATIONS = []
 
 export function fetchSegmentDestinationsAndLoad() {
+  console.log("fetch segment destinations")
   fetchDestinations(SEGMENT_WRITE_KEY).then(destinations => {
     SEGMENT_DESTINATIONS = destinations
 
@@ -28,6 +29,7 @@ function waitForOneTrust() {
   // wait 1sec at most.
   if (!oneTrustReady()) {
     const interval = setInterval(() => {
+      console.log("waiting for onetrust")
       if (oneTrustReady() || attempts > maxAttempts) clearInterval(interval)
       attempts++
     }, 10)
@@ -35,10 +37,14 @@ function waitForOneTrust() {
 }
 
 function oneTrustReady() {
-  if (typeof window.Optanon === "undefined") {
-    return false
+  // OneTrust is ready if OnetrustActiveGroups contains at least Strictly Necessary group.
+  if (
+    typeof window.OnetrustActiveGroups === "string" &&
+    window.OnetrustActiveGroups.split(",").includes("C0001")
+  ) {
+    return true
   }
-  return true
+  return false
 }
 
 async function fetchDestinations(writeKey) {
@@ -63,6 +69,7 @@ function getConsentAndLoadSegment() {
 
   if (oneTrustConsent === ONETRUST_PREVIOUS_CONSENT) {
     // consent didn't change, nothing to do.
+    console.log("consent same as before: ", oneTrustConsent)
     return
   }
 
@@ -134,12 +141,14 @@ function conditionallyLoadAnalytics({
   if (window.analytics.initialized) {
     // Segment has been initialized, a page reload is required to reload Segment.
     if (shouldReload) {
+      console.log("reload page")
       window.location.reload()
     }
     return
   }
 
   if (isAnythingEnabled) {
+    console.log("loading segment")
     // @ts-ignore
     window.analytics.load(writeKey, { integrations: destinationPreferences })
   }
