@@ -168,12 +168,6 @@ export const BaseArtworkFilter: React.FC<
   const { filtered_artworks } = viewer
   const hasFilter = filtered_artworks && filtered_artworks.id
 
-  console.log(
-    "enableCreateAlert && filterContext.hasFilters",
-    enableCreateAlert,
-    filterContext.hasFilters
-  )
-
   const showCreateAlert = enableCreateAlert && filterContext.hasFilters
 
   /**

@@ -78,7 +78,8 @@ export const SavedSearchAlertForm: React.FC<SavedSearchAlertFormProps> = ({
     <FormikProvider value={formik}>
       <Form onSubmit={formik.handleSubmit}>
         <Input
-          title="name"
+          title="Name"
+          name="name"
           placeholder={namePlaceholder}
           value={formik.values.name}
           onChange={formik.handleChange("name")}
