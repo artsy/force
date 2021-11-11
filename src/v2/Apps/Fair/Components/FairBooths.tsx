@@ -1,5 +1,5 @@
-import { useState } from "react";
-import * as React from "react";
+import { useState } from "react"
+import * as React from "react"
 import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
 import useDeepCompareEffect from "use-deep-compare-effect"
 import { Box, Flex, Spacer } from "@artsy/palette"
@@ -124,7 +124,8 @@ const FairBooths: React.FC<FairBoothsProps> = ({ fair, relay }) => {
       <LoadingArea isLoading={isLoading}>
         {fair.exhibitors?.edges!.map((edge, index) => {
           const show = edge?.node!
-          if (!show.isDisplayable) {
+
+          if (show.counts?.artworks === 0 || !show.partner) {
             // Skip rendering of booths without artworks
             return null
           }
@@ -196,7 +197,17 @@ export const FairBoothsFragmentContainer = createRefetchContainer(
           edges {
             node {
               id
-              isDisplayable
+              counts {
+                artworks
+              }
+              partner {
+                ... on Partner {
+                  id
+                }
+                ... on ExternalPartner {
+                  id
+                }
+              }
               ...FairBoothRail_show
             }
           }
