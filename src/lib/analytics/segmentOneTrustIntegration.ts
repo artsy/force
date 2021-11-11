@@ -5,19 +5,31 @@ const SEGMENT_WRITE_KEY = sd.SEGMENT_WRITE_KEY
 
 let PREVIOUS_CONSENT = ""
 let SEGMENT_DESTINATIONS = []
+let ONETRUST_ENABLED = false
 
-export function fetchSegmentDestinationsAndLoad() {
-  fetchDestinations(SEGMENT_WRITE_KEY).then(async destinations => {
-    SEGMENT_DESTINATIONS = destinations
-
-    await getConsentAndLoadSegment()
-
-    // OneTrust calls OptanonWrapper when there's a consent change.
-    window.OptanonWrapper = getConsentAndLoadSegment
-  })
+if (sd.ONETRUST_SCRIPT_ID) {
+  ONETRUST_ENABLED = true
 }
 
-async function getConsentAndLoadSegment() {
+export function loadSegment() {
+  if (ONETRUST_ENABLED) {
+    // OneTrust is enabled, load Segment based on OneTrust consent.
+    fetchDestinations(SEGMENT_WRITE_KEY).then(async destinations => {
+      SEGMENT_DESTINATIONS = destinations
+
+      await getConsentAndLoad()
+
+      // OneTrust calls OptanonWrapper when there's a consent change. Hook into it.
+      window.OptanonWrapper = getConsentAndLoad
+    })
+  } else {
+    // OneTrust is disabled. Load Segment normally - load all Segment destinations.
+    // @ts-ignore
+    window.analytics.load(SEGMENT_WRITE_KEY)
+  }
+}
+
+async function getConsentAndLoad() {
   const consent = await getConsent()
 
   if (consent === PREVIOUS_CONSENT) {
@@ -27,11 +39,13 @@ async function getConsentAndLoadSegment() {
 
   PREVIOUS_CONSENT = consent
 
+  // flag each Segment destination on or off, based on consent.
   const destinationPreferences = setSegmentDestinationPref(
     consent,
     SEGMENT_DESTINATIONS
   )
 
+  // load Segment and pass on those flags.
   conditionallyLoadAnalytics({
     writeKey: SEGMENT_WRITE_KEY,
     destinations: SEGMENT_DESTINATIONS,
@@ -61,6 +75,7 @@ async function getOneTrustConsent() {
   }
 
   if (oneTrustReady()) {
+    // OneTrust stores consent in window.OnetrustActiveGroups.
     return window.OnetrustActiveGroups
   } else {
     return ""
@@ -112,6 +127,7 @@ function setSegmentDestinationPref(consent, destinations) {
 
   const consentArray = consent.split(",")
 
+  // for each destination, if its category maps to a OneTrust category that is present in consent, set it true, to be enabled.
   const destinationPreferences = destinations
     .map(function (dest) {
       if (
@@ -120,7 +136,7 @@ function setSegmentDestinationPref(consent, destinations) {
       ) {
         return { [dest.id]: true }
       } else {
-        // if we don't have a mapping for the Segment category, or we do but there's no OneTrust consent.
+        // no mapping for the Segment category, or it maps to a OneTrust category that is not present in consent.
         return { [dest.id]: false }
       }
     })
@@ -131,6 +147,7 @@ function setSegmentDestinationPref(consent, destinations) {
           ...acc,
         }
       },
+      // tag on an entry for Segment.io destination.
       { "Segment.io": consentArray.some(d => d === SEGMENT_MAPPING) }
     )
 
