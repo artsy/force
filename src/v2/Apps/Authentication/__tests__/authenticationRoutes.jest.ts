@@ -103,6 +103,7 @@ describe("authenticationRoutes", () => {
 
   describe("#reset_password", () => {
     describe("onServerSideRender", () => {
+<<<<<<< HEAD
       it("sets session variables if reset_password_token is found", () => {
         const { req, onServerSideRender } = setup(
           "/reset_password?reset_password_token=foo&set_password=bar&reset_password_redirect_to=/home"
@@ -111,6 +112,10 @@ describe("authenticationRoutes", () => {
         expect(req.session.reset_password_token).toEqual("foo")
         expect(req.session.set_password).toEqual("bar")
         expect(req.session.reset_password_redirect_to).toEqual("/home")
+=======
+      it("runs middleware", () => {
+        setup("/reset_password").onServerSideRender()
+>>>>>>> wip
         expect(mockCheckForRedirect).toHaveBeenCalled()
         expect(mockSetReferer).toHaveBeenCalled()
       })

@@ -10,16 +10,12 @@ interface AuthStaticProps extends BoxProps {
   type: ModalType
   meta: { title?: string }
   options: ModalOptions
-  isMigration?: boolean
 }
 
 export const AuthStatic: React.FC<AuthStaticProps> = ({
   type,
   meta: { title },
   options,
-
-  // TODO: fix
-  isMigration,
   ...rest
 }) => {
   return (
@@ -42,9 +38,9 @@ export const AuthStatic: React.FC<AuthStaticProps> = ({
           submitUrls={{
             apple: "/users/auth/apple",
             facebook: "/users/auth/facebook",
-            forgot: isMigration ? "/forgot_password2" : "/forgot_password",
-            login: isMigration ? "/log_in2" : "/log_in",
-            signup: isMigration ? "/sign_up2" : "/sign_up",
+            forgot: "/forgot_password",
+            login: "/log_in",
+            signup: "/sign_up",
           }}
           showRecaptchaDisclaimer
           options={options}
