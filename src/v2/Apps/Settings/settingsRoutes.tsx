@@ -159,6 +159,13 @@ export const settingsRoutes: AppRouteConfig[] = [
         prepare: () => {
           SettingsRoute.preload()
         },
+        query: graphql`
+          query settingsRoutes_SettingsEditProfileRouteQuery {
+            me {
+              ...SettingsEditProfileRoute_me
+            }
+          }
+        `,
       },
       {
         path: "shipping",

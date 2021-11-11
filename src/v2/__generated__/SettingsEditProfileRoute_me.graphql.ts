@@ -4,7 +4,12 @@
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type SettingsEditProfileRoute_me = {
+    readonly email: string | null;
     readonly name: string | null;
+    readonly paddleNumber: string | null;
+    readonly phone: string | null;
+    readonly internalID: string;
+    readonly " $fragmentRefs": FragmentRefs<"UserInformation_me">;
     readonly " $refType": "SettingsEditProfileRoute_me";
 };
 export type SettingsEditProfileRoute_me$data = SettingsEditProfileRoute_me;
@@ -25,11 +30,44 @@ const node: ReaderFragment = {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
+      "name": "email",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
       "name": "name",
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "paddleNumber",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "phone",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "internalID",
+      "storageKey": null
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "UserInformation_me"
     }
   ],
   "type": "Me"
 };
-(node as any).hash = '57f19d27ac6573fc5a1b53ac83eb74ae';
+(node as any).hash = 'c80c7088bfe9fad87ef872a8e9924ed8';
 export default node;
