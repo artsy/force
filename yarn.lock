@@ -11,16 +11,14 @@
     lodash "^4.17.21"
     prettier "^1.19.1"
 
-"@artsy/backbone-mixins@2.0.0":
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/@artsy/backbone-mixins/-/backbone-mixins-2.0.0.tgz#8a7cd00c3f961f10fa457249d7c7db42dda1bdc5"
-  integrity sha512-xiz+s4xSItiHAC3gf50lihCj+vUVIq1hp9ZQyTfQMvv8oYhvFE+OVBqwFeQ8CmhOk2ujtVlkmK5TDwdR8OYhNw==
+"@artsy/backbone-mixins@3.0.0":
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/@artsy/backbone-mixins/-/backbone-mixins-3.0.0.tgz#e1344f66be7292b909758814d9cce171f475a644"
+  integrity sha512-N5su2OkaIHcRjHV1ECsfiqYrLwvdv+XVb6Sqx8XRJFCIzSBlRSTyE43McJJeHyl+fW9kV8YkZyj8YMMXqdDg3g==
   dependencies:
-    ics "^0.4.1"
-    marked "*"
-    moment "^2.11.1"
-    qs "5.2.0"
-    underscore "*"
+    marked "^1.2.8"
+    qs "^6.9.6"
+    underscore "^1.12.1"
 
 "@artsy/cohesion@1.60.0":
   version "1.60.0"
@@ -11070,11 +11068,6 @@ iconv-lite@^0.6.2:
   dependencies:
     safer-buffer ">= 2.1.2 < 3.0.0"
 
-ics@^0.4.1:
-  version "0.4.2"
-  resolved "https://registry.yarnpkg.com/ics/-/ics-0.4.2.tgz#5f122102e1cad8fdfee9cb9fd5511e8df0ca9b42"
-  integrity sha1-XxIhAuHK2P3+6cuf1VEejfDKm0I=
-
 icss-utils@^4.0.0, icss-utils@^4.1.1:
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/icss-utils/-/icss-utils-4.1.1.tgz#21170b53789ee27447c2f47dd683081403f9a467"
@@ -14175,10 +14168,10 @@ markdown-to-jsx@^7.1.3:
   resolved "https://registry.yarnpkg.com/markdown-to-jsx/-/markdown-to-jsx-7.1.3.tgz#f00bae66c0abe7dd2d274123f84cb6bd2a2c7c6a"
   integrity sha512-jtQ6VyT7rMT5tPV0g2EJakEnXLiPksnvlYtwQsVVZ611JsWGN8bQ1tVSDX4s6JllfEH6wmsYxNjTUAMrPmNA8w==
 
-marked@*:
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/marked/-/marked-1.1.1.tgz#e5d61b69842210d5df57b05856e0c91572703e6a"
-  integrity sha512-mJzT8D2yPxoPh7h0UXkB+dBj4FykPJ2OIfxAWeIHrvoHDkFxukV/29QxoFQoPM6RLEwhIFdJpmKBlqVM3s2ZIw==
+marked@^1.2.8:
+  version "1.2.9"
+  resolved "https://registry.yarnpkg.com/marked/-/marked-1.2.9.tgz#53786f8b05d4c01a2a5a76b7d1ec9943d29d72dc"
+  integrity sha512-H8lIX2SvyitGX+TRdtS06m1jHMijKN/XjfH6Ooii9fvxMlh8QdqBfBDkGUpMWH2kQNrtixjzYUa3SH8ROTgRRw==
 
 math-js@^0.0.4:
   version "0.0.4"
@@ -14602,7 +14595,7 @@ moment-twitter@0.2.0:
   dependencies:
     moment "~2.4.0"
 
-moment@2.22.2, "moment@>= 2.9.0", moment@^2.11.1, moment@^2.27.0, moment@~2.4.0:
+moment@2.22.2, "moment@>= 2.9.0", moment@^2.27.0, moment@~2.4.0:
   version "2.22.2"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.22.2.tgz#3c257f9839fc0e93ff53149632239eb90783ff66"
   integrity sha1-PCV/mDn8DpP/UxSWMiOeuQeD/2Y=
@@ -16539,11 +16532,6 @@ qrcode.react@1.0.0:
     prop-types "^15.6.0"
     qr.js "0.0.0"
 
-qs@5.2.0:
-  version "5.2.0"
-  resolved "https://registry.yarnpkg.com/qs/-/qs-5.2.0.tgz#a9f31142af468cb72b25b30136ba2456834916be"
-  integrity sha1-qfMRQq9GjLcrJbMBNrokVoNJFr4=
-
 qs@6.5.2, qs@~6.5.2:
   version "6.5.2"
   resolved "https://registry.yarnpkg.com/qs/-/qs-6.5.2.tgz#cb3ae806e8740444584ef154ce8ee98d403f3e36"
@@ -16559,7 +16547,7 @@ qs@^6.0.2, qs@^6.5.0, qs@^6.5.1:
   resolved "https://registry.yarnpkg.com/qs/-/qs-6.9.6.tgz#26ed3c8243a431b2924aca84cc90471f35d5a0ee"
   integrity sha512-TIRk4aqYLNoJUbd+g2lEdz5kLWIuTMRagAXxl78Q0RiVjAOugHmeKNGdd3cwo/ktpf9aL9epCfFqWDEKysUlLQ==
 
-qs@^6.10.0:
+qs@^6.10.0, qs@^6.9.6:
   version "6.10.1"
   resolved "https://registry.yarnpkg.com/qs/-/qs-6.10.1.tgz#4931482fa8d647a5aab799c5271d2133b981fb6a"
   integrity sha512-M528Hph6wsSVOBiYUnGf+K/7w0hNshs/duGsNXPUCLH5XAqjEtiPGwNONLV0tBH8NoGb0mvD5JubnUTrujKDTg==
