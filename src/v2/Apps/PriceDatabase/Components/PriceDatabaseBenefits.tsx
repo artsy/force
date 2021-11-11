@@ -28,7 +28,7 @@ export const PriceDatabaseBenefits: React.FC = () => {
 
       <Section
         title="The largest publicly available art market database"
-        text="With nearly 6.5 million auction records, our growing database encompasses over 900 auction houses with pricing that dates back to 1986. Get real-time records from history-making auction houses like Christie's, Sotheby's, Phillips, Bonhams, and more."
+        text="With millions of auction records, our growing database encompasses over 900 auction houses with pricing that dates back to 1986. Get real-time records from history-making auction houses like Christie's, Sotheby's, Phillips, Bonhams, and more."
         jsx={<PopularArtistsList />}
       />
 
