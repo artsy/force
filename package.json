@@ -77,7 +77,7 @@
     "superagent": "3.8.3"
   },
   "dependencies": {
-    "@artsy/backbone-mixins": "2.0.0",
+    "@artsy/backbone-mixins": "3.0.0",
     "@artsy/cohesion": "4.19.0",
     "@artsy/eigen-web-association": "^1.2.1",
     "@artsy/express-reloadable": "1.6.0",
