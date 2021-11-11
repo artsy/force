@@ -5,7 +5,7 @@ import {
   SharedArtworkFilterContextProps,
 } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
 import { updateUrl } from "v2/Components/ArtworkFilter/Utils/urlBuilder"
-import * as React from "react";
+import * as React from "react"
 import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
 import { MediumFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/MediumFilter"
 import { PriceRangeFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/PriceRangeFilter"
@@ -39,7 +39,7 @@ const FairArtworksFilter: React.FC<FairArtworksFilterProps> = props => {
   // we still want to render the rest of the page.
   if (!hasFilter) return null
 
-  // @ts-expect-error STRICT_NULL_CHECK
+  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
   const { counts } = filtered_artworks
 
   // TODO: You shouldn't have to pass `relayEnvironment` and `user` through below.
@@ -82,7 +82,7 @@ const FairArtworksFilter: React.FC<FairArtworksFilterProps> = props => {
       ]}
       onChange={updateUrl}
       aggregations={
-        // @ts-expect-error STRICT_NULL_CHECK
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         sidebarAggregations.aggregations as SharedArtworkFilterContextProps["aggregations"]
       }
     >

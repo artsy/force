@@ -1,6 +1,6 @@
 import { Box } from "@artsy/palette"
-import { useState } from "react";
-import * as React from "react";
+import { useState } from "react"
+import * as React from "react"
 import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
 import { PaginationFragmentContainer } from "v2/Components/Pagination"
 import { LoadingArea } from "v2/Components/LoadingArea"
@@ -36,7 +36,7 @@ const ShowPaginatedEvents: React.FC<ShowEventsProps> = ({
   const [isLoading, setIsLoading] = useState(false)
 
   if (!partner.showsList) {
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     return null
   }
 
@@ -82,14 +82,14 @@ const ShowPaginatedEvents: React.FC<ShowEventsProps> = ({
   }
 
   const handleNext = (page: number) => {
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     handleClick(endCursor, page)
   }
 
   return (
     <Box id={scrollTo.substring(1)}>
       <LoadingArea isLoading={isLoading}>
-        {/* @ts-expect-error STRICT_NULL_CHECK */}
+        {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
         <ShowEventsFragmentContainer edges={shows} eventTitle={eventTitle} />
       </LoadingArea>
 

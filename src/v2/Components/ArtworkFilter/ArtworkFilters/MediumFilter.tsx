@@ -1,5 +1,5 @@
 import { Checkbox, Flex, useThemeConfig } from "@artsy/palette"
-import { FC } from "react";
+import { FC } from "react"
 import { useArtworkFilterContext } from "../ArtworkFilterContext"
 import { ShowMore, INITIAL_ITEMS_TO_SHOW } from "./ShowMore"
 import { intersection } from "lodash"
@@ -12,7 +12,7 @@ export interface MediumFilterProps {
 
 export const MediumFilter: FC<MediumFilterProps> = ({ expanded }) => {
   const { aggregations, counts, ...filterContext } = useArtworkFilterContext()
-  // @ts-expect-error STRICT_NULL_CHECK
+  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
   const mediums = aggregations.find(agg => agg.slice === "MEDIUM") || {
     slice: "",
     counts: [],
@@ -21,7 +21,7 @@ export const MediumFilter: FC<MediumFilterProps> = ({ expanded }) => {
     mediums && mediums.counts.length ? mediums.counts : hardcodedMediums
 
   const toggleMediumSelection = (selected, slug) => {
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     let geneIDs = filterContext
       .currentlySelectedFilters()
       .additionalGeneIDs.slice()
@@ -33,11 +33,11 @@ export const MediumFilter: FC<MediumFilterProps> = ({ expanded }) => {
     filterContext.setFilter("additionalGeneIDs", geneIDs)
   }
 
-  // @ts-expect-error STRICT_NULL_CHECK
+  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
   const currentFilters = filterContext.currentlySelectedFilters()
   const hasBelowTheFoldMediumFilter =
     intersection(
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       currentFilters.additionalGeneIDs,
       allowedMediums.slice(INITIAL_ITEMS_TO_SHOW).map(({ value }) => value)
     ).length > 0
@@ -47,7 +47,7 @@ export const MediumFilter: FC<MediumFilterProps> = ({ expanded }) => {
     v3: { my: 1 },
   })
   const resultsSorted = sortResults(
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     currentFilters.additionalGeneIDs,
     allowedMediums
   )
@@ -55,7 +55,7 @@ export const MediumFilter: FC<MediumFilterProps> = ({ expanded }) => {
   return (
     <FilterExpandable
       label="Medium"
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       expanded={(!counts.artworks || counts.artworks > 0) && expanded}
     >
       <Flex flexDirection="column" alignItems="left">
@@ -64,7 +64,7 @@ export const MediumFilter: FC<MediumFilterProps> = ({ expanded }) => {
             return (
               <Checkbox
                 selected={
-                  // @ts-expect-error STRICT_NULL_CHECK
+                  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
                   currentFilters.additionalGeneIDs.includes(slug) ||
                   currentFilters.medium === slug
                 }

@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"
 import { ContextModule } from "@artsy/cohesion"
 import { createFragmentContainer, graphql } from "react-relay"
 import { EntityHeader } from "@artsy/palette"
@@ -26,7 +26,7 @@ const ShowPartnerEntityHeader: React.FC<ShowPartnerEntityHeaderProps> = ({
   const canFollow =
     partner && partner.type !== "Auction House" && !!partner.profile
   const locationNames = limitWithCount(
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     filterLocations(partner.locations),
     2
   ).join(", ")

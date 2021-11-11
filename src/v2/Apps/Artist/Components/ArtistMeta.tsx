@@ -1,7 +1,7 @@
 import { ArtistMeta_artist } from "v2/__generated__/ArtistMeta_artist.graphql"
 import { Person as SeoDataForArtist } from "v2/Components/Seo/Person"
 import { identity, pickBy } from "lodash"
-import { Component } from "react";
+import { Component } from "react"
 import { Meta } from "react-head"
 import { createFragmentContainer, graphql } from "react-relay"
 import { data as sd } from "sharify"
@@ -12,7 +12,7 @@ interface Props {
   artist: ArtistMeta_artist
 }
 
-// @ts-expect-error STRICT_NULL_CHECK
+// @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
 type ArtworkNode = ArtistMeta_artist["artworks_connection"]["edges"][0]["node"]
 
 export const sellerFromPartner = (partner: ArtworkNode["partner"]) => {
@@ -55,7 +55,7 @@ export const imageObjectAttributes = (item: ItemWithImage) => {
 }
 
 export const offersAttributes = (artist: ArtistMeta_artist) => {
-  // @ts-expect-error STRICT_NULL_CHECK
+  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
   const { edges } = artist.artworks_connection
 
   const offers =
@@ -159,16 +159,16 @@ export const structuredDataAttributes = (artist: ArtistMeta_artist) => {
 export class ArtistMeta extends Component<Props> {
   renderImageMetaTags() {
     const { artist } = this.props
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     const hasImage = artist.image && artist.image.versions.length
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     if (hasImage && artist.image.versions.indexOf("large") !== -1) {
       return (
         <>
           <Meta property="twitter:card" content="summary_large_image" />
-          {/* @ts-expect-error STRICT_NULL_CHECK */}
+          {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
           <Meta property="og:image" content={artist.image.large} />
-          {/* @ts-expect-error STRICT_NULL_CHECK */}
+          {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
           <Meta name="thumbnail" content={artist.image.square} />
         </>
       )
@@ -183,7 +183,7 @@ export class ArtistMeta extends Component<Props> {
 
   maybeRenderNoIndex() {
     const { artist } = this.props
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     if (artist.counts.artworks === 0 && !artist.blurb) {
       return (
         <>
@@ -205,13 +205,13 @@ export class ArtistMeta extends Component<Props> {
       <>
         <ArtistMetaCanonicalLink artist={artist} />
 
-        {/* @ts-expect-error STRICT_NULL_CHECK */}
+        {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
         <Meta name="description" content={artist.meta.description} />
-        {/* @ts-expect-error STRICT_NULL_CHECK */}
+        {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
         <Meta property="og:description" content={artist.meta.description} />
         <Meta
           property="twitter:description"
-          // @ts-expect-error STRICT_NULL_CHECK
+          // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
           content={artist.meta.description}
         />
         <Meta property="og:url" href={`${sd.APP_URL}/artist/${artist.slug}`} />

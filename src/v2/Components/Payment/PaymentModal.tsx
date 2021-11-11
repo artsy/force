@@ -1,5 +1,5 @@
-import { useState } from "react";
-import * as React from "react";
+import { useState } from "react"
+import * as React from "react"
 import { Button, Modal, Spacer, Text } from "@artsy/palette"
 import { Formik, FormikHelpers, FormikProps } from "formik"
 import {
@@ -29,7 +29,7 @@ const onCreditCardAdded = (
   data: PaymentModalCreateCreditCardMutation["response"]
 ): void => {
   const {
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     createCreditCard: { creditCardOrError },
   } = data
 
@@ -37,7 +37,7 @@ const onCreditCardAdded = (
   if (creditCardOrError.creditCardEdge) {
     const meStore = store.get(me.id)
     const connection = ConnectionHandler.getConnection(
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       meStore,
       "PaymentSection_creditCards"
     )
@@ -48,7 +48,7 @@ const onCreditCardAdded = (
     const creditCardEdge = creditCardOrErrorEdge.getLinkedRecord(
       "creditCardEdge"
     )
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     ConnectionHandler.insertEdgeAfter(connection, creditCardEdge)
   }
 }
@@ -110,19 +110,19 @@ export const PaymentModal: React.FC<PaymentModalProps> = props => {
       address_country: values.country,
     }
 
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     const cardElement = elements.getElement(CardElement)
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     const stripeResults = await stripe.createToken(cardElement, billingAddress)
     const { token, error } = stripeResults
     if (error) {
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       setCreateError(error.message)
     } else {
       commitMutation<PaymentModalCreateCreditCardMutation>(relay.environment, {
         onCompleted: (data, errors) => {
           const {
-            // @ts-expect-error STRICT_NULL_CHECK
+            // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
             createCreditCard: { creditCardOrError },
           } = data
           actions?.setSubmitting(false)
@@ -132,14 +132,14 @@ export const PaymentModal: React.FC<PaymentModalProps> = props => {
             if (errors) {
               // TODO: user freindly message?
               setCreateError(
-                // @ts-expect-error STRICT_NULL_CHECK
+                // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
                 `Failed. ${errors
                   .map((e: PayloadError) => e.message)
                   .join(", ")}`
               )
             } else {
               const mutationError = creditCardOrError.mutationError
-              // @ts-expect-error STRICT_NULL_CHECK
+              // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
               setCreateError(`Failed. ${mutationError.message}`)
             }
           }
@@ -147,12 +147,12 @@ export const PaymentModal: React.FC<PaymentModalProps> = props => {
         onError: error => {
           actions?.setSubmitting(false)
           logger.error(error)
-          // @ts-expect-error STRICT_NULL_CHECK
+          // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
           setCreateError("Failed.")
         },
         mutation,
         variables: {
-          // @ts-expect-error STRICT_NULL_CHECK
+          // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
           input: { token: token.id },
         },
         updater: (store, data) => {

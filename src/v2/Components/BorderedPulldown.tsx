@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"
 
 import styled from "styled-components"
 import colors from "../Assets/Colors"
@@ -53,7 +53,7 @@ export class BorderedPulldown extends React.Component<
     })
 
     const displayValue =
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       (this.state.selected && this.state.selected.name) ||
       selectedName ||
       defaultValue

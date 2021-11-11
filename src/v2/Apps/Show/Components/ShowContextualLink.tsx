@@ -1,5 +1,5 @@
 import { Box, Text } from "@artsy/palette"
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Media } from "v2/Utils/Responsive"
 import { ShowContextualLink_show } from "v2/__generated__/ShowContextualLink_show.graphql"
@@ -37,11 +37,11 @@ export const ContextualLink: React.FC<Props> = ({ show }) => {
   if (isFairBooth) {
     return (
       <>
-        {/* @ts-expect-error STRICT_NULL_CHECK */}
+        {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
         {fair.isActive && (
           <Box>
             <Text variant="sm">
-              {/* @ts-expect-error STRICT_NULL_CHECK */}
+              {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
               Part of <RouterLink to={fairHref}>{fairName}</RouterLink>
             </Text>
           </Box>

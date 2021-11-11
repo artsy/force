@@ -7,7 +7,7 @@ import { track } from "v2/System/Analytics"
 import * as Schema from "v2/System/Analytics/Schema"
 import ArtworkGrid from "v2/Components/ArtworkGrid"
 import { take } from "lodash"
-import { Component } from "react";
+import { Component } from "react"
 import styled from "styled-components"
 import createLogger from "v2/Utils/logger"
 import { ContextModule } from "@artsy/cohesion"
@@ -76,7 +76,7 @@ class RelatedWorksArtworkGrid extends Component<
 
     // The layer might have failed to fetch, so we use the `get` helper
     // instead of ordinary destructuring.
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     const artworksConnection = get(layer, l => l.artworksConnection)
 
     if (hideGrid(artworksConnection)) {
@@ -85,7 +85,7 @@ class RelatedWorksArtworkGrid extends Component<
 
     // For sale artworks are already rendered on the page so we filter them from related works
     const names = take(
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       layers.filter(l => l.name !== "For Sale"),
       MAX_TAB_ITEMS
     )
@@ -100,9 +100,9 @@ class RelatedWorksArtworkGrid extends Component<
 
         <Spacer mt={4} />
 
-        {/* @ts-expect-error STRICT_NULL_CHECK */}
+        {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
         <Tabs onChange={this.handleTabClick}>
-          {/* @ts-expect-error STRICT_NULL_CHECK */}
+          {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
           {names.map(({ name, internalID }, key) => {
             return (
               <Tab name={name} key={key} data={{ layerId: internalID }}>
@@ -112,7 +112,7 @@ class RelatedWorksArtworkGrid extends Component<
                   ) : (
                     <ArtworkGrid
                       contextModule={ContextModule.relatedWorksRail}
-                      // @ts-expect-error STRICT_NULL_CHECK
+                      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
                       artworks={artworksConnection}
                       columnCount={[2, 3, 4, 4]}
                       mediator={mediator}

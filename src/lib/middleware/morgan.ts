@@ -55,13 +55,13 @@ type Options = {
 
 export function morganMiddleware(options: Options): RequestHandler {
   if (options.development) {
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     return morgan("dev", {
       skip: options.logAssets ? null : skipAssets,
     })
   }
   return morgan(logFormat, {
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     skip: options.logAssets ? null : skipAssets,
   })
 }

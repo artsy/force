@@ -13,8 +13,8 @@ import {
 } from "@artsy/palette"
 import { CCPARequestMutation } from "v2/__generated__/CCPARequestMutation.graphql"
 import { useSystemContext } from "v2/System"
-import { useEffect, useState } from "react";
-import * as React from "react";
+import { useEffect, useState } from "react"
+import * as React from "react"
 import { commitMutation, graphql } from "react-relay"
 import styled from "styled-components"
 import { ErrorWithMetadata } from "v2/Utils/errors"
@@ -208,7 +208,7 @@ const sendDataRequest = ({
     },
     onCompleted: data => {
       const {
-        // @ts-expect-error STRICT_NULL_CHECK
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         createAccountRequest: { accountRequestOrError },
       } = data
       if (accountRequestOrError.mutationError) {
@@ -237,7 +237,7 @@ export const CCPARequest: React.SFC<Props> = props => {
   const [clickedSubmit, setClickedSubmit] = useState(false)
   const [submitted, setSubmitted] = useState(false)
 
-  // @ts-expect-error STRICT_NULL_CHECK
+  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
   const userEmail = get(props, p => p.user.email)
 
   const modalContents = submitted ? (

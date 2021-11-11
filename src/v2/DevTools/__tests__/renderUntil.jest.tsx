@@ -1,5 +1,5 @@
 import { mount } from "enzyme"
-import * as React from "react";
+import * as React from "react"
 import { Responsive } from "v2/Utils/Responsive"
 import { MockBoot } from "../MockBoot"
 import { renderUntil } from "../renderUntil"
@@ -37,7 +37,7 @@ describe("renderUntil", () => {
       const states = []
       await mount(<Component />).renderUntil(tree => {
         const text = tree.find("div").text()
-        // @ts-expect-error STRICT_NULL_CHECK
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         states.push(text)
         return text !== "Loading"
       })
@@ -57,7 +57,7 @@ describe("renderUntil", () => {
       const states = []
       await renderUntil(wrapper => {
         const text = wrapper.find("div").text()
-        // @ts-expect-error STRICT_NULL_CHECK
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         states.push(text)
         return text !== "Loading"
       }, <Component />)

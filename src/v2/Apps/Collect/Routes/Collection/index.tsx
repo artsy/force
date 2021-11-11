@@ -7,7 +7,7 @@ import { SystemContextProps, withSystemContext } from "v2/System/SystemContext"
 import { FrameWithRecentlyViewed } from "v2/Components/FrameWithRecentlyViewed"
 import { RelatedCollectionsRailFragmentContainer as RelatedCollectionsRail } from "v2/Components/RelatedCollectionsRail/RelatedCollectionsRail"
 import { BreadCrumbList } from "v2/Components/Seo"
-import * as React from "react";
+import * as React from "react"
 import { Title } from "react-head"
 import { RelayRefetchProp, graphql, createFragmentContainer } from "react-relay"
 import { data as sd } from "sharify"
@@ -87,18 +87,18 @@ export const CollectionApp: React.FC<CollectionAppProps> = props => {
 
       {artworksConnection && (
         <SeoProductsForCollections
-          // @ts-expect-error STRICT_NULL_CHECK
+          // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
           descending_artworks={descending_artworks}
-          // @ts-expect-error STRICT_NULL_CHECK
+          // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
           ascending_artworks={ascending_artworks}
-          // @ts-expect-error STRICT_NULL_CHECK
+          // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
           collectionDescription={description}
           collectionURL={collectionHref}
           collectionName={title}
         />
       )}
 
-      {/* @ts-expect-error STRICT_NULL_CHECK */}
+      {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
       <CollectionHeader collection={collection} artworks={artworksConnection} />
 
       <FrameWithRecentlyViewed>

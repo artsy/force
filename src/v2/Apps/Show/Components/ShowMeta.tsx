@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"
 import { Link, Meta, Title } from "react-head"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ShowMeta_show } from "v2/__generated__/ShowMeta_show.graphql"
@@ -22,7 +22,7 @@ const ShowMeta: React.FC<ShowMetaProps> = ({
   const title = `${name} | Artsy`
   const href = `${getENV("APP_URL")}/show/${slug}`
 
-  // @ts-expect-error STRICT_NULL_CHECK
+  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
   const fallbackDescription = `Explore ${name} from ${partner.name} on Artsy. ${formattedStartAt} - ${formattedEndAt}.`
   const description = metaDescription || fallbackDescription
   return (

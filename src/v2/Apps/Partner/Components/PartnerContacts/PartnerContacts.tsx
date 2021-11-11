@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"
 import { PartnerContacts_edges } from "v2/__generated__/PartnerContacts_edges.graphql"
 import { Column, GridColumns } from "@artsy/palette"
 import { PartnerContactCardFragmentContainer as PartnerContactCard } from "./PartnerContactCard"
@@ -17,9 +17,9 @@ export const PartnerContacts: React.FC<ContactRouteProps> = ({ edges }) => {
         .filter(edge => !!edge && !!edge.node)
         .map(edge => {
           return (
-            // @ts-expect-error STRICT_NULL_CHECK
+            // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
             <Column key={edge.node.id} span={12}>
-              {/* @ts-expect-error STRICT_NULL_CHECK */}
+              {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
               <PartnerContactCard location={edge.node} />
             </Column>
           )

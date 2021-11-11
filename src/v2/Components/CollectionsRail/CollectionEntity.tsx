@@ -3,7 +3,7 @@ import { CollectionEntity_collection } from "v2/__generated__/CollectionEntity_c
 import { track } from "v2/System/Analytics"
 import * as Schema from "v2/System/Analytics/Schema"
 import currency from "currency.js"
-import { Component } from "react";
+import { Component } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { data as sd } from "sharify"
 import styled from "styled-components"
@@ -57,7 +57,7 @@ export class CollectionEntity extends Component<CollectionProps> {
           onClick={this.onLinkClick.bind(this)}
         >
           <Background
-            // @ts-expect-error STRICT_NULL_CHECK
+            // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
             collectionImage={resize(collection.headerImage, {
               width: 645,
               height: 275,
@@ -66,7 +66,8 @@ export class CollectionEntity extends Component<CollectionProps> {
           />
           <CollectionTitle size="4">{collection.title}</CollectionTitle>
           <Sans size="2">
-            Works from ${/* @ts-expect-error STRICT_NULL_CHECK */}
+            Works from $
+            {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
             {currency(collection.price_guidance, {
               separator: ",",
               precision: 0,

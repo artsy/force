@@ -6,7 +6,7 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ShowContextCard_show } from "v2/__generated__/ShowContextCard_show.graphql"
 import { FairTimingFragmentContainer as FairTiming } from "v2/Apps/Fair/Components/FairHeader/FairTiming"
@@ -55,14 +55,14 @@ export const ShowContextCard: React.FC<Props> = ({ show }) => {
       const payload: ClickedFairCard = {
         action: ActionType.clickedFairCard,
         context_module: ContextModule.presentingFair,
-        // @ts-expect-error STRICT_NULL_CHECK
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         context_page_owner_type: contextPageOwnerType,
         context_page_owner_id: contextPageOwnerId,
         context_page_owner_slug: contextPageOwnerSlug,
         destination_page_owner_type: OwnerType.fair,
-        // @ts-expect-error STRICT_NULL_CHECK
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         destination_page_owner_id: fair.internalID,
-        // @ts-expect-error STRICT_NULL_CHECK
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         destination_page_owner_slug: fair.slug,
         type: "thumbnail",
       }
@@ -72,25 +72,25 @@ export const ShowContextCard: React.FC<Props> = ({ show }) => {
 
     return (
       <GridColumns>
-        {/* @ts-expect-error STRICT_NULL_CHECK */}
+        {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
         {fair.isActive && (
           <Column span={6}>
-            {/* @ts-expect-error STRICT_NULL_CHECK */}
+            {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
             <Text variant="lg">Part of {fair.name}</Text>
           </Column>
         )}
         <Column span={6}>
-          {/* @ts-expect-error STRICT_NULL_CHECK */}
+          {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
           <StyledLink noUnderline to={fair.href} onClick={handleClick}>
-            {/* @ts-expect-error STRICT_NULL_CHECK */}
+            {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
             <FairCard fair={fair} />
 
             <Spacer mb={2} />
             <Box>
-              {/* @ts-expect-error STRICT_NULL_CHECK */}
+              {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
               <Text variant="xl">{fair.name}</Text>
 
-              {/* @ts-expect-error STRICT_NULL_CHECK */}
+              {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
               <FairTiming fair={fair} />
             </Box>
           </StyledLink>
@@ -103,7 +103,7 @@ export const ShowContextCard: React.FC<Props> = ({ show }) => {
     const partnerHref = partner?.href
     const partnerName = partner?.name
     const imageUrls = compact(
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       partner?.artworksConnection?.edges?.map(({ node }) => node?.image?.url)
     )
 
@@ -113,7 +113,7 @@ export const ShowContextCard: React.FC<Props> = ({ show }) => {
     })
 
     const locationNames = limitWithCount(
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       filterLocations(partner.locations),
       2
     ).join(", ")
@@ -122,14 +122,14 @@ export const ShowContextCard: React.FC<Props> = ({ show }) => {
       const payload: ClickedPartnerCard = {
         action: ActionType.clickedPartnerCard,
         context_module: ContextModule.presentingPartner,
-        // @ts-expect-error STRICT_NULL_CHECK
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         context_page_owner_type: contextPageOwnerType,
         context_page_owner_id: contextPageOwnerId,
         context_page_owner_slug: contextPageOwnerSlug,
         destination_page_owner_type: OwnerType.partner,
-        // @ts-expect-error STRICT_NULL_CHECK
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         destination_page_owner_id: partner.internalID,
-        // @ts-expect-error STRICT_NULL_CHECK
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         destination_page_owner_slug: partner.slug,
         type: "thumbnail",
       }
@@ -143,7 +143,7 @@ export const ShowContextCard: React.FC<Props> = ({ show }) => {
           <Text variant="lg">Presented by {partnerName}</Text>
         </Column>
         <Column span={6}>
-          {/* @ts-expect-error STRICT_NULL_CHECK */}
+          {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
           <StyledLink to={partnerHref} noUnderline onClick={handleClick}>
             <TriptychCard
               title={partnerName}

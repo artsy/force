@@ -2,7 +2,7 @@ import { Text, Image } from "@artsy/palette"
 import { OtherCollectionEntity_member } from "v2/__generated__/OtherCollectionEntity_member.graphql"
 import { useTracking } from "v2/System/Analytics/useTracking"
 import { RouterLink } from "v2/System/Router/RouterLink"
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ContextModule, clickedCollectionGroup } from "@artsy/cohesion"
 import { useAnalyticsContext } from "v2/System/Analytics/AnalyticsContext"
@@ -30,7 +30,7 @@ export const OtherCollectionEntity: React.FC<CollectionProps> = ({
         contextModule: ContextModule.otherCollectionsRail,
         contextPageOwnerId,
         contextPageOwnerSlug,
-        // @ts-expect-error STRICT_NULL_CHECK
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         contextPageOwnerType,
         destinationPageOwnerId: id,
         destinationPageOwnerSlug: slug,

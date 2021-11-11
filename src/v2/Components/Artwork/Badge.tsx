@@ -1,6 +1,6 @@
 import { Flex, Text } from "@artsy/palette"
 import { Badge_artwork } from "v2/__generated__/Badge_artwork.graphql"
-import { Component } from "react";
+import { Component } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
 import { get } from "v2/Utils/get"
@@ -22,7 +22,7 @@ class Badge extends Component<BadgeProps> {
 
     return get(
       this.props,
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       p => p.width / devicePixelRatio < MIN_IMAGE_SIZE,
       false
     )

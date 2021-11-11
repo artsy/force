@@ -14,7 +14,7 @@ import { Pagination } from "@artsy/palette"
 jest.unmock("react-relay")
 jest.mock("v2/Components/Pagination/useComputeHref")
 
-// @ts-expect-error STRICT_NULL_CHECK
+// @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
 const pageInfo: PurchaseAppTestQueryRawResponse["me"]["orders"]["pageInfo"] = {
   endCursor: "MQ",
   hasNextPage: true,
@@ -22,7 +22,7 @@ const pageInfo: PurchaseAppTestQueryRawResponse["me"]["orders"]["pageInfo"] = {
   startCursor: "NQ",
 }
 
-// @ts-expect-error STRICT_NULL_CHECK
+// @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
 const pageCursors: PurchaseAppTestQueryRawResponse["me"]["orders"]["pageCursors"] = {
   around: [
     { cursor: "", isCurrent: true, page: 1 },

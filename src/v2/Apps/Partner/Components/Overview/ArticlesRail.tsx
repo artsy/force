@@ -19,7 +19,7 @@ const ArticlesRail: React.FC<ArticlesRailProps> = ({
   articles,
   partnerSlug,
 }) => {
-  // @ts-expect-error STRICT_NULL_CHECK
+  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
   const [isSeeAllAvaliable, setIsSeeAllAvaliable] = useState<boolean>(undefined)
   return (
     <>
@@ -38,13 +38,13 @@ const ArticlesRail: React.FC<ArticlesRailProps> = ({
         itemsPerViewport={[2, 2, 3]}
         onRailOverflowChange={setIsSeeAllAvaliable}
       >
-        {/* @ts-expect-error STRICT_NULL_CHECK */}
+        {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
         {flatten([
           articles.map(({ node: article }) => {
             return (
-              // @ts-expect-error STRICT_NULL_CHECK
+              // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
               <Box width={["280px", "100%"]} key={article.internalID}>
-                {/* @ts-expect-error STRICT_NULL_CHECK */}
+                {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
                 <ArticleCard article={article} />
               </Box>
             )

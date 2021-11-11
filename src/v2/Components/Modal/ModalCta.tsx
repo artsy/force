@@ -1,5 +1,5 @@
 import { Button, color, space } from "@artsy/palette"
-import { SFC } from "react";
+import { SFC } from "react"
 import styled from "styled-components"
 import { media } from "../Helpers"
 
@@ -15,7 +15,7 @@ export const ModalCta: SFC<{
   onClose: () => void
 }> = props => {
   const {
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     cta: { isFixed, onClick, text },
     hasImage,
     onClose,

@@ -1,6 +1,6 @@
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { Image, ResponsiveBox, Text } from "@artsy/palette"
-import * as React from "react";
+import * as React from "react"
 import { getAuthors } from "./helpers"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArticleCard_article } from "v2/__generated__/ArticleCard_article.graphql"
@@ -19,7 +19,7 @@ const ArticleCard: React.FC<ArticleCardProps> = ({ article }): JSX.Element => {
     contributingAuthors,
   } = article
   const { authorName, editorialName } = getAuthors(
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     channelID,
     author,
     contributingAuthors
@@ -31,9 +31,9 @@ const ArticleCard: React.FC<ArticleCardProps> = ({ article }): JSX.Element => {
         {thumbnailImage && (
           <ResponsiveBox aspectWidth={4} aspectHeight={3} maxWidth="100%">
             <Image
-              // @ts-expect-error STRICT_NULL_CHECK
+              // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
               src={thumbnailImage.medium.src}
-              // @ts-expect-error STRICT_NULL_CHECK
+              // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
               srcSet={thumbnailImage.medium.srcSet}
               alt=""
               width="100%"

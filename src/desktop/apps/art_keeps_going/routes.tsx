@@ -41,7 +41,7 @@ export const landingPage = async (
     const layout = await stitch({
       basePath: __dirname,
       blocks: {
-        // @ts-expect-error STRICT_NULL_CHECK
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         body: bodyHTML,
         head: () => <Fragment>{headTags}</Fragment>,
       },
@@ -55,7 +55,7 @@ export const landingPage = async (
       },
     })
 
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     res.status(status).send(layout)
   } catch (error) {
     next(error)

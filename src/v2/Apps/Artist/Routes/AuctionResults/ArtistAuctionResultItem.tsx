@@ -142,7 +142,7 @@ const LargeAuctionItem: FC<Props> = props => {
     salePriceUSD,
   } = getProps(props)
 
-  // @ts-expect-error STRICT_NULL_CHECK
+  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
   const imageUrl = get(images, i => i.thumbnail.url, "")
   const dateOfSale = getDisplaySaleDate(saleDate)
 
@@ -237,7 +237,7 @@ const ExtraSmallAuctionItem: FC<Props> = props => {
     salePrice,
     salePriceUSD,
   } = getProps(props)
-  // @ts-expect-error STRICT_NULL_CHECK
+  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
   const imageUrl = get(images, i => i.thumbnail.url, "")
   const dateOfSale = getDisplaySaleDate(saleDate)
 
@@ -535,7 +535,7 @@ const renderLargeCollapse = (props, user, mediator, filtersAtDefault) => {
   const dateOfSale = getDisplaySaleDate(saleDate)
 
   return (
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     <Collapse open={expanded}>
       <Separator />
       <Box p={2}>
@@ -609,7 +609,7 @@ const renderSmallCollapse = (props, user, mediator, filtersAtDefault) => {
   const dateOfSale = getDisplaySaleDate(saleDate)
 
   return (
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     <Collapse open={expanded}>
       <Separator />
       <Box p={2}>

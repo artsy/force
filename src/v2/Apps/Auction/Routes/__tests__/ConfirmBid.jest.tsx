@@ -51,13 +51,13 @@ jest.mock("@stripe/stripe-js", () => {
   return {
     loadStripe: () => {
       if (mock === null) {
-        // @ts-expect-error STRICT_NULL_CHECK
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         mock = mockStripe()
       }
       return mock
     },
     _mockStripe: () => mock,
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     _mockReset: () => (mock = mockStripe()),
   }
 })
@@ -70,7 +70,7 @@ const mockEnablePriceTransparency = jest.fn()
 
 const mockedLocation: Partial<Location> = {
   query: {
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     bid: null,
   },
 }
@@ -85,7 +85,7 @@ const setupTestEnv = ({
     Component: (
       props: auctionRoutes_ConfirmBidQueryResponse & { tracking: TrackingProp }
     ) => (
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       <ConfirmBidRouteFragmentContainer
         match={{ location } as Match}
         {...props}

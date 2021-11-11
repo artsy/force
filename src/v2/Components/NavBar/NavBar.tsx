@@ -98,7 +98,7 @@ export const NavBar: React.FC = track(
         toggleMobileNav(false)
         return
       }
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       target = target.parentElement
     }
   }
@@ -221,7 +221,7 @@ export const NavBar: React.FC = track(
                       variant="secondaryOutline"
                       size="small"
                       onClick={() => {
-                        // @ts-expect-error STRICT_NULL_CHECK
+                        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
                         openAuthModal(mediator, {
                           mode: ModalType.login,
                           intent: Intent.login,
@@ -235,7 +235,7 @@ export const NavBar: React.FC = track(
                     <Button
                       size="small"
                       onClick={() => {
-                        // @ts-expect-error STRICT_NULL_CHECK
+                        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
                         openAuthModal(mediator, {
                           mode: ModalType.signup,
                           intent: Intent.signup,

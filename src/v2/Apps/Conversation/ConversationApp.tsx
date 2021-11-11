@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import * as React from "react";
+import { useEffect, useState } from "react"
+import * as React from "react"
 import { Title } from "react-head"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Match, Router } from "found"
@@ -19,7 +19,7 @@ interface ConversationAppProps {
 
 interface InboxProps {
   me: ConversationApp_me
-  // @ts-expect-error STRICT_NULL_CHECK
+  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
   selectedConversation: ConversationApp_me["conversationsConnection"]["edges"][0]["node"]
 }
 

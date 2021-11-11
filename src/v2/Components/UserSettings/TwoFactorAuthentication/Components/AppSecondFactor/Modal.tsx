@@ -3,8 +3,8 @@ import { CreateAppSecondFactorMutationResponse } from "v2/__generated__/CreateAp
 import { useSystemContext } from "v2/System"
 import { Formik, FormikHelpers as FormikActions, FormikProps } from "formik"
 import QRCode from "qrcode.react"
-import { useState } from "react";
-import * as React from "react";
+import { useState } from "react"
+import * as React from "react"
 import * as Yup from "yup"
 import { ApiError } from "../../ApiError"
 import { EnableSecondFactor } from "../Mutation/EnableSecondFactor"
@@ -32,7 +32,7 @@ interface AppSecondFactorModalProps {
   onClose: () => void
   show?: boolean
   onComplete: () => void
-  // @ts-expect-error STRICT_NULL_CHECK
+  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
   secondFactor: CreateAppSecondFactorMutationResponse["createAppSecondFactor"]["secondFactorOrErrors"]
 }
 
@@ -76,7 +76,7 @@ export const AppSecondFactorModal: React.FC<AppSecondFactorModalProps> = props =
     actions: FormikActions<FormValues>
   ) => {
     try {
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       await UpdateAppSecondFactor(relayEnvironment, {
         secondFactorID: secondFactor.internalID,
         attributes: {
@@ -84,13 +84,13 @@ export const AppSecondFactorModal: React.FC<AppSecondFactorModalProps> = props =
         },
       })
 
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       const response = await EnableSecondFactor(relayEnvironment, {
         secondFactorID: secondFactor.internalID,
         code: values.code,
       })
 
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       setRecoveryCodes(response.enableSecondFactor.recoveryCodes)
 
       actions.setSubmitting(false)
@@ -137,7 +137,7 @@ export const AppSecondFactorModal: React.FC<AppSecondFactorModalProps> = props =
         }
       >
         <BackupSecondFactorReminder
-          // @ts-expect-error STRICT_NULL_CHECK
+          // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
           backupSecondFactors={recoveryCodes}
           factorTypeName={secondFactor.__typename}
         />
@@ -147,7 +147,7 @@ export const AppSecondFactorModal: React.FC<AppSecondFactorModalProps> = props =
 }
 
 interface InnerFormProps extends FormikProps<FormValues> {
-  // @ts-expect-error STRICT_NULL_CHECK
+  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
   secondFactor: CreateAppSecondFactorMutationResponse["createAppSecondFactor"]["secondFactorOrErrors"]
 }
 

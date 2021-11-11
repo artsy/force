@@ -6,7 +6,7 @@ const difference = (initial: {}, next: {}) => {
     if (!isEqual(value, initial[key])) {
       result[key] =
         isObject(value) && isObject(initial[key])
-          ? // @ts-expect-error STRICT_NULL_CHECK
+          ? // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
             difference(value, initial[key])
           : value
     }

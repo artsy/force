@@ -1,5 +1,5 @@
 import { Column, GridColumns, HTML, Spacer, Text } from "@artsy/palette"
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { FollowGeneButtonFragmentContainer } from "v2/Components/FollowButton/FollowGeneButton"
@@ -32,9 +32,9 @@ export const GeneShow: React.FC<GeneShowProps> = ({ gene }) => {
           <Text as="h2" variant="xs" textTransform="uppercase" mb={1}>
             About
           </Text>
-          {/* @ts-expect-error STRICT_NULL_CHECK */}
+          {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
           <HTML variant="sm" mb={2} html={gene.formattedDescription} />
-          {/* @ts-expect-error STRICT_NULL_CHECK */}
+          {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
           {gene.similar?.edges.length > 0 && (
             <>
               <Text as="h2" variant="xs" textTransform="uppercase" mb={1}>
@@ -42,12 +42,12 @@ export const GeneShow: React.FC<GeneShowProps> = ({ gene }) => {
               </Text>
 
               <Text variant="sm" mb={2}>
-                {/* @ts-expect-error STRICT_NULL_CHECK */}
+                {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
                 {gene.similar.edges.map(({ node }, i) => {
                   return (
                     <React.Fragment key={node.internalID}>
                       <RouterLink to={node.href}>{node.name}</RouterLink>
-                      {/* @ts-expect-error STRICT_NULL_CHECK */}
+                      {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
                       {i !== gene.similar.edges.length - 1 && ", "}
                     </React.Fragment>
                   )
@@ -55,7 +55,7 @@ export const GeneShow: React.FC<GeneShowProps> = ({ gene }) => {
               </Text>
             </>
           )}
-          {/* @ts-expect-error STRICT_NULL_CHECK */}
+          {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
           {gene.artistsConnection?.edges.length > 0 && (
             <>
               <Text as="h2" variant="xs" textTransform="uppercase" mb={1}>
@@ -63,12 +63,12 @@ export const GeneShow: React.FC<GeneShowProps> = ({ gene }) => {
               </Text>
 
               <Text variant="sm">
-                {/* @ts-expect-error STRICT_NULL_CHECK */}
+                {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
                 {gene.artistsConnection.edges.map(({ node }, i) => {
                   return (
                     <React.Fragment key={node.internalID}>
                       <RouterLink to={node.href}>{node.name}</RouterLink>
-                      {/* @ts-expect-error STRICT_NULL_CHECK */}
+                      {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
                       {i !== gene.artistsConnection.edges.length - 1 && ", "}
                     </React.Fragment>
                   )

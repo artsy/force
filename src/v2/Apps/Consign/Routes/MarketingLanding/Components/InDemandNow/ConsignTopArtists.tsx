@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import { useSystemContext } from "v2/System"
 import { graphql } from "react-relay"
@@ -7,7 +7,7 @@ import { ConsignTopArtistsQuery } from "v2/__generated__/ConsignTopArtistsQuery.
 import { Text, EntityHeader, GridColumns, Column } from "@artsy/palette"
 import { formatCentsToDollars } from "v2/Apps/Consign/Routes/MarketingLanding/Utils/formatCentsToDollars"
 
-// @ts-expect-error STRICT_NULL_CHECK
+// @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
 type ArtworkProps = ConsignTopArtistsQuery["response"]["targetSupply"]["microfunnel"][0]["artworksConnection"]["edges"][0]["node"] & {
   realizedPriceAverage: string
 }
@@ -90,7 +90,7 @@ const TopArtists: React.FC<ConsignTopArtistsQuery["response"]> = props => {
           return null
         }
 
-        // @ts-expect-error STRICT_NULL_CHECK
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         const { edges } = artwork.artworksConnection
 
         const realizedPriceAverage = formatCentsToDollars(

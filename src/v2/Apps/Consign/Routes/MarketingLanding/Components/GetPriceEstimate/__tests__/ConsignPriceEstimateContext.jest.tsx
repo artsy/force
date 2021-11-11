@@ -56,7 +56,7 @@ describe("ConsignPriceEstimateContext", () => {
         return { priceInsights: { edges: [{ node: { medium } }] } }
       })
 
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       await actions.fetchArtistInsights("some-id")
 
       expect(mockFetchQuery).toHaveBeenCalledWith(
@@ -116,7 +116,7 @@ describe("ConsignPriceEstimateContext", () => {
         return suggestions
       })
 
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       await actions.fetchSuggestions(searchQuery)
 
       expect(mockFetchQuery).toHaveBeenCalledWith(
@@ -142,7 +142,7 @@ describe("ConsignPriceEstimateContext", () => {
         },
       }
 
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       actions.selectSuggestion(someSuggestion)
       expect(actions.fetchArtistInsights).toHaveBeenCalledWith(
         someSuggestion.node.internalID
@@ -152,7 +152,7 @@ describe("ConsignPriceEstimateContext", () => {
     it("#setFetching", () => {
       const actions = getActions(mockDispatch, mockEnvironment)
       const isFetching = true
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       actions.setFetching(isFetching)
       expect(mockDispatch).toHaveBeenCalledWith({
         payload: {
@@ -165,7 +165,7 @@ describe("ConsignPriceEstimateContext", () => {
     it("#setMedium", async () => {
       const actions = getActions(mockDispatch, mockEnvironment)
       const medium = "some-medium"
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       actions.setMedium(medium)
       expect(mockDispatch).toHaveBeenCalledWith({
         payload: { medium },
@@ -176,7 +176,7 @@ describe("ConsignPriceEstimateContext", () => {
     it("#setMediums", async () => {
       const actions = getActions(mockDispatch, mockEnvironment)
       const mediums = ["foo", "bar", "baz"]
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       actions.setMediums(mediums)
       expect(mockDispatch).toHaveBeenCalledWith({
         payload: { mediums },
@@ -187,7 +187,7 @@ describe("ConsignPriceEstimateContext", () => {
     it("#setSearchQuery", () => {
       const actions = getActions(mockDispatch, mockEnvironment)
       const searchQuery = "foo"
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       actions.setSearchQuery(searchQuery)
       expect(mockDispatch).toHaveBeenCalledWith({
         payload: {

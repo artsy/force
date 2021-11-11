@@ -68,21 +68,21 @@ class RespondTestPage extends OrderAppTestPage {
 
   async selectAcceptRadio() {
     const radio = this.findRadioWithText("Accept seller's offer")
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     radio.props().onSelect({ selected: true, value: "ACCEPT" })
     await this.update()
   }
 
   async selectDeclineRadio() {
     const radio = this.findRadioWithText("Decline seller's offer")
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     radio.props().onSelect({ selected: true, value: "DECLINE" })
     await this.update()
   }
 
   async selectCounterRadio() {
     const radio = this.findRadioWithText("Send counteroffer")
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     radio.props().onSelect({ selected: true, value: "COUNTER" })
     await this.update()
   }
