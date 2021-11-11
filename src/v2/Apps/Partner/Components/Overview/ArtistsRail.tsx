@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"
 import { Box, BoxProps, Flex, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtistsRail_partner } from "v2/__generated__/ArtistsRail_partner.graphql"
@@ -44,7 +44,12 @@ const ArtistsRail: React.FC<ArtistsRailProps> = ({ partner, ...rest }) => {
 
   return (
     <Box {...rest}>
-      <Flex mb={6} justifyContent="space-between" alignItems="center">
+      <Flex
+        mb={6}
+        justifyContent="space-between"
+        alignItems="center"
+        position="relative"
+      >
         <Text variant="title">
           {profileArtistsLayout === "Grid" ? "Featured Artists" : "Artists"}
         </Text>
