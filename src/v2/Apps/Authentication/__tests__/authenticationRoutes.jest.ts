@@ -39,7 +39,7 @@ describe("authenticationRoutes", () => {
   describe("#forgot", () => {
     describe("onServerSideRender", () => {
       it("sets RESET_PASSWORD_REDIRECT_TO and SET_PASSWORD", () => {
-        const { onServerSideRender, req, res } = setup("/forgot2")
+        const { onServerSideRender, req, res } = setup("/forgot")
         req.query = {
           reset_password_redirect_to: "foo", // pragma: allowlist secret
           set_password: "bar", // pragma: allowlist secret
@@ -53,7 +53,7 @@ describe("authenticationRoutes", () => {
       })
 
       it("runs middleware", () => {
-        setup("/forgot2").onServerSideRender()
+        setup("/forgot").onServerSideRender()
         expect(mockCheckForRedirect).toHaveBeenCalled()
         expect(mockSetReferer).toHaveBeenCalled()
       })
@@ -63,7 +63,7 @@ describe("authenticationRoutes", () => {
   describe("#login", () => {
     describe("onServerSideRender", () => {
       it("runs middleware", () => {
-        setup("/login2").onServerSideRender()
+        setup("/login").onServerSideRender()
         expect(mockCheckForRedirect).toHaveBeenCalled()
         expect(mockSetReferer).toHaveBeenCalled()
       })
@@ -73,13 +73,13 @@ describe("authenticationRoutes", () => {
   describe("#log_in", () => {
     it("redirects to /login", () => {
       expect(() =>
-        setup("/log_in2").route.render?.({
+        setup("/log_in").route.render?.({
           match: { location: { search: "?foo=bar" } },
         } as any)
       ).toThrow(
         expect.objectContaining({
           isFoundRedirectException: true,
-          location: "/login2?foo=bar",
+          location: "/login?foo=bar",
           status: 301,
         })
       )
@@ -89,7 +89,7 @@ describe("authenticationRoutes", () => {
   describe("#reset_password", () => {
     describe("onServerSideRender", () => {
       it("runs middleware", () => {
-        setup("/reset_password2").onServerSideRender()
+        setup("/reset_password").onServerSideRender()
         expect(mockCheckForRedirect).toHaveBeenCalled()
         expect(mockSetReferer).toHaveBeenCalled()
       })
@@ -99,7 +99,7 @@ describe("authenticationRoutes", () => {
   describe("#signup", () => {
     describe("onServerSideRender", () => {
       it("runs middleware", () => {
-        setup("/signup2").onServerSideRender()
+        setup("/signup").onServerSideRender()
         expect(mockCheckForRedirect).toHaveBeenCalled()
         expect(mockSetReferer).toHaveBeenCalled()
       })
@@ -109,13 +109,13 @@ describe("authenticationRoutes", () => {
   describe("#sign_up", () => {
     it("redirects to /signup", () => {
       expect(() =>
-        setup("/sign_up2").route.render?.({
+        setup("/sign_up").route.render?.({
           match: { location: { search: "?foo=bar" } },
         } as any)
       ).toThrow(
         expect.objectContaining({
           isFoundRedirectException: true,
-          location: "/signup2?foo=bar",
+          location: "/signup?foo=bar",
           status: 301,
         })
       )

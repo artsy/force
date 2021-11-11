@@ -19,9 +19,6 @@ const routes = {
 
   "/consign": require("../apps/consign/client").init,
 
-  "/reset_password": require("../apps/authentication/client/reset_password.coffee")
-    .init,
-
   "/works-for-you": () => {
     require("../apps/notifications/client/index.coffee").init()
     const { artist, artist_id } = qs.parse(location.search.substring(1))

@@ -11,7 +11,7 @@ import { configureScope } from "@sentry/browser"
 import { data as sd } from "sharify"
 import * as globalReactModules from "./global_react_modules"
 import { hydrate as hydrateStitch } from "@artsy/stitch/dist/internal/hydrate"
-import { initModalManager } from "desktop/apps/authentication/client/initModalManager"
+import { initAuthModalContainer } from "v2/Utils/initAuthModalContainer"
 import { Components } from "@artsy/stitch/dist/internal/types"
 import { omit } from "lodash"
 import syncAuth from "lib/syncAuth"
@@ -36,7 +36,7 @@ export function deprecatedGlobalClientSetup() {
   listenForInvert()
   listenForBounce()
   confirmation.check()
-  initModalManager()
+  initAuthModalContainer()
   mountStitchComponents()
   syncAuth()
   trackAuthenticationEvents()

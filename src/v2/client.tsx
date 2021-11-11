@@ -16,14 +16,17 @@ async function setupClient() {
   Promise.all([
     import(
       /* webpackChunkName: "clientAppModals", webpackPrefetch: true */
-      "desktop/apps/authentication/client/initModalManager"
+      "./Utils/initAuthModalContainer"
     ),
     import(
       /* webpackChunkName: "clientAppModals", webpackPrefetch: true */
       "desktop/components/artistSignupModal/artistSignupModal"
     ),
   ]).then(clientImports => {
-    const [{ initModalManager }, { setupArtistSignUpModal }] = clientImports
+    const [
+      { initAuthModalContainer },
+      { setupArtistSignUpModal },
+    ] = clientImports
 
     // Attach analytics
     if (getClientParam("disableAnalytics") !== "true") {
@@ -34,7 +37,7 @@ async function setupClient() {
       })
     }
 
-    initModalManager()
+    initAuthModalContainer()
     setupArtistSignUpModal()
 
     // Logout handler

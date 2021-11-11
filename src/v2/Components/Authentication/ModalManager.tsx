@@ -10,7 +10,7 @@ import {
   ModalType,
   SubmitHandler,
 } from "v2/Components/Authentication/Types"
-import { ReCaptchaContainer } from "v2/Utils/ReCaptchaContainer"
+import { EnableRecaptcha } from "v2/Utils/EnableRecaptcha"
 
 export interface ModalManagerProps {
   blurContainerSelector?: string
@@ -140,7 +140,7 @@ export class ModalManager extends Component<
           options?.disableCloseOnBackgroundClick
         )}
       >
-        {this.state.recaptchaLoaded ? <ReCaptchaContainer /> : null}
+        {this.state.recaptchaLoaded ? <EnableRecaptcha /> : null}
         <FormSwitcher
           type={currentType}
           error={error}

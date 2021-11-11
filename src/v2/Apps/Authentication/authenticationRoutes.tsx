@@ -4,6 +4,8 @@ import { AppRouteConfig } from "v2/System/Router/Route"
 import { checkForRedirect } from "./Server/checkForRedirect"
 import { setReferer } from "./Server/setReferer"
 import { flow } from "lodash"
+import { redirectIfLoggedIn } from "./Server/redirectIfLoggedIn"
+import { setCookies } from "./Utils/helpers"
 
 const ForgotPasswordRoute = loadable(
   () =>
@@ -41,7 +43,7 @@ const runAuthMiddleware = flow(checkForRedirect, setReferer)
 
 export const authenticationRoutes: AppRouteConfig[] = [
   {
-    path: "/forgot2",
+    path: "/forgot",
     hideNav: true,
     hideFooter: true,
     getComponent: () => ForgotPasswordRoute,
@@ -56,45 +58,56 @@ export const authenticationRoutes: AppRouteConfig[] = [
     },
   },
   {
-    path: "/login2",
+    path: "/login",
     hideNav: true,
     hideFooter: true,
     getComponent: () => LoginRoute,
-    onServerSideRender: runAuthMiddleware,
-    onClientSideRender: () => {
-      return LoginRoute.preload()
+    onServerSideRender: props => {
+      redirectIfLoggedIn(props)
+      runAuthMiddleware(props)
+    },
+    onClientSideRender: ({ match }) => {
+      setCookies(match.location.query)
+
+      // TODO: check if user is logged in and redirect
+      LoginRoute.preload()
     },
   },
   {
-    path: "/log_in2",
+    path: "/log_in",
     render: ({ match }) => {
-      throw new RedirectException(`/login2${match.location.search}`, 301)
+      throw new RedirectException(`/login${match.location.search}`, 301)
     },
   },
   {
-    path: "/reset_password2",
+    path: "/reset_password",
     hideNav: true,
     hideFooter: true,
     getComponent: () => ResetPasswordRoute,
     onServerSideRender: runAuthMiddleware,
-    onClientSideRender: () => {
-      return ResetPasswordRoute.preload()
+    onClientSideRender: ({ match }) => {
+      setCookies(match.location.query)
+      ResetPasswordRoute.preload()
     },
   },
   {
-    path: "/signup2",
+    path: "/signup",
     hideNav: true,
     hideFooter: true,
     getComponent: () => SignupRoute,
-    onServerSideRender: runAuthMiddleware,
-    onClientSideRender: () => {
-      return LoginRoute.preload()
+    onServerSideRender: props => {
+      redirectIfLoggedIn(props)
+      runAuthMiddleware(props)
+    },
+    onClientSideRender: ({ match }) => {
+      setCookies(match.location.query)
+      SignupRoute.preload()
     },
   },
   {
-    path: "/sign_up2",
+    path: "/sign_up",
     render: ({ match }) => {
-      throw new RedirectException(`/signup2${match.location.search}`, 301)
+      throw new RedirectException(`/signup${match.location.search}`, 301)
     },
   },
 ]

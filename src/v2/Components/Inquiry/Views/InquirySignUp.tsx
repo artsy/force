@@ -1,8 +1,8 @@
 import { Box, Button, Input, Separator, Spacer, Text } from "@artsy/palette"
-import * as React from "react";
+import * as React from "react"
 import { useState } from "react"
 import { createRelaySSREnvironment } from "v2/System/Relay/createRelaySSREnvironment"
-import { ReCaptchaContainer } from "v2/Utils/ReCaptchaContainer"
+import { EnableRecaptcha } from "v2/Utils/EnableRecaptcha"
 import { wait } from "v2/Utils/wait"
 import { useInquiryContext } from "../Hooks/useInquiryContext"
 import { useArtworkInquiryRequest } from "../Hooks/useArtworkInquiryRequest"
@@ -109,7 +109,7 @@ export const InquirySignUp: React.FC = () => {
 
   return (
     <>
-      <ReCaptchaContainer />
+      <EnableRecaptcha />
 
       <Box as="form" onSubmit={handleSubmit}>
         <Text variant="lg" mr={4}>
