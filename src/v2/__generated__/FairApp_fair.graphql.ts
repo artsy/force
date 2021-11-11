@@ -7,11 +7,14 @@ export type FairApp_fair = {
     readonly internalID: string;
     readonly href: string | null;
     readonly slug: string;
+    readonly name: string | null;
     readonly profile: {
         readonly icon: {
             readonly cropped: {
                 readonly src: string;
                 readonly srcSet: string;
+                readonly width: number;
+                readonly height: number;
             } | null;
         } | null;
         readonly id: string;
@@ -60,6 +63,13 @@ const node: ReaderFragment = {
     {
       "alias": null,
       "args": null,
+      "kind": "ScalarField",
+      "name": "name",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
       "concreteType": "Profile",
       "kind": "LinkedField",
       "name": "profile",
@@ -79,7 +89,7 @@ const node: ReaderFragment = {
                 {
                   "kind": "Literal",
                   "name": "height",
-                  "value": 60
+                  "value": 50
                 },
                 {
                   "kind": "Literal",
@@ -89,7 +99,7 @@ const node: ReaderFragment = {
                 {
                   "kind": "Literal",
                   "name": "width",
-                  "value": 60
+                  "value": 50
                 }
               ],
               "concreteType": "CroppedImageUrl",
@@ -110,9 +120,23 @@ const node: ReaderFragment = {
                   "kind": "ScalarField",
                   "name": "srcSet",
                   "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "width",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "height",
+                  "storageKey": null
                 }
               ],
-              "storageKey": "cropped(height:60,version:\"square140\",width:60)"
+              "storageKey": "cropped(height:50,version:\"square140\",width:50)"
             }
           ],
           "storageKey": null
@@ -163,5 +187,5 @@ const node: ReaderFragment = {
   ],
   "type": "Fair"
 };
-(node as any).hash = '6abe986e4e78ab1ae4b7687e47e09ba0';
+(node as any).hash = '8865f4a231bde5450215990c7c05d9fe';
 export default node;

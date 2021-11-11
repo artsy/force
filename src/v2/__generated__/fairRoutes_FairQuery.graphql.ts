@@ -32,11 +32,14 @@ fragment FairApp_fair on Fair {
   internalID
   href
   slug
+  name
   profile {
     icon {
-      cropped(width: 60, height: 60, version: "square140") {
+      cropped(width: 50, height: 50, version: "square140") {
         src
         srcSet
+        width
+        height
       }
     }
     id
@@ -109,36 +112,25 @@ v2 = {
   "name": "version",
   "value": "square140"
 },
-v3 = [
-  {
-    "kind": "Literal",
-    "name": "height",
-    "value": 60
-  },
-  (v2/*: any*/),
-  {
-    "kind": "Literal",
-    "name": "width",
-    "value": 60
-  }
+v3 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "src",
+  "storageKey": null
+},
+v4 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "srcSet",
+  "storageKey": null
+},
+v5 = [
+  (v3/*: any*/),
+  (v4/*: any*/)
 ],
-v4 = [
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "src",
-    "storageKey": null
-  },
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "srcSet",
-    "storageKey": null
-  }
-],
-v5 = {
+v6 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -209,6 +201,13 @@ return {
           {
             "alias": null,
             "args": null,
+            "kind": "ScalarField",
+            "name": "name",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
             "concreteType": "Profile",
             "kind": "LinkedField",
             "name": "profile",
@@ -224,13 +223,42 @@ return {
                 "selections": [
                   {
                     "alias": null,
-                    "args": (v3/*: any*/),
+                    "args": [
+                      {
+                        "kind": "Literal",
+                        "name": "height",
+                        "value": 50
+                      },
+                      (v2/*: any*/),
+                      {
+                        "kind": "Literal",
+                        "name": "width",
+                        "value": 50
+                      }
+                    ],
                     "concreteType": "CroppedImageUrl",
                     "kind": "LinkedField",
                     "name": "cropped",
                     "plural": false,
-                    "selections": (v4/*: any*/),
-                    "storageKey": "cropped(height:60,version:\"square140\",width:60)"
+                    "selections": [
+                      (v3/*: any*/),
+                      (v4/*: any*/),
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "width",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "height",
+                        "storageKey": null
+                      }
+                    ],
+                    "storageKey": "cropped(height:50,version:\"square140\",width:50)"
                   },
                   {
                     "alias": "desktop",
@@ -251,31 +279,36 @@ return {
                     "kind": "LinkedField",
                     "name": "cropped",
                     "plural": false,
-                    "selections": (v4/*: any*/),
+                    "selections": (v5/*: any*/),
                     "storageKey": "cropped(height:100,version:\"square140\",width:100)"
                   },
                   {
                     "alias": "mobile",
-                    "args": (v3/*: any*/),
+                    "args": [
+                      {
+                        "kind": "Literal",
+                        "name": "height",
+                        "value": 60
+                      },
+                      (v2/*: any*/),
+                      {
+                        "kind": "Literal",
+                        "name": "width",
+                        "value": 60
+                      }
+                    ],
                     "concreteType": "CroppedImageUrl",
                     "kind": "LinkedField",
                     "name": "cropped",
                     "plural": false,
-                    "selections": (v4/*: any*/),
+                    "selections": (v5/*: any*/),
                     "storageKey": "cropped(height:60,version:\"square140\",width:60)"
                   }
                 ],
                 "storageKey": null
               },
-              (v5/*: any*/)
+              (v6/*: any*/)
             ],
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "name",
             "storageKey": null
           },
           {
@@ -358,7 +391,7 @@ return {
             ],
             "storageKey": null
           },
-          (v5/*: any*/)
+          (v6/*: any*/)
         ],
         "storageKey": null
       }
@@ -369,7 +402,7 @@ return {
     "metadata": {},
     "name": "fairRoutes_FairQuery",
     "operationKind": "query",
-    "text": "query fairRoutes_FairQuery(\n  $slug: String!\n) {\n  fair(id: $slug) @principalField {\n    ...FairApp_fair\n    id\n  }\n}\n\nfragment FairApp_fair on Fair {\n  internalID\n  href\n  slug\n  profile {\n    icon {\n      cropped(width: 60, height: 60, version: \"square140\") {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n  ...FairMeta_fair\n  ...FairHeader_fair\n  ...FairHeaderImage_fair\n  counts {\n    artworks\n  }\n}\n\nfragment FairHeaderIcon_fair on Fair {\n  name\n  profile {\n    icon {\n      desktop: cropped(width: 100, height: 100, version: \"square140\") {\n        src\n        srcSet\n      }\n      mobile: cropped(width: 60, height: 60, version: \"square140\") {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment FairHeaderImage_fair on Fair {\n  image {\n    url(version: \"wide\")\n  }\n}\n\nfragment FairHeader_fair on Fair {\n  ...FairHeaderIcon_fair\n  name\n  exhibitionPeriod\n}\n\nfragment FairMeta_fair on Fair {\n  name\n  slug\n  metaDescription: summary\n  metaImage: image {\n    src: url(version: \"large_rectangle\")\n  }\n}\n"
+    "text": "query fairRoutes_FairQuery(\n  $slug: String!\n) {\n  fair(id: $slug) @principalField {\n    ...FairApp_fair\n    id\n  }\n}\n\nfragment FairApp_fair on Fair {\n  internalID\n  href\n  slug\n  name\n  profile {\n    icon {\n      cropped(width: 50, height: 50, version: \"square140\") {\n        src\n        srcSet\n        width\n        height\n      }\n    }\n    id\n  }\n  ...FairMeta_fair\n  ...FairHeader_fair\n  ...FairHeaderImage_fair\n  counts {\n    artworks\n  }\n}\n\nfragment FairHeaderIcon_fair on Fair {\n  name\n  profile {\n    icon {\n      desktop: cropped(width: 100, height: 100, version: \"square140\") {\n        src\n        srcSet\n      }\n      mobile: cropped(width: 60, height: 60, version: \"square140\") {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment FairHeaderImage_fair on Fair {\n  image {\n    url(version: \"wide\")\n  }\n}\n\nfragment FairHeader_fair on Fair {\n  ...FairHeaderIcon_fair\n  name\n  exhibitionPeriod\n}\n\nfragment FairMeta_fair on Fair {\n  name\n  slug\n  metaDescription: summary\n  metaImage: image {\n    src: url(version: \"large_rectangle\")\n  }\n}\n"
   }
 };
 })();

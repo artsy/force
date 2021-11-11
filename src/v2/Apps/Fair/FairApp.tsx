@@ -2,7 +2,15 @@ import { useRef } from "react"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FairApp_fair } from "v2/__generated__/FairApp_fair.graphql"
-import { Box, DROP_SHADOW, Flex, FullBleed, Text, Image } from "@artsy/palette"
+import {
+  Box,
+  DROP_SHADOW,
+  Flex,
+  FullBleed,
+  Text,
+  Image,
+  Spacer,
+} from "@artsy/palette"
 import { RouteTab, RouteTabs } from "v2/Components/RouteTabs"
 import { FairMetaFragmentContainer } from "./Components/FairMeta"
 import { useSystemContext } from "v2/System"
@@ -82,77 +90,84 @@ const FairApp: React.FC<FairAppProps> = ({ children, fair }) => {
             >
               <AppContainer>
                 <HorizontalPadding>
-                  <Flex>
-                    <Box
-                      width={60}
-                      height={60}
-                      border="1px solid transparent"
-                      borderBottomColor="black10"
-                    >
-                      {stuck && fair.profile?.icon?.cropped && (
-                        <Image
-                          src={fair.profile.icon.cropped.src}
-                          srcSet={fair.profile.icon.cropped.srcSet}
-                          width="100%"
-                          height="100%"
-                        />
-                      )}
-                    </Box>
-                    <RouteTabs textAlign="center" flexGrow={1} fill>
-                      <FairRouteTab
-                        to={fairHref}
-                        exact
-                        onClick={trackTabData(
-                          fairHref,
-                          "Overview",
-                          ContextModule.fairInfo
-                        )}
-                      >
-                        Overview
-                      </FairRouteTab>
-
-                      <FairRouteTab
-                        to={`${fairHref}/artworks`}
-                        exact
-                        onClick={trackTabData(
-                          `${fairHref}/artworks`,
-                          "Artworks",
-                          ContextModule.artworksTab
-                        )}
-                      >
-                        Artworks
-                        <Text display="inline">&nbsp;({artworkCount})</Text>
-                      </FairRouteTab>
-
-                      {enableFairPageExhibitorsTab && (
-                        <FairRouteTab
-                          to={`${fairHref}/exhibitors`}
-                          exact
-                          onClick={trackTabData(
-                            `${fairHref}/exhibitors`,
-                            "Exhibitors",
-                            ContextModule.exhibitorsTab
-                          )}
+                  <Flex
+                    height={70}
+                    py={1}
+                    border="1px solid transparent"
+                    borderBottomColor={stuck && "black10"}
+                  >
+                    {stuck && fair.profile?.icon?.cropped && (
+                      <>
+                        <Box
+                          width={fair.profile.icon.cropped.width}
+                          height={fair.profile.icon.cropped.height}
                         >
-                          Exhibitors A-Z
-                        </FairRouteTab>
-                      )}
-
-                      {!enableFairPageExhibitorsTab && (
-                        <FairRouteTab
-                          to={`${fairHref}/booths`}
-                          exact
-                          onClick={trackTabData(
-                            `${fairHref}/booths`,
-                            "Booths",
-                            ContextModule.boothsTab
-                          )}
-                        >
-                          Booths
-                        </FairRouteTab>
-                      )}
-                    </RouteTabs>
+                          <Image
+                            src={fair.profile.icon.cropped.src}
+                            srcSet={fair.profile.icon.cropped.srcSet}
+                            width="100%"
+                            height="100%"
+                          />
+                        </Box>
+                        <Spacer ml={1} />
+                        <Text variant="lg">{fair.name}</Text>
+                      </>
+                    )}
                   </Flex>
+                  <RouteTabs textAlign="center" flexGrow={1} fill>
+                    <FairRouteTab
+                      to={fairHref}
+                      exact
+                      onClick={trackTabData(
+                        fairHref,
+                        "Overview",
+                        ContextModule.fairInfo
+                      )}
+                    >
+                      Overview
+                    </FairRouteTab>
+
+                    <FairRouteTab
+                      to={`${fairHref}/artworks`}
+                      exact
+                      onClick={trackTabData(
+                        `${fairHref}/artworks`,
+                        "Artworks",
+                        ContextModule.artworksTab
+                      )}
+                    >
+                      Artworks
+                      <Text display="inline">&nbsp;({artworkCount})</Text>
+                    </FairRouteTab>
+
+                    {enableFairPageExhibitorsTab && (
+                      <FairRouteTab
+                        to={`${fairHref}/exhibitors`}
+                        exact
+                        onClick={trackTabData(
+                          `${fairHref}/exhibitors`,
+                          "Exhibitors",
+                          ContextModule.exhibitorsTab
+                        )}
+                      >
+                        Exhibitors A-Z
+                      </FairRouteTab>
+                    )}
+
+                    {!enableFairPageExhibitorsTab && (
+                      <FairRouteTab
+                        to={`${fairHref}/booths`}
+                        exact
+                        onClick={trackTabData(
+                          `${fairHref}/booths`,
+                          "Booths",
+                          ContextModule.boothsTab
+                        )}
+                      >
+                        Booths
+                      </FairRouteTab>
+                    )}
+                  </RouteTabs>
                 </HorizontalPadding>
               </AppContainer>
             </FullBleed>
@@ -208,11 +223,14 @@ export const FairAppFragmentContainer = createFragmentContainer(
         internalID
         href
         slug
+        name
         profile {
           icon {
-            cropped(width: 60, height: 60, version: "square140") {
+            cropped(width: 50, height: 50, version: "square140") {
               src
               srcSet
+              width
+              height
             }
           }
         }
