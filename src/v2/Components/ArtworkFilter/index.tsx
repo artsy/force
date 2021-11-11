@@ -166,6 +166,15 @@ export const BaseArtworkFilter: React.FC<
 
   const showCreateAlert = enableCreateAlert && filterContext.hasFilters
 
+  const pills = [
+    { name: "Amoako Boafo", isDefault: true },
+    { name: "Red", isDefault: false },
+    { name: "Black and White", isDefault: false },
+    { name: "Glass", isDefault: false },
+    { name: "Limited Edition", isDefault: false },
+    { name: "Open Edition", isDefault: false },
+  ]
+
   /**
    * Check to see if the mobile action sheet is present and prevent scrolling
    */
@@ -321,6 +330,7 @@ export const BaseArtworkFilter: React.FC<
 
           {savedSearchProps && enableCreateAlert && (
             <FiltersPills
+              pills={pills}
               savedSearchAttributes={savedSearchProps}
               show={showCreateAlert}
             />
@@ -375,8 +385,9 @@ export const BaseArtworkFilter: React.FC<
 
             {enableCreateAlert && savedSearchProps && (
               <FiltersPills
-                savedSearchAttributes={savedSearchProps}
                 show={showCreateAlert}
+                savedSearchAttributes={savedSearchProps}
+                pills={pills}
               />
             )}
 

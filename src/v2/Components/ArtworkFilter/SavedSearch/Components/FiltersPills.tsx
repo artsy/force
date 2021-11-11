@@ -1,19 +1,55 @@
-import React, { useEffect, useState } from "react"
+import React, { FC, useEffect, useState } from "react"
 import styled from "styled-components"
-import { Box, Flex, Spacer } from "@artsy/palette"
+import { Box, Clickable, CloseIcon, Flex, Spacer, Text } from "@artsy/palette"
 import { growAndFadeIn, shrinkAndFadeOut } from "v2/Assets/Animations"
 import { CreateAlertButton } from "./CreateAlertButton"
 import { SavedSearchAttributes } from "../types"
 
 const WRAPPER_HEIGHT = 70
 
-interface FilterPillsProps {
+interface FilterPill {
+  name: string
+  isDefault: boolean
+}
+
+interface FiltersPillsProps {
   show: boolean
+  pills: FilterPill[]
   savedSearchAttributes: SavedSearchAttributes
 }
 
-export const FiltersPills: React.FC<FilterPillsProps> = ({
+const Pill: FC<{ enableRemoveButton: boolean }> = ({
+  children,
+  enableRemoveButton,
+}) => {
+  return (
+    <Flex
+      alignItems="center"
+      justifyContent="center"
+      m={0.5}
+      px={1}
+      py={0.5}
+      border="1px solid"
+      borderColor="black60"
+    >
+      <Text variant="xs" overflowEllipsis>
+        {children}
+      </Text>
+      {enableRemoveButton && (
+        <>
+          <Spacer ml={0.5} />
+          <Clickable display="flex">
+            <CloseIcon />
+          </Clickable>
+        </>
+      )}
+    </Flex>
+  )
+}
+
+export const FiltersPills: React.FC<FiltersPillsProps> = ({
   show,
+  pills,
   savedSearchAttributes,
 }) => {
   const [showBlock, setShowBlock] = useState(show)
@@ -28,8 +64,19 @@ export const FiltersPills: React.FC<FilterPillsProps> = ({
     <>
       {showBlock && (
         <AnimatedBox show={show}>
-          <Flex>
-            <CreateAlertButton savedSearchAttributes={savedSearchAttributes} />
+          <Flex flexWrap="wrap">
+            {pills.map((pill, index) => (
+              <Pill
+                key={`filter-label-${index}`}
+                enableRemoveButton={!pill.isDefault}
+              >
+                {pill.name}
+              </Pill>
+            ))}
+            <CreateAlertButton
+              savedSearchAttributes={savedSearchAttributes}
+              m={0.5}
+            />
           </Flex>
           <Spacer mt={4} />
         </AnimatedBox>

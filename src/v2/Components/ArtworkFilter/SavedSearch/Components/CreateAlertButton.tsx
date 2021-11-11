@@ -1,14 +1,15 @@
 import React, { useState } from "react"
-import { BellIcon, Button } from "@artsy/palette"
+import { BellIcon, Button, ButtonProps } from "@artsy/palette"
 import { CreateSavedSearchAlert } from "v2/Components/SavedSearchAlert/CreateSavedSearchAlert"
 import { SavedSearchAttributes } from "../types"
 
-interface CreateAlertButtonProps {
+interface CreateAlertButtonProps extends ButtonProps {
   savedSearchAttributes: SavedSearchAttributes
 }
 
 export const CreateAlertButton: React.FC<CreateAlertButtonProps> = ({
   savedSearchAttributes,
+  ...props
 }) => {
   const [visibleForm, setVisibleForm] = useState(false)
 
@@ -17,7 +18,12 @@ export const CreateAlertButton: React.FC<CreateAlertButtonProps> = ({
 
   return (
     <>
-      <Button onClick={handleOpenForm} variant="secondaryOutline" size="small">
+      <Button
+        onClick={handleOpenForm}
+        variant="secondaryOutline"
+        size="small"
+        {...props}
+      >
         <BellIcon mr={0.5} color="currentColor" />
         Create an Alert
       </Button>
