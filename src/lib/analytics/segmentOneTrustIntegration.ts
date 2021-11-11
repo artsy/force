@@ -79,7 +79,7 @@ function oneTrustReady() {
 }
 
 function delay(n) {
-  return new Promise(done => {
+  return new Promise<void>(done => {
     setTimeout(() => {
       done()
     }, n)
