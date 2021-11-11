@@ -3,41 +3,72 @@ import { data as sd } from "sharify"
 const SEGMENT_MAPPING = "C0001" // Segment itself assigned OneTrust Strictly Necessary category.
 const SEGMENT_WRITE_KEY = sd.SEGMENT_WRITE_KEY
 
-let ONETRUST_PREVIOUS_CONSENT = ""
+let PREVIOUS_CONSENT = ""
 let SEGMENT_DESTINATIONS = []
 
 export function fetchSegmentDestinationsAndLoad() {
-  console.log("fetch segment destinations")
-  fetchDestinations(SEGMENT_WRITE_KEY).then(destinations => {
+  fetchDestinations(SEGMENT_WRITE_KEY).then(async destinations => {
     SEGMENT_DESTINATIONS = destinations
 
-    waitForOneTrust()
+    await getConsentAndLoadSegment()
 
-    if (oneTrustReady()) {
-      getConsentAndLoadSegment()
-    }
+    // OneTrust calls OptanonWrapper when there's a consent change.
+    window.OptanonWrapper = getConsentAndLoadSegment
   })
-
-  // OneTrust calls OptanonWrapper when there's a consent change.
-  window.OptanonWrapper = getConsentAndLoadSegment
 }
 
-function waitForOneTrust() {
+async function getConsentAndLoadSegment() {
+  const consent = await getConsent()
+
+  if (consent === PREVIOUS_CONSENT) {
+    // consent didn't change, nothing to do.
+    return
+  }
+
+  PREVIOUS_CONSENT = consent
+
+  const destinationPreferences = setSegmentDestinationPref(
+    consent,
+    SEGMENT_DESTINATIONS
+  )
+
+  conditionallyLoadAnalytics({
+    writeKey: SEGMENT_WRITE_KEY,
+    destinations: SEGMENT_DESTINATIONS,
+    destinationPreferences,
+  })
+}
+
+async function getConsent() {
+  const oneTrustConsent = await getOneTrustConsent()
+
+  if (oneTrustConsent === "") {
+    // failed getting OneTrust consent, return C0001 as we have implicit consent for Strictly Necessary things.
+    return "C0001"
+  } else {
+    return oneTrustConsent
+  }
+}
+
+async function getOneTrustConsent() {
   let attempts = 0
   const maxAttempts = 100
 
-  // wait 1sec at most.
-  if (!oneTrustReady()) {
-    const interval = setInterval(() => {
-      console.log("waiting for onetrust")
-      if (oneTrustReady() || attempts > maxAttempts) clearInterval(interval)
-      attempts++
-    }, 10)
+  // if OneTrust is not ready, wait 1 second at most.
+  while (!oneTrustReady() && attempts <= maxAttempts) {
+    await delay(10)
+    attempts++
+  }
+
+  if (oneTrustReady()) {
+    return window.OnetrustActiveGroups
+  } else {
+    return ""
   }
 }
 
 function oneTrustReady() {
-  // OneTrust is ready if OnetrustActiveGroups contains at least Strictly Necessary group.
+  // OneTrust is ready when window.OnetrustActiveGroups contains at least C0001.
   if (
     typeof window.OnetrustActiveGroups === "string" &&
     window.OnetrustActiveGroups.split(",").includes("C0001")
@@ -45,6 +76,14 @@ function oneTrustReady() {
     return true
   }
   return false
+}
+
+function delay(n) {
+  return new Promise(done => {
+    setTimeout(() => {
+      done()
+    }, n)
+  })
 }
 
 async function fetchDestinations(writeKey) {
@@ -63,31 +102,7 @@ async function fetchDestinations(writeKey) {
   return destinations
 }
 
-function getConsentAndLoadSegment() {
-  // OneTrust stores consent in OnetrustActiveGroups.
-  const oneTrustConsent = window.OnetrustActiveGroups
-
-  if (oneTrustConsent === ONETRUST_PREVIOUS_CONSENT) {
-    // consent didn't change, nothing to do.
-    console.log("consent same as before: ", oneTrustConsent)
-    return
-  }
-
-  ONETRUST_PREVIOUS_CONSENT = oneTrustConsent
-
-  const destinationPreferences = setSegmentDestinationPref(
-    oneTrustConsent,
-    SEGMENT_DESTINATIONS
-  )
-
-  conditionallyLoadAnalytics({
-    writeKey: SEGMENT_WRITE_KEY,
-    destinations: SEGMENT_DESTINATIONS,
-    destinationPreferences,
-  })
-}
-
-function setSegmentDestinationPref(oneTrustConsent, destinations) {
+function setSegmentDestinationPref(consent, destinations) {
   // map Segment destination category to OneTrust cookie category.
   const segmentToOneTrust = {
     "SMS & Push Notifications": "C0001", // OneTrust Strictly Necessary
@@ -95,13 +110,13 @@ function setSegmentDestinationPref(oneTrustConsent, destinations) {
     Advertising: "C0004", // OneTrust Targeting
   }
 
-  const consent = oneTrustConsent.split(",")
+  const consentArray = consent.split(",")
 
   const destinationPreferences = destinations
     .map(function (dest) {
       if (
         dest.category in segmentToOneTrust &&
-        consent.includes(segmentToOneTrust[dest.category])
+        consentArray.includes(segmentToOneTrust[dest.category])
       ) {
         return { [dest.id]: true }
       } else {
@@ -116,7 +131,7 @@ function setSegmentDestinationPref(oneTrustConsent, destinations) {
           ...acc,
         }
       },
-      { "Segment.io": consent.some(d => d === SEGMENT_MAPPING) }
+      { "Segment.io": consentArray.some(d => d === SEGMENT_MAPPING) }
     )
 
   return destinationPreferences
@@ -141,14 +156,12 @@ function conditionallyLoadAnalytics({
   if (window.analytics.initialized) {
     // Segment has been initialized, a page reload is required to reload Segment.
     if (shouldReload) {
-      console.log("reload page")
       window.location.reload()
     }
     return
   }
 
   if (isAnythingEnabled) {
-    console.log("loading segment")
     // @ts-ignore
     window.analytics.load(writeKey, { integrations: destinationPreferences })
   }
