@@ -23,6 +23,7 @@ import {
 import { FairBoothSortFilter } from "./FairBoothSortFilter"
 import { FairBoothRailFragmentContainer as FairBoothRail } from "./FairBoothRail"
 import { defaultSort, isValidSort } from "../Utils/IsValidSort"
+import { extractNodes } from "v2/Utils/extractNodes"
 
 const logger = createLogger("FairBooths.tsx")
 
@@ -37,6 +38,7 @@ const FairBooths: React.FC<FairBoothsProps> = ({ fair, relay }) => {
   const context = useBoothsFilterContext()
   const [isLoading, setIsLoading] = useState(false)
   const previousFilters = usePrevious(context.filters!)
+  const shows = extractNodes(fair.exhibitors)
 
   const {
     pageInfo: { hasNextPage },
@@ -122,9 +124,7 @@ const FairBooths: React.FC<FairBoothsProps> = ({ fair, relay }) => {
       <Spacer mt={4} />
 
       <LoadingArea isLoading={isLoading}>
-        {fair.exhibitors?.edges!.map((edge, index) => {
-          const show = edge?.node!
-
+        {shows.map((show, index) => {
           if (show.counts?.artworks === 0 || !show.partner) {
             // Skip rendering of booths without artworks
             return null
