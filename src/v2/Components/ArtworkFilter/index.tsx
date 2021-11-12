@@ -199,6 +199,8 @@ export const BaseArtworkFilter: React.FC<
 
             tracking.trackEvent(pageTrackingParams)
           } else {
+            const onlyAllowedFilters = allowedFilters(filterContext.filters)
+
             tracking.trackEvent(
               commercialFilterParamsChanged({
                 changed: JSON.stringify({
@@ -207,7 +209,7 @@ export const BaseArtworkFilter: React.FC<
                 contextOwnerId: contextPageOwnerId,
                 contextOwnerSlug: contextPageOwnerSlug,
                 contextOwnerType: contextPageOwnerType!,
-                current: JSON.stringify(filterContext.filters),
+                current: JSON.stringify(onlyAllowedFilters),
               })
             )
           }
