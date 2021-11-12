@@ -1,6 +1,6 @@
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { Image, ResponsiveBox, Text } from "@artsy/palette"
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ShowCard_show } from "v2/__generated__/ShowCard_show.graphql"
 
@@ -16,18 +16,18 @@ const ShowCard: React.FC<ShowCardProps> = ({ show }): JSX.Element => {
     <RouterLink to={href} textDecoration="none">
       {coverImage && (
         <ResponsiveBox
-          // @ts-expect-error STRICT_NULL_CHECK
+          // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
           aspectWidth={coverImage.medium.width}
-          // @ts-expect-error STRICT_NULL_CHECK
+          // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
           aspectHeight={coverImage.medium.height}
           maxWidth="100%"
         >
           <Image
-            // @ts-expect-error STRICT_NULL_CHECK
+            // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
             src={coverImage.medium.src}
-            // @ts-expect-error STRICT_NULL_CHECK
+            // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
             srcSet={coverImage.medium.srcSet}
-            // @ts-expect-error STRICT_NULL_CHECK
+            // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
             alt={name}
             width="100%"
             height="100%"

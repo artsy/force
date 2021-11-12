@@ -17,7 +17,7 @@ export function useComputeHref() {
 
   // Artwork filter-specific
   // (location doesn't update in the case of artwork filter)
-  // @ts-expect-error STRICT_NULL_CHECK
+  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
   const currentlySelectedFilters = artworkFilterContext.currentlySelectedFilters()
 
   const computeHref = page => {

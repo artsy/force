@@ -1,5 +1,5 @@
 import { Flex, Sans, Serif, Spinner } from "@artsy/palette"
-import * as React from "react";
+import * as React from "react"
 import { graphql } from "react-relay"
 
 import {
@@ -16,7 +16,7 @@ const Row = props => (
 )
 
 export const PricingTransparency: React.FC<PricingTransparencyQueryResponse> = props => {
-  // @ts-expect-error STRICT_NULL_CHECK
+  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
   const { calculatedCost } = props.artwork.saleArtwork
 
   return (

@@ -1,6 +1,6 @@
 import Colors from "v2/Assets/Colors"
 import { avantgarde } from "v2/Assets/Fonts"
-import { Component } from "react";
+import { Component } from "react"
 import styled from "styled-components"
 import MultiStateButton, {
   MultiButtonState,
@@ -106,7 +106,7 @@ export class Layout extends Component<Props, null> {
             <NextButton
               disabled={disabled}
               onClick={this.props.onNextButtonPressed}
-              // @ts-expect-error STRICT_NULL_CHECK
+              // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
               state={this.props.buttonState}
             >
               {buttonText}

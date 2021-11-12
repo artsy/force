@@ -1,5 +1,5 @@
 import { Box, Image, StackableBorderBox, Text } from "@artsy/palette"
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
 
@@ -17,7 +17,7 @@ const SubmissionSummary: React.FC<SubmissionSummaryProps> = ({ offer }) => {
       <Box height="auto">{renderImage(submission)}</Box>
       <Box>
         <TruncatedLine>
-          {/* @ts-expect-error STRICT_NULL_CHECK */}
+          {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
           <Text variant="mediumText">{submission.artist.name}</Text>
           {renderTitleLine(submission)}
         </TruncatedLine>
@@ -59,7 +59,7 @@ function renderImage(submission: SubmissionSummary_offer["submission"]) {
     return null
   }
 
-  // @ts-expect-error STRICT_NULL_CHECK
+  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
   return <Image src={imageURL} alt={submission.title} width={55} mr={1} />
 }
 

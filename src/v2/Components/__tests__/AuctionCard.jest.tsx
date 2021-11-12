@@ -32,7 +32,7 @@ describe("relativeTime", () => {
 
 describe("upcomingLabel", () => {
   const sale: AuctionCard_sale = {
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     " $refType": null,
     cover_image: {
       cropped: {

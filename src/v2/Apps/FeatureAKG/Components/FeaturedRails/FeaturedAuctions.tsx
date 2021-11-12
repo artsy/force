@@ -6,7 +6,7 @@ import {
 } from "v2/Apps/FeatureAKG/Components/FeaturedRails"
 import { AnalyticsSchema } from "v2/System"
 import { compact } from "lodash"
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer } from "react-relay"
 import { graphql } from "relay-runtime"
 
@@ -25,7 +25,7 @@ const FeaturedAuctionsRail: React.FC<FeaturedAuctionsRailProps> = props => {
 
   const itemsForCarousel = auctions.edges.map(auction => {
     const matchingAuctionFromSpreadsheet = items.find(
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       item => item.id === auction.node.slug
     )
 
@@ -34,9 +34,9 @@ const FeaturedAuctionsRail: React.FC<FeaturedAuctionsRailProps> = props => {
         ...auction,
         imageSrc: matchingAuctionFromSpreadsheet.image_src,
         subtitle: "Auction",
-        // @ts-expect-error STRICT_NULL_CHECK
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         title: auction.node.name,
-        // @ts-expect-error STRICT_NULL_CHECK
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         href: auction.node.href,
       }
     } else {
@@ -48,7 +48,7 @@ const FeaturedAuctionsRail: React.FC<FeaturedAuctionsRailProps> = props => {
     return (
       <FeaturedRail title={title} subtitle={subtitle}>
         <FeaturedRailCarousel
-          // @ts-expect-error STRICT_NULL_CHECK
+          // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
           itemsForCarousel={compact(itemsForCarousel)}
           contextModule={AnalyticsSchema.ContextModule.BrowseAuctions}
         />

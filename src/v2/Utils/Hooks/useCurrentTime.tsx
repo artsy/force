@@ -35,7 +35,7 @@ export const useCurrentTime = ({
 
   useEffect(() => {
     if (syncWithServer) {
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       getOffsetBetweenGravityClock(relayEnvironment).then(offset => {
         setTimeOffsetInMilliseconds(offset)
       })
@@ -46,7 +46,7 @@ export const useCurrentTime = ({
     }, interval)
 
     return () => {
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       clearInterval(intervalId.current)
     }
   }, [interval, relayEnvironment, syncWithServer])

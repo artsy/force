@@ -5,8 +5,8 @@ import {
   LabeledInput,
   MagnifyingGlassIcon,
 } from "@artsy/palette"
-import { useRef, useState } from "react";
-import * as React from "react";
+import { useRef, useState } from "react"
+import * as React from "react"
 
 export type FilterInputProps = InputProps
 
@@ -30,7 +30,7 @@ export const FilterInput: React.FC<InputProps> = ({
   const handleClick = () => {
     setValue("")
 
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     ref.current.focus()
 
     // HACK: simulate an onChange event

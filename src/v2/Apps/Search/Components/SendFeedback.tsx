@@ -11,7 +11,7 @@ import {
 import { SendFeedbackSearchResultsMutation } from "v2/__generated__/SendFeedbackSearchResultsMutation.graphql"
 import { SystemContextProps } from "v2/System"
 import { withSystemContext } from "v2/System"
-import { Component } from "react";
+import { Component } from "react"
 import { commitMutation, graphql } from "react-relay"
 import styled from "styled-components"
 import { ErrorWithMetadata } from "v2/Utils/errors"
@@ -45,7 +45,7 @@ class SendFeedbackForm extends Component<SystemContextProps, State> {
     const { relayEnvironment } = this.props
     const { message, name, email } = this.state
 
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     commitMutation<SendFeedbackSearchResultsMutation>(relayEnvironment, {
       // TODO: Inputs to the mutation might have changed case of the keys!
       mutation: graphql`
@@ -85,7 +85,7 @@ class SendFeedbackForm extends Component<SystemContextProps, State> {
       },
       onCompleted: data => {
         const {
-          // @ts-expect-error STRICT_NULL_CHECK
+          // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
           sendFeedback: { feedbackOrError },
         } = data
         if (feedbackOrError.mutationError) {

@@ -1,5 +1,5 @@
 import { trim } from "lodash"
-import * as React from "react";
+import * as React from "react"
 
 import { SeoDataForArtwork_artwork } from "v2/__generated__/SeoDataForArtwork_artwork.graphql"
 import { CreativeWork } from "v2/Components/Seo/CreativeWork"
@@ -24,15 +24,15 @@ export const SeoDataForArtwork: React.FC<SeoDataForArtworkProps> = ({
 }) => {
   const artistsName = artwork.artistNames
 
-  // @ts-expect-error STRICT_NULL_CHECK
+  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
   const dimensions = parseDimensions(get(artwork, a => a.dimensions.in, ""))
 
   const artworkMetaData = {
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     name: artwork.meta.title,
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     image: get(artwork, a => a.meta_image.resized.url),
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     description: get(artwork, a => a.meta.description),
     url: `${APP_URL}${artwork.href}`,
     ...dimensions,
@@ -42,7 +42,7 @@ export const SeoDataForArtwork: React.FC<SeoDataForArtworkProps> = ({
     },
   }
 
-  // @ts-expect-error STRICT_NULL_CHECK
+  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
   const partnerType = get(artwork, a => a.partner.type)
   const offers = offerAttributes(artwork)
 
@@ -132,16 +132,16 @@ export const offerAttributes = (artwork: SeoDataForArtwork_artwork) => {
   if (!artwork.listPrice || artwork.is_price_hidden) return null
   const galleryProfileImage = get(
     artwork,
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     a => a.partner.profile.image.resized.url
   )
   const seller = galleryProfileImage && {
     "@type": "ArtGallery",
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     name: get(artwork, a => a.partner.name),
     image: galleryProfileImage,
   }
-  // @ts-expect-error STRICT_NULL_CHECK
+  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
   const availability = AVAILABILITY[artwork.availability]
   switch (artwork.listPrice.__typename) {
     case "PriceRange":
@@ -149,7 +149,7 @@ export const offerAttributes = (artwork: SeoDataForArtwork_artwork) => {
       if (!artwork.listPrice.minPrice) {
         return null
       }
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       const highPrice = get(artwork.listPrice, price => price.maxPrice.major)
       return {
         "@type": "AggregateOffer",

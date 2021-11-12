@@ -7,8 +7,8 @@ import {
   Sans,
   color,
 } from "@artsy/palette"
-import { useEffect, useRef } from "react";
-import * as React from "react";
+import { useEffect, useRef } from "react"
+import * as React from "react"
 import styled from "styled-components"
 import {
   initialArtworkFilterState,
@@ -43,21 +43,21 @@ export const ArtworkFilterMobileActionSheet: React.FC<{
     //
     // On mount, enter staged mode, and initialize a set of staged filter
     // changes from the current filter choices.
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     filterContext.setShouldStageFilterChanges(true)
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     filterContext.setStagedFilters(filterContext.filters)
 
     // On unmount, exit staged mode.
     return () => {
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       filterContext.setShouldStageFilterChanges(false)
     }
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   // enumerate the difference between prior and currently selected filters
   const changedFilterCount = countChangedFilters(
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     filterContext.filters,
     filterContext.stagedFilters
   )
@@ -65,7 +65,7 @@ export const ArtworkFilterMobileActionSheet: React.FC<{
   const applyFilters = () => {
     // On apply, replace the actual filter state with the
     // hitherto staged filters
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     filterContext.setFilters(filterContext.stagedFilters)
     onClose()
   }
@@ -86,7 +86,7 @@ export const ArtworkFilterMobileActionSheet: React.FC<{
           size="small"
           onClick={() => {
             // On close, abandon any staged filter changes
-            // @ts-expect-error STRICT_NULL_CHECK
+            // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
             filterContext.setStagedFilters({})
             onClose()
           }}

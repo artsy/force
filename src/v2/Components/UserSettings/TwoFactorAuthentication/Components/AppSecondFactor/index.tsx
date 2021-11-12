@@ -8,8 +8,8 @@ import {
   Sans,
   Serif,
 } from "@artsy/palette"
-import { useState } from "react";
-import * as React from "react";
+import { useState } from "react"
+import * as React from "react"
 import { RelayRefetchProp, createFragmentContainer, graphql } from "react-relay"
 import request from "superagent"
 
@@ -60,7 +60,7 @@ export const AppSecondFactor: React.FC<AppSecondFactorProps> = props => {
     }
 
     if (props.me.hasSecondFactorEnabled) {
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       relayRefetch.refetch({}, {}, showCompleteModalCallback)
     } else {
       if (redirectTo) {
@@ -105,12 +105,12 @@ export const AppSecondFactor: React.FC<AppSecondFactorProps> = props => {
     setCreating(true)
 
     try {
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       const response = await CreateAppSecondFactor(relayEnvironment, {
         attributes: {},
         password,
       })
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       setStagedSecondFactor(response.createAppSecondFactor.secondFactorOrErrors)
       setShowConfirmPassword(false)
       setShowSetupModal(true)
@@ -122,7 +122,7 @@ export const AppSecondFactor: React.FC<AppSecondFactorProps> = props => {
   }
 
   function onDisableSecondFactor() {
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     relayRefetch.refetch({}, {}, () => {
       setShowConfirmDisable(false)
     })
@@ -171,13 +171,13 @@ export const AppSecondFactor: React.FC<AppSecondFactorProps> = props => {
           </Serif>
         </Flex>
         <Flex mt={[3, 0]} flexDirection={["column", "row"]} alignItems="center">
-          {/* @ts-expect-error STRICT_NULL_CHECK */}
+          {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
           {me.appSecondFactors.length &&
-          // @ts-expect-error STRICT_NULL_CHECK
+          // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
           me.appSecondFactors[0].__typename === "AppSecondFactor" ? (
             <>
               <Sans color="black60" size="3" weight="medium">
-                {/* @ts-expect-error STRICT_NULL_CHECK */}
+                {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
                 {me.appSecondFactors[0].name || "Unnamed"}
               </Sans>
               <DisableButton width={["100%", "auto"]} ml={[0, 1]} mt={[1, 0]} />
@@ -215,15 +215,15 @@ export const AppSecondFactor: React.FC<AppSecondFactorProps> = props => {
         show={!!apiErrors.length}
         errors={apiErrors}
       />
-      {/* @ts-expect-error STRICT_NULL_CHECK */}
+      {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
       {me.appSecondFactors.length > 0 &&
-        // @ts-expect-error STRICT_NULL_CHECK
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         me.appSecondFactors[0].__typename === "AppSecondFactor" && (
           <DisableFactorConfirmation
             show={showConfirmDisable}
             onConfirm={onDisableSecondFactor}
             onCancel={() => setShowConfirmDisable(false)}
-            // @ts-expect-error STRICT_NULL_CHECK
+            // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
             secondFactorID={me.appSecondFactors[0].internalID}
           />
         )}

@@ -4,7 +4,7 @@ const props: NavigationTabsProps = {
   artworkCount: 601,
   term: "whitney",
   searchableConnection: {
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     " $refType": null,
     aggregations: [
       {

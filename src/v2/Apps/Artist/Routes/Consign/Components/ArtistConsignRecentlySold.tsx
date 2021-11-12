@@ -1,5 +1,5 @@
 import { Box, Flex, Sans, Spacer } from "@artsy/palette"
-import * as React from "react";
+import * as React from "react"
 
 import { ArtistConsignRecentlySold_artist } from "v2/__generated__/ArtistConsignRecentlySold_artist.graphql"
 
@@ -16,7 +16,7 @@ interface ArtistConsignRecentlySoldProps {
 export const ArtistConsignRecentlySold: React.FC<ArtistConsignRecentlySoldProps> = ({
   artist,
 }) => {
-  // @ts-expect-error STRICT_NULL_CHECK
+  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
   if (artist.targetSupply.microfunnel.artworksConnection.edges.length === 0) {
     return null
   }
@@ -30,9 +30,9 @@ export const ArtistConsignRecentlySold: React.FC<ArtistConsignRecentlySoldProps>
           <Spacer my={4} />
 
           <Flex justifyContent={["center", "center"]} flexWrap="wrap">
-            {/* @ts-expect-error STRICT_NULL_CHECK */}
+            {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
             {artist.targetSupply.microfunnel.artworksConnection.edges.map(
-              // @ts-expect-error STRICT_NULL_CHECK
+              // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
               ({ node }, key) => {
                 return (
                   <Flex

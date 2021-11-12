@@ -2,7 +2,7 @@ import { space } from "@artsy/palette"
 import { fadeIn, fadeOut } from "v2/Assets/Animations"
 import Colors from "v2/Assets/Colors"
 import { garamond, unica } from "v2/Assets/Fonts"
-import { Component } from "react";
+import { Component } from "react"
 import styled from "styled-components"
 import { borderedInputMixin } from "./Mixins"
 
@@ -28,10 +28,7 @@ export interface QuickInputState {
  * Quick input. Renders the label inside of the textbox.
  * @deprecated
  */
-export class QuickInput extends Component<
-  QuickInputProps,
-  QuickInputState
-> {
+export class QuickInput extends Component<QuickInputProps, QuickInputState> {
   state = {
     focused: false,
     value: (this.props.value as string) || "",
@@ -58,7 +55,7 @@ export class QuickInput extends Component<
 
   onBlur = e => {
     if (this.props.setTouched) {
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       this.props.setTouched({ [this.props.name]: true })
     }
     this.setState({
@@ -72,7 +69,7 @@ export class QuickInput extends Component<
 
   onChange = e => {
     if (this.props.touchedOnChange && this.props.setTouched) {
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       this.props.setTouched({ [this.props.name]: true })
     }
     this.setState({

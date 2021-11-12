@@ -1,5 +1,5 @@
 import { FormikProps } from "formik"
-import * as React from "react";
+import * as React from "react"
 
 import { FormValuesForRegistration } from "v2/Apps/Auction/Components/Form"
 
@@ -26,7 +26,7 @@ export const OnSubmitValidationError: React.FC<{
 
   const effect = () => {
     if (
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       formikProps.submitCount > 0 &&
       !formikProps.isSubmitting &&
       !formikProps.isValid
@@ -37,9 +37,9 @@ export const OnSubmitValidationError: React.FC<{
 
       const errors = Object.assign({}, clonedErrors, addressErrors)
 
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       cb(Object.values(errors as string[]))
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       formikProps.setSubmitting(false)
     }
   }

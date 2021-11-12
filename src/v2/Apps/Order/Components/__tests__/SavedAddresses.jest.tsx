@@ -54,7 +54,7 @@ describe("Saved Addresses", () => {
       const editButton = page
         .find(`[data-test="editAddressInProfileClick"]`)
         .first()
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       editButton
         .props()
         .onClick(userAddressMutation.me.addressConnection.edges[0].node as any)

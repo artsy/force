@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"
 import { Box, Flex, Image, ResponsiveBox, Text } from "@artsy/palette"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { ContextModule } from "@artsy/cohesion"
@@ -27,18 +27,18 @@ export const ArtistsArtistCard: React.FC<ArtistsArtistCardProps> = ({
         tabIndex={-1}
       >
         <ResponsiveBox
-          // @ts-expect-error STRICT_NULL_CHECK
+          // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
           aspectWidth={image.thumb.width}
-          // @ts-expect-error STRICT_NULL_CHECK
+          // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
           aspectHeight={image.thumb.height}
           maxWidth="100%"
         >
           <Image
-            // @ts-expect-error STRICT_NULL_CHECK
+            // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
             src={image.thumb.src}
-            // @ts-expect-error STRICT_NULL_CHECK
+            // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
             srcSet={image.thumb.srcSet}
-            // @ts-expect-error STRICT_NULL_CHECK
+            // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
             alt={artist.name}
             width="100%"
             height="100%"
@@ -58,12 +58,12 @@ export const ArtistsArtistCard: React.FC<ArtistsArtistCardProps> = ({
               </Text>
             )}
 
-            {/* @ts-expect-error STRICT_NULL_CHECK */}
+            {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
             {counts && counts.artworks > 0 && (
               <Text variant="xs" fontWeight="bold">
                 {counts.artworks} work
                 {counts.artworks === 1 ? "" : "s"}
-                {/* @ts-expect-error STRICT_NULL_CHECK */}
+                {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
                 {counts.forSaleArtworks > 0 &&
                   counts.forSaleArtworks !== counts.artworks && (
                     <>, {counts.forSaleArtworks} for sale</>

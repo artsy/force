@@ -15,7 +15,7 @@ Links should point to specific commits, and not a branch (in case the branch or 
 - [When writing UI, use Palette](#when-writing-ui-use-palette)
 - [For routing, use our framework](#for-routing-use-our-framework)
 - [Leverage TypeScript to prevent runtime bugs](#leverage-typescript-to-prevent-runtime-bugs)
-- [Avoid copying and try to fix `// @ts-expect-error STRICT_NULL_CHECK` flags](#avoid-copying-and-try-to-fix--ts-expect-error-strict_null_check-flags)
+- [Avoid copying and try to fix `// @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION` flags](#avoid-copying-and-try-to-fix--ts-expect-error-strict_null_check-flags)
 - [Use Relay for network requests](#use-relay-for-network-requests)
 - [Prefer Relay containers (higher order components) over relay-hooks](#prefer-relay-containers-higher-order-components-over-relay-hooks)
 - [Keep file structure organized](#keep-file-structure-organized)
@@ -45,9 +45,9 @@ To learn how to create a new sub-app, see [the docs](https://github.com/artsy/fo
 
 We use [TypeScript](https://www.typescriptlang.org/docs) to maximize runtime code safety.
 
-### Avoid copying and try to fix `// @ts-expect-error STRICT_NULL_CHECK` flags 
+### Avoid copying and try to fix `// @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION` flags
 
-Around mid-2021 we migrated to strict type checking for **all new code**. What this meant in practice was that all _old code_ that failed strict type checking was silenced via a special flag inserted by a script (`// @ts-expect-error STRICT_NULL_CHECK`) with all _new code_ expected to adhere to best practices. Going forward, this flag should never be used, and if encounted while working on old code it should be removed and the type error fixed.
+Around mid-2021 we migrated to strict type checking for **all new code**. What this meant in practice was that all _old code_ that failed strict type checking was silenced via a special flag inserted by a script (`// @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION`) with all _new code_ expected to adhere to best practices. Going forward, this flag should never be used, and if encounted while working on old code it should be removed and the type error fixed.
 
 ### Use Relay for network requests
 

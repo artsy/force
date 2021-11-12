@@ -1,5 +1,5 @@
-import { useState } from "react";
-import * as React from "react";
+import { useState } from "react"
+import * as React from "react"
 import { Box, Button, Dialog, Text } from "@artsy/palette"
 import { useAnalyticsContext, useTracking } from "v2/System"
 import { ContextModule, clickedShowMore } from "@artsy/cohesion"
@@ -20,7 +20,7 @@ export const WelcomeRoute: React.FC = () => {
     trackEvent(
       clickedShowMore({
         context_module: ContextModule.promoSpace,
-        // @ts-expect-error STRICT_NULL_CHECK
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         context_page_owner_type: contextPageOwnerType,
         context_page_owner_slug: contextPageOwnerSlug,
         context_page_owner_id: contextPageOwnerId,

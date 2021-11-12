@@ -57,17 +57,17 @@ describe("MaterialsTermFilter", () => {
     it("acts on material term values", async () => {
       const wrapper = getWrapper({ aggregations })
 
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       expect(context.filters.materialsTerms).toHaveLength(0)
 
       await wrapper.find("Checkbox").first().simulate("click")
       await wrapper.find("Checkbox").last().simulate("click")
 
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       expect(context.filters.materialsTerms).toHaveLength(2)
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       expect(context.filters.materialsTerms).toContain("acrylic")
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       expect(context.filters.materialsTerms).toContain("enamel")
     })
 

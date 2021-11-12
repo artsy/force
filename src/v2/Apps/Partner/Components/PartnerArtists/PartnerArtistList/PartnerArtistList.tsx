@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"
 import { PartnerArtistList_artists } from "v2/__generated__/PartnerArtistList_artists.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Box, Column, GridColumns, Text } from "@artsy/palette"
@@ -54,14 +54,14 @@ export const PartnerArtistList: React.FC<PartnerArtistListProps> = ({
                 </Text>
               )}
               <Box style={{ columnCount: group.columnSize }}>
-                {/* @ts-expect-error STRICT_NULL_CHECK */}
+                {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
                 {group.artists.map(({ node, counts: { artworks } }) => {
                   return (
                     <PartnerArtistItem
                       scrollTo={scrollTo}
-                      // @ts-expect-error STRICT_NULL_CHECK
+                      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
                       key={node.internalID}
-                      // @ts-expect-error STRICT_NULL_CHECK
+                      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
                       artist={node}
                       partnerSlug={partnerSlug}
                       hasPublishedArtworks={artworks > 0}

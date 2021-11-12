@@ -1,6 +1,6 @@
 import { Column, GridColumns, Join, Spacer } from "@artsy/palette"
-import { useContext } from "react";
-import * as React from "react";
+import { useContext } from "react"
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { data as sd } from "sharify"
 import { ArtworkApp_artwork } from "v2/__generated__/ArtworkApp_artwork.graphql"
@@ -131,9 +131,9 @@ export class ArtworkApp extends React.Component<Props> {
         action_type: Schema.ActionType.ViewedLot,
         artwork_id: internalID,
         artwork_slug: slug,
-        // @ts-expect-error STRICT_NULL_CHECK
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         auction_slug: sale.slug,
-        // @ts-expect-error STRICT_NULL_CHECK
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         sale_id: sale.internalID,
       }
       tracking.trackEvent(trackingData)

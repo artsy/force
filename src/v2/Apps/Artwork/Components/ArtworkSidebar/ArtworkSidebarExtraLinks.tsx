@@ -1,7 +1,7 @@
 import { Clickable, Link, Separator, Spacer, Text } from "@artsy/palette"
 import { track } from "v2/System/Analytics"
 import * as Schema from "v2/System/Analytics/Schema"
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtworkSidebarExtraLinks_artwork } from "v2/__generated__/ArtworkSidebarExtraLinks_artwork.graphql"
 import { useInquiry, WithInquiryProps } from "v2/Components/Inquiry/useInquiry"
@@ -99,14 +99,14 @@ class ArtworkSidebarExtraLinksContainer extends React.Component<
   conditionsOfSaleText() {
     const first = "By placing your bid you agree to Artsy's "
     if (
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       !this.props.artwork.sale.isBenefit &&
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       !!this.props.artwork.sale.partner
     ) {
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       const partnerName = this.props.artwork.sale.partner.name
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       const possessivePartnerName = partnerName.endsWith("'s")
         ? partnerName
         : partnerName + "'s"

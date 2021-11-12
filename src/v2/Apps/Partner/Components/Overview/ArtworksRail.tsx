@@ -21,7 +21,7 @@ interface ArtworksRailProps extends BoxProps {
 export const ARTWORK_CAROUSEL_ITEM_HEIGHT = 300
 
 const ArtworksRail: React.FC<ArtworksRailProps> = ({ partner, ...rest }) => {
-  // @ts-expect-error STRICT_NULL_CHECK
+  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
   const [isSeeAllAvaliable, setIsSeeAllAvaliable] = useState<boolean>(undefined)
 
   if (
@@ -50,14 +50,14 @@ const ArtworksRail: React.FC<ArtworksRailProps> = ({ partner, ...rest }) => {
       </Flex>
 
       <Carousel onRailOverflowChange={setIsSeeAllAvaliable}>
-        {/* @ts-expect-error STRICT_NULL_CHECK */}
+        {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
         {flatten([
           artworks.map(artwork => {
             return (
               <FillwidthItem
-                // @ts-expect-error STRICT_NULL_CHECK
+                // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
                 key={artwork.node.id}
-                // @ts-expect-error STRICT_NULL_CHECK
+                // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
                 artwork={artwork.node}
                 imageHeight={ARTWORK_CAROUSEL_ITEM_HEIGHT}
                 hidePartnerName

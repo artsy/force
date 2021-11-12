@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FairFollowedArtists_fair } from "v2/__generated__/FairFollowedArtists_fair.graphql"
 import { Carousel } from "v2/Components/Carousel"
@@ -34,7 +34,7 @@ export const FairFollowedArtists: React.FC<FairFollowedArtistsProps> = ({
 
   const tappedViewTrackingData: ClickedArtworkGroup = {
     context_module: ContextModule.worksByArtistsYouFollowRail,
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     context_page_owner_type: contextPageOwnerType,
     context_page_owner_id: contextPageOwnerId,
     context_page_owner_slug: contextPageOwnerSlug,
@@ -52,7 +52,7 @@ export const FairFollowedArtists: React.FC<FairFollowedArtistsProps> = ({
   }): ClickedArtworkGroup => {
     return {
       context_module: ContextModule.worksByArtistsYouFollowRail,
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       context_page_owner_type: contextPageOwnerType,
       context_page_owner_id: contextPageOwnerId,
       context_page_owner_slug: contextPageOwnerSlug,
@@ -87,7 +87,7 @@ export const FairFollowedArtists: React.FC<FairFollowedArtistsProps> = ({
       </Box>
 
       <Carousel arrowHeight={IMAGE_HEIGHT}>
-        {/* @ts-expect-error STRICT_NULL_CHECK */}
+        {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
         {fair.followedArtistArtworks.edges.map(({ artwork }, index) => {
           return (
             <FillwidthItem

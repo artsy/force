@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ExampleApp_system } from "v2/__generated__/ExampleApp_system.graphql"
 import {
@@ -22,7 +22,7 @@ export interface ExampleAppProps {
 }
 
 const ExampleApp: React.FC<ExampleAppProps> = ({ system, children }) => {
-  // @ts-expect-error STRICT_NULL_CHECK
+  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
   const { month, day, year } = system.time
 
   return (

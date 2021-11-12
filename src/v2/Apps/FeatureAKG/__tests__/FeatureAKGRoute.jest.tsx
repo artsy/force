@@ -144,7 +144,7 @@ describe("FeatureAKG", () => {
         const largeWrapper = await getWrapper(
           ArtKeepsGoingFixture,
           defaultVariables,
-          // @ts-expect-error STRICT_NULL_CHECK
+          // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
           largeWrapperData
         )
         expect(largeWrapper.html()).not.toContain("video_1_large")
@@ -177,7 +177,7 @@ describe("FeatureAKG", () => {
         const smallWrapper = await getWrapper(
           ArtKeepsGoingFixture,
           defaultVariables,
-          // @ts-expect-error STRICT_NULL_CHECK
+          // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
           smallWrapperData,
           "xs"
         )
@@ -288,7 +288,7 @@ describe("FeatureAKG", () => {
         const wrapper = await getWrapper(
           ArtKeepsGoingFixture,
           defaultVariables,
-          // @ts-expect-error STRICT_NULL_CHECK
+          // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
           injectedData
         )
 
@@ -324,7 +324,7 @@ describe("FeatureAKG", () => {
           },
         }
 
-        // @ts-expect-error STRICT_NULL_CHECK
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         const wrapper = await getWrapper(noArticlesData, defaultVariables)
 
         // In this case we'll still render the section, but it should just be
@@ -356,7 +356,7 @@ describe("FeatureAKG", () => {
           },
         }
 
-        // @ts-expect-error STRICT_NULL_CHECK
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         const wrapper = await getWrapper(noSelectedWorksData, defaultVariables)
 
         // In this case we'll still render the section, but it should just be
@@ -377,7 +377,7 @@ describe("FeatureAKG", () => {
         const wrapper = await getWrapper(
           ArtKeepsGoingFixture,
           defaultVariables,
-          // @ts-expect-error STRICT_NULL_CHECK
+          // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
           injectedData
         )
 
@@ -454,7 +454,7 @@ describe("FeatureAKG", () => {
           },
         }
 
-        // @ts-expect-error STRICT_NULL_CHECK
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         const wrapper = await getWrapper(noCollectionsData, defaultVariables)
         expect(wrapper.find("FeaturedRailCarousel").length).toEqual(2)
         expect(wrapper.find("FeaturedRails").text()).not.toContain(
@@ -473,7 +473,7 @@ describe("FeatureAKG", () => {
           },
         }
 
-        // @ts-expect-error STRICT_NULL_CHECK
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         const wrapper = await getWrapper(noAuctionsData, defaultVariables)
         expect(wrapper.find("FeaturedRailCarousel").length).toEqual(2)
         expect(wrapper.find("FeaturedRails").text()).not.toContain(
@@ -489,7 +489,7 @@ describe("FeatureAKG", () => {
           },
         }
 
-        // @ts-expect-error STRICT_NULL_CHECK
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         const wrapper = await getWrapper(noFairsData, defaultVariables)
         expect(wrapper.find("FeaturedRailCarousel").length).toEqual(2)
         expect(wrapper.find("FeaturedRails").text()).not.toContain("Fairs")

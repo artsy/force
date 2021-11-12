@@ -1,6 +1,6 @@
 import Autosuggest from "react-autosuggest"
-import { useEffect } from "react";
-import * as React from "react";
+import { useEffect } from "react"
+import * as React from "react"
 import {
   MagnifyingGlassIcon,
   Text,
@@ -49,7 +49,7 @@ export const ConsignArtistAutosuggest: React.FC = () => {
         owner_id: suggestion.internalID,
         owner_slug: suggestion.slug,
         owner_type: OwnerType.artist,
-        // @ts-expect-error STRICT_NULL_CHECK
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         query: searchQuery,
       })
     )
@@ -60,7 +60,7 @@ export const ConsignArtistAutosuggest: React.FC = () => {
       searchedWithNoResults({
         context_module: ContextModule.priceEstimate,
         context_owner_type: OwnerType.consign,
-        // @ts-expect-error STRICT_NULL_CHECK
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         query: searchQuery,
       })
     )
@@ -83,11 +83,11 @@ export const ConsignArtistAutosuggest: React.FC = () => {
     <Autosuggest
       suggestions={suggestions ?? []}
       onSuggestionsClearRequested={x => x}
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       onSuggestionsFetchRequested={() => fetchSuggestions(searchQuery)}
       onSuggestionSelected={(_, { suggestion }) => {
         trackSelectedItemFromSearch(suggestion)
-        // @ts-expect-error STRICT_NULL_CHECK
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         selectSuggestion(suggestion)
       }}
       getSuggestionValue={suggestion => suggestion.node.displayLabel}
@@ -95,7 +95,7 @@ export const ConsignArtistAutosuggest: React.FC = () => {
       renderSuggestion={Suggestion}
       inputProps={{
         onChange: (_, { newValue }) => {
-          // @ts-expect-error STRICT_NULL_CHECK
+          // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
           setSearchQuery(newValue)
         },
         onFocus: trackFocusedOnSearchInput,

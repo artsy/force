@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import * as React from "react";
+import * as React from "react"
 import { PartnerInline } from "@artsy/reaction/dist/Components/Publishing/Partner/PartnerInline"
 import {
   Clickable,
@@ -25,7 +25,7 @@ export const Header: React.SFC<HeaderProps> = props => {
 
   return (
     <HeaderMain justifyContent="space-between" alignItems="center">
-      {/* @ts-expect-error STRICT_NULL_CHECK */}
+      {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
       <PartnerInline
         url={partner_url}
         logo={partner_logo}

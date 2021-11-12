@@ -1,7 +1,7 @@
 import { Pagination_pageCursors } from "v2/__generated__/Pagination_pageCursors.graphql"
 
 export const paginationProps = {
-  // @ts-expect-error STRICT_NULL_CHECK
+  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
   cursor: {
     first: { page: 1, cursor: "Y3Vyc29yMg==", isCurrent: false },
     last: { page: 20, cursor: "Y3Vyc29yMw==", isCurrent: false },

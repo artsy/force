@@ -310,7 +310,7 @@ export const BaseArtworkFilter: React.FC<
           <Spacer mb={2} />
 
           <ArtworkFilterArtworkGrid
-            // @ts-expect-error STRICT_NULL_CHECK
+            // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
             filtered_artworks={viewer.filtered_artworks}
             isLoading={isFetching}
             offset={offset}
@@ -359,7 +359,7 @@ export const BaseArtworkFilter: React.FC<
 
             {children || (
               <ArtworkFilterArtworkGrid
-                // @ts-expect-error STRICT_NULL_CHECK
+                // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
                 filtered_artworks={viewer.filtered_artworks}
                 isLoading={isFetching}
                 offset={offset}

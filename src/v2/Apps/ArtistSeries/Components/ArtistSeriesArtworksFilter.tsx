@@ -6,7 +6,7 @@ import {
 } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
 import { updateUrl } from "v2/Components/ArtworkFilter/Utils/urlBuilder"
 import { Match, RouterState, withRouter } from "found"
-import * as React from "react";
+import * as React from "react"
 import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
 
 interface ArtistSeriesArtworksFilterProps {
@@ -55,7 +55,7 @@ const ArtistSeriesArtworksFilter: React.FC<ArtistSeriesArtworksFilterProps> = pr
 
 export const ArtistSeriesArtworksFilterRefetchContainer = createRefetchContainer(
   withRouter<ArtistSeriesArtworksFilterProps & RouterState>(
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     ArtistSeriesArtworksFilter
   ),
   {

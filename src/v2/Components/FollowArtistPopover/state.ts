@@ -11,14 +11,14 @@ export class FollowArtistPopoverState extends Container<State> {
     super()
 
     if (props && props.excludeArtistIds) {
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       this.state.excludeArtistIds = props.excludeArtistIds
     }
   }
 
   addArtist = (artistId: string) => {
     const { excludeArtistIds } = this.state
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     this.setState({ excludeArtistIds: excludeArtistIds.concat(artistId) })
   }
 }

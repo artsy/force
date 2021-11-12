@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"
 import { commitMutation, createFragmentContainer, graphql } from "react-relay"
 import { useSystemContext } from "v2/System"
 import { FollowButton } from "./Button"
@@ -20,7 +20,7 @@ const FollowGeneButton: React.FC<FollowGeneButtonProps> = ({
 
   const handleClick = () => {
     if (!user) {
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       openAuthToFollowSave(mediator, {
         entity: gene,
         contextModule: ContextModule.geneHeader,
@@ -30,7 +30,7 @@ const FollowGeneButton: React.FC<FollowGeneButtonProps> = ({
       return
     }
 
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     commitMutation<FollowGeneButtonMutation>(relayEnvironment, {
       mutation: graphql`
         mutation FollowGeneButtonMutation($input: FollowGeneInput!) {
@@ -61,7 +61,7 @@ const FollowGeneButton: React.FC<FollowGeneButtonProps> = ({
 
   return (
     <FollowButton
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       isFollowed={gene.isFollowed}
       handleFollow={handleClick}
       buttonProps={rest}

@@ -2,7 +2,7 @@ import { EntityHeader, Spacer, Spinner } from "@artsy/palette"
 import { WorksForYouArtistFeed_viewer } from "v2/__generated__/WorksForYouArtistFeed_viewer.graphql"
 import { SystemContextProps } from "v2/System"
 import ArtworkGrid from "v2/Components/ArtworkGrid"
-import { Component } from "react";
+import { Component } from "react"
 import styled from "styled-components"
 import { get } from "v2/Utils/get"
 
@@ -31,7 +31,7 @@ export class WorksForYouArtistFeed extends Component<Props, State> {
   }
 
   loadMoreArtworks() {
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     const hasMore = this.props.viewer.artist.artworks_connection.pageInfo
       .hasNextPage
 
@@ -54,21 +54,21 @@ export class WorksForYouArtistFeed extends Component<Props, State> {
       viewer: { artist },
     } = this.props
 
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     const avatarImageUrl = get(artist, p => p.image.resized.url)
     const meta =
       (forSale
-        ? // @ts-expect-error STRICT_NULL_CHECK
+        ? // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
           get(artist, p => p.counts.for_sale_artworks.toLocaleString(), "")
-        : // @ts-expect-error STRICT_NULL_CHECK
+        : // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
           get(artist, p => p.counts.artworks.toLocaleString(), "")) + " Works"
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     const worksForSaleHref = artist.href + "/works-for-sale"
 
     return (
       <>
         <EntityHeader
-          // @ts-expect-error STRICT_NULL_CHECK
+          // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
           name={artist.name}
           meta={meta}
           imageUrl={avatarImageUrl}
@@ -78,7 +78,7 @@ export class WorksForYouArtistFeed extends Component<Props, State> {
         <Spacer mb={3} />
 
         <ArtworkGrid
-          // @ts-expect-error STRICT_NULL_CHECK
+          // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
           artworks={artist.artworks_connection}
           columnCount={3}
           itemMargin={40}
@@ -146,7 +146,7 @@ export const WorksForYouArtistFeedPaginationContainer = createPaginationContaine
   {
     direction: "forward",
     getConnectionFromProps(props) {
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       return props.viewer.artist.artworks_connection
     },
     getFragmentVariables(prevVars, totalCount) {
