@@ -19,15 +19,16 @@ interface SavedSearchAlertFormProps extends SavedSearchAlertFormPropsBase {
   onComplete?: (result: SavedSearchAlertMutationResult) => void
 }
 
+const logger = createLogger(
+  "v2/Components/SavedSearchAlert/SavedSearchAlertForm"
+)
+
 export const SavedSearchAlertForm: React.FC<SavedSearchAlertFormProps> = ({
   artistId,
   artistName,
   initialValues,
   onComplete,
 }) => {
-  const logger = createLogger(
-    "v2/Components/SavedSearchAlert/SavedSearchAlertForm"
-  )
   const { relayEnvironment } = useSystemContext()
   const filterContext = useArtworkFilterContext()
 
