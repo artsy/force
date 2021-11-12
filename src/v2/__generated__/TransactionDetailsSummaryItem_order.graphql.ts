@@ -39,6 +39,7 @@ export type TransactionDetailsSummaryItem_order = {
     readonly taxTotalCents: number | null;
     readonly itemsTotal: string | null;
     readonly buyerTotal: string | null;
+    readonly currencyCode: string;
     readonly lastOffer?: {
         readonly internalID: string;
         readonly amount: string | null;
@@ -302,6 +303,13 @@ return {
     },
     (v7/*: any*/),
     {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "currencyCode",
+      "storageKey": null
+    },
+    {
       "kind": "InlineFragment",
       "selections": [
         {
@@ -331,5 +339,5 @@ return {
   "type": "CommerceOrder"
 };
 })();
-(node as any).hash = 'e8c77949a24ec4c167d6471e81fe1b8c';
+(node as any).hash = 'a82fef516986f0724e8b28ab6860f060';
 export default node;
