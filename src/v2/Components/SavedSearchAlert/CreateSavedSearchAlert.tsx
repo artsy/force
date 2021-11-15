@@ -2,18 +2,17 @@ import React from "react"
 import { Modal, Text } from "@artsy/palette"
 import { SavedSearchAlertForm } from "./SavedSearchAlertForm"
 import { SavedSearchAlertMutationResult } from "./SavedSearchAlertModel"
+import { SavedSearchAttributes } from "../ArtworkFilter/SavedSearch/types"
 
 interface CreateSavedSearchAlertProps {
-  artistId: string
-  artistName: string
+  savedSearchAttributes: SavedSearchAttributes
   onClose: () => void
   onComplete: (response: SavedSearchAlertMutationResult) => void
   visible?: boolean
 }
 
 export const CreateSavedSearchAlert: React.FC<CreateSavedSearchAlertProps> = ({
-  artistId,
-  artistName,
+  savedSearchAttributes,
   onClose,
   onComplete,
   visible,
@@ -28,8 +27,7 @@ export const CreateSavedSearchAlert: React.FC<CreateSavedSearchAlertProps> = ({
         Create an Alert
       </Text>
       <SavedSearchAlertForm
-        artistId={artistId}
-        artistName={artistName}
+        savedSearchAttributes={savedSearchAttributes}
         initialValues={{ name: "", email: true }}
         onComplete={handleComplete}
       />

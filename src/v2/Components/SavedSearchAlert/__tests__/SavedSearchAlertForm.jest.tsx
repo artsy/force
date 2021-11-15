@@ -4,6 +4,7 @@ import {
   ArtworkFiltersState,
   initialArtworkFilterState,
 } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
+import { SavedSearchAttributes } from "v2/Components/ArtworkFilter/SavedSearch/types"
 import { MockBoot } from "v2/DevTools"
 import { SystemContextProvider } from "v2/System"
 import { Breakpoint } from "v2/Utils/Responsive"
@@ -12,6 +13,12 @@ import { SavedSearchAlertForm } from "../SavedSearchAlertForm"
 const formInitialValues = {
   name: "",
   email: true,
+}
+
+const savedSearchProps: SavedSearchAttributes = {
+  type: "artist",
+  id: "test-artist-id",
+  name: "test-artist-name",
 }
 
 const savedSearchFilters = {
@@ -30,8 +37,7 @@ const getWrapper = (
         <ArtworkFilterContextProvider filters={filters}>
           <SavedSearchAlertForm
             initialValues={formInitialValues}
-            artistId="test-artist-id"
-            artistName={"test-artist-name"}
+            savedSearchAttributes={savedSearchProps}
           />
         </ArtworkFilterContextProvider>
       </SystemContextProvider>

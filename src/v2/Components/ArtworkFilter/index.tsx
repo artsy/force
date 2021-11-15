@@ -53,6 +53,7 @@ import { TagArtworkFilter_tag } from "v2/__generated__/TagArtworkFilter_tag.grap
 import { Works_partner } from "v2/__generated__/Works_partner.graphql"
 import { CollectionArtworksFilter_collection } from "v2/__generated__/CollectionArtworksFilter_collection.graphql"
 import { FiltersPills } from "./SavedSearch/Components/FiltersPills"
+import { SavedSearchAttributes } from "./SavedSearch/types"
 
 /**
  * Primary ArtworkFilter which is wrapped with a context and refetch container.
@@ -65,8 +66,7 @@ export const ArtworkFilter: React.FC<
   BoxProps &
     SharedArtworkFilterContextProps & {
       viewer: any // FIXME: We need to support multiple types implementing different viewer interfaces
-      artistId?: string
-      artistName?: string
+      savedSearchProps?: SavedSearchAttributes
     }
 > = ({
   viewer,
@@ -77,8 +77,7 @@ export const ArtworkFilter: React.FC<
   onFilterClick,
   onChange,
   ZeroState,
-  artistId,
-  artistName,
+  savedSearchProps,
   ...rest
 }) => {
   return (
@@ -93,8 +92,7 @@ export const ArtworkFilter: React.FC<
     >
       <ArtworkFilterRefetchContainer
         viewer={viewer}
-        artistId={artistId}
-        artistName={artistName}
+        savedSearchProps={savedSearchProps}
         {...rest}
       />
     </ArtworkFilterContextProvider>
@@ -137,9 +135,8 @@ export const BaseArtworkFilter: React.FC<
       | CollectionArtworksFilter_collection
     Filters?: JSX.Element
     offset?: number
+    savedSearchProps?: SavedSearchAttributes
     enableCreateAlert?: boolean
-    artistId?: string
-    artistName?: string
   }
 > = ({
   relay,
@@ -148,9 +145,8 @@ export const BaseArtworkFilter: React.FC<
   relayVariables = {},
   children,
   offset,
+  savedSearchProps,
   enableCreateAlert = false,
-  artistId,
-  artistName,
   ...rest
 }) => {
   const tracking = useTracking()
@@ -321,10 +317,9 @@ export const BaseArtworkFilter: React.FC<
 
           <Spacer mb={2} />
 
-          {enableCreateAlert && artistId && artistName && (
+          {savedSearchProps && enableCreateAlert && (
             <FiltersPills
-              artistId={artistId}
-              artistName={artistName}
+              savedSearchAttributes={savedSearchProps}
               show={showCreateAlert}
             />
           )}
@@ -332,8 +327,7 @@ export const BaseArtworkFilter: React.FC<
           <Spacer mb={2} />
 
           <ArtworkFilterArtworkGrid
-            // @ts-expect-error STRICT_NULL_CHECK
-            filtered_artworks={viewer.filtered_artworks}
+            filtered_artworks={viewer.filtered_artworks!}
             isLoading={isFetching}
             offset={offset}
             columnCount={[2, 2, 2, 3]}
@@ -377,18 +371,16 @@ export const BaseArtworkFilter: React.FC<
               </Box>
             )}
 
-            {enableCreateAlert && artistId && artistName && (
+            {enableCreateAlert && savedSearchProps && (
               <FiltersPills
-                artistId={artistId}
-                artistName={artistName}
+                savedSearchAttributes={savedSearchProps}
                 show={showCreateAlert}
               />
             )}
 
             {children || (
               <ArtworkFilterArtworkGrid
-                // @ts-expect-error STRICT_NULL_CHECK
-                filtered_artworks={viewer.filtered_artworks}
+                filtered_artworks={viewer.filtered_artworks!}
                 isLoading={isFetching}
                 offset={offset}
                 columnCount={[2, 2, 2, 3]}

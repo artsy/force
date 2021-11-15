@@ -2,7 +2,6 @@ import React from "react"
 import { Form, FormikProvider, useFormik } from "formik"
 import {
   SavedSearchAleftFormValues,
-  SavedSearchAlertFormPropsBase,
   SavedSearchAlertMutationResult,
 } from "./SavedSearchAlertModel"
 import { Box, Button, Checkbox, Input, Text } from "@artsy/palette"
@@ -13,8 +12,10 @@ import { useSystemContext } from "v2/System"
 import { extractPills } from "./Utils/extractPills"
 import { useArtworkFilterContext } from "../ArtworkFilter/ArtworkFilterContext"
 import createLogger from "v2/Utils/logger"
+import { SavedSearchAttributes } from "../ArtworkFilter/SavedSearch/types"
 
-interface SavedSearchAlertFormProps extends SavedSearchAlertFormPropsBase {
+interface SavedSearchAlertFormProps {
+  savedSearchAttributes: SavedSearchAttributes
   initialValues: SavedSearchAleftFormValues
   onComplete?: (result: SavedSearchAlertMutationResult) => void
 }
@@ -24,18 +25,18 @@ const logger = createLogger(
 )
 
 export const SavedSearchAlertForm: React.FC<SavedSearchAlertFormProps> = ({
-  artistId,
-  artistName,
+  savedSearchAttributes,
   initialValues,
   onComplete,
 }) => {
+  const { id, name } = savedSearchAttributes
   const { relayEnvironment } = useSystemContext()
   const filterContext = useArtworkFilterContext()
 
   const filters = filterContext.currentlySelectedFilters?.() || {}
 
   const pills = extractPills(filters, filterContext.aggregations!)
-  const namePlaceholder = getNamePlaceholder(artistName, pills)
+  const namePlaceholder = getNamePlaceholder(name, pills)
 
   const formik = useFormik<SavedSearchAleftFormValues>({
     initialValues,
@@ -53,7 +54,7 @@ export const SavedSearchAlertForm: React.FC<SavedSearchAlertFormProps> = ({
       }
 
       try {
-        const criteria = getSearchCriteriaFromFilters(artistId, filters)
+        const criteria = getSearchCriteriaFromFilters(id, filters)
         const response = await createSavedSearchAlert(
           relayEnvironment,
           userAlertSettings,
