@@ -1,6 +1,6 @@
 import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { PartnersRailFragmentContainer } from "./PartnersRail"
+import { PartnersRailQueryRenderer } from "./PartnersRail"
 import { PartnersRails_viewer } from "v2/__generated__/PartnersRails_viewer.graphql"
 import { PartnersRailsQuery } from "v2/__generated__/PartnersRailsQuery.graphql"
 import { compact, shuffle } from "lodash"
@@ -12,18 +12,21 @@ import { PartnerCellPlaceholder } from "v2/Components/Cells/PartnerCell"
 
 interface PartnersRailsProps {
   viewer: PartnersRails_viewer
+  type: "INSTITUTION" | "GALLERY"
 }
 
-const PartnersRails: FC<PartnersRailsProps> = ({ viewer }) => {
+const PartnersRails: FC<PartnersRailsProps> = ({ viewer, type }) => {
   const categories = shuffle(compact(viewer.partnerCategories))
 
   return (
     <Join separator={<Spacer mt={4} />}>
-      {categories.map((partnerCategory, i) => {
+      {categories.map(partnerCategory => {
         return (
-          <PartnersRailFragmentContainer
-            key={i}
-            partnerCategory={partnerCategory}
+          <PartnersRailQueryRenderer
+            key={partnerCategory.slug}
+            type={type}
+            id={partnerCategory.slug}
+            name={partnerCategory.name!}
           />
         )
       })}
@@ -45,7 +48,6 @@ const PartnersRailsFragmentContainer = createFragmentContainer(PartnersRails, {
       ) {
         name
         slug
-        ...PartnersRail_partnerCategory @arguments(type: $type)
       }
     }
   `,
@@ -55,7 +57,7 @@ const PartnersRailsPlaceholder: FC = () => {
   return (
     <Skeleton>
       <Join separator={<Spacer mt={4} />}>
-        {[...new Array(4)].map((_, i) => {
+        {[...new Array(15)].map((_, i) => {
           return (
             <Rail
               key={i}
@@ -110,7 +112,9 @@ export const PartnersRailsQueryRenderer: FC<PartnersRailsQueryRendererProps> = (
           return <PartnersRailsPlaceholder />
         }
 
-        return <PartnersRailsFragmentContainer viewer={props.viewer} />
+        return (
+          <PartnersRailsFragmentContainer type={type} viewer={props.viewer} />
+        )
       }}
     />
   )

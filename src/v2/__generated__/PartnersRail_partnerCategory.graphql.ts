@@ -36,25 +36,20 @@ v1 = {
 },
 v2 = {
   "kind": "Variable",
-  "name": "near",
-  "variableName": "near"
-},
-v3 = {
-  "kind": "Variable",
   "name": "partnerCategories",
   "variableName": "category"
 },
-v4 = {
+v3 = {
   "kind": "Literal",
   "name": "sort",
   "value": "RANDOM_SCORE_DESC"
 },
-v5 = {
+v4 = {
   "kind": "Variable",
   "name": "type",
   "variableName": "type"
 },
-v6 = [
+v5 = [
   {
     "alias": null,
     "args": null,
@@ -75,12 +70,6 @@ return {
       "kind": "LocalArgument",
       "name": "category",
       "type": "[String]"
-    },
-    {
-      "defaultValue": null,
-      "kind": "LocalArgument",
-      "name": "near",
-      "type": "String"
     },
     {
       "defaultValue": null,
@@ -112,14 +101,13 @@ return {
         },
         (v2/*: any*/),
         (v3/*: any*/),
-        (v4/*: any*/),
-        (v5/*: any*/)
+        (v4/*: any*/)
       ],
       "concreteType": "Partner",
       "kind": "LinkedField",
       "name": "partners",
       "plural": true,
-      "selections": (v6/*: any*/),
+      "selections": (v5/*: any*/),
       "storageKey": null
     },
     {
@@ -134,19 +122,18 @@ return {
         },
         (v2/*: any*/),
         (v3/*: any*/),
-        (v4/*: any*/),
-        (v5/*: any*/)
+        (v4/*: any*/)
       ],
       "concreteType": "Partner",
       "kind": "LinkedField",
       "name": "partners",
       "plural": true,
-      "selections": (v6/*: any*/),
+      "selections": (v5/*: any*/),
       "storageKey": null
     }
   ],
   "type": "PartnerCategory"
 };
 })();
-(node as any).hash = '11933362f3154c27961fbfbc6f0e45bd';
+(node as any).hash = 'cc6b6a031766931890033cb1c816dc44';
 export default node;
