@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import * as React from "react";
+import { useEffect, useState } from "react"
+import * as React from "react"
 import {
   Button,
   Flex,
@@ -73,7 +73,7 @@ export const PriceRangeFilter: React.FC<PriceRangeFilterProps> = ({
   const [mode, setMode] = useState<"resting" | "done">("resting")
 
   const { currentlySelectedFilters, setFilter } = useArtworkFilterContext()
-  // @ts-expect-error STRICT_NULL_CHECK
+  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
   const { priceRange: initialRange, reset } = currentlySelectedFilters()
 
   const numericInitialRange = parseRange(initialRange)
@@ -118,7 +118,7 @@ export const PriceRangeFilter: React.FC<PriceRangeFilterProps> = ({
     }
 
     if (selectedOption !== null) {
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       setCustomRange(parseRange(selectedOption))
     }
 
@@ -131,7 +131,7 @@ export const PriceRangeFilter: React.FC<PriceRangeFilterProps> = ({
     v3: { my: 1 },
   })
 
-  // @ts-expect-error STRICT_NULL_CHECK
+  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
   const selection = currentlySelectedFilters().priceRange
   const hasSelection = selection && selection.length > 0
 

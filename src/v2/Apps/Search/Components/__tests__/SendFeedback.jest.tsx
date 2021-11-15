@@ -62,7 +62,7 @@ describe("SendFeedback", () => {
 
   describe("logged out", () => {
     it("does not call the mutation without a valid email", () => {
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       const component = getWrapper({ user: null })
       simulateTypingNameAndEmail(component, {
         name: "Percy Z",
@@ -76,7 +76,7 @@ describe("SendFeedback", () => {
     })
 
     it("calls the mutation with a valid email and name", () => {
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       const component = getWrapper({ user: null })
       commitMutation.mockImplementationOnce((_environment, { onCompleted }) => {
         onCompleted(successResponse)

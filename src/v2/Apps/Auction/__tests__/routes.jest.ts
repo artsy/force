@@ -57,7 +57,7 @@ describe("Auction/routes", () => {
     it("does not redirect if the user is qualified to bid in the sale, the sale is open, and the artwork is biddable", async () => {
       const fixture = mockConfirmBidResolver()
       const { redirect, status } = await render(
-        // @ts-expect-error STRICT_NULL_CHECK
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         `/auction/${fixture.artwork.saleArtwork.sale.slug}/bid/${fixture.artwork.slug}`,
         fixture
       )
@@ -75,14 +75,14 @@ describe("Auction/routes", () => {
         },
       })
       const { redirect } = await render(
-        // @ts-expect-error STRICT_NULL_CHECK
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         `/auction/${fixture.artwork.saleArtwork.sale.slug}/bid/${fixture.artwork.slug}`,
         fixture
       )
 
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       expect(redirect.url).toBe(
-        // @ts-expect-error STRICT_NULL_CHECK
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         `/auction/${fixture.artwork.saleArtwork.sale.slug}/confirm-registration`
       )
     })
@@ -98,13 +98,13 @@ describe("Auction/routes", () => {
         },
       })
       const { redirect } = await render(
-        // @ts-expect-error STRICT_NULL_CHECK
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         `/auction/${fixture.artwork.saleArtwork.sale.slug}/bid/${fixture.artwork.slug}`,
         fixture
       )
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       expect(redirect.url).toBe(
-        // @ts-expect-error STRICT_NULL_CHECK
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         `/auction/${fixture.artwork.saleArtwork.sale.slug}/artwork/${fixture.artwork.slug}`
       )
     })
@@ -115,11 +115,11 @@ describe("Auction/routes", () => {
       })
 
       const { redirect } = await render(
-        // @ts-expect-error STRICT_NULL_CHECK
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         `/auction/${fixture.artwork.saleArtwork.sale.slug}/bid/${fixture.artwork.slug}`,
         fixture
       )
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       expect(redirect.url).toBe(
         "/login?redirectTo=%2Fauction%2Fsaleslug%2Fbid%2Fartworkslug"
       )
@@ -137,13 +137,13 @@ describe("Auction/routes", () => {
         },
       })
       const { redirect } = await render(
-        // @ts-expect-error STRICT_NULL_CHECK
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         `/auction/${fixture.artwork.saleArtwork.sale.slug}/bid/${fixture.artwork.slug}`,
         fixture
       )
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       expect(redirect.url).toBe(
-        // @ts-expect-error STRICT_NULL_CHECK
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         `/auction/${fixture.artwork.saleArtwork.sale.slug}/artwork/${fixture.artwork.slug}`
       )
     })
@@ -160,7 +160,7 @@ describe("Auction/routes", () => {
         },
       })
       const { redirect, status } = await render(
-        // @ts-expect-error STRICT_NULL_CHECK
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         `/auction/${fixture.artwork.saleArtwork.sale.slug}/bid/${fixture.artwork.slug}`,
         fixture
       )
@@ -173,7 +173,7 @@ describe("Auction/routes", () => {
   describe("Register: /auction-registration/:saleId", () => {
     it("does not redirect if a sale is found", async () => {
       const { redirect, status } = await render(
-        // @ts-expect-error STRICT_NULL_CHECK
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         `/auction-registration/${RegisterQueryResponseFixture.sale.slug}`,
         mockRegisterResolver(RegisterQueryResponseFixture)
       )
@@ -184,7 +184,7 @@ describe("Auction/routes", () => {
 
     it("also responds to auction-registration2 route", async () => {
       const { status } = await render(
-        // @ts-expect-error STRICT_NULL_CHECK
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         `/auction-registration2/${RegisterQueryResponseFixture.sale.slug}`,
         mockRegisterResolver(RegisterQueryResponseFixture)
       )
@@ -194,11 +194,11 @@ describe("Auction/routes", () => {
 
     it("redirects to the auction registration modal if the user has a qualified credit card", async () => {
       const { redirect } = await render(
-        // @ts-expect-error STRICT_NULL_CHECK
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         `/auction-registration/${RegisterQueryResponseFixture.sale.slug}`,
         mockRegisterResolver({
           ...RegisterQueryResponseFixture,
-          // @ts-expect-error STRICT_NULL_CHECK
+          // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
           me: {
             ...RegisterQueryResponseFixture.me,
             hasQualifiedCreditCards: true,
@@ -206,20 +206,20 @@ describe("Auction/routes", () => {
         })
       )
 
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       expect(redirect.url).toBe(
-        // @ts-expect-error STRICT_NULL_CHECK
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         `/auction/${RegisterQueryResponseFixture.sale.slug}/registration-flow`
       )
     })
 
     it("redirects back to the auction if the registration window has closed", async () => {
       const { redirect } = await render(
-        // @ts-expect-error STRICT_NULL_CHECK
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         `/auction-registration/${RegisterQueryResponseFixture.sale.slug}`,
         mockRegisterResolver({
           ...RegisterQueryResponseFixture,
-          // @ts-expect-error STRICT_NULL_CHECK
+          // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
           sale: {
             ...RegisterQueryResponseFixture.sale,
             isRegistrationClosed: true,
@@ -227,24 +227,24 @@ describe("Auction/routes", () => {
         })
       )
 
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       expect(redirect.url).toBe(
-        // @ts-expect-error STRICT_NULL_CHECK
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         `/auction/${RegisterQueryResponseFixture.sale.slug}`
       )
     })
 
     it("redirects to the auction confirm registration route if bidder has already registered", async () => {
       const { redirect } = await render(
-        // @ts-expect-error STRICT_NULL_CHECK
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         `/auction-registration/${RegisterQueryResponseFixture.sale.slug}`,
         mockRegisterResolver({
           ...RegisterQueryResponseFixture,
           sale: {
             ...RegisterQueryResponseFixture.sale,
-            // @ts-expect-error STRICT_NULL_CHECK
+            // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
             registrationStatus: {
-              // @ts-expect-error STRICT_NULL_CHECK
+              // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
               ...RegisterQueryResponseFixture.sale.registrationStatus,
               qualifiedForBidding: true,
             },
@@ -252,9 +252,9 @@ describe("Auction/routes", () => {
         })
       )
 
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       expect(redirect.url).toBe(
-        // @ts-expect-error STRICT_NULL_CHECK
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         `/auction/${RegisterQueryResponseFixture.sale.slug}/confirm-registration`
       )
     })

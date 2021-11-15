@@ -1,5 +1,5 @@
 import { ErrorBoundary } from "v2/System/Router/ErrorBoundary"
-import * as React from "react";
+import * as React from "react"
 import ReactDOM from "react-dom/server"
 
 interface Props {
@@ -22,7 +22,7 @@ export const Truncator: React.SFC<Props> = ({
   let readMoreHTML = null
 
   if (ReadMoreLink) {
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     readMoreHTML = ReactDOM.renderToStaticMarkup(ReadMoreLink())
   }
 

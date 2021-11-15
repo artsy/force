@@ -265,7 +265,7 @@ describe("CurrentUser", () => {
   describe("#followArtist", () => {
     it("follows an artist", () => {
       user.followArtist("andy-foobar", {})
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       last(Backbone.sync.mock.calls)[1]
         .url()
         .should.containEql("me/follow/artist")
@@ -274,7 +274,7 @@ describe("CurrentUser", () => {
     it("injects the access token", () => {
       user.set({ accessToken: "xfoobar" })
       user.followArtist("andy-foobar", {})
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       last(Backbone.sync.mock.calls)[2].access_token.should.equal("xfoobar")
     })
   })

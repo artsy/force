@@ -1,8 +1,8 @@
 import { Box, Button, Text } from "@artsy/palette"
 import { SystemContextProps } from "v2/System"
 
-import { useState } from "react";
-import * as React from "react";
+import { useState } from "react"
+import * as React from "react"
 import { RelayProp, createFragmentContainer, graphql } from "react-relay"
 import { SavedCreditCards } from "v2/Components/Payment/SavedCreditCards"
 import { PaymentSectionCreditCard } from "v2/__generated__/PaymentSectionCreditCard.graphql"
@@ -19,7 +19,7 @@ interface PaymentSectionProps extends SystemContextProps {
 
 export const PaymentSection: React.FC<PaymentSectionProps> = props => {
   const creditCardEdges = props.me?.creditCards?.edges ?? []
-  // @ts-expect-error STRICT_NULL_CHECK
+  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
   const creditCards = creditCardEdges.map(({ node: creditCard }) => {
     return creditCard
   })

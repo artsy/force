@@ -6,7 +6,7 @@ import {
 } from "v2/Apps/FeatureAKG/Components/FeaturedRails"
 import { AnalyticsSchema } from "v2/System"
 import { compact } from "lodash"
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer } from "react-relay"
 import { graphql } from "relay-runtime"
 
@@ -40,7 +40,7 @@ const FeaturedFairsRail: React.FC<FeaturedFairsRailProps> = props => {
     return (
       <FeaturedRail title={title} subtitle={subtitle}>
         <FeaturedRailCarousel
-          // @ts-expect-error STRICT_NULL_CHECK
+          // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
           itemsForCarousel={compact(itemsForCarousel)}
           contextModule={AnalyticsSchema.ContextModule.BrowseFairs}
         />

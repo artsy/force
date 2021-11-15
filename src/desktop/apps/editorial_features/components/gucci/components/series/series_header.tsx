@@ -1,6 +1,6 @@
 import { Box, media } from "@artsy/palette"
 import styled from "styled-components"
-import * as React from "react";
+import * as React from "react"
 import Waypoint from "react-waypoint"
 import { Header } from "../nav/header"
 import { SectionsNav } from "../nav/sections_nav"
@@ -28,7 +28,7 @@ export const SeriesHeader: React.SFC<SeriesHeaderProps> = props => {
       </Box>
       <Waypoint onEnter={() => inBody(false)} onLeave={() => inBody(true)} />
       <SectionsNav
-        // @ts-expect-error STRICT_NULL_CHECK
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         activeSection={null}
         sections={curation.sections}
         onClick={onChangeSection}

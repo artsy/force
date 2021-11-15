@@ -1,6 +1,6 @@
 import { ContextModule } from "@artsy/cohesion"
 import { Box, Image, Text } from "@artsy/palette"
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { FollowArtistButtonQueryRenderer } from "v2/Components/FollowButton/FollowArtistButton"
@@ -18,34 +18,33 @@ interface ArtistsCarouselCellProps {
 
 const ArtistsCarouselCell: React.FC<ArtistsCarouselCellProps> = ({
   featuredLink,
-
 }) => {
   const { image } = featuredLink
 
   if (!image) return null
 
-  // @ts-expect-error STRICT_NULL_CHECK
+  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
   const slug = getSlug(featuredLink.href)
 
   return (
     <>
       <RouterLink
-        // @ts-expect-error STRICT_NULL_CHECK
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         key={featuredLink.internalID}
         to={featuredLink.href}
         display="block"
         textDecoration="none"
       >
         <Image
-          // @ts-expect-error STRICT_NULL_CHECK
+          // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
           src={image.thumb.src}
-          // @ts-expect-error STRICT_NULL_CHECK
+          // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
           srcSet={image.thumb.srcSet}
-          // @ts-expect-error STRICT_NULL_CHECK
+          // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
           width={image.thumb.width}
-          // @ts-expect-error STRICT_NULL_CHECK
+          // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
           height={image.thumb.height}
-          // @ts-expect-error STRICT_NULL_CHECK
+          // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
           alt={featuredLink.title}
           lazyLoad
         />
@@ -61,12 +60,12 @@ const ArtistsCarouselCell: React.FC<ArtistsCarouselCellProps> = ({
         height={50}
       >
         <RouterLink
-          // @ts-expect-error STRICT_NULL_CHECK
+          // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
           key={featuredLink.internalID}
           to={featuredLink.href}
           dispaly="block"
           textDecoration="none"
-          // @ts-expect-error STRICT_NULL_CHECK
+          // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
           aria-label={featuredLink.title}
         >
           <Text variant="lg">{featuredLink.title}</Text>

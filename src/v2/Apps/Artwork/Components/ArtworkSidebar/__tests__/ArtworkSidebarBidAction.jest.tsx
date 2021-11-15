@@ -178,7 +178,7 @@ describe("ArtworkSidebarBidAction", () => {
 
               const wrapper = await getWrapper({
                 artwork,
-                // @ts-expect-error STRICT_NULL_CHECK
+                // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
                 me: {
                   ...NotIDVedUser,
                   pendingIdentityVerification: {
@@ -206,7 +206,7 @@ describe("ArtworkSidebarBidAction", () => {
 
               const wrapper = await getWrapper({
                 artwork,
-                // @ts-expect-error STRICT_NULL_CHECK
+                // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
                 me: {
                   ...NotIDVedUser,
                   pendingIdentityVerification: null,

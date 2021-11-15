@@ -1,6 +1,6 @@
 import { Checkbox, Flex, useThemeConfig } from "@artsy/palette"
 import { isEmpty } from "lodash"
-import { FC } from "react";
+import { FC } from "react"
 import {
   ArtworkFilters,
   useArtworkFilterContext,
@@ -33,25 +33,25 @@ export const WaysToBuyFilter: FC<WaysToBuyFilterProps> = ({ expanded }) => {
 
   const checkboxes: WayToBuy[] = [
     {
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       disabled: isDisabled(filterContext.counts.ecommerce_artworks),
       name: "Buy Now",
       state: "acquireable",
     },
     {
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       disabled: isDisabled(filterContext.counts.has_make_offer_artworks),
       name: "Make Offer",
       state: "offerable",
     },
     {
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       disabled: isDisabled(filterContext.counts.auction_artworks),
       name: "Bid",
       state: "atAuction",
     },
     {
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       disabled: isDisabled(filterContext.counts.for_sale_artworks),
       name: "Inquire",
       state: "inquireableOnly",
@@ -63,7 +63,7 @@ export const WaysToBuyFilter: FC<WaysToBuyFilterProps> = ({ expanded }) => {
     v3: { my: 1 },
   })
 
-  // @ts-expect-error STRICT_NULL_CHECK
+  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
   const selection = filterContext.currentlySelectedFilters()
   const hasSelection =
     !!selection.acquireable ||
@@ -81,7 +81,7 @@ export const WaysToBuyFilter: FC<WaysToBuyFilterProps> = ({ expanded }) => {
               disabled={checkbox.disabled}
               onSelect={value => filterContext.setFilter(checkbox.state, value)}
               selected={Boolean(
-                // @ts-expect-error STRICT_NULL_CHECK
+                // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
                 filterContext.currentlySelectedFilters()[checkbox.state]
               )}
               my={tokens.my}

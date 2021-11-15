@@ -1,7 +1,7 @@
 import { Box, Sans, Serif, Spacer } from "@artsy/palette"
 import { ArtistConsignFAQ_artist } from "v2/__generated__/ArtistConsignFAQ_artist.graphql"
 import { AnalyticsSchema, useTracking } from "v2/System"
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { SectionContainer } from "./SectionContainer"
 import { Subheader } from "./Subheader"
@@ -52,7 +52,7 @@ const ArtistConsignFAQ: React.FC<ArtistConsignFAQProps> = props => {
                     })
                   }}
                   href={getConsignSubmissionUrl({
-                    // @ts-expect-error STRICT_NULL_CHECK
+                    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
                     contextPath: props.artist.href,
                     subject: AnalyticsSchema.Subject.Here,
                   })}

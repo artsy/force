@@ -46,7 +46,7 @@ import {
   AddressTouched,
 } from "v2/Components/AddressForm"
 import { Router } from "found"
-import { Component } from "react";
+import { Component } from "react"
 import { RelayProp, createFragmentContainer, graphql } from "react-relay"
 import createLogger from "v2/Utils/logger"
 import { Media } from "v2/Utils/Responsive"
@@ -116,7 +116,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
     shippingOption: getShippingOption(
       this.props.order.requestedFulfillment?.__typename
     ),
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     address: startingAddress(this.props.me, this.props.order),
     addressErrors: {},
     addressTouched: {},

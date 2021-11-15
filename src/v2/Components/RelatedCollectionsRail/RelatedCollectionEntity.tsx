@@ -2,7 +2,7 @@ import { Box, Flex, Image, Text } from "@artsy/palette"
 import { RelatedCollectionEntity_collection } from "v2/__generated__/RelatedCollectionEntity_collection.graphql"
 import { useTracking } from "v2/System/Analytics"
 import currency from "currency.js"
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ContextModule, clickedCollectionGroup } from "@artsy/cohesion"
 import { useAnalyticsContext } from "v2/System/Analytics/AnalyticsContext"
@@ -28,7 +28,7 @@ export const RelatedCollectionEntity: React.FC<RelatedCollectionEntityProps> = (
     slug,
     title,
   } = collection
-  // @ts-expect-error STRICT_NULL_CHECK
+  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
   const artworks = artworksConnection.edges.map(({ node }) => node)
 
   const { trackEvent } = useTracking()
@@ -44,7 +44,7 @@ export const RelatedCollectionEntity: React.FC<RelatedCollectionEntityProps> = (
         contextModule: ContextModule.relatedCollectionsRail,
         contextPageOwnerId,
         contextPageOwnerSlug,
-        // @ts-expect-error STRICT_NULL_CHECK
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         contextPageOwnerType,
         destinationPageOwnerId: id,
         destinationPageOwnerSlug: slug,
@@ -78,7 +78,7 @@ export const RelatedCollectionEntity: React.FC<RelatedCollectionEntityProps> = (
             })
           ) : (
             <Image
-              // @ts-expect-error STRICT_NULL_CHECK
+              // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
               {...cropped(headerImage, { width: 325, height: 150 })}
               width={325}
               height={150}

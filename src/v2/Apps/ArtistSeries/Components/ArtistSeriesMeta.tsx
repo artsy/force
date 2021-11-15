@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtistSeriesMeta_artistSeries } from "v2/__generated__/ArtistSeriesMeta_artistSeries.graphql"
 import { truncate } from "lodash"
@@ -10,7 +10,7 @@ interface ArtistSeriesMetaProps {
 
 export const ArtistSeriesMeta: React.FC<ArtistSeriesMetaProps> = props => {
   const { artistSeries } = props
-  // @ts-expect-error STRICT_NULL_CHECK
+  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
   const artist = artistSeries.artists[0]
   const artistName = artist?.name ? `${artist.name}’s ` : ""
   const title = `${artistName}${artistSeries.title} - For Sale on Artsy`

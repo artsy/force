@@ -1,6 +1,6 @@
 import { ArtworkGrid_Test_QueryRawResponse } from "v2/__generated__/ArtworkGrid_Test_Query.graphql"
 
-// @ts-expect-error STRICT_NULL_CHECK
+// @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
 export const ArtworksGridEdges: ArtworkGrid_Test_QueryRawResponse["artist"]["artworks_connection"]["edges"] = [
   {
     __typename: "ArtworkEdge",
@@ -163,7 +163,7 @@ export const ArtworksGridEdges: ArtworkGrid_Test_QueryRawResponse["artist"]["art
   },
 ]
 
-// @ts-expect-error STRICT_NULL_CHECK
+// @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
 export const ArtworkGridFixture: ArtworkGrid_Test_QueryRawResponse["artist"]["artworks_connection"] = {
   // pageInfo: {
   //   hasNextPage: true,

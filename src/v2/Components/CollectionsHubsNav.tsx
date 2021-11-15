@@ -2,7 +2,7 @@ import { CSSGrid, Text } from "@artsy/palette"
 import { CollectionsHubsNav_marketingHubCollections } from "v2/__generated__/CollectionsHubsNav_marketingHubCollections.graphql"
 import { useTracking } from "v2/System/Analytics"
 import * as Schema from "v2/System/Analytics/Schema"
-import { FC } from "react";
+import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { resize } from "v2/Utils/resizer"
 import { ImageLink } from "./ImageLink"
@@ -27,7 +27,7 @@ export const CollectionsHubsNav: FC<CollectionsHubsNavProps> = props => {
       {props.marketingHubCollections.slice(0, 6).map(hub => (
         <ImageLink
           to={`/collection/${hub.slug}`}
-          // @ts-expect-error STRICT_NULL_CHECK
+          // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
           src={resize(hub.thumbnail, { width: 357, height: 175 })}
           ratio={[0.49]}
           title={

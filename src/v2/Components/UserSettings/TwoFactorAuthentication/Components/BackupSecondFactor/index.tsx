@@ -7,8 +7,8 @@ import {
   Sans,
   Serif,
 } from "@artsy/palette"
-import { useState } from "react";
-import * as React from "react";
+import { useState } from "react"
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 
 import { useSystemContext } from "v2/System"
@@ -32,7 +32,7 @@ export const BackupSecondFactor: React.FC<BackupSecondFactorProps> = props => {
     setCreating(true)
 
     try {
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       await CreateBackupSecondFactors(relayEnvironment)
       setShowModal(true)
     } catch (e) {
@@ -78,11 +78,11 @@ export const BackupSecondFactor: React.FC<BackupSecondFactorProps> = props => {
           </Serif>
         </Flex>
         <Flex mt={[3, 0]} flexDirection={["column", "row"]} alignItems="center">
-          {/* @ts-expect-error STRICT_NULL_CHECK */}
+          {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
           {me.backupSecondFactors.length ? (
             <>
               <Sans color="black60" size="3" weight="medium">
-                {/* @ts-expect-error STRICT_NULL_CHECK */}
+                {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
                 {me.backupSecondFactors.length} remaining
               </Sans>
               <ShowButton width={["100%", "auto"]} ml={[0, 1]} mt={[1, 0]} />

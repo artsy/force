@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"
 import { Box, BoxProps, Join, Spacer, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ShowHeader_show } from "v2/__generated__/ShowHeader_show.graphql"
@@ -13,7 +13,7 @@ export const ShowHeader: React.FC<ShowHeaderProps> = ({ show, ...rest }) => {
   const { name, startAt, endAt, formattedStartAt, formattedEndAt } = show
 
   const currentTime = useCurrentTime({ syncWithServer: true })
-  // @ts-expect-error STRICT_NULL_CHECK
+  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
   const { formattedTime } = useEventTiming({ currentTime, startAt, endAt })
 
   return (

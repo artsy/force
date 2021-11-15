@@ -6,7 +6,7 @@ import {
 } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
 import { isEmpty } from "lodash"
-import * as React from "react";
+import * as React from "react"
 import styled from "styled-components"
 
 const SearchButton = styled(Clickable)`
@@ -39,7 +39,7 @@ export const SearchInputContainer: React.ForwardRefExoticComponent<
         <SearchButton
           type="submit"
           onClick={event => {
-            // @ts-expect-error STRICT_NULL_CHECK
+            // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
             ;(event.target as HTMLElement).parentElement.blur()
 
             if (isEmpty(props.value)) {

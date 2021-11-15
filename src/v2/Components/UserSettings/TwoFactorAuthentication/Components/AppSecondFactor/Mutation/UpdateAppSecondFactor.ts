@@ -13,7 +13,7 @@ export const UpdateAppSecondFactor = (
     async (resolve, reject) => {
       commitMutation<UpdateAppSecondFactorMutation>(environment, {
         onCompleted: data => {
-          // @ts-expect-error STRICT_NULL_CHECK
+          // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
           const response = data.updateAppSecondFactor.secondFactorOrErrors
 
           switch (response.__typename) {

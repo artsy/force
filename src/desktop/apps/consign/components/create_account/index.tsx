@@ -24,11 +24,11 @@ export class CreateAccount extends Component<CreateAccountProps> {
 
     let analyticsParams = []
     if (artistId && artistName) {
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       analyticsParams.push(`artistId=${artistId}`, `artistName=${artistName}`)
     }
     if (contextPath && subject) {
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       analyticsParams.push(`contextPath=${contextPath}`, `subject=${subject}`)
     }
 

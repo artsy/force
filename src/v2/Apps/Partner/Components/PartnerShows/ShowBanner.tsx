@@ -9,8 +9,8 @@ import {
   ReadMore,
   Text,
 } from "@artsy/palette"
-import { useEffect, useState } from "react";
-import * as React from "react";
+import { useEffect, useState } from "react"
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
 import { RouterLink } from "v2/System/Router/RouterLink"
@@ -62,7 +62,7 @@ const ShowBanner: React.FC<ShowBannerProps> = ({
     description,
     href,
   } = show
-  // @ts-expect-error STRICT_NULL_CHECK
+  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
   const showType = `${statusLabelsMap[status]} ${
     isFairBooth ? "fair booth" : "show"
   }`
@@ -70,7 +70,7 @@ const ShowBanner: React.FC<ShowBannerProps> = ({
 
   useEffect(() => {
     if (withAnimation && selected !== active) {
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       setActive(selected)
     }
   }, [withAnimation, selected])
@@ -125,7 +125,7 @@ const ShowBanner: React.FC<ShowBannerProps> = ({
               <Image
                 src={coverImage.medium.src}
                 srcSet={coverImage.medium.srcSet}
-                // @ts-expect-error STRICT_NULL_CHECK
+                // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
                 alt={name}
                 width="100%"
                 height={[280, 480]}

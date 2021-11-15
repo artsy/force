@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"
 import styled from "styled-components"
 import * as fonts from "../Assets/Fonts"
 
@@ -51,10 +51,10 @@ const RawText: React.SFC<TextProps> = (props: TextProps) => {
  */
 const Text = styled(RawText)`
   ${props =>
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     textStyleNameToCss[props.textStyle]};
   font-size: ${props =>
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     TextStyleToTextSize[props.textStyle][props.textSize]};
   text-align: ${props => props.align};
   color: ${props => props.color};

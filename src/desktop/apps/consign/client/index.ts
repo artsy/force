@@ -19,7 +19,7 @@ export const init = () => {
     ".consignments-header .consignments-header__consign-button",
     function (e) {
       const buttonText = $(e.target).text()
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       window.analytics.track("click", {
         type: "button",
         label: buttonText,
@@ -36,7 +36,7 @@ export const init = () => {
     ".consignments-how-consignments-work .consignments-section__consign-button",
     function (e) {
       const buttonText = $(e.target).text()
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       window.analytics.track("click", {
         type: "button",
         label: buttonText,
@@ -53,7 +53,7 @@ export const init = () => {
     ".consignments-top-sales .consignments-section__consign-button",
     function (e) {
       const buttonText = $(e.target).text()
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       window.analytics.track("click", {
         type: "button",
         label: buttonText,
@@ -70,7 +70,7 @@ export const init = () => {
     ".consignments-upcoming-sales .consignments-section__consign-button",
     function (e) {
       const buttonText = $(e.target).text()
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       window.analytics.track("click", {
         type: "button",
         label: buttonText,
@@ -87,7 +87,7 @@ export const init = () => {
     ".consignments-footer .consignments-header__consign-button",
     function (e) {
       const buttonText = $(e.target).text()
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       window.analytics.track("click", {
         type: "button",
         label: buttonText,

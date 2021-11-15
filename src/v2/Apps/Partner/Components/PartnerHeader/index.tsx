@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"
 import styled from "styled-components"
 import {
   Box,
@@ -28,7 +28,7 @@ export const HeaderImage = styled(Image)`
 
 export const PartnerHeader: React.FC<PartnerHeaderProps> = ({ partner }) => {
   const { user } = useSystemContext()
-  // @ts-expect-error STRICT_NULL_CHECK
+  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
   const hasLocations = partner.locations?.totalCount > 0
   // TODO: Remove after page migration.
   const partnerUrl = `/partner/${partner.slug}`
@@ -46,11 +46,11 @@ export const PartnerHeader: React.FC<PartnerHeaderProps> = ({ partner }) => {
                 style={{ display: "flex", textDecoration: "none" }}
               >
                 <HeaderImage
-                  // @ts-expect-error STRICT_NULL_CHECK
+                  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
                   src={partner.profile.icon.resized.src}
-                  // @ts-expect-error STRICT_NULL_CHECK
+                  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
                   srcSet={partner.profile.icon.resized.srcSet}
-                  // @ts-expect-error STRICT_NULL_CHECK
+                  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
                   alt={partner.name}
                   width={[60, 80]}
                   height={[60, 80]}
@@ -71,7 +71,7 @@ export const PartnerHeader: React.FC<PartnerHeaderProps> = ({ partner }) => {
             </Text>
             {hasLocations && (
               <Text color="black60" variant="text">
-                {/* @ts-expect-error STRICT_NULL_CHECK */}
+                {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
                 <PartnerHeaderAddress {...partner.locations} />
               </Text>
             )}
@@ -81,7 +81,7 @@ export const PartnerHeader: React.FC<PartnerHeaderProps> = ({ partner }) => {
       <Column span={[12, 2]}>
         {canFollow && (
           <FollowProfileButton
-            // @ts-expect-error STRICT_NULL_CHECK
+            // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
             profile={partner.profile}
             user={user}
             contextModule={ContextModule.partnerHeader}

@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"
 import { Checkbox, Flex, useThemeConfig } from "@artsy/palette"
 import { useArtworkFilterContext } from "../ArtworkFilterContext"
 import { FilterExpandable } from "./FilterExpandable"
@@ -32,7 +32,7 @@ export const AttributionClassFilter: React.FC<AttributionClassFilterProps> = ({
   const filterContext = useArtworkFilterContext()
 
   const toggleSelection = (selected, name) => {
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     let attributions = filterContext
       .currentlySelectedFilters()
       .attributionClass.slice()
@@ -58,7 +58,7 @@ export const AttributionClassFilter: React.FC<AttributionClassFilterProps> = ({
               key={index}
               my={tokens.my}
               onSelect={selected => toggleSelection(selected, value)}
-              // @ts-expect-error STRICT_NULL_CHECK
+              // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
               selected={filterContext
                 .currentlySelectedFilters()
                 .attributionClass.includes(value)}

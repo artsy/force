@@ -1,4 +1,4 @@
-import { Component, Fragment } from "react";
+import { Component, Fragment } from "react"
 import ReactDOM from "react-dom"
 import { Article } from "@artsy/reaction/dist/Components/Publishing"
 import { Mediator, SystemContextProvider } from "@artsy/reaction/dist/Artsy"
@@ -82,10 +82,10 @@ class EditPortal extends Component<ArticleProps> {
         <EditButton
           channelId={article.channel_id}
           slug={article.slug}
-          // @ts-expect-error STRICT_NULL_CHECK
+          // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
           positionTop={positionTop}
         />,
-        // @ts-expect-error STRICT_NULL_CHECK
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         document.getElementById("react-portal")
       )
     } catch (e) {

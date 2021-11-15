@@ -70,7 +70,7 @@ export const RegistrationForm: React.FC<RegistrationFormProps> = props => (
 
         <Spacer mt={4} />
 
-        {/* @ts-expect-error STRICT_NULL_CHECK */}
+        {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
         <AddressForm
           value={values.address}
           onChange={(address, _key) => setFieldValue("address", address)}

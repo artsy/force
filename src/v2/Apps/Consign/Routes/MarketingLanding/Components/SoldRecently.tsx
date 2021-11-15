@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"
 import { Box, Flex, Spacer, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useSystemContext } from "v2/System"
@@ -29,7 +29,7 @@ const SoldRecently: React.FC<SoldRecentlyProps> = ({ targetSupply }) => {
   const recentlySoldArtworks = shuffle(
     flatten(
       targetSupply.microfunnel.map(microfunnel => {
-        // @ts-expect-error STRICT_NULL_CHECK
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         const artworks = extractNodes(microfunnel.artworksConnection)
         return artworks.filter(
           artwork => artwork.realizedPrice && artwork.realizedToEstimate

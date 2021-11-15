@@ -1,5 +1,5 @@
 import { Box, Link } from "@artsy/palette"
-import { Component } from "react";
+import { Component } from "react"
 import { getENV } from "v2/Utils/getENV"
 import { ModalDialog } from "./ModalDialog"
 import { ModalWidth } from "./ModalWrapper"
@@ -64,7 +64,7 @@ export class ErrorModal extends Component<ErrorModalProps> {
           </>
         }
         primaryCta={{
-          // @ts-expect-error STRICT_NULL_CHECK
+          // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
           action: ctaAction || onClose,
           text: closeText,
         }}
