@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react"
-import { isEqual } from "lodash"
+import { compact, isEqual } from "lodash"
 import useDeepCompareEffect from "use-deep-compare-effect"
 import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
 import { useSystemContext } from "v2/System"
@@ -137,6 +137,7 @@ export const BaseArtworkFilter: React.FC<
     offset?: number
     savedSearchProps?: SavedSearchAttributes
     enableCreateAlert?: boolean
+    defaultValues?: (string | null)[]
   }
 > = ({
   relay,
@@ -147,6 +148,7 @@ export const BaseArtworkFilter: React.FC<
   offset,
   savedSearchProps,
   enableCreateAlert = false,
+  defaultValues = [],
   ...rest
 }) => {
   const tracking = useTracking()
@@ -164,16 +166,11 @@ export const BaseArtworkFilter: React.FC<
   const { filtered_artworks } = viewer
   const hasFilter = filtered_artworks && filtered_artworks.id
 
-  const showCreateAlert = enableCreateAlert && filterContext.hasFilters
-
-  const pills = [
-    { name: "Amoako Boafo", isDefault: true },
-    { name: "Red", isDefault: false },
-    { name: "Black and White", isDefault: false },
-    { name: "Glass", isDefault: false },
-    { name: "Limited Edition", isDefault: false },
-    { name: "Open Edition", isDefault: false },
-  ]
+  const pills = compact(defaultValues)?.map(value => ({
+    name: value,
+    isDefault: true,
+  }))
+  const showCreateAlert = enableCreateAlert && !!pills.length
 
   /**
    * Check to see if the mobile action sheet is present and prevent scrolling
@@ -331,8 +328,8 @@ export const BaseArtworkFilter: React.FC<
           {savedSearchProps && enableCreateAlert && (
             <FiltersPills
               pills={pills}
-              savedSearchAttributes={savedSearchProps}
               show={showCreateAlert}
+              savedSearchAttributes={savedSearchProps}
             />
           )}
 
@@ -385,9 +382,9 @@ export const BaseArtworkFilter: React.FC<
 
             {enableCreateAlert && savedSearchProps && (
               <FiltersPills
+                pills={pills}
                 show={showCreateAlert}
                 savedSearchAttributes={savedSearchProps}
-                pills={pills}
               />
             )}
 

@@ -61,6 +61,7 @@ const ArtistArtworkFilter: React.FC<ArtistArtworkFilterProps> = props => {
         }}
         savedSearchProps={savedSearchAttributes}
         enableCreateAlert={sd.ENABLE_SAVED_SEARCH}
+        defaultValues={[artist.name]}
       >
         {artist.counts!.artworks === 0 && (
           <ZeroState artist={artist} isFollowed={artist.isFollowed} />
@@ -77,6 +78,7 @@ export const ArtistArtworkFilterRefetchContainer = createRefetchContainer(
       fragment ArtistArtworkFilter_artist on Artist
         @argumentDefinitions(input: { type: "FilterArtworksInput" }) {
         ...FollowArtistButton_artist
+        name
         counts {
           partner_shows: partnerShows
           for_sale_artworks: forSaleArtworks
