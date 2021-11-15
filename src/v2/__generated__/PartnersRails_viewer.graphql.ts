@@ -7,7 +7,6 @@ export type PartnersRails_viewer = {
     readonly partnerCategories: ReadonlyArray<{
         readonly name: string | null;
         readonly slug: string;
-        readonly " $fragmentRefs": FragmentRefs<"PartnersRail_partnerCategory">;
     } | null> | null;
     readonly " $refType": "PartnersRails_viewer";
 };
@@ -75,17 +74,6 @@ const node: ReaderFragment = {
           "kind": "ScalarField",
           "name": "slug",
           "storageKey": null
-        },
-        {
-          "args": [
-            {
-              "kind": "Variable",
-              "name": "type",
-              "variableName": "type"
-            }
-          ],
-          "kind": "FragmentSpread",
-          "name": "PartnersRail_partnerCategory"
         }
       ],
       "storageKey": null
@@ -93,5 +81,5 @@ const node: ReaderFragment = {
   ],
   "type": "Viewer"
 };
-(node as any).hash = 'a33b2f28aa2428dbc99b19cdb5620187';
+(node as any).hash = 'e757b78983e6d7447dc9735d7f18484f';
 export default node;
