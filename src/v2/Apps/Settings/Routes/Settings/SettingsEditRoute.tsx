@@ -1,18 +1,14 @@
-import { Text } from "@artsy/palette"
 import React from "react"
 import { SettingsEditRoute_me } from "v2/__generated__/SettingsEditRoute_me.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
+import { SettingsEditProfileRouteFragmentContainer } from "../EditProfile/SettingsEditProfileRoute"
 
 interface SettingsEditRouteProps {
   me: SettingsEditRoute_me
 }
 
 const SettingsEditRoute: React.FC<SettingsEditRouteProps> = ({ me }) => {
-  return (
-    <>
-      <Text>Settings Route</Text>
-    </>
-  )
+  return <SettingsEditProfileRouteFragmentContainer me={me} />
 }
 
 export const SettingsEditRouteFragmentContainer = createFragmentContainer(
@@ -20,7 +16,7 @@ export const SettingsEditRouteFragmentContainer = createFragmentContainer(
   {
     me: graphql`
       fragment SettingsEditRoute_me on Me {
-        name
+        ...SettingsEditProfileRoute_me
       }
     `,
   }

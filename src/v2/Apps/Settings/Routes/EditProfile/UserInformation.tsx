@@ -1,5 +1,4 @@
 import * as React from "react"
-import QuickInput from "v2/Components/QuickInput"
 import {
   QueryRenderer,
   RelayRefetchProp,
@@ -11,7 +10,7 @@ import { renderWithLoadProgress } from "v2/System/Relay/renderWithLoadProgress"
 import { Form, Formik, FormikProps } from "formik"
 import { UserInformation_me } from "v2/__generated__/UserInformation_me.graphql"
 import { UserInformationQuery } from "v2/__generated__/UserInformationQuery.graphql"
-import { Box, Button, Serif, Text, space, Banner } from "@artsy/palette"
+import { Box, Button, Text, Banner, Input } from "@artsy/palette"
 import { ChangeUserInformationValidator } from "v2/Components/Authentication/Validators"
 import { PasswordInput } from "v2/Components/PasswordInput"
 import type { SystemContextProps } from "@artsy/reaction/dist/Artsy"
@@ -74,9 +73,9 @@ export const UserInformation: React.FC<UserInformationProps> = ({
 
   return (
     <Box>
-      <Serif size="6" mb={space(2)}>
+      <Text size="6" mb={2}>
         Information
-      </Serif>
+      </Text>
       <Formik
         initialValues={me}
         validationSchema={ChangeUserInformationValidator}
@@ -93,8 +92,9 @@ export const UserInformation: React.FC<UserInformationProps> = ({
           values,
         }) => (
           <Form onSubmit={handleSubmit}>
-            <Text>Full name</Text>
-            <QuickInput
+            <Input
+              mb={2}
+              title="Full name"
               error={errors.name as any}
               placeholder="Enter your full name"
               name="name"
@@ -103,9 +103,9 @@ export const UserInformation: React.FC<UserInformationProps> = ({
               onChange={handleChange}
               onBlur={handleBlur}
             />
-            <Text>Email</Text>
-            <QuickInput
-              block
+            <Input
+              mb={2}
+              title="Email"
               error={errors.email as any}
               placeholder="Enter your email address"
               name="email"
@@ -114,9 +114,9 @@ export const UserInformation: React.FC<UserInformationProps> = ({
               onChange={handleChange}
               onBlur={handleBlur}
             />
-            <Text>Mobile number</Text>
-            <QuickInput
-              block
+            <Input
+              mb={2}
+              title="Mobile number"
               placeholder="Enter your mobile phone number"
               name="phone"
               type="tel"
@@ -126,9 +126,9 @@ export const UserInformation: React.FC<UserInformationProps> = ({
             />
             {me.paddleNumber && (
               <>
-                <Text>Bidder number</Text>
-                <QuickInput
-                  block
+                <Input
+                  mb={2}
+                  title="Bidder number"
                   name="paddleNumber"
                   value={me.paddleNumber}
                   readOnly
@@ -138,8 +138,8 @@ export const UserInformation: React.FC<UserInformationProps> = ({
             <input name="internalID" value={me.internalID} hidden readOnly />
             {touched.email && values.email !== me.email && (
               <>
-                <Text>Password</Text>
                 <PasswordInput
+                  title="Password"
                   autoFocus
                   block
                   // @ts-expect-error STRICT_NULL_CHECK
@@ -158,15 +158,7 @@ export const UserInformation: React.FC<UserInformationProps> = ({
             {status && !status.success && (
               <Banner variant="error">{status.error}</Banner>
             )}
-            <Button
-              type="submit"
-              size="large"
-              loading={isSubmitting}
-              width="100%"
-              variant="secondaryOutline"
-            >
-              Save changes
-            </Button>
+            <Button loading={isSubmitting}>Save changes</Button>
           </Form>
         )}
       </Formik>
@@ -200,6 +192,7 @@ export const UserInformationQueryRenderer = () => {
   const { user, relayEnvironment } = useSystemContext()
 
   if (!user) {
+    console.log("NO USER INFO FOUND **********")
     return null
   }
 
