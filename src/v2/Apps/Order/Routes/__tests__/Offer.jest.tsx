@@ -62,17 +62,17 @@ describe("Offer InitialMutation", () => {
 
     it("shows the list price just below the input", () => {
       const container = page.find("div#offer-page-left-column")
-      expect(container.text()).toContain("List price: $16,000")
+      expect(container.text()).toContain("List price: US$16,000")
     })
 
     it("can receive input, which updates the transaction summary", () => {
       expect(page.transactionSummary.text()).toContain("Your offer")
 
       page.setOfferAmount(1)
-      expect(page.transactionSummary.text()).toContain("Your offer$1.00")
+      expect(page.transactionSummary.text()).toContain("Your offerUS$1.00")
 
       page.setOfferAmount(1023)
-      expect(page.transactionSummary.text()).toContain("Your offer$1,023.00")
+      expect(page.transactionSummary.text()).toContain("Your offerUS$1,023.00")
     })
 
     it("shows final offer binding notice", () => {
@@ -126,7 +126,7 @@ describe("Offer InitialMutation", () => {
 
     it("shows the list price as a range", () => {
       const container = page.find("div#offer-page-left-column")
-      expect(container.text()).toContain("List price: $14,000 - 18,000")
+      expect(container.text()).toContain("List price: US$14,000 - 18,000")
     })
 
     it("does not show the offer is too small warning", async () => {

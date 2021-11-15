@@ -34,11 +34,6 @@ export class TransactionDetailsSummaryItem extends React.Component<
   amountPlaceholder = this.props.placeholderOverride || "—"
 
   render() {
-    console.log(
-      "🚀 ~ file: TransactionDetailsSummaryItem.tsx ~ line 32 ~ this.props",
-      this.props
-    )
-
     const {
       showOfferNote,
       offerOverride,
@@ -54,11 +49,21 @@ export class TransactionDetailsSummaryItem extends React.Component<
         <Entry
           label={this.shippingDisplayLabel()}
           value={this.shippingDisplayAmount()}
+          data-test="shippingDisplayAmount"
         />
 
-        <Entry label="Tax" value={this.taxDisplayAmount()} />
+        <Entry
+          label="Tax"
+          value={this.taxDisplayAmount()}
+          data-test="taxDisplayAmount"
+        />
         <Spacer mb={2} />
-        <Entry label="Total" value={this.buyerTotalDisplayAmount()} final />
+        <Entry
+          label="Total"
+          value={this.buyerTotalDisplayAmount()}
+          final
+          data-test="buyerTotalDisplayAmount"
+        />
         {showOfferNote && order.mode === "OFFER" && this.renderNoteEntry()}
         {order.state === "SUBMITTED" && (
           <Column
@@ -171,6 +176,7 @@ export class TransactionDetailsSummaryItem extends React.Component<
         <Entry
           label="Price"
           value={appendCurrencySymbol(order.itemsTotal, currency)}
+          data-test="price"
         />
       )
     }
@@ -186,8 +192,9 @@ export class TransactionDetailsSummaryItem extends React.Component<
           value={
             appendCurrencySymbol(offerOverride, currency) ||
             (offer && appendCurrencySymbol(offer.amount, currency)) ||
-            appendCurrencySymbol(this.amountPlaceholder, currency)
+            this.amountPlaceholder
           }
+          data-test="offer"
         />
         {offerContextPrice === "LIST_PRICE" ? (
           offerItem && (

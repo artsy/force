@@ -133,7 +133,7 @@ describe("Accept seller offer", () => {
         "Accept seller's offerChange"
       )
       expect(page.transactionSummary.text()).toMatch(
-        "Seller's offer$sellers.offer"
+        "Seller's offerUS$sellers.offer"
       )
     })
 

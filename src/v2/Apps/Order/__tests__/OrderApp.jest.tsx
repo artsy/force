@@ -536,7 +536,7 @@ describe("OrderApp", () => {
     }
   }
 
-  it.only("adds a meta tag with 'view-port-fit=cover' when not Eigen", () => {
+  it("adds a meta tag with 'view-port-fit=cover' when not Eigen", () => {
     const props = getProps() as any
     const subject = getWrapper({ props }) as any
     const viewportMetaTags = subject

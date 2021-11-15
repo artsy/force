@@ -14,7 +14,6 @@ const OfferSummaryItem = ({
 }: {
   order: OfferSummaryItem_order
 } & StepSummaryItemProps) => {
-  console.log("🚀 ~ file: OfferSummaryItem.tsx ~ line 17 ~ order", order)
   const offerItem = getOfferItemFromOrder(order.lineItems)
   const offerNote = order.myLastOffer?.note
 
