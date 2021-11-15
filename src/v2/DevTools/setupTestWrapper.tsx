@@ -12,9 +12,8 @@ type SetupTestWrapper<T extends OperationType> = {
   variables?: T["variables"]
 }
 /**
- * Creates an enzyme-based wrapper for testing Relay components using the
- * `relay-test-utils` package, which will provide automatic fixture data for
- * GraphQL queries.
+ * Creates a wrapper for testing Relay components using the `relay-test-utils`
+ * package, which will provide automatic fixture data for GraphQL queries.
  *
  * Note: If wanting to test a QueryRenderer, extract the render code into a
  * fragment-like container and test that; `QueryRenderer` components aren't
@@ -24,13 +23,14 @@ type SetupTestWrapper<T extends OperationType> = {
  *
  * @example
 
-  import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
+	import { screen } from "@testing-library/react"
+	import { setupTestWrapperTL } from "v2/DevTools/setupTestWrapper"
 
   // Important! Don't forget to unmock relay, otherwise the following error
   // will occur: "RelayModernMockEnvironment: There are no pending operations."
   jest.unmock("react-relay")
 
-  const { getWrapper } = setupTestWrapper({
+  const { renderWithRelay } = setupTestWrapperTL({
     Component: (props: any) => {
       return <ShowMetaFragmentContainer show={props.show} />
     },
@@ -47,56 +47,19 @@ type SetupTestWrapper<T extends OperationType> = {
   })
 
   // Invoking without arguments will return dummy fixture data, provide by relay
-  const wrapper = getWrapper()
-  expect(wrapper.text()).toContain(...)
+  renderWithRelay()
+	expect(screen.queryByText("Some text string")).toBeInTheDocument()
 
   // If wanting to manually provide fixture data, can pass in an object that
   // maps to the type and field resolvers.
-  const wrapper = getWrapper({
+  renderWithRelay({
     Show: () => ({
       description: "Hello world!"
     })
   })
-  expect(wrapper.text()).toContain("Hello World!")
+
+	expect(screen.queryByText("Hello world")).toBeInTheDocument()
  */
-export const setupTestWrapper = <T extends OperationType>({
-  Component,
-  query,
-  variables = {},
-}: SetupTestWrapper<T>) => {
-  const getWrapper = (mockResolvers: MockResolvers = {}) => {
-    const env = createMockEnvironment()
-
-    const TestRenderer = () => (
-      <QueryRenderer<T>
-        environment={env}
-        variables={variables}
-        query={query}
-        render={({ props, error }) => {
-          if (props) {
-            // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-            return <Component {...props} />
-          } else if (error) {
-            console.error(error)
-          }
-        }}
-      />
-    )
-
-    const wrapper = mount(<TestRenderer />)
-
-    env.mock.resolveMostRecentOperation(operation => {
-      return MockPayloadGenerator.generate(operation, mockResolvers)
-    })
-
-    wrapper.update()
-
-    return wrapper
-  }
-
-  return { getWrapper }
-}
-
 /**
  * Creates a React Testing Library-based wrapper for testing Relay components
  * using the `relay-test-utils` package, which will provide automatic fixture
@@ -139,4 +102,45 @@ export const setupTestWrapperTL = <T extends OperationType>({
   }
 
   return { renderWithRelay }
+}
+
+/**
+ * @deprecated Use `setupTestWrapperTL`, which uses `@testing-library/react`
+ */
+export const setupTestWrapper = <T extends OperationType>({
+  Component,
+  query,
+  variables = {},
+}: SetupTestWrapper<T>) => {
+  const getWrapper = (mockResolvers: MockResolvers = {}) => {
+    const env = createMockEnvironment()
+
+    const TestRenderer = () => (
+      <QueryRenderer<T>
+        environment={env}
+        variables={variables}
+        query={query}
+        render={({ props, error }) => {
+          if (props) {
+            // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
+            return <Component {...props} />
+          } else if (error) {
+            console.error(error)
+          }
+        }}
+      />
+    )
+
+    const wrapper = mount(<TestRenderer />)
+
+    env.mock.resolveMostRecentOperation(operation => {
+      return MockPayloadGenerator.generate(operation, mockResolvers)
+    })
+
+    wrapper.update()
+
+    return wrapper
+  }
+
+  return { getWrapper }
 }
