@@ -2,7 +2,7 @@ import { filterLocations } from "v2/Apps/Artwork/Utils/filterLocations"
 import { limitWithCount } from "v2/Apps/Artwork/Utils/limitWithCount"
 import { SystemContextConsumer } from "v2/System"
 import { FollowProfileButtonFragmentContainer as FollowProfileButton } from "v2/Components/FollowButton/FollowProfileButton"
-import { Component } from "react";
+import { Component } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { get } from "v2/Utils/get"
 import { Media } from "v2/Utils/Responsive"
@@ -73,10 +73,10 @@ export class ArtworkDetailsAboutTheWorkFromPartner extends Component<
   render() {
     const { artwork } = this.props
     const { additional_information, partner } = artwork
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     const locationNames = get(
       partner,
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       p => limitWithCount(filterLocations(p.locations), 2),
       []
     ).join(", ")

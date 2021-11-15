@@ -6,7 +6,7 @@ import {
   TextVariant,
 } from "@artsy/palette"
 import { Details_artwork } from "v2/__generated__/Details_artwork.graphql"
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 
 interface DetailsProps {
@@ -84,7 +84,7 @@ const TitleLine: React.FC<DetailsProps> = ({
   })
 
   return (
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     <ConditionalLink includeLinks={includeLinks} href={href}>
       <Text variant={tokens.variant} color="black60" overflowEllipsis>
         <i>{title}</i>
@@ -117,7 +117,7 @@ const PartnerLine: React.FC<DetailsProps> = ({
 
   if (partner) {
     return (
-      //  @ts-expect-error STRICT_NULL_CHECK
+      //  @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       <ConditionalLink includeLinks={includeLinks} href={partner.href}>
         <Text variant={tokens.variant} color="black60" overflowEllipsis>
           {partner.name}
@@ -185,7 +185,7 @@ const BidInfo: React.FC<DetailsProps> = ({
     return null
   }
 
-  // @ts-expect-error STRICT_NULL_CHECK
+  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
   const bidderPositionCounts = sale_artwork?.counts.bidder_positions ?? 0
 
   if (bidderPositionCounts === 0) {

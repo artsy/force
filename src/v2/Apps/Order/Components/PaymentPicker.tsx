@@ -14,7 +14,7 @@ import { CreditCardInput } from "v2/Apps/Order/Components/CreditCardInput"
 import { validateAddress } from "v2/Apps/Order/Utils/formValidators"
 import { track } from "v2/System/Analytics"
 import * as Schema from "v2/System/Analytics/Schema"
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import type {
   StripeError,
@@ -70,7 +70,7 @@ export class PaymentPicker extends React.Component<
   PaymentPickerProps & SystemContextProps & StripeProps,
   PaymentPickerState
 > {
-  // @ts-expect-error STRICT_NULL_CHECK
+  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
   state = {
     hideBillingAddress: true,
     stripeError: null,
@@ -144,7 +144,7 @@ export class PaymentPicker extends React.Component<
       const { errors, hasErrors } = validateAddress(this.state.address)
       if (hasErrors) {
         this.setState({
-          // @ts-expect-error STRICT_NULL_CHECK
+          // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
           addressErrors: errors,
           addressTouched: this.touchedAddress,
         })
@@ -192,7 +192,7 @@ export class PaymentPicker extends React.Component<
       }
   }
 
-  // @ts-expect-error STRICT_NULL_CHECK
+  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
   @track((props: PaymentPickerProps, state, args) => {
     const showBillingAddress = !args[0]
     if (showBillingAddress && props.order.state === "PENDING") {
@@ -282,7 +282,7 @@ export class PaymentPicker extends React.Component<
             >
               {creditCardsArray
                 .map(e => {
-                  // @ts-expect-error STRICT_NULL_CHECK
+                  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
                   const { internalID, ...creditCardProps } = e
                   return (
                     <BorderedRadio value={internalID} key={internalID}>

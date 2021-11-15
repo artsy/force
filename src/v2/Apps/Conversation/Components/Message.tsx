@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer } from "react-relay"
 import { graphql } from "relay-runtime"
 import Linkify from "react-linkify"
@@ -53,7 +53,7 @@ const MessageText = styled(Text)`
 `
 
 interface AttachmentProps {
-  // @ts-expect-error STRICT_NULL_CHECK
+  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
   attachment: Message_message["attachments"][0]
   alignSelf: string
   bgColor: Color

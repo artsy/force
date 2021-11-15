@@ -1,5 +1,5 @@
-import { useState } from "react";
-import * as React from "react";
+import { useState } from "react"
+import * as React from "react"
 import { Column, GridColumns, Box } from "@artsy/palette"
 import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
 import { useRouter } from "v2/System/Router/useRouter"
@@ -68,7 +68,7 @@ const Articles: React.FC<ArticlesProps> = ({ partner, relay }) => {
   }
 
   const handleNext = (page: number) => {
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     handleClick(endCursor, page)
   }
 
@@ -76,7 +76,7 @@ const Articles: React.FC<ArticlesProps> = ({ partner, relay }) => {
     <Box id="jumpto--articlesGrid">
       <LoadingArea isLoading={isLoading}>
         <GridColumns mt={6} gridRowGap={[2, 4]}>
-          {/* @ts-expect-error STRICT_NULL_CHECK */}
+          {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
           {articles.map(({ node: article }) => {
             return (
               <Column key={article.internalID} span={4}>

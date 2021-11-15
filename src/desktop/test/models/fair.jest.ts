@@ -91,12 +91,12 @@ describe("Fair", () => {
   describe("#fetchOverviewData", () => {
     it("fetches a ton of data in parallel for the fair page", () => {
       testContext.fair.fetchOverviewData({})
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       _.last(Backbone.sync.args)[2].success(
         new Backbone.Model(fabricate("profile"))
       )
       const urls = Array.from(Backbone.sync.args).map(
-        // @ts-expect-error STRICT_NULL_CHECK
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         call => _.result(call[1], "url") || call[2].url
       )
       urls[0].should.match(new RegExp(`api/v1/fair/.*`))

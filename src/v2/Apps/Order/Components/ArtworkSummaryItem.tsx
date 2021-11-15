@@ -1,6 +1,6 @@
 import { ArtworkSummaryItem_order } from "v2/__generated__/ArtworkSummaryItem_order.graphql"
 import { Omit } from "lodash"
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { get } from "v2/Utils/get"
 
@@ -21,7 +21,7 @@ export interface ArtworkSummaryItemProps extends Omit<FlexProps, "order"> {
 const ArtworkSummaryItem: React.FC<ArtworkSummaryItemProps> = ({
   order: {
     lineItems,
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     sellerDetails: { name },
   },
   ...others

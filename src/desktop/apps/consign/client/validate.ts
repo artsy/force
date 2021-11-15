@@ -14,7 +14,7 @@ export const scrollToError = errors => {
   const firstErrorElement = document.getElementsByName(firstError)[0]
   if (firstErrorElement) {
     window.scrollTo(0, firstErrorElement.offsetTop - scrollBuffer)
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     firstErrorElement.querySelector("input").focus()
   }
 }

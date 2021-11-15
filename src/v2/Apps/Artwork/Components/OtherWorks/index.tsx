@@ -15,7 +15,7 @@ import { SystemContextProps, withSystemContext } from "v2/System"
 import { track, useTracking } from "v2/System/Analytics"
 import * as Schema from "v2/System/Analytics/Schema"
 import ArtworkGrid from "v2/Components/ArtworkGrid"
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { get } from "v2/Utils/get"
 import { Mediator } from "lib/mediator"
@@ -41,13 +41,13 @@ const populatedGrids = (grids: OtherWorks_artwork["contextGrids"]) => {
   if (grids && grids.length > 0) {
     return grids.filter(grid => {
       return (
-        // @ts-expect-error STRICT_NULL_CHECK
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         grid.artworksConnection &&
-        // @ts-expect-error STRICT_NULL_CHECK
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         grid.artworksConnection.edges &&
-        // @ts-expect-error STRICT_NULL_CHECK
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         grid.artworksConnection.edges.length > 0 &&
-        // @ts-expect-error STRICT_NULL_CHECK
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         grid.__typename !== "RelatedArtworkGrid"
       )
     })
@@ -100,19 +100,19 @@ export const OtherWorks = track()(
           <Join separator={<Spacer mt={6} />}>
             {gridsToShow.map((grid, index) => {
               const contextModule = contextGridTypeToV2ContextModule(
-                // @ts-expect-error STRICT_NULL_CHECK
+                // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
                 grid.__typename
               )
 
               return (
                 <Box key={`Grid-${index}`} data-test={contextModule}>
-                  {/* @ts-expect-error STRICT_NULL_CHECK */}
+                  {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
                   <Header title={grid.title} buttonHref={grid.ctaHref} />
 
                   <Spacer mt={4} />
 
                   <ArtworkGrid
-                    // @ts-expect-error STRICT_NULL_CHECK
+                    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
                     artworks={grid.artworksConnection}
                     columnCount={[2, 3, 4, 4]}
                     mediator={props.mediator}
@@ -122,7 +122,7 @@ export const OtherWorks = track()(
                         type: Schema.Type.ArtworkBrick,
                         action_type: Schema.ActionType.Click,
                         context_module: contextGridTypeToContextModule(
-                          // @ts-expect-error STRICT_NULL_CHECK
+                          // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
                           grid.__typename
                         ),
                       })

@@ -1,6 +1,6 @@
 import { FollowProfileButtonMutation } from "v2/__generated__/FollowProfileButtonMutation.graphql"
 import * as Artsy from "v2/System"
-import * as React from "react";
+import * as React from "react"
 import track, { TrackingProp } from "react-tracking"
 import { FollowProfileButton_profile } from "../../__generated__/FollowProfileButton_profile.graphql"
 import { FollowButton } from "./Button"
@@ -58,23 +58,23 @@ export class FollowProfileButton extends React.Component<Props> {
     } = this.props
 
     const args: FollowedArgs = {
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       ownerId: profile.internalID,
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       ownerSlug: profile.slug,
       contextModule,
       contextOwnerId: contextPageOwnerId,
       contextOwnerSlug: contextPageOwnerSlug,
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       contextOwnerType: contextPageOwnerType,
     }
 
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     const analyticsData = profile.is_followed
       ? unfollowedPartner(args)
       : followedPartner(args)
 
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     tracking.trackEvent(analyticsData)
   }
 
@@ -83,7 +83,7 @@ export class FollowProfileButton extends React.Component<Props> {
     const { contextModule, profile, user, relay, mediator } = this.props
 
     if (user && user.id) {
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       commitMutation<FollowProfileButtonMutation>(relay.environment, {
         // TODO: Inputs to the mutation might have changed case of the keys!
         mutation: graphql`
@@ -98,18 +98,18 @@ export class FollowProfileButton extends React.Component<Props> {
         `,
         variables: {
           input: {
-            // @ts-expect-error STRICT_NULL_CHECK
+            // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
             profileID: profile.internalID,
-            // @ts-expect-error STRICT_NULL_CHECK
+            // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
             unfollow: profile.is_followed,
           },
         },
         optimisticResponse: {
           followProfile: {
             profile: {
-              // @ts-expect-error STRICT_NULL_CHECK
+              // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
               id: profile.id,
-              // @ts-expect-error STRICT_NULL_CHECK
+              // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
               is_followed: !profile.is_followed,
             },
           },
@@ -117,12 +117,12 @@ export class FollowProfileButton extends React.Component<Props> {
       })
       this.trackFollow()
     } else {
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       openAuthToFollowSave(mediator, {
         entity: {
-          // @ts-expect-error STRICT_NULL_CHECK
+          // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
           name: profile.name,
-          // @ts-expect-error STRICT_NULL_CHECK
+          // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
           slug: profile.slug,
         },
         contextModule,
@@ -138,14 +138,14 @@ export class FollowProfileButton extends React.Component<Props> {
     if (render) {
       return (
         <Clickable onClick={this.handleFollow} data-test="followButton">
-          {/* @ts-expect-error STRICT_NULL_CHECK */}
+          {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
           {render(profile)}
         </Clickable>
       )
     } else {
       return (
         <FollowButton
-          // @ts-expect-error STRICT_NULL_CHECK
+          // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
           isFollowed={profile && profile.is_followed}
           handleFollow={this.handleFollow}
           buttonProps={buttonProps}

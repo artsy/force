@@ -5,7 +5,7 @@ import {
 } from "v2/__generated__/SavedCreditCardsDeleteCreditCardMutation.graphql"
 import { CreditCardDetails } from "v2/Apps/Order/Components/CreditCardDetails"
 import { ErrorModal } from "v2/Components/Modal/ErrorModal"
-import * as React from "react";
+import * as React from "react"
 import { RelayProp, commitMutation, graphql } from "react-relay"
 import { ConnectionHandler, RecordSourceSelectorProxy } from "relay-runtime"
 import styled from "styled-components"
@@ -69,12 +69,12 @@ export class CreditCard extends React.Component<
   private deleteCreditCard() {
     this.setState({ isCommittingMutation: true }, () => {
       commitMutation<SavedCreditCardsDeleteCreditCardMutation>(
-        // @ts-expect-error STRICT_NULL_CHECK
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         this.props.relay.environment,
         {
           onCompleted: (data, errors) => {
             const {
-              // @ts-expect-error STRICT_NULL_CHECK
+              // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
               deleteCreditCard: { creditCardOrError },
             } = data
 
@@ -109,7 +109,7 @@ export class CreditCard extends React.Component<
             }
           `,
           variables: {
-            // @ts-expect-error STRICT_NULL_CHECK
+            // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
             input: { id: this.props.creditCard.internalID },
           },
           updater: (store, data) => this.onCreditCardDeleted(store, data),
@@ -125,7 +125,7 @@ export class CreditCard extends React.Component<
     data: SavedCreditCardsDeleteCreditCardMutationResponse
   ) {
     const {
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       deleteCreditCard: { creditCardOrError },
     } = data
 
@@ -139,13 +139,13 @@ export class CreditCard extends React.Component<
       const creditCardId = creditCardEdge.getValue("id")
       const meStore = store.get(this.props.me.id)
       let connection = null
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       connection = ConnectionHandler.getConnection(
         meStore!,
         "UserSettingsPayments_creditCards"
       )
       if (!connection) {
-        // @ts-expect-error STRICT_NULL_CHECK
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         connection = ConnectionHandler.getConnection(
           meStore!,
           "PaymentSection_creditCards"

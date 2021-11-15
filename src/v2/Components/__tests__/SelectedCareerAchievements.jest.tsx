@@ -49,12 +49,12 @@ describe("SelectedCareerAchievements", () => {
   })
 
   it("renders selected career achievements if no auction results or partner highlights", async () => {
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     wrapper = await getWrapper({
       ...artistResponse,
       auctionResultsConnection: null,
       highlights: {
-        // @ts-expect-error STRICT_NULL_CHECK
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         ...artistResponse.highlights,
         partnersConnection: null,
       },
@@ -71,12 +71,12 @@ describe("SelectedCareerAchievements", () => {
 
   // TODO https://artsyproduct.atlassian.net/browse/GRO-393
   it("doesn't render selected career achievements if no auction results, partner highlights, or insights", async () => {
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     wrapper = await getWrapper({
       ...artistResponse,
       auctionResultsConnection: null,
       highlights: {
-        // @ts-expect-error STRICT_NULL_CHECK
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         ...artistResponse.highlights,
         partnersConnection: null,
       },
@@ -89,12 +89,12 @@ describe("SelectedCareerAchievements", () => {
 
   // TODO https://artsyproduct.atlassian.net/browse/GRO-393
   it("doesn't render selected career achievements if no auction results or partner highlights and insights is null", async () => {
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     wrapper = await getWrapper({
       ...artistResponse,
       auctionResultsConnection: null,
       highlights: {
-        // @ts-expect-error STRICT_NULL_CHECK
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         ...artistResponse.highlights,
         partnersConnection: null,
       },
@@ -107,12 +107,12 @@ describe("SelectedCareerAchievements", () => {
 
   // TODO https://artsyproduct.atlassian.net/browse/GRO-393
   it("renders the Artists CV link regardless of career achievements", async () => {
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     wrapper = await getWrapper({
       ...artistResponse,
       auctionResultsConnection: null,
       highlights: {
-        // @ts-expect-error STRICT_NULL_CHECK
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         ...artistResponse.highlights,
         partnersConnection: null,
       },

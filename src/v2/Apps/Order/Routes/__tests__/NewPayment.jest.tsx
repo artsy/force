@@ -31,13 +31,13 @@ jest.mock("@stripe/stripe-js", () => {
   return {
     loadStripe: () => {
       if (mock === null) {
-        // @ts-expect-error STRICT_NULL_CHECK
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         mock = mockStripe()
       }
       return mock
     },
     _mockStripe: () => mock,
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     _mockReset: () => (mock = mockStripe()),
   }
 })
@@ -175,7 +175,7 @@ describe("Payment", () => {
       "Not available",
       "Sorry, the work is no longer available."
     )
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     const artistId = testOrder.lineItems.edges[0].node.artwork.artists[0].slug
     expect(window.location.assign).toHaveBeenCalledWith(`/artist/${artistId}`)
   })

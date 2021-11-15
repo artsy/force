@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FairCollection_collection } from "v2/__generated__/FairCollection_collection.graphql"
 import { TriptychCard } from "@artsy/palette"
@@ -43,7 +43,7 @@ export const FairCollection: React.FC<FairCollectionProps> = ({
 
   const collectionTrackingData: ClickedCollectionGroup = {
     context_module: ContextModule.curatedHighlightsRail,
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     context_page_owner_type: contextPageOwnerType,
     context_page_owner_id: contextPageOwnerId,
     context_page_owner_slug: contextPageOwnerSlug,
@@ -56,7 +56,7 @@ export const FairCollection: React.FC<FairCollectionProps> = ({
   }
 
   const imageUrls = compact(
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     collection.artworks.edges.map(({ node }) => node?.image?.url)
   )
 
@@ -77,7 +77,7 @@ export const FairCollection: React.FC<FairCollectionProps> = ({
     }
   })
 
-  // @ts-expect-error STRICT_NULL_CHECK
+  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
   const count = collection.artworks.counts.total
 
   return (

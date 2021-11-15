@@ -28,7 +28,7 @@ const FairsFairRow: React.FC<FairsFairRowProps> = ({ fair, ...rest }) => {
   const href =
     // If fair status is upcoming — link to the organizer profile
     // TODO: Extract this logic to Metaphysics `href`
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     DateTime.local() < DateTime.fromISO(fair.isoStartAt)
       ? fair?.organizer?.profile?.href // possibly null
       : fair.href

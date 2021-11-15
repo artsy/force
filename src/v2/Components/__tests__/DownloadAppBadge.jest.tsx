@@ -36,7 +36,7 @@ describe("DownloadAppBadge", () => {
   it("tracks clicks on the app download badge", () => {
     const badge = mount(<DownloadAppBadge {...props} />)
     const downloadLink = badge.find(Link)
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     downloadLink.props().onClick({} as any)
     expect(trackEvent).toHaveBeenCalledWith(expect.objectContaining(event))
   })

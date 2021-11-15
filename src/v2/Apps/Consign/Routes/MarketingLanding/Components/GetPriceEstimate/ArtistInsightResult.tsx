@@ -35,7 +35,7 @@ export const ArtistInsightResult: React.FC = () => {
     return <ZeroState />
   }
 
-  // @ts-expect-error STRICT_NULL_CHECK
+  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
   const mediumSelectOptions = mediums.map(medium => ({
     text: medium,
     value: medium,

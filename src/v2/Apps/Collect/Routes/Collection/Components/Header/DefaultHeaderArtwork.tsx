@@ -3,7 +3,7 @@ import { DefaultHeaderArtwork_artwork } from "v2/__generated__/DefaultHeaderArtw
 import { AnalyticsSchema } from "v2/System/Analytics"
 import { useTracking } from "v2/System/Analytics/useTracking"
 import { RouterLink } from "v2/System/Router/RouterLink"
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 
 export interface DefaultHeaderArtworkProps {
@@ -24,14 +24,14 @@ export const DefaultHeaderArtwork: React.FC<DefaultHeaderArtworkProps> = ({
   const handleClick = () => {
     trackEvent({
       action_type: AnalyticsSchema.ActionType.Click,
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       context_module: AnalyticsSchema.ContextModule.ArtworkBanner,
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       context_page_owner_type: AnalyticsSchema.OwnerType.Collection,
       context_page: AnalyticsSchema.PageName.CollectionPage,
       context_page_owner_id: collectionId,
       context_page_owner_slug: collectionSlug,
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       destination_path: artwork.href,
     })
   }

@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"
 
 import { Box, Sans, Spacer } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -16,7 +16,7 @@ export const ArtistConsignPageViews: React.FC<ArtistConsignPageViewsProps> = pro
     artist: {
       name,
       targetSupply: {
-        // @ts-expect-error STRICT_NULL_CHECK
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         microfunnel: {
           metadata: { roundedViews, roundedUniqueVisitors },
         },

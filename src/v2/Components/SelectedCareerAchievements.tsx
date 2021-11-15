@@ -10,7 +10,7 @@ import { SelectedCareerAchievements_artist } from "v2/__generated__/SelectedCare
 
 import { ArtistInsight } from "v2/Components/ArtistInsight"
 import { ArtistInsightsModal } from "v2/Components/ArtistInsightsModal"
-import { Component } from "react";
+import { Component } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { SpaceProps } from "styled-system"
 import { RouterLink } from "v2/System/Router/RouterLink"
@@ -48,15 +48,15 @@ export class SelectedCareerAchievements extends Component<
   renderAuctionHighlight() {
     if (
       !this.props.artist.auctionResultsConnection ||
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       this.props.artist.auctionResultsConnection.edges.length < 1
     ) {
       return null
     }
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     const topAuctionResult = this.props.artist.auctionResultsConnection.edges[0]
       .node
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     const display = `${topAuctionResult.price_realized.display}, ${topAuctionResult.organization}, ${topAuctionResult.sale_date}`
 
     return (
@@ -71,7 +71,7 @@ export class SelectedCareerAchievements extends Component<
   }
   renderGalleryRepresentation() {
     const { highlights } = this.props.artist
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     const { partnersConnection } = highlights
     if (
       partnersConnection &&
@@ -108,7 +108,7 @@ export class SelectedCareerAchievements extends Component<
 
   render() {
     if (
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       !hasSections(this.props.artist) &&
       (!this.props.artist.insights || this.props.artist.insights.length === 0)
     ) {
@@ -138,7 +138,7 @@ export class SelectedCareerAchievements extends Component<
                 {this.renderGalleryRepresentation()}
                 {this.renderAuctionHighlight()}
 
-                {/*  @ts-expect-error STRICT_NULL_CHECK */}
+                {/*  @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
                 {this.props.artist.insights.map(insight => {
                   return this.renderInsight(insight)
                 })}

@@ -1,5 +1,5 @@
 import { Spacer, useThemeConfig } from "@artsy/palette"
-import * as React from "react";
+import * as React from "react"
 import { RelayProp, createFragmentContainer, graphql } from "react-relay"
 import { ArtworkFilterArtworkGrid_filtered_artworks } from "v2/__generated__/ArtworkFilterArtworkGrid_filtered_artworks.graphql"
 import { useSystemContext, useTracking } from "v2/System"
@@ -47,7 +47,7 @@ const ArtworkFilterArtworkGrid: React.FC<ArtworkFilterArtworkGridProps> = props 
    */
   function loadNext() {
     if (hasNextPage) {
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       loadPage(context.filters.page + 1)
     }
   }
@@ -61,7 +61,7 @@ const ArtworkFilterArtworkGrid: React.FC<ArtworkFilterArtworkGridProps> = props 
 
   return (
     <>
-      {/* @ts-expect-error STRICT_NULL_CHECK */}
+      {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
       <LoadingArea isLoading={props.isLoading}>
         <ArtworkGrid
           artworks={props.filtered_artworks}
@@ -74,14 +74,14 @@ const ArtworkFilterArtworkGrid: React.FC<ArtworkFilterArtworkGridProps> = props 
           onBrickClick={(artwork, artworkIndex) => {
             trackEvent(
               clickedMainArtworkGrid({
-                // @ts-expect-error STRICT_NULL_CHECK
+                // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
                 contextPageOwnerType,
                 contextPageOwnerSlug,
                 contextPageOwnerId,
                 destinationPageOwnerId: artwork.internalID,
                 destinationPageOwnerSlug: artwork.slug,
                 position: artworkIndex,
-                // @ts-expect-error STRICT_NULL_CHECK
+                // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
                 sort: context.filters.sort,
               })
             )

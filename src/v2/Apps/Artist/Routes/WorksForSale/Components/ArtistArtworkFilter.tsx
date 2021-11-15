@@ -34,7 +34,7 @@ const ArtistArtworkFilter: React.FC<ArtistArtworkFilterProps> = props => {
   const savedSearchAttributes: SavedSearchAttributes = {
     type: "artist",
     id: artist.internalID,
-    name: artist.name || "",
+    name: artist.name ?? "",
   }
 
   return (

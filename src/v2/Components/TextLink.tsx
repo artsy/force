@@ -1,5 +1,5 @@
 import { garamond } from "v2/Assets/Fonts"
-import * as React from "react";
+import * as React from "react"
 import styled from "styled-components"
 import colors from "../Assets/Colors"
 
@@ -34,19 +34,19 @@ export class TextLink extends React.Component<LinkProps, null> {
   }
 }
 
-// @ts-expect-error STRICT_NULL_CHECK
+// @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
 const StyledTextLink = styled(TextLink)`
   ${garamond("s15")};
   color: ${props =>
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     props.color};
   text-decoration: ${props =>
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     props.underline ? "underline" : "none"};
 `
 
 StyledTextLink.defaultProps = {
-  // @ts-expect-error STRICT_NULL_CHECK
+  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
   underline: false,
   color: colors.grayBold,
 }

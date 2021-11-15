@@ -1,7 +1,7 @@
 import { Box, Flex, Sans, Serif } from "@artsy/palette"
 import { LotInfo_artwork } from "v2/__generated__/LotInfo_artwork.graphql"
 import { LotInfo_saleArtwork } from "v2/__generated__/LotInfo_saleArtwork.graphql"
-import * as React from "react";
+import * as React from "react"
 import { RelayProp, createFragmentContainer, graphql } from "react-relay"
 
 interface Props {
@@ -12,7 +12,7 @@ interface Props {
 
 export const LotInfo: React.FC<Props> = ({ artwork, saleArtwork }) => {
   const {
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     counts: { bidderPositions: bidCount },
   } = saleArtwork
   return (
@@ -40,7 +40,7 @@ export const LotInfo: React.FC<Props> = ({ artwork, saleArtwork }) => {
         </Serif>
         <br />
         <Serif size="3">
-          {/* @ts-expect-error STRICT_NULL_CHECK */}
+          {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
           Current Bid: {saleArtwork.minimumNextBid.display}
         </Serif>
         {bidCount > 0 && (

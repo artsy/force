@@ -69,7 +69,7 @@ describe("NavBar", () => {
     })
 
     it("renders logged in items", () => {
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       const wrapper = getWrapper({ user: true })
       expect(wrapper.html()).not.toContain("Log In")
       expect(wrapper.html()).not.toContain("Sign Up")
@@ -80,7 +80,7 @@ describe("NavBar", () => {
     describe("lab features", () => {
       it("shows inquiries icon if lab feature enabled", () => {
         const wrapper = getWrapper({
-          // @ts-expect-error STRICT_NULL_CHECK
+          // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
           user: { type: "NotAdmin", lab_features: ["User Conversations View"] },
         })
         expect(wrapper.find(EnvelopeIcon).length).toEqual(1)
@@ -145,7 +145,7 @@ describe("NavBar", () => {
 
     it("shows the inbox notifications count  when there are conversations", () => {
       const wrapper = getWrapper({
-        // @ts-expect-error STRICT_NULL_CHECK
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         user: { type: "NotAdmin", lab_features: ["User Conversations View"] },
       })
       expect(wrapper.find(NavBarMobileMenuInboxNotificationCount).length).toBe(

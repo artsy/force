@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"
 import block from "bem-cn-lite"
 import { connect } from "react-redux"
 import { Button, Sans } from "@artsy/palette"
@@ -62,7 +62,7 @@ const Registration: React.FC<RegistrationProps> = props => {
 
   const b = block("auction-Registration")
   const trackClick = desc => e => {
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     window.analytics.track(desc, {
       context_type: "auctions landing",
       auction_slug: auction.id,
@@ -110,7 +110,7 @@ const Registration: React.FC<RegistrationProps> = props => {
                 <div className={b("wrapper")}>
                   <a
                     className={b("idv-link")}
-                    // @ts-expect-error STRICT_NULL_CHECK
+                    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
                     href={`/identity-verification/${pendingIdentityVerification.internalID}`}
                   >
                     <Button

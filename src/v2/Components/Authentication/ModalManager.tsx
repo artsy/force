@@ -50,7 +50,7 @@ export class ModalManager extends Component<
   ModalManagerState
 > {
   state: ModalManagerState = {
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     currentType: null,
     options: {} as ModalOptions,
     recaptchaLoaded: false,
@@ -74,7 +74,7 @@ export class ModalManager extends Component<
     let afterClose = this.state.options?.afterClose
 
     this.setState({
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       currentType: null,
       options: {} as ModalOptions,
     })
@@ -124,7 +124,7 @@ export class ModalManager extends Component<
 
     const handleSubmit: SubmitHandler = !!this.props.handleSubmit
       ? this.props.handleSubmit.bind(this, currentType, options)
-      : // @ts-expect-error STRICT_NULL_CHECK
+      : // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         defaultHandleSubmit(submitUrls[currentType], csrf, redirectTo)
 
     return (

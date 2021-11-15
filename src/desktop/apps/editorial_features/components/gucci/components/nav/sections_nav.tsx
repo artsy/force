@@ -1,5 +1,5 @@
 import styled, { css, keyframes } from "styled-components"
-import * as React from "react";
+import * as React from "react"
 import { Flex, Sans, color } from "@artsy/palette"
 
 interface SectionsNavProps {
@@ -14,7 +14,7 @@ export const SectionsNav: React.SFC<SectionsNavProps> = props => {
 
   return (
     <SectionsNavContainer
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       isAnimated={animated}
       mx="auto"
       mt={[4, 6]}
@@ -27,12 +27,12 @@ export const SectionsNav: React.SFC<SectionsNavProps> = props => {
       {sections.map((section, index) => (
         <SectionItem onClick={() => onClick(index)} key={"nav-" + index}>
           <Title
-            // @ts-expect-error STRICT_NULL_CHECK
+            // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
             mt={animated && [4, 6]}
-            // @ts-expect-error STRICT_NULL_CHECK
+            // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
             mb={animated && [2, 5]}
             size={["10", "10", "10", "14"]}
-            // @ts-expect-error STRICT_NULL_CHECK
+            // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
             mx={animated && [3]}
             color={activeSection === index ? "black" : color("black10")}
           >

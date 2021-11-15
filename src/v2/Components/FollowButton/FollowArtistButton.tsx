@@ -77,7 +77,7 @@ export class FollowArtistButton extends React.Component<Props> {
       contextModule,
       contextOwnerId: contextPageOwnerId,
       contextOwnerSlug: contextPageOwnerSlug,
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       contextOwnerType: contextPageOwnerType,
       ownerId: artist.internalID,
       ownerSlug: artist.slug,
@@ -87,7 +87,7 @@ export class FollowArtistButton extends React.Component<Props> {
       ? unfollowedArtist(args)
       : followedArtist(args)
 
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     tracking.trackEvent(analyticsData)
   }
 
@@ -102,7 +102,7 @@ export class FollowArtistButton extends React.Component<Props> {
     if (user && user.id) {
       this.followArtistForUser()
     } else {
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       openAuthToFollowSave(mediator, {
         contextModule,
         entity: artist,
@@ -120,7 +120,7 @@ export class FollowArtistButton extends React.Component<Props> {
       ? (artist.counts?.follows ?? 0) - 1
       : (artist.counts?.follows ?? 0) + 1
 
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     commitMutation<FollowArtistButtonMutation>(relay.environment, {
       mutation: graphql`
         mutation FollowArtistButtonMutation($input: FollowArtistInput!) {
@@ -147,10 +147,10 @@ export class FollowArtistButton extends React.Component<Props> {
         },
       },
       updater: (store, data) => {
-        // @ts-expect-error STRICT_NULL_CHECK
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         const artistProxy = store.get(data.followArtist.artist.id)
 
-        // @ts-expect-error STRICT_NULL_CHECK
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         artistProxy
           .getLinkedRecord("counts")
           .setValue(newFollowCount, "follows")
@@ -203,7 +203,7 @@ export class FollowArtistButton extends React.Component<Props> {
                 }}
               >
                 {" "}
-                {/* @ts-expect-error STRICT_NULL_CHECK */}
+                {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
                 {render(artist)}
               </Container>
             ) : (
@@ -268,7 +268,7 @@ export const FollowArtistButtonQueryRenderer: React.FC<
       variables={{ id }}
       render={({ error, props }) => {
         if (error || !props) {
-          // @ts-expect-error STRICT_NULL_CHECK
+          // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
           return <FollowArtistButtonFragmentContainer {...rest} artist={null} />
         }
 

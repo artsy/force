@@ -20,7 +20,7 @@ import { track } from "v2/System/Analytics"
 import * as Schema from "v2/System/Analytics/Schema"
 import { CountdownTimer } from "v2/Components/CountdownTimer"
 import { Router } from "found"
-import { Component } from "react";
+import { Component } from "react"
 import { RelayProp, createFragmentContainer, graphql } from "react-relay"
 import createLogger from "v2/Utils/logger"
 import { Media } from "v2/Utils/Responsive"
@@ -81,7 +81,7 @@ export class CounterRoute extends Component<CounterProps> {
   onSubmitButtonPressed = async () => {
     try {
       const {
-        // @ts-expect-error STRICT_NULL_CHECK
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         commerceSubmitPendingOffer: { orderOrError },
       } = await this.submitPendingOffer({
         input: {

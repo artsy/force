@@ -1,7 +1,7 @@
 import { Box, Button, Flex, Sans, Serif, color } from "@artsy/palette"
 import { AnalyticsSchema, useTracking } from "v2/System"
 import { RouterLink } from "v2/System/Router/RouterLink"
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { SectionContainer } from "./SectionContainer"
 import { Subheader } from "./Subheader"
@@ -19,7 +19,7 @@ export const ArtistConsignMarketTrends: React.FC<ArtistConsignMarketTrendsProps>
     artist: {
       href,
       targetSupply: {
-        // @ts-expect-error STRICT_NULL_CHECK
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         microfunnel: {
           metadata: { highestRealized, str, realized },
         },

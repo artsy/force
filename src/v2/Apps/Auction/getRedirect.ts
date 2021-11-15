@@ -10,31 +10,31 @@ export function registerRedirect({
   me,
   sale,
 }: auctionRoutes_RegisterQueryResponse): Redirect | null {
-  // @ts-expect-error STRICT_NULL_CHECK
+  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
   if (me.hasQualifiedCreditCards) {
     return {
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       path: registrationFlowPath(sale),
       reason: "user already has a qualified credit card",
     }
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
   } else if (!sale.isAuction) {
     return {
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       path: `/sale/${sale.slug}`,
       reason: "sale must be an auction",
     }
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
   } else if (!isRegisterable(sale)) {
     return {
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       path: auctionPath(sale),
       reason: "auction must be registerable",
     }
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
   } else if (userRegisteredToBid(sale)) {
     return {
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       path: confirmRegistrationPath(sale),
       reason: "user is already registered to bid",
     }
@@ -48,7 +48,7 @@ export function confirmBidRedirect(
   location: Location
 ): Redirect | null {
   const { artwork, me } = data
-  // @ts-expect-error STRICT_NULL_CHECK
+  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
   const { saleArtwork } = artwork
 
   const { sale } = saleArtwork
@@ -63,7 +63,7 @@ export function confirmBidRedirect(
 
   if (!registrationStatus && sale.isRegistrationClosed) {
     return {
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       path: artworkPath(sale, artwork),
       reason: "user is not registered, registration closed",
     }
@@ -76,7 +76,7 @@ export function confirmBidRedirect(
   }
   if (sale.isClosed) {
     return {
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       path: artworkPath(sale, artwork),
       reason: "sale is closed",
     }

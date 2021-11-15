@@ -1,5 +1,5 @@
 import { Artwork_artwork } from "v2/__generated__/Artwork_artwork.graphql"
-import * as React from "react";
+import * as React from "react"
 // @ts-ignore
 import { ComponentRef, createFragmentContainer, graphql } from "react-relay"
 import styled, { css } from "styled-components"
@@ -109,7 +109,7 @@ export class Artwork extends React.Component<ArtworkProps, ArtworkState> {
     return (
       <Container onClick={this.onSelected}>
         <ImageContainer>
-          {/* @ts-expect-error STRICT_NULL_CHECK */}
+          {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
           <Image src={artwork.image.url} />
           <div className={overlayClasses}>
             {Overlay && <Overlay selected={this.state.isSelected} />}

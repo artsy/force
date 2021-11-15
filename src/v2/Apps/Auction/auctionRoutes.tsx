@@ -59,7 +59,7 @@ export const auctionRoutes: AppRouteConfig[] = [
           return <ErrorPage code={404} />
         }
         handleRedirect(
-          // @ts-expect-error STRICT_NULL_CHECK
+          // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
           confirmBidRedirect({ artwork, me }, match.location),
           match.location
         )
@@ -116,7 +116,7 @@ export const auctionRoutes: AppRouteConfig[] = [
           return <ErrorPage code={404} />
         }
 
-        // @ts-expect-error STRICT_NULL_CHECK
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         handleRedirect(registerRedirect({ sale, me }), match.location)
 
         return <Component {...props} />

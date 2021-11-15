@@ -7,7 +7,7 @@ import { FeaturedFairsRailFragmentContainer as FeaturedFairs } from "v2/Apps/Fea
 import { AnalyticsSchema, ContextModule } from "v2/System"
 import { useTracking } from "v2/System/Analytics/useTracking"
 import { Carousel } from "v2/Components/Carousel"
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { crop } from "v2/Utils/resizer"
 
@@ -28,7 +28,7 @@ const FeaturedRails: React.FC<FeaturedRailsProps> = props => {
       {hasCollectionsRail && (
         <>
           <FeaturedCollections
-            // @ts-expect-error STRICT_NULL_CHECK
+            // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
             collections={props.viewer.collections}
             railMetadata={props.collections_rail}
           />
@@ -39,7 +39,7 @@ const FeaturedRails: React.FC<FeaturedRailsProps> = props => {
       {hasAuctionsRail && (
         <>
           <FeaturedAuctions
-            // @ts-expect-error STRICT_NULL_CHECK
+            // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
             auctions={props.viewer.auctions}
             railMetadata={props.auctions_rail}
           />
@@ -50,7 +50,7 @@ const FeaturedRails: React.FC<FeaturedRailsProps> = props => {
       {hasFairsRail && (
         <>
           <FeaturedFairs
-            // @ts-expect-error STRICT_NULL_CHECK
+            // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
             fairs={props.viewer.fairs}
             railMetadata={props.fairs_rail}
           />
@@ -160,7 +160,7 @@ export const FeaturedRailCarousel: React.FC<FeaturedRailCarouselProps> = props =
             >
               <Image
                 lazyLoad
-                // @ts-expect-error STRICT_NULL_CHECK
+                // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
                 src={croppedImageUrl}
                 width={imgWidth}
                 height={imgHeight}

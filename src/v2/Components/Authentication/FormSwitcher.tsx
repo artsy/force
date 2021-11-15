@@ -108,7 +108,7 @@ export class FormSwitcher extends Component<FormSwitcherProps, State> {
 
   getAfterSignupAction = (options: ModalOptions): AfterSignUpAction => {
     const { afterSignUpAction, action, kind, objectId } = options
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     return (
       afterSignUpAction || {
         action,
@@ -128,7 +128,7 @@ export class FormSwitcher extends Component<FormSwitcherProps, State> {
       email = qs.parse(searchQuery).email as string
     }
 
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     return email || values.email || ""
   }
 
@@ -176,12 +176,12 @@ export class FormSwitcher extends Component<FormSwitcherProps, State> {
     const { handleSubmit, onBackButtonClicked, values } = this.props
 
     const defaultValues = {
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       accepted_terms_of_service: values.accepted_terms_of_service || false,
       email: this.getEmailValue(),
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       name: values.name || "",
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       password: values.password || "",
     }
 

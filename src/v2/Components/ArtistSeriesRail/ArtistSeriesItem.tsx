@@ -1,6 +1,6 @@
 import { Box, Image, Text } from "@artsy/palette"
 import { ArtistSeriesItem_artistSeries } from "v2/__generated__/ArtistSeriesItem_artistSeries.graphql"
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ContextModule, clickedArtistSeriesGroup } from "@artsy/cohesion"
 import { useTracking } from "v2/System/Analytics/useTracking"
@@ -40,7 +40,7 @@ export const ArtistSeriesItem: React.FC<ArtistSeriesItemProps> = ({
     trackEvent(
       clickedArtistSeriesGroup({
         contextModule,
-        // @ts-expect-error STRICT_NULL_CHECK
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         contextPageOwnerType,
         destinationPageOwnerId: internalID,
         destinationPageOwnerSlug: slug,

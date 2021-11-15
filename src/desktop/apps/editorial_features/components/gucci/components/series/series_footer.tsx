@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"
 import { PartnerBlock, Text } from "@artsy/reaction/dist/Components/Publishing"
 import { Box, Flex, Sans } from "@artsy/palette"
 import { Media } from "@artsy/reaction/dist/Utils/Responsive"
@@ -33,7 +33,7 @@ export const SeriesFooter: React.SFC<SeriesFooterProps> = props => {
         </Sans>
         <Media greaterThanOrEqual="lg">
           <Box pb={10}>
-            {/* @ts-expect-error STRICT_NULL_CHECK */}
+            {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
             <PartnerBlock
               logo={logoSrc}
               url={logoUrl}
@@ -50,7 +50,7 @@ export const SeriesFooter: React.SFC<SeriesFooterProps> = props => {
         <Text html={curation.about} layout="standard" />
         <Media lessThan="md">
           <Box pt={80}>
-            {/* @ts-expect-error STRICT_NULL_CHECK */}
+            {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
             <PartnerBlock
               logo={logoSrc}
               url={logoUrl}

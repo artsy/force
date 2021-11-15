@@ -1,4 +1,4 @@
-import { Component } from "react";
+import { Component } from "react"
 import { flatten } from "underscore"
 import Waypoint from "react-waypoint"
 import styled from "styled-components"
@@ -139,7 +139,7 @@ export class InfiniteScrollArticle extends Component<
       articles.map((article, i) => {
         const articleType = article.layout
         // Feature articles and Standard articles should return true
-        // @ts-expect-error STRICT_NULL_CHECK
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         const renderAd = shouldAdRender(null, null, null, articleType, isEigen)
 
         return (

@@ -1,5 +1,5 @@
 import { HTML, ReadMore, Spacer } from "@artsy/palette"
-import { Component } from "react";
+import { Component } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Media } from "v2/Utils/Responsive"
 import { ArtworkDetailsAboutTheWorkFromArtsy_artwork } from "v2/__generated__/ArtworkDetailsAboutTheWorkFromArtsy_artwork.graphql"
@@ -40,7 +40,7 @@ export class ArtworkDetailsAboutTheWorkFromArtsy extends Component<
       <HTML variant="sm">
         <ReadMore
           maxChars={maxChars}
-          // @ts-expect-error STRICT_NULL_CHECK
+          // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
           content={description}
           onReadMoreClicked={this.trackReadMoreClick.bind(this)}
         />

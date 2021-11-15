@@ -1,5 +1,5 @@
 import { Button, Modal, Text } from "@artsy/palette"
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtworkDetailsMediumModal_artwork } from "v2/__generated__/ArtworkDetailsMediumModal_artwork.graphql"
 
@@ -18,7 +18,7 @@ export const ArtworkDetailsMediumModal: React.FC<ArtworkDetailsMediumModalProps>
     <Modal
       show={show}
       onClose={onClose}
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       title={artwork.mediumType.name}
       FixedButton={
         <Button onClick={onClose} width="100%">
@@ -26,7 +26,7 @@ export const ArtworkDetailsMediumModal: React.FC<ArtworkDetailsMediumModalProps>
         </Button>
       }
     >
-      {/* @ts-expect-error STRICT_NULL_CHECK */}
+      {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
       <Text color="black100">{artwork.mediumType.longDescription}</Text>
     </Modal>
   )
