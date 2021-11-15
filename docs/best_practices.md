@@ -177,7 +177,7 @@ We use [Jest](https://jestjs.io/) for our unit tests, and [Mocha](https://mochaj
 Some top-level notes:
 
 - ~~We use [`enzyme`](https://enzymejs.github.io/enzyme/)~~
-- As of 2021, we've begun using [@testing-library/react](https://testing-library.com/docs/) for our tests. (See [this doc](https://kentcdodds.com/blog/common-mistakes-with-react-testing-library#using-waitfor-to-wait-for-elements-that-can-be-queried-with-find) for some common mistakes and best practices.)   
+- As of 2021, we've begun using [@testing-library/react](https://testing-library.com/docs/) for our tests. (See [this doc](https://kentcdodds.com/blog/common-mistakes-with-react-testing-library) for some common mistakes and best practices.)   
 - We avoid snapshot tests; they produce too much churn for too little value.
 - We use the `relay-test-utils` package for testing Relay code, and [this helper](https://github.com/artsy/force/blob/0b291f005763e7c2600a5077786c9510bf655079/src/v2/DevTools/setupTestWrapper.tsx) for quickly spinning up tests. Note that this helper can't test `QueryRenderer`s; extract the render code into a fragment-like container and test that. (See the [`SoldRecently` component](https://github.com/artsy/force/blob/daad34183723be649e6031859842d65f4d902c21/src/v2/Apps/Consign/Routes/MarketingLanding/Components/__tests__/SoldRecently.jest.tsx) for an example.)
 
