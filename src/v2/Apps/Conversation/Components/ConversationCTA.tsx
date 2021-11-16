@@ -19,8 +19,8 @@ export const ConversationCTA: React.FC<ConversationCTAProps> = ({
   openOrderModal,
 }) => {
   // Determine whether we have a conversation about an artwork
-  const firstItem = conversation?.items?.[0]?.item
-  const artwork = firstItem?.__typename === "Artwork" ? firstItem : null
+  const liveArtwork = conversation?.items?.[0]?.liveArtwork
+  const artwork = liveArtwork?.__typename === "Artwork" ? liveArtwork : null
 
   if (!artwork) {
     return null
@@ -64,11 +64,16 @@ export const ConversationCTAFragmentContainer = createFragmentContainer(
       fragment ConversationCTA_conversation on Conversation {
         internalID
         items {
+          liveArtwork {
+            ... on Artwork {
+              __typename
+              isOfferableFromInquiry
+            }
+          }
           item {
             __typename
             ... on Artwork {
               internalID
-              isOfferableFromInquiry
             }
           }
         }
