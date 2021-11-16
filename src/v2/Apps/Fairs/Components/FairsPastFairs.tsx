@@ -1,6 +1,6 @@
 import { Box, Button } from "@artsy/palette"
-import { useState } from "react";
-import * as React from "react";
+import { useState } from "react"
+import * as React from "react"
 import {
   createPaginationContainer,
   graphql,
@@ -50,13 +50,12 @@ export const FairsPastFairs: React.FC<FairsPastFairsProps> = ({
       </Box>
 
       <Button
-        variant="secondaryOutline"
         display="block"
         mx="auto"
         loading={isLoading}
         onClick={handleClick}
       >
-        View more
+        Show More
       </Button>
     </>
   )

@@ -24,6 +24,15 @@ query PartnersSpecialtyAutocomplete_Test_Query {
 }
 
 fragment PartnersSpecialtyAutocomplete_viewer on Viewer {
+  allOptions: filterPartners(aggregations: [CATEGORY], defaultProfilePublic: true, eligibleForListing: true, size: 0) {
+    aggregations {
+      counts {
+        text: name
+        value
+        count
+      }
+    }
+  }
   filterPartners(aggregations: [CATEGORY, TOTAL], defaultProfilePublic: true, eligibleForListing: true, size: 0) {
     total
     aggregations {
@@ -37,7 +46,66 @@ fragment PartnersSpecialtyAutocomplete_viewer on Viewer {
 }
 */
 
-const node: ConcreteRequest = {
+const node: ConcreteRequest = (function(){
+var v0 = {
+  "kind": "Literal",
+  "name": "defaultProfilePublic",
+  "value": true
+},
+v1 = {
+  "kind": "Literal",
+  "name": "eligibleForListing",
+  "value": true
+},
+v2 = {
+  "kind": "Literal",
+  "name": "size",
+  "value": 0
+},
+v3 = {
+  "alias": null,
+  "args": null,
+  "concreteType": "PartnersAggregationResults",
+  "kind": "LinkedField",
+  "name": "aggregations",
+  "plural": true,
+  "selections": [
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "AggregationCount",
+      "kind": "LinkedField",
+      "name": "counts",
+      "plural": true,
+      "selections": [
+        {
+          "alias": "text",
+          "args": null,
+          "kind": "ScalarField",
+          "name": "name",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "value",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "count",
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
+    }
+  ],
+  "storageKey": null
+};
+return {
   "fragment": {
     "argumentDefinitions": [],
     "kind": "Fragment",
@@ -78,6 +146,29 @@ const node: ConcreteRequest = {
         "plural": false,
         "selections": [
           {
+            "alias": "allOptions",
+            "args": [
+              {
+                "kind": "Literal",
+                "name": "aggregations",
+                "value": [
+                  "CATEGORY"
+                ]
+              },
+              (v0/*: any*/),
+              (v1/*: any*/),
+              (v2/*: any*/)
+            ],
+            "concreteType": "FilterPartners",
+            "kind": "LinkedField",
+            "name": "filterPartners",
+            "plural": false,
+            "selections": [
+              (v3/*: any*/)
+            ],
+            "storageKey": "filterPartners(aggregations:[\"CATEGORY\"],defaultProfilePublic:true,eligibleForListing:true,size:0)"
+          },
+          {
             "alias": null,
             "args": [
               {
@@ -88,21 +179,9 @@ const node: ConcreteRequest = {
                   "TOTAL"
                 ]
               },
-              {
-                "kind": "Literal",
-                "name": "defaultProfilePublic",
-                "value": true
-              },
-              {
-                "kind": "Literal",
-                "name": "eligibleForListing",
-                "value": true
-              },
-              {
-                "kind": "Literal",
-                "name": "size",
-                "value": 0
-              }
+              (v0/*: any*/),
+              (v1/*: any*/),
+              (v2/*: any*/)
             ],
             "concreteType": "FilterPartners",
             "kind": "LinkedField",
@@ -116,49 +195,7 @@ const node: ConcreteRequest = {
                 "name": "total",
                 "storageKey": null
               },
-              {
-                "alias": null,
-                "args": null,
-                "concreteType": "PartnersAggregationResults",
-                "kind": "LinkedField",
-                "name": "aggregations",
-                "plural": true,
-                "selections": [
-                  {
-                    "alias": null,
-                    "args": null,
-                    "concreteType": "AggregationCount",
-                    "kind": "LinkedField",
-                    "name": "counts",
-                    "plural": true,
-                    "selections": [
-                      {
-                        "alias": "text",
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "name",
-                        "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "value",
-                        "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "count",
-                        "storageKey": null
-                      }
-                    ],
-                    "storageKey": null
-                  }
-                ],
-                "storageKey": null
-              }
+              (v3/*: any*/)
             ],
             "storageKey": "filterPartners(aggregations:[\"CATEGORY\",\"TOTAL\"],defaultProfilePublic:true,eligibleForListing:true,size:0)"
           }
@@ -172,8 +209,9 @@ const node: ConcreteRequest = {
     "metadata": {},
     "name": "PartnersSpecialtyAutocomplete_Test_Query",
     "operationKind": "query",
-    "text": "query PartnersSpecialtyAutocomplete_Test_Query {\n  viewer {\n    ...PartnersSpecialtyAutocomplete_viewer\n  }\n}\n\nfragment PartnersSpecialtyAutocomplete_viewer on Viewer {\n  filterPartners(aggregations: [CATEGORY, TOTAL], defaultProfilePublic: true, eligibleForListing: true, size: 0) {\n    total\n    aggregations {\n      counts {\n        text: name\n        value\n        count\n      }\n    }\n  }\n}\n"
+    "text": "query PartnersSpecialtyAutocomplete_Test_Query {\n  viewer {\n    ...PartnersSpecialtyAutocomplete_viewer\n  }\n}\n\nfragment PartnersSpecialtyAutocomplete_viewer on Viewer {\n  allOptions: filterPartners(aggregations: [CATEGORY], defaultProfilePublic: true, eligibleForListing: true, size: 0) {\n    aggregations {\n      counts {\n        text: name\n        value\n        count\n      }\n    }\n  }\n  filterPartners(aggregations: [CATEGORY, TOTAL], defaultProfilePublic: true, eligibleForListing: true, size: 0) {\n    total\n    aggregations {\n      counts {\n        text: name\n        value\n        count\n      }\n    }\n  }\n}\n"
   }
 };
+})();
 (node as any).hash = '229934365b6d20de56170f3618ecd104';
 export default node;

@@ -66,7 +66,7 @@ describe("ad display logic in Feature and Standard Articles", () => {
 
   it("checks the shouldAdRender prop is passed to Feature articles", () => {
     const articleType = FeatureArticle.layout
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     const shouldRender = shouldAdRender(null, null, null, articleType)
 
     expect(shouldRender).toBe(true)
@@ -74,7 +74,7 @@ describe("ad display logic in Feature and Standard Articles", () => {
 
   it("checks the shouldAdRender prop is passed to Standard articles", () => {
     const articleType = StandardArticle.layout
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     const shouldRender = shouldAdRender(null, null, null, articleType)
 
     expect(shouldRender).toBe(true)

@@ -32,7 +32,7 @@ export const trackPageView = (excludedRoutes: string[] = []) => {
       window.PARSELY = { autotrack: false }
     }
 
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     window.analytics.page(properties, { integrations: { Marketo: false } })
   }
 }
@@ -49,7 +49,7 @@ const maybeTrackAuctionPageView = () => {
     if (!matchedBidRoute) {
       window.addEventListener("load", function () {
         // distinct event required for marketing integrations (Criteo)
-        // @ts-expect-error STRICT_NULL_CHECK
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         window.analytics.track("Auction Pageview", { auction_slug: pageSlug })
       })
     }

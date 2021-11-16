@@ -15,7 +15,7 @@ export const artistSeriesRoutes: AppRouteConfig[] = [
   {
     path: "/artist-series/:slug",
     getComponent: () => ArtistSeriesApp,
-    prepare: () => {
+    onClientSideRender: () => {
       ArtistSeriesApp.preload()
     },
     prepareVariables: initializeVariablesWithFilterState,

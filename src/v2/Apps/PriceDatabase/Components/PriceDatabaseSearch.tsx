@@ -97,7 +97,7 @@ export const PriceDatabaseSearch: React.FC = () => {
           <Text variant={["sm", "lg"]} mb={[0, 2]}>
             Unlimited access to auction results and art market data—for free.
             <br />
-            Browse 6.5 million auction records from 2,400 top auction houses,
+            Browse millions of auction records from over 900 top auction houses,
             from 1986 to today.
           </Text>
         </Column>

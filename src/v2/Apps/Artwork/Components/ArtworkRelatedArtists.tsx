@@ -15,8 +15,8 @@ import { hideGrid } from "v2/Apps/Artwork/Components/OtherWorks"
 import { track, useTracking } from "v2/System/Analytics"
 import * as Schema from "v2/System/Analytics/Schema"
 import { ArtistCardFragmentContainer as ArtistCard } from "v2/Components/ArtistCard"
-import { useState } from "react";
-import * as React from "react";
+import { useState } from "react"
+import * as React from "react"
 import {
   RelayPaginationProp,
   createPaginationContainer,
@@ -48,7 +48,7 @@ export const ArtworkRelatedArtists: React.FC<ArtworkRelatedArtistsProps> = track
       relay,
     } = props
 
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     if (hideGrid(artist.related.artistsConnection)) {
       return null
     }
@@ -112,13 +112,8 @@ const ShowMoreButton: React.FC<{ onClick: () => void; loading: boolean }> = ({
 }) => {
   return (
     <Flex justifyContent="center">
-      <Button
-        variant="secondaryOutline"
-        size="small"
-        onClick={onClick}
-        loading={loading}
-      >
-        Show more
+      <Button onClick={onClick} loading={loading}>
+        Show More
       </Button>
     </Flex>
   )
@@ -156,7 +151,7 @@ export const ArtworkRelatedArtistsPaginationContainer = createPaginationContaine
   {
     direction: "forward",
     getConnectionFromProps(props) {
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       return props.artwork.artist.related.artistsConnection
     },
     getFragmentVariables(prevVars, count) {

@@ -9,7 +9,7 @@ import { AnalyticsSchema, ContextModule } from "v2/System"
 import { useTracking } from "v2/System/Analytics/useTracking"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { useSystemContext } from "v2/System/SystemContext"
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
 import { crop, resize } from "v2/Utils/resizer"
@@ -57,7 +57,7 @@ const Feature: React.FC<FeatureProps> = props => {
           <Box textAlign="center" mb={-1}>
             <Video
               src={heroVideo.large_src}
-              // @ts-expect-error STRICT_NULL_CHECK
+              // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
               placeholder={resizedLargePlaceholder}
             />
           </Box>
@@ -68,7 +68,7 @@ const Feature: React.FC<FeatureProps> = props => {
           <Box textAlign="center" mb={-1}>
             <Video
               src={heroVideo.small_src}
-              // @ts-expect-error STRICT_NULL_CHECK
+              // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
               placeholder={resizedSmallPlaceholder}
             />
           </Box>

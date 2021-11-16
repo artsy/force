@@ -52,7 +52,7 @@ export const resized = (
   })
 
   return {
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     src: _1x,
     srcSet: `${_1x} 1x, ${_2x} 2x`,
   }
@@ -89,7 +89,7 @@ export const cropped = (
   })
 
   return {
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     src: _1x,
     srcSet: `${_1x} 1x, ${_2x} 2x`,
   }

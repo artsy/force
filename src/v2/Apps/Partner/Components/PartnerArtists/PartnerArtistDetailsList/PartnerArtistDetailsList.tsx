@@ -1,6 +1,6 @@
 import { Box } from "@artsy/palette"
-import { useEffect, useRef, useState } from "react";
-import * as React from "react";
+import { useEffect, useRef, useState } from "react"
+import * as React from "react"
 import { useSystemContext } from "v2/System"
 import {
   createPaginationContainer,
@@ -39,7 +39,7 @@ export const PartnerArtistDetailsList: React.FC<PartnerArtistDetailsListProps> =
   }, [])
 
   const maybeLoadMore = () => {
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     const el = containerRef.current.getBoundingClientRect()
 
     if (window.innerHeight >= el.bottom && el.bottom > 0) {

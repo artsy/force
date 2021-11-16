@@ -3,7 +3,7 @@ import { Message_message } from "v2/__generated__/Message_message.graphql"
 import { Message as messageFixture } from "v2/Apps/__tests__/Fixtures/Conversation"
 import { Message } from "../Message"
 
-// @ts-ignore
+// @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
 const message: Message_message = { " $refType": null, ...messageFixture }
 
 describe("Message", () => {

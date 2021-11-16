@@ -1,7 +1,7 @@
 _ = require 'underscore'
 StepView = require './step.coffee'
 Form = require '../../form/index.coffee'
-Representatives = require '../../../collections/representatives.coffee'
+{ Representatives } = require '../../../collections/representatives'
 template = -> require('../templates/specialist.jade') arguments...
 
 module.exports = class Specialist extends StepView

@@ -13,7 +13,7 @@ export const priceDatabaseRoutes: AppRouteConfig[] = [
   {
     path: "/price-database",
     getComponent: () => PriceDatabase,
-    prepare: () => {
+    onClientSideRender: () => {
       PriceDatabaseApp.preload()
     },
   },

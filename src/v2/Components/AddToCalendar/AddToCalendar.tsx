@@ -1,5 +1,5 @@
-import { useState } from "react";
-import * as React from "react";
+import { useState } from "react"
+import * as React from "react"
 import { Box, Clickable, Menu, MenuItem, Text } from "@artsy/palette"
 import {
   generateGoogleCalendarUrl,
@@ -41,7 +41,7 @@ export const AddToCalendar: React.FC<CalendarEventProps> = props => {
         context_module: props.contextModule,
         context_owner_id: contextPageOwnerId,
         context_owner_slug: contextPageOwnerSlug,
-        // @ts-expect-error STRICT_NULL_CHECK
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         context_owner_type: contextPageOwnerType,
         subject,
       })

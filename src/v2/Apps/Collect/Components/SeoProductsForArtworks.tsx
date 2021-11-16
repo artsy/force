@@ -1,5 +1,5 @@
 import currency from "currency.js"
-import { Component } from "react";
+import { Component } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { toSentence } from "underscore.string"
 
@@ -27,7 +27,7 @@ export class SeoProducts extends Component<SeoProductsProps> {
     // here the filtering is necessary so we can re-use the artwork list shown in the page (could include
     // non-acquireable artworks) without making an extra request. Also, seller image is a required field
     // so excluding those that don't have `partner.profile.icon.url`.
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     const artworksForSeoProduct = artworks.edges.filter(edge => {
       return get(edge, e => {
         return e!.node!.is_acquireable && e!.node!.partner!.profile!.icon!.url
@@ -43,7 +43,7 @@ export class SeoProducts extends Component<SeoProductsProps> {
           image,
           is_price_range,
           partner,
-          // @ts-expect-error STRICT_NULL_CHECK
+          // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
           listPrice: { display },
         } = node
         const location = partner && partner.locations && partner.locations[0]
@@ -52,7 +52,7 @@ export class SeoProducts extends Component<SeoProductsProps> {
           : null
         const isInstitution = partner && partner.type === "Institution"
         const partnerImg = get(partner, p => {
-          // @ts-expect-error STRICT_NULL_CHECK
+          // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
           return p.profile.icon.url
         })
 

@@ -128,7 +128,7 @@ function getProductionWebpackConfig() {
   // Support configuration dumps for a basic insights into the webpack configuration.
   if (env.enableWebpackDumpConfig) {
     fs.writeFileSync(
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       process.env.WEBPACK_DUMP_CONFIG,
       JSON.stringify(config, null, 2)
     )

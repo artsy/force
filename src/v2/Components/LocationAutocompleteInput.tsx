@@ -12,7 +12,7 @@ import { useEffect } from "react"
 import { useState } from "react"
 import { useAppendStylesheet } from "v2/Utils/Hooks/useAppendStylesheet"
 
-const GOOGLE_PLACES_API_SRC = `https://maps.googleapis.com/maps/api/js?key=${sd.GOOGLE_MAPS_API_KEY}&libraries=places&language=en&sessiontoken=${sd.SESSION_ID}`
+const GOOGLE_PLACES_API_SRC = `https://maps.googleapis.com/maps/api/js?key=${sd.GOOGLE_MAPS_API_KEY}&libraries=places&language=en&sessiontoken=${sd.SESSION_ID}&callback=__googleMapsCallback`
 
 interface LocationAutocompleteInputProps extends Omit<InputProps, "onChange"> {
   onChange(place: Place): void
@@ -24,12 +24,22 @@ export const LocationAutocompleteInput: React.FC<LocationAutocompleteInputProps>
 }) => {
   const [ready, setReady] = useState(false)
 
+  useEffect(() => {
+    // @ts-ignore
+    if (typeof google === "undefined") {
+      // @ts-ignore
+      window.__googleMapsCallback = () => {
+        setReady(true)
+      }
+      return
+    }
+
+    setReady(true)
+  }, [])
+
   useLoadScript({
     id: "google-maps-js",
     src: GOOGLE_PLACES_API_SRC,
-    onReady: () => {
-      setReady(true)
-    },
   })
 
   useAppendStylesheet({

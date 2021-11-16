@@ -1,5 +1,5 @@
-import { useState } from "react";
-import * as React from "react";
+import { useState } from "react"
+import * as React from "react"
 import { Box, BoxProps, Flex, ResponsiveBox, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ShowsRail_partner } from "v2/__generated__/ShowsRail_partner.graphql"
@@ -15,7 +15,7 @@ interface ShowsRailProps extends BoxProps {
 }
 
 const ShowsRail: React.FC<ShowsRailProps> = ({ partner, ...rest }) => {
-  // @ts-expect-error STRICT_NULL_CHECK
+  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
   const [isSeeAllAvaliable, setIsSeeAllAvaliable] = useState<boolean>(undefined)
   if (
     !partner?.showsConnection?.edges ||
@@ -39,7 +39,12 @@ const ShowsRail: React.FC<ShowsRailProps> = ({ partner, ...rest }) => {
 
   return (
     <Box {...rest}>
-      <Flex mb={4} justifyContent="space-between" alignItems="center">
+      <Flex
+        mb={4}
+        justifyContent="space-between"
+        alignItems="center"
+        position="relative"
+      >
         <Text variant="title">All Events</Text>
 
         {canShowAll && <ViewAllButton to={`/partner/${slug}/shows`} />}
@@ -48,12 +53,12 @@ const ShowsRail: React.FC<ShowsRailProps> = ({ partner, ...rest }) => {
         onRailOverflowChange={setIsSeeAllAvaliable}
         itemsPerViewport={[2, 2, 3, 4]}
       >
-        {/* @ts-expect-error STRICT_NULL_CHECK */}
+        {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
         {flatten([
           shows.map(edge => {
             return (
               <Box key={edge?.node?.id} width={[300, "100%"]}>
-                {/* @ts-expect-error STRICT_NULL_CHECK */}
+                {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
                 <ShowCardFragmentContainer show={edge.node} />
               </Box>
             )

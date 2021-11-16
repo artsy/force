@@ -33,7 +33,7 @@ const StyledTitle = styled(Title)`
   color: ${props => props.color};
   margin: 20px 0;
   ${p =>
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     garamond(titleSizes[p.titleSize] as any)};
   ${media.sm`
     font-size: ${titleSizes.small};

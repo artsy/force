@@ -14,7 +14,7 @@ import {
   Flex,
 } from "@artsy/palette"
 import { compact, take } from "lodash"
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "v2/System"
 import { RouterLink } from "v2/System/Router/RouterLink"
@@ -138,13 +138,21 @@ export const HomeFeaturedEventsRailFragmentContainer = createFragmentContainer(
             subtitle
             href
             image {
-              small: cropped(width: 95, height: 63) {
+              small: cropped(
+                width: 95
+                height: 63
+                version: ["main", "wide", "large_rectangle"]
+              ) {
                 src
                 srcSet
                 width
                 height
               }
-              large: cropped(width: 445, height: 297) {
+              large: cropped(
+                width: 445
+                height: 297
+                version: ["main", "wide", "large_rectangle"]
+              ) {
                 src
                 srcSet
               }

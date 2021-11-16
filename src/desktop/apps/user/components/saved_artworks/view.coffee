@@ -1,7 +1,7 @@
 { API_URL } = require('sharify').data
 { defer } = require 'underscore'
 Backbone = require 'backbone'
-Artworks = require '../../../../collections/artworks.coffee'
+{ Artworks } = require '../../../../collections/artworks'
 QuasiInfiniteView = require '../quasi_infinite/view.coffee'
 ArtworkColumnsView = require '../../../../components/artwork_columns/view.coffee'
 

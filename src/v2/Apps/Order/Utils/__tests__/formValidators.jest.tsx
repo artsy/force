@@ -3,11 +3,11 @@ import { validateAddress, validatePresence } from "../formValidators"
 
 describe("formValidators/validatePresence", () => {
   it("returns error when field is null", () => {
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     expect(validatePresence(null)).toBe("This field is required")
   })
   it("returns error when field is undefined", () => {
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     expect(validatePresence(undefined)).toBe("This field is required")
   })
   it("returns error when field is empty", () => {
@@ -40,7 +40,7 @@ describe("formValidators/validateAddress", () => {
   describe("name", () => {
     it("returns an error for an undefined name", () => {
       const address: Address = buildAddress()
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       address.name = undefined
 
       const result = validateAddress(address)
@@ -63,7 +63,7 @@ describe("formValidators/validateAddress", () => {
   describe("addressLine1", () => {
     it("returns an error for an undefined addressLine1", () => {
       const address: Address = buildAddress()
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       address.addressLine1 = undefined
 
       const result = validateAddress(address)
@@ -86,7 +86,7 @@ describe("formValidators/validateAddress", () => {
   describe("city", () => {
     it("returns an error for an undefined city", () => {
       const address: Address = buildAddress()
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       address.city = undefined
 
       const result = validateAddress(address)
@@ -109,7 +109,7 @@ describe("formValidators/validateAddress", () => {
   describe("region", () => {
     it("returns no error for an undefined region if it's not US/CA", () => {
       const address: Address = buildAddress()
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       address.region = undefined
 
       const result = validateAddress(address)
@@ -119,7 +119,7 @@ describe("formValidators/validateAddress", () => {
 
     it("returns an error for an undefined region if it's US", () => {
       const address: Address = buildAddress()
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       address.region = undefined
       address.country = "US"
 
@@ -144,7 +144,7 @@ describe("formValidators/validateAddress", () => {
   describe("country", () => {
     it("returns an error for an undefined country", () => {
       const address: Address = buildAddress()
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       address.country = undefined
 
       const result = validateAddress(address)
@@ -167,7 +167,7 @@ describe("formValidators/validateAddress", () => {
   describe("postalCode", () => {
     it("returns no error for an undefined postalCode if it's not US/CA", () => {
       const address: Address = buildAddress()
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       address.postalCode = undefined
 
       const result = validateAddress(address)
@@ -177,7 +177,7 @@ describe("formValidators/validateAddress", () => {
 
     it("returns an error for an undefined postalCode if it's US", () => {
       const address: Address = buildAddress()
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       address.postalCode = undefined
       address.country = "US"
 

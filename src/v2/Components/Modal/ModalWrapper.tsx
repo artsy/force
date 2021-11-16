@@ -1,5 +1,5 @@
 import { Theme } from "@artsy/palette"
-import * as React from "react";
+import * as React from "react"
 import styled, { createGlobalStyle, keyframes } from "styled-components"
 import { getViewportDimensions } from "v2/Utils/viewport"
 import FadeTransition from "../Animation/FadeTransition"
@@ -86,7 +86,7 @@ export class ModalWrapper extends React.Component<
   }
 
   close = () => {
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     this.props.onClose()
     this.removeBlurToContainers()
   }
@@ -148,7 +148,7 @@ export class ModalWrapper extends React.Component<
           <GlobalStyle suppressMultiMountWarning />
           {isShown && (
             <ModalOverlay
-              // @ts-expect-error STRICT_NULL_CHECK
+              // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
               onClick={
                 this.props.disableCloseOnBackgroundClick ? null : this.close
               }
@@ -228,7 +228,7 @@ export const ModalContainer = styled.div<{
   background: #fff;
   width: ${props => {
     if (props.image) {
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       return props.viewportWidth > 900 ? ModalWidth.Wide : ModalWidth.Medium
     } else {
       return props.width ? props.width : ModalWidth.Normal

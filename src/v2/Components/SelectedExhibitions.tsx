@@ -10,7 +10,7 @@ import {
 import { SelectedExhibitions_exhibitions } from "v2/__generated__/SelectedExhibitions_exhibitions.graphql"
 import { Link } from "found"
 import { groupBy, toPairs } from "lodash"
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Media } from "v2/Utils/Responsive"
 import { ArtworkDefinitionList } from "v2/Apps/Artwork/Components/ArtworkDefinitionList"
@@ -181,10 +181,10 @@ export class SelectedExhibitionsContainer extends React.Component<
 
           {!isCollapsed({ expanded: this.state.expanded, ...this.props }) && (
             <FullExhibitionList
-              // @ts-expect-error STRICT_NULL_CHECK
+              // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
               artistID={this.props.artistID}
               exhibitions={this.props.exhibitions}
-              // @ts-expect-error STRICT_NULL_CHECK
+              // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
               totalExhibitions={this.props.totalExhibitions}
               ViewAllLink={this.props.ViewAllLink}
             />

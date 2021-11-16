@@ -39,8 +39,11 @@ const { renderWithRelay } = setupTestWrapperTL<ConversationAppTestQuery>({
   `,
 })
 
-// @ts-ignore
-const pageInfo: ConversationAppTestQueryRawResponse["me"]["conversationsConnection"]["pageInfo"] = {
+const pageInfo: NonNullable<
+  NonNullable<
+    ConversationAppTestQueryRawResponse["me"]
+  >["conversationsConnection"]
+>["pageInfo"] = {
   startCursor: "NQ",
   endCursor: "MQ",
   hasNextPage: true,

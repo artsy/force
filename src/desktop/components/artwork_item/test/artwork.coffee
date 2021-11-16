@@ -4,7 +4,7 @@ jade = require 'jade'
 path = require 'path'
 { fabricate } = require '@artsy/antigravity'
 Artwork = require '../../../models/artwork'
-Artists = require '../../../collections/artists'
+{ Artists } = require '../../../collections/artists'
 Artist = require '../../../models/artist'
 SaleArtwork = require '../../../models/sale_artwork'
 

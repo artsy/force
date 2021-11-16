@@ -1,13 +1,10 @@
-/**
- * Taken from @taion as per example of how they actually use found-relay and
- * have default setup for each route.
- */
-
 import { RouteSpinner } from "v2/System/Relay/renderWithLoadProgress"
 import { RouteConfig, HttpError } from "found"
 import BaseRoute from "found/Route"
 import * as React from "react";
 import { CacheConfig, GraphQLTaggedNode } from "relay-runtime";
+import { ArtsyRequest, ArtsyResponse } from "lib/middleware/artsyExpress";
+import { NextFunction } from "express";
 
 type RemoveIndex<T> = {
   [P in keyof T as string extends P ? never : number extends P ? never : P]: T[P]
@@ -22,7 +19,8 @@ interface RouteConfigProps extends RouteConfig {
   hideNavigationTabs?: boolean
   ignoreScrollBehavior?: boolean
   ignoreScrollBehaviorBetweenChildren?: boolean
-  prepare?: () => void
+  onClientSideRender?: () => void
+  onServerSideRender?: (props: { req: ArtsyRequest, res: ArtsyResponse, next: NextFunction, route: AppRouteConfig }) => void
   prepareVariables?: (params: any, props: any) => object
   query?: GraphQLTaggedNode
   scrollToTop?: boolean
@@ -74,34 +72,7 @@ function createRender({
     if (!props) {
       if (fetchIndicator === "spinner") {
         return <RouteSpinner />
-
-        // TODO: At some point  we might want to make this a little fancier. If
-        // undefined  is returned here, then we defer to `RenderStatus` component.
       } else if (fetchIndicator === "overlay") {
-        /*
-          In attempting to avoid the use of <StaticContainer> in RenderStatus.tsx,
-          which freezes the component tree with `shouldComponentUpdate = false`,
-          we stored the previously-rendered component and props in a variable and
-          instead of returning undefined here, we returned <PrevComponent {...prevProps} />.
-
-          However, when the component is rendered by react, it errors out because
-          the data in prevProps has seemingly been garbage collected.
-
-          Relay has the ability to `retain` data in the store. We should investigate,
-          which would give us greater control over our component tree when top-level
-          route transitions occur.
-
-          See: https://graphql.slack.com/archives/C0BEXJLKG/p1561741782163900
-
-          export const setLocal = (query: GraphQLTaggedNode, localData: object) => {
-            const request = getRequest(query);
-            const operation = createOperationDescriptor(request, {});
-
-            env.commitPayload(operation, localData);
-            env.retain(operation.root);  // <== here @en_js magic :wink:
-          };
-        */
-
         /**
          * Its an odd requirement, but the way in which one triggers RenderStatus
          * component updates is to return undefined.

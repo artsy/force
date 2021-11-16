@@ -10,8 +10,8 @@ import {
   themeProps,
 } from "@artsy/palette"
 import { isEqual } from "lodash"
-import { useContext, useState } from "react";
-import * as React from "react";
+import { useContext, useState } from "react"
+import * as React from "react"
 import { Title } from "react-head"
 import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
 import { useTracking } from "react-tracking"
@@ -146,7 +146,7 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
 
         // If user is not logged-in, show auth modal, but only if it was never shown before.
         if (!user && !authShownForFiltering) {
-          // @ts-expect-error STRICT_NULL_CHECK
+          // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
           openAuthModal(mediator, {
             contextModule: ContextModule.auctionResults,
             copy: `Sign up to see auction results for ${artistName}`,
@@ -269,7 +269,7 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
 
           {auctionResultsLength > 0 ? (
             <LoadingArea isLoading={isLoading}>
-              {/* @ts-expect-error STRICT_NULL_CHECK */}
+              {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
               {artist.auctionResultsConnection.edges.map(({ node }, index) => {
                 return (
                   <React.Fragment key={index}>
@@ -293,7 +293,7 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
           <Pagination
             getHref={() => ""}
             hasNextPage={Boolean(pageInfo?.hasNextPage)}
-            // @ts-expect-error STRICT_NULL_CHECK
+            // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
             pageCursors={artist.auctionResultsConnection.pageCursors}
             onClick={(_cursor, page) => loadPage(_cursor, page)}
             onNext={() => loadNext()}

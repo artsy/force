@@ -1,4 +1,4 @@
-const UserFairActions = require("../user_fair_actions.coffee")
+const { UserFairActions } = require("../user_fair_actions")
 
 describe("UserFairActions", () => {
   let userFairActions

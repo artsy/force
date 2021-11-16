@@ -9,7 +9,7 @@ const jade = require("jade")
 const path = require("path")
 const benv = require("benv")
 const { fabricate } = require("@artsy/antigravity")
-const PartnerShows = require("../../../collections/partner_shows")
+const { PartnerShows } = require("../../../collections/partner_shows")
 
 const render = function (template) {
   const filename = path.resolve(__dirname, `../${template}.jade`)

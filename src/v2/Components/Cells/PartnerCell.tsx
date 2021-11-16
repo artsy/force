@@ -8,12 +8,13 @@ import {
   Box,
   EntityHeader,
   Image,
+  ResponsiveBox,
   SkeletonBox,
   SkeletonText,
   Text,
 } from "@artsy/palette"
 import { uniq } from "lodash"
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "v2/System/Analytics/useTracking"
 import { useSystemContext } from "v2/System"
@@ -24,12 +25,18 @@ import { FollowProfileButtonFragmentContainer } from "v2/Components/FollowButton
 
 interface PartnerCellProps {
   partner: PartnerCell_partner
+  /** Defaults to `"RAIL"` */
+  mode?: "GRID" | "RAIL"
 }
 
-const PartnerCell: React.FC<PartnerCellProps> = ({ partner }) => {
+const PartnerCell: React.FC<PartnerCellProps> = ({
+  partner,
+  mode = "RAIL",
+}) => {
   const { user } = useSystemContext()
   const { trackEvent } = useTracking()
 
+  const width = mode === "GRID" ? "100%" : 325
   const locations = extractNodes(partner.locationsConnection)
   const meta = uniq(locations.map(location => location.city?.trim())).join(", ")
   const image = partner.profile?.image?.cropped
@@ -43,7 +50,7 @@ const PartnerCell: React.FC<PartnerCellProps> = ({ partner }) => {
       to={`/partner${partner.href}`}
       display="block"
       textDecoration="none"
-      width={325}
+      width={width}
       onClick={() => {
         const trackingEvent: ClickedGalleryGroup = {
           action: ActionType.clickedGalleryGroup,
@@ -84,44 +91,56 @@ const PartnerCell: React.FC<PartnerCellProps> = ({ partner }) => {
         }
       />
 
-      {image?.src ? (
-        <Image
-          src={image.src}
-          srcSet={image.srcSet}
-          width={325}
-          height={244}
-          alt=""
-          lazyLoad
-          style={{ display: "block" }}
-        />
-      ) : (
-        <Text
-          variant="lg"
-          bg="black10"
-          width={325}
-          height={244}
-          display="flex"
-          alignItems="center"
-          justifyContent="center"
-        >
-          {partner.initials}
-        </Text>
-      )}
+      <ResponsiveBox aspectWidth={4} aspectHeight={3} maxWidth="100%">
+        {image?.src ? (
+          <Image
+            src={image.src}
+            srcSet={image.srcSet}
+            width="100%"
+            height="100%"
+            alt=""
+            lazyLoad
+            style={{ display: "block" }}
+          />
+        ) : (
+          <Text
+            variant="lg"
+            bg="black10"
+            width="100%"
+            height="100%"
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+          >
+            {partner.initials}
+          </Text>
+        )}
+      </ResponsiveBox>
     </RouterLink>
   )
 }
 
-export const PARTNER_CELL_PLACEHOLDER = (
-  <Box width={325}>
-    <SkeletonText variant="lg">Example Gallery</SkeletonText>
+type PartnerCellPlaceholderProps = Pick<PartnerCellProps, "mode">
 
-    <SkeletonText variant="md" mb={1}>
-      Location
-    </SkeletonText>
+export const PartnerCellPlaceholder: React.FC<PartnerCellPlaceholderProps> = ({
+  mode = "RAIL",
+}) => {
+  const width = mode === "GRID" ? "100%" : 325
 
-    <SkeletonBox width={325} height={244} />
-  </Box>
-)
+  return (
+    <Box width={width}>
+      <SkeletonText variant="lg">Example Gallery</SkeletonText>
+
+      <SkeletonText variant="md" mb={1}>
+        Location
+      </SkeletonText>
+
+      <ResponsiveBox aspectWidth={4} aspectHeight={3} maxWidth="100%">
+        <SkeletonBox width="100%" height="100%" />
+      </ResponsiveBox>
+    </Box>
+  )
+}
 
 export const PartnerCellFragmentContainer = createFragmentContainer(
   PartnerCell,
@@ -145,8 +164,8 @@ export const PartnerCellFragmentContainer = createFragmentContainer(
           isFollowed
           image {
             cropped(
-              width: 325
-              height: 244
+              width: 445
+              height: 334
               version: ["wide", "large", "featured", "larger"]
             ) {
               src

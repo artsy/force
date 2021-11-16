@@ -68,6 +68,6 @@ describe("CurrentAuctions", () => {
     })
     expect(wrapper.find("AuctionArtworksRailFragmentContainer")).toBeDefined()
     expect(wrapper.find("Button")).toBeDefined()
-    expect(wrapper.text()).toContain("Show more")
+    expect(wrapper.text()).toContain("Show More")
   })
 })

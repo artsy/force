@@ -1,6 +1,6 @@
 import { VerifiedIcon } from "@artsy/palette"
 import { VerifiedSeller_artwork } from "v2/__generated__/VerifiedSeller_artwork.graphql"
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer } from "react-relay"
 import { graphql } from "react-relay"
 import { TrustSignal, TrustSignalProps } from "./TrustSignal"
@@ -10,7 +10,7 @@ interface VerifiedSellerProps
   artwork: VerifiedSeller_artwork
 }
 
-// @ts-expect-error STRICT_NULL_CHECK
+// @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
 export const VerifiedSeller: React.FC<VerifiedSellerProps> = ({
   artwork,
   ...other

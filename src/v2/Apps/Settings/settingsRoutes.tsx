@@ -93,7 +93,7 @@ export const settingsRoutes: AppRouteConfig[] = [
     path: "/settings2",
     theme: "v3",
     getComponent: () => SettingsApp,
-    prepare: () => {
+    onClientSideRender: () => {
       SettingsApp.preload()
     },
     query: graphql`
@@ -107,14 +107,14 @@ export const settingsRoutes: AppRouteConfig[] = [
       {
         path: "/",
         getComponent: () => OverviewRoute,
-        prepare: () => {
+        onClientSideRender: () => {
           OverviewRoute.preload()
         },
       },
       {
         path: "auctions",
         getComponent: () => AuctionsRoute,
-        prepare: () => {
+        onClientSideRender: () => {
           AuctionsRoute.preload()
         },
         query: graphql`
@@ -128,14 +128,21 @@ export const settingsRoutes: AppRouteConfig[] = [
       {
         path: "edit-profile",
         getComponent: () => EditProfileRoute,
-        prepare: () => {
+        onClientSideRender: () => {
           EditProfileRoute.preload()
         },
+        query: graphql`
+          query settingsRoutes_EditProfileRouteQuery {
+            me {
+              ...SettingsEditProfileRoute_me
+            }
+          }
+        `,
       },
       {
         path: "payments",
         getComponent: () => PaymentsRoute,
-        prepare: () => {
+        onClientSideRender: () => {
           PaymentsRoute.preload()
         },
         query: graphql`
@@ -149,28 +156,49 @@ export const settingsRoutes: AppRouteConfig[] = [
       {
         path: "purchases",
         getComponent: () => PurchasesRoute,
-        prepare: () => {
+        onClientSideRender: () => {
           PurchasesRoute.preload()
         },
+        query: graphql`
+          query settingsRoutes_PurchasesRouteQuery {
+            me {
+              ...SettingsPurchasesRoute_me
+            }
+          }
+        `,
       },
       {
         path: "saves",
         getComponent: () => SavesRoute,
-        prepare: () => {
+        onClientSideRender: () => {
           SavesRoute.preload()
         },
+        query: graphql`
+          query settingsRoutes_SavesRouteQuery {
+            me {
+              ...SettingsSavesRoute_me
+            }
+          }
+        `,
       },
       {
         path: "edit-settings",
         getComponent: () => SettingsRoute,
-        prepare: () => {
+        onClientSideRender: () => {
           SettingsRoute.preload()
         },
+        query: graphql`
+          query settingsRoutes_SettingsRouteQuery {
+            me {
+              ...SettingsEditRoute_me
+            }
+          }
+        `,
       },
       {
         path: "shipping",
         getComponent: () => ShippingRoute,
-        prepare: () => {
+        onClientSideRender: () => {
           ShippingRoute.preload()
         },
         query: graphql`

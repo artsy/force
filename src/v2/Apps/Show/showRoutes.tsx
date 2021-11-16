@@ -28,7 +28,7 @@ export const showRoutes: AppRouteConfig[] = [
   {
     getComponent: () => ShowApp,
     path: "/show/:slug",
-    prepare: () => {
+    onClientSideRender: () => {
       ShowApp.preload()
     },
     prepareVariables: initializeVariablesWithFilterState,
@@ -57,7 +57,7 @@ export const showRoutes: AppRouteConfig[] = [
       {
         getComponent: () => ShowInfoRoute,
         path: "info",
-        prepare: () => {
+        onClientSideRender: () => {
           ShowInfoRoute.preload()
         },
         query: graphql`
@@ -77,7 +77,7 @@ export const showRoutes: AppRouteConfig[] = [
     ],
     getComponent: () => ShowSubApp,
     path: "/show/:slug",
-    prepare: () => {
+    onClientSideRender: () => {
       ShowSubApp.preload()
     },
     query: graphql`

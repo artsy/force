@@ -50,7 +50,7 @@ fragment PartnerCell_partner on Partner {
     ...FollowProfileButton_profile
     isFollowed
     image {
-      cropped(width: 325, height: 244, version: ["wide", "large", "featured", "larger"]) {
+      cropped(width: 445, height: 334, version: ["wide", "large", "featured", "larger"]) {
         src
         srcSet
       }
@@ -240,7 +240,7 @@ return {
                       {
                         "kind": "Literal",
                         "name": "height",
-                        "value": 244
+                        "value": 334
                       },
                       {
                         "kind": "Literal",
@@ -255,7 +255,7 @@ return {
                       {
                         "kind": "Literal",
                         "name": "width",
-                        "value": 325
+                        "value": 445
                       }
                     ],
                     "concreteType": "CroppedImageUrl",
@@ -278,7 +278,7 @@ return {
                         "storageKey": null
                       }
                     ],
-                    "storageKey": "cropped(height:244,version:[\"wide\",\"large\",\"featured\",\"larger\"],width:325)"
+                    "storageKey": "cropped(height:334,version:[\"wide\",\"large\",\"featured\",\"larger\"],width:445)"
                   }
                 ],
                 "storageKey": null
@@ -297,7 +297,7 @@ return {
     "metadata": {},
     "name": "PartnerCellFragmentContainer_Test_Query",
     "operationKind": "query",
-    "text": "query PartnerCellFragmentContainer_Test_Query {\n  partner(id: \"example\") {\n    ...PartnerCell_partner\n    id\n  }\n}\n\nfragment FollowProfileButton_profile on Profile {\n  id\n  slug\n  name\n  internalID\n  is_followed: isFollowed\n}\n\nfragment PartnerCell_partner on Partner {\n  internalID\n  slug\n  name\n  href\n  initials\n  locationsConnection(first: 15) {\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n  profile {\n    ...FollowProfileButton_profile\n    isFollowed\n    image {\n      cropped(width: 325, height: 244, version: [\"wide\", \"large\", \"featured\", \"larger\"]) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n"
+    "text": "query PartnerCellFragmentContainer_Test_Query {\n  partner(id: \"example\") {\n    ...PartnerCell_partner\n    id\n  }\n}\n\nfragment FollowProfileButton_profile on Profile {\n  id\n  slug\n  name\n  internalID\n  is_followed: isFollowed\n}\n\nfragment PartnerCell_partner on Partner {\n  internalID\n  slug\n  name\n  href\n  initials\n  locationsConnection(first: 15) {\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n  profile {\n    ...FollowProfileButton_profile\n    isFollowed\n    image {\n      cropped(width: 445, height: 334, version: [\"wide\", \"large\", \"featured\", \"larger\"]) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n"
   }
 };
 })();

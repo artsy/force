@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import {
   Box,
@@ -56,16 +56,16 @@ export const ArtistsIndex: React.FC<ArtistsIndexProps> = ({
 
         {artists && (
           <Shelf my={2}>
-            {/*  @ts-expect-error STRICT_NULL_CHECK */}
+            {/*  @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
             {artists.map((featuredLink, index) => {
-              // @ts-expect-error STRICT_NULL_CHECK
+              // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
               if (!featuredLink.internalID) return null
 
               return (
                 <ArtistsCarouselCellFragmentContainer
-                  // @ts-expect-error STRICT_NULL_CHECK
+                  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
                   key={featuredLink.internalID}
-                  // @ts-expect-error STRICT_NULL_CHECK
+                  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
                   featuredLink={featuredLink}
                   index={index}
                 />
@@ -80,21 +80,21 @@ export const ArtistsIndex: React.FC<ArtistsIndexProps> = ({
       {genes && (
         <Join separator={<Spacer mt={6} />}>
           {genes?.map(gene => {
-            // @ts-expect-error STRICT_NULL_CHECK
+            // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
             if (gene.trendingArtists?.length === 0) return null
 
             return (
-              // @ts-expect-error STRICT_NULL_CHECK
+              // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
               <React.Fragment key={gene.name}>
                 <Box display="flex" justifyContent="space-between" mb={2}>
-                  {/* @ts-expect-error STRICT_NULL_CHECK */}
+                  {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
                   <RouterLink to={gene.href} noUnderline>
                     <Text variant="lg" as="h2">
-                      {/* @ts-expect-error STRICT_NULL_CHECK */}
+                      {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
                       {gene.name}
                     </Text>
                   </RouterLink>
-                  {/* @ts-expect-error STRICT_NULL_CHECK */}
+                  {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
                   <RouterLink to={gene.href} noUnderline>
                     <Text variant="md" color="black60">
                       View
@@ -103,12 +103,12 @@ export const ArtistsIndex: React.FC<ArtistsIndexProps> = ({
                 </Box>
 
                 <GridColumns gridRowGap={[2, 0]}>
-                  {/* @ts-expect-error STRICT_NULL_CHECK */}
+                  {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
                   {gene.trendingArtists.map(artist => {
                     return (
-                      // @ts-expect-error STRICT_NULL_CHECK
+                      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
                       <Column key={artist.internalID} span={[12, 6, 3, 3]}>
-                        {/* @ts-expect-error STRICT_NULL_CHECK */}
+                        {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
                         <ArtistsArtistCardFragmentContainer artist={artist} />
                       </Column>
                     )

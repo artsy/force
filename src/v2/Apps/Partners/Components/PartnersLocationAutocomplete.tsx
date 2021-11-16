@@ -13,20 +13,27 @@ interface PartnersLocationAutocompleteProps {
 }
 
 const PartnersLocationAutocomplete: FC<PartnersLocationAutocompleteProps> = ({
-  viewer: { cities },
+  viewer: { featuredCities, allCities },
 }) => {
   const { router, match } = useRouter()
 
-  const [options, setOptions] = useState([...cities])
+  const [options, setOptions] = useState([...featuredCities])
 
   const handleChange = ({
     target: { value },
   }: React.ChangeEvent<HTMLInputElement>) => {
-    setOptions(
-      cities.filter(({ text }) =>
-        text.toLowerCase().includes(value.toLowerCase())
-      )
-    )
+    if (value === "") {
+      setOptions([...featuredCities])
+      return
+    }
+
+    const cities = value.length > 2 ? allCities : featuredCities
+
+    const filtered = cities.filter(({ text }) => {
+      return text.toLowerCase().includes(value.toLowerCase())
+    })
+
+    setOptions(filtered)
   }
 
   const handleSelect = (option: typeof options[number]) => {
@@ -65,10 +72,8 @@ const PartnersLocationAutocomplete: FC<PartnersLocationAutocompleteProps> = ({
 
     if (!location) return
 
-    return options.find(({ value }) => {
-      return value === location
-    })?.text
-  }, [match.location.query, options])
+    return allCities.find(({ value }) => value === location)?.text
+  }, [allCities, match.location.query])
 
   return (
     <AutocompleteInput
@@ -97,7 +102,15 @@ export const PartnersLocationAutocompleteFragmentContainer = createFragmentConta
   {
     viewer: graphql`
       fragment PartnersLocationAutocomplete_viewer on Viewer {
-        cities(featured: true) {
+        featuredCities: cities(featured: true) {
+          text: name
+          value: slug
+          coordinates {
+            lat
+            lng
+          }
+        }
+        allCities: cities {
           text: name
           value: slug
           coordinates {

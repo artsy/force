@@ -54,7 +54,7 @@ function trackParamChange(changed, newState) {
     { price: filterParams.estimate_range },
   ]
 
-  // @ts-expect-error STRICT_NULL_CHECK
+  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
   window.analytics.track("Commercial filter params changed", {
     sale_id: _id,
     auction_slug: id,

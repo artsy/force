@@ -1,6 +1,6 @@
 import Backbone from "backbone"
 import { fabricate } from "@artsy/antigravity"
-const Items = require("../items.coffee")
+const Items = require("../items")
 
 describe("Items", () => {
   let items
@@ -15,14 +15,14 @@ describe("Items", () => {
   describe("#url", () => {
     it("should the appropriate url", () => {
       items.id.should.equal("foobar")
-      items.url().should.containEql("/api/v1/set/foobar/items")
+      expect(items.url()).toEqual(expect.stringContaining("/api/v1/set/foobar/items"))
     })
   })
 
   describe("#model", () => {
     it("news up the appropriate class", () => {
-      items.at(0).constructor.name.should.equal("FeaturedLink")
-      items.at(1).constructor.name.should.equal("Item")
+      expect(items.at(0).constructor.name).toEqual("FeaturedLink")
+      expect(items.at(1).constructor.name).toEqual("Item")
     })
   })
 })

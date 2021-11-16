@@ -33,7 +33,7 @@ export const auctionRoutes: AppRouteConfig[] = [
     path: "/auction-faq",
     theme: "v2",
     getComponent: () => AuctionFAQRoute,
-    prepare: () => {
+    onClientSideRender: () => {
       AuctionFAQRoute.preload()
     },
     query: graphql`
@@ -49,7 +49,7 @@ export const auctionRoutes: AppRouteConfig[] = [
     path: "/auction/:saleID/bid(2)?/:artworkID",
     theme: "v2",
     getComponent: () => ConfirmBidRoute,
-    prepare: () => {
+    onClientSideRender: () => {
       ConfirmBidRoute.preload()
     },
     render: ({ Component, props }) => {
@@ -59,7 +59,7 @@ export const auctionRoutes: AppRouteConfig[] = [
           return <ErrorPage code={404} />
         }
         handleRedirect(
-          // @ts-expect-error STRICT_NULL_CHECK
+          // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
           confirmBidRedirect({ artwork, me }, match.location),
           match.location
         )
@@ -105,7 +105,7 @@ export const auctionRoutes: AppRouteConfig[] = [
     path: "/auction-registration(2)?/:saleID",
     theme: "v2",
     getComponent: () => RegisterRoute,
-    prepare: () => {
+    onClientSideRender: () => {
       RegisterRoute.preload()
     },
     render: ({ Component, props }) => {
@@ -116,7 +116,7 @@ export const auctionRoutes: AppRouteConfig[] = [
           return <ErrorPage code={404} />
         }
 
-        // @ts-expect-error STRICT_NULL_CHECK
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         handleRedirect(registerRedirect({ sale, me }), match.location)
 
         return <Component {...props} />

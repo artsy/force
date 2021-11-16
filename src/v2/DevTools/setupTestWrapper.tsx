@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"
 import { mount } from "enzyme"
 import { render } from "@testing-library/react"
 import { QueryRenderer } from "react-relay"
@@ -74,7 +74,7 @@ export const setupTestWrapper = <T extends OperationType>({
         query={query}
         render={({ props, error }) => {
           if (props) {
-            // @ts-expect-error STRICT_NULL_CHECK
+            // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
             return <Component {...props} />
           } else if (error) {
             console.error(error)
@@ -120,7 +120,7 @@ export const setupTestWrapperTL = <T extends OperationType>({
         query={query}
         render={({ props, error }) => {
           if (props) {
-            // @ts-expect-error STRICT_NULL_CHECK
+            // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
             return <Component {...props} />
           } else if (error) {
             console.error(error)

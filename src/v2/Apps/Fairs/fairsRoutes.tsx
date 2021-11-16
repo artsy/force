@@ -27,14 +27,14 @@ export const fairsRoutes: AppRouteConfig[] = [
   {
     path: "/art-fairs",
     getComponent: () => FairsApp,
-    prepare: () => {
+    onClientSideRender: () => {
       return FairsApp.preload()
     },
     children: [
       {
         path: "",
         getComponent: () => FairsIndexRoute,
-        prepare: () => {
+        onClientSideRender: () => {
           return FairsIndexRoute.preload()
         },
         query: graphql`

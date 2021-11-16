@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"
 import { Link } from "react-head"
 import { data as sd } from "sharify"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -39,10 +39,10 @@ export const ArtistMetaCanonicalLink: React.FC<ArtistMetaCanonicalLinkProps> = (
 }) => {
   const { pathname } = useRouter().match.location
   const hasArtistInsights =
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     hasSections(artist) || (artist.insights && artist.insights.length > 0)
 
-  // @ts-expect-error STRICT_NULL_CHECK
+  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
   const hasArtistContent = hasOverviewContent(artist)
   const canShowOverview = hasArtistInsights || hasArtistContent
 

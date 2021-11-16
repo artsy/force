@@ -1,5 +1,5 @@
-import { useState } from "react";
-import * as React from "react";
+import { useState } from "react"
+import * as React from "react"
 import { Banner, Box, Flex, SelectSmall, Serif } from "@artsy/palette"
 import { useSystemContext } from "v2/System/SystemContext"
 import { graphql } from "react-relay"
@@ -17,11 +17,12 @@ const options = [
   { text: "None", value: "none" },
   { text: "Daily", value: "daily" },
   { text: "Weekly", value: "weekly" },
+  { text: "Alerts Only", value: "alerts_only" },
 ]
 
 export const UserEmailPreferences: React.FC<UserEmailPreferencesQueryResponse> = props => {
   const { relayEnvironment } = useSystemContext()
-  // @ts-expect-error STRICT_NULL_CHECK
+  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
   const emailFrequency = props.me.emailFrequency || fallbackFrequency
   const [updated, setUpdated] = useState(false)
 
@@ -29,10 +30,10 @@ export const UserEmailPreferences: React.FC<UserEmailPreferencesQueryResponse> =
     setUpdated(false)
     const variables = { emailFrequency: newEmailFrequency }
     await UpdateUserEmailPreferencesMutation(
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       relayEnvironment,
       variables,
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       props.me.id
     )
     setUpdated(true)

@@ -37,6 +37,9 @@ jest.mock("react-relay", () => ({
 import { fetchQuery } from "react-relay"
 import { artworkDetailsValidationSchema } from "../../Utils/validation"
 
+const mockErrorHandler = jest.fn()
+const mockFetchQuery = fetchQuery as jest.Mock
+
 let formikValues: ArtworkDetailsFormModel
 const renderArtistAutosuggest = (values: ArtworkDetailsFormModel) =>
   mount(
@@ -50,7 +53,9 @@ const renderArtistAutosuggest = (values: ArtworkDetailsFormModel) =>
           formikValues = values
           return (
             <Form>
-              <ArtistAutosuggest />
+              <ArtistAutosuggest
+                onAutosuggestError={() => mockErrorHandler(true)}
+              />
             </Form>
           )
         }}
@@ -61,7 +66,7 @@ const renderArtistAutosuggest = (values: ArtworkDetailsFormModel) =>
 const simulateTyping = async (wrapper: ReactWrapper, text: string) => {
   const artistInput = wrapper.find("input[data-test-id='autosuggest-input']")
   artistInput.simulate("focus").simulate("change", { target: { value: text } })
-  await flushPromiseQueue()
+  await new Promise(r => setTimeout(r, 500))
   wrapper.update()
 }
 
@@ -130,6 +135,17 @@ describe("ArtistAutosuggest", () => {
     })
   })
 
+  describe("Autosuggest component", () => {
+    it("fires error handler with correct arg when query failed", async () => {
+      mockFetchQuery.mockRejectedValueOnce("no artist")
+
+      await simulateTyping(wrapper, "cas")
+
+      expect(mockErrorHandler).toHaveBeenCalledTimes(1)
+      expect(mockErrorHandler).toHaveBeenCalledWith(true)
+    })
+  })
+
   describe("Suggestions", () => {
     it("render suggestions labels", async () => {
       const correctSuggestionsLabels = ["Banksy", "Andy Warhol"]
@@ -188,7 +204,8 @@ describe("ArtistAutosuggest", () => {
       )
 
       wrapper.find("input[data-test-id='autosuggest-input']").simulate("focus")
-      await flushPromiseQueue()
+      await new Promise(r => setTimeout(r, 500))
+
       wrapper.update()
 
       expect(wrapper.find("div[data-test-id='artist-suggestion']").length).toBe(

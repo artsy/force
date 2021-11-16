@@ -23,7 +23,7 @@ export const trackEvent = (data: any, options: object = {}) => {
     const trackingOptions = setAnalyticsClientReferrerOptions(options)
 
     // Send event to segment
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     window.analytics.track(actionName, trackingData, trackingOptions)
   } else {
     console.error(
@@ -63,7 +63,7 @@ export const onAnalyticsReady = () => {
 const onClickedReadMore = data => {
   const pathname = data.pathname || location.pathname
   const href = window.sd.APP_URL + "/" + pathname
-  // @ts-expect-error STRICT_NULL_CHECK
+  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
   window.analytics.page(
     { path: pathname },
     { integrations: { Marketo: false } }
@@ -91,7 +91,7 @@ const logAnalyticsCalls = () => {
   const mobileText = sd.IS_MOBILE ? "MOBILE " : ""
 
   // Log all pageviews
-  // @ts-expect-error STRICT_NULL_CHECK
+  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
   window.analytics.on("page", function () {
     console.info(
       `${mobileText}ANALYTICS PAGEVIEW: `,
@@ -100,12 +100,12 @@ const logAnalyticsCalls = () => {
     )
   })
   // Log all track calls
-  // @ts-expect-error STRICT_NULL_CHECK
+  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
   window.analytics.on("track", (actionName: string, data?: any) => {
     console.info(`${mobileText}ANALYTICS TRACK:`, actionName, data)
   })
   // Log all identify calls
-  // @ts-expect-error STRICT_NULL_CHECK
+  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
   window.analytics.on(
     "identify",
     (userId: string, data: object, context: any) => {
@@ -131,7 +131,7 @@ const identify = () => {
     const traits = extend(pick(sd.CURRENT_USER, allowedlist), {
       session_id: sd.SESSION_ID,
     })
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     window.analytics.identify(sd.CURRENT_USER.id, traits, {
       integrations: { Marketo: false },
     })

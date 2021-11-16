@@ -4,7 +4,7 @@ import { track } from "v2/System/Analytics"
 import * as Schema from "v2/System/Analytics/Schema"
 import { pMedia } from "v2/Components/Helpers"
 import { once } from "lodash"
-import { Component } from "react";
+import { Component } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import Waypoint from "react-waypoint"
 import styled from "styled-components"
@@ -34,7 +34,7 @@ const RailsWrapper = styled(Flex)`
   `};
 `
 
-// @ts-expect-error STRICT_NULL_CHECK
+// @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
 @track(null, {
   dispatch: data => Events.postEvent(data),
 })

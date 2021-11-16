@@ -1,5 +1,5 @@
-import { FC, useEffect, useState } from "react";
-import * as React from "react";
+import { FC, useEffect, useState } from "react"
+import * as React from "react"
 import { sortBy } from "lodash"
 import { Checkbox, CheckboxProps, Flex, useThemeConfig } from "@artsy/palette"
 import { useArtworkFilterContext } from "../ArtworkFilterContext"
@@ -33,7 +33,7 @@ const ArtistItem: React.FC<
 }) => {
   const { currentlySelectedFilters, setFilter } = useArtworkFilterContext()
   const toggleArtistSelection = (selected, slug) => {
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     let artistIDs = currentlySelectedFilters().artistIDs.slice()
     if (selected) {
       artistIDs.push(slug)
@@ -62,7 +62,7 @@ const ArtistItem: React.FC<
     <Checkbox
       {...checkboxProps}
       selected={
-        // @ts-expect-error STRICT_NULL_CHECK
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         currentlySelectedFilters().artistIDs.includes(slug) ||
         (isFollowedArtistCheckboxSelected && isFollowedArtist)
       }
@@ -83,7 +83,7 @@ export const ArtistsFilter: FC<ArtistsFilterProps> = ({
   user,
 }) => {
   const { aggregations, ...filterContext } = useArtworkFilterContext()
-  // @ts-expect-error STRICT_NULL_CHECK
+  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
   const artists = aggregations.find(agg => agg.slice === "ARTIST")
 
   const [followedArtists, setFollowedArtists] = useState<FollowedArtistList>([])
@@ -112,11 +112,11 @@ export const ArtistsFilter: FC<ArtistsFilterProps> = ({
 
   const isFollowedArtistCheckboxSelected =
     !!user &&
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     filterContext.currentlySelectedFilters()["includeArtworksByFollowedArtists"]
   const followedArtistArtworkCount = filterContext?.counts?.followedArtists ?? 0
 
-  // @ts-expect-error STRICT_NULL_CHECK
+  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
   const selection = filterContext.currentlySelectedFilters().artistIDs
   const hasSelection =
     (selection && selection.length > 0) || isFollowedArtistCheckboxSelected
@@ -143,7 +143,7 @@ export const ArtistsFilter: FC<ArtistsFilterProps> = ({
                 slug={slug}
                 name={name}
                 followedArtistSlugs={followedArtistSlugs}
-                // @ts-expect-error STRICT_NULL_CHECK
+                // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
                 isFollowedArtistCheckboxSelected={
                   isFollowedArtistCheckboxSelected
                 }

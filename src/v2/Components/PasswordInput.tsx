@@ -1,6 +1,6 @@
 import { ClosedEyeIcon, OpenEyeIcon, space } from "@artsy/palette"
-import { useState } from "react";
-import * as React from "react";
+import { useState } from "react"
+import * as React from "react"
 import styled from "styled-components"
 import QuickInput, { QuickInputProps } from "./QuickInput"
 
@@ -41,7 +41,7 @@ export const PasswordInput: React.FC<PasswordInputProps> = ({
       error={error}
       type={type}
       rightAddOn={eyeIcon()}
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       note={note}
     />
   )

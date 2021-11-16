@@ -1,5 +1,5 @@
 import { Banner, Button, Text } from "@artsy/palette"
-import * as React from "react";
+import * as React from "react"
 import { useState } from "react"
 import { useInquiryContext } from "../Hooks/useInquiryContext"
 import { useUpdateMyUserProfile } from "../Hooks/useUpdateMyUserProfile"
@@ -14,11 +14,13 @@ enum Mode {
 }
 
 export const InquiryCommercialInterest: React.FC = () => {
-  const { next, setContext } = useInquiryContext()
+  const { next, setContext, relayEnvironment } = useInquiryContext()
 
   const [mode, setMode] = useState(Mode.Pending)
 
-  const { submitUpdateMyUserProfile } = useUpdateMyUserProfile()
+  const { submitUpdateMyUserProfile } = useUpdateMyUserProfile({
+    relayEnvironment: relayEnvironment.current!,
+  })
 
   const handleClick = (value: 2 | 3) => async () => {
     setContext({ collectorLevel: value })

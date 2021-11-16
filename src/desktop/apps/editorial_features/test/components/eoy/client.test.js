@@ -10,12 +10,12 @@ const { resolve } = require("path")
 const fixtures = require("../../../../../test/helpers/fixtures")
 const Curation = require("../../../../../models/curation.coffee")
 const Article = require("../../../../../models/article.coffee")
-const Articles = require("../../../../../collections/articles.coffee")
+const { Articles } = require("../../../../../collections/articles")
 const markdown = require("../../../../../components/util/markdown.coffee")
 
 const sd = require("sharify").data
 
-xdescribe("EoyView", function () {
+describe.skip("EoyView", function () {
   before(function (done) {
     return benv.setup(() => {
       benv.expose({ $: benv.require("jquery"), jQuery: benv.require("jquery") })
@@ -232,7 +232,7 @@ xdescribe("EoyView", function () {
     }))
 
   describe("#setupVideos", () =>
-    xit("calls play video for each video", function () {
+    it.skip("calls play video for each video", function () {
       this.view.setupVideos()
       $(".video-controls").waypoint.args[4][0]()
       $(".video-controls").waypoint.args[5][0]()

@@ -235,7 +235,7 @@ export const UntouchedOrder = {
   createdAt: "2019-12-19T06:01:17.171Z",
   creditCard: null,
   currencyCode: "USD",
-  displayState: "PENDING",
+  displayState: "SUBMITTED",
   id: "2939023",
   internalID: "2939023",
   itemsTotal: "$12,000",

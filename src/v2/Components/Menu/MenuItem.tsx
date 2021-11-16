@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"
 import styled from "styled-components"
 import {
   Box,
@@ -60,9 +60,9 @@ export const MenuItem: React.FC<MenuItemProps> = ({
 }) => {
   return (
     <Container
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       to={href}
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       hasLighterTextColor={hasLighterTextColor}
       px={2}
       py={1}

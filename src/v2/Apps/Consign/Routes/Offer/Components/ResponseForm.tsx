@@ -1,5 +1,5 @@
-import { useState } from "react";
-import * as React from "react";
+import { useState } from "react"
+import * as React from "react"
 import { Form, Formik } from "formik"
 import { BorderedRadio, Button, RadioGroup, Text } from "@artsy/palette"
 import { useSystemContext } from "v2/System"
@@ -31,7 +31,7 @@ const ResponseForm: React.FC<ResponseFormProps> = ({ offer }) => {
         intendedState: "ACCEPTED",
       }}
       onSubmit={async (values: ResponseFormValues, actions) => {
-        // @ts-expect-error STRICT_NULL_CHECK
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         await CreateOfferResponse(relayEnvironment, offer.id, values)
         setResponded(true)
         actions.setSubmitting(false)

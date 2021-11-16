@@ -86,7 +86,7 @@ describe("ModalManager", () => {
 
     expect(manager.state.currentType).toEqual("signup")
     expect(manager.state.switchedForms).toEqual(true)
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     expect(manager.state.options.mode).toEqual("signup")
   })
 

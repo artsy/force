@@ -2,7 +2,7 @@ Backbone = require 'backbone'
 { defer } = require 'underscore'
 { Following, FollowButton } = require '../../../../components/follow_button/index'
 FillwidthView = require '../../../../components/fillwidth_row/view.coffee'
-Categories = require '../../../../collections/genes.coffee'
+{ Genes } = require '../../../../collections/genes'
 QuasiInfiniteView = require '../quasi_infinite/view.coffee'
 template = -> require('./index.jade') arguments...
 
@@ -17,7 +17,7 @@ module.exports = class CategoriesView extends QuasiInfiniteView
       size: 5
       page: 1
 
-    @categories = new Categories
+    @categories = new Genes
     @collection = new Following [], kind: 'gene'
     @allFollows = new Following [], kind: 'gene'
 
@@ -37,7 +37,7 @@ module.exports = class CategoriesView extends QuasiInfiniteView
     @categories.add @collection.pluck 'gene'
     end = @categories.length
 
-    categories = new Categories @categories.slice begin, end
+    categories = new Genes @categories.slice begin, end
 
     @$(@selectors.collection)[if @renderCount is 0 then 'html' else 'append'] template
       categories: categories

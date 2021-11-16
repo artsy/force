@@ -9,14 +9,7 @@ export const artworkDetailsValidationSchema = yup.object().shape({
     ),
   year: yup.string().required().trim(),
   title: yup.string().required().trim(),
-  medium: yup
-    .string()
-    .required()
-    .test(
-      "isDefault",
-      "Medium field not selected",
-      medium => medium !== "default"
-    ),
+  materials: yup.string().required().trim(),
   rarity: yup
     .string()
     .required()
@@ -42,8 +35,16 @@ export const artworkDetailsValidationSchema = yup.object().shape({
     )
     .trim(),
   units: yup.string().required(),
+  provenance: yup.string().trim(),
 })
 
+/*
+this validation currently not in use until we find a workaround
+formik is checking whether errorMessage found for a photo under the hood
+and invalidates form submission if errorMessage exists
+
+The check is currently moved to UploadPhotos.tsx's Button directly
+*/
 export const uploadPhotosValidationSchema = yup.object().shape({
   photos: yup
     .array()

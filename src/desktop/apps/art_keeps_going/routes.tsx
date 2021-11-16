@@ -3,7 +3,7 @@ import { stitch } from "@artsy/stitch"
 import { featureAKGRoutes } from "v2/Apps/FeatureAKG/featureAKGRoutes"
 // @ts-ignore
 import JSONPage from "../../components/json_page"
-import { Fragment } from "react";
+import { Fragment } from "react"
 import { NextFunction } from "express"
 import type { ArtsyRequest, ArtsyResponse } from "lib/middleware/artsyExpress"
 
@@ -28,6 +28,7 @@ export const landingPage = async (
       context: { injectedData: data },
       req,
       res,
+      next,
       routes: featureAKGRoutes,
     })
 
@@ -40,7 +41,7 @@ export const landingPage = async (
     const layout = await stitch({
       basePath: __dirname,
       blocks: {
-        // @ts-expect-error STRICT_NULL_CHECK
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         body: bodyHTML,
         head: () => <Fragment>{headTags}</Fragment>,
       },
@@ -54,7 +55,7 @@ export const landingPage = async (
       },
     })
 
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     res.status(status).send(layout)
   } catch (error) {
     next(error)

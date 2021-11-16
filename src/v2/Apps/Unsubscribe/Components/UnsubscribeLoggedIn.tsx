@@ -1,6 +1,6 @@
 import { Spacer, Button, Select, useToasts } from "@artsy/palette"
-import { useRef, useState } from "react";
-import * as React from "react";
+import { useRef, useState } from "react"
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useSystemContext } from "v2/System"
 import { UpdateUserEmailPreferencesMutation } from "v2/Components/UserSettings/UserEmailPreferences/UserEmailPreferencesMutation"
@@ -72,6 +72,7 @@ export const UnsubscribeLoggedIn: React.FC<UnsubscribeLoggedInProps> = ({
           { text: "None", value: "none" },
           { text: "Weekly", value: "weekly" },
           { text: "Daily", value: "daily" },
+          { text: "Alerts Only", value: "alerts_only" },
         ]}
         onSelect={setEmailFrequency}
       />

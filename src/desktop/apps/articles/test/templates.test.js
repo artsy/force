@@ -8,7 +8,7 @@ const path = require("path")
 const jade = require("jade")
 const fs = require("fs")
 const moment = require("moment")
-const Articles = require("../../../collections/articles")
+const { Articles } = require("../../../collections/articles")
 const Section = require("../../../models/section")
 const fixtures = require("../../../test/helpers/fixtures")
 

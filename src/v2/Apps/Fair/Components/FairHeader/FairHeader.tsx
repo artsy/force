@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"
 import { Box, BoxProps, Flex, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FairHeaderIconFragmentContainer } from "./FairHeaderIcon"
@@ -12,7 +12,7 @@ const FairHeader: React.FC<FairHeaderProps> = ({ fair }) => {
   const { name, exhibitionPeriod } = fair
 
   return (
-    <Flex my={[2, 4]}>
+    <Flex mt={[2, 4]}>
       <FairHeaderIconFragmentContainer fair={fair} mr={2} />
       <Box display="flex" flexDirection="column" justifyContent="center">
         <Text as="h1" variant={["lg", "xl"]}>

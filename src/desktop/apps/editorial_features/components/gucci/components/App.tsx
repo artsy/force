@@ -1,5 +1,5 @@
 import { Box, Theme } from "@artsy/palette"
-import { Component } from "react";
+import { Component } from "react"
 import { debounce } from "lodash"
 import { FixedHeader } from "./nav/fixed_header"
 import { SeriesHeader } from "./series/series_header"
@@ -56,7 +56,7 @@ export class App extends Component<GucciProps, GucciState> {
   onChangeSection = index => {
     const section = this.props.curation.sections[index]
     this.setState({ activeSection: index })
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     document.getElementById(section.slug).scrollIntoView()
   }
 

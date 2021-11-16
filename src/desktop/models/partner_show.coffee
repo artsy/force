@@ -7,7 +7,7 @@ DateHelpers = require '../components/util/date_helpers.coffee'
 { compactObject } = require './mixins/compact_object.coffee'
 FairLocation = require './fair_location.coffee'
 PartnerLocation = require './partner_location.coffee'
-Artworks = require '../collections/artworks.coffee'
+{ Artworks } = require '../collections/artworks'
 ImageSizes = require './mixins/image_sizes.coffee'
 Relations = require './mixins/relations/partner_show.coffee'
 

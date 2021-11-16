@@ -1,5 +1,5 @@
 import { FormikProps } from "formik"
-import { Component } from "react";
+import { Component } from "react"
 import { TrackingProp } from "react-tracking"
 import { AuthenticationModal } from "v2/Components/Authentication/Components/AuthenticationModal"
 import { FormSwitcher } from "v2/Components/Authentication/FormSwitcher"
@@ -50,7 +50,7 @@ export class ModalManager extends Component<
   ModalManagerState
 > {
   state: ModalManagerState = {
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     currentType: null,
     options: {} as ModalOptions,
     recaptchaLoaded: false,
@@ -74,7 +74,7 @@ export class ModalManager extends Component<
     let afterClose = this.state.options?.afterClose
 
     this.setState({
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       currentType: null,
       options: {} as ModalOptions,
     })
@@ -92,7 +92,6 @@ export class ModalManager extends Component<
 
     this.setState({
       currentType: type,
-      // @ts-expect-error STRICT_NULL_CHECK
       options: newOptions,
       switchedForms: true,
     })
@@ -125,7 +124,7 @@ export class ModalManager extends Component<
 
     const handleSubmit: SubmitHandler = !!this.props.handleSubmit
       ? this.props.handleSubmit.bind(this, currentType, options)
-      : // @ts-expect-error STRICT_NULL_CHECK
+      : // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         defaultHandleSubmit(submitUrls[currentType], csrf, redirectTo)
 
     return (

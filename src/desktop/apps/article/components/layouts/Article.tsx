@@ -1,4 +1,4 @@
-import { Component } from "react";
+import { Component } from "react"
 import { Article } from "@artsy/reaction/dist/Components/Publishing/Article"
 import { AppProps } from "../App"
 import { InfiniteScrollArticle } from "../InfiniteScrollArticle"
@@ -64,7 +64,7 @@ export class ArticleLayout extends Component<AppProps> {
 
     const isStatic = isSuper || article.seriesArticle || customEditorial
 
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     const renderAd = shouldAdRender(null, null, null, article.layout, isEigen)
 
     return (

@@ -1,4 +1,4 @@
-# syntax=docker/dockerfile:experimental
+# syntax=docker/dockerfile:1.3
 #              +------------------+
 #              |                  |
 #              |  builder-base    |
@@ -82,8 +82,8 @@ COPY patches ./patches
 # ---------------------------------------------------------
 FROM yarn-base as yarn-deps
 
-RUN --mount=type=cache,target=/usr/local/share/.cache \
-  --mount=type=cache,target=/root/.cache/Cypress \
+RUN --mount=type=cache,id=yarndev,target=/usr/local/share/.cache \
+  --mount=type=cache,id=cypress,sharing=locked,target=/root/.cache/Cypress \
   yarn install --frozen-lockfile --quiet
 
 # ---------------------------------------------------------
@@ -91,8 +91,8 @@ RUN --mount=type=cache,target=/usr/local/share/.cache \
 # ---------------------------------------------------------
 FROM yarn-base as yarn-deps-prod
 
-RUN --mount=type=cache,target=/usr/local/share/.cache \
-  --mount=type=cache,target=/root/.cache/Cypress \
+RUN --mount=type=cache,id=yarnprod,target=/usr/local/share/.cache \
+  --mount=type=cache,id=cypress,sharing=locked,target=/root/.cache/Cypress \
   yarn install --production --frozen-lockfile --quiet
 
 # ---------------------------------------------------------

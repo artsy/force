@@ -5,7 +5,7 @@ import { PhotoThumbnail } from "../Components/PhotoThumbnail"
 import { UploadPhotos } from "../UploadPhotos"
 import { flushPromiseQueue } from "v2/DevTools"
 import { SystemContextProvider } from "v2/System"
-import { MBSize } from "../../Utils/fileUtils"
+import { MBSize, uploadPhoto } from "../../Utils/fileUtils"
 import * as openAuthModal from "v2/Utils/openAuthModal"
 import { createConsignSubmission } from "../../Utils/createConsignSubmission"
 
@@ -46,14 +46,7 @@ Object.defineProperty(window, "sessionStorage", {
 
 jest.mock("../../Utils/fileUtils", () => ({
   ...jest.requireActual("../../Utils/fileUtils"),
-  uploadPhoto: jest
-    .fn()
-    .mockImplementation(async (relayEnvironment, photo, updateProgress) => {
-      return await new Promise((resolve, reject) => {
-        updateProgress(100)
-        resolve("s3Key")
-      })
-    }),
+  uploadPhoto: jest.fn(),
 }))
 
 jest.mock("../../Utils/createConsignSubmission", () => ({
@@ -63,6 +56,9 @@ jest.mock("../../Utils/createConsignSubmission", () => ({
 
 const openAuthModalSpy = jest.spyOn(openAuthModal, "openAuthModal")
 let user: User = undefined
+
+const mockUploadPhoto = uploadPhoto as jest.Mock
+const mockCreateConsignSubmission = createConsignSubmission as jest.Mock
 
 const { getWrapper } = setupTestWrapper({
   Component: () => {
@@ -94,11 +90,13 @@ describe("UploadPhotos", () => {
     jest.spyOn(global, "FileReader").mockImplementation(function () {
       this.readAsDataURL = jest.fn()
     })
+    mockUploadPhoto.mockResolvedValue("s3key")
   })
 
   afterEach(() => {
     user = undefined
     openAuthModalSpy.mockReset()
+    mockUploadPhoto.mockClear()
   })
 
   it("renders correct", async () => {
@@ -337,6 +335,36 @@ describe("UploadPhotos", () => {
   })
 
   describe("show error message", () => {
+    it("if an image could not be uploaded", async () => {
+      mockUploadPhoto.mockRejectedValueOnce("rejected")
+
+      const wrapper = getWrapper()
+
+      const dropzoneInput = wrapper
+        .find(UploadPhotosForm)
+        .find("[data-test-id='image-dropzone']")
+        .find("input")
+
+      dropzoneInput.simulate("change", {
+        target: {
+          files: [
+            {
+              name: "foo.png",
+              path: "foo.png",
+              type: "image/png",
+              size: 40 * MBSize,
+            },
+          ],
+        },
+      })
+
+      await flushPromiseQueue()
+      wrapper.update()
+
+      const thumbnailWithError = wrapper.find("PhotoThumbnailErrorState")
+      expect(thumbnailWithError).toHaveLength(1)
+    })
+
     it("if uploading too big file", async () => {
       const wrapper = getWrapper()
 
@@ -422,6 +450,49 @@ describe("UploadPhotos", () => {
       expect(wrapper.text()).toContain(
         "File format not supported. Please upload JPG or PNG files."
       )
+    })
+  })
+
+  describe("show error modal", () => {
+    beforeEach(() => {
+      mockCreateConsignSubmission.mockRejectedValueOnce("rejected")
+    })
+
+    it("if consingment submission fails", async () => {
+      user = {
+        email: "test@test.test",
+      }
+
+      const wrapper = getWrapper()
+
+      const dropzoneInput = wrapper
+        .find(UploadPhotosForm)
+        .find("[data-test-id='image-dropzone']")
+        .find("input")
+
+      dropzoneInput.simulate("change", {
+        target: {
+          files: [
+            {
+              name: "foo.png",
+              path: "foo.png",
+              type: "image/png",
+              size: 40 * MBSize,
+            },
+          ],
+        },
+      })
+
+      await flushPromiseQueue()
+      wrapper.update()
+
+      wrapper.find("Form").simulate("submit")
+
+      await flushPromiseQueue()
+      wrapper.update()
+
+      const errorModal = wrapper.find("ErrorModal")
+      expect(errorModal).toHaveLength(1)
     })
   })
 })

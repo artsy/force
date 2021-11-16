@@ -41,13 +41,13 @@ jest.mock("@stripe/stripe-js", () => {
   return {
     loadStripe: () => {
       if (mock === null) {
-        // @ts-expect-error STRICT_NULL_CHECK
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         mock = mockStripe()
       }
       return mock
     },
     _mockStripe: () => mock,
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     _mockReset: () => (mock = mockStripe()),
   }
 })
@@ -355,16 +355,16 @@ describe("PaymentPickerFragmentContainer", () => {
     const stripeToken: { token: Token } = {
       token: {
         id: "tokenId",
-        // @ts-expect-error STRICT_NULL_CHECK
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         object: null,
         client_ip: null,
-        // @ts-expect-error STRICT_NULL_CHECK
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         created: null,
-        // @ts-expect-error STRICT_NULL_CHECK
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         livemode: null,
-        // @ts-expect-error STRICT_NULL_CHECK
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         type: null,
-        // @ts-expect-error STRICT_NULL_CHECK
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         used: null,
       },
     }
@@ -384,16 +384,16 @@ describe("PaymentPickerFragmentContainer", () => {
   it("shows an error message when CreateToken passes in an error", async () => {
     const stripeError: { error: StripeError } = {
       error: {
-        // @ts-expect-error STRICT_NULL_CHECK
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         type: null,
-        // @ts-expect-error STRICT_NULL_CHECK
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         charge: null,
         message: "Your card number is invalid.",
-        // @ts-expect-error STRICT_NULL_CHECK
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         code: null,
-        // @ts-expect-error STRICT_NULL_CHECK
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         decline_code: null,
-        // @ts-expect-error STRICT_NULL_CHECK
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         param: null,
       },
     }
@@ -410,7 +410,7 @@ describe("PaymentPickerFragmentContainer", () => {
   })
 
   describe("when the user has existing credit cards", () => {
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     const cards: Array<PaymentPicker_me["creditCards"]["edges"][0]["node"]> = [
       {
         internalID: "card-id-1",

@@ -6,7 +6,7 @@ export const useRailOverflow = (
   callback: (val: boolean) => void
 ) => {
   const { width: viewportWidth } = useWindowSize()
-  // @ts-expect-error STRICT_NULL_CHECK
+  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
   const [showMore, setShowMore] = useState<boolean>(undefined)
 
   useEffect(() => {

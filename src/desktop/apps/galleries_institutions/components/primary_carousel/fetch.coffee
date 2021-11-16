@@ -1,8 +1,8 @@
 _ = require 'underscore'
 Profile = require '../../../../models/profile.coffee'
-Profiles = require '../../../../collections/profiles.coffee'
-OrderedSets = require '../../../../collections/ordered_sets.coffee'
 FilterPartners = require './collections/filter_partners.coffee'
+{ Profiles } = require '../../../../collections/profiles'
+{ OrderedSets } = require '../../../../collections/ordered_sets'
 
 key =
   gallery: 'galleries:carousel-galleries' # https://admin.artsy.net/set/5638fdfb7261690296000031
@@ -12,11 +12,11 @@ key =
 
 fetchFeaturedSet = (type) ->
   sets = new OrderedSets key: key[type]
-  Promise.resolve(sets.fetchAll cache: true)
+  Promise.resolve(sets.fetchAll cache: false)
     .then ->
       profiles = sets.first().get 'items'
       showsCollections = profiles.map (profile) -> profile.related().owner.related().shows
-      Promise.all(_.invoke showsCollections, 'fetch', cache: true).then ->
+      Promise.all(_.invoke showsCollections, 'fetch', cache: false).then ->
         profiles
 
 fetchWithParams = (params) ->

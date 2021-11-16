@@ -44,7 +44,7 @@ describe("PriceRangeFilter", () => {
     option.simulate("click")
     await flushPromiseQueue()
 
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     expect(context.filters.priceRange).toEqual("25000-50000")
   })
 
@@ -96,12 +96,12 @@ describe("PriceRangeFilter", () => {
     await flushPromiseQueue()
     wrapper.update()
 
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     wrapper.find(Input).first().find("input").prop("onChange")({
       currentTarget: { value: "400" },
     } as any)
 
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     wrapper.find(Input).last().find("input").prop("onChange")({
       currentTarget: { value: "7500" },
     } as any)
@@ -109,7 +109,7 @@ describe("PriceRangeFilter", () => {
     wrapper.update()
     wrapper.find("Button").last().simulate("click")
 
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     expect(context.filters.priceRange).toEqual("400-7500")
   })
 
@@ -120,28 +120,28 @@ describe("PriceRangeFilter", () => {
     await flushPromiseQueue()
     wrapper.update()
 
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     wrapper.find(Input).first().find("input").prop("onChange")({
       currentTarget: { value: "400" },
     } as any)
 
     wrapper.update()
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     wrapper.find("Button").last().prop("onClick")({} as any)
 
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     expect(context.filters.priceRange).toEqual("400-*")
 
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     wrapper.find(Input).first().find("input").prop("onChange")({
       currentTarget: { value: "" },
     } as any)
 
     wrapper.update()
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     wrapper.find("Button").last().prop("onClick")({} as any)
 
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     expect(context.filters.priceRange).toEqual("*-*")
   })
 

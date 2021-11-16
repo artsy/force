@@ -1,5 +1,5 @@
-import { useRef } from "react";
-import * as React from "react";
+import { useRef } from "react"
+import * as React from "react"
 import {
   Carousel,
   CarouselCell,
@@ -38,7 +38,7 @@ export const DesktopCarousel: React.FC<CarouselProps> = ({
 }) => {
   const railRef = useRef<HTMLDivElement | null>(null)
 
-  // @ts-expect-error STRICT_NULL_CHECK
+  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
   useRailOverflow(railRef, showMore => {
     onRailOverflowChange && onRailOverflowChange(showMore)
   })

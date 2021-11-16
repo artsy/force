@@ -178,7 +178,7 @@ describe("AddressModal", () => {
       })
 
       const formik = wrapper.find("Formik").first()
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       formik.props().onSubmit(validAddress as any)
 
       await wrapper.update()
@@ -209,7 +209,7 @@ describe("AddressModal", () => {
       )
 
       const formik = wrapper.find("Formik").first()
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       formik.props().onSubmit(validAddress as any)
 
       await wrapper.update()
@@ -238,7 +238,7 @@ describe("AddressModal", () => {
       )
 
       const formik = wrapper.find("Formik").first()
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       formik.props().onSubmit(validAddress as any)
 
       await wrapper.update()

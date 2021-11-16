@@ -1,7 +1,7 @@
 Backbone = require 'backbone'
 { FOLLOWING, API_URL } = sd = require('sharify').data
 qs = require 'querystring'
-Notifications = require '../../../collections/notifications.coffee'
+{ Notifications } = require '../../../collections/notifications'
 CurrentUser = require '../../../models/current_user'
 JumpView = require '../../../components/jump/view.coffee'
 SidebarView = require './sidebar.coffee'

@@ -152,7 +152,7 @@ const node: ReaderFragment = {
                 {
                   "kind": "Literal",
                   "name": "height",
-                  "value": 244
+                  "value": 334
                 },
                 {
                   "kind": "Literal",
@@ -167,7 +167,7 @@ const node: ReaderFragment = {
                 {
                   "kind": "Literal",
                   "name": "width",
-                  "value": 325
+                  "value": 445
                 }
               ],
               "concreteType": "CroppedImageUrl",
@@ -190,7 +190,7 @@ const node: ReaderFragment = {
                   "storageKey": null
                 }
               ],
-              "storageKey": "cropped(height:244,version:[\"wide\",\"large\",\"featured\",\"larger\"],width:325)"
+              "storageKey": "cropped(height:334,version:[\"wide\",\"large\",\"featured\",\"larger\"],width:445)"
             }
           ],
           "storageKey": null
@@ -206,5 +206,5 @@ const node: ReaderFragment = {
   ],
   "type": "Partner"
 };
-(node as any).hash = '495d4620a9747f42d1cb6fb93b7365d0';
+(node as any).hash = '97216233ec62a0a1236c3735da900b08';
 export default node;
