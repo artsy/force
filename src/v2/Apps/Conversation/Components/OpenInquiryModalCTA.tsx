@@ -6,6 +6,7 @@ import {
   Text,
   Link,
   Separator,
+  FLAT_SHADOW,
 } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
@@ -14,7 +15,7 @@ import styled from "styled-components"
 import { OpenInquiryModalCTA_conversation } from "v2/__generated__/OpenInquiryModalCTA_conversation.graphql"
 
 export const ShadowSeparator = styled(Separator)`
-  box-shadow: 0 -1px 1px rgba(50, 50, 50, 0.1);
+  box-shadow: ${FLAT_SHADOW};
   width: 100%;
   height: 0;
 `
