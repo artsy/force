@@ -114,23 +114,34 @@ const logger = createLogger("Order/Routes/Shipping/index.tsx")
 track()
 // export class ShippingRoute extends Component<ShippingProps, ShippingState> {
 export const ShippingRoute: React.FC<ShippingProps> = props => {
-  const [state, setState] = useState<ShippingState>({
-    shippingOption: getShippingOption(
-      props.order.requestedFulfillment?.__typename
-    ),
-    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-    address: startingAddress(props.me, props.order),
-    addressErrors: {},
-    addressTouched: {},
-    savedAddressID: undefined,
-    phoneNumber: startingPhoneNumber(props.me, props.order),
-    phoneNumberError: "",
-    phoneNumberTouched: false,
-    selectedAddressID: defaultShippingAddressIndex(props.me, props.order),
-    shippingQuotes: getShippingQuotes(props.order),
-    shippingQuoteId: getSelectedShippingQuoteId(props.order),
-    saveAddress: true,
-  })
+  const [shippingOption, setShippingOption] = useState<
+    CommerceOrderFulfillmentTypeEnum
+  >(getShippingOption(props.order.requestedFulfillment?.__typename))
+  const [address, setAddress] = useState<Address>(
+    startingAddress(props.me, props.order) as Address
+  )
+  const [addressErrors, setAddressErrors] = useState<AddressErrors | {}>({})
+  const [addressTouched, setAddressTouched] = useState<AddressTouched>({})
+  const [savedAddressID, setSavedAddressID] = useState<string | undefined>(
+    undefined
+  )
+  const [phoneNumber, setPhoneNumber] = useState<PhoneNumber>(
+    startingPhoneNumber(props.me, props.order)
+  )
+  const [phoneNumberError, setPhoneNumberError] = useState<PhoneNumberError>("")
+  const [phoneNumberTouched, setPhoneNumberTouched] = useState<
+    PhoneNumberTouched
+  >(false)
+  const [selectedAddressID, setSelectedAddressID] = useState<string>(
+    defaultShippingAddressIndex(props.me, props.order)
+  )
+  const [shippingQuotes, setShippingQuotes] = useState<ShippingQuotesType>(
+    getShippingQuotes(props.order)
+  )
+  const [shippingQuoteId, setShippingQuoteId] = useState<string | undefined>(
+    getSelectedShippingQuoteId(props.order)
+  )
+  const [saveAddressToggle, setSaveAddressToggle] = useState<boolean>(true)
 
   const touchedAddress = () => {
     return {
@@ -149,13 +160,10 @@ export const ShippingRoute: React.FC<ShippingProps> = props => {
     const addressList = getAddressList()
 
     if (!addressList || addressList.length === 0) {
-      setState({
-        ...state,
-        selectedAddressID: NEW_ADDRESS,
-        shippingQuotes: null,
-        shippingQuoteId: undefined,
-      })
-    } else if (state.selectedAddressID == deletedAddressID) {
+      setSelectedAddressID(NEW_ADDRESS)
+      setShippingQuotes(null)
+      setShippingQuoteId(undefined)
+    } else if (selectedAddressID == deletedAddressID) {
       selectSavedAddress(
         addressList.find(address => address?.node?.isDefault)?.node?.internalID!
       )
@@ -166,28 +174,28 @@ export const ShippingRoute: React.FC<ShippingProps> = props => {
 
   const getOrderArtwork = () => props.order.lineItems?.edges?.[0]?.node?.artwork
 
-  const isCreateNewAddress = () => state.selectedAddressID === NEW_ADDRESS
+  const isCreateNewAddress = () => selectedAddressID === NEW_ADDRESS
 
   const isArtaShipping = () => {
     const addresses = getAddressList()
     const artaShippingEnabled = !!getOrderArtwork()?.artaShippingEnabled
 
     const shippingCountry = isCreateNewAddress()
-      ? state.address.country
+      ? address.country
       : addresses &&
         addresses.find(
-          address => address?.node?.internalID == state.selectedAddressID
+          address => address?.node?.internalID == selectedAddressID
         )?.node?.country
 
     return (
-      state.shippingOption === "SHIP" &&
+      shippingOption === "SHIP" &&
       artaShippingEnabled &&
       shippingCountry === "US"
     )
   }
 
   const onContinueButtonPressed = async () => {
-    if (isArtaShipping() && !!state.shippingQuoteId) {
+    if (isArtaShipping() && !!shippingQuoteId) {
       selectShippingQuote()
     } else {
       selectShipping()
@@ -195,46 +203,32 @@ export const ShippingRoute: React.FC<ShippingProps> = props => {
   }
 
   const selectShipping = async () => {
-    const { address, shippingOption, phoneNumber, selectedAddressID } = state
-
     if (shippingOption === "SHIP") {
       if (isCreateNewAddress()) {
         // validate when order is not pickup and the address is new
         const { errors, hasErrors } = validateAddress(address)
         const { error, hasError } = validatePhoneNumber(phoneNumber)
         if (hasErrors && hasError) {
-          setState({
-            ...state,
-            addressErrors: errors!,
-            addressTouched: touchedAddress(),
-            phoneNumberError: error!,
-            phoneNumberTouched: true,
-          })
+          setAddressErrors(errors!)
+          setAddressTouched(touchedAddress())
+          setPhoneNumberError(error!)
+          setPhoneNumberTouched(true)
           return
         } else if (hasErrors) {
-          setState({
-            ...state,
-            addressErrors: errors!,
-            addressTouched: touchedAddress(),
-          })
+          setAddressErrors(errors!)
+          setAddressTouched(touchedAddress())
           return
         } else if (hasError) {
-          setState({
-            ...state,
-            phoneNumberError: error!,
-            phoneNumberTouched: true,
-          })
+          setPhoneNumberError(error!)
+          setPhoneNumberTouched(true)
           return
         }
       }
     } else {
       const { error, hasError } = validatePhoneNumber(phoneNumber)
       if (hasError) {
-        setState({
-          ...state,
-          phoneNumberError: error!,
-          phoneNumberTouched: true,
-        })
+        setPhoneNumberError(error!)
+        setPhoneNumberTouched(true)
         return
       }
     }
@@ -253,12 +247,8 @@ export const ShippingRoute: React.FC<ShippingProps> = props => {
         : getAddressList()?.find(
             address => address?.node?.internalID == selectedAddressID
           )?.node?.phoneNumber
-
-      setState({
-        ...state,
-        shippingQuotes: null,
-        shippingQuoteId: undefined,
-      })
+      setShippingQuotes(null)
+      setShippingQuoteId(undefined)
 
       // const isArtaShipping = isArtaShipping()
 
@@ -281,10 +271,7 @@ export const ShippingRoute: React.FC<ShippingProps> = props => {
       await saveAddress()
 
       if (isArtaShipping()) {
-        setState({
-          ...state,
-          shippingQuotes: getShippingQuotes(orderOrError?.order),
-        })
+        setShippingQuotes(getShippingQuotes(orderOrError?.order))
       } else {
         props.router.push(`/orders/${props.order.internalID}/payment`)
       }
@@ -295,7 +282,7 @@ export const ShippingRoute: React.FC<ShippingProps> = props => {
   }
 
   const selectShippingQuote = async () => {
-    const { shippingQuoteId } = state
+    // const { shippingQuoteId } = state
     const { order } = props
 
     if (shippingQuoteId && order.internalID) {
@@ -327,17 +314,17 @@ export const ShippingRoute: React.FC<ShippingProps> = props => {
   }
 
   const saveAddress = async () => {
-    const {
-      address,
-      phoneNumber,
-      shippingOption,
-      saveAddress,
-      savedAddressID,
-    } = state
+    // const {
+    //   address,
+    //   phoneNumber,
+    //   shippingOption,
+    //   saveAddress,
+    //   savedAddressID,
+    // } = state
     const { relayEnvironment } = props
     // const isCreateNewAddress = isCreateNewAddress()
 
-    if (saveAddress) {
+    if (saveAddressToggle) {
       if (
         shippingOption === "SHIP" &&
         isCreateNewAddress() &&
@@ -367,11 +354,9 @@ export const ShippingRoute: React.FC<ShippingProps> = props => {
               phoneNumber: phoneNumber,
             }, // address
             data => {
-              setState({
-                ...state,
-                savedAddressID:
-                  data?.createUserAddress?.userAddressOrErrors.internalID,
-              })
+              setSavedAddressID(
+                data?.createUserAddress?.userAddressOrErrors.internalID
+              )
             }, // onSuccess
             () => {
               message => {
@@ -416,7 +401,7 @@ export const ShippingRoute: React.FC<ShippingProps> = props => {
         title: "Can't ship to that address",
         message: "This work can only be shipped domestically.",
       })
-    } else if (isArtaShipping() && state.shippingQuoteId) {
+    } else if (isArtaShipping() && shippingQuoteId) {
       props.dialog.showErrorDialog({
         message: getArtaErrorMessage(),
       })
@@ -435,32 +420,26 @@ export const ShippingRoute: React.FC<ShippingProps> = props => {
 
   const onAddressChange: AddressChangeHandler = (address, key) => {
     const { errors } = validateAddress(address)
-    setState({
-      ...state,
-      address,
-      addressErrors: {
-        ...state.addressErrors,
-        ...errors,
-      },
-      addressTouched: {
-        ...state.addressTouched,
-        [key]: true,
-      },
-      shippingQuotes: null,
-      shippingQuoteId: undefined,
+    setAddress(address)
+    setAddressErrors(prevState => ({
+      ...prevState,
+      ...errors,
+    }))
+    setAddressTouched({
+      ...addressTouched,
+      [key]: true,
     })
+    setShippingQuotes(null)
+    setShippingQuoteId(undefined)
   }
 
   const onPhoneNumberChange: PhoneNumberChangeHandler = phoneNumber => {
     const { error } = validatePhoneNumber(phoneNumber)
-    setState({
-      ...state,
-      phoneNumber,
-      phoneNumberError: error!,
-      phoneNumberTouched: true,
-      shippingQuotes: null,
-      shippingQuoteId: undefined,
-    })
+    setPhoneNumber(phoneNumber)
+    setPhoneNumberError(error!)
+    setPhoneNumberTouched(true)
+    setShippingQuotes(null)
+    setShippingQuoteId(undefined)
   }
 
   track((props, state, args) => ({
@@ -478,18 +457,15 @@ export const ShippingRoute: React.FC<ShippingProps> = props => {
     if (addressList && addressList.length > 0 && isArtaShipping()) {
       selectShipping()
     }
-  }, [state.shippingOption, state.shippingQuotes, state.shippingQuoteId])
+  }, [shippingOption, shippingQuotes, shippingQuoteId])
 
   const onSelectShippingOption = (
-    shippingOption: CommerceOrderFulfillmentTypeEnum
+    shippingOptionProp: CommerceOrderFulfillmentTypeEnum
   ) => {
-    if (state.shippingOption !== shippingOption) {
-      setState({
-        ...state,
-        shippingOption,
-        shippingQuotes: null,
-        shippingQuoteId: undefined,
-      })
+    if (shippingOption !== shippingOptionProp) {
+      setShippingOption(shippingOptionProp)
+      setShippingQuotes(null)
+      setShippingQuoteId(undefined)
     }
   }
 
@@ -504,10 +480,7 @@ export const ShippingRoute: React.FC<ShippingProps> = props => {
   )
 
   const handleShippingQuoteSelected = (shippingQuoteId: string) => {
-    setState({
-      ...state,
-      shippingQuoteId: shippingQuoteId,
-    })
+    setShippingQuoteId(shippingQuoteId)
   }
 
   track(
@@ -524,19 +497,21 @@ export const ShippingRoute: React.FC<ShippingProps> = props => {
   }
 
   useEffect(() => {
-    if (isArtaShipping()) {
+    if (
+      isArtaShipping() &&
+      selectedAddressID &&
+      !shippingQuotes &&
+      !shippingQuoteId
+    ) {
       selectShipping()
     }
-  }, [state.selectedAddressID, state.shippingQuotes, state.shippingQuoteId])
+  }, [selectedAddressID, shippingQuotes, shippingQuoteId])
 
   const selectSavedAddress = (value: string) => {
-    if (state.selectedAddressID !== value) {
-      setState({
-        ...state,
-        selectedAddressID: value,
-        shippingQuotes: null,
-        shippingQuoteId: undefined,
-      })
+    if (selectedAddressID !== value) {
+      setSelectedAddressID(value)
+      setShippingQuotes(null)
+      setShippingQuoteId(undefined)
     }
   }
 
@@ -544,21 +519,22 @@ export const ShippingRoute: React.FC<ShippingProps> = props => {
     address: UpdateUserAddressMutationResponse["updateUserAddress"]
   ) => {
     // reload shipping quotes if selected address edited
-    if (state.selectedAddressID === address?.userAddressOrErrors?.internalID) {
-      setState(
-        {
-          ...state,
-          shippingQuotes: null,
-          shippingQuoteId: undefined,
-        }
-        // () => {
-        //   if (isArtaShipping()) {
-        //     selectShipping()
-        //   }
-        // }
-      )
+    if (selectedAddressID === address?.userAddressOrErrors?.internalID) {
+      setShippingQuotes(null)
+      setShippingQuoteId(undefined)
+      // () => {
+      //   if (isArtaShipping()) {
+      //     selectShipping()
+      //   }
+      // }
     }
   }
+
+  useEffect(() => {
+    if (!shippingQuotes && !shippingQuoteId && isArtaShipping()) {
+      selectShipping()
+    }
+  }, [shippingQuotes, shippingQuoteId])
 
   const handleAddressCreate = (
     address: CreateUserAddressMutationResponse["createUserAddress"]
@@ -589,24 +565,24 @@ export const ShippingRoute: React.FC<ShippingProps> = props => {
   }
 
   useEffect(() => {
-    if (isArtaShipping() && !isCreateNewAddress() && !state.shippingQuoteId) {
+    if (isArtaShipping() && !isCreateNewAddress() && !shippingQuoteId) {
       selectShipping()
     }
-  }, [state.shippingQuoteId, isArtaShipping, isCreateNewAddress])
+  }, [shippingQuoteId, isArtaShipping, isCreateNewAddress])
 
   const { order, isCommittingMutation } = props
-  const {
-    address,
-    addressErrors,
-    addressTouched,
-    phoneNumber,
-    phoneNumberError,
-    phoneNumberTouched,
-    shippingQuotes,
-    shippingOption,
-    shippingQuoteId,
-    selectedAddressID,
-  } = state
+  // const {
+  //   address,
+  //   addressErrors,
+  //   addressTouched,
+  //   phoneNumber,
+  //   phoneNumberError,
+  //   phoneNumberTouched,
+  //   shippingQuotes,
+  //   shippingOption,
+  //   shippingQuoteId,
+  //   selectedAddressID,
+  // } = state
   const artwork = getOrderArtwork()
   const addressList = getAddressList()
 
@@ -645,7 +621,7 @@ export const ShippingRoute: React.FC<ShippingProps> = props => {
               <>
                 <RadioGroup
                   data-test="shipping-options"
-                  onSelect={onSelectShippingOption.bind(this)}
+                  onSelect={onSelectShippingOption}
                   defaultValue={shippingOption}
                 >
                   <Text variant="md" mb="1">
@@ -684,7 +660,7 @@ export const ShippingRoute: React.FC<ShippingProps> = props => {
               <SavedAddresses
                 me={props.me}
                 selectedAddress={selectedAddressID}
-                onSelect={selectSavedAddressWithTracking.bind(this)}
+                onSelect={selectSavedAddressWithTracking}
                 inCollectorProfile={false}
                 onAddressDelete={handleAddressDelete}
                 onAddressCreate={handleAddressCreate}
@@ -716,13 +692,8 @@ export const ShippingRoute: React.FC<ShippingProps> = props => {
                 label="Required for shipping logistics"
               />
               <Checkbox
-                onSelect={selected =>
-                  setState({
-                    ...state,
-                    saveAddress: selected,
-                  })
-                }
-                selected={state.saveAddress}
+                onSelect={selected => setSaveAddressToggle(selected)}
+                selected={saveAddressToggle}
                 data-test="save-address-checkbox"
               >
                 Save shipping address for later use
@@ -761,7 +732,7 @@ export const ShippingRoute: React.FC<ShippingProps> = props => {
                 mb={3}
                 selectedShippingQuoteId={shippingQuoteId}
                 shippingQuotes={compact(shippingQuotes)}
-                onSelect={handleShippingQuoteSelected.bind(this)}
+                onSelect={handleShippingQuoteSelected}
               />
               <Spacer mt={4} />
             </Collapse>
