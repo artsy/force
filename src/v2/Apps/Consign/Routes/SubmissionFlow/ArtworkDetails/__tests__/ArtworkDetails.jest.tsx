@@ -45,27 +45,20 @@ const validFormWithSpaces = {
   provenance: "  provenance  ",
 }
 
+const utmParams = { utmMedium: "Medium", utmSource: "Source", utmTerm: "Term" }
+
 const mockRouterPush = jest.fn()
 const mockRouterReplace = jest.fn()
-jest.mock("v2/System/Router/useRouter", () => {
-  return {
-    useRouter: jest.fn(() => {
-      return {
-        router: { push: mockRouterPush, replace: mockRouterReplace },
-        match: { params: { id: "1" } },
-      }
-    }),
-  }
-})
+jest.mock("v2/System/Router/useRouter", () => ({
+  useRouter: jest.fn(() => ({
+    router: { push: mockRouterPush, replace: mockRouterReplace },
+    match: { params: { id: "1" } },
+  })),
+}))
 
-let sessionStore = { "submission-1": JSON.stringify({ artistId: "artistId" }) }
+let sessionStore = {}
 Object.defineProperty(window, "sessionStorage", {
-  value: {
-    getItem(key) {
-      return sessionStore[key] || null
-    },
-    setItem: jest.fn(),
-  },
+  value: { getItem: key => sessionStore[key] || null, setItem: jest.fn() },
 })
 
 const getWrapper = (breakpoint: Breakpoint = "lg") =>
@@ -83,6 +76,7 @@ describe("ArtworkDetails", () => {
       }),
     }
   })
+
   describe("Initial render", () => {
     it("renders correctly", async () => {
       const wrapper = getWrapper()
@@ -225,7 +219,7 @@ describe("ArtworkDetails", () => {
         })
       })
 
-      it("data is saved in session storage and submition created", async () => {
+      it("data without UTM params is saved in session storage and submition created", async () => {
         sessionStore = {
           "submission-1": JSON.stringify({
             artworkDetailsForm: { ...validForm },
@@ -244,12 +238,34 @@ describe("ArtworkDetails", () => {
         )
       })
 
+      it("data with UTM params is saved in session storage and submition created", async () => {
+        sessionStore = {
+          "submission-1": JSON.stringify({
+            artworkDetailsForm: { ...validForm },
+          }),
+          utmParams: JSON.stringify(utmParams),
+        }
+
+        const wrapper = getWrapper()
+        await flushPromiseQueue()
+
+        wrapper.find("Form").simulate("submit")
+
+        await flushPromiseQueue()
+
+        expect(sessionStorage.setItem).toHaveBeenCalledWith(
+          "submission-1",
+          JSON.stringify({ artworkDetailsForm: { ...validForm }, utmParams })
+        )
+      })
+
       it("delete spaces before saving to session storage", async () => {
         sessionStore = {
           "submission-1": JSON.stringify({
             artworkDetailsForm: { ...validFormWithSpaces },
           }),
         }
+
         const wrapper = getWrapper()
         await flushPromiseQueue()
 
