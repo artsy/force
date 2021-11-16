@@ -1,3 +1,4 @@
+import { useState } from "react"
 import { Box, Button, Text } from "@artsy/palette"
 import { Form, Formik } from "formik"
 import { SubmissionStepper } from "v2/Apps/Consign/Components/SubmissionStepper"
@@ -9,10 +10,10 @@ import { PhotoThumbnail } from "./Components/PhotoThumbnail"
 import { Photo } from "../Utils/fileUtils"
 import { useRouter } from "v2/System/Router/useRouter"
 import { useSubmission } from "../Utils/useSubmission"
-import { uploadPhotosValidationSchema } from "../Utils/validation"
 import { useSystemContext } from "v2/System"
 import { openAuthModal } from "v2/Utils/openAuthModal"
 import { ModalType } from "v2/Components/Authentication/Types"
+import { ErrorModal } from "v2/Components/Modal/ErrorModal"
 import { ContextModule, Intent } from "@artsy/cohesion"
 import { createConsignSubmission } from "../Utils/createConsignSubmission"
 import { BackLink } from "v2/Components/Links/BackLink"
@@ -25,6 +26,7 @@ export const UploadPhotos: React.FC = () => {
     },
   } = useRouter()
 
+  const [isSubmissionApiError, setIsSubmissionApiError] = useState(false)
   const { mediator, isLoggedIn, relayEnvironment, user } = useSystemContext()
   const {
     submission,
@@ -33,20 +35,11 @@ export const UploadPhotos: React.FC = () => {
     removeSubmission,
   } = useSubmission(id)
 
-  const handleSubmit = async (values: UploadPhotosFormModel) => {
+  const handleSubmit = async () => {
     if (submission) {
-      submission.uploadPhotosForm = {
-        photos: values.photos.map(photo => ({
-          ...photo,
-          file: undefined,
-          progress: undefined,
-        })),
-      }
-
-      saveSubmission(submission)
-
+      // TODO: SWA-78
       // router.push({
-      //   pathname: `/consign/submission2/${submissionId}/contact-information`,
+      //   pathname: `/consign/submission/${submissionId}/contact-information`,
       // })
 
       if (!isLoggedIn && mediator) {
@@ -54,7 +47,7 @@ export const UploadPhotos: React.FC = () => {
           mode: ModalType.signup,
           intent: Intent.consign,
           contextModule: ContextModule.consignSubmissionFlow,
-          redirectTo: `/consign/submission2/${submissionId}/thank-you`,
+          redirectTo: `/consign/submission/${submissionId}/thank-you`,
           afterSignUpAction: {
             action: "save",
             kind: "submissions",
@@ -63,12 +56,28 @@ export const UploadPhotos: React.FC = () => {
         })
       } else {
         if (relayEnvironment && submission) {
-          await createConsignSubmission(relayEnvironment, submission, user)
-          removeSubmission()
-          router.push(`/consign/submission2/${submissionId}/thank-you`)
+          try {
+            await createConsignSubmission(relayEnvironment, submission, user)
+            removeSubmission()
+            router.push(`/consign/submission/${submissionId}/thank-you`)
+          } catch (error) {
+            setIsSubmissionApiError(true)
+          }
         }
       }
     }
+  }
+
+  const saveUpladPhotosForm = (photos: Photo[]) => {
+    submission!.uploadPhotosForm = {
+      photos: photos.map(photo => ({
+        ...photo,
+        file: undefined,
+        progress: undefined,
+      })),
+    }
+
+    saveSubmission(submission!)
   }
 
   return (
@@ -76,7 +85,7 @@ export const UploadPhotos: React.FC = () => {
       <BackLink
         py={2}
         mb={6}
-        to={`/consign/submission2/${submissionId}/artwork-details`}
+        to={`/consign/submission/${submissionId}/artwork-details`}
       >
         Back
       </BackLink>
@@ -95,28 +104,43 @@ export const UploadPhotos: React.FC = () => {
         authenticity.
       </Text>
 
+      <ErrorModal
+        show={isSubmissionApiError}
+        headerText="An error occurred"
+        contactEmail="consign@artsymail.com"
+        closeText="Close"
+        onClose={() => setIsSubmissionApiError(false)}
+      />
+
       <Formik<UploadPhotosFormModel>
         validateOnMount
         onSubmit={handleSubmit}
         initialValues={{
           photos: [],
         }}
-        validationSchema={uploadPhotosValidationSchema}
       >
-        {({ values, setFieldValue, isValid, isSubmitting }) => {
+        {({ values, setFieldValue, isSubmitting }) => {
           const handlePhotoDelete = (photo: Photo) => {
             photo.removed = true
             photo.abortUploading?.()
 
-            setFieldValue(
-              "photos",
-              values.photos.filter(p => p.id !== photo.id)
-            )
+            const photosToSave = values.photos.filter(p => p.id !== photo.id)
+
+            setFieldValue("photos", photosToSave)
+            saveUpladPhotosForm(photosToSave.filter(p => p.s3Key))
+          }
+
+          const handlePhotoUploaded = () => {
+            saveUpladPhotosForm(values.photos.filter(p => p.s3Key))
           }
 
           return (
             <Form>
-              <UploadPhotosForm mt={4} maxTotalSize={30} />
+              <UploadPhotosForm
+                mt={4}
+                maxTotalSize={30}
+                onPhotoUploaded={handlePhotoUploaded}
+              />
 
               <Box mb={6}>
                 {values.photos.map(photo => (
@@ -131,10 +155,11 @@ export const UploadPhotos: React.FC = () => {
 
               <Button
                 width={["100%", "auto"]}
-                disabled={!isValid || isSubmitting}
-                loading={isSubmitting || values.photos.some(c => !c.s3Key)}
+                disabled={isSubmitting || !values.photos.some(c => c.s3Key)}
+                loading={isSubmitting || values.photos.some(c => c.loading)}
                 type="submit"
               >
+                {/* TODO: SWA-78 */}
                 {/* Save and Continue */}
                 Submit Artwork
               </Button>

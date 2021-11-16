@@ -1,6 +1,6 @@
 import { SystemContext } from "v2/System"
-import { useContext } from "react";
-import * as React from "react";
+import { useContext } from "react"
+import * as React from "react"
 import { commitMutation as relayCommitMutation } from "react-relay"
 import { Environment, MutationConfig, MutationParameters } from "relay-runtime"
 
@@ -95,9 +95,9 @@ export function injectCommitMutation<Props extends CommitMutationProps>(
         <MutationContext.Consumer>
           {({ isCommittingMutation, commitMutation }) => (
             <Component
-              // @ts-expect-error STRICT_NULL_CHECK
+              // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
               isCommittingMutation={isCommittingMutation}
-              // @ts-expect-error STRICT_NULL_CHECK
+              // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
               commitMutation={commitMutation}
               {...(props as Props)}
             />

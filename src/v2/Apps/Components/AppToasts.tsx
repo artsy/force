@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"
 import { Box, Column, GridColumns, Toasts } from "@artsy/palette"
 import { useNavBarHeight } from "v2/Components/NavBar/useNavBarHeight"
 import { AppContainer } from "./AppContainer"
@@ -13,7 +13,7 @@ export const AppToasts: React.FC<AppToastsProps> = ({ accomodateNav }) => {
   return (
     <Box
       position="fixed"
-      zIndex={1}
+      zIndex={2}
       top={accomodateNav ? height : 0}
       left={0}
       width="100%"

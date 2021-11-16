@@ -1,6 +1,6 @@
 import { fabricate } from "@artsy/antigravity"
 import Backbone from "backbone"
-const OrderedSets = require("../ordered_sets.coffee")
+const { OrderedSets } = require("../ordered_sets")
 
 describe("OrderedSets", () => {
   let orderedSets

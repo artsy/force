@@ -4,7 +4,6 @@
 
 import { SystemContextConsumer } from "v2/System"
 import {
-  ServerRouterConfig,
   __TEST_INTERNAL_SERVER_APP__,
   buildServerApp,
 } from "v2/System/Router/buildServerApp"
@@ -13,15 +12,19 @@ import ReactDOMServer from "react-dom/server"
 import { Title } from "react-head"
 import { graphql } from "react-relay"
 import { Media } from "v2/Utils/Responsive"
-import { Request } from "express"
+import { NextFunction, Request } from "express"
 import type { ArtsyResponse } from "lib/middleware/artsyExpress"
 import { createMockNetworkLayer } from "v2/DevTools/createMockNetworkLayer"
+import { findRoutesByPath } from "../Utils/findRoutesByPath"
 
 jest.unmock("react-relay")
 
 // FIXME: Not sure why this fails test since all code here is server-side. Need
 // to investigate where this dep intersects
 jest.mock("found-scroll", () => {})
+jest.mock("../Utils/findRoutesByPath", () => ({
+  findRoutesByPath: jest.fn(),
+}))
 
 jest.mock("@loadable/server", () => ({
   ChunkExtractor: class {
@@ -34,13 +37,16 @@ jest.mock("@loadable/server", () => ({
 const defaultComponent = () => <div>hi!</div>
 
 describe("buildServerApp", () => {
+  let mockFindRoutesByPath = findRoutesByPath as jest.Mock
   let res: ArtsyResponse
   let req: Request
-  let options: Pick<
-    ServerRouterConfig,
-    Exclude<keyof ServerRouterConfig, "routes">
-    // @ts-ignore
-  > = { req, res }
+  let next: NextFunction
+  // @ts-ignore
+  let options: any = { req, res, next }
+
+  mockFindRoutesByPath.mockImplementation(() => {
+    return []
+  })
 
   beforeEach(() => {
     res = {
@@ -54,6 +60,7 @@ describe("buildServerApp", () => {
     options = {
       res,
       req,
+      next,
     }
   })
 
@@ -280,5 +287,30 @@ describe("buildServerApp", () => {
         expect(error.message).toMatch(/Oh noes/)
       }
     })
+  })
+
+  it("invokes onServerSideRender hook", async () => {
+    const spy = jest.fn()
+    const route = {
+      path: "/",
+      Component: () => null,
+      onServerSideRender: spy,
+    }
+
+    mockFindRoutesByPath.mockImplementation(() => {
+      return [route]
+    })
+
+    await getWrapper(() => <>Hello</>, {
+      ...options,
+      routes: [route],
+    })
+
+    expect(spy).toHaveBeenCalledWith(
+      expect.objectContaining({
+        ...options,
+        route,
+      })
+    )
   })
 })

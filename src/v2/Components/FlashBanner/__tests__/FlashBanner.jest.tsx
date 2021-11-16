@@ -23,7 +23,7 @@ const getRelayWrapper = async ({
   queryString: search = "",
   props: passedProps = {},
 }) => {
-  // @ts-expect-error STRICT_NULL_CHECK
+  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
   delete window.location
   window.location = { search } as any
 

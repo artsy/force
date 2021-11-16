@@ -2,7 +2,7 @@ React = require 'react'
 ReactDOM = require 'react-dom'
 { NewsPanel } = require '@artsy/reaction/dist/Components/Publishing/News/NewsPanel'
 { AuthWrapper } = require("desktop/apps/articles/components/AuthWrapper")
-Articles = require '../../../collections/articles.coffee'
+{ Articles } = require '../../../collections/articles'
 ArticlesFeedView = require '../../../components/articles_feed/view.coffee'
 sd = require('sharify').data
 

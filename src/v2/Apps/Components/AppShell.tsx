@@ -1,5 +1,5 @@
 import { Box, Flex, Theme } from "@artsy/palette"
-import { NetworkOfflineMonitor } from "v2/System/Router/NetworkOfflineMonitor"
+import { useNetworkOfflineMonitor } from "v2/Utils/Hooks/useNetworkOfflineMonitor"
 import { findCurrentRoute } from "v2/System/Router/Utils/findCurrentRoute"
 import { useMaybeReloadAfterInquirySignIn } from "v2/System/Router/Utils/useMaybeReloadAfterInquirySignIn"
 import { NavBar } from "v2/Components/NavBar"
@@ -16,6 +16,7 @@ import { useRouteComplete } from "v2/Utils/Hooks/useRouteComplete"
 import { useAuthIntent } from "v2/Utils/Hooks/useAuthIntent"
 import { AppToasts } from "./AppToasts"
 import { useNavBarHeight } from "v2/Components/NavBar/useNavBarHeight"
+import { useProductionEnvironmentWarning } from "v2/Utils/Hooks/useProductionEnvironmentWarning"
 
 const logger = createLogger("Apps/Components/AppShell")
 
@@ -34,24 +35,20 @@ export const AppShell: React.FC<AppShellProps> = props => {
   const showFooter = !isEigen && !routeConfig.hideFooter
   const appContainerMaxWidth = routeConfig.displayFullPage ? "100%" : null
 
-  /**
-   * Check to see if a route has a prepare key; if so call it. Used typically to
-   * preload bundle-split components (import()) while the route is fetching data
-   * in the background.
-   */
+  // Check to see if a route has a onServerSideRender key; if so call it. Used
+  // typically to preload bundle-split components (import()) while the route is
+  // fetching data in the background.
   useEffect(() => {
-    if (isFunction(routeConfig.prepare)) {
+    if (isFunction(routeConfig.onClientSideRender)) {
       try {
-        routeConfig.prepare()
+        routeConfig.onClientSideRender()
       } catch (error) {
         logger.error(error)
       }
     }
   }, [routeConfig])
 
-  /**
-   * Let our end-to-end tests know that the app is hydrated and ready to go
-   */
+  // Let our end-to-end tests know that the app is hydrated and ready to go
   useEffect(() => {
     document.body.setAttribute("data-test", "AppReady")
   }, [])
@@ -71,6 +68,9 @@ export const AppShell: React.FC<AppShellProps> = props => {
   useMaybeReloadAfterInquirySignIn()
 
   const { height: navBarHeight } = useNavBarHeight()
+
+  useNetworkOfflineMonitor()
+  useProductionEnvironmentWarning()
 
   return (
     <Flex
@@ -103,8 +103,6 @@ export const AppShell: React.FC<AppShellProps> = props => {
             <HorizontalPadding>{children}</HorizontalPadding>
           </AppContainer>
         </Flex>
-
-        <NetworkOfflineMonitor />
 
         {showFooter && (
           <Flex bg="white100">

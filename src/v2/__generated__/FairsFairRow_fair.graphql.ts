@@ -7,8 +7,7 @@ export type FairsFairRow_fair = {
     readonly href: string | null;
     readonly name: string | null;
     readonly isoStartAt: string | null;
-    readonly startAt: string | null;
-    readonly endAt: string | null;
+    readonly exhibitionPeriod: string | null;
     readonly profile: {
         readonly icon: {
             readonly resized: {
@@ -65,29 +64,10 @@ return {
     },
     {
       "alias": null,
-      "args": [
-        {
-          "kind": "Literal",
-          "name": "format",
-          "value": "MMM Do"
-        }
-      ],
+      "args": null,
       "kind": "ScalarField",
-      "name": "startAt",
-      "storageKey": "startAt(format:\"MMM Do\")"
-    },
-    {
-      "alias": null,
-      "args": [
-        {
-          "kind": "Literal",
-          "name": "format",
-          "value": "MMM Do YYYY"
-        }
-      ],
-      "kind": "ScalarField",
-      "name": "endAt",
-      "storageKey": "endAt(format:\"MMM Do YYYY\")"
+      "name": "exhibitionPeriod",
+      "storageKey": null
     },
     {
       "alias": null,
@@ -193,5 +173,5 @@ return {
   "type": "Fair"
 };
 })();
-(node as any).hash = 'a0b427ff1b06ef97c38a1c080e99b12e';
+(node as any).hash = '18bcad7870e32664847bf5de2aa4b757';
 export default node;

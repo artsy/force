@@ -25,12 +25,13 @@ app.set("view engine", "jade")
 // app.get(landing.paths.edit, adminOnly, edit)
 // app.post(landing.paths.edit, adminOnly, upload)
 
-app.get(
-  "/consign/submission/:id/describe-your-work",
-  routes.submissionFlowWithFetch
-)
-app.get("/consign/submission/:id/upload-photos", routes.submissionFlowWithFetch)
-app.get("/consign/submission/:id/thank-you", routes.submissionFlowWithId)
-app.get("/consign/submission/:id/upload", routes.submissionFlowWithId)
-app.get("/consign/submission", routes.submissionFlow)
-app.get("/consign/submission*", routes.redirectToSubmissionFlow)
+// TODO: SWA-77
+// app.get(
+//   "/consign/submission/:id/describe-your-work",
+//   routes.submissionFlowWithFetch
+// )
+// app.get("/consign/submission/:id/upload-photos", routes.submissionFlowWithFetch)
+// app.get("/consign/submission/:id/thank-you", routes.submissionFlowWithId)
+// app.get("/consign/submission/:id/upload", routes.submissionFlowWithId)
+// app.get("/consign/submission", routes.submissionFlow)
+// app.get("/consign/submission*", routes.redirectToSubmissionFlow)

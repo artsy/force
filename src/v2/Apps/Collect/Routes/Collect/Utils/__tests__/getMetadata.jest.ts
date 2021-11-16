@@ -5,7 +5,7 @@ describe("getMetadata", () => {
     it("formats medium types", () => {
       const { title, breadcrumbTitle, description } = getMetadata({
         medium: "painting",
-        // @ts-expect-error STRICT_NULL_CHECK
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         color: null,
       })
       expect(title).toBe("Paintings - For Sale on Artsy")
@@ -18,7 +18,7 @@ describe("getMetadata", () => {
     it("falls back to fallback meta if medium is invalid", () => {
       const { title, breadcrumbTitle, description } = getMetadata({
         medium: "foo" as any,
-        // @ts-expect-error STRICT_NULL_CHECK
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         color: null,
       })
       expect(title).toBe("Collect | Artsy")
@@ -32,7 +32,7 @@ describe("getMetadata", () => {
   describe("color", () => {
     it("formats color types", () => {
       const { title, breadcrumbTitle, description } = getMetadata({
-        // @ts-expect-error STRICT_NULL_CHECK
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         medium: null,
         color: "red",
       })
@@ -46,7 +46,7 @@ describe("getMetadata", () => {
 
     it("falls back to fallback meta if medium is invalid", () => {
       const { title, breadcrumbTitle, description } = getMetadata({
-        // @ts-expect-error STRICT_NULL_CHECK
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         medium: null,
         color: "foo" as any,
       })
@@ -60,9 +60,9 @@ describe("getMetadata", () => {
 
   it("formats default types", () => {
     const { title, breadcrumbTitle, description } = getMetadata({
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       medium: null,
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       color: null,
     })
 

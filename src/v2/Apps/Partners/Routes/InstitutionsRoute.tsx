@@ -7,22 +7,26 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import { compact } from "lodash"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { MetaTags } from "v2/Components/MetaTags"
+import { useRouter } from "v2/System/Router/useRouter"
 import { InstitutionsRoute_viewer } from "v2/__generated__/InstitutionsRoute_viewer.graphql"
+import { PartnersFeaturedCarouselFragmentContainer } from "../Components/PartnersFeaturedCarousel"
+import { PartnersFilteredCellsQueryRenderer } from "../Components/PartnersFilteredCells"
 import { PartnersFilters } from "../Components/PartnersFilters"
-import { PartnersRailFragmentContainer } from "../Components/PartnersRail"
+import { PartnersRailsQueryRenderer } from "../Components/PartnersRails"
 
 interface InstitutionsRouteProps {
   viewer: InstitutionsRoute_viewer
 }
 
 const InstitutionsRoute: React.FC<InstitutionsRouteProps> = ({ viewer }) => {
-  // TODO: In the original implementation these categories are shuffled.
-  // We need a way to do SSR-stable shuffle.
-  const categories = compact(viewer.partnerCategories)
+  const {
+    match: {
+      location: { query },
+    },
+  } = useRouter()
 
   return (
     <>
@@ -32,20 +36,19 @@ const InstitutionsRoute: React.FC<InstitutionsRouteProps> = ({ viewer }) => {
       />
 
       <Join separator={<Spacer mt={4} />}>
-        <Text variant="xl" mt={4}>
-          Browse Institutions
-        </Text>
+        <PartnersFeaturedCarouselFragmentContainer viewer={viewer} />
 
         <PartnersFilters type="INSTITUTION" />
 
-        {categories.map((partnerCategory, i) => {
-          return (
-            <PartnersRailFragmentContainer
-              key={i}
-              partnerCategory={partnerCategory}
-            />
-          )
-        })}
+        {"category" in query || "near" in query ? (
+          <PartnersFilteredCellsQueryRenderer
+            type="INSTITUTION"
+            category={query.category}
+            near={query.near}
+          />
+        ) : (
+          <PartnersRailsQueryRenderer type="INSTITUTION" />
+        )}
 
         <Separator />
 
@@ -75,15 +78,8 @@ export const InstitutionsRouteFragmentContainer = createFragmentContainer(
   {
     viewer: graphql`
       fragment InstitutionsRoute_viewer on Viewer {
-        partnerCategories(
-          categoryType: INSTITUTION
-          size: 50
-          internal: false
-        ) {
-          name
-          slug
-          ...PartnersRail_partnerCategory @arguments(type: INSTITUTION)
-        }
+        ...PartnersFeaturedCarousel_viewer
+          @arguments(id: "564e181a258faf3d5c000080")
       }
     `,
   }

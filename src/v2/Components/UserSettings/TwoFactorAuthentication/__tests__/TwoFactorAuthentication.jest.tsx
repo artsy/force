@@ -27,7 +27,7 @@ const setupTestEnv = () => {
   return createTestEnv({
     TestPage: TwoFactorAuthenticationTestPage,
     Component: (props: TwoFactorAuthenticationQueryResponse) => (
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       <TwoFactorAuthenticationRefetchContainer {...props} />
     ),
     query: graphql`
@@ -58,7 +58,7 @@ const setupTestEnv = () => {
   })
 }
 
-describe("TwoFactorAuthentication ", () => {
+describe("TwoFactorAuthentication", () => {
   it("shows current 2FA enrollment status", async () => {
     const env = setupTestEnv()
     const page = await env.buildPage()

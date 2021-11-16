@@ -1,4 +1,3 @@
-import * as React from "react";
 import { usePriceEstimateContext } from "./ConsignPriceEstimateContext"
 import { formatCentsToDollars } from "v2/Apps/Consign/Routes/MarketingLanding/Utils/formatCentsToDollars"
 import {
@@ -36,7 +35,7 @@ export const ArtistInsightResult: React.FC = () => {
     return <ZeroState />
   }
 
-  // @ts-expect-error STRICT_NULL_CHECK
+  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
   const mediumSelectOptions = mediums.map(medium => ({
     text: medium,
     value: medium,
@@ -119,7 +118,7 @@ export const ArtistInsightResult: React.FC = () => {
           <Button
             // @ts-ignore
             as={RouterLink}
-            to="/consign/submission"
+            to="/consign/submission/artwork-details"
           >
             Get a valuation
           </Button>
@@ -131,7 +130,7 @@ export const ArtistInsightResult: React.FC = () => {
             mb={2}
             // @ts-ignore
             as={RouterLink}
-            to="/consign/submission"
+            to="/consign/submission/artwork-details"
           >
             Get a valuation
           </Button>

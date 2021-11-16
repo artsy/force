@@ -28,7 +28,7 @@ export function getUser(user: User | null | undefined): User | null {
 
 export function userHasLabFeature(user: User, featureName: string): boolean {
   const lab_features = get(user, u => u?.lab_features, [])
-  // @ts-expect-error STRICT_NULL_CHECK
+  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
   const hasLabFeature = lab_features.includes(featureName)
   return hasLabFeature
 }

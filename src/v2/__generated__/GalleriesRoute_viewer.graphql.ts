@@ -4,11 +4,7 @@
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type GalleriesRoute_viewer = {
-    readonly partnerCategories: ReadonlyArray<{
-        readonly name: string | null;
-        readonly slug: string;
-        readonly " $fragmentRefs": FragmentRefs<"PartnersRail_partnerCategory">;
-    } | null> | null;
+    readonly " $fragmentRefs": FragmentRefs<"PartnersFeaturedCarousel_viewer">;
     readonly " $refType": "GalleriesRoute_viewer";
 };
 export type GalleriesRoute_viewer$data = GalleriesRoute_viewer;
@@ -26,59 +22,18 @@ const node: ReaderFragment = {
   "name": "GalleriesRoute_viewer",
   "selections": [
     {
-      "alias": null,
       "args": [
         {
           "kind": "Literal",
-          "name": "categoryType",
-          "value": "GALLERY"
-        },
-        {
-          "kind": "Literal",
-          "name": "internal",
-          "value": false
-        },
-        {
-          "kind": "Literal",
-          "name": "size",
-          "value": 50
+          "name": "id",
+          "value": "5638fdfb7261690296000031"
         }
       ],
-      "concreteType": "PartnerCategory",
-      "kind": "LinkedField",
-      "name": "partnerCategories",
-      "plural": true,
-      "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "name",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "slug",
-          "storageKey": null
-        },
-        {
-          "args": [
-            {
-              "kind": "Literal",
-              "name": "type",
-              "value": "GALLERY"
-            }
-          ],
-          "kind": "FragmentSpread",
-          "name": "PartnersRail_partnerCategory"
-        }
-      ],
-      "storageKey": "partnerCategories(categoryType:\"GALLERY\",internal:false,size:50)"
+      "kind": "FragmentSpread",
+      "name": "PartnersFeaturedCarousel_viewer"
     }
   ],
   "type": "Viewer"
 };
-(node as any).hash = '207bd1fb31af8c812f263a02cd0bd870';
+(node as any).hash = 'ce6e81cc90204e38ed5a0a996d92e310';
 export default node;

@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FairCollections_fair } from "v2/__generated__/FairCollections_fair.graphql"
 import { Box, BoxProps } from "@artsy/palette"
@@ -19,9 +19,9 @@ export const FairCollections: React.FC<FairCollectionsProps> = ({
         {fair.marketingCollections.map((collection, index) => {
           return (
             <FairCollection
-              // @ts-expect-error STRICT_NULL_CHECK
+              // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
               key={collection.id}
-              // @ts-expect-error STRICT_NULL_CHECK
+              // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
               collection={collection}
               carouselIndex={index}
             />

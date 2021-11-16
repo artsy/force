@@ -8,7 +8,7 @@ const benv = require("benv")
 const Backbone = require("backbone")
 const sinon = require("sinon")
 const { fabricate } = require("@artsy/antigravity")
-const Artworks = require("../../../collections/artworks")
+const { Artworks } = require("../../../collections/artworks")
 const CurrentUser = require("../../../models/current_user")
 const { resolve } = require("path")
 const FillwidthView = benv.requireWithJadeify(resolve(__dirname, "../view"), [
@@ -74,9 +74,9 @@ describe("FillwidthView", function () {
     }))
 
   return describe("#handleSeeMore", function () {
-    xit("Hides first row")
-    xit("Shows see more if got # of artowrks asked for")
-    return xit(
+    it.skip("Hides first row")
+    it.skip("Shows see more if got # of artowrks asked for")
+    return it.skip(
       "Shows see more if got fewer artworks than asked but not all fit on row"
     )
   })

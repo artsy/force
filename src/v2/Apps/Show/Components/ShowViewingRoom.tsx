@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"
 import { Box, BoxProps, Card, ResponsiveBox, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ShowViewingRoom_show } from "v2/__generated__/ShowViewingRoom_show.graphql"
@@ -41,7 +41,7 @@ export const ShowViewingRoom: React.FC<ShowViewingRoomProps> = ({
     const payload: ClickedViewingRoomCard = {
       action: ActionType.clickedViewingRoomCard,
       context_module: ContextModule.associatedViewingRoom,
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       context_page_owner_type: contextPageOwnerType,
       context_page_owner_id: contextPageOwnerId,
       context_page_owner_slug: contextPageOwnerSlug,

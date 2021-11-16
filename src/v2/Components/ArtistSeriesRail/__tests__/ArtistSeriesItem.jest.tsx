@@ -77,7 +77,7 @@ const itemContent: ArtistSeriesItem_artistSeries = {
   slug: "slug",
   title: "title",
   featured: true,
-  // @ts-expect-error STRICT_NULL_CHECK
+  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
   " $refType": null,
   image: {
     cropped: {

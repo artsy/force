@@ -3,7 +3,7 @@ qs = require 'querystring'
 Backbone = require 'backbone'
 form = require '../form/utilities.coffee'
 Engine = require './bloodhound.coffee'
-Match = require '../../collections/match.coffee'
+{ Match } = require '../../collections/match'
 device = require '../util/device.coffee'
 templates =
   index: -> require('./templates/index.jade') arguments...

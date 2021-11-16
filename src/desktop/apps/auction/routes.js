@@ -1,6 +1,6 @@
 import * as actions from "desktop/apps/auction/actions/artworkBrowser"
 import App from "desktop/apps/auction/components/App"
-import Articles from "desktop/collections/articles.coffee"
+import Articles from "desktop/collections/articles"
 import { meV2Query } from "desktop/apps/auction/queries/v2/me"
 import { saleV2Query } from "desktop/apps/auction/queries/v2/sale"
 import ArticlesQuery from "desktop/apps/auction/queries/articles"

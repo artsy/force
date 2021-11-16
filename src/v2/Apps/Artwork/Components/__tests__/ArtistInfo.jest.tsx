@@ -51,14 +51,14 @@ describe("ArtistInfo", () => {
       const artist = {
         ...ArtistInfoFixture,
         highlights: {
-          // @ts-expect-error STRICT_NULL_CHECK
+          // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
           ...ArtistInfoFixture.highlights,
           partnersConnection: null,
         },
         collections: null,
         auctionResultsConnection: null,
         exhibition_highlights: {
-          // @ts-expect-error STRICT_NULL_CHECK
+          // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
           ...ArtistInfoFixture.exhibition_highlights,
           length: 1,
         },
@@ -71,7 +71,7 @@ describe("ArtistInfo", () => {
       const artist = {
         ...ArtistInfoFixture,
         biographyBlurb: {
-          // @ts-expect-error STRICT_NULL_CHECK
+          // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
           ...ArtistInfoFixture.biographyBlurb,
           text: null,
         },
@@ -84,7 +84,7 @@ describe("ArtistInfo", () => {
       const artist = {
         ...ArtistInfoFixture,
         highlights: {
-          // @ts-expect-error STRICT_NULL_CHECK
+          // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
           ...ArtistInfoFixture.highlights,
           partnersConnection: null,
         },

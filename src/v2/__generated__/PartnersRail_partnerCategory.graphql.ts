@@ -35,16 +35,21 @@ v1 = {
   "value": true
 },
 v2 = {
+  "kind": "Variable",
+  "name": "partnerCategories",
+  "variableName": "category"
+},
+v3 = {
   "kind": "Literal",
   "name": "sort",
   "value": "RANDOM_SCORE_DESC"
 },
-v3 = {
+v4 = {
   "kind": "Variable",
   "name": "type",
   "variableName": "type"
 },
-v4 = [
+v5 = [
   {
     "alias": null,
     "args": null,
@@ -60,6 +65,12 @@ v4 = [
 ];
 return {
   "argumentDefinitions": [
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "category",
+      "type": "[String]"
+    },
     {
       "defaultValue": null,
       "kind": "LocalArgument",
@@ -89,13 +100,14 @@ return {
           "value": true
         },
         (v2/*: any*/),
-        (v3/*: any*/)
+        (v3/*: any*/),
+        (v4/*: any*/)
       ],
       "concreteType": "Partner",
       "kind": "LinkedField",
       "name": "partners",
       "plural": true,
-      "selections": (v4/*: any*/),
+      "selections": (v5/*: any*/),
       "storageKey": null
     },
     {
@@ -109,18 +121,19 @@ return {
           "value": true
         },
         (v2/*: any*/),
-        (v3/*: any*/)
+        (v3/*: any*/),
+        (v4/*: any*/)
       ],
       "concreteType": "Partner",
       "kind": "LinkedField",
       "name": "partners",
       "plural": true,
-      "selections": (v4/*: any*/),
+      "selections": (v5/*: any*/),
       "storageKey": null
     }
   ],
   "type": "PartnerCategory"
 };
 })();
-(node as any).hash = '32505a6b0834102961161984a8464b59';
+(node as any).hash = 'cc6b6a031766931890033cb1c816dc44';
 export default node;

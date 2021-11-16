@@ -44,18 +44,18 @@ export const UserInformation: React.FC<UserInformationProps> = ({
         phone,
       }
 
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       const response = await UpdateUserInformation(relayEnvironment, variables)
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       const userOrError = response.updateMyUserProfile.userOrError
 
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       if (userOrError.mutationError) {
-        // @ts-expect-error STRICT_NULL_CHECK
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         const { message, fieldErrors } = userOrError.mutationError
         if (fieldErrors) {
           // display errors for a specified form field
-          // @ts-expect-error STRICT_NULL_CHECK
+          // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
           const formattedErrors = formatGravityErrors(userOrError.mutationError)
           formikBag.setErrors(formattedErrors)
         } else if (message) {
@@ -73,7 +73,7 @@ export const UserInformation: React.FC<UserInformationProps> = ({
 
   return (
     <Box>
-      <Text size="6" mb={2}>
+      <Text variant="lg" mb={2}>
         Information
       </Text>
       <Formik
@@ -153,7 +153,7 @@ export const UserInformation: React.FC<UserInformationProps> = ({
                   title="Password"
                   autoFocus
                   block
-                  // @ts-expect-error STRICT_NULL_CHECK
+                  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
                   error={
                     !values.password && "Password is required to change email."
                   }
@@ -186,7 +186,6 @@ export const UserInformationRefetchContainer = createRefetchContainer(
         name
         paddleNumber
         phone
-        internalID
       }
     `,
   },
@@ -209,7 +208,7 @@ export const UserInformationQueryRenderer = () => {
 
   return (
     <QueryRenderer<UserInformationQuery>
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       environment={relayEnvironment}
       variables={{}}
       query={graphql`
@@ -224,7 +223,7 @@ export const UserInformationQueryRenderer = () => {
   )
 }
 
-// @ts-expect-error STRICT_NULL_CHECK
+// @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
 type GravityFieldErrors = UpdateUserInformationMutationResponse["updateMyUserProfile"]["userOrError"]["mutationError"]
 
 const formatGravityErrors = ({ fieldErrors }: GravityFieldErrors) => {

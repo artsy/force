@@ -25,7 +25,7 @@ describe("deprecatedGlobalClientSetup", () => {
         { expires: 86400 }
       )
       trackAuthenticationEvents()
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       expect(window.analytics.track).toBeCalledWith("createdAccount", {
         auth_redirect: "/artist/andy-warhol",
         context_module: "popUpModal",
@@ -37,7 +37,7 @@ describe("deprecatedGlobalClientSetup", () => {
         type: "signup",
         user_id: "123",
       })
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       expect(window.analytics.identify).toBeCalledWith(
         "123",
         "user@email.com",
@@ -55,7 +55,7 @@ describe("deprecatedGlobalClientSetup", () => {
         { expires: 86400 }
       )
       trackAuthenticationEvents()
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       expect(window.analytics.track).toBeCalledWith("successfullyLoggedIn", {
         auth_redirect: "/artist/andy-warhol",
         context_module: "popUpModal",
@@ -66,7 +66,7 @@ describe("deprecatedGlobalClientSetup", () => {
         type: "login",
         user_id: "123",
       })
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       expect(window.analytics.identify).toBeCalledWith(
         "123",
         "user@email.com",

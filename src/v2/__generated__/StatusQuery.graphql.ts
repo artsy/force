@@ -3,6 +3,7 @@
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
+export type CommerceOrderDisplayStateEnum = "ABANDONED" | "APPROVED" | "CANCELED" | "FULFILLED" | "IN_TRANSIT" | "PENDING" | "PROCESSING" | "REFUNDED" | "SUBMITTED" | "%future added value";
 export type CommerceOrderModeEnum = "BUY" | "OFFER" | "%future added value";
 export type CommerceOrderParticipantEnum = "BUYER" | "SELLER" | "%future added value";
 export type CommerceOrderStateEnum = "ABANDONED" | "APPROVED" | "CANCELED" | "FULFILLED" | "PENDING" | "REFUNDED" | "SUBMITTED" | "%future added value";
@@ -17,7 +18,7 @@ export type StatusQueryRawResponse = {
         readonly __typename: "CommerceOfferOrder";
         readonly internalID: string;
         readonly code: string;
-        readonly displayState: string | null;
+        readonly displayState: CommerceOrderDisplayStateEnum;
         readonly state: CommerceOrderStateEnum;
         readonly mode: CommerceOrderModeEnum | null;
         readonly stateReason: string | null;
@@ -151,7 +152,7 @@ export type StatusQueryRawResponse = {
         readonly __typename: string;
         readonly internalID: string;
         readonly code: string;
-        readonly displayState: string | null;
+        readonly displayState: CommerceOrderDisplayStateEnum;
         readonly state: CommerceOrderStateEnum;
         readonly mode: CommerceOrderModeEnum | null;
         readonly stateReason: string | null;

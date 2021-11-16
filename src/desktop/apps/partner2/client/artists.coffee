@@ -1,6 +1,6 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-PartnerArtists = require '../../../collections/partner_artists.coffee'
+{ PartnerArtists } = require '../../../collections/partner_artists'
 ArtistView = require './artists_artist.coffee'
 ArtistsListView = require '../components/artists_list/view.coffee'
 require '../../../../lib/promiseDone'

@@ -5,9 +5,9 @@ import moment from "moment"
 import path from "path"
 
 const markdown = require("../../../components/util/markdown")
-const OrderedSets = require("../../../collections/ordered_sets")
+const { OrderedSets } = require("../../../collections/ordered_sets")
 
-xdescribe("landing page", () => {
+describe.skip("landing page", () => {
   const jsonData = require("./fixture.json")
   let data
 

@@ -8,8 +8,8 @@ import {
   Spacer,
   Column,
 } from "@artsy/palette"
-import { useState } from "react";
-import * as React from "react";
+import { useState } from "react"
+import * as React from "react"
 import { graphql, createRefetchContainer, RelayRefetchProp } from "react-relay"
 import styled, { css } from "styled-components"
 import { RouterLink } from "v2/System/Router/RouterLink"
@@ -66,7 +66,7 @@ export const ArtistsByLetter: React.FC<ArtistsByLetterProps> = ({
   } = viewer
 
   const handleNext = (page: number) => {
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     handleClick(endCursor, page)
   }
 
@@ -115,7 +115,7 @@ export const ArtistsByLetter: React.FC<ArtistsByLetterProps> = ({
       <Spacer mt={6} />
 
       <Columns isLoading={isLoading}>
-        {/* @ts-expect-error STRICT_NULL_CHECK */}
+        {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
         {artists.map(({ artist }) => {
           return (
             <Text key={artist.internalID}>

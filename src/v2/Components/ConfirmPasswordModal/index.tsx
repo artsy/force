@@ -1,5 +1,5 @@
 import { Banner, Button, Flex, Modal, space, Text } from "@artsy/palette"
-import * as React from "react";
+import * as React from "react"
 import { useSystemContext } from "v2/System"
 import { PasswordInput } from "v2/Components/PasswordInput"
 import { Form, Formik, FormikProps } from "formik"
@@ -25,7 +25,7 @@ export const ConfirmPasswordModal: React.FC<ConfirmPasswordModalProps> = props =
   ) => {
     formikBag.setStatus({ error: undefined })
     try {
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       await ConfirmPassword(relayEnvironment, {
         password,
       })

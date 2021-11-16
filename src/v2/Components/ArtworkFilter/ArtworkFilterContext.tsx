@@ -1,6 +1,6 @@
 import { omit } from "lodash"
-import { useContext, useReducer, useState } from "react";
-import * as React from "react";
+import { useContext, useReducer, useState } from "react"
+import * as React from "react"
 import useDeepCompareEffect from "use-deep-compare-effect"
 import { SortOptions } from "../SortFilter"
 import { hasFilters } from "./Utils/hasFilters"
@@ -166,18 +166,18 @@ export const ArtworkFilterContext = React.createContext<
 >({
   filters: initialArtworkFilterState,
   hasFilters: false,
-  // @ts-expect-error STRICT_NULL_CHECK
+  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
   isDefaultValue: null,
-  // @ts-expect-error STRICT_NULL_CHECK
+  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
   rangeToTuple: null,
-  // @ts-expect-error STRICT_NULL_CHECK
+  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
   resetFilters: null,
-  // @ts-expect-error STRICT_NULL_CHECK
+  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
   setFilter: null,
   sortOptions: [],
-  // @ts-expect-error STRICT_NULL_CHECK
+  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
   unsetFilter: null,
-  // @ts-expect-error STRICT_NULL_CHECK
+  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
   ZeroState: null,
   mountedContext: false,
 })
@@ -302,7 +302,7 @@ export const ArtworkFilterContextProvider: React.FC<
     resetFilters: () => {
       const action: ArtworkFiltersAction = {
         type: "RESET",
-        // @ts-expect-error STRICT_NULL_CHECK
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         payload: null,
       }
       dispatchOrStage(action)

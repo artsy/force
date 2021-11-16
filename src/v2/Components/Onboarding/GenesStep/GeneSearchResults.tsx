@@ -7,7 +7,7 @@ import { GeneSearchResultsQuery } from "v2/__generated__/GeneSearchResultsQuery.
 import { SystemContextProps, withSystemContext } from "v2/System"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import { garamond } from "v2/Assets/Fonts"
-import * as React from "react";
+import * as React from "react"
 import {
   RelayProp,
   commitMutation,
@@ -20,7 +20,7 @@ import { get } from "v2/Utils/get"
 import ReplaceTransition from "../../Animation/ReplaceTransition"
 import ItemLink, { LinkContainer } from "../ItemLink"
 
-// @ts-expect-error STRICT_NULL_CHECK
+// @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
 type Gene = GeneSearchResults_viewer["match_gene"]["edges"][number]["node"]
 
 interface ContainerProps {
@@ -48,7 +48,7 @@ class GeneSearchResultsContent extends React.Component<Props, null> {
   constructor(props: Props, context: any) {
     super(props, context)
     this.excludedGeneIds = new Set(
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       this.props.viewer.match_gene.edges.map(({ node }) => node.internalID)
     )
   }
@@ -62,15 +62,15 @@ class GeneSearchResultsContent extends React.Component<Props, null> {
     this.props.onGeneFollow(follow, gene)
 
     const suggestedGene = store.get(
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       data.followGene.gene.similar.edges[0].node.id
     )
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     this.excludedGeneIds.add(suggestedGene.getValue("internalID") as string)
 
     const suggestedGenesRootField = store.get("client:root:viewer")
     const suggestedGenes =
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       suggestedGenesRootField.getLinkedRecords("match_gene", {
         term: this.props.term,
       }) || []
@@ -78,9 +78,9 @@ class GeneSearchResultsContent extends React.Component<Props, null> {
       geneItem.getValue("id") === gene.id ? suggestedGene : geneItem
     )
 
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     suggestedGenesRootField.setLinkedRecords(
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       updatedSuggestedGenes,
       "match_gene",
       { term: this.props.term }
@@ -91,7 +91,7 @@ class GeneSearchResultsContent extends React.Component<Props, null> {
     this.excludedGeneIds.add(gene.internalID)
 
     commitMutation<GeneSearchResultsFollowGeneMutation>(
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       this.props.relay.environment,
       {
         // TODO: Inputs to the mutation might have changed case of the keys!
@@ -135,9 +135,9 @@ class GeneSearchResultsContent extends React.Component<Props, null> {
   }
 
   render() {
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     const items = this.props.viewer.match_gene.edges.map(
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       ({ node: item }, index) => {
         const imageUrl = get(item, i => i.image.cropped.url)
         return (
@@ -171,7 +171,7 @@ class GeneSearchResultsContent extends React.Component<Props, null> {
 }
 
 export const GeneSearchResultsContentContainer = createFragmentContainer(
-  // @ts-expect-error STRICT_NULL_CHECK
+  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
   GeneSearchResultsContent,
   {
     viewer: graphql`

@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { MyBids_me } from "v2/__generated__/MyBids_me.graphql"
 import { MyBidsBidHeaderFragmentContainer } from "./MyBidsBidHeader"
@@ -89,7 +89,7 @@ const MyBids: React.FC<MyBidsProps> = props => {
                           trackEvent(
                             clickedEntityGroup({
                               contextModule: ContextModule.yourActiveBids,
-                              // @ts-expect-error STRICT_NULL_CHECK
+                              // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
                               contextPageOwnerType,
                               destinationPageOwnerType: OwnerType.sale,
                               type: "thumbnail",

@@ -7,23 +7,22 @@ import {
   HelpIcon,
   Image,
   Join,
-  Link,
   Separator,
   Text,
 } from "@artsy/palette"
 import { DateTime } from "luxon"
 
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
+import { RouterLink } from "v2/System/Router/RouterLink"
 import { Media } from "v2/Utils/Responsive"
 import { OrderRow_order } from "v2/__generated__/OrderRow_order.graphql"
 import {
   getOrderColor,
   getOrderIcon,
-  getOrderStatus,
-  OrderState,
-} from "../Utils/orderHelper"
+  getOrderDisplayStateString,
+} from "v2/Apps/Purchase/Utils/orderHelper"
 import { LocaleOptions } from "luxon"
 import { extractNodes } from "v2/Utils/extractNodes"
 
@@ -38,15 +37,21 @@ const StyledImage = styled(Image)`
   width: 50px;
 `
 
+const UnderlineOnHoverLink = styled(RouterLink)`
+  text-decoration: none;
+  &:hover {
+    text-decoration: underline;
+  }
+`
+
 const OrderRow: React.FC<OrderRowProps> = props => {
   const { order } = props
+  const displayState = order.displayState
   const [lineItem] = extractNodes(order?.lineItems)
   const { artwork, fulfillments } = lineItem
   const orderCreatedAt = DateTime.fromISO(order.createdAt)
   const { creditCard, requestedFulfillment } = order
-  const orderStatus = getOrderStatus(order.state as OrderState, lineItem)
-  const orderIsInactive =
-    orderStatus === "canceled" || orderStatus === "refunded"
+  const orderIsActive = order.state !== "CANCELED" && order.state !== "REFUNDED"
 
   const partnerImageUrl = artwork?.partner?.profile?.icon?.url
   const partnerInitials = artwork?.partner?.initials
@@ -114,17 +119,17 @@ const OrderRow: React.FC<OrderRowProps> = props => {
           </Text>
           <Text
             variant="sm"
-            color={getOrderColor(orderStatus)}
+            color={getOrderColor(displayState)}
             letterSpacing="tight"
             style={{ textTransform: "capitalize" }}
           >
-            {orderStatus}
+            {getOrderDisplayStateString(displayState)}
           </Text>
         </Flex>
       </Flex>
       <Flex>
         <Join separator={<Box ml={1} />}>
-          {!orderIsInactive && (
+          {orderIsActive && (
             <Box flexGrow={1} mb={2}>
               <Button
                 width="100%"
@@ -169,27 +174,27 @@ const OrderRow: React.FC<OrderRowProps> = props => {
           {orderCreatedAt.toLocaleString(DateTime.DATE_MED as LocaleOptions)}
         </Text>
         <Flex alignItems="center">
-          {getOrderIcon(orderStatus)}
+          {getOrderIcon(displayState)}
           <Text
             ml="2px"
             variant="sm"
-            color={getOrderColor(orderStatus)}
+            color={getOrderColor(displayState)}
             style={{ textTransform: "capitalize" }}
           >
-            {orderStatus}
+            {getOrderDisplayStateString(displayState)}
           </Text>
           {trackingId && (
             <>
               <Text variant="sm" mx={1}>
                 &#8226;
               </Text>
-              <Link
+              <RouterLink
+                to={trackingURL}
                 target="_blank"
                 rel="noopener noreferrer"
-                href={trackingURL}
               >
                 <Text variant="sm">Track order</Text>
-              </Link>
+              </RouterLink>
             </>
           )}
         </Flex>
@@ -198,14 +203,14 @@ const OrderRow: React.FC<OrderRowProps> = props => {
         <Flex width="50%">
           {artworkImage}
           <Flex flexDirection="column" ml={1}>
-            <Link href={artistURL} underlineBehavior="hover">
+            <UnderlineOnHoverLink to={artistURL}>
               <Text variant="sm">{artwork?.artistNames}</Text>
-            </Link>
-            <Link href={artworkURL} underlineBehavior="hover">
+            </UnderlineOnHoverLink>
+            <UnderlineOnHoverLink to={artworkURL}>
               <Text variant="sm" color="black60">
                 {artwork?.title}
               </Text>
-            </Link>
+            </UnderlineOnHoverLink>
           </Flex>
         </Flex>
         <Flex width="50%">
@@ -215,11 +220,11 @@ const OrderRow: React.FC<OrderRowProps> = props => {
             initials={partnerInitials || undefined}
           />
           <Flex flexDirection="column" ml={1}>
-            <Link href={partnerURL} underlineBehavior="hover">
+            <UnderlineOnHoverLink to={partnerURL}>
               <Text variant="sm" color="black60" letterSpacing="tight">
                 {partnerName}
               </Text>
-            </Link>{" "}
+            </UnderlineOnHoverLink>{" "}
             <Text variant="sm" color="black60">
               {artwork?.shippingOrigin &&
                 artwork?.shippingOrigin.replace(/, US/g, "")}
@@ -233,14 +238,13 @@ const OrderRow: React.FC<OrderRowProps> = props => {
       <Flex p={2}>
         <Flex flexDirection="column" width="25%">
           <Text variant="sm">Order No.</Text>
-          {!orderIsInactive && (
-            <Link href={orderURL} underlineBehavior="hover">
+          {orderIsActive ? (
+            <UnderlineOnHoverLink to={orderURL}>
               <Text variant="sm" letterSpacing="tight">
                 {order.code}
               </Text>
-            </Link>
-          )}
-          {orderIsInactive && (
+            </UnderlineOnHoverLink>
+          ) : (
             <Text variant="sm" letterSpacing="tight">
               {order.code}
             </Text>
@@ -273,11 +277,11 @@ const OrderRow: React.FC<OrderRowProps> = props => {
         <Text variant="sm" color="black60">
           Need Help?{" "}
         </Text>
-        <Link href="mailto:support@artsy.net">
+        <RouterLink to="mailto:support@artsy.net">
           <Text variant="sm" color="black60" ml="3px">
             Contact Us.
           </Text>
-        </Link>
+        </RouterLink>
       </Flex>
     </BorderBox>
   )
@@ -297,6 +301,7 @@ export const OrderRowFragmentContainer = createFragmentContainer(
       fragment OrderRow_order on CommerceOrder {
         internalID
         code
+        displayState
         state
         mode
         requestedFulfillment {
@@ -313,15 +318,12 @@ export const OrderRowFragmentContainer = createFragmentContainer(
         creditCard {
           lastDigits
         }
-        buyerTotal
+        buyerTotal(precision: 2)
         createdAt
         itemsTotal
         lineItems {
           edges {
             node {
-              shipment {
-                status
-              }
               artwork {
                 slug
                 date

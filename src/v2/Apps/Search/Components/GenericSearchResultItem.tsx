@@ -1,9 +1,10 @@
-import { Component } from "react";
-import { Box, Flex, Image, Link, Text, BorderBox } from "@artsy/palette"
-import { track } from "v2/System/Analytics"
+import React from "react"
+import { Box, Flex, Image, Text, BorderBox } from "@artsy/palette"
 import * as Schema from "v2/System/Analytics/Schema"
 import styled from "styled-components"
 import { themeGet } from "@styled-system/theme-get"
+import { RouterLink } from "v2/System/Router/RouterLink"
+import { useTracking } from "react-tracking"
 
 interface GenericSearchResultItemProps {
   imageUrl: string
@@ -16,69 +17,75 @@ interface GenericSearchResultItemProps {
   id: string
 }
 
-@track()
-export class GenericSearchResultItem extends Component<
-  GenericSearchResultItemProps
-> {
-  @track((props: GenericSearchResultItemProps) => ({
-    action_type: Schema.ActionType.SelectedItemFromSearchPage,
-    query: props.term,
-    item_number: props.index,
-    item_type: props.entityType,
-    item_id: props.id,
-    destination_path: props.href,
-  }))
-  handleClick() {
-    // no-op
+export const GenericSearchResultItem: React.FC<GenericSearchResultItemProps> = ({
+  imageUrl,
+  name,
+  description,
+  href,
+  entityType,
+  term,
+  index,
+  id,
+}) => {
+  const tracking = useTracking()
+
+  const translateEntityType = (anEntityType: string) => {
+    switch (anEntityType) {
+      case "PartnerShow":
+        return "Show"
+      default:
+        return anEntityType
+    }
   }
 
-  render() {
-    const { imageUrl, href, name, description, entityType } = this.props
-    const translateEntityType = anEntityType => {
-      switch (anEntityType) {
-        case "PartnerShow":
-          return "Show"
-        default:
-          return anEntityType
-      }
+  const trackEvent = () => {
+    const trackingData = {
+      action_type: Schema.ActionType.SelectedItemFromSearchPage,
+      query: term,
+      item_number: index,
+      item_type: entityType,
+      item_id: id,
+      destination_path: href,
     }
 
-    return (
-      <Link href={href} underlineBehavior="none" onClick={this.handleClick}>
-        <ItemRow py={2}>
-          <Flex flexDirection="row">
-            <Box width={72} height={72} mr={2}>
-              <BorderBox width={72} height={72} p={0}>
-                {imageUrl && entityType !== "City" && (
-                  <Image
-                    lazyLoad
-                    width={70}
-                    height={70}
-                    src={imageUrl}
-                    alt={name}
-                  />
-                )}
-              </BorderBox>
-            </Box>
-
-            <Box>
-              <Text variant="xs" color="black60" mb={0.5}>
-                {translateEntityType(entityType)}
-              </Text>
-
-              <Text size="md">{name}</Text>
-
-              {description && (
-                <Text mt={0.5} variant="sm" color="black60" lineClamp={3}>
-                  {description}
-                </Text>
-              )}
-            </Box>
-          </Flex>
-        </ItemRow>
-      </Link>
-    )
+    tracking.trackEvent(trackingData)
   }
+
+  return (
+    <RouterLink to={href} textDecoration="none" onClick={trackEvent}>
+      <ItemRow py={2}>
+        <Flex flexDirection="row">
+          <Box width={72} height={72} mr={2}>
+            <BorderBox width={72} height={72} p={0}>
+              {imageUrl && entityType !== "City" && (
+                <Image
+                  lazyLoad
+                  width={70}
+                  height={70}
+                  src={imageUrl}
+                  alt={name}
+                />
+              )}
+            </BorderBox>
+          </Box>
+
+          <Box>
+            <Text variant="xs" color="black60" mb={0.5}>
+              {translateEntityType(entityType)}
+            </Text>
+
+            <Text size="md">{name}</Text>
+
+            {description && (
+              <Text mt={0.5} variant="sm" color="black60" lineClamp={3}>
+                {description}
+              </Text>
+            )}
+          </Box>
+        </Flex>
+      </ItemRow>
+    </RouterLink>
+  )
 }
 
 const ItemRow = styled(Box)`

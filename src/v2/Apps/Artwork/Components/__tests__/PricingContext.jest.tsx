@@ -18,7 +18,7 @@ import { flushPromiseQueue } from "v2/DevTools"
 jest.unmock("react-tracking")
 jest.unmock("react-relay")
 
-// @ts-expect-error STRICT_NULL_CHECK
+// @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
 const mockPricingContext: PricingContextTestQueryRawResponse["artwork"]["pricingContext"] = {
   appliedFiltersDisplay: "Price ranges of small mocks by David Sheldrick",
   appliedFilters: {
@@ -71,7 +71,7 @@ const mockArtwork: PricingContextTestQueryRawResponse["artwork"] = {
 describe("PricingContext", () => {
   function getWrapper(
     mockData: PricingContextTestQueryRawResponse = {
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       artwork: {
         ...mockArtwork,
       },
@@ -80,7 +80,7 @@ describe("PricingContext", () => {
     return renderRelayTree({
       Component: (props: PricingContextTestQueryResponse) => (
         <div>
-          {/* @ts-expect-error STRICT_NULL_CHECK */}
+          {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
           <PricingContextFragmentContainer {...props} />
         </div>
       ),
@@ -176,7 +176,7 @@ describe("PricingContext", () => {
     const wrapper = await getWrapper({
       artwork: {
         ...mockArtwork,
-        // @ts-expect-error STRICT_NULL_CHECK
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         pricingContext: {
           ...mockArtwork.pricingContext,
           bins: [
@@ -220,7 +220,7 @@ Object {
     const wrapper = await getWrapper({
       artwork: {
         ...mockArtwork,
-        // @ts-expect-error STRICT_NULL_CHECK
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         pricingContext: {
           ...mockArtwork.pricingContext,
           bins: [

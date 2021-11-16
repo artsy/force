@@ -14,8 +14,8 @@ import { ArtistBioFragmentContainer as ArtistBio } from "v2/Components/ArtistBio
 import { ArtistMarketInsightsFragmentContainer as ArtistMarketInsights } from "v2/Components/ArtistMarketInsights"
 import { SelectedExhibitionFragmentContainer as SelectedExhibitions } from "v2/Components/SelectedExhibitions"
 import { ContextModule } from "@artsy/cohesion"
-import { Component } from "react";
-import * as React from "react";
+import { Component } from "react"
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { data as sd } from "sharify"
 import Events from "v2/Utils/Events"
@@ -89,9 +89,9 @@ export class ArtistInfo extends Component<ArtistInfoProps> {
         <SelectedExhibitions
           artistID={artist.internalID}
           border={false}
-          // @ts-expect-error STRICT_NULL_CHECK
+          // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
           totalExhibitions={artist.counts?.partner_shows}
-          // @ts-expect-error STRICT_NULL_CHECK
+          // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
           exhibitions={artist.exhibition_highlights}
           ViewAllLink={
             <a href={`${sd.APP_URL}/artist/${artist.slug}/cv`}>View all</a>

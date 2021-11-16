@@ -91,7 +91,7 @@ export const orderRoutes: AppRouteConfig[] = [
     path: "/order(2|s)/:orderID",
     hideFooter: true,
     Component: OrderApp,
-    prepare: () => {
+    onClientSideRender: () => {
       OrderApp.preload()
     },
 

@@ -6,7 +6,7 @@ import {
 import { SuggestedGenesQuery } from "v2/__generated__/SuggestedGenesQuery.graphql"
 import { SystemContextProps, withSystemContext } from "v2/System"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
-import * as React from "react";
+import * as React from "react"
 import {
   RelayProp,
   commitMutation,
@@ -48,23 +48,23 @@ class SuggestedGenesContent extends React.Component<Props> {
     this.props.onGeneFollow(follow, gene)
 
     const suggestedGene = store.get(
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       data.followGene.gene.similar.edges[0].node.id
     )
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     this.excludedGeneIds.add(suggestedGene.getValue("internalID") as string)
 
     const suggestedGenesRootField = store.get("client:root")
     const suggestedGenes =
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       suggestedGenesRootField.getLinkedRecords("suggested_genes") || []
     const updatedSuggestedGenes = suggestedGenes.map(geneItem =>
       geneItem.getValue("id") === gene.id ? suggestedGene : geneItem
     )
 
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     suggestedGenesRootField.setLinkedRecords(
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       updatedSuggestedGenes,
       "suggested_genes"
     )
@@ -74,7 +74,7 @@ class SuggestedGenesContent extends React.Component<Props> {
     this.excludedGeneIds.add(gene.internalID)
 
     commitMutation<SuggestedGenesFollowGeneMutation>(
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       this.props.relay.environment,
       {
         // TODO: Inputs to the mutation might have changed case of the keys!
@@ -119,7 +119,7 @@ class SuggestedGenesContent extends React.Component<Props> {
 
   render() {
     const items = this.props.suggested_genes.map((item, index) => {
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       const imageUrl = get(item, i => i.image.cropped.url)
       return (
         <LinkContainer key={`suggested-genes-${index}`}>
@@ -132,9 +132,9 @@ class SuggestedGenesContent extends React.Component<Props> {
               item={item}
               key={item.id}
               id={item.slug}
-              // @ts-expect-error STRICT_NULL_CHECK
+              // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
               name={item.name}
-              // @ts-expect-error STRICT_NULL_CHECK
+              // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
               image_url={imageUrl}
               onFollow={selected => this.followedGene(item, selected)}
             />

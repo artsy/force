@@ -11,20 +11,20 @@ jest.mock("@stripe/stripe-js", () => {
   return {
     loadStripe: () => {
       if (mock === null) {
-        // @ts-expect-error STRICT_NULL_CHECK
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         mock = mockStripe()
       }
       return mock
     },
     _mockStripe: () => mock,
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     _mockReset: () => (mock = mockStripe()),
   }
 })
 
 const { getWrapper } = setupTestWrapper<PaymentSection_Test_Query>({
   Component: props => {
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     return <PaymentSectionFragmentContainer {...props} />
   },
   query: graphql`

@@ -6,11 +6,11 @@ module.exports =
 
     @on 'sync', @rebuild
 
-    Articles = require '../../../collections/articles.coffee'
-    Artworks = require '../../../collections/artworks.coffee'
-    Artists = require '../../../collections/artists.coffee'
-    InstallShots = require '../../../collections/install_shots.coffee'
-    ShowEvents = require '../../../collections/partner_show_events.coffee'
+    { Articles } = require '../../../collections/articles'
+    { Artworks } = require '../../../collections/artworks'
+    { Artists } = require '../../../collections/artists'
+    { InstallShots } = require '../../../collections/install_shots'
+    { PartnerShowEvents } = require '../../../collections/partner_show_events'
     Partner = require '../../partner.coffee'
     Fair = require '../../fair.coffee'
     Profile = require '../../profile.coffee'
@@ -32,7 +32,7 @@ module.exports =
 
     profile = new Profile id: partner.get('default_profile_id')
 
-    showEvents = new ShowEvents @get('events')
+    showEvents = new PartnerShowEvents @get('events')
 
     @__related__ =
       artworks: artworks

@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtistArtworkFilterRefetchContainer } from "./Components/ArtistArtworkFilter"
 import { ArtistWorksForSaleRoute_artist } from "v2/__generated__/ArtistWorksForSaleRoute_artist.graphql"
@@ -15,7 +15,11 @@ interface ArtistWorksForSaleRouteProps {
 const ArtistWorksForSaleRoute: React.FC<ArtistWorksForSaleRouteProps> = ({
   artist,
 }) => {
-  const title = computeTitle(artist.name!, artist?.counts?.forSaleArtworks!)
+  const title = computeTitle(
+    artist.name!,
+    artist?.counts?.forSaleArtworks!,
+    true
+  )
 
   return (
     <>

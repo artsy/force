@@ -1,7 +1,7 @@
 _ = require 'underscore'
 ArticlesGridView = require '../../../components/articles_grid/view.coffee'
 ArticleView = require '../../../components/article/client/view.coffee'
-Articles = require '../../../collections/articles.coffee'
+{ Articles } = require '../../../collections/articles'
 Article = require '../../../models/article.coffee'
 articleTemplate = -> require('../../../components/article/templates/index.jade') arguments...
 { resize } = require '../../../components/resizer/index.coffee'

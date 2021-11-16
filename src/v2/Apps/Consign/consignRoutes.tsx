@@ -77,24 +77,24 @@ export const consignRoutes: AppRouteConfig[] = [
   {
     path: "/consign",
     getComponent: () => MarketingLandingApp,
-    prepare: () => {
+    onClientSideRender: () => {
       MarketingLandingApp.preload()
     },
   },
   {
-    path: "/consign/submission2",
+    path: "/consign/submission",
     getComponent: () => SubmissionLayout,
     children: [
       new Redirect({
         from: "/",
-        to: "/consign/submission2/artwork-details",
+        to: "/consign/submission/artwork-details",
       }) as any,
       {
         path: "artwork-details",
         hideNav: true,
         hideFooter: true,
         getComponent: () => ArtworkDetails,
-        prepare: () => {
+        onClientSideRender: () => {
           ArtworkDetails.preload()
         },
       },
@@ -103,7 +103,7 @@ export const consignRoutes: AppRouteConfig[] = [
         hideNav: true,
         hideFooter: true,
         getComponent: () => ArtworkDetails,
-        prepare: () => {
+        onClientSideRender: () => {
           ArtworkDetails.preload()
         },
       },
@@ -112,7 +112,7 @@ export const consignRoutes: AppRouteConfig[] = [
         hideNav: true,
         hideFooter: true,
         getComponent: () => UploadPhotos,
-        prepare: () => {
+        onClientSideRender: () => {
           UploadPhotos.preload()
         },
       },
@@ -121,7 +121,7 @@ export const consignRoutes: AppRouteConfig[] = [
         hideNav: true,
         hideFooter: true,
         getComponent: () => ContactInformation,
-        prepare: () => {
+        onClientSideRender: () => {
           ContactInformation.preload()
         },
         query: graphql`
@@ -137,7 +137,7 @@ export const consignRoutes: AppRouteConfig[] = [
         hideNav: true,
         hideFooter: true,
         getComponent: () => ThankYou,
-        prepare: () => {
+        onClientSideRender: () => {
           ThankYou.preload()
         },
       },
@@ -147,7 +147,7 @@ export const consignRoutes: AppRouteConfig[] = [
     path: "/consign/offer/:offerID",
     theme: "v2",
     getComponent: () => OfferDetailApp,
-    prepare: () => {
+    onClientSideRender: () => {
       OfferDetailApp.preload()
     },
     query: graphql`

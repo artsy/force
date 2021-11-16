@@ -47,7 +47,7 @@ describe("Seo Products for Collection Page", () => {
     listPrice
   ): SeoProductsForCollections_descending_artworks {
     return {
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       " $refType": null,
       edges: [
         {
@@ -65,7 +65,7 @@ describe("Seo Products for Collection Page", () => {
     listPrice
   ): SeoProductsForCollections_ascending_artworks {
     return {
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       " $refType": null,
       edges: [
         {
@@ -210,7 +210,7 @@ describe("Seo Products for Collection Page", () => {
   })
 
   describe("when both a Money and a PriceRange are present", () => {
-    it("it uses the maxPrice when the descending is a PriceRange", () => {
+    it("uses the maxPrice when the descending is a PriceRange", () => {
       props.ascending_artworks = buildAscendingArtworks(
         buildIndividualPrice(42)
       )
@@ -225,7 +225,7 @@ describe("Seo Products for Collection Page", () => {
       expect(html).toContain('"highPrice": 420')
     })
 
-    it("it uses the minPrice when the ascending is a PriceRange", () => {
+    it("uses the minPrice when the ascending is a PriceRange", () => {
       props.ascending_artworks = buildAscendingArtworks(
         buildPriceRange(42, 100)
       )

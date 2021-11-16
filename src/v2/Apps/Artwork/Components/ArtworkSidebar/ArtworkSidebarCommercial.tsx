@@ -20,8 +20,8 @@ import { ModalType } from "v2/Components/Authentication/Types"
 import { ErrorModal } from "v2/Components/Modal/ErrorModal"
 import currency from "currency.js"
 import { Router } from "found"
-import { FC, useContext } from "react";
-import * as React from "react";
+import { FC, useContext } from "react"
+import * as React from "react"
 import {
   RelayProp,
   commitMutation,
@@ -80,9 +80,9 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
   firstAvailableEcommerceEditionSet(): EditionSet {
     const editionSets = this.props.artwork.edition_sets
 
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     return editionSets.find(editionSet => {
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       return editionSet.is_acquireable || editionSet.is_offerable
     })
   }
@@ -179,7 +179,7 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
       {
         product_id: props.artwork.internalID,
         quantity: 1,
-        // @ts-expect-error STRICT_NULL_CHECK
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         price: currency(props.artwork.listPrice.display).value,
       },
     ],
@@ -188,10 +188,10 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
     const { user, mediator } = this.props
     if (user && user.id) {
       this.setState({ isCommittingCreateOrderMutation: true }, () => {
-        // @ts-expect-error STRICT_NULL_CHECK
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         if (get(this.props, props => props.relay.environment)) {
           commitMutation<ArtworkSidebarCommercialOrderMutation>(
-            // @ts-expect-error STRICT_NULL_CHECK
+            // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
             this.props.relay.environment,
             {
               // TODO: Inputs to the mutation might have changed case of the keys!
@@ -233,7 +233,7 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
                   { isCommittingCreateOrderMutation: false },
                   () => {
                     const {
-                      // @ts-expect-error STRICT_NULL_CHECK
+                      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
                       commerceCreateOrderWithArtwork: { orderOrError },
                     } = data
                     if (orderOrError.error) {
@@ -245,7 +245,7 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
                       )
                     } else {
                       const url = `/orders/${orderOrError.order.internalID}`
-                      // @ts-expect-error STRICT_NULL_CHECK
+                      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
                       this.props.router.push(url)
                     }
                   }
@@ -277,10 +277,10 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
     const { user, mediator } = this.props
     if (user && user.id) {
       this.setState({ isCommittingCreateOfferOrderMutation: true }, () => {
-        // @ts-expect-error STRICT_NULL_CHECK
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         if (get(this.props, props => props.relay.environment)) {
           commitMutation<ArtworkSidebarCommercialOfferOrderMutation>(
-            // @ts-expect-error STRICT_NULL_CHECK
+            // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
             this.props.relay.environment,
             {
               // TODO: Inputs to the mutation might have changed case of the keys!
@@ -322,7 +322,7 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
                   { isCommittingCreateOfferOrderMutation: false },
                   () => {
                     const {
-                      // @ts-expect-error STRICT_NULL_CHECK
+                      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
                       commerceCreateOfferOrderWithArtwork: { orderOrError },
                     } = data
                     if (orderOrError.error) {
@@ -334,7 +334,7 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
                       )
                     } else {
                       const url = `/orders/${orderOrError.order.internalID}/offer`
-                      // @ts-expect-error STRICT_NULL_CHECK
+                      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
                       this.props.router.push(url)
                     }
                   }

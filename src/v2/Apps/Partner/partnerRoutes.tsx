@@ -68,7 +68,7 @@ export const partnerRoutes: AppRouteConfig[] = [
     theme: "v2",
     ignoreScrollBehaviorBetweenChildren: true,
     getComponent: () => PartnerApp,
-    prepare: () => {
+    onClientSideRender: () => {
       PartnerApp.preload()
     },
     query: graphql`
@@ -108,7 +108,7 @@ export const partnerRoutes: AppRouteConfig[] = [
         path: "",
         theme: "v2",
         getComponent: () => OverviewRoute,
-        prepare: () => {
+        onClientSideRender: () => {
           OverviewRoute.preload()
         },
         query: graphql`
@@ -133,7 +133,7 @@ export const partnerRoutes: AppRouteConfig[] = [
         path: "shows",
         theme: "v2",
         getComponent: () => ShowsRoute,
-        prepare: () => {
+        onClientSideRender: () => {
           ShowsRoute.preload()
         },
         query: graphql`
@@ -175,7 +175,7 @@ export const partnerRoutes: AppRouteConfig[] = [
         path: "viewing-rooms",
         theme: "v2",
         getComponent: () => ViewinRoomsRoute,
-        prepare: () => {
+        onClientSideRender: () => {
           ViewinRoomsRoute.preload()
         },
         query: graphql`
@@ -203,7 +203,7 @@ export const partnerRoutes: AppRouteConfig[] = [
         path: "works",
         theme: "v2",
         getComponent: () => WorksRoute,
-        prepare: () => {
+        onClientSideRender: () => {
           WorksRoute.preload()
         },
         prepareVariables: (data, props) => {
@@ -283,7 +283,7 @@ export const partnerRoutes: AppRouteConfig[] = [
         path: "artists/:artistId?",
         theme: "v2",
         getComponent: () => ArtistsRoute,
-        prepare: () => {
+        onClientSideRender: () => {
           ArtistsRoute.preload()
         },
         query: graphql`
@@ -325,7 +325,7 @@ export const partnerRoutes: AppRouteConfig[] = [
         path: "articles",
         theme: "v2",
         getComponent: () => ArticlesRoute,
-        prepare: () => {
+        onClientSideRender: () => {
           ArticlesRoute.preload()
         },
         prepareVariables: (params, { location }) => {
@@ -373,7 +373,7 @@ export const partnerRoutes: AppRouteConfig[] = [
         path: "contact",
         theme: "v2",
         getComponent: () => ContactRoute,
-        prepare: () => {
+        onClientSideRender: () => {
           ContactRoute.preload()
         },
         query: graphql`

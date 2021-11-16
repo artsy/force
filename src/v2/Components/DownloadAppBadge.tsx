@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"
 import track, { useTracking } from "react-tracking"
 import { clickedAppDownload, ContextModule } from "@artsy/cohesion"
 import { useAnalyticsContext } from "v2/System"
@@ -24,7 +24,7 @@ interface DownloadAppBadgeProps extends LinkProps {
   downloadAppUrl: string
 }
 
-// @ts-expect-error STRICT_NULL_CHECK
+// @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
 export const DownloadAppBadge: React.FC<DownloadAppBadgeProps> = track(null, {
   dispatch: data => Events.postEvent(data),
 })(({ contextModule, device, downloadAppUrl, ...rest }) => {

@@ -1,3 +1,4 @@
+import * as React from "react"
 import { Box, Separator } from "@artsy/palette"
 import { SearchResultsArtists_viewer } from "v2/__generated__/SearchResultsArtists_viewer.graphql"
 import { GenericSearchResultItem } from "v2/Apps/Search/Components/GenericSearchResultItem"
@@ -6,7 +7,6 @@ import { LoadingArea, LoadingAreaState } from "v2/Components/LoadingArea"
 import { PaginationFragmentContainer as Pagination } from "v2/Components/Pagination"
 import { RouterState, withRouter } from "found"
 import qs from "qs"
-import * as React from "react";
 import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
 
 export interface Props extends RouterState {
@@ -94,7 +94,7 @@ export class SearchResultsArtistsRoute extends React.Component<Props, State> {
         })
         // TODO: Look into using router push w/ query params.
         // this.props.router.replace(`/search/artists?${urlParams}`)
-        // @ts-expect-error STRICT_NULL_CHECK
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         window.history.pushState({}, null, `/search/artists?${urlParams}`)
       }
     )
@@ -110,18 +110,23 @@ export class SearchResultsArtistsRoute extends React.Component<Props, State> {
       <>
         {artists?.map((artist, index) => {
           const worksForSaleHref = artist!.href + "/works-for-sale"
+          const { name, bio, imageUrl, internalID } = artist || {}
+
+          if (!name || !internalID) {
+            return null
+          }
+
           return (
             <Box key={index}>
-              {/* @ts-expect-error STRICT_NULL_CHECK */}
               <GenericSearchResultItem
-                name={artist!.name}
-                description={artist!.bio}
-                imageUrl={artist!.imageUrl}
+                name={name}
+                description={bio ?? ""}
+                imageUrl={imageUrl ?? ""}
                 entityType="Artist"
                 href={worksForSaleHref}
                 index={index}
                 term={term}
-                id={artist!.internalID}
+                id={internalID}
               />
               {index < artists.length - 1 && <Separator />}
             </Box>

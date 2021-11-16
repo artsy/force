@@ -1,6 +1,6 @@
 import ReactDOM from "react-dom"
-import { FullPageAuthStatic } from "../components/FullPageAuthStatic"
-import { setCookies } from "../helpers"
+import { FullPageAuthStatic } from "v2/Apps/Authentication/Components/FullPageAuthStatic"
+import { setCookies } from "v2/Apps/Authentication/Utils/helpers"
 
 export const init = () => {
   // Rehydrate data from Server

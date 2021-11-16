@@ -31,6 +31,15 @@ query PartnersSpecialtyAutocompleteQuery(
 }
 
 fragment PartnersSpecialtyAutocomplete_viewer_2yvayw on Viewer {
+  allOptions: filterPartners(aggregations: [CATEGORY], defaultProfilePublic: true, eligibleForListing: true, size: 0) {
+    aggregations {
+      counts {
+        text: name
+        value
+        count
+      }
+    }
+  }
   filterPartners(aggregations: [CATEGORY, TOTAL], defaultProfilePublic: true, eligibleForListing: true, near: $near, size: 0, type: $type) {
     total
     aggregations {
@@ -68,6 +77,64 @@ v2 = {
   "kind": "Variable",
   "name": "type",
   "variableName": "type"
+},
+v3 = {
+  "kind": "Literal",
+  "name": "defaultProfilePublic",
+  "value": true
+},
+v4 = {
+  "kind": "Literal",
+  "name": "eligibleForListing",
+  "value": true
+},
+v5 = {
+  "kind": "Literal",
+  "name": "size",
+  "value": 0
+},
+v6 = {
+  "alias": null,
+  "args": null,
+  "concreteType": "PartnersAggregationResults",
+  "kind": "LinkedField",
+  "name": "aggregations",
+  "plural": true,
+  "selections": [
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "AggregationCount",
+      "kind": "LinkedField",
+      "name": "counts",
+      "plural": true,
+      "selections": [
+        {
+          "alias": "text",
+          "args": null,
+          "kind": "ScalarField",
+          "name": "name",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "value",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "count",
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
+    }
+  ],
+  "storageKey": null
 };
 return {
   "fragment": {
@@ -113,6 +180,29 @@ return {
         "plural": false,
         "selections": [
           {
+            "alias": "allOptions",
+            "args": [
+              {
+                "kind": "Literal",
+                "name": "aggregations",
+                "value": [
+                  "CATEGORY"
+                ]
+              },
+              (v3/*: any*/),
+              (v4/*: any*/),
+              (v5/*: any*/)
+            ],
+            "concreteType": "FilterPartners",
+            "kind": "LinkedField",
+            "name": "filterPartners",
+            "plural": false,
+            "selections": [
+              (v6/*: any*/)
+            ],
+            "storageKey": "filterPartners(aggregations:[\"CATEGORY\"],defaultProfilePublic:true,eligibleForListing:true,size:0)"
+          },
+          {
             "alias": null,
             "args": [
               {
@@ -123,22 +213,10 @@ return {
                   "TOTAL"
                 ]
               },
-              {
-                "kind": "Literal",
-                "name": "defaultProfilePublic",
-                "value": true
-              },
-              {
-                "kind": "Literal",
-                "name": "eligibleForListing",
-                "value": true
-              },
+              (v3/*: any*/),
+              (v4/*: any*/),
               (v1/*: any*/),
-              {
-                "kind": "Literal",
-                "name": "size",
-                "value": 0
-              },
+              (v5/*: any*/),
               (v2/*: any*/)
             ],
             "concreteType": "FilterPartners",
@@ -153,49 +231,7 @@ return {
                 "name": "total",
                 "storageKey": null
               },
-              {
-                "alias": null,
-                "args": null,
-                "concreteType": "PartnersAggregationResults",
-                "kind": "LinkedField",
-                "name": "aggregations",
-                "plural": true,
-                "selections": [
-                  {
-                    "alias": null,
-                    "args": null,
-                    "concreteType": "AggregationCount",
-                    "kind": "LinkedField",
-                    "name": "counts",
-                    "plural": true,
-                    "selections": [
-                      {
-                        "alias": "text",
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "name",
-                        "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "value",
-                        "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "count",
-                        "storageKey": null
-                      }
-                    ],
-                    "storageKey": null
-                  }
-                ],
-                "storageKey": null
-              }
+              (v6/*: any*/)
             ],
             "storageKey": null
           }
@@ -209,7 +245,7 @@ return {
     "metadata": {},
     "name": "PartnersSpecialtyAutocompleteQuery",
     "operationKind": "query",
-    "text": "query PartnersSpecialtyAutocompleteQuery(\n  $near: String\n  $type: [PartnerClassification]\n) {\n  viewer {\n    ...PartnersSpecialtyAutocomplete_viewer_2yvayw\n  }\n}\n\nfragment PartnersSpecialtyAutocomplete_viewer_2yvayw on Viewer {\n  filterPartners(aggregations: [CATEGORY, TOTAL], defaultProfilePublic: true, eligibleForListing: true, near: $near, size: 0, type: $type) {\n    total\n    aggregations {\n      counts {\n        text: name\n        value\n        count\n      }\n    }\n  }\n}\n"
+    "text": "query PartnersSpecialtyAutocompleteQuery(\n  $near: String\n  $type: [PartnerClassification]\n) {\n  viewer {\n    ...PartnersSpecialtyAutocomplete_viewer_2yvayw\n  }\n}\n\nfragment PartnersSpecialtyAutocomplete_viewer_2yvayw on Viewer {\n  allOptions: filterPartners(aggregations: [CATEGORY], defaultProfilePublic: true, eligibleForListing: true, size: 0) {\n    aggregations {\n      counts {\n        text: name\n        value\n        count\n      }\n    }\n  }\n  filterPartners(aggregations: [CATEGORY, TOTAL], defaultProfilePublic: true, eligibleForListing: true, near: $near, size: 0, type: $type) {\n    total\n    aggregations {\n      counts {\n        text: name\n        value\n        count\n      }\n    }\n  }\n}\n"
   }
 };
 })();

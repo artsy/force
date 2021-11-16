@@ -12,7 +12,7 @@ orbs:
 jobs:
   run_deepcrawl_automator:
     docker:
-      - image: cimg/base:2021.10
+      - image: cimg/base:2021.11
     environment:
       AUTOMATOR_START_ONLY: true
     steps:
@@ -340,9 +340,13 @@ workflows:
 
       # Release
       - horizon/block:
-          <<: *only_release
           context: horizon
           project_id: 11
+          filters:
+            branches:
+              only:
+                - release
+                - staging
 
       - validate_production_schema:
           <<: *only_release

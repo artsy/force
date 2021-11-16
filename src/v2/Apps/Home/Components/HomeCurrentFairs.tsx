@@ -79,11 +79,11 @@ const HomeCurrentFairs: React.FC<HomeCurrentFairsProps> = ({ viewer }) => {
                 )}
 
                 <Text variant={["lg", "xl"]} mt={1}>
-                  {fair?.name}
+                  {fair.name}
                 </Text>
 
                 <Text variant={["md", "lg"]} color="black60">
-                  {fair.startAt} – {fair?.endAt}
+                  {fair.exhibitionPeriod}
                 </Text>
               </RouterLink>
             </Column>
@@ -177,6 +177,7 @@ export const HomeCurrentFairsFragmentContainer = createFragmentContainer(
           name
           startAt(format: "MMM Do")
           endAt(format: "MMM Do YYYY")
+          exhibitionPeriod
           bannerSize
           image {
             # 4:3 aspect ratio

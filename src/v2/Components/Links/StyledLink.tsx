@@ -1,13 +1,13 @@
 import styled from "styled-components"
 import { RouterLink } from "v2/System/Router/RouterLink"
-import { color } from "@artsy/palette"
+import { themeGet } from "@styled-system/theme-get"
 
 export const StyledLink = styled(RouterLink)`
-  text-decoration: none;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  text-decoration: underline;
+  color: ${themeGet("colors.black100")};
 
   &:hover {
-    text-decoration: none;
-    color: ${color("black60")};
+    color: ${themeGet("colors.brand")};
   }
 `

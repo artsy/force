@@ -1,5 +1,6 @@
 import path from "path"
-import * as React from "react";
+import * as React from "react"
+import { isFunction } from "lodash"
 import ReactDOMServer from "react-dom/server"
 import serialize from "serialize-javascript"
 import { ServerStyleSheet } from "styled-components"
@@ -33,6 +34,8 @@ import { getENV } from "v2/Utils/getENV"
 import RelayServerSSR from "react-relay-network-modern-ssr/lib/server"
 import { buildServerAppContext } from "desktop/lib/buildServerAppContext"
 import { AppRouteConfig } from "v2/System/Router/Route"
+import { NextFunction } from "express"
+import { findRoutesByPath } from "./Utils/findRoutesByPath"
 
 export interface ServerAppResolve {
   bodyHTML?: string
@@ -51,6 +54,7 @@ const logger = createLogger("Artsy/Router/buildServerApp.tsx")
 export interface ServerRouterConfig extends RouterConfig {
   req: ArtsyRequest
   res: ArtsyResponse
+  next: NextFunction
   routes: AppRouteConfig[]
   context?: {
     injectedData?: any
@@ -71,6 +75,7 @@ export function buildServerApp(
         routes = [],
         res,
         req,
+        next,
         // FIXME: We don't, and wont, bundle split legacy code. Can remove this
         // configuration once desktop/apps/art_keeps_going and auction_reaction
         // are deleted from the codebase.
@@ -78,6 +83,22 @@ export function buildServerApp(
         loadablePath = "public/assets",
         assetsPath = "/assets",
       } = config
+
+      // Find and execute pre-render hooks
+      const matchedRoutes = findRoutesByPath({
+        path: req.path,
+      })
+
+      for await (const route of matchedRoutes) {
+        if (isFunction(route?.onServerSideRender)) {
+          await route.onServerSideRender({
+            req,
+            res,
+            next,
+            route,
+          })
+        }
+      }
 
       const serverContext = buildServerAppContext(req, res, context)
       const userAgent = req.header("User-Agent")
@@ -97,10 +118,12 @@ export function buildServerApp(
         renderError: RenderError,
       })
 
+      const routeConfig = createRouteConfig(routes)
+
       const farceResults = await getFarceResult({
         url: req.url,
         historyMiddlewares,
-        routeConfig: createRouteConfig(routes),
+        routeConfig,
         resolver,
         matchContext: serverContext,
         render: props => <Render {...props} />,
@@ -271,7 +294,7 @@ export function buildServerApp(
       logger.error(error)
       reject(error)
     }
-  });
+  })
 }
 
 export const __TEST_INTERNAL_SERVER_APP__ =

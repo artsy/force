@@ -1,5 +1,5 @@
 import { clickedEntityGroup, ContextModule, OwnerType } from "@artsy/cohesion"
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import { useAnalyticsContext, useSystemContext } from "v2/System"
@@ -71,7 +71,7 @@ const ArtistWorksForSaleRail: React.FC<ArtistWorksForSaleRailProps> = ({
                       contextModule: ContextModule.worksForSaleRail,
                       contextPageOwnerId,
                       contextPageOwnerSlug,
-                      // @ts-expect-error STRICT_NULL_CHECK
+                      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
                       contextPageOwnerType,
                       destinationPageOwnerType: OwnerType.artwork,
                       destinationPageOwnerId: node.internalID,

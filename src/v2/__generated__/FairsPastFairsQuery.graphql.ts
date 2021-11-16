@@ -33,8 +33,7 @@ fragment FairsFairRow_fair on Fair {
   href
   name
   isoStartAt: startAt
-  startAt(format: "MMM Do")
-  endAt(format: "MMM Do YYYY")
+  exhibitionPeriod
   profile {
     icon {
       resized(width: 80, height: 80, version: "square140") {
@@ -320,29 +319,10 @@ return {
                       },
                       {
                         "alias": null,
-                        "args": [
-                          {
-                            "kind": "Literal",
-                            "name": "format",
-                            "value": "MMM Do"
-                          }
-                        ],
+                        "args": null,
                         "kind": "ScalarField",
-                        "name": "startAt",
-                        "storageKey": "startAt(format:\"MMM Do\")"
-                      },
-                      {
-                        "alias": null,
-                        "args": [
-                          {
-                            "kind": "Literal",
-                            "name": "format",
-                            "value": "MMM Do YYYY"
-                          }
-                        ],
-                        "kind": "ScalarField",
-                        "name": "endAt",
-                        "storageKey": "endAt(format:\"MMM Do YYYY\")"
+                        "name": "exhibitionPeriod",
+                        "storageKey": null
                       },
                       {
                         "alias": null,
@@ -442,7 +422,7 @@ return {
     "metadata": {},
     "name": "FairsPastFairsQuery",
     "operationKind": "query",
-    "text": "query FairsPastFairsQuery(\n  $first: Int!\n  $after: String\n) {\n  viewer {\n    ...FairsPastFairs_viewer_2HEEH6\n  }\n}\n\nfragment FairsFairRow_fair on Fair {\n  href\n  name\n  isoStartAt: startAt\n  startAt(format: \"MMM Do\")\n  endAt(format: \"MMM Do YYYY\")\n  profile {\n    icon {\n      resized(width: 80, height: 80, version: \"square140\") {\n        width\n        height\n        src\n        srcSet\n      }\n    }\n    id\n  }\n  organizer {\n    profile {\n      href\n      id\n    }\n    id\n  }\n}\n\nfragment FairsPastFairs_viewer_2HEEH6 on Viewer {\n  pastFairs: fairsConnection(hasListing: true, hasFullFeature: true, sort: START_AT_DESC, status: CLOSED, first: $first, after: $after) {\n    edges {\n      node {\n        internalID\n        isPublished\n        profile {\n          isPublished\n          id\n        }\n        ...FairsFairRow_fair\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query FairsPastFairsQuery(\n  $first: Int!\n  $after: String\n) {\n  viewer {\n    ...FairsPastFairs_viewer_2HEEH6\n  }\n}\n\nfragment FairsFairRow_fair on Fair {\n  href\n  name\n  isoStartAt: startAt\n  exhibitionPeriod\n  profile {\n    icon {\n      resized(width: 80, height: 80, version: \"square140\") {\n        width\n        height\n        src\n        srcSet\n      }\n    }\n    id\n  }\n  organizer {\n    profile {\n      href\n      id\n    }\n    id\n  }\n}\n\nfragment FairsPastFairs_viewer_2HEEH6 on Viewer {\n  pastFairs: fairsConnection(hasListing: true, hasFullFeature: true, sort: START_AT_DESC, status: CLOSED, first: $first, after: $after) {\n    edges {\n      node {\n        internalID\n        isPublished\n        profile {\n          isPublished\n          id\n        }\n        ...FairsFairRow_fair\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();

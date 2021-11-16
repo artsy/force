@@ -1,6 +1,6 @@
 import { ActionType, AuthImpression, AuthModalType } from "@artsy/cohesion"
 import qs from "querystring"
-import { Component } from "react";
+import { Component } from "react"
 import track, { TrackingProp } from "react-tracking"
 import Events from "v2/Utils/Events"
 import { SystemContextProvider } from "v2/System"
@@ -72,9 +72,9 @@ export class FormSwitcher extends Component<FormSwitcherProps, State> {
 
     const trackingArgs: AuthImpression = {
       action: ActionType.authImpression,
-      context_module: contextModule,
+      context_module: contextModule!,
       modal_copy: copy || title,
-      intent,
+      intent: intent!,
       trigger: triggerSeconds ? "timed" : "click",
       trigger_seconds: triggerSeconds,
       type: AuthModalType[type],
@@ -108,7 +108,7 @@ export class FormSwitcher extends Component<FormSwitcherProps, State> {
 
   getAfterSignupAction = (options: ModalOptions): AfterSignUpAction => {
     const { afterSignUpAction, action, kind, objectId } = options
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     return (
       afterSignUpAction || {
         action,
@@ -128,7 +128,7 @@ export class FormSwitcher extends Component<FormSwitcherProps, State> {
       email = qs.parse(searchQuery).email as string
     }
 
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     return email || values.email || ""
   }
 
@@ -176,12 +176,12 @@ export class FormSwitcher extends Component<FormSwitcherProps, State> {
     const { handleSubmit, onBackButtonClicked, values } = this.props
 
     const defaultValues = {
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       accepted_terms_of_service: values.accepted_terms_of_service || false,
       email: this.getEmailValue(),
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       name: values.name || "",
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       password: values.password || "",
     }
 
@@ -189,12 +189,12 @@ export class FormSwitcher extends Component<FormSwitcherProps, State> {
       <SystemContextProvider>
         <Form
           title={title}
-          contextModule={options.contextModule}
+          contextModule={options.contextModule!}
           error={error}
           values={defaultValues}
           handleTypeChange={this.handleTypeChange}
           handleSubmit={handleSubmit}
-          intent={options.intent}
+          intent={options.intent!}
           onBackButtonClicked={onBackButtonClicked}
           onAppleLogin={() => {
             if (this.props.onSocialAuthEvent) {

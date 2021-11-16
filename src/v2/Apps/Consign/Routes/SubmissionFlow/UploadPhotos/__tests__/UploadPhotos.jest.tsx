@@ -5,7 +5,9 @@ import { PhotoThumbnail } from "../Components/PhotoThumbnail"
 import { UploadPhotos } from "../UploadPhotos"
 import { flushPromiseQueue } from "v2/DevTools"
 import { SystemContextProvider } from "v2/System"
-import { MBSize } from "../../Utils/fileUtils"
+import { MBSize, uploadPhoto } from "../../Utils/fileUtils"
+import * as openAuthModal from "v2/Utils/openAuthModal"
+import { createConsignSubmission } from "../../Utils/createConsignSubmission"
 
 jest.unmock("react-relay")
 
@@ -38,25 +40,30 @@ Object.defineProperty(window, "sessionStorage", {
       return sessionStore[key] || null
     },
     setItem: jest.fn(),
+    removeItem: jest.fn(),
   },
 })
 
 jest.mock("../../Utils/fileUtils", () => ({
   ...jest.requireActual("../../Utils/fileUtils"),
-  uploadPhoto: jest
-    .fn()
-    .mockImplementation(async (relayEnvironment, photo, updateProgress) => {
-      return await new Promise((resolve, reject) => {
-        updateProgress(100)
-        resolve("s3Key")
-      })
-    }),
+  uploadPhoto: jest.fn(),
 }))
+
+jest.mock("../../Utils/createConsignSubmission", () => ({
+  ...jest.requireActual("../../Utils/createConsignSubmission"),
+  createConsignSubmission: jest.fn(),
+}))
+
+const openAuthModalSpy = jest.spyOn(openAuthModal, "openAuthModal")
+let user: User = undefined
+
+const mockUploadPhoto = uploadPhoto as jest.Mock
+const mockCreateConsignSubmission = createConsignSubmission as jest.Mock
 
 const { getWrapper } = setupTestWrapper({
   Component: () => {
     return (
-      <SystemContextProvider>
+      <SystemContextProvider user={user} isLoggedIn={!!user}>
         <UploadPhotos />
       </SystemContextProvider>
     )
@@ -83,6 +90,13 @@ describe("UploadPhotos", () => {
     jest.spyOn(global, "FileReader").mockImplementation(function () {
       this.readAsDataURL = jest.fn()
     })
+    mockUploadPhoto.mockResolvedValue("s3key")
+  })
+
+  afterEach(() => {
+    user = undefined
+    openAuthModalSpy.mockReset()
+    mockUploadPhoto.mockClear()
   })
 
   it("renders correct", async () => {
@@ -98,7 +112,7 @@ describe("UploadPhotos", () => {
     expect(wrapper.find("button[type='submit']").length).toBe(1)
     expect(wrapper.find("BackLink")).toHaveLength(1)
     expect(wrapper.find("BackLink").prop("to")).toEqual(
-      "/consign/submission2/1/artwork-details"
+      "/consign/submission/1/artwork-details"
     )
   })
 
@@ -236,45 +250,121 @@ describe("UploadPhotos", () => {
     expect(wrapper.find(PhotoThumbnail)).toHaveLength(1)
   })
 
-  it("save images to session storage", async () => {
-    const wrapper = getWrapper()
+  describe("save images to session storage", () => {
+    it("if user not logged in", async () => {
+      const wrapper = getWrapper()
 
-    const dropzoneInput = wrapper
-      .find(UploadPhotosForm)
-      .find("[data-test-id='image-dropzone']")
-      .find("input")
+      const dropzoneInput = wrapper
+        .find(UploadPhotosForm)
+        .find("[data-test-id='image-dropzone']")
+        .find("input")
 
-    dropzoneInput.simulate("change", {
-      target: {
-        files: [
-          {
-            name: "foo.png",
-            path: "foo.png",
-            type: "image/png",
-            size: 20000,
-          },
-        ],
-      },
+      dropzoneInput.simulate("change", {
+        target: {
+          files: [
+            {
+              name: "foo.png",
+              path: "foo.png",
+              type: "image/png",
+              size: 20000,
+            },
+          ],
+        },
+      })
+
+      await flushPromiseQueue()
+      wrapper.update()
+
+      wrapper.find("Form").simulate("submit")
+
+      await flushPromiseQueue()
+      wrapper.update()
+
+      expect(mockRouterPush).not.toHaveBeenCalled()
+      expect(openAuthModalSpy).toBeCalled()
     })
 
-    await flushPromiseQueue()
-    wrapper.update()
+    it("if user logged in", async () => {
+      user = {
+        email: "test@test.test",
+      }
 
-    wrapper.find("Form").simulate("submit")
+      const wrapper = getWrapper()
 
-    await flushPromiseQueue()
-    wrapper.update()
+      const dropzoneInput = wrapper
+        .find(UploadPhotosForm)
+        .find("[data-test-id='image-dropzone']")
+        .find("input")
 
-    expect(wrapper.find(PhotoThumbnail)).toHaveLength(1)
+      dropzoneInput.simulate("change", {
+        target: {
+          files: [
+            {
+              name: "foo.png",
+              path: "foo.png",
+              type: "image/png",
+              size: 20000,
+            },
+          ],
+        },
+      })
 
-    expect(sessionStorage.setItem).toHaveBeenCalled()
-    // expect(mockRouterPush).toHaveBeenCalled()
-    // expect(mockRouterPush).toHaveBeenCalledWith({
-    //   pathname: "/consign/submission2/1/contact-information",
-    // })
+      expect(sessionStorage.setItem).toHaveBeenCalled()
+
+      await flushPromiseQueue()
+      wrapper.update()
+
+      wrapper.find("Form").simulate("submit")
+
+      await flushPromiseQueue()
+      wrapper.update()
+
+      expect(createConsignSubmission).toHaveBeenCalled()
+      expect(sessionStorage.removeItem).toHaveBeenCalled()
+      // TODO: SWA-78
+      // expect(mockRouterPush).toHaveBeenCalled()
+      // expect(mockRouterPush).toHaveBeenCalledWith({
+      //   pathname: "/consign/submission/1/contact-information",
+      // })
+      expect(mockRouterPush).toHaveBeenCalled()
+      expect(mockRouterPush).toHaveBeenCalledWith(
+        "/consign/submission/1/thank-you"
+      )
+      expect(openAuthModalSpy).not.toBeCalled()
+    })
   })
 
   describe("show error message", () => {
+    it("if an image could not be uploaded", async () => {
+      mockUploadPhoto.mockRejectedValueOnce("rejected")
+
+      const wrapper = getWrapper()
+
+      const dropzoneInput = wrapper
+        .find(UploadPhotosForm)
+        .find("[data-test-id='image-dropzone']")
+        .find("input")
+
+      dropzoneInput.simulate("change", {
+        target: {
+          files: [
+            {
+              name: "foo.png",
+              path: "foo.png",
+              type: "image/png",
+              size: 40 * MBSize,
+            },
+          ],
+        },
+      })
+
+      await flushPromiseQueue()
+      wrapper.update()
+
+      const thumbnailWithError = wrapper.find("PhotoThumbnailErrorState")
+      expect(thumbnailWithError).toHaveLength(1)
+    })
+
     it("if uploading too big file", async () => {
       const wrapper = getWrapper()
 
@@ -360,6 +450,49 @@ describe("UploadPhotos", () => {
       expect(wrapper.text()).toContain(
         "File format not supported. Please upload JPG or PNG files."
       )
+    })
+  })
+
+  describe("show error modal", () => {
+    beforeEach(() => {
+      mockCreateConsignSubmission.mockRejectedValueOnce("rejected")
+    })
+
+    it("if consingment submission fails", async () => {
+      user = {
+        email: "test@test.test",
+      }
+
+      const wrapper = getWrapper()
+
+      const dropzoneInput = wrapper
+        .find(UploadPhotosForm)
+        .find("[data-test-id='image-dropzone']")
+        .find("input")
+
+      dropzoneInput.simulate("change", {
+        target: {
+          files: [
+            {
+              name: "foo.png",
+              path: "foo.png",
+              type: "image/png",
+              size: 40 * MBSize,
+            },
+          ],
+        },
+      })
+
+      await flushPromiseQueue()
+      wrapper.update()
+
+      wrapper.find("Form").simulate("submit")
+
+      await flushPromiseQueue()
+      wrapper.update()
+
+      const errorModal = wrapper.find("ErrorModal")
+      expect(errorModal).toHaveLength(1)
     })
   })
 })

@@ -4,7 +4,7 @@ import { Conversation_conversation } from "v2/__generated__/Conversation_convers
 
 describe("Item", () => {
   describe("when inquiry item is an artwork", () => {
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     const artworkItemProps: Conversation_conversation["items"][0]["item"] = {
       __typename: "Artwork",
       id: "12345",
@@ -40,7 +40,7 @@ describe("Item", () => {
   })
 
   describe("when inquiry item is a show", () => {
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     const showItemProps: Conversation_conversation["items"][0]["item"] = {
       __typename: "Show",
       id: "12345",
@@ -73,7 +73,7 @@ describe("Item", () => {
   })
 
   describe("when inquiry item is %other", () => {
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     const otherItemProps: Conversation_conversation["items"][0]["item"] = {
       __typename: "%other",
     }

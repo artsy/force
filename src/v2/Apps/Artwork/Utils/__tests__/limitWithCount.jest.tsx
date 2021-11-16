@@ -2,7 +2,7 @@ import { limitWithCount } from "../limitWithCount"
 
 describe("limitWithCount", () => {
   it("returns empty array if no array of strings is given", () => {
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     const limited = limitWithCount(null, 3)
     expect(limited).toEqual([])
   })

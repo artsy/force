@@ -1,5 +1,5 @@
 import App from "desktop/apps/auction/components/App"
-import Articles from "desktop/collections/articles.coffee"
+import Articles from "desktop/collections/articles"
 import Auction from "desktop/models/auction.coffee"
 import CurrentUser from "desktop/models/current_user"
 import ReactDOM from "react-dom"

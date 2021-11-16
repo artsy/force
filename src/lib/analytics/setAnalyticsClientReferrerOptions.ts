@@ -5,7 +5,7 @@
  * @param options page/referrer properties object, NOT event data
  */
 export const setAnalyticsClientReferrerOptions = (options: object = {}) => {
-  // @ts-expect-error STRICT_NULL_CHECK
+  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
   const referrer = window.analytics.__artsyClientSideRoutingReferrer
   let trackingOptions = options
 

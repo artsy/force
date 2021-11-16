@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"
 import { createRefetchContainer, RelayRefetchProp } from "react-relay"
 import { graphql } from "relay-runtime"
 import { Works_partner } from "v2/__generated__/Works_partner.graphql"
@@ -48,7 +48,7 @@ export const Artworks: React.FC<PartnerArtworkFilterProps> = ({
 }
 
 export const ArtworksRefetchContainer = createRefetchContainer(
-  // @ts-expect-error STRICT_NULL_CHECK
+  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
   withRouter<PartnerArtworkFilterProps & RouterState>(Artworks),
   {
     partner: graphql`

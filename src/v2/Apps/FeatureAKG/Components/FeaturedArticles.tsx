@@ -4,7 +4,7 @@ import { StyledLink } from "./StyledLink"
 import { AnalyticsSchema } from "v2/System"
 import { useTracking } from "v2/System/Analytics/useTracking"
 import { RouterLink } from "v2/System/Router/RouterLink"
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer } from "react-relay"
 import { graphql } from "relay-runtime"
 import styled from "styled-components"
@@ -45,9 +45,9 @@ const FeaturedArticles: React.FC<FeaturedArticlesProps> = props => {
         <Col md={6}>
           <Box pr={[0, 0, 1]}>
             <StyledLink
-              // @ts-expect-error STRICT_NULL_CHECK
+              // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
               to={firstArticle.href}
-              // @ts-expect-error STRICT_NULL_CHECK
+              // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
               onClick={() => trackClick(firstArticle.href)}
             >
               {firstArticleImage && (
@@ -63,11 +63,11 @@ const FeaturedArticles: React.FC<FeaturedArticlesProps> = props => {
                 />
               )}
               <Sans size={["4t", "4t", "6"]} my={1}>
-                {/* @ts-expect-error STRICT_NULL_CHECK */}
+                {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
                 {firstArticle.thumbnailTitle}
               </Sans>
               <Sans size="2" color="black60">
-                {/* @ts-expect-error STRICT_NULL_CHECK */}
+                {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
                 {firstArticle.publishedAt}
               </Sans>
             </StyledLink>
@@ -82,7 +82,7 @@ const FeaturedArticles: React.FC<FeaturedArticlesProps> = props => {
               <Box ml={[0, 0, 1]} key={`article-${index}`}>
                 <StyledLink
                   to={article.href}
-                  // @ts-expect-error STRICT_NULL_CHECK
+                  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
                   onClick={() => trackClick(article.href)}
                 >
                   <Flex width="100%" justifyContent="space-between">
@@ -96,11 +96,11 @@ const FeaturedArticles: React.FC<FeaturedArticlesProps> = props => {
                     </Box>
                     <Box maxWidth={["90px", "120px"]}>
                       <Image
-                        // @ts-expect-error STRICT_NULL_CHECK
+                        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
                         src={article.tinyImage.cropped.url}
                         width="60px"
                         height={60}
-                        // @ts-expect-error STRICT_NULL_CHECK
+                        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
                         alt={article.thumbnailTitle}
                       />
                     </Box>

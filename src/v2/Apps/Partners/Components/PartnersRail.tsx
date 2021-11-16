@@ -1,10 +1,16 @@
 import { compact, take } from "lodash"
-import { useMemo } from "react";
-import * as React from "react";
+import { useMemo } from "react"
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { PartnerCellFragmentContainer } from "v2/Components/Cells/PartnerCell"
+import {
+  PartnerCellFragmentContainer,
+  PartnerCellPlaceholder,
+} from "v2/Components/Cells/PartnerCell"
 import { Rail } from "v2/Components/Rail"
 import { PartnersRail_partnerCategory } from "v2/__generated__/PartnersRail_partnerCategory.graphql"
+import { PartnersRailQuery } from "v2/__generated__/PartnersRailQuery.graphql"
+import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
+import { Skeleton } from "@artsy/palette"
 
 interface PartnersRailProps {
   partnerCategory: PartnersRail_partnerCategory
@@ -35,19 +41,45 @@ const PartnersRail: React.FC<PartnersRailProps> = ({ partnerCategory }) => {
   )
 }
 
+interface PartnersRailPlaceholderProps {
+  name: string
+}
+
+export const PartnersRailPlaceholder: React.FC<PartnersRailPlaceholderProps> = ({
+  name,
+}) => {
+  return (
+    <Skeleton>
+      <Rail
+        title={name}
+        isLoading
+        getItems={() => {
+          return [...new Array(9)].map((_, k) => {
+            return <PartnerCellPlaceholder key={k} mode="RAIL" />
+          })
+        }}
+      />
+    </Skeleton>
+  )
+}
+
 export const PartnersRailFragmentContainer = createFragmentContainer(
   PartnersRail,
   {
     partnerCategory: graphql`
       fragment PartnersRail_partnerCategory on PartnerCategory
-        @argumentDefinitions(type: { type: "[PartnerClassification!]!" }) {
+        @argumentDefinitions(
+          category: { type: "[String]" }
+          type: { type: "[PartnerClassification!]!" }
+        ) {
         name
         primary: partners(
+          defaultProfilePublic: true
           eligibleForListing: true
           eligibleForPrimaryBucket: true
-          type: $type
+          partnerCategories: $category
           sort: RANDOM_SCORE_DESC
-          defaultProfilePublic: true
+          type: $type
         ) {
           internalID
           ...PartnerCell_partner
@@ -56,6 +88,7 @@ export const PartnersRailFragmentContainer = createFragmentContainer(
           eligibleForListing: true
           eligibleForSecondaryBucket: true
           type: $type
+          partnerCategories: $category
           sort: RANDOM_SCORE_DESC
           defaultProfilePublic: true
         ) {
@@ -67,12 +100,58 @@ export const PartnersRailFragmentContainer = createFragmentContainer(
   }
 )
 
+interface PartnersRailQueryRendererProps {
+  id: string
+  name: string
+  type: "INSTITUTION" | "GALLERY"
+}
+
+export const PartnersRailQueryRenderer: React.FC<PartnersRailQueryRendererProps> = ({
+  id,
+  name,
+  type,
+}) => {
+  return (
+    <SystemQueryRenderer<PartnersRailQuery>
+      lazyLoad
+      placeholder={<PartnersRailPlaceholder name={name} />}
+      variables={{ id, category: type, type: type }}
+      query={graphql`
+        query PartnersRailQuery(
+          $id: String!
+          $category: [String]
+          $type: [PartnerClassification!]!
+        ) {
+          partnerCategory(id: $id) {
+            ...PartnersRail_partnerCategory
+              @arguments(category: $category, type: $type)
+          }
+        }
+      `}
+      render={({ props, error }) => {
+        if (error) {
+          console.error(error)
+          return null
+        }
+
+        if (!props?.partnerCategory) {
+          return <PartnersRailPlaceholder name={name} />
+        }
+
+        return (
+          <PartnersRailFragmentContainer
+            partnerCategory={props.partnerCategory}
+          />
+        )
+      }}
+    />
+  )
+}
+
 const desiredTotal = 9
 const desiredPrimary = 6
 const desiredSecondary = 3
 
-// TODO: In the original implemntation, each section was independently shuffled.
-// We need a way to do a SSR-stable shuffle for this to work.
 const mergeBuckets = <T,>(primary: T[], secondary: T[]): T[] => {
   if (primary.length < desiredPrimary) {
     return [...primary, ...take(secondary, desiredTotal - primary.length)]

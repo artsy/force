@@ -18,7 +18,7 @@ const validForm = {
   artistName: "Banksy",
   year: "2021",
   title: "Some title",
-  medium: "PAINTING",
+  materials: "materials",
   rarity: "limited edition",
   editionNumber: "1",
   editionSize: "2",
@@ -26,6 +26,7 @@ const validForm = {
   width: "4",
   depth: "5",
   units: "cm",
+  provenance: "provenance",
 }
 
 const validFormWithSpaces = {
@@ -33,7 +34,7 @@ const validFormWithSpaces = {
   artistName: "Banksy",
   year: " 2021 ",
   title: " Some title ",
-  medium: "PAINTING",
+  materials: "  materials  ",
   rarity: "limited edition",
   editionNumber: " 1 ",
   editionSize: " 2 ",
@@ -41,6 +42,7 @@ const validFormWithSpaces = {
   width: " 4 ",
   depth: " 5 ",
   units: " cm ",
+  provenance: "  provenance  ",
 }
 
 const mockRouterPush = jest.fn()
@@ -127,8 +129,8 @@ describe("ArtworkDetails", () => {
       expect(wrapper.find("input[name='title']").prop("value")).toBe(
         "Some title"
       )
-      expect(wrapper.find("select[name='medium']").prop("value")).toBe(
-        "PAINTING"
+      expect(wrapper.find("input[name='materials']").prop("value")).toBe(
+        "materials"
       )
       expect(wrapper.find("select[name='rarity']").prop("value")).toBe(
         "limited edition"
@@ -141,6 +143,9 @@ describe("ArtworkDetails", () => {
       expect(wrapper.find("input[name='width']").prop("value")).toBe("4")
       expect(wrapper.find("input[name='depth']").prop("value")).toBe("5")
       expect(wrapper.find("Radio[value='cm']").prop("selected")).toBe(true)
+      expect(wrapper.find("input[name='provenance']").prop("value")).toBe(
+        "provenance"
+      )
     })
 
     describe("Correct steps", () => {
@@ -212,11 +217,11 @@ describe("ArtworkDetails", () => {
         await flushPromiseQueue()
 
         expect(mockRouterReplace).toHaveBeenCalledWith({
-          pathname: "/consign/submission2/1/artwork-details",
+          pathname: "/consign/submission/1/artwork-details",
         })
 
         expect(mockRouterPush).toHaveBeenCalledWith({
-          pathname: "/consign/submission2/1/upload-photos",
+          pathname: "/consign/submission/1/upload-photos",
         })
       })
 

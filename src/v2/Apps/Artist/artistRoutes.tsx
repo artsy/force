@@ -7,6 +7,7 @@ import { getWorksForSaleRouteVariables } from "./Routes/WorksForSale/Utils/getWo
 import { paramsToCamelCase } from "v2/Components/ArtworkFilter/Utils/urlBuilder"
 import { initialAuctionResultsFilterState } from "./Routes/AuctionResults/AuctionResultsFilterContext"
 import { allowedAuctionResultFilters } from "./Utils/allowedAuctionResultFilters"
+import { enableArtistPageCTA } from "./Server/enableArtistPageCTA"
 
 const ArtistApp = loadable(
   () => import(/* webpackChunkName: "artistBundle" */ "./ArtistApp"),
@@ -86,7 +87,8 @@ export const artistRoutes: AppRouteConfig[] = [
     path: "/artist/:artistID",
     ignoreScrollBehaviorBetweenChildren: true,
     getComponent: () => ArtistApp,
-    prepare: () => {
+    onServerSideRender: enableArtistPageCTA,
+    onClientSideRender: () => {
       ArtistApp.preload()
       OverviewRoute.preload()
       WorksForSaleRoute.preload()
@@ -100,11 +102,13 @@ export const artistRoutes: AppRouteConfig[] = [
       }
     `,
     render: renderOrRedirect,
+
     children: [
       {
         path: "/",
         getComponent: () => OverviewRoute,
-        prepare: () => {
+        onServerSideRender: enableArtistPageCTA,
+        onClientSideRender: () => {
           OverviewRoute.preload()
         },
         query: graphql`
@@ -118,7 +122,7 @@ export const artistRoutes: AppRouteConfig[] = [
       {
         path: "works-for-sale",
         getComponent: () => WorksForSaleRoute,
-        prepare: () => {
+        onClientSideRender: () => {
           WorksForSaleRoute.preload()
         },
         prepareVariables: getWorksForSaleRouteVariables,
@@ -138,7 +142,7 @@ export const artistRoutes: AppRouteConfig[] = [
       {
         path: "auction-results",
         getComponent: () => AuctionResultsRoute,
-        prepare: () => {
+        onClientSideRender: () => {
           AuctionResultsRoute.preload()
         },
         prepareVariables: ({ artistID }, props) => {
@@ -183,7 +187,7 @@ export const artistRoutes: AppRouteConfig[] = [
         path: "articles",
         hideNavigationTabs: true,
         getComponent: () => ArticlesRoute,
-        prepare: () => {
+        onClientSideRender: () => {
           ArticlesRoute.preload()
         },
         query: graphql`
@@ -200,7 +204,7 @@ export const artistRoutes: AppRouteConfig[] = [
         displayFullPage: true,
         hideNavigationTabs: true,
         getComponent: () => ConsignRoute,
-        prepare: () => {
+        onClientSideRender: () => {
           ConsignRoute.preload()
         },
         query: graphql`
@@ -234,7 +238,7 @@ export const artistRoutes: AppRouteConfig[] = [
         path: "cv",
         hideNavigationTabs: true,
         getComponent: () => CVRoute,
-        prepare: () => {
+        onClientSideRender: () => {
           CVRoute.preload()
         },
         query: graphql`
@@ -249,7 +253,7 @@ export const artistRoutes: AppRouteConfig[] = [
         path: "shows",
         hideNavigationTabs: true,
         getComponent: () => ShowsRoute,
-        prepare: () => {
+        onClientSideRender: () => {
           ShowsRoute.preload()
         },
         query: graphql`

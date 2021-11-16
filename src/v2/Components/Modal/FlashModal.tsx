@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import * as React from "react";
+import { useEffect, useState } from "react"
+import * as React from "react"
 import { useSystemContext } from "v2/System/useSystemContext"
 import { ErrorModal, ErrorModalProps } from "./ErrorModal"
 
@@ -15,17 +15,17 @@ export const FlashMessage: React.FC = () => {
   const [message, setMessage] = useState(null)
 
   useEffect(() => {
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     mediator.on("modal:error:show", (options: FlashMessageProps) => {
       setShow(true)
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       setMessage(options.message)
     })
   })
 
   return show ? (
     <ErrorModal
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       detailText={message}
       onClose={() => {
         setShow(false)

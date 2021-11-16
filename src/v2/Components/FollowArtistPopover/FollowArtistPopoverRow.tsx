@@ -8,7 +8,7 @@ import {
 import { FollowArtistPopoverRow_artist } from "v2/__generated__/FollowArtistPopoverRow_artist.graphql"
 import { FollowArtistPopoverRowMutation } from "v2/__generated__/FollowArtistPopoverRowMutation.graphql"
 import { SystemContextProps } from "v2/System"
-import { Component } from "react";
+import { Component } from "react"
 import {
   RelayProp,
   commitMutation,
@@ -32,7 +32,7 @@ interface State {
 
 class FollowArtistPopoverRow extends Component<Props, State> {
   state: State = {
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     swappedArtist: null,
     followed: false,
   }
@@ -40,7 +40,7 @@ class FollowArtistPopoverRow extends Component<Props, State> {
   handleClick(artistID: string) {
     const { user, relay, excludeArtistIdsState } = this.props
     const {
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       state: { excludeArtistIds },
     } = excludeArtistIdsState
     if (user && user.id) {
@@ -84,9 +84,9 @@ class FollowArtistPopoverRow extends Component<Props, State> {
         },
         updater: (_store, data) => {
           const {
-            // @ts-expect-error STRICT_NULL_CHECK
+            // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
             node,
-            // @ts-expect-error STRICT_NULL_CHECK
+            // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
           } = data.followArtist.artist.related.suggestedConnection.edges[0]
 
           // Add slight delay to make UX seem a bit nicer
@@ -104,7 +104,7 @@ class FollowArtistPopoverRow extends Component<Props, State> {
             }
           )
 
-          // @ts-expect-error STRICT_NULL_CHECK
+          // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
           excludeArtistIdsState.addArtist(node.internalID)
         },
       })

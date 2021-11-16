@@ -30,9 +30,9 @@ const searchResults: SearchBarTestQueryRawResponse["viewer"] = {
           displayLabel: "Banksy",
           href: "/artist/banksy",
           __typename: "Artist",
-          counts: {
-            artworks: 3390,
-            auctionResults: 734,
+          statuses: {
+            artworks: true,
+            auctionLots: true,
           },
           id: "opaque-searchable-item-id2",
         },
@@ -42,9 +42,9 @@ const searchResults: SearchBarTestQueryRawResponse["viewer"] = {
           displayLabel: "Not Banksy",
           href: "/artist/not-banksy",
           __typename: "Artist",
-          counts: {
-            artworks: 0,
-            auctionResults: 0,
+          statuses: {
+            artworks: false,
+            auctionLots: false,
           },
           id: "opaque-searchable-item-id3",
         },
@@ -176,36 +176,36 @@ describe("SearchBar", () => {
 describe("getSearchTerm", () => {
   function buildLocationWithQueryString(queryString: string): Location {
     return {
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       ancestorOrigins: undefined,
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       host: undefined,
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       hostname: undefined,
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       href: undefined,
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       origin: undefined,
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       port: undefined,
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       protocol: undefined,
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       assign: undefined,
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       hash: undefined,
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       pathname: undefined,
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       reload: undefined,
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       replace: undefined,
       search: queryString,
     }
   }
 
   it("returns empty string if there is no term", () => {
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     const location = buildLocationWithQueryString(undefined)
 
     const result = getSearchTerm(location)

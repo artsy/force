@@ -20,7 +20,7 @@ const { getWrapper } = setupTestWrapper<FollowGeneButton_Test_Query>({
   Component: props => {
     return (
       <SystemContextProvider user={user}>
-        {/* @ts-expect-error STRICT_NULL_CHECK */}
+        {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
         <FollowGeneButtonFragmentContainer {...props} />
       </SystemContextProvider>
     )
@@ -72,7 +72,7 @@ describe("FollowGeneButton", () => {
   })
 
   describe("logged out", () => {
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     user = null
 
     it("pops up the auth model when clicked", () => {

@@ -14,9 +14,9 @@ jest.mock("sharify", () => ({
 
 describe("Meta", () => {
   const artist: ArtistMeta_artist = {
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     " $fragmentRefs": null,
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     " $refType": null,
     alternate_names: null,
     birthday: "1929",
@@ -81,7 +81,7 @@ describe("Meta", () => {
     nationality: "Swedish",
   }
 
-  // @ts-expect-error STRICT_NULL_CHECK
+  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
   type ArtworkMeta = ArtistMeta_artist["artworks_connection"]["edges"][number]["node"]
 
   const artistWithArtworkOverrides = (
@@ -93,7 +93,7 @@ describe("Meta", () => {
         edges: [
           {
             node: {
-              // @ts-expect-error STRICT_NULL_CHECK
+              // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
               ...artist.artworks_connection.edges[0].node,
               ...artwork,
             },
@@ -227,7 +227,7 @@ describe("Meta", () => {
     })
 
     it("#productFromArtistArtwork construct product object from artist/artwork", () => {
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       const artwork = artist.artworks_connection.edges[0].node
       const json = productAttributes(artist, artwork)
 
@@ -263,7 +263,7 @@ describe("Meta", () => {
       const modifiedArtist = artistWithArtworkOverrides({
         listPrice: null,
       })
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       const artwork = modifiedArtist.artworks_connection.edges[0].node
       const json = productAttributes(modifiedArtist, artwork)
       expect(json).toBeFalsy()
@@ -282,7 +282,7 @@ describe("Meta", () => {
           },
         } as const,
       })
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       const artwork = modifiedArtist.artworks_connection.edges[0].node
       const json = productAttributes(modifiedArtist, artwork)
       expect(json).toMatchObject({
@@ -304,7 +304,7 @@ describe("Meta", () => {
           minPrice: null,
         } as const,
       })
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       const artwork = modifiedArtist.artworks_connection.edges[0].node
       const json = productAttributes(modifiedArtist, artwork)
       expect(json).toBeFalsy()
@@ -321,7 +321,7 @@ describe("Meta", () => {
           },
         } as const,
       })
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       const artwork = modifiedArtist.artworks_connection.edges[0].node
       const json = productAttributes(modifiedArtist, artwork)
       expect(json).toMatchObject({
@@ -333,7 +333,7 @@ describe("Meta", () => {
     })
 
     it("#sellerFromPartner constructs seller object from partner", () => {
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       const partner = artist.artworks_connection.edges[0].node.partner
       const json = sellerFromPartner(partner)
       expect(json).toEqual({

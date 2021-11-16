@@ -15,7 +15,6 @@ export type UserInformationQueryRawResponse = {
         readonly name: string | null;
         readonly paddleNumber: string | null;
         readonly phone: string | null;
-        readonly internalID: string;
         readonly id: string | null;
     }) | null;
 };
@@ -40,7 +39,6 @@ fragment UserInformation_me on Me {
   name
   paddleNumber
   phone
-  internalID
 }
 */
 
@@ -116,13 +114,6 @@ const node: ConcreteRequest = {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "internalID",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
             "name": "id",
             "storageKey": null
           }
@@ -136,7 +127,7 @@ const node: ConcreteRequest = {
     "metadata": {},
     "name": "UserInformationQuery",
     "operationKind": "query",
-    "text": "query UserInformationQuery {\n  me {\n    ...UserInformation_me\n    id\n  }\n}\n\nfragment UserInformation_me on Me {\n  email\n  name\n  paddleNumber\n  phone\n  internalID\n}\n"
+    "text": "query UserInformationQuery {\n  me {\n    ...UserInformation_me\n    id\n  }\n}\n\nfragment UserInformation_me on Me {\n  email\n  name\n  paddleNumber\n  phone\n}\n"
   }
 };
 (node as any).hash = '77e70fe6f059d61db962f2645846adb8';

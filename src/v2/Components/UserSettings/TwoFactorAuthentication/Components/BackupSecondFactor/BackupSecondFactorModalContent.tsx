@@ -1,6 +1,6 @@
 import { BorderBoxProps, Box, Flex, Sans } from "@artsy/palette"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 
 import { BackupSecondFactorModalContent_me } from "v2/__generated__/BackupSecondFactorModalContent_me.graphql"
@@ -23,11 +23,11 @@ export const BackupSecondFactorModalContent: React.FC<BackupSecondFactorModalCon
         one-time codes to access your account.
       </Sans>
       <Flex mt={3} flexDirection="row" flexWrap="wrap">
-        {/* @ts-expect-error STRICT_NULL_CHECK */}
+        {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
         {me.backupSecondFactors.map((factor, index) => (
           <Box width="50%" key={index}>
             <Sans size="6" color="black60" textAlign="center" py={0.5}>
-              {/* @ts-expect-error STRICT_NULL_CHECK */}
+              {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
               {factor.code}
             </Sans>
           </Box>

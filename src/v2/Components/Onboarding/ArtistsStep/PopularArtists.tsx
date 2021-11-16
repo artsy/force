@@ -6,7 +6,7 @@ import {
 import { PopularArtistsQuery } from "v2/__generated__/PopularArtistsQuery.graphql"
 import { SystemContextProps, withSystemContext } from "v2/System"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
-import * as React from "react";
+import * as React from "react"
 import {
   RelayProp,
   commitMutation,
@@ -48,20 +48,20 @@ class PopularArtistsContent extends React.Component<Props, null> {
     this.props.onArtistFollow(follow, artist)
 
     const suggestedArtistEdge =
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       data.followArtist.artist.related.suggestedConnection.edges[0]
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     const popularArtist = data.followArtist.popular_artists[0]
     const artistToSuggest = store.get(
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       ((suggestedArtistEdge && suggestedArtistEdge.node) || popularArtist).id
     )
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     this.excludedArtistIds.add(artistToSuggest.getValue("internalID") as string)
 
     const popularArtistsRootField = store.get("client:root")
     const popularArtists =
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       popularArtistsRootField.getLinkedRecords("popular_artists", {
         exclude_followed_artists: true,
       }) || []
@@ -72,16 +72,16 @@ class PopularArtistsContent extends React.Component<Props, null> {
         artistItem.getDataID() === artist.id ? artistToSuggest : artistItem
       )
 
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     store
       .get("client:root")
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       .setLinkedRecords(updatedPopularArtists, "popular_artists")
   }
 
   onFollowedArtist(artist: Artist, follow: boolean) {
     commitMutation<PopularArtistsFollowArtistMutation>(
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       this.props.relay.environment,
       {
         // TODO: Inputs to the mutation might have changed case of the keys!
@@ -150,7 +150,7 @@ class PopularArtistsContent extends React.Component<Props, null> {
     const artistItems = this.props.popular_artists
       .filter(Boolean)
       .map((artist, index) => {
-        // @ts-expect-error STRICT_NULL_CHECK
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         const imageUrl = get(artist, a => a.image.cropped.url)
         return (
           <LinkContainer key={`popular-artists-${index}`}>
@@ -163,9 +163,9 @@ class PopularArtistsContent extends React.Component<Props, null> {
                 item={artist}
                 key={artist.id}
                 id={artist.id}
-                // @ts-expect-error STRICT_NULL_CHECK
+                // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
                 name={artist.name}
-                // @ts-expect-error STRICT_NULL_CHECK
+                // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
                 image_url={imageUrl}
                 onFollow={selected => this.onFollowedArtist(artist, selected)}
               />
@@ -179,7 +179,7 @@ class PopularArtistsContent extends React.Component<Props, null> {
 }
 
 export const PopularArtistContentContainer = createFragmentContainer(
-  // @ts-expect-error STRICT_NULL_CHECK
+  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
   PopularArtistsContent,
   {
     popular_artists: graphql`

@@ -47,13 +47,13 @@ fragment HomeFeaturedEventsRail_orderedSet on OrderedSet {
       subtitle
       href
       image {
-        small: cropped(width: 95, height: 63) {
+        small: cropped(width: 95, height: 63, version: ["main", "wide", "large_rectangle"]) {
           src
           srcSet
           width
           height
         }
-        large: cropped(width: 445, height: 297) {
+        large: cropped(width: 445, height: 297, version: ["main", "wide", "large_rectangle"]) {
           src
           srcSet
         }
@@ -132,13 +132,22 @@ v5 = {
   "storageKey": null
 },
 v6 = {
+  "kind": "Literal",
+  "name": "version",
+  "value": [
+    "main",
+    "wide",
+    "large_rectangle"
+  ]
+},
+v7 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "src",
   "storageKey": null
 },
-v7 = {
+v8 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -301,6 +310,7 @@ return {
                             "name": "height",
                             "value": 63
                           },
+                          (v6/*: any*/),
                           {
                             "kind": "Literal",
                             "name": "width",
@@ -312,8 +322,8 @@ return {
                         "name": "cropped",
                         "plural": false,
                         "selections": [
-                          (v6/*: any*/),
                           (v7/*: any*/),
+                          (v8/*: any*/),
                           {
                             "alias": null,
                             "args": null,
@@ -329,7 +339,7 @@ return {
                             "storageKey": null
                           }
                         ],
-                        "storageKey": "cropped(height:63,width:95)"
+                        "storageKey": "cropped(height:63,version:[\"main\",\"wide\",\"large_rectangle\"],width:95)"
                       },
                       {
                         "alias": "large",
@@ -339,6 +349,7 @@ return {
                             "name": "height",
                             "value": 297
                           },
+                          (v6/*: any*/),
                           {
                             "kind": "Literal",
                             "name": "width",
@@ -350,10 +361,10 @@ return {
                         "name": "cropped",
                         "plural": false,
                         "selections": [
-                          (v6/*: any*/),
-                          (v7/*: any*/)
+                          (v7/*: any*/),
+                          (v8/*: any*/)
                         ],
-                        "storageKey": "cropped(height:297,width:445)"
+                        "storageKey": "cropped(height:297,version:[\"main\",\"wide\",\"large_rectangle\"],width:445)"
                       }
                     ],
                     "storageKey": null
@@ -375,7 +386,7 @@ return {
     "metadata": {},
     "name": "HomeApp_Test_Query",
     "operationKind": "query",
-    "text": "query HomeApp_Test_Query {\n  homePage {\n    ...HomeApp_homePage\n  }\n  featuredEventsOrderedSet: orderedSet(id: \"example\") {\n    ...HomeApp_featuredEventsOrderedSet\n    id\n  }\n}\n\nfragment HomeApp_featuredEventsOrderedSet on OrderedSet {\n  ...HomeFeaturedEventsRail_orderedSet\n}\n\nfragment HomeApp_homePage on HomePage {\n  ...HomeHeroUnits_homePage\n}\n\nfragment HomeFeaturedEventsRail_orderedSet on OrderedSet {\n  items {\n    __typename\n    ... on FeaturedLink {\n      internalID\n      title\n      subtitle\n      href\n      image {\n        small: cropped(width: 95, height: 63) {\n          src\n          srcSet\n          width\n          height\n        }\n        large: cropped(width: 445, height: 297) {\n          src\n          srcSet\n        }\n      }\n      id\n    }\n    ... on Node {\n      id\n    }\n    ... on Profile {\n      id\n    }\n  }\n}\n\nfragment HomeHeroUnit_heroUnit on HomePageHeroUnit {\n  backgroundImageURL\n  heading\n  title\n  subtitle\n  linkText\n  href\n  creditLine\n}\n\nfragment HomeHeroUnits_homePage on HomePage {\n  heroUnits(platform: DESKTOP) {\n    internalID\n    ...HomeHeroUnit_heroUnit\n    id\n  }\n}\n"
+    "text": "query HomeApp_Test_Query {\n  homePage {\n    ...HomeApp_homePage\n  }\n  featuredEventsOrderedSet: orderedSet(id: \"example\") {\n    ...HomeApp_featuredEventsOrderedSet\n    id\n  }\n}\n\nfragment HomeApp_featuredEventsOrderedSet on OrderedSet {\n  ...HomeFeaturedEventsRail_orderedSet\n}\n\nfragment HomeApp_homePage on HomePage {\n  ...HomeHeroUnits_homePage\n}\n\nfragment HomeFeaturedEventsRail_orderedSet on OrderedSet {\n  items {\n    __typename\n    ... on FeaturedLink {\n      internalID\n      title\n      subtitle\n      href\n      image {\n        small: cropped(width: 95, height: 63, version: [\"main\", \"wide\", \"large_rectangle\"]) {\n          src\n          srcSet\n          width\n          height\n        }\n        large: cropped(width: 445, height: 297, version: [\"main\", \"wide\", \"large_rectangle\"]) {\n          src\n          srcSet\n        }\n      }\n      id\n    }\n    ... on Node {\n      id\n    }\n    ... on Profile {\n      id\n    }\n  }\n}\n\nfragment HomeHeroUnit_heroUnit on HomePageHeroUnit {\n  backgroundImageURL\n  heading\n  title\n  subtitle\n  linkText\n  href\n  creditLine\n}\n\nfragment HomeHeroUnits_homePage on HomePage {\n  heroUnits(platform: DESKTOP) {\n    internalID\n    ...HomeHeroUnit_heroUnit\n    id\n  }\n}\n"
   }
 };
 })();

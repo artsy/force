@@ -33,7 +33,7 @@ export const CollectionsHubsHomepageNav = track(
       {props.marketingHubCollections.slice(0, 6).map(hub => (
         <ImageLink
           to={`/collection/${hub.slug}`}
-          // @ts-expect-error STRICT_NULL_CHECK
+          // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
           src={resize(hub.thumbnail, { width: 357, height: 175 })}
           ratio={[0.49]}
           title={<Text variant="text">{hub.title}</Text>}

@@ -5,19 +5,25 @@ import { InstitutionsRouteFragmentContainer_Test_Query } from "v2/__generated__/
 import { MockBoot } from "v2/DevTools"
 import { screen } from "@testing-library/react"
 import { useTracking } from "react-tracking"
+import { useRouter } from "v2/System/Router/useRouter"
 
 jest.unmock("react-relay")
-
+jest.mock("v2/System/Router/useRouter")
 jest.mock("v2/Components/FollowButton/FollowProfileButton", () => ({
   FollowProfileButtonFragmentContainer: () => null,
 }))
-
 jest.mock("v2/System/Analytics/useTracking", () => ({
   useTracking: () => ({}),
 }))
-
 jest.mock("../../Components/PartnersFilters", () => ({
   PartnersFilters: () => null,
+}))
+jest.mock("../../Components/PartnersRails", () => ({
+  PartnersRailsQueryRenderer: () => "PartnersRailsQueryRenderer",
+}))
+jest.mock("../../Components/PartnersFilteredCells", () => ({
+  PartnersFilteredCellsQueryRenderer: () =>
+    "PartnersFilteredCellsQueryRenderer",
 }))
 
 const { renderWithRelay } = setupTestWrapperTL<
@@ -40,17 +46,48 @@ const { renderWithRelay } = setupTestWrapperTL<
 })
 
 describe("InstitutionsRoute", () => {
-  const trackEvent = jest.fn()
+  const mockTracking = useTracking as jest.Mock
+  const mockUseRouter = useRouter as jest.Mock
+
   beforeEach(() => {
-    renderWithRelay()
-    ;(useTracking as jest.Mock).mockImplementation(() => ({ trackEvent }))
+    mockTracking.mockImplementation(() => ({ trackEvent: jest.fn() }))
+    mockUseRouter.mockImplementation(() => ({
+      match: { location: { query: {} } },
+    }))
   })
 
   afterEach(() => {
-    trackEvent.mockReset()
+    mockTracking.mockReset()
+    mockUseRouter.mockReset()
   })
 
   it("renders the page", () => {
-    expect(screen.getByText("Browse Institutions")).toBeInTheDocument()
+    renderWithRelay()
+
+    expect(
+      screen.getByText("Interested in Listing Your Museum on Artsy?")
+    ).toBeInTheDocument()
+
+    expect(screen.getByText("PartnersRailsQueryRenderer")).toBeInTheDocument()
+  })
+
+  describe("when querying", () => {
+    beforeEach(() => {
+      mockUseRouter.mockImplementation(() => ({
+        match: { location: { query: { near: "0,0" } } },
+      }))
+    })
+
+    it("renders the page with the filtered cells", () => {
+      renderWithRelay()
+
+      expect(
+        screen.getByText("Interested in Listing Your Museum on Artsy?")
+      ).toBeInTheDocument()
+
+      expect(
+        screen.getByText("PartnersFilteredCellsQueryRenderer")
+      ).toBeInTheDocument()
+    })
   })
 })

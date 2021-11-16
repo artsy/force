@@ -1,7 +1,7 @@
 import { ModalType } from "v2/Components/Authentication/Types"
 import { parse } from "url"
-import { FullPageAuthStatic } from "./components/FullPageAuthStatic"
-import { AuthenticationMeta } from "./components/meta"
+import { FullPageAuthStatic } from "v2/Apps/Authentication/Components/FullPageAuthStatic"
+import { AuthenticationMeta } from "v2/Apps/Authentication/Components/AuthenticationMeta"
 
 export const computeCopy = ({ intent, pageTitle, req, res, type }) => {
   let title
@@ -55,7 +55,7 @@ export const computeStitchOptions = ({
 
   const copy = computeCopy({ intent, pageTitle, req, res, type })
   const redirectTo = getRedirectTo(req)
-  // @ts-expect-error STRICT_NULL_CHECK
+  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
   const destination = req.query.destination || (isStaticAuthRoute && "/")
   const signupReferer = req.header("Referer") || req.hostname
 

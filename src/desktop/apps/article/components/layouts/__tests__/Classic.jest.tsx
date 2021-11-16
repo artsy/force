@@ -5,7 +5,7 @@ import {
   ClassicArticleInternalChannel,
   ClassicArticlePromotedContent,
 } from "@artsy/reaction/dist/Components/Publishing/Fixtures/Articles"
-jest.mock("desktop/collections/articles.coffee")
+jest.mock("desktop/collections/articles")
 jest.mock("desktop/components/articles_grid/view.coffee")
 const ArticlesGridView = require("desktop/components/articles_grid/view.coffee") as jest.Mock
 

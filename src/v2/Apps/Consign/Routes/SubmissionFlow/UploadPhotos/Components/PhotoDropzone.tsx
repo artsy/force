@@ -99,7 +99,11 @@ export const PhotoDropzone: React.FC<PhotoDropzoneProps> = ({
   })
 
   useEffect(() => {
-    onReject(concatErrors(fileRejections, customErrors))
+    const errors = concatErrors(fileRejections, customErrors)
+
+    if (errors.length) {
+      onReject(errors)
+    }
   }, [customErrors, fileRejections])
 
   return (

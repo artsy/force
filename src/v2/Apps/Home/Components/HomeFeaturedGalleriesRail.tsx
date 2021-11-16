@@ -1,22 +1,11 @@
-import {
-  Box,
-  Image,
-  Spacer,
-  EntityHeader,
-  Skeleton,
-  SkeletonText,
-  SkeletonBox,
-  Text,
-} from "@artsy/palette"
-import * as React from "react";
+import { Skeleton } from "@artsy/palette"
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useSystemContext, useTracking } from "v2/System"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
-import { RouterLink } from "v2/System/Router/RouterLink"
 import { HomeFeaturedGalleriesRail_orderedSet } from "v2/__generated__/HomeFeaturedGalleriesRail_orderedSet.graphql"
 import { HomeFeaturedGalleriesRailQuery } from "v2/__generated__/HomeFeaturedGalleriesRailQuery.graphql"
 import { extractNodes } from "v2/Utils/extractNodes"
-import { FollowProfileButtonFragmentContainer } from "v2/Components/FollowButton/FollowProfileButton"
 import {
   ActionType,
   ClickedGalleryGroup,
@@ -24,6 +13,10 @@ import {
   OwnerType,
 } from "@artsy/cohesion"
 import { Rail } from "v2/Components/Rail"
+import {
+  PartnerCellFragmentContainer,
+  PartnerCellPlaceholder,
+} from "v2/Components/Cells/PartnerCell"
 
 interface HomeFeaturedGalleriesRailProps {
   orderedSet: HomeFeaturedGalleriesRail_orderedSet
@@ -33,7 +26,7 @@ const HomeFeaturedGalleriesRail: React.FC<HomeFeaturedGalleriesRailProps> = ({
   orderedSet,
 }) => {
   const { trackEvent } = useTracking()
-  const { user } = useSystemContext()
+
   const nodes = extractNodes(orderedSet.orderedItemsConnection)
 
   if (nodes.length === 0) {
@@ -58,83 +51,9 @@ const HomeFeaturedGalleriesRail: React.FC<HomeFeaturedGalleriesRailProps> = ({
       }}
       getItems={() => {
         return nodes.map((node, index) => {
-          if (node.__typename !== "Profile") {
-            return <></>
-          }
+          if (node.__typename !== "Profile") return <></>
           return (
-            <RouterLink
-              to={`/partner${node.href}`}
-              textDecoration="none"
-              key={index}
-              onClick={() => {
-                const trackingEvent: ClickedGalleryGroup = {
-                  action: ActionType.clickedGalleryGroup,
-                  context_module: ContextModule.featuredGalleriesRail,
-                  context_page_owner_type: OwnerType.home,
-                  destination_page_owner_id: node.internalID,
-                  destination_page_owner_slug: node.slug,
-                  destination_page_owner_type: OwnerType.galleries,
-                  type: "thumbnail",
-                }
-                trackEvent(trackingEvent)
-              }}
-            >
-              <Box width={325} key={index}>
-                <EntityHeader
-                  name={node.name!}
-                  meta={node.location!}
-                  smallVariant
-                  FollowButton={
-                    <FollowProfileButtonFragmentContainer
-                      user={user}
-                      profile={node}
-                      contextModule={ContextModule.partnerHeader}
-                      buttonProps={{
-                        size: "small",
-                        variant: "secondaryOutline",
-                      }}
-                      onClick={() => {
-                        const trackingEvent: any = {
-                          action: node.isFollowed
-                            ? ActionType.unfollowedPartner
-                            : ActionType.followedPartner,
-                          context_module: ContextModule.featuredGalleriesRail,
-                          context_owner_type: OwnerType.partner,
-                        }
-                        trackEvent(trackingEvent)
-                      }}
-                    />
-                  }
-                />
-
-                <Spacer mt={1} />
-
-                {node.image?.cropped?.src ? (
-                  <Box>
-                    <Image
-                      src={node.image.cropped.src}
-                      srcSet={node.image.cropped.srcSet}
-                      width={node.image.cropped.width}
-                      height={node.image.cropped.height}
-                      alt=""
-                      lazyLoad
-                    />
-                  </Box>
-                ) : (
-                  <Text
-                    variant="lg"
-                    bg="black10"
-                    width={325}
-                    height={230}
-                    display="flex"
-                    alignItems="center"
-                    justifyContent="center"
-                  >
-                    {node.initials}
-                  </Text>
-                )}
-              </Box>
-            </RouterLink>
+            <PartnerCellFragmentContainer key={index} partner={node.owner} />
           )
         })
       }}
@@ -150,13 +69,7 @@ const PLACEHOLDER = (
       viewAllHref="/galleries"
       getItems={() => {
         return [...new Array(8)].map((_, i) => {
-          return (
-            <Box width={325} key={i}>
-              <SkeletonText variant="lg">Some Gallery</SkeletonText>
-              <SkeletonText variant="md">Location</SkeletonText>
-              <SkeletonBox width={325} height={230} />
-            </Box>
-          )
+          return <PartnerCellPlaceholder key={i} />
         })
       }}
     />
@@ -173,21 +86,8 @@ export const HomeFeaturedGalleriesRailFragmentContainer = createFragmentContaine
             node {
               __typename
               ... on Profile {
-                ...FollowProfileButton_profile
-                initials
-                internalID
-                isFollowed
-                name
-                slug
-                href
-                location
-                image {
-                  cropped(width: 325, height: 230) {
-                    src
-                    srcSet
-                    width
-                    height
-                  }
+                owner {
+                  ...PartnerCell_partner
                 }
               }
             }

@@ -4,6 +4,7 @@ import { FC } from "react"
 
 interface SubmissionStepperProps {
   currentStep: "Artwork Details" | "Upload Photos"
+  // TODO: SWA-78
   // | "Contact Information"
 }
 
@@ -14,12 +15,14 @@ function typedArray<T extends string>(...elems: T[]): T[] {
 export const submissionFlowSteps = typedArray(
   "Artwork Details",
   "Upload Photos"
+  // TODO: SWA-78
   // "Contact Information"
 )
 
 export const submissionFlowStepsMobile = typedArray(
   "Artwork",
   "Upload"
+  // TODO: SWA-78
   // "Contact"
 )
 

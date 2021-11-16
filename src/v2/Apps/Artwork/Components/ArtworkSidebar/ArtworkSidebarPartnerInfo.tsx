@@ -1,6 +1,6 @@
 import { Flex, LocationIcon, Spacer, Text } from "@artsy/palette"
 import { filterLocations } from "v2/Apps/Artwork/Utils/filterLocations"
-import { Component } from "react";
+import { Component } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtworkSidebarPartnerInfo_artwork } from "v2/__generated__/ArtworkSidebarPartnerInfo_artwork.graphql"
 import { RouterLink } from "v2/System/Router/RouterLink"
@@ -52,7 +52,7 @@ export class ArtworkSidebarPartnerInfo extends Component<
       artwork.partner &&
       artwork.partner.locations &&
       artwork.partner.locations.length > 0 &&
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       filterLocations(artwork.partner.locations)
 
     return (

@@ -11,9 +11,12 @@ import {
   Radio,
   LabeledInput,
   Clickable,
+  Modal,
+  Button,
 } from "@artsy/palette"
 import { useFormikContext } from "formik"
 import { checkboxValues } from "v2/Components/ArtworkFilter/ArtworkFilters/AttributionClassFilter"
+import { ErrorModal } from "v2/Components/Modal/ErrorModal"
 import { ArtistAutosuggest } from "./ArtistAutosuggest"
 import { useRouter } from "v2/System/Router/useRouter"
 import { ArtworkSidebarClassificationsModalQueryRenderer } from "v2/Apps/Artwork/Components/ArtworkSidebarClassificationsModal"
@@ -24,7 +27,7 @@ export const getArtworkDetailsFormInitialValues = () => ({
   artistName: "",
   year: "",
   title: "",
-  medium: "",
+  materials: "",
   rarity: "",
   editionNumber: "",
   editionSize: undefined,
@@ -32,6 +35,7 @@ export const getArtworkDetailsFormInitialValues = () => ({
   width: "",
   depth: "",
   units: "in",
+  provenance: "",
 })
 
 const rarityOptions = checkboxValues.map(({ name, value }) => ({
@@ -75,7 +79,7 @@ export interface ArtworkDetailsFormModel {
   artistId: string
   year: string
   title: string
-  medium: string
+  materials: string
   rarity: string
   editionNumber: string
   editionSize?: string
@@ -83,6 +87,7 @@ export interface ArtworkDetailsFormModel {
   width: string
   depth: string
   units: string
+  provenance: string
 }
 
 export const ArtworkDetailsForm: React.FC = () => {
@@ -92,7 +97,9 @@ export const ArtworkDetailsForm: React.FC = () => {
     },
   } = useRouter()
 
-  const [isRarityModalOpen, setIsRarityModalOpen] = useState<boolean>(false)
+  const [isAutosuggestError, setIsAutosuggestError] = useState(false)
+  const [isRarityModalOpen, setIsRarityModalOpen] = useState(false)
+  const [isProvenanceModalOpen, setIsProvenanceModalOpen] = useState(false)
 
   const {
     values,
@@ -120,16 +127,63 @@ export const ArtworkDetailsForm: React.FC = () => {
     }
   }, [submission])
 
+  const handleAutosuggestError = (isError: boolean) => {
+    setIsAutosuggestError(isError)
+
+    if (!isError) {
+      setFieldValue("artistName", "")
+      setFieldValue("artistId", "")
+    }
+  }
+
   return (
     <>
+      <ErrorModal
+        show={isAutosuggestError}
+        headerText="An error occurred"
+        contactEmail="consign@artsymail.com"
+        closeText="Close"
+        onClose={() => handleAutosuggestError(false)}
+      />
       <ArtworkSidebarClassificationsModalQueryRenderer
         onClose={() => setIsRarityModalOpen(false)}
         show={isRarityModalOpen}
         showDisclaimer={false}
       />
+      <Modal
+        onClose={() => setIsProvenanceModalOpen(false)}
+        show={isProvenanceModalOpen}
+        title="Artwork provenance"
+        FixedButton={
+          <Button onClick={() => setIsProvenanceModalOpen(false)} width="100%">
+            OK
+          </Button>
+        }
+      >
+        <Text variant="md">
+          Provenance is the documented history of an artwork’s ownership and
+          authenticity.
+        </Text>
+        <Text variant="md" mt={2}>
+          Please list any documentation you have that proves your artwork’s
+          provenance, such as:
+        </Text>
+        <Text as="li" variant="md" mt={2}>
+          Invoices from previous owners
+        </Text>
+        <Text as="li" variant="md" mt={1}>
+          Certificates of authenticity
+        </Text>
+        <Text as="li" variant="md" mt={1}>
+          Gallery exhibition catalogues
+        </Text>
+      </Modal>
+
       <GridColumns>
         <Column span={6}>
-          <ArtistAutosuggest />
+          <ArtistAutosuggest
+            onAutosuggestError={() => handleAutosuggestError(true)}
+          />
         </Column>
         <Column span={6} mt={[2, 0]}>
           <Input
@@ -155,18 +209,14 @@ export const ArtworkDetailsForm: React.FC = () => {
           />
         </Column>
         <Column span={6} mt={[1, 0]}>
-          <Text variant="xs" mb={0.5} textTransform="uppercase">
-            Medium
-          </Text>
-          <Select
-            name="medium"
-            options={mediumOptions}
-            selected={values.medium}
+          <Input
+            title="Materials"
+            placeholder="Add Materials"
+            name="materials"
+            maxLength={256}
             onBlur={handleBlur}
             onChange={handleChange}
-            onSelect={selected => {
-              setFieldValue("medium", selected)
-            }}
+            value={values.materials}
           />
         </Column>
       </GridColumns>
@@ -284,6 +334,38 @@ export const ArtworkDetailsForm: React.FC = () => {
               <Radio value="cm" label="cm" />
             </RadioGroup>
           </Flex>
+        </Column>
+      </GridColumns>
+      <GridColumns mt={[1, 2]}>
+        <Column span={6}>
+          <Flex justifyContent="space-between">
+            <Flex>
+              <Text variant="xs" mb={0.5} mr={0.5} textTransform="uppercase">
+                Provenance
+              </Text>
+              <Text variant="xs" color="black60">
+                (Optional)
+              </Text>
+            </Flex>
+
+            <Clickable
+              onClick={() => setIsProvenanceModalOpen(true)}
+              data-test-id="open-provenance-modal"
+            >
+              <Text variant="xs" color="black60">
+                <u>What is this?</u>
+              </Text>
+            </Clickable>
+          </Flex>
+
+          <Input
+            name="provenance"
+            placeholder="Describe how you acquired the work"
+            maxLength={256}
+            onBlur={handleBlur}
+            onChange={handleChange}
+            value={values.provenance}
+          />
         </Column>
       </GridColumns>
     </>

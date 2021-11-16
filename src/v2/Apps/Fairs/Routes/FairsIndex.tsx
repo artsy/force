@@ -1,3 +1,4 @@
+import * as React from "react"
 import { ContextModule, Intent } from "@artsy/cohesion"
 import {
   Box,
@@ -12,7 +13,6 @@ import {
   Tabs,
   Text,
 } from "@artsy/palette"
-import * as React from "react";
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { ModalType } from "v2/Components/Authentication/Types"
@@ -297,9 +297,7 @@ export const FairsIndex: React.FC<FairsIndexProps> = ({
                     fair.name
                   )}
 
-                  <Box>
-                    {fair.startAt} – {fair.endAt}
-                  </Box>
+                  <Box>{fair.exhibitionPeriod}</Box>
                   {fair.location && <Box>{fair.location.city}</Box>}
                 </Text>
               )
@@ -370,8 +368,7 @@ export const FairsIndexFragmentContainer = createFragmentContainer(FairsIndex, {
       ) {
         internalID
         name
-        startAt(format: "MMM Do")
-        endAt(format: "MMM Do YYYY")
+        exhibitionPeriod
         location {
           city
         }

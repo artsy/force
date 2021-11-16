@@ -8,6 +8,8 @@ import {
 } from "../Mutations"
 import createLogger from "v2/Utils/logger"
 import { SubmissionModel } from "./useSubmission"
+import { ActionType } from "@artsy/cohesion"
+import { trackEvent } from "lib/analytics/helpers"
 
 const logger = createLogger("createConsignSubmission.ts")
 
@@ -26,6 +28,13 @@ export const createConsignSubmission = async (
     relayEnvironment,
     input
   )
+
+  trackEvent({
+    action: ActionType.consignmentSubmitted,
+    submission_id: submissionId,
+    user_id: user?.id,
+    user_email: user?.email,
+  })
 
   const convectionKey = await getConvectionGeminiKey(relayEnvironment)
 

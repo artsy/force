@@ -3,7 +3,7 @@ import { ArtistSeriesEntity_member } from "v2/__generated__/ArtistSeriesEntity_m
 import { useTracking } from "v2/System/Analytics/useTracking"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import currency from "currency.js"
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ContextModule, clickedArtistSeriesGroup } from "@artsy/cohesion"
 import { useAnalyticsContext } from "v2/System/Analytics/AnalyticsContext"
@@ -44,7 +44,7 @@ export const ArtistSeriesEntity: React.FC<ArtistSeriesEntityProps> = ({
         contextModule: ContextModule.artistSeriesRail,
         contextPageOwnerId,
         contextPageOwnerSlug,
-        // @ts-expect-error STRICT_NULL_CHECK
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         contextPageOwnerType,
         destinationPageOwnerId: id,
         destinationPageOwnerSlug: slug,
@@ -70,15 +70,15 @@ export const ArtistSeriesEntity: React.FC<ArtistSeriesEntityProps> = ({
               return (
                 <Box key={index} ml={index === 0 ? 0 : -2}>
                   <Image
-                    // @ts-expect-error STRICT_NULL_CHECK
+                    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
                     src={resized.src}
-                    // @ts-expect-error STRICT_NULL_CHECK
+                    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
                     srcSet={resized.srcSet}
-                    // @ts-expect-error STRICT_NULL_CHECK
+                    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
                     width={resized.width}
-                    // @ts-expect-error STRICT_NULL_CHECK
+                    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
                     height={resized.height}
-                    // @ts-expect-error STRICT_NULL_CHECK
+                    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
                     alt={artwork.title}
                     lazyLoad
                   />
@@ -87,7 +87,7 @@ export const ArtistSeriesEntity: React.FC<ArtistSeriesEntityProps> = ({
             })
           ) : (
             <Image
-              // @ts-expect-error STRICT_NULL_CHECK
+              // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
               {...cropped(headerImage, { width: 325, height: 150 })}
               width={325}
               height={150}

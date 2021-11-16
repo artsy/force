@@ -22,7 +22,7 @@ export const partnersRoutes: AppRouteConfig[] = [
   {
     path: "/galleries2",
     getComponent: () => GalleriesRoute,
-    prepare: () => {
+    onClientSideRender: () => {
       return GalleriesRoute.preload()
     },
     query: graphql`
@@ -36,7 +36,7 @@ export const partnersRoutes: AppRouteConfig[] = [
   {
     path: "/institutions2",
     getComponent: () => InstitutionsRoute,
-    prepare: () => {
+    onClientSideRender: () => {
       return InstitutionsRoute.preload()
     },
     query: graphql`

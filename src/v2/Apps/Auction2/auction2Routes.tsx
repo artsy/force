@@ -74,8 +74,6 @@ export const auction2Routes: AppRouteConfig[] = [
         sale(id: $slug) @principalField {
           ...Auction2App_sale
         }
-
-        # TODO: Move this to query renderer
         me {
           ...Auction2App_me
         }
@@ -85,6 +83,13 @@ export const auction2Routes: AppRouteConfig[] = [
       {
         path: "/",
         getComponent: () => ArtworksRoute,
+        query: graphql`
+          query auction2Routes_ArtworksRouteQuery($slug: String!) {
+            sale(id: $slug) @principalField {
+              ...Auction2ArtworksRoute_sale
+            }
+          }
+        `,
       },
       {
         path: "bid/:artworkID",

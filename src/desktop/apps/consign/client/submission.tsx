@@ -34,16 +34,16 @@ function setupSubmissionFlow() {
 
   const middleware = []
 
-  // @ts-expect-error STRICT_NULL_CHECK
+  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
   middleware.push(thunkMiddleware) // lets us dispatch() functions
-  // @ts-expect-error STRICT_NULL_CHECK
+  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
   middleware.push(routerMiddleware(history))
-  // @ts-expect-error STRICT_NULL_CHECK
+  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
   middleware.push(analyticsMiddleware) // middleware to help us track previous and future states
 
   if (sd.NODE_ENV === "development" || sd.NODE_ENV === "staging") {
     middleware.push(
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       createLogger({
         // middleware that logs actions
         collapsed: true,
@@ -63,7 +63,7 @@ function setupSubmissionFlow() {
 
   // track pageviews when react-router updates the url
   history.listen(ev => {
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     window.analytics.page(
       { path: ev.pathname },
       { integrations: { Marketo: false } }

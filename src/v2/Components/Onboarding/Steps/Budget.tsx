@@ -1,5 +1,5 @@
-import { useState } from "react";
-import * as React from "react";
+import { useState } from "react"
+import * as React from "react"
 import { ActionType, ContextModule, OwnerType } from "@artsy/cohesion"
 import { commitMutation, graphql } from "react-relay"
 import styled from "styled-components"
@@ -84,23 +84,23 @@ export const BudgetComponent: React.FC<Props> = props => {
 
   const onOptionSelected = (index: number) => {
     const selection = { selection: Object.values(budgetOptions)[index] }
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     setSelectedOption(selection)
   }
 
   const options = Object.keys(budgetOptions).map((text, index) => (
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     <SelectableToggle
       key={index}
       text={text}
       onSelect={() => onOptionSelected(index)}
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       selected={selectedOption?.selection === budgetOptions[text]}
     />
   ))
 
   const submit = () => {
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     const priceRangeMax = selectedOption?.selection
     if (!priceRangeMax) return
 
@@ -124,9 +124,9 @@ export const BudgetComponent: React.FC<Props> = props => {
 
   return (
     <>
-      {/* @ts-expect-error STRICT_NULL_CHECK */}
+      {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
       <ProgressIndicator percentComplete={0.75} />
-      {/* @ts-expect-error STRICT_NULL_CHECK */}
+      {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
       <Layout
         title="What’s your maximum artwork budget?"
         subtitle="Select one"

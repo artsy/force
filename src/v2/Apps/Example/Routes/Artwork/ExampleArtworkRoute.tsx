@@ -1,5 +1,5 @@
 import { Box, Flex, Image, Text, Title } from "@artsy/palette"
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { AnalyticsContext, useAnalyticsContext } from "v2/System"
 import { ExampleArtworkRoute_artwork } from "v2/__generated__/ExampleArtworkRoute_artwork.graphql"
@@ -20,7 +20,7 @@ const ExampleArtworkRoute: React.FC<ExampleArtworkRouteProps> = ({
         <Text variant="lg" mb={2}>
           {artwork.title}
         </Text>
-        {/* @ts-expect-error STRICT_NULL_CHECK */}
+        {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
         <Image src={artwork.imageUrl} alt={artwork.title} />
         <Text fontWeight="bold">{artwork.artistNames}</Text>
         <Text>{artwork.date}</Text>
@@ -29,7 +29,7 @@ const ExampleArtworkRoute: React.FC<ExampleArtworkRouteProps> = ({
       <Box>
         <Text variant="md">Related Artists</Text>
         <Flex my={2}>
-          {/* @ts-expect-error STRICT_NULL_CHECK */}
+          {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
           {artwork.artist.related.artistsConnection.edges.map(({ node }) => (
             <Box width={["100%", "25%"]} pr={[0, "20px"]}>
               <ArtistCard

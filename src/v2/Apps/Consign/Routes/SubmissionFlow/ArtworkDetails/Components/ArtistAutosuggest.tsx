@@ -1,6 +1,5 @@
-import { useState } from "react"
-import { fetchQuery, graphql } from "react-relay"
-import RelayModernEnvironment from "relay-runtime/lib/store/RelayModernEnvironment"
+import { useMemo, useState } from "react"
+import { Environment, fetchQuery, graphql } from "react-relay"
 import { useSystemContext } from "v2/System"
 import { useFormikContext } from "formik"
 import { Text, DROP_SHADOW, Input, Image, Flex, Box } from "@artsy/palette"
@@ -10,6 +9,7 @@ import {
   ArtistAutosuggest_SearchConnection_Query,
   ArtistAutosuggest_SearchConnection_QueryResponse,
 } from "v2/__generated__/ArtistAutosuggest_SearchConnection_Query.graphql"
+import { debounce } from "lodash"
 
 type Suggestion =
   | NonNullable<
@@ -24,7 +24,15 @@ type Suggestion =
 
 type Suggestions = readonly Suggestion[] | undefined | null
 
-export const ArtistAutosuggest: React.FC = () => {
+const DEBOUNCE_DELAY = 300
+
+interface ArtistAutosuggestProps {
+  onAutosuggestError: () => void
+}
+
+export const ArtistAutosuggest: React.FC<ArtistAutosuggestProps> = ({
+  onAutosuggestError,
+}) => {
   const {
     values,
     setFieldValue,
@@ -35,14 +43,22 @@ export const ArtistAutosuggest: React.FC = () => {
   } = useFormikContext<ArtworkDetailsFormModel>()
   const [suggestions, setSuggestions] = useState<Suggestions>([])
   const { relayEnvironment } = useSystemContext()
-
   const updateSuggestions = async (value: string) => {
     setSuggestions([])
     if (relayEnvironment) {
-      const suggestions = await fetchSuggestions(value, relayEnvironment)
-      setSuggestions(suggestions)
+      try {
+        const suggestions = await fetchSuggestions(value, relayEnvironment)
+        setSuggestions(suggestions)
+      } catch (error) {
+        onAutosuggestError()
+      }
     }
   }
+
+  const handleSuggestionsFetchRequested = useMemo(
+    () => debounce(updateSuggestions, DEBOUNCE_DELAY),
+    []
+  )
 
   const inputProps = {
     onChange: (e: Event, { newValue }) => {
@@ -63,9 +79,9 @@ export const ArtistAutosuggest: React.FC = () => {
       onSuggestionsClearRequested={() => {
         setSuggestions([])
       }}
-      onSuggestionsFetchRequested={({ value }) => {
-        updateSuggestions(value)
-      }}
+      onSuggestionsFetchRequested={({ value }) =>
+        handleSuggestionsFetchRequested(value)
+      }
       onSuggestionSelected={(e: Event, { suggestion, suggestionValue }) => {
         e.preventDefault()
         setFieldValue("artistId", suggestion.node.internalID)
@@ -89,7 +105,7 @@ export const ArtistAutosuggest: React.FC = () => {
 
 const fetchSuggestions = async (
   searchQuery: string,
-  relayEnvironment: RelayModernEnvironment
+  relayEnvironment: Environment
 ) => {
   const response = await fetchQuery<ArtistAutosuggest_SearchConnection_Query>(
     relayEnvironment,
@@ -130,6 +146,7 @@ const SuggestionsContainer = ({ containerProps, children }) => {
   return (
     <Box
       {...containerProps}
+      data-test-id="suggestions-container"
       position="absolute"
       left={0}
       right={0}
@@ -158,6 +175,7 @@ const ArtistSuggestion: React.FC<{ node: NonNullable<Suggestion>["node"] }> = (
 ) => {
   return (
     <Flex
+      data-test-id="artist-suggestion"
       alignItems="center"
       p={1}
       width="100%"

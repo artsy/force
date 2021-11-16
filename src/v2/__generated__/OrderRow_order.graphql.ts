@@ -3,11 +3,13 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
+export type CommerceOrderDisplayStateEnum = "ABANDONED" | "APPROVED" | "CANCELED" | "FULFILLED" | "IN_TRANSIT" | "PENDING" | "PROCESSING" | "REFUNDED" | "SUBMITTED" | "%future added value";
 export type CommerceOrderModeEnum = "BUY" | "OFFER" | "%future added value";
 export type CommerceOrderStateEnum = "ABANDONED" | "APPROVED" | "CANCELED" | "FULFILLED" | "PENDING" | "REFUNDED" | "SUBMITTED" | "%future added value";
 export type OrderRow_order = {
     readonly internalID: string;
     readonly code: string;
+    readonly displayState: CommerceOrderDisplayStateEnum;
     readonly state: CommerceOrderStateEnum;
     readonly mode: CommerceOrderModeEnum | null;
     readonly requestedFulfillment: ({
@@ -30,9 +32,6 @@ export type OrderRow_order = {
     readonly lineItems: {
         readonly edges: ReadonlyArray<{
             readonly node: {
-                readonly shipment: {
-                    readonly status: string | null;
-                } | null;
                 readonly artwork: {
                     readonly slug: string;
                     readonly date: string | null;
@@ -121,6 +120,13 @@ return {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
+      "name": "displayState",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
       "name": "state",
       "storageKey": null
     },
@@ -177,10 +183,16 @@ return {
     },
     {
       "alias": null,
-      "args": null,
+      "args": [
+        {
+          "kind": "Literal",
+          "name": "precision",
+          "value": 2
+        }
+      ],
       "kind": "ScalarField",
       "name": "buyerTotal",
-      "storageKey": null
+      "storageKey": "buyerTotal(precision:2)"
     },
     {
       "alias": null,
@@ -220,24 +232,6 @@ return {
               "name": "node",
               "plural": false,
               "selections": [
-                {
-                  "alias": null,
-                  "args": null,
-                  "concreteType": "CommerceShipment",
-                  "kind": "LinkedField",
-                  "name": "shipment",
-                  "plural": false,
-                  "selections": [
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "status",
-                      "storageKey": null
-                    }
-                  ],
-                  "storageKey": null
-                },
                 {
                   "alias": null,
                   "args": null,
@@ -452,5 +446,5 @@ return {
   "type": "CommerceOrder"
 };
 })();
-(node as any).hash = 'e3a37c6bc7d17729054affe374a30407';
+(node as any).hash = '9e8d67d923eb28543807a2c62e96ac8b';
 export default node;

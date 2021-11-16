@@ -9,8 +9,8 @@ import {
   Spacer,
 } from "@artsy/palette"
 import { FormikHelpers as FormikActions } from "formik"
-import { useState } from "react";
-import * as React from "react";
+import { useState } from "react"
+import * as React from "react"
 import styled from "styled-components"
 
 import * as Yup from "yup"
@@ -33,7 +33,7 @@ interface SmsSecondFactorModalProps {
   onClose: () => void
   show?: boolean
   onComplete: () => void
-  // @ts-expect-error STRICT_NULL_CHECK
+  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
   secondFactor: CreateSmsSecondFactorMutationResponse["createSmsSecondFactor"]["secondFactorOrErrors"]
 }
 
@@ -62,14 +62,14 @@ export const SmsSecondFactorModal: React.FC<SmsSecondFactorModalProps> = props =
     setSubmitting(true)
 
     try {
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       const response = await EnableSecondFactor(relayEnvironment, {
         secondFactorID: secondFactor.internalID,
-        // @ts-expect-error STRICT_NULL_CHECK
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         code: values.code,
       })
 
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       setRecoveryCodes(response.enableSecondFactor.recoveryCodes)
 
       setShowRecoveryCodes(true)
@@ -117,22 +117,22 @@ export const SmsSecondFactorModal: React.FC<SmsSecondFactorModalProps> = props =
       setDelivering(true)
 
       try {
-        // @ts-expect-error STRICT_NULL_CHECK
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         await UpdateSmsSecondFactor(relayEnvironment, {
           secondFactorID: secondFactor.internalID,
           attributes: {
-            // @ts-expect-error STRICT_NULL_CHECK
+            // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
             phoneNumber: values.phoneNumber,
-            // @ts-expect-error STRICT_NULL_CHECK
+            // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
             countryCode: values.countryCode,
           },
         })
-        // @ts-expect-error STRICT_NULL_CHECK
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         const response = await DeliverSecondFactor(relayEnvironment, {
           secondFactorID: secondFactor.internalID,
         })
 
-        // @ts-expect-error STRICT_NULL_CHECK
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         const factor = response.deliverSecondFactor.secondFactorOrErrors
 
         if (factor.__typename === "SmsSecondFactor") {
@@ -294,7 +294,7 @@ export const SmsSecondFactorModal: React.FC<SmsSecondFactorModalProps> = props =
         }
       >
         <BackupSecondFactorReminder
-          // @ts-expect-error STRICT_NULL_CHECK
+          // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
           backupSecondFactors={recoveryCodes}
           factorTypeName={secondFactor.__typename}
         />

@@ -9,7 +9,7 @@ import {
   SkeletonText,
   Text,
 } from "@artsy/palette"
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import { useInquiryContext } from "../Hooks/useInquiryContext"
@@ -39,11 +39,13 @@ interface InquiryBasicInfoProps {
 }
 
 const InquiryBasicInfo: React.FC<InquiryBasicInfoProps> = ({ artwork, me }) => {
-  const { next, setContext } = useInquiryContext()
+  const { next, setContext, relayEnvironment } = useInquiryContext()
 
   const [mode, setMode] = useState(Mode.Pending)
 
-  const { submitUpdateMyUserProfile } = useUpdateMyUserProfile()
+  const { submitUpdateMyUserProfile } = useUpdateMyUserProfile({
+    relayEnvironment: relayEnvironment.current!,
+  })
 
   const [state, setState] = useState<{
     profession: string | null

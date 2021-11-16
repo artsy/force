@@ -1,5 +1,5 @@
-import { Component, useContext } from "react";
-import * as React from "react";
+import { Component, useContext } from "react"
+import * as React from "react"
 import { Box, BoxProps } from "@artsy/palette"
 import { SearchBar_viewer } from "v2/__generated__/SearchBar_viewer.graphql"
 import { SearchBarSuggestQuery } from "v2/__generated__/SearchBarSuggestQuery.graphql"
@@ -78,7 +78,7 @@ const Form = styled.form`
   width: 100%;
 `
 
-// @ts-expect-error STRICT_NULL_CHECK
+// @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
 @track(null, {
   dispatch: data => Events.postEvent(data),
 })
@@ -92,7 +92,7 @@ export class SearchBar extends Component<Props, State> {
 
   private removeNavigationListener: () => void
 
-  // @ts-expect-error STRICT_NULL_CHECK
+  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
   state = {
     entityID: null,
     entityType: null,
@@ -145,9 +145,9 @@ export class SearchBar extends Component<Props, State> {
           this.reportPerformanceMeasurement(performanceStart)
         }
         const { viewer } = this.props
-        // @ts-expect-error STRICT_NULL_CHECK
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         const edges = get(viewer, v => v.searchConnection.edges, [])
-        // @ts-expect-error STRICT_NULL_CHECK
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         this.trackSearch(term, edges.length > 0)
       }
     )
@@ -234,9 +234,9 @@ export class SearchBar extends Component<Props, State> {
     //  to follow it.
     if (!this.userClickedOnDescendant) {
       this.setState({
-        // @ts-expect-error STRICT_NULL_CHECK
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         entityID: null,
-        // @ts-expect-error STRICT_NULL_CHECK
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         entityType: null,
       })
     }
@@ -298,7 +298,7 @@ export class SearchBar extends Component<Props, State> {
   renderSuggestionsContainer = ({ containerProps, children, query }) => {
     const noResults = get(
       this.props,
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       p => p.viewer.searchConnection.edges.length === 0
     )
     const { focused } = this.state
@@ -349,12 +349,12 @@ export class SearchBar extends Component<Props, State> {
   }
 
   renderDefaultSuggestion = (edge, { query, isHighlighted }) => {
-    const { displayLabel, href, counts } = edge.node
+    const { displayLabel, href, statuses } = edge.node
 
     const label = this.getLabel(edge.node)
 
-    const showArtworksButton = !!counts?.artworks
-    const showAuctionResultsButton = !!counts?.auctionResults
+    const showArtworksButton = !!statuses?.artworks
+    const showAuctionResultsButton = !!statuses?.auctionLots
 
     return (
       <SuggestionItem
@@ -403,9 +403,9 @@ export class SearchBar extends Component<Props, State> {
       },
     }
 
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     const edges = get(viewer, v => v.searchConnection.edges, [])
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     const suggestions = [firstSuggestionPlaceholder, ...edges]
 
     return (
@@ -485,9 +485,9 @@ export const SearchBarRefetchContainer = createRefetchContainer(
                 slug
               }
               ... on Artist {
-                counts {
+                statuses {
                   artworks
-                  auctionResults
+                  auctionLots
                 }
               }
             }

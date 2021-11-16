@@ -1,7 +1,7 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 qs = require 'querystring'
-FilterArtworks = require '../../collections/filter_artworks.coffee'
+{ FilterArtworks } = require '../../collections/filter_artworks'
 FilterView = require './view.coffee'
 FilterRouter = require './router/index.coffee'
 

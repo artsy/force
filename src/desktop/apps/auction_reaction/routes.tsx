@@ -14,6 +14,7 @@ const renderPage = async ({ layoutTemplate }, req, res, next) => {
     } = await buildServerApp({
       req,
       res,
+      next,
       routes: auctionRoutes,
     })
 
@@ -26,7 +27,7 @@ const renderPage = async ({ layoutTemplate }, req, res, next) => {
     const layout = await stitch({
       basePath: __dirname,
       blocks: {
-        // @ts-expect-error STRICT_NULL_CHECK
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         body: bodyHTML,
         head: () => headTags,
       },

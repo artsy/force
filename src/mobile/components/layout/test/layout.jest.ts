@@ -9,7 +9,7 @@ jest.mock("desktop/lib/deprecated_global_client_setup", () => ({
 
 describe("bootstrap", () => {
   beforeAll(() => {
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     mediator.on = jest.fn((_e, cb) => cb())
   })
 

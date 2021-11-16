@@ -47,7 +47,7 @@ const ArtworkSidebarClassificationsModal: React.FC<ArtworkSidebarClassifications
     >
       <Join separator={<Spacer my={1} />}>
         {viewer
-          ? // @ts-expect-error STRICT_NULL_CHECK
+          ? // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
             viewer.artworkAttributionClasses.map(classification => {
               if (!classification) return null
 
@@ -114,7 +114,7 @@ export const ArtworkSidebarClassificationsModalQueryRenderer: React.FC<Omit<
           return (
             <ArtworkSidebarClassificationsModalFragmentContainer
               {...rest}
-              // @ts-expect-error STRICT_NULL_CHECK
+              // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
               viewer={null}
             />
           )

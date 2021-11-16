@@ -48,7 +48,7 @@ export const ContactInformation: React.FC<ContactInformationProps> = ({
         mode: ModalType.signup,
         intent: Intent.consign,
         contextModule: ContextModule.consignSubmissionFlow,
-        redirectTo: `/consign/submission2/${submissionId}/thank-you`,
+        redirectTo: `/consign/submission/${submissionId}/thank-you`,
         afterSignUpAction: {
           action: "save",
           kind: "submissions",
@@ -59,7 +59,7 @@ export const ContactInformation: React.FC<ContactInformationProps> = ({
       if (relayEnvironment && submission) {
         await createConsignSubmission(relayEnvironment, submission, user)
         removeSubmission()
-        router.push(`/consign/submission2/${submissionId}/thank-you`)
+        router.push(`/consign/submission/${submissionId}/thank-you`)
       }
     }
   }
@@ -69,11 +69,12 @@ export const ContactInformation: React.FC<ContactInformationProps> = ({
       <BackLink
         py={2}
         mb={6}
-        to={`/consign/submission2/${submissionId}/upload-photos`}
+        to={`/consign/submission/${submissionId}/upload-photos`}
       >
         Back
       </BackLink>
 
+      {/* TODO: SWA-78 */}
       {/* <SubmissionStepper currentStep="Contact Information" /> */}
 
       <Text mt={4} variant="lg">

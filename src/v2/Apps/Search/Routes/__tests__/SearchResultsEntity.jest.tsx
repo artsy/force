@@ -39,7 +39,7 @@ describe("SearchResultsEntity", () => {
         edges: [
           {
             node: {
-              id: "percy",
+              internalID: "percy",
               displayLabel: "Cat",
               href: "/cat/percy",
               displayType: "Artistic Cats",

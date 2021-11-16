@@ -1,6 +1,6 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-Items = require '../collections/items.coffee'
+Items = require '../collections/items'
 LayoutSyle = require './mixins/layout_style.coffee'
 
 module.exports = class OrderedSet extends Backbone.Model

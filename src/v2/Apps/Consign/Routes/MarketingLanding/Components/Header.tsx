@@ -1,4 +1,3 @@
-import * as React from "react";
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { FullBleedHeader } from "v2/Components/FullBleedHeader"
 import { Box, Button, Text } from "@artsy/palette"
@@ -27,7 +26,9 @@ export const Header: React.FC = () => {
         <Button
           // @ts-ignore
           as={RouterLink}
-          to="/consign/submission"
+          //TODO: SWA-77
+          //to="/consign/submission"
+          to="/consign/submission/artwork-details"
         >
           Get a Free Auction Valuation
         </Button>

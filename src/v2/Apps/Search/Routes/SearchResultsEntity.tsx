@@ -1,3 +1,4 @@
+import * as React from "react"
 import { Box, Separator } from "@artsy/palette"
 import { SearchResultsEntity_viewer } from "v2/__generated__/SearchResultsEntity_viewer.graphql"
 import { GenericSearchResultItem } from "v2/Apps/Search/Components/GenericSearchResultItem"
@@ -6,7 +7,6 @@ import { LoadingArea, LoadingAreaState } from "v2/Components/LoadingArea"
 import { PaginationFragmentContainer as Pagination } from "v2/Components/Pagination"
 import { RouterState, withRouter } from "found"
 import qs from "qs"
-import * as React from "react";
 import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
 
 export interface Props extends RouterState {
@@ -96,7 +96,7 @@ export class SearchResultsEntityRoute extends React.Component<Props, State> {
         })
         // TODO: Look into using router push w/ query params.
         // this.props.router.replace(`/search/${tab}?${urlParams}`)
-        // @ts-expect-error STRICT_NULL_CHECK
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         window.history.pushState({}, null, `/search/${tab}?${urlParams}`)
       }
     )
@@ -115,38 +115,44 @@ export class SearchResultsEntityRoute extends React.Component<Props, State> {
     return (
       <>
         {items.map((searchableItem, index) => {
+          const {
+            displayLabel: name,
+            description,
+            href,
+            imageUrl,
+            displayType: entityType,
+            internalID,
+          } = searchableItem || {}
+
+          if (!name || !href || !entityType || !internalID) {
+            return null
+          }
+
           return (
             <Box key={index}>
-              {/* @ts-expect-error STRICT_NULL_CHECK */}
               <GenericSearchResultItem
-                // @ts-expect-error STRICT_NULL_CHECK
-                name={searchableItem.displayLabel}
-                // @ts-expect-error STRICT_NULL_CHECK
-                description={searchableItem.description}
-                // @ts-expect-error STRICT_NULL_CHECK
-                href={searchableItem.href}
-                // @ts-expect-error STRICT_NULL_CHECK
-                imageUrl={searchableItem.imageUrl}
-                // @ts-expect-error STRICT_NULL_CHECK
-                entityType={searchableItem.displayType}
+                name={name}
+                description={description ?? ""}
+                href={href}
+                imageUrl={imageUrl ?? ""}
+                entityType={entityType}
                 index={index}
                 term={term}
-                // @ts-expect-error STRICT_NULL_CHECK
-                id={searchableItem.internalID}
+                id={internalID}
               />
               {index < items.length - 1 && <Separator />}
             </Box>
           )
         })}
-        <Pagination
-          // @ts-expect-error STRICT_NULL_CHECK
-          pageCursors={searchConnection.pageCursors}
-          onClick={this.loadAfter}
-          onNext={this.loadNext}
-          scrollTo="#jumpto--searchResultTabs"
-          // @ts-expect-error STRICT_NULL_CHECK
-          hasNextPage={searchConnection.pageInfo.hasNextPage}
-        />
+        {searchConnection && (
+          <Pagination
+            pageCursors={searchConnection.pageCursors}
+            onClick={this.loadAfter}
+            onNext={this.loadNext}
+            scrollTo="#jumpto--searchResultTabs"
+            hasNextPage={searchConnection.pageInfo.hasNextPage}
+          />
+        )}
       </>
     )
   }

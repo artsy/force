@@ -27,7 +27,7 @@ jest.useFakeTimers()
 describe("AuthWrapper", () => {
   beforeEach(() => {
     jest.spyOn(mediator, "on")
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     delete sd.IS_MOBILE
     delete sd.CURRENT_USER
     window.addEventListener = jest.fn()

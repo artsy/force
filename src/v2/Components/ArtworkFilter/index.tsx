@@ -1,6 +1,6 @@
 import { isEqual } from "lodash"
-import { useEffect, useRef, useState } from "react";
-import * as React from "react";
+import { useEffect, useRef, useState } from "react"
+import * as React from "react"
 import useDeepCompareEffect from "use-deep-compare-effect"
 import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
 import { useSystemContext } from "v2/System"
@@ -53,6 +53,7 @@ import type RelayModernEnvironment from "relay-runtime/lib/store/RelayModernEnvi
 import { TagArtworkFilter_tag } from "v2/__generated__/TagArtworkFilter_tag.graphql"
 import { Works_partner } from "v2/__generated__/Works_partner.graphql"
 import { CollectionArtworksFilter_collection } from "v2/__generated__/CollectionArtworksFilter_collection.graphql"
+import { FiltersPills } from "./FiltersPills"
 
 /**
  * Primary ArtworkFilter which is wrapped with a context and refetch container.
@@ -128,6 +129,7 @@ export const BaseArtworkFilter: React.FC<
       | CollectionArtworksFilter_collection
     Filters?: JSX.Element
     offset?: number
+    enableCreateAlert?: boolean
   }
 > = ({
   relay,
@@ -136,6 +138,7 @@ export const BaseArtworkFilter: React.FC<
   relayVariables = {},
   children,
   offset,
+  enableCreateAlert = false,
   ...rest
 }) => {
   const tracking = useTracking()
@@ -152,6 +155,8 @@ export const BaseArtworkFilter: React.FC<
 
   const { filtered_artworks } = viewer
   const hasFilter = filtered_artworks && filtered_artworks.id
+
+  const showCreateAlert = enableCreateAlert && filterContext.hasFilters
 
   /**
    * Check to see if the mobile action sheet is present and prevent scrolling
@@ -305,7 +310,7 @@ export const BaseArtworkFilter: React.FC<
           <Spacer mb={2} />
 
           <ArtworkFilterArtworkGrid
-            // @ts-expect-error STRICT_NULL_CHECK
+            // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
             filtered_artworks={viewer.filtered_artworks}
             isLoading={isFetching}
             offset={offset}
@@ -350,9 +355,11 @@ export const BaseArtworkFilter: React.FC<
               </Box>
             )}
 
+            {enableCreateAlert && <FiltersPills show={showCreateAlert} />}
+
             {children || (
               <ArtworkFilterArtworkGrid
-                // @ts-expect-error STRICT_NULL_CHECK
+                // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
                 filtered_artworks={viewer.filtered_artworks}
                 isLoading={isFetching}
                 offset={offset}

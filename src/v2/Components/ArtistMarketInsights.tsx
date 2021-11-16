@@ -1,6 +1,6 @@
 import { BorderBox, Box, Join, Spacer } from "@artsy/palette"
 import { ArtistMarketInsights_artist } from "v2/__generated__/ArtistMarketInsights_artist.graphql"
-import { Component } from "react";
+import { Component } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtworkDefinitionList } from "v2/Apps/Artwork/Components/ArtworkDefinitionList"
 import { groupBy } from "lodash"
@@ -88,7 +88,7 @@ export class MarketInsights extends Component<MarketInsightsProps> {
   }
 
   render() {
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     if (!hasSections(this.props.artist)) {
       return null
     }

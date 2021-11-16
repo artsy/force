@@ -1,5 +1,5 @@
+import * as React from "react"
 import { Box, BoxProps, Image, ResponsiveBox, Text } from "@artsy/palette"
-import * as React from "react";
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
 import { RouterLink } from "v2/System/Router/RouterLink"
@@ -92,9 +92,7 @@ const FairsFairBanner: React.FC<FairsFairBannerProps> = ({ fair, ...rest }) => {
           <Box>
             <Text>{fair.name}</Text>
 
-            <Text>
-              {fair.startAt} – {fair.endAt}
-            </Text>
+            <Text>{fair.exhibitionPeriod}</Text>
           </Box>
         </Box>
       </RouterLink>
@@ -109,8 +107,7 @@ export const FairsFairBannerFragmentContainer = createFragmentContainer(
       fragment FairsFairBanner_fair on Fair {
         href
         name
-        startAt(format: "MMM Do")
-        endAt(format: "MMM Do YYYY")
+        exhibitionPeriod
         bannerSize
         image {
           large: cropped(width: 1840, height: 790, version: ["wide"]) {
