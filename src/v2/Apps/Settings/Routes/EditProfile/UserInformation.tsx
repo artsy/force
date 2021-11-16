@@ -77,7 +77,14 @@ export const UserInformation: React.FC<UserInformationProps> = ({
         Information
       </Text>
       <Formik
-        initialValues={me}
+        initialValues={
+          {
+            name: me.name,
+            email: me.email,
+            phone: me.phone,
+            paddleNumber: me.paddleNumber
+          }
+        }
         validationSchema={ChangeUserInformationValidator}
         onSubmit={onSubmit}
       >
@@ -95,41 +102,45 @@ export const UserInformation: React.FC<UserInformationProps> = ({
             <Input
               mb={2}
               title="Full name"
+              name="name"
               error={errors.name as any}
               placeholder="Enter your full name"
-              name="name"
               type="text"
               value={values.name}
               onChange={handleChange}
               onBlur={handleBlur}
+              width="50%"
             />
             <Input
               mb={2}
               title="Email"
+              name="email"
               error={errors.email as any}
               placeholder="Enter your email address"
-              name="email"
               type="email"
               value={values.email}
               onChange={handleChange}
               onBlur={handleBlur}
+              width="50%"
             />
             <Input
               mb={2}
               title="Mobile number"
-              placeholder="Enter your mobile phone number"
               name="phone"
+              placeholder="Enter your mobile phone number"
               type="tel"
               value={values.phone}
               onChange={handleChange}
               onBlur={handleBlur}
+              width="50%"
             />
             {me.paddleNumber && (
               <>
                 <Input
                   mb={2}
-                  title="Bidder number"
                   name="paddleNumber"
+                  width="50%"
+                  title="Bidder number"
                   value={me.paddleNumber}
                   readOnly
                 />
@@ -147,11 +158,11 @@ export const UserInformation: React.FC<UserInformationProps> = ({
                     !values.password && "Password is required to change email."
                   }
                   placeholder="Enter your password"
-                  name="password"
                   value={values.password}
                   onChange={handleChange}
                   onBlur={handleBlur}
                   required
+                  width="50%"
                 />
               </>
             )}
