@@ -181,7 +181,7 @@ Some top-level notes:
 - We avoid snapshot tests; they produce too much churn for too little value.
 - We use the `relay-test-utils` package for testing Relay code, and [this helper](https://github.com/artsy/force/blob/0b291f005763e7c2600a5077786c9510bf655079/src/v2/DevTools/setupTestWrapper.tsx) for quickly spinning up tests. Note that this helper can't test `QueryRenderer`s; extract the render code into a fragment-like container and test that. (See the [`RegisterButton` component](https://github.com/artsy/force/blob/master/src/v2/Apps/Auction2/Components/AuctionDetails/__tests__/RegisterButton.jest.tsx#L1) for an example.)
 
-Here are some great examples of what tests and test coverage should look like.
+Here are some great examples of what tests and test coverage should look like. (TODO: Update links below with `@testing-library/react` examples.)
 
 - [RegisterButton.jest.tsx](https://github.com/artsy/force/blob/master/src/v2/Apps/Auction2/Components/AuctionDetails/__tests__/RegisterButton.jest.tsx#L1)
 - [ResetPasswordRoute.jest.tsx](https://github.com/artsy/force/blob/master/src/v2/Apps/Authentication/Routes/__tests__/ResetPasswordRoute.jest.tsx#L8)
