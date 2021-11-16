@@ -179,12 +179,12 @@ Some top-level notes:
 - ~~We use [`enzyme`](https://enzymejs.github.io/enzyme/)~~
 - As of 2021, we've begun using [@testing-library/react](https://testing-library.com/docs/) for our tests. (See [this doc](https://kentcdodds.com/blog/common-mistakes-with-react-testing-library) for some common mistakes and best practices.)   
 - We avoid snapshot tests; they produce too much churn for too little value.
-- We use the `relay-test-utils` package for testing Relay code, and [this helper](https://github.com/artsy/force/blob/0b291f005763e7c2600a5077786c9510bf655079/src/v2/DevTools/setupTestWrapper.tsx) for quickly spinning up tests. Note that this helper can't test `QueryRenderer`s; extract the render code into a fragment-like container and test that. (See the [`SoldRecently` component](https://github.com/artsy/force/blob/daad34183723be649e6031859842d65f4d902c21/src/v2/Apps/Consign/Routes/MarketingLanding/Components/__tests__/SoldRecently.jest.tsx) for an example.)
+- We use the `relay-test-utils` package for testing Relay code, and [this helper](https://github.com/artsy/force/blob/0b291f005763e7c2600a5077786c9510bf655079/src/v2/DevTools/setupTestWrapper.tsx) for quickly spinning up tests. Note that this helper can't test `QueryRenderer`s; extract the render code into a fragment-like container and test that. (See the [`RegisterButton` component](https://github.com/artsy/force/blob/master/src/v2/Apps/Auction2/Components/AuctionDetails/__tests__/RegisterButton.jest.tsx#L1) for an example.)
 
-Here are some great examples of what tests and test coverage should look like. (TODO: Update links below with `@testing-library/react` examples.)
+Here are some great examples of what tests and test coverage should look like.
 
-- [ShowApp.jest.tsx](https://github.com/artsy/force/blob/0b291f005763e7c2600a5077786c9510bf655079/src/v2/Apps/Show/__tests__/ShowApp.jest.tsx)
-- [ConsignPriceEstimateContext.jest.tsx](https://github.com/artsy/force/blob/0b291f005763e7c2600a5077786c9510bf655079/src/v2/Apps/Consign/Routes/MarketingLanding/Components/GetPriceEstimate/__tests__/ConsignPriceEstimateContext.jest.tsx)
+- [RegisterButton.jest.tsx](https://github.com/artsy/force/blob/master/src/v2/Apps/Auction2/Components/AuctionDetails/__tests__/RegisterButton.jest.tsx#L1)
+- [ResetPasswordRoute.jest.tsx](https://github.com/artsy/force/blob/master/src/v2/Apps/Authentication/Routes/__tests__/ResetPasswordRoute.jest.tsx#L8)
 
 ### Add smoke tests for new routes
 
