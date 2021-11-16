@@ -82,7 +82,8 @@ export const UserInformation: React.FC<UserInformationProps> = ({
             name: me.name,
             email: me.email,
             phone: me.phone,
-            paddleNumber: me.paddleNumber
+            paddleNumber: me.paddleNumber,
+            internalID: me.internalID
           }
         }
         validationSchema={ChangeUserInformationValidator}
@@ -186,6 +187,7 @@ export const UserInformationRefetchContainer = createRefetchContainer(
         name
         paddleNumber
         phone
+        internalID
       }
     `,
   },

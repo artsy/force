@@ -29,6 +29,7 @@ fragment UserInformation_me on Me {
   name
   paddleNumber
   phone
+  internalID
 }
 */
 
@@ -104,6 +105,13 @@ const node: ConcreteRequest = {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
+            "name": "internalID",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
             "name": "id",
             "storageKey": null
           }
@@ -117,7 +125,7 @@ const node: ConcreteRequest = {
     "metadata": {},
     "name": "UserInformationRefetchQuery",
     "operationKind": "query",
-    "text": "query UserInformationRefetchQuery {\n  me {\n    ...UserInformation_me\n    id\n  }\n}\n\nfragment UserInformation_me on Me {\n  email\n  name\n  paddleNumber\n  phone\n}\n"
+    "text": "query UserInformationRefetchQuery {\n  me {\n    ...UserInformation_me\n    id\n  }\n}\n\nfragment UserInformation_me on Me {\n  email\n  name\n  paddleNumber\n  phone\n  internalID\n}\n"
   }
 };
 (node as any).hash = '127fc3954c8b2c9dcbd872fbe4f5bf9a';
