@@ -5,7 +5,7 @@ import { AuthenticationMeta } from "../Components/AuthenticationMeta"
 import { AuthStatic } from "../Components/AuthStatic"
 import { useAuthForm } from "../Utils/useAuthForm"
 
-export const SignupRoute: React.FC = () => {
+export const SignupRoute: React.FC = props => {
   const { meta, options, type } = useAuthForm({
     canonical: `${getENV("APP_URL")}/signup`,
     pageTitle: "Signup to Artsy",
