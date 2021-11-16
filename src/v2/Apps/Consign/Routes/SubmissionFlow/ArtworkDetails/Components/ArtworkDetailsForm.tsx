@@ -11,6 +11,8 @@ import {
   Radio,
   LabeledInput,
   Clickable,
+  Modal,
+  Button,
 } from "@artsy/palette"
 import { useFormikContext } from "formik"
 import { checkboxValues } from "v2/Components/ArtworkFilter/ArtworkFilters/AttributionClassFilter"
@@ -89,14 +91,15 @@ export interface ArtworkDetailsFormModel {
 }
 
 export const ArtworkDetailsForm: React.FC = () => {
-  const [isAutosuggestError, setIsAutosuggestError] = useState(false)
   const {
     match: {
       params: { id },
     },
   } = useRouter()
 
-  const [isRarityModalOpen, setIsRarityModalOpen] = useState<boolean>(false)
+  const [isAutosuggestError, setIsAutosuggestError] = useState(false)
+  const [isRarityModalOpen, setIsRarityModalOpen] = useState(false)
+  const [isProvenanceModalOpen, setIsProvenanceModalOpen] = useState(false)
 
   const {
     values,
@@ -147,6 +150,35 @@ export const ArtworkDetailsForm: React.FC = () => {
         show={isRarityModalOpen}
         showDisclaimer={false}
       />
+      <Modal
+        onClose={() => setIsProvenanceModalOpen(false)}
+        show={isProvenanceModalOpen}
+        title="Artwork provenance"
+        FixedButton={
+          <Button onClick={() => setIsProvenanceModalOpen(false)} width="100%">
+            OK
+          </Button>
+        }
+      >
+        <Text variant="md">
+          Provenance is the documented history of an artwork’s ownership and
+          authenticity.
+        </Text>
+        <Text variant="md" mt={2}>
+          Please list any documentation you have that proves your artwork’s
+          provenance, such as:
+        </Text>
+        <Text as="li" variant="md" mt={2}>
+          Invoices from previous owners
+        </Text>
+        <Text as="li" variant="md" mt={1}>
+          Certificates of authenticity
+        </Text>
+        <Text as="li" variant="md" mt={1}>
+          Gallery exhibition catalogues
+        </Text>
+      </Modal>
+
       <GridColumns>
         <Column span={6}>
           <ArtistAutosuggest
@@ -306,14 +338,26 @@ export const ArtworkDetailsForm: React.FC = () => {
       </GridColumns>
       <GridColumns mt={[1, 2]}>
         <Column span={6}>
-          <Flex>
-            <Text variant="xs" mb={0.5} mr={0.5} textTransform="uppercase">
-              Provenance
-            </Text>
-            <Text variant="xs" color="black60">
-              (Optional)
-            </Text>
+          <Flex justifyContent="space-between">
+            <Flex>
+              <Text variant="xs" mb={0.5} mr={0.5} textTransform="uppercase">
+                Provenance
+              </Text>
+              <Text variant="xs" color="black60">
+                (Optional)
+              </Text>
+            </Flex>
+
+            <Clickable
+              onClick={() => setIsProvenanceModalOpen(true)}
+              data-test-id="open-provenance-modal"
+            >
+              <Text variant="xs" color="black60">
+                <u>What is this?</u>
+              </Text>
+            </Clickable>
           </Flex>
+
           <Input
             name="provenance"
             placeholder="Describe how you acquired the work"

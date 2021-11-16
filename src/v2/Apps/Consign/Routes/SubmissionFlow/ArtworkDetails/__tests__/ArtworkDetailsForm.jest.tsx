@@ -5,7 +5,7 @@ import {
   getArtworkDetailsFormInitialValues,
 } from "../Components/ArtworkDetailsForm"
 import { Formik } from "formik"
-import { LabeledInput, Text } from "@artsy/palette"
+import { LabeledInput, Modal, Text } from "@artsy/palette"
 import { useRouter } from "v2/System/Router/useRouter"
 import { ArtworkSidebarClassificationsModalQueryRenderer } from "v2/Apps/Artwork/Components/ArtworkSidebarClassificationsModal"
 
@@ -99,6 +99,17 @@ describe("ArtworkDetailsForm", () => {
           .prop("show")
       ).toBe(true)
     })
+  })
+
+  it("provenance modal", () => {
+    expect(wrapper.find(Modal).prop("show")).toBe(false)
+
+    wrapper
+      .find("[data-test-id='open-provenance-modal']")
+      .find(Text)
+      .simulate("click")
+
+    expect(wrapper.find(Modal).prop("show")).toBe(true)
   })
 
   it("if units are 'in' renders size fields correctly", () => {
