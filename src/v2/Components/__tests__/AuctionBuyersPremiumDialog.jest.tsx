@@ -76,5 +76,19 @@ describe("AuctionBuyersPremiumDialog", () => {
         "On the portion of the hammer price in excess of $2,500,000: 12%"
       )
     })
+
+    describe("with a percentage that isn't a whole number", () => {
+      it("rounds to a single decimal place", () => {
+        const wrapper = getWrapper({
+          Sale: () => ({
+            buyersPremium: [{ amount: "$0", cents: 0, percent: 0.225 }],
+          }),
+        })
+
+        const text = wrapper.text()
+
+        expect(text).toContain("22.5% on the hammer price")
+      })
+    })
   })
 })
