@@ -36,8 +36,8 @@ import {
   validateAddress,
   validatePhoneNumber,
 } from "v2/Apps/Order/Utils/formValidators"
-import { track } from "v2/System/Analytics"
-import * as Schema from "v2/System/Analytics/Schema"
+import { useTracking } from "react-tracking"
+import { AnalyticsSchema } from "v2/System"
 import {
   Address,
   AddressChangeHandler,
@@ -94,25 +94,8 @@ export interface ShippingProps extends SystemContextProps {
   isCommittingMutation: boolean
 }
 
-export interface ShippingState {
-  shippingOption: CommerceOrderFulfillmentTypeEnum
-  address: Address
-  phoneNumber: PhoneNumber
-  phoneNumberError: PhoneNumberError
-  phoneNumberTouched: PhoneNumberTouched
-  addressErrors: AddressErrors | {}
-  addressTouched: AddressTouched
-  selectedAddressID: string
-  saveAddress: boolean
-  shippingQuotes: ShippingQuotesType
-  shippingQuoteId?: string
-  savedAddressID?: string
-}
-
 const logger = createLogger("Order/Routes/Shipping/index.tsx")
 
-track()
-// export class ShippingRoute extends Component<ShippingProps, ShippingState> {
 export const ShippingRoute: React.FC<ShippingProps> = props => {
   const [shippingOption, setShippingOption] = useState<
     CommerceOrderFulfillmentTypeEnum
@@ -143,6 +126,9 @@ export const ShippingRoute: React.FC<ShippingProps> = props => {
   )
   const [saveAddressToggle, setSaveAddressToggle] = useState<boolean>(true)
 
+  const { trackEvent } = useTracking()
+
+  // TODO: use Formik instead?
   const touchedAddress = () => {
     return {
       name: true,
@@ -282,15 +268,12 @@ export const ShippingRoute: React.FC<ShippingProps> = props => {
   }
 
   const selectShippingQuote = async () => {
-    // const { shippingQuoteId } = state
-    const { order } = props
-
-    if (shippingQuoteId && order.internalID) {
+    if (shippingQuoteId && props.order.internalID) {
       try {
         const orderOrError = (
           await selectShippingOption(props.commitMutation, {
             input: {
-              id: order.internalID,
+              id: props.order.internalID,
               selectedShippingQuoteId: shippingQuoteId,
             },
           })
@@ -314,25 +297,15 @@ export const ShippingRoute: React.FC<ShippingProps> = props => {
   }
 
   const saveAddress = async () => {
-    // const {
-    //   address,
-    //   phoneNumber,
-    //   shippingOption,
-    //   saveAddress,
-    //   savedAddressID,
-    // } = state
-    const { relayEnvironment } = props
-    // const isCreateNewAddress = isCreateNewAddress()
-
     if (saveAddressToggle) {
       if (
         shippingOption === "SHIP" &&
         isCreateNewAddress() &&
-        relayEnvironment
+        props.relayEnvironment
       ) {
         if (savedAddressID) {
           updateUserAddress(
-            relayEnvironment,
+            props.relayEnvironment,
             savedAddressID,
             {
               ...address,
@@ -348,7 +321,7 @@ export const ShippingRoute: React.FC<ShippingProps> = props => {
           )
         } else {
           await createUserAddress(
-            relayEnvironment,
+            props.relayEnvironment,
             {
               ...address,
               phoneNumber: phoneNumber,
@@ -370,7 +343,7 @@ export const ShippingRoute: React.FC<ShippingProps> = props => {
       }
     } else if (savedAddressID) {
       deleteUserAddress(
-        relayEnvironment!,
+        props.relayEnvironment!,
         savedAddressID,
         () => {},
         message => {
@@ -442,16 +415,6 @@ export const ShippingRoute: React.FC<ShippingProps> = props => {
     setShippingQuoteId(undefined)
   }
 
-  track((props, state, args) => ({
-    action_type: Schema.ActionType.Click,
-    subject:
-      args[0] === "SHIP"
-        ? Schema.Subject.BNMOProvideShipping
-        : Schema.Subject.BNMOArrangePickup,
-    flow: "buy now",
-    type: "button",
-  }))
-
   useEffect(() => {
     const addressList = getAddressList()
     if (addressList && addressList.length > 0 && isArtaShipping()) {
@@ -462,6 +425,15 @@ export const ShippingRoute: React.FC<ShippingProps> = props => {
   const onSelectShippingOption = (
     shippingOptionProp: CommerceOrderFulfillmentTypeEnum
   ) => {
+    trackEvent({
+      action_type: AnalyticsSchema.ActionType.Click,
+      subject:
+        shippingOptionProp === "SHIP"
+          ? AnalyticsSchema.Subject.BNMOProvideShipping
+          : AnalyticsSchema.Subject.BNMOArrangePickup,
+      flow: "buy now",
+      type: "button",
+    })
     if (shippingOption !== shippingOptionProp) {
       setShippingOption(shippingOptionProp)
       setShippingQuotes(null)
@@ -469,30 +441,22 @@ export const ShippingRoute: React.FC<ShippingProps> = props => {
     }
   }
 
-  track(
-    (_props, _state, args) =>
-      ({
-        action: ActionType.clickedSelectShippingOption,
-        context_module: ContextModule.ordersShipping,
-        context_page_owner_type: "orders-shipping",
-        subject: args[0],
-      } as ClickedSelectShippingOption)
-  )
-
   const handleShippingQuoteSelected = (shippingQuoteId: string) => {
+    trackEvent({
+      action: ActionType.clickedSelectShippingOption,
+      context_module: ContextModule.ordersShipping,
+      context_page_owner_type: "orders-shipping",
+      subject: shippingQuoteId,
+    } as ClickedSelectShippingOption)
     setShippingQuoteId(shippingQuoteId)
   }
 
-  track(
-    () =>
-      ({
-        action: ActionType.clickedShippingAddress,
-        context_module: ContextModule.ordersShipping,
-        context_page_owner_type: "orders-shipping",
-      } as ClickedShippingAddress)
-  )
-
   const selectSavedAddressWithTracking = (value: string) => {
+    trackEvent({
+      action: ActionType.clickedShippingAddress,
+      context_module: ContextModule.ordersShipping,
+      context_page_owner_type: "orders-shipping",
+    } as ClickedShippingAddress)
     selectSavedAddress(value)
   }
 
@@ -522,6 +486,7 @@ export const ShippingRoute: React.FC<ShippingProps> = props => {
     if (selectedAddressID === address?.userAddressOrErrors?.internalID) {
       setShippingQuotes(null)
       setShippingQuoteId(undefined)
+      // TODO: Check that this indeed has been moved to an useEffect
       // () => {
       //   if (isArtaShipping()) {
       //     selectShipping()
@@ -571,18 +536,6 @@ export const ShippingRoute: React.FC<ShippingProps> = props => {
   }, [shippingQuoteId, isArtaShipping, isCreateNewAddress])
 
   const { order, isCommittingMutation } = props
-  // const {
-  //   address,
-  //   addressErrors,
-  //   addressTouched,
-  //   phoneNumber,
-  //   phoneNumberError,
-  //   phoneNumberTouched,
-  //   shippingQuotes,
-  //   shippingOption,
-  //   shippingQuoteId,
-  //   selectedAddressID,
-  // } = state
   const artwork = getOrderArtwork()
   const addressList = getAddressList()
 
@@ -736,7 +689,6 @@ export const ShippingRoute: React.FC<ShippingProps> = props => {
               />
               <Spacer mt={4} />
             </Collapse>
-
             <Media greaterThan="xs">
               <Button
                 onClick={onContinueButtonPressed}
