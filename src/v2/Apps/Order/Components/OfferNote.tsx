@@ -1,4 +1,4 @@
-import { Clickable, Text, TextArea, TextAreaChange } from "@artsy/palette"
+import { TextArea, TextAreaChange } from "@artsy/palette"
 import * as React from "react"
 import { useInquiry } from "v2/Components/Inquiry/useInquiry"
 
@@ -7,7 +7,7 @@ export const OfferNote: React.FC<{
   artworkId: string
   counteroffer?: boolean
 }> = ({ onChange, artworkId, counteroffer }) => {
-  const { inquiryComponent, showInquiry } = useInquiry({
+  const { inquiryComponent } = useInquiry({
     artworkID: artworkId,
   })
 
