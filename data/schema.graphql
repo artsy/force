@@ -5555,6 +5555,7 @@ type ConversationOfferSubmitted implements Node {
   fromParticipant: ConversationOfferPartyType
   id: ID!
   isCounter: Boolean
+  offerAmountChanged: Boolean
   respondsTo: ConversationOfferSubmitted
 }
 

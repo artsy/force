@@ -28,9 +28,8 @@ export type Conversation_conversation = {
                 readonly buyerAction?: CommerceBuyerOfferActionEnum | null;
             } | null;
         } | null> | null;
-        readonly " $fragmentRefs": FragmentRefs<"ConversationMessages_events">;
     } | null;
-    readonly messagesConnection: {
+    readonly conversationEventConnection: {
         readonly pageInfo: {
             readonly startCursor: string | null;
             readonly endCursor: string | null;
@@ -39,11 +38,11 @@ export type Conversation_conversation = {
         };
         readonly edges: ReadonlyArray<{
             readonly node: {
-                readonly id: string;
+                readonly __typename: string;
             } | null;
         } | null> | null;
         readonly totalCount: number | null;
-        readonly " $fragmentRefs": FragmentRefs<"ConversationMessages_messages">;
+        readonly " $fragmentRefs": FragmentRefs<"ConversationMessages_messagesAndEvents">;
     } | null;
     readonly items: ReadonlyArray<{
         readonly item: {
@@ -113,7 +112,7 @@ v4 = {
 return {
   "argumentDefinitions": [
     {
-      "defaultValue": 30,
+      "defaultValue": 4,
       "kind": "LocalArgument",
       "name": "count",
       "type": "Int"
@@ -133,7 +132,7 @@ return {
         "cursor": "after",
         "direction": "forward",
         "path": [
-          "messagesConnection"
+          "conversationEventConnection"
         ]
       }
     ]
@@ -287,21 +286,16 @@ return {
             }
           ],
           "storageKey": null
-        },
-        {
-          "args": null,
-          "kind": "FragmentSpread",
-          "name": "ConversationMessages_events"
         }
       ],
       "storageKey": "orderConnection(first:10,participantType:\"BUYER\",states:[\"APPROVED\",\"FULFILLED\",\"SUBMITTED\",\"REFUNDED\",\"CANCELED\"])"
     },
     {
-      "alias": "messagesConnection",
+      "alias": "conversationEventConnection",
       "args": null,
-      "concreteType": "MessageConnection",
+      "concreteType": "ConversationEventConnection",
       "kind": "LinkedField",
-      "name": "__Messages_messagesConnection_connection",
+      "name": "__Conversation_conversationEventConnection_connection",
       "plural": false,
       "selections": [
         {
@@ -346,7 +340,7 @@ return {
         {
           "alias": null,
           "args": null,
-          "concreteType": "MessageEdge",
+          "concreteType": "ConversationEventEdge",
           "kind": "LinkedField",
           "name": "edges",
           "plural": true,
@@ -354,12 +348,11 @@ return {
             {
               "alias": null,
               "args": null,
-              "concreteType": "Message",
+              "concreteType": null,
               "kind": "LinkedField",
               "name": "node",
               "plural": false,
               "selections": [
-                (v0/*: any*/),
                 (v3/*: any*/)
               ],
               "storageKey": null
@@ -384,7 +377,7 @@ return {
         {
           "args": null,
           "kind": "FragmentSpread",
-          "name": "ConversationMessages_messages"
+          "name": "ConversationMessages_messagesAndEvents"
         }
       ],
       "storageKey": null
@@ -455,5 +448,5 @@ return {
   "type": "Conversation"
 };
 })();
-(node as any).hash = '3ba3d5c05fa28d7e0e212562c89a5f4b';
+(node as any).hash = '5169d974e0053044ac4cf6378149747b';
 export default node;

@@ -210,8 +210,8 @@ const Conversation: React.FC<ConversationProps> = props => {
               <Waypoint onEnter={loadMore} />
               {fetchingMore ? <Loading /> : null}
               <ConversationMessages
-                messages={conversation.messagesConnection!}
                 events={conversation.orderConnection}
+                messagesAndEvents={conversation.conversationEventConnection!}
                 lastViewedMessageID={conversation?.fromLastViewedMessageID}
               />
               <Box ref={bottomOfMessageContainer as any} />
@@ -281,7 +281,7 @@ export const ConversationPaginationContainer = createPaginationContainer(
     conversation: graphql`
       fragment Conversation_conversation on Conversation
         @argumentDefinitions(
-          count: { type: "Int", defaultValue: 30 }
+          count: { type: "Int", defaultValue: 4 }
           after: { type: "String" }
         ) {
         id
@@ -318,7 +318,7 @@ export const ConversationPaginationContainer = createPaginationContainer(
         unread
         conversationEventConnection(first: $count, after: $after)
           @connection(
-            key: "Messages_conversationEventConnection"
+            key: "Conversation_conversationEventConnection"
             filters: []
           ) {
           pageInfo {
@@ -329,11 +329,11 @@ export const ConversationPaginationContainer = createPaginationContainer(
           }
           edges {
             node {
-              id
+              __typename
             }
           }
           totalCount
-          ...ConversationMessages_messages
+          ...ConversationMessages_messagesAndEvents
         }
         items {
           item {
@@ -360,7 +360,7 @@ export const ConversationPaginationContainer = createPaginationContainer(
   {
     direction: "forward",
     getConnectionFromProps(props) {
-      return props.conversation?.messagesConnection
+      return props.conversation?.conversationEventConnection
     },
     getFragmentVariables(prevVars, count) {
       return {

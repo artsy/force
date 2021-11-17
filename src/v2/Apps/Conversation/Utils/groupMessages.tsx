@@ -1,9 +1,9 @@
-import { ConversationMessages_messages } from "v2/__generated__/ConversationMessages_messages.graphql"
+import { ConversationMessages_messagesAndEvents } from "v2/__generated__/ConversationMessages_messagesAndEvents.graphql"
 import { DateTime } from "luxon"
 import { fromToday } from "../Components/TimeSince"
 
 // @ts-expect-error STRICT_NULL_CHECK
-export type Message = ConversationMessages_messages["edges"][number]["node"]
+export type Message = ConversationMessages_messagesAndEvents["edges"][number]["node"]
 /**
  * Combines messages into groups of messages sent by the same party and
  * separated out into different groups if sent across multiple days

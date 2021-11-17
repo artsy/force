@@ -8,11 +8,17 @@ export type ConversationMessages_events = {
     readonly edges: ReadonlyArray<{
         readonly node: {
             readonly orderHistory: ReadonlyArray<{
-                readonly __typename: string;
-                readonly state?: CommerceOrderStateEnum;
-                readonly stateReason?: string | null;
-                readonly createdAt?: string;
-                readonly " $fragmentRefs": FragmentRefs<"OrderUpdate_event">;
+                readonly __typename: "CommerceOrderStateChangedEvent";
+                readonly state: CommerceOrderStateEnum;
+                readonly stateReason: string | null;
+                readonly createdAt: string;
+            } | {
+                readonly __typename: "CommerceOfferSubmittedEvent";
+                readonly createdAt: string;
+            } | {
+                /*This will never be '%other', but we need some
+                value in case none of the concrete values match.*/
+                readonly __typename: "%other";
             }>;
         } | null;
     } | null> | null;
@@ -72,11 +78,6 @@ return {
                   "storageKey": null
                 },
                 {
-                  "args": null,
-                  "kind": "FragmentSpread",
-                  "name": "OrderUpdate_event"
-                },
-                {
                   "kind": "InlineFragment",
                   "selections": [
                     {
@@ -117,5 +118,5 @@ return {
   "type": "CommerceOrderConnectionWithTotalCount"
 };
 })();
-(node as any).hash = 'f4d042dc020c7280f6945d95fdcccd7f';
+(node as any).hash = '2748648b17cc3e36cd0ef77e4b63ef17';
 export default node;
