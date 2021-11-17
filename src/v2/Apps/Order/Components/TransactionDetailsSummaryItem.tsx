@@ -164,6 +164,7 @@ export const TransactionDetailsSummaryItem: React.FC<TransactionDetailsSummaryIt
           justifyContent="center"
           order={[2, 1]}
           p={2}
+          mt={4}
         >
           <Flex flexDirection="column" mr="auto">
             <Text variant="sm" color="blue100">
