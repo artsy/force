@@ -1,9 +1,6 @@
 import { Text, Button } from "@artsy/palette"
 import { SubmissionStepper } from "v2/Apps/Consign/Components/SubmissionStepper"
 import { useSystemContext } from "v2/System"
-import { openAuthModal } from "v2/Utils/openAuthModal"
-import { ModalType } from "v2/Components/Authentication/Types"
-import { ContextModule, Intent } from "@artsy/cohesion"
 import { useRouter } from "v2/System/Router/useRouter"
 import { createConsignSubmission } from "../Utils/createConsignSubmission"
 import { Form, Formik } from "formik"
@@ -39,7 +36,7 @@ export const ContactInformation: React.FC<ContactInformationProps> = ({
     },
   } = useRouter()
   const [isSubmissionApiError, setIsSubmissionApiError] = useState(false)
-  const { mediator, isLoggedIn, relayEnvironment, user } = useSystemContext()
+  const { relayEnvironment, user } = useSystemContext()
   const {
     submission,
     saveSubmission,
@@ -63,27 +60,13 @@ export const ContactInformation: React.FC<ContactInformationProps> = ({
       saveSubmission(submission)
     }
 
-    if (!isLoggedIn && mediator) {
-      openAuthModal(mediator, {
-        mode: ModalType.signup,
-        intent: Intent.consign,
-        contextModule: ContextModule.consignSubmissionFlow,
-        redirectTo: `/consign/submission/${submissionId}/thank-you`,
-        afterSignUpAction: {
-          action: "save",
-          kind: "submissions",
-          objectId: submissionId,
-        },
-      })
-    } else {
-      if (relayEnvironment && submission) {
-        try {
-          await createConsignSubmission(relayEnvironment, submission, user?.id)
-          removeSubmission()
-          router.push(`/consign/submission/${submissionId}/thank-you`)
-        } catch (error) {
-          setIsSubmissionApiError(true)
-        }
+    if (relayEnvironment && submission) {
+      try {
+        await createConsignSubmission(relayEnvironment, submission, user?.id)
+        removeSubmission()
+        router.push(`/consign/submission/${submissionId}/thank-you`)
+      } catch (error) {
+        setIsSubmissionApiError(true)
       }
     }
   }
