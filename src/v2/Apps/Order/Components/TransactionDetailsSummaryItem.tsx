@@ -1,8 +1,8 @@
 import { TransactionDetailsSummaryItem_order } from "v2/__generated__/TransactionDetailsSummaryItem_order.graphql"
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 
-import { Flex, Text, Spacer } from "@artsy/palette"
+import { Flex, Text, Spacer, Column } from "@artsy/palette"
 import {
   StepSummaryItem,
   StepSummaryItemProps,
@@ -10,6 +10,13 @@ import {
 import { Omit } from "lodash"
 import { getOfferItemFromOrder } from "v2/Apps/Order/Utils/offerItemExtractor"
 import { extractNodes } from "v2/Utils/extractNodes"
+import {
+  Device,
+  DOWNLOAD_APP_URLS,
+  useDeviceDetection,
+} from "v2/Utils/Hooks/useDeviceDetection"
+import { DownloadAppBadge } from "v2/Components/DownloadAppBadge"
+import { ContextModule } from "@artsy/cohesion"
 
 export interface TransactionDetailsSummaryItemProps
   extends Omit<StepSummaryItemProps, "order"> {
@@ -21,60 +28,38 @@ export interface TransactionDetailsSummaryItemProps
   placeholderOverride?: string | null
 }
 
-export class TransactionDetailsSummaryItem extends React.Component<
-  TransactionDetailsSummaryItemProps
-> {
-  static defaultProps: Partial<TransactionDetailsSummaryItemProps> = {
-    offerContextPrice: "LIST_PRICE",
+export const TransactionDetailsSummaryItem: React.FC<TransactionDetailsSummaryItemProps> = props => {
+  const {
+    showOfferNote,
+    offerOverride,
+    order,
+    placeholderOverride,
+    offerContextPrice = "LIST_PRICE",
+    useLastSubmittedOffer,
+    ...others
+  } = props
+
+  const { device, downloadAppUrl } = useDeviceDetection()
+
+  const amountPlaceholder = placeholderOverride || "—"
+
+  const getOffer = ():
+    | TransactionDetailsSummaryItem_order["lastOffer"]
+    | null => {
+    return useLastSubmittedOffer ? order.lastOffer : order.myLastOffer
   }
 
-  amountPlaceholder = this.props.placeholderOverride || "—"
-
-  render() {
-    const {
-      showOfferNote,
-      offerOverride,
-      order,
-      placeholderOverride,
-      ...others
-    } = this.props
-
-    return (
-      <StepSummaryItem {...others}>
-        {this.renderPriceEntry()}
-        <Spacer mb={2} />
-        <Entry
-          label={this.shippingDisplayLabel()}
-          value={this.shippingDisplayAmount()}
-        />
-
-        <Entry label="Tax" value={this.taxDisplayAmount()} />
-        <Spacer mb={2} />
-        <Entry label="Total" value={this.buyerTotalDisplayAmount()} final />
-        {showOfferNote && order.mode === "OFFER" && this.renderNoteEntry()}
-      </StepSummaryItem>
-    )
-  }
-
-  getOffer(): TransactionDetailsSummaryItem_order["lastOffer"] | null {
-    return this.props.useLastSubmittedOffer
-      ? this.props.order.lastOffer
-      : this.props.order.myLastOffer
-  }
-
-  shippingDisplayAmount = () => {
-    const { order } = this.props
+  const shippingDisplayAmount = () => {
     switch (order.mode) {
       case "BUY":
-        return order.shippingTotal || this.amountPlaceholder
+        return order.shippingTotal || amountPlaceholder
       case "OFFER":
-        const offer = this.getOffer()
-        return (offer && offer.shippingTotal) || this.amountPlaceholder
+        const offer = getOffer()
+        return (offer && offer.shippingTotal) || amountPlaceholder
     }
   }
 
-  shippingDisplayLabel = () => {
-    const { order } = this.props
+  const shippingDisplayLabel = () => {
     let label = "Shipping"
 
     if (order.requestedFulfillment?.__typename === "CommerceShipArta") {
@@ -89,34 +74,31 @@ export class TransactionDetailsSummaryItem extends React.Component<
     return label
   }
 
-  taxDisplayAmount = () => {
-    const { order } = this.props
+  const taxDisplayAmount = () => {
     switch (order.mode) {
       case "BUY":
-        return order.taxTotal || this.amountPlaceholder
+        return order.taxTotal || amountPlaceholder
       case "OFFER":
-        const offer = this.getOffer()
-        return (offer && offer.taxTotal) || this.amountPlaceholder
+        const offer = getOffer()
+        return (offer && offer.taxTotal) || amountPlaceholder
     }
   }
 
-  buyerTotalDisplayAmount = () => {
-    const { order } = this.props
+  const buyerTotalDisplayAmount = () => {
     switch (order.mode) {
       case "BUY":
         return order.buyerTotal
       case "OFFER":
-        const offer = this.getOffer()
+        const offer = getOffer()
         return offer && offer.buyerTotal
     }
   }
 
-  renderPriceEntry = () => {
-    const { order, offerOverride, offerContextPrice } = this.props
+  const renderPriceEntry = () => {
     if (order.mode === "BUY") {
       return <Entry label="Price" value={order.itemsTotal} />
     }
-    const offer = this.getOffer()
+    const offer = getOffer()
     const offerItem = getOfferItemFromOrder(order.lineItems)
     const isBuyerOffer =
       offerOverride != null || !offer || offer.fromParticipant === "BUYER"
@@ -125,9 +107,7 @@ export class TransactionDetailsSummaryItem extends React.Component<
       <>
         <Entry
           label={isBuyerOffer ? "Your offer" : "Seller's offer"}
-          value={
-            offerOverride || (offer && offer.amount) || this.amountPlaceholder
-          }
+          value={offerOverride || (offer && offer.amount) || amountPlaceholder}
         />
         {offerContextPrice === "LIST_PRICE" ? (
           offerItem && (
@@ -148,8 +128,8 @@ export class TransactionDetailsSummaryItem extends React.Component<
     )
   }
 
-  renderNoteEntry = () => {
-    const offer = this.getOffer()
+  const renderNoteEntry = () => {
+    const offer = getOffer()
     if (offer?.note) {
       return (
         <>
@@ -164,8 +144,66 @@ export class TransactionDetailsSummaryItem extends React.Component<
       )
     }
   }
-}
+  return (
+    <StepSummaryItem {...others}>
+      {renderPriceEntry()}
+      <Spacer mb={2} />
+      <Entry label={shippingDisplayLabel} value={shippingDisplayAmount} />
 
+      <Entry label="Tax" value={taxDisplayAmount()} />
+      <Spacer mb={2} />
+      <Entry label="Total" value={buyerTotalDisplayAmount()} final />
+      {showOfferNote && order.mode === "OFFER" && renderNoteEntry()}
+      <Spacer mb={4} />
+      <Column
+        span={4}
+        display="flex"
+        // flexDirection="column"
+        alignItems="center"
+        flexWrap="wrap"
+        backgroundColor="blue10"
+        justifyContent="center"
+        order={[2, 1]}
+        p={2}
+      >
+        <Flex flexDirection="column" mr="auto">
+          <Text variant="sm" color="blue100">
+            Congratulations! We have added this artwork to your Collection.
+          </Text>
+          <Text variant="sm">
+            View and manage your Collection in the Artsy App.
+          </Text>
+        </Flex>
+        <Flex pt={1}>
+          {device === Device.Unknown ? (
+            <Flex flexWrap="wrap" justifyContent="center">
+              <DownloadAppBadge
+                contextModule={ContextModule.footer}
+                device={Device.iPhone}
+                downloadAppUrl={DOWNLOAD_APP_URLS[Device.iPhone]}
+                mx={0.5}
+                mb={0.5}
+              />
+
+              <DownloadAppBadge
+                contextModule={ContextModule.footer}
+                device={Device.Android}
+                downloadAppUrl={DOWNLOAD_APP_URLS[Device.Android]}
+                mx={0.5}
+              />
+            </Flex>
+          ) : (
+            <DownloadAppBadge
+              contextModule={ContextModule.footer}
+              device={device}
+              downloadAppUrl={downloadAppUrl}
+            />
+          )}
+        </Flex>
+      </Column>
+    </StepSummaryItem>
+  )
+}
 interface SecondaryEntryProps {
   label: React.ReactNode
   value: React.ReactNode
@@ -178,7 +216,11 @@ interface EntryProps extends SecondaryEntryProps {
 const Entry: React.FC<EntryProps> = ({ label, value, final }) => (
   <Flex justifyContent="space-between" alignItems="baseline">
     <div>
-      <Text variant={["xs", "sm"]} color="black60">
+      <Text
+        variant={["xs", "sm"]}
+        color={final ? "black100" : "black60"}
+        fontWeight={final ? "semibold" : "regular"}
+      >
         {label}
       </Text>
     </div>
