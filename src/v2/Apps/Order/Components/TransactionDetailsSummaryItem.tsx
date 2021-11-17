@@ -154,53 +154,53 @@ export const TransactionDetailsSummaryItem: React.FC<TransactionDetailsSummaryIt
       <Spacer mb={2} />
       <Entry label="Total" value={buyerTotalDisplayAmount()} final />
       {showOfferNote && order.mode === "OFFER" && renderNoteEntry()}
-      <Spacer mb={4} />
-      <Column
-        span={4}
-        display="flex"
-        // flexDirection="column"
-        alignItems="center"
-        flexWrap="wrap"
-        backgroundColor="blue10"
-        justifyContent="center"
-        order={[2, 1]}
-        p={2}
-      >
-        <Flex flexDirection="column" mr="auto">
-          <Text variant="sm" color="blue100">
-            Congratulations! We have added this artwork to your Collection.
-          </Text>
-          <Text variant="sm">
-            View and manage your Collection in the Artsy App.
-          </Text>
-        </Flex>
-        <Flex pt={1}>
-          {device === Device.Unknown ? (
-            <Flex flexWrap="wrap" justifyContent="center">
-              <DownloadAppBadge
-                contextModule={ContextModule.footer}
-                device={Device.iPhone}
-                downloadAppUrl={DOWNLOAD_APP_URLS[Device.iPhone]}
-                mx={0.5}
-                mb={0.5}
-              />
+      {order.state === "SUBMITTED" && (
+        <Column
+          span={4}
+          display="flex"
+          alignItems="center"
+          flexWrap="wrap"
+          backgroundColor="blue10"
+          justifyContent="center"
+          order={[2, 1]}
+          p={2}
+        >
+          <Flex flexDirection="column" mr="auto">
+            <Text variant="sm" color="blue100">
+              Congratulations! We have added this artwork to your Collection.
+            </Text>
+            <Text variant="sm">
+              View and manage your Collection in the Artsy App.
+            </Text>
+          </Flex>
+          <Flex pt={1}>
+            {device === Device.Unknown ? (
+              <Flex flexWrap="wrap" justifyContent="center">
+                <DownloadAppBadge
+                  contextModule={ContextModule.footer}
+                  device={Device.iPhone}
+                  downloadAppUrl={DOWNLOAD_APP_URLS[Device.iPhone]}
+                  mx={0.5}
+                  mb={0.5}
+                />
 
+                <DownloadAppBadge
+                  contextModule={ContextModule.footer}
+                  device={Device.Android}
+                  downloadAppUrl={DOWNLOAD_APP_URLS[Device.Android]}
+                  mx={0.5}
+                />
+              </Flex>
+            ) : (
               <DownloadAppBadge
                 contextModule={ContextModule.footer}
-                device={Device.Android}
-                downloadAppUrl={DOWNLOAD_APP_URLS[Device.Android]}
-                mx={0.5}
+                device={device}
+                downloadAppUrl={downloadAppUrl}
               />
-            </Flex>
-          ) : (
-            <DownloadAppBadge
-              contextModule={ContextModule.footer}
-              device={device}
-              downloadAppUrl={downloadAppUrl}
-            />
-          )}
-        </Flex>
-      </Column>
+            )}
+          </Flex>
+        </Column>
+      )}
     </StepSummaryItem>
   )
 }
@@ -290,6 +290,7 @@ export const TransactionDetailsSummaryItemFragmentContainer = createFragmentCont
             }
           }
         }
+        state
         mode
         shippingTotal(precision: 2)
         shippingTotalCents
