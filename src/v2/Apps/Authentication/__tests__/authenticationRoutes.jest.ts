@@ -1,5 +1,6 @@
 import { NextFunction } from "express"
 import { ArtsyRequest, ArtsyResponse } from "lib/middleware/artsyExpress"
+import qs from "qs"
 import { authenticationRoutes } from "../authenticationRoutes"
 import { checkForRedirect } from "../Server/checkForRedirect"
 import { setReferer } from "../Server/setReferer"
@@ -18,14 +19,28 @@ describe("authenticationRoutes", () => {
   const setup = path => {
     const req = {
       query: {},
+      session: {},
       get: (() => "") as any,
       header: (() => "") as any,
       body: {},
     } as ArtsyRequest
-    const res = { locals: { sd: {} } } as ArtsyResponse
+
+    const res = {
+      locals: {
+        sd: {},
+      },
+      redirect: jest.fn() as any,
+    } as ArtsyResponse
+
     const next = jest.fn() as NextFunction
 
-    const route = authenticationRoutes.find(route => route.path === path)!
+    const route = authenticationRoutes.find(route => {
+      const [routePath, query] = path.split("?")
+      if (query) {
+        req.query = qs.parse(query)
+      }
+      return routePath === route.path
+    })!
     const onServerSideRender = () =>
       route.onServerSideRender?.({ req, res, next, route })
 
@@ -88,9 +103,22 @@ describe("authenticationRoutes", () => {
 
   describe("#reset_password", () => {
     describe("onServerSideRender", () => {
-      it("runs middleware", () => {
-        setup("/reset_password").onServerSideRender()
+      it("sets session variables if reset_password_token is found", () => {
+        const { req, onServerSideRender } = setup(
+          "/reset_password?reset_password_token=foo&set_password=bar&reset_password_redirect_to=/home"
+        )
+        onServerSideRender()
+        expect(req.session.reset_password_token).toEqual("foo")
+        expect(req.session.set_password).toEqual("bar")
+        expect(req.session.reset_password_redirect_to).toEqual("/home")
         expect(mockCheckForRedirect).toHaveBeenCalled()
+        expect(mockSetReferer).toHaveBeenCalled()
+      })
+
+      it("redirects if no reset_password_token is found", () => {
+        const { res, onServerSideRender } = setup("/reset_password")
+        onServerSideRender()
+        expect(res.redirect).toHaveBeenCalledWith("/")
         expect(mockSetReferer).toHaveBeenCalled()
       })
     })
