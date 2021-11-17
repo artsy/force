@@ -188,9 +188,9 @@ export const settingsRoutes: AppRouteConfig[] = [
           SettingsRoute.preload()
         },
         query: graphql`
-          query settingsRoutes_SettingsRouteQuery {
+          query settingsRoutes_SettingsEditProfileRouteQuery {
             me {
-              ...SettingsEditRoute_me
+              ...SettingsEditProfileRoute_me
             }
           }
         `,

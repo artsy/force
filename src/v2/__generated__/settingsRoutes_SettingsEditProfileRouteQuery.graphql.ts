@@ -3,21 +3,21 @@
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type settingsRoutes_EditProfileRouteQueryVariables = {};
-export type settingsRoutes_EditProfileRouteQueryResponse = {
+export type settingsRoutes_SettingsEditProfileRouteQueryVariables = {};
+export type settingsRoutes_SettingsEditProfileRouteQueryResponse = {
     readonly me: {
         readonly " $fragmentRefs": FragmentRefs<"SettingsEditProfileRoute_me">;
     } | null;
 };
-export type settingsRoutes_EditProfileRouteQuery = {
-    readonly response: settingsRoutes_EditProfileRouteQueryResponse;
-    readonly variables: settingsRoutes_EditProfileRouteQueryVariables;
+export type settingsRoutes_SettingsEditProfileRouteQuery = {
+    readonly response: settingsRoutes_SettingsEditProfileRouteQueryResponse;
+    readonly variables: settingsRoutes_SettingsEditProfileRouteQueryVariables;
 };
 
 
 
 /*
-query settingsRoutes_EditProfileRouteQuery {
+query settingsRoutes_SettingsEditProfileRouteQuery {
   me {
     ...SettingsEditProfileRoute_me
     id
@@ -102,7 +102,7 @@ return {
     "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
-    "name": "settingsRoutes_EditProfileRouteQuery",
+    "name": "settingsRoutes_SettingsEditProfileRouteQuery",
     "selections": [
       {
         "alias": null,
@@ -127,7 +127,7 @@ return {
   "operation": {
     "argumentDefinitions": [],
     "kind": "Operation",
-    "name": "settingsRoutes_EditProfileRouteQuery",
+    "name": "settingsRoutes_SettingsEditProfileRouteQuery",
     "selections": [
       {
         "alias": null,
@@ -275,11 +275,11 @@ return {
   "params": {
     "id": null,
     "metadata": {},
-    "name": "settingsRoutes_EditProfileRouteQuery",
+    "name": "settingsRoutes_SettingsEditProfileRouteQuery",
     "operationKind": "query",
-    "text": "query settingsRoutes_EditProfileRouteQuery {\n  me {\n    ...SettingsEditProfileRoute_me\n    id\n  }\n}\n\nfragment SettingsEditProfileAboutYou_me on Me {\n  location {\n    display\n    id\n  }\n  profession\n  shareFollows\n}\n\nfragment SettingsEditProfileArtistsYouCollect_me on Me {\n  collectorProfile {\n    userInterests {\n      internalID\n      category\n      interest {\n        __typename\n        ... on Artist {\n          internalID\n          name\n          slug\n        }\n        ... on Node {\n          id\n        }\n      }\n      id\n    }\n    id\n  }\n}\n\nfragment SettingsEditProfileRoute_me on Me {\n  ...UserInformation_me\n  ...SettingsEditProfileAboutYou_me\n  ...SettingsEditProfileArtistsYouCollect_me\n  ...SettingsEditProfileYourGalleryIntro_me\n}\n\nfragment SettingsEditProfileYourGalleryIntro_me on Me {\n  inquiryIntroduction\n}\n\nfragment UserInformation_me on Me {\n  email\n  name\n  paddleNumber\n  phone\n  internalID\n}\n"
+    "text": "query settingsRoutes_SettingsEditProfileRouteQuery {\n  me {\n    ...SettingsEditProfileRoute_me\n    id\n  }\n}\n\nfragment SettingsEditProfileAboutYou_me on Me {\n  location {\n    display\n    id\n  }\n  profession\n  shareFollows\n}\n\nfragment SettingsEditProfileArtistsYouCollect_me on Me {\n  collectorProfile {\n    userInterests {\n      internalID\n      category\n      interest {\n        __typename\n        ... on Artist {\n          internalID\n          name\n          slug\n        }\n        ... on Node {\n          id\n        }\n      }\n      id\n    }\n    id\n  }\n}\n\nfragment SettingsEditProfileRoute_me on Me {\n  ...UserInformation_me\n  ...SettingsEditProfileAboutYou_me\n  ...SettingsEditProfileArtistsYouCollect_me\n  ...SettingsEditProfileYourGalleryIntro_me\n}\n\nfragment SettingsEditProfileYourGalleryIntro_me on Me {\n  inquiryIntroduction\n}\n\nfragment UserInformation_me on Me {\n  email\n  name\n  paddleNumber\n  phone\n  internalID\n}\n"
   }
 };
 })();
-(node as any).hash = '2af6af652354dd9f68b4325960bff2df';
+(node as any).hash = 'fccb8f8aa271809e4c65c8d30166e79d';
 export default node;

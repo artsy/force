@@ -1,5 +1,4 @@
 import * as React from "react"
-import QuickInput from "v2/Components/QuickInput"
 import {
   QueryRenderer,
   RelayRefetchProp,
@@ -11,9 +10,18 @@ import { renderWithLoadProgress } from "v2/System/Relay/renderWithLoadProgress"
 import { Form, Formik, FormikProps } from "formik"
 import { UserInformation_me } from "v2/__generated__/UserInformation_me.graphql"
 import { UserInformationQuery } from "v2/__generated__/UserInformationQuery.graphql"
-import { Box, Button, Serif, Text, space, Banner } from "@artsy/palette"
+import {
+  Box,
+  Button,
+  Text,
+  Banner,
+  Input,
+  Join,
+  Spacer,
+  useToasts,
+  PasswordInput,
+} from "@artsy/palette"
 import { ChangeUserInformationValidator } from "v2/Components/Authentication/Validators"
-import { PasswordInput } from "v2/Components/PasswordInput"
 import type { SystemContextProps } from "@artsy/reaction/dist/Artsy"
 import { UpdateUserInformation } from "./UpdateUserInformationMutation"
 import {
@@ -31,6 +39,7 @@ export const UserInformation: React.FC<UserInformationProps> = ({
   relay,
 }) => {
   const { relayEnvironment } = useSystemContext()
+  const { sendToast } = useToasts()
 
   const onSubmit = async (
     { email, name, phone, password }: UpdateMyProfileInput,
@@ -45,19 +54,21 @@ export const UserInformation: React.FC<UserInformationProps> = ({
         phone,
       }
 
-      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-      const response = await UpdateUserInformation(relayEnvironment, variables)
-      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-      const userOrError = response.updateMyUserProfile.userOrError
+      const response = await UpdateUserInformation(relayEnvironment!, variables)
+      const userOrError = response.updateMyUserProfile!.userOrError
 
-      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-      if (userOrError.mutationError) {
-        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-        const { message, fieldErrors } = userOrError.mutationError
+      sendToast({
+        variant: "success",
+        message: "Information updated successfully",
+      })
+
+      if (userOrError!.mutationError) {
+        const { message, fieldErrors } = userOrError!.mutationError
         if (fieldErrors) {
           // display errors for a specified form field
-          // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-          const formattedErrors = formatGravityErrors(userOrError.mutationError)
+          const formattedErrors = formatGravityErrors(
+            userOrError!.mutationError
+          )
           formikBag.setErrors(formattedErrors)
         } else if (message) {
           // display generic gravity error
@@ -69,16 +80,27 @@ export const UserInformation: React.FC<UserInformationProps> = ({
       }
     } catch (err) {
       formikBag.setErrors(err)
+      sendToast({
+        variant: "error",
+        message: "There was a problem",
+        description: err.message,
+      })
     }
   }
 
   return (
     <Box>
-      <Serif size="6" mb={space(2)}>
+      <Text variant="lg" mb={4}>
         Information
-      </Serif>
+      </Text>
       <Formik
-        initialValues={me}
+        initialValues={{
+          name: me.name,
+          email: me.email,
+          phone: me.phone,
+          paddleNumber: me.paddleNumber,
+          internalID: me.internalID,
+        }}
         validationSchema={ChangeUserInformationValidator}
         onSubmit={onSubmit}
       >
@@ -93,80 +115,68 @@ export const UserInformation: React.FC<UserInformationProps> = ({
           values,
         }) => (
           <Form onSubmit={handleSubmit}>
-            <Text>Full name</Text>
-            <QuickInput
-              error={errors.name as any}
-              placeholder="Enter your full name"
-              name="name"
-              type="text"
-              value={values.name}
-              onChange={handleChange}
-              onBlur={handleBlur}
-            />
-            <Text>Email</Text>
-            <QuickInput
-              block
-              error={errors.email as any}
-              placeholder="Enter your email address"
-              name="email"
-              type="email"
-              value={values.email}
-              onChange={handleChange}
-              onBlur={handleBlur}
-            />
-            <Text>Mobile number</Text>
-            <QuickInput
-              block
-              placeholder="Enter your mobile phone number"
-              name="phone"
-              type="tel"
-              value={values.phone}
-              onChange={handleChange}
-              onBlur={handleBlur}
-            />
-            {me.paddleNumber && (
-              <>
-                <Text>Bidder number</Text>
-                <QuickInput
-                  block
-                  name="paddleNumber"
-                  value={me.paddleNumber}
-                  readOnly
-                />
-              </>
-            )}
-            <input name="internalID" value={me.internalID} hidden readOnly />
-            {touched.email && values.email !== me.email && (
-              <>
-                <Text>Password</Text>
-                <PasswordInput
-                  autoFocus
-                  block
-                  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-                  error={
-                    !values.password && "Password is required to change email."
-                  }
-                  placeholder="Enter your password"
-                  name="password"
-                  value={values.password}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  required
-                />
-              </>
-            )}
-            {status && !status.success && (
-              <Banner variant="error">{status.error}</Banner>
-            )}
-            <Button
-              type="submit"
-              size="large"
-              loading={isSubmitting}
-              width="100%"
-              variant="secondaryOutline"
-            >
-              Save changes
-            </Button>
+            <Join separator={<Spacer mt={2} />}>
+              <Input
+                title="Full name"
+                name="name"
+                error={errors.name as any}
+                placeholder="Enter your full name"
+                value={values.name}
+                onChange={handleChange}
+                onBlur={handleBlur}
+              />
+              <Input
+                title="Email"
+                name="email"
+                error={errors.email as any}
+                placeholder="Enter your email address"
+                value={values.email}
+                onChange={handleChange}
+                onBlur={handleBlur}
+              />
+              <Input
+                title="Mobile number"
+                name="phone"
+                placeholder="Enter your mobile phone number"
+                value={values.phone}
+                onChange={handleChange}
+                onBlur={handleBlur}
+              />
+              {me.paddleNumber && (
+                <>
+                  <Input
+                    name="paddleNumber"
+                    title="Bidder number"
+                    value={me.paddleNumber}
+                    readOnly
+                  />
+                </>
+              )}
+              <input name="internalID" value={me.internalID} hidden readOnly />
+              {touched.email && values.email !== me.email && (
+                <>
+                  <PasswordInput
+                    title="Password"
+                    autoFocus
+                    error={
+                      !values.password &&
+                      "Password is required to change email."
+                    }
+                    placeholder="Enter your password"
+                    value={values.password}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    required
+                  />
+                </>
+              )}
+              {status && !status.success && (
+                <Banner variant="error">{status.error}</Banner>
+              )}
+              <Button mt={2} type="submit" loading={isSubmitting}>
+                Save changes
+              </Button>
+            </Join>
           </Form>
         )}
       </Formik>
