@@ -22,7 +22,7 @@ import {
 import { track } from "v2/System/Analytics"
 import * as Schema from "v2/System/Analytics"
 import { Router } from "found"
-import { Component } from "react";
+import { Component } from "react"
 import { RelayProp, createFragmentContainer, graphql } from "react-relay"
 import createLogger from "v2/Utils/logger"
 import { Media } from "v2/Utils/Responsive"
@@ -247,14 +247,12 @@ export class OfferRoute extends Component<OfferProps, OfferState> {
               {!order.isInquiryOrder && (
                 <>
                   <Spacer mb={2} />
-                  <RevealButton align="left" buttonLabel="Add note to seller">
-                    <OfferNote
-                      onChange={offerNoteValue =>
-                        this.setState({ offerNoteValue })
-                      }
-                      artworkId={artworkId!}
-                    />
-                  </RevealButton>
+                  <OfferNote
+                    onChange={offerNoteValue =>
+                      this.setState({ offerNoteValue })
+                    }
+                    artworkId={artworkId!}
+                  />
                 </>
               )}
               <Spacer mb={[2, 4]} />
