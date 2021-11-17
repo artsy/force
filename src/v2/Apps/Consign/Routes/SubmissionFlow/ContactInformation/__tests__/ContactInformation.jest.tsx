@@ -4,7 +4,6 @@ import { ContactInformationFragmentContainer } from "../ContactInformation"
 import { ContactInformationForm } from "../Components/ContactInformationForm"
 import { flushPromiseQueue } from "v2/DevTools"
 import { SystemContextProvider } from "v2/System"
-import * as openAuthModal from "v2/Utils/openAuthModal"
 import { ReactWrapper } from "enzyme"
 import { createConsignSubmission } from "../../Utils/createConsignSubmission"
 
@@ -43,7 +42,6 @@ const contactInformationForm = {
   phone: "111",
 }
 const mockMe = { name: "Serge", email: "serge@test.test", phone: "222" }
-const openAuthModalSpy = jest.spyOn(openAuthModal, "openAuthModal")
 const mockRouterPush = jest.fn()
 
 jest.mock("v2/System/Router/useRouter", () => ({
@@ -220,22 +218,22 @@ describe("Contact Information step", () => {
       expect(wrapper.find("input[name='phone']").prop("value")).toBe("111")
     })
 
-    it("submiting a valid form", async () => {
-      const { getWrapper } = getWrapperWithProps()
-      const wrapper = getWrapper()
-      await flushPromiseQueue()
-      wrapper.update()
+    // TODO: We should return this test after anonymous submission will work
+    // it("submiting a valid form", async () => {
+    //   const { getWrapper } = getWrapperWithProps()
+    //   const wrapper = getWrapper()
+    //   await flushPromiseQueue()
+    //   wrapper.update()
 
-      await simulateTyping(wrapper, "name", "Banksy")
-      await simulateTyping(wrapper, "email", "banksy@test.test")
-      await simulateTyping(wrapper, "phone", "333")
+    //   await simulateTyping(wrapper, "name", "Banksy")
+    //   await simulateTyping(wrapper, "email", "banksy@test.test")
+    //   await simulateTyping(wrapper, "phone", "333")
 
-      wrapper.find("Form").simulate("submit")
-      await flushPromiseQueue()
-      wrapper.update()
-      expect(mockRouterPush).not.toHaveBeenCalled()
-      expect(openAuthModalSpy).toBeCalled()
-    })
+    //   wrapper.find("Form").simulate("submit")
+    //   await flushPromiseQueue()
+    //   wrapper.update()
+    //   expect(mockRouterPush).not.toHaveBeenCalled()
+    // })
   })
 
   describe("If logged in", () => {
@@ -290,7 +288,6 @@ describe("Contact Information step", () => {
       expect(mockRouterPush).toHaveBeenCalledWith(
         "/consign/submission/1/thank-you"
       )
-      expect(openAuthModalSpy).not.toBeCalled()
     })
   })
 
