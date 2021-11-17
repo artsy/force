@@ -75,7 +75,9 @@ export class TransactionDetailsSummaryItem extends React.Component<
               </Text>
             </Flex>
             <Flex pt={1}>
-              <DownloadAppBadges contextModule={ContextModule.footer} />
+              <DownloadAppBadges
+                contextModule={ContextModule.ordersSubmitted}
+              />
             </Flex>
           </Column>
         )}
