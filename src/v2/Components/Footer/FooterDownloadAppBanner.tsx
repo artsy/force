@@ -1,7 +1,7 @@
+import { ContextModule } from "@artsy/cohesion"
 import {
   Box,
   Column,
-  Flex,
   GridColumns,
   Image,
   Spacer,
@@ -10,14 +10,8 @@ import {
   useThemeConfig,
 } from "@artsy/palette"
 import { resized } from "v2/Utils/resized"
-import { DownloadAppBadge } from "../DownloadAppBadge"
-import { ContextModule } from "@artsy/cohesion"
-import {
-  Device,
-  DOWNLOAD_APP_URLS,
-  useDeviceDetection,
-} from "v2/Utils/Hooks/useDeviceDetection"
 import { Media } from "v2/Utils/Responsive"
+import { DownloadAppBadges } from "../DownloadAppBadges/DownloadAppBadges"
 
 const DESKTOP_COVER_IMAGE = resized(
   "https://files.artsy.net/images/footer-desktop.jpg",
@@ -35,8 +29,6 @@ const OVERLAY_IMAGE = resized(
 )
 
 export const FooterDownloadAppBanner = () => {
-  const { device, downloadAppUrl } = useDeviceDetection()
-
   const tokens = useThemeConfig({
     v2: { title: "largeTitle" as TextVariant },
     v3: { title: "xl" as TextVariant },
@@ -57,33 +49,8 @@ export const FooterDownloadAppBanner = () => {
         <Text variant={tokens.title} textAlign="center" mb={1}>
           Get More from Artsy—on the App
         </Text>
-
         <Spacer mt={2} />
-
-        {device === Device.Unknown ? (
-          <Flex flexWrap="wrap" justifyContent="center">
-            <DownloadAppBadge
-              contextModule={ContextModule.footer}
-              device={Device.iPhone}
-              downloadAppUrl={DOWNLOAD_APP_URLS[Device.iPhone]}
-              mx={0.5}
-              mb={0.5}
-            />
-
-            <DownloadAppBadge
-              contextModule={ContextModule.footer}
-              device={Device.Android}
-              downloadAppUrl={DOWNLOAD_APP_URLS[Device.Android]}
-              mx={0.5}
-            />
-          </Flex>
-        ) : (
-          <DownloadAppBadge
-            contextModule={ContextModule.footer}
-            device={device}
-            downloadAppUrl={downloadAppUrl}
-          />
-        )}
+        <DownloadAppBadges contextModule={ContextModule.footer} />
       </Column>
 
       <Column span={8} position="relative" order={[1, 2]}>
