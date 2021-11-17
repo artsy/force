@@ -127,7 +127,7 @@ class ShippingTestPage extends OrderAppTestPage {
 }
 
 describe("Shipping", () => {
-  const { mutations, buildPage, routes } = createTestEnv({
+  const { mutations, buildPage, routes, ...hooks } = createTestEnv({
     Component: ShippingFragmentContainer,
     defaultData: { order: testOrder, me: emptyTestMe },
     defaultMutationResults: {
@@ -149,6 +149,9 @@ describe("Shipping", () => {
     `,
     TestPage: ShippingTestPage,
   })
+
+  beforeEach(hooks.clearErrors)
+  afterEach(hooks.clearMocksAndErrors)
 
   beforeAll(() => {
     ;(useTracking as jest.Mock).mockImplementation(() => ({
@@ -370,8 +373,7 @@ describe("Shipping", () => {
 
         expect(mutations.mockFetch).toHaveBeenCalledTimes(2)
         expect(mutations.mockFetch.mock.calls[0][0].name).toEqual(
-          "SetShippingMutation",
-          "CreateUserAddressMutation"
+          "SetShippingMutation"
         )
 
         expect(mutations.mockFetch.mock.calls.map(call => call[1].input))
@@ -972,8 +974,7 @@ describe("Shipping", () => {
 
         expect(mutations.mockFetch).toHaveBeenCalledTimes(2)
         expect(mutations.mockFetch.mock.calls[0][0].name).toEqual(
-          "SetShippingMutation",
-          "SelectShippingOptionMutation"
+          "SetShippingMutation"
         )
 
         expect(routes.mockPushRoute).toHaveBeenCalledWith(

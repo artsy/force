@@ -12,6 +12,7 @@ module.exports = {
       setupFiles: ["<rootDir>/test.config.js"],
       testPathIgnorePatterns: ["<rootDir>/src/v2"],
       testRegex: ".*\\.jest\\.(ts|tsx|js|jsx)$",
+      testEnvironment: "jest-environment-jsdom",
       testURL: "https://artsy.net",
       transform: {
         "\\.(gql|graphql)$": "jest-transform-graphql",

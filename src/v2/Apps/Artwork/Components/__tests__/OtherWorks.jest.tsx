@@ -10,13 +10,11 @@ describe("OtherWorks", () => {
 
   beforeEach(() => {
     let trackEvent
-    beforeEach(() => {
-      trackEvent = jest.fn()
-      ;(useTracking as jest.Mock).mockImplementation(() => {
-        return {
-          trackEvent,
-        }
-      })
+    trackEvent = jest.fn()
+    ;(useTracking as jest.Mock).mockImplementation(() => {
+      return {
+        trackEvent,
+      }
     })
 
     genericOtherWorksData = {

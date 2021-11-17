@@ -79,7 +79,7 @@ describe("Review", () => {
     mockLocation()
   })
 
-  const { buildPage, mutations, routes } = createTestEnv({
+  const { buildPage, mutations, routes, ...hooks } = createTestEnv({
     Component: ReviewFragmentContainer,
     defaultData: {
       order: testOrder,
@@ -97,6 +97,10 @@ describe("Review", () => {
     `,
     TestPage: ReviewTestPage,
   })
+
+  beforeEach(hooks.clearErrors)
+
+  afterEach(hooks.clearMocksAndErrors)
 
   describe("buy-mode orders", () => {
     let page: ReviewTestPage

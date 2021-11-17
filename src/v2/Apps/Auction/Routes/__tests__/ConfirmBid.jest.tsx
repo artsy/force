@@ -148,7 +148,7 @@ describe("Routes/ConfirmBid", () => {
   })
 
   describe("for registered users", () => {
-    it("allows the user to place a bid without agreeing to terms", async done => {
+    it("allows the user to place a bid without agreeing to terms", async () => {
       const env = setupTestEnv()
       const page = await env.buildPage()
 
@@ -182,17 +182,14 @@ describe("Routes/ConfirmBid", () => {
         confirmBidBidderPositionQueryWithWinning
       )
 
-      setTimeout(() => {
-        expect(mockBidderPositionQuery).toHaveBeenCalledTimes(1)
-        expect(mockBidderPositionQuery.mock.calls[0][1]).toEqual({
-          bidderPositionID: "pending-bidder-position-id-from-polling",
-        })
-
-        expect(window.location.assign).toHaveBeenCalledWith(
-          `/artwork/${ConfirmBidQueryResponseFixture.artwork?.slug}`
-        )
-        done()
-      }, 1001)
+      await new Promise(resolve => setTimeout(resolve, 1001))
+      expect(mockBidderPositionQuery).toHaveBeenCalledTimes(1)
+      expect(mockBidderPositionQuery.mock.calls[0][1]).toEqual({
+        bidderPositionID: "pending-bidder-position-id-from-polling",
+      })
+      expect(window.location.assign).toHaveBeenCalledWith(
+        `/artwork/${ConfirmBidQueryResponseFixture.artwork?.slug}`
+      )
     })
 
     it("displays buyer's premium and subtotal", async () => {

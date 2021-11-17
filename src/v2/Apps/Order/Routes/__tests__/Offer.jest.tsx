@@ -32,7 +32,7 @@ const testOffer: OfferTestQueryRawResponse["order"] = {
 }
 
 describe("Offer InitialMutation", () => {
-  const { buildPage, mutations, routes } = createTestEnv({
+  const { buildPage, mutations, routes, ...hooks } = createTestEnv({
     Component: OfferFragmentContainer,
     TestPage: OrderAppTestPage,
     defaultData: {
@@ -49,6 +49,10 @@ describe("Offer InitialMutation", () => {
       }
     `,
   })
+
+  beforeEach(hooks.clearErrors)
+
+  afterEach(hooks.clearMocksAndErrors)
 
   describe("the page layout", () => {
     let page: OrderAppTestPage

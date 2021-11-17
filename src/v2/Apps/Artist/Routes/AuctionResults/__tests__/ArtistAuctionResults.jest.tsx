@@ -1,14 +1,11 @@
-/* eslint-disable jest/no-done-callback */
 import { ArtistAuctionResults_Test_QueryRawResponse } from "v2/__generated__/ArtistAuctionResults_Test_Query.graphql"
 import { AuctionResultsRouteFragmentContainer as AuctionResultsRoute } from "v2/Apps/Artist/Routes/AuctionResults/ArtistAuctionResultsRoute"
-import { MockBoot, renderRelayTree } from "v2/DevTools"
-import { ReactWrapper } from "enzyme"
-import { act } from "react-dom/test-utils"
+import { MockBoot } from "v2/DevTools"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
-import { Breakpoint } from "v2/Utils/Responsive"
 import { openAuthModal } from "v2/Utils/openAuthModal"
-import { Pagination } from "v2/Components/Pagination"
+import { setupTestWrapperTL } from "v2/DevTools/setupTestWrapper"
+import { screen, fireEvent, within, act } from "@testing-library/react"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
@@ -26,9 +23,19 @@ jest.mock("v2/System/Router/useRouter", () => ({
 }))
 
 import { useRouter } from "v2/System/Router/useRouter"
+import { MockPayloadGenerator } from "relay-test-utils"
 
 describe("AuctionResults", () => {
-  let wrapper: ReactWrapper
+  // @ts-ignore
+  window.setImmediate = jest.fn()
+  let breakpoint
+  const trackEvent = jest.fn()
+  const mockOpenAuthModal = openAuthModal as jest.Mock
+  const mockedResolver = {
+    Artist: () => ({
+      ...AuctionResultsFixture.artist,
+    }),
+  }
 
   beforeAll(() => {
     ;(useRouter as jest.Mock).mockImplementation(() => ({
@@ -38,33 +45,6 @@ describe("AuctionResults", () => {
         },
       },
     }))
-  })
-
-  const getWrapper = async (breakpoint: Breakpoint = "xl") => {
-    return await renderRelayTree({
-      Component: AuctionResultsRoute,
-      query: graphql`
-        query ArtistAuctionResults_Test_Query($artistID: String!)
-          @raw_response_type {
-          artist(id: $artistID) {
-            ...ArtistAuctionResultsRoute_artist
-          }
-        }
-      `,
-      mockData: AuctionResultsFixture as ArtistAuctionResults_Test_QueryRawResponse,
-      variables: {
-        artistID: "pablo-picasso",
-      },
-      wrapper: children => (
-        <MockBoot breakpoint={breakpoint}>{children}</MockBoot>
-      ),
-    })
-  }
-
-  const trackEvent = jest.fn()
-  const mockOpenAuthModal = openAuthModal as jest.Mock
-
-  beforeAll(() => {
     ;(useTracking as jest.Mock).mockImplementation(() => {
       return {
         trackEvent,
@@ -75,84 +55,121 @@ describe("AuctionResults", () => {
       return
     })
   })
+
   afterEach(() => {
     trackEvent.mockReset()
   })
 
+  afterAll(() => {
+    jest.resetAllMocks()
+  })
+
+  const { renderWithRelay } = setupTestWrapperTL({
+    Component: (props: any) => (
+      <MockBoot breakpoint={breakpoint}>
+        <AuctionResultsRoute {...props} />
+      </MockBoot>
+    ),
+    query: graphql`
+      query ArtistAuctionResults_Test_Query($artistID: String!)
+        @raw_response_type {
+        artist(id: $artistID) {
+          ...ArtistAuctionResultsRoute_artist
+        }
+      }
+    `,
+    variables: {
+      artistID: "pablo-picasso",
+    },
+  })
+
   describe("trigger auth modal for filtering and pagination", () => {
-    beforeEach(async () => {
-      wrapper = await getWrapper()
-    })
     afterEach(() => {
       mockOpenAuthModal.mockReset()
     })
 
-    it("calls auth modal for 1st pagination but not for 2nd", done => {
-      const pagination = wrapper.find(Pagination)
-      pagination.find("a").at(1).simulate("click")
+    it("calls auth modal for 1st pagination but not for 2nd", () => {
+      renderWithRelay(mockedResolver)
+      const navigation = screen.getByRole("navigation")
+      const links = within(navigation).getAllByRole("link")
+      expect(links).toHaveLength(6)
 
-      setTimeout(() => {
-        expect(mockOpenAuthModal).toHaveBeenCalledTimes(1)
-      })
-
-      pagination.find("a").at(2).simulate("click")
-
-      setTimeout(() => {
-        // expect no new call
-        expect(mockOpenAuthModal).toHaveBeenCalledTimes(1)
-        done()
-      })
+      fireEvent.click(links[2])
+      expect(mockOpenAuthModal).toHaveBeenCalledTimes(1)
+      fireEvent.click(links[3])
+      expect(mockOpenAuthModal).toHaveBeenCalledTimes(1)
     })
 
-    it("calls auth modal for 1st medium selection but not for 2nd", done => {
-      const filter = wrapper.find("MediumFilter")
-      const checkboxes = filter.find("Checkbox")
+    it("calls auth modal for 1st category selection but not for 2nd", () => {
+      let operationVariables
+      const { env } = renderWithRelay(mockedResolver, true)
 
-      checkboxes.at(1).simulate("click")
-      setTimeout(() => {
-        expect(openAuthModal).toHaveBeenCalledTimes(1)
+      act(() => {
+        env.mock.resolveMostRecentOperation(operation => {
+          return MockPayloadGenerator.generate(operation, mockedResolver)
+        })
       })
 
-      checkboxes.at(2).simulate("click")
-      setTimeout(() => {
-        // expect no new call
-        expect(openAuthModal).toHaveBeenCalledTimes(1)
-        done()
+      const checkboxes = screen.getAllByRole("checkbox")
+      fireEvent.click(checkboxes[1])
+      act(() => {
+        env.mock.resolveMostRecentOperation(operation => {
+          operationVariables = operation.request.variables
+          return MockPayloadGenerator.generate(operation, mockedResolver)
+        })
       })
+
+      expect(operationVariables.categories).toContain("Work on Paper")
+      expect(openAuthModal).toHaveBeenCalledTimes(1)
+
+      fireEvent.click(checkboxes[2])
+      act(() => {
+        env.mock.resolveMostRecentOperation(operation => {
+          operationVariables = operation.request.variables
+          return MockPayloadGenerator.generate(operation, mockedResolver)
+        })
+      })
+
+      expect(openAuthModal).toHaveBeenCalledTimes(1)
+      expect(operationVariables.categories).toContain("Sculpture")
     })
   })
 
   describe("general behavior", () => {
-    beforeAll(async () => {
-      wrapper = await getWrapper()
-    })
-
     it("renders proper elements", () => {
-      expect(wrapper.find("select")).toHaveLength(3) // year created earliest, year created latest, sale date
-      expect(wrapper.find(Pagination).length).toBe(1)
-      expect(wrapper.find("ArtistAuctionResultItem").length).toBe(10)
+      renderWithRelay(mockedResolver)
+
+      const navigation = screen.getByRole("navigation")
+      const links = within(navigation).getAllByRole("link")
+      expect(links).toHaveLength(6)
+
+      const sortSelect = screen.getAllByRole("combobox")[0]
+      const options = within(sortSelect).getAllByRole("option")
+      expect(options[0]).toHaveTextContent("Sale Date (Most recent)")
+      expect(options[1]).toHaveTextContent("Estimate")
+      expect(options[2]).toHaveTextContent("Sale price")
+
+      expect(screen.getAllByRole("img")).toHaveLength(10)
     })
 
     it("renders either realized price, bought in, or price not avail", () => {
-      const html = wrapper.html()
-      expect(html).toContain("Price not available")
-      expect(html).toContain("Bought in")
-      expect(html).toContain("Realized Price")
+      renderWithRelay(mockedResolver)
+
+      expect(screen.getAllByText("Price not available")).toHaveLength(15)
+      expect(screen.getByText("Bought in")).toBeInTheDocument()
+      expect(screen.getAllByText("Realized Price")).toHaveLength(10)
     })
 
     it("renders price in original currency and in USD only if currency is not USD", () => {
-      const html = wrapper.html()
-      expect(html).toContain("€12,000")
-      expect(html).toContain("$15,000")
+      renderWithRelay({
+        Artist: () => ({
+          ...AuctionResultsFixture.artist,
+        }),
+      })
 
-      expect(html.match("20,000")?.length).toEqual(1)
-    })
-
-    it("renders proper select options", () => {
-      const html = wrapper.find("select").first().html()
-      expect(html).toContain("Most recent")
-      expect(html).toContain("Estimate")
-      expect(html).toContain("Sale price")
+      expect(screen.getAllByText("$20,000")).toHaveLength(2)
+      expect(screen.getAllByText("€12,000")).toHaveLength(2)
+      expect(screen.getByText("$15,000")).toBeInTheDocument()
     })
 
     describe("sets filters from URL query", () => {
@@ -168,8 +185,6 @@ describe("AuctionResults", () => {
             },
           },
         }))
-
-        wrapper = await getWrapper()
       })
 
       afterAll(() => {
@@ -182,338 +197,267 @@ describe("AuctionResults", () => {
         }))
       })
 
-      it("sets filters from query", async () => {
-        const MediumCheckbox = wrapper.find("[testID='medium-filter-Painting']")
-        expect(
-          MediumCheckbox.getElements().map(checkbox => checkbox.props.selected)
-        ).toEqual([true, true])
+      it("sets filters from query", () => {
+        renderWithRelay(mockedResolver)
 
-        const SmallCheckbox = wrapper.find("[testID='size-filter-SMALL']")
-        expect(
-          SmallCheckbox.getElements().map(checkbox => checkbox.props.selected)
-        ).toEqual([true, true])
+        const checkedCheckboxes = screen.getAllByRole("checkbox", {
+          checked: true,
+        })
 
-        const LargeCheckbox = wrapper.find("[testID='size-filter-LARGE']")
-        expect(
-          LargeCheckbox.getElements().map(checkbox => checkbox.props.selected)
-        ).toEqual([true, true])
-
-        const OtherCheckbox = wrapper.find("[testID='medium-filter-Sculpture']")
-        expect(
-          OtherCheckbox.getElements().map(checkbox => checkbox.props.selected)
-        ).toEqual([false, false])
-      })
-    })
-
-    describe("collapsed details", () => {
-      it("opens the collapse", () => {
-        wrapper.find("ArrowDownIcon").first().simulate("click")
-        wrapper.update()
-        const html = wrapper.html()
-        const data =
-          AuctionResultsFixture.artist?.auctionResultsConnection?.edges?.[0]
-            ?.node
-        expect(html).toContain("Artwork Info")
-        expect(html).toContain(data?.dimension_text)
+        expect(checkedCheckboxes).toHaveLength(5)
+        expect(checkedCheckboxes[0]).toHaveTextContent("CheckPainting")
+        expect(checkedCheckboxes[1]).toHaveTextContent(
+          "CheckSmall (under 40cm)"
+        )
+        expect(checkedCheckboxes[2]).toHaveTextContent(
+          "CheckLarge (over 100cm)"
+        )
+        expect(checkedCheckboxes[3]).toHaveTextContent(
+          "CheckInclude unspecified dates"
+        )
+        expect(checkedCheckboxes[4]).toHaveTextContent("CheckPhillips")
       })
     })
 
     describe("user interactions", () => {
-      const defaultRelayParams = {
-        first: 10,
-        after: null,
-        artistID: "pablo-picasso",
-        organizations: [],
-        sort: "DATE_DESC",
-      }
-      let refetchSpy
-      beforeEach(async () => {
-        wrapper = await getWrapper()
-        refetchSpy = jest.spyOn(
-          (wrapper.find("AuctionResultsContainer").props() as any).relay,
-          "refetch"
-        )
-      })
       describe("pagination", () => {
-        it("triggers relay refetch with after, and re-shows sign up to see price", done => {
-          const pagination = wrapper.find(Pagination)
+        it("triggers relay refetch with after, and re-shows sign up to see price", async () => {
+          const { env } = renderWithRelay(mockedResolver, true)
+          let operationVariables
 
-          pagination.find("a").at(1).simulate("click")
-
-          setTimeout(() => {
-            expect(refetchSpy).toHaveBeenCalledTimes(1)
-            expect(refetchSpy.mock.calls[0][0]).toEqual(
-              expect.objectContaining({
-                ...defaultRelayParams,
-                after: "YXJyYXljb25uZWN0aW9uOjk=",
-              })
-            )
-            done()
+          act(() => {
+            env.mock.resolveMostRecentOperation(operation => {
+              return MockPayloadGenerator.generate(operation, mockedResolver)
+            })
           })
 
-          wrapper.update()
-          const html = wrapper.html()
-          expect(html).toContain("Sign up to see price")
+          const navigation = screen.getByRole("navigation")
+          const checkboxes = screen.getAllByRole("checkbox")
+          fireEvent.click(checkboxes[1])
+          fireEvent.click(within(navigation).getAllByRole("link")[1])
+
+          act(() => {
+            env.mock.resolveMostRecentOperation(operation => {
+              operationVariables = operation.request.variables
+              return MockPayloadGenerator.generate(operation, mockedResolver)
+            })
+          })
+
+          expect(screen.getAllByText("Sign up to see price")).toHaveLength(10)
+          expect(
+            operationVariables.categories.includes("Work on Paper")
+          ).toBeTruthy()
+          expect(operationVariables.after).toBe("cursor2")
         })
       })
+
       describe("filters", () => {
         describe("medium filter", () => {
-          it("triggers relay refetch with medium list, and re-shows sign up to see price", done => {
-            const filter = wrapper.find("MediumFilter")
+          it("triggers relay refetch with medium list, and re-shows sign up to see price", () => {
+            const { env } = renderWithRelay(mockedResolver, true)
 
-            const checkboxes = filter.find("Checkbox")
-
-            checkboxes.at(1).simulate("click")
-
-            checkboxes.at(2).simulate("click")
-
-            checkboxes.at(1).simulate("click")
-
-            setTimeout(() => {
-              expect(refetchSpy).toHaveBeenCalledTimes(3)
-
-              expect(refetchSpy.mock.calls[0][0]).toEqual(
-                expect.objectContaining({
-                  ...defaultRelayParams,
-                  categories: ["Work on Paper"],
-                })
-              )
-              expect(refetchSpy.mock.calls[1][0]).toEqual(
-                expect.objectContaining({
-                  ...defaultRelayParams,
-                  categories: ["Work on Paper", "Sculpture"],
-                })
-              )
-              expect(refetchSpy.mock.calls[2][0]).toEqual(
-                expect.objectContaining({
-                  ...defaultRelayParams,
-                  categories: ["Sculpture"],
-                })
-              )
-
-              expect(trackEvent).toHaveBeenCalledTimes(3)
-              expect(trackEvent.mock.calls[0][0]).toMatchObject({
-                action_type: "Auction results filter params changed",
-                context_page: "Artist Auction Results",
-                // `changed` & `current` supplied as JSON blobs
+            act(() => {
+              env.mock.resolveMostRecentOperation(operation => {
+                return MockPayloadGenerator.generate(operation, mockedResolver)
               })
-
-              const { changed, current } = trackEvent.mock.calls[0][0]
-
-              expect(JSON.parse(changed)).toMatchObject({
-                categories: ["Work on Paper"],
-              })
-
-              expect(JSON.parse(current)).toMatchObject({
-                categories: ["Work on Paper"],
-                organizations: [],
-                sizes: [],
-                pageAndCursor: { page: 1, cursor: null },
-                sort: "DATE_DESC",
-                allowEmptyCreatedDates: true,
-                createdAfterYear: 1880,
-                createdBeforeYear: 1973,
-              })
-
-              wrapper.update()
-              const html = wrapper.html()
-              expect(html).toContain("Sign up to see price")
-
-              done()
             })
+
+            const checkboxes = screen.getAllByRole("checkbox")
+            fireEvent.click(checkboxes[1])
+            act(() => {
+              env.mock.resolveMostRecentOperation(operation => {
+                return MockPayloadGenerator.generate(operation, mockedResolver)
+              })
+            })
+
+            fireEvent.click(checkboxes[2])
+            act(() => {
+              env.mock.resolveMostRecentOperation(operation => {
+                return MockPayloadGenerator.generate(operation, mockedResolver)
+              })
+            })
+
+            fireEvent.click(checkboxes[3])
+            act(() => {
+              env.mock.resolveMostRecentOperation(operation => {
+                return MockPayloadGenerator.generate(operation, mockedResolver)
+              })
+            })
+
+            expect(trackEvent).toHaveBeenCalledTimes(3)
+            expect(trackEvent.mock.calls[0][0]).toMatchObject({
+              action_type: "Auction results filter params changed",
+              context_page: "Artist Auction Results",
+              // `changed` & `current` supplied as JSON blobs
+            })
+
+            const { changed, current } = trackEvent.mock.calls[0][0]
+            expect(JSON.parse(changed)).toMatchObject({
+              categories: ["Work on Paper"],
+            })
+            expect(JSON.parse(current)).toMatchObject({
+              categories: ["Work on Paper"],
+              organizations: [],
+              sizes: [],
+              pageAndCursor: { page: 1, cursor: null },
+              sort: "DATE_DESC",
+              allowEmptyCreatedDates: true,
+              createdAfterYear: 1880,
+              createdBeforeYear: 1973,
+            })
+            expect(screen.getAllByText("Sign up to see price")).toHaveLength(10)
           })
         })
+
         describe("keyword filter", () => {
-          it("triggers relay refetch with keyword filter, and re-shows sign up to see price", done => {
-            const filter = wrapper.find("KeywordFilter")
-
-            const input = filter.find("input")
-
-            const setInputValue = (
-              inputWrapper: ReactWrapper,
-              value: string,
-              setSelectionRangeMock = jest.fn()
-            ) => {
-              ;(inputWrapper.getDOMNode() as any).value = value
-              ;(inputWrapper.getDOMNode() as any).setSelectionRange = setSelectionRangeMock
-              inputWrapper.simulate("change")
-            }
-
-            setInputValue(input, "test-keyword")
-
-            setTimeout(() => {
-              expect(refetchSpy).toHaveBeenCalledTimes(1)
-
-              expect(refetchSpy.mock.calls[0][0]).toEqual(
-                expect.objectContaining({
-                  ...defaultRelayParams,
-                  keyword: "test-keyword",
-                })
-              )
-
-              wrapper.update()
-              const html = wrapper.html()
-              expect(html).toContain("Sign up to see price")
-
-              done()
+          it("triggers relay refetch with keyword filter, and re-shows sign up to see price", () => {
+            renderWithRelay(mockedResolver)
+            fireEvent.change(screen.getByRole("textbox"), {
+              target: { value: "test-keyword" },
             })
+
+            expect(screen.getAllByText("Sign up to see price")).toHaveLength(10)
           })
         })
+
         describe("auction house filter", () => {
-          it("triggers relay refetch with organization list, and re-shows sign up to see price", done => {
-            const checkboxes = wrapper
-              .find("AuctionHouseFilter")
-              .find("Checkbox")
+          it("triggers relay refetch with organization list, and re-shows sign up to see price", () => {
+            let operationVariables
+            const { env } = renderWithRelay(mockedResolver, true)
 
-            checkboxes.at(1).simulate("click")
-            checkboxes.at(2).simulate("click")
-            checkboxes.at(1).simulate("click")
-
-            setTimeout(() => {
-              expect(refetchSpy).toHaveBeenCalledTimes(3)
-
-              expect(refetchSpy.mock.calls[0][0]).toEqual(
-                expect.objectContaining({
-                  ...defaultRelayParams,
-                  organizations: ["Christie's"],
-                })
-              )
-              expect(refetchSpy.mock.calls[1][0]).toEqual(
-                expect.objectContaining({
-                  ...defaultRelayParams,
-                  organizations: ["Christie's", "Phillips"],
-                })
-              )
-              expect(refetchSpy.mock.calls[2][0]).toEqual(
-                expect.objectContaining({
-                  ...defaultRelayParams,
-                  organizations: ["Phillips"],
-                })
-              )
-
-              wrapper.update()
-              const html = wrapper.html()
-              expect(html).toContain("Sign up to see price")
-
-              done()
+            act(() => {
+              env.mock.resolveMostRecentOperation(operation => {
+                return MockPayloadGenerator.generate(operation, mockedResolver)
+              })
             })
+
+            fireEvent.click(
+              screen.getAllByText("Christie's", { exact: false })[0]
+            )
+            act(() => {
+              env.mock.resolveMostRecentOperation(operation => {
+                operationVariables = operation.request.variables
+                return MockPayloadGenerator.generate(operation, mockedResolver)
+              })
+            })
+            expect(operationVariables.organizations).toContain("Christie's")
+
+            fireEvent.click(
+              screen.getAllByText("Phillips", { exact: false })[0]
+            )
+            act(() => {
+              env.mock.resolveMostRecentOperation(operation => {
+                operationVariables = operation.request.variables
+                return MockPayloadGenerator.generate(operation, mockedResolver)
+              })
+            })
+            expect(operationVariables.organizations).toContain("Phillips")
+
+            fireEvent.click(
+              screen.getAllByText("Christie's", { exact: false })[0]
+            )
+            act(() => {
+              env.mock.resolveMostRecentOperation(operation => {
+                operationVariables = operation.request.variables
+                return MockPayloadGenerator.generate(operation, mockedResolver)
+              })
+            })
+            expect(operationVariables.organizations).not.toContain("Christie's")
+            expect(operationVariables.organizations).toContain("Phillips")
           })
         })
         describe("size filter", () => {
-          it("triggers relay refetch with size list and tracks events, and re-shows sign up to see price", done => {
-            const filter = wrapper.find("SizeFilter")
-
-            const checkboxes = filter.find("Checkbox")
-
-            checkboxes.at(1).simulate("click")
-
-            checkboxes.at(2).simulate("click")
-
-            checkboxes.at(1).simulate("click")
-
-            setTimeout(() => {
-              expect(refetchSpy).toHaveBeenCalledTimes(3)
-
-              expect(refetchSpy.mock.calls[0][0]).toEqual(
-                expect.objectContaining({
-                  ...defaultRelayParams,
-                  sizes: ["MEDIUM"],
-                })
-              )
-              expect(refetchSpy.mock.calls[1][0]).toEqual(
-                expect.objectContaining({
-                  ...defaultRelayParams,
-                  sizes: ["MEDIUM", "LARGE"],
-                })
-              )
-              expect(refetchSpy.mock.calls[2][0]).toEqual(
-                expect.objectContaining({
-                  ...defaultRelayParams,
-                  sizes: ["LARGE"],
-                })
-              )
-
-              expect(trackEvent).toHaveBeenCalledTimes(3)
-              expect(trackEvent.mock.calls[0][0]).toMatchObject({
-                action_type: "Auction results filter params changed",
-                context_page: "Artist Auction Results",
-                // `changed` & `current` supplied as JSON blobs
-              })
-
-              const { changed, current } = trackEvent.mock.calls[0][0]
-
-              expect(JSON.parse(changed)).toMatchObject({
-                sizes: ["MEDIUM"],
-              })
-
-              expect(JSON.parse(current)).toMatchObject({
-                sizes: ["MEDIUM"],
-                pageAndCursor: { page: 1, cursor: null },
-                sort: "DATE_DESC",
-                organizations: [],
-                categories: [],
-                createdAfterYear: 1880,
-                createdBeforeYear: 1973,
-                allowEmptyCreatedDates: true,
-              })
-
-              wrapper.update()
-              const html = wrapper.html()
-              expect(html).toContain("Sign up to see price")
-
-              done()
-            })
-          })
-        })
-        describe("year created filter", () => {
-          const value = v => ({ target: { value: `${v}` } })
-          it("triggers relay refetch with created years and tracks events, and re-shows sign up to see price", () => {
-            const filter = wrapper.find("YearCreated")
-            const selects = filter.find("select")
+          it("triggers relay refetch with size list and tracks events, and re-shows sign up to see price", () => {
+            let operationVariables
+            const { env } = renderWithRelay(mockedResolver, true)
 
             act(() => {
-              selects.at(0).simulate("change", value(1900))
-              selects.at(1).simulate("change", value(1960))
+              env.mock.resolveMostRecentOperation(operation => {
+                return MockPayloadGenerator.generate(operation, mockedResolver)
+              })
             })
 
-            expect(refetchSpy).toHaveBeenCalledTimes(2)
-
-            expect(refetchSpy.mock.calls[1][0]).toEqual(
-              expect.objectContaining({
-                ...defaultRelayParams,
-                createdAfterYear: 1900,
-                createdBeforeYear: 1960,
+            fireEvent.click(screen.getByText("Medium (40 – 100cm)"))
+            act(() => {
+              env.mock.resolveMostRecentOperation(operation => {
+                operationVariables = operation.request.variables
+                return MockPayloadGenerator.generate(operation, mockedResolver)
               })
-            )
+            })
+            expect(operationVariables.sizes).toContain("MEDIUM")
 
-            wrapper.update()
-            const html = wrapper.html()
-            expect(html).toContain("Sign up to see price")
+            fireEvent.click(screen.getByText("Large (over 100cm)"))
+            act(() => {
+              env.mock.resolveMostRecentOperation(operation => {
+                operationVariables = operation.request.variables
+                return MockPayloadGenerator.generate(operation, mockedResolver)
+              })
+            })
+            expect(operationVariables.sizes).toContain("MEDIUM")
+            expect(operationVariables.sizes).toContain("LARGE")
+
+            fireEvent.click(screen.getByText("Medium (40 – 100cm)"))
+            act(() => {
+              env.mock.resolveMostRecentOperation(operation => {
+                operationVariables = operation.request.variables
+                return MockPayloadGenerator.generate(operation, mockedResolver)
+              })
+            })
+            expect(operationVariables.sizes).not.toContain("MEDIUM")
+            expect(operationVariables.sizes).toContain("LARGE")
+          })
+        })
+
+        describe("year created filter", () => {
+          it("triggers relay refetch with created years and tracks events, and re-shows sign up to see price", () => {
+            let operationVariables
+            const { env } = renderWithRelay(mockedResolver, true)
+
+            act(() => {
+              env.mock.resolveMostRecentOperation(operation => {
+                return MockPayloadGenerator.generate(operation, mockedResolver)
+              })
+            })
+
+            const comboboxes = screen.getAllByRole("combobox")
+            fireEvent.change(comboboxes[1], { target: { value: "1900" } })
+            fireEvent.change(comboboxes[2], { target: { value: "1960" } })
+            act(() => {
+              env.mock.resolveMostRecentOperation(operation => {
+                operationVariables = operation.request.variables
+                return MockPayloadGenerator.generate(operation, mockedResolver)
+              })
+            })
+
+            expect(operationVariables.createdAfterYear).toBe(1900)
+            expect(operationVariables.createdBeforeYear).toBe(1960)
           })
         })
       })
 
       describe("sort", () => {
-        it("triggers relay refetch with correct params, and re-shows sign up to see price", done => {
-          const sort = wrapper.find("SortSelect select")
+        it("triggers relay refetch with correct params, and re-shows sign up to see price", () => {
+          let operationVariables
+          const { env } = renderWithRelay(mockedResolver, true)
 
-          sort.find("option").at(1).simulate("change")
-
-          setTimeout(() => {
-            expect(refetchSpy).toHaveBeenCalledTimes(1)
-            expect(refetchSpy.mock.calls[0][0]).toEqual(
-              expect.objectContaining({
-                ...defaultRelayParams,
-                sort: "ESTIMATE_AND_DATE_DESC",
-              })
-            )
-
-            wrapper.update()
-            const html = wrapper.html()
-            expect(html).toContain("Sign up to see price")
-
-            done()
+          act(() => {
+            env.mock.resolveMostRecentOperation(operation => {
+              return MockPayloadGenerator.generate(operation, mockedResolver)
+            })
           })
+
+          const comboboxes = screen.getAllByRole("combobox")
+          fireEvent.change(comboboxes[0], {
+            target: { value: "ESTIMATE_AND_DATE_DESC" },
+          })
+          act(() => {
+            env.mock.resolveMostRecentOperation(operation => {
+              operationVariables = operation.request.variables
+              return MockPayloadGenerator.generate(operation, mockedResolver)
+            })
+          })
+
+          expect(operationVariables.sort).toBe("ESTIMATE_AND_DATE_DESC")
         })
       })
     })
@@ -527,17 +471,17 @@ const AuctionResultsFixture: ArtistAuctionResults_Test_QueryRawResponse = {
     slug: "pablo-picasso",
     name: "Pablo Picasso",
     auctionResultsConnection: {
-      pageInfo: { hasNextPage: true, endCursor: "YXJyYXljb25uZWN0aW9uOjk=" },
+      pageInfo: { hasNextPage: true, endCursor: "cursor4" },
       pageCursors: {
         around: [
-          { cursor: "YXJyYXljb25uZWN0aW9uOi0x", page: 1, isCurrent: true },
-          { cursor: "YXJyYXljb25uZWN0aW9uOjk=", page: 2, isCurrent: false },
-          { cursor: "YXJyYXljb25uZWN0aW9uOjE5", page: 3, isCurrent: false },
-          { cursor: "YXJyYXljb25uZWN0aW9uOjI5", page: 4, isCurrent: false },
+          { cursor: "cursor1", page: 1, isCurrent: true },
+          { cursor: "cursor2", page: 2, isCurrent: false },
+          { cursor: "cursor3", page: 3, isCurrent: false },
+          { cursor: "cursor4", page: 4, isCurrent: false },
         ],
         first: null,
         last: {
-          cursor: "YXJyYXljb25uZWN0aW9uOjgxOQ==",
+          cursor: "cursor4",
           page: 83,
           isCurrent: false,
         },
@@ -575,7 +519,7 @@ const AuctionResultsFixture: ArtistAuctionResults_Test_QueryRawResponse = {
             estimate: { display: "$40,000 - 60,000" },
             id: "QXVjdGlvblJlc3VsdDoyNDk2Nw==",
             mediumText: "oil on canvas",
-            categoryText: "Painting",
+            categoryText: "Work on Paper",
           },
         },
         {

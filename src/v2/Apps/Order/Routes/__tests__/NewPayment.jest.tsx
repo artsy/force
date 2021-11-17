@@ -74,7 +74,7 @@ describe("Payment", () => {
   beforeAll(() => {
     window.sd = { STRIPE_PUBLISHABLE_KEY: "" } as GlobalData
   })
-  const { buildPage, mutations, routes } = createTestEnv({
+  const { buildPage, mutations, routes, ...hooks } = createTestEnv({
     Component: NewPaymentFragmentContainer,
     defaultData: {
       order: testOrder,
@@ -104,10 +104,12 @@ describe("Payment", () => {
 
   beforeEach(() => {
     mockLocation()
+    hooks.clearErrors()
     global.setInterval = jest.fn()
   })
 
   afterEach(() => {
+    hooks.clearMocksAndErrors()
     global.setInterval = realSetInterval
   })
 

@@ -1,7 +1,7 @@
 import { SystemContextProvider } from "v2/System"
 import { buildAppRoutes } from "v2/System/Router/buildAppRoutes"
 import { buildClientApp } from "v2/System/Router/client"
-import { mount } from "enzyme"
+import { render, screen } from "@testing-library/react"
 
 jest.mock("v2/Components/NavBar/NavBar", () => ({
   NavBar: () => <div />,
@@ -36,16 +36,18 @@ describe("AppShell", () => {
       ]),
     })
 
-    const wrapper = mount(
+    render(
       <SystemContextProvider>
         <ClientApp />
       </SystemContextProvider>
     )
-    expect(wrapper.find("AppShell").length).toEqual(1)
+    expect(
+      screen.getByText("Get More from Artsy—on the App")
+    ).toBeInTheDocument()
   })
 
-  // eslint-disable-next-line jest/no-done-callback, jest/expect-expect
-  it("calls the matched routes `prepare` function if found", async done => {
+  it("calls the matched routes `prepare` function if found", async () => {
+    const onClientSideRender = jest.fn()
     const { ClientApp } = await buildClientApp({
       history: {
         protocol: "memory",
@@ -57,19 +59,19 @@ describe("AppShell", () => {
             {
               path: "/foo",
               Component: () => <div />,
-              onClientSideRender: () => {
-                done()
-              },
+              onClientSideRender,
             },
           ],
         },
       ]),
     })
 
-    mount(
+    render(
       <SystemContextProvider>
         <ClientApp />
       </SystemContextProvider>
     )
+
+    expect(onClientSideRender).toHaveBeenCalledTimes(1)
   })
 })

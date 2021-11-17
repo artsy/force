@@ -101,7 +101,12 @@ const FiltersWithScrollIntoView: React.FC<{
   const scrollRef = useRef<HTMLDivElement | null>(null)
 
   return (
-    <Box ref={scrollRef as any} overflowY="scroll" height="100%">
+    <Box
+      ref={scrollRef as any}
+      overflowY="scroll"
+      height="100%"
+      data-testid="FiltersWithScrollIntoView"
+    >
       <ScrollRefContext.Provider value={{ scrollRef }}>
         {Filters ? (
           Filters

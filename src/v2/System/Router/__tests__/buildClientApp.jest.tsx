@@ -1,9 +1,9 @@
 import { SystemContextConsumer } from "v2/System"
 import { buildClientApp } from "v2/System/Router/buildClientApp"
 import { createMockNetworkLayer } from "v2/DevTools"
-import { mount } from "enzyme"
+import { render, screen } from "@testing-library/react"
 import { graphql } from "react-relay"
-import { Boot } from "../Boot"
+import * as relaySystem from "v2/System/Relay/createRelaySSREnvironment"
 
 jest.mock("v2/Components/NavBar", () => ({
   NavBar: () => <div />,
@@ -16,6 +16,8 @@ jest.mock("react-relay", () => ({
 }))
 
 describe("buildClientApp", () => {
+  const createRelayEnvSpy = jest.spyOn(relaySystem, "createRelaySSREnvironment")
+
   it("resolves with a <ClientApp /> component", async () => {
     const { ClientApp } = await buildClientApp({
       history: {
@@ -33,8 +35,8 @@ describe("buildClientApp", () => {
       ],
     })
 
-    const wrapper = mount(<ClientApp />)
-    expect(wrapper.html()).toContain("<div>Hello Router</div>")
+    render(<ClientApp />)
+    expect(screen.getByText("Hello Router")).toBeInTheDocument()
   })
 
   it("accepts an initial route", async () => {
@@ -55,17 +57,18 @@ describe("buildClientApp", () => {
       ],
     })
 
-    const wrapper = mount(<ClientApp />)
-    expect(wrapper.html()).toContain("<div>CV Page</div>")
+    render(<ClientApp />)
+    expect(screen.getByText("CV Page")).toBeInTheDocument()
   })
 
   it("bootstraps data from __RELAY_BOOTSTRAP__", async () => {
-    window.__RELAY_BOOTSTRAP__ = JSON.stringify([
+    const relayBootstrap = [
       [
         '{"queryID":"OrderQuery","variables":{"orderID":"0"}}',
         "found window cache",
       ],
-    ])
+    ]
+    window.__RELAY_BOOTSTRAP__ = JSON.stringify(relayBootstrap)
 
     const { ClientApp } = await buildClientApp({
       history: {
@@ -83,16 +86,15 @@ describe("buildClientApp", () => {
       ],
     })
 
-    const wrapper = mount(<ClientApp />)
-    expect(
-      (wrapper
-        .find(Boot)
-        .props() as any).relayEnvironment.relaySSRMiddleware.cache.values()
-    ).toContain("found window cache")
+    render(<ClientApp />)
+
+    expect(createRelayEnvSpy).toHaveBeenCalledWith({
+      cache: relayBootstrap,
+      user: undefined,
+    })
   })
 
-  // eslint-disable-next-line jest/no-done-callback
-  it("passes along initial context values", async done => {
+  it("passes along initial context values", async () => {
     const HomeApp = () => {
       return (
         <SystemContextConsumer>
@@ -111,8 +113,8 @@ describe("buildClientApp", () => {
               "setUser",
               "user",
             ])
-            setImmediate(done)
-            return <div />
+
+            return <div>SystemContextConsumer</div>
           }}
         </SystemContextConsumer>
       )
@@ -131,7 +133,8 @@ describe("buildClientApp", () => {
       context: {},
     })
 
-    mount(<ClientApp />)
+    render(<ClientApp />)
+    expect(screen.getByText("SystemContextConsumer")).toBeInTheDocument()
   })
 
   describe("concerning GraphQL errors", () => {
@@ -184,7 +187,7 @@ describe("buildClientApp", () => {
           ],
         })
 
-        mount(<ClientApp />)
+        render(<ClientApp />)
       } catch (error) {
         // eslint-disable-next-line jest/no-conditional-expect, jest/no-try-expect
         expect(error.message).toMatch(/Oh noes/)

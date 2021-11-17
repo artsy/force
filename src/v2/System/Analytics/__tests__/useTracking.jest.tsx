@@ -1,6 +1,6 @@
 import { AnalyticsSchema } from "v2/System/Analytics"
 import { mount } from "enzyme"
-import * as React from "react";
+import * as React from "react"
 import { renderToString } from "react-dom/server"
 import { track } from "../track"
 import { useTracking } from "../useTracking"
@@ -10,7 +10,7 @@ jest.mock("../useTracking")
 describe("useTracking", () => {
   it("throws error if tracking context not present", () => {
     ;(useTracking as jest.Mock).mockImplementationOnce(
-      require.requireActual("../useTracking").useTracking
+      jest.requireActual("../useTracking").useTracking
     )
 
     const ThrowMissingContext = () => {

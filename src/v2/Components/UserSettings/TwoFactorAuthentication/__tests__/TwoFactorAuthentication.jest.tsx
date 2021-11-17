@@ -72,7 +72,7 @@ describe("TwoFactorAuthentication", () => {
       const env = setupTestEnv()
       const page = await env.buildPage()
 
-      expect(page.appSetupButton.exists).toBeTruthy
+      expect(page.appSetupButton.exists).toBeTruthy()
     })
 
     it("creates an enabled App Authenticator 2FA factor", async () => {
@@ -92,7 +92,7 @@ describe("TwoFactorAuthentication", () => {
       const env = setupTestEnv()
       const page = await env.buildPage()
 
-      expect(page.smsSetupButton.exists).toBeTruthy
+      expect(page.smsSetupButton.exists).toBeTruthy()
     })
 
     it("creates an enabled SMS 2FA factor", async () => {
@@ -117,16 +117,16 @@ describe("TwoFactorAuthentication", () => {
         mockData: AppEnabledWithoutBackupCodesQueryResponse,
       })
 
-      expect(page.backupSetupButton.exists).toBeTruthy
+      expect(page.backupSetupButton.exists).toBeTruthy()
     })
 
-    it("creates backup codes and displays codes in a modal", async done => {
+    it("creates backup codes and displays codes in a modal", async () => {
       const env = setupTestEnv()
       const page = await env.buildPage({
         mockData: AppEnabledWithoutBackupCodesQueryResponse,
       })
 
-      expect(page.backupSetupButton.exists).toBeTruthy
+      expect(page.backupSetupButton.exists).toBeTruthy()
 
       env.mutations.useResultsOnce(
         CreateBackupSecondFactorsMutationSuccessResponse
@@ -139,18 +139,13 @@ describe("TwoFactorAuthentication", () => {
 
       await page.clickBackupSetupButton()
 
-      setTimeout(() => {
-        const modalText = page.backupModal.text()
-
-        BackupSecondFactors.forEach(factor => {
-          expect(modalText).toContain(factor.code)
-        })
-
-        done()
+      const modalText = page.backupModal.text()
+      BackupSecondFactors.forEach(factor => {
+        expect(modalText).toContain(factor.code)
       })
     })
 
-    it("shows current backup codes in a modal", async done => {
+    it("shows current backup codes in a modal", async () => {
       const env = setupTestEnv()
       const page = await env.buildPage({
         mockData: AppEnabledWithBackupCodesQueryResponse,
@@ -160,24 +155,19 @@ describe("TwoFactorAuthentication", () => {
 
       await page.clickBackupShowButton()
 
-      setTimeout(() => {
-        const modalText = page.backupModal.text()
-
-        BackupSecondFactors.forEach(factor => {
-          expect(modalText).toContain(factor.code)
-        })
-
-        done()
+      const modalText = page.backupModal.text()
+      BackupSecondFactors.forEach(factor => {
+        expect(modalText).toContain(factor.code)
       })
     })
 
-    it("regenerates backup codes and displays codes in a modal", async done => {
+    it("regenerates backup codes and displays codes in a modal", async () => {
       const env = setupTestEnv()
       const page = await env.buildPage({
         mockData: AppEnabledWithBackupCodesQueryResponse,
       })
 
-      expect(page.backupRegenerateButton.exists).toBeTruthy
+      expect(page.backupRegenerateButton.exists).toBeTruthy()
 
       env.mutations.useResultsOnce(
         CreateBackupSecondFactorsMutationSuccessResponse
@@ -185,14 +175,9 @@ describe("TwoFactorAuthentication", () => {
 
       await page.clickBackupRegenerateButton()
 
-      setTimeout(() => {
-        const modalText = page.backupModal.text()
-
-        BackupSecondFactors.forEach(factor => {
-          expect(modalText).toContain(factor.code)
-        })
-
-        done()
+      const modalText = page.backupModal.text()
+      BackupSecondFactors.forEach(factor => {
+        expect(modalText).toContain(factor.code)
       })
     })
   })

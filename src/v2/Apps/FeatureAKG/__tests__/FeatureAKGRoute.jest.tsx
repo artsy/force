@@ -716,7 +716,7 @@ describe("FeatureAKG", () => {
           context_module: "BrowseFairs",
           destination_path: "/fair/fair-1",
         })
-      })
+      }, 20000)
 
       it("doesn't show the section if there are no rails", async () => {
         const injectedData = {

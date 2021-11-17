@@ -79,12 +79,10 @@ describe("PartnerContactUtils", () => {
     ["with null", null, []],
   ])(
     "getContactAddressLines returns correct value %s",
-    (
-      name: string,
-      location: PartnerContactMap_location,
-      addressLines: Array<string>
-    ) => {
-      expect(getContactAddressLines(location)).toEqual(addressLines)
+    (_, location, addressLines) => {
+      expect(
+        getContactAddressLines(location as PartnerContactMap_location)
+      ).toEqual(addressLines)
     }
   )
 
