@@ -7,10 +7,10 @@ import {
 } from "react-relay"
 import { useSystemContext } from "v2/System/SystemContext"
 import { renderWithLoadProgress } from "v2/System/Relay/renderWithLoadProgress"
-import { Form, Formik, FormikProps } from "formik"
+import { Formik, FormikProps } from "formik"
 import { UserInformation_me } from "v2/__generated__/UserInformation_me.graphql"
 import { UserInformationQuery } from "v2/__generated__/UserInformationQuery.graphql"
-import { Box, Button, Text, Banner, Input } from "@artsy/palette"
+import { Box, Button, Text, Banner, Input, Join, Spacer, useToasts } from "@artsy/palette"
 import { ChangeUserInformationValidator } from "v2/Components/Authentication/Validators"
 import { PasswordInput } from "v2/Components/PasswordInput"
 import type { SystemContextProps } from "@artsy/reaction/dist/Artsy"
@@ -30,6 +30,7 @@ export const UserInformation: React.FC<UserInformationProps> = ({
   relay,
 }) => {
   const { relayEnvironment } = useSystemContext()
+  const { sendToast } = useToasts()
 
   const onSubmit = async (
     { email, name, phone, password }: UpdateMyProfileInput,
@@ -44,19 +45,19 @@ export const UserInformation: React.FC<UserInformationProps> = ({
         phone,
       }
 
-      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-      const response = await UpdateUserInformation(relayEnvironment, variables)
-      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-      const userOrError = response.updateMyUserProfile.userOrError
+      const response = await UpdateUserInformation(relayEnvironment!, variables)
+      const userOrError = response.updateMyUserProfile!.userOrError
 
-      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-      if (userOrError.mutationError) {
-        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-        const { message, fieldErrors } = userOrError.mutationError
+      sendToast({
+        variant: "success",
+        message: "Information updated successfully",
+      })
+
+      if (userOrError!.mutationError) {
+        const { message, fieldErrors } = userOrError!.mutationError
         if (fieldErrors) {
           // display errors for a specified form field
-          // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-          const formattedErrors = formatGravityErrors(userOrError.mutationError)
+          const formattedErrors = formatGravityErrors(userOrError!.mutationError)
           formikBag.setErrors(formattedErrors)
         } else if (message) {
           // display generic gravity error
@@ -68,12 +69,17 @@ export const UserInformation: React.FC<UserInformationProps> = ({
       }
     } catch (err) {
       formikBag.setErrors(err)
+      sendToast({
+        variant: "error",
+        message: "There was a problem",
+        description: err.message,
+      })
     }
   }
 
   return (
     <Box>
-      <Text variant="lg" mb={2}>
+      <Text variant="lg" mb={4}>
         Information
       </Text>
       <Formik
@@ -99,79 +105,69 @@ export const UserInformation: React.FC<UserInformationProps> = ({
           touched,
           values,
         }) => (
-          <Form onSubmit={handleSubmit}>
-            <Input
-              mb={2}
-              title="Full name"
-              name="name"
-              error={errors.name as any}
-              placeholder="Enter your full name"
-              type="text"
-              value={values.name}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              width="50%"
-            />
-            <Input
-              mb={2}
-              title="Email"
-              name="email"
-              error={errors.email as any}
-              placeholder="Enter your email address"
-              type="email"
-              value={values.email}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              width="50%"
-            />
-            <Input
-              mb={2}
-              title="Mobile number"
-              name="phone"
-              placeholder="Enter your mobile phone number"
-              type="tel"
-              value={values.phone}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              width="50%"
-            />
-            {me.paddleNumber && (
-              <>
-                <Input
-                  mb={2}
-                  name="paddleNumber"
-                  width="50%"
-                  title="Bidder number"
-                  value={me.paddleNumber}
-                  readOnly
-                />
-              </>
-            )}
-            <input name="internalID" value={me.internalID} hidden readOnly />
-            {touched.email && values.email !== me.email && (
-              <>
-                <PasswordInput
-                  title="Password"
-                  autoFocus
-                  block
-                  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-                  error={
-                    !values.password && "Password is required to change email."
-                  }
-                  placeholder="Enter your password"
-                  value={values.password}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  required
-                  width="50%"
-                />
-              </>
-            )}
-            {status && !status.success && (
-              <Banner variant="error">{status.error}</Banner>
-            )}
-            <Button loading={isSubmitting}>Save changes</Button>
-          </Form>
+          <form onSubmit={handleSubmit}>
+            <Join separator={<Spacer mt={2} />}>
+              <Input
+                title="Full name"
+                name="name"
+                error={errors.name as any}
+                placeholder="Enter your full name"
+                value={values.name}
+                onChange={handleChange}
+                onBlur={handleBlur}
+              />
+              <Input
+                title="Email"
+                name="email"
+                error={errors.email as any}
+                placeholder="Enter your email address"
+                value={values.email}
+                onChange={handleChange}
+                onBlur={handleBlur}
+              />
+              <Input
+                title="Mobile number"
+                name="phone"
+                placeholder="Enter your mobile phone number"
+                value={values.phone}
+                onChange={handleChange}
+                onBlur={handleBlur}
+              />
+              {me.paddleNumber && (
+                <>
+                  <Input
+                    name="paddleNumber"
+                    title="Bidder number"
+                    value={me.paddleNumber}
+                    readOnly
+                  />
+                </>
+              )}
+              <input name="internalID" value={me.internalID} hidden readOnly />
+              {touched.email && values.email !== me.email && (
+                <>
+                  <PasswordInput
+                    title="Password"
+                    autoFocus
+                    block
+                    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
+                    error={
+                      !values.password && "Password is required to change email."
+                    }
+                    placeholder="Enter your password"
+                    value={values.password}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    required
+                  />
+                </>
+              )}
+              {status && !status.success && (
+                <Banner variant="error">{status.error}</Banner>
+              )}
+              <Button mt={2} type="submit" loading={isSubmitting}>Save changes</Button>
+            </Join>
+          </form>
         )}
       </Formik>
     </Box>
@@ -204,7 +200,6 @@ export const UserInformationQueryRenderer = () => {
   const { user, relayEnvironment } = useSystemContext()
 
   if (!user) {
-    console.log("NO USER INFO FOUND **********")
     return null
   }
 

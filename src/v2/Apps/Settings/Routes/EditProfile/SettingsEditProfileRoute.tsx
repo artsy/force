@@ -16,10 +16,11 @@ const SettingsEditProfileRoute: React.FC<SettingsEditProfileRouteProps> = ({
 }) => {
   return (
     <>
-      <UserInformationRefetchContainer me={me} />
       <GridColumns>
         <Column span={8}>
           <Join separator={<Separator my={4} />}>
+            <UserInformationRefetchContainer me={me} />
+
             <SettingsEditProfileAboutYouFragmentContainer me={me} />
 
             <SettingsEditProfileArtistsYouCollectFragmentContainer me={me} />
