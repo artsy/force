@@ -84,7 +84,18 @@ export const authenticationRoutes: AppRouteConfig[] = [
     hideNav: true,
     hideFooter: true,
     getComponent: () => ResetPasswordRoute,
-    onServerSideRender: runAuthMiddleware,
+    onServerSideRender: ({ req, res }) => {
+      if (req.query.reset_password_token) {
+        req.session.reset_password_token = req.query.reset_password_token
+        req.session.set_password = req.query.set_password
+        req.session.reset_password_redirect_to =
+          req.query.reset_password_redirect_to
+
+        runAuthMiddleware({ req, res })
+      } else {
+        res.redirect("/")
+      }
+    },
     onClientSideRender: ({ match }) => {
       setCookies(match.location.query)
       ResetPasswordRoute.preload()
