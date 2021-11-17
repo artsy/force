@@ -1,11 +1,13 @@
 import { graphql } from "react-relay"
-import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
+import { setupTestWrapperTL } from "v2/DevTools/setupTestWrapper"
 import { OrderUpdateFragmentContainer } from "../OrderUpdate"
 import { OrderUpdate_Test_Query } from "v2/__generated__/OrderUpdate_Test_Query.graphql"
+import { screen } from "@testing-library/react"
+import { DateTime } from "luxon"
 
 jest.unmock("react-relay")
 
-const { getWrapper } = setupTestWrapper<OrderUpdate_Test_Query>({
+const { renderWithRelay } = setupTestWrapperTL<OrderUpdate_Test_Query>({
   Component: props => {
     const event = props!.me!.conversation!.orderConnection!.edges![0]!.node!
       .orderHistory[0]
@@ -34,7 +36,8 @@ const { getWrapper } = setupTestWrapper<OrderUpdate_Test_Query>({
 
 describe("testing different statuses", () => {
   it("render counteroffer", () => {
-    let wrapper = getWrapper({
+    const createdAt = "2021-07-04T12:46:40Z"
+    renderWithRelay({
       Conversation: () => ({
         orderConnection: {
           edges: [
@@ -43,7 +46,7 @@ describe("testing different statuses", () => {
                 orderHistory: [
                   {
                     __typename: "CommerceOfferSubmittedEvent",
-                    createdAt: "2021-07-04T12:46:40+03:00",
+                    createdAt,
                     offer: {
                       amount: "$40000",
                       definesTotal: true,
@@ -61,12 +64,16 @@ describe("testing different statuses", () => {
         },
       }),
     })
-    expect(wrapper.find("TimeSince").length).toEqual(1)
-    expect(wrapper.text()).toContain("You sent a counteroffer for $40000")
+
+    const date = DateTime.fromISO(createdAt)
+    expect(screen.getByText(date.toFormat("ccc, LLL d, t"))).toBeInTheDocument()
+    expect(
+      screen.getByText("You sent a counteroffer for $40000")
+    ).toBeInTheDocument()
   })
 
   it("render received a counteroffer", () => {
-    let wrapper = getWrapper({
+    renderWithRelay({
       Conversation: () => ({
         orderConnection: {
           edges: [
@@ -91,11 +98,13 @@ describe("testing different statuses", () => {
         },
       }),
     })
-    expect(wrapper.text()).toContain("You received a counteroffer for $40000")
+    expect(
+      screen.getByText("You received a counteroffer for $40000")
+    ).toBeInTheDocument()
   })
 
   it("render Offer Accepted - Pending Action", () => {
-    let wrapper = getWrapper({
+    renderWithRelay({
       Conversation: () => ({
         orderConnection: {
           edges: [
@@ -120,11 +129,13 @@ describe("testing different statuses", () => {
         },
       }),
     })
-    expect(wrapper.text()).toContain("Offer Accepted - Pending Action")
+    expect(
+      screen.getByText("Offer Accepted - Pending Action")
+    ).toBeInTheDocument()
   })
 
   it("render Offer Accepted", () => {
-    let wrapper = getWrapper({
+    renderWithRelay({
       Conversation: () => ({
         orderConnection: {
           edges: [
@@ -142,10 +153,10 @@ describe("testing different statuses", () => {
         },
       }),
     })
-    expect(wrapper.text()).toContain("Offer Accepted")
+    expect(screen.getByText("Offer Accepted")).toBeInTheDocument()
   })
   it("render Offer Declined", () => {
-    let wrapper = getWrapper({
+    renderWithRelay({
       Conversation: () => ({
         orderConnection: {
           edges: [
@@ -164,10 +175,10 @@ describe("testing different statuses", () => {
         },
       }),
     })
-    expect(wrapper.text()).toContain("Offer Declined")
+    expect(screen.getByText("Offer Declined")).toBeInTheDocument()
   })
   it("render Offer Expired", () => {
-    let wrapper = getWrapper({
+    renderWithRelay({
       Conversation: () => ({
         orderConnection: {
           edges: [
@@ -186,6 +197,6 @@ describe("testing different statuses", () => {
         },
       }),
     })
-    expect(wrapper.text()).toContain("Offer Expired")
+    expect(screen.getByText("Offer Expired")).toBeInTheDocument()
   })
 })

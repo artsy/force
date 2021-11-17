@@ -8,10 +8,17 @@ export type CommerceOrderStateEnum = "ABANDONED" | "APPROVED" | "CANCELED" | "FU
 export type ConversationCTA_conversation = {
     readonly internalID: string | null;
     readonly items: ReadonlyArray<{
+        readonly liveArtwork: ({
+            readonly __typename: "Artwork";
+            readonly isOfferableFromInquiry: boolean | null;
+        } | {
+            /*This will never be '%other', but we need some
+            value in case none of the concrete values match.*/
+            readonly __typename: "%other";
+        }) | null;
         readonly item: ({
             readonly __typename: "Artwork";
             readonly internalID: string;
-            readonly isOfferableFromInquiry: boolean | null;
         } | {
             /*This will never be '%other', but we need some
             value in case none of the concrete values match.*/
@@ -36,6 +43,7 @@ export type ConversationCTA_conversation = {
             } | null;
         } | null> | null;
     } | null;
+    readonly " $fragmentRefs": FragmentRefs<"OpenInquiryModalCTA_conversation">;
     readonly " $refType": "ConversationCTA_conversation";
 };
 export type ConversationCTA_conversation$data = ConversationCTA_conversation;
@@ -53,7 +61,17 @@ var v0 = {
   "kind": "ScalarField",
   "name": "internalID",
   "storageKey": null
-};
+},
+v1 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "__typename",
+  "storageKey": null
+},
+v2 = [
+  (v0/*: any*/)
+];
 return {
   "argumentDefinitions": [],
   "kind": "Fragment",
@@ -74,20 +92,13 @@ return {
           "args": null,
           "concreteType": null,
           "kind": "LinkedField",
-          "name": "item",
+          "name": "liveArtwork",
           "plural": false,
           "selections": [
             {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "__typename",
-              "storageKey": null
-            },
-            {
               "kind": "InlineFragment",
               "selections": [
-                (v0/*: any*/),
+                (v1/*: any*/),
                 {
                   "alias": null,
                   "args": null,
@@ -96,6 +107,23 @@ return {
                   "storageKey": null
                 }
               ],
+              "type": "Artwork"
+            }
+          ],
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": null,
+          "kind": "LinkedField",
+          "name": "item",
+          "plural": false,
+          "selections": [
+            (v1/*: any*/),
+            {
+              "kind": "InlineFragment",
+              "selections": (v2/*: any*/),
               "type": "Artwork"
             }
           ],
@@ -205,9 +233,7 @@ return {
                               "kind": "LinkedField",
                               "name": "node",
                               "plural": false,
-                              "selections": [
-                                (v0/*: any*/)
-                              ],
+                              "selections": (v2/*: any*/),
                               "storageKey": null
                             }
                           ],
@@ -227,10 +253,15 @@ return {
         }
       ],
       "storageKey": "orderConnection(first:10,states:[\"APPROVED\",\"FULFILLED\",\"SUBMITTED\",\"REFUNDED\"])"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "OpenInquiryModalCTA_conversation"
     }
   ],
   "type": "Conversation"
 };
 })();
-(node as any).hash = '0c338c6ac22d830e9f965a8701a222a6';
+(node as any).hash = 'c59d15f5504451a7e41ae6b4e3df0cbb';
 export default node;

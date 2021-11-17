@@ -5,6 +5,7 @@
 Backbone pageable's collection itself is: "Backbone.PageableCollection is a strict superset of Backbone.Collection and passes its test suite." so you should be able to use it anywhere you use `Backbone.Collection`
 
 ## Usage
+
 ```coffeescript
 PageableCollection = require '../components/pageable_collection/index
 
@@ -12,6 +13,7 @@ module.exports = class PageableArtists extends PageableCollection
 ```
 
 Use with the pagination template mixin:
+
 ```jade
 +paginate(pageableArtists.state.currentPage, pageableArtists.state.totalPages)
 ```

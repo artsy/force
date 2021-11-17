@@ -2,13 +2,22 @@ import { ConversationPaginationContainer } from "../Conversation"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import { useSystemContext } from "v2/System/useSystemContext"
-import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
+import { setupTestWrapperTL } from "v2/DevTools/setupTestWrapper"
 import { ConversationPagination_Test_Query } from "v2/__generated__/ConversationPagination_Test_Query.graphql"
+import { screen } from "@testing-library/react"
 
 jest.unmock("react-relay")
 jest.mock("v2/System/useSystemContext")
+jest.mock("v2/Apps/Conversation/Components/ConfirmArtworkModal", () => ({
+  ConfirmArtworkModalQueryRenderer: () => null,
+}))
+jest.mock("v2/Apps/Conversation/Components/UnreadMessagesToast", () => ({
+  UnreadMessagesToastQueryRenderer: () => null,
+}))
 
-const { getWrapper } = setupTestWrapper<ConversationPagination_Test_Query>({
+const { renderWithRelay } = setupTestWrapperTL<
+  ConversationPagination_Test_Query
+>({
   Component: props => {
     if (!props.node) return null
 
@@ -55,28 +64,14 @@ describe("Conversation", () => {
       }
     })
 
-    it("shows the buyer guarantee message", () => {
-      const wrapper = getWrapper({
+    it("shows the buyer guarantee message", async () => {
+      renderWithRelay({
         Artwork: () => ({ isOfferableFromInquiry: true }),
       })
 
-      expect(wrapper.find("BuyerGuaranteeMessage")).toHaveLength(1)
-    })
-
-    it("renders the confirm artwork modal query renderer", () => {
-      const wrapper = getWrapper({
-        Artwork: () => ({ isOfferableFromInquiry: true }),
-      })
-
-      expect(wrapper.find("ConfirmArtworkModalQueryRenderer")).toHaveLength(1)
-    })
-
-    it("renders the OrderModal", () => {
-      const wrapper = getWrapper({
-        Artwork: () => ({ isOfferableFromInquiry: true }),
-      })
-
-      expect(wrapper.find("OrderModal")).toHaveLength(1)
+      expect(
+        screen.getByText("Be Protected by The Artsy Guarantee")
+      ).toBeInTheDocument()
     })
   })
 
@@ -88,12 +83,13 @@ describe("Conversation", () => {
     })
 
     it("doesn't show the buyer guarantee message", () => {
-      const wrapper = getWrapper({
+      renderWithRelay({
         Artwork: () => ({ isOfferableFromInquiry: false }),
       })
-      const buyerGuaranteeMessage = wrapper.find("BuyerGuaranteeMessage")
 
-      expect(buyerGuaranteeMessage).toHaveLength(0)
+      expect(
+        screen.queryByText("Be Protected by The Artsy Guarantee")
+      ).not.toBeInTheDocument()
     })
   })
 })
