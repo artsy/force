@@ -301,6 +301,7 @@ export const SignUpFormQueryRenderer: React.FC<FormProps> = passedProps => {
           }
         }
       `}
+      placeholder={<SignUpForm {...passedProps} />}
       render={({ error, props }) => {
         if (error || !props || !props.requestLocation) {
           return <SignUpFormFragmentContainer {...passedProps} />

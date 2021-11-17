@@ -12,7 +12,7 @@ export const checkForRedirect = ({ req, res }) => {
     (!isStaticAuth ? referrer : undefined)
 
   let newRedirect
-  if (redirectTo === ("/reset_password2" || "/user/delete")) {
+  if (redirectTo === ("/reset_password" || "/user/delete")) {
     newRedirect = "/"
   } else {
     newRedirect = redirectTo
@@ -20,5 +20,5 @@ export const checkForRedirect = ({ req, res }) => {
 
   res.locals.sd.AUTHENTICATION_REDIRECT_TO = newRedirect
 
-  return { req, res }
+  return { req, res, redirectTo: newRedirect }
 }

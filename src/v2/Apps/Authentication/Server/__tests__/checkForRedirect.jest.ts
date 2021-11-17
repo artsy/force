@@ -47,13 +47,13 @@ describe("checkForRedirect", () => {
     expect(res.locals.sd.AUTHENTICATION_REDIRECT_TO).toEqual(undefined)
   })
 
-  it("redirects to `/` if redirectTo=/reset_password2", () => {
-    const { res } = setup({ query: { redirectTo: "/reset_password2" } })
+  it("redirects to `/` if redirectTo=/reset_password", () => {
+    const { res } = setup({ query: { redirectTo: "/reset_password" } })
     expect(res.locals.sd.AUTHENTICATION_REDIRECT_TO).toEqual("/")
   })
 
   it("redirects to `/` if redirectTo=/user/delete", () => {
-    const { res } = setup({ query: { redirectTo: "/reset_password2" } })
+    const { res } = setup({ query: { redirectTo: "/reset_password" } })
     expect(res.locals.sd.AUTHENTICATION_REDIRECT_TO).toEqual("/")
   })
 })
