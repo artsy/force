@@ -70,7 +70,10 @@ describe("OfferNote", () => {
     expect(text).toContain(
       "Use this note to add any additional context about your offer"
     )
-    expect(text).toContain("0 / 200 max")
+    expect(text).toContain(
+      "Please do not share personal information in this field"
+    )
+    expect(text).toContain("0 / 1000 max")
   })
 
   it("has a different description for counteroffers", () => {
@@ -78,16 +81,5 @@ describe("OfferNote", () => {
     expect(text).toContain(
       "Use this note to add any additional context about your counteroffer"
     )
-  })
-
-  it("has a link to ask a specialist things", () => {
-    const wrapper = getWrapper()
-    const link = wrapper.find("Text[data-test='ask-specialists']")
-
-    expect(link.text()).toContain("ask our specialists")
-
-    link.simulate("click")
-
-    expect(showInquiry).toBeCalledWith({ askSpecialist: true })
   })
 })
