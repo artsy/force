@@ -7,12 +7,21 @@ import {
 } from "react-relay"
 import { useSystemContext } from "v2/System/SystemContext"
 import { renderWithLoadProgress } from "v2/System/Relay/renderWithLoadProgress"
-import { Formik, FormikProps } from "formik"
+import { Form, Formik, FormikProps } from "formik"
 import { UserInformation_me } from "v2/__generated__/UserInformation_me.graphql"
 import { UserInformationQuery } from "v2/__generated__/UserInformationQuery.graphql"
-import { Box, Button, Text, Banner, Input, Join, Spacer, useToasts } from "@artsy/palette"
+import {
+  Box,
+  Button,
+  Text,
+  Banner,
+  Input,
+  Join,
+  Spacer,
+  useToasts,
+  PasswordInput,
+} from "@artsy/palette"
 import { ChangeUserInformationValidator } from "v2/Components/Authentication/Validators"
-import { PasswordInput } from "v2/Components/PasswordInput"
 import type { SystemContextProps } from "@artsy/reaction/dist/Artsy"
 import { UpdateUserInformation } from "./UpdateUserInformationMutation"
 import {
@@ -57,7 +66,9 @@ export const UserInformation: React.FC<UserInformationProps> = ({
         const { message, fieldErrors } = userOrError!.mutationError
         if (fieldErrors) {
           // display errors for a specified form field
-          const formattedErrors = formatGravityErrors(userOrError!.mutationError)
+          const formattedErrors = formatGravityErrors(
+            userOrError!.mutationError
+          )
           formikBag.setErrors(formattedErrors)
         } else if (message) {
           // display generic gravity error
@@ -83,15 +94,13 @@ export const UserInformation: React.FC<UserInformationProps> = ({
         Information
       </Text>
       <Formik
-        initialValues={
-          {
-            name: me.name,
-            email: me.email,
-            phone: me.phone,
-            paddleNumber: me.paddleNumber,
-            internalID: me.internalID
-          }
-        }
+        initialValues={{
+          name: me.name,
+          email: me.email,
+          phone: me.phone,
+          paddleNumber: me.paddleNumber,
+          internalID: me.internalID,
+        }}
         validationSchema={ChangeUserInformationValidator}
         onSubmit={onSubmit}
       >
@@ -105,7 +114,7 @@ export const UserInformation: React.FC<UserInformationProps> = ({
           touched,
           values,
         }) => (
-          <form onSubmit={handleSubmit}>
+          <Form onSubmit={handleSubmit}>
             <Join separator={<Spacer mt={2} />}>
               <Input
                 title="Full name"
@@ -149,10 +158,9 @@ export const UserInformation: React.FC<UserInformationProps> = ({
                   <PasswordInput
                     title="Password"
                     autoFocus
-                    block
-                    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
                     error={
-                      !values.password && "Password is required to change email."
+                      !values.password &&
+                      "Password is required to change email."
                     }
                     placeholder="Enter your password"
                     value={values.password}
@@ -165,9 +173,11 @@ export const UserInformation: React.FC<UserInformationProps> = ({
               {status && !status.success && (
                 <Banner variant="error">{status.error}</Banner>
               )}
-              <Button mt={2} type="submit" loading={isSubmitting}>Save changes</Button>
+              <Button mt={2} type="submit" loading={isSubmitting}>
+                Save changes
+              </Button>
             </Join>
-          </form>
+          </Form>
         )}
       </Formik>
     </Box>
