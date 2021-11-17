@@ -98,7 +98,7 @@ export const settingsRoutes: AppRouteConfig[] = [
     },
     query: graphql`
       query settingsRoutes_SettingsQuery {
-        me {
+        me @principalField {
           ...SettingsApp_me
         }
       }

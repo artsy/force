@@ -7,6 +7,13 @@ export type SettingsSavesArtworks_me = {
     readonly followsAndSaves: {
         readonly artworksConnection: {
             readonly totalCount: number | null;
+            readonly pageInfo: {
+                readonly hasNextPage: boolean;
+                readonly endCursor: string | null;
+            };
+            readonly pageCursors: {
+                readonly " $fragmentRefs": FragmentRefs<"Pagination_pageCursors">;
+            };
             readonly edges: ReadonlyArray<{
                 readonly node: {
                     readonly internalID: string;
@@ -30,8 +37,8 @@ const node: ReaderFragment = {
     {
       "defaultValue": null,
       "kind": "LocalArgument",
-      "name": "after",
-      "type": "String"
+      "name": "page",
+      "type": "Int"
     }
   ],
   "kind": "Fragment",
@@ -39,7 +46,7 @@ const node: ReaderFragment = {
     "connection": [
       {
         "count": null,
-        "cursor": "after",
+        "cursor": null,
         "direction": "forward",
         "path": [
           "followsAndSaves",
@@ -62,6 +69,11 @@ const node: ReaderFragment = {
           "alias": "artworksConnection",
           "args": [
             {
+              "kind": "Variable",
+              "name": "page",
+              "variableName": "page"
+            },
+            {
               "kind": "Literal",
               "name": "private",
               "value": true
@@ -77,6 +89,47 @@ const node: ReaderFragment = {
               "args": null,
               "kind": "ScalarField",
               "name": "totalCount",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "concreteType": "PageInfo",
+              "kind": "LinkedField",
+              "name": "pageInfo",
+              "plural": false,
+              "selections": [
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "hasNextPage",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "endCursor",
+                  "storageKey": null
+                }
+              ],
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "concreteType": "PageCursors",
+              "kind": "LinkedField",
+              "name": "pageCursors",
+              "plural": false,
+              "selections": [
+                {
+                  "args": null,
+                  "kind": "FragmentSpread",
+                  "name": "Pagination_pageCursors"
+                }
+              ],
               "storageKey": null
             },
             {
@@ -126,34 +179,9 @@ const node: ReaderFragment = {
                 }
               ],
               "storageKey": null
-            },
-            {
-              "alias": null,
-              "args": null,
-              "concreteType": "PageInfo",
-              "kind": "LinkedField",
-              "name": "pageInfo",
-              "plural": false,
-              "selections": [
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "endCursor",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "hasNextPage",
-                  "storageKey": null
-                }
-              ],
-              "storageKey": null
             }
           ],
-          "storageKey": "__SettingsSavesArtworks_artworksConnection_connection(private:true)"
+          "storageKey": null
         }
       ],
       "storageKey": null
@@ -161,5 +189,5 @@ const node: ReaderFragment = {
   ],
   "type": "Me"
 };
-(node as any).hash = 'dee1433b3badc5755c154ea7e8b1e5e4';
+(node as any).hash = '36a1d7869b96de495fafb3eee6b91c76';
 export default node;
