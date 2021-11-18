@@ -45,6 +45,8 @@ async function getConsentAndLoad() {
     SEGMENT_DESTINATIONS
   )
 
+  console.log("segment destination preferences: ", destinationPreferences)
+
   // load Segment and pass on those flags.
   conditionallyLoadAnalytics({
     writeKey: SEGMENT_WRITE_KEY,
@@ -118,21 +120,25 @@ async function fetchDestinations(writeKey) {
 }
 
 function setSegmentDestinationPref(consent, destinations) {
-  // map Segment destination category to OneTrust cookie category.
+  // map Segment destination id to OneTrust cookie category.
   const segmentToOneTrust = {
-    "SMS & Push Notifications": "C0001", // OneTrust Strictly Necessary
-    Analytics: "C0002", // OneTrust Performance
-    Advertising: "C0004", // OneTrust Targeting
+    AdWords: "C0004",
+    "Amazon S3": "C0001",
+    Appboy: "C0001",
+    "Facebook Pixel": "C0004",
+    "Google Analytics": "C0002",
+    Indicative: "C0002",
+    "Segment.io": "C0001",
   }
 
   const consentArray = consent.split(",")
 
-  // for each destination, if its category maps to a OneTrust category that is present in consent, set it true, to be enabled.
+  // for each destination, if its id maps to a OneTrust category that is present in consent, set it true, to be enabled.
   const destinationPreferences = destinations
     .map(function (dest) {
       if (
-        dest.category in segmentToOneTrust &&
-        consentArray.includes(segmentToOneTrust[dest.category])
+        dest.id in segmentToOneTrust &&
+        consentArray.includes(segmentToOneTrust[dest.id])
       ) {
         return { [dest.id]: true }
       } else {
