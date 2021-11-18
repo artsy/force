@@ -68,10 +68,10 @@ const SavesRoute = loadable(
       component.SettingsSavesRouteFragmentContainer,
   }
 )
-const SettingsRoute = loadable(
+const EditSettingsRoute = loadable(
   () =>
     import(
-      /* webpackChunkName: "settingsBundle" */ "./Routes/Settings/SettingsEditRoute"
+      /* webpackChunkName: "settingsBundle" */ "./Routes/EditSettings/SettingsEditSettingsRoute"
     ),
   {
     resolveComponent: component => component.SettingsEditRouteFragmentContainer,
@@ -183,14 +183,14 @@ export const settingsRoutes: AppRouteConfig[] = [
       },
       {
         path: "edit-settings",
-        getComponent: () => SettingsRoute,
+        getComponent: () => EditSettingsRoute,
         onClientSideRender: () => {
-          SettingsRoute.preload()
+          EditSettingsRoute.preload()
         },
         query: graphql`
-          query settingsRoutes_SettingsEditProfileRouteQuery {
+          query settingsRoutes_SettingsEditSettingsRouteQuery {
             me {
-              ...SettingsEditProfileRoute_me
+              ...SettingsEditSettingsRoute_me
             }
           }
         `,
