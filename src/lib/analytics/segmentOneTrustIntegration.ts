@@ -45,8 +45,6 @@ async function getConsentAndLoad() {
     SEGMENT_DESTINATIONS
   )
 
-  console.log("segment destination preferences: ", destinationPreferences)
-
   // load Segment and pass on those flags.
   conditionallyLoadAnalytics({
     writeKey: SEGMENT_WRITE_KEY,
