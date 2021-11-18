@@ -46,20 +46,20 @@ describe("OfferNote", () => {
       exceedsCharacterLimit: false,
     })
 
-    const twoHundredAs = new Array(200).fill("a").join("")
-    expect(twoHundredAs.length).toBe(200)
-    simulateTyping(wrapper, twoHundredAs)
+    const oneThousand = new Array(1000).fill("a").join("")
+    expect(oneThousand.length).toBe(1000)
+    simulateTyping(wrapper, oneThousand)
 
     expect(onChange).toHaveBeenCalledWith({
-      value: twoHundredAs,
+      value: oneThousand,
       exceedsCharacterLimit: false,
     })
 
-    const twoHundredAndOneAs = new Array(201).fill("a").join("")
-    simulateTyping(wrapper, twoHundredAndOneAs)
+    const oneThousandAndOneAs = new Array(1001).fill("a").join("")
+    simulateTyping(wrapper, oneThousandAndOneAs)
 
     expect(onChange).toHaveBeenCalledWith({
-      value: twoHundredAndOneAs,
+      value: oneThousandAndOneAs,
       exceedsCharacterLimit: true,
     })
   })
