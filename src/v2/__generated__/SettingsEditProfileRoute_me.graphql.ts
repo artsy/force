@@ -4,7 +4,7 @@
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type SettingsEditProfileRoute_me = {
-    readonly " $fragmentRefs": FragmentRefs<"UserInformation_me" | "SettingsEditProfileAboutYou_me" | "SettingsEditProfileArtistsYouCollect_me" | "SettingsEditProfileYourGalleryIntro_me">;
+    readonly " $fragmentRefs": FragmentRefs<"SettingsEditProfileAboutYou_me" | "SettingsEditProfileArtistsYouCollect_me" | "SettingsEditProfileYourGalleryIntro_me">;
     readonly " $refType": "SettingsEditProfileRoute_me";
 };
 export type SettingsEditProfileRoute_me$data = SettingsEditProfileRoute_me;
@@ -24,11 +24,6 @@ const node: ReaderFragment = {
     {
       "args": null,
       "kind": "FragmentSpread",
-      "name": "UserInformation_me"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
       "name": "SettingsEditProfileAboutYou_me"
     },
     {
@@ -44,5 +39,5 @@ const node: ReaderFragment = {
   ],
   "type": "Me"
 };
-(node as any).hash = 'f42742dc575fbea75c65ee1a13becaf7';
+(node as any).hash = 'd100364f21da4a8e4b13c80efc42142a';
 export default node;
