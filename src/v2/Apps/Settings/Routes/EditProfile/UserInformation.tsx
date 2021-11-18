@@ -93,6 +93,7 @@ export const UserInformation: React.FC<UserInformationProps> = ({
       <Text variant="lg" mb={4}>
         Information
       </Text>
+
       <Formik
         initialValues={{
           name: me.name,
@@ -141,6 +142,7 @@ export const UserInformation: React.FC<UserInformationProps> = ({
                 value={values.phone}
                 onChange={handleChange}
                 onBlur={handleBlur}
+                type="tel"
               />
               {me.paddleNumber && (
                 <>
