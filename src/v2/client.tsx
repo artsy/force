@@ -40,7 +40,7 @@ async function setupClient() {
 
     loadSegment()
 
-    initModalManager()
+    initAuthModalContainer()
     setupArtistSignUpModal()
 
     // Logout handler
