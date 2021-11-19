@@ -1,6 +1,6 @@
 import * as React from "react"
 import track, { useTracking } from "react-tracking"
-import { clickedAppDownload, ContextModule } from "@artsy/cohesion"
+import { ActionType, ClickedAppDownload, ContextModule } from "@artsy/cohesion"
 import { useAnalyticsContext } from "v2/System"
 import Events from "v2/Utils/Events"
 import { Link, LinkProps } from "@artsy/palette"
@@ -37,16 +37,17 @@ export const DownloadAppBadge: React.FC<DownloadAppBadgeProps> = track(null, {
   } = useAnalyticsContext()
 
   const handleClick = () => {
-    tracking.trackEvent(
-      clickedAppDownload({
-        context_module: contextModule,
-        context_page_owner_type: contextPageOwnerType!,
-        context_page_owner_slug: contextPageOwnerSlug,
-        context_page_owner_id: contextPageOwnerId,
-        destination_path: downloadAppUrl,
-        subject: "Download on the App Store",
-      })
-    )
+    const clickedAppDownload: ClickedAppDownload = {
+      action: ActionType.clickedAppDownload,
+      context_module: contextModule,
+      context_page_owner_type: contextPageOwnerType!,
+      context_page_owner_slug: contextPageOwnerSlug,
+      context_page_owner_id: contextPageOwnerId,
+      destination_path: downloadAppUrl,
+      subject: "Download on the App Store",
+    }
+
+    tracking.trackEvent(clickedAppDownload)
   }
 
   if (device === Device.Unknown) {
