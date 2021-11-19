@@ -352,6 +352,7 @@ workflows:
             branches:
               only:
                 - staging
+                - sonecabr/add-smoketest-before-prod
           steps:
             - run: cypress run --config baseUrl=https://staging.artsy.net
 
