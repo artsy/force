@@ -10,6 +10,11 @@ orbs:
   yarn: artsy/yarn@6.0.0
 
 jobs:
+  smoketest-on-staging:
+    executor: node/build
+    steps:
+      - run: cypress run --config baseUrl=https://staging.artsy.net
+
   run_deepcrawl_automator:
     docker:
       - image: cimg/base:2021.11
@@ -347,14 +352,12 @@ workflows:
               only:
                 - release
 
-      - smoketest_on_staging:
+      - smoketest-on-staging:
           filters:
             branches:
               only:
                 - staging
                 - sonecabr/add-smoketest-before-prod
-          steps:
-            - run: cypress run --config baseUrl=https://staging.artsy.net
 
       - validate_production_schema:
           <<: *only_release
@@ -364,6 +367,7 @@ workflows:
           name: deploy-production
           requires:
             - horizon/block
+            - smoketest-on-staging
             - validate_production_schema
 
       # Other
