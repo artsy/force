@@ -1,4 +1,3 @@
-import * as React from "react"
 import { MetaTags } from "v2/Components/MetaTags"
 
 export const ConsignMeta: React.FC = () => {
