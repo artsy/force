@@ -17,6 +17,7 @@ jobs:
           TERM: xterm
     working_directory: ~/app
     steps:
+      - checkout
       - run:
           name: Install Dependencies
           command: npm ci
