@@ -20,7 +20,7 @@ jobs:
       - checkout
       - run:
           name: Install Dependencies
-          command: npm ci
+          command: npm install
       - run: ./node_modules/.bin/cypress run --config baseUrl=https://staging.artsy.net
 
   run_deepcrawl_automator:
