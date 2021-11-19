@@ -358,6 +358,7 @@ workflows:
                 - release
 
       - smoketest-on-staging:
+          context: hokusai
           filters:
             branches:
               only:
