@@ -25,13 +25,7 @@ jobs:
       - run:
           name: Install Dependencies
           command: npm ci
-      - save_cache:
-          key: v1-deps-{{ .Branch }}-{{ checksum "package.json" }}
-          # cache NPM modules and the folder with the Cypress binary
-          paths:
-            - ~/.npm
-            - ~/.cache
-      - run: $(npm bin)/cypress run --config baseUrl=https://staging.artsy.net
+      - run: ./node_modules/.bin/cypress run --config baseUrl=https://staging.artsy.net
 
   run_deepcrawl_automator:
     docker:
