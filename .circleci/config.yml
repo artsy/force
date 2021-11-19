@@ -346,7 +346,14 @@ workflows:
             branches:
               only:
                 - release
+
+      - smoketest_on_staging:
+          filters:
+            branches:
+              only:
                 - staging
+          steps:
+            - run: cypress run --config baseUrl=https://staging.artsy.net
 
       - validate_production_schema:
           <<: *only_release
