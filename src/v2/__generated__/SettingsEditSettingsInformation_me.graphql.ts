@@ -8,7 +8,6 @@ export type SettingsEditSettingsInformation_me = {
     readonly name: string | null;
     readonly paddleNumber: string | null;
     readonly phone: string | null;
-    readonly internalID: string;
     readonly " $refType": "SettingsEditSettingsInformation_me";
 };
 export type SettingsEditSettingsInformation_me$data = SettingsEditSettingsInformation_me;
@@ -52,16 +51,9 @@ const node: ReaderFragment = {
       "kind": "ScalarField",
       "name": "phone",
       "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "internalID",
-      "storageKey": null
     }
   ],
   "type": "Me"
 };
-(node as any).hash = '9d46433d4e508aa5b9bb74d4f11991ea';
+(node as any).hash = '4b58a8c8a4bb4bcbc13fd9519056de2a';
 export default node;
