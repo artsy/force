@@ -13,7 +13,7 @@ import {
   validAddress,
 } from "v2/Components/__tests__/Utils/addressForm"
 import { CountrySelect } from "v2/Components/CountrySelect"
-import { Input } from "@artsy/palette"
+import { Input, BorderedRadio } from "@artsy/palette"
 import { createTestEnv } from "v2/DevTools/createTestEnv"
 import { graphql } from "react-relay"
 import {
@@ -922,7 +922,9 @@ describe("Shipping", () => {
         expect(mutations.mockFetch.mock.calls[0][0].name).toEqual(
           "SetShippingMutation"
         )
-        expect(page.find(`[data-test="shipping-quotes"]`)).toHaveLength(5)
+        expect(
+          page.find(`[data-test="shipping-quotes"]`).find(BorderedRadio)
+        ).toHaveLength(5)
       })
 
       it("submit button disabled if shipping quote is not selected", async () => {
