@@ -15,13 +15,8 @@ jobs:
       - image: cypress/base:14.16.0
         environment:
           TERM: xterm
-    working_directory: /app
+    working_directory: ~/app
     steps:
-      - restore_cache:
-          keys:
-            - v1-deps-{{ .Branch }}-{{ checksum "package.json" }}
-            - v1-deps-{{ .Branch }}
-            - v1-deps
       - run:
           name: Install Dependencies
           command: npm ci
