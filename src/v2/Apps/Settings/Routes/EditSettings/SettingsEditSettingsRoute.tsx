@@ -1,7 +1,8 @@
 import React from "react"
 import { SettingsEditSettingsRoute_me } from "v2/__generated__/SettingsEditSettingsRoute_me.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
-import { SettingsEditSettingsInformationFragmentContainer } from "./SettingsEditSettingsInformation"
+import { SettingsEditSettingsInformationFragmentContainer } from "../EditSettings/Components/SettingsEditSettingsInformation"
+import { SettingsEditSettingsTwoFactorRefetchContainer } from "../EditSettings/Components/SettingsEditSettingsTwoFactor"
 import { Column, GridColumns, Join, Separator } from "@artsy/palette"
 
 interface SettingsEditRouteProps {
@@ -17,7 +18,7 @@ const SettingsEditRoute: React.FC<SettingsEditRouteProps> = ({ me }) => {
 
           {/* TODO: SettingsEditSettingsPassword */}
 
-          {/* TODO: SettingsEditSettingsTwoFactor */}
+          <SettingsEditSettingsTwoFactorRefetchContainer me={me}/>
 
           {/* TODO: SettingsEditSettingsLinkedAccounts */}
 
@@ -36,6 +37,7 @@ export const SettingsEditRouteFragmentContainer = createFragmentContainer(
     me: graphql`
       fragment SettingsEditSettingsRoute_me on Me {
         ...SettingsEditSettingsInformation_me
+        ...SettingsEditSettingsTwoFactor_me
       }
     `,
   }

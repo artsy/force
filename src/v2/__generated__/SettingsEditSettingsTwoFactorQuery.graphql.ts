@@ -3,23 +3,49 @@
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type settingsRoutes_SettingsEditSettingsRouteQueryVariables = {};
-export type settingsRoutes_SettingsEditSettingsRouteQueryResponse = {
+export type SettingsEditSettingsTwoFactorQueryVariables = {};
+export type SettingsEditSettingsTwoFactorQueryResponse = {
     readonly me: {
-        readonly " $fragmentRefs": FragmentRefs<"SettingsEditSettingsRoute_me">;
+        readonly " $fragmentRefs": FragmentRefs<"SettingsEditSettingsTwoFactor_me">;
     } | null;
 };
-export type settingsRoutes_SettingsEditSettingsRouteQuery = {
-    readonly response: settingsRoutes_SettingsEditSettingsRouteQueryResponse;
-    readonly variables: settingsRoutes_SettingsEditSettingsRouteQueryVariables;
+export type SettingsEditSettingsTwoFactorQueryRawResponse = {
+    readonly me: ({
+        readonly hasSecondFactorEnabled: boolean;
+        readonly appSecondFactors: ReadonlyArray<({
+            readonly __typename: "AppSecondFactor";
+            readonly internalID: string;
+            readonly name: string | null;
+        } | {
+            readonly __typename: string | null;
+        }) | null> | null;
+        readonly smsSecondFactors: ReadonlyArray<({
+            readonly __typename: "SmsSecondFactor";
+            readonly internalID: string;
+            readonly formattedPhoneNumber: string | null;
+        } | {
+            readonly __typename: string | null;
+        }) | null> | null;
+        readonly backupSecondFactors: ReadonlyArray<({
+            readonly __typename: "BackupSecondFactor";
+        } | {
+            readonly __typename: string | null;
+        }) | null> | null;
+        readonly id: string | null;
+    }) | null;
+};
+export type SettingsEditSettingsTwoFactorQuery = {
+    readonly response: SettingsEditSettingsTwoFactorQueryResponse;
+    readonly variables: SettingsEditSettingsTwoFactorQueryVariables;
+    readonly rawResponse: SettingsEditSettingsTwoFactorQueryRawResponse;
 };
 
 
 
 /*
-query settingsRoutes_SettingsEditSettingsRouteQuery {
+query SettingsEditSettingsTwoFactorQuery {
   me {
-    ...SettingsEditSettingsRoute_me
+    ...SettingsEditSettingsTwoFactor_me
     id
   }
 }
@@ -43,19 +69,6 @@ fragment BackupSecondFactor_me on Me {
       __typename
     }
   }
-}
-
-fragment SettingsEditSettingsInformation_me on Me {
-  email
-  name
-  paddleNumber
-  phone
-  internalID
-}
-
-fragment SettingsEditSettingsRoute_me on Me {
-  ...SettingsEditSettingsInformation_me
-  ...SettingsEditSettingsTwoFactor_me
 }
 
 fragment SettingsEditSettingsTwoFactor_me on Me {
@@ -83,7 +96,7 @@ var v0 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "name",
+  "name": "__typename",
   "storageKey": null
 },
 v1 = {
@@ -92,20 +105,13 @@ v1 = {
   "kind": "ScalarField",
   "name": "internalID",
   "storageKey": null
-},
-v2 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "__typename",
-  "storageKey": null
 };
 return {
   "fragment": {
     "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
-    "name": "settingsRoutes_SettingsEditSettingsRouteQuery",
+    "name": "SettingsEditSettingsTwoFactorQuery",
     "selections": [
       {
         "alias": null,
@@ -118,7 +124,7 @@ return {
           {
             "args": null,
             "kind": "FragmentSpread",
-            "name": "SettingsEditSettingsRoute_me"
+            "name": "SettingsEditSettingsTwoFactor_me"
           }
         ],
         "storageKey": null
@@ -130,7 +136,7 @@ return {
   "operation": {
     "argumentDefinitions": [],
     "kind": "Operation",
-    "name": "settingsRoutes_SettingsEditSettingsRouteQuery",
+    "name": "SettingsEditSettingsTwoFactorQuery",
     "selections": [
       {
         "alias": null,
@@ -140,29 +146,6 @@ return {
         "name": "me",
         "plural": false,
         "selections": [
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "email",
-            "storageKey": null
-          },
-          (v0/*: any*/),
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "paddleNumber",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "phone",
-            "storageKey": null
-          },
-          (v1/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -186,13 +169,19 @@ return {
             "name": "secondFactors",
             "plural": true,
             "selections": [
-              (v2/*: any*/),
+              (v0/*: any*/),
               {
                 "kind": "InlineFragment",
                 "selections": [
-                  (v2/*: any*/),
+                  (v0/*: any*/),
                   (v1/*: any*/),
-                  (v0/*: any*/)
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "name",
+                    "storageKey": null
+                  }
                 ],
                 "type": "AppSecondFactor"
               }
@@ -215,11 +204,11 @@ return {
             "name": "secondFactors",
             "plural": true,
             "selections": [
-              (v2/*: any*/),
+              (v0/*: any*/),
               {
                 "kind": "InlineFragment",
                 "selections": [
-                  (v2/*: any*/),
+                  (v0/*: any*/),
                   (v1/*: any*/),
                   {
                     "alias": null,
@@ -250,11 +239,11 @@ return {
             "name": "secondFactors",
             "plural": true,
             "selections": [
-              (v2/*: any*/),
+              (v0/*: any*/),
               {
                 "kind": "InlineFragment",
                 "selections": [
-                  (v2/*: any*/)
+                  (v0/*: any*/)
                 ],
                 "type": "BackupSecondFactor"
               }
@@ -276,11 +265,11 @@ return {
   "params": {
     "id": null,
     "metadata": {},
-    "name": "settingsRoutes_SettingsEditSettingsRouteQuery",
+    "name": "SettingsEditSettingsTwoFactorQuery",
     "operationKind": "query",
-    "text": "query settingsRoutes_SettingsEditSettingsRouteQuery {\n  me {\n    ...SettingsEditSettingsRoute_me\n    id\n  }\n}\n\nfragment AppSecondFactor_me on Me {\n  hasSecondFactorEnabled\n  appSecondFactors: secondFactors(kinds: [app]) {\n    __typename\n    ... on AppSecondFactor {\n      __typename\n      internalID\n      name\n    }\n  }\n}\n\nfragment BackupSecondFactor_me on Me {\n  backupSecondFactors: secondFactors(kinds: [backup]) {\n    __typename\n    ... on BackupSecondFactor {\n      __typename\n    }\n  }\n}\n\nfragment SettingsEditSettingsInformation_me on Me {\n  email\n  name\n  paddleNumber\n  phone\n  internalID\n}\n\nfragment SettingsEditSettingsRoute_me on Me {\n  ...SettingsEditSettingsInformation_me\n  ...SettingsEditSettingsTwoFactor_me\n}\n\nfragment SettingsEditSettingsTwoFactor_me on Me {\n  hasSecondFactorEnabled\n  ...AppSecondFactor_me\n  ...SmsSecondFactor_me\n  ...BackupSecondFactor_me\n}\n\nfragment SmsSecondFactor_me on Me {\n  hasSecondFactorEnabled\n  smsSecondFactors: secondFactors(kinds: [sms]) {\n    __typename\n    ... on SmsSecondFactor {\n      __typename\n      internalID\n      formattedPhoneNumber\n    }\n  }\n}\n"
+    "text": "query SettingsEditSettingsTwoFactorQuery {\n  me {\n    ...SettingsEditSettingsTwoFactor_me\n    id\n  }\n}\n\nfragment AppSecondFactor_me on Me {\n  hasSecondFactorEnabled\n  appSecondFactors: secondFactors(kinds: [app]) {\n    __typename\n    ... on AppSecondFactor {\n      __typename\n      internalID\n      name\n    }\n  }\n}\n\nfragment BackupSecondFactor_me on Me {\n  backupSecondFactors: secondFactors(kinds: [backup]) {\n    __typename\n    ... on BackupSecondFactor {\n      __typename\n    }\n  }\n}\n\nfragment SettingsEditSettingsTwoFactor_me on Me {\n  hasSecondFactorEnabled\n  ...AppSecondFactor_me\n  ...SmsSecondFactor_me\n  ...BackupSecondFactor_me\n}\n\nfragment SmsSecondFactor_me on Me {\n  hasSecondFactorEnabled\n  smsSecondFactors: secondFactors(kinds: [sms]) {\n    __typename\n    ... on SmsSecondFactor {\n      __typename\n      internalID\n      formattedPhoneNumber\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '87f56be623fa0ca771be8d9298fd830e';
+(node as any).hash = '40558986e3222b3bbbbba841eda23cc5';
 export default node;
