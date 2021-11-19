@@ -11,7 +11,12 @@ orbs:
 
 jobs:
   smoketest-on-staging:
-    executor: node/build
+    docker:
+      - image: 585031190124.dkr.ecr.us-east-1.amazonaws.com/force:$CIRCLE_SHA1-builder
+        aws_auth:
+          aws_access_key_id: $AWS_ACCESS_KEY_ID
+          aws_secret_access_key: $AWS_SECRET_ACCESS_KEY
+    working_directory: /app
     steps:
       - run: cypress run --config baseUrl=https://staging.artsy.net
 
