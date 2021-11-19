@@ -2,6 +2,7 @@
 /* eslint-disable */
 
 import { ConcreteRequest } from "relay-runtime";
+import { FragmentRefs } from "relay-runtime";
 export type UpdateMyProfileInput = {
     artworksPerYear?: string | null;
     bio?: string | null;
@@ -46,6 +47,9 @@ export type useUpdateSettingsInformationMutationVariables = {
 };
 export type useUpdateSettingsInformationMutationResponse = {
     readonly updateMyUserProfile: {
+        readonly me: {
+            readonly " $fragmentRefs": FragmentRefs<"SettingsEditSettingsInformation_me">;
+        } | null;
         readonly userOrError: {
             readonly user?: {
                 readonly internalID: string;
@@ -75,6 +79,10 @@ mutation useUpdateSettingsInformationMutation(
   $input: UpdateMyProfileInput!
 ) {
   updateMyUserProfile(input: $input) {
+    me {
+      ...SettingsEditSettingsInformation_me
+      id
+    }
     userOrError {
       __typename
       ... on UpdateMyProfileMutationSuccess {
@@ -97,6 +105,13 @@ mutation useUpdateSettingsInformationMutation(
       }
     }
   }
+}
+
+fragment SettingsEditSettingsInformation_me on Me {
+  email
+  name
+  paddleNumber
+  phone
 }
 */
 
@@ -131,6 +146,13 @@ v3 = {
   "storageKey": null
 },
 v4 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "name",
+  "storageKey": null
+},
+v5 = {
   "kind": "InlineFragment",
   "selections": [
     {
@@ -171,13 +193,7 @@ v4 = {
           "name": "fieldErrors",
           "plural": true,
           "selections": [
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "name",
-              "storageKey": null
-            },
+            (v4/*: any*/),
             (v3/*: any*/)
           ],
           "storageKey": null
@@ -187,6 +203,13 @@ v4 = {
     }
   ],
   "type": "UpdateMyProfileMutationFailure"
+},
+v6 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
 };
 return {
   "fragment": {
@@ -203,6 +226,22 @@ return {
         "name": "updateMyUserProfile",
         "plural": false,
         "selections": [
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "Me",
+            "kind": "LinkedField",
+            "name": "me",
+            "plural": false,
+            "selections": [
+              {
+                "args": null,
+                "kind": "FragmentSpread",
+                "name": "SettingsEditSettingsInformation_me"
+              }
+            ],
+            "storageKey": null
+          },
           {
             "alias": null,
             "args": null,
@@ -229,7 +268,7 @@ return {
                 ],
                 "type": "UpdateMyProfileMutationSuccess"
               },
-              (v4/*: any*/)
+              (v5/*: any*/)
             ],
             "storageKey": null
           }
@@ -253,6 +292,40 @@ return {
         "name": "updateMyUserProfile",
         "plural": false,
         "selections": [
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "Me",
+            "kind": "LinkedField",
+            "name": "me",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "email",
+                "storageKey": null
+              },
+              (v4/*: any*/),
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "paddleNumber",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "phone",
+                "storageKey": null
+              },
+              (v6/*: any*/)
+            ],
+            "storageKey": null
+          },
           {
             "alias": null,
             "args": null,
@@ -280,20 +353,14 @@ return {
                     "plural": false,
                     "selections": [
                       (v2/*: any*/),
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "id",
-                        "storageKey": null
-                      }
+                      (v6/*: any*/)
                     ],
                     "storageKey": null
                   }
                 ],
                 "type": "UpdateMyProfileMutationSuccess"
               },
-              (v4/*: any*/)
+              (v5/*: any*/)
             ],
             "storageKey": null
           }
@@ -307,9 +374,9 @@ return {
     "metadata": {},
     "name": "useUpdateSettingsInformationMutation",
     "operationKind": "mutation",
-    "text": "mutation useUpdateSettingsInformationMutation(\n  $input: UpdateMyProfileInput!\n) {\n  updateMyUserProfile(input: $input) {\n    userOrError {\n      __typename\n      ... on UpdateMyProfileMutationSuccess {\n        user {\n          internalID\n          id\n        }\n      }\n      ... on UpdateMyProfileMutationFailure {\n        mutationError {\n          type\n          message\n          detail\n          error\n          fieldErrors {\n            name\n            message\n          }\n        }\n      }\n    }\n  }\n}\n"
+    "text": "mutation useUpdateSettingsInformationMutation(\n  $input: UpdateMyProfileInput!\n) {\n  updateMyUserProfile(input: $input) {\n    me {\n      ...SettingsEditSettingsInformation_me\n      id\n    }\n    userOrError {\n      __typename\n      ... on UpdateMyProfileMutationSuccess {\n        user {\n          internalID\n          id\n        }\n      }\n      ... on UpdateMyProfileMutationFailure {\n        mutationError {\n          type\n          message\n          detail\n          error\n          fieldErrors {\n            name\n            message\n          }\n        }\n      }\n    }\n  }\n}\n\nfragment SettingsEditSettingsInformation_me on Me {\n  email\n  name\n  paddleNumber\n  phone\n}\n"
   }
 };
 })();
-(node as any).hash = '23b440f4eb85495acfc488dcdbfc45cc';
+(node as any).hash = 'c3ddab7400b980cba872ea195359ca0a';
 export default node;

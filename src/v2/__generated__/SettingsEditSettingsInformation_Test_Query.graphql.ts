@@ -3,23 +3,23 @@
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type settingsRoutes_SettingsEditSettingsRouteQueryVariables = {};
-export type settingsRoutes_SettingsEditSettingsRouteQueryResponse = {
+export type SettingsEditSettingsInformation_Test_QueryVariables = {};
+export type SettingsEditSettingsInformation_Test_QueryResponse = {
     readonly me: {
-        readonly " $fragmentRefs": FragmentRefs<"SettingsEditSettingsRoute_me">;
+        readonly " $fragmentRefs": FragmentRefs<"SettingsEditSettingsInformation_me">;
     } | null;
 };
-export type settingsRoutes_SettingsEditSettingsRouteQuery = {
-    readonly response: settingsRoutes_SettingsEditSettingsRouteQueryResponse;
-    readonly variables: settingsRoutes_SettingsEditSettingsRouteQueryVariables;
+export type SettingsEditSettingsInformation_Test_Query = {
+    readonly response: SettingsEditSettingsInformation_Test_QueryResponse;
+    readonly variables: SettingsEditSettingsInformation_Test_QueryVariables;
 };
 
 
 
 /*
-query settingsRoutes_SettingsEditSettingsRouteQuery {
+query SettingsEditSettingsInformation_Test_Query {
   me {
-    ...SettingsEditSettingsRoute_me
+    ...SettingsEditSettingsInformation_me
     id
   }
 }
@@ -30,10 +30,6 @@ fragment SettingsEditSettingsInformation_me on Me {
   paddleNumber
   phone
 }
-
-fragment SettingsEditSettingsRoute_me on Me {
-  ...SettingsEditSettingsInformation_me
-}
 */
 
 const node: ConcreteRequest = {
@@ -41,7 +37,7 @@ const node: ConcreteRequest = {
     "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
-    "name": "settingsRoutes_SettingsEditSettingsRouteQuery",
+    "name": "SettingsEditSettingsInformation_Test_Query",
     "selections": [
       {
         "alias": null,
@@ -54,7 +50,7 @@ const node: ConcreteRequest = {
           {
             "args": null,
             "kind": "FragmentSpread",
-            "name": "SettingsEditSettingsRoute_me"
+            "name": "SettingsEditSettingsInformation_me"
           }
         ],
         "storageKey": null
@@ -66,7 +62,7 @@ const node: ConcreteRequest = {
   "operation": {
     "argumentDefinitions": [],
     "kind": "Operation",
-    "name": "settingsRoutes_SettingsEditSettingsRouteQuery",
+    "name": "SettingsEditSettingsInformation_Test_Query",
     "selections": [
       {
         "alias": null,
@@ -119,10 +115,10 @@ const node: ConcreteRequest = {
   "params": {
     "id": null,
     "metadata": {},
-    "name": "settingsRoutes_SettingsEditSettingsRouteQuery",
+    "name": "SettingsEditSettingsInformation_Test_Query",
     "operationKind": "query",
-    "text": "query settingsRoutes_SettingsEditSettingsRouteQuery {\n  me {\n    ...SettingsEditSettingsRoute_me\n    id\n  }\n}\n\nfragment SettingsEditSettingsInformation_me on Me {\n  email\n  name\n  paddleNumber\n  phone\n}\n\nfragment SettingsEditSettingsRoute_me on Me {\n  ...SettingsEditSettingsInformation_me\n}\n"
+    "text": "query SettingsEditSettingsInformation_Test_Query {\n  me {\n    ...SettingsEditSettingsInformation_me\n    id\n  }\n}\n\nfragment SettingsEditSettingsInformation_me on Me {\n  email\n  name\n  paddleNumber\n  phone\n}\n"
   }
 };
-(node as any).hash = '87f56be623fa0ca771be8d9298fd830e';
+(node as any).hash = 'bacba3a36985208c8d653b5bd00f81a7';
 export default node;
