@@ -359,6 +359,8 @@ workflows:
 
       - smoketest-on-staging:
           context: hokusai
+          requires:
+            - builder-image-push
           filters:
             branches:
               only:
@@ -373,7 +375,6 @@ workflows:
           name: deploy-production
           requires:
             - horizon/block
-            - smoketest-on-staging
             - validate_production_schema
 
       # Other
