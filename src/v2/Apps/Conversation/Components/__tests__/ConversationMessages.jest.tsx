@@ -1,90 +1,79 @@
-import { ConversationMessages } from "../ConversationMessages"
-import { mount } from "enzyme"
+import { graphql } from "react-relay"
+import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
+import { ConversationMessagesFragmentContainer } from "../ConversationMessages"
+import { useTracking } from "react-tracking"
+import { useSystemContext as baseUseSystemContext } from "v2/System/useSystemContext"
+
+jest.unmock("react-relay")
+jest.mock("react-tracking")
+jest.mock("v2/System/useSystemContext")
 
 describe("ConversationMessages", () => {
-  it("check components render", () => {
-    const wrapper = mount(
-      <ConversationMessages
-        messages={
-          {
-            edges: [
-              {
-                node: {
-                  __typename: "Message",
-                  id: "123",
-                  internalID: "123",
-                  body: "",
-                  isFromUser: true,
-                  createdAt: Date.now().toString(),
-                  attachments: [],
-                },
-              },
-              {
-                node: {
-                  __typename: "Message",
-                  id: "456",
-                  internalID: "456",
-                  body: "hello world",
-                  isFromUser: true,
-                  createdAt: Date.now().toString(),
-                  attachments: [],
-                },
-              },
-            ],
-          } as any
+  const { getWrapper } = setupTestWrapper({
+    Component: (props: any) => {
+      return (
+        <ConversationMessagesFragmentContainer
+          messagesAndEvents={props.me.conversation.conversationEventConnection}
+          lastViewedMessageID={null}
+        />
+      )
+    },
+    query: graphql`
+      query ConversationMessages_Test_Query {
+        me {
+          conversation(id: "1234") {
+            conversationEventConnection {
+              ...ConversationMessages_messagesAndEvents
+            }
+          }
         }
-        events={
-          {
-            edges: [
-              {
-                node: {
-                  buyerAction: "OFFER_ACCEPTED_CONFIRM_NEEDED",
-                  internalID: "7adde1e2-bdd4-4360-9484-989d6dd3248esss",
-                  id: "7adde1e2-bdd4-4360-9484-989d6dd3248esss",
+      }
+    `,
+  })
 
-                  orderHistory: [
-                    {
-                      __typename: "CommerceOfferSubmittedEvent",
-                      internalID: "7adde1e2-bdd4-4360-9484-989d6dd3248e",
-                      createdAt: Date.now().toString(),
-                      state: "PENDING",
-                      stateReason: null,
-                      offer: {
-                        amount: "£40,000",
-                        definesTotal: true,
-                        fromParticipant: "SELLER",
-                        offerAmountChanged: false,
-                        respondsTo: {
-                          fromParticipant: "BUYER",
-                        },
-                      },
-                    },
-                    {
-                      __typename: "CommerceOrderStateChangedEvent",
-                      internalID: "7adde1e2-bdd4-4360-9484-989d6dde",
+  const mockuseTracking = useTracking as jest.Mock
+  const trackingSpy = jest.fn()
+  let useSystemContext = baseUseSystemContext as jest.Mock
 
-                      createdAt: Date.now().toString(),
-                      state: "APPROVED",
-                      stateReason: null,
-                      offer: {
-                        amount: "£40,000",
-                        definesTotal: true,
-                        fromParticipant: "SELLER",
-                        offerAmountChanged: false,
-                        respondsTo: {
-                          fromParticipant: "BUYER",
-                        },
-                      },
-                    },
-                  ],
-                },
+  beforeEach(() => {
+    mockuseTracking.mockImplementation(() => ({
+      trackEvent: trackingSpy,
+    }))
+
+    useSystemContext.mockImplementation(() => {
+      return {
+        mediator: {
+          on: jest.fn(),
+          off: jest.fn(),
+        },
+      }
+    })
+  })
+
+  afterEach(() => {
+    jest.resetAllMocks()
+  })
+
+  it("renders correct number of messages and order events", () => {
+    const wrapper = getWrapper({
+      Conversation: () => ({
+        conversationEventConnection: {
+          edges: [
+            { node: { __typename: "Message", body: "Hello I'm a message" } },
+
+            { node: { __typename: "ConversationOfferSubmitted" } },
+            {
+              node: {
+                __typename: "ConversationOrderStateChanged",
+                state: "ACCEPTED",
               },
-            ],
-          } as any
-        }
-      />
-    )
-    expect(wrapper.find("Message").length).toBe(2)
+            },
+          ],
+        },
+      }),
+    })
+
+    expect(wrapper.find("Message").length).toBe(1)
     expect(wrapper.find("OrderUpdate").length).toBe(2)
   })
 })

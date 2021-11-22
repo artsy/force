@@ -210,7 +210,6 @@ const Conversation: React.FC<ConversationProps> = props => {
               <Waypoint onEnter={loadMore} />
               {fetchingMore ? <Loading /> : null}
               <ConversationMessages
-                events={conversation.orderConnection}
                 messagesAndEvents={conversation.conversationEventConnection!}
                 lastViewedMessageID={conversation?.fromLastViewedMessageID}
               />
@@ -281,7 +280,7 @@ export const ConversationPaginationContainer = createPaginationContainer(
     conversation: graphql`
       fragment Conversation_conversation on Conversation
         @argumentDefinitions(
-          count: { type: "Int", defaultValue: 4 }
+          count: { type: "Int", defaultValue: 10 }
           after: { type: "String" }
         ) {
         id

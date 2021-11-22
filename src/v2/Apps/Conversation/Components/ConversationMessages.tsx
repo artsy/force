@@ -1,83 +1,29 @@
-import { Fragment, useEffect, useState } from "react"
+import { Fragment } from "react"
 import { createFragmentContainer } from "react-relay"
 import { graphql } from "relay-runtime"
 import { Spacer } from "@artsy/palette"
-import { DateTime } from "luxon"
-import { sortBy } from "lodash"
-
-import { groupMessages, Message as MessageType } from "../Utils/groupMessages"
+import { groupMessages } from "../Utils/groupMessages"
 import { TimeSince, fromToday } from "./TimeSince"
-import { MessageFragmentContainer as Message } from "./Message"
+import { MessageFragmentContainer } from "./Message"
 import { NewMessageMarker } from "./NewMessageMarker"
 import { OrderUpdateFragmentContainer } from "./OrderUpdate"
 import { extractNodes } from "v2/Utils/extractNodes"
-import { ConversationMessages_events } from "v2/__generated__/ConversationMessages_events.graphql"
 import { ConversationMessages_messagesAndEvents } from "v2/__generated__/ConversationMessages_messagesAndEvents.graphql"
 import { Message_message } from "v2/__generated__/Message_message.graphql"
 
 interface ConversationMessageProps {
   messagesAndEvents: ConversationMessages_messagesAndEvents
-  events: ConversationMessages_events | null
   lastViewedMessageID?: string | null
 }
-type Order = NonNullable<
-  NonNullable<
-    NonNullable<NonNullable<ConversationMessages_events>["edges"]>[number]
-  >["node"]
->
-type OrderEvent = Order["orderHistory"][number]
 
 export const ConversationMessages = ({
   messagesAndEvents,
-  events,
   lastViewedMessageID,
 }: ConversationMessageProps) => {
-  // let [messagesAndEvents, setMessagesAndEvents] = useState<MessageType[][]>([])
-
-  // useEffect(() => {
-  // const allMessages = extractNodes(messages)
-  // const allOrderEvents = extractNodes(events).reduce<OrderEvent[]>(
-  //   (prev, order) => prev.concat(order.orderHistory),
-  //   []
-  // )
-
   const allOrderEventsAndMessages = extractNodes(messagesAndEvents)
 
-  const allStateChangeEvents = allOrderEventsAndMessages.filter(() => {})
-  const allOrderEvents = extractNodes(messagesAndEvents)
+  const groupedMessages = groupMessages(allOrderEventsAndMessages)
 
-  console.log(
-    "ORDER EVENTS",
-    allOrderEventsAndMessages.map(e => {
-      return [e.createdAt, e.__typename, e]
-    })
-  )
-
-  // const orderEventsWithoutFailedPayment = allOrderEvents.filter(
-  //   (event, index) => {
-  //     if (
-  //       !!event &&
-  //       event.__typename === "ConversationOrderStateChangedEvent" &&
-  //       !(
-  //         event.state === "APPROVED" &&
-  //         allOrderEvents[index + 1] &&
-  //         allOrderEvents[index + 1].state === "SUBMITTED"
-  //       )
-  //     ) {
-  //       return event
-  //     }
-  //   }
-  // )
-  const sortedMessages = sortBy([...allOrderEvents], message =>
-    DateTime.fromISO(message.createdAt!)
-  )
-  const groupedMessages = groupMessages(allOrderEvents)
-  // setMessagesAndEvents(groupAllMessages.reverse())
-  // }, [messages, events])
-
-  // remove useEffect but keep sorting and grouping
-
-  // UPDATE ME - new things without event
   const relevantEvents = [
     "ConversationOfferSubmitted",
     "ConversationOrderStateChanged",
@@ -109,7 +55,7 @@ export const ConversationMessages = ({
               />
             )}
 
-            {[...messageGroup].reverse().map((message, messageIndex) => {
+            {messageGroup.map((message, messageIndex) => {
               if (isRelevantEvent(message)) {
                 return (
                   <OrderUpdateFragmentContainer
@@ -142,7 +88,7 @@ export const ConversationMessages = ({
                 return (
                   <Fragment key={`message-${message.internalID}`}>
                     {showNewFlag && <NewMessageMarker />}
-                    <Message
+                    <MessageFragmentContainer
                       message={message}
                       key={message.internalID}
                       showTimeSince={
@@ -186,25 +132,6 @@ export const ConversationMessagesFragmentContainer = createFragmentContainer(
             }
             ... on ConversationOfferSubmitted {
               createdAt
-            }
-          }
-        }
-      }
-    `,
-    events: graphql`
-      fragment ConversationMessages_events on CommerceOrderConnectionWithTotalCount {
-        edges {
-          node {
-            orderHistory {
-              __typename
-              ... on CommerceOrderStateChangedEvent {
-                state
-                stateReason
-                createdAt
-              }
-              ... on CommerceOfferSubmittedEvent {
-                createdAt
-              }
             }
           }
         }
