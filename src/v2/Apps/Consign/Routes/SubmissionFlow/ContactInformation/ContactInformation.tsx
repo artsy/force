@@ -15,6 +15,7 @@ import { contactInformationValidationSchema } from "../Utils/validation"
 import { BackLink } from "v2/Components/Links/BackLink"
 import { ErrorModal } from "v2/Components/Modal/ErrorModal"
 import { useState } from "react"
+import { data as sd } from "sharify"
 
 const getContactInformationFormInitialValues = (me: ContactInformation_me) => ({
   name: me?.name || "",
@@ -36,13 +37,14 @@ export const ContactInformation: React.FC<ContactInformationProps> = ({
     },
   } = useRouter()
   const [isSubmissionApiError, setIsSubmissionApiError] = useState(false)
-  const { relayEnvironment, user } = useSystemContext()
+  const { relayEnvironment, user, isLoggedIn } = useSystemContext()
   const {
     submission,
     saveSubmission,
     submissionId,
     removeSubmission,
   } = useSubmission(id)
+
   const handleSubmit = async ({
     name,
     email,
@@ -62,7 +64,12 @@ export const ContactInformation: React.FC<ContactInformationProps> = ({
 
     if (relayEnvironment && submission) {
       try {
-        await createConsignSubmission(relayEnvironment, submission, user?.id)
+        await createConsignSubmission(
+          relayEnvironment,
+          submission,
+          user?.id,
+          !isLoggedIn ? sd.SESSION_ID : undefined
+        )
         removeSubmission()
         router.push(`/consign/submission/${submissionId}/thank-you`)
       } catch (error) {
