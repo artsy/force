@@ -99,7 +99,7 @@ export const ArtworkDetailsForm: React.FC = () => {
 
   const { openErrorModal } = useErrorModal()
 
-  const [isAutosuggestError] = useState(false)
+  // const [isAutosuggestError] = useState(false)
   const [isRarityModalOpen, setIsRarityModalOpen] = useState(false)
   const [isProvenanceModalOpen, setIsProvenanceModalOpen] = useState(false)
 
@@ -140,6 +140,7 @@ export const ArtworkDetailsForm: React.FC = () => {
 
   return (
     <>
+      <Button onClick={() => handleAutosuggestError(true)}>Open it</Button>
       <ArtworkSidebarClassificationsModalQueryRenderer
         onClose={() => setIsRarityModalOpen(false)}
         show={isRarityModalOpen}
