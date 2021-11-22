@@ -42,7 +42,12 @@ const contactInformationForm = {
   email: "andy@test.test",
   phone: "111",
 }
-const mockMe = { name: "Serge", email: "serge@test.test", phone: "222" }
+const mockMe = {
+  name: "Serge",
+  email: "serge@test.test",
+  phone: "222",
+  id: "userId",
+}
 const mockRouterPush = jest.fn()
 
 jest.mock("v2/System/Router/useRouter", () => ({
@@ -61,6 +66,9 @@ jest.mock("../../Utils/createConsignSubmission", () => ({
   ...jest.requireActual("../../Utils/createConsignSubmission"),
   createConsignSubmission: jest.fn(),
 }))
+
+jest.mock("sharify", () => ({ data: { SESSION_ID: "SessionID" } }))
+
 
 jest.mock("../../Utils/createConsignSubmission", () => ({
   ...jest.requireActual("../../Utils/createConsignSubmission"),
@@ -230,22 +238,29 @@ describe("Contact Information step", () => {
       expect(wrapper.find("input[name='phone']").prop("value")).toBe("111")
     })
 
-    // TODO: We should return this test after anonymous submission will work
-    // it("submiting a valid form", async () => {
-    //   const { getWrapper } = getWrapperWithProps()
-    //   const wrapper = getWrapper()
-    //   await flushPromiseQueue()
-    //   wrapper.update()
+    it("submiting a valid form", async () => {
+      const { getWrapper } = getWrapperWithProps()
+      const wrapper = getWrapper()
+      await flushPromiseQueue()
+      wrapper.update()
 
-    //   await simulateTyping(wrapper, "name", "Banksy")
-    //   await simulateTyping(wrapper, "email", "banksy@test.test")
-    //   await simulateTyping(wrapper, "phone", "333")
+      await simulateTyping(wrapper, "name", "Banksy")
+      await simulateTyping(wrapper, "email", "banksy@test.test")
+      await simulateTyping(wrapper, "phone", "333")
 
-    //   wrapper.find("Form").simulate("submit")
-    //   await flushPromiseQueue()
-    //   wrapper.update()
-    //   expect(mockRouterPush).not.toHaveBeenCalled()
-    // })
+      wrapper.find("Form").simulate("submit")
+      await flushPromiseQueue()
+      wrapper.update()
+
+      expect(sessionStorage.setItem).toHaveBeenCalled()
+      expect(mockCreateConsignSubmission).toHaveBeenCalled()
+      expect(mockCreateConsignSubmission.mock.calls[0][2]).toEqual(undefined)
+      expect(mockCreateConsignSubmission.mock.calls[0][3]).toEqual("SessionID")
+      expect(sessionStorage.removeItem).toHaveBeenCalled()
+      expect(mockRouterPush).toHaveBeenCalledWith(
+        "/consign/submission/1/thank-you"
+      )
+    })
   })
 
   describe("If logged in", () => {
@@ -294,8 +309,11 @@ describe("Contact Information step", () => {
       wrapper.find("Form").simulate("submit")
       await flushPromiseQueue()
       wrapper.update()
+
       expect(sessionStorage.setItem).toHaveBeenCalled()
-      expect(createConsignSubmission).toHaveBeenCalled()
+      expect(mockCreateConsignSubmission).toHaveBeenCalled()
+      expect(mockCreateConsignSubmission.mock.calls[0][2]).toEqual("userId")
+      expect(mockCreateConsignSubmission.mock.calls[0][3]).toEqual(undefined)
       expect(sessionStorage.removeItem).toHaveBeenCalled()
       expect(mockRouterPush).toHaveBeenCalledWith(
         "/consign/submission/1/thank-you"
@@ -329,10 +347,8 @@ describe("Contact Information step", () => {
       })
     )
 
-    const createConsignSubmissionData = (createConsignSubmission as jest.Mock)
-      .mock.calls[0][1]
-    expect(createConsignSubmission).toHaveBeenCalledTimes(1)
-    expect(createConsignSubmissionData).toEqual({
+    expect(mockCreateConsignSubmission).toHaveBeenCalledTimes(1)
+    expect(mockCreateConsignSubmission.mock.calls[0][1]).toEqual({
       ...previousStepsData,
       contactInformationForm: {
         name: "Banksy",

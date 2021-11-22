@@ -16,7 +16,8 @@ const logger = createLogger("createConsignSubmission.ts")
 export const createConsignSubmission = async (
   relayEnvironment: Environment,
   submission: SubmissionModel,
-  userId?: string
+  userId?: string,
+  sessionId?: string
 ) => {
   if (
     !submission ||
@@ -26,7 +27,7 @@ export const createConsignSubmission = async (
     return
   }
 
-  const input = createConsignSubmissionInput(submission)
+  const input = createConsignSubmissionInput(submission, sessionId)
 
   const submissionId = await createConsignSubmissionMutation(
     relayEnvironment,
