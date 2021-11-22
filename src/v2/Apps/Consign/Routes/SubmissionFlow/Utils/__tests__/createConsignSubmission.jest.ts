@@ -109,9 +109,13 @@ describe("createConsignSubmission", () => {
     })
   })
 
-  it("creates submission", async () => {
-    const result = await createConsignSubmission(relayEnvironment, submission)
-
+  it("creates submission if logged-in", async () => {
+    const result = await createConsignSubmission(
+      relayEnvironment,
+      submission,
+      "userId",
+      undefined
+    )
     const input = {
       artistID: "artistId",
       year: "year",
@@ -130,6 +134,43 @@ describe("createConsignSubmission", () => {
       userPhone: "123456789",
       provenance: "provenance",
       // locationCity: "location",
+      sessionID: undefined,
+    }
+
+    expect(createConsignSubmissionMutation).toHaveBeenCalled()
+    expect(createConsignSubmissionMutation).toHaveBeenCalledWith(
+      relayEnvironment,
+      input
+    )
+    expect(result).toEqual("123")
+  })
+
+  it("creates submission if not logged-in", async () => {
+    const result = await createConsignSubmission(
+      relayEnvironment,
+      submission,
+      undefined,
+      "sessionId"
+    )
+    const input = {
+      artistID: "artistId",
+      year: "year",
+      title: "title",
+      medium: "materials",
+      attributionClass: "RARITY",
+      editionNumber: "",
+      editionSizeFormatted: "",
+      height: "height",
+      width: "width",
+      depth: "",
+      dimensionsMetric: "units",
+      state: "SUBMITTED",
+      userEmail: "test@test.test",
+      userName: "name",
+      userPhone: "123456789",
+      provenance: "provenance",
+      // locationCity: "location",
+      sessionID: "sessionId",
     }
 
     expect(createConsignSubmissionMutation).toHaveBeenCalled()
