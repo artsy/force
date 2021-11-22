@@ -21,6 +21,7 @@ import { ArtistAutosuggest } from "./ArtistAutosuggest"
 import { useRouter } from "v2/System/Router/useRouter"
 import { ArtworkSidebarClassificationsModalQueryRenderer } from "v2/Apps/Artwork/Components/ArtworkSidebarClassificationsModal"
 import { useSubmission } from "../../Utils/useSubmission"
+import { useErrorModal } from "../../Utils/useErrorModal"
 
 export const getArtworkDetailsFormInitialValues = () => ({
   artistId: "",
@@ -97,6 +98,8 @@ export const ArtworkDetailsForm: React.FC = () => {
     },
   } = useRouter()
 
+  const { openErrorModal } = useErrorModal()
+
   const [isAutosuggestError, setIsAutosuggestError] = useState(false)
   const [isRarityModalOpen, setIsRarityModalOpen] = useState(false)
   const [isProvenanceModalOpen, setIsProvenanceModalOpen] = useState(false)
@@ -128,7 +131,8 @@ export const ArtworkDetailsForm: React.FC = () => {
   }, [submission])
 
   const handleAutosuggestError = (isError: boolean) => {
-    setIsAutosuggestError(isError)
+    // setIsAutosuggestError(isError)
+    openErrorModal(true, "header", "")
 
     if (!isError) {
       setFieldValue("artistName", "")
