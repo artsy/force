@@ -1,6 +1,7 @@
 import {
   Button,
   Column,
+  Flex,
   GridColumns,
   Join,
   Separator,
@@ -37,6 +38,33 @@ const GalleriesRoute: React.FC<GalleriesRouteProps> = ({ viewer }) => {
 
       <Join separator={<Spacer mt={4} />}>
         <PartnersFeaturedCarouselFragmentContainer viewer={viewer} />
+
+        <Flex justifyContent="space-between" alignItems="center">
+          <Text variant="xl" as="h1">
+            Browse Galleries
+          </Text>
+
+          <Flex>
+            <Text
+              variant="md"
+              as="a"
+              // @ts-ignore
+              href="https://partners.artsy.net"
+              mr={2}
+            >
+              Partner with Artsy
+            </Text>
+
+            <Text
+              variant="md"
+              as="a"
+              // @ts-ignore
+              href="https://partners.artsy.net/gallery-resources/"
+            >
+              Gallery Insights
+            </Text>
+          </Flex>
+        </Flex>
 
         <PartnersFilters type="GALLERY" />
 

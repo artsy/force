@@ -75,7 +75,6 @@ app.use(require("./apps/frieze_week_london").app)
 app.use(require("./apps/basel_week").app)
 
 // Non-profile dynamic vanity url apps
-app.use(require("./apps/galleries_institutions"))
 app.use(require("./apps/articles").app)
 app.use(require("./apps/page"))
 app.use(require("./apps/shortcuts"))

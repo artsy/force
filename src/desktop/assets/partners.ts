@@ -15,10 +15,8 @@ const routes = {
   },
   "/auction-partnerships": require("../apps/partnerships/client/index.coffee")
     .init,
-  "/galleries": require("../apps/galleries_institutions/client/index.coffee"),
   "/institution-partnerships": require("../apps/partnerships/client/index.coffee")
     .init,
-  "/institutions": require("../apps/galleries_institutions/client/index.coffee"),
 }
 
 for (let path in routes) {
