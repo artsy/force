@@ -31,6 +31,7 @@ export const ErrorModalProvider = ({ children }) => {
   }
 
   console.log(isErrorModalOpen)
+  console.log(isErrorModalOpen)
 
   return (
     <ErrorModalContext.Provider
