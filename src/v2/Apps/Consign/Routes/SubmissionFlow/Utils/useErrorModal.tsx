@@ -30,6 +30,8 @@ export const ErrorModalProvider = ({ children }) => {
     setCloseText(modalCloseButtonText || closeText)
   }
 
+  console.log("XX")
+
   return (
     <ErrorModalContext.Provider
       value={{
