@@ -100,7 +100,7 @@ export const ArtworkDetailsForm: React.FC = () => {
 
   const { openErrorModal } = useErrorModal()
 
-  const [isAutosuggestError, setIsAutosuggestError] = useState(false)
+  const [isAutosuggestError] = useState(false)
   const [isRarityModalOpen, setIsRarityModalOpen] = useState(false)
   const [isProvenanceModalOpen, setIsProvenanceModalOpen] = useState(false)
 
@@ -131,7 +131,6 @@ export const ArtworkDetailsForm: React.FC = () => {
   }, [submission])
 
   const handleAutosuggestError = (isError: boolean) => {
-    // setIsAutosuggestError(isError)
     openErrorModal(true, "header", "")
 
     if (!isError) {
