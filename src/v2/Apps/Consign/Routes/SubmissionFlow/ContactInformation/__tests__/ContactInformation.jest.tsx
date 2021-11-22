@@ -6,6 +6,7 @@ import { flushPromiseQueue } from "v2/DevTools"
 import { SystemContextProvider } from "v2/System"
 import { ReactWrapper } from "enzyme"
 import { createConsignSubmission } from "../../Utils/createConsignSubmission"
+import { useErrorModal } from "../../Utils/useErrorModal"
 
 jest.unmock("react-relay")
 
@@ -49,6 +50,11 @@ jest.mock("v2/System/Router/useRouter", () => ({
     router: { push: mockRouterPush },
     match: { params: { id: "1" } },
   })),
+}))
+
+const mockOpenErrorModal = jest.fn()
+jest.mock("../../Utils/useErrorModal", () => ({
+  useErrorModal: jest.fn(),
 }))
 
 jest.mock("../../Utils/createConsignSubmission", () => ({
@@ -106,7 +112,14 @@ const simulateTyping = async (
 }
 
 describe("Contact Information step", () => {
+  const mockUseErrorModal = useErrorModal as jest.Mock
   const saveButtonSelector = "button[data-test-id='save-button']"
+
+  beforeEach(() => {
+    mockUseErrorModal.mockImplementation(() => ({
+      openErrorModal: mockOpenErrorModal,
+    }))
+  })
 
   afterEach(() => {
     jest.clearAllMocks()
@@ -181,8 +194,7 @@ describe("Contact Information step", () => {
       await flushPromiseQueue()
       wrapper.update()
 
-      const errorModal = wrapper.find("ErrorModal")
-      expect(errorModal).toHaveLength(1)
+      expect(mockOpenErrorModal).toBeCalled()
     })
   })
 
