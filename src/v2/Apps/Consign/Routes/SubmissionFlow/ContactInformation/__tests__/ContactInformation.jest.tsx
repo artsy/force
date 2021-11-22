@@ -62,7 +62,9 @@ jest.mock("../../Utils/useErrorModal", () => ({
   useErrorModal: jest.fn(),
 }))
 
-jest.mock("sharify", () => ({ data: { SESSION_ID: "SessionID" } }))
+jest.mock("sharify", () => ({
+  data: { SESSION_ID: "SessionID", RECAPTCHA_KEY: "recaptcha-api-key" },
+}))
 
 jest.mock("../../Utils/createConsignSubmission", () => ({
   ...jest.requireActual("../../Utils/createConsignSubmission"),
@@ -246,6 +248,9 @@ describe("Contact Information step", () => {
       await flushPromiseQueue()
       wrapper.update()
 
+      expect(window.grecaptcha.execute).toBeCalledWith("recaptcha-api-key", {
+        action: "submission_submit",
+      })
       expect(sessionStorage.setItem).toHaveBeenCalled()
       expect(mockCreateConsignSubmission).toHaveBeenCalled()
       expect(mockCreateConsignSubmission.mock.calls[0][2]).toEqual(undefined)
@@ -304,6 +309,9 @@ describe("Contact Information step", () => {
       await flushPromiseQueue()
       wrapper.update()
 
+      expect(window.grecaptcha.execute).toBeCalledWith("recaptcha-api-key", {
+        action: "submission_submit",
+      })
       expect(sessionStorage.setItem).toHaveBeenCalled()
       expect(mockCreateConsignSubmission).toHaveBeenCalled()
       expect(mockCreateConsignSubmission.mock.calls[0][2]).toEqual("userId")
