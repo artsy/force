@@ -804,6 +804,12 @@ describe("Shipping", () => {
       )
     })
 
+    it("the default address is selected", async () => {
+      const savedAddressButtons = page.find(`[data-test="savedAddress"]`)
+      expect(savedAddressButtons.first().props().selected).toEqual(false)
+      expect(savedAddressButtons.last().props().selected).toEqual(true)
+    })
+
     it("commits the mutation with selected address and phone number", async () => {
       await page.clickSubmit()
 
@@ -831,6 +837,11 @@ describe("Shipping", () => {
     it("when another saved address is selected commits mutation with selected address and phone number", async () => {
       page.find(`[data-test="savedAddress"]`).first().simulate("click")
       await page.update()
+
+      const savedAddressButtons = page.find(`[data-test="savedAddress"]`)
+      expect(savedAddressButtons.first().props().selected).toEqual(true)
+      expect(savedAddressButtons.last().props().selected).toEqual(false)
+
       await page.clickSubmit()
 
       expect(mutations.mockFetch).toHaveBeenCalledTimes(1)
@@ -933,6 +944,10 @@ describe("Shipping", () => {
 
       it("submit button enabled if shipping quote is selected", async () => {
         page.find(`[data-test="shipping-quotes"]`).last().simulate("click")
+
+        expect(
+          page.find(`[data-test="shipping-quotes"]`).last().props().selected
+        ).toEqual(true)
 
         expect(page.submitButton.props().disabled).toBeFalsy()
       })
