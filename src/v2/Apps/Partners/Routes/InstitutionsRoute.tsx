@@ -41,7 +41,9 @@ const InstitutionsRoute: React.FC<InstitutionsRouteProps> = ({ viewer }) => {
         <PartnersFeaturedCarouselFragmentContainer viewer={viewer} />
 
         <Flex justifyContent="space-between" alignItems="center">
-          <Text variant="xl">Browse Institutions</Text>
+          <Text variant="xl" as="h1">
+            Browse Institutions
+          </Text>
 
           <Text
             variant="md"

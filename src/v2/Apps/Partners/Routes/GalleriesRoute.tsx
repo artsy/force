@@ -40,7 +40,9 @@ const GalleriesRoute: React.FC<GalleriesRouteProps> = ({ viewer }) => {
         <PartnersFeaturedCarouselFragmentContainer viewer={viewer} />
 
         <Flex justifyContent="space-between" alignItems="center">
-          <Text variant="xl">Browse Galleries</Text>
+          <Text variant="xl" as="h1">
+            Browse Galleries
+          </Text>
 
           <Flex>
             <Text
