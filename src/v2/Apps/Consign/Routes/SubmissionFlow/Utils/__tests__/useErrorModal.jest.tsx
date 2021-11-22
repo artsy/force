@@ -12,11 +12,11 @@ describe("useErrorModal", () => {
     useErrorModalResult = result
   })
 
-  it("has initial state correctly set not to render an error modal", async () => {
+  it("has initial state correctly set not to render an error modal", () => {
     expect(useErrorModalResult.current.isErrorModalOpen).toBe(false)
   })
 
-  it("renders error modal when openErrorModal is called", async () => {
+  it("renders error modal when openErrorModal is called", () => {
     act(() => {
       useErrorModalResult.current.openErrorModal()
     })
