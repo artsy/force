@@ -15,6 +15,7 @@ import { contactInformationValidationSchema } from "../Utils/validation"
 import { BackLink } from "v2/Components/Links/BackLink"
 import { useErrorModal } from "../Utils/useErrorModal"
 import { data as sd } from "sharify"
+import { recaptcha, RecaptchaAction } from "v2/Utils/recaptcha"
 
 const getContactInformationFormInitialValues = (me: ContactInformation_me) => ({
   name: me?.name || "",
@@ -47,11 +48,16 @@ export const ContactInformation: React.FC<ContactInformationProps> = ({
     removeSubmission,
   } = useSubmission(id)
 
+  const handleRecaptcha = (action: RecaptchaAction) =>
+    new Promise(resolve => recaptcha(action, resolve))
+
   const handleSubmit = async ({
     name,
     email,
     phone,
   }: ContactInformationFormModel) => {
+    if (!(await handleRecaptcha("submission_submit"))) return
+
     if (submission) {
       const contactInformationForm = {
         name: name.trim(),
