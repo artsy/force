@@ -62,13 +62,7 @@ jest.mock("../../Utils/useErrorModal", () => ({
   useErrorModal: jest.fn(),
 }))
 
-jest.mock("../../Utils/createConsignSubmission", () => ({
-  ...jest.requireActual("../../Utils/createConsignSubmission"),
-  createConsignSubmission: jest.fn(),
-}))
-
 jest.mock("sharify", () => ({ data: { SESSION_ID: "SessionID" } }))
-
 
 jest.mock("../../Utils/createConsignSubmission", () => ({
   ...jest.requireActual("../../Utils/createConsignSubmission"),
