@@ -367,8 +367,6 @@ workflows:
             branches:
               only:
                 - staging
-          requires:
-            - hokusai/deploy-staging
 
       - validate_production_schema:
           <<: *only_release
