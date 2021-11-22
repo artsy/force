@@ -194,7 +194,7 @@ jobs:
             exit $code
           fi
 
-  smoke_test_on_running_env:
+  smoke-test-on-live-env:
     docker:
       - image: cypress/base:14.16.0
         environment:
@@ -362,7 +362,7 @@ workflows:
               only:
                 - release
 
-      - smoke_test_on_running_env:
+      - smoke-test-on-live-env:
           filters:
             branches:
               only:
@@ -378,7 +378,7 @@ workflows:
           requires:
             - horizon/block
             - validate_production_schema
-            - smoke_test_on_running_env
+            - smoke-test-on-live-env
 
       # Other
       - run_deepcrawl_automator:
