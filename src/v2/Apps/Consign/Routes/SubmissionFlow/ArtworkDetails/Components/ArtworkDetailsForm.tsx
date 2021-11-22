@@ -68,8 +68,9 @@ export const ArtworkDetailsForm: React.FC = () => {
     },
   } = useRouter()
 
-  const { setIsErrorModalOpen } = useErrorModal()
+  const { openErrorModal } = useErrorModal()
 
+  const [isAutosuggestError, setIsAutosuggestError] = useState(false)
   const [isRarityModalOpen, setIsRarityModalOpen] = useState(false)
   const [isProvenanceModalOpen, setIsProvenanceModalOpen] = useState(false)
 
@@ -95,9 +96,8 @@ export const ArtworkDetailsForm: React.FC = () => {
   }, [submission])
 
   const handleAutosuggestError = (isError: boolean) => {
-    if (setIsErrorModalOpen) {
-      setIsErrorModalOpen(isError)
-    }
+    // setIsAutosuggestError(isError)
+    openErrorModal(true, "header", "")
 
     if (!isError) {
       setFieldValue("artistName", "")
