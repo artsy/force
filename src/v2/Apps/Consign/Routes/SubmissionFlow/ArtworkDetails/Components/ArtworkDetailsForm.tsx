@@ -16,7 +16,6 @@ import {
 } from "@artsy/palette"
 import { useFormikContext } from "formik"
 import { checkboxValues } from "v2/Components/ArtworkFilter/ArtworkFilters/AttributionClassFilter"
-import { ErrorModal } from "v2/Components/Modal/ErrorModal"
 import { ArtistAutosuggest } from "./ArtistAutosuggest"
 import { useRouter } from "v2/System/Router/useRouter"
 import { ArtworkSidebarClassificationsModalQueryRenderer } from "v2/Apps/Artwork/Components/ArtworkSidebarClassificationsModal"
