@@ -1,26 +1,17 @@
-import {
-  createContext,
-  Dispatch,
-  SetStateAction,
-  useContext,
-  useState,
-} from "react"
+import { createContext, useContext, useState } from "react"
 import { ErrorModal } from "v2/Components/Modal/ErrorModal"
 
 interface ErrorModalContextT {
-  isErrorModalOpen: boolean
-  setIsErrorModalOpen: Dispatch<SetStateAction<boolean>> | null
-  setHeaderText: Dispatch<SetStateAction<string>> | null
-  setContactEmail: Dispatch<SetStateAction<string>> | null
-  setCloseText: Dispatch<SetStateAction<string>> | null
+  openErrorModal: (
+    isOpen: boolean,
+    modalHeader?: string,
+    contactEmailDisplayed?: string,
+    modalCloseButtonText?: string
+  ) => void
 }
 
 const ErrorModalContext = createContext<ErrorModalContextT>({
-  isErrorModalOpen: false,
-  setIsErrorModalOpen: null,
-  setHeaderText: null,
-  setContactEmail: null,
-  setCloseText: null,
+  openErrorModal: () => null,
 })
 
 export const ErrorModalProvider = ({ children }) => {
@@ -29,16 +20,22 @@ export const ErrorModalProvider = ({ children }) => {
   const [contactEmail, setContactEmail] = useState("consign@artsymail.com")
   const [closeText, setCloseText] = useState("Close")
 
-  const onClose = () => setIsErrorModalOpen(false)
+  const openErrorModal = (
+    isOpen: boolean,
+    modalHeader?: string,
+    contactEmailDisplayed?: string,
+    modalCloseButtonText?: string
+  ) => {
+    setIsErrorModalOpen(isOpen)
+    setHeaderText(modalHeader || headerText)
+    setContactEmail(contactEmailDisplayed || contactEmail)
+    setCloseText(modalCloseButtonText || closeText)
+  }
 
   return (
     <ErrorModalContext.Provider
       value={{
-        isErrorModalOpen,
-        setIsErrorModalOpen,
-        setHeaderText,
-        setContactEmail,
-        setCloseText,
+        openErrorModal,
       }}
     >
       <ErrorModal
@@ -46,7 +43,7 @@ export const ErrorModalProvider = ({ children }) => {
         headerText={headerText}
         contactEmail={contactEmail}
         closeText={closeText}
-        onClose={onClose}
+        onClose={() => setIsErrorModalOpen(false)}
       />
       {children}
     </ErrorModalContext.Provider>
