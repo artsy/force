@@ -19,6 +19,8 @@ import {
   UpdateSmsSecondFactorMutationSuccessResponse,
 } from "./fixtures"
 import { TwoFactorAuthenticationTestPage } from "./Utils/TwoFactorAuthenticationTestPage"
+import { mount } from "enzyme"
+import { BackupSecondFactorReminder } from "../Components/BackupSecondFactorReminder"
 
 jest.unmock("react-relay")
 HTMLCanvasElement.prototype.getContext = jest.fn()
@@ -194,6 +196,50 @@ describe("TwoFactorAuthentication", () => {
 
         done()
       })
+    })
+  })
+})
+
+describe("Two factor authentication enrollment", () => {
+  const props = {
+    backupSecondFactors: ['d3bd78d468', '7aa4c5922c'],
+    factorTypeName: 'AppSecondFactor'
+  }
+  const getWrapper = (passedProps = props) => {
+    return mount(<BackupSecondFactorReminder {...passedProps} />)
+  }
+
+  const getCopyButton = () => {
+    return getWrapper().find('[data-test="copyButton"]').first()
+  }
+
+  describe("when the browser does not support clipboard", () => {
+    it("displays a copy button based on browser support", () => {
+      expect(getCopyButton()).toHaveLength(0)
+    })
+  })
+
+  describe("when the browser supports clipboard", () => {
+    const mockClipboard = { writeText: jest.fn() };
+    beforeEach(() => {
+      Object.assign(navigator, {
+        clipboard: mockClipboard
+      });
+    })
+
+    it("displays a copy button", () => {
+      const copyButton = getCopyButton()
+
+      expect(copyButton).toHaveLength(1)
+      expect(copyButton.text()).toBe("Copy")
+    })
+
+    it("enables user to copy the recovery codes", () => {
+      const copyButtonProps = getCopyButton().props()
+
+      if (copyButtonProps.onClick) copyButtonProps.onClick({} as any);
+
+      expect(navigator.clipboard.writeText).toBeCalledTimes(1)
     })
   })
 })

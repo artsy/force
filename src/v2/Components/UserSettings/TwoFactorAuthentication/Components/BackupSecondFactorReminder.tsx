@@ -1,5 +1,11 @@
-import { BorderBoxProps, Box, Flex, Text } from "@artsy/palette"
-import * as React from "react";
+import {
+  BorderBoxProps,
+  Box,
+  Button,
+  Flex,
+  Text,
+} from "@artsy/palette"
+import React, { useEffect, useState } from "react"
 
 interface BackupSecondFactorReminderProps extends BorderBoxProps {
   backupSecondFactors: string[]
@@ -8,6 +14,17 @@ interface BackupSecondFactorReminderProps extends BorderBoxProps {
 
 export const BackupSecondFactorReminder: React.FC<BackupSecondFactorReminderProps> = props => {
   const { backupSecondFactors, factorTypeName } = props
+  const [supportsClipboard, setSupportsClipboard] = useState(false)
+
+  useEffect(() => {
+    // Only render the copy button if browser supports the Clipboard API
+    // https://developer.mozilla.org/en-US/docs/Web/API/Clipboard_API
+    if ("clipboard" in navigator) setSupportsClipboard(true)
+  }, [])
+
+  function copyCodesToClipboard() {
+    navigator.clipboard.writeText(props.backupSecondFactors.join("\n"))
+  }
 
   return (
     <Box minHeight="280px">
@@ -36,6 +53,21 @@ export const BackupSecondFactorReminder: React.FC<BackupSecondFactorReminderProp
           </Box>
         ))}
       </Flex>
+
+      {supportsClipboard && (
+        <Flex justifyContent="center">
+          <Button
+            onClick={copyCodesToClipboard}
+            variant="secondaryOutline"
+            size="small"
+            mt={1}
+            mb={1}
+            data-test="copyButton"
+          >
+            Copy
+          </Button>
+        </Flex>
+      )}
     </Box>
   )
 }
