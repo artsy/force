@@ -16,11 +16,11 @@ import {
 } from "@artsy/palette"
 import { useFormikContext } from "formik"
 import { checkboxValues } from "v2/Components/ArtworkFilter/ArtworkFilters/AttributionClassFilter"
-import { ErrorModal } from "v2/Components/Modal/ErrorModal"
 import { useRouter } from "v2/System/Router/useRouter"
-import { ArtworkSidebarClassificationsModalQueryRenderer } from "v2/Apps/Artwork/Components/ArtworkSidebarClassificationsModal"
 import { useSubmission } from "../../Utils/useSubmission"
 import { ArtistAutoComplete } from "./ArtistAutocomplete"
+import { ArtworkSidebarClassificationsModalQueryRenderer } from "v2/Apps/Artwork/Components/ArtworkSidebarClassificationsModal"
+import { useErrorModal } from "../../Utils/useErrorModal"
 
 export const getArtworkDetailsFormInitialValues = () => ({
   artistId: "",
@@ -68,7 +68,8 @@ export const ArtworkDetailsForm: React.FC = () => {
     },
   } = useRouter()
 
-  const [isArtistApiError, setIsArtistApiError] = useState(false)
+  const { setIsErrorModalOpen } = useErrorModal()
+
   const [isRarityModalOpen, setIsRarityModalOpen] = useState(false)
   const [isProvenanceModalOpen, setIsProvenanceModalOpen] = useState(false)
 
@@ -93,15 +94,19 @@ export const ArtworkDetailsForm: React.FC = () => {
     }
   }, [submission])
 
+  const handleAutosuggestError = (isError: boolean) => {
+    if (setIsErrorModalOpen) {
+      setIsErrorModalOpen(isError)
+    }
+
+    if (!isError) {
+      setFieldValue("artistName", "")
+      setFieldValue("artistId", "")
+    }
+  }
+
   return (
     <>
-      <ErrorModal
-        show={isArtistApiError}
-        headerText="An error occurred"
-        contactEmail="consign@artsymail.com"
-        closeText="Close"
-        onClose={() => setIsArtistApiError(false)}
-      />
       <ArtworkSidebarClassificationsModalQueryRenderer
         onClose={() => setIsRarityModalOpen(false)}
         show={isRarityModalOpen}
@@ -138,7 +143,7 @@ export const ArtworkDetailsForm: React.FC = () => {
 
       <GridColumns>
         <Column span={6}>
-          <ArtistAutoComplete onError={() => setIsArtistApiError(true)} />
+          <ArtistAutoComplete onError={() => handleAutosuggestError(true)} />
         </Column>
         <Column span={6} mt={[2, 0]}>
           <Input
