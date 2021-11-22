@@ -7,10 +7,12 @@ interface ErrorModalContextT {
     contactEmailDisplayed?: string,
     modalCloseButtonText?: string
   ) => void
+  isErrorModalOpen: boolean
 }
 
 const ErrorModalContext = createContext<ErrorModalContextT>({
   openErrorModal: () => null,
+  isErrorModalOpen: false,
 })
 
 export const ErrorModalProvider = ({ children }) => {
@@ -34,6 +36,7 @@ export const ErrorModalProvider = ({ children }) => {
     <ErrorModalContext.Provider
       value={{
         openErrorModal,
+        isErrorModalOpen,
       }}
     >
       <ErrorModal
