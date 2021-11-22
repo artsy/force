@@ -3,11 +3,18 @@ import { Box, BoxProps, Flex, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FairHeader_fair } from "v2/__generated__/FairHeader_fair.graphql"
 import { ProfileIcon } from "v2/Components/ProfileIcon"
+import styled from "styled-components"
+import { fadeIn, fadeOut } from "v2/Assets/Animations"
 
 interface FairHeaderProps extends BoxProps {
   stuck?: boolean
   fair: FairHeader_fair
 }
+
+const FadingText = styled(Text)<{ show: boolean }>`
+  opacity: ${p => +p.show};
+  animation: ${p => (p.show ? fadeIn : fadeOut)} 0.1s linear;
+`
 
 const FairHeader: React.FC<FairHeaderProps> = ({ fair, stuck }) => {
   const { name, exhibitionPeriod, profile } = fair
@@ -27,11 +34,10 @@ const FairHeader: React.FC<FairHeaderProps> = ({ fair, stuck }) => {
         <Text as="h1" variant={stuck ? "lg" : ["lg", "xl"]}>
           {name}
         </Text>
-        {!stuck && (
-          <Text variant={["lg", "xl"]} color="black60">
-            {exhibitionPeriod}
-          </Text>
-        )}
+
+        <FadingText show={!stuck} variant={["lg", "xl"]} color="black60">
+          {exhibitionPeriod}
+        </FadingText>
       </Box>
     </Flex>
   )
