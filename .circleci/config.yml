@@ -352,6 +352,7 @@ workflows:
           project-name: force
           requires:
             - production-image-push
+            - smoke-test-on-live-env
 
       # Release
       - horizon/block:
@@ -367,7 +368,6 @@ workflows:
             branches:
               only:
                 - staging
-                - release
 
       - validate_production_schema:
           <<: *only_release
@@ -378,7 +378,6 @@ workflows:
           requires:
             - horizon/block
             - validate_production_schema
-            - smoke-test-on-live-env
 
       # Other
       - run_deepcrawl_automator:
