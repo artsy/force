@@ -3,10 +3,19 @@ import styled from "styled-components"
 import { Box, Flex, Spacer } from "@artsy/palette"
 import { growAndFadeIn, shrinkAndFadeOut } from "v2/Assets/Animations"
 import { CreateAlertButton } from "./CreateAlertButton"
+import { SavedSearchAttributes } from "../types"
 
 const WRAPPER_HEIGHT = 70
 
-export const FiltersPills: React.FC<{ show: boolean }> = ({ show }) => {
+interface FilterPillsProps {
+  show: boolean
+  savedSearchAttributes: SavedSearchAttributes
+}
+
+export const FiltersPills: React.FC<FilterPillsProps> = ({
+  show,
+  savedSearchAttributes,
+}) => {
   const [showBlock, setShowBlock] = useState(show)
 
   useEffect(() => {
@@ -20,7 +29,7 @@ export const FiltersPills: React.FC<{ show: boolean }> = ({ show }) => {
       {showBlock && (
         <AnimatedBox show={show}>
           <Flex>
-            <CreateAlertButton />
+            <CreateAlertButton savedSearchAttributes={savedSearchAttributes} />
           </Flex>
           <Spacer mt={4} />
         </AnimatedBox>

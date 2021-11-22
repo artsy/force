@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import * as React from "react";
+import { useEffect, useState } from "react"
+import * as React from "react"
 import {
   Button,
   Text,
@@ -34,7 +34,7 @@ type CustomSize = {
 
 const convertToCentimeters = (element: number) => Math.round(element * 2.54)
 
-const parseRange = (range?: string) => {
+export const parseRange = (range?: string) => {
   return range?.split("-").map(s => {
     if (s === "*") return s
     return convertToCentimeters(parseFloat(s))
@@ -74,7 +74,7 @@ const getValue = (value: CustomRange[number]) => {
   return value === "*" || value === 0 ? "" : value
 }
 
-const isCustomSize = (value?: string) => value !== "*-*"
+export const isCustomSize = (value?: string) => value !== "*-*"
 
 export interface SizeFilterProps {
   expanded?: boolean

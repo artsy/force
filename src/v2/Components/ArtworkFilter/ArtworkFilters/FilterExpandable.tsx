@@ -1,14 +1,13 @@
+import React, { useEffect, useRef, useState } from "react"
 import {
   Box,
   Expandable,
   ExpandableProps,
   useThemeConfig,
 } from "@artsy/palette"
-import { useEffect, useRef, useState } from "react";
-import * as React from "react";
-import { getElementParams } from "./helpers"
 import { useScrollRefContext } from "./useScrollContext"
 import { data as sd } from "sharify"
+import { getElementParams } from "../Utils/getElementParams"
 
 export const FilterExpandable: React.FC<ExpandableProps> = ({
   expanded,
