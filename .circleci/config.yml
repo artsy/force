@@ -367,6 +367,7 @@ workflows:
             branches:
               only:
                 - staging
+                - release
 
       - validate_production_schema:
           <<: *only_release
