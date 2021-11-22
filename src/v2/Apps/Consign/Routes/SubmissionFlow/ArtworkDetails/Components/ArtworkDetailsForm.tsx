@@ -97,7 +97,7 @@ export const ArtworkDetailsForm: React.FC = () => {
     },
   } = useRouter()
 
-  const { setIsErrorModalOpen } = useErrorModal()
+  const { openErrorModal } = useErrorModal()
 
   const [isRarityModalOpen, setIsRarityModalOpen] = useState(false)
   const [isProvenanceModalOpen, setIsProvenanceModalOpen] = useState(false)
@@ -129,9 +129,7 @@ export const ArtworkDetailsForm: React.FC = () => {
   }, [submission])
 
   const handleAutosuggestError = (isError: boolean) => {
-    if (setIsErrorModalOpen) {
-      setIsErrorModalOpen(isError)
-    }
+    openErrorModal(isError, "zz", "heya", "kapa")
 
     if (!isError) {
       setFieldValue("artistName", "")
@@ -141,6 +139,7 @@ export const ArtworkDetailsForm: React.FC = () => {
 
   return (
     <>
+      <Button onClick={() => handleAutosuggestError(true)}>Open it</Button>
       <ArtworkSidebarClassificationsModalQueryRenderer
         onClose={() => setIsRarityModalOpen(false)}
         show={isRarityModalOpen}
