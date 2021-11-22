@@ -309,6 +309,7 @@
     "@types/underscore.string": "0.0.32",
     "@types/webpack": "4.4.24",
     "@types/webpack-env": "1.13.6",
+    "@types/yup": "^0.29.13",
     "@typescript-eslint/eslint-plugin": "2.30.0",
     "@typescript-eslint/parser": "4.18.0",
     "@wojtekmaj/enzyme-adapter-react-17": "0.6.0",
