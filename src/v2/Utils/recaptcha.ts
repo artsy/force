@@ -36,3 +36,4 @@ export type RecaptchaAction =
   | "inquiry_register_impression"
   | "login_submit"
   | "signup_submit"
+  | "submission_submit"
