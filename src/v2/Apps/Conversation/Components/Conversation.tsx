@@ -280,7 +280,7 @@ export const ConversationPaginationContainer = createPaginationContainer(
     conversation: graphql`
       fragment Conversation_conversation on Conversation
         @argumentDefinitions(
-          count: { type: "Int", defaultValue: 10 }
+          count: { type: "Int", defaultValue: 30 }
           after: { type: "String" }
         ) {
         id
