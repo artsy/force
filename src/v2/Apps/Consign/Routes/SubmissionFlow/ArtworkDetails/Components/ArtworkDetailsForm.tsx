@@ -74,7 +74,6 @@ export const ArtworkDetailsForm: React.FC = () => {
 
   const { openErrorModal } = useErrorModal()
 
-  // const [isAutosuggestError] = useState(false)
   const [isRarityModalOpen, setIsRarityModalOpen] = useState(false)
   const [isProvenanceModalOpen, setIsProvenanceModalOpen] = useState(false)
 
@@ -100,17 +99,17 @@ export const ArtworkDetailsForm: React.FC = () => {
   }, [submission])
 
   const handleAutosuggestError = (isError: boolean) => {
-    openErrorModal(true, "header", "")
-
-    if (!isError) {
-      setFieldValue("artistName", "")
-      setFieldValue("artistId", "")
+    if (isError) {
+      openErrorModal()
+      return
     }
+
+    setFieldValue("artistName", "")
+    setFieldValue("artistId", "")
   }
 
   return (
     <>
-      <Button onClick={() => handleAutosuggestError(true)}>Open it</Button>
       <ArtworkSidebarClassificationsModalQueryRenderer
         onClose={() => setIsRarityModalOpen(false)}
         show={isRarityModalOpen}
