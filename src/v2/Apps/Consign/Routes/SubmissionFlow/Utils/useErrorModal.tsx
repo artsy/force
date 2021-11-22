@@ -10,11 +10,17 @@ import { ErrorModal } from "v2/Components/Modal/ErrorModal"
 interface ErrorModalContextT {
   isErrorModalOpen: boolean
   setIsErrorModalOpen: Dispatch<SetStateAction<boolean>> | null
+  setHeaderText: Dispatch<SetStateAction<string>> | null
+  setContactEmail: Dispatch<SetStateAction<string>> | null
+  setCloseText: Dispatch<SetStateAction<string>> | null
 }
 
 const ErrorModalContext = createContext<ErrorModalContextT>({
   isErrorModalOpen: false,
   setIsErrorModalOpen: null,
+  setHeaderText: null,
+  setContactEmail: null,
+  setCloseText: null,
 })
 
 export const ErrorModalProvider = ({ children }) => {
@@ -27,7 +33,13 @@ export const ErrorModalProvider = ({ children }) => {
 
   return (
     <ErrorModalContext.Provider
-      value={{ isErrorModalOpen, setIsErrorModalOpen }}
+      value={{
+        isErrorModalOpen,
+        setIsErrorModalOpen,
+        setHeaderText,
+        setContactEmail,
+        setCloseText,
+      }}
     >
       <ErrorModal
         show={isErrorModalOpen}
