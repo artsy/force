@@ -2,15 +2,7 @@ import { useRef } from "react"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FairApp_fair } from "v2/__generated__/FairApp_fair.graphql"
-import {
-  Box,
-  DROP_SHADOW,
-  Flex,
-  FullBleed,
-  Text,
-  Image,
-  Spacer,
-} from "@artsy/palette"
+import { DROP_SHADOW, FullBleed, Spacer, Text } from "@artsy/palette"
 import { RouteTab, RouteTabs } from "v2/Components/RouteTabs"
 import { FairMetaFragmentContainer } from "./Components/FairMeta"
 import { useSystemContext } from "v2/System"
@@ -79,7 +71,7 @@ const FairApp: React.FC<FairAppProps> = ({ children, fair }) => {
 
       <FairHeaderImageFragmentContainer fair={fair} />
 
-      <FairHeaderFragmentContainer fair={fair} />
+      <Spacer mt={[1, 30]} />
 
       <Sticky>
         {({ stuck }) => {
@@ -90,30 +82,8 @@ const FairApp: React.FC<FairAppProps> = ({ children, fair }) => {
             >
               <AppContainer>
                 <HorizontalPadding>
-                  <Flex
-                    height={70}
-                    py={1}
-                    border="1px solid transparent"
-                    borderBottomColor={stuck && "black10"}
-                  >
-                    {stuck && fair.profile?.icon?.cropped && (
-                      <>
-                        <Box
-                          width={fair.profile.icon.cropped.width}
-                          height={fair.profile.icon.cropped.height}
-                        >
-                          <Image
-                            src={fair.profile.icon.cropped.src}
-                            srcSet={fair.profile.icon.cropped.srcSet}
-                            width="100%"
-                            height="100%"
-                          />
-                        </Box>
-                        <Spacer ml={1} />
-                        <Text variant="lg">{fair.name}</Text>
-                      </>
-                    )}
-                  </Flex>
+                  <FairHeaderFragmentContainer fair={fair} stuck={stuck} />
+
                   <RouteTabs textAlign="center" flexGrow={1} fill>
                     <FairRouteTab
                       to={fairHref}
@@ -223,17 +193,6 @@ export const FairAppFragmentContainer = createFragmentContainer(
         internalID
         href
         slug
-        name
-        profile {
-          icon {
-            cropped(width: 50, height: 50, version: "square140") {
-              src
-              srcSet
-              width
-              height
-            }
-          }
-        }
         ...FairMeta_fair
         ...FairHeader_fair
         ...FairHeaderImage_fair
