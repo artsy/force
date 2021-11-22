@@ -3,7 +3,6 @@ import { ErrorModal } from "v2/Components/Modal/ErrorModal"
 
 interface ErrorModalContextT {
   openErrorModal: (
-    isOpen: boolean,
     modalHeader?: string,
     contactEmailDisplayed?: string,
     modalCloseButtonText?: string
@@ -21,12 +20,11 @@ export const ErrorModalProvider = ({ children }) => {
   const [closeText, setCloseText] = useState("Close")
 
   const openErrorModal = (
-    isOpen: boolean,
     modalHeader?: string,
     contactEmailDisplayed?: string,
     modalCloseButtonText?: string
   ) => {
-    setIsErrorModalOpen(isOpen)
+    setIsErrorModalOpen(true)
     setHeaderText(modalHeader || headerText)
     setContactEmail(contactEmailDisplayed || contactEmail)
     setCloseText(modalCloseButtonText || closeText)
