@@ -13,8 +13,7 @@ import { ContactInformation_me } from "v2/__generated__/ContactInformation_me.gr
 import { useSubmission } from "../Utils/useSubmission"
 import { contactInformationValidationSchema } from "../Utils/validation"
 import { BackLink } from "v2/Components/Links/BackLink"
-import { ErrorModal } from "v2/Components/Modal/ErrorModal"
-import { useState } from "react"
+import { useErrorModal } from "../Utils/useErrorModal"
 import { data as sd } from "sharify"
 
 const getContactInformationFormInitialValues = (me: ContactInformation_me) => ({
@@ -36,8 +35,11 @@ export const ContactInformation: React.FC<ContactInformationProps> = ({
       params: { id },
     },
   } = useRouter()
-  const [isSubmissionApiError, setIsSubmissionApiError] = useState(false)
+
+  const { openErrorModal } = useErrorModal()
+
   const { relayEnvironment, user, isLoggedIn } = useSystemContext()
+
   const {
     submission,
     saveSubmission,
@@ -73,7 +75,7 @@ export const ContactInformation: React.FC<ContactInformationProps> = ({
         removeSubmission()
         router.push(`/consign/submission/${submissionId}/thank-you`)
       } catch (error) {
-        setIsSubmissionApiError(true)
+        openErrorModal()
       }
     }
   }
@@ -96,14 +98,6 @@ export const ContactInformation: React.FC<ContactInformationProps> = ({
       <Text mt={1} variant="md" color="black60">
         We&#39;ll only use these details to share updates on your submission.
       </Text>
-
-      <ErrorModal
-        show={isSubmissionApiError}
-        headerText="An error occurred"
-        contactEmail="consign@artsymail.com"
-        closeText="Close"
-        onClose={() => setIsSubmissionApiError(false)}
-      />
 
       <Formik<ContactInformationFormModel>
         initialValues={getContactInformationFormInitialValues(me)}
