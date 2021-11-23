@@ -8,7 +8,7 @@ import {
 } from "./Components/ArtworkDetailsForm"
 import { useRouter } from "v2/System/Router/useRouter"
 import uuid from "uuid"
-import { useSubmission } from "../Utils/useSubmission"
+import { useSubmission, UtmParams } from "../Utils/useSubmission"
 import { artworkDetailsValidationSchema } from "../Utils/validation"
 import { BackLink } from "v2/Components/Links/BackLink"
 
@@ -25,6 +25,7 @@ export const ArtworkDetails: React.FC = () => {
 
   const handleSubmit = (values: ArtworkDetailsFormModel) => {
     const isLimitedEditionRarity = values.rarity === "limited edition"
+    const utmParamsData = sessionStorage.getItem("utmParams")
 
     const artworkDetailsForm = {
       ...values,
@@ -41,14 +42,20 @@ export const ArtworkDetails: React.FC = () => {
       }
     }
 
-    saveSubmission(
-      submission
-        ? {
-            ...submission,
-            artworkDetailsForm,
-          }
-        : { artworkDetailsForm }
-    )
+    if (utmParamsData) {
+      const utmParams: UtmParams = utmParamsData && JSON.parse(utmParamsData)
+      saveSubmission(
+        submission
+          ? { ...submission, artworkDetailsForm, utmParams }
+          : { artworkDetailsForm, utmParams }
+      )
+    } else {
+      saveSubmission(
+        submission
+          ? { ...submission, artworkDetailsForm }
+          : { artworkDetailsForm }
+      )
+    }
 
     router.replace({
       pathname: `/consign/submission/${submissionId}/artwork-details`,
