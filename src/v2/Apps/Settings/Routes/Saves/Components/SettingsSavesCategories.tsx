@@ -5,8 +5,8 @@ import {
   RelayPaginationProp,
 } from "react-relay"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
-import { SettingsSavesArtists_me } from "v2/__generated__/SettingsSavesArtists_me.graphql"
-import { SettingsSavesArtistsQuery } from "v2/__generated__/SettingsSavesArtistsQuery.graphql"
+import { SettingsSavesCategories_me } from "v2/__generated__/SettingsSavesCategories_me.graphql"
+import { SettingsSavesCategoriesQuery } from "v2/__generated__/SettingsSavesCategoriesQuery.graphql"
 import {
   Box,
   Button,
@@ -19,20 +19,25 @@ import {
 } from "@artsy/palette"
 import { extractNodes } from "v2/Utils/extractNodes"
 import {
-  ArtistRailFragmentContainer,
-  ARTIST_RAIL_PLACEHOLDER,
-} from "v2/Components/ArtistRail"
+  CategoryRailFragmentContainer,
+  CATEGORY_RAIL_PLACEHOLDER,
+} from "v2/Components/CategoryRail"
 
-interface SettingsSavesArtistsProps {
-  me: SettingsSavesArtists_me
+interface SettingsSavesCategoriesProps {
+  me: SettingsSavesCategories_me
   relay: RelayPaginationProp
 }
 
-const SettingsSavesArtists: FC<SettingsSavesArtistsProps> = ({ me, relay }) => {
+const SettingsSavesCategories: FC<SettingsSavesCategoriesProps> = ({
+  me,
+  relay,
+}) => {
   const [loading, setLoading] = useState(false)
 
-  const connection = me.followsAndSaves?.artistsConnection
-  const followedArtists = extractNodes(me.followsAndSaves?.artistsConnection)
+  const connection = me.followsAndSaves?.categoriesConnection
+  const followedCategories = extractNodes(
+    me.followsAndSaves?.categoriesConnection
+  )
   const total = connection?.totalCount ?? 0
 
   const handleClick = () => {
@@ -49,17 +54,20 @@ const SettingsSavesArtists: FC<SettingsSavesArtistsProps> = ({ me, relay }) => {
   return (
     <>
       <Text variant="lg" mb={4}>
-        Followed Artists {total > 0 && <Sup color="brand">{total}</Sup>}
+        Followed Categories {total > 0 && <Sup color="brand">{total}</Sup>}
       </Text>
 
-      {followedArtists.length > 0 ? (
+      {followedCategories.length > 0 ? (
         <>
           <Join separator={<Spacer mt={4} />}>
-            {followedArtists.map(({ internalID, artist }) => {
-              if (!artist) return null
+            {followedCategories.map(({ internalID, category }) => {
+              if (!category) return null
 
               return (
-                <ArtistRailFragmentContainer key={internalID} artist={artist} />
+                <CategoryRailFragmentContainer
+                  key={internalID}
+                  category={category}
+                />
               )
             })}
           </Join>
@@ -81,29 +89,30 @@ const SettingsSavesArtists: FC<SettingsSavesArtistsProps> = ({ me, relay }) => {
   )
 }
 
-export const SETTINGS_SAVES_ARTISTS_QUERY = graphql`
-  query SettingsSavesArtistsQuery($after: String) {
+export const SETTINGS_SAVES_CATEGORIES_QUERY = graphql`
+  query SettingsSavesCategoriesQuery($after: String) {
     me {
-      ...SettingsSavesArtists_me @arguments(after: $after)
+      ...SettingsSavesCategories_me @arguments(after: $after)
     }
   }
 `
 
-export const SettingsSavesArtistsPaginationContainer = createPaginationContainer(
-  SettingsSavesArtists,
+export const SettingsSavesCategoriesPaginationContainer = createPaginationContainer(
+  SettingsSavesCategories,
   {
     me: graphql`
-      fragment SettingsSavesArtists_me on Me
+      fragment SettingsSavesCategories_me on Me
         @argumentDefinitions(after: { type: "String" }) {
         followsAndSaves {
-          artistsConnection(first: 4, after: $after)
-            @connection(key: "SettingsSavesArtists_artistsConnection") {
+          categoriesConnection: genesConnection(first: 4, after: $after)
+            @connection(key: "SettingsSavesCategories_categoriesConnection") {
             totalCount
             edges {
               node {
                 internalID
-                artist {
-                  ...ArtistRail_artist
+                category: gene {
+                  internalID
+                  ...CategoryRail_category
                 }
               }
             }
@@ -120,32 +129,32 @@ export const SettingsSavesArtistsPaginationContainer = createPaginationContainer
     getVariables(_, { cursor: after }, fragmentVariables) {
       return { ...fragmentVariables, after }
     },
-    query: SETTINGS_SAVES_ARTISTS_QUERY,
+    query: SETTINGS_SAVES_CATEGORIES_QUERY,
   }
 )
 
-const SETTINGS_SAVES_ARTISTS_PLACEHOLDER = (
+const SETTINGS_SAVES_CATEGORIES_PLACEHOLDER = (
   <>
     <Skeleton>
       <SkeletonText variant="lg" mb={4}>
-        Followed Artists
+        Followed Categories
       </SkeletonText>
     </Skeleton>
 
     <Join separator={<Spacer mt={4} />}>
       {[...new Array(4)].map((_, i) => {
-        return <Fragment key={i}>{ARTIST_RAIL_PLACEHOLDER}</Fragment>
+        return <Fragment key={i}>{CATEGORY_RAIL_PLACEHOLDER}</Fragment>
       })}
     </Join>
   </>
 )
 
-export const SettingsSavesArtistsQueryRenderer = () => {
+export const SettingsSavesCategoriesQueryRenderer = () => {
   return (
-    <SystemQueryRenderer<SettingsSavesArtistsQuery>
+    <SystemQueryRenderer<SettingsSavesCategoriesQuery>
       lazyLoad
-      placeholder={SETTINGS_SAVES_ARTISTS_PLACEHOLDER}
-      query={SETTINGS_SAVES_ARTISTS_QUERY}
+      placeholder={SETTINGS_SAVES_CATEGORIES_PLACEHOLDER}
+      query={SETTINGS_SAVES_CATEGORIES_QUERY}
       render={({ props, error }) => {
         if (error) {
           console.error(error)
@@ -153,10 +162,10 @@ export const SettingsSavesArtistsQueryRenderer = () => {
         }
 
         if (!props?.me) {
-          return SETTINGS_SAVES_ARTISTS_PLACEHOLDER
+          return SETTINGS_SAVES_CATEGORIES_PLACEHOLDER
         }
 
-        return <SettingsSavesArtistsPaginationContainer me={props.me} />
+        return <SettingsSavesCategoriesPaginationContainer me={props.me} />
       }}
     />
   )
