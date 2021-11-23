@@ -69,7 +69,7 @@ export const ProfileIcon: React.FC<ProfileIconProps> = ({
   if (!profile?.icon) return null
 
   return (
-    <Box {...rest}>
+    <Box height="fit-content" {...rest}>
       {icon?.desktop?.src && (
         <Media greaterThanOrEqual="md">
           <BorderBox size={desktopSize} prevSize={previousDesktopSize}>

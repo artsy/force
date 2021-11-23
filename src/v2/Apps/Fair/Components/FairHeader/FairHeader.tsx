@@ -4,8 +4,10 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { FairHeader_fair } from "v2/__generated__/FairHeader_fair.graphql"
 import { ProfileIcon } from "v2/Components/ProfileIcon"
 import styled from "styled-components"
-import { fadeIn, fadeOut } from "v2/Assets/Animations"
+import { growAndFadeIn, shrinkAndFadeOut } from "v2/Assets/Animations"
 import { Media } from "v2/Utils/Responsive"
+
+const SUBTITLE_HEIGHT = "38px"
 
 interface FairHeaderProps extends BoxProps {
   stuck?: boolean
@@ -13,12 +15,20 @@ interface FairHeaderProps extends BoxProps {
 }
 
 const FadingText = styled(Text)<{ show: boolean }>`
+  transform-origin: 0 0;
+  transform: ${p => `scale(${+p.show})`};
+  transition: transform 0.2s;
   opacity: ${p => +p.show};
-  animation: ${p => (p.show ? fadeIn : fadeOut)} 0.1s linear;
+  height: ${p => (p.show ? SUBTITLE_HEIGHT : 0)};
+  animation: ${p =>
+      p.show
+        ? growAndFadeIn(SUBTITLE_HEIGHT)
+        : shrinkAndFadeOut(SUBTITLE_HEIGHT)}
+    0.1s linear;
 `
 
 const ScalingText = styled(Text)<{ stuck: boolean }>`
-  transform-origin: 0;
+  transform-origin: 0 0;
   transform: ${p => `scale(${p.stuck ? 0.7 : 1})`};
   transition: transform 0.2s;
 `
