@@ -4,6 +4,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { SettingsSavesArtworksQueryRenderer } from "./Components/SettingsSavesArtworks"
 import { SettingsSavesArtistsQueryRenderer } from "./Components/SettingsSavesArtists"
 import { Join, Separator } from "@artsy/palette"
+import { SettingsSavesCategoriesQueryRenderer } from "./Components/SettingsSavesCategories"
 
 interface SettingsSavesRouteProps {
   me: SettingsSavesRoute_me
@@ -15,6 +16,8 @@ const SettingsSavesRoute: React.FC<SettingsSavesRouteProps> = ({ me }) => {
       <SettingsSavesArtworksQueryRenderer />
 
       <SettingsSavesArtistsQueryRenderer />
+
+      <SettingsSavesCategoriesQueryRenderer />
     </Join>
   )
 }
