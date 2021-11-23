@@ -21,7 +21,7 @@ export const ArticleView = (_ArticleView = (function() {
 
     initialize() {
       this.article = new Article(sd.ARTICLE);
-      // return new slideshows;
+      return new slideshows;
     }
 
     clickPlay(event) {
