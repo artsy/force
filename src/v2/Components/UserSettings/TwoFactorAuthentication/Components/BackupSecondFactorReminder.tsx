@@ -1,10 +1,4 @@
-import {
-  BorderBoxProps,
-  Box,
-  Button,
-  Flex,
-  Text,
-} from "@artsy/palette"
+import { BorderBoxProps, Box, Button, Flex, Text } from "@artsy/palette"
 import React, { useEffect, useState } from "react"
 
 interface BackupSecondFactorReminderProps extends BorderBoxProps {
@@ -24,6 +18,16 @@ export const BackupSecondFactorReminder: React.FC<BackupSecondFactorReminderProp
 
   function copyCodesToClipboard() {
     navigator.clipboard.writeText(props.backupSecondFactors.join("\n"))
+  }
+
+  function downloadCodes() {
+    const codes = props.backupSecondFactors.join("\n")
+    const element = document.createElement("a")
+    const file = new Blob([codes], { type: "text/plain" })
+    element.href = URL.createObjectURL(file)
+    element.download = "recovery_codes.txt"
+    document.body.appendChild(element) // Required for this to work in FireFox
+    element.click()
   }
 
   return (
@@ -54,8 +58,8 @@ export const BackupSecondFactorReminder: React.FC<BackupSecondFactorReminderProp
         ))}
       </Flex>
 
-      {supportsClipboard && (
-        <Flex justifyContent="center">
+      <Flex justifyContent="center">
+        {supportsClipboard && (
           <Button
             onClick={copyCodesToClipboard}
             variant="secondaryOutline"
@@ -66,8 +70,18 @@ export const BackupSecondFactorReminder: React.FC<BackupSecondFactorReminderProp
           >
             Copy
           </Button>
-        </Flex>
-      )}
+        )}
+
+        <Button
+          onClick={downloadCodes}
+          variant="secondaryOutline"
+          size="small"
+          m={1}
+          data-test="downloadButton"
+        >
+          Download
+        </Button>
+      </Flex>
     </Box>
   )
 }
