@@ -13,7 +13,7 @@ export type OrderUpdate_event = {
 } | {
     readonly __typename: "ConversationOfferSubmitted";
     readonly createdAt: string | null;
-    readonly amount: string;
+    readonly amount: string | null;
     readonly fromParticipant: ConversationOfferPartyType | null;
     readonly offerAmountChanged: boolean | null;
     readonly respondsTo: {
