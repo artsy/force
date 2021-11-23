@@ -29,6 +29,7 @@ import { OrderStepper, offerFlowSteps } from "../../Components/OrderStepper"
 import { BuyerGuarantee } from "../../Components/BuyerGuarantee"
 import { getOfferItemFromOrder } from "v2/Apps/Order/Utils/offerItemExtractor"
 import { ContextModule, OwnerType } from "@artsy/cohesion"
+import { isNil } from "lodash"
 import { appendCurrencySymbol } from "v2/Apps/Order/Utils/currencyUtils"
 
 export interface OfferProps {
@@ -168,6 +169,9 @@ export class OfferRoute extends Component<OfferProps, OfferState> {
     }
 
     const listPriceCents = this.props.order.totalListPriceCents
+    const artworkPrice = this?.props?.order?.lineItems?.edges?.[0]?.node
+      ?.artwork?.price
+    const isPriceHidden = isNil(artworkPrice) || artworkPrice === ""
     const isRangeOffer = getOfferItemFromOrder(this.props.order.lineItems)
       ?.displayPriceRange
 
@@ -183,7 +187,8 @@ export class OfferRoute extends Component<OfferProps, OfferState> {
     if (
       !highSpeedBumpEncountered &&
       this.state.offerValue * 100 > listPriceCents &&
-      !isRangeOffer
+      !isRangeOffer &&
+      !isPriceHidden
     ) {
       this.showHighSpeedbump()
       return
@@ -334,6 +339,7 @@ export const OfferFragmentContainer = createFragmentContainer(
             node {
               artwork {
                 slug
+                price
               }
               artworkOrEditionSet {
                 __typename
