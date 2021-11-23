@@ -194,6 +194,21 @@ jobs:
             exit $code
           fi
 
+  smoke-test-on-live-env:
+    docker:
+      - image: cypress/base:14.17.3
+        environment:
+          TERM: xterm
+    working_directory: ~/app
+    steps:
+      - checkout
+      - run:
+          name: Install Dependencies
+          command: yarn install
+      - run:
+          name: Run Smoke Tests on Staging
+          command: ./node_modules/.bin/cypress run --config baseUrl=$SMOKE_TEST_TARGET
+
 not_master_or_staging_or_release: &not_master_or_staging_or_release
   filters:
     branches:
@@ -346,6 +361,11 @@ workflows:
             branches:
               only:
                 - release
+
+      - smoke-test-on-live-env:
+          filters:
+            branches:
+              only:
                 - staging
 
       - validate_production_schema:

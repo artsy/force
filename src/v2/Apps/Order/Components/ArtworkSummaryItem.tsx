@@ -47,9 +47,7 @@ const ArtworkSummaryItem: React.FC<ArtworkSummaryItemProps> = ({
         {imageURL && <Image src={imageURL} alt={title!} width="55px" mr={1} />}
       </Box>
       <Flex flexDirection="column" overflow="hidden">
-        <Text variant="sm" color="black60">
-          {artistNames}
-        </Text>
+        <Text variant="sm">{artistNames}</Text>
         <Box style={{ lineHeight: "1", ...truncateTextStyle }}>
           <Text
             fontStyle="italic"

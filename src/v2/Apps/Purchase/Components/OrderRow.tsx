@@ -25,6 +25,7 @@ import {
 } from "v2/Apps/Purchase/Utils/orderHelper"
 import { LocaleOptions } from "luxon"
 import { extractNodes } from "v2/Utils/extractNodes"
+import { appendCurrencySymbol } from "v2/Apps/Order/Utils/currencyUtils"
 
 interface OrderRowProps {
   order: OrderRow_order
@@ -76,6 +77,7 @@ const OrderRow: React.FC<OrderRowProps> = props => {
   const artistURL = `/artist/${artwork?.artists?.[0]?.slug}`
   const partnerURL = artwork?.partner?.href!
   const trackingURL = `https://google.com/search?q=${trackingId}`
+  const currency = order.currencyCode
 
   const XSOrderRow = (
     <Flex px={2} flexDirection="column">
@@ -115,7 +117,7 @@ const OrderRow: React.FC<OrderRowProps> = props => {
             letterSpacing="tight"
             style={{ textTransform: "capitalize" }}
           >
-            {order.buyerTotal}
+            {appendCurrencySymbol(order.buyerTotal, currency)}
           </Text>
           <Text
             variant="sm"
@@ -253,7 +255,7 @@ const OrderRow: React.FC<OrderRowProps> = props => {
         <Flex flexDirection="column" width="25%">
           <Text variant="sm">Total</Text>
           <Text variant="sm" color="black60">
-            {order.buyerTotal}
+            {appendCurrencySymbol(order.buyerTotal, currency)}
           </Text>
         </Flex>
         <Flex flexDirection="column" width="25%">
@@ -321,6 +323,7 @@ export const OrderRowFragmentContainer = createFragmentContainer(
         buyerTotal(precision: 2)
         createdAt
         itemsTotal
+        currencyCode
         lineItems {
           edges {
             node {

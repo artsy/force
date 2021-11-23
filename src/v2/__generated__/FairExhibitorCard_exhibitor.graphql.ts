@@ -11,12 +11,6 @@ export type FairExhibitorCard_exhibitor = {
         readonly slug: string;
         readonly cities: ReadonlyArray<string | null> | null;
         readonly profile: {
-            readonly icon: {
-                readonly cropped: {
-                    readonly src: string;
-                    readonly srcSet: string;
-                } | null;
-            } | null;
             readonly " $fragmentRefs": FragmentRefs<"FollowProfileButton_profile">;
         } | null;
     } | null;
@@ -88,53 +82,6 @@ const node: ReaderFragment = {
           "plural": false,
           "selections": [
             {
-              "alias": null,
-              "args": null,
-              "concreteType": "Image",
-              "kind": "LinkedField",
-              "name": "icon",
-              "plural": false,
-              "selections": [
-                {
-                  "alias": null,
-                  "args": [
-                    {
-                      "kind": "Literal",
-                      "name": "height",
-                      "value": 50
-                    },
-                    {
-                      "kind": "Literal",
-                      "name": "width",
-                      "value": 50
-                    }
-                  ],
-                  "concreteType": "CroppedImageUrl",
-                  "kind": "LinkedField",
-                  "name": "cropped",
-                  "plural": false,
-                  "selections": [
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "src",
-                      "storageKey": null
-                    },
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "srcSet",
-                      "storageKey": null
-                    }
-                  ],
-                  "storageKey": "cropped(height:50,width:50)"
-                }
-              ],
-              "storageKey": null
-            },
-            {
               "args": null,
               "kind": "FragmentSpread",
               "name": "FollowProfileButton_profile"
@@ -148,5 +95,5 @@ const node: ReaderFragment = {
   ],
   "type": "FairExhibitor"
 };
-(node as any).hash = 'da98359cf26a7797eba752408b3f3f62';
+(node as any).hash = '05a4102e1727dc4949254af298a9e7ce';
 export default node;

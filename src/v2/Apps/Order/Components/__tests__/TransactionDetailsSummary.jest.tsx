@@ -54,6 +54,17 @@ const transactionSummaryOfferOrder: TestOfferOrder = {
   buyerTotal: "$215.25",
 }
 
+const transactionSummaryOfferOrderPounds: TestOfferOrder = {
+  ...OfferOrderWithOffers,
+  shippingTotal: "£12.00",
+  shippingTotalCents: 1200,
+  taxTotal: "£3.25",
+  taxTotalCents: 325,
+  itemsTotal: "£200.00",
+  buyerTotal: "£215.25",
+  currencyCode: "GBP",
+}
+
 const render = (
   order: TransactionDetailsSummaryItemTestQueryRawResponse["order"],
   extraProps?: Partial<
@@ -80,15 +91,26 @@ const render = (
 
 describe("TransactionDetailsSummaryItem", () => {
   describe("CommerceBuyOrder", () => {
+    it("shows a US prefix on the price when currency is USD", async () => {
+      const transactionSummary = await render(transactionSummaryBuyOrder)
+
+      const entry = transactionSummary.find("Entry")
+
+      expect(entry.at(0).text()).toMatch("PriceUS$200.00")
+      expect(entry.at(1).text()).toMatch("ShippingUS$12.00")
+      expect(entry.at(2).text()).toMatch("TaxUS$3.25")
+      expect(entry.at(3).text()).toMatch("TotalUS$215.25")
+    })
+
     it("shows the shipping and tax price if it's greater than 0", async () => {
       const transactionSummary = await render(transactionSummaryBuyOrder)
 
       const text = transactionSummary.text()
 
-      expect(text).toMatch("Price$200.00")
-      expect(text).toMatch("Shipping$12.00")
-      expect(text).toMatch("Tax$3.25")
-      expect(text).toMatch("Total$215.25")
+      expect(text).toMatch("PriceUS$200.00")
+      expect(text).toMatch("ShippingUS$12.00")
+      expect(text).toMatch("TaxUS$3.25")
+      expect(text).toMatch("TotalUS$215.25")
     })
 
     it("shows the shipping and tax price as dashes if null", async () => {
@@ -102,10 +124,10 @@ describe("TransactionDetailsSummaryItem", () => {
 
       const text = transactionSummary.text()
 
-      expect(text).toMatch("Price$200.00")
+      expect(text).toMatch("PriceUS$200.00")
       expect(text).toMatch("Shipping—")
       expect(text).toMatch("Tax—")
-      expect(text).toMatch("Total$215.25")
+      expect(text).toMatch("TotalUS$215.25")
     })
 
     it("shows the shipping quote name if shipping by Arta", async () => {
@@ -125,10 +147,10 @@ describe("TransactionDetailsSummaryItem", () => {
 
       const text = transactionSummary.text()
 
-      expect(text).toMatch("Your offer$14,000")
-      expect(text).toMatch("Shipping$200")
-      expect(text).toMatch("Tax$120")
-      expect(text).toMatch("Total$14,320")
+      expect(text).toMatch("Your offerUS$14,000")
+      expect(text).toMatch("ShippingUS$200")
+      expect(text).toMatch("TaxUS$120")
+      expect(text).toMatch("TotalUS$14,320")
     })
 
     it("shows the shipping and tax price as dashes if null", async () => {
@@ -149,7 +171,7 @@ describe("TransactionDetailsSummaryItem", () => {
 
       const text = transactionSummary.text()
 
-      expect(text).toMatch("Your offer$14,000")
+      expect(text).toMatch("Your offerUS$14,000")
       expect(text).toMatch("Shipping—")
       expect(text).toMatch("Tax—")
       expect(text).toMatch("Total")
@@ -161,18 +183,33 @@ describe("TransactionDetailsSummaryItem", () => {
         myLastOffer: null,
       } as any)
 
-      const text = transactionSummary.text()
-
-      expect(text).toMatch("Your offer—")
-      expect(text).toMatch("Shipping—")
-      expect(text).toMatch("Tax—")
-      expect(text).toMatch("Total")
+      expect(
+        transactionSummary.find("Entry").find("[data-test='offer']").text()
+      ).toMatch("Your offer—")
+      expect(
+        transactionSummary
+          .find("Entry")
+          .find("[data-test='shippingDisplayAmount']")
+          .text()
+      ).toMatch("Shipping—")
+      expect(
+        transactionSummary
+          .find("Entry")
+          .find("[data-test='taxDisplayAmount']")
+          .text()
+      ).toMatch("Tax—")
+      expect(
+        transactionSummary
+          .find("Entry")
+          .find("[data-test='buyerTotalDisplayAmount']")
+          .text()
+      ).toMatch("Total")
     })
 
     it("shows the last submitted offer if requested", async () => {
       const transactionSummary = await render(
         {
-          ...transactionSummaryOfferOrder,
+          ...transactionSummaryOfferOrderPounds,
           __typename: "CommerceOfferOrder",
           lastOffer: {
             ...OfferWithTotals,
@@ -198,7 +235,7 @@ describe("TransactionDetailsSummaryItem", () => {
     it("says 'seller's offer' when the last submitted offer is from the seller", async () => {
       const transactionSummary = await render(
         {
-          ...transactionSummaryOfferOrder,
+          ...transactionSummaryOfferOrderPounds,
           lastOffer: {
             ...OfferWithTotals,
             id: "seller-offer-id",
@@ -230,13 +267,13 @@ describe("TransactionDetailsSummaryItem", () => {
 
       const text = transactionSummary.text()
 
-      expect(text).toMatch("Your offer$1billion")
+      expect(text).toMatch("Your offerUS$1billion")
     })
 
     it("lets you specify whether to use list price or last offer as context price", async () => {
       const transactionSummary = await render(
         {
-          ...transactionSummaryOfferOrder,
+          ...transactionSummaryOfferOrderPounds,
           lastOffer: {
             ...OfferWithTotals,
             amount: "£405.00",

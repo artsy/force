@@ -1,5 +1,4 @@
-import { useEffect } from "react";
-import * as React from "react";
+import React, { useEffect } from "react"
 import { Box, DROP_SHADOW, FullBleed, Spacer, Text } from "@artsy/palette"
 import { graphql, createFragmentContainer } from "react-relay"
 import { FairExhibitors_fair } from "v2/__generated__/FairExhibitors_fair.graphql"

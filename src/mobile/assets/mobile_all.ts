@@ -22,8 +22,6 @@ const routes = {
   "^/.*/(collection|shop)[/]?": require("../apps/partner_profile/client/artworks.coffee")
     .init,
   "^/auctions": require("../apps/auctions/client/auctions.coffee").init,
-  "^/(galleries|institutions)": require("../apps/galleries_institutions/client/galleries_institutions.coffee")
-    .init,
   // Use more specific regex to avoid intercepting '^/.*/browse/artist/.*'
   // Note that the order of iteration over a dictionary is not guaranteed.
   "^/[^/]*/artist/.*": require("../apps/partner_profile/client/artist.coffee")

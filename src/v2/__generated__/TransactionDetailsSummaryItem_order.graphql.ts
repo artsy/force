@@ -5,6 +5,7 @@ import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type CommerceOrderModeEnum = "BUY" | "OFFER" | "%future added value";
 export type CommerceOrderParticipantEnum = "BUYER" | "SELLER" | "%future added value";
+export type CommerceOrderStateEnum = "ABANDONED" | "APPROVED" | "CANCELED" | "FULFILLED" | "PENDING" | "REFUNDED" | "SUBMITTED" | "%future added value";
 export type TransactionDetailsSummaryItem_order = {
     readonly __typename: string;
     readonly requestedFulfillment: {
@@ -30,6 +31,7 @@ export type TransactionDetailsSummaryItem_order = {
             } | null;
         } | null> | null;
     } | null;
+    readonly state: CommerceOrderStateEnum;
     readonly mode: CommerceOrderModeEnum | null;
     readonly shippingTotal: string | null;
     readonly shippingTotalCents: number | null;
@@ -37,6 +39,7 @@ export type TransactionDetailsSummaryItem_order = {
     readonly taxTotalCents: number | null;
     readonly itemsTotal: string | null;
     readonly buyerTotal: string | null;
+    readonly currencyCode: string;
     readonly lastOffer?: {
         readonly internalID: string;
         readonly amount: string | null;
@@ -277,6 +280,13 @@ return {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
+      "name": "state",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
       "name": "mode",
       "storageKey": null
     },
@@ -292,6 +302,13 @@ return {
       "storageKey": "itemsTotal(precision:2)"
     },
     (v7/*: any*/),
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "currencyCode",
+      "storageKey": null
+    },
     {
       "kind": "InlineFragment",
       "selections": [
@@ -322,5 +339,5 @@ return {
   "type": "CommerceOrder"
 };
 })();
-(node as any).hash = '6b1894a4d076b716f3d62976b755a219';
+(node as any).hash = 'a82fef516986f0724e8b28ab6860f060';
 export default node;

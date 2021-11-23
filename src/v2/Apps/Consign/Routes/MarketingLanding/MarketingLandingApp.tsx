@@ -13,8 +13,32 @@ import { PromoSpace } from "./Components/PromoSpace"
 import { BecomePartner } from "./Components/BecomePartner"
 import { ArtsyMissionStatement } from "./Components/ArtsyMissionStatement"
 import { Join, Spacer } from "@artsy/palette"
+import { useRouter } from "v2/System/Router/useRouter"
+import { useEffect } from "react"
+import { UtmParams } from "../SubmissionFlow/Utils/useSubmission"
 
 export const MarketingLandingApp = () => {
+  const {
+    match: {
+      location: { query },
+    },
+  } = useRouter()
+
+  useEffect(() => {
+    const utmParamsSessionData = sessionStorage.getItem("utmParams")
+    if (!utmParamsSessionData) {
+      const queryUtmParams: UtmParams = {
+        utmMedium: query?.utm_medium,
+        utmSource: query?.utm_source,
+        utmTerm: query?.utm_term,
+      }
+
+      if (Object.values(queryUtmParams).some(c => !!c)) {
+        sessionStorage.setItem("utmParams", JSON.stringify(queryUtmParams))
+      }
+    }
+  }, [])
+
   return (
     <>
       <ConsignMeta />

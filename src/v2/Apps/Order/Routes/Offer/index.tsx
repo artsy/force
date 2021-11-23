@@ -29,6 +29,7 @@ import { OrderStepper, offerFlowSteps } from "../../Components/OrderStepper"
 import { BuyerGuarantee } from "../../Components/BuyerGuarantee"
 import { getOfferItemFromOrder } from "v2/Apps/Order/Utils/offerItemExtractor"
 import { ContextModule, OwnerType } from "@artsy/cohesion"
+import { appendCurrencySymbol } from "v2/Apps/Order/Utils/currencyUtils"
 
 export interface OfferProps {
   order: Offer_order
@@ -240,7 +241,8 @@ export class OfferRoute extends Component<OfferProps, OfferState> {
               </Flex>
               {Boolean(offerItem?.price) && (
                 <Text my={1} variant="xs" color="black60">
-                  List price: {offerItem?.price}
+                  List price:{" "}
+                  {appendCurrencySymbol(offerItem?.price, order.currencyCode)}
                 </Text>
               )}
               {!order.isInquiryOrder && (

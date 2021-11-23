@@ -27,5 +27,8 @@ export const createConsignSubmissionInput = (
     userEmail: user?.email,
     userName: user?.name,
     userPhone: user?.phone,
+    utmMedium: submission?.utmParams?.utmMedium,
+    utmSource: submission?.utmParams?.utmSource,
+    utmTerm: submission?.utmParams?.utmTerm,
   }
 }
