@@ -1,8 +1,9 @@
-import { Button, BorderBoxProps, Box, Flex, Sans } from "@artsy/palette"
+import { BorderBoxProps, Box, Flex, Sans } from "@artsy/palette"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
-import React, { useEffect, useState } from "react"
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 
+import { BackupSecondFactorActions } from "./BackupSecondFactorActions"
 import { BackupSecondFactorModalContent_me } from "v2/__generated__/BackupSecondFactorModalContent_me.graphql"
 import { BackupSecondFactorModalContentQuery } from "v2/__generated__/BackupSecondFactorModalContentQuery.graphql"
 
@@ -15,29 +16,6 @@ interface BackupSecondFactorModalContentProps extends BorderBoxProps {
 
 export const BackupSecondFactorModalContent: React.FC<BackupSecondFactorModalContentProps> = props => {
   const { me } = props
-
-  const [supportsClipboard, setSupportsClipboard] = useState(false)
-
-  useEffect(() => {
-    // Only render the copy button if browser supports the Clipboard API
-    // https://developer.mozilla.org/en-US/docs/Web/API/Clipboard_API
-    if ("clipboard" in navigator) setSupportsClipboard(true)
-  }, [])
-
-  function copyCodesToClipboard() {
-    const codes = me.backupSecondFactors!.map(item => item!.code).join("\n")
-    navigator.clipboard.writeText(codes)
-  }
-
-  function downloadCodes() {
-    const codes = me.backupSecondFactors!.map(item => item!.code).join("\n")
-    const element = document.createElement("a")
-    const file = new Blob([codes], { type: "text/plain" })
-    element.href = URL.createObjectURL(file)
-    element.download = "recovery_codes.txt"
-    document.body.appendChild(element) // Required for this to work in FireFox
-    element.click()
-  }
 
   return (
     <Box minHeight="280px">
@@ -57,29 +35,8 @@ export const BackupSecondFactorModalContent: React.FC<BackupSecondFactorModalCon
         ))}
       </Flex>
 
-      <Flex justifyContent="center">
-        {supportsClipboard && (
-          <Button
-            onClick={copyCodesToClipboard}
-            variant="secondaryOutline"
-            size="small"
-            m={1}
-            data-test="copyButton"
-          >
-            Copy
-          </Button>
-        )}
-
-        <Button
-          onClick={downloadCodes}
-          variant="secondaryOutline"
-          size="small"
-          m={1}
-          data-test="downloadButton"
-        >
-          Download
-        </Button>
-      </Flex>
+      <BackupSecondFactorActions
+        backupSecondFactors={me.backupSecondFactors!.map(item => item!.code!.toString())} />
     </Box>
   )
 }

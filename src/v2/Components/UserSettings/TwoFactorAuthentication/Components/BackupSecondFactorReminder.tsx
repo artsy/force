@@ -1,5 +1,6 @@
-import { BorderBoxProps, Box, Button, Flex, Text } from "@artsy/palette"
-import React, { useEffect, useState } from "react"
+import { BorderBoxProps, Box, Flex, Text } from "@artsy/palette"
+import { BackupSecondFactorActions } from "./BackupSecondFactor/BackupSecondFactorActions"
+import * as React from "react"
 
 interface BackupSecondFactorReminderProps extends BorderBoxProps {
   backupSecondFactors: string[]
@@ -8,27 +9,6 @@ interface BackupSecondFactorReminderProps extends BorderBoxProps {
 
 export const BackupSecondFactorReminder: React.FC<BackupSecondFactorReminderProps> = props => {
   const { backupSecondFactors, factorTypeName } = props
-  const [supportsClipboard, setSupportsClipboard] = useState(false)
-
-  useEffect(() => {
-    // Only render the copy button if browser supports the Clipboard API
-    // https://developer.mozilla.org/en-US/docs/Web/API/Clipboard_API
-    if ("clipboard" in navigator) setSupportsClipboard(true)
-  }, [])
-
-  function copyCodesToClipboard() {
-    navigator.clipboard.writeText(props.backupSecondFactors.join("\n"))
-  }
-
-  function downloadCodes() {
-    const codes = props.backupSecondFactors.join("\n")
-    const element = document.createElement("a")
-    const file = new Blob([codes], { type: "text/plain" })
-    element.href = URL.createObjectURL(file)
-    element.download = "recovery_codes.txt"
-    document.body.appendChild(element) // Required for this to work in FireFox
-    element.click()
-  }
 
   return (
     <Box minHeight="280px">
@@ -58,30 +38,7 @@ export const BackupSecondFactorReminder: React.FC<BackupSecondFactorReminderProp
         ))}
       </Flex>
 
-      <Flex justifyContent="center">
-        {supportsClipboard && (
-          <Button
-            onClick={copyCodesToClipboard}
-            variant="secondaryOutline"
-            size="small"
-            mt={1}
-            mb={1}
-            data-test="copyButton"
-          >
-            Copy
-          </Button>
-        )}
-
-        <Button
-          onClick={downloadCodes}
-          variant="secondaryOutline"
-          size="small"
-          m={1}
-          data-test="downloadButton"
-        >
-          Download
-        </Button>
-      </Flex>
+      <BackupSecondFactorActions backupSecondFactors={backupSecondFactors} />
     </Box>
   )
 }
