@@ -6,6 +6,7 @@ import {
 } from "v2/Components/StepSummaryItem"
 import { createFragmentContainer, graphql } from "react-relay"
 import { getOfferItemFromOrder } from "v2/Apps/Order/Utils/offerItemExtractor"
+import { appendCurrencySymbol } from "v2/Apps/Order/Utils/currencyUtils"
 
 const OfferSummaryItem = ({
   order,
@@ -19,11 +20,12 @@ const OfferSummaryItem = ({
   return (
     <StepSummaryItem title="Your offer" {...others}>
       <Text variant={["xs", "md"]} color="black100">
-        {order.myLastOffer?.amount}
+        {appendCurrencySymbol(order.myLastOffer?.amount, order.currencyCode)}
       </Text>
       {offerItem && (
         <Text variant="xs" color="black60">
-          List price: {offerItem.price}
+          List price:{" "}
+          {appendCurrencySymbol(offerItem.price, order.currencyCode)}
         </Text>
       )}
       {offerNote && (
@@ -46,6 +48,7 @@ export const OfferSummaryItemFragmentContainer = createFragmentContainer(
   {
     order: graphql`
       fragment OfferSummaryItem_order on CommerceOrder {
+        currencyCode
         lineItems {
           edges {
             node {

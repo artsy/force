@@ -8,17 +8,19 @@ import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RevealButton } from "./RevealButton"
 import { getOfferItemFromOrder } from "v2/Apps/Order/Utils/offerItemExtractor"
+import { appendCurrencySymbol } from "v2/Apps/Order/Utils/currencyUtils"
 
 const OfferHistoryItem: React.FC<
   {
     order: OfferHistoryItem_order
   } & StepSummaryItemProps
-> = ({ order: { lastOffer, lineItems, offers }, ...others }) => {
+> = ({ order: { currencyCode, lastOffer, lineItems, offers }, ...others }) => {
   const offerItem = getOfferItemFromOrder(lineItems)
   const previousOffers = offers?.edges?.filter(
     // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     ({ node: { internalID } }) => internalID !== lastOffer.internalID
   )
+  const currency = currencyCode!
 
   return (
     <StepSummaryItem {...others}>
@@ -29,14 +31,14 @@ const OfferHistoryItem: React.FC<
             : "Your offer"}
         </Text>
         <Text variant={["xs", "sm"]} color="black100">
-          {lastOffer?.amount}
+          {appendCurrencySymbol(lastOffer?.amount, currency)}
         </Text>
       </Row>
       {offerItem && (
         <Row>
           <div />
           <Text variant={"xs"} color="black60">
-            List price: {offerItem.price}
+            List price: {appendCurrencySymbol(offerItem.price, currency)}
           </Text>
         </Row>
       )}
@@ -74,7 +76,7 @@ const OfferHistoryItem: React.FC<
                     {` (${offer.createdAt})`}
                   </Text>
                   <Text variant={["xs", "sm"]} color="black60">
-                    {offer.amount}
+                    {appendCurrencySymbol(offer.amount, currency)}
                   </Text>
                 </Row>
               ))}
@@ -123,6 +125,7 @@ export const OfferHistoryItemFragmentContainer = createFragmentContainer(
               }
             }
           }
+          currencyCode
           lastOffer {
             internalID
             fromParticipant

@@ -32,6 +32,7 @@ export type OfferHistoryItem_order = {
             } | null;
         } | null> | null;
     } | null;
+    readonly currencyCode?: string;
     readonly lastOffer?: {
         readonly internalID: string;
         readonly fromParticipant: CommerceOrderParticipantEnum | null;
@@ -210,6 +211,13 @@ return {
         {
           "alias": null,
           "args": null,
+          "kind": "ScalarField",
+          "name": "currencyCode",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
           "concreteType": "CommerceOffer",
           "kind": "LinkedField",
           "name": "lastOffer",
@@ -249,5 +257,5 @@ return {
   "type": "CommerceOrder"
 };
 })();
-(node as any).hash = '36cf4150cb84ee1f60b885d5e58146c2';
+(node as any).hash = '71f585f504a995973d06e8545eb5d427';
 export default node;
