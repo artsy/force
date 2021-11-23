@@ -96,12 +96,20 @@ export interface ShippingProps extends SystemContextProps {
 
 const logger = createLogger("Order/Routes/Shipping/index.tsx")
 
-export const ShippingRoute: React.FC<ShippingProps> = props => {
+export const ShippingRoute: React.FC<ShippingProps> = ({
+  order,
+  me,
+  commitMutation,
+  dialog,
+  router,
+  relayEnvironment,
+  isCommittingMutation,
+}) => {
   const [shippingOption, setShippingOption] = useState<
     CommerceOrderFulfillmentTypeEnum
-  >(getShippingOption(props.order.requestedFulfillment?.__typename))
+  >(getShippingOption(order.requestedFulfillment?.__typename))
   const [address, setAddress] = useState<Address>(
-    startingAddress(props.me, props.order) as Address
+    startingAddress(me, order) as Address
   )
   const [addressErrors, setAddressErrors] = useState<AddressErrors | {}>({})
   const [addressTouched, setAddressTouched] = useState<AddressTouched>({})
@@ -109,20 +117,20 @@ export const ShippingRoute: React.FC<ShippingProps> = props => {
     undefined
   )
   const [phoneNumber, setPhoneNumber] = useState<PhoneNumber>(
-    startingPhoneNumber(props.me, props.order)
+    startingPhoneNumber(me, order)
   )
   const [phoneNumberError, setPhoneNumberError] = useState<PhoneNumberError>("")
   const [phoneNumberTouched, setPhoneNumberTouched] = useState<
     PhoneNumberTouched
   >(false)
   const [selectedAddressID, setSelectedAddressID] = useState<string>(
-    defaultShippingAddressIndex(props.me, props.order)
+    defaultShippingAddressIndex(me, order)
   )
   const [shippingQuotes, setShippingQuotes] = useState<ShippingQuotesType>(
-    getShippingQuotes(props.order)
+    getShippingQuotes(order)
   )
   const [shippingQuoteId, setShippingQuoteId] = useState<string | undefined>(
-    getSelectedShippingQuoteId(props.order)
+    getSelectedShippingQuoteId(order)
   )
   const [saveAddressToggle, setSaveAddressToggle] = useState<boolean>(true)
 
@@ -155,9 +163,9 @@ export const ShippingRoute: React.FC<ShippingProps> = props => {
     }
   }
 
-  const getAddressList = () => props.me.addressConnection?.edges
+  const getAddressList = () => me.addressConnection?.edges
 
-  const getOrderArtwork = () => props.order.lineItems?.edges?.[0]?.node?.artwork
+  const getOrderArtwork = () => order.lineItems?.edges?.[0]?.node?.artwork
 
   const isCreateNewAddress = () => selectedAddressID === NEW_ADDRESS
 
@@ -247,9 +255,9 @@ export const ShippingRoute: React.FC<ShippingProps> = props => {
       setShippingQuoteId(undefined)
 
       const orderOrError = (
-        await setShipping(props.commitMutation, {
+        await setShipping(commitMutation, {
           input: {
-            id: props.order.internalID,
+            id: order.internalID,
             fulfillmentType: isArtaShipping() ? "SHIP_ARTA" : shippingOption,
             shipping: shipToAddress,
             phoneNumber: shipToPhoneNumber,
@@ -265,24 +273,23 @@ export const ShippingRoute: React.FC<ShippingProps> = props => {
       await saveAddress()
 
       if (isArtaShipping()) {
-        console.log({ shippingQuotes: getShippingQuotes(orderOrError?.order) })
         setShippingQuotes(getShippingQuotes(orderOrError?.order))
       } else {
-        props.router.push(`/orders/${props.order.internalID}/payment`)
+        router.push(`/orders/${order.internalID}/payment`)
       }
     } catch (error) {
       logger.error(error)
-      props.dialog.showErrorDialog()
+      dialog.showErrorDialog()
     }
   }
 
   const selectShippingQuote = async () => {
-    if (shippingQuoteId && props.order.internalID) {
+    if (shippingQuoteId && order.internalID) {
       try {
         const orderOrError = (
-          await selectShippingOption(props.commitMutation, {
+          await selectShippingOption(commitMutation, {
             input: {
-              id: props.order.internalID,
+              id: order.internalID,
               selectedShippingQuoteId: shippingQuoteId,
             },
           })
@@ -295,10 +302,10 @@ export const ShippingRoute: React.FC<ShippingProps> = props => {
           return
         }
 
-        props.router.push(`/orders/${props.order.internalID}/payment`)
+        router.push(`/orders/${order.internalID}/payment`)
       } catch (error) {
         logger.error(error)
-        props.dialog.showErrorDialog({
+        dialog.showErrorDialog({
           message: getArtaErrorMessage(),
         })
       }
@@ -310,11 +317,11 @@ export const ShippingRoute: React.FC<ShippingProps> = props => {
       if (
         shippingOption === "SHIP" &&
         isCreateNewAddress() &&
-        props.relayEnvironment
+        relayEnvironment
       ) {
         if (savedAddressID) {
           updateUserAddress(
-            props.relayEnvironment,
+            relayEnvironment,
             savedAddressID,
             {
               ...address,
@@ -330,7 +337,7 @@ export const ShippingRoute: React.FC<ShippingProps> = props => {
           )
         } else {
           await createUserAddress(
-            props.relayEnvironment,
+            relayEnvironment,
             {
               ...address,
               phoneNumber: phoneNumber,
@@ -345,14 +352,14 @@ export const ShippingRoute: React.FC<ShippingProps> = props => {
                 logger.error(message)
               }
             }, // onError
-            props.me, // me
+            me, // me
             () => {}
           )
         }
       }
     } else if (savedAddressID) {
       deleteUserAddress(
-        props.relayEnvironment!,
+        relayEnvironment!,
         savedAddressID,
         () => {},
         message => {
@@ -370,7 +377,7 @@ export const ShippingRoute: React.FC<ShippingProps> = props => {
       error.code === "missing_country" ||
       error.code === "missing_postal_code"
     ) {
-      props.dialog.showErrorDialog({
+      dialog.showErrorDialog({
         title: "Invalid address",
         message:
           "There was an error processing your address. Please review and try again.",
@@ -379,16 +386,16 @@ export const ShippingRoute: React.FC<ShippingProps> = props => {
       error.code === "unsupported_shipping_location" &&
       parsedData.failure_code === "domestic_shipping_only"
     ) {
-      props.dialog.showErrorDialog({
+      dialog.showErrorDialog({
         title: "Can't ship to that address",
         message: "This work can only be shipped domestically.",
       })
     } else if (isArtaShipping() && shippingQuoteId) {
-      props.dialog.showErrorDialog({
+      dialog.showErrorDialog({
         message: getArtaErrorMessage(),
       })
     } else {
-      props.dialog.showErrorDialog()
+      dialog.showErrorDialog()
     }
   }
 
@@ -508,7 +515,6 @@ export const ShippingRoute: React.FC<ShippingProps> = props => {
     )
   }
 
-  const { order, isCommittingMutation } = props
   const artwork = getOrderArtwork()
   const addressList = getAddressList()
 
@@ -584,7 +590,7 @@ export const ShippingRoute: React.FC<ShippingProps> = props => {
                 shippingQuotes.length === 0 &&
                 renderArtaErrorMessage()}
               <SavedAddresses
-                me={props.me}
+                me={me}
                 selectedAddress={selectedAddressID}
                 onSelect={selectSavedAddressWithTracking}
                 inCollectorProfile={false}
