@@ -68,7 +68,8 @@ export class TransactionDetailsSummaryItem extends React.Component<
           >
             <Flex flexDirection="column" mr="auto">
               <Text variant="sm" color="blue100">
-                Congratulations! We have added this artwork to your Collection.
+                Congratulations! This artwork will be added to your Collection
+                once the gallery ships the order.
               </Text>
               <Text variant="sm">
                 View and manage your Collection in the Artsy App.
