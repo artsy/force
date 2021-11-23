@@ -114,9 +114,6 @@ export const SettingsSavesArtistsPaginationContainer = createPaginationContainer
   },
   {
     direction: "forward",
-    getConnectionFromProps(props) {
-      return props.me.followsAndSaves?.artistsConnection
-    },
     getFragmentVariables(prevVars, totalCount) {
       return { ...prevVars, totalCount }
     },
@@ -146,6 +143,7 @@ const SETTINGS_SAVES_ARTISTS_PLACEHOLDER = (
 export const SettingsSavesArtistsQueryRenderer = () => {
   return (
     <SystemQueryRenderer<SettingsSavesArtistsQuery>
+      lazyLoad
       placeholder={SETTINGS_SAVES_ARTISTS_PLACEHOLDER}
       query={SETTINGS_SAVES_ARTISTS_QUERY}
       render={({ props, error }) => {

@@ -177,6 +177,7 @@ const SETTINGS_SAVES_ARTWORKS_PLACEHOLDER = (
 export const SettingsSavesArtworksQueryRenderer = () => {
   return (
     <SystemQueryRenderer<SettingsSavesArtworksQuery>
+      lazyLoad
       placeholder={SETTINGS_SAVES_ARTWORKS_PLACEHOLDER}
       query={SETTINGS_SAVES_ARTWORKS_QUERY}
       render={({ props, error }) => {
