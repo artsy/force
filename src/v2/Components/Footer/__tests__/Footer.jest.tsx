@@ -1,7 +1,7 @@
 import { MockBoot } from "v2/DevTools/MockBoot"
 import { mount } from "enzyme"
 import { Footer } from "../Footer"
-import { DownloadAppBadge } from "v2/Components/DownloadAppBadge"
+import { DownloadAppBadge } from "v2/Components/DownloadAppBadges/DownloadAppBadge"
 import { CCPARequest } from "../../CCPARequest"
 import { Breakpoint } from "@artsy/palette/dist/themes/types"
 

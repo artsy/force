@@ -1,8 +1,8 @@
 import { TransactionDetailsSummaryItem_order } from "v2/__generated__/TransactionDetailsSummaryItem_order.graphql"
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 
-import { Flex, Text, Spacer } from "@artsy/palette"
+import { Flex, Text, Spacer, Column } from "@artsy/palette"
 import {
   StepSummaryItem,
   StepSummaryItemProps,
@@ -10,6 +10,8 @@ import {
 import { Omit } from "lodash"
 import { getOfferItemFromOrder } from "v2/Apps/Order/Utils/offerItemExtractor"
 import { extractNodes } from "v2/Utils/extractNodes"
+import { DownloadAppBadges } from "v2/Components/DownloadAppBadges/DownloadAppBadges"
+import { ContextModule } from "@artsy/cohesion"
 
 export interface TransactionDetailsSummaryItemProps
   extends Omit<StepSummaryItemProps, "order"> {
@@ -52,6 +54,34 @@ export class TransactionDetailsSummaryItem extends React.Component<
         <Spacer mb={2} />
         <Entry label="Total" value={this.buyerTotalDisplayAmount()} final />
         {showOfferNote && order.mode === "OFFER" && this.renderNoteEntry()}
+        {order.state === "SUBMITTED" && (
+          <Column
+            span={4}
+            display="flex"
+            alignItems="center"
+            flexWrap="wrap"
+            backgroundColor="blue10"
+            justifyContent="center"
+            order={[2, 1]}
+            p={2}
+            mt={4}
+          >
+            <Flex flexDirection="column" mr="auto">
+              <Text variant="sm" color="blue100">
+                Congratulations! This artwork will be added to your Collection
+                once the gallery ships the order.
+              </Text>
+              <Text variant="sm">
+                View and manage your Collection in the Artsy App.
+              </Text>
+            </Flex>
+            <Flex pt={1}>
+              <DownloadAppBadges
+                contextModule={ContextModule.ordersSubmitted}
+              />
+            </Flex>
+          </Column>
+        )}
       </StepSummaryItem>
     )
   }
@@ -248,6 +278,7 @@ export const TransactionDetailsSummaryItemFragmentContainer = createFragmentCont
             }
           }
         }
+        state
         mode
         shippingTotal(precision: 2)
         shippingTotalCents

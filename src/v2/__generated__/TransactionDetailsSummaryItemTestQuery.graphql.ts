@@ -5,6 +5,7 @@ import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type CommerceOrderModeEnum = "BUY" | "OFFER" | "%future added value";
 export type CommerceOrderParticipantEnum = "BUYER" | "SELLER" | "%future added value";
+export type CommerceOrderStateEnum = "ABANDONED" | "APPROVED" | "CANCELED" | "FULFILLED" | "PENDING" | "REFUNDED" | "SUBMITTED" | "%future added value";
 export type TransactionDetailsSummaryItemTestQueryVariables = {};
 export type TransactionDetailsSummaryItemTestQueryResponse = {
     readonly order: {
@@ -40,6 +41,7 @@ export type TransactionDetailsSummaryItemTestQueryRawResponse = {
                 }) | null;
             }) | null> | null;
         }) | null;
+        readonly state: CommerceOrderStateEnum;
         readonly mode: CommerceOrderModeEnum | null;
         readonly shippingTotal: string | null;
         readonly shippingTotalCents: number | null;
@@ -104,6 +106,7 @@ export type TransactionDetailsSummaryItemTestQueryRawResponse = {
                 }) | null;
             }) | null> | null;
         }) | null;
+        readonly state: CommerceOrderStateEnum;
         readonly mode: CommerceOrderModeEnum | null;
         readonly shippingTotal: string | null;
         readonly shippingTotalCents: number | null;
@@ -160,6 +163,7 @@ fragment TransactionDetailsSummaryItem_order on CommerceOrder {
       }
     }
   }
+  state
   mode
   shippingTotal(precision: 2)
   shippingTotalCents
@@ -456,6 +460,13 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
+            "name": "state",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
             "name": "mode",
             "storageKey": null
           },
@@ -508,7 +519,7 @@ return {
     "metadata": {},
     "name": "TransactionDetailsSummaryItemTestQuery",
     "operationKind": "query",
-    "text": "query TransactionDetailsSummaryItemTestQuery {\n  order: commerceOrder(id: \"whatevs\") {\n    __typename\n    ...TransactionDetailsSummaryItem_order\n    id\n  }\n}\n\nfragment TransactionDetailsSummaryItem_order on CommerceOrder {\n  __typename\n  requestedFulfillment {\n    __typename\n  }\n  lineItems {\n    edges {\n      node {\n        artworkOrEditionSet {\n          __typename\n          ... on Artwork {\n            price\n          }\n          ... on EditionSet {\n            price\n            id\n          }\n          ... on Node {\n            id\n          }\n        }\n        selectedShippingQuote {\n          displayName\n          id\n        }\n        id\n      }\n    }\n  }\n  mode\n  shippingTotal(precision: 2)\n  shippingTotalCents\n  taxTotal(precision: 2)\n  taxTotalCents\n  itemsTotal(precision: 2)\n  buyerTotal(precision: 2)\n  ... on CommerceOfferOrder {\n    lastOffer {\n      internalID\n      amount(precision: 2)\n      amountCents\n      shippingTotal(precision: 2)\n      shippingTotalCents\n      taxTotal(precision: 2)\n      taxTotalCents\n      buyerTotal(precision: 2)\n      buyerTotalCents\n      fromParticipant\n      note\n      id\n    }\n    myLastOffer {\n      internalID\n      amount(precision: 2)\n      amountCents\n      shippingTotal(precision: 2)\n      shippingTotalCents\n      taxTotal(precision: 2)\n      taxTotalCents\n      buyerTotal(precision: 2)\n      buyerTotalCents\n      fromParticipant\n      note\n      id\n    }\n  }\n}\n"
+    "text": "query TransactionDetailsSummaryItemTestQuery {\n  order: commerceOrder(id: \"whatevs\") {\n    __typename\n    ...TransactionDetailsSummaryItem_order\n    id\n  }\n}\n\nfragment TransactionDetailsSummaryItem_order on CommerceOrder {\n  __typename\n  requestedFulfillment {\n    __typename\n  }\n  lineItems {\n    edges {\n      node {\n        artworkOrEditionSet {\n          __typename\n          ... on Artwork {\n            price\n          }\n          ... on EditionSet {\n            price\n            id\n          }\n          ... on Node {\n            id\n          }\n        }\n        selectedShippingQuote {\n          displayName\n          id\n        }\n        id\n      }\n    }\n  }\n  state\n  mode\n  shippingTotal(precision: 2)\n  shippingTotalCents\n  taxTotal(precision: 2)\n  taxTotalCents\n  itemsTotal(precision: 2)\n  buyerTotal(precision: 2)\n  ... on CommerceOfferOrder {\n    lastOffer {\n      internalID\n      amount(precision: 2)\n      amountCents\n      shippingTotal(precision: 2)\n      shippingTotalCents\n      taxTotal(precision: 2)\n      taxTotalCents\n      buyerTotal(precision: 2)\n      buyerTotalCents\n      fromParticipant\n      note\n      id\n    }\n    myLastOffer {\n      internalID\n      amount(precision: 2)\n      amountCents\n      shippingTotal(precision: 2)\n      shippingTotalCents\n      taxTotal(precision: 2)\n      taxTotalCents\n      buyerTotal(precision: 2)\n      buyerTotalCents\n      fromParticipant\n      note\n      id\n    }\n  }\n}\n"
   }
 };
 })();
