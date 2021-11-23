@@ -21,7 +21,7 @@ export default _Artists = (function () {
     }
 
     initialize() {
-      return (this.model = require("../models/artist").default)
+      return (this.model = require("../models/artist").Artist)
     }
 
     toSentence() {

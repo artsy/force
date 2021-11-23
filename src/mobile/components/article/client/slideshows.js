@@ -9,7 +9,7 @@ const { Artworks } = require('../../../collections/artworks');
 const Flickity = require('flickity');
 const carouselTemplate = function() { return require('../templates/sections/slideshow/carousel.jade')(...arguments); };
 
-export default () => $('.article-section-slideshow').each(function() {
+export const slideshows = function () { $('.article-section-slideshow').each(function() {
   let $el;
   const allItems = ($el = $(this)).data('items');
   const artworkIds = _.pluck(_.where(allItems, {type: 'artwork'}), 'id');
@@ -53,4 +53,4 @@ export default () => $('.article-section-slideshow').each(function() {
     }
   }
   );
-});
+})};

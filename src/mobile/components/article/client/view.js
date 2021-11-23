@@ -9,7 +9,7 @@ let _ArticleView;
 const Backbone = require('backbone');
 const sd = require('sharify').data;
 const { Article } = require('../../../models/article');
-import SlideshowsView  from './slideshows';
+const { slideshows } = require('./slideshows');
 
 export const ArticleView = (_ArticleView = (function() {
   _ArticleView = class ArticleView extends Backbone.View {
@@ -21,7 +21,7 @@ export const ArticleView = (_ArticleView = (function() {
 
     initialize() {
       this.article = new Article(sd.ARTICLE);
-      return new SlideshowsView;
+      // return new slideshows;
     }
 
     clickPlay(event) {

@@ -13,7 +13,7 @@ export default _SearchResults = class SearchResults extends Backbone.Collection 
   }
 
   initialize() {
-    return (this.model = require("../models/search_result").default)
+    return (this.model = require("../models/search_result").SearchResult)
   }
 
   updateLocationsForFair(fair) {

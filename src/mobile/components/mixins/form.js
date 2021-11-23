@@ -15,7 +15,7 @@ const en = {
   }
 };
 
-export default {
+export const form = {
   // Returns false the first time it is called,
   // true everytime thereafter, until `@submitting`
   // becomes undefined (#reenableForm)

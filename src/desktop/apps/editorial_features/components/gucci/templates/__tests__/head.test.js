@@ -1,7 +1,7 @@
 import path from "path"
 import jade from "jade"
 import fs from "fs"
-import Curation from "desktop/models/curation"
+import { Curation } from "desktop/models/curation"
 
 const render = templateName => {
   const filename = path.resolve(__dirname, `../${templateName}.jade`)

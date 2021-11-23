@@ -7,7 +7,7 @@ const Backbone = require("backbone")
 
  class EditionSetsInternal extends Backbone.Collection {
   initialize() {
-    return (this.model = require("../models/edition_set").default)
+    return (this.model = require("../models/edition_set").EditionSet)
   }
 }
 export default EditionSetsInternal

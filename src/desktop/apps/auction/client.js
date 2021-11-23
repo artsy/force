@@ -1,6 +1,6 @@
 import App from "desktop/apps/auction/components/App"
-import Articles from "desktop/collections/articles"
-import Auction from "desktop/models/auction"
+import { Articles } from "desktop/collections/articles"
+import { Auction } from "desktop/models/auction"
 import CurrentUser from "desktop/models/current_user"
 import ReactDOM from "react-dom"
 import auctionReducer from "desktop/apps/auction/reducers"

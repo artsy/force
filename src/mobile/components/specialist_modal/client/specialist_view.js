@@ -7,7 +7,7 @@
 let _SpecialistView;
 const _ = require('underscore');
 const Backbone = require('backbone');
-import Form from '../../mixins/form';
+const { form } = require('../../mixins/form');
 const CurrentUser = require('../../../models/current_user');
 const { mediator } = require('../../../../lib/mediator');
 const sd = require('sharify').data;
@@ -18,7 +18,7 @@ const successTemplate = function() { return require('../templates/success.jade')
 export const SpecialistView = (_SpecialistView = (function() {
   _SpecialistView = class SpecialistView extends Backbone.View {
     static initClass() {
-      _.extend(this.prototype, Form);
+      _.extend(this.prototype, form);
       this.prototype.className = 'main-side-margin contact-modal-height';
   
       this.prototype.events =

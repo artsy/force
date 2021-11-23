@@ -50,7 +50,7 @@ describe("EmbeddedInquiryView", function () {
     })
 
     describe("#render", () =>
-    it("renders the template correctly", function () {
+      it("renders the template correctly", function () {
         this.view
           .$("input, textarea")
           .map(function () {
