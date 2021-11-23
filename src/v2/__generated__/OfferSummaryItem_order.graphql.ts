@@ -4,6 +4,7 @@
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type OfferSummaryItem_order = {
+    readonly currencyCode: string;
     readonly lineItems: {
         readonly edges: ReadonlyArray<{
             readonly node: {
@@ -51,6 +52,13 @@ return {
   "metadata": null,
   "name": "OfferSummaryItem_order",
   "selections": [
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "currencyCode",
+      "storageKey": null
+    },
     {
       "alias": null,
       "args": null,
@@ -153,5 +161,5 @@ return {
   "type": "CommerceOrder"
 };
 })();
-(node as any).hash = '485617e01ba4ef0825d4e151d51e7504';
+(node as any).hash = '838d32e682c55dbaf42bdf7f04d25ed7';
 export default node;

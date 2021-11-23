@@ -12,6 +12,7 @@ import { getOfferItemFromOrder } from "v2/Apps/Order/Utils/offerItemExtractor"
 import { extractNodes } from "v2/Utils/extractNodes"
 import { DownloadAppBadges } from "v2/Components/DownloadAppBadges/DownloadAppBadges"
 import { ContextModule } from "@artsy/cohesion"
+import { appendCurrencySymbol } from "v2/Apps/Order/Utils/currencyUtils"
 
 export interface TransactionDetailsSummaryItemProps
   extends Omit<StepSummaryItemProps, "order"> {
@@ -48,11 +49,21 @@ export class TransactionDetailsSummaryItem extends React.Component<
         <Entry
           label={this.shippingDisplayLabel()}
           value={this.shippingDisplayAmount()}
+          data-test="shippingDisplayAmount"
         />
 
-        <Entry label="Tax" value={this.taxDisplayAmount()} />
+        <Entry
+          label="Tax"
+          value={this.taxDisplayAmount()}
+          data-test="taxDisplayAmount"
+        />
         <Spacer mb={2} />
-        <Entry label="Total" value={this.buyerTotalDisplayAmount()} final />
+        <Entry
+          label="Total"
+          value={this.buyerTotalDisplayAmount()}
+          final
+          data-test="buyerTotalDisplayAmount"
+        />
         {showOfferNote && order.mode === "OFFER" && this.renderNoteEntry()}
         {order.state === "SUBMITTED" && (
           <Column
@@ -94,12 +105,19 @@ export class TransactionDetailsSummaryItem extends React.Component<
 
   shippingDisplayAmount = () => {
     const { order } = this.props
+    const currency = order.currencyCode
     switch (order.mode) {
       case "BUY":
-        return order.shippingTotal || this.amountPlaceholder
+        return (
+          appendCurrencySymbol(order.shippingTotal, currency) ||
+          this.amountPlaceholder
+        )
       case "OFFER":
         const offer = this.getOffer()
-        return (offer && offer.shippingTotal) || this.amountPlaceholder
+        return (
+          (offer && appendCurrencySymbol(offer.shippingTotal, currency)) ||
+          this.amountPlaceholder
+        )
     }
   }
 
@@ -121,30 +139,46 @@ export class TransactionDetailsSummaryItem extends React.Component<
 
   taxDisplayAmount = () => {
     const { order } = this.props
+    const currency = order.currencyCode
     switch (order.mode) {
       case "BUY":
-        return order.taxTotal || this.amountPlaceholder
+        return (
+          appendCurrencySymbol(order.taxTotal, currency) ||
+          this.amountPlaceholder
+        )
       case "OFFER":
         const offer = this.getOffer()
-        return (offer && offer.taxTotal) || this.amountPlaceholder
+        return (
+          (offer && appendCurrencySymbol(offer.taxTotal, currency)) ||
+          this.amountPlaceholder
+        )
     }
   }
 
   buyerTotalDisplayAmount = () => {
     const { order } = this.props
+    const currency = order.currencyCode
     switch (order.mode) {
       case "BUY":
-        return order.buyerTotal
+        return appendCurrencySymbol(order.buyerTotal, currency)
       case "OFFER":
         const offer = this.getOffer()
-        return offer && offer.buyerTotal
+        return offer && appendCurrencySymbol(offer.buyerTotal, currency)
     }
   }
 
   renderPriceEntry = () => {
     const { order, offerOverride, offerContextPrice } = this.props
+    const currency = order.currencyCode
+
     if (order.mode === "BUY") {
-      return <Entry label="Price" value={order.itemsTotal} />
+      return (
+        <Entry
+          label="Price"
+          value={appendCurrencySymbol(order.itemsTotal, currency)}
+          data-test="price"
+        />
+      )
     }
     const offer = this.getOffer()
     const offerItem = getOfferItemFromOrder(order.lineItems)
@@ -156,12 +190,18 @@ export class TransactionDetailsSummaryItem extends React.Component<
         <Entry
           label={isBuyerOffer ? "Your offer" : "Seller's offer"}
           value={
-            offerOverride || (offer && offer.amount) || this.amountPlaceholder
+            appendCurrencySymbol(offerOverride, currency) ||
+            (offer && appendCurrencySymbol(offer.amount, currency)) ||
+            this.amountPlaceholder
           }
+          data-test="offer"
         />
         {offerContextPrice === "LIST_PRICE" ? (
           offerItem && (
-            <SecondaryEntry label="List price" value={offerItem.price} />
+            <SecondaryEntry
+              label="List price"
+              value={appendCurrencySymbol(offerItem.price, currency)}
+            />
           )
         ) : (
           // show last offer
@@ -171,7 +211,7 @@ export class TransactionDetailsSummaryItem extends React.Component<
                 ? "Seller's offer"
                 : "Your offer"
             }
-            value={order.lastOffer?.amount}
+            value={appendCurrencySymbol(order.lastOffer?.amount, currency)}
           />
         )}
       </>
@@ -286,6 +326,7 @@ export const TransactionDetailsSummaryItemFragmentContainer = createFragmentCont
         taxTotalCents
         itemsTotal(precision: 2)
         buyerTotal(precision: 2)
+        currencyCode
         ... on CommerceOfferOrder {
           lastOffer {
             ...TransactionDetailsSummaryItemOfferProperties @relay(mask: false)

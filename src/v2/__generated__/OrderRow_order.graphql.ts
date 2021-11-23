@@ -29,6 +29,7 @@ export type OrderRow_order = {
     readonly buyerTotal: string | null;
     readonly createdAt: string;
     readonly itemsTotal: string | null;
+    readonly currencyCode: string;
     readonly lineItems: {
         readonly edges: ReadonlyArray<{
             readonly node: {
@@ -206,6 +207,13 @@ return {
       "args": null,
       "kind": "ScalarField",
       "name": "itemsTotal",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "currencyCode",
       "storageKey": null
     },
     {
@@ -446,5 +454,5 @@ return {
   "type": "CommerceOrder"
 };
 })();
-(node as any).hash = '9e8d67d923eb28543807a2c62e96ac8b';
+(node as any).hash = '6f0ad57bd0508dead42ce4e1a1a0584b';
 export default node;
