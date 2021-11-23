@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 
 import { ArtistConsignSellArt_artist } from "v2/__generated__/ArtistConsignSellArt_artist.graphql"
@@ -35,7 +35,7 @@ const ArtistConsignSellArt: React.FC<ArtistConsignSellArtProps> = ({
         <Box>
           <RouterLink
             to={getConsignSubmissionUrl({
-              // @ts-expect-error STRICT_NULL_CHECK
+              // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
               contextPath: artist.href,
               subject: AnalyticsSchema.Subject.RequestPriceEstimate,
             })}

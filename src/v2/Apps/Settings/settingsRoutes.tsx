@@ -68,10 +68,10 @@ const SavesRoute = loadable(
       component.SettingsSavesRouteFragmentContainer,
   }
 )
-const SettingsRoute = loadable(
+const EditSettingsRoute = loadable(
   () =>
     import(
-      /* webpackChunkName: "settingsBundle" */ "./Routes/Settings/SettingsEditRoute"
+      /* webpackChunkName: "settingsBundle" */ "./Routes/EditSettings/SettingsEditSettingsRoute"
     ),
   {
     resolveComponent: component => component.SettingsEditRouteFragmentContainer,
@@ -98,7 +98,7 @@ export const settingsRoutes: AppRouteConfig[] = [
     },
     query: graphql`
       query settingsRoutes_SettingsQuery {
-        me {
+        me @principalField {
           ...SettingsApp_me
         }
       }
@@ -131,6 +131,13 @@ export const settingsRoutes: AppRouteConfig[] = [
         onClientSideRender: () => {
           EditProfileRoute.preload()
         },
+        query: graphql`
+          query settingsRoutes_EditProfileRouteQuery {
+            me {
+              ...SettingsEditProfileRoute_me
+            }
+          }
+        `,
       },
       {
         path: "payments",
@@ -152,6 +159,13 @@ export const settingsRoutes: AppRouteConfig[] = [
         onClientSideRender: () => {
           PurchasesRoute.preload()
         },
+        query: graphql`
+          query settingsRoutes_PurchasesRouteQuery {
+            me {
+              ...SettingsPurchasesRoute_me
+            }
+          }
+        `,
       },
       {
         path: "saves",
@@ -159,13 +173,27 @@ export const settingsRoutes: AppRouteConfig[] = [
         onClientSideRender: () => {
           SavesRoute.preload()
         },
+        query: graphql`
+          query settingsRoutes_SavesRouteQuery {
+            me {
+              ...SettingsSavesRoute_me
+            }
+          }
+        `,
       },
       {
         path: "edit-settings",
-        getComponent: () => SettingsRoute,
+        getComponent: () => EditSettingsRoute,
         onClientSideRender: () => {
-          SettingsRoute.preload()
+          EditSettingsRoute.preload()
         },
+        query: graphql`
+          query settingsRoutes_SettingsEditSettingsRouteQuery {
+            me {
+              ...SettingsEditSettingsRoute_me
+            }
+          }
+        `,
       },
       {
         path: "shipping",

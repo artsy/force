@@ -11,26 +11,24 @@
     lodash "^4.17.21"
     prettier "^1.19.1"
 
-"@artsy/backbone-mixins@2.0.0":
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/@artsy/backbone-mixins/-/backbone-mixins-2.0.0.tgz#8a7cd00c3f961f10fa457249d7c7db42dda1bdc5"
-  integrity sha512-xiz+s4xSItiHAC3gf50lihCj+vUVIq1hp9ZQyTfQMvv8oYhvFE+OVBqwFeQ8CmhOk2ujtVlkmK5TDwdR8OYhNw==
+"@artsy/backbone-mixins@3.0.0":
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/@artsy/backbone-mixins/-/backbone-mixins-3.0.0.tgz#e1344f66be7292b909758814d9cce171f475a644"
+  integrity sha512-N5su2OkaIHcRjHV1ECsfiqYrLwvdv+XVb6Sqx8XRJFCIzSBlRSTyE43McJJeHyl+fW9kV8YkZyj8YMMXqdDg3g==
   dependencies:
-    ics "^0.4.1"
-    marked "*"
-    moment "^2.11.1"
-    qs "5.2.0"
-    underscore "*"
+    marked "^1.2.8"
+    qs "^6.9.6"
+    underscore "^1.12.1"
 
 "@artsy/cohesion@1.60.0":
   version "1.60.0"
   resolved "https://registry.yarnpkg.com/@artsy/cohesion/-/cohesion-1.60.0.tgz#854db37b9f8643ed650f3cc9d14234a1b762fcc8"
   integrity sha512-GBfa0/AoiLtG/Mw0VBR0vCiEj1s8+eBMTtKSLQS82iFo41Z84Li8M0YrlHAmXUrK3oBOO/YvhVNFE40avgK8xQ==
 
-"@artsy/cohesion@4.19.0":
-  version "4.19.0"
-  resolved "https://registry.yarnpkg.com/@artsy/cohesion/-/cohesion-4.19.0.tgz#7b2f30a848a726d061f28a415304ba92f5f6cc60"
-  integrity sha512-XFkZMIPqvKaJ6D57P6vsPTUaJfPo+yZF/5rpYc3V9W/iO86WdqBBZaZUhb1NkwMLv4mwrVkaeuAMVJN+oP/uCw==
+"@artsy/cohesion@4.21.0":
+  version "4.21.0"
+  resolved "https://registry.yarnpkg.com/@artsy/cohesion/-/cohesion-4.21.0.tgz#3ccf18f5b1348f4d5e35fed191bee22edf34cd15"
+  integrity sha512-P1RX0ti6p7WKK/4LHO+eS4hX+MZ6HmcEc35XDvDggpWtinUSw0Z9rm5i6Q8T3/Scyc1M0KJY01tcK/w30/gJIg==
   dependencies:
     core-js "3"
 
@@ -39,10 +37,10 @@
   resolved "https://registry.yarnpkg.com/@artsy/detect-responsive-traits/-/detect-responsive-traits-0.0.5.tgz#abf85959f8567816babec6f582b744f58c98b726"
   integrity sha512-axgW5YuqSpPzHb27yo2jmPHz/N9eN2hh2E+Mub5BKuu/jHZI+iDTdw0OZ3I+z7Z9WKBh+FPVx4gpza5w7slJNA==
 
-"@artsy/eigen-web-association@1.2.0":
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/@artsy/eigen-web-association/-/eigen-web-association-1.2.0.tgz#904cad018cd99da8ce30c4f6875a45a63abede65"
-  integrity sha512-VPOoecp1lgkYe9bH5/5BXosYPejHJLHlE4wJiezsILgW2zSM3p7MxjsPGio2YGpoGNt1NpM9XJhK9TObq5N9Qg==
+"@artsy/eigen-web-association@^1.2.1":
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/@artsy/eigen-web-association/-/eigen-web-association-1.2.1.tgz#8b286b8fe15384dd53ad85dd90b7c7acf660115b"
+  integrity sha512-o9IWTgo595yKPDLCv3t7MqVsXgx1nLEnFjdBPZjZp2XgzQG7oJrLhi8EImn5rmjth/cR+3KOqgia5pTMQqCdWQ==
   dependencies:
     express "^4.15.0"
 
@@ -55,10 +53,10 @@
     chokidar "^3.0.0"
     decache "^4.4.0"
 
-"@artsy/fresnel@3.0.2":
-  version "3.0.2"
-  resolved "https://registry.yarnpkg.com/@artsy/fresnel/-/fresnel-3.0.2.tgz#c52d03dfa385627174ef03d28b0a1a61eef13bfb"
-  integrity sha512-nx4oIX5jgwdYXtPydkBK3ZGwJ9mCGxaV/CRn7DzLFeKxW9qQPj56H1OvtMEm43UGCshXnLEu2ID/B2ozioMLrQ==
+"@artsy/fresnel@3.1.0":
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/@artsy/fresnel/-/fresnel-3.1.0.tgz#e6bb59fb5d9a5e829189351bf7040e4975684da0"
+  integrity sha512-rQObBJQjYA/qCIcHDwQBg47du7CX8AyDLTWfrswa3s34q+HUmpyIiKTy2jYkMUMrZ2bWe9EHH/DdZg6wpxb+Ow==
 
 "@artsy/fresnel@^1.0.13":
   version "1.7.0"
@@ -79,12 +77,12 @@
   dependencies:
     dotenv "^10.0.0"
 
-"@artsy/palette-charts@17.6.0":
-  version "17.6.0"
-  resolved "https://registry.yarnpkg.com/@artsy/palette-charts/-/palette-charts-17.6.0.tgz#a44cf525ed7fd91b0b194a4c8a52ec4092a880c7"
-  integrity sha512-acYhxxLWimIQx8tx+zJeucnJEDf/ErtvnWbOcUtOJR9qrplP35rFMrMfXvci/fzQuH32ISLe1k6YGdPeMZy6hQ==
+"@artsy/palette-charts@17.7.1":
+  version "17.7.1"
+  resolved "https://registry.yarnpkg.com/@artsy/palette-charts/-/palette-charts-17.7.1.tgz#4142c99c0beb978b8859fd7b3e94db5ab1aacdea"
+  integrity sha512-aHiVL9ELXhAnk0iCZmeZfn0zQAz96Fl2lynWMRHZx1HlmhwScvOqbtYRVW7eOxtRjU+mEGemMGhqOX2OjbMT6Q==
   dependencies:
-    "@artsy/palette" "^18.6.0"
+    "@artsy/palette" "^18.7.1"
     "@seznam/compose-react-refs" "^1.0.6"
     "@styled-system/theme-get" "^5.1.2"
     d3-interpolate "^1.3.2"
@@ -96,10 +94,10 @@
   resolved "https://registry.yarnpkg.com/@artsy/palette-tokens/-/palette-tokens-2.6.0.tgz#3d780ff65994fef0daadef29d43d11f89470b728"
   integrity sha512-UQP6P+xv/5hm82ep0z5X3kCFFnk03H6y8kdW/wTU+xPq45ESUay7aNFYXeub47tmW2v6dXJ8Oa01Z0iwc6BVpA==
 
-"@artsy/palette@18.6.0", "@artsy/palette@^18.6.0":
-  version "18.6.0"
-  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-18.6.0.tgz#8f184b0af2ef7ffbad419099bd877c81274c2d08"
-  integrity sha512-RjVMGoqdmOYiUJKL6J9wDedizx2LzwTLcIgGOJ+ocLIXYGGI2EVRCjSkxSZIuvovWH5txk03w/U+PLSNVx/yaA==
+"@artsy/palette@18.7.1", "@artsy/palette@^18.7.1":
+  version "18.7.1"
+  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-18.7.1.tgz#9fcda01f976077c144d48d144656aceb4ff94834"
+  integrity sha512-W9Ao1boE+rXrSdc3TMfwArBQDMfmxpOLLdKcL4xJJM2pfqQYuEUg7xTtgtqHcr6+hWocGJw3PBYFjQe6l7SX9g==
   dependencies:
     "@artsy/palette-tokens" "^2.6.0"
     "@seznam/compose-react-refs" "^1.0.6"
@@ -135,7 +133,7 @@
     express "^4.14.0"
     ip "^1.1.5"
     passport "0.3.2"
-    passport-apple "git+https://github.com/artsy/passport-apple.git#f41adb7822c8344b72bc36a7d68312f6592cb14f"
+    passport-apple "https://github.com/artsy/passport-apple#f41adb7822c8344b72bc36a7d68312f6592cb14f"
     passport-facebook "2.1.1"
     superagent "^1.8.4"
     underscore "^1.12.1"
@@ -3878,6 +3876,11 @@
   integrity sha512-Dk/IDOPtOgubt/IaevIUbTgV7doaKkoorvOyYM2CMwuDyP89bekI7H4xLIwunNYiK9jhCkmc6pUrJk3cj2AB9w==
   dependencies:
     "@types/yargs-parser" "*"
+
+"@types/yup@^0.29.13":
+  version "0.29.13"
+  resolved "https://registry.yarnpkg.com/@types/yup/-/yup-0.29.13.tgz#21b137ba60841307a3c8a1050d3bf4e63ad561e9"
+  integrity sha512-qRyuv+P/1t1JK1rA+elmK1MmCL1BapEzKKfbEhDBV/LMMse4lmhZ/XbgETI39JveDJRpLjmToOI6uFtMW/WR2g==
 
 "@typescript-eslint/eslint-plugin@2.30.0":
   version "2.30.0"
@@ -7760,6 +7763,11 @@ delegates@^1.0.0:
   resolved "https://registry.yarnpkg.com/delegates/-/delegates-1.0.0.tgz#84c6e159b81904fdca59a0ef44cd870d31250f9a"
   integrity sha1-hMbhWbgZBP3KWaDvRM2HDTElD5o=
 
+denque@^1.5.0:
+  version "1.5.1"
+  resolved "https://registry.yarnpkg.com/denque/-/denque-1.5.1.tgz#07f670e29c9a78f8faecb2566a1e2c11929c5cbf"
+  integrity sha512-XwE+iZ4D6ZUB7mfYRMb5wByE8L74HCn30FBN7sWnXksWc1LO1bPDl67pBR9o/kC4z/xSNAwkMYcGgqDV3BE3Hw==
+
 depd@1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/depd/-/depd-1.1.0.tgz#e1bd82c6aab6ced965b97b88b17ed3e528ca18c3"
@@ -8118,11 +8126,6 @@ dotenv@^8.0.0:
   version "8.2.0"
   resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-8.2.0.tgz#97e619259ada750eea3e4ea3e26bceea5424b16a"
   integrity sha512-8sJ78ElpbDJBHNeBzUbUVLsqKdccaa/BXF1uPTw3GrvQTBgrQrtObr2mUrE38vzYd8cEv+m/JBfDLioYcfXoaw==
-
-double-ended-queue@^2.1.0-0:
-  version "2.1.0-0"
-  resolved "https://registry.yarnpkg.com/double-ended-queue/-/double-ended-queue-2.1.0-0.tgz#103d3527fd31528f40188130c841efdd78264e5c"
-  integrity sha1-ED01J/0xUo9AGIEwyEHv3XgmTlw=
 
 downshift@^6.0.15:
   version "6.1.0"
@@ -11050,11 +11053,6 @@ iconv-lite@^0.6.2:
   integrity sha512-2y91h5OpQlolefMPmUlivelittSWy0rP+oYVpn6A7GwVHNE8AWzoYOBNmlwks3LobaJxgHCYZAnyNo2GgpNRNQ==
   dependencies:
     safer-buffer ">= 2.1.2 < 3.0.0"
-
-ics@^0.4.1:
-  version "0.4.2"
-  resolved "https://registry.yarnpkg.com/ics/-/ics-0.4.2.tgz#5f122102e1cad8fdfee9cb9fd5511e8df0ca9b42"
-  integrity sha1-XxIhAuHK2P3+6cuf1VEejfDKm0I=
 
 icss-utils@^4.0.0, icss-utils@^4.1.1:
   version "4.1.1"
@@ -14156,10 +14154,10 @@ markdown-to-jsx@^7.1.3:
   resolved "https://registry.yarnpkg.com/markdown-to-jsx/-/markdown-to-jsx-7.1.3.tgz#f00bae66c0abe7dd2d274123f84cb6bd2a2c7c6a"
   integrity sha512-jtQ6VyT7rMT5tPV0g2EJakEnXLiPksnvlYtwQsVVZ611JsWGN8bQ1tVSDX4s6JllfEH6wmsYxNjTUAMrPmNA8w==
 
-marked@*:
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/marked/-/marked-1.1.1.tgz#e5d61b69842210d5df57b05856e0c91572703e6a"
-  integrity sha512-mJzT8D2yPxoPh7h0UXkB+dBj4FykPJ2OIfxAWeIHrvoHDkFxukV/29QxoFQoPM6RLEwhIFdJpmKBlqVM3s2ZIw==
+marked@^1.2.8:
+  version "1.2.9"
+  resolved "https://registry.yarnpkg.com/marked/-/marked-1.2.9.tgz#53786f8b05d4c01a2a5a76b7d1ec9943d29d72dc"
+  integrity sha512-H8lIX2SvyitGX+TRdtS06m1jHMijKN/XjfH6Ooii9fvxMlh8QdqBfBDkGUpMWH2kQNrtixjzYUa3SH8ROTgRRw==
 
 math-js@^0.0.4:
   version "0.0.4"
@@ -14583,7 +14581,7 @@ moment-twitter@0.2.0:
   dependencies:
     moment "~2.4.0"
 
-moment@2.22.2, "moment@>= 2.9.0", moment@^2.11.1, moment@^2.27.0, moment@~2.4.0:
+moment@2.22.2, "moment@>= 2.9.0", moment@^2.27.0, moment@~2.4.0:
   version "2.22.2"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.22.2.tgz#3c257f9839fc0e93ff53149632239eb90783ff66"
   integrity sha1-PCV/mDn8DpP/UxSWMiOeuQeD/2Y=
@@ -15673,10 +15671,9 @@ pascalcase@^0.1.1:
   resolved "https://registry.yarnpkg.com/pascalcase/-/pascalcase-0.1.1.tgz#b363e55e8006ca6fe21784d2db22bd15d7917f14"
   integrity sha1-s2PlXoAGym/iF4TS2yK9FdeRfxQ=
 
-"passport-apple@git+https://github.com/artsy/passport-apple.git#f41adb7822c8344b72bc36a7d68312f6592cb14f":
+"passport-apple@https://github.com/artsy/passport-apple#f41adb7822c8344b72bc36a7d68312f6592cb14f":
   version "1.1.2"
-  uid f41adb7822c8344b72bc36a7d68312f6592cb14f
-  resolved "git+https://github.com/artsy/passport-apple.git#f41adb7822c8344b72bc36a7d68312f6592cb14f"
+  resolved "https://github.com/artsy/passport-apple#f41adb7822c8344b72bc36a7d68312f6592cb14f"
   dependencies:
     jsonwebtoken "^8.5.1"
     passport-oauth2 "^1.5.0"
@@ -15689,9 +15686,9 @@ passport-facebook@2.1.1:
     passport-oauth2 "1.x.x"
 
 passport-oauth2@1.x.x, passport-oauth2@^1.5.0:
-  version "1.5.0"
-  resolved "https://registry.yarnpkg.com/passport-oauth2/-/passport-oauth2-1.5.0.tgz#64babbb54ac46a4dcab35e7f266ed5294e3c4108"
-  integrity sha512-kqBt6vR/5VlCK8iCx1/KpY42kQ+NEHZwsSyt4Y6STiNjU+wWICG1i8ucc1FapXDGO15C5O5VZz7+7vRzrDPXXQ==
+  version "1.6.1"
+  resolved "https://registry.yarnpkg.com/passport-oauth2/-/passport-oauth2-1.6.1.tgz#c5aee8f849ce8bd436c7f81d904a3cd1666f181b"
+  integrity sha512-ZbV43Hq9d/SBSYQ22GOiglFsjsD1YY/qdiptA+8ej+9C1dL1TVB+mBE5kDH/D4AJo50+2i8f4bx0vg4/yDDZCQ==
   dependencies:
     base64url "3.x.x"
     oauth "0.9.x"
@@ -16521,11 +16518,6 @@ qrcode.react@1.0.0:
     prop-types "^15.6.0"
     qr.js "0.0.0"
 
-qs@5.2.0:
-  version "5.2.0"
-  resolved "https://registry.yarnpkg.com/qs/-/qs-5.2.0.tgz#a9f31142af468cb72b25b30136ba2456834916be"
-  integrity sha1-qfMRQq9GjLcrJbMBNrokVoNJFr4=
-
 qs@6.5.2, qs@~6.5.2:
   version "6.5.2"
   resolved "https://registry.yarnpkg.com/qs/-/qs-6.5.2.tgz#cb3ae806e8740444584ef154ce8ee98d403f3e36"
@@ -16541,7 +16533,7 @@ qs@^6.0.2, qs@^6.5.0, qs@^6.5.1:
   resolved "https://registry.yarnpkg.com/qs/-/qs-6.9.6.tgz#26ed3c8243a431b2924aca84cc90471f35d5a0ee"
   integrity sha512-TIRk4aqYLNoJUbd+g2lEdz5kLWIuTMRagAXxl78Q0RiVjAOugHmeKNGdd3cwo/ktpf9aL9epCfFqWDEKysUlLQ==
 
-qs@^6.10.0:
+qs@^6.10.0, qs@^6.9.6:
   version "6.10.1"
   resolved "https://registry.yarnpkg.com/qs/-/qs-6.10.1.tgz#4931482fa8d647a5aab799c5271d2133b981fb6a"
   integrity sha512-M528Hph6wsSVOBiYUnGf+K/7w0hNshs/duGsNXPUCLH5XAqjEtiPGwNONLV0tBH8NoGb0mvD5JubnUTrujKDTg==
@@ -17401,24 +17393,32 @@ redent@^3.0.0:
     indent-string "^4.0.0"
     strip-indent "^3.0.0"
 
-redis-commands@^1.2.0:
-  version "1.3.1"
-  resolved "https://registry.yarnpkg.com/redis-commands/-/redis-commands-1.3.1.tgz#81d826f45fa9c8b2011f4cd7a0fe597d241d442b"
-  integrity sha1-gdgm9F+pyLIBH0zXoP5ZfSQdRCs=
+redis-commands@^1.7.0:
+  version "1.7.0"
+  resolved "https://registry.yarnpkg.com/redis-commands/-/redis-commands-1.7.0.tgz#15a6fea2d58281e27b1cd1acfb4b293e278c3a89"
+  integrity sha512-nJWqw3bTFy21hX/CPKHth6sfhZbdiHP6bTawSgQBlKOVRG7EZkfHbbHwQJnrE4vsQf0CMNE+3gJ4Fmm16vdVlQ==
 
-redis-parser@^2.5.0:
-  version "2.6.0"
-  resolved "https://registry.yarnpkg.com/redis-parser/-/redis-parser-2.6.0.tgz#52ed09dacac108f1a631c07e9b69941e7a19504b"
-  integrity sha1-Uu0J2srBCPGmMcB+m2mUHnoZUEs=
+redis-errors@^1.0.0, redis-errors@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/redis-errors/-/redis-errors-1.2.0.tgz#eb62d2adb15e4eaf4610c04afe1529384250abad"
+  integrity sha1-62LSrbFeTq9GEMBK/hUpOEJQq60=
 
-redis@2.7.1:
-  version "2.7.1"
-  resolved "https://registry.yarnpkg.com/redis/-/redis-2.7.1.tgz#7d56f7875b98b20410b71539f1d878ed58ebf46a"
-  integrity sha1-fVb3h1uYsgQQtxU58dh47Vjr9Go=
+redis-parser@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/redis-parser/-/redis-parser-3.0.0.tgz#b66d828cdcafe6b4b8a428a7def4c6bcac31c8b4"
+  integrity sha1-tm2CjNyv5rS4pCin3vTGvKwxyLQ=
   dependencies:
-    double-ended-queue "^2.1.0-0"
-    redis-commands "^1.2.0"
-    redis-parser "^2.5.0"
+    redis-errors "^1.0.0"
+
+redis@3.1.2:
+  version "3.1.2"
+  resolved "https://registry.yarnpkg.com/redis/-/redis-3.1.2.tgz#766851117e80653d23e0ed536254677ab647638c"
+  integrity sha512-grn5KoZLr/qrRQVwoSkmzdbw6pwF+/rwODtrOr6vuBRiR/f3rjSTGupbF90Zpqm2oenix8Do6RV7pYEkGwlKkw==
+  dependencies:
+    denque "^1.5.0"
+    redis-commands "^1.7.0"
+    redis-errors "^1.2.0"
+    redis-parser "^3.0.0"
 
 redux-form@7.2.3:
   version "7.2.3"
@@ -20035,9 +20035,9 @@ uid-safe@2.1.5:
     random-bytes "~1.0.0"
 
 uid2@0.0.x:
-  version "0.0.3"
-  resolved "https://registry.yarnpkg.com/uid2/-/uid2-0.0.3.tgz#483126e11774df2f71b8b639dcd799c376162b82"
-  integrity sha1-SDEm4Rd03y9xuLY53NeZw3YWK4I=
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/uid2/-/uid2-0.0.4.tgz#033f3b1d5d32505f5ce5f888b9f3b667123c0a44"
+  integrity sha512-IevTus0SbGwQzYh3+fRsAMTVVPOoIVufzacXcHPmdlle1jUpq7BRL+mw3dgeLanvGZdwwbWhRV6XrcFNdBmjWA==
 
 unbox-primitive@^1.0.0:
   version "1.0.0"

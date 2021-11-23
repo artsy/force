@@ -1,5 +1,5 @@
-import { Children, useRef } from "react";
-import * as React from "react";
+import { Children, useRef } from "react"
+import * as React from "react"
 import { Box, Swiper, SwiperRail } from "@artsy/palette"
 import { CarouselProps } from "./Carousel"
 import { useRailOverflow } from "./useRailOverflow"
@@ -14,7 +14,7 @@ export const MobileCarousel: React.FC<CarouselProps> = ({
   const cells = Children.toArray(children)
   const railRef = useRef<HTMLDivElement | null>(null)
 
-  // @ts-expect-error STRICT_NULL_CHECK
+  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
   useRailOverflow(railRef, showMore => {
     onRailOverflowChange && onRailOverflowChange(showMore)
   })

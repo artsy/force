@@ -1,8 +1,8 @@
 import { Form, Formik, FormikHelpers as FormikActions } from "formik"
 import { isEmpty } from "lodash"
 import PropTypes from "prop-types"
-import { Component } from "react";
-import * as React from "react";
+import { Component } from "react"
+import * as React from "react"
 import { StepElement, StepProps, WizardRenderProps } from "./types"
 import { FormValues, WizardContext } from "./types"
 
@@ -157,7 +157,7 @@ export class Wizard extends React.Component<WizardProps, WizardState> {
     return (
       <Formik
         initialValues={initialValues}
-        // @ts-expect-error STRICT_NULL_CHECK
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         validate={validate}
         validationSchema={validationSchema}
         validateOnChange={false}

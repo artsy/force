@@ -6,7 +6,7 @@ import {
 } from "v2/Apps/Artist/Routes/Consign/Components/SectionContainer"
 import { AnalyticsSchema, useTracking } from "v2/System"
 import { RouterLink } from "v2/System/Router/RouterLink"
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Media } from "v2/Utils/Responsive"
 import { getConsignSubmissionUrl } from "../Utils/getConsignSubmissionUrl"
@@ -56,7 +56,7 @@ export const ArtistConsignHeader: React.FC<ArtistConsignHeaderProps> = ({
         <Box>
           <RouterLink
             to={getConsignSubmissionUrl({
-              // @ts-expect-error STRICT_NULL_CHECK
+              // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
               contextPath: artist.href,
               subject: AnalyticsSchema.Subject.RequestPriceEstimate,
             })}

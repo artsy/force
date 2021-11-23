@@ -4,7 +4,7 @@ import {
   StepSummaryItem,
   StepSummaryItemProps,
 } from "v2/Components/StepSummaryItem"
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RevealButton } from "./RevealButton"
 import { getOfferItemFromOrder } from "v2/Apps/Order/Utils/offerItemExtractor"
@@ -16,7 +16,7 @@ const OfferHistoryItem: React.FC<
 > = ({ order: { lastOffer, lineItems, offers }, ...others }) => {
   const offerItem = getOfferItemFromOrder(lineItems)
   const previousOffers = offers?.edges?.filter(
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     ({ node: { internalID } }) => internalID !== lastOffer.internalID
   )
 
@@ -66,7 +66,7 @@ const OfferHistoryItem: React.FC<
               >
                 Offer history
               </Text>
-              {/* @ts-expect-error STRICT_NULL_CHECK */}
+              {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
               {previousOffers.map(({ node: offer }) => (
                 <Row key={offer.internalID}>
                   <Text variant={["xs", "sm"]} color="black60">

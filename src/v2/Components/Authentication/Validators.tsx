@@ -4,9 +4,9 @@ export const email = Yup.string()
   .email("Please enter a valid email.")
   .required("Please enter a valid email.")
 
-const name = Yup.string().required("Name is required.")
+export const name = Yup.string().required("Name is required.")
 
-const password = Yup.string()
+export const password = Yup.string()
   .required("Password required")
   .min(8, "Your password must be at least 8 characters")
 

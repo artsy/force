@@ -1,9 +1,9 @@
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 
 import { extractNodes } from "v2/Utils/extractNodes"
 import { ReviewOfferCTA } from "./ReviewOfferCTA"
-import { OpenInquiryModalButtonQueryRenderer } from "./OpenInquiryModalButton"
+import { OpenInquiryModalCTAFragmentContainer } from "./OpenInquiryModalCTA"
 
 import { ConversationCTA_conversation } from "v2/__generated__/ConversationCTA_conversation.graphql"
 
@@ -19,30 +19,31 @@ export const ConversationCTA: React.FC<ConversationCTAProps> = ({
   openOrderModal,
 }) => {
   // Determine whether we have a conversation about an artwork
+  const liveArtwork = conversation?.items?.[0]?.liveArtwork
+  const artwork = liveArtwork?.__typename === "Artwork" ? liveArtwork : null
 
-  const firstItem = conversation?.items?.[0]?.item
-  const artwork = firstItem?.__typename === "Artwork" ? firstItem : null
-  const artworkID = artwork?.internalID
+  if (!artwork) {
+    return null
+  }
 
-  let CTA: JSX.Element | null = null
+  const conversationID = conversation.internalID!
+  const activeOrder = extractNodes(conversation.activeOrders)[0]
 
-  if (artwork) {
-    // artworkID is guaranteed to be present if `isOfferableFromInquiry` was present.
-    const conversationID = conversation.internalID!
-    const activeOrder = extractNodes(conversation.activeOrders)[0]
-    if (!activeOrder) {
-      CTA = (
-        <OpenInquiryModalButtonQueryRenderer
-          artworkID={artworkID!}
+  if (!activeOrder) {
+    if (artwork.isOfferableFromInquiry) {
+      return (
+        <OpenInquiryModalCTAFragmentContainer
           openInquiryModal={() => openInquiryModal()}
-          conversationID={conversationID}
+          conversation={conversation}
         />
       )
-    } else {
-      const { buyerAction } = activeOrder
-      const kind = buyerAction || null
+    }
+  } else {
+    const { buyerAction } = activeOrder
+    const kind = buyerAction || null
 
-      CTA = kind && (
+    if (kind) {
+      return (
         <ReviewOfferCTA
           kind={kind}
           activeOrder={activeOrder}
@@ -52,11 +53,8 @@ export const ConversationCTA: React.FC<ConversationCTAProps> = ({
       )
     }
   }
-  if (!CTA) {
-    return null
-  } else {
-    return <>{CTA}</>
-  }
+
+  return null
 }
 
 export const ConversationCTAFragmentContainer = createFragmentContainer(
@@ -66,11 +64,16 @@ export const ConversationCTAFragmentContainer = createFragmentContainer(
       fragment ConversationCTA_conversation on Conversation {
         internalID
         items {
+          liveArtwork {
+            ... on Artwork {
+              __typename
+              isOfferableFromInquiry
+            }
+          }
           item {
             __typename
             ... on Artwork {
               internalID
-              isOfferableFromInquiry
             }
           }
         }
@@ -97,6 +100,7 @@ export const ConversationCTAFragmentContainer = createFragmentContainer(
             }
           }
         }
+        ...OpenInquiryModalCTA_conversation
       }
     `,
   }

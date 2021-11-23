@@ -48,7 +48,7 @@ describe("ArtworkSidebarCurrentBidInfo", () => {
     it("tracks a click on the buyers premium link", async () => {
       const component = await getWrapper(OpenAuctionReserveMetWithMyWinningBid)
 
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       component
         .find("button")
         .filterWhere(l => l.text() === "buyer’s premium")

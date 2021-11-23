@@ -1,7 +1,7 @@
 import { SeoProductsForCollections_ascending_artworks } from "v2/__generated__/SeoProductsForCollections_ascending_artworks.graphql"
 import { SeoProductsForCollections_descending_artworks } from "v2/__generated__/SeoProductsForCollections_descending_artworks.graphql"
 import { Product } from "v2/Components/Seo/Product"
-import { Component } from "react";
+import { Component } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { get } from "v2/Utils/get"
 
@@ -18,24 +18,24 @@ export const getMaxMinPrice = (
   ascending_artworks: SeoProductsForCollections_ascending_artworks
 ) => {
   const leastExpensive = getPriceRange(
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     ascending_artworks.edges[0]?.node?.listPrice
   )
   const mostExpensive = getPriceRange(
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     descending_artworks.edges[0]?.node?.listPrice
   )
 
   return {
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     min: leastExpensive.min || mostExpensive.min,
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     max: mostExpensive.max || leastExpensive.max,
   }
 }
 
 const getPriceRange = (
-  // @ts-expect-error STRICT_NULL_CHECK
+  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
   listPrice: SeoProductsForCollections_ascending_artworks["edges"][0]["node"]["listPrice"]
 ) => {
   if (!listPrice) {

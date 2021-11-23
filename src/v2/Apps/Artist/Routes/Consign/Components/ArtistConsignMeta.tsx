@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"
 import { Meta, Title } from "react-head"
 import { createFragmentContainer, graphql } from "react-relay"
 import { getENV } from "v2/Utils/getENV"
@@ -17,7 +17,7 @@ export const ArtistConsignMeta: React.FC<ArtistConsignMetaProps> = props => {
 
   const imageURL = get(
     targetSupply,
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     p => p.microfunnel.artworksConnection.edges[0].node.image.imageURL
   )
 

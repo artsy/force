@@ -179,6 +179,7 @@ export class SignUpForm extends Component<SignUpFormProps, SignUpFormState> {
                       setFieldValue("agreed_to_receive_emails", selected)
                       setFieldValue("accepted_terms_of_service", selected)
                     }}
+                    data-test="agreeToTerms"
                   >
                     {"I agree to the "}
                     <a href="https://www.artsy.net/terms" target="_blank">
@@ -204,6 +205,7 @@ export class SignUpForm extends Component<SignUpFormProps, SignUpFormState> {
                     onSelect={selected => {
                       setFieldValue("accepted_terms_of_service", selected)
                     }}
+                    data-test="agreeToTerms"
                   >
                     {"By checking this box, you consent to our "}
                     <a href="https://www.artsy.net/terms" target="_blank">
@@ -299,6 +301,7 @@ export const SignUpFormQueryRenderer: React.FC<FormProps> = passedProps => {
           }
         }
       `}
+      placeholder={<SignUpForm {...passedProps} />}
       render={({ error, props }) => {
         if (error || !props || !props.requestLocation) {
           return <SignUpFormFragmentContainer {...passedProps} />

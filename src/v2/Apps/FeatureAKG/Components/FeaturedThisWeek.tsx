@@ -1,6 +1,6 @@
 import { Box, Col, Grid, Row } from "@artsy/palette"
 import { AnalyticsSchema } from "v2/System"
-import * as React from "react";
+import * as React from "react"
 import { FeaturedContentLink, FeaturedLinkType } from "./Feature"
 
 interface FeaturedThisWeekProps {
@@ -25,7 +25,7 @@ export const FeaturedThisWeek: React.FC<FeaturedThisWeekProps> = props => {
             <FeaturedContentLink
               key={`featured-content-link-1`}
               size="large"
-              // @ts-expect-error STRICT_NULL_CHECK
+              // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
               contextModule={AnalyticsSchema.ContextModule.FeaturedThisWeek}
               {...featured_item_1}
             />
@@ -36,7 +36,7 @@ export const FeaturedThisWeek: React.FC<FeaturedThisWeekProps> = props => {
             <FeaturedContentLink
               key={`featured-content-link-2`}
               size="large"
-              // @ts-expect-error STRICT_NULL_CHECK
+              // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
               contextModule={AnalyticsSchema.ContextModule.FeaturedThisWeek}
               {...featured_item_2}
             />

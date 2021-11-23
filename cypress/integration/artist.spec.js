@@ -20,5 +20,3 @@ describe("/artist/:id", () => {
     cy.get("h2").should("contain", "Spanish, 1881–1973")
   })
 })
-
-//

@@ -60,6 +60,7 @@ export class LoginForm extends Component<FormProps, LoginFormState> {
         onSubmit={this.onSubmit}
         validationSchema={LoginValidator}
         validateOnBlur={false}
+        validateOnChange={false}
       >
         {({
           values,

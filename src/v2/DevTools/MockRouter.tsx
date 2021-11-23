@@ -6,79 +6,80 @@ import {
 } from "v2/DevTools/createMockNetworkLayer"
 import { FarceCreateRouterArgs, RouteConfig } from "found"
 import { IMocks } from "graphql-tools/dist/Interfaces"
-import { Component, Fragment } from "react";
+import React, { useEffect, useState } from "react"
 import { getUser } from "v2/Utils/user"
+import { AppShell } from "v2/Apps/Components/AppShell"
+import { RelaySSREnvironment } from "v2/System/Relay/createRelaySSREnvironment"
 
-interface Props {
-  routes: RouteConfig[]
-  initialRoute?: string
-  initialState?: object
+interface MockRouterProps {
+  context?: RouterConfig["context"]
   historyOptions?: FarceCreateRouterArgs["historyOptions"]
-  mockResolvers?: IMocks
+  initialRoute?: string
   mockData?: object
   mockMutationResults?: object
-  context?: RouterConfig["context"]
+  mockResolvers?: IMocks
+  routes: RouteConfig[]
 }
 
-export class MockRouter extends Component<Props> {
-  state = {
-    ClientApp: null,
-  }
+export const MockRouter: React.FC<MockRouterProps> = ({
+  context,
+  historyOptions,
+  initialRoute = "/",
+  mockData,
+  mockMutationResults,
+  mockResolvers,
+  routes,
+}) => {
+  const [MockRouterApp, setMockRouterApp] = useState<React.ReactElement<
+    any
+  > | null>(null)
 
-  static defaultProps = {
-    initialRoute: "/",
-  }
+  useEffect(() => {
+    const initRouter = async () => {
+      try {
+        const user = getUser(context?.user)
 
-  async componentDidMount() {
-    const {
-      routes,
-      initialRoute,
-      historyOptions,
-      mockResolvers,
-      mockData,
-      mockMutationResults,
-      context,
-    } = this.props
+        const relayEnvironment = mockResolvers
+          ? createMockNetworkLayer(mockResolvers)
+          : mockData || mockMutationResults
+          ? createMockNetworkLayer2({ mockData, mockMutationResults })
+          : null
 
-    try {
-      const user = getUser(context && context.user)
+        const { ClientApp } = await buildClientApp({
+          routes: [
+            {
+              path: "/",
+              children: routes,
+              Component: ({ children, ...props }) => {
+                return <AppShell {...props}>{children}</AppShell>
+              },
+            },
+          ],
+          initialRoute,
+          history: {
+            protocol: "memory",
+            options: historyOptions,
+          },
+          context: {
+            ...context,
+            user,
+            relayEnvironment: (relayEnvironment as unknown) as RelaySSREnvironment,
+          },
+        })
 
-      const relayEnvironment = mockResolvers
-        ? createMockNetworkLayer(mockResolvers)
-        : mockData || mockMutationResults
-        ? createMockNetworkLayer2({ mockData, mockMutationResults })
-        : undefined
-
-      const { ClientApp } = await buildClientApp({
-        routes,
-        initialRoute,
-        history: {
-          protocol: "memory",
-          options: historyOptions,
-        },
-        context: {
-          ...context,
-          user,
-          relayEnvironment,
-        } as any,
-      })
-
-      this.setState({
-        ClientApp,
-      })
-    } catch (error) {
-      console.error("MockRouter", error)
+        setMockRouterApp((<ClientApp />) as any)
+      } catch (error) {
+        console.error("[DevTools/MockRouter] Error rendering router:", error)
+      }
     }
+
+    initRouter()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  if (!MockRouterApp) {
+    return null
   }
 
-  render() {
-    const { ClientApp } = this.state
-
-    return (
-      <Fragment>
-        {/* @ts-expect-error STRICT_NULL_CHECK */}
-        {ClientApp && <ClientApp {...this.props.initialState} />}
-      </Fragment>
-    );
-  }
+  return MockRouterApp
 }

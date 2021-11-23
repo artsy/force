@@ -9,8 +9,10 @@ const path = require("path")
 
 const files = JSON.parse(results.value)
 
-const JS_COMMENT = "// @ts-expect-error STRICT_NULL_CHECK"
-const JSX_COMMENT = "{/* @ts-expect-error STRICT_NULL_CHECK */}"
+const JS_COMMENT =
+  "// @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION"
+const JSX_COMMENT =
+  "{/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}"
 
 for (let [label, warnings] of Object.entries(files)) {
   let offset = 0

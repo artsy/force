@@ -1,11 +1,11 @@
 import { Box, Flex } from "@artsy/palette"
 import { ArtistConsignHeaderImages_artist } from "v2/__generated__/ArtistConsignHeaderImages_artist.graphql"
 import { last } from "lodash"
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
 
-// @ts-expect-error STRICT_NULL_CHECK
+// @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
 type Artworks = ArtistConsignHeaderImages_artist["targetSupply"]["microfunnel"]["artworksConnection"]["edges"]
 
 interface HeaderImageProps {
@@ -14,10 +14,10 @@ interface HeaderImageProps {
 
 export const ArtistConsignHeaderImages: React.FC<HeaderImageProps> = props => {
   const leftImage =
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     props.artist.targetSupply.microfunnel?.artworksConnection?.edges?.[0]?.node
   const rightImage = last(
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     props.artist.targetSupply.microfunnel?.artworksConnection?.edges
   )?.node
   const error = !(leftImage && rightImage)
@@ -28,11 +28,11 @@ export const ArtistConsignHeaderImages: React.FC<HeaderImageProps> = props => {
     <HeaderImageContainer>
       <Flex width="100%" justifyContent="space-between" m="auto">
         <LeftImage>
-          {/* @ts-expect-error STRICT_NULL_CHECK */}
+          {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
           <LeftImagePhoto {...leftImage} />
         </LeftImage>
         <RightImage>
-          {/* @ts-expect-error STRICT_NULL_CHECK */}
+          {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
           <RightImagePhoto {...rightImage} />
         </RightImage>
       </Flex>

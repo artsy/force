@@ -68,17 +68,17 @@ export const BidForm: React.FC<Props> = ({
 }) => {
   const displayIncrements = dropWhile(
     saleArtwork.increments,
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     increment => increment.cents < saleArtwork.minimumNextBid.cents
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
   ).map(inc => ({ value: inc.cents.toString(), text: inc.display }))
 
-  // @ts-expect-error STRICT_NULL_CHECK
+  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
   const selectedBid = getSelectedBid({ initialSelectedBid, displayIncrements })
   const {
     requiresCheckbox,
     requiresPaymentInformation,
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
   } = determineDisplayRequirements(saleArtwork.sale.registrationStatus, me)
   const validationSchema = requiresCheckbox
     ? requiresPaymentInformation
@@ -129,14 +129,14 @@ export const BidForm: React.FC<Props> = ({
               setFieldValue("selectedBid", value)
               setFieldTouched("selectedBid")
             }}
-            // @ts-expect-error STRICT_NULL_CHECK
+            // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
             options={displayIncrements}
             error={touched.selectedBid && errors.selectedBid}
           />
 
           <PricingTransparencyQueryRenderer
             relayEnvironment={relay.environment}
-            // @ts-expect-error STRICT_NULL_CHECK
+            // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
             saleId={saleArtwork.sale.slug}
             artworkId={artworkSlug}
             bidAmountMinor={parseInt(values.selectedBid)}
@@ -162,7 +162,7 @@ export const BidForm: React.FC<Props> = ({
 
               <Spacer mt={2} />
 
-              {/* @ts-expect-error STRICT_NULL_CHECK */}
+              {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
               <AddressForm
                 value={values.address}
                 onChange={address => setFieldValue("address", address)}

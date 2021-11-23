@@ -29,6 +29,6 @@ export const initialValuesForRegistration: FormValuesForRegistration = {
 
 export const initialValuesForBidding: FormValuesForBidding = {
   ...initialValuesForRegistration,
-  // @ts-expect-error STRICT_NULL_CHECK
+  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
   selectedBid: undefined,
 }

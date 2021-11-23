@@ -27,7 +27,7 @@ export class ForgotPasswordForm extends Component<
   render() {
     return (
       <Formik
-        // @ts-expect-error STRICT_NULL_CHECK
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         initialValues={this.props.values}
         onSubmit={this.onSubmit}
         validationSchema={ForgotPasswordValidator}

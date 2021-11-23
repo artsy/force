@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"
 import { useSystemContext } from "v2/System"
 import { DisableSecondFactor } from "./Mutation/DisableSecondFactor"
 import { FormikProps } from "formik"
@@ -28,7 +28,7 @@ export const DisableFactorConfirmation: React.FC<DisableFactorConfirmationProps>
     }
 
     try {
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       await DisableSecondFactor(relayEnvironment, {
         password,
         secondFactorID,

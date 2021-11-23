@@ -1,5 +1,5 @@
-import { useState } from "react";
-import * as React from "react";
+import { useState } from "react"
+import * as React from "react"
 import { Box, BoxProps, Flex, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtworksRail_partner } from "v2/__generated__/ArtworksRail_partner.graphql"
@@ -21,7 +21,7 @@ interface ArtworksRailProps extends BoxProps {
 export const ARTWORK_CAROUSEL_ITEM_HEIGHT = 300
 
 const ArtworksRail: React.FC<ArtworksRailProps> = ({ partner, ...rest }) => {
-  // @ts-expect-error STRICT_NULL_CHECK
+  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
   const [isSeeAllAvaliable, setIsSeeAllAvaliable] = useState<boolean>(undefined)
 
   if (
@@ -38,21 +38,26 @@ const ArtworksRail: React.FC<ArtworksRailProps> = ({ partner, ...rest }) => {
 
   return (
     <Box {...rest}>
-      <Flex mb={4} justifyContent="space-between" alignItems="center">
+      <Flex
+        mb={4}
+        justifyContent="space-between"
+        alignItems="center"
+        position="relative"
+      >
         <Text variant="title">Featured Artworks</Text>
 
         <ViewAllButton to={`/partner/${slug}/works`} />
       </Flex>
 
       <Carousel onRailOverflowChange={setIsSeeAllAvaliable}>
-        {/* @ts-expect-error STRICT_NULL_CHECK */}
+        {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
         {flatten([
           artworks.map(artwork => {
             return (
               <FillwidthItem
-                // @ts-expect-error STRICT_NULL_CHECK
+                // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
                 key={artwork.node.id}
-                // @ts-expect-error STRICT_NULL_CHECK
+                // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
                 artwork={artwork.node}
                 imageHeight={ARTWORK_CAROUSEL_ITEM_HEIGHT}
                 hidePartnerName

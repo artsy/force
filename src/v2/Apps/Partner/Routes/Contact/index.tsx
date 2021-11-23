@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Contact_partner } from "v2/__generated__/Contact_partner.graphql"
 import { Box, Text } from "@artsy/palette"
@@ -12,7 +12,7 @@ export const ContactRoute: React.FC<ContactRouteProps> = ({ partner }) => {
   return (
     <Box mt={[4, 6]}>
       <Text variant="title">Locations</Text>
-      {/* @ts-expect-error STRICT_NULL_CHECK */}
+      {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
       <PartnerContacts edges={partner.locations.edges} />
     </Box>
   )

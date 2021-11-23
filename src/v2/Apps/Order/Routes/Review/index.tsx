@@ -20,7 +20,7 @@ import {
 import { track } from "v2/System/Analytics"
 import * as Schema from "v2/System/Analytics/Schema"
 import { RouteConfig, Router } from "found"
-import { Component } from "react";
+import { Component } from "react"
 import { RelayProp, createFragmentContainer, graphql } from "react-relay"
 import { get } from "v2/Utils/get"
 import createLogger from "v2/Utils/logger"
@@ -369,8 +369,6 @@ export class ReviewRoute extends Component<ReviewProps> {
                   <Message p={[2, 4]} mb={[2, 4]}>
                     Disruptions caused by COVID-19 may cause delays — we
                     appreciate your understanding.
-                    <Spacer mb={1} />
-                    Please note that all offers are binding.
                   </Message>
                   {isEigen && (
                     <>

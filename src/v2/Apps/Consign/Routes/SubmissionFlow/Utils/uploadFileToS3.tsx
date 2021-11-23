@@ -61,6 +61,12 @@ export const uploadFileToS3 = (
     }
 
     request.open("POST", uploadURL, true)
+
+    request.onerror = () => {
+      reject(new Error("Network error: Something went wrong"))
+      return
+    }
+
     request.send(formData)
 
     photo.bucket = bucket

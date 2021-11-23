@@ -1,6 +1,5 @@
+import React, { useEffect, useRef, useState } from "react"
 import { isEqual } from "lodash"
-import { useEffect, useRef, useState } from "react"
-import * as React from "react"
 import useDeepCompareEffect from "use-deep-compare-effect"
 import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
 import { useSystemContext } from "v2/System"
@@ -53,7 +52,8 @@ import type RelayModernEnvironment from "relay-runtime/lib/store/RelayModernEnvi
 import { TagArtworkFilter_tag } from "v2/__generated__/TagArtworkFilter_tag.graphql"
 import { Works_partner } from "v2/__generated__/Works_partner.graphql"
 import { CollectionArtworksFilter_collection } from "v2/__generated__/CollectionArtworksFilter_collection.graphql"
-import { FiltersPills } from "./FiltersPills"
+import { FiltersPills } from "./SavedSearch/Components/FiltersPills"
+import { SavedSearchAttributes } from "./SavedSearch/types"
 
 /**
  * Primary ArtworkFilter which is wrapped with a context and refetch container.
@@ -66,6 +66,7 @@ export const ArtworkFilter: React.FC<
   BoxProps &
     SharedArtworkFilterContextProps & {
       viewer: any // FIXME: We need to support multiple types implementing different viewer interfaces
+      savedSearchProps?: SavedSearchAttributes
     }
 > = ({
   viewer,
@@ -76,6 +77,7 @@ export const ArtworkFilter: React.FC<
   onFilterClick,
   onChange,
   ZeroState,
+  savedSearchProps,
   ...rest
 }) => {
   return (
@@ -88,7 +90,11 @@ export const ArtworkFilter: React.FC<
       onChange={onChange}
       ZeroState={ZeroState}
     >
-      <ArtworkFilterRefetchContainer viewer={viewer} {...rest} />
+      <ArtworkFilterRefetchContainer
+        viewer={viewer}
+        savedSearchProps={savedSearchProps}
+        {...rest}
+      />
     </ArtworkFilterContextProvider>
   )
 }
@@ -129,6 +135,7 @@ export const BaseArtworkFilter: React.FC<
       | CollectionArtworksFilter_collection
     Filters?: JSX.Element
     offset?: number
+    savedSearchProps?: SavedSearchAttributes
     enableCreateAlert?: boolean
   }
 > = ({
@@ -138,6 +145,7 @@ export const BaseArtworkFilter: React.FC<
   relayVariables = {},
   children,
   offset,
+  savedSearchProps,
   enableCreateAlert = false,
   ...rest
 }) => {
@@ -199,6 +207,8 @@ export const BaseArtworkFilter: React.FC<
 
             tracking.trackEvent(pageTrackingParams)
           } else {
+            const onlyAllowedFilters = allowedFilters(filterContext.filters)
+
             tracking.trackEvent(
               commercialFilterParamsChanged({
                 changed: JSON.stringify({
@@ -207,7 +217,7 @@ export const BaseArtworkFilter: React.FC<
                 contextOwnerId: contextPageOwnerId,
                 contextOwnerSlug: contextPageOwnerSlug,
                 contextOwnerType: contextPageOwnerType!,
-                current: JSON.stringify(filterContext.filters),
+                current: JSON.stringify(onlyAllowedFilters),
               })
             )
           }
@@ -309,9 +319,17 @@ export const BaseArtworkFilter: React.FC<
 
           <Spacer mb={2} />
 
+          {savedSearchProps && enableCreateAlert && (
+            <FiltersPills
+              savedSearchAttributes={savedSearchProps}
+              show={showCreateAlert}
+            />
+          )}
+
+          <Spacer mb={2} />
+
           <ArtworkFilterArtworkGrid
-            // @ts-expect-error STRICT_NULL_CHECK
-            filtered_artworks={viewer.filtered_artworks}
+            filtered_artworks={viewer.filtered_artworks!}
             isLoading={isFetching}
             offset={offset}
             columnCount={[2, 2, 2, 3]}
@@ -355,12 +373,16 @@ export const BaseArtworkFilter: React.FC<
               </Box>
             )}
 
-            {enableCreateAlert && <FiltersPills show={showCreateAlert} />}
+            {enableCreateAlert && savedSearchProps && (
+              <FiltersPills
+                savedSearchAttributes={savedSearchProps}
+                show={showCreateAlert}
+              />
+            )}
 
             {children || (
               <ArtworkFilterArtworkGrid
-                // @ts-expect-error STRICT_NULL_CHECK
-                filtered_artworks={viewer.filtered_artworks}
+                filtered_artworks={viewer.filtered_artworks!}
                 isLoading={isFetching}
                 offset={offset}
                 columnCount={[2, 2, 2, 3]}

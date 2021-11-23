@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"
 import QuickInput from "v2/Components/QuickInput"
 import {
   QueryRenderer,

@@ -11,7 +11,7 @@ import { configureScope } from "@sentry/browser"
 import { data as sd } from "sharify"
 import * as globalReactModules from "./global_react_modules"
 import { hydrate as hydrateStitch } from "@artsy/stitch/dist/internal/hydrate"
-import { initModalManager } from "desktop/apps/authentication/client/initModalManager"
+import { initAuthModalContainer } from "v2/Utils/initAuthModalContainer"
 import { Components } from "@artsy/stitch/dist/internal/types"
 import { omit } from "lodash"
 import syncAuth from "lib/syncAuth"
@@ -36,7 +36,7 @@ export function deprecatedGlobalClientSetup() {
   listenForInvert()
   listenForBounce()
   confirmation.check()
-  initModalManager()
+  initAuthModalContainer()
   mountStitchComponents()
   syncAuth()
   trackAuthenticationEvents()
@@ -150,7 +150,7 @@ export function trackAuthenticationEvents() {
       if (user) {
         const { action } = data
         const analyticsOptions = omit(data, "action")
-        // @ts-expect-error STRICT_NULL_CHECK
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         window.analytics.track(action, {
           ...analyticsOptions,
           user_id: user && user.id,
@@ -163,7 +163,7 @@ export function trackAuthenticationEvents() {
 
 function analyticsIdentify(user) {
   // FIXME: add typings for user
-  // @ts-expect-error STRICT_NULL_CHECK
+  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
   window.analytics.identify(user.id, user.email, {
     integrations: {
       All: false,

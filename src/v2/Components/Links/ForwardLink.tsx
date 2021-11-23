@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"
 import { BoxProps, ChevronIcon, Text, boxMixin } from "@artsy/palette"
 import { StyledLink } from "./StyledLink"
 import styled from "styled-components"
@@ -39,7 +39,7 @@ export const ForwardLink: React.FC<ForwardLinkProps> = ({
       </Text>
 
       <ChevronIcon
-        // @ts-expect-error STRICT_NULL_CHECK
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         title={null}
         direction="right"
         color="black"

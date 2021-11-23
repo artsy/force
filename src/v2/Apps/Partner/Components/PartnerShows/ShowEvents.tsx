@@ -1,5 +1,5 @@
 import { Column, GridColumns, Text } from "@artsy/palette"
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ShowCardFragmentContainer } from "./ShowCard"
 import { ShowEvents_edges } from "v2/__generated__/ShowEvents_edges.graphql"
@@ -22,9 +22,9 @@ const ShowEvents: React.FC<ShowEventsProps> = ({
       <GridColumns mb={6} gridRowGap={[2, 4]}>
         {edges.map(({ node: show }) => {
           return (
-            // @ts-expect-error STRICT_NULL_CHECK
+            // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
             <Column key={show.internalID} span={[6, 6, 3, 3]}>
-              {/* @ts-expect-error STRICT_NULL_CHECK */}
+              {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
               <ShowCardFragmentContainer show={show} />
             </Column>
           )

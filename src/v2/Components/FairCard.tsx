@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"
 import { Image, ResponsiveBox } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FairCard_fair } from "v2/__generated__/FairCard_fair.graphql"
@@ -20,11 +20,11 @@ export const FairCard: React.FC<FairHeaderImageProps> = ({
     >
       {image && (
         <Image
-          // @ts-expect-error STRICT_NULL_CHECK
+          // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
           src={image.cropped.src}
-          // @ts-expect-error STRICT_NULL_CHECK
+          // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
           srcSet={image.cropped.srcSet}
-          // @ts-expect-error STRICT_NULL_CHECK
+          // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
           alt={name}
           lazyLoad
           borderRadius={4}

@@ -2,7 +2,7 @@ import { Box, EntityHeader, Separator, Spacer, Spinner } from "@artsy/palette"
 import { WorksForYouFeed_viewer } from "v2/__generated__/WorksForYouFeed_viewer.graphql"
 import { SystemContextProps } from "v2/System"
 import ArtworkGrid from "v2/Components/ArtworkGrid"
-import { Component } from "react";
+import { Component } from "react"
 import ReactDOM from "react-dom"
 import styled from "styled-components"
 import { get } from "v2/Utils/get"
@@ -45,14 +45,14 @@ export class WorksForYouFeed extends Component<Props, State> {
 
   componentWillUnmount() {
     if (this.state.interval) {
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       clearInterval(this.state.interval)
     }
   }
 
   maybeLoadMore() {
     const threshold = window.innerHeight + window.scrollY
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     const el = ReactDOM.findDOMNode(this).parentElement as Element
     if (threshold >= el.clientHeight + el.scrollTop) {
       this.loadMoreArtworks()
@@ -60,12 +60,12 @@ export class WorksForYouFeed extends Component<Props, State> {
   }
 
   loadMoreArtworks() {
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     const hasMore = this.props.viewer.me.followsAndSaves.notifications.pageInfo
       .hasNextPage
 
     if (!hasMore && this.state.interval) {
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       clearInterval(this.state.interval)
     }
     if (hasMore && !this.state.loading) {
@@ -84,9 +84,9 @@ export class WorksForYouFeed extends Component<Props, State> {
   render() {
     return (
       <>
-        {/* @ts-expect-error STRICT_NULL_CHECK */}
+        {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
         {this.props.viewer.me.followsAndSaves.notifications.edges.map(
-          // @ts-expect-error STRICT_NULL_CHECK
+          // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
           ({ node }, index) => {
             const avatarImageUrl = get(node, p => p.image.resized.url)
             const meta = `${node.summary}, ${node.published_at}`
@@ -174,7 +174,7 @@ export const WorksForYouFeedPaginationContainer = createPaginationContainer(
   {
     direction: "forward",
     getConnectionFromProps(props) {
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       return props.viewer.me.followsAndSaves.notifications
     },
     getFragmentVariables(prevVars, totalCount) {

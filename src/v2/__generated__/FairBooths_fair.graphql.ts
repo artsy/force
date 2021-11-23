@@ -15,7 +15,12 @@ export type FairBooths_fair = {
         readonly edges: ReadonlyArray<{
             readonly node: {
                 readonly id: string;
-                readonly isDisplayable: boolean | null;
+                readonly counts: {
+                    readonly artworks: number | null;
+                } | null;
+                readonly partner: {
+                    readonly id?: string;
+                } | null;
                 readonly " $fragmentRefs": FragmentRefs<"FairBoothRail_show">;
             } | null;
         } | null> | null;
@@ -30,7 +35,18 @@ export type FairBooths_fair$key = {
 
 
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+},
+v1 = [
+  (v0/*: any*/)
+];
+return {
   "argumentDefinitions": [
     {
       "defaultValue": "FEATURED_DESC",
@@ -141,18 +157,44 @@ const node: ReaderFragment = {
               "name": "node",
               "plural": false,
               "selections": [
+                (v0/*: any*/),
                 {
                   "alias": null,
                   "args": null,
-                  "kind": "ScalarField",
-                  "name": "id",
+                  "concreteType": "ShowCounts",
+                  "kind": "LinkedField",
+                  "name": "counts",
+                  "plural": false,
+                  "selections": [
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "artworks",
+                      "storageKey": null
+                    }
+                  ],
                   "storageKey": null
                 },
                 {
                   "alias": null,
                   "args": null,
-                  "kind": "ScalarField",
-                  "name": "isDisplayable",
+                  "concreteType": null,
+                  "kind": "LinkedField",
+                  "name": "partner",
+                  "plural": false,
+                  "selections": [
+                    {
+                      "kind": "InlineFragment",
+                      "selections": (v1/*: any*/),
+                      "type": "Partner"
+                    },
+                    {
+                      "kind": "InlineFragment",
+                      "selections": (v1/*: any*/),
+                      "type": "ExternalPartner"
+                    }
+                  ],
                   "storageKey": null
                 },
                 {
@@ -172,5 +214,6 @@ const node: ReaderFragment = {
   ],
   "type": "Fair"
 };
-(node as any).hash = 'b4f0a37c4f31cb5828986cd5793aad15';
+})();
+(node as any).hash = '8e02da19b488f00af55b0d521d9901e9';
 export default node;

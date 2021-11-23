@@ -59,11 +59,20 @@ fragment Contact_artwork on Artwork {
 fragment ConversationCTA_conversation on Conversation {
   internalID
   items {
+    liveArtwork {
+      __typename
+      ... on Artwork {
+        __typename
+        isOfferableFromInquiry
+      }
+      ... on Node {
+        id
+      }
+    }
     item {
       __typename
       ... on Artwork {
         internalID
-        isOfferableFromInquiry
       }
       ... on Node {
         id
@@ -93,6 +102,7 @@ fragment ConversationCTA_conversation on Conversation {
       }
     }
   }
+  ...OpenInquiryModalCTA_conversation
 }
 
 fragment ConversationList_me on Me {

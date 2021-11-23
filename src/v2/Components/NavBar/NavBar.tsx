@@ -98,7 +98,7 @@ export const NavBar: React.FC = track(
         toggleMobileNav(false)
         return
       }
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       target = target.parentElement
     }
   }
@@ -175,13 +175,15 @@ export const NavBar: React.FC = track(
               {/* Desktop. Collapses into mobile at `xs` breakpoint. */}
               <Flex display={["none", "flex"]} ml={1} alignItems="stretch">
                 <Text variant="sm" lineHeight={1} display={["none", "flex"]}>
-                  <NavBarItemLink
-                    href="/collect"
-                    textDecoration="none"
-                    onClick={handleClick}
-                  >
-                    Buy
-                  </NavBarItemLink>
+                  <Flex alignItems="center" display={["none", "none", "flex"]}>
+                    <NavBarItemLink
+                      href="/collect"
+                      textDecoration="none"
+                      onClick={handleClick}
+                    >
+                      Buy
+                    </NavBarItemLink>
+                  </Flex>
 
                   <NavBarItemLink
                     href="/consign"
@@ -192,12 +194,22 @@ export const NavBar: React.FC = track(
                   </NavBarItemLink>
 
                   <NavBarItemLink
-                    href="/articles"
+                    href="/price-database"
                     textDecoration="none"
                     onClick={handleClick}
                   >
-                    Editorial
+                    Price Database
                   </NavBarItemLink>
+
+                  <Flex alignItems="center" display={["none", "none", "flex"]}>
+                    <NavBarItemLink
+                      href="/articles"
+                      textDecoration="none"
+                      onClick={handleClick}
+                    >
+                      Editorial
+                    </NavBarItemLink>
+                  </Flex>
                 </Text>
 
                 {isLoggedIn ? (
@@ -209,7 +221,7 @@ export const NavBar: React.FC = track(
                       variant="secondaryOutline"
                       size="small"
                       onClick={() => {
-                        // @ts-expect-error STRICT_NULL_CHECK
+                        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
                         openAuthModal(mediator, {
                           mode: ModalType.login,
                           intent: Intent.login,
@@ -223,7 +235,7 @@ export const NavBar: React.FC = track(
                     <Button
                       size="small"
                       onClick={() => {
-                        // @ts-expect-error STRICT_NULL_CHECK
+                        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
                         openAuthModal(mediator, {
                           mode: ModalType.signup,
                           intent: Intent.signup,

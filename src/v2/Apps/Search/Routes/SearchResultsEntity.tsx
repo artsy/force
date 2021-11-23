@@ -96,7 +96,7 @@ export class SearchResultsEntityRoute extends React.Component<Props, State> {
         })
         // TODO: Look into using router push w/ query params.
         // this.props.router.replace(`/search/${tab}?${urlParams}`)
-        // @ts-expect-error STRICT_NULL_CHECK
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         window.history.pushState({}, null, `/search/${tab}?${urlParams}`)
       }
     )

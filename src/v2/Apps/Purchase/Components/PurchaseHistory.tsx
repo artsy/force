@@ -8,8 +8,8 @@ import {
 } from "@artsy/palette"
 import { data as sd } from "sharify"
 import { PurchaseHistory_me } from "v2/__generated__/PurchaseHistory_me.graphql"
-import { useState } from "react";
-import * as React from "react";
+import { useState } from "react"
+import * as React from "react"
 import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
 import styled from "styled-components"
 import { Media } from "v2/Utils/Responsive"
@@ -77,17 +77,17 @@ const PurchaseHistory: React.FC<PurchaseHistoryProps> = (
 ) => {
   const [loading, setLoading] = useState(false)
   const { me } = props
-  // @ts-expect-error STRICT_NULL_CHECK
+  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
   const pageInfo = me.orders.pageInfo
-  // @ts-expect-error STRICT_NULL_CHECK
+  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
   const myOrders = me.orders.edges && me.orders.edges.map(x => x.node)
 
   const paginationProps = {
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     hasNextPage: props.me.orders.pageInfo.hasNextPage,
     onClick: cursor => loadAfter(cursor, props.relay, setLoading),
     onNext: () => loadNext(pageInfo, props.relay, setLoading),
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     pageCursors: props.me.orders.pageCursors,
   }
 
@@ -96,16 +96,16 @@ const PurchaseHistory: React.FC<PurchaseHistoryProps> = (
       <Box mx={["0px", "40px", "40px", "40px"]} mt="-5px">
         <UserSettingsTabs route={sd.CURRENT_PATH} username={me.name} />
       </Box>
-      {/* @ts-expect-error STRICT_NULL_CHECK */}
+      {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
       {myOrders.length ? (
-        // @ts-expect-error STRICT_NULL_CHECK
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         myOrders.map((order, i) => (
           <OrderRow
-            // @ts-expect-error STRICT_NULL_CHECK
+            // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
             key={order.code}
-            // @ts-expect-error STRICT_NULL_CHECK
+            // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
             order={order}
-            // @ts-expect-error STRICT_NULL_CHECK
+            // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
             hasDivider={i != myOrders.length - 1}
           />
         ))
@@ -116,7 +116,7 @@ const PurchaseHistory: React.FC<PurchaseHistoryProps> = (
       )}
       <StyledBox>
         <Media at="xs">
-          {/* @ts-expect-error STRICT_NULL_CHECK */}
+          {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
           {props.me.orders.pageCursors && (
             <SmallPagination
               {...paginationProps}
@@ -131,7 +131,7 @@ const PurchaseHistory: React.FC<PurchaseHistoryProps> = (
         <Media greaterThan="xs">
           <Box>
             <Separator mb={3} pr={2} />
-            {/* @ts-expect-error STRICT_NULL_CHECK */}
+            {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
             {props.me.orders.pageCursors && (
               <LargePagination
                 {...paginationProps}

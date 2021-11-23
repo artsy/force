@@ -1,8 +1,8 @@
-import { Component } from "react";
+import { Component } from "react"
 import { connect } from "react-redux"
 import { Box, ThemeProviderV3 } from "@artsy/palette"
 import { FormSwitcher } from "v2/Components/Authentication/FormSwitcher"
-import { handleSubmit } from "desktop/apps/authentication/helpers"
+import { handleSubmit } from "v2/Apps/Authentication/Utils/helpers"
 import { ModalHeader } from "v2/Components/Modal/ModalHeader"
 import { updateAuthFormStateAndClearError } from "../../client/actions"
 import { ModalType } from "v2/Components/Authentication/Types"
@@ -24,11 +24,11 @@ export class CreateAccount extends Component<CreateAccountProps> {
 
     let analyticsParams = []
     if (artistId && artistName) {
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       analyticsParams.push(`artistId=${artistId}`, `artistName=${artistName}`)
     }
     if (contextPath && subject) {
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       analyticsParams.push(`contextPath=${contextPath}`, `subject=${subject}`)
     }
 

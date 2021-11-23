@@ -3,9 +3,7 @@
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type OrderUpdate_Test_QueryVariables = {
-    conversationID: string;
-};
+export type OrderUpdate_Test_QueryVariables = {};
 export type OrderUpdate_Test_QueryResponse = {
     readonly me: {
         readonly conversation: {
@@ -28,11 +26,9 @@ export type OrderUpdate_Test_Query = {
 
 
 /*
-query OrderUpdate_Test_Query(
-  $conversationID: String!
-) {
+query OrderUpdate_Test_Query {
   me {
-    conversation(id: $conversationID) {
+    conversation(id: "1234") {
       conversationEventConnection {
         edges {
           node {
@@ -74,41 +70,33 @@ fragment OrderUpdate_event on ConversationEvent {
 const node: ConcreteRequest = (function(){
 var v0 = [
   {
-    "defaultValue": null,
-    "kind": "LocalArgument",
-    "name": "conversationID",
-    "type": "String!"
-  }
-],
-v1 = [
-  {
-    "kind": "Variable",
+    "kind": "Literal",
     "name": "id",
-    "variableName": "conversationID"
+    "value": "1234"
   }
 ],
-v2 = {
+v1 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "__typename",
   "storageKey": null
 },
-v3 = {
+v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v4 = {
+v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "createdAt",
   "storageKey": null
 },
-v5 = {
+v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -117,7 +105,7 @@ v5 = {
 };
 return {
   "fragment": {
-    "argumentDefinitions": (v0/*: any*/),
+    "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
     "name": "OrderUpdate_Test_Query",
@@ -132,7 +120,7 @@ return {
         "selections": [
           {
             "alias": null,
-            "args": (v1/*: any*/),
+            "args": (v0/*: any*/),
             "concreteType": "Conversation",
             "kind": "LinkedField",
             "name": "conversation",
@@ -162,7 +150,7 @@ return {
                         "name": "node",
                         "plural": false,
                         "selections": [
-                          (v2/*: any*/),
+                          (v1/*: any*/),
                           {
                             "args": null,
                             "kind": "FragmentSpread",
@@ -178,7 +166,7 @@ return {
                 "storageKey": null
               }
             ],
-            "storageKey": null
+            "storageKey": "conversation(id:\"1234\")"
           }
         ],
         "storageKey": null
@@ -188,7 +176,7 @@ return {
   },
   "kind": "Request",
   "operation": {
-    "argumentDefinitions": (v0/*: any*/),
+    "argumentDefinitions": [],
     "kind": "Operation",
     "name": "OrderUpdate_Test_Query",
     "selections": [
@@ -202,7 +190,7 @@ return {
         "selections": [
           {
             "alias": null,
-            "args": (v1/*: any*/),
+            "args": (v0/*: any*/),
             "concreteType": "Conversation",
             "kind": "LinkedField",
             "name": "conversation",
@@ -232,12 +220,12 @@ return {
                         "name": "node",
                         "plural": false,
                         "selections": [
+                          (v1/*: any*/),
                           (v2/*: any*/),
-                          (v3/*: any*/),
                           {
                             "kind": "InlineFragment",
                             "selections": [
-                              (v4/*: any*/),
+                              (v3/*: any*/),
                               {
                                 "alias": null,
                                 "args": null,
@@ -258,7 +246,7 @@ return {
                           {
                             "kind": "InlineFragment",
                             "selections": [
-                              (v4/*: any*/),
+                              (v3/*: any*/),
                               {
                                 "alias": null,
                                 "args": null,
@@ -266,7 +254,7 @@ return {
                                 "name": "amount",
                                 "storageKey": null
                               },
-                              (v5/*: any*/),
+                              (v4/*: any*/),
                               {
                                 "alias": null,
                                 "args": null,
@@ -282,8 +270,8 @@ return {
                                 "name": "respondsTo",
                                 "plural": false,
                                 "selections": [
-                                  (v5/*: any*/),
-                                  (v3/*: any*/)
+                                  (v4/*: any*/),
+                                  (v2/*: any*/)
                                 ],
                                 "storageKey": null
                               }
@@ -299,11 +287,11 @@ return {
                 ],
                 "storageKey": null
               },
-              (v3/*: any*/)
+              (v2/*: any*/)
             ],
-            "storageKey": null
+            "storageKey": "conversation(id:\"1234\")"
           },
-          (v3/*: any*/)
+          (v2/*: any*/)
         ],
         "storageKey": null
       }
@@ -314,9 +302,9 @@ return {
     "metadata": {},
     "name": "OrderUpdate_Test_Query",
     "operationKind": "query",
-    "text": "query OrderUpdate_Test_Query(\n  $conversationID: String!\n) {\n  me {\n    conversation(id: $conversationID) {\n      conversationEventConnection {\n        edges {\n          node {\n            __typename\n            ...OrderUpdate_event\n            ... on Node {\n              id\n            }\n          }\n        }\n      }\n      id\n    }\n    id\n  }\n}\n\nfragment OrderUpdate_event on ConversationEvent {\n  ... on ConversationOrderStateChanged {\n    __typename\n    createdAt\n    stateReason\n    state\n  }\n  ... on ConversationOfferSubmitted {\n    __typename\n    createdAt\n    amount\n    fromParticipant\n    offerAmountChanged\n    respondsTo {\n      fromParticipant\n      id\n    }\n  }\n}\n"
+    "text": "query OrderUpdate_Test_Query {\n  me {\n    conversation(id: \"1234\") {\n      conversationEventConnection {\n        edges {\n          node {\n            __typename\n            ...OrderUpdate_event\n            ... on Node {\n              id\n            }\n          }\n        }\n      }\n      id\n    }\n    id\n  }\n}\n\nfragment OrderUpdate_event on ConversationEvent {\n  ... on ConversationOrderStateChanged {\n    __typename\n    createdAt\n    stateReason\n    state\n  }\n  ... on ConversationOfferSubmitted {\n    __typename\n    createdAt\n    amount\n    fromParticipant\n    offerAmountChanged\n    respondsTo {\n      fromParticipant\n      id\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '09dd5d281663f6185c9699030a51b5b4';
+(node as any).hash = 'aa943f25145d786203fd9f8f73a48b59';
 export default node;

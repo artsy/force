@@ -41,11 +41,12 @@ export const AppShell: React.FC<AppShellProps> = props => {
   useEffect(() => {
     if (isFunction(routeConfig.onClientSideRender)) {
       try {
-        routeConfig.onClientSideRender()
+        routeConfig.onClientSideRender({ match })
       } catch (error) {
         logger.error(error)
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [routeConfig])
 
   // Let our end-to-end tests know that the app is hydrated and ready to go

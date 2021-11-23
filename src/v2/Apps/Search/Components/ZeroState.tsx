@@ -1,7 +1,7 @@
 import { Box, Flex, Text } from "@artsy/palette"
 import { SendFeedback } from "v2/Apps/Search/Components/SendFeedback"
 import { useArtworkFilterContext } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
-import { FC } from "react";
+import { FC } from "react"
 
 interface ZeroStateProps {
   term: string
@@ -10,7 +10,7 @@ interface ZeroStateProps {
 export const ZeroState: FC<ZeroStateProps> = props => {
   const {
     hasFilters,
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     filters: { term = props.term },
   } = useArtworkFilterContext()
 

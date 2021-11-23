@@ -25,11 +25,10 @@
   <!-- Create preload tags for dynamic chunks -->
   <%- htmlWebpackPlugin.tags.bodyTags.map((originalTag) => { const tag = { ...originalTag, attributes: { ...originalTag.attributes } }; tag.tagName = 'link'; tag.attributes['href'] = "<" + "%= cdnUrl %" + ">" + originalTag.attributes['src']; tag.attributes['rel'] = 'preload'; tag.attributes['as'] = 'script'; delete tag.attributes.src; return tag; }) %>
 
-  <link rel='apple-touch-icon' href="<%%= icons.icon152 %>" />
-  <link rel='apple-touch-icon' sizes='120x120' href="<%%= icons.icon120 %>" />
-  <link rel='apple-touch-icon' sizes='152x152' href="<%%= icons.icon152 %>" />
-  <link rel='apple-touch-icon' sizes='76x76' href="<%%= icons.icon76 %>" />
-  <link rel='icon' type='image/png' href="<%%= icons.favicon %>" />
+  <link rel="icon" type="image/png" href="<%%= icons.favicon %>" sizes="any" />
+  <link rel="icon" type="image/svg+xml" href="<%%= icons.faviconSVG %>" />
+  <link rel="apple-touch-icon" href="<%%= icons.appleTouchIcon %>">
+  <link rel="manifest" href="<%%= manifest.webmanifest %>">
 
   <link rel='search' type='application/opensearchdescription+xml' href="<%%= manifest.openSearch %>" title='Artsy' />
 

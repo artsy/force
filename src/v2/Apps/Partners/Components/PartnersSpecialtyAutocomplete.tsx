@@ -18,11 +18,15 @@ interface PartnersSpecialtyAutocompleteProps {
 }
 
 const PartnersSpecialtyAutocomplete: FC<PartnersSpecialtyAutocompleteProps> = ({
-  viewer: { filterPartners },
+  viewer: { allOptions, filterPartners },
 }) => {
   const specialties = useMemo(() => {
     return compact(filterPartners?.aggregations?.[0]?.counts)
   }, [filterPartners])
+
+  const all = useMemo(() => {
+    return compact(allOptions?.aggregations?.[0]?.counts)
+  }, [allOptions])
 
   const { router, match } = useRouter()
 
@@ -68,10 +72,8 @@ const PartnersSpecialtyAutocomplete: FC<PartnersSpecialtyAutocompleteProps> = ({
 
     if (!category) return
 
-    return options.find(({ value }) => {
-      return value === category
-    })?.text
-  }, [match.location.query, options])
+    return all.find(({ value }) => value === category)?.text
+  }, [all, match.location.query])
 
   return (
     <AutocompleteInput<typeof options[number]>
@@ -118,6 +120,20 @@ export const PartnersSpecialtyAutocompleteFragmentContainer = createFragmentCont
           near: { type: "String" }
           type: { type: "[PartnerClassification]" }
         ) {
+        allOptions: filterPartners(
+          aggregations: [CATEGORY]
+          defaultProfilePublic: true
+          eligibleForListing: true
+          size: 0
+        ) {
+          aggregations {
+            counts {
+              text: name
+              value
+              count
+            }
+          }
+        }
         filterPartners(
           aggregations: [CATEGORY, TOTAL]
           defaultProfilePublic: true

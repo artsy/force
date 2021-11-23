@@ -59,11 +59,12 @@ describe("createConsignSubmission", () => {
         units: "units",
         width: "width",
         year: "year",
-        medium: "medium",
+        materials: "materials",
         artistName: "",
         editionNumber: "",
         editionSize: "",
         depth: "",
+        provenance: "provenance",
       },
       uploadPhotosForm: {
         photos: [
@@ -118,7 +119,7 @@ describe("createConsignSubmission", () => {
       artistID: "artistId",
       year: "year",
       title: "title",
-      category: "medium",
+      medium: "materials",
       attributionClass: "RARITY",
       editionNumber: "",
       editionSizeFormatted: "",
@@ -130,6 +131,7 @@ describe("createConsignSubmission", () => {
       userEmail: user.email,
       userName: undefined,
       userPhone: undefined,
+      provenance: "provenance",
     }
 
     expect(createConsignSubmissionMutation).toHaveBeenCalled()

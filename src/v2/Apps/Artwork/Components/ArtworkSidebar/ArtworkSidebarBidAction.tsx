@@ -10,7 +10,7 @@ import {
   Text,
   Tooltip,
 } from "@artsy/palette"
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtworkSidebarBidAction_artwork } from "v2/__generated__/ArtworkSidebarBidAction_artwork.graphql"
 import { ArtworkSidebarBidAction_me } from "v2/__generated__/ArtworkSidebarBidAction_me.graphql"
@@ -62,7 +62,7 @@ export class ArtworkSidebarBidAction extends React.Component<
   ArtworkSidebarBidActionState
 > {
   state: ArtworkSidebarBidActionState = {
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     selectedMaxBidCents: null,
   }
 
@@ -141,7 +141,7 @@ export class ArtworkSidebarBidAction extends React.Component<
       pendingIdentityVerification,
       shouldPromptIdVerification,
     } = bidderQualifications(
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       sale,
       me,
       sale.registrationStatus && {
@@ -161,7 +161,7 @@ export class ArtworkSidebarBidAction extends React.Component<
           )
         } else if (shouldPromptIdVerification) {
           PreviewAction = () => (
-            // @ts-expect-error STRICT_NULL_CHECK
+            // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
             <VerifyIdentityButton id={pendingIdentityVerification.internalID} />
           )
         } else {
@@ -234,7 +234,7 @@ export class ArtworkSidebarBidAction extends React.Component<
           <>
             {shouldPromptIdVerification ? (
               <VerifyIdentityButton
-                // @ts-expect-error STRICT_NULL_CHECK
+                // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
                 id={pendingIdentityVerification.internalID}
               />
             ) : (
@@ -315,7 +315,7 @@ export class ArtworkSidebarBidAction extends React.Component<
 
             <Select
               variant="default"
-              // @ts-expect-error STRICT_NULL_CHECK
+              // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
               options={selectOptions}
               onSelect={this.setMaxBid}
             />
@@ -326,7 +326,7 @@ export class ArtworkSidebarBidAction extends React.Component<
               width="100%"
               size="medium"
               data-test="bid"
-              // @ts-expect-error STRICT_NULL_CHECK
+              // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
               onClick={() => this.redirectToBid(firstIncrement.cents)}
             >
               {hasMyBids ? "Increase max bid" : "Bid"}

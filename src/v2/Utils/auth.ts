@@ -112,7 +112,7 @@ const recaptcha = () => {
 }
 
 /**
- * To use ensure that `ReCaptchaContainer` is included somewhere on your page
+ * To use ensure that `EnableRecaptcha` is included somewhere on your page
  */
 export const signUp = async (args: {
   name: string

@@ -107,7 +107,7 @@ export const HomeFeaturedGalleriesRailQueryRenderer: React.FC = () => {
       environment={relayEnvironment}
       query={graphql`
         query HomeFeaturedGalleriesRailQuery {
-          orderedSet(id: "5638fdfb7261690296000031") {
+          orderedSet(id: "6193c9ede70512000fbf3e8d") {
             ...HomeFeaturedGalleriesRail_orderedSet
           }
         }

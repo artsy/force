@@ -1,5 +1,5 @@
-import { useState } from "react";
-import * as React from "react";
+import { useState } from "react"
+import * as React from "react"
 import { Box, Text, Flex } from "@artsy/palette"
 import { compact, flatten } from "lodash"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -25,7 +25,7 @@ export interface PartnerArtistsCarouselProps {
 export const PartnerArtistsCarousel: React.FC<PartnerArtistsCarouselProps> = ({
   partner,
 }) => {
-  // @ts-expect-error STRICT_NULL_CHECK
+  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
   const [isSeeAllAvaliable, setIsSeeAllAvaliable] = useState<boolean>(undefined)
 
   if (!partner || !partner.artists || !partner.artists.edges) {

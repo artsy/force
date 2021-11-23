@@ -13,12 +13,12 @@ describe("Confirm Registration Modal", () => {
   })
 
   describe("sanitizing the URL", () => {
-    xit("removes /confirm-registration from the url", () => {
+    it.skip("removes /confirm-registration from the url", () => {
       document.title = "big time"
       window.location.pathname = "/auction/auction-one/confirm-registration"
 
       act(() =>
-        // @ts-expect-error STRICT_NULL_CHECK
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         renderTestComponent({
           Component: ConfirmRegistrationModal,
           options: { renderMode: "mount" },

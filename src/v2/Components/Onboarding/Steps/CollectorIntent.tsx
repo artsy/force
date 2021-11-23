@@ -1,5 +1,5 @@
-import { useState } from "react";
-import * as React from "react";
+import { useState } from "react"
+import * as React from "react"
 import { ActionType, ContextModule, OwnerType } from "@artsy/cohesion"
 import { commitMutation, graphql } from "react-relay"
 import styled from "styled-components"
@@ -100,7 +100,7 @@ export const CollectorIntentComponent: React.FC<Props> = props => {
   }
 
   const optionTags = Object.keys(intentEnum).map((text, index) => (
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     <SelectableToggle
       key={index}
       text={text}
@@ -124,9 +124,9 @@ export const CollectorIntentComponent: React.FC<Props> = props => {
 
   return (
     <>
-      {/* @ts-expect-error STRICT_NULL_CHECK */}
+      {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
       <ProgressIndicator />
-      {/* @ts-expect-error STRICT_NULL_CHECK */}
+      {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
       <Layout
         buttonState={buttonState}
         onNextButtonPressed={submit}

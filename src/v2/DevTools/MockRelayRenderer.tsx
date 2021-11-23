@@ -3,7 +3,7 @@ import { SystemContextConsumer } from "v2/System"
 import { renderWithLoadProgress } from "v2/System/Relay/renderWithLoadProgress"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import { IMocks } from "graphql-tools/dist/Interfaces"
-import * as React from "react";
+import * as React from "react"
 /* tslint:disable-next-line:no-query-renderer-import */
 import { QueryRenderer } from "react-relay"
 import {
@@ -136,7 +136,7 @@ export class MockRelayRenderer<T extends OperationType> extends React.Component<
   MockRelayRendererProps<T>,
   MockRelayRendererState
 > {
-  // @ts-expect-error STRICT_NULL_CHECK
+  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
   state = {
     caughtError: undefined,
   }
@@ -198,7 +198,7 @@ export class MockRelayRenderer<T extends OperationType> extends React.Component<
     }
 
     if (this.state.caughtError) {
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       const { error, errorInfo } = this.state.caughtError
       console.error({ error, errorInfo })
       return `Error occurred while rendering Relay component: ${error}`

@@ -1,49 +1,19 @@
-import { MockBoot } from "v2/DevTools/MockBoot"
-import { MockRouter } from "v2/DevTools/MockRouter"
 import { mount } from "enzyme"
 import { RouteTab, RouteTabs } from "../RouteTabs"
 
 describe("RouteTabs", () => {
   const getWrapper = () => {
     return mount(
-      <MockBoot>
-        <MockRouter
-          initialRoute="/cv"
-          routes={[
-            {
-              path: "/",
-              Component: () => {
-                return (
-                  <RouteTabs>
-                    <RouteTab to="/overview">Overview</RouteTab>
-                    <RouteTab to="/cv">CV</RouteTab>
-                    <RouteTab to="/shows">Shows</RouteTab>
-                  </RouteTabs>
-                )
-              },
-              children: [
-                {
-                  path: "/overview",
-                },
-                {
-                  path: "/cv",
-                },
-                {
-                  path: "/shows",
-                },
-              ],
-            },
-          ]}
-        />
-      </MockBoot>
+      <RouteTabs>
+        <RouteTab to="/overview">Overview</RouteTab>
+        <RouteTab to="/cv">CV</RouteTab>
+        <RouteTab to="/shows">Shows</RouteTab>
+      </RouteTabs>
     )
   }
 
   it("renders nav items", async () => {
     const wrapper = getWrapper()
-
-    // @ts-expect-error STRICT_NULL_CHECK
-    await wrapper.find("MockRouter").instance().componentDidMount()
 
     const html = wrapper.html()
     expect(html).toContain("Overview")

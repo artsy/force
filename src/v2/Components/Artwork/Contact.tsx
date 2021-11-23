@@ -1,5 +1,5 @@
 import { Contact_artwork } from "v2/__generated__/Contact_artwork.graphql"
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { get } from "v2/Utils/get"
 import TextLink from "../TextLink"
@@ -20,27 +20,27 @@ export class Contact extends React.Component<ContactProps, null> {
 
   auctionLine() {
     const { artwork } = this.props
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     const isLiveOpen = get(artwork, p => p.sale.is_live_open)
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     const isOpen = get(artwork, p => p.sale.is_open)
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     const isClosed = get(artwork, p => p.sale.is_closed)
 
     if (isLiveOpen) {
       return (
-        // @ts-expect-error STRICT_NULL_CHECK
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         <TextLink href={artwork.href} underline>
           Enter Live Auction
         </TextLink>
       )
     } else if (isOpen) {
       const sa = get(artwork, p => p.sale_artwork)
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       const bidderPositions = get(sa, p => p.counts.bidder_positions)
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       const highestBidDisplay = get(sa, p => p.highest_bid.display)
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       const openingBidDisplay = get(sa, p => p.opening_bid.display)
 
       if (bidderPositions && bidderPositions > 0) {
@@ -63,13 +63,13 @@ export class Contact extends React.Component<ContactProps, null> {
 
   contactPartnerLine() {
     const partner = get(this.props, p =>
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       p.artwork.partner.type.toLocaleLowerCase()
     )
 
     if (partner) {
       return (
-        // @ts-expect-error STRICT_NULL_CHECK
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         <TextLink href={this.props.artwork.href} underline>
           Contact {partner}
         </TextLink>
@@ -84,7 +84,7 @@ export class Contact extends React.Component<ContactProps, null> {
   }
 }
 
-// @ts-expect-error STRICT_NULL_CHECK
+// @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
 export default createFragmentContainer(Contact, {
   artwork: graphql`
     fragment Contact_artwork on Artwork {

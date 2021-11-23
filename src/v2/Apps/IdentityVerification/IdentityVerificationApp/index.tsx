@@ -3,8 +3,8 @@ import { IdentityVerificationApp_me } from "v2/__generated__/IdentityVerificatio
 import { IdentityVerificationAppStartMutation } from "v2/__generated__/IdentityVerificationAppStartMutation.graphql"
 import * as Schema from "v2/System/Analytics/Schema"
 import { ErrorModal } from "v2/Components/Modal/ErrorModal"
-import { useState } from "react";
-import * as React from "react";
+import { useState } from "react"
+import * as React from "react"
 import { Title as HeadTitle } from "react-head"
 import {
   RelayProp,
@@ -31,11 +31,11 @@ const IdentityVerificationApp: React.FC<Props> = ({ me, relay }) => {
   const [showErrorModal, setShowErrorModal] = useState(false)
   const { trackEvent } = useTracking()
   if (!identityVerification || identityVerification.userID !== me.internalID) {
-    // @ts-expect-error STRICT_NULL_CHECK
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     return <WrongOwner email={me.email} />
   }
 
-  // @ts-expect-error STRICT_NULL_CHECK
+  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
   let AlternateComponent: React.FC = null
 
   if (identityVerification.state === "failed") {
@@ -82,7 +82,7 @@ const IdentityVerificationApp: React.FC<Props> = ({ me, relay }) => {
           } else {
             const {
               startIdentityVerification: {
-                // @ts-expect-error STRICT_NULL_CHECK
+                // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
                 startIdentityVerificationResponseOrError: {
                   identityVerificationFlowUrl,
                   mutationError,
@@ -98,7 +98,7 @@ const IdentityVerificationApp: React.FC<Props> = ({ me, relay }) => {
         },
         onError: reject,
         variables: {
-          // @ts-expect-error STRICT_NULL_CHECK
+          // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
           input: { identityVerificationId: identityVerification.internalID },
         },
       })
