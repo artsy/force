@@ -82,6 +82,10 @@ export class OrderAppTestPage extends RootTestPage {
   }
 
   /*** COMMON ASSERTIONS ***/
+  async expectNoModal() {
+    const modal = this.modalDialog.find(ModalButton)
+    expect(modal.length).toBe(0)
+  }
 
   async expectAndDismissDefaultErrorDialog() {
     await this.expectAndDismissErrorDialogMatching(
