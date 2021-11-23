@@ -1,6 +1,6 @@
-import { BorderBoxProps, Box, Flex, Sans } from "@artsy/palette"
+import { Button, BorderBoxProps, Box, Flex, Sans } from "@artsy/palette"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
-import * as React from "react"
+import React, { useEffect, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 
 import { BackupSecondFactorModalContent_me } from "v2/__generated__/BackupSecondFactorModalContent_me.graphql"
@@ -15,6 +15,19 @@ interface BackupSecondFactorModalContentProps extends BorderBoxProps {
 
 export const BackupSecondFactorModalContent: React.FC<BackupSecondFactorModalContentProps> = props => {
   const { me } = props
+
+  const [supportsClipboard, setSupportsClipboard] = useState(false)
+
+  useEffect(() => {
+    // Only render the copy button if browser supports the Clipboard API
+    // https://developer.mozilla.org/en-US/docs/Web/API/Clipboard_API
+    if ("clipboard" in navigator) setSupportsClipboard(true)
+  }, [])
+
+  function copyCodesToClipboard() {
+    const codes = me.backupSecondFactors!.map(item => item!.code).join("\n")
+    navigator.clipboard.writeText(codes)
+  }
 
   return (
     <Box minHeight="280px">
@@ -33,6 +46,21 @@ export const BackupSecondFactorModalContent: React.FC<BackupSecondFactorModalCon
           </Box>
         ))}
       </Flex>
+
+      {supportsClipboard && (
+        <Flex justifyContent="center">
+          <Button
+            onClick={copyCodesToClipboard}
+            variant="secondaryOutline"
+            size="small"
+            mt={1}
+            mb={1}
+            data-test="copyButton"
+          >
+            Copy
+          </Button>
+        </Flex>
+      )}
     </Box>
   )
 }
