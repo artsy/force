@@ -29,6 +29,16 @@ export const BackupSecondFactorModalContent: React.FC<BackupSecondFactorModalCon
     navigator.clipboard.writeText(codes)
   }
 
+  function downloadCodes() {
+    const codes = me.backupSecondFactors!.map(item => item!.code).join("\n")
+    const element = document.createElement("a")
+    const file = new Blob([codes], { type: "text/plain" })
+    element.href = URL.createObjectURL(file)
+    element.download = "recovery_codes.txt"
+    document.body.appendChild(element) // Required for this to work in FireFox
+    element.click()
+  }
+
   return (
     <Box minHeight="280px">
       <Sans size="3" color="black60">
@@ -47,20 +57,29 @@ export const BackupSecondFactorModalContent: React.FC<BackupSecondFactorModalCon
         ))}
       </Flex>
 
-      {supportsClipboard && (
-        <Flex justifyContent="center">
+      <Flex justifyContent="center">
+        {supportsClipboard && (
           <Button
             onClick={copyCodesToClipboard}
             variant="secondaryOutline"
             size="small"
-            mt={1}
-            mb={1}
+            m={1}
             data-test="copyButton"
           >
             Copy
           </Button>
-        </Flex>
-      )}
+        )}
+
+        <Button
+          onClick={downloadCodes}
+          variant="secondaryOutline"
+          size="small"
+          m={1}
+          data-test="downloadButton"
+        >
+          Download
+        </Button>
+      </Flex>
     </Box>
   )
 }
