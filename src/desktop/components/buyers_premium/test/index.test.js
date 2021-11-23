@@ -4,7 +4,7 @@
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/master/docs/suggestions.md
  */
 const sinon = require("sinon")
-const Sale = require("../../../models/sale")
+const { Sale } = require("../../../models/sale")
 const Backbone = require("backbone")
 const buyersPremium = require("../")
 const { fabricate } = require("@artsy/antigravity")

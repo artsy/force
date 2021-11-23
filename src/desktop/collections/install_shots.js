@@ -8,7 +8,7 @@
 let _InstallShots
 const _ = require("underscore")
 const Backbone = require("backbone")
-const InstallShot = require("../models/install_shot")
+const { InstallShot } = require("../models/install_shot")
 const { Fetch } = require("@artsy/backbone-mixins")
 const { API_URL } = require("sharify").data
 

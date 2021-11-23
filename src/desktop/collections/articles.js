@@ -10,7 +10,7 @@
 let _Articles
 const Backbone = require("backbone")
 const sd = require("sharify").data
-const Article = require("../models/article")
+const { Article } = require("../models/article")
 
 export default _Articles = (function () {
   _Articles = class Articles extends Backbone.Collection {

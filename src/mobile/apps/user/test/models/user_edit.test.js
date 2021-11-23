@@ -5,7 +5,7 @@
  */
 const _ = require("underscore")
 const Backbone = require("backbone")
-const UserEdit = require("../../models/user_edit.coffee")
+const UserEdit = require("../../models/user_edit")
 const { fabricate } = require("@artsy/antigravity")
 const sinon = require("sinon")
 

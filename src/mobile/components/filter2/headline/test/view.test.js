@@ -7,8 +7,8 @@ const benv = require("benv")
 const Backbone = require("backbone")
 const { resolve } = require("path")
 const { fabricate, fabricate2 } = require("@artsy/antigravity")
-const Fair = require("../../../../models/fair.coffee")
-const Gene = require("../../../../models/gene.coffee")
+const { Fair } = require("../../../../models/fair")
+const { Gene } = require("../../../../models/gene")
 const { FilterArtworks } = require("../../../../collections/filter_artworks")
 
 describe("Filter / Headline", function () {
@@ -16,7 +16,7 @@ describe("Filter / Headline", function () {
     return benv.setup(() => {
       benv.expose({ $: benv.require("jquery") })
       Backbone.$ = $
-      const HeadlineView = benv.require(resolve(__dirname, "../view"))
+      const { HeadlineView } = benv.require(resolve(__dirname, "../view"))
       this.view = new HeadlineView({
         el: $("<div></div>"),
         params: new Backbone.Model(),

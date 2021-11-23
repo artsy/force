@@ -7,7 +7,7 @@ let _Partners
 const _ = require("underscore")
 const sd = require("sharify").data
 const Backbone = require("backbone")
-const Partner = require("../models/partner")
+const { Partner } = require("../models/partner")
 const { API_URL } = require("sharify").data
 const { Fetch, AToZ } = require("@artsy/backbone-mixins")
 

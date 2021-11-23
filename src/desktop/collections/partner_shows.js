@@ -10,7 +10,7 @@ let _PartnerShows
 const _ = require("underscore")
 const sd = require("sharify").data
 const moment = require("moment")
-const PartnerShow = require("../models/partner_show")
+const { PartnerShow } = require("../models/partner_show")
 
 const Backbone = require("backbone")
 const { API_URL } = require("sharify").data

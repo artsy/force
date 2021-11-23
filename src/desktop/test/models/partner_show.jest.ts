@@ -2,10 +2,9 @@ import _ from "underscore"
 import { fabricate } from "@artsy/antigravity"
 const sd = require("sharify").data
 import Backbone from "backbone"
-const PartnerShow = require("../../models/partner_show.coffee")
-const PartnerLocation = require("../../models/partner_location.coffee")
-const FairLocation = require("../../models/partner_location.coffee")
-const Fair = require("../../models/fair.coffee")
+const { PartnerShow } = require("../../models/partner_show")
+const { PartnerLocation } = require("../../models/partner_location")
+const { Fair } = require("../../models/fair")
 import sinon from "sinon"
 const moment = require("moment")
 
@@ -132,7 +131,7 @@ describe("PartnerShow", () => {
           },
         })
       )
-      show.location().should.be.instanceOf(FairLocation)
+      show.location().should.be.instanceOf(PartnerLocation)
     })
   })
 

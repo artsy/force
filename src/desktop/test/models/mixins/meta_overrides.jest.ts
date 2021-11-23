@@ -1,5 +1,5 @@
 import Backbone from "backbone"
-const MetaOverrides = require("../../../models/mixins/meta_overrides.coffee")
+const { MetaOverrides } = require("../../../models/mixins/meta_overrides")
 import _ from "underscore"
 
 class Model extends Backbone.Model {

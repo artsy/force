@@ -9,7 +9,7 @@
 let _PartnerLocations
 const Backbone = require("backbone")
 const sd = require("sharify").data
-const PartnerLocation = require("../models/partner_location")
+const { PartnerLocation } = require("../models/partner_location")
 
 export default _PartnerLocations = (function () {
   _PartnerLocations = class PartnerLocations extends Backbone.Collection {

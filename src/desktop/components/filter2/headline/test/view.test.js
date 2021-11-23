@@ -7,7 +7,7 @@ const benv = require("benv")
 const Backbone = require("backbone")
 const { resolve } = require("path")
 const { fabricate, fabricate2 } = require("@artsy/antigravity")
-const Fair = require("../../../../models/fair.coffee")
+const { Fair } = require("../../../../models/fair")
 const { FilterArtworks } = require("../../../../collections/filter_artworks")
 
 describe("Filter / Headline", function () {

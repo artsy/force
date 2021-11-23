@@ -1,7 +1,7 @@
 _ = require 'underscore'
 ContactView = require './view.coffee'
 { analyticsHooks } = require "../inquiry_questionnaire/analytics/analyticsHooks"
-Partner = require '../../models/partner.coffee'
+{ Partner } = require '../../models/partner'
 Cookies = require 'cookies-js'
 Form = require '../mixins/form.coffee'
 defaultMessage = require './default_message.coffee'

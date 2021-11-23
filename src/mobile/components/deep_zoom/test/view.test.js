@@ -10,7 +10,7 @@ const sinon = require("sinon")
 const { resolve } = require("path")
 const { fabricate } = require("@artsy/antigravity")
 
-const Artwork = require("../../../models/artwork")
+const { Artwork } = require("../../../models/artwork")
 const OpenSeadragon = () => ({
   addHandler: sinon.stub(),
 })
@@ -38,7 +38,7 @@ describe("DeepZoomView", function () {
       ["template"]
     )
     DeepZoomView.__set__("getScript", (x, cb) => cb())
-    this.view = new DeepZoomView({ el: $("body"), model: this.model })
+    this.view = new DeepZoomView.DeepZoomView({ el: $("body"), model: this.model })
     return done()
   })
 

@@ -1,6 +1,6 @@
 import sinon from "sinon"
 import Backbone from "backbone"
-const CollectorProfile = require("../../models/collector_profile.coffee")
+const { CollectorProfile } = require("../../models/collector_profile")
 
 describe("CollectorProfile", () => {
   let testContext

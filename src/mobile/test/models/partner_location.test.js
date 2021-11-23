@@ -3,7 +3,7 @@
  * DS102: Remove unnecessary code created because of implicit returns
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/master/docs/suggestions.md
  */
-const PartnerLocation = require("../../models/partner_location")
+const { PartnerLocation } = require("../../models/partner_location")
 const { fabricate } = require("@artsy/antigravity")
 
 describe("PartnerLocation", function () {

@@ -1,8 +1,8 @@
 import $ from "jquery"
 require("backbone").$ = $
-const articleIndex = require("../apps/articles/client/articles.coffee")
-const sectionView = require("../apps/articles/client/section.coffee")
-const ArticleView = require("../components/article/client/view.coffee")
+const articleIndex = require("../apps/articles/client/articles")
+const sectionView = require("../apps/articles/client/section")
+const { ArticleView } = require("../components/article/client/view")
 
 $(() => {
   if (location.pathname === "/articles") {

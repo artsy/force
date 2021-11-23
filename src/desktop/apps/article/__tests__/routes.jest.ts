@@ -5,7 +5,7 @@ import * as fixtures from "@artsy/reaction/dist/Components/Publishing/Fixtures/A
 import * as routes from "../routes"
 import { extend } from "lodash"
 import { GalleryInsightsRedirects } from "../gallery_insights_redirects"
-const Article = require("desktop/models/article.coffee")
+const { Article } = require("desktop/models/article")
 
 jest.mock("desktop/lib/positronql", () => ({
   positronql: jest.fn(),

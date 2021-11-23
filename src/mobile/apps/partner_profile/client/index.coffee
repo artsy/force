@@ -1,9 +1,9 @@
-bootstrap = require '../../../components/layout/bootstrap.coffee'
+{ bootstrap } = require '../../../components/layout/bootstrap'
 sd = require('sharify').data
 CurrentUser = require '../../../models/current_user'
-Profile = require '../../../models/profile.coffee'
+{ Profile } = require '../../../models/profile'
 { FollowProfiles } = require '../../../collections/follow_profiles'
-FollowButtonView = require '../../../components/follow_button/view.coffee'
+{ FollowButtonView } = require '../../../components/follow_button/view'
 
 $ ->
   bootstrap()

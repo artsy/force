@@ -1,7 +1,7 @@
 import Backbone from "backbone"
 import { keys, last } from "lodash"
 import { fabricate } from "@artsy/antigravity"
-const CurrentUser = require("../../lib/current_user.coffee")
+const { CurrentUser } = require("../../lib/current_user")
 
 describe("CurrentUser", () => {
   let user

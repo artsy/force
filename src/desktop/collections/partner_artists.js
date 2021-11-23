@@ -6,7 +6,7 @@
 let _PartnerArtists
 const _ = require("underscore")
 const Backbone = require("backbone")
-const PartnerArtist = require("../models/partner_artist")
+const { PartnerArtist } = require("../models/partner_artist")
 const { API_URL } = require("sharify").data
 const { Fetch } = require("@artsy/backbone-mixins")
 

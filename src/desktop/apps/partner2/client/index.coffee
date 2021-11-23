@@ -1,6 +1,6 @@
 sd = require('sharify').data
 Backbone = require 'backbone'
-Profile = require '../../../models/profile.coffee'
+{ Profile } = require '../../../models/profile'
 PartnerRouter = require './router.coffee'
 
 module.exports.init = ->

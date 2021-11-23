@@ -8,8 +8,8 @@ const Backbone = require("backbone")
 const sinon = require("sinon")
 const path = require("path")
 const { Artworks } = require("../../../../collections/artworks")
-const Artwork = require("../../../../models/artwork.coffee")
-const Profile = require("../../../../models/profile")
+const { Artwork } = require("../../../../models/artwork")
+const { Profile } = require("../../../../models/profile")
 const { fabricate } = require("@artsy/antigravity")
 
 describe("PartnerArtworksView", function () {

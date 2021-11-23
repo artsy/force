@@ -6,7 +6,7 @@
 let _Representatives
 const Backbone = require("backbone")
 const { API_URL } = require("sharify").data
-const Representative = require("../models/representative")
+const { Representative } = require("../models/representative")
 
 export default _Representatives = (function () {
   _Representatives = class Representatives extends Backbone.Collection {

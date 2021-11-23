@@ -5,7 +5,7 @@
  */
 let _Images
 const Backbone = require("backbone")
-const Image = require("../models/image")
+const { Image } = require("../models/image")
 
 export default _Images = (function () {
   _Images = class Images extends Backbone.Collection {

@@ -6,11 +6,11 @@
  */
 const _ = require("underscore")
 const Backbone = require("backbone")
-const dateMixin = require("../../../models/mixins/date")
+const { Date: DateMixin } = require("../../../models/mixins/date")
 
 class Model extends Backbone.Model {
   static initClass() {
-    _.extend(this.prototype, dateMixin)
+    _.extend(this.prototype, DateMixin)
   }
 }
 Model.initClass()

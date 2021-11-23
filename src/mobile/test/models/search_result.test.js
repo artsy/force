@@ -4,8 +4,7 @@
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/master/docs/suggestions.md
  */
 const { fabricate } = require("@artsy/antigravity")
-const rewire = require("rewire")
-const SearchResult = rewire("../../models/search_result.coffee")
+const { SearchResult } = require("../../models/search_result")
 const moment = require("moment")
 
 describe("SearchResult", function () {

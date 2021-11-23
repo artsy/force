@@ -10,7 +10,7 @@ const sinon = require("sinon")
 const Backbone = require("backbone")
 const { fabricate } = require("@artsy/antigravity")
 const { resolve } = require("path")
-const Artwork = require("../../../models/artwork")
+const { Artwork } = require("../../../models/artwork")
 
 describe("Inquiry", function () {
   before(done =>

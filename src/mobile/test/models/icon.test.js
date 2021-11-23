@@ -5,8 +5,8 @@
  */
 const sinon = require("sinon")
 const Backbone = require("backbone")
-const Icon = require("../../models/icon")
-const Profile = require("../../models/profile")
+const { Icon } = require("../../models/icon")
+const { Profile } = require("../../models/profile")
 const { fabricate } = require("@artsy/antigravity")
 
 describe("Icon", function () {

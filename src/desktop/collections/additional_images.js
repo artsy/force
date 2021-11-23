@@ -8,7 +8,7 @@
 let _AdditionalImages
 const _ = require("underscore")
 const Backbone = require("backbone")
-const AdditionalImage = require("../models/additional_image")
+const { AdditionalImage } = require("../models/additional_image")
 
 export default _AdditionalImages = (function () {
   _AdditionalImages = class AdditionalImages extends Backbone.Collection {

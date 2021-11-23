@@ -7,7 +7,7 @@ const _ = require("underscore")
 const { fabricate } = require("@artsy/antigravity")
 const sinon = require("sinon")
 const routes = require("../routes")
-const Profile = require("../../../models/profile")
+const { Profile } = require("../../../models/profile")
 const Backbone = require("backbone")
 
 describe("Profile page", function () {

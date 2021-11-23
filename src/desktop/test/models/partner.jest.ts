@@ -1,5 +1,5 @@
 import { fabricate } from "@artsy/antigravity"
-const Partner = require("../../models/partner.coffee")
+const { Partner } = require("../../models/partner")
 
 describe("Partner", () => {
   let testContext

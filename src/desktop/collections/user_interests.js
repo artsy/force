@@ -9,7 +9,7 @@ let _UserInterests
 const _ = require("underscore")
 const Backbone = require("backbone")
 const { API_URL } = require("sharify").data
-const UserInterest = require("../models/user_interest")
+const { UserInterest } = require("../models/user_interest")
 
 export default _UserInterests = (function () {
   _UserInterests = class UserInterests extends Backbone.Collection {

@@ -1,8 +1,8 @@
 _ = require 'underscore'
 { ARTWORK } = require('sharify').data
-User = require '../../../../models/user.coffee'
-Artwork = require '../../../../models/artwork.coffee'
-ArtworkInquiry = require '../../../../models/artwork_inquiry.coffee'
+{ User } = require '../../../../models/user'
+{ Artwork } = require '../../../../models/artwork'
+{ ArtworkInquiry } = require '../../../../models/artwork_inquiry'
 State = require '../../../../components/branching_state/index.coffee'
 StateView = require '../../../../components/branching_state/view.coffee'
 openErrorFlash = require '../../../../components/inquiry_questionnaire/error.coffee'

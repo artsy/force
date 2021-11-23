@@ -1,1 +1,1 @@
-module.exports = require("../../lib/current_user.coffee")
+module.exports = require("../../lib/current_user").CurrentUser

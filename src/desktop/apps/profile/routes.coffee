@@ -1,4 +1,4 @@
-Profile = require '../../models/profile'
+{ Profile } = require '../../models/profile'
 Following = require '../../components/follow_button/collection.coffee'
 
 @follow = (req, res) ->

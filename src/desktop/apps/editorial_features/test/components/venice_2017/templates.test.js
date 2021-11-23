@@ -7,8 +7,8 @@ const path = require("path")
 const jade = require("jade")
 const fs = require("fs")
 const moment = require("moment")
-const Curation = require("../../../../../models/curation.coffee")
-const Article = require("../../../../../models/article.coffee")
+const { Curation } = require("../../../../../models/curation")
+const { Article } = require("../../../../../models/article")
 
 const render = function (templateName) {
   const filename = path.resolve(

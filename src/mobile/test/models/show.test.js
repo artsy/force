@@ -6,8 +6,8 @@
 const sinon = require("sinon")
 const Backbone = require("backbone")
 const _ = require("underscore")
-const Show = require("../../models/show")
-const Artwork = require("../../models/artwork")
+const { Show } = require("../../models/show")
+const { Artwork } = require("../../models/artwork")
 const { fabricate } = require("@artsy/antigravity")
 const moment = require("moment")
 

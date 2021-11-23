@@ -1,6 +1,6 @@
 _ = require 'underscore'
-Profile = require '../../models/profile.coffee'
-FairOrganizer = require '../../models/fair_organizer.coffee'
+{ Profile } = require '../../models/profile'
+{ FairOrganizer } = require '../../models/fair_organizer'
 { Fairs } = require '../../collections/fairs'
 { OrderedSets } = require '../../collections/ordered_sets'
 { Articles } = require '../../collections/articles'

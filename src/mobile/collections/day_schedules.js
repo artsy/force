@@ -8,7 +8,7 @@ let _DaySchedules
 const _ = require("underscore")
 const moment = require("moment")
 const Backbone = require("backbone")
-const DaySchedule = require("../models/day_schedule")
+const { DaySchedule } = require("../models/day_schedule")
 
 export default _DaySchedules = (function () {
   _DaySchedules = class DaySchedules extends Backbone.Collection {

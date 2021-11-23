@@ -5,7 +5,7 @@
  */
 const rewire = require("rewire")
 const CurrentUser = require("../../../models/current_user")
-const Artwork = require("../../../models/artwork")
+const { Artwork } = require("../../../models/artwork")
 const State = require("../../branching_state")
 let map = null
 const benv = require("benv")

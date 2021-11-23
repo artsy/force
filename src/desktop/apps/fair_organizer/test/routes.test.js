@@ -10,10 +10,10 @@ const Backbone = require("backbone")
 const rewire = require("rewire")
 const moment = require("moment")
 const routes = rewire("../routes")
-const FairOrganizer = require("../../../models/fair_organizer.coffee")
-const Fair = require("../../../models/fair.coffee")
+const { FairOrganizer } = require("../../../models/fair_organizer")
+const { Fair } = require("../../../models/fair")
 const { Fairs } = require("../../../collections/fairs")
-const Profile = require("../../../models/profile.coffee")
+const { Profile } = require("../../../models/profile")
 
 class OrderedSetsFixture extends Backbone.Collection {
   fetchAll() {

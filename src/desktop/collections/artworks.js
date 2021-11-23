@@ -11,7 +11,7 @@
 let _Artworks
 const _ = require("underscore")
 const _s = require("underscore.string")
-const Artwork = require("../models/artwork")
+const { Artwork } = require("../models/artwork")
 const Backbone = require("backbone")
 const { API_URL } = require("sharify").data
 const { Fetch } = require("@artsy/backbone-mixins")

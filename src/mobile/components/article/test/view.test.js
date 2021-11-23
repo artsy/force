@@ -1,7 +1,7 @@
 const benv = require("benv")
 const sinon = require("sinon")
 const Backbone = require("backbone")
-const Article = require("../../../models/article")
+const { Article } = require("../../../models/article")
 const { Articles } = require("../../../collections/articles")
 const { resolve } = require("path")
 const { fabricate } = require("@artsy/antigravity")
@@ -48,7 +48,7 @@ describe("ArticleView", () => {
           ArticleView = benv.requireWithJadeify(
             resolve(__dirname, "../client/view"),
             []
-          )
+          ).ArticleView
           sinon.stub(Backbone, "sync")
           done()
         }

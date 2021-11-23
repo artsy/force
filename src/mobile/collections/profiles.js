@@ -7,7 +7,7 @@ let _Profiles
 const _ = require("underscore")
 const sd = require("sharify").data
 const Backbone = require("backbone")
-const Profile = require("../models/profile")
+const { Profile } = require("../models/profile")
 const { AToZ, Fetch } = require("@artsy/backbone-mixins")
 
 export default _Profiles = (function () {

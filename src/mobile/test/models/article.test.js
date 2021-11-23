@@ -6,14 +6,14 @@
 const Backbone = require("backbone")
 const { fabricate } = require("@artsy/antigravity")
 const rewire = require("rewire")
-const Article = rewire("../../models/article.coffee")
+const Article = rewire("../../models/article")
 const sinon = require("sinon")
-const fixtures = require("../helpers/fixtures.coffee")
+const fixtures = require("../helpers/fixtures")
 
 describe("Article", function () {
   beforeEach(function () {
     sinon.stub(Backbone, "sync")
-    this.article = new Article(fixtures.article)
+    this.article = new Article.Article(fixtures.article)
     return Article.__set__("sd", { FAIR_CHANNEL_ID: "12345" })
   })
 

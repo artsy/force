@@ -9,7 +9,7 @@
 let _Notifications
 const _ = require("underscore")
 const sd = require("sharify").data
-const Artwork = require("../models/artwork")
+const { Artwork } = require("../models/artwork")
 const PageableCollection = require("../components/pageable_collection/index")
 const { API_URL } = require("sharify").data
 

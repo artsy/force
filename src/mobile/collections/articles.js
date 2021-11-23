@@ -10,7 +10,7 @@
  */
 let _Articles
 const Backbone = require("backbone")
-const Article = require("../models/article")
+const { Article } = require("../models/article")
 const sd = require("sharify").data
 
 export default _Articles = (function () {

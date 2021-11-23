@@ -7,7 +7,7 @@ const benv = require("benv")
 const _ = require("underscore")
 const Backbone = require("backbone")
 const { SearchResults } = require("../../../collections/search_results")
-const SearchResult = require("../../../models/search_result")
+const { SearchResult } = require("../../../models/search_result")
 const sinon = require("sinon")
 const { resolve } = require("path")
 

@@ -13,7 +13,7 @@ describe("SelectView", function () {
     return benv.setup(() => {
       benv.expose({ $: benv.require("jquery") })
       Backbone.$ = $
-      const filename = path.resolve(__dirname, "../client/select_view.coffee")
+      const filename = path.resolve(__dirname, "../client/select_view")
       const SelectView = benv.requireWithJadeify(filename, ["template"])
 
       this.triggerSpy = sinon.stub()
@@ -36,7 +36,7 @@ describe("SelectView", function () {
 
   afterEach(() => benv.teardown())
 
-  return xdescribe("#initialRender", () =>
-    xit("renders the select box properly", () =>
+  return describe.skip("#initialRender", () =>
+    it.skip("renders the select box properly", () =>
       $("#select-group__select-cabbie option").length.should.equal(2)))
 })

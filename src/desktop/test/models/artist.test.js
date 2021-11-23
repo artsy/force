@@ -6,9 +6,8 @@
 const _ = require("underscore")
 const sinon = require("sinon")
 const Backbone = require("backbone")
-const rewire = require("rewire")
 const { fabricate } = require("@artsy/antigravity")
-const Artist = rewire("../../models/artist")
+const { Artist } = require("../../models/artist")
 
 describe("Artist", function () {
   beforeEach(function () {

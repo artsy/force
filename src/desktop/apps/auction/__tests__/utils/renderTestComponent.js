@@ -1,5 +1,5 @@
 import Articles from "desktop/collections/articles"
-import Auction from "desktop/models/auction.coffee"
+import Auction from "desktop/models/auction"
 import CurrentUser from "desktop/models/current_user"
 import auctions from "desktop/apps/auction/reducers"
 import bootstrap from "desktop/apps/auction/__tests__/fixtures/auction"
