@@ -31,7 +31,9 @@ const ArtistWorksForSaleRoute: React.FC<ArtistWorksForSaleRouteProps> = ({
 
   useEffect(() => {
     if (isMatchMediaParsed && match?.location?.query?.search_criteria_id) {
-      scrollTo()
+      requestAnimationFrame(() => {
+        scrollTo()
+      })
     }
   }, [isMatchMediaParsed])
 
