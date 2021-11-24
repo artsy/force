@@ -29,6 +29,13 @@ const ArtistWorksForSaleRoute: React.FC<ArtistWorksForSaleRouteProps> = ({
     offset: 10,
   })
 
+  /**
+   * We should perform scroll only when isReadyForUse is true
+   * Otherwise the wrong offset will be used for mWeb
+   *
+   * scrollTo without requestAnimationFrame doesn't work in Safari
+   * when it is used in useEffect hook
+   */
   useEffect(() => {
     if (isReadyForUse && match?.location?.query?.search_criteria_id) {
       requestAnimationFrame(() => {
