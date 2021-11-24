@@ -35,6 +35,7 @@ const ArtistArtworkFilter: React.FC<ArtistArtworkFilterProps> = props => {
     type: "artist",
     id: artist.internalID,
     name: artist.name ?? "",
+    slug: artist.slug,
   }
 
   return (

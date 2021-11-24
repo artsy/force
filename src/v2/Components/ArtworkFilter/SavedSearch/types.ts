@@ -22,6 +22,7 @@ export interface SavedSearchAttributes {
   type: "artist"
   id: string
   name: string
+  slug: string
 }
 
 export type SearchCriteriaAttributeKeys = keyof SearchCriteriaAttributes
