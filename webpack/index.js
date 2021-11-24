@@ -7,6 +7,7 @@ import path from "path"
 import { bundleAnalyzer } from "./plugins/bundleAnalyzer"
 import { metrics } from "./plugins/datadog"
 import { env, basePath } from "./utils/env"
+import { log } from "./utils/log"
 import { legacySharedConfig } from "./envs/legacySharedConfig"
 import { legacyDevelopmentConfig } from "./envs/legacyDevelopmentConfig"
 import { legacyProductionConfig } from "./envs/legacyProductionConfig"
@@ -14,17 +15,16 @@ import { clientDevelopmentConfig } from "./envs/clientDevelopmentConfig"
 import { clientProductionConfig } from "./envs/clientProductionConfig"
 import { serverConfig } from "./envs/serverConfig"
 
-const logEnv = () =>
-  console.log(chalk.green(`\n[Force] NODE_ENV=${env.nodeEnv} \n`))
+const logEnv = () => log(chalk.green(`\n[Force] NODE_ENV=${env.nodeEnv} \n`))
 
 function getClientConfig() {
   if (env.isDevelopment) {
-    console.log("[Force] Building client-side development code...")
-    return clientDevelopmentConfig
+    log("[Force] Building client-side development code...")
+    return clientDevelopmentConfig()
   }
   if (env.isProduction) {
-    console.log("[Force] Building client-side production code...")
-    return clientProductionConfig
+    log("[Force] Building client-side production code...")
+    return clientProductionConfig()
   }
 
   throw new Error(`[Force] Unsupported environment ${env.nodeEnv}`)
@@ -34,8 +34,8 @@ function getServerConfig() {
   logEnv()
 
   if (env.isDevelopment || env.isProduction) {
-    console.log("[Force Server] Building server-side code...")
-    return serverConfig
+    log("[Force Server] Building server-side code...")
+    return serverConfig()
   }
 
   throw new Error(`[Force Server] Unsupported environment ${env.nodeEnv}`)
@@ -48,7 +48,7 @@ function getLegacyConfig() {
     const cacheDirectory = path.resolve(basePath, ".cache")
 
     if (!env.onCi && !fs.existsSync(cacheDirectory)) {
-      console.log(
+      log(
         chalk.yellow(
           "\n[!] No existing `.cache` directory detected, initial " +
             "launch will take a while.\n"
@@ -56,12 +56,12 @@ function getLegacyConfig() {
       )
     }
 
-    return merge.smart(legacySharedConfig, legacyDevelopmentConfig)
+    return merge.smart(legacySharedConfig(), legacyDevelopmentConfig())
   }
 
   if (env.isProduction) {
-    console.log("[Force Client] Building legacy client-side production code...")
-    return merge.smart(legacySharedConfig, legacyProductionConfig)
+    log("[Force Client] Building legacy client-side production code...")
+    return merge.smart(legacySharedConfig(), legacyProductionConfig())
   }
 
   throw new Error(`[Force Client] Unsupported environment ${env.nodeEnv}`)
@@ -72,17 +72,17 @@ function getLegacyConfig() {
 export function getDevelopmentWebpackConfig(configName) {
   switch (configName) {
     case "client.dev":
-      return clientDevelopmentConfig
+      return clientDevelopmentConfig()
     case "client.prod":
-      return clientProductionConfig
+      return clientProductionConfig()
     case "legacy.dev":
-      return merge.smart(legacySharedConfig, legacyDevelopmentConfig)
+      return merge.smart(legacySharedConfig(), legacyDevelopmentConfig())
     case "legacy.prod":
-      return merge.smart(legacySharedConfig, legacyProductionConfig)
+      return merge.smart(legacySharedConfig(), legacyProductionConfig())
     case "server.dev":
-      return serverConfig
+      return serverConfig()
     case "server.prod":
-      return serverConfig
+      return serverConfig()
   }
 }
 
@@ -93,13 +93,13 @@ function getProductionWebpackConfig() {
 
   // Verify that only a single build is selected.
   if (!env.buildLegacyClient && !env.buildServer && !env.buildClient) {
-    console.log("Must build either the CLIENT or SERVER.")
+    log("Must build either the CLIENT or SERVER.")
     process.exit(1)
   } else if (
     (env.buildLegacyClient && env.buildServer) ||
     (env.buildClient && env.buildServer)
   ) {
-    console.log("Must only build CLIENT or SERVER.")
+    log("Must only build CLIENT or SERVER.")
     process.exit(1)
   }
 
@@ -116,7 +116,7 @@ function getProductionWebpackConfig() {
     config = getClientConfig()
     name = "assets"
   } else {
-    console.log(chalk.red("No build selected."))
+    log(chalk.red("No build selected."))
     process.exit(1)
   }
 

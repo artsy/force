@@ -7,7 +7,7 @@ import { basePath, env } from "../utils/env"
 import { minimizer } from "./sharedConfig"
 import { jadeLoader } from "./sharedLoaders"
 
-export const serverConfig = {
+export const serverConfig = () => ({
   devtool: env.webpackDevtool || "source-map",
   entry: path.join(basePath, "src/index.js"),
   externals: [nodeExternals()],
@@ -59,4 +59,4 @@ export const serverConfig = {
     modules: [path.resolve(basePath, "src"), "node_modules"],
   },
   target: "node",
-}
+})

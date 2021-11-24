@@ -8,7 +8,7 @@ import { env } from "../utils/env"
 
 const currentYear = new Date().getFullYear()
 
-export const sharedPlugins = [
+export const sharedPlugins = () => [
   new LodashModuleReplacementPlugin({
     collections: true,
     currying: true,

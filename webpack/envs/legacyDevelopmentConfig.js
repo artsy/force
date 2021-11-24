@@ -12,7 +12,7 @@ import ReactRefreshWebpackPlugin from "@pmmmwh/react-refresh-webpack-plugin"
 import { basePath, env } from "../utils/env"
 import { getEntrypoints } from "../utils/getEntrypoints"
 
-export const legacyDevelopmentConfig = {
+export const legacyDevelopmentConfig = () => ({
   entry: getEntrypoints(),
   module: {
     // CSS is compiled in dev for in-memory refreshing; in prod its compiled
@@ -71,4 +71,4 @@ export const legacyDevelopmentConfig = {
     }),
   ],
   stats: env.webpackStats || "errors-only",
-}
+})
