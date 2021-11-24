@@ -1,4 +1,4 @@
-import { FC, useEffect } from "react";
+import { FC, useEffect } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import {
   Box,
@@ -55,6 +55,12 @@ const DetailsContainer = styled(Flex)<{ transform?: string }>`
   `}
 `
 
+const TruncatedLine = styled(Text)`
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+`
+
 interface DetailsProps extends FlexProps {
   conversation: Details_conversation
   showDetails: boolean
@@ -94,8 +100,12 @@ export const Details: FC<DetailsProps> = ({
   const attachments = conversation?.messagesConnection?.edges
     ?.map(edge => edge?.node?.attachments)
     ?.filter(attachments => attachments?.length)
-    ?.reduce((previous, current) => previous?.concat(current!), [])
-    ?.filter(attachment => !attachment?.contentType.includes("image"))
+    ?.flat()
+  // ?.filter(attachment => !attachment?.contentType.includes("image"))
+
+  useEffect(() => {
+    console.log("Hey HEy", attachments)
+  }, [])
 
   const attachmentItems = attachments
     ?.filter(attachment => attachment?.id && attachment?.downloadURL)
@@ -109,7 +119,7 @@ export const Details: FC<DetailsProps> = ({
         >
           <Flex alignItems="center">
             <DocumentIcon mr={0.5} />
-            <Text variant="xs">{attachment?.fileName}</Text>
+            <TruncatedLine variant="xs">{attachment?.fileName}</TruncatedLine>
           </Flex>
         </Link>
       )
@@ -195,7 +205,7 @@ export const Details: FC<DetailsProps> = ({
           </Flex>
         </>
       )}
-      {attachments?.length && (
+      {!!attachments?.length && (
         <>
           <Separator my={2} />
           <Box px={2}>
