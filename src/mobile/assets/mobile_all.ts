@@ -10,7 +10,6 @@ import $ from "jquery"
 import { data as sd } from "sharify"
 
 const routes = {
-  "^/search": require("../apps/search/client.coffee").init,
   "^/contact": require("../apps/contact/client/index.coffee").init,
   "^/how-auctions-work[/]?.*": require("../apps/how_auctions_work/client/index.coffee")
     .init,
