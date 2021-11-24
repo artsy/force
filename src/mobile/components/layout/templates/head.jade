@@ -23,7 +23,7 @@ link( rel='apple-touch-icon', href=asset('/images/icon-152.png') )
 
 if sd.PAGE_TYPE == "partner" && sd.PROFILE.id
  link( href="#{sd.APP_URL}/#{sd.PROFILE.id}", rel="canonical" )
-else 
+else
   link( href="#{sd.APP_URL}#{sd.CURRENT_PATH}", rel="canonical" )
 
 //- Include asset package's CSS
@@ -37,6 +37,8 @@ link( rel='preconnect', href='https://www.googleadservices.com' )
 
 link( rel='dns-prefetch', href='https://connect.facebook.net' )
 link( rel='dns-prefetch', href='https://cdn.segment.com' )
+
+link( type='text/css', rel='stylesheet', href='#{sd.WEBFONT_URL}/all-webfonts.css' )
 
 //- TTI measurement
 script( type="text/javascript" )
