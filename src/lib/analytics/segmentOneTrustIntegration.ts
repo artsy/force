@@ -1,6 +1,6 @@
 import { data as sd } from "sharify"
 
-const SEGMENT_MAPPING = "C0001" // Segment itself assigned OneTrust Strictly Necessary category.
+const SEGMENT_MAPPING = "C0001" // assign OneTrust category to Segment itself.
 const SEGMENT_WRITE_KEY = sd.SEGMENT_WRITE_KEY
 
 let PREVIOUS_CONSENT = ""
@@ -40,16 +40,18 @@ async function getConsentAndLoad() {
   PREVIOUS_CONSENT = consent
 
   // flag each Segment destination on or off, based on consent.
-  const destinationPreferences = setSegmentDestinationPref(
+  const destinationPref = setSegmentDestinationPref(
     consent,
     SEGMENT_DESTINATIONS
   )
+
+  console.log(destinationPref)
 
   // load Segment and pass on those flags.
   conditionallyLoadAnalytics({
     writeKey: SEGMENT_WRITE_KEY,
     destinations: SEGMENT_DESTINATIONS,
-    destinationPreferences,
+    destinationPref,
   })
 }
 
@@ -131,8 +133,16 @@ function setSegmentDestinationPref(consent, destinations) {
 
   const consentArray = consent.split(",")
 
+  const basePref = {
+    // default to false for all Segment destinations.
+    // so if we don't set preference for a destination, it will not be loaded.
+    All: false,
+    // whether we send events to Segment itself.
+    "Segment.io": consentArray.some(d => d === SEGMENT_MAPPING),
+  }
+
   // for each destination, if its id maps to a OneTrust category that is present in consent, set it true, to be enabled.
-  const destinationPreferences = destinations
+  const additionalPref = destinations
     .map(function (dest) {
       if (
         dest.id in segmentToOneTrust &&
@@ -140,34 +150,35 @@ function setSegmentDestinationPref(consent, destinations) {
       ) {
         return { [dest.id]: true }
       } else {
-        // no mapping for the Segment category, or it maps to a OneTrust category that is not present in consent.
+        // no mapping for the destination, or it maps to a OneTrust category that is not present in OneTrust consent.
         return { [dest.id]: false }
       }
     })
-    .reduce(
-      (acc, val) => {
-        return {
-          ...val,
-          ...acc,
-        }
-      },
-      // tag on an entry for Segment.io destination.
-      { "Segment.io": consentArray.some(d => d === SEGMENT_MAPPING) }
-    )
+    .reduce((acc, val) => {
+      return {
+        ...val,
+        ...acc,
+      }
+    })
 
-  return destinationPreferences
+  const destinationPref = {
+    ...basePref,
+    ...additionalPref,
+  }
+
+  return destinationPref
 }
 
 function conditionallyLoadAnalytics({
   writeKey,
   destinations,
-  destinationPreferences,
+  destinationPref,
   shouldReload = true,
 }) {
   let isAnythingEnabled = false
 
-  for (const destination in destinationPreferences) {
-    const isEnabled = destinationPreferences[destination]
+  for (const destination in destinationPref) {
+    const isEnabled = destinationPref[destination]
     if (isEnabled) {
       isAnythingEnabled = true
     }
@@ -184,7 +195,7 @@ function conditionallyLoadAnalytics({
 
   if (isAnythingEnabled) {
     // @ts-ignore
-    window.analytics.load(writeKey, { integrations: destinationPreferences })
+    window.analytics.load(writeKey, { integrations: destinationPref })
   }
 
   // if everything is disabled, don't load segment.
