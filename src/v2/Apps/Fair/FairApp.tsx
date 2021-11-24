@@ -77,7 +77,7 @@ const FairApp: React.FC<FairAppProps> = ({ children, fair }) => {
         {({ stuck }) => {
           return (
             <FullBleed
-              mb={stuck ? 0.5 : 0}
+              mb={stuck ? 1 : 0}
               style={stuck ? { boxShadow: DROP_SHADOW } : undefined}
             >
               <AppContainer>
