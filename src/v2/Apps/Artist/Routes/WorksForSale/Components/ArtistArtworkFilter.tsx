@@ -7,12 +7,13 @@ import {
 } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
 import { updateUrl } from "v2/Components/ArtworkFilter/Utils/urlBuilder"
 import { Match } from "found"
-import * as React from "react"
+import React, { useEffect } from "react"
 import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
 import { data as sd } from "sharify"
 import { ZeroState } from "./ZeroState"
 import { useRouter } from "v2/System/Router/useRouter"
 import { SavedSearchAttributes } from "v2/Components/ArtworkFilter/SavedSearch/types"
+import { useScrollTo } from "v2/Utils/Hooks/useScrollTo"
 
 interface ArtistArtworkFilterProps {
   aggregations: SharedArtworkFilterContextProps["aggregations"]
@@ -26,6 +27,18 @@ const ArtistArtworkFilter: React.FC<ArtistArtworkFilterProps> = props => {
   const { relay, aggregations, artist } = props
   const { filtered_artworks } = artist
   const hasFilter = filtered_artworks && filtered_artworks.id
+
+  const { scrollTo, isMatchMediaParsed } = useScrollTo({
+    selectorOrRef: "#jump--artworkFilter",
+    behavior: "smooth",
+    offset: 10,
+  })
+
+  useEffect(() => {
+    if (isMatchMediaParsed && match?.location?.query?.search_criteria_id) {
+      scrollTo()
+    }
+  }, [isMatchMediaParsed])
 
   if (!hasFilter) {
     return null
