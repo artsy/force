@@ -30,9 +30,7 @@ form.settings-password__form.stacked-form(
       id='current-password'
       name='current_password'
       type='password'
-      autocomplete='on'
-      pattern='.{8,}'
-      title='8 characters minimum'
+      autocomplete='current-password'
       autofocus
       required
     )
@@ -50,7 +48,7 @@ form.settings-password__form.stacked-form(
     id='new_password'
     name='new_password'
     type='password'
-    autocomplete='on'
+    autocomplete='new-password'
     pattern='.{8,}'
     title='8 characters minimum'
     required
@@ -62,7 +60,7 @@ form.settings-password__form.stacked-form(
     id='password_confirmation'
     name='password_confirmation'
     type='password'
-    autocomplete='on'
+    autocomplete='new-password'
     pattern='.{8,}'
     title='8 characters minimum'
     required
