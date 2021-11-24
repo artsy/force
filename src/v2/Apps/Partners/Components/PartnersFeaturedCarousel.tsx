@@ -1,7 +1,7 @@
-import { compact } from "lodash"
 import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { HeroCarousel } from "v2/Components/HeroCarousel/HeroCarousel"
+import { extractNodes } from "v2/Utils/extractNodes"
 import { PartnersFeaturedCarousel_viewer } from "v2/__generated__/PartnersFeaturedCarousel_viewer.graphql"
 import { PartnersFeaturedCarouselCellFragmentContainer } from "./PartnersFeaturedCarouselCell"
 
@@ -12,7 +12,7 @@ interface PartnersFeaturedCarouselProps {
 const PartnersFeaturedCarousel: FC<PartnersFeaturedCarouselProps> = ({
   viewer,
 }) => {
-  const profiles = compact(viewer.orderedSet?.items)
+  const profiles = extractNodes(viewer.orderedSet?.orderedItemsConnection)
 
   return (
     <HeroCarousel fullBleed={false}>
@@ -35,10 +35,14 @@ export const PartnersFeaturedCarouselFragmentContainer = createFragmentContainer
       fragment PartnersFeaturedCarousel_viewer on Viewer
         @argumentDefinitions(id: { type: "String!" }) {
         orderedSet(id: $id) {
-          items {
-            ... on Profile {
-              internalID
-              ...PartnersFeaturedCarouselCell_profile
+          orderedItemsConnection(first: 50) {
+            edges {
+              node {
+                ... on Profile {
+                  internalID
+                  ...PartnersFeaturedCarouselCell_profile
+                }
+              }
             }
           }
         }
