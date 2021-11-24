@@ -64,8 +64,8 @@ export const AddressForm: React.FC<AddressFormProps> = ({
   errors,
   touched,
 }) => {
-  const [address, setAddress] = useState({ ...emptyAddress, ...value })
-  const [key, setKey] = useState<keyof Address>()
+  const [address, setAddress] = React.useState({ ...emptyAddress, ...value })
+  const [key, setKey] = React.useState<keyof Address>()
 
   const styles = useThemeConfig({
     v2: {
@@ -92,7 +92,7 @@ export const AddressForm: React.FC<AddressFormProps> = ({
     onChangeValue(key, value)
   }
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (key) {
       onChange(address, key)
     }
@@ -103,7 +103,7 @@ export const AddressForm: React.FC<AddressFormProps> = ({
     setAddress(prevAddress => ({ ...prevAddress, [key]: value }))
   }
 
-  const getError = useCallback(
+  const getError = React.useCallback(
     (key: keyof Address) => {
       return (touched && touched[key] && errors && errors[key]) || ""
     },
