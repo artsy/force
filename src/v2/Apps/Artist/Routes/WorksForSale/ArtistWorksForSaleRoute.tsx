@@ -23,19 +23,19 @@ const ArtistWorksForSaleRoute: React.FC<ArtistWorksForSaleRouteProps> = ({
     true
   )
   const { match } = useRouter()
-  const { scrollTo, isMatchMediaParsed } = useScrollTo({
+  const { scrollTo, isReadyForUse } = useScrollTo({
     selectorOrRef: "#jump--artworkFilter",
     behavior: "smooth",
     offset: 10,
   })
 
   useEffect(() => {
-    if (isMatchMediaParsed && match?.location?.query?.search_criteria_id) {
+    if (isReadyForUse && match?.location?.query?.search_criteria_id) {
       requestAnimationFrame(() => {
         scrollTo()
       })
     }
-  }, [isMatchMediaParsed])
+  }, [isReadyForUse])
 
   return (
     <>
