@@ -57,8 +57,9 @@ export const ProfileIcon: React.FC<ProfileIconProps> = ({
 }) => {
   const { icon, name } = profile
 
-  const getSizeWithSticky = standartSize =>
-    (stuck && icon?.sticky ? icon.sticky.size : standartSize) + 2
+  const getSizeWithSticky = (standartSize?: number) =>
+    +!!standartSize &&
+    (stuck && icon?.sticky ? icon.sticky.size : standartSize!) + 2
 
   const desktopSize = getSizeWithSticky(icon?.desktop?.size)
   const mobileSize = getSizeWithSticky(icon?.mobile?.size)
