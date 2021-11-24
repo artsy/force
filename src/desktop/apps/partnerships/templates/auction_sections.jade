@@ -22,7 +22,7 @@ mixin auction_apply(section)
       script(src='//app-ab14.marketo.com/js/forms2/js/forms2.min.js')
       form#mktoForm_1240
       script.
-        MktoForms2.loadForm("//app-ab14.marketo.com", "609-FDY-207", 1240);
+        typeof MktoForms2 !== "undefined" && MktoForms2.loadForm("//app-ab14.marketo.com", "609-FDY-207", 1240);
 
 mixin auction_audience(section)
   .partnerships-section-header.audience
