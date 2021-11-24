@@ -208,6 +208,8 @@ jobs:
       - run:
           name: Run Smoke Tests on Staging
           command: ./node_modules/.bin/cypress run --config baseUrl=$SMOKE_TEST_TARGET
+      - store_artifacts:
+          path: cypress/screenshots
 
 not_master_or_staging_or_release: &not_master_or_staging_or_release
   filters:
