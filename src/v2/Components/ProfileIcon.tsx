@@ -1,4 +1,5 @@
 import { Box, BoxProps } from "@artsy/palette"
+import { BorderBoxBase } from "@artsy/palette/dist/elements/BorderBox/BorderBoxBase"
 import * as React from "react"
 import styled from "styled-components"
 import { resizeSquare } from "v2/Assets/Animations"
@@ -27,8 +28,13 @@ interface ProfileIconProps extends BoxProps {
   profile: Profile
 }
 
-const BorderBox = styled(Box)<{ prevSize?: number; size?: number }>`
-  border: 1px solid #c2c2c2;
+const BorderBox = styled(BorderBoxBase).attrs({
+  borderColor: "black30",
+  p: 0,
+})<{
+  prevSize?: number
+  size?: number
+}>`
   animation: ${p => resizeSquare(`${p.prevSize}px`, `${p.size}px`)} 0.2s linear;
 `
 BorderBox.displayName = "BorderBox"
@@ -57,9 +63,8 @@ export const ProfileIcon: React.FC<ProfileIconProps> = ({
 }) => {
   const { icon, name } = profile
 
-  const getSizeWithSticky = (standartSize?: number) =>
-    +!!standartSize &&
-    (stuck && icon?.sticky ? icon.sticky.size : standartSize!) + 2
+  const getSizeWithSticky = (baseSize?: number) =>
+    +!!baseSize && (stuck && icon?.sticky ? icon.sticky.size : baseSize!) + 2
 
   const desktopSize = getSizeWithSticky(icon?.desktop?.size)
   const mobileSize = getSizeWithSticky(icon?.mobile?.size)

@@ -1,11 +1,12 @@
 import * as React from "react"
-import { Box, BoxProps, Flex, Text } from "@artsy/palette"
+import { Box, BoxProps, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FairHeader_fair } from "v2/__generated__/FairHeader_fair.graphql"
 import { ProfileIcon } from "v2/Components/ProfileIcon"
 import styled from "styled-components"
 import { growAndFadeIn, shrinkAndFadeOut } from "v2/Assets/Animations"
 import { Media } from "v2/Utils/Responsive"
+import { BorderBoxBase } from "@artsy/palette/dist/elements/BorderBox/BorderBoxBase"
 
 const SUBTITLE_HEIGHT = "38px"
 
@@ -40,7 +41,7 @@ const Title: React.FC<{ title: string | null; stuck: boolean }> = ({
   return (
     <>
       <Media greaterThanOrEqual="md">
-        <ScalingText as="h1" variant={"xl"} stuck={stuck}>
+        <ScalingText as="h1" variant="xl" stuck={stuck}>
           {title}
         </ScalingText>
       </Media>
@@ -58,9 +59,10 @@ const FairHeader: React.FC<FairHeaderProps> = ({ fair, stuck = false }) => {
   const { name, exhibitionPeriod, profile } = fair
 
   return (
-    <Flex
+    <BorderBoxBase
+      p={0}
       py={1}
-      border="1px solid transparent"
+      borderColor="transparent"
       borderBottomColor={stuck ? "black10" : "transparent"}
     >
       <ProfileIcon
@@ -74,7 +76,7 @@ const FairHeader: React.FC<FairHeaderProps> = ({ fair, stuck = false }) => {
           {exhibitionPeriod}
         </FadingText>
       </Box>
-    </Flex>
+    </BorderBoxBase>
   )
 }
 
