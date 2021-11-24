@@ -33,7 +33,6 @@ import {
 } from "../__fixtures__/MutationResults/saveAddress"
 import { useTracking } from "v2/System"
 import { flushPromiseQueue } from "v2/DevTools"
-import { waitFor } from "@testing-library/react"
 
 jest.unmock("react-relay")
 jest.mock("v2/System/Analytics/useTracking")
@@ -649,8 +648,8 @@ describe("Shipping", () => {
           fillAddressForm(page.root, address)
           await page.clickSubmit()
 
-          // await flushPromiseQueue()
-          // page.update()
+          await flushPromiseQueue()
+          page.update()
 
           const input = page
             .find(Input)
@@ -679,19 +678,15 @@ describe("Shipping", () => {
           expect(cityInput.props().error).toBeFalsy()
         })
 
-        fit("after submit, shows all validation errors on inputs that have not been touched", async () => {
+        it("after submit, shows all validation errors on inputs that have not been touched", async () => {
           fillIn(page.root, { title: "Full name", value: "Erik David" })
 
+          await flushPromiseQueue()
           await page.clickSubmit()
 
           const cityInput = page
             .find(Input)
             .filterWhere(wrapper => wrapper.props().title === "City")
-
-          // await waitFor(() =>
-          //   /* eslint-disable testing-library/no-node-access */
-          //   expect(cityInput.props().error).toBeTruthy()
-          // )
 
           expect(cityInput.props().error).toBeTruthy()
         })
@@ -726,8 +721,8 @@ describe("Shipping", () => {
           fillAddressForm(page.root, address)
           await page.clickSubmit()
 
-          // await flushPromiseQueue()
-          // page.update()
+          await flushPromiseQueue()
+          page.update()
 
           expect(mutations.mockFetch).toBeCalled()
         })
