@@ -56,7 +56,9 @@
     "test:ci:mocha": "NODE_ENV=test yarn mocha src/**/*.test.js src/**/*.test.ts",
     "type-check": "tsc",
     "unlink-all": "yalc remove --all && yarn --check-files",
-    "stats:assets": "WEBPACK_CONCATENATE=false WEBPACK_STATS=normal NODE_ENV=production BUILD_CLIENT=true node --max_old_space_size=4096 -r @babel/register node_modules/.bin/webpack --profile --json --config ./webpack > stats.json",
+    "stats:server": "WEBPACK_LOG_CONFIG=false WEBPACK_LOG=false WEBPACK_CONCATENATE=false WEBPACK_STATS=normal NODE_ENV=production BUILD_SERVER=true node --max_old_space_size=4096 -r @babel/register node_modules/.bin/webpack --profile --json --config ./webpack > stats-server.json",
+    "stats:assets:legacy": "WEBPACK_LOG_CONFIG=false WEBPACK_LOG=false WEBPACK_CONCATENATE=false WEBPACK_STATS=normal NODE_ENV=production BUILD_LEGACY_CLIENT=true node --max_old_space_size=4096 -r @babel/register node_modules/.bin/webpack --profile --json --config ./webpack > stats-assets-legacy.json",
+    "stats:assets:v2": "WEBPACK_LOG_CONFIG=false WEBPACK_LOG=false WEBPACK_CONCATENATE=false WEBPACK_STATS=normal NODE_ENV=production BUILD_CLIENT=true node --max_old_space_size=4096 -r @babel/register node_modules/.bin/webpack --profile --json --config ./webpack > stats-assets-v2.json",
     "storybook": "start-storybook -p 6006",
     "webpack": "node --max_old_space_size=4096 -r @babel/register node_modules/.bin/webpack --config ./webpack"
   },
@@ -295,7 +297,6 @@
     "@types/react-dom": "16.8.4",
     "@types/react-overlays": "0.8.4",
     "@types/react-relay": "7.0.9",
-    "@types/react-slick": "0.23.2",
     "@types/react-test-renderer": "16.0.1",
     "@types/react-tracking": "7.0.0",
     "@types/react-transition-group": "2.0.11",

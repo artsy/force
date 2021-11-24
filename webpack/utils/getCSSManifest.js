@@ -8,6 +8,7 @@ import crypto from "crypto"
 import { execSync } from "child_process"
 import { legacySharedConfig } from "../envs/legacySharedConfig"
 import { env } from "./env"
+import { log } from "./log"
 
 // Ouput
 const DEST = "public/assets"
@@ -18,7 +19,7 @@ function clean() {
 }
 
 function compile() {
-  console.log(chalk.green(`[Force compileCSS] Compiling...`))
+  log(chalk.green(`[Force compileCSS] Compiling...`))
   try {
     fs.mkdirSync(DEST, { recursive: true })
   } catch {
@@ -57,7 +58,7 @@ function fingerprint(file) {
 function createManifest() {
   const manifest = glob.sync(`${DEST}/*.css`).reduce((acc, file) => {
     const { original, fingerprinted } = fingerprint(file)
-    const { publicPath } = legacySharedConfig.output
+    const { publicPath } = legacySharedConfig().output
     return {
       ...acc,
       [original]: publicPath + fingerprinted,
@@ -76,13 +77,13 @@ export function getCSSManifest() {
       return {}
     }
     if (cachedManifest) {
-      console.log(chalk.green(`[Force compileCSS] Using Cache.`))
+      log(chalk.green(`[Force compileCSS] Using Cache.`))
       return cachedManifest
     }
     clean()
     compile()
     cachedManifest = createManifest()
-    console.log(chalk.green(`[Force compileCSS] Complete.`))
+    log(chalk.green(`[Force compileCSS] Complete.`))
     return cachedManifest
   } catch (error) {
     console.error(chalk.red("[Force compileCSS] Error:", error))

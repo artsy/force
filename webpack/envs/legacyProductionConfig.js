@@ -8,7 +8,7 @@ import { basePath, env } from "../utils/env"
 import { getEntrypoints } from "../utils/getEntrypoints"
 import { minimizer } from "./sharedConfig"
 
-export const legacyProductionConfig = {
+export const legacyProductionConfig = () => ({
   entry: getEntrypoints(),
   optimization: {
     minimize: !env.webpackDebug && !env.fastProductionBuild,
@@ -28,4 +28,4 @@ export const legacyProductionConfig = {
       seed: env.isProduction ? getCSSManifest() : {},
     }),
   ],
-}
+})

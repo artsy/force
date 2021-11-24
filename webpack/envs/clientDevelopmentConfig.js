@@ -23,7 +23,7 @@ import {
 
 import { externals, devtool, mode, resolve, stats } from "./sharedConfig"
 
-export const clientDevelopmentConfig = {
+export const clientDevelopmentConfig = () => ({
   devtool,
   entry: {
     "artsy-entry": [
@@ -48,7 +48,7 @@ export const clientDevelopmentConfig = {
     publicPath: "/assets/",
   },
   plugins: [
-    ...sharedPlugins,
+    ...sharedPlugins(),
     new webpack.HotModuleReplacementPlugin(),
     new ForkTsCheckerWebpackPlugin({
       checkSyntacticErrors: true,
@@ -76,4 +76,4 @@ export const clientDevelopmentConfig = {
   ],
   resolve,
   stats,
-}
+})
