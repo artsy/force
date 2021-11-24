@@ -101,11 +101,6 @@ export const Details: FC<DetailsProps> = ({
     ?.map(edge => edge?.node?.attachments)
     ?.filter(attachments => attachments?.length)
     ?.flat()
-  // ?.filter(attachment => !attachment?.contentType.includes("image"))
-
-  useEffect(() => {
-    console.log("Hey HEy", attachments)
-  }, [])
 
   const attachmentItems = attachments
     ?.filter(attachment => attachment?.id && attachment?.downloadURL)
