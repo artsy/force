@@ -351,7 +351,7 @@
     "hulk-editor": "craigspaeth/hulk",
     "husky": "3.0.5",
     "imagesloaded": "4.1.2",
-    "immer": "8.0.1",
+    "immer": "9.0.7",
     "inquirer": "1.2.3",
     "jest": "24.9.0",
     "jest-coffee-preprocessor": "1.0.0",
