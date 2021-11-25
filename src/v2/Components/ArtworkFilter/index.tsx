@@ -54,6 +54,7 @@ import { Works_partner } from "v2/__generated__/Works_partner.graphql"
 import { CollectionArtworksFilter_collection } from "v2/__generated__/CollectionArtworksFilter_collection.graphql"
 import { FiltersPills } from "./SavedSearch/Components/FiltersPills"
 import { SavedSearchAttributes } from "./SavedSearch/types"
+import { ArtworkFilterAnchor } from "./ArtworkFilterAnchor"
 
 /**
  * Primary ArtworkFilter which is wrapped with a context and refetch container.
@@ -144,7 +145,7 @@ export const BaseArtworkFilter: React.FC<
   Filters,
   relayVariables = {},
   children,
-  offset,
+  offset = 0,
   savedSearchProps,
   enableCreateAlert = false,
   ...rest
@@ -268,8 +269,7 @@ export const BaseArtworkFilter: React.FC<
 
   return (
     <Box mt={tokens.mt} {...rest}>
-      <Box id="jump--artworkFilter" />
-
+      <ArtworkFilterAnchor />
       {/* Mobile Artwork Filter */}
       <Media at="xs">
         <Box mb={1}>
