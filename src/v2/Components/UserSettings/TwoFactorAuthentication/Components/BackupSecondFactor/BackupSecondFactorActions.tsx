@@ -22,12 +22,13 @@ export const BackupSecondFactorActions: React.FC<BackupSecondFactorActionsProps>
 
   function downloadCodes() {
     const codes = backupSecondFactors.join("\n")
-    const element = document.createElement("a");
-    const file = new Blob([codes], {type: 'text/plain'});
-    element.href = URL.createObjectURL(file);
-    element.download = "recovery_codes.txt";
-    document.body.appendChild(element); // Required for this to work in FireFox
-    element.click();
+    const element = document.createElement("a")
+    const file = new Blob([codes], { type: "text/plain" })
+    element.href = URL.createObjectURL(file)
+    element.download = "recovery_codes.txt"
+    document.body.appendChild(element) // Required for this to work in FireFox
+    element.click()
+    URL.revokeObjectURL(element.href)
   }
 
   return (
