@@ -137,7 +137,6 @@ export const BaseArtworkFilter: React.FC<
     offset?: number
     savedSearchProps?: SavedSearchAttributes
     enableCreateAlert?: boolean
-    defaultValues?: (string | null)[]
   }
 > = ({
   relay,
@@ -148,7 +147,6 @@ export const BaseArtworkFilter: React.FC<
   offset,
   savedSearchProps,
   enableCreateAlert = false,
-  defaultValues = [],
   ...rest
 }) => {
   const tracking = useTracking()
@@ -166,10 +164,14 @@ export const BaseArtworkFilter: React.FC<
   const { filtered_artworks } = viewer
   const hasFilter = filtered_artworks && filtered_artworks.id
 
-  const pills = compact(defaultValues)?.map(value => ({
-    name: value,
-    isDefault: true,
-  }))
+  const defaultPill = !!savedSearchProps?.name
+    ? {
+        name: savedSearchProps.name,
+        isDefault: true,
+      }
+    : null
+  const pills = compact([defaultPill])
+
   const showCreateAlert = enableCreateAlert && !!pills.length
 
   /**

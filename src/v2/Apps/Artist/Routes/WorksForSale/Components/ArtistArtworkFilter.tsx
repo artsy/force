@@ -61,7 +61,6 @@ const ArtistArtworkFilter: React.FC<ArtistArtworkFilterProps> = props => {
         }}
         savedSearchProps={savedSearchAttributes}
         enableCreateAlert={sd.ENABLE_SAVED_SEARCH}
-        defaultValues={[artist.name]}
       >
         {artist.counts!.artworks === 0 && (
           <ZeroState artist={artist} isFollowed={artist.isFollowed} />
