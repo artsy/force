@@ -8331,6 +8331,15 @@ type Me implements Node {
     last: Int
   ): UserAddressConnection
 
+  # A connection of artist recommendations for the current user.
+  artistRecommendations(
+    after: String
+    before: String
+    first: Int
+    last: Int
+    page: Int
+  ): ArtistConnection
+
   # A list of the current user’s inquiry requests
   artworkInquiriesConnection(
     after: String
