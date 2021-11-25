@@ -4,7 +4,9 @@ import Adapter from "@wojtekmaj/enzyme-adapter-react-17"
 import "regenerator-runtime/runtime"
 import { format } from "util"
 import "@testing-library/jest-dom"
+import replaceAllInserter from "string.prototype.replaceall"
 
+replaceAllInserter.shim()
 jest.mock("react-tracking")
 import _track from "react-tracking"
 const track = _track as jest.Mock<typeof _track>

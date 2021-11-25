@@ -389,6 +389,7 @@
     "sinon": "1.17.7",
     "static-extend": "0.1.2",
     "storybook-states": "1.2.0",
+    "string.prototype.replaceall": "^1.0.6",
     "style-loader": "0.23.1",
     "stylus-loader": "3.0.2",
     "supertest": "2.0.1",
