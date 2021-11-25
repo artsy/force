@@ -325,7 +325,7 @@ export const BaseArtworkFilter: React.FC<
 
           <Spacer mb={2} />
 
-          {enableCreateAlert && showCreateAlert && savedSearchProps && (
+          {showCreateAlert && savedSearchProps && (
             <FiltersPills
               pills={pills}
               savedSearchAttributes={savedSearchProps}
@@ -379,7 +379,7 @@ export const BaseArtworkFilter: React.FC<
               </Box>
             )}
 
-            {enableCreateAlert && showCreateAlert && savedSearchProps && (
+            {showCreateAlert && savedSearchProps && (
               <FiltersPills
                 pills={pills}
                 savedSearchAttributes={savedSearchProps}
