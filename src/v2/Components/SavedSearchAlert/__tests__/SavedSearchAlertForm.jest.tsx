@@ -19,6 +19,7 @@ const savedSearchProps: SavedSearchAttributes = {
   type: "artist",
   id: "test-artist-id",
   name: "test-artist-name",
+  slug: "test-artist-slug",
 }
 
 const savedSearchFilters = {
