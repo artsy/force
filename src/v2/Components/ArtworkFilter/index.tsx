@@ -55,7 +55,10 @@ import type RelayModernEnvironment from "relay-runtime/lib/store/RelayModernEnvi
 import { TagArtworkFilter_tag } from "v2/__generated__/TagArtworkFilter_tag.graphql"
 import { Works_partner } from "v2/__generated__/Works_partner.graphql"
 import { CollectionArtworksFilter_collection } from "v2/__generated__/CollectionArtworksFilter_collection.graphql"
-import { FiltersPills } from "./SavedSearch/Components/FiltersPills"
+import {
+  DefaultFilterPill,
+  FiltersPills,
+} from "./SavedSearch/Components/FiltersPills"
 import { SavedSearchAttributes } from "./SavedSearch/types"
 import { extractPills } from "../SavedSearchAlert/Utils/extractPills"
 
@@ -169,21 +172,14 @@ export const BaseArtworkFilter: React.FC<
   const hasFilter = filtered_artworks && filtered_artworks.id
   const filters = getAllowedFiltersForSavedSearchInput(filterContext.filters!)
 
-  const defaultPill = !!savedSearchProps?.name
+  const defaultPill: DefaultFilterPill | null = !!savedSearchProps?.name
     ? {
-        name: savedSearchProps.name,
+        displayName: savedSearchProps.name,
         isDefault: true,
       }
     : null
 
-  const filterPills = extractPills(filters, filterContext.aggregations!).map(
-    pill => {
-      return {
-        name: pill,
-        isDefault: false,
-      }
-    }
-  )
+  const filterPills = extractPills(filters, filterContext.aggregations!)
 
   const pills = compact([defaultPill, ...filterPills])
   const showCreateAlert = enableCreateAlert && !!pills.length

@@ -15,6 +15,7 @@ import styled from "styled-components"
 import { Media } from "v2/Utils/Responsive"
 import { themeGet } from "@styled-system/theme-get"
 import { FilterExpandable } from "./FilterExpandable"
+import { isCustomValue } from "./Utils/isCustomValue"
 
 // Disables arrows in numeric inputs
 export const NumericInput = styled(LabeledInput).attrs({ type: "number" })`
@@ -79,8 +80,8 @@ export const PriceRangeFilter: React.FC<PriceRangeFilterProps> = ({
   const numericInitialRange = parseRange(initialRange)
 
   const isCustomRange =
-    // Has some kind of price range set (isn't blank)
-    !!initialRange &&
+    // Has some kind of price range set (isn't default)
+    isCustomValue(initialRange) &&
     // And isn't a pre-defined price range option
     PRICE_RANGES.find(range => range.value === initialRange) === undefined
 
@@ -136,11 +137,11 @@ export const PriceRangeFilter: React.FC<PriceRangeFilterProps> = ({
   const hasSelection = selection && selection.length > 0
 
   useEffect(() => {
-    // if filter state is being reset, then also clear local input state
-    if (reset) {
+    // if price filter or filters state is being reset, then also clear local input state
+    if (reset || !isCustomValue(initialRange)) {
       setCustomRange(["*", "*"])
     }
-  }, [reset])
+  }, [reset, initialRange])
 
   return (
     <FilterExpandable label="Price" expanded={hasSelection || expanded}>

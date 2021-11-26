@@ -24,6 +24,7 @@ export const initialArtworkFilterState: ArtworkFilters = {
   locationCities: [],
   artistNationalities: [],
   materialsTerms: [],
+  priceRange: "*-*",
   height: "*-*",
   width: "*-*",
 }
