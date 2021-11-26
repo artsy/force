@@ -6,6 +6,7 @@ const savedSearchAttributes: SavedSearchAttributes = {
   type: "artist",
   id: "test-artist-id",
   name: "test-artist-name",
+  slug: "example-slug",
 }
 
 const mockedPills = [
