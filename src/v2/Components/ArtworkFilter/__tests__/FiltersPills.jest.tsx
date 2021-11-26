@@ -1,4 +1,4 @@
-import { mount } from "enzyme"
+import { render, screen, within } from "@testing-library/react"
 import { SavedSearchAttributes } from "v2/Components/ArtworkFilter/SavedSearch/types"
 import { FiltersPills } from "../SavedSearch/Components/FiltersPills"
 
@@ -13,34 +13,32 @@ const mockedPills = [
   { name: "Open Edition", isDefault: false },
 ]
 
-const getWrapper = ({ pills = mockedPills }) =>
-  mount(
+const renderPills = (pills = mockedPills) => {
+  render(
     <FiltersPills pills={pills} savedSearchAttributes={savedSearchAttributes} />
   )
+}
 
 describe("FiltersPills", () => {
   it("renders correctly", () => {
-    const wrapper = getWrapper({})
-    expect(wrapper.find("Pill").length).toBe(2)
-    expect(wrapper.find("Pill CloseIcon").length).toBe(2)
-    expect(wrapper.find("CreateAlertButton").length).toBe(1)
-    const wrapperText = wrapper.text()
-    expect(wrapperText).toContain("Red")
-    expect(wrapperText).toContain("Open Edition")
+    renderPills()
+    expect(screen.getByText("Red")).toBeInTheDocument()
+    expect(screen.getByText("Open Edition")).toBeInTheDocument()
+    expect(screen.getAllByTitle("Close")).toHaveLength(2)
+    expect(screen.getByText("Create an Alert")).toBeInTheDocument()
   })
 
   it("renders default pills without CloseIcon", () => {
-    const wrapper = getWrapper({
-      pills: [{ name: "Banksy", isDefault: true }, ...mockedPills],
-    })
-    const pills = wrapper.find("Pill")
-    expect(pills.length).toBe(3)
-    expect(pills.find("CloseIcon").length).toBe(2)
-    expect(pills.at(0).text()).toContain("Banksy")
-    expect(pills.at(0).find("CloseIcon").length).toBe(0)
-    expect(pills.at(1).text()).toContain("Red")
-    expect(pills.at(1).find("CloseIcon").length).toBe(1)
-    expect(pills.at(2).text()).toContain("Open Edition")
-    expect(pills.at(2).find("CloseIcon").length).toBe(1)
+    renderPills([{ name: "Banksy", isDefault: true }, ...mockedPills])
+    expect(
+      within(screen.getByText("Banksy")).queryByTitle("Close")
+    ).not.toBeInTheDocument()
+    expect(
+      within(screen.getByText("Red")).getByTitle("Close")
+    ).toBeInTheDocument()
+    expect(
+      within(screen.getByText("Open Edition")).getByTitle("Close")
+    ).toBeInTheDocument()
+    expect(screen.getAllByTitle("Close")).toHaveLength(2)
   })
 })
