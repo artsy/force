@@ -78,6 +78,7 @@ export const ArtistArtworkFilterRefetchContainer = createRefetchContainer(
       fragment ArtistArtworkFilter_artist on Artist
         @argumentDefinitions(input: { type: "FilterArtworksInput" }) {
         ...FollowArtistButton_artist
+        name
         counts {
           partner_shows: partnerShows
           for_sale_artworks: forSaleArtworks

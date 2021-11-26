@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react"
-import { isEqual } from "lodash"
+import { compact, isEqual } from "lodash"
 import useDeepCompareEffect from "use-deep-compare-effect"
 import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
 import { useSystemContext } from "v2/System"
@@ -164,7 +164,15 @@ export const BaseArtworkFilter: React.FC<
   const { filtered_artworks } = viewer
   const hasFilter = filtered_artworks && filtered_artworks.id
 
-  const showCreateAlert = enableCreateAlert && filterContext.hasFilters
+  const defaultPill = !!savedSearchProps?.name
+    ? {
+        name: savedSearchProps.name,
+        isDefault: true,
+      }
+    : null
+  const pills = compact([defaultPill])
+
+  const showCreateAlert = enableCreateAlert && !!pills.length
 
   /**
    * Check to see if the mobile action sheet is present and prevent scrolling
@@ -319,10 +327,10 @@ export const BaseArtworkFilter: React.FC<
 
           <Spacer mb={2} />
 
-          {savedSearchProps && enableCreateAlert && (
+          {showCreateAlert && savedSearchProps && (
             <FiltersPills
+              pills={pills}
               savedSearchAttributes={savedSearchProps}
-              show={showCreateAlert}
             />
           )}
 
@@ -373,10 +381,10 @@ export const BaseArtworkFilter: React.FC<
               </Box>
             )}
 
-            {enableCreateAlert && savedSearchProps && (
+            {showCreateAlert && savedSearchProps && (
               <FiltersPills
+                pills={pills}
                 savedSearchAttributes={savedSearchProps}
-                show={showCreateAlert}
               />
             )}
 
