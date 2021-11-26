@@ -19,7 +19,7 @@ import { NumericInput } from "./PriceRangeFilter"
 import { Media } from "v2/Utils/Responsive"
 import { FilterExpandable } from "./FilterExpandable"
 
-const SIZES = [
+export const SIZES = [
   { displayName: "Small (under 40cm)", name: "SMALL" },
   { displayName: "Medium (40 – 100cm)", name: "MEDIUM" },
   { displayName: "Large (over 100cm)", name: "LARGE" },

@@ -1,12 +1,17 @@
-import { compact, flatten, keyBy } from "lodash"
+import { compact, find, flatten, keyBy } from "lodash"
 import {
   Aggregations,
   ArtworkFilters,
 } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
+import { checkboxValues } from "v2/Components/ArtworkFilter/ArtworkFilters/AttributionClassFilter"
+import { COLOR_OPTIONS } from "v2/Components/ArtworkFilter/ArtworkFilters/ColorFilter"
 import {
   isCustomSize,
   parseRange,
+  SIZES,
 } from "v2/Components/ArtworkFilter/ArtworkFilters/SizeFilter"
+import { getTimePeriodToDisplay } from "v2/Components/ArtworkFilter/ArtworkFilters/TimePeriodFilter"
+import { WAYS_TO_BUY_OPTIONS } from "v2/Components/ArtworkFilter/ArtworkFilters/WaysToBuyFilter"
 import {
   aggregationForFilter,
   shouldExtractValueNamesFromAggregation,
@@ -34,23 +39,36 @@ export const extractPillFromAggregation = (
 }
 
 export const extractSizeLabel = (prefix: string, value: string) => {
-  const sizes = parseRange(value)
-
-  if (!sizes) {
-    return null
-  }
+  const [min, max] = parseRange(value)!
 
   let label
-
-  if (sizes[0] === "*") {
-    label = `from ${sizes[0]}`
-  } else if (sizes[1] === "*") {
-    label = `to ${sizes[1]}`
+  if (max === "*") {
+    label = `from ${min}`
+  } else if (min === "*") {
+    label = `to ${max}`
   } else {
-    label = `${sizes[0]}-${sizes[1]}`
+    label = `${min}-${max}`
   }
 
   return `${prefix}: ${label} cm`
+}
+
+const extractPriceLabel = (range: string) => {
+  const [min, max] = range.split("-").map(value => {
+    return value === "*" ? value : (+value).toLocaleString()
+  })
+
+  let label
+
+  if (min === "*") {
+    label = `$0-$${max}`
+  } else if (max === "*") {
+    label = `$${min}+`
+  } else {
+    label = `$${min}-$${max}`
+  }
+
+  return label
 }
 
 export const extractPills = (
@@ -60,37 +78,47 @@ export const extractPills = (
   const pills = Object.entries(filters).map(filter => {
     const [paramName, paramValue] = filter
 
-    // we shouldn't create pills for page and sort param
-    if (paramName === "page" || paramName === "sort") {
-      return null
-    }
-    // skip width/height if value is *-*
-    if (paramName === "width" && !isCustomSize(paramValue)) {
-      return null
-    }
-    if (paramName === "height" && !isCustomSize(paramValue)) {
-      return null
-    }
-
-    if (paramName === "width") {
-      return extractSizeLabel("w", paramValue)
-    }
-
-    if (paramName === "height") {
-      return extractSizeLabel("h", paramValue)
-    }
-
-    // Extract label from aggregations
     if (shouldExtractValueNamesFromAggregation.includes(paramName)) {
       return extractPillFromAggregation({ paramName, paramValue }, aggregations)
     }
 
-    // TODO: convert Ways to Buy options to displaying value (ex. offerable -> Make Offer)
-    if (Array.isArray(paramValue)) {
-      return paramValue
+    if (paramName in WAYS_TO_BUY_OPTIONS) {
+      return paramValue && WAYS_TO_BUY_OPTIONS[paramName].name
     }
 
-    return paramName
+    switch (paramName) {
+      case "width":
+      case "height": {
+        if (!isCustomSize(paramValue)) {
+          return null
+        }
+        return extractSizeLabel(paramName[0], paramValue)
+      }
+      case "sizes": {
+        return paramValue.map(
+          value => find(SIZES, option => value === option.name)?.displayName
+        )
+      }
+      case "colors": {
+        return paramValue.map(
+          value => find(COLOR_OPTIONS, option => value === option.value)?.name
+        )
+      }
+      case "attributionClass": {
+        return paramValue.map(
+          value => find(checkboxValues, option => value === option.value)?.name
+        )
+      }
+      case "majorPeriods": {
+        return paramValue.map(value => getTimePeriodToDisplay(value))
+      }
+      case "priceRange": {
+        return extractPriceLabel(paramValue)
+      }
+      default: {
+        return paramName
+      }
+    }
   })
 
   return compact(flatten(pills))

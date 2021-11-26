@@ -43,7 +43,10 @@ import {
   ContextModule,
   ClickedChangePage,
 } from "@artsy/cohesion"
-import { allowedFilters } from "./Utils/allowedFilters"
+import {
+  allowedFilters,
+  getAllowedFiltersForSavedSearchInput,
+} from "./Utils/allowedFilters"
 import { Sticky } from "v2/Components/Sticky"
 import { ScrollRefContext } from "./ArtworkFilters/useScrollContext"
 import { ArtworkSortFilter } from "./ArtworkFilters/ArtworkSortFilter"
@@ -54,6 +57,7 @@ import { Works_partner } from "v2/__generated__/Works_partner.graphql"
 import { CollectionArtworksFilter_collection } from "v2/__generated__/CollectionArtworksFilter_collection.graphql"
 import { FiltersPills } from "./SavedSearch/Components/FiltersPills"
 import { SavedSearchAttributes } from "./SavedSearch/types"
+import { extractPills } from "../SavedSearchAlert/Utils/extractPills"
 
 /**
  * Primary ArtworkFilter which is wrapped with a context and refetch container.
@@ -163,6 +167,7 @@ export const BaseArtworkFilter: React.FC<
 
   const { filtered_artworks } = viewer
   const hasFilter = filtered_artworks && filtered_artworks.id
+  const filters = getAllowedFiltersForSavedSearchInput(filterContext.filters!)
 
   const defaultPill = !!savedSearchProps?.name
     ? {
@@ -170,8 +175,17 @@ export const BaseArtworkFilter: React.FC<
         isDefault: true,
       }
     : null
-  const pills = compact([defaultPill])
 
+  const filterPills = extractPills(filters, filterContext.aggregations!).map(
+    pill => {
+      return {
+        name: pill,
+        isDefault: false,
+      }
+    }
+  )
+
+  const pills = compact([defaultPill, ...filterPills])
   const showCreateAlert = enableCreateAlert && !!pills.length
 
   /**
