@@ -41,8 +41,10 @@ fragment PartnersFeaturedCarouselCell_profile on Profile {
     __typename
     ... on Partner {
       internalID
+      href
       name
       featuredShow {
+        href
         name
         status
         statusUpdate
@@ -125,7 +127,14 @@ v3 = {
   "name": "name",
   "storageKey": null
 },
-v4 = [
+v4 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "href",
+  "storageKey": null
+},
+v5 = [
   {
     "kind": "Literal",
     "name": "format",
@@ -251,6 +260,7 @@ return {
                                     "kind": "InlineFragment",
                                     "selections": [
                                       (v2/*: any*/),
+                                      (v4/*: any*/),
                                       (v3/*: any*/),
                                       {
                                         "alias": null,
@@ -260,6 +270,7 @@ return {
                                         "name": "featuredShow",
                                         "plural": false,
                                         "selections": [
+                                          (v4/*: any*/),
                                           (v3/*: any*/),
                                           {
                                             "alias": null,
@@ -277,14 +288,14 @@ return {
                                           },
                                           {
                                             "alias": null,
-                                            "args": (v4/*: any*/),
+                                            "args": (v5/*: any*/),
                                             "kind": "ScalarField",
                                             "name": "startAt",
                                             "storageKey": "startAt(format:\"MMM D\")"
                                           },
                                           {
                                             "alias": null,
-                                            "args": (v4/*: any*/),
+                                            "args": (v5/*: any*/),
                                             "kind": "ScalarField",
                                             "name": "endAt",
                                             "storageKey": "endAt(format:\"MMM D\")"
@@ -402,7 +413,7 @@ return {
     "metadata": {},
     "name": "InstitutionsRouteFragmentContainer_Test_Query",
     "operationKind": "query",
-    "text": "query InstitutionsRouteFragmentContainer_Test_Query {\n  viewer {\n    ...InstitutionsRoute_viewer\n  }\n}\n\nfragment FollowProfileButton_profile on Profile {\n  id\n  slug\n  name\n  internalID\n  is_followed: isFollowed\n}\n\nfragment InstitutionsRoute_viewer on Viewer {\n  ...PartnersFeaturedCarousel_viewer_3Ao4DD\n}\n\nfragment PartnersFeaturedCarouselCell_profile on Profile {\n  ...FollowProfileButton_profile\n  owner {\n    __typename\n    ... on Partner {\n      internalID\n      name\n      featuredShow {\n        name\n        status\n        statusUpdate\n        startAt(format: \"MMM D\")\n        endAt(format: \"MMM D\")\n        isOnlineExclusive\n        location {\n          city\n          id\n        }\n        coverImage {\n          resized(height: 500, version: [\"normalized\", \"larger\", \"large\"]) {\n            src\n            srcSet\n          }\n        }\n        id\n      }\n    }\n    ... on Node {\n      id\n    }\n    ... on FairOrganizer {\n      id\n    }\n  }\n}\n\nfragment PartnersFeaturedCarousel_viewer_3Ao4DD on Viewer {\n  orderedSet(id: \"564e181a258faf3d5c000080\") {\n    orderedItemsConnection(first: 50) {\n      edges {\n        node {\n          __typename\n          ... on Profile {\n            internalID\n            ...PartnersFeaturedCarouselCell_profile\n            id\n          }\n          ... on Node {\n            id\n          }\n          ... on FeaturedLink {\n            id\n          }\n        }\n      }\n    }\n    id\n  }\n}\n"
+    "text": "query InstitutionsRouteFragmentContainer_Test_Query {\n  viewer {\n    ...InstitutionsRoute_viewer\n  }\n}\n\nfragment FollowProfileButton_profile on Profile {\n  id\n  slug\n  name\n  internalID\n  is_followed: isFollowed\n}\n\nfragment InstitutionsRoute_viewer on Viewer {\n  ...PartnersFeaturedCarousel_viewer_3Ao4DD\n}\n\nfragment PartnersFeaturedCarouselCell_profile on Profile {\n  ...FollowProfileButton_profile\n  owner {\n    __typename\n    ... on Partner {\n      internalID\n      href\n      name\n      featuredShow {\n        href\n        name\n        status\n        statusUpdate\n        startAt(format: \"MMM D\")\n        endAt(format: \"MMM D\")\n        isOnlineExclusive\n        location {\n          city\n          id\n        }\n        coverImage {\n          resized(height: 500, version: [\"normalized\", \"larger\", \"large\"]) {\n            src\n            srcSet\n          }\n        }\n        id\n      }\n    }\n    ... on Node {\n      id\n    }\n    ... on FairOrganizer {\n      id\n    }\n  }\n}\n\nfragment PartnersFeaturedCarousel_viewer_3Ao4DD on Viewer {\n  orderedSet(id: \"564e181a258faf3d5c000080\") {\n    orderedItemsConnection(first: 50) {\n      edges {\n        node {\n          __typename\n          ... on Profile {\n            internalID\n            ...PartnersFeaturedCarouselCell_profile\n            id\n          }\n          ... on Node {\n            id\n          }\n          ... on FeaturedLink {\n            id\n          }\n        }\n      }\n    }\n    id\n  }\n}\n"
   }
 };
 })();
