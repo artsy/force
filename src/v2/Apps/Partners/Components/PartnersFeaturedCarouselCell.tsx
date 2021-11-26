@@ -4,6 +4,7 @@ import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FollowProfileButtonFragmentContainer } from "v2/Components/FollowButton/FollowProfileButton"
 import { useSystemContext } from "v2/System"
+import { RouterLink } from "v2/System/Router/RouterLink"
 import { PartnersFeaturedCarouselCell_profile } from "v2/__generated__/PartnersFeaturedCarouselCell_profile.graphql"
 
 interface PartnersFeaturedCarouselCellProps {
@@ -40,12 +41,18 @@ const PartnersFeaturedCarouselCell: FC<PartnersFeaturedCarouselCellProps> = ({
         px={4}
         py={2}
       >
-        <Text variant="xl" mb={4}>
-          {partner.name}
-        </Text>
+        <RouterLink
+          to={`/partner${partner.href}`}
+          display="block"
+          textDecoration="none"
+        >
+          <Text variant="xl" mb={4}>
+            {partner.name}
+          </Text>
+        </RouterLink>
 
         {show && (
-          <>
+          <RouterLink to={show.href} display="block" textDecoration="none">
             <Text variant="xs" textTransform="uppercase" mb={2}>
               {status} Show
             </Text>
@@ -74,12 +81,19 @@ const PartnersFeaturedCarouselCell: FC<PartnersFeaturedCarouselCellProps> = ({
                 variant: "secondaryOutline",
               }}
             />
-          </>
+          </RouterLink>
         )}
       </Flex>
 
       {image && (
-        <Flex flex={[null, 1]} bg="black10" height={[300, 500]} width="100%">
+        <RouterLink
+          to={show?.href ?? ""}
+          display="flex"
+          flex={[null, 1]}
+          bg="black10"
+          height={[300, 500]}
+          width="100%"
+        >
           <Image
             src={image.src}
             srcSet={image.srcSet}
@@ -89,7 +103,7 @@ const PartnersFeaturedCarouselCell: FC<PartnersFeaturedCarouselCellProps> = ({
             height="100%"
             alt=""
           />
-        </Flex>
+        </RouterLink>
       )}
     </Flex>
   )
@@ -104,8 +118,10 @@ export const PartnersFeaturedCarouselCellFragmentContainer = createFragmentConta
         owner {
           ... on Partner {
             internalID
+            href
             name
             featuredShow {
+              href
               name
               status
               statusUpdate
