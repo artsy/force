@@ -79,7 +79,11 @@ export const UnsubscribeLoggedIn: React.FC<UnsubscribeLoggedInProps> = ({
 
       <Spacer mt={2} />
 
-      <Button onClick={handleClick} loading={mode === Mode.Loading}>
+      <Button
+        onClick={handleClick}
+        loading={mode === Mode.Loading}
+        width={["100%", "auto"]}
+      >
         {
           {
             [Mode.Pending]: "Update preferences",
