@@ -66,6 +66,7 @@ export const createConsignSubmission = async (
             assetType: "image",
             geminiToken,
             submissionID: submissionId,
+            sessionID: sessionId,
           })
         } catch (error) {
           logger.error("Consign submission: add asset error", error)
