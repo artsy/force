@@ -14,6 +14,7 @@ const CLOSE_ICON_SIZE = 15
 
 export interface DefaultFilterPill {
   isDefault: true
+  name: string
   displayName: string
 }
 
@@ -56,9 +57,9 @@ export const FiltersPills: FC<FiltersPillsProps> = ({
   return (
     <>
       <Flex flexWrap="wrap" mx={-PILL_HORIZONTAL_MARGIN_SIZE}>
-        {pills.map((pill, index) => (
+        {pills.map(pill => (
           <Pill
-            key={`filter-label-${index}`}
+            key={`filter-label-${pill.name}`}
             variant="textSquare"
             mx={PILL_HORIZONTAL_MARGIN_SIZE}
             mb={1}

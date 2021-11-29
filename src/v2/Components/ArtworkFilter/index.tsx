@@ -174,8 +174,9 @@ export const BaseArtworkFilter: React.FC<
 
   const defaultPill: DefaultFilterPill | null = !!savedSearchProps?.name
     ? {
-        displayName: savedSearchProps.name,
         isDefault: true,
+        name: savedSearchProps.slug,
+        displayName: savedSearchProps.name,
       }
     : null
 
