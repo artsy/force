@@ -41,9 +41,6 @@ jest.mock("../Components/ContactUs", () => ({
 jest.mock("../Components/FAQ", () => ({
   FAQ: () => <div />,
 }))
-jest.mock("../Components/SellWithArtsy", () => ({
-  SellWithArtsy: () => <div />,
-}))
 jest.mock("../Components/ArtworkCredits", () => ({
   ArtworkCredits: () => <div />,
 }))
