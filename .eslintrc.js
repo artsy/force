@@ -47,6 +47,7 @@ module.exports = {
     "@typescript-eslint/member-delimiter-style": 0,
     "@typescript-eslint/no-explicit-any": 0,
     "@typescript-eslint/no-inferrable-types": 0,
+    "@typescript-eslint/no-namespace": 0,
     "@typescript-eslint/no-use-before-define": 0,
     "@typescript-eslint/no-unused-vars": 0,
     "@typescript-eslint/no-var-requires": 0,
