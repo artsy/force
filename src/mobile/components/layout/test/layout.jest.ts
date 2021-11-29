@@ -14,6 +14,7 @@ describe("bootstrap", () => {
   })
 
   it("sets up mediator to call #logoutEventHandler", () => {
+    // @ts-ignore
     bootstrap()
     mediator.trigger("auth:logout")
     expect(logoutEventHandler).toBeCalled()
