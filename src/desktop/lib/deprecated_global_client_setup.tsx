@@ -19,7 +19,7 @@ import { mediator } from "lib/mediator"
 import type { LogoutEventOptions } from "lib/mediator"
 import * as templateModules from "./template_modules"
 import { setupSentryClient } from "lib/setupSentryClient"
-import SOI from "lib/analytics/segmentOneTrustIntegration"
+import { loadSegment } from "lib/analytics/segmentOneTrustIntegration"
 
 const FlashMessage = require("../components/flash/index.coffee")
 const listenForInvert = require("../components/eggs/invert/index.coffee")
@@ -40,7 +40,7 @@ export function deprecatedGlobalClientSetup() {
   initAuthModalContainer()
   mountStitchComponents()
   syncAuth()
-  SOI.loadSegment()
+  loadSegment()
   trackAuthenticationEvents()
   mediator.on("auth:logout", logoutEventHandler)
 }

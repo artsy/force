@@ -9,7 +9,7 @@ import { beforeAnalyticsReady, onAnalyticsReady } from "lib/analytics/helpers"
 import { getClientParam } from "./Utils/getClientParam"
 import { buildClientApp } from "v2/System/Router/client"
 import { syncNonCacheableData } from "./System/Client/syncSharify"
-import SOI from "lib/analytics/segmentOneTrustIntegration"
+import { loadSegment } from "lib/analytics/segmentOneTrustIntegration"
 
 async function setupClient() {
   syncNonCacheableData()
@@ -38,7 +38,7 @@ async function setupClient() {
       })
     }
 
-    SOI.loadSegment()
+    loadSegment()
 
     initAuthModalContainer()
     setupArtistSignUpModal()

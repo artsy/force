@@ -1,4 +1,5 @@
-import SOI from "../segmentOneTrustIntegration"
+// SOI for segmentOneTrustIntegration
+import { exportForTesting as SOI } from "../segmentOneTrustIntegration"
 
 let originalConditionallyLoadAnalytics = SOI.conditionallyLoadAnalytics
 let originalDelay = SOI.delay
