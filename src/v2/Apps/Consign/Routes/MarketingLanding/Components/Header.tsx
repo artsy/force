@@ -26,8 +26,6 @@ export const Header: React.FC = () => {
         <Button
           // @ts-ignore
           as={RouterLink}
-          //TODO: SWA-77
-          //to="/consign/submission"
           to="/consign/submission/artwork-details"
         >
           Get a Free Auction Valuation
