@@ -194,7 +194,12 @@ describe("createConsignSubmission", () => {
   })
 
   it("saves images", async () => {
-    await createConsignSubmission(relayEnvironment, submission)
+    await createConsignSubmission(
+      relayEnvironment,
+      submission,
+      undefined,
+      "sessionId"
+    )
 
     expect(createGeminiAssetWithS3Credentials).toHaveBeenCalledTimes(1)
     expect(createGeminiAssetWithS3Credentials).toHaveBeenCalledWith(
@@ -214,6 +219,7 @@ describe("createConsignSubmission", () => {
       assetType: "image",
       geminiToken: "geminiToken",
       submissionID: "123",
+      sessionID: "sessionId",
     })
   })
 })
