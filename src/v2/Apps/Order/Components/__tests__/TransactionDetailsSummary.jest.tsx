@@ -73,7 +73,6 @@ const render = (
 ) =>
   renderRelayTree({
     Component: (props: TransactionDetailsSummaryItemTestQueryResponse) => (
-      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       <TransactionDetailsSummaryItemFragmentContainer
         {...props}
         {...extraProps}
