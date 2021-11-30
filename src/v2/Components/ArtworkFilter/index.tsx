@@ -180,7 +180,7 @@ export const BaseArtworkFilter: React.FC<
       }
     : null
 
-  const filterPills = extractPills(filters, filterContext.aggregations!)
+  const filterPills = extractPills(filters, filterContext.aggregations)
 
   const pills = compact([defaultPill, ...filterPills])
   const showCreateAlert = enableCreateAlert && !!pills.length

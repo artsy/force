@@ -27,7 +27,7 @@ export interface NonDefaultFilterPill {
 
 export type FilterPill = DefaultFilterPill | NonDefaultFilterPill
 
-interface FiltersPillsProps {
+export interface FiltersPillsProps {
   pills: FilterPill[]
   savedSearchAttributes: SavedSearchAttributes
 }

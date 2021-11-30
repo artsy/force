@@ -76,7 +76,7 @@ const extractPriceLabel = (range: string) => {
 
 export const extractPills = (
   filters: ArtworkFilters,
-  aggregations: Aggregations
+  aggregations: Aggregations = []
 ) => {
   const pills: NonDefaultFilterPill[] = Object.entries(filters).map(filter => {
     const [paramName, paramValue] = filter

@@ -134,7 +134,7 @@ export const PriceRangeFilter: React.FC<PriceRangeFilterProps> = ({
 
   // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
   const selection = currentlySelectedFilters().priceRange
-  const hasSelection = selection && selection.length > 0
+  const hasSelection = selection && isCustomValue(selection)
 
   useEffect(() => {
     // if price filter or filters state is being reset, then also clear local input state
