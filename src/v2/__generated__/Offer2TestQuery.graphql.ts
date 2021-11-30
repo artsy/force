@@ -97,6 +97,7 @@ export type Offer2TestQueryRawResponse = {
         readonly requestedFulfillment: ({
             readonly __typename: string;
         }) | null;
+        readonly code: string;
         readonly shippingTotal: string | null;
         readonly shippingTotalCents: number | null;
         readonly taxTotal: string | null;
@@ -216,6 +217,7 @@ export type Offer2TestQueryRawResponse = {
         readonly requestedFulfillment: ({
             readonly __typename: string;
         }) | null;
+        readonly code: string;
         readonly shippingTotal: string | null;
         readonly shippingTotalCents: number | null;
         readonly taxTotal: string | null;
@@ -353,6 +355,7 @@ fragment TransactionDetailsSummaryItem_order on CommerceOrder {
   requestedFulfillment {
     __typename
   }
+  code
   lineItems {
     edges {
       node {

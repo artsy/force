@@ -9,6 +9,24 @@ export type Details_conversation = {
         readonly name: string;
         readonly initials: string | null;
     };
+    readonly orderConnection: {
+        readonly edges: ReadonlyArray<{
+            readonly node: {
+                readonly internalID: string;
+                readonly requestedFulfillment: {
+                    readonly __typename: string;
+                    readonly " $fragmentRefs": FragmentRefs<"ShippingAddress_ship">;
+                } | null;
+                readonly creditCard: {
+                    readonly brand: string;
+                    readonly lastDigits: string;
+                    readonly expirationYear: number;
+                    readonly expirationMonth: number;
+                } | null;
+                readonly " $fragmentRefs": FragmentRefs<"TransactionDetailsSummaryItem_order" | "ShippingSummaryItem_order">;
+            } | null;
+        } | null> | null;
+    } | null;
     readonly messagesConnection: {
         readonly edges: ReadonlyArray<{
             readonly node: {
@@ -133,6 +151,132 @@ return {
         }
       ],
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": [
+        {
+          "kind": "Literal",
+          "name": "first",
+          "value": 10
+        },
+        {
+          "kind": "Literal",
+          "name": "participantType",
+          "value": "BUYER"
+        },
+        {
+          "kind": "Literal",
+          "name": "states",
+          "value": [
+            "APPROVED",
+            "FULFILLED",
+            "SUBMITTED"
+          ]
+        }
+      ],
+      "concreteType": "CommerceOrderConnectionWithTotalCount",
+      "kind": "LinkedField",
+      "name": "orderConnection",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "CommerceOrderEdge",
+          "kind": "LinkedField",
+          "name": "edges",
+          "plural": true,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "concreteType": null,
+              "kind": "LinkedField",
+              "name": "node",
+              "plural": false,
+              "selections": [
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "internalID",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "concreteType": null,
+                  "kind": "LinkedField",
+                  "name": "requestedFulfillment",
+                  "plural": false,
+                  "selections": [
+                    (v0/*: any*/),
+                    {
+                      "args": null,
+                      "kind": "FragmentSpread",
+                      "name": "ShippingAddress_ship"
+                    }
+                  ],
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "concreteType": "CreditCard",
+                  "kind": "LinkedField",
+                  "name": "creditCard",
+                  "plural": false,
+                  "selections": [
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "brand",
+                      "storageKey": null
+                    },
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "lastDigits",
+                      "storageKey": null
+                    },
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "expirationYear",
+                      "storageKey": null
+                    },
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "expirationMonth",
+                      "storageKey": null
+                    }
+                  ],
+                  "storageKey": null
+                },
+                {
+                  "args": null,
+                  "kind": "FragmentSpread",
+                  "name": "TransactionDetailsSummaryItem_order"
+                },
+                {
+                  "args": null,
+                  "kind": "FragmentSpread",
+                  "name": "ShippingSummaryItem_order"
+                }
+              ],
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
+        }
+      ],
+      "storageKey": "orderConnection(first:10,participantType:\"BUYER\",states:[\"APPROVED\",\"FULFILLED\",\"SUBMITTED\"])"
     },
     {
       "alias": "messagesConnection",
@@ -308,5 +452,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = 'adf50c39a69901a855db9dd38c7176d4';
+(node as any).hash = '4d11194647ac2cae10ee9304cd4172bf';
 export default node;

@@ -233,9 +233,7 @@ return {
           "value": [
             "APPROVED",
             "FULFILLED",
-            "SUBMITTED",
-            "REFUNDED",
-            "CANCELED"
+            "SUBMITTED"
           ]
         }
       ],
@@ -294,7 +292,7 @@ return {
           "name": "ConversationMessages_events"
         }
       ],
-      "storageKey": "orderConnection(first:10,participantType:\"BUYER\",states:[\"APPROVED\",\"FULFILLED\",\"SUBMITTED\",\"REFUNDED\",\"CANCELED\"])"
+      "storageKey": "orderConnection(first:10,participantType:\"BUYER\",states:[\"APPROVED\",\"FULFILLED\",\"SUBMITTED\"])"
     },
     {
       "alias": "messagesConnection",
@@ -458,5 +456,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '3ba3d5c05fa28d7e0e212562c89a5f4b';
+(node as any).hash = 'a2c2719506831f7a381533e19821ee9e';
 export default node;

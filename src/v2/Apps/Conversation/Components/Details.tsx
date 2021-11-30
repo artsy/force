@@ -14,6 +14,7 @@ import {
   Spacer,
   breakpoints,
   media,
+  StackableBorderBox,
 } from "@artsy/palette"
 import styled from "styled-components"
 import { debounce } from "lodash"
@@ -26,6 +27,12 @@ import { getViewportDimensions } from "v2/Utils/viewport"
 import { DetailsHeader } from "./DetailsHeader"
 
 import { Details_conversation } from "v2/__generated__/Details_conversation.graphql"
+import { OfferHistoryItemFragmentContainer } from "v2/Apps/Order/Components/OfferHistoryItem"
+import { extractNodes } from "v2/Utils/extractNodes"
+import { TransactionDetailsSummaryItemFragmentContainer } from "v2/Apps/Order/Components/TransactionDetailsSummaryItem"
+import { ShippingSummaryItemFragmentContainer } from "v2/Apps/Order/Components/ShippingSummaryItem"
+import { ShippingAddressFragmentContainer } from "v2/Apps/Order/Components/ShippingAddress"
+import { CreditCardDetails } from "v2/Apps/Order/Components/CreditCardDetails"
 
 const DETAIL_BOX_XL_ANIMATION = `transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);`
 const DETAIL_BOX_XS_ANIMATION = `transition: opacity 0.3s, z-index 0.3s;`
@@ -35,7 +42,7 @@ const DETAIL_BOX_MD_ANIMATION = `transition: transform 0.3s;`
 // in XL screen it is animated with `width` because animation needs to push the mid column content
 // in L screens it is animated with `translate` for better performance (than `width`)
 const DetailsContainer = styled(Flex)<{ transform?: string }>`
-  border-left: 1px solid ${themeGet("colors.black10")};
+  /* border-left: 1px solid ${themeGet("colors.black10")}; */
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   background-color: ${themeGet("colors.white100")};
   transform: none;
@@ -141,6 +148,8 @@ export const Details: FC<DetailsProps> = ({
     return 1
   }
 
+  const activeOrder = extractNodes(conversation.orderConnection)[0]
+
   return (
     <DetailsContainer
       flexDirection="column"
@@ -175,7 +184,7 @@ export const Details: FC<DetailsProps> = ({
         <>
           <Separator />
           <Flex flexDirection="column" p={2}>
-            <Text variant="xs" mb={2}>
+            <Text variant="md" mb={2}>
               {item.__typename}
             </Text>
             <Flex>
@@ -200,11 +209,42 @@ export const Details: FC<DetailsProps> = ({
           </Flex>
         </>
       )}
+      {!!activeOrder && (
+        <TransactionDetailsSummaryItemFragmentContainer
+          order={activeOrder}
+          showOrderNumberHeader
+        />
+      )}
+      {!!activeOrder && (
+        <>
+          <Separator my={2} />
+          <Box px={2}>
+            <Text variant="md" mb={2}>
+              Ship To
+            </Text>
+            <ShippingAddressFragmentContainer
+              ship={activeOrder.requestedFulfillment!}
+              textColor="black60"
+            />
+          </Box>
+        </>
+      )}
+      {!!activeOrder && (
+        <>
+          <Separator my={2} />
+          <Box px={2}>
+            <Text variant="md" mb={2}>
+              Payment Method
+            </Text>
+            <CreditCardDetails {...activeOrder.creditCard!} />
+          </Box>
+        </>
+      )}
       {!!attachments?.length && (
         <>
           <Separator my={2} />
           <Box px={2}>
-            <Text variant="xs" mb={2}>
+            <Text variant="md" mb={2}>
               Attachments
             </Text>
             <Join separator={<Spacer mb={1} />}>{attachmentItems}</Join>
@@ -213,7 +253,7 @@ export const Details: FC<DetailsProps> = ({
       )}
       <Separator my={2} />
       <Flex flexDirection="column" px={2}>
-        <Text variant="xs" mb={2}>
+        <Text variant="md" mb={2}>
           Support
         </Text>
         <Link
@@ -241,6 +281,29 @@ export const DetailsFragmentContainer = createFragmentContainer(Details, {
       to {
         name
         initials
+      }
+      orderConnection(
+        first: 10
+        states: [APPROVED, FULFILLED, SUBMITTED]
+        participantType: BUYER
+      ) {
+        edges {
+          node {
+            internalID
+            ...TransactionDetailsSummaryItem_order
+            ...ShippingSummaryItem_order
+            requestedFulfillment {
+              __typename
+              ...ShippingAddress_ship
+            }
+            creditCard {
+              brand
+              lastDigits
+              expirationYear
+              expirationMonth
+            }
+          }
+        }
       }
       messagesConnection(first: $count, after: $after, sort: DESC)
         @connection(key: "Messages_messagesConnection", filters: []) {

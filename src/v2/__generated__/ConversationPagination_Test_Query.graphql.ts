@@ -130,7 +130,7 @@ fragment Conversation_conversation on Conversation {
   fromLastViewedMessageID
   isLastMessageToUser
   unread
-  orderConnection(first: 10, states: [APPROVED, FULFILLED, SUBMITTED, REFUNDED, CANCELED], participantType: BUYER) {
+  orderConnection(first: 10, states: [APPROVED, FULFILLED, SUBMITTED], participantType: BUYER) {
     edges {
       node {
         __typename
@@ -640,9 +640,7 @@ return {
                     "value": [
                       "APPROVED",
                       "FULFILLED",
-                      "SUBMITTED",
-                      "REFUNDED",
-                      "CANCELED"
+                      "SUBMITTED"
                     ]
                   }
                 ],
@@ -773,7 +771,7 @@ return {
                     "storageKey": null
                   }
                 ],
-                "storageKey": "orderConnection(first:10,participantType:\"BUYER\",states:[\"APPROVED\",\"FULFILLED\",\"SUBMITTED\",\"REFUNDED\",\"CANCELED\"])"
+                "storageKey": "orderConnection(first:10,participantType:\"BUYER\",states:[\"APPROVED\",\"FULFILLED\",\"SUBMITTED\"])"
               },
               {
                 "alias": null,

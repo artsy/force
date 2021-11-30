@@ -90,6 +90,7 @@ export type RespondTestQueryRawResponse = {
             readonly __typename: string;
             readonly __isCommerceRequestedFulfillmentUnion: string;
         }) | null;
+        readonly code: string;
         readonly shippingTotal: string | null;
         readonly shippingTotalCents: number | null;
         readonly taxTotal: string | null;
@@ -235,6 +236,7 @@ export type RespondTestQueryRawResponse = {
             readonly __typename: string;
             readonly __isCommerceRequestedFulfillmentUnion: string;
         }) | null;
+        readonly code: string;
         readonly shippingTotal: string | null;
         readonly shippingTotalCents: number | null;
         readonly taxTotal: string | null;
@@ -467,6 +469,7 @@ fragment TransactionDetailsSummaryItem_order on CommerceOrder {
   requestedFulfillment {
     __typename
   }
+  code
   lineItems {
     edges {
       node {

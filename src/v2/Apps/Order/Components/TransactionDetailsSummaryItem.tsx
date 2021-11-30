@@ -26,6 +26,7 @@ export interface TransactionDetailsSummaryItemProps
   placeholderOverride?: string | null
   showCongratulationMessage?: boolean
   isEigen?: boolean
+  showOrderNumberHeader?: boolean
 }
 
 export class TransactionDetailsSummaryItem extends React.Component<
@@ -45,11 +46,17 @@ export class TransactionDetailsSummaryItem extends React.Component<
       placeholderOverride,
       isEigen,
       showCongratulationMessage = false,
+      showOrderNumberHeader,
       ...others
     } = this.props
 
     return (
       <StepSummaryItem {...others}>
+        {showOrderNumberHeader && (
+          <Text variant="md" mb={2}>
+            Order No. {order.code}
+          </Text>
+        )}
         {this.renderPriceEntry()}
         <Spacer mb={2} />
         <Entry
@@ -312,6 +319,7 @@ export const TransactionDetailsSummaryItemFragmentContainer = createFragmentCont
         requestedFulfillment {
           __typename
         }
+        code
         lineItems {
           edges {
             node {

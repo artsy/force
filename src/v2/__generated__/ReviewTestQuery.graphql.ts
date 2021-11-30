@@ -542,6 +542,7 @@ fragment TransactionDetailsSummaryItem_order on CommerceOrder {
   requestedFulfillment {
     __typename
   }
+  code
   lineItems {
     edges {
       node {
@@ -1249,6 +1250,13 @@ return {
             "args": null,
             "kind": "ScalarField",
             "name": "currencyCode",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "code",
             "storageKey": null
           },
           {

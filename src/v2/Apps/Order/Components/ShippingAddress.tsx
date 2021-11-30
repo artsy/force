@@ -6,6 +6,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 
 export interface ShippingAddressProps {
   ship: ShippingAddress_ship
+  textColor?: string
 }
 
 export const ShippingAddress = ({
@@ -19,19 +20,26 @@ export const ShippingAddress = ({
     country,
     phoneNumber,
   },
+  textColor,
 }: ShippingAddressProps) => (
   <>
-    <Text variant={["xs", "sm"]}>{name}</Text>
-    <Text variant={["xs", "sm"]}>
+    <Text color={textColor ? textColor : "black100"} variant={["xs", "sm"]}>
+      {name}
+    </Text>
+    <Text color={textColor ? textColor : "black100"} variant={["xs", "sm"]}>
       {[addressLine1, (addressLine2 || "").trim()].filter(Boolean).join(", ")}
     </Text>
-    <Text variant={["xs", "sm"]}>
+    <Text color={textColor ? textColor : "black100"} variant={["xs", "sm"]}>
       {city}, {region} {postalCode}
     </Text>
-    <Text variant={["xs", "sm"]}>
+    <Text color={textColor ? textColor : "black100"} variant={["xs", "sm"]}>
       {country && (COUNTRY_CODE_TO_COUNTRY_NAME[country] || country)}
     </Text>
-    {phoneNumber && <Text variant={["xs", "sm"]}>{phoneNumber}</Text>}
+    {phoneNumber && (
+      <Text color={textColor ? textColor : "black100"} variant={["xs", "sm"]}>
+        {phoneNumber}
+      </Text>
+    )}
   </>
 )
 

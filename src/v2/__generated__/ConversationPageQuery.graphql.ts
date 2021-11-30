@@ -220,7 +220,7 @@ fragment Conversation_conversation on Conversation {
   fromLastViewedMessageID
   isLastMessageToUser
   unread
-  orderConnection(first: 10, states: [APPROVED, FULFILLED, SUBMITTED, REFUNDED, CANCELED], participantType: BUYER) {
+  orderConnection(first: 10, states: [APPROVED, FULFILLED, SUBMITTED], participantType: BUYER) {
     edges {
       node {
         __typename
@@ -333,6 +333,28 @@ fragment Details_conversation on Conversation {
     name
     initials
     id
+  }
+  orderConnection(first: 10, states: [APPROVED, FULFILLED, SUBMITTED], participantType: BUYER) {
+    edges {
+      node {
+        __typename
+        internalID
+        ...TransactionDetailsSummaryItem_order
+        ...ShippingSummaryItem_order
+        requestedFulfillment {
+          __typename
+          ...ShippingAddress_ship
+        }
+        creditCard {
+          brand
+          lastDigits
+          expirationYear
+          expirationMonth
+          id
+        }
+        id
+      }
+    }
   }
   messagesConnection(first: 30, sort: DESC) {
     edges {
@@ -467,6 +489,119 @@ fragment OrderUpdate_event on CommerceOrderEventUnion {
         fromParticipant
         id
       }
+      id
+    }
+  }
+}
+
+fragment ShippingAddress_ship on CommerceRequestedFulfillmentUnion {
+  ... on CommerceShip {
+    name
+    addressLine1
+    addressLine2
+    city
+    postalCode
+    region
+    country
+    phoneNumber
+  }
+  ... on CommerceShipArta {
+    name
+    addressLine1
+    addressLine2
+    city
+    postalCode
+    region
+    country
+    phoneNumber
+  }
+}
+
+fragment ShippingSummaryItem_order on CommerceOrder {
+  state
+  requestedFulfillment {
+    __typename
+    ...ShippingAddress_ship
+  }
+  lineItems {
+    edges {
+      node {
+        artwork {
+          shippingOrigin
+          id
+        }
+        id
+      }
+    }
+  }
+}
+
+fragment TransactionDetailsSummaryItem_order on CommerceOrder {
+  __typename
+  requestedFulfillment {
+    __typename
+  }
+  code
+  lineItems {
+    edges {
+      node {
+        artworkOrEditionSet {
+          __typename
+          ... on Artwork {
+            price
+          }
+          ... on EditionSet {
+            price
+            id
+          }
+          ... on Node {
+            id
+          }
+        }
+        selectedShippingQuote {
+          displayName
+          id
+        }
+        id
+      }
+    }
+  }
+  state
+  mode
+  shippingTotal(precision: 2)
+  shippingTotalCents
+  taxTotal(precision: 2)
+  taxTotalCents
+  itemsTotal(precision: 2)
+  buyerTotal(precision: 2)
+  currencyCode
+  ... on CommerceOfferOrder {
+    lastOffer {
+      internalID
+      amount(precision: 2)
+      amountCents
+      shippingTotal(precision: 2)
+      shippingTotalCents
+      taxTotal(precision: 2)
+      taxTotalCents
+      buyerTotal(precision: 2)
+      buyerTotalCents
+      fromParticipant
+      note
+      id
+    }
+    myLastOffer {
+      internalID
+      amount(precision: 2)
+      amountCents
+      shippingTotal(precision: 2)
+      shippingTotalCents
+      taxTotal(precision: 2)
+      taxTotalCents
+      buyerTotal(precision: 2)
+      buyerTotalCents
+      fromParticipant
+      note
       id
     }
   }
@@ -654,7 +789,7 @@ v25 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "buyerAction",
+  "name": "city",
   "storageKey": null
 },
 v26 = [
@@ -1002,9 +1137,7 @@ return {
                     "value": [
                       "APPROVED",
                       "FULFILLED",
-                      "SUBMITTED",
-                      "REFUNDED",
-                      "CANCELED"
+                      "SUBMITTED"
                     ]
                   }
                 ],
@@ -1029,7 +1162,6 @@ return {
                         "name": "node",
                         "plural": false,
                         "selections": [
-                          (v8/*: any*/),
                           (v4/*: any*/),
                           {
                             "alias": null,
@@ -1120,6 +1252,198 @@ return {
                             ],
                             "storageKey": null
                           },
+                          (v8/*: any*/),
+                          {
+                            "alias": null,
+                            "args": null,
+                            "concreteType": null,
+                            "kind": "LinkedField",
+                            "name": "requestedFulfillment",
+                            "plural": false,
+                            "selections": [
+                              (v8/*: any*/),
+                              {
+                                "kind": "InlineFragment",
+                                "selections": (v25/*: any*/),
+                                "type": "CommerceShip"
+                              },
+                              {
+                                "kind": "InlineFragment",
+                                "selections": (v25/*: any*/),
+                                "type": "CommerceShipArta"
+                              }
+                            ],
+                            "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "code",
+                            "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
+                            "concreteType": "CommerceLineItemConnection",
+                            "kind": "LinkedField",
+                            "name": "lineItems",
+                            "plural": false,
+                            "selections": [
+                              {
+                                "alias": null,
+                                "args": null,
+                                "concreteType": "CommerceLineItemEdge",
+                                "kind": "LinkedField",
+                                "name": "edges",
+                                "plural": true,
+                                "selections": [
+                                  {
+                                    "alias": null,
+                                    "args": null,
+                                    "concreteType": "CommerceLineItem",
+                                    "kind": "LinkedField",
+                                    "name": "node",
+                                    "plural": false,
+                                    "selections": [
+                                      {
+                                        "alias": null,
+                                        "args": null,
+                                        "concreteType": null,
+                                        "kind": "LinkedField",
+                                        "name": "artworkOrEditionSet",
+                                        "plural": false,
+                                        "selections": [
+                                          (v8/*: any*/),
+                                          (v3/*: any*/),
+                                          {
+                                            "kind": "InlineFragment",
+                                            "selections": (v26/*: any*/),
+                                            "type": "Artwork"
+                                          },
+                                          {
+                                            "kind": "InlineFragment",
+                                            "selections": (v26/*: any*/),
+                                            "type": "EditionSet"
+                                          }
+                                        ],
+                                        "storageKey": null
+                                      },
+                                      {
+                                        "alias": null,
+                                        "args": null,
+                                        "concreteType": "CommerceShippingQuote",
+                                        "kind": "LinkedField",
+                                        "name": "selectedShippingQuote",
+                                        "plural": false,
+                                        "selections": [
+                                          {
+                                            "alias": null,
+                                            "args": null,
+                                            "kind": "ScalarField",
+                                            "name": "displayName",
+                                            "storageKey": null
+                                          },
+                                          (v3/*: any*/)
+                                        ],
+                                        "storageKey": null
+                                      },
+                                      (v3/*: any*/),
+                                      {
+                                        "alias": null,
+                                        "args": null,
+                                        "concreteType": "Artwork",
+                                        "kind": "LinkedField",
+                                        "name": "artwork",
+                                        "plural": false,
+                                        "selections": [
+                                          {
+                                            "alias": null,
+                                            "args": null,
+                                            "kind": "ScalarField",
+                                            "name": "shippingOrigin",
+                                            "storageKey": null
+                                          },
+                                          (v3/*: any*/)
+                                        ],
+                                        "storageKey": null
+                                      }
+                                    ],
+                                    "storageKey": null
+                                  }
+                                ],
+                                "storageKey": null
+                              }
+                            ],
+                            "storageKey": null
+                          },
+                          (v22/*: any*/),
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "mode",
+                            "storageKey": null
+                          },
+                          (v28/*: any*/),
+                          (v29/*: any*/),
+                          (v30/*: any*/),
+                          (v31/*: any*/),
+                          {
+                            "alias": null,
+                            "args": (v27/*: any*/),
+                            "kind": "ScalarField",
+                            "name": "itemsTotal",
+                            "storageKey": "itemsTotal(precision:2)"
+                          },
+                          (v32/*: any*/),
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "currencyCode",
+                            "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
+                            "concreteType": "CreditCard",
+                            "kind": "LinkedField",
+                            "name": "creditCard",
+                            "plural": false,
+                            "selections": [
+                              {
+                                "alias": null,
+                                "args": null,
+                                "kind": "ScalarField",
+                                "name": "brand",
+                                "storageKey": null
+                              },
+                              {
+                                "alias": null,
+                                "args": null,
+                                "kind": "ScalarField",
+                                "name": "lastDigits",
+                                "storageKey": null
+                              },
+                              {
+                                "alias": null,
+                                "args": null,
+                                "kind": "ScalarField",
+                                "name": "expirationYear",
+                                "storageKey": null
+                              },
+                              {
+                                "alias": null,
+                                "args": null,
+                                "kind": "ScalarField",
+                                "name": "expirationMonth",
+                                "storageKey": null
+                              },
+                              (v3/*: any*/)
+                            ],
+                            "storageKey": null
+                          },
                           {
                             "kind": "InlineFragment",
                             "selections": [
@@ -1135,7 +1459,7 @@ return {
                     "storageKey": null
                   }
                 ],
-                "storageKey": "orderConnection(first:10,participantType:\"BUYER\",states:[\"APPROVED\",\"FULFILLED\",\"SUBMITTED\",\"REFUNDED\",\"CANCELED\"])"
+                "storageKey": "orderConnection(first:10,participantType:\"BUYER\",states:[\"APPROVED\",\"FULFILLED\",\"SUBMITTED\"])"
               },
               {
                 "alias": null,
@@ -1533,13 +1857,7 @@ return {
                                 "name": "location",
                                 "plural": false,
                                 "selections": [
-                                  {
-                                    "alias": null,
-                                    "args": null,
-                                    "kind": "ScalarField",
-                                    "name": "city",
-                                    "storageKey": null
-                                  },
+                                  (v24/*: any*/),
                                   (v3/*: any*/)
                                 ],
                                 "storageKey": null

@@ -11,6 +11,7 @@ export type TransactionDetailsSummaryItem_order = {
     readonly requestedFulfillment: {
         readonly __typename: string;
     } | null;
+    readonly code: string;
     readonly lineItems: {
         readonly edges: ReadonlyArray<{
             readonly node: {
@@ -200,6 +201,13 @@ return {
       "selections": [
         (v0/*: any*/)
       ],
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "code",
       "storageKey": null
     },
     {

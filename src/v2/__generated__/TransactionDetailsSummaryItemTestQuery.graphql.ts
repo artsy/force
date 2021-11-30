@@ -19,6 +19,7 @@ export type TransactionDetailsSummaryItemTestQueryRawResponse = {
         readonly requestedFulfillment: ({
             readonly __typename: string;
         }) | null;
+        readonly code: string;
         readonly lineItems: ({
             readonly edges: ReadonlyArray<({
                 readonly node: ({
@@ -88,6 +89,7 @@ export type TransactionDetailsSummaryItemTestQueryRawResponse = {
         readonly requestedFulfillment: ({
             readonly __typename: string;
         }) | null;
+        readonly code: string;
         readonly lineItems: ({
             readonly edges: ReadonlyArray<({
                 readonly node: ({
@@ -148,6 +150,7 @@ fragment TransactionDetailsSummaryItem_order on CommerceOrder {
   requestedFulfillment {
     __typename
   }
+  code
   lineItems {
     edges {
       node {
@@ -436,6 +439,13 @@ return {
             "selections": [
               (v1/*: any*/)
             ],
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "code",
             "storageKey": null
           },
           {
