@@ -45,7 +45,7 @@ export const CreateSavedSearchAlert: React.FC<CreateSavedSearchAlertProps> = ({
       </Text>
       <SavedSearchAlertForm
         savedSearchAttributes={savedSearchAttributes}
-        initialValues={{ name: "", email: true }}
+        initialValues={{ name: "", email: true, push: false }}
         onComplete={handleComplete}
       />
     </Modal>

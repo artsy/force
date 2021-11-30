@@ -4,7 +4,7 @@ import {
   SavedSearchAleftFormValues,
   SavedSearchAlertMutationResult,
 } from "./SavedSearchAlertModel"
-import { Box, Button, Checkbox, Input, Text } from "@artsy/palette"
+import { Box, Button, Checkbox, Input, Spacer, Text } from "@artsy/palette"
 import { getNamePlaceholder } from "./Utils/getNamePlaceholder"
 import { getSearchCriteriaFromFilters } from "../ArtworkFilter/SavedSearch/Utils"
 import { createSavedSearchAlert } from "./Mutations/createSavedSearchAlert"
@@ -51,6 +51,7 @@ export const SavedSearchAlertForm: React.FC<SavedSearchAlertFormProps> = ({
       const userAlertSettings: SavedSearchAleftFormValues = {
         name: alertName,
         email: values.email,
+        push: values.push,
       }
 
       try {
@@ -72,8 +73,10 @@ export const SavedSearchAlertForm: React.FC<SavedSearchAlertFormProps> = ({
     },
   })
 
-  const handleToggleEmailNotification = (enabled: boolean) => {
-    formik.setFieldValue("email", enabled)
+  const handleToggleNotification = (name: "email" | "push") => (
+    enabled: boolean
+  ) => {
+    formik.setFieldValue(name, enabled)
   }
 
   return (
@@ -89,13 +92,25 @@ export const SavedSearchAlertForm: React.FC<SavedSearchAlertFormProps> = ({
           error={formik.errors.name}
           maxLength={75}
         />
-        <Box display="flex" justifyContent="space-between" my={4}>
-          <Text>Email Alerts</Text>
-          <Checkbox
-            onSelect={handleToggleEmailNotification}
-            selected={formik.values.email}
-          />
+
+        <Box my={4}>
+          <Box display="flex" justifyContent="space-between">
+            <Text>Email Alerts</Text>
+            <Checkbox
+              onSelect={handleToggleNotification("email")}
+              selected={formik.values.email}
+            />
+          </Box>
+          <Spacer mt={4} />
+          <Box display="flex" justifyContent="space-between">
+            <Text>Mobile Alerts</Text>
+            <Checkbox
+              onSelect={handleToggleNotification("push")}
+              selected={formik.values.push}
+            />
+          </Box>
         </Box>
+
         <Button type="submit" loading={formik.isSubmitting} width="100%" mt={4}>
           Save Alert
         </Button>
