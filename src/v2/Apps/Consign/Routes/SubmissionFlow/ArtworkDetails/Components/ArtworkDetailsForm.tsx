@@ -21,6 +21,7 @@ import { useRouter } from "v2/System/Router/useRouter"
 import { ArtworkSidebarClassificationsModalQueryRenderer } from "v2/Apps/Artwork/Components/ArtworkSidebarClassificationsModal"
 import { useSubmission } from "../../Utils/useSubmission"
 import { ArtistAutoComplete } from "./ArtistAutocomplete"
+import { LocationAutoComplete } from "./LocationAutocomplete"
 
 export const getArtworkDetailsFormInitialValues = () => ({
   artistId: "",
@@ -36,6 +37,8 @@ export const getArtworkDetailsFormInitialValues = () => ({
   depth: "",
   units: "in",
   provenance: "",
+  locationId: "",
+  location: "",
 })
 
 const rarityOptions = checkboxValues.map(({ name, value }) => ({
@@ -59,6 +62,8 @@ export interface ArtworkDetailsFormModel {
   depth: string
   units: string
   provenance: string
+  location: string
+  locationId: string
 }
 
 export const ArtworkDetailsForm: React.FC = () => {
@@ -68,7 +73,7 @@ export const ArtworkDetailsForm: React.FC = () => {
     },
   } = useRouter()
 
-  const [isArtistApiError, setIsArtistApiError] = useState(false)
+  const [isApiError, setIsApiError] = useState(false)
   const [isRarityModalOpen, setIsRarityModalOpen] = useState(false)
   const [isProvenanceModalOpen, setIsProvenanceModalOpen] = useState(false)
 
@@ -96,11 +101,11 @@ export const ArtworkDetailsForm: React.FC = () => {
   return (
     <>
       <ErrorModal
-        show={isArtistApiError}
+        show={isApiError}
         headerText="An error occurred"
         contactEmail="consign@artsymail.com"
         closeText="Close"
-        onClose={() => setIsArtistApiError(false)}
+        onClose={() => setIsApiError(false)}
       />
       <ArtworkSidebarClassificationsModalQueryRenderer
         onClose={() => setIsRarityModalOpen(false)}
@@ -138,7 +143,7 @@ export const ArtworkDetailsForm: React.FC = () => {
 
       <GridColumns>
         <Column span={6}>
-          <ArtistAutoComplete onError={() => setIsArtistApiError(true)} />
+          <ArtistAutoComplete onError={() => setIsApiError(true)} />
         </Column>
         <Column span={6} mt={[2, 0]}>
           <Input
@@ -317,6 +322,9 @@ export const ArtworkDetailsForm: React.FC = () => {
             onChange={handleChange}
             value={values.provenance}
           />
+        </Column>
+        <Column span={6} mt={[1, 0]}>
+          <LocationAutoComplete onError={() => setIsApiError(true)} />
         </Column>
       </GridColumns>
     </>

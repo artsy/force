@@ -2,6 +2,7 @@ import { mount } from "enzyme"
 import { ArtworkDetails } from "../ArtworkDetails"
 import {
   ArtworkDetailsForm,
+  ArtworkDetailsFormModel,
   getArtworkDetailsFormInitialValues,
 } from "../Components/ArtworkDetailsForm"
 import {
@@ -13,7 +14,7 @@ import { MockBoot } from "v2/DevTools"
 import { Breakpoint } from "v2/Utils/Responsive"
 import { flushPromiseQueue } from "v2/DevTools"
 
-const validForm = {
+const validForm: ArtworkDetailsFormModel = {
   artistId: "artistId",
   artistName: "Banksy",
   year: "2021",
@@ -27,9 +28,11 @@ const validForm = {
   depth: "5",
   units: "cm",
   provenance: "provenance",
+  location: "NY, USA",
+  locationId: "locationId",
 }
 
-const validFormWithSpaces = {
+const validFormWithSpaces: ArtworkDetailsFormModel = {
   artistId: "artistId",
   artistName: "Banksy",
   year: " 2021 ",
@@ -43,6 +46,8 @@ const validFormWithSpaces = {
   depth: " 5 ",
   units: " cm ",
   provenance: "  provenance  ",
+  location: "  NY, USA  ",
+  locationId: "locationId",
 }
 
 const utmParams = { utmMedium: "Medium", utmSource: "Source", utmTerm: "Term" }
@@ -140,6 +145,11 @@ describe("ArtworkDetails", () => {
       expect(wrapper.find("input[name='provenance']").prop("value")).toBe(
         "provenance"
       )
+      expect(
+        wrapper
+          .find("input[data-test-id='autocomplete-location']")
+          .prop("value")
+      ).toBe("NY, USA")
     })
 
     describe("Correct steps", () => {
