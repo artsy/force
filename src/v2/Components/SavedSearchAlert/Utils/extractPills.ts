@@ -91,6 +91,7 @@ export const extractPills = (
       return (
         paramValue && {
           filterName: paramName,
+          name: paramName,
           displayName: WAYS_TO_BUY_OPTIONS[paramName].name,
         }
       )
