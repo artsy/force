@@ -13,6 +13,7 @@ import { extractNodes } from "v2/Utils/extractNodes"
 import { DownloadAppBadges } from "v2/Components/DownloadAppBadges/DownloadAppBadges"
 import { ContextModule } from "@artsy/cohesion"
 import { appendCurrencySymbol } from "v2/Apps/Order/Utils/currencyUtils"
+import { withSystemContext } from "v2/System"
 
 export interface TransactionDetailsSummaryItemProps
   extends Omit<StepSummaryItemProps, "order"> {
@@ -22,6 +23,8 @@ export interface TransactionDetailsSummaryItemProps
   offerContextPrice?: "LIST_PRICE" | "LAST_OFFER"
   showOfferNote?: boolean
   placeholderOverride?: string | null
+  showCongratulationMessage?: boolean
+  isEigen?: boolean
 }
 
 export class TransactionDetailsSummaryItem extends React.Component<
@@ -39,6 +42,8 @@ export class TransactionDetailsSummaryItem extends React.Component<
       offerOverride,
       order,
       placeholderOverride,
+      isEigen,
+      showCongratulationMessage = false,
       ...others
     } = this.props
 
@@ -65,7 +70,7 @@ export class TransactionDetailsSummaryItem extends React.Component<
           data-test="buyerTotalDisplayAmount"
         />
         {showOfferNote && order.mode === "OFFER" && this.renderNoteEntry()}
-        {order.state === "SUBMITTED" && (
+        {showCongratulationMessage && (
           <Column
             span={4}
             display="flex"
@@ -87,9 +92,11 @@ export class TransactionDetailsSummaryItem extends React.Component<
               </Text>
             </Flex>
             <Flex pt={1}>
-              <DownloadAppBadges
-                contextModule={ContextModule.ordersSubmitted}
-              />
+              {!isEigen && (
+                <DownloadAppBadges
+                  contextModule={ContextModule.ordersSubmitted}
+                />
+              )}
             </Flex>
           </Column>
         )}
@@ -292,7 +299,7 @@ graphql`
 `
 
 export const TransactionDetailsSummaryItemFragmentContainer = createFragmentContainer(
-  TransactionDetailsSummaryItem,
+  withSystemContext(TransactionDetailsSummaryItem),
   {
     order: graphql`
       fragment TransactionDetailsSummaryItem_order on CommerceOrder {
@@ -318,7 +325,6 @@ export const TransactionDetailsSummaryItemFragmentContainer = createFragmentCont
             }
           }
         }
-        state
         mode
         shippingTotal(precision: 2)
         shippingTotalCents
