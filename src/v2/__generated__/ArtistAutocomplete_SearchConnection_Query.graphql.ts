@@ -2,10 +2,10 @@
 /* eslint-disable */
 
 import { ConcreteRequest } from "relay-runtime";
-export type ArtistAutosuggest_SearchConnection_QueryVariables = {
+export type ArtistAutocomplete_SearchConnection_QueryVariables = {
     searchQuery: string;
 };
-export type ArtistAutosuggest_SearchConnection_QueryResponse = {
+export type ArtistAutocomplete_SearchConnection_QueryResponse = {
     readonly searchConnection: {
         readonly edges: ReadonlyArray<{
             readonly node: {
@@ -23,15 +23,15 @@ export type ArtistAutosuggest_SearchConnection_QueryResponse = {
         } | null> | null;
     } | null;
 };
-export type ArtistAutosuggest_SearchConnection_Query = {
-    readonly response: ArtistAutosuggest_SearchConnection_QueryResponse;
-    readonly variables: ArtistAutosuggest_SearchConnection_QueryVariables;
+export type ArtistAutocomplete_SearchConnection_Query = {
+    readonly response: ArtistAutocomplete_SearchConnection_QueryResponse;
+    readonly variables: ArtistAutocomplete_SearchConnection_QueryVariables;
 };
 
 
 
 /*
-query ArtistAutosuggest_SearchConnection_Query(
+query ArtistAutocomplete_SearchConnection_Query(
   $searchQuery: String!
 ) {
   searchConnection(query: $searchQuery, entities: ARTIST, mode: AUTOSUGGEST, first: 3) {
@@ -176,7 +176,7 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "ArtistAutosuggest_SearchConnection_Query",
+    "name": "ArtistAutocomplete_SearchConnection_Query",
     "selections": [
       {
         "alias": null,
@@ -220,7 +220,7 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "ArtistAutosuggest_SearchConnection_Query",
+    "name": "ArtistAutocomplete_SearchConnection_Query",
     "selections": [
       {
         "alias": null,
@@ -276,11 +276,11 @@ return {
   "params": {
     "id": null,
     "metadata": {},
-    "name": "ArtistAutosuggest_SearchConnection_Query",
+    "name": "ArtistAutocomplete_SearchConnection_Query",
     "operationKind": "query",
-    "text": "query ArtistAutosuggest_SearchConnection_Query(\n  $searchQuery: String!\n) {\n  searchConnection(query: $searchQuery, entities: ARTIST, mode: AUTOSUGGEST, first: 3) {\n    edges {\n      node {\n        __typename\n        displayLabel\n        ... on Artist {\n          internalID\n          image {\n            cropped(width: 44, height: 44) {\n              height\n              src\n              srcSet\n              width\n            }\n          }\n        }\n        ... on Node {\n          id\n        }\n      }\n    }\n  }\n}\n"
+    "text": "query ArtistAutocomplete_SearchConnection_Query(\n  $searchQuery: String!\n) {\n  searchConnection(query: $searchQuery, entities: ARTIST, mode: AUTOSUGGEST, first: 3) {\n    edges {\n      node {\n        __typename\n        displayLabel\n        ... on Artist {\n          internalID\n          image {\n            cropped(width: 44, height: 44) {\n              height\n              src\n              srcSet\n              width\n            }\n          }\n        }\n        ... on Node {\n          id\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '79a276339764fe6e8332cbf26bb6f57c';
+(node as any).hash = 'e216f1a1cc08d8e68679a16add120697';
 export default node;
