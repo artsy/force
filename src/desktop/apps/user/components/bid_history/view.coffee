@@ -1,5 +1,5 @@
 Backbone = require 'backbone'
-metaphysics2 = require '../../../../../lib/metaphysics2.coffee'
+{ metaphysics2 } = require '../../../../../lib/metaphysics2'
 query = require '../../../../components/my_active_bids/query.coffee'
 template = -> require('./index.jade') arguments...
 
