@@ -12,6 +12,7 @@ import { renderRelayTree } from "v2/DevTools"
 import { graphql } from "react-relay"
 import { ExtractProps } from "v2/Utils/ExtractProps"
 import { TransactionDetailsSummaryItemFragmentContainer } from "../TransactionDetailsSummaryItem"
+import { Text } from "@artsy/palette"
 
 jest.unmock("react-relay")
 
@@ -73,7 +74,6 @@ const render = (
 ) =>
   renderRelayTree({
     Component: (props: TransactionDetailsSummaryItemTestQueryResponse) => (
-      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       <TransactionDetailsSummaryItemFragmentContainer
         {...props}
         {...extraProps}
@@ -138,6 +138,26 @@ describe("TransactionDetailsSummaryItem", () => {
       const text = transactionSummary.text()
 
       expect(text).toMatch("Premium delivery")
+    })
+
+    it("shows the congratulations message when order gets submmited", async () => {
+      const transactionSummary = await render(
+        {
+          ...transactionSummaryBuyOrder,
+        },
+        {
+          showCongratulationMessage: true,
+        }
+      )
+
+      const textWrappers = transactionSummary.find(Text)
+
+      expect(textWrappers.map(text => text.text())).toContain(
+        "Congratulations! This artwork will be added to your Collection once the gallery ships the order."
+      )
+      expect(textWrappers.map(text => text.text())).toContain(
+        "View and manage your Collection in the Artsy App."
+      )
     })
   })
 
