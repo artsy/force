@@ -4,7 +4,15 @@ import {
   SavedSearchAleftFormValues,
   SavedSearchAlertMutationResult,
 } from "./SavedSearchAlertModel"
-import { Box, Button, Checkbox, Input, Spacer, Text } from "@artsy/palette"
+import {
+  Box,
+  Button,
+  Checkbox,
+  Input,
+  Join,
+  Spacer,
+  Text,
+} from "@artsy/palette"
 import { getNamePlaceholder } from "./Utils/getNamePlaceholder"
 import { getSearchCriteriaFromFilters } from "../ArtworkFilter/SavedSearch/Utils"
 import { createSavedSearchAlert } from "./Mutations/createSavedSearchAlert"
@@ -13,6 +21,7 @@ import { extractPills } from "./Utils/extractPills"
 import { useArtworkFilterContext } from "../ArtworkFilter/ArtworkFilterContext"
 import createLogger from "v2/Utils/logger"
 import { SavedSearchAttributes } from "../ArtworkFilter/SavedSearch/types"
+import { FiltersPills } from "../ArtworkFilter/SavedSearch/Components/FiltersPills"
 
 interface SavedSearchAlertFormProps {
   savedSearchAttributes: SavedSearchAttributes
@@ -82,38 +91,53 @@ export const SavedSearchAlertForm: React.FC<SavedSearchAlertFormProps> = ({
   return (
     <FormikProvider value={formik}>
       <Form onSubmit={formik.handleSubmit}>
-        <Input
-          title="Name"
-          name="name"
-          placeholder={namePlaceholder}
-          value={formik.values.name}
-          onChange={formik.handleChange("name")}
-          onBlur={formik.handleBlur("name")}
-          error={formik.errors.name}
-          maxLength={75}
-        />
+        <Join separator={<Spacer mt={4} />}>
+          <Input
+            title="Name"
+            name="name"
+            placeholder={namePlaceholder}
+            value={formik.values.name}
+            onChange={formik.handleChange("name")}
+            onBlur={formik.handleBlur("name")}
+            error={formik.errors.name}
+            maxLength={75}
+          />
 
-        <Box my={4}>
-          <Box display="flex" justifyContent="space-between">
-            <Text>Email Alerts</Text>
-            <Checkbox
-              onSelect={handleToggleNotification("email")}
-              selected={formik.values.email}
-            />
+          <Box>
+            <Text variant="xs" textTransform="uppercase">
+              Filters
+            </Text>
+            <Spacer mt={2} />
+            <FiltersPills />
           </Box>
-          <Spacer mt={4} />
-          <Box display="flex" justifyContent="space-between">
-            <Text>Mobile Alerts</Text>
-            <Checkbox
-              onSelect={handleToggleNotification("push")}
-              selected={formik.values.push}
-            />
-          </Box>
-        </Box>
 
-        <Button type="submit" loading={formik.isSubmitting} width="100%" mt={4}>
-          Save Alert
-        </Button>
+          <Box>
+            <Box display="flex" justifyContent="space-between">
+              <Text>Email Alerts</Text>
+              <Checkbox
+                onSelect={handleToggleNotification("email")}
+                selected={formik.values.email}
+              />
+            </Box>
+            <Spacer mt={4} />
+            <Box display="flex" justifyContent="space-between">
+              <Text>Mobile Alerts</Text>
+              <Checkbox
+                onSelect={handleToggleNotification("push")}
+                selected={formik.values.push}
+              />
+            </Box>
+          </Box>
+
+          <Button
+            type="submit"
+            loading={formik.isSubmitting}
+            width="100%"
+            mt={4}
+          >
+            Save Alert
+          </Button>
+        </Join>
       </Form>
     </FormikProvider>
   )

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react"
+import React, { useEffect, useMemo, useRef, useState } from "react"
 import { compact, isEqual } from "lodash"
 import useDeepCompareEffect from "use-deep-compare-effect"
 import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
@@ -55,12 +55,13 @@ import type RelayModernEnvironment from "relay-runtime/lib/store/RelayModernEnvi
 import { TagArtworkFilter_tag } from "v2/__generated__/TagArtworkFilter_tag.graphql"
 import { Works_partner } from "v2/__generated__/Works_partner.graphql"
 import { CollectionArtworksFilter_collection } from "v2/__generated__/CollectionArtworksFilter_collection.graphql"
-import {
-  DefaultFilterPill,
-  FiltersPills,
-} from "./SavedSearch/Components/FiltersPills"
+import { FiltersPills } from "./SavedSearch/Components/FiltersPills"
 import { SavedSearchAttributes } from "./SavedSearch/types"
 import { extractPills } from "../SavedSearchAlert/Utils/extractPills"
+import {
+  DefaultFilterPill,
+  useFilterPillsContext,
+} from "./SavedSearch/Utils/FilterPillsContext"
 
 /**
  * Primary ArtworkFilter which is wrapped with a context and refetch container.
@@ -167,23 +168,37 @@ export const BaseArtworkFilter: React.FC<
   const filterContext = useArtworkFilterContext()
   const previousFilters = usePrevious(filterContext.filters)
   const { user } = useSystemContext()
+  const { pills = [], setPills } = useFilterPillsContext()
 
   const { filtered_artworks } = viewer
   const hasFilter = filtered_artworks && filtered_artworks.id
-  const filters = getAllowedFiltersForSavedSearchInput(filterContext.filters!)
+  const filters = useMemo(
+    () => getAllowedFiltersForSavedSearchInput(filterContext.filters ?? {}),
+    [filterContext.filters]
+  )
 
-  const defaultPill: DefaultFilterPill | null = !!savedSearchProps?.name
-    ? {
-        isDefault: true,
-        name: savedSearchProps.slug,
-        displayName: savedSearchProps.name,
-      }
-    : null
+  const defaultPill: DefaultFilterPill | null = useMemo(
+    () =>
+      !!savedSearchProps
+        ? {
+            isDefault: true,
+            name: savedSearchProps.slug,
+            displayName: savedSearchProps.name,
+          }
+        : null,
+    [savedSearchProps]
+  )
 
-  const filterPills = extractPills(filters, filterContext.aggregations)
+  const filterPills = useMemo(
+    () => extractPills(filters, filterContext.aggregations),
+    [filters, filterContext.aggregations]
+  )
 
-  const pills = compact([defaultPill, ...filterPills])
   const showCreateAlert = enableCreateAlert && !!pills.length
+
+  useEffect(() => {
+    setPills?.(compact([defaultPill, ...filterPills]))
+  }, [defaultPill, filterPills])
 
   /**
    * Check to see if the mobile action sheet is present and prevent scrolling
@@ -338,11 +353,8 @@ export const BaseArtworkFilter: React.FC<
 
           <Spacer mb={2} />
 
-          {showCreateAlert && savedSearchProps && (
-            <FiltersPills
-              pills={pills}
-              savedSearchAttributes={savedSearchProps}
-            />
+          {showCreateAlert && (
+            <FiltersPills savedSearchAttributes={savedSearchProps} />
           )}
 
           <Spacer mb={2} />
@@ -392,11 +404,8 @@ export const BaseArtworkFilter: React.FC<
               </Box>
             )}
 
-            {showCreateAlert && savedSearchProps && (
-              <FiltersPills
-                pills={pills}
-                savedSearchAttributes={savedSearchProps}
-              />
+            {showCreateAlert && (
+              <FiltersPills savedSearchAttributes={savedSearchProps} />
             )}
 
             {children || (

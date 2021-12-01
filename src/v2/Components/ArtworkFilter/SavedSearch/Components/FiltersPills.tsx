@@ -8,35 +8,20 @@ import {
   useArtworkFilterContext,
 } from "../../ArtworkFilterContext"
 import { isArray } from "lodash"
+import { FilterPill, useFilterPillsContext } from "../Utils/FilterPillsContext"
 
 const PILL_HORIZONTAL_MARGIN_SIZE = 0.5
 const CLOSE_ICON_SIZE = 15
 
-export interface DefaultFilterPill {
-  isDefault: true
-  name: string
-  displayName: string
-}
-
-export interface NonDefaultFilterPill {
-  isDefault?: false
-  name: string
-  displayName: string
-  filterName: string
-}
-
-export type FilterPill = DefaultFilterPill | NonDefaultFilterPill
-
 export interface FiltersPillsProps {
-  pills: FilterPill[]
-  savedSearchAttributes: SavedSearchAttributes
+  savedSearchAttributes?: SavedSearchAttributes
 }
 
 export const FiltersPills: FC<FiltersPillsProps> = ({
-  pills,
   savedSearchAttributes,
 }) => {
   const filterContext = useArtworkFilterContext()
+  const { pills = [] } = useFilterPillsContext()
 
   const removePill = (pill: FilterPill) => {
     if (pill.isDefault) return
@@ -76,10 +61,12 @@ export const FiltersPills: FC<FiltersPillsProps> = ({
             )}
           </Pill>
         ))}
-        <CreateAlertButton
-          savedSearchAttributes={savedSearchAttributes}
-          ml={PILL_HORIZONTAL_MARGIN_SIZE}
-        />
+        {savedSearchAttributes && (
+          <CreateAlertButton
+            savedSearchAttributes={savedSearchAttributes}
+            ml={PILL_HORIZONTAL_MARGIN_SIZE}
+          />
+        )}
       </Flex>
       <Spacer mt={4} />
     </>
