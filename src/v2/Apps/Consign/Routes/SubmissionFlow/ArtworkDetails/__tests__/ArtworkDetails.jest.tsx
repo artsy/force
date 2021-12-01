@@ -97,7 +97,7 @@ describe("ArtworkDetails", () => {
       expect(text).toContain("Tell us about your artwork")
       expect(text).toContain("All fields are required to submit a work.")
       expect(text).toContain(
-        "Unfortunately we are not accepting consignments directly from artists at this time."
+        "We currently do not allow artists to sell their own work on Artsy."
       )
       expect(wrapper.find(ArtworkDetailsForm)).toBeTruthy()
       expect(wrapper.find("[data-test-id='save-button']")).toBeTruthy()

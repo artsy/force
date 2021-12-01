@@ -51,7 +51,7 @@ const ArtistConsignHowtoSell: React.FC<ArtistConsignHowtoSellProps> = ({
           <Section
             icon={<EnvelopeIcon width={30} height={30} />}
             text="Receive offers"
-            description="If your work is accepted, you’ll receive competitive consignment
+            description="If your work is accepted, you’ll receive competitive
             offers from auction houses, galleries, and collectors."
           />
           <Section

@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"
 import { Expandable, Join, Spacer, Text } from "@artsy/palette"
 
 export const FAQ: React.FC = () => {
@@ -70,10 +70,10 @@ export const FAQ: React.FC = () => {
               <a href="/consign" target="_blank">
                 Sell with Artsy program
               </a>{" "}
-              in which we currently accept consignments of works by artists that
-              are already in our database who have a resale market and
-              substantial collector demand. To learn more about our Sell with
-              Artsy program, please visit our Help Center article on{" "}
+              in which we currently accept works by artists that are already in
+              our database who have a resale market and substantial collector
+              demand. To learn more about our Sell with Artsy program, please
+              visit our Help Center article on{" "}
               <a
                 href="https://support.artsy.net/hc/en-us/articles/1500006366381"
                 target="_blank"
