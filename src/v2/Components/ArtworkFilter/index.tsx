@@ -43,7 +43,10 @@ import {
   ContextModule,
   ClickedChangePage,
 } from "@artsy/cohesion"
-import { allowedFilters } from "./Utils/allowedFilters"
+import {
+  allowedFilters,
+  getAllowedFiltersForSavedSearchInput,
+} from "./Utils/allowedFilters"
 import { Sticky } from "v2/Components/Sticky"
 import { ScrollRefContext } from "./ArtworkFilters/useScrollContext"
 import { ArtworkSortFilter } from "./ArtworkFilters/ArtworkSortFilter"
@@ -52,8 +55,12 @@ import type RelayModernEnvironment from "relay-runtime/lib/store/RelayModernEnvi
 import { TagArtworkFilter_tag } from "v2/__generated__/TagArtworkFilter_tag.graphql"
 import { Works_partner } from "v2/__generated__/Works_partner.graphql"
 import { CollectionArtworksFilter_collection } from "v2/__generated__/CollectionArtworksFilter_collection.graphql"
-import { FiltersPills } from "./SavedSearch/Components/FiltersPills"
+import {
+  DefaultFilterPill,
+  FiltersPills,
+} from "./SavedSearch/Components/FiltersPills"
 import { SavedSearchAttributes } from "./SavedSearch/types"
+import { extractPills } from "../SavedSearchAlert/Utils/extractPills"
 
 /**
  * Primary ArtworkFilter which is wrapped with a context and refetch container.
@@ -163,15 +170,19 @@ export const BaseArtworkFilter: React.FC<
 
   const { filtered_artworks } = viewer
   const hasFilter = filtered_artworks && filtered_artworks.id
+  const filters = getAllowedFiltersForSavedSearchInput(filterContext.filters!)
 
-  const defaultPill = !!savedSearchProps?.name
+  const defaultPill: DefaultFilterPill | null = !!savedSearchProps?.name
     ? {
-        name: savedSearchProps.name,
         isDefault: true,
+        name: savedSearchProps.slug,
+        displayName: savedSearchProps.name,
       }
     : null
-  const pills = compact([defaultPill])
 
+  const filterPills = extractPills(filters, filterContext.aggregations)
+
+  const pills = compact([defaultPill, ...filterPills])
   const showCreateAlert = enableCreateAlert && !!pills.length
 
   /**

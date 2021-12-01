@@ -7,6 +7,7 @@ import { ArtworkQueryFilter } from "../ArtworkQueryFilter"
 import { ArtworkFilterFixture } from "./fixtures/ArtworkFilter.fixture"
 import { Pagination } from "v2/Components/Pagination"
 import { initialArtworkFilterState } from "../ArtworkFilterContext"
+import { SavedSearchAttributes } from "../SavedSearch/types"
 
 jest.unmock("react-relay")
 jest.mock("v2/System/Analytics/useTracking")
@@ -14,6 +15,13 @@ jest.mock("v2/Components/Pagination/useComputeHref")
 jest.mock("v2/Utils/Hooks/useMatchMedia", () => ({
   __internal__useMatchMedia: () => ({}),
 }))
+
+const savedSearchProps: SavedSearchAttributes = {
+  type: "artist",
+  id: "test-artist-id",
+  name: "Test Artist",
+  slug: "test-artist-slug",
+}
 
 describe("ArtworkFilter", () => {
   const getWrapper = async (
@@ -35,11 +43,53 @@ describe("ArtworkFilter", () => {
   const trackEvent = jest.fn()
 
   beforeEach(() => {
+    jest.clearAllMocks()
     ;(useTracking as jest.Mock).mockImplementation(() => {
       return {
         trackEvent,
       }
     })
+  })
+
+  it("renders filters pills when enableCreateAlert is true, savedSearchProps are passed and there are selected filters", async () => {
+    const wrapper = await getWrapper("lg", {
+      enableCreateAlert: true,
+      savedSearchProps,
+      filters: {
+        colors: ["yellow", "pink"],
+      },
+    })
+
+    const filterPills = wrapper.find("FiltersPills")
+    expect(
+      filterPills.findWhere(node => node.text() === "Yellow").exists()
+    ).toBeTruthy()
+    expect(
+      filterPills.findWhere(node => node.text() === "Pink").exists()
+    ).toBeTruthy()
+  })
+
+  it("removes pill after click on it", async () => {
+    const wrapper = await getWrapper("lg", {
+      enableCreateAlert: true,
+      savedSearchProps,
+      filters: {
+        colors: ["yellow", "pink"],
+      },
+    })
+    expect(
+      wrapper
+        .find("FiltersPills")
+        .findWhere(node => node.text() === "Yellow")
+        .exists()
+    ).toBeTruthy()
+    wrapper.find("FiltersPills").find("Pill").at(1).simulate("click")
+    expect(
+      wrapper
+        .find("FiltersPills")
+        .findWhere(node => node.text() === "Yellow")
+        .exists()
+    ).toBeFalsy()
   })
 
   describe("without any filtered artworks", () => {
@@ -107,9 +157,10 @@ describe("ArtworkFilter", () => {
   describe("desktop", () => {
     it("renders default UI items", async () => {
       const wrapper = await getWrapper()
-      expect(wrapper.find("ArtworkFilterArtworkGrid").length).toEqual(1)
-      expect(wrapper.find("SortFilter").length).toEqual(1)
-      expect(wrapper.find(Pagination).length).toEqual(1)
+      expect(wrapper.find("ArtworkFilterArtworkGrid")).toHaveLength(1)
+      expect(wrapper.find("SortFilter")).toHaveLength(1)
+      expect(wrapper.find("FiltersPills")).toHaveLength(0)
+      expect(wrapper.find(Pagination)).toHaveLength(1)
     })
 
     it("triggers #onFilterClick on filter click, passing back the changed value and current filter state", async () => {
@@ -186,9 +237,10 @@ describe("ArtworkFilter", () => {
   describe("mobile", () => {
     it("renders default UI items", async () => {
       const wrapper = await getWrapper("xs")
-      expect(wrapper.find("ArtworkFilterArtworkGrid").length).toEqual(1)
+      expect(wrapper.find("ArtworkFilterArtworkGrid")).toHaveLength(1)
       expect(wrapper.find("Button").text()).toEqual("FilterFilter") // svg icon + text
-      expect(wrapper.find("FilterIcon").length).toEqual(1)
+      expect(wrapper.find("FilterIcon")).toHaveLength(1)
+      expect(wrapper.find("FiltersPills")).toHaveLength(0)
     })
 
     it("toggles mobile action sheet", async () => {
@@ -198,13 +250,13 @@ describe("ArtworkFilter", () => {
       const actionSheet = wrapper.find("ArtworkFilterMobileActionSheet")
       expect(actionSheet.length).toEqual(1)
       expect(wrapper.find("FiltersWithScrollIntoView").length).toEqual(1)
-      expect(document.body.style.overflowY).toEqual("hidden")
+      expect(document.body).toHaveStyle({ overflowY: "hidden" })
 
       wrapper.find("WaysToBuyFilter").find("Checkbox").first().simulate("click")
       actionSheet.find("Button").last().simulate("click")
 
       expect(wrapper.find("ArtworkFilterMobileActionSheet").length).toEqual(0)
-      expect(document.body.style.overflowY).toEqual("visible")
+      expect(document.body).toHaveStyle({ overflowY: "visible" })
     })
   })
 })

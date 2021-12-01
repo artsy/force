@@ -18,8 +18,9 @@ import {
 import { NumericInput } from "./PriceRangeFilter"
 import { Media } from "v2/Utils/Responsive"
 import { FilterExpandable } from "./FilterExpandable"
+import { isCustomValue } from "./Utils/isCustomValue"
 
-const SIZES = [
+export const SIZES = [
   { displayName: "Small (under 40cm)", name: "SMALL" },
   { displayName: "Medium (40 – 100cm)", name: "MEDIUM" },
   { displayName: "Large (over 100cm)", name: "LARGE" },
@@ -74,8 +75,6 @@ const getValue = (value: CustomRange[number]) => {
   return value === "*" || value === 0 ? "" : value
 }
 
-export const isCustomSize = (value?: string) => value !== "*-*"
-
 export interface SizeFilterProps {
   expanded?: boolean
 }
@@ -88,13 +87,16 @@ export const SizeFilter: React.FC<SizeFilterProps> = ({ expanded }) => {
     reset,
   } = currentlySelectedFilters?.() as ArtworkFiltersState
 
-  const initialCustomSize = {
-    height: parseRange(height) as CustomRange,
-    width: parseRange(width) as CustomRange,
-  }
+  const initialCustomSize = React.useMemo(
+    () => ({
+      height: parseRange(height) as CustomRange,
+      width: parseRange(width) as CustomRange,
+    }),
+    [width, height]
+  )
 
   const [showCustom, setShowCustom] = useState(
-    isCustomSize(width) || isCustomSize(height)
+    isCustomValue(width) || isCustomValue(height)
   )
   const [customSize, setCustomSize] = useState<CustomSize>(initialCustomSize)
   const [mode, setMode] = useState<"resting" | "done">("resting")
@@ -171,13 +173,17 @@ export const SizeFilter: React.FC<SizeFilterProps> = ({ expanded }) => {
     }
   }, [reset])
 
+  useEffect(() => {
+    setCustomSize(initialCustomSize)
+  }, [initialCustomSize])
+
   const selection = currentlySelectedFilters?.().sizes
   const customHeight = currentlySelectedFilters?.().height
   const customWidth = currentlySelectedFilters?.().width
   const hasSelection =
     (selection && selection.length > 0) ||
-    isCustomSize(customHeight) ||
-    isCustomSize(customWidth)
+    isCustomValue(customHeight) ||
+    isCustomValue(customWidth)
 
   return (
     <FilterExpandable label="Size" expanded={hasSelection || expanded}>

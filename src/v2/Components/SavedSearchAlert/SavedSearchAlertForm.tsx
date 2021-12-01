@@ -36,7 +36,7 @@ export const SavedSearchAlertForm: React.FC<SavedSearchAlertFormProps> = ({
   const filters = filterContext.currentlySelectedFilters?.() || {}
 
   const pills = extractPills(filters, filterContext.aggregations!)
-  const namePlaceholder = getNamePlaceholder(name, pills)
+  const namePlaceholder = getNamePlaceholder(name, pills.length)
 
   const formik = useFormik<SavedSearchAleftFormValues>({
     initialValues,
