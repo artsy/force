@@ -1,35 +1,21 @@
 import { graphql } from "react-relay"
-// import { createMockFetchQuery } from "v2/DevTools"
-// import {
-//   AppEnabledWithBackupCodesQueryResponse,
-//   AppEnabledWithoutBackupCodesQueryResponse,
-//   BackupSecondFactors,
-//   CreateAppSecondFactorMutationSuccessResponse,
-//   CreateBackupSecondFactorsMutationSuccessResponse,
-//   CreateSmsSecondFactorMutationSuccessResponse,
-//   DeliverSmsSecondFactorMutationSuccessResponse,
-//   EnableAppSecondFactorMutationSuccessResponse,
-//   EnableSmsSecondFactorMutationSuccessResponse,
-//   UpdateAppSecondFactorMutationSuccessResponse,
-//   UpdateSmsSecondFactorMutationSuccessResponse,
-// } from "./fixtures"
-
-import { SettingsEditSettingsTwoFactor, SettingsEditSettingsTwoFactorRefetchContainer } from "../SettingsEditSettingsTwoFactor"
+import { screen } from "@testing-library/react"
+import { SettingsEditSettingsTwoFactorRefetchContainer } from "../SettingsEditSettingsTwoFactor"
 import { setupTestWrapperTL } from "v2/DevTools/setupTestWrapper"
 import { useTracking } from "v2/System/Analytics/useTracking"
 
 jest.unmock("react-relay")
 jest.mock("v2/System/Analytics/useTracking")
 
-const { renderwithRelay } = setupTestWrapperTL({
+const { renderWithRelay } = setupTestWrapperTL({
   Component: SettingsEditSettingsTwoFactorRefetchContainer,
   query: graphql`
-      query SettingsEditSettingsTwoFactorTestRefetchQuery {
-        me {
-          ...SettingsEditSettingsTwoFactor_me
-        }
+    query SettingsEditSettingsTwoFactor_Test_Query {
+      me {
+        ...SettingsEditSettingsTwoFactor_me
       }
-    `,
+    }
+  `,
 })
 
 describe("TwoFactorAuthentication", () => {
@@ -42,35 +28,32 @@ describe("TwoFactorAuthentication", () => {
   })
 
   it("shows current 2FA enrollment status", async () => {
-    const env = renderwithRelay({
-      SettingsEditSettingsTwoFactor
-    })
-    const page = await env.buildPage()
-
-    expect(page.text()).toContain("Two-factor Authentication")
-    expect(page.text()).toContain("Set up")
+    renderWithRelay()
+    expect(screen.getByText("Two-factor Authentication")).toBeInTheDocument()
+    expect(
+      screen.getByText(
+        "Set up an additional layer of security by requiring a security code in addition to your password to log in to your Artsy account."
+      )
+    ).toBeInTheDocument()
   })
 
-  // describe("AppSecondFactor", () => {
-  //   it("prompts to setup if not enabled", async () => {
-  //     const env = setupTestEnv()
-  //     const page = await env.buildPage()
+  describe("AppSecondFactor", () => {
+    it.skip("prompts to setup if not enabled", async () => {
+      // const env = setupTestEnv()
+      // const page = await env.buildPage()
+      // expect(page.appSetupButton.exists).toBeTruthy
+    })
 
-  //     expect(page.appSetupButton.exists).toBeTruthy
-  //   })
-
-  //   // eslint-disable-next-line jest/expect-expect
-  //   it("creates an enabled App Authenticator 2FA factor", async () => {
-  //     const env = setupTestEnv()
-  //     const page = await env.buildPage()
-
-  //     env.mutations.useResultsOnce(CreateAppSecondFactorMutationSuccessResponse)
-  //     env.mutations.useResultsOnce(UpdateAppSecondFactorMutationSuccessResponse)
-  //     env.mutations.useResultsOnce(EnableAppSecondFactorMutationSuccessResponse)
-
-  //     await page.clickAppSetupButton()
-  //   })
-  // })
+    // eslint-disable-next-line jest/expect-expect
+    it.skip("creates an enabled App Authenticator 2FA factor", async () => {
+      // const env = setupTestEnv()
+      // const page = await env.buildPage()
+      // env.mutations.useResultsOnce(CreateAppSecondFactorMutationSuccessResponse)
+      // env.mutations.useResultsOnce(UpdateAppSecondFactorMutationSuccessResponse)
+      // env.mutations.useResultsOnce(EnableAppSecondFactorMutationSuccessResponse)
+      // await page.clickAppSetupButton()
+    })
+  })
 
   // describe("SmsSecondFactor", () => {
   //   it("prompts to setup if not enabled", async () => {
