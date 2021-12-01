@@ -62,6 +62,7 @@ import {
   DefaultFilterPill,
   useFilterPillsContext,
 } from "./SavedSearch/Utils/FilterPillsContext"
+import { getSelectedFiltersCounts } from "./Utils/getSelectedFIltersCounts"
 
 /**
  * Primary ArtworkFilter which is wrapped with a context and refetch container.
@@ -169,6 +170,13 @@ export const BaseArtworkFilter: React.FC<
   const previousFilters = usePrevious(filterContext.filters)
   const { user, isLoggedIn } = useSystemContext()
   const { pills = [], setPills } = useFilterPillsContext()
+  const currentlySelectedFilters = getSelectedFiltersCounts(
+    filterContext.currentlySelectedFilters?.() || {}
+  )
+  const appliedFiltersTotalCount = Object.values(
+    currentlySelectedFilters
+  ).reduce((total: number, curr: number) => total + curr, 0)
+  const { user } = useSystemContext()
 
   const { filtered_artworks } = viewer
   const hasFilter = filtered_artworks && filtered_artworks.id
@@ -342,6 +350,9 @@ export const BaseArtworkFilter: React.FC<
                       <FilterIcon fill="white100" />
                       <Spacer mr={0.5} />
                       Filter
+                      {appliedFiltersTotalCount > 0
+                        ? ` • ${appliedFiltersTotalCount}`
+                        : ""}
                     </Flex>
                   </Button>
 
