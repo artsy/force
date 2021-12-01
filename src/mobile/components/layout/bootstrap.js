@@ -10,7 +10,6 @@
 // Don't go too wild here, we want to keep this minimal and light-weight because it could be
 // included across most apps and any uncessary bloat should be avoided.
 //
-//
 
 require("jquery")
 const Backbone = require("backbone")
