@@ -3,21 +3,21 @@
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type SettingsEditSettingsTwoFactorTestRefetchQueryVariables = {};
-export type SettingsEditSettingsTwoFactorTestRefetchQueryResponse = {
+export type SettingsEditSettingsTwoFactor_Test_QueryVariables = {};
+export type SettingsEditSettingsTwoFactor_Test_QueryResponse = {
     readonly me: {
         readonly " $fragmentRefs": FragmentRefs<"SettingsEditSettingsTwoFactor_me">;
     } | null;
 };
-export type SettingsEditSettingsTwoFactorTestRefetchQuery = {
-    readonly response: SettingsEditSettingsTwoFactorTestRefetchQueryResponse;
-    readonly variables: SettingsEditSettingsTwoFactorTestRefetchQueryVariables;
+export type SettingsEditSettingsTwoFactor_Test_Query = {
+    readonly response: SettingsEditSettingsTwoFactor_Test_QueryResponse;
+    readonly variables: SettingsEditSettingsTwoFactor_Test_QueryVariables;
 };
 
 
 
 /*
-query SettingsEditSettingsTwoFactorTestRefetchQuery {
+query SettingsEditSettingsTwoFactor_Test_Query {
   me {
     ...SettingsEditSettingsTwoFactor_me
     id
@@ -85,7 +85,7 @@ return {
     "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
-    "name": "SettingsEditSettingsTwoFactorTestRefetchQuery",
+    "name": "SettingsEditSettingsTwoFactor_Test_Query",
     "selections": [
       {
         "alias": null,
@@ -110,7 +110,7 @@ return {
   "operation": {
     "argumentDefinitions": [],
     "kind": "Operation",
-    "name": "SettingsEditSettingsTwoFactorTestRefetchQuery",
+    "name": "SettingsEditSettingsTwoFactor_Test_Query",
     "selections": [
       {
         "alias": null,
@@ -239,11 +239,11 @@ return {
   "params": {
     "id": null,
     "metadata": {},
-    "name": "SettingsEditSettingsTwoFactorTestRefetchQuery",
+    "name": "SettingsEditSettingsTwoFactor_Test_Query",
     "operationKind": "query",
-    "text": "query SettingsEditSettingsTwoFactorTestRefetchQuery {\n  me {\n    ...SettingsEditSettingsTwoFactor_me\n    id\n  }\n}\n\nfragment AppSecondFactor_me on Me {\n  hasSecondFactorEnabled\n  appSecondFactors: secondFactors(kinds: [app]) {\n    __typename\n    ... on AppSecondFactor {\n      __typename\n      internalID\n      name\n    }\n  }\n}\n\nfragment BackupSecondFactor_me on Me {\n  backupSecondFactors: secondFactors(kinds: [backup]) {\n    __typename\n    ... on BackupSecondFactor {\n      __typename\n    }\n  }\n}\n\nfragment SettingsEditSettingsTwoFactor_me on Me {\n  hasSecondFactorEnabled\n  ...AppSecondFactor_me\n  ...SmsSecondFactor_me\n  ...BackupSecondFactor_me\n}\n\nfragment SmsSecondFactor_me on Me {\n  hasSecondFactorEnabled\n  smsSecondFactors: secondFactors(kinds: [sms]) {\n    __typename\n    ... on SmsSecondFactor {\n      __typename\n      internalID\n      formattedPhoneNumber\n    }\n  }\n}\n"
+    "text": "query SettingsEditSettingsTwoFactor_Test_Query {\n  me {\n    ...SettingsEditSettingsTwoFactor_me\n    id\n  }\n}\n\nfragment AppSecondFactor_me on Me {\n  hasSecondFactorEnabled\n  appSecondFactors: secondFactors(kinds: [app]) {\n    __typename\n    ... on AppSecondFactor {\n      __typename\n      internalID\n      name\n    }\n  }\n}\n\nfragment BackupSecondFactor_me on Me {\n  backupSecondFactors: secondFactors(kinds: [backup]) {\n    __typename\n    ... on BackupSecondFactor {\n      __typename\n    }\n  }\n}\n\nfragment SettingsEditSettingsTwoFactor_me on Me {\n  hasSecondFactorEnabled\n  ...AppSecondFactor_me\n  ...SmsSecondFactor_me\n  ...BackupSecondFactor_me\n}\n\nfragment SmsSecondFactor_me on Me {\n  hasSecondFactorEnabled\n  smsSecondFactors: secondFactors(kinds: [sms]) {\n    __typename\n    ... on SmsSecondFactor {\n      __typename\n      internalID\n      formattedPhoneNumber\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'a1ec2ccdfa015a14ae2b6245469a9145';
+(node as any).hash = '8306f3c3e4959cef321e3349f9c88505';
 export default node;

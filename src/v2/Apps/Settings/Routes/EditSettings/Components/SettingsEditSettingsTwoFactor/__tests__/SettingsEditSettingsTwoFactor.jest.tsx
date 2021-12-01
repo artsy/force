@@ -38,13 +38,12 @@ describe("TwoFactorAuthentication", () => {
   })
 
   describe("AppSecondFactor", () => {
-    it.skip("prompts to setup if not enabled", async () => {
-      // const env = setupTestEnv()
-      // const page = await env.buildPage()
-      // expect(page.appSetupButton.exists).toBeTruthy
+    it("can display Second Factor", async () => {
+      renderWithRelay()
+      expect(screen.getByText("Use text messages")).toBeInTheDocument()
     })
 
-    // eslint-disable-next-line jest/expect-expect
+    // eslint-disable-next-line jest/no-disabled-tests
     it.skip("creates an enabled App Authenticator 2FA factor", async () => {
       // const env = setupTestEnv()
       // const page = await env.buildPage()
@@ -55,16 +54,15 @@ describe("TwoFactorAuthentication", () => {
     })
   })
 
-  // describe("SmsSecondFactor", () => {
-  //   it("prompts to setup if not enabled", async () => {
-  //     const env = setupTestEnv()
-  //     const page = await env.buildPage()
+  describe("SmsSecondFactor", () => {
+    it("can display SMSSecondFactor", async () => {
+      renderWithRelay()
 
-  //     expect(page.smsSetupButton.exists).toBeTruthy
-  //   })
+      expect(screen.getByText("Security codes will be sent to your mobile phone.")).toBeInTheDocument()
+    })
 
-  //   // eslint-disable-next-line jest/expect-expect
-  //   it("creates an enabled SMS 2FA factor", async () => {
+  // eslint-disable-next-line jest/no-disabled-tests
+    it.skip("creates an enabled SMS 2FA factor", async () => {
   //     const env = setupTestEnv()
   //     const page = await env.buildPage()
 
@@ -76,20 +74,28 @@ describe("TwoFactorAuthentication", () => {
   //     env.mutations.useResultsOnce(EnableSmsSecondFactorMutationSuccessResponse)
 
   //     await page.clickSmsSetupButton()
-  //   })
-  // })
+    })
+  })
 
-  // describe("BackupSecondFactor", () => {
-  //   it("prompts to setup if no codes are available", async () => {
+  describe("BackupSecondFactor", () => {
+    it("can display BackupSecondFactor", async () => {
+      renderWithRelay()
+
+      expect(screen.getByText("Generate one-time backup codes to access your account. Keep these safe.")).toBeInTheDocument()
+    })
+
+    // eslint-disable-next-line jest/no-disabled-tests
+    it.skip("prompts to setup if no codes are available", async () => {
   //     const env = setupTestEnv()
   //     const page = await env.buildPage({
   //       mockData: AppEnabledWithoutBackupCodesQueryResponse,
   //     })
 
   //     expect(page.backupSetupButton.exists).toBeTruthy
-  //   })
+    })
 
-  //   it("creates backup codes and displays codes in a modal", async done => {
+    // eslint-disable-next-line jest/no-disabled-tests
+    it.skip("creates backup codes and displays codes in a modal", async () => {
   //     const env = setupTestEnv()
   //     const page = await env.buildPage({
   //       mockData: AppEnabledWithoutBackupCodesQueryResponse,
@@ -117,9 +123,10 @@ describe("TwoFactorAuthentication", () => {
 
   //       done()
   //     })
-  //   })
+    })
 
-  //   it("shows current backup codes in a modal", async done => {
+    // eslint-disable-next-line jest/no-disabled-tests
+    it.skip("shows current backup codes in a modal", async () => {
   //     const env = setupTestEnv()
   //     const page = await env.buildPage({
   //       mockData: AppEnabledWithBackupCodesQueryResponse,
@@ -165,4 +172,6 @@ describe("TwoFactorAuthentication", () => {
   //     })
   //   })
   // })
+    })
+  })
 })
