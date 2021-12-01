@@ -29,7 +29,9 @@ const syncAuth = require("../../../lib/syncAuth.ts").default
 const {
   logoutEventHandler,
 } = require("../../../desktop/lib/deprecated_global_client_setup.tsx")
-const { loadSegment } = require("../../../lib/analytics/segmentOneTrustIntegration")
+const {
+  loadSegment,
+} = require("../../../lib/analytics/segmentOneTrustIntegration/segmentOneTrustIntegration.ts")
 
 export const bootstrap = function () {
   // Add the Gravity XAPP or access token to all ajax requests
