@@ -1,5 +1,7 @@
 import { conditionallyLoadAnalytics } from "../conditionallyLoadAnalytics"
 
+declare const window: any
+
 describe("conditionallyLoadAnalytics", () => {
   describe("segment already initialized", () => {
     beforeEach(() => {
@@ -15,7 +17,6 @@ describe("conditionallyLoadAnalytics", () => {
         writeKey: "abc",
       })
       expect(window.location.reload).toHaveBeenCalled()
-      // @ts-ignore
       expect(window.analytics.load).not.toHaveBeenCalled()
     })
     it("does not reload page if shouldReload is false, and exit", () => {
@@ -25,7 +26,6 @@ describe("conditionallyLoadAnalytics", () => {
         writeKey: "abc",
       })
       expect(window.location.reload).not.toHaveBeenCalled()
-      // @ts-ignore
       expect(window.analytics.load).not.toHaveBeenCalled()
     })
   })
@@ -43,7 +43,6 @@ describe("conditionallyLoadAnalytics", () => {
         writeKey: "abc",
       })
       expect(window.location.reload).not.toHaveBeenCalled()
-      // @ts-ignore
       expect(window.analytics.load).toHaveBeenCalled()
     })
     it("does not load analytics if no destination is enabled", () => {
@@ -52,7 +51,6 @@ describe("conditionallyLoadAnalytics", () => {
         writeKey: "abc",
       })
       expect(window.location.reload).not.toHaveBeenCalled()
-      // @ts-ignore
       expect(window.analytics.load).not.toHaveBeenCalled()
     })
     it("does not load analytics if destinationPref is empty", () => {
@@ -61,7 +59,6 @@ describe("conditionallyLoadAnalytics", () => {
         writeKey: "abc",
       })
       expect(window.location.reload).not.toHaveBeenCalled()
-      // @ts-ignore
       expect(window.analytics.load).not.toHaveBeenCalled()
     })
   })

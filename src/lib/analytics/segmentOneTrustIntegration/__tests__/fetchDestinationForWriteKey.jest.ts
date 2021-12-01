@@ -3,6 +3,8 @@ import { validateSegmentResponse } from "../validateSegmentResponse"
 
 jest.mock("../validateSegmentResponse")
 
+declare const window: any
+
 describe("fetchDestinationForWriteKey", () => {
   const validateSegmentResponseMock = validateSegmentResponse as jest.Mock
 
@@ -21,7 +23,6 @@ describe("fetchDestinationForWriteKey", () => {
       ok: true,
       json: () => Promise.resolve([{ creationName: "foo" }]),
     }
-    // @ts-ignore
     window.fetch = jest.fn(() => Promise.resolve(res))
     const result = await fetchDestinationForWriteKey("abc")
     expect(result).toEqual([{ id: "foo" }])
@@ -31,13 +32,11 @@ describe("fetchDestinationForWriteKey", () => {
       ok: true,
       json: () => Promise.resolve([]),
     }
-    // @ts-ignore
     window.fetch = jest.fn(() => Promise.resolve(res))
     const result = await fetchDestinationForWriteKey("abc")
     expect(result).toEqual([])
   })
   it("returns empty array if network error", async () => {
-    // @ts-ignore
     window.fetch = jest.fn(() => Promise.reject("foo"))
     const result = await fetchDestinationForWriteKey("abc")
     expect(result).toEqual([])
@@ -48,7 +47,6 @@ describe("fetchDestinationForWriteKey", () => {
       status: "404",
       statusText: "not found",
     }
-    // @ts-ignore
     window.fetch = jest.fn(() => Promise.resolve(res))
     const result = await fetchDestinationForWriteKey("abc")
     expect(result).toEqual([])
@@ -61,7 +59,6 @@ describe("fetchDestinationForWriteKey", () => {
       ok: true,
       json: () => Promise.resolve([{ creationName: "foo" }]),
     }
-    // @ts-ignore
     window.fetch = jest.fn(() => Promise.resolve(res))
     const result = await fetchDestinationForWriteKey("abc")
     expect(result).toEqual([])
