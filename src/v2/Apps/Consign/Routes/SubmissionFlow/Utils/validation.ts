@@ -36,9 +36,13 @@ export const artworkDetailsValidationSchema = yup.object().shape({
     .trim(),
   units: yup.string().required(),
   provenance: yup.string().trim(),
-  locationId: yup
-    .string()
-    .required("Please, select a location from suggestions"),
+  locationId: yup.string().test((value, ctx) =>
+    value
+      ? true
+      : ctx.createError({
+          message: `Could not find ${ctx.parent.location}`,
+        })
+  ),
 })
 
 /*

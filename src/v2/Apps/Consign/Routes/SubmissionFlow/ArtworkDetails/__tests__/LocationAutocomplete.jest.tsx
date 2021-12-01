@@ -190,7 +190,7 @@ describe("ArtistAutocomplete", () => {
 
   describe("Shows an error", () => {
     it("if focus moved out without selected suggestion", async () => {
-      await simulateTyping(wrapper, "Ban")
+      await simulateTyping(wrapper, "Min")
       expect(wrapper.find("div[color='red100']").length).toBe(0)
 
       const handleClose: () => void = wrapper
@@ -201,7 +201,7 @@ describe("ArtistAutocomplete", () => {
       wrapper.update()
 
       expect(wrapper.find("div[color='red100']").text()).toBe(
-        "Please, select a location from suggestions"
+        `Could not find ${formikValues.location}`
       )
     })
   })
