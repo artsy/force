@@ -1,5 +1,13 @@
-import * as React from "react";
-import { BorderedRadio, BoxProps, Flex, RadioGroup, Text } from "@artsy/palette"
+import * as React from "react"
+import {
+  BorderedRadio,
+  BoxProps,
+  Column,
+  Flex,
+  GridColumns,
+  RadioGroup,
+  Text,
+} from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ShippingQuotes_shippingQuotes } from "v2/__generated__/ShippingQuotes_shippingQuotes.graphql"
 import { compact } from "lodash"
@@ -55,13 +63,17 @@ export const ShippingQuotes: React.FC<ShippingQuotesProps> = ({
             position="relative"
           >
             <Flex flexDirection="column" width="100%">
-              <Flex justifyContent="space-between">
-                <Text textTransform="capitalize">{displayName}</Text>
-                <Text textTransform="capitalize" data-test="quotePrice">
-                  {price}
-                </Text>
-              </Flex>
-              <Text textColor="black60">{description}</Text>
+              <GridColumns>
+                <Column span={10}>
+                  <Text textTransform="capitalize">{displayName}</Text>
+                  <Text textColor="black60">{description}</Text>
+                </Column>
+                <Column span={2} textAlign={"right"}>
+                  <Text textTransform="capitalize" data-test="quotePrice">
+                    {price}
+                  </Text>
+                </Column>
+              </GridColumns>
             </Flex>
           </BorderedRadio>
         )
