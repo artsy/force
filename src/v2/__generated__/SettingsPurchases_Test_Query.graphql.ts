@@ -3,23 +3,23 @@
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type settingsRoutes_PurchasesRouteQueryVariables = {};
-export type settingsRoutes_PurchasesRouteQueryResponse = {
+export type SettingsPurchases_Test_QueryVariables = {};
+export type SettingsPurchases_Test_QueryResponse = {
     readonly me: {
-        readonly " $fragmentRefs": FragmentRefs<"SettingsPurchasesRoute_me">;
+        readonly " $fragmentRefs": FragmentRefs<"SettingsPurchases_me">;
     } | null;
 };
-export type settingsRoutes_PurchasesRouteQuery = {
-    readonly response: settingsRoutes_PurchasesRouteQueryResponse;
-    readonly variables: settingsRoutes_PurchasesRouteQueryVariables;
+export type SettingsPurchases_Test_Query = {
+    readonly response: SettingsPurchases_Test_QueryResponse;
+    readonly variables: SettingsPurchases_Test_QueryVariables;
 };
 
 
 
 /*
-query settingsRoutes_PurchasesRouteQuery {
+query SettingsPurchases_Test_Query {
   me {
-    ...SettingsPurchasesRoute_me
+    ...SettingsPurchases_me
     id
   }
 }
@@ -44,10 +44,6 @@ fragment CommercePagination_pageCursors on CommercePageCursors {
     cursor
     page
   }
-}
-
-fragment SettingsPurchasesRoute_me on Me {
-  ...SettingsPurchases_me
 }
 
 fragment SettingsPurchasesRow_order on CommerceOrder {
@@ -234,7 +230,7 @@ return {
     "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
-    "name": "settingsRoutes_PurchasesRouteQuery",
+    "name": "SettingsPurchases_Test_Query",
     "selections": [
       {
         "alias": null,
@@ -247,7 +243,7 @@ return {
           {
             "args": null,
             "kind": "FragmentSpread",
-            "name": "SettingsPurchasesRoute_me"
+            "name": "SettingsPurchases_me"
           }
         ],
         "storageKey": null
@@ -259,7 +255,7 @@ return {
   "operation": {
     "argumentDefinitions": [],
     "kind": "Operation",
-    "name": "settingsRoutes_PurchasesRouteQuery",
+    "name": "SettingsPurchases_Test_Query",
     "selections": [
       {
         "alias": null,
@@ -684,11 +680,11 @@ return {
   "params": {
     "id": null,
     "metadata": {},
-    "name": "settingsRoutes_PurchasesRouteQuery",
+    "name": "SettingsPurchases_Test_Query",
     "operationKind": "query",
-    "text": "query settingsRoutes_PurchasesRouteQuery {\n  me {\n    ...SettingsPurchasesRoute_me\n    id\n  }\n}\n\nfragment CommercePagination_pageCursors on CommercePageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n\nfragment SettingsPurchasesRoute_me on Me {\n  ...SettingsPurchases_me\n}\n\nfragment SettingsPurchasesRow_order on CommerceOrder {\n  internalID\n  code\n  displayState\n  state\n  requestedFulfillment {\n    __typename\n  }\n  creditCard {\n    lastDigits\n    id\n  }\n  buyerTotal(precision: 2)\n  createdAt\n  currencyCode\n  lineItems {\n    edges {\n      node {\n        artwork {\n          href\n          image {\n            cropped(width: 45, height: 45) {\n              src\n              srcSet\n            }\n          }\n          partner {\n            href\n            initials\n            name\n            profile {\n              icon {\n                cropped(width: 45, height: 45) {\n                  src\n                  srcSet\n                }\n              }\n              id\n            }\n            id\n          }\n          shippingOrigin\n          title\n          artistNames\n          artists {\n            href\n            id\n          }\n          id\n        }\n        fulfillments(first: 1) {\n          edges {\n            node {\n              trackingId\n              id\n            }\n          }\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment SettingsPurchases_me on Me {\n  name\n  orders(states: [APPROVED, CANCELED, FULFILLED, REFUNDED, SUBMITTED], first: 10) {\n    totalCount\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    pageCursors {\n      ...CommercePagination_pageCursors\n    }\n    edges {\n      node {\n        __typename\n        code\n        ...SettingsPurchasesRow_order\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query SettingsPurchases_Test_Query {\n  me {\n    ...SettingsPurchases_me\n    id\n  }\n}\n\nfragment CommercePagination_pageCursors on CommercePageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n\nfragment SettingsPurchasesRow_order on CommerceOrder {\n  internalID\n  code\n  displayState\n  state\n  requestedFulfillment {\n    __typename\n  }\n  creditCard {\n    lastDigits\n    id\n  }\n  buyerTotal(precision: 2)\n  createdAt\n  currencyCode\n  lineItems {\n    edges {\n      node {\n        artwork {\n          href\n          image {\n            cropped(width: 45, height: 45) {\n              src\n              srcSet\n            }\n          }\n          partner {\n            href\n            initials\n            name\n            profile {\n              icon {\n                cropped(width: 45, height: 45) {\n                  src\n                  srcSet\n                }\n              }\n              id\n            }\n            id\n          }\n          shippingOrigin\n          title\n          artistNames\n          artists {\n            href\n            id\n          }\n          id\n        }\n        fulfillments(first: 1) {\n          edges {\n            node {\n              trackingId\n              id\n            }\n          }\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment SettingsPurchases_me on Me {\n  name\n  orders(states: [APPROVED, CANCELED, FULFILLED, REFUNDED, SUBMITTED], first: 10) {\n    totalCount\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    pageCursors {\n      ...CommercePagination_pageCursors\n    }\n    edges {\n      node {\n        __typename\n        code\n        ...SettingsPurchasesRow_order\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '7beca60e070f3e2c391eeb2718a6e1ca';
+(node as any).hash = '4d131f8aba1be273db75ce3f6a68b78b';
 export default node;

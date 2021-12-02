@@ -15,7 +15,7 @@ import { sortResults } from "./ResultsFilter"
 import { FilterExpandable } from "./FilterExpandable"
 import { INITIAL_ITEMS_TO_SHOW, ShowMore } from "./ShowMore"
 
-const COLOR_OPTIONS = [
+export const COLOR_OPTIONS = [
   { hex: "#ffffff", value: "black-and-white", name: "Black and White" },
   { hex: "#ff0000", value: "red", name: "Red" },
   { hex: "#fbe854", value: "yellow", name: "Yellow" },

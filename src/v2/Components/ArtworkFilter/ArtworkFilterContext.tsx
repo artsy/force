@@ -26,6 +26,7 @@ export const initialArtworkFilterState: ArtworkFilters = {
   materialsTerms: [],
   height: "*-*",
   width: "*-*",
+  priceRange: "*-*",
 }
 
 /**

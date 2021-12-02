@@ -1,6 +1,16 @@
-import { render, screen, within } from "@testing-library/react"
+import { render, screen, within, fireEvent } from "@testing-library/react"
 import { SavedSearchAttributes } from "v2/Components/ArtworkFilter/SavedSearch/types"
-import { FiltersPills } from "../SavedSearch/Components/FiltersPills"
+import {
+  ArtworkFilterContextProps,
+  ArtworkFilterContextProvider,
+  useArtworkFilterContext,
+} from "../ArtworkFilterContext"
+import {
+  DefaultFilterPill,
+  FilterPill,
+  FiltersPills,
+  FiltersPillsProps,
+} from "../SavedSearch/Components/FiltersPills"
 
 const savedSearchAttributes: SavedSearchAttributes = {
   type: "artist",
@@ -9,18 +19,40 @@ const savedSearchAttributes: SavedSearchAttributes = {
   slug: "example-slug",
 }
 
-const mockedPills = [
-  { name: "Red", isDefault: false },
-  { name: "Open Edition", isDefault: false },
+const mockedPills: FilterPill[] = [
+  { filterName: "colors", name: "red", displayName: "Red" },
+  {
+    filterName: "attributionClass",
+    name: "open-edition",
+    displayName: "Open Edition",
+  },
 ]
 
-const renderPills = (pills = mockedPills) => {
-  render(
-    <FiltersPills pills={pills} savedSearchAttributes={savedSearchAttributes} />
-  )
+const defaultPill: DefaultFilterPill = {
+  isDefault: true,
+  name: "banksy",
+  displayName: "Banksy",
 }
 
 describe("FiltersPills", () => {
+  let context: ArtworkFilterContextProps
+
+  const renderPills = (pills: FilterPill[] = mockedPills) => {
+    render(
+      <ArtworkFilterContextProvider>
+        <FiltersPillsTest
+          pills={pills}
+          savedSearchAttributes={savedSearchAttributes}
+        />
+      </ArtworkFilterContextProvider>
+    )
+  }
+
+  const FiltersPillsTest = (props: FiltersPillsProps) => {
+    context = useArtworkFilterContext()
+    return <FiltersPills {...props} />
+  }
+
   it("renders correctly", () => {
     renderPills()
     expect(screen.getByText("Red")).toBeInTheDocument()
@@ -30,7 +62,7 @@ describe("FiltersPills", () => {
   })
 
   it("renders default pills without CloseIcon", () => {
-    renderPills([{ name: "Banksy", isDefault: true }, ...mockedPills])
+    renderPills([defaultPill, ...mockedPills])
     expect(
       within(screen.getByText("Banksy")).queryByTitle("Close")
     ).not.toBeInTheDocument()
@@ -41,5 +73,19 @@ describe("FiltersPills", () => {
       within(screen.getByText("Open Edition")).getByTitle("Close")
     ).toBeInTheDocument()
     expect(screen.getAllByTitle("Close")).toHaveLength(2)
+  })
+
+  it("updates filters on pill click", () => {
+    renderPills()
+    const setFilterSpy = jest.spyOn(context, "setFilter")
+    fireEvent.click(screen.getByText("Red"))
+    expect(setFilterSpy).toHaveBeenCalled()
+  })
+
+  it("does not update filters on default pill click", () => {
+    renderPills([defaultPill, ...mockedPills])
+    const setFilterSpy = jest.spyOn(context, "setFilter")
+    fireEvent.click(screen.getByText("Banksy"))
+    expect(setFilterSpy).not.toHaveBeenCalled()
   })
 })

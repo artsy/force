@@ -77,12 +77,12 @@
   dependencies:
     dotenv "^10.0.0"
 
-"@artsy/palette-charts@17.8.0":
-  version "17.8.0"
-  resolved "https://registry.yarnpkg.com/@artsy/palette-charts/-/palette-charts-17.8.0.tgz#faa972f8511cee36488560b56fcdf7e94fa4553d"
-  integrity sha512-5mXA/9isYIMMMlxcdw1Tv4s5TVCXKK/lJgLzyxdO61CQhJTiGqGJ4euSRm5ah5usAmwBm8Bmx6hLP8W0XOvSXw==
+"@artsy/palette-charts@17.9.0":
+  version "17.9.0"
+  resolved "https://registry.yarnpkg.com/@artsy/palette-charts/-/palette-charts-17.9.0.tgz#d2c4549e96db466fd117feecfa6605bdcfb2c339"
+  integrity sha512-WTc1HbkU5AsUsl6B8g38/7c2SU3DQD0QOkDS3jH8rbOOorQlWVcftj+/GNI/itiUE1yVlrFQ3SuT+VaMpOO0XQ==
   dependencies:
-    "@artsy/palette" "^18.8.0"
+    "@artsy/palette" "^18.9.0"
     "@seznam/compose-react-refs" "^1.0.6"
     "@styled-system/theme-get" "^5.1.2"
     d3-interpolate "^1.3.2"
@@ -94,10 +94,10 @@
   resolved "https://registry.yarnpkg.com/@artsy/palette-tokens/-/palette-tokens-2.6.0.tgz#3d780ff65994fef0daadef29d43d11f89470b728"
   integrity sha512-UQP6P+xv/5hm82ep0z5X3kCFFnk03H6y8kdW/wTU+xPq45ESUay7aNFYXeub47tmW2v6dXJ8Oa01Z0iwc6BVpA==
 
-"@artsy/palette@18.8.0", "@artsy/palette@^18.8.0":
-  version "18.8.0"
-  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-18.8.0.tgz#1af8bc1fb37fb803e5a2b3d055c4401749f41292"
-  integrity sha512-/CUfd/9/EXuk6JEoHiJJxU92ZHM4ctfL59aaENcL3a50TogiGUnbZfIaSWT5g2YzOrdutkEAKP3dzs8qAWCJSw==
+"@artsy/palette@18.9.0", "@artsy/palette@^18.9.0":
+  version "18.9.0"
+  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-18.9.0.tgz#c3b3de3ab560c0522c7f0d478b19538e17f50755"
+  integrity sha512-DOo9mJyHxhLwn4zVseMAtED1pXY5rhXr5mw/OqN10xGzlfV3ojpX3VdZXU1oBdb0Deb09r13liORECy+7MTimQ==
   dependencies:
     "@artsy/palette-tokens" "^2.6.0"
     "@seznam/compose-react-refs" "^1.0.6"
@@ -20661,10 +20661,10 @@ void-elements@~2.0.1:
   resolved "https://registry.yarnpkg.com/void-elements/-/void-elements-2.0.1.tgz#c066afb582bb1cb4128d60ea92392e94d5e9dbec"
   integrity sha1-wGavtYK7HLQSjWDqkjkulNXp2+w=
 
-vscode-apollo-relay@1.5.1:
-  version "1.5.1"
-  resolved "https://registry.yarnpkg.com/vscode-apollo-relay/-/vscode-apollo-relay-1.5.1.tgz#6c98bef9a127c5bb80d10f6de35dd60ab851415e"
-  integrity sha512-+tEyseQVbjEqFR7wda9taij5bayVxE1x9XkgCAtBK2qqCq+V/5ohbEsrOdFRL0Ir3o9U+i+I2gz7y7Jn4dDiPA==
+vscode-apollo-relay@1.5.2:
+  version "1.5.2"
+  resolved "https://registry.yarnpkg.com/vscode-apollo-relay/-/vscode-apollo-relay-1.5.2.tgz#0893f56ba11debf85391aefa9241e8afd356c012"
+  integrity sha512-5OD2dtiuRWD+3d7Ewwws8hDjr24YAp1PUQxtuXcbMntPMHQLMZ7dIHbzBbL95BI6GIVK24g8SE7tRquRtrKF3w==
 
 vscode-css-languageservice@^4.0.2:
   version "4.2.0"

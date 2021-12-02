@@ -1,37 +1,40 @@
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Media } from "v2/Utils/Responsive"
 import { Pagination_pageCursors } from "v2/__generated__/Pagination_pageCursors.graphql"
+import { CommercePagination_pageCursors } from "v2/__generated__/CommercePagination_pageCursors.graphql"
 import {
   Pagination as PaginationBase,
   Separator,
   SmallPagination,
-  PaginationProps,
+  PaginationProps as BasePaginationProps,
   useThemeConfig,
 } from "@artsy/palette"
 import { useComputeHref } from "./useComputeHref"
 import { userIsForcingNavigation } from "v2/System/Router/Utils/catchLinks"
 import { scrollIntoView } from "v2/Utils/scrollHelpers"
 
-interface Props {
+export interface PaginationProps {
   hasNextPage: boolean
-  pageCursors: Pagination_pageCursors
+  // TODO: Hacks around stitching. See if we can transform the schema to make this unnecessary.
+  pageCursors: Pagination_pageCursors | CommercePagination_pageCursors
   scrollTo?: string
   offset?: number
-  getHref?: PaginationProps["getHref"]
+  getHref?: BasePaginationProps["getHref"]
   onClick?: (cursor: string, page: number) => void
   onNext?: (page: number) => void
 }
 
-export const Pagination: React.FC<Props> = ({
-  hasNextPage,
-  pageCursors,
-  scrollTo = null,
-  getHref: __getHref__,
-  onClick = _cursor => ({}),
-  onNext = () => ({}),
-  offset,
-}) => {
+export const Pagination: React.FC<PaginationProps> = props => {
+  const {
+    hasNextPage,
+    pageCursors,
+    scrollTo = null,
+    getHref: __getHref__,
+    onClick = _cursor => ({}),
+    onNext = () => ({}),
+    offset,
+  } = props
   const getHref = __getHref__ ?? useComputeHref()
 
   const tokens = useThemeConfig({
@@ -63,7 +66,7 @@ export const Pagination: React.FC<Props> = ({
     scrollIntoView({ selector: scrollTo, offset })
   }
 
-  const paginationProps: PaginationProps = {
+  const paginationProps: BasePaginationProps = {
     getHref,
     hasNextPage,
     onClick: handleClick,

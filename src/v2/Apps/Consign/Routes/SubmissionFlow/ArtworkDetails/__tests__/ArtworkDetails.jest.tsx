@@ -116,7 +116,7 @@ describe("ArtworkDetails", () => {
       wrapper.update()
 
       expect(
-        wrapper.find("input[data-test-id='autosuggest-input']").prop("value")
+        wrapper.find("input[data-test-id='autocomplete-input']").prop("value")
       ).toBe("Banksy")
 
       expect(wrapper.find("input[name='year']").prop("value")).toBe("2021")
