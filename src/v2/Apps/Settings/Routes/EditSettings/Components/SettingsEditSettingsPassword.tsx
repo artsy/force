@@ -7,8 +7,11 @@ import {
   PasswordInput,
   Join,
   Spacer,
+  useToasts,
 } from "@artsy/palette"
 import { Form, Formik } from "formik"
+import { useUpdateSettingsPassword } from "../useUpdateSettingsPassword"
+import { logout } from "v2/Utils/auth"
 
 enum Mode {
   Pending,
@@ -17,6 +20,8 @@ enum Mode {
 
 export const SettingsEditSettingsPassword: FC = () => {
   const [mode, setMode] = useState(Mode.Pending)
+  const { sendToast } = useToasts()
+  const { submitUpdateSettingsPassword } = useUpdateSettingsPassword()
 
   const handleActivate = () => {
     setMode(Mode.Active)
@@ -50,16 +55,40 @@ export const SettingsEditSettingsPassword: FC = () => {
         <Formik
           initialValues={{
             currentPassword: "",
-            password: "",
+            newPassword: "",
             passwordConfirmation: "",
           }}
           onSubmit={async ({
             currentPassword,
-            password,
+            newPassword,
             passwordConfirmation,
           }) => {
-            // TODO: Handle password update
-            console.log({ currentPassword, password, passwordConfirmation })
+            try {
+              await submitUpdateSettingsPassword({
+                currentPassword,
+                newPassword,
+                passwordConfirmation,
+              })
+
+              sendToast({
+                variant: "success",
+                message: "Password updated successfully",
+              })
+
+              await logout()
+
+              window.location.href = "/login"
+            } catch (err) {
+              console.error(err)
+
+              const error = Array.isArray(err) ? err[0] : err
+
+              sendToast({
+                variant: "error",
+                message: "There was a problem",
+                description: error.message,
+              })
+            }
           }}
         >
           {({ errors, handleBlur, handleChange, isSubmitting, values }) => {
@@ -79,11 +108,11 @@ export const SettingsEditSettingsPassword: FC = () => {
                   />
 
                   <PasswordInput
-                    name="password"
+                    name="newPassword"
                     title="New Password"
-                    error={errors.password}
+                    error={errors.newPassword}
                     placeholder="Enter your password"
-                    value={values.password}
+                    value={values.newPassword}
                     onChange={handleChange}
                     onBlur={handleBlur}
                     required
