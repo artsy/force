@@ -1,5 +1,5 @@
 import { Input } from "@artsy/palette"
-import { Component } from "react";
+import { Component } from "react"
 
 export interface OfferInputProps {
   id: string
@@ -15,7 +15,6 @@ export class OfferInput extends Component<OfferInputProps> {
     return (
       <Input
         id={id}
-        title="Your offer"
         type="text"
         pattern="[0-9]"
         error={showError ? "Offer amount missing or invalid." : false}
@@ -34,6 +33,6 @@ export class OfferInput extends Component<OfferInputProps> {
           this.props.onChange(Number(ev.currentTarget.value || "0"))
         }}
       />
-    );
+    )
   }
 }

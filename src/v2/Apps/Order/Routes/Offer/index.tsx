@@ -1,7 +1,9 @@
 import {
+  BorderedRadio,
   Button,
   Flex,
   Message,
+  RadioGroup,
   Spacer,
   Text,
   TextAreaChange,
@@ -31,6 +33,7 @@ import { getOfferItemFromOrder } from "v2/Apps/Order/Utils/offerItemExtractor"
 import { ContextModule, OwnerType } from "@artsy/cohesion"
 import { isNil } from "lodash"
 import { appendCurrencySymbol } from "v2/Apps/Order/Utils/currencyUtils"
+// import { userHasLabFeature } from "v2/Utils/user"
 
 export interface OfferProps {
   order: Offer_order
@@ -154,6 +157,62 @@ export class OfferRoute extends Component<OfferProps, OfferState> {
       }
     }
   }
+  getPriceOption() {
+    const priceAmountRange = [
+      {
+        value: "USD3200",
+        label: "USD5000",
+        description: "low-end range of range",
+      },
+      { value: "USD3200", label: "USD5500", description: "midpoint" },
+      { value: "USD3200", label: "USD6000", description: "top-end of range" },
+    ]
+    const priceAmountExact = [
+      {
+        value: "USD3200",
+        label: "USD3200",
+        description: "20% below list price",
+      },
+      {
+        value: "USD3200",
+        label: "USD3400",
+        description: "15% below list price",
+      },
+      {
+        value: "USD3200",
+        label: "USD3600",
+        description: "10% below list price",
+      },
+    ]
+
+    const isRangeOffer = this.props.order.lineItems?.edges
+
+    let components: JSX.Element[]
+
+    if (isRangeOffer && isRangeOffer[0]?.node?.artwork?.isPriceRange) {
+      components = priceAmountRange.map(({ value, label, description }) => {
+        return (
+          <BorderedRadio value={value} label={label}>
+            <Text variant="sm" color="black60">
+              {description}
+            </Text>
+          </BorderedRadio>
+        )
+      })
+    } else {
+      components = priceAmountExact.map(({ value, label, description }) => {
+        return (
+          <BorderedRadio value={value} label={label}>
+            <Text variant="sm" color="black60">
+              {description}
+            </Text>
+          </BorderedRadio>
+        )
+      })
+    }
+
+    return <>{components}</>
+  }
 
   onContinueButtonPressed = async () => {
     const {
@@ -234,22 +293,63 @@ export class OfferRoute extends Component<OfferProps, OfferState> {
               style={isCommittingMutation ? { pointerEvents: "none" } : {}}
               id="offer-page-left-column"
             >
-              <Flex flexDirection="column">
-                <OfferInput
-                  id="OfferForm_offerValue"
-                  showError={
-                    this.state.formIsDirty && this.state.offerValue <= 0
-                  }
-                  onChange={offerValue => this.setState({ offerValue })}
-                  onFocus={this.onOfferInputFocus.bind(this)}
-                />
-              </Flex>
+              <Text variant="lg" color="black80" marginTop={4}>
+                Select an Option
+              </Text>
               {Boolean(offerItem?.price) && (
                 <Text my={1} variant="xs" color="black60">
                   List price:{" "}
                   {appendCurrencySymbol(offerItem?.price, order.currencyCode)}
                 </Text>
               )}
+              <Text
+                variant="md"
+                color="black80"
+                marginTop={4}
+                marginBottom={2}
+                textTransform="uppercase"
+              >
+                Your offer
+              </Text>
+              <RadioGroup>
+                {/* {priceAmountExact.map((value, label, description) => {
+                  return (
+                    <BorderedRadio value={value} label={label}>
+                      <Text variant="sm" color="black60">
+                        {description}
+                      </Text>
+                    </BorderedRadio>
+                  )
+                })} */}
+
+                {/* <BorderedRadio
+                  value="custom"
+                  label="Different amount"
+                  data-test="custom"
+                /> */}
+
+                {this.getPriceOption()}
+
+                <BorderedRadio
+                  value="custom"
+                  label="Different amount"
+                  data-test="custom"
+                >
+                  <Text variant="sm" color="black60">
+                    custom label
+                  </Text>
+                  <Flex flexDirection="column">
+                    <OfferInput
+                      id="OfferForm_offerValue"
+                      showError={
+                        this.state.formIsDirty && this.state.offerValue <= 0
+                      }
+                      onChange={offerValue => this.setState({ offerValue })}
+                      onFocus={this.onOfferInputFocus.bind(this)}
+                    />
+                  </Flex>
+                </BorderedRadio>
+              </RadioGroup>
               {!order.isInquiryOrder && (
                 <>
                   <Spacer mb={2} />
@@ -340,6 +440,7 @@ export const OfferFragmentContainer = createFragmentContainer(
               artwork {
                 slug
                 price
+                isPriceRange
               }
               artworkOrEditionSet {
                 __typename

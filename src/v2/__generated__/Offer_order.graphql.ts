@@ -17,6 +17,7 @@ export type Offer_order = {
                 readonly artwork: {
                     readonly slug: string;
                     readonly price: string | null;
+                    readonly isPriceRange: boolean | null;
                 } | null;
                 readonly artworkOrEditionSet: ({
                     readonly __typename: "Artwork";
@@ -144,7 +145,14 @@ return {
                       "name": "slug",
                       "storageKey": null
                     },
-                    (v0/*: any*/)
+                    (v0/*: any*/),
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "isPriceRange",
+                      "storageKey": null
+                    }
                   ],
                   "storageKey": null
                 },
@@ -212,5 +220,5 @@ return {
   "type": "CommerceOrder"
 };
 })();
-(node as any).hash = '04bf345b90df1c9bc3f1e30b6e1fa155';
+(node as any).hash = '8b43c6b036ebc2a58e3b07a320119091';
 export default node;
