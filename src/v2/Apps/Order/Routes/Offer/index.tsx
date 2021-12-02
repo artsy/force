@@ -312,22 +312,6 @@ export class OfferRoute extends Component<OfferProps, OfferState> {
                 Your offer
               </Text>
               <RadioGroup>
-                {/* {priceAmountExact.map((value, label, description) => {
-                  return (
-                    <BorderedRadio value={value} label={label}>
-                      <Text variant="sm" color="black60">
-                        {description}
-                      </Text>
-                    </BorderedRadio>
-                  )
-                })} */}
-
-                {/* <BorderedRadio
-                  value="custom"
-                  label="Different amount"
-                  data-test="custom"
-                /> */}
-
                 {this.getPriceOption()}
 
                 <BorderedRadio
