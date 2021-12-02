@@ -13,7 +13,7 @@ import {
   PasswordInput,
 } from "@artsy/palette"
 import { email, password, name } from "v2/Components/Authentication/Validators"
-import { useUpdateSettingsInformation } from "./useUpdateSettingsInformation"
+import { useUpdateSettingsInformation } from "../useUpdateSettingsInformation"
 
 interface SettingsEditSettingsInformationProps {
   me: SettingsEditSettingsInformation_me
