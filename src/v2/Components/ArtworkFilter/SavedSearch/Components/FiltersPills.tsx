@@ -14,7 +14,7 @@ const PILL_HORIZONTAL_MARGIN_SIZE = 0.5
 const CLOSE_ICON_SIZE = 15
 
 export interface FiltersPillsProps {
-  savedSearchAttributes?: SavedSearchAttributes
+  savedSearchAttributes?: SavedSearchAttributes | null
 }
 
 export const FiltersPills: FC<FiltersPillsProps> = ({

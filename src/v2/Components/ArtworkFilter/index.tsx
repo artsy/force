@@ -167,7 +167,7 @@ export const BaseArtworkFilter: React.FC<
   const [showMobileActionSheet, toggleMobileActionSheet] = useState(false)
   const filterContext = useArtworkFilterContext()
   const previousFilters = usePrevious(filterContext.filters)
-  const { user } = useSystemContext()
+  const { user, isLoggedIn } = useSystemContext()
   const { pills = [], setPills } = useFilterPillsContext()
 
   const { filtered_artworks } = viewer
@@ -355,7 +355,9 @@ export const BaseArtworkFilter: React.FC<
 
           {showCreateAlert && (
             <>
-              <FiltersPills savedSearchAttributes={savedSearchProps} />
+              <FiltersPills
+                savedSearchAttributes={isLoggedIn ? savedSearchProps : null}
+              />
               <Spacer mt={4} />
             </>
           )}
@@ -409,7 +411,9 @@ export const BaseArtworkFilter: React.FC<
 
             {showCreateAlert && (
               <>
-                <FiltersPills savedSearchAttributes={savedSearchProps} />
+                <FiltersPills
+                  savedSearchAttributes={isLoggedIn ? savedSearchProps : null}
+                />
                 <Spacer mt={4} />
               </>
             )}
