@@ -18,11 +18,11 @@ import { getNamePlaceholder } from "./Utils/getNamePlaceholder"
 import { getSearchCriteriaFromFilters } from "../ArtworkFilter/SavedSearch/Utils"
 import { createSavedSearchAlert } from "./Mutations/createSavedSearchAlert"
 import { useSystemContext } from "v2/System"
-import { extractPills } from "./Utils/extractPills"
 import { useArtworkFilterContext } from "../ArtworkFilter/ArtworkFilterContext"
 import createLogger from "v2/Utils/logger"
 import { SavedSearchAttributes } from "../ArtworkFilter/SavedSearch/types"
 import { FiltersPills } from "../ArtworkFilter/SavedSearch/Components/FiltersPills"
+import { useFilterPillsContext } from "../ArtworkFilter/SavedSearch/Utils/FilterPillsContext"
 
 interface SavedSearchAlertFormProps {
   savedSearchAttributes: SavedSearchAttributes
@@ -46,10 +46,8 @@ export const SavedSearchAlertModal: React.FC<SavedSearchAlertFormProps> = ({
   const { id, name } = savedSearchAttributes
   const { relayEnvironment } = useSystemContext()
   const filterContext = useArtworkFilterContext()
-
+  const { pills = [] } = useFilterPillsContext()
   const filters = filterContext.currentlySelectedFilters?.() || {}
-
-  const pills = extractPills(filters, filterContext.aggregations!)
   const namePlaceholder = getNamePlaceholder(name, pills.length)
 
   const formik = useFormik<SavedSearchAleftFormValues>({

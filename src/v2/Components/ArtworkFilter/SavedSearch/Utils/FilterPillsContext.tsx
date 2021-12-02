@@ -26,9 +26,10 @@ export const FilterPillsContext = React.createContext<FilterPillsContextProps>(
 )
 
 export const FilterPillsContextProvider: React.FC<FilterPillsContextProps> = ({
+  pills: initialPills = [],
   children,
 }) => {
-  const [pills, setPills] = useState<FilterPill[]>([])
+  const [pills, setPills] = useState<FilterPill[]>(initialPills)
 
   const filterPillsContext: FilterPillsContextProps = {
     pills,

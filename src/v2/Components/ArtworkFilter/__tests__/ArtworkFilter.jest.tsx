@@ -8,6 +8,7 @@ import { ArtworkFilterFixture } from "./fixtures/ArtworkFilter.fixture"
 import { Pagination } from "v2/Components/Pagination"
 import { initialArtworkFilterState } from "../ArtworkFilterContext"
 import { SavedSearchAttributes } from "../SavedSearch/types"
+import { FilterPillsContextProvider } from "../SavedSearch/Utils/FilterPillsContext"
 
 jest.unmock("react-relay")
 jest.mock("v2/System/Analytics/useTracking")
@@ -30,7 +31,9 @@ describe("ArtworkFilter", () => {
   ) => {
     return await renderRelayTree({
       Component: props => (
-        <ArtworkFilter {...(props as any)} {...passedProps} />
+        <FilterPillsContextProvider>
+          <ArtworkFilter {...(props as any)} {...passedProps} />
+        </FilterPillsContextProvider>
       ),
       query: ArtworkQueryFilter,
       mockData: ArtworkFilterFixture,
