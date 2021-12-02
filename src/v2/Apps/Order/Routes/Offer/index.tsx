@@ -158,58 +158,51 @@ export class OfferRoute extends Component<OfferProps, OfferState> {
     }
   }
   getPriceOption() {
-    const priceAmountRange = [
-      {
-        value: "USD3200",
-        label: "USD5000",
-        description: "low-end range of range",
-      },
-      { value: "USD3200", label: "USD5500", description: "midpoint" },
-      { value: "USD3200", label: "USD6000", description: "top-end of range" },
-    ]
-    const priceAmountExact = [
-      {
-        value: "USD3200",
-        label: "USD3200",
-        description: "20% below list price",
-      },
-      {
-        value: "USD3200",
-        label: "USD3400",
-        description: "15% below list price",
-      },
-      {
-        value: "USD3200",
-        label: "USD3600",
-        description: "10% below list price",
-      },
-    ]
+    const listPrice = this.props.order.lineItems?.edges?.[0]?.node?.artwork
+      ?.listPrice
+
+    const minPriceRange = listPrice?.minPrice?.major
+    const maxPriceRange = listPrice?.maxPrice?.major
+    const midPriceRange = (Number(minPriceRange) + Number(maxPriceRange)) / 2
+
+    const priceAmountRange = [minPriceRange, midPriceRange, maxPriceRange].map(
+      rangePrice => {
+        return {
+          value: rangePrice,
+          label: rangePrice,
+          // TODO:add description text
+          description: "text",
+        }
+      }
+    )
+
+    const priceAmountExact = [0.2, 0.15, 0.1].map(pricePercentage => {
+      if (listPrice?.major) {
+        const listPriceCalculate = listPrice.major * (1 - pricePercentage)
+        return {
+          value: listPriceCalculate,
+          label: listPriceCalculate,
+          description: `${pricePercentage * 100}% below list price`,
+        }
+      }
+    })
 
     const isRangeOffer = this.props.order.lineItems?.edges
 
-    let components: JSX.Element[]
+    const iterateValues =
+      isRangeOffer && isRangeOffer[0]?.node?.artwork?.isPriceRange
+        ? priceAmountRange
+        : priceAmountExact
 
-    if (isRangeOffer && isRangeOffer[0]?.node?.artwork?.isPriceRange) {
-      components = priceAmountRange.map(({ value, label, description }) => {
-        return (
-          <BorderedRadio value={value} label={label}>
-            <Text variant="sm" color="black60">
-              {description}
-            </Text>
-          </BorderedRadio>
-        )
-      })
-    } else {
-      components = priceAmountExact.map(({ value, label, description }) => {
-        return (
-          <BorderedRadio value={value} label={label}>
-            <Text variant="sm" color="black60">
-              {description}
-            </Text>
-          </BorderedRadio>
-        )
-      })
-    }
+    const components = iterateValues.map(({ value, label, description }) => {
+      return (
+        <BorderedRadio value={value} label={label}>
+          <Text variant="sm" color="black60">
+            {description}
+          </Text>
+        </BorderedRadio>
+      )
+    })
 
     return <>{components}</>
   }
@@ -319,9 +312,6 @@ export class OfferRoute extends Component<OfferProps, OfferState> {
                   label="Different amount"
                   data-test="custom"
                 >
-                  <Text variant="sm" color="black60">
-                    custom label
-                  </Text>
                   <Flex flexDirection="column">
                     <OfferInput
                       id="OfferForm_offerValue"
@@ -425,6 +415,22 @@ export const OfferFragmentContainer = createFragmentContainer(
                 slug
                 price
                 isPriceRange
+                listPrice {
+                  ... on Money {
+                    major
+                    currencyCode
+                  }
+                  ... on PriceRange {
+                    maxPrice {
+                      major
+                      currencyCode
+                    }
+                    minPrice {
+                      major
+                      currencyCode
+                    }
+                  }
+                }
               }
               artworkOrEditionSet {
                 __typename

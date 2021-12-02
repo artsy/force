@@ -18,6 +18,18 @@ export type Offer_order = {
                     readonly slug: string;
                     readonly price: string | null;
                     readonly isPriceRange: boolean | null;
+                    readonly listPrice: {
+                        readonly major?: number;
+                        readonly currencyCode?: string;
+                        readonly maxPrice?: {
+                            readonly major: number;
+                            readonly currencyCode: string;
+                        } | null;
+                        readonly minPrice?: {
+                            readonly major: number;
+                            readonly currencyCode: string;
+                        } | null;
+                    } | null;
                 } | null;
                 readonly artworkOrEditionSet: ({
                     readonly __typename: "Artwork";
@@ -52,11 +64,28 @@ var v0 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
+  "name": "currencyCode",
+  "storageKey": null
+},
+v1 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
   "name": "price",
   "storageKey": null
 },
-v1 = [
-  (v0/*: any*/),
+v2 = [
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "major",
+    "storageKey": null
+  },
+  (v0/*: any*/)
+],
+v3 = [
+  (v1/*: any*/),
   {
     "alias": null,
     "args": null,
@@ -99,13 +128,7 @@ return {
       "name": "totalListPriceCents",
       "storageKey": null
     },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "currencyCode",
-      "storageKey": null
-    },
+    (v0/*: any*/),
     {
       "alias": null,
       "args": null,
@@ -145,12 +168,54 @@ return {
                       "name": "slug",
                       "storageKey": null
                     },
-                    (v0/*: any*/),
+                    (v1/*: any*/),
                     {
                       "alias": null,
                       "args": null,
                       "kind": "ScalarField",
                       "name": "isPriceRange",
+                      "storageKey": null
+                    },
+                    {
+                      "alias": null,
+                      "args": null,
+                      "concreteType": null,
+                      "kind": "LinkedField",
+                      "name": "listPrice",
+                      "plural": false,
+                      "selections": [
+                        {
+                          "kind": "InlineFragment",
+                          "selections": (v2/*: any*/),
+                          "type": "Money"
+                        },
+                        {
+                          "kind": "InlineFragment",
+                          "selections": [
+                            {
+                              "alias": null,
+                              "args": null,
+                              "concreteType": "Money",
+                              "kind": "LinkedField",
+                              "name": "maxPrice",
+                              "plural": false,
+                              "selections": (v2/*: any*/),
+                              "storageKey": null
+                            },
+                            {
+                              "alias": null,
+                              "args": null,
+                              "concreteType": "Money",
+                              "kind": "LinkedField",
+                              "name": "minPrice",
+                              "plural": false,
+                              "selections": (v2/*: any*/),
+                              "storageKey": null
+                            }
+                          ],
+                          "type": "PriceRange"
+                        }
+                      ],
                       "storageKey": null
                     }
                   ],
@@ -173,12 +238,12 @@ return {
                     },
                     {
                       "kind": "InlineFragment",
-                      "selections": (v1/*: any*/),
+                      "selections": (v3/*: any*/),
                       "type": "Artwork"
                     },
                     {
                       "kind": "InlineFragment",
-                      "selections": (v1/*: any*/),
+                      "selections": (v3/*: any*/),
                       "type": "EditionSet"
                     }
                   ],
@@ -220,5 +285,5 @@ return {
   "type": "CommerceOrder"
 };
 })();
-(node as any).hash = '8b43c6b036ebc2a58e3b07a320119091';
+(node as any).hash = '9eb9368f2087d594c6a0a8684cef95a2';
 export default node;
