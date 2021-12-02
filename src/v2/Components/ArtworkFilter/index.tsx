@@ -354,7 +354,10 @@ export const BaseArtworkFilter: React.FC<
           <Spacer mb={2} />
 
           {showCreateAlert && (
-            <FiltersPills savedSearchAttributes={savedSearchProps} />
+            <>
+              <FiltersPills savedSearchAttributes={savedSearchProps} />
+              <Spacer mt={4} />
+            </>
           )}
 
           <Spacer mb={2} />
@@ -405,7 +408,10 @@ export const BaseArtworkFilter: React.FC<
             )}
 
             {showCreateAlert && (
-              <FiltersPills savedSearchAttributes={savedSearchProps} />
+              <>
+                <FiltersPills savedSearchAttributes={savedSearchProps} />
+                <Spacer mt={4} />
+              </>
             )}
 
             {children || (

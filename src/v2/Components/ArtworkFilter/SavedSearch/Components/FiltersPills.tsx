@@ -1,5 +1,5 @@
 import React, { FC } from "react"
-import { CloseIcon, Flex, Pill, Spacer } from "@artsy/palette"
+import { CloseIcon, Flex, Pill } from "@artsy/palette"
 import { CreateAlertButton } from "./CreateAlertButton"
 import { SavedSearchAttributes } from "../types"
 import {
@@ -40,35 +40,32 @@ export const FiltersPills: FC<FiltersPillsProps> = ({
   }
 
   return (
-    <>
-      <Flex flexWrap="wrap" mx={-PILL_HORIZONTAL_MARGIN_SIZE}>
-        {pills.map(pill => (
-          <Pill
-            key={`filter-label-${pill.name}`}
-            variant="textSquare"
-            mx={PILL_HORIZONTAL_MARGIN_SIZE}
-            mb={1}
-            onClick={() => removePill(pill)}
-          >
-            {pill.displayName}
-            {!pill.isDefault && (
-              <CloseIcon
-                fill="currentColor"
-                width={CLOSE_ICON_SIZE}
-                height={CLOSE_ICON_SIZE}
-                ml={0.5}
-              />
-            )}
-          </Pill>
-        ))}
-        {savedSearchAttributes && (
-          <CreateAlertButton
-            savedSearchAttributes={savedSearchAttributes}
-            ml={PILL_HORIZONTAL_MARGIN_SIZE}
-          />
-        )}
-      </Flex>
-      <Spacer mt={4} />
-    </>
+    <Flex flexWrap="wrap" mx={-PILL_HORIZONTAL_MARGIN_SIZE}>
+      {pills.map(pill => (
+        <Pill
+          key={`filter-label-${pill.name}`}
+          variant="textSquare"
+          mx={PILL_HORIZONTAL_MARGIN_SIZE}
+          mb={1}
+          onClick={() => removePill(pill)}
+        >
+          {pill.displayName}
+          {!pill.isDefault && (
+            <CloseIcon
+              fill="currentColor"
+              width={CLOSE_ICON_SIZE}
+              height={CLOSE_ICON_SIZE}
+              ml={0.5}
+            />
+          )}
+        </Pill>
+      ))}
+      {savedSearchAttributes && (
+        <CreateAlertButton
+          savedSearchAttributes={savedSearchAttributes}
+          ml={PILL_HORIZONTAL_MARGIN_SIZE}
+        />
+      )}
+    </Flex>
   )
 }

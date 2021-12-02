@@ -10,6 +10,7 @@ import {
   Checkbox,
   Input,
   Join,
+  Modal,
   Spacer,
   Text,
 } from "@artsy/palette"
@@ -26,16 +27,20 @@ import { FiltersPills } from "../ArtworkFilter/SavedSearch/Components/FiltersPil
 interface SavedSearchAlertFormProps {
   savedSearchAttributes: SavedSearchAttributes
   initialValues: SavedSearchAleftFormValues
+  visible?: boolean
+  onClose: () => void
   onComplete?: (result: SavedSearchAlertMutationResult) => void
 }
 
 const logger = createLogger(
-  "v2/Components/SavedSearchAlert/SavedSearchAlertForm"
+  "v2/Components/SavedSearchAlert/SavedSearchAlertModal"
 )
 
-export const SavedSearchAlertForm: React.FC<SavedSearchAlertFormProps> = ({
+export const SavedSearchAlertModal: React.FC<SavedSearchAlertFormProps> = ({
   savedSearchAttributes,
   initialValues,
+  visible,
+  onClose,
   onComplete,
 }) => {
   const { id, name } = savedSearchAttributes
@@ -91,53 +96,55 @@ export const SavedSearchAlertForm: React.FC<SavedSearchAlertFormProps> = ({
   return (
     <FormikProvider value={formik}>
       <Form onSubmit={formik.handleSubmit}>
-        <Join separator={<Spacer mt={4} />}>
-          <Input
-            title="Name"
-            name="name"
-            placeholder={namePlaceholder}
-            value={formik.values.name}
-            onChange={formik.handleChange("name")}
-            onBlur={formik.handleBlur("name")}
-            error={formik.errors.name}
-            maxLength={75}
-          />
+        <Modal
+          show={visible}
+          onClose={onClose}
+          title="Create an Alert"
+          FixedButton={
+            <Button type="submit" loading={formik.isSubmitting} width="100%">
+              Save Alert
+            </Button>
+          }
+        >
+          <Join separator={<Spacer mt={4} />}>
+            <Input
+              title="Name"
+              name="name"
+              placeholder={namePlaceholder}
+              value={formik.values.name}
+              onChange={formik.handleChange("name")}
+              onBlur={formik.handleBlur("name")}
+              error={formik.errors.name}
+              maxLength={75}
+            />
 
-          <Box>
-            <Text variant="xs" textTransform="uppercase">
-              Filters
-            </Text>
-            <Spacer mt={2} />
-            <FiltersPills />
-          </Box>
-
-          <Box>
-            <Box display="flex" justifyContent="space-between">
-              <Text>Email Alerts</Text>
-              <Checkbox
-                onSelect={handleToggleNotification("email")}
-                selected={formik.values.email}
-              />
+            <Box>
+              <Text variant="xs" textTransform="uppercase">
+                Filters
+              </Text>
+              <Spacer mt={2} />
+              <FiltersPills />
             </Box>
-            <Spacer mt={4} />
-            <Box display="flex" justifyContent="space-between">
-              <Text>Mobile Alerts</Text>
-              <Checkbox
-                onSelect={handleToggleNotification("push")}
-                selected={formik.values.push}
-              />
-            </Box>
-          </Box>
 
-          <Button
-            type="submit"
-            loading={formik.isSubmitting}
-            width="100%"
-            mt={4}
-          >
-            Save Alert
-          </Button>
-        </Join>
+            <Box>
+              <Box display="flex" justifyContent="space-between">
+                <Text>Email Alerts</Text>
+                <Checkbox
+                  onSelect={handleToggleNotification("email")}
+                  selected={formik.values.email}
+                />
+              </Box>
+              <Spacer mt={4} />
+              <Box display="flex" justifyContent="space-between">
+                <Text>Mobile Alerts</Text>
+                <Checkbox
+                  onSelect={handleToggleNotification("push")}
+                  selected={formik.values.push}
+                />
+              </Box>
+            </Box>
+          </Join>
+        </Modal>
       </Form>
     </FormikProvider>
   )
