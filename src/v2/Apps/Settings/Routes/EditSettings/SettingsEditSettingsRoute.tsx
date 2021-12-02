@@ -1,9 +1,10 @@
 import React from "react"
-import { SettingsEditSettingsRoute_me } from "v2/__generated__/SettingsEditSettingsRoute_me.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
+import { Column, GridColumns, Join, Separator } from "@artsy/palette"
 import { SettingsEditSettingsInformationFragmentContainer } from "./Components/SettingsEditSettingsInformation"
 import { SettingsEditSettingsTwoFactorFragmentContainer } from "./Components/SettingsEditSettingsTwoFactor"
-import { Column, GridColumns, Join, Separator } from "@artsy/palette"
+import { SettingsEditSettingsPassword } from "./Components/SettingsEditSettingsPassword"
+import { SettingsEditSettingsRoute_me } from "v2/__generated__/SettingsEditSettingsRoute_me.graphql"
 
 interface SettingsEditRouteProps {
   me: SettingsEditSettingsRoute_me
@@ -16,7 +17,7 @@ const SettingsEditRoute: React.FC<SettingsEditRouteProps> = ({ me }) => {
         <Join separator={<Separator my={4} />}>
           <SettingsEditSettingsInformationFragmentContainer me={me} />
 
-          {/* TODO: SettingsEditSettingsPassword */}
+          <SettingsEditSettingsPassword />
 
           <SettingsEditSettingsTwoFactorFragmentContainer me={me} />
 

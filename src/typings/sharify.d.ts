@@ -63,6 +63,7 @@ declare module "sharify" {
         twitterPath?: string
         signupPagePath?: string
         loginPagePath?: string
+        logoutPath?: string
       }
       API_REQUEST_TIMEOUT?: number
       API_URL: string
