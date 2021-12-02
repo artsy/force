@@ -60,8 +60,7 @@ export const AppSecondFactor: React.FC<AppSecondFactorProps> = props => {
     }
 
     if (props.me.hasSecondFactorEnabled) {
-      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-      relayRefetch.refetch({}, {}, showCompleteModalCallback)
+      relayRefetch?.refetch({}, {}, showCompleteModalCallback)
     } else {
       if (redirectTo) {
         showCompleteRedirectModalCallback()

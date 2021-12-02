@@ -60,8 +60,7 @@ export const SmsSecondFactor: React.FC<SmsSecondFactorProps> = props => {
     }
 
     if (props.me.hasSecondFactorEnabled) {
-      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-      relayRefetch.refetch({}, {}, showCompleteModalCallback)
+      relayRefetch?.refetch({}, {}, showCompleteModalCallback)
     } else {
       showCompleteModalCallback()
       if (redirectTo) {
