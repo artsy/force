@@ -1,4 +1,4 @@
-import { login, forgotPassword, signUp, resetPassword } from "../auth"
+import { login, forgotPassword, signUp, resetPassword, logout } from "../auth"
 
 jest.mock("sharify", () => ({
   data: {
@@ -6,7 +6,11 @@ jest.mock("sharify", () => ({
     APP_URL: "https://www.artsy.net",
     SESSION_ID: "session_id",
     ARTSY_XAPP_TOKEN: "artsy_xapp_token",
-    AP: { loginPagePath: "/login", signupPagePath: "/signup" },
+    AP: {
+      loginPagePath: "/login",
+      signupPagePath: "/signup",
+      logoutPath: "/users/sign_out",
+    },
   },
 }))
 
@@ -146,5 +150,31 @@ describe("signUp", () => {
     })
 
     expect(res).toEqual({ success: true })
+  })
+
+  describe("logout", () => {
+    it("makes the correct request", async () => {
+      const mockFetch = jest.fn(() =>
+        Promise.resolve({
+          ok: true,
+          json: () => Promise.resolve({ msg: "success" }),
+        })
+      )
+
+      // @ts-ignore
+      global.fetch = mockFetch
+
+      await logout()
+
+      expect(mockFetch).toBeCalledWith("https://www.artsy.net/users/sign_out", {
+        credentials: "same-origin",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          "X-Requested-With": "XMLHttpRequest",
+        },
+        method: "DELETE",
+      })
+    })
   })
 })
