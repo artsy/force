@@ -28,6 +28,12 @@ fragment ContactInformation_me on Me {
   name
   email
   phone
+  phoneNumber {
+    isValid
+    international: display(format: INTERNATIONAL)
+    national: display(format: NATIONAL)
+    regionCode
+  }
 }
 */
 
@@ -95,6 +101,57 @@ const node: ConcreteRequest = {
           {
             "alias": null,
             "args": null,
+            "concreteType": "PhoneNumberType",
+            "kind": "LinkedField",
+            "name": "phoneNumber",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "isValid",
+                "storageKey": null
+              },
+              {
+                "alias": "international",
+                "args": [
+                  {
+                    "kind": "Literal",
+                    "name": "format",
+                    "value": "INTERNATIONAL"
+                  }
+                ],
+                "kind": "ScalarField",
+                "name": "display",
+                "storageKey": "display(format:\"INTERNATIONAL\")"
+              },
+              {
+                "alias": "national",
+                "args": [
+                  {
+                    "kind": "Literal",
+                    "name": "format",
+                    "value": "NATIONAL"
+                  }
+                ],
+                "kind": "ScalarField",
+                "name": "display",
+                "storageKey": "display(format:\"NATIONAL\")"
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "regionCode",
+                "storageKey": null
+              }
+            ],
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
             "kind": "ScalarField",
             "name": "id",
             "storageKey": null
@@ -109,7 +166,7 @@ const node: ConcreteRequest = {
     "metadata": {},
     "name": "ContactInformationTestQuery",
     "operationKind": "query",
-    "text": "query ContactInformationTestQuery {\n  me {\n    ...ContactInformation_me\n    id\n  }\n}\n\nfragment ContactInformation_me on Me {\n  name\n  email\n  phone\n}\n"
+    "text": "query ContactInformationTestQuery {\n  me {\n    ...ContactInformation_me\n    id\n  }\n}\n\nfragment ContactInformation_me on Me {\n  name\n  email\n  phone\n  phoneNumber {\n    isValid\n    international: display(format: INTERNATIONAL)\n    national: display(format: NATIONAL)\n    regionCode\n  }\n}\n"
   }
 };
 (node as any).hash = '915ba484cb210763fa4744cac757923f';

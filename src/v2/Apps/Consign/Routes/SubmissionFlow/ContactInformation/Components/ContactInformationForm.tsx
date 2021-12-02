@@ -4,11 +4,14 @@ import { useEffect } from "react"
 import { useRouter } from "v2/System/Router/useRouter"
 import { ContactInformation_me } from "v2/__generated__/ContactInformation_me.graphql"
 import { useSubmission } from "../../Utils/useSubmission"
+import { getPhoneNumberInformation } from "../../Utils/phoneNumberUtils"
+import { useSystemContext } from "v2/System"
+import { PhoneNumber, PhoneNumberInput } from "./PhoneNumberInput"
 
 export interface ContactInformationFormModel {
   name: string
   email: string
-  phone: string
+  phone: PhoneNumber & { international?: string }
 }
 
 export interface ContactInformationFormProps extends BoxProps {
@@ -23,9 +26,14 @@ export const ContactInformationForm: React.FC<ContactInformationFormProps> = ({
     values,
     handleChange,
     handleBlur,
+    touched,
+    errors,
     resetForm,
     validateForm,
+    setFieldTouched,
+    setFieldValue,
   } = useFormikContext<ContactInformationFormModel>()
+  const { relayEnvironment } = useSystemContext()
 
   const {
     match: {
@@ -37,9 +45,22 @@ export const ContactInformationForm: React.FC<ContactInformationFormProps> = ({
   useEffect(() => {
     if (submission) {
       resetForm({ values: submission.contactInformationForm })
+      setFieldTouched("phone", false)
       validateForm(submission.contactInformationForm)
     }
   }, [submission])
+
+  const handlePhoneNumberChange = async (region, number) => {
+    if (region && number && relayEnvironment) {
+      const phoneInformation = await getPhoneNumberInformation(
+        number,
+        relayEnvironment,
+        region
+      )
+
+      setFieldValue("phone", phoneInformation)
+    }
+  }
 
   return (
     <Box {...rest}>
@@ -62,15 +83,16 @@ export const ContactInformationForm: React.FC<ContactInformationFormProps> = ({
         onChange={handleChange}
         onBlur={handleBlur}
       />
-      <Input
+
+      <PhoneNumberInput
         mt={4}
-        max={256}
-        name="phone"
-        title="phone number"
-        placeholder="Your Phone number"
-        value={values.phone}
-        onChange={handleChange}
-        onBlur={handleBlur}
+        phoneNumber={values.phone}
+        onChange={handlePhoneNumberChange}
+        inputProps={{
+          onBlur: handleBlur("phone"),
+          placeholder: "(000) 000 0000",
+        }}
+        error={touched.phone && (errors.phone as string)}
       />
     </Box>
   )
