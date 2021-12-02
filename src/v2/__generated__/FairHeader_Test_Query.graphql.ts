@@ -24,27 +24,29 @@ query FairHeader_Test_Query {
   }
 }
 
-fragment FairHeaderIcon_fair on Fair {
+fragment FairHeader_fair on Fair {
   name
+  exhibitionPeriod
   profile {
     icon {
-      desktop: cropped(width: 100, height: 100, version: "square140") {
+      desktop: cropped(width: 80, height: 80, version: "square140") {
         src
         srcSet
+        size: width
       }
       mobile: cropped(width: 60, height: 60, version: "square140") {
         src
         srcSet
+        size: width
+      }
+      sticky: cropped(width: 50, height: 50, version: "square140") {
+        src
+        srcSet
+        size: width
       }
     }
     id
   }
-}
-
-fragment FairHeader_fair on Fair {
-  ...FairHeaderIcon_fair
-  name
-  exhibitionPeriod
 }
 */
 
@@ -74,6 +76,13 @@ v2 = [
     "args": null,
     "kind": "ScalarField",
     "name": "srcSet",
+    "storageKey": null
+  },
+  {
+    "alias": "size",
+    "args": null,
+    "kind": "ScalarField",
+    "name": "width",
     "storageKey": null
   }
 ],
@@ -134,6 +143,13 @@ return {
           {
             "alias": null,
             "args": null,
+            "kind": "ScalarField",
+            "name": "exhibitionPeriod",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
             "concreteType": "Profile",
             "kind": "LinkedField",
             "name": "profile",
@@ -153,13 +169,13 @@ return {
                       {
                         "kind": "Literal",
                         "name": "height",
-                        "value": 100
+                        "value": 80
                       },
                       (v1/*: any*/),
                       {
                         "kind": "Literal",
                         "name": "width",
-                        "value": 100
+                        "value": 80
                       }
                     ],
                     "concreteType": "CroppedImageUrl",
@@ -167,7 +183,7 @@ return {
                     "name": "cropped",
                     "plural": false,
                     "selections": (v2/*: any*/),
-                    "storageKey": "cropped(height:100,version:\"square140\",width:100)"
+                    "storageKey": "cropped(height:80,version:\"square140\",width:80)"
                   },
                   {
                     "alias": "mobile",
@@ -190,19 +206,34 @@ return {
                     "plural": false,
                     "selections": (v2/*: any*/),
                     "storageKey": "cropped(height:60,version:\"square140\",width:60)"
+                  },
+                  {
+                    "alias": "sticky",
+                    "args": [
+                      {
+                        "kind": "Literal",
+                        "name": "height",
+                        "value": 50
+                      },
+                      (v1/*: any*/),
+                      {
+                        "kind": "Literal",
+                        "name": "width",
+                        "value": 50
+                      }
+                    ],
+                    "concreteType": "CroppedImageUrl",
+                    "kind": "LinkedField",
+                    "name": "cropped",
+                    "plural": false,
+                    "selections": (v2/*: any*/),
+                    "storageKey": "cropped(height:50,version:\"square140\",width:50)"
                   }
                 ],
                 "storageKey": null
               },
               (v3/*: any*/)
             ],
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "exhibitionPeriod",
             "storageKey": null
           },
           (v3/*: any*/)
@@ -216,7 +247,7 @@ return {
     "metadata": {},
     "name": "FairHeader_Test_Query",
     "operationKind": "query",
-    "text": "query FairHeader_Test_Query {\n  fair(id: \"example\") {\n    ...FairHeader_fair\n    id\n  }\n}\n\nfragment FairHeaderIcon_fair on Fair {\n  name\n  profile {\n    icon {\n      desktop: cropped(width: 100, height: 100, version: \"square140\") {\n        src\n        srcSet\n      }\n      mobile: cropped(width: 60, height: 60, version: \"square140\") {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment FairHeader_fair on Fair {\n  ...FairHeaderIcon_fair\n  name\n  exhibitionPeriod\n}\n"
+    "text": "query FairHeader_Test_Query {\n  fair(id: \"example\") {\n    ...FairHeader_fair\n    id\n  }\n}\n\nfragment FairHeader_fair on Fair {\n  name\n  exhibitionPeriod\n  profile {\n    icon {\n      desktop: cropped(width: 80, height: 80, version: \"square140\") {\n        src\n        srcSet\n        size: width\n      }\n      mobile: cropped(width: 60, height: 60, version: \"square140\") {\n        src\n        srcSet\n        size: width\n      }\n      sticky: cropped(width: 50, height: 50, version: \"square140\") {\n        src\n        srcSet\n        size: width\n      }\n    }\n    id\n  }\n}\n"
   }
 };
 })();

@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ProfileIcon } from "v2/Components/ProfileIcon"
 
@@ -21,11 +21,13 @@ export const FairOrganizerHeaderIconFragmentContainer = createFragmentContainer(
             desktop: cropped(width: 80, height: 80, version: "square140") {
               src
               srcSet
+              size: width
             }
 
             mobile: cropped(width: 60, height: 60, version: "square140") {
               src
               srcSet
+              size: width
             }
           }
         }
