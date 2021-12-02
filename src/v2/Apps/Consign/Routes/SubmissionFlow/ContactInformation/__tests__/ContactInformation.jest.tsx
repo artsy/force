@@ -7,6 +7,7 @@ import { SystemContextProvider } from "v2/System"
 import { ReactWrapper } from "enzyme"
 import { createConsignSubmission } from "../../Utils/createConsignSubmission"
 import { useErrorModal } from "../../Utils/useErrorModal"
+import { getPhoneNumberInformation } from "../../Utils/phoneNumberUtils"
 
 jest.unmock("react-relay")
 
@@ -40,13 +41,24 @@ const previousStepsData = {
 const contactInformationForm = {
   name: "Andy",
   email: "andy@test.test",
-  phone: "111",
+  phone: {
+    isValid: true,
+    international: "+1 415-555-0132",
+    national: "(415) 555-0132",
+    regionCode: "us",
+  },
 }
 const mockMe = {
   name: "Serge",
   email: "serge@test.test",
-  phone: "222",
+  phone: "+1 415-555-0132",
   id: "userId",
+  phoneNumber: {
+    isValid: true,
+    international: "+1 415-555-0132",
+    national: "(415) 555-0132",
+    regionCode: "us",
+  },
 }
 const mockRouterPush = jest.fn()
 
@@ -71,7 +83,13 @@ jest.mock("../../Utils/createConsignSubmission", () => ({
   createConsignSubmission: jest.fn(),
 }))
 
+jest.mock("../../Utils/phoneNumberUtils", () => ({
+  ...jest.requireActual("../../Utils/phoneNumberUtils"),
+  getPhoneNumberInformation: jest.fn(),
+}))
+
 const mockCreateConsignSubmission = createConsignSubmission as jest.Mock
+const mockGetPhoneNumberInformation = getPhoneNumberInformation as jest.Mock
 
 let sessionStore = {
   "submission-1": JSON.stringify({
@@ -123,6 +141,7 @@ describe("Contact Information step", () => {
     mockUseErrorModal.mockImplementation(() => ({
       openErrorModal: mockOpenErrorModal,
     }))
+    mockGetPhoneNumberInformation.mockResolvedValue(mockMe.phoneNumber)
   })
 
   afterEach(() => {
@@ -159,7 +178,7 @@ describe("Contact Information step", () => {
     it("is disabled if at least one field is not valid", async () => {
       const { getWrapper } = getWrapperWithProps()
       const wrapper = getWrapper({
-        Me: () => ({ name: null, email: null, phone: null }),
+        Me: () => ({ name: null, email: null, phone: null, phoneNumber: null }),
       })
       await flushPromiseQueue()
       wrapper.update()
@@ -174,7 +193,7 @@ describe("Contact Information step", () => {
 
       expect(wrapper.find(saveButtonSelector).prop("disabled")).toBe(true)
 
-      await simulateTyping(wrapper, "phone", "333")
+      await simulateTyping(wrapper, "phone", "(415) 555-0132")
 
       expect(wrapper.find(saveButtonSelector).prop("disabled")).toBe(false)
     })
@@ -206,7 +225,7 @@ describe("Contact Information step", () => {
     it("fields are not pre-populating from user profile", async () => {
       const { getWrapper } = getWrapperWithProps()
       const wrapper = getWrapper({
-        Me: () => ({ name: null, email: null, phone: null }),
+        Me: () => ({ name: null, email: null, phone: null, phoneNumber: null }),
       })
       expect(wrapper.find("input[name='name']").prop("value")).toBe("")
       expect(wrapper.find("input[name='email']").prop("value")).toBe("")
@@ -222,7 +241,7 @@ describe("Contact Information step", () => {
       }
       const { getWrapper } = getWrapperWithProps()
       const wrapper = getWrapper({
-        Me: () => ({ name: null, email: null, phone: null }),
+        Me: () => ({ name: null, email: null, phone: null, phoneNumber: null }),
       })
       await flushPromiseQueue()
       wrapper.update()
@@ -231,7 +250,9 @@ describe("Contact Information step", () => {
       expect(wrapper.find("input[name='email']").prop("value")).toBe(
         "andy@test.test"
       )
-      expect(wrapper.find("input[name='phone']").prop("value")).toBe("111")
+      expect(wrapper.find("input[name='phone']").prop("value")).toBe(
+        "(415) 555-0132"
+      )
     })
 
     it("submiting a valid form", async () => {
@@ -277,7 +298,7 @@ describe("Contact Information step", () => {
         mockMe.email
       )
       expect(wrapper.find("input[name='phone']").prop("value")).toBe(
-        mockMe.phone
+        mockMe.phoneNumber.national
       )
     })
 
@@ -297,7 +318,9 @@ describe("Contact Information step", () => {
       expect(wrapper.find("input[name='email']").prop("value")).toBe(
         "andy@test.test"
       )
-      expect(wrapper.find("input[name='phone']").prop("value")).toBe("111")
+      expect(wrapper.find("input[name='phone']").prop("value")).toBe(
+        "(415) 555-0132"
+      )
     })
 
     it("submiting a valid form", async () => {
@@ -331,7 +354,7 @@ describe("Contact Information step", () => {
 
     await simulateTyping(wrapper, "name", " Banksy  ")
     await simulateTyping(wrapper, "email", "  banksy@test.test  ")
-    await simulateTyping(wrapper, "phone", "  333  ")
+    await simulateTyping(wrapper, "phone", "  +1 415-555-0132  ")
 
     wrapper.find("Form").simulate("submit")
     await flushPromiseQueue()
@@ -344,7 +367,12 @@ describe("Contact Information step", () => {
         contactInformationForm: {
           name: "Banksy",
           email: "banksy@test.test",
-          phone: "333",
+          phone: {
+            isValid: true,
+            international: "+1 415-555-0132",
+            national: "(415) 555-0132",
+            regionCode: "us",
+          },
         },
       })
     )
@@ -355,7 +383,12 @@ describe("Contact Information step", () => {
       contactInformationForm: {
         name: "Banksy",
         email: "banksy@test.test",
-        phone: "333",
+        phone: {
+          isValid: true,
+          international: "+1 415-555-0132",
+          national: "(415) 555-0132",
+          regionCode: "us",
+        },
       },
     })
   })

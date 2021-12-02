@@ -80,7 +80,12 @@ describe("createConsignSubmission", () => {
       contactInformationForm: {
         name: "name",
         email: "test@test.test",
-        phone: "123456789",
+        phone: {
+          isValid: true,
+          international: "+1 415-555-0132",
+          national: "(415) 555-0132",
+          regionCode: "us",
+        },
       },
     }
     relayEnvironment = {} as Environment
@@ -131,7 +136,7 @@ describe("createConsignSubmission", () => {
       state: "SUBMITTED",
       userEmail: "test@test.test",
       userName: "name",
-      userPhone: "123456789",
+      userPhone: "+1 415-555-0132",
       provenance: "provenance",
       // locationCity: "location",
       sessionID: undefined,
@@ -167,7 +172,7 @@ describe("createConsignSubmission", () => {
       state: "SUBMITTED",
       userEmail: "test@test.test",
       userName: "name",
-      userPhone: "123456789",
+      userPhone: "+1 415-555-0132",
       provenance: "provenance",
       // locationCity: "location",
       sessionID: "sessionId",
