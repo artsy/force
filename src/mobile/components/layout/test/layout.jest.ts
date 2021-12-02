@@ -7,6 +7,11 @@ jest.mock("desktop/lib/deprecated_global_client_setup", () => ({
   logoutEventHandler: jest.fn(),
 }))
 
+jest.mock(
+  "../../../../lib/analytics/segmentOneTrustIntegration/segmentOneTrustIntegration",
+  () => ({ loadSegment: jest.fn() })
+)
+
 describe("bootstrap", () => {
   beforeAll(() => {
     // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
@@ -14,7 +19,6 @@ describe("bootstrap", () => {
   })
 
   it("sets up mediator to call #logoutEventHandler", () => {
-    // @ts-ignore
     bootstrap()
     mediator.trigger("auth:logout")
     expect(logoutEventHandler).toBeCalled()
