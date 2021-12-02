@@ -1,7 +1,7 @@
 import { screen, fireEvent } from "@testing-library/react"
 import { graphql } from "react-relay"
 import { setupTestWrapperTL } from "v2/DevTools/setupTestWrapper"
-import { SettingsEditSettingsInformationFragmentContainer } from "../SettingsEditSettingsInformation"
+import { SettingsEditSettingsInformationFragmentContainer } from "../Components/SettingsEditSettingsInformation"
 
 jest.unmock("react-relay")
 
