@@ -92,7 +92,7 @@ export class TransactionDetailsSummaryItem extends React.Component<
                 View and manage all artworks in your Collection{" "}
                 {!isEigen ? "on the Artsy app." : "through your "}
                 {isEigen && (
-                  <RouterLink to={"artsy:///my-profile"}>profile</RouterLink>
+                  <RouterLink to={"artsy:///my-profile"}>profile.</RouterLink>
                 )}
               </Text>
             </Flex>
