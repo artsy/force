@@ -30,7 +30,9 @@ export const getSelectedFiltersCounts = (selectedFilters: ArtworkFilters) => {
 
     switch (true) {
       case waysToBuyFilterNames.includes(paramName as FilterParamName): {
-        counts.waysToBuy = (counts.waysToBuy ?? 0) + 1
+        if (paramValue) {
+          counts.waysToBuy = (counts.waysToBuy ?? 0) + 1
+        }
         break
       }
       case rangeFilterNames.includes(paramName as FilterParamName): {

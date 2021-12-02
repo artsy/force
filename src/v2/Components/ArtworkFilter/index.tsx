@@ -176,7 +176,6 @@ export const BaseArtworkFilter: React.FC<
   const appliedFiltersTotalCount = Object.values(
     currentlySelectedFilters
   ).reduce((total: number, curr: number) => total + curr, 0)
-  const { user } = useSystemContext()
 
   const { filtered_artworks } = viewer
   const hasFilter = filtered_artworks && filtered_artworks.id
