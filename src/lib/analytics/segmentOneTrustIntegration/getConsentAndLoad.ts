@@ -8,20 +8,11 @@ export async function getConsentAndLoad(
   segmentMapping,
   writeKey
 ) {
-  console.log("getConsentAndLoad called")
-
-  console.log(Date.now())
-
-  console.log("destinations: ", destinations)
-  console.log("previousConsent: ", previousConsent)
-
   const consent = await getConsent()
-
-  console.log("consent: ", consent)
 
   if (consent === previousConsent) {
     // consent didn't change, nothing to do.
-    console.log("no change to consent, nothing to do")
+
     return consent
   }
 
@@ -31,8 +22,6 @@ export async function getConsentAndLoad(
     destinations,
     segmentMapping
   )
-
-  console.log("destinationPref: ", destinationPref)
 
   // load Segment and pass on those flags.
   conditionallyLoadAnalytics({

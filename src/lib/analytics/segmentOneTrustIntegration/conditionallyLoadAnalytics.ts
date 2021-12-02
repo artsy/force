@@ -3,8 +3,6 @@ export function conditionallyLoadAnalytics({
   shouldReload = true,
   writeKey,
 }) {
-  console.log("conditionallyLoadAnalytics")
-
   let isAnythingEnabled = false
 
   for (const destination in destinationPref) {
@@ -24,7 +22,6 @@ export function conditionallyLoadAnalytics({
   }
 
   if (isAnythingEnabled) {
-    console.log("loading segment")
     // @ts-ignore
     window.analytics.load(writeKey, { integrations: destinationPref })
   }

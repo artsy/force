@@ -1,8 +1,6 @@
 import { fetchDestinationForWriteKey } from "./fetchDestinationForWriteKey"
 
 export async function fetchDestinations(writeKey) {
-  console.log("fetchDestinations called")
-
   let destinations = await fetchDestinationForWriteKey(writeKey)
 
   destinations = [

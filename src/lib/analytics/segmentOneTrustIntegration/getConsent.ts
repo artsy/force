@@ -1,8 +1,6 @@
 import { getOneTrustConsent } from "./getOneTrustConsent"
 
 export async function getConsent() {
-  console.log("getConsent called")
-
   const oneTrustConsent = await getOneTrustConsent()
 
   if (oneTrustConsent === "") {

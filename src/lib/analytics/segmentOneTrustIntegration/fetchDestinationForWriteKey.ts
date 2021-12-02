@@ -1,8 +1,6 @@
 import { validateSegmentResponse } from "./validateSegmentResponse"
 
 export async function fetchDestinationForWriteKey(writeKey) {
-  console.log("fetchDestinationForWriteKey called")
-
   try {
     const res = await window.fetch(
       `https://cdn.segment.com/v1/projects/${writeKey}/integrations`

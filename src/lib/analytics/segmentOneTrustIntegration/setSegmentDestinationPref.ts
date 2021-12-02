@@ -3,8 +3,6 @@ export function setSegmentDestinationPref(
   destinations,
   segmentMapping
 ) {
-  console.log("setSegmentDestinationPref called")
-
   // map Segment destination id to OneTrust cookie category.
   const segmentToOneTrust = {
     AdWords: "C0004",

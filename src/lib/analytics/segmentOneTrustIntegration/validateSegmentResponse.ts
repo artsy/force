@@ -1,6 +1,4 @@
 export function validateSegmentResponse(destinations) {
-  console.log("validateSegmentResponse called")
-
   if (!Array.isArray(destinations)) {
     return false
   }

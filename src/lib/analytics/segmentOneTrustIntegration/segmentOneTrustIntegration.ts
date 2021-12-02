@@ -15,8 +15,6 @@ if (!sd.THIRD_PARTIES_DISABLED && !sd.EIGEN && sd.ONETRUST_SCRIPT_ID) {
 }
 
 export function loadSegment() {
-  console.log("loadSegment called")
-
   if (ONETRUST_ENABLED) {
     // OneTrust is enabled, load Segment based on OneTrust consent.
     fetchDestinations(SEGMENT_WRITE_KEY).then(async destinations => {
@@ -39,7 +37,6 @@ export function loadSegment() {
 }
 
 async function reconsentHook() {
-  console.log("reconsentHook called")
   PREVIOUS_CONSENT = await getConsentAndLoad(
     SEGMENT_DESTINATIONS,
     PREVIOUS_CONSENT,

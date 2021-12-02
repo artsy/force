@@ -2,8 +2,6 @@ import { delay } from "./delay"
 import { oneTrustReady } from "./oneTrustReady"
 
 export async function getOneTrustConsent() {
-  console.log("getOneTrustConsent called")
-
   let attempts = 0
   const maxAttempts = 100
 
