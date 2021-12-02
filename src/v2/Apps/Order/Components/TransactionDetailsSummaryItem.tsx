@@ -14,6 +14,7 @@ import { DownloadAppBadges } from "v2/Components/DownloadAppBadges/DownloadAppBa
 import { ContextModule } from "@artsy/cohesion"
 import { appendCurrencySymbol } from "v2/Apps/Order/Utils/currencyUtils"
 import { withSystemContext } from "v2/System"
+import { RouterLink } from "v2/System/Router/RouterLink"
 
 export interface TransactionDetailsSummaryItemProps
   extends Omit<StepSummaryItemProps, "order"> {
@@ -85,10 +86,14 @@ export class TransactionDetailsSummaryItem extends React.Component<
             <Flex flexDirection="column" mr="auto">
               <Text variant="sm" color="blue100">
                 Congratulations! This artwork will be added to your Collection
-                once the gallery ships the order.
+                once the gallery confirms the order.
               </Text>
               <Text variant="sm">
-                View and manage your Collection in the Artsy App.
+                View and manage all artworks in your Collection{" "}
+                {!isEigen ? "on the Artsy app." : "through your "}
+                {isEigen && (
+                  <RouterLink to={"/my-profile"}>profile.</RouterLink>
+                )}
               </Text>
             </Flex>
             <Flex pt={1}>

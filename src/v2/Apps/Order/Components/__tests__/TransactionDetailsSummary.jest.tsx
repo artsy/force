@@ -153,10 +153,10 @@ describe("TransactionDetailsSummaryItem", () => {
       const textWrappers = transactionSummary.find(Text)
 
       expect(textWrappers.map(text => text.text())).toContain(
-        "Congratulations! This artwork will be added to your Collection once the gallery ships the order."
+        "Congratulations! This artwork will be added to your Collection once the gallery confirms the order."
       )
       expect(textWrappers.map(text => text.text())).toContain(
-        "View and manage your Collection in the Artsy App."
+        "View and manage all artworks in your Collection on the Artsy app."
       )
     })
   })
