@@ -20,6 +20,7 @@ import {
 import { compact, take } from "lodash"
 import * as React from "react";
 import { createFragmentContainer, graphql } from "react-relay"
+import { StyledLink } from "v2/Components/Links/StyledLink";
 import { Masonry } from "v2/Components/Masonry"
 import { useSystemContext, useTracking } from "v2/System"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
@@ -27,6 +28,7 @@ import { RouterLink } from "v2/System/Router/RouterLink"
 import { Media } from "v2/Utils/Responsive"
 import { HomeFeaturedMarketNewsQuery } from "v2/__generated__/HomeFeaturedMarketNewsQuery.graphql"
 import { HomeFeaturedMarketNews_articles } from "v2/__generated__/HomeFeaturedMarketNews_articles.graphql"
+import styled from "styled-components"
 
 const ARTICLE_COUNT = 6
 
@@ -34,8 +36,15 @@ interface HomeFeaturedMarketNewsProps {
   articles: HomeFeaturedMarketNews_articles
 }
 
+const StyledTitle = styled(StyledLink)`
+  text-decoration: none;
+  &:hover {
+    color: ("blue100");
+  }
+`
+
 const HomeFeaturedMarketNews: React.FC<HomeFeaturedMarketNewsProps> = ({
-  articles,
+  articles
 }) => {
   const { trackEvent } = useTracking()
   const [firstArticle, ...restOfArticles] = articles
@@ -82,8 +91,10 @@ const HomeFeaturedMarketNews: React.FC<HomeFeaturedMarketNewsProps> = ({
             <Text variant="xs" textTransform="uppercase" my={1}>
               {firstArticle.vertical}
             </Text>
-
+          
+          <StyledTitle to={firstArticle.href ?? ""}>
             <Text variant="xl">{firstArticle.title}</Text>
+          </StyledTitle>
 
             <Text variant="lg" mt={1}>
               By {firstArticle.author?.name}
@@ -136,9 +147,11 @@ const HomeFeaturedMarketNews: React.FC<HomeFeaturedMarketNewsProps> = ({
                     <Text variant="xs" textTransform="uppercase" my={1}>
                       {article.vertical}
                     </Text>
-
-                    <Text variant="lg">{article.title}</Text>
-
+                    
+                    <StyledTitle to={article.href ?? ""}>
+                      <Text variant="lg">{article.title}</Text>
+                    </StyledTitle>
+                    
                     <Text variant="md" mt={1}>
                       By {article.author?.name}
                     </Text>
