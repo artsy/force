@@ -9051,6 +9051,11 @@ type Mutation {
     input: UpdateConversationMutationInput!
   ): UpdateConversationMutationPayload
 
+  # Updates the logged in user's password
+  updateMyPassword(
+    input: UpdateMyPasswordMutationInput!
+  ): UpdateMyPasswordMutationPayload
+
   # Update the current logged in user.
   updateMyUserProfile(input: UpdateMyProfileInput!): UpdateMyProfilePayload
   updateSavedSearch(input: UpdateSavedSearchInput!): UpdateSavedSearchPayload
@@ -12731,6 +12736,18 @@ input UpdateConversationMutationInput {
 type UpdateConversationMutationPayload {
   clientMutationId: String
   conversation: Conversation
+}
+
+input UpdateMyPasswordMutationInput {
+  clientMutationId: String
+  currentPassword: String!
+  newPassword: String!
+  passwordConfirmation: String!
+}
+
+type UpdateMyPasswordMutationPayload {
+  clientMutationId: String
+  me: Me!
 }
 
 input UpdateMyProfileInput {
