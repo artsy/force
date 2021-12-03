@@ -5,11 +5,11 @@ import {
   Checkbox,
   Collapse,
   Flex,
-  Link,
   RadioGroup,
   Spacer,
   Text,
 } from "@artsy/palette"
+import { RouterLink } from "v2/System/Router/RouterLink"
 import { Shipping_order } from "v2/__generated__/Shipping_order.graphql"
 import { CommerceOrderFulfillmentTypeEnum } from "v2/__generated__/SetShippingMutation.graphql"
 import { ArtworkSummaryItemFragmentContainer as ArtworkSummaryItem } from "v2/Apps/Order/Components/ArtworkSummaryItem"
@@ -50,7 +50,7 @@ import { Component } from "react"
 import { RelayProp, createFragmentContainer, graphql } from "react-relay"
 import createLogger from "v2/Utils/logger"
 import { Media } from "v2/Utils/Responsive"
-import { BuyerGuarantee } from "../../Components/BuyerGuarantee"
+import { BuyerGuarantee } from "v2/Apps/Order/Components/BuyerGuarantee"
 import { Shipping_me } from "v2/__generated__/Shipping_me.graphql"
 import {
   startingPhoneNumber,
@@ -61,19 +61,19 @@ import {
   getShippingQuotes,
   getShippingOption,
   ShippingQuotesType,
-} from "../../Utils/shippingUtils"
+} from "v2/Apps/Order/Utils/shippingUtils"
 import {
   NEW_ADDRESS,
   SavedAddressesFragmentContainer as SavedAddresses,
-} from "../../Components/SavedAddresses"
-import { createUserAddress } from "../../Mutations/CreateUserAddress"
-import { setShipping } from "../../Mutations/SetShipping"
+} from "v2/Apps/Order/Components/SavedAddresses"
+import { createUserAddress } from "v2/Apps/Order/Mutations/CreateUserAddress"
+import { setShipping } from "v2/Apps/Order/Mutations/SetShipping"
 import { SystemContextProps, withSystemContext } from "v2/System/SystemContext"
-import { ShippingQuotesFragmentContainer } from "../../Components/ShippingQuotes"
+import { ShippingQuotesFragmentContainer } from "v2/Apps/Order/Components/ShippingQuotes"
 import { compact } from "lodash"
-import { selectShippingOption } from "../../Mutations/SelectShippingOption"
-import { updateUserAddress } from "../../Mutations/UpdateUserAddress"
-import { deleteUserAddress } from "../../Mutations/DeleteUserAddress"
+import { selectShippingOption } from "v2/Apps/Order/Mutations/SelectShippingOption"
+import { updateUserAddress } from "v2/Apps/Order/Mutations/UpdateUserAddress"
+import { deleteUserAddress } from "v2/Apps/Order/Mutations/DeleteUserAddress"
 import { CreateUserAddressMutationResponse } from "v2/__generated__/CreateUserAddressMutation.graphql"
 import { UpdateUserAddressMutationResponse } from "v2/__generated__/UpdateUserAddressMutation.graphql"
 import {
@@ -433,7 +433,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
     <>
       There was a problem getting shipping quotes. <br />
       Please contact{" "}
-      <Link href={`mailto:orders@artsy.net`}>orders@artsy.net</Link>.
+      <RouterLink to={`mailto:orders@artsy.net`}>orders@artsy.net</RouterLink>.
     </>
   )
 
@@ -571,9 +571,9 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
       >
         We need to confirm some details with you before processing this order.
         Please reach out to{" "}
-        <Link color="red100" hoverColor="red100" href="mailto:orders@artsy.net">
+        <RouterLink color="red100" to="mailto:orders@artsy.net">
           orders@artsy.net
-        </Link>{" "}
+        </RouterLink>{" "}
         for assistance.
       </Text>
     )
