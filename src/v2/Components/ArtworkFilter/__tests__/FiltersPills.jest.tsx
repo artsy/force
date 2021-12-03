@@ -6,11 +6,14 @@ import {
   useArtworkFilterContext,
 } from "../ArtworkFilterContext"
 import {
-  DefaultFilterPill,
-  FilterPill,
   FiltersPills,
   FiltersPillsProps,
 } from "../SavedSearch/Components/FiltersPills"
+import {
+  DefaultFilterPill,
+  FilterPill,
+  FilterPillsContextProvider,
+} from "../SavedSearch/Utils/FilterPillsContext"
 
 const savedSearchAttributes: SavedSearchAttributes = {
   type: "artist",
@@ -40,10 +43,9 @@ describe("FiltersPills", () => {
   const renderPills = (pills: FilterPill[] = mockedPills) => {
     render(
       <ArtworkFilterContextProvider>
-        <FiltersPillsTest
-          pills={pills}
-          savedSearchAttributes={savedSearchAttributes}
-        />
+        <FilterPillsContextProvider pills={pills}>
+          <FiltersPillsTest savedSearchAttributes={savedSearchAttributes} />
+        </FilterPillsContextProvider>
       </ArtworkFilterContextProvider>
     )
   }

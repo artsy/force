@@ -13,6 +13,7 @@ import { data as sd } from "sharify"
 import { ZeroState } from "./ZeroState"
 import { useRouter } from "v2/System/Router/useRouter"
 import { SavedSearchAttributes } from "v2/Components/ArtworkFilter/SavedSearch/types"
+import { FilterPillsContextProvider } from "v2/Components/ArtworkFilter/SavedSearch/Utils/FilterPillsContext"
 
 interface ArtistArtworkFilterProps {
   aggregations: SharedArtworkFilterContextProps["aggregations"]
@@ -54,19 +55,21 @@ const ArtistArtworkFilter: React.FC<ArtistArtworkFilterProps> = props => {
         { value: "year", text: "Artwork year (asc.)" },
       ]}
     >
-      <BaseArtworkFilter
-        relay={relay}
-        viewer={artist}
-        relayVariables={{
-          aggregations: ["TOTAL"],
-        }}
-        savedSearchProps={savedSearchAttributes}
-        enableCreateAlert={sd.ENABLE_SAVED_SEARCH}
-      >
-        {artist.counts!.artworks === 0 && (
-          <ZeroState artist={artist} isFollowed={artist.isFollowed} />
-        )}
-      </BaseArtworkFilter>
+      <FilterPillsContextProvider>
+        <BaseArtworkFilter
+          relay={relay}
+          viewer={artist}
+          relayVariables={{
+            aggregations: ["TOTAL"],
+          }}
+          savedSearchProps={savedSearchAttributes}
+          enableCreateAlert={sd.ENABLE_SAVED_SEARCH}
+        >
+          {artist.counts!.artworks === 0 && (
+            <ZeroState artist={artist} isFollowed={artist.isFollowed} />
+          )}
+        </BaseArtworkFilter>
+      </FilterPillsContextProvider>
     </ArtworkFilterContextProvider>
   )
 }

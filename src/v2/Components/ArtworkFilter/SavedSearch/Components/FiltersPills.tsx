@@ -1,5 +1,5 @@
 import React, { FC } from "react"
-import { CloseIcon, Flex, Pill, Spacer } from "@artsy/palette"
+import { CloseIcon, Flex, Pill } from "@artsy/palette"
 import { CreateAlertButton } from "./CreateAlertButton"
 import { SavedSearchAttributes } from "../types"
 import {
@@ -8,35 +8,20 @@ import {
   useArtworkFilterContext,
 } from "../../ArtworkFilterContext"
 import { isArray } from "lodash"
+import { FilterPill, useFilterPillsContext } from "../Utils/FilterPillsContext"
 
 const PILL_HORIZONTAL_MARGIN_SIZE = 0.5
 const CLOSE_ICON_SIZE = 15
 
-export interface DefaultFilterPill {
-  isDefault: true
-  name: string
-  displayName: string
-}
-
-export interface NonDefaultFilterPill {
-  isDefault?: false
-  name: string
-  displayName: string
-  filterName: string
-}
-
-export type FilterPill = DefaultFilterPill | NonDefaultFilterPill
-
 export interface FiltersPillsProps {
-  pills: FilterPill[]
-  savedSearchAttributes: SavedSearchAttributes
+  savedSearchAttributes?: SavedSearchAttributes | null
 }
 
 export const FiltersPills: FC<FiltersPillsProps> = ({
-  pills,
   savedSearchAttributes,
 }) => {
   const filterContext = useArtworkFilterContext()
+  const { pills = [] } = useFilterPillsContext()
 
   const removePill = (pill: FilterPill) => {
     if (pill.isDefault) return
@@ -55,33 +40,32 @@ export const FiltersPills: FC<FiltersPillsProps> = ({
   }
 
   return (
-    <>
-      <Flex flexWrap="wrap" mx={-PILL_HORIZONTAL_MARGIN_SIZE}>
-        {pills.map(pill => (
-          <Pill
-            key={`filter-label-${pill.name}`}
-            variant="textSquare"
-            mx={PILL_HORIZONTAL_MARGIN_SIZE}
-            mb={1}
-            onClick={() => removePill(pill)}
-          >
-            {pill.displayName}
-            {!pill.isDefault && (
-              <CloseIcon
-                fill="currentColor"
-                width={CLOSE_ICON_SIZE}
-                height={CLOSE_ICON_SIZE}
-                ml={0.5}
-              />
-            )}
-          </Pill>
-        ))}
+    <Flex flexWrap="wrap" mx={-PILL_HORIZONTAL_MARGIN_SIZE}>
+      {pills.map(pill => (
+        <Pill
+          key={`filter-label-${pill.name}`}
+          variant="textSquare"
+          mx={PILL_HORIZONTAL_MARGIN_SIZE}
+          mb={1}
+          onClick={() => removePill(pill)}
+        >
+          {pill.displayName}
+          {!pill.isDefault && (
+            <CloseIcon
+              fill="currentColor"
+              width={CLOSE_ICON_SIZE}
+              height={CLOSE_ICON_SIZE}
+              ml={0.5}
+            />
+          )}
+        </Pill>
+      ))}
+      {savedSearchAttributes && (
         <CreateAlertButton
           savedSearchAttributes={savedSearchAttributes}
           ml={PILL_HORIZONTAL_MARGIN_SIZE}
         />
-      </Flex>
-      <Spacer mt={4} />
-    </>
+      )}
+    </Flex>
   )
 }
