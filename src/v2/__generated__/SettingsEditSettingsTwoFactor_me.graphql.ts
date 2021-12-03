@@ -5,7 +5,7 @@ import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type SettingsEditSettingsTwoFactor_me = {
     readonly hasSecondFactorEnabled: boolean;
-    readonly " $fragmentRefs": FragmentRefs<"AppSecondFactor_me" | "SmsSecondFactor_me" | "BackupSecondFactor_me">;
+    readonly " $fragmentRefs": FragmentRefs<"AppSecondFactor_me" | "SmsSecondFactor_me" | "SettingsEditSettingsTwoFactorBackupCodes_me">;
     readonly " $refType": "SettingsEditSettingsTwoFactor_me";
 };
 export type SettingsEditSettingsTwoFactor_me$data = SettingsEditSettingsTwoFactor_me;
@@ -42,10 +42,10 @@ const node: ReaderFragment = {
     {
       "args": null,
       "kind": "FragmentSpread",
-      "name": "BackupSecondFactor_me"
+      "name": "SettingsEditSettingsTwoFactorBackupCodes_me"
     }
   ],
   "type": "Me"
 };
-(node as any).hash = 'd918c88835cf5bb886d68ee1d80fcec1';
+(node as any).hash = '7176ddcf512b6018b12a55a8ad4cedd1';
 export default node;
