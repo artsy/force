@@ -43,7 +43,9 @@ describe("conditionallyLoadAnalytics", () => {
         writeKey: "abc",
       })
       expect(window.location.reload).not.toHaveBeenCalled()
-      expect(window.analytics.load).toHaveBeenCalled()
+      expect(window.analytics.load).toHaveBeenCalledWith("abc", {
+        integrations: { foo: true, bar: false },
+      })
     })
     it("does not load analytics if no destination is enabled", () => {
       conditionallyLoadAnalytics({

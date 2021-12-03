@@ -20,15 +20,25 @@ describe("getConsentAndLoad", () => {
 
   it("loads segment if consent changed", async () => {
     getConsentMock.mockImplementation(() => Promise.resolve("C0001"))
+    setSegmentDestinationPrefMock.mockImplementation(() => {
+      return []
+    })
     await getConsentAndLoad([], "", "C0001", "abc")
-    expect(getConsentMock).toHaveBeenCalled()
-    expect(setSegmentDestinationPrefMock).toHaveBeenCalled()
-    expect(conditionallyLoadAnalyticsMock).toHaveBeenCalled()
+    expect(getConsentMock).toHaveBeenCalledWith()
+    expect(setSegmentDestinationPrefMock).toHaveBeenCalledWith(
+      "C0001",
+      [],
+      "C0001"
+    )
+    expect(conditionallyLoadAnalyticsMock).toHaveBeenCalledWith({
+      destinationPref: [],
+      writeKey: "abc",
+    })
   })
   it("does not load segment if consent did not change", async () => {
     getConsentMock.mockImplementation(() => Promise.resolve(""))
     await getConsentAndLoad([], "", "C0001", "abc")
-    expect(getConsentMock).toHaveBeenCalled()
+    expect(getConsentMock).toHaveBeenCalledWith()
     expect(setSegmentDestinationPrefMock).not.toHaveBeenCalled()
     expect(conditionallyLoadAnalyticsMock).not.toHaveBeenCalled()
   })

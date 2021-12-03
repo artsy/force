@@ -15,6 +15,7 @@ describe("fetchDestinations", () => {
       Promise.resolve([{ id: "foo" }])
     )
     const result = await fetchDestinations("abc")
+    expect(fetchDestinationForWriteKeyMock).toHaveBeenCalledWith("abc")
     expect(result).toEqual([{ id: "foo" }])
   })
   it("removes repeater destinations", async () => {
@@ -22,6 +23,7 @@ describe("fetchDestinations", () => {
       Promise.resolve([{ id: "foo" }, { id: "Repeater" }])
     )
     const result = await fetchDestinations("abc")
+    expect(fetchDestinationForWriteKeyMock).toHaveBeenCalledWith("abc")
     expect(result).toEqual([{ id: "foo" }])
   })
   it("removes duplicate destinations", async () => {
@@ -29,6 +31,7 @@ describe("fetchDestinations", () => {
       Promise.resolve([{ id: "foo" }, { id: "foo" }])
     )
     const result = await fetchDestinations("abc")
+    expect(fetchDestinationForWriteKeyMock).toHaveBeenCalledWith("abc")
     expect(result).toEqual([{ id: "foo" }])
   })
 })

@@ -23,6 +23,10 @@ describe("getOneTrustConsent", () => {
       return false
     })
     const result = await getOneTrustConsent()
+    expect(delayMock).toHaveBeenCalledWith(10)
+    expect(delayMock).toHaveBeenCalledTimes(101)
+    expect(oneTrustReadyMock).toHaveBeenCalledWith()
+    expect(oneTrustReadyMock).toHaveBeenCalledTimes(103)
     expect(result).toBe("")
   })
   it("returns onetrust consent string if onetrust is ready", async () => {
@@ -31,6 +35,8 @@ describe("getOneTrustConsent", () => {
     })
     window.OnetrustActiveGroups = "C0001"
     const result = await getOneTrustConsent()
+    expect(delayMock).not.toHaveBeenCalled()
+    expect(oneTrustReadyMock).toHaveBeenCalledWith()
     expect(result).toBe("C0001")
   })
 })
