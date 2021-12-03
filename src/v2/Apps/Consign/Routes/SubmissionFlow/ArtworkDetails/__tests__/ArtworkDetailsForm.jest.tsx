@@ -43,6 +43,10 @@ describe("ArtworkDetailsForm", () => {
     expect(wrapper.find("Radio[value='in']").length).toBe(1)
     expect(wrapper.find("Radio[value='cm']").length).toBe(1)
     expect(wrapper.find("input[name='provenance']").length).toBe(1)
+    expect(wrapper.find("input[name='provenance']").length).toBe(1)
+    expect(
+      wrapper.find("input[data-test-id='autocomplete-location']").length
+    ).toBe(1)
   })
 
   describe("Rarity", () => {
@@ -115,7 +119,9 @@ describe("ArtworkDetailsForm", () => {
   it("if units are 'in' renders size fields correctly", () => {
     const sizeFields = wrapper
       .find(LabeledInput)
-      .filterWhere(n => n.prop("title") !== "Artist")
+      .filterWhere(
+        n => n.prop("title") !== "Artist" && n.prop("title") !== "Location"
+      )
 
     sizeFields.forEach((node: ReactWrapper) => {
       expect(node.text()).toBe("in")
@@ -126,7 +132,9 @@ describe("ArtworkDetailsForm", () => {
     wrapper.find("Radio[value='cm']").simulate("click")
     const sizeFields = wrapper
       .find(LabeledInput)
-      .filterWhere(n => n.prop("title") !== "Artist")
+      .filterWhere(
+        n => n.prop("title") !== "Artist" && n.prop("title") !== "Location"
+      )
 
     sizeFields.forEach((node: ReactWrapper) => {
       expect(node.text()).toBe("cm")

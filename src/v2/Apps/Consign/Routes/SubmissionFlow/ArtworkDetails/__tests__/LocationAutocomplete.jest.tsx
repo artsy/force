@@ -3,47 +3,32 @@ import {
   ArtworkDetailsFormModel,
   getArtworkDetailsFormInitialValues,
 } from "../Components/ArtworkDetailsForm"
-import { ArtistAutoComplete } from "../Components/ArtistAutocomplete"
+import { LocationAutoComplete } from "../Components/LocationAutocomplete"
 import { Form, Formik } from "formik"
 import { Input } from "@artsy/palette"
 import { SystemContextProvider } from "v2/System"
 import { flushPromiseQueue } from "v2/DevTools"
+import { artworkDetailsValidationSchema } from "../../Utils/validation"
 
 jest.mock("v2/System/Router/useRouter", () => ({
   useRouter: jest.fn(() => ({ match: { params: { id: null } } })),
 }))
 
-jest.mock("react-relay", () => ({
-  ...jest.requireActual("react-relay"),
-  fetchQuery: jest.fn().mockResolvedValue({
-    searchConnection: {
-      edges: [
-        {
-          node: {
-            displayLabel: "Banksy",
-            internalID: "111",
-            image: {
-              cropped: {
-                height: 44,
-                src: "some-img",
-                srcSet: "some-img",
-                width: 44,
-              },
-            },
-          },
-        },
-        { node: { displayLabel: "Andy Warhol", internalID: "222" } },
-      ],
-    },
-  }),
+const mockGetPlacePredictions = jest.fn().mockResolvedValue({
+  predictions: [
+    { description: "Minden, Germany", place_id: "111" },
+    { description: "Minsk, Belarus", place_id: "222" },
+  ],
+})
+const AutocompleteService = jest.fn().mockImplementation(() => ({
+  getPlacePredictions: mockGetPlacePredictions,
 }))
-
-import { fetchQuery } from "react-relay"
-import { artworkDetailsValidationSchema } from "../../Utils/validation"
+const setupGoogleMapsMock = () => {
+  // @ts-ignore
+  global.window.google = { maps: { places: { AutocompleteService } } }
+}
 
 const mockErrorHandler = jest.fn()
-const mockFetchQuery = fetchQuery as jest.Mock
-
 let formikValues: ArtworkDetailsFormModel
 const renderArtistAutosuggest = (values: ArtworkDetailsFormModel) =>
   mount(
@@ -57,7 +42,7 @@ const renderArtistAutosuggest = (values: ArtworkDetailsFormModel) =>
           formikValues = values
           return (
             <Form>
-              <ArtistAutoComplete onError={() => mockErrorHandler(true)} />
+              <LocationAutoComplete onError={() => mockErrorHandler(true)} />
             </Form>
           )
         }}
@@ -65,12 +50,14 @@ const renderArtistAutosuggest = (values: ArtworkDetailsFormModel) =>
     </SystemContextProvider>
   )
 
-const inputSelector = "input[data-test-id='autocomplete-input']"
+const inputSelector = "input[data-test-id='autocomplete-location']"
 const optionsSelector = "button[role='option']"
 
 const simulateTyping = async (wrapper: ReactWrapper, text: string) => {
-  const artistInput = wrapper.find(inputSelector)
-  artistInput.simulate("focus").simulate("change", { target: { value: text } })
+  const locationInput = wrapper.find(inputSelector)
+  locationInput
+    .simulate("focus")
+    .simulate("change", { target: { value: text } })
   await new Promise(r => setTimeout(r, 500))
   await flushPromiseQueue()
   wrapper.update()
@@ -87,6 +74,10 @@ const simulateSelectSuggestion = async (wrapper: ReactWrapper, idx: number) => {
 describe("ArtistAutocomplete", () => {
   let wrapper: ReactWrapper
 
+  beforeAll(() => {
+    setupGoogleMapsMock()
+  })
+
   beforeEach(async () => {
     wrapper = renderArtistAutosuggest(getArtworkDetailsFormInitialValues())
   })
@@ -98,33 +89,34 @@ describe("ArtistAutocomplete", () => {
   it("renders correctly", () => {
     const input = wrapper.find(Input)
     expect(wrapper.find(inputSelector).length).toBe(1)
-    expect(input.prop("placeholder")).toBe("Enter Full Name")
-    expect(input.prop("title")).toBe("Artist")
+    expect(input.prop("placeholder")).toBe(
+      "Enter City Where Artwork Is Located"
+    )
+    expect(input.prop("title")).toBe("Location")
   })
 
   describe("Query", () => {
     it("starts when character is entered", async () => {
-      await simulateTyping(wrapper, "B")
+      await simulateTyping(wrapper, "M")
 
-      const searchString = (fetchQuery as jest.Mock).mock.calls[0][2]
-        .searchQuery
+      const searchString = mockGetPlacePredictions.mock.calls[0][0].input
 
-      expect(fetchQuery).toHaveBeenCalledTimes(1)
-      expect(searchString).toBe("B")
+      expect(mockGetPlacePredictions).toHaveBeenCalledTimes(1)
+      expect(searchString).toBe("M")
     })
 
     it("doesn't starts if it's space", async () => {
       await simulateTyping(wrapper, " ")
 
-      expect(fetchQuery).toHaveBeenCalledTimes(0)
+      expect(mockGetPlacePredictions).toHaveBeenCalledTimes(0)
     })
   })
 
-  describe("ArtistAutocomplete component", () => {
+  describe("LocationAutocomplete component", () => {
     it("fires error handler with correct arg when query failed", async () => {
-      mockFetchQuery.mockRejectedValueOnce("no artist")
+      mockGetPlacePredictions.mockRejectedValueOnce("query failed")
 
-      await simulateTyping(wrapper, "cas")
+      await simulateTyping(wrapper, "Par")
 
       expect(mockErrorHandler).toHaveBeenCalledTimes(1)
       expect(mockErrorHandler).toHaveBeenCalledWith(true)
@@ -132,9 +124,9 @@ describe("ArtistAutocomplete", () => {
   })
 
   describe("Suggestions", () => {
-    it("render suggestions labels", async () => {
-      const correctSuggestionsLabels = ["Banksy", "Andy Warhol"]
-      await simulateTyping(wrapper, "Ban")
+    it("render suggestions", async () => {
+      const correctSuggestionsLabels = ["Minden, Germany", "Minsk, Belarus"]
+      await simulateTyping(wrapper, "Min")
 
       const suggestions = wrapper.find(optionsSelector)
 
@@ -143,35 +135,24 @@ describe("ArtistAutocomplete", () => {
       })
     })
 
-    it("render suggestions images", async () => {
-      await simulateTyping(wrapper, "Ban")
-
-      const suggestions = wrapper.find(optionsSelector)
-
-      expect(suggestions.first().find("Image").length).toBe(1)
-      expect(suggestions.first().find("Box").length).toBe(0)
-      expect(suggestions.last().find("Image").length).toBe(0)
-      expect(suggestions.last().find("Box").length).toBe(1)
-    })
-
     it("suggestion selected", async () => {
-      await simulateTyping(wrapper, "Ban")
+      await simulateTyping(wrapper, "Min")
       await simulateSelectSuggestion(wrapper, 0)
-      expect(wrapper.find(inputSelector).prop("value")).toBe("Banksy")
-      expect(formikValues.artistName).toBe("Banksy")
-      expect(formikValues.artistId).toBe("111")
+      expect(wrapper.find(inputSelector).prop("value")).toBe("Minden, Germany")
+      expect(formikValues.location).toBe("Minden, Germany")
+      expect(formikValues.locationId).toBe("111")
       expect(wrapper.find(optionsSelector).length).toBe(0)
 
-      await simulateTyping(wrapper, "Andy")
+      await simulateTyping(wrapper, "Mins")
       await simulateSelectSuggestion(wrapper, 1)
-      expect(wrapper.find(inputSelector).prop("value")).toBe("Andy Warhol")
-      expect(formikValues.artistName).toBe("Andy Warhol")
-      expect(formikValues.artistId).toBe("222")
+      expect(wrapper.find(inputSelector).prop("value")).toBe("Minsk, Belarus")
+      expect(formikValues.location).toBe("Minsk, Belarus")
+      expect(formikValues.locationId).toBe("222")
       expect(wrapper.find(optionsSelector).length).toBe(0)
     })
 
     it("renders suggestions after focus backed to input", async () => {
-      await simulateTyping(wrapper, "Ban")
+      await simulateTyping(wrapper, "Min")
       await simulateSelectSuggestion(wrapper, 0)
       expect(wrapper.find(optionsSelector).length).toBe(0)
 
@@ -179,19 +160,19 @@ describe("ArtistAutocomplete", () => {
       expect(wrapper.find(optionsSelector).length).toBe(2)
     })
 
-    it("resets artistId if changing input", async () => {
-      await simulateTyping(wrapper, "Ban")
+    it("resets locationId if changing input", async () => {
+      await simulateTyping(wrapper, "Min")
       await simulateSelectSuggestion(wrapper, 1)
-      expect(formikValues.artistId).toBe("222")
+      expect(formikValues.locationId).toBe("222")
 
-      await simulateTyping(wrapper, "k")
-      expect(formikValues.artistId).toBe("")
+      await simulateTyping(wrapper, "A")
+      expect(formikValues.locationId).toBe("")
     })
   })
 
   describe("Shows an error", () => {
     it("if focus moved out without selected suggestion", async () => {
-      await simulateTyping(wrapper, "Ban")
+      await simulateTyping(wrapper, "Min")
       expect(wrapper.find("div[color='red100']").length).toBe(0)
 
       const handleClose: () => void = wrapper
@@ -202,7 +183,7 @@ describe("ArtistAutocomplete", () => {
       wrapper.update()
 
       expect(wrapper.find("div[color='red100']").text()).toBe(
-        "Unfortunately, we currently do not have enough demand for this artist’s work to be consigned."
+        `Could not find ${formikValues.location}`
       )
     })
   })
