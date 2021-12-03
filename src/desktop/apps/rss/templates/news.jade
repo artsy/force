@@ -24,9 +24,10 @@ rss(version='2.0', xmlns:atom='http://www.w3.org/2005/Atom' xmlns:content='http:
           meta(property="og:image" content="#{sd.APP_URL}/images/og_image.jpg")
         else if article.get('thumbnail_image')
           - image = article.get('thumbnail_image')
+          - resizedImage = resize(image, { width: 1000 })
           - extension = image.split('.').pop()
           - mimeType = ['jpg', 'jpeg'].includes(extension) ? 'jpeg' : extension
-          enclosure(url=image length=0 type="image/#{mimeType}")
+          enclosure(url=resizedImage length=0 type="image/#{mimeType}")
         content:encoded
           | <![CDATA[
           include article
