@@ -96,37 +96,19 @@ describe("ArtistAutocomplete", () => {
   })
 
   describe("Query", () => {
-    describe("sends request", () => {
-      it("when the 3rd character is entered", async () => {
-        await simulateTyping(wrapper, "Min")
+    it("starts when character is entered", async () => {
+      await simulateTyping(wrapper, "M")
 
-        const searchString = mockGetPlacePredictions.mock.calls[0][0].input
+      const searchString = mockGetPlacePredictions.mock.calls[0][0].input
 
-        expect(mockGetPlacePredictions).toHaveBeenCalledTimes(1)
-        expect(searchString).toBe("Min")
-      })
-
-      it("spaces are not counted", async () => {
-        await simulateTyping(wrapper, " Mi n")
-
-        const searchString = mockGetPlacePredictions.mock.calls[0][0].input
-
-        expect(mockGetPlacePredictions).toHaveBeenCalledTimes(1)
-        expect(searchString).toBe(" Mi n")
-      })
+      expect(mockGetPlacePredictions).toHaveBeenCalledTimes(1)
+      expect(searchString).toBe("M")
     })
-    describe("doesn't sends request", () => {
-      it("when less then 3 character is entered", async () => {
-        await simulateTyping(wrapper, "Mi")
 
-        expect(mockGetPlacePredictions).toHaveBeenCalledTimes(0)
-      })
+    it("doesn't starts if it's space", async () => {
+      await simulateTyping(wrapper, " ")
 
-      it("spaces are not counted", async () => {
-        simulateTyping(wrapper, " Mi ")
-
-        expect(mockGetPlacePredictions).toHaveBeenCalledTimes(0)
-      })
+      expect(mockGetPlacePredictions).toHaveBeenCalledTimes(0)
     })
   })
 

@@ -103,39 +103,20 @@ describe("ArtistAutocomplete", () => {
   })
 
   describe("Query", () => {
-    describe("sends request", () => {
-      it("when the 3rd character is entered", async () => {
-        await simulateTyping(wrapper, "Ban")
+    it("starts when character is entered", async () => {
+      await simulateTyping(wrapper, "B")
 
-        const searchString = (fetchQuery as jest.Mock).mock.calls[0][2]
-          .searchQuery
+      const searchString = (fetchQuery as jest.Mock).mock.calls[0][2]
+        .searchQuery
 
-        expect(fetchQuery).toHaveBeenCalledTimes(1)
-        expect(searchString).toBe("Ban")
-      })
-
-      it("spaces are not counted", async () => {
-        await simulateTyping(wrapper, " Ba n")
-
-        const searchString = (fetchQuery as jest.Mock).mock.calls[0][2]
-          .searchQuery
-
-        expect(fetchQuery).toHaveBeenCalledTimes(1)
-        expect(searchString).toBe(" Ba n")
-      })
+      expect(fetchQuery).toHaveBeenCalledTimes(1)
+      expect(searchString).toBe("B")
     })
-    describe("doesn't sends request", () => {
-      it("when less then 3 character is entered", async () => {
-        await simulateTyping(wrapper, "Ba")
 
-        expect(fetchQuery).toHaveBeenCalledTimes(0)
-      })
+    it("doesn't starts if it's space", async () => {
+      await simulateTyping(wrapper, " ")
 
-      it("spaces are not counted", async () => {
-        simulateTyping(wrapper, " Ba ")
-
-        expect(fetchQuery).toHaveBeenCalledTimes(0)
-      })
+      expect(fetchQuery).toHaveBeenCalledTimes(0)
     })
   })
 

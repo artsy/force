@@ -82,13 +82,15 @@ export const ArtistAutoComplete: React.FC<{ onError: () => void }> = ({
 
   const updateSuggestions = async (value: string) => {
     setSuggestions([])
-    if (value.trim().length > 2 && relayEnvironment) {
+    if (!value.trim()) return
+
+    if (relayEnvironment) {
       try {
         setIsLoading(true)
         const suggestions = await fetchSuggestions(value, relayEnvironment)
         setIsError(false)
         setIsLoading(false)
-        if (suggestions) {
+        if (suggestions?.edges?.length) {
           const options = extractNodes(suggestions)
           setSuggestions(
             options.map(option => ({
@@ -119,9 +121,8 @@ export const ArtistAutoComplete: React.FC<{ onError: () => void }> = ({
     handleSuggestionsFetchRequested(value)
   }
 
-  const handleClick = ({ currentTarget: { value } }) => {
+  const handleClick = () => {
     setFieldTouched("artistName", false)
-    handleSuggestionsFetchRequested(value)
   }
 
   const handleClear = () => {
@@ -130,10 +131,7 @@ export const ArtistAutoComplete: React.FC<{ onError: () => void }> = ({
     setFieldValue("artistName", "")
   }
 
-  const handleSelect = (
-    { text, value }: ArtistAutocompleteOption,
-    index: number
-  ) => {
+  const handleSelect = ({ text, value }: ArtistAutocompleteOption) => {
     setFieldValue("artistId", value)
     setFieldValue("artistName", text)
   }

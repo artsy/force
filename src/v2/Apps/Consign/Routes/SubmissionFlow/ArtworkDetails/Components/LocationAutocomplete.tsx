@@ -91,25 +91,25 @@ export const LocationAutoComplete: React.FC<{ onError: () => void }> = ({
 
   const updateSuggestions = async (value: string) => {
     setSuggestions([])
-    if (value.trim().length > 2) {
-      try {
-        setIsLoading(true)
-        const suggestions = await fetchSuggestions(value)
-        setIsError(false)
-        setIsLoading(false)
-        if (suggestions) {
-          setSuggestions(
-            suggestions.map(option => ({
-              text: option.description!,
-              value: option.place_id!,
-            }))
-          )
-        }
-      } catch {
-        setIsLoading(false)
-        setIsError(true)
-        onError()
+    if (!value.trim()) return
+
+    try {
+      setIsLoading(true)
+      const suggestions = await fetchSuggestions(value)
+      setIsError(false)
+      setIsLoading(false)
+      if (suggestions) {
+        setSuggestions(
+          suggestions.map(option => ({
+            text: option.description!,
+            value: option.place_id!,
+          }))
+        )
       }
+    } catch {
+      setIsLoading(false)
+      setIsError(true)
+      onError()
     }
   }
 
@@ -126,9 +126,8 @@ export const LocationAutoComplete: React.FC<{ onError: () => void }> = ({
     handleSuggestionsFetchRequested(value)
   }
 
-  const handleClick = ({ currentTarget: { value } }) => {
+  const handleClick = () => {
     setFieldTouched("location", false)
-    handleSuggestionsFetchRequested(value)
   }
 
   const handleClear = () => {
