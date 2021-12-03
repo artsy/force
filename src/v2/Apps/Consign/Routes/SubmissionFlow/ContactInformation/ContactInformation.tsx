@@ -17,10 +17,17 @@ import { useErrorModal } from "../Utils/useErrorModal"
 import { data as sd } from "sharify"
 import { recaptcha, RecaptchaAction } from "v2/Utils/recaptcha"
 
-const getContactInformationFormInitialValues = (me: ContactInformation_me) => ({
+const getContactInformationFormInitialValues = (
+  me: ContactInformation_me
+): ContactInformationFormModel => ({
   name: me?.name || "",
   email: me?.email || "",
-  phone: me?.phone || "",
+  phone: {
+    isValid: !!me?.phoneNumber?.isValid,
+    national: me?.phoneNumber?.national ?? undefined,
+    international: me?.phoneNumber?.international ?? undefined,
+    regionCode: me?.phoneNumber?.regionCode ?? undefined,
+  },
 })
 
 export interface ContactInformationProps {
@@ -61,7 +68,7 @@ export const ContactInformation: React.FC<ContactInformationProps> = ({
       const contactInformationForm = {
         name: name.trim(),
         email: email.trim(),
-        phone: phone.trim(),
+        phone: phone,
       }
 
       submission.contactInformationForm = contactInformationForm
@@ -140,6 +147,12 @@ export const ContactInformationFragmentContainer = createFragmentContainer(
         name
         email
         phone
+        phoneNumber {
+          isValid
+          international: display(format: INTERNATIONAL)
+          national: display(format: NATIONAL)
+          regionCode
+        }
       }
     `,
   }

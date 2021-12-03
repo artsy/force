@@ -53,5 +53,13 @@ export const uploadPhotosValidationSchema = yup.object().shape({
 export const contactInformationValidationSchema = yup.object().shape({
   name: yup.string().label("Name").required().trim(),
   email: email.trim(),
-  phone: yup.string().label("Phone number").required().trim(),
+  phone: yup
+    .object()
+    .label("Phone number")
+    .required()
+    .test(
+      "phone-number",
+      "Please enter a valid phone number",
+      value => value.isValid
+    ),
 })
