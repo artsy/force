@@ -1,4 +1,4 @@
-import { isArray, isEmpty } from "lodash"
+import { isArray } from "lodash"
 import {
   ArtworkFilters,
   FilterParamName,
@@ -19,7 +19,9 @@ const rangeFilterNames = [
   FilterParamName.priceRange,
 ]
 
-export const getSelectedFiltersCounts = (selectedFilters: ArtworkFilters) => {
+export const getSelectedFiltersCounts = (
+  selectedFilters: ArtworkFilters = {}
+) => {
   const counts: Partial<SelectedFiltersCounts> = {}
   const filtersParams = Object.values(FilterParamName)
 
@@ -42,18 +44,9 @@ export const getSelectedFiltersCounts = (selectedFilters: ArtworkFilters) => {
         break
       }
       case paramName === FilterParamName.artistsIFollow: {
-        counts.artistIDs = (counts.artistIDs ?? 0) + 1
-        break
-      }
-      case isArray(paramValue): {
-        if (isEmpty(paramValue)) {
-          break
+        if (paramValue) {
+          counts.artistIDs = (counts.artistIDs ?? 0) + 1
         }
-
-        const isArtistsFilter = paramName === FilterParamName.artistIDs
-        const countToAdd = isArtistsFilter ? counts.artistIDs ?? 0 : 0
-
-        counts[paramName] = paramValue.length + countToAdd
         break
       }
       case paramName === FilterParamName.sort: {
@@ -62,6 +55,19 @@ export const getSelectedFiltersCounts = (selectedFilters: ArtworkFilters) => {
         }
         break
       }
+      case paramName === FilterParamName.artistIDs: {
+        if (paramValue.length > 0) {
+          counts.artistIDs = paramValue.length + (counts.artistIDs ?? 0)
+        }
+        break
+      }
+      case isArray(paramValue): {
+        if (paramValue.length > 0) {
+          counts[paramName] = paramValue.length
+        }
+        break
+      }
+
       default: {
         counts[paramName] = 1
       }

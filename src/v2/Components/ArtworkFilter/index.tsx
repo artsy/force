@@ -171,7 +171,7 @@ export const BaseArtworkFilter: React.FC<
   const { user, isLoggedIn } = useSystemContext()
   const { pills = [], setPills } = useFilterPillsContext()
   const currentlySelectedFilters = getSelectedFiltersCounts(
-    filterContext.currentlySelectedFilters?.() || {}
+    filterContext.currentlySelectedFilters?.()
   )
   const appliedFiltersTotalCount = Object.values(
     currentlySelectedFilters
