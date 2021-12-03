@@ -36,7 +36,7 @@ fragment AppSecondFactor_me on Me {
   }
 }
 
-fragment BackupSecondFactor_me on Me {
+fragment SettingsEditSettingsTwoFactorBackupCodes_me on Me {
   backupSecondFactors: secondFactors(kinds: [backup]) {
     __typename
     ... on BackupSecondFactor {
@@ -49,7 +49,7 @@ fragment SettingsEditSettingsTwoFactor_me on Me {
   hasSecondFactorEnabled
   ...AppSecondFactor_me
   ...SmsSecondFactor_me
-  ...BackupSecondFactor_me
+  ...SettingsEditSettingsTwoFactorBackupCodes_me
 }
 
 fragment SmsSecondFactor_me on Me {
@@ -241,7 +241,7 @@ return {
     "metadata": {},
     "name": "SettingsEditSettingsTwoFactor_Test_Query",
     "operationKind": "query",
-    "text": "query SettingsEditSettingsTwoFactor_Test_Query {\n  me {\n    ...SettingsEditSettingsTwoFactor_me\n    id\n  }\n}\n\nfragment AppSecondFactor_me on Me {\n  hasSecondFactorEnabled\n  appSecondFactors: secondFactors(kinds: [app]) {\n    __typename\n    ... on AppSecondFactor {\n      __typename\n      internalID\n      name\n    }\n  }\n}\n\nfragment BackupSecondFactor_me on Me {\n  backupSecondFactors: secondFactors(kinds: [backup]) {\n    __typename\n    ... on BackupSecondFactor {\n      __typename\n    }\n  }\n}\n\nfragment SettingsEditSettingsTwoFactor_me on Me {\n  hasSecondFactorEnabled\n  ...AppSecondFactor_me\n  ...SmsSecondFactor_me\n  ...BackupSecondFactor_me\n}\n\nfragment SmsSecondFactor_me on Me {\n  hasSecondFactorEnabled\n  smsSecondFactors: secondFactors(kinds: [sms]) {\n    __typename\n    ... on SmsSecondFactor {\n      __typename\n      internalID\n      formattedPhoneNumber\n    }\n  }\n}\n"
+    "text": "query SettingsEditSettingsTwoFactor_Test_Query {\n  me {\n    ...SettingsEditSettingsTwoFactor_me\n    id\n  }\n}\n\nfragment AppSecondFactor_me on Me {\n  hasSecondFactorEnabled\n  appSecondFactors: secondFactors(kinds: [app]) {\n    __typename\n    ... on AppSecondFactor {\n      __typename\n      internalID\n      name\n    }\n  }\n}\n\nfragment SettingsEditSettingsTwoFactorBackupCodes_me on Me {\n  backupSecondFactors: secondFactors(kinds: [backup]) {\n    __typename\n    ... on BackupSecondFactor {\n      __typename\n    }\n  }\n}\n\nfragment SettingsEditSettingsTwoFactor_me on Me {\n  hasSecondFactorEnabled\n  ...AppSecondFactor_me\n  ...SmsSecondFactor_me\n  ...SettingsEditSettingsTwoFactorBackupCodes_me\n}\n\nfragment SmsSecondFactor_me on Me {\n  hasSecondFactorEnabled\n  smsSecondFactors: secondFactors(kinds: [sms]) {\n    __typename\n    ... on SmsSecondFactor {\n      __typename\n      internalID\n      formattedPhoneNumber\n    }\n  }\n}\n"
   }
 };
 })();
