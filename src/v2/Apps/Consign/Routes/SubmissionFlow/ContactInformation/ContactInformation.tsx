@@ -87,6 +87,7 @@ export const ContactInformation: React.FC<ContactInformationProps> = ({
         removeSubmission()
         router.push(`/consign/submission/${submissionId}/thank-you`)
       } catch (error) {
+        console.log(error)
         openErrorModal()
       }
     }

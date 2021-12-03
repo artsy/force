@@ -327,7 +327,7 @@ export const ArtworkDetailsForm: React.FC = () => {
           />
         </Column>
         {/* <Column span={6} mt={[1, 0]}>
-          <LocationAutoComplete onError={() => setIsApiError(true)} />
+          <LocationAutoComplete onError={() => openErrorModal()} />
         </Column> */}
       </GridColumns>
     </>
