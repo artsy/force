@@ -145,11 +145,11 @@ describe("ArtworkDetails", () => {
       expect(wrapper.find("input[name='provenance']").prop("value")).toBe(
         "provenance"
       )
-      expect(
-        wrapper
-          .find("input[data-test-id='autocomplete-location']")
-          .prop("value")
-      ).toBe("NY, USA")
+      // expect(
+      //   wrapper
+      //     .find("input[data-test-id='autocomplete-location']")
+      //     .prop("value")
+      // ).toBe("NY, USA")
     })
 
     describe("Correct steps", () => {
