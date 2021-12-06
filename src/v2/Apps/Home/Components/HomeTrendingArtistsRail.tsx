@@ -93,6 +93,7 @@ const HomeTrendingArtistsRail: React.FC<HomeTrendingArtistsRailProps> = ({
                 <Spacer mt={1} />
 
                 <EntityHeader
+                  textAlign="right"
                   name={node.name!}
                   meta={node.formattedNationalityAndBirthday!}
                   smallVariant
