@@ -4,10 +4,10 @@ import { stitch } from "@artsy/stitch"
 jest.mock("lib/metaphysics", () => ({
   metaphysics: jest.fn(),
 }))
-jest.mock("lib/metaphysics2.coffee", () => jest.fn())
+jest.mock("lib/metaphysics2", () => ({ metaphysics2: jest.fn() }))
 
 const metaphysics = require("lib/metaphysics").metaphysics as jest.Mock
-const metaphysics2 = require("lib/metaphysics2.coffee") as jest.Mock
+const { metaphysics2 } = require("lib/metaphysics2")
 const CurrentUser = require("desktop/models/current_user")
 
 import * as routes from "../routes"

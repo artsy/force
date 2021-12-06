@@ -1,7 +1,7 @@
 import Backbone from "backbone"
 import request from "superagent"
 
-const metaphysics2 = require("../../lib/metaphysics2.coffee")
+const { metaphysics2 } = require("../../lib/metaphysics2")
 
 jest.mock("superagent", () => {
   return jest.fn()

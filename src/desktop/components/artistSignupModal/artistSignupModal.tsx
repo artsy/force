@@ -5,7 +5,7 @@ import { ContextModule, Intent } from "@artsy/cohesion"
 import { mediator } from "lib/mediator"
 import Cookies from "desktop/components/cookies/index"
 
-const metaphysics2 = require("lib/metaphysics2.coffee")
+const { metaphysics2 } = require("lib/metaphysics2")
 
 export const query = `
 query ArtistCTAQuery($artistID: String!) {
