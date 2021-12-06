@@ -3,21 +3,21 @@
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type consignRoutes_ContactInformationQueryVariables = {};
-export type consignRoutes_ContactInformationQueryResponse = {
+export type ContactInformationTestQueryVariables = {};
+export type ContactInformationTestQueryResponse = {
     readonly me: {
         readonly " $fragmentRefs": FragmentRefs<"ContactInformation_me">;
     } | null;
 };
-export type consignRoutes_ContactInformationQuery = {
-    readonly response: consignRoutes_ContactInformationQueryResponse;
-    readonly variables: consignRoutes_ContactInformationQueryVariables;
+export type ContactInformationTestQuery = {
+    readonly response: ContactInformationTestQueryResponse;
+    readonly variables: ContactInformationTestQueryVariables;
 };
 
 
 
 /*
-query consignRoutes_ContactInformationQuery {
+query ContactInformationTestQuery {
   me {
     ...ContactInformation_me
     id
@@ -42,7 +42,7 @@ const node: ConcreteRequest = {
     "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
-    "name": "consignRoutes_ContactInformationQuery",
+    "name": "ContactInformationTestQuery",
     "selections": [
       {
         "alias": null,
@@ -67,7 +67,7 @@ const node: ConcreteRequest = {
   "operation": {
     "argumentDefinitions": [],
     "kind": "Operation",
-    "name": "consignRoutes_ContactInformationQuery",
+    "name": "ContactInformationTestQuery",
     "selections": [
       {
         "alias": null,
@@ -164,10 +164,10 @@ const node: ConcreteRequest = {
   "params": {
     "id": null,
     "metadata": {},
-    "name": "consignRoutes_ContactInformationQuery",
+    "name": "ContactInformationTestQuery",
     "operationKind": "query",
-    "text": "query consignRoutes_ContactInformationQuery {\n  me {\n    ...ContactInformation_me\n    id\n  }\n}\n\nfragment ContactInformation_me on Me {\n  name\n  email\n  phone\n  phoneNumber {\n    isValid\n    international: display(format: INTERNATIONAL)\n    national: display(format: NATIONAL)\n    regionCode\n  }\n}\n"
+    "text": "query ContactInformationTestQuery {\n  me {\n    ...ContactInformation_me\n    id\n  }\n}\n\nfragment ContactInformation_me on Me {\n  name\n  email\n  phone\n  phoneNumber {\n    isValid\n    international: display(format: INTERNATIONAL)\n    national: display(format: NATIONAL)\n    regionCode\n  }\n}\n"
   }
 };
-(node as any).hash = 'de14d5df7cf3fdf6b86b94813ccea9a7';
+(node as any).hash = '915ba484cb210763fa4744cac757923f';
 export default node;
