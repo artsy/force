@@ -132,7 +132,10 @@ export function redisPageCacheMiddleware(
         debugLog(`[Redis Page Cache]: Reading ${cacheKeyForRequest} from cache`)
         cachedResponseServed = true
         setTimingHeader(res, "redisCacheHit")
-        return res.send(html.toString("utf-8"))
+        res.locals.cachedPageAvailable = true
+        res.locals.cachedPageData = html.toString("utf-8")
+        next()
+        return
       }
 
       setTimingHeader(res, "redisCacheMiss")
