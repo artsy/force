@@ -2,6 +2,7 @@ import * as React from "react"
 import { Checkbox, Flex, useThemeConfig } from "@artsy/palette"
 import { useArtworkFilterContext } from "../ArtworkFilterContext"
 import { FilterExpandable } from "./FilterExpandable"
+import { getFilterLabelWithCounts } from "../Utils/getFilterLabelWithCounts"
 
 export const checkboxValues = [
   {
@@ -31,6 +32,11 @@ export const AttributionClassFilter: React.FC<AttributionClassFilterProps> = ({
 }) => {
   const filterContext = useArtworkFilterContext()
 
+  const label = getFilterLabelWithCounts(
+    "Rarity",
+    filterContext.selectedFiltersCounts.attributionClass
+  )
+
   const toggleSelection = (selected, name) => {
     let attributions =
       filterContext.currentlySelectedFilters?.()?.attributionClass?.slice() ??
@@ -49,7 +55,7 @@ export const AttributionClassFilter: React.FC<AttributionClassFilterProps> = ({
   })
 
   return (
-    <FilterExpandable label="Rarity" expanded={expanded}>
+    <FilterExpandable label={label} expanded={expanded}>
       <Flex flexDirection="column">
         {checkboxValues.map(({ name, value }, index) => {
           return (

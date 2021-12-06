@@ -5,6 +5,7 @@ import {
   ArtworkFilters,
   useArtworkFilterContext,
 } from "../ArtworkFilterContext"
+import { getFilterLabelWithCounts } from "../Utils/getFilterLabelWithCounts"
 import { FilterExpandable } from "./FilterExpandable"
 
 interface WayToBuy {
@@ -38,6 +39,11 @@ export const WAYS_TO_BUY_OPTIONS = {
 
 export const WaysToBuyFilter: FC<WaysToBuyFilterProps> = ({ expanded }) => {
   const filterContext = useArtworkFilterContext()
+
+  const label = getFilterLabelWithCounts(
+    "Ways to Buy",
+    filterContext.selectedFiltersCounts.waysToBuy
+  )
 
   /**
    * If counts aren't passed, enable by default
@@ -75,7 +81,7 @@ export const WaysToBuyFilter: FC<WaysToBuyFilterProps> = ({ expanded }) => {
     !!selection?.inquireableOnly
 
   return (
-    <FilterExpandable label="Ways to Buy" expanded={hasSelection || expanded}>
+    <FilterExpandable label={label} expanded={hasSelection || expanded}>
       <Flex flexDirection="column">
         {checkboxes.map((checkbox, index) => {
           return (

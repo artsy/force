@@ -5,6 +5,7 @@ import { useArtworkFilterContext } from "../ArtworkFilterContext"
 import { FilterExpandable } from "./FilterExpandable"
 import { INITIAL_ITEMS_TO_SHOW, ShowMore } from "./ShowMore"
 import { sortResults } from "./ResultsFilter"
+import { getFilterLabelWithCounts } from "../Utils/getFilterLabelWithCounts"
 
 export interface TimePeriodFilterProps {
   expanded?: boolean // set to true to force expansion
@@ -14,8 +15,17 @@ export const getTimePeriodToDisplay = period =>
   isNaN(period) ? period : `${period}s`
 
 export const TimePeriodFilter: FC<TimePeriodFilterProps> = ({ expanded }) => {
-  const { aggregations, ...filterContext } = useArtworkFilterContext()
+  const {
+    aggregations,
+    selectedFiltersCounts,
+    ...filterContext
+  } = useArtworkFilterContext()
   const timePeriods = aggregations?.find(agg => agg.slice === "MAJOR_PERIOD")
+
+  const label = getFilterLabelWithCounts(
+    "Time Period",
+    selectedFiltersCounts.majorPeriods
+  )
 
   let periods
   if (timePeriods && timePeriods.counts) {
@@ -55,10 +65,7 @@ export const TimePeriodFilter: FC<TimePeriodFilterProps> = ({ expanded }) => {
   const resultsSorted = sortResults(currentFilters?.majorPeriods ?? [], periods)
 
   return (
-    <FilterExpandable
-      label="Time Period"
-      expanded={hasMajorPeriodFilter || expanded}
-    >
+    <FilterExpandable label={label} expanded={hasMajorPeriodFilter || expanded}>
       <Flex flexDirection="column">
         <ShowMore expanded={hasBelowTheFoldMajorPeriodFilter}>
           {resultsSorted.map(({ name }, index) => {

@@ -62,7 +62,7 @@ import {
   DefaultFilterPill,
   useFilterPillsContext,
 } from "./SavedSearch/Utils/FilterPillsContext"
-import { getTotalSelectedFiltersCount } from "./Utils/getSelectedFiltersCounts"
+import { getTotalSelectedFiltersCount } from "./Utils/getTotalSelectedFiltersCount"
 
 /**
  * Primary ArtworkFilter which is wrapped with a context and refetch container.

@@ -16,6 +16,7 @@ import { Media } from "v2/Utils/Responsive"
 import { themeGet } from "@styled-system/theme-get"
 import { FilterExpandable } from "./FilterExpandable"
 import { isCustomValue } from "./Utils/isCustomValue"
+import { getFilterLabelWithCounts } from "../Utils/getFilterLabelWithCounts"
 
 // Disables arrows in numeric inputs
 export const NumericInput = styled(LabeledInput).attrs({ type: "number" })`
@@ -73,10 +74,19 @@ export const PriceRangeFilter: React.FC<PriceRangeFilterProps> = ({
 }) => {
   const [mode, setMode] = useState<"resting" | "done">("resting")
 
-  const { currentlySelectedFilters, setFilter } = useArtworkFilterContext()
+  const {
+    currentlySelectedFilters,
+    selectedFiltersCounts,
+    setFilter,
+  } = useArtworkFilterContext()
   const { priceRange: initialRange, reset } = currentlySelectedFilters?.() ?? {}
 
   const numericInitialRange = parseRange(initialRange)
+
+  const label = getFilterLabelWithCounts(
+    "Price",
+    selectedFiltersCounts.priceRange
+  )
 
   const isCustomRange =
     // Has some kind of price range set (isn't default)
@@ -141,7 +151,7 @@ export const PriceRangeFilter: React.FC<PriceRangeFilterProps> = ({
   }, [reset, initialRange])
 
   return (
-    <FilterExpandable label="Price" expanded={hasSelection || expanded}>
+    <FilterExpandable label={label} expanded={hasSelection || expanded}>
       {mode === "done" && (
         <Media lessThan="sm">
           <Message variant="info" my={2}>

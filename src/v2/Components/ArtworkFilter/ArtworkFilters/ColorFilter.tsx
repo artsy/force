@@ -14,6 +14,7 @@ import { useArtworkFilterContext } from "../ArtworkFilterContext"
 import { sortResults } from "./ResultsFilter"
 import { FilterExpandable } from "./FilterExpandable"
 import { INITIAL_ITEMS_TO_SHOW, ShowMore } from "./ShowMore"
+import { getFilterLabelWithCounts } from "../Utils/getFilterLabelWithCounts"
 
 export const COLOR_OPTIONS = [
   { hex: "#ffffff", value: "black-and-white", name: "Black and White" },
@@ -113,7 +114,11 @@ export interface ColorFilterProps {
 }
 
 export const ColorFilter: React.FC<ColorFilterProps> = ({ expanded }) => {
-  const { currentlySelectedFilters } = useArtworkFilterContext()
+  const {
+    currentlySelectedFilters,
+    selectedFiltersCounts,
+  } = useArtworkFilterContext()
+  const label = getFilterLabelWithCounts("Color", selectedFiltersCounts.colors)
   const hasBelowTheFoldColorFilter =
     intersection(
       currentlySelectedFilters?.().colors ?? [],
@@ -125,7 +130,7 @@ export const ColorFilter: React.FC<ColorFilterProps> = ({ expanded }) => {
     COLOR_OPTIONS
   )
   return (
-    <FilterExpandable label="Color" expanded={hasColorFilter || expanded}>
+    <FilterExpandable label={label} expanded={hasColorFilter || expanded}>
       <Flex flexDirection="column">
         <ShowMore expanded={hasBelowTheFoldColorFilter}>
           {resultsSorted.map(colorOption => {

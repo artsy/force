@@ -5,13 +5,25 @@ import { ShowMore, INITIAL_ITEMS_TO_SHOW } from "./ShowMore"
 import { intersection } from "lodash"
 import { sortResults } from "./ResultsFilter"
 import { FilterExpandable } from "./FilterExpandable"
+import { getFilterLabelWithCounts } from "../Utils/getFilterLabelWithCounts"
 
 export interface MediumFilterProps {
   expanded?: boolean
 }
 
 export const MediumFilter: FC<MediumFilterProps> = ({ expanded }) => {
-  const { aggregations, counts, ...filterContext } = useArtworkFilterContext()
+  const {
+    aggregations,
+    counts,
+    selectedFiltersCounts,
+    ...filterContext
+  } = useArtworkFilterContext()
+
+  const label = getFilterLabelWithCounts(
+    "Medium",
+    selectedFiltersCounts.additionalGeneIDs
+  )
+
   const mediums = aggregations?.find(agg => agg.slice === "MEDIUM") || {
     slice: "",
     counts: [],
@@ -49,7 +61,7 @@ export const MediumFilter: FC<MediumFilterProps> = ({ expanded }) => {
 
   return (
     <FilterExpandable
-      label="Medium"
+      label={label}
       expanded={(!counts?.artworks || counts.artworks > 0) && expanded}
     >
       <Flex flexDirection="column" alignItems="left">

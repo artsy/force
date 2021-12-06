@@ -9,6 +9,7 @@ import {
 } from "../Utils/fetchFollowedArtists"
 import { FilterExpandable } from "./FilterExpandable"
 import { ShowMore } from "./ShowMore"
+import { getFilterLabelWithCounts } from "../Utils/getFilterLabelWithCounts"
 
 export interface ArtistsFilterProps {
   expanded?: boolean
@@ -86,6 +87,12 @@ export const ArtistsFilter: FC<ArtistsFilterProps> = ({
   const [followedArtists, setFollowedArtists] = useState<FollowedArtistList>([])
   const followedArtistSlugs = followedArtists.map(({ slug }) => slug)
 
+  const { selectedFiltersCounts } = useArtworkFilterContext()
+  const label = getFilterLabelWithCounts(
+    "Artists",
+    selectedFiltersCounts.artistIDs
+  )
+
   const tokens = useThemeConfig({
     v2: { my: 0.5 },
     v3: { my: 1 },
@@ -119,7 +126,7 @@ export const ArtistsFilter: FC<ArtistsFilterProps> = ({
     (selection && selection.length > 0) || isFollowedArtistCheckboxSelected
 
   return (
-    <FilterExpandable label="Artists" expanded={hasSelection || expanded}>
+    <FilterExpandable label={label} expanded={hasSelection || expanded}>
       <Flex flexDirection="column">
         <Checkbox
           disabled={!followedArtistArtworkCount}

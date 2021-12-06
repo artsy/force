@@ -19,6 +19,7 @@ import { NumericInput } from "./PriceRangeFilter"
 import { Media } from "v2/Utils/Responsive"
 import { FilterExpandable } from "./FilterExpandable"
 import { isCustomValue } from "./Utils/isCustomValue"
+import { getFilterLabelWithCounts } from "../Utils/getFilterLabelWithCounts"
 
 export const SIZES = [
   { displayName: "Small (under 40cm)", name: "SMALL" },
@@ -80,12 +81,18 @@ export interface SizeFilterProps {
 }
 
 export const SizeFilter: React.FC<SizeFilterProps> = ({ expanded }) => {
-  const { currentlySelectedFilters, setFilters } = useArtworkFilterContext()
+  const {
+    currentlySelectedFilters,
+    selectedFiltersCounts,
+    setFilters,
+  } = useArtworkFilterContext()
   const {
     height,
     width,
     reset,
   } = currentlySelectedFilters?.() as ArtworkFiltersState
+
+  const label = getFilterLabelWithCounts("Size", selectedFiltersCounts.sizes)
 
   const initialCustomSize = React.useMemo(
     () => ({
@@ -186,7 +193,7 @@ export const SizeFilter: React.FC<SizeFilterProps> = ({ expanded }) => {
     isCustomValue(customWidth)
 
   return (
-    <FilterExpandable label="Size" expanded={hasSelection || expanded}>
+    <FilterExpandable label={label} expanded={hasSelection || expanded}>
       {mode === "done" && (
         <Media lessThan="sm">
           <Message variant="info" my={2}>
