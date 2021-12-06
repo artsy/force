@@ -96,6 +96,24 @@ export interface ShippingProps extends SystemContextProps {
 
 const logger = createLogger("Order/Routes/Shipping/index.tsx")
 
+const ArtaErrorMessage: React.FC = () => (
+  <Text
+    py={1}
+    px={2}
+    mb={2}
+    bg="red10"
+    color="red100"
+    data-test="artaErrorMessage"
+  >
+    We need to confirm some details with you before processing this order.
+    Please reach out to{" "}
+    <RouterLink color="red100" to="mailto:orders@artsy.net">
+      orders@artsy.net
+    </RouterLink>{" "}
+    for assistance.
+  </Text>
+)
+
 export const ShippingRoute: React.FC<ShippingProps> = ({
   order,
   me,
@@ -143,22 +161,60 @@ export const ShippingRoute: React.FC<ShippingProps> = ({
 
   const { trackEvent } = useTracking()
 
-  const touchedAddress = () => {
-    return {
-      name: true,
-      country: true,
-      postalCode: true,
-      addressLine1: true,
-      addressLine2: true,
-      city: true,
-      region: true,
-      phoneNumber: true,
-    }
+  const touchedAddress = {
+    name: true,
+    country: true,
+    postalCode: true,
+    addressLine1: true,
+    addressLine2: true,
+    city: true,
+    region: true,
+    phoneNumber: true,
   }
 
-  const handleAddressDelete = (deletedAddressID: string) => {
-    const addressList = getAddressList()
+  const addressList = me.addressConnection?.edges
 
+  const orderArtwork = order.lineItems?.edges?.[0]?.node?.artwork
+
+  const isCreateNewAddress = selectedAddressID === NEW_ADDRESS
+
+  const artaShippingEnabled = !!orderArtwork?.artaShippingEnabled
+
+  const shippingCountry = isCreateNewAddress
+    ? address.value.country
+    : addressList &&
+      addressList.find(
+        address => address?.node?.internalID == selectedAddressID
+      )?.node?.country
+
+  const isArtaShipping =
+    shippingOption === "SHIP" && artaShippingEnabled && shippingCountry === "US"
+
+  const shippingSelected =
+    !orderArtwork?.pickup_available || shippingOption === "SHIP"
+
+  const showAddressForm =
+    shippingSelected && (isCreateNewAddress || addressList?.length === 0)
+
+  const showSavedAddresses =
+    shippingSelected && addressList && addressList.length > 0
+
+  const isContinueButtonDisabled = isCommittingMutation
+    ? false
+    : isArtaShipping &&
+      !!shippingQuotes.quotes &&
+      shippingQuotes.quotes.length > 0 &&
+      !shippingQuotes.quoteId
+
+  const artaErrorDialog = (
+    <>
+      There was a problem getting shipping quotes. <br />
+      Please contact{" "}
+      <RouterLink to={`mailto:orders@artsy.net`}>orders@artsy.net</RouterLink>.
+    </>
+  )
+
+  const handleAddressDelete = (deletedAddressID: string) => {
     if (!addressList || addressList.length === 0) {
       setSelectedAddressID(NEW_ADDRESS)
       setShippingQuotes({ quotes: null, quoteId: undefined })
@@ -169,140 +225,11 @@ export const ShippingRoute: React.FC<ShippingProps> = ({
     }
   }
 
-  const getAddressList = () => me.addressConnection?.edges
-
-  const getOrderArtwork = () => order.lineItems?.edges?.[0]?.node?.artwork
-
-  const isCreateNewAddress = () => selectedAddressID === NEW_ADDRESS
-
-  const isArtaShipping = () => {
-    const addresses = getAddressList()
-    const artaShippingEnabled = !!getOrderArtwork()?.artaShippingEnabled
-
-    const shippingCountry = isCreateNewAddress()
-      ? address.value.country
-      : addresses &&
-        addresses.find(
-          address => address?.node?.internalID == selectedAddressID
-        )?.node?.country
-
-    return (
-      shippingOption === "SHIP" &&
-      artaShippingEnabled &&
-      shippingCountry === "US"
-    )
-  }
-
-  useEffect(() => {
-    if (
-      isArtaShipping() &&
-      selectedAddressID &&
-      !shippingQuotes.quotes &&
-      !shippingQuotes.quoteId
-    ) {
-      selectShipping()
-    }
-  }, [shippingOption, shippingQuotes.quotes, shippingQuotes.quoteId])
-
   const onContinueButtonPressed = async () => {
-    if (isArtaShipping() && !!shippingQuotes.quoteId) {
+    if (isArtaShipping && !!shippingQuotes.quoteId) {
       selectShippingQuote()
     } else {
       selectShipping()
-    }
-  }
-
-  const selectShipping = async () => {
-    if (shippingOption === "SHIP") {
-      if (isCreateNewAddress()) {
-        // validate when order is not pickup and the address is new
-        const { errors, hasErrors } = validateAddress(address.value)
-        const { error, hasError } = validatePhoneNumber(phoneNumber.value)
-        if (hasErrors && hasError) {
-          setAddress(prevState => ({
-            ...prevState,
-            errors: errors!,
-            touched: touchedAddress(),
-          }))
-          setPhoneNumber(prevState => ({
-            ...prevState,
-            error: error!,
-            touched: true,
-          }))
-          return
-        } else if (hasErrors) {
-          setAddress(prevState => ({
-            ...prevState,
-            errors: errors!,
-            touched: touchedAddress(),
-          }))
-          return
-        } else if (hasError) {
-          setPhoneNumber(prevState => ({
-            ...prevState,
-            error: error!,
-            touched: true,
-          }))
-          return
-        }
-      }
-    } else {
-      const { error, hasError } = validatePhoneNumber(phoneNumber.value)
-      if (hasError) {
-        setPhoneNumber(prevState => ({
-          ...prevState,
-          error: error!,
-          touched: true,
-        }))
-        return
-      }
-    }
-
-    try {
-      // if not creating a new address, use the saved address selection for shipping
-      const shipToAddress = isCreateNewAddress()
-        ? address.value
-        : convertShippingAddressForExchange(
-            getAddressList()?.find(
-              address => address?.node?.internalID == selectedAddressID
-            )?.node!
-          )
-      const shipToPhoneNumber = isCreateNewAddress()
-        ? phoneNumber.value
-        : getAddressList()?.find(
-            address => address?.node?.internalID == selectedAddressID
-          )?.node?.phoneNumber
-      setShippingQuotes({ quotes: null, quoteId: undefined })
-
-      const orderOrError = (
-        await setShipping(commitMutation, {
-          input: {
-            id: order.internalID,
-            fulfillmentType: isArtaShipping() ? "SHIP_ARTA" : shippingOption,
-            shipping: shipToAddress,
-            phoneNumber: shipToPhoneNumber,
-          },
-        })
-      ).commerceSetShipping?.orderOrError
-
-      if (orderOrError?.error) {
-        handleSubmitError(orderOrError.error)
-        return
-      }
-      // save address when user is entering new address AND save checkbox is selected
-      await saveAddress()
-
-      if (isArtaShipping()) {
-        setShippingQuotes(prevState => ({
-          ...prevState,
-          quotes: getShippingQuotes(orderOrError?.order),
-        }))
-      } else {
-        router.push(`/orders/${order.internalID}/payment`)
-      }
-    } catch (error) {
-      logger.error(error)
-      dialog.showErrorDialog()
     }
   }
 
@@ -329,7 +256,7 @@ export const ShippingRoute: React.FC<ShippingProps> = ({
       } catch (error) {
         logger.error(error)
         dialog.showErrorDialog({
-          message: getArtaErrorMessage(),
+          message: artaErrorDialog,
         })
       }
     }
@@ -337,11 +264,7 @@ export const ShippingRoute: React.FC<ShippingProps> = ({
 
   const saveAddress = async () => {
     if (saveAddressToggle) {
-      if (
-        shippingOption === "SHIP" &&
-        isCreateNewAddress() &&
-        relayEnvironment
-      ) {
+      if (shippingOption === "SHIP" && isCreateNewAddress && relayEnvironment) {
         if (savedAddressID) {
           updateUserAddress(
             relayEnvironment,
@@ -413,22 +336,119 @@ export const ShippingRoute: React.FC<ShippingProps> = ({
         title: "Can't ship to that address",
         message: "This work can only be shipped domestically.",
       })
-    } else if (isArtaShipping() && shippingQuotes.quoteId) {
+    } else if (isArtaShipping && shippingQuotes.quoteId) {
       dialog.showErrorDialog({
-        message: getArtaErrorMessage(),
+        message: artaErrorDialog,
       })
     } else {
       dialog.showErrorDialog()
     }
   }
 
-  const getArtaErrorMessage = () => (
-    <>
-      There was a problem getting shipping quotes. <br />
-      Please contact{" "}
-      <RouterLink to={`mailto:orders@artsy.net`}>orders@artsy.net</RouterLink>.
-    </>
-  )
+  const selectShipping = async () => {
+    if (shippingOption === "SHIP") {
+      if (isCreateNewAddress) {
+        // validate when order is not pickup and the address is new
+        const { errors, hasErrors } = validateAddress(address.value)
+        const { error, hasError } = validatePhoneNumber(phoneNumber.value)
+        if (hasErrors && hasError) {
+          setAddress(prevState => ({
+            ...prevState,
+            errors: errors!,
+            touched: touchedAddress,
+          }))
+          setPhoneNumber(prevState => ({
+            ...prevState,
+            error: error!,
+            touched: true,
+          }))
+          return
+        } else if (hasErrors) {
+          setAddress(prevState => ({
+            ...prevState,
+            errors: errors!,
+            touched: touchedAddress,
+          }))
+          return
+        } else if (hasError) {
+          setPhoneNumber(prevState => ({
+            ...prevState,
+            error: error!,
+            touched: true,
+          }))
+          return
+        }
+      }
+    } else {
+      const { error, hasError } = validatePhoneNumber(phoneNumber.value)
+      if (hasError) {
+        setPhoneNumber(prevState => ({
+          ...prevState,
+          error: error!,
+          touched: true,
+        }))
+        return
+      }
+    }
+
+    try {
+      // if not creating a new address, use the saved address selection for shipping
+      const shipToAddress = isCreateNewAddress
+        ? address.value
+        : convertShippingAddressForExchange(
+            addressList?.find(
+              address => address?.node?.internalID == selectedAddressID
+            )?.node!
+          )
+      const shipToPhoneNumber = isCreateNewAddress
+        ? phoneNumber.value
+        : addressList?.find(
+            address => address?.node?.internalID == selectedAddressID
+          )?.node?.phoneNumber
+      setShippingQuotes({ quotes: null, quoteId: undefined })
+
+      const orderOrError = (
+        await setShipping(commitMutation, {
+          input: {
+            id: order.internalID,
+            fulfillmentType: isArtaShipping ? "SHIP_ARTA" : shippingOption,
+            shipping: shipToAddress,
+            phoneNumber: shipToPhoneNumber,
+          },
+        })
+      ).commerceSetShipping?.orderOrError
+
+      if (orderOrError?.error) {
+        handleSubmitError(orderOrError.error)
+        return
+      }
+      // save address when user is entering new address AND save checkbox is selected
+      await saveAddress()
+
+      if (isArtaShipping) {
+        setShippingQuotes(prevState => ({
+          ...prevState,
+          quotes: getShippingQuotes(orderOrError?.order),
+        }))
+      } else {
+        router.push(`/orders/${order.internalID}/payment`)
+      }
+    } catch (error) {
+      logger.error(error)
+      dialog.showErrorDialog()
+    }
+  }
+
+  useEffect(() => {
+    if (isArtaShipping && !isCreateNewAddress && !shippingQuotes.quoteId) {
+      selectShipping()
+    }
+  }, [
+    isArtaShipping,
+    selectedAddressID,
+    isCreateNewAddress,
+    shippingQuotes.quoteId,
+  ])
 
   const onAddressChange: AddressChangeHandler = (address, key) => {
     const { errors } = validateAddress(address)
@@ -456,6 +476,9 @@ export const ShippingRoute: React.FC<ShippingProps> = ({
     if (shippingOption !== shippingOptionProp) {
       setShippingOption(shippingOptionProp)
       setShippingQuotes({ quotes: null, quoteId: undefined })
+      if (addressList && addressList.length > 0 && isArtaShipping) {
+        selectShipping()
+      }
     }
     trackEvent({
       action_type: Schema.ActionType.Click,
@@ -481,20 +504,16 @@ export const ShippingRoute: React.FC<ShippingProps> = ({
     } as ClickedSelectShippingOption)
   }
 
-  const selectSavedAddressWithTracking = (value: string) => {
-    selectSavedAddress(value)
-    trackEvent({
-      action: ActionType.clickedShippingAddress,
-      context_module: ContextModule.ordersShipping,
-      context_page_owner_type: "orders-shipping",
-    } as ClickedShippingAddress)
-  }
-
   const selectSavedAddress = (value: string) => {
     if (selectedAddressID !== value) {
       setSelectedAddressID(value)
       setShippingQuotes({ quotes: null, quoteId: undefined })
     }
+    trackEvent({
+      action: ActionType.clickedShippingAddress,
+      context_module: ContextModule.ordersShipping,
+      context_page_owner_type: "orders-shipping",
+    } as ClickedShippingAddress)
   }
 
   const handleAddressEdit = (
@@ -503,6 +522,9 @@ export const ShippingRoute: React.FC<ShippingProps> = ({
     // reload shipping quotes if selected address edited
     if (selectedAddressID === address?.userAddressOrErrors?.internalID) {
       setShippingQuotes({ quotes: null, quoteId: undefined })
+      if (isArtaShipping) {
+        selectShipping()
+      }
     }
   }
 
@@ -513,45 +535,6 @@ export const ShippingRoute: React.FC<ShippingProps> = ({
       selectSavedAddress(address.userAddressOrErrors.internalID)
     }
   }
-
-  const renderArtaErrorMessage = () => {
-    return (
-      <Text
-        py={1}
-        px={2}
-        mb={2}
-        bg="red10"
-        color="red100"
-        data-test="artaErrorMessage"
-      >
-        We need to confirm some details with you before processing this order.
-        Please reach out to{" "}
-        <RouterLink color="red100" to="mailto:orders@artsy.net">
-          orders@artsy.net
-        </RouterLink>{" "}
-        for assistance.
-      </Text>
-    )
-  }
-
-  const artwork = getOrderArtwork()
-  const addressList = getAddressList()
-
-  const shippingSelected =
-    !artwork?.pickup_available || shippingOption === "SHIP"
-
-  const showAddressForm =
-    shippingSelected && (isCreateNewAddress() || addressList?.length === 0)
-
-  const showSavedAddresses =
-    shippingSelected && addressList && addressList.length > 0
-  const isAnArtaShipping = isArtaShipping()
-  const isContinueButtonDisabled = isCommittingMutation
-    ? false
-    : isAnArtaShipping &&
-      !!shippingQuotes.quotes &&
-      shippingQuotes.quotes.length > 0 &&
-      !shippingQuotes.quoteId
 
   return (
     <Box data-test="orderShipping">
@@ -568,7 +551,7 @@ export const ShippingRoute: React.FC<ShippingProps> = ({
             {/* TODO: Make RadioGroup generic for the allowed values,
                 which could also ensure the children only use
                 allowed values. */}
-            {artwork?.pickup_available && (
+            {orderArtwork?.pickup_available && (
               <>
                 <RadioGroup
                   data-test="shipping-options"
@@ -604,14 +587,13 @@ export const ShippingRoute: React.FC<ShippingProps> = ({
               <Text variant="md" mb="1">
                 Delivery address
               </Text>
-              {isAnArtaShipping &&
+              {isArtaShipping &&
                 shippingQuotes.quotes &&
-                shippingQuotes.quotes.length === 0 &&
-                renderArtaErrorMessage()}
+                shippingQuotes.quotes.length === 0 && <ArtaErrorMessage />}
               <SavedAddresses
                 me={me}
                 selectedAddress={selectedAddressID}
-                onSelect={selectSavedAddressWithTracking}
+                onSelect={selectSavedAddress}
                 inCollectorProfile={false}
                 onAddressDelete={handleAddressDelete}
                 onAddressCreate={handleAddressCreate}
@@ -620,18 +602,17 @@ export const ShippingRoute: React.FC<ShippingProps> = ({
             </Collapse>
 
             <Collapse data-test="addressFormCollapse" open={showAddressForm}>
-              {isAnArtaShipping &&
+              {isArtaShipping &&
                 shippingQuotes.quotes &&
-                shippingQuotes.quotes.length === 0 &&
-                renderArtaErrorMessage()}
+                shippingQuotes.quotes.length === 0 && <ArtaErrorMessage />}
               <AddressForm
                 value={address.value}
                 errors={address.errors}
                 touched={address.touched}
                 onChange={onAddressChange}
-                domesticOnly={artwork?.onlyShipsDomestically!}
-                euOrigin={artwork?.euShippingOrigin!}
-                shippingCountry={artwork?.shippingCountry!}
+                domesticOnly={orderArtwork?.onlyShipsDomestically!}
+                euOrigin={orderArtwork?.euShippingOrigin!}
+                shippingCountry={orderArtwork?.shippingCountry!}
                 showPhoneNumberInput={false}
               />
               <Spacer mb={2} />
@@ -668,7 +649,7 @@ export const ShippingRoute: React.FC<ShippingProps> = ({
 
             <Collapse
               open={
-                isAnArtaShipping &&
+                isArtaShipping &&
                 !!shippingQuotes.quotes &&
                 shippingQuotes.quotes.length > 0
               }
