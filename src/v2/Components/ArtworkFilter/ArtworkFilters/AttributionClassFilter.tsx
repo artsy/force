@@ -32,10 +32,9 @@ export const AttributionClassFilter: React.FC<AttributionClassFilterProps> = ({
   const filterContext = useArtworkFilterContext()
 
   const toggleSelection = (selected, name) => {
-    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-    let attributions = filterContext
-      .currentlySelectedFilters()
-      .attributionClass.slice()
+    let attributions =
+      filterContext.currentlySelectedFilters?.()?.attributionClass?.slice() ??
+      []
 
     selected
       ? attributions.push(name)
@@ -58,10 +57,9 @@ export const AttributionClassFilter: React.FC<AttributionClassFilterProps> = ({
               key={index}
               my={tokens.my}
               onSelect={selected => toggleSelection(selected, value)}
-              // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
               selected={filterContext
-                .currentlySelectedFilters()
-                .attributionClass.includes(value)}
+                .currentlySelectedFilters?.()
+                .attributionClass?.includes(value)}
             >
               {name}
             </Checkbox>

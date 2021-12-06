@@ -12,8 +12,7 @@ export interface MediumFilterProps {
 
 export const MediumFilter: FC<MediumFilterProps> = ({ expanded }) => {
   const { aggregations, counts, ...filterContext } = useArtworkFilterContext()
-  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-  const mediums = aggregations.find(agg => agg.slice === "MEDIUM") || {
+  const mediums = aggregations?.find(agg => agg.slice === "MEDIUM") || {
     slice: "",
     counts: [],
   }
@@ -21,10 +20,9 @@ export const MediumFilter: FC<MediumFilterProps> = ({ expanded }) => {
     mediums && mediums.counts.length ? mediums.counts : hardcodedMediums
 
   const toggleMediumSelection = (selected, slug) => {
-    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-    let geneIDs = filterContext
-      .currentlySelectedFilters()
-      .additionalGeneIDs.slice()
+    let geneIDs =
+      filterContext.currentlySelectedFilters?.()?.additionalGeneIDs?.slice() ??
+      []
     if (selected) {
       geneIDs.push(slug)
     } else {
@@ -33,12 +31,10 @@ export const MediumFilter: FC<MediumFilterProps> = ({ expanded }) => {
     filterContext.setFilter("additionalGeneIDs", geneIDs)
   }
 
-  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-  const currentFilters = filterContext.currentlySelectedFilters()
+  const currentFilters = filterContext.currentlySelectedFilters?.() ?? {}
   const hasBelowTheFoldMediumFilter =
     intersection(
-      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-      currentFilters.additionalGeneIDs,
+      currentFilters.additionalGeneIDs ?? [],
       allowedMediums.slice(INITIAL_ITEMS_TO_SHOW).map(({ value }) => value)
     ).length > 0
 
@@ -47,16 +43,14 @@ export const MediumFilter: FC<MediumFilterProps> = ({ expanded }) => {
     v3: { my: 1 },
   })
   const resultsSorted = sortResults(
-    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-    currentFilters.additionalGeneIDs,
+    currentFilters.additionalGeneIDs ?? [],
     allowedMediums
   )
 
   return (
     <FilterExpandable
       label="Medium"
-      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-      expanded={(!counts.artworks || counts.artworks > 0) && expanded}
+      expanded={(!counts?.artworks || counts.artworks > 0) && expanded}
     >
       <Flex flexDirection="column" alignItems="left">
         <ShowMore expanded={hasBelowTheFoldMediumFilter}>
@@ -64,8 +58,7 @@ export const MediumFilter: FC<MediumFilterProps> = ({ expanded }) => {
             return (
               <Checkbox
                 selected={
-                  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-                  currentFilters.additionalGeneIDs.includes(slug) ||
+                  currentFilters.additionalGeneIDs?.includes(slug) ||
                   currentFilters.medium === slug
                 }
                 key={index}

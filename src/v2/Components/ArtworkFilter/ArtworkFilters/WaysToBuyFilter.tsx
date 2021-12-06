@@ -67,13 +67,12 @@ export const WaysToBuyFilter: FC<WaysToBuyFilterProps> = ({ expanded }) => {
     v3: { my: 1 },
   })
 
-  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-  const selection = filterContext.currentlySelectedFilters()
+  const selection = filterContext.currentlySelectedFilters?.()
   const hasSelection =
-    !!selection.acquireable ||
-    !!selection.offerable ||
-    !!selection.atAuction ||
-    !!selection.inquireableOnly
+    !!selection?.acquireable ||
+    !!selection?.offerable ||
+    !!selection?.atAuction ||
+    !!selection?.inquireableOnly
 
   return (
     <FilterExpandable label="Ways to Buy" expanded={hasSelection || expanded}>
@@ -85,8 +84,7 @@ export const WaysToBuyFilter: FC<WaysToBuyFilterProps> = ({ expanded }) => {
               disabled={checkbox.disabled}
               onSelect={value => filterContext.setFilter(checkbox.state, value)}
               selected={Boolean(
-                // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-                filterContext.currentlySelectedFilters()[checkbox.state]
+                filterContext.currentlySelectedFilters?.()[checkbox.state]
               )}
               my={tokens.my}
             >

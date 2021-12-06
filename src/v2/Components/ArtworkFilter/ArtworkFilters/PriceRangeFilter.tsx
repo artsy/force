@@ -53,8 +53,8 @@ type CustomRange = (number | "*")[]
 
 const DEFAULT_CUSTOM_RANGE: CustomRange = ["*", "*"]
 
-const parseRange = (range?: string) => {
-  return range?.split("-").map(s => {
+const parseRange = (range: string = "*-*") => {
+  return range.split("-").map(s => {
     if (s === "*") return s
     return parseInt(s, 10)
   })
@@ -74,8 +74,7 @@ export const PriceRangeFilter: React.FC<PriceRangeFilterProps> = ({
   const [mode, setMode] = useState<"resting" | "done">("resting")
 
   const { currentlySelectedFilters, setFilter } = useArtworkFilterContext()
-  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-  const { priceRange: initialRange, reset } = currentlySelectedFilters()
+  const { priceRange: initialRange, reset } = currentlySelectedFilters?.() ?? {}
 
   const numericInitialRange = parseRange(initialRange)
 
@@ -119,7 +118,6 @@ export const PriceRangeFilter: React.FC<PriceRangeFilterProps> = ({
     }
 
     if (selectedOption !== null) {
-      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       setCustomRange(parseRange(selectedOption))
     }
 
@@ -132,8 +130,7 @@ export const PriceRangeFilter: React.FC<PriceRangeFilterProps> = ({
     v3: { my: 1 },
   })
 
-  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-  const selection = currentlySelectedFilters().priceRange
+  const selection = currentlySelectedFilters?.().priceRange
   const hasSelection = selection && isCustomValue(selection)
 
   useEffect(() => {

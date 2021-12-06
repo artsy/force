@@ -64,19 +64,15 @@ const ColorFilterOption: React.FC<{ colorOption: ColorOption }> = ({
   const { name, value, hex } = colorOption
 
   const { currentlySelectedFilters, setFilter } = useArtworkFilterContext()
-  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-  const { colors: selectedColorOptions } = currentlySelectedFilters()
+  const selectedColorOptions = currentlySelectedFilters?.().colors ?? []
 
   const toggleColor = (color: string) => {
-    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     if (selectedColorOptions.includes(color)) {
       setFilter(
         "colors",
-        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         selectedColorOptions.filter(selectedColor => color !== selectedColor)
       )
     } else {
-      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       setFilter("colors", [...selectedColorOptions, color])
     }
   }
@@ -90,7 +86,6 @@ const ColorFilterOption: React.FC<{ colorOption: ColorOption }> = ({
     <Checkbox
       key={name}
       onSelect={() => toggleColor(value)}
-      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       selected={selectedColorOptions.includes(value)}
       my={tokens.my}
     >
@@ -121,15 +116,12 @@ export const ColorFilter: React.FC<ColorFilterProps> = ({ expanded }) => {
   const { currentlySelectedFilters } = useArtworkFilterContext()
   const hasBelowTheFoldColorFilter =
     intersection(
-      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-      currentlySelectedFilters().colors,
+      currentlySelectedFilters?.().colors ?? [],
       COLOR_OPTIONS.slice(INITIAL_ITEMS_TO_SHOW).map(({ value }) => value)
     ).length > 0
-  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-  const hasColorFilter = currentlySelectedFilters().colors.length > 0
+  const hasColorFilter = (currentlySelectedFilters?.().colors?.length ?? 0) > 0
   const resultsSorted = sortResults(
-    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-    currentlySelectedFilters().colors,
+    currentlySelectedFilters?.().colors ?? [],
     COLOR_OPTIONS
   )
   return (
