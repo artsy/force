@@ -1,5 +1,5 @@
 import { initialArtworkFilterState } from "../../ArtworkFilterContext"
-import { getSelectedFiltersCounts } from "../getSelectedFIltersCounts"
+import { getSelectedFiltersCounts } from "../getSelectedFiltersCounts"
 
 describe("getSelectedFiltersCounts helper", () => {
   const multiSelectFilters = {

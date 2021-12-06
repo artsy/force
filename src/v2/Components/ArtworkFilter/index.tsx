@@ -62,7 +62,7 @@ import {
   DefaultFilterPill,
   useFilterPillsContext,
 } from "./SavedSearch/Utils/FilterPillsContext"
-import { getSelectedFiltersCounts } from "./Utils/getSelectedFIltersCounts"
+import { getTotalSelectedFiltersCount } from "./Utils/getSelectedFiltersCounts"
 
 /**
  * Primary ArtworkFilter which is wrapped with a context and refetch container.
@@ -170,12 +170,9 @@ export const BaseArtworkFilter: React.FC<
   const previousFilters = usePrevious(filterContext.filters)
   const { user, isLoggedIn } = useSystemContext()
   const { pills = [], setPills } = useFilterPillsContext()
-  const currentlySelectedFilters = getSelectedFiltersCounts(
-    filterContext.currentlySelectedFilters?.()
+  const appliedFiltersTotalCount = getTotalSelectedFiltersCount(
+    filterContext.selectedFiltersCounts
   )
-  const appliedFiltersTotalCount = Object.values(
-    currentlySelectedFilters
-  ).reduce((total: number, curr: number) => total + curr, 0)
 
   const { filtered_artworks } = viewer
   const hasFilter = filtered_artworks && filtered_artworks.id

@@ -3,25 +3,16 @@ import {
   ArtworkFilters,
   FilterParamName,
   initialArtworkFilterState,
+  rangeFilterNames,
   SelectedFiltersCounts,
+  waysToBuyFilterNames,
 } from "../ArtworkFilterContext"
-
-const waysToBuyFilterNames = [
-  FilterParamName.waysToBuyBuy,
-  FilterParamName.waysToBuyMakeOffer,
-  FilterParamName.waysToBuyBid,
-  FilterParamName.waysToBuyInquire,
-]
-
-const rangeFilterNames = [
-  FilterParamName.width,
-  FilterParamName.height,
-  FilterParamName.priceRange,
-]
 
 export const getSelectedFiltersCounts = (
   selectedFilters: ArtworkFilters = {}
 ) => {
+  console.log("getSelectedFiltersCounts")
+
   const counts: Partial<SelectedFiltersCounts> = {}
   const filtersParams = Object.values(FilterParamName)
 
@@ -75,4 +66,15 @@ export const getSelectedFiltersCounts = (
   })
 
   return counts
+}
+
+export const getTotalSelectedFiltersCount = (
+  selectedFiltersCounts: Partial<SelectedFiltersCounts> = {}
+) => {
+  console.log("getTotalSelectedFiltersCount")
+
+  return Object.values(selectedFiltersCounts).reduce(
+    (total: number, curr: number) => total + curr,
+    0
+  )
 }

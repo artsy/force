@@ -7,6 +7,7 @@ import { hasFilters } from "./Utils/hasFilters"
 import { isDefaultFilter } from "./Utils/isDefaultFilter"
 import { rangeToTuple } from "./Utils/rangeToTuple"
 import { paramsToCamelCase } from "./Utils/urlBuilder"
+import { getSelectedFiltersCounts } from "./Utils/getSelectedFiltersCounts"
 
 /**
  * Initial filter state
@@ -55,6 +56,19 @@ export enum FilterParamName {
   waysToBuyMakeOffer = "offerable",
   width = "width",
 }
+
+export const waysToBuyFilterNames = [
+  FilterParamName.waysToBuyBuy,
+  FilterParamName.waysToBuyMakeOffer,
+  FilterParamName.waysToBuyBid,
+  FilterParamName.waysToBuyInquire,
+]
+
+export const rangeFilterNames = [
+  FilterParamName.width,
+  FilterParamName.height,
+  FilterParamName.priceRange,
+]
 
 /**
  * A list of filters that support multiple selections
@@ -155,6 +169,9 @@ export interface ArtworkFilterContextProps {
 
   /** Getter for the appropriate source of truth to render in the filter UI */
   currentlySelectedFilters?: () => ArtworkFiltersState
+
+  /* number of currently selected options for each filter */
+  selectedFiltersCounts: Partial<SelectedFiltersCounts>
 
   // Components
   ZeroState?: React.FC
@@ -277,6 +294,15 @@ export const ArtworkFilterContextProvider: React.FC<
     shouldStageFilterChanges ? stage(action) : dispatch(action)
   }
 
+  const currentlySelectedFiltersCounts = getSelectedFiltersCounts(
+    currentlySelectedFilters()
+  )
+
+  console.log(
+    "selectedFiltersCounts",
+    getSelectedFiltersCounts(currentlySelectedFilters())
+  )
+
   const artworkFilterContext = {
     mountedContext: true,
 
@@ -284,6 +310,7 @@ export const ArtworkFilterContextProvider: React.FC<
     hasFilters: hasFilters(artworkFilterState),
     stagedFilters: stagedArtworkFilterState,
     currentlySelectedFilters: currentlySelectedFilters,
+    selectedFiltersCounts: currentlySelectedFiltersCounts,
 
     // Handlers
     onFilterClick,
