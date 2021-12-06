@@ -161,7 +161,7 @@ export const LocationAutoComplete: React.FC<{ onError: () => void }> = ({
       spellCheck={false}
       loading={isLoading}
       defaultValue={values.location}
-      error={values.location.trim() && touched.location && errors.locationId}
+      error={values.location?.trim() && touched.location && errors.locationId}
       onChange={handleChange}
       onClick={handleClick}
       onClear={handleClear}
