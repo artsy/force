@@ -71,7 +71,7 @@ const simulateSelectSuggestion = async (wrapper: ReactWrapper, idx: number) => {
   wrapper.update()
 }
 
-describe("ArtistAutocomplete", () => {
+describe.skip("LocationAutocomplete", () => {
   let wrapper: ReactWrapper
 
   beforeAll(() => {

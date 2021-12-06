@@ -21,7 +21,7 @@ import { useRouter } from "v2/System/Router/useRouter"
 import { ArtworkSidebarClassificationsModalQueryRenderer } from "v2/Apps/Artwork/Components/ArtworkSidebarClassificationsModal"
 import { useSubmission } from "../../Utils/useSubmission"
 import { ArtistAutoComplete } from "./ArtistAutocomplete"
-import { LocationAutoComplete } from "./LocationAutocomplete"
+// import { LocationAutoComplete } from "./LocationAutocomplete"
 
 export const getArtworkDetailsFormInitialValues = () => ({
   artistId: "",
@@ -37,8 +37,8 @@ export const getArtworkDetailsFormInitialValues = () => ({
   depth: "",
   units: "in",
   provenance: "",
-  locationId: "",
-  location: "",
+  // locationId: "",
+  // location: "",
 })
 
 const rarityOptions = checkboxValues.map(({ name, value }) => ({
@@ -62,8 +62,8 @@ export interface ArtworkDetailsFormModel {
   depth: string
   units: string
   provenance: string
-  location: string
-  locationId: string
+  location?: string
+  locationId?: string
 }
 
 export const ArtworkDetailsForm: React.FC = () => {
@@ -323,9 +323,9 @@ export const ArtworkDetailsForm: React.FC = () => {
             value={values.provenance}
           />
         </Column>
-        <Column span={6} mt={[1, 0]}>
+        {/* <Column span={6} mt={[1, 0]}>
           <LocationAutoComplete onError={() => setIsApiError(true)} />
-        </Column>
+        </Column> */}
       </GridColumns>
     </>
   )

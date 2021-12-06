@@ -65,8 +65,8 @@ describe("createConsignSubmission", () => {
         editionSize: "",
         depth: "",
         provenance: "provenance",
-        location: "location",
-        locationId: "locationID",
+        // location: "location",
+        // locationId: "locationID",
       },
       uploadPhotosForm: {
         photos: [
@@ -134,7 +134,7 @@ describe("createConsignSubmission", () => {
       userName: undefined,
       userPhone: undefined,
       provenance: "provenance",
-      locationCity: "location",
+      // locationCity: "location",
     }
 
     expect(createConsignSubmissionMutation).toHaveBeenCalled()

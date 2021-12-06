@@ -23,7 +23,7 @@ export const createConsignSubmissionInput = (
     depth: submission.artworkDetailsForm.depth,
     dimensionsMetric: submission.artworkDetailsForm.units,
     provenance: submission.artworkDetailsForm.provenance,
-    locationCity: submission.artworkDetailsForm.location,
+    // locationCity: submission.artworkDetailsForm.location,
     state: "SUBMITTED",
     userEmail: user?.email,
     userName: user?.name,
