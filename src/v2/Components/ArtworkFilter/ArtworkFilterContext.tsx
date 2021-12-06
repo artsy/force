@@ -30,6 +30,33 @@ export const initialArtworkFilterState: ArtworkFilters = {
 }
 
 /**
+ * General filter types and objects
+ */
+export enum FilterParamName {
+  additionalGeneIDs = "additionalGeneIDs",
+  artistIDs = "artistIDs",
+  artistNationalities = "artistNationalities",
+  artistsIFollow = "includeArtworksByFollowedArtists",
+  attributionClass = "attributionClass",
+  colors = "colors",
+  height = "height",
+  keyword = "keyword",
+  locationCities = "locationCities",
+  materialsTerms = "materialsTerms",
+  medium = "medium",
+  partnerIDs = "partnerIDs",
+  priceRange = "priceRange",
+  sizes = "sizes",
+  sort = "sort",
+  timePeriod = "majorPeriods",
+  waysToBuyBid = "atAuction",
+  waysToBuyBuy = "acquireable",
+  waysToBuyInquire = "inquireableOnly",
+  waysToBuyMakeOffer = "offerable",
+  width = "width",
+}
+
+/**
  * A list of filters that support multiple selections
  */
 export interface MultiSelectArtworkFilters {
@@ -110,6 +137,10 @@ export interface Counts {
   artworks?: number
   has_make_offer_artworks?: boolean
   followedArtists?: number
+}
+
+export type SelectedFiltersCounts = {
+  [Name in FilterParamName | "waysToBuy"]: number
 }
 
 // TODO: merge or make a generic base of `ArtworkFilterContextProps` and `AuctionResultsFilterContextProps`.
