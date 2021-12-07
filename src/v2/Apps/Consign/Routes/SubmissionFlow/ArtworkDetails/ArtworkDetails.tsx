@@ -13,12 +13,9 @@ import { BackLink } from "v2/Components/Links/BackLink"
 import { useErrorModal } from "../Utils/useErrorModal"
 import { useSystemContext } from "v2/System"
 import { createOrUpdateConsignSubmission } from "../Utils/createConsignSubmission"
-import { useState } from "react"
 
 export const ArtworkDetails: React.FC = () => {
   const { router } = useRouter()
-  const [submission, setSubmission] = useState<SubmissionModel>()
-  const [submissionId, setSubmissionId] = useState<string | undefined>("")
   const { openErrorModal } = useErrorModal()
   const { relayEnvironment, user, isLoggedIn } = useSystemContext()
 
@@ -41,33 +38,36 @@ export const ArtworkDetails: React.FC = () => {
       }
     }
 
+    let submission: SubmissionModel
+    let submissionId: string
+
     if (utmParamsData) {
       const utmParams: UtmParams = utmParamsData && JSON.parse(utmParamsData)
-      setSubmission({ artworkDetailsForm, utmParams })
+      submission = { artworkDetailsForm, utmParams }
     } else {
-      setSubmission({ artworkDetailsForm })
+      submission = { artworkDetailsForm }
     }
 
     if (relayEnvironment && submission) {
       try {
-        const submissionId = await createOrUpdateConsignSubmission(
+        submissionId = await createOrUpdateConsignSubmission(
           relayEnvironment,
           submission,
           user,
           !isLoggedIn ? sd.SESSION_ID : undefined
         )
-        setSubmissionId(submissionId)
       } catch (error) {
         openErrorModal()
+        return
       }
-    }
 
-    router.replace({
-      pathname: `/consign/submission/${submissionId}/artwork-details`,
-    })
-    router.push({
-      pathname: `/consign/submission/${submissionId}/upload-photos`,
-    })
+      router.replace({
+        pathname: `/consign/submission/${submissionId}/artwork-details`,
+      })
+      router.push({
+        pathname: `/consign/submission/${submissionId}/upload-photos`,
+      })
+    }
   }
 
   return (
