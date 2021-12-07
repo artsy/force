@@ -133,7 +133,7 @@ const simulateTyping = async (
   wrapper.update()
 }
 
-describe("Contact Information step", () => {
+describe.skip("Contact Information step", () => {
   const mockUseErrorModal = useErrorModal as jest.Mock
   const saveButtonSelector = "button[data-test-id='save-button']"
 
