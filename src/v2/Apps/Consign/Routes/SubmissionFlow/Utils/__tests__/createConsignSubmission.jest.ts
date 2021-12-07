@@ -6,7 +6,7 @@ import {
   createConsignSubmissionMutation,
   createGeminiAssetWithS3Credentials,
 } from "../../Mutations"
-import { createConsignSubmission } from "../createConsignSubmission"
+import { createOrUpdateConsignSubmission } from "../createConsignSubmission"
 import { SubmissionModel } from "../useSubmission"
 
 jest.mock("../../../../../../../lib/analytics/helpers", () => ({
@@ -42,7 +42,7 @@ const file = new File([new Array(10000).join(" ")], "foo.png", {
   type: "image/png",
 })
 
-describe("createConsignSubmission", () => {
+describe("createOrUpdateConsignSubmission", () => {
   let submission: SubmissionModel, relayEnvironment
 
   beforeEach(() => {
@@ -96,7 +96,7 @@ describe("createConsignSubmission", () => {
 
   describe("returns undefined if", () => {
     it("submition empty", async () => {
-      const result = await createConsignSubmission(
+      const result = await createOrUpdateConsignSubmission(
         relayEnvironment,
         (null as unknown) as SubmissionModel
       )
@@ -105,7 +105,7 @@ describe("createConsignSubmission", () => {
     })
 
     it("uploadPhotosForm empty", async () => {
-      const result = await createConsignSubmission(
+      const result = await createOrUpdateConsignSubmission(
         relayEnvironment,
         {} as SubmissionModel
       )
@@ -115,10 +115,10 @@ describe("createConsignSubmission", () => {
   })
 
   it("creates submission if logged-in", async () => {
-    const result = await createConsignSubmission(
+    const result = await createOrUpdateConsignSubmission(
       relayEnvironment,
       submission,
-      "userId",
+      { id: "123", email: "test@test.test" } as User,
       undefined
     )
     const input = {
@@ -151,7 +151,7 @@ describe("createConsignSubmission", () => {
   })
 
   it("creates submission if not logged-in", async () => {
-    const result = await createConsignSubmission(
+    const result = await createOrUpdateConsignSubmission(
       relayEnvironment,
       submission,
       undefined,
@@ -187,7 +187,7 @@ describe("createConsignSubmission", () => {
   })
 
   it("tracks consignment submitted event", async () => {
-    await createConsignSubmission(relayEnvironment, submission)
+    await createOrUpdateConsignSubmission(relayEnvironment, submission)
 
     expect(trackEvent).toHaveBeenCalled()
     expect(trackEvent).toHaveBeenCalledWith({
@@ -199,7 +199,7 @@ describe("createConsignSubmission", () => {
   })
 
   it("saves images", async () => {
-    await createConsignSubmission(
+    await createOrUpdateConsignSubmission(
       relayEnvironment,
       submission,
       undefined,

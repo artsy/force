@@ -2,7 +2,7 @@ import { Text, Button } from "@artsy/palette"
 import { SubmissionStepper } from "v2/Apps/Consign/Components/SubmissionStepper"
 import { useSystemContext } from "v2/System"
 import { useRouter } from "v2/System/Router/useRouter"
-import { createConsignSubmission } from "../Utils/createConsignSubmission"
+import { createOrUpdateConsignSubmission } from "../Utils/createConsignSubmission"
 import { Form, Formik } from "formik"
 import {
   ContactInformationForm,
@@ -78,12 +78,20 @@ export const ContactInformation: React.FC<ContactInformationProps> = ({
 
     if (relayEnvironment && submission) {
       try {
-        await createConsignSubmission(
+        await createOrUpdateConsignSubmission(
           relayEnvironment,
           submission,
-          user?.id,
+          user,
           !isLoggedIn ? sd.SESSION_ID : undefined
         )
+
+        // trackEvent({
+        //   action: ActionType.consignmentSubmitted,
+        //   submission_id: submissionId,
+        //   user_id: user?.id,
+        //   user_email: user?.email,
+        // })
+
         removeSubmission()
         router.push(`/consign/submission/${submissionId}/thank-you`)
       } catch (error) {

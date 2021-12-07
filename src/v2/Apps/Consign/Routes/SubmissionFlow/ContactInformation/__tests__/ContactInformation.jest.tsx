@@ -5,7 +5,7 @@ import { ContactInformationForm } from "../Components/ContactInformationForm"
 import { flushPromiseQueue } from "v2/DevTools"
 import { SystemContextProvider } from "v2/System"
 import { ReactWrapper } from "enzyme"
-import { createConsignSubmission } from "../../Utils/createConsignSubmission"
+import { createOrUpdateConsignSubmission } from "../../Utils/createConsignSubmission"
 import { useErrorModal } from "../../Utils/useErrorModal"
 import { getPhoneNumberInformation } from "../../Utils/phoneNumberUtils"
 
@@ -88,7 +88,7 @@ jest.mock("../../Utils/phoneNumberUtils", () => ({
   getPhoneNumberInformation: jest.fn(),
 }))
 
-const mockCreateConsignSubmission = createConsignSubmission as jest.Mock
+const mockCreateConsignSubmission = createOrUpdateConsignSubmission as jest.Mock
 const mockGetPhoneNumberInformation = getPhoneNumberInformation as jest.Mock
 
 let sessionStore = {
