@@ -42,7 +42,6 @@ const HomeTrendingArtistsRail: React.FC<HomeTrendingArtistsRailProps> = ({
   return (
     <Rail
       alignItems="flex-start"
-      text-align="right"
       title="Trending Artists on Artsy"
       viewAllLabel="View All Artists"
       viewAllHref="/artists"
@@ -132,7 +131,6 @@ const PLACEHOLDER = (
   <Skeleton>
     <Rail
       title="Trending Artists on Artsy"
-      text-align="right"
       viewAllLabel="View All Artists"
       viewAllHref="/artists"
       getItems={() => {
