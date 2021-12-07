@@ -299,7 +299,7 @@ export const countries: CountryData[] = [
     country: "Andorra",
     countryCode: "376",
     value: "ad",
-    text: "🇦🇩  + 375",
+    text: "🇦🇩  + 376",
   },
   {
     country: "Angola",
@@ -431,7 +431,7 @@ export const countries: CountryData[] = [
     country: "Botswana",
     countryCode: "267",
     value: "bw",
-    text: "🇧🇼 + 276",
+    text: "🇧🇼 + 267",
   },
   {
     country: "Brazil (Brasil)",
@@ -749,7 +749,7 @@ export const countries: CountryData[] = [
     country: "Germany (Deutschland)",
     countryCode: "49",
     value: "de",
-    text: "🇩🇪 + 29",
+    text: "🇩🇪 + 49",
   },
   {
     country: "Ghana (Gaana)",
@@ -875,7 +875,7 @@ export const countries: CountryData[] = [
     country: "Iraq (‫العراق‬‎)",
     value: "iq",
     countryCode: "964",
-    text: "🇮🇶 + 924",
+    text: "🇮🇶 + 964",
   },
   {
     country: "Ireland",
