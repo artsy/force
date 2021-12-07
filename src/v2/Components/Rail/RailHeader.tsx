@@ -67,6 +67,7 @@ export const RailHeader: React.FC<RailHeaderProps> = ({
 
       {showViewAll && (
         <Text
+          textAlign="right"
           variant="sm"
           as={RouterLink}
           // @ts-ignore

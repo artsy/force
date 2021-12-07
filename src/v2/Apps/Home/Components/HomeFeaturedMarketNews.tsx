@@ -172,6 +172,7 @@ const HomeFeaturedMarketNewsContainer: React.FC = ({ children }) => {
 
         <Text
           variant="sm"
+          textAlign="right"
           as={RouterLink}
           // @ts-ignore
           to="/articles"
