@@ -77,12 +77,12 @@
   dependencies:
     dotenv "^10.0.0"
 
-"@artsy/palette-charts@17.9.0":
-  version "17.9.0"
-  resolved "https://registry.yarnpkg.com/@artsy/palette-charts/-/palette-charts-17.9.0.tgz#d2c4549e96db466fd117feecfa6605bdcfb2c339"
-  integrity sha512-WTc1HbkU5AsUsl6B8g38/7c2SU3DQD0QOkDS3jH8rbOOorQlWVcftj+/GNI/itiUE1yVlrFQ3SuT+VaMpOO0XQ==
+"@artsy/palette-charts@17.10.0":
+  version "17.10.0"
+  resolved "https://registry.yarnpkg.com/@artsy/palette-charts/-/palette-charts-17.10.0.tgz#6278483092796535a0636995bb61095ee414d195"
+  integrity sha512-16bJd/cS+KPncxXZxxbee9wEmrJbI5utzj+eR7q8yu4xfrUgiiONTLxHYll8NnB3kYfiSZ2MwmZx34g+KzIOUA==
   dependencies:
-    "@artsy/palette" "^18.9.0"
+    "@artsy/palette" "^18.10.0"
     "@seznam/compose-react-refs" "^1.0.6"
     "@styled-system/theme-get" "^5.1.2"
     d3-interpolate "^1.3.2"
@@ -94,28 +94,10 @@
   resolved "https://registry.yarnpkg.com/@artsy/palette-tokens/-/palette-tokens-2.6.0.tgz#3d780ff65994fef0daadef29d43d11f89470b728"
   integrity sha512-UQP6P+xv/5hm82ep0z5X3kCFFnk03H6y8kdW/wTU+xPq45ESUay7aNFYXeub47tmW2v6dXJ8Oa01Z0iwc6BVpA==
 
-"@artsy/palette@18.10.0":
+"@artsy/palette@18.10.0", "@artsy/palette@^18.10.0":
   version "18.10.0"
   resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-18.10.0.tgz#8309fc34515b00d716f273dbac7649047e1342e4"
   integrity sha512-rOZEqZRzTMCEoIogcRNmQO39CIYSDGyiVeUKRq/Ew6DIonzmVA1eoo+UGTvHNab/FziwtsaH969xY7TGFsqNMA==
-  dependencies:
-    "@artsy/palette-tokens" "^2.6.0"
-    "@seznam/compose-react-refs" "^1.0.6"
-    "@styled-system/theme-get" "^5.1.2"
-    luxon "^1.15"
-    proportional-scale "^4.0.0"
-    react-lazy-load-image-component "1.5.0"
-    react-remove-scroll "^2.3.0"
-    styled-bootstrap-grid "3.1.0"
-    styled-system "^5.1.5"
-    trunc-html "^1.1.2"
-    use-cursor "^1.2.3"
-    use-keyboard-list-navigation "2.4.2"
-
-"@artsy/palette@^18.9.0":
-  version "18.9.0"
-  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-18.9.0.tgz#c3b3de3ab560c0522c7f0d478b19538e17f50755"
-  integrity sha512-DOo9mJyHxhLwn4zVseMAtED1pXY5rhXr5mw/OqN10xGzlfV3ojpX3VdZXU1oBdb0Deb09r13liORECy+7MTimQ==
   dependencies:
     "@artsy/palette-tokens" "^2.6.0"
     "@seznam/compose-react-refs" "^1.0.6"
