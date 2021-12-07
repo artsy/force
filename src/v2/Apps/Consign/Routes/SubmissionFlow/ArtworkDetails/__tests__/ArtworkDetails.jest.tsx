@@ -206,7 +206,7 @@ describe("ArtworkDetails", () => {
       expect(button.prop("disabled")).toBe(false)
     })
 
-    describe("Valid form submit", () => {
+    describe.skip("Valid form submit", () => {
       it("replace current route and redirects to Upload photos step", async () => {
         sessionStore = {
           "submission-1": JSON.stringify({
