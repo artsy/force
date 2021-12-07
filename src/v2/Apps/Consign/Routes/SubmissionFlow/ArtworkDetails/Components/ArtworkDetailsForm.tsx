@@ -36,8 +36,7 @@ export const getArtworkDetailsFormInitialValues = () => ({
   depth: "",
   units: "in",
   provenance: "",
-  // locationId: "",
-  // location: "",
+  location: "",
 })
 
 const rarityOptions = checkboxValues.map(({ name, value }) => ({
@@ -326,9 +325,18 @@ export const ArtworkDetailsForm: React.FC = () => {
             value={values.provenance}
           />
         </Column>
-        {/* <Column span={6} mt={[1, 0]}>
-          <LocationAutoComplete onError={() => openErrorModal()} />
-        </Column> */}
+        <Column span={6} mt={[1, 0]}>
+          <Input
+            title="Location"
+            name="location"
+            placeholder="Enter City Where Artwork Is Located"
+            maxLength={256}
+            onBlur={handleBlur}
+            onChange={handleChange}
+            value={values.location}
+          />
+          {/* <LocationAutoComplete onError={() => openErrorModal()} /> */}
+        </Column>
       </GridColumns>
     </>
   )
