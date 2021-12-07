@@ -22,7 +22,7 @@ export const CollectionsCategory: React.FC<CollectionsCategoryProps> = ({
   category,
   category: { collections },
 }) => {
-  const [toggleInput, toggleRadioInput] = useState(false)
+  const [showAll, toggleShowAll] = useState(false)
 
   const sortedCollections = [...collections].sort((a, b) =>
     a.title.localeCompare(b.title)
