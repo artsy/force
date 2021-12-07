@@ -36,6 +36,7 @@ export const artworkDetailsValidationSchema = yup.object().shape({
     .trim(),
   units: yup.string().required(),
   provenance: yup.string().trim(),
+  location: yup.string().required().trim(),
   // locationId: yup.string().test((value, ctx) =>
   //   value
   //     ? true
