@@ -1,13 +1,15 @@
-import { FC } from "react";
-import * as React from "react";
+import { FC } from "react"
+import * as React from "react"
 import {
   CloseIcon,
   Flex,
   Icon,
   Path,
   Text,
-  Separator,
   Title,
+  StackableBorderBox,
+  Box,
+  InfoCircleIcon,
 } from "@artsy/palette"
 import { color } from "styled-system"
 import styled from "styled-components"
@@ -24,13 +26,14 @@ interface DetailsHeaderProps extends DetailsProps {}
 export const DetailsHeader: FC<DetailsHeaderProps> = props => {
   const { showDetails, setShowDetails } = props
   return (
-    <Flex
+    <StackableBorderBox
+      p={0}
       flexDirection="column"
-      width={showDetails ? "375px" : "0"}
+      width={showDetails ? "376px" : "0"}
       maxWidth={showDetails ? "auto" : "0"}
-      pb={1}
       display={["none", "none", "flex", "flex", "flex"]}
       {...props}
+      borderTop="none !important"
     >
       <Flex
         flexDirection="row"
@@ -49,8 +52,7 @@ export const DetailsHeader: FC<DetailsHeaderProps> = props => {
           onClick={() => setShowDetails(false)}
         />
       </Flex>
-      <Separator />
-    </Flex>
+    </StackableBorderBox>
   )
 }
 
@@ -59,23 +61,34 @@ export const DetailIcon: React.FC<DetailsProps> = props => {
   return (
     // TODO: Fix <Icon /> typings in Palette
     // @ts-ignore
-    <StatefulIcon
-      width="28"
-      height="28"
-      viewBox="0 0 28 28"
-      mr={[0, 0, 0, 1]}
-      onClick={() => {
-        setShowDetails(!showDetails)
-      }}
-      active={showDetails}
-    >
-      <Title>Show details</Title>
-      <Path
-        d="M6.5 21.5V6.5H16L16 21.5H6.5ZM17.5 21.5H21.5V6.5H17.5L17.5 21.5ZM5 5.5C5 5.22386 5.22386 5 5.5 5H22.5C22.7761 5 23 5.22386 23 5.5V22.5C23 22.7761 22.7761 23 22.5 23H5.5C5.22386 23 5 22.7761 5 22.5V5.5Z"
-        fill={color("black100")}
-        fillRule="evenodd"
-      />
-    </StatefulIcon>
+    <Box display={showDetails ? "none" : "inline"}>
+      <InfoCircleIcon />
+      <Text
+        onClick={() => {
+          setShowDetails(!showDetails)
+        }}
+      >
+        Details
+      </Text>
+    </Box>
+    // <StatefulIcon
+    //   width="28"
+    //   height="28"
+    //   viewBox="0 0 28 28"
+    //   mr={[0, 0, 0, 1]}
+    //   onClick={() => {
+    //     setShowDetails(!showDetails)
+    //   }}
+    //   active={showDetails}
+    // >
+    // <Title>Show details</Title>
+    // <Text>Details</Text>
+    // <Path
+    //   d="M6.5 21.5V6.5H16L16 21.5H6.5ZM17.5 21.5H21.5V6.5H17.5L17.5 21.5ZM5 5.5C5 5.22386 5.22386 5 5.5 5H22.5C22.7761 5 23 5.22386 23 5.5V22.5C23 22.7761 22.7761 23 22.5 23H5.5C5.22386 23 5 22.7761 5 22.5V5.5Z"
+    //   fill={color("black100")}
+    //   fillRule="evenodd"
+    // />
+    // </StatefulIcon>
   )
 }
 

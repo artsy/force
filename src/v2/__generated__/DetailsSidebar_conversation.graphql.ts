@@ -4,7 +4,7 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type Details_conversation = {
+export type DetailsSidebar_conversation = {
     readonly to: {
         readonly name: string;
         readonly initials: string | null;
@@ -13,6 +13,7 @@ export type Details_conversation = {
         readonly edges: ReadonlyArray<{
             readonly node: {
                 readonly internalID: string;
+                readonly stateExpiresAt: string | null;
                 readonly requestedFulfillment: {
                     readonly __typename: string;
                     readonly " $fragmentRefs": FragmentRefs<"ShippingAddress_ship">;
@@ -59,12 +60,12 @@ export type Details_conversation = {
             readonly __typename: "%other";
         }) | null;
     } | null> | null;
-    readonly " $refType": "Details_conversation";
+    readonly " $refType": "DetailsSidebar_conversation";
 };
-export type Details_conversation$data = Details_conversation;
-export type Details_conversation$key = {
-    readonly " $data"?: Details_conversation$data;
-    readonly " $fragmentRefs": FragmentRefs<"Details_conversation">;
+export type DetailsSidebar_conversation$data = DetailsSidebar_conversation;
+export type DetailsSidebar_conversation$key = {
+    readonly " $data"?: DetailsSidebar_conversation$data;
+    readonly " $fragmentRefs": FragmentRefs<"DetailsSidebar_conversation">;
 };
 
 
@@ -125,7 +126,7 @@ return {
       }
     ]
   },
-  "name": "Details_conversation",
+  "name": "DetailsSidebar_conversation",
   "selections": [
     {
       "alias": null,
@@ -201,6 +202,13 @@ return {
                   "args": null,
                   "kind": "ScalarField",
                   "name": "internalID",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "stateExpiresAt",
                   "storageKey": null
                 },
                 {
@@ -452,5 +460,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '4d11194647ac2cae10ee9304cd4172bf';
+(node as any).hash = '502ce17d50d4d1a6afe578c369a1ad59';
 export default node;

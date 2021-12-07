@@ -6,18 +6,20 @@ export const CreditCardDetails = ({
   expirationMonth,
   expirationYear,
   responsive = true,
+  textColor,
 }: {
   brand: string
   lastDigits: string
   expirationMonth: number
   expirationYear: number
   responsive?: boolean
+  textColor?: string
 }) => (
   <Flex alignItems="center">
     <CreditCardIcon mr={1} type={brand} width="25px" />
     <Text
       size={responsive ? ["2", "3"] : "3"}
-      color="black100"
+      color={textColor ? textColor : "black100"}
       style={{ position: "relative", top: "1px" }}
     >
       •••• {lastDigits}

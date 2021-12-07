@@ -3,14 +3,12 @@ import { createFragmentContainer, graphql } from "react-relay"
 import {
   Box,
   DocumentIcon,
-  EntityHeader,
   Flex,
   FlexProps,
   Join,
   Link,
   QuestionCircleIcon,
   Text,
-  Separator,
   Spacer,
   breakpoints,
   media,
@@ -25,12 +23,9 @@ import { useWindowSize } from "v2/Utils/Hooks/useWindowSize"
 import ArtworkDetails from "v2/Components/Artwork/Metadata"
 import { getViewportDimensions } from "v2/Utils/viewport"
 import { DetailsHeader } from "./DetailsHeader"
-
-import { Details_conversation } from "v2/__generated__/Details_conversation.graphql"
-import { OfferHistoryItemFragmentContainer } from "v2/Apps/Order/Components/OfferHistoryItem"
+import { DetailsSidebar_conversation } from "v2/__generated__/DetailsSidebar_conversation.graphql"
 import { extractNodes } from "v2/Utils/extractNodes"
 import { TransactionDetailsSummaryItemFragmentContainer } from "v2/Apps/Order/Components/TransactionDetailsSummaryItem"
-import { ShippingSummaryItemFragmentContainer } from "v2/Apps/Order/Components/ShippingSummaryItem"
 import { ShippingAddressFragmentContainer } from "v2/Apps/Order/Components/ShippingAddress"
 import { CreditCardDetails } from "v2/Apps/Order/Components/CreditCardDetails"
 
@@ -69,12 +64,12 @@ const TruncatedLine = styled(Text)`
 `
 
 interface DetailsProps extends FlexProps {
-  conversation: Details_conversation
+  conversation: DetailsSidebar_conversation
   showDetails: boolean
   setShowDetails: (showDetails: boolean) => void
 }
 
-export const Details: FC<DetailsProps> = ({
+export const DetailsSidebar: FC<DetailsProps> = ({
   conversation,
   setShowDetails,
   showDetails,
@@ -150,6 +145,15 @@ export const Details: FC<DetailsProps> = ({
 
   const activeOrder = extractNodes(conversation.orderConnection)[0]
 
+  let cardInfoWithTextColor
+
+  if (activeOrder) {
+    cardInfoWithTextColor = {
+      ...activeOrder.creditCard!,
+      ...{ textColor: "black60" },
+    }
+  }
+
   return (
     <DetailsContainer
       flexDirection="column"
@@ -174,16 +178,18 @@ export const Details: FC<DetailsProps> = ({
         showDetails={showDetails}
         setShowDetails={setShowDetails}
       />
-      <EntityHeader
-        px={2}
-        py={1}
-        name={conversation.to.name}
-        initials={conversation.to.initials ?? undefined}
-      />
+      {!!activeOrder && (
+        <StackableBorderBox>
+          <Text>
+            The seller should respond to your offer by{" "}
+            {activeOrder.stateExpiresAt}. Please keep in mind that making an
+            offer does not guarantee the purchase.
+          </Text>
+        </StackableBorderBox>
+      )}
       {item && (
         <>
-          <Separator />
-          <Flex flexDirection="column" p={2}>
+          <StackableBorderBox flexDirection="column" p={2}>
             <Text variant="md" mb={2}>
               {item.__typename}
             </Text>
@@ -206,7 +212,7 @@ export const Details: FC<DetailsProps> = ({
                 )}
               </Flex>
             </Flex>
-          </Flex>
+          </StackableBorderBox>
         </>
       )}
       {!!activeOrder && (
@@ -216,8 +222,7 @@ export const Details: FC<DetailsProps> = ({
         />
       )}
       {!!activeOrder && (
-        <>
-          <Separator my={2} />
+        <StackableBorderBox>
           <Box px={2}>
             <Text variant="md" mb={2}>
               Ship To
@@ -227,115 +232,118 @@ export const Details: FC<DetailsProps> = ({
               textColor="black60"
             />
           </Box>
-        </>
+        </StackableBorderBox>
       )}
       {!!activeOrder && (
-        <>
-          <Separator my={2} />
+        <StackableBorderBox>
           <Box px={2}>
             <Text variant="md" mb={2}>
               Payment Method
             </Text>
-            <CreditCardDetails {...activeOrder.creditCard!} />
+            <CreditCardDetails {...cardInfoWithTextColor} />
           </Box>
-        </>
+        </StackableBorderBox>
       )}
       {!!attachments?.length && (
-        <>
-          <Separator my={2} />
+        <StackableBorderBox>
           <Box px={2}>
             <Text variant="md" mb={2}>
               Attachments
             </Text>
             <Join separator={<Spacer mb={1} />}>{attachmentItems}</Join>
           </Box>
-        </>
+        </StackableBorderBox>
       )}
-      <Separator my={2} />
-      <Flex flexDirection="column" px={2}>
-        <Text variant="md" mb={2}>
-          Support
-        </Text>
-        <Link
-          href="https://support.artsy.net/hc/en-us/sections/360008203054-Contact-a-gallery"
-          target="_blank"
-          noUnderline
-        >
-          <Flex alignItems="center" mb={1}>
-            <QuestionCircleIcon mr={1} />
-            <Text variant="xs">Inquiries FAQ</Text>
-          </Flex>
-        </Link>
-      </Flex>
+      <StackableBorderBox height="100%">
+        <Flex flexDirection="column" px={2}>
+          <Text variant="md" mb={2}>
+            Support
+          </Text>
+          <Link
+            href="https://support.artsy.net/hc/en-us/sections/360008203054-Contact-a-gallery"
+            target="_blank"
+            noUnderline
+          >
+            <Flex alignItems="center" mb={1}>
+              <QuestionCircleIcon mr={1} />
+              <Text variant="xs">Inquiries FAQ</Text>
+            </Flex>
+          </Link>
+        </Flex>
+      </StackableBorderBox>
     </DetailsContainer>
   )
 }
 
-export const DetailsFragmentContainer = createFragmentContainer(Details, {
-  conversation: graphql`
-    fragment Details_conversation on Conversation
-      @argumentDefinitions(
-        count: { type: "Int", defaultValue: 30 }
-        after: { type: "String" }
-      ) {
-      to {
-        name
-        initials
-      }
-      orderConnection(
-        first: 10
-        states: [APPROVED, FULFILLED, SUBMITTED]
-        participantType: BUYER
-      ) {
-        edges {
-          node {
-            internalID
-            ...TransactionDetailsSummaryItem_order
-            ...ShippingSummaryItem_order
-            requestedFulfillment {
-              __typename
-              ...ShippingAddress_ship
+export const DetailsSidebarFragmentContainer = createFragmentContainer(
+  DetailsSidebar,
+  {
+    conversation: graphql`
+      fragment DetailsSidebar_conversation on Conversation
+        @argumentDefinitions(
+          count: { type: "Int", defaultValue: 30 }
+          after: { type: "String" }
+        ) {
+        to {
+          name
+          initials
+        }
+        orderConnection(
+          first: 10
+          states: [APPROVED, FULFILLED, SUBMITTED]
+          participantType: BUYER
+        ) {
+          edges {
+            node {
+              internalID
+              stateExpiresAt
+              ...TransactionDetailsSummaryItem_order
+              ...ShippingSummaryItem_order
+              requestedFulfillment {
+                __typename
+                ...ShippingAddress_ship
+              }
+              creditCard {
+                brand
+                lastDigits
+                expirationYear
+                expirationMonth
+              }
             }
-            creditCard {
-              brand
-              lastDigits
-              expirationYear
-              expirationMonth
+          }
+        }
+        messagesConnection(first: $count, after: $after, sort: DESC)
+          @connection(key: "Messages_messagesConnection", filters: []) {
+          edges {
+            node {
+              attachments {
+                id
+                contentType
+                fileName
+                downloadURL
+              }
+            }
+          }
+        }
+        items {
+          item {
+            __typename
+            ... on Artwork {
+              href
+              ...Metadata_artwork
+              image {
+                thumbnailUrl: url(version: "small")
+              }
+            }
+            ... on Show {
+              href
+              image: coverImage {
+                thumbnailUrl: url(version: "small")
+              }
             }
           }
         }
       }
-      messagesConnection(first: $count, after: $after, sort: DESC)
-        @connection(key: "Messages_messagesConnection", filters: []) {
-        edges {
-          node {
-            attachments {
-              id
-              contentType
-              fileName
-              downloadURL
-            }
-          }
-        }
-      }
-      items {
-        item {
-          __typename
-          ... on Artwork {
-            href
-            ...Metadata_artwork
-            image {
-              thumbnailUrl: url(version: "small")
-            }
-          }
-          ... on Show {
-            href
-            image: coverImage {
-              thumbnailUrl: url(version: "small")
-            }
-          }
-        }
-      }
-    }
-  `,
-})
+    `,
+  }
+)

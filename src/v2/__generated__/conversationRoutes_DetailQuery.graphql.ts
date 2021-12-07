@@ -287,48 +287,12 @@ fragment Conversation_me_3oGfhn on Me {
     internalID
     ...Conversation_conversation
     ...ConversationCTA_conversation
-    ...Details_conversation
+    ...DetailsSidebar_conversation
     id
   }
 }
 
-fragment Details_artwork on Artwork {
-  href
-  title
-  date
-  sale_message: saleMessage
-  cultural_maker: culturalMaker
-  artists(shallow: true) {
-    id
-    href
-    name
-  }
-  collecting_institution: collectingInstitution
-  partner(shallow: true) {
-    name
-    href
-    id
-  }
-  sale {
-    is_auction: isAuction
-    is_closed: isClosed
-    id
-  }
-  sale_artwork: saleArtwork {
-    counts {
-      bidder_positions: bidderPositions
-    }
-    highest_bid: highestBid {
-      display
-    }
-    opening_bid: openingBid {
-      display
-    }
-    id
-  }
-}
-
-fragment Details_conversation on Conversation {
+fragment DetailsSidebar_conversation on Conversation {
   to {
     name
     initials
@@ -339,6 +303,7 @@ fragment Details_conversation on Conversation {
       node {
         __typename
         internalID
+        stateExpiresAt
         ...TransactionDetailsSummaryItem_order
         ...ShippingSummaryItem_order
         requestedFulfillment {
@@ -396,6 +361,42 @@ fragment Details_conversation on Conversation {
         id
       }
     }
+  }
+}
+
+fragment Details_artwork on Artwork {
+  href
+  title
+  date
+  sale_message: saleMessage
+  cultural_maker: culturalMaker
+  artists(shallow: true) {
+    id
+    href
+    name
+  }
+  collecting_institution: collectingInstitution
+  partner(shallow: true) {
+    name
+    href
+    id
+  }
+  sale {
+    is_auction: isAuction
+    is_closed: isClosed
+    id
+  }
+  sale_artwork: saleArtwork {
+    counts {
+      bidder_positions: bidderPositions
+    }
+    highest_bid: highestBid {
+      display
+    }
+    opening_bid: openingBid {
+      display
+    }
+    id
   }
 }
 
@@ -783,6 +784,13 @@ v24 = {
   "args": null,
   "kind": "ScalarField",
   "name": "fromParticipant",
+  "storageKey": null
+},
+v25 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "stateExpiresAt",
   "storageKey": null
 },
 v25 = {
@@ -1252,6 +1260,7 @@ return {
                             ],
                             "storageKey": null
                           },
+                          (v24/*: any*/),
                           (v8/*: any*/),
                           {
                             "alias": null,
@@ -1264,12 +1273,12 @@ return {
                               (v8/*: any*/),
                               {
                                 "kind": "InlineFragment",
-                                "selections": (v25/*: any*/),
+                                "selections": (v26/*: any*/),
                                 "type": "CommerceShip"
                               },
                               {
                                 "kind": "InlineFragment",
-                                "selections": (v25/*: any*/),
+                                "selections": (v26/*: any*/),
                                 "type": "CommerceShipArta"
                               }
                             ],
@@ -1318,12 +1327,12 @@ return {
                                           (v3/*: any*/),
                                           {
                                             "kind": "InlineFragment",
-                                            "selections": (v26/*: any*/),
+                                            "selections": (v27/*: any*/),
                                             "type": "Artwork"
                                           },
                                           {
                                             "kind": "InlineFragment",
-                                            "selections": (v26/*: any*/),
+                                            "selections": (v27/*: any*/),
                                             "type": "EditionSet"
                                           }
                                         ],
@@ -1385,18 +1394,18 @@ return {
                             "name": "mode",
                             "storageKey": null
                           },
-                          (v28/*: any*/),
                           (v29/*: any*/),
                           (v30/*: any*/),
                           (v31/*: any*/),
+                          (v32/*: any*/),
                           {
                             "alias": null,
-                            "args": (v27/*: any*/),
+                            "args": (v28/*: any*/),
                             "kind": "ScalarField",
                             "name": "itemsTotal",
                             "storageKey": "itemsTotal(precision:2)"
                           },
-                          (v32/*: any*/),
+                          (v33/*: any*/),
                           {
                             "alias": null,
                             "args": null,
@@ -1857,7 +1866,7 @@ return {
                                 "name": "location",
                                 "plural": false,
                                 "selections": [
-                                  (v24/*: any*/),
+                                  (v25/*: any*/),
                                   (v3/*: any*/)
                                 ],
                                 "storageKey": null
