@@ -12,16 +12,7 @@ import { useRouter } from "v2/System/Router/useRouter"
 import { useSubmission } from "../Utils/useSubmission"
 import { BackLink } from "v2/Components/Links/BackLink"
 import { uploadPhotosValidationSchema } from "../Utils/validation"
-
-import {
-  addAssetToConsignment,
-  createGeminiAssetWithS3Credentials,
-  getConvectionGeminiKey,
-} from "../Mutations"
-
-import createLogger from "v2/Utils/logger"
-
-const logger = createLogger("createConsignSubmission.ts")
+import { uploadPhotosToConsignment } from "../Utils/uploadPhotosToConsignment"
 
 export const UploadPhotos: React.FC = () => {
   const {
@@ -30,7 +21,7 @@ export const UploadPhotos: React.FC = () => {
       params: { id },
     },
   } = useRouter()
-  const { isLoggedIn, relayEnvironment } = useSystemContext()
+  const { isLoggedIn, relayEnvironment, user } = useSystemContext()
   const { submission, saveSubmission, submissionId } = useSubmission(id)
 
   const handleSubmit = async () => {
@@ -38,40 +29,14 @@ export const UploadPhotos: React.FC = () => {
       return
     }
 
-    const convectionKey = await getConvectionGeminiKey(relayEnvironment)
-
-    await Promise.all(
-      submission.uploadPhotosForm.photos
-        .filter(photo => photo.s3Key && photo.bucket)
-        .map(async photo => {
-          try {
-            // Let Gemini know that this file exists and should be processed
-            const geminiToken = await createGeminiAssetWithS3Credentials(
-              relayEnvironment,
-              {
-                sourceKey: photo.s3Key!,
-                sourceBucket: photo.bucket!,
-                templateKey: convectionKey,
-                metadata: {
-                  id: submissionId,
-                  _type: "Consignment",
-                },
-              }
-            )
-
-            await addAssetToConsignment(relayEnvironment, {
-              assetType: "image",
-              geminiToken,
-              submissionID: submissionId,
-              sessionID: !isLoggedIn ? sd.SESSION_ID : undefined,
-            })
-          } catch (error) {
-            logger.error("Consign submission: add asset error", error)
-          }
-        })
+    const photoUploadSuccess = await uploadPhotosToConsignment(
+      relayEnvironment,
+      submission,
+      user?.id,
+      !isLoggedIn ? sd.SESSION_ID : undefined
     )
 
-    if (submission) {
+    if (photoUploadSuccess) {
       router.push({
         pathname: `/consign/submission/${submissionId}/contact-information`,
       })

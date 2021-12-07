@@ -1,17 +1,9 @@
 import { Environment } from "relay-runtime"
 import { createConsignSubmissionInput } from "./createConsignSubmissionInput"
-import {
-  addAssetToConsignment,
-  createConsignSubmissionMutation,
-  createGeminiAssetWithS3Credentials,
-  getConvectionGeminiKey,
-} from "../Mutations"
-import createLogger from "v2/Utils/logger"
+import { createConsignSubmissionMutation } from "../Mutations"
 import { SubmissionModel } from "./useSubmission"
 import { ActionType } from "@artsy/cohesion"
 import { trackEvent } from "lib/analytics/helpers"
-
-const logger = createLogger("createConsignSubmission.ts")
 
 export const createConsignSubmission = async (
   relayEnvironment: Environment,
@@ -40,39 +32,6 @@ export const createConsignSubmission = async (
     user_id: userId,
     user_email: submission.contactInformationForm.email,
   })
-
-  const convectionKey = await getConvectionGeminiKey(relayEnvironment)
-
-  await Promise.all(
-    submission.uploadPhotosForm.photos
-      .filter(photo => photo.s3Key && photo.bucket)
-      .map(async photo => {
-        try {
-          // Let Gemini know that this file exists and should be processed
-          const geminiToken = await createGeminiAssetWithS3Credentials(
-            relayEnvironment,
-            {
-              sourceKey: photo.s3Key!,
-              sourceBucket: photo.bucket!,
-              templateKey: convectionKey,
-              metadata: {
-                id: submissionId,
-                _type: "Consignment",
-              },
-            }
-          )
-
-          await addAssetToConsignment(relayEnvironment, {
-            assetType: "image",
-            geminiToken,
-            submissionID: submissionId,
-            sessionID: sessionId,
-          })
-        } catch (error) {
-          logger.error("Consign submission: add asset error", error)
-        }
-      })
-  )
 
   return submissionId
 }
