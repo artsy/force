@@ -37,7 +37,7 @@ export const HowToSell: React.FC = () => {
           <Section
             icon={<MultipleOffersIcon width={50} height={50} />}
             text="Receive multiple offers"
-            description="If your work is accepted, you’ll receive competitive consignment offers from Artsy’s curated auctions, auction houses, and galleries."
+            description="If your work is accepted, you’ll receive competitive offers from Artsy’s curated auctions, auction houses, and galleries."
           />
         </Column>
 
