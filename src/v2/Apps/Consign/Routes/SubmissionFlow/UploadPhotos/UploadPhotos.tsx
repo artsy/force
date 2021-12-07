@@ -1,4 +1,5 @@
 import { Box, Button, Text } from "@artsy/palette"
+import { useSystemContext } from "v2/System"
 import { Form, Formik } from "formik"
 import { SubmissionStepper } from "v2/Apps/Consign/Components/SubmissionStepper"
 import {
@@ -12,6 +13,16 @@ import { useSubmission } from "../Utils/useSubmission"
 import { BackLink } from "v2/Components/Links/BackLink"
 import { uploadPhotosValidationSchema } from "../Utils/validation"
 
+import {
+  addAssetToConsignment,
+  createGeminiAssetWithS3Credentials,
+  getConvectionGeminiKey,
+} from "../Mutations"
+
+import createLogger from "v2/Utils/logger"
+
+const logger = createLogger("createConsignSubmission.ts")
+
 export const UploadPhotos: React.FC = () => {
   const {
     router,
@@ -19,9 +30,47 @@ export const UploadPhotos: React.FC = () => {
       params: { id },
     },
   } = useRouter()
+  const { isLoggedIn, relayEnvironment } = useSystemContext()
   const { submission, saveSubmission, submissionId } = useSubmission(id)
 
   const handleSubmit = async () => {
+    if (!submission || !submission.uploadPhotosForm || !relayEnvironment) {
+      return
+    }
+
+    const convectionKey = await getConvectionGeminiKey(relayEnvironment)
+
+    await Promise.all(
+      submission.uploadPhotosForm.photos
+        .filter(photo => photo.s3Key && photo.bucket)
+        .map(async photo => {
+          try {
+            // Let Gemini know that this file exists and should be processed
+            const geminiToken = await createGeminiAssetWithS3Credentials(
+              relayEnvironment,
+              {
+                sourceKey: photo.s3Key!,
+                sourceBucket: photo.bucket!,
+                templateKey: convectionKey,
+                metadata: {
+                  id: submissionId,
+                  _type: "Consignment",
+                },
+              }
+            )
+
+            await addAssetToConsignment(relayEnvironment, {
+              assetType: "image",
+              geminiToken,
+              submissionID: submissionId,
+              sessionID: !isLoggedIn ? sd.SESSION_ID : undefined,
+            })
+          } catch (error) {
+            logger.error("Consign submission: add asset error", error)
+          }
+        })
+    )
+
     if (submission) {
       router.push({
         pathname: `/consign/submission/${submissionId}/contact-information`,
