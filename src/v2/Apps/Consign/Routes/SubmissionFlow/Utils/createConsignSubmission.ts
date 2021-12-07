@@ -20,18 +20,21 @@ export const createOrUpdateConsignSubmission = async (
   user?: User,
   sessionId?: string
 ) => {
+  let submissionId: string
+
   if (submission.id) {
     // TODO: updateConsignSubmissionMutation
+
+    submissionId = submission.id
   } else {
     const input = createConsignSubmissionInput(submission, sessionId)
-    const submissionId = await createConsignSubmissionMutation(
+    submissionId = await createConsignSubmissionMutation(
       relayEnvironment,
       input
     )
-
-    return submissionId
   }
 
+  return submissionId
   // const convectionKey = await getConvectionGeminiKey(relayEnvironment)
 
   // await Promise.all(
