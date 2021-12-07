@@ -1,5 +1,5 @@
-import { useState } from "react";
-import * as React from "react";
+import { useState } from "react"
+import * as React from "react"
 import {
   Box,
   Button,
@@ -22,7 +22,7 @@ export const CollectionsCategory: React.FC<CollectionsCategoryProps> = ({
   category,
   category: { collections },
 }) => {
-  const [showAll, toggleShowAll] = useState(false)
+  const [toggleInput, toggleRadioInput] = useState(false)
 
   const sortedCollections = [...collections].sort((a, b) =>
     a.title.localeCompare(b.title)

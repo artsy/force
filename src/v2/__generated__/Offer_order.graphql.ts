@@ -18,6 +18,7 @@ export type Offer_order = {
                     readonly slug: string;
                     readonly price: string | null;
                     readonly isPriceRange: boolean | null;
+                    readonly price_currency: string | null;
                     readonly listPrice: {
                         readonly major?: number;
                         readonly currencyCode?: string;
@@ -177,6 +178,13 @@ return {
                       "storageKey": null
                     },
                     {
+                      "alias": "price_currency",
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "priceCurrency",
+                      "storageKey": null
+                    },
+                    {
                       "alias": null,
                       "args": null,
                       "concreteType": null,
@@ -285,5 +293,5 @@ return {
   "type": "CommerceOrder"
 };
 })();
-(node as any).hash = '9eb9368f2087d594c6a0a8684cef95a2';
+(node as any).hash = 'ea0cec28da9a5d9a90aedfc2ebb11ad8';
 export default node;
