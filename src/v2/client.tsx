@@ -9,6 +9,7 @@ import { beforeAnalyticsReady, onAnalyticsReady } from "lib/analytics/helpers"
 import { getClientParam } from "./Utils/getClientParam"
 import { buildClientApp } from "v2/System/Router/client"
 import { syncNonCacheableData } from "./System/Client/syncSharify"
+import { loadSegment } from "lib/analytics/segmentOneTrustIntegration/segmentOneTrustIntegration"
 
 async function setupClient() {
   syncNonCacheableData()
@@ -37,6 +38,8 @@ async function setupClient() {
       })
     }
 
+    loadSegment()
+
     initAuthModalContainer()
     setupArtistSignUpModal()
 
@@ -54,7 +57,7 @@ async function setupClient() {
   })
 }
 
-// Initialze clent
+// Initialze client
 ;(async () => {
   try {
     await setupClient()
