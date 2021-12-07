@@ -21,7 +21,7 @@ export const SettingsEditSettingsTwoFactor: React.FC<SettingsEditSettingsTwoFact
       </Text>
 
       <Join separator={<Spacer mt={2} />}>
-        <Text variant="sm">
+        <Text variant="sm" color="black60">
           Set up an additional layer of security by requiring a security code in
           addition to your password to log in to your Artsy account.
         </Text>
