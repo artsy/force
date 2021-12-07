@@ -1,5 +1,4 @@
-import { ReactElement } from "react";
-import * as React from "react";
+import React, { ReactElement } from "react"
 import {
   render as originalRender,
   RenderOptions,
@@ -13,6 +12,10 @@ import {
   useArtworkFilterContext,
 } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
 import { SizeFilter } from "../SizeFilter"
+
+jest.mock("v2/Utils/Hooks/useMatchMedia", () => ({
+  __internal__useMatchMedia: () => ({}),
+}))
 
 const render = (ui: ReactElement, options: RenderOptions = {}) =>
   originalRender(ui, { wrapper: Wrapper, ...options })

@@ -22,6 +22,9 @@ jest.mock("v2/System/Router/useRouter", () => ({
   }),
 }))
 jest.mock("v2/System/Analytics/useTracking")
+jest.mock("v2/Utils/Hooks/useMatchMedia", () => ({
+  __internal__useMatchMedia: () => ({}),
+}))
 
 const { getWrapper } = setupTestWrapper<SearchResultsArtworks_Query>({
   Component: ({ viewer }) => (
