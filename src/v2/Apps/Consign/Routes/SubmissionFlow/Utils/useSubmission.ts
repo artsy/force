@@ -14,6 +14,7 @@ export type UtmParams = {
   utmSource?: string
 }
 export interface SubmissionModel {
+  id?: string
   artworkDetailsForm: ArtworkDetailsFormModel
   uploadPhotosForm?: UploadPhotosFormModel
   contactInformationForm?: ContactInformationFormModel
