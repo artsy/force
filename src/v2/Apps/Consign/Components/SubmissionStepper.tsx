@@ -19,7 +19,6 @@ export const submissionFlowSteps = typedArray(
 export const submissionFlowStepsMobile = typedArray(
   "Artwork",
   "Photos",
-  // TODO: SWA-78
   "Contact"
 )
 

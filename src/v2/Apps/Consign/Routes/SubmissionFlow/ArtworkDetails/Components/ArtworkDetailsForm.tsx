@@ -44,7 +44,7 @@ const rarityOptions = checkboxValues.map(({ name, value }) => ({
   value,
 }))
 
-rarityOptions.unshift({ text: "Select a classification", value: "default" })
+rarityOptions.unshift({ text: "Select a Сlassification", value: "default" })
 
 export interface ArtworkDetailsFormModel {
   artistName: string
@@ -318,7 +318,7 @@ export const ArtworkDetailsForm: React.FC = () => {
 
           <Input
             name="provenance"
-            placeholder="Describe how you acquired the work"
+            placeholder="Describe How You Acquired the Work"
             maxLength={256}
             onBlur={handleBlur}
             onChange={handleChange}
