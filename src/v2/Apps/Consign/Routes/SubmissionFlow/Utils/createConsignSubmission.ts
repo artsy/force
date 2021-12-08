@@ -1,24 +1,17 @@
 import { Environment } from "relay-runtime"
-import { createConsignSubmissionInput } from "./createConsignSubmissionInput"
-import {
-  // addAssetToConsignment,
-  createConsignSubmissionMutation,
-  // createGeminiAssetWithS3Credentials,
-  // getConvectionGeminiKey,
-} from "../Mutations"
-// import createLogger from "v2/Utils/logger"
-import { SubmissionModel } from "./useSubmission"
-// import { ActionType } from "@artsy/cohesion"
-// import { trackEvent } from "lib/analytics/helpers"
-// import { useState } from "react"
+import { createConsignSubmissionMutation } from "../Mutations"
+import { CreateSubmissionMutationInput } from "v2/__generated__/CreateConsignSubmissionMutation.graphql"
 
 // const logger = createLogger("createConsignSubmission.ts")
 
+//,UpdateSubmissionMutationInput
+export interface SubmissionInput extends CreateSubmissionMutationInput {
+  id?: string
+}
+
 export const createOrUpdateConsignSubmission = async (
   relayEnvironment: Environment,
-  submission: SubmissionModel,
-  user?: User,
-  sessionId?: string
+  submission: SubmissionInput
 ) => {
   let submissionId: string
 
@@ -27,10 +20,9 @@ export const createOrUpdateConsignSubmission = async (
 
     submissionId = submission.id
   } else {
-    const input = createConsignSubmissionInput(submission, sessionId)
     submissionId = await createConsignSubmissionMutation(
       relayEnvironment,
-      input
+      submission
     )
   }
 

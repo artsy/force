@@ -43,7 +43,7 @@ jest.mock("v2/System/Router/useRouter", () => {
   }
 })
 
-describe("useSubmission", () => {
+describe.skip("useSubmission", () => {
   it("returns correct initial values", async () => {
     const { result } = renderHook(() => useSubmission("1"))
 
