@@ -34,7 +34,7 @@ import { ContextModule, OwnerType } from "@artsy/cohesion"
 import { isNil } from "lodash"
 import { appendCurrencySymbol } from "v2/Apps/Order/Utils/currencyUtils"
 import { userHasLabFeature } from "v2/Utils/user"
-import { useSystemContext } from "v2/System/useSystemContext"
+import { SystemContextConsumer, SystemContextProps } from "v2/System"
 
 export interface OfferProps {
   order: Offer_order
@@ -54,12 +54,14 @@ export interface OfferState {
   isToggleRadio: boolean
 }
 
-const { user } = useSystemContext()
-
 const logger = createLogger("Order/Routes/Offer/index.tsx")
 
 @track()
-export class OfferRoute extends Component<OfferProps, OfferState> {
+export class OfferRoute extends Component<
+  OfferProps,
+  OfferState,
+  SystemContextProps
+> {
   state: OfferState = {
     formIsDirty: false,
     highSpeedBumpEncountered: false,
@@ -170,59 +172,58 @@ export class OfferRoute extends Component<OfferProps, OfferState> {
   }
 
   getPriceOption() {
-    if (user && userHasLabFeature(user, "New Offer Submissions")) {
-      // const { currencyCode } = this.props.order
-      const listPrice = this.props.order.lineItems?.edges?.[0]?.node?.artwork
-        ?.listPrice
+    // const { currencyCode } = this.props.order
+    const artwork = this.props.order.lineItems?.edges?.[0]?.node?.artwork
+    const listPrice = artwork?.listPrice
 
-      const minPriceRange = listPrice?.minPrice?.major
-      const maxPriceRange = listPrice?.maxPrice?.major
-      const midPriceRange = (Number(minPriceRange) + Number(maxPriceRange)) / 2
+    const minPriceRange = listPrice?.minPrice?.major
+    const maxPriceRange = listPrice?.maxPrice?.major
+    const midPriceRange = (Number(minPriceRange) + Number(maxPriceRange)) / 2
 
-      const getRangeDetails = [
-        { value: minPriceRange, description: "Low-end of range" },
-        { value: maxPriceRange, description: "Midpoint" },
-        { value: midPriceRange, description: "Top-end of range" },
-      ]
+    const getRangeDetails = [
+      { value: minPriceRange, description: "Low-end of range" },
+      { value: maxPriceRange, description: "Midpoint" },
+      { value: midPriceRange, description: "Top-end of range" },
+    ]
 
-      const priceAmountRange = getRangeDetails.map(rangePrice => {
+    const priceAmountRange = getRangeDetails.map(rangePrice => {
+      return {
+        value: rangePrice.value,
+        label: rangePrice.value,
+        description: rangePrice.description,
+      }
+    })
+
+    const priceAmountExact = [0.2, 0.15, 0.1].map(pricePercentage => {
+      if (listPrice?.major) {
+        const listPriceCalculate = listPrice.major * (1 - pricePercentage)
         return {
-          value: rangePrice.value,
-          label: rangePrice.value,
-          description: rangePrice.description,
+          value: listPriceCalculate,
+          label: listPriceCalculate,
+          description: `${pricePercentage * 100}% below list price`,
         }
-      })
+      }
+    })
+    const priceOptions = artwork?.isPriceRange
+      ? priceAmountRange
+      : priceAmountExact
 
-      const priceAmountExact = [0.2, 0.15, 0.1].map(pricePercentage => {
-        if (listPrice?.major) {
-          const listPriceCalculate = listPrice.major * (1 - pricePercentage)
-          return {
-            value: listPriceCalculate,
-            label: listPriceCalculate,
-            description: `${pricePercentage * 100}% below list price`,
-          }
-        }
-      })
+    const components = priceOptions.map(({ value, label, description }) => {
+      return (
+        <BorderedRadio
+          value={value}
+          label={label}
+          onSelect={() => this.setState({ offerValue: value })}
+          key={`price-option-${value}`}
+        >
+          <Text variant="sm" color="black60">
+            {description}
+          </Text>
+        </BorderedRadio>
+      )
+    })
 
-      const isRangeOffer = this.props.order.lineItems?.edges
-
-      const getPriceType =
-        isRangeOffer && isRangeOffer[0]?.node?.artwork?.isPriceRange
-          ? priceAmountRange
-          : priceAmountExact
-
-      const components = getPriceType.map(({ value, label, description }) => {
-        return (
-          <BorderedRadio value={value} label={label}>
-            <Text variant="sm" color="black60">
-              {description}
-            </Text>
-          </BorderedRadio>
-        )
-      })
-
-      return <>{components}</>
-    }
+    return <>{components}</>
   }
   onContinueButtonPressed = async () => {
     const {
@@ -294,141 +295,158 @@ export class OfferRoute extends Component<OfferProps, OfferState> {
     const orderCurrency = order.currencyCode
 
     return (
-      <>
-        <OrderStepper currentStep="Offer" steps={offerFlowSteps} />
-        <TwoColumnLayout
-          Content={
-            <Flex
-              flexDirection="column"
-              style={isCommittingMutation ? { pointerEvents: "none" } : {}}
-              id="offer-page-left-column"
-            >
-              <Text variant="lg" color="black80" marginTop={4}>
-                Select an Option
-              </Text>
-              {Boolean(offerItem?.price) && (
-                <Text my={1} variant="xs" color="black60">
-                  List price:{" "}
-                  {appendCurrencySymbol(offerItem?.price, order.currencyCode)}
-                </Text>
-              )}
-              <Text
-                variant="md"
-                color="black80"
-                marginTop={4}
-                marginBottom={2}
-                textTransform="uppercase"
-              >
-                Your offer
-              </Text>
-              <Flex flexDirection="column">
-                <OfferInput
-                  id="OfferForm_offerValue"
-                  showError={
-                    this.state.formIsDirty && this.state.offerValue <= 0
-                  }
-                  onChange={offerValue => this.setState({ offerValue })}
-                  onFocus={this.onOfferInputFocus.bind(this)}
-                />
-              </Flex>
-              {user && userHasLabFeature(user, "New Offer Submissions") && (
-                <RadioGroup>
-                  {/* {this.getPriceOption()} */}
-                  <BorderedRadio
-                    value="custom"
-                    label="Different amount"
-                    data-test="custom"
-                    onClick={this.toggleRadio.bind(this)}
+      <SystemContextConsumer>
+        {({ user }) => {
+          return (
+            <>
+              <OrderStepper currentStep="Offer" steps={offerFlowSteps} />
+              <TwoColumnLayout
+                Content={
+                  <Flex
+                    flexDirection="column"
+                    style={
+                      isCommittingMutation ? { pointerEvents: "none" } : {}
+                    }
+                    id="offer-page-left-column"
                   >
-                    {/* {this.state.isToggleRadio == true ? ( */}
+                    <Text variant="lg" color="black80" marginTop={4}>
+                      Select an Option
+                    </Text>
+                    {Boolean(offerItem?.price) && (
+                      <Text my={1} variant="xs" color="black60">
+                        List price:{" "}
+                        {appendCurrencySymbol(
+                          offerItem?.price,
+                          order.currencyCode
+                        )}
+                      </Text>
+                    )}
+                    <Text
+                      variant="md"
+                      color="black80"
+                      marginTop={4}
+                      marginBottom={2}
+                      textTransform="uppercase"
+                    >
+                      Your offer
+                    </Text>
+                    {user && userHasLabFeature(user, "New Offer Submissions") && (
+                      <Flex flexDirection="column">
+                        <OfferInput
+                          id="OfferForm_offerValue"
+                          showError={
+                            this.state.formIsDirty && this.state.offerValue <= 0
+                          }
+                          onChange={offerValue => this.setState({ offerValue })}
+                          onFocus={this.onOfferInputFocus.bind(this)}
+                        />
+                      </Flex>
+                    )}
+                    {user && !userHasLabFeature(user, "New Offer Submissions") && (
+                      <RadioGroup>
+                        {this.getPriceOption()}
+                        <BorderedRadio
+                          value="custom"
+                          label="Different amount"
+                          data-test="custom"
+                          onClick={this.toggleRadio.bind(this)}
+                        >
+                          {/* {this.state.isToggleRadio == true ? ( */}
+                          <Flex flexDirection="column">
+                            <OfferInput
+                              id="OfferForm_offerValue"
+                              showError={
+                                this.state.formIsDirty &&
+                                this.state.offerValue <= 0
+                              }
+                              onChange={offerValue =>
+                                this.setState({ offerValue })
+                              }
+                              onFocus={this.onOfferInputFocus.bind(this)}
+                            />
+                          </Flex>
+                          {/* ) : (
+                            ""
+                          )} */}
+                        </BorderedRadio>
+                        <BorderedRadio />
+                      </RadioGroup>
+                    )}
+
+                    {!order.isInquiryOrder && (
+                      <>
+                        <Spacer mb={2} />
+                        <OfferNote
+                          onChange={offerNoteValue =>
+                            this.setState({ offerNoteValue })
+                          }
+                          artworkId={artworkId!}
+                        />
+                      </>
+                    )}
+                    <Spacer mb={[2, 4]} />
+                    <Message p={2}>
+                      Please note that all final offers are binding. If your
+                      offer is accepted, your payment will be processed
+                      immediately.
+                      <Text mt={1}>
+                        Keep in mind making an offer doesn’t guarantee you the
+                        work, as the seller might be receiving competing offers.
+                      </Text>
+                    </Message>
+                    <Spacer mb={[2, 4]} />
+                    <Media greaterThan="xs">
+                      <Button
+                        onClick={this.onContinueButtonPressed}
+                        loading={isCommittingMutation}
+                        variant="primaryBlack"
+                        width="100%"
+                      >
+                        Continue
+                      </Button>
+                    </Media>
+                  </Flex>
+                }
+                Sidebar={
+                  <Flex flexDirection="column">
                     <Flex flexDirection="column">
-                      <OfferInput
-                        id="OfferForm_offerValue"
-                        showError={
-                          this.state.formIsDirty && this.state.offerValue <= 0
+                      <ArtworkSummaryItem order={order} />
+                      <TransactionDetailsSummaryItem
+                        order={order}
+                        offerOverride={
+                          this.state.offerValue &&
+                          this.state.offerValue.toLocaleString("en-US", {
+                            currency: orderCurrency,
+                            minimumFractionDigits: 2,
+                            style: "currency",
+                          })
                         }
-                        onChange={offerValue => this.setState({ offerValue })}
-                        onFocus={this.onOfferInputFocus.bind(this)}
                       />
                     </Flex>
-                    {/* ) : (
-                      ""
-                    )} */}
-                  </BorderedRadio>
-                  <BorderedRadio />
-                </RadioGroup>
-              )}
-
-              {!order.isInquiryOrder && (
-                <>
-                  <Spacer mb={2} />
-                  <OfferNote
-                    onChange={offerNoteValue =>
-                      this.setState({ offerNoteValue })
-                    }
-                    artworkId={artworkId!}
-                  />
-                </>
-              )}
-              <Spacer mb={[2, 4]} />
-              <Message p={2}>
-                Please note that all final offers are binding. If your offer is
-                accepted, your payment will be processed immediately.
-                <Text mt={1}>
-                  Keep in mind making an offer doesn’t guarantee you the work,
-                  as the seller might be receiving competing offers.
-                </Text>
-              </Message>
-              <Spacer mb={[2, 4]} />
-              <Media greaterThan="xs">
-                <Button
-                  onClick={this.onContinueButtonPressed}
-                  loading={isCommittingMutation}
-                  variant="primaryBlack"
-                  width="100%"
-                >
-                  Continue
-                </Button>
-              </Media>
-            </Flex>
-          }
-          Sidebar={
-            <Flex flexDirection="column">
-              <Flex flexDirection="column">
-                <ArtworkSummaryItem order={order} />
-                <TransactionDetailsSummaryItem
-                  order={order}
-                  offerOverride={
-                    this.state.offerValue &&
-                    this.state.offerValue.toLocaleString("en-US", {
-                      currency: orderCurrency,
-                      minimumFractionDigits: 2,
-                      style: "currency",
-                    })
-                  }
-                />
-              </Flex>
-              <BuyerGuarantee
-                contextModule={ContextModule.ordersOffer}
-                contextPageOwnerType={OwnerType.ordersOffer}
+                    <BuyerGuarantee
+                      contextModule={ContextModule.ordersOffer}
+                      contextPageOwnerType={OwnerType.ordersOffer}
+                    />
+                    <Spacer mb={[2, 4]} />
+                    <Media at="xs">
+                      <>
+                        <Button
+                          onClick={this.onContinueButtonPressed}
+                          loading={isCommittingMutation}
+                          variant="primaryBlack"
+                          width="100%"
+                        >
+                          Continue
+                        </Button>
+                      </>
+                    </Media>
+                  </Flex>
+                }
               />
-              <Spacer mb={[2, 4]} />
-              <Media at="xs">
-                <>
-                  <Button
-                    onClick={this.onContinueButtonPressed}
-                    loading={isCommittingMutation}
-                    variant="primaryBlack"
-                    width="100%"
-                  >
-                    Continue
-                  </Button>
-                </>
-              </Media>
-            </Flex>
-          }
-        />
-      </>
+            </>
+          )
+        }}
+      </SystemContextConsumer>
     )
   }
 }
@@ -450,7 +468,6 @@ export const OfferFragmentContainer = createFragmentContainer(
                 slug
                 price
                 isPriceRange
-                price_currency: priceCurrency
                 listPrice {
                   ... on Money {
                     major
