@@ -7,23 +7,19 @@ import {
   getArtworkDetailsFormInitialValues,
 } from "./Components/ArtworkDetailsForm"
 import { useRouter } from "v2/System/Router/useRouter"
-import uuid from "uuid"
-import { useSubmission, UtmParams } from "../Utils/useSubmission"
+import { SubmissionModel, UtmParams } from "../Utils/useSubmission"
 import { artworkDetailsValidationSchema } from "../Utils/validation"
 import { BackLink } from "v2/Components/Links/BackLink"
+import { useErrorModal } from "../Utils/useErrorModal"
+import { useSystemContext } from "v2/System"
+import { createOrUpdateConsignSubmission } from "../Utils/createConsignSubmission"
 
 export const ArtworkDetails: React.FC = () => {
-  const {
-    router,
-    match: {
-      params: { id },
-    },
-  } = useRouter()
-  const { submission, saveSubmission, submissionId } = useSubmission(
-    id ? id : uuid()
-  )
+  const { router } = useRouter()
+  const { openErrorModal } = useErrorModal()
+  const { relayEnvironment, user, isLoggedIn } = useSystemContext()
 
-  const handleSubmit = (values: ArtworkDetailsFormModel) => {
+  const handleSubmit = async (values: ArtworkDetailsFormModel) => {
     const isLimitedEditionRarity = values.rarity === "limited edition"
     const utmParamsData = sessionStorage.getItem("utmParams")
 
@@ -42,27 +38,36 @@ export const ArtworkDetails: React.FC = () => {
       }
     }
 
+    let submission: SubmissionModel
+    let submissionId: string
+
     if (utmParamsData) {
       const utmParams: UtmParams = utmParamsData && JSON.parse(utmParamsData)
-      saveSubmission(
-        submission
-          ? { ...submission, artworkDetailsForm, utmParams }
-          : { artworkDetailsForm, utmParams }
-      )
+      submission = { artworkDetailsForm, utmParams }
     } else {
-      saveSubmission(
-        submission
-          ? { ...submission, artworkDetailsForm }
-          : { artworkDetailsForm }
-      )
+      submission = { artworkDetailsForm }
     }
 
-    router.replace({
-      pathname: `/consign/submission/${submissionId}/artwork-details`,
-    })
-    router.push({
-      pathname: `/consign/submission/${submissionId}/upload-photos`,
-    })
+    if (relayEnvironment && submission) {
+      try {
+        submissionId = await createOrUpdateConsignSubmission(
+          relayEnvironment,
+          submission,
+          user,
+          !isLoggedIn ? sd.SESSION_ID : undefined
+        )
+      } catch (error) {
+        openErrorModal()
+        return
+      }
+
+      router.replace({
+        pathname: `/consign/submission/${submissionId}/artwork-details`,
+      })
+      router.push({
+        pathname: `/consign/submission/${submissionId}/upload-photos`,
+      })
+    }
   }
 
   return (
