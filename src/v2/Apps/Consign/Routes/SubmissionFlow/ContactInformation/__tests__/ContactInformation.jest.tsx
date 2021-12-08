@@ -1,6 +1,5 @@
 import { graphql } from "relay-runtime"
 import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
-import { ContactInformationFragmentContainer } from "../ContactInformation"
 import { ContactInformationForm } from "../Components/ContactInformationForm"
 import { flushPromiseQueue } from "v2/DevTools"
 import { SystemContextProvider } from "v2/System"
@@ -32,7 +31,7 @@ const previousStepsData = {
         id: "id",
         name: "foo.png",
         size: 111084,
-        s3Key: "Sr63tiKsuvMKfCWViJPWHw/foo.png",
+        geminiToken: "Sr63tiKsuvMKfCWViJPWHw/foo.png",
         removed: false,
       },
     ],
@@ -109,7 +108,7 @@ const getWrapperWithProps = (user?: User) =>
     Component: (props: any) => {
       return (
         <SystemContextProvider user={user} isLoggedIn={!!user}>
-          <ContactInformationFragmentContainer me={props.me} />
+          {/* <ContactInformationFragmentContainer me={props.me} /> */}
         </SystemContextProvider>
       )
     },
@@ -391,5 +390,16 @@ describe.skip("Contact Information step", () => {
         },
       },
     })
+  })
+
+  it.skip("tracks consignment submitted event", async () => {
+    // await createOrUpdateConsignSubmission(relayEnvironment, submission)
+    // expect(trackEvent).toHaveBeenCalled()
+    // expect(trackEvent).toHaveBeenCalledWith({
+    //   action: ActionType.consignmentSubmitted,
+    //   submission_id: "123",
+    //   user_id: undefined,
+    //   user_email: "test@test.test",
+    // })
   })
 })
