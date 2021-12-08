@@ -145,13 +145,23 @@ export const LocationAutoComplete: React.FC<{ onError: () => void }> = ({
     setFieldTouched("location")
   }
 
-  const renderOption = (option: AutocompleteInputOptionType) => (
-    <Flex alignItems="center" p={1} width="100%">
-      <Text ml={1} variant="md">
-        {option.text}
-      </Text>
-    </Flex>
-  )
+  const renderOption = (option: AutocompleteInputOptionType, a) => {
+    console.log(option, a, suggestions)
+
+    return a + 1 === suggestions.length ? (
+      <Flex alignItems="center" p={1} width="100%">
+        <Text ml={1} variant="md">
+          Last
+        </Text>
+      </Flex>
+    ) : (
+      <Flex alignItems="center" p={1} width="100%">
+        <Text ml={1} variant="md">
+          {option.text}
+        </Text>
+      </Flex>
+    )
+  }
 
   return initialized ? (
     <AutocompleteInput
@@ -169,7 +179,7 @@ export const LocationAutoComplete: React.FC<{ onError: () => void }> = ({
       onSelect={handleSelect}
       onClose={handleClose}
       renderOption={renderOption}
-    />
+    ></AutocompleteInput>
   ) : (
     <Input title="Location" placeholder="Enter City Where Artwork Is Located" />
   )
