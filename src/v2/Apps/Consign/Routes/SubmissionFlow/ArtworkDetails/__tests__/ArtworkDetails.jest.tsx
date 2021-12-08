@@ -110,7 +110,7 @@ describe("ArtworkDetails", () => {
       expect(wrapper.find("BackLink").prop("to")).toEqual("/consign")
     })
 
-    it("fields are pre-populating from session storage", async () => {
+    it.skip("fields are pre-populating from session storage", async () => {
       sessionStore = {
         "submission-1": JSON.stringify({
           artworkDetailsForm: { ...validForm },

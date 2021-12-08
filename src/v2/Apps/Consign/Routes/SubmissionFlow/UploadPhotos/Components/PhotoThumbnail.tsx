@@ -54,7 +54,7 @@ export const PhotoThumbnail: React.FC<PhotoThumbnailProps & BoxProps> = ({
       photoSrc,
     }
 
-    if (photo.s3Key) {
+    if (photo.url || photo.geminiToken) {
       return <PhotoThumbnailSuccessState {...props} />
     } else if (photo.errorMessage) {
       return <PhotoThumbnailErrorState {...props} />
@@ -138,7 +138,7 @@ const PhotoThumbnailLoadingState: React.FC<PhotoThumbnailStateProps> = ({
         bg="black10"
       >
         <Image
-          src={photoSrc}
+          src={photo.url || photoSrc}
           style={{ objectFit: "cover" }}
           height="100%"
           width="100%"

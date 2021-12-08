@@ -32,6 +32,16 @@ const SubmissionLayout = loadable(
   }
 )
 
+const ArtworkDetailsFragmentContainer = loadable(
+  () =>
+    import(
+      /* webpackChunkName: "consignBundle" */ "./Routes/SubmissionFlow/ArtworkDetails/ArtworkDetails"
+    ),
+  {
+    resolveComponent: component => component.ArtworkDetailsFragmentContainer,
+  }
+)
+
 const ArtworkDetails = loadable(
   () =>
     import(
@@ -48,7 +58,7 @@ const UploadPhotos = loadable(
       /* webpackChunkName: "consignBundle" */ "./Routes/SubmissionFlow/UploadPhotos/UploadPhotos"
     ),
   {
-    resolveComponent: component => component.UploadPhotos,
+    resolveComponent: component => component.UploadPhotosFragmentContainer,
   }
 )
 
@@ -72,6 +82,19 @@ const ThankYou = loadable(
     resolveComponent: component => component.ThankYou,
   }
 )
+
+const submissionQuery = graphql`
+  query consignRoutes_submissionQuery($id: ID!) {
+    submission(id: $id) {
+      ...ArtworkDetails_submission
+      ...UploadPhotos_submission
+      ...ContactInformation_submission
+    }
+    me {
+      ...ContactInformation_me
+    }
+  }
+`
 
 export const consignRoutes: AppRouteConfig[] = [
   {
@@ -102,10 +125,11 @@ export const consignRoutes: AppRouteConfig[] = [
         path: ":id/artwork-details",
         hideNav: true,
         hideFooter: true,
-        getComponent: () => ArtworkDetails,
+        getComponent: () => ArtworkDetailsFragmentContainer,
         onClientSideRender: () => {
-          ArtworkDetails.preload()
+          ArtworkDetailsFragmentContainer.preload()
         },
+        query: submissionQuery,
       },
       {
         path: ":id/upload-photos",
@@ -115,6 +139,7 @@ export const consignRoutes: AppRouteConfig[] = [
         onClientSideRender: () => {
           UploadPhotos.preload()
         },
+        query: submissionQuery,
       },
       {
         path: ":id/contact-information",
@@ -124,13 +149,7 @@ export const consignRoutes: AppRouteConfig[] = [
         onClientSideRender: () => {
           ContactInformation.preload()
         },
-        query: graphql`
-          query consignRoutes_ContactInformationQuery {
-            me {
-              ...ContactInformation_me
-            }
-          }
-        `,
+        query: submissionQuery,
       },
       {
         path: ":id/thank-you",
