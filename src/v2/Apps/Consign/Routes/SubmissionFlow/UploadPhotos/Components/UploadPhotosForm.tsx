@@ -9,11 +9,9 @@ import {
   Photo,
   uploadPhoto,
 } from "../../Utils/fileUtils"
-import { useRouter } from "v2/System/Router/useRouter"
 import { PhotoDropzone } from "./PhotoDropzone"
 import { FileRejection } from "react-dropzone"
 import { PhotoThumbnail } from "./PhotoThumbnail"
-import { useSubmission } from "../../Utils/useSubmission"
 
 export interface UploadPhotosFormModel {
   photos: Photo[]
@@ -29,27 +27,9 @@ export const UploadPhotosForm: React.FC<UploadPhotosFormProps> = ({
   onPhotoUploaded,
   ...rest
 }) => {
-  const {
-    match: {
-      params: { id },
-    },
-  } = useRouter()
-
   const { relayEnvironment } = useSystemContext()
   const [errors, setErrors] = useState<Array<FileRejection>>([])
-  const { setFieldValue, values, validateField } = useFormikContext<
-    UploadPhotosFormModel
-  >()
-  const { submission } = useSubmission(id)
-
-  useEffect(() => {
-    if (submission && submission.uploadPhotosForm) {
-      setFieldValue("photos", submission.uploadPhotosForm.photos)
-      validateField("photos")
-    } else {
-      setFieldValue("photos", [])
-    }
-  }, [submission])
+  const { setFieldValue, values } = useFormikContext<UploadPhotosFormModel>()
 
   const handlePhotoUploadingProgress = (photo: Photo) => progress => {
     photo.progress = progress
@@ -61,7 +41,8 @@ export const UploadPhotosForm: React.FC<UploadPhotosFormProps> = ({
     photo.loading = true
 
     if (relayEnvironment) {
-      const uploadedPhotoKey = await uploadPhoto(
+      // TODO: Update uploadPhoto function to return geminiToken
+      const geminiToken = await uploadPhoto(
         relayEnvironment,
         photo,
         handlePhotoUploadingProgress(photo)
@@ -69,13 +50,13 @@ export const UploadPhotosForm: React.FC<UploadPhotosFormProps> = ({
 
       photo.loading = false
 
-      if (!uploadedPhotoKey) {
+      if (!geminiToken) {
         photo.errorMessage = `Photo could not be added: ${photo.name}`
         setFieldValue("photos", values.photos)
         return
       }
 
-      photo.s3Key = uploadedPhotoKey
+      photo.geminiToken = geminiToken
       setFieldValue("photos", values.photos, true)
 
       if (onPhotoUploaded) {
@@ -85,7 +66,9 @@ export const UploadPhotosForm: React.FC<UploadPhotosFormProps> = ({
   }
 
   useEffect(() => {
-    const imagesToUpload = values.photos.filter(c => !c.s3Key && !c.loading)
+    const imagesToUpload = values.photos.filter(
+      c => !(c.geminiToken || c.url) && !c.loading
+    )
 
     if (imagesToUpload.length) {
       imagesToUpload.forEach(uploadImage)

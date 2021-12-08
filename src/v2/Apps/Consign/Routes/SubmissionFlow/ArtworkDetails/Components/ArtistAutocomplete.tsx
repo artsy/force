@@ -8,7 +8,6 @@ import {
   Text,
   Box,
   Image,
-  Input,
 } from "@artsy/palette"
 import {
   ArtistAutocomplete_SearchConnection_Query,
@@ -18,7 +17,6 @@ import { extractNodes } from "v2/Utils/extractNodes"
 import { ArtworkDetailsFormModel } from "./ArtworkDetailsForm"
 import { useFormikContext } from "formik"
 import { debounce } from "lodash"
-import { useRouter } from "v2/System/Router/useRouter"
 
 const DEBOUNCE_DELAY = 300
 
@@ -47,7 +45,6 @@ export const ArtistAutoComplete: React.FC<{ onError: () => void }> = ({
   >([])
   const [isError, setIsError] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
-  const [initialized, setInitialized] = useState(false)
   const { relayEnvironment } = useSystemContext()
   const {
     values,
@@ -57,25 +54,9 @@ export const ArtistAutoComplete: React.FC<{ onError: () => void }> = ({
     setFieldTouched,
   } = useFormikContext<ArtworkDetailsFormModel>()
 
-  const {
-    match: {
-      params: { id },
-    },
-  } = useRouter()
-
-  useEffect(() => {
-    if (!initialized) {
-      if (!id || (values.artistName && values.artistId)) {
-        setInitialized(true)
-        setIsError(false)
-      }
-    }
-  }, [values.artistName, values.artistId, initialized, id])
-
   useEffect(() => {
     if (!isError) return
 
-    setInitialized(false)
     setFieldValue("artistId", "")
     setFieldValue("artistName", "")
   }, [isError])
@@ -158,7 +139,7 @@ export const ArtistAutoComplete: React.FC<{ onError: () => void }> = ({
     </Flex>
   )
 
-  return initialized ? (
+  return (
     <AutocompleteInput
       maxLength={256}
       title="Artist"
@@ -176,8 +157,6 @@ export const ArtistAutoComplete: React.FC<{ onError: () => void }> = ({
       onClose={handleClose}
       renderOption={renderOption}
     />
-  ) : (
-    <Input title="Artist" placeholder="Enter Full Name" />
   )
 }
 

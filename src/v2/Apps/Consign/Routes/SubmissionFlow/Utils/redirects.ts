@@ -1,44 +1,39 @@
 import { Match, Router } from "found"
-import { isFunction } from "lodash"
 import { SubmissionModel } from "./useSubmission"
-import {
-  artworkDetailsValidationSchema,
-  uploadPhotosValidationSchema,
-} from "./validation"
 
 export interface ValidationInformation {
   submission?: SubmissionModel
   submissionId?: string
 }
 
-const redirectToIf = (
-  to: ((id?: string) => string) | string,
-  predicate: (args: ValidationInformation) => boolean
-) => (args: ValidationInformation) => {
-  if (predicate(args)) {
-    return isFunction(to) ? to(args.submissionId) : to
-  }
-}
+// const redirectToIf = (
+//   to: ((id?: string) => string) | string,
+//   predicate: (args: ValidationInformation) => boolean
+// ) => (args: ValidationInformation) => {
+//   if (predicate(args)) {
+//     return isFunction(to) ? to(args.submissionId) : to
+//   }
+// }
 
-const checkSubmissionExist = redirectToIf(
-  "/consign/submission/artwork-details",
-  ({ submissionId, submission }) =>
-    !submissionId || !submission || !submission.artworkDetailsForm
-)
+// const checkSubmissionExist = redirectToIf(
+//   "/consign/submission/artwork-details",
+//   ({ submissionId, submission }) =>
+//     !submissionId || !submission || !submission.artworkDetailsForm
+// )
 
-const checkArtworkDetailsFormValid = redirectToIf(
-  id => `/consign/submission/${id}/artwork-details`,
-  ({ submission }) =>
-    !artworkDetailsValidationSchema.isValidSync(submission?.artworkDetailsForm)
-)
+// const checkArtworkDetailsFormValid = redirectToIf(
+//   id => `/consign/submission/${id}/artwork-details`,
+//   ({ submission }) =>
+//     !artworkDetailsValidationSchema.isValidSync(submission?.artworkDetailsForm)
+// )
 
-const checkUploadPhotosFormValid = redirectToIf(
-  id => `/consign/submission/${id}/upload-photos`,
-  ({ submission }) =>
-    !submission?.uploadPhotosForm ||
-    !submission?.uploadPhotosForm.photos ||
-    !uploadPhotosValidationSchema.isValidSync(submission?.uploadPhotosForm)
-)
+// const checkUploadPhotosFormValid = redirectToIf(
+//   id => `/consign/submission/${id}/upload-photos`,
+//   ({ submission }) =>
+//     !submission?.uploadPhotosForm ||
+//     !submission?.uploadPhotosForm.photos ||
+//     !uploadPhotosValidationSchema.isValidSync(submission?.uploadPhotosForm)
+// )
 
 export const redirects = {
   path: "/consign/submission",
@@ -50,18 +45,22 @@ export const redirects = {
     },
     {
       path: "/:id/artwork-details",
-      rules: [checkSubmissionExist],
+      rules: [
+        // checkSubmissionExist
+      ],
     },
     {
       path: "/:id/upload-photos",
-      rules: [checkSubmissionExist, checkArtworkDetailsFormValid],
+      rules: [
+        // checkSubmissionExist, checkArtworkDetailsFormValid
+      ],
     },
     {
       path: "/:id/contact-information",
       rules: [
-        checkSubmissionExist,
-        checkArtworkDetailsFormValid,
-        checkUploadPhotosFormValid,
+        // checkSubmissionExist,
+        // checkArtworkDetailsFormValid,
+        // checkUploadPhotosFormValid,
       ],
     },
   ],
