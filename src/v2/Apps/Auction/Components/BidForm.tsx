@@ -2,10 +2,9 @@ import {
   Box,
   Button,
   Flex,
-  LargeSelect,
-  Sans,
+  Select,
+  Text,
   Separator,
-  Serif,
   Spacer,
 } from "@artsy/palette"
 import {
@@ -122,11 +121,11 @@ export const BidForm: React.FC<Props> = ({
             }}
           />
 
-          <Serif mt={4} pb={0.5} size="4t" weight="semibold" color="black100">
+          <Text variant="md" mt={2} pb={0.5} fontWeight="bold" color="black100">
             Set your max bid
-          </Serif>
+          </Text>
 
-          <LargeSelect
+          <Select
             selected={values.selectedBid}
             onSelect={value => {
               onMaxBidSelect && onMaxBidSelect(value)
@@ -146,16 +145,22 @@ export const BidForm: React.FC<Props> = ({
             bidAmountMinor={parseInt(values.selectedBid)}
           />
 
-          <Spacer mt={4} />
+          <Spacer mt={2} />
 
           {requiresPaymentInformation && (
             <>
-              <Separator mb={3} />
+              <Separator mb={2} />
               <CreditCardInstructions />
 
-              <Serif mt={4} mb={2} size="4t" weight="semibold" color="black100">
+              <Text
+                variant="md"
+                mt={4}
+                mb={2}
+                fontWeight="bold"
+                color="black100"
+              >
                 Card Information
-              </Serif>
+              </Text>
 
               <CreditCardInput
                 error={{ message: errors.creditCard } as StripeError}
@@ -164,7 +169,7 @@ export const BidForm: React.FC<Props> = ({
                 }
               />
 
-              <Spacer mt={2} />
+              <Spacer mt={4} />
 
               <AddressForm
                 value={values.address}
@@ -180,7 +185,7 @@ export const BidForm: React.FC<Props> = ({
           <Spacer mt={3} />
 
           {requiresCheckbox && (
-            <Flex mb={3} flexDirection="column" justifyContent="center">
+            <Flex mb={4} flexDirection="column" justifyContent="center">
               <Box mx="auto">
                 <ConditionsOfSaleCheckbox
                   selected={values.agreeToTerms}
@@ -193,18 +198,19 @@ export const BidForm: React.FC<Props> = ({
               </Box>
 
               {touched.agreeToTerms && errors.agreeToTerms && (
-                <Sans mt={1} color="red100" size="2" textAlign="center">
+                <Text variant="md" mt={1} color="red100" textAlign="center">
                   {errors.agreeToTerms}
-                </Sans>
+                </Text>
               )}
             </Flex>
           )}
 
           <Button
-            size="large"
+            variant="primaryBlack"
             width="100%"
             loading={isSubmitting}
             type="submit"
+            mb={4}
           >
             Confirm bid
           </Button>

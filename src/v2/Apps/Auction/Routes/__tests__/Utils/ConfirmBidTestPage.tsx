@@ -1,4 +1,4 @@
-import { Checkbox, LargeSelect } from "@artsy/palette"
+import { Checkbox, Select } from "@artsy/palette"
 
 import { ValidFormValues } from "v2/Apps/Auction/Routes/__tests__/Utils/RegisterTestPage"
 import { Address, AddressForm } from "v2/Components/AddressForm"
@@ -16,7 +16,7 @@ export class ConfirmBidTestPage extends RootTestPage {
   }
 
   get bidAmountLargeSelect() {
-    return expectOne(this.find(LargeSelect))
+    return expectOne(this.find(Select))
   }
 
   get form() {
