@@ -23,7 +23,11 @@ import { BidForm_saleArtwork } from "v2/__generated__/BidForm_saleArtwork.graphq
 import { CreditCardInstructions } from "v2/Apps/Auction/Components/CreditCardInstructions"
 import { PricingTransparencyQueryRenderer } from "v2/Apps/Auction/Components/PricingTransparency"
 import { CreditCardInput } from "v2/Apps/Order/Components/CreditCardInput"
-import { AddressForm } from "v2/Components/AddressForm"
+import {
+  AddressErrors,
+  AddressForm,
+  AddressTouched,
+} from "v2/Components/AddressForm"
 import { ConditionsOfSaleCheckbox } from "v2/Components/Auction/ConditionsOfSaleCheckbox"
 import {
   OnSubmitValidationError,
@@ -162,12 +166,11 @@ export const BidForm: React.FC<Props> = ({
 
               <Spacer mt={2} />
 
-              {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
               <AddressForm
                 value={values.address}
                 onChange={address => setFieldValue("address", address)}
-                errors={errors.address}
-                touched={touched.address}
+                errors={errors.address as AddressErrors}
+                touched={touched.address as AddressTouched}
                 billing
                 showPhoneNumberInput
               />

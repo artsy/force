@@ -41,6 +41,7 @@ export const fillCountrySelect = (component, value) => {
 }
 
 export const fillAddressForm = (component: any, address: Address) => {
+  fillCountrySelect(component, address.country)
   fillIn(component, { title: "Full name", value: address.name })
   fillIn(component, { title: "Address line 1", value: address.addressLine1 })
   fillIn(component, {
@@ -56,5 +57,4 @@ export const fillAddressForm = (component: any, address: Address) => {
   fillInPhoneNumber(component, {
     value: address.phoneNumber,
   })
-  fillCountrySelect(component, address.country)
 }
