@@ -1,9 +1,7 @@
 import {
-  BorderedRadio,
   Button,
   Flex,
   Message,
-  RadioGroup,
   Spacer,
   Text,
   TextAreaChange,
@@ -12,6 +10,7 @@ import { Offer_order } from "v2/__generated__/Offer_order.graphql"
 import { OfferMutation } from "v2/__generated__/OfferMutation.graphql"
 import { ArtworkSummaryItemFragmentContainer as ArtworkSummaryItem } from "v2/Apps/Order/Components/ArtworkSummaryItem"
 import { OfferInput } from "v2/Apps/Order/Components/OfferInput"
+import { PriceOptions } from "v2/Apps/Order/Components/PriceOptions"
 import { OfferNote } from "v2/Apps/Order/Components/OfferNote"
 import { TransactionDetailsSummaryItemFragmentContainer as TransactionDetailsSummaryItem } from "v2/Apps/Order/Components/TransactionDetailsSummaryItem"
 import { TwoColumnLayout } from "v2/Apps/Order/Components/TwoColumnLayout"
@@ -165,66 +164,6 @@ export class OfferRoute extends Component<
     }
   }
 
-  toggleRadio() {
-    this.setState({
-      isToggleRadio: true,
-    })
-  }
-
-  getPriceOption() {
-    // const { currencyCode } = this.props.order
-    const artwork = this.props.order.lineItems?.edges?.[0]?.node?.artwork
-    const listPrice = artwork?.listPrice
-
-    const minPriceRange = listPrice?.minPrice?.major
-    const maxPriceRange = listPrice?.maxPrice?.major
-    const midPriceRange = (Number(minPriceRange) + Number(maxPriceRange)) / 2
-
-    const getRangeDetails = [
-      { value: minPriceRange, description: "Low-end of range" },
-      { value: maxPriceRange, description: "Midpoint" },
-      { value: midPriceRange, description: "Top-end of range" },
-    ]
-
-    const priceAmountRange = getRangeDetails.map(rangePrice => {
-      return {
-        value: rangePrice.value,
-        label: rangePrice.value,
-        description: rangePrice.description,
-      }
-    })
-
-    const priceAmountExact = [0.2, 0.15, 0.1].map(pricePercentage => {
-      if (listPrice?.major) {
-        const listPriceCalculate = listPrice.major * (1 - pricePercentage)
-        return {
-          value: listPriceCalculate,
-          label: listPriceCalculate,
-          description: `${pricePercentage * 100}% below list price`,
-        }
-      }
-    })
-    const priceOptions = artwork?.isPriceRange
-      ? priceAmountRange
-      : priceAmountExact
-
-    const components = priceOptions.map(({ value, label, description }) => {
-      return (
-        <BorderedRadio
-          value={value}
-          label={label}
-          onSelect={() => this.setState({ offerValue: value })}
-          key={`price-option-${value}`}
-        >
-          <Text variant="sm" color="black60">
-            {description}
-          </Text>
-        </BorderedRadio>
-      )
-    })
-
-    return <>{components}</>
-  }
   onContinueButtonPressed = async () => {
     const {
       offerValue,
@@ -293,6 +232,8 @@ export class OfferRoute extends Component<
     const offerItem = getOfferItemFromOrder(order.lineItems)
     const artworkId = order.lineItems?.edges?.[0]?.node?.artwork?.slug
     const orderCurrency = order.currencyCode
+    const artwork = this.props.order.lineItems?.edges?.[0]?.node?.artwork
+    const isInquiryCheckout = !artwork?.isPriceRange && !artwork?.listPrice
 
     return (
       <SystemContextConsumer>
@@ -309,69 +250,64 @@ export class OfferRoute extends Component<
                     }
                     id="offer-page-left-column"
                   >
-                    <Text variant="lg" color="black80" marginTop={4}>
-                      Select an Option
-                    </Text>
-                    {Boolean(offerItem?.price) && (
-                      <Text my={1} variant="xs" color="black60">
-                        List price:{" "}
-                        {appendCurrencySymbol(
-                          offerItem?.price,
-                          order.currencyCode
+                    {((user &&
+                      userHasLabFeature(user, "New Offer Submissions")) ||
+                      isInquiryCheckout) && (
+                      <>
+                        <Flex flexDirection="column">
+                          <OfferInput
+                            id="OfferForm_offerValue"
+                            showError={
+                              this.state.formIsDirty &&
+                              this.state.offerValue <= 0
+                            }
+                            onChange={offerValue =>
+                              this.setState({ offerValue })
+                            }
+                            onFocus={this.onOfferInputFocus.bind(this)}
+                          />
+                        </Flex>
+                        {Boolean(offerItem?.price) && (
+                          <Text my={1} variant="xs" color="black60">
+                            List price:{" "}
+                            {appendCurrencySymbol(
+                              offerItem?.price,
+                              order.currencyCode
+                            )}
+                          </Text>
                         )}
-                      </Text>
+                      </>
                     )}
-                    <Text
-                      variant="md"
-                      color="black80"
-                      marginTop={4}
-                      marginBottom={2}
-                      textTransform="uppercase"
-                    >
-                      Your offer
-                    </Text>
-                    {user && userHasLabFeature(user, "New Offer Submissions") && (
-                      <Flex flexDirection="column">
-                        <OfferInput
-                          id="OfferForm_offerValue"
-                          showError={
-                            this.state.formIsDirty && this.state.offerValue <= 0
-                          }
-                          onChange={offerValue => this.setState({ offerValue })}
-                          onFocus={this.onOfferInputFocus.bind(this)}
-                        />
-                      </Flex>
-                    )}
-                    {user && !userHasLabFeature(user, "New Offer Submissions") && (
-                      <RadioGroup>
-                        {this.getPriceOption()}
-                        <BorderedRadio
-                          value="custom"
-                          label="Different amount"
-                          data-test="custom"
-                          onClick={this.toggleRadio.bind(this)}
-                        >
-                          {/* {this.state.isToggleRadio == true ? ( */}
-                          <Flex flexDirection="column">
-                            <OfferInput
-                              id="OfferForm_offerValue"
-                              showError={
-                                this.state.formIsDirty &&
-                                this.state.offerValue <= 0
-                              }
-                              onChange={offerValue =>
-                                this.setState({ offerValue })
-                              }
-                              onFocus={this.onOfferInputFocus.bind(this)}
-                            />
-                          </Flex>
-                          {/* ) : (
-                            ""
-                          )} */}
-                        </BorderedRadio>
-                        <BorderedRadio />
-                      </RadioGroup>
-                    )}
+                    {user &&
+                      !userHasLabFeature(user, "New Offer Submissions") &&
+                      !isInquiryCheckout && (
+                        <>
+                          <Text variant="lg" color="black80" marginTop={4}>
+                            Select an Option
+                          </Text>
+                          {Boolean(offerItem?.price) && (
+                            <Text my={1} variant="xs" color="black60">
+                              List price:{" "}
+                              {appendCurrencySymbol(
+                                offerItem?.price,
+                                order.currencyCode
+                              )}
+                            </Text>
+                          )}
+                          <PriceOptions
+                            artwork={artwork}
+                            currency={orderCurrency}
+                            setValue={offerValue =>
+                              this.setState({ offerValue })
+                            }
+                            onFocus={this.onOfferInputFocus.bind(this)}
+                            showError={
+                              this.state.formIsDirty &&
+                              this.state.offerValue <= 0
+                            }
+                          />
+                        </>
+                      )}
 
                     {!order.isInquiryOrder && (
                       <>
@@ -471,16 +407,13 @@ export const OfferFragmentContainer = createFragmentContainer(
                 listPrice {
                   ... on Money {
                     major
-                    currencyCode
                   }
                   ... on PriceRange {
                     maxPrice {
                       major
-                      currencyCode
                     }
                     minPrice {
                       major
-                      currencyCode
                     }
                   }
                 }

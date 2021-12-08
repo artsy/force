@@ -20,14 +20,11 @@ export type Offer_order = {
                     readonly isPriceRange: boolean | null;
                     readonly listPrice: {
                         readonly major?: number;
-                        readonly currencyCode?: string;
                         readonly maxPrice?: {
                             readonly major: number;
-                            readonly currencyCode: string;
                         } | null;
                         readonly minPrice?: {
                             readonly major: number;
-                            readonly currencyCode: string;
                         } | null;
                     } | null;
                 } | null;
@@ -64,28 +61,20 @@ var v0 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "currencyCode",
-  "storageKey": null
-},
-v1 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
   "name": "price",
   "storageKey": null
 },
-v2 = [
+v1 = [
   {
     "alias": null,
     "args": null,
     "kind": "ScalarField",
     "name": "major",
     "storageKey": null
-  },
-  (v0/*: any*/)
+  }
 ],
-v3 = [
-  (v1/*: any*/),
+v2 = [
+  (v0/*: any*/),
   {
     "alias": null,
     "args": null,
@@ -128,7 +117,13 @@ return {
       "name": "totalListPriceCents",
       "storageKey": null
     },
-    (v0/*: any*/),
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "currencyCode",
+      "storageKey": null
+    },
     {
       "alias": null,
       "args": null,
@@ -168,7 +163,7 @@ return {
                       "name": "slug",
                       "storageKey": null
                     },
-                    (v1/*: any*/),
+                    (v0/*: any*/),
                     {
                       "alias": null,
                       "args": null,
@@ -186,7 +181,7 @@ return {
                       "selections": [
                         {
                           "kind": "InlineFragment",
-                          "selections": (v2/*: any*/),
+                          "selections": (v1/*: any*/),
                           "type": "Money"
                         },
                         {
@@ -199,7 +194,7 @@ return {
                               "kind": "LinkedField",
                               "name": "maxPrice",
                               "plural": false,
-                              "selections": (v2/*: any*/),
+                              "selections": (v1/*: any*/),
                               "storageKey": null
                             },
                             {
@@ -209,7 +204,7 @@ return {
                               "kind": "LinkedField",
                               "name": "minPrice",
                               "plural": false,
-                              "selections": (v2/*: any*/),
+                              "selections": (v1/*: any*/),
                               "storageKey": null
                             }
                           ],
@@ -238,12 +233,12 @@ return {
                     },
                     {
                       "kind": "InlineFragment",
-                      "selections": (v3/*: any*/),
+                      "selections": (v2/*: any*/),
                       "type": "Artwork"
                     },
                     {
                       "kind": "InlineFragment",
-                      "selections": (v3/*: any*/),
+                      "selections": (v2/*: any*/),
                       "type": "EditionSet"
                     }
                   ],
@@ -285,5 +280,5 @@ return {
   "type": "CommerceOrder"
 };
 })();
-(node as any).hash = '9eb9368f2087d594c6a0a8684cef95a2';
+(node as any).hash = '6dedf510b4954d4a0038b7eb55b1e237';
 export default node;
