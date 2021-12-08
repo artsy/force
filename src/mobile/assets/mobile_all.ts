@@ -10,7 +10,6 @@ import $ from "jquery"
 import { data as sd } from "sharify"
 
 const routes = {
-  "^/search": require("../apps/search/client.coffee").init,
   "^/contact": require("../apps/contact/client/index.coffee").init,
   "^/how-auctions-work[/]?.*": require("../apps/how_auctions_work/client/index.coffee")
     .init,
@@ -21,7 +20,6 @@ const routes = {
   "^/.*/contact.*": require("../apps/partner_profile/client/contact.ts"),
   "^/.*/(collection|shop)[/]?": require("../apps/partner_profile/client/artworks.coffee")
     .init,
-  "^/auctions": require("../apps/auctions/client/auctions.coffee").init,
   // Use more specific regex to avoid intercepting '^/.*/browse/artist/.*'
   // Note that the order of iteration over a dictionary is not guaranteed.
   "^/[^/]*/artist/.*": require("../apps/partner_profile/client/artist.coffee")
