@@ -24,7 +24,8 @@ export interface Photo {
   file?: File
   name: string
   size: number
-  s3Key?: string
+  url?: string
+  geminiToken?: string
   abortUploading?: () => void
   progress?: number
   removed: boolean
@@ -39,7 +40,7 @@ export function normalizePhoto(file: File, errorMessage?: string): Photo {
     file,
     name: file.name,
     size: file.size,
-    s3Key: undefined,
+    geminiToken: undefined,
     abortUploading: undefined,
     progress: undefined,
     removed: false,

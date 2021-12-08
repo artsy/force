@@ -50,11 +50,7 @@ export const uploadPhotosValidationSchema = yup.object().shape({
     .array()
     .min(1)
     .transform(fields => fields.filter(c => !c.errorMessage))
-    .of(
-      yup.object().shape({
-        s3Key: yup.string().required(),
-      })
-    ),
+    .of(yup.object().test("photos", value => value.geminiToken || value.url)),
 })
 
 export const contactInformationValidationSchema = yup.object().shape({
