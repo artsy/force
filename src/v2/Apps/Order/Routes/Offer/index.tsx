@@ -232,6 +232,12 @@ export class OfferRoute extends Component<
     const offerItem = getOfferItemFromOrder(order.lineItems)
     const artworkId = order.lineItems?.edges?.[0]?.node?.artwork?.slug
     const orderCurrency = order.currencyCode
+    const priceNote = Boolean(offerItem?.price) && (
+      <Text my={1} variant="xs" color="black60">
+        List price: {appendCurrencySymbol(offerItem?.price, order.currencyCode)}
+      </Text>
+    )
+
     const artwork = this.props.order.lineItems?.edges?.[0]?.node?.artwork
     const isInquiryCheckout = !artwork?.isPriceRange && !artwork?.listPrice
 
@@ -251,7 +257,7 @@ export class OfferRoute extends Component<
                     id="offer-page-left-column"
                   >
                     {((user &&
-                      userHasLabFeature(user, "New Offer Submissions")) ||
+                      !userHasLabFeature(user, "New Offer Submissions")) ||
                       isInquiryCheckout) && (
                       <>
                         <Flex flexDirection="column">
@@ -267,33 +273,17 @@ export class OfferRoute extends Component<
                             onFocus={this.onOfferInputFocus.bind(this)}
                           />
                         </Flex>
-                        {Boolean(offerItem?.price) && (
-                          <Text my={1} variant="xs" color="black60">
-                            List price:{" "}
-                            {appendCurrencySymbol(
-                              offerItem?.price,
-                              order.currencyCode
-                            )}
-                          </Text>
-                        )}
+                        {priceNote}
                       </>
                     )}
                     {user &&
-                      !userHasLabFeature(user, "New Offer Submissions") &&
+                      userHasLabFeature(user, "New Offer Submissions") &&
                       !isInquiryCheckout && (
                         <>
                           <Text variant="lg" color="black80" marginTop={4}>
                             Select an Option
                           </Text>
-                          {Boolean(offerItem?.price) && (
-                            <Text my={1} variant="xs" color="black60">
-                              List price:{" "}
-                              {appendCurrencySymbol(
-                                offerItem?.price,
-                                order.currencyCode
-                              )}
-                            </Text>
-                          )}
+                          {priceNote}
                           <PriceOptions
                             artwork={artwork}
                             currency={orderCurrency}
