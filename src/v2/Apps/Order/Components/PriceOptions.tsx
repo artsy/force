@@ -2,6 +2,7 @@ import { BorderedRadio, Flex, RadioGroup, Text } from "@artsy/palette"
 import { useEffect, useState } from "react"
 import { OfferInput } from "v2/Apps/Order/Components/OfferInput"
 import { Offer_order } from "v2/__generated__/Offer_order.graphql"
+import { compact } from "lodash"
 
 interface PriceOptionsProps {
   setValue: (value: number) => void
@@ -44,8 +45,8 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
   const getRangeOptions = () => {
     const getRangeDetails = [
       { value: minPriceRange, description: "Low-end of range" },
-      { value: maxPriceRange, description: "Midpoint" },
-      { value: midPriceRange, description: "Top-end of range" },
+      { value: midPriceRange, description: "Midpoint" },
+      { value: maxPriceRange, description: "Top-end of range" },
     ]
     return getRangeDetails.map(rangePrice => ({
       value: rangePrice.value!,
@@ -61,7 +62,7 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
           description: `${pricePercentage * 100}% below list price`,
         }
       }
-      return {}
+      return undefined
     })
   }
 
@@ -71,8 +72,8 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
 
   return (
     <RadioGroup>
-      {
-        priceOptions.map(({ value, description }) => (
+      {compact(priceOptions)
+        .map(({ value, description }) => (
           <BorderedRadio
             value={`price-option-${value}`}
             label={asCurrency(value!)}
@@ -84,26 +85,27 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
               {description}
             </Text>
           </BorderedRadio>
-        )) as any /* FIXME */
-      }
-      <BorderedRadio
-        value="custom"
-        label="Different amount"
-        onSelect={() => customValue && setValue(customValue)}
-        data-test="custom"
-      >
-        <Flex flexDirection="column">
-          <OfferInput
-            id="OfferForm_offerValue"
-            showError={showError}
-            onChange={value => {
-              setCustomValue(value)
-            }}
-            onFocus={onFocus}
-            noTitle
-          />
-        </Flex>
-      </BorderedRadio>
+        ))
+        .concat(
+          <BorderedRadio
+            value="custom"
+            label="Different amount"
+            onSelect={() => customValue && setValue(customValue)}
+            data-test="custom"
+          >
+            <Flex flexDirection="column">
+              <OfferInput
+                id="OfferForm_offerValue"
+                showError={showError}
+                onChange={value => {
+                  setCustomValue(value)
+                }}
+                onFocus={onFocus}
+                noTitle
+              />
+            </Flex>
+          </BorderedRadio>
+        )}
     </RadioGroup>
   )
 }
