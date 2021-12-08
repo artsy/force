@@ -31,7 +31,7 @@ export const UploadPhotos: React.FC = () => {
 
     const photoUploadSuccess = await uploadPhotosToConsignment(
       relayEnvironment,
-      submission,
+      submission.uploadPhotosForm,
       user?.id,
       !isLoggedIn ? sd.SESSION_ID : undefined
     )

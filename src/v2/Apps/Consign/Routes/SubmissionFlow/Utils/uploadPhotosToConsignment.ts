@@ -5,24 +5,24 @@ import {
   getConvectionGeminiKey,
 } from "../Mutations"
 import createLogger from "v2/Utils/logger"
-import { SubmissionModel } from "./useSubmission"
+import { UploadPhotosFormModel } from "../UploadPhotos/Components/UploadPhotosForm"
 
 const logger = createLogger("createConsignSubmission.ts")
 
 export const uploadPhotosToConsignment = async (
   relayEnvironment: Environment,
-  submission: SubmissionModel,
+  uploadPhotosForm: UploadPhotosFormModel,
   submissionId?: string,
   sessionId?: string
 ): Promise<boolean> => {
-  if (!submission || !submission.uploadPhotosForm) {
+  if (!uploadPhotosForm.photos || !uploadPhotosForm.photos.length) {
     return false
   }
 
   const convectionKey = await getConvectionGeminiKey(relayEnvironment)
 
   await Promise.all(
-    submission.uploadPhotosForm.photos
+    uploadPhotosForm.photos
       .filter(photo => photo.s3Key && photo.bucket)
       .map(async photo => {
         try {
