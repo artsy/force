@@ -1,7 +1,7 @@
 import * as React from "react"
 import { createFragmentContainer } from "react-relay"
 import { graphql } from "relay-runtime"
-import Linkify from "react-linkify"
+import linkifyHtml from "linkify-html"
 import {
   Box,
   BoxProps,
@@ -114,15 +114,6 @@ export const Message: React.FC<MessageProps> = props => {
   const textColor = isFromUser ? "white100" : "black100"
   const alignSelf = isFromUser ? "flex-end" : undefined
 
-  // react-linkify v1.0.0-alpha has a bug that `properties` doesn't work.
-  // This is a workaround to specify target for now.
-  // https://github.com/tasti/react-linkify/issues/78#issuecomment-514754050
-  const linkTargetDecorator = (href, text, key) => (
-    <a href={href} key={key} target="_blank">
-      {text}
-    </a>
-  )
-
   return (
     <>
       <Box
@@ -136,9 +127,13 @@ export const Message: React.FC<MessageProps> = props => {
         maxWidth="66.67%"
         width="fit-content"
       >
-        <MessageText variant="md" color={textColor}>
-          <Linkify componentDecorator={linkTargetDecorator}>{body}</Linkify>
-        </MessageText>
+        <MessageText
+          variant="md"
+          color={textColor}
+          dangerouslySetInnerHTML={{
+            __html: linkifyHtml(body!, { target: "_blank" }),
+          }}
+        />
       </Box>
       {!!message?.attachments?.length &&
         message?.attachments?.map(attachment => {
