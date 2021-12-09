@@ -4,7 +4,7 @@ import { ContactInformationForm } from "../Components/ContactInformationForm"
 import { flushPromiseQueue } from "v2/DevTools"
 import { SystemContextProvider } from "v2/System"
 import { ReactWrapper } from "enzyme"
-import { createOrUpdateConsignSubmission } from "../../Utils/createConsignSubmission"
+import { createOrUpdateConsignSubmission } from "../../Utils/createOrUpdateConsignSubmission"
 import { useErrorModal } from "../../Utils/useErrorModal"
 import { getPhoneNumberInformation } from "../../Utils/phoneNumberUtils"
 
@@ -77,9 +77,9 @@ jest.mock("sharify", () => ({
   data: { SESSION_ID: "SessionID", RECAPTCHA_KEY: "recaptcha-api-key" },
 }))
 
-jest.mock("../../Utils/createConsignSubmission", () => ({
-  ...jest.requireActual("../../Utils/createConsignSubmission"),
-  createConsignSubmission: jest.fn(),
+jest.mock("../../Utils/createOrUpdateConsignSubmission", () => ({
+  ...jest.requireActual("../../Utils/createOrUpdateConsignSubmission"),
+  createOrUpdateConsignSubmission: jest.fn(),
 }))
 
 jest.mock("../../Utils/phoneNumberUtils", () => ({
