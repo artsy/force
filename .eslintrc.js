@@ -101,6 +101,14 @@ module.exports = {
         name: "underscore",
         message: "Please use lodash instead.",
       },
+      {
+        name: "superagent",
+        message: "Please use native fetch instead.",
+      },
+      {
+        name: "react-autosuggest",
+        message: "Please use Palette's AutosuggestInput instead.",
+      },
     ],
   },
   overrides: [
