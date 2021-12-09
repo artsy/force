@@ -3,7 +3,7 @@ import { createConsignSubmissionMutation } from "../../Mutations"
 import {
   createOrUpdateConsignSubmission,
   SubmissionInput,
-} from "../createConsignSubmission"
+} from "../createOrUpdateConsignSubmission"
 
 jest.mock("../../Mutations/CreateConsignSubmissionMutation", () => ({
   ...jest.requireActual("../../Mutations/CreateConsignSubmissionMutation"),
@@ -16,6 +16,7 @@ describe("createOrUpdateConsignSubmission", () => {
   beforeEach(() => {
     submission = {
       artistID: "artistId",
+      id: "",
     }
     relayEnvironment = {} as Environment
     ;(createConsignSubmissionMutation as jest.Mock).mockClear()

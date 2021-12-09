@@ -12,7 +12,7 @@ import { artworkDetailsValidationSchema } from "../Utils/validation"
 import { BackLink } from "v2/Components/Links/BackLink"
 import { useErrorModal } from "../Utils/useErrorModal"
 import { useSystemContext } from "v2/System"
-import { createOrUpdateConsignSubmission } from "../Utils/createConsignSubmission"
+import { createOrUpdateConsignSubmission } from "../Utils/createOrUpdateConsignSubmission"
 import { createFragmentContainer, graphql } from "react-relay"
 import {
   ArtworkDetails_submission,

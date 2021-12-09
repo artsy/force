@@ -2,7 +2,7 @@ import { Text, Button } from "@artsy/palette"
 import { SubmissionStepper } from "v2/Apps/Consign/Components/SubmissionStepper"
 import { useSystemContext, useTracking } from "v2/System"
 import { useRouter } from "v2/System/Router/useRouter"
-import { createOrUpdateConsignSubmission } from "../Utils/createConsignSubmission"
+import { createOrUpdateConsignSubmission } from "../Utils/createOrUpdateConsignSubmission"
 import { Form, Formik } from "formik"
 import {
   ContactInformationForm,
