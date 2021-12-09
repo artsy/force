@@ -9,7 +9,7 @@ const { getWrapper } = setupTestWrapper({
     return <AboutPartnerFragmentContainer partner={partner} />
   },
   query: graphql`
-    query AboutPartner_Test_Query {
+    query AboutPartner_Test_Query @relay_test_operation {
       partner(id: "unit-london") @principalField {
         ...AboutPartner_partner
       }

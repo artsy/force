@@ -15,7 +15,7 @@ describe("StandoutLotsRail", () => {
       return <StandoutLotsRailFragmentContainer viewer={props.viewer} />
     },
     query: graphql`
-      query StandoutLotsRail_Test_Query {
+      query StandoutLotsRail_Test_Query @relay_test_operation {
         viewer {
           ...StandoutLotsRail_viewer
         }

@@ -23,7 +23,7 @@ describe("ConversationCTA", () => {
       )
     },
     query: graphql`
-      query ConversationCTA_Test_Query {
+      query ConversationCTA_Test_Query @relay_test_operation {
         me {
           conversation(id: "1234") {
             ...ConversationCTA_conversation

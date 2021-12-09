@@ -18,7 +18,9 @@ describe("SelectedCareerAchievements", () => {
     return await renderRelayTree({
       Component: SelectedCareerAchievements,
       query: graphql`
-        query SelectedCareerAchievementsTestQuery @raw_response_type {
+        query SelectedCareerAchievementsTestQuery
+          @raw_response_type
+          @relay_test_operation {
           artist(id: "pablo-picasso") {
             ...SelectedCareerAchievements_artist
           }

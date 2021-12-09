@@ -16,7 +16,7 @@ const { getWrapper } = setupTestWrapper<PaymentApp_Test_Query>({
     )
   },
   query: graphql`
-    query PaymentApp_Test_Query {
+    query PaymentApp_Test_Query @relay_test_operation {
       me {
         ...PaymentApp_me
       }

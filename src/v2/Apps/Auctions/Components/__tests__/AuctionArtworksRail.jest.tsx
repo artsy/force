@@ -17,7 +17,7 @@ describe("AuctionArtworksRail", () => {
       )
     },
     query: graphql`
-      query AuctionArtworksRail_Test_Query {
+      query AuctionArtworksRail_Test_Query @relay_test_operation {
         sale(id: "xxx") {
           ...AuctionArtworksRail_sale
         }

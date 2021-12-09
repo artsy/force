@@ -13,7 +13,7 @@ const { renderWithRelay } = setupTestWrapperTL<
 >({
   Component: PartnersFeaturedCarouselFragmentContainer,
   query: graphql`
-    query PartnersFeaturedCarousel_Test_Query {
+    query PartnersFeaturedCarousel_Test_Query @relay_test_operation {
       viewer {
         ...PartnersFeaturedCarousel_viewer @arguments(id: "example")
       }

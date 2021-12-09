@@ -31,7 +31,7 @@ const { getWrapper } = setupTestWrapper<
     )
   },
   query: graphql`
-    query ArtworkDetailsAdditionalInfo_Test_Query {
+    query ArtworkDetailsAdditionalInfo_Test_Query @relay_test_operation {
       artwork(id: "xxx") {
         ...ArtworkDetailsAdditionalInfo_artwork
       }

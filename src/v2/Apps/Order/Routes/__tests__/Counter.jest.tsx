@@ -54,7 +54,7 @@ describe("Submit Pending Counter Offer", () => {
   const { buildPage, mutations, routes } = createTestEnv({
     Component: CounterFragmentContainer,
     query: graphql`
-      query CounterTestQuery @raw_response_type {
+      query CounterTestQuery @raw_response_type @relay_test_operation {
         order: commerceOrder(id: "") {
           ...Counter_order
         }

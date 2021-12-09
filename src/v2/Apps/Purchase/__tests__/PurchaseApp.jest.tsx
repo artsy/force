@@ -42,7 +42,7 @@ const render = (me: PurchaseAppTestQueryRawResponse["me"], user: User) =>
     ),
     mockData: { me } as PurchaseAppTestQueryRawResponse,
     query: graphql`
-      query PurchaseAppTestQuery @raw_response_type {
+      query PurchaseAppTestQuery @raw_response_type @relay_test_operation {
         me {
           ...PurchaseApp_me
         }

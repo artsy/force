@@ -27,7 +27,7 @@ describe("ArtistApp", () => {
   const { getWrapper } = setupTestWrapper<ArtistApp_Test_Query>({
     Component: ArtistAppFragmentContainer,
     query: graphql`
-      query ArtistApp_Test_Query {
+      query ArtistApp_Test_Query @relay_test_operation {
         artist(id: "example") {
           ...ArtistApp_artist
         }

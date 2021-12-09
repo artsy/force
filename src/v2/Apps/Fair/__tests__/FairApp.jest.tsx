@@ -29,7 +29,7 @@ const { getWrapper } = setupTestWrapper<FairApp_Test_Query>({
     )
   },
   query: graphql`
-    query FairApp_Test_Query {
+    query FairApp_Test_Query @relay_test_operation {
       fair(id: "example") {
         ...FairApp_fair
       }

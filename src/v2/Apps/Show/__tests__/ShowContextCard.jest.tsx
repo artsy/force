@@ -23,7 +23,7 @@ const { getWrapper } = setupTestWrapper<ShowContextCard_Test_Query>({
     </AnalyticsContext.Provider>
   ),
   query: graphql`
-    query ShowContextCard_Test_Query {
+    query ShowContextCard_Test_Query @relay_test_operation {
       show(id: "xxx") {
         ...ShowContextCard_show
       }

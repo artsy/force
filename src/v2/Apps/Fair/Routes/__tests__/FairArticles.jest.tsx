@@ -1,14 +1,19 @@
-import {
-  FairArticlesPaginationContainer,
-  FAIR_ARTICLES_QUERY,
-} from "../FairArticles"
+import { FairArticlesPaginationContainer } from "../FairArticles"
 import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
+import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
 
 const { getWrapper } = setupTestWrapper({
   Component: FairArticlesPaginationContainer,
-  query: FAIR_ARTICLES_QUERY,
+  query: graphql`
+    query FairArticles_test_Query($id: String!, $first: Int!, $after: String)
+      @relay_test_operation {
+      fair(id: $id) {
+        ...FairArticles_fair @arguments(first: $first, after: $after)
+      }
+    }
+  `,
   variables: {
     id: "example",
     first: 10,

@@ -12,7 +12,7 @@ describe("ArtistCurrentArticlesRail", () => {
     {
       Component: ArtistCurrentArticlesRailFragmentContainer,
       query: graphql`
-        query ArtistCurrentArticlesRail_Test_Query {
+        query ArtistCurrentArticlesRail_Test_Query @relay_test_operation {
           artist(id: "test") {
             ...ArtistCurrentArticlesRail_artist
           }

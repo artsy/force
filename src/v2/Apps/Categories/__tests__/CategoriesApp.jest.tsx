@@ -16,7 +16,7 @@ const { renderWithRelay } = setupTestWrapperTL<CategoriesApp_Test_Query>({
     )
   },
   query: graphql`
-    query CategoriesApp_Test_Query {
+    query CategoriesApp_Test_Query @relay_test_operation {
       geneFamiliesConnection(first: 20) {
         ...CategoriesApp_geneFamiliesConnection
       }

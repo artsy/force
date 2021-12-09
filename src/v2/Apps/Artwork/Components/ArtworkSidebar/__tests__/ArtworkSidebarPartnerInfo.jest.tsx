@@ -16,7 +16,9 @@ describe("ArtworkSidebarPartnerInfo", () => {
     return await renderRelayTree({
       Component: ArtworkSidebarPartnerInfoFragmentContainer,
       query: graphql`
-        query ArtworkSidebarPartnerInfo_Test_Query @raw_response_type {
+        query ArtworkSidebarPartnerInfo_Test_Query
+          @raw_response_type
+          @relay_test_operation {
           artwork(id: "artwork_from_partner_with_locations") {
             ...ArtworkSidebarPartnerInfo_artwork
           }

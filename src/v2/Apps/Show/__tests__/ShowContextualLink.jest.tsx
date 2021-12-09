@@ -14,7 +14,7 @@ const { getWrapper } = setupTestWrapper<ShowContextualLink_Test_Query>({
     </MockBoot>
   ),
   query: graphql`
-    query ShowContextualLink_Test_Query {
+    query ShowContextualLink_Test_Query @relay_test_operation {
       show(id: "catty-show") {
         ...ShowContextualLink_show
       }

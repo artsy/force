@@ -20,7 +20,7 @@ const { getWrapper } = setupTestWrapper<ShippingApp_Test_Query>({
     )
   },
   query: graphql`
-    query ShippingApp_Test_Query {
+    query ShippingApp_Test_Query @relay_test_operation {
       me {
         ...ShippingApp_me
       }

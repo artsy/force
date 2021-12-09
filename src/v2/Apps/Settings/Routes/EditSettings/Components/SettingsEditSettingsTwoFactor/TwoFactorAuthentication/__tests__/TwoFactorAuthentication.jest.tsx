@@ -31,7 +31,7 @@ const setupTestEnv = () => {
       <TwoFactorAuthenticationRefetchContainer {...props} />
     ),
     query: graphql`
-      query TwoFactorAuthenticationTestQuery {
+      query TwoFactorAuthenticationTestQuery @relay_test_operation {
         me {
           ...TwoFactorAuthentication_me
         }

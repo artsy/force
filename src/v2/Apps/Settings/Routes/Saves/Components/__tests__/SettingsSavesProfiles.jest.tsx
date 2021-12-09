@@ -1,15 +1,20 @@
 import { screen } from "@testing-library/react"
+import { graphql } from "react-relay"
 import { setupTestWrapperTL } from "v2/DevTools/setupTestWrapper"
-import {
-  SettingsSavesProfilesPaginationContainer,
-  SETTINGS_SAVES_PROFILES_QUERY,
-} from "../SettingsSavesProfiles"
+import { SettingsSavesProfilesPaginationContainer } from "../SettingsSavesProfiles"
 
 jest.unmock("react-relay")
 
 const { renderWithRelay } = setupTestWrapperTL({
   Component: SettingsSavesProfilesPaginationContainer,
-  query: SETTINGS_SAVES_PROFILES_QUERY,
+  query: graphql`
+    query SettingsSavesProfiles_test_Query($after: String)
+      @relay_test_operation {
+      me {
+        ...SettingsSavesProfiles_me @arguments(after: $after)
+      }
+    }
+  `,
 })
 
 describe("SettingsSavesProfiles", () => {

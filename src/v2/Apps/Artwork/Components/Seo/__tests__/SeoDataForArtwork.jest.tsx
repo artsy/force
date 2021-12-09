@@ -25,7 +25,9 @@ describe("SeoDataForArtwork", () => {
       Component: SeoDataForArtworkFragmentContainer,
       wrapper: renderer => <MockBoot>{renderer}</MockBoot>,
       query: graphql`
-        query SeoDataForArtwork_Test_Query @raw_response_type {
+        query SeoDataForArtwork_Test_Query
+          @raw_response_type
+          @relay_test_operation {
           artwork(id: "richard-anuszkiewicz-lino-yellow-318") {
             ...SeoDataForArtwork_artwork
           }

@@ -18,7 +18,9 @@ describe("ArtistSeriesMeta", () => {
         )
       },
       query: graphql`
-        query ArtistSeriesMeta_TestQuery($slug: ID!) @raw_response_type {
+        query ArtistSeriesMeta_TestQuery($slug: ID!)
+          @raw_response_type
+          @relay_test_operation {
           artistSeries(id: $slug) {
             ...ArtistSeriesMeta_artistSeries
           }

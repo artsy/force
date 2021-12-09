@@ -18,7 +18,7 @@ const { getWrapper } = setupTestWrapper<GeneFamilies_Test_Query>({
     )
   },
   query: graphql`
-    query GeneFamilies_Test_Query {
+    query GeneFamilies_Test_Query @relay_test_operation {
       geneFamiliesConnection(first: 20) {
         ...GeneFamilies_geneFamiliesConnection
       }

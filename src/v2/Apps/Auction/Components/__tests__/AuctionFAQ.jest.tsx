@@ -64,7 +64,7 @@ describe("AuctionFAQ", () => {
     return await renderRelayTree({
       Component: AuctionFAQFragmentContainer,
       query: graphql`
-        query AuctionFAQ_Query @raw_response_type {
+        query AuctionFAQ_Query @raw_response_type @relay_test_operation {
           viewer {
             ...AuctionFAQ_viewer
           }

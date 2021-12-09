@@ -38,7 +38,7 @@ const { getWrapper } = setupTestWrapper<ShowArtworks_Test_Query>({
     </MockBoot>
   ),
   query: graphql`
-    query ShowArtworks_Test_Query {
+    query ShowArtworks_Test_Query @relay_test_operation {
       show(id: "catty-show") {
         ...ShowArtworks_show
       }

@@ -10,7 +10,7 @@ jest.mock("v2/Utils/Hooks/Mutations/useUpdateMyUserProfile")
 const { renderWithRelay } = setupTestWrapperTL({
   Component: SettingsEditProfileAboutYouFragmentContainer,
   query: graphql`
-    query SettingsEditProfileAboutYou_Test_Query {
+    query SettingsEditProfileAboutYou_Test_Query @relay_test_operation {
       me {
         ...SettingsEditProfileAboutYou_me
       }

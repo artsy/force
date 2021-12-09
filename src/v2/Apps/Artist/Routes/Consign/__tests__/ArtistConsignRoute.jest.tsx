@@ -27,7 +27,8 @@ describe("ConsignRoute", () => {
       },
       query: graphql`
         query ArtistConsignRoute_Test_Query($artistID: String!)
-          @raw_response_type {
+          @raw_response_type
+          @relay_test_operation {
           artist(id: $artistID) {
             ...ArtistConsignRoute_artist
 

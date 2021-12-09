@@ -72,7 +72,8 @@ const getWrapper = (
     Component: SearchBar,
     query: graphql`
       query SearchBarTestQuery($term: String!, $hasTerm: Boolean!)
-        @raw_response_type {
+        @raw_response_type
+        @relay_test_operation {
         viewer {
           ...SearchBar_viewer @arguments(term: $term, hasTerm: $hasTerm)
         }

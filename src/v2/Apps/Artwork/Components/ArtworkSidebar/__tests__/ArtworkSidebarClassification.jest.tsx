@@ -16,7 +16,9 @@ jest.unmock("react-relay")
 const { getWrapper } = setupTestWrapper({
   Component: ArtworkSidebarClassificationFragmentContainer,
   query: graphql`
-    query ArtworkSidebarClassification_Test_Query @raw_response_type {
+    query ArtworkSidebarClassification_Test_Query
+      @raw_response_type
+      @relay_test_operation {
       artwork(id: "josef-albers-homage-to-the-square-85") {
         ...ArtworkSidebarClassification_artwork
       }

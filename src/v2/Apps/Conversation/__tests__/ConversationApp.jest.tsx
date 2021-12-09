@@ -31,7 +31,7 @@ const { renderWithRelay } = setupTestWrapperTL<ConversationAppTestQuery>({
     )
   },
   query: graphql`
-    query ConversationAppTestQuery @raw_response_type {
+    query ConversationAppTestQuery @raw_response_type @relay_test_operation {
       me {
         ...ConversationApp_me
       }

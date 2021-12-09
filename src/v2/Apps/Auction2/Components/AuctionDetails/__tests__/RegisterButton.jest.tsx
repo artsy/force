@@ -11,7 +11,7 @@ jest.mock("v2/System/Analytics/useTracking")
 const { renderWithRelay } = setupTestWrapperTL<RegisterButton_Test_Query>({
   Component: RegisterButtonFragmentContainer,
   query: graphql`
-    query RegisterButton_Test_Query {
+    query RegisterButton_Test_Query @relay_test_operation {
       sale(id: "foo") {
         ...RegisterButton_sale
       }

@@ -1,10 +1,8 @@
-import {
-  ArtistsByLetterFragmentContainer,
-  ARTISTS_BY_LETTER_QUERY,
-} from "../Routes/ArtistsByLetter"
+import { ArtistsByLetterFragmentContainer } from "../Routes/ArtistsByLetter"
 import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
 import { ArtistsByLetterQuery } from "v2/__generated__/ArtistsByLetterQuery.graphql"
 import { MockBoot } from "v2/DevTools"
+import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
 jest.mock("v2/Components/Pagination/useComputeHref")
@@ -22,7 +20,14 @@ const { getWrapper } = setupTestWrapper<ArtistsByLetterQuery>({
       </MockBoot>
     )
   },
-  query: ARTISTS_BY_LETTER_QUERY,
+  query: graphql`
+    query ArtistsByLetter_test_Query($letter: String!, $size: Int, $page: Int) {
+      viewer {
+        ...ArtistsByLetter_viewer
+          @arguments(letter: $letter, page: $page, size: $size)
+      }
+    }
+  `,
 })
 
 describe("ArtistsByLetter", () => {

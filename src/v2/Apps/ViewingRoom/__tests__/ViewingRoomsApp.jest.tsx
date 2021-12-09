@@ -31,7 +31,9 @@ describe("ViewingRoomsApp", () => {
         },
         mockData: response,
         query: graphql`
-          query ViewingRoomsApp_Test_Query @raw_response_type {
+          query ViewingRoomsApp_Test_Query
+            @raw_response_type
+            @relay_test_operation {
             allViewingRooms: viewer {
               ...ViewingRoomsApp_allViewingRooms
             }

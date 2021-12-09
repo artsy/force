@@ -27,7 +27,7 @@ describe("SignUpForm", () => {
       )
     },
     query: graphql`
-      query SignUpFormLocation_tests_Query($ip: String!) {
+      query SignUpFormLocation_tests_Query($ip: String!) @relay_test_operation {
         requestLocation(ip: $ip) {
           ...SignUpForm_requestLocation
         }

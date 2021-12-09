@@ -18,7 +18,7 @@ const { getWrapper } = setupTestWrapper<
     )
   },
   query: graphql`
-    query HomeWorksByArtistsYouFollowRail_Test_Query {
+    query HomeWorksByArtistsYouFollowRail_Test_Query @relay_test_operation {
       homePage {
         ...HomeWorksByArtistsYouFollowRail_homePage
       }

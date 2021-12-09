@@ -9,7 +9,7 @@ describe("UserRegistrationAuctions", () => {
   const { getWrapper } = setupTestWrapper<UserRegistrationAuctions_Test_Query>({
     Component: UserRegistrationAuctionsFragmentContainer,
     query: graphql`
-      query UserRegistrationAuctions_Test_Query {
+      query UserRegistrationAuctions_Test_Query @relay_test_operation {
         me {
           ...UserRegistrationAuctions_me
         }

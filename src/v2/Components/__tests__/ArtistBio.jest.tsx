@@ -25,7 +25,7 @@ describe("ArtistBio", () => {
         </MockBoot>
       ),
       query: graphql`
-        query ArtistBioTestQuery @raw_response_type {
+        query ArtistBioTestQuery @raw_response_type @relay_test_operation {
           bio: artist(id: "unused") {
             ...ArtistBio_bio
           }

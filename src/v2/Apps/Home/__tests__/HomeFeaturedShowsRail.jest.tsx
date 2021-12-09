@@ -10,7 +10,7 @@ jest.mock("v2/System/Analytics/useTracking")
 const { getWrapper } = setupTestWrapper<HomeFeaturedShowsRail_Test_Query>({
   Component: HomeFeaturedShowsRailFragmentContainer,
   query: graphql`
-    query HomeFeaturedShowsRail_Test_Query {
+    query HomeFeaturedShowsRail_Test_Query @relay_test_operation {
       orderedSet(id: "example") {
         ...HomeFeaturedShowsRail_orderedSet
       }

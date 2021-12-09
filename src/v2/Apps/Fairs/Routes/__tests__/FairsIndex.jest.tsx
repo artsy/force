@@ -16,7 +16,7 @@ const { getWrapper } = setupTestWrapper<FairsIndex_Test_Query>({
     )
   },
   query: graphql`
-    query FairsIndex_Test_Query {
+    query FairsIndex_Test_Query @relay_test_operation {
       featuredFairs: orderedSets(key: "art-fairs:featured") {
         ...FairsIndex_featuredFairs
       }

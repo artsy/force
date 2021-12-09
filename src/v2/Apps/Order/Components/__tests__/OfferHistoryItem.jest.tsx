@@ -36,7 +36,7 @@ const render = (
       },
     },
     query: graphql`
-      query OfferHistoryItemTestQuery @raw_response_type {
+      query OfferHistoryItemTestQuery @raw_response_type @relay_test_operation {
         order: commerceOrder(id: "foo") {
           ...OfferHistoryItem_order
         }

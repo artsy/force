@@ -40,7 +40,9 @@ describe("FairArtworks", () => {
         )
       },
       query: graphql`
-        query FairArtworks_Query($slug: String!) @raw_response_type {
+        query FairArtworks_Query($slug: String!)
+          @raw_response_type
+          @relay_test_operation {
           fair(id: $slug) {
             ...FairArtworks_fair @arguments(shouldFetchCounts: true)
           }

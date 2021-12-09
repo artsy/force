@@ -20,7 +20,7 @@ describe("ArtistIconicCollectionsRail", () => {
         $isFeaturedArtistContent: Boolean
         $size: Int
         $artistID: String
-      ) {
+      ) @relay_test_operation {
         marketingCollections(
           isFeaturedArtistContent: $isFeaturedArtistContent
           size: $size

@@ -27,7 +27,7 @@ const { getWrapper } = setupTestWrapper<ShowsCity_Test_Query>({
     )
   },
   query: graphql`
-    query ShowsCity_Test_Query {
+    query ShowsCity_Test_Query @relay_test_operation {
       viewer {
         ...ShowsCity_viewer
       }

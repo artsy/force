@@ -114,7 +114,7 @@ const getWrapperWithProps = (user?: User) =>
       )
     },
     query: graphql`
-      query ContactInformationTestQuery {
+      query ContactInformationTestQuery @relay_test_operation {
         me {
           ...ContactInformation_me
         }

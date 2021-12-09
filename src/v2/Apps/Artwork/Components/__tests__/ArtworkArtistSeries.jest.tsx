@@ -32,7 +32,9 @@ describe("ArtworkArtistSeries", () => {
         )
       },
       query: graphql`
-        query ArtworkArtistSeries_Query($slug: String!) @raw_response_type {
+        query ArtworkArtistSeries_Query($slug: String!)
+          @raw_response_type
+          @relay_test_operation {
           artwork(id: $slug) {
             ...ArtworkArtistSeries_artwork
           }

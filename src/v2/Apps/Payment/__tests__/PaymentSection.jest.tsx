@@ -28,7 +28,7 @@ const { getWrapper } = setupTestWrapper<PaymentSection_Test_Query>({
     return <PaymentSectionFragmentContainer {...props} />
   },
   query: graphql`
-    query PaymentSection_Test_Query {
+    query PaymentSection_Test_Query @relay_test_operation {
       me {
         ...PaymentSection_me
       }

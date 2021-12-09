@@ -17,7 +17,7 @@ describe("WorksByArtistsYouFollowRail", () => {
       )
     },
     query: graphql`
-      query WorksByArtistsYouFollowRail_Test_Query {
+      query WorksByArtistsYouFollowRail_Test_Query @relay_test_operation {
         viewer {
           ...WorksByArtistsYouFollowRail_viewer
         }

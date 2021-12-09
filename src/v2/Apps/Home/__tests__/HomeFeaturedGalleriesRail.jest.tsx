@@ -16,7 +16,7 @@ const { getWrapper } = setupTestWrapper<HomeFeaturedGalleriesRail_Test_Query>({
     )
   },
   query: graphql`
-    query HomeFeaturedGalleriesRail_Test_Query {
+    query HomeFeaturedGalleriesRail_Test_Query @relay_test_operation {
       orderedSet(id: "example") {
         ...HomeFeaturedGalleriesRail_orderedSet
       }

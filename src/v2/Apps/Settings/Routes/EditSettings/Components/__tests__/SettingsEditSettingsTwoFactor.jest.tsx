@@ -13,7 +13,7 @@ jest.mock(
 const { renderWithRelay } = setupTestWrapperTL({
   Component: SettingsEditSettingsTwoFactorFragmentContainer,
   query: graphql`
-    query SettingsEditSettingsTwoFactor_Test_Query {
+    query SettingsEditSettingsTwoFactor_Test_Query @relay_test_operation {
       me {
         ...SettingsEditSettingsTwoFactor_me
       }

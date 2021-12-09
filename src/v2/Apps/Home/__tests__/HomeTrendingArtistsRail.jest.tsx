@@ -12,7 +12,7 @@ const { getWrapper } = setupTestWrapper<HomeTrendingArtistsRail_Test_Query>({
     return <HomeTrendingArtistsRailFragmentContainer viewer={props.viewer!} />
   },
   query: graphql`
-    query HomeTrendingArtistsRail_Test_Query {
+    query HomeTrendingArtistsRail_Test_Query @relay_test_operation {
       viewer {
         ...HomeTrendingArtistsRail_viewer
       }

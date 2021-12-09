@@ -19,7 +19,7 @@ const { renderWithRelay } = setupTestWrapperTL<
 >({
   Component: PartnerCellFragmentContainer,
   query: graphql`
-    query PartnerCellFragmentContainer_Test_Query {
+    query PartnerCellFragmentContainer_Test_Query @relay_test_operation {
       partner(id: "example") {
         ...PartnerCell_partner
       }

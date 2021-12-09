@@ -45,7 +45,7 @@ describe("FairBooths", () => {
           $first: Int
           $page: Int
           $sort: ShowSorts
-        ) @raw_response_type {
+        ) @raw_response_type @relay_test_operation {
           fair(id: $id) {
             ...FairBooths_fair
               @arguments(first: $first, page: $page, sort: $sort)

@@ -11,7 +11,7 @@ describe("ArtistNotableWorksRail", () => {
   const { getWrapper } = setupTestWrapper<ArtistNotableWorksRail_Test_Query>({
     Component: ArtistNotableWorksRailFragmentContainer,
     query: graphql`
-      query ArtistNotableWorksRail_Test_Query {
+      query ArtistNotableWorksRail_Test_Query @relay_test_operation {
         artist(id: "test") {
           ...ArtistNotableWorksRail_artist
         }

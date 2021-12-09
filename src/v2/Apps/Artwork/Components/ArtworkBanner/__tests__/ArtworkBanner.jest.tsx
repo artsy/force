@@ -9,7 +9,7 @@ describe("ArtworkBanner", () => {
   const { getWrapper } = setupTestWrapper<ArtworkBanner_Test_Query>({
     Component: ArtworkBannerFragmentContainer,
     query: graphql`
-      query ArtworkBanner_Test_Query {
+      query ArtworkBanner_Test_Query @relay_test_operation {
         artwork(id: "richard-anuszkiewicz-lino-yellow-318") {
           ...ArtworkBanner_artwork
         }

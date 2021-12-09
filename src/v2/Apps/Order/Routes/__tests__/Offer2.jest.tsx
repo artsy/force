@@ -26,7 +26,7 @@ describe("an offer on the work with price hidden", () => {
       ...initialOfferSuccess,
     },
     query: graphql`
-      query Offer2TestQuery @raw_response_type {
+      query Offer2TestQuery @raw_response_type @relay_test_operation {
         order: commerceOrder(id: "1234567") {
           ...Offer_order
         }

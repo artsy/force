@@ -34,7 +34,9 @@ describe("FairCollection", () => {
         )
       },
       query: graphql`
-        query FairCollection_Query($slug: String!) @raw_response_type {
+        query FairCollection_Query($slug: String!)
+          @raw_response_type
+          @relay_test_operation {
           marketingCollection(slug: $slug) {
             ...FairCollection_collection
           }

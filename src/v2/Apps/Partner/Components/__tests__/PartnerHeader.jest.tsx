@@ -17,7 +17,7 @@ const { getWrapper } = setupTestWrapper<PartnerHeader_Test_Query>({
     return <PartnerHeader partner={partner} />
   },
   query: graphql`
-    query PartnerHeader_Test_Query @raw_response_type {
+    query PartnerHeader_Test_Query @raw_response_type @relay_test_operation {
       partner(id: "white-cube") {
         ...PartnerHeader_partner
       }

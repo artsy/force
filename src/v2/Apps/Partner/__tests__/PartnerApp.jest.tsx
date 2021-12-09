@@ -31,7 +31,7 @@ const { getWrapper } = setupTestWrapper<PartnerApp_Test_Query>({
     )
   },
   query: graphql`
-    query PartnerApp_Test_Query {
+    query PartnerApp_Test_Query @relay_test_operation {
       partner(id: "example") {
         ...PartnerApp_partner
       }

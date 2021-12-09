@@ -20,7 +20,7 @@ describe("MyBidsBidItem", () => {
       )
     },
     query: graphql`
-      query MyBidsBidItem_Test_Query {
+      query MyBidsBidItem_Test_Query @relay_test_operation {
         saleArtwork(id: "foo") {
           ...MyBidsBidItem_saleArtwork
         }
