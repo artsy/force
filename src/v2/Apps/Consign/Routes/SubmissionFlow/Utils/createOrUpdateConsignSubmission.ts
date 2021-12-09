@@ -6,8 +6,6 @@ import {
 import { CreateSubmissionMutationInput } from "v2/__generated__/CreateConsignSubmissionMutation.graphql"
 import { UpdateSubmissionMutationInput } from "v2/__generated__/UpdateConsignSubmissionMutation.graphql"
 
-// const logger = createLogger("createConsignSubmission.ts")
-
 export type SubmissionInput =
   | CreateSubmissionMutationInput
   | UpdateSubmissionMutationInput
