@@ -1,4 +1,4 @@
-import { LargeSelect } from "@artsy/palette"
+import { Select } from "@artsy/palette"
 import { PositionProps, SpaceProps } from "styled-system"
 
 export interface CountrySelectProps extends PositionProps, SpaceProps {
@@ -11,7 +11,7 @@ export interface CountrySelectProps extends PositionProps, SpaceProps {
 
 export const CountrySelect = (props: CountrySelectProps) => {
   return (
-    <LargeSelect
+    <Select
       {...props}
       options={
         props.euShippingOnly

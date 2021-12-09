@@ -1,4 +1,4 @@
-import { Flex, Sans, Serif, Spinner } from "@artsy/palette"
+import { Flex, Text, Spinner } from "@artsy/palette"
 import * as React from "react"
 import { graphql } from "react-relay"
 
@@ -10,7 +10,6 @@ import {
 import { SystemContextProps, withSystemContext } from "v2/System"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 
-const Text = props => <Serif size="3t" color="black100" {...props} />
 const Row = props => (
   <Flex flexDirection="row" justifyContent="space-between" pb={1} {...props} />
 )
@@ -20,26 +19,26 @@ export const PricingTransparency: React.FC<PricingTransparencyQueryResponse> = p
   const { calculatedCost } = props.artwork.saleArtwork
 
   return (
-    <Flex pt={3} flexDirection="column">
-      <Serif pb={1} size="4t" weight="semibold" color="black100">
+    <Flex pt={2} flexDirection="column">
+      <Text variant="md" pb={1} fontWeight="bold" color="black100">
         Summary
-      </Serif>
+      </Text>
 
       <Row>
-        <Text>Your max bid</Text>
-        <Text>{calculatedCost.bidAmount.display}</Text>
-      </Row>
-      <Row pb={2}>
-        <Text>Buyer's Premium</Text>
-        <Text>{calculatedCost.buyersPremium.display}</Text>
+        <Text variant="md">Your max bid</Text>
+        <Text variant="md">{calculatedCost.bidAmount.display}</Text>
       </Row>
       <Row>
-        <Text>Subtotal</Text>
-        <Text>{calculatedCost.subtotal.display}</Text>
+        <Text variant="md">Buyer's Premium</Text>
+        <Text variant="md">{calculatedCost.buyersPremium.display}</Text>
       </Row>
-      <Sans size="2" color="black60">
+      <Row>
+        <Text variant="md">Subtotal</Text>
+        <Text variant="md">{calculatedCost.subtotal.display}</Text>
+      </Row>
+      <Text variant="sm" color="black60" mt={2}>
         Plus any applicable shipping, taxes, and fees.
-      </Sans>
+      </Text>
     </Flex>
   )
 }
