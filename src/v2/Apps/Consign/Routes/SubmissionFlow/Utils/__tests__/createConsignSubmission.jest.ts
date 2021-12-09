@@ -1,5 +1,8 @@
 import { Environment } from "relay-runtime"
-import { createConsignSubmissionMutation } from "../../Mutations"
+import {
+  createConsignSubmissionMutation,
+  updateConsignSubmissionMutation,
+} from "../../Mutations"
 import {
   createOrUpdateConsignSubmission,
   SubmissionInput,
@@ -7,19 +10,21 @@ import {
 
 jest.mock("../../Mutations/CreateConsignSubmissionMutation", () => ({
   ...jest.requireActual("../../Mutations/CreateConsignSubmissionMutation"),
-  createConsignSubmissionMutation: jest.fn().mockResolvedValue("123"),
+  createConsignSubmissionMutation: jest.fn().mockResolvedValue("111"),
 }))
+jest.mock("../../Mutations/UpdateConsignSubmissionMutation", () => ({
+  ...jest.requireActual("../../Mutations/UpdateConsignSubmissionMutation"),
+  updateConsignSubmissionMutation: jest.fn().mockResolvedValue("222"),
+}))
+const mockCreateMutation = createConsignSubmissionMutation as jest.Mock
+const mockUpdateMutation = updateConsignSubmissionMutation as jest.Mock
 
 describe("createOrUpdateConsignSubmission", () => {
-  let submission: SubmissionInput, relayEnvironment
+  let submission: SubmissionInput, relayEnvironment: Environment
 
   beforeEach(() => {
-    submission = {
-      artistID: "artistId",
-      id: "",
-    }
-    relayEnvironment = {} as Environment
-    ;(createConsignSubmissionMutation as jest.Mock).mockClear()
+    submission = { artistID: "artistId" }
+    jest.clearAllMocks()
   })
 
   it("creates submission", async () => {
@@ -28,13 +33,27 @@ describe("createOrUpdateConsignSubmission", () => {
       submission
     )
 
-    expect(createConsignSubmissionMutation).toHaveBeenCalled()
-    expect(createConsignSubmissionMutation).toHaveBeenCalledWith(
+    expect(mockCreateMutation).toHaveBeenCalled()
+    expect(mockCreateMutation).toHaveBeenCalledWith(
       relayEnvironment,
       submission
     )
-    expect(result).toEqual("123")
+    expect(result).toEqual("111")
   })
 
-  it.skip("updates submission", async () => {})
+  it("updates submission", async () => {
+    submission = { artistID: "artistId", id: "123" }
+
+    const result = await updateConsignSubmissionMutation(
+      relayEnvironment,
+      submission
+    )
+
+    expect(mockUpdateMutation).toHaveBeenCalled()
+    expect(mockUpdateMutation).toHaveBeenCalledWith(
+      relayEnvironment,
+      submission
+    )
+    expect(result).toEqual("222")
+  })
 })
