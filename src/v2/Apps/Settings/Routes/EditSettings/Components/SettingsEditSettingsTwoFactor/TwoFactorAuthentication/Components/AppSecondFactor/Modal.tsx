@@ -10,7 +10,7 @@ import { ApiError } from "../../ApiError"
 import { EnableSecondFactor } from "../Mutation/EnableSecondFactor"
 import { UpdateAppSecondFactor } from "./Mutation/UpdateAppSecondFactor"
 import { BackupSecondFactorReminder } from "../BackupSecondFactorReminder"
-import { redirectMessage } from "v2/Components/UserSettings/TwoFactorAuthentication/helpers"
+import { redirectMessage } from "v2/Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsTwoFactor/TwoFactorAuthentication/helpers"
 
 export interface FormValues {
   name: string

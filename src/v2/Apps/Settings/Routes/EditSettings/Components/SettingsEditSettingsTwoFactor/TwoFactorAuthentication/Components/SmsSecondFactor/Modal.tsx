@@ -27,7 +27,7 @@ import { UpdateSmsSecondFactor } from "./Mutation/UpdateSmsSecondFactor"
 import { BackupSecondFactorReminder } from "../BackupSecondFactorReminder"
 
 import { CreateSmsSecondFactorMutationResponse } from "v2/__generated__/CreateSmsSecondFactorMutation.graphql"
-import { redirectMessage } from "v2/Components/UserSettings/TwoFactorAuthentication/helpers"
+import { redirectMessage } from "v2/Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsTwoFactor/TwoFactorAuthentication/helpers"
 
 interface SmsSecondFactorModalProps {
   onClose: () => void

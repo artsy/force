@@ -23,7 +23,7 @@ import { AppSecondFactor_me } from "v2/__generated__/AppSecondFactor_me.graphql"
 import { ConfirmPasswordModal } from "v2/Components/ConfirmPasswordModal"
 import { CreateAppSecondFactorInput } from "v2/__generated__/CreateAppSecondFactorMutation.graphql"
 
-import { afterUpdateRedirect } from "v2/Components/UserSettings/TwoFactorAuthentication/helpers"
+import { afterUpdateRedirect } from "v2/Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsTwoFactor/TwoFactorAuthentication/helpers"
 
 interface AppSecondFactorProps extends BorderBoxProps {
   me: AppSecondFactor_me

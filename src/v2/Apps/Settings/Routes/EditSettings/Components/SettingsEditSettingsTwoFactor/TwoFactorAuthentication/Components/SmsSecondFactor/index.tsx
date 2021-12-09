@@ -23,7 +23,7 @@ import { ApiErrorModal } from "../ApiErrorModal"
 import { DisableFactorConfirmation } from "../DisableFactorConfirmation"
 import { ConfirmPasswordModal } from "v2/Components/ConfirmPasswordModal"
 
-import { afterUpdateRedirect } from "v2/Components/UserSettings/TwoFactorAuthentication/helpers"
+import { afterUpdateRedirect } from "v2/Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsTwoFactor/TwoFactorAuthentication/helpers"
 
 interface SmsSecondFactorProps extends BorderBoxProps {
   me: SmsSecondFactor_me
