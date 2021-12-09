@@ -11,7 +11,7 @@ export interface PasswordInputProps extends QuickInputProps {
 /**
  * Password input.
  * Renders the label inside of the textbox; shows/hides the password.
- *
+ * @deprecated: Use @artsy/palette's PasswordInput instead.
  */
 export const PasswordInput: React.FC<PasswordInputProps> = ({
   error,
