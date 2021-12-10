@@ -170,7 +170,7 @@ export const BaseArtworkFilter: React.FC<
   const [showMobileActionSheet, toggleMobileActionSheet] = useState(false)
   const filterContext = useArtworkFilterContext()
   const previousFilters = usePrevious(filterContext.filters)
-  const { user, isLoggedIn } = useSystemContext()
+  const { user } = useSystemContext()
   const { pills = [], setPills } = useFilterPillsContext()
   const appliedFiltersTotalCount = getTotalSelectedFiltersCount(
     filterContext.selectedFiltersCounts
@@ -182,8 +182,6 @@ export const BaseArtworkFilter: React.FC<
     () => getAllowedFiltersForSavedSearchInput(filterContext.filters ?? {}),
     [filterContext.filters]
   )
-  const savedSearchAttributes =
-    isLoggedIn && savedSearchProps ? savedSearchProps : null
 
   const showCreateAlert = enableCreateAlert && !!pills.length
 
@@ -357,7 +355,7 @@ export const BaseArtworkFilter: React.FC<
           {showCreateAlert && (
             <>
               <ArtworkGridFilterPills
-                savedSearchAttributes={savedSearchAttributes}
+                savedSearchAttributes={savedSearchProps}
               />
               <Spacer mt={4} />
             </>
@@ -413,7 +411,7 @@ export const BaseArtworkFilter: React.FC<
             {showCreateAlert && (
               <>
                 <ArtworkGridFilterPills
-                  savedSearchAttributes={savedSearchAttributes}
+                  savedSearchAttributes={savedSearchProps}
                 />
                 <Spacer mt={4} />
               </>
