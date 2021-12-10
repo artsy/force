@@ -1,5 +1,5 @@
-import { BorderBoxProps, Box, Flex, Text } from "@artsy/palette"
-import * as React from "react";
+import { BorderBoxProps, Column, GridColumns, Text } from "@artsy/palette"
+import * as React from "react"
 
 interface BackupSecondFactorReminderProps extends BorderBoxProps {
   backupSecondFactors: string[]
@@ -10,8 +10,8 @@ export const BackupSecondFactorReminder: React.FC<BackupSecondFactorReminderProp
   const { backupSecondFactors, factorTypeName } = props
 
   return (
-    <Box minHeight="280px">
-      <Text color="black60">
+    <>
+      <Text variant="sm" color="black60">
         You can use these one-time codes to access your account if you lose
         access to your{" "}
         {factorTypeName === "AppSecondFactor"
@@ -19,23 +19,24 @@ export const BackupSecondFactorReminder: React.FC<BackupSecondFactorReminderProp
           : "phone"}
         .
       </Text>
-      <Text mt={2} variant="mediumText" color="black80">
+
+      <Text mt={2} variant="sm" color="black60">
         Treat these codes like a password and store them in a safe place.
       </Text>
-      <Flex mt={3} flexDirection="row" flexWrap="wrap">
-        {backupSecondFactors.map((factor, index) => (
-          <Box width="50%" key={index}>
-            <Text
-              variant="subtitle"
-              color="black60"
-              textAlign="center"
-              py={0.5}
-            >
-              {factor}
-            </Text>
-          </Box>
-        ))}
-      </Flex>
-    </Box>
+
+      <GridColumns mt={2}>
+        {backupSecondFactors.map(factor => {
+          if (!factor) return null
+
+          return (
+            <Column span={6} key={factor}>
+              <Text variant="lg" textAlign="center">
+                {factor}
+              </Text>
+            </Column>
+          )
+        })}
+      </GridColumns>
+    </>
   )
 }

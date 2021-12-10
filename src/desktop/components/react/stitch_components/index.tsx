@@ -17,7 +17,7 @@ export { NavBar } from "./NavBar"
 export { CollectionsHubsHomepageNav } from "./CollectionsHubsHomepageNav"
 export {
   TwoFactorAuthenticationQueryRenderer as TwoFactorAuthentication,
-} from "v2/Components/UserSettings/TwoFactorAuthentication"
+} from "v2/Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsTwoFactor/TwoFactorAuthentication"
 export { UserEmailPreferencesQueryRenderer as UserEmailPreferences, } from "v2/Components/UserSettings/UserEmailPreferences"
 export { UserInformationQueryRenderer as UserInformation } from "v2/Components/UserSettings/UserInformation"
 export { ReactionCCPARequest as CCPARequest } from "./CCPARequest"

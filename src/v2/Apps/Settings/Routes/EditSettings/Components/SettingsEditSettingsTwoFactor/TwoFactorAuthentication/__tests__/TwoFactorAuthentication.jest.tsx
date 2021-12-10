@@ -4,7 +4,7 @@ import { createTestEnv } from "v2/DevTools/createTestEnv"
 
 import { TwoFactorAuthenticationQueryResponse } from "v2/__generated__/TwoFactorAuthenticationQuery.graphql"
 import { createMockFetchQuery } from "v2/DevTools"
-import { TwoFactorAuthenticationRefetchContainer } from "../"
+import { TwoFactorAuthenticationRefetchContainer } from ".."
 import {
   AppEnabledWithBackupCodesQueryResponse,
   AppEnabledWithoutBackupCodesQueryResponse,
@@ -72,9 +72,10 @@ describe("TwoFactorAuthentication", () => {
       const env = setupTestEnv()
       const page = await env.buildPage()
 
-      expect(page.appSetupButton.exists).toBeTruthy
+      expect(page.appSetupButton.exists).toBeTruthy()
     })
 
+    // eslint-disable-next-line jest/expect-expect
     it("creates an enabled App Authenticator 2FA factor", async () => {
       const env = setupTestEnv()
       const page = await env.buildPage()
@@ -92,9 +93,10 @@ describe("TwoFactorAuthentication", () => {
       const env = setupTestEnv()
       const page = await env.buildPage()
 
-      expect(page.smsSetupButton.exists).toBeTruthy
+      expect(page.smsSetupButton.exists).toBeTruthy()
     })
 
+    // eslint-disable-next-line jest/expect-expect
     it("creates an enabled SMS 2FA factor", async () => {
       const env = setupTestEnv()
       const page = await env.buildPage()
@@ -117,16 +119,17 @@ describe("TwoFactorAuthentication", () => {
         mockData: AppEnabledWithoutBackupCodesQueryResponse,
       })
 
-      expect(page.backupSetupButton.exists).toBeTruthy
+      expect(page.backupSetupButton.exists).toBeTruthy()
     })
 
+    // eslint-disable-next-line jest/no-done-callback
     it("creates backup codes and displays codes in a modal", async done => {
       const env = setupTestEnv()
       const page = await env.buildPage({
         mockData: AppEnabledWithoutBackupCodesQueryResponse,
       })
 
-      expect(page.backupSetupButton.exists).toBeTruthy
+      expect(page.backupSetupButton.exists).toBeTruthy()
 
       env.mutations.useResultsOnce(
         CreateBackupSecondFactorsMutationSuccessResponse
@@ -150,6 +153,7 @@ describe("TwoFactorAuthentication", () => {
       })
     })
 
+    // eslint-disable-next-line jest/no-done-callback
     it("shows current backup codes in a modal", async done => {
       const env = setupTestEnv()
       const page = await env.buildPage({
@@ -171,13 +175,14 @@ describe("TwoFactorAuthentication", () => {
       })
     })
 
+    // eslint-disable-next-line jest/no-done-callback
     it("regenerates backup codes and displays codes in a modal", async done => {
       const env = setupTestEnv()
       const page = await env.buildPage({
         mockData: AppEnabledWithBackupCodesQueryResponse,
       })
 
-      expect(page.backupRegenerateButton.exists).toBeTruthy
+      expect(page.backupRegenerateButton.exists).toBeTruthy()
 
       env.mutations.useResultsOnce(
         CreateBackupSecondFactorsMutationSuccessResponse
