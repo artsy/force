@@ -1,10 +1,9 @@
-import { useState } from "react"
 import * as React from "react"
-import { Banner, Box, Flex, Select, Text, useToasts } from "@artsy/palette"
+import { Flex, Select, Text, useToasts } from "@artsy/palette"
 import { useSystemContext } from "v2/System/SystemContext"
 import { createFragmentContainer, graphql } from "react-relay"
-import { UpdateUserEmailPreferencesMutation } from "../../../../../../Components/UserSettings/UserEmailPreferences/UserEmailPreferencesMutation"
 import { SettingsEditSettingsEmailPreferences_me } from "v2/__generated__/SettingsEditSettingsEmailPreferences_me.graphql"
+import { UpdateUserEmailPreferencesMutation } from "v2/Components/UserSettings/UserEmailPreferences/UserEmailPreferencesMutation"
 
 const fallbackFrequency = "weekly"
 
@@ -24,12 +23,10 @@ export const SettingsEditSettingsEmailPreferences: React.FC<SettingEditSettingsE
 }) => {
   const { relayEnvironment } = useSystemContext()
   const emailFrequency = me?.emailFrequency || fallbackFrequency
-  const [updated, setUpdated] = useState(false)
 
   const { sendToast } = useToasts()
 
   const handleSelect = async newEmailFrequency => {
-    setUpdated(false)
     const variables = { emailFrequency: newEmailFrequency }
     try{
       await UpdateUserEmailPreferencesMutation(
@@ -38,7 +35,10 @@ export const SettingsEditSettingsEmailPreferences: React.FC<SettingEditSettingsE
         variables,
         me?.id
       )
-      setUpdated(true)
+      sendToast({
+        variant: "success",
+        message: "Information updated successfully",
+      })
     } catch (err) {
       sendToast({ variant: "error", message: err.message })
     }
@@ -53,13 +53,6 @@ export const SettingsEditSettingsEmailPreferences: React.FC<SettingEditSettingsE
         Receive emails from Artsy with auctions, articles, curated collections,
         and new works by artists you follow
       </Text>
-      {updated && (
-        <Box mt="2">
-          <Banner variant="success" dismissable>
-            Preferences updated
-          </Banner>
-        </Box>
-      )}
       <Flex mt="2" justifyContent="space-between">
         <Text color="black100" variant="sm">
           Frequency
