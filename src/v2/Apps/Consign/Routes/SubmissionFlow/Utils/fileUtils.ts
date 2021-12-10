@@ -4,6 +4,8 @@ import { uploadFileToS3 } from "./uploadFileToS3"
 import {
   getConvectionGeminiKey,
   getGeminiCredentialsForEnvironment,
+  createGeminiAssetWithS3Credentials,
+  addAssetToConsignment,
 } from "../Mutations"
 import { ErrorCode, FileRejection } from "react-dropzone"
 import createLogger from "v2/Utils/logger"
@@ -71,14 +73,19 @@ export const uploadPhoto = async (
   relayEnvironment: Environment,
   photo: Photo,
   updateProgress: (progress: number) => void,
-  acl: string = "private"
+  acl: string = "private",
+  submissionId: string = ""
 ) => {
   try {
+    // expect submissionId to be provided
+    if (!submissionId) return
+
+    // get convection key & abort when key not acquired
     const convectionKey = await getConvectionGeminiKey(relayEnvironment)
 
     if (!convectionKey) return
 
-    // Get S3 Credentials from Gemini
+    // get S3 Credentials from Gemini with convection key
     let assetCredentials = await getGeminiCredentialsForEnvironment(
       relayEnvironment,
       {
@@ -87,9 +94,32 @@ export const uploadPhoto = async (
       }
     )
 
-    if (photo.removed) return
+    // expect to have asset credentials from gemini, otherwise abort
+    if (!assetCredentials || photo.removed) return
 
-    return await uploadFileToS3(photo, acl, assetCredentials, updateProgress)
+    // upload photo to S3
+    await uploadFileToS3(photo, acl, assetCredentials, updateProgress)
+
+    // create photo asset in gemini
+    await createGeminiAssetWithS3Credentials(relayEnvironment, {
+      sourceKey: photo.geminiToken!,
+      sourceBucket: photo.bucket!,
+      templateKey: convectionKey,
+      metadata: {
+        id: submissionId,
+        _type: "Consignment",
+      },
+    })
+
+    // add gemini asset to the submission
+    await addAssetToConsignment(relayEnvironment, {
+      assetType: "image",
+      geminiToken: photo.geminiToken!,
+      submissionID: submissionId,
+      sessionID: submissionId,
+    })
+
+    return photo.geminiToken
   } catch (error) {
     logger.error("Consign submission operation error", error)
     return

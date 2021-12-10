@@ -112,6 +112,7 @@ export const UploadPhotos: React.FC<UploadPhotosProps> = ({ submission }) => {
                 mt={4}
                 maxTotalSize={30}
                 onPhotoUploaded={handlePhotoUploaded}
+                submissionId={submission?.id || ""}
               />
 
               <Box mb={6}>

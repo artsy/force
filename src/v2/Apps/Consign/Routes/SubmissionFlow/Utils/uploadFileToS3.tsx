@@ -70,6 +70,7 @@ export const uploadFileToS3 = (
     request.send(formData)
 
     photo.bucket = bucket
+    photo.geminiToken = geminiKey
     photo.abortUploading = () => {
       request.abort()
     }
