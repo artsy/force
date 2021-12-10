@@ -97,24 +97,34 @@ export const uploadPhoto = async (
     // expect to have asset credentials from gemini, otherwise abort
     if (!assetCredentials || photo.removed) return
 
-    // upload photo to S3
-    await uploadFileToS3(photo, acl, assetCredentials, updateProgress)
+    // upload photo to S3 & get source key
+    const sourceKey = await uploadFileToS3(
+      photo,
+      acl,
+      assetCredentials,
+      updateProgress
+    )
 
-    // create photo asset in gemini
-    await createGeminiAssetWithS3Credentials(relayEnvironment, {
-      sourceKey: photo.geminiToken!,
-      sourceBucket: photo.bucket!,
-      templateKey: convectionKey,
-      metadata: {
-        id: submissionId,
-        _type: "Consignment",
-      },
-    })
+    if (!sourceKey) return
+
+    // create photo asset in gemini with S3 source key
+    const assetToken = await createGeminiAssetWithS3Credentials(
+      relayEnvironment,
+      {
+        sourceKey,
+        sourceBucket: photo.bucket!,
+        templateKey: convectionKey,
+        metadata: {
+          id: submissionId,
+          _type: "Consignment",
+        },
+      }
+    )
 
     // add gemini asset to the submission
     await addAssetToConsignment(relayEnvironment, {
       assetType: "image",
-      geminiToken: photo.geminiToken!,
+      geminiToken: assetToken,
       submissionID: submissionId,
       sessionID: submissionId,
     })

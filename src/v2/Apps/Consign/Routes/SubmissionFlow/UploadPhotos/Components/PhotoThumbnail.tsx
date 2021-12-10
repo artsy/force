@@ -175,30 +175,28 @@ const PhotoThumbnailSuccessState: React.FC<PhotoThumbnailStateProps> = ({
   onDelete,
   photoSrc,
   photo,
-}) => {
-  return (
-    <>
-      <Flex alignItems="center">
-        <Box
-          height={[48, 120]}
-          width={[48, 120]}
-          minWidth={[48, 120]}
-          mr={[15, 2]}
-          bg="black10"
-        >
-          <Image
-            src={photoSrc}
-            style={{ objectFit: "cover" }}
-            height="100%"
-            width="100%"
-          />
-        </Box>
-        <TruncatedLine variant="xs">{photo.name}</TruncatedLine>
-      </Flex>
-      <Flex alignItems="center" justifyContent="space-between">
-        <Text variant="xs">{formatFileSize(photo.size)}</Text>
-        <RemoveButton handleDelete={onDelete} />
-      </Flex>
-    </>
-  )
-}
+}) => (
+  <>
+    <Flex alignItems="center">
+      <Box
+        height={[48, 120]}
+        width={[48, 120]}
+        minWidth={[48, 120]}
+        mr={[15, 2]}
+        bg="black10"
+      >
+        <Image
+          src={photoSrc}
+          style={{ objectFit: "cover" }}
+          height="100%"
+          width="100%"
+        />
+      </Box>
+      <TruncatedLine variant="xs">{photo.name}</TruncatedLine>
+    </Flex>
+    <Flex alignItems="center" justifyContent="space-between">
+      <Text variant="xs">{formatFileSize(photo.size)}</Text>
+      <RemoveButton handleDelete={onDelete} />
+    </Flex>
+  </>
+)

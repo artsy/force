@@ -84,10 +84,7 @@ export const UploadPhotos: React.FC<UploadPhotosProps> = ({ submission }) => {
             photo.abortUploading?.()
 
             const photosToSave = values.photos.filter(p => p.id !== photo.id)
-
             setFieldValue("photos", photosToSave)
-            // saveUpladPhotosForm(photosToSave.filter(p => p.geminiToken || p.url))
-            // TODO: Remove image from submission
           }
 
           return (
