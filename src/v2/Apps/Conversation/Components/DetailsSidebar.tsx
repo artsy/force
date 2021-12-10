@@ -28,6 +28,7 @@ import { extractNodes } from "v2/Utils/extractNodes"
 import { TransactionDetailsSummaryItemFragmentContainer } from "v2/Apps/Order/Components/TransactionDetailsSummaryItem"
 import { ShippingAddressFragmentContainer } from "v2/Apps/Order/Components/ShippingAddress"
 import { CreditCardDetails } from "v2/Apps/Order/Components/CreditCardDetails"
+import { RouterLink } from "v2/System/Router/RouterLink"
 
 const DETAIL_BOX_XL_ANIMATION = `transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);`
 const DETAIL_BOX_XS_ANIMATION = `transition: opacity 0.3s, z-index 0.3s;`
@@ -216,33 +217,31 @@ export const DetailsSidebar: FC<DetailsProps> = ({
         </>
       )}
       {!!activeOrder && (
-        <TransactionDetailsSummaryItemFragmentContainer
-          order={activeOrder}
-          showOrderNumberHeader
-        />
-      )}
-      {!!activeOrder && (
-        <StackableBorderBox>
-          <Box px={2}>
-            <Text variant="md" mb={2}>
-              Ship To
-            </Text>
-            <ShippingAddressFragmentContainer
-              ship={activeOrder.requestedFulfillment!}
-              textColor="black60"
-            />
-          </Box>
-        </StackableBorderBox>
-      )}
-      {!!activeOrder && (
-        <StackableBorderBox>
-          <Box px={2}>
-            <Text variant="md" mb={2}>
-              Payment Method
-            </Text>
-            <CreditCardDetails {...cardInfoWithTextColor} />
-          </Box>
-        </StackableBorderBox>
+        <>
+          <TransactionDetailsSummaryItemFragmentContainer
+            order={activeOrder}
+            showOrderNumberHeader
+          />
+          <StackableBorderBox>
+            <Box px={2}>
+              <Text variant="md" mb={2}>
+                Ship To
+              </Text>
+              <ShippingAddressFragmentContainer
+                ship={activeOrder.requestedFulfillment!}
+                textColor="black60"
+              />
+            </Box>
+          </StackableBorderBox>
+          <StackableBorderBox>
+            <Box px={2}>
+              <Text variant="md" mb={2}>
+                Payment Method
+              </Text>
+              <CreditCardDetails {...cardInfoWithTextColor} />
+            </Box>
+          </StackableBorderBox>
+        </>
       )}
       {!!attachments?.length && (
         <StackableBorderBox>
@@ -259,8 +258,8 @@ export const DetailsSidebar: FC<DetailsProps> = ({
           <Text variant="md" mb={2}>
             Support
           </Text>
-          <Link
-            href="https://support.artsy.net/hc/en-us/sections/360008203054-Contact-a-gallery"
+          <RouterLink
+            to={`https://support.artsy.net/hc/en-us/sections/360008203054-Contact-a-gallery`}
             target="_blank"
             noUnderline
           >
@@ -268,7 +267,7 @@ export const DetailsSidebar: FC<DetailsProps> = ({
               <QuestionCircleIcon mr={1} />
               <Text variant="xs">Inquiries FAQ</Text>
             </Flex>
-          </Link>
+          </RouterLink>
         </Flex>
       </StackableBorderBox>
     </DetailsContainer>
@@ -296,7 +295,7 @@ export const DetailsSidebarFragmentContainer = createFragmentContainer(
           edges {
             node {
               internalID
-              stateExpiresAt
+              stateExpiresAt(format: "MMM D")
               ...TransactionDetailsSummaryItem_order
               ...ShippingSummaryItem_order
               requestedFulfillment {

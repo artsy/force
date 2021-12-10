@@ -303,7 +303,7 @@ fragment DetailsSidebar_conversation on Conversation {
       node {
         __typename
         internalID
-        stateExpiresAt
+        stateExpiresAt(format: "MMM D")
         ...TransactionDetailsSummaryItem_order
         ...ShippingSummaryItem_order
         requestedFulfillment {
@@ -790,13 +790,6 @@ v25 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "stateExpiresAt",
-  "storageKey": null
-},
-v25 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
   "name": "city",
   "storageKey": null
 },
@@ -1260,7 +1253,19 @@ return {
                             ],
                             "storageKey": null
                           },
-                          (v24/*: any*/),
+                          {
+                            "alias": null,
+                            "args": [
+                              {
+                                "kind": "Literal",
+                                "name": "format",
+                                "value": "MMM D"
+                              }
+                            ],
+                            "kind": "ScalarField",
+                            "name": "stateExpiresAt",
+                            "storageKey": "stateExpiresAt(format:\"MMM D\")"
+                          },
                           (v8/*: any*/),
                           {
                             "alias": null,
@@ -1273,12 +1278,12 @@ return {
                               (v8/*: any*/),
                               {
                                 "kind": "InlineFragment",
-                                "selections": (v26/*: any*/),
+                                "selections": (v25/*: any*/),
                                 "type": "CommerceShip"
                               },
                               {
                                 "kind": "InlineFragment",
-                                "selections": (v26/*: any*/),
+                                "selections": (v25/*: any*/),
                                 "type": "CommerceShipArta"
                               }
                             ],
@@ -1327,12 +1332,12 @@ return {
                                           (v3/*: any*/),
                                           {
                                             "kind": "InlineFragment",
-                                            "selections": (v27/*: any*/),
+                                            "selections": (v26/*: any*/),
                                             "type": "Artwork"
                                           },
                                           {
                                             "kind": "InlineFragment",
-                                            "selections": (v27/*: any*/),
+                                            "selections": (v26/*: any*/),
                                             "type": "EditionSet"
                                           }
                                         ],
@@ -1394,18 +1399,18 @@ return {
                             "name": "mode",
                             "storageKey": null
                           },
+                          (v28/*: any*/),
                           (v29/*: any*/),
                           (v30/*: any*/),
                           (v31/*: any*/),
-                          (v32/*: any*/),
                           {
                             "alias": null,
-                            "args": (v28/*: any*/),
+                            "args": (v27/*: any*/),
                             "kind": "ScalarField",
                             "name": "itemsTotal",
                             "storageKey": "itemsTotal(precision:2)"
                           },
-                          (v33/*: any*/),
+                          (v32/*: any*/),
                           {
                             "alias": null,
                             "args": null,
@@ -1866,7 +1871,7 @@ return {
                                 "name": "location",
                                 "plural": false,
                                 "selections": [
-                                  (v25/*: any*/),
+                                  (v24/*: any*/),
                                   (v3/*: any*/)
                                 ],
                                 "storageKey": null

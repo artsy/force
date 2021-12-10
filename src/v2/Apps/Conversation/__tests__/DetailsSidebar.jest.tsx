@@ -1,19 +1,10 @@
 import { graphql } from "react-relay"
-import { useTracking } from "react-tracking"
-import { useSystemContext } from "v2/System/useSystemContext"
 import { setupTestWrapperTL } from "v2/DevTools/setupTestWrapper"
 import { screen } from "@testing-library/react"
 import { DetailsSidebarFragmentContainer } from "../Components/DetailsSidebar"
 import { DetailsSidebar_Test_Query } from "v2/__generated__/DetailsSidebar_Test_Query.graphql"
 
 jest.unmock("react-relay")
-jest.mock("v2/System/useSystemContext")
-// jest.mock("v2/Apps/Conversation/Components/ConfirmArtworkModal", () => ({
-//   ConfirmArtworkModalQueryRenderer: () => null,
-// }))
-// jest.mock("v2/Apps/Conversation/Components/UnreadMessagesToast", () => ({
-//   UnreadMessagesToastQueryRenderer: () => null,
-// }))
 
 const { renderWithRelay } = setupTestWrapperTL<DetailsSidebar_Test_Query>({
   Component: props => {
@@ -37,56 +28,127 @@ const { renderWithRelay } = setupTestWrapperTL<DetailsSidebar_Test_Query>({
 })
 
 describe("Conversation", () => {
-  const mockuseTracking = useTracking as jest.Mock
-  const trackingSpy = jest.fn()
-  const mockuseSystemContext = useSystemContext as jest.Mock
-
-  let user = {}
-
-  beforeEach(() => {
-    mockuseTracking.mockImplementation(() => ({ trackEvent: trackingSpy }))
-    mockuseSystemContext.mockImplementation(() => ({ user }))
-  })
-
-  afterEach(() => {
-    mockuseTracking.mockReset()
-    mockuseSystemContext.mockReset()
-    user = {}
-  })
-
-  describe("when the artwork is offerable", () => {
-    beforeEach(() => {
-      // user = {
-      //   type: "NotAdmin",
-      // }
-    })
-
-    it.only("shows the buyer guarantee message", async () => {
+  describe("when there is an active order", () => {
+    it("shows the offer expiration message", async () => {
       renderWithRelay({
-        OrderConnection: () => ({ isOfferableFromInquiry: true }),
+        CommerceOrderConnectionWithTotalCount: () => ({
+          edges: [
+            {
+              node: {
+                mode: "OFFER",
+                stateExpiresAt: "Dec 13",
+              },
+            },
+          ],
+        }),
       })
 
       expect(
-        screen.getByText("Be Protected by The Artsy Guarantee")
+        screen.getByText(
+          "The seller should respond to your offer by Dec 13. Please keep in mind that making an offer does not guarantee the purchase."
+        )
       ).toBeInTheDocument()
     })
-  })
 
-  describe("when the artwork is not offerable", () => {
-    beforeEach(() => {
-      user = {
-        type: "NotAdmin",
-      }
-    })
-
-    it("doesn't show the buyer guarantee message", () => {
+    it("shows the offer breakdown", async () => {
       renderWithRelay({
-        Artwork: () => ({ isOfferableFromInquiry: false }),
+        CommerceOrderConnectionWithTotalCount: () => ({
+          edges: [
+            {
+              node: {
+                myLastOffer: {
+                  fromParticipant: "SELLER",
+                },
+                mode: "OFFER",
+              },
+            },
+          ],
+        }),
       })
 
-      expect(
-        screen.queryByText("Be Protected by The Artsy Guarantee")
-      ).not.toBeInTheDocument()
+      expect(screen.getByText("Seller's offer")).toBeInTheDocument()
+      expect(screen.getByText("List price")).toBeInTheDocument()
+      expect(screen.getByText("Tax")).toBeInTheDocument()
+    })
+
+    it("shows the payment method", async () => {
+      renderWithRelay({
+        CommerceOrderConnectionWithTotalCount: () => ({
+          edges: [
+            {
+              node: {
+                myLastOffer: {
+                  fromParticipant: "SELLER",
+                },
+                mode: "OFFER",
+                creditCard: {
+                  lastDigits: "4242",
+                  expirationYear: "2024",
+                  expirationMonth: "04",
+                },
+              },
+            },
+          ],
+        }),
+      })
+
+      expect(screen.getByText("Payment Method")).toBeInTheDocument()
+    })
+
+    it("shows the ship to section", async () => {
+      renderWithRelay({
+        CommerceOrderConnectionWithTotalCount: () => ({
+          edges: [
+            {
+              node: {
+                myLastOffer: {
+                  fromParticipant: "SELLER",
+                },
+                mode: "OFFER",
+                requestedFulfillment: {
+                  city: "Seattle",
+                  postalCode: "98112",
+                  region: "WA",
+                },
+              },
+            },
+          ],
+        }),
+      })
+      expect(screen.getByText("Ship To")).toBeInTheDocument()
+      expect(screen.getByText("Seattle, WA 98112")).toBeInTheDocument()
+    })
+  })
+
+  describe("when there is no active order", () => {
+    it("doesn't show any shipping info", () => {
+      renderWithRelay({
+        CommerceOrderConnectionWithTotalCount: () => ({
+          edges: [],
+        }),
+      })
+
+      expect(screen.queryByText("Ship To")).not.toBeInTheDocument()
+    })
+
+    it("doesn't show any credit card info", () => {
+      renderWithRelay({
+        CommerceOrderConnectionWithTotalCount: () => ({
+          edges: [],
+        }),
+      })
+
+      expect(screen.queryByText("Payment Method")).not.toBeInTheDocument()
+    })
+
+    it("doesn't show any pricing info", () => {
+      renderWithRelay({
+        CommerceOrderConnectionWithTotalCount: () => ({
+          edges: [],
+        }),
+      })
+
+      expect(screen.queryByText("List Price")).not.toBeInTheDocument()
     })
   })
 })
