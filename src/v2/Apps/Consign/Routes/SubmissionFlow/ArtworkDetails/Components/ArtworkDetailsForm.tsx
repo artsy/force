@@ -150,6 +150,7 @@ export const ArtworkDetailsForm: React.FC = () => {
         <Column span={6} mt={[2, 0]}>
           <Input
             title="year"
+            maxLength={256}
             placeholder="YYYY"
             name="year"
             onBlur={handleBlur}
@@ -213,6 +214,7 @@ export const ArtworkDetailsForm: React.FC = () => {
                 title="Edition Number"
                 placeholder="Your Work's #"
                 name="editionNumber"
+                maxLength={256}
                 onBlur={handleBlur}
                 onChange={handleChange}
                 value={values.editionNumber}
@@ -224,6 +226,7 @@ export const ArtworkDetailsForm: React.FC = () => {
                 title="Edition Size"
                 placeholder="Total # in Edition"
                 name="editionSize"
+                maxLength={256}
                 onBlur={handleBlur}
                 onChange={handleChange}
                 value={values.editionSize}
@@ -240,6 +243,7 @@ export const ArtworkDetailsForm: React.FC = () => {
                 Height
               </Text>
               <LabeledInput
+                maxLength={256}
                 label={values.units}
                 name="height"
                 onBlur={handleBlur}
@@ -252,6 +256,7 @@ export const ArtworkDetailsForm: React.FC = () => {
                 Width
               </Text>
               <LabeledInput
+                maxLength={256}
                 label={values.units}
                 name="width"
                 onBlur={handleBlur}
@@ -273,6 +278,7 @@ export const ArtworkDetailsForm: React.FC = () => {
                 </Text>
               </Flex>
               <LabeledInput
+                maxLength={256}
                 label={values.units}
                 name="depth"
                 onBlur={handleBlur}
