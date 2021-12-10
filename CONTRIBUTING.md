@@ -2,7 +2,7 @@
 
 This project is work of [many developers](https://github.com/artsy/force/graphs/contributors).
 
-For an overview of our current best practices, see [this doc](https://github.com/artsy/force/blob/master/docs/best_practices.md). 
+For an overview of our current best practices, see [this doc](https://github.com/artsy/force/blob/main/docs/best_practices.md).
 
 For an architecture overview (as of July 2021), see [this video](https://drive.google.com/drive/folders/1RE_7j4hocKD51RVZy60_5rZqUk9T-Zc2).
 
@@ -75,8 +75,8 @@ See [the docs](docs/creating_review_app.md).
 Make sure your fork is up-to-date and create a topic branch for your feature or bug fix.
 
 ```sh
-git checkout master
-git pull upstream master
+git checkout main
+git pull upstream main
 git checkout -b my-feature-branch
 ```
 
