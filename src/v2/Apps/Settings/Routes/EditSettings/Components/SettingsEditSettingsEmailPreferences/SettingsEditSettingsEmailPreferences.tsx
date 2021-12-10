@@ -3,13 +3,7 @@ import * as React from "react"
 import { Banner, Box, Flex, Select, Text } from "@artsy/palette"
 import { useSystemContext } from "v2/System/SystemContext"
 import { createFragmentContainer, graphql } from "react-relay"
-// import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
-// import {
-//   SettingsEditSettingsEmailPreferencesQuery,
-//   SettingsEditSettingsEmailPreferencesQueryResponse,
-// } from "v2/__generated__/SettingsEditSettingsEmailPreferencesQuery.graphql"
 import { UpdateUserEmailPreferencesMutation } from "../../../../../../Components/UserSettings/UserEmailPreferences/UserEmailPreferencesMutation"
-// import { renderWithLoadProgress } from "v2/System/Relay/renderWithLoadProgress"
 import { SettingsEditSettingsEmailPreferences_me } from "v2/__generated__/SettingsEditSettingsEmailPreferences_me.graphql"
 
 const fallbackFrequency = "weekly"
@@ -88,29 +82,3 @@ export const SettingsEditSettingsEmailPreferencesFragmentContainer = createFragm
     `,
   }
 )
-
-// export const SettingsEditSettingsEmailPreferencesQueryRenderer = () => {
-//   const { user, relayEnvironment } = useSystemContext()
-
-//   if (!user) {
-//     return null
-//   }
-
-//   return (
-//     <SystemQueryRenderer<SettingsEditSettingsEmailPreferencesQuery>
-//       environment={relayEnvironment}
-//       variables={{}}
-//       query={graphql`
-//         query SettingsEditSettingsEmailPreferencesQuery {
-//           me {
-//             emailFrequency
-//             id
-//           }
-//         }
-//       `}
-//       render={renderWithLoadProgress<SettingsEditSettingsEmailPreferencesQueryResponse>(
-//         SettingsEditSettingsEmailPreferences
-//       )}
-//     />
-//   )
-// }
