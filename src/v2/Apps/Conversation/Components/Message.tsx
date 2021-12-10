@@ -13,16 +13,8 @@ import {
   Text,
 } from "@artsy/palette"
 import styled from "styled-components"
-import {
-  AlignSelfProps,
-  BackgroundProps,
-  alignSelf,
-  background,
-  color,
-} from "styled-system"
-
+import { AlignSelfProps, BackgroundProps, alignSelf } from "styled-system"
 import { TimeSince } from "./TimeSince"
-
 import { Message_message } from "v2/__generated__/Message_message.graphql"
 
 const AttachmentLink = styled.a<{ isImage: boolean } & AlignSelfProps>`
@@ -36,7 +28,6 @@ const AttachmentContainer = styled(Flex)<
   FlexProps & AlignSelfProps & BackgroundProps
 >`
   ${alignSelf};
-  ${background};
   border-radius: 15px;
   white-space: no-wrap;
   justify-content: space-between;
@@ -74,7 +65,8 @@ export const Attachment: React.FC<AttachmentProps> = props => {
       <AttachmentContainer
         p={1}
         mt={0.5}
-        background={color(bgColor)}
+        bg={bgColor}
+        alignItems="center"
         width={isImage ? "100%" : "min-content"}
       >
         {isImage ? (
@@ -89,14 +81,14 @@ export const Attachment: React.FC<AttachmentProps> = props => {
             <Text color={textColor} variant="md" mr={2}>
               {attachment.fileName}
             </Text>
-            <Box flexShrink={0}>
+            <Flex flexShrink={0}>
               <DownloadIcon
                 fill={textColor}
                 width="24px"
                 height="24px"
                 viewBox="0 0 24 24"
               />
-            </Box>
+            </Flex>
           </>
         )}
       </AttachmentContainer>
