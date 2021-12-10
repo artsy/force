@@ -29,7 +29,16 @@ const { getWrapper } = setupTestWrapper<FairsIndex_Test_Query>({
 
 describe("FairsIndex", () => {
   it("renders correctly", () => {
-    const wrapper = getWrapper()
+    const wrapper = getWrapper({
+      Viewer: () => ({
+        runningFairs: [
+          {
+            isPublished: true,
+            profile: { isPublished: true },
+          },
+        ],
+      }),
+    })
 
     const html = wrapper.html()
 

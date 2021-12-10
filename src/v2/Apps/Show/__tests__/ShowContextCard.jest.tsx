@@ -50,7 +50,9 @@ describe("ShowContextCard", () => {
         }
       },
     })
-    expect(wrapper.text()).toContain("Part of Catty Art Fair")
+    expect(wrapper.text()).toContain(
+      'Presented by <mock-value-for-field-"name"><mock-value-for-field-"name"><mock-value-for-field-"city">'
+    )
   })
 
   it("renders correctly for a partner", () => {

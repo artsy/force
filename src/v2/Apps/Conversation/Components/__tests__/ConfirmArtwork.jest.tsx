@@ -99,8 +99,10 @@ describe("Artwork editions", () => {
       editionSets: [
         {
           isOfferableFromInquiry: false,
+          internalID: "foo",
         },
       ],
+      isEdition: true,
     }),
   }
 
@@ -108,11 +110,13 @@ describe("Artwork editions", () => {
     Artwork: () => ({
       editionSets: [
         {
+          isOfferableFromInquiry: true,
           listPrice: {
             display: null,
           },
         },
       ],
+      isEdition: true,
     }),
   }
 

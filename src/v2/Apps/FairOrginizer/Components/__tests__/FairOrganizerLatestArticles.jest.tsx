@@ -65,7 +65,9 @@ describe("FairOrganizerLatestArticles", () => {
   })
 
   it("doesn't render read all button if articles count is not greater than 7", () => {
-    const wrapper = getWrapper({})
+    const wrapper = getWrapper({
+      FairOrganizer: () => ({ articlesConnection: articlesFixture }),
+    })
     expect(wrapper.find("Button").length).toBe(0)
   })
 

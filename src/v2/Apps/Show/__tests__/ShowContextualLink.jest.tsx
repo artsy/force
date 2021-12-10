@@ -27,7 +27,7 @@ describe("ShowContextualLink", () => {
     it("renders the fair link", () => {
       const wrapper = getWrapper({
         Show: () => ({ isFairBooth: true }),
-        Fair: () => ({ name: "Catty Fair" }),
+        Fair: () => ({ name: "Catty Fair", isActive: true }),
       })
 
       expect(wrapper.text()).toContain("Part of Catty Fair")

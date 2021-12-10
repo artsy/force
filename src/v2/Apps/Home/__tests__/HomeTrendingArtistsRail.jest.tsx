@@ -62,8 +62,8 @@ describe("HomeTrendingArtistsRail", () => {
         action: "clickedArtistGroup",
         context_module: "trendingArtistsRail",
         context_page_owner_type: "home",
-        destination_page_owner_id: '<mock-value-for-field-"internalID">',
-        destination_page_owner_slug: '<mock-value-for-field-"slug">',
+        destination_page_owner_id: "<Artist-mock-id-2>",
+        destination_page_owner_slug: "<Artist-mock-id-3>",
         destination_page_owner_type: "artist",
         type: "thumbnail",
       })

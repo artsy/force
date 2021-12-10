@@ -14,7 +14,7 @@ const { getWrapper } = setupTestWrapper<HomeRecentlyViewedRail_Test_Query>({
     )
   },
   query: graphql`
-    query HomeRecentlyViewedRail_Test_Query @relay_test_operation {
+    query HomeRecentlyViewedRail_Test_Query {
       homePage {
         ...HomeRecentlyViewedRail_homePage
       }

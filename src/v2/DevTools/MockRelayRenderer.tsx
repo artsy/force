@@ -1,3 +1,4 @@
+/* eslint-disable jest/no-commented-out-tests */
 import { SystemContextProvider } from "v2/System"
 import { SystemContextConsumer } from "v2/System"
 import { renderWithLoadProgress } from "v2/System/Relay/renderWithLoadProgress"
@@ -189,6 +190,7 @@ export class MockRelayRenderer<T extends OperationType> extends React.Component<
     //       to test this in a generic way, plus with the rule we get fixes.
     if (
       typeof __webpack_require__ === "undefined" &&
+      // eslint-disable-next-line jest/no-mocks-import
       QueryRenderer === require("../../../__mocks__/react-relay").QueryRenderer
     ) {
       throw new Error(
@@ -198,7 +200,7 @@ export class MockRelayRenderer<T extends OperationType> extends React.Component<
     }
 
     if (this.state.caughtError) {
-      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
+      // @ts-ignore
       const { error, errorInfo } = this.state.caughtError
       console.error({ error, errorInfo })
       return `Error occurred while rendering Relay component: ${error}`

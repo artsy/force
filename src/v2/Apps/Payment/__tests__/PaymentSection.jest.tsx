@@ -44,10 +44,7 @@ describe("PaymentSection", () => {
     const savedCreditCardText = wrapper.find("SavedCreditCards").text()
 
     expect(savedCreditCardText).toContain(
-      'credit card•••• <mock-value-for-field-"lastDigits">'
-    )
-    expect(savedCreditCardText).toContain(
-      'Exp <mock-value-for-field-"expirationMonth">/">Remove'
+      'credit card•••• <mock-value-for-field-"lastDigits">   Exp 42/42Remove'
     )
   })
 

@@ -99,7 +99,7 @@ const setupTestEnv = ({
       updateMyUserProfile: {},
     },
     query: graphql`
-      query ConfirmBidValidTestQuery @raw_response_type @relay_test_operation {
+      query ConfirmBidValidTestQuery @raw_response_type {
         artwork(id: "artwork-id") {
           ...LotInfo_artwork
           internalID

@@ -44,7 +44,7 @@ describe("ArtistCVRoute", () => {
 
     const text = wrapper.text()
     expect(text).toContain(
-      'Fair booths<mock-value-for-field-"startAt"><mock-value-for-field-"name">, <mock-value-for-field-"name">Load More'
+      'Fair booths<mock-value-for-field-"startAt"><mock-value-for-field-"name">, <mock-value-for-field-"name">'
     )
   })
 })

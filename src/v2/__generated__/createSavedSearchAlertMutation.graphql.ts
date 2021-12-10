@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 export type CreateSavedSearchInput = {
@@ -68,8 +69,7 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "input",
-    "type": "CreateSavedSearchInput!"
+    "name": "input"
   }
 ],
 v1 = [
@@ -90,7 +90,8 @@ v2 = {
       "storageKey": null
     }
   ],
-  "type": "SearchCriteria"
+  "type": "SearchCriteria",
+  "abstractKey": null
 };
 return {
   "fragment": {
@@ -123,7 +124,8 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Mutation"
+    "type": "Mutation",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -164,6 +166,7 @@ return {
     ]
   },
   "params": {
+    "cacheID": "8da0f987b20732772166f198dbc586b0",
     "id": null,
     "metadata": {},
     "name": "createSavedSearchAlertMutation",

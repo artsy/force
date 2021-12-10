@@ -50,7 +50,7 @@ describe("HomeFeaturedMarketNews", () => {
       expect(trackEvent).toBeCalledWith({
         action: "clickedArticleGroup",
         context_module: "marketNews",
-        context_page_owner_id: '<mock-value-for-field-"internalID">',
+        context_page_owner_id: "<Article-mock-id-1>",
         context_page_owner_slug: '<mock-value-for-field-"slug">',
         context_page_owner_type: "home",
         destination_page_owner_type: "article",

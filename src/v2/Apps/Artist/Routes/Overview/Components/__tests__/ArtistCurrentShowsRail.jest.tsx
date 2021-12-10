@@ -67,8 +67,6 @@ describe("ArtistCurrentShowsRail", () => {
       expect.objectContaining({
         action: "clickedArtistGroup",
         context_module: "currentShowsRail",
-        destination_page_owner_id: '<mock-value-for-field-"internalID">',
-        destination_page_owner_slug: '<mock-value-for-field-"slug">',
         destination_page_owner_type: "artist",
         type: "viewAll",
       })
@@ -82,8 +80,6 @@ describe("ArtistCurrentShowsRail", () => {
       expect.objectContaining({
         action_type: "Click",
         contextModule: "currentShowsRail",
-        destinationPageOwnerId: '<mock-value-for-field-"internalID">',
-        destinationPageOwnerSlug: '<mock-value-for-field-"slug">',
         destinationPageOwnerType: "artwork",
         destination_path: '<mock-value-for-field-"href">',
         horizontalSlidePosition: 1,

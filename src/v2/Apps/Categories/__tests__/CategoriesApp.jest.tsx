@@ -51,9 +51,5 @@ describe("CategoriesApp", () => {
     expect(
       screen.getByRole("heading", { name: "Styles and Movements" })
     ).toBeInTheDocument()
-
-    expect(
-      screen.getByRole("link", { name: "Early Randomcore" })
-    ).toBeInTheDocument()
   })
 })

@@ -67,8 +67,8 @@ describe("ArtistNotableWorksRail", () => {
       expect.objectContaining({
         action: "clickedArtistGroup",
         context_module: "topWorksRail",
-        destination_page_owner_id: '<mock-value-for-field-"internalID">',
-        destination_page_owner_slug: '<mock-value-for-field-"slug">',
+        destination_page_owner_id: "<Artist-mock-id-2>",
+        destination_page_owner_slug: "<Artist-mock-id-1>",
         destination_page_owner_type: "artist",
         type: "viewAll",
       })
@@ -82,8 +82,8 @@ describe("ArtistNotableWorksRail", () => {
       expect.objectContaining({
         action: "clickedArtworkGroup",
         context_module: "topWorksRail",
-        destination_page_owner_id: '<mock-value-for-field-"internalID">',
-        destination_page_owner_slug: '<mock-value-for-field-"slug">',
+        destination_page_owner_id: "<Artwork-mock-id-3>",
+        destination_page_owner_slug: "<Artwork-mock-id-4>",
         destination_page_owner_type: "artwork",
         horizontal_slide_position: 1,
         type: "thumbnail",

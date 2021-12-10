@@ -1,10 +1,10 @@
 import { ArtworkActionsFragmentContainer } from "../ArtworkActions"
 import {
-  BellFillIcon,
+  BellIcon,
   DownloadIcon,
   EditIcon,
   GenomeIcon,
-  HeartFillIcon,
+  HeartIcon,
   MoreIcon,
   OpenEyeIcon,
   ShareIcon,
@@ -78,9 +78,11 @@ describe("ArtworkActions", () => {
     it("renders proper components for a non-team user", () => {
       mockUserIsAdmin = false
       mockUserIsTeam = false
-      const wrapper = getWrapper()
+      const wrapper = getWrapper({
+        Artwork: () => ({ is_hangable: true, is_downloadable: true }),
+      })
 
-      expect(wrapper.find(HeartFillIcon).length).toBe(1)
+      expect(wrapper.find(HeartIcon).length).toBe(1)
       expect(wrapper.find(ShareIcon).length).toBe(1)
       expect(wrapper.find(OpenEyeIcon).length).toBe(1)
       expect(wrapper.find(DownloadIcon).length).toBe(1)
@@ -93,15 +95,15 @@ describe("ArtworkActions", () => {
       it("renders heart icon when not sale", () => {
         const wrapper = getWrapper({ Artwork: () => ({ sale: null }) })
 
-        expect(wrapper.find(HeartFillIcon).length).toBe(1)
-        expect(wrapper.find(BellFillIcon).length).toBe(0)
+        expect(wrapper.find(HeartIcon).length).toBe(1)
+        expect(wrapper.find(BellIcon).length).toBe(0)
       })
 
       it("renders heart icon when sale is closed", () => {
         const wrapper = getWrapper({ Sale: () => ({ is_closed: true }) })
 
-        expect(wrapper.find(HeartFillIcon).length).toBe(1)
-        expect(wrapper.find(BellFillIcon).length).toBe(0)
+        expect(wrapper.find(HeartIcon).length).toBe(1)
+        expect(wrapper.find(BellIcon).length).toBe(0)
       })
 
       it("renders bell icon when sale is open", () => {
@@ -112,8 +114,8 @@ describe("ArtworkActions", () => {
           }),
         })
 
-        expect(wrapper.find(HeartFillIcon).length).toBe(0)
-        expect(wrapper.find(BellFillIcon).length).toBe(1)
+        expect(wrapper.find(HeartIcon).length).toBe(0)
+        expect(wrapper.find(BellIcon).length).toBe(1)
       })
     })
 
@@ -170,9 +172,11 @@ describe("ArtworkActions", () => {
     const getWrapper = getWrapperWithBreakpoint("xs")
 
     it("shows the More icon", () => {
-      const wrapper = getWrapper()
+      const wrapper = getWrapper({
+        Artwork: () => ({ is_hangable: true, is_downloadable: true }),
+      })
 
-      expect(wrapper.find(HeartFillIcon).length).toBe(1)
+      expect(wrapper.find(HeartIcon).length).toBe(1)
       expect(wrapper.find(ShareIcon).length).toBe(1)
       expect(wrapper.find(OpenEyeIcon).length).toBe(1)
       expect(wrapper.find(MoreIcon).length).toBe(1)
@@ -185,10 +189,10 @@ describe("ArtworkActions", () => {
       mockUserIsAdmin = false
       mockUserIsTeam = false
       const wrapper = getWrapper({
-        Artwork: () => ({ is_downloadable: false }),
+        Artwork: () => ({ is_downloadable: false, is_hangable: true }),
       })
 
-      expect(wrapper.find(HeartFillIcon).length).toBe(1)
+      expect(wrapper.find(HeartIcon).length).toBe(1)
       expect(wrapper.find(ShareIcon).length).toBe(1)
       expect(wrapper.find(OpenEyeIcon).length).toBe(1)
       expect(wrapper.find(DownloadIcon).length).toBe(0)

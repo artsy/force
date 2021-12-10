@@ -58,8 +58,8 @@ describe("HomeFeaturedShowsRail", () => {
         action: "clickedShowGroup",
         context_module: "featuredShowsRail",
         context_page_owner_type: "home",
-        destination_page_owner_id: '<mock-value-for-field-"internalID">',
-        destination_page_owner_slug: '<mock-value-for-field-"slug">',
+        destination_page_owner_id: "<Show-mock-id-1>",
+        destination_page_owner_slug: "<Show-mock-id-2>",
         destination_page_owner_type: "show",
         type: "thumbnail",
       })

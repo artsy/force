@@ -58,7 +58,7 @@ describe("ShowArtworks", () => {
   })
 
   it("renders correctly", () => {
-    const wrapper = getWrapper()
+    const wrapper = getWrapper({ Show: () => ({ __typename: "Show" }) })
 
     expect(wrapper.find("ArtworkFilterArtworkGrid").length).toBe(1)
     expect(wrapper.find("ArtworkGridItem").length).toBe(1)

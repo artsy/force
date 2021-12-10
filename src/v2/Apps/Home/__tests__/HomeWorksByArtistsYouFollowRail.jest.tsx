@@ -63,8 +63,8 @@ describe("HomeWorksByArtistsYouFollowRail", () => {
         action: "clickedArtworkGroup",
         context_module: "worksByArtistsYouFollowRail",
         context_page_owner_type: "home",
-        destination_page_owner_id: '<mock-value-for-field-"internalID">',
-        destination_page_owner_slug: '<mock-value-for-field-"slug">',
+        destination_page_owner_id: "<Artwork-mock-id-1>",
+        destination_page_owner_slug: "<Artwork-mock-id-2>",
         destination_page_owner_type: "artwork",
         type: "thumbnail",
       })

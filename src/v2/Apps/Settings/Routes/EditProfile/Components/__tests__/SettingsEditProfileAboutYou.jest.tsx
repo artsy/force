@@ -55,7 +55,7 @@ describe("SettingsEditProfileAboutYou", () => {
       priceRangeMax: null,
       priceRangeMin: null,
       profession: "Artist",
-      shareFollows: true,
+      shareFollows: false,
     })
   })
 })

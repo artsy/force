@@ -37,6 +37,7 @@ describe("AboutPartner", () => {
           fullBio,
           bio: limitedBio,
         },
+        displayFullPartnerPage: true,
       }),
     })
 

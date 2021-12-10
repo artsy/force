@@ -30,6 +30,7 @@ describe("PartnerNavigationTabs", () => {
         displayArtistsSection: true,
         representedArtists: { totalCount: 10 },
         notRepresentedArtists: { totalCount: 10 },
+        displayWorksSection: true,
       }),
     })
     const html = wrapper.html()
@@ -48,6 +49,7 @@ describe("PartnerNavigationTabs", () => {
       Partner: () => ({
         id: "white-cube",
         partnerType: "Brand",
+        displayWorksSection: true,
       }),
     })
     const html = wrapper.html()
