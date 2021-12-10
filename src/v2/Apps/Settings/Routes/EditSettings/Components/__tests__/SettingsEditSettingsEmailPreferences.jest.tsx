@@ -1,4 +1,4 @@
-import { screen, fireEvent } from "@testing-library/react"
+import { screen } from "@testing-library/react"
 import { graphql } from "react-relay"
 import { setupTestWrapperTL } from "v2/DevTools/setupTestWrapper"
 import { SettingsEditSettingsEmailPreferencesFragmentContainer } from "../SettingsEditSettingsEmailPreferences/SettingsEditSettingsEmailPreferences"
