@@ -40,6 +40,8 @@ export const PhotoThumbnail: React.FC<PhotoThumbnailProps & BoxProps> = ({
       reader.onloadend = () => {
         setPhotoSrc(reader.result as string)
       }
+    } else {
+      setPhotoSrc(photo.url)
     }
   }, [])
 
