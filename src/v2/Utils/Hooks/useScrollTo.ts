@@ -47,5 +47,5 @@ export const useScrollTo = ({
     window.scrollTo({ top: position, behavior })
   }
 
-  return { scrollTo }
+  return { scrollTo, isReadyForUse: isMobile !== null }
 }

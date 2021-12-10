@@ -32,6 +32,7 @@ import {
   updateAddressSuccess,
 } from "../__fixtures__/MutationResults/saveAddress"
 import { useTracking } from "v2/System"
+import { flushPromiseQueue } from "v2/DevTools"
 
 jest.unmock("react-relay")
 jest.mock("v2/System/Analytics/useTracking")
@@ -647,6 +648,9 @@ describe("Shipping", () => {
           fillAddressForm(page.root, address)
           await page.clickSubmit()
 
+          await flushPromiseQueue()
+          page.update()
+
           const input = page
             .find(Input)
             .filterWhere(wrapper => wrapper.props().title === "Postal code")
@@ -674,12 +678,13 @@ describe("Shipping", () => {
           expect(cityInput.props().error).toBeFalsy()
         })
 
-        it("after submit, shows all validation errors on inputs that have been touched", async () => {
+        it("after submit, shows all validation errors on inputs that have not been touched", async () => {
           fillIn(page.root, { title: "Full name", value: "Erik David" })
 
+          await flushPromiseQueue()
           await page.clickSubmit()
 
-          const cityInput = page.root
+          const cityInput = page
             .find(Input)
             .filterWhere(wrapper => wrapper.props().title === "City")
 
@@ -715,6 +720,10 @@ describe("Shipping", () => {
           }
           fillAddressForm(page.root, address)
           await page.clickSubmit()
+
+          await flushPromiseQueue()
+          page.update()
+
           expect(mutations.mockFetch).toBeCalled()
         })
       })

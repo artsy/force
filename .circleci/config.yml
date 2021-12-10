@@ -12,7 +12,7 @@ orbs:
 jobs:
   run_deepcrawl_automator:
     docker:
-      - image: cimg/base:2021.11
+      - image: cimg/base:2021.12
     environment:
       AUTOMATOR_START_ONLY: true
     steps:
@@ -211,11 +211,11 @@ jobs:
       - store_artifacts:
           path: cypress/screenshots
 
-not_master_or_staging_or_release: &not_master_or_staging_or_release
+not_main_or_staging_or_release: &not_main_or_staging_or_release
   filters:
     branches:
       ignore:
-        - master
+        - main
         - staging
         - release
 
@@ -226,11 +226,11 @@ not_staging_or_release: &not_staging_or_release
         - staging
         - release
 
-only_master: &only_master
+only_main: &only_main
   context: hokusai
   filters:
     branches:
-      only: master
+      only: main
 
 only_release: &only_release
   context: hokusai
@@ -242,7 +242,7 @@ workflows:
   default:
     jobs:
       - detect-secrets:
-          <<: *not_master_or_staging_or_release
+          <<: *not_main_or_staging_or_release
 
       # Main build
       - artsy-remote-docker/buildkit-build:
@@ -329,14 +329,14 @@ workflows:
 
       # Staging
       - artsy-remote-docker/buildkit-build:
-          <<: *only_master
+          <<: *only_main
           context: hokusai
           name: production-image-build
           requires:
             - builder-image-build
 
       - artsy-remote-docker/buildkit-push:
-          <<: *only_master
+          <<: *only_main
           context: hokusai
           name: production-image-push
           requires:
@@ -349,7 +349,7 @@ workflows:
             - production-image-build
 
       - hokusai/deploy-staging:
-          <<: *only_master
+          <<: *only_main
           name: deploy-staging
           project-name: force
           requires:
@@ -397,7 +397,7 @@ workflows:
 
       # Docs / Storybooks
       - yarn/run:
-          <<: *only_master
+          <<: *only_main
           name: build-docs
           script: "build-storybook"
           post-steps:
@@ -406,7 +406,7 @@ workflows:
                 paths:
                   - storybook-static
       - upload-docs:
-          <<: *only_master
+          <<: *only_main
           context: static-sites-uploader
           requires:
             - build-docs

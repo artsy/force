@@ -103,6 +103,7 @@ const HomeCurrentFairsContainer: React.FC = ({ children }) => {
 
         <Text
           variant="sm"
+          textAlign="right"
           as={RouterLink}
           // @ts-ignore
           to="/art-fairs"
