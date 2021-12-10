@@ -9,7 +9,7 @@ import {
 } from "@artsy/palette"
 import { useState } from "react"
 import * as React from "react"
-import { RelayRefetchProp, createFragmentContainer, graphql } from "react-relay"
+import { RelayRefetchProp, graphql, createRefetchContainer } from "react-relay"
 // eslint-disable-next-line no-restricted-imports
 import request from "superagent"
 import { useSystemContext } from "v2/System"
@@ -26,12 +26,12 @@ import { afterUpdateRedirect } from "v2/Apps/Settings/Routes/EditSettings/Compon
 
 interface AppSecondFactorProps {
   me: AppSecondFactor_me
-  relayRefetch?: RelayRefetchProp
+  relay: RelayRefetchProp
 }
 
 export const AppSecondFactor: React.FC<AppSecondFactorProps> = ({
   me,
-  relayRefetch,
+  relay,
 }) => {
   const [apiErrors, setApiErrors] = useState<ApiError[]>([])
   const [showConfirmDisable, setShowConfirmDisable] = useState(false)
@@ -69,7 +69,7 @@ export const AppSecondFactor: React.FC<AppSecondFactorProps> = ({
     }
 
     if (me.hasSecondFactorEnabled) {
-      relayRefetch?.refetch({}, {}, showCompleteModalCallback)
+      relay.refetch({}, {}, showCompleteModalCallback)
     } else {
       if (redirectTo) {
         showCompleteRedirectModalCallback()
@@ -130,8 +130,7 @@ export const AppSecondFactor: React.FC<AppSecondFactorProps> = ({
   }
 
   function onDisableSecondFactor() {
-    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-    relayRefetch.refetch({}, {}, () => {
+    relay.refetch({}, {}, () => {
       setShowConfirmDisable(false)
     })
   }
@@ -284,7 +283,7 @@ export const AppSecondFactor: React.FC<AppSecondFactorProps> = ({
   )
 }
 
-export const AppSecondFactorFragmentContainer = createFragmentContainer(
+export const AppSecondFactorRefetchContainer = createRefetchContainer(
   AppSecondFactor,
   {
     me: graphql`
@@ -299,5 +298,12 @@ export const AppSecondFactorFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
+  graphql`
+    query AppSecondFactorRefetchQuery {
+      me {
+        ...AppSecondFactor_me
+      }
+    }
+  `
 )

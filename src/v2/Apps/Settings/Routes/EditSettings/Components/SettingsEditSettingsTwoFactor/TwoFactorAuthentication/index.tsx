@@ -8,9 +8,9 @@ import { SystemContextProps, useSystemContext } from "v2/System"
 import { renderWithLoadProgress } from "v2/System/Relay/renderWithLoadProgress"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 
-import { AppSecondFactorFragmentContainer as AppSecondFactor } from "./Components/AppSecondFactor"
+import { AppSecondFactorRefetchContainer as AppSecondFactor } from "./Components/AppSecondFactor"
 import { BackupSecondFactorFragmentContainer as BackupSecondFactor } from "./Components/BackupSecondFactor"
-import { SmsSecondFactorFragmentContainer as SmsSecondFactor } from "./Components/SmsSecondFactor"
+import { SmsSecondFactorRefetchContainer as SmsSecondFactor } from "./Components/SmsSecondFactor"
 
 import { TwoFactorAuthentication_me } from "v2/__generated__/TwoFactorAuthentication_me.graphql"
 import { TwoFactorAuthenticationQuery } from "v2/__generated__/TwoFactorAuthenticationQuery.graphql"
@@ -21,7 +21,7 @@ export interface TwoFactorAuthenticationProps extends SystemContextProps {
 }
 
 const TwoFactorAuthentication: React.FC<TwoFactorAuthenticationProps> = props => {
-  const { me, relay } = props
+  const { me } = props
 
   return (
     <Box>
@@ -46,11 +46,11 @@ const TwoFactorAuthentication: React.FC<TwoFactorAuthenticationProps> = props =>
 
       <Spacer mt={2} />
 
-      <AppSecondFactor me={me} relayRefetch={relay} />
+      <AppSecondFactor me={me} />
 
       <Spacer mt={2} />
 
-      <SmsSecondFactor me={me} relayRefetch={relay} />
+      <SmsSecondFactor me={me} />
       {me.hasSecondFactorEnabled && <BackupSecondFactor mt={2} me={me} />}
     </Box>
   )

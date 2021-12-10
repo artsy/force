@@ -9,7 +9,7 @@ import {
 } from "@artsy/palette"
 import { useState } from "react"
 import * as React from "react"
-import { RelayRefetchProp, createFragmentContainer, graphql } from "react-relay"
+import { RelayRefetchProp, graphql, createRefetchContainer } from "react-relay"
 // eslint-disable-next-line no-restricted-imports
 import request from "superagent"
 import { useSystemContext } from "v2/System"
@@ -25,12 +25,12 @@ import { afterUpdateRedirect } from "v2/Apps/Settings/Routes/EditSettings/Compon
 
 interface SmsSecondFactorProps {
   me: SmsSecondFactor_me
-  relayRefetch?: RelayRefetchProp
+  relay: RelayRefetchProp
 }
 
 export const SmsSecondFactor: React.FC<SmsSecondFactorProps> = ({
   me,
-  relayRefetch,
+  relay,
 }) => {
   const { relayEnvironment } = useSystemContext()
   const [showConfirmDisable, setShowConfirmDisable] = useState(false)
@@ -68,7 +68,7 @@ export const SmsSecondFactor: React.FC<SmsSecondFactorProps> = ({
     }
 
     if (me.hasSecondFactorEnabled) {
-      relayRefetch?.refetch({}, {}, showCompleteModalCallback)
+      relay.refetch({}, {}, showCompleteModalCallback)
     } else {
       showCompleteModalCallback()
       if (redirectTo) {
@@ -132,8 +132,7 @@ export const SmsSecondFactor: React.FC<SmsSecondFactorProps> = ({
   }
 
   async function onDisableSecondFactor() {
-    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-    relayRefetch.refetch({}, {}, () => {
+    relay.refetch({}, {}, () => {
       setShowConfirmDisable(false)
     })
   }
@@ -270,7 +269,7 @@ export const SmsSecondFactor: React.FC<SmsSecondFactorProps> = ({
   )
 }
 
-export const SmsSecondFactorFragmentContainer = createFragmentContainer(
+export const SmsSecondFactorRefetchContainer = createRefetchContainer(
   SmsSecondFactor,
   {
     me: graphql`
@@ -286,5 +285,12 @@ export const SmsSecondFactorFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
+  graphql`
+    query SmsSecondFactorRefetchQuery {
+      me {
+        ...SmsSecondFactor_me
+      }
+    }
+  `
 )
