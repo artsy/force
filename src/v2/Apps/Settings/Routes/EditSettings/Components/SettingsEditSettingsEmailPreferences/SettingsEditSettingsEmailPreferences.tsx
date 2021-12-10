@@ -2,14 +2,15 @@ import { useState } from "react"
 import * as React from "react"
 import { Banner, Box, Flex, Select, Text } from "@artsy/palette"
 import { useSystemContext } from "v2/System/SystemContext"
-import { graphql } from "react-relay"
-import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
-import {
-  SettingsEditSettingsEmailPreferencesQuery,
-  SettingsEditSettingsEmailPreferencesQueryResponse,
-} from "v2/__generated__/SettingsEditSettingsEmailPreferencesQuery.graphql"
+import { createFragmentContainer, graphql } from "react-relay"
+// import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
+// import {
+//   SettingsEditSettingsEmailPreferencesQuery,
+//   SettingsEditSettingsEmailPreferencesQueryResponse,
+// } from "v2/__generated__/SettingsEditSettingsEmailPreferencesQuery.graphql"
 import { UpdateUserEmailPreferencesMutation } from "../../../../../../Components/UserSettings/UserEmailPreferences/UserEmailPreferencesMutation"
-import { renderWithLoadProgress } from "v2/System/Relay/renderWithLoadProgress"
+// import { renderWithLoadProgress } from "v2/System/Relay/renderWithLoadProgress"
+import { SettingsEditSettingsEmailPreferences_me } from "v2/__generated__/SettingsEditSettingsEmailPreferences_me.graphql"
 
 const fallbackFrequency = "weekly"
 
@@ -20,9 +21,15 @@ const options = [
   { text: "Alerts Only", value: "alerts_only" },
 ]
 
-export const SettingsEditSettingsEmailPreferences: React.FC<SettingsEditSettingsEmailPreferencesQueryResponse> = props => {
+interface SettingEditSettingsEmailPreferencesProps {
+  me: SettingsEditSettingsEmailPreferences_me
+}
+
+export const SettingsEditSettingsEmailPreferences: React.FC<SettingEditSettingsEmailPreferencesProps> = ({
+  me,
+}) => {
   const { relayEnvironment } = useSystemContext()
-  const emailFrequency = props.me?.emailFrequency || fallbackFrequency
+  const emailFrequency = me?.emailFrequency || fallbackFrequency
   const [updated, setUpdated] = useState(false)
 
   const handleSelect = async newEmailFrequency => {
@@ -32,7 +39,7 @@ export const SettingsEditSettingsEmailPreferences: React.FC<SettingsEditSettings
       // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       relayEnvironment,
       variables,
-      props.me?.id
+      me?.id
     )
     setUpdated(true)
   }
@@ -70,28 +77,40 @@ export const SettingsEditSettingsEmailPreferences: React.FC<SettingsEditSettings
   )
 }
 
-export const SettingsEditSettingsEmailPreferencesQueryRenderer = () => {
-  const { user, relayEnvironment } = useSystemContext()
-
-  if (!user) {
-    return null
+export const SettingsEditSettingsEmailPreferencesFragmentContainer = createFragmentContainer(
+  SettingsEditSettingsEmailPreferences,
+  {
+    me: graphql`
+      fragment SettingsEditSettingsEmailPreferences_me on Me {
+        emailFrequency
+        id
+      }
+    `,
   }
+)
 
-  return (
-    <SystemQueryRenderer<SettingsEditSettingsEmailPreferencesQuery>
-      environment={relayEnvironment}
-      variables={{}}
-      query={graphql`
-        query SettingsEditSettingsEmailPreferencesQuery {
-          me {
-            emailFrequency
-            id
-          }
-        }
-      `}
-      render={renderWithLoadProgress<SettingsEditSettingsEmailPreferencesQueryResponse>(
-        SettingsEditSettingsEmailPreferences
-      )}
-    />
-  )
-}
+// export const SettingsEditSettingsEmailPreferencesQueryRenderer = () => {
+//   const { user, relayEnvironment } = useSystemContext()
+
+//   if (!user) {
+//     return null
+//   }
+
+//   return (
+//     <SystemQueryRenderer<SettingsEditSettingsEmailPreferencesQuery>
+//       environment={relayEnvironment}
+//       variables={{}}
+//       query={graphql`
+//         query SettingsEditSettingsEmailPreferencesQuery {
+//           me {
+//             emailFrequency
+//             id
+//           }
+//         }
+//       `}
+//       render={renderWithLoadProgress<SettingsEditSettingsEmailPreferencesQueryResponse>(
+//         SettingsEditSettingsEmailPreferences
+//       )}
+//     />
+//   )
+// }

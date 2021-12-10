@@ -3,7 +3,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { Column, GridColumns, Join, Separator } from "@artsy/palette"
 import { SettingsEditSettingsInformationFragmentContainer } from "./Components/SettingsEditSettingsInformation"
 import { SettingsEditSettingsTwoFactorFragmentContainer } from "./Components/SettingsEditSettingsTwoFactor"
-import { SettingsEditSettingsEmailPreferencesQueryRenderer } from "./Components/SettingsEditSettingsEmailPreferences/SettingsEditSettingsEmailPreferences"
+import { SettingsEditSettingsEmailPreferencesFragmentContainer } from "./Components/SettingsEditSettingsEmailPreferences/SettingsEditSettingsEmailPreferences"
 import { SettingsEditSettingsPassword } from "./Components/SettingsEditSettingsPassword"
 import { SettingsEditSettingsRoute_me } from "v2/__generated__/SettingsEditSettingsRoute_me.graphql"
 
@@ -24,7 +24,7 @@ const SettingsEditRoute: React.FC<SettingsEditRouteProps> = ({ me }) => {
 
           {/* TODO: SettingsEditSettingsLinkedAccounts */}
 
-          <SettingsEditSettingsEmailPreferencesQueryRenderer />
+          <SettingsEditSettingsEmailPreferencesFragmentContainer me={me} />
 
           {/* TODO: SettingsEditSettingsDeleteAccount */}
         </Join>
@@ -40,7 +40,7 @@ export const SettingsEditRouteFragmentContainer = createFragmentContainer(
       fragment SettingsEditSettingsRoute_me on Me {
         ...SettingsEditSettingsInformation_me
         ...SettingsEditSettingsTwoFactor_me
-        ...SettingsEditSettingsEmailPreferencesQuery
+        ...SettingsEditSettingsEmailPreferences_me
       }
     `,
   }
