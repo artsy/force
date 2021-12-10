@@ -5,7 +5,7 @@ export class TwoFactorAuthenticationTestPage extends RootTestPage {
     return expectOne(
       this.find("AppSecondFactor")
         .find("Button")
-        .filterWhere(btn => btn.text().includes("Set up"))
+        .filterWhere(btn => btn.text().includes("Set Up"))
     )
   }
 

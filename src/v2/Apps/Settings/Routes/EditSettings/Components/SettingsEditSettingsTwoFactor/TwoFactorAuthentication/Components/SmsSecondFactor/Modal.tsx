@@ -1,31 +1,25 @@
 import {
-  Box,
+  Banner,
   Button,
   Flex,
   Input,
-  Modal,
-  Sans,
-  Serif,
+  ModalDialog,
   Spacer,
+  Text,
 } from "@artsy/palette"
 import { FormikHelpers as FormikActions } from "formik"
 import { useState } from "react"
 import * as React from "react"
-import styled from "styled-components"
-
 import * as Yup from "yup"
-
 import { useSystemContext } from "v2/System"
 import { CountrySelect } from "v2/Components/CountrySelect"
 import { Step, Wizard } from "v2/Components/Wizard"
 import { FormValues, StepElement } from "v2/Components/Wizard/types"
-
 import { ApiError } from "../../ApiError"
 import { EnableSecondFactor } from "../Mutation/EnableSecondFactor"
 import { DeliverSecondFactor } from "./Mutation/DeliverSecondFactor"
 import { UpdateSmsSecondFactor } from "./Mutation/UpdateSmsSecondFactor"
 import { BackupSecondFactorReminder } from "../BackupSecondFactorReminder"
-
 import { CreateSmsSecondFactorMutationResponse } from "v2/__generated__/CreateSmsSecondFactorMutation.graphql"
 import { redirectMessage } from "v2/Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsTwoFactor/TwoFactorAuthentication/helpers"
 
@@ -36,11 +30,6 @@ interface SmsSecondFactorModalProps {
   // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
   secondFactor: CreateSmsSecondFactorMutationResponse["createSmsSecondFactor"]["secondFactorOrErrors"]
 }
-
-// TODO: Port this box-sizing attribute to Palette component
-const StyledInput = styled(Input)`
-  box-sizing: border-box;
-`
 
 export const SmsSecondFactorModal: React.FC<SmsSecondFactorModalProps> = props => {
   const { secondFactor, onComplete } = props
@@ -164,50 +153,58 @@ export const SmsSecondFactorModal: React.FC<SmsSecondFactorModalProps> = props =
         phoneNumber: Yup.string().required("Enter your phone number"),
       })}
     >
-      {({ form, wizard }) => (
+      {({ form }) => (
         <>
-          <Sans mt={1} color="black60" size="3t">
+          <Text variant="sm" color="black60">
             Enter your mobile phone number.
-          </Sans>
-          <Sans mt={1} color="black60" size="3t">
+          </Text>
+
+          <Text variant="sm" mt={1} color="black60">
             We’ll send you a security code to this number whenever you log into
             Artsy.
-          </Sans>
-          <Spacer mt={3} />
+          </Text>
+
+          <Spacer mt={2} />
+
           <CountrySelect
             selected={form.values.countryCode}
             onSelect={value => form.setFieldValue("countryCode", value)}
           />
+
           <Spacer mt={1} />
-          <StyledInput
-            autoComplete="off"
-            name="phoneNumber"
-            error={form.touched.phoneNumber && form.errors.phoneNumber}
-            value={form.values.phoneNumber}
-            onBlur={form.handleBlur}
-            placeholder="Add phone"
-            pattern="[^a-z]+"
-            onChange={form.handleChange}
+
+          <Input
+            autoComplete="tel"
             autoFocus
+            error={form.touched.phoneNumber && form.errors.phoneNumber}
+            name="phoneNumber"
+            onBlur={form.handleBlur}
+            onChange={form.handleChange}
+            pattern="[^a-z]+"
+            placeholder="Add phone"
+            type="tel"
+            value={form.values.phoneNumber}
           />
+
           {form.status && (
-            <Sans mt={1} color="red100" size="2">
+            <Banner my={2} variant="error">
               {form.status.message}
-            </Sans>
+            </Banner>
           )}
+
           <Button
+            mt={2}
             loading={isDelivering}
             disabled={isDelivering}
-            display="block"
             width="100%"
             type="submit"
-            mt={2}
           >
             Next
           </Button>
         </>
       )}
     </Step>,
+
     <Step
       label="Authentication Code"
       validationSchema={Yup.object().shape({
@@ -216,30 +213,34 @@ export const SmsSecondFactorModal: React.FC<SmsSecondFactorModalProps> = props =
     >
       {({ form, wizard }) => (
         <>
-          <Sans mt={1} color="black60" size="3t">
+          <Text variant="sm" color="black60">
             We’ve sent the authentication code to{" "}
             {form.values.formattedPhoneNumber}. Please enter the code to verify
             your phone number.
-          </Sans>
+          </Text>
+
           <Spacer mt={2} />
-          <StyledInput
-            error={form.touched.code && form.errors.code}
-            onBlur={form.handleBlur}
+
+          <Input
             autoComplete="off"
-            name="code"
-            value={form.values.code}
-            onChange={form.handleChange}
             autoFocus
+            error={form.touched.code && form.errors.code}
+            name="code"
+            onBlur={form.handleBlur}
+            onChange={form.handleChange}
+            value={form.values.code}
           />
+
           {form.status && (
-            <Sans mt={1} color="red100" size="2">
+            <Banner my={2} variant="error">
               {form.status.message}
-            </Sans>
+            </Banner>
           )}
+
           <Flex justifyContent="space-between" alignItems="center" mt={2}>
             <Button
-              width="50%"
-              variant="secondaryGray"
+              flex={1}
+              variant="noOutline"
               type="button"
               onClick={e => {
                 form.setStatus(null)
@@ -248,14 +249,16 @@ export const SmsSecondFactorModal: React.FC<SmsSecondFactorModalProps> = props =
             >
               Back
             </Button>
+
             <Spacer ml={1} />
+
             <Button
-              width="50%"
+              flex={1}
               loading={isSubmitting}
               disabled={isSubmitting}
               type="submit"
             >
-              Turn on
+              Turn On
             </Button>
           </Flex>
         </>
@@ -265,40 +268,39 @@ export const SmsSecondFactorModal: React.FC<SmsSecondFactorModalProps> = props =
 
   return (
     <>
-      <Modal
-        title="Set up with text message"
-        show={props.show}
-        onClose={props.onClose}
-      >
-        <Wizard
-          onComplete={handleOnComplete}
-          initialValues={{ countryCode: "US", phoneNumber: "", code: "" }}
-          steps={steps}
+      {props.show && (
+        <ModalDialog title="Set up with text message" onClose={props.onClose}>
+          <Wizard
+            onComplete={handleOnComplete}
+            initialValues={{ countryCode: "US", phoneNumber: "", code: "" }}
+            steps={steps}
+          >
+            {wizardProps => {
+              const { wizard } = wizardProps
+              const { currentStep } = wizard
+              return currentStep
+            }}
+          </Wizard>
+        </ModalDialog>
+      )}
+
+      {showRecoveryCodes && (
+        <ModalDialog
+          title="Recovery Codes"
+          onClose={onComplete}
+          footer={
+            <Button onClick={handleRecoveryReminderNext} width="100%">
+              Next
+            </Button>
+          }
         >
-          {wizardProps => {
-            const { wizard } = wizardProps
-            const { currentStep } = wizard
-            return <Box>{currentStep}</Box>
-          }}
-        </Wizard>
-      </Modal>
-      <Modal
-        title="Recovery Codes"
-        onClose={onComplete}
-        show={showRecoveryCodes}
-        hideCloseButton={true}
-        FixedButton={
-          <Button onClick={handleRecoveryReminderNext} width="100%">
-            next
-          </Button>
-        }
-      >
-        <BackupSecondFactorReminder
-          // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-          backupSecondFactors={recoveryCodes}
-          factorTypeName={secondFactor.__typename}
-        />
-      </Modal>
+          <BackupSecondFactorReminder
+            // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
+            backupSecondFactors={recoveryCodes}
+            factorTypeName={secondFactor.__typename}
+          />
+        </ModalDialog>
+      )}
     </>
   )
 }
@@ -312,24 +314,27 @@ interface OnCompleteRedirectModalProps {
 export const OnCompleteRedirectModal: React.FC<OnCompleteRedirectModalProps> = props => {
   const { onClick, redirectTo, show } = props
 
+  if (!show) {
+    return null
+  }
+
   return (
-    <Modal
+    <ModalDialog
       title="Set up with text message"
       onClose={onClick}
-      show={show}
-      hideCloseButton={true}
-      FixedButton={
+      footer={
         <Button onClick={onClick} width="100%">
           OK
         </Button>
       }
     >
-      <Serif size="3t" color="black60">
+      <Text color="black60">
         You’ve successfully set up two-factor authentication!
-      </Serif>
-      <Serif mt={2} size="3t" color="black60">
+      </Text>
+
+      <Text mt={2} color="black60">
         {redirectMessage(redirectTo)}
-      </Serif>
-    </Modal>
+      </Text>
+    </ModalDialog>
   )
 }

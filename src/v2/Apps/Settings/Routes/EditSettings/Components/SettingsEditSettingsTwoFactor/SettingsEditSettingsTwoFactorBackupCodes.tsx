@@ -2,7 +2,7 @@ import {
   Box,
   Button,
   Flex,
-  Modal,
+  ModalDialog,
   Spacer,
   Sup,
   Text,
@@ -37,8 +37,6 @@ export const SettingsEditSettingsTwoFactorBackupCodes: FC<SettingsEditSettingsTw
 
   const handleGenerate = async () => {
     setMode(Mode.Creating)
-
-    console.log("creating now")
 
     try {
       await submitCreateSettingsBackupSecondFactors()
@@ -122,18 +120,19 @@ export const SettingsEditSettingsTwoFactorBackupCodes: FC<SettingsEditSettingsTw
         </Flex>
       </Flex>
 
-      <Modal
-        title="Your backup codes"
-        show={mode === Mode.Show}
-        onClose={handleClose}
-        FixedButton={
-          <Button width="100%" onClick={handleClose}>
-            Done
-          </Button>
-        }
-      >
-        <SettingsEditSettingsTwoFactorBackupCodesDialogQueryRenderer />
-      </Modal>
+      {mode === Mode.Show && (
+        <ModalDialog
+          title="Your backup codes"
+          onClose={handleClose}
+          footer={
+            <Button width="100%" onClick={handleClose}>
+              Done
+            </Button>
+          }
+        >
+          <SettingsEditSettingsTwoFactorBackupCodesDialogQueryRenderer />
+        </ModalDialog>
+      )}
     </>
   )
 }

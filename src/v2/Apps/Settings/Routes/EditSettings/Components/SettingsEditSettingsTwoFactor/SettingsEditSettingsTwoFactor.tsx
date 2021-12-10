@@ -26,10 +26,8 @@ export const SettingsEditSettingsTwoFactor: React.FC<SettingsEditSettingsTwoFact
           addition to your password to log in to your Artsy account.
         </Text>
 
-        {/* TODO: */}
         <AppSecondFactorFragmentContainer me={me} />
 
-        {/* TODO: */}
         <SmsSecondFactorFragmentContainer me={me} />
 
         {me.hasSecondFactorEnabled && (

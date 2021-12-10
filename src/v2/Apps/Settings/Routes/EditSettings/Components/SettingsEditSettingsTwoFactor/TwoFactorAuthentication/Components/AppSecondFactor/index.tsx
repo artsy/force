@@ -1,18 +1,17 @@
 import {
-  BorderBox,
-  BorderBoxProps,
   Button,
   Flex,
-  Link,
-  Modal,
-  Sans,
-  Serif,
+  Box,
+  Text,
+  Sup,
+  Spacer,
+  ModalDialog,
 } from "@artsy/palette"
 import { useState } from "react"
 import * as React from "react"
 import { RelayRefetchProp, createFragmentContainer, graphql } from "react-relay"
+// eslint-disable-next-line no-restricted-imports
 import request from "superagent"
-
 import { useSystemContext } from "v2/System"
 import { AppSecondFactorModal, OnCompleteRedirectModal } from "./Modal"
 import { ApiError } from "../../ApiError"
@@ -25,13 +24,15 @@ import { CreateAppSecondFactorInput } from "v2/__generated__/CreateAppSecondFact
 
 import { afterUpdateRedirect } from "v2/Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsTwoFactor/TwoFactorAuthentication/helpers"
 
-interface AppSecondFactorProps extends BorderBoxProps {
+interface AppSecondFactorProps {
   me: AppSecondFactor_me
   relayRefetch?: RelayRefetchProp
 }
 
-export const AppSecondFactor: React.FC<AppSecondFactorProps> = props => {
-  const { me, relayRefetch } = props
+export const AppSecondFactor: React.FC<AppSecondFactorProps> = ({
+  me,
+  relayRefetch,
+}) => {
   const [apiErrors, setApiErrors] = useState<ApiError[]>([])
   const [showConfirmDisable, setShowConfirmDisable] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
@@ -48,6 +49,14 @@ export const AppSecondFactor: React.FC<AppSecondFactorProps> = props => {
 
   const redirectTo = afterUpdateRedirect()
 
+  const enabledSecondFactorLabel =
+    me.appSecondFactors?.length &&
+    me.appSecondFactors[0]?.__typename === "AppSecondFactor"
+      ? me.appSecondFactors[0].name
+      : null
+
+  const isEnabled = !!enabledSecondFactorLabel
+
   function onComplete() {
     const showCompleteModalCallback = () => {
       setShowSetupModal(false)
@@ -59,7 +68,7 @@ export const AppSecondFactor: React.FC<AppSecondFactorProps> = props => {
       setShowCompleteRedirectModal(true)
     }
 
-    if (props.me.hasSecondFactorEnabled) {
+    if (me.hasSecondFactorEnabled) {
       relayRefetch?.refetch({}, {}, showCompleteModalCallback)
     } else {
       if (redirectTo) {
@@ -71,7 +80,7 @@ export const AppSecondFactor: React.FC<AppSecondFactorProps> = props => {
   }
 
   async function onCompleteConfirmed() {
-    if (props.me.hasSecondFactorEnabled) {
+    if (me.hasSecondFactorEnabled) {
       setShowCompleteModal(false)
     } else {
       await request
@@ -83,7 +92,7 @@ export const AppSecondFactor: React.FC<AppSecondFactorProps> = props => {
   }
 
   function onCompleteRedirect() {
-    if (props.me.hasSecondFactorEnabled) {
+    if (me.hasSecondFactorEnabled) {
       setShowCompleteModal(false)
     } else {
       window.location.assign(redirectTo)
@@ -127,75 +136,88 @@ export const AppSecondFactor: React.FC<AppSecondFactorProps> = props => {
     })
   }
 
-  const DisableButton = props => (
-    <Button
-      onClick={() => setShowConfirmDisable(true)}
-      variant="secondaryOutline"
-      loading={isDisabling}
-      disabled={isDisabling}
-      {...props}
-    >
-      Disable
-    </Button>
-  )
-
-  const SetupButton = props => (
-    <Button
-      onClick={() => setShowConfirmPassword(true)}
-      loading={isCreating}
-      disabled={isCreating}
-      {...props}
-    >
-      {props.children}
-    </Button>
-  )
-
   return (
-    <BorderBox p={2} {...props}>
+    <>
       <Flex
+        p={2}
+        border="1px solid"
+        borderColor="black10"
         flexDirection={["column", "row"]}
-        justifyContent="space-between"
-        width="100%"
       >
-        <Flex flexDirection="column" maxWidth="345px">
-          <Sans size="4t" color="black100">
+        <Box flexBasis="50%">
+          <Text variant="lg" mb={2}>
             App Authenticator
-          </Sans>
-          <Serif mt={1} size="3t" color="black60">
+            {enabledSecondFactorLabel && (
+              <>
+                {" "}
+                <Sup color="black60">{enabledSecondFactorLabel}</Sup>
+              </>
+            )}
+          </Text>
+
+          <Text variant="sm" color="black60">
             Generate secure authentication codes using an application such as{" "}
-            <Link href="https://support.1password.com/one-time-passwords">
+            <a
+              href="https://support.1password.com/one-time-passwords"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               1Password
-            </Link>{" "}
-            or <Link href="https://authy.com/features">Authy</Link>.
-          </Serif>
-        </Flex>
-        <Flex mt={[3, 0]} flexDirection={["column", "row"]} alignItems="center">
-          {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
-          {me.appSecondFactors.length &&
-          // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-          me.appSecondFactors[0].__typename === "AppSecondFactor" ? (
+            </a>{" "}
+            or{" "}
+            <a
+              href="https://authy.com/features"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Authy
+            </a>
+            .
+          </Text>
+        </Box>
+
+        <Spacer ml={[0, 2]} mt={[2, 0]} />
+
+        <Flex flexBasis="50%" alignItems="center" justifyContent="flex-end">
+          {isEnabled ? (
             <>
-              <Sans color="black60" size="3" weight="medium">
-                {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
-                {me.appSecondFactors[0].name || "Unnamed"}
-              </Sans>
-              <DisableButton width={["100%", "auto"]} ml={[0, 1]} mt={[1, 0]} />
-              <SetupButton
+              <Button
+                variant="secondaryOutline"
                 width={["100%", "auto"]}
-                ml={[0, 1]}
-                mt={[1, 0]}
+                onClick={() => setShowConfirmDisable(true)}
+                loading={isDisabling}
+                disabled={isDisabling}
+              >
+                Disable
+              </Button>
+
+              <Spacer ml={1} />
+
+              <Button
+                width={["100%", "auto"]}
                 variant="secondaryGray"
+                onClick={() => setShowConfirmPassword(true)}
+                loading={isCreating}
+                disabled={isCreating}
               >
                 Edit
-              </SetupButton>
+              </Button>
             </>
           ) : (
-            <SetupButton width={["100%", "auto"]} ml={[0, 1]} mt={[1, 0]}>
-              Set up
-            </SetupButton>
+            <Button
+              width={["100%", "auto"]}
+              onClick={() => setShowConfirmPassword(true)}
+              loading={isCreating}
+              disabled={isCreating}
+            >
+              Set Up
+            </Button>
           )}
         </Flex>
       </Flex>
+
+      {/* Modals */}
+
       <ConfirmPasswordModal
         show={showConfirmPassword}
         onConfirm={createSecondFactor}
@@ -203,17 +225,20 @@ export const AppSecondFactor: React.FC<AppSecondFactorProps> = props => {
         title="Set up with app"
         subTitle="Confirm your password to continue."
       />
+
       <AppSecondFactorModal
         show={showSetupModal}
         secondFactor={stagedSecondFactor}
         onComplete={onComplete}
         onClose={() => setShowSetupModal(false)}
       />
+
       <ApiErrorModal
         onClose={() => setApiErrors([])}
         show={!!apiErrors.length}
         errors={apiErrors}
       />
+
       {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
       {me.appSecondFactors.length > 0 &&
         // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
@@ -226,33 +251,36 @@ export const AppSecondFactor: React.FC<AppSecondFactorProps> = props => {
             secondFactorID={me.appSecondFactors[0].internalID}
           />
         )}
-      <Modal
-        title="Set up with app"
-        onClose={onCompleteConfirmed}
-        show={showCompleteModal}
-        hideCloseButton={!me.hasSecondFactorEnabled}
-        FixedButton={
-          <Button onClick={onCompleteConfirmed} width="100%">
-            {me.hasSecondFactorEnabled ? "OK" : "Log back in"}
-          </Button>
-        }
-      >
-        <Serif size="3t" color="black60">
-          You’ve successfully set up two-factor authentication!
-        </Serif>
-        {!me.hasSecondFactorEnabled && (
-          <Serif mt={2} size="3t" color="black60">
-            You will be logged out of this session and prompted to enter a
-            two-factor authentication code.
-          </Serif>
-        )}
-      </Modal>
+
+      {showCompleteModal && (
+        <ModalDialog
+          title="Set up with app"
+          onClose={onCompleteConfirmed}
+          footer={
+            <Button onClick={onCompleteConfirmed} width="100%">
+              {me.hasSecondFactorEnabled ? "OK" : "Log Back In"}
+            </Button>
+          }
+        >
+          <Text variant="sm" color="black60">
+            You’ve successfully set up two-factor authentication!
+          </Text>
+
+          {!me.hasSecondFactorEnabled && (
+            <Text variant="sm" mt={2} color="black60">
+              You will be logged out of this session and prompted to enter a
+              two-factor authentication code.
+            </Text>
+          )}
+        </ModalDialog>
+      )}
+
       <OnCompleteRedirectModal
         onClick={onCompleteRedirect}
         redirectTo={redirectTo}
         show={showCompleteRedirectModal}
       />
-    </BorderBox>
+    </>
   )
 }
 
@@ -262,7 +290,6 @@ export const AppSecondFactorFragmentContainer = createFragmentContainer(
     me: graphql`
       fragment AppSecondFactor_me on Me {
         hasSecondFactorEnabled
-
         appSecondFactors: secondFactors(kinds: [app]) {
           ... on AppSecondFactor {
             __typename

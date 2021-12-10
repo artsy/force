@@ -1,4 +1,12 @@
-import { Box, Button, Flex, Input, Modal, Sans, Serif } from "@artsy/palette"
+import {
+  Box,
+  Button,
+  Input,
+  Join,
+  ModalDialog,
+  Text,
+  Spacer,
+} from "@artsy/palette"
 import { CreateAppSecondFactorMutationResponse } from "v2/__generated__/CreateAppSecondFactorMutation.graphql"
 import { useSystemContext } from "v2/System"
 import { Formik, FormikHelpers as FormikActions, FormikProps } from "formik"
@@ -110,38 +118,37 @@ export const AppSecondFactorModal: React.FC<AppSecondFactorModalProps> = props =
 
   return (
     <>
-      <Modal
-        title="Set up with app"
-        show={showForm}
-        onClose={() => setShowForm(false)}
-      >
-        <Formik
-          validationSchema={validationSchema}
-          initialValues={{ name: secondFactor.name || "", code: "" }}
-          onSubmit={handleSubmit}
+      {showForm && (
+        <ModalDialog title="Set up with app" onClose={() => setShowForm(false)}>
+          <Formik
+            validationSchema={validationSchema}
+            initialValues={{ name: secondFactor.name || "", code: "" }}
+            onSubmit={handleSubmit}
+          >
+            {(formikProps: FormikProps<FormValues>) => (
+              <InnerForm secondFactor={secondFactor} {...formikProps} />
+            )}
+          </Formik>
+        </ModalDialog>
+      )}
+
+      {showRecoveryCodes && (
+        <ModalDialog
+          title="Recovery Codes"
+          onClose={handleRecoveryReminderNext}
+          footer={
+            <Button onClick={handleRecoveryReminderNext} width="100%">
+              Next
+            </Button>
+          }
         >
-          {(formikProps: FormikProps<FormValues>) => (
-            <InnerForm secondFactor={secondFactor} {...formikProps} />
-          )}
-        </Formik>
-      </Modal>
-      <Modal
-        title="Recovery Codes"
-        onClose={handleRecoveryReminderNext}
-        show={showRecoveryCodes}
-        hideCloseButton={true}
-        FixedButton={
-          <Button onClick={handleRecoveryReminderNext} width="100%">
-            Next
-          </Button>
-        }
-      >
-        <BackupSecondFactorReminder
-          // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-          backupSecondFactors={recoveryCodes}
-          factorTypeName={secondFactor.__typename}
-        />
-      </Modal>
+          <BackupSecondFactorReminder
+            // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
+            backupSecondFactors={recoveryCodes}
+            factorTypeName={secondFactor.__typename}
+          />
+        </ModalDialog>
+      )}
     </>
   )
 }
@@ -168,34 +175,36 @@ const InnerForm: React.FC<InnerFormProps> = ({
   }
 
   return (
-    <Box mt={2}>
-      <Sans color="black60" size="3">
+    <Join separator={<Spacer mt={2} />}>
+      <Text variant="sm" color="black60">
         An authenticator app lets you generate security codes.
-      </Sans>
-      <Box mt={1}>
-        <Input
-          autoComplete="off"
-          name="name"
-          error={touched.name && errors.name}
-          value={values.name}
-          onBlur={handleBlur}
-          placeholder="Device Name"
-          onChange={handleChange}
-          autoFocus
-        />
-      </Box>
-      <Sans mt={2} color="black60" size="3">
+      </Text>
+
+      <Input
+        autoComplete="off"
+        name="name"
+        error={touched.name && errors.name}
+        value={values.name}
+        onBlur={handleBlur}
+        placeholder="Device Name"
+        onChange={handleChange}
+        autoFocus
+      />
+
+      <Text variant="sm" color="black60">
         1. Use your app to scan the code below. If you can’t use a barcode,
         enter the secret code manually.
-      </Sans>
-      <Box mt={2} textAlign="center">
+      </Text>
+
+      <Box textAlign="center">
         <QRCode size={256} value={secondFactor.otpProvisioningURI} />
       </Box>
-      <Box mt={2} textAlign="center">
+
+      <Box textAlign="center">
         {showSecret ? (
-          <Sans color="black60" size="3t">
+          <Text variant="sm" color="black60">
             {secondFactor.otpSecret}
-          </Sans>
+          </Text>
         ) : (
           <Button
             size="small"
@@ -206,34 +215,32 @@ const InnerForm: React.FC<InnerFormProps> = ({
           </Button>
         )}
       </Box>
-      <Sans mt={2} color="black60" size="3">
+
+      <Text variant="sm" color="black60">
         2. Enter the six-digit code from the application to complete the
         configuration.
-      </Sans>
-      <Box mt={2}>
-        <Input
-          error={touched.code && errors.code}
-          onBlur={handleBlur}
-          autoComplete="off"
-          name="code"
-          value={values.code}
-          onChange={handleChange}
-          placeholder="Authentication Code"
-        />
-      </Box>
-      <Flex alignItems="center">
-        <Button
-          mt={2}
-          loading={isSubmitting}
-          disabled={isSubmitting}
-          width="100%"
-          type="submit"
-          onClick={() => handleSubmit()}
-        >
-          Turn on
-        </Button>
-      </Flex>
-    </Box>
+      </Text>
+
+      <Input
+        error={touched.code && errors.code}
+        onBlur={handleBlur}
+        autoComplete="off"
+        name="code"
+        value={values.code}
+        onChange={handleChange}
+        placeholder="Authentication Code"
+      />
+
+      <Button
+        loading={isSubmitting}
+        disabled={isSubmitting}
+        width="100%"
+        type="submit"
+        onClick={() => handleSubmit()}
+      >
+        Turn on
+      </Button>
+    </Join>
   )
 }
 
@@ -246,24 +253,25 @@ interface OnCompleteRedirectModalProps {
 export const OnCompleteRedirectModal: React.FC<OnCompleteRedirectModalProps> = props => {
   const { onClick, redirectTo, show } = props
 
+  if (!show) return null
+
   return (
-    <Modal
+    <ModalDialog
       title="Set up with app"
       onClose={onClick}
-      show={show}
-      hideCloseButton={true}
-      FixedButton={
+      footer={
         <Button onClick={onClick} width="100%">
           OK
         </Button>
       }
     >
-      <Serif size="3t" color="black60">
+      <Text variant="sm" color="black60">
         You’ve successfully set up two-factor authentication!
-      </Serif>
-      <Serif mt={2} size="3t" color="black60">
+      </Text>
+
+      <Text variant="sm" mt={2} color="black60">
         {redirectMessage(redirectTo)}
-      </Serif>
-    </Modal>
+      </Text>
+    </ModalDialog>
   )
 }

@@ -1,5 +1,7 @@
-import { Box, Flex, Sans, Serif } from "@artsy/palette"
-import * as React from "react";
+// TODO: Delete this file once settings2 is launched
+
+import { Box, Flex, Sans, Serif, Spacer } from "@artsy/palette"
+import * as React from "react"
 import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
 
 import { SystemContextProps, useSystemContext } from "v2/System"
@@ -36,12 +38,19 @@ const TwoFactorAuthentication: React.FC<TwoFactorAuthenticationProps> = props =>
           </Sans>
         )}
       </Flex>
+
       <Serif mt={1} size="3t" maxWidth="515px" color="black60">
         Set up an additional layer of security by requiring a security code in
         addition to your password to log in to your Artsy account.
       </Serif>
-      <AppSecondFactor mt={3} me={me} relayRefetch={relay} />
-      <SmsSecondFactor mt={2} me={me} relayRefetch={relay} />
+
+      <Spacer mt={2} />
+
+      <AppSecondFactor me={me} relayRefetch={relay} />
+
+      <Spacer mt={2} />
+
+      <SmsSecondFactor me={me} relayRefetch={relay} />
       {me.hasSecondFactorEnabled && <BackupSecondFactor mt={2} me={me} />}
     </Box>
   )
