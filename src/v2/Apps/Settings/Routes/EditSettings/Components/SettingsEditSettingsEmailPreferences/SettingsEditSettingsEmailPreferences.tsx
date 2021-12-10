@@ -37,7 +37,7 @@ export const SettingsEditSettingsEmailPreferences: React.FC<SettingEditSettingsE
       )
       sendToast({
         variant: "success",
-        message: "Information updated successfully",
+        message: "Preference Updated",
       })
     } catch (err) {
       sendToast({ variant: "error", message: err.message })
