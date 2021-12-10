@@ -10,11 +10,14 @@ import {
 import { intersection } from "lodash"
 import * as React from "react"
 import styled from "styled-components"
-import { useArtworkFilterContext } from "../ArtworkFilterContext"
+import {
+  SelectedFiltersCountsLabels,
+  useArtworkFilterContext,
+} from "../ArtworkFilterContext"
 import { sortResults } from "./ResultsFilter"
 import { FilterExpandable } from "./FilterExpandable"
 import { INITIAL_ITEMS_TO_SHOW, ShowMore } from "./ShowMore"
-import { getFilterLabelWithCounts } from "../Utils/getFilterLabelWithCounts"
+import { useFilterLabelCountByKey } from "../Utils/useFilterLabelCountByKey"
 
 export const COLOR_OPTIONS = [
   { hex: "#ffffff", value: "black-and-white", name: "Black and White" },
@@ -114,11 +117,13 @@ export interface ColorFilterProps {
 }
 
 export const ColorFilter: React.FC<ColorFilterProps> = ({ expanded }) => {
-  const {
-    currentlySelectedFilters,
-    selectedFiltersCounts,
-  } = useArtworkFilterContext()
-  const label = getFilterLabelWithCounts("Color", selectedFiltersCounts.colors)
+  const { currentlySelectedFilters } = useArtworkFilterContext()
+
+  const filtersCount = useFilterLabelCountByKey(
+    SelectedFiltersCountsLabels.colors
+  )
+  const label = `Color${filtersCount}`
+
   const hasBelowTheFoldColorFilter =
     intersection(
       currentlySelectedFilters?.().colors ?? [],

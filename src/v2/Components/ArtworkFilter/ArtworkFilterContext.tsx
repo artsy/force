@@ -155,6 +155,23 @@ export type SelectedFiltersCounts = {
   [Name in FilterParamName | "waysToBuy"]: number
 }
 
+export enum SelectedFiltersCountsLabels {
+  additionalGeneIDs = "additionalGeneIDs",
+  artistIDs = "artistIDs",
+  artistNationalities = "artistNationalities",
+  attributionClass = "attributionClass",
+  colors = "colors",
+  locationCities = "locationCities",
+  materialsTerms = "materialsTerms",
+  medium = "medium",
+  partnerIDs = "partnerIDs",
+  priceRange = "priceRange",
+  sizes = "sizes",
+  sort = "sort",
+  timePeriod = "majorPeriods",
+  waysToBuy = "waysToBuy",
+}
+
 // TODO: merge or make a generic base of `ArtworkFilterContextProps` and `AuctionResultsFilterContextProps`.
 // Possibly just extend `BaseFilterContext` and make the former ones into `BaseFilterContext<ArtworkFilters>`
 // and `BaseFilterContext<AuctionResultFilters>`.
@@ -563,7 +580,7 @@ export const getSelectedFiltersCounts = (
   const filtersParams = Object.values(FilterParamName)
 
   Object.entries(selectedFilters).forEach(([paramName, paramValue]) => {
-    if (!filtersParams.includes(paramName as any)) {
+    if (!filtersParams.includes(paramName as FilterParamName)) {
       return
     }
 
@@ -575,14 +592,14 @@ export const getSelectedFiltersCounts = (
         break
       }
       case customSizeFilterNames.includes(paramName as FilterParamName): {
-        if (paramValue !== "*-*") {
-          counts[FilterParamName.sizes] =
-            (counts[FilterParamName.sizes] ?? 0) + 1
+        if (paramValue !== initialArtworkFilterState[paramName]) {
+          const prevCountValue = counts[FilterParamName.sizes] ?? 0
+          counts[FilterParamName.sizes] = prevCountValue + 1
         }
         break
       }
       case paramName === FilterParamName.priceRange: {
-        if (paramValue !== "*-*") {
+        if (paramValue !== initialArtworkFilterState.priceRange) {
           counts[paramName] = 1
         }
         break
@@ -600,13 +617,13 @@ export const getSelectedFiltersCounts = (
         break
       }
       case paramName === FilterParamName.artistIDs: {
-        if (paramValue.length > 0) {
+        if (paramValue.length) {
           counts.artistIDs = paramValue.length + (counts.artistIDs ?? 0)
         }
         break
       }
       case isArray(paramValue): {
-        if (paramValue.length > 0) {
+        if (paramValue.length) {
           counts[paramName] = paramValue.length
         }
         break

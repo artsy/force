@@ -2,14 +2,17 @@ import { FC, useEffect, useState } from "react"
 import * as React from "react"
 import { sortBy } from "lodash"
 import { Checkbox, CheckboxProps, Flex, useThemeConfig } from "@artsy/palette"
-import { useArtworkFilterContext } from "../ArtworkFilterContext"
+import {
+  SelectedFiltersCountsLabels,
+  useArtworkFilterContext,
+} from "../ArtworkFilterContext"
 import {
   FollowedArtistList,
   fetchFollowedArtists,
 } from "../Utils/fetchFollowedArtists"
 import { FilterExpandable } from "./FilterExpandable"
 import { ShowMore } from "./ShowMore"
-import { getFilterLabelWithCounts } from "../Utils/getFilterLabelWithCounts"
+import { useFilterLabelCountByKey } from "../Utils/useFilterLabelCountByKey"
 
 export interface ArtistsFilterProps {
   expanded?: boolean
@@ -87,11 +90,10 @@ export const ArtistsFilter: FC<ArtistsFilterProps> = ({
   const [followedArtists, setFollowedArtists] = useState<FollowedArtistList>([])
   const followedArtistSlugs = followedArtists.map(({ slug }) => slug)
 
-  const { selectedFiltersCounts } = useArtworkFilterContext()
-  const label = getFilterLabelWithCounts(
-    "Artists",
-    selectedFiltersCounts.artistIDs
+  const filtersCount = useFilterLabelCountByKey(
+    SelectedFiltersCountsLabels.artistIDs
   )
+  const label = `Artists${filtersCount}`
 
   const tokens = useThemeConfig({
     v2: { my: 0.5 },

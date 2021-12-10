@@ -1,6 +1,5 @@
 import * as React from "react"
-import { useArtworkFilterContext } from "../ArtworkFilterContext"
-import { getFilterLabelWithCounts } from "../Utils/getFilterLabelWithCounts"
+import { SelectedFiltersCountsLabels } from "../ArtworkFilterContext"
 import { ResultsFilter } from "./ResultsFilter"
 
 export interface ArtworkLocationFilterProps {
@@ -10,18 +9,13 @@ export interface ArtworkLocationFilterProps {
 export const ArtworkLocationFilter: React.FC<ArtworkLocationFilterProps> = ({
   expanded,
 }) => {
-  const { selectedFiltersCounts } = useArtworkFilterContext()
-  const label = getFilterLabelWithCounts(
-    "Artwork Location",
-    selectedFiltersCounts.locationCities
-  )
-
   return (
     <ResultsFilter
       facetName="locationCities"
       slice="LOCATION_CITY"
-      label={label}
+      label="Artwork Location"
       placeholder="Enter a city"
+      filtersCountKey={SelectedFiltersCountsLabels.locationCities}
       expanded={expanded}
     />
   )

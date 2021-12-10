@@ -1,6 +1,5 @@
 import * as React from "react"
-import { useArtworkFilterContext } from "../ArtworkFilterContext"
-import { getFilterLabelWithCounts } from "../Utils/getFilterLabelWithCounts"
+import { SelectedFiltersCountsLabels } from "../ArtworkFilterContext"
 import { ResultsFilter } from "./ResultsFilter"
 
 export interface MaterialsFilterProps {
@@ -10,18 +9,13 @@ export interface MaterialsFilterProps {
 export const MaterialsFilter: React.FC<MaterialsFilterProps> = ({
   expanded,
 }) => {
-  const { selectedFiltersCounts } = useArtworkFilterContext()
-  const label = getFilterLabelWithCounts(
-    "Material",
-    selectedFiltersCounts.materialsTerms
-  )
-
   return (
     <ResultsFilter
       facetName="materialsTerms"
       slice="MATERIALS_TERMS"
-      label={label}
+      label="Material"
       placeholder="Enter a material"
+      filtersCountKey={SelectedFiltersCountsLabels.materialsTerms}
       expanded={expanded}
     />
   )

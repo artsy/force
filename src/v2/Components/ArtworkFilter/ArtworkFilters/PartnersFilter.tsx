@@ -1,6 +1,5 @@
 import * as React from "react"
-import { useArtworkFilterContext } from "../ArtworkFilterContext"
-import { getFilterLabelWithCounts } from "../Utils/getFilterLabelWithCounts"
+import { SelectedFiltersCountsLabels } from "../ArtworkFilterContext"
 import { ResultsFilter } from "./ResultsFilter"
 
 export interface PartnersFilterProps {
@@ -12,19 +11,13 @@ export const PartnersFilter: React.FC<PartnersFilterProps> = ({
   expanded,
   label = "Galleries and Institutions",
 }) => {
-  const { selectedFiltersCounts } = useArtworkFilterContext()
-
-  const filterLabel = getFilterLabelWithCounts(
-    label,
-    selectedFiltersCounts.partnerIDs
-  )
-
   return (
     <ResultsFilter
       facetName="partnerIDs"
       slice="PARTNER"
-      label={filterLabel}
+      label={label}
       placeholder="Enter a gallery"
+      filtersCountKey={SelectedFiltersCountsLabels.partnerIDs}
       expanded={expanded}
     />
   )

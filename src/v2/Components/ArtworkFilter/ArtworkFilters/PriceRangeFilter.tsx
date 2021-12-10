@@ -10,13 +10,16 @@ import {
   Spacer,
   useThemeConfig,
 } from "@artsy/palette"
-import { useArtworkFilterContext } from "../ArtworkFilterContext"
+import {
+  SelectedFiltersCountsLabels,
+  useArtworkFilterContext,
+} from "../ArtworkFilterContext"
 import styled from "styled-components"
 import { Media } from "v2/Utils/Responsive"
 import { themeGet } from "@styled-system/theme-get"
 import { FilterExpandable } from "./FilterExpandable"
 import { isCustomValue } from "./Utils/isCustomValue"
-import { getFilterLabelWithCounts } from "../Utils/getFilterLabelWithCounts"
+import { useFilterLabelCountByKey } from "../Utils/useFilterLabelCountByKey"
 
 // Disables arrows in numeric inputs
 export const NumericInput = styled(LabeledInput).attrs({ type: "number" })`
@@ -74,19 +77,15 @@ export const PriceRangeFilter: React.FC<PriceRangeFilterProps> = ({
 }) => {
   const [mode, setMode] = useState<"resting" | "done">("resting")
 
-  const {
-    currentlySelectedFilters,
-    selectedFiltersCounts,
-    setFilter,
-  } = useArtworkFilterContext()
+  const { currentlySelectedFilters, setFilter } = useArtworkFilterContext()
   const { priceRange: initialRange, reset } = currentlySelectedFilters?.() ?? {}
 
   const numericInitialRange = parseRange(initialRange)
 
-  const label = getFilterLabelWithCounts(
-    "Price",
-    selectedFiltersCounts.priceRange
+  const filtersCount = useFilterLabelCountByKey(
+    SelectedFiltersCountsLabels.priceRange
   )
+  const label = `Price${filtersCount}`
 
   const isCustomRange =
     // Has some kind of price range set (isn't default)

@@ -13,13 +13,14 @@ import {
 } from "@artsy/palette"
 import {
   ArtworkFiltersState,
+  SelectedFiltersCountsLabels,
   useArtworkFilterContext,
 } from "../ArtworkFilterContext"
 import { NumericInput } from "./PriceRangeFilter"
 import { Media } from "v2/Utils/Responsive"
 import { FilterExpandable } from "./FilterExpandable"
 import { isCustomValue } from "./Utils/isCustomValue"
-import { getFilterLabelWithCounts } from "../Utils/getFilterLabelWithCounts"
+import { useFilterLabelCountByKey } from "../Utils/useFilterLabelCountByKey"
 
 export const SIZES = [
   { displayName: "Small (under 40cm)", name: "SMALL" },
@@ -81,18 +82,17 @@ export interface SizeFilterProps {
 }
 
 export const SizeFilter: React.FC<SizeFilterProps> = ({ expanded }) => {
-  const {
-    currentlySelectedFilters,
-    selectedFiltersCounts,
-    setFilters,
-  } = useArtworkFilterContext()
+  const { currentlySelectedFilters, setFilters } = useArtworkFilterContext()
   const {
     height,
     width,
     reset,
   } = currentlySelectedFilters?.() as ArtworkFiltersState
 
-  const label = getFilterLabelWithCounts("Size", selectedFiltersCounts.sizes)
+  const filtersCount = useFilterLabelCountByKey(
+    SelectedFiltersCountsLabels.sizes
+  )
+  const label = `Size${filtersCount}`
 
   const initialCustomSize = React.useMemo(
     () => ({

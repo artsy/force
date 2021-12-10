@@ -3,9 +3,10 @@ import { entries, isEmpty } from "lodash"
 import { FC } from "react"
 import {
   ArtworkFilters,
+  SelectedFiltersCountsLabels,
   useArtworkFilterContext,
 } from "../ArtworkFilterContext"
-import { getFilterLabelWithCounts } from "../Utils/getFilterLabelWithCounts"
+import { useFilterLabelCountByKey } from "../Utils/useFilterLabelCountByKey"
 import { FilterExpandable } from "./FilterExpandable"
 
 interface WayToBuy {
@@ -40,10 +41,10 @@ export const WAYS_TO_BUY_OPTIONS = {
 export const WaysToBuyFilter: FC<WaysToBuyFilterProps> = ({ expanded }) => {
   const filterContext = useArtworkFilterContext()
 
-  const label = getFilterLabelWithCounts(
-    "Ways to Buy",
-    filterContext.selectedFiltersCounts.waysToBuy
+  const filtersCount = useFilterLabelCountByKey(
+    SelectedFiltersCountsLabels.waysToBuy
   )
+  const label = `Ways to Buy${filtersCount}`
 
   /**
    * If counts aren't passed, enable by default

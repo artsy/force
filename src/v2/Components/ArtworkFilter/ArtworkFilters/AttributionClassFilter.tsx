@@ -1,8 +1,11 @@
 import * as React from "react"
 import { Checkbox, Flex, useThemeConfig } from "@artsy/palette"
-import { useArtworkFilterContext } from "../ArtworkFilterContext"
+import {
+  SelectedFiltersCountsLabels,
+  useArtworkFilterContext,
+} from "../ArtworkFilterContext"
 import { FilterExpandable } from "./FilterExpandable"
-import { getFilterLabelWithCounts } from "../Utils/getFilterLabelWithCounts"
+import { useFilterLabelCountByKey } from "../Utils/useFilterLabelCountByKey"
 
 export const checkboxValues = [
   {
@@ -32,10 +35,10 @@ export const AttributionClassFilter: React.FC<AttributionClassFilterProps> = ({
 }) => {
   const filterContext = useArtworkFilterContext()
 
-  const label = getFilterLabelWithCounts(
-    "Rarity",
-    filterContext.selectedFiltersCounts.attributionClass
+  const filtersCount = useFilterLabelCountByKey(
+    SelectedFiltersCountsLabels.attributionClass
   )
+  const label = `Rarity${filtersCount}`
 
   const toggleSelection = (selected, name) => {
     let attributions =

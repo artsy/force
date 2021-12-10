@@ -1,28 +1,26 @@
 import { Checkbox, Flex, useThemeConfig } from "@artsy/palette"
 import { FC } from "react"
-import { useArtworkFilterContext } from "../ArtworkFilterContext"
+import {
+  SelectedFiltersCountsLabels,
+  useArtworkFilterContext,
+} from "../ArtworkFilterContext"
 import { ShowMore, INITIAL_ITEMS_TO_SHOW } from "./ShowMore"
 import { intersection } from "lodash"
 import { sortResults } from "./ResultsFilter"
 import { FilterExpandable } from "./FilterExpandable"
-import { getFilterLabelWithCounts } from "../Utils/getFilterLabelWithCounts"
+import { useFilterLabelCountByKey } from "../Utils/useFilterLabelCountByKey"
 
 export interface MediumFilterProps {
   expanded?: boolean
 }
 
 export const MediumFilter: FC<MediumFilterProps> = ({ expanded }) => {
-  const {
-    aggregations,
-    counts,
-    selectedFiltersCounts,
-    ...filterContext
-  } = useArtworkFilterContext()
+  const { aggregations, counts, ...filterContext } = useArtworkFilterContext()
 
-  const label = getFilterLabelWithCounts(
-    "Medium",
-    selectedFiltersCounts.additionalGeneIDs
+  const filtersCount = useFilterLabelCountByKey(
+    SelectedFiltersCountsLabels.additionalGeneIDs
   )
+  const label = `Medium${filtersCount}`
 
   const mediums = aggregations?.find(agg => agg.slice === "MEDIUM") || {
     slice: "",

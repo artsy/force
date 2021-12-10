@@ -1,6 +1,5 @@
 import React from "react"
-import { useArtworkFilterContext } from "../ArtworkFilterContext"
-import { getFilterLabelWithCounts } from "../Utils/getFilterLabelWithCounts"
+import { SelectedFiltersCountsLabels } from "../ArtworkFilterContext"
 import { ResultsFilter } from "./ResultsFilter"
 
 export interface ArtistNationalityFilterProps {
@@ -10,18 +9,13 @@ export interface ArtistNationalityFilterProps {
 export const ArtistNationalityFilter: React.FC<ArtistNationalityFilterProps> = ({
   expanded,
 }) => {
-  const { selectedFiltersCounts } = useArtworkFilterContext()
-  const label = getFilterLabelWithCounts(
-    "Artist Nationality or Ethnicity",
-    selectedFiltersCounts.artistNationalities
-  )
-
   return (
     <ResultsFilter
       facetName="artistNationalities"
       slice="ARTIST_NATIONALITY"
-      label={label}
+      label="Artist Nationality or Ethnicity"
       placeholder="Enter a nationality or ethnicity"
+      filtersCountKey={SelectedFiltersCountsLabels.artistNationalities}
       expanded={expanded}
     />
   )
