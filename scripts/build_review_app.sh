@@ -86,7 +86,7 @@ echo "Create a CNAME record of $NAME.artsy.net pointing to nginx-staging.artsy.n
 # you may do this in the Cloudflare interface. Credentials are in 1pass.
 #
 # Step-by-step instructions:
-# https://github.com/artsy/force/blob/master/docs/creating_review_app.md#dns-setup
+# https://github.com/artsy/force/blob/main/docs/creating_review_app.md#dns-setup
 echo "[build_review_app.sh] SUCCESS"
 
 exit 0

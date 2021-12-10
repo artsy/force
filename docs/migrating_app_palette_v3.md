@@ -14,11 +14,11 @@ There are a few different ways one can start to work with Palette v3:
 1. Wrap the root of your React tree in a `<ThemeProviderV3>` context provider
 1. Use the `useThemeConfig` hook
 
-> Note: Because we can't statefully determine at runtime which theme is being used, _all_ `space` token values for v2 and v3 are returned via typescript intellisense. This means, when using the `v3` theme, that `mt={3}` is an option but in the `v3` theme that value doesn't exist. If a value collapses to 0 when viewing the UI then it means that it's not in the theme. We plan to clean this up in the future. And if in doubt, [check out the theme values directly](https://github.com/artsy/palette/blob/master/packages/palette/src/themes/v3.tsx). 
+> Note: Because we can't statefully determine at runtime which theme is being used, _all_ `space` token values for v2 and v3 are returned via typescript intellisense. This means, when using the `v3` theme, that `mt={3}` is an option but in the `v3` theme that value doesn't exist. If a value collapses to 0 when viewing the UI then it means that it's not in the theme. We plan to clean this up in the future. And if in doubt, [check out the theme values directly](https://github.com/artsy/palette/blob/master/packages/palette/src/themes/v3.tsx).
 
 ### Example 1: Updating Route Config
 
-> See [here](https://github.com/artsy/force/blob/master/src/v2/Apps/ArtistSeries/artistSeriesRoutes.tsx#L14) for a real-world example.
+> See [here](https://github.com/artsy/force/blob/main/src/v2/Apps/ArtistSeries/artistSeriesRoutes.tsx#L14) for a real-world example.
 
 ```jsx
 export const appRoutes = [
@@ -68,7 +68,7 @@ export const MyApp = props => {
 
 ## Example 3: Use the `useThemeConfig` hook
 
-> See [here](https://github.com/artsy/force/blob/master/src/v2/Components/Footer/Footer.tsx#L219-L226) for a real-world example.
+> See [here](https://github.com/artsy/force/blob/main/src/v2/Components/Footer/Footer.tsx#L219-L226) for a real-world example.
 
 The `useThemeConfig` hook can be used within components that are _shared_ between v2 and v3 apps, and thus can't be converted wholesale to v3. (A good example of this is the Artwork Filter, which is a complex component used in a couple different apps.)
 
