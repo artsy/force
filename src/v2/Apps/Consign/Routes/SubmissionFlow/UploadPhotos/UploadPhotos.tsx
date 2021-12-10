@@ -48,17 +48,6 @@ export const UploadPhotos: React.FC<UploadPhotosProps> = ({ submission }) => {
     }
   }
 
-  // const saveUpladPhotosForm = (photos: Photo[]) => {
-  // submission!.uploadPhotosForm = {
-  //   photos: photos.map(photo => ({
-  //     ...photo,
-  //     file: undefined,
-  //     progress: undefined,
-  //   })),
-  // }
-  // saveSubmission(submission!)
-  // }
-
   return (
     <>
       <BackLink
@@ -101,17 +90,11 @@ export const UploadPhotos: React.FC<UploadPhotosProps> = ({ submission }) => {
             // TODO: Remove image from submission
           }
 
-          const handlePhotoUploaded = () => {
-            // saveUpladPhotosForm(values.photos.filter(p => p.geminiToken && !p.url))
-            // TODO: Add image to submission
-          }
-
           return (
             <Form>
               <UploadPhotosForm
                 mt={4}
                 maxTotalSize={30}
-                onPhotoUploaded={handlePhotoUploaded}
                 submissionId={submission?.id || ""}
               />
 

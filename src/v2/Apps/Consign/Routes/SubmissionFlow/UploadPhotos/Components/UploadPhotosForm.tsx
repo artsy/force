@@ -19,13 +19,11 @@ export interface UploadPhotosFormModel {
 
 export interface UploadPhotosFormProps extends BoxProps {
   maxTotalSize: number
-  onPhotoUploaded?: () => void
   submissionId: string
 }
 
 export const UploadPhotosForm: React.FC<UploadPhotosFormProps> = ({
   maxTotalSize,
-  onPhotoUploaded,
   submissionId,
   ...rest
 }) => {
@@ -60,10 +58,6 @@ export const UploadPhotosForm: React.FC<UploadPhotosFormProps> = ({
 
       photo.geminiToken = geminiToken
       setFieldValue("photos", values.photos, true)
-
-      if (onPhotoUploaded) {
-        onPhotoUploaded()
-      }
     }
   }
 

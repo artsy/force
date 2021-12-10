@@ -52,7 +52,7 @@ const ArtworkDetails = loadable(
   }
 )
 
-const UploadPhotos = loadable(
+const UploadPhotosFragmentContainer = loadable(
   () =>
     import(
       /* webpackChunkName: "consignBundle" */ "./Routes/SubmissionFlow/UploadPhotos/UploadPhotos"
@@ -135,9 +135,9 @@ export const consignRoutes: AppRouteConfig[] = [
         path: ":id/upload-photos",
         hideNav: true,
         hideFooter: true,
-        getComponent: () => UploadPhotos,
+        getComponent: () => UploadPhotosFragmentContainer,
         onClientSideRender: () => {
-          UploadPhotos.preload()
+          UploadPhotosFragmentContainer.preload()
         },
         query: submissionQuery,
       },
