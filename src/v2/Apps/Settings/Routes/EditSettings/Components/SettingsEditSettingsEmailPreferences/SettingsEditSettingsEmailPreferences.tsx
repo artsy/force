@@ -1,6 +1,6 @@
 import { useState } from "react"
 import * as React from "react"
-import { Banner, Box, Flex, Select, Text } from "@artsy/palette"
+import { Banner, Box, Flex, Select, Text, useToasts } from "@artsy/palette"
 import { useSystemContext } from "v2/System/SystemContext"
 import { createFragmentContainer, graphql } from "react-relay"
 import { UpdateUserEmailPreferencesMutation } from "../../../../../../Components/UserSettings/UserEmailPreferences/UserEmailPreferencesMutation"
@@ -26,16 +26,22 @@ export const SettingsEditSettingsEmailPreferences: React.FC<SettingEditSettingsE
   const emailFrequency = me?.emailFrequency || fallbackFrequency
   const [updated, setUpdated] = useState(false)
 
+  const { sendToast } = useToasts()
+
   const handleSelect = async newEmailFrequency => {
     setUpdated(false)
     const variables = { emailFrequency: newEmailFrequency }
-    await UpdateUserEmailPreferencesMutation(
-      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-      relayEnvironment,
-      variables,
-      me?.id
-    )
-    setUpdated(true)
+    try{
+      await UpdateUserEmailPreferencesMutation(
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
+        relayEnvironment,
+        variables,
+        me?.id
+      )
+      setUpdated(true)
+    } catch (err) {
+      sendToast({ variant: "error", message: err.message })
+    }
   }
 
   return (
