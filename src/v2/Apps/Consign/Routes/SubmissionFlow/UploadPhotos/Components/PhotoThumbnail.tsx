@@ -36,14 +36,11 @@ export const PhotoThumbnail: React.FC<PhotoThumbnailProps & BoxProps> = ({
     if (photo.file) {
       const reader = new FileReader()
       reader.readAsDataURL(photo.file)
-
-      reader.onloadend = () => {
-        setPhotoSrc(reader.result as string)
-      }
+      reader.onloadend = () => setPhotoSrc(reader.result as string)
     } else {
       setPhotoSrc(photo.url)
     }
-  }, [])
+  }, [photo])
 
   const handleDelete = () => onDelete(photo)
 
