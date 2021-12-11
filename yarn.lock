@@ -77,12 +77,12 @@
   dependencies:
     dotenv "^10.0.0"
 
-"@artsy/palette-charts@17.11.0":
-  version "17.11.0"
-  resolved "https://registry.yarnpkg.com/@artsy/palette-charts/-/palette-charts-17.11.0.tgz#b946ef6f3173964b72dc6671e2e814a94ea099de"
-  integrity sha512-ZylmlqdP+gvznVu2+4u3tLudVqqHMLeGhP4bapb/VMW1oL7j6CuQJpDPjmvR6FqqMNxEq+goBA/1k57Xno5N9A==
+"@artsy/palette-charts@17.11.1":
+  version "17.11.1"
+  resolved "https://registry.yarnpkg.com/@artsy/palette-charts/-/palette-charts-17.11.1.tgz#77fb33f106c77693c2d5f2f5f75cc3bb46212353"
+  integrity sha512-lKivzqHJmyFEM61LOzuZQTr0ILLhAXsonhy8dyU37ysPirivF4KTWaJp2b00g2lKBQY+9G/vb/QZvW6sZ0/NJw==
   dependencies:
-    "@artsy/palette" "^18.11.0"
+    "@artsy/palette" "^18.11.1"
     "@seznam/compose-react-refs" "^1.0.6"
     "@styled-system/theme-get" "^5.1.2"
     d3-interpolate "^1.3.2"
@@ -94,28 +94,10 @@
   resolved "https://registry.yarnpkg.com/@artsy/palette-tokens/-/palette-tokens-2.6.0.tgz#3d780ff65994fef0daadef29d43d11f89470b728"
   integrity sha512-UQP6P+xv/5hm82ep0z5X3kCFFnk03H6y8kdW/wTU+xPq45ESUay7aNFYXeub47tmW2v6dXJ8Oa01Z0iwc6BVpA==
 
-"@artsy/palette@18.11.1":
+"@artsy/palette@18.11.1", "@artsy/palette@^18.11.1":
   version "18.11.1"
   resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-18.11.1.tgz#0b64e95a7c0c0eb6a9f079047cb2c45e20b6d9e6"
   integrity sha512-MG4OFr//W4HvJuFTc+GHIcvADlcXCO7aVHvnAtfRcyOrSxWvW0gN8hLN9+8E4cgbEu/DCky1ngQtcYhCxC54VA==
-  dependencies:
-    "@artsy/palette-tokens" "^2.6.0"
-    "@seznam/compose-react-refs" "^1.0.6"
-    "@styled-system/theme-get" "^5.1.2"
-    luxon "^1.15"
-    proportional-scale "^4.0.0"
-    react-lazy-load-image-component "1.5.0"
-    react-remove-scroll "^2.3.0"
-    styled-bootstrap-grid "3.1.0"
-    styled-system "^5.1.5"
-    trunc-html "^1.1.2"
-    use-cursor "^1.2.3"
-    use-keyboard-list-navigation "2.4.2"
-
-"@artsy/palette@^18.11.0":
-  version "18.11.0"
-  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-18.11.0.tgz#06a5f965707e18c28c4cde171de89f29b4e2334a"
-  integrity sha512-sM+0oZmemxkFaxrWDbgEAh71j3wpag8byVw8zlr++qNlTq/4xMIw5li9JV/3ydBMqF3VV22aXlAqNOfcBHwZQg==
   dependencies:
     "@artsy/palette-tokens" "^2.6.0"
     "@seznam/compose-react-refs" "^1.0.6"
