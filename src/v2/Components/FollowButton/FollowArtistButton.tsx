@@ -21,7 +21,7 @@ import {
   createFragmentContainer,
   graphql,
 } from "react-relay"
-import { openAuthToFollowSave } from "v2/Utils/openAuthModal"
+import { openAuthToFollowSaveCreate } from "v2/Utils/openAuthModal"
 import {
   AnalyticsContextProps,
   withAnalyticsContext,
@@ -103,7 +103,7 @@ export class FollowArtistButton extends React.Component<Props> {
       this.followArtistForUser()
     } else {
       // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-      openAuthToFollowSave(mediator, {
+      openAuthToFollowSaveCreate(mediator, {
         contextModule,
         entity: artist,
         intent: Intent.followArtist,

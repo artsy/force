@@ -2,7 +2,7 @@ import { graphql } from "react-relay"
 import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
 import { FairOrganizerFollowButton_Test_Query } from "v2/__generated__/FairOrganizerFollowButton_Test_Query.graphql"
 import { FairOrganizerFollowButtonFragmentContainer } from "../FairOrganizerFollowButton"
-import { openAuthToFollowSave } from "v2/Utils/openAuthModal"
+import { openAuthToFollowSaveCreate } from "v2/Utils/openAuthModal"
 import { useSystemContext } from "v2/System/useSystemContext"
 import { fairOrganizerFollowMutation } from "../../Mutations/FairOrganizerFollowMutation"
 
@@ -27,7 +27,7 @@ describe("FairOrganizerFollowButton", () => {
   )
 
   const mockUseSystemContext = useSystemContext as jest.Mock
-  const mockOpenAuthToFollowSave = openAuthToFollowSave as jest.Mock
+  const mockOpenAuthToFollowSave = openAuthToFollowSaveCreate as jest.Mock
   const mockFairOrganizerFollowMutation = fairOrganizerFollowMutation as jest.Mock
 
   beforeEach(() => {

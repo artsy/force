@@ -30,7 +30,7 @@ const authModalReady = (mediator: Mediator): boolean => {
   return mediator.ready("open:auth")
 }
 
-export const openAuthToFollowSave = (
+export const openAuthToFollowSaveCreate = (
   mediator: Mediator,
   options: AuthModalOptions
 ) => {
@@ -96,6 +96,23 @@ function getDesktopIntentToSaveArtwork({
   }
 }
 
+const getDesktopIntentToCreateAlert = ({
+  contextModule,
+  entity,
+  intent,
+}: AuthModalOptions): ModalOptions => {
+  return {
+    afterSignUpAction: {
+      action: "createAlert",
+      kind: "artist",
+      objectId: entity.slug,
+    },
+    contextModule,
+    intent,
+    mode: ModalType.signup,
+  }
+}
+
 function getDesktopIntent(options: AuthModalOptions): ModalOptions {
   switch (options.intent) {
     case Intent.followArtist:
@@ -104,6 +121,8 @@ function getDesktopIntent(options: AuthModalOptions): ModalOptions {
       return getDesktopIntentToFollow(options)
     case Intent.saveArtwork:
       return getDesktopIntentToSaveArtwork(options)
+    case "createAlert" as AuthIntent:
+      return getDesktopIntentToCreateAlert(options)
     default:
       // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       return undefined

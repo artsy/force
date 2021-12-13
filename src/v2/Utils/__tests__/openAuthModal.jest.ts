@@ -4,7 +4,7 @@ import { mockLocation } from "v2/DevTools/mockLocation"
 import {
   AuthModalOptions,
   openAuthModal,
-  openAuthToFollowSave,
+  openAuthToFollowSaveCreate,
 } from "../openAuthModal"
 
 const artistArgs: AuthModalOptions = {
@@ -65,10 +65,10 @@ describe("openAuth Helpers", () => {
     })
   })
 
-  describe("#openAuthToFollowSave", () => {
+  describe("#openAuthToFollowSaveCreateAlert", () => {
     describe("desktop", () => {
       it("transforms args for following artists", () => {
-        openAuthToFollowSave(mediator, artistArgs)
+        openAuthToFollowSaveCreate(mediator, artistArgs)
 
         expect(mediator.trigger).toBeCalledWith("open:auth", {
           afterSignUpAction: {
@@ -84,7 +84,7 @@ describe("openAuth Helpers", () => {
       })
 
       it("transforms args for following partners", () => {
-        openAuthToFollowSave(mediator, partnerArgs)
+        openAuthToFollowSaveCreate(mediator, partnerArgs)
 
         expect(mediator.trigger).toBeCalledWith("open:auth", {
           afterSignUpAction: {
@@ -100,7 +100,7 @@ describe("openAuth Helpers", () => {
       })
 
       it("transforms args for saving artworks", () => {
-        openAuthToFollowSave(mediator, artworkArgs)
+        openAuthToFollowSaveCreate(mediator, artworkArgs)
 
         expect(mediator.trigger).toBeCalledWith("open:auth", {
           afterSignUpAction: {

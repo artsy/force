@@ -4,14 +4,14 @@ import { SavedSearchAttributes } from "../types"
 import { useSystemContext, useTracking } from "v2/System"
 import {
   ActionType,
+  AuthIntent,
   ContextModule,
-  Intent,
   PageOwnerType,
 } from "@artsy/cohesion"
 import { SavedSearchAlertModal } from "v2/Components/SavedSearchAlert/SavedSearchAlertModal"
 import { SavedSearchAlertMutationResult } from "v2/Components/SavedSearchAlert/SavedSearchAlertModel"
-import { openAuthModal } from "v2/Utils/openAuthModal"
-import { ModalType } from "v2/Components/Authentication/Types"
+import { openAuthToFollowSaveCreate } from "v2/Utils/openAuthModal"
+import { mediator } from "lib/mediator"
 
 interface CreateAlertButtonProps extends ButtonProps {
   savedSearchAttributes: SavedSearchAttributes
@@ -22,11 +22,17 @@ export const CreateAlertButton: React.FC<CreateAlertButtonProps> = ({
   ...props
 }) => {
   const tracking = useTracking()
-  const { isLoggedIn, mediator } = useSystemContext()
+  const { isLoggedIn } = useSystemContext()
   const [visibleForm, setVisibleForm] = useState(false)
 
-  const handleOpenForm = () => {
+  const openModal = () => {
     setVisibleForm(true)
+  }
+
+  mediator?.on("auth:login:success", openModal)
+
+  const handleOpenForm = () => {
+    openModal()
     tracking.trackEvent({
       action: ActionType.clickedCreateAlert,
       context_page_owner_type: savedSearchAttributes.type as PageOwnerType,
@@ -39,10 +45,13 @@ export const CreateAlertButton: React.FC<CreateAlertButtonProps> = ({
     if (isLoggedIn) {
       handleOpenForm()
     } else {
-      openAuthModal(mediator!, {
-        mode: ModalType.login,
+      openAuthToFollowSaveCreate(mediator, {
+        entity: {
+          name: savedSearchAttributes.name,
+          slug: savedSearchAttributes.slug,
+        },
         contextModule: ContextModule.worksForSaleRail,
-        intent: Intent.login,
+        intent: "createAlert" as AuthIntent,
       })
     }
   }
