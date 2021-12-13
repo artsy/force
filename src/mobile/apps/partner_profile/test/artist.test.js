@@ -71,7 +71,7 @@ describe("PartnerArtistView", function () {
       return $("body").html().should.containEql("Andy Foobar's Finger Painting")
     })
 
-    return xit("renders on add", function () {
+    return it.skip("renders on add", function () {
       const spy = sinon.spy(view, "renderArtworks")
       // need to call initialize again to bind the spied renderArtworks()
       view.initialize({
@@ -100,7 +100,7 @@ describe("PartnerArtistView", function () {
     }))
 
   describe("#seeMoreArtworks", () =>
-    xit("fetches more artworks and adds them to the collection", function () {
+    it.skip("fetches more artworks and adds them to the collection", function () {
       view.seeMoreArtworks()
       _.last(Backbone.sync.args)[2].data.page.should.equal(2)
       _.last(Backbone.sync.args)[2].success([

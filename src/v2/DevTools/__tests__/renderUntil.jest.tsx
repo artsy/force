@@ -1,5 +1,6 @@
 import { mount } from "enzyme"
 import * as React from "react"
+import { setImmediate } from "timers"
 import { Responsive } from "v2/Utils/Responsive"
 import { MockBoot } from "../MockBoot"
 import { renderUntil } from "../renderUntil"

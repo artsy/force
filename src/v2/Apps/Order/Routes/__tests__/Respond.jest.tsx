@@ -89,7 +89,7 @@ class RespondTestPage extends OrderAppTestPage {
 }
 
 describe("The respond page", () => {
-  const { buildPage, mutations, routes } = createTestEnv({
+  const { buildPage, mutations, routes, ...hooks } = createTestEnv({
     Component: RespondFragmentContainer,
     defaultData: {
       order: testOrder,
@@ -114,6 +114,11 @@ describe("The respond page", () => {
 
   beforeEach(() => {
     mockPostEvent.mockReset()
+    hooks.clearErrors()
+  })
+
+  afterEach(() => {
+    hooks.clearMocksAndErrors()
   })
 
   describe("the page layout", () => {

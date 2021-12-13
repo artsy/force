@@ -158,13 +158,13 @@ describe("ArticlesAdapter", function () {
       return this.ArticlesAdapter.prototype.isArticle.restore()
     })
 
-    xit("redirects to the partner overview if the article is not found", function () {
+    it.skip("redirects to the partner overview if the article is not found", function () {
       Backbone.sync.args[0][2].error()
       window.location.replace.called.should.be.true()
       return window.location.replace.args[0][0].should.equal("/gagosian")
     })
 
-    xit("displays an article", function () {
+    it.skip("displays an article", function () {
       Backbone.sync.args[0][2].success(fixtures.article)
       this.view.el
         .html()
@@ -172,7 +172,7 @@ describe("ArticlesAdapter", function () {
       return this.view.el.html().should.containEql("article-container")
     })
 
-    xit("shows a header, and omits the More button", function () {
+    it.skip("shows a header, and omits the More button", function () {
       Backbone.sync.args[0][2].success(fixtures.article)
       this.view.collection.add(fabricate("article"))
       this.view.collection.trigger("sync")
@@ -182,7 +182,7 @@ describe("ArticlesAdapter", function () {
         .should.not.containEql("articles-grid__more-button")
     })
 
-    return xit("renders the json-ld", function () {
+    return it.skip("renders the json-ld", function () {
       const article = _.extend({}, fixtures.article, {
         channel_id: null,
         partner_channel_id: "123",

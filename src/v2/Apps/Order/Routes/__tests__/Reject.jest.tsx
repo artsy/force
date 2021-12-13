@@ -29,7 +29,7 @@ const testOrder: RejectTestQueryRawResponse["order"] = {
 }
 
 describe("Buyer rejects seller offer", () => {
-  const { mutations, buildPage, routes } = createTestEnv({
+  const { mutations, buildPage, routes, ...hooks } = createTestEnv({
     Component: RejectFragmentContainer,
     query: graphql`
       query RejectTestQuery @raw_response_type {
@@ -51,6 +51,10 @@ describe("Buyer rejects seller offer", () => {
     },
     TestPage: OrderAppTestPage,
   })
+
+  beforeEach(hooks.clearErrors)
+
+  afterEach(hooks.clearMocksAndErrors)
 
   describe("the page layout", () => {
     let page: OrderAppTestPage

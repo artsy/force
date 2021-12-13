@@ -61,6 +61,10 @@ describe("Status", () => {
     })
   }
 
+  beforeEach(env.clearErrors)
+
+  afterEach(env.clearMocksAndErrors)
+
   describe("offers", () => {
     it("should should have a title containing status", async () => {
       expect(env.headTags.length).toEqual(0)

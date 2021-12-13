@@ -151,8 +151,7 @@ describe("buildServerApp", () => {
     expect(headTags?.[headTags.length - 1].props.children).toBe("test")
   })
 
-  // eslint-disable-next-line jest/no-done-callback
-  it("passes items along in context option", async done => {
+  it("passes items along in context option", async () => {
     const HomeApp = () => {
       return (
         <SystemContextConsumer>
@@ -172,14 +171,14 @@ describe("buildServerApp", () => {
               "setUser",
               "user",
             ])
-            setImmediate(done)
-            return <div />
+            return <div>HomeApp</div>
           }}
         </SystemContextConsumer>
       )
     }
 
-    await getWrapper(HomeApp)
+    const { wrapper } = await getWrapper(HomeApp)
+    expect(wrapper.find("div").text()).toContain("HomeApp")
   })
 
   it("passes along rendered css", async () => {

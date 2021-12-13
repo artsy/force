@@ -14,7 +14,7 @@ const { fabricate } = require("@artsy/antigravity")
 const { stubChildClasses } = require("../../../test/helpers/stubs")
 const embed = require("particle")
 
-xdescribe("ArticleView", function () {
+describe.skip("ArticleView", function () {
   before(function () {
     return benv.setup(() => {
       benv.expose({

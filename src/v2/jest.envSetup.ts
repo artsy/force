@@ -83,50 +83,56 @@ if (process.env.ALLOW_CONSOLE_LOGS !== "true") {
     }
   }
 
-  beforeEach(done => {
-    ;["error", "warn"].forEach((type: "error" | "warn") => {
-      // Don't spy on loggers that have been modified by the current test.
-      // eslint-disable-next-line no-console
-      if (console[type] === originalLoggers[type]) {
-        const handler = (...args) => {
-          // FIXME: React 16.8.x doesn't support async `act` testing hooks and so this
-          // suppresses for now. Remove once we upgrade to React 16.9.
-          // @see https://github.com/facebook/react/issues/14769
-          if (
-            args[0] &&
-            args[0].includes &&
-            !args[0].includes(
-              "Warning: An update to %s inside a test was not wrapped in act"
-            ) &&
-            !args[0].includes(
-              "Warning: RelayResponseNormalizer: Payload did not contain a value for field `id: id`. Check that you are parsing with the same query that was used to fetch the payload."
-            ) &&
-            !/Warning: Received.+?for a non-boolean attribute/.test(args[0]) &&
-            // FIXME: Ignore unknown props warnings until we can filter out styled-system props
-            !args[0].includes("Warning: React does not recognize the") &&
-            // FIXME: Ignore this warning which stems from using refs on RouterLinks
-            !args[0].includes(
-              "Warning: Function components cannot be given refs."
-            ) &&
-            !args[0].includes(
-              "Warning: componentWillReceiveProps has been renamed"
-            ) &&
-            !args[0].includes("Warning: componentWillMount has been renamed") &&
-            !args[0].includes(
-              "Warning: unstable_flushDiscreteUpdates: Cannot flush updates when React is already rendering"
-            ) &&
-            !args[0].includes(
-              // Styled-components 5 warning
-              "You may see this warning because you've called styled inside another component"
-            )
-          ) {
-            done.fail(logToError(type, args, handler))
+  beforeEach(() => {
+    return new Promise((resolve, reject) => {
+      ;["error", "warn"].forEach((type: "error" | "warn") => {
+        // Don't spy on loggers that have been modified by the current test.
+        // eslint-disable-next-line no-console
+        if (console[type] === originalLoggers[type]) {
+          const handler = (...args) => {
+            // FIXME: React 16.8.x doesn't support async `act` testing hooks and so this
+            // suppresses for now. Remove once we upgrade to React 16.9.
+            // @see https://github.com/facebook/react/issues/14769
+            if (
+              args[0] &&
+              args[0].includes &&
+              !args[0].includes(
+                "Warning: An update to %s inside a test was not wrapped in act"
+              ) &&
+              !args[0].includes(
+                "Warning: RelayResponseNormalizer: Payload did not contain a value for field `id: id`. Check that you are parsing with the same query that was used to fetch the payload."
+              ) &&
+              !/Warning: Received.+?for a non-boolean attribute/.test(
+                args[0]
+              ) &&
+              // FIXME: Ignore unknown props warnings until we can filter out styled-system props
+              !args[0].includes("Warning: React does not recognize the") &&
+              // FIXME: Ignore this warning which stems from using refs on RouterLinks
+              !args[0].includes(
+                "Warning: Function components cannot be given refs."
+              ) &&
+              !args[0].includes(
+                "Warning: componentWillReceiveProps has been renamed"
+              ) &&
+              !args[0].includes(
+                "Warning: componentWillMount has been renamed"
+              ) &&
+              !args[0].includes(
+                "Warning: unstable_flushDiscreteUpdates: Cannot flush updates when React is already rendering"
+              ) &&
+              !args[0].includes(
+                // Styled-components 5 warning
+                "You may see this warning because you've called styled inside another component"
+              )
+            ) {
+              reject(logToError(type, args, handler))
+            }
           }
-        }
 
-        jest.spyOn(console, type).mockImplementation(handler)
-      }
-    })
-    done() // it is important to call this here or every test will timeout
+          jest.spyOn(console, type).mockImplementation(handler)
+        }
+      })
+      resolve(null)
+    }) // it is important to call this here or every test will timeout
   })
 }

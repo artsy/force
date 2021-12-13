@@ -14,22 +14,6 @@ Tell us when we can remove this hack.
 
 > 👀 When adding a new item, see comment on top of file for template.
 
-## Jest's JSDom pinned to v13
-
-#### Explanation/Context:
-
-As part of the [effort to bring React Testing Library into Force](https://github.com/artsy/force/pull/7629),
-we needed a newer version of Jest/JSDom in order for Testing Library assertions
-to work.
-
-Getting to Jest 25+ was the goal, but introduced a lot of breakage.
-
-The smaller lift of getting Jest's version of JSDom to v13 was the interim solution.
-
-#### When can we remove this:
-
-Once we get to Jest 25+
-
 ## patches/relay-mock-network-layer+2.0.0.patch
 
 #### Explanation/Context:

@@ -196,7 +196,7 @@ describe("Profile page", function () {
   })
 
   return describe("#fetchArtworksAndRender", () =>
-    xit("renders the partner's works based on parameters", function () {
+    it.skip("renders the partner's works based on parameters", function () {
       let renderStub
       routes.fetchArtworksAndRender(
         {

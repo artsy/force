@@ -1,5 +1,6 @@
 import { ReactWrapper, RenderUntilPredicate, mount } from "enzyme"
-import * as React from "react";
+import * as React from "react"
+import { setImmediate } from "timers"
 
 function renderUntil<
   P = {},

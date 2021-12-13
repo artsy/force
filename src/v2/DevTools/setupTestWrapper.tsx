@@ -1,8 +1,12 @@
 import * as React from "react"
 import { mount } from "enzyme"
-import { render } from "@testing-library/react"
+import { render, RenderResult } from "@testing-library/react"
 import { QueryRenderer } from "react-relay"
-import { MockPayloadGenerator, createMockEnvironment } from "relay-test-utils"
+import {
+  MockPayloadGenerator,
+  createMockEnvironment,
+  RelayMockEnvironment,
+} from "relay-test-utils"
 import { GraphQLTaggedNode, OperationType } from "relay-runtime"
 import { MockResolvers } from "relay-test-utils/lib/RelayMockPayloadGenerator"
 
@@ -68,14 +72,22 @@ type SetupTestWrapper<T extends OperationType> = {
  * @see https://relay.dev/docs/en/testing-relay-components
  * @see https://testing-library.com/docs/react-testing-library/
  */
+
+type RTLRenderResult = RenderResult<
+  typeof import("@testing-library/dom/types/queries"),
+  HTMLElement
+>
+type RenderWithRelay = RTLRenderResult & { env: RelayMockEnvironment }
 export const setupTestWrapperTL = <T extends OperationType>({
   Component,
   query,
   variables = {},
 }: SetupTestWrapper<T>) => {
-  const renderWithRelay = (mockResolvers: MockResolvers = {}) => {
+  const renderWithRelay = (
+    mockResolvers: MockResolvers = {},
+    manualEnvControl?: boolean
+  ): RenderWithRelay => {
     const env = createMockEnvironment()
-
     const TestRenderer = () => (
       <QueryRenderer<T>
         environment={env}
@@ -94,11 +106,13 @@ export const setupTestWrapperTL = <T extends OperationType>({
 
     const view = render(<TestRenderer />)
 
-    env.mock.resolveMostRecentOperation(operation => {
-      return MockPayloadGenerator.generate(operation, mockResolvers)
-    })
+    if (!manualEnvControl) {
+      env.mock.resolveMostRecentOperation(operation => {
+        return MockPayloadGenerator.generate(operation, mockResolvers)
+      })
+    }
 
-    return view
+    return { ...view, env }
   }
 
   return { renderWithRelay }

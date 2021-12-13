@@ -2,7 +2,7 @@ import {
   SystemContextProvider,
   useSystemContext,
 } from "v2/System/SystemContext"
-import { mount } from "enzyme"
+import { render, screen } from "@testing-library/react"
 import { buildAppRoutes } from "../buildAppRoutes"
 import { buildClientApp } from "../buildClientApp"
 
@@ -18,6 +18,10 @@ jest.mock("v2/System/Analytics/useTracking", () => ({
   useTracking: () => ({
     trackEvent: x => x,
   }),
+}))
+
+jest.mock("v2/Apps/Components/AppShell", () => ({
+  AppShell: () => "AppShell",
 }))
 
 describe("buildAppRoutes", () => {
@@ -80,11 +84,10 @@ describe("buildAppRoutes", () => {
     ])
   })
 
-  it("sets a router in the global context on mount", async done => {
+  it("sets a router in the global context on mount", async () => {
     const App = () => {
       const { router } = useSystemContext()
       expect(router).toBeDefined()
-      done()
       return null
     }
 
@@ -105,7 +108,7 @@ describe("buildAppRoutes", () => {
       ]),
     })
 
-    mount(
+    render(
       <SystemContextProvider>
         <ClientApp />
       </SystemContextProvider>
@@ -130,11 +133,11 @@ describe("buildAppRoutes", () => {
       ]),
     })
 
-    const wrapper = mount(
+    render(
       <SystemContextProvider>
         <ClientApp />
       </SystemContextProvider>
     )
-    expect(wrapper.find("AppShell").length).toEqual(1)
+    expect(screen.getByText("AppShell")).toBeInTheDocument()
   })
 })

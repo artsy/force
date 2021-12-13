@@ -194,6 +194,13 @@ describe("PaymentPickerFragmentContainer", () => {
     _mockStripe().createToken.mockImplementation(() =>
       Promise.resolve({ error: "bad error" })
     )
+    env.clearErrors()
+    eigenEnv.clearErrors()
+  })
+
+  afterEach(() => {
+    env.clearMocksAndErrors()
+    eigenEnv.clearMocksAndErrors()
   })
 
   describe("with no existing cards", () => {

@@ -22,7 +22,7 @@ describe("FeaturedLink", () => {
     testContext.featuredLink.mdToHtml.should.be.an.instanceof(Function)
   })
 
-  xdescribe("#fetchItems", function () {})
+  describe.skip("#fetchItems", function () {})
 
   describe("#layoutStyle", () => {
     it("returns a descriptor for the required layout", () => {

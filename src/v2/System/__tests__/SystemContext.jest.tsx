@@ -1,7 +1,8 @@
 import { SystemContextProps } from "v2/System"
 import * as Artsy from "v2/System"
 import { render } from "enzyme"
-import * as React from "react";
+import * as React from "react"
+import { setImmediate } from "timers"
 
 jest.mock("v2/System/Relay/createRelaySSREnvironment", () => ({
   createRelaySSREnvironment: config => ({
