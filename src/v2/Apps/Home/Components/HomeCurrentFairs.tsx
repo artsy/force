@@ -31,7 +31,7 @@ interface HomeCurrentFairsProps {
 const HomeCurrentFairs: React.FC<HomeCurrentFairsProps> = ({ viewer }) => {
   const { trackEvent } = useTracking()
 
-  if (viewer.fairs?.length === 0) {
+  if (!viewer.fairs?.length) {
     return null
   }
 

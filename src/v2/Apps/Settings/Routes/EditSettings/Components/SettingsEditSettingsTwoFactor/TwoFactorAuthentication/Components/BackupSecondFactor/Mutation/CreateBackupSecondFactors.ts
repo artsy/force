@@ -1,3 +1,5 @@
+// TODO: Delete this file once settings2 is launched
+
 import { Environment, commitMutation, graphql } from "relay-runtime"
 
 import {

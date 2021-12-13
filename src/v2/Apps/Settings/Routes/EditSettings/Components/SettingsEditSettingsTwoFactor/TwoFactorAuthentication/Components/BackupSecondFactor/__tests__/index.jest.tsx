@@ -1,7 +1,7 @@
 import { Button } from "@artsy/palette"
 import { mount } from "enzyme"
 
-import { BackupSecondFactor } from "../"
+import { BackupSecondFactor } from ".."
 import {
   AppEnabledWithBackupCodesQueryResponse,
   DisabledQueryResponse,

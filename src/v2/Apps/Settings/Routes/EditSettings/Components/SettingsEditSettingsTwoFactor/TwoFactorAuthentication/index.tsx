@@ -1,14 +1,16 @@
-import { Box, Flex, Sans, Serif } from "@artsy/palette"
-import * as React from "react";
+// TODO: Delete this file once settings2 is launched
+
+import { Box, Flex, Sans, Serif, Spacer } from "@artsy/palette"
+import * as React from "react"
 import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
 
 import { SystemContextProps, useSystemContext } from "v2/System"
 import { renderWithLoadProgress } from "v2/System/Relay/renderWithLoadProgress"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 
-import { AppSecondFactorFragmentContainer as AppSecondFactor } from "./Components/AppSecondFactor"
+import { AppSecondFactorRefetchContainer as AppSecondFactor } from "./Components/AppSecondFactor"
 import { BackupSecondFactorFragmentContainer as BackupSecondFactor } from "./Components/BackupSecondFactor"
-import { SmsSecondFactorFragmentContainer as SmsSecondFactor } from "./Components/SmsSecondFactor"
+import { SmsSecondFactorRefetchContainer as SmsSecondFactor } from "./Components/SmsSecondFactor"
 
 import { TwoFactorAuthentication_me } from "v2/__generated__/TwoFactorAuthentication_me.graphql"
 import { TwoFactorAuthenticationQuery } from "v2/__generated__/TwoFactorAuthenticationQuery.graphql"
@@ -19,7 +21,7 @@ export interface TwoFactorAuthenticationProps extends SystemContextProps {
 }
 
 const TwoFactorAuthentication: React.FC<TwoFactorAuthenticationProps> = props => {
-  const { me, relay } = props
+  const { me } = props
 
   return (
     <Box>
@@ -36,12 +38,19 @@ const TwoFactorAuthentication: React.FC<TwoFactorAuthenticationProps> = props =>
           </Sans>
         )}
       </Flex>
+
       <Serif mt={1} size="3t" maxWidth="515px" color="black60">
         Set up an additional layer of security by requiring a security code in
         addition to your password to log in to your Artsy account.
       </Serif>
-      <AppSecondFactor mt={3} me={me} relayRefetch={relay} />
-      <SmsSecondFactor mt={2} me={me} relayRefetch={relay} />
+
+      <Spacer mt={2} />
+
+      <AppSecondFactor me={me} />
+
+      <Spacer mt={2} />
+
+      <SmsSecondFactor me={me} />
       {me.hasSecondFactorEnabled && <BackupSecondFactor mt={2} me={me} />}
     </Box>
   )

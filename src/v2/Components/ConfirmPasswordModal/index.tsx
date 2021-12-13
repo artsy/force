@@ -92,14 +92,19 @@ export const ConfirmPasswordModal: FC<ConfirmPasswordModalProps> = ({
             )}
 
             <Flex mt={2}>
-              <Button width="100%" variant="noOutline" onClick={onCancel}>
+              <Button
+                flex={1}
+                variant="noOutline"
+                type="button"
+                onClick={onCancel}
+              >
                 Cancel
               </Button>
 
               <Spacer ml={1} />
 
               <Button
-                width="100%"
+                flex={1}
                 type="submit"
                 loading={isSubmitting}
                 disabled={!values.password}

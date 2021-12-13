@@ -57,7 +57,7 @@ describe("TwoFactorAuthentication", () => {
     it("can display Second Factor", () => {
       renderWithRelay()
 
-      expect(screen.getByText("Use text messages")).toBeInTheDocument()
+      expect(screen.getByText("Use Text Messages")).toBeInTheDocument()
     })
 
     // eslint-disable-next-line jest/no-disabled-tests

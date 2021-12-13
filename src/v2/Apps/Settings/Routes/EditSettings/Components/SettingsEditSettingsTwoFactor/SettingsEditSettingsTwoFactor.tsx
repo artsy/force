@@ -2,8 +2,8 @@ import { Join, Spacer, Sup, Text } from "@artsy/palette"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { SettingsEditSettingsTwoFactor_me } from "v2/__generated__/SettingsEditSettingsTwoFactor_me.graphql"
-import { SmsSecondFactorFragmentContainer } from "v2/Components/UserSettings/TwoFactorAuthentication/Components/SmsSecondFactor"
-import { AppSecondFactorFragmentContainer } from "v2/Components/UserSettings/TwoFactorAuthentication/Components/AppSecondFactor"
+import { SmsSecondFactorRefetchContainer } from "v2/Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsTwoFactor/TwoFactorAuthentication/Components/SmsSecondFactor"
+import { AppSecondFactorRefetchContainer } from "v2/Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsTwoFactor/TwoFactorAuthentication/Components/AppSecondFactor"
 import { SettingsEditSettingsTwoFactorBackupCodesFragmentContainer } from "./SettingsEditSettingsTwoFactorBackupCodes"
 
 export interface SettingsEditSettingsTwoFactorProps {
@@ -21,16 +21,14 @@ export const SettingsEditSettingsTwoFactor: React.FC<SettingsEditSettingsTwoFact
       </Text>
 
       <Join separator={<Spacer mt={2} />}>
-        <Text variant="sm">
+        <Text variant="sm" color="black60">
           Set up an additional layer of security by requiring a security code in
           addition to your password to log in to your Artsy account.
         </Text>
 
-        {/* TODO: */}
-        <AppSecondFactorFragmentContainer me={me} />
+        <AppSecondFactorRefetchContainer me={me} />
 
-        {/* TODO: */}
-        <SmsSecondFactorFragmentContainer me={me} />
+        <SmsSecondFactorRefetchContainer me={me} />
 
         {me.hasSecondFactorEnabled && (
           <SettingsEditSettingsTwoFactorBackupCodesFragmentContainer me={me} />

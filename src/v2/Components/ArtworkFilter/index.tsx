@@ -349,6 +349,7 @@ export const BaseArtworkFilter: React.FC<
                   <Button
                     size="small"
                     onClick={() => toggleMobileActionSheet(true)}
+                    mr={2}
                   >
                     <Flex justifyContent="space-between" alignItems="center">
                       <FilterIcon fill="white100" />

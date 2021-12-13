@@ -4,7 +4,7 @@ import { createTestEnv } from "v2/DevTools/createTestEnv"
 
 import { TwoFactorAuthenticationQueryResponse } from "v2/__generated__/TwoFactorAuthenticationQuery.graphql"
 import { createMockFetchQuery } from "v2/DevTools"
-import { TwoFactorAuthenticationRefetchContainer } from "../"
+import { TwoFactorAuthenticationRefetchContainer } from ".."
 import {
   AppEnabledWithBackupCodesQueryResponse,
   AppEnabledWithoutBackupCodesQueryResponse,
@@ -75,6 +75,7 @@ describe("TwoFactorAuthentication", () => {
       expect(page.appSetupButton.exists).toBeTruthy()
     })
 
+    // eslint-disable-next-line jest/expect-expect
     it("creates an enabled App Authenticator 2FA factor", async () => {
       const env = setupTestEnv()
       const page = await env.buildPage()
@@ -95,6 +96,7 @@ describe("TwoFactorAuthentication", () => {
       expect(page.smsSetupButton.exists).toBeTruthy()
     })
 
+    // eslint-disable-next-line jest/expect-expect
     it("creates an enabled SMS 2FA factor", async () => {
       const env = setupTestEnv()
       const page = await env.buildPage()

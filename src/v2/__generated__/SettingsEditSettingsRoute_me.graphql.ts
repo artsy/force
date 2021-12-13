@@ -4,7 +4,7 @@
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type SettingsEditSettingsRoute_me = {
-    readonly " $fragmentRefs": FragmentRefs<"SettingsEditSettingsInformation_me" | "SettingsEditSettingsTwoFactor_me">;
+    readonly " $fragmentRefs": FragmentRefs<"SettingsEditSettingsInformation_me" | "SettingsEditSettingsTwoFactor_me" | "SettingsEditSettingsEmailPreferences_me">;
     readonly " $refType": "SettingsEditSettingsRoute_me";
 };
 export type SettingsEditSettingsRoute_me$data = SettingsEditSettingsRoute_me;
@@ -30,9 +30,14 @@ const node: ReaderFragment = {
       "args": null,
       "kind": "FragmentSpread",
       "name": "SettingsEditSettingsTwoFactor_me"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "SettingsEditSettingsEmailPreferences_me"
     }
   ],
   "type": "Me"
 };
-(node as any).hash = '619118a3bd4e8c25231ac8967f402331';
+(node as any).hash = '07b2dfa7211803df622fb745662ff6f4';
 export default node;
