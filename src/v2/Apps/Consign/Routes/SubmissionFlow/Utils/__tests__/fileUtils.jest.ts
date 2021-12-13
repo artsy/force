@@ -40,7 +40,13 @@ describe("fileUtils", () => {
     })
 
     it("use convectionKey to get gemini credentials", async () => {
-      await uploadPhoto(relayEnvironment, photo, updateProgress)
+      await uploadPhoto(
+        relayEnvironment,
+        photo,
+        updateProgress,
+        "private",
+        "123"
+      )
 
       expect(getConvectionGeminiKey).toHaveBeenCalled()
       expect(getGeminiCredentialsForEnvironment).toHaveBeenCalled()
@@ -59,7 +65,13 @@ describe("fileUtils", () => {
         assetCredentials
       )
 
-      await uploadPhoto(relayEnvironment, photo, updateProgress)
+      await uploadPhoto(
+        relayEnvironment,
+        photo,
+        updateProgress,
+        "private",
+        "123"
+      )
 
       expect(getGeminiCredentialsForEnvironment).toHaveBeenCalled()
       expect(uploadFileToS3).toHaveBeenCalled()
@@ -74,7 +86,13 @@ describe("fileUtils", () => {
     it("prevents uploading if the image was removed", async () => {
       photo.removed = true
 
-      await uploadPhoto(relayEnvironment, photo, updateProgress)
+      await uploadPhoto(
+        relayEnvironment,
+        photo,
+        updateProgress,
+        "private",
+        "123"
+      )
 
       expect(uploadFileToS3).not.toHaveBeenCalled()
     })
@@ -94,7 +112,9 @@ describe("fileUtils", () => {
       const uploadPhotoResult = await uploadPhoto(
         relayEnvironment,
         photo,
-        updateProgress
+        updateProgress,
+        "private",
+        "123"
       )
 
       expect(uploadPhotoResult).toBe(undefined)
