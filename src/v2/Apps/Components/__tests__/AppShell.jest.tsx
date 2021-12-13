@@ -59,7 +59,10 @@ describe("AppShell", () => {
             {
               path: "/foo",
               Component: () => <div />,
-              onClientSideRender,
+              onClientSideRender: ({ match }) => {
+                expect(match.location.pathname).toBe("/foo")
+                onClientSideRender()
+              },
             },
           ],
         },

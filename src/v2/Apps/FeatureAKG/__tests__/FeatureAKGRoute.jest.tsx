@@ -10,6 +10,7 @@ jest.unmock("react-relay")
 jest.mock("v2/System/Analytics/useTracking")
 
 describe("FeatureAKG", () => {
+  jest.setTimeout(20000)
   const trackEvent = jest.fn()
   const defaultVariables = {
     articleIDs: ["article1", "article2", "article3", "article4"],
@@ -79,7 +80,6 @@ describe("FeatureAKG", () => {
         trackEvent,
       }
     })
-    jest.setTimeout(10000)
   })
 
   afterEach(() => {
