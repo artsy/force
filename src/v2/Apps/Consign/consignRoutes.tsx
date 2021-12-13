@@ -132,16 +132,6 @@ export const consignRoutes: AppRouteConfig[] = [
         query: submissionQuery,
       },
       {
-        path: ":id/upload-photos",
-        hideNav: true,
-        hideFooter: true,
-        getComponent: () => UploadPhotosFragmentContainer,
-        onClientSideRender: () => {
-          UploadPhotosFragmentContainer.preload()
-        },
-        query: submissionQuery,
-      },
-      {
         path: ":id/contact-information",
         hideNav: true,
         hideFooter: true,
@@ -161,6 +151,16 @@ export const consignRoutes: AppRouteConfig[] = [
         },
       },
     ],
+  },
+  {
+    path: "/consign/submission/:id/upload-photos",
+    hideNav: true,
+    hideFooter: true,
+    getComponent: () => UploadPhotosFragmentContainer,
+    onClientSideRender: () => {
+      UploadPhotosFragmentContainer.preload()
+    },
+    query: submissionQuery,
   },
   {
     path: "/consign/offer/:offerID",
