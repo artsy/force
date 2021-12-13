@@ -78,26 +78,6 @@ class TestEnv<MutationNames extends string, TestPage extends RootTestPage> {
       {} as any
     )
 
-    // beforeEach(() => {
-    //   this.errors = []
-    // })
-
-    // afterEach(() => {
-    //   const _errors = this.errors
-    //   this.errors = []
-    //   // @ts-ignore
-    //   this.headTags = []
-    //   this.mutations.mockFetch.mockClear()
-    //   this.routes.mockOnTransition.mockClear()
-    //   this.routes.mockPushRoute.mockClear()
-    //   Object.keys(mutationResolvers).forEach(key =>
-    //     mutationResolvers[key].mockClear()
-    //   )
-    //   if (_errors.length !== 0) {
-    //     throw new Error(_errors as any)
-    //   }
-    // })
-
     this.mockQuery = jest.fn()
     this.mutations = new Mutations(mutationResolvers)
   }

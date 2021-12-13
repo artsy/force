@@ -5,7 +5,10 @@ declare const window: any
 describe("conditionallyLoadAnalytics", () => {
   describe("segment already initialized", () => {
     beforeEach(() => {
-      window.location.reload = jest.fn()
+      Object.defineProperty(window, "location", {
+        writable: true,
+        value: { reload: jest.fn() },
+      })
       window.analytics = {
         initialized: true,
         load: jest.fn(),
