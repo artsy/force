@@ -297,14 +297,9 @@ export const ArtworkDetailsForm: React.FC = () => {
       <GridColumns mt={[1, 2]}>
         <Column span={6}>
           <Flex justifyContent="space-between">
-            <Flex>
-              <Text variant="xs" mb={0.5} mr={0.5} textTransform="uppercase">
-                Provenance
-              </Text>
-              <Text variant="xs" color="black60">
-                (Optional)
-              </Text>
-            </Flex>
+            <Text variant="xs" mb={0.5} textTransform="uppercase">
+              Provenance
+            </Text>
 
             <Clickable
               onClick={() => setIsProvenanceModalOpen(true)}
