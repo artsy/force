@@ -1,5 +1,5 @@
 import { fabricate } from "@artsy/antigravity"
-const PartnerShow = require("../../models/partner_show.coffee")
+const { PartnerShow } = require("../../models/partner_show")
 
 describe("PartnerShowEvent", () => {
   let testContext

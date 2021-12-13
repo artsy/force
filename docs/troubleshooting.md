@@ -2,8 +2,8 @@
 
 #### Related Links:
 
-- [Force environment configuration](https://github.com/artsy/force/blob/master/docs/env_configuration.md)
-- [Document hacks in Force](https://github.com/artsy/force/blob/master/HACKS.md)
+- [Force environment configuration](https://github.com/artsy/force/blob/main/docs/env_configuration.md)
+- [Document hacks in Force](https://github.com/artsy/force/blob/main/HACKS.md)
 -
 
 Force is a large and complex project; in all likelihood, you'll encounter bugs

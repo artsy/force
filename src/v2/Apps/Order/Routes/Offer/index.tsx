@@ -11,7 +11,6 @@ import { OfferMutation } from "v2/__generated__/OfferMutation.graphql"
 import { ArtworkSummaryItemFragmentContainer as ArtworkSummaryItem } from "v2/Apps/Order/Components/ArtworkSummaryItem"
 import { OfferInput } from "v2/Apps/Order/Components/OfferInput"
 import { OfferNote } from "v2/Apps/Order/Components/OfferNote"
-import { RevealButton } from "v2/Apps/Order/Components/RevealButton"
 import { TransactionDetailsSummaryItemFragmentContainer as TransactionDetailsSummaryItem } from "v2/Apps/Order/Components/TransactionDetailsSummaryItem"
 import { TwoColumnLayout } from "v2/Apps/Order/Components/TwoColumnLayout"
 import { Dialog, injectDialog } from "v2/Apps/Order/Dialogs"
@@ -22,7 +21,7 @@ import {
 import { track } from "v2/System/Analytics"
 import * as Schema from "v2/System/Analytics"
 import { Router } from "found"
-import { Component } from "react";
+import { Component } from "react"
 import { RelayProp, createFragmentContainer, graphql } from "react-relay"
 import createLogger from "v2/Utils/logger"
 import { Media } from "v2/Utils/Responsive"
@@ -30,6 +29,8 @@ import { OrderStepper, offerFlowSteps } from "../../Components/OrderStepper"
 import { BuyerGuarantee } from "../../Components/BuyerGuarantee"
 import { getOfferItemFromOrder } from "v2/Apps/Order/Utils/offerItemExtractor"
 import { ContextModule, OwnerType } from "@artsy/cohesion"
+import { isNil } from "lodash"
+import { appendCurrencySymbol } from "v2/Apps/Order/Utils/currencyUtils"
 
 export interface OfferProps {
   order: Offer_order
@@ -168,6 +169,9 @@ export class OfferRoute extends Component<OfferProps, OfferState> {
     }
 
     const listPriceCents = this.props.order.totalListPriceCents
+    const artworkPrice = this?.props?.order?.lineItems?.edges?.[0]?.node
+      ?.artwork?.price
+    const isPriceHidden = isNil(artworkPrice) || artworkPrice === ""
     const isRangeOffer = getOfferItemFromOrder(this.props.order.lineItems)
       ?.displayPriceRange
 
@@ -183,7 +187,8 @@ export class OfferRoute extends Component<OfferProps, OfferState> {
     if (
       !highSpeedBumpEncountered &&
       this.state.offerValue * 100 > listPriceCents &&
-      !isRangeOffer
+      !isRangeOffer &&
+      !isPriceHidden
     ) {
       this.showHighSpeedbump()
       return
@@ -241,20 +246,19 @@ export class OfferRoute extends Component<OfferProps, OfferState> {
               </Flex>
               {Boolean(offerItem?.price) && (
                 <Text my={1} variant="xs" color="black60">
-                  List price: {offerItem?.price}
+                  List price:{" "}
+                  {appendCurrencySymbol(offerItem?.price, order.currencyCode)}
                 </Text>
               )}
               {!order.isInquiryOrder && (
                 <>
                   <Spacer mb={2} />
-                  <RevealButton align="left" buttonLabel="Add note to seller">
-                    <OfferNote
-                      onChange={offerNoteValue =>
-                        this.setState({ offerNoteValue })
-                      }
-                      artworkId={artworkId!}
-                    />
-                  </RevealButton>
+                  <OfferNote
+                    onChange={offerNoteValue =>
+                      this.setState({ offerNoteValue })
+                    }
+                    artworkId={artworkId!}
+                  />
                 </>
               )}
               <Spacer mb={[2, 4]} />
@@ -335,6 +339,7 @@ export const OfferFragmentContainer = createFragmentContainer(
             node {
               artwork {
                 slug
+                price
               }
               artworkOrEditionSet {
                 __typename

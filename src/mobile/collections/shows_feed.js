@@ -10,7 +10,7 @@ let _ShowsFeed
 const _ = require("underscore")
 const Backbone = require("backbone")
 const sd = require("sharify").data
-const Show = require("../models/show")
+const { Show } = require("../models/show")
 
 export default _ShowsFeed = (function () {
   _ShowsFeed = class ShowsFeed extends Backbone.Collection {

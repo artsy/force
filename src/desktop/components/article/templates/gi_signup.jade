@@ -4,6 +4,6 @@ script(src='//app-ab14.marketo.com/js/forms2/js/forms2.min.js')
     .article-subscribe-mainheader Subscribe to the Gallery Insights newsletter
     .article-subscribe-subheader The latest market research, art buying trends & forecasts, and tools to help you excel.
     script.
-      MktoForms2.loadForm("//app-ab14.marketo.com", "609-FDY-207", 1230);
+      typeof MktoForms2 !== "undefined" && MktoForms2.loadForm("//app-ab14.marketo.com", "609-FDY-207", 1230);
     .articles-insights-marketo-form
       form#mktoForm_1230

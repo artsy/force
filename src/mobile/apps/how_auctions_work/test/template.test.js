@@ -4,7 +4,7 @@
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/master/docs/suggestions.md
  */
 const fixture = require("../fixtures/data.json")
-const markdown = require("../../../components/util/markdown.coffee")
+import { markdown } from "../../../components/util/markdown"
 const bidIncrements = require("../bid_increments.coffee")
 const benv = require("benv")
 const { resolve } = require("path")

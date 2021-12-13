@@ -7,7 +7,7 @@ import deepMerge from "deepmerge"
 import { createTestEnv } from "v2/DevTools/createTestEnv"
 import { Location, Match } from "found"
 import { graphql } from "react-relay"
-import { LargeSelect } from "@artsy/palette"
+import { Select } from "@artsy/palette"
 
 import { auctionRoutes_ConfirmBidQueryResponse } from "v2/__generated__/auctionRoutes_ConfirmBidQuery.graphql"
 import { ConfirmBidQueryResponseFixture } from "v2/Apps/Auction/__fixtures__/routes_ConfirmBidQuery"
@@ -383,7 +383,7 @@ describe("Routes/ConfirmBid", () => {
       await page.submitForm()
 
       expect(window.location.assign).not.toHaveBeenCalled()
-      expect(page.find(LargeSelect).text()).toContain(
+      expect(page.find(Select).text()).toContain(
         "Your bid wasn't high enough. Please select a higher bid."
       )
     })

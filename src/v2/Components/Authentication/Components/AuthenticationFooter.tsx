@@ -1,5 +1,5 @@
 import { Box, BoxProps, Clickable, Text, Join, Spacer } from "@artsy/palette"
-import * as React from "react";
+import * as React from "react"
 import styled from "styled-components"
 import { ModalType } from "../Types"
 

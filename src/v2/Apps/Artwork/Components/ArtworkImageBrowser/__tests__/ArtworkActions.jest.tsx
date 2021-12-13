@@ -33,6 +33,9 @@ jest.mock("v2/Utils/user", () => ({
   userIsAdmin: jest.fn(),
   userIsTeam: jest.fn(),
 }))
+jest.mock("v2/Components/NavBar/NavBar", () => ({
+  NavBar: () => null,
+}))
 
 const getWrapperWithBreakpoint = (breakpoint: Breakpoint) =>
   setupTestWrapper({

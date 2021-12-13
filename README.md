@@ -12,14 +12,14 @@ Want to know more about Artsy's tech? Read the [Artsy Engineering Blog](http://a
 - **Production:** [https://www.artsy.net](https://www.artsy.net) | [k8s](https://kubernetes.prd.artsy.systems/#/search?q=force&namespace=default)
 - **Staging:** [https://staging.artsy.net](https://staging.artsy.net) | [k8s](https://kubernetes.stg.artsy.systems/#/search?q=force&namespace=default)
 - **GitHub:** [https://github.com/artsy/force](https://github.com/artsy/force)
-- **CI/Deploys:** [CircleCi](https://circleci.com/gh/artsy/force); merged PRs to `artsy/force#master` are automatically deployed to staging; PRs from `staging` to `release` are automatically deployed to production. [Start a deploy...](https://github.com/artsy/force/compare/release...staging?expand=1)
+- **CI/Deploys:** [CircleCi](https://circleci.com/gh/artsy/force); merged PRs to `artsy/force#main` are automatically deployed to staging; PRs from `staging` to `release` are automatically deployed to production. [Start a deploy...](https://github.com/artsy/force/compare/release...staging?expand=1)
 - **BrowserStack:** For testing applications cross-browser use [BrowserStack](https://browserstack.com). Credentials are located in 1Password.
 - **Storybook:** [https://force-storybook.artsy.net](https://force-storybook.artsy.net)
 - **Hacks:** [View code hacks here](./HACKS.md)
 - **Point People:** [@damassi](https://github.com/damassi), [@mzikherman](https://github.com/mzikherman)
 
 [![Build Status](https://circleci.com/gh/artsy/force.svg?style=svg)](https://circleci.com/gh/artsy/force)
-[![codecov](https://codecov.io/gh/artsy/force/branch/master/graph/badge.svg)](https://codecov.io/gh/artsy/force)
+[![codecov](https://codecov.io/gh/artsy/force/branch/main/graph/badge.svg)](https://codecov.io/gh/artsy/force)
 
 ## History
 
@@ -77,8 +77,8 @@ You can learn more about this work from [our blog][footer_blog] and by following
 our [job postings][footer_jobs]!
 
 [footer_website]: https://www.artsy.net/
-[footer_principles]: https://github.com/artsy/README/blob/master/culture/engineering-principles.md
-[footer_open]: https://github.com/artsy/README/blob/master/culture/engineering-principles.md#open-source-by-default
+[footer_principles]: https://github.com/artsy/README/blob/main/culture/engineering-principles.md
+[footer_open]: https://github.com/artsy/README/blob/main/culture/engineering-principles.md#open-source-by-default
 [footer_blog]: https://artsy.github.io/
 [footer_twitter]: https://twitter.com/ArtsyOpenSource
 [footer_api]: https://developers.artsy.net/

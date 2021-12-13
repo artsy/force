@@ -11,7 +11,7 @@ const moment = require("moment")
 const sinon = require("sinon")
 const rewire = require("rewire")
 const ClockView = rewire("../view.coffee")
-const Sale = require("../../../models/sale")
+const { Sale } = require("../../../models/sale")
 const { fabricate } = require("@artsy/antigravity")
 
 describe("ClockView", function () {
@@ -42,7 +42,7 @@ describe("ClockView", function () {
   })
 
   describe("#render", function () {
-    xit("sets renderClock to call in 1 second intervals", function () {
+    it.skip("sets renderClock to call in 1 second intervals", function () {
       const stub = sinon.stub(global, "setInterval")
 
       this.view.render()
@@ -124,7 +124,7 @@ describe("ClockView", function () {
   })
 
   // TODO: components/clock/test/view.coffee
-  return xdescribe("#stateCallback", function () {
+  return describe.skip("#stateCallback", function () {
     it("defaults to reloading the page when the clock state changes", function () {
       const clockView = new ClockView({
         model: new Sale(fabricate("sale"), { clockState: "open" }),

@@ -36,23 +36,23 @@ switch (process.argv[2]) {
     break
   case "check-pr":
     try {
-      execSync("git merge origin/master", { stdio: "inherit" })
+      execSync("git merge origin/main", { stdio: "inherit" })
     } catch (e) {
       console.log(
-        "Branch has conflicts with master, aborting strictness migration check"
+        "Branch has conflicts with main, aborting strictness migration check"
       )
       process.exit(0)
     }
     const current = countIssuesInWholeProject()
-    execSync("git checkout origin/master", { stdio: "inherit" })
-    const onMaster = countIssuesInWholeProject()
-    if (current > onMaster) {
+    execSync("git checkout origin/main", { stdio: "inherit" })
+    const onMain = countIssuesInWholeProject()
+    if (current > onMain) {
       console.error(
         chalk.yellow.bold("WARNING:"),
         `The number of comments with the substring ${chalk.cyan(
           "STRICT_NULL_CHECK"
-        )} has risen from ${chalk.green(onMaster)} in ${chalk.bold(
-          "master"
+        )} has risen from ${chalk.green(onMain)} in ${chalk.bold(
+          "main"
         )} to ${chalk.red(current)} in this PR.`
       )
       console.error(
@@ -63,16 +63,16 @@ switch (process.argv[2]) {
         `It is safe to ignore this failure if you are in a hurry, but please consider refactoring to remove these tags.`
       )
       process.exit(1)
-    } else if (current < onMaster) {
+    } else if (current < onMain) {
       console.log(
         `Yay! Thanks for decreasing the number of strictness migration issues from ${chalk.bold(
-          onMaster
+          onMain
         )} to ${chalk.bold(current)} 🌟`
       )
     } else {
       console.log(
         `There's still ${chalk.bold(
-          onMaster
+          onMain
         )} strictness migration issues to fix.`
       )
     }

@@ -6,8 +6,10 @@ import { FragmentRefs } from "relay-runtime";
 export type PartnersFeaturedCarouselCell_profile = {
     readonly owner: {
         readonly internalID?: string;
+        readonly href?: string | null;
         readonly name?: string | null;
         readonly featuredShow?: {
+            readonly href: string | null;
             readonly name: string | null;
             readonly status: string | null;
             readonly statusUpdate: string | null;
@@ -41,10 +43,17 @@ var v0 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
+  "name": "href",
+  "storageKey": null
+},
+v1 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
   "name": "name",
   "storageKey": null
 },
-v1 = [
+v2 = [
   {
     "kind": "Literal",
     "name": "format",
@@ -76,6 +85,7 @@ return {
               "storageKey": null
             },
             (v0/*: any*/),
+            (v1/*: any*/),
             {
               "alias": null,
               "args": null,
@@ -85,6 +95,7 @@ return {
               "plural": false,
               "selections": [
                 (v0/*: any*/),
+                (v1/*: any*/),
                 {
                   "alias": null,
                   "args": null,
@@ -101,14 +112,14 @@ return {
                 },
                 {
                   "alias": null,
-                  "args": (v1/*: any*/),
+                  "args": (v2/*: any*/),
                   "kind": "ScalarField",
                   "name": "startAt",
                   "storageKey": "startAt(format:\"MMM D\")"
                 },
                 {
                   "alias": null,
-                  "args": (v1/*: any*/),
+                  "args": (v2/*: any*/),
                   "kind": "ScalarField",
                   "name": "endAt",
                   "storageKey": "endAt(format:\"MMM D\")"
@@ -207,5 +218,5 @@ return {
   "type": "Profile"
 };
 })();
-(node as any).hash = 'dc1ac146946834c039db9f1a91de3400';
+(node as any).hash = '96f2438a5e38ecb4f1902def2992ea57';
 export default node;

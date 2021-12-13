@@ -1,4 +1,4 @@
-Tag = require '../../models/tag'
+{ Tag } = require '../../models/tag'
 
 module.exports.index = (req, res, next) ->
   tag = new Tag id: req.params.id

@@ -1,6 +1,5 @@
-import { isEqual } from "lodash"
-import { useEffect, useRef, useState } from "react"
-import * as React from "react"
+import React, { useEffect, useMemo, useRef, useState } from "react"
+import { compact, isEqual } from "lodash"
 import useDeepCompareEffect from "use-deep-compare-effect"
 import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
 import { useSystemContext } from "v2/System"
@@ -44,7 +43,10 @@ import {
   ContextModule,
   ClickedChangePage,
 } from "@artsy/cohesion"
-import { allowedFilters } from "./Utils/allowedFilters"
+import {
+  allowedFilters,
+  getAllowedFiltersForSavedSearchInput,
+} from "./Utils/allowedFilters"
 import { Sticky } from "v2/Components/Sticky"
 import { ScrollRefContext } from "./ArtworkFilters/useScrollContext"
 import { ArtworkSortFilter } from "./ArtworkFilters/ArtworkSortFilter"
@@ -53,7 +55,14 @@ import type RelayModernEnvironment from "relay-runtime/lib/store/RelayModernEnvi
 import { TagArtworkFilter_tag } from "v2/__generated__/TagArtworkFilter_tag.graphql"
 import { Works_partner } from "v2/__generated__/Works_partner.graphql"
 import { CollectionArtworksFilter_collection } from "v2/__generated__/CollectionArtworksFilter_collection.graphql"
-import { FiltersPills } from "./FiltersPills"
+import { FiltersPills } from "./SavedSearch/Components/FiltersPills"
+import { SavedSearchAttributes } from "./SavedSearch/types"
+import { extractPills } from "../SavedSearchAlert/Utils/extractPills"
+import {
+  DefaultFilterPill,
+  useFilterPillsContext,
+} from "./SavedSearch/Utils/FilterPillsContext"
+import { getSelectedFiltersCounts } from "./Utils/getSelectedFIltersCounts"
 
 /**
  * Primary ArtworkFilter which is wrapped with a context and refetch container.
@@ -66,6 +75,7 @@ export const ArtworkFilter: React.FC<
   BoxProps &
     SharedArtworkFilterContextProps & {
       viewer: any // FIXME: We need to support multiple types implementing different viewer interfaces
+      savedSearchProps?: SavedSearchAttributes
     }
 > = ({
   viewer,
@@ -76,6 +86,7 @@ export const ArtworkFilter: React.FC<
   onFilterClick,
   onChange,
   ZeroState,
+  savedSearchProps,
   ...rest
 }) => {
   return (
@@ -88,7 +99,11 @@ export const ArtworkFilter: React.FC<
       onChange={onChange}
       ZeroState={ZeroState}
     >
-      <ArtworkFilterRefetchContainer viewer={viewer} {...rest} />
+      <ArtworkFilterRefetchContainer
+        viewer={viewer}
+        savedSearchProps={savedSearchProps}
+        {...rest}
+      />
     </ArtworkFilterContextProvider>
   )
 }
@@ -134,6 +149,7 @@ export const BaseArtworkFilter: React.FC<
       | CollectionArtworksFilter_collection
     Filters?: JSX.Element
     offset?: number
+    savedSearchProps?: SavedSearchAttributes
     enableCreateAlert?: boolean
   }
 > = ({
@@ -143,6 +159,7 @@ export const BaseArtworkFilter: React.FC<
   relayVariables = {},
   children,
   offset,
+  savedSearchProps,
   enableCreateAlert = false,
   ...rest
 }) => {
@@ -156,12 +173,44 @@ export const BaseArtworkFilter: React.FC<
   const [showMobileActionSheet, toggleMobileActionSheet] = useState(false)
   const filterContext = useArtworkFilterContext()
   const previousFilters = usePrevious(filterContext.filters)
-  const { user } = useSystemContext()
+  const { user, isLoggedIn } = useSystemContext()
+  const { pills = [], setPills } = useFilterPillsContext()
+  const currentlySelectedFilters = getSelectedFiltersCounts(
+    filterContext.currentlySelectedFilters?.()
+  )
+  const appliedFiltersTotalCount = Object.values(
+    currentlySelectedFilters
+  ).reduce((total: number, curr: number) => total + curr, 0)
 
   const { filtered_artworks } = viewer
   const hasFilter = filtered_artworks && filtered_artworks.id
+  const filters = useMemo(
+    () => getAllowedFiltersForSavedSearchInput(filterContext.filters ?? {}),
+    [filterContext.filters]
+  )
 
-  const showCreateAlert = enableCreateAlert && filterContext.hasFilters
+  const defaultPill: DefaultFilterPill | null = useMemo(
+    () =>
+      !!savedSearchProps
+        ? {
+            isDefault: true,
+            name: savedSearchProps.slug,
+            displayName: savedSearchProps.name,
+          }
+        : null,
+    [savedSearchProps]
+  )
+
+  const filterPills = useMemo(
+    () => extractPills(filters, filterContext.aggregations),
+    [filters, filterContext.aggregations]
+  )
+
+  const showCreateAlert = enableCreateAlert && !!pills.length
+
+  useEffect(() => {
+    setPills?.(compact([defaultPill, ...filterPills]))
+  }, [defaultPill, filterPills])
 
   /**
    * Check to see if the mobile action sheet is present and prevent scrolling
@@ -204,6 +253,8 @@ export const BaseArtworkFilter: React.FC<
 
             tracking.trackEvent(pageTrackingParams)
           } else {
+            const onlyAllowedFilters = allowedFilters(filterContext.filters)
+
             tracking.trackEvent(
               commercialFilterParamsChanged({
                 changed: JSON.stringify({
@@ -212,7 +263,7 @@ export const BaseArtworkFilter: React.FC<
                 contextOwnerId: contextPageOwnerId,
                 contextOwnerSlug: contextPageOwnerSlug,
                 contextOwnerType: contextPageOwnerType!,
-                current: JSON.stringify(filterContext.filters),
+                current: JSON.stringify(onlyAllowedFilters),
               })
             )
           }
@@ -303,6 +354,9 @@ export const BaseArtworkFilter: React.FC<
                       <FilterIcon fill="white100" />
                       <Spacer mr={0.5} />
                       Filter
+                      {appliedFiltersTotalCount > 0
+                        ? ` • ${appliedFiltersTotalCount}`
+                        : ""}
                     </Flex>
                   </Button>
 
@@ -314,9 +368,19 @@ export const BaseArtworkFilter: React.FC<
 
           <Spacer mb={2} />
 
+          {showCreateAlert && (
+            <>
+              <FiltersPills
+                savedSearchAttributes={isLoggedIn ? savedSearchProps : null}
+              />
+              <Spacer mt={4} />
+            </>
+          )}
+
+          <Spacer mb={2} />
+
           <ArtworkFilterArtworkGrid
-            // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-            filtered_artworks={viewer.filtered_artworks}
+            filtered_artworks={viewer.filtered_artworks!}
             isLoading={isFetching}
             offset={offset}
             columnCount={[2, 2, 2, 3]}
@@ -360,12 +424,18 @@ export const BaseArtworkFilter: React.FC<
               </Box>
             )}
 
-            {enableCreateAlert && <FiltersPills show={showCreateAlert} />}
+            {showCreateAlert && (
+              <>
+                <FiltersPills
+                  savedSearchAttributes={isLoggedIn ? savedSearchProps : null}
+                />
+                <Spacer mt={4} />
+              </>
+            )}
 
             {children || (
               <ArtworkFilterArtworkGrid
-                // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-                filtered_artworks={viewer.filtered_artworks}
+                filtered_artworks={viewer.filtered_artworks!}
                 isLoading={isFetching}
                 offset={offset}
                 columnCount={[2, 2, 2, 3]}

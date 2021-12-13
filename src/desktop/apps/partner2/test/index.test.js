@@ -9,7 +9,7 @@ const _ = require("underscore")
 const express = require("express")
 const request = require("supertest")
 const CurrentUser = require("../../../models/current_user")
-const Profile = require("../../../models/profile.coffee")
+const { Profile } = require("../../../models/profile")
 
 const newLayoutPartnerProfiles = _.map(
   ["gallery_one", "gallery_two", "gallery_three"],

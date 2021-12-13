@@ -10,7 +10,6 @@ import $ from "jquery"
 import { data as sd } from "sharify"
 
 const routes = {
-  "^/search": require("../apps/search/client.coffee").init,
   "^/contact": require("../apps/contact/client/index.coffee").init,
   "^/how-auctions-work[/]?.*": require("../apps/how_auctions_work/client/index.coffee")
     .init,
@@ -20,9 +19,6 @@ const routes = {
   "^/.*/articles.*": require("../apps/partner_profile/client/articles.coffee"),
   "^/.*/contact.*": require("../apps/partner_profile/client/contact.ts"),
   "^/.*/(collection|shop)[/]?": require("../apps/partner_profile/client/artworks.coffee")
-    .init,
-  "^/auctions": require("../apps/auctions/client/auctions.coffee").init,
-  "^/(galleries|institutions)": require("../apps/galleries_institutions/client/galleries_institutions.coffee")
     .init,
   // Use more specific regex to avoid intercepting '^/.*/browse/artist/.*'
   // Note that the order of iteration over a dictionary is not guaranteed.
@@ -44,7 +40,7 @@ const routes = {
       return require("../apps/profile/client.coffee")
     } else {
       // Last resort
-      return require("../components/layout/bootstrap.coffee")()
+      return require("../components/layout/bootstrap").bootstrap()
     }
   },
 }

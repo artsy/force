@@ -182,12 +182,12 @@ describe("The respond page", () => {
         .onClick({} as React.MouseEvent<HTMLButtonElement, MouseEvent>)
 
       expect(page.offerHistory.text()).toMatch(
-        "You (May 21)$1,200.00Seller (Apr 30)$1,500.00You (Apr 5)$1,100.00"
+        "You (May 21)US$1,200.00Seller (Apr 30)US$1,500.00You (Apr 5)US$1,100.00"
       )
     })
 
     it("shows the transaction summary", () => {
-      expect(page.transactionSummary.text()).toMatch("Seller's offer$14,000")
+      expect(page.transactionSummary.text()).toMatch("Seller's offerUS$14,000")
     })
 
     it("shows the artwork summary", () => {

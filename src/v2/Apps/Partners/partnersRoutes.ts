@@ -20,7 +20,7 @@ const InstitutionsRoute = loadable(
 
 export const partnersRoutes: AppRouteConfig[] = [
   {
-    path: "/galleries2",
+    path: "/galleries",
     getComponent: () => GalleriesRoute,
     onClientSideRender: () => {
       return GalleriesRoute.preload()
@@ -34,7 +34,7 @@ export const partnersRoutes: AppRouteConfig[] = [
     `,
   },
   {
-    path: "/institutions2",
+    path: "/institutions",
     getComponent: () => InstitutionsRoute,
     onClientSideRender: () => {
       return InstitutionsRoute.preload()

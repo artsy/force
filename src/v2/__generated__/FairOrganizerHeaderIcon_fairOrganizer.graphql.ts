@@ -10,10 +10,12 @@ export type FairOrganizerHeaderIcon_fairOrganizer = {
             readonly desktop: {
                 readonly src: string;
                 readonly srcSet: string;
+                readonly size: number;
             } | null;
             readonly mobile: {
                 readonly src: string;
                 readonly srcSet: string;
+                readonly size: number;
             } | null;
         } | null;
     } | null;
@@ -46,6 +48,13 @@ v1 = [
     "args": null,
     "kind": "ScalarField",
     "name": "srcSet",
+    "storageKey": null
+  },
+  {
+    "alias": "size",
+    "args": null,
+    "kind": "ScalarField",
+    "name": "width",
     "storageKey": null
   }
 ];
@@ -132,5 +141,5 @@ return {
   "type": "FairOrganizer"
 };
 })();
-(node as any).hash = '3f35d322ce522a7edd84b6baed43778d';
+(node as any).hash = 'dddc2ee309b49029c8c9d10e9c0d3843';
 export default node;

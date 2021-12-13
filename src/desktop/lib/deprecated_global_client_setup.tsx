@@ -11,7 +11,7 @@ import { configureScope } from "@sentry/browser"
 import { data as sd } from "sharify"
 import * as globalReactModules from "./global_react_modules"
 import { hydrate as hydrateStitch } from "@artsy/stitch/dist/internal/hydrate"
-import { initModalManager } from "desktop/apps/authentication/client/initModalManager"
+import { initAuthModalContainer } from "v2/Utils/initAuthModalContainer"
 import { Components } from "@artsy/stitch/dist/internal/types"
 import { omit } from "lodash"
 import syncAuth from "lib/syncAuth"
@@ -19,6 +19,7 @@ import { mediator } from "lib/mediator"
 import type { LogoutEventOptions } from "lib/mediator"
 import * as templateModules from "./template_modules"
 import { setupSentryClient } from "lib/setupSentryClient"
+import { loadSegment } from "lib/analytics/segmentOneTrustIntegration/segmentOneTrustIntegration"
 
 const FlashMessage = require("../components/flash/index.coffee")
 const listenForInvert = require("../components/eggs/invert/index.coffee")
@@ -36,9 +37,10 @@ export function deprecatedGlobalClientSetup() {
   listenForInvert()
   listenForBounce()
   confirmation.check()
-  initModalManager()
+  initAuthModalContainer()
   mountStitchComponents()
   syncAuth()
+  loadSegment()
   trackAuthenticationEvents()
   mediator.on("auth:logout", logoutEventHandler)
 }

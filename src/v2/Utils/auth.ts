@@ -112,7 +112,7 @@ const recaptcha = () => {
 }
 
 /**
- * To use ensure that `ReCaptchaContainer` is included somewhere on your page
+ * To use ensure that `EnableRecaptcha` is included somewhere on your page
  */
 export const signUp = async (args: {
   name: string
@@ -148,4 +148,25 @@ export const signUp = async (args: {
     const err = await response.json()
     return Promise.reject(new Error(err.error))
   })
+}
+
+export const logout = async () => {
+  const logoutUrl = `${sd.APP_URL}${sd.AP.logoutPath}`
+
+  const response = await fetch(logoutUrl, {
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      "X-Requested-With": "XMLHttpRequest",
+    },
+    method: "DELETE",
+    credentials: "same-origin",
+  })
+
+  if (response.ok) {
+    return await response.json()
+  }
+
+  const err = await response.json()
+  return Promise.reject(new Error(err.error))
 }

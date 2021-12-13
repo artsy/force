@@ -1,7 +1,7 @@
-import { Text } from "@artsy/palette"
 import React from "react"
 import { SettingsPurchasesRoute_me } from "v2/__generated__/SettingsPurchasesRoute_me.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
+import { SettingsPurchasesFragmentContainer } from "./Components/SettingsPurchases"
 
 interface SettingsPurchasesRouteProps {
   me: SettingsPurchasesRoute_me
@@ -10,11 +10,7 @@ interface SettingsPurchasesRouteProps {
 const SettingsPurchasesRoute: React.FC<SettingsPurchasesRouteProps> = ({
   me,
 }) => {
-  return (
-    <>
-      <Text>Purchases Route</Text>
-    </>
-  )
+  return <SettingsPurchasesFragmentContainer me={me} />
 }
 
 export const SettingsPurchasesRouteFragmentContainer = createFragmentContainer(
@@ -22,7 +18,7 @@ export const SettingsPurchasesRouteFragmentContainer = createFragmentContainer(
   {
     me: graphql`
       fragment SettingsPurchasesRoute_me on Me {
-        name
+        ...SettingsPurchases_me
       }
     `,
   }

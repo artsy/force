@@ -10,7 +10,7 @@ let _PartnerLocations
 const _ = require("underscore")
 const _s = require("underscore.string")
 const Backbone = require("backbone")
-const PartnerLocation = require("../models/partner_location")
+const { PartnerLocation } = require("../models/partner_location")
 const { API_URL } = require("sharify").data
 const { Fetch } = require("@artsy/backbone-mixins")
 

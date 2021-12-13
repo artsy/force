@@ -1,6 +1,6 @@
 import _ from "underscore"
 import Backbone from "backbone"
-const Eventable = require("../../../models/mixins/eventable.coffee")
+const { Eventable } = require("../../../models/mixins/eventable")
 
 class Model extends Backbone.Model {
   static initClass() {

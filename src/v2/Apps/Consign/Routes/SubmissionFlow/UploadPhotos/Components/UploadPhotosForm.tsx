@@ -96,11 +96,19 @@ export const UploadPhotosForm: React.FC<UploadPhotosFormProps> = ({
   const onDrop = useCallback((acceptedFiles: File[]) => {
     const photos = acceptedFiles.map(file => normalizePhoto(file))
 
-    setFieldValue("photos", [...values.photos, ...photos])
+    setErrors([])
+    setFieldValue("photos", [
+      ...values.photos.filter(p => !p.errorMessage),
+      ...photos,
+    ])
   }, [])
 
   const onReject = (rejections: FileRejection[]) => {
     setErrors(rejections)
+    setFieldValue(
+      "photos",
+      values.photos.filter(p => !p.errorMessage)
+    )
   }
 
   return (

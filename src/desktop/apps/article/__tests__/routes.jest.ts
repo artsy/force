@@ -5,7 +5,7 @@ import * as fixtures from "@artsy/reaction/dist/Components/Publishing/Fixtures/A
 import * as routes from "../routes"
 import { extend } from "lodash"
 import { GalleryInsightsRedirects } from "../gallery_insights_redirects"
-const Article = require("desktop/models/article.coffee")
+const { Article } = require("desktop/models/article")
 
 jest.mock("desktop/lib/positronql", () => ({
   positronql: jest.fn(),
@@ -14,7 +14,7 @@ jest.mock("desktop/lib/buildServerAppContext", () => ({
   buildServerAppContext: jest.fn(),
 }))
 
-jest.mock("lib/metaphysics2.coffee", () => jest.fn())
+jest.mock("lib/metaphysics2", () => ({ metaphysics2: jest.fn()}))
 
 jest.mock("sharify", () => ({
   data: {
@@ -35,7 +35,7 @@ const positronql = require("desktop/lib/positronql").positronql as jest.Mock
 const buildServerAppContext = require("desktop/lib/buildServerAppContext")
   .buildServerAppContext as jest.Mock
 const stitch = require("@artsy/stitch").stitch as jest.Mock
-const metaphysics = require("lib/metaphysics2.coffee") as jest.Mock
+const { metaphysics2 } = require("lib/metaphysics2") as any
 
 describe("Article Routes", () => {
   let req
@@ -79,7 +79,7 @@ describe("Article Routes", () => {
     buildServerAppContext.mockClear()
     positronql.mockClear()
     stitch.mockClear()
-    metaphysics.mockClear()
+    metaphysics2.mockClear()
   })
 
   describe("#index", () => {
@@ -363,7 +363,7 @@ describe("Article Routes", () => {
         partner_ids: ["123"],
         sale: null,
       })
-      metaphysics.mockReturnValue(
+      metaphysics2.mockReturnValue(
         Promise.resolve({ partner: fixtures.ClassicArticlePartner })
       )
 
@@ -377,7 +377,7 @@ describe("Article Routes", () => {
     it("fetches sale for auction promoted content", done => {
       article = Object.assign({}, fixtures.ClassicArticlePromotedContent)
       delete article.sale
-      metaphysics.mockReturnValue(
+      metaphysics2.mockReturnValue(
         Promise.resolve({ sale: fixtures.ClassicArticleSale })
       )
 

@@ -14,8 +14,6 @@ describe("Header", () => {
 
   it("links out to submission flow", () => {
     const wrapper = getWrapper()
-    //TODO: SWA-77
-    // expect(wrapper.find("RouterLink").props().to).toBe("/consign/submission")
     expect(wrapper.find("RouterLink").props().to).toBe(
       "/consign/submission/artwork-details"
     )

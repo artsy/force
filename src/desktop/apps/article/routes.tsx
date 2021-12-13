@@ -36,9 +36,9 @@ import { buildServerAppContext } from "desktop/lib/buildServerAppContext"
 const { Articles } = require("desktop/collections/articles")
 const markdown = require("desktop/components/util/markdown.coffee")
 const { crop, resize } = require("desktop/components/resizer/index.coffee")
-const Article = require("desktop/models/article.coffee")
+const { Article } = require("desktop/models/article")
 const { stringifyJSONForWeb } = require("desktop/components/util/json.coffee")
-const metaphysics = require("lib/metaphysics2.coffee")
+import { metaphysics2 } from "lib/metaphysics2"
 
 export const index = async (req, res, next) => {
   let articleId = req.params.slug
@@ -84,7 +84,7 @@ export const index = async (req, res, next) => {
 
       if (article.partner_channel_id) {
         // redirect partner channels to partner page
-        const { partner } = await metaphysics({
+        const { partner } = await metaphysics2({
           method: "post",
           query: partnerQuery(article.partner_channel_id),
         }).then(data => data)
@@ -211,7 +211,7 @@ export const classic = async (_req, res, next, article) => {
       query: partnerQuery(article.partner_ids[0]),
     }
 
-    await metaphysics(send).then(data => {
+    await metaphysics2(send).then(data => {
       article.partner = data.partner
     })
   }
@@ -222,7 +222,7 @@ export const classic = async (_req, res, next, article) => {
       query: auctionQuery(article.auction_ids[0]),
     }
 
-    await metaphysics(send).then(data => {
+    await metaphysics2(send).then(data => {
       article.sale = data.sale
     })
   }

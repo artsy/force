@@ -10,6 +10,9 @@ export interface TimePeriodFilterProps {
   expanded?: boolean // set to true to force expansion
 }
 
+export const getTimePeriodToDisplay = period =>
+  isNaN(period) ? period : `${period}s`
+
 export const TimePeriodFilter: FC<TimePeriodFilterProps> = ({ expanded }) => {
   const { aggregations, ...filterContext } = useArtworkFilterContext()
   // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
@@ -74,7 +77,7 @@ export const TimePeriodFilter: FC<TimePeriodFilterProps> = ({ expanded }) => {
                 onSelect={selected => togglePeriodSelection(selected, name)}
                 my={tokens.my}
               >
-                {isNaN(name as any) ? name : `${name}s`}
+                {getTimePeriodToDisplay(name)}
               </Checkbox>
             )
           })}

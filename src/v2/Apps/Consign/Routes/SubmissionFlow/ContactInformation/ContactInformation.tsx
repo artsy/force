@@ -1,8 +1,6 @@
 import { Text, Button } from "@artsy/palette"
+import { SubmissionStepper } from "v2/Apps/Consign/Components/SubmissionStepper"
 import { useSystemContext } from "v2/System"
-import { openAuthModal } from "v2/Utils/openAuthModal"
-import { ModalType } from "v2/Components/Authentication/Types"
-import { ContextModule, Intent } from "@artsy/cohesion"
 import { useRouter } from "v2/System/Router/useRouter"
 import { createConsignSubmission } from "../Utils/createConsignSubmission"
 import { Form, Formik } from "formik"
@@ -15,6 +13,22 @@ import { ContactInformation_me } from "v2/__generated__/ContactInformation_me.gr
 import { useSubmission } from "../Utils/useSubmission"
 import { contactInformationValidationSchema } from "../Utils/validation"
 import { BackLink } from "v2/Components/Links/BackLink"
+import { useErrorModal } from "../Utils/useErrorModal"
+import { data as sd } from "sharify"
+import { recaptcha, RecaptchaAction } from "v2/Utils/recaptcha"
+
+const getContactInformationFormInitialValues = (
+  me: ContactInformation_me
+): ContactInformationFormModel => ({
+  name: me?.name || "",
+  email: me?.email || "",
+  phone: {
+    isValid: !!me?.phoneNumber?.isValid,
+    national: me?.phoneNumber?.national ?? undefined,
+    international: me?.phoneNumber?.international ?? undefined,
+    regionCode: me?.phoneNumber?.regionCode ?? undefined,
+  },
+})
 
 export interface ContactInformationProps {
   me: ContactInformation_me
@@ -29,37 +43,52 @@ export const ContactInformation: React.FC<ContactInformationProps> = ({
       params: { id },
     },
   } = useRouter()
-  const { mediator, isLoggedIn, relayEnvironment, user } = useSystemContext()
+
+  const { openErrorModal } = useErrorModal()
+
+  const { relayEnvironment, user, isLoggedIn } = useSystemContext()
   const {
     submission,
     saveSubmission,
     submissionId,
     removeSubmission,
   } = useSubmission(id)
-  const handleSubmit = async (values: ContactInformationFormModel) => {
+
+  const handleRecaptcha = (action: RecaptchaAction) =>
+    new Promise(resolve => recaptcha(action, resolve))
+
+  const handleSubmit = async ({
+    name,
+    email,
+    phone,
+  }: ContactInformationFormModel) => {
+    if (!(await handleRecaptcha("submission_submit"))) return
+
     if (submission) {
-      submission.contactInformationForm = values
+      const contactInformationForm = {
+        name: name.trim(),
+        email: email.trim(),
+        phone: phone,
+      }
+
+      submission.contactInformationForm = contactInformationForm
 
       saveSubmission(submission)
     }
 
-    if (!isLoggedIn && mediator) {
-      openAuthModal(mediator, {
-        mode: ModalType.signup,
-        intent: Intent.consign,
-        contextModule: ContextModule.consignSubmissionFlow,
-        redirectTo: `/consign/submission/${submissionId}/thank-you`,
-        afterSignUpAction: {
-          action: "save",
-          kind: "submissions",
-          objectId: submissionId,
-        },
-      })
-    } else {
-      if (relayEnvironment && submission) {
-        await createConsignSubmission(relayEnvironment, submission, user)
+    if (relayEnvironment && submission) {
+      try {
+        await createConsignSubmission(
+          relayEnvironment,
+          submission,
+          user?.id,
+          !isLoggedIn ? sd.SESSION_ID : undefined
+        )
         removeSubmission()
         router.push(`/consign/submission/${submissionId}/thank-you`)
+      } catch (error) {
+        console.log(error)
+        openErrorModal()
       }
     }
   }
@@ -74,8 +103,7 @@ export const ContactInformation: React.FC<ContactInformationProps> = ({
         Back
       </BackLink>
 
-      {/* TODO: SWA-78 */}
-      {/* <SubmissionStepper currentStep="Contact Information" /> */}
+      <SubmissionStepper currentStep="Contact Information" />
 
       <Text mt={4} variant="lg">
         Let us know how to reach you
@@ -85,11 +113,7 @@ export const ContactInformation: React.FC<ContactInformationProps> = ({
       </Text>
 
       <Formik<ContactInformationFormModel>
-        initialValues={{
-          name: me?.name || "",
-          email: me?.email || "",
-          phone: me?.phone || "",
-        }}
+        initialValues={getContactInformationFormInitialValues(me)}
         validateOnMount
         onSubmit={handleSubmit}
         validationSchema={contactInformationValidationSchema}
@@ -97,9 +121,10 @@ export const ContactInformation: React.FC<ContactInformationProps> = ({
         {({ isValid, isSubmitting }) => {
           return (
             <Form>
-              <ContactInformationForm my={6} />
+              <ContactInformationForm my={6} me={me} />
 
               <Button
+                data-test-id="save-button"
                 width={["100%", "auto"]}
                 disabled={!isValid || isSubmitting}
                 loading={isSubmitting}
@@ -123,6 +148,12 @@ export const ContactInformationFragmentContainer = createFragmentContainer(
         name
         email
         phone
+        phoneNumber {
+          isValid
+          international: display(format: INTERNATIONAL)
+          national: display(format: NATIONAL)
+          regionCode
+        }
       }
     `,
   }

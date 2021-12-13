@@ -6,6 +6,7 @@ export type AddAssetToConsignmentSubmissionInput = {
     assetType?: string | null;
     clientMutationId?: string | null;
     geminiToken: string;
+    sessionID?: string | null;
     submissionID: string;
 };
 export type addAssetToConsignmentMutationVariables = {

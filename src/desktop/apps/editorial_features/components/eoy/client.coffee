@@ -1,8 +1,8 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 SuperArticleView = require '../../../../components/article/client/super_article.coffee'
-Article = require '../../../../models/article.coffee'
-Curation = require '../../../../models/curation.coffee'
+{ Article } = require '../../../../models/article'
+{ Curation } = require '../../../../models/curation'
 initCarousel = require '../../../../components/merry_go_round/horizontal_nav_mgr.coffee'
 bodyView = -> require('./templates/body.jade') arguments...
 sd = require('sharify').data

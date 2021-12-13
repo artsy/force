@@ -1,23 +1,30 @@
-import * as React from "react";
+import * as React from "react"
 import { Box, Column, GridColumns, Image, Text } from "@artsy/palette"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { useTracking } from "react-tracking"
-import { ContextModule, OwnerType, clickedArticleGroup } from "@artsy/cohesion"
+import {
+  ActionType,
+  ClickedArticleGroup,
+  ContextModule,
+  OwnerType,
+} from "@artsy/cohesion"
 import { cropped } from "v2/Utils/resized"
 
 export const ReadMore: React.FC = () => {
   const tracking = useTracking()
 
   const trackClick = ({ slug, internalID }) => {
-    tracking.trackEvent(
-      clickedArticleGroup({
-        context_module: ContextModule.relatedArticles,
-        context_page_owner_type: OwnerType.consign,
-        destination_page_owner_id: internalID,
-        destination_page_owner_slug: slug,
-        destination_page_owner_type: OwnerType.article,
-      })
-    )
+    const clickedArticleGroup: ClickedArticleGroup = {
+      action: ActionType.clickedArticleGroup,
+      context_module: ContextModule.relatedArticles,
+      context_page_owner_type: OwnerType.consign,
+      destination_page_owner_id: internalID,
+      destination_page_owner_slug: slug,
+      destination_page_owner_type: OwnerType.article,
+      type: "thumbnail",
+    }
+
+    tracking.trackEvent(clickedArticleGroup)
   }
 
   return (

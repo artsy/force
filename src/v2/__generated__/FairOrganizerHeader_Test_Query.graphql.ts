@@ -41,10 +41,12 @@ fragment FairOrganizerHeaderIcon_fairOrganizer on FairOrganizer {
       desktop: cropped(width: 80, height: 80, version: "square140") {
         src
         srcSet
+        size: width
       }
       mobile: cropped(width: 60, height: 60, version: "square140") {
         src
         srcSet
+        size: width
       }
     }
     id
@@ -106,6 +108,13 @@ v3 = [
     "args": null,
     "kind": "ScalarField",
     "name": "srcSet",
+    "storageKey": null
+  },
+  {
+    "alias": "size",
+    "args": null,
+    "kind": "ScalarField",
+    "name": "width",
     "storageKey": null
   }
 ];
@@ -334,7 +343,7 @@ return {
     "metadata": {},
     "name": "FairOrganizerHeader_Test_Query",
     "operationKind": "query",
-    "text": "query FairOrganizerHeader_Test_Query {\n  fairOrganizer(id: \"example\") {\n    ...FairOrganizerHeader_fairOrganizer\n    id\n  }\n}\n\nfragment FairOrganizerFollowButton_fairOrganizer on FairOrganizer {\n  slug\n  name\n  profile {\n    id\n    internalID\n    isFollowed\n  }\n}\n\nfragment FairOrganizerHeaderIcon_fairOrganizer on FairOrganizer {\n  name\n  profile {\n    icon {\n      desktop: cropped(width: 80, height: 80, version: \"square140\") {\n        src\n        srcSet\n      }\n      mobile: cropped(width: 60, height: 60, version: \"square140\") {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment FairOrganizerHeader_fairOrganizer on FairOrganizer {\n  name\n  fairsConnection(first: 1, sort: START_AT_DESC) {\n    edges {\n      node {\n        href\n        startAt\n        exhibitionPeriod\n        id\n      }\n    }\n  }\n  ...FairOrganizerHeaderIcon_fairOrganizer\n  ...FairOrganizerFollowButton_fairOrganizer\n  ...FairOrganizerInfo_fairOrganizer\n}\n\nfragment FairOrganizerInfo_fairOrganizer on FairOrganizer {\n  about(format: HTML)\n}\n"
+    "text": "query FairOrganizerHeader_Test_Query {\n  fairOrganizer(id: \"example\") {\n    ...FairOrganizerHeader_fairOrganizer\n    id\n  }\n}\n\nfragment FairOrganizerFollowButton_fairOrganizer on FairOrganizer {\n  slug\n  name\n  profile {\n    id\n    internalID\n    isFollowed\n  }\n}\n\nfragment FairOrganizerHeaderIcon_fairOrganizer on FairOrganizer {\n  name\n  profile {\n    icon {\n      desktop: cropped(width: 80, height: 80, version: \"square140\") {\n        src\n        srcSet\n        size: width\n      }\n      mobile: cropped(width: 60, height: 60, version: \"square140\") {\n        src\n        srcSet\n        size: width\n      }\n    }\n    id\n  }\n}\n\nfragment FairOrganizerHeader_fairOrganizer on FairOrganizer {\n  name\n  fairsConnection(first: 1, sort: START_AT_DESC) {\n    edges {\n      node {\n        href\n        startAt\n        exhibitionPeriod\n        id\n      }\n    }\n  }\n  ...FairOrganizerHeaderIcon_fairOrganizer\n  ...FairOrganizerFollowButton_fairOrganizer\n  ...FairOrganizerInfo_fairOrganizer\n}\n\nfragment FairOrganizerInfo_fairOrganizer on FairOrganizer {\n  about(format: HTML)\n}\n"
   }
 };
 })();

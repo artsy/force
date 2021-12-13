@@ -8,8 +8,8 @@ const path = require("path")
 const fs = require("fs")
 const cheerio = require("cheerio")
 const Backbone = require("backbone")
-const Profile = require("../../../models/profile")
-const Partner = require("../../../models/partner")
+const { Profile } = require("../../../models/profile")
+const { Partner } = require("../../../models/partner")
 const { fabricate } = require("@artsy/antigravity")
 const { Artists } = require("../../../collections/artists")
 const fixtures = require("../../../test/helpers/fixtures")
@@ -47,10 +47,12 @@ describe("Partner page templates", function () {
   })
 
   it("renders single list when distinguish_represented_artists is false", function () {
+    const rmodels = new Artists([fabricate("artist")]).models
+    const umodels = new Artists([fabricate("artist")]).models
     const html = render("artists")({
       profile: new Profile(fabricate("profile")),
-      represented: new Artists([fabricate("artist")]).models,
-      unrepresented: new Artists([fabricate("artist")]).models,
+      represented: rmodels,
+      unrepresented: umodels,
       partner: new Partner({ distinguish_represented_artists: false }),
       sd: {},
     })

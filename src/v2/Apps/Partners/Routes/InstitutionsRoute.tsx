@@ -1,6 +1,7 @@
 import {
   Button,
   Column,
+  Flex,
   GridColumns,
   Join,
   Separator,
@@ -10,6 +11,7 @@ import {
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { MetaTags } from "v2/Components/MetaTags"
+import { RouterLink } from "v2/System/Router/RouterLink"
 import { useRouter } from "v2/System/Router/useRouter"
 import { InstitutionsRoute_viewer } from "v2/__generated__/InstitutionsRoute_viewer.graphql"
 import { PartnersFeaturedCarouselFragmentContainer } from "../Components/PartnersFeaturedCarousel"
@@ -37,6 +39,21 @@ const InstitutionsRoute: React.FC<InstitutionsRouteProps> = ({ viewer }) => {
 
       <Join separator={<Spacer mt={4} />}>
         <PartnersFeaturedCarouselFragmentContainer viewer={viewer} />
+
+        <Flex justifyContent="space-between" alignItems="center">
+          <Text variant="xl" as="h1">
+            Browse Institutions
+          </Text>
+
+          <Text
+            variant="md"
+            as={RouterLink}
+            // @ts-ignore
+            to="/institution-partnerships"
+          >
+            Partner with Artsy
+          </Text>
+        </Flex>
 
         <PartnersFilters type="INSTITUTION" />
 

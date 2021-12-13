@@ -5,7 +5,7 @@
  */
 const _ = require("underscore")
 const CurrentUser = require("../../../../models/current_user")
-const PasswordEdit = require("../../models/password_edit.coffee")
+const PasswordEdit = require("../../models/password_edit")
 const { fabricate } = require("@artsy/antigravity")
 
 describe("PasswordEdit", function () {

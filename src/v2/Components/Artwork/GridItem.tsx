@@ -2,7 +2,7 @@ import { AuthContextModule, ContextModule } from "@artsy/cohesion"
 import { Image as BaseImage, Box } from "@artsy/palette"
 import { GridItem_artwork } from "v2/__generated__/GridItem_artwork.graphql"
 import { useSystemContext } from "v2/System"
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
 import { userIsTeam } from "v2/Utils/user"
@@ -108,23 +108,28 @@ const Image = styled(BaseImage)`
   height: 100%;
 `
 
-export default createFragmentContainer(ArtworkGridItem, {
-  artwork: graphql`
-    fragment GridItem_artwork on Artwork {
-      internalID
-      title
-      image_title: imageTitle
-      image {
-        placeholder
-        url(version: "large")
-        aspect_ratio: aspectRatio
+export const ArtworkGridItemFragmentContainer = createFragmentContainer(
+  ArtworkGridItem,
+  {
+    artwork: graphql`
+      fragment GridItem_artwork on Artwork {
+        internalID
+        title
+        image_title: imageTitle
+        image {
+          placeholder
+          url(version: "large")
+          aspect_ratio: aspectRatio
+        }
+        artistNames
+        href
+        is_saved: isSaved
+        ...Metadata_artwork
+        ...SaveButton_artwork
+        ...Badge_artwork
       }
-      artistNames
-      href
-      is_saved: isSaved
-      ...Metadata_artwork
-      ...SaveButton_artwork
-      ...Badge_artwork
-    }
-  `,
-})
+    `,
+  }
+)
+
+export default ArtworkGridItemFragmentContainer

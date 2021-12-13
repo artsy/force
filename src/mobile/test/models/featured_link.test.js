@@ -3,7 +3,7 @@
  * DS102: Remove unnecessary code created because of implicit returns
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/master/docs/suggestions.md
  */
-const FeaturedLink = require("../../models/featured_link")
+const { FeaturedLink } = require("../../models/featured_link")
 const { fabricate } = require("@artsy/antigravity")
 
 describe("FeaturedLink", function () {

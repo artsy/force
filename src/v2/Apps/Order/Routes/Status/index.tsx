@@ -405,6 +405,9 @@ export class StatusRoute extends Component<StatusProps> {
                             order={order}
                             useLastSubmittedOffer
                             showOfferNote={showOfferNote}
+                            showCongratulationMessage={
+                              order.state === "SUBMITTED"
+                            }
                           />
                         </Flex>
                       ) : (

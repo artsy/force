@@ -27,6 +27,7 @@ const env = {
   isProduction: process.env.NODE_ENV === "production",
   isStaging: process.env.NODE_ENV === "staging",
   logConfig: yn(process.env.WEBPACK_LOG_CONFIG, { default: false }),
+  loggingEnabled: yn(process.env.WEBPACK_LOG, { default: true }),
   machineCpus: os.cpus().length,
   machineHeapSize: v8.getHeapStatistics().total_heap_size,
   machineName: os.hostname(),
@@ -73,6 +74,7 @@ if (env.onCi || env.logConfig) {
   console.log("  WEBPACK_DUMP_CONFIG".padEnd(35), chalk.yellow(env.enableWebpackDumpConfig))
   console.log("  WEBPACK_FAST_PRODUCTION_BUILD".padEnd(35), chalk.yellow(env.fastProductionBuild))
   console.log("  WEBPACK_LOG_CONFIG".padEnd(35), chalk.yellow(env.logConfig))
+  console.log("  WEBPACK_LOG".padEnd(35), chalk.yellow(env.loggingEnabled))
   console.log("  WEBPACK_STATS".padEnd(35), chalk.yellow(env.webpackStats))
   console.log("")
 }

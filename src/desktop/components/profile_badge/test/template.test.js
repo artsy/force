@@ -8,7 +8,7 @@ const fs = require("fs")
 const jade = require("jade")
 const path = require("path")
 const { fabricate } = require("@artsy/antigravity")
-const Profile = require("../../../models/profile")
+const { Profile } = require("../../../models/profile")
 
 const render = function (template) {
   const filename = path.resolve(__dirname, `../${template}.jade`)

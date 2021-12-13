@@ -1,8 +1,8 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 Form = require '../form/index.coffee'
-User = require '../../models/user.coffee'
-ArtworkInquiry = require '../../models/artwork_inquiry.coffee'
+{ User } = require '../../models/user'
+{ ArtworkInquiry } = require '../../models/artwork_inquiry'
 defaultMessage = require '../contact/default_message.coffee'
 openInquiryQuestionnaireFor = require '../inquiry_questionnaire/index.coffee'
 template = -> require('./templates/index.jade') arguments...

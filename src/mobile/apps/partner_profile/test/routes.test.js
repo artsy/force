@@ -7,7 +7,7 @@ const _ = require("underscore")
 const { fabricate } = require("@artsy/antigravity")
 const sinon = require("sinon")
 const routes = require("../routes")
-const Profile = require("../../../models/profile")
+const { Profile } = require("../../../models/profile")
 const Backbone = require("backbone")
 
 describe("Profile page", function () {
@@ -196,7 +196,7 @@ describe("Profile page", function () {
   })
 
   return describe("#fetchArtworksAndRender", () =>
-    xit("renders the partner's works based on parameters", function () {
+    it.skip("renders the partner's works based on parameters", function () {
       let renderStub
       routes.fetchArtworksAndRender(
         {

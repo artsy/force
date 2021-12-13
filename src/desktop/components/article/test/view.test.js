@@ -7,14 +7,14 @@ const _ = require("underscore")
 const benv = require("benv")
 const sinon = require("sinon")
 const Backbone = require("backbone")
-const Article = require("../../../models/article")
-const fixtures = require("../../../test/helpers/fixtures.coffee")
+const { Article } = require("../../../models/article")
+const fixtures = require("../../../test/helpers/fixtures")
 const { resolve } = require("path")
 const { fabricate } = require("@artsy/antigravity")
 const { stubChildClasses } = require("../../../test/helpers/stubs")
 const embed = require("particle")
 
-xdescribe("ArticleView", function () {
+describe.skip("ArticleView", function () {
   before(function () {
     return benv.setup(() => {
       benv.expose({

@@ -15,13 +15,6 @@ const routes = {
 
   "/jobs": require("../apps/jobs/client/index.coffee").init,
 
-  "/consign/submission": require("../apps/consign/client/submission").init,
-
-  "/consign": require("../apps/consign/client").init,
-
-  "/reset_password": require("../apps/authentication/client/reset_password.coffee")
-    .init,
-
   "/works-for-you": () => {
     require("../apps/notifications/client/index.coffee").init()
     const { artist, artist_id } = qs.parse(location.search.substring(1))

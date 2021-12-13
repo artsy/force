@@ -11,7 +11,7 @@ const articleTemplate = require("jade").compileFile(
   require.resolve("../templates/article.jade")
 )
 const sd = { APP_URL: "http://localhost" }
-const Article = require("../../../models/article")
+const { Article } = require("../../../models/article")
 const { Articles } = require("../../../collections/articles")
 const moment = require("moment")
 const { toSentence } = require("underscore.string")
@@ -130,6 +130,9 @@ describe("/rss", function () {
     })
 
     return it("renders enclosures on non-video articles", function () {
+      const mockResize = url => {
+        return url
+      }
       const articles = [
         {
           layout: "standard",
@@ -148,6 +151,7 @@ describe("/rss", function () {
         sd,
         articles: new Articles(articles),
         moment,
+        resize: mockResize,
       })
       rendered.should.containEql(
         '<enclosure url="artsy.net/jpg.jpg" length="0" type="image/jpeg">'

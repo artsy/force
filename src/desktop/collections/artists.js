@@ -8,7 +8,7 @@ let _Artists
 const _ = require("underscore")
 const { toSentence } = require("underscore.string")
 const Backbone = require("backbone")
-const Artist = require("../models/artist")
+const { Artist } = require("../models/artist")
 const { API_URL } = require("sharify").data
 const { Fetch, AToZ } = require("@artsy/backbone-mixins")
 

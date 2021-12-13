@@ -1,16 +1,21 @@
 import { Box, BoxProps } from "@artsy/palette"
-import * as React from "react";
+import { BorderBoxBase } from "@artsy/palette/dist/elements/BorderBox/BorderBoxBase"
+import * as React from "react"
 import styled from "styled-components"
+import { resizeSquare } from "v2/Assets/Animations"
+import { usePrevious } from "v2/Utils/Hooks/usePrevious"
 import { Media } from "v2/Utils/Responsive"
 
 interface Icon {
   src: string
   srcSet: string
+  size: number
 }
 
 interface IconSet {
   desktop: Icon | null
   mobile: Icon | null
+  sticky?: Icon | null
 }
 
 export interface Profile {
@@ -19,34 +24,64 @@ export interface Profile {
 }
 
 interface ProfileIconProps extends BoxProps {
+  stuck?: boolean
   profile: Profile
 }
 
-const BorderBox = styled(Box).attrs({
-  border: "solid #C2C2C2",
-  borderWidth: "1px",
-})``
+const BorderBox = styled(BorderBoxBase).attrs({
+  borderColor: "black30",
+  p: 0,
+})<{
+  prevSize?: number
+  size?: number
+}>`
+  animation: ${p => resizeSquare(`${p.prevSize}px`, `${p.size}px`)} 0.2s linear;
+`
 BorderBox.displayName = "BorderBox"
+
+const Image: React.FC<{ icon?: Icon | null; alt?: string }> = ({
+  icon,
+  alt,
+}) => {
+  if (!icon) return null
+
+  return (
+    <img
+      src={icon.src}
+      srcSet={icon.srcSet}
+      alt={alt}
+      width="100%"
+      height="100%"
+    />
+  )
+}
 
 export const ProfileIcon: React.FC<ProfileIconProps> = ({
   profile,
+  stuck,
   ...rest
 }) => {
-  if (!profile?.icon) return null
-
   const { icon, name } = profile
 
+  const getSizeWithSticky = (baseSize?: number) =>
+    +!!baseSize && (stuck && icon?.sticky ? icon.sticky.size : baseSize!) + 2
+
+  const desktopSize = getSizeWithSticky(icon?.desktop?.size)
+  const mobileSize = getSizeWithSticky(icon?.mobile?.size)
+
+  const previousDesktopSize = usePrevious(desktopSize)
+  const previousMobileSize = usePrevious(mobileSize)
+
+  if (!profile?.icon) return null
+
   return (
-    <Box {...rest}>
+    <Box height="fit-content" {...rest}>
       {icon?.desktop?.src && (
         <Media greaterThanOrEqual="md">
-          <BorderBox width={82} height={82}>
-            <img
-              src={icon.desktop.src}
-              srcSet={icon.desktop.srcSet}
+          <BorderBox size={desktopSize} prevSize={previousDesktopSize}>
+            <Image
+              icon={stuck && icon.sticky ? icon.sticky : icon.desktop}
               alt={`Logo of ${name}`}
-              width={80}
-              height={80}
             />
           </BorderBox>
         </Media>
@@ -54,13 +89,10 @@ export const ProfileIcon: React.FC<ProfileIconProps> = ({
 
       {icon?.mobile?.src && (
         <Media lessThan="md">
-          <BorderBox width={62} height={62}>
-            <img
-              src={icon.mobile.src}
-              srcSet={icon.mobile.srcSet}
+          <BorderBox size={mobileSize} prevSize={previousMobileSize}>
+            <Image
+              icon={stuck && icon.sticky ? icon.sticky : icon.mobile}
               alt={`Logo of ${name}`}
-              width={60}
-              height={60}
             />
           </BorderBox>
         </Media>

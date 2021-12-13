@@ -106,10 +106,14 @@ describe("Submit Pending Counter Offer", () => {
     })
 
     it("shows the transaction summary", () => {
-      expect(page.transactionSummary.text()).toMatch("Your counterofferChange")
-      expect(page.transactionSummary.text()).toMatch("Your offer$your.offer")
+      expect(
+        page.transactionSummary.find("Entry").find("[data-test='offer']").text()
+      ).toMatch("Your offerUS$your.offer")
+      expect(
+        page.transactionSummary.find("TransactionDetailsSummaryItem").text()
+      ).toMatch("Your counterofferChange")
       expect(page.transactionSummary.text()).toMatch(
-        "Seller's offer$sellers.offer"
+        "Seller's offerUS$sellers.offer"
       )
     })
 

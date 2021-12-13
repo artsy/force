@@ -1,8 +1,8 @@
 import { TransactionDetailsSummaryItem_order } from "v2/__generated__/TransactionDetailsSummaryItem_order.graphql"
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 
-import { Flex, Text, Spacer } from "@artsy/palette"
+import { Flex, Text, Spacer, Column } from "@artsy/palette"
 import {
   StepSummaryItem,
   StepSummaryItemProps,
@@ -10,6 +10,11 @@ import {
 import { Omit } from "lodash"
 import { getOfferItemFromOrder } from "v2/Apps/Order/Utils/offerItemExtractor"
 import { extractNodes } from "v2/Utils/extractNodes"
+import { DownloadAppBadges } from "v2/Components/DownloadAppBadges/DownloadAppBadges"
+import { ContextModule } from "@artsy/cohesion"
+import { appendCurrencySymbol } from "v2/Apps/Order/Utils/currencyUtils"
+import { withSystemContext } from "v2/System"
+import { RouterLink } from "v2/System/Router/RouterLink"
 
 export interface TransactionDetailsSummaryItemProps
   extends Omit<StepSummaryItemProps, "order"> {
@@ -19,6 +24,8 @@ export interface TransactionDetailsSummaryItemProps
   offerContextPrice?: "LIST_PRICE" | "LAST_OFFER"
   showOfferNote?: boolean
   placeholderOverride?: string | null
+  showCongratulationMessage?: boolean
+  isEigen?: boolean
 }
 
 export class TransactionDetailsSummaryItem extends React.Component<
@@ -36,6 +43,8 @@ export class TransactionDetailsSummaryItem extends React.Component<
       offerOverride,
       order,
       placeholderOverride,
+      isEigen,
+      showCongratulationMessage = false,
       ...others
     } = this.props
 
@@ -46,12 +55,56 @@ export class TransactionDetailsSummaryItem extends React.Component<
         <Entry
           label={this.shippingDisplayLabel()}
           value={this.shippingDisplayAmount()}
+          data-test="shippingDisplayAmount"
         />
 
-        <Entry label="Tax" value={this.taxDisplayAmount()} />
+        <Entry
+          label="Tax"
+          value={this.taxDisplayAmount()}
+          data-test="taxDisplayAmount"
+        />
         <Spacer mb={2} />
-        <Entry label="Total" value={this.buyerTotalDisplayAmount()} final />
+        <Entry
+          label="Total"
+          value={this.buyerTotalDisplayAmount()}
+          final
+          data-test="buyerTotalDisplayAmount"
+        />
         {showOfferNote && order.mode === "OFFER" && this.renderNoteEntry()}
+        {showCongratulationMessage && (
+          <Column
+            span={4}
+            display="flex"
+            alignItems="center"
+            flexWrap="wrap"
+            backgroundColor="blue10"
+            justifyContent="center"
+            order={[2, 1]}
+            p={2}
+            mt={4}
+          >
+            <Flex flexDirection="column" mr="auto">
+              <Text variant="sm" color="blue100">
+                Congratulations! This artwork will be added to your Collection
+                once the gallery confirms the order.
+              </Text>
+              <Text variant="sm">
+                View and manage all artworks in your Collection{" "}
+                {!isEigen ? "on the Artsy app." : "through your "}
+                {isEigen && (
+                  <RouterLink to={"/my-profile"}>profile.</RouterLink>
+                )}
+              </Text>
+            </Flex>
+            <Flex pt={1}>
+              {!isEigen && (
+                <DownloadAppBadges
+                  contextModule={ContextModule.ordersSubmitted}
+                />
+              )}
+            </Flex>
+          </Column>
+        )}
       </StepSummaryItem>
     )
   }
@@ -64,12 +117,19 @@ export class TransactionDetailsSummaryItem extends React.Component<
 
   shippingDisplayAmount = () => {
     const { order } = this.props
+    const currency = order.currencyCode
     switch (order.mode) {
       case "BUY":
-        return order.shippingTotal || this.amountPlaceholder
+        return (
+          appendCurrencySymbol(order.shippingTotal, currency) ||
+          this.amountPlaceholder
+        )
       case "OFFER":
         const offer = this.getOffer()
-        return (offer && offer.shippingTotal) || this.amountPlaceholder
+        return (
+          (offer && appendCurrencySymbol(offer.shippingTotal, currency)) ||
+          this.amountPlaceholder
+        )
     }
   }
 
@@ -91,30 +151,46 @@ export class TransactionDetailsSummaryItem extends React.Component<
 
   taxDisplayAmount = () => {
     const { order } = this.props
+    const currency = order.currencyCode
     switch (order.mode) {
       case "BUY":
-        return order.taxTotal || this.amountPlaceholder
+        return (
+          appendCurrencySymbol(order.taxTotal, currency) ||
+          this.amountPlaceholder
+        )
       case "OFFER":
         const offer = this.getOffer()
-        return (offer && offer.taxTotal) || this.amountPlaceholder
+        return (
+          (offer && appendCurrencySymbol(offer.taxTotal, currency)) ||
+          this.amountPlaceholder
+        )
     }
   }
 
   buyerTotalDisplayAmount = () => {
     const { order } = this.props
+    const currency = order.currencyCode
     switch (order.mode) {
       case "BUY":
-        return order.buyerTotal
+        return appendCurrencySymbol(order.buyerTotal, currency)
       case "OFFER":
         const offer = this.getOffer()
-        return offer && offer.buyerTotal
+        return offer && appendCurrencySymbol(offer.buyerTotal, currency)
     }
   }
 
   renderPriceEntry = () => {
     const { order, offerOverride, offerContextPrice } = this.props
+    const currency = order.currencyCode
+
     if (order.mode === "BUY") {
-      return <Entry label="Price" value={order.itemsTotal} />
+      return (
+        <Entry
+          label="Price"
+          value={appendCurrencySymbol(order.itemsTotal, currency)}
+          data-test="price"
+        />
+      )
     }
     const offer = this.getOffer()
     const offerItem = getOfferItemFromOrder(order.lineItems)
@@ -126,12 +202,18 @@ export class TransactionDetailsSummaryItem extends React.Component<
         <Entry
           label={isBuyerOffer ? "Your offer" : "Seller's offer"}
           value={
-            offerOverride || (offer && offer.amount) || this.amountPlaceholder
+            appendCurrencySymbol(offerOverride, currency) ||
+            (offer && appendCurrencySymbol(offer.amount, currency)) ||
+            this.amountPlaceholder
           }
+          data-test="offer"
         />
         {offerContextPrice === "LIST_PRICE" ? (
           offerItem && (
-            <SecondaryEntry label="List price" value={offerItem.price} />
+            <SecondaryEntry
+              label="List price"
+              value={appendCurrencySymbol(offerItem.price, currency)}
+            />
           )
         ) : (
           // show last offer
@@ -141,7 +223,7 @@ export class TransactionDetailsSummaryItem extends React.Component<
                 ? "Seller's offer"
                 : "Your offer"
             }
-            value={order.lastOffer?.amount}
+            value={appendCurrencySymbol(order.lastOffer?.amount, currency)}
           />
         )}
       </>
@@ -222,7 +304,7 @@ graphql`
 `
 
 export const TransactionDetailsSummaryItemFragmentContainer = createFragmentContainer(
-  TransactionDetailsSummaryItem,
+  withSystemContext(TransactionDetailsSummaryItem),
   {
     order: graphql`
       fragment TransactionDetailsSummaryItem_order on CommerceOrder {
@@ -255,6 +337,7 @@ export const TransactionDetailsSummaryItemFragmentContainer = createFragmentCont
         taxTotalCents
         itemsTotal(precision: 2)
         buyerTotal(precision: 2)
+        currencyCode
         ... on CommerceOfferOrder {
           lastOffer {
             ...TransactionDetailsSummaryItemOfferProperties @relay(mask: false)

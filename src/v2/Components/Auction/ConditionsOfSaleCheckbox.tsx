@@ -1,5 +1,5 @@
-import { Checkbox, CheckboxProps, Link, Serif } from "@artsy/palette"
-import * as React from "react";
+import { Checkbox, CheckboxProps, Link, Text } from "@artsy/palette"
+import * as React from "react"
 import { data as sd } from "sharify"
 
 export const ConditionsOfSaleCheckbox: React.FC<CheckboxProps> = ({
@@ -8,9 +8,9 @@ export const ConditionsOfSaleCheckbox: React.FC<CheckboxProps> = ({
 }) => {
   return (
     <Checkbox selected={selected} onSelect={onSelect}>
-      <Serif display="inline" color="black60" size="3t" ml={0.5}>
+      <Text variant="md" color="black60" ml={0.5}>
         {"Agree to "}
-        <Serif display="inline" color="black100" size="3t">
+        <Text variant="md" display="inline" color="black100">
           <Link
             color="black100"
             href={`${sd.APP_URL}/conditions-of-sale`}
@@ -18,8 +18,8 @@ export const ConditionsOfSaleCheckbox: React.FC<CheckboxProps> = ({
           >
             Conditions of Sale
           </Link>
-        </Serif>
-      </Serif>
+        </Text>
+      </Text>
     </Checkbox>
   )
 }

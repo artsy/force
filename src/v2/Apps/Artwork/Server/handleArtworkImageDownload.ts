@@ -1,6 +1,6 @@
 import request from "superagent"
 
-const Artwork = require("desktop/models/artwork.coffee")
+const { Artwork } = require("desktop/models/artwork")
 
 export const handleArtworkImageDownload = async ({ req, res }) => {
   const artwork = new Artwork({ id: req.params.artworkID })

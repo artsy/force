@@ -5,7 +5,7 @@
  */
 const Backbone = require("backbone")
 const { fabricate } = require("@artsy/antigravity")
-const Gene = require("../../models/gene.coffee")
+const { Gene } = require("../../models/gene")
 const sinon = require("sinon")
 
 describe("Gene", function () {

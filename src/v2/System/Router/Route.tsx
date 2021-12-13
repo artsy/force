@@ -1,5 +1,5 @@
 import { RouteSpinner } from "v2/System/Relay/renderWithLoadProgress"
-import { RouteConfig, HttpError } from "found"
+import { RouteConfig, HttpError, Match } from "found"
 import BaseRoute from "found/Route"
 import * as React from "react";
 import { CacheConfig, GraphQLTaggedNode } from "relay-runtime";
@@ -19,7 +19,7 @@ interface RouteConfigProps extends RouteConfig {
   hideNavigationTabs?: boolean
   ignoreScrollBehavior?: boolean
   ignoreScrollBehaviorBetweenChildren?: boolean
-  onClientSideRender?: () => void
+  onClientSideRender?: (props: { match: Match }) => void
   onServerSideRender?: (props: { req: ArtsyRequest, res: ArtsyResponse, next: NextFunction, route: AppRouteConfig }) => void
   prepareVariables?: (params: any, props: any) => object
   query?: GraphQLTaggedNode

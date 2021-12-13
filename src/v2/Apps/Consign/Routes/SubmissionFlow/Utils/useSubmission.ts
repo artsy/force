@@ -8,10 +8,16 @@ import { getRedirect } from "./redirects"
 
 const logger = createLogger("getSubmissionFromSessionStorage.ts")
 
+export type UtmParams = {
+  utmTerm?: string
+  utmMedium?: string
+  utmSource?: string
+}
 export interface SubmissionModel {
   artworkDetailsForm: ArtworkDetailsFormModel
   uploadPhotosForm?: UploadPhotosFormModel
   contactInformationForm?: ContactInformationFormModel
+  utmParams?: UtmParams
 }
 
 export const getSubmission = (id: string): SubmissionModel | undefined => {

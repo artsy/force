@@ -20,7 +20,7 @@ export default _Artworks = (function () {
     }
 
     initialize() {
-      return (this.model = require("../models/artwork"))
+      return (this.model = require("../models/artwork").Artwork)
     }
 
     // Maps each artwork's images into an array of image { width, height } hashes meant to be

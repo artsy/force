@@ -9,6 +9,7 @@ import { beforeAnalyticsReady, onAnalyticsReady } from "lib/analytics/helpers"
 import { getClientParam } from "./Utils/getClientParam"
 import { buildClientApp } from "v2/System/Router/client"
 import { syncNonCacheableData } from "./System/Client/syncSharify"
+import { loadSegment } from "lib/analytics/segmentOneTrustIntegration/segmentOneTrustIntegration"
 
 async function setupClient() {
   syncNonCacheableData()
@@ -16,14 +17,17 @@ async function setupClient() {
   Promise.all([
     import(
       /* webpackChunkName: "clientAppModals", webpackPrefetch: true */
-      "desktop/apps/authentication/client/initModalManager"
+      "./Utils/initAuthModalContainer"
     ),
     import(
       /* webpackChunkName: "clientAppModals", webpackPrefetch: true */
       "desktop/components/artistSignupModal/artistSignupModal"
     ),
   ]).then(clientImports => {
-    const [{ initModalManager }, { setupArtistSignUpModal }] = clientImports
+    const [
+      { initAuthModalContainer },
+      { setupArtistSignUpModal },
+    ] = clientImports
 
     // Attach analytics
     if (getClientParam("disableAnalytics") !== "true") {
@@ -34,7 +38,9 @@ async function setupClient() {
       })
     }
 
-    initModalManager()
+    loadSegment()
+
+    initAuthModalContainer()
     setupArtistSignUpModal()
 
     // Logout handler
@@ -51,7 +57,7 @@ async function setupClient() {
   })
 }
 
-// Initialze clent
+// Initialze client
 ;(async () => {
   try {
     await setupClient()

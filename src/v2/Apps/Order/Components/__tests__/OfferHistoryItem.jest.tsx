@@ -50,8 +50,8 @@ describe("OfferHistoryItem", () => {
 
     const text = offerHistory.text()
 
-    expect(text).toMatch("Seller's offer$14,000")
-    expect(text).toMatch("List price: $16,000")
+    expect(text).toMatch("Seller's offerUS$14,000")
+    expect(text).toMatch("List price: US$16,000")
   })
 
   it("doesn't show the 'show offer history' button if no other offers", async () => {
@@ -81,9 +81,9 @@ describe("OfferHistoryItem", () => {
     expect(offerHistory.find(Collapse).props().open).toBeTruthy()
 
     const text = offerHistory.text()
-    expect(text).toMatch("You (May 21)$1,200.00")
-    expect(text).toMatch("Seller (Apr 30)$1,500.00")
-    expect(text).toMatch("You (Apr 5)$1,100.00")
+    expect(text).toMatch("You (May 21)US$1,200.00")
+    expect(text).toMatch("Seller (Apr 30)US$1,500.00")
+    expect(text).toMatch("You (Apr 5)US$1,100.00")
   })
 
   it("shows right copy if the last submitted offer was from the buyer", async () => {
@@ -97,6 +97,6 @@ describe("OfferHistoryItem", () => {
 
     const text = offerHistory.text()
 
-    expect(text).toMatch("Your offer$14,000")
+    expect(text).toMatch("Your offerUS$14,000")
   })
 })

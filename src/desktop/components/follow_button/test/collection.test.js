@@ -10,7 +10,7 @@ const benv = require("benv")
 const sinon = require("sinon")
 const Backbone = require("backbone")
 const Follow = require("../model")
-const Profile = require("../../../models/profile")
+const { Profile } = require("../../../models/profile")
 const Following = require("../collection")
 const CurrentUser = require("../../../models/current_user")
 

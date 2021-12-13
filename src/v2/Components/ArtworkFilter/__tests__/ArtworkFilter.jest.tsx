@@ -7,6 +7,8 @@ import { ArtworkQueryFilter } from "../ArtworkQueryFilter"
 import { ArtworkFilterFixture } from "./fixtures/ArtworkFilter.fixture"
 import { initialArtworkFilterState } from "../ArtworkFilterContext"
 import { setupTestWrapperTL } from "v2/DevTools/setupTestWrapper"
+import { SavedSearchAttributes } from "../SavedSearch/types"
+import { FilterPillsContextProvider } from "../SavedSearch/Utils/FilterPillsContext"
 
 jest.unmock("react-relay")
 jest.mock("v2/System/Analytics/useTracking")
@@ -15,23 +17,35 @@ jest.mock("v2/Utils/Hooks/useMatchMedia", () => ({
   __internal__useMatchMedia: () => ({}),
 }))
 
+const savedSearchProps: SavedSearchAttributes = {
+  type: "artist",
+  id: "test-artist-id",
+  name: "Test Artist",
+  slug: "test-artist-slug",
+}
+
 describe("ArtworkFilter", () => {
   const onFilterClick = jest.fn()
   const onChange = jest.fn()
   let sortOptionsMock
   let filters
   let breakpoint
+  let enableCreateAlert
 
   const { renderWithRelay } = setupTestWrapperTL({
     Component: (props: any) => (
       <MockBoot breakpoint={breakpoint}>
-        <ArtworkFilter
-          {...(props as any)}
-          onFilterClick={onFilterClick}
-          onChange={onChange}
-          sortOptions={sortOptionsMock}
-          filters={{ ...initialArtworkFilterState, ...filters }}
-        />
+        <FilterPillsContextProvider>
+          <ArtworkFilter
+            {...(props as any)}
+            enableCreateAlert={enableCreateAlert}
+            savedSearchProps={savedSearchProps}
+            onFilterClick={onFilterClick}
+            onChange={onChange}
+            sortOptions={sortOptionsMock}
+            filters={{ ...initialArtworkFilterState, ...filters }}
+          />
+        </FilterPillsContextProvider>
       </MockBoot>
     ),
     query: ArtworkQueryFilter,
@@ -47,11 +61,35 @@ describe("ArtworkFilter", () => {
       }
     })
     breakpoint = "lg"
-    filters = undefined
+    filters = {
+      colors: ["yellow", "pink"],
+    }
+    enableCreateAlert = false
     sortOptionsMock = [
       { value: "sortTest1", text: "Sort Test 1" },
       { value: "sortTest2", text: "Sort Test 2" },
     ]
+  })
+
+  it("renders filters pills when enableCreateAlert is true, savedSearchProps are passed and there are selected filters", async () => {
+    enableCreateAlert = true
+    renderWithRelay()
+
+    expect(screen.getAllByText("Yellow")[1]).toBeInTheDocument()
+    expect(screen.getAllByText("Yellow")[1]).toHaveTextContent("Close")
+    expect(screen.getAllByText("Pink")[1]).toBeInTheDocument()
+    expect(screen.getAllByText("Pink")[1]).toHaveTextContent("Close")
+  })
+
+  it("removes pill after click on it", async () => {
+    enableCreateAlert = true
+    renderWithRelay()
+
+    fireEvent.click(screen.getAllByText("Yellow")[1])
+
+    expect(screen.getAllByText("Yellow")).not.toHaveLength(2)
+    expect(screen.getAllByText("Pink")[1]).toBeInTheDocument()
+    expect(screen.getAllByText("Pink")[1]).toHaveTextContent("Close")
   })
 
   describe("without any filtered artworks", () => {
@@ -86,6 +124,7 @@ describe("ArtworkFilter", () => {
 
       expect(JSON.parse(current)).toMatchObject({
         ...initialArtworkFilterState,
+        ...filters,
         acquireable: true,
       })
 
@@ -164,6 +203,7 @@ describe("ArtworkFilter", () => {
       expect(screen.getByRole("navigation")).toBeInTheDocument()
       expect(screen.getAllByText("Andy Warhol")).toHaveLength(30)
       expect(screen.getAllByRole("option")).toHaveLength(2)
+      expect(screen.getByText("Yellow")).toBeInTheDocument()
     })
 
     it("triggers #onFilterClick on filter click, passing back the changed value and current filter state", () => {
@@ -172,6 +212,7 @@ describe("ArtworkFilter", () => {
 
       expect(onFilterClick).toHaveBeenCalledWith("acquireable", true, {
         ...initialArtworkFilterState,
+        ...filters,
         acquireable: true,
       })
     })
@@ -206,6 +247,7 @@ describe("ArtworkFilter", () => {
 
       expect(onChange).toHaveBeenCalledWith({
         ...initialArtworkFilterState,
+        ...filters,
         acquireable: true,
       })
     })
@@ -225,6 +267,7 @@ describe("ArtworkFilter", () => {
 
       expect(onChange).toHaveBeenLastCalledWith({
         ...initialArtworkFilterState,
+        ...filters,
         sort: "sortTest2",
       })
     })

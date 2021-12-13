@@ -15,7 +15,6 @@ app.use(
 )
 
 app.use(require("./apps/page"))
-app.use(require("./apps/fair_organizer"))
 app.use(require("./apps/contact"))
 app.use(require("./apps/how_auctions_work"))
 app.use(require("./apps/profile"))
@@ -24,11 +23,9 @@ app.use(require("./apps/partners"))
 app.use(require("./apps/articles"))
 app.use(require("./apps/fair_organizer"))
 app.use(require("./apps/tag"))
-app.use(require("./apps/galleries_institutions"))
 app.use(require("./apps/browse"))
 app.use(require("./apps/partner_profile"))
 app.use(require("./apps/favorites_following"))
-app.use(require("./apps/auctions"))
 app.use(require("./apps/dev"))
 
 // Export for hot reloading

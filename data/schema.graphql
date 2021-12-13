@@ -32,6 +32,7 @@ input AddAssetsToConsignmentSubmissionInput {
   # A unique identifier for the client performing the mutation.
   clientMutationId: String
   geminiTokens: [String!]!
+  sessionID: String
   submissionID: ID!
 }
 
@@ -50,6 +51,7 @@ input AddAssetToConsignmentSubmissionInput {
   # A unique identifier for the client performing the mutation.
   clientMutationId: String
   geminiToken: String!
+  sessionID: String
   submissionID: ID!
 }
 
@@ -5075,6 +5077,12 @@ enum ConsignmentSubmissionSort {
   # sort by created_at in descending order
   CREATED_AT_DESC
 
+  # sort by created_by in ascending order
+  CREATED_BY_ASC
+
+  # sort by created_by in descending order
+  CREATED_BY_DESC
+
   # sort by currency in ascending order
   CURRENCY_ASC
 
@@ -5746,6 +5754,7 @@ input CreateSubmissionMutationInput {
   medium: String
   minimumPriceDollars: Int
   provenance: String
+  sessionID: String
   signature: Boolean
 
   # If this artwork exists in Gravity, its ID
@@ -6391,6 +6400,14 @@ enum EventStatus {
   UPCOMING
 }
 
+enum ExhibitionPeriodFormat {
+  # Long formatted period e.g. February 25 – May 24, 2015
+  LONG
+
+  # Short formatted period e.g. Feb 25 - May 24, 2015
+  SHORT
+}
+
 type External {
   auctionHouses(size: Int, term: String): [ExternalAuctionHouse!]!
   fairs(size: Int, term: String): [ExternalFair!]!
@@ -6509,7 +6526,10 @@ type Fair implements EntityWithFilterArtworksConnectionInterface & Node {
   ): String
 
   # A formatted description of the start to end dates
-  exhibitionPeriod: String
+  exhibitionPeriod(
+    # Formatting option to apply to exhibition period
+    format: ExhibitionPeriodFormat
+  ): String
 
   # The exhibitors with booths in this fair with letter.
   exhibitorsGroupedByName: [FairExhibitorsGroup]
@@ -6985,9 +7005,11 @@ type FollowArtist {
 type FollowArtistConnection {
   # A list of edges.
   edges: [FollowArtistEdge]
+  pageCursors: PageCursors!
 
   # Information to aid in pagination.
   pageInfo: PageInfo!
+  totalCount: Int
 }
 
 type FollowArtistCounts {
@@ -7114,6 +7136,35 @@ type FollowedGalleryEdge {
   node: Partner
 }
 
+type FollowedProfile {
+  # A globally unique ID.
+  id: ID!
+
+  # A type-specific ID likely used as a database ID.
+  internalID: ID!
+  profile: Profile!
+}
+
+# A connection to a list of items.
+type FollowedProfileConnection {
+  # A list of edges.
+  edges: [FollowedProfileEdge]
+  pageCursors: PageCursors!
+
+  # Information to aid in pagination.
+  pageInfo: PageInfo!
+  totalCount: Int
+}
+
+# An edge in a connection.
+type FollowedProfileEdge {
+  # A cursor for use in pagination
+  cursor: String!
+
+  # The item at the end of the edge
+  node: FollowedProfile
+}
+
 # A connection to a list of items.
 type FollowedShowConnection {
   # A list of edges.
@@ -7146,9 +7197,11 @@ type FollowGene {
 type FollowGeneConnection {
   # A list of edges.
   edges: [FollowGeneEdge]
+  pageCursors: PageCursors!
 
   # Information to aid in pagination.
   pageInfo: PageInfo!
+  totalCount: Int
 }
 
 # An edge in a connection.
@@ -7190,6 +7243,8 @@ type FollowsAndSaves {
     fairID: String
     first: Int
     last: Int
+    page: Int
+    size: Int
   ): FollowArtistConnection
   artworksConnection(
     after: String
@@ -7234,7 +7289,19 @@ type FollowsAndSaves {
     before: String
     first: Int
     last: Int
+    page: Int
+    size: Int
   ): FollowGeneConnection
+
+  # A list of the current user’s currently followed partner profiles
+  profilesConnection(
+    after: String
+    before: String
+    first: Int
+    last: Int
+    page: Int
+    size: Int
+  ): FollowedProfileConnection
 
   # A list of the current user’s currently followed shows
   showsConnection(
@@ -8270,6 +8337,15 @@ type Me implements Node {
     last: Int
   ): UserAddressConnection
 
+  # A connection of artist recommendations for the current user.
+  artistRecommendations(
+    after: String
+    before: String
+    first: Int
+    last: Int
+    page: Int
+  ): ArtistConnection
+
   # A list of the current user’s inquiry requests
   artworkInquiriesConnection(
     after: String
@@ -8506,6 +8582,7 @@ type Me implements Node {
   # The user's most current pending identity verification, if it exists
   pendingIdentityVerification: IdentityVerification
   phone: String
+  phoneNumber: PhoneNumberType
   priceRange: String
   priceRangeMax: Float
   priceRangeMin: Float
@@ -8973,6 +9050,11 @@ type Mutation {
   updateConversation(
     input: UpdateConversationMutationInput!
   ): UpdateConversationMutationPayload
+
+  # Updates the logged in user's password
+  updateMyPassword(
+    input: UpdateMyPasswordMutationInput!
+  ): UpdateMyPasswordMutationPayload
 
   # Update the current logged in user.
   updateMyUserProfile(input: UpdateMyProfileInput!): UpdateMyProfilePayload
@@ -9851,6 +9933,29 @@ enum PartnersSortType {
 }
 
 union PartnerTypes = ExternalPartner | Partner
+
+enum PhoneNumberErrors {
+  INVALID_COUNTRY_CODE
+  INVALID_NUMBER
+  TOO_LONG
+  TOO_SHORT
+}
+
+enum PhoneNumberFormats {
+  E164
+  INTERNATIONAL
+  NATIONAL
+  RFC3966
+}
+
+type PhoneNumberType {
+  countryCode: String
+  display(format: PhoneNumberFormats): String
+  error: PhoneNumberErrors
+  isValid: Boolean
+  originalNumber: String
+  regionCode: String
+}
 
 # The connection type for MarketPriceInsights.
 type PriceInsightConnection {
@@ -10796,6 +10901,9 @@ type Query {
     type: [PartnerClassification]
   ): PartnerConnection
 
+  # Phone number information
+  phoneNumber(phoneNumber: String!, regionCode: String): PhoneNumberType
+
   # Get all price insights for an artist.
   priceInsights(
     # Returns the elements in the list that come after the specified cursor.
@@ -11700,6 +11808,7 @@ type SearchCriteria {
   offerable: Boolean
   partnerIDs: [String!]!
   priceRange: String
+  sizes: [ArtworkSizes]
   userAlertSettings: SavedSearchUserAlertSettings!
   width: String
 }
@@ -11721,6 +11830,7 @@ input SearchCriteriaAttributes {
   offerable: Boolean = null
   partnerIDs: [String!] = []
   priceRange: String = null
+  sizes: [ArtworkSizes] = []
   width: String = null
 }
 
@@ -11958,7 +12068,10 @@ type Show implements EntityWithFilterArtworksConnectionInterface & Node {
   events: [ShowEventType]
 
   # A formatted description of the start to end dates
-  exhibitionPeriod: String
+  exhibitionPeriod(
+    # Formatting option to apply to exhibition period
+    format: ExhibitionPeriodFormat
+  ): String
 
   # If the show is in a Fair, then that fair
   fair: Fair
@@ -12202,7 +12315,10 @@ type ShowEventType {
   eventType: String
 
   # A formatted description of the start to end dates
-  exhibitionPeriod: String
+  exhibitionPeriod(
+    # Formatting option to apply to exhibition period
+    format: ExhibitionPeriodFormat
+  ): String
   startAt(
     format: String
 
@@ -12624,6 +12740,18 @@ type UpdateConversationMutationPayload {
   conversation: Conversation
 }
 
+input UpdateMyPasswordMutationInput {
+  clientMutationId: String
+  currentPassword: String!
+  newPassword: String!
+  passwordConfirmation: String!
+}
+
+type UpdateMyPasswordMutationPayload {
+  clientMutationId: String
+  me: Me!
+}
+
 input UpdateMyProfileInput {
   # Number of artworks purchased per year.
   artworksPerYear: String
@@ -12782,6 +12910,7 @@ input UpdateSubmissionMutationInput {
   medium: String
   minimumPriceDollars: Int
   provenance: String
+  sessionID: String
   signature: Boolean
   state: ConsignmentSubmissionStateAggregation
   title: String
@@ -13516,6 +13645,9 @@ type Viewer {
     sort: PartnersSortType
     type: [PartnerClassification]
   ): PartnerConnection
+
+  # Phone number information
+  phoneNumber(phoneNumber: String!, regionCode: String): PhoneNumberType
 
   # A requested location
   requestLocation(ip: String!): RequestLocation

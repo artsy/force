@@ -1,6 +1,6 @@
 import { isCustomEditorial } from "./editorial_features"
 const { stringifyJSONForWeb } = require("desktop/components/util/json.coffee")
-const Article = require("desktop/models/article.coffee")
+const { Article } = require("desktop/models/article")
 
 // Helper method to determine how frequently ads should be rendered in Article components
 export const shouldAdRender = (

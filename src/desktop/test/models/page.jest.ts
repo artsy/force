@@ -1,4 +1,4 @@
-const Page = require("desktop/models/page.coffee")
+const { Page } = require("desktop/models/page")
 
 describe("Page", () => {
   it("can sanitize text to html", () => {

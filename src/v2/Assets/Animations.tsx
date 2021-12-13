@@ -43,3 +43,15 @@ export const shrinkAndFadeOut = height => keyframes`
     height: 0;
   }
 `
+
+export const resizeSquare = (prevSize, size) => keyframes`
+  from {
+    width: ${prevSize};
+    height: ${prevSize};
+  }
+
+  to {
+    width: ${size};
+    height: ${size};
+  }
+`

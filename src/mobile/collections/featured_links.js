@@ -9,7 +9,7 @@ let _FeaturedLinks
 const Backbone = require("backbone")
 const sd = require("sharify").data
 const _ = require("underscore")
-const FeaturedLink = require("../models/featured_link")
+const { FeaturedLink } = require("../models/featured_link")
 const { Fetch } = require("@artsy/backbone-mixins")
 
 export default _FeaturedLinks = (function () {

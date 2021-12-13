@@ -18,7 +18,7 @@ export type settingsRoutes_SettingsQuery = {
 
 /*
 query settingsRoutes_SettingsQuery {
-  me {
+  me @principalField {
     ...SettingsApp_me
     id
   }
@@ -93,8 +93,8 @@ const node: ConcreteRequest = {
     "metadata": {},
     "name": "settingsRoutes_SettingsQuery",
     "operationKind": "query",
-    "text": "query settingsRoutes_SettingsQuery {\n  me {\n    ...SettingsApp_me\n    id\n  }\n}\n\nfragment SettingsApp_me on Me {\n  name\n}\n"
+    "text": "query settingsRoutes_SettingsQuery {\n  me @principalField {\n    ...SettingsApp_me\n    id\n  }\n}\n\nfragment SettingsApp_me on Me {\n  name\n}\n"
   }
 };
-(node as any).hash = '41ffd02fc8cd23db2c073a63982eb3c0';
+(node as any).hash = '2110a4436f8f780bd8c2218f9081f92f';
 export default node;

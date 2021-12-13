@@ -15,7 +15,7 @@ import {
   mjsLoader,
 } from "./sharedLoaders"
 
-export const legacySharedConfig = {
+export const legacySharedConfig = () => ({
   devtool,
   externals,
   mode,
@@ -101,7 +101,7 @@ export const legacySharedConfig = {
     path: path.resolve(basePath, "public/assets"),
     publicPath: "/assets/",
   },
-  plugins: [...sharedPlugins, new LoadablePlugin()],
+  plugins: [...sharedPlugins(), new LoadablePlugin()],
   resolve,
   stats,
-}
+})

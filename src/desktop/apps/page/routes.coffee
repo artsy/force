@@ -1,4 +1,4 @@
-Page = require '../../models/page'
+{ Page } = require '../../models/page'
 
 @vanityUrl = (id) ->
   (req, res) ->

@@ -24,7 +24,7 @@ describe("Article", function () {
     Article.__set__("ARTSY_EDITORIAL_CHANNEL", "5759e3efb5989e6f98f77993")
     Article.__set__
     sinon.stub(Backbone, "sync").returns(Promise.resolve())
-    return (this.article = new Article())
+    return (this.article = new Article.Article())
   })
 
   afterEach(() => Backbone.sync.restore())

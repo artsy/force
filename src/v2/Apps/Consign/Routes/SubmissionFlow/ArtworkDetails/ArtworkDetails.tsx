@@ -8,7 +8,7 @@ import {
 } from "./Components/ArtworkDetailsForm"
 import { useRouter } from "v2/System/Router/useRouter"
 import uuid from "uuid"
-import { useSubmission } from "../Utils/useSubmission"
+import { useSubmission, UtmParams } from "../Utils/useSubmission"
 import { artworkDetailsValidationSchema } from "../Utils/validation"
 import { BackLink } from "v2/Components/Links/BackLink"
 
@@ -25,6 +25,7 @@ export const ArtworkDetails: React.FC = () => {
 
   const handleSubmit = (values: ArtworkDetailsFormModel) => {
     const isLimitedEditionRarity = values.rarity === "limited edition"
+    const utmParamsData = sessionStorage.getItem("utmParams")
 
     const artworkDetailsForm = {
       ...values,
@@ -41,14 +42,20 @@ export const ArtworkDetails: React.FC = () => {
       }
     }
 
-    saveSubmission(
-      submission
-        ? {
-            ...submission,
-            artworkDetailsForm,
-          }
-        : { artworkDetailsForm }
-    )
+    if (utmParamsData) {
+      const utmParams: UtmParams = utmParamsData && JSON.parse(utmParamsData)
+      saveSubmission(
+        submission
+          ? { ...submission, artworkDetailsForm, utmParams }
+          : { artworkDetailsForm, utmParams }
+      )
+    } else {
+      saveSubmission(
+        submission
+          ? { ...submission, artworkDetailsForm }
+          : { artworkDetailsForm }
+      )
+    }
 
     router.replace({
       pathname: `/consign/submission/${submissionId}/artwork-details`,
@@ -74,8 +81,8 @@ export const ArtworkDetails: React.FC = () => {
         &#8226; All fields are required to submit a work.
       </Text>
       <Text mb={[2, 6]} variant="sm" color="black60">
-        &#8226; Unfortunately we are not accepting consignments directly from
-        artists at this time.
+        &#8226; We currently do not allow artists to sell their own work on
+        Artsy.
       </Text>
 
       <Formik<ArtworkDetailsFormModel>

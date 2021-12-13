@@ -30,6 +30,7 @@ describe("PasswordView", function () {
     sinon.stub(_, "delay", cb => cb())
 
     this.user = new CurrentUser(fabricate("user"))
+
     this.view = new PasswordView({ user: this.user })
     return this.view.render()
   })

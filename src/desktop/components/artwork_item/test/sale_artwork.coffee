@@ -4,8 +4,8 @@ sinon = require 'sinon'
 Backbone = require 'backbone'
 { fabricate } = require '@artsy/antigravity'
 { resolve } = require 'path'
-Artwork = require '../../../models/artwork'
-Sale = require '../../../models/sale'
+{ Artwork } = require '../../../models/artwork'
+{ Sale } = require '../../../models/sale'
 { mediator } = require '../../../../lib/mediator'
 
 describe 'SaleArtworks', ->

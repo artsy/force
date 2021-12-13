@@ -27,7 +27,7 @@ import {
   stats,
 } from "./sharedConfig"
 
-export const clientProductionConfig = {
+export const clientProductionConfig = () => ({
   devtool: productionDevtool,
   entry: {
     "artsy-entry": [path.resolve(process.cwd(), "src/v2/client.tsx")],
@@ -51,7 +51,7 @@ export const clientProductionConfig = {
     publicPath: "/assets/",
   },
   plugins: [
-    ...sharedPlugins,
+    ...sharedPlugins(),
     new LoadablePlugin({
       filename: "loadable-novo-stats.json",
       path: path.resolve(basePath, "public", "assets"),
@@ -74,4 +74,4 @@ export const clientProductionConfig = {
   ],
   resolve,
   stats,
-}
+})

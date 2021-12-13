@@ -23,6 +23,9 @@ declare global {
         reset: (path) => void
       }
     ]
+    OnetrustActiveGroups: string
+    Optanon: any
+    OptanonWrapper: () => void
     // Zendesk integration for artwork app
     zEmbed: {
       show: () => void

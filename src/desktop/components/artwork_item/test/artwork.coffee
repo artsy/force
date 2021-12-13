@@ -3,10 +3,10 @@ fs = require 'fs'
 jade = require 'jade'
 path = require 'path'
 { fabricate } = require '@artsy/antigravity'
-Artwork = require '../../../models/artwork'
+{ Artwork } = require '../../../models/artwork'
 { Artists } = require '../../../collections/artists'
-Artist = require '../../../models/artist'
-SaleArtwork = require '../../../models/sale_artwork'
+{ Artist } = require '../../../models/artist'
+{ SaleArtwork } = require '../../../models/sale_artwork'
 
 render = (template) ->
   filename = path.resolve __dirname, "../templates/#{template}.jade"

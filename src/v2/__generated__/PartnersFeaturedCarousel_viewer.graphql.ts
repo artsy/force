@@ -5,10 +5,14 @@ import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type PartnersFeaturedCarousel_viewer = {
     readonly orderedSet: {
-        readonly items: ReadonlyArray<{
-            readonly internalID?: string;
-            readonly " $fragmentRefs": FragmentRefs<"PartnersFeaturedCarouselCell_profile">;
-        } | null> | null;
+        readonly orderedItemsConnection: {
+            readonly edges: ReadonlyArray<{
+                readonly node: {
+                    readonly internalID?: string;
+                    readonly " $fragmentRefs": FragmentRefs<"PartnersFeaturedCarouselCell_profile">;
+                } | null;
+            } | null> | null;
+        };
     } | null;
     readonly " $refType": "PartnersFeaturedCarousel_viewer";
 };
@@ -49,32 +53,60 @@ const node: ReaderFragment = {
       "selections": [
         {
           "alias": null,
-          "args": null,
-          "concreteType": null,
+          "args": [
+            {
+              "kind": "Literal",
+              "name": "first",
+              "value": 50
+            }
+          ],
+          "concreteType": "OrderedSetItemConnection",
           "kind": "LinkedField",
-          "name": "items",
-          "plural": true,
+          "name": "orderedItemsConnection",
+          "plural": false,
           "selections": [
             {
-              "kind": "InlineFragment",
+              "alias": null,
+              "args": null,
+              "concreteType": "OrderedSetItemEdge",
+              "kind": "LinkedField",
+              "name": "edges",
+              "plural": true,
               "selections": [
                 {
                   "alias": null,
                   "args": null,
-                  "kind": "ScalarField",
-                  "name": "internalID",
+                  "concreteType": null,
+                  "kind": "LinkedField",
+                  "name": "node",
+                  "plural": false,
+                  "selections": [
+                    {
+                      "kind": "InlineFragment",
+                      "selections": [
+                        {
+                          "alias": null,
+                          "args": null,
+                          "kind": "ScalarField",
+                          "name": "internalID",
+                          "storageKey": null
+                        },
+                        {
+                          "args": null,
+                          "kind": "FragmentSpread",
+                          "name": "PartnersFeaturedCarouselCell_profile"
+                        }
+                      ],
+                      "type": "Profile"
+                    }
+                  ],
                   "storageKey": null
-                },
-                {
-                  "args": null,
-                  "kind": "FragmentSpread",
-                  "name": "PartnersFeaturedCarouselCell_profile"
                 }
               ],
-              "type": "Profile"
+              "storageKey": null
             }
           ],
-          "storageKey": null
+          "storageKey": "orderedItemsConnection(first:50)"
         }
       ],
       "storageKey": null
@@ -82,5 +114,5 @@ const node: ReaderFragment = {
   ],
   "type": "Viewer"
 };
-(node as any).hash = '7a1ee54071a4522594bd6513970e63a7';
+(node as any).hash = '3cde7259fe9f6d1b5010399bf2c6b469';
 export default node;

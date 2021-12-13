@@ -9,7 +9,7 @@ const path = require("path")
 const jade = require("jade")
 const fs = require("fs")
 const moment = require("moment")
-const Article = require("../../../models/article")
+const { Article } = require("../../../models/article")
 const { Articles } = require("../../../collections/articles")
 
 const render = function (templateName) {

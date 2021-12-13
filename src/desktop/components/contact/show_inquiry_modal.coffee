@@ -3,8 +3,8 @@ Backbone = require 'backbone'
 ContactView = require './view.coffee'
 FlashMessage = require '../flash/index.coffee'
 openInquiryQuestionnaireFor = require '../inquiry_questionnaire/index.coffee'
-User = require '../../models/user.coffee'
-Partner = require '../../models/partner.coffee'
+{ User } = require '../../models/user'
+{ Partner } = require '../../models/partner'
 { SESSION_ID, API_URL } = require('sharify').data
 
 formTemplate = -> require('./templates/inquiry_show_form.jade') arguments...

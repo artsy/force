@@ -7,7 +7,7 @@ const _ = require("underscore")
 const jade = require("jade")
 const path = require("path")
 const fs = require("fs")
-const Article = require("../../../../models/article")
+const { Article } = require("../../../../models/article")
 const fixtures = require("../../../../test/helpers/fixtures")
 
 describe("Article template", function () {

@@ -1,9 +1,9 @@
 import { EntityHeader, Join, Spacer } from "@artsy/palette"
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ContextModule } from "@artsy/cohesion"
 import { ArtworkSidebarArtists_artwork } from "v2/__generated__/ArtworkSidebarArtists_artwork.graphql"
-import { FollowArtistButtonFragmentContainer as FollowArtistButton } from "v2/Components/FollowButton/FollowArtistButton"
+import { FollowArtistButtonFragmentContainer } from "v2/Components/FollowButton/FollowArtistButton"
 
 export interface ArtistsProps {
   artwork: ArtworkSidebarArtists_artwork
@@ -30,14 +30,14 @@ export const ArtworkSidebarArtists: React.FC<ArtistsProps> = ({
               srcSet: artist.avatar?.cropped?.srcSet,
             }}
             FollowButton={
-              <FollowArtistButton
+              <FollowArtistButtonFragmentContainer
                 artist={artist}
                 contextModule={ContextModule.artworkSidebar}
                 triggerSuggestions
                 buttonProps={{ size: "small", variant: "secondaryOutline" }}
               >
                 Follow
-              </FollowArtistButton>
+              </FollowArtistButtonFragmentContainer>
             }
           />
         )

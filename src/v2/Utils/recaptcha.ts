@@ -5,7 +5,7 @@ const logger = createLogger("recaptcha.ts")
 
 export const recaptcha = (action: RecaptchaAction, cb?: any) => {
   if (sd.RECAPTCHA_KEY) {
-    window.grecaptcha.ready(async () => {
+    window.grecaptcha?.ready(async () => {
       try {
         const token = await window.grecaptcha.execute(sd.RECAPTCHA_KEY, {
           action,
@@ -16,14 +16,14 @@ export const recaptcha = (action: RecaptchaAction, cb?: any) => {
         if (action === "signup_submit") {
           logger.warn("Signup submitted without Recaptcha Token")
         }
-        cb && cb()
+        cb?.()
       }
     })
   } else {
     if (action === "signup_submit") {
       logger.warn("Signup submitted without Recaptcha Key")
     }
-    cb && cb()
+    cb?.()
   }
 }
 
@@ -36,3 +36,4 @@ export type RecaptchaAction =
   | "inquiry_register_impression"
   | "login_submit"
   | "signup_submit"
+  | "submission_submit"

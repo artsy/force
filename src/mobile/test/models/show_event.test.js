@@ -4,7 +4,7 @@
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/master/docs/suggestions.md
  */
 const { fabricate } = require("@artsy/antigravity")
-const Show = require("../../models/show")
+const { Show } = require("../../models/show")
 
 describe("ShowEvent", function () {
   beforeEach(function () {

@@ -1,9 +1,9 @@
 _ = require 'underscore'
 sd = require('sharify').data
 qs = require 'querystring'
-bootstrap = require '../../components/layout/bootstrap.coffee'
+{ bootstrap } = require '../../components/layout/bootstrap'
 Backbone = require 'backbone'
-Tag = require '../../models/tag.coffee'
+{ Tag } = require '../../models/tag'
 { Artworks } = require '../../collections/artworks'
 artworkColumnsTemplate = -> require('../../components/artwork_columns/template.jade') arguments...
 

@@ -1,8 +1,8 @@
 ## Creating a Force Review App
 
-If you want to create a deploy for a WIP feature or for QA, Hokusai supports [Review Apps](https://github.com/artsy/hokusai/blob/master/docs/Review_Apps.md).
+If you want to create a deploy for a WIP feature or for QA, Hokusai supports [Review Apps](https://github.com/artsy/hokusai/blob/main/docs/Review_Apps.md).
 
-You can create a review app via CircleCI which runs the [`build_review_app.sh`](https://github.com/artsy/force/blob/master/scripts/build_review_app.sh) script. Or, you can run that script locally, which will be slower because it involves building the docker image locally and pushing it up to AWS ECR.
+You can create a review app via CircleCI which runs the [`build_review_app.sh`](https://github.com/artsy/force/blob/main/scripts/build_review_app.sh) script. Or, you can run that script locally, which will be slower because it involves building the docker image locally and pushing it up to AWS ECR.
 
 The rest of the doc assumes you are working with a review app called `awesome-feature`.
 
@@ -15,7 +15,7 @@ CircleCI will match the `review-app-` prefix and either:
 1. Create a review app using `build_review_app.sh` if the review app doesn't
    exist yet (i.e. first successful push of the branch), or
 2. Update an existing review app using `update_review_app.sh`
-3. Once CI is complete follow [this step](https://github.com/artsy/force/blob/master/docs/creating_review_app.md#accessing-the-review-app) to setup DNS.
+3. Once CI is complete follow [this step](https://github.com/artsy/force/blob/main/docs/creating_review_app.md#accessing-the-review-app) to setup DNS.
 
 ### Building on Local
 
@@ -83,4 +83,4 @@ Delete its DNS entry by:
 
 For more info on Review App maintenence, [see Hokusai docs](https://github.com/artsy/hokusai/blob/master/docs/Review_Apps.md).
 
-Read over the [`build_review_app.sh`](https://github.com/artsy/force/blob/master/scripts/build_review_app.sh) script for more info on how this is all done.
+Read over the [`build_review_app.sh`](https://github.com/artsy/force/blob/main/scripts/build_review_app.sh) script for more info on how this is all done.

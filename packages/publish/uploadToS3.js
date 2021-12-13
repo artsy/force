@@ -42,7 +42,7 @@ const generateHeaders = file => {
 
 console.log(chalk.green("[uploadToS3] Starting S3 sync...\n"))
 
-files.forEach((file, index) => {
+files.forEach(file => {
   const s3Path = last(file.split(options.root)).substring(1)
   const uploader = client.uploadFile({
     localFile: file,
@@ -55,6 +55,7 @@ files.forEach((file, index) => {
     },
   })
 
+  const start = Date.now()
   uploader.on("error", err => {
     console.error(
       chalk.red(`[uploadToS3] Error uploading ${s3Path}.\n`),
@@ -64,10 +65,16 @@ files.forEach((file, index) => {
   })
 
   uploader.on("progress", () => {
-    // If we need more detailed logging, can tap into uploader.progressAmount
+    const now = Date.now()
+    console.log(
+      `[uploadToS3] ${s3Path} ${uploader.progressAmount} ${
+        uploader.progressTotal
+      } - ${now - start}ms`
+    )
   })
 
   uploader.on("end", () => {
-    console.log(`[uploadToS3] ${s3Path}`)
+    const now = Date.now()
+    console.log(`[uploadToS3] ${s3Path} - ${now - start}ms`)
   })
 })

@@ -29,6 +29,11 @@ const { routes, routePaths } = getRouteConfig()
 app.get(
   routePaths,
   async (req: ArtsyRequest, res: ArtsyResponse, next: NextFunction) => {
+    if (res.locals.cachedPageAvailable) {
+      res.send(res.locals.cachedPageData)
+      return
+    }
+
     try {
       const {
         status,

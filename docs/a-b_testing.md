@@ -2,7 +2,7 @@
 
 > Note: Apologies about the following examples being written in CoffeeScript; this lib code is very old!
 
-The [A/B Test component](https://github.com/artsy/force/blob/master/src/desktop/components/split_test) enables the bucketing of users into categories. When a test is enabled, a cookie is set for each user that is also stored on the window via sharify. The cookie/SD var's name is based on the test name, and its value is set to one of the test's possible outcomes. Engineers can expose multiple variations of features, content, components etc. by hooking into a test outcome.
+The [A/B Test component](https://github.com/artsy/force/blob/main/src/desktop/components/split_test) enables the bucketing of users into categories. When a test is enabled, a cookie is set for each user that is also stored on the window via sharify. The cookie/SD var's name is based on the test name, and its value is set to one of the test's possible outcomes. Engineers can expose multiple variations of features, content, components etc. by hooking into a test outcome.
 
 Rolling out a test requires a few steps:
 

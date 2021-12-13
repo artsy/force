@@ -13,15 +13,15 @@ const CookiesSetMock = require("desktop/components/cookies/index")
 const CookiesGetMock = require("desktop/components/cookies/index")
   .get as jest.Mock
 
-jest.mock("lib/metaphysics2.coffee", () =>
-  jest.fn().mockReturnValue(Promise.resolve({}))
-)
+jest.mock("lib/metaphysics2", () => ({
+  metaphysics2: jest.fn().mockReturnValue(Promise.resolve({}))
+}))
 
 jest.spyOn(helpers, "handleScrollingAuthModal")
 
 const handleScrollingAuthModal = require("desktop/lib/openAuthModal")
   .handleScrollingAuthModal
-const mockMetaphysics = require("lib/metaphysics2.coffee")
+const { metaphysics2: mockMetaphysics } = require("lib/metaphysics2")
 
 jest.mock("sharify", () => ({
   data: {

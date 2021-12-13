@@ -1,14 +1,14 @@
 _ = require 'underscore'
 { Artworks } = require '../../collections/artworks'
-Artist = require '../../models/artist'
+{ Artist } = require '../../models/artist'
 { PartnerShows } = require '../../collections/partner_shows'
-Partner = require '../../models/partner'
+{ Partner } = require '../../models/partner'
 { ACTIVE_PARTNER_LAYOUTS } = require '../../models/partner'
 { Articles } = require '../../collections/articles'
-Article = require '../../models/article'
+{ Article } = require '../../models/article'
 embed = require 'embed-video'
-{ stringifyJSONForWeb } = require '../../components/util/json.coffee'
-{ crop, resize } = require '../../components/resizer/index.coffee'
+{ stringifyJSONForWeb } = require '../../components/util/json'
+{ resizer: { crop, resize } } = require '../../components/resizer/index'
 
 partnerFromProfile = (req) ->
   if req.profile?.isPartner()

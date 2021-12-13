@@ -5,7 +5,7 @@ export const artworkDetailsValidationSchema = yup.object().shape({
   artistId: yup
     .string()
     .required(
-      "Unfortunately, we currently do not have enough demand for this artist’s work to be consigned."
+      "Unfortunately, we currently do not have enough demand for this artist’s work to be submitted."
     ),
   year: yup.string().required().trim(),
   title: yup.string().required().trim(),
@@ -36,19 +36,21 @@ export const artworkDetailsValidationSchema = yup.object().shape({
     .trim(),
   units: yup.string().required(),
   provenance: yup.string().trim(),
+  location: yup.string().required().trim(),
+  // locationId: yup.string().test((value, ctx) =>
+  //   value
+  //     ? true
+  //     : ctx.createError({
+  //         message: `Could not find ${ctx.parent.location}`,
+  //       })
+  // ),
 })
 
-/*
-this validation currently not in use until we find a workaround
-formik is checking whether errorMessage found for a photo under the hood
-and invalidates form submission if errorMessage exists
-
-The check is currently moved to UploadPhotos.tsx's Button directly
-*/
 export const uploadPhotosValidationSchema = yup.object().shape({
   photos: yup
     .array()
     .min(1)
+    .transform(fields => fields.filter(c => !c.errorMessage))
     .of(
       yup.object().shape({
         s3Key: yup.string().required(),
@@ -57,7 +59,15 @@ export const uploadPhotosValidationSchema = yup.object().shape({
 })
 
 export const contactInformationValidationSchema = yup.object().shape({
-  name: yup.string().label("Name").required(),
-  email,
-  phone: yup.string().label("Phone number").required(),
+  name: yup.string().label("Name").required().trim(),
+  email: email.trim(),
+  phone: yup
+    .object()
+    .label("Phone number")
+    .required()
+    .test(
+      "phone-number",
+      "Please enter a valid phone number",
+      value => value.isValid
+    ),
 })

@@ -1,5 +1,5 @@
 import { Checkbox, Flex, useThemeConfig } from "@artsy/palette"
-import { isEmpty } from "lodash"
+import { entries, isEmpty } from "lodash"
 import { FC } from "react"
 import {
   ArtworkFilters,
@@ -17,6 +17,25 @@ export interface WaysToBuyFilterProps {
   expanded?: boolean
 }
 
+export const WAYS_TO_BUY_OPTIONS = {
+  acquireable: {
+    name: "Buy Now",
+    countName: "ecommerce_artworks",
+  },
+  offerable: {
+    name: "Make Offer",
+    countName: "has_make_offer_artworks",
+  },
+  atAuction: {
+    name: "Bid",
+    countName: "auction_artworks",
+  },
+  inquireableOnly: {
+    name: "Inquire",
+    countName: "for_sale_artworks",
+  },
+}
+
 export const WaysToBuyFilter: FC<WaysToBuyFilterProps> = ({ expanded }) => {
   const filterContext = useArtworkFilterContext()
 
@@ -31,32 +50,17 @@ export const WaysToBuyFilter: FC<WaysToBuyFilterProps> = ({ expanded }) => {
     return !Boolean(condition)
   }
 
-  const checkboxes: WayToBuy[] = [
-    {
-      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-      disabled: isDisabled(filterContext.counts.ecommerce_artworks),
-      name: "Buy Now",
-      state: "acquireable",
+  const checkboxes: WayToBuy[] = entries(WAYS_TO_BUY_OPTIONS).reduce(
+    (acc, [state, value]) => {
+      acc.push({
+        state: state as keyof ArtworkFilters,
+        name: value.name,
+        disabled: isDisabled(filterContext.counts?.[value.countName]),
+      })
+      return acc
     },
-    {
-      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-      disabled: isDisabled(filterContext.counts.has_make_offer_artworks),
-      name: "Make Offer",
-      state: "offerable",
-    },
-    {
-      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-      disabled: isDisabled(filterContext.counts.auction_artworks),
-      name: "Bid",
-      state: "atAuction",
-    },
-    {
-      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-      disabled: isDisabled(filterContext.counts.for_sale_artworks),
-      name: "Inquire",
-      state: "inquireableOnly",
-    },
-  ]
+    [] as WayToBuy[]
+  )
 
   const tokens = useThemeConfig({
     v2: { my: 0.5 },

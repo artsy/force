@@ -10,7 +10,7 @@ import moment from "moment"
 import Waypoint from "react-waypoint"
 import { Environment } from "react-relay"
 import { SystemContextProvider } from "@artsy/reaction/dist/Artsy"
-const fixtures = require("desktop/test/helpers/fixtures.coffee")
+const fixtures = require("desktop/test/helpers/fixtures")
 
 jest.mock("lodash/debounce", () => jest.fn(e => e))
 jest.mock("desktop/lib/positronql", () => ({

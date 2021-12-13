@@ -2,6 +2,7 @@ import { mount } from "enzyme"
 import { ArtworkDetails } from "../ArtworkDetails"
 import {
   ArtworkDetailsForm,
+  ArtworkDetailsFormModel,
   getArtworkDetailsFormInitialValues,
 } from "../Components/ArtworkDetailsForm"
 import {
@@ -13,7 +14,7 @@ import { MockBoot } from "v2/DevTools"
 import { Breakpoint } from "v2/Utils/Responsive"
 import { flushPromiseQueue } from "v2/DevTools"
 
-const validForm = {
+const validForm: ArtworkDetailsFormModel = {
   artistId: "artistId",
   artistName: "Banksy",
   year: "2021",
@@ -27,9 +28,11 @@ const validForm = {
   depth: "5",
   units: "cm",
   provenance: "provenance",
+  location: "NY, USA",
+  locationId: "locationId",
 }
 
-const validFormWithSpaces = {
+const validFormWithSpaces: ArtworkDetailsFormModel = {
   artistId: "artistId",
   artistName: "Banksy",
   year: " 2021 ",
@@ -43,29 +46,24 @@ const validFormWithSpaces = {
   depth: " 5 ",
   units: " cm ",
   provenance: "  provenance  ",
+  location: "  NY, USA  ",
+  locationId: "locationId",
 }
+
+const utmParams = { utmMedium: "Medium", utmSource: "Source", utmTerm: "Term" }
 
 const mockRouterPush = jest.fn()
 const mockRouterReplace = jest.fn()
-jest.mock("v2/System/Router/useRouter", () => {
-  return {
-    useRouter: jest.fn(() => {
-      return {
-        router: { push: mockRouterPush, replace: mockRouterReplace },
-        match: { params: { id: "1" } },
-      }
-    }),
-  }
-})
+jest.mock("v2/System/Router/useRouter", () => ({
+  useRouter: jest.fn(() => ({
+    router: { push: mockRouterPush, replace: mockRouterReplace },
+    match: { params: { id: "1" } },
+  })),
+}))
 
-let sessionStore = { "submission-1": JSON.stringify({ artistId: "artistId" }) }
+let sessionStore = {}
 Object.defineProperty(window, "sessionStorage", {
-  value: {
-    getItem(key) {
-      return sessionStore[key] || null
-    },
-    setItem: jest.fn(),
-  },
+  value: { getItem: key => sessionStore[key] || null, setItem: jest.fn() },
 })
 
 const getWrapper = (breakpoint: Breakpoint = "lg") =>
@@ -83,6 +81,7 @@ describe("ArtworkDetails", () => {
       }),
     }
   })
+
   describe("Initial render", () => {
     it("renders correctly", async () => {
       const wrapper = getWrapper()
@@ -103,7 +102,7 @@ describe("ArtworkDetails", () => {
       expect(text).toContain("Tell us about your artwork")
       expect(text).toContain("All fields are required to submit a work.")
       expect(text).toContain(
-        "Unfortunately we are not accepting consignments directly from artists at this time."
+        "We currently do not allow artists to sell their own work on Artsy."
       )
       expect(wrapper.find(ArtworkDetailsForm)).toBeTruthy()
       expect(wrapper.find("[data-test-id='save-button']")).toBeTruthy()
@@ -122,7 +121,7 @@ describe("ArtworkDetails", () => {
       wrapper.update()
 
       expect(
-        wrapper.find("input[data-test-id='autosuggest-input']").prop("value")
+        wrapper.find("input[data-test-id='autocomplete-input']").prop("value")
       ).toBe("Banksy")
 
       expect(wrapper.find("input[name='year']").prop("value")).toBe("2021")
@@ -146,6 +145,11 @@ describe("ArtworkDetails", () => {
       expect(wrapper.find("input[name='provenance']").prop("value")).toBe(
         "provenance"
       )
+      // expect(
+      //   wrapper
+      //     .find("input[data-test-id='autocomplete-location']")
+      //     .prop("value")
+      // ).toBe("NY, USA")
     })
 
     describe("Correct steps", () => {
@@ -225,7 +229,7 @@ describe("ArtworkDetails", () => {
         })
       })
 
-      it("data is saved in session storage and submition created", async () => {
+      it("data without UTM params is saved in session storage and submition created", async () => {
         sessionStore = {
           "submission-1": JSON.stringify({
             artworkDetailsForm: { ...validForm },
@@ -244,12 +248,34 @@ describe("ArtworkDetails", () => {
         )
       })
 
+      it("data with UTM params is saved in session storage and submition created", async () => {
+        sessionStore = {
+          "submission-1": JSON.stringify({
+            artworkDetailsForm: { ...validForm },
+          }),
+          utmParams: JSON.stringify(utmParams),
+        }
+
+        const wrapper = getWrapper()
+        await flushPromiseQueue()
+
+        wrapper.find("Form").simulate("submit")
+
+        await flushPromiseQueue()
+
+        expect(sessionStorage.setItem).toHaveBeenCalledWith(
+          "submission-1",
+          JSON.stringify({ artworkDetailsForm: { ...validForm }, utmParams })
+        )
+      })
+
       it("delete spaces before saving to session storage", async () => {
         sessionStore = {
           "submission-1": JSON.stringify({
             artworkDetailsForm: { ...validFormWithSpaces },
           }),
         }
+
         const wrapper = getWrapper()
         await flushPromiseQueue()
 
