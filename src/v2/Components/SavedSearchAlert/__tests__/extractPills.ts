@@ -1,5 +1,5 @@
-import { SavedSearchAttributes } from "../../SavedSearch/types"
-import { getArtistPillFromAttributes } from "../getArtistPillFromAttributes"
+import { SavedSearchAttributes } from "v2/Components/ArtworkFilter/SavedSearch/types"
+import { extractArtistPill } from "../Utils/extractPills"
 
 describe("getArtistPillFromAttributes", () => {
   it("returns artist pill", () => {
@@ -10,7 +10,7 @@ describe("getArtistPillFromAttributes", () => {
       id: "id",
     }
 
-    expect(getArtistPillFromAttributes(attributes)).toEqual({
+    expect(extractArtistPill(attributes)).toEqual({
       isDefault: true,
       name: "slug",
       displayName: "name",
@@ -18,7 +18,7 @@ describe("getArtistPillFromAttributes", () => {
   })
 
   it("returns null if nothing is passed", () => {
-    expect(getArtistPillFromAttributes()).toBeNull()
+    expect(extractArtistPill()).toBeNull()
   })
 
   it("returns null if required fields are not passed", () => {
@@ -28,6 +28,6 @@ describe("getArtistPillFromAttributes", () => {
       id: "id",
     } as SavedSearchAttributes
 
-    expect(getArtistPillFromAttributes(attributes)).toBeNull()
+    expect(extractArtistPill(attributes)).toBeNull()
   })
 })

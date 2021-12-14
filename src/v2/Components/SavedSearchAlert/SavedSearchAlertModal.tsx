@@ -28,8 +28,6 @@ import { SavedSearchAttributes } from "../ArtworkFilter/SavedSearch/types"
 import { FilterPill } from "../ArtworkFilter/SavedSearch/Utils/FilterPillsContext"
 import { extractPills } from "./Utils/extractPills"
 import { Pills } from "../ArtworkFilter/SavedSearch/Components/Pills"
-import { getArtistPillFromAttributes } from "../ArtworkFilter/Utils/getArtistPillFromAttributes"
-import { compact } from "lodash"
 
 interface SavedSearchAlertFormProps {
   savedSearchAttributes: SavedSearchAttributes
@@ -55,11 +53,11 @@ export const SavedSearchAlertModal: React.FC<SavedSearchAlertFormProps> = ({
   const filterContext = useArtworkFilterContext()
   const filtersFromContext = filterContext.currentlySelectedFilters!()
   const [filters, setFilters] = useState(filtersFromContext)
-  const pillsFromFilters = extractPills(filters, filterContext.aggregations)
-  const pills = compact([
-    getArtistPillFromAttributes(savedSearchAttributes),
-    ...pillsFromFilters,
-  ])
+  const pills = extractPills(
+    filters,
+    filterContext.aggregations,
+    savedSearchAttributes
+  )
   const namePlaceholder = getNamePlaceholder(name, pills.length)
 
   useEffect(() => {

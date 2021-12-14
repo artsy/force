@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from "react"
-import { compact, isEqual } from "lodash"
+import { isEqual } from "lodash"
 import useDeepCompareEffect from "use-deep-compare-effect"
 import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
 import { useSystemContext } from "v2/System"
@@ -58,12 +58,8 @@ import { CollectionArtworksFilter_collection } from "v2/__generated__/Collection
 import { ArtworkGridFilterPills } from "./SavedSearch/Components/ArtworkGridFilterPills"
 import { SavedSearchAttributes } from "./SavedSearch/types"
 import { extractPills } from "../SavedSearchAlert/Utils/extractPills"
-import {
-  DefaultFilterPill,
-  useFilterPillsContext,
-} from "./SavedSearch/Utils/FilterPillsContext"
+import { useFilterPillsContext } from "./SavedSearch/Utils/FilterPillsContext"
 import { getTotalSelectedFiltersCount } from "./Utils/getTotalSelectedFiltersCount"
-import { getArtistPillFromAttributes } from "./Utils/getArtistPillFromAttributes"
 
 /**
  * Primary ArtworkFilter which is wrapped with a context and refetch container.
@@ -189,21 +185,17 @@ export const BaseArtworkFilter: React.FC<
   const savedSearchAttributes =
     isLoggedIn && savedSearchProps ? savedSearchProps : null
 
-  const defaultPill: DefaultFilterPill | null = useMemo(
-    () => getArtistPillFromAttributes(savedSearchProps),
-    [savedSearchProps]
-  )
-
-  const filterPills = useMemo(
-    () => extractPills(filters, filterContext.aggregations),
-    [filters, filterContext.aggregations]
-  )
-
   const showCreateAlert = enableCreateAlert && !!pills.length
 
   useEffect(() => {
-    setPills?.(compact([defaultPill, ...filterPills]))
-  }, [defaultPill, filterPills])
+    const pills = extractPills(
+      filters,
+      filterContext.aggregations,
+      savedSearchProps
+    )
+
+    setPills?.(pills)
+  }, [savedSearchProps, filters, filterContext.aggregations])
 
   /**
    * Check to see if the mobile action sheet is present and prevent scrolling
