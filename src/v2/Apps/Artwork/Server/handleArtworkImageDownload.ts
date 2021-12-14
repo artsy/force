@@ -1,3 +1,5 @@
+import "isomorphic-fetch"
+
 export const handleArtworkImageDownload = async ({ req, res }) => {
   const { Artwork } = require("desktop/models/artwork")
   const artwork = new Artwork({ id: req.params.artworkID })
@@ -5,12 +7,13 @@ export const handleArtworkImageDownload = async ({ req, res }) => {
     cache: true,
   })
 
-  if (artwork.isDownloadable(req.user)) {
-    const request = require("superagent")
-    const imageRequest = request.get(artwork.downloadableUrl(req.user))
-    if (req.user) {
-      imageRequest.set("X-ACCESS-TOKEN", req.user.get("accessToken"))
-    }
-    res.redirect(302, imageRequest.url)
+  if (req.user && artwork.isDownloadable(req.user)) {
+    const request = await fetch(artwork.downloadableUrl(req.user), {
+      headers: {
+        "X-ACCESS-TOKEN": req.user.get("accessToken"),
+      },
+    })
+
+    res.redirect(302, request.url)
   }
 }
