@@ -147,7 +147,7 @@ export const ArtworkDetailsForm: React.FC = () => {
         <Column span={6}>
           <ArtistAutoComplete onError={() => handleAutosuggestError(true)} />
         </Column>
-        <Column span={6} mt={[2, 0]}>
+        <Column span={6} mt={[30, 0]}>
           <Input
             title="year"
             maxLength={256}
@@ -159,7 +159,7 @@ export const ArtworkDetailsForm: React.FC = () => {
           />
         </Column>
       </GridColumns>
-      <GridColumns mt={[1, 2]}>
+      <GridColumns mt={[4, 2]}>
         <Column span={6}>
           <Input
             title="Title"
@@ -171,7 +171,7 @@ export const ArtworkDetailsForm: React.FC = () => {
             value={values.title}
           />
         </Column>
-        <Column span={6} mt={[1, 0]}>
+        <Column span={6} mt={[30, 0]}>
           <Input
             title="Materials"
             placeholder="Add Materials"
@@ -183,7 +183,7 @@ export const ArtworkDetailsForm: React.FC = () => {
           />
         </Column>
       </GridColumns>
-      <GridColumns mt={[1, 2]}>
+      <GridColumns mt={[4, 2]}>
         <Column span={6}>
           <Flex justifyContent="space-between">
             <Text variant="xs" mb={0.5} textTransform="uppercase">
@@ -209,7 +209,7 @@ export const ArtworkDetailsForm: React.FC = () => {
         </Column>
         <Column span={6}>
           {limitedEditionRarity && (
-            <Flex alignItems="center" mt={[1, 0]}>
+            <Flex alignItems="center" mt={[30, 0]} mb={[1, 0]}>
               <Input
                 title="Edition Number"
                 placeholder="Your Work's #"
@@ -235,7 +235,7 @@ export const ArtworkDetailsForm: React.FC = () => {
           )}
         </Column>
       </GridColumns>
-      <GridColumns mt={[1, 2]}>
+      <GridColumns mt={[30, 2]}>
         <Column span={6}>
           <Flex height="100%">
             <Box width="50%" mr={2} height="100%">
@@ -266,7 +266,7 @@ export const ArtworkDetailsForm: React.FC = () => {
             </Box>
           </Flex>
         </Column>
-        <Column span={6} mt={[1, 0]}>
+        <Column span={6} mt={[30, 0]}>
           <Flex height="100%">
             <Box pr={[0, 1]} width="50%" height="100%">
               <Flex>
@@ -300,7 +300,7 @@ export const ArtworkDetailsForm: React.FC = () => {
           </Flex>
         </Column>
       </GridColumns>
-      <GridColumns mt={[1, 2]}>
+      <GridColumns mt={[4, 2]}>
         <Column span={6}>
           <Flex justifyContent="space-between">
             <Text variant="xs" mb={0.5} textTransform="uppercase">
@@ -326,7 +326,7 @@ export const ArtworkDetailsForm: React.FC = () => {
             value={values.provenance}
           />
         </Column>
-        <Column span={6} mt={[1, 0]}>
+        <Column span={6} mt={[30, 0]}>
           <Input
             title="Location"
             name="location"
