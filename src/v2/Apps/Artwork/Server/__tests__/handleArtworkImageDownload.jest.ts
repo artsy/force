@@ -1,7 +1,7 @@
 import { handleArtworkImageDownload } from "../handleArtworkImageDownload"
 
 jest.mock("desktop/models/artwork", () => {
-  return { 
+  return {
     Artwork: class {
       fetch() {
         return new Promise<void>(resolve => {
@@ -14,11 +14,20 @@ jest.mock("desktop/models/artwork", () => {
       downloadableUrl() {
         return ""
       }
-    }
+    },
   }
 })
 
 describe("artworkMiddleware", () => {
+  beforeAll(() => {
+    // @ts-ignore
+    global.fetch = jest.fn(() => Promise.resolve({ url: "foo" }))
+  })
+
+  afterAll(() => {
+    jest.restoreAllMocks()
+  })
+
   it("returns a downloadable request if downloadable", async () => {
     const spy = jest.fn()
     const req = {
