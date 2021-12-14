@@ -4,7 +4,7 @@ import { FilterPill } from "../Utils/FilterPillsContext"
 
 const CLOSE_ICON_SIZE = 15
 
-interface PillsProps {
+export interface PillsProps {
   items: FilterPill[]
   onDeletePress: (pill: FilterPill) => void
 }
