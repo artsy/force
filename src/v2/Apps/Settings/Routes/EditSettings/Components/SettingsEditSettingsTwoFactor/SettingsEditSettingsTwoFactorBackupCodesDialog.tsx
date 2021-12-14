@@ -45,7 +45,7 @@ const SettingsEditSettingsTwoFactorBackupCodesDialog: FC<SettingsEditSettingsTwo
             backupSecondFactors={me.backupSecondFactors!.map(factor =>
               factor!.code!.toString()
             )}
-          ></SettingsEditSettingsTwoFactorBackupCodesActions>
+          />
         </>
       ) : (
         <Skeleton>
