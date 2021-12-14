@@ -21,7 +21,7 @@ import { useSystemContext } from "v2/System"
 import { useArtworkFilterContext } from "../ArtworkFilter/ArtworkFilterContext"
 import createLogger from "v2/Utils/logger"
 import { SavedSearchAttributes } from "../ArtworkFilter/SavedSearch/types"
-import { FiltersPills } from "../ArtworkFilter/SavedSearch/Components/FiltersPills"
+import { ArtworkGridFilterPills } from "../ArtworkFilter/SavedSearch/Components/ArtworkGridFilterPills"
 import { useFilterPillsContext } from "../ArtworkFilter/SavedSearch/Utils/FilterPillsContext"
 
 interface SavedSearchAlertFormProps {
@@ -128,7 +128,7 @@ export const SavedSearchAlertModal: React.FC<SavedSearchAlertFormProps> = ({
                 Filters
               </Text>
               <Spacer mt={2} />
-              <FiltersPills />
+              <ArtworkGridFilterPills />
             </Box>
 
             <Box>

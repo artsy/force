@@ -55,7 +55,7 @@ import type RelayModernEnvironment from "relay-runtime/lib/store/RelayModernEnvi
 import { TagArtworkFilter_tag } from "v2/__generated__/TagArtworkFilter_tag.graphql"
 import { Works_partner } from "v2/__generated__/Works_partner.graphql"
 import { CollectionArtworksFilter_collection } from "v2/__generated__/CollectionArtworksFilter_collection.graphql"
-import { FiltersPills } from "./SavedSearch/Components/FiltersPills"
+import { ArtworkGridFilterPills } from "./SavedSearch/Components/ArtworkGridFilterPills"
 import { SavedSearchAttributes } from "./SavedSearch/types"
 import { extractPills } from "../SavedSearchAlert/Utils/extractPills"
 import {
@@ -185,6 +185,8 @@ export const BaseArtworkFilter: React.FC<
     () => getAllowedFiltersForSavedSearchInput(filterContext.filters ?? {}),
     [filterContext.filters]
   )
+  const savedSearchAttributes =
+    isLoggedIn && savedSearchProps ? savedSearchProps : null
 
   const defaultPill: DefaultFilterPill | null = useMemo(
     () =>
@@ -368,8 +370,8 @@ export const BaseArtworkFilter: React.FC<
 
           {showCreateAlert && (
             <>
-              <FiltersPills
-                savedSearchAttributes={isLoggedIn ? savedSearchProps : null}
+              <ArtworkGridFilterPills
+                savedSearchAttributes={savedSearchAttributes}
               />
               <Spacer mt={4} />
             </>
@@ -424,8 +426,8 @@ export const BaseArtworkFilter: React.FC<
 
             {showCreateAlert && (
               <>
-                <FiltersPills
-                  savedSearchAttributes={isLoggedIn ? savedSearchProps : null}
+                <ArtworkGridFilterPills
+                  savedSearchAttributes={savedSearchAttributes}
                 />
                 <Spacer mt={4} />
               </>

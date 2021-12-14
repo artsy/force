@@ -6,9 +6,9 @@ import {
   useArtworkFilterContext,
 } from "../ArtworkFilterContext"
 import {
-  FiltersPills,
-  FiltersPillsProps,
-} from "../SavedSearch/Components/FiltersPills"
+  ArtworkGridFilterPills,
+  ArtworkGridFilterPillsProps,
+} from "../SavedSearch/Components/ArtworkGridFilterPills"
 import {
   DefaultFilterPill,
   FilterPill,
@@ -37,22 +37,24 @@ const defaultPill: DefaultFilterPill = {
   displayName: "Banksy",
 }
 
-describe("FiltersPills", () => {
+describe("ArtworkGridFilterPills", () => {
   let context: ArtworkFilterContextProps
 
   const renderPills = (pills: FilterPill[] = mockedPills) => {
     render(
       <ArtworkFilterContextProvider>
         <FilterPillsContextProvider pills={pills}>
-          <FiltersPillsTest savedSearchAttributes={savedSearchAttributes} />
+          <ArtworkGridFilterPillsTest
+            savedSearchAttributes={savedSearchAttributes}
+          />
         </FilterPillsContextProvider>
       </ArtworkFilterContextProvider>
     )
   }
 
-  const FiltersPillsTest = (props: FiltersPillsProps) => {
+  const ArtworkGridFilterPillsTest = (props: ArtworkGridFilterPillsProps) => {
     context = useArtworkFilterContext()
-    return <FiltersPills {...props} />
+    return <ArtworkGridFilterPills {...props} />
   }
 
   it("renders correctly", () => {
