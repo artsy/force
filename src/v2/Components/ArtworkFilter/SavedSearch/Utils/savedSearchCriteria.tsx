@@ -20,10 +20,10 @@ export const getAllowedFiltersForSavedSearchInput = (
 }
 
 const isDefaultValue = (paramName, paramValue) => {
-  return (
-    (Array.isArray(paramValue) && !paramValue.length) ||
-    initialArtworkFilterState[paramName] === paramValue
-  )
+  if (Array.isArray(paramValue)) {
+    return !paramValue.length
+  }
+  return initialArtworkFilterState[paramName] === paramValue
 }
 
 export const getSearchCriteriaFromFilters = (
