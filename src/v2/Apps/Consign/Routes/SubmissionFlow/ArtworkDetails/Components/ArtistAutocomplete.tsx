@@ -160,6 +160,7 @@ export const ArtistAutoComplete: React.FC<{ onError: () => void }> = ({
 
   return initialized ? (
     <AutocompleteInput
+      maxLength={256}
       title="Artist"
       placeholder="Enter Full Name"
       data-test-id="autocomplete-input"

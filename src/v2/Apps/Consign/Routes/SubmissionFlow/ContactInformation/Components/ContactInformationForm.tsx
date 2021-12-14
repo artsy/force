@@ -65,7 +65,7 @@ export const ContactInformationForm: React.FC<ContactInformationFormProps> = ({
   return (
     <Box {...rest}>
       <Input
-        max={256}
+        maxLength={256}
         name="name"
         title="name"
         placeholder="Your Full Name"
@@ -75,7 +75,7 @@ export const ContactInformationForm: React.FC<ContactInformationFormProps> = ({
       />
       <Input
         mt={4}
-        max={256}
+        maxLength={256}
         name="email"
         title="email"
         placeholder="Your Email Address"
@@ -89,6 +89,7 @@ export const ContactInformationForm: React.FC<ContactInformationFormProps> = ({
         phoneNumber={values.phone}
         onChange={handlePhoneNumberChange}
         inputProps={{
+          maxLength: 256,
           onBlur: handleBlur("phone"),
           placeholder: "(000) 000 0000",
         }}
