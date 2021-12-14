@@ -41,7 +41,7 @@ fragment ShowBanner_show on Show {
     id
   }
   coverImage {
-    medium: cropped(width: 600, height: 480) {
+    medium: cropped(width: 600, height: 480, version: ["normalized", "larger", "large"]) {
       src
       srcSet
     }
@@ -232,6 +232,15 @@ v5 = [
                   },
                   {
                     "kind": "Literal",
+                    "name": "version",
+                    "value": [
+                      "normalized",
+                      "larger",
+                      "large"
+                    ]
+                  },
+                  {
+                    "kind": "Literal",
                     "name": "width",
                     "value": 600
                   }
@@ -256,7 +265,7 @@ v5 = [
                     "storageKey": null
                   }
                 ],
-                "storageKey": "cropped(height:480,width:600)"
+                "storageKey": "cropped(height:480,version:[\"normalized\",\"larger\",\"large\"],width:600)"
               }
             ],
             "storageKey": null
@@ -425,7 +434,7 @@ return {
     "metadata": {},
     "name": "ShowBannersRailRendererQuery",
     "operationKind": "query",
-    "text": "query ShowBannersRailRendererQuery(\n  $partnerId: String!\n) {\n  partner(id: $partnerId) @principalField {\n    ...ShowBannersRail_partner\n    id\n  }\n}\n\nfragment ShowBanner_show on Show {\n  slug\n  name\n  href\n  isFairBooth\n  exhibitionPeriod\n  status\n  description\n  location {\n    city\n    id\n  }\n  coverImage {\n    medium: cropped(width: 600, height: 480) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment ShowBannersDesktopCarousel_shows on Show {\n  id\n  ...ShowBanner_show\n}\n\nfragment ShowBannersMobileCarousel_shows on Show {\n  id\n  ...ShowBanner_show\n}\n\nfragment ShowBannersRail_partner on Partner {\n  slug\n  featuredShow: showsConnection(first: 1, status: ALL, sort: FEATURED_DESC_END_AT_DESC, isDisplayable: true) {\n    edges {\n      node {\n        id\n        ...ShowBannersMobileCarousel_shows\n        ...ShowBannersDesktopCarousel_shows\n      }\n    }\n  }\n  currentShows: showsConnection(first: 10, status: CURRENT, sort: END_AT_ASC, isDisplayable: true) {\n    edges {\n      node {\n        id\n        ...ShowBannersMobileCarousel_shows\n        ...ShowBannersDesktopCarousel_shows\n      }\n    }\n  }\n  upcomingShows: showsConnection(first: 10, status: UPCOMING, sort: START_AT_ASC, isDisplayable: true) {\n    edges {\n      node {\n        id\n        ...ShowBannersMobileCarousel_shows\n        ...ShowBannersDesktopCarousel_shows\n      }\n    }\n  }\n  pastShows: showsConnection(first: 2, status: CLOSED, sort: END_AT_DESC, isDisplayable: true) {\n    edges {\n      node {\n        id\n        ...ShowBannersMobileCarousel_shows\n        ...ShowBannersDesktopCarousel_shows\n      }\n    }\n  }\n}\n"
+    "text": "query ShowBannersRailRendererQuery(\n  $partnerId: String!\n) {\n  partner(id: $partnerId) @principalField {\n    ...ShowBannersRail_partner\n    id\n  }\n}\n\nfragment ShowBanner_show on Show {\n  slug\n  name\n  href\n  isFairBooth\n  exhibitionPeriod\n  status\n  description\n  location {\n    city\n    id\n  }\n  coverImage {\n    medium: cropped(width: 600, height: 480, version: [\"normalized\", \"larger\", \"large\"]) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment ShowBannersDesktopCarousel_shows on Show {\n  id\n  ...ShowBanner_show\n}\n\nfragment ShowBannersMobileCarousel_shows on Show {\n  id\n  ...ShowBanner_show\n}\n\nfragment ShowBannersRail_partner on Partner {\n  slug\n  featuredShow: showsConnection(first: 1, status: ALL, sort: FEATURED_DESC_END_AT_DESC, isDisplayable: true) {\n    edges {\n      node {\n        id\n        ...ShowBannersMobileCarousel_shows\n        ...ShowBannersDesktopCarousel_shows\n      }\n    }\n  }\n  currentShows: showsConnection(first: 10, status: CURRENT, sort: END_AT_ASC, isDisplayable: true) {\n    edges {\n      node {\n        id\n        ...ShowBannersMobileCarousel_shows\n        ...ShowBannersDesktopCarousel_shows\n      }\n    }\n  }\n  upcomingShows: showsConnection(first: 10, status: UPCOMING, sort: START_AT_ASC, isDisplayable: true) {\n    edges {\n      node {\n        id\n        ...ShowBannersMobileCarousel_shows\n        ...ShowBannersDesktopCarousel_shows\n      }\n    }\n  }\n  pastShows: showsConnection(first: 2, status: CLOSED, sort: END_AT_DESC, isDisplayable: true) {\n    edges {\n      node {\n        id\n        ...ShowBannersMobileCarousel_shows\n        ...ShowBannersDesktopCarousel_shows\n      }\n    }\n  }\n}\n"
   }
 };
 })();
