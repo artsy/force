@@ -63,6 +63,7 @@ import {
   useFilterPillsContext,
 } from "./SavedSearch/Utils/FilterPillsContext"
 import { getTotalSelectedFiltersCount } from "./Utils/getTotalSelectedFiltersCount"
+import { getArtistPillFromAttributes } from "./Utils/getArtistPillFromAttributes"
 
 /**
  * Primary ArtworkFilter which is wrapped with a context and refetch container.
@@ -189,14 +190,7 @@ export const BaseArtworkFilter: React.FC<
     isLoggedIn && savedSearchProps ? savedSearchProps : null
 
   const defaultPill: DefaultFilterPill | null = useMemo(
-    () =>
-      !!savedSearchProps
-        ? {
-            isDefault: true,
-            name: savedSearchProps.slug,
-            displayName: savedSearchProps.name,
-          }
-        : null,
+    () => getArtistPillFromAttributes(savedSearchProps),
     [savedSearchProps]
   )
 
