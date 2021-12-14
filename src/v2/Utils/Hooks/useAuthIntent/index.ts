@@ -3,6 +3,7 @@ import { mediator } from "lib/mediator"
 import { useEffect } from "react"
 import { Environment } from "react-relay"
 import { useSystemContext } from "v2/System"
+import { triggerEvent } from "v2/Utils/openAuthModal"
 import { followArtistMutation } from "./mutations/AuthIntentFollowArtistMutation"
 import { followGeneMutation } from "./mutations/AuthIntentFollowGeneMutation"
 import { followProfileMutation } from "./mutations/AuthIntentFollowProfileMutation"
@@ -53,16 +54,7 @@ export const runAuthIntent = async (
       switch (value.action) {
         case "createAlert":
           if (value.kind === "artist") {
-            if (mediator.ready("auth:login:success")) {
-              mediator.trigger("auth:login:success")
-              return
-            }
-            const intervalId = setInterval(() => {
-              if (mediator.ready("auth:login:success")) {
-                mediator.trigger("auth:login:success")
-                clearInterval(intervalId)
-              }
-            }, 100)
+            triggerEvent(mediator, "auth:login:success")
           }
           break
         case "follow":
