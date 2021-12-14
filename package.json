@@ -87,7 +87,7 @@
     "@artsy/gemup": "0.1.0",
     "@artsy/multienv": "^1.2.0",
     "@artsy/palette": "18.11.1",
-    "@artsy/palette-charts": "17.11.1",
+    "@artsy/palette-charts": "17.12.0",
     "@artsy/passport": "3.5.2",
     "@artsy/reaction": "29.2.1",
     "@artsy/stitch": "6.4.2",
