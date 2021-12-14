@@ -113,4 +113,19 @@ describe("SavedSearchAlertModal", () => {
     fireEvent.click(screen.getAllByRole("checkbox")[1])
     expect(screen.getAllByRole("checkbox")[1]).toBeChecked()
   })
+
+  it("saved alert button is disabled when no one notification option selected", () => {
+    renderModal({
+      props: { initialValues: { ...formInitialValues, email: false } },
+    })
+    const saveAlertButton = screen.getByRole("button", { name: "Save Alert" })
+
+    expect(saveAlertButton).toBeDisabled()
+  })
+
+  it("saved alert button is enabled when at least one notification option selected", () => {
+    renderModal({})
+
+    expect(screen.getByText("Save Alert")).toBeEnabled()
+  })
 })
