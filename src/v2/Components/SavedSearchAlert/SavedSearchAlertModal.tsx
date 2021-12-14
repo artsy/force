@@ -159,7 +159,7 @@ export const SavedSearchAlertModal: React.FC<SavedSearchAlertFormProps> = ({
                 Filters
               </Text>
               <Spacer mt={2} />
-              <Flex flexWrap="wrap" mx={0.5}>
+              <Flex flexWrap="wrap" mx={-0.5}>
                 <Pills items={pills} onDeletePress={handleRemovePillPress} />
               </Flex>
             </Box>
