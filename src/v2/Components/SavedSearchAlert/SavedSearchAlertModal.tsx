@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 import { Form, FormikProvider, useFormik } from "formik"
 import {
   SavedSearchAleftFormValues,
@@ -8,6 +8,7 @@ import {
   Box,
   Button,
   Checkbox,
+  Flex,
   Input,
   Join,
   Modal,
@@ -18,11 +19,15 @@ import { getNamePlaceholder } from "./Utils/getNamePlaceholder"
 import { getSearchCriteriaFromFilters } from "../ArtworkFilter/SavedSearch/Utils"
 import { createSavedSearchAlert } from "./Mutations/createSavedSearchAlert"
 import { useSystemContext } from "v2/System"
-import { useArtworkFilterContext } from "../ArtworkFilter/ArtworkFilterContext"
+import {
+  useArtworkFilterContext,
+  initialArtworkFilterState,
+} from "../ArtworkFilter/ArtworkFilterContext"
 import createLogger from "v2/Utils/logger"
 import { SavedSearchAttributes } from "../ArtworkFilter/SavedSearch/types"
-import { ArtworkGridFilterPills } from "../ArtworkFilter/SavedSearch/Components/ArtworkGridFilterPills"
-import { useFilterPillsContext } from "../ArtworkFilter/SavedSearch/Utils/FilterPillsContext"
+import { FilterPill } from "../ArtworkFilter/SavedSearch/Utils/FilterPillsContext"
+import { extractPills } from "./Utils/extractPills"
+import { Pills } from "../ArtworkFilter/SavedSearch/Components/Pills"
 
 interface SavedSearchAlertFormProps {
   savedSearchAttributes: SavedSearchAttributes
@@ -46,9 +51,22 @@ export const SavedSearchAlertModal: React.FC<SavedSearchAlertFormProps> = ({
   const { id, name } = savedSearchAttributes
   const { relayEnvironment } = useSystemContext()
   const filterContext = useArtworkFilterContext()
-  const { pills = [] } = useFilterPillsContext()
-  const filters = filterContext.currentlySelectedFilters?.() || {}
+  const filtersFromContext = filterContext.currentlySelectedFilters!()
+  const [filters, setFilters] = useState(filtersFromContext)
+  const pillsFromFilters = extractPills(filters, filterContext.aggregations)
+  const pills: FilterPill[] = [
+    {
+      isDefault: true,
+      name: savedSearchAttributes.slug,
+      displayName: savedSearchAttributes.name,
+    },
+    ...pillsFromFilters,
+  ]
   const namePlaceholder = getNamePlaceholder(name, pills.length)
+
+  useEffect(() => {
+    setFilters(filtersFromContext)
+  }, [visible])
 
   const formik = useFormik<SavedSearchAleftFormValues>({
     initialValues,
@@ -73,11 +91,9 @@ export const SavedSearchAlertModal: React.FC<SavedSearchAlertFormProps> = ({
           userAlertSettings,
           criteria
         )
-
         const result = {
           id: response.createSavedSearch?.savedSearchOrErrors.internalID!,
         }
-
         onComplete?.(result)
       } catch (error) {
         logger.error(error)
@@ -91,6 +107,25 @@ export const SavedSearchAlertModal: React.FC<SavedSearchAlertFormProps> = ({
     enabled: boolean
   ) => {
     formik.setFieldValue(name, enabled)
+  }
+
+  const handleRemovePillPress = (pill: FilterPill) => {
+    if (pill.isDefault) {
+      return
+    }
+
+    let filterValue = filters[pill.filterName]
+
+    if (Array.isArray(filterValue)) {
+      filterValue = filterValue.filter(value => value !== pill.name)
+    } else {
+      filterValue = initialArtworkFilterState[pill.filterName]
+    }
+
+    setFilters({
+      ...filters,
+      [pill.filterName]: filterValue,
+    })
   }
 
   return (
@@ -128,7 +163,9 @@ export const SavedSearchAlertModal: React.FC<SavedSearchAlertFormProps> = ({
                 Filters
               </Text>
               <Spacer mt={2} />
-              <ArtworkGridFilterPills />
+              <Flex flexWrap="wrap" mx={0.5}>
+                <Pills items={pills} onDeletePress={handleRemovePillPress} />
+              </Flex>
             </Box>
 
             <Box>
