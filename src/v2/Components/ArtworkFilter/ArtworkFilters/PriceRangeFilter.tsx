@@ -52,9 +52,10 @@ const PRICE_RANGES = [
 type CustomRange = (number | "*")[]
 
 const DEFAULT_CUSTOM_RANGE: CustomRange = ["*", "*"]
+const DEFAULT_PRICE_RANGE = "*-*"
 
-const parseRange = (range?: string) => {
-  return range?.split("-").map(s => {
+const parseRange = (range: string = DEFAULT_PRICE_RANGE) => {
+  return range.split("-").map(s => {
     if (s === "*") return s
     return parseInt(s, 10)
   })
@@ -118,13 +119,15 @@ export const PriceRangeFilter: React.FC<PriceRangeFilterProps> = ({
       return
     }
 
-    if (selectedOption !== null) {
-      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
+    if (selectedOption) {
       setCustomRange(parseRange(selectedOption))
+      setFilter("priceRange", selectedOption)
+    } else {
+      setCustomRange(DEFAULT_CUSTOM_RANGE)
+      setFilter("priceRange", DEFAULT_PRICE_RANGE)
     }
 
     setShowCustom(false)
-    setFilter("priceRange", selectedOption)
   }
 
   const tokens = useThemeConfig({
