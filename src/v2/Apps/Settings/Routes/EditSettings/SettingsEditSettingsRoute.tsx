@@ -6,6 +6,7 @@ import { SettingsEditSettingsTwoFactorFragmentContainer } from "./Components/Set
 import { SettingsEditSettingsEmailPreferencesFragmentContainer } from "./Components/SettingsEditSettingsEmailPreferences/SettingsEditSettingsEmailPreferences"
 import { SettingsEditSettingsPassword } from "./Components/SettingsEditSettingsPassword"
 import { SettingsEditSettingsRoute_me } from "v2/__generated__/SettingsEditSettingsRoute_me.graphql"
+import { SettingsEditSettingsLinkedAccountsFragmentContainer } from "./Components/SettingsEditSettingsLinkedAccounts"
 
 interface SettingsEditRouteProps {
   me: SettingsEditSettingsRoute_me
@@ -22,7 +23,7 @@ const SettingsEditRoute: React.FC<SettingsEditRouteProps> = ({ me }) => {
 
           <SettingsEditSettingsTwoFactorFragmentContainer me={me} />
 
-          {/* TODO: SettingsEditSettingsLinkedAccounts */}
+          <SettingsEditSettingsLinkedAccountsFragmentContainer me={me} />
 
           <SettingsEditSettingsEmailPreferencesFragmentContainer me={me} />
 
@@ -41,6 +42,7 @@ export const SettingsEditRouteFragmentContainer = createFragmentContainer(
         ...SettingsEditSettingsInformation_me
         ...SettingsEditSettingsTwoFactor_me
         ...SettingsEditSettingsEmailPreferences_me
+        ...SettingsEditSettingsLinkedAccounts_me
       }
     `,
   }
