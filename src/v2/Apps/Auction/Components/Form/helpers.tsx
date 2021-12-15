@@ -35,7 +35,7 @@ const BIDDING_STATE_TO_MESSAGE_MAPPING = {
 
   LIVE_BIDDING_STARTED: "Continue to the live sale to place your bid.",
   OUTBID: "Your bid wasn't high enough. Please select a higher bid.",
-  RESERVE_NOT_MET: "Your bid wasn't high enough. Please select a higher bid.",
+  RESERVE_NOT_MET: "Your bid is below the reserve price. Please select a higher bid.",
   SALE_CLOSED: "This sale had been closed. Please browse other open sales.",
 }
 
