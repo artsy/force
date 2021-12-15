@@ -1,4 +1,5 @@
-import * as React from "react";
+import * as React from "react"
+import { SelectedFiltersCountsLabels } from "../ArtworkFilterContext"
 import { ResultsFilter } from "./ResultsFilter"
 
 export interface PartnersFilterProps {
@@ -16,6 +17,7 @@ export const PartnersFilter: React.FC<PartnersFilterProps> = ({
       slice="PARTNER"
       label={label}
       placeholder="Enter a gallery"
+      filtersCountKey={SelectedFiltersCountsLabels.partnerIDs}
       expanded={expanded}
     />
   )

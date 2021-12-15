@@ -1,10 +1,14 @@
 import { Checkbox, Flex, useThemeConfig } from "@artsy/palette"
 import { FC } from "react"
 import { intersection } from "lodash"
-import { useArtworkFilterContext } from "../ArtworkFilterContext"
+import {
+  SelectedFiltersCountsLabels,
+  useArtworkFilterContext,
+} from "../ArtworkFilterContext"
 import { FilterExpandable } from "./FilterExpandable"
 import { INITIAL_ITEMS_TO_SHOW, ShowMore } from "./ShowMore"
 import { sortResults } from "./ResultsFilter"
+import { useFilterLabelCountByKey } from "../Utils/useFilterLabelCountByKey"
 
 export interface TimePeriodFilterProps {
   expanded?: boolean // set to true to force expansion
@@ -14,9 +18,17 @@ export const getTimePeriodToDisplay = period =>
   isNaN(period) ? period : `${period}s`
 
 export const TimePeriodFilter: FC<TimePeriodFilterProps> = ({ expanded }) => {
-  const { aggregations, ...filterContext } = useArtworkFilterContext()
-  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-  const timePeriods = aggregations.find(agg => agg.slice === "MAJOR_PERIOD")
+  const {
+    aggregations,
+    selectedFiltersCounts,
+    ...filterContext
+  } = useArtworkFilterContext()
+  const timePeriods = aggregations?.find(agg => agg.slice === "MAJOR_PERIOD")
+
+  const filtersCount = useFilterLabelCountByKey(
+    SelectedFiltersCountsLabels.timePeriod
+  )
+  const label = `Time Period${filtersCount}`
 
   let periods
   if (timePeriods && timePeriods.counts) {
@@ -35,10 +47,8 @@ export const TimePeriodFilter: FC<TimePeriodFilterProps> = ({ expanded }) => {
   if (!periods.length) return null
 
   const togglePeriodSelection = (selected, period) => {
-    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-    let majorPeriods = filterContext
-      .currentlySelectedFilters()
-      .majorPeriods.slice()
+    let majorPeriods =
+      filterContext.currentlySelectedFilters?.()?.majorPeriods?.slice() ?? []
     if (selected) {
       majorPeriods.push(period)
     } else {
@@ -47,32 +57,24 @@ export const TimePeriodFilter: FC<TimePeriodFilterProps> = ({ expanded }) => {
     filterContext.setFilter("majorPeriods", majorPeriods)
   }
 
-  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-  const currentFilters = filterContext.currentlySelectedFilters()
+  const currentFilters = filterContext.currentlySelectedFilters?.()
   const hasBelowTheFoldMajorPeriodFilter =
     intersection(
-      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-      currentFilters.majorPeriods,
+      currentFilters?.majorPeriods ?? [],
       periods.slice(INITIAL_ITEMS_TO_SHOW).map(({ name }) => name)
     ).length > 0
-  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-  const hasMajorPeriodFilter = currentFilters.majorPeriods.length > 0
+  const hasMajorPeriodFilter = (currentFilters?.majorPeriods?.length ?? 0) > 0
 
-  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-  const resultsSorted = sortResults(currentFilters.majorPeriods, periods)
+  const resultsSorted = sortResults(currentFilters?.majorPeriods ?? [], periods)
 
   return (
-    <FilterExpandable
-      label="Time Period"
-      expanded={hasMajorPeriodFilter || expanded}
-    >
+    <FilterExpandable label={label} expanded={hasMajorPeriodFilter || expanded}>
       <Flex flexDirection="column">
         <ShowMore expanded={hasBelowTheFoldMajorPeriodFilter}>
           {resultsSorted.map(({ name }, index) => {
             return (
               <Checkbox
-                // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-                selected={currentFilters.majorPeriods.includes(name)}
+                selected={currentFilters?.majorPeriods?.includes(name)}
                 key={index}
                 onSelect={selected => togglePeriodSelection(selected, name)}
                 my={tokens.my}

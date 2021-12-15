@@ -1,7 +1,11 @@
 import * as React from "react"
 import { Checkbox, Flex, useThemeConfig } from "@artsy/palette"
-import { useArtworkFilterContext } from "../ArtworkFilterContext"
+import {
+  SelectedFiltersCountsLabels,
+  useArtworkFilterContext,
+} from "../ArtworkFilterContext"
 import { FilterExpandable } from "./FilterExpandable"
+import { useFilterLabelCountByKey } from "../Utils/useFilterLabelCountByKey"
 
 export const checkboxValues = [
   {
@@ -31,11 +35,15 @@ export const AttributionClassFilter: React.FC<AttributionClassFilterProps> = ({
 }) => {
   const filterContext = useArtworkFilterContext()
 
+  const filtersCount = useFilterLabelCountByKey(
+    SelectedFiltersCountsLabels.attributionClass
+  )
+  const label = `Rarity${filtersCount}`
+
   const toggleSelection = (selected, name) => {
-    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-    let attributions = filterContext
-      .currentlySelectedFilters()
-      .attributionClass.slice()
+    let attributions =
+      filterContext.currentlySelectedFilters?.()?.attributionClass?.slice() ??
+      []
 
     selected
       ? attributions.push(name)
@@ -50,7 +58,7 @@ export const AttributionClassFilter: React.FC<AttributionClassFilterProps> = ({
   })
 
   return (
-    <FilterExpandable label="Rarity" expanded={expanded}>
+    <FilterExpandable label={label} expanded={expanded}>
       <Flex flexDirection="column">
         {checkboxValues.map(({ name, value }, index) => {
           return (
@@ -58,10 +66,9 @@ export const AttributionClassFilter: React.FC<AttributionClassFilterProps> = ({
               key={index}
               my={tokens.my}
               onSelect={selected => toggleSelection(selected, value)}
-              // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
               selected={filterContext
-                .currentlySelectedFilters()
-                .attributionClass.includes(value)}
+                .currentlySelectedFilters?.()
+                .attributionClass?.includes(value)}
             >
               {name}
             </Checkbox>

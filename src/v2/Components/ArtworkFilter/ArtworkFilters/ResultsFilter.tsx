@@ -4,6 +4,7 @@ import { toTitleCase } from "@artsy/to-title-case"
 import * as React from "react"
 import {
   MultiSelectArtworkFilters,
+  SelectedFiltersCountsLabels,
   Slice,
   useArtworkFilterContext,
 } from "../ArtworkFilterContext"
@@ -11,6 +12,7 @@ import { INITIAL_ITEMS_TO_SHOW, ShowMore } from "./ShowMore"
 import { FacetFilter, useFacetFilter } from "./FacetFilter"
 import { Result, ResultOption } from "./ResultOption"
 import { FilterExpandable } from "./FilterExpandable"
+import { useFilterLabelCountByKey } from "../Utils/useFilterLabelCountByKey"
 
 export const sortResults = (
   selectedValues: Array<string>,
@@ -32,6 +34,7 @@ interface ResultsFilterProps {
   slice: Slice
   label: string
   placeholder: string
+  filtersCountKey: SelectedFiltersCountsLabels
   expanded?: boolean
 }
 
@@ -40,15 +43,17 @@ export const ResultsFilter: React.FC<ResultsFilterProps> = ({
   slice,
   label,
   placeholder,
+  filtersCountKey,
   expanded,
 }) => {
   const { aggregations, currentlySelectedFilters } = useArtworkFilterContext()
   const { isFiltered, handleFilterChange } = useFacetFilter()
 
-  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-  const selectedValues = currentlySelectedFilters()[facetName]
-  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-  const results = aggregations.find(aggregation => aggregation.slice === slice)
+  const filtersCount = useFilterLabelCountByKey(filtersCountKey)
+  const labelWithCount = `${label}${filtersCount}`
+
+  const selectedValues = currentlySelectedFilters?.()[facetName] ?? []
+  const results = aggregations?.find(aggregation => aggregation.slice === slice)
     ?.counts
 
   if (!results?.length) {
@@ -56,12 +61,10 @@ export const ResultsFilter: React.FC<ResultsFilterProps> = ({
   }
 
   const resultsOrdered = orderBy(results, ["count", "name"], ["desc", "asc"])
-  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
   const resultsSorted = sortResults(selectedValues, resultsOrdered)
 
   const isBelowTheFoldFilterSelected =
     intersection(
-      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       selectedValues,
       resultsSorted.slice(INITIAL_ITEMS_TO_SHOW).map(({ value }) => value)
     ).length > 0
@@ -69,7 +72,10 @@ export const ResultsFilter: React.FC<ResultsFilterProps> = ({
   const hasSelection = selectedValues && selectedValues.length > 0
 
   return (
-    <FilterExpandable label={label} expanded={hasSelection || expanded}>
+    <FilterExpandable
+      label={labelWithCount}
+      expanded={hasSelection || expanded}
+    >
       <Flex flexDirection="column">
         <FacetFilter
           facetName={facetName}

@@ -1,4 +1,5 @@
-import * as React from "react";
+import React from "react"
+import { SelectedFiltersCountsLabels } from "../ArtworkFilterContext"
 import { ResultsFilter } from "./ResultsFilter"
 
 export interface ArtistNationalityFilterProps {
@@ -14,6 +15,7 @@ export const ArtistNationalityFilter: React.FC<ArtistNationalityFilterProps> = (
       slice="ARTIST_NATIONALITY"
       label="Artist Nationality or Ethnicity"
       placeholder="Enter a nationality or ethnicity"
+      filtersCountKey={SelectedFiltersCountsLabels.artistNationalities}
       expanded={expanded}
     />
   )

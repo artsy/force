@@ -1,4 +1,4 @@
-import { omit } from "lodash"
+import { isArray, omit } from "lodash"
 import { useContext, useReducer, useState } from "react"
 import * as React from "react"
 import useDeepCompareEffect from "use-deep-compare-effect"
@@ -55,6 +55,18 @@ export enum FilterParamName {
   waysToBuyMakeOffer = "offerable",
   width = "width",
 }
+
+export const waysToBuyFilterNames = [
+  FilterParamName.waysToBuyBuy,
+  FilterParamName.waysToBuyMakeOffer,
+  FilterParamName.waysToBuyBid,
+  FilterParamName.waysToBuyInquire,
+]
+
+export const customSizeFilterNames = [
+  FilterParamName.width,
+  FilterParamName.height,
+]
 
 /**
  * A list of filters that support multiple selections
@@ -143,6 +155,23 @@ export type SelectedFiltersCounts = {
   [Name in FilterParamName | "waysToBuy"]: number
 }
 
+export enum SelectedFiltersCountsLabels {
+  additionalGeneIDs = "additionalGeneIDs",
+  artistIDs = "artistIDs",
+  artistNationalities = "artistNationalities",
+  attributionClass = "attributionClass",
+  colors = "colors",
+  locationCities = "locationCities",
+  materialsTerms = "materialsTerms",
+  medium = "medium",
+  partnerIDs = "partnerIDs",
+  priceRange = "priceRange",
+  sizes = "sizes",
+  sort = "sort",
+  timePeriod = "majorPeriods",
+  waysToBuy = "waysToBuy",
+}
+
 // TODO: merge or make a generic base of `ArtworkFilterContextProps` and `AuctionResultsFilterContextProps`.
 // Possibly just extend `BaseFilterContext` and make the former ones into `BaseFilterContext<ArtworkFilters>`
 // and `BaseFilterContext<AuctionResultFilters>`.
@@ -155,6 +184,9 @@ export interface ArtworkFilterContextProps {
 
   /** Getter for the appropriate source of truth to render in the filter UI */
   currentlySelectedFilters?: () => ArtworkFiltersState
+
+  /* number of currently selected options for each filter */
+  selectedFiltersCounts: Partial<SelectedFiltersCounts>
 
   // Components
   ZeroState?: React.FC
@@ -277,6 +309,10 @@ export const ArtworkFilterContextProvider: React.FC<
     shouldStageFilterChanges ? stage(action) : dispatch(action)
   }
 
+  const currentlySelectedFiltersCounts = getSelectedFiltersCounts(
+    currentlySelectedFilters()
+  )
+
   const artworkFilterContext = {
     mountedContext: true,
 
@@ -284,6 +320,7 @@ export const ArtworkFilterContextProvider: React.FC<
     hasFilters: hasFilters(artworkFilterState),
     stagedFilters: stagedArtworkFilterState,
     currentlySelectedFilters: currentlySelectedFilters,
+    selectedFiltersCounts: currentlySelectedFiltersCounts,
 
     // Handlers
     onFilterClick,
@@ -534,6 +571,71 @@ const artworkFilterReducer = (
     default:
       return state
   }
+}
+
+export const getSelectedFiltersCounts = (
+  selectedFilters: ArtworkFilters = {}
+) => {
+  const counts: Partial<SelectedFiltersCounts> = {}
+  const filtersParams = Object.values(FilterParamName)
+
+  Object.entries(selectedFilters).forEach(([paramName, paramValue]) => {
+    if (!filtersParams.includes(paramName as FilterParamName)) {
+      return
+    }
+
+    switch (true) {
+      case waysToBuyFilterNames.includes(paramName as FilterParamName): {
+        if (paramValue) {
+          counts.waysToBuy = (counts.waysToBuy ?? 0) + 1
+        }
+        break
+      }
+      case customSizeFilterNames.includes(paramName as FilterParamName): {
+        if (paramValue !== initialArtworkFilterState[paramName]) {
+          const prevCountValue = counts[FilterParamName.sizes] ?? 0
+          counts[FilterParamName.sizes] = prevCountValue + 1
+        }
+        break
+      }
+      case paramName === FilterParamName.priceRange: {
+        if (paramValue !== initialArtworkFilterState.priceRange) {
+          counts[paramName] = 1
+        }
+        break
+      }
+      case paramName === FilterParamName.artistsIFollow: {
+        if (paramValue) {
+          counts.artistIDs = (counts.artistIDs ?? 0) + 1
+        }
+        break
+      }
+      case paramName === FilterParamName.sort: {
+        if (paramValue !== initialArtworkFilterState.sort) {
+          counts[paramName] = 1
+        }
+        break
+      }
+      case paramName === FilterParamName.artistIDs: {
+        if (paramValue.length) {
+          counts.artistIDs = paramValue.length + (counts.artistIDs ?? 0)
+        }
+        break
+      }
+      case isArray(paramValue): {
+        if (paramValue.length) {
+          counts[paramName] = paramValue.length
+        }
+        break
+      }
+
+      default: {
+        counts[paramName] = 1
+      }
+    }
+  })
+
+  return counts
 }
 
 /**

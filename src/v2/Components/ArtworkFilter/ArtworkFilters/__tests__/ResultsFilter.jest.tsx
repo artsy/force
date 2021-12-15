@@ -1,5 +1,8 @@
 import { mount } from "enzyme"
-import { ArtworkFilterContextProvider } from "../../ArtworkFilterContext"
+import {
+  ArtworkFilterContextProvider,
+  SelectedFiltersCountsLabels,
+} from "../../ArtworkFilterContext"
 import { ResultsFilter, sortResults } from "../ResultsFilter"
 
 jest.mock("v2/Utils/Hooks/useMatchMedia", () => ({
@@ -15,6 +18,7 @@ describe("ArtworkLocationFilter", () => {
           slice="LOCATION_CITY"
           placeholder="Enter a city"
           label="Artwork Location"
+          filtersCountKey={SelectedFiltersCountsLabels.locationCities}
           expanded
         />
       </ArtworkFilterContextProvider>
