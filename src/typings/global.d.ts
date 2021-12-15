@@ -1,6 +1,8 @@
 interface Window {
   analytics?: {
     identify: (userId: string, traits: object, object) => void
+    initialized: boolean
+    load: (writeKey: string, options: any) => void
     on: (
       action: string,
       cb: (nameOrData: any, data?: object, context?: object) => void

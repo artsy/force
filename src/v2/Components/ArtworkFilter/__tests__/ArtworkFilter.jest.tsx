@@ -1,12 +1,12 @@
-import { Breakpoint } from "@artsy/palette"
+import { screen, fireEvent } from "@testing-library/react"
 import { useTracking } from "v2/System/Analytics/useTracking"
 import { ArtworkFilter, BaseArtworkFilter } from "v2/Components/ArtworkFilter"
-import { MockBoot, renderRelayTree } from "v2/DevTools"
+import { MockBoot } from "v2/DevTools"
 import { renderToString } from "v2/DevTools/__tests__/MockRelayRendererFixtures"
 import { ArtworkQueryFilter } from "../ArtworkQueryFilter"
 import { ArtworkFilterFixture } from "./fixtures/ArtworkFilter.fixture"
-import { Pagination } from "v2/Components/Pagination"
 import { initialArtworkFilterState } from "../ArtworkFilterContext"
+import { setupTestWrapperTL } from "v2/DevTools/setupTestWrapper"
 import { SavedSearchAttributes } from "../SavedSearch/types"
 import { FilterPillsContextProvider } from "../SavedSearch/Utils/FilterPillsContext"
 
@@ -25,74 +25,71 @@ const savedSearchProps: SavedSearchAttributes = {
 }
 
 describe("ArtworkFilter", () => {
-  const getWrapper = async (
-    breakpoint: Breakpoint = "lg",
-    passedProps = {}
-  ) => {
-    return await renderRelayTree({
-      Component: props => (
+  const onFilterClick = jest.fn()
+  const onChange = jest.fn()
+  let sortOptionsMock
+  let filters
+  let breakpoint
+  let enableCreateAlert
+
+  const { renderWithRelay } = setupTestWrapperTL({
+    Component: (props: any) => (
+      <MockBoot breakpoint={breakpoint}>
         <FilterPillsContextProvider>
-          <ArtworkFilter {...(props as any)} {...passedProps} />
+          <ArtworkFilter
+            {...(props as any)}
+            enableCreateAlert={enableCreateAlert}
+            savedSearchProps={savedSearchProps}
+            onFilterClick={onFilterClick}
+            onChange={onChange}
+            sortOptions={sortOptionsMock}
+            filters={{ ...initialArtworkFilterState, ...filters }}
+          />
         </FilterPillsContextProvider>
-      ),
-      query: ArtworkQueryFilter,
-      mockData: ArtworkFilterFixture,
-      wrapper: children => {
-        return <MockBoot breakpoint={breakpoint}>{children}</MockBoot>
-      },
-    })
-  }
+      </MockBoot>
+    ),
+    query: ArtworkQueryFilter,
+  })
 
   const trackEvent = jest.fn()
 
   beforeEach(() => {
-    jest.clearAllMocks()
+    jest.resetAllMocks()
     ;(useTracking as jest.Mock).mockImplementation(() => {
       return {
         trackEvent,
       }
     })
+    breakpoint = "lg"
+    filters = {
+      colors: ["yellow", "pink"],
+    }
+    enableCreateAlert = false
+    sortOptionsMock = [
+      { value: "sortTest1", text: "Sort Test 1" },
+      { value: "sortTest2", text: "Sort Test 2" },
+    ]
   })
 
   it("renders filters pills when enableCreateAlert is true, savedSearchProps are passed and there are selected filters", async () => {
-    const wrapper = await getWrapper("lg", {
-      enableCreateAlert: true,
-      savedSearchProps,
-      filters: {
-        colors: ["yellow", "pink"],
-      },
-    })
+    enableCreateAlert = true
+    renderWithRelay()
 
-    const filterPills = wrapper.find("FiltersPills")
-    expect(
-      filterPills.findWhere(node => node.text() === "Yellow").exists()
-    ).toBeTruthy()
-    expect(
-      filterPills.findWhere(node => node.text() === "Pink").exists()
-    ).toBeTruthy()
+    expect(screen.getAllByText("Yellow")[1]).toBeInTheDocument()
+    expect(screen.getAllByText("Yellow")[1]).toHaveTextContent("Close")
+    expect(screen.getAllByText("Pink")[1]).toBeInTheDocument()
+    expect(screen.getAllByText("Pink")[1]).toHaveTextContent("Close")
   })
 
   it("removes pill after click on it", async () => {
-    const wrapper = await getWrapper("lg", {
-      enableCreateAlert: true,
-      savedSearchProps,
-      filters: {
-        colors: ["yellow", "pink"],
-      },
-    })
-    expect(
-      wrapper
-        .find("FiltersPills")
-        .findWhere(node => node.text() === "Yellow")
-        .exists()
-    ).toBeTruthy()
-    wrapper.find("FiltersPills").find("Pill").at(1).simulate("click")
-    expect(
-      wrapper
-        .find("FiltersPills")
-        .findWhere(node => node.text() === "Yellow")
-        .exists()
-    ).toBeFalsy()
+    enableCreateAlert = true
+    renderWithRelay()
+
+    fireEvent.click(screen.getAllByText("Yellow")[1])
+
+    expect(screen.getAllByText("Yellow")).not.toHaveLength(2)
+    expect(screen.getAllByText("Pink")[1]).toBeInTheDocument()
+    expect(screen.getAllByText("Pink")[1]).toHaveTextContent("Close")
   })
 
   describe("without any filtered artworks", () => {
@@ -106,13 +103,10 @@ describe("ArtworkFilter", () => {
   })
 
   describe("tracks clicks", () => {
-    it("on filter", async () => {
-      const onFilterClick = jest.fn()
-      const wrapper = await getWrapper("lg", {
-        onFilterClick,
-      })
+    it("on filter", () => {
+      renderWithRelay()
 
-      wrapper.find("WaysToBuyFilter").find("Checkbox").first().simulate("click")
+      fireEvent.click(screen.getByText("Buy Now"))
 
       expect(trackEvent).toHaveBeenCalledWith(
         expect.objectContaining({
@@ -130,6 +124,7 @@ describe("ArtworkFilter", () => {
 
       expect(JSON.parse(current)).toMatchObject({
         ...initialArtworkFilterState,
+        ...filters,
         acquireable: true,
       })
 
@@ -139,9 +134,49 @@ describe("ArtworkFilter", () => {
     })
 
     it("on page change", async () => {
-      const wrapper = await getWrapper()
+      renderWithRelay({
+        Viewer: () => ({
+          filtered_artworks: {
+            pageInfo: {
+              hasNextPage: true,
+              endCursor: "cursor1",
+            },
+            pageCursors: {
+              around: [
+                {
+                  cursor: "cursor1",
+                  page: 1,
+                  isCurrent: true,
+                },
+                {
+                  cursor: "cursor2",
+                  page: 2,
+                  isCurrent: false,
+                },
+                {
+                  cursor: "cursor3",
+                  page: 3,
+                  isCurrent: false,
+                },
+                {
+                  cursor: "cursor4",
+                  page: 4,
+                  isCurrent: false,
+                },
+              ],
+              first: null,
+              last: {
+                cursor: "cursor4=",
+                page: 4,
+                isCurrent: false,
+              },
+              previous: null,
+            },
+          },
+        }),
+      })
 
-      wrapper.find("Page a").at(2).simulate("click", { button: 0 })
+      fireEvent.click(screen.getByText("3"))
 
       expect(trackEvent).toHaveBeenCalledWith(
         expect.objectContaining({
@@ -158,31 +193,38 @@ describe("ArtworkFilter", () => {
   })
 
   describe("desktop", () => {
-    it("renders default UI items", async () => {
-      const wrapper = await getWrapper()
-      expect(wrapper.find("ArtworkFilterArtworkGrid")).toHaveLength(1)
-      expect(wrapper.find("SortFilter")).toHaveLength(1)
-      expect(wrapper.find("FiltersPills")).toHaveLength(0)
-      expect(wrapper.find(Pagination)).toHaveLength(1)
-    })
-
-    it("triggers #onFilterClick on filter click, passing back the changed value and current filter state", async () => {
-      const onFilterClick = jest.fn()
-      const wrapper = await getWrapper("lg", {
-        onFilterClick,
+    it("renders default UI items", () => {
+      renderWithRelay({
+        Viewer: () => ({
+          ...ArtworkFilterFixture.viewer,
+        }),
       })
 
-      wrapper.find("WaysToBuyFilter").find("Checkbox").first().simulate("click")
+      expect(screen.getByRole("navigation")).toBeInTheDocument()
+      expect(screen.getAllByText("Andy Warhol")).toHaveLength(30)
+      expect(screen.getAllByRole("option")).toHaveLength(2)
+      expect(screen.getByText("Yellow")).toBeInTheDocument()
+    })
+
+    it("triggers #onFilterClick on filter click, passing back the changed value and current filter state", () => {
+      renderWithRelay()
+      fireEvent.click(screen.getByText("Buy Now"))
 
       expect(onFilterClick).toHaveBeenCalledWith("acquireable", true, {
         ...initialArtworkFilterState,
+        ...filters,
         acquireable: true,
       })
     })
 
-    it("triggers #onBrickClick on brick click", async () => {
-      const wrapper = await getWrapper()
-      wrapper.find("ArtworkGridItem a").first().simulate("click")
+    it("triggers #onBrickClick on brick click", () => {
+      renderWithRelay({
+        Viewer: () => ({
+          ...ArtworkFilterFixture.viewer,
+        }),
+      })
+
+      fireEvent.click(screen.getByAltText("Andy Warhol, ‘Kenny Burrell’, 1956"))
 
       expect(trackEvent).toHaveBeenCalledWith({
         action: "clickedMainArtworkGrid",
@@ -199,67 +241,68 @@ describe("ArtworkFilter", () => {
       })
     })
 
-    it("triggers #onChange when filters change, passing back filter state", async () => {
-      const onChange = jest.fn()
-      const wrapper = await getWrapper("lg", {
-        onChange,
-      })
-
-      wrapper.find("WaysToBuyFilter").find("Checkbox").first().simulate("click")
+    it("triggers #onChange when filters change, passing back filter state", () => {
+      renderWithRelay()
+      fireEvent.click(screen.getByText("Buy Now"))
 
       expect(onChange).toHaveBeenCalledWith({
         ...initialArtworkFilterState,
+        ...filters,
         acquireable: true,
       })
     })
 
-    it("does not render sort if options not passed", async () => {
-      const wrapper = await getWrapper("lg")
-      expect(wrapper.find("SelectSmall").length).toEqual(0)
+    it("does not render sort if options not passed", () => {
+      sortOptionsMock = undefined
+      renderWithRelay()
+      expect(screen.queryByRole("option")).not.toBeInTheDocument()
     })
 
-    it("renders a sort filter if filters are passed in and updates filter state on change", async () => {
-      const onChange = jest.fn()
-      const wrapper = await getWrapper("lg", {
-        onChange,
-        sortOptions: [
-          { value: "-decayed_merch", text: "Default" },
-          { value: "-partner_updated_at", text: "Recently updated" },
-        ],
+    it("renders a sort filter if filters are passed in and updates filter state on change", () => {
+      filters = { sort: "sortTest1" }
+      renderWithRelay()
+      fireEvent.change(screen.getByRole("combobox"), {
+        target: { value: "sortTest2" },
       })
 
-      wrapper.find("Select").find("option").at(1).simulate("change")
-
-      expect(onChange).toHaveBeenCalledWith({
+      expect(onChange).toHaveBeenLastCalledWith({
         ...initialArtworkFilterState,
-        sort: "-partner_updated_at",
+        ...filters,
+        sort: "sortTest2",
       })
     })
   })
 
   describe("mobile", () => {
-    it("renders default UI items", async () => {
-      const wrapper = await getWrapper("xs")
-      expect(wrapper.find("ArtworkFilterArtworkGrid")).toHaveLength(1)
-      expect(wrapper.find("Button").text()).toEqual("FilterFilter") // svg icon + text
-      expect(wrapper.find("FilterIcon")).toHaveLength(1)
-      expect(wrapper.find("FiltersPills")).toHaveLength(0)
+    it("renders default UI items", () => {
+      breakpoint = "xs"
+      renderWithRelay({
+        Viewer: () => ({
+          ...ArtworkFilterFixture.viewer,
+        }),
+      })
+
+      expect(screen.getAllByText("Andy Warhol")).toHaveLength(30)
+      expect(screen.getAllByRole("button")[0]).toHaveTextContent("Filter")
     })
 
-    it("toggles mobile action sheet", async () => {
-      const wrapper = await getWrapper("xs")
-      expect(wrapper.find("FiltersWithScrollIntoView").length).toEqual(0)
-      wrapper.find("Button").simulate("click")
-      const actionSheet = wrapper.find("ArtworkFilterMobileActionSheet")
-      expect(actionSheet.length).toEqual(1)
-      expect(wrapper.find("FiltersWithScrollIntoView").length).toEqual(1)
-      expect(document.body).toHaveStyle({ overflowY: "hidden" })
+    it("toggles mobile action sheet", () => {
+      breakpoint = "xs"
+      renderWithRelay()
 
-      wrapper.find("WaysToBuyFilter").find("Checkbox").first().simulate("click")
-      actionSheet.find("Button").last().simulate("click")
+      expect(
+        screen.queryByTestId("FiltersWithScrollIntoView")
+      ).not.toBeInTheDocument()
+      fireEvent.click(screen.getAllByRole("button")[0])
 
-      expect(wrapper.find("ArtworkFilterMobileActionSheet").length).toEqual(0)
-      expect(document.body).toHaveStyle({ overflowY: "visible" })
+      expect(screen.getByText("Clear all")).toBeInTheDocument()
+      expect(document.body).toHaveStyle("overflow-y: hidden")
+
+      fireEvent.click(screen.getByText("Buy Now"))
+      fireEvent.click(screen.getByText("Show Results"))
+
+      expect(screen.queryByText("Clear all")).not.toBeInTheDocument()
+      expect(document.body).toHaveStyle("overflow-y: visible")
     })
   })
 })

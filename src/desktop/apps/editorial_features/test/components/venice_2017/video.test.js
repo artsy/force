@@ -11,7 +11,7 @@ const { Article } = require("../../../../../models/article")
 const markdown = require("../../../../../components/util/markdown.coffee")
 const { resolve } = require("path")
 
-xdescribe("Venice Video", function () {
+describe.skip("Venice Video", function () {
   beforeEach(function (done) {
     return benv.setup(() => {
       benv.expose({

@@ -85,6 +85,8 @@ export const SavedSearchAlertModal: React.FC<SavedSearchAlertFormProps> = ({
     },
   })
 
+  const isSaveAlertButtonDisabled = !formik.values.email && !formik.values.push
+
   const handleToggleNotification = (name: "email" | "push") => (
     enabled: boolean
   ) => {
@@ -99,7 +101,12 @@ export const SavedSearchAlertModal: React.FC<SavedSearchAlertFormProps> = ({
           onClose={onClose}
           title="Create an Alert"
           FixedButton={
-            <Button type="submit" loading={formik.isSubmitting} width="100%">
+            <Button
+              type="submit"
+              disabled={isSaveAlertButtonDisabled}
+              loading={formik.isSubmitting}
+              width="100%"
+            >
               Save Alert
             </Button>
           }

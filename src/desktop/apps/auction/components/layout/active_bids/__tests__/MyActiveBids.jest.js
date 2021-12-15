@@ -5,7 +5,7 @@ const { Auction } = require("desktop/models/auction")
 const CurrentUser = require("desktop/models/current_user")
 
 // FIXME: Add required props
-xdescribe("apps/auction/components/layout/active_bids/MyActiveBids", () => {
+describe.skip("apps/auction/components/layout/active_bids/MyActiveBids", () => {
   let baseData
 
   beforeEach(() => {

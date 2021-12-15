@@ -37,7 +37,7 @@ Our design system [Palette](https://github.com/artsy/palette) is used for most U
 
 ### For routing, use our framework
 
-Individual sub-apps (represented by routes like `/artist/:id` or `/collect`) are built on top of a home-grown SSR (server-side-rendering) framework based around [Found](https://github.com/4Catalyzer/found), a routing library. Sub-apps are mounted within the [global routes file](https://github.com/artsy/force/blob/master/src/v2/routes.tsx).
+Individual sub-apps (represented by routes like `/artist/:id` or `/collect`) are built on top of a home-grown SSR (server-side-rendering) framework based around [Found](https://github.com/4Catalyzer/found), a routing library. Sub-apps are mounted within the [global routes file](https://github.com/artsy/force/blob/main/src/v2/routes.tsx).
 
 To learn how to create a new sub-app, see [the docs](https://github.com/artsy/force/blob/1842553ad34475bc3b804f00c6410d7f23d64f65/docs/adding_new_app.md).
 
@@ -54,7 +54,7 @@ Around mid-2021 we migrated to strict type checking for **all new code**. What t
 Data should be loaded from [Metaphysics](https://github.com/artsy/metaphysics), Artsy's GraphQL server. Requests to Metaphysics should be made through [Relay](https://relay.dev).
 
 - [Why Artsy uses Relay](http://artsy.github.io/blog/2017/02/05/Front-end-JavaScript-at-Artsy-2017/#Relay)
-- [Artsy JavaScriptures seminar on Relay](https://github.com/artsy/javascriptures/tree/master/4_intro-to-relay)
+- [Artsy JavaScriptures seminar on Relay](https://github.com/artsy/javascriptures/tree/main/4_intro-to-relay)
 - Examples
   - [A top-level route-based Relay request](https://github.com/artsy/force/blob/0b291f005763e7c2600a5077786c9510bf655079/src/v2/Apps/Consign/consignRoutes.tsx#L28-L34)
   - [A fragment container](https://github.com/artsy/force/blob/0b291f005763e7c2600a5077786c9510bf655079/src/v2/Apps/Consign/Routes/Offer/OfferDetailApp.tsx#L47-L57)
@@ -179,16 +179,16 @@ Some top-level notes:
 - ~~We use [`enzyme`](https://enzymejs.github.io/enzyme/)~~
 - As of 2021, we've begun using [@testing-library/react](https://testing-library.com/docs/) for our tests. (See [this doc](https://kentcdodds.com/blog/common-mistakes-with-react-testing-library) for some common mistakes and best practices.)
 - We avoid snapshot tests; they produce too much churn for too little value.
-- We use the `relay-test-utils` package for testing Relay code, and [this helper](https://github.com/artsy/force/blob/0b291f005763e7c2600a5077786c9510bf655079/src/v2/DevTools/setupTestWrapper.tsx) for quickly spinning up tests. Note that this helper can't test `QueryRenderer`s; extract the render code into a fragment-like container and test that. (See the [`RegisterButton` component](https://github.com/artsy/force/blob/master/src/v2/Apps/Auction2/Components/AuctionDetails/__tests__/RegisterButton.jest.tsx#L1) for an example.)
+- We use the `relay-test-utils` package for testing Relay code, and [this helper](https://github.com/artsy/force/blob/0b291f005763e7c2600a5077786c9510bf655079/src/v2/DevTools/setupTestWrapper.tsx) for quickly spinning up tests. Note that this helper can't test `QueryRenderer`s; extract the render code into a fragment-like container and test that. (See the [`RegisterButton` component](https://github.com/artsy/force/blob/main/src/v2/Apps/Auction2/Components/AuctionDetails/__tests__/RegisterButton.jest.tsx#L1) for an example.)
 
 Here are some great examples of what tests and test coverage should look like.
 
-- [RegisterButton.jest.tsx](https://github.com/artsy/force/blob/master/src/v2/Apps/Auction2/Components/AuctionDetails/__tests__/RegisterButton.jest.tsx#L1)
-- [ResetPasswordRoute.jest.tsx](https://github.com/artsy/force/blob/master/src/v2/Apps/Authentication/Routes/__tests__/ResetPasswordRoute.jest.tsx#L8)
+- [RegisterButton.jest.tsx](https://github.com/artsy/force/blob/main/src/v2/Apps/Auction2/Components/AuctionDetails/__tests__/RegisterButton.jest.tsx#L1)
+- [ResetPasswordRoute.jest.tsx](https://github.com/artsy/force/blob/main/src/v2/Apps/Authentication/Routes/__tests__/ResetPasswordRoute.jest.tsx#L8)
 
 ### Add smoke tests for new routes
 
-We use [Cypress.io](https://docs.cypress.io/guides/overview/why-cypress.html#In-a-nutshell) to ensure that whole sections of the app (e.g., a route like `/artist/:id`) work as expected. If adding a new route or feature that might benefit from a higher level of testing, check out [this folder](https://github.com/artsy/force/tree/master/cypress/integration) for some patterns. We generally add a simple check just to ensure the route doesn't error out.
+We use [Cypress.io](https://docs.cypress.io/guides/overview/why-cypress.html#In-a-nutshell) to ensure that whole sections of the app (e.g., a route like `/artist/:id`) work as expected. If adding a new route or feature that might benefit from a higher level of testing, check out [this folder](https://github.com/artsy/force/tree/main/cypress/integration) for some patterns. We generally add a simple check just to ensure the route doesn't error out.
 
 > Related: For more comprehensive end-to-end testing we use [Integrity](https://github.com/artsy/integrity), also built on Cypress. Check out [the repo](https://github.com/artsy/integrity) for more information.
 

@@ -8,6 +8,10 @@ jest.mock("jquery", x => () => ({
 }))
 
 jest.useFakeTimers()
+Object.defineProperty(window, "location", {
+  writable: true,
+  value: { assign: jest.fn() },
+})
 
 describe("DOM Interactions", () => {
   // spyOn required to restore global mocks' original implementations

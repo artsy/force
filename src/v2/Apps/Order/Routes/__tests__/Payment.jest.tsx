@@ -22,8 +22,6 @@ jest.mock("v2/Utils/Events", () => ({
   postEvent: jest.fn(),
 }))
 
-const mockPostEvent = require("v2/Utils/Events").postEvent as jest.Mock
-
 jest.mock(
   "v2/Apps/Order/Components/PaymentPicker",
   // not sure why this is neccessary :(
@@ -161,33 +159,6 @@ describe("Payment", () => {
         `"CheckOfferNavigate rightCheckShippingNavigate rightPaymentNavigate rightReview"`
       )
       expect(page.orderStepperCurrentStep).toBe("Payment")
-    })
-  })
-
-  describe("analytics", () => {
-    const err = console.error
-    beforeEach(() => {
-      mockPostEvent.mockClear()
-      // TODO: update to react 16.9 so we can use async `act`
-      console.error = (...args) => {
-        if (
-          !args.some(
-            a =>
-              a &&
-              a
-                .toString()
-                .match(
-                  "code that causes React state updates should be wrapped into act"
-                )
-          )
-        ) {
-          err(...args)
-        }
-      }
-    })
-
-    afterEach(() => {
-      console.error = err
     })
   })
 })

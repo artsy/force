@@ -7,7 +7,7 @@ import deepMerge from "deepmerge"
 import { createTestEnv } from "v2/DevTools/createTestEnv"
 import { Location, Match } from "found"
 import { graphql } from "react-relay"
-import { LargeSelect } from "@artsy/palette"
+import { Select } from "@artsy/palette"
 
 import { auctionRoutes_ConfirmBidQueryResponse } from "v2/__generated__/auctionRoutes_ConfirmBidQuery.graphql"
 import { ConfirmBidQueryResponseFixture } from "v2/Apps/Auction/__fixtures__/routes_ConfirmBidQuery"
@@ -148,7 +148,7 @@ describe("Routes/ConfirmBid", () => {
   })
 
   describe("for registered users", () => {
-    it("allows the user to place a bid without agreeing to terms", async done => {
+    it("allows the user to place a bid without agreeing to terms", async () => {
       const env = setupTestEnv()
       const page = await env.buildPage()
 
@@ -182,17 +182,14 @@ describe("Routes/ConfirmBid", () => {
         confirmBidBidderPositionQueryWithWinning
       )
 
-      setTimeout(() => {
-        expect(mockBidderPositionQuery).toHaveBeenCalledTimes(1)
-        expect(mockBidderPositionQuery.mock.calls[0][1]).toEqual({
-          bidderPositionID: "pending-bidder-position-id-from-polling",
-        })
-
-        expect(window.location.assign).toHaveBeenCalledWith(
-          `/artwork/${ConfirmBidQueryResponseFixture.artwork?.slug}`
-        )
-        done()
-      }, 1001)
+      await new Promise(resolve => setTimeout(resolve, 1001))
+      expect(mockBidderPositionQuery).toHaveBeenCalledTimes(1)
+      expect(mockBidderPositionQuery.mock.calls[0][1]).toEqual({
+        bidderPositionID: "pending-bidder-position-id-from-polling",
+      })
+      expect(window.location.assign).toHaveBeenCalledWith(
+        `/artwork/${ConfirmBidQueryResponseFixture.artwork?.slug}`
+      )
     })
 
     it("displays buyer's premium and subtotal", async () => {
@@ -386,7 +383,7 @@ describe("Routes/ConfirmBid", () => {
       await page.submitForm()
 
       expect(window.location.assign).not.toHaveBeenCalled()
-      expect(page.find(LargeSelect).text()).toContain(
+      expect(page.find(Select).text()).toContain(
         "Your bid wasn't high enough. Please select a higher bid."
       )
     })

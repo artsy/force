@@ -38,14 +38,16 @@ export const ThankYou: React.FC = () => {
           </Button>
         </RouterLink>
 
-        <RouterLink
-          to="/"
-          data-test-id="go-to-artsy-homepage"
-          display="flex"
-          justifyContent="center"
-          mt={[4, 0]}
-        >
-          Back to Artsy Homepage
+        <RouterLink to="/">
+          <Button
+            mt={[4, 0]}
+            width={["100%", "auto"]}
+            data-test-id="go-to-artsy-homepage"
+            size="medium"
+            variant="noOutline"
+          >
+            Back to Artsy Homepage
+          </Button>
         </RouterLink>
       </Flex>
 

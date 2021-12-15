@@ -42,8 +42,10 @@ declare module "sharify" {
       readonly NETWORK_CACHE_TTL: string
       readonly NODE_ENV: string
       readonly NOTIFICATION_COUNT: string
+      readonly ONETRUST_SCRIPT_ID: string
       readonly PREDICTION_URL: string
       readonly RECAPTCHA_KEY: string
+      readonly SEGMENT_WRITE_KEY: string
       readonly SENTRY_PUBLIC_DSN: string
       readonly SHOW_ANALYTICS_CALLS: boolean
       readonly SIFT_BEACON_KEY: string

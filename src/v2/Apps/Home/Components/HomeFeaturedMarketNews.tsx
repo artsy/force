@@ -27,6 +27,8 @@ import { RouterLink } from "v2/System/Router/RouterLink"
 import { Media } from "v2/Utils/Responsive"
 import { HomeFeaturedMarketNewsQuery } from "v2/__generated__/HomeFeaturedMarketNewsQuery.graphql"
 import { HomeFeaturedMarketNews_articles } from "v2/__generated__/HomeFeaturedMarketNews_articles.graphql"
+import styled from "styled-components"
+import { themeGet } from "@styled-system/theme-get";
 
 const ARTICLE_COUNT = 6
 
@@ -34,8 +36,15 @@ interface HomeFeaturedMarketNewsProps {
   articles: HomeFeaturedMarketNews_articles
 }
 
+const StyledRouterLink = styled(RouterLink)`
+  text-decoration: none;
+  &:hover {
+    color: ${themeGet("colors.blue100")};
+  }
+`
+
 const HomeFeaturedMarketNews: React.FC<HomeFeaturedMarketNewsProps> = ({
-  articles,
+  articles
 }) => {
   const { trackEvent } = useTracking()
   const [firstArticle, ...restOfArticles] = articles
@@ -46,7 +55,7 @@ const HomeFeaturedMarketNews: React.FC<HomeFeaturedMarketNewsProps> = ({
     <HomeFeaturedMarketNewsContainer>
       <GridColumns>
         <Column span={[12, 6]} mb={[4, 0]}>
-          <RouterLink
+          <StyledRouterLink
             key={firstArticle.internalID}
             to={firstArticle.href ?? ""}
             display="block"
@@ -82,13 +91,13 @@ const HomeFeaturedMarketNews: React.FC<HomeFeaturedMarketNewsProps> = ({
             <Text variant="xs" textTransform="uppercase" my={1}>
               {firstArticle.vertical}
             </Text>
-
+          
             <Text variant="xl">{firstArticle.title}</Text>
 
             <Text variant="lg" mt={1}>
               By {firstArticle.author?.name}
             </Text>
-          </RouterLink>
+          </StyledRouterLink>
         </Column>
 
         <Column span={[12, 6]}>
@@ -97,7 +106,7 @@ const HomeFeaturedMarketNews: React.FC<HomeFeaturedMarketNewsProps> = ({
               const image = article.thumbnailImage?.small
 
               return (
-                <RouterLink
+                <StyledRouterLink
                   key={article.internalID}
                   to={article.href ?? ""}
                   textDecoration="none"
@@ -136,14 +145,14 @@ const HomeFeaturedMarketNews: React.FC<HomeFeaturedMarketNewsProps> = ({
                     <Text variant="xs" textTransform="uppercase" my={1}>
                       {article.vertical}
                     </Text>
-
-                    <Text variant="lg">{article.title}</Text>
-
+                    
+                      <Text variant="lg">{article.title}</Text>
+                    
                     <Text variant="md" mt={1}>
                       By {article.author?.name}
                     </Text>
                   </Box>
-                </RouterLink>
+                </StyledRouterLink>
               )
             })}
           </Masonry>
@@ -163,6 +172,7 @@ const HomeFeaturedMarketNewsContainer: React.FC = ({ children }) => {
 
         <Text
           variant="sm"
+          textAlign="right"
           as={RouterLink}
           // @ts-ignore
           to="/articles"

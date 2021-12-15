@@ -26,7 +26,6 @@ app.use(require("./apps/tag"))
 app.use(require("./apps/browse"))
 app.use(require("./apps/partner_profile"))
 app.use(require("./apps/favorites_following"))
-app.use(require("./apps/auctions"))
 app.use(require("./apps/dev"))
 
 // Export for hot reloading

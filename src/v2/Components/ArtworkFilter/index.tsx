@@ -116,7 +116,12 @@ const FiltersWithScrollIntoView: React.FC<{
   const scrollRef = useRef<HTMLDivElement | null>(null)
 
   return (
-    <Box ref={scrollRef as any} overflowY="scroll" height="100%">
+    <Box
+      ref={scrollRef as any}
+      overflowY="scroll"
+      height="100%"
+      data-testid="FiltersWithScrollIntoView"
+    >
       <ScrollRefContext.Provider value={{ scrollRef }}>
         {Filters ? (
           Filters
@@ -341,6 +346,7 @@ export const BaseArtworkFilter: React.FC<
                   <Button
                     size="small"
                     onClick={() => toggleMobileActionSheet(true)}
+                    mr={2}
                   >
                     <Flex justifyContent="space-between" alignItems="center">
                       <FilterIcon fill="white100" />

@@ -1,13 +1,14 @@
 import { cloneDeep, extend } from "lodash"
 import { mount } from "enzyme"
 import { FairWeekPageScaffold } from "../PageScaffold"
+import Fixture from "desktop/apps/armory_week/fixture"
 
 // FIXME: Reaction migration
-xdescribe("FairWeekPageScaffold", () => {
-  const Fixture = require("desktop/apps/armory_week/fixture.json")
+describe.skip("FairWeekPageScaffold", () => {
   const getWrapper = (data = {}) => {
     const props = extend(cloneDeep(Fixture), data)
 
+    // @ts-ignore
     return mount(<FairWeekPageScaffold {...props} />)
   }
 
@@ -32,6 +33,7 @@ xdescribe("FairWeekPageScaffold", () => {
       } = Fixture
 
       expect(component.html()).toMatch(fairs[0].logo_url)
+      // @ts-ignore
       expect(component.html()).toMatch(fairs[0].site_url)
       expect(component.html()).toMatch(fairs[1].logo_url)
       expect(component.html()).toMatch(fairs[2].logo_url)

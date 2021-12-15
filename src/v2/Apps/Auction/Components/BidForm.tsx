@@ -2,10 +2,9 @@ import {
   Box,
   Button,
   Flex,
-  LargeSelect,
-  Sans,
+  Select,
+  Text,
   Separator,
-  Serif,
   Spacer,
 } from "@artsy/palette"
 import {
@@ -23,7 +22,11 @@ import { BidForm_saleArtwork } from "v2/__generated__/BidForm_saleArtwork.graphq
 import { CreditCardInstructions } from "v2/Apps/Auction/Components/CreditCardInstructions"
 import { PricingTransparencyQueryRenderer } from "v2/Apps/Auction/Components/PricingTransparency"
 import { CreditCardInput } from "v2/Apps/Order/Components/CreditCardInput"
-import { AddressForm } from "v2/Components/AddressForm"
+import {
+  AddressErrors,
+  AddressForm,
+  AddressTouched,
+} from "v2/Components/AddressForm"
 import { ConditionsOfSaleCheckbox } from "v2/Components/Auction/ConditionsOfSaleCheckbox"
 import {
   OnSubmitValidationError,
@@ -118,11 +121,11 @@ export const BidForm: React.FC<Props> = ({
             }}
           />
 
-          <Serif mt={4} pb={0.5} size="4t" weight="semibold" color="black100">
+          <Text variant="md" mt={2} pb={0.5} fontWeight="bold" color="black100">
             Set your max bid
-          </Serif>
+          </Text>
 
-          <LargeSelect
+          <Select
             selected={values.selectedBid}
             onSelect={value => {
               onMaxBidSelect && onMaxBidSelect(value)
@@ -142,16 +145,22 @@ export const BidForm: React.FC<Props> = ({
             bidAmountMinor={parseInt(values.selectedBid)}
           />
 
-          <Spacer mt={4} />
+          <Spacer mt={2} />
 
           {requiresPaymentInformation && (
             <>
-              <Separator mb={3} />
+              <Separator mb={2} />
               <CreditCardInstructions />
 
-              <Serif mt={4} mb={2} size="4t" weight="semibold" color="black100">
+              <Text
+                variant="md"
+                mt={4}
+                mb={2}
+                fontWeight="bold"
+                color="black100"
+              >
                 Card Information
-              </Serif>
+              </Text>
 
               <CreditCardInput
                 error={{ message: errors.creditCard } as StripeError}
@@ -160,14 +169,13 @@ export const BidForm: React.FC<Props> = ({
                 }
               />
 
-              <Spacer mt={2} />
+              <Spacer mt={4} />
 
-              {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
               <AddressForm
                 value={values.address}
                 onChange={address => setFieldValue("address", address)}
-                errors={errors.address}
-                touched={touched.address}
+                errors={errors.address as AddressErrors}
+                touched={touched.address as AddressTouched}
                 billing
                 showPhoneNumberInput
               />
@@ -177,7 +185,7 @@ export const BidForm: React.FC<Props> = ({
           <Spacer mt={3} />
 
           {requiresCheckbox && (
-            <Flex mb={3} flexDirection="column" justifyContent="center">
+            <Flex mb={4} flexDirection="column" justifyContent="center">
               <Box mx="auto">
                 <ConditionsOfSaleCheckbox
                   selected={values.agreeToTerms}
@@ -190,18 +198,19 @@ export const BidForm: React.FC<Props> = ({
               </Box>
 
               {touched.agreeToTerms && errors.agreeToTerms && (
-                <Sans mt={1} color="red100" size="2" textAlign="center">
+                <Text variant="md" mt={1} color="red100" textAlign="center">
                   {errors.agreeToTerms}
-                </Sans>
+                </Text>
               )}
             </Flex>
           )}
 
           <Button
-            size="large"
+            variant="primaryBlack"
             width="100%"
             loading={isSubmitting}
             type="submit"
+            mb={4}
           >
             Confirm bid
           </Button>

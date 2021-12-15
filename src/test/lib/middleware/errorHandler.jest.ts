@@ -1,4 +1,5 @@
 import { IpDeniedError } from "express-ipfilter"
+import { errorHandlerMiddleware } from "../../../lib/middleware/errorHandler"
 jest.mock("../../../config", () => {
   return {
     NODE_ENV: "unknown",
@@ -28,14 +29,6 @@ describe("errorHandler", () => {
 
   it("invokes the error handler template with the right parameters (and the right status code for the page)", () => {
     config["NODE_ENV"] = "development"
-
-    let errorHandlerMiddleware
-    jest.isolateModules(
-      () =>
-        (errorHandlerMiddleware = require("../../../lib/middleware/errorHandler")
-          .errorHandlerMiddleware)
-    )
-
     errorHandlerMiddleware(
       testContext.err,
       {} as any,
@@ -54,12 +47,6 @@ describe("errorHandler", () => {
 
   it("passes undefined in production", () => {
     config["NODE_ENV"] = "production"
-    let errorHandlerMiddleware
-    jest.isolateModules(
-      () =>
-        (errorHandlerMiddleware = require("../../../lib/middleware/errorHandler")
-          .errorHandlerMiddleware)
-    )
 
     errorHandlerMiddleware(
       testContext.err,
@@ -78,12 +65,6 @@ describe("errorHandler", () => {
   })
 
   it("returns a 401 when an IP is denied", () => {
-    let errorHandlerMiddleware
-    jest.isolateModules(
-      () =>
-        (errorHandlerMiddleware = require("../../../lib/middleware/errorHandler")
-          .errorHandlerMiddleware)
-    )
     const err = new IpDeniedError("You've been blocked")
     errorHandlerMiddleware(err, {} as any, testContext.res, testContext.next)
     expect(testContext.res.status).toBeCalledWith(401)

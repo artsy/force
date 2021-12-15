@@ -80,9 +80,9 @@ export const ArtworkDetails: React.FC = () => {
       <Text mt={1} variant="sm" color="black60">
         &#8226; All fields are required to submit a work.
       </Text>
-      <Text mb={[2, 6]} variant="sm" color="black60">
-        &#8226; Unfortunately we are not accepting consignments directly from
-        artists at this time.
+      <Text mb={[4, 6]} variant="sm" color="black60">
+        &#8226; We currently do not allow artists to sell their own work on
+        Artsy.
       </Text>
 
       <Formik<ArtworkDetailsFormModel>

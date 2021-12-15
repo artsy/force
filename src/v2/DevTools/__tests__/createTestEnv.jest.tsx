@@ -161,11 +161,7 @@ const Component = createFragmentContainer(
 )
 
 describe("test envs", () => {
-  beforeEach(() => {
-    onCompleted.mockReset()
-    onError.mockReset()
-  })
-  const { buildPage, mutations } = createTestEnv({
+  const { buildPage, mutations, ...hooks } = createTestEnv({
     Component,
     TestPage: class MyTestPage extends RootTestPage {
       get heading() {
@@ -204,6 +200,14 @@ describe("test envs", () => {
       }
     `,
   })
+
+  beforeEach(() => {
+    onCompleted.mockReset()
+    onError.mockReset()
+    hooks.clearErrors()
+  })
+
+  afterEach(hooks.clearMocksAndErrors)
 
   it("lets you make a page", async () => {
     const page = await buildPage()

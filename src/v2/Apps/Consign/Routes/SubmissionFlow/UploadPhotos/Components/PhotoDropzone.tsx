@@ -1,7 +1,7 @@
 import { Box, Text, Button, BoxProps } from "@artsy/palette"
 import { useFormikContext } from "formik"
 import { cloneDeep } from "lodash"
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import { FileRejection, useDropzone } from "react-dropzone"
 import { Media } from "v2/Utils/Responsive"
 import { CustomErrorCode, MBSize, Photo } from "../../Utils/fileUtils"
@@ -77,6 +77,7 @@ export const PhotoDropzone: React.FC<PhotoDropzoneProps> = ({
 }) => {
   const [customErrors, setCustomErrors] = useState<Array<FileRejection>>([])
   const { values } = useFormikContext<UploadPhotosFormModel>()
+  const buttonRef = useRef<HTMLButtonElement | null>(null)
 
   const { getRootProps, getInputProps, open, fileRejections } = useDropzone({
     onDropAccepted: files => {
@@ -89,8 +90,14 @@ export const PhotoDropzone: React.FC<PhotoDropzoneProps> = ({
       if (acceptedFiles.length) {
         onDrop(acceptedFiles)
       }
-
       setCustomErrors(errors)
+      buttonRef.current?.blur()
+    },
+    onFileDialogCancel: () => {
+      buttonRef.current?.blur()
+    },
+    onDropRejected: () => {
+      buttonRef.current?.blur()
     },
     accept: ["image/jpeg", "image/png"],
     noClick: true,
@@ -124,6 +131,7 @@ export const PhotoDropzone: React.FC<PhotoDropzoneProps> = ({
         </Text>
 
         <Button
+          ref={buttonRef}
           width={["100%", "auto"]}
           type="button"
           mt={4}
