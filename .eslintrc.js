@@ -109,6 +109,10 @@ module.exports = {
         name: "react-autosuggest",
         message: "Please use Palette's AutosuggestInput instead.",
       },
+      {
+        name: "sharify",
+        message: "Please use getENV instead.",
+      },
     ],
   },
   overrides: [
