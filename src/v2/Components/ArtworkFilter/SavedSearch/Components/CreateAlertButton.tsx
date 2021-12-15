@@ -50,7 +50,7 @@ export const CreateAlertButton: React.FC<CreateAlertButtonProps> = ({
           name: savedSearchAttributes.name,
           slug: savedSearchAttributes.slug,
         },
-        contextModule: ContextModule.worksForSaleRail,
+        contextModule: ContextModule.artworkGrid,
         intent: "createAlert" as AuthIntent,
       })
     }

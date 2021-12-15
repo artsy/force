@@ -113,7 +113,7 @@ describe("CreateAlertButton", () => {
           name: "test-artist-name",
           slug: "example-slug",
         },
-        contextModule: "worksForSaleRail",
+        contextModule: "artworkGrid",
         intent: "createAlert",
       })
     })
