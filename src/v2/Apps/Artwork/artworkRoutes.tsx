@@ -1,7 +1,6 @@
 import loadable from "@loadable/component"
 import { graphql } from "react-relay"
 import { AppRouteConfig } from "v2/System/Router/Route"
-import { handleArtworkImageDownload } from "./Server/handleArtworkImageDownload"
 
 const ArtworkApp = loadable(
   () => import(/* webpackChunkName: "artworkBundle" */ "./ArtworkApp"),
@@ -39,6 +38,5 @@ export const artworkRoutes: AppRouteConfig[] = [
   {
     path: "/artwork/:artworkID/download/:filename",
     Component: () => null,
-    onServerSideRender: handleArtworkImageDownload,
   },
 ]

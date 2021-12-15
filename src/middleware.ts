@@ -60,12 +60,13 @@ import { marketingModalsMiddleware } from "./lib/middleware/marketingModals"
 import { redisPageCacheMiddleware } from "./lib/middleware/redisPageCache"
 import { sameOriginMiddleware } from "./lib/middleware/sameOrigin"
 import { unsupportedBrowserMiddleware } from "./lib/middleware/unsupportedBrowser"
-import { backboneSync } from "lib/backboneSync"
-import { serverTimingHeaders } from "lib/middleware/serverTimingHeaders"
+import { backboneSync } from "./lib/backboneSync"
+import { serverTimingHeaders } from "./lib/middleware/serverTimingHeaders"
+import { handleArtworkImageDownload } from "./lib/middleware/handleArtworkImageDownload"
 
-import { splitTestMiddleware } from "desktop/components/split_test/splitTestMiddleware"
-import { IGNORED_ERRORS } from "lib/analytics/sentryFilters"
-import { sharifyToCookie } from "lib/middleware/sharifyToCookie"
+import { splitTestMiddleware } from "./desktop/components/split_test/splitTestMiddleware"
+import { IGNORED_ERRORS } from "./lib/analytics/sentryFilters"
+import { sharifyToCookie } from "./lib/middleware/sharifyToCookie"
 
 // Find the v2 routes, we will not be testing memory caching for legacy pages.
 
@@ -144,6 +145,9 @@ export function initializeMiddleware(app) {
 
   // Static assets
   applyStaticAssetMiddlewares(app)
+
+  // Image download
+  app.get("/artwork/:artworkID/download/:filename", handleArtworkImageDownload)
 }
 
 function applySecurityMiddleware(app) {
