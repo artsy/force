@@ -86,14 +86,14 @@ describe("FollowGeneButton", () => {
         }),
       })
 
-      const openAuthToFollowSaveCreate = jest.spyOn(
+      const openAuthToSatisfyIntent = jest.spyOn(
         openAuthModal,
-        "openAuthToFollowSaveCreate"
+        "openAuthToSatisfyIntent"
       )
 
       wrapper.find(FollowButton).simulate("click")
 
-      expect(openAuthToFollowSaveCreate).toBeCalledWith(mediator, {
+      expect(openAuthToSatisfyIntent).toBeCalledWith(mediator, {
         intent: "followGene",
         contextModule: "geneHeader",
         entity: {

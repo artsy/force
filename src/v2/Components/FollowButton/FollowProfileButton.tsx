@@ -4,7 +4,7 @@ import * as React from "react"
 import track, { TrackingProp } from "react-tracking"
 import { FollowProfileButton_profile } from "../../__generated__/FollowProfileButton_profile.graphql"
 import { FollowButton } from "./Button"
-import { openAuthToFollowSaveCreate } from "v2/Utils/openAuthModal"
+import { openAuthToSatisfyIntent } from "v2/Utils/openAuthModal"
 import {
   AuthContextModule,
   FollowedArgs,
@@ -118,7 +118,7 @@ export class FollowProfileButton extends React.Component<Props> {
       this.trackFollow()
     } else {
       // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-      openAuthToFollowSaveCreate(mediator, {
+      openAuthToSatisfyIntent(mediator, {
         entity: {
           // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
           name: profile.name,

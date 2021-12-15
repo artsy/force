@@ -34,7 +34,7 @@ export const triggerEvent = (
   }, 100)
 }
 
-export const openAuthToFollowSaveCreate = (
+export const openAuthToSatisfyIntent = (
   mediator: Mediator,
   options: AuthModalOptions
 ) => {

@@ -9,9 +9,9 @@ import * as openAuthModal from "v2/Utils/openAuthModal"
 import { AnalyticsContext } from "v2/System/Analytics/AnalyticsContext"
 import { mockLocation } from "v2/DevTools/mockLocation"
 
-const openAuthToFollowSaveCreate = jest.spyOn(
+const openAuthToSatisfyIntent = jest.spyOn(
   openAuthModal,
-  "openAuthToFollowSaveCreate"
+  "openAuthToSatisfyIntent"
 )
 jest.mock("react-relay", () => ({
   commitMutation: jest.fn(),
@@ -59,7 +59,7 @@ describe("FollowArtistButton", () => {
       const component = getWrapper()
       component.find(FollowButton).simulate("click")
 
-      expect(openAuthToFollowSaveCreate).toBeCalledWith(mediator, {
+      expect(openAuthToSatisfyIntent).toBeCalledWith(mediator, {
         contextModule: "artistsToFollowRail",
         entity: {
           counts: {

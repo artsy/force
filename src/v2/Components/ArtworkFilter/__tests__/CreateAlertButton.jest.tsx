@@ -30,9 +30,9 @@ describe("CreateAlertButton", () => {
     return <CreateAlertButton {...props} />
   }
 
-  const openAuthToFollowSaveCreate = jest.spyOn(
+  const openAuthToSatisfyIntent = jest.spyOn(
     openAuthModal,
-    "openAuthToFollowSaveCreate"
+    "openAuthToSatisfyIntent"
   )
 
   const trackEvent = jest.fn()
@@ -108,7 +108,7 @@ describe("CreateAlertButton", () => {
       renderButton()
       const button = screen.getByText("Create an Alert")
       fireEvent.click(button)
-      expect(openAuthToFollowSaveCreate).toHaveBeenCalledWith(mediator, {
+      expect(openAuthToSatisfyIntent).toHaveBeenCalledWith(mediator, {
         entity: {
           name: "test-artist-name",
           slug: "example-slug",

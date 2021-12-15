@@ -5,7 +5,7 @@ import { FollowButton } from "./Button"
 import { FollowGeneButton_gene } from "v2/__generated__/FollowGeneButton_gene.graphql"
 import { FollowGeneButtonMutation } from "v2/__generated__/FollowGeneButtonMutation.graphql"
 import { ButtonProps } from "@artsy/palette"
-import { openAuthToFollowSaveCreate } from "v2/Utils/openAuthModal"
+import { openAuthToSatisfyIntent } from "v2/Utils/openAuthModal"
 import { Intent, ContextModule } from "@artsy/cohesion"
 
 interface FollowGeneButtonProps extends ButtonProps {
@@ -21,7 +21,7 @@ const FollowGeneButton: React.FC<FollowGeneButtonProps> = ({
   const handleClick = () => {
     if (!user) {
       // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-      openAuthToFollowSaveCreate(mediator, {
+      openAuthToSatisfyIntent(mediator, {
         entity: gene,
         contextModule: ContextModule.geneHeader,
         intent: Intent.followGene,

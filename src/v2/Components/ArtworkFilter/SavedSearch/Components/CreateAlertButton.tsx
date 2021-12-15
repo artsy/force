@@ -10,7 +10,7 @@ import {
 } from "@artsy/cohesion"
 import { SavedSearchAlertModal } from "v2/Components/SavedSearchAlert/SavedSearchAlertModal"
 import { SavedSearchAlertMutationResult } from "v2/Components/SavedSearchAlert/SavedSearchAlertModel"
-import { openAuthToFollowSaveCreate } from "v2/Utils/openAuthModal"
+import { openAuthToSatisfyIntent } from "v2/Utils/openAuthModal"
 import { mediator } from "lib/mediator"
 
 interface CreateAlertButtonProps extends ButtonProps {
@@ -45,7 +45,7 @@ export const CreateAlertButton: React.FC<CreateAlertButtonProps> = ({
     if (isLoggedIn) {
       handleOpenForm()
     } else {
-      openAuthToFollowSaveCreate(mediator, {
+      openAuthToSatisfyIntent(mediator, {
         entity: {
           name: savedSearchAttributes.name,
           slug: savedSearchAttributes.slug,

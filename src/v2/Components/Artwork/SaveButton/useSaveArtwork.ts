@@ -1,6 +1,6 @@
 import { useSystemContext } from "v2/System"
 import { AuthContextModule, Intent } from "@artsy/cohesion"
-import { openAuthToFollowSaveCreate } from "v2/Utils/openAuthModal"
+import { openAuthToSatisfyIntent } from "v2/Utils/openAuthModal"
 import { SaveArtwork } from "./SaveArtworkMutation"
 
 type Artwork = {
@@ -52,7 +52,7 @@ export const useSaveArtwork = ({
         console.error("Artwork/Save Error saving artwork: ", err)
       }
     } else {
-      openAuthToFollowSaveCreate(mediator!, {
+      openAuthToSatisfyIntent(mediator!, {
         contextModule,
         intent: Intent.saveArtwork,
         entity: {

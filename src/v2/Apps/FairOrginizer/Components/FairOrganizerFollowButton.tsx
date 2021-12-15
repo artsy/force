@@ -4,7 +4,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { FairOrganizerFollowButton_fairOrganizer } from "v2/__generated__/FairOrganizerFollowButton_fairOrganizer.graphql"
 import { useSystemContext } from "v2/System"
 import { fairOrganizerFollowMutation } from "../Mutations/FairOrganizerFollowMutation"
-import { openAuthToFollowSaveCreate } from "v2/Utils/openAuthModal"
+import { openAuthToSatisfyIntent } from "v2/Utils/openAuthModal"
 import { ContextModule, Intent } from "@artsy/cohesion"
 
 interface FairOrganizerFollowButtonProps {
@@ -26,7 +26,7 @@ export const FairOrganizerFollowButton: React.FC<FairOrganizerFollowButtonProps>
         return true
       }
 
-      openAuthToFollowSaveCreate(mediator!, {
+      openAuthToSatisfyIntent(mediator!, {
         contextModule: ContextModule.fairOrganizerHeader,
         entity: {
           slug: fairOrganizer.slug,

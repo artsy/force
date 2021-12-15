@@ -2,7 +2,7 @@ import { graphql } from "react-relay"
 import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
 import { FairOrganizerFollowButton_Test_Query } from "v2/__generated__/FairOrganizerFollowButton_Test_Query.graphql"
 import { FairOrganizerFollowButtonFragmentContainer } from "../FairOrganizerFollowButton"
-import { openAuthToFollowSaveCreate } from "v2/Utils/openAuthModal"
+import { openAuthToSatisfyIntent } from "v2/Utils/openAuthModal"
 import { useSystemContext } from "v2/System/useSystemContext"
 import { fairOrganizerFollowMutation } from "../../Mutations/FairOrganizerFollowMutation"
 
@@ -27,7 +27,7 @@ describe("FairOrganizerFollowButton", () => {
   )
 
   const mockUseSystemContext = useSystemContext as jest.Mock
-  const mockOpenAuthToFollowSave = openAuthToFollowSaveCreate as jest.Mock
+  const mockOpenAuthToSatisfyIntent = openAuthToSatisfyIntent as jest.Mock
   const mockFairOrganizerFollowMutation = fairOrganizerFollowMutation as jest.Mock
 
   beforeEach(() => {
@@ -76,7 +76,7 @@ describe("FairOrganizerFollowButton", () => {
     })
     wrapper.simulate("click")
 
-    expect(mockOpenAuthToFollowSave).toHaveBeenCalledWith("mediator", {
+    expect(mockOpenAuthToSatisfyIntent).toHaveBeenCalledWith("mediator", {
       contextModule: "fairOrganizerHeader",
       entity: { name: "fairOrganizerName", slug: "faiOrganizerSlug" },
       intent: "followPartner",
