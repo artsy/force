@@ -61,6 +61,8 @@ export function bootstrapSharifyAndContextLocalsMiddleware(
   const reqIp = req.ip || ""
   updateSharifyAndContext(res, "IP_ADDRESS", reqIp)
 
+  updateSharifyAndContext(res, "AP", res.locals.sd.AP)
+
   next()
 }
 
