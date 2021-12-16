@@ -20,12 +20,17 @@ export const FirstSuggestionItem: React.FC<SuggestionItemProps> = ({
   isHighlighted,
   query,
 }) => {
+  const handleClick = event => {
+    event.preventDefault()
+  }
+
   return (
     <SuggestionItemLink
-      to={href}
+      bg={isHighlighted ? "black5" : "white100"}
       borderBottom="1px solid"
       borderBottomColor="black10"
-      bg={isHighlighted ? "black5" : "white100"}
+      onClick={handleClick}
+      to={href}
     >
       <Text variant="sm">See full results for &ldquo;{query}&rdquo;</Text>
     </SuggestionItemLink>
@@ -40,8 +45,16 @@ export const SuggestionItem: React.FC<SuggestionItemProps> = props => {
     showAuctionResultsButton,
   } = props
 
+  const handleClick = event => {
+    event.preventDefault()
+  }
+
   return (
-    <SuggestionItemLink to={href} bg={isHighlighted ? "black5" : "white100"}>
+    <SuggestionItemLink
+      bg={isHighlighted ? "black5" : "white100"}
+      onClick={handleClick}
+      to={href}
+    >
       <DefaultSuggestion {...props} />
       <QuickNavigation
         href={href}
