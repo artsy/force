@@ -36,29 +36,6 @@ describe("FairExhibitors", () => {
     jest.clearAllMocks()
   })
 
-  it("renders the letters nav", () => {
-    const wrapper = getWrapper(FAIR_FIXTURE)
-    expect(wrapper.find("ExhibitorsLetterNav").length).toBe(1)
-  })
-
-  it("scrolls down the page on letter click", () => {
-    document.querySelector = jest.fn().mockReturnValue({
-      getBoundingClientRect: () => ({
-        top: 0,
-      }),
-    })
-
-    const spy = jest.fn()
-    window.scrollTo = spy
-
-    const wrapper = getWrapper(FAIR_FIXTURE)
-
-    const letter = wrapper.find("ExhibitorsLetterNav").find("Letter").at(3)
-
-    letter.simulate("click")
-    expect(spy).toHaveBeenCalledTimes(1)
-  })
-
   it("renders the exhibitors group", () => {
     const wrapper = getWrapper(FAIR_FIXTURE)
 

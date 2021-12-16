@@ -7,9 +7,17 @@ import { useTracking } from "react-tracking"
 import { OwnerType } from "@artsy/cohesion"
 import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
 import { ReactWrapper } from "enzyme"
+import { useRouter } from "v2/System/Router/useRouter"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
+jest.mock("v2/Utils/Hooks/useMatchMedia", () => ({
+  __internal__useMatchMedia: () => false,
+}))
+jest.mock("v2/System/Router/useRouter", () => ({
+  useRouter: jest.fn(),
+  useIsRouteActive: () => false,
+}))
 
 const { getWrapper } = setupTestWrapper<FairApp_Test_Query>({
   Component: props => {
@@ -40,9 +48,21 @@ const sd = require("sharify").data
 
 describe("FairApp", () => {
   const trackEvent = jest.fn()
+  const mockUseRouter = useRouter as jest.Mock
 
   beforeEach(() => {
     ;(useTracking as jest.Mock).mockImplementation(() => ({ trackEvent }))
+    mockUseRouter.mockImplementation(() => ({
+      match: {
+        location: {
+          pathname: "anything",
+        },
+      },
+    }))
+  })
+
+  afterEach(() => {
+    mockUseRouter.mockReset()
   })
 
   afterEach(() => {
@@ -186,4 +206,58 @@ describe("FairApp", () => {
       subject: "Artworks",
     })
   })
+
+  describe("Exhibitors tab", () => {
+    beforeEach(() => {
+      mockUseRouter.mockImplementation(() => ({
+        match: {
+          location: {
+            pathname: "/exhibitors",
+          },
+        },
+      }))
+    })
+
+    it("renders the letters nav", () => {
+      const wrapper = getWrapper(FAIR_FIXTURE)
+      expect(wrapper.find("ExhibitorsLetterNav").length).toBe(1)
+    })
+
+    it("scrolls down the page on letter click", () => {
+      document.querySelector = jest.fn().mockReturnValue({
+        getBoundingClientRect: () => ({
+          top: 0,
+        }),
+      })
+
+      const spy = jest.fn()
+      window.scrollTo = spy
+
+      const wrapper = getWrapper(FAIR_FIXTURE)
+
+      const letter = wrapper.find("ExhibitorsLetterNav").find("Letter").at(3)
+
+      letter.simulate("click")
+      expect(spy).toHaveBeenCalledTimes(1)
+    })
+  })
 })
+
+const FAIR_FIXTURE = {
+  Fair: () => ({
+    exhibitorsGroupedByName: [
+      {
+        letter: "A",
+        exhibitors: [],
+      },
+      {
+        letter: "C",
+        exhibitors: [],
+      },
+      {
+        letter: "D",
+        exhibitors: [],
+      },
+    ],
+  }),
+}
