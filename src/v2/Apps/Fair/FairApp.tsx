@@ -18,6 +18,7 @@ import {
   PageOwnerType,
 } from "@artsy/cohesion"
 import { HttpError } from "found"
+import { useRouter } from "v2/System/Router/useRouter"
 import { userIsAdmin } from "v2/Utils/user"
 import { FairHeaderImageFragmentContainer } from "./Components/FairHeader/FairHeaderImage"
 import { FairHeaderFragmentContainer } from "./Components/FairHeader"
@@ -40,6 +41,7 @@ const FairApp: React.FC<FairAppProps> = ({ children, fair }) => {
     contextPageOwnerType,
   } = useAnalyticsContext()
   const lastClickedTab = useRef(ContextModule.fairInfo)
+  const { match } = useRouter()
 
   const fairHref = fair.href ?? ""
 
@@ -139,7 +141,9 @@ const FairApp: React.FC<FairAppProps> = ({ children, fair }) => {
                       </FairRouteTab>
                     )}
                   </RouteTabs>
-                  <ExhibitorsLetterNav fair={fair} />
+                  {match.location.pathname.includes("/exhibitors") && (
+                    <ExhibitorsLetterNav fair={fair} />
+                  )}
                 </HorizontalPadding>
               </AppContainer>
             </FullBleed>
