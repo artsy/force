@@ -26,6 +26,7 @@ import { Sticky, StickyProvider } from "v2/Components/Sticky"
 import { AppContainer } from "../Components/AppContainer"
 import { HorizontalPadding } from "../Components/HorizontalPadding"
 import styled from "styled-components"
+import { ExhibitorsLetterNavFragmentContainer as ExhibitorsLetterNav } from "./Components/ExhibitorsLetterNav"
 
 interface FairAppProps {
   fair: FairApp_fair
@@ -138,6 +139,7 @@ const FairApp: React.FC<FairAppProps> = ({ children, fair }) => {
                       </FairRouteTab>
                     )}
                   </RouteTabs>
+                  <ExhibitorsLetterNav fair={fair} />
                 </HorizontalPadding>
               </AppContainer>
             </FullBleed>
@@ -196,6 +198,7 @@ export const FairAppFragmentContainer = createFragmentContainer(
         ...FairMeta_fair
         ...FairHeader_fair
         ...FairHeaderImage_fair
+        ...ExhibitorsLetterNav_fair
         counts {
           artworks
         }
