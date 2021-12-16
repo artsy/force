@@ -8,7 +8,7 @@ export const useExhibitorsTabOffset = () => {
   } = useNavBarHeight()
 
   const isMobile = __internal__useMatchMedia(themeProps.mediaQueries.xs)
-  const stickyTabsHeight = 150
+  const stickyTabsHeight = 205
 
   const offset =
     (isMobile ? mobileNavBarHeight : desktopNavBarHeight) + stickyTabsHeight
