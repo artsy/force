@@ -17,7 +17,7 @@ export const LotInfo: React.FC<Props> = ({ artwork, saleArtwork }) => {
     counts: { bidderPositions: bidCount },
   } = saleArtwork
   return (
-    <Flex id="our-parent-flex-box" py={4}>
+    <Flex py={4}>
       <Box maxWidth="150px" width="100%" height="auto" p={0}>
         <RouterLink to={`/artwork/${artwork.slug}`}>
           <div
