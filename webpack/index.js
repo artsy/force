@@ -5,6 +5,7 @@ import merge from "webpack-merge"
 import fs from "fs"
 import path from "path"
 import { bundleAnalyzer } from "./plugins/bundleAnalyzer"
+import { bundleSize } from "./plugins/bundleSize"
 import { metrics } from "./plugins/datadog"
 import { env, basePath } from "./utils/env"
 import { log } from "./utils/log"
@@ -122,6 +123,8 @@ function getProductionWebpackConfig() {
 
   // Optionally analyze the bundle
   config = bundleAnalyzer(config)
+  // Optionall track the bundle size
+  config = bundleSize(config)
   // Add datadog metrics
   config = metrics(config, name)
 
