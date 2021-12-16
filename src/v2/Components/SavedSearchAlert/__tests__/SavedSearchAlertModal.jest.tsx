@@ -1,10 +1,9 @@
 import { render, screen, fireEvent } from "@testing-library/react"
-import { ArtworkFiltersState } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
-import { SavedSearchAttributes } from "v2/Components/ArtworkFilter/SavedSearch/types"
 import {
-  FilterPill,
-  FilterPillsContextProvider,
-} from "v2/Components/ArtworkFilter/SavedSearch/Utils/FilterPillsContext"
+  ArtworkFilterContextProvider,
+  ArtworkFiltersState,
+} from "v2/Components/ArtworkFilter/ArtworkFilterContext"
+import { SavedSearchAttributes } from "v2/Components/ArtworkFilter/SavedSearch/types"
 import { ExtractProps } from "v2/Utils/ExtractProps"
 import { Breakpoint } from "v2/Utils/Responsive"
 import { SavedSearchAlertModal } from "../SavedSearchAlertModal"
@@ -22,23 +21,10 @@ const savedSearchProps: SavedSearchAttributes = {
   slug: "test-artist-slug",
 }
 
-const mockedPills: FilterPill[] = [
-  {
-    isDefault: true,
-    name: "test-artist-slug",
-    displayName: "Test Artist",
-  },
-  {
-    filterName: "attributionClass",
-    name: "open-edition",
-    displayName: "Open Edition",
-  },
-  {
-    filterName: "priceRange",
-    name: "25000-50000",
-    displayName: "$25,000-$50,000",
-  },
-]
+const defaultFilters: ArtworkFiltersState = {
+  attributionClass: ["open edition"],
+  priceRange: "25000-50000",
+}
 
 const onCloseMock = jest.fn()
 const onCompleteMock = jest.fn()
@@ -46,13 +32,14 @@ const onCompleteMock = jest.fn()
 describe("SavedSearchAlertModal", () => {
   const renderModal = ({
     props = {},
+    filters = defaultFilters,
   }: {
     breakpoint?: Breakpoint
     filters?: ArtworkFiltersState
     props?: Partial<ExtractProps<typeof SavedSearchAlertModal>>
   }) => {
     render(
-      <FilterPillsContextProvider pills={mockedPills}>
+      <ArtworkFilterContextProvider filters={filters}>
         <SavedSearchAlertModal
           visible
           initialValues={formInitialValues}
@@ -61,7 +48,7 @@ describe("SavedSearchAlertModal", () => {
           onComplete={onCompleteMock}
           {...props}
         />
-      </FilterPillsContextProvider>
+      </ArtworkFilterContextProvider>
     )
   }
 

@@ -12,11 +12,15 @@ import {
 import { getTimePeriodToDisplay } from "v2/Components/ArtworkFilter/ArtworkFilters/TimePeriodFilter"
 import { isCustomValue } from "v2/Components/ArtworkFilter/ArtworkFilters/Utils/isCustomValue"
 import { WAYS_TO_BUY_OPTIONS } from "v2/Components/ArtworkFilter/ArtworkFilters/WaysToBuyFilter"
-import { NonDefaultFilterPill } from "v2/Components/ArtworkFilter/SavedSearch/Utils/FilterPillsContext"
+import {
+  DefaultFilterPill,
+  NonDefaultFilterPill,
+} from "v2/Components/ArtworkFilter/SavedSearch/Utils/FilterPillsContext"
 import {
   aggregationForFilter,
   shouldExtractValueNamesFromAggregation,
 } from "v2/Components/ArtworkFilter/SavedSearch/Utils"
+import { SavedSearchAttributes } from "v2/Components/ArtworkFilter/SavedSearch/types"
 
 export const extractPillFromAggregation = (
   filter: {
@@ -74,7 +78,7 @@ const extractPriceLabel = (range: string) => {
   return label
 }
 
-export const extractPills = (
+export const extractPillsFromFilters = (
   filters: ArtworkFilters,
   aggregations: Aggregations = []
 ) => {
@@ -162,4 +166,29 @@ export const extractPills = (
   })
 
   return compact(flatten(pills))
+}
+
+export const extractArtistPill = (
+  savedSearchAttributes?: SavedSearchAttributes
+): DefaultFilterPill | null => {
+  if (savedSearchAttributes?.name && savedSearchAttributes.slug) {
+    return {
+      isDefault: true,
+      name: savedSearchAttributes.slug,
+      displayName: savedSearchAttributes.name,
+    }
+  }
+
+  return null
+}
+
+export const extractPills = (
+  filters: ArtworkFilters,
+  aggregations: Aggregations = [],
+  savedSearchAttributes?: SavedSearchAttributes
+) => {
+  const artistPill = extractArtistPill(savedSearchAttributes)
+  const pillsFromFilters = extractPillsFromFilters(filters, aggregations)
+
+  return compact([artistPill, ...pillsFromFilters])
 }
