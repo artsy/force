@@ -9,6 +9,7 @@ export type LotInfo_artwork = {
     readonly title: string | null;
     readonly imageUrl: string | null;
     readonly artistNames: string | null;
+    readonly slug: string;
     readonly " $refType": "LotInfo_artwork";
 };
 export type LotInfo_artwork$data = LotInfo_artwork;
@@ -59,9 +60,16 @@ const node: ReaderFragment = {
       "kind": "ScalarField",
       "name": "artistNames",
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "slug",
+      "storageKey": null
     }
   ],
   "type": "Artwork"
 };
-(node as any).hash = 'b97e574bb5ba20c56fcba68e82f78ffb';
+(node as any).hash = '8282283c0a119d9ce6e05a8b03e648c4';
 export default node;
