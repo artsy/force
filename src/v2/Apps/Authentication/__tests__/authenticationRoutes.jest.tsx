@@ -21,6 +21,7 @@ jest.mock("../Utils/helpers", () => ({
   ...jest.requireActual("../Utils/helpers"),
   setCookies: jest.fn(),
 }))
+jest.mock("v2/Utils/Hooks/useAuthValidation")
 
 describe("authenticationRoutes", () => {
   const mockCheckForRedirect = checkForRedirect as jest.Mock
