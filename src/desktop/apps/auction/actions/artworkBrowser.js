@@ -1,4 +1,5 @@
-import { metaphysics } from "lib/metaphysics"
+// @ts-check
+import { metaphysics2 } from "lib/metaphysics2"
 import { filterQuery } from "desktop/apps/auction/queries/filter"
 import { worksByFollowedArtists } from "desktop/apps/auction/queries/worksByFollowedArtists"
 
@@ -54,7 +55,7 @@ export function fetchArtworks() {
     try {
       dispatch(getArtworksRequest())
 
-      const { filter_sale_artworks } = await metaphysics({
+      const { filter_sale_artworks } = await metaphysics2({
         query: filterQuery,
         req: {
           id: requestID,
@@ -107,7 +108,7 @@ export function fetchArtworksByFollowedArtists() {
     }
 
     try {
-      const { filter_sale_artworks } = await metaphysics({
+      const { filter_sale_artworks } = await metaphysics2({
         query: worksByFollowedArtists,
         req: {
           id: requestID,
@@ -138,7 +139,7 @@ export function fetchMoreArtworks() {
 
     try {
       dispatch(getArtworksRequest())
-      const { filter_sale_artworks } = await metaphysics({
+      const { filter_sale_artworks } = await metaphysics2({
         query: filterQuery,
         req: {
           user,

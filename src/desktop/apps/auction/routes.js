@@ -11,7 +11,7 @@ import auctionReducer from "desktop/apps/auction/reducers"
 import configureStore from "desktop/components/react/utils/configureStore"
 import { get, isEmpty } from "lodash"
 import { metaphysics } from "lib/metaphysics"
-import { metaphysics2} from "lib/metaphysics2"
+import { metaphysics2 } from "lib/metaphysics2"
 import u from "updeep"
 import { initialState as appInitialState } from "desktop/apps/auction/reducers/app"
 import { initialState as auctionWorksInitialState } from "desktop/apps/auction/reducers/artworkBrowser"
@@ -41,8 +41,8 @@ export async function index(req, res, next) {
     let articles = []
 
     try {
-      ;({ articles } = await metaphysics({
-        query: ArticlesQuery(sale._id),
+      ;({ articles } = await metaphysics2({
+        query: ArticlesQuery(sale.internalID),
         req,
       }))
     } catch (error) {
@@ -163,14 +163,14 @@ export async function index(req, res, next) {
 
 export async function redirectLive(req, res, next) {
   try {
-    const { sale } = await metaphysics({
+    const { sale } = await metaphysics2({
       query: SaleQuery(req.params.id),
       req,
     })
     const isLiveOpen = get(sale, "is_live_open")
 
     if (isLiveOpen) {
-      const { me } = await metaphysics({
+      const { me } = await metaphysics2({
         query: MeQuery(req.params.id),
         req,
       })

@@ -2,7 +2,7 @@ import ActiveBidItem from "desktop/apps/auction/components/layout/active_bids/Ac
 import BidStatus from "desktop/components/bid_status/react"
 import MeQuery from "desktop/apps/auction/queries/me"
 import PropTypes from "prop-types"
-import { Component } from "react";
+import { Component } from "react"
 import block from "bem-cn-lite"
 import { get } from "lodash"
 import { metaphysics } from "lib/metaphysics"
@@ -41,7 +41,7 @@ class MyActiveBids extends Component {
     const { saleId, user } = this.props
 
     try {
-      const { me } = await metaphysics({
+      const { me } = await metaphysics2({
         query: MeQuery(saleId),
         req: {
           user,
