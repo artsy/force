@@ -5,13 +5,13 @@
  */
 export const InquiryOutcomeRelations = {
   related() {
+    const { Artwork } = require("../../artwork")
 
-    const Artwork = require('../../artwork');
+    const inquireable =
+      this.get("inquireable_type") === "Artwork"
+        ? new Artwork(this.get("inquireable"))
+        : undefined
 
-    const inquireable = this.get('inquireable_type')  === 'Artwork' ?
-      new Artwork(this.get('inquireable')) : undefined;
-
-    return this.__related__ =
-      {inquireable};
-  }
-};
+    return (this.__related__ = { inquireable })
+  },
+}
