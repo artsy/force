@@ -14,7 +14,7 @@ import { useSubmission } from "../Utils/useSubmission"
 import { contactInformationValidationSchema } from "../Utils/validation"
 import { BackLink } from "v2/Components/Links/BackLink"
 import { useErrorModal } from "../Utils/useErrorModal"
-import { data as sd } from "sharify"
+import { getENV } from "v2/Utils/getENV"
 import { recaptcha, RecaptchaAction } from "v2/Utils/recaptcha"
 
 const getContactInformationFormInitialValues = (
@@ -82,7 +82,7 @@ export const ContactInformation: React.FC<ContactInformationProps> = ({
           relayEnvironment,
           submission,
           user?.id,
-          !isLoggedIn ? sd.SESSION_ID : undefined
+          !isLoggedIn ? getENV("SESSION_ID") : undefined
         )
         removeSubmission()
         router.push(`/consign/submission/${submissionId}/thank-you`)
@@ -98,6 +98,7 @@ export const ContactInformation: React.FC<ContactInformationProps> = ({
       <BackLink
         py={2}
         mb={6}
+        width="min-content"
         to={`/consign/submission/${submissionId}/upload-photos`}
       >
         Back

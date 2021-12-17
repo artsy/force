@@ -46,6 +46,7 @@ export const UploadPhotos: React.FC = () => {
       <BackLink
         py={2}
         mb={6}
+        width="min-content"
         to={`/consign/submission/${submissionId}/artwork-details`}
       >
         Back
