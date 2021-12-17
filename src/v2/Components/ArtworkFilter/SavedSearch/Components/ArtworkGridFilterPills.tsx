@@ -14,7 +14,7 @@ import { Pills } from "./Pills"
 const PILL_HORIZONTAL_MARGIN_SIZE = 0.5
 
 export interface ArtworkGridFilterPillsProps {
-  savedSearchAttributes: SavedSearchAttributes | null
+  savedSearchAttributes?: SavedSearchAttributes
 }
 
 export const ArtworkGridFilterPills: FC<ArtworkGridFilterPillsProps> = ({

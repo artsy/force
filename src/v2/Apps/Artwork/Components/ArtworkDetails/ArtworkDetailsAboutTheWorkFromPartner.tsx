@@ -21,7 +21,7 @@ import {
   StackableBorderBox,
   Text,
 } from "@artsy/palette"
-import { openAuthToFollowSave } from "v2/Utils/openAuthModal"
+import { openAuthToSatisfyIntent } from "v2/Utils/openAuthModal"
 
 export interface ArtworkDetailsAboutTheWorkFromPartnerProps {
   artwork: ArtworkDetailsAboutTheWorkFromPartner_artwork
@@ -45,7 +45,7 @@ export class ArtworkDetailsAboutTheWorkFromPartner extends Component<
   }
 
   handleOpenAuth = (mediator, partner) => {
-    openAuthToFollowSave(mediator, {
+    openAuthToSatisfyIntent(mediator, {
       entity: partner,
       contextModule: ContextModule.aboutTheWork,
       intent: Intent.followPartner,

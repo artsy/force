@@ -126,7 +126,7 @@ export const SavedSearchAlertModal: React.FC<SavedSearchAlertFormProps> = ({
 
   return (
     <FormikProvider value={formik}>
-      <Form onSubmit={formik.handleSubmit}>
+      <Form onSubmit={formik.handleSubmit} role="form">
         <Modal
           show={visible}
           onClose={onClose}

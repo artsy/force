@@ -13,24 +13,28 @@ export interface AuthModalOptions extends ModalOptions {
 }
 
 export const openAuthModal = (mediator: Mediator, options: ModalOptions) => {
-  if (authModalReady(mediator)) {
-    mediator.trigger("open:auth", options)
+  triggerEvent(mediator, "open:auth", options)
+}
+
+export const triggerEvent = (
+  mediator: Mediator,
+  eventName: string,
+  options?: ModalOptions
+) => {
+  if (mediator.ready(eventName)) {
+    mediator.trigger(eventName, options)
     return
   }
 
   const intervalId = setInterval(() => {
-    if (authModalReady(mediator)) {
-      mediator.trigger("open:auth", options)
+    if (mediator.ready(eventName)) {
+      mediator.trigger(eventName, options)
       clearInterval(intervalId)
     }
   }, 100)
 }
 
-const authModalReady = (mediator: Mediator): boolean => {
-  return mediator.ready("open:auth")
-}
-
-export const openAuthToFollowSave = (
+export const openAuthToSatisfyIntent = (
   mediator: Mediator,
   options: AuthModalOptions
 ) => {
@@ -96,6 +100,23 @@ function getDesktopIntentToSaveArtwork({
   }
 }
 
+const getDesktopIntentToCreateAlert = ({
+  contextModule,
+  entity,
+  intent,
+}: AuthModalOptions): ModalOptions => {
+  return {
+    afterSignUpAction: {
+      action: "createAlert",
+      kind: "artist",
+      objectId: entity.slug,
+    },
+    contextModule,
+    intent,
+    mode: ModalType.signup,
+  }
+}
+
 function getDesktopIntent(options: AuthModalOptions): ModalOptions {
   switch (options.intent) {
     case Intent.followArtist:
@@ -104,6 +125,8 @@ function getDesktopIntent(options: AuthModalOptions): ModalOptions {
       return getDesktopIntentToFollow(options)
     case Intent.saveArtwork:
       return getDesktopIntentToSaveArtwork(options)
+    case Intent.createAlert:
+      return getDesktopIntentToCreateAlert(options)
     default:
       // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       return undefined

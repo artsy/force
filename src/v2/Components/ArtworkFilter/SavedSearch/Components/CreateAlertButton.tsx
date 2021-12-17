@@ -1,10 +1,17 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { BellIcon, Button, ButtonProps } from "@artsy/palette"
 import { SavedSearchAttributes } from "../types"
-import { useTracking } from "v2/System"
-import { ActionType, PageOwnerType } from "@artsy/cohesion"
+import { useSystemContext, useTracking } from "v2/System"
+import {
+  ActionType,
+  Intent,
+  ContextModule,
+  PageOwnerType,
+} from "@artsy/cohesion"
 import { SavedSearchAlertModal } from "v2/Components/SavedSearchAlert/SavedSearchAlertModal"
 import { SavedSearchAlertMutationResult } from "v2/Components/SavedSearchAlert/SavedSearchAlertModel"
+import { openAuthToSatisfyIntent } from "v2/Utils/openAuthModal"
+import { mediator } from "lib/mediator"
 
 interface CreateAlertButtonProps extends ButtonProps {
   savedSearchAttributes: SavedSearchAttributes
@@ -15,16 +22,44 @@ export const CreateAlertButton: React.FC<CreateAlertButtonProps> = ({
   ...props
 }) => {
   const tracking = useTracking()
+  const { isLoggedIn } = useSystemContext()
   const [visibleForm, setVisibleForm] = useState(false)
 
-  const handleOpenForm = () => {
+  const openModal = () => {
     setVisibleForm(true)
+  }
+
+  useEffect(() => {
+    mediator.on("auth:login:success", openModal)
+
+    return () => {
+      mediator.off("auth:login:success")
+    }
+  }, [])
+
+  const handleOpenForm = () => {
+    openModal()
     tracking.trackEvent({
       action: ActionType.clickedCreateAlert,
       context_page_owner_type: savedSearchAttributes.type as PageOwnerType,
       context_page_owner_id: savedSearchAttributes.id,
       context_page_owner_slug: savedSearchAttributes.slug,
     })
+  }
+
+  const handleClick = () => {
+    if (isLoggedIn) {
+      handleOpenForm()
+    } else {
+      openAuthToSatisfyIntent(mediator, {
+        entity: {
+          name: savedSearchAttributes.name,
+          slug: savedSearchAttributes.slug,
+        },
+        contextModule: ContextModule.artworkGrid,
+        intent: Intent.createAlert,
+      })
+    }
   }
 
   const handleComplete = (result: SavedSearchAlertMutationResult) => {
@@ -42,7 +77,7 @@ export const CreateAlertButton: React.FC<CreateAlertButtonProps> = ({
   return (
     <>
       <Button
-        onClick={handleOpenForm}
+        onClick={handleClick}
         variant="secondaryOutline"
         size="small"
         {...props}
