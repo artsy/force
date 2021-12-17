@@ -2,15 +2,15 @@ import { Spacer } from "@artsy/palette"
 import { RouterLink } from "v2/System/Router/RouterLink"
 
 interface StatusPageConfig {
-  title: React.ReactNode
-  description: React.ReactNode
+  title?: React.ReactNode
+  description?: React.ReactNode
   // default showTransactionSummary is true
   showTransactionSummary?: boolean
 }
 
-export const getStatusCopy = (order, logger?): StatusPageConfig | null => {
+export const getStatusCopy = (order, logger?): StatusPageConfig => {
   if (!order) {
-    return null
+    return {}
   }
 
   const {
