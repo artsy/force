@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { BellIcon, Button, ButtonProps } from "@artsy/palette"
 import { SavedSearchAttributes } from "../types"
 import { useSystemContext, useTracking } from "v2/System"
@@ -29,7 +29,13 @@ export const CreateAlertButton: React.FC<CreateAlertButtonProps> = ({
     setVisibleForm(true)
   }
 
-  mediator?.on("auth:login:success", openModal)
+  useEffect(() => {
+    mediator.on("auth:login:success", openModal)
+
+    return () => {
+      mediator.off("auth:login:success")
+    }
+  }, [])
 
   const handleOpenForm = () => {
     openModal()
