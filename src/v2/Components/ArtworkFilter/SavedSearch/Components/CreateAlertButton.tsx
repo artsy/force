@@ -4,7 +4,7 @@ import { SavedSearchAttributes } from "../types"
 import { useSystemContext, useTracking } from "v2/System"
 import {
   ActionType,
-  AuthIntent,
+  Intent,
   ContextModule,
   PageOwnerType,
 } from "@artsy/cohesion"
@@ -51,7 +51,7 @@ export const CreateAlertButton: React.FC<CreateAlertButtonProps> = ({
           slug: savedSearchAttributes.slug,
         },
         contextModule: ContextModule.artworkGrid,
-        intent: "createAlert" as AuthIntent,
+        intent: Intent.createAlert,
       })
     }
   }

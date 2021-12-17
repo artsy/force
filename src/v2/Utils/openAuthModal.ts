@@ -125,7 +125,7 @@ function getDesktopIntent(options: AuthModalOptions): ModalOptions {
       return getDesktopIntentToFollow(options)
     case Intent.saveArtwork:
       return getDesktopIntentToSaveArtwork(options)
-    case "createAlert" as AuthIntent:
+    case Intent.createAlert:
       return getDesktopIntentToCreateAlert(options)
     default:
       // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
