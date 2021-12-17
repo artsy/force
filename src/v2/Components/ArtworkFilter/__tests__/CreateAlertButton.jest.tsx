@@ -6,6 +6,7 @@ import { SavedSearchAttributes } from "v2/Components/ArtworkFilter/SavedSearch/t
 import { ExtractProps } from "v2/Utils/ExtractProps"
 import { CreateAlertButton } from "../SavedSearch/Components/CreateAlertButton"
 import { mediator } from "lib/mediator"
+import { ArtworkFilterContextProvider } from "../ArtworkFilterContext"
 
 jest.mock("v2/System/useSystemContext")
 jest.mock("v2/System/Analytics/useTracking")
@@ -27,7 +28,11 @@ describe("CreateAlertButton", () => {
   const CreateAlertButtonTest = (
     props: ExtractProps<typeof CreateAlertButton>
   ) => {
-    return <CreateAlertButton {...props} />
+    return (
+      <ArtworkFilterContextProvider>
+        <CreateAlertButton {...props} />
+      </ArtworkFilterContextProvider>
+    )
   }
 
   const openAuthToSatisfyIntent = jest.spyOn(
