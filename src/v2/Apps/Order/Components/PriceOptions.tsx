@@ -3,8 +3,9 @@ import { useEffect, useState } from "react"
 import { OfferInput } from "v2/Apps/Order/Components/OfferInput"
 import { Offer_order } from "v2/__generated__/Offer_order.graphql"
 import { compact } from "lodash"
+import { createFragmentContainer, graphql } from "react-relay"
 
-interface PriceOptionsProps {
+export interface PriceOptionsProps {
   setValue: (value: number) => void
   onFocus: () => void
   showError?: boolean
@@ -36,6 +37,8 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
   useEffect(() => {
     customValue && setValue(customValue)
   }, [customValue])
+
+  const [toggle, setToggle] = useState(false)
 
   const listPrice = artwork?.listPrice
   const minPriceRange = listPrice?.minPrice?.major
@@ -71,41 +74,84 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
     : getPercentageOptions()
 
   return (
-    <RadioGroup>
-      {compact(priceOptions)
-        .map(({ value, description }) => (
-          <BorderedRadio
-            value={`price-option-${value}`}
-            label={asCurrency(value!)}
-            onSelect={() => setValue(value!)}
-            key={`price-option-${value}`}
-            data-test="price-options"
-          >
-            <Text variant="sm" color="black60">
-              {description}
-            </Text>
-          </BorderedRadio>
-        ))
-        .concat(
-          <BorderedRadio
-            value="custom"
-            label="Different amount"
-            onSelect={() => customValue && setValue(customValue)}
-            data-test="custom"
-          >
-            <Flex flexDirection="column">
-              <OfferInput
-                id="OfferForm_offerValue"
-                showError={showError}
-                onChange={value => {
-                  setCustomValue(value)
-                }}
-                onFocus={onFocus}
-                noTitle
-              />
-            </Flex>
-          </BorderedRadio>
-        )}
-    </RadioGroup>
+    <>
+      <RadioGroup>
+        {compact(priceOptions)
+          .map(({ value, description }) => (
+            <BorderedRadio
+              value={`price-option-${value}`}
+              label={asCurrency(value!)}
+              onSelect={() => {
+                setValue(value!)
+                setToggle(false)
+              }}
+              key={`price-option-${value}`}
+              data-test="price-options"
+            >
+              <Text variant="sm" color="black60">
+                {description}
+              </Text>
+            </BorderedRadio>
+          ))
+          .concat(
+            <BorderedRadio
+              value="custom"
+              label="Different amount"
+              onSelect={() => {
+                customValue && setValue(customValue)
+                setToggle(true)
+              }}
+              data-test="custom"
+            >
+              {toggle && (
+                <Flex flexDirection="column">
+                  <OfferInput
+                    id="OfferForm_offerValue"
+                    showError={showError}
+                    onChange={value => {
+                      setCustomValue(value)
+                    }}
+                    onFocus={onFocus}
+                    noTitle
+                  />
+                </Flex>
+              )}
+            </BorderedRadio>
+          )}
+      </RadioGroup>
+    </>
   )
 }
+
+export const PriceOptionsFragmentContainer = createFragmentContainer(
+  PriceOptions,
+  {
+    artwork: graphql`
+      fragment PriceOptions_order on CommerceOrder {
+        lineItems {
+          edges {
+            node {
+              artwork {
+                price
+                isPriceRange
+                listPrice {
+                  ... on Money {
+                    major
+                  }
+                  ... on PriceRange {
+                    maxPrice {
+                      major
+                    }
+                    minPrice {
+                      major
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    `,
+  }
+)

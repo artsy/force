@@ -382,6 +382,7 @@ export const OfferFragmentContainer = createFragmentContainer(
   {
     order: graphql`
       fragment Offer_order on CommerceOrder {
+        ...PriceOptions_artwork
         internalID
         mode
         state
