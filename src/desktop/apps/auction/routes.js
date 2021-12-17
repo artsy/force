@@ -17,6 +17,7 @@ import { initialState as appInitialState } from "desktop/apps/auction/reducers/a
 import { initialState as auctionWorksInitialState } from "desktop/apps/auction/reducers/artworkBrowser"
 import { getLiveAuctionUrl } from "desktop/apps/auction/utils/urls"
 import { stitch } from "@artsy/stitch"
+import ReactDOM from "react-dom/server"
 
 export async function index(req, res, next) {
   const saleId = req.params.id
@@ -29,8 +30,8 @@ export async function index(req, res, next) {
     })
 
     // For compatibility for MP V1
-    if (!isEmpty(sale?.promoted_sale?.sale_artworks?.edges)) {
-      sale.promoted_sale.sale_artworks = sale.promoted_sale.sale_artworks.edges.map(
+    if (!isEmpty(sale?.promoted_sale?.saleArtworksConnection?.edges)) {
+      sale.promoted_sale.saleArtworksConnection = sale.promoted_sale.saleArtworksConnection.edges.map(
         ({ node }) => node
       )
     }
@@ -42,7 +43,7 @@ export async function index(req, res, next) {
 
     try {
       ;({ articles } = await metaphysics2({
-        query: ArticlesQuery(sale.internalID),
+        query: ArticlesQuery(sale._id),
         req,
       }))
     } catch (error) {
@@ -128,6 +129,10 @@ export async function index(req, res, next) {
       req.user && store.dispatch(actions.fetchArtworksByFollowedArtists()),
       store.dispatch(actions.fetchArtworks()),
     ])
+
+    // For debugging server-side runtime errors uncomment this line. Proper
+    // statck traces are being consumed in the `await stitch` call below.
+    // return res.send(ReactDOM.renderToString(<App store={store} />))
 
     try {
       const layout = await stitch({

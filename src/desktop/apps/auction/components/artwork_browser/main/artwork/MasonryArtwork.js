@@ -72,19 +72,19 @@ const mapStateToProps = (state, props) => {
     "artwork.images.0.image_medium",
     "/images/missing_image.png"
   )
-  const { artists } = saleArtwork.artwork
+  const { artists } = saleArtwork
   const artistDisplay =
     artists && artists.length > 0 ? artists.map(aa => aa.name).join(", ") : ""
 
   return {
-    date: saleArtwork.artwork.date,
+    date: saleArtwork.date,
     image,
     isAuction: state.app.auction.get("is_auction"),
     isClosed: state.app.auction.isClosed(),
     lotLabel: saleArtwork.lot_label,
     artistDisplay,
-    sale_message: saleArtwork.artwork.sale_message,
-    title: saleArtwork.artwork.title,
+    sale_message: saleArtwork.sale_message,
+    title: saleArtwork.title,
   }
 }
 

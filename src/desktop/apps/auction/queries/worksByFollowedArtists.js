@@ -1,6 +1,4 @@
-import { graphql } from "relay-runtime"
-
-export const worksByFollowedArtists = graphql`
+export const worksByFollowedArtists = `
   query AuctionWorksByFollowedArtistsQuery(
     $page: Int
     $size: Int

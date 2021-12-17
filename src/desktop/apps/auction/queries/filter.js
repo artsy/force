@@ -1,6 +1,4 @@
-import { graphql } from "relay-runtime"
-
-export const filterQuery = graphql`
+export const filterQuery = `
   query AuctionFilterSaleArtworks(
     $aggregations: [SaleArtworkAggregation]
     $page: Int

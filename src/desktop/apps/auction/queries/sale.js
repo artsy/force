@@ -3,7 +3,7 @@ export default function SaleQuery(id) {
   query SaleQuery {
     sale(id: "${id}") {
       internalID
-			associated_sale: associatedSale {
+      associated_sale: associatedSale {
         cover_image: coverImage {
           cropped(width: 260, height: 110) {
             url

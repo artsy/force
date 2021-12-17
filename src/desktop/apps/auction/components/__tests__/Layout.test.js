@@ -518,7 +518,7 @@ describe.skip("<Layout />", () => {
           sale_type: "auction promo",
           eligible_sale_artworks_count: 0,
           promoted_sale: {
-            sale_artworks: promotedSaleArtworks,
+            saleArtworksConnection: promotedSaleArtworks,
           },
         },
       },
@@ -530,7 +530,7 @@ describe.skip("<Layout />", () => {
     describe("<BuyNowSaleArtworks />", () => {
       it("does not render if there is no data", () => {
         let emptyData = cloneDeep(data)
-        emptyData.app.auction.promoted_sale.sale_artworks = null
+        emptyData.app.auction.promoted_sale.saleArtworksConnection = null
 
         const { wrapper } = renderTestComponent({
           Component: Layout,
@@ -630,7 +630,7 @@ describe.skip("<Layout />", () => {
           sale_type: "auction promo",
           eligible_sale_artworks_count: 0,
           promoted_sale: {
-            sale_artworks: promotedSaleArtworks,
+            saleArtworksConnection: promotedSaleArtworks,
           },
         },
       },

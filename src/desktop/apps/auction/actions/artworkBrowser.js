@@ -55,7 +55,7 @@ export function fetchArtworks() {
     try {
       dispatch(getArtworksRequest())
 
-      const { filter_sale_artworks } = await metaphysics2({
+      let { saleArtworksConnection } = await metaphysics2({
         query: filterQuery,
         req: {
           id: requestID,
@@ -64,7 +64,9 @@ export function fetchArtworks() {
         variables: filterParams,
       })
 
-      const aggregations = filter_sale_artworks.aggregations
+      saleArtworksConnection = formatDataForMPv2(saleArtworksConnection)
+
+      const aggregations = saleArtworksConnection.aggregations
       const artistAggregation = aggregations.filter(
         agg => agg.slice === "ARTIST"
       )
@@ -75,11 +77,13 @@ export function fetchArtworks() {
       dispatch(updateAggregatedArtists(artistAggregation[0].counts))
       dispatch(updateAggregatedMediums(mediumAggregation[0].counts))
       dispatch(updateInitialMediumMap(mediumAggregation[0].counts))
-      dispatch(updateTotal(filter_sale_artworks.counts.total))
+      dispatch(updateTotal(saleArtworksConnection.counts.total))
       dispatch(
-        updateNumArtistsYouFollow(filter_sale_artworks.counts.followed_artists)
+        updateNumArtistsYouFollow(
+          saleArtworksConnection.counts.followed_artists
+        )
       )
-      dispatch(updateSaleArtworks(filter_sale_artworks.hits))
+      dispatch(updateSaleArtworks(saleArtworksConnection.hits))
       dispatch(updateAllFetched())
       dispatch(getArtworksSuccess())
     } catch (error) {
@@ -108,7 +112,7 @@ export function fetchArtworksByFollowedArtists() {
     }
 
     try {
-      const { filter_sale_artworks } = await metaphysics2({
+      let { saleArtworksConnection } = await metaphysics2({
         query: worksByFollowedArtists,
         req: {
           id: requestID,
@@ -116,11 +120,16 @@ export function fetchArtworksByFollowedArtists() {
         },
         variables: inputVars,
       })
-      if (filter_sale_artworks.hits.length > 0) {
-        dispatch(updateSaleArtworksByFollowedArtists(filter_sale_artworks.hits))
+
+      saleArtworksConnection = formatDataForMPv2(saleArtworksConnection)
+
+      if (saleArtworksConnection.hits.length > 0) {
+        dispatch(
+          updateSaleArtworksByFollowedArtists(saleArtworksConnection.hits)
+        )
         dispatch(
           updateSaleArtworksByFollowedArtistsTotal(
-            filter_sale_artworks.counts.total
+            saleArtworksConnection.counts.total
           )
         )
         dispatch(showFollowedArtistsRail())
@@ -139,14 +148,16 @@ export function fetchMoreArtworks() {
 
     try {
       dispatch(getArtworksRequest())
-      const { filter_sale_artworks } = await metaphysics2({
+      let { saleArtworksConnection } = await metaphysics2({
         query: filterQuery,
         req: {
           user,
         },
         variables: filterParams,
       })
-      dispatch(updateSaleArtworks(filter_sale_artworks.hits))
+      saleArtworksConnection = formatDataForMPv2(saleArtworksConnection)
+
+      dispatch(updateSaleArtworks(saleArtworksConnection.hits))
       dispatch(updateAllFetched())
       dispatch(getArtworksSuccess())
     } catch (error) {
@@ -355,4 +366,20 @@ export function updateTotal(total) {
     },
     type: UPDATE_TOTAL,
   }
+}
+
+function formatDataForMPv2(saleArtworksConnection) {
+  saleArtworksConnection.hits = saleArtworksConnection.edges
+    .map(({ node }) => node)
+    .map(saleArtwork => {
+      const props = {
+        ...saleArtwork,
+        ...saleArtwork.sale_artwork,
+      }
+      return {
+        ...props,
+        artwork: props,
+      }
+    })
+  return saleArtworksConnection
 }

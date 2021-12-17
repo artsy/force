@@ -33,7 +33,7 @@ export const saleV2 = {
   promoted_sale: {
     id: "wright-art-plus-design-part-2",
     name: "Wright: Art + Design Part 2",
-    sale_artworks: {
+    saleArtworksConnection: {
       edges: [
         {
           node: {
@@ -70,6 +70,6 @@ export const saleV2 = {
   registration_ends_at: null,
   requireIdentityVerification: true,
   start_at: "2020-04-13T22:26:00+00:00",
-  auction_state: "preview",
+  status: "preview",
   symbol: "CHF",
 }

@@ -38,7 +38,7 @@ export const saleV2Query = `
       promoted_sale: promotedSale {
         id: slug
         name
-        sale_artworks: saleArtworksConnection(first: 25) {
+        saleArtworksConnection(first: 25) {
           edges {
             node {
               artwork {

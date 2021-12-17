@@ -45,7 +45,7 @@ const mapStateToProps = (state, props) => {
 
   return {
     isSold: artwork.is_sold,
-    currentBidDisplay: current_bid.display,
+    currentBidDisplay: current_bid?.display,
     bidLabel,
   }
 }

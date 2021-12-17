@@ -33,7 +33,7 @@ export const saleV1 = {
   promoted_sale: {
     id: "wright-art-plus-design-part-2",
     name: "Wright: Art + Design Part 2",
-    sale_artworks: [
+    saleArtworksConnection: [
       {
         artwork: {
           id: "alexander-calder-sun-and-moon-3",
@@ -65,6 +65,6 @@ export const saleV1 = {
   },
   registration_ends_at: null,
   start_at: "2020-04-13T22:26:00+00:00",
-  auction_state: "preview",
+  status: "preview",
   symbol: "CHF",
 }

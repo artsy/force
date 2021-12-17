@@ -27,7 +27,7 @@ export default {
       name: "Wright: Art + Design",
       registration_ends_at: "2025-07-17T17:00:00+00:00",
       start_at: "2017-07-03T18:30:00+00:00",
-      auction_state: "open",
+      status: "open",
       symbol: "$",
     },
     footerItems: [
