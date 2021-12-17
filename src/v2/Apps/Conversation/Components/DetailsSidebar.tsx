@@ -29,6 +29,7 @@ import { TransactionDetailsSummaryItemFragmentContainer } from "v2/Apps/Order/Co
 import { ShippingAddressFragmentContainer } from "v2/Apps/Order/Components/ShippingAddress"
 import { CreditCardDetails } from "v2/Apps/Order/Components/CreditCardDetails"
 import { RouterLink } from "v2/System/Router/RouterLink"
+import { getStatusCopy } from "v2/Apps/Order/Utils/getStatusCopy"
 
 const DETAIL_BOX_XL_ANIMATION = `transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);`
 const DETAIL_BOX_XS_ANIMATION = `transition: opacity 0.3s, z-index 0.3s;`
@@ -38,7 +39,6 @@ const DETAIL_BOX_MD_ANIMATION = `transition: transform 0.3s;`
 // in XL screen it is animated with `width` because animation needs to push the mid column content
 // in L screens it is animated with `translate` for better performance (than `width`)
 const DetailsContainer = styled(Flex)<{ transform?: string }>`
-  /* border-left: 1px solid ${themeGet("colors.black10")}; */
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   background-color: ${themeGet("colors.white100")};
   transform: none;
@@ -144,7 +144,7 @@ export const DetailsSidebar: FC<DetailsProps> = ({
     return 1
   }
 
-  const activeOrder = extractNodes(conversation.orderConnection)[0]
+  const activeOrder = extractNodes(conversation.sidebarOrderConnection)[0]
 
   let cardInfoWithTextColor
 
@@ -154,6 +154,8 @@ export const DetailsSidebar: FC<DetailsProps> = ({
       ...{ textColor: "black60" },
     }
   }
+
+  const { description } = activeOrder ? getStatusCopy(activeOrder) : ""
 
   return (
     <DetailsContainer
@@ -179,13 +181,9 @@ export const DetailsSidebar: FC<DetailsProps> = ({
         showDetails={showDetails}
         setShowDetails={setShowDetails}
       />
-      {!!activeOrder && (
+      {!!activeOrder && !!description && (
         <StackableBorderBox>
-          <Text>
-            The seller should respond to your offer by{" "}
-            {activeOrder.stateExpiresAt}. Please keep in mind that making an
-            offer does not guarantee the purchase.
-          </Text>
+          <Text>{description}</Text>
         </StackableBorderBox>
       )}
       {item && (
@@ -287,14 +285,18 @@ export const DetailsSidebarFragmentContainer = createFragmentContainer(
           name
           initials
         }
-        orderConnection(
+        sidebarOrderConnection: orderConnection(
           first: 10
           states: [APPROVED, FULFILLED, SUBMITTED]
-          participantType: BUYER
         ) {
           edges {
             node {
+              __typename
               internalID
+              state
+              displayState
+              mode
+              stateReason
               stateExpiresAt(format: "MMM D")
               ...TransactionDetailsSummaryItem_order
               ...ShippingSummaryItem_order
@@ -307,6 +309,30 @@ export const DetailsSidebarFragmentContainer = createFragmentContainer(
                 lastDigits
                 expirationYear
                 expirationMonth
+              }
+              lineItems {
+                edges {
+                  node {
+                    shipment {
+                      trackingNumber
+                      trackingUrl
+                      carrierName
+                      estimatedDeliveryWindow
+                    }
+                    selectedShippingQuote {
+                      displayName
+                    }
+                    fulfillments {
+                      edges {
+                        node {
+                          courier
+                          trackingId
+                          estimatedDelivery(format: "MMM Do, YYYY")
+                        }
+                      }
+                    }
+                  }
+                }
               }
             }
           }

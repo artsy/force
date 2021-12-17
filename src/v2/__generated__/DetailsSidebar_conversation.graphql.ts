@@ -4,15 +4,23 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
+export type CommerceOrderDisplayStateEnum = "ABANDONED" | "APPROVED" | "CANCELED" | "FULFILLED" | "IN_TRANSIT" | "PENDING" | "PROCESSING" | "REFUNDED" | "SUBMITTED" | "%future added value";
+export type CommerceOrderModeEnum = "BUY" | "OFFER" | "%future added value";
+export type CommerceOrderStateEnum = "ABANDONED" | "APPROVED" | "CANCELED" | "FULFILLED" | "PENDING" | "REFUNDED" | "SUBMITTED" | "%future added value";
 export type DetailsSidebar_conversation = {
     readonly to: {
         readonly name: string;
         readonly initials: string | null;
     };
-    readonly orderConnection: {
+    readonly sidebarOrderConnection: {
         readonly edges: ReadonlyArray<{
             readonly node: {
+                readonly __typename: string;
                 readonly internalID: string;
+                readonly state: CommerceOrderStateEnum;
+                readonly displayState: CommerceOrderDisplayStateEnum;
+                readonly mode: CommerceOrderModeEnum | null;
+                readonly stateReason: string | null;
                 readonly stateExpiresAt: string | null;
                 readonly requestedFulfillment: {
                     readonly __typename: string;
@@ -23,6 +31,30 @@ export type DetailsSidebar_conversation = {
                     readonly lastDigits: string;
                     readonly expirationYear: number;
                     readonly expirationMonth: number;
+                } | null;
+                readonly lineItems: {
+                    readonly edges: ReadonlyArray<{
+                        readonly node: {
+                            readonly shipment: {
+                                readonly trackingNumber: string | null;
+                                readonly trackingUrl: string | null;
+                                readonly carrierName: string | null;
+                                readonly estimatedDeliveryWindow: string | null;
+                            } | null;
+                            readonly selectedShippingQuote: {
+                                readonly displayName: string;
+                            } | null;
+                            readonly fulfillments: {
+                                readonly edges: ReadonlyArray<{
+                                    readonly node: {
+                                        readonly courier: string;
+                                        readonly trackingId: string | null;
+                                        readonly estimatedDelivery: string | null;
+                                    } | null;
+                                } | null> | null;
+                            } | null;
+                        } | null;
+                    } | null> | null;
                 } | null;
                 readonly " $fragmentRefs": FragmentRefs<"TransactionDetailsSummaryItem_order" | "ShippingSummaryItem_order">;
             } | null;
@@ -154,17 +186,12 @@ return {
       "storageKey": null
     },
     {
-      "alias": null,
+      "alias": "sidebarOrderConnection",
       "args": [
         {
           "kind": "Literal",
           "name": "first",
           "value": 10
-        },
-        {
-          "kind": "Literal",
-          "name": "participantType",
-          "value": "BUYER"
         },
         {
           "kind": "Literal",
@@ -197,11 +224,40 @@ return {
               "name": "node",
               "plural": false,
               "selections": [
+                (v0/*: any*/),
                 {
                   "alias": null,
                   "args": null,
                   "kind": "ScalarField",
                   "name": "internalID",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "state",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "displayState",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "mode",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "stateReason",
                   "storageKey": null
                 },
                 {
@@ -274,6 +330,156 @@ return {
                   "storageKey": null
                 },
                 {
+                  "alias": null,
+                  "args": null,
+                  "concreteType": "CommerceLineItemConnection",
+                  "kind": "LinkedField",
+                  "name": "lineItems",
+                  "plural": false,
+                  "selections": [
+                    {
+                      "alias": null,
+                      "args": null,
+                      "concreteType": "CommerceLineItemEdge",
+                      "kind": "LinkedField",
+                      "name": "edges",
+                      "plural": true,
+                      "selections": [
+                        {
+                          "alias": null,
+                          "args": null,
+                          "concreteType": "CommerceLineItem",
+                          "kind": "LinkedField",
+                          "name": "node",
+                          "plural": false,
+                          "selections": [
+                            {
+                              "alias": null,
+                              "args": null,
+                              "concreteType": "CommerceShipment",
+                              "kind": "LinkedField",
+                              "name": "shipment",
+                              "plural": false,
+                              "selections": [
+                                {
+                                  "alias": null,
+                                  "args": null,
+                                  "kind": "ScalarField",
+                                  "name": "trackingNumber",
+                                  "storageKey": null
+                                },
+                                {
+                                  "alias": null,
+                                  "args": null,
+                                  "kind": "ScalarField",
+                                  "name": "trackingUrl",
+                                  "storageKey": null
+                                },
+                                {
+                                  "alias": null,
+                                  "args": null,
+                                  "kind": "ScalarField",
+                                  "name": "carrierName",
+                                  "storageKey": null
+                                },
+                                {
+                                  "alias": null,
+                                  "args": null,
+                                  "kind": "ScalarField",
+                                  "name": "estimatedDeliveryWindow",
+                                  "storageKey": null
+                                }
+                              ],
+                              "storageKey": null
+                            },
+                            {
+                              "alias": null,
+                              "args": null,
+                              "concreteType": "CommerceShippingQuote",
+                              "kind": "LinkedField",
+                              "name": "selectedShippingQuote",
+                              "plural": false,
+                              "selections": [
+                                {
+                                  "alias": null,
+                                  "args": null,
+                                  "kind": "ScalarField",
+                                  "name": "displayName",
+                                  "storageKey": null
+                                }
+                              ],
+                              "storageKey": null
+                            },
+                            {
+                              "alias": null,
+                              "args": null,
+                              "concreteType": "CommerceFulfillmentConnection",
+                              "kind": "LinkedField",
+                              "name": "fulfillments",
+                              "plural": false,
+                              "selections": [
+                                {
+                                  "alias": null,
+                                  "args": null,
+                                  "concreteType": "CommerceFulfillmentEdge",
+                                  "kind": "LinkedField",
+                                  "name": "edges",
+                                  "plural": true,
+                                  "selections": [
+                                    {
+                                      "alias": null,
+                                      "args": null,
+                                      "concreteType": "CommerceFulfillment",
+                                      "kind": "LinkedField",
+                                      "name": "node",
+                                      "plural": false,
+                                      "selections": [
+                                        {
+                                          "alias": null,
+                                          "args": null,
+                                          "kind": "ScalarField",
+                                          "name": "courier",
+                                          "storageKey": null
+                                        },
+                                        {
+                                          "alias": null,
+                                          "args": null,
+                                          "kind": "ScalarField",
+                                          "name": "trackingId",
+                                          "storageKey": null
+                                        },
+                                        {
+                                          "alias": null,
+                                          "args": [
+                                            {
+                                              "kind": "Literal",
+                                              "name": "format",
+                                              "value": "MMM Do, YYYY"
+                                            }
+                                          ],
+                                          "kind": "ScalarField",
+                                          "name": "estimatedDelivery",
+                                          "storageKey": "estimatedDelivery(format:\"MMM Do, YYYY\")"
+                                        }
+                                      ],
+                                      "storageKey": null
+                                    }
+                                  ],
+                                  "storageKey": null
+                                }
+                              ],
+                              "storageKey": null
+                            }
+                          ],
+                          "storageKey": null
+                        }
+                      ],
+                      "storageKey": null
+                    }
+                  ],
+                  "storageKey": null
+                },
+                {
                   "args": null,
                   "kind": "FragmentSpread",
                   "name": "TransactionDetailsSummaryItem_order"
@@ -290,7 +496,7 @@ return {
           "storageKey": null
         }
       ],
-      "storageKey": "orderConnection(first:10,participantType:\"BUYER\",states:[\"APPROVED\",\"FULFILLED\",\"SUBMITTED\"])"
+      "storageKey": "orderConnection(first:10,states:[\"APPROVED\",\"FULFILLED\",\"SUBMITTED\"])"
     },
     {
       "alias": "messagesConnection",
@@ -466,5 +672,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '475589ebd3d3d056532589b1fb647a95';
+(node as any).hash = 'aa8ac3430c97b04b7ed24e1a8f5e75c4';
 export default node;

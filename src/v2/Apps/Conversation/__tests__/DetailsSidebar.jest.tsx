@@ -36,7 +36,8 @@ describe("Conversation", () => {
             {
               node: {
                 mode: "OFFER",
-                stateExpiresAt: "Dec 13",
+                stateExpiresAt: "Dec 19",
+                displayState: "SUBMITTED",
               },
             },
           ],
@@ -45,7 +46,7 @@ describe("Conversation", () => {
 
       expect(
         screen.getByText(
-          "The seller should respond to your offer by Dec 13. Please keep in mind that making an offer does not guarantee the purchase."
+          "The seller will respond to your offer by Dec 19. Keep in mind making an offer doesn’t guarantee you the work."
         )
       ).toBeInTheDocument()
     })
@@ -59,6 +60,7 @@ describe("Conversation", () => {
                 myLastOffer: {
                   fromParticipant: "SELLER",
                 },
+                displayState: "SUBMITTED",
                 mode: "OFFER",
               },
             },
@@ -81,6 +83,7 @@ describe("Conversation", () => {
                   fromParticipant: "SELLER",
                 },
                 mode: "OFFER",
+                displayState: "SUBMITTED",
                 creditCard: {
                   lastDigits: "4242",
                   expirationYear: "2024",
@@ -105,6 +108,7 @@ describe("Conversation", () => {
                   fromParticipant: "SELLER",
                 },
                 mode: "OFFER",
+                displayState: "SUBMITTED",
                 requestedFulfillment: {
                   city: "Seattle",
                   postalCode: "98112",

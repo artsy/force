@@ -6,7 +6,7 @@ export const CreditCardDetails = ({
   expirationMonth,
   expirationYear,
   responsive = true,
-  textColor,
+  textColor = "black100",
 }: {
   brand: string
   lastDigits: string
@@ -19,7 +19,7 @@ export const CreditCardDetails = ({
     <CreditCardIcon mr={1} type={brand} width="25px" />
     <Text
       size={responsive ? ["2", "3"] : "3"}
-      color={textColor ? textColor : "black100"}
+      color={textColor}
       style={{ position: "relative", top: "1px" }}
     >
       •••• {lastDigits}

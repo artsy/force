@@ -59,11 +59,15 @@ fragment DetailsSidebar_conversation on Conversation {
     initials
     id
   }
-  orderConnection(first: 10, states: [APPROVED, FULFILLED, SUBMITTED], participantType: BUYER) {
+  sidebarOrderConnection: orderConnection(first: 10, states: [APPROVED, FULFILLED, SUBMITTED]) {
     edges {
       node {
         __typename
         internalID
+        state
+        displayState
+        mode
+        stateReason
         stateExpiresAt(format: "MMM D")
         ...TransactionDetailsSummaryItem_order
         ...ShippingSummaryItem_order
@@ -77,6 +81,34 @@ fragment DetailsSidebar_conversation on Conversation {
           expirationYear
           expirationMonth
           id
+        }
+        lineItems {
+          edges {
+            node {
+              shipment {
+                trackingNumber
+                trackingUrl
+                carrierName
+                estimatedDeliveryWindow
+                id
+              }
+              selectedShippingQuote {
+                displayName
+                id
+              }
+              fulfillments {
+                edges {
+                  node {
+                    courier
+                    trackingId
+                    estimatedDelivery(format: "MMM Do, YYYY")
+                    id
+                  }
+                }
+              }
+              id
+            }
+          }
         }
         id
       }
@@ -579,17 +611,12 @@ return {
                 "storageKey": null
               },
               {
-                "alias": null,
+                "alias": "sidebarOrderConnection",
                 "args": [
                   {
                     "kind": "Literal",
                     "name": "first",
                     "value": 10
-                  },
-                  {
-                    "kind": "Literal",
-                    "name": "participantType",
-                    "value": "BUYER"
                   },
                   {
                     "kind": "Literal",
@@ -622,7 +649,36 @@ return {
                         "name": "node",
                         "plural": false,
                         "selections": [
+                          (v1/*: any*/),
                           (v4/*: any*/),
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "state",
+                            "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "displayState",
+                            "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "mode",
+                            "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "stateReason",
+                            "storageKey": null
+                          },
                           {
                             "alias": null,
                             "args": [
@@ -636,7 +692,6 @@ return {
                             "name": "stateExpiresAt",
                             "storageKey": "stateExpiresAt(format:\"MMM D\")"
                           },
-                          (v1/*: any*/),
                           {
                             "alias": null,
                             "args": null,
@@ -749,6 +804,107 @@ return {
                                             "storageKey": null
                                           },
                                           (v2/*: any*/)
+                                        ],
+                                        "storageKey": null
+                                      },
+                                      {
+                                        "alias": null,
+                                        "args": null,
+                                        "concreteType": "CommerceShipment",
+                                        "kind": "LinkedField",
+                                        "name": "shipment",
+                                        "plural": false,
+                                        "selections": [
+                                          {
+                                            "alias": null,
+                                            "args": null,
+                                            "kind": "ScalarField",
+                                            "name": "trackingNumber",
+                                            "storageKey": null
+                                          },
+                                          {
+                                            "alias": null,
+                                            "args": null,
+                                            "kind": "ScalarField",
+                                            "name": "trackingUrl",
+                                            "storageKey": null
+                                          },
+                                          {
+                                            "alias": null,
+                                            "args": null,
+                                            "kind": "ScalarField",
+                                            "name": "carrierName",
+                                            "storageKey": null
+                                          },
+                                          {
+                                            "alias": null,
+                                            "args": null,
+                                            "kind": "ScalarField",
+                                            "name": "estimatedDeliveryWindow",
+                                            "storageKey": null
+                                          },
+                                          (v2/*: any*/)
+                                        ],
+                                        "storageKey": null
+                                      },
+                                      {
+                                        "alias": null,
+                                        "args": null,
+                                        "concreteType": "CommerceFulfillmentConnection",
+                                        "kind": "LinkedField",
+                                        "name": "fulfillments",
+                                        "plural": false,
+                                        "selections": [
+                                          {
+                                            "alias": null,
+                                            "args": null,
+                                            "concreteType": "CommerceFulfillmentEdge",
+                                            "kind": "LinkedField",
+                                            "name": "edges",
+                                            "plural": true,
+                                            "selections": [
+                                              {
+                                                "alias": null,
+                                                "args": null,
+                                                "concreteType": "CommerceFulfillment",
+                                                "kind": "LinkedField",
+                                                "name": "node",
+                                                "plural": false,
+                                                "selections": [
+                                                  {
+                                                    "alias": null,
+                                                    "args": null,
+                                                    "kind": "ScalarField",
+                                                    "name": "courier",
+                                                    "storageKey": null
+                                                  },
+                                                  {
+                                                    "alias": null,
+                                                    "args": null,
+                                                    "kind": "ScalarField",
+                                                    "name": "trackingId",
+                                                    "storageKey": null
+                                                  },
+                                                  {
+                                                    "alias": null,
+                                                    "args": [
+                                                      {
+                                                        "kind": "Literal",
+                                                        "name": "format",
+                                                        "value": "MMM Do, YYYY"
+                                                      }
+                                                    ],
+                                                    "kind": "ScalarField",
+                                                    "name": "estimatedDelivery",
+                                                    "storageKey": "estimatedDelivery(format:\"MMM Do, YYYY\")"
+                                                  },
+                                                  (v2/*: any*/)
+                                                ],
+                                                "storageKey": null
+                                              }
+                                            ],
+                                            "storageKey": null
+                                          }
                                         ],
                                         "storageKey": null
                                       }
@@ -868,7 +1024,7 @@ return {
                     "storageKey": null
                   }
                 ],
-                "storageKey": "orderConnection(first:10,participantType:\"BUYER\",states:[\"APPROVED\",\"FULFILLED\",\"SUBMITTED\"])"
+                "storageKey": "orderConnection(first:10,states:[\"APPROVED\",\"FULFILLED\",\"SUBMITTED\"])"
               },
               {
                 "alias": null,

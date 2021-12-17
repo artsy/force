@@ -20,23 +20,23 @@ export const ShippingAddress = ({
     country,
     phoneNumber,
   },
-  textColor,
+  textColor = "black100",
 }: ShippingAddressProps) => (
   <>
-    <Text color={textColor ? textColor : "black100"} variant={["xs", "sm"]}>
+    <Text color={textColor} variant={["xs", "sm"]}>
       {name}
     </Text>
-    <Text color={textColor ? textColor : "black100"} variant={["xs", "sm"]}>
+    <Text color={textColor} variant={["xs", "sm"]}>
       {[addressLine1, (addressLine2 || "").trim()].filter(Boolean).join(", ")}
     </Text>
-    <Text color={textColor ? textColor : "black100"} variant={["xs", "sm"]}>
+    <Text color={textColor} variant={["xs", "sm"]}>
       {city}, {region} {postalCode}
     </Text>
-    <Text color={textColor ? textColor : "black100"} variant={["xs", "sm"]}>
+    <Text color={textColor} variant={["xs", "sm"]}>
       {country && (COUNTRY_CODE_TO_COUNTRY_NAME[country] || country)}
     </Text>
     {phoneNumber && (
-      <Text color={textColor ? textColor : "black100"} variant={["xs", "sm"]}>
+      <Text color={textColor} variant={["xs", "sm"]}>
         {phoneNumber}
       </Text>
     )}
