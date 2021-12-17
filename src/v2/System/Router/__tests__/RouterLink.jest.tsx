@@ -17,6 +17,8 @@ jest.mock("v2/Components/NavBar/NavBar", () => ({
   NavBar: () => "NavBar",
 }))
 
+jest.mock("v2/Utils/Hooks/useAuthValidation")
+
 describe("RouterLink", () => {
   const renderTestRoute = () => {
     render(

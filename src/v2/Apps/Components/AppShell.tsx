@@ -17,6 +17,7 @@ import { useAuthIntent } from "v2/Utils/Hooks/useAuthIntent"
 import { AppToasts } from "./AppToasts"
 import { useNavBarHeight } from "v2/Components/NavBar/useNavBarHeight"
 import { useProductionEnvironmentWarning } from "v2/Utils/Hooks/useProductionEnvironmentWarning"
+import { useAuthValidation } from "v2/Utils/Hooks/useAuthValidation"
 
 const logger = createLogger("Apps/Components/AppShell")
 
@@ -27,6 +28,7 @@ interface AppShellProps {
 
 export const AppShell: React.FC<AppShellProps> = props => {
   useAuthIntent()
+  useAuthValidation()
 
   const { children, match } = props
   const routeConfig = findCurrentRoute(match)!
