@@ -155,7 +155,7 @@ export const DetailsSidebar: FC<DetailsProps> = ({
     }
   }
 
-  const { description } = activeOrder ? getStatusCopy(activeOrder) : ""
+  const { description } = getStatusCopy(activeOrder)
 
   return (
     <DetailsContainer
