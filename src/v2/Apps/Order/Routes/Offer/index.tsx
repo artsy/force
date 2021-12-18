@@ -10,7 +10,7 @@ import { Offer_order } from "v2/__generated__/Offer_order.graphql"
 import { OfferMutation } from "v2/__generated__/OfferMutation.graphql"
 import { ArtworkSummaryItemFragmentContainer as ArtworkSummaryItem } from "v2/Apps/Order/Components/ArtworkSummaryItem"
 import { OfferInput } from "v2/Apps/Order/Components/OfferInput"
-import { PriceOptions } from "v2/Apps/Order/Components/PriceOptions"
+import { PriceOptionsFragmentContainer } from "v2/Apps/Order/Components/PriceOptions"
 import { OfferNote } from "v2/Apps/Order/Components/OfferNote"
 import { TransactionDetailsSummaryItemFragmentContainer as TransactionDetailsSummaryItem } from "v2/Apps/Order/Components/TransactionDetailsSummaryItem"
 import { TwoColumnLayout } from "v2/Apps/Order/Components/TwoColumnLayout"
@@ -239,7 +239,7 @@ export class OfferRoute extends Component<
     )
 
     const artwork = this.props.order.lineItems?.edges?.[0]?.node?.artwork
-    const isInquiryCheckout = !artwork?.isPriceRange && !artwork?.listPrice
+    const isInquiryCheckout = !artwork?.isPriceRange && !artwork?.price
 
     return (
       <SystemContextConsumer>
@@ -284,9 +284,8 @@ export class OfferRoute extends Component<
                             Select an Option
                           </Text>
                           {priceNote}
-                          <PriceOptions
+                          <PriceOptionsFragmentContainer
                             artwork={artwork}
-                            currency={orderCurrency}
                             setValue={offerValue =>
                               this.setState({ offerValue })
                             }
@@ -382,7 +381,6 @@ export const OfferFragmentContainer = createFragmentContainer(
   {
     order: graphql`
       fragment Offer_order on CommerceOrder {
-        ...PriceOptions_artwork
         internalID
         mode
         state
@@ -395,19 +393,7 @@ export const OfferFragmentContainer = createFragmentContainer(
                 slug
                 price
                 isPriceRange
-                listPrice {
-                  ... on Money {
-                    major
-                  }
-                  ... on PriceRange {
-                    maxPrice {
-                      major
-                    }
-                    minPrice {
-                      major
-                    }
-                  }
-                }
+                ...PriceOptions_artwork
               }
               artworkOrEditionSet {
                 __typename

@@ -1,22 +1,16 @@
 import { BorderedRadio, Flex, RadioGroup, Text } from "@artsy/palette"
 import { useEffect, useState } from "react"
 import { OfferInput } from "v2/Apps/Order/Components/OfferInput"
-import { Offer_order } from "v2/__generated__/Offer_order.graphql"
 import { compact } from "lodash"
 import { createFragmentContainer, graphql } from "react-relay"
+
+import { PriceOptions_artwork } from "v2/__generated__/PriceOptions_artwork.graphql"
 
 export interface PriceOptionsProps {
   setValue: (value: number) => void
   onFocus: () => void
   showError?: boolean
-  artwork:
-    | NonNullable<
-        NonNullable<
-          NonNullable<NonNullable<Offer_order["lineItems"]>["edges"]>[0]
-        >["node"]
-      >["artwork"]
-    | undefined
-  currency: string
+  artwork: PriceOptions_artwork | null | undefined
 }
 
 export const PriceOptions: React.FC<PriceOptionsProps> = ({
@@ -24,11 +18,10 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
   onFocus,
   showError,
   artwork,
-  currency,
 }) => {
   const asCurrency = (value: number) =>
     value?.toLocaleString("en-US", {
-      currency,
+      currency: artwork?.priceCurrency!,
       minimumFractionDigits: 2,
       style: "currency",
     })
@@ -65,7 +58,7 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
           description: `${pricePercentage * 100}% below list price`,
         }
       }
-      return undefined
+      return
     })
   }
 
@@ -74,52 +67,51 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
     : getPercentageOptions()
 
   return (
-    <>
-      <RadioGroup>
-        {compact(priceOptions)
-          .map(({ value, description }) => (
-            <BorderedRadio
-              value={`price-option-${value}`}
-              label={asCurrency(value!)}
-              onSelect={() => {
-                setValue(value!)
-                setToggle(false)
-              }}
-              key={`price-option-${value}`}
-              data-test="price-options"
-            >
-              <Text variant="sm" color="black60">
-                {description}
-              </Text>
-            </BorderedRadio>
-          ))
-          .concat(
-            <BorderedRadio
-              value="custom"
-              label="Different amount"
-              onSelect={() => {
-                customValue && setValue(customValue)
-                setToggle(true)
-              }}
-              data-test="custom"
-            >
-              {toggle && (
-                <Flex flexDirection="column">
-                  <OfferInput
-                    id="OfferForm_offerValue"
-                    showError={showError}
-                    onChange={value => {
-                      setCustomValue(value)
-                    }}
-                    onFocus={onFocus}
-                    noTitle
-                  />
-                </Flex>
-              )}
-            </BorderedRadio>
-          )}
-      </RadioGroup>
-    </>
+    <RadioGroup>
+      {compact(priceOptions)
+        .map(({ value, description }) => (
+          <BorderedRadio
+            value={`price-option-${value}`}
+            label={asCurrency(value!)}
+            onSelect={() => {
+              setValue(value!)
+              setToggle(false)
+            }}
+            key={`price-option-${value}`}
+            data-test="price-option"
+          >
+            <Text variant="sm" color="black60">
+              {description}
+            </Text>
+          </BorderedRadio>
+        ))
+        .concat(
+          <BorderedRadio
+            value="custom"
+            label="Different amount"
+            onSelect={() => {
+              customValue && setValue(customValue)
+              setToggle(true)
+            }}
+            data-test="price-option"
+            key="price-option-custom"
+          >
+            {toggle && (
+              <Flex flexDirection="column">
+                <OfferInput
+                  id="OfferForm_offerValue"
+                  showError={showError}
+                  onChange={value => {
+                    setCustomValue(value)
+                  }}
+                  onFocus={onFocus}
+                  noTitle
+                />
+              </Flex>
+            )}
+          </BorderedRadio>
+        )}
+    </RadioGroup>
   )
 }
 
@@ -127,27 +119,19 @@ export const PriceOptionsFragmentContainer = createFragmentContainer(
   PriceOptions,
   {
     artwork: graphql`
-      fragment PriceOptions_order on CommerceOrder {
-        lineItems {
-          edges {
-            node {
-              artwork {
-                price
-                isPriceRange
-                listPrice {
-                  ... on Money {
-                    major
-                  }
-                  ... on PriceRange {
-                    maxPrice {
-                      major
-                    }
-                    minPrice {
-                      major
-                    }
-                  }
-                }
-              }
+      fragment PriceOptions_artwork on Artwork {
+        priceCurrency
+        isPriceRange
+        listPrice {
+          ... on Money {
+            major
+          }
+          ... on PriceRange {
+            maxPrice {
+              major
+            }
+            minPrice {
+              major
             }
           }
         }
