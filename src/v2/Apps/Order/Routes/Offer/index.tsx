@@ -33,9 +33,9 @@ import { ContextModule, OwnerType } from "@artsy/cohesion"
 import { isNil } from "lodash"
 import { appendCurrencySymbol } from "v2/Apps/Order/Utils/currencyUtils"
 import { userHasLabFeature } from "v2/Utils/user"
-import { SystemContextConsumer, SystemContextProps } from "v2/System"
+import { SystemContextProps, withSystemContext } from "v2/System"
 
-export interface OfferProps {
+export interface OfferProps extends SystemContextProps {
   order: Offer_order
   relay?: RelayProp
   router: Router
@@ -56,11 +56,7 @@ export interface OfferState {
 const logger = createLogger("Order/Routes/Offer/index.tsx")
 
 @track()
-export class OfferRoute extends Component<
-  OfferProps,
-  OfferState,
-  SystemContextProps
-> {
+export class OfferRoute extends Component<OfferProps, OfferState> {
   state: OfferState = {
     formIsDirty: false,
     highSpeedBumpEncountered: false,
@@ -241,143 +237,129 @@ export class OfferRoute extends Component<
     const artwork = this.props.order.lineItems?.edges?.[0]?.node?.artwork
     const isInquiryCheckout = !artwork?.isPriceRange && !artwork?.price
 
-    return (
-      <SystemContextConsumer>
-        {({ user }) => {
-          return (
-            <>
-              <OrderStepper currentStep="Offer" steps={offerFlowSteps} />
-              <TwoColumnLayout
-                Content={
-                  <Flex
-                    flexDirection="column"
-                    style={
-                      isCommittingMutation ? { pointerEvents: "none" } : {}
-                    }
-                    id="offer-page-left-column"
-                  >
-                    {((user &&
-                      !userHasLabFeature(user, "New Offer Submissions")) ||
-                      isInquiryCheckout) && (
-                      <>
-                        <Flex flexDirection="column">
-                          <OfferInput
-                            id="OfferForm_offerValue"
-                            showError={
-                              this.state.formIsDirty &&
-                              this.state.offerValue <= 0
-                            }
-                            onChange={offerValue =>
-                              this.setState({ offerValue })
-                            }
-                            onFocus={this.onOfferInputFocus.bind(this)}
-                          />
-                        </Flex>
-                        {priceNote}
-                      </>
-                    )}
-                    {user &&
-                      userHasLabFeature(user, "New Offer Submissions") &&
-                      !isInquiryCheckout && (
-                        <>
-                          <Text variant="lg" color="black80" marginTop={4}>
-                            Select an Option
-                          </Text>
-                          {priceNote}
-                          <PriceOptionsFragmentContainer
-                            artwork={artwork}
-                            setValue={offerValue =>
-                              this.setState({ offerValue })
-                            }
-                            onFocus={this.onOfferInputFocus.bind(this)}
-                            showError={
-                              this.state.formIsDirty &&
-                              this.state.offerValue <= 0
-                            }
-                          />
-                        </>
-                      )}
+    const newOfferSubmissionEnabled = userHasLabFeature(
+      this.props.user,
+      "New Offer Submissions"
+    )
 
-                    {!order.isInquiryOrder && (
-                      <>
-                        <Spacer mb={2} />
-                        <OfferNote
-                          onChange={offerNoteValue =>
-                            this.setState({ offerNoteValue })
-                          }
-                          artworkId={artworkId!}
-                        />
-                      </>
-                    )}
-                    <Spacer mb={[2, 4]} />
-                    <Message p={2}>
-                      Please note that all final offers are binding. If your
-                      offer is accepted, your payment will be processed
-                      immediately.
-                      <Text mt={1}>
-                        Keep in mind making an offer doesn’t guarantee you the
-                        work, as the seller might be receiving competing offers.
-                      </Text>
-                    </Message>
-                    <Spacer mb={[2, 4]} />
-                    <Media greaterThan="xs">
-                      <Button
-                        onClick={this.onContinueButtonPressed}
-                        loading={isCommittingMutation}
-                        variant="primaryBlack"
-                        width="100%"
-                      >
-                        Continue
-                      </Button>
-                    </Media>
-                  </Flex>
-                }
-                Sidebar={
+    return (
+      <>
+        <OrderStepper currentStep="Offer" steps={offerFlowSteps} />
+        <TwoColumnLayout
+          Content={
+            <Flex
+              flexDirection="column"
+              style={isCommittingMutation ? { pointerEvents: "none" } : {}}
+              id="offer-page-left-column"
+            >
+              {(!newOfferSubmissionEnabled || isInquiryCheckout) && (
+                <>
                   <Flex flexDirection="column">
-                    <Flex flexDirection="column">
-                      <ArtworkSummaryItem order={order} />
-                      <TransactionDetailsSummaryItem
-                        order={order}
-                        offerOverride={
-                          this.state.offerValue &&
-                          this.state.offerValue.toLocaleString("en-US", {
-                            currency: orderCurrency,
-                            minimumFractionDigits: 2,
-                            style: "currency",
-                          })
-                        }
-                      />
-                    </Flex>
-                    <BuyerGuarantee
-                      contextModule={ContextModule.ordersOffer}
-                      contextPageOwnerType={OwnerType.ordersOffer}
+                    <OfferInput
+                      id="OfferForm_offerValue"
+                      showError={
+                        this.state.formIsDirty && this.state.offerValue <= 0
+                      }
+                      onChange={offerValue => this.setState({ offerValue })}
+                      onFocus={this.onOfferInputFocus.bind(this)}
                     />
-                    <Spacer mb={[2, 4]} />
-                    <Media at="xs">
-                      <>
-                        <Button
-                          onClick={this.onContinueButtonPressed}
-                          loading={isCommittingMutation}
-                          variant="primaryBlack"
-                          width="100%"
-                        >
-                          Continue
-                        </Button>
-                      </>
-                    </Media>
                   </Flex>
-                }
+                  {priceNote}
+                </>
+              )}
+              {newOfferSubmissionEnabled && !isInquiryCheckout && (
+                <>
+                  <Text variant="lg" color="black80" marginTop={4}>
+                    Select an Option
+                  </Text>
+                  {priceNote}
+                  <PriceOptionsFragmentContainer
+                    artwork={artwork}
+                    setValue={offerValue => this.setState({ offerValue })}
+                    onFocus={this.onOfferInputFocus.bind(this)}
+                    showError={
+                      this.state.formIsDirty && this.state.offerValue <= 0
+                    }
+                  />
+                </>
+              )}
+
+              {!order.isInquiryOrder && (
+                <>
+                  <Spacer mb={2} />
+                  <OfferNote
+                    onChange={offerNoteValue =>
+                      this.setState({ offerNoteValue })
+                    }
+                    artworkId={artworkId!}
+                  />
+                </>
+              )}
+              <Spacer mb={[2, 4]} />
+              <Message p={2}>
+                Please note that all final offers are binding. If your offer is
+                accepted, your payment will be processed immediately.
+                <Text mt={1}>
+                  Keep in mind making an offer doesn’t guarantee you the work,
+                  as the seller might be receiving competing offers.
+                </Text>
+              </Message>
+              <Spacer mb={[2, 4]} />
+              <Media greaterThan="xs">
+                <Button
+                  onClick={this.onContinueButtonPressed}
+                  loading={isCommittingMutation}
+                  variant="primaryBlack"
+                  width="100%"
+                >
+                  Continue
+                </Button>
+              </Media>
+            </Flex>
+          }
+          Sidebar={
+            <Flex flexDirection="column">
+              <Flex flexDirection="column">
+                <ArtworkSummaryItem order={order} />
+                <TransactionDetailsSummaryItem
+                  order={order}
+                  offerOverride={
+                    this.state.offerValue &&
+                    this.state.offerValue.toLocaleString("en-US", {
+                      currency: orderCurrency,
+                      minimumFractionDigits: 2,
+                      style: "currency",
+                    })
+                  }
+                />
+              </Flex>
+              <BuyerGuarantee
+                contextModule={ContextModule.ordersOffer}
+                contextPageOwnerType={OwnerType.ordersOffer}
               />
-            </>
-          )
-        }}
-      </SystemContextConsumer>
+              <Spacer mb={[2, 4]} />
+              <Media at="xs">
+                <>
+                  <Button
+                    onClick={this.onContinueButtonPressed}
+                    loading={isCommittingMutation}
+                    variant="primaryBlack"
+                    width="100%"
+                  >
+                    Continue
+                  </Button>
+                </>
+              </Media>
+            </Flex>
+          }
+        />
+      </>
     )
   }
 }
 
 export const OfferFragmentContainer = createFragmentContainer(
-  injectCommitMutation(injectDialog(OfferRoute)),
+  withSystemContext(injectCommitMutation(injectDialog(OfferRoute))),
   {
     order: graphql`
       fragment Offer_order on CommerceOrder {
