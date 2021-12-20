@@ -17,13 +17,15 @@ import { HorizontalPadding } from "v2/Apps/Components/HorizontalPadding"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { useTracking } from "react-tracking"
 import { AnalyticsSchema } from "v2/System"
+import styled from "styled-components"
 
 interface ArtistSellWithArtsyProps {
   artist?: ArtistSellWithArtsy_artist
 }
 
 const ArtistSellWithArtsy: FC<ArtistSellWithArtsyProps> = ({ artist }) => {
-  const image = artist?.image?.cropped
+  const image = artist?.image?.resized?.src
+
   const href = artist?.targetSupply?.isInMicrofunnel
     ? `${artist?.href}/consign`
     : "/consign"
@@ -45,27 +47,23 @@ const ArtistSellWithArtsy: FC<ArtistSellWithArtsyProps> = ({ artist }) => {
 
   return (
     <>
-      <FullBleed
-        bg="black100"
-        color="white100"
-        position="relative"
-        overflow="hidden"
-      >
+      <Container bg="black100" color="white100">
         {image && (
           <Box
-            position="absolute"
+            position="fixed"
             top={0}
             left={0}
-            right={0}
-            bottom={0}
+            width="100%"
+            height="100%"
             opacity={0.4}
             style={{
               filter: "blur(10px)",
               transform: "scale(1.1)",
+              pointerEvents: "none",
             }}
           >
             <Image
-              {...image}
+              src={image}
               lazyLoad
               width="100%"
               height="100%"
@@ -116,7 +114,7 @@ const ArtistSellWithArtsy: FC<ArtistSellWithArtsyProps> = ({ artist }) => {
             </GridColumns>
           </HorizontalPadding>
         </AppContainer>
-      </FullBleed>
+      </Container>
     </>
   )
 }
@@ -133,11 +131,8 @@ const ArtistSellWithArtsyFragmentContainer = createFragmentContainer(
           isInMicrofunnel
         }
         image {
-          cropped(width: 2560, height: 360) {
+          resized(width: 640) {
             src
-            srcSet
-            width
-            height
           }
         }
       }
@@ -154,6 +149,7 @@ export const ArtistSellWithArtsyQueryRenderer: FC<ArtistSellWithArtsyQueryRender
 }) => {
   return (
     <SystemQueryRenderer<ArtistSellWithArtsyQuery>
+      lazyLoad
       placeholder={<ArtistSellWithArtsy />}
       variables={{ slug }}
       query={graphql`
@@ -178,3 +174,8 @@ export const ArtistSellWithArtsyQueryRenderer: FC<ArtistSellWithArtsyQueryRender
     />
   )
 }
+
+const Container = styled(FullBleed)`
+  overflow: hidden;
+  clip-path: inset(0);
+`

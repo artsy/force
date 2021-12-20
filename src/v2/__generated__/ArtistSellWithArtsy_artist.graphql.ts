@@ -12,11 +12,8 @@ export type ArtistSellWithArtsy_artist = {
         readonly isInMicrofunnel: boolean | null;
     } | null;
     readonly image: {
-        readonly cropped: {
+        readonly resized: {
             readonly src: string;
-            readonly srcSet: string;
-            readonly width: number;
-            readonly height: number;
         } | null;
     } | null;
     readonly " $refType": "ArtistSellWithArtsy_artist";
@@ -87,18 +84,13 @@ const node: ReaderFragment = {
           "args": [
             {
               "kind": "Literal",
-              "name": "height",
-              "value": 360
-            },
-            {
-              "kind": "Literal",
               "name": "width",
-              "value": 2560
+              "value": 640
             }
           ],
-          "concreteType": "CroppedImageUrl",
+          "concreteType": "ResizedImageUrl",
           "kind": "LinkedField",
-          "name": "cropped",
+          "name": "resized",
           "plural": false,
           "selections": [
             {
@@ -107,30 +99,9 @@ const node: ReaderFragment = {
               "kind": "ScalarField",
               "name": "src",
               "storageKey": null
-            },
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "srcSet",
-              "storageKey": null
-            },
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "width",
-              "storageKey": null
-            },
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "height",
-              "storageKey": null
             }
           ],
-          "storageKey": "cropped(height:360,width:2560)"
+          "storageKey": "resized(width:640)"
         }
       ],
       "storageKey": null
@@ -139,5 +110,5 @@ const node: ReaderFragment = {
   "type": "Artist",
   "abstractKey": null
 };
-(node as any).hash = '8ab5358bba88c949daa0fd74b5968ecd';
+(node as any).hash = 'f7a5d349a177b4933b261a3561b6ef37';
 export default node;

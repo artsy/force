@@ -37,11 +37,8 @@ fragment ArtistSellWithArtsy_artist on Artist {
     isInMicrofunnel
   }
   image {
-    cropped(width: 2560, height: 360) {
+    resized(width: 640) {
       src
-      srcSet
-      width
-      height
     }
   }
 }
@@ -156,18 +153,13 @@ return {
                 "args": [
                   {
                     "kind": "Literal",
-                    "name": "height",
-                    "value": 360
-                  },
-                  {
-                    "kind": "Literal",
                     "name": "width",
-                    "value": 2560
+                    "value": 640
                   }
                 ],
-                "concreteType": "CroppedImageUrl",
+                "concreteType": "ResizedImageUrl",
                 "kind": "LinkedField",
-                "name": "cropped",
+                "name": "resized",
                 "plural": false,
                 "selections": [
                   {
@@ -176,30 +168,9 @@ return {
                     "kind": "ScalarField",
                     "name": "src",
                     "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "srcSet",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "width",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "height",
-                    "storageKey": null
                   }
                 ],
-                "storageKey": "cropped(height:360,width:2560)"
+                "storageKey": "resized(width:640)"
               }
             ],
             "storageKey": null
@@ -222,7 +193,7 @@ return {
     "metadata": {},
     "name": "ArtistSellWithArtsyQuery",
     "operationKind": "query",
-    "text": "query ArtistSellWithArtsyQuery(\n  $slug: String!\n) {\n  artist(id: $slug) {\n    ...ArtistSellWithArtsy_artist\n    id\n  }\n}\n\nfragment ArtistSellWithArtsy_artist on Artist {\n  internalID\n  slug\n  href\n  targetSupply {\n    isInMicrofunnel\n  }\n  image {\n    cropped(width: 2560, height: 360) {\n      src\n      srcSet\n      width\n      height\n    }\n  }\n}\n"
+    "text": "query ArtistSellWithArtsyQuery(\n  $slug: String!\n) {\n  artist(id: $slug) {\n    ...ArtistSellWithArtsy_artist\n    id\n  }\n}\n\nfragment ArtistSellWithArtsy_artist on Artist {\n  internalID\n  slug\n  href\n  targetSupply {\n    isInMicrofunnel\n  }\n  image {\n    resized(width: 640) {\n      src\n    }\n  }\n}\n"
   }
 };
 })();
