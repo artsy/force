@@ -70,9 +70,6 @@ describe("OfferNote", () => {
     expect(text).toContain(
       "For your own safety, please do not share personal information."
     )
-    expect(text).toContain(
-      "Add any additional information regarding your offer."
-    )
     expect(text).toContain("0 / 1000 max")
   })
 })
