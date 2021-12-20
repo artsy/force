@@ -97,7 +97,7 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
             key="price-option-custom"
           >
             {toggle && (
-              <Flex flexDirection="column">
+              <Flex flexDirection="column" marginTop={2}>
                 <OfferInput
                   id="OfferForm_offerValue"
                   showError={showError}

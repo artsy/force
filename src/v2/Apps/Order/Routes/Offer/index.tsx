@@ -229,7 +229,7 @@ export class OfferRoute extends Component<OfferProps, OfferState> {
     const artworkId = order.lineItems?.edges?.[0]?.node?.artwork?.slug
     const orderCurrency = order.currencyCode
     const priceNote = Boolean(offerItem?.price) && (
-      <Text my={1} variant="xs" color="black60">
+      <Text my={1} variant="sm" color="black60">
         List price: {appendCurrencySymbol(offerItem?.price, order.currencyCode)}
       </Text>
     )
@@ -273,6 +273,15 @@ export class OfferRoute extends Component<OfferProps, OfferState> {
                     Select an Option
                   </Text>
                   {priceNote}
+                  <Text
+                    variant="md"
+                    color="black80"
+                    textTransform="uppercase"
+                    marginTop={4}
+                    marginBottom={2}
+                  >
+                    your offer
+                  </Text>
                   <PriceOptionsFragmentContainer
                     artwork={artwork}
                     setValue={offerValue => this.setState({ offerValue })}
@@ -296,13 +305,10 @@ export class OfferRoute extends Component<OfferProps, OfferState> {
                 </>
               )}
               <Spacer mb={[2, 4]} />
-              <Message p={2}>
-                Please note that all final offers are binding. If your offer is
-                accepted, your payment will be processed immediately.
-                <Text mt={1}>
-                  Keep in mind making an offer doesn’t guarantee you the work,
-                  as the seller might be receiving competing offers.
-                </Text>
+              <Message variant="info" p={2} title="All offers are binding">
+                If your offer is accepted, payment will be processed
+                immediately. Please note that this sale is not final until your
+                offer is accepted.
               </Message>
               <Spacer mb={[2, 4]} />
               <Media greaterThan="xs">

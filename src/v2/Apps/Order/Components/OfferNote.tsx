@@ -18,14 +18,8 @@ export const OfferNote: React.FC<{
       <TextArea
         title="Note (optional)"
         characterLimit={1000}
-        description={
-          <>
-            Use this note to add any additional context about your
-            {counteroffer ? " counteroffer" : " offer"}. Please do not share
-            personal information in this field.
-          </>
-        }
-        placeholder="Add a note"
+        description="For your own safety, please do not share personal information."
+        placeholder="Add any additional information regarding your offer."
         onChange={onChange}
       />
     </>
