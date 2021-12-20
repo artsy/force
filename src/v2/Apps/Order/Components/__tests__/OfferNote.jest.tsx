@@ -68,18 +68,11 @@ describe("OfferNote", () => {
     const text = getWrapper().text()
     expect(text).toContain("Note (optional)")
     expect(text).toContain(
-      "Use this note to add any additional context about your offer"
+      "For your own safety, please do not share personal information."
     )
     expect(text).toContain(
-      "Please do not share personal information in this field"
+      "Add any additional information regarding your offer."
     )
     expect(text).toContain("0 / 1000 max")
-  })
-
-  it("has a different description for counteroffers", () => {
-    const text = getWrapper({ counteroffer: true }).text()
-    expect(text).toContain(
-      "Use this note to add any additional context about your counteroffer"
-    )
   })
 })
