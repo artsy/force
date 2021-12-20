@@ -5,6 +5,7 @@ import { compact } from "lodash"
 import { createFragmentContainer, graphql } from "react-relay"
 
 import { PriceOptions_artwork } from "v2/__generated__/PriceOptions_artwork.graphql"
+import { appendCurrencySymbol } from "../Utils/currencyUtils"
 
 export interface PriceOptionsProps {
   setValue: (value: number) => void
@@ -72,7 +73,10 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
         .map(({ value, description }) => (
           <BorderedRadio
             value={`price-option-${value}`}
-            label={asCurrency(value!)}
+            label={appendCurrencySymbol(
+              asCurrency(value!),
+              artwork?.priceCurrency!
+            )}
             onSelect={() => {
               setValue(value!)
               setToggle(false)
