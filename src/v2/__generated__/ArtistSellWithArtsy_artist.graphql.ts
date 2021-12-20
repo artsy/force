@@ -4,27 +4,27 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type ArtistConsignButton_artist = {
-    readonly targetSupply: {
-        readonly isInMicrofunnel: boolean | null;
-        readonly isTargetSupply: boolean | null;
-    } | null;
+export type ArtistSellWithArtsy_artist = {
     readonly internalID: string;
     readonly slug: string;
-    readonly name: string | null;
     readonly href: string | null;
+    readonly targetSupply: {
+        readonly isInMicrofunnel: boolean | null;
+    } | null;
     readonly image: {
         readonly cropped: {
             readonly src: string;
             readonly srcSet: string;
+            readonly width: number;
+            readonly height: number;
         } | null;
     } | null;
-    readonly " $refType": "ArtistConsignButton_artist";
+    readonly " $refType": "ArtistSellWithArtsy_artist";
 };
-export type ArtistConsignButton_artist$data = ArtistConsignButton_artist;
-export type ArtistConsignButton_artist$key = {
-    readonly " $data"?: ArtistConsignButton_artist$data;
-    readonly " $fragmentRefs": FragmentRefs<"ArtistConsignButton_artist">;
+export type ArtistSellWithArtsy_artist$data = ArtistSellWithArtsy_artist;
+export type ArtistSellWithArtsy_artist$key = {
+    readonly " $data"?: ArtistSellWithArtsy_artist$data;
+    readonly " $fragmentRefs": FragmentRefs<"ArtistSellWithArtsy_artist">;
 };
 
 
@@ -33,33 +33,8 @@ const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "ArtistConsignButton_artist",
+  "name": "ArtistSellWithArtsy_artist",
   "selections": [
-    {
-      "alias": null,
-      "args": null,
-      "concreteType": "ArtistTargetSupply",
-      "kind": "LinkedField",
-      "name": "targetSupply",
-      "plural": false,
-      "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "isInMicrofunnel",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "isTargetSupply",
-          "storageKey": null
-        }
-      ],
-      "storageKey": null
-    },
     {
       "alias": null,
       "args": null,
@@ -78,14 +53,25 @@ const node: ReaderFragment = {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "name",
+      "name": "href",
       "storageKey": null
     },
     {
       "alias": null,
       "args": null,
-      "kind": "ScalarField",
-      "name": "href",
+      "concreteType": "ArtistTargetSupply",
+      "kind": "LinkedField",
+      "name": "targetSupply",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "isInMicrofunnel",
+          "storageKey": null
+        }
+      ],
       "storageKey": null
     },
     {
@@ -102,12 +88,12 @@ const node: ReaderFragment = {
             {
               "kind": "Literal",
               "name": "height",
-              "value": 50
+              "value": 360
             },
             {
               "kind": "Literal",
               "name": "width",
-              "value": 50
+              "value": 2560
             }
           ],
           "concreteType": "CroppedImageUrl",
@@ -128,9 +114,23 @@ const node: ReaderFragment = {
               "kind": "ScalarField",
               "name": "srcSet",
               "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "width",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "height",
+              "storageKey": null
             }
           ],
-          "storageKey": "cropped(height:50,width:50)"
+          "storageKey": "cropped(height:360,width:2560)"
         }
       ],
       "storageKey": null
@@ -139,5 +139,5 @@ const node: ReaderFragment = {
   "type": "Artist",
   "abstractKey": null
 };
-(node as any).hash = '16e052c9bf2ad2292e85f3b3bb2a6ac5';
+(node as any).hash = '8ab5358bba88c949daa0fd74b5968ecd';
 export default node;

@@ -4,40 +4,44 @@
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type ArtistConsignButton_Test_QueryVariables = {};
-export type ArtistConsignButton_Test_QueryResponse = {
+export type ArtistSellWithArtsyQueryVariables = {
+    slug: string;
+};
+export type ArtistSellWithArtsyQueryResponse = {
     readonly artist: {
-        readonly " $fragmentRefs": FragmentRefs<"ArtistConsignButton_artist">;
+        readonly " $fragmentRefs": FragmentRefs<"ArtistSellWithArtsy_artist">;
     } | null;
 };
-export type ArtistConsignButton_Test_Query = {
-    readonly response: ArtistConsignButton_Test_QueryResponse;
-    readonly variables: ArtistConsignButton_Test_QueryVariables;
+export type ArtistSellWithArtsyQuery = {
+    readonly response: ArtistSellWithArtsyQueryResponse;
+    readonly variables: ArtistSellWithArtsyQueryVariables;
 };
 
 
 
 /*
-query ArtistConsignButton_Test_Query {
-  artist(id: "alex-katz") {
-    ...ArtistConsignButton_artist
+query ArtistSellWithArtsyQuery(
+  $slug: String!
+) {
+  artist(id: $slug) {
+    ...ArtistSellWithArtsy_artist
     id
   }
 }
 
-fragment ArtistConsignButton_artist on Artist {
-  targetSupply {
-    isInMicrofunnel
-    isTargetSupply
-  }
+fragment ArtistSellWithArtsy_artist on Artist {
   internalID
   slug
-  name
   href
+  targetSupply {
+    isInMicrofunnel
+  }
   image {
-    cropped(width: 50, height: 50) {
+    cropped(width: 2560, height: 360) {
       src
       srcSet
+      width
+      height
     }
   }
 }
@@ -46,21 +50,29 @@ fragment ArtistConsignButton_artist on Artist {
 const node: ConcreteRequest = (function(){
 var v0 = [
   {
-    "kind": "Literal",
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "slug",
+    "type": "String!"
+  }
+],
+v1 = [
+  {
+    "kind": "Variable",
     "name": "id",
-    "value": "alex-katz"
+    "variableName": "slug"
   }
 ];
 return {
   "fragment": {
-    "argumentDefinitions": [],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "ArtistConsignButton_Test_Query",
+    "name": "ArtistSellWithArtsyQuery",
     "selections": [
       {
         "alias": null,
-        "args": (v0/*: any*/),
+        "args": (v1/*: any*/),
         "concreteType": "Artist",
         "kind": "LinkedField",
         "name": "artist",
@@ -69,10 +81,10 @@ return {
           {
             "args": null,
             "kind": "FragmentSpread",
-            "name": "ArtistConsignButton_artist"
+            "name": "ArtistSellWithArtsy_artist"
           }
         ],
-        "storageKey": "artist(id:\"alex-katz\")"
+        "storageKey": null
       }
     ],
     "type": "Query",
@@ -80,43 +92,18 @@ return {
   },
   "kind": "Request",
   "operation": {
-    "argumentDefinitions": [],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "ArtistConsignButton_Test_Query",
+    "name": "ArtistSellWithArtsyQuery",
     "selections": [
       {
         "alias": null,
-        "args": (v0/*: any*/),
+        "args": (v1/*: any*/),
         "concreteType": "Artist",
         "kind": "LinkedField",
         "name": "artist",
         "plural": false,
         "selections": [
-          {
-            "alias": null,
-            "args": null,
-            "concreteType": "ArtistTargetSupply",
-            "kind": "LinkedField",
-            "name": "targetSupply",
-            "plural": false,
-            "selections": [
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "isInMicrofunnel",
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "isTargetSupply",
-                "storageKey": null
-              }
-            ],
-            "storageKey": null
-          },
           {
             "alias": null,
             "args": null,
@@ -135,14 +122,25 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "name",
+            "name": "href",
             "storageKey": null
           },
           {
             "alias": null,
             "args": null,
-            "kind": "ScalarField",
-            "name": "href",
+            "concreteType": "ArtistTargetSupply",
+            "kind": "LinkedField",
+            "name": "targetSupply",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "isInMicrofunnel",
+                "storageKey": null
+              }
+            ],
             "storageKey": null
           },
           {
@@ -159,12 +157,12 @@ return {
                   {
                     "kind": "Literal",
                     "name": "height",
-                    "value": 50
+                    "value": 360
                   },
                   {
                     "kind": "Literal",
                     "name": "width",
-                    "value": 50
+                    "value": 2560
                   }
                 ],
                 "concreteType": "CroppedImageUrl",
@@ -185,9 +183,23 @@ return {
                     "kind": "ScalarField",
                     "name": "srcSet",
                     "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "width",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "height",
+                    "storageKey": null
                   }
                 ],
-                "storageKey": "cropped(height:50,width:50)"
+                "storageKey": "cropped(height:360,width:2560)"
               }
             ],
             "storageKey": null
@@ -200,7 +212,7 @@ return {
             "storageKey": null
           }
         ],
-        "storageKey": "artist(id:\"alex-katz\")"
+        "storageKey": null
       }
     ]
   },
@@ -208,11 +220,11 @@ return {
     "cacheID": "4ca78d4c9c7e5dd63825c34a90064e68",
     "id": null,
     "metadata": {},
-    "name": "ArtistConsignButton_Test_Query",
+    "name": "ArtistSellWithArtsyQuery",
     "operationKind": "query",
-    "text": "query ArtistConsignButton_Test_Query {\n  artist(id: \"alex-katz\") {\n    ...ArtistConsignButton_artist\n    id\n  }\n}\n\nfragment ArtistConsignButton_artist on Artist {\n  targetSupply {\n    isInMicrofunnel\n    isTargetSupply\n  }\n  internalID\n  slug\n  name\n  href\n  image {\n    cropped(width: 50, height: 50) {\n      src\n      srcSet\n    }\n  }\n}\n"
+    "text": "query ArtistSellWithArtsyQuery(\n  $slug: String!\n) {\n  artist(id: $slug) {\n    ...ArtistSellWithArtsy_artist\n    id\n  }\n}\n\nfragment ArtistSellWithArtsy_artist on Artist {\n  internalID\n  slug\n  href\n  targetSupply {\n    isInMicrofunnel\n  }\n  image {\n    cropped(width: 2560, height: 360) {\n      src\n      srcSet\n      width\n      height\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '51589b480b6186c9dd1c1c5eb91e6ed2';
+(node as any).hash = '2236059f5d30a3e41c6b0c49e0f10185';
 export default node;
