@@ -100,8 +100,12 @@ describe("SizeFilter", () => {
     userEvent.click(screen.getByText("Set size"))
 
     expect(currentContext().filters?.sizes).toEqual([])
-    expect(currentContext().filters?.height).toEqual("4.72-6.3")
-    expect(currentContext().filters?.width).toEqual("4.72-6.3")
+    expect(currentContext().filters?.height).toEqual(
+      "4.724409448818897-6.299212598425196"
+    )
+    expect(currentContext().filters?.width).toEqual(
+      "4.724409448818897-6.299212598425196"
+    )
   })
 
   it("updates the filter values when only one dimension is added", () => {
@@ -113,7 +117,9 @@ describe("SizeFilter", () => {
     userEvent.click(screen.getByText("Set size"))
 
     expect(currentContext().filters?.sizes).toEqual([])
-    expect(currentContext().filters?.height).toEqual("4.72-9.45")
+    expect(currentContext().filters?.height).toEqual(
+      "4.724409448818897-9.448818897637794"
+    )
     expect(currentContext().filters?.width).toEqual("*-*")
   })
 
@@ -139,8 +145,12 @@ describe("SizeFilter", () => {
 
     // assert: state and ui are updated
     expect(currentContext().filters?.sizes).toEqual([])
-    expect(currentContext().filters?.width).toEqual("0.39-0.79")
-    expect(currentContext().filters?.height).toEqual("1.18-1.57")
+    expect(currentContext().filters?.width).toEqual(
+      "0.39370078740157477-0.7874015748031495"
+    )
+    expect(currentContext().filters?.height).toEqual(
+      "1.1811023622047243-1.574803149606299"
+    )
     expect(screen.queryByDisplayValue("1")).toBeInTheDocument()
     expect(screen.queryByDisplayValue("2")).toBeInTheDocument()
     expect(screen.queryByDisplayValue("3")).toBeInTheDocument()

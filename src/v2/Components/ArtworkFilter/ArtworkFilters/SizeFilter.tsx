@@ -27,6 +27,7 @@ export const SIZES = [
   { displayName: "Medium (40 – 100cm)", name: "MEDIUM" },
   { displayName: "Large (over 100cm)", name: "LARGE" },
 ]
+const ONE_IN_TO_CM = 2.54
 
 type CustomRange = (number | "*")[]
 
@@ -35,7 +36,9 @@ type CustomSize = {
   width: CustomRange
 }
 
-const convertToCentimeters = (element: number) => Math.round(element * 2.54)
+const convertToCentimeters = (element: number) => {
+  return Math.round(element * ONE_IN_TO_CM)
+}
 
 export const parseRange = (range?: string) => {
   return range?.split("-").map(s => {
@@ -49,7 +52,7 @@ const convertRangeElementToInches = (element: number | "*") => {
     return element
   }
 
-  return Math.round((element / 2.54) * 100) / 100
+  return element / ONE_IN_TO_CM
 }
 
 const convertRangeToInches = (range: CustomRange) => {
