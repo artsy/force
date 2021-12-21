@@ -28,8 +28,9 @@ const { renderWithRelay } = setupTestWrapperTL<PriceOptions_Test_Query>({
   `,
 })
 
+let radios: HTMLElement[]
+
 describe("PriceOptions - Range", () => {
-  let radios: HTMLElement[]
   beforeEach(() => {
     renderWithRelay({
       Artwork: () => ({
@@ -46,15 +47,15 @@ describe("PriceOptions - Range", () => {
         },
       }),
     })
-    radios = screen.queryAllByTestId("price-option")
+    radios = screen.getAllByRole("radio")
   })
   it("renders all radio options", () => {
     expect(radios).toHaveLength(4)
   })
   it("correctly formats values", () => {
-    expect(radios[0]).toHaveTextContent("$100.00")
-    expect(radios[1]).toHaveTextContent("$150.00")
-    expect(radios[2]).toHaveTextContent("$200.00")
+    expect(radios[0]).toHaveTextContent("US$100.00")
+    expect(radios[1]).toHaveTextContent("US$150.00")
+    expect(radios[2]).toHaveTextContent("US$200.00")
     expect(radios[3]).toHaveTextContent("Different amount")
   })
   it("fires click event with correct value", () => {
@@ -77,7 +78,6 @@ describe("PriceOptions - Range", () => {
 })
 
 describe("PriceOptions - Exact", () => {
-  let radios: HTMLElement[]
   beforeEach(() => {
     renderWithRelay({
       Artwork: () => ({
@@ -89,7 +89,7 @@ describe("PriceOptions - Exact", () => {
         },
       }),
     })
-    radios = screen.queryAllByTestId("price-option")
+    radios = screen.getAllByRole("radio")
   })
   it("renders all radio options", () => {
     expect(radios).toHaveLength(4)

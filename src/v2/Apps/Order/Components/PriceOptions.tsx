@@ -82,7 +82,6 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
               setToggle(false)
             }}
             key={`price-option-${value}`}
-            data-test="price-option"
           >
             <Text variant="sm" color="black60">
               {description}
@@ -97,7 +96,6 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
               customValue && setValue(customValue)
               setToggle(true)
             }}
-            data-test="price-option"
             key="price-option-custom"
           >
             {toggle && (
@@ -105,9 +103,7 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
                 <OfferInput
                   id="OfferForm_offerValue"
                   showError={showError}
-                  onChange={value => {
-                    setCustomValue(value)
-                  }}
+                  onChange={setCustomValue}
                   onFocus={onFocus}
                   noTitle
                 />
