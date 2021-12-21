@@ -1,4 +1,5 @@
 import { Box, Button, Text } from "@artsy/palette"
+import { useSystemContext } from "v2/System"
 import { Form, Formik } from "formik"
 import { SubmissionStepper } from "v2/Apps/Consign/Components/SubmissionStepper"
 import {
@@ -6,7 +7,7 @@ import {
   UploadPhotosFormModel,
 } from "./Components/UploadPhotosForm"
 import { PhotoThumbnail } from "./Components/PhotoThumbnail"
-import { Photo } from "../Utils/fileUtils"
+import { Photo, addPhotoToSubmission } from "../Utils/fileUtils"
 import { useRouter } from "v2/System/Router/useRouter"
 import { BackLink } from "v2/Components/Links/BackLink"
 import { uploadPhotosValidationSchema } from "../Utils/validation"
@@ -39,6 +40,7 @@ const getUploadPhotosFormInitialValues = (
 
 export const UploadPhotos: React.FC<UploadPhotosProps> = ({ submission }) => {
   const { router } = useRouter()
+  const { relayEnvironment } = useSystemContext()
 
   const handleSubmit = async () => {
     if (submission) {
@@ -47,17 +49,6 @@ export const UploadPhotos: React.FC<UploadPhotosProps> = ({ submission }) => {
       })
     }
   }
-
-  // const saveUpladPhotosForm = (photos: Photo[]) => {
-  // submission!.uploadPhotosForm = {
-  //   photos: photos.map(photo => ({
-  //     ...photo,
-  //     file: undefined,
-  //     progress: undefined,
-  //   })),
-  // }
-  // saveSubmission(submission!)
-  // }
 
   return (
     <>
@@ -95,15 +86,13 @@ export const UploadPhotos: React.FC<UploadPhotosProps> = ({ submission }) => {
             photo.abortUploading?.()
 
             const photosToSave = values.photos.filter(p => p.id !== photo.id)
-
             setFieldValue("photos", photosToSave)
-            // saveUpladPhotosForm(photosToSave.filter(p => p.geminiToken || p.url))
-            // TODO: Remove image from submission
           }
 
-          const handlePhotoUploaded = () => {
-            // saveUpladPhotosForm(values.photos.filter(p => p.geminiToken && !p.url))
-            // TODO: Add image to submission
+          const handlePhotoUploaded = async (photo: Photo) => {
+            if (relayEnvironment) {
+              await addPhotoToSubmission(relayEnvironment, photo, submission)
+            }
           }
 
           return (
@@ -111,7 +100,7 @@ export const UploadPhotos: React.FC<UploadPhotosProps> = ({ submission }) => {
               <UploadPhotosForm
                 mt={4}
                 maxTotalSize={30}
-                onPhotoUploaded={handlePhotoUploaded}
+                onPhotoUploaded={photo => handlePhotoUploaded(photo)}
               />
 
               <Box mb={6}>

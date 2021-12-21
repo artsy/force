@@ -19,7 +19,7 @@ export interface UploadPhotosFormModel {
 
 export interface UploadPhotosFormProps extends BoxProps {
   maxTotalSize: number
-  onPhotoUploaded?: () => void
+  onPhotoUploaded: (photo: Photo) => void
 }
 
 export const UploadPhotosForm: React.FC<UploadPhotosFormProps> = ({
@@ -41,7 +41,6 @@ export const UploadPhotosForm: React.FC<UploadPhotosFormProps> = ({
     photo.loading = true
 
     if (relayEnvironment) {
-      // TODO: Update uploadPhoto function to return geminiToken
       const geminiToken = await uploadPhoto(
         relayEnvironment,
         photo,
@@ -58,10 +57,7 @@ export const UploadPhotosForm: React.FC<UploadPhotosFormProps> = ({
 
       photo.geminiToken = geminiToken
       setFieldValue("photos", values.photos, true)
-
-      if (onPhotoUploaded) {
-        onPhotoUploaded()
-      }
+      onPhotoUploaded(photo)
     }
   }
 
