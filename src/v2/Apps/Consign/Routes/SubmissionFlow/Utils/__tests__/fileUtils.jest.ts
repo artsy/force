@@ -63,7 +63,7 @@ describe("fileUtils", () => {
 
   describe("uploadPhoto", () => {
     it("use convectionKey to get gemini credentials", async () => {
-      await uploadPhoto(relayEnvironment, photo, updateProgress)
+      await uploadPhoto(submission.id, relayEnvironment, photo, updateProgress)
 
       expect(getConvectionGeminiKey).toHaveBeenCalled()
       expect(getGeminiCredentialsForEnvironment).toHaveBeenCalled()
@@ -82,7 +82,7 @@ describe("fileUtils", () => {
         assetCredentials
       )
 
-      await uploadPhoto(relayEnvironment, photo, updateProgress)
+      await uploadPhoto(submission.id, relayEnvironment, photo, updateProgress)
 
       expect(getGeminiCredentialsForEnvironment).toHaveBeenCalled()
       expect(uploadFileToS3).toHaveBeenCalled()
@@ -94,10 +94,28 @@ describe("fileUtils", () => {
       )
     })
 
+    it("creates gemini asset with correct credentials", async () => {
+      await uploadPhoto(submission.id, relayEnvironment, photo, updateProgress)
+
+      expect(createGeminiAssetWithS3Credentials).toHaveBeenCalled()
+      expect(createGeminiAssetWithS3Credentials).toHaveBeenCalledWith(
+        relayEnvironment,
+        {
+          sourceKey: "key",
+          sourceBucket: "bucket",
+          templateKey: "convectionKey",
+          metadata: {
+            id: "1",
+            _type: "Consignment",
+          },
+        }
+      )
+    })
+
     it("prevents uploading if the image was removed", async () => {
       photo.removed = true
 
-      await uploadPhoto(relayEnvironment, photo, updateProgress)
+      await uploadPhoto(submission.id, relayEnvironment, photo, updateProgress)
 
       expect(uploadFileToS3).not.toHaveBeenCalled()
     })
@@ -115,6 +133,7 @@ describe("fileUtils", () => {
       ;(uploadFileToS3 as jest.Mock).mockRejectedValueOnce("rejected")
 
       const uploadPhotoResult = await uploadPhoto(
+        submission.id,
         relayEnvironment,
         photo,
         updateProgress
@@ -125,40 +144,16 @@ describe("fileUtils", () => {
   })
 
   describe("addPhotoToSubmission", () => {
-    it("gets convection gemini key", async () => {
-      await addPhotoToSubmission(relayEnvironment, photo, submission)
-      expect(getConvectionGeminiKey).toHaveBeenCalled()
-    })
-
-    it("creates gemini asset with correct credentials", async () => {
-      await uploadPhoto(relayEnvironment, photo, updateProgress)
-      await addPhotoToSubmission(relayEnvironment, photo, submission)
-
-      expect(createGeminiAssetWithS3Credentials).toHaveBeenCalled()
-      expect(createGeminiAssetWithS3Credentials).toHaveBeenCalledWith(
-        relayEnvironment,
-        {
-          sourceKey: "123",
-          sourceBucket: "bucket",
-          templateKey: "convectionKey",
-          metadata: {
-            id: "1",
-            _type: "Consignment",
-          },
-        }
-      )
-    })
-
     it("adds correct asset to correct submission", async () => {
-      await uploadPhoto(relayEnvironment, photo, updateProgress)
-      await addPhotoToSubmission(relayEnvironment, photo, submission)
+      await uploadPhoto(submission.id, relayEnvironment, photo, updateProgress)
+      await addPhotoToSubmission(relayEnvironment, photo, submission.id, "1")
 
       expect(addAssetToConsignment).toHaveBeenCalled()
       expect(addAssetToConsignment).toHaveBeenCalledWith(relayEnvironment, {
         assetType: "image",
-        geminiToken: "geminiToken",
+        geminiToken: "123",
         submissionID: submission.id,
-        sessionID: submission.id,
+        sessionID: "1",
       })
     })
   })
