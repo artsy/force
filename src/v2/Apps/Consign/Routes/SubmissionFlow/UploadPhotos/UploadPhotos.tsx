@@ -10,6 +10,7 @@ import { PhotoThumbnail } from "./Components/PhotoThumbnail"
 import { Photo, addPhotoToSubmission } from "../Utils/fileUtils"
 import { useRouter } from "v2/System/Router/useRouter"
 import { BackLink } from "v2/Components/Links/BackLink"
+import { getENV } from "v2/Utils/getENV"
 import { uploadPhotosValidationSchema } from "../Utils/validation"
 import { createFragmentContainer, graphql } from "react-relay"
 import { UploadPhotos_submission } from "v2/__generated__/UploadPhotos_submission.graphql"
@@ -40,7 +41,7 @@ const getUploadPhotosFormInitialValues = (
 
 export const UploadPhotos: React.FC<UploadPhotosProps> = ({ submission }) => {
   const { router } = useRouter()
-  const { relayEnvironment } = useSystemContext()
+  const { relayEnvironment, isLoggedIn } = useSystemContext()
 
   const handleSubmit = async () => {
     if (submission) {
@@ -91,7 +92,12 @@ export const UploadPhotos: React.FC<UploadPhotosProps> = ({ submission }) => {
 
           const handlePhotoUploaded = async (photo: Photo) => {
             if (relayEnvironment) {
-              await addPhotoToSubmission(relayEnvironment, photo, submission)
+              await addPhotoToSubmission(
+                relayEnvironment,
+                photo,
+                submission?.id || "",
+                !isLoggedIn ? getENV("SESSION_ID") : undefined
+              )
             }
           }
 
@@ -100,7 +106,8 @@ export const UploadPhotos: React.FC<UploadPhotosProps> = ({ submission }) => {
               <UploadPhotosForm
                 mt={4}
                 maxTotalSize={30}
-                onPhotoUploaded={photo => handlePhotoUploaded(photo)}
+                onPhotoUploaded={handlePhotoUploaded}
+                submissionId={submission?.id || ""}
               />
 
               <Box mb={6}>

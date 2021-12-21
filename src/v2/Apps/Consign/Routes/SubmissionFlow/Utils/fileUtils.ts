@@ -70,6 +70,7 @@ export const getErrorMessage = (fileRejection: FileRejection) => {
 }
 
 export const uploadPhoto = async (
+  submissionId,
   relayEnvironment: Environment,
   photo: Photo,
   updateProgress: (progress: number) => void,
@@ -81,7 +82,7 @@ export const uploadPhoto = async (
     if (!convectionKey) return
 
     // Get S3 Credentials from Gemini
-    let assetCredentials = await getGeminiCredentialsForEnvironment(
+    const assetCredentials = await getGeminiCredentialsForEnvironment(
       relayEnvironment,
       {
         acl: acl,
@@ -101,7 +102,8 @@ export const uploadPhoto = async (
 export const addPhotoToSubmission = async (
   relayEnvironment: Environment,
   photo: Photo,
-  submission
+  submissionID: string,
+  sessionID: string
 ) => {
   try {
     const convectionKey = await getConvectionGeminiKey(relayEnvironment)
@@ -115,7 +117,7 @@ export const addPhotoToSubmission = async (
         sourceBucket: photo.bucket!,
         templateKey: convectionKey,
         metadata: {
-          id: submission.id,
+          id: submissionID,
           _type: "Consignment",
         },
       }
@@ -124,8 +126,8 @@ export const addPhotoToSubmission = async (
     await addAssetToConsignment(relayEnvironment, {
       assetType: "image",
       geminiToken,
-      submissionID: submission.id,
-      sessionID: submission.id,
+      submissionID,
+      sessionID,
     })
   } catch (error) {
     logger.error("Consign submission: add asset error", error)
