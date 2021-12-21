@@ -14,6 +14,7 @@ import { ContactInformation_submission } from "v2/__generated__/ContactInformati
 import { contactInformationValidationSchema } from "../Utils/validation"
 import { BackLink } from "v2/Components/Links/BackLink"
 import { useErrorModal } from "../Utils/useErrorModal"
+import { getENV } from "v2/Utils/getENV"
 import { recaptcha, RecaptchaAction } from "v2/Utils/recaptcha"
 import { ActionType } from "@artsy/cohesion"
 
@@ -56,16 +57,17 @@ export const ContactInformation: React.FC<ContactInformationProps> = ({
 
     if (relayEnvironment && submission) {
       try {
-        await createOrUpdateConsignSubmission(relayEnvironment, {
-          id: submission.id,
-          userName: name.trim(),
-          userEmail: email.trim(),
-          userPhone: phone.international,
-          // remove artistID
-          artistID: submission.artistId,
-          sessionID: !isLoggedIn ? sd.SESSION_ID : undefined,
-        })
-
+        await createOrUpdateConsignSubmission(
+          relayEnvironment,
+          {
+            id: submission.id,
+            userName: name.trim(),
+            userEmail: email.trim(),
+            userPhone: phone.international,
+            state: "SUBMITTED",
+            sessionID: !isLoggedIn ? getENV("SESSION_ID") : undefined,
+          }
+        )
         trackEvent({
           action: ActionType.consignmentSubmitted,
           submission_id: submission.id,
@@ -77,6 +79,7 @@ export const ContactInformation: React.FC<ContactInformationProps> = ({
       } catch (error) {
         console.log(error)
         openErrorModal()
+        return
       }
     }
   }
@@ -134,7 +137,6 @@ export const ContactInformationFragmentContainer = createFragmentContainer(
     submission: graphql`
       fragment ContactInformation_submission on ConsignmentSubmission {
         id
-        artistId
       }
     `,
     me: graphql`
