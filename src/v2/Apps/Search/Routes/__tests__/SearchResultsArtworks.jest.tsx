@@ -3,7 +3,8 @@ import { SearchResultsArtworksRouteFragmentContainer as SearchResultsArtworks } 
 import { graphql } from "react-relay"
 import { SearchResultsArtworks_Query } from "v2/__generated__/SearchResultsArtworks_Query.graphql"
 import { useTracking } from "v2/System/Analytics/useTracking"
-import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
+import { setupTestWrapperTL } from "v2/DevTools/setupTestWrapper"
+import { screen } from "@testing-library/react"
 import {
   artistAggregation,
   artistNationalityAggregation,
@@ -22,8 +23,11 @@ jest.mock("v2/System/Router/useRouter", () => ({
   }),
 }))
 jest.mock("v2/System/Analytics/useTracking")
+jest.mock("v2/Utils/Hooks/useMatchMedia", () => ({
+  __internal__useMatchMedia: () => ({}),
+}))
 
-const { getWrapper } = setupTestWrapper<SearchResultsArtworks_Query>({
+const { renderWithRelay } = setupTestWrapperTL<SearchResultsArtworks_Query>({
   Component: ({ viewer }) => (
     <MockBoot user={{ id: "percy-z" }}>
       <SearchResultsArtworks viewer={viewer!} />
@@ -50,13 +54,17 @@ describe("SearchResultsArtworks", () => {
   })
 
   it("renders correctly", () => {
-    const wrapper = getWrapper()
-    expect(wrapper.find("ArtworkFilterArtworkGrid").length).toBe(1)
-    expect(wrapper.find("ArtworkGridItem").length).toBe(1)
+    renderWithRelay({
+      Artwork: () => ({
+        title: "Artwork title",
+      }),
+    })
+
+    expect(screen.getByText("Artwork title")).toBeInTheDocument()
   })
 
-  it("renders filters in correct order", () => {
-    const wrapper = getWrapper({
+  it("renders filters", () => {
+    renderWithRelay({
       FilterArtworksConnection: () => ({
         counts: {
           followedArtists: 10,
@@ -71,57 +79,28 @@ describe("SearchResultsArtworks", () => {
         ],
       }),
     })
-    const filterWrappers = wrapper.find("FilterExpandable")
-    const filters = [
-      {
-        label: "Artists",
-        expanded: true,
-      },
-      {
-        label: "Rarity",
-        expanded: true,
-      },
-      {
-        label: "Medium",
-        expanded: true,
-      },
-      {
-        label: "Price",
-        expanded: true,
-      },
-      {
-        label: "Size",
-        expanded: true,
-      },
-      {
-        label: "Ways to Buy",
-        expanded: true,
-      },
-      {
-        label: "Material",
-      },
-      {
-        label: "Artist Nationality or Ethnicity",
-      },
-      {
-        label: "Artwork Location",
-      },
-      {
-        label: "Time Period",
-      },
-      {
-        label: "Color",
-      },
-      {
-        label: "Galleries and Institutions",
-      },
-    ]
 
-    filters.forEach((filter, filterIndex) => {
-      const { label, expanded } = filter
+    expect(screen.getByText("Artists")).toBeInTheDocument()
+    expect(screen.getByText("Rarity")).toBeInTheDocument()
+    expect(screen.getByText("Medium")).toBeInTheDocument()
+    expect(screen.getByText("Medium")).toBeInTheDocument()
+    expect(screen.getByText("Medium")).toBeInTheDocument()
+    expect(screen.getByText("Price")).toBeInTheDocument()
+    expect(screen.getByText("Size")).toBeInTheDocument()
+    expect(screen.getByText("Ways to Buy")).toBeInTheDocument()
+    expect(screen.getByText("Material")).toBeInTheDocument()
+    expect(
+      screen.getByText("Artist Nationality or Ethnicity")
+    ).toBeInTheDocument()
+    expect(screen.getByText("Artwork Location")).toBeInTheDocument()
+    expect(screen.getByText("Time Period")).toBeInTheDocument()
+    expect(screen.getByText("Color")).toBeInTheDocument()
+    expect(screen.getByText("Galleries and Institutions")).toBeInTheDocument()
+  })
 
-      expect(filterWrappers.at(filterIndex).prop("label")).toEqual(label)
-      expect(filterWrappers.at(filterIndex).prop("expanded")).toEqual(expanded)
-    })
+  it("renders sort input", () => {
+    renderWithRelay()
+
+    expect(screen.getByText("Sort:")).toBeInTheDocument()
   })
 })

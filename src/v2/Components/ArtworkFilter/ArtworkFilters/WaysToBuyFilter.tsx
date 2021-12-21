@@ -3,8 +3,10 @@ import { entries, isEmpty } from "lodash"
 import { FC } from "react"
 import {
   ArtworkFilters,
+  SelectedFiltersCountsLabels,
   useArtworkFilterContext,
 } from "../ArtworkFilterContext"
+import { useFilterLabelCountByKey } from "../Utils/useFilterLabelCountByKey"
 import { FilterExpandable } from "./FilterExpandable"
 
 interface WayToBuy {
@@ -39,6 +41,11 @@ export const WAYS_TO_BUY_OPTIONS = {
 export const WaysToBuyFilter: FC<WaysToBuyFilterProps> = ({ expanded }) => {
   const filterContext = useArtworkFilterContext()
 
+  const filtersCount = useFilterLabelCountByKey(
+    SelectedFiltersCountsLabels.waysToBuy
+  )
+  const label = `Ways to Buy${filtersCount}`
+
   /**
    * If counts aren't passed, enable by default
    */
@@ -67,16 +74,15 @@ export const WaysToBuyFilter: FC<WaysToBuyFilterProps> = ({ expanded }) => {
     v3: { my: 1 },
   })
 
-  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-  const selection = filterContext.currentlySelectedFilters()
+  const selection = filterContext.currentlySelectedFilters?.()
   const hasSelection =
-    !!selection.acquireable ||
-    !!selection.offerable ||
-    !!selection.atAuction ||
-    !!selection.inquireableOnly
+    !!selection?.acquireable ||
+    !!selection?.offerable ||
+    !!selection?.atAuction ||
+    !!selection?.inquireableOnly
 
   return (
-    <FilterExpandable label="Ways to Buy" expanded={hasSelection || expanded}>
+    <FilterExpandable label={label} expanded={hasSelection || expanded}>
       <Flex flexDirection="column">
         {checkboxes.map((checkbox, index) => {
           return (
@@ -85,8 +91,7 @@ export const WaysToBuyFilter: FC<WaysToBuyFilterProps> = ({ expanded }) => {
               disabled={checkbox.disabled}
               onSelect={value => filterContext.setFilter(checkbox.state, value)}
               selected={Boolean(
-                // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-                filterContext.currentlySelectedFilters()[checkbox.state]
+                filterContext.currentlySelectedFilters?.()[checkbox.state]
               )}
               my={tokens.my}
             >

@@ -1,4 +1,5 @@
-import * as React from "react";
+import * as React from "react"
+import { SelectedFiltersCountsLabels } from "../ArtworkFilterContext"
 import { ResultsFilter } from "./ResultsFilter"
 
 export interface ArtworkLocationFilterProps {
@@ -14,6 +15,7 @@ export const ArtworkLocationFilter: React.FC<ArtworkLocationFilterProps> = ({
       slice="LOCATION_CITY"
       label="Artwork Location"
       placeholder="Enter a city"
+      filtersCountKey={SelectedFiltersCountsLabels.locationCities}
       expanded={expanded}
     />
   )

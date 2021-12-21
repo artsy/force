@@ -10,10 +10,14 @@ import {
 import { intersection } from "lodash"
 import * as React from "react"
 import styled from "styled-components"
-import { useArtworkFilterContext } from "../ArtworkFilterContext"
+import {
+  SelectedFiltersCountsLabels,
+  useArtworkFilterContext,
+} from "../ArtworkFilterContext"
 import { sortResults } from "./ResultsFilter"
 import { FilterExpandable } from "./FilterExpandable"
 import { INITIAL_ITEMS_TO_SHOW, ShowMore } from "./ShowMore"
+import { useFilterLabelCountByKey } from "../Utils/useFilterLabelCountByKey"
 
 export const COLOR_OPTIONS = [
   { hex: "#ffffff", value: "black-and-white", name: "Black and White" },
@@ -64,19 +68,15 @@ const ColorFilterOption: React.FC<{ colorOption: ColorOption }> = ({
   const { name, value, hex } = colorOption
 
   const { currentlySelectedFilters, setFilter } = useArtworkFilterContext()
-  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-  const { colors: selectedColorOptions } = currentlySelectedFilters()
+  const selectedColorOptions = currentlySelectedFilters?.().colors ?? []
 
   const toggleColor = (color: string) => {
-    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     if (selectedColorOptions.includes(color)) {
       setFilter(
         "colors",
-        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         selectedColorOptions.filter(selectedColor => color !== selectedColor)
       )
     } else {
-      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       setFilter("colors", [...selectedColorOptions, color])
     }
   }
@@ -90,7 +90,6 @@ const ColorFilterOption: React.FC<{ colorOption: ColorOption }> = ({
     <Checkbox
       key={name}
       onSelect={() => toggleColor(value)}
-      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       selected={selectedColorOptions.includes(value)}
       my={tokens.my}
     >
@@ -119,21 +118,24 @@ export interface ColorFilterProps {
 
 export const ColorFilter: React.FC<ColorFilterProps> = ({ expanded }) => {
   const { currentlySelectedFilters } = useArtworkFilterContext()
+
+  const filtersCount = useFilterLabelCountByKey(
+    SelectedFiltersCountsLabels.colors
+  )
+  const label = `Color${filtersCount}`
+
   const hasBelowTheFoldColorFilter =
     intersection(
-      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-      currentlySelectedFilters().colors,
+      currentlySelectedFilters?.().colors ?? [],
       COLOR_OPTIONS.slice(INITIAL_ITEMS_TO_SHOW).map(({ value }) => value)
     ).length > 0
-  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-  const hasColorFilter = currentlySelectedFilters().colors.length > 0
+  const hasColorFilter = (currentlySelectedFilters?.().colors?.length ?? 0) > 0
   const resultsSorted = sortResults(
-    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-    currentlySelectedFilters().colors,
+    currentlySelectedFilters?.().colors ?? [],
     COLOR_OPTIONS
   )
   return (
-    <FilterExpandable label="Color" expanded={hasColorFilter || expanded}>
+    <FilterExpandable label={label} expanded={hasColorFilter || expanded}>
       <Flex flexDirection="column">
         <ShowMore expanded={hasBelowTheFoldColorFilter}>
           {resultsSorted.map(colorOption => {

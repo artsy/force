@@ -10,12 +10,16 @@ import {
   Spacer,
   useThemeConfig,
 } from "@artsy/palette"
-import { useArtworkFilterContext } from "../ArtworkFilterContext"
+import {
+  SelectedFiltersCountsLabels,
+  useArtworkFilterContext,
+} from "../ArtworkFilterContext"
 import styled from "styled-components"
 import { Media } from "v2/Utils/Responsive"
 import { themeGet } from "@styled-system/theme-get"
 import { FilterExpandable } from "./FilterExpandable"
 import { isCustomValue } from "./Utils/isCustomValue"
+import { useFilterLabelCountByKey } from "../Utils/useFilterLabelCountByKey"
 
 // Disables arrows in numeric inputs
 export const NumericInput = styled(LabeledInput).attrs({ type: "number" })`
@@ -52,9 +56,10 @@ const PRICE_RANGES = [
 type CustomRange = (number | "*")[]
 
 const DEFAULT_CUSTOM_RANGE: CustomRange = ["*", "*"]
+const DEFAULT_PRICE_RANGE = "*-*"
 
-const parseRange = (range?: string) => {
-  return range?.split("-").map(s => {
+const parseRange = (range: string = DEFAULT_PRICE_RANGE) => {
+  return range.split("-").map(s => {
     if (s === "*") return s
     return parseInt(s, 10)
   })
@@ -74,10 +79,14 @@ export const PriceRangeFilter: React.FC<PriceRangeFilterProps> = ({
   const [mode, setMode] = useState<"resting" | "done">("resting")
 
   const { currentlySelectedFilters, setFilter } = useArtworkFilterContext()
-  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-  const { priceRange: initialRange, reset } = currentlySelectedFilters()
+  const { priceRange: initialRange, reset } = currentlySelectedFilters?.() ?? {}
 
   const numericInitialRange = parseRange(initialRange)
+
+  const filtersCount = useFilterLabelCountByKey(
+    SelectedFiltersCountsLabels.priceRange
+  )
+  const label = `Price${filtersCount}`
 
   const isCustomRange =
     // Has some kind of price range set (isn't default)
@@ -118,13 +127,15 @@ export const PriceRangeFilter: React.FC<PriceRangeFilterProps> = ({
       return
     }
 
-    if (selectedOption !== null) {
-      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
+    if (selectedOption) {
       setCustomRange(parseRange(selectedOption))
+      setFilter("priceRange", selectedOption)
+    } else {
+      setCustomRange(DEFAULT_CUSTOM_RANGE)
+      setFilter("priceRange", DEFAULT_PRICE_RANGE)
     }
 
     setShowCustom(false)
-    setFilter("priceRange", selectedOption)
   }
 
   const tokens = useThemeConfig({
@@ -132,8 +143,7 @@ export const PriceRangeFilter: React.FC<PriceRangeFilterProps> = ({
     v3: { my: 1 },
   })
 
-  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-  const selection = currentlySelectedFilters().priceRange
+  const selection = currentlySelectedFilters?.().priceRange
   const hasSelection = selection && isCustomValue(selection)
 
   useEffect(() => {
@@ -144,7 +154,7 @@ export const PriceRangeFilter: React.FC<PriceRangeFilterProps> = ({
   }, [reset, initialRange])
 
   return (
-    <FilterExpandable label="Price" expanded={hasSelection || expanded}>
+    <FilterExpandable label={label} expanded={hasSelection || expanded}>
       {mode === "done" && (
         <Media lessThan="sm">
           <Message variant="info" my={2}>

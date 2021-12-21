@@ -2,7 +2,6 @@
 /* eslint-disable */
 
 import { ConcreteRequest } from "relay-runtime";
-export type ArtworkSizes = "LARGE" | "MEDIUM" | "SMALL" | "%future added value";
 export type CreateSavedSearchInput = {
     attributes: SearchCriteriaAttributes;
     clientMutationId?: string | null;
@@ -24,7 +23,7 @@ export type SearchCriteriaAttributes = {
     offerable?: boolean | null;
     partnerIDs?: Array<string> | null;
     priceRange?: string | null;
-    sizes?: Array<ArtworkSizes | null> | null;
+    sizes?: Array<string> | null;
     width?: string | null;
 };
 export type UserAlertSettingsInput = {

@@ -15,6 +15,7 @@ import favicon from "serve-favicon"
 import glob from "glob"
 import helmet from "helmet"
 import path from "path"
+// eslint-disable-next-line no-restricted-imports
 import sharify from "sharify"
 import siteAssociation from "@artsy/eigen-web-association"
 import timeout from "connect-timeout"
@@ -60,12 +61,11 @@ import { marketingModalsMiddleware } from "./lib/middleware/marketingModals"
 import { redisPageCacheMiddleware } from "./lib/middleware/redisPageCache"
 import { sameOriginMiddleware } from "./lib/middleware/sameOrigin"
 import { unsupportedBrowserMiddleware } from "./lib/middleware/unsupportedBrowser"
-import { backboneSync } from "lib/backboneSync"
-import { serverTimingHeaders } from "lib/middleware/serverTimingHeaders"
-
-import { splitTestMiddleware } from "desktop/components/split_test/splitTestMiddleware"
-import { IGNORED_ERRORS } from "lib/analytics/sentryFilters"
-import { sharifyToCookie } from "lib/middleware/sharifyToCookie"
+import { backboneSync } from "./lib/backboneSync"
+import { serverTimingHeaders } from "./lib/middleware/serverTimingHeaders"
+import { splitTestMiddleware } from "./desktop/components/split_test/splitTestMiddleware"
+import { IGNORED_ERRORS } from "./lib/analytics/sentryFilters"
+import { sharifyToCookie } from "./lib/middleware/sharifyToCookie"
 
 // Find the v2 routes, we will not be testing memory caching for legacy pages.
 

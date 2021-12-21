@@ -5,6 +5,7 @@ import { followGeneMutation } from "../mutations/AuthIntentFollowGeneMutation"
 import { followArtistMutation } from "../mutations/AuthIntentFollowArtistMutation"
 import { followProfileMutation } from "../mutations/AuthIntentFollowProfileMutation"
 import { saveArtworkMutation } from "../mutations/AuthIntentSaveArtworkMutation"
+import { mediator } from "lib/mediator"
 
 jest.mock("cookies-js", () => ({
   get: jest.fn(),
@@ -231,6 +232,39 @@ describe("runAuthIntent", () => {
         expect(Cookies.expire).not.toBeCalled()
         expect(global.console.error).toBeCalled()
       })
+    })
+  })
+
+  describe("creating an alert", () => {
+    beforeEach(() => {
+      ;(Cookies.get as jest.Mock).mockImplementation(() =>
+        JSON.stringify({
+          action: "createAlert",
+          kind: "artist",
+          objectId: "banksy",
+        })
+      )
+
+      jest.spyOn(mediator, "trigger")
+    })
+
+    afterEach(() => {
+      jest.resetAllMocks()
+    })
+
+    it("triggers auth:login:success event once mediator is on", async () => {
+      await runAuthIntent({}, env as any)
+      expect(mediator.trigger).not.toBeCalled()
+      mediator.on("auth:login:success", () => {})
+      setTimeout(() => {
+        expect(mediator.trigger).toBeCalledWith("auth:login:success")
+      }, 100)
+    })
+
+    it("expires the cookie", async () => {
+      jest.spyOn(Cookies, "expire")
+      await runAuthIntent({}, env as any)
+      expect(Cookies.expire).toBeCalledWith("afterSignUpAction")
     })
   })
 })

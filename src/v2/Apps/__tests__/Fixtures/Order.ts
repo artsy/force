@@ -87,6 +87,7 @@ const OrderArtworkNodeWithoutShipping = {
   shippingCountry: "US",
   slug: "artworkId",
   title: "Gramercy Park South",
+  isPriceRange: false,
 }
 
 const OrderArtworkNode = {

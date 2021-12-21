@@ -17,6 +17,8 @@ export type Offer_order = {
                 readonly artwork: {
                     readonly slug: string;
                     readonly price: string | null;
+                    readonly isPriceRange: boolean | null;
+                    readonly " $fragmentRefs": FragmentRefs<"PriceOptions_artwork">;
                 } | null;
                 readonly artworkOrEditionSet: ({
                     readonly __typename: "Artwork";
@@ -144,7 +146,19 @@ return {
                       "name": "slug",
                       "storageKey": null
                     },
-                    (v0/*: any*/)
+                    (v0/*: any*/),
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "isPriceRange",
+                      "storageKey": null
+                    },
+                    {
+                      "args": null,
+                      "kind": "FragmentSpread",
+                      "name": "PriceOptions_artwork"
+                    }
                   ],
                   "storageKey": null
                 },
@@ -212,5 +226,5 @@ return {
   "type": "CommerceOrder"
 };
 })();
-(node as any).hash = '04bf345b90df1c9bc3f1e30b6e1fa155';
+(node as any).hash = '58af1ba5da576befdf9eb261a412d96f';
 export default node;

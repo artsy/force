@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"
 import { SearchResultsArtworks_viewer } from "v2/__generated__/SearchResultsArtworks_viewer.graphql"
 import { ZeroState } from "v2/Apps/Search/Components/ZeroState"
 import { ArtworkFilter } from "v2/Components/ArtworkFilter"
@@ -30,6 +30,15 @@ export const SearchResultsArtworksRoute: React.FC<SearchResultsRouteProps> = pro
         sidebar?.aggregations as SharedArtworkFilterContextProps["aggregations"]
       }
       counts={sidebar?.counts as Counts}
+      sortOptions={[
+        { value: "-decayed_merch", text: "Default" },
+        { value: "-has_price,-prices", text: "Price (desc.)" },
+        { value: "-has_price,prices", text: "Price (asc.)" },
+        { value: "-partner_updated_at", text: "Recently updated" },
+        { value: "-published_at", text: "Recently added" },
+        { value: "-year", text: "Artwork year (desc.)" },
+        { value: "year", text: "Artwork year (asc.)" },
+      ]}
     />
   )
 }

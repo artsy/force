@@ -10,6 +10,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import { SettingsEditSettingsTwoFactorBackupCodesDialog_me } from "v2/__generated__/SettingsEditSettingsTwoFactorBackupCodesDialog_me.graphql"
 import { SettingsEditSettingsTwoFactorBackupCodesDialogQuery } from "v2/__generated__/SettingsEditSettingsTwoFactorBackupCodesDialogQuery.graphql"
+import { SettingsEditSettingsTwoFactorBackupCodesActions } from "./SettingsEditSettingsTwoFactorBackupCodesActions"
 
 interface SettingsEditSettingsTwoFactorBackupCodesDialogProps {
   me?: SettingsEditSettingsTwoFactorBackupCodesDialog_me | null
@@ -26,19 +27,26 @@ const SettingsEditSettingsTwoFactorBackupCodesDialog: FC<SettingsEditSettingsTwo
       </Text>
 
       {me?.backupSecondFactors ? (
-        <GridColumns mt={2}>
-          {me.backupSecondFactors.map(factor => {
-            if (!factor) return null
+        <>
+          <GridColumns mt={2}>
+            {me.backupSecondFactors.map(factor => {
+              if (!factor) return null
 
-            return (
-              <Column span={6} key={factor.code}>
-                <Text variant="lg" textAlign="center">
-                  {factor.code}
-                </Text>
-              </Column>
-            )
-          })}
-        </GridColumns>
+              return (
+                <Column span={6} key={factor.code}>
+                  <Text variant="lg" textAlign="center">
+                    {factor.code}
+                  </Text>
+                </Column>
+              )
+            })}
+          </GridColumns>
+          <SettingsEditSettingsTwoFactorBackupCodesActions
+            backupSecondFactors={me.backupSecondFactors!.map(factor =>
+              factor!.code!.toString()
+            )}
+          />
+        </>
       ) : (
         <Skeleton>
           <GridColumns mt={2}>

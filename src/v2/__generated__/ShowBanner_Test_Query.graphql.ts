@@ -50,7 +50,7 @@ fragment ShowBanner_show on Show {
     id
   }
   coverImage {
-    medium: cropped(width: 600, height: 480) {
+    medium: cropped(width: 600, height: 480, version: ["normalized", "larger", "large"]) {
       src
       srcSet
     }
@@ -263,6 +263,15 @@ return {
                               },
                               {
                                 "kind": "Literal",
+                                "name": "version",
+                                "value": [
+                                  "normalized",
+                                  "larger",
+                                  "large"
+                                ]
+                              },
+                              {
+                                "kind": "Literal",
                                 "name": "width",
                                 "value": 600
                               }
@@ -287,7 +296,7 @@ return {
                                 "storageKey": null
                               }
                             ],
-                            "storageKey": "cropped(height:480,width:600)"
+                            "storageKey": "cropped(height:480,version:[\"normalized\",\"larger\",\"large\"],width:600)"
                           }
                         ],
                         "storageKey": null
@@ -313,7 +322,7 @@ return {
     "metadata": {},
     "name": "ShowBanner_Test_Query",
     "operationKind": "query",
-    "text": "query ShowBanner_Test_Query {\n  partner(id: \"white-cube\") @principalField {\n    showsConnection(first: 1) {\n      edges {\n        node {\n          ...ShowBanner_show\n          id\n        }\n      }\n    }\n    id\n  }\n}\n\nfragment ShowBanner_show on Show {\n  slug\n  name\n  href\n  isFairBooth\n  exhibitionPeriod\n  status\n  description\n  location {\n    city\n    id\n  }\n  coverImage {\n    medium: cropped(width: 600, height: 480) {\n      src\n      srcSet\n    }\n  }\n}\n"
+    "text": "query ShowBanner_Test_Query {\n  partner(id: \"white-cube\") @principalField {\n    showsConnection(first: 1) {\n      edges {\n        node {\n          ...ShowBanner_show\n          id\n        }\n      }\n    }\n    id\n  }\n}\n\nfragment ShowBanner_show on Show {\n  slug\n  name\n  href\n  isFairBooth\n  exhibitionPeriod\n  status\n  description\n  location {\n    city\n    id\n  }\n  coverImage {\n    medium: cropped(width: 600, height: 480, version: [\"normalized\", \"larger\", \"large\"]) {\n      src\n      srcSet\n    }\n  }\n}\n"
   }
 };
 })();

@@ -2,13 +2,17 @@ import { FC, useEffect, useState } from "react"
 import * as React from "react"
 import { sortBy } from "lodash"
 import { Checkbox, CheckboxProps, Flex, useThemeConfig } from "@artsy/palette"
-import { useArtworkFilterContext } from "../ArtworkFilterContext"
+import {
+  SelectedFiltersCountsLabels,
+  useArtworkFilterContext,
+} from "../ArtworkFilterContext"
 import {
   FollowedArtistList,
   fetchFollowedArtists,
 } from "../Utils/fetchFollowedArtists"
 import { FilterExpandable } from "./FilterExpandable"
 import { ShowMore } from "./ShowMore"
+import { useFilterLabelCountByKey } from "../Utils/useFilterLabelCountByKey"
 
 export interface ArtistsFilterProps {
   expanded?: boolean
@@ -33,8 +37,7 @@ const ArtistItem: React.FC<
 }) => {
   const { currentlySelectedFilters, setFilter } = useArtworkFilterContext()
   const toggleArtistSelection = (selected, slug) => {
-    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-    let artistIDs = currentlySelectedFilters().artistIDs.slice()
+    let artistIDs = currentlySelectedFilters?.()?.artistIDs?.slice() ?? []
     if (selected) {
       artistIDs.push(slug)
     } else {
@@ -62,8 +65,7 @@ const ArtistItem: React.FC<
     <Checkbox
       {...checkboxProps}
       selected={
-        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-        currentlySelectedFilters().artistIDs.includes(slug) ||
+        currentlySelectedFilters?.().artistIDs?.includes(slug) ||
         (isFollowedArtistCheckboxSelected && isFollowedArtist)
       }
       onSelect={selected => {
@@ -83,11 +85,15 @@ export const ArtistsFilter: FC<ArtistsFilterProps> = ({
   user,
 }) => {
   const { aggregations, ...filterContext } = useArtworkFilterContext()
-  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-  const artists = aggregations.find(agg => agg.slice === "ARTIST")
+  const artists = aggregations?.find(agg => agg.slice === "ARTIST")
 
   const [followedArtists, setFollowedArtists] = useState<FollowedArtistList>([])
   const followedArtistSlugs = followedArtists.map(({ slug }) => slug)
+
+  const filtersCount = useFilterLabelCountByKey(
+    SelectedFiltersCountsLabels.artistIDs
+  )
+  const label = `Artists${filtersCount}`
 
   const tokens = useThemeConfig({
     v2: { my: 0.5 },
@@ -112,17 +118,17 @@ export const ArtistsFilter: FC<ArtistsFilterProps> = ({
 
   const isFollowedArtistCheckboxSelected =
     !!user &&
-    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-    filterContext.currentlySelectedFilters()["includeArtworksByFollowedArtists"]
+    filterContext.currentlySelectedFilters?.()[
+      "includeArtworksByFollowedArtists"
+    ]
   const followedArtistArtworkCount = filterContext?.counts?.followedArtists ?? 0
 
-  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-  const selection = filterContext.currentlySelectedFilters().artistIDs
+  const selection = filterContext.currentlySelectedFilters?.().artistIDs
   const hasSelection =
     (selection && selection.length > 0) || isFollowedArtistCheckboxSelected
 
   return (
-    <FilterExpandable label="Artists" expanded={hasSelection || expanded}>
+    <FilterExpandable label={label} expanded={hasSelection || expanded}>
       <Flex flexDirection="column">
         <Checkbox
           disabled={!followedArtistArtworkCount}
@@ -143,9 +149,8 @@ export const ArtistsFilter: FC<ArtistsFilterProps> = ({
                 slug={slug}
                 name={name}
                 followedArtistSlugs={followedArtistSlugs}
-                // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
                 isFollowedArtistCheckboxSelected={
-                  isFollowedArtistCheckboxSelected
+                  isFollowedArtistCheckboxSelected ?? false
                 }
                 my={tokens.my}
               />

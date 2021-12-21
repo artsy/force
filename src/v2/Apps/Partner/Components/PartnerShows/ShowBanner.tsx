@@ -129,7 +129,11 @@ const ShowBanner: React.FC<ShowBannerProps> = ({
                 alt={name}
                 width="100%"
                 height={[280, 480]}
-                style={{ objectFit: "cover", objectPosition: "center" }}
+                style={{
+                  display: "block",
+                  objectFit: "cover",
+                  objectPosition: "center",
+                }}
               />
             </RouterLink>
           </SlideBox>
@@ -153,7 +157,11 @@ export const ShowBannerFragmentContainer = createFragmentContainer(ShowBanner, {
         city
       }
       coverImage {
-        medium: cropped(width: 600, height: 480) {
+        medium: cropped(
+          width: 600
+          height: 480
+          version: ["normalized", "larger", "large"]
+        ) {
           src
           srcSet
         }

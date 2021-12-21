@@ -41,7 +41,7 @@ export interface FormProps {
 }
 
 export interface AfterSignUpAction {
-  action: "save" | "follow" | "editorialSignup"
+  action: "save" | "follow" | "editorialSignup" | "createAlert"
   objectId?: string
   kind?: "artist" | "artworks" | "gene" | "profile" | "show"
 }

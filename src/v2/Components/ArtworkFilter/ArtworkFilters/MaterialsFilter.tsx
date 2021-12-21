@@ -1,4 +1,5 @@
-import * as React from "react";
+import * as React from "react"
+import { SelectedFiltersCountsLabels } from "../ArtworkFilterContext"
 import { ResultsFilter } from "./ResultsFilter"
 
 export interface MaterialsFilterProps {
@@ -14,6 +15,7 @@ export const MaterialsFilter: React.FC<MaterialsFilterProps> = ({
       slice="MATERIALS_TERMS"
       label="Material"
       placeholder="Enter a material"
+      filtersCountKey={SelectedFiltersCountsLabels.materialsTerms}
       expanded={expanded}
     />
   )

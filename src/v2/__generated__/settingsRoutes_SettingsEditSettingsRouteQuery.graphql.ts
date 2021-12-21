@@ -48,10 +48,23 @@ fragment SettingsEditSettingsInformation_me on Me {
   phone
 }
 
+fragment SettingsEditSettingsLinkedAccounts_me on Me {
+  authentications {
+    provider
+    id
+  }
+}
+
+fragment SettingsEditSettingsPassword_me on Me {
+  hasPassword
+}
+
 fragment SettingsEditSettingsRoute_me on Me {
   ...SettingsEditSettingsInformation_me
+  ...SettingsEditSettingsPassword_me
   ...SettingsEditSettingsTwoFactor_me
   ...SettingsEditSettingsEmailPreferences_me
+  ...SettingsEditSettingsLinkedAccounts_me
 }
 
 fragment SettingsEditSettingsTwoFactorBackupCodes_me on Me {
@@ -103,6 +116,13 @@ v2 = {
   "args": null,
   "kind": "ScalarField",
   "name": "internalID",
+  "storageKey": null
+},
+v3 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
   "storageKey": null
 };
 return {
@@ -165,6 +185,13 @@ return {
             "args": null,
             "kind": "ScalarField",
             "name": "phone",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "hasPassword",
             "storageKey": null
           },
           {
@@ -272,11 +299,24 @@ return {
             "name": "emailFrequency",
             "storageKey": null
           },
+          (v3/*: any*/),
           {
             "alias": null,
             "args": null,
-            "kind": "ScalarField",
-            "name": "id",
+            "concreteType": "AuthenticationType",
+            "kind": "LinkedField",
+            "name": "authentications",
+            "plural": true,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "provider",
+                "storageKey": null
+              },
+              (v3/*: any*/)
+            ],
             "storageKey": null
           }
         ],
@@ -289,7 +329,7 @@ return {
     "metadata": {},
     "name": "settingsRoutes_SettingsEditSettingsRouteQuery",
     "operationKind": "query",
-    "text": "query settingsRoutes_SettingsEditSettingsRouteQuery {\n  me {\n    ...SettingsEditSettingsRoute_me\n    id\n  }\n}\n\nfragment AppSecondFactor_me on Me {\n  hasSecondFactorEnabled\n  appSecondFactors: secondFactors(kinds: [app]) {\n    __typename\n    ... on AppSecondFactor {\n      __typename\n      internalID\n      name\n    }\n  }\n}\n\nfragment SettingsEditSettingsEmailPreferences_me on Me {\n  emailFrequency\n  id\n}\n\nfragment SettingsEditSettingsInformation_me on Me {\n  email\n  name\n  paddleNumber\n  phone\n}\n\nfragment SettingsEditSettingsRoute_me on Me {\n  ...SettingsEditSettingsInformation_me\n  ...SettingsEditSettingsTwoFactor_me\n  ...SettingsEditSettingsEmailPreferences_me\n}\n\nfragment SettingsEditSettingsTwoFactorBackupCodes_me on Me {\n  backupSecondFactors: secondFactors(kinds: [backup]) {\n    __typename\n    ... on BackupSecondFactor {\n      __typename\n    }\n  }\n}\n\nfragment SettingsEditSettingsTwoFactor_me on Me {\n  hasSecondFactorEnabled\n  ...AppSecondFactor_me\n  ...SmsSecondFactor_me\n  ...SettingsEditSettingsTwoFactorBackupCodes_me\n}\n\nfragment SmsSecondFactor_me on Me {\n  hasSecondFactorEnabled\n  smsSecondFactors: secondFactors(kinds: [sms]) {\n    __typename\n    ... on SmsSecondFactor {\n      __typename\n      internalID\n      formattedPhoneNumber\n    }\n  }\n}\n"
+    "text": "query settingsRoutes_SettingsEditSettingsRouteQuery {\n  me {\n    ...SettingsEditSettingsRoute_me\n    id\n  }\n}\n\nfragment AppSecondFactor_me on Me {\n  hasSecondFactorEnabled\n  appSecondFactors: secondFactors(kinds: [app]) {\n    __typename\n    ... on AppSecondFactor {\n      __typename\n      internalID\n      name\n    }\n  }\n}\n\nfragment SettingsEditSettingsEmailPreferences_me on Me {\n  emailFrequency\n  id\n}\n\nfragment SettingsEditSettingsInformation_me on Me {\n  email\n  name\n  paddleNumber\n  phone\n}\n\nfragment SettingsEditSettingsLinkedAccounts_me on Me {\n  authentications {\n    provider\n    id\n  }\n}\n\nfragment SettingsEditSettingsPassword_me on Me {\n  hasPassword\n}\n\nfragment SettingsEditSettingsRoute_me on Me {\n  ...SettingsEditSettingsInformation_me\n  ...SettingsEditSettingsPassword_me\n  ...SettingsEditSettingsTwoFactor_me\n  ...SettingsEditSettingsEmailPreferences_me\n  ...SettingsEditSettingsLinkedAccounts_me\n}\n\nfragment SettingsEditSettingsTwoFactorBackupCodes_me on Me {\n  backupSecondFactors: secondFactors(kinds: [backup]) {\n    __typename\n    ... on BackupSecondFactor {\n      __typename\n    }\n  }\n}\n\nfragment SettingsEditSettingsTwoFactor_me on Me {\n  hasSecondFactorEnabled\n  ...AppSecondFactor_me\n  ...SmsSecondFactor_me\n  ...SettingsEditSettingsTwoFactorBackupCodes_me\n}\n\nfragment SmsSecondFactor_me on Me {\n  hasSecondFactorEnabled\n  smsSecondFactors: secondFactors(kinds: [sms]) {\n    __typename\n    ... on SmsSecondFactor {\n      __typename\n      internalID\n      formattedPhoneNumber\n    }\n  }\n}\n"
   }
 };
 })();

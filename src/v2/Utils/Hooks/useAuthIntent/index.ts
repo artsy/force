@@ -1,7 +1,9 @@
 import Cookies from "cookies-js"
+import { mediator } from "lib/mediator"
 import { useEffect } from "react"
 import { Environment } from "react-relay"
 import { useSystemContext } from "v2/System"
+import { triggerEvent } from "v2/Utils/openAuthModal"
 import { followArtistMutation } from "./mutations/AuthIntentFollowArtistMutation"
 import { followGeneMutation } from "./mutations/AuthIntentFollowGeneMutation"
 import { followProfileMutation } from "./mutations/AuthIntentFollowProfileMutation"
@@ -10,6 +12,7 @@ import { saveArtworkMutation } from "./mutations/AuthIntentSaveArtworkMutation"
 const AFTER_AUTH_ACTION_KEY = "afterSignUpAction"
 
 export type AfterAuthAction =
+  | { action: "createAlert"; kind: "artist"; objectId: string }
   | { action: "follow"; kind: "artist"; objectId: string }
   | { action: "follow"; kind: "profile"; objectId: string }
   | { action: "follow"; kind: "gene"; objectId: string }
@@ -49,6 +52,11 @@ export const runAuthIntent = async (
   try {
     await (() => {
       switch (value.action) {
+        case "createAlert":
+          if (value.kind === "artist") {
+            triggerEvent(mediator, "auth:login:success")
+          }
+          break
         case "follow":
           switch (value.kind) {
             case "artist":

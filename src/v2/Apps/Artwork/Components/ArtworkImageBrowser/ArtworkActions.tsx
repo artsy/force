@@ -2,11 +2,9 @@ import { ArtworkActions_artwork } from "v2/__generated__/ArtworkActions_artwork.
 import { useSystemContext } from "v2/System"
 import { AnalyticsSchema, useTracking } from "v2/System/Analytics"
 import { compact } from "lodash"
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { data as sd } from "sharify"
 import styled, { css } from "styled-components"
-import { slugify } from "underscore.string"
 import { Media } from "v2/Utils/Responsive"
 import { ArtworkSharePanelFragmentContainer } from "./ArtworkSharePanel"
 import {
@@ -34,6 +32,7 @@ import {
   useViewInRoom,
   ViewInRoomFragmentContainer,
 } from "v2/Components/ViewInRoom/ViewInRoom"
+import { getENV } from "v2/Utils/getENV"
 
 interface ArtworkActionsProps {
   artwork: ArtworkActions_artwork
@@ -65,7 +64,7 @@ export const ArtworkActions: React.FC<ArtworkActionsProps> = ({
     isViewInRoomVisible,
   } = useViewInRoom()
 
-  const { is_downloadable, href, artists, title, date } = artwork
+  const { is_downloadable, artists, title, date } = artwork
 
   const ViewInRoomButton = () => {
     return (
@@ -112,13 +111,14 @@ export const ArtworkActions: React.FC<ArtworkActionsProps> = ({
 
   const DownloadButton = () => {
     const artistNames = (artists ?? []).map(artist => artist?.name).join(", ")
-    const filename = slugify(compact([artistNames, title, date]).join(" "))
+    const filename = compact([artistNames, title, date]).join(", ").trim()
 
     return (
       <UtilButton
         name="download"
-        href={`${href}/download/${filename}.jpg`}
+        href={artwork.downloadableImageUrl!}
         label="Download"
+        download={filename}
         Component={UtilButtonLink}
       />
     )
@@ -128,7 +128,9 @@ export const ArtworkActions: React.FC<ArtworkActionsProps> = ({
     return (
       <UtilButton
         name="edit"
-        href={`${sd.CMS_URL}/artworks/${artwork.slug}/edit?current_partner_id=${artwork.partner?.slug}`}
+        href={`${getENV("CMS_URL")}/artworks/${
+          artwork.slug
+        }/edit?current_partner_id=${artwork.partner?.slug}`}
         label="Edit"
         Component={UtilButtonLink}
       />
@@ -139,7 +141,9 @@ export const ArtworkActions: React.FC<ArtworkActionsProps> = ({
     return (
       <UtilButton
         name="genome"
-        href={`${sd.GENOME_URL}/genome/artworks?artwork_ids=${artwork.slug}`}
+        href={`${getENV("GENOME_URL")}/genome/artworks?artwork_ids=${
+          artwork.slug
+        }`}
         label="Genome"
         Component={UtilButtonLink}
       />
@@ -269,7 +273,6 @@ export const ArtworkActionsFragmentContainer = createFragmentContainer(
         dimensions {
           cm
         }
-        href
         slug
         image {
           internalID
@@ -277,6 +280,7 @@ export const ArtworkActionsFragmentContainer = createFragmentContainer(
           height
           width
         }
+        downloadableImageUrl
         is_downloadable: isDownloadable
         is_hangable: isHangable
         partner {
@@ -304,6 +308,7 @@ interface UtilButtonProps {
     | "share"
     | "viewInRoom"
   href?: string
+  download?: string
   selected?: boolean
   label?: string
   Icon?: React.ReactNode
@@ -317,7 +322,16 @@ export const UtilButton: React.ForwardRefExoticComponent<
   }
 > = React.forwardRef(
   (
-    { href, label, name, onClick, Icon, Component = UtilButtonButton, ...rest },
+    {
+      href,
+      label,
+      name,
+      onClick,
+      Icon,
+      Component = UtilButtonButton,
+      download,
+      ...rest
+    },
     forwardedRef
   ) => {
     const getIcon = () => {
@@ -349,7 +363,7 @@ export const UtilButton: React.ForwardRefExoticComponent<
         ref={forwardedRef as any}
         p={1}
         onClick={onClick}
-        {...(href ? { href, target: "_blank" } : {})}
+        {...(href ? { href, target: "_blank", download } : {})}
       >
         <Flex
           alignItems="center"

@@ -67,7 +67,7 @@ export const ArtworkDetails: React.FC = () => {
 
   return (
     <>
-      <BackLink py={2} mb={6} to="/consign">
+      <BackLink py={2} mb={6} to="/consign" width="min-content">
         Back
       </BackLink>
 

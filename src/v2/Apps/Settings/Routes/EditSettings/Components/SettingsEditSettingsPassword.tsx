@@ -1,4 +1,5 @@
 import { FC, useState } from "react"
+import { createFragmentContainer, graphql } from "react-relay"
 import {
   Text,
   Input,
@@ -12,13 +13,20 @@ import {
 import { Form, Formik } from "formik"
 import { useUpdateSettingsPassword } from "../useUpdateSettingsPassword"
 import { logout } from "v2/Utils/auth"
+import { SettingsEditSettingsPassword_me } from "v2/__generated__/SettingsEditSettingsPassword_me.graphql"
 
 enum Mode {
   Pending,
   Active,
 }
 
-export const SettingsEditSettingsPassword: FC = () => {
+interface SettingsEditSettingsPasswordProps {
+  me: SettingsEditSettingsPassword_me
+}
+
+export const SettingsEditSettingsPassword: FC<SettingsEditSettingsPasswordProps> = ({
+  me: { hasPassword },
+}) => {
   const [mode, setMode] = useState(Mode.Pending)
   const { sendToast } = useToasts()
   const { submitUpdateSettingsPassword } = useUpdateSettingsPassword()
@@ -39,16 +47,18 @@ export const SettingsEditSettingsPassword: FC = () => {
 
       {mode === Mode.Pending ? (
         <>
-          <Input
-            title="Current Password"
-            type="password"
-            value="examplepassword"
-            required
-            disabled
-          />
+          {hasPassword && (
+            <Input
+              title="Current Password"
+              type="password"
+              value="examplepassword"
+              required
+              disabled
+            />
+          )}
 
-          <Button mt={4} onClick={handleActivate}>
-            Create New Password
+          <Button mt={hasPassword ? 4 : 0} onClick={handleActivate}>
+            {hasPassword ? "Create New Password" : "Set Password"}
           </Button>
         </>
       ) : (
@@ -72,7 +82,9 @@ export const SettingsEditSettingsPassword: FC = () => {
 
               sendToast({
                 variant: "success",
-                message: "Password updated successfully",
+                message: hasPassword
+                  ? "Password updated successfully"
+                  : "Password set successfully",
               })
 
               await logout()
@@ -95,17 +107,19 @@ export const SettingsEditSettingsPassword: FC = () => {
             return (
               <Form>
                 <Join separator={<Spacer mt={2} />}>
-                  <PasswordInput
-                    name="currentPassword"
-                    title="Current Password"
-                    error={errors.currentPassword}
-                    placeholder="Enter your password"
-                    value={values.currentPassword}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    required
-                    autoComplete="current-password"
-                  />
+                  {hasPassword && (
+                    <PasswordInput
+                      name="currentPassword"
+                      title="Current Password"
+                      error={errors.currentPassword}
+                      placeholder="Enter your password"
+                      value={values.currentPassword}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      required
+                      autoComplete="current-password"
+                    />
+                  )}
 
                   <PasswordInput
                     name="newPassword"
@@ -154,3 +168,14 @@ export const SettingsEditSettingsPassword: FC = () => {
     </>
   )
 }
+
+export const SettingsEditSettingsPasswordFragmentContainer = createFragmentContainer(
+  SettingsEditSettingsPassword,
+  {
+    me: graphql`
+      fragment SettingsEditSettingsPassword_me on Me {
+        hasPassword
+      }
+    `,
+  }
+)

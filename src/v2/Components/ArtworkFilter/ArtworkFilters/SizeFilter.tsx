@@ -13,18 +13,21 @@ import {
 } from "@artsy/palette"
 import {
   ArtworkFiltersState,
+  SelectedFiltersCountsLabels,
   useArtworkFilterContext,
 } from "../ArtworkFilterContext"
 import { NumericInput } from "./PriceRangeFilter"
 import { Media } from "v2/Utils/Responsive"
 import { FilterExpandable } from "./FilterExpandable"
 import { isCustomValue } from "./Utils/isCustomValue"
+import { useFilterLabelCountByKey } from "../Utils/useFilterLabelCountByKey"
 
 export const SIZES = [
   { displayName: "Small (under 40cm)", name: "SMALL" },
   { displayName: "Medium (40 – 100cm)", name: "MEDIUM" },
   { displayName: "Large (over 100cm)", name: "LARGE" },
 ]
+const ONE_IN_TO_CM = 2.54
 
 type CustomRange = (number | "*")[]
 
@@ -33,7 +36,9 @@ type CustomSize = {
   width: CustomRange
 }
 
-const convertToCentimeters = (element: number) => Math.round(element * 2.54)
+const convertToCentimeters = (element: number) => {
+  return Math.round(element * ONE_IN_TO_CM)
+}
 
 export const parseRange = (range?: string) => {
   return range?.split("-").map(s => {
@@ -47,7 +52,7 @@ const convertRangeElementToInches = (element: number | "*") => {
     return element
   }
 
-  return Math.round((element / 2.54) * 100) / 100
+  return element / ONE_IN_TO_CM
 }
 
 const convertRangeToInches = (range: CustomRange) => {
@@ -86,6 +91,11 @@ export const SizeFilter: React.FC<SizeFilterProps> = ({ expanded }) => {
     width,
     reset,
   } = currentlySelectedFilters?.() as ArtworkFiltersState
+
+  const filtersCount = useFilterLabelCountByKey(
+    SelectedFiltersCountsLabels.sizes
+  )
+  const label = `Size${filtersCount}`
 
   const initialCustomSize = React.useMemo(
     () => ({
@@ -186,7 +196,7 @@ export const SizeFilter: React.FC<SizeFilterProps> = ({ expanded }) => {
     isCustomValue(customWidth)
 
   return (
-    <FilterExpandable label="Size" expanded={hasSelection || expanded}>
+    <FilterExpandable label={label} expanded={hasSelection || expanded}>
       {mode === "done" && (
         <Media lessThan="sm">
           <Message variant="info" my={2}>

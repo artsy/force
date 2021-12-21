@@ -4,9 +4,10 @@ import { Column, GridColumns, Join, Separator } from "@artsy/palette"
 import { SettingsEditSettingsInformationFragmentContainer } from "./Components/SettingsEditSettingsInformation"
 import { SettingsEditSettingsTwoFactorFragmentContainer } from "./Components/SettingsEditSettingsTwoFactor"
 import { SettingsEditSettingsEmailPreferencesFragmentContainer } from "./Components/SettingsEditSettingsEmailPreferences/SettingsEditSettingsEmailPreferences"
-import { SettingsEditSettingsPassword } from "./Components/SettingsEditSettingsPassword"
+import { SettingsEditSettingsPasswordFragmentContainer } from "./Components/SettingsEditSettingsPassword"
 import { SettingsEditSettingsRoute_me } from "v2/__generated__/SettingsEditSettingsRoute_me.graphql"
 import { SettingsEditSettingsDeleteAccount } from "./Components/SettingsEditSettingsDeleteAccount/SettingsEditSettingsDeleteAccount"
+import { SettingsEditSettingsLinkedAccountsFragmentContainer } from "./Components/SettingsEditSettingsLinkedAccounts"
 
 interface SettingsEditRouteProps {
   me: SettingsEditSettingsRoute_me
@@ -19,11 +20,11 @@ const SettingsEditRoute: React.FC<SettingsEditRouteProps> = ({ me }) => {
         <Join separator={<Separator my={4} />}>
           <SettingsEditSettingsInformationFragmentContainer me={me} />
 
-          <SettingsEditSettingsPassword />
+          <SettingsEditSettingsPasswordFragmentContainer me={me} />
 
           <SettingsEditSettingsTwoFactorFragmentContainer me={me} />
 
-          {/* TODO: SettingsEditSettingsLinkedAccounts */}
+          <SettingsEditSettingsLinkedAccountsFragmentContainer me={me} />
 
           <SettingsEditSettingsEmailPreferencesFragmentContainer me={me} />
 
@@ -40,8 +41,10 @@ export const SettingsEditRouteFragmentContainer = createFragmentContainer(
     me: graphql`
       fragment SettingsEditSettingsRoute_me on Me {
         ...SettingsEditSettingsInformation_me
+        ...SettingsEditSettingsPassword_me
         ...SettingsEditSettingsTwoFactor_me
         ...SettingsEditSettingsEmailPreferences_me
+        ...SettingsEditSettingsLinkedAccounts_me
       }
     `,
   }

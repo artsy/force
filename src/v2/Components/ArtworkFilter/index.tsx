@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from "react"
-import { compact, isEqual } from "lodash"
+import { isEqual } from "lodash"
 import useDeepCompareEffect from "use-deep-compare-effect"
 import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
 import { useSystemContext } from "v2/System"
@@ -55,14 +55,11 @@ import type RelayModernEnvironment from "relay-runtime/lib/store/RelayModernEnvi
 import { TagArtworkFilter_tag } from "v2/__generated__/TagArtworkFilter_tag.graphql"
 import { Works_partner } from "v2/__generated__/Works_partner.graphql"
 import { CollectionArtworksFilter_collection } from "v2/__generated__/CollectionArtworksFilter_collection.graphql"
-import { FiltersPills } from "./SavedSearch/Components/FiltersPills"
+import { ArtworkGridFilterPills } from "./SavedSearch/Components/ArtworkGridFilterPills"
 import { SavedSearchAttributes } from "./SavedSearch/types"
 import { extractPills } from "../SavedSearchAlert/Utils/extractPills"
-import {
-  DefaultFilterPill,
-  useFilterPillsContext,
-} from "./SavedSearch/Utils/FilterPillsContext"
-import { getSelectedFiltersCounts } from "./Utils/getSelectedFIltersCounts"
+import { useFilterPillsContext } from "./SavedSearch/Utils/FilterPillsContext"
+import { getTotalSelectedFiltersCount } from "./Utils/getTotalSelectedFiltersCount"
 
 /**
  * Primary ArtworkFilter which is wrapped with a context and refetch container.
@@ -173,14 +170,11 @@ export const BaseArtworkFilter: React.FC<
   const [showMobileActionSheet, toggleMobileActionSheet] = useState(false)
   const filterContext = useArtworkFilterContext()
   const previousFilters = usePrevious(filterContext.filters)
-  const { user, isLoggedIn } = useSystemContext()
+  const { user } = useSystemContext()
   const { pills = [], setPills } = useFilterPillsContext()
-  const currentlySelectedFilters = getSelectedFiltersCounts(
-    filterContext.currentlySelectedFilters?.()
+  const appliedFiltersTotalCount = getTotalSelectedFiltersCount(
+    filterContext.selectedFiltersCounts
   )
-  const appliedFiltersTotalCount = Object.values(
-    currentlySelectedFilters
-  ).reduce((total: number, curr: number) => total + curr, 0)
 
   const { filtered_artworks } = viewer
   const hasFilter = filtered_artworks && filtered_artworks.id
@@ -189,28 +183,17 @@ export const BaseArtworkFilter: React.FC<
     [filterContext.filters]
   )
 
-  const defaultPill: DefaultFilterPill | null = useMemo(
-    () =>
-      !!savedSearchProps
-        ? {
-            isDefault: true,
-            name: savedSearchProps.slug,
-            displayName: savedSearchProps.name,
-          }
-        : null,
-    [savedSearchProps]
-  )
-
-  const filterPills = useMemo(
-    () => extractPills(filters, filterContext.aggregations),
-    [filters, filterContext.aggregations]
-  )
-
   const showCreateAlert = enableCreateAlert && !!pills.length
 
   useEffect(() => {
-    setPills?.(compact([defaultPill, ...filterPills]))
-  }, [defaultPill, filterPills])
+    const pills = extractPills(
+      filters,
+      filterContext.aggregations,
+      savedSearchProps
+    )
+
+    setPills?.(pills)
+  }, [savedSearchProps, filters, filterContext.aggregations])
 
   /**
    * Check to see if the mobile action sheet is present and prevent scrolling
@@ -371,8 +354,8 @@ export const BaseArtworkFilter: React.FC<
 
           {showCreateAlert && (
             <>
-              <FiltersPills
-                savedSearchAttributes={isLoggedIn ? savedSearchProps : null}
+              <ArtworkGridFilterPills
+                savedSearchAttributes={savedSearchProps}
               />
               <Spacer mt={4} />
             </>
@@ -427,8 +410,8 @@ export const BaseArtworkFilter: React.FC<
 
             {showCreateAlert && (
               <>
-                <FiltersPills
-                  savedSearchAttributes={isLoggedIn ? savedSearchProps : null}
+                <ArtworkGridFilterPills
+                  savedSearchAttributes={savedSearchProps}
                 />
                 <Spacer mt={4} />
               </>
