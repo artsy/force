@@ -20,11 +20,13 @@ export interface UploadPhotosFormModel {
 export interface UploadPhotosFormProps extends BoxProps {
   maxTotalSize: number
   onPhotoUploaded: (photo: Photo) => void
+  submissionId: string
 }
 
 export const UploadPhotosForm: React.FC<UploadPhotosFormProps> = ({
   maxTotalSize,
   onPhotoUploaded,
+  submissionId,
   ...rest
 }) => {
   const { relayEnvironment } = useSystemContext()
@@ -33,7 +35,6 @@ export const UploadPhotosForm: React.FC<UploadPhotosFormProps> = ({
 
   const handlePhotoUploadingProgress = (photo: Photo) => progress => {
     photo.progress = progress
-
     setFieldValue("photos", values.photos)
   }
 
@@ -42,6 +43,7 @@ export const UploadPhotosForm: React.FC<UploadPhotosFormProps> = ({
 
     if (relayEnvironment) {
       const geminiToken = await uploadPhoto(
+        submissionId,
         relayEnvironment,
         photo,
         handlePhotoUploadingProgress(photo)
