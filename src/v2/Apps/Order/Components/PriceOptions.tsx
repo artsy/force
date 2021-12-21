@@ -3,8 +3,14 @@ import { useEffect, useState } from "react"
 import { OfferInput } from "v2/Apps/Order/Components/OfferInput"
 import { compact } from "lodash"
 import { createFragmentContainer, graphql } from "react-relay"
-
+import {
+  AnalyticsSchema,
+  useAnalyticsContext,
+  useTracking,
+} from "v2/System/Analytics"
+import { ActionType, ClickedOfferOption, PageOwnerType } from "@artsy/cohesion"
 import { PriceOptions_artwork } from "v2/__generated__/PriceOptions_artwork.graphql"
+import { PriceOptions_order } from "v2/__generated__/PriceOptions_order.graphql"
 import { appendCurrencySymbol } from "../Utils/currencyUtils"
 
 export interface PriceOptionsProps {
@@ -12,6 +18,7 @@ export interface PriceOptionsProps {
   onFocus: () => void
   showError?: boolean
   artwork: PriceOptions_artwork | null | undefined
+  order: PriceOptions_order
 }
 
 export const PriceOptions: React.FC<PriceOptionsProps> = ({
@@ -19,7 +26,26 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
   onFocus,
   showError,
   artwork,
+  order,
 }) => {
+  const tracking = useTracking()
+  const { contextPageOwnerId, contextPageOwnerType } = useAnalyticsContext()
+
+  const trackClick = (offer: string, amount: number) => {
+    const trackingData: ClickedOfferOption = {
+      action: ActionType.clickedOfferOption,
+      context_page_owner_id: contextPageOwnerId!,
+      context_page_owner_type: contextPageOwnerType as PageOwnerType,
+      currency: artwork?.priceCurrency!,
+      order_id: order.internalID,
+      flow: AnalyticsSchema.Flow.MakeOffer,
+      offer,
+      amount,
+    }
+
+    tracking.trackEvent(trackingData)
+  }
+
   const asCurrency = (value: number) =>
     value?.toLocaleString("en-US", {
       currency: artwork?.priceCurrency!,
@@ -30,6 +56,14 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
   const [customValue, setCustomValue] = useState<number>()
   useEffect(() => {
     customValue && setValue(customValue)
+    // TODO: move this call if necessary once the feature is implemented
+    if (toggle && customValue && customValue < priceOptions[0]?.value!) {
+      tracking.trackEvent({
+        action_type: AnalyticsSchema.ActionType.ViewedOfferTooLow,
+        flow: AnalyticsSchema.Flow.MakeOffer,
+        order_id: order.internalID,
+      })
+    }
   }, [customValue])
 
   const [toggle, setToggle] = useState(false)
@@ -67,6 +101,9 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
     ? getRangeOptions()
     : getPercentageOptions()
 
+  // TODO: add call bellow when the feature is implemented
+  // trackClick("We recommend changing your order", priceOptions[0]?.value!)
+
   return (
     <RadioGroup>
       {compact(priceOptions)
@@ -80,6 +117,7 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
             onSelect={() => {
               setValue(value!)
               setToggle(false)
+              trackClick(description, value)
             }}
             key={`price-option-${value}`}
           >
@@ -95,6 +133,7 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
             onSelect={() => {
               customValue && setValue(customValue)
               setToggle(true)
+              trackClick("Different amount", 0)
             }}
             key="price-option-custom"
           >
@@ -135,6 +174,11 @@ export const PriceOptionsFragmentContainer = createFragmentContainer(
             }
           }
         }
+      }
+    `,
+    order: graphql`
+      fragment PriceOptions_order on CommerceOrder {
+        internalID
       }
     `,
   }

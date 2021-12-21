@@ -284,6 +284,7 @@ export class OfferRoute extends Component<OfferProps, OfferState> {
                   </Text>
                   <PriceOptionsFragmentContainer
                     artwork={artwork}
+                    order={order}
                     setValue={offerValue => this.setState({ offerValue })}
                     onFocus={this.onOfferInputFocus.bind(this)}
                     showError={
@@ -402,6 +403,7 @@ export const OfferFragmentContainer = createFragmentContainer(
         }
         ...ArtworkSummaryItem_order
         ...TransactionDetailsSummaryItem_order
+        ...PriceOptions_order
       }
     `,
   }

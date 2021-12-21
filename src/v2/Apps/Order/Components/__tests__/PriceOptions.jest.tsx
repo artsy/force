@@ -1,28 +1,32 @@
 import { PriceOptionsFragmentContainer } from "../PriceOptions"
 import { setupTestWrapperTL } from "v2/DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
-import { configure, fireEvent, screen, within } from "@testing-library/react"
+import { fireEvent, screen, within } from "@testing-library/react"
+import { useTracking } from "react-tracking"
 import { PriceOptions_Test_Query } from "v2/__generated__/PriceOptions_Test_Query.graphql"
-
-configure({ testIdAttribute: "data-test" })
 
 jest.unmock("react-relay")
 
 const setValue = jest.fn()
 const onFocus = jest.fn()
+const mockUseTracking = useTracking as jest.Mock
 
 const { renderWithRelay } = setupTestWrapperTL<PriceOptions_Test_Query>({
   Component: props => (
     <PriceOptionsFragmentContainer
       artwork={props.artwork}
+      order={props.order!}
       setValue={setValue}
       onFocus={onFocus}
     />
   ),
   query: graphql`
     query PriceOptions_Test_Query {
-      artwork(id: "xxx") {
+      artwork(id: "artwork-id") {
         ...PriceOptions_artwork
+      }
+      order: commerceOrder(id: "order-id") {
+        ...PriceOptions_order
       }
     }
   `,
@@ -32,6 +36,9 @@ let radios: HTMLElement[]
 
 describe("PriceOptions - Range", () => {
   beforeEach(() => {
+    mockUseTracking.mockImplementation(() => ({
+      trackEvent: jest.fn(),
+    }))
     renderWithRelay({
       Artwork: () => ({
         priceCurrency: "USD",
@@ -79,6 +86,9 @@ describe("PriceOptions - Range", () => {
 
 describe("PriceOptions - Exact", () => {
   beforeEach(() => {
+    mockUseTracking.mockImplementation(() => ({
+      trackEvent: jest.fn(),
+    }))
     renderWithRelay({
       Artwork: () => ({
         priceCurrency: "EUR",
