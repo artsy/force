@@ -9,6 +9,8 @@ jest.unmock("react-relay")
 
 const setValue = jest.fn()
 const onFocus = jest.fn()
+const trackEvent = jest.fn()
+
 const mockUseTracking = useTracking as jest.Mock
 
 const { renderWithRelay } = setupTestWrapperTL<PriceOptions_Test_Query>({
@@ -34,10 +36,22 @@ const { renderWithRelay } = setupTestWrapperTL<PriceOptions_Test_Query>({
 
 let radios: HTMLElement[]
 
+const getTrackingObject = (
+  offer: string,
+  amount: number,
+  currency: string
+) => ({
+  action: "clickedOfferOption",
+  currency,
+  flow: "Make offer",
+  offer,
+  amount,
+})
+
 describe("PriceOptions - Range", () => {
   beforeEach(() => {
     mockUseTracking.mockImplementation(() => ({
-      trackEvent: jest.fn(),
+      trackEvent,
     }))
     renderWithRelay({
       Artwork: () => ({
@@ -82,12 +96,41 @@ describe("PriceOptions - Range", () => {
     fireEvent.change(input, { target: { value: 1000 } })
     expect(setValue).toHaveBeenLastCalledWith(1000)
   })
+  it("correctly tracks the clicking of an option", () => {
+    fireEvent.click(radios[0])
+    expect(trackEvent).toHaveBeenLastCalledWith(
+      expect.objectContaining(getTrackingObject("Low-end of range", 100, "USD"))
+    )
+    fireEvent.click(radios[1])
+    expect(trackEvent).toHaveBeenLastCalledWith(
+      expect.objectContaining(getTrackingObject("Midpoint", 150, "USD"))
+    )
+    fireEvent.click(radios[2])
+    expect(trackEvent).toHaveBeenLastCalledWith(
+      expect.objectContaining(getTrackingObject("Top-end of range", 200, "USD"))
+    )
+    fireEvent.click(radios[3])
+    expect(trackEvent).toHaveBeenLastCalledWith(
+      expect.objectContaining(getTrackingObject("Different amount", 0, "USD"))
+    )
+  })
+  it("tracks the offer too low notice", async () => {
+    fireEvent.click(radios[3])
+    const input = await within(radios[3]).findByRole("textbox")
+    fireEvent.change(input, { target: { value: 50 } })
+    expect(trackEvent).toHaveBeenLastCalledWith(
+      expect.objectContaining({
+        action_type: "Viewed offer too low",
+        flow: "Make offer",
+      })
+    )
+  })
 })
 
 describe("PriceOptions - Exact", () => {
   beforeEach(() => {
     mockUseTracking.mockImplementation(() => ({
-      trackEvent: jest.fn(),
+      trackEvent,
     }))
     renderWithRelay({
       Artwork: () => ({
@@ -109,5 +152,29 @@ describe("PriceOptions - Exact", () => {
     expect(radios[1]).toHaveTextContent("€85.00")
     expect(radios[2]).toHaveTextContent("€90.00")
     expect(radios[3]).toHaveTextContent("Different amount")
+  })
+  it("correctly tracks the clicking of an option", () => {
+    fireEvent.click(radios[0])
+    expect(trackEvent).toHaveBeenLastCalledWith(
+      expect.objectContaining(
+        getTrackingObject("20% below the list price", 80, "EUR")
+      )
+    )
+    fireEvent.click(radios[1])
+    expect(trackEvent).toHaveBeenLastCalledWith(
+      expect.objectContaining(
+        getTrackingObject("15% below the list price", 85, "EUR")
+      )
+    )
+    fireEvent.click(radios[2])
+    expect(trackEvent).toHaveBeenLastCalledWith(
+      expect.objectContaining(
+        getTrackingObject("10% below the list price", 90, "EUR")
+      )
+    )
+    fireEvent.click(radios[3])
+    expect(trackEvent).toHaveBeenLastCalledWith(
+      expect.objectContaining(getTrackingObject("Different amount", 0, "EUR"))
+    )
   })
 })
