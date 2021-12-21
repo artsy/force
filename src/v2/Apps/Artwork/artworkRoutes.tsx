@@ -35,8 +35,4 @@ export const artworkRoutes: AppRouteConfig[] = [
       force: true,
     },
   },
-  {
-    path: "/artwork/:artworkID/download/:filename",
-    Component: () => null,
-  },
 ]
