@@ -90,7 +90,7 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
       if (listPrice?.major) {
         return {
           value: listPrice.major * (1 - pricePercentage),
-          description: `${pricePercentage * 100}% below list price`,
+          description: `${pricePercentage * 100}% below the list price`,
         }
       }
       return
@@ -102,7 +102,7 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
     : getPercentageOptions()
 
   // TODO: add call bellow when the feature is implemented
-  // trackClick("We recommend changing your order", priceOptions[0]?.value!)
+  // trackClick("We recommend changing your offer", priceOptions[0]?.value!)
 
   return (
     <RadioGroup>
