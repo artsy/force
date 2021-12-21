@@ -10,6 +10,7 @@ import { Offer_order } from "v2/__generated__/Offer_order.graphql"
 import { OfferMutation } from "v2/__generated__/OfferMutation.graphql"
 import { ArtworkSummaryItemFragmentContainer as ArtworkSummaryItem } from "v2/Apps/Order/Components/ArtworkSummaryItem"
 import { OfferInput } from "v2/Apps/Order/Components/OfferInput"
+import { PriceOptionsFragmentContainer } from "v2/Apps/Order/Components/PriceOptions"
 import { OfferNote } from "v2/Apps/Order/Components/OfferNote"
 import { TransactionDetailsSummaryItemFragmentContainer as TransactionDetailsSummaryItem } from "v2/Apps/Order/Components/TransactionDetailsSummaryItem"
 import { TwoColumnLayout } from "v2/Apps/Order/Components/TwoColumnLayout"
@@ -31,8 +32,10 @@ import { getOfferItemFromOrder } from "v2/Apps/Order/Utils/offerItemExtractor"
 import { ContextModule, OwnerType } from "@artsy/cohesion"
 import { isNil } from "lodash"
 import { appendCurrencySymbol } from "v2/Apps/Order/Utils/currencyUtils"
+import { userHasLabFeature } from "v2/Utils/user"
+import { SystemContextProps, withSystemContext } from "v2/System"
 
-export interface OfferProps {
+export interface OfferProps extends SystemContextProps {
   order: Offer_order
   relay?: RelayProp
   router: Router
@@ -47,6 +50,7 @@ export interface OfferState {
   formIsDirty: boolean
   lowSpeedBumpEncountered: boolean
   highSpeedBumpEncountered: boolean
+  isToggleRadio: boolean
 }
 
 const logger = createLogger("Order/Routes/Offer/index.tsx")
@@ -59,6 +63,7 @@ export class OfferRoute extends Component<OfferProps, OfferState> {
     lowSpeedBumpEncountered: false,
     offerNoteValue: { exceedsCharacterLimit: false, value: "" },
     offerValue: 0,
+    isToggleRadio: false,
   }
 
   @track<OfferProps>(props => ({
@@ -223,6 +228,19 @@ export class OfferRoute extends Component<OfferProps, OfferState> {
     const offerItem = getOfferItemFromOrder(order.lineItems)
     const artworkId = order.lineItems?.edges?.[0]?.node?.artwork?.slug
     const orderCurrency = order.currencyCode
+    const priceNote = Boolean(offerItem?.price) && (
+      <Text my={1} variant="sm" color="black60">
+        List price: {appendCurrencySymbol(offerItem?.price, order.currencyCode)}
+      </Text>
+    )
+
+    const artwork = this.props.order.lineItems?.edges?.[0]?.node?.artwork
+    const isInquiryCheckout = !artwork?.isPriceRange && !artwork?.price
+
+    const newOfferSubmissionEnabled = userHasLabFeature(
+      this.props.user,
+      "New Offer Submissions"
+    )
 
     return (
       <>
@@ -234,22 +252,47 @@ export class OfferRoute extends Component<OfferProps, OfferState> {
               style={isCommittingMutation ? { pointerEvents: "none" } : {}}
               id="offer-page-left-column"
             >
-              <Flex flexDirection="column">
-                <OfferInput
-                  id="OfferForm_offerValue"
-                  showError={
-                    this.state.formIsDirty && this.state.offerValue <= 0
-                  }
-                  onChange={offerValue => this.setState({ offerValue })}
-                  onFocus={this.onOfferInputFocus.bind(this)}
-                />
-              </Flex>
-              {Boolean(offerItem?.price) && (
-                <Text my={1} variant="xs" color="black60">
-                  List price:{" "}
-                  {appendCurrencySymbol(offerItem?.price, order.currencyCode)}
-                </Text>
+              {(!newOfferSubmissionEnabled || isInquiryCheckout) && (
+                <>
+                  <Flex flexDirection="column">
+                    <OfferInput
+                      id="OfferForm_offerValue"
+                      showError={
+                        this.state.formIsDirty && this.state.offerValue <= 0
+                      }
+                      onChange={offerValue => this.setState({ offerValue })}
+                      onFocus={this.onOfferInputFocus.bind(this)}
+                    />
+                  </Flex>
+                  {priceNote}
+                </>
               )}
+              {newOfferSubmissionEnabled && !isInquiryCheckout && (
+                <>
+                  <Text variant="lg" color="black80" marginTop={4}>
+                    Select an Option
+                  </Text>
+                  {priceNote}
+                  <Text
+                    variant="md"
+                    color="black80"
+                    textTransform="uppercase"
+                    marginTop={4}
+                    marginBottom={2}
+                  >
+                    your offer
+                  </Text>
+                  <PriceOptionsFragmentContainer
+                    artwork={artwork}
+                    setValue={offerValue => this.setState({ offerValue })}
+                    onFocus={this.onOfferInputFocus.bind(this)}
+                    showError={
+                      this.state.formIsDirty && this.state.offerValue <= 0
+                    }
+                  />
+                </>
+              )}
+
               {!order.isInquiryOrder && (
                 <>
                   <Spacer mb={2} />
@@ -262,13 +305,10 @@ export class OfferRoute extends Component<OfferProps, OfferState> {
                 </>
               )}
               <Spacer mb={[2, 4]} />
-              <Message p={2}>
-                Please note that all final offers are binding. If your offer is
-                accepted, your payment will be processed immediately.
-                <Text mt={1}>
-                  Keep in mind making an offer doesn’t guarantee you the work,
-                  as the seller might be receiving competing offers.
-                </Text>
+              <Message variant="info" p={2} title="All offers are binding">
+                If your offer is accepted, payment will be processed
+                immediately. Please note that this sale is not final until your
+                offer is accepted.
               </Message>
               <Spacer mb={[2, 4]} />
               <Media greaterThan="xs">
@@ -325,7 +365,7 @@ export class OfferRoute extends Component<OfferProps, OfferState> {
 }
 
 export const OfferFragmentContainer = createFragmentContainer(
-  injectCommitMutation(injectDialog(OfferRoute)),
+  withSystemContext(injectCommitMutation(injectDialog(OfferRoute))),
   {
     order: graphql`
       fragment Offer_order on CommerceOrder {
@@ -340,6 +380,8 @@ export const OfferFragmentContainer = createFragmentContainer(
               artwork {
                 slug
                 price
+                isPriceRange
+                ...PriceOptions_artwork
               }
               artworkOrEditionSet {
                 __typename

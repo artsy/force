@@ -80,9 +80,7 @@ describe("Offer InitialMutation", () => {
     })
 
     it("shows final offer binding notice", () => {
-      expect(page.text()).toContain(
-        "Please note that all final offers are binding"
-      )
+      expect(page.text()).toContain("All offers are binding")
     })
   })
 

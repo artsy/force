@@ -1,8 +1,9 @@
 import { Input } from "@artsy/palette"
-import { Component } from "react";
+import { Component } from "react"
 
 export interface OfferInputProps {
   id: string
+  noTitle?: boolean
   showError?: boolean
   onChange: (value: number) => void
   onFocus?: () => void
@@ -10,12 +11,12 @@ export interface OfferInputProps {
 
 export class OfferInput extends Component<OfferInputProps> {
   render() {
-    const { id, showError, onFocus } = this.props
+    const { id, showError, onFocus, noTitle } = this.props
 
     return (
       <Input
         id={id}
-        title="Your offer"
+        title={noTitle ? "" : "Your offer"}
         type="text"
         pattern="[0-9]"
         error={showError ? "Offer amount missing or invalid." : false}
@@ -34,6 +35,6 @@ export class OfferInput extends Component<OfferInputProps> {
           this.props.onChange(Number(ev.currentTarget.value || "0"))
         }}
       />
-    );
+    )
   }
 }
