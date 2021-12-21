@@ -4,6 +4,8 @@ import { uploadFileToS3 } from "./uploadFileToS3"
 import {
   getConvectionGeminiKey,
   getGeminiCredentialsForEnvironment,
+  createGeminiAssetWithS3Credentials,
+  addAssetToConsignment,
 } from "../Mutations"
 import { ErrorCode, FileRejection } from "react-dropzone"
 import createLogger from "v2/Utils/logger"
@@ -93,5 +95,39 @@ export const uploadPhoto = async (
   } catch (error) {
     logger.error("Consign submission operation error", error)
     return
+  }
+}
+
+export const addPhotoToSubmission = async (
+  relayEnvironment: Environment,
+  photo: Photo,
+  submission
+) => {
+  try {
+    const convectionKey = await getConvectionGeminiKey(relayEnvironment)
+
+    if (!convectionKey) return
+
+    const geminiToken = await createGeminiAssetWithS3Credentials(
+      relayEnvironment,
+      {
+        sourceKey: photo.geminiToken!,
+        sourceBucket: photo.bucket!,
+        templateKey: convectionKey,
+        metadata: {
+          id: submission.id,
+          _type: "Consignment",
+        },
+      }
+    )
+
+    await addAssetToConsignment(relayEnvironment, {
+      assetType: "image",
+      geminiToken,
+      submissionID: submission.id,
+      sessionID: submission.id,
+    })
+  } catch (error) {
+    logger.error("Consign submission: add asset error", error)
   }
 }

@@ -40,12 +40,12 @@ export const PhotoThumbnail: React.FC<PhotoThumbnailProps & BoxProps> = ({
       reader.onloadend = () => {
         setPhotoSrc(reader.result as string)
       }
+    } else {
+      setPhotoSrc(photo.url)
     }
-  }, [])
+  }, [photo])
 
-  const handleDelete = () => {
-    onDelete(photo)
-  }
+  const handleDelete = () => onDelete(photo)
 
   const renderThumbnail = photoSrc => {
     const props: PhotoThumbnailStateProps = {
@@ -127,9 +127,53 @@ const PhotoThumbnailLoadingState: React.FC<PhotoThumbnailStateProps> = ({
   onDelete,
   photoSrc,
   photo,
-}) => {
-  return (
-    <Column span={[2]} display="flex" alignItems="center" flexDirection="row">
+}) => (
+  <Column span={[2]} display="flex" alignItems="center" flexDirection="row">
+    <Box
+      height={[48, 120]}
+      width={[48, 120]}
+      minWidth={[48, 120]}
+      mr={[15, 2]}
+      bg="black10"
+    >
+      <Image
+        src={photoSrc}
+        style={{ objectFit: "cover" }}
+        height="100%"
+        width="100%"
+      />
+    </Box>
+    <ProgressBar
+      width="100%"
+      highlight="brand"
+      percentComplete={photo.progress || 0}
+    />
+    <RemoveButton withIconButton handleDelete={onDelete} />
+  </Column>
+)
+
+const PhotoThumbnailErrorState: React.FC<PhotoThumbnailStateProps> = ({
+  onDelete,
+  photo,
+}) => (
+  <>
+    <Flex alignItems="center">
+      <TruncatedLine variant="xs">{photo.name}</TruncatedLine>
+    </Flex>
+    <Flex alignItems="center" justifyContent="space-between">
+      <Text variant="xs">{formatFileSize(photo.size)}</Text>
+      <RemoveButton withIconButton handleDelete={onDelete} />
+    </Flex>
+  </>
+)
+
+const PhotoThumbnailSuccessState: React.FC<PhotoThumbnailStateProps> = ({
+  onDelete,
+  photoSrc,
+  photo,
+}) => (
+  <>
+    <Flex alignItems="center">
       <Box
         height={[48, 120]}
         width={[48, 120]}
@@ -138,67 +182,17 @@ const PhotoThumbnailLoadingState: React.FC<PhotoThumbnailStateProps> = ({
         bg="black10"
       >
         <Image
-          src={photo.url || photoSrc}
+          src={photoSrc}
           style={{ objectFit: "cover" }}
           height="100%"
           width="100%"
         />
       </Box>
-      <ProgressBar
-        width="100%"
-        highlight="brand"
-        percentComplete={photo.progress || 0}
-      />
-      <RemoveButton withIconButton handleDelete={onDelete} />
-    </Column>
-  )
-}
-
-const PhotoThumbnailErrorState: React.FC<PhotoThumbnailStateProps> = ({
-  onDelete,
-  photo,
-}) => {
-  return (
-    <>
-      <Flex alignItems="center">
-        <TruncatedLine variant="xs">{photo.name}</TruncatedLine>
-      </Flex>
-      <Flex alignItems="center" justifyContent="space-between">
-        <Text variant="xs">{formatFileSize(photo.size)}</Text>
-        <RemoveButton withIconButton handleDelete={onDelete} />
-      </Flex>
-    </>
-  )
-}
-
-const PhotoThumbnailSuccessState: React.FC<PhotoThumbnailStateProps> = ({
-  onDelete,
-  photoSrc,
-  photo,
-}) => {
-  return (
-    <>
-      <Flex alignItems="center">
-        <Box
-          height={[48, 120]}
-          width={[48, 120]}
-          minWidth={[48, 120]}
-          mr={[15, 2]}
-          bg="black10"
-        >
-          <Image
-            src={photoSrc}
-            style={{ objectFit: "cover" }}
-            height="100%"
-            width="100%"
-          />
-        </Box>
-        <TruncatedLine variant="xs">{photo.name}</TruncatedLine>
-      </Flex>
-      <Flex alignItems="center" justifyContent="space-between">
-        <Text variant="xs">{formatFileSize(photo.size)}</Text>
-        <RemoveButton handleDelete={onDelete} />
-      </Flex>
-    </>
-  )
-}
+      <TruncatedLine variant="xs">{photo.name}</TruncatedLine>
+    </Flex>
+    <Flex alignItems="center" justifyContent="space-between">
+      <Text variant="xs">{formatFileSize(photo.size)}</Text>
+      <RemoveButton handleDelete={onDelete} />
+    </Flex>
+  </>
+)
