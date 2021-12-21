@@ -6,6 +6,9 @@ import {
   ArtworkSingleEditionHiddenAvailability,
   ArtworkSold,
   ContactForPriceWork,
+  ArtworkOfferableFromInquiryPriceExact,
+  ArtworkOfferableFromInquiryPriceRange,
+  ArtworkOfferableAndInquireablePriceHidden,
 } from "v2/Apps/__tests__/Fixtures/Artwork/ArtworkSidebar/ArtworkSidebarCommercial"
 
 import {
@@ -149,6 +152,47 @@ describe("ArtworkSidebarCommercial", () => {
     const wrapper = getWrapper(artwork)
 
     expect(wrapper.text()).toContain("Make offer")
+  })
+
+  it("displays both Make Offer and Contact Gallery CTAs when offerable from inquiry and exact price listed", () => {
+    const artwork = Object.assign({}, ArtworkOfferableFromInquiryPriceExact)
+    const wrapper = getWrapper(artwork)
+    const makeOfferButton = wrapper.find(
+      "button[data-test-id='makeOfferButton']"
+    )
+    const contactGalleryButton = wrapper.find(
+      "button[data-test-id='contactGalleryButton']"
+    )
+    expect(makeOfferButton.text()).toBe("Make offer")
+    expect(contactGalleryButton.text()).toBe("Contact Gallery")
+  })
+
+  it("displays both Make Offer and Contact Gallery CTAs when offerable from inquiry and price range", () => {
+    const artwork = Object.assign({}, ArtworkOfferableFromInquiryPriceRange)
+    const wrapper = getWrapper(artwork)
+    const makeOfferButton = wrapper.find(
+      "button[data-test-id='makeOfferButton']"
+    )
+    const contactGalleryButton = wrapper.find(
+      "button[data-test-id='contactGalleryButton']"
+    )
+
+    expect(makeOfferButton.text()).toBe("Make offer")
+    expect(contactGalleryButton.text()).toBe("Contact Gallery")
+  })
+
+  it("does not display Make Offer CTA and only the Contact Gallery CTA when offerable from inquiry and price hidden", () => {
+    const artwork = Object.assign({}, ArtworkOfferableAndInquireablePriceHidden)
+    const wrapper = getWrapper(artwork)
+    const makeOfferButton = wrapper.find(
+      "button[data-test-id='makeOfferButton']"
+    )
+    const contactGalleryButton = wrapper.find(
+      "button[data-test-id='contactGalleryButton']"
+    )
+
+    expect(makeOfferButton).toHaveLength(0)
+    expect(contactGalleryButton.text()).toBe("Contact Gallery")
   })
 
   it("displays artwork enrolled in Make Offer when enabled for both make offer and inquiry", async () => {

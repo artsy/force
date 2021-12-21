@@ -5,10 +5,19 @@
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkSidebarCommercial_artwork = {
-    readonly slug: string;
+    readonly edition_sets: ReadonlyArray<{
+        readonly internalID: string;
+        readonly id: string;
+        readonly is_acquireable: boolean | null;
+        readonly is_offerable: boolean | null;
+        readonly sale_message: string | null;
+        readonly " $fragmentRefs": FragmentRefs<"ArtworkSidebarSizeInfo_piece">;
+    } | null> | null;
     readonly internalID: string;
-    readonly is_for_sale: boolean | null;
+    readonly isOfferableFromInquiry: boolean | null;
+    readonly isPriceHidden: boolean | null;
     readonly is_acquireable: boolean | null;
+    readonly is_for_sale: boolean | null;
     readonly is_inquireable: boolean | null;
     readonly is_offerable: boolean | null;
     readonly listPrice: {
@@ -18,14 +27,7 @@ export type ArtworkSidebarCommercial_artwork = {
     readonly sale_message: string | null;
     readonly shippingInfo: string | null;
     readonly shippingOrigin: string | null;
-    readonly edition_sets: ReadonlyArray<{
-        readonly internalID: string;
-        readonly id: string;
-        readonly is_acquireable: boolean | null;
-        readonly is_offerable: boolean | null;
-        readonly sale_message: string | null;
-        readonly " $fragmentRefs": FragmentRefs<"ArtworkSidebarSizeInfo_piece">;
-    } | null> | null;
+    readonly slug: string;
     readonly " $refType": "ArtworkSidebarCommercial_artwork";
 };
 export type ArtworkSidebarCommercial_artwork$data = ArtworkSidebarCommercial_artwork;
@@ -58,7 +60,14 @@ v2 = {
   "name": "isOfferable",
   "storageKey": null
 },
-v3 = [
+v3 = {
+  "alias": "sale_message",
+  "args": null,
+  "kind": "ScalarField",
+  "name": "saleMessage",
+  "storageKey": null
+},
+v4 = [
   {
     "alias": null,
     "args": null,
@@ -66,14 +75,7 @@ v3 = [
     "name": "display",
     "storageKey": null
   }
-],
-v4 = {
-  "alias": "sale_message",
-  "args": null,
-  "kind": "ScalarField",
-  "name": "saleMessage",
-  "storageKey": null
-};
+];
 return {
   "argumentDefinitions": [],
   "kind": "Fragment",
@@ -81,13 +83,48 @@ return {
   "name": "ArtworkSidebarCommercial_artwork",
   "selections": [
     {
-      "alias": null,
+      "alias": "edition_sets",
       "args": null,
-      "kind": "ScalarField",
-      "name": "slug",
+      "concreteType": "EditionSet",
+      "kind": "LinkedField",
+      "name": "editionSets",
+      "plural": true,
+      "selections": [
+        (v0/*: any*/),
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "id",
+          "storageKey": null
+        },
+        (v1/*: any*/),
+        (v2/*: any*/),
+        (v3/*: any*/),
+        {
+          "args": null,
+          "kind": "FragmentSpread",
+          "name": "ArtworkSidebarSizeInfo_piece"
+        }
+      ],
       "storageKey": null
     },
     (v0/*: any*/),
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "isOfferableFromInquiry",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "isPriceHidden",
+      "storageKey": null
+    },
+    (v1/*: any*/),
     {
       "alias": "is_for_sale",
       "args": null,
@@ -95,7 +132,6 @@ return {
       "name": "isForSale",
       "storageKey": null
     },
-    (v1/*: any*/),
     {
       "alias": "is_inquireable",
       "args": null,
@@ -134,7 +170,7 @@ return {
       "name": "priceIncludesTaxDisplay",
       "storageKey": null
     },
-    (v4/*: any*/),
+    (v3/*: any*/),
     {
       "alias": null,
       "args": null,
@@ -150,30 +186,10 @@ return {
       "storageKey": null
     },
     {
-      "alias": "edition_sets",
+      "alias": null,
       "args": null,
-      "concreteType": "EditionSet",
-      "kind": "LinkedField",
-      "name": "editionSets",
-      "plural": true,
-      "selections": [
-        (v0/*: any*/),
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "id",
-          "storageKey": null
-        },
-        (v1/*: any*/),
-        (v2/*: any*/),
-        (v4/*: any*/),
-        {
-          "args": null,
-          "kind": "FragmentSpread",
-          "name": "ArtworkSidebarSizeInfo_piece"
-        }
-      ],
+      "kind": "ScalarField",
+      "name": "slug",
       "storageKey": null
     }
   ],
@@ -181,5 +197,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '4b27f5f48c80ad681cc7752ca8fe9638';
+(node as any).hash = '8148293620c60ce8feafe199eb1560a0';
 export default node;

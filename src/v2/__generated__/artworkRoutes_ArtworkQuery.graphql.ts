@@ -506,10 +506,19 @@ fragment ArtworkSidebarClassification_artwork on Artwork {
 }
 
 fragment ArtworkSidebarCommercial_artwork on Artwork {
-  slug
+  edition_sets: editionSets {
+    internalID
+    id
+    is_acquireable: isAcquireable
+    is_offerable: isOfferable
+    sale_message: saleMessage
+    ...ArtworkSidebarSizeInfo_piece
+  }
   internalID
-  is_for_sale: isForSale
+  isOfferableFromInquiry
+  isPriceHidden
   is_acquireable: isAcquireable
+  is_for_sale: isForSale
   is_inquireable: isInquireable
   is_offerable: isOfferable
   listPrice {
@@ -525,14 +534,7 @@ fragment ArtworkSidebarCommercial_artwork on Artwork {
   sale_message: saleMessage
   shippingInfo
   shippingOrigin
-  edition_sets: editionSets {
-    internalID
-    id
-    is_acquireable: isAcquireable
-    is_offerable: isOfferable
-    sale_message: saleMessage
-    ...ArtworkSidebarSizeInfo_piece
-  }
+  slug
 }
 
 fragment ArtworkSidebarCurrentBidInfo_artwork on Artwork {
@@ -2626,6 +2628,20 @@ return {
               }
             ],
             "storageKey": "myLotStanding(live:true)"
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "isOfferableFromInquiry",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "isPriceHidden",
+            "storageKey": null
           },
           {
             "alias": "is_for_sale",

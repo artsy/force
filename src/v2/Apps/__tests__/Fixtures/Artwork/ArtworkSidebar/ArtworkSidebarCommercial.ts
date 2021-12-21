@@ -254,3 +254,19 @@ export const ArtworkSingleEditionHiddenAvailability = {
     },
   ],
 }
+
+export const ArtworkOfferableAndInquireablePriceHidden = {
+  ...ArtworkSingleEditionHiddenAvailability,
+  isPriceHidden: true,
+}
+
+export const ArtworkOfferableFromInquiryPriceRange = {
+  ...ContactForPriceWork,
+  is_price_range: true,
+  isOfferableFromInquiry: true,
+}
+
+export const ArtworkOfferableFromInquiryPriceExact = {
+  ...ContactForPriceWork,
+  isOfferableFromInquiry: true,
+}
