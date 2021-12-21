@@ -73,7 +73,7 @@ export const ArtworkDetails: React.FC<ArtworkDetailsProps> = ({
           depth: artworkDetailsForm.depth,
           dimensionsMetric: artworkDetailsForm.units,
           provenance: artworkDetailsForm.provenance,
-          // locationCity: artworkDetailsForm.location,
+          locationCity: artworkDetailsForm.location,
           state: "DRAFT",
           utmMedium: utmParams?.utmMedium,
           utmSource: utmParams?.utmSource,
