@@ -38,7 +38,7 @@ export const getArtworkDetailsFormInitialValues = (
   units: submission?.dimensionsMetric ?? "in",
   provenance: submission?.provenance ?? "",
   // locationId: "",
-  // location: "",
+  location: submission?.locationCity ?? "",
 })
 
 const rarityOptions = checkboxValues.map(({ name, value }) => ({

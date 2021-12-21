@@ -62,8 +62,7 @@ export const ContactInformation: React.FC<ContactInformationProps> = ({
           userName: name.trim(),
           userEmail: email.trim(),
           userPhone: phone.international,
-          // remove artistID
-          artistID: submission.artistId,
+          state: "SUBMITTED",
           sessionID: !isLoggedIn ? getENV("SESSION_ID") : undefined,
         })
 
@@ -78,6 +77,7 @@ export const ContactInformation: React.FC<ContactInformationProps> = ({
       } catch (error) {
         console.log(error)
         openErrorModal()
+        return
       }
     }
   }
@@ -136,7 +136,6 @@ export const ContactInformationFragmentContainer = createFragmentContainer(
     submission: graphql`
       fragment ContactInformation_submission on ConsignmentSubmission {
         id
-        artistId
       }
     `,
     me: graphql`
