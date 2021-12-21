@@ -92,7 +92,26 @@ export const uploadPhoto = async (
 
     if (photo.removed) return
 
-    return await uploadFileToS3(photo, acl, assetCredentials, updateProgress)
+    // upload photo to S3
+    const sourceKey = await uploadFileToS3(
+      photo,
+      acl,
+      assetCredentials,
+      updateProgress
+    )
+
+    if (!sourceKey) return
+
+    // create asset in Gemini
+    return await createGeminiAssetWithS3Credentials(relayEnvironment, {
+      sourceKey,
+      sourceBucket: photo.bucket!,
+      templateKey: convectionKey,
+      metadata: {
+        id: submissionId,
+        _type: "Consignment",
+      },
+    })
   } catch (error) {
     logger.error("Consign submission operation error", error)
     return
@@ -106,26 +125,9 @@ export const addPhotoToSubmission = async (
   sessionID: string
 ) => {
   try {
-    const convectionKey = await getConvectionGeminiKey(relayEnvironment)
-
-    if (!convectionKey) return
-
-    const geminiToken = await createGeminiAssetWithS3Credentials(
-      relayEnvironment,
-      {
-        sourceKey: photo.geminiToken!,
-        sourceBucket: photo.bucket!,
-        templateKey: convectionKey,
-        metadata: {
-          id: submissionID,
-          _type: "Consignment",
-        },
-      }
-    )
-
     await addAssetToConsignment(relayEnvironment, {
       assetType: "image",
-      geminiToken,
+      geminiToken: photo.geminiToken!,
       submissionID,
       sessionID,
     })
