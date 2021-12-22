@@ -2,9 +2,15 @@ import { useState, useMemo } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { AlgoliaApp_system } from "v2/__generated__/AlgoliaApp_system.graphql"
 import algoliasearch from "algoliasearch"
-import { InstantSearch, Configure } from "react-instantsearch-dom"
+import {
+  InstantSearch,
+  Configure,
+  Pagination,
+  Hits,
+} from "react-instantsearch-dom"
 import { useRouter } from "v2/System/Router/useRouter"
 import { AlgoliaIndicesFragmentContainer } from "./Components/AlgoliaIndices"
+import { AlgoliaResultItem } from "./Components/AlgoliaResultItem"
 
 interface AlgoliaAppProps {
   system: AlgoliaApp_system
@@ -35,7 +41,8 @@ export const AlgoliaApp: React.FC<AlgoliaAppProps> = ({ system, children }) => {
           algolia={algolia}
           onClick={setSelectedTabIndex}
         />
-        {children}
+        <Hits hitComponent={AlgoliaResultItem} />
+        <Pagination />
       </InstantSearch>
     )
   }
