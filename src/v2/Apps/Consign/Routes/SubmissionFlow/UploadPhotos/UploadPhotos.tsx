@@ -58,8 +58,8 @@ export const UploadPhotos: React.FC = () => {
         Upload photos of your artwork
       </Text>
       <Text variant="sm" color="black60" mt={1}>
-        &#8226; For a faster valuation, please upload high-quality photos of the
-        work&#39;s front and back.
+        &#8226; To evaluate your submission faster, please upload high-quality
+        photos of the work&#39;s front and back.
       </Text>
       <Text variant="sm" color="black60">
         &#8226; If possible, include photos of any signatures or certificates of
