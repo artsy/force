@@ -12,7 +12,8 @@ import { useRouter } from "v2/System/Router/useRouter"
 import { AlgoliaIndicesFragmentContainer } from "./Components/AlgoliaIndices"
 import { AlgoliaResultItem } from "./Components/AlgoliaResultItem"
 import { AlgoliaPagination } from "./Components/AlgoliaPagination"
-import { HITS_PER_PAGE } from "./constants"
+import { ANCHOR_CONTAINER_ID, HITS_PER_PAGE } from "./constants"
+import { Box } from "@artsy/palette"
 
 interface AlgoliaAppProps {
   system: AlgoliaApp_system
@@ -43,6 +44,7 @@ export const AlgoliaApp: React.FC<AlgoliaAppProps> = ({ system, children }) => {
         indexName={selectedIndice.name}
       >
         <Configure query={location.query?.query} hitsPerPage={HITS_PER_PAGE} />
+        <Box id={ANCHOR_CONTAINER_ID} />
         <AlgoliaIndicesFragmentContainer
           algolia={algolia}
           onClick={setSelectedTabIndex}

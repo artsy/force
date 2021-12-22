@@ -12,7 +12,7 @@ export const AlgoliaIndices: React.FC<AlgoliaIndicesProps> = ({
   onClick,
 }) => {
   return (
-    <Box my={2} mx={-0.5}>
+    <Box py={2} mx={-0.5}>
       {algolia?.indices.map((indice, index) => {
         return (
           <Pill
