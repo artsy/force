@@ -42,8 +42,9 @@ const getTrackingObject = (
   currency: string
 ) => ({
   action: "clickedOfferOption",
-  currency,
   flow: "Make offer",
+  order_id: '<mock-value-for-field-"internalID">',
+  currency,
   offer,
   amount,
 })
