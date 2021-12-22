@@ -7,7 +7,11 @@ import {
   UploadPhotosFormModel,
 } from "./Components/UploadPhotosForm"
 import { PhotoThumbnail } from "./Components/PhotoThumbnail"
-import { Photo, addPhotoToSubmission } from "../Utils/fileUtils"
+import {
+  Photo,
+  addPhotoToSubmission,
+  removePhotoFromSubmission,
+} from "../Utils/fileUtils"
 import { useRouter } from "v2/System/Router/useRouter"
 import { BackLink } from "v2/Components/Links/BackLink"
 import { getENV } from "v2/Utils/getENV"
@@ -86,12 +90,21 @@ export const UploadPhotos: React.FC<UploadPhotosProps> = ({ submission }) => {
         initialErrors={initialErrors}
       >
         {({ values, setFieldValue, isValid, isSubmitting }) => {
-          const handlePhotoDelete = (photo: Photo) => {
+          const handlePhotoDelete = async (photo: Photo) => {
             photo.removed = true
             photo.abortUploading?.()
 
-            const photosToSave = values.photos.filter(p => p.id !== photo.id)
-            setFieldValue("photos", photosToSave)
+            if (relayEnvironment) {
+              await removePhotoFromSubmission(
+                relayEnvironment,
+                photo,
+                submission?.id || "",
+                !isLoggedIn ? getENV("SESSION_ID") : undefined
+              )
+
+              const photosToSave = values.photos.filter(p => p.id !== photo.id)
+              setFieldValue("photos", photosToSave)
+            }
           }
 
           const handlePhotoUploaded = async (photo: Photo) => {
