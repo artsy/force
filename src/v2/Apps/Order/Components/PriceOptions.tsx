@@ -64,7 +64,7 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
         order_id: order.internalID,
       })
     }
-  }, [customValue])
+  }, [customValue, setValue])
 
   const [toggle, setToggle] = useState(false)
 
