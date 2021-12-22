@@ -6,6 +6,7 @@ import {
   getGeminiCredentialsForEnvironment,
   createGeminiAssetWithS3Credentials,
   addAssetToConsignment,
+  removeAssetFromConsignment,
 } from "../Mutations"
 import { ErrorCode, FileRejection } from "react-dropzone"
 import createLogger from "v2/Utils/logger"
@@ -133,5 +134,22 @@ export const addPhotoToSubmission = async (
     })
   } catch (error) {
     logger.error("Consign submission: add asset error", error)
+  }
+}
+
+export const removePhotoFromSubmission = async (
+  relayEnvironment: Environment,
+  photo: Photo,
+  submissionID: string,
+  sessionID: string
+) => {
+  try {
+    await removeAssetFromConsignment(relayEnvironment, {
+      assetType: "image",
+      geminiToken: photo.geminiToken!,
+      submissionID,
+    })
+  } catch (error) {
+    logger.error("Consign submission: remove asset error", error)
   }
 }
