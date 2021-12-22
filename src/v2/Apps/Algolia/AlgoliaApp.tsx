@@ -5,16 +5,20 @@ import algoliasearch from "algoliasearch"
 import {
   InstantSearch,
   Configure,
-  Pagination,
   Hits,
+  connectPagination,
 } from "react-instantsearch-dom"
 import { useRouter } from "v2/System/Router/useRouter"
 import { AlgoliaIndicesFragmentContainer } from "./Components/AlgoliaIndices"
 import { AlgoliaResultItem } from "./Components/AlgoliaResultItem"
+import { AlgoliaPagination } from "./Components/AlgoliaPagination"
+import { HITS_PER_PAGE } from "./constants"
 
 interface AlgoliaAppProps {
   system: AlgoliaApp_system
 }
+
+const ConnectedAlgoliaPagination = connectPagination(AlgoliaPagination)
 
 export const AlgoliaApp: React.FC<AlgoliaAppProps> = ({ system, children }) => {
   const { algolia } = system
@@ -31,14 +35,14 @@ export const AlgoliaApp: React.FC<AlgoliaAppProps> = ({ system, children }) => {
   }, [algolia?.appID, algolia?.apiKey])
 
   if (searchClient) {
-    const selectedIndice = algolia?.indices[selectedTabIndex]
+    const selectedIndice = algolia?.indices[selectedTabIndex]!
 
     return (
       <InstantSearch
         searchClient={searchClient}
-        indexName={selectedIndice?.name}
+        indexName={selectedIndice.name}
       >
-        <Configure query={location.query?.query} />
+        <Configure query={location.query?.query} hitsPerPage={HITS_PER_PAGE} />
         <AlgoliaIndicesFragmentContainer
           algolia={algolia}
           onClick={setSelectedTabIndex}
@@ -47,11 +51,11 @@ export const AlgoliaApp: React.FC<AlgoliaAppProps> = ({ system, children }) => {
           hitComponent={({ hit }) => (
             <AlgoliaResultItem
               hit={hit}
-              entityType={selectedIndice?.displayName ?? ""}
+              entityType={selectedIndice.displayName ?? ""}
             />
           )}
         />
-        <Pagination />
+        <ConnectedAlgoliaPagination />
       </InstantSearch>
     )
   }
