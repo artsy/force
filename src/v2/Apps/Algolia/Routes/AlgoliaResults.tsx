@@ -1,10 +1,14 @@
 import * as React from "react"
-import { Box, Text } from "@artsy/palette"
+import { Box } from "@artsy/palette"
+import { Hits, Pagination } from "react-instantsearch-dom"
+
+const Hit = ({ hit }) => <p>{hit.name}</p>
 
 export const AlgoliaResults = () => {
   return (
     <Box>
-      <Text>AlgoliaResults</Text>
+      <Hits hitComponent={Hit} />
+      <Pagination />
     </Box>
   )
 }
