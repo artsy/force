@@ -6,7 +6,7 @@ import {
   getGeminiCredentialsForEnvironment,
   createGeminiAssetWithS3Credentials,
   addAssetToConsignment,
-  removeAssetFromConsignment,
+  removeAssetFromConsignmentSubmission,
 } from "../Mutations"
 import { ErrorCode, FileRejection } from "react-dropzone"
 import createLogger from "v2/Utils/logger"
@@ -144,7 +144,7 @@ export const removePhotoFromSubmission = async (
   sessionID: string
 ) => {
   try {
-    await removeAssetFromConsignment(relayEnvironment, {
+    await removeAssetFromConsignmentSubmission(relayEnvironment, {
       assetType: "image",
       geminiToken: photo.geminiToken!,
       submissionID,
