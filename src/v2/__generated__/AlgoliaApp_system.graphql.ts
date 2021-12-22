@@ -8,6 +8,7 @@ export type AlgoliaApp_system = {
         readonly apiKey: string;
         readonly appID: string;
         readonly indices: ReadonlyArray<{
+            readonly displayName: string;
             readonly name: string;
         }>;
         readonly " $fragmentRefs": FragmentRefs<"AlgoliaIndices_algolia">;
@@ -62,6 +63,13 @@ const node: ReaderFragment = {
               "alias": null,
               "args": null,
               "kind": "ScalarField",
+              "name": "displayName",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
               "name": "name",
               "storageKey": null
             }
@@ -79,5 +87,5 @@ const node: ReaderFragment = {
   ],
   "type": "System"
 };
-(node as any).hash = '1285c9ebc4c20830e57ef3a28237a6f7';
+(node as any).hash = '8c582b8902919bd9de9645cf243406d5';
 export default node;

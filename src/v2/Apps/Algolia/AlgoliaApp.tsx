@@ -31,17 +31,26 @@ export const AlgoliaApp: React.FC<AlgoliaAppProps> = ({ system, children }) => {
   }, [algolia?.appID, algolia?.apiKey])
 
   if (searchClient) {
+    const selectedIndice = algolia?.indices[selectedTabIndex]
+
     return (
       <InstantSearch
         searchClient={searchClient}
-        indexName={algolia?.indices[selectedTabIndex].name}
+        indexName={selectedIndice?.name}
       >
         <Configure query={location.query?.query} />
         <AlgoliaIndicesFragmentContainer
           algolia={algolia}
           onClick={setSelectedTabIndex}
         />
-        <Hits hitComponent={AlgoliaResultItem} />
+        <Hits
+          hitComponent={({ hit }) => (
+            <AlgoliaResultItem
+              hit={hit}
+              entityType={selectedIndice?.displayName ?? ""}
+            />
+          )}
+        />
         <Pagination />
       </InstantSearch>
     )
@@ -57,6 +66,7 @@ export const AlgoliaAppFragmentContainer = createFragmentContainer(AlgoliaApp, {
         apiKey
         appID
         indices {
+          displayName
           name
         }
         ...AlgoliaIndices_algolia
