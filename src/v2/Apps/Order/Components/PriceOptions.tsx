@@ -14,7 +14,7 @@ import { PriceOptions_order } from "v2/__generated__/PriceOptions_order.graphql"
 import { appendCurrencySymbol } from "../Utils/currencyUtils"
 
 export interface PriceOptionsProps {
-  setValue: (value: number) => void
+  onChange: (value: number) => void
   onFocus: () => void
   showError?: boolean
   artwork: PriceOptions_artwork | null | undefined
@@ -22,7 +22,7 @@ export interface PriceOptionsProps {
 }
 
 export const PriceOptions: React.FC<PriceOptionsProps> = ({
-  setValue,
+  onChange,
   onFocus,
   showError,
   artwork,
@@ -55,7 +55,7 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
 
   const [customValue, setCustomValue] = useState<number>()
   useEffect(() => {
-    customValue && setValue(customValue)
+    customValue && onChange(customValue)
     // TODO: move this call if necessary once the feature is implemented
     if (toggle && customValue && customValue < priceOptions[0]?.value!) {
       tracking.trackEvent({
@@ -64,7 +64,7 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
         order_id: order.internalID,
       })
     }
-  }, [customValue, setValue])
+  }, [customValue, onChange])
 
   const [toggle, setToggle] = useState(false)
 
@@ -115,7 +115,7 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
               artwork?.priceCurrency!
             )}
             onSelect={() => {
-              setValue(value!)
+              onChange(value!)
               setToggle(false)
               trackClick(description, value)
             }}
@@ -131,7 +131,7 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
             value="custom"
             label="Different amount"
             onSelect={() => {
-              customValue && setValue(customValue)
+              customValue && onChange(customValue)
               setToggle(true)
               trackClick("Different amount", 0)
             }}

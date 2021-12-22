@@ -285,7 +285,7 @@ export class OfferRoute extends Component<OfferProps, OfferState> {
                   <PriceOptionsFragmentContainer
                     artwork={artwork}
                     order={order}
-                    setValue={offerValue => this.setState({ offerValue })}
+                    onChange={offerValue => this.setState({ offerValue })}
                     onFocus={this.onOfferInputFocus.bind(this)}
                     showError={
                       this.state.formIsDirty && this.state.offerValue <= 0

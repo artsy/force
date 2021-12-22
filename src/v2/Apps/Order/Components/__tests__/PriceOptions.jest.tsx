@@ -7,7 +7,7 @@ import { PriceOptions_Test_Query } from "v2/__generated__/PriceOptions_Test_Quer
 
 jest.unmock("react-relay")
 
-const setValue = jest.fn()
+const onChange = jest.fn()
 const onFocus = jest.fn()
 const trackEvent = jest.fn()
 
@@ -18,7 +18,7 @@ const { renderWithRelay } = setupTestWrapperTL<PriceOptions_Test_Query>({
     <PriceOptionsFragmentContainer
       artwork={props.artwork}
       order={props.order!}
-      setValue={setValue}
+      onChange={onChange}
       onFocus={onFocus}
     />
   ),
@@ -86,7 +86,7 @@ describe("PriceOptions", () => {
     it("fires click event with correct value", () => {
       fireEvent.click(radios[1])
       expect(radios[1]).toBeChecked()
-      expect(setValue).toHaveBeenLastCalledWith(150)
+      expect(onChange).toHaveBeenLastCalledWith(150)
     })
     it("conditionally displays input field", async () => {
       expect(within(radios[3]).queryByRole("textbox")).not.toBeInTheDocument()
@@ -98,7 +98,7 @@ describe("PriceOptions", () => {
       fireEvent.click(radios[3])
       const input = await within(radios[3]).findByRole("textbox")
       fireEvent.change(input, { target: { value: 1000 } })
-      expect(setValue).toHaveBeenLastCalledWith(1000)
+      expect(onChange).toHaveBeenLastCalledWith(1000)
     })
     it("correctly tracks the clicking of an option", () => {
       fireEvent.click(radios[0])
