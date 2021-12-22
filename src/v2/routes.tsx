@@ -1,5 +1,6 @@
 import { AppRouteConfig } from "v2/System/Router/Route"
 import { aboutRoutes } from "./Apps/_About2/aboutRoutes"
+import { algoliaRoutes } from "./Apps/Algolia/algoliaRoutes"
 import { artistRoutes } from "v2/Apps/Artist/artistRoutes"
 import { artistSeriesRoutes } from "v2/Apps/ArtistSeries/artistSeriesRoutes"
 import { artistsRoutes } from "v2/Apps/Artists/artistsRoutes"
@@ -46,6 +47,7 @@ import { worksForYouRoutes } from "./Apps/_WorksForYou2/worksForYouRoutes"
 
 export function getAppRoutes(): AppRouteConfig[] {
   return buildAppRoutes([
+    { routes: algoliaRoutes },
     { routes: aboutRoutes },
     { routes: artistRoutes },
     { routes: artistSeriesRoutes },
