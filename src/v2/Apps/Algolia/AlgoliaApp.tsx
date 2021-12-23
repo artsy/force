@@ -82,7 +82,10 @@ export const AlgoliaApp: React.FC<AlgoliaAppProps> = ({ system }) => {
         onSearchStateChange={onSearchStateChange}
         createURL={createURL}
       >
-        <Configure hitsPerPage={HITS_PER_PAGE} />
+        <Configure
+          hitsPerPage={HITS_PER_PAGE}
+          query={searchState.query ?? ""}
+        />
         <Box id={ANCHOR_CONTAINER_ID} />
         <AlgoliaIndicesFragmentContainer
           algolia={algolia}
