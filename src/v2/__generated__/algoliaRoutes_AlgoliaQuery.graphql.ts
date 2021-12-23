@@ -32,6 +32,7 @@ fragment AlgoliaApp_system on System {
       name
     }
     ...AlgoliaIndices_algolia
+    ...AlgoliaResults_algolia
   }
 }
 
@@ -39,6 +40,13 @@ fragment AlgoliaIndices_algolia on Algolia {
   indices {
     displayName
     key
+    name
+  }
+}
+
+fragment AlgoliaResults_algolia on Algolia {
+  indices {
+    displayName
     name
   }
 }
@@ -151,7 +159,7 @@ const node: ConcreteRequest = {
     "metadata": {},
     "name": "algoliaRoutes_AlgoliaQuery",
     "operationKind": "query",
-    "text": "query algoliaRoutes_AlgoliaQuery {\n  system {\n    ...AlgoliaApp_system\n  }\n}\n\nfragment AlgoliaApp_system on System {\n  algolia {\n    apiKey\n    appID\n    indices {\n      displayName\n      name\n    }\n    ...AlgoliaIndices_algolia\n  }\n}\n\nfragment AlgoliaIndices_algolia on Algolia {\n  indices {\n    displayName\n    key\n    name\n  }\n}\n"
+    "text": "query algoliaRoutes_AlgoliaQuery {\n  system {\n    ...AlgoliaApp_system\n  }\n}\n\nfragment AlgoliaApp_system on System {\n  algolia {\n    apiKey\n    appID\n    indices {\n      displayName\n      name\n    }\n    ...AlgoliaIndices_algolia\n    ...AlgoliaResults_algolia\n  }\n}\n\nfragment AlgoliaIndices_algolia on Algolia {\n  indices {\n    displayName\n    key\n    name\n  }\n}\n\nfragment AlgoliaResults_algolia on Algolia {\n  indices {\n    displayName\n    name\n  }\n}\n"
   }
 };
 (node as any).hash = 'fe9f7e94981a0a973e5bace060b62840';
