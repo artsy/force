@@ -29,16 +29,16 @@ import type { Stripe, StripeElements } from "@stripe/stripe-js"
 import { CardElement } from "@stripe/react-stripe-js"
 import createLogger from "v2/Utils/logger"
 import {
-  BillingInfoWithBid,
   determineDisplayRequirements,
   errorMessageForBidding,
   errorMessageForCard,
   saleConfirmRegistrationPath,
   toStripeAddress,
-} from "v2/Apps/Auction/Components/Form"
+} from "v2/Apps/Auction/Components/Utils/helpers"
+import { BillingInfoWithBid } from "v2/Components/BillingInfoFormContext"
 import { createStripeWrapper } from "v2/Utils/createStripeWrapper"
 import { ZendeskWrapper } from "v2/Components/ZendeskWrapper"
-import { data as sd } from "sharify"
+import { getENV } from "v2/Utils/getENV"
 
 const logger = createLogger("Apps/Auction/Routes/ConfirmBid")
 
@@ -316,7 +316,7 @@ export const ConfirmBidRoute: React.FC<
   function renderZendeskScript() {
     if (typeof window !== "undefined" && window.zEmbed) return
 
-    return <ZendeskWrapper zdKey={sd.AUCTION_ZENDESK_KEY} />
+    return <ZendeskWrapper zdKey={getENV("AUCTION_ZENDESK_KEY")} />
   }
 
   if (!artwork) {

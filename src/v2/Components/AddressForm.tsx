@@ -15,7 +15,7 @@ import { CountrySelect } from "v2/Components/CountrySelect"
 import React, { useCallback } from "react"
 import { TwoColumnSplit } from "../Apps/Order/Components/TwoColumnLayout"
 import { useFormikContext } from "formik"
-import { BillingInfoWithTerms } from "v2/Apps/Auction/Components/Form"
+import { BillingInfoWithTerms } from "v2/Components/BillingInfoFormContext"
 import { userHasLabFeature } from "v2/Utils/user"
 import { useSystemContext } from "v2/System/SystemContext"
 
@@ -245,9 +245,6 @@ export const AddressForm: React.FC<AddressFormProps> = ({
                 letterSpacing: "1px",
                 borderRight: "none",
               }}
-              // TODO: Replace data-testid with queryByDisplayValue() on tests
-              // when a `selected` property is implemented
-              data-testid="phoneNumberCountry"
             />
           </Box>
           <Flex

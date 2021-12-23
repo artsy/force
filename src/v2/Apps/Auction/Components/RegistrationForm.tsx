@@ -6,12 +6,15 @@ import { CreditCardInstructions } from "v2/Apps/Auction/Components/CreditCardIns
 import { CreditCardInput } from "v2/Apps/Order/Components/CreditCardInput"
 import { AddressForm } from "v2/Components/AddressForm"
 import { ConditionsOfSaleCheckbox } from "v2/Components/Auction/ConditionsOfSaleCheckbox"
-import { BillingInfoFormValues, BillingInfoWithTerms } from "./Form"
+import {
+  BillingInfoFormValues,
+  BillingInfoWithTerms,
+  BillingInfoFormContext,
+} from "v2/Components/BillingInfoFormContext"
 import {
   OnSubmitValidationError,
   TrackErrors,
 } from "v2/Apps/Auction/Components/OnSubmitValidationError"
-import { BillingInfoFormContext } from "./Form"
 import { ErrorModal } from "v2/Components/Modal/ErrorModal"
 
 type FormValues = Pick<

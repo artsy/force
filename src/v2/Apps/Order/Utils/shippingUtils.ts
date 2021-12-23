@@ -11,7 +11,7 @@ import {
   CommerceOrderFulfillmentTypeEnum,
   SetShippingMutationResponse,
 } from "v2/__generated__/SetShippingMutation.graphql"
-import { BillingInfoFormValues } from "v2/Apps/Auction/Components/Form/formValidation"
+import { BillingInfoFormValues } from "v2/Components/BillingInfoFormContext"
 
 export type SavedAddressType = NonNullable<
   NonNullable<

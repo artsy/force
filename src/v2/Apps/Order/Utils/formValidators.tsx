@@ -1,7 +1,7 @@
 import { isEmpty } from "lodash"
 
 export const validatePresence = (value: string | null): string | null => {
-  if (value == undefined || isEmpty(value.trim())) {
+  if (!value || isEmpty(value.trim())) {
     return "This field is required"
   }
   return null

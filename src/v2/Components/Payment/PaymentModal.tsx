@@ -4,7 +4,7 @@ import { Button, Modal, Spacer, Text } from "@artsy/palette"
 import {
   BillingInfoFormContext,
   BillingInfoFormValues,
-} from "v2/Apps/Auction/Components/Form"
+} from "v2/Components/BillingInfoFormContext"
 import { AddressForm } from "../AddressForm"
 import { Form, FormikHelpers, FormikValues, FormikProps } from "formik"
 import { SavedAddressType } from "v2/Apps/Order/Utils/shippingUtils"

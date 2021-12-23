@@ -40,7 +40,7 @@ import {
 } from "v2/System/SystemContext"
 import { createStripeWrapper } from "v2/Utils/createStripeWrapper"
 import { isNull, mergeWith } from "lodash"
-import { BillingInfoFormContext } from "v2/Apps/Auction/Components/Form"
+import { BillingInfoFormContext } from "v2/Components/BillingInfoFormContext"
 import { Form } from "formik"
 
 export interface StripeProps {

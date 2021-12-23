@@ -1,4 +1,4 @@
-import { errorMessageForCard } from "v2/Apps/Auction/Components/Form"
+import { errorMessageForCard } from "v2/Apps/Auction/Components/Utils/helpers"
 
 describe("helpers", () => {
   describe("#errorMessageForCard", () => {

@@ -1,10 +1,10 @@
 import { useFormikContext } from "formik"
-import * as React from "react"
+import { FC, useEffect } from "react"
 
 import {
   BillingInfoWithBid,
   BillingInfoWithTerms,
-} from "v2/Apps/Auction/Components/Form"
+} from "v2/Components/BillingInfoFormContext"
 
 export type TrackErrors = (errors: string[]) => void
 
@@ -21,30 +21,26 @@ export type TrackErrors = (errors: string[]) => void
     https://github.com/jaredpalmer/formik/issues/1484#issuecomment-490558973
  */
 
-export const OnSubmitValidationError: React.FC<{ cb: TrackErrors }> = ({
-  cb,
-}) => {
-  const formikProps = useFormikContext<
-    BillingInfoWithTerms | BillingInfoWithBid
-  >()
+export const OnSubmitValidationError: FC<{ cb: TrackErrors }> = ({ cb }) => {
+  const {
+    submitCount,
+    isSubmitting,
+    isValid,
+    errors,
+    setSubmitting,
+  } = useFormikContext<BillingInfoWithTerms | BillingInfoWithBid>()
 
-  const effect = () => {
-    if (
-      formikProps.submitCount > 0 &&
-      !formikProps.isSubmitting &&
-      !formikProps.isValid
-    ) {
-      const clonedErrors = Object.assign({}, formikProps.errors)
+  useEffect(() => {
+    if (submitCount > 0 && !isSubmitting && !isValid) {
+      const clonedErrors = Object.assign({}, errors)
       const addressErrors = clonedErrors.address
       delete clonedErrors.address
 
-      const errors = Object.assign({}, clonedErrors, addressErrors)
-      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-      cb(Object.values(errors as string[]))
-      formikProps.setSubmitting(false)
+      const err = Object.assign({}, clonedErrors, addressErrors)
+      cb(Object.values(err))
+      setSubmitting(false)
     }
-  }
-  React.useEffect(effect, [formikProps.submitCount, formikProps.isSubmitting])
+  }, [submitCount, isSubmitting])
 
   return null
 }

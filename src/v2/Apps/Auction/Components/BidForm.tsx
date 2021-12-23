@@ -29,13 +29,15 @@ import {
   TrackErrors,
 } from "v2/Apps/Auction/Components/OnSubmitValidationError"
 import {
-  BillingInfoFormContext,
   determineDisplayRequirements,
-  BillingInfoWithBid,
   getSelectedBid,
-} from "v2/Apps/Auction/Components/Form"
+} from "v2/Apps/Auction/Components/Utils/helpers"
+import {
+  BillingInfoFormContext,
+  BillingInfoWithBid,
+  BillingInfoFormKeys,
+} from "v2/Components/BillingInfoFormContext"
 import { AuctionErrorModal } from "v2/Apps/Auction/Components/AuctionErrorModal"
-import { BillingInfoFormKeys } from "./Form/formValidation"
 
 interface Props {
   artworkSlug: string

@@ -74,7 +74,7 @@ import {
   ContextModule,
   OwnerType,
 } from "@artsy/cohesion"
-import { BillingInfoFormContext } from "v2/Apps/Auction/Components/Form"
+import { BillingInfoFormContext } from "v2/Components/BillingInfoFormContext"
 import { Form } from "formik"
 
 export interface ShippingProps extends SystemContextProps {

@@ -91,7 +91,7 @@ describe("AddressForm", () => {
       expect(
         screen.queryByText("Required for shipping logistics")
       ).toBeInTheDocument()
-      expect(screen.queryByTestId("phoneNumberCountry")).not.toBeInTheDocument()
+      expect(screen.queryByRole("combobox")).toBeInTheDocument()
     })
 
     it("renders a dropdown for country input when feature flag present", () => {
@@ -107,7 +107,7 @@ describe("AddressForm", () => {
       expect(
         screen.queryByText("Only used for shipping purposes")
       ).toBeInTheDocument()
-      expect(screen.getByTestId("phoneNumberCountry")).toBeInTheDocument()
+      expect(screen.queryAllByRole("combobox")).toHaveLength(2)
       expect(screen.getByPlaceholderText("Add phone")).toBeInTheDocument()
     })
   })

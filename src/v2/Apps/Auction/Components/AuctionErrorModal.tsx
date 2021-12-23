@@ -1,10 +1,10 @@
-import { ComponentProps } from "react";
+import { ComponentProps } from "react"
 
 import { ErrorModal } from "v2/Components/Modal/ErrorModal"
 import {
   BiddingStatus,
   errorMessageForBidding,
-} from "v2/Apps/Auction/Components/Form"
+} from "v2/Apps/Auction/Components/Utils/helpers"
 
 const HEADER_TEXT_MAPPING = {
   SALE_CLOSED: "Sale Closed",

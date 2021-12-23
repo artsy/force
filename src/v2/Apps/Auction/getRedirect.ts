@@ -88,7 +88,7 @@ const auctionPath = (sale: { slug: string }): string => `/auction/${sale.slug}`
 const registrationFlowPath = (sale: { slug: string }): string =>
   auctionPath(sale) + "/registration-flow"
 
-// TODO: Duplicate of `saleConfirmRegistrationPath` in `src/v2/Apps/Auction/Components/Form/helpers.tsx`
+// TODO: Duplicate of `saleConfirmRegistrationPath` in `src/v2/Apps/Auction/Components/Utils/helpers.tsx`
 const confirmRegistrationPath = (sale: { slug: string }): string =>
   auctionPath(sale) + "/confirm-registration"
 

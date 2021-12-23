@@ -15,7 +15,7 @@ import { CardElement } from "@stripe/react-stripe-js"
 import styled, { css } from "styled-components"
 import { useState } from "react"
 import { fontFamily } from "@artsy/palette/dist/platform/fonts"
-import { BillingInfoWithTerms } from "v2/Apps/Auction/Components/Form"
+import { BillingInfoWithTerms } from "v2/Components/BillingInfoFormContext"
 import { useFormikContext } from "formik"
 
 export const StyledCardElement = styled(CardElement)<{ isV3?: boolean }>`

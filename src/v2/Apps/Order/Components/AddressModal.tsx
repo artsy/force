@@ -27,7 +27,7 @@ import {
   BillingInfo,
   BillingInfoFormValues,
   BillingInfoFormContext,
-} from "v2/Apps/Auction/Components/Form"
+} from "v2/Components/BillingInfoFormContext"
 
 export interface ModalDetails {
   addressModalTitle: string
