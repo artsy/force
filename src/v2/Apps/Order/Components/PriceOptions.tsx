@@ -181,7 +181,7 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
                     noTitle
                   />
                 </Flex>
-                <Flex marginTop={1}>
+                <Flex marginTop={2}>
                   {hasErrorMessage ? (
                     <Message variant="default" p={2}>
                       Galleries usually accept offers within
