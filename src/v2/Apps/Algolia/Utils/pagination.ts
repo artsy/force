@@ -30,22 +30,15 @@ const pageCursorsToArray = (
   return cursors
 }
 
-export const computeTotalPages = (totalRecords: number, size: number) => {
-  return Math.ceil(totalRecords / size)
-}
-
 export const createPageCursors = (
   currentPage: number,
-  size: number,
-  totalRecords,
+  totalPages: number,
   max = 5
 ): PageCursors => {
   // If max is even, bump it up by 1, and log out a warning.
   if (max % 2 === 0) {
     max = max + 1
   }
-
-  const totalPages = Math.ceil(totalRecords / size)
 
   let pageCursors
   // Degenerate case of no records found.
