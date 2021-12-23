@@ -5,7 +5,6 @@ import { createPageCursors } from "../Utils/pagination"
 
 export const AlgoliaPagination = props => {
   const { nbPages, currentRefinement, refine } = props
-  const pageCursors = createPageCursors(currentRefinement, nbPages)
   const { scrollTo } = useScrollTo({
     selectorOrRef: `#${ANCHOR_CONTAINER_ID}`,
     behavior: "smooth",
@@ -16,20 +15,26 @@ export const AlgoliaPagination = props => {
     scrollTo()
   }
 
-  return (
-    <Box my={1}>
-      <Pagination
-        hasNextPage={currentRefinement < nbPages}
-        onClick={(_cursor, page, event) => {
-          event.preventDefault()
-          handleSelectPage(page)
-        }}
-        onNext={(event, page) => {
-          event.preventDefault()
-          handleSelectPage(page)
-        }}
-        pageCursors={pageCursors}
-      />
-    </Box>
-  )
+  if (nbPages !== 0) {
+    const pageCursors = createPageCursors(currentRefinement, nbPages)
+
+    return (
+      <Box my={1}>
+        <Pagination
+          hasNextPage={currentRefinement < nbPages}
+          onClick={(_cursor, page, event) => {
+            event.preventDefault()
+            handleSelectPage(page)
+          }}
+          onNext={(event, page) => {
+            event.preventDefault()
+            handleSelectPage(page)
+          }}
+          pageCursors={pageCursors}
+        />
+      </Box>
+    )
+  }
+
+  return null
 }
