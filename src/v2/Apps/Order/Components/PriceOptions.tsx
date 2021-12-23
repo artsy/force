@@ -128,7 +128,7 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
     setCustomValue,
   ])
 
-  const [selected, setSelectedRadio] = useState(false)
+  const [, /*selected*/ setSelectedRadio] = useState(false)
 
   const selectMinPrice = () => {
     trackClick("We recommend changing your offer", priceOptions[0]?.value!)
@@ -152,7 +152,6 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
               trackClick(description, value)
             }}
             key={`price-option-${value}`}
-            defaultChecked
           >
             <Text variant="sm" color="black60">
               {description}
