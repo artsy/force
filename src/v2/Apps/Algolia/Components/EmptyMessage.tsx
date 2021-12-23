@@ -5,7 +5,7 @@ interface EmptyMessageProps {
   query: string
 }
 
-const namesWithAnArticle = ["Artist", "Auction", "Artist Series"]
+const namesWithAnArticle = ["Artist", "Auction", "Artist Series", "Article"]
 
 export const EmptyMessage: React.FC<EmptyMessageProps> = ({
   entityType,

@@ -10,11 +10,11 @@ import { keyBy } from "lodash"
 
 type StateResults = StateResultsProvided<AlgoliaHit>
 
-export interface AlgoliaResultItemProps extends StateResults {
+export interface AlgoliaResultsProps extends StateResults {
   algolia: AlgoliaResults_algolia | null
 }
 
-export const AlgoliaResults: React.FC<AlgoliaResultItemProps> = props => {
+export const AlgoliaResults: React.FC<AlgoliaResultsProps> = props => {
   const { searchResults, isSearchStalled, algolia } = props
   const indiceByKey = keyBy(algolia?.indices ?? [], "name")
   const entityType = indiceByKey[searchResults?.index]?.displayName ?? ""
