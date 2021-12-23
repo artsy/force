@@ -123,7 +123,7 @@ function getProductionWebpackConfig() {
 
   // Optionally analyze the bundle
   config = bundleAnalyzer(config)
-  // Optionall track the bundle size
+  // Optionally track the bundle size
   config = bundleSize(config)
   // Add datadog metrics
   config = metrics(config, name)
