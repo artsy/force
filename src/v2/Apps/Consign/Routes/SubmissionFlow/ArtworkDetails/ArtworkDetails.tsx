@@ -7,7 +7,6 @@ import {
   getArtworkDetailsFormInitialValues,
 } from "./Components/ArtworkDetailsForm"
 import { useRouter } from "v2/System/Router/useRouter"
-import { UtmParams } from "../Utils/useSubmission"
 import { artworkDetailsValidationSchema } from "../Utils/validation"
 import { BackLink } from "v2/Components/Links/BackLink"
 import { useErrorModal } from "../Utils/useErrorModal"
@@ -18,6 +17,7 @@ import {
   ArtworkDetails_submission,
   ConsignmentAttributionClass,
 } from "v2/__generated__/ArtworkDetails_submission.graphql"
+import { UtmParams } from "../Utils/types"
 
 export interface ArtworkDetailsProps {
   submission?: ArtworkDetails_submission

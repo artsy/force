@@ -19,7 +19,7 @@ export interface UploadPhotosProps {
   submission?: UploadPhotos_submission
 }
 
-const getUploadPhotosFormInitialValues = (
+export const getUploadPhotosFormInitialValues = (
   submission?: UploadPhotos_submission
 ): UploadPhotosFormModel => {
   return {
