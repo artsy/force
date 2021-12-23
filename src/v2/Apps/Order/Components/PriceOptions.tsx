@@ -3,23 +3,49 @@ import { useEffect, useState } from "react"
 import { OfferInput } from "v2/Apps/Order/Components/OfferInput"
 import { compact } from "lodash"
 import { createFragmentContainer, graphql } from "react-relay"
-
+import {
+  AnalyticsSchema,
+  useAnalyticsContext,
+  useTracking,
+} from "v2/System/Analytics"
+import { ActionType, ClickedOfferOption, PageOwnerType } from "@artsy/cohesion"
 import { PriceOptions_artwork } from "v2/__generated__/PriceOptions_artwork.graphql"
+import { PriceOptions_order } from "v2/__generated__/PriceOptions_order.graphql"
 import { appendCurrencySymbol } from "../Utils/currencyUtils"
 
 export interface PriceOptionsProps {
-  setValue: (value: number) => void
+  onChange: (value: number) => void
   onFocus: () => void
   showError?: boolean
   artwork: PriceOptions_artwork | null | undefined
+  order: PriceOptions_order
 }
 
 export const PriceOptions: React.FC<PriceOptionsProps> = ({
-  setValue,
+  onChange,
   onFocus,
   showError,
   artwork,
+  order,
 }) => {
+  const tracking = useTracking()
+  const { contextPageOwnerId, contextPageOwnerType } = useAnalyticsContext()
+
+  const trackClick = (offer: string, amount: number) => {
+    const trackingData: ClickedOfferOption = {
+      action: ActionType.clickedOfferOption,
+      context_page_owner_id: contextPageOwnerId!,
+      context_page_owner_type: contextPageOwnerType as PageOwnerType,
+      currency: artwork?.priceCurrency!,
+      order_id: order.internalID,
+      flow: AnalyticsSchema.Flow.MakeOffer,
+      offer,
+      amount,
+    }
+
+    tracking.trackEvent(trackingData)
+  }
+
   const asCurrency = (value: number) =>
     value?.toLocaleString("en-US", {
       currency: artwork?.priceCurrency!,
@@ -29,8 +55,16 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
 
   const [customValue, setCustomValue] = useState<number>()
   useEffect(() => {
-    customValue && setValue(customValue)
-  }, [customValue])
+    customValue && onChange(customValue)
+    // TODO: move this call if necessary once the feature is implemented
+    if (toggle && customValue && customValue < priceOptions[0]?.value!) {
+      tracking.trackEvent({
+        action_type: AnalyticsSchema.ActionType.ViewedOfferTooLow,
+        flow: AnalyticsSchema.Flow.MakeOffer,
+        order_id: order.internalID,
+      })
+    }
+  }, [customValue, onChange])
 
   const [toggle, setToggle] = useState(false)
 
@@ -56,7 +90,7 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
       if (listPrice?.major) {
         return {
           value: listPrice.major * (1 - pricePercentage),
-          description: `${pricePercentage * 100}% below list price`,
+          description: `${pricePercentage * 100}% below the list price`,
         }
       }
       return
@@ -66,6 +100,9 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
   const priceOptions = artwork?.isPriceRange
     ? getRangeOptions()
     : getPercentageOptions()
+
+  // TODO: add call bellow when the feature is implemented
+  // trackClick("We recommend changing your offer", priceOptions[0]?.value!)
 
   return (
     <RadioGroup>
@@ -78,8 +115,9 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
               artwork?.priceCurrency!
             )}
             onSelect={() => {
-              setValue(value!)
+              onChange(value!)
               setToggle(false)
+              trackClick(description, value)
             }}
             key={`price-option-${value}`}
           >
@@ -93,8 +131,9 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
             value="custom"
             label="Different amount"
             onSelect={() => {
-              customValue && setValue(customValue)
+              customValue && onChange(customValue)
               setToggle(true)
+              trackClick("Different amount", 0)
             }}
             key="price-option-custom"
           >
@@ -135,6 +174,11 @@ export const PriceOptionsFragmentContainer = createFragmentContainer(
             }
           }
         }
+      }
+    `,
+    order: graphql`
+      fragment PriceOptions_order on CommerceOrder {
+        internalID
       }
     `,
   }
