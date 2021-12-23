@@ -1,13 +1,14 @@
 import { Box, Separator } from "@artsy/palette"
 import { AlgoliaResultItem } from "./AlgoliaResultItem"
 import { StateResultsProvided } from "react-instantsearch-core"
+import { AlgoliaHit } from "../types"
 
 export interface AlgoliaResultItemBaseProps {
   entityType: string
 }
 
 export interface AlgoliaResultItemProps
-  extends StateResultsProvided,
+  extends StateResultsProvided<AlgoliaHit>,
     AlgoliaResultItemBaseProps {}
 
 export const AlgoliaResults: React.FC<AlgoliaResultItemProps> = props => {
