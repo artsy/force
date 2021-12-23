@@ -1,39 +1,43 @@
 import { Match, Router } from "found"
-import { SubmissionModel } from "./useSubmission"
+import { graphql } from "lib/graphql"
+import { isFunction } from "lodash"
+import { redirects_submission } from "v2/__generated__/redirects_submission.graphql"
+import { getArtworkDetailsFormInitialValues } from "../ArtworkDetails/Components/ArtworkDetailsForm"
+import { getUploadPhotosFormInitialValues } from "../UploadPhotos/UploadPhotos"
+import {
+  artworkDetailsValidationSchema,
+  uploadPhotosValidationSchema,
+} from "./validation"
 
-export interface ValidationInformation {
-  submission?: SubmissionModel
-  submissionId?: string
+const redirectToIf = (
+  to: ((id?: string) => string) | string,
+  predicate: (args: redirects_submission) => boolean
+) => (args: redirects_submission) => {
+  if (predicate(args)) {
+    return isFunction(to) ? to(args?.id) : to
+  }
 }
 
-// const redirectToIf = (
-//   to: ((id?: string) => string) | string,
-//   predicate: (args: ValidationInformation) => boolean
-// ) => (args: ValidationInformation) => {
-//   if (predicate(args)) {
-//     return isFunction(to) ? to(args.submissionId) : to
-//   }
-// }
+const checkSubmissionExist = redirectToIf(
+  "/consign/submission/artwork-details",
+  submission => !submission || !submission.id
+)
 
-// const checkSubmissionExist = redirectToIf(
-//   "/consign/submission/artwork-details",
-//   ({ submissionId, submission }) =>
-//     !submissionId || !submission || !submission.artworkDetailsForm
-// )
+const checkArtworkDetailsFormValid = redirectToIf(
+  id => `/consign/submission/${id}/artwork-details`,
+  submission =>
+    !artworkDetailsValidationSchema.isValidSync(
+      getArtworkDetailsFormInitialValues(submission as any)
+    )
+)
 
-// const checkArtworkDetailsFormValid = redirectToIf(
-//   id => `/consign/submission/${id}/artwork-details`,
-//   ({ submission }) =>
-//     !artworkDetailsValidationSchema.isValidSync(submission?.artworkDetailsForm)
-// )
-
-// const checkUploadPhotosFormValid = redirectToIf(
-//   id => `/consign/submission/${id}/upload-photos`,
-//   ({ submission }) =>
-//     !submission?.uploadPhotosForm ||
-//     !submission?.uploadPhotosForm.photos ||
-//     !uploadPhotosValidationSchema.isValidSync(submission?.uploadPhotosForm)
-// )
+const checkUploadPhotosFormValid = redirectToIf(
+  id => `/consign/submission/${id}/upload-photos`,
+  submission =>
+    !uploadPhotosValidationSchema.isValidSync(
+      getUploadPhotosFormInitialValues(submission as any)
+    )
+)
 
 export const redirects = {
   path: "/consign/submission",
@@ -45,22 +49,18 @@ export const redirects = {
     },
     {
       path: "/:id/artwork-details",
-      rules: [
-        // checkSubmissionExist
-      ],
+      rules: [checkSubmissionExist],
     },
     {
       path: "/:id/upload-photos",
-      rules: [
-        // checkSubmissionExist, checkArtworkDetailsFormValid
-      ],
+      rules: [checkSubmissionExist, checkArtworkDetailsFormValid],
     },
     {
       path: "/:id/contact-information",
       rules: [
-        // checkSubmissionExist,
-        // checkArtworkDetailsFormValid,
-        // checkUploadPhotosFormValid,
+        checkSubmissionExist,
+        checkArtworkDetailsFormValid,
+        checkUploadPhotosFormValid,
       ],
     },
   ],
@@ -69,12 +69,12 @@ export const redirects = {
 export function getRedirect(
   router: Router,
   match: Match,
-  validationInfo: ValidationInformation
+  submission: redirects_submission
 ) {
   for (let [path, route] of getPaths(redirects, "")) {
     if (isActiveRoute(router, match, path)) {
       for (const rule of route.rules) {
-        const redirectTo = rule(validationInfo)
+        const redirectTo = rule(submission)
         if (redirectTo) {
           return redirectTo
         }
@@ -104,3 +104,10 @@ function getPaths(node, path) {
 
   return result
 }
+
+graphql`
+  fragment redirects_submission on ConsignmentSubmission {
+    ...ArtworkDetails_submission @relay(mask: false)
+    ...UploadPhotos_submission @relay(mask: false)
+  }
+`

@@ -1,7 +1,9 @@
 import loadable from "@loadable/component"
-import { Redirect } from "found"
+import { Redirect, RedirectException } from "found"
 import { graphql } from "react-relay"
 import { AppRouteConfig } from "v2/System/Router/Route"
+import { getENV } from "v2/Utils/getENV"
+import { getRedirect } from "./Routes/SubmissionFlow/Utils/redirects"
 
 const MarketingLandingApp = loadable(
   () =>
@@ -83,18 +85,29 @@ const ThankYou = loadable(
   }
 )
 
-const submissionQuery = graphql`
-  query consignRoutes_submissionQuery($id: ID!) {
-    submission(id: $id) {
-      ...ArtworkDetails_submission
-      ...UploadPhotos_submission
-      ...ContactInformation_submission
-    }
-    me {
-      ...ContactInformation_me
+const renderSubmissionFlowStep = ({ Component, props, match, resolving }) => {
+  if (!(Component && props)) {
+    return undefined
+  }
+
+  if (resolving) {
+    const { submission } = props as any
+    const redirectTo = getRedirect(props.router, match, submission)
+
+    if (redirectTo) {
+      throw new RedirectException(redirectTo)
     }
   }
-`
+
+  return <Component {...props} />
+}
+
+const prepareSubmissionFlowStepVariables = data => {
+  return {
+    ...data,
+    sessionID: getENV("SESSION_ID"),
+  }
+}
 
 export const consignRoutes: AppRouteConfig[] = [
   {
@@ -129,7 +142,38 @@ export const consignRoutes: AppRouteConfig[] = [
         onClientSideRender: () => {
           ArtworkDetailsFragmentContainer.preload()
         },
-        query: submissionQuery,
+        query: graphql`
+          query consignRoutes_artworkDetailsQuery(
+            $id: ID!
+            $sessionID: String
+          ) {
+            submission(id: $id, sessionID: $sessionID) {
+              ...ArtworkDetails_submission
+              ...redirects_submission @relay(mask: false)
+            }
+          }
+        `,
+        prepareVariables: prepareSubmissionFlowStepVariables,
+        render: renderSubmissionFlowStep,
+      },
+      {
+        path: ":id/upload-photos",
+        hideNav: true,
+        hideFooter: true,
+        getComponent: () => UploadPhotosFragmentContainer,
+        onClientSideRender: () => {
+          UploadPhotosFragmentContainer.preload()
+        },
+        query: graphql`
+          query consignRoutes_uploadPhotosQuery($id: ID!, $sessionID: String) {
+            submission(id: $id, sessionID: $sessionID) {
+              ...UploadPhotos_submission
+              ...redirects_submission @relay(mask: false)
+            }
+          }
+        `,
+        prepareVariables: prepareSubmissionFlowStepVariables,
+        render: renderSubmissionFlowStep,
       },
       {
         path: ":id/contact-information",
@@ -139,7 +183,22 @@ export const consignRoutes: AppRouteConfig[] = [
         onClientSideRender: () => {
           ContactInformation.preload()
         },
-        query: submissionQuery,
+        query: graphql`
+          query consignRoutes_contactInformationQuery(
+            $id: ID!
+            $sessionID: String
+          ) {
+            submission(id: $id, sessionID: $sessionID) {
+              ...ContactInformation_submission
+              ...redirects_submission @relay(mask: false)
+            }
+            me {
+              ...ContactInformation_me
+            }
+          }
+        `,
+        render: renderSubmissionFlowStep,
+        prepareVariables: prepareSubmissionFlowStepVariables,
       },
       {
         path: ":id/thank-you",
@@ -151,16 +210,6 @@ export const consignRoutes: AppRouteConfig[] = [
         },
       },
     ],
-  },
-  {
-    path: "/consign/submission/:id/upload-photos",
-    hideNav: true,
-    hideFooter: true,
-    getComponent: () => UploadPhotosFragmentContainer,
-    onClientSideRender: () => {
-      UploadPhotosFragmentContainer.preload()
-    },
-    query: submissionQuery,
   },
   {
     path: "/consign/offer/:offerID",
