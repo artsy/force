@@ -15,6 +15,7 @@ import { ANCHOR_CONTAINER_ID, HITS_PER_PAGE, DEBOUNCE_TIME } from "./constants"
 import { Box } from "@artsy/palette"
 import { createURL, searchStateToUrl, urlToSearchState } from "./Utils/url"
 import { AlgoliaResultsFragmentContainer } from "./Components/AlgoliaResults"
+import { AlgoliaMeta } from "./Components/AlgoliaMeta"
 
 interface AlgoliaAppProps {
   system: AlgoliaApp_system
@@ -79,6 +80,7 @@ export const AlgoliaApp: React.FC<AlgoliaAppProps> = ({ system }) => {
         onSearchStateChange={onSearchStateChange}
         createURL={createURL}
       >
+        <AlgoliaMeta />
         <Configure
           hitsPerPage={HITS_PER_PAGE}
           query={searchState.query ?? ""}
