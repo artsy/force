@@ -53,6 +53,14 @@ export const AlgoliaApp: React.FC<AlgoliaAppProps> = ({ system, children }) => {
     setSearchState(updatedSearchState)
   }
 
+  const handleIndiceSelect = (indice: number) => {
+    setSelectedTabIndex(indice)
+    setSearchState({
+      searchState,
+      page: 1,
+    })
+  }
+
   useEffect(() => {
     setSearchState(urlToSearchState(match.location))
   }, [match.location])
@@ -72,7 +80,7 @@ export const AlgoliaApp: React.FC<AlgoliaAppProps> = ({ system, children }) => {
         <Box id={ANCHOR_CONTAINER_ID} />
         <AlgoliaIndicesFragmentContainer
           algolia={algolia}
-          onClick={setSelectedTabIndex}
+          onClick={handleIndiceSelect}
         />
         <Hits
           hitComponent={({ hit }) => (
