@@ -3990,7 +3990,7 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react-instantsearch-core@*":
+"@types/react-instantsearch-core@*", "@types/react-instantsearch-core@^6.10.5":
   version "6.10.5"
   resolved "https://registry.yarnpkg.com/@types/react-instantsearch-core/-/react-instantsearch-core-6.10.5.tgz#909870ad8bbdbd8ba501b34df8f952d983c3d8ce"
   integrity sha512-VjXJFUfsPdWMSiugJiQc950G9ZRjCEIzqQ9/K915d1f1BsVE2TE57PcfHSxAy1pGDDR8FT5uAgAaOMyKJ66NJQ==
