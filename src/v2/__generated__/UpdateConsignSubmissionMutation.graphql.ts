@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 export type ConsignmentAttributionClass = "LIMITED_EDITION" | "OPEN_EDITION" | "UNIQUE" | "UNKNOWN_EDITION" | "%future added value";
@@ -75,8 +76,7 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "input",
-    "type": "UpdateSubmissionMutationInput!"
+    "name": "input"
   }
 ],
 v1 = [
@@ -124,7 +124,8 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Mutation"
+    "type": "Mutation",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -165,6 +166,7 @@ return {
     ]
   },
   "params": {
+    "cacheID": "bb38be645a773cd1f6f155db8226b6e2",
     "id": null,
     "metadata": {},
     "name": "UpdateConsignSubmissionMutation",
