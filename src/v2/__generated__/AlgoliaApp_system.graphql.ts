@@ -11,7 +11,7 @@ export type AlgoliaApp_system = {
             readonly displayName: string;
             readonly name: string;
         }>;
-        readonly " $fragmentRefs": FragmentRefs<"AlgoliaIndices_algolia">;
+        readonly " $fragmentRefs": FragmentRefs<"AlgoliaIndices_algolia" | "AlgoliaResults_algolia">;
     } | null;
     readonly " $refType": "AlgoliaApp_system";
 };
@@ -80,6 +80,11 @@ const node: ReaderFragment = {
           "args": null,
           "kind": "FragmentSpread",
           "name": "AlgoliaIndices_algolia"
+        },
+        {
+          "args": null,
+          "kind": "FragmentSpread",
+          "name": "AlgoliaResults_algolia"
         }
       ],
       "storageKey": null
@@ -87,5 +92,5 @@ const node: ReaderFragment = {
   ],
   "type": "System"
 };
-(node as any).hash = '8c582b8902919bd9de9645cf243406d5';
+(node as any).hash = '918a8b800cf6625a0c053a0c918535d1';
 export default node;
