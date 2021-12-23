@@ -1,28 +1,34 @@
-import { useState, useMemo, useRef, useEffect } from "react"
+import { useState, useMemo, useRef, useEffect, ComponentClass } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { AlgoliaApp_system } from "v2/__generated__/AlgoliaApp_system.graphql"
 import algoliasearch from "algoliasearch"
 import {
   InstantSearch,
   Configure,
-  Hits,
   connectPagination,
+  connectStateResults,
 } from "react-instantsearch-dom"
 import { useRouter } from "v2/System/Router/useRouter"
 import { AlgoliaIndicesFragmentContainer } from "./Components/AlgoliaIndices"
-import { AlgoliaResultItem } from "./Components/AlgoliaResultItem"
 import { AlgoliaPagination } from "./Components/AlgoliaPagination"
 import { ANCHOR_CONTAINER_ID, HITS_PER_PAGE, DEBOUNCE_TIME } from "./constants"
 import { Box } from "@artsy/palette"
 import { createURL, searchStateToUrl, urlToSearchState } from "./Utils/url"
+import {
+  AlgoliaResultItemBaseProps,
+  AlgoliaResults,
+} from "./Components/AlgoliaResults"
 
 interface AlgoliaAppProps {
   system: AlgoliaApp_system
 }
 
 const ConnectedAlgoliaPagination = connectPagination(AlgoliaPagination)
+const ConnectedAlgoliaResults = connectStateResults(
+  AlgoliaResults
+) as ComponentClass<AlgoliaResultItemBaseProps>
 
-export const AlgoliaApp: React.FC<AlgoliaAppProps> = ({ system, children }) => {
+export const AlgoliaApp: React.FC<AlgoliaAppProps> = ({ system }) => {
   const { algolia } = system
   const { match } = useRouter()
   const [searchState, setSearchState] = useState(
@@ -82,13 +88,8 @@ export const AlgoliaApp: React.FC<AlgoliaAppProps> = ({ system, children }) => {
           algolia={algolia}
           onClick={handleIndiceSelect}
         />
-        <Hits
-          hitComponent={({ hit }) => (
-            <AlgoliaResultItem
-              hit={hit}
-              entityType={selectedIndice.displayName ?? ""}
-            />
-          )}
+        <ConnectedAlgoliaResults
+          entityType={selectedIndice.displayName ?? ""}
         />
         <ConnectedAlgoliaPagination />
       </InstantSearch>
