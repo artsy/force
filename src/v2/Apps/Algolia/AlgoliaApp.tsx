@@ -1,4 +1,4 @@
-import { useState, useMemo, useRef, useEffect, ComponentClass } from "react"
+import { useState, useMemo, useRef, useEffect } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { AlgoliaApp_system } from "v2/__generated__/AlgoliaApp_system.graphql"
 import algoliasearch from "algoliasearch"
@@ -14,10 +14,7 @@ import { AlgoliaPagination } from "./Components/AlgoliaPagination"
 import { ANCHOR_CONTAINER_ID, HITS_PER_PAGE, DEBOUNCE_TIME } from "./constants"
 import { Box } from "@artsy/palette"
 import { createURL, searchStateToUrl, urlToSearchState } from "./Utils/url"
-import {
-  AlgoliaResultItemBaseProps,
-  AlgoliaResults,
-} from "./Components/AlgoliaResults"
+import { AlgoliaResultsFragmentContainer } from "./Components/AlgoliaResults"
 
 interface AlgoliaAppProps {
   system: AlgoliaApp_system
@@ -25,8 +22,8 @@ interface AlgoliaAppProps {
 
 const ConnectedAlgoliaPagination = connectPagination(AlgoliaPagination)
 const ConnectedAlgoliaResults = connectStateResults(
-  AlgoliaResults
-) as ComponentClass<AlgoliaResultItemBaseProps>
+  AlgoliaResultsFragmentContainer
+)
 
 export const AlgoliaApp: React.FC<AlgoliaAppProps> = ({ system }) => {
   const { algolia } = system
@@ -91,9 +88,7 @@ export const AlgoliaApp: React.FC<AlgoliaAppProps> = ({ system }) => {
           algolia={algolia}
           onClick={handleIndiceSelect}
         />
-        <ConnectedAlgoliaResults
-          entityType={selectedIndice.displayName ?? ""}
-        />
+        <ConnectedAlgoliaResults algolia={algolia} />
         <ConnectedAlgoliaPagination />
       </InstantSearch>
     )
@@ -113,6 +108,7 @@ export const AlgoliaAppFragmentContainer = createFragmentContainer(AlgoliaApp, {
           name
         }
         ...AlgoliaIndices_algolia
+        ...AlgoliaResults_algolia
       }
     }
   `,
