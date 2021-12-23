@@ -1,6 +1,6 @@
 import { Clickable, Spacer } from "@artsy/palette"
 import { ArtworkSidebarCurrentBidInfo_artwork } from "v2/__generated__/ArtworkSidebarCurrentBidInfo_artwork.graphql"
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { AnalyticsSchema, useTracking } from "v2/System"
 import {
@@ -122,9 +122,9 @@ export const ArtworkSidebarCurrentBidInfo: React.FC<ArtworkSidebarCurrentBidInfo
           {myBidPresent && (
             <Box pt={0.5}>
               {myBidWinning ? (
-                <WinningBidIcon fill="green100" />
+                <WinningBidIcon fill="green100" title="Winning Bid" />
               ) : (
-                <LosingBidIcon fill="red100" />
+                <LosingBidIcon fill="red100" title="Losing Bid" />
               )}
             </Box>
           )}
