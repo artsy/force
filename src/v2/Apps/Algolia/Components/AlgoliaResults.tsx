@@ -21,6 +21,7 @@ export const AlgoliaResults: React.FC<AlgoliaResultItemProps> = props => {
             key={hit.objectID}
             hit={hit}
             entityType={entityType}
+            position={searchResults.page * searchResults.hitsPerPage + index}
           />
           {index < searchResults.hits.length - 1 && <Separator />}
         </>
