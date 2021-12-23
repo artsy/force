@@ -20,6 +20,9 @@ const env = {
   enableWebpackAnalyze: yn(process.env.WEBPACK_ANALYZE, { default: false }),
   enableWebpackDatadog: yn(process.env.WEBPACK_DATADOG, { default: false }),
   enableWebpackDumpConfig: process.env.WEBPACK_DUMP_CONFIG,
+  enableWebpackSizePlugin: yn(process.env.WEBPACK_SIZE_PLUGIN, {
+    default: false,
+  }),
   fastProductionBuild: yn(process.env.WEBPACK_FAST_PRODUCTION_BUILD, {
     default: false,
   }),
@@ -75,6 +78,7 @@ if (env.onCi || env.logConfig) {
   console.log("  WEBPACK_FAST_PRODUCTION_BUILD".padEnd(35), chalk.yellow(env.fastProductionBuild))
   console.log("  WEBPACK_LOG_CONFIG".padEnd(35), chalk.yellow(env.logConfig))
   console.log("  WEBPACK_LOG".padEnd(35), chalk.yellow(env.loggingEnabled))
+  console.log("  WEBPACK_SIZE_PLUGIN".padEnd(35), chalk.yellow(env.enableWebpackSizePlugin))
   console.log("  WEBPACK_STATS".padEnd(35), chalk.yellow(env.webpackStats))
   console.log("")
 }

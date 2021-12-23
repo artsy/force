@@ -7,11 +7,12 @@ export interface OfferInputProps {
   showError?: boolean
   onChange: (value: number) => void
   onFocus?: () => void
+  onBlur?: () => void
 }
 
 export class OfferInput extends Component<OfferInputProps> {
   render() {
-    const { id, showError, onFocus, noTitle } = this.props
+    const { id, showError, onFocus, onBlur, noTitle } = this.props
 
     return (
       <Input
@@ -21,6 +22,7 @@ export class OfferInput extends Component<OfferInputProps> {
         pattern="[0-9]"
         error={showError ? "Offer amount missing or invalid." : false}
         onFocus={onFocus}
+        onBlur={onBlur}
         onChange={ev => {
           const currentValue = ev.currentTarget.value
           const nonDigitMatch = currentValue.match(/\D/)
