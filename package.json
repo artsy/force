@@ -389,6 +389,7 @@
     "should": "13.2.3",
     "simple-progress-webpack-plugin": "1.1.2",
     "sinon": "1.17.7",
+    "size-plugin": "^3.0.0",
     "static-extend": "0.1.2",
     "storybook-states": "1.2.0",
     "style-loader": "0.23.1",

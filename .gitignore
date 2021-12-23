@@ -64,3 +64,5 @@ manifest-legacy-artwork-dll.json
 .dependency-cruiser.js
 depcruiser*
 *.html
+
+size-plugin.json
