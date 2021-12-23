@@ -1,6 +1,6 @@
 import { createFragmentContainer, graphql } from "react-relay"
 import { AlgoliaIndices_algolia } from "v2/__generated__/AlgoliaIndices_algolia.graphql"
-import { Box, Pill } from "@artsy/palette"
+import { Box, Pill, Swiper } from "@artsy/palette"
 
 interface AlgoliaIndicesProps {
   algolia: AlgoliaIndices_algolia | null
@@ -12,19 +12,22 @@ export const AlgoliaIndices: React.FC<AlgoliaIndicesProps> = ({
   onClick,
 }) => {
   return (
-    <Box py={2} mx={-0.5}>
-      {algolia?.indices.map((indice, index) => {
-        return (
-          <Pill
-            variant="filter"
-            onClick={() => onClick(index)}
-            key={indice.key}
-            mx={0.5}
-          >
-            {indice.displayName}
-          </Pill>
-        )
-      })}
+    <Box mx={-0.5}>
+      <Swiper>
+        {algolia?.indices.map((indice, index) => {
+          return (
+            <Pill
+              variant="filter"
+              onClick={() => onClick(index)}
+              key={indice.key}
+              mx={0.5}
+              my={2}
+            >
+              {indice.displayName}
+            </Pill>
+          )
+        })}
+      </Swiper>
     </Box>
   )
 }
