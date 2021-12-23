@@ -30,7 +30,7 @@ export const AlgoliaApp: React.FC<AlgoliaAppProps> = ({ system }) => {
   const { algolia } = system
   const { match } = useRouter()
   const [searchState, setSearchState] = useState(
-    urlToSearchState(match.location)
+    urlToSearchState(match.location.search)
   )
   const [selectedTabIndex, setSelectedTabIndex] = useState(0)
   const debouncedSetStateRef = useRef<NodeJS.Timeout | null>(null)
@@ -66,8 +66,11 @@ export const AlgoliaApp: React.FC<AlgoliaAppProps> = ({ system }) => {
   }
 
   useEffect(() => {
-    setSearchState(urlToSearchState(match.location))
+    setSearchState(urlToSearchState(match.location.search))
   }, [match.location])
+
+  console.log("[debug] converted", match.location)
+  console.log("[debug] converted", urlToSearchState(match.location.search))
 
   if (searchClient) {
     const selectedIndice = algolia?.indices[selectedTabIndex]!
