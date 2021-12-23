@@ -2,14 +2,6 @@ import loadable from "@loadable/component"
 import { AppRouteConfig } from "v2/System/Router/Route"
 import { graphql } from "react-relay"
 
-const AlgoliaResults = loadable(
-  () =>
-    import(/* webpackChunkName: "algoliaBundle" */ "./Routes/AlgoliaResults"),
-  {
-    resolveComponent: component => component.AlgoliaResults,
-  }
-)
-
 const AlgoliaApp = loadable(
   () => import(/* webpackChunkName: "algoliaBundle" */ "./AlgoliaApp"),
   {
@@ -19,7 +11,7 @@ const AlgoliaApp = loadable(
 
 export const algoliaRoutes: AppRouteConfig[] = [
   {
-    path: "/algolia",
+    path: "/algolia/results",
     getComponent: () => AlgoliaApp,
     onClientSideRender: () => {
       AlgoliaApp.preload()
@@ -31,14 +23,5 @@ export const algoliaRoutes: AppRouteConfig[] = [
         }
       }
     `,
-    children: [
-      {
-        path: "results",
-        getComponent: () => AlgoliaResults,
-        onClientSideRender: () => {
-          AlgoliaResults.preload()
-        },
-      },
-    ],
   },
 ]
