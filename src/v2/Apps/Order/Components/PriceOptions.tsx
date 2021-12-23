@@ -1,4 +1,11 @@
-import { BorderedRadio, Flex, RadioGroup, Text } from "@artsy/palette"
+import {
+  BorderedRadio,
+  Clickable,
+  Flex,
+  Message,
+  RadioGroup,
+  Text,
+} from "@artsy/palette"
 import { useEffect, useState } from "react"
 import { OfferInput } from "v2/Apps/Order/Components/OfferInput"
 import { compact } from "lodash"
@@ -68,6 +75,17 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
 
   const [toggle, setToggle] = useState(false)
 
+  // const [hasErrorMessage, setErrorMessage] = useState(false)
+  // useEffect(() => {
+  //   if (hasErrorMessage) {
+  //     setErrorMessage(true)
+  //   }
+  // }, [hasErrorMessage])
+
+  // const hasMessage = () => {
+
+  // }
+
   const listPrice = artwork?.listPrice
   const minPriceRange = listPrice?.minPrice?.major
   const maxPriceRange = listPrice?.maxPrice?.major
@@ -136,6 +154,7 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
               trackClick("Different amount", 0)
             }}
             key="price-option-custom"
+            name="radio"
           >
             {toggle && (
               <Flex flexDirection="column" marginTop={2}>
@@ -148,6 +167,27 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
                 />
               </Flex>
             )}
+            <Flex>
+              {customValue == minPriceRange ? (
+                <Message variant="default" p={2}>
+                  Galleries usually accept offers within
+                  {artwork?.isPriceRange
+                    ? " the displayed price range"
+                    : " 20% of the listed price"}
+                  ; any lower is likely to be rejected.
+                  <Clickable
+                    textDecoration="underline"
+                    cursor="pointer"
+                    // onClick={}
+                  >
+                    We recommend changing your offer to
+                    {artwork?.isPriceRange ? minPriceRange : " USD $3,200"}.
+                  </Clickable>
+                </Message>
+              ) : (
+                ""
+              )}
+            </Flex>
           </BorderedRadio>
         )}
     </RadioGroup>
