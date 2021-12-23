@@ -38,6 +38,15 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
   const tracking = useTracking()
   const { contextPageOwnerId, contextPageOwnerType } = useAnalyticsContext()
 
+  const [customValue, setCustomValue] = useState<number>()
+  const [toggle, setToggle] = useState(false)
+  const [displayWarning, setDisplayWarning] = useState(false)
+  const listPrice = artwork?.listPrice
+
+  useEffect(() => {
+    customValue && onChange(customValue)
+  }, [customValue, onChange])
+
   const trackClick = (offer: string, amount: number) => {
     const trackingData: ClickedOfferOption = {
       action: ActionType.clickedOfferOption,
@@ -63,21 +72,11 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
       artwork?.priceCurrency!
     )
 
-  const [customValue, setCustomValue] = useState<number>()
-  useEffect(() => {
-    customValue && onChange(customValue)
-  }, [customValue, onChange])
-
-  const [toggle, setToggle] = useState(false)
-
-  const [hasErrorMessage, setErrorMessage] = useState(false)
-
-  const listPrice = artwork?.listPrice
-  const minPriceRange = listPrice?.minPrice?.major
-  const maxPriceRange = listPrice?.maxPrice?.major
-  const midPriceRange = (Number(minPriceRange) + Number(maxPriceRange)) / 2
-
   const getRangeOptions = () => {
+    const minPriceRange = listPrice?.minPrice?.major
+    const maxPriceRange = listPrice?.maxPrice?.major
+    const midPriceRange = (Number(minPriceRange) + Number(maxPriceRange)) / 2
+
     const getRangeDetails = [
       { value: minPriceRange, description: "Low-end of range" },
       { value: midPriceRange, description: "Midpoint" },
@@ -104,31 +103,25 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
   const priceOptions = artwork?.isPriceRange
     ? getRangeOptions()
     : getPercentageOptions()
+  const minPrice = priceOptions[0]?.value!
 
-  useEffect(() => {
-    setErrorMessage(false)
-    if (!toggle) {
-      setCustomValue(undefined)
-    }
-    if (toggle && customValue && customValue < priceOptions[0]?.value!) {
-      setErrorMessage(true)
+  const showMinPriceNotice = () => {
+    if (toggle && !!customValue && customValue < minPrice) {
+      setDisplayWarning(true)
       tracking.trackEvent({
         action_type: AnalyticsSchema.ActionType.ViewedOfferTooLow,
         flow: AnalyticsSchema.Flow.MakeOffer,
         order_id: order.internalID,
       })
     }
-  }, [
-    toggle,
-    customValue,
-    priceOptions,
-    order,
-    tracking,
-    setErrorMessage,
-    setCustomValue,
-  ])
+  }
 
-  const [, /*selected*/ setSelectedRadio] = useState(false)
+  useEffect(() => {
+    setDisplayWarning(false)
+    if (!toggle) setCustomValue(undefined)
+  }, [customValue, setCustomValue, setDisplayWarning, toggle])
+
+  const [selected, setSelectedRadio] = useState(false)
 
   const selectMinPrice = () => {
     trackClick("We recommend changing your offer", priceOptions[0]?.value!)
@@ -136,9 +129,8 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
     setSelectedRadio(true)
   }
 
-  console.log("select", selectMinPrice)
+  console.log("select", selected)
 
-  const minPriceExact = priceOptions[0]?.value!
   return (
     <RadioGroup>
       {compact(priceOptions)
@@ -178,11 +170,12 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
                     showError={showError}
                     onChange={setCustomValue}
                     onFocus={onFocus}
+                    onBlur={showMinPriceNotice}
                     noTitle
                   />
                 </Flex>
                 <Flex marginTop={2}>
-                  {hasErrorMessage ? (
+                  {displayWarning ? (
                     <Message variant="default" p={2}>
                       Galleries usually accept offers within
                       {artwork?.isPriceRange
@@ -195,10 +188,9 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
                         cursor="pointer"
                         onClick={selectMinPrice}
                       >
-                        {`We recommend changing your offer to 
-                     ${asCurrency(
-                       artwork?.isPriceRange ? minPriceRange! : minPriceExact!
-                     )}.`}
+                        {`We recommend changing your offer to ${asCurrency(
+                          minPrice
+                        )}.`}
                       </Clickable>
                     </Message>
                   ) : (
