@@ -1,7 +1,8 @@
-import { Box, Separator } from "@artsy/palette"
+import { Separator } from "@artsy/palette"
 import { AlgoliaResultItem } from "./AlgoliaResultItem"
 import { StateResultsProvided } from "react-instantsearch-core"
 import { AlgoliaHit } from "../types"
+import { LoadingArea } from "v2/Components/LoadingArea"
 
 export interface AlgoliaResultItemBaseProps {
   entityType: string
@@ -12,10 +13,10 @@ export interface AlgoliaResultItemProps
     AlgoliaResultItemBaseProps {}
 
 export const AlgoliaResults: React.FC<AlgoliaResultItemProps> = props => {
-  const { searchResults, entityType } = props
+  const { searchResults, entityType, isSearchStalled } = props
 
   return (
-    <Box>
+    <LoadingArea isLoading={isSearchStalled}>
       {searchResults?.hits.map((hit, index) => (
         <>
           <AlgoliaResultItem
@@ -27,6 +28,6 @@ export const AlgoliaResults: React.FC<AlgoliaResultItemProps> = props => {
           {index < searchResults.hits.length - 1 && <Separator />}
         </>
       ))}
-    </Box>
+    </LoadingArea>
   )
 }
