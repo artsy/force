@@ -56,7 +56,7 @@ export const AlgoliaApp: React.FC<AlgoliaAppProps> = ({ system, children }) => {
   const handleIndiceSelect = (indice: number) => {
     setSelectedTabIndex(indice)
     setSearchState({
-      searchState,
+      ...searchState,
       page: 1,
     })
   }
