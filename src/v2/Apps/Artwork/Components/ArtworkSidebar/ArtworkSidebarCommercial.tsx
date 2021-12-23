@@ -1,3 +1,4 @@
+import { userHasLabFeature } from "v2/Utils/user"
 import { ContextModule, Intent } from "@artsy/cohesion"
 import {
   Box,
@@ -362,6 +363,10 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
     const isOfferable = artwork?.is_offerable
     const isAcquireable = artwork?.is_acquireable
     const isInquireable = artwork?.is_inquireable
+    const labFeatureEnabled = userHasLabFeature(
+      this.props.user,
+      "Make Offer On All Eligible Artworks"
+    )
 
     const {
       isCommittingCreateOrderMutation,
@@ -376,7 +381,10 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
     }
 
     const shouldDisplayMakeOfferButton = (): boolean => {
-      if (isOfferable || (isPriceListed && isOfferableFromInquiry)) {
+      if (
+        isOfferable ||
+        (isPriceListed && isOfferableFromInquiry && labFeatureEnabled)
+      ) {
         return true
       }
       return false

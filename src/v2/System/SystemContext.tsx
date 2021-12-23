@@ -1,5 +1,5 @@
 import { Router } from "found"
-import { createContext, FC, useState } from "react";
+import { createContext, FC, useState } from "react"
 import { data as sd } from "sharify"
 import { Environment } from "relay-runtime"
 

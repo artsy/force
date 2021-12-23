@@ -14,10 +14,13 @@ import { setupTestWrapperTL } from "v2/DevTools/setupTestWrapper"
 jest.unmock("react-relay")
 
 describe("ArtworkSidebarCommercial RTL", () => {
+  const user = { lab_features: ["Make Offer On All Eligible Artworks"] }
+
   const { renderWithRelay } = setupTestWrapperTL({
+    variables: { user },
     Component: ({ artwork }: any) => {
       return (
-        <SystemContextProvider>
+        <SystemContextProvider user={user}>
           <ArtworkSidebarCommercialFragmentContainer artwork={artwork} />
         </SystemContextProvider>
       )
