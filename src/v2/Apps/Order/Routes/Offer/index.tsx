@@ -269,7 +269,7 @@ export class OfferRoute extends Component<OfferProps, OfferState> {
               )}
               {newOfferSubmissionEnabled && !isInquiryCheckout && (
                 <>
-                  <Text variant="lg" color="black80" marginTop={4}>
+                  <Text variant="lg" color="black80" marginTop={2}>
                     Select an Option
                   </Text>
                   {priceNote}
@@ -296,7 +296,7 @@ export class OfferRoute extends Component<OfferProps, OfferState> {
 
               {!order.isInquiryOrder && (
                 <>
-                  <Spacer mb={2} />
+                  <Spacer mb={4} />
                   <OfferNote
                     onChange={offerNoteValue =>
                       this.setState({ offerNoteValue })

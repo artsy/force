@@ -54,37 +54,23 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
   }
 
   const asCurrency = (value: number) =>
-    value?.toLocaleString("en-US", {
-      currency: artwork?.priceCurrency!,
-      minimumFractionDigits: 2,
-      style: "currency",
-    })
+    appendCurrencySymbol(
+      value?.toLocaleString("en-US", {
+        currency: artwork?.priceCurrency!,
+        minimumFractionDigits: 2,
+        style: "currency",
+      }),
+      artwork?.priceCurrency!
+    )
 
   const [customValue, setCustomValue] = useState<number>()
   useEffect(() => {
     customValue && onChange(customValue)
-    // TODO: move this call if necessary once the feature is implemented
-    if (toggle && customValue && customValue < priceOptions[0]?.value!) {
-      tracking.trackEvent({
-        action_type: AnalyticsSchema.ActionType.ViewedOfferTooLow,
-        flow: AnalyticsSchema.Flow.MakeOffer,
-        order_id: order.internalID,
-      })
-    }
   }, [customValue, onChange])
 
   const [toggle, setToggle] = useState(false)
 
-  // const [hasErrorMessage, setErrorMessage] = useState(false)
-  // useEffect(() => {
-  //   if (hasErrorMessage) {
-  //     setErrorMessage(true)
-  //   }
-  // }, [hasErrorMessage])
-
-  // const hasMessage = () => {
-
-  // }
+  const [hasErrorMessage, setErrorMessage] = useState(false)
 
   const listPrice = artwork?.listPrice
   const minPriceRange = listPrice?.minPrice?.major
@@ -119,25 +105,54 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
     ? getRangeOptions()
     : getPercentageOptions()
 
-  // TODO: add call bellow when the feature is implemented
-  // trackClick("We recommend changing your offer", priceOptions[0]?.value!)
+  useEffect(() => {
+    setErrorMessage(false)
+    if (!toggle) {
+      setCustomValue(undefined)
+    }
+    if (toggle && customValue && customValue < priceOptions[0]?.value!) {
+      setErrorMessage(true)
+      tracking.trackEvent({
+        action_type: AnalyticsSchema.ActionType.ViewedOfferTooLow,
+        flow: AnalyticsSchema.Flow.MakeOffer,
+        order_id: order.internalID,
+      })
+    }
+  }, [
+    toggle,
+    customValue,
+    priceOptions,
+    order,
+    tracking,
+    setErrorMessage,
+    setCustomValue,
+  ])
 
+  const [selected, setSelectedRadio] = useState(false)
+
+  const selectMinPrice = () => {
+    trackClick("We recommend changing your offer", priceOptions[0]?.value!)
+    // TODO: get specific radio option
+    setSelectedRadio(true)
+  }
+
+  console.log("select", selectMinPrice)
+
+  const minPriceExact = priceOptions[0]?.value!
   return (
     <RadioGroup>
       {compact(priceOptions)
         .map(({ value, description }) => (
           <BorderedRadio
             value={`price-option-${value}`}
-            label={appendCurrencySymbol(
-              asCurrency(value!),
-              artwork?.priceCurrency!
-            )}
+            label={asCurrency(value!)}
             onSelect={() => {
               onChange(value!)
               setToggle(false)
               trackClick(description, value)
             }}
             key={`price-option-${value}`}
+            defaultChecked
           >
             <Text variant="sm" color="black60">
               {description}
@@ -157,37 +172,42 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
             name="radio"
           >
             {toggle && (
-              <Flex flexDirection="column" marginTop={2}>
-                <OfferInput
-                  id="OfferForm_offerValue"
-                  showError={showError}
-                  onChange={setCustomValue}
-                  onFocus={onFocus}
-                  noTitle
-                />
-              </Flex>
+              <>
+                <Flex flexDirection="column" marginTop={2}>
+                  <OfferInput
+                    id="OfferForm_offerValue"
+                    showError={showError}
+                    onChange={setCustomValue}
+                    onFocus={onFocus}
+                    noTitle
+                  />
+                </Flex>
+                <Flex marginTop={1}>
+                  {hasErrorMessage ? (
+                    <Message variant="default" p={2}>
+                      Galleries usually accept offers within
+                      {artwork?.isPriceRange
+                        ? " the displayed price range"
+                        : " 20% of the listed price"}
+                      ; any lower is likely to be rejected.
+                      <br />
+                      <Clickable
+                        textDecoration="underline"
+                        cursor="pointer"
+                        onClick={selectMinPrice}
+                      >
+                        {`We recommend changing your offer to 
+                     ${asCurrency(
+                       artwork?.isPriceRange ? minPriceRange! : minPriceExact!
+                     )}.`}
+                      </Clickable>
+                    </Message>
+                  ) : (
+                    ""
+                  )}
+                </Flex>
+              </>
             )}
-            <Flex>
-              {customValue == minPriceRange ? (
-                <Message variant="default" p={2}>
-                  Galleries usually accept offers within
-                  {artwork?.isPriceRange
-                    ? " the displayed price range"
-                    : " 20% of the listed price"}
-                  ; any lower is likely to be rejected.
-                  <Clickable
-                    textDecoration="underline"
-                    cursor="pointer"
-                    // onClick={}
-                  >
-                    We recommend changing your offer to
-                    {artwork?.isPriceRange ? minPriceRange : " USD $3,200"}.
-                  </Clickable>
-                </Message>
-              ) : (
-                ""
-              )}
-            </Flex>
           </BorderedRadio>
         )}
     </RadioGroup>
