@@ -256,17 +256,20 @@ export const ArtworkSingleEditionHiddenAvailability = {
 }
 
 export const ArtworkOfferableAndInquireablePriceHidden = {
-  ...ArtworkSingleEditionHiddenAvailability,
+  ...FullArtworkFixture,
   isPriceHidden: true,
+  isOfferableFromInquiry: true,
 }
 
 export const ArtworkOfferableFromInquiryPriceRange = {
-  ...ContactForPriceWork,
+  ...FullArtworkFixture,
   is_price_range: true,
+  isPriceHidden: false,
   isOfferableFromInquiry: true,
 }
 
 export const ArtworkOfferableFromInquiryPriceExact = {
   ...ContactForPriceWork,
   isOfferableFromInquiry: true,
+  isPriceHidden: false,
 }
