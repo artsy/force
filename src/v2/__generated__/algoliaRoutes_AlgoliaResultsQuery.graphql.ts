@@ -3,36 +3,23 @@
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type algoliaRoutes_AlgoliaQueryVariables = {};
-export type algoliaRoutes_AlgoliaQueryResponse = {
+export type algoliaRoutes_AlgoliaResultsQueryVariables = {};
+export type algoliaRoutes_AlgoliaResultsQueryResponse = {
     readonly system: {
-        readonly " $fragmentRefs": FragmentRefs<"AlgoliaApp_system">;
+        readonly " $fragmentRefs": FragmentRefs<"AlgoliaResults_system">;
     } | null;
 };
-export type algoliaRoutes_AlgoliaQuery = {
-    readonly response: algoliaRoutes_AlgoliaQueryResponse;
-    readonly variables: algoliaRoutes_AlgoliaQueryVariables;
+export type algoliaRoutes_AlgoliaResultsQuery = {
+    readonly response: algoliaRoutes_AlgoliaResultsQueryResponse;
+    readonly variables: algoliaRoutes_AlgoliaResultsQueryVariables;
 };
 
 
 
 /*
-query algoliaRoutes_AlgoliaQuery {
+query algoliaRoutes_AlgoliaResultsQuery {
   system {
-    ...AlgoliaApp_system
-  }
-}
-
-fragment AlgoliaApp_system on System {
-  algolia {
-    apiKey
-    appID
-    indices {
-      displayName
-      name
-    }
-    ...AlgoliaIndices_algolia
-    ...AlgoliaResults_algolia
+    ...AlgoliaResults_system
   }
 }
 
@@ -44,10 +31,23 @@ fragment AlgoliaIndices_algolia on Algolia {
   }
 }
 
-fragment AlgoliaResults_algolia on Algolia {
+fragment AlgoliaResultsList_algolia on Algolia {
   indices {
     displayName
     name
+  }
+}
+
+fragment AlgoliaResults_system on System {
+  algolia {
+    apiKey
+    appID
+    indices {
+      displayName
+      name
+    }
+    ...AlgoliaIndices_algolia
+    ...AlgoliaResultsList_algolia
   }
 }
 */
@@ -57,7 +57,7 @@ const node: ConcreteRequest = {
     "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
-    "name": "algoliaRoutes_AlgoliaQuery",
+    "name": "algoliaRoutes_AlgoliaResultsQuery",
     "selections": [
       {
         "alias": null,
@@ -70,7 +70,7 @@ const node: ConcreteRequest = {
           {
             "args": null,
             "kind": "FragmentSpread",
-            "name": "AlgoliaApp_system"
+            "name": "AlgoliaResults_system"
           }
         ],
         "storageKey": null
@@ -82,7 +82,7 @@ const node: ConcreteRequest = {
   "operation": {
     "argumentDefinitions": [],
     "kind": "Operation",
-    "name": "algoliaRoutes_AlgoliaQuery",
+    "name": "algoliaRoutes_AlgoliaResultsQuery",
     "selections": [
       {
         "alias": null,
@@ -157,10 +157,10 @@ const node: ConcreteRequest = {
   "params": {
     "id": null,
     "metadata": {},
-    "name": "algoliaRoutes_AlgoliaQuery",
+    "name": "algoliaRoutes_AlgoliaResultsQuery",
     "operationKind": "query",
-    "text": "query algoliaRoutes_AlgoliaQuery {\n  system {\n    ...AlgoliaApp_system\n  }\n}\n\nfragment AlgoliaApp_system on System {\n  algolia {\n    apiKey\n    appID\n    indices {\n      displayName\n      name\n    }\n    ...AlgoliaIndices_algolia\n    ...AlgoliaResults_algolia\n  }\n}\n\nfragment AlgoliaIndices_algolia on Algolia {\n  indices {\n    displayName\n    key\n    name\n  }\n}\n\nfragment AlgoliaResults_algolia on Algolia {\n  indices {\n    displayName\n    name\n  }\n}\n"
+    "text": "query algoliaRoutes_AlgoliaResultsQuery {\n  system {\n    ...AlgoliaResults_system\n  }\n}\n\nfragment AlgoliaIndices_algolia on Algolia {\n  indices {\n    displayName\n    key\n    name\n  }\n}\n\nfragment AlgoliaResultsList_algolia on Algolia {\n  indices {\n    displayName\n    name\n  }\n}\n\nfragment AlgoliaResults_system on System {\n  algolia {\n    apiKey\n    appID\n    indices {\n      displayName\n      name\n    }\n    ...AlgoliaIndices_algolia\n    ...AlgoliaResultsList_algolia\n  }\n}\n"
   }
 };
-(node as any).hash = 'fe9f7e94981a0a973e5bace060b62840';
+(node as any).hash = '608f52c3d031f36f87571add00f22a92';
 export default node;

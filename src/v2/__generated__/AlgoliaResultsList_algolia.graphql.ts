@@ -3,17 +3,17 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type AlgoliaResults_algolia = {
+export type AlgoliaResultsList_algolia = {
     readonly indices: ReadonlyArray<{
         readonly displayName: string;
         readonly name: string;
     }>;
-    readonly " $refType": "AlgoliaResults_algolia";
+    readonly " $refType": "AlgoliaResultsList_algolia";
 };
-export type AlgoliaResults_algolia$data = AlgoliaResults_algolia;
-export type AlgoliaResults_algolia$key = {
-    readonly " $data"?: AlgoliaResults_algolia$data;
-    readonly " $fragmentRefs": FragmentRefs<"AlgoliaResults_algolia">;
+export type AlgoliaResultsList_algolia$data = AlgoliaResultsList_algolia;
+export type AlgoliaResultsList_algolia$key = {
+    readonly " $data"?: AlgoliaResultsList_algolia$data;
+    readonly " $fragmentRefs": FragmentRefs<"AlgoliaResultsList_algolia">;
 };
 
 
@@ -22,7 +22,7 @@ const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "AlgoliaResults_algolia",
+  "name": "AlgoliaResultsList_algolia",
   "selections": [
     {
       "alias": null,
@@ -52,5 +52,5 @@ const node: ReaderFragment = {
   ],
   "type": "Algolia"
 };
-(node as any).hash = 'eddc04cfc7a9f7c0494ad7538739b317';
+(node as any).hash = '7aaa17ee904ab0eb6f044b27abf01113';
 export default node;

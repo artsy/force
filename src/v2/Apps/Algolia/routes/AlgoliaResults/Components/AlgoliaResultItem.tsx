@@ -1,7 +1,7 @@
 import { Hit } from "react-instantsearch-core"
 import { GenericSearchResultItem } from "v2/Apps/Search/Components/GenericSearchResultItem"
 import { useRouter } from "v2/System/Router/useRouter"
-import { AlgoliaHit } from "../types"
+import { AlgoliaHit } from "v2/Apps/Algolia/types"
 
 interface AlgoliaResultItemProps {
   hit: Hit<AlgoliaHit>

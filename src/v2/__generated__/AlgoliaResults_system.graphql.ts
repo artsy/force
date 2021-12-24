@@ -3,7 +3,7 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type AlgoliaApp_system = {
+export type AlgoliaResults_system = {
     readonly algolia: {
         readonly apiKey: string;
         readonly appID: string;
@@ -11,14 +11,14 @@ export type AlgoliaApp_system = {
             readonly displayName: string;
             readonly name: string;
         }>;
-        readonly " $fragmentRefs": FragmentRefs<"AlgoliaIndices_algolia" | "AlgoliaResults_algolia">;
+        readonly " $fragmentRefs": FragmentRefs<"AlgoliaIndices_algolia" | "AlgoliaResultsList_algolia">;
     } | null;
-    readonly " $refType": "AlgoliaApp_system";
+    readonly " $refType": "AlgoliaResults_system";
 };
-export type AlgoliaApp_system$data = AlgoliaApp_system;
-export type AlgoliaApp_system$key = {
-    readonly " $data"?: AlgoliaApp_system$data;
-    readonly " $fragmentRefs": FragmentRefs<"AlgoliaApp_system">;
+export type AlgoliaResults_system$data = AlgoliaResults_system;
+export type AlgoliaResults_system$key = {
+    readonly " $data"?: AlgoliaResults_system$data;
+    readonly " $fragmentRefs": FragmentRefs<"AlgoliaResults_system">;
 };
 
 
@@ -27,7 +27,7 @@ const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "AlgoliaApp_system",
+  "name": "AlgoliaResults_system",
   "selections": [
     {
       "alias": null,
@@ -84,7 +84,7 @@ const node: ReaderFragment = {
         {
           "args": null,
           "kind": "FragmentSpread",
-          "name": "AlgoliaResults_algolia"
+          "name": "AlgoliaResultsList_algolia"
         }
       ],
       "storageKey": null
@@ -92,5 +92,5 @@ const node: ReaderFragment = {
   ],
   "type": "System"
 };
-(node as any).hash = '918a8b800cf6625a0c053a0c918535d1';
+(node as any).hash = '9141a695bf21bea53a4c4ba17be9ccdb';
 export default node;
