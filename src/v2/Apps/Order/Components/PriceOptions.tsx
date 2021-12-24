@@ -116,7 +116,7 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
 
   const selectMinPrice = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation()
-    trackClick("We recommend changing your offer", priceOptions[0]?.value!)
+    trackClick("We recommend changing your offer", minPrice)
     setSelectedRadio("price-option-0")
     setToggle(false)
     setCustomValue(undefined)
