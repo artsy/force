@@ -10,9 +10,12 @@ const AlgoliaApp = loadable(
 )
 
 const AlgoliaHome = loadable(
-  () => import(/* webpackChunkName: "algoliaBundle" */ "./routes/AlgoliaHome"),
+  () =>
+    import(
+      /* webpackChunkName: "algoliaBundle" */ "./routes/AlgoliaHome/AlgoliaHome"
+    ),
   {
-    resolveComponent: component => component.AlgoliaHome,
+    resolveComponent: component => component.AlgoliaHomeFragmentContainer,
   }
 )
 
@@ -40,6 +43,13 @@ export const algoliaRoutes: AppRouteConfig[] = [
         onClientSideRender: () => {
           AlgoliaHome.preload()
         },
+        query: graphql`
+          query algoliaRoutes_AlgoliaHomeQuery {
+            system {
+              ...AlgoliaHome_system
+            }
+          }
+        `,
       },
       {
         path: "results",
