@@ -1,20 +1,20 @@
 import { Separator } from "@artsy/palette"
 import { AlgoliaResultItem } from "./AlgoliaResultItem"
 import { StateResultsProvided } from "react-instantsearch-core"
-import { AlgoliaHit } from "../types"
+import { AlgoliaHit } from "v2/Apps/Algolia/types"
 import { LoadingArea } from "v2/Components/LoadingArea"
 import { EmptyMessage } from "./EmptyMessage"
 import { createFragmentContainer, graphql } from "react-relay"
-import { AlgoliaResults_algolia } from "v2/__generated__/AlgoliaResults_algolia.graphql"
+import { AlgoliaResultsList_algolia } from "v2/__generated__/AlgoliaResultsList_algolia.graphql"
 import { keyBy } from "lodash"
 
 type StateResults = StateResultsProvided<AlgoliaHit>
 
-export interface AlgoliaResultsProps extends StateResults {
-  algolia: AlgoliaResults_algolia | null
+export interface AlgoliaResultsListProps extends StateResults {
+  algolia: AlgoliaResultsList_algolia | null
 }
 
-export const AlgoliaResults: React.FC<AlgoliaResultsProps> = props => {
+export const AlgoliaResultsList: React.FC<AlgoliaResultsListProps> = props => {
   const { searchResults, isSearchStalled, algolia } = props
   const indiceByKey = keyBy(algolia?.indices ?? [], "name")
   const entityType = indiceByKey[searchResults?.index]?.displayName ?? ""
@@ -41,11 +41,11 @@ export const AlgoliaResults: React.FC<AlgoliaResultsProps> = props => {
   )
 }
 
-export const AlgoliaResultsFragmentContainer = createFragmentContainer(
-  AlgoliaResults,
+export const AlgoliaResultsListFragmentContainer = createFragmentContainer(
+  AlgoliaResultsList,
   {
     algolia: graphql`
-      fragment AlgoliaResults_algolia on Algolia {
+      fragment AlgoliaResultsList_algolia on Algolia {
         indices {
           displayName
           name

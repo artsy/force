@@ -2,15 +2,15 @@ import { screen } from "@testing-library/react"
 import { graphql } from "relay-runtime"
 import { setupTestWrapperTL } from "v2/DevTools/setupTestWrapper"
 import {
-  AlgoliaResults_Test_Query,
-  AlgoliaResults_Test_QueryRawResponse,
-} from "v2/__generated__/AlgoliaResults_Test_Query.graphql"
+  AlgoliaResultsList_Test_Query,
+  AlgoliaResultsList_Test_QueryRawResponse,
+} from "v2/__generated__/AlgoliaResultsList_Test_Query.graphql"
 import {
-  AlgoliaResultsProps,
-  AlgoliaResultsFragmentContainer,
-} from "../AlgoliaResults"
+  AlgoliaResultsListProps,
+  AlgoliaResultsListFragmentContainer,
+} from "../AlgoliaResultsList"
 import { SearchResults } from "react-instantsearch-core"
-import { AlgoliaHit } from "../../types"
+import { AlgoliaHit } from "v2/Apps/Algolia/types"
 
 jest.unmock("react-relay")
 jest.mock("v2/System/Router/useRouter", () => ({
@@ -28,15 +28,15 @@ jest.mock("v2/System/Router/useRouter", () => ({
 
 const onClickMock = jest.fn()
 
-describe("AlgoliaResults", () => {
+describe("AlgoliaResultsList", () => {
   const getWrapper = (
-    props?: Partial<Omit<AlgoliaResultsProps, "algolia">>
+    props?: Partial<Omit<AlgoliaResultsListProps, "algolia">>
   ) => {
-    return setupTestWrapperTL<AlgoliaResults_Test_Query>({
+    return setupTestWrapperTL<AlgoliaResultsList_Test_Query>({
       Component: ({ system }) => {
         if (system?.algolia) {
           return (
-            <AlgoliaResultsFragmentContainer
+            <AlgoliaResultsListFragmentContainer
               algolia={system.algolia}
               searchState={{}}
               searchResults={SearchResultsFixture}
@@ -53,10 +53,10 @@ describe("AlgoliaResults", () => {
         return null
       },
       query: graphql`
-        query AlgoliaResults_Test_Query @raw_response_type {
+        query AlgoliaResultsList_Test_Query @raw_response_type {
           system {
             algolia {
-              ...AlgoliaResults_algolia
+              ...AlgoliaResultsList_algolia
             }
           }
         }
@@ -106,7 +106,7 @@ describe("AlgoliaResults", () => {
 })
 
 const AlgoliaIndicesFixture: NonNullable<
-  AlgoliaResults_Test_QueryRawResponse["system"]
+  AlgoliaResultsList_Test_QueryRawResponse["system"]
 >["algolia"] = {
   indices: [
     {

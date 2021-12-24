@@ -1,7 +1,7 @@
 import { Box, Pagination } from "@artsy/palette"
 import { useScrollTo } from "v2/Utils/Hooks/useScrollTo"
-import { ANCHOR_CONTAINER_ID } from "../constants"
-import { createPageCursors } from "../Utils/pagination"
+import { ANCHOR_CONTAINER_ID } from "v2/Apps/Algolia/constants"
+import { createPageCursors } from "v2/Apps/Algolia/Utils/pagination"
 
 export const AlgoliaPagination = props => {
   const { nbPages, currentRefinement, refine } = props
