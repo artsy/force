@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC } from "react"
 import {
   ArrowLeftIcon,
   Box,
@@ -42,14 +42,14 @@ export const ConversationHeader: FC<ConversationHeaderProps> = props => {
   const { partnerName, showDetails, setShowDetails } = props
   return (
     <>
-      <Media between={["xs", "sm"]}>
+      <Media lessThan="sm">
         <SmallConversationHeader
           showDetails={showDetails}
           setShowDetails={setShowDetails}
           partnerName={partnerName}
         />
       </Media>
-      <Media greaterThan="sm">
+      <Media greaterThanOrEqual="sm">
         <LargeConversationHeader
           showDetails={showDetails}
           setShowDetails={setShowDetails}

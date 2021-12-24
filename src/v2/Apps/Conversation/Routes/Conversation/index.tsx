@@ -1,5 +1,4 @@
 import { useState } from "react"
-import * as React from "react"
 import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
 import { Box, Flex, FullBleed, Title, ThemeProviderV3 } from "@artsy/palette"
 import { Match } from "found"
@@ -11,6 +10,7 @@ import { ConversationListPaginationContainer as ConversationList } from "v2/Apps
 import { Media } from "v2/Utils/Responsive"
 import { Conversation_me } from "v2/__generated__/Conversation_me.graphql"
 import { DetailsSidebarFragmentContainer } from "../../Components/DetailsSidebar"
+
 interface ConversationRouteProps {
   me: Conversation_me
   conversationID: string
