@@ -1,13 +1,7 @@
-import {
-  BorderedRadio,
-  Clickable,
-  Flex,
-  Message,
-  RadioGroup,
-  Text,
-} from "@artsy/palette"
+import { BorderedRadio, Flex, RadioGroup, Text } from "@artsy/palette"
 import { useEffect, useState } from "react"
 import { OfferInput } from "v2/Apps/Order/Components/OfferInput"
+import { MinPriceWarning } from "./MinPriceWarning"
 import { compact } from "lodash"
 import { createFragmentContainer, graphql } from "react-relay"
 import {
@@ -41,11 +35,13 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
   const [customValue, setCustomValue] = useState<number>()
   const [toggle, setToggle] = useState(false)
   const [displayWarning, setDisplayWarning] = useState(false)
+  const [selectedRadio, setSelectedRadio] = useState<string>()
   const listPrice = artwork?.listPrice
 
   useEffect(() => {
-    customValue && onChange(customValue)
-  }, [customValue, onChange])
+    if (!!customValue) onChange(customValue)
+    setDisplayWarning(false)
+  }, [customValue])
 
   const trackClick = (offer: string, amount: number) => {
     const trackingData: ClickedOfferOption = {
@@ -82,16 +78,18 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
       { value: midPriceRange, description: "Midpoint" },
       { value: maxPriceRange, description: "Top-end of range" },
     ]
-    return getRangeDetails.map(rangePrice => ({
+    return getRangeDetails.map((rangePrice, idx) => ({
+      key: `price-option-${idx}`,
       value: rangePrice.value!,
       description: rangePrice.description,
     }))
   }
 
   const getPercentageOptions = () => {
-    return [0.2, 0.15, 0.1].map(pricePercentage => {
+    return [0.2, 0.15, 0.1].map((pricePercentage, idx) => {
       if (listPrice?.major) {
         return {
+          key: `price-option-${idx}`,
           value: listPrice.major * (1 - pricePercentage),
           description: `${pricePercentage * 100}% below the list price`,
         }
@@ -116,34 +114,29 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
     }
   }
 
-  useEffect(() => {
-    setDisplayWarning(false)
-    if (!toggle) setCustomValue(undefined)
-  }, [customValue, setCustomValue, setDisplayWarning, toggle])
-
-  const [selected, setSelectedRadio] = useState(false)
-
-  const selectMinPrice = () => {
+  const selectMinPrice = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation()
     trackClick("We recommend changing your offer", priceOptions[0]?.value!)
-    // TODO: get specific radio option
-    setSelectedRadio(true)
+    setSelectedRadio("price-option-0")
+    setToggle(false)
+    setCustomValue(undefined)
+    onChange(minPrice)
   }
 
-  console.log("select", selected)
-
   return (
-    <RadioGroup>
+    <RadioGroup onSelect={setSelectedRadio} defaultValue={selectedRadio}>
       {compact(priceOptions)
-        .map(({ value, description }) => (
+        .map(({ value, description, key }) => (
           <BorderedRadio
-            value={`price-option-${value}`}
+            value={key}
             label={asCurrency(value!)}
             onSelect={() => {
               onChange(value!)
               setToggle(false)
+              setCustomValue(undefined)
               trackClick(description, value)
             }}
-            key={`price-option-${value}`}
+            key={key}
           >
             <Text variant="sm" color="black60">
               {description}
@@ -163,41 +156,23 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
             name="radio"
           >
             {toggle && (
-              <>
-                <Flex flexDirection="column" marginTop={2}>
-                  <OfferInput
-                    id="OfferForm_offerValue"
-                    showError={showError}
-                    onChange={setCustomValue}
-                    onFocus={onFocus}
-                    onBlur={showMinPriceNotice}
-                    noTitle
+              <Flex flexDirection="column" mt={2}>
+                <OfferInput
+                  id="OfferForm_offerValue"
+                  showError={showError}
+                  onChange={setCustomValue}
+                  onFocus={onFocus}
+                  onBlur={showMinPriceNotice}
+                  noTitle
+                />
+                {!!displayWarning && (
+                  <MinPriceWarning
+                    isPriceRange={!!artwork?.isPriceRange}
+                    onClick={selectMinPrice}
+                    minPrice={asCurrency(minPrice) as string}
                   />
-                </Flex>
-                <Flex marginTop={2}>
-                  {displayWarning ? (
-                    <Message variant="default" p={2}>
-                      Galleries usually accept offers within
-                      {artwork?.isPriceRange
-                        ? " the displayed price range"
-                        : " 20% of the listed price"}
-                      ; any lower is likely to be rejected.
-                      <br />
-                      <Clickable
-                        textDecoration="underline"
-                        cursor="pointer"
-                        onClick={selectMinPrice}
-                      >
-                        {`We recommend changing your offer to ${asCurrency(
-                          minPrice
-                        )}.`}
-                      </Clickable>
-                    </Message>
-                  ) : (
-                    ""
-                  )}
-                </Flex>
-              </>
+                )}
+              </Flex>
             )}
           </BorderedRadio>
         )}
