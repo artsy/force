@@ -51,6 +51,17 @@ export interface GalleryAlgoliaHit {
   search_boost?: number
 }
 
+export interface GlobalAlgoliaHit {
+  type?: string
+  alternate_names?: string[] | null
+  featured_names?: string[] | null
+  objectID: string
+  name: string
+  image_url: string | null
+  href: string
+  slug: string
+}
+
 export interface AlgoliaHit
   extends ArtistAlgoliaHit,
     FairAlgoliaHit,
@@ -59,7 +70,9 @@ export interface AlgoliaHit
     ArtistSeriesAlgoliaHit,
     CollectionAlgoliaHit,
     ShowAlgoliaHit,
-    GalleryAlgoliaHit {
+    GalleryAlgoliaHit,
+    GlobalAlgoliaHit {
+  objectID: string
   name: string
   image_url: string | null
   href: string

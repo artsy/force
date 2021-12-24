@@ -1,10 +1,12 @@
-import { Box, Text } from "@artsy/palette"
+import { Box } from "@artsy/palette"
 import { useMemo } from "react"
 import algoliasearch from "algoliasearch"
 import { InstantSearch } from "react-instantsearch-core"
 import { createFragmentContainer, graphql } from "react-relay"
 import { AlgoliaHome_system } from "v2/__generated__/AlgoliaHome_system.graphql"
 import { getENV } from "v2/Utils/getENV"
+import { connectAutoComplete } from "react-instantsearch-dom"
+import { AlgoliaAutocomplete } from "./components/AlgoliaAutocomplete"
 
 interface AlgoliaHomeProps {
   system: AlgoliaHome_system
@@ -17,6 +19,8 @@ const getIndexName = () => {
 
   return "Global_staging"
 }
+
+const ConnectAlgoliaAutocomplete = connectAutoComplete(AlgoliaAutocomplete)
 
 export const AlgoliaHome: React.FC<AlgoliaHomeProps> = ({ system }) => {
   const { algolia } = system
@@ -33,7 +37,7 @@ export const AlgoliaHome: React.FC<AlgoliaHomeProps> = ({ system }) => {
     return (
       <Box my={4}>
         <InstantSearch searchClient={searchClient} indexName={indexName}>
-          <Text>AlgoliaHome</Text>
+          <ConnectAlgoliaAutocomplete />
         </InstantSearch>
       </Box>
     )
