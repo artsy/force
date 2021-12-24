@@ -1,7 +1,7 @@
 import { MetaTags } from "v2/Components/MetaTags"
 import { useRouter } from "v2/System/Router/useRouter"
 
-export const AlgoliaMeta = () => {
+export const AlgoliaResultsMeta = () => {
   const { match } = useRouter()
   const {
     location: {
