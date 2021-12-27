@@ -7,14 +7,18 @@ import {
 } from "@artsy/palette"
 import { ArtworkDetailsFormModel } from "./ArtworkDetailsForm"
 import { useFormikContext } from "formik"
-import { data as sd } from "sharify"
+import { getENV } from "v2/Utils/getENV"
 import { useLoadScript } from "v2/Utils/Hooks/useLoadScript"
 import { useEffect, useMemo, useRef, useState } from "react"
 import { debounce } from "lodash"
 import { useRouter } from "v2/System/Router/useRouter"
 
 const DEBOUNCE_DELAY = 300
-const GOOGLE_PLACES_API_SRC = `https://maps.googleapis.com/maps/api/js?key=${sd.GOOGLE_MAPS_API_KEY}&libraries=places&v=weekly&language=en&sessiontoken=${sd.SESSION_ID}&callback=__googleMapsCallback`
+const GOOGLE_PLACES_API_SRC = `https://maps.googleapis.com/maps/api/js?key=${getENV(
+  "GOOGLE_MAPS_API_KEY"
+)}&libraries=places&v=weekly&language=en&sessiontoken=${getENV(
+  "SESSION_ID"
+)}&callback=__googleMapsCallback`
 
 export const LocationAutoComplete: React.FC<{ onError: () => void }> = ({
   onError,
@@ -169,6 +173,11 @@ export const LocationAutoComplete: React.FC<{ onError: () => void }> = ({
       placeholder="Enter City Where Artwork Is Located"
       data-test-id="autocomplete-location"
       spellCheck={false}
+      // footer={
+      //   <Flex px={2} py={0.5} bg="white100" justifyContent="flex-end">
+      //     <PoweredByGoogleIcon />
+      //   </Flex>
+      // }
       loading={isLoading}
       defaultValue={values.location}
       error={values.location?.trim() && touched.location && errors.locationId}
