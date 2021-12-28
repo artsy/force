@@ -116,24 +116,23 @@ export const ContactInformation: React.FC<ContactInformationProps> = ({
         onSubmit={handleSubmit}
         validationSchema={contactInformationValidationSchema}
         initialErrors={initialErrors}
+        initialTouched={{}}
       >
-        {({ isValid, isSubmitting }) => {
-          return (
-            <Form>
-              <ContactInformationForm my={6} me={me} />
+        {({ isValid, isSubmitting }) => (
+          <Form>
+            <ContactInformationForm my={6} me={me} />
 
-              <Button
-                data-test-id="save-button"
-                width={["100%", "auto"]}
-                disabled={!isValid || isSubmitting}
-                loading={isSubmitting}
-                type="submit"
-              >
-                Submit Artwork
-              </Button>
-            </Form>
-          )
-        }}
+            <Button
+              data-test-id="save-button"
+              width={["100%", "auto"]}
+              disabled={!isValid || isSubmitting}
+              loading={isSubmitting}
+              type="submit"
+            >
+              Submit Artwork
+            </Button>
+          </Form>
+        )}
       </Formik>
     </>
   )
