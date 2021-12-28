@@ -123,25 +123,23 @@ export const ArtworkDetails: React.FC<ArtworkDetailsProps> = ({
         validationSchema={artworkDetailsValidationSchema}
         initialErrors={initialErrors}
       >
-        {({ isSubmitting, isValid }) => {
-          return (
-            <Form>
-              <ArtworkDetailsForm />
-              <Button
-                mt={6}
-                width={["100%", "auto"]}
-                data-test-id="save-button"
-                type="submit"
-                size="medium"
-                variant="primaryBlack"
-                loading={isSubmitting}
-                disabled={!isValid}
-              >
-                Save and Continue
-              </Button>
-            </Form>
-          )
-        }}
+        {({ isSubmitting, isValid }) => (
+          <Form>
+            <ArtworkDetailsForm />
+            <Button
+              mt={6}
+              width={["100%", "auto"]}
+              data-test-id="save-button"
+              type="submit"
+              size="medium"
+              variant="primaryBlack"
+              loading={isSubmitting}
+              disabled={!isValid}
+            >
+              Save and Continue
+            </Button>
+          </Form>
+        )}
       </Formik>
     </>
   )
