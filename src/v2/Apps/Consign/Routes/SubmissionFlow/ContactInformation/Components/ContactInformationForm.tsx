@@ -4,7 +4,6 @@ import { ContactInformation_me } from "v2/__generated__/ContactInformation_me.gr
 import { getPhoneNumberInformation } from "../../Utils/phoneNumberUtils"
 import { useSystemContext } from "v2/System"
 import { PhoneNumber, PhoneNumberInput } from "./PhoneNumberInput"
-import { useEffect } from "react"
 
 export interface ContactInformationFormModel {
   name: string
@@ -27,7 +26,6 @@ export const ContactInformationForm: React.FC<ContactInformationFormProps> = ({
     touched,
     errors,
     setFieldValue,
-    setFieldTouched,
   } = useFormikContext<ContactInformationFormModel>()
   const { relayEnvironment } = useSystemContext()
 
@@ -42,10 +40,6 @@ export const ContactInformationForm: React.FC<ContactInformationFormProps> = ({
       setFieldValue("phone", phoneInformation)
     }
   }
-
-  useEffect(() => {
-    setFieldTouched("phone", false)
-  }, [])
 
   return (
     <Box {...rest}>
