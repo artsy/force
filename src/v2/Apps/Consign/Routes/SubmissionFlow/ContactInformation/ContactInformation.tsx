@@ -11,7 +11,10 @@ import {
 import { createFragmentContainer, graphql } from "react-relay"
 import { ContactInformation_me } from "v2/__generated__/ContactInformation_me.graphql"
 import { ContactInformation_submission } from "v2/__generated__/ContactInformation_submission.graphql"
-import { contactInformationValidationSchema } from "../Utils/validation"
+import {
+  contactInformationValidationSchema,
+  validate,
+} from "../Utils/validation"
 import { BackLink } from "v2/Components/Links/BackLink"
 import { useErrorModal } from "../Utils/useErrorModal"
 import { getENV } from "v2/Utils/getENV"
@@ -44,6 +47,11 @@ export const ContactInformation: React.FC<ContactInformationProps> = ({
   const { router } = useRouter()
   const { openErrorModal } = useErrorModal()
   const { relayEnvironment, user, isLoggedIn } = useSystemContext()
+  const initialValue = getContactInformationFormInitialValues(me)
+  const initialErrors = validate(
+    initialValue,
+    contactInformationValidationSchema
+  )
 
   const handleRecaptcha = (action: RecaptchaAction) =>
     new Promise(resolve => recaptcha(action, resolve))
@@ -103,10 +111,11 @@ export const ContactInformation: React.FC<ContactInformationProps> = ({
       </Text>
 
       <Formik<ContactInformationFormModel>
-        initialValues={getContactInformationFormInitialValues(me)}
         validateOnMount
+        initialValues={initialValue}
         onSubmit={handleSubmit}
         validationSchema={contactInformationValidationSchema}
+        initialErrors={initialErrors}
       >
         {({ isValid, isSubmitting }) => {
           return (
