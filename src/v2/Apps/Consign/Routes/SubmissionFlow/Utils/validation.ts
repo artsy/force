@@ -1,5 +1,6 @@
 import * as yup from "yup"
 import { email } from "v2/Components/Authentication/Validators"
+import { FormikErrors, yupToFormErrors } from "formik"
 
 export const artworkDetailsValidationSchema = yup.object().shape({
   artistId: yup
@@ -67,3 +68,17 @@ export const contactInformationValidationSchema = yup.object().shape({
       value => value.isValid
     ),
 })
+
+export const validate = <T>(values: T, validationSchema: yup.AnySchema) => {
+  let errors: FormikErrors<T> = {}
+
+  try {
+    validationSchema.validateSync(values, {
+      abortEarly: false,
+    })
+  } catch (error) {
+    errors = yupToFormErrors(error)
+  }
+
+  return errors
+}
