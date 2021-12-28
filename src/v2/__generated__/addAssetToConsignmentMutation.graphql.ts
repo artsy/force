@@ -18,11 +18,6 @@ export type addAssetToConsignmentMutationResponse = {
     readonly addAssetToConsignmentSubmission: {
         readonly asset: {
             readonly submissionID: string | null;
-            readonly geminiToken: string | null;
-            readonly imageUrls: unknown | null;
-            readonly submissionId: string;
-            readonly filename: string | null;
-            readonly size: string | null;
         } | null;
     } | null;
 };
@@ -40,11 +35,6 @@ mutation addAssetToConsignmentMutation(
   addAssetToConsignmentSubmission(input: $input) {
     asset {
       submissionID
-      geminiToken
-      imageUrls
-      submissionId
-      filename
-      size
       id
     }
   }
@@ -73,41 +63,6 @@ v2 = {
   "kind": "ScalarField",
   "name": "submissionID",
   "storageKey": null
-},
-v3 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "geminiToken",
-  "storageKey": null
-},
-v4 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "imageUrls",
-  "storageKey": null
-},
-v5 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "submissionId",
-  "storageKey": null
-},
-v6 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "filename",
-  "storageKey": null
-},
-v7 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "size",
-  "storageKey": null
 };
 return {
   "fragment": {
@@ -132,12 +87,7 @@ return {
             "name": "asset",
             "plural": false,
             "selections": [
-              (v2/*: any*/),
-              (v3/*: any*/),
-              (v4/*: any*/),
-              (v5/*: any*/),
-              (v6/*: any*/),
-              (v7/*: any*/)
+              (v2/*: any*/)
             ],
             "storageKey": null
           }
@@ -170,11 +120,6 @@ return {
             "plural": false,
             "selections": [
               (v2/*: any*/),
-              (v3/*: any*/),
-              (v4/*: any*/),
-              (v5/*: any*/),
-              (v6/*: any*/),
-              (v7/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -195,9 +140,9 @@ return {
     "metadata": {},
     "name": "addAssetToConsignmentMutation",
     "operationKind": "mutation",
-    "text": "mutation addAssetToConsignmentMutation(\n  $input: AddAssetToConsignmentSubmissionInput!\n) {\n  addAssetToConsignmentSubmission(input: $input) {\n    asset {\n      submissionID\n      geminiToken\n      imageUrls\n      submissionId\n      filename\n      size\n      id\n    }\n  }\n}\n"
+    "text": "mutation addAssetToConsignmentMutation(\n  $input: AddAssetToConsignmentSubmissionInput!\n) {\n  addAssetToConsignmentSubmission(input: $input) {\n    asset {\n      submissionID\n      id\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '37512a314e89f56230ea2bfce1a05316';
+(node as any).hash = '978fb7b6934654ffbae949e10f3d64d1';
 export default node;
