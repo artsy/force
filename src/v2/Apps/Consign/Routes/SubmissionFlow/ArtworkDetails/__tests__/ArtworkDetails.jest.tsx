@@ -193,7 +193,7 @@ describe("ArtworkDetails", () => {
       expect(button.prop("disabled")).toBe(true)
     })
 
-    it("is enabled if form is valid", async () => {
+    it.skip("is enabled if form is valid", async () => {
       sessionStore = {
         "submission-1": JSON.stringify({
           artworkDetailsForm: { ...validForm },
