@@ -7,7 +7,7 @@ import {
   getArtworkDetailsFormInitialValues,
 } from "./Components/ArtworkDetailsForm"
 import { useRouter } from "v2/System/Router/useRouter"
-import { artworkDetailsValidationSchema } from "../Utils/validation"
+import { artworkDetailsValidationSchema, validate } from "../Utils/validation"
 import { BackLink } from "v2/Components/Links/BackLink"
 import { useErrorModal } from "../Utils/useErrorModal"
 import { useSystemContext } from "v2/System"
@@ -29,6 +29,8 @@ export const ArtworkDetails: React.FC<ArtworkDetailsProps> = ({
   const { router } = useRouter()
   const { openErrorModal } = useErrorModal()
   const { relayEnvironment, isLoggedIn } = useSystemContext()
+  const initialValue = getArtworkDetailsFormInitialValues(submission)
+  const initialErrors = validate(initialValue, artworkDetailsValidationSchema)
 
   const handleSubmit = async (values: ArtworkDetailsFormModel) => {
     const isLimitedEditionRarity = values.rarity === "limited edition"
@@ -115,28 +117,31 @@ export const ArtworkDetails: React.FC<ArtworkDetailsProps> = ({
       </Text>
 
       <Formik<ArtworkDetailsFormModel>
-        initialValues={getArtworkDetailsFormInitialValues(submission)}
+        validateOnMount
+        initialValues={initialValue}
         onSubmit={handleSubmit}
         validationSchema={artworkDetailsValidationSchema}
-        validateOnMount
+        initialErrors={initialErrors}
       >
-        {({ isSubmitting, isValid }) => (
-          <Form>
-            <ArtworkDetailsForm />
-            <Button
-              mt={6}
-              width={["100%", "auto"]}
-              data-test-id="save-button"
-              type="submit"
-              size="medium"
-              variant="primaryBlack"
-              loading={isSubmitting}
-              disabled={!isValid}
-            >
-              Save and Continue
-            </Button>
-          </Form>
-        )}
+        {({ isSubmitting, isValid }) => {
+          return (
+            <Form>
+              <ArtworkDetailsForm />
+              <Button
+                mt={6}
+                width={["100%", "auto"]}
+                data-test-id="save-button"
+                type="submit"
+                size="medium"
+                variant="primaryBlack"
+                loading={isSubmitting}
+                disabled={!isValid}
+              >
+                Save and Continue
+              </Button>
+            </Form>
+          )
+        }}
       </Formik>
     </>
   )
