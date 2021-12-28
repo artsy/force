@@ -92,6 +92,8 @@ const SettingsEditProfileAboutYou: FC<SettingsEditProfileAboutYouProps> = ({
                 name="location"
                 title="Primary Location"
                 placeholder="Enter your city"
+                maxLength={256}
+                spellCheck={false}
                 defaultValue={formik.values.displayLocation?.display!}
                 onChange={place => {
                   formik.setFieldValue("location", normalizePlace(place))

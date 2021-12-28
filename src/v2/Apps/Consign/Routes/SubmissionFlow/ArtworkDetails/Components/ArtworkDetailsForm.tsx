@@ -20,6 +20,11 @@ import { ArtistAutoComplete } from "./ArtistAutocomplete"
 import { ArtworkSidebarClassificationsModalQueryRenderer } from "v2/Apps/Artwork/Components/ArtworkSidebarClassificationsModal"
 import { useErrorModal } from "../../Utils/useErrorModal"
 import { ArtworkDetails_submission } from "v2/__generated__/ArtworkDetails_submission.graphql"
+import {
+  Location,
+  LocationAutocompleteInput,
+  normalizePlace,
+} from "v2/Components/LocationAutocompleteInput"
 
 export const getArtworkDetailsFormInitialValues = (
   submission?: ArtworkDetails_submission
@@ -37,8 +42,11 @@ export const getArtworkDetailsFormInitialValues = (
   depth: submission?.depth ?? "",
   units: submission?.dimensionsMetric ?? "in",
   provenance: submission?.provenance ?? "",
-  // locationId: "",
-  location: submission?.locationCity ?? "",
+  location: {
+    city: submission?.locationCity,
+    country: submission?.locationCountry,
+    state: submission?.locationState,
+  },
 })
 
 const rarityOptions = checkboxValues.map(({ name, value }) => ({
@@ -62,8 +70,7 @@ export interface ArtworkDetailsFormModel {
   depth: string
   units: string
   provenance: string
-  location?: string
-  locationId?: string
+  location: Location
 }
 
 export const ArtworkDetailsForm: React.FC = () => {
@@ -308,16 +315,18 @@ export const ArtworkDetailsForm: React.FC = () => {
           />
         </Column>
         <Column span={6} mt={[30, 0]}>
-          <Input
-            title="Location"
+          <LocationAutocompleteInput
             name="location"
+            title="Location"
             placeholder="Enter City Where Artwork Is Located"
+            data-test-id="autocomplete-location"
             maxLength={256}
-            onBlur={handleBlur}
-            onChange={handleChange}
-            value={values.location}
+            spellCheck={false}
+            defaultValue={values.location.city}
+            onChange={place => {
+              setFieldValue("location", normalizePlace(place))
+            }}
           />
-          {/* <LocationAutoComplete onError={() => openErrorModal()} /> */}
         </Column>
       </GridColumns>
     </>

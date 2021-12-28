@@ -32,6 +32,7 @@ const validForm = {
   depth: "5",
   dimensionsMetric: "cm",
   provenance: "provenance",
+  location: { city: "New York" },
 } as ArtworkDetails_submission
 
 const utmParams = { utmMedium: "Medium", utmSource: "Source", utmTerm: "Term" }

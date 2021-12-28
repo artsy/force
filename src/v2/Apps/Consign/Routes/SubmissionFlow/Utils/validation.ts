@@ -37,14 +37,17 @@ export const artworkDetailsValidationSchema = yup.object().shape({
     .trim(),
   units: yup.string().required(),
   provenance: yup.string().required().trim(),
-  location: yup.string().required().trim(),
-  // locationId: yup.string().test((value, ctx) =>
-  //   value
-  //     ? true
-  //     : ctx.createError({
-  //         message: `Could not find ${ctx.parent.location}`,
-  //       })
-  // ),
+  location: yup
+    .object()
+    .shape({
+      city: yup.string().trim().required(),
+      state: yup.string(),
+      stateCode: yup.string(),
+      postalCode: yup.string(),
+      country: yup.string(),
+      coordinates: yup.array(yup.number()),
+    })
+    .required(),
 })
 
 export const uploadPhotosValidationSchema = yup.object().shape({

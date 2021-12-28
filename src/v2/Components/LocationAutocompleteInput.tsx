@@ -1,28 +1,42 @@
-import * as React from "react"
 import {
-  DEFAULT_MODAL_Z_INDEX,
-  DROP_SHADOW,
-  Input,
-  InputProps,
+  AutocompleteInput,
+  AutocompleteInputOptionType,
+  AutocompleteInputProps,
+  Flex,
+  Text,
 } from "@artsy/palette"
 import { useLoadScript } from "v2/Utils/Hooks/useLoadScript"
-import { data as sd } from "sharify"
-import { useRef } from "react"
-import { useEffect } from "react"
-import { useState } from "react"
-import { useAppendStylesheet } from "v2/Utils/Hooks/useAppendStylesheet"
+import { getENV } from "v2/Utils/getENV"
+import { useState, useEffect, useRef, MouseEvent, ChangeEvent, FC } from "react"
 
-const GOOGLE_PLACES_API_SRC = `https://maps.googleapis.com/maps/api/js?key=${sd.GOOGLE_MAPS_API_KEY}&libraries=places&language=en&sessiontoken=${sd.SESSION_ID}&callback=__googleMapsCallback`
+const GOOGLE_PLACES_API_SRC = `https://maps.googleapis.com/maps/api/js?key=${getENV(
+  "GOOGLE_MAPS_API_KEY"
+)}&libraries=places&v=weekly&language=en&sessiontoken=${getENV(
+  "SESSION_ID"
+)}&callback=__googleMapsCallback`
 
-interface LocationAutocompleteInputProps extends Omit<InputProps, "onChange"> {
-  onChange(place: Place): void
+interface LocationAutocompleteInputProps
+  extends Omit<
+    AutocompleteInputProps<AutocompleteInputOptionType>,
+    "options" | "renderOption" | "onSelect" | "onChange" | "onClear"
+  > {
+  onChange: (place: Place) => void
 }
 
-export const LocationAutocompleteInput: React.FC<LocationAutocompleteInputProps> = ({
+export const LocationAutocompleteInput: FC<LocationAutocompleteInputProps> = ({
   onChange,
+  onClick,
+  onClose,
   ...rest
 }) => {
+  const [suggestions, setSuggestions] = useState<
+    Array<AutocompleteInputOptionType>
+  >([])
   const [ready, setReady] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
+
+  const autocompleteServiceRef = useRef<any | null>(null)
+  const geocoderRef = useRef<any | null>(null)
 
   useEffect(() => {
     // @ts-ignore
@@ -37,53 +51,97 @@ export const LocationAutocompleteInput: React.FC<LocationAutocompleteInputProps>
     setReady(true)
   }, [])
 
-  useLoadScript({
-    id: "google-maps-js",
-    src: GOOGLE_PLACES_API_SRC,
-  })
-
-  useAppendStylesheet({
-    id: "google-maps-css",
-    body: `
-      .pac-container { margin-top: 10px; z-index: ${DEFAULT_MODAL_Z_INDEX}; box-shadow: ${DROP_SHADOW}; border-top: 0; }
-      .pac-item { padding: 10px; border-top: 0; }
-      .pac-item, .pac-item-query { font-size: 1rem; }
-    `,
-  })
-
-  const inputRef = useRef<HTMLInputElement | null>(null)
-  const autocompleteServiceRef = useRef<any | null>(null)
-
   useEffect(() => {
     // @ts-ignore
-    if (typeof google === "undefined") return
-    if (!ready || !inputRef.current) return
-
+    if (typeof google === "undefined" || !ready) return
     // @ts-ignore
-    autocompleteServiceRef.current = new google.maps.places.Autocomplete(
-      inputRef.current,
-      { types: ["(cities)"] }
-    )
+    autocompleteServiceRef.current = new google.maps.places.AutocompleteService()
+    // @ts-ignore
+    geocoderRef.current = new google.maps.Geocoder()
+  }, [ready])
 
-    autocompleteServiceRef.current.addListener("place_changed", () => {
-      const place: Place | undefined = autocompleteServiceRef.current.getPlace()
-      if (!place) return
-      onChange(place)
+  useLoadScript({ id: "google-maps-js", src: GOOGLE_PLACES_API_SRC })
+
+  const fetchSuggestions = async (searchQuery: string) => {
+    const res = await autocompleteServiceRef.current.getPlacePredictions({
+      input: searchQuery,
+      types: ["(cities)"],
     })
 
-    // @ts-ignore
-    google.maps.event.addDomListener(
-      inputRef.current,
-      "keydown",
-      (event: KeyboardEvent) => {
-        if (event.key === "Enter") {
-          event.preventDefault()
-        }
-      }
-    )
-  }, [onChange, ready])
+    return res?.predictions
+  }
 
-  return <Input ref={inputRef as any} {...rest} />
+  const updateSuggestions = async (value: string) => {
+    setSuggestions([])
+    if (!value.trim()) return
+
+    try {
+      setIsLoading(true)
+      const suggestions = await fetchSuggestions(value)
+      setIsLoading(false)
+      if (suggestions) {
+        setSuggestions(
+          suggestions.map(option => ({
+            text: option.description!,
+            value: option.place_id!,
+          }))
+        )
+      }
+    } catch {
+      setIsLoading(false)
+    }
+  }
+
+  const handleSelect = async (option: AutocompleteInputOptionType) => {
+    const place = await geocoderRef.current.geocode({ placeId: option.value })
+    onChange?.(place?.results[0])
+  }
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    updateSuggestions(e.target.value)
+    onChange?.({ city: e.target.value })
+  }
+
+  const handleClick = (e: MouseEvent<HTMLInputElement>) => {
+    onClick?.(e)
+  }
+
+  const handleClear = () => {
+    setSuggestions([])
+    onChange?.({ city: "" })
+  }
+
+  const handleClose = () => {
+    onClose?.()
+  }
+
+  const renderOption = (option: AutocompleteInputOptionType) => (
+    <Flex alignItems="center" p={1} width="100%">
+      <Text ml={1} variant="md">
+        {option.text}
+      </Text>
+    </Flex>
+  )
+
+  return (
+    <AutocompleteInput
+      {...rest}
+      loading={isLoading}
+      data-test-id="autocomplete-location"
+      // footer={
+      //   <Flex px={2} py={0.5} bg="white100" justifyContent="flex-end">
+      //     <PoweredByGoogleIcon />
+      //   </Flex>
+      // }
+      onSelect={handleSelect}
+      onChange={handleChange}
+      onClick={handleClick}
+      onClear={handleClear}
+      onClose={handleClose}
+      options={suggestions || []}
+      renderOption={renderOption}
+    />
+  )
 }
 
 type AddressComponent = {
@@ -93,42 +151,13 @@ type AddressComponent = {
 }
 
 export type Place =
-  /** When Google can't match a city, it simply returns the name entered */
-  | { name: string }
-  /** Typically Google returns this rich place object */
+  | { city: string }
   | {
       address_components: AddressComponent[]
-      adr_address: string
       formatted_address: string
-      geometry: {
-        location: {
-          lat(): number
-          lng(): number
-        }
-        viewport: {
-          south: number
-          west: number
-          north: number
-          east: number
-        }
-      }
-      icon: string
-      icon_background_color: string
-      icon_mask_base_uri: string
-      name: string
-      photos: {
-        height: number
-        html_attributions: string[]
-        width: number
-      }[]
+      geometry: {}
       place_id: string
-      reference: string
       types: string[]
-      url: string
-      utc_offset: number
-      vicinity: string
-      html_attributions: any[]
-      utc_offset_minutes: number
     }
 
 export type Location = {
@@ -142,18 +171,25 @@ export type Location = {
 
 export const normalizePlace = (place: Place): Location => {
   if (!("address_components" in place)) {
-    return { city: place.name }
+    return { city: place.city }
   }
 
-  const components = place.address_components.reduce(
+  const components = place.address_components.reduce<{
+    [key: string]: AddressComponent
+  }>(
     (
       acc: {
+        city: AddressComponent
         state?: AddressComponent
         postalCode?: AddressComponent
         country?: AddressComponent
       },
       component
     ) => {
+      if (component.types.includes("locality")) {
+        return { ...acc, city: component }
+      }
+
       if (component.types.includes("administrative_area_level_1")) {
         return { ...acc, state: component }
       }
@@ -172,7 +208,7 @@ export const normalizePlace = (place: Place): Location => {
   )
 
   return {
-    city: place.name,
+    city: components.city?.long_name,
     state: components.state?.long_name,
     stateCode: components.state?.short_name,
     postalCode: components.postalCode?.long_name,
