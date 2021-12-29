@@ -6,12 +6,7 @@ import {
 } from "../Components/ArtworkDetailsForm"
 import { Formik } from "formik"
 import { LabeledInput, Modal, Text } from "@artsy/palette"
-import { useRouter } from "v2/System/Router/useRouter"
 import { ArtworkSidebarClassificationsModalQueryRenderer } from "v2/Apps/Artwork/Components/ArtworkSidebarClassificationsModal"
-
-jest.mock("v2/System/Router/useRouter", () => ({
-  useRouter: jest.fn(),
-}))
 
 const renderArtworkForm = (values: ArtworkDetailsFormModel) =>
   mount(
@@ -23,9 +18,6 @@ const renderArtworkForm = (values: ArtworkDetailsFormModel) =>
 describe("ArtworkDetailsForm", () => {
   let wrapper: ReactWrapper
   beforeEach(() => {
-    ;(useRouter as jest.Mock).mockImplementation(() => ({
-      match: { params: { id: null } },
-    }))
     wrapper = renderArtworkForm(getArtworkDetailsFormInitialValues())
   })
 
@@ -43,9 +35,7 @@ describe("ArtworkDetailsForm", () => {
     expect(wrapper.find("Radio[value='in']").length).toBe(1)
     expect(wrapper.find("Radio[value='cm']").length).toBe(1)
     expect(wrapper.find("input[name='provenance']").length).toBe(1)
-    // expect(
-    //   wrapper.find("input[data-test-id='autocomplete-location']").length
-    // ).toBe(1)
+    expect(wrapper.find("input[name='location']").length).toBe(1)
   })
 
   describe("Rarity", () => {
