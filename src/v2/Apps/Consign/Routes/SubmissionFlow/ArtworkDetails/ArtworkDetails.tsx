@@ -7,8 +7,7 @@ import {
   getArtworkDetailsFormInitialValues,
 } from "./Components/ArtworkDetailsForm"
 import { useRouter } from "v2/System/Router/useRouter"
-import { UtmParams } from "../Utils/useSubmission"
-import { artworkDetailsValidationSchema } from "../Utils/validation"
+import { artworkDetailsValidationSchema, validate } from "../Utils/validation"
 import { BackLink } from "v2/Components/Links/BackLink"
 import { useErrorModal } from "../Utils/useErrorModal"
 import { useSystemContext } from "v2/System"
@@ -18,6 +17,7 @@ import {
   ArtworkDetails_submission,
   ConsignmentAttributionClass,
 } from "v2/__generated__/ArtworkDetails_submission.graphql"
+import { UtmParams } from "../Utils/types"
 
 export interface ArtworkDetailsProps {
   submission?: ArtworkDetails_submission
@@ -29,6 +29,8 @@ export const ArtworkDetails: React.FC<ArtworkDetailsProps> = ({
   const { router } = useRouter()
   const { openErrorModal } = useErrorModal()
   const { relayEnvironment, isLoggedIn } = useSystemContext()
+  const initialValue = getArtworkDetailsFormInitialValues(submission)
+  const initialErrors = validate(initialValue, artworkDetailsValidationSchema)
 
   const handleSubmit = async (values: ArtworkDetailsFormModel) => {
     const isLimitedEditionRarity = values.rarity === "limited edition"
@@ -115,10 +117,11 @@ export const ArtworkDetails: React.FC<ArtworkDetailsProps> = ({
       </Text>
 
       <Formik<ArtworkDetailsFormModel>
-        initialValues={getArtworkDetailsFormInitialValues(submission)}
+        validateOnMount
+        initialValues={initialValue}
         onSubmit={handleSubmit}
         validationSchema={artworkDetailsValidationSchema}
-        validateOnMount
+        initialErrors={initialErrors}
       >
         {({ isSubmitting, isValid }) => (
           <Form>

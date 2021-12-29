@@ -29,7 +29,7 @@ export const getArtworkDetailsFormInitialValues = (
   year: submission?.year ?? "",
   title: submission?.title ?? "",
   materials: submission?.medium ?? "",
-  rarity: submission?.attributionClass ?? "",
+  rarity: submission?.attributionClass?.replace("_", " ").toLowerCase() ?? "",
   editionNumber: submission?.editionNumber ?? "",
   editionSize: submission?.editionSize ?? undefined,
   height: submission?.height ?? "",

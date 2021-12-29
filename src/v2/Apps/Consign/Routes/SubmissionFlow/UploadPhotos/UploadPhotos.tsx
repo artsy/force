@@ -11,7 +11,7 @@ import { Photo, addPhotoToSubmission } from "../Utils/fileUtils"
 import { useRouter } from "v2/System/Router/useRouter"
 import { BackLink } from "v2/Components/Links/BackLink"
 import { getENV } from "v2/Utils/getENV"
-import { uploadPhotosValidationSchema } from "../Utils/validation"
+import { uploadPhotosValidationSchema, validate } from "../Utils/validation"
 import { createFragmentContainer, graphql } from "react-relay"
 import { UploadPhotos_submission } from "v2/__generated__/UploadPhotos_submission.graphql"
 
@@ -19,7 +19,7 @@ export interface UploadPhotosProps {
   submission?: UploadPhotos_submission
 }
 
-const getUploadPhotosFormInitialValues = (
+export const getUploadPhotosFormInitialValues = (
   submission?: UploadPhotos_submission
 ): UploadPhotosFormModel => {
   return {
@@ -42,6 +42,8 @@ const getUploadPhotosFormInitialValues = (
 export const UploadPhotos: React.FC<UploadPhotosProps> = ({ submission }) => {
   const { router } = useRouter()
   const { relayEnvironment, isLoggedIn } = useSystemContext()
+  const initialValue = getUploadPhotosFormInitialValues(submission)
+  const initialErrors = validate(initialValue, uploadPhotosValidationSchema)
 
   const handleSubmit = async () => {
     if (submission) {
@@ -80,7 +82,8 @@ export const UploadPhotos: React.FC<UploadPhotosProps> = ({ submission }) => {
         validateOnMount
         onSubmit={handleSubmit}
         validationSchema={uploadPhotosValidationSchema}
-        initialValues={getUploadPhotosFormInitialValues(submission)}
+        initialValues={initialValue}
+        initialErrors={initialErrors}
       >
         {({ values, setFieldValue, isValid, isSubmitting }) => {
           const handlePhotoDelete = (photo: Photo) => {
