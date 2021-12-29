@@ -10,6 +10,8 @@ export type UploadPhotos_submission = {
         readonly id: string;
         readonly imageUrls: unknown | null;
         readonly geminiToken: string | null;
+        readonly size: string | null;
+        readonly filename: string | null;
     } | null> | null;
     readonly " $refType": "UploadPhotos_submission";
 };
@@ -58,6 +60,20 @@ return {
           "kind": "ScalarField",
           "name": "geminiToken",
           "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "size",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "filename",
+          "storageKey": null
         }
       ],
       "storageKey": null
@@ -67,5 +83,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '5b46db31278b661bd98701c9643efc03';
+(node as any).hash = 'f6b524d7b6c49ec4aeb9bac584d857e7';
 export default node;

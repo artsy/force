@@ -34,6 +34,8 @@ export type consignRoutes_uploadPhotosQueryResponse = {
             readonly id: string;
             readonly imageUrls: unknown | null;
             readonly geminiToken: string | null;
+            readonly size: string | null;
+            readonly filename: string | null;
         } | null> | null;
         readonly " $fragmentRefs": FragmentRefs<"UploadPhotos_submission">;
     } | null;
@@ -76,6 +78,8 @@ query consignRoutes_uploadPhotosQuery(
       id
       imageUrls
       geminiToken
+      size
+      filename
     }
   }
 }
@@ -86,6 +90,8 @@ fragment UploadPhotos_submission on ConsignmentSubmission {
     id
     imageUrls
     geminiToken
+    size
+    filename
   }
 }
 */
@@ -256,6 +262,20 @@ v19 = {
       "kind": "ScalarField",
       "name": "geminiToken",
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "size",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "filename",
+      "storageKey": null
     }
   ],
   "storageKey": null
@@ -366,12 +386,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "e5b1736be95701cf4ecc02b22d356a3a",
+    "cacheID": "ad18861ad60191131ddb2ea00737839a",
     "id": null,
     "metadata": {},
     "name": "consignRoutes_uploadPhotosQuery",
     "operationKind": "query",
-    "text": "query consignRoutes_uploadPhotosQuery(\n  $id: ID!\n  $sessionID: String\n) {\n  submission(id: $id, sessionID: $sessionID) {\n    ...UploadPhotos_submission\n    id\n    artist {\n      internalID\n      name\n      id\n    }\n    locationCity\n    locationCountry\n    locationState\n    year\n    title\n    medium\n    attributionClass\n    editionNumber\n    editionSize\n    height\n    width\n    depth\n    dimensionsMetric\n    provenance\n    assets {\n      id\n      imageUrls\n      geminiToken\n    }\n  }\n}\n\nfragment UploadPhotos_submission on ConsignmentSubmission {\n  id\n  assets {\n    id\n    imageUrls\n    geminiToken\n  }\n}\n"
+    "text": "query consignRoutes_uploadPhotosQuery(\n  $id: ID!\n  $sessionID: String\n) {\n  submission(id: $id, sessionID: $sessionID) {\n    ...UploadPhotos_submission\n    id\n    artist {\n      internalID\n      name\n      id\n    }\n    locationCity\n    locationCountry\n    locationState\n    year\n    title\n    medium\n    attributionClass\n    editionNumber\n    editionSize\n    height\n    width\n    depth\n    dimensionsMetric\n    provenance\n    assets {\n      id\n      imageUrls\n      geminiToken\n      size\n      filename\n    }\n  }\n}\n\nfragment UploadPhotos_submission on ConsignmentSubmission {\n  id\n  assets {\n    id\n    imageUrls\n    geminiToken\n    size\n    filename\n  }\n}\n"
   }
 };
 })();

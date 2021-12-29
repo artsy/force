@@ -1,15 +1,12 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 export type RemoveAssetFromConsignmentSubmissionInput = {
-    assetType?: string | null;
+    assetID?: string | null;
     clientMutationId?: string | null;
-    filename?: string | null;
-    geminiToken: string;
     sessionID?: string | null;
-    size?: string | null;
-    submissionID: string;
 };
 export type removeAssetFromConsignmentSubmissionMutationVariables = {
     input: RemoveAssetFromConsignmentSubmissionInput;
@@ -17,7 +14,7 @@ export type removeAssetFromConsignmentSubmissionMutationVariables = {
 export type removeAssetFromConsignmentSubmissionMutationResponse = {
     readonly removeAssetFromConsignmentSubmission: {
         readonly asset: {
-            readonly submissionID: string | null;
+            readonly id: string;
         } | null;
     } | null;
 };
@@ -34,7 +31,6 @@ mutation removeAssetFromConsignmentSubmissionMutation(
 ) {
   removeAssetFromConsignmentSubmission(input: $input) {
     asset {
-      submissionID
       id
     }
   }
@@ -46,103 +42,72 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "input",
-    "type": "RemoveAssetFromConsignmentSubmissionInput!"
+    "name": "input"
   }
 ],
 v1 = [
   {
-    "kind": "Variable",
-    "name": "input",
-    "variableName": "input"
-  }
-],
-v2 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "submissionID",
-  "storageKey": null
-};
-return {
-  "fragment": {
-    "argumentDefinitions": (v0/*: any*/),
-    "kind": "Fragment",
-    "metadata": null,
-    "name": "removeAssetFromConsignmentSubmissionMutation",
+    "alias": null,
+    "args": [
+      {
+        "kind": "Variable",
+        "name": "input",
+        "variableName": "input"
+      }
+    ],
+    "concreteType": "RemoveAssetFromConsignmentSubmissionPayload",
+    "kind": "LinkedField",
+    "name": "removeAssetFromConsignmentSubmission",
+    "plural": false,
     "selections": [
       {
         "alias": null,
-        "args": (v1/*: any*/),
-        "concreteType": "RemoveAssetFromConsignmentSubmissionPayload",
+        "args": null,
+        "concreteType": "ConsignmentSubmissionCategoryAsset",
         "kind": "LinkedField",
-        "name": "removeAssetFromConsignmentSubmission",
+        "name": "asset",
         "plural": false,
         "selections": [
           {
             "alias": null,
             "args": null,
-            "concreteType": "ConsignmentSubmissionCategoryAsset",
-            "kind": "LinkedField",
-            "name": "asset",
-            "plural": false,
-            "selections": [
-              (v2/*: any*/)
-            ],
+            "kind": "ScalarField",
+            "name": "id",
             "storageKey": null
           }
         ],
         "storageKey": null
       }
     ],
-    "type": "Mutation"
+    "storageKey": null
+  }
+];
+return {
+  "fragment": {
+    "argumentDefinitions": (v0/*: any*/),
+    "kind": "Fragment",
+    "metadata": null,
+    "name": "removeAssetFromConsignmentSubmissionMutation",
+    "selections": (v1/*: any*/),
+    "type": "Mutation",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
     "name": "removeAssetFromConsignmentSubmissionMutation",
-    "selections": [
-      {
-        "alias": null,
-        "args": (v1/*: any*/),
-        "concreteType": "RemoveAssetFromConsignmentSubmissionPayload",
-        "kind": "LinkedField",
-        "name": "removeAssetFromConsignmentSubmission",
-        "plural": false,
-        "selections": [
-          {
-            "alias": null,
-            "args": null,
-            "concreteType": "ConsignmentSubmissionCategoryAsset",
-            "kind": "LinkedField",
-            "name": "asset",
-            "plural": false,
-            "selections": [
-              (v2/*: any*/),
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "id",
-                "storageKey": null
-              }
-            ],
-            "storageKey": null
-          }
-        ],
-        "storageKey": null
-      }
-    ]
+    "selections": (v1/*: any*/)
   },
   "params": {
+    "cacheID": "d6ba79ba74aba724eb08852f5bff49b9",
     "id": null,
     "metadata": {},
     "name": "removeAssetFromConsignmentSubmissionMutation",
     "operationKind": "mutation",
-    "text": "mutation removeAssetFromConsignmentSubmissionMutation(\n  $input: RemoveAssetFromConsignmentSubmissionInput!\n) {\n  removeAssetFromConsignmentSubmission(input: $input) {\n    asset {\n      submissionID\n      id\n    }\n  }\n}\n"
+    "text": "mutation removeAssetFromConsignmentSubmissionMutation(\n  $input: RemoveAssetFromConsignmentSubmissionInput!\n) {\n  removeAssetFromConsignmentSubmission(input: $input) {\n    asset {\n      id\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '50e3ef2df2d3259bba7146897b6984b9';
+(node as any).hash = '1843ec8e41ecb33b9f6a47bb0c5fa547';
 export default node;
