@@ -24,6 +24,7 @@ export function formatFileSize(size: number): string {
 
 export interface Photo {
   id: string
+  assetId?: string
   file?: File
   name: string
   size: number
@@ -40,6 +41,7 @@ export interface Photo {
 export function normalizePhoto(file: File, errorMessage?: string): Photo {
   return {
     id: uuid(),
+    assetId: undefined,
     file,
     name: file.name,
     size: file.size,
@@ -119,35 +121,38 @@ export const uploadPhoto = async (
   }
 }
 
-export const addPhotoToSubmission = async (
+export const addAssetToSubmission = async (
   relayEnvironment: Environment,
   photo: Photo,
   submissionID: string,
-  sessionID: string
+  sessionID: string,
+  assetType: string = "image"
 ) => {
   try {
-    await addAssetToConsignment(relayEnvironment, {
-      assetType: "image",
+    const assetId = await addAssetToConsignment(relayEnvironment, {
+      assetType,
       geminiToken: photo.geminiToken!,
       submissionID,
       sessionID,
+      filename: photo.name,
+      size: photo.size.toString(),
     })
+
+    return assetId
   } catch (error) {
     logger.error("Consign submission: add asset error", error)
   }
 }
 
-export const removePhotoFromSubmission = async (
+export const removeAssetFromSubmission = async (
   relayEnvironment: Environment,
-  photo: Photo,
-  submissionID: string,
-  sessionID: string
+  assetId: string,
+  sessionId: string
 ) => {
   try {
     await removeAssetFromConsignmentSubmission(relayEnvironment, {
-      assetType: "image",
-      geminiToken: photo.geminiToken!,
-      submissionID,
+      assetID: assetId,
+      sessionID: sessionId,
     })
   } catch (error) {
     logger.error("Consign submission: remove asset error", error)

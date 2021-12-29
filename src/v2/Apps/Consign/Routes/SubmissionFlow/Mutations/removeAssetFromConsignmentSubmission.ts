@@ -20,7 +20,7 @@ export const removeAssetFromConsignmentSubmission = (
             ) {
               removeAssetFromConsignmentSubmission(input: $input) {
                 asset {
-                  submissionID
+                  id
                 }
               }
             }
