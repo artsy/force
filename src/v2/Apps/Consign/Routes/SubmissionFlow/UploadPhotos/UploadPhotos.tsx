@@ -48,7 +48,7 @@ export const getUploadPhotosFormInitialValues = (
 
 export const UploadPhotos: React.FC<UploadPhotosProps> = ({ submission }) => {
   const { router } = useRouter()
-  const { relayEnvironment, isLoggedIn } = useSystemContext()
+  const { isLoggedIn } = useSystemContext()
   const {
     submitMutation: removeAsset,
   } = useRemoveAssetFromConsignmentSubmission()
@@ -118,7 +118,7 @@ export const UploadPhotos: React.FC<UploadPhotosProps> = ({ submission }) => {
           }
 
           const handlePhotoUploaded = async (photo: Photo) => {
-            if (relayEnvironment && photo.geminiToken && submission?.id) {
+            if (photo.geminiToken && submission?.id) {
               photo.loading = true
 
               try {
