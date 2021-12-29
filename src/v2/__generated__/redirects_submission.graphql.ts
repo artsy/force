@@ -28,6 +28,8 @@ export type redirects_submission = {
         readonly id: string;
         readonly imageUrls: unknown | null;
         readonly geminiToken: string | null;
+        readonly size: string | null;
+        readonly filename: string | null;
     } | null> | null;
     readonly " $refType": "redirects_submission";
 };
@@ -198,6 +200,20 @@ return {
           "args": null,
           "kind": "ScalarField",
           "name": "geminiToken",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "size",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "filename",
           "storageKey": null
         }
       ],

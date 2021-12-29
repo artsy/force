@@ -9,8 +9,8 @@ import {
 import { PhotoThumbnail } from "./Components/PhotoThumbnail"
 import {
   Photo,
-  addPhotoToSubmission,
-  removePhotoFromSubmission,
+  addAssetToSubmission,
+  removeAssetFromSubmission,
 } from "../Utils/fileUtils"
 import { useRouter } from "v2/System/Router/useRouter"
 import { BackLink } from "v2/Components/Links/BackLink"
@@ -32,13 +32,15 @@ export const getUploadPhotosFormInitialValues = (
         ?.filter(asset => !!asset)
         .map(asset => ({
           id: asset!.id,
-          // TODO: Add size and name
-          size: 0,
-          name: "",
+          assetId: asset!.id,
+          size: (asset?.size && parseInt(asset?.size, 10)) || 0,
+          name: asset?.filename ?? "",
+          geminiToken: asset?.geminiToken ?? undefined,
+          url:
+            (asset?.imageUrls as any)?.thumbnail ||
+            (asset?.imageUrls as any)?.square,
           removed: false,
           loading: false,
-          geminiToken: asset?.geminiToken ?? undefined,
-          url: (asset?.imageUrls as any)?.thumbnail,
         })) || [],
   }
 }
@@ -90,31 +92,36 @@ export const UploadPhotos: React.FC<UploadPhotosProps> = ({ submission }) => {
         initialErrors={initialErrors}
       >
         {({ values, setFieldValue, isValid, isSubmitting }) => {
-          const handlePhotoDelete = async (photo: Photo) => {
+          const handlePhotoDelete = (photo: Photo) => {
             photo.removed = true
             photo.abortUploading?.()
 
-            if (relayEnvironment) {
-              await removePhotoFromSubmission(
+            if (relayEnvironment && photo.assetId) {
+              removeAssetFromSubmission(
                 relayEnvironment,
-                photo,
-                submission?.id || "",
+                photo.assetId,
                 !isLoggedIn ? getENV("SESSION_ID") : undefined
               )
-
-              const photosToSave = values.photos.filter(p => p.id !== photo.id)
-              setFieldValue("photos", photosToSave)
             }
+
+            const photosToSave = values.photos.filter(p => p.id !== photo.id)
+            setFieldValue("photos", photosToSave)
           }
 
           const handlePhotoUploaded = async (photo: Photo) => {
-            if (relayEnvironment) {
-              await addPhotoToSubmission(
+            if (relayEnvironment && photo.geminiToken) {
+              photo.loading = true
+
+              const assetId = await addAssetToSubmission(
                 relayEnvironment,
                 photo,
                 submission?.id || "",
                 !isLoggedIn ? getENV("SESSION_ID") : undefined
               )
+
+              photo.loading = false
+              photo.assetId = assetId
+              setFieldValue("photos", values.photos, true)
             }
           }
 
@@ -164,6 +171,8 @@ export const UploadPhotosFragmentContainer = createFragmentContainer(
           id
           imageUrls
           geminiToken
+          size
+          filename
         }
       }
     `,

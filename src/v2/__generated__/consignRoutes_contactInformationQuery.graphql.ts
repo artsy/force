@@ -33,6 +33,8 @@ export type consignRoutes_contactInformationQueryResponse = {
             readonly id: string;
             readonly imageUrls: unknown | null;
             readonly geminiToken: string | null;
+            readonly size: string | null;
+            readonly filename: string | null;
         } | null> | null;
         readonly " $fragmentRefs": FragmentRefs<"ContactInformation_submission">;
     } | null;
@@ -78,6 +80,8 @@ query consignRoutes_contactInformationQuery(
       id
       imageUrls
       geminiToken
+      size
+      filename
     }
   }
   me {
@@ -270,6 +274,20 @@ v19 = {
       "args": null,
       "kind": "ScalarField",
       "name": "geminiToken",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "size",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "filename",
       "storageKey": null
     }
   ],
@@ -478,7 +496,7 @@ return {
     "metadata": {},
     "name": "consignRoutes_contactInformationQuery",
     "operationKind": "query",
-    "text": "query consignRoutes_contactInformationQuery(\n  $id: ID!\n  $sessionID: String\n) {\n  submission(id: $id, sessionID: $sessionID) {\n    ...ContactInformation_submission\n    id\n    artist {\n      internalID\n      name\n      id\n    }\n    locationCity\n    locationCountry\n    locationState\n    year\n    title\n    medium\n    attributionClass\n    editionNumber\n    editionSize\n    height\n    width\n    depth\n    dimensionsMetric\n    provenance\n    assets {\n      id\n      imageUrls\n      geminiToken\n    }\n  }\n  me {\n    ...ContactInformation_me\n    id\n  }\n}\n\nfragment ContactInformation_me on Me {\n  name\n  email\n  phone\n  phoneNumber {\n    isValid\n    international: display(format: INTERNATIONAL)\n    national: display(format: NATIONAL)\n    regionCode\n  }\n}\n\nfragment ContactInformation_submission on ConsignmentSubmission {\n  id\n}\n"
+    "text": "query consignRoutes_contactInformationQuery(\n  $id: ID!\n  $sessionID: String\n) {\n  submission(id: $id, sessionID: $sessionID) {\n    ...ContactInformation_submission\n    id\n    artist {\n      internalID\n      name\n      id\n    }\n    locationCity\n    locationCountry\n    locationState\n    year\n    title\n    medium\n    attributionClass\n    editionNumber\n    editionSize\n    height\n    width\n    depth\n    dimensionsMetric\n    provenance\n    assets {\n      id\n      imageUrls\n      geminiToken\n      size\n      filename\n    }\n  }\n  me {\n    ...ContactInformation_me\n    id\n  }\n}\n\nfragment ContactInformation_me on Me {\n  name\n  email\n  phone\n  phoneNumber {\n    isValid\n    international: display(format: INTERNATIONAL)\n    national: display(format: NATIONAL)\n    regionCode\n  }\n}\n\nfragment ContactInformation_submission on ConsignmentSubmission {\n  id\n}\n"
   }
 };
 })();

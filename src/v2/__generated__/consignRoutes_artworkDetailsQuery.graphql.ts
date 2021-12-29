@@ -33,6 +33,8 @@ export type consignRoutes_artworkDetailsQueryResponse = {
             readonly id: string;
             readonly imageUrls: unknown | null;
             readonly geminiToken: string | null;
+            readonly size: string | null;
+            readonly filename: string | null;
         } | null> | null;
         readonly " $fragmentRefs": FragmentRefs<"ArtworkDetails_submission">;
     } | null;
@@ -75,6 +77,8 @@ query consignRoutes_artworkDetailsQuery(
       id
       imageUrls
       geminiToken
+      size
+      filename
     }
   }
 }
@@ -271,6 +275,20 @@ v19 = {
       "kind": "ScalarField",
       "name": "geminiToken",
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "size",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "filename",
+      "storageKey": null
     }
   ],
   "storageKey": null
@@ -384,7 +402,7 @@ return {
     "metadata": {},
     "name": "consignRoutes_artworkDetailsQuery",
     "operationKind": "query",
-    "text": "query consignRoutes_artworkDetailsQuery(\n  $id: ID!\n  $sessionID: String\n) {\n  submission(id: $id, sessionID: $sessionID) {\n    ...ArtworkDetails_submission\n    id\n    artist {\n      internalID\n      name\n      id\n    }\n    locationCity\n    locationCountry\n    locationState\n    year\n    title\n    medium\n    attributionClass\n    editionNumber\n    editionSize\n    height\n    width\n    depth\n    dimensionsMetric\n    provenance\n    assets {\n      id\n      imageUrls\n      geminiToken\n    }\n  }\n}\n\nfragment ArtworkDetails_submission on ConsignmentSubmission {\n  id\n  artist {\n    internalID\n    name\n    id\n  }\n  locationCity\n  locationCountry\n  locationState\n  year\n  title\n  medium\n  attributionClass\n  editionNumber\n  editionSize\n  height\n  width\n  depth\n  dimensionsMetric\n  provenance\n}\n"
+    "text": "query consignRoutes_artworkDetailsQuery(\n  $id: ID!\n  $sessionID: String\n) {\n  submission(id: $id, sessionID: $sessionID) {\n    ...ArtworkDetails_submission\n    id\n    artist {\n      internalID\n      name\n      id\n    }\n    locationCity\n    locationCountry\n    locationState\n    year\n    title\n    medium\n    attributionClass\n    editionNumber\n    editionSize\n    height\n    width\n    depth\n    dimensionsMetric\n    provenance\n    assets {\n      id\n      imageUrls\n      geminiToken\n      size\n      filename\n    }\n  }\n}\n\nfragment ArtworkDetails_submission on ConsignmentSubmission {\n  id\n  artist {\n    internalID\n    name\n    id\n  }\n  locationCity\n  locationCountry\n  locationState\n  year\n  title\n  medium\n  attributionClass\n  editionNumber\n  editionSize\n  height\n  width\n  depth\n  dimensionsMetric\n  provenance\n}\n"
   }
 };
 })();
