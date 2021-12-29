@@ -3,9 +3,8 @@ import {
   getConvectionGeminiKey,
   getGeminiCredentialsForEnvironment,
   createGeminiAssetWithS3Credentials,
-  addAssetToConsignment,
 } from "../../Mutations"
-import { Photo, uploadPhoto, addAssetToSubmission } from "../fileUtils"
+import { Photo, uploadPhoto } from "../fileUtils"
 import { uploadFileToS3 } from "../uploadFileToS3"
 
 jest.mock("../../Mutations/Gemini/getConvectionGeminiKey", () => ({
@@ -50,7 +49,6 @@ describe("fileUtils", () => {
   beforeEach(() => {
     ;(getGeminiCredentialsForEnvironment as jest.Mock).mockClear()
     ;(createGeminiAssetWithS3Credentials as jest.Mock).mockClear()
-    ;(addAssetToConsignment as jest.Mock).mockClear()
     ;(getConvectionGeminiKey as jest.Mock).mockClear()
     ;(uploadFileToS3 as jest.Mock).mockClear()
 
@@ -142,22 +140,6 @@ describe("fileUtils", () => {
       )
 
       expect(uploadPhotoResult).toBe(undefined)
-    })
-  })
-
-  describe("addAssetToSubmission", () => {
-    it("adds correct asset to correct submission", async () => {
-      await addAssetToSubmission(relayEnvironment, photo, submission.id, "1")
-
-      expect(addAssetToConsignment).toHaveBeenCalled()
-      expect(addAssetToConsignment).toHaveBeenCalledWith(relayEnvironment, {
-        assetType: "image",
-        geminiToken: "123",
-        submissionID: submission.id,
-        sessionID: "1",
-        size: "20000",
-        filename: "photo.png",
-      })
     })
   })
 })
