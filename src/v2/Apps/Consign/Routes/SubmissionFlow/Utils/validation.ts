@@ -52,7 +52,7 @@ export const uploadPhotosValidationSchema = yup.object().shape({
     .array()
     .min(1)
     .transform(fields => fields.filter(c => !c.errorMessage))
-    .of(yup.object().test("photos", value => value.geminiToken || value.url)),
+    .of(yup.object().test("photos", value => value.assetId)),
 })
 
 export const contactInformationValidationSchema = yup.object().shape({
