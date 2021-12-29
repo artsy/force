@@ -7,17 +7,18 @@ import {
   UploadPhotosFormModel,
 } from "./Components/UploadPhotosForm"
 import { PhotoThumbnail } from "./Components/PhotoThumbnail"
-import {
-  Photo,
-  addAssetToSubmission,
-  removeAssetFromSubmission,
-} from "../Utils/fileUtils"
+import { Photo } from "../Utils/fileUtils"
 import { useRouter } from "v2/System/Router/useRouter"
 import { BackLink } from "v2/Components/Links/BackLink"
 import { getENV } from "v2/Utils/getENV"
 import { uploadPhotosValidationSchema, validate } from "../Utils/validation"
 import { createFragmentContainer, graphql } from "react-relay"
 import { UploadPhotos_submission } from "v2/__generated__/UploadPhotos_submission.graphql"
+import { useRemoveAssetFromConsignmentSubmission } from "../Mutations/removeAssetFromConsignmentSubmission"
+import createLogger from "v2/Utils/logger"
+import { useAddAssetToConsignmentSubmission } from "../Mutations"
+
+const logger = createLogger("UploadPhotos.tsx")
 
 export interface UploadPhotosProps {
   submission?: UploadPhotos_submission
@@ -48,6 +49,11 @@ export const getUploadPhotosFormInitialValues = (
 export const UploadPhotos: React.FC<UploadPhotosProps> = ({ submission }) => {
   const { router } = useRouter()
   const { relayEnvironment, isLoggedIn } = useSystemContext()
+  const {
+    submitMutation: removeAsset,
+  } = useRemoveAssetFromConsignmentSubmission()
+  const { submitMutation: addAsset } = useAddAssetToConsignmentSubmission()
+
   const initialValue = getUploadPhotosFormInitialValues(submission)
   const initialErrors = validate(initialValue, uploadPhotosValidationSchema)
 
@@ -96,12 +102,15 @@ export const UploadPhotos: React.FC<UploadPhotosProps> = ({ submission }) => {
             photo.removed = true
             photo.abortUploading?.()
 
-            if (relayEnvironment && photo.assetId) {
-              removeAssetFromSubmission(
-                relayEnvironment,
-                photo.assetId,
-                !isLoggedIn ? getENV("SESSION_ID") : undefined
-              )
+            if (photo.assetId) {
+              removeAsset({
+                input: {
+                  assetID: photo.assetId,
+                  sessionID: !isLoggedIn ? getENV("SESSION_ID") : undefined,
+                },
+              }).catch(error => {
+                logger.error("Consign submission: remove asset error", error)
+              })
             }
 
             const photosToSave = values.photos.filter(p => p.id !== photo.id)
@@ -109,19 +118,29 @@ export const UploadPhotos: React.FC<UploadPhotosProps> = ({ submission }) => {
           }
 
           const handlePhotoUploaded = async (photo: Photo) => {
-            if (relayEnvironment && photo.geminiToken) {
+            if (relayEnvironment && photo.geminiToken && submission?.id) {
               photo.loading = true
 
-              const assetId = await addAssetToSubmission(
-                relayEnvironment,
-                photo,
-                submission?.id || "",
-                !isLoggedIn ? getENV("SESSION_ID") : undefined
-              )
+              try {
+                const response = await addAsset({
+                  input: {
+                    assetType: "image",
+                    geminiToken: photo.geminiToken!,
+                    submissionID: submission.id,
+                    sessionID: !isLoggedIn ? getENV("SESSION_ID") : undefined,
+                    filename: photo.name,
+                    size: photo.size.toString(),
+                  },
+                })
 
-              photo.loading = false
-              photo.assetId = assetId
-              setFieldValue("photos", values.photos, true)
+                photo.assetId =
+                  response.addAssetToConsignmentSubmission?.asset?.id
+              } catch (error) {
+                logger.error("Consign submission: add asset error", error)
+              } finally {
+                photo.loading = false
+                setFieldValue("photos", values.photos, true)
+              }
             }
           }
 

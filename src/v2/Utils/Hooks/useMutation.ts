@@ -17,7 +17,7 @@ export const useMutation = <T extends MutationParameters>({
     options: {
       checkForErrors?: (res: T["response"]) => unknown
     } = {}
-  ): T["response"] => {
+  ): Promise<T["response"]> => {
     return new Promise((resolve, reject) => {
       commitMutation<T>(relayEnvironment!, {
         mutation,
