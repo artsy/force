@@ -18,6 +18,7 @@ import {
   ConsignmentAttributionClass,
 } from "v2/__generated__/ArtworkDetails_submission.graphql"
 import { UtmParams } from "../Utils/types"
+import { getENV } from "v2/Utils/getENV"
 
 export interface ArtworkDetailsProps {
   submission?: ArtworkDetails_submission
@@ -80,7 +81,7 @@ export const ArtworkDetails: React.FC<ArtworkDetailsProps> = ({
           utmMedium: utmParams?.utmMedium,
           utmSource: utmParams?.utmSource,
           utmTerm: utmParams?.utmTerm,
-          sessionID: !isLoggedIn ? sd.SESSION_ID : undefined,
+          sessionID: !isLoggedIn ? getENV("SESSION_ID") : undefined,
         })
       } catch (error) {
         openErrorModal()
@@ -129,7 +130,7 @@ export const ArtworkDetails: React.FC<ArtworkDetailsProps> = ({
             <Button
               mt={6}
               width={["100%", "auto"]}
-              data-test-id="save-button"
+              data-testid="save-button"
               type="submit"
               size="medium"
               variant="primaryBlack"
