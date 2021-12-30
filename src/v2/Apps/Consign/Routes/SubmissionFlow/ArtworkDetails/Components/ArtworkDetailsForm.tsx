@@ -319,7 +319,6 @@ export const ArtworkDetailsForm: React.FC = () => {
             name="location"
             title="Location"
             placeholder="Enter City Where Artwork Is Located"
-            data-test-id="autocomplete-location"
             maxLength={256}
             spellCheck={false}
             defaultValue={values.location.city}

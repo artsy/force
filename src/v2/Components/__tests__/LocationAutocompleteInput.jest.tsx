@@ -1,4 +1,147 @@
-import { normalizePlace } from "../LocationAutocompleteInput"
+import { mount, ReactWrapper } from "enzyme"
+import {
+  LocationAutocompleteInput,
+  normalizePlace,
+} from "../LocationAutocompleteInput"
+import { Input } from "@artsy/palette"
+import { flushPromiseQueue } from "v2/DevTools"
+
+const mockGetPlacePredictions = jest.fn().mockResolvedValue({
+  predictions: [
+    { description: "New York, NY, USA", place_id: "111" },
+    { description: "New Orleans, LA, USA", place_id: "222" },
+  ],
+})
+const mockGeocode = jest.fn()
+const AutocompleteService = jest.fn().mockImplementation(() => ({
+  getPlacePredictions: mockGetPlacePredictions,
+}))
+const Geocoder = jest.fn().mockImplementation(() => ({
+  geocode: mockGeocode,
+}))
+const setupGoogleMapsMock = () => {
+  // @ts-ignore
+  global.window.google = { maps: { Geocoder, places: { AutocompleteService } } }
+}
+
+let defaultValue = "Minsk, Belarus"
+const mockOnChange = jest.fn()
+
+const inputSelector = "input[data-test-id='autocomplete-location']"
+const optionsSelector = "button[role='option']"
+
+const simulateTyping = async (wrapper: ReactWrapper, text: string) => {
+  const locationInput = wrapper.find(inputSelector)
+  locationInput
+    .simulate("focus")
+    .simulate("change", { target: { value: text } })
+  await new Promise(r => setTimeout(r, 500))
+  await flushPromiseQueue()
+  wrapper.update()
+}
+
+const simulateSelectSuggestion = async (wrapper: ReactWrapper, idx: number) => {
+  wrapper.find(inputSelector).simulate("focus")
+  const suggestion = wrapper.find(optionsSelector).at(idx)
+  suggestion.simulate("mouseenter").simulate("mousedown").simulate("mouseup")
+  await flushPromiseQueue()
+  wrapper.update()
+}
+describe("LocationAutocompleteInput", () => {
+  let wrapper: ReactWrapper
+
+  beforeAll(() => {
+    setupGoogleMapsMock()
+  })
+
+  beforeEach(() => {
+    wrapper = mount(
+      <LocationAutocompleteInput
+        name="location"
+        title="Location"
+        placeholder="Enter City Where Artwork Is Located"
+        defaultValue={defaultValue}
+        onChange={mockOnChange}
+      />
+    )
+  })
+
+  afterEach(() => {
+    jest.clearAllMocks()
+  })
+
+  it("renders correctly", () => {
+    const input = wrapper.find(Input)
+    expect(wrapper.find(inputSelector).length).toBe(1)
+    expect(input.prop("placeholder")).toBe(
+      "Enter City Where Artwork Is Located"
+    )
+    expect(input.prop("title")).toBe("Location")
+  })
+
+  describe("Query", () => {
+    it("starts when character is entered", async () => {
+      await simulateTyping(wrapper, "N")
+
+      const searchString = mockGetPlacePredictions.mock.calls[0][0].input
+
+      expect(mockGetPlacePredictions).toHaveBeenCalledTimes(1)
+      expect(searchString).toBe("N")
+    })
+
+    it("doesn't starts if it's space", async () => {
+      await simulateTyping(wrapper, " ")
+
+      expect(mockGetPlacePredictions).toHaveBeenCalledTimes(0)
+    })
+  })
+
+  describe("Suggestions", () => {
+    it("render suggestions", async () => {
+      const correctSuggestionsLabels = [
+        "New York, NY, USA",
+        "New Orleans, LA, USA",
+      ]
+      await simulateTyping(wrapper, "New")
+
+      const suggestions = wrapper.find(optionsSelector)
+
+      suggestions.forEach((node, idx) => {
+        expect(node.text()).toBe(correctSuggestionsLabels[idx])
+      })
+    })
+
+    it("suggestion selected", async () => {
+      await simulateTyping(wrapper, "New")
+      await simulateSelectSuggestion(wrapper, 0)
+      expect(wrapper.find(inputSelector).prop("value")).toBe(
+        "New York, NY, USA"
+      )
+
+      expect(mockGeocode.mock.calls[0][0].placeId).toBe("111")
+      expect(wrapper.find(optionsSelector).length).toBe(0)
+
+      await simulateTyping(wrapper, "New O")
+      await simulateSelectSuggestion(wrapper, 1)
+
+      expect(mockGeocode.mock.calls[1][0].placeId).toBe("222")
+      expect(wrapper.find(inputSelector).prop("value")).toBe(
+        "New Orleans, LA, USA"
+      )
+
+      expect(wrapper.find(optionsSelector).length).toBe(0)
+    })
+
+    it("renders suggestions after focus backed to input", async () => {
+      await simulateTyping(wrapper, "New")
+      await simulateSelectSuggestion(wrapper, 0)
+      expect(wrapper.find(optionsSelector).length).toBe(0)
+
+      wrapper.find(inputSelector).simulate("focus")
+      expect(wrapper.find(optionsSelector).length).toBe(2)
+    })
+  })
+})
 
 describe("normalizePlace", () => {
   it("returns a more Gravity friendly place object", () => {
