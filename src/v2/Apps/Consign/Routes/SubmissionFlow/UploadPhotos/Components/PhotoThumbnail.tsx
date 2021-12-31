@@ -81,7 +81,12 @@ export const PhotoThumbnail: React.FC<PhotoThumbnailProps & BoxProps> = ({
         </CSSGrid>
       </Flex>
       {photo.errorMessage && (
-        <Text mt={[0.5, 2]} variant="xs" color="red100">
+        <Text
+          data-testid="photo-thumbnail-error"
+          mt={[0.5, 2]}
+          variant="xs"
+          color="red100"
+        >
           {photo.errorMessage}
         </Text>
       )}
@@ -98,11 +103,7 @@ const RemoveButton: React.FC<RemoveButtonProps> = ({
   withIconButton,
   handleDelete,
 }) => (
-  <Clickable
-    ml={2}
-    data-test-id="delete-photo-thumbnail"
-    onClick={handleDelete}
-  >
+  <Clickable data-testid="delete-photo-thumbnail" ml={2} onClick={handleDelete}>
     {withIconButton ? (
       <CloseCircleIcon
         display="flex"
