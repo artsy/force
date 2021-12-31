@@ -1,12 +1,9 @@
 import { graphql } from "relay-runtime"
-import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
-import { UploadPhotosForm } from "../Components/UploadPhotosForm"
-import { PhotoThumbnail } from "../Components/PhotoThumbnail"
-import { UploadPhotos } from "../UploadPhotos"
-import { flushPromiseQueue } from "v2/DevTools"
+import { setupTestWrapperTL } from "v2/DevTools/setupTestWrapper"
+import { UploadPhotosFragmentContainer } from "../UploadPhotos"
 import { SystemContextProvider } from "v2/System"
 import { MBSize, uploadPhoto } from "../../Utils/fileUtils"
-import * as openAuthModal from "v2/Utils/openAuthModal"
+import { fireEvent, screen, waitFor } from "@testing-library/react"
 
 jest.unmock("react-relay")
 
@@ -16,31 +13,9 @@ jest.mock("v2/System/Router/useRouter", () => {
     useRouter: jest.fn(() => {
       return {
         router: { push: mockRouterPush },
-        match: {
-          params: {
-            id: "1",
-          },
-        },
       }
     }),
   }
-})
-
-let sessionStore = {
-  "submission-1": JSON.stringify({
-    artworkDetailsForm: {
-      artistId: "artistId",
-    },
-  }),
-}
-Object.defineProperty(window, "sessionStorage", {
-  value: {
-    getItem(key) {
-      return sessionStore[key] || null
-    },
-    setItem: jest.fn(),
-    removeItem: jest.fn(),
-  },
 })
 
 jest.mock("../../Utils/fileUtils", () => ({
@@ -48,69 +23,84 @@ jest.mock("../../Utils/fileUtils", () => ({
   uploadPhoto: jest.fn(),
 }))
 
-const openAuthModalSpy = jest.spyOn(openAuthModal, "openAuthModal")
+const mockAddAsset = jest.fn()
+const mockRemoveAsset = jest.fn()
+
+jest.mock("../../Mutations", () => ({
+  ...jest.requireActual("../../Mutations"),
+  useRemoveAssetFromConsignmentSubmission: () => ({
+    submitMutation: mockRemoveAsset,
+  }),
+  useAddAssetToConsignmentSubmission: () => ({
+    submitMutation: mockAddAsset,
+  }),
+}))
 
 const mockUploadPhoto = uploadPhoto as jest.Mock
 
-const { getWrapper } = setupTestWrapper({
-  Component: () => {
+const { renderWithRelay } = setupTestWrapperTL({
+  Component: props => {
     return (
       <SystemContextProvider>
-        <UploadPhotos />
+        <UploadPhotosFragmentContainer {...props} />
       </SystemContextProvider>
     )
   },
   query: graphql`
-    query UploadPhotosQuery @relay_test_operation {
-      submission(id: "") {
-        id
+    query UploadPhotos_SubmissionFlowTest_Query($id: ID!)
+      @relay_test_operation {
+      submission(id: $id) {
+        ...UploadPhotos_submission
       }
     }
   `,
+  variables: {
+    id: "1",
+  },
 })
+
+const submission = {
+  id: "1",
+  assets: [],
+}
 
 describe("UploadPhotos", () => {
   beforeEach(() => {
-    sessionStore = {
-      "submission-1": JSON.stringify({
-        artworkDetailsForm: {
-          artistId: "artistId",
-        },
-      }),
-    }
     //@ts-ignore
     jest.spyOn(global, "FileReader").mockImplementation(function () {
       this.readAsDataURL = jest.fn()
     })
     mockUploadPhoto.mockResolvedValue("geminiToken")
+    mockAddAsset.mockResolvedValue({
+      addAssetToConsignmentSubmission: {
+        asset: {
+          id: 1,
+        },
+      },
+    })
+    mockRemoveAsset.mockImplementation(() => Promise.resolve())
   })
 
   afterEach(() => {
-    openAuthModalSpy.mockReset()
     mockUploadPhoto.mockReset()
+    mockAddAsset.mockReset()
+    mockRemoveAsset.mockReset()
   })
 
-  it.skip("renders correct", async () => {
-    const wrapper = getWrapper()
+  it("renders correct", async () => {
+    renderWithRelay({
+      ConsignmentSubmission: () => submission,
+    })
 
-    await flushPromiseQueue()
-    wrapper.update()
+    expect(
+      screen.getByText("Upload photos of your artwork")
+    ).toBeInTheDocument()
+    expect(screen.getByText("Back")).toBeInTheDocument()
 
-    const text = wrapper.text()
-
-    expect(text).toContain("Upload photos of your artwork")
-    expect(text).toContain(
-      "To evaluate your submission faster, please upload high-quality photos of the work's front and back."
-    )
-    expect(text).toContain(
-      "If possible, include photos of any signatures or certificates of authenticity."
-    )
-    expect(wrapper.find(UploadPhotosForm).length).toBe(1)
-    expect(wrapper.find("button[type='submit']").length).toBe(1)
-    expect(wrapper.find("BackLink")).toHaveLength(1)
-    expect(wrapper.find("BackLink").prop("to")).toEqual(
-      "/consign/submission/1/artwork-details"
-    )
+    expect(
+      screen.getAllByRole("link").find(c => c.textContent?.includes("Back"))
+    ).toHaveAttribute("href", "/consign/submission/1/artwork-details")
+    expect(screen.getByText("Save and Continue")).toBeInTheDocument()
   })
 
   it.each([
@@ -118,14 +108,11 @@ describe("UploadPhotos", () => {
     ["foo.jpg", "image/jpeg"],
     ["foo.jpeg", "image/jpeg"],
   ])("shows uploaded image name for %s", async (name, type) => {
-    const wrapper = getWrapper()
+    renderWithRelay({
+      ConsignmentSubmission: () => submission,
+    })
 
-    const dropzoneInput = wrapper
-      .find(UploadPhotosForm)
-      .find("[data-test-id='image-dropzone']")
-      .find("input")
-
-    dropzoneInput.simulate("change", {
+    fireEvent.change(screen.getByTestId("image-dropzone-input"), {
       target: {
         files: [
           {
@@ -138,26 +125,19 @@ describe("UploadPhotos", () => {
       },
     })
 
-    await flushPromiseQueue()
-    wrapper.update()
-
-    const photoThumbnail = wrapper.find(PhotoThumbnail)
-    const photoThumbnailText = photoThumbnail.text()
-
-    expect(photoThumbnail).toHaveLength(1)
-    expect(photoThumbnailText).toContain(name)
-    expect(photoThumbnailText).toContain("0.02 MB")
+    await waitFor(() => {
+      expect(screen.getByText("0.02 MB")).toBeInTheDocument()
+      expect(screen.getByText(name)).toBeInTheDocument()
+      expect(screen.getAllByTestId("photo-thumbnail").length).toEqual(1)
+    })
   })
 
   it("uploads few files correctly", async () => {
-    const wrapper = getWrapper()
+    renderWithRelay({
+      ConsignmentSubmission: () => submission,
+    })
 
-    const dropzoneInput = wrapper
-      .find(UploadPhotosForm)
-      .find("[data-test-id='image-dropzone']")
-      .find("input")
-
-    dropzoneInput.simulate("change", {
+    fireEvent.change(screen.getByTestId("image-dropzone-input"), {
       target: {
         files: [
           {
@@ -176,25 +156,19 @@ describe("UploadPhotos", () => {
       },
     })
 
-    await flushPromiseQueue()
-    wrapper.update()
-
-    const text = wrapper.text()
-
-    expect(wrapper.find(PhotoThumbnail)).toHaveLength(2)
-    expect(text).toContain("foo.png")
-    expect(text).toContain("bar.png")
+    await waitFor(() => {
+      expect(screen.getByText("foo.png")).toBeInTheDocument()
+      expect(screen.getByText("bar.png")).toBeInTheDocument()
+      expect(screen.getAllByTestId("photo-thumbnail").length).toEqual(2)
+    })
   })
 
   it("correctly remove image", async () => {
-    const wrapper = getWrapper()
+    renderWithRelay({
+      ConsignmentSubmission: () => submission,
+    })
 
-    const dropzoneInput = wrapper
-      .find(UploadPhotosForm)
-      .find("[data-test-id='image-dropzone']")
-      .find("input")
-
-    dropzoneInput.simulate("change", {
+    fireEvent.change(screen.getByTestId("image-dropzone-input"), {
       target: {
         files: [
           {
@@ -207,81 +181,67 @@ describe("UploadPhotos", () => {
       },
     })
 
-    await flushPromiseQueue()
-    wrapper.update()
+    await waitFor(() => {
+      expect(screen.queryByText("foo.png")).toBeInTheDocument()
+    })
 
-    const deletePhotoThumbnail = wrapper
-      .find(PhotoThumbnail)
-      .find("[data-test-id='delete-photo-thumbnail']")
-      .find("u")
+    fireEvent.click(screen.getByTestId("delete-photo-thumbnail"))
 
-    deletePhotoThumbnail.simulate("click")
-
-    expect(wrapper.find(PhotoThumbnail)).toHaveLength(0)
+    await waitFor(() => {
+      expect(screen.queryByText("foo.png")).not.toBeInTheDocument()
+      expect(mockRemoveAsset).toHaveBeenCalled()
+    })
   })
 
-  it.skip("prepopulates images from session storage", async () => {
-    sessionStore = {
-      "submission-1": JSON.stringify({
-        artworkDetailsForm: {
-          artistId: "artistId",
-        },
-        uploadPhotosForm: {
-          photos: [
-            {
-              id: "id",
-              name: "foo.png",
-              size: 111084,
-              s3Key: "Sr63tiKsuvMKfCWViJPWHw/foo.png",
-              removed: false,
-            },
-          ],
-        },
+  it("prepopulates images from server", async () => {
+    renderWithRelay({
+      ConsignmentSubmission: () => ({
+        ...submission,
+        assets: [
+          {
+            id: "id",
+            imageUrls: {},
+            geminiToken: "geminiToken",
+            size: "111084",
+            filename: "foo.png",
+          },
+        ],
       }),
-    }
-    const wrapper = getWrapper()
+    })
 
-    await flushPromiseQueue()
-    wrapper.update()
-
-    expect(wrapper.find(PhotoThumbnail)).toHaveLength(1)
+    expect(screen.getAllByTestId("photo-thumbnail").length).toEqual(1)
   })
 
-  it.skip("save images to session storage", async () => {
-    const wrapper = getWrapper()
+  it("saves image", async () => {
+    renderWithRelay({
+      ConsignmentSubmission: () => submission,
+    })
 
-    const dropzoneInput = wrapper
-      .find(UploadPhotosForm)
-      .find("[data-test-id='image-dropzone']")
-      .find("input")
-
-    dropzoneInput.simulate("change", {
+    fireEvent.change(screen.getByTestId("image-dropzone-input"), {
       target: {
         files: [
           {
             name: "foo.png",
             path: "foo.png",
             type: "image/png",
-            size: 20000,
+            size: 200,
           },
         ],
       },
     })
 
-    await flushPromiseQueue()
-    wrapper.update()
+    await waitFor(() => {
+      expect(screen.getAllByTestId("photo-thumbnail").length).toEqual(1)
+    })
 
-    wrapper.find("Form").simulate("submit")
+    fireEvent.click(screen.getByText("Save and Continue"))
 
-    await flushPromiseQueue()
-    wrapper.update()
-
-    expect(wrapper.find(PhotoThumbnail)).toHaveLength(1)
-
-    expect(sessionStorage.setItem).toHaveBeenCalled()
-    expect(mockRouterPush).toHaveBeenCalled()
-    expect(mockRouterPush).toHaveBeenCalledWith({
-      pathname: "/consign/submission/1/contact-information",
+    await waitFor(() => {
+      expect(mockAddAsset).toHaveBeenCalled()
+      expect(mockRouterPush).toHaveBeenCalled()
+      expect(mockRouterPush).toHaveBeenCalledWith({
+        pathname: "/consign/submission/1/contact-information",
+      })
     })
   })
 
@@ -289,14 +249,11 @@ describe("UploadPhotos", () => {
     it("if an image could not be uploaded", async () => {
       mockUploadPhoto.mockRejectedValueOnce("rejected")
 
-      const wrapper = getWrapper()
+      renderWithRelay({
+        ConsignmentSubmission: () => submission,
+      })
 
-      const dropzoneInput = wrapper
-        .find(UploadPhotosForm)
-        .find("[data-test-id='image-dropzone']")
-        .find("input")
-
-      dropzoneInput.simulate("change", {
+      fireEvent.change(screen.getByTestId("image-dropzone-input"), {
         target: {
           files: [
             {
@@ -309,22 +266,17 @@ describe("UploadPhotos", () => {
         },
       })
 
-      await flushPromiseQueue()
-      wrapper.update()
-
-      const thumbnailWithError = wrapper.find("PhotoThumbnailErrorState")
-      expect(thumbnailWithError).toHaveLength(1)
+      await waitFor(() => {
+        expect(screen.getAllByTestId("photo-thumbnail-error").length).toEqual(1)
+      })
     })
 
     it("if uploading too big file", async () => {
-      const wrapper = getWrapper()
+      renderWithRelay({
+        ConsignmentSubmission: () => submission,
+      })
 
-      const dropzoneInput = wrapper
-        .find(UploadPhotosForm)
-        .find("[data-test-id='image-dropzone']")
-        .find("input")
-
-      dropzoneInput.simulate("change", {
+      fireEvent.change(screen.getByTestId("image-dropzone-input"), {
         target: {
           files: [
             {
@@ -337,23 +289,20 @@ describe("UploadPhotos", () => {
         },
       })
 
-      await flushPromiseQueue()
-      wrapper.update()
-
-      expect(wrapper.text()).toContain(
-        "Whoa, you've reached the size limit! Please delete or upload smaller files."
-      )
+      await waitFor(() => {
+        expect(screen.getAllByTestId("photo-thumbnail-error").length).toEqual(1)
+        expect(screen.getByTestId("photo-thumbnail-error")).toHaveTextContent(
+          "Whoa, you've reached the size limit! Please delete or upload smaller files."
+        )
+      })
     })
 
     it("if uploading wrong file type", async () => {
-      const wrapper = getWrapper()
+      renderWithRelay({
+        ConsignmentSubmission: () => submission,
+      })
 
-      const dropzoneInput = wrapper
-        .find(UploadPhotosForm)
-        .find("[data-test-id='image-dropzone']")
-        .find("input")
-
-      dropzoneInput.simulate("change", {
+      fireEvent.change(screen.getByTestId("image-dropzone-input"), {
         target: {
           files: [
             {
@@ -366,23 +315,20 @@ describe("UploadPhotos", () => {
         },
       })
 
-      await flushPromiseQueue()
-      wrapper.update()
-
-      expect(wrapper.text()).toContain(
-        "File format not supported. Please upload JPG or PNG files."
-      )
+      await waitFor(() => {
+        expect(screen.getAllByTestId("photo-thumbnail-error").length).toEqual(1)
+        expect(screen.getByTestId("photo-thumbnail-error")).toHaveTextContent(
+          "File format not supported. Please upload JPG or PNG files."
+        )
+      })
     })
 
     it("if uploading wrong file type with too big size", async () => {
-      const wrapper = getWrapper()
+      renderWithRelay({
+        ConsignmentSubmission: () => submission,
+      })
 
-      const dropzoneInput = wrapper
-        .find(UploadPhotosForm)
-        .find("[data-test-id='image-dropzone']")
-        .find("input")
-
-      dropzoneInput.simulate("change", {
+      fireEvent.change(screen.getByTestId("image-dropzone-input"), {
         target: {
           files: [
             {
@@ -395,60 +341,53 @@ describe("UploadPhotos", () => {
         },
       })
 
-      await flushPromiseQueue()
-      wrapper.update()
-
-      expect(wrapper.text()).toContain(
-        "File format not supported. Please upload JPG or PNG files."
-      )
+      await waitFor(() => {
+        expect(screen.getAllByTestId("photo-thumbnail-error").length).toEqual(1)
+        expect(screen.getByTestId("photo-thumbnail-error")).toHaveTextContent(
+          "File format not supported. Please upload JPG or PNG files."
+        )
+      })
     })
-  })
 
-  describe("remove error message", () => {
-    it("if new uploading starts", async () => {
-      const wrapper = getWrapper()
+    describe("remove error message", () => {
+      it("if new uploading starts", async () => {
+        renderWithRelay({
+          ConsignmentSubmission: () => submission,
+        })
 
-      const dropzoneInput = wrapper
-        .find(UploadPhotosForm)
-        .find("[data-test-id='image-dropzone']")
-        .find("input")
+        fireEvent.change(screen.getByTestId("image-dropzone-input"), {
+          target: {
+            files: [
+              {
+                name: "foo.png",
+                path: "foo.png",
+                type: "image/png",
+                size: 40 * MBSize,
+              },
+            ],
+          },
+        })
 
-      dropzoneInput.simulate("change", {
-        target: {
-          files: [
-            {
-              name: "foo.png",
-              path: "foo.png",
-              type: "image/png",
-              size: 40 * MBSize,
-            },
-          ],
-        },
+        fireEvent.change(screen.getByTestId("image-dropzone-input"), {
+          target: {
+            files: [
+              {
+                name: "foo.png",
+                path: "foo.png",
+                type: "image/png",
+                size: 2 * MBSize,
+              },
+            ],
+          },
+        })
+
+        await waitFor(() => {
+          expect(
+            screen.queryByTestId("photo-thumbnail-error")
+          ).not.toBeInTheDocument()
+          expect(screen.getAllByTestId("photo-thumbnail").length).toEqual(1)
+        })
       })
-
-      await flushPromiseQueue()
-      wrapper.update()
-
-      dropzoneInput.simulate("change", {
-        target: {
-          files: [
-            {
-              name: "foo.png",
-              path: "foo.png",
-              type: "image/png",
-              size: 2 * MBSize,
-            },
-          ],
-        },
-      })
-
-      await flushPromiseQueue()
-      wrapper.update()
-
-      const thumbnailWithError = wrapper.find("PhotoThumbnailErrorState")
-      expect(thumbnailWithError).toHaveLength(0)
-      const successThumbnail = wrapper.find("PhotoThumbnailSuccessState")
-      expect(successThumbnail).toHaveLength(1)
     })
   })
 })
