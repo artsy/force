@@ -14,9 +14,11 @@ import { getENV } from "v2/Utils/getENV"
 import { uploadPhotosValidationSchema, validate } from "../Utils/validation"
 import { createFragmentContainer, graphql } from "react-relay"
 import { UploadPhotos_submission } from "v2/__generated__/UploadPhotos_submission.graphql"
-import { useRemoveAssetFromConsignmentSubmission } from "../Mutations/removeAssetFromConsignmentSubmission"
+import {
+  useRemoveAssetFromConsignmentSubmission,
+  useAddAssetToConsignmentSubmission,
+} from "../Mutations"
 import createLogger from "v2/Utils/logger"
-import { useAddAssetToConsignmentSubmission } from "../Mutations"
 
 const logger = createLogger("UploadPhotos.tsx")
 
@@ -159,6 +161,7 @@ export const UploadPhotos: React.FC<UploadPhotosProps> = ({ submission }) => {
                     mt={2}
                     key={photo.id}
                     photo={photo}
+                    data-testid="photo-thumbnail"
                     onDelete={handlePhotoDelete}
                   />
                 ))}
