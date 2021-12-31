@@ -7,7 +7,18 @@ import {
 } from "@artsy/palette"
 import { useLoadScript } from "v2/Utils/Hooks/useLoadScript"
 import { getENV } from "v2/Utils/getENV"
-import { useState, useEffect, useRef, MouseEvent, ChangeEvent, FC } from "react"
+import {
+  useState,
+  useEffect,
+  useRef,
+  MouseEvent,
+  ChangeEvent,
+  FC,
+  useMemo,
+} from "react"
+import { debounce } from "lodash"
+
+const DEBOUNCE_DELAY = 300
 
 const GOOGLE_PLACES_API_SRC = `https://maps.googleapis.com/maps/api/js?key=${getENV(
   "GOOGLE_MAPS_API_KEY"
@@ -92,13 +103,19 @@ export const LocationAutocompleteInput: FC<LocationAutocompleteInputProps> = ({
     }
   }
 
+  const handleSuggestionsFetchRequested = useMemo(
+    () => debounce(updateSuggestions, DEBOUNCE_DELAY),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
+  )
+
   const handleSelect = async (option: AutocompleteInputOptionType) => {
     const place = await geocoderRef.current.geocode({ placeId: option.value })
     onChange?.(place?.results[0])
   }
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    updateSuggestions(e.target.value)
+    handleSuggestionsFetchRequested(e.target.value)
     onChange?.({ city: e.target.value })
   }
 
