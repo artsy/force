@@ -1,57 +1,21 @@
 import { graphql } from "relay-runtime"
-import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
-import { ContactInformationForm } from "../Components/ContactInformationForm"
-import { flushPromiseQueue } from "v2/DevTools"
-import { SystemContextProvider } from "v2/System"
-import { ReactWrapper } from "enzyme"
+import { setupTestWrapperTL } from "v2/DevTools/setupTestWrapper"
+import { SystemContextProvider, useTracking } from "v2/System"
 import { createOrUpdateConsignSubmission } from "../../Utils/createOrUpdateConsignSubmission"
 import { useErrorModal } from "../../Utils/useErrorModal"
 import { getPhoneNumberInformation } from "../../Utils/phoneNumberUtils"
+import { ContactInformationFragmentContainer } from "../ContactInformation"
+import { fireEvent, screen, waitFor } from "@testing-library/react"
+import { ActionType } from "@artsy/cohesion"
 
 jest.unmock("react-relay")
+jest.mock("v2/System/Analytics/useTracking")
 
-const previousStepsData = {
-  artworkDetailsForm: {
-    artistId: "artistId",
-    artistName: "Banksy",
-    year: "2021",
-    title: "Some title",
-    medium: "PAINTING",
-    rarity: "limited edition",
-    editionNumber: "1",
-    editionSize: "2",
-    height: "3",
-    width: "4",
-    depth: "5",
-    units: "cm",
-  },
-  uploadPhotosForm: {
-    photos: [
-      {
-        id: "id",
-        name: "foo.png",
-        size: 111084,
-        geminiToken: "Sr63tiKsuvMKfCWViJPWHw/foo.png",
-        removed: false,
-      },
-    ],
-  },
-}
-const contactInformationForm = {
-  name: "Andy",
-  email: "andy@test.test",
-  phone: {
-    isValid: true,
-    international: "+1 415-555-0132",
-    national: "(415) 555-0132",
-    regionCode: "us",
-  },
-}
 const mockMe = {
+  internalID: "123",
   name: "Serge",
   email: "serge@test.test",
   phone: "+1 415-555-0132",
-  id: "userId",
   phoneNumber: {
     isValid: true,
     international: "+1 415-555-0132",
@@ -59,6 +23,19 @@ const mockMe = {
     regionCode: "us",
   },
 }
+
+const mockEmptyMe = {
+  internalID: null,
+  name: null,
+  email: null,
+  phone: null,
+  phoneNumber: null,
+}
+
+const mockSubmission = {
+  id: "1",
+}
+
 const mockRouterPush = jest.fn()
 
 jest.mock("v2/System/Router/useRouter", () => ({
@@ -89,58 +66,53 @@ jest.mock("../../Utils/phoneNumberUtils", () => ({
 
 const mockCreateConsignSubmission = createOrUpdateConsignSubmission as jest.Mock
 const mockGetPhoneNumberInformation = getPhoneNumberInformation as jest.Mock
+const mockUseErrorModal = useErrorModal as jest.Mock
+const mockTracking = useTracking as jest.Mock
+const mockTrackEvent = jest.fn()
 
-let sessionStore = {
-  "submission-1": JSON.stringify({
-    ...previousStepsData,
-  }),
-}
-Object.defineProperty(window, "sessionStorage", {
-  value: {
-    getItem: key => sessionStore[key] || null,
-    setItem: jest.fn(),
-    removeItem: jest.fn(),
-  },
-})
-
-const getWrapperWithProps = (user?: User) =>
-  setupTestWrapper({
+const getWrapper = (user?: User) =>
+  setupTestWrapperTL({
     Component: (props: any) => {
       return (
         <SystemContextProvider user={user} isLoggedIn={!!user}>
-          {/* <ContactInformationFragmentContainer me={props.me} /> */}
+          <ContactInformationFragmentContainer {...props} />
         </SystemContextProvider>
       )
     },
     query: graphql`
-      query ContactInformationTestQuery @relay_test_operation {
+      query ContactInformation_SubmissionFlowTest_Query($id: ID!)
+        @relay_test_operation {
         me {
           ...ContactInformation_me
         }
+        submission(id: $id) {
+          ...ContactInformation_submission
+        }
       }
     `,
+    variables: {
+      id: "1",
+    },
   })
 
-const simulateTyping = async (
-  wrapper: ReactWrapper,
-  field: string,
-  text: string
-) => {
-  const input = wrapper.find(`input[name='${field}']`)
-  input.simulate("change", { target: { name: field, value: text } })
-  await flushPromiseQueue()
-  wrapper.update()
+const simulateTyping = async (field: string, text: string) => {
+  const input = getInput(field)
+  input && fireEvent.change(input, { target: { name: field, value: text } })
 }
 
-describe.skip("Contact Information step", () => {
-  const mockUseErrorModal = useErrorModal as jest.Mock
-  const saveButtonSelector = "button[data-test-id='save-button']"
+const getSubmitButton = () => screen.getByTestId("save-button")
+const getInput = name =>
+  screen.getAllByRole("textbox").find(c => c.getAttribute("name") === name)
 
+describe("Contact Information step", () => {
   beforeEach(() => {
     mockUseErrorModal.mockImplementation(() => ({
       openErrorModal: mockOpenErrorModal,
     }))
     mockGetPhoneNumberInformation.mockResolvedValue(mockMe.phoneNumber)
+    mockTracking.mockImplementation(() => ({
+      trackEvent: mockTrackEvent,
+    }))
   })
 
   afterEach(() => {
@@ -149,257 +121,209 @@ describe.skip("Contact Information step", () => {
 
   describe("Initial render", () => {
     it("renders correctly", async () => {
-      const { getWrapper } = getWrapperWithProps(mockMe)
-      const wrapper = getWrapper({ Me: () => mockMe })
-      await flushPromiseQueue()
-      wrapper.update()
-      const text = wrapper.text()
-      const artworkCurrentStep = wrapper
-        .find("button")
-        .filterWhere(n => n.prop("aria-selected") === true)
-      artworkCurrentStep.forEach(n => {
-        expect(n.text()).toContain("Contact")
+      getWrapper().renderWithRelay({
+        Me: () => mockMe,
+        ConsignmentSubmission: () => mockSubmission,
       })
-      expect(text).toContain("Let us know how to reach you")
-      expect(text).toContain(
-        "We will only use these details to contact you regarding your submission."
-      )
-      expect(wrapper.find(ContactInformationForm).length).toBe(1)
-      expect(wrapper.find("button[type='submit']").length).toBe(1)
-      expect(wrapper.find("BackLink")).toHaveLength(1)
-      expect(wrapper.find("BackLink").prop("to")).toEqual(
-        "/consign/submission/1/upload-photos"
-      )
+
+      expect(
+        screen.getByText("Let us know how to reach you")
+      ).toBeInTheDocument()
+      expect(
+        screen.getByText(
+          "We will only use these details to contact you regarding your submission."
+        )
+      ).toBeInTheDocument()
+      expect(screen.getByText("Back")).toBeInTheDocument()
+      expect(
+        screen.getAllByRole("link").find(c => c.textContent?.includes("Back"))
+      ).toHaveAttribute("href", "/consign/submission/1/upload-photos")
+
+      expect(getSubmitButton()).toBeInTheDocument()
     })
   })
 
   describe("Save and Continue button", () => {
     it("is disabled if at least one field is not valid", async () => {
-      const { getWrapper } = getWrapperWithProps()
-      const wrapper = getWrapper({
-        Me: () => ({ name: null, email: null, phone: null, phoneNumber: null }),
+      getWrapper().renderWithRelay({
+        Me: () => mockEmptyMe,
+        ConsignmentSubmission: () => mockSubmission,
       })
-      await flushPromiseQueue()
-      wrapper.update()
 
-      expect(wrapper.find(saveButtonSelector).prop("disabled")).toBe(true)
+      expect(getSubmitButton()).toBeDisabled()
 
-      await simulateTyping(wrapper, "name", "Banksy")
+      simulateTyping("name", "Banksy")
 
-      expect(wrapper.find(saveButtonSelector).prop("disabled")).toBe(true)
+      await waitFor(() => {
+        expect(getSubmitButton()).toBeDisabled()
+      })
 
-      await simulateTyping(wrapper, "email", "banksy@test.test")
+      simulateTyping("email", "banksy@test.test")
 
-      expect(wrapper.find(saveButtonSelector).prop("disabled")).toBe(true)
+      await waitFor(() => {
+        expect(getSubmitButton()).toBeDisabled()
+      })
 
-      await simulateTyping(wrapper, "phone", "(415) 555-0132")
+      simulateTyping("phone", "(415) 555-0132")
 
-      expect(wrapper.find(saveButtonSelector).prop("disabled")).toBe(false)
+      await waitFor(() => {
+        expect(getSubmitButton()).toBeEnabled()
+      })
     })
 
     it("is enabled if  all fields is valid", async () => {
-      const { getWrapper } = getWrapperWithProps(mockMe)
-      const wrapper = getWrapper({ Me: () => mockMe })
-      await flushPromiseQueue()
-      wrapper.update()
-      const button = wrapper.find(saveButtonSelector)
-      expect(button.prop("disabled")).toBe(false)
+      getWrapper().renderWithRelay({
+        Me: () => mockMe,
+        ConsignmentSubmission: () => mockSubmission,
+      })
+
+      expect(getSubmitButton()).toBeEnabled()
     })
 
     it("show error modal if consingment submission fails", async () => {
       mockCreateConsignSubmission.mockRejectedValueOnce("rejected")
-      const { getWrapper } = getWrapperWithProps(mockMe)
-      const wrapper = getWrapper({ Me: () => mockMe })
+      getWrapper().renderWithRelay({
+        Me: () => mockMe,
+        ConsignmentSubmission: () => mockSubmission,
+      })
 
-      wrapper.find("Form").simulate("submit")
+      fireEvent.click(getSubmitButton())
 
-      await flushPromiseQueue()
-      wrapper.update()
-
-      expect(mockOpenErrorModal).toBeCalled()
+      await waitFor(() => {
+        expect(mockOpenErrorModal).toBeCalled()
+      })
     })
   })
 
   describe("If not logged in", () => {
     it("fields are not pre-populating from user profile", async () => {
-      const { getWrapper } = getWrapperWithProps()
-      const wrapper = getWrapper({
-        Me: () => ({ name: null, email: null, phone: null, phoneNumber: null }),
+      getWrapper().renderWithRelay({
+        Me: () => mockEmptyMe,
+        ConsignmentSubmission: () => mockSubmission,
       })
-      expect(wrapper.find("input[name='name']").prop("value")).toBe("")
-      expect(wrapper.find("input[name='email']").prop("value")).toBe("")
-      expect(wrapper.find("input[name='phone']").prop("value")).toBe("")
-    })
 
-    it("fields are pre-populating from session storage", async () => {
-      sessionStore = {
-        "submission-1": JSON.stringify({
-          ...previousStepsData,
-          contactInformationForm,
-        }),
-      }
-      const { getWrapper } = getWrapperWithProps()
-      const wrapper = getWrapper({
-        Me: () => ({ name: null, email: null, phone: null, phoneNumber: null }),
-      })
-      await flushPromiseQueue()
-      wrapper.update()
-
-      expect(wrapper.find("input[name='name']").prop("value")).toBe("Andy")
-      expect(wrapper.find("input[name='email']").prop("value")).toBe(
-        "andy@test.test"
-      )
-      expect(wrapper.find("input[name='phone']").prop("value")).toBe(
-        "(415) 555-0132"
-      )
+      expect(getInput("name")).not.toHaveValue()
+      expect(getInput("email")).not.toHaveValue()
+      expect(getInput("phone")).not.toHaveValue()
     })
 
     it("submiting a valid form", async () => {
-      const { getWrapper } = getWrapperWithProps()
-      const wrapper = getWrapper()
-      await flushPromiseQueue()
-      wrapper.update()
-
-      await simulateTyping(wrapper, "name", "Banksy")
-      await simulateTyping(wrapper, "email", "banksy@test.test")
-      await simulateTyping(wrapper, "phone", "333")
-
-      wrapper.find("Form").simulate("submit")
-      await flushPromiseQueue()
-      wrapper.update()
-
-      expect(window.grecaptcha.execute).toBeCalledWith("recaptcha-api-key", {
-        action: "submission_submit",
+      getWrapper().renderWithRelay({
+        Me: () => mockMe,
+        ConsignmentSubmission: () => mockSubmission,
       })
-      expect(sessionStorage.setItem).toHaveBeenCalled()
-      expect(mockCreateConsignSubmission).toHaveBeenCalled()
-      expect(mockCreateConsignSubmission.mock.calls[0][2]).toEqual(undefined)
-      expect(mockCreateConsignSubmission.mock.calls[0][3]).toEqual("SessionID")
-      expect(sessionStorage.removeItem).toHaveBeenCalled()
-      expect(mockRouterPush).toHaveBeenCalledWith(
-        "/consign/submission/1/thank-you"
-      )
+
+      simulateTyping("name", "Banksy")
+      simulateTyping("email", "banksy@test.test")
+      simulateTyping("phone", "333")
+
+      fireEvent.click(getSubmitButton())
+
+      await waitFor(() => {
+        expect(window.grecaptcha.execute).toBeCalledWith("recaptcha-api-key", {
+          action: "submission_submit",
+        })
+        expect(mockCreateConsignSubmission).toHaveBeenCalled()
+        expect(mockCreateConsignSubmission.mock.calls[0][1]).toEqual({
+          id: "1",
+          userName: "Banksy",
+          userEmail: "banksy@test.test",
+          userPhone: "+1 415-555-0132",
+          state: "SUBMITTED",
+          sessionID: "SessionID",
+        })
+        expect(mockRouterPush).toHaveBeenCalledWith(
+          "/consign/submission/1/thank-you"
+        )
+      })
     })
   })
 
   describe("If logged in", () => {
-    it("fields are pre-populating from user profile if session storage is clear", async () => {
-      sessionStore = {
-        "submission-1": JSON.stringify({ ...previousStepsData }),
-      }
-      const { getWrapper } = getWrapperWithProps(mockMe)
-      const wrapper = getWrapper({ Me: () => mockMe })
-      await flushPromiseQueue()
-      wrapper.update()
+    it("fields are pre-populating from user profile", async () => {
+      getWrapper().renderWithRelay({
+        Me: () => mockMe,
+        ConsignmentSubmission: () => mockSubmission,
+      })
 
-      expect(wrapper.find("input[name='name']").prop("value")).toBe(mockMe.name)
-      expect(wrapper.find("input[name='email']").prop("value")).toBe(
-        mockMe.email
-      )
-      expect(wrapper.find("input[name='phone']").prop("value")).toBe(
-        mockMe.phoneNumber.national
-      )
-    })
-
-    it("data from session storage overrides data from user profile", async () => {
-      sessionStore = {
-        "submission-1": JSON.stringify({
-          ...previousStepsData,
-          contactInformationForm,
-        }),
-      }
-      const { getWrapper } = getWrapperWithProps(mockMe)
-      const wrapper = getWrapper({ Me: () => mockMe })
-      await flushPromiseQueue()
-      wrapper.update()
-
-      expect(wrapper.find("input[name='name']").prop("value")).toBe("Andy")
-      expect(wrapper.find("input[name='email']").prop("value")).toBe(
-        "andy@test.test"
-      )
-      expect(wrapper.find("input[name='phone']").prop("value")).toBe(
-        "(415) 555-0132"
-      )
+      expect(getInput("name")).toHaveValue(mockMe.name)
+      expect(getInput("email")).toHaveValue(mockMe.email)
+      expect(getInput("phone")).toHaveValue(mockMe.phoneNumber.national)
     })
 
     it("submiting a valid form", async () => {
-      const { getWrapper } = getWrapperWithProps(mockMe)
-      const wrapper = getWrapper({ Me: () => mockMe })
-      await flushPromiseQueue()
-      wrapper.update()
-      wrapper.find("Form").simulate("submit")
-      await flushPromiseQueue()
-      wrapper.update()
-
-      expect(window.grecaptcha.execute).toBeCalledWith("recaptcha-api-key", {
-        action: "submission_submit",
+      getWrapper().renderWithRelay({
+        Me: () => mockMe,
+        ConsignmentSubmission: () => mockSubmission,
       })
-      expect(sessionStorage.setItem).toHaveBeenCalled()
-      expect(mockCreateConsignSubmission).toHaveBeenCalled()
-      expect(mockCreateConsignSubmission.mock.calls[0][2]).toEqual("userId")
-      expect(mockCreateConsignSubmission.mock.calls[0][3]).toEqual(undefined)
-      expect(sessionStorage.removeItem).toHaveBeenCalled()
-      expect(mockRouterPush).toHaveBeenCalledWith(
-        "/consign/submission/1/thank-you"
-      )
+
+      fireEvent.click(getSubmitButton())
+
+      await waitFor(() => {
+        expect(window.grecaptcha.execute).toBeCalledWith("recaptcha-api-key", {
+          action: "submission_submit",
+        })
+        expect(mockCreateConsignSubmission).toHaveBeenCalled()
+        expect(mockCreateConsignSubmission.mock.calls[0][1]).toEqual({
+          id: "1",
+          userName: "Serge",
+          userEmail: "serge@test.test",
+          userPhone: "+1 415-555-0132",
+          state: "SUBMITTED",
+          sessionID: "SessionID",
+        })
+        expect(mockRouterPush).toHaveBeenCalledWith(
+          "/consign/submission/1/thank-you"
+        )
+      })
     })
   })
 
   it("values are trimmed before any actions", async () => {
-    const { getWrapper } = getWrapperWithProps(mockMe)
-    const wrapper = getWrapper({ Me: () => mockMe })
-    await flushPromiseQueue()
-    wrapper.update()
+    getWrapper().renderWithRelay({
+      Me: () => mockEmptyMe,
+      ConsignmentSubmission: () => mockSubmission,
+    })
 
-    await simulateTyping(wrapper, "name", " Banksy  ")
-    await simulateTyping(wrapper, "email", "  banksy@test.test  ")
-    await simulateTyping(wrapper, "phone", "  +1 415-555-0132  ")
+    simulateTyping("name", " Banksy  ")
+    simulateTyping("email", "  banksy@test.test  ")
+    simulateTyping("phone", "  +1 415-555-0132  ")
 
-    wrapper.find("Form").simulate("submit")
-    await flushPromiseQueue()
-    wrapper.update()
+    await waitFor(() => {
+      expect(getSubmitButton()).toBeEnabled()
+    })
 
-    expect(sessionStorage.setItem).toHaveBeenCalledWith(
-      "submission-1",
-      JSON.stringify({
-        ...previousStepsData,
-        contactInformationForm: {
-          name: "Banksy",
-          email: "banksy@test.test",
-          phone: {
-            isValid: true,
-            international: "+1 415-555-0132",
-            national: "(415) 555-0132",
-            regionCode: "us",
-          },
-        },
+    fireEvent.click(getSubmitButton())
+
+    await waitFor(() => {
+      expect(mockCreateConsignSubmission).toHaveBeenCalled()
+      expect(mockCreateConsignSubmission.mock.calls[0][1]).toEqual({
+        id: "1",
+        userName: "Banksy",
+        userEmail: "banksy@test.test",
+        userPhone: "+1 415-555-0132",
+        state: "SUBMITTED",
+        sessionID: "SessionID",
       })
-    )
-
-    expect(mockCreateConsignSubmission).toHaveBeenCalledTimes(1)
-    expect(mockCreateConsignSubmission.mock.calls[0][1]).toEqual({
-      ...previousStepsData,
-      contactInformationForm: {
-        name: "Banksy",
-        email: "banksy@test.test",
-        phone: {
-          isValid: true,
-          international: "+1 415-555-0132",
-          national: "(415) 555-0132",
-          regionCode: "us",
-        },
-      },
     })
   })
 
-  it.skip("tracks consignment submitted event", async () => {
-    // await createOrUpdateConsignSubmission(relayEnvironment, submission)
-    // expect(trackEvent).toHaveBeenCalled()
-    // expect(trackEvent).toHaveBeenCalledWith({
-    //   action: ActionType.consignmentSubmitted,
-    //   submission_id: "123",
-    //   user_id: undefined,
-    //   user_email: "test@test.test",
-    // })
+  it("tracks consignment submitted event", async () => {
+    getWrapper().renderWithRelay({
+      Me: () => mockMe,
+      ConsignmentSubmission: () => mockSubmission,
+    })
+
+    fireEvent.click(getSubmitButton())
+
+    await waitFor(() => {
+      expect(mockTrackEvent).toHaveBeenCalled()
+      expect(mockTrackEvent).toHaveBeenCalledWith({
+        action: ActionType.consignmentSubmitted,
+        submission_id: "1",
+        user_id: "123",
+        user_email: "serge@test.test",
+      })
+    })
   })
 })
