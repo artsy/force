@@ -4,17 +4,21 @@ import { Box, Pill, Swiper } from "@artsy/palette"
 
 interface AlgoliaIndicesProps {
   algolia: AlgoliaIndices_algolia | null
+  selectedIndiceName: string
   onClick: (index: number) => void
 }
 
 export const AlgoliaIndices: React.FC<AlgoliaIndicesProps> = ({
   algolia,
+  selectedIndiceName,
   onClick,
 }) => {
   return (
     <Box mx={-0.5}>
       <Swiper>
         {algolia?.indices.map((indice, index) => {
+          const isSelected = selectedIndiceName === indice.name
+
           return (
             <Pill
               variant="filter"
@@ -22,6 +26,8 @@ export const AlgoliaIndices: React.FC<AlgoliaIndicesProps> = ({
               key={indice.key}
               mx={0.5}
               my={2}
+              focus={isSelected}
+              hover={isSelected}
             >
               {indice.displayName}
             </Pill>
