@@ -20,7 +20,7 @@ describe("partner/:partner_id", () => {
     cy.get("h1").should("contain", "Mariane Ibrahim Gallery")
   })
 
-  it("shows the list of shows", () => {
+  it.skip("shows the list of shows", () => {
     cy.visit("partner/mariane-ibrahim-gallery/shows")
     cy.contains("Past Events")
   })
