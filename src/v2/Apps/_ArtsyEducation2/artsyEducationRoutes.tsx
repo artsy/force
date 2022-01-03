@@ -13,7 +13,7 @@ const ArtsyEducationApp = loadable(
 
 export const artsyEducation: AppRouteConfig[] = [
   {
-    path: "artsy-education2",
+    path: "/artsy-education2",
     getComponent: () => ArtsyEducationApp,
   },
 ]

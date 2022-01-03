@@ -11,7 +11,7 @@ const WorksForYou2App = loadable(
 
 export const worksForYouRoutes: AppRouteConfig[] = [
   {
-    path: "works-for-you2",
+    path: "/works-for-you2",
     getComponent: () => WorksForYou2App,
   },
 ]
