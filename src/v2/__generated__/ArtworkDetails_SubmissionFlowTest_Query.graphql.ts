@@ -74,6 +74,18 @@ v2 = {
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
+},
+v3 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "ID"
+},
+v4 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "String"
 };
 return {
   "fragment": {
@@ -249,12 +261,55 @@ return {
   "params": {
     "cacheID": "fdde03f7c93d93f44b812a2caed24760",
     "id": null,
-    "metadata": {},
+    "metadata": {
+      "relayTestingSelectionTypeInfo": {
+        "submission": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "ConsignmentSubmission"
+        },
+        "submission.artist": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Artist"
+        },
+        "submission.artist.id": (v3/*: any*/),
+        "submission.artist.internalID": (v3/*: any*/),
+        "submission.artist.name": (v4/*: any*/),
+        "submission.attributionClass": {
+          "enumValues": [
+            "LIMITED_EDITION",
+            "OPEN_EDITION",
+            "UNIQUE",
+            "UNKNOWN_EDITION"
+          ],
+          "nullable": true,
+          "plural": false,
+          "type": "ConsignmentAttributionClass"
+        },
+        "submission.depth": (v4/*: any*/),
+        "submission.dimensionsMetric": (v4/*: any*/),
+        "submission.editionNumber": (v4/*: any*/),
+        "submission.editionSize": (v4/*: any*/),
+        "submission.height": (v4/*: any*/),
+        "submission.id": (v3/*: any*/),
+        "submission.locationCity": (v4/*: any*/),
+        "submission.locationCountry": (v4/*: any*/),
+        "submission.locationState": (v4/*: any*/),
+        "submission.medium": (v4/*: any*/),
+        "submission.provenance": (v4/*: any*/),
+        "submission.title": (v4/*: any*/),
+        "submission.width": (v4/*: any*/),
+        "submission.year": (v4/*: any*/)
+      }
+    },
     "name": "ArtworkDetails_SubmissionFlowTest_Query",
     "operationKind": "query",
     "text": "query ArtworkDetails_SubmissionFlowTest_Query(\n  $id: ID!\n) {\n  submission(id: $id) {\n    ...ArtworkDetails_submission\n    id\n  }\n}\n\nfragment ArtworkDetails_submission on ConsignmentSubmission {\n  id\n  artist {\n    internalID\n    name\n    id\n  }\n  locationCity\n  locationCountry\n  locationState\n  year\n  title\n  medium\n  attributionClass\n  editionNumber\n  editionSize\n  height\n  width\n  depth\n  dimensionsMetric\n  provenance\n}\n"
   }
 };
 })();
-(node as any).hash = 'e6ddef43fed0dadb1a25a1612eeba6e2';
+(node as any).hash = 'd8bbfe0bd79359f3c18de6c33f50d622';
 export default node;
