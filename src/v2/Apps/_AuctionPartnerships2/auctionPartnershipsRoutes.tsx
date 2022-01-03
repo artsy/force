@@ -13,7 +13,7 @@ const AuctionPartnershipsApp = loadable(
 
 export const auctionPartnershipsRoutes: AppRouteConfig[] = [
   {
-    path: "auction-partnerships2",
+    path: "/auction-partnerships2",
     getComponent: () => AuctionPartnershipsApp,
   },
 ]
