@@ -21,8 +21,8 @@ describe("partner/:partner_id", () => {
   })
 
   it("shows the list of shows", () => {
-    cy.visit("partner/konig-galerie/shows")
-    cy.contains("Current Events")
+    cy.visit("partner/mariane-ibrahim-gallery/shows")
+    cy.contains("Past Events")
   })
 
   it("shows partner artists", () => {
