@@ -45,6 +45,7 @@ export const AlgoliaResults: React.FC<AlgoliaResultsProps> = ({ system }) => {
 
     return null
   }, [algolia?.appID, algolia?.apiKey])
+  const selectedIndice = algolia?.indices?.[selectedTabIndex]
 
   const onSearchStateChange = updatedSearchState => {
     if (debouncedSetStateRef.current) {
@@ -73,9 +74,7 @@ export const AlgoliaResults: React.FC<AlgoliaResultsProps> = ({ system }) => {
     setSearchState(urlToSearchState(match.location.search))
   }, [match.location])
 
-  if (searchClient) {
-    const selectedIndice = algolia?.indices[selectedTabIndex]!
-
+  if (searchClient && selectedIndice) {
     return (
       <InstantSearch
         searchClient={searchClient}
@@ -92,6 +91,7 @@ export const AlgoliaResults: React.FC<AlgoliaResultsProps> = ({ system }) => {
         <Box id={ANCHOR_CONTAINER_ID} />
         <AlgoliaIndicesFragmentContainer
           algolia={algolia}
+          selectedIndiceName={selectedIndice.name}
           onClick={handleIndiceSelect}
         />
         <ConnectedAlgoliaResults algolia={algolia} />

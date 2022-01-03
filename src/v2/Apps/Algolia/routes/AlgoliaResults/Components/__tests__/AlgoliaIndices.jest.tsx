@@ -17,6 +17,7 @@ const { renderWithRelay } = setupTestWrapperTL<AlgoliaIndices_Test_Query>({
       return (
         <AlgoliaIndicesFragmentContainer
           algolia={system.algolia}
+          selectedIndiceName="indice_one"
           onClick={onClickMock}
         />
       )
