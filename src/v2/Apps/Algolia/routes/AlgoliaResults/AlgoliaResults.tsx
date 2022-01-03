@@ -7,7 +7,7 @@ import {
   Configure,
   connectPagination,
   connectStateResults,
-} from "react-instantsearch-dom"
+} from "react-instantsearch-core"
 import { useRouter } from "v2/System/Router/useRouter"
 import { AlgoliaIndicesFragmentContainer } from "./Components/AlgoliaIndices"
 import { AlgoliaPagination } from "./Components/AlgoliaPagination"

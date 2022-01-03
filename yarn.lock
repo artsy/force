@@ -3983,7 +3983,7 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react-instantsearch-core@*", "@types/react-instantsearch-core@^6.10.5":
+"@types/react-instantsearch-core@^6.10.5":
   version "6.10.5"
   resolved "https://registry.yarnpkg.com/@types/react-instantsearch-core/-/react-instantsearch-core-6.10.5.tgz#909870ad8bbdbd8ba501b34df8f952d983c3d8ce"
   integrity sha512-VjXJFUfsPdWMSiugJiQc950G9ZRjCEIzqQ9/K915d1f1BsVE2TE57PcfHSxAy1pGDDR8FT5uAgAaOMyKJ66NJQ==
@@ -3991,14 +3991,6 @@
     "@types/react" "*"
     algoliasearch ">=4"
     algoliasearch-helper ">=3"
-
-"@types/react-instantsearch-dom@^6.12.1":
-  version "6.12.1"
-  resolved "https://registry.yarnpkg.com/@types/react-instantsearch-dom/-/react-instantsearch-dom-6.12.1.tgz#5d289174d31e688028327eb83251a7fe27587590"
-  integrity sha512-0crWjo6w6SHPZY5XWVUVkH3exVRGjyNJXtVYXRD7s6u8CiSIhONO82cCsxSCsdyGeK2yenPZNxFuZ1KXnoWKOg==
-  dependencies:
-    "@types/react" "*"
-    "@types/react-instantsearch-core" "*"
 
 "@types/react-overlays@0.8.4":
   version "0.8.4"
@@ -17572,18 +17564,6 @@ react-instantsearch-core@^6.18.0:
     algoliasearch-helper "^3.6.2"
     prop-types "^15.6.2"
     react-fast-compare "^3.0.0"
-
-react-instantsearch-dom@^6.18.0:
-  version "6.18.0"
-  resolved "https://registry.yarnpkg.com/react-instantsearch-dom/-/react-instantsearch-dom-6.18.0.tgz#6d9ba255d6e5156df0dcfa5d0feafed1c4fecfa7"
-  integrity sha512-gsxSyzviDMcCX9+cgEnmOxRcQhoQq6e3+hCh/QvlF36Qw6xASeAt5VD+f+fRXCYX0oFJ3SoIoJXjcag4E4C4kQ==
-  dependencies:
-    "@babel/runtime" "^7.1.2"
-    algoliasearch-helper "^3.6.2"
-    classnames "^2.2.5"
-    prop-types "^15.6.2"
-    react-fast-compare "^3.0.0"
-    react-instantsearch-core "^6.18.0"
 
 react-is@16.8.3, react-is@^16.12.0, "react-is@^16.12.0 || ^17.0.0", react-is@^16.6.0, react-is@^16.7.0, react-is@^16.8.1, react-is@^16.8.4, react-is@^16.8.6, react-is@^16.9.0, react-is@^17.0.0, react-is@^17.0.1, react-is@^17.0.2:
   version "16.8.3"
