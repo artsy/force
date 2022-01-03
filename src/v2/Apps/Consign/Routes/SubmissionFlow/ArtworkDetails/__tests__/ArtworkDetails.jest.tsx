@@ -69,7 +69,8 @@ const getWrapper = (breakpoint: Breakpoint = "lg") =>
       )
     },
     query: graphql`
-      query ArtworkDetails_SubmissionFlowTest_Query($id: ID!) {
+      query ArtworkDetails_SubmissionFlowTest_Query($id: ID!)
+        @relay_test_operation {
         submission(id: $id) {
           ...ArtworkDetails_submission
         }
