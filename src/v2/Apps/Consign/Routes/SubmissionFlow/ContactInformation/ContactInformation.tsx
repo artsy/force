@@ -46,7 +46,7 @@ export const ContactInformation: React.FC<ContactInformationProps> = ({
   const { trackEvent } = useTracking()
   const { router } = useRouter()
   const { openErrorModal } = useErrorModal()
-  const { relayEnvironment, user, isLoggedIn } = useSystemContext()
+  const { relayEnvironment, isLoggedIn } = useSystemContext()
   const initialValue = getContactInformationFormInitialValues(me)
   const initialErrors = validate(
     initialValue,
@@ -77,8 +77,8 @@ export const ContactInformation: React.FC<ContactInformationProps> = ({
         trackEvent({
           action: ActionType.consignmentSubmitted,
           submission_id: submission.id,
-          user_id: user?.id,
-          user_email: user?.email,
+          user_id: me?.internalID,
+          user_email: me?.email ?? undefined,
         })
 
         router.push(`/consign/submission/${submission?.id}/thank-you`)
@@ -123,7 +123,7 @@ export const ContactInformation: React.FC<ContactInformationProps> = ({
             <ContactInformationForm my={6} me={me} />
 
             <Button
-              data-test-id="save-button"
+              data-testid="save-button"
               width={["100%", "auto"]}
               disabled={!isValid || isSubmitting}
               loading={isSubmitting}
@@ -148,6 +148,7 @@ export const ContactInformationFragmentContainer = createFragmentContainer(
     `,
     me: graphql`
       fragment ContactInformation_me on Me {
+        internalID
         name
         email
         phone

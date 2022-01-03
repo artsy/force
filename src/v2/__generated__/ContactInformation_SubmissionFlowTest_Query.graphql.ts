@@ -4,28 +4,40 @@
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type ContactInformationTestQueryVariables = {};
-export type ContactInformationTestQueryResponse = {
+export type ContactInformation_SubmissionFlowTest_QueryVariables = {
+    id: string;
+};
+export type ContactInformation_SubmissionFlowTest_QueryResponse = {
     readonly me: {
         readonly " $fragmentRefs": FragmentRefs<"ContactInformation_me">;
     } | null;
+    readonly submission: {
+        readonly " $fragmentRefs": FragmentRefs<"ContactInformation_submission">;
+    } | null;
 };
-export type ContactInformationTestQuery = {
-    readonly response: ContactInformationTestQueryResponse;
-    readonly variables: ContactInformationTestQueryVariables;
+export type ContactInformation_SubmissionFlowTest_Query = {
+    readonly response: ContactInformation_SubmissionFlowTest_QueryResponse;
+    readonly variables: ContactInformation_SubmissionFlowTest_QueryVariables;
 };
 
 
 
 /*
-query ContactInformationTestQuery {
+query ContactInformation_SubmissionFlowTest_Query(
+  $id: ID!
+) {
   me {
     ...ContactInformation_me
+    id
+  }
+  submission(id: $id) {
+    ...ContactInformation_submission
     id
   }
 }
 
 fragment ContactInformation_me on Me {
+  internalID
   name
   email
   phone
@@ -36,21 +48,52 @@ fragment ContactInformation_me on Me {
     regionCode
   }
 }
+
+fragment ContactInformation_submission on ConsignmentSubmission {
+  id
+}
 */
 
 const node: ConcreteRequest = (function(){
-var v0 = {
+var v0 = [
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "id"
+  }
+],
+v1 = [
+  {
+    "kind": "Variable",
+    "name": "id",
+    "variableName": "id"
+  }
+],
+v2 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+},
+v3 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "String"
+},
+v4 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "ID"
 };
 return {
   "fragment": {
-    "argumentDefinitions": [],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "ContactInformationTestQuery",
+    "name": "ContactInformation_SubmissionFlowTest_Query",
     "selections": [
       {
         "alias": null,
@@ -67,6 +110,22 @@ return {
           }
         ],
         "storageKey": null
+      },
+      {
+        "alias": null,
+        "args": (v1/*: any*/),
+        "concreteType": "ConsignmentSubmission",
+        "kind": "LinkedField",
+        "name": "submission",
+        "plural": false,
+        "selections": [
+          {
+            "args": null,
+            "kind": "FragmentSpread",
+            "name": "ContactInformation_submission"
+          }
+        ],
+        "storageKey": null
       }
     ],
     "type": "Query",
@@ -74,9 +133,9 @@ return {
   },
   "kind": "Request",
   "operation": {
-    "argumentDefinitions": [],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "ContactInformationTestQuery",
+    "name": "ContactInformation_SubmissionFlowTest_Query",
     "selections": [
       {
         "alias": null,
@@ -86,6 +145,13 @@ return {
         "name": "me",
         "plural": false,
         "selections": [
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "internalID",
+            "storageKey": null
+          },
           {
             "alias": null,
             "args": null,
@@ -158,20 +224,26 @@ return {
             ],
             "storageKey": null
           },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "id",
-            "storageKey": null
-          }
+          (v2/*: any*/)
+        ],
+        "storageKey": null
+      },
+      {
+        "alias": null,
+        "args": (v1/*: any*/),
+        "concreteType": "ConsignmentSubmission",
+        "kind": "LinkedField",
+        "name": "submission",
+        "plural": false,
+        "selections": [
+          (v2/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "518bdad8ad1c6349193a9ab622f36c0d",
+    "cacheID": "da8ff598599ff203d0f22309c3252c39",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -181,37 +253,40 @@ return {
           "plural": false,
           "type": "Me"
         },
-        "me.email": (v0/*: any*/),
-        "me.id": {
-          "enumValues": null,
-          "nullable": false,
-          "plural": false,
-          "type": "ID"
-        },
-        "me.name": (v0/*: any*/),
-        "me.phone": (v0/*: any*/),
+        "me.email": (v3/*: any*/),
+        "me.id": (v4/*: any*/),
+        "me.internalID": (v4/*: any*/),
+        "me.name": (v3/*: any*/),
+        "me.phone": (v3/*: any*/),
         "me.phoneNumber": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "PhoneNumberType"
         },
-        "me.phoneNumber.international": (v0/*: any*/),
+        "me.phoneNumber.international": (v3/*: any*/),
         "me.phoneNumber.isValid": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "Boolean"
         },
-        "me.phoneNumber.national": (v0/*: any*/),
-        "me.phoneNumber.regionCode": (v0/*: any*/)
+        "me.phoneNumber.national": (v3/*: any*/),
+        "me.phoneNumber.regionCode": (v3/*: any*/),
+        "submission": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "ConsignmentSubmission"
+        },
+        "submission.id": (v4/*: any*/)
       }
     },
-    "name": "ContactInformationTestQuery",
+    "name": "ContactInformation_SubmissionFlowTest_Query",
     "operationKind": "query",
-    "text": "query ContactInformationTestQuery {\n  me {\n    ...ContactInformation_me\n    id\n  }\n}\n\nfragment ContactInformation_me on Me {\n  name\n  email\n  phone\n  phoneNumber {\n    isValid\n    international: display(format: INTERNATIONAL)\n    national: display(format: NATIONAL)\n    regionCode\n  }\n}\n"
+    "text": "query ContactInformation_SubmissionFlowTest_Query(\n  $id: ID!\n) {\n  me {\n    ...ContactInformation_me\n    id\n  }\n  submission(id: $id) {\n    ...ContactInformation_submission\n    id\n  }\n}\n\nfragment ContactInformation_me on Me {\n  internalID\n  name\n  email\n  phone\n  phoneNumber {\n    isValid\n    international: display(format: INTERNATIONAL)\n    national: display(format: NATIONAL)\n    regionCode\n  }\n}\n\nfragment ContactInformation_submission on ConsignmentSubmission {\n  id\n}\n"
   }
 };
 })();
-(node as any).hash = '9c1bf7f75f2780e1bbfe696235d8c373';
+(node as any).hash = '86f083359efd9e6383c8c3dcc335e3c4';
 export default node;
