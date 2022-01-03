@@ -61,7 +61,7 @@ export const FeatureSetFragmentContainer = createFragmentContainer(FeatureSet, {
       name
       description(format: HTML)
       itemType
-      orderedItems: orderedItemsConnection(first: 35) {
+      orderedItems: orderedItemsConnection(first: 99) {
         edges {
           __typename
           node {
