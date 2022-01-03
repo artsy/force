@@ -34,23 +34,6 @@ const validForm = {
   provenance: "provenance",
 } as ArtworkDetails_submission
 
-// const validFormWithSpaces: ArtworkDetailsFormModel = {
-//   artistId: "artistId",
-//   artistName: "Banksy",
-//   year: " 2021 ",
-//   title: " Some title ",
-//   materials: "  materials  ",
-//   rarity: "limited edition",
-//   editionNumber: " 1 ",
-//   editionSize: " 2 ",
-//   height: " 3 ",
-//   width: " 4 ",
-//   depth: " 5 ",
-//   units: " cm ",
-//   provenance: "  provenance  ",
-//   location: "  NY, USA  ",
-// }
-
 const utmParams = { utmMedium: "Medium", utmSource: "Source", utmTerm: "Term" }
 
 const mockRouterPush = jest.fn()
