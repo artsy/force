@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"
 import { Box, CSSGrid, Join, Spacer } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Masonry } from "v2/Components/Masonry"
@@ -64,7 +64,7 @@ export const FeatureSetContainerFragmentContainer = createFragmentContainer(
         id
         layout
         itemType
-        orderedItems: orderedItemsConnection(first: 35) {
+        orderedItems: orderedItemsConnection(first: 99) {
           edges {
             __typename
           }
