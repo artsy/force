@@ -7,6 +7,7 @@ import { EmptyMessage } from "./EmptyMessage"
 import { createFragmentContainer, graphql } from "react-relay"
 import { AlgoliaResultsList_algolia } from "v2/__generated__/AlgoliaResultsList_algolia.graphql"
 import { keyBy } from "lodash"
+import { Fragment } from "react"
 
 type StateResults = StateResultsProvided<AlgoliaHit>
 
@@ -19,15 +20,14 @@ export const AlgoliaResultsList: React.FC<AlgoliaResultsListProps> = props => {
   const indiceByKey = keyBy(algolia?.indices ?? [], "name")
   const entityType = indiceByKey[searchResults?.index]?.displayName ?? ""
   const results = searchResults?.hits.map((hit, index) => (
-    <>
+    <Fragment key={hit.objectID}>
       <AlgoliaResultItem
-        key={hit.objectID}
         hit={hit}
         entityType={entityType}
         position={searchResults.page * searchResults.hitsPerPage + index}
       />
       {index < searchResults.hits.length - 1 && <Separator />}
-    </>
+    </Fragment>
   ))
 
   return (
