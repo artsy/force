@@ -27,6 +27,7 @@ export type UpdateMyProfileInput = {
     phone?: string | null;
     priceRangeMax?: number | null;
     priceRangeMin?: number | null;
+    privacy?: number | null;
     profession?: string | null;
     receiveLotOpeningSoonNotification?: boolean | null;
     receiveNewSalesNotification?: boolean | null;

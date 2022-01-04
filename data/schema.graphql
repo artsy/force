@@ -2646,6 +2646,7 @@ type CollectorProfileType {
     timezone: String
   ): String
   name: String
+  privacy: Int
   professionalBuyerAppliedAt(
     format: String
 
@@ -8745,6 +8746,7 @@ type Me implements Node {
   priceRange: String
   priceRangeMax: Float
   priceRangeMin: Float
+  privacy: Int
   profession: String
 
   # This user should receive lot opening notifications
@@ -9315,12 +9317,12 @@ input MyCollectionCreateArtworkInput {
   externalImageUrls: [String]
   height: String
   isEdition: Boolean
-  medium: String!
+  medium: String
   metric: String
   pricePaidCents: Int
   pricePaidCurrency: String
   provenance: String
-  title: String
+  title: String!
   width: String
 }
 
@@ -9377,7 +9379,7 @@ input MyCollectionUpdateArtworkInput {
   pricePaidCents: Int
   pricePaidCurrency: String
   provenance: String
-  title: String
+  title: String!
   width: String
 }
 
@@ -12919,6 +12921,7 @@ type UpdateCollectorProfilePayload {
     timezone: String
   ): String
   name: String
+  privacy: Int
   professionalBuyerAppliedAt(
     format: String
 
@@ -13018,6 +13021,9 @@ input UpdateMyProfileInput {
 
   # The minimum price collector has selected
   priceRangeMin: Int
+
+  # Wheter or not the collector shares detailed profile information with galleries.
+  privacy: Int
 
   # Profession.
   profession: String
