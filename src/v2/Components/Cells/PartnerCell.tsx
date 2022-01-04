@@ -47,7 +47,7 @@ const PartnerCell: React.FC<PartnerCellProps> = ({
 
   return (
     <RouterLink
-      to={`/partner${partner.href}`}
+      to={`${partner.href}`}
       display="block"
       textDecoration="none"
       width={width}
