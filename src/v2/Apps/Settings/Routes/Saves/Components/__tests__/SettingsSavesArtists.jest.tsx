@@ -1,15 +1,20 @@
 import { screen } from "@testing-library/react"
+import { graphql } from "react-relay"
 import { setupTestWrapperTL } from "v2/DevTools/setupTestWrapper"
-import {
-  SettingsSavesArtistsPaginationContainer,
-  SETTINGS_SAVES_ARTISTS_QUERY,
-} from "../SettingsSavesArtists"
+import { SettingsSavesArtistsPaginationContainer } from "../SettingsSavesArtists"
 
 jest.unmock("react-relay")
 
 const { renderWithRelay } = setupTestWrapperTL({
   Component: SettingsSavesArtistsPaginationContainer,
-  query: SETTINGS_SAVES_ARTISTS_QUERY,
+  query: graphql`
+    query SettingsSavesArtists_test_Query($after: String)
+      @relay_test_operation {
+      me {
+        ...SettingsSavesArtists_me @arguments(after: $after)
+      }
+    }
+  `,
 })
 
 describe("SettingsSavesArtists", () => {

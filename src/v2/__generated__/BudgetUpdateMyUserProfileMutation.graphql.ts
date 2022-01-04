@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 export type UpdateMyProfileInput = {
@@ -76,8 +77,7 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "input",
-    "type": "UpdateMyProfileInput!"
+    "name": "input"
   }
 ],
 v1 = [
@@ -125,7 +125,8 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Mutation"
+    "type": "Mutation",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -166,6 +167,7 @@ return {
     ]
   },
   "params": {
+    "cacheID": "8709bbfc006309acb491e271cbcb4e9f",
     "id": null,
     "metadata": {},
     "name": "BudgetUpdateMyUserProfileMutation",

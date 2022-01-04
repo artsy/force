@@ -11,7 +11,8 @@ describe("MarketStats", () => {
   const { getWrapper } = setupTestWrapper<MarketStats_Test_Query>({
     Component: MarketStatsFragmentContainer,
     query: graphql`
-      query MarketStats_Test_Query($artistInternalID: ID!) {
+      query MarketStats_Test_Query($artistInternalID: ID!)
+        @relay_test_operation {
         priceInsightsConnection: priceInsights(
           artistId: $artistInternalID
           sort: ANNUAL_VALUE_SOLD_CENTS_DESC

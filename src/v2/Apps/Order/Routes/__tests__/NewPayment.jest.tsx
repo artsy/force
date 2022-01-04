@@ -90,7 +90,7 @@ describe("Payment", () => {
       ...fixFailedPaymentSuccess,
     },
     query: graphql`
-      query NewPaymentTestQuery @raw_response_type {
+      query NewPaymentTestQuery @raw_response_type @relay_test_operation {
         me {
           ...NewPayment_me
         }

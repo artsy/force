@@ -7,7 +7,7 @@ jest.unmock("react-relay")
 const { getWrapper } = setupTestWrapper({
   Component: AuthenticityCertificateFragmentContainer,
   query: graphql`
-    query AuthenticityCertificateTestQuery {
+    query AuthenticityCertificateTestQuery @relay_test_operation {
       artwork(id: "whatevs") {
         ...AuthenticityCertificate_artwork
       }

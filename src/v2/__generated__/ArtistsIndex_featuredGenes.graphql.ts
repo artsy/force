@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -92,13 +93,15 @@ return {
               "storageKey": "trendingArtists(sample:4)"
             }
           ],
-          "type": "Gene"
+          "type": "Gene",
+          "abstractKey": null
         }
       ],
       "storageKey": null
     }
   ],
-  "type": "OrderedSet"
+  "type": "OrderedSet",
+  "abstractKey": null
 };
 })();
 (node as any).hash = '64b07efb8dc9cb2ad5f98213e6216081';

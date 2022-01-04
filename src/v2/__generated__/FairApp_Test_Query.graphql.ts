@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -122,6 +123,42 @@ v3 = {
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
+},
+v4 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "String"
+},
+v5 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "ID"
+},
+v6 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "Image"
+},
+v7 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "CroppedImageUrl"
+},
+v8 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "Int"
+},
+v9 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "String"
 };
 return {
   "fragment": {
@@ -147,7 +184,8 @@ return {
         "storageKey": "fair(id:\"example\")"
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -367,13 +405,66 @@ return {
     ]
   },
   "params": {
+    "cacheID": "b2144787dc89e73130ea34c8acafd28a",
     "id": null,
-    "metadata": {},
+    "metadata": {
+      "relayTestingSelectionTypeInfo": {
+        "fair": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Fair"
+        },
+        "fair.counts": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "FairCounts"
+        },
+        "fair.counts.artworks": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "FormattedNumber"
+        },
+        "fair.exhibitionPeriod": (v4/*: any*/),
+        "fair.href": (v4/*: any*/),
+        "fair.id": (v5/*: any*/),
+        "fair.image": (v6/*: any*/),
+        "fair.image.url": (v4/*: any*/),
+        "fair.internalID": (v5/*: any*/),
+        "fair.metaDescription": (v4/*: any*/),
+        "fair.metaImage": (v6/*: any*/),
+        "fair.metaImage.src": (v4/*: any*/),
+        "fair.name": (v4/*: any*/),
+        "fair.profile": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Profile"
+        },
+        "fair.profile.icon": (v6/*: any*/),
+        "fair.profile.icon.desktop": (v7/*: any*/),
+        "fair.profile.icon.desktop.size": (v8/*: any*/),
+        "fair.profile.icon.desktop.src": (v9/*: any*/),
+        "fair.profile.icon.desktop.srcSet": (v9/*: any*/),
+        "fair.profile.icon.mobile": (v7/*: any*/),
+        "fair.profile.icon.mobile.size": (v8/*: any*/),
+        "fair.profile.icon.mobile.src": (v9/*: any*/),
+        "fair.profile.icon.mobile.srcSet": (v9/*: any*/),
+        "fair.profile.icon.sticky": (v7/*: any*/),
+        "fair.profile.icon.sticky.size": (v8/*: any*/),
+        "fair.profile.icon.sticky.src": (v9/*: any*/),
+        "fair.profile.icon.sticky.srcSet": (v9/*: any*/),
+        "fair.profile.id": (v5/*: any*/),
+        "fair.slug": (v5/*: any*/)
+      }
+    },
     "name": "FairApp_Test_Query",
     "operationKind": "query",
     "text": "query FairApp_Test_Query {\n  fair(id: \"example\") {\n    ...FairApp_fair\n    id\n  }\n}\n\nfragment FairApp_fair on Fair {\n  internalID\n  href\n  slug\n  ...FairMeta_fair\n  ...FairHeader_fair\n  ...FairHeaderImage_fair\n  counts {\n    artworks\n  }\n  profile {\n    id\n  }\n}\n\nfragment FairHeaderImage_fair on Fair {\n  image {\n    url(version: \"wide\")\n  }\n}\n\nfragment FairHeader_fair on Fair {\n  name\n  exhibitionPeriod\n  profile {\n    icon {\n      desktop: cropped(width: 80, height: 80, version: \"square140\") {\n        src\n        srcSet\n        size: width\n      }\n      mobile: cropped(width: 60, height: 60, version: \"square140\") {\n        src\n        srcSet\n        size: width\n      }\n      sticky: cropped(width: 50, height: 50, version: \"square140\") {\n        src\n        srcSet\n        size: width\n      }\n    }\n    id\n  }\n}\n\nfragment FairMeta_fair on Fair {\n  name\n  slug\n  metaDescription: summary\n  metaImage: image {\n    src: url(version: \"large_rectangle\")\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '57cdc4242917dae9662bce1f32753f3b';
+(node as any).hash = '0d24d146ba08a426b78f8dada6663446';
 export default node;

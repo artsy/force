@@ -40,7 +40,8 @@ describe("Follow Artist Popover", () => {
       Component: FollowArtistPopover,
       query: graphql`
         query FollowArtistPopover_Test_Query($artistID: String!)
-          @raw_response_type {
+          @raw_response_type
+          @relay_test_operation {
           artist(id: $artistID) {
             ...FollowArtistPopover_artist
           }

@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -120,7 +121,37 @@ v3 = [
     "name": "srcSet",
     "storageKey": null
   }
-];
+],
+v4 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "String"
+},
+v5 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "ID"
+},
+v6 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "CroppedImageUrl"
+},
+v7 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "Int"
+},
+v8 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "String"
+};
 return {
   "fragment": {
     "argumentDefinitions": [],
@@ -145,7 +176,8 @@ return {
         "storageKey": "fairOrganizer(id:\"example\")"
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -323,13 +355,73 @@ return {
     ]
   },
   "params": {
+    "cacheID": "39038ce9c56e1d08b5a0ba5060061f7a",
     "id": null,
-    "metadata": {},
+    "metadata": {
+      "relayTestingSelectionTypeInfo": {
+        "fairOrganizer": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "FairOrganizer"
+        },
+        "fairOrganizer.articlesConnection": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "ArticleConnection"
+        },
+        "fairOrganizer.articlesConnection.edges": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": true,
+          "type": "ArticleEdge"
+        },
+        "fairOrganizer.articlesConnection.edges.node": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Article"
+        },
+        "fairOrganizer.articlesConnection.edges.node.href": (v4/*: any*/),
+        "fairOrganizer.articlesConnection.edges.node.id": (v5/*: any*/),
+        "fairOrganizer.articlesConnection.edges.node.internalID": (v5/*: any*/),
+        "fairOrganizer.articlesConnection.edges.node.publishedAt": (v4/*: any*/),
+        "fairOrganizer.articlesConnection.edges.node.slug": (v4/*: any*/),
+        "fairOrganizer.articlesConnection.edges.node.thumbnailImage": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Image"
+        },
+        "fairOrganizer.articlesConnection.edges.node.thumbnailImage.large": (v6/*: any*/),
+        "fairOrganizer.articlesConnection.edges.node.thumbnailImage.large.height": (v7/*: any*/),
+        "fairOrganizer.articlesConnection.edges.node.thumbnailImage.large.src": (v8/*: any*/),
+        "fairOrganizer.articlesConnection.edges.node.thumbnailImage.large.srcSet": (v8/*: any*/),
+        "fairOrganizer.articlesConnection.edges.node.thumbnailImage.large.width": (v7/*: any*/),
+        "fairOrganizer.articlesConnection.edges.node.thumbnailImage.small": (v6/*: any*/),
+        "fairOrganizer.articlesConnection.edges.node.thumbnailImage.small.height": (v7/*: any*/),
+        "fairOrganizer.articlesConnection.edges.node.thumbnailImage.small.src": (v8/*: any*/),
+        "fairOrganizer.articlesConnection.edges.node.thumbnailImage.small.srcSet": (v8/*: any*/),
+        "fairOrganizer.articlesConnection.edges.node.thumbnailImage.small.width": (v7/*: any*/),
+        "fairOrganizer.articlesConnection.edges.node.thumbnailTitle": (v4/*: any*/),
+        "fairOrganizer.articlesConnection.edges.node.title": (v4/*: any*/),
+        "fairOrganizer.articlesConnection.totalCount": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Int"
+        },
+        "fairOrganizer.id": (v5/*: any*/),
+        "fairOrganizer.name": (v4/*: any*/),
+        "fairOrganizer.slug": (v5/*: any*/)
+      }
+    },
     "name": "FairOrganizerLatestArticles_Test_Query",
     "operationKind": "query",
     "text": "query FairOrganizerLatestArticles_Test_Query {\n  fairOrganizer(id: \"example\") {\n    ...FairOrganizerLatestArticles_fairOrganizer\n    id\n  }\n}\n\nfragment FairEditorialItemLink_article on Article {\n  internalID\n  slug\n  title\n  href\n  publishedAt(format: \"MMMM D, YYYY\")\n}\n\nfragment FairEditorialItem_article on Article {\n  id\n  title\n  publishedAt(format: \"MMMM D, YYYY\")\n  thumbnailTitle\n  thumbnailImage {\n    large: cropped(width: 670, height: 720) {\n      width\n      height\n      src\n      srcSet\n    }\n    small: cropped(width: 325, height: 240) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n  ...FairEditorialItemLink_article\n}\n\nfragment FairOrganizerLatestArticles_fairOrganizer on FairOrganizer {\n  name\n  slug\n  articlesConnection(first: 7, sort: PUBLISHED_AT_DESC) {\n    totalCount\n    edges {\n      node {\n        id\n        ...FairEditorialItem_article\n      }\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'f4988040ee57bb4704a62273e70fdf91';
+(node as any).hash = '4c1fca36670e5bf3e2abebce7c25b913';
 export default node;

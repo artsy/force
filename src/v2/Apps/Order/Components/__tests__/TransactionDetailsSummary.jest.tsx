@@ -81,7 +81,9 @@ const render = (
     ),
     mockData: { order },
     query: graphql`
-      query TransactionDetailsSummaryItemTestQuery @raw_response_type {
+      query TransactionDetailsSummaryItemTestQuery
+        @raw_response_type
+        @relay_test_operation {
         order: commerceOrder(id: "whatevs") {
           ...TransactionDetailsSummaryItem_order
         }

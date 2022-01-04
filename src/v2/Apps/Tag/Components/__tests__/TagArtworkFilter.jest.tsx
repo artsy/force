@@ -33,7 +33,7 @@ const { getWrapper } = setupTestWrapper<TagArtworkFilter_Query>({
     </MockBoot>
   ),
   query: graphql`
-    query TagArtworkFilter_Query($slug: String!) {
+    query TagArtworkFilter_Query($slug: String!) @relay_test_operation {
       tag(id: $slug) {
         ...TagArtworkFilter_tag @arguments(shouldFetchCounts: true)
       }

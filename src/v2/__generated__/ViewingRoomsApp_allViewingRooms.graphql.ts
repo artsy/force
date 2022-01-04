@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -20,14 +21,12 @@ const node: ReaderFragment = {
     {
       "defaultValue": null,
       "kind": "LocalArgument",
-      "name": "count",
-      "type": "Int"
+      "name": "after"
     },
     {
       "defaultValue": null,
       "kind": "LocalArgument",
-      "name": "after",
-      "type": "String"
+      "name": "count"
     }
   ],
   "kind": "Fragment",
@@ -51,7 +50,8 @@ const node: ReaderFragment = {
       "name": "ViewingRoomsLatestGrid_viewingRooms"
     }
   ],
-  "type": "Viewer"
+  "type": "Viewer",
+  "abstractKey": null
 };
 (node as any).hash = 'bac462a0b1f43ecffedeb54a49be7a86';
 export default node;

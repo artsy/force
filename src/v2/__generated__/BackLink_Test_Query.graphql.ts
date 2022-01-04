@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -37,7 +38,13 @@ var v0 = [
     "name": "id",
     "value": "example"
   }
-];
+],
+v1 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "ID"
+};
 return {
   "fragment": {
     "argumentDefinitions": [],
@@ -62,7 +69,8 @@ return {
         "storageKey": "artist(id:\"example\")"
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -105,13 +113,31 @@ return {
     ]
   },
   "params": {
+    "cacheID": "abb7344101fff911d425adadeec5d980",
     "id": null,
-    "metadata": {},
+    "metadata": {
+      "relayTestingSelectionTypeInfo": {
+        "artist": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Artist"
+        },
+        "artist.id": (v1/*: any*/),
+        "artist.name": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "String"
+        },
+        "artist.slug": (v1/*: any*/)
+      }
+    },
     "name": "BackLink_Test_Query",
     "operationKind": "query",
     "text": "query BackLink_Test_Query {\n  artist(id: \"example\") {\n    ...BackLink_artist\n    id\n  }\n}\n\nfragment BackLink_artist on Artist {\n  name\n  slug\n}\n"
   }
 };
 })();
-(node as any).hash = '4087705b26dc52854bdbad9e271aab56';
+(node as any).hash = '857fa2bb422c485fa6892edd4832e014';
 export default node;

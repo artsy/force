@@ -20,7 +20,7 @@ describe("AuctionsApp", () => {
       )
     },
     query: graphql`
-      query AuctionsApp_Test_Query {
+      query AuctionsApp_Test_Query @relay_test_operation {
         viewer {
           ...AuctionsApp_viewer
         }

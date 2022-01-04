@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -71,6 +72,36 @@ v2 = {
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
+},
+v3 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "String"
+},
+v4 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "ID"
+},
+v5 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "Profile"
+},
+v6 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "Int"
+},
+v7 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "String"
 };
 return {
   "fragment": {
@@ -96,7 +127,8 @@ return {
         "storageKey": "fair(id:\"example\")"
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -244,13 +276,56 @@ return {
     ]
   },
   "params": {
+    "cacheID": "ac7a6decfefaa17b5b4db2bc99877d86",
     "id": null,
-    "metadata": {},
+    "metadata": {
+      "relayTestingSelectionTypeInfo": {
+        "fair": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Fair"
+        },
+        "fair.exhibitionPeriod": (v3/*: any*/),
+        "fair.href": (v3/*: any*/),
+        "fair.id": (v4/*: any*/),
+        "fair.isoStartAt": (v3/*: any*/),
+        "fair.name": (v3/*: any*/),
+        "fair.organizer": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "FairOrganizer"
+        },
+        "fair.organizer.id": (v4/*: any*/),
+        "fair.organizer.profile": (v5/*: any*/),
+        "fair.organizer.profile.href": (v3/*: any*/),
+        "fair.organizer.profile.id": (v4/*: any*/),
+        "fair.profile": (v5/*: any*/),
+        "fair.profile.icon": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Image"
+        },
+        "fair.profile.icon.resized": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "ResizedImageUrl"
+        },
+        "fair.profile.icon.resized.height": (v6/*: any*/),
+        "fair.profile.icon.resized.src": (v7/*: any*/),
+        "fair.profile.icon.resized.srcSet": (v7/*: any*/),
+        "fair.profile.icon.resized.width": (v6/*: any*/),
+        "fair.profile.id": (v4/*: any*/)
+      }
+    },
     "name": "FairsFairRow_Test_Query",
     "operationKind": "query",
     "text": "query FairsFairRow_Test_Query {\n  fair(id: \"example\") {\n    ...FairsFairRow_fair\n    id\n  }\n}\n\nfragment FairsFairRow_fair on Fair {\n  href\n  name\n  isoStartAt: startAt\n  exhibitionPeriod\n  profile {\n    icon {\n      resized(width: 80, height: 80, version: \"square140\") {\n        width\n        height\n        src\n        srcSet\n      }\n    }\n    id\n  }\n  organizer {\n    profile {\n      href\n      id\n    }\n    id\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '4f6194f4d7f9b52e0b90c12c124c282a';
+(node as any).hash = 'aeac823bc4ecfdfaaefb428618e8e491';
 export default node;

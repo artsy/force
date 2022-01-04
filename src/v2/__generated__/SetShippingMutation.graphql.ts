@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -162,8 +163,7 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "input",
-    "type": "CommerceSetShippingInput!"
+    "name": "input"
   }
 ],
 v1 = [
@@ -264,12 +264,14 @@ v6 = {
     {
       "kind": "InlineFragment",
       "selections": (v5/*: any*/),
-      "type": "CommerceShip"
+      "type": "CommerceShip",
+      "abstractKey": null
     },
     {
       "kind": "InlineFragment",
       "selections": (v5/*: any*/),
-      "type": "CommerceShipArta"
+      "type": "CommerceShipArta",
+      "abstractKey": null
     }
   ],
   "storageKey": null
@@ -310,7 +312,8 @@ v7 = {
       "storageKey": null
     }
   ],
-  "type": "CommerceOrderWithMutationFailure"
+  "type": "CommerceOrderWithMutationFailure",
+  "abstractKey": null
 },
 v8 = {
   "alias": null,
@@ -421,7 +424,8 @@ return {
                     "storageKey": null
                   }
                 ],
-                "type": "CommerceOrderWithMutationSuccess"
+                "type": "CommerceOrderWithMutationSuccess",
+                "abstractKey": null
               },
               (v7/*: any*/)
             ],
@@ -431,7 +435,8 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Mutation"
+    "type": "Mutation",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -459,7 +464,6 @@ return {
               {
                 "kind": "InlineFragment",
                 "selections": [
-                  (v2/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -579,7 +583,8 @@ return {
                     "storageKey": null
                   }
                 ],
-                "type": "CommerceOrderWithMutationSuccess"
+                "type": "CommerceOrderWithMutationSuccess",
+                "abstractKey": null
               },
               (v7/*: any*/)
             ],
@@ -591,6 +596,7 @@ return {
     ]
   },
   "params": {
+    "cacheID": "35b1236c8986904e9f731fe7ce8f1e15",
     "id": null,
     "metadata": {},
     "name": "SetShippingMutation",

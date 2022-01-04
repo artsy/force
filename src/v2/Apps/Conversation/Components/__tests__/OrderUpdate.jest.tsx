@@ -15,7 +15,8 @@ const { renderWithRelay } = setupTestWrapperTL<OrderUpdate_Test_Query>({
     return <OrderUpdateFragmentContainer event={event} />
   },
   query: graphql`
-    query OrderUpdate_Test_Query($conversationID: String!) {
+    query OrderUpdate_Test_Query($conversationID: String!)
+      @relay_test_operation {
       me {
         conversation(id: $conversationID) {
           orderConnection(first: 10, participantType: BUYER) {

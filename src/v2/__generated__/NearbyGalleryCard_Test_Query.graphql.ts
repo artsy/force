@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -67,8 +68,7 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "partnerId",
-    "type": "String!"
+    "name": "partnerId"
   }
 ],
 v1 = [
@@ -98,6 +98,24 @@ v4 = {
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
+},
+v5 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "ID"
+},
+v6 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "String"
+},
+v7 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "String"
 };
 return {
   "fragment": {
@@ -123,7 +141,8 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -289,13 +308,78 @@ return {
     ]
   },
   "params": {
+    "cacheID": "88bbe5b628437d486be39fe7750b372b",
     "id": null,
-    "metadata": {},
+    "metadata": {
+      "relayTestingSelectionTypeInfo": {
+        "partner": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Partner"
+        },
+        "partner.id": (v5/*: any*/),
+        "partner.locationsConnection": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "LocationConnection"
+        },
+        "partner.locationsConnection.edges": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": true,
+          "type": "LocationEdge"
+        },
+        "partner.locationsConnection.edges.node": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Location"
+        },
+        "partner.locationsConnection.edges.node.city": (v6/*: any*/),
+        "partner.locationsConnection.edges.node.displayCountry": (v6/*: any*/),
+        "partner.locationsConnection.edges.node.id": (v5/*: any*/),
+        "partner.name": (v6/*: any*/),
+        "partner.profile": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Profile"
+        },
+        "partner.profile.id": (v5/*: any*/),
+        "partner.profile.image": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Image"
+        },
+        "partner.profile.image.cropped": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "CroppedImageUrl"
+        },
+        "partner.profile.image.cropped.src": (v7/*: any*/),
+        "partner.profile.image.cropped.srcSet": (v7/*: any*/),
+        "partner.profile.internalID": (v5/*: any*/),
+        "partner.profile.is_followed": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Boolean"
+        },
+        "partner.profile.name": (v6/*: any*/),
+        "partner.profile.slug": (v5/*: any*/),
+        "partner.slug": (v5/*: any*/),
+        "partner.type": (v6/*: any*/)
+      }
+    },
     "name": "NearbyGalleryCard_Test_Query",
     "operationKind": "query",
     "text": "query NearbyGalleryCard_Test_Query(\n  $partnerId: String!\n) {\n  partner(id: $partnerId) @principalField {\n    ...NearbyGalleryCard_partner\n    id\n  }\n}\n\nfragment FollowProfileButton_profile on Profile {\n  id\n  slug\n  name\n  internalID\n  is_followed: isFollowed\n}\n\nfragment NearbyGalleryCard_partner on Partner {\n  name\n  slug\n  type\n  profile {\n    image {\n      cropped(height: 300, width: 400, version: \"wide\") {\n        src\n        srcSet\n      }\n    }\n    ...FollowProfileButton_profile\n    id\n  }\n  locationsConnection(first: 20) {\n    edges {\n      node {\n        city\n        displayCountry\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'd3001002733966f70c3087964ffb98a3';
+(node as any).hash = 'd19ad1e16f7fd9053393fc42ce754703';
 export default node;

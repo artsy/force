@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -114,7 +115,37 @@ v2 = [
     "name": "srcSet",
     "storageKey": null
   }
-];
+],
+v3 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "String"
+},
+v4 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "ID"
+},
+v5 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "CroppedImageUrl"
+},
+v6 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "Int"
+},
+v7 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "String"
+};
 return {
   "fragment": {
     "argumentDefinitions": [],
@@ -139,7 +170,8 @@ return {
         "storageKey": "fair(id:\"test\")"
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -308,13 +340,65 @@ return {
     ]
   },
   "params": {
+    "cacheID": "5dfacf9136a29965782c9aff931ed76e",
     "id": null,
-    "metadata": {},
+    "metadata": {
+      "relayTestingSelectionTypeInfo": {
+        "fair": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Fair"
+        },
+        "fair.articlesConnection": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "ArticleConnection"
+        },
+        "fair.articlesConnection.edges": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": true,
+          "type": "ArticleEdge"
+        },
+        "fair.articlesConnection.edges.node": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Article"
+        },
+        "fair.articlesConnection.edges.node.href": (v3/*: any*/),
+        "fair.articlesConnection.edges.node.id": (v4/*: any*/),
+        "fair.articlesConnection.edges.node.internalID": (v4/*: any*/),
+        "fair.articlesConnection.edges.node.publishedAt": (v3/*: any*/),
+        "fair.articlesConnection.edges.node.slug": (v3/*: any*/),
+        "fair.articlesConnection.edges.node.thumbnailImage": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Image"
+        },
+        "fair.articlesConnection.edges.node.thumbnailImage.large": (v5/*: any*/),
+        "fair.articlesConnection.edges.node.thumbnailImage.large.height": (v6/*: any*/),
+        "fair.articlesConnection.edges.node.thumbnailImage.large.src": (v7/*: any*/),
+        "fair.articlesConnection.edges.node.thumbnailImage.large.srcSet": (v7/*: any*/),
+        "fair.articlesConnection.edges.node.thumbnailImage.large.width": (v6/*: any*/),
+        "fair.articlesConnection.edges.node.thumbnailImage.small": (v5/*: any*/),
+        "fair.articlesConnection.edges.node.thumbnailImage.small.height": (v6/*: any*/),
+        "fair.articlesConnection.edges.node.thumbnailImage.small.src": (v7/*: any*/),
+        "fair.articlesConnection.edges.node.thumbnailImage.small.srcSet": (v7/*: any*/),
+        "fair.articlesConnection.edges.node.thumbnailImage.small.width": (v6/*: any*/),
+        "fair.articlesConnection.edges.node.thumbnailTitle": (v3/*: any*/),
+        "fair.articlesConnection.edges.node.title": (v3/*: any*/),
+        "fair.id": (v4/*: any*/)
+      }
+    },
     "name": "FairEditorial_Test_Query",
     "operationKind": "query",
     "text": "query FairEditorial_Test_Query {\n  fair(id: \"test\") {\n    ...FairEditorial_fair\n    id\n  }\n}\n\nfragment FairEditorialItemLink_article on Article {\n  internalID\n  slug\n  title\n  href\n  publishedAt(format: \"MMMM D, YYYY\")\n}\n\nfragment FairEditorialItem_article on Article {\n  id\n  title\n  publishedAt(format: \"MMMM D, YYYY\")\n  thumbnailTitle\n  thumbnailImage {\n    large: cropped(width: 670, height: 720) {\n      width\n      height\n      src\n      srcSet\n    }\n    small: cropped(width: 325, height: 240) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n  ...FairEditorialItemLink_article\n}\n\nfragment FairEditorialRailArticles_fair on Fair {\n  articlesConnection(first: 6, sort: PUBLISHED_AT_DESC) {\n    edges {\n      node {\n        id\n        ...FairEditorialItem_article\n      }\n    }\n  }\n}\n\nfragment FairEditorial_fair on Fair {\n  ...FairEditorialRailArticles_fair\n}\n"
   }
 };
 })();
-(node as any).hash = '8a5283ca80e3a673221c07828d2e0864';
+(node as any).hash = 'd98f3c96f4e8b360107eeda98c019c65';
 export default node;

@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -62,6 +63,24 @@ v2 = {
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
+},
+v3 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "String"
+},
+v4 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "String"
+},
+v5 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "ID"
 };
 return {
   "fragment": {
@@ -87,7 +106,8 @@ return {
         "storageKey": "sale(id:\"foo\")"
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -185,13 +205,49 @@ return {
     ]
   },
   "params": {
+    "cacheID": "734d3c4855db4c5048451c7e27560bf0",
     "id": null,
-    "metadata": {},
+    "metadata": {
+      "relayTestingSelectionTypeInfo": {
+        "sale": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Sale"
+        },
+        "sale.coverImage": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Image"
+        },
+        "sale.coverImage.cropped": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "CroppedImageUrl"
+        },
+        "sale.coverImage.cropped.src": (v3/*: any*/),
+        "sale.coverImage.cropped.srcSet": (v3/*: any*/),
+        "sale.formattedStartDateTime": (v4/*: any*/),
+        "sale.id": (v5/*: any*/),
+        "sale.name": (v4/*: any*/),
+        "sale.partner": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Partner"
+        },
+        "sale.partner.id": (v5/*: any*/),
+        "sale.partner.name": (v4/*: any*/),
+        "sale.slug": (v5/*: any*/)
+      }
+    },
     "name": "MyBidsBidHeader_Test_Query",
     "operationKind": "query",
     "text": "query MyBidsBidHeader_Test_Query {\n  sale(id: \"foo\") {\n    ...MyBidsBidHeader_sale\n    id\n  }\n}\n\nfragment MyBidsBidHeader_sale on Sale {\n  coverImage {\n    cropped(width: 330, height: 100) {\n      src\n      srcSet\n    }\n  }\n  formattedStartDateTime\n  name\n  partner {\n    name\n    id\n  }\n  slug\n}\n"
   }
 };
 })();
-(node as any).hash = '949c4689766094942fa22d427c7b07cc';
+(node as any).hash = '4389c2883e34a4aad235bf3d192a0b5f';
 export default node;

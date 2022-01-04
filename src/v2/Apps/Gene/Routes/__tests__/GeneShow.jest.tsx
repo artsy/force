@@ -19,7 +19,7 @@ const { getWrapper } = setupTestWrapper<GeneShow_Test_Query>({
     )
   },
   query: graphql`
-    query GeneShow_Test_Query {
+    query GeneShow_Test_Query @relay_test_operation {
       gene(id: "example") {
         ...GeneShow_gene
       }

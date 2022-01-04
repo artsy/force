@@ -15,7 +15,7 @@ describe("ArtistCVRoute", () => {
   const { getWrapper } = setupTestWrapper<ArtistCVRoute_Test_Query>({
     Component: ArtistCVRouteFragmentContainer,
     query: graphql`
-      query ArtistCVRoute_Test_Query($artistID: String!) {
+      query ArtistCVRoute_Test_Query($artistID: String!) @relay_test_operation {
         viewer {
           ...ArtistCVRoute_viewer
         }
@@ -44,7 +44,7 @@ describe("ArtistCVRoute", () => {
 
     const text = wrapper.text()
     expect(text).toContain(
-      'Fair booths<mock-value-for-field-"startAt"><mock-value-for-field-"name">, <mock-value-for-field-"name">Load More'
+      'Fair booths<mock-value-for-field-"startAt"><mock-value-for-field-"name">, <mock-value-for-field-"name">'
     )
   })
 })

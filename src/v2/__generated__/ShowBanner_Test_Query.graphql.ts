@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -79,6 +80,24 @@ v2 = {
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
+},
+v3 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "ID"
+},
+v4 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "String"
+},
+v5 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "String"
 };
 return {
   "fragment": {
@@ -137,7 +156,8 @@ return {
         "storageKey": "partner(id:\"white-cube\")"
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -318,13 +338,77 @@ return {
     ]
   },
   "params": {
+    "cacheID": "b341d9493a617df6dabcc29ca7521c68",
     "id": null,
-    "metadata": {},
+    "metadata": {
+      "relayTestingSelectionTypeInfo": {
+        "partner": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Partner"
+        },
+        "partner.id": (v3/*: any*/),
+        "partner.showsConnection": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "ShowConnection"
+        },
+        "partner.showsConnection.edges": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": true,
+          "type": "ShowEdge"
+        },
+        "partner.showsConnection.edges.node": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Show"
+        },
+        "partner.showsConnection.edges.node.coverImage": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Image"
+        },
+        "partner.showsConnection.edges.node.coverImage.medium": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "CroppedImageUrl"
+        },
+        "partner.showsConnection.edges.node.coverImage.medium.src": (v4/*: any*/),
+        "partner.showsConnection.edges.node.coverImage.medium.srcSet": (v4/*: any*/),
+        "partner.showsConnection.edges.node.description": (v5/*: any*/),
+        "partner.showsConnection.edges.node.exhibitionPeriod": (v5/*: any*/),
+        "partner.showsConnection.edges.node.href": (v5/*: any*/),
+        "partner.showsConnection.edges.node.id": (v3/*: any*/),
+        "partner.showsConnection.edges.node.isFairBooth": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Boolean"
+        },
+        "partner.showsConnection.edges.node.location": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Location"
+        },
+        "partner.showsConnection.edges.node.location.city": (v5/*: any*/),
+        "partner.showsConnection.edges.node.location.id": (v3/*: any*/),
+        "partner.showsConnection.edges.node.name": (v5/*: any*/),
+        "partner.showsConnection.edges.node.slug": (v3/*: any*/),
+        "partner.showsConnection.edges.node.status": (v5/*: any*/)
+      }
+    },
     "name": "ShowBanner_Test_Query",
     "operationKind": "query",
     "text": "query ShowBanner_Test_Query {\n  partner(id: \"white-cube\") @principalField {\n    showsConnection(first: 1) {\n      edges {\n        node {\n          ...ShowBanner_show\n          id\n        }\n      }\n    }\n    id\n  }\n}\n\nfragment ShowBanner_show on Show {\n  slug\n  name\n  href\n  isFairBooth\n  exhibitionPeriod\n  status\n  description\n  location {\n    city\n    id\n  }\n  coverImage {\n    medium: cropped(width: 600, height: 480, version: [\"normalized\", \"larger\", \"large\"]) {\n      src\n      srcSet\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '97c877363bd39d5f13ed3ceff53abfcb';
+(node as any).hash = '115546c798271ef60e1a328d523c1665';
 export default node;

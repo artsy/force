@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -32,18 +33,18 @@ export type auctionRoutes_RegisterQueryRawResponse = {
         readonly isOpen: boolean | null;
         readonly registrationStatus: ({
             readonly qualifiedForBidding: boolean | null;
-            readonly id: string | null;
+            readonly id: string;
         }) | null;
         readonly internalID: string;
         readonly status: string | null;
         readonly requireIdentityVerification: boolean | null;
-        readonly id: string | null;
+        readonly id: string;
     }) | null;
     readonly me: ({
         readonly hasQualifiedCreditCards: boolean | null;
         readonly internalID: string;
         readonly identityVerified: boolean | null;
-        readonly id: string | null;
+        readonly id: string;
     }) | null;
 };
 export type auctionRoutes_RegisterQuery = {
@@ -96,8 +97,7 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "saleID",
-    "type": "String!"
+    "name": "saleID"
   }
 ],
 v1 = [
@@ -228,7 +228,8 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -305,6 +306,7 @@ return {
     ]
   },
   "params": {
+    "cacheID": "f9689b52d0527881de508cb89e470fa4",
     "id": null,
     "metadata": {},
     "name": "auctionRoutes_RegisterQuery",

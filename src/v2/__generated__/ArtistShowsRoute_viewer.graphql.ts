@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -32,33 +33,28 @@ var v0 = [
 return {
   "argumentDefinitions": [
     {
-      "defaultValue": "running",
-      "kind": "LocalArgument",
-      "name": "currentShowsStatus",
-      "type": "String"
+      "kind": "RootArgument",
+      "name": "artistID"
     },
     {
       "defaultValue": "END_AT_ASC",
       "kind": "LocalArgument",
-      "name": "currentShowsSort",
-      "type": "ShowSorts"
+      "name": "currentShowsSort"
     },
     {
-      "defaultValue": "upcoming",
+      "defaultValue": "running",
       "kind": "LocalArgument",
-      "name": "upcomingShowsStatus",
-      "type": "String"
+      "name": "currentShowsStatus"
     },
     {
       "defaultValue": "START_AT_ASC",
       "kind": "LocalArgument",
-      "name": "upcomingShowsSort",
-      "type": "ShowSorts"
+      "name": "upcomingShowsSort"
     },
     {
-      "kind": "RootArgument",
-      "name": "artistID",
-      "type": "String!"
+      "defaultValue": "upcoming",
+      "kind": "LocalArgument",
+      "name": "upcomingShowsStatus"
     }
   ],
   "kind": "Fragment",
@@ -127,7 +123,8 @@ return {
       "storageKey": null
     }
   ],
-  "type": "Viewer"
+  "type": "Viewer",
+  "abstractKey": null
 };
 })();
 (node as any).hash = '1e6a77e86f2c4e6e2bb445bd5cdb34fe';

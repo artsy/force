@@ -10,7 +10,7 @@ describe("FairEditorialRailArticles", () => {
       return <FairEditorialRailArticlesFragmentContainer fair={props.fair} />
     },
     query: graphql`
-      query FairEditorialRailArticles_Test_Query {
+      query FairEditorialRailArticles_Test_Query @relay_test_operation {
         fair(id: "test") {
           ...FairEditorialRailArticles_fair
         }

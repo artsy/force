@@ -23,7 +23,9 @@ describe("ArtworkSidebarMetadata", () => {
     return await renderRelayTree({
       Component: ArtworkSidebarMetadataFragmentContainer,
       query: graphql`
-        query ArtworkSidebarMetadata_Test_Query @raw_response_type {
+        query ArtworkSidebarMetadata_Test_Query
+          @raw_response_type
+          @relay_test_operation {
           artwork(id: "josef-albers-homage-to-the-square-85") {
             ...ArtworkSidebarMetadata_artwork
           }

@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -87,7 +88,8 @@ const node: ReaderFragment = {
       "name": "ArtworkSidebarClassification_artwork"
     }
   ],
-  "type": "Artwork"
+  "type": "Artwork",
+  "abstractKey": null
 };
 (node as any).hash = 'ee1d620cfeeb5424fe48e300e387ffa4';
 export default node;

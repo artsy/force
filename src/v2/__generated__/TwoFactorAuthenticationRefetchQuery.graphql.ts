@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -104,7 +105,8 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -147,7 +149,6 @@ return {
               {
                 "kind": "InlineFragment",
                 "selections": [
-                  (v0/*: any*/),
                   (v1/*: any*/),
                   {
                     "alias": null,
@@ -157,7 +158,8 @@ return {
                     "storageKey": null
                   }
                 ],
-                "type": "AppSecondFactor"
+                "type": "AppSecondFactor",
+                "abstractKey": null
               }
             ],
             "storageKey": "secondFactors(kinds:[\"app\"])"
@@ -182,7 +184,6 @@ return {
               {
                 "kind": "InlineFragment",
                 "selections": [
-                  (v0/*: any*/),
                   (v1/*: any*/),
                   {
                     "alias": null,
@@ -192,7 +193,8 @@ return {
                     "storageKey": null
                   }
                 ],
-                "type": "SmsSecondFactor"
+                "type": "SmsSecondFactor",
+                "abstractKey": null
               }
             ],
             "storageKey": "secondFactors(kinds:[\"sms\"])"
@@ -213,14 +215,7 @@ return {
             "name": "secondFactors",
             "plural": true,
             "selections": [
-              (v0/*: any*/),
-              {
-                "kind": "InlineFragment",
-                "selections": [
-                  (v0/*: any*/)
-                ],
-                "type": "BackupSecondFactor"
-              }
+              (v0/*: any*/)
             ],
             "storageKey": "secondFactors(kinds:[\"backup\"])"
           },
@@ -237,6 +232,7 @@ return {
     ]
   },
   "params": {
+    "cacheID": "a7325bee60ffc53b7b3dbe1681a5f584",
     "id": null,
     "metadata": {},
     "name": "TwoFactorAuthenticationRefetchQuery",

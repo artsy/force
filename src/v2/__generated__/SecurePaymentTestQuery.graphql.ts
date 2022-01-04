@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -37,7 +38,13 @@ var v0 = [
     "name": "id",
     "value": "whatevs"
   }
-];
+],
+v1 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "Boolean"
+};
 return {
   "fragment": {
     "argumentDefinitions": [],
@@ -62,7 +69,8 @@ return {
         "storageKey": "artwork(id:\"whatevs\")"
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -105,13 +113,31 @@ return {
     ]
   },
   "params": {
+    "cacheID": "a6174e5f4a3c77e88f3c06d269b84758",
     "id": null,
-    "metadata": {},
+    "metadata": {
+      "relayTestingSelectionTypeInfo": {
+        "artwork": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Artwork"
+        },
+        "artwork.id": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": false,
+          "type": "ID"
+        },
+        "artwork.is_acquireable": (v1/*: any*/),
+        "artwork.is_offerable": (v1/*: any*/)
+      }
+    },
     "name": "SecurePaymentTestQuery",
     "operationKind": "query",
     "text": "query SecurePaymentTestQuery {\n  artwork(id: \"whatevs\") {\n    ...SecurePayment_artwork\n    id\n  }\n}\n\nfragment SecurePayment_artwork on Artwork {\n  is_acquireable: isAcquireable\n  is_offerable: isOfferable\n}\n"
   }
 };
 })();
-(node as any).hash = '165920d44caabb5774c28db0aa6f8de1';
+(node as any).hash = 'aea04d3bc45239212a2e4d66598b5aa3';
 export default node;

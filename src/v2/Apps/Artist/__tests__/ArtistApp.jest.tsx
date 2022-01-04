@@ -27,7 +27,7 @@ describe("ArtistApp", () => {
   const { getWrapper } = setupTestWrapper<ArtistApp_Test_Query>({
     Component: ArtistAppFragmentContainer,
     query: graphql`
-      query ArtistApp_Test_Query {
+      query ArtistApp_Test_Query @relay_test_operation {
         artist(id: "example") {
           ...ArtistApp_artist
         }
@@ -38,7 +38,14 @@ describe("ArtistApp", () => {
   describe("for default routes", () => {
     it("renders correct components", () => {
       mockfindCurrentRoute.mockImplementation(() => ({}))
-      const wrapper = getWrapper()
+      const wrapper = getWrapper({
+        Artist: () => ({
+          statuses: {
+            auctionLots: true,
+            artworks: true,
+          },
+        }),
+      })
       expect(wrapper.find("ArtistMetaFragmentContainer").length).toBe(1)
       expect(wrapper.find("ArtistHeaderFragmentContainer").length).toBe(1)
       expect(wrapper.find("RouteTabs").length).toBe(1)
@@ -52,6 +59,10 @@ describe("ArtistApp", () => {
       const wrapper = getWrapper({
         Artist: () => ({
           slug: "artist-slug",
+          statuses: {
+            auctionLots: true,
+            artworks: true,
+          },
         }),
       })
       expect(wrapper.find("RouteTab").at(0).html()).toContain(
@@ -76,6 +87,8 @@ describe("ArtistApp", () => {
               articles: false,
               cv: false,
               shows: false,
+              auctionLots: true,
+              artworks: true,
             },
           }),
         })
@@ -89,6 +102,7 @@ describe("ArtistApp", () => {
           Artist: () => ({
             statuses: {
               artworks: false,
+              auctionLots: true,
             },
           }),
         })
@@ -102,6 +116,7 @@ describe("ArtistApp", () => {
           Artist: () => ({
             statuses: {
               auctionLots: false,
+              artworks: true,
             },
           }),
         })
@@ -117,6 +132,9 @@ describe("ArtistApp", () => {
           counts: {
             forSaleArtworks: 20,
           },
+          statuses: {
+            artworks: true,
+          },
         }),
       })
       expect(wrapper.find("RouteTab").at(1).text()).toBe("Works for Sale (20)")
@@ -128,6 +146,7 @@ describe("ArtistApp", () => {
         Artist: () => ({
           statuses: {
             auctionLots: false,
+            artworks: true,
           },
           counts: {
             forSaleArtworks: 20,
@@ -145,6 +164,7 @@ describe("ArtistApp", () => {
       const wrapper = getWrapper({
         Artist: () => ({
           statuses: {
+            artworks: true,
             auctionLots: true,
           },
           counts: {

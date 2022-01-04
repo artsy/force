@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -48,7 +49,13 @@ var v0 = [
     "name": "excludeFollowedArtists",
     "value": true
   }
-];
+],
+v1 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "ID"
+};
 return {
   "fragment": {
     "argumentDefinitions": [],
@@ -84,7 +91,8 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -185,13 +193,56 @@ return {
     ]
   },
   "params": {
+    "cacheID": "8a67856d2ac5c3c976471b862cdafef1",
     "id": null,
-    "metadata": {},
+    "metadata": {
+      "relayTestingSelectionTypeInfo": {
+        "highlights": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Highlights"
+        },
+        "highlights.popular_artists": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": true,
+          "type": "Artist"
+        },
+        "highlights.popular_artists.id": (v1/*: any*/),
+        "highlights.popular_artists.image": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Image"
+        },
+        "highlights.popular_artists.image.cropped": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "CroppedImageUrl"
+        },
+        "highlights.popular_artists.image.cropped.url": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": false,
+          "type": "String"
+        },
+        "highlights.popular_artists.internalID": (v1/*: any*/),
+        "highlights.popular_artists.name": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "String"
+        },
+        "highlights.popular_artists.slug": (v1/*: any*/)
+      }
+    },
     "name": "PopularArtists_Test_Query",
     "operationKind": "query",
     "text": "query PopularArtists_Test_Query {\n  highlights {\n    popular_artists: popularArtists(excludeFollowedArtists: true) {\n      ...PopularArtists_popular_artists\n      id\n    }\n  }\n}\n\nfragment PopularArtists_popular_artists on Artist {\n  slug\n  internalID\n  id\n  name\n  image {\n    cropped(width: 100, height: 100) {\n      url\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'ba4240ea45daeb9ce6ff133907fbd835';
+(node as any).hash = '0b9ed094ef8d045e39741250da915e19';
 export default node;

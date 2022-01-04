@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -73,6 +74,24 @@ v2 = {
   "kind": "ScalarField",
   "name": "internalID",
   "storageKey": null
+},
+v3 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "ID"
+},
+v4 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "Int"
+},
+v5 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "String"
 };
 return {
   "fragment": {
@@ -132,7 +151,8 @@ return {
         "storageKey": "partner(id:\"white-cube\")"
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -259,13 +279,66 @@ return {
     ]
   },
   "params": {
+    "cacheID": "f9d3fe4997800804c4d5f6f28cbe5961",
     "id": null,
-    "metadata": {},
+    "metadata": {
+      "relayTestingSelectionTypeInfo": {
+        "partner": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Partner"
+        },
+        "partner.id": (v3/*: any*/),
+        "partner.viewingRoomsConnection": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "ViewingRoomsConnection"
+        },
+        "partner.viewingRoomsConnection.edges": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": true,
+          "type": "ViewingRoomsEdge"
+        },
+        "partner.viewingRoomsConnection.edges.node": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "ViewingRoom"
+        },
+        "partner.viewingRoomsConnection.edges.node.coverImage": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "ARImage"
+        },
+        "partner.viewingRoomsConnection.edges.node.coverImage.height": (v4/*: any*/),
+        "partner.viewingRoomsConnection.edges.node.coverImage.imageURLs": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "ImageURLs"
+        },
+        "partner.viewingRoomsConnection.edges.node.coverImage.imageURLs.normalized": (v5/*: any*/),
+        "partner.viewingRoomsConnection.edges.node.coverImage.width": (v4/*: any*/),
+        "partner.viewingRoomsConnection.edges.node.exhibitionPeriod": (v5/*: any*/),
+        "partner.viewingRoomsConnection.edges.node.href": (v5/*: any*/),
+        "partner.viewingRoomsConnection.edges.node.internalID": (v3/*: any*/),
+        "partner.viewingRoomsConnection.edges.node.title": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": false,
+          "type": "String"
+        }
+      }
+    },
     "name": "ViewingRoomCard_Test_Query",
     "operationKind": "query",
     "text": "query ViewingRoomCard_Test_Query {\n  partner(id: \"white-cube\") @principalField {\n    viewingRoomsConnection(first: 12) {\n      edges {\n        node {\n          internalID\n          ...ViewingRoomCard_viewingRoom\n        }\n      }\n    }\n    id\n  }\n}\n\nfragment ViewingRoomCard_viewingRoom on ViewingRoom {\n  href\n  title\n  exhibitionPeriod\n  coverImage: image {\n    imageURLs {\n      normalized\n    }\n    width\n    height\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '703e6d8b7c2de96dfc84605e2ceb7000';
+(node as any).hash = 'd125328b9c5643dc4e4b0b76b0f0f8ad';
 export default node;

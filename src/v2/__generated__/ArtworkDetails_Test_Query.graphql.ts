@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -222,7 +223,49 @@ v8 = [
     "name": "details",
     "storageKey": null
   }
-];
+],
+v9 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "String"
+},
+v10 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "ID"
+},
+v11 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "Image"
+},
+v12 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "CroppedImageUrl"
+},
+v13 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "String"
+},
+v14 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "Boolean"
+},
+v15 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "ArtworkInfoRow"
+};
 return {
   "fragment": {
     "argumentDefinitions": [],
@@ -247,7 +290,8 @@ return {
         "storageKey": "artwork(id:\"example\")"
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -635,13 +679,126 @@ return {
     ]
   },
   "params": {
+    "cacheID": "e9be102424c9de70570d5e130b39a2de",
     "id": null,
-    "metadata": {},
+    "metadata": {
+      "relayTestingSelectionTypeInfo": {
+        "artwork": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Artwork"
+        },
+        "artwork.additional_information": (v9/*: any*/),
+        "artwork.articles": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": true,
+          "type": "Article"
+        },
+        "artwork.articles.author": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Author"
+        },
+        "artwork.articles.author.id": (v10/*: any*/),
+        "artwork.articles.author.name": (v9/*: any*/),
+        "artwork.articles.href": (v9/*: any*/),
+        "artwork.articles.id": (v10/*: any*/),
+        "artwork.articles.publishedAt": (v9/*: any*/),
+        "artwork.articles.slug": (v9/*: any*/),
+        "artwork.articles.thumbnailImage": (v11/*: any*/),
+        "artwork.articles.thumbnailImage.cropped": (v12/*: any*/),
+        "artwork.articles.thumbnailImage.cropped.src": (v13/*: any*/),
+        "artwork.articles.thumbnailImage.cropped.srcSet": (v13/*: any*/),
+        "artwork.articles.thumbnailTitle": (v9/*: any*/),
+        "artwork.canRequestLotConditionsReport": (v14/*: any*/),
+        "artwork.category": (v9/*: any*/),
+        "artwork.certificateOfAuthenticity": (v15/*: any*/),
+        "artwork.certificateOfAuthenticity.details": (v9/*: any*/),
+        "artwork.certificateOfAuthenticity.label": (v9/*: any*/),
+        "artwork.conditionDescription": (v15/*: any*/),
+        "artwork.conditionDescription.details": (v9/*: any*/),
+        "artwork.conditionDescription.label": (v9/*: any*/),
+        "artwork.description": (v9/*: any*/),
+        "artwork.exhibition_history": (v9/*: any*/),
+        "artwork.framed": (v15/*: any*/),
+        "artwork.framed.details": (v9/*: any*/),
+        "artwork.framed.label": (v9/*: any*/),
+        "artwork.id": (v10/*: any*/),
+        "artwork.image_rights": (v9/*: any*/),
+        "artwork.internalID": (v10/*: any*/),
+        "artwork.literature": (v9/*: any*/),
+        "artwork.manufacturer": (v9/*: any*/),
+        "artwork.mediumType": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "ArtworkMedium"
+        },
+        "artwork.mediumType.__typename": (v13/*: any*/),
+        "artwork.mediumType.longDescription": (v9/*: any*/),
+        "artwork.mediumType.name": (v9/*: any*/),
+        "artwork.partner": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Partner"
+        },
+        "artwork.partner.href": (v9/*: any*/),
+        "artwork.partner.id": (v10/*: any*/),
+        "artwork.partner.initials": (v9/*: any*/),
+        "artwork.partner.internalID": (v10/*: any*/),
+        "artwork.partner.is_default_profile_public": (v14/*: any*/),
+        "artwork.partner.locations": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": true,
+          "type": "Location"
+        },
+        "artwork.partner.locations.city": (v9/*: any*/),
+        "artwork.partner.locations.id": (v10/*: any*/),
+        "artwork.partner.name": (v9/*: any*/),
+        "artwork.partner.profile": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Profile"
+        },
+        "artwork.partner.profile.icon": (v11/*: any*/),
+        "artwork.partner.profile.icon.cropped": (v12/*: any*/),
+        "artwork.partner.profile.icon.cropped.src": (v13/*: any*/),
+        "artwork.partner.profile.icon.cropped.srcSet": (v13/*: any*/),
+        "artwork.partner.profile.id": (v10/*: any*/),
+        "artwork.partner.profile.internalID": (v10/*: any*/),
+        "artwork.partner.profile.is_followed": (v14/*: any*/),
+        "artwork.partner.profile.name": (v9/*: any*/),
+        "artwork.partner.profile.slug": (v10/*: any*/),
+        "artwork.partner.slug": (v10/*: any*/),
+        "artwork.partner.type": (v9/*: any*/),
+        "artwork.provenance": (v9/*: any*/),
+        "artwork.publisher": (v9/*: any*/),
+        "artwork.sale": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Sale"
+        },
+        "artwork.sale.id": (v10/*: any*/),
+        "artwork.sale.isBenefit": (v14/*: any*/),
+        "artwork.sale.isGalleryAuction": (v14/*: any*/),
+        "artwork.series": (v9/*: any*/),
+        "artwork.signatureInfo": (v15/*: any*/),
+        "artwork.signatureInfo.details": (v9/*: any*/),
+        "artwork.signatureInfo.label": (v9/*: any*/)
+      }
+    },
     "name": "ArtworkDetails_Test_Query",
     "operationKind": "query",
     "text": "query ArtworkDetails_Test_Query {\n  artwork(id: \"example\") {\n    ...ArtworkDetails_artwork\n    id\n  }\n}\n\nfragment ArtworkDetailsAboutTheWorkFromArtsy_artwork on Artwork {\n  description(format: HTML)\n}\n\nfragment ArtworkDetailsAboutTheWorkFromPartner_artwork on Artwork {\n  additional_information: additionalInformation(format: HTML)\n  sale {\n    isBenefit\n    isGalleryAuction\n    id\n  }\n  partner {\n    internalID\n    slug\n    type\n    href\n    name\n    initials\n    locations {\n      city\n      id\n    }\n    is_default_profile_public: isDefaultProfilePublic\n    profile {\n      ...FollowProfileButton_profile\n      slug\n      icon {\n        cropped(width: 45, height: 45) {\n          src\n          srcSet\n        }\n      }\n      id\n    }\n    id\n  }\n}\n\nfragment ArtworkDetailsAdditionalInfo_artwork on Artwork {\n  category\n  series\n  publisher\n  manufacturer\n  image_rights: imageRights\n  canRequestLotConditionsReport\n  internalID\n  framed {\n    label\n    details\n  }\n  signatureInfo {\n    label\n    details\n  }\n  conditionDescription {\n    label\n    details\n  }\n  certificateOfAuthenticity {\n    label\n    details\n  }\n  mediumType {\n    __typename\n  }\n  ...ArtworkDetailsMediumModal_artwork\n}\n\nfragment ArtworkDetailsArticles_artwork on Artwork {\n  articles(size: 10) {\n    author {\n      name\n      id\n    }\n    href\n    publishedAt(format: \"MMM Do, YYYY\")\n    thumbnailImage {\n      cropped(width: 200, height: 150) {\n        src\n        srcSet\n      }\n    }\n    thumbnailTitle\n    id\n  }\n}\n\nfragment ArtworkDetailsMediumModal_artwork on Artwork {\n  mediumType {\n    name\n    longDescription\n  }\n}\n\nfragment ArtworkDetails_artwork on Artwork {\n  ...ArtworkDetailsAboutTheWorkFromArtsy_artwork\n  ...ArtworkDetailsAboutTheWorkFromPartner_artwork\n  ...ArtworkDetailsAdditionalInfo_artwork\n  ...ArtworkDetailsArticles_artwork\n  articles(size: 10) {\n    slug\n    id\n  }\n  literature(format: HTML)\n  exhibition_history: exhibitionHistory(format: HTML)\n  provenance(format: HTML)\n}\n\nfragment FollowProfileButton_profile on Profile {\n  id\n  slug\n  name\n  internalID\n  is_followed: isFollowed\n}\n"
   }
 };
 })();
-(node as any).hash = '5e114725fd8ed5ca271f69c5dfb0ea1c';
+(node as any).hash = '00e8341863f202ef05b6f34cbe7c8472';
 export default node;

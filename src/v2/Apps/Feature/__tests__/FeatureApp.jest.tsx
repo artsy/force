@@ -16,7 +16,7 @@ const { getWrapper } = setupTestWrapper<FeatureApp_Test_Query>({
     )
   },
   query: graphql`
-    query FeatureApp_Test_Query {
+    query FeatureApp_Test_Query @relay_test_operation {
       feature(id: "example") {
         ...FeatureApp_feature
       }

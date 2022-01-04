@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -95,6 +96,30 @@ v4 = {
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
+},
+v5 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "String"
+},
+v6 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "ID"
+},
+v7 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "String"
+},
+v8 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "Boolean"
 };
 return {
   "fragment": {
@@ -120,7 +145,8 @@ return {
         "storageKey": "partner(id:\"example\")"
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -293,13 +319,75 @@ return {
     ]
   },
   "params": {
+    "cacheID": "24d0675592562b182e9efa7ccb327f89",
     "id": null,
-    "metadata": {},
+    "metadata": {
+      "relayTestingSelectionTypeInfo": {
+        "partner": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Partner"
+        },
+        "partner.href": (v5/*: any*/),
+        "partner.id": (v6/*: any*/),
+        "partner.initials": (v5/*: any*/),
+        "partner.internalID": (v6/*: any*/),
+        "partner.locationsConnection": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "LocationConnection"
+        },
+        "partner.locationsConnection.edges": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": true,
+          "type": "LocationEdge"
+        },
+        "partner.locationsConnection.edges.node": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Location"
+        },
+        "partner.locationsConnection.edges.node.city": (v5/*: any*/),
+        "partner.locationsConnection.edges.node.id": (v6/*: any*/),
+        "partner.name": (v5/*: any*/),
+        "partner.profile": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Profile"
+        },
+        "partner.profile.id": (v6/*: any*/),
+        "partner.profile.image": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Image"
+        },
+        "partner.profile.image.cropped": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "CroppedImageUrl"
+        },
+        "partner.profile.image.cropped.src": (v7/*: any*/),
+        "partner.profile.image.cropped.srcSet": (v7/*: any*/),
+        "partner.profile.internalID": (v6/*: any*/),
+        "partner.profile.isFollowed": (v8/*: any*/),
+        "partner.profile.is_followed": (v8/*: any*/),
+        "partner.profile.name": (v5/*: any*/),
+        "partner.profile.slug": (v6/*: any*/),
+        "partner.slug": (v6/*: any*/)
+      }
+    },
     "name": "PartnerCellFragmentContainer_Test_Query",
     "operationKind": "query",
     "text": "query PartnerCellFragmentContainer_Test_Query {\n  partner(id: \"example\") {\n    ...PartnerCell_partner\n    id\n  }\n}\n\nfragment FollowProfileButton_profile on Profile {\n  id\n  slug\n  name\n  internalID\n  is_followed: isFollowed\n}\n\nfragment PartnerCell_partner on Partner {\n  internalID\n  slug\n  name\n  href\n  initials\n  locationsConnection(first: 15) {\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n  profile {\n    ...FollowProfileButton_profile\n    isFollowed\n    image {\n      cropped(width: 445, height: 334, version: [\"wide\", \"large\", \"featured\", \"larger\"]) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '020b76a81076a4d2d71231a7d54d4348';
+(node as any).hash = 'b609bdc6b023c52eca89ffa453b5cd36';
 export default node;

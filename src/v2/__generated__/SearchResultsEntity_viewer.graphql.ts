@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -36,46 +37,39 @@ export type SearchResultsEntity_viewer$key = {
 const node: ReaderFragment = {
   "argumentDefinitions": [
     {
-      "defaultValue": "",
+      "defaultValue": null,
       "kind": "LocalArgument",
-      "name": "term",
-      "type": "String!"
+      "name": "after"
+    },
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "before"
+    },
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "entities"
     },
     {
       "defaultValue": 10,
       "kind": "LocalArgument",
-      "name": "first",
-      "type": "Int"
+      "name": "first"
     },
     {
       "defaultValue": null,
       "kind": "LocalArgument",
-      "name": "last",
-      "type": "Int"
+      "name": "last"
     },
     {
       "defaultValue": null,
       "kind": "LocalArgument",
-      "name": "after",
-      "type": "String"
+      "name": "page"
     },
     {
-      "defaultValue": null,
+      "defaultValue": "",
       "kind": "LocalArgument",
-      "name": "before",
-      "type": "String"
-    },
-    {
-      "defaultValue": null,
-      "kind": "LocalArgument",
-      "name": "page",
-      "type": "Int"
-    },
-    {
-      "defaultValue": null,
-      "kind": "LocalArgument",
-      "name": "entities",
-      "type": "[SearchEntity]"
+      "name": "term"
     }
   ],
   "kind": "Fragment",
@@ -229,7 +223,8 @@ const node: ReaderFragment = {
                       "storageKey": null
                     }
                   ],
-                  "type": "SearchableItem"
+                  "type": "SearchableItem",
+                  "abstractKey": null
                 }
               ],
               "storageKey": null
@@ -241,7 +236,8 @@ const node: ReaderFragment = {
       "storageKey": null
     }
   ],
-  "type": "Viewer"
+  "type": "Viewer",
+  "abstractKey": null
 };
 (node as any).hash = '5815db449614a1ba927017f63ab148bf';
 export default node;

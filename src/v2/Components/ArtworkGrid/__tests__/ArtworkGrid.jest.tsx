@@ -120,7 +120,9 @@ describe("ArtworkGrid", () => {
         Component: TestContainer,
         componentProps,
         query: graphql`
-          query ArtworkGrid_Test_Query @raw_response_type {
+          query ArtworkGrid_Test_Query
+            @raw_response_type
+            @relay_test_operation {
             artist(id: "pablo-picasso") {
               ...ArtworkGrid_artist
             }

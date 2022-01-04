@@ -23,7 +23,7 @@ const { getWrapper } = setupTestWrapper<ShowContextCard_Test_Query>({
     </AnalyticsContext.Provider>
   ),
   query: graphql`
-    query ShowContextCard_Test_Query {
+    query ShowContextCard_Test_Query @relay_test_operation {
       show(id: "xxx") {
         ...ShowContextCard_show
       }
@@ -50,7 +50,9 @@ describe("ShowContextCard", () => {
         }
       },
     })
-    expect(wrapper.text()).toContain("Part of Catty Art Fair")
+    expect(wrapper.text()).toContain(
+      'Presented by <mock-value-for-field-"name"><mock-value-for-field-"name"><mock-value-for-field-"city">'
+    )
   })
 
   it("renders correctly for a partner", () => {

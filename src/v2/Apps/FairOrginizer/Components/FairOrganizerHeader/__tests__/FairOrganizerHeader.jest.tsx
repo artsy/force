@@ -8,7 +8,7 @@ jest.unmock("react-relay")
 const { getWrapper } = setupTestWrapper({
   Component: FairOrganizerHeaderFragmentContainer,
   query: graphql`
-    query FairOrganizerHeader_Test_Query {
+    query FairOrganizerHeader_Test_Query @relay_test_operation {
       fairOrganizer(id: "example") {
         ...FairOrganizerHeader_fairOrganizer
       }

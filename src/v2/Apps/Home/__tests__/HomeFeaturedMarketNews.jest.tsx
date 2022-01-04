@@ -10,7 +10,7 @@ jest.mock("v2/System/Analytics/useTracking")
 const { getWrapper } = setupTestWrapper<HomeFeaturedMarketNews_Test_Query>({
   Component: HomeFeaturedMarketNewsFragmentContainer,
   query: graphql`
-    query HomeFeaturedMarketNews_Test_Query {
+    query HomeFeaturedMarketNews_Test_Query @relay_test_operation {
       articles {
         ...HomeFeaturedMarketNews_articles
       }
@@ -50,7 +50,7 @@ describe("HomeFeaturedMarketNews", () => {
       expect(trackEvent).toBeCalledWith({
         action: "clickedArticleGroup",
         context_module: "marketNews",
-        context_page_owner_id: '<mock-value-for-field-"internalID">',
+        context_page_owner_id: "<Article-mock-id-1>",
         context_page_owner_slug: '<mock-value-for-field-"slug">',
         context_page_owner_type: "home",
         destination_page_owner_type: "article",

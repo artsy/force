@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -76,7 +77,31 @@ v2 = [
     "name": "display",
     "storageKey": null
   }
-];
+],
+v3 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "String"
+},
+v4 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "ID"
+},
+v5 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "String"
+},
+v6 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "Boolean"
+};
 return {
   "fragment": {
     "argumentDefinitions": [],
@@ -101,7 +126,8 @@ return {
         "storageKey": "saleArtwork(id:\"foo\")"
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -270,13 +296,78 @@ return {
     ]
   },
   "params": {
+    "cacheID": "8ee40c4ec5ab997e8da94a8f3f764fad",
     "id": null,
-    "metadata": {},
+    "metadata": {
+      "relayTestingSelectionTypeInfo": {
+        "saleArtwork": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "SaleArtwork"
+        },
+        "saleArtwork.artwork": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Artwork"
+        },
+        "saleArtwork.artwork.artistNames": (v3/*: any*/),
+        "saleArtwork.artwork.id": (v4/*: any*/),
+        "saleArtwork.artwork.image": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Image"
+        },
+        "saleArtwork.artwork.image.resized": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "ResizedImageUrl"
+        },
+        "saleArtwork.artwork.image.resized.src": (v5/*: any*/),
+        "saleArtwork.artwork.image.resized.srcSet": (v5/*: any*/),
+        "saleArtwork.currentBid": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "SaleArtworkCurrentBid"
+        },
+        "saleArtwork.currentBid.display": (v3/*: any*/),
+        "saleArtwork.estimate": (v3/*: any*/),
+        "saleArtwork.id": (v4/*: any*/),
+        "saleArtwork.internalID": (v4/*: any*/),
+        "saleArtwork.isHighestBidder": (v6/*: any*/),
+        "saleArtwork.isWatching": (v6/*: any*/),
+        "saleArtwork.lotLabel": (v3/*: any*/),
+        "saleArtwork.lotState": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "CausalityLotState"
+        },
+        "saleArtwork.lotState.bidCount": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Int"
+        },
+        "saleArtwork.lotState.sellingPrice": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Money"
+        },
+        "saleArtwork.lotState.sellingPrice.display": (v3/*: any*/),
+        "saleArtwork.slug": (v4/*: any*/)
+      }
+    },
     "name": "MyBidsBidItem_Test_Query",
     "operationKind": "query",
     "text": "query MyBidsBidItem_Test_Query {\n  saleArtwork(id: \"foo\") {\n    ...MyBidsBidItem_saleArtwork\n    id\n  }\n}\n\nfragment MyBidsBidItem_saleArtwork on SaleArtwork {\n  artwork {\n    artistNames\n    image {\n      resized(width: 55, height: 55) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n  estimate\n  currentBid {\n    display\n  }\n  internalID\n  isHighestBidder\n  isWatching\n  lotState {\n    bidCount\n    sellingPrice {\n      display\n    }\n  }\n  lotLabel\n  slug\n}\n"
   }
 };
 })();
-(node as any).hash = '52f57207755d8d8b702cf7621e5147d6';
+(node as any).hash = '98a4cc76d8e7d26934b94ab456ae5355';
 export default node;

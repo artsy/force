@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Box, BorderBox, Flex, Text, Radio } from "@artsy/palette"
 import styled from "styled-components"

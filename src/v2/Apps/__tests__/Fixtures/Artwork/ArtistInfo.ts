@@ -18,6 +18,7 @@ export const ArtistInfoFixture: ArtistInfo_Test_QueryRawResponse["artist"] = {
   exhibition_highlights: [
     {
       partner: {
+        __isNode: "Partner",
         __typename: "Partner",
         name: "Tate Modern",
         id: "UGFydG5lcjp0YXRlLW1vZGVybg==",
@@ -36,6 +37,7 @@ export const ArtistInfoFixture: ArtistInfo_Test_QueryRawResponse["artist"] = {
     },
     {
       partner: {
+        __isNode: "Partner",
         __typename: "Partner",
         name: "Musée Picasso Paris",
         id: "UGFydG5lcjptdXNlZS1waWNhc3NvLXBhcmlz",
@@ -55,6 +57,7 @@ export const ArtistInfoFixture: ArtistInfo_Test_QueryRawResponse["artist"] = {
     {
       partner: {
         __typename: "Partner",
+        __isNode: "Partner",
         name: "Musée Picasso Paris",
         id: "UGFydG5lcjptdXNlZS1waWNhc3NvLXBhcmlz",
       },

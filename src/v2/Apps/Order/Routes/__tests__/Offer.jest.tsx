@@ -42,7 +42,7 @@ describe("Offer InitialMutation", () => {
       ...initialOfferSuccess,
     },
     query: graphql`
-      query OfferTestQuery @raw_response_type {
+      query OfferTestQuery @raw_response_type @relay_test_operation {
         order: commerceOrder(id: "unused") {
           ...Offer_order
         }

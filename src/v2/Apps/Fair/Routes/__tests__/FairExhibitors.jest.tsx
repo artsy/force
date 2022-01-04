@@ -23,7 +23,7 @@ describe("FairExhibitors", () => {
   const { getWrapper } = setupTestWrapper<FairExhibitors_Test_Query>({
     Component: FairExhibitorsFragmentContainer,
     query: graphql`
-      query FairExhibitors_Test_Query($id: String!) {
+      query FairExhibitors_Test_Query($id: String!) @relay_test_operation {
         fair(id: $id) @principalField {
           ...FairExhibitors_fair
         }

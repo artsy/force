@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -17,9 +18,9 @@ export type IdentityVerificationAppTestQueryRawResponse = {
             readonly internalID: string;
             readonly userID: string;
             readonly state: string;
-            readonly id: string | null;
+            readonly id: string;
         }) | null;
-        readonly id: string | null;
+        readonly id: string;
     }) | null;
 };
 export type IdentityVerificationAppTestQuery = {
@@ -71,6 +72,18 @@ v2 = {
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
+},
+v3 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "ID"
+},
+v4 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "String"
 };
 return {
   "fragment": {
@@ -96,7 +109,8 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -154,13 +168,41 @@ return {
     ]
   },
   "params": {
+    "cacheID": "8b65aa859d5eb88e45e38bd744455251",
     "id": null,
-    "metadata": {},
+    "metadata": {
+      "relayTestingSelectionTypeInfo": {
+        "me": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Me"
+        },
+        "me.email": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "String"
+        },
+        "me.id": (v3/*: any*/),
+        "me.identityVerification": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "IdentityVerification"
+        },
+        "me.identityVerification.id": (v3/*: any*/),
+        "me.identityVerification.internalID": (v3/*: any*/),
+        "me.identityVerification.state": (v4/*: any*/),
+        "me.identityVerification.userID": (v4/*: any*/),
+        "me.internalID": (v3/*: any*/)
+      }
+    },
     "name": "IdentityVerificationAppTestQuery",
     "operationKind": "query",
     "text": "query IdentityVerificationAppTestQuery {\n  me {\n    ...IdentityVerificationApp_me_3zaPSf\n    id\n  }\n}\n\nfragment IdentityVerificationApp_me_3zaPSf on Me {\n  internalID\n  email\n  identityVerification(id: \"idv-id\") {\n    internalID\n    userID\n    state\n    id\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '9e5f6cb15751616ff1e1d7394f00b245';
+(node as any).hash = 'ce0e064167e6a0c0679bcbb559733078';
 export default node;

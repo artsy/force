@@ -21,7 +21,7 @@ const { renderWithRelay } = setupTestWrapperTL<TagApp_Test_Query>({
     )
   },
   query: graphql`
-    query TagApp_Test_Query {
+    query TagApp_Test_Query @relay_test_operation {
       tag(id: "example") {
         ...TagApp_tag
       }

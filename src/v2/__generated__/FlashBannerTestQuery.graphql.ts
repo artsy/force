@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 export type FlashBannerTestQueryVariables = {};
@@ -11,7 +12,7 @@ export type FlashBannerTestQueryResponse = {
 export type FlashBannerTestQueryRawResponse = {
     readonly me: ({
         readonly canRequestEmailConfirmation: boolean;
-        readonly id: string | null;
+        readonly id: string;
     }) | null;
 };
 export type FlashBannerTestQuery = {
@@ -59,7 +60,8 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -89,13 +91,35 @@ return {
     ]
   },
   "params": {
+    "cacheID": "3100e134abd39082018558b8616c21bd",
     "id": null,
-    "metadata": {},
+    "metadata": {
+      "relayTestingSelectionTypeInfo": {
+        "me": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Me"
+        },
+        "me.canRequestEmailConfirmation": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": false,
+          "type": "Boolean"
+        },
+        "me.id": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": false,
+          "type": "ID"
+        }
+      }
+    },
     "name": "FlashBannerTestQuery",
     "operationKind": "query",
     "text": "query FlashBannerTestQuery {\n  me {\n    canRequestEmailConfirmation\n    id\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '3462bf9f36f122833699aad139cf2a14';
+(node as any).hash = 'f3601d608439e328bcfce96e31a134c0';
 export default node;

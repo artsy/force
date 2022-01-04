@@ -15,7 +15,7 @@ describe("MyBidsBidHeaderFragmentContainer", () => {
       return <MyBidsBidHeaderFragmentContainer sale={props.sale} />
     },
     query: graphql`
-      query MyBidsBidHeader_Test_Query {
+      query MyBidsBidHeader_Test_Query @relay_test_operation {
         sale(id: "foo") {
           ...MyBidsBidHeader_sale
         }

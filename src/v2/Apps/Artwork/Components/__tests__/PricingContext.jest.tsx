@@ -86,7 +86,7 @@ describe("PricingContext", () => {
       ),
       mockData: mockData as PricingContextTestQueryRawResponse,
       query: graphql`
-        query PricingContextTestQuery @raw_response_type {
+        query PricingContextTestQuery @raw_response_type @relay_test_operation {
           artwork(id: "unused") {
             ...PricingContext_artwork
           }

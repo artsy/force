@@ -20,7 +20,7 @@ describe("PastAuctions", () => {
       )
     },
     query: graphql`
-      query PastAuctions_Test_Query {
+      query PastAuctions_Test_Query @relay_test_operation {
         viewer {
           ...PastAuctions_viewer
         }

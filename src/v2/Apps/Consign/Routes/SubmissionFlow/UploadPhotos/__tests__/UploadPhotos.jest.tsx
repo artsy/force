@@ -61,7 +61,7 @@ const { getWrapper } = setupTestWrapper({
     )
   },
   query: graphql`
-    query UploadPhotosQuery {
+    query UploadPhotosQuery @relay_test_operation {
       submission(id: "") {
         id
       }
