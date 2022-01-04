@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -42,10 +43,10 @@ var v0 = [
   }
 ],
 v1 = {
-  "type": "ID",
   "enumValues": null,
+  "nullable": false,
   "plural": false,
-  "nullable": false
+  "type": "ID"
 };
 return {
   "fragment": {
@@ -71,7 +72,8 @@ return {
         "storageKey": "gene(id:\"example\")"
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -128,30 +130,31 @@ return {
     ]
   },
   "params": {
+    "cacheID": "400ec25326a33f1da5029ba13e220fff",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "gene": {
-          "type": "Gene",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "Gene"
         },
         "gene.id": (v1/*: any*/),
-        "gene.slug": (v1/*: any*/),
-        "gene.name": {
-          "type": "String",
-          "enumValues": null,
-          "plural": false,
-          "nullable": true
-        },
         "gene.internalID": (v1/*: any*/),
         "gene.isFollowed": {
-          "type": "Boolean",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
-        }
+          "type": "Boolean"
+        },
+        "gene.name": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "String"
+        },
+        "gene.slug": (v1/*: any*/)
       }
     },
     "name": "FollowGeneButton_Test_Query",

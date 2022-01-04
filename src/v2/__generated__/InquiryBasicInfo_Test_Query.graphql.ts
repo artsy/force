@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -64,16 +65,16 @@ v1 = {
   "storageKey": null
 },
 v2 = {
-  "type": "ID",
   "enumValues": null,
+  "nullable": false,
   "plural": false,
-  "nullable": true
+  "type": "ID"
 },
 v3 = {
-  "type": "String",
   "enumValues": null,
+  "nullable": true,
   "plural": false,
-  "nullable": true
+  "type": "String"
 };
 return {
   "fragment": {
@@ -115,7 +116,8 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -202,41 +204,42 @@ return {
     ]
   },
   "params": {
+    "cacheID": "63b28423738c12d0a249d1f77d6bdb66",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "artwork": {
-          "type": "Artwork",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
-        },
-        "me": {
-          "type": "Me",
-          "enumValues": null,
-          "plural": false,
-          "nullable": true
+          "type": "Artwork"
         },
         "artwork.id": (v2/*: any*/),
-        "me.id": (v2/*: any*/),
         "artwork.partner": {
-          "type": "Partner",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "Partner"
         },
-        "me.location": {
-          "type": "MyLocation",
-          "enumValues": null,
-          "plural": false,
-          "nullable": true
-        },
-        "me.phone": (v3/*: any*/),
-        "me.profession": (v3/*: any*/),
-        "artwork.partner.name": (v3/*: any*/),
         "artwork.partner.id": (v2/*: any*/),
+        "artwork.partner.name": (v3/*: any*/),
+        "me": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Me"
+        },
+        "me.id": (v2/*: any*/),
+        "me.location": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "MyLocation"
+        },
         "me.location.display": (v3/*: any*/),
-        "me.location.id": (v2/*: any*/)
+        "me.location.id": (v2/*: any*/),
+        "me.phone": (v3/*: any*/),
+        "me.profession": (v3/*: any*/)
       }
     },
     "name": "InquiryBasicInfo_Test_Query",

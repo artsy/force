@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -21,7 +22,7 @@ export type ShippingQuotes_Test_QueryResponse = {
 };
 export type ShippingQuotes_Test_QueryRawResponse = {
     readonly order: ({
-        readonly __typename: string | null;
+        readonly __typename: string;
         readonly lineItems: ({
             readonly edges: ReadonlyArray<({
                 readonly node: ({
@@ -36,11 +37,11 @@ export type ShippingQuotes_Test_QueryRawResponse = {
                             }) | null;
                         }) | null> | null;
                     }) | null;
-                    readonly id: string | null;
+                    readonly id: string;
                 }) | null;
             }) | null> | null;
         }) | null;
-        readonly id: string | null;
+        readonly id: string;
     }) | null;
 };
 export type ShippingQuotes_Test_Query = {
@@ -91,10 +92,16 @@ var v0 = {
   "storageKey": null
 },
 v1 = {
-  "type": "ID",
   "enumValues": null,
+  "nullable": false,
   "plural": false,
-  "nullable": true
+  "type": "String"
+},
+v2 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "ID"
 };
 return {
   "fragment": {
@@ -175,7 +182,8 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -307,82 +315,74 @@ return {
     ]
   },
   "params": {
+    "cacheID": "3dd0ee3660ed7f5f75174180d9a0f597",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "order": {
-          "type": "CommerceOrder",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "CommerceOrder"
         },
+        "order.__typename": (v1/*: any*/),
+        "order.id": (v2/*: any*/),
         "order.lineItems": {
-          "type": "CommerceLineItemConnection",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "CommerceLineItemConnection"
         },
-        "order.id": (v1/*: any*/),
         "order.lineItems.edges": {
-          "type": "CommerceLineItemEdge",
           "enumValues": null,
+          "nullable": true,
           "plural": true,
-          "nullable": true
+          "type": "CommerceLineItemEdge"
         },
         "order.lineItems.edges.node": {
-          "type": "CommerceLineItem",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "CommerceLineItem"
         },
+        "order.lineItems.edges.node.id": (v2/*: any*/),
         "order.lineItems.edges.node.shippingQuoteOptions": {
-          "type": "CommerceShippingQuoteConnection",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "CommerceShippingQuoteConnection"
         },
-        "order.lineItems.edges.node.id": (v1/*: any*/),
         "order.lineItems.edges.node.shippingQuoteOptions.edges": {
-          "type": "CommerceShippingQuoteEdge",
           "enumValues": null,
+          "nullable": true,
           "plural": true,
-          "nullable": true
+          "type": "CommerceShippingQuoteEdge"
         },
         "order.lineItems.edges.node.shippingQuoteOptions.edges.node": {
-          "type": "CommerceShippingQuote",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "CommerceShippingQuote"
         },
-        "order.lineItems.edges.node.shippingQuoteOptions.edges.node.id": {
-          "type": "ID",
-          "enumValues": null,
-          "plural": false,
-          "nullable": false
-        },
-        "order.lineItems.edges.node.shippingQuoteOptions.edges.node.displayName": {
-          "type": "String",
-          "enumValues": null,
-          "plural": false,
-          "nullable": false
-        },
+        "order.lineItems.edges.node.shippingQuoteOptions.edges.node.displayName": (v1/*: any*/),
+        "order.lineItems.edges.node.shippingQuoteOptions.edges.node.id": (v2/*: any*/),
         "order.lineItems.edges.node.shippingQuoteOptions.edges.node.isSelected": {
-          "type": "Boolean",
           "enumValues": null,
+          "nullable": false,
           "plural": false,
-          "nullable": false
+          "type": "Boolean"
         },
         "order.lineItems.edges.node.shippingQuoteOptions.edges.node.price": {
-          "type": "String",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "String"
         },
         "order.lineItems.edges.node.shippingQuoteOptions.edges.node.priceCents": {
-          "type": "Int",
           "enumValues": null,
+          "nullable": false,
           "plural": false,
-          "nullable": false
+          "type": "Int"
         }
       }
     },

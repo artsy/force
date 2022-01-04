@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -18,18 +19,18 @@ export type ArtworkSidebarExtraLinks_Test_QueryRawResponse = {
         readonly is_inquireable: boolean | null;
         readonly artists: ReadonlyArray<({
             readonly is_consignable: boolean | null;
-            readonly id: string | null;
+            readonly id: string;
         }) | null> | null;
         readonly sale: ({
             readonly is_closed: boolean | null;
             readonly isBenefit: boolean | null;
             readonly partner: ({
                 readonly name: string | null;
-                readonly id: string | null;
+                readonly id: string;
             }) | null;
-            readonly id: string | null;
+            readonly id: string;
         }) | null;
-        readonly id: string | null;
+        readonly id: string;
     }) | null;
 };
 export type ArtworkSidebarExtraLinks_Test_Query = {
@@ -86,16 +87,16 @@ v1 = {
   "storageKey": null
 },
 v2 = {
-  "type": "ID",
   "enumValues": null,
+  "nullable": false,
   "plural": false,
-  "nullable": true
+  "type": "ID"
 },
 v3 = {
-  "type": "Boolean",
   "enumValues": null,
+  "nullable": true,
   "plural": false,
-  "nullable": true
+  "type": "Boolean"
 };
 return {
   "fragment": {
@@ -121,7 +122,8 @@ return {
         "storageKey": "artwork(id:\"josef-albers-homage-to-the-square-85\")"
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -243,56 +245,52 @@ return {
     ]
   },
   "params": {
+    "cacheID": "2f3d7bb557d7f15752b4ae615d0e6f0f",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "artwork": {
-          "type": "Artwork",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "Artwork"
         },
-        "artwork.id": (v2/*: any*/),
-        "artwork.internalID": {
-          "type": "ID",
-          "enumValues": null,
-          "plural": false,
-          "nullable": false
-        },
-        "artwork.is_in_auction": (v3/*: any*/),
-        "artwork.is_for_sale": (v3/*: any*/),
-        "artwork.is_acquireable": (v3/*: any*/),
-        "artwork.is_inquireable": (v3/*: any*/),
         "artwork.artists": {
-          "type": "Artist",
           "enumValues": null,
+          "nullable": true,
           "plural": true,
-          "nullable": true
+          "type": "Artist"
         },
-        "artwork.sale": {
-          "type": "Sale",
-          "enumValues": null,
-          "plural": false,
-          "nullable": true
-        },
-        "artwork.artists.is_consignable": (v3/*: any*/),
         "artwork.artists.id": (v2/*: any*/),
-        "artwork.sale.is_closed": (v3/*: any*/),
-        "artwork.sale.isBenefit": (v3/*: any*/),
-        "artwork.sale.partner": {
-          "type": "Partner",
+        "artwork.artists.is_consignable": (v3/*: any*/),
+        "artwork.id": (v2/*: any*/),
+        "artwork.internalID": (v2/*: any*/),
+        "artwork.is_acquireable": (v3/*: any*/),
+        "artwork.is_for_sale": (v3/*: any*/),
+        "artwork.is_in_auction": (v3/*: any*/),
+        "artwork.is_inquireable": (v3/*: any*/),
+        "artwork.sale": {
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "Sale"
         },
         "artwork.sale.id": (v2/*: any*/),
-        "artwork.sale.partner.name": {
-          "type": "String",
+        "artwork.sale.isBenefit": (v3/*: any*/),
+        "artwork.sale.is_closed": (v3/*: any*/),
+        "artwork.sale.partner": {
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "Partner"
         },
-        "artwork.sale.partner.id": (v2/*: any*/)
+        "artwork.sale.partner.id": (v2/*: any*/),
+        "artwork.sale.partner.name": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "String"
+        }
       }
     },
     "name": "ArtworkSidebarExtraLinks_Test_Query",

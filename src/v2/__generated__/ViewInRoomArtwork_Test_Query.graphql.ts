@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -47,22 +48,22 @@ var v0 = [
   }
 ],
 v1 = {
-  "type": "Float",
   "enumValues": null,
+  "nullable": true,
   "plural": false,
-  "nullable": true
+  "type": "Float"
 },
 v2 = {
-  "type": "String",
   "enumValues": null,
+  "nullable": true,
   "plural": false,
-  "nullable": false
+  "type": "Int"
 },
 v3 = {
-  "type": "Int",
   "enumValues": null,
+  "nullable": false,
   "plural": false,
-  "nullable": true
+  "type": "String"
 };
 return {
   "fragment": {
@@ -88,7 +89,8 @@ return {
         "storageKey": "artwork(id:\"example\")"
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -201,39 +203,40 @@ return {
     ]
   },
   "params": {
+    "cacheID": "c463d5b2664aecdd09c78cb93f0d34f4",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "artwork": {
-          "type": "Artwork",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "Artwork"
         },
-        "artwork.id": {
-          "type": "ID",
-          "enumValues": null,
-          "plural": false,
-          "nullable": true
-        },
-        "artwork.widthCm": (v1/*: any*/),
         "artwork.heightCm": (v1/*: any*/),
-        "artwork.image": {
-          "type": "Image",
+        "artwork.id": {
           "enumValues": null,
+          "nullable": false,
           "plural": false,
-          "nullable": true
+          "type": "ID"
+        },
+        "artwork.image": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Image"
         },
         "artwork.image.resized": {
-          "type": "ResizedImageUrl",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "ResizedImageUrl"
         },
-        "artwork.image.resized.src": (v2/*: any*/),
-        "artwork.image.resized.srcSet": (v2/*: any*/),
-        "artwork.image.resized.width": (v3/*: any*/),
-        "artwork.image.resized.height": (v3/*: any*/)
+        "artwork.image.resized.height": (v2/*: any*/),
+        "artwork.image.resized.src": (v3/*: any*/),
+        "artwork.image.resized.srcSet": (v3/*: any*/),
+        "artwork.image.resized.width": (v2/*: any*/),
+        "artwork.widthCm": (v1/*: any*/)
       }
     },
     "name": "ViewInRoomArtwork_Test_Query",

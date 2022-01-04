@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -93,6 +94,7 @@ fragment Message_message on Message {
 }
 
 fragment OrderUpdate_event on CommerceOrderEventUnion {
+  __isCommerceOrderEventUnion: __typename
   __typename
   ... on CommerceOrderStateChangedEvent {
     createdAt
@@ -160,43 +162,37 @@ v5 = {
   "storageKey": null
 },
 v6 = {
-  "type": "ID",
   "enumValues": null,
+  "nullable": false,
   "plural": false,
-  "nullable": true
+  "type": "ID"
 },
 v7 = {
-  "type": "String",
   "enumValues": null,
+  "nullable": false,
   "plural": false,
-  "nullable": false
+  "type": "String"
 },
 v8 = {
-  "type": "ID",
   "enumValues": null,
+  "nullable": true,
   "plural": false,
-  "nullable": false
+  "type": "String"
 },
 v9 = {
-  "type": "String",
   "enumValues": null,
+  "nullable": false,
   "plural": false,
-  "nullable": true
+  "type": "Boolean"
 },
 v10 = {
-  "type": "CommerceOrderParticipantEnum",
   "enumValues": [
     "BUYER",
     "SELLER"
   ],
+  "nullable": true,
   "plural": false,
-  "nullable": true
-},
-v11 = {
-  "type": "Boolean",
-  "enumValues": null,
-  "plural": false,
-  "nullable": false
+  "type": "CommerceOrderParticipantEnum"
 };
 return {
   "fragment": {
@@ -260,7 +256,8 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -432,6 +429,10 @@ return {
                             "name": "orderHistory",
                             "plural": true,
                             "selections": [
+                              {
+                                "kind": "TypeDiscriminator",
+                                "abstractKey": "__isCommerceOrderEventUnion"
+                              },
                               (v2/*: any*/),
                               {
                                 "kind": "InlineFragment",
@@ -452,7 +453,8 @@ return {
                                     "storageKey": null
                                   }
                                 ],
-                                "type": "CommerceOrderStateChangedEvent"
+                                "type": "CommerceOrderStateChangedEvent",
+                                "abstractKey": null
                               },
                               {
                                 "kind": "InlineFragment",
@@ -506,7 +508,8 @@ return {
                                     "storageKey": null
                                   }
                                 ],
-                                "type": "CommerceOfferSubmittedEvent"
+                                "type": "CommerceOfferSubmittedEvent",
+                                "abstractKey": null
                               }
                             ],
                             "storageKey": null
@@ -532,98 +535,119 @@ return {
     ]
   },
   "params": {
+    "cacheID": "9c8544ae85f736c389e6287345c77693",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "me": {
-          "type": "Me",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "Me"
         },
         "me.conversation": {
-          "type": "Conversation",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
-        },
-        "me.id": (v6/*: any*/),
-        "me.conversation.messagesConnection": {
-          "type": "MessageConnection",
-          "enumValues": null,
-          "plural": false,
-          "nullable": true
-        },
-        "me.conversation.orderConnection": {
-          "type": "CommerceOrderConnectionWithTotalCount",
-          "enumValues": null,
-          "plural": false,
-          "nullable": true
+          "type": "Conversation"
         },
         "me.conversation.id": (v6/*: any*/),
-        "me.conversation.messagesConnection.edges": {
-          "type": "MessageEdge",
+        "me.conversation.messagesConnection": {
           "enumValues": null,
-          "plural": true,
-          "nullable": true
+          "nullable": true,
+          "plural": false,
+          "type": "MessageConnection"
         },
-        "me.conversation.orderConnection.edges": {
-          "type": "CommerceOrderEdge",
+        "me.conversation.messagesConnection.edges": {
           "enumValues": null,
+          "nullable": true,
           "plural": true,
-          "nullable": true
+          "type": "MessageEdge"
         },
         "me.conversation.messagesConnection.edges.node": {
-          "type": "Message",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
-        },
-        "me.conversation.orderConnection.edges.node": {
-          "type": "CommerceOrder",
-          "enumValues": null,
-          "plural": false,
-          "nullable": true
+          "type": "Message"
         },
         "me.conversation.messagesConnection.edges.node.__typename": (v7/*: any*/),
-        "me.conversation.messagesConnection.edges.node.id": (v8/*: any*/),
-        "me.conversation.messagesConnection.edges.node.internalID": (v8/*: any*/),
-        "me.conversation.messagesConnection.edges.node.createdAt": (v9/*: any*/),
-        "me.conversation.messagesConnection.edges.node.isFromUser": {
-          "type": "Boolean",
-          "enumValues": null,
-          "plural": false,
-          "nullable": true
-        },
-        "me.conversation.messagesConnection.edges.node.body": (v9/*: any*/),
-        "me.conversation.orderConnection.edges.node.orderHistory": {
-          "type": "CommerceOrderEventUnion",
-          "enumValues": null,
-          "plural": true,
-          "nullable": false
-        },
-        "me.conversation.orderConnection.edges.node.id": (v6/*: any*/),
-        "me.conversation.messagesConnection.edges.node.from": {
-          "type": "MessageInitiator",
-          "enumValues": null,
-          "plural": false,
-          "nullable": true
-        },
         "me.conversation.messagesConnection.edges.node.attachments": {
-          "type": "Attachment",
           "enumValues": null,
+          "nullable": true,
           "plural": true,
-          "nullable": true
+          "type": "Attachment"
         },
-        "me.conversation.orderConnection.edges.node.orderHistory.__typename": (v7/*: any*/),
-        "me.conversation.messagesConnection.edges.node.from.name": (v9/*: any*/),
-        "me.conversation.messagesConnection.edges.node.from.email": (v9/*: any*/),
-        "me.conversation.messagesConnection.edges.node.attachments.id": (v8/*: any*/),
         "me.conversation.messagesConnection.edges.node.attachments.contentType": (v7/*: any*/),
-        "me.conversation.messagesConnection.edges.node.attachments.fileName": (v7/*: any*/),
         "me.conversation.messagesConnection.edges.node.attachments.downloadURL": (v7/*: any*/),
+        "me.conversation.messagesConnection.edges.node.attachments.fileName": (v7/*: any*/),
+        "me.conversation.messagesConnection.edges.node.attachments.id": (v6/*: any*/),
+        "me.conversation.messagesConnection.edges.node.body": (v8/*: any*/),
+        "me.conversation.messagesConnection.edges.node.createdAt": (v8/*: any*/),
+        "me.conversation.messagesConnection.edges.node.from": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "MessageInitiator"
+        },
+        "me.conversation.messagesConnection.edges.node.from.email": (v8/*: any*/),
+        "me.conversation.messagesConnection.edges.node.from.name": (v8/*: any*/),
+        "me.conversation.messagesConnection.edges.node.id": (v6/*: any*/),
+        "me.conversation.messagesConnection.edges.node.internalID": (v6/*: any*/),
+        "me.conversation.messagesConnection.edges.node.isFromUser": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Boolean"
+        },
+        "me.conversation.orderConnection": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "CommerceOrderConnectionWithTotalCount"
+        },
+        "me.conversation.orderConnection.edges": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": true,
+          "type": "CommerceOrderEdge"
+        },
+        "me.conversation.orderConnection.edges.node": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "CommerceOrder"
+        },
+        "me.conversation.orderConnection.edges.node.__typename": (v7/*: any*/),
+        "me.conversation.orderConnection.edges.node.id": (v6/*: any*/),
+        "me.conversation.orderConnection.edges.node.orderHistory": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": true,
+          "type": "CommerceOrderEventUnion"
+        },
+        "me.conversation.orderConnection.edges.node.orderHistory.__isCommerceOrderEventUnion": (v7/*: any*/),
+        "me.conversation.orderConnection.edges.node.orderHistory.__typename": (v7/*: any*/),
+        "me.conversation.orderConnection.edges.node.orderHistory.createdAt": (v7/*: any*/),
+        "me.conversation.orderConnection.edges.node.orderHistory.offer": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": false,
+          "type": "CommerceOffer"
+        },
+        "me.conversation.orderConnection.edges.node.orderHistory.offer.amount": (v8/*: any*/),
+        "me.conversation.orderConnection.edges.node.orderHistory.offer.definesTotal": (v9/*: any*/),
+        "me.conversation.orderConnection.edges.node.orderHistory.offer.fromParticipant": (v10/*: any*/),
+        "me.conversation.orderConnection.edges.node.orderHistory.offer.id": (v6/*: any*/),
+        "me.conversation.orderConnection.edges.node.orderHistory.offer.offerAmountChanged": (v9/*: any*/),
+        "me.conversation.orderConnection.edges.node.orderHistory.offer.respondsTo": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "CommerceOffer"
+        },
+        "me.conversation.orderConnection.edges.node.orderHistory.offer.respondsTo.fromParticipant": (v10/*: any*/),
+        "me.conversation.orderConnection.edges.node.orderHistory.offer.respondsTo.id": (v6/*: any*/),
         "me.conversation.orderConnection.edges.node.orderHistory.state": {
-          "type": "CommerceOrderStateEnum",
           "enumValues": [
             "ABANDONED",
             "APPROVED",
@@ -633,35 +657,17 @@ return {
             "REFUNDED",
             "SUBMITTED"
           ],
+          "nullable": false,
           "plural": false,
-          "nullable": false
+          "type": "CommerceOrderStateEnum"
         },
-        "me.conversation.orderConnection.edges.node.orderHistory.stateReason": (v9/*: any*/),
-        "me.conversation.orderConnection.edges.node.orderHistory.createdAt": (v7/*: any*/),
-        "me.conversation.orderConnection.edges.node.orderHistory.offer": {
-          "type": "CommerceOffer",
-          "enumValues": null,
-          "plural": false,
-          "nullable": false
-        },
-        "me.conversation.orderConnection.edges.node.orderHistory.offer.amount": (v9/*: any*/),
-        "me.conversation.orderConnection.edges.node.orderHistory.offer.fromParticipant": (v10/*: any*/),
-        "me.conversation.orderConnection.edges.node.orderHistory.offer.definesTotal": (v11/*: any*/),
-        "me.conversation.orderConnection.edges.node.orderHistory.offer.offerAmountChanged": (v11/*: any*/),
-        "me.conversation.orderConnection.edges.node.orderHistory.offer.respondsTo": {
-          "type": "CommerceOffer",
-          "enumValues": null,
-          "plural": false,
-          "nullable": true
-        },
-        "me.conversation.orderConnection.edges.node.orderHistory.offer.id": (v6/*: any*/),
-        "me.conversation.orderConnection.edges.node.orderHistory.offer.respondsTo.fromParticipant": (v10/*: any*/),
-        "me.conversation.orderConnection.edges.node.orderHistory.offer.respondsTo.id": (v6/*: any*/)
+        "me.conversation.orderConnection.edges.node.orderHistory.stateReason": (v8/*: any*/),
+        "me.id": (v6/*: any*/)
       }
     },
     "name": "ConversationMessages_Test_Query",
     "operationKind": "query",
-    "text": "query ConversationMessages_Test_Query {\n  me {\n    conversation(id: \"1234\") {\n      messagesConnection(first: 10) {\n        ...ConversationMessages_messages\n      }\n      orderConnection(first: 10) {\n        ...ConversationMessages_events\n      }\n      id\n    }\n    id\n  }\n}\n\nfragment ConversationMessages_events on CommerceOrderConnectionWithTotalCount {\n  edges {\n    node {\n      __typename\n      orderHistory {\n        ...OrderUpdate_event\n        __typename\n        ... on CommerceOrderStateChangedEvent {\n          state\n          stateReason\n          createdAt\n        }\n        ... on CommerceOfferSubmittedEvent {\n          createdAt\n        }\n      }\n      id\n    }\n  }\n}\n\nfragment ConversationMessages_messages on MessageConnection {\n  edges {\n    node {\n      __typename\n      id\n      internalID\n      createdAt\n      isFromUser\n      body\n      ...Message_message\n    }\n  }\n}\n\nfragment Message_message on Message {\n  __typename\n  internalID\n  body\n  createdAt\n  isFromUser\n  from {\n    name\n    email\n  }\n  attachments {\n    id\n    contentType\n    fileName\n    downloadURL\n  }\n}\n\nfragment OrderUpdate_event on CommerceOrderEventUnion {\n  __typename\n  ... on CommerceOrderStateChangedEvent {\n    createdAt\n    stateReason\n    state\n  }\n  ... on CommerceOfferSubmittedEvent {\n    createdAt\n    offer {\n      amount\n      fromParticipant\n      definesTotal\n      offerAmountChanged\n      respondsTo {\n        fromParticipant\n        id\n      }\n      id\n    }\n  }\n}\n"
+    "text": "query ConversationMessages_Test_Query {\n  me {\n    conversation(id: \"1234\") {\n      messagesConnection(first: 10) {\n        ...ConversationMessages_messages\n      }\n      orderConnection(first: 10) {\n        ...ConversationMessages_events\n      }\n      id\n    }\n    id\n  }\n}\n\nfragment ConversationMessages_events on CommerceOrderConnectionWithTotalCount {\n  edges {\n    node {\n      __typename\n      orderHistory {\n        ...OrderUpdate_event\n        __typename\n        ... on CommerceOrderStateChangedEvent {\n          state\n          stateReason\n          createdAt\n        }\n        ... on CommerceOfferSubmittedEvent {\n          createdAt\n        }\n      }\n      id\n    }\n  }\n}\n\nfragment ConversationMessages_messages on MessageConnection {\n  edges {\n    node {\n      __typename\n      id\n      internalID\n      createdAt\n      isFromUser\n      body\n      ...Message_message\n    }\n  }\n}\n\nfragment Message_message on Message {\n  __typename\n  internalID\n  body\n  createdAt\n  isFromUser\n  from {\n    name\n    email\n  }\n  attachments {\n    id\n    contentType\n    fileName\n    downloadURL\n  }\n}\n\nfragment OrderUpdate_event on CommerceOrderEventUnion {\n  __isCommerceOrderEventUnion: __typename\n  __typename\n  ... on CommerceOrderStateChangedEvent {\n    createdAt\n    stateReason\n    state\n  }\n  ... on CommerceOfferSubmittedEvent {\n    createdAt\n    offer {\n      amount\n      fromParticipant\n      definesTotal\n      offerAmountChanged\n      respondsTo {\n        fromParticipant\n        id\n      }\n      id\n    }\n  }\n}\n"
   }
 };
 })();

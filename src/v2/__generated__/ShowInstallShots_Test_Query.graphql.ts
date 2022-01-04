@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -90,34 +91,28 @@ v3 = [
   (v2/*: any*/)
 ],
 v4 = {
-  "type": "ID",
   "enumValues": null,
+  "nullable": true,
   "plural": false,
-  "nullable": true
+  "type": "String"
 },
 v5 = {
-  "type": "String",
   "enumValues": null,
+  "nullable": true,
   "plural": false,
-  "nullable": true
+  "type": "ResizedImageUrl"
 },
 v6 = {
-  "type": "ResizedImageUrl",
   "enumValues": null,
+  "nullable": true,
   "plural": false,
-  "nullable": true
+  "type": "Int"
 },
 v7 = {
-  "type": "Int",
   "enumValues": null,
+  "nullable": false,
   "plural": false,
-  "nullable": true
-},
-v8 = {
-  "type": "String",
-  "enumValues": null,
-  "plural": false,
-  "nullable": false
+  "type": "String"
 };
 return {
   "fragment": {
@@ -143,7 +138,8 @@ return {
         "storageKey": "show(id:\"xxx\")"
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -279,38 +275,49 @@ return {
     ]
   },
   "params": {
+    "cacheID": "16ada786e67ea01c9f7eaa1c913bc6fd",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "show": {
-          "type": "Show",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "Show"
         },
-        "show.id": (v4/*: any*/),
-        "show.name": (v5/*: any*/),
-        "show.images": {
-          "type": "Image",
+        "show.id": {
           "enumValues": null,
-          "plural": true,
-          "nullable": true
+          "nullable": false,
+          "plural": false,
+          "type": "ID"
         },
-        "show.images.internalID": (v4/*: any*/),
-        "show.images.caption": (v5/*: any*/),
-        "show.images.mobile": (v6/*: any*/),
-        "show.images.desktop": (v6/*: any*/),
-        "show.images.zoom": (v6/*: any*/),
-        "show.images.mobile.width": (v7/*: any*/),
-        "show.images.mobile.height": (v7/*: any*/),
-        "show.images.desktop.src": (v8/*: any*/),
-        "show.images.desktop.srcSet": (v8/*: any*/),
-        "show.images.desktop.width": (v7/*: any*/),
-        "show.images.desktop.height": (v7/*: any*/),
-        "show.images.zoom.src": (v8/*: any*/),
-        "show.images.zoom.srcSet": (v8/*: any*/),
-        "show.images.zoom.width": (v7/*: any*/),
-        "show.images.zoom.height": (v7/*: any*/)
+        "show.images": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": true,
+          "type": "Image"
+        },
+        "show.images.caption": (v4/*: any*/),
+        "show.images.desktop": (v5/*: any*/),
+        "show.images.desktop.height": (v6/*: any*/),
+        "show.images.desktop.src": (v7/*: any*/),
+        "show.images.desktop.srcSet": (v7/*: any*/),
+        "show.images.desktop.width": (v6/*: any*/),
+        "show.images.internalID": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "ID"
+        },
+        "show.images.mobile": (v5/*: any*/),
+        "show.images.mobile.height": (v6/*: any*/),
+        "show.images.mobile.width": (v6/*: any*/),
+        "show.images.zoom": (v5/*: any*/),
+        "show.images.zoom.height": (v6/*: any*/),
+        "show.images.zoom.src": (v7/*: any*/),
+        "show.images.zoom.srcSet": (v7/*: any*/),
+        "show.images.zoom.width": (v6/*: any*/),
+        "show.name": (v4/*: any*/)
       }
     },
     "name": "ShowInstallShots_Test_Query",

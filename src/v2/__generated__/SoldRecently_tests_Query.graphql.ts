@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -180,28 +181,22 @@ v4 = [
   }
 ],
 v5 = {
-  "type": "String",
   "enumValues": null,
+  "nullable": true,
   "plural": false,
-  "nullable": true
+  "type": "String"
 },
 v6 = {
-  "type": "ID",
   "enumValues": null,
+  "nullable": false,
   "plural": false,
-  "nullable": false
+  "type": "ID"
 },
 v7 = {
-  "type": "Boolean",
   "enumValues": null,
+  "nullable": true,
   "plural": false,
-  "nullable": true
-},
-v8 = {
-  "type": "ID",
-  "enumValues": null,
-  "plural": false,
-  "nullable": true
+  "type": "Boolean"
 };
 return {
   "fragment": {
@@ -227,7 +222,8 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -556,132 +552,133 @@ return {
     ]
   },
   "params": {
+    "cacheID": "7d4430d9369d59e0e90bcf0250dce784",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "targetSupply": {
-          "type": "TargetSupply",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "TargetSupply"
         },
         "targetSupply.microfunnel": {
-          "type": "TargetSupplyMicrofunnelItem",
           "enumValues": null,
+          "nullable": true,
           "plural": true,
-          "nullable": true
+          "type": "TargetSupplyMicrofunnelItem"
         },
         "targetSupply.microfunnel.artworksConnection": {
-          "type": "ArtworkConnection",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "ArtworkConnection"
         },
         "targetSupply.microfunnel.artworksConnection.edges": {
-          "type": "ArtworkEdge",
           "enumValues": null,
+          "nullable": true,
           "plural": true,
-          "nullable": true
+          "type": "ArtworkEdge"
         },
         "targetSupply.microfunnel.artworksConnection.edges.node": {
-          "type": "Artwork",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "Artwork"
         },
-        "targetSupply.microfunnel.artworksConnection.edges.node.realizedPrice": (v5/*: any*/),
-        "targetSupply.microfunnel.artworksConnection.edges.node.realizedToEstimate": (v5/*: any*/),
+        "targetSupply.microfunnel.artworksConnection.edges.node.artists": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": true,
+          "type": "Artist"
+        },
+        "targetSupply.microfunnel.artworksConnection.edges.node.artists.href": (v5/*: any*/),
+        "targetSupply.microfunnel.artworksConnection.edges.node.artists.id": (v6/*: any*/),
+        "targetSupply.microfunnel.artworksConnection.edges.node.artists.name": (v5/*: any*/),
+        "targetSupply.microfunnel.artworksConnection.edges.node.collecting_institution": (v5/*: any*/),
+        "targetSupply.microfunnel.artworksConnection.edges.node.cultural_maker": (v5/*: any*/),
+        "targetSupply.microfunnel.artworksConnection.edges.node.date": (v5/*: any*/),
+        "targetSupply.microfunnel.artworksConnection.edges.node.href": (v5/*: any*/),
         "targetSupply.microfunnel.artworksConnection.edges.node.id": (v6/*: any*/),
         "targetSupply.microfunnel.artworksConnection.edges.node.image": {
-          "type": "Image",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "Image"
         },
-        "targetSupply.microfunnel.artworksConnection.edges.node.imageTitle": (v5/*: any*/),
-        "targetSupply.microfunnel.artworksConnection.edges.node.title": (v5/*: any*/),
-        "targetSupply.microfunnel.artworksConnection.edges.node.href": (v5/*: any*/),
-        "targetSupply.microfunnel.artworksConnection.edges.node.is_saved": (v7/*: any*/),
-        "targetSupply.microfunnel.artworksConnection.edges.node.image.url": (v5/*: any*/),
         "targetSupply.microfunnel.artworksConnection.edges.node.image.aspectRatio": {
-          "type": "Float",
           "enumValues": null,
+          "nullable": false,
           "plural": false,
-          "nullable": false
+          "type": "Float"
         },
+        "targetSupply.microfunnel.artworksConnection.edges.node.image.url": (v5/*: any*/),
+        "targetSupply.microfunnel.artworksConnection.edges.node.imageTitle": (v5/*: any*/),
         "targetSupply.microfunnel.artworksConnection.edges.node.internalID": (v6/*: any*/),
-        "targetSupply.microfunnel.artworksConnection.edges.node.slug": (v6/*: any*/),
         "targetSupply.microfunnel.artworksConnection.edges.node.is_biddable": (v7/*: any*/),
-        "targetSupply.microfunnel.artworksConnection.edges.node.sale": {
-          "type": "Sale",
-          "enumValues": null,
-          "plural": false,
-          "nullable": true
-        },
-        "targetSupply.microfunnel.artworksConnection.edges.node.date": (v5/*: any*/),
-        "targetSupply.microfunnel.artworksConnection.edges.node.sale_message": (v5/*: any*/),
-        "targetSupply.microfunnel.artworksConnection.edges.node.cultural_maker": (v5/*: any*/),
-        "targetSupply.microfunnel.artworksConnection.edges.node.artists": {
-          "type": "Artist",
-          "enumValues": null,
-          "plural": true,
-          "nullable": true
-        },
-        "targetSupply.microfunnel.artworksConnection.edges.node.collecting_institution": (v5/*: any*/),
-        "targetSupply.microfunnel.artworksConnection.edges.node.partner": {
-          "type": "Partner",
-          "enumValues": null,
-          "plural": false,
-          "nullable": true
-        },
-        "targetSupply.microfunnel.artworksConnection.edges.node.sale_artwork": {
-          "type": "SaleArtwork",
-          "enumValues": null,
-          "plural": false,
-          "nullable": true
-        },
         "targetSupply.microfunnel.artworksConnection.edges.node.is_inquireable": (v7/*: any*/),
-        "targetSupply.microfunnel.artworksConnection.edges.node.sale.is_preview": (v7/*: any*/),
-        "targetSupply.microfunnel.artworksConnection.edges.node.sale.display_timely_at": (v5/*: any*/),
-        "targetSupply.microfunnel.artworksConnection.edges.node.sale.id": (v8/*: any*/),
-        "targetSupply.microfunnel.artworksConnection.edges.node.artists.id": (v6/*: any*/),
-        "targetSupply.microfunnel.artworksConnection.edges.node.artists.href": (v5/*: any*/),
-        "targetSupply.microfunnel.artworksConnection.edges.node.artists.name": (v5/*: any*/),
-        "targetSupply.microfunnel.artworksConnection.edges.node.partner.name": (v5/*: any*/),
+        "targetSupply.microfunnel.artworksConnection.edges.node.is_saved": (v7/*: any*/),
+        "targetSupply.microfunnel.artworksConnection.edges.node.partner": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Partner"
+        },
         "targetSupply.microfunnel.artworksConnection.edges.node.partner.href": (v5/*: any*/),
-        "targetSupply.microfunnel.artworksConnection.edges.node.partner.id": (v8/*: any*/),
+        "targetSupply.microfunnel.artworksConnection.edges.node.partner.id": (v6/*: any*/),
+        "targetSupply.microfunnel.artworksConnection.edges.node.partner.name": (v5/*: any*/),
+        "targetSupply.microfunnel.artworksConnection.edges.node.partner.type": (v5/*: any*/),
+        "targetSupply.microfunnel.artworksConnection.edges.node.realizedPrice": (v5/*: any*/),
+        "targetSupply.microfunnel.artworksConnection.edges.node.realizedToEstimate": (v5/*: any*/),
+        "targetSupply.microfunnel.artworksConnection.edges.node.sale": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Sale"
+        },
+        "targetSupply.microfunnel.artworksConnection.edges.node.sale.display_timely_at": (v5/*: any*/),
+        "targetSupply.microfunnel.artworksConnection.edges.node.sale.id": (v6/*: any*/),
         "targetSupply.microfunnel.artworksConnection.edges.node.sale.is_auction": (v7/*: any*/),
         "targetSupply.microfunnel.artworksConnection.edges.node.sale.is_closed": (v7/*: any*/),
-        "targetSupply.microfunnel.artworksConnection.edges.node.sale_artwork.counts": {
-          "type": "SaleArtworkCounts",
-          "enumValues": null,
-          "plural": false,
-          "nullable": true
-        },
-        "targetSupply.microfunnel.artworksConnection.edges.node.sale_artwork.highest_bid": {
-          "type": "SaleArtworkHighestBid",
-          "enumValues": null,
-          "plural": false,
-          "nullable": true
-        },
-        "targetSupply.microfunnel.artworksConnection.edges.node.sale_artwork.opening_bid": {
-          "type": "SaleArtworkOpeningBid",
-          "enumValues": null,
-          "plural": false,
-          "nullable": true
-        },
-        "targetSupply.microfunnel.artworksConnection.edges.node.sale_artwork.id": (v8/*: any*/),
         "targetSupply.microfunnel.artworksConnection.edges.node.sale.is_live_open": (v7/*: any*/),
         "targetSupply.microfunnel.artworksConnection.edges.node.sale.is_open": (v7/*: any*/),
-        "targetSupply.microfunnel.artworksConnection.edges.node.partner.type": (v5/*: any*/),
-        "targetSupply.microfunnel.artworksConnection.edges.node.sale_artwork.counts.bidder_positions": {
-          "type": "FormattedNumber",
+        "targetSupply.microfunnel.artworksConnection.edges.node.sale.is_preview": (v7/*: any*/),
+        "targetSupply.microfunnel.artworksConnection.edges.node.sale_artwork": {
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "SaleArtwork"
+        },
+        "targetSupply.microfunnel.artworksConnection.edges.node.sale_artwork.counts": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "SaleArtworkCounts"
+        },
+        "targetSupply.microfunnel.artworksConnection.edges.node.sale_artwork.counts.bidder_positions": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "FormattedNumber"
+        },
+        "targetSupply.microfunnel.artworksConnection.edges.node.sale_artwork.highest_bid": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "SaleArtworkHighestBid"
         },
         "targetSupply.microfunnel.artworksConnection.edges.node.sale_artwork.highest_bid.display": (v5/*: any*/),
-        "targetSupply.microfunnel.artworksConnection.edges.node.sale_artwork.opening_bid.display": (v5/*: any*/)
+        "targetSupply.microfunnel.artworksConnection.edges.node.sale_artwork.id": (v6/*: any*/),
+        "targetSupply.microfunnel.artworksConnection.edges.node.sale_artwork.opening_bid": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "SaleArtworkOpeningBid"
+        },
+        "targetSupply.microfunnel.artworksConnection.edges.node.sale_artwork.opening_bid.display": (v5/*: any*/),
+        "targetSupply.microfunnel.artworksConnection.edges.node.sale_message": (v5/*: any*/),
+        "targetSupply.microfunnel.artworksConnection.edges.node.slug": (v6/*: any*/),
+        "targetSupply.microfunnel.artworksConnection.edges.node.title": (v5/*: any*/)
       }
     },
     "name": "SoldRecently_tests_Query",

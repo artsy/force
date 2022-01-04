@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -130,40 +131,34 @@ v2 = [
   }
 ],
 v3 = {
-  "type": "ID",
   "enumValues": null,
+  "nullable": true,
   "plural": false,
-  "nullable": true
+  "type": "String"
 },
 v4 = {
-  "type": "String",
   "enumValues": null,
+  "nullable": true,
   "plural": false,
-  "nullable": true
+  "type": "Int"
 },
 v5 = {
-  "type": "Boolean",
   "enumValues": null,
+  "nullable": false,
   "plural": false,
-  "nullable": true
+  "type": "Int"
 },
 v6 = {
-  "type": "Int",
   "enumValues": null,
+  "nullable": false,
   "plural": false,
-  "nullable": false
+  "type": "String"
 },
 v7 = {
-  "type": "String",
   "enumValues": null,
+  "nullable": true,
   "plural": false,
-  "nullable": false
-},
-v8 = {
-  "type": "Int",
-  "enumValues": null,
-  "plural": false,
-  "nullable": true
+  "type": "Boolean"
 };
 return {
   "fragment": {
@@ -189,7 +184,8 @@ return {
         "storageKey": "artwork(id:\"example\")"
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -375,72 +371,83 @@ return {
     ]
   },
   "params": {
+    "cacheID": "465ea400e4c5c78afb62d0a03caf726e",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "artwork": {
-          "type": "Artwork",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "Artwork"
         },
-        "artwork.id": (v3/*: any*/),
+        "artwork.formattedMetadata": (v3/*: any*/),
+        "artwork.id": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": false,
+          "type": "ID"
+        },
         "artwork.images": {
-          "type": "Image",
           "enumValues": null,
+          "nullable": true,
           "plural": true,
-          "nullable": true
-        },
-        "artwork.formattedMetadata": (v4/*: any*/),
-        "artwork.images.internalID": (v3/*: any*/),
-        "artwork.images.isZoomable": (v5/*: any*/),
-        "artwork.images.isDefault": (v5/*: any*/),
-        "artwork.images.placeholder": (v4/*: any*/),
-        "artwork.images.fallback": {
-          "type": "CroppedImageUrl",
-          "enumValues": null,
-          "plural": false,
-          "nullable": true
-        },
-        "artwork.images.resized": {
-          "type": "ResizedImageUrl",
-          "enumValues": null,
-          "plural": false,
-          "nullable": true
+          "type": "Image"
         },
         "artwork.images.deepZoom": {
-          "type": "DeepZoom",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "DeepZoom"
         },
-        "artwork.images.fallback.width": (v6/*: any*/),
-        "artwork.images.fallback.height": (v6/*: any*/),
-        "artwork.images.fallback.src": (v7/*: any*/),
-        "artwork.images.fallback.srcSet": (v7/*: any*/),
-        "artwork.images.resized.width": (v8/*: any*/),
-        "artwork.images.resized.height": (v8/*: any*/),
-        "artwork.images.resized.src": (v7/*: any*/),
-        "artwork.images.resized.srcSet": (v7/*: any*/),
         "artwork.images.deepZoom.Image": {
-          "type": "DeepZoomImage",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "DeepZoomImage"
         },
-        "artwork.images.deepZoom.Image.xmlns": (v4/*: any*/),
-        "artwork.images.deepZoom.Image.Url": (v4/*: any*/),
-        "artwork.images.deepZoom.Image.Format": (v4/*: any*/),
-        "artwork.images.deepZoom.Image.TileSize": (v8/*: any*/),
-        "artwork.images.deepZoom.Image.Overlap": (v8/*: any*/),
+        "artwork.images.deepZoom.Image.Format": (v3/*: any*/),
+        "artwork.images.deepZoom.Image.Overlap": (v4/*: any*/),
         "artwork.images.deepZoom.Image.Size": {
-          "type": "DeepZoomImageSize",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "DeepZoomImageSize"
         },
-        "artwork.images.deepZoom.Image.Size.Width": (v8/*: any*/),
-        "artwork.images.deepZoom.Image.Size.Height": (v8/*: any*/)
+        "artwork.images.deepZoom.Image.Size.Height": (v4/*: any*/),
+        "artwork.images.deepZoom.Image.Size.Width": (v4/*: any*/),
+        "artwork.images.deepZoom.Image.TileSize": (v4/*: any*/),
+        "artwork.images.deepZoom.Image.Url": (v3/*: any*/),
+        "artwork.images.deepZoom.Image.xmlns": (v3/*: any*/),
+        "artwork.images.fallback": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "CroppedImageUrl"
+        },
+        "artwork.images.fallback.height": (v5/*: any*/),
+        "artwork.images.fallback.src": (v6/*: any*/),
+        "artwork.images.fallback.srcSet": (v6/*: any*/),
+        "artwork.images.fallback.width": (v5/*: any*/),
+        "artwork.images.internalID": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "ID"
+        },
+        "artwork.images.isDefault": (v7/*: any*/),
+        "artwork.images.isZoomable": (v7/*: any*/),
+        "artwork.images.placeholder": (v3/*: any*/),
+        "artwork.images.resized": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "ResizedImageUrl"
+        },
+        "artwork.images.resized.height": (v4/*: any*/),
+        "artwork.images.resized.src": (v6/*: any*/),
+        "artwork.images.resized.srcSet": (v6/*: any*/),
+        "artwork.images.resized.width": (v4/*: any*/)
       }
     },
     "name": "ArtworkImageBrowserLarge_Test_Query",

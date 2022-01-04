@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -50,10 +51,10 @@ v1 = {
   "storageKey": null
 },
 v2 = {
-  "type": "ID",
   "enumValues": null,
+  "nullable": false,
   "plural": false,
-  "nullable": true
+  "type": "ID"
 };
 return {
   "fragment": {
@@ -90,7 +91,8 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -132,24 +134,30 @@ return {
     ]
   },
   "params": {
+    "cacheID": "ea1543c41bdf0b25597cb48eea65499f",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "me": {
-          "type": "Me",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "Me"
         },
         "me.conversation": {
-          "type": "Conversation",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "Conversation"
         },
-        "me.id": (v2/*: any*/),
         "me.conversation.id": (v2/*: any*/),
-        "me.conversation.internalID": (v2/*: any*/)
+        "me.conversation.internalID": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "ID"
+        },
+        "me.id": (v2/*: any*/)
       }
     },
     "name": "OpenInquiryModalCTA_Test_Query",

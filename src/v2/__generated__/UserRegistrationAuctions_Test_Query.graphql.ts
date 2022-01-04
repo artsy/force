@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -51,16 +52,16 @@ var v0 = {
   "storageKey": null
 },
 v1 = {
-  "type": "ID",
   "enumValues": null,
+  "nullable": false,
   "plural": false,
-  "nullable": true
+  "type": "ID"
 },
 v2 = {
-  "type": "String",
   "enumValues": null,
+  "nullable": true,
   "plural": false,
-  "nullable": true
+  "type": "String"
 };
 return {
   "fragment": {
@@ -86,7 +87,8 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -215,56 +217,52 @@ return {
     ]
   },
   "params": {
+    "cacheID": "6ba99489b79965b19ef624b0ba88cc8c",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "me": {
-          "type": "Me",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "Me"
         },
         "me.id": (v1/*: any*/),
         "me.saleRegistrationsConnection": {
-          "type": "SaleRegistrationConnection",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "SaleRegistrationConnection"
         },
         "me.saleRegistrationsConnection.edges": {
-          "type": "SaleRegistrationEdge",
           "enumValues": null,
+          "nullable": true,
           "plural": true,
-          "nullable": true
+          "type": "SaleRegistrationEdge"
         },
         "me.saleRegistrationsConnection.edges.node": {
-          "type": "SaleRegistration",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
-        },
-        "me.saleRegistrationsConnection.edges.node.sale": {
-          "type": "Sale",
-          "enumValues": null,
-          "plural": false,
-          "nullable": true
+          "type": "SaleRegistration"
         },
         "me.saleRegistrationsConnection.edges.node.id": (v1/*: any*/),
-        "me.saleRegistrationsConnection.edges.node.sale.id": {
-          "type": "ID",
+        "me.saleRegistrationsConnection.edges.node.sale": {
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": false
+          "type": "Sale"
+        },
+        "me.saleRegistrationsConnection.edges.node.sale.href": (v2/*: any*/),
+        "me.saleRegistrationsConnection.edges.node.sale.id": (v1/*: any*/),
+        "me.saleRegistrationsConnection.edges.node.sale.isClosed": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Boolean"
         },
         "me.saleRegistrationsConnection.edges.node.sale.name": (v2/*: any*/),
-        "me.saleRegistrationsConnection.edges.node.sale.href": (v2/*: any*/),
-        "me.saleRegistrationsConnection.edges.node.sale.startAt": (v2/*: any*/),
-        "me.saleRegistrationsConnection.edges.node.sale.isClosed": {
-          "type": "Boolean",
-          "enumValues": null,
-          "plural": false,
-          "nullable": true
-        }
+        "me.saleRegistrationsConnection.edges.node.sale.startAt": (v2/*: any*/)
       }
     },
     "name": "UserRegistrationAuctions_Test_Query",

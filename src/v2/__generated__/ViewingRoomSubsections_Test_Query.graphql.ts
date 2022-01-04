@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -49,16 +50,16 @@ var v0 = [
   }
 ],
 v1 = {
-  "type": "String",
   "enumValues": null,
+  "nullable": true,
   "plural": false,
-  "nullable": true
+  "type": "String"
 },
 v2 = {
-  "type": "Int",
   "enumValues": null,
+  "nullable": true,
   "plural": false,
-  "nullable": true
+  "type": "Int"
 };
 return {
   "fragment": {
@@ -84,7 +85,8 @@ return {
         "storageKey": "viewingRoom(id:\"exmaple\")"
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -188,45 +190,46 @@ return {
     ]
   },
   "params": {
+    "cacheID": "598bb548b7c8ecfa24439d829b003fdf",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "viewingRoom": {
-          "type": "ViewingRoom",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "ViewingRoom"
         },
         "viewingRoom.subsections": {
-          "type": "ViewingRoomSubsection",
           "enumValues": null,
+          "nullable": false,
           "plural": true,
-          "nullable": false
+          "type": "ViewingRoomSubsection"
         },
-        "viewingRoom.subsections.internalID": {
-          "type": "ID",
-          "enumValues": null,
-          "plural": false,
-          "nullable": false
-        },
-        "viewingRoom.subsections.title": (v1/*: any*/),
         "viewingRoom.subsections.body": (v1/*: any*/),
-        "viewingRoom.subsections.image": {
-          "type": "ARImage",
-          "enumValues": null,
-          "plural": false,
-          "nullable": true
-        },
         "viewingRoom.subsections.caption": (v1/*: any*/),
-        "viewingRoom.subsections.image.width": (v2/*: any*/),
+        "viewingRoom.subsections.image": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "ARImage"
+        },
         "viewingRoom.subsections.image.height": (v2/*: any*/),
         "viewingRoom.subsections.image.imageURLs": {
-          "type": "ImageURLs",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "ImageURLs"
         },
-        "viewingRoom.subsections.image.imageURLs.normalized": (v1/*: any*/)
+        "viewingRoom.subsections.image.imageURLs.normalized": (v1/*: any*/),
+        "viewingRoom.subsections.image.width": (v2/*: any*/),
+        "viewingRoom.subsections.internalID": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": false,
+          "type": "ID"
+        },
+        "viewingRoom.subsections.title": (v1/*: any*/)
       }
     },
     "name": "ViewingRoomSubsections_Test_Query",

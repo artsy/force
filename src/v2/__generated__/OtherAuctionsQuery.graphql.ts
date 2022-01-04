@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -75,14 +76,12 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "first",
-    "type": "Int"
+    "name": "first"
   },
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "sort",
-    "type": "SaleSorts"
+    "name": "sort"
   }
 ],
 v1 = [
@@ -142,7 +141,8 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -339,6 +339,7 @@ return {
     ]
   },
   "params": {
+    "cacheID": "cc9d10f568acac655f288720d5474f8b",
     "id": null,
     "metadata": {},
     "name": "OtherAuctionsQuery",

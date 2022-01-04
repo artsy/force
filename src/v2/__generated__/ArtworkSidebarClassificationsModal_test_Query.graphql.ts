@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -34,10 +35,10 @@ fragment ArtworkSidebarClassificationsModal_viewer on Viewer {
 
 const node: ConcreteRequest = (function(){
 var v0 = {
-  "type": "String",
   "enumValues": null,
+  "nullable": true,
   "plural": false,
-  "nullable": true
+  "type": "String"
 };
 return {
   "fragment": {
@@ -63,7 +64,8 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -117,29 +119,30 @@ return {
     ]
   },
   "params": {
+    "cacheID": "3e9c86fbad13153ce3cacb447a13c23d",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "viewer": {
-          "type": "Viewer",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "Viewer"
         },
         "viewer.artworkAttributionClasses": {
-          "type": "AttributionClass",
           "enumValues": null,
+          "nullable": true,
           "plural": true,
-          "nullable": true
+          "type": "AttributionClass"
         },
         "viewer.artworkAttributionClasses.id": {
-          "type": "ID",
           "enumValues": null,
+          "nullable": false,
           "plural": false,
-          "nullable": false
+          "type": "ID"
         },
-        "viewer.artworkAttributionClasses.name": (v0/*: any*/),
-        "viewer.artworkAttributionClasses.longDescription": (v0/*: any*/)
+        "viewer.artworkAttributionClasses.longDescription": (v0/*: any*/),
+        "viewer.artworkAttributionClasses.name": (v0/*: any*/)
       }
     },
     "name": "ArtworkSidebarClassificationsModal_test_Query",

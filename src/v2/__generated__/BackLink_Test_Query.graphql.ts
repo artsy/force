@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -37,7 +38,13 @@ var v0 = [
     "name": "id",
     "value": "example"
   }
-];
+],
+v1 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "ID"
+};
 return {
   "fragment": {
     "argumentDefinitions": [],
@@ -62,7 +69,8 @@ return {
         "storageKey": "artist(id:\"example\")"
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -105,33 +113,24 @@ return {
     ]
   },
   "params": {
+    "cacheID": "abb7344101fff911d425adadeec5d980",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "artist": {
-          "type": "Artist",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "Artist"
         },
-        "artist.id": {
-          "type": "ID",
-          "enumValues": null,
-          "plural": false,
-          "nullable": true
-        },
+        "artist.id": (v1/*: any*/),
         "artist.name": {
-          "type": "String",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "String"
         },
-        "artist.slug": {
-          "type": "ID",
-          "enumValues": null,
-          "plural": false,
-          "nullable": false
-        }
+        "artist.slug": (v1/*: any*/)
       }
     },
     "name": "BackLink_Test_Query",

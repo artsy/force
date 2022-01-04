@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -85,28 +86,28 @@ v3 = {
   "storageKey": null
 },
 v4 = {
-  "type": "ID",
   "enumValues": null,
+  "nullable": false,
   "plural": false,
-  "nullable": true
+  "type": "ID"
 },
 v5 = {
-  "type": "String",
   "enumValues": null,
+  "nullable": false,
   "plural": false,
-  "nullable": true
+  "type": "Int"
 },
 v6 = {
-  "type": "Int",
   "enumValues": null,
+  "nullable": false,
   "plural": false,
-  "nullable": false
+  "type": "String"
 },
 v7 = {
-  "type": "String",
   "enumValues": null,
+  "nullable": true,
   "plural": false,
-  "nullable": false
+  "type": "String"
 };
 return {
   "fragment": {
@@ -166,7 +167,8 @@ return {
         "storageKey": "partner(id:\"white-cube\")"
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -313,66 +315,62 @@ return {
     ]
   },
   "params": {
+    "cacheID": "a6e0bf858d5d726da259057a40ec2abc",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "partner": {
-          "type": "Partner",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
-        },
-        "partner.showsConnection": {
-          "type": "ShowConnection",
-          "enumValues": null,
-          "plural": false,
-          "nullable": true
+          "type": "Partner"
         },
         "partner.id": (v4/*: any*/),
-        "partner.showsConnection.edges": {
-          "type": "ShowEdge",
+        "partner.showsConnection": {
           "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "ShowConnection"
+        },
+        "partner.showsConnection.edges": {
+          "enumValues": null,
+          "nullable": true,
           "plural": true,
-          "nullable": true
+          "type": "ShowEdge"
         },
         "partner.showsConnection.edges.node": {
-          "type": "Show",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "Show"
         },
-        "partner.showsConnection.edges.node.internalID": {
-          "type": "ID",
-          "enumValues": null,
-          "plural": false,
-          "nullable": false
-        },
-        "partner.showsConnection.edges.node.id": (v4/*: any*/),
-        "partner.showsConnection.edges.node.href": (v5/*: any*/),
-        "partner.showsConnection.edges.node.name": (v5/*: any*/),
-        "partner.showsConnection.edges.node.isFairBooth": {
-          "type": "Boolean",
-          "enumValues": null,
-          "plural": false,
-          "nullable": true
-        },
-        "partner.showsConnection.edges.node.exhibitionPeriod": (v5/*: any*/),
         "partner.showsConnection.edges.node.coverImage": {
-          "type": "Image",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "Image"
         },
         "partner.showsConnection.edges.node.coverImage.medium": {
-          "type": "CroppedImageUrl",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "CroppedImageUrl"
         },
-        "partner.showsConnection.edges.node.coverImage.medium.width": (v6/*: any*/),
-        "partner.showsConnection.edges.node.coverImage.medium.height": (v6/*: any*/),
-        "partner.showsConnection.edges.node.coverImage.medium.src": (v7/*: any*/),
-        "partner.showsConnection.edges.node.coverImage.medium.srcSet": (v7/*: any*/)
+        "partner.showsConnection.edges.node.coverImage.medium.height": (v5/*: any*/),
+        "partner.showsConnection.edges.node.coverImage.medium.src": (v6/*: any*/),
+        "partner.showsConnection.edges.node.coverImage.medium.srcSet": (v6/*: any*/),
+        "partner.showsConnection.edges.node.coverImage.medium.width": (v5/*: any*/),
+        "partner.showsConnection.edges.node.exhibitionPeriod": (v7/*: any*/),
+        "partner.showsConnection.edges.node.href": (v7/*: any*/),
+        "partner.showsConnection.edges.node.id": (v4/*: any*/),
+        "partner.showsConnection.edges.node.internalID": (v4/*: any*/),
+        "partner.showsConnection.edges.node.isFairBooth": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Boolean"
+        },
+        "partner.showsConnection.edges.node.name": (v7/*: any*/)
       }
     },
     "name": "ShowCard_Test_Query",

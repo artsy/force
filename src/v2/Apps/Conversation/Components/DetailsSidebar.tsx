@@ -162,10 +162,10 @@ export const DetailsSidebar: FC<DetailsProps> = ({
       flexDirection="column"
       justifyContent="flex-start"
       height={[
-        "calc(100% - 122px)",
-        "calc(100% - 175px)",
-        "calc(100% - 122px)",
-        "calc(100% - 122px)",
+        "calc(100% - 114px)",
+        "calc(100% - 173px)",
+        "calc(100% - 173px)",
+        "calc(100% - 173px)",
         "100%",
       ]}
       flexShrink={0}
@@ -221,7 +221,7 @@ export const DetailsSidebar: FC<DetailsProps> = ({
             showOrderNumberHeader
           />
           <StackableBorderBox>
-            <Box px={2}>
+            <Box>
               <Text variant="md" mb={2}>
                 Ship To
               </Text>
@@ -232,7 +232,7 @@ export const DetailsSidebar: FC<DetailsProps> = ({
             </Box>
           </StackableBorderBox>
           <StackableBorderBox>
-            <Box px={2}>
+            <Box>
               <Text variant="md" mb={2}>
                 Payment Method
               </Text>
@@ -243,7 +243,7 @@ export const DetailsSidebar: FC<DetailsProps> = ({
       )}
       {!!attachments?.length && (
         <StackableBorderBox>
-          <Box px={2}>
+          <Box>
             <Text variant="md" mb={2}>
               Attachments
             </Text>
@@ -252,7 +252,7 @@ export const DetailsSidebar: FC<DetailsProps> = ({
         </StackableBorderBox>
       )}
       <StackableBorderBox height="100%">
-        <Flex flexDirection="column" px={2}>
+        <Flex flexDirection="column">
           <Text variant="md" mb={2}>
             Support
           </Text>

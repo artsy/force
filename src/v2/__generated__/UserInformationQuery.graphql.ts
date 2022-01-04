@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -16,7 +17,7 @@ export type UserInformationQueryRawResponse = {
         readonly paddleNumber: string | null;
         readonly phone: string | null;
         readonly internalID: string;
-        readonly id: string | null;
+        readonly id: string;
     }) | null;
 };
 export type UserInformationQuery = {
@@ -68,7 +69,8 @@ const node: ConcreteRequest = {
         "storageKey": null
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -132,6 +134,7 @@ const node: ConcreteRequest = {
     ]
   },
   "params": {
+    "cacheID": "dccaddcecaa80ff8a3f7ebe4b78d9978",
     "id": null,
     "metadata": {},
     "name": "UserInformationQuery",

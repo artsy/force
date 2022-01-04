@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 export type SubmitInquiryRequestMutationInput = {
@@ -53,6 +54,7 @@ mutation useArtworkInquiryRequestMutation(
           price
         }
         ... on Node {
+          __isNode: __typename
           id
         }
       }
@@ -67,8 +69,7 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "input",
-    "type": "SubmitInquiryRequestMutationInput!"
+    "name": "input"
   }
 ],
 v1 = [
@@ -111,7 +112,8 @@ v4 = {
       "storageKey": null
     }
   ],
-  "type": "Artwork"
+  "type": "Artwork",
+  "abstractKey": null
 },
 v5 = {
   "alias": null,
@@ -164,7 +166,8 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Mutation"
+    "type": "Mutation",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -205,8 +208,15 @@ return {
                     "name": "__typename",
                     "storageKey": null
                   },
-                  (v5/*: any*/),
-                  (v4/*: any*/)
+                  (v4/*: any*/),
+                  {
+                    "kind": "InlineFragment",
+                    "selections": [
+                      (v5/*: any*/)
+                    ],
+                    "type": "Node",
+                    "abstractKey": "__isNode"
+                  }
                 ],
                 "storageKey": null
               },
@@ -220,11 +230,12 @@ return {
     ]
   },
   "params": {
+    "cacheID": "8f4fa54bd5a87ba62997eac92b8a6df1",
     "id": null,
     "metadata": {},
     "name": "useArtworkInquiryRequestMutation",
     "operationKind": "mutation",
-    "text": "mutation useArtworkInquiryRequestMutation(\n  $input: SubmitInquiryRequestMutationInput!\n) {\n  submitInquiryRequestMutation(input: $input) {\n    clientMutationId\n    inquiryRequest {\n      internalID\n      inquireable {\n        __typename\n        ... on Artwork {\n          internalID\n          slug\n          price\n        }\n        ... on Node {\n          id\n        }\n      }\n      id\n    }\n  }\n}\n"
+    "text": "mutation useArtworkInquiryRequestMutation(\n  $input: SubmitInquiryRequestMutationInput!\n) {\n  submitInquiryRequestMutation(input: $input) {\n    clientMutationId\n    inquiryRequest {\n      internalID\n      inquireable {\n        __typename\n        ... on Artwork {\n          internalID\n          slug\n          price\n        }\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n      }\n      id\n    }\n  }\n}\n"
   }
 };
 })();

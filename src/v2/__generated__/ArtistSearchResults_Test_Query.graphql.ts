@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -40,6 +41,7 @@ fragment ArtistSearchResults_viewer on Viewer {
           imageUrl
         }
         ... on Node {
+          __isNode: __typename
           id
         }
       }
@@ -53,21 +55,33 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "term",
-    "type": "String!"
+    "name": "term"
   }
 ],
 v1 = {
-  "type": "ID",
-  "enumValues": null,
-  "plural": false,
-  "nullable": false
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
 },
 v2 = {
-  "type": "String",
   "enumValues": null,
+  "nullable": false,
   "plural": false,
-  "nullable": true
+  "type": "String"
+},
+v3 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "String"
+},
+v4 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "ID"
 };
 return {
   "fragment": {
@@ -93,7 +107,8 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -164,15 +179,9 @@ return {
                         "storageKey": null
                       },
                       {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "id",
-                        "storageKey": null
-                      },
-                      {
                         "kind": "InlineFragment",
                         "selections": [
+                          (v1/*: any*/),
                           {
                             "alias": null,
                             "args": null,
@@ -202,7 +211,16 @@ return {
                             "storageKey": null
                           }
                         ],
-                        "type": "SearchableItem"
+                        "type": "SearchableItem",
+                        "abstractKey": null
+                      },
+                      {
+                        "kind": "InlineFragment",
+                        "selections": [
+                          (v1/*: any*/)
+                        ],
+                        "type": "Node",
+                        "abstractKey": "__isNode"
                       }
                     ],
                     "storageKey": null
@@ -219,48 +237,46 @@ return {
     ]
   },
   "params": {
+    "cacheID": "9041a5151a609637d199b1d07eb7e9e6",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "viewer": {
-          "type": "Viewer",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "Viewer"
         },
         "viewer.searchConnection": {
-          "type": "SearchableConnection",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "SearchableConnection"
         },
         "viewer.searchConnection.edges": {
-          "type": "SearchableEdge",
           "enumValues": null,
+          "nullable": true,
           "plural": true,
-          "nullable": true
+          "type": "SearchableEdge"
         },
         "viewer.searchConnection.edges.node": {
-          "type": "Searchable",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "Searchable"
         },
-        "viewer.searchConnection.edges.node.id": {
-          "type": "ID",
-          "enumValues": null,
-          "plural": false,
-          "nullable": true
-        },
-        "viewer.searchConnection.edges.node.slug": (v1/*: any*/),
-        "viewer.searchConnection.edges.node.internalID": (v1/*: any*/),
-        "viewer.searchConnection.edges.node.displayLabel": (v2/*: any*/),
-        "viewer.searchConnection.edges.node.imageUrl": (v2/*: any*/)
+        "viewer.searchConnection.edges.node.__isNode": (v2/*: any*/),
+        "viewer.searchConnection.edges.node.__typename": (v2/*: any*/),
+        "viewer.searchConnection.edges.node.displayLabel": (v3/*: any*/),
+        "viewer.searchConnection.edges.node.id": (v4/*: any*/),
+        "viewer.searchConnection.edges.node.imageUrl": (v3/*: any*/),
+        "viewer.searchConnection.edges.node.internalID": (v4/*: any*/),
+        "viewer.searchConnection.edges.node.slug": (v4/*: any*/)
       }
     },
     "name": "ArtistSearchResults_Test_Query",
     "operationKind": "query",
-    "text": "query ArtistSearchResults_Test_Query(\n  $term: String!\n) {\n  viewer {\n    ...ArtistSearchResults_viewer\n  }\n}\n\nfragment ArtistSearchResults_viewer on Viewer {\n  searchConnection(query: $term, mode: AUTOSUGGEST, entities: [ARTIST], first: 10) {\n    edges {\n      node {\n        __typename\n        ... on SearchableItem {\n          id\n          slug\n          internalID\n          displayLabel\n          imageUrl\n        }\n        ... on Node {\n          id\n        }\n      }\n    }\n  }\n}\n"
+    "text": "query ArtistSearchResults_Test_Query(\n  $term: String!\n) {\n  viewer {\n    ...ArtistSearchResults_viewer\n  }\n}\n\nfragment ArtistSearchResults_viewer on Viewer {\n  searchConnection(query: $term, mode: AUTOSUGGEST, entities: [ARTIST], first: 10) {\n    edges {\n      node {\n        __typename\n        ... on SearchableItem {\n          id\n          slug\n          internalID\n          displayLabel\n          imageUrl\n        }\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();

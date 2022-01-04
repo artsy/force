@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -65,7 +66,8 @@ return {
         "storageKey": "sale(id:\"example\")"
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -126,44 +128,45 @@ return {
     ]
   },
   "params": {
+    "cacheID": "a68ed85b846d0425622c52593e65d909",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "sale": {
-          "type": "Sale",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
-        },
-        "sale.id": {
-          "type": "ID",
-          "enumValues": null,
-          "plural": false,
-          "nullable": true
+          "type": "Sale"
         },
         "sale.buyersPremium": {
-          "type": "BuyersPremium",
           "enumValues": null,
+          "nullable": true,
           "plural": true,
-          "nullable": true
+          "type": "BuyersPremium"
         },
         "sale.buyersPremium.amount": {
-          "type": "String",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "String"
         },
         "sale.buyersPremium.cents": {
-          "type": "Int",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "Int"
         },
         "sale.buyersPremium.percent": {
-          "type": "Float",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "Float"
+        },
+        "sale.id": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": false,
+          "type": "ID"
         }
       }
     },

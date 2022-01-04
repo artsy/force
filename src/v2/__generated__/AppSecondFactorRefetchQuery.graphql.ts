@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -37,15 +38,7 @@ fragment AppSecondFactor_me on Me {
 }
 */
 
-const node: ConcreteRequest = (function(){
-var v0 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "__typename",
-  "storageKey": null
-};
-return {
+const node: ConcreteRequest = {
   "fragment": {
     "argumentDefinitions": [],
     "kind": "Fragment",
@@ -69,7 +62,8 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -108,11 +102,16 @@ return {
             "name": "secondFactors",
             "plural": true,
             "selections": [
-              (v0/*: any*/),
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "__typename",
+                "storageKey": null
+              },
               {
                 "kind": "InlineFragment",
                 "selections": [
-                  (v0/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -128,7 +127,8 @@ return {
                     "storageKey": null
                   }
                 ],
-                "type": "AppSecondFactor"
+                "type": "AppSecondFactor",
+                "abstractKey": null
               }
             ],
             "storageKey": "secondFactors(kinds:[\"app\"])"
@@ -146,6 +146,7 @@ return {
     ]
   },
   "params": {
+    "cacheID": "0fd614359fcbd334b9bcc786fb220eed",
     "id": null,
     "metadata": {},
     "name": "AppSecondFactorRefetchQuery",
@@ -153,6 +154,5 @@ return {
     "text": "query AppSecondFactorRefetchQuery {\n  me {\n    ...AppSecondFactor_me\n    id\n  }\n}\n\nfragment AppSecondFactor_me on Me {\n  hasSecondFactorEnabled\n  appSecondFactors: secondFactors(kinds: [app]) {\n    __typename\n    ... on AppSecondFactor {\n      __typename\n      internalID\n      name\n    }\n  }\n}\n"
   }
 };
-})();
 (node as any).hash = '6fe77b566e0c28ba19ba5573a354fc5d';
 export default node;

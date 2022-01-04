@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -51,9 +52,9 @@ export type SeoDataForArtwork_Test_QueryRawResponse = {
                         readonly url: string;
                     }) | null;
                 }) | null;
-                readonly id: string | null;
+                readonly id: string;
             }) | null;
-            readonly id: string | null;
+            readonly id: string;
         }) | null;
         readonly artistNames: string | null;
         readonly availability: string | null;
@@ -61,7 +62,7 @@ export type SeoDataForArtwork_Test_QueryRawResponse = {
         readonly dimensions: ({
             readonly in: string | null;
         }) | null;
-        readonly id: string | null;
+        readonly id: string;
     }) | null;
 };
 export type SeoDataForArtwork_Test_Query = {
@@ -174,58 +175,58 @@ v4 = {
   "storageKey": null
 },
 v5 = {
-  "type": "ID",
   "enumValues": null,
+  "nullable": true,
   "plural": false,
-  "nullable": true
+  "type": "String"
 },
 v6 = {
-  "type": "String",
   "enumValues": null,
+  "nullable": false,
   "plural": false,
-  "nullable": true
+  "type": "ID"
 },
 v7 = {
-  "type": "Boolean",
   "enumValues": null,
+  "nullable": true,
   "plural": false,
-  "nullable": true
+  "type": "Boolean"
 },
 v8 = {
-  "type": "Image",
   "enumValues": null,
+  "nullable": false,
   "plural": false,
-  "nullable": true
+  "type": "String"
 },
 v9 = {
-  "type": "String",
   "enumValues": null,
+  "nullable": false,
   "plural": false,
-  "nullable": false
+  "type": "Float"
 },
 v10 = {
-  "type": "ResizedImageUrl",
   "enumValues": null,
+  "nullable": true,
   "plural": false,
-  "nullable": true
+  "type": "Money"
 },
 v11 = {
-  "type": "Money",
   "enumValues": null,
+  "nullable": true,
   "plural": false,
-  "nullable": true
+  "type": "Image"
 },
 v12 = {
-  "type": "Float",
   "enumValues": null,
+  "nullable": true,
   "plural": false,
-  "nullable": false
+  "type": "ResizedImageUrl"
 },
 v13 = {
-  "type": "Int",
   "enumValues": null,
+  "nullable": true,
   "plural": false,
-  "nullable": true
+  "type": "Int"
 };
 return {
   "fragment": {
@@ -251,7 +252,8 @@ return {
         "storageKey": "artwork(id:\"richard-anuszkiewicz-lino-yellow-318\")"
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -336,12 +338,14 @@ return {
                     "storageKey": null
                   }
                 ],
-                "type": "PriceRange"
+                "type": "PriceRange",
+                "abstractKey": null
               },
               {
                 "kind": "InlineFragment",
                 "selections": (v2/*: any*/),
-                "type": "Money"
+                "type": "Money",
+                "abstractKey": null
               }
             ],
             "storageKey": null
@@ -559,76 +563,77 @@ return {
     ]
   },
   "params": {
+    "cacheID": "f8392b0d6f9c82a9432ddf2ec1e103f5",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "artwork": {
-          "type": "Artwork",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "Artwork"
         },
-        "artwork.id": (v5/*: any*/),
-        "artwork.href": (v6/*: any*/),
-        "artwork.date": (v6/*: any*/),
+        "artwork.artistNames": (v5/*: any*/),
+        "artwork.availability": (v5/*: any*/),
+        "artwork.category": (v5/*: any*/),
+        "artwork.date": (v5/*: any*/),
+        "artwork.dimensions": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "dimensions"
+        },
+        "artwork.dimensions.in": (v5/*: any*/),
+        "artwork.href": (v5/*: any*/),
+        "artwork.id": (v6/*: any*/),
         "artwork.is_price_hidden": (v7/*: any*/),
         "artwork.is_price_range": (v7/*: any*/),
         "artwork.listPrice": {
-          "type": "ListPrice",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "ListPrice"
         },
-        "artwork.meta_image": (v8/*: any*/),
+        "artwork.listPrice.__typename": (v8/*: any*/),
+        "artwork.listPrice.currencyCode": (v8/*: any*/),
+        "artwork.listPrice.major": (v9/*: any*/),
+        "artwork.listPrice.maxPrice": (v10/*: any*/),
+        "artwork.listPrice.maxPrice.major": (v9/*: any*/),
+        "artwork.listPrice.minPrice": (v10/*: any*/),
+        "artwork.listPrice.minPrice.currencyCode": (v8/*: any*/),
+        "artwork.listPrice.minPrice.major": (v9/*: any*/),
         "artwork.meta": {
-          "type": "ArtworkMeta",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "ArtworkMeta"
         },
-        "artwork.partner": {
-          "type": "Partner",
-          "enumValues": null,
-          "plural": false,
-          "nullable": true
-        },
-        "artwork.artistNames": (v6/*: any*/),
-        "artwork.availability": (v6/*: any*/),
-        "artwork.category": (v6/*: any*/),
-        "artwork.dimensions": {
-          "type": "dimensions",
-          "enumValues": null,
-          "plural": false,
-          "nullable": true
-        },
-        "artwork.listPrice.__typename": (v9/*: any*/),
-        "artwork.meta_image.resized": (v10/*: any*/),
-        "artwork.meta.title": (v6/*: any*/),
-        "artwork.meta.description": (v6/*: any*/),
-        "artwork.partner.name": (v6/*: any*/),
-        "artwork.partner.type": (v6/*: any*/),
-        "artwork.partner.profile": {
-          "type": "Profile",
-          "enumValues": null,
-          "plural": false,
-          "nullable": true
-        },
-        "artwork.partner.id": (v5/*: any*/),
-        "artwork.dimensions.in": (v6/*: any*/),
-        "artwork.listPrice.minPrice": (v11/*: any*/),
-        "artwork.listPrice.maxPrice": (v11/*: any*/),
-        "artwork.listPrice.major": (v12/*: any*/),
-        "artwork.listPrice.currencyCode": (v9/*: any*/),
-        "artwork.meta_image.resized.width": (v13/*: any*/),
+        "artwork.meta.description": (v5/*: any*/),
+        "artwork.meta.title": (v5/*: any*/),
+        "artwork.meta_image": (v11/*: any*/),
+        "artwork.meta_image.resized": (v12/*: any*/),
         "artwork.meta_image.resized.height": (v13/*: any*/),
-        "artwork.meta_image.resized.url": (v9/*: any*/),
-        "artwork.partner.profile.image": (v8/*: any*/),
-        "artwork.partner.profile.id": (v5/*: any*/),
-        "artwork.listPrice.minPrice.major": (v12/*: any*/),
-        "artwork.listPrice.minPrice.currencyCode": (v9/*: any*/),
-        "artwork.listPrice.maxPrice.major": (v12/*: any*/),
-        "artwork.partner.profile.image.resized": (v10/*: any*/),
-        "artwork.partner.profile.image.resized.url": (v9/*: any*/)
+        "artwork.meta_image.resized.url": (v8/*: any*/),
+        "artwork.meta_image.resized.width": (v13/*: any*/),
+        "artwork.partner": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Partner"
+        },
+        "artwork.partner.id": (v6/*: any*/),
+        "artwork.partner.name": (v5/*: any*/),
+        "artwork.partner.profile": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Profile"
+        },
+        "artwork.partner.profile.id": (v6/*: any*/),
+        "artwork.partner.profile.image": (v11/*: any*/),
+        "artwork.partner.profile.image.resized": (v12/*: any*/),
+        "artwork.partner.profile.image.resized.url": (v8/*: any*/),
+        "artwork.partner.type": (v5/*: any*/)
       }
     },
     "name": "SeoDataForArtwork_Test_Query",

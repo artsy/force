@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -47,6 +48,7 @@ fragment FairBoothRail_show on Show {
       id
     }
     ... on Node {
+      __isNode: __typename
       id
     }
   }
@@ -79,6 +81,7 @@ fragment FairBooths_fair_20XdsY on Fair {
             id
           }
           ... on Node {
+            __isNode: __typename
             id
           }
         }
@@ -112,67 +115,62 @@ fragment Pagination_pageCursors on PageCursors {
 */
 
 const node: ConcreteRequest = (function(){
-var v0 = [
-  {
-    "defaultValue": null,
-    "kind": "LocalArgument",
-    "name": "slug",
-    "type": "String!"
-  },
-  {
-    "defaultValue": null,
-    "kind": "LocalArgument",
-    "name": "page",
-    "type": "Int"
-  },
-  {
-    "defaultValue": null,
-    "kind": "LocalArgument",
-    "name": "sort",
-    "type": "ShowSorts"
-  }
-],
-v1 = [
+var v0 = {
+  "defaultValue": null,
+  "kind": "LocalArgument",
+  "name": "page"
+},
+v1 = {
+  "defaultValue": null,
+  "kind": "LocalArgument",
+  "name": "slug"
+},
+v2 = {
+  "defaultValue": null,
+  "kind": "LocalArgument",
+  "name": "sort"
+},
+v3 = [
   {
     "kind": "Variable",
     "name": "id",
     "variableName": "slug"
   }
 ],
-v2 = {
+v4 = {
   "kind": "Variable",
   "name": "page",
   "variableName": "page"
 },
-v3 = {
+v5 = {
   "kind": "Variable",
   "name": "sort",
   "variableName": "sort"
 },
-v4 = {
+v6 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "slug",
   "storageKey": null
 },
-v5 = {
+v7 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "cursor",
   "storageKey": null
 },
-v6 = {
+v8 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "page",
   "storageKey": null
 },
-v7 = [
-  (v5/*: any*/),
-  (v6/*: any*/),
+v9 = [
+  (v7/*: any*/),
+  (v8/*: any*/),
   {
     "alias": null,
     "args": null,
@@ -181,14 +179,15 @@ v7 = [
     "storageKey": null
   }
 ],
-v8 = {
+v10 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v9 = [
+v11 = [
+  (v10/*: any*/),
   {
     "alias": null,
     "args": null,
@@ -199,14 +198,18 @@ v9 = [
 ];
 return {
   "fragment": {
-    "argumentDefinitions": (v0/*: any*/),
+    "argumentDefinitions": [
+      (v0/*: any*/),
+      (v1/*: any*/),
+      (v2/*: any*/)
+    ],
     "kind": "Fragment",
     "metadata": null,
     "name": "fairRoutes_FairBoothsQuery",
     "selections": [
       {
         "alias": null,
-        "args": (v1/*: any*/),
+        "args": (v3/*: any*/),
         "concreteType": "Fair",
         "kind": "LinkedField",
         "name": "fair",
@@ -214,8 +217,8 @@ return {
         "selections": [
           {
             "args": [
-              (v2/*: any*/),
-              (v3/*: any*/)
+              (v4/*: any*/),
+              (v5/*: any*/)
             ],
             "kind": "FragmentSpread",
             "name": "FairBooths_fair"
@@ -224,23 +227,28 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
-    "argumentDefinitions": (v0/*: any*/),
+    "argumentDefinitions": [
+      (v1/*: any*/),
+      (v0/*: any*/),
+      (v2/*: any*/)
+    ],
     "kind": "Operation",
     "name": "fairRoutes_FairBoothsQuery",
     "selections": [
       {
         "alias": null,
-        "args": (v1/*: any*/),
+        "args": (v3/*: any*/),
         "concreteType": "Fair",
         "kind": "LinkedField",
         "name": "fair",
         "plural": false,
         "selections": [
-          (v4/*: any*/),
+          (v6/*: any*/),
           {
             "alias": "exhibitors",
             "args": [
@@ -249,8 +257,8 @@ return {
                 "name": "first",
                 "value": 15
               },
-              (v2/*: any*/),
-              (v3/*: any*/),
+              (v4/*: any*/),
+              (v5/*: any*/),
               {
                 "kind": "Literal",
                 "name": "totalCount",
@@ -295,7 +303,7 @@ return {
                     "kind": "LinkedField",
                     "name": "around",
                     "plural": true,
-                    "selections": (v7/*: any*/),
+                    "selections": (v9/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -305,7 +313,7 @@ return {
                     "kind": "LinkedField",
                     "name": "first",
                     "plural": false,
-                    "selections": (v7/*: any*/),
+                    "selections": (v9/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -315,7 +323,7 @@ return {
                     "kind": "LinkedField",
                     "name": "last",
                     "plural": false,
-                    "selections": (v7/*: any*/),
+                    "selections": (v9/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -326,8 +334,8 @@ return {
                     "name": "previous",
                     "plural": false,
                     "selections": [
-                      (v5/*: any*/),
-                      (v6/*: any*/)
+                      (v7/*: any*/),
+                      (v8/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -350,7 +358,7 @@ return {
                     "name": "node",
                     "plural": false,
                     "selections": [
-                      (v8/*: any*/),
+                      (v10/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -384,16 +392,25 @@ return {
                             "name": "__typename",
                             "storageKey": null
                           },
-                          (v8/*: any*/),
                           {
                             "kind": "InlineFragment",
-                            "selections": (v9/*: any*/),
-                            "type": "Partner"
+                            "selections": (v11/*: any*/),
+                            "type": "Partner",
+                            "abstractKey": null
                           },
                           {
                             "kind": "InlineFragment",
-                            "selections": (v9/*: any*/),
-                            "type": "ExternalPartner"
+                            "selections": (v11/*: any*/),
+                            "type": "ExternalPartner",
+                            "abstractKey": null
+                          },
+                          {
+                            "kind": "InlineFragment",
+                            "selections": [
+                              (v10/*: any*/)
+                            ],
+                            "type": "Node",
+                            "abstractKey": "__isNode"
                           }
                         ],
                         "storageKey": null
@@ -405,7 +422,7 @@ return {
                         "name": "internalID",
                         "storageKey": null
                       },
-                      (v4/*: any*/),
+                      (v6/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -422,18 +439,19 @@ return {
             ],
             "storageKey": null
           },
-          (v8/*: any*/)
+          (v10/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
+    "cacheID": "94e7ec3d366542daf102e434a0901029",
     "id": null,
     "metadata": {},
     "name": "fairRoutes_FairBoothsQuery",
     "operationKind": "query",
-    "text": "query fairRoutes_FairBoothsQuery(\n  $slug: String!\n  $page: Int\n  $sort: ShowSorts\n) {\n  fair(id: $slug) @principalField {\n    ...FairBooths_fair_20XdsY\n    id\n  }\n}\n\nfragment FairBoothRail_show on Show {\n  internalID\n  slug\n  href\n  partner {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on ExternalPartner {\n      name\n      id\n    }\n    ... on Node {\n      id\n    }\n  }\n  counts {\n    artworks\n  }\n}\n\nfragment FairBooths_fair_20XdsY on Fair {\n  slug\n  exhibitors: showsConnection(sort: $sort, first: 15, page: $page, totalCount: true) {\n    pageInfo {\n      hasNextPage\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    edges {\n      node {\n        id\n        counts {\n          artworks\n        }\n        partner {\n          __typename\n          ... on Partner {\n            id\n          }\n          ... on ExternalPartner {\n            id\n          }\n          ... on Node {\n            id\n          }\n        }\n        ...FairBoothRail_show\n      }\n    }\n  }\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n"
+    "text": "query fairRoutes_FairBoothsQuery(\n  $slug: String!\n  $page: Int\n  $sort: ShowSorts\n) {\n  fair(id: $slug) @principalField {\n    ...FairBooths_fair_20XdsY\n    id\n  }\n}\n\nfragment FairBoothRail_show on Show {\n  internalID\n  slug\n  href\n  partner {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on ExternalPartner {\n      name\n      id\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n  counts {\n    artworks\n  }\n}\n\nfragment FairBooths_fair_20XdsY on Fair {\n  slug\n  exhibitors: showsConnection(sort: $sort, first: 15, page: $page, totalCount: true) {\n    pageInfo {\n      hasNextPage\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    edges {\n      node {\n        id\n        counts {\n          artworks\n        }\n        partner {\n          __typename\n          ... on Partner {\n            id\n          }\n          ... on ExternalPartner {\n            id\n          }\n          ... on Node {\n            __isNode: __typename\n            id\n          }\n        }\n        ...FairBoothRail_show\n      }\n    }\n  }\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n"
   }
 };
 })();

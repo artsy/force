@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -36,14 +37,12 @@ const node: ReaderFragment = {
     {
       "defaultValue": null,
       "kind": "LocalArgument",
-      "name": "after",
-      "type": "String"
+      "name": "after"
     },
     {
       "defaultValue": 10,
       "kind": "LocalArgument",
-      "name": "first",
-      "type": "Int"
+      "name": "first"
     },
     {
       "defaultValue": [
@@ -54,8 +53,7 @@ const node: ReaderFragment = {
         "SUBMITTED"
       ],
       "kind": "LocalArgument",
-      "name": "states",
-      "type": "[CommerceOrderStateEnum!]"
+      "name": "states"
     }
   ],
   "kind": "Fragment",
@@ -179,7 +177,8 @@ const node: ReaderFragment = {
       "storageKey": null
     }
   ],
-  "type": "Me"
+  "type": "Me",
+  "abstractKey": null
 };
 (node as any).hash = '9468eff95ef41e986a57b3da6a720318';
 export default node;

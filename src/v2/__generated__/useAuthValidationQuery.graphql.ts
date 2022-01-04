@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 export type AuthenticationStatus = "INVALID" | "LOGGED_IN" | "LOGGED_OUT" | "%future added value";
@@ -37,7 +38,8 @@ return {
     "metadata": null,
     "name": "useAuthValidationQuery",
     "selections": (v0/*: any*/),
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -47,6 +49,7 @@ return {
     "selections": (v0/*: any*/)
   },
   "params": {
+    "cacheID": "abde732d3af0c5c7ee480209560f6de0",
     "id": null,
     "metadata": {},
     "name": "useAuthValidationQuery",

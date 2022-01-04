@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -266,7 +267,8 @@ return {
       "name": "FairsPastFairs_viewer"
     }
   ],
-  "type": "Viewer"
+  "type": "Viewer",
+  "abstractKey": null
 };
 })();
 (node as any).hash = '863757b83cf4b9a2c9aab52c1fb95c00';

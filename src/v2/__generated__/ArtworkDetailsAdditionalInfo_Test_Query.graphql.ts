@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -87,16 +88,22 @@ v1 = [
   }
 ],
 v2 = {
-  "type": "String",
   "enumValues": null,
+  "nullable": true,
   "plural": false,
-  "nullable": true
+  "type": "String"
 },
 v3 = {
-  "type": "ArtworkInfoRow",
   "enumValues": null,
+  "nullable": true,
   "plural": false,
-  "nullable": true
+  "type": "ArtworkInfoRow"
+},
+v4 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "ID"
 };
 return {
   "fragment": {
@@ -122,7 +129,8 @@ return {
         "storageKey": "artwork(id:\"xxx\")"
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -272,64 +280,55 @@ return {
     ]
   },
   "params": {
+    "cacheID": "b91dd6a2d41c185fde8bd566c1301da5",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "artwork": {
-          "type": "Artwork",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "Artwork"
         },
-        "artwork.id": {
-          "type": "ID",
+        "artwork.canRequestLotConditionsReport": {
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "Boolean"
         },
         "artwork.category": (v2/*: any*/),
-        "artwork.series": (v2/*: any*/),
-        "artwork.publisher": (v2/*: any*/),
-        "artwork.manufacturer": (v2/*: any*/),
-        "artwork.image_rights": (v2/*: any*/),
-        "artwork.canRequestLotConditionsReport": {
-          "type": "Boolean",
-          "enumValues": null,
-          "plural": false,
-          "nullable": true
-        },
-        "artwork.internalID": {
-          "type": "ID",
-          "enumValues": null,
-          "plural": false,
-          "nullable": false
-        },
-        "artwork.framed": (v3/*: any*/),
-        "artwork.signatureInfo": (v3/*: any*/),
-        "artwork.conditionDescription": (v3/*: any*/),
         "artwork.certificateOfAuthenticity": (v3/*: any*/),
-        "artwork.mediumType": {
-          "type": "ArtworkMedium",
-          "enumValues": null,
-          "plural": false,
-          "nullable": true
-        },
-        "artwork.framed.label": (v2/*: any*/),
-        "artwork.framed.details": (v2/*: any*/),
-        "artwork.signatureInfo.label": (v2/*: any*/),
-        "artwork.signatureInfo.details": (v2/*: any*/),
-        "artwork.conditionDescription.label": (v2/*: any*/),
-        "artwork.conditionDescription.details": (v2/*: any*/),
-        "artwork.certificateOfAuthenticity.label": (v2/*: any*/),
         "artwork.certificateOfAuthenticity.details": (v2/*: any*/),
-        "artwork.mediumType.__typename": {
-          "type": "String",
+        "artwork.certificateOfAuthenticity.label": (v2/*: any*/),
+        "artwork.conditionDescription": (v3/*: any*/),
+        "artwork.conditionDescription.details": (v2/*: any*/),
+        "artwork.conditionDescription.label": (v2/*: any*/),
+        "artwork.framed": (v3/*: any*/),
+        "artwork.framed.details": (v2/*: any*/),
+        "artwork.framed.label": (v2/*: any*/),
+        "artwork.id": (v4/*: any*/),
+        "artwork.image_rights": (v2/*: any*/),
+        "artwork.internalID": (v4/*: any*/),
+        "artwork.manufacturer": (v2/*: any*/),
+        "artwork.mediumType": {
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": false
+          "type": "ArtworkMedium"
         },
+        "artwork.mediumType.__typename": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": false,
+          "type": "String"
+        },
+        "artwork.mediumType.longDescription": (v2/*: any*/),
         "artwork.mediumType.name": (v2/*: any*/),
-        "artwork.mediumType.longDescription": (v2/*: any*/)
+        "artwork.publisher": (v2/*: any*/),
+        "artwork.series": (v2/*: any*/),
+        "artwork.signatureInfo": (v3/*: any*/),
+        "artwork.signatureInfo.details": (v2/*: any*/),
+        "artwork.signatureInfo.label": (v2/*: any*/)
       }
     },
     "name": "ArtworkDetailsAdditionalInfo_Test_Query",

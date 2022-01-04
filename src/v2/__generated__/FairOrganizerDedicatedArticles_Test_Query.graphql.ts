@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -192,58 +193,52 @@ v8 = [
   (v7/*: any*/)
 ],
 v9 = {
-  "type": "ID",
   "enumValues": null,
+  "nullable": true,
   "plural": false,
-  "nullable": true
+  "type": "String"
 },
 v10 = {
-  "type": "ID",
   "enumValues": null,
+  "nullable": false,
   "plural": false,
-  "nullable": false
+  "type": "ID"
 },
 v11 = {
-  "type": "String",
   "enumValues": null,
+  "nullable": true,
   "plural": false,
-  "nullable": true
+  "type": "Image"
 },
 v12 = {
-  "type": "Boolean",
   "enumValues": null,
+  "nullable": true,
   "plural": false,
-  "nullable": false
+  "type": "CroppedImageUrl"
 },
 v13 = {
-  "type": "Image",
   "enumValues": null,
+  "nullable": false,
   "plural": false,
-  "nullable": true
+  "type": "Int"
 },
 v14 = {
-  "type": "PageCursor",
   "enumValues": null,
+  "nullable": false,
   "plural": false,
-  "nullable": true
+  "type": "String"
 },
 v15 = {
-  "type": "String",
   "enumValues": null,
+  "nullable": false,
   "plural": false,
-  "nullable": false
+  "type": "Boolean"
 },
 v16 = {
-  "type": "Int",
   "enumValues": null,
+  "nullable": true,
   "plural": false,
-  "nullable": false
-},
-v17 = {
-  "type": "CroppedImageUrl",
-  "enumValues": null,
-  "plural": false,
-  "nullable": true
+  "type": "PageCursor"
 };
 return {
   "fragment": {
@@ -269,7 +264,8 @@ return {
         "storageKey": "fairOrganizer(id:\"example\")"
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -576,109 +572,110 @@ return {
     ]
   },
   "params": {
+    "cacheID": "c8afcb0240dd026d64ee19e8fb387c92",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "fairOrganizer": {
-          "type": "FairOrganizer",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "FairOrganizer"
         },
-        "fairOrganizer.id": (v9/*: any*/),
-        "fairOrganizer.slug": (v10/*: any*/),
-        "fairOrganizer.name": (v11/*: any*/),
         "fairOrganizer.articlesConnection": {
-          "type": "ArticleConnection",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
-        },
-        "fairOrganizer.articlesConnection.totalCount": {
-          "type": "Int",
-          "enumValues": null,
-          "plural": false,
-          "nullable": true
-        },
-        "fairOrganizer.articlesConnection.pageInfo": {
-          "type": "PageInfo",
-          "enumValues": null,
-          "plural": false,
-          "nullable": false
-        },
-        "fairOrganizer.articlesConnection.pageCursors": {
-          "type": "PageCursors",
-          "enumValues": null,
-          "plural": false,
-          "nullable": false
+          "type": "ArticleConnection"
         },
         "fairOrganizer.articlesConnection.edges": {
-          "type": "ArticleEdge",
           "enumValues": null,
+          "nullable": true,
           "plural": true,
-          "nullable": true
+          "type": "ArticleEdge"
         },
-        "fairOrganizer.profile": {
-          "type": "Profile",
-          "enumValues": null,
-          "plural": false,
-          "nullable": true
-        },
-        "fairOrganizer.articlesConnection.pageInfo.hasNextPage": (v12/*: any*/),
         "fairOrganizer.articlesConnection.edges.node": {
-          "type": "Article",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "Article"
         },
-        "fairOrganizer.profile.image": (v13/*: any*/),
-        "fairOrganizer.profile.id": (v9/*: any*/),
-        "fairOrganizer.articlesConnection.pageCursors.around": {
-          "type": "PageCursor",
-          "enumValues": null,
-          "plural": true,
-          "nullable": false
-        },
-        "fairOrganizer.articlesConnection.pageCursors.first": (v14/*: any*/),
-        "fairOrganizer.articlesConnection.pageCursors.last": (v14/*: any*/),
-        "fairOrganizer.articlesConnection.pageCursors.previous": (v14/*: any*/),
+        "fairOrganizer.articlesConnection.edges.node.href": (v9/*: any*/),
         "fairOrganizer.articlesConnection.edges.node.id": (v10/*: any*/),
-        "fairOrganizer.profile.image.resized": {
-          "type": "ResizedImageUrl",
-          "enumValues": null,
-          "plural": false,
-          "nullable": true
-        },
-        "fairOrganizer.articlesConnection.pageCursors.around.cursor": (v15/*: any*/),
-        "fairOrganizer.articlesConnection.pageCursors.around.page": (v16/*: any*/),
-        "fairOrganizer.articlesConnection.pageCursors.around.isCurrent": (v12/*: any*/),
-        "fairOrganizer.articlesConnection.pageCursors.first.cursor": (v15/*: any*/),
-        "fairOrganizer.articlesConnection.pageCursors.first.page": (v16/*: any*/),
-        "fairOrganizer.articlesConnection.pageCursors.first.isCurrent": (v12/*: any*/),
-        "fairOrganizer.articlesConnection.pageCursors.last.cursor": (v15/*: any*/),
-        "fairOrganizer.articlesConnection.pageCursors.last.page": (v16/*: any*/),
-        "fairOrganizer.articlesConnection.pageCursors.last.isCurrent": (v12/*: any*/),
-        "fairOrganizer.articlesConnection.pageCursors.previous.cursor": (v15/*: any*/),
-        "fairOrganizer.articlesConnection.pageCursors.previous.page": (v16/*: any*/),
-        "fairOrganizer.articlesConnection.edges.node.title": (v11/*: any*/),
-        "fairOrganizer.articlesConnection.edges.node.publishedAt": (v11/*: any*/),
-        "fairOrganizer.articlesConnection.edges.node.thumbnailTitle": (v11/*: any*/),
-        "fairOrganizer.articlesConnection.edges.node.thumbnailImage": (v13/*: any*/),
-        "fairOrganizer.profile.image.resized.src": (v15/*: any*/),
-        "fairOrganizer.profile.image.resized.srcSet": (v15/*: any*/),
-        "fairOrganizer.articlesConnection.edges.node.thumbnailImage.large": (v17/*: any*/),
-        "fairOrganizer.articlesConnection.edges.node.thumbnailImage.small": (v17/*: any*/),
         "fairOrganizer.articlesConnection.edges.node.internalID": (v10/*: any*/),
-        "fairOrganizer.articlesConnection.edges.node.slug": (v11/*: any*/),
-        "fairOrganizer.articlesConnection.edges.node.href": (v11/*: any*/),
-        "fairOrganizer.articlesConnection.edges.node.thumbnailImage.large.width": (v16/*: any*/),
-        "fairOrganizer.articlesConnection.edges.node.thumbnailImage.large.height": (v16/*: any*/),
-        "fairOrganizer.articlesConnection.edges.node.thumbnailImage.large.src": (v15/*: any*/),
-        "fairOrganizer.articlesConnection.edges.node.thumbnailImage.large.srcSet": (v15/*: any*/),
-        "fairOrganizer.articlesConnection.edges.node.thumbnailImage.small.width": (v16/*: any*/),
-        "fairOrganizer.articlesConnection.edges.node.thumbnailImage.small.height": (v16/*: any*/),
-        "fairOrganizer.articlesConnection.edges.node.thumbnailImage.small.src": (v15/*: any*/),
-        "fairOrganizer.articlesConnection.edges.node.thumbnailImage.small.srcSet": (v15/*: any*/)
+        "fairOrganizer.articlesConnection.edges.node.publishedAt": (v9/*: any*/),
+        "fairOrganizer.articlesConnection.edges.node.slug": (v9/*: any*/),
+        "fairOrganizer.articlesConnection.edges.node.thumbnailImage": (v11/*: any*/),
+        "fairOrganizer.articlesConnection.edges.node.thumbnailImage.large": (v12/*: any*/),
+        "fairOrganizer.articlesConnection.edges.node.thumbnailImage.large.height": (v13/*: any*/),
+        "fairOrganizer.articlesConnection.edges.node.thumbnailImage.large.src": (v14/*: any*/),
+        "fairOrganizer.articlesConnection.edges.node.thumbnailImage.large.srcSet": (v14/*: any*/),
+        "fairOrganizer.articlesConnection.edges.node.thumbnailImage.large.width": (v13/*: any*/),
+        "fairOrganizer.articlesConnection.edges.node.thumbnailImage.small": (v12/*: any*/),
+        "fairOrganizer.articlesConnection.edges.node.thumbnailImage.small.height": (v13/*: any*/),
+        "fairOrganizer.articlesConnection.edges.node.thumbnailImage.small.src": (v14/*: any*/),
+        "fairOrganizer.articlesConnection.edges.node.thumbnailImage.small.srcSet": (v14/*: any*/),
+        "fairOrganizer.articlesConnection.edges.node.thumbnailImage.small.width": (v13/*: any*/),
+        "fairOrganizer.articlesConnection.edges.node.thumbnailTitle": (v9/*: any*/),
+        "fairOrganizer.articlesConnection.edges.node.title": (v9/*: any*/),
+        "fairOrganizer.articlesConnection.pageCursors": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": false,
+          "type": "PageCursors"
+        },
+        "fairOrganizer.articlesConnection.pageCursors.around": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": true,
+          "type": "PageCursor"
+        },
+        "fairOrganizer.articlesConnection.pageCursors.around.cursor": (v14/*: any*/),
+        "fairOrganizer.articlesConnection.pageCursors.around.isCurrent": (v15/*: any*/),
+        "fairOrganizer.articlesConnection.pageCursors.around.page": (v13/*: any*/),
+        "fairOrganizer.articlesConnection.pageCursors.first": (v16/*: any*/),
+        "fairOrganizer.articlesConnection.pageCursors.first.cursor": (v14/*: any*/),
+        "fairOrganizer.articlesConnection.pageCursors.first.isCurrent": (v15/*: any*/),
+        "fairOrganizer.articlesConnection.pageCursors.first.page": (v13/*: any*/),
+        "fairOrganizer.articlesConnection.pageCursors.last": (v16/*: any*/),
+        "fairOrganizer.articlesConnection.pageCursors.last.cursor": (v14/*: any*/),
+        "fairOrganizer.articlesConnection.pageCursors.last.isCurrent": (v15/*: any*/),
+        "fairOrganizer.articlesConnection.pageCursors.last.page": (v13/*: any*/),
+        "fairOrganizer.articlesConnection.pageCursors.previous": (v16/*: any*/),
+        "fairOrganizer.articlesConnection.pageCursors.previous.cursor": (v14/*: any*/),
+        "fairOrganizer.articlesConnection.pageCursors.previous.page": (v13/*: any*/),
+        "fairOrganizer.articlesConnection.pageInfo": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": false,
+          "type": "PageInfo"
+        },
+        "fairOrganizer.articlesConnection.pageInfo.hasNextPage": (v15/*: any*/),
+        "fairOrganizer.articlesConnection.totalCount": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Int"
+        },
+        "fairOrganizer.id": (v10/*: any*/),
+        "fairOrganizer.name": (v9/*: any*/),
+        "fairOrganizer.profile": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Profile"
+        },
+        "fairOrganizer.profile.id": (v10/*: any*/),
+        "fairOrganizer.profile.image": (v11/*: any*/),
+        "fairOrganizer.profile.image.resized": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "ResizedImageUrl"
+        },
+        "fairOrganizer.profile.image.resized.src": (v14/*: any*/),
+        "fairOrganizer.profile.image.resized.srcSet": (v14/*: any*/),
+        "fairOrganizer.slug": (v10/*: any*/)
       }
     },
     "name": "FairOrganizerDedicatedArticles_Test_Query",

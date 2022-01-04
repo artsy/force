@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -54,16 +55,16 @@ var v0 = [
   }
 ],
 v1 = {
-  "type": "String",
   "enumValues": null,
+  "nullable": true,
   "plural": false,
-  "nullable": true
+  "type": "String"
 },
 v2 = {
-  "type": "Int",
   "enumValues": null,
+  "nullable": true,
   "plural": false,
-  "nullable": true
+  "type": "Int"
 };
 return {
   "fragment": {
@@ -100,7 +101,8 @@ return {
         "storageKey": "artwork(id:\"example\")"
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -222,52 +224,53 @@ return {
     ]
   },
   "params": {
+    "cacheID": "0af34a87bb80a2043ccf5e692cd3d56e",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "artwork": {
-          "type": "Artwork",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
-        },
-        "artwork.images": {
-          "type": "Image",
-          "enumValues": null,
-          "plural": true,
-          "nullable": true
+          "type": "Artwork"
         },
         "artwork.id": {
-          "type": "ID",
           "enumValues": null,
+          "nullable": false,
           "plural": false,
-          "nullable": true
+          "type": "ID"
+        },
+        "artwork.images": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": true,
+          "type": "Image"
         },
         "artwork.images.deepZoom": {
-          "type": "DeepZoom",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "DeepZoom"
         },
         "artwork.images.deepZoom.Image": {
-          "type": "DeepZoomImage",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "DeepZoomImage"
         },
-        "artwork.images.deepZoom.Image.xmlns": (v1/*: any*/),
-        "artwork.images.deepZoom.Image.Url": (v1/*: any*/),
         "artwork.images.deepZoom.Image.Format": (v1/*: any*/),
-        "artwork.images.deepZoom.Image.TileSize": (v2/*: any*/),
         "artwork.images.deepZoom.Image.Overlap": (v2/*: any*/),
         "artwork.images.deepZoom.Image.Size": {
-          "type": "DeepZoomImageSize",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "DeepZoomImageSize"
         },
+        "artwork.images.deepZoom.Image.Size.Height": (v2/*: any*/),
         "artwork.images.deepZoom.Image.Size.Width": (v2/*: any*/),
-        "artwork.images.deepZoom.Image.Size.Height": (v2/*: any*/)
+        "artwork.images.deepZoom.Image.TileSize": (v2/*: any*/),
+        "artwork.images.deepZoom.Image.Url": (v1/*: any*/),
+        "artwork.images.deepZoom.Image.xmlns": (v1/*: any*/)
       }
     },
     "name": "DeepZoom_Test_Query",

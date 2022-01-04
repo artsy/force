@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -13,9 +14,9 @@ export type ArtworkSidebarClassification_Test_QueryRawResponse = {
     readonly artwork: ({
         readonly attributionClass: ({
             readonly shortDescription: string | null;
-            readonly id: string | null;
+            readonly id: string;
         }) | null;
-        readonly id: string | null;
+        readonly id: string;
     }) | null;
 };
 export type ArtworkSidebarClassification_Test_Query = {
@@ -58,10 +59,10 @@ v1 = {
   "storageKey": null
 },
 v2 = {
-  "type": "ID",
   "enumValues": null,
+  "nullable": false,
   "plural": false,
-  "nullable": true
+  "type": "ID"
 };
 return {
   "fragment": {
@@ -87,7 +88,8 @@ return {
         "storageKey": "artwork(id:\"josef-albers-homage-to-the-square-85\")"
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -129,29 +131,30 @@ return {
     ]
   },
   "params": {
+    "cacheID": "3e2fee4ac8a516f21734a5b2a8093745",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "artwork": {
-          "type": "Artwork",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "Artwork"
         },
-        "artwork.id": (v2/*: any*/),
         "artwork.attributionClass": {
-          "type": "AttributionClass",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "AttributionClass"
         },
+        "artwork.attributionClass.id": (v2/*: any*/),
         "artwork.attributionClass.shortDescription": {
-          "type": "String",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "String"
         },
-        "artwork.attributionClass.id": (v2/*: any*/)
+        "artwork.id": (v2/*: any*/)
       }
     },
     "name": "ArtworkSidebarClassification_Test_Query",

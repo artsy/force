@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -51,15 +52,18 @@ export type FairBooths_QueryRawResponse = {
                     }) | null;
                     readonly partner: ({
                         readonly __typename: "Partner";
-                        readonly id: string | null;
+                        readonly __isNode: "Partner";
+                        readonly id: string;
                         readonly name: string | null;
                     } | {
                         readonly __typename: "ExternalPartner";
-                        readonly id: string | null;
+                        readonly __isNode: "ExternalPartner";
+                        readonly id: string;
                         readonly name: string | null;
                     } | {
-                        readonly __typename: string | null;
-                        readonly id: string | null;
+                        readonly __typename: string;
+                        readonly __isNode: string;
+                        readonly id: string;
                     }) | null;
                     readonly internalID: string;
                     readonly slug: string;
@@ -67,7 +71,7 @@ export type FairBooths_QueryRawResponse = {
                 }) | null;
             }) | null> | null;
         }) | null;
-        readonly id: string | null;
+        readonly id: string;
     }) | null;
 };
 export type FairBooths_Query = {
@@ -105,6 +109,7 @@ fragment FairBoothRail_show on Show {
       id
     }
     ... on Node {
+      __isNode: __typename
       id
     }
   }
@@ -137,6 +142,7 @@ fragment FairBooths_fair_1HMhop on Fair {
             id
           }
           ... on Node {
+            __isNode: __typename
             id
           }
         }
@@ -170,78 +176,72 @@ fragment Pagination_pageCursors on PageCursors {
 */
 
 const node: ConcreteRequest = (function(){
-var v0 = [
-  {
-    "defaultValue": null,
-    "kind": "LocalArgument",
-    "name": "id",
-    "type": "String!"
-  },
-  {
-    "defaultValue": null,
-    "kind": "LocalArgument",
-    "name": "first",
-    "type": "Int"
-  },
-  {
-    "defaultValue": null,
-    "kind": "LocalArgument",
-    "name": "page",
-    "type": "Int"
-  },
-  {
-    "defaultValue": null,
-    "kind": "LocalArgument",
-    "name": "sort",
-    "type": "ShowSorts"
-  }
-],
-v1 = [
+var v0 = {
+  "defaultValue": null,
+  "kind": "LocalArgument",
+  "name": "first"
+},
+v1 = {
+  "defaultValue": null,
+  "kind": "LocalArgument",
+  "name": "id"
+},
+v2 = {
+  "defaultValue": null,
+  "kind": "LocalArgument",
+  "name": "page"
+},
+v3 = {
+  "defaultValue": null,
+  "kind": "LocalArgument",
+  "name": "sort"
+},
+v4 = [
   {
     "kind": "Variable",
     "name": "id",
     "variableName": "id"
   }
 ],
-v2 = {
+v5 = {
   "kind": "Variable",
   "name": "first",
   "variableName": "first"
 },
-v3 = {
+v6 = {
   "kind": "Variable",
   "name": "page",
   "variableName": "page"
 },
-v4 = {
+v7 = {
   "kind": "Variable",
   "name": "sort",
   "variableName": "sort"
 },
-v5 = {
+v8 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "slug",
   "storageKey": null
 },
-v6 = {
+v9 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "cursor",
   "storageKey": null
 },
-v7 = {
+v10 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "page",
   "storageKey": null
 },
-v8 = [
-  (v6/*: any*/),
-  (v7/*: any*/),
+v11 = [
+  (v9/*: any*/),
+  (v10/*: any*/),
   {
     "alias": null,
     "args": null,
@@ -250,14 +250,15 @@ v8 = [
     "storageKey": null
   }
 ],
-v9 = {
+v12 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v10 = [
+v13 = [
+  (v12/*: any*/),
   {
     "alias": null,
     "args": null,
@@ -266,58 +267,57 @@ v10 = [
     "storageKey": null
   }
 ],
-v11 = {
-  "type": "ID",
-  "enumValues": null,
-  "plural": false,
-  "nullable": true
-},
-v12 = {
-  "type": "ID",
-  "enumValues": null,
-  "plural": false,
-  "nullable": false
-},
-v13 = {
-  "type": "Boolean",
-  "enumValues": null,
-  "plural": false,
-  "nullable": false
-},
 v14 = {
-  "type": "PageCursor",
   "enumValues": null,
+  "nullable": true,
   "plural": false,
-  "nullable": true
+  "type": "String"
 },
 v15 = {
-  "type": "String",
   "enumValues": null,
+  "nullable": false,
   "plural": false,
-  "nullable": false
+  "type": "ID"
 },
 v16 = {
-  "type": "Int",
   "enumValues": null,
+  "nullable": false,
   "plural": false,
-  "nullable": false
+  "type": "String"
 },
 v17 = {
-  "type": "String",
   "enumValues": null,
+  "nullable": false,
   "plural": false,
-  "nullable": true
+  "type": "Boolean"
+},
+v18 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "Int"
+},
+v19 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "PageCursor"
 };
 return {
   "fragment": {
-    "argumentDefinitions": (v0/*: any*/),
+    "argumentDefinitions": [
+      (v0/*: any*/),
+      (v1/*: any*/),
+      (v2/*: any*/),
+      (v3/*: any*/)
+    ],
     "kind": "Fragment",
     "metadata": null,
     "name": "FairBooths_Query",
     "selections": [
       {
         "alias": null,
-        "args": (v1/*: any*/),
+        "args": (v4/*: any*/),
         "concreteType": "Fair",
         "kind": "LinkedField",
         "name": "fair",
@@ -325,9 +325,9 @@ return {
         "selections": [
           {
             "args": [
-              (v2/*: any*/),
-              (v3/*: any*/),
-              (v4/*: any*/)
+              (v5/*: any*/),
+              (v6/*: any*/),
+              (v7/*: any*/)
             ],
             "kind": "FragmentSpread",
             "name": "FairBooths_fair"
@@ -336,29 +336,35 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
-    "argumentDefinitions": (v0/*: any*/),
+    "argumentDefinitions": [
+      (v1/*: any*/),
+      (v0/*: any*/),
+      (v2/*: any*/),
+      (v3/*: any*/)
+    ],
     "kind": "Operation",
     "name": "FairBooths_Query",
     "selections": [
       {
         "alias": null,
-        "args": (v1/*: any*/),
+        "args": (v4/*: any*/),
         "concreteType": "Fair",
         "kind": "LinkedField",
         "name": "fair",
         "plural": false,
         "selections": [
-          (v5/*: any*/),
+          (v8/*: any*/),
           {
             "alias": "exhibitors",
             "args": [
-              (v2/*: any*/),
-              (v3/*: any*/),
-              (v4/*: any*/),
+              (v5/*: any*/),
+              (v6/*: any*/),
+              (v7/*: any*/),
               {
                 "kind": "Literal",
                 "name": "totalCount",
@@ -403,7 +409,7 @@ return {
                     "kind": "LinkedField",
                     "name": "around",
                     "plural": true,
-                    "selections": (v8/*: any*/),
+                    "selections": (v11/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -413,7 +419,7 @@ return {
                     "kind": "LinkedField",
                     "name": "first",
                     "plural": false,
-                    "selections": (v8/*: any*/),
+                    "selections": (v11/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -423,7 +429,7 @@ return {
                     "kind": "LinkedField",
                     "name": "last",
                     "plural": false,
-                    "selections": (v8/*: any*/),
+                    "selections": (v11/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -434,8 +440,8 @@ return {
                     "name": "previous",
                     "plural": false,
                     "selections": [
-                      (v6/*: any*/),
-                      (v7/*: any*/)
+                      (v9/*: any*/),
+                      (v10/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -458,7 +464,7 @@ return {
                     "name": "node",
                     "plural": false,
                     "selections": [
-                      (v9/*: any*/),
+                      (v12/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -492,16 +498,25 @@ return {
                             "name": "__typename",
                             "storageKey": null
                           },
-                          (v9/*: any*/),
                           {
                             "kind": "InlineFragment",
-                            "selections": (v10/*: any*/),
-                            "type": "Partner"
+                            "selections": (v13/*: any*/),
+                            "type": "Partner",
+                            "abstractKey": null
                           },
                           {
                             "kind": "InlineFragment",
-                            "selections": (v10/*: any*/),
-                            "type": "ExternalPartner"
+                            "selections": (v13/*: any*/),
+                            "type": "ExternalPartner",
+                            "abstractKey": null
+                          },
+                          {
+                            "kind": "InlineFragment",
+                            "selections": [
+                              (v12/*: any*/)
+                            ],
+                            "type": "Node",
+                            "abstractKey": "__isNode"
                           }
                         ],
                         "storageKey": null
@@ -513,7 +528,7 @@ return {
                         "name": "internalID",
                         "storageKey": null
                       },
-                      (v5/*: any*/),
+                      (v8/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -530,104 +545,107 @@ return {
             ],
             "storageKey": null
           },
-          (v9/*: any*/)
+          (v12/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
+    "cacheID": "a4da7689b400b28c71903fe3c360ea6d",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "fair": {
-          "type": "Fair",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "Fair"
         },
-        "fair.id": (v11/*: any*/),
-        "fair.slug": (v12/*: any*/),
         "fair.exhibitors": {
-          "type": "ShowConnection",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
-        },
-        "fair.exhibitors.pageInfo": {
-          "type": "PageInfo",
-          "enumValues": null,
-          "plural": false,
-          "nullable": false
-        },
-        "fair.exhibitors.pageCursors": {
-          "type": "PageCursors",
-          "enumValues": null,
-          "plural": false,
-          "nullable": false
+          "type": "ShowConnection"
         },
         "fair.exhibitors.edges": {
-          "type": "ShowEdge",
           "enumValues": null,
+          "nullable": true,
           "plural": true,
-          "nullable": true
+          "type": "ShowEdge"
         },
-        "fair.exhibitors.pageInfo.hasNextPage": (v13/*: any*/),
         "fair.exhibitors.edges.node": {
-          "type": "Show",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "Show"
+        },
+        "fair.exhibitors.edges.node.counts": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "ShowCounts"
+        },
+        "fair.exhibitors.edges.node.counts.artworks": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Int"
+        },
+        "fair.exhibitors.edges.node.href": (v14/*: any*/),
+        "fair.exhibitors.edges.node.id": (v15/*: any*/),
+        "fair.exhibitors.edges.node.internalID": (v15/*: any*/),
+        "fair.exhibitors.edges.node.partner": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "PartnerTypes"
+        },
+        "fair.exhibitors.edges.node.partner.__isNode": (v16/*: any*/),
+        "fair.exhibitors.edges.node.partner.__typename": (v16/*: any*/),
+        "fair.exhibitors.edges.node.partner.id": (v15/*: any*/),
+        "fair.exhibitors.edges.node.partner.name": (v14/*: any*/),
+        "fair.exhibitors.edges.node.slug": (v15/*: any*/),
+        "fair.exhibitors.pageCursors": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": false,
+          "type": "PageCursors"
         },
         "fair.exhibitors.pageCursors.around": {
-          "type": "PageCursor",
           "enumValues": null,
+          "nullable": false,
           "plural": true,
-          "nullable": false
+          "type": "PageCursor"
         },
-        "fair.exhibitors.pageCursors.first": (v14/*: any*/),
-        "fair.exhibitors.pageCursors.last": (v14/*: any*/),
-        "fair.exhibitors.pageCursors.previous": (v14/*: any*/),
-        "fair.exhibitors.edges.node.id": (v12/*: any*/),
-        "fair.exhibitors.edges.node.counts": {
-          "type": "ShowCounts",
+        "fair.exhibitors.pageCursors.around.cursor": (v16/*: any*/),
+        "fair.exhibitors.pageCursors.around.isCurrent": (v17/*: any*/),
+        "fair.exhibitors.pageCursors.around.page": (v18/*: any*/),
+        "fair.exhibitors.pageCursors.first": (v19/*: any*/),
+        "fair.exhibitors.pageCursors.first.cursor": (v16/*: any*/),
+        "fair.exhibitors.pageCursors.first.isCurrent": (v17/*: any*/),
+        "fair.exhibitors.pageCursors.first.page": (v18/*: any*/),
+        "fair.exhibitors.pageCursors.last": (v19/*: any*/),
+        "fair.exhibitors.pageCursors.last.cursor": (v16/*: any*/),
+        "fair.exhibitors.pageCursors.last.isCurrent": (v17/*: any*/),
+        "fair.exhibitors.pageCursors.last.page": (v18/*: any*/),
+        "fair.exhibitors.pageCursors.previous": (v19/*: any*/),
+        "fair.exhibitors.pageCursors.previous.cursor": (v16/*: any*/),
+        "fair.exhibitors.pageCursors.previous.page": (v18/*: any*/),
+        "fair.exhibitors.pageInfo": {
           "enumValues": null,
+          "nullable": false,
           "plural": false,
-          "nullable": true
+          "type": "PageInfo"
         },
-        "fair.exhibitors.edges.node.partner": {
-          "type": "PartnerTypes",
-          "enumValues": null,
-          "plural": false,
-          "nullable": true
-        },
-        "fair.exhibitors.pageCursors.around.cursor": (v15/*: any*/),
-        "fair.exhibitors.pageCursors.around.page": (v16/*: any*/),
-        "fair.exhibitors.pageCursors.around.isCurrent": (v13/*: any*/),
-        "fair.exhibitors.pageCursors.first.cursor": (v15/*: any*/),
-        "fair.exhibitors.pageCursors.first.page": (v16/*: any*/),
-        "fair.exhibitors.pageCursors.first.isCurrent": (v13/*: any*/),
-        "fair.exhibitors.pageCursors.last.cursor": (v15/*: any*/),
-        "fair.exhibitors.pageCursors.last.page": (v16/*: any*/),
-        "fair.exhibitors.pageCursors.last.isCurrent": (v13/*: any*/),
-        "fair.exhibitors.pageCursors.previous.cursor": (v15/*: any*/),
-        "fair.exhibitors.pageCursors.previous.page": (v16/*: any*/),
-        "fair.exhibitors.edges.node.counts.artworks": {
-          "type": "Int",
-          "enumValues": null,
-          "plural": false,
-          "nullable": true
-        },
-        "fair.exhibitors.edges.node.internalID": (v12/*: any*/),
-        "fair.exhibitors.edges.node.slug": (v12/*: any*/),
-        "fair.exhibitors.edges.node.href": (v17/*: any*/),
-        "fair.exhibitors.edges.node.partner.id": (v11/*: any*/),
-        "fair.exhibitors.edges.node.partner.name": (v17/*: any*/)
+        "fair.exhibitors.pageInfo.hasNextPage": (v17/*: any*/),
+        "fair.id": (v15/*: any*/),
+        "fair.slug": (v15/*: any*/)
       }
     },
     "name": "FairBooths_Query",
     "operationKind": "query",
-    "text": "query FairBooths_Query(\n  $id: String!\n  $first: Int\n  $page: Int\n  $sort: ShowSorts\n) {\n  fair(id: $id) {\n    ...FairBooths_fair_1HMhop\n    id\n  }\n}\n\nfragment FairBoothRail_show on Show {\n  internalID\n  slug\n  href\n  partner {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on ExternalPartner {\n      name\n      id\n    }\n    ... on Node {\n      id\n    }\n  }\n  counts {\n    artworks\n  }\n}\n\nfragment FairBooths_fair_1HMhop on Fair {\n  slug\n  exhibitors: showsConnection(sort: $sort, first: $first, page: $page, totalCount: true) {\n    pageInfo {\n      hasNextPage\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    edges {\n      node {\n        id\n        counts {\n          artworks\n        }\n        partner {\n          __typename\n          ... on Partner {\n            id\n          }\n          ... on ExternalPartner {\n            id\n          }\n          ... on Node {\n            id\n          }\n        }\n        ...FairBoothRail_show\n      }\n    }\n  }\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n"
+    "text": "query FairBooths_Query(\n  $id: String!\n  $first: Int\n  $page: Int\n  $sort: ShowSorts\n) {\n  fair(id: $id) {\n    ...FairBooths_fair_1HMhop\n    id\n  }\n}\n\nfragment FairBoothRail_show on Show {\n  internalID\n  slug\n  href\n  partner {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on ExternalPartner {\n      name\n      id\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n  counts {\n    artworks\n  }\n}\n\nfragment FairBooths_fair_1HMhop on Fair {\n  slug\n  exhibitors: showsConnection(sort: $sort, first: $first, page: $page, totalCount: true) {\n    pageInfo {\n      hasNextPage\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    edges {\n      node {\n        id\n        counts {\n          artworks\n        }\n        partner {\n          __typename\n          ... on Partner {\n            id\n          }\n          ... on ExternalPartner {\n            id\n          }\n          ... on Node {\n            __isNode: __typename\n            id\n          }\n        }\n        ...FairBoothRail_show\n      }\n    }\n  }\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n"
   }
 };
 })();

@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -18,7 +19,7 @@ export type ArtistSeriesMeta_TestQueryRawResponse = {
         readonly slug: string;
         readonly artists: ReadonlyArray<({
             readonly name: string | null;
-            readonly id: string | null;
+            readonly id: string;
         }) | null> | null;
     }) | null;
 };
@@ -55,8 +56,7 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "slug",
-    "type": "ID!"
+    "name": "slug"
   }
 ],
 v1 = [
@@ -67,16 +67,16 @@ v1 = [
   }
 ],
 v2 = {
-  "type": "String",
   "enumValues": null,
+  "nullable": true,
   "plural": false,
-  "nullable": false
+  "type": "String"
 },
 v3 = {
-  "type": "String",
   "enumValues": null,
+  "nullable": false,
   "plural": false,
-  "nullable": true
+  "type": "String"
 };
 return {
   "fragment": {
@@ -102,7 +102,8 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -176,31 +177,32 @@ return {
     ]
   },
   "params": {
+    "cacheID": "868f3d4385f11ae2bdfc73c06bbae975",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "artistSeries": {
-          "type": "ArtistSeries",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "ArtistSeries"
         },
-        "artistSeries.title": (v2/*: any*/),
-        "artistSeries.description": (v3/*: any*/),
-        "artistSeries.slug": (v2/*: any*/),
         "artistSeries.artists": {
-          "type": "Artist",
           "enumValues": null,
+          "nullable": true,
           "plural": true,
-          "nullable": true
+          "type": "Artist"
         },
-        "artistSeries.artists.name": (v3/*: any*/),
         "artistSeries.artists.id": {
-          "type": "ID",
           "enumValues": null,
+          "nullable": false,
           "plural": false,
-          "nullable": true
-        }
+          "type": "ID"
+        },
+        "artistSeries.artists.name": (v2/*: any*/),
+        "artistSeries.description": (v2/*: any*/),
+        "artistSeries.slug": (v3/*: any*/),
+        "artistSeries.title": (v3/*: any*/)
       }
     },
     "name": "ArtistSeriesMeta_TestQuery",

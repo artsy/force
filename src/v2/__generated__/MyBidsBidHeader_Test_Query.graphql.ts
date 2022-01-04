@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -64,22 +65,22 @@ v2 = {
   "storageKey": null
 },
 v3 = {
-  "type": "ID",
   "enumValues": null,
+  "nullable": false,
   "plural": false,
-  "nullable": true
+  "type": "String"
 },
 v4 = {
-  "type": "String",
   "enumValues": null,
+  "nullable": true,
   "plural": false,
-  "nullable": true
+  "type": "String"
 },
 v5 = {
-  "type": "String",
   "enumValues": null,
+  "nullable": false,
   "plural": false,
-  "nullable": false
+  "type": "ID"
 };
 return {
   "fragment": {
@@ -105,7 +106,8 @@ return {
         "storageKey": "sale(id:\"foo\")"
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -203,46 +205,42 @@ return {
     ]
   },
   "params": {
+    "cacheID": "734d3c4855db4c5048451c7e27560bf0",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "sale": {
-          "type": "Sale",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "Sale"
         },
-        "sale.id": (v3/*: any*/),
         "sale.coverImage": {
-          "type": "Image",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
-        },
-        "sale.formattedStartDateTime": (v4/*: any*/),
-        "sale.name": (v4/*: any*/),
-        "sale.partner": {
-          "type": "Partner",
-          "enumValues": null,
-          "plural": false,
-          "nullable": true
-        },
-        "sale.slug": {
-          "type": "ID",
-          "enumValues": null,
-          "plural": false,
-          "nullable": false
+          "type": "Image"
         },
         "sale.coverImage.cropped": {
-          "type": "CroppedImageUrl",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "CroppedImageUrl"
         },
+        "sale.coverImage.cropped.src": (v3/*: any*/),
+        "sale.coverImage.cropped.srcSet": (v3/*: any*/),
+        "sale.formattedStartDateTime": (v4/*: any*/),
+        "sale.id": (v5/*: any*/),
+        "sale.name": (v4/*: any*/),
+        "sale.partner": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Partner"
+        },
+        "sale.partner.id": (v5/*: any*/),
         "sale.partner.name": (v4/*: any*/),
-        "sale.partner.id": (v3/*: any*/),
-        "sale.coverImage.cropped.src": (v5/*: any*/),
-        "sale.coverImage.cropped.srcSet": (v5/*: any*/)
+        "sale.slug": (v5/*: any*/)
       }
     },
     "name": "MyBidsBidHeader_Test_Query",

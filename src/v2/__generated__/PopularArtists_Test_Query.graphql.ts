@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -50,10 +51,10 @@ var v0 = [
   }
 ],
 v1 = {
-  "type": "ID",
   "enumValues": null,
+  "nullable": false,
   "plural": false,
-  "nullable": false
+  "type": "ID"
 };
 return {
   "fragment": {
@@ -90,7 +91,8 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -191,48 +193,49 @@ return {
     ]
   },
   "params": {
+    "cacheID": "8a67856d2ac5c3c976471b862cdafef1",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "highlights": {
-          "type": "Highlights",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "Highlights"
         },
         "highlights.popular_artists": {
-          "type": "Artist",
           "enumValues": null,
+          "nullable": true,
           "plural": true,
-          "nullable": true
+          "type": "Artist"
         },
         "highlights.popular_artists.id": (v1/*: any*/),
-        "highlights.popular_artists.slug": (v1/*: any*/),
-        "highlights.popular_artists.internalID": (v1/*: any*/),
-        "highlights.popular_artists.name": {
-          "type": "String",
-          "enumValues": null,
-          "plural": false,
-          "nullable": true
-        },
         "highlights.popular_artists.image": {
-          "type": "Image",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "Image"
         },
         "highlights.popular_artists.image.cropped": {
-          "type": "CroppedImageUrl",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "CroppedImageUrl"
         },
         "highlights.popular_artists.image.cropped.url": {
-          "type": "String",
           "enumValues": null,
+          "nullable": false,
           "plural": false,
-          "nullable": false
-        }
+          "type": "String"
+        },
+        "highlights.popular_artists.internalID": (v1/*: any*/),
+        "highlights.popular_artists.name": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "String"
+        },
+        "highlights.popular_artists.slug": (v1/*: any*/)
       }
     },
     "name": "PopularArtists_Test_Query",

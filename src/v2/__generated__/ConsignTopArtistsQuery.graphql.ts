@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 export type ConsignTopArtistsQueryVariables = {};
@@ -184,7 +185,8 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -263,6 +265,7 @@ return {
     ]
   },
   "params": {
+    "cacheID": "560ea858932ea0d613dfd1e59c0cb483",
     "id": null,
     "metadata": {},
     "name": "ConsignTopArtistsQuery",

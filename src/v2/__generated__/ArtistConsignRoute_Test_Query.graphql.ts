@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -33,7 +34,7 @@ export type ArtistConsignRoute_Test_QueryRawResponse = {
                                 readonly url: string | null;
                                 readonly aspectRatio: number;
                             }) | null;
-                            readonly id: string | null;
+                            readonly id: string;
                             readonly imageTitle: string | null;
                             readonly title: string | null;
                             readonly href: string | null;
@@ -50,13 +51,13 @@ export type ArtistConsignRoute_Test_QueryRawResponse = {
                             readonly partner: ({
                                 readonly name: string | null;
                                 readonly href: string | null;
-                                readonly id: string | null;
+                                readonly id: string;
                                 readonly type: string | null;
                             }) | null;
                             readonly sale: ({
                                 readonly is_auction: boolean | null;
                                 readonly is_closed: boolean | null;
-                                readonly id: string | null;
+                                readonly id: string;
                                 readonly is_live_open: boolean | null;
                                 readonly is_open: boolean | null;
                                 readonly is_preview: boolean | null;
@@ -72,7 +73,7 @@ export type ArtistConsignRoute_Test_QueryRawResponse = {
                                 readonly opening_bid: ({
                                     readonly display: string | null;
                                 }) | null;
-                                readonly id: string | null;
+                                readonly id: string;
                             }) | null;
                             readonly is_inquireable: boolean | null;
                             readonly internalID: string;
@@ -92,7 +93,7 @@ export type ArtistConsignRoute_Test_QueryRawResponse = {
             }) | null;
             readonly isInMicrofunnel: boolean | null;
         }) | null;
-        readonly id: string | null;
+        readonly id: string;
     }) | null;
 };
 export type ArtistConsignRoute_Test_Query = {
@@ -336,8 +337,7 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "artistID",
-    "type": "String!"
+    "name": "artistID"
   }
 ],
 v1 = [
@@ -392,34 +392,28 @@ v7 = [
   }
 ],
 v8 = {
-  "type": "ID",
   "enumValues": null,
+  "nullable": true,
   "plural": false,
-  "nullable": true
+  "type": "String"
 },
 v9 = {
-  "type": "Boolean",
   "enumValues": null,
+  "nullable": false,
   "plural": false,
-  "nullable": true
+  "type": "ID"
 },
 v10 = {
-  "type": "String",
   "enumValues": null,
+  "nullable": true,
   "plural": false,
-  "nullable": true
+  "type": "Boolean"
 },
 v11 = {
-  "type": "ID",
   "enumValues": null,
+  "nullable": true,
   "plural": false,
-  "nullable": false
-},
-v12 = {
-  "type": "Int",
-  "enumValues": null,
-  "plural": false,
-  "nullable": true
+  "type": "Int"
 };
 return {
   "fragment": {
@@ -457,7 +451,8 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -891,167 +886,168 @@ return {
     ]
   },
   "params": {
+    "cacheID": "72869e6bdb1064ffe6ebae25fd42ac52",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "artist": {
-          "type": "Artist",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "Artist"
         },
+        "artist.href": (v8/*: any*/),
+        "artist.id": (v9/*: any*/),
+        "artist.name": (v8/*: any*/),
         "artist.targetSupply": {
-          "type": "ArtistTargetSupply",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "ArtistTargetSupply"
         },
-        "artist.id": (v8/*: any*/),
-        "artist.targetSupply.isInMicrofunnel": (v9/*: any*/),
-        "artist.name": (v10/*: any*/),
-        "artist.href": (v10/*: any*/),
+        "artist.targetSupply.isInMicrofunnel": (v10/*: any*/),
         "artist.targetSupply.microfunnel": {
-          "type": "ArtistTargetSupplyMicrofunnel",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "ArtistTargetSupplyMicrofunnel"
         },
         "artist.targetSupply.microfunnel.artworksConnection": {
-          "type": "ArtworkConnection",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
-        },
-        "artist.targetSupply.microfunnel.metadata": {
-          "type": "TargetSupplyMicrofunnelMetadata",
-          "enumValues": null,
-          "plural": false,
-          "nullable": true
+          "type": "ArtworkConnection"
         },
         "artist.targetSupply.microfunnel.artworksConnection.edges": {
-          "type": "ArtworkEdge",
           "enumValues": null,
+          "nullable": true,
           "plural": true,
-          "nullable": true
+          "type": "ArtworkEdge"
         },
-        "artist.targetSupply.microfunnel.metadata.roundedViews": (v10/*: any*/),
-        "artist.targetSupply.microfunnel.metadata.roundedUniqueVisitors": (v10/*: any*/),
-        "artist.targetSupply.microfunnel.metadata.highestRealized": (v10/*: any*/),
-        "artist.targetSupply.microfunnel.metadata.str": (v10/*: any*/),
-        "artist.targetSupply.microfunnel.metadata.realized": (v10/*: any*/),
         "artist.targetSupply.microfunnel.artworksConnection.edges.node": {
-          "type": "Artwork",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "Artwork"
         },
-        "artist.targetSupply.microfunnel.artworksConnection.edges.node.image": {
-          "type": "Image",
-          "enumValues": null,
-          "plural": false,
-          "nullable": true
-        },
-        "artist.targetSupply.microfunnel.artworksConnection.edges.node.id": (v11/*: any*/),
-        "artist.targetSupply.microfunnel.artworksConnection.edges.node.realizedPrice": (v10/*: any*/),
-        "artist.targetSupply.microfunnel.artworksConnection.edges.node.image.imageURL": (v10/*: any*/),
-        "artist.targetSupply.microfunnel.artworksConnection.edges.node.imageTitle": (v10/*: any*/),
-        "artist.targetSupply.microfunnel.artworksConnection.edges.node.title": (v10/*: any*/),
-        "artist.targetSupply.microfunnel.artworksConnection.edges.node.href": (v10/*: any*/),
-        "artist.targetSupply.microfunnel.artworksConnection.edges.node.is_saved": (v9/*: any*/),
-        "artist.targetSupply.microfunnel.artworksConnection.edges.node.image.resized": {
-          "type": "ResizedImageUrl",
-          "enumValues": null,
-          "plural": false,
-          "nullable": true
-        },
-        "artist.targetSupply.microfunnel.artworksConnection.edges.node.image.url": (v10/*: any*/),
-        "artist.targetSupply.microfunnel.artworksConnection.edges.node.image.aspectRatio": {
-          "type": "Float",
-          "enumValues": null,
-          "plural": false,
-          "nullable": false
-        },
-        "artist.targetSupply.microfunnel.artworksConnection.edges.node.internalID": (v11/*: any*/),
-        "artist.targetSupply.microfunnel.artworksConnection.edges.node.slug": (v11/*: any*/),
-        "artist.targetSupply.microfunnel.artworksConnection.edges.node.is_biddable": (v9/*: any*/),
-        "artist.targetSupply.microfunnel.artworksConnection.edges.node.sale": {
-          "type": "Sale",
-          "enumValues": null,
-          "plural": false,
-          "nullable": true
-        },
-        "artist.targetSupply.microfunnel.artworksConnection.edges.node.image.resized.width": (v12/*: any*/),
-        "artist.targetSupply.microfunnel.artworksConnection.edges.node.image.resized.height": (v12/*: any*/),
-        "artist.targetSupply.microfunnel.artworksConnection.edges.node.image.resized.url": {
-          "type": "String",
-          "enumValues": null,
-          "plural": false,
-          "nullable": false
-        },
-        "artist.targetSupply.microfunnel.artworksConnection.edges.node.date": (v10/*: any*/),
-        "artist.targetSupply.microfunnel.artworksConnection.edges.node.sale_message": (v10/*: any*/),
-        "artist.targetSupply.microfunnel.artworksConnection.edges.node.cultural_maker": (v10/*: any*/),
         "artist.targetSupply.microfunnel.artworksConnection.edges.node.artists": {
-          "type": "Artist",
           "enumValues": null,
+          "nullable": true,
           "plural": true,
-          "nullable": true
+          "type": "Artist"
         },
-        "artist.targetSupply.microfunnel.artworksConnection.edges.node.collecting_institution": (v10/*: any*/),
+        "artist.targetSupply.microfunnel.artworksConnection.edges.node.artists.href": (v8/*: any*/),
+        "artist.targetSupply.microfunnel.artworksConnection.edges.node.artists.id": (v9/*: any*/),
+        "artist.targetSupply.microfunnel.artworksConnection.edges.node.artists.name": (v8/*: any*/),
+        "artist.targetSupply.microfunnel.artworksConnection.edges.node.collecting_institution": (v8/*: any*/),
+        "artist.targetSupply.microfunnel.artworksConnection.edges.node.cultural_maker": (v8/*: any*/),
+        "artist.targetSupply.microfunnel.artworksConnection.edges.node.date": (v8/*: any*/),
+        "artist.targetSupply.microfunnel.artworksConnection.edges.node.href": (v8/*: any*/),
+        "artist.targetSupply.microfunnel.artworksConnection.edges.node.id": (v9/*: any*/),
+        "artist.targetSupply.microfunnel.artworksConnection.edges.node.image": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Image"
+        },
+        "artist.targetSupply.microfunnel.artworksConnection.edges.node.image.aspectRatio": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": false,
+          "type": "Float"
+        },
+        "artist.targetSupply.microfunnel.artworksConnection.edges.node.image.imageURL": (v8/*: any*/),
+        "artist.targetSupply.microfunnel.artworksConnection.edges.node.image.resized": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "ResizedImageUrl"
+        },
+        "artist.targetSupply.microfunnel.artworksConnection.edges.node.image.resized.height": (v11/*: any*/),
+        "artist.targetSupply.microfunnel.artworksConnection.edges.node.image.resized.url": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": false,
+          "type": "String"
+        },
+        "artist.targetSupply.microfunnel.artworksConnection.edges.node.image.resized.width": (v11/*: any*/),
+        "artist.targetSupply.microfunnel.artworksConnection.edges.node.image.url": (v8/*: any*/),
+        "artist.targetSupply.microfunnel.artworksConnection.edges.node.imageTitle": (v8/*: any*/),
+        "artist.targetSupply.microfunnel.artworksConnection.edges.node.internalID": (v9/*: any*/),
+        "artist.targetSupply.microfunnel.artworksConnection.edges.node.is_biddable": (v10/*: any*/),
+        "artist.targetSupply.microfunnel.artworksConnection.edges.node.is_inquireable": (v10/*: any*/),
+        "artist.targetSupply.microfunnel.artworksConnection.edges.node.is_saved": (v10/*: any*/),
         "artist.targetSupply.microfunnel.artworksConnection.edges.node.partner": {
-          "type": "Partner",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "Partner"
         },
+        "artist.targetSupply.microfunnel.artworksConnection.edges.node.partner.href": (v8/*: any*/),
+        "artist.targetSupply.microfunnel.artworksConnection.edges.node.partner.id": (v9/*: any*/),
+        "artist.targetSupply.microfunnel.artworksConnection.edges.node.partner.name": (v8/*: any*/),
+        "artist.targetSupply.microfunnel.artworksConnection.edges.node.partner.type": (v8/*: any*/),
+        "artist.targetSupply.microfunnel.artworksConnection.edges.node.realizedPrice": (v8/*: any*/),
+        "artist.targetSupply.microfunnel.artworksConnection.edges.node.sale": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Sale"
+        },
+        "artist.targetSupply.microfunnel.artworksConnection.edges.node.sale.display_timely_at": (v8/*: any*/),
+        "artist.targetSupply.microfunnel.artworksConnection.edges.node.sale.id": (v9/*: any*/),
+        "artist.targetSupply.microfunnel.artworksConnection.edges.node.sale.is_auction": (v10/*: any*/),
+        "artist.targetSupply.microfunnel.artworksConnection.edges.node.sale.is_closed": (v10/*: any*/),
+        "artist.targetSupply.microfunnel.artworksConnection.edges.node.sale.is_live_open": (v10/*: any*/),
+        "artist.targetSupply.microfunnel.artworksConnection.edges.node.sale.is_open": (v10/*: any*/),
+        "artist.targetSupply.microfunnel.artworksConnection.edges.node.sale.is_preview": (v10/*: any*/),
         "artist.targetSupply.microfunnel.artworksConnection.edges.node.sale_artwork": {
-          "type": "SaleArtwork",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "SaleArtwork"
         },
-        "artist.targetSupply.microfunnel.artworksConnection.edges.node.is_inquireable": (v9/*: any*/),
-        "artist.targetSupply.microfunnel.artworksConnection.edges.node.sale.is_preview": (v9/*: any*/),
-        "artist.targetSupply.microfunnel.artworksConnection.edges.node.sale.display_timely_at": (v10/*: any*/),
-        "artist.targetSupply.microfunnel.artworksConnection.edges.node.sale.id": (v8/*: any*/),
-        "artist.targetSupply.microfunnel.artworksConnection.edges.node.artists.id": (v11/*: any*/),
-        "artist.targetSupply.microfunnel.artworksConnection.edges.node.artists.href": (v10/*: any*/),
-        "artist.targetSupply.microfunnel.artworksConnection.edges.node.artists.name": (v10/*: any*/),
-        "artist.targetSupply.microfunnel.artworksConnection.edges.node.partner.name": (v10/*: any*/),
-        "artist.targetSupply.microfunnel.artworksConnection.edges.node.partner.href": (v10/*: any*/),
-        "artist.targetSupply.microfunnel.artworksConnection.edges.node.partner.id": (v8/*: any*/),
-        "artist.targetSupply.microfunnel.artworksConnection.edges.node.sale.is_auction": (v9/*: any*/),
-        "artist.targetSupply.microfunnel.artworksConnection.edges.node.sale.is_closed": (v9/*: any*/),
         "artist.targetSupply.microfunnel.artworksConnection.edges.node.sale_artwork.counts": {
-          "type": "SaleArtworkCounts",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "SaleArtworkCounts"
+        },
+        "artist.targetSupply.microfunnel.artworksConnection.edges.node.sale_artwork.counts.bidder_positions": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "FormattedNumber"
         },
         "artist.targetSupply.microfunnel.artworksConnection.edges.node.sale_artwork.highest_bid": {
-          "type": "SaleArtworkHighestBid",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "SaleArtworkHighestBid"
         },
+        "artist.targetSupply.microfunnel.artworksConnection.edges.node.sale_artwork.highest_bid.display": (v8/*: any*/),
+        "artist.targetSupply.microfunnel.artworksConnection.edges.node.sale_artwork.id": (v9/*: any*/),
         "artist.targetSupply.microfunnel.artworksConnection.edges.node.sale_artwork.opening_bid": {
-          "type": "SaleArtworkOpeningBid",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "SaleArtworkOpeningBid"
         },
-        "artist.targetSupply.microfunnel.artworksConnection.edges.node.sale_artwork.id": (v8/*: any*/),
-        "artist.targetSupply.microfunnel.artworksConnection.edges.node.sale.is_live_open": (v9/*: any*/),
-        "artist.targetSupply.microfunnel.artworksConnection.edges.node.sale.is_open": (v9/*: any*/),
-        "artist.targetSupply.microfunnel.artworksConnection.edges.node.partner.type": (v10/*: any*/),
-        "artist.targetSupply.microfunnel.artworksConnection.edges.node.sale_artwork.counts.bidder_positions": {
-          "type": "FormattedNumber",
+        "artist.targetSupply.microfunnel.artworksConnection.edges.node.sale_artwork.opening_bid.display": (v8/*: any*/),
+        "artist.targetSupply.microfunnel.artworksConnection.edges.node.sale_message": (v8/*: any*/),
+        "artist.targetSupply.microfunnel.artworksConnection.edges.node.slug": (v9/*: any*/),
+        "artist.targetSupply.microfunnel.artworksConnection.edges.node.title": (v8/*: any*/),
+        "artist.targetSupply.microfunnel.metadata": {
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "TargetSupplyMicrofunnelMetadata"
         },
-        "artist.targetSupply.microfunnel.artworksConnection.edges.node.sale_artwork.highest_bid.display": (v10/*: any*/),
-        "artist.targetSupply.microfunnel.artworksConnection.edges.node.sale_artwork.opening_bid.display": (v10/*: any*/)
+        "artist.targetSupply.microfunnel.metadata.highestRealized": (v8/*: any*/),
+        "artist.targetSupply.microfunnel.metadata.realized": (v8/*: any*/),
+        "artist.targetSupply.microfunnel.metadata.roundedUniqueVisitors": (v8/*: any*/),
+        "artist.targetSupply.microfunnel.metadata.roundedViews": (v8/*: any*/),
+        "artist.targetSupply.microfunnel.metadata.str": (v8/*: any*/)
       }
     },
     "name": "ArtistConsignRoute_Test_Query",
