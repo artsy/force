@@ -1,6 +1,6 @@
 import { useState, useMemo, useRef, useEffect } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { AlgoliaResults_system } from "v2/__generated__/AlgoliaResults_system.graphql"
+import { Search2Results_system } from "v2/__generated__/Search2Results_system.graphql"
 import algoliasearch from "algoliasearch"
 import {
   InstantSearch,
@@ -9,28 +9,32 @@ import {
   connectStateResults,
 } from "react-instantsearch-core"
 import { useRouter } from "v2/System/Router/useRouter"
-import { AlgoliaIndicesFragmentContainer } from "./Components/AlgoliaIndices"
-import { AlgoliaPagination } from "./Components/AlgoliaPagination"
+import { Search2IndicesFragmentContainer } from "./Components/Search2Indices"
+import { Search2Pagination } from "./Components/Search2Pagination"
 import {
   ANCHOR_CONTAINER_ID,
   HITS_PER_PAGE,
   DEBOUNCE_TIME,
 } from "../../constants"
 import { Box } from "@artsy/palette"
-import { createURL, searchStateToUrl, urlToSearchState } from "../../Utils/url"
-import { AlgoliaResultsListFragmentContainer } from "./Components/AlgoliaResultsList"
-import { AlgoliaResultsMeta } from "./Components/AlgoliaResultsMeta"
+import {
+  createURL,
+  searchStateToUrl,
+  urlToSearchState,
+} from "v2/Apps/Search2/Utils/url"
+import { Search2ResultsListFragmentContainer } from "./Components/Search2ResultsList"
+import { Search2ResultsMeta } from "./Components/Search2ResultsMeta"
 
-interface AlgoliaResultsProps {
-  system: AlgoliaResults_system
+interface Search2ResultsProps {
+  system: Search2Results_system
 }
 
-const ConnectedAlgoliaPagination = connectPagination(AlgoliaPagination)
-const ConnectedAlgoliaResults = connectStateResults(
-  AlgoliaResultsListFragmentContainer
+const ConnectedSearch2Pagination = connectPagination(Search2Pagination)
+const ConnectedSearch2Results = connectStateResults(
+  Search2ResultsListFragmentContainer
 )
 
-export const AlgoliaResults: React.FC<AlgoliaResultsProps> = ({ system }) => {
+export const Search2Results: React.FC<Search2ResultsProps> = ({ system }) => {
   const { algolia } = system
   const { match } = useRouter()
   const [searchState, setSearchState] = useState(
@@ -83,19 +87,19 @@ export const AlgoliaResults: React.FC<AlgoliaResultsProps> = ({ system }) => {
         onSearchStateChange={onSearchStateChange}
         createURL={createURL}
       >
-        <AlgoliaResultsMeta />
+        <Search2ResultsMeta />
         <Configure
           hitsPerPage={HITS_PER_PAGE}
           query={searchState.query ?? ""}
         />
         <Box id={ANCHOR_CONTAINER_ID} />
-        <AlgoliaIndicesFragmentContainer
+        <Search2IndicesFragmentContainer
           algolia={algolia}
           selectedIndiceName={selectedIndice.name}
           onClick={handleIndiceSelect}
         />
-        <ConnectedAlgoliaResults algolia={algolia} />
-        <ConnectedAlgoliaPagination />
+        <ConnectedSearch2Results algolia={algolia} />
+        <ConnectedSearch2Pagination />
       </InstantSearch>
     )
   }
@@ -103,11 +107,11 @@ export const AlgoliaResults: React.FC<AlgoliaResultsProps> = ({ system }) => {
   return null
 }
 
-export const AlgoliaResultsFragmentContainer = createFragmentContainer(
-  AlgoliaResults,
+export const Search2ResultsFragmentContainer = createFragmentContainer(
+  Search2Results,
   {
     system: graphql`
-      fragment AlgoliaResults_system on System {
+      fragment Search2Results_system on System {
         algolia {
           apiKey
           appID
@@ -115,8 +119,8 @@ export const AlgoliaResultsFragmentContainer = createFragmentContainer(
             displayName
             name
           }
-          ...AlgoliaIndices_algolia
-          ...AlgoliaResultsList_algolia
+          ...Search2Indices_algolia
+          ...Search2ResultsList_algolia
         }
       }
     `,

@@ -1,21 +1,21 @@
 import { fireEvent, screen } from "@testing-library/react"
 import { graphql } from "relay-runtime"
 import { setupTestWrapperTL } from "v2/DevTools/setupTestWrapper"
-import { AlgoliaIndicesFragmentContainer } from "../AlgoliaIndices"
+import { Search2IndicesFragmentContainer } from "../Search2Indices"
 import {
-  AlgoliaIndices_Test_Query,
-  AlgoliaIndices_Test_QueryRawResponse,
-} from "v2/__generated__/AlgoliaIndices_Test_Query.graphql"
+  Search2Indices_Test_Query,
+  Search2Indices_Test_QueryRawResponse,
+} from "v2/__generated__/Search2Indices_Test_Query.graphql"
 
 jest.unmock("react-relay")
 
 const onClickMock = jest.fn()
 
-const { renderWithRelay } = setupTestWrapperTL<AlgoliaIndices_Test_Query>({
+const { renderWithRelay } = setupTestWrapperTL<Search2Indices_Test_Query>({
   Component: ({ system }) => {
     if (system?.algolia) {
       return (
-        <AlgoliaIndicesFragmentContainer
+        <Search2IndicesFragmentContainer
           algolia={system.algolia}
           selectedIndiceName="indice_one"
           onClick={onClickMock}
@@ -26,17 +26,17 @@ const { renderWithRelay } = setupTestWrapperTL<AlgoliaIndices_Test_Query>({
     return null
   },
   query: graphql`
-    query AlgoliaIndices_Test_Query @raw_response_type {
+    query Search2Indices_Test_Query @raw_response_type {
       system {
         algolia {
-          ...AlgoliaIndices_algolia
+          ...Search2Indices_algolia
         }
       }
     }
   `,
 })
 
-describe("AlgoliaIndices", () => {
+describe("Search2Indices", () => {
   beforeEach(() => {
     onClickMock.mockClear()
   })
@@ -66,7 +66,7 @@ describe("AlgoliaIndices", () => {
 })
 
 const AlgoliaIndicesFixture: NonNullable<
-  AlgoliaIndices_Test_QueryRawResponse["system"]
+  Search2Indices_Test_QueryRawResponse["system"]
 >["algolia"] = {
   indices: [
     {

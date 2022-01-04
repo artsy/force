@@ -1,14 +1,14 @@
 import { createFragmentContainer, graphql } from "react-relay"
-import { AlgoliaIndices_algolia } from "v2/__generated__/AlgoliaIndices_algolia.graphql"
+import { Search2Indices_algolia } from "v2/__generated__/Search2Indices_algolia.graphql"
 import { Box, Pill, Swiper } from "@artsy/palette"
 
-interface AlgoliaIndicesProps {
-  algolia: AlgoliaIndices_algolia | null
+interface Search2IndicesProps {
+  algolia: Search2Indices_algolia | null
   selectedIndiceName: string
   onClick: (index: number) => void
 }
 
-export const AlgoliaIndices: React.FC<AlgoliaIndicesProps> = ({
+export const Search2Indices: React.FC<Search2IndicesProps> = ({
   algolia,
   selectedIndiceName,
   onClick,
@@ -38,11 +38,11 @@ export const AlgoliaIndices: React.FC<AlgoliaIndicesProps> = ({
   )
 }
 
-export const AlgoliaIndicesFragmentContainer = createFragmentContainer(
-  AlgoliaIndices,
+export const Search2IndicesFragmentContainer = createFragmentContainer(
+  Search2Indices,
   {
     algolia: graphql`
-      fragment AlgoliaIndices_algolia on Algolia {
+      fragment Search2Indices_algolia on Algolia {
         indices {
           displayName
           key

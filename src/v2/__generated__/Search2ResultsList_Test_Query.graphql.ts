@@ -3,46 +3,44 @@
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type AlgoliaIndices_Test_QueryVariables = {};
-export type AlgoliaIndices_Test_QueryResponse = {
+export type Search2ResultsList_Test_QueryVariables = {};
+export type Search2ResultsList_Test_QueryResponse = {
     readonly system: {
         readonly algolia: {
-            readonly " $fragmentRefs": FragmentRefs<"AlgoliaIndices_algolia">;
+            readonly " $fragmentRefs": FragmentRefs<"Search2ResultsList_algolia">;
         } | null;
     } | null;
 };
-export type AlgoliaIndices_Test_QueryRawResponse = {
+export type Search2ResultsList_Test_QueryRawResponse = {
     readonly system: ({
         readonly algolia: ({
             readonly indices: ReadonlyArray<{
                 readonly displayName: string;
-                readonly key: string;
                 readonly name: string;
             }>;
         }) | null;
     }) | null;
 };
-export type AlgoliaIndices_Test_Query = {
-    readonly response: AlgoliaIndices_Test_QueryResponse;
-    readonly variables: AlgoliaIndices_Test_QueryVariables;
-    readonly rawResponse: AlgoliaIndices_Test_QueryRawResponse;
+export type Search2ResultsList_Test_Query = {
+    readonly response: Search2ResultsList_Test_QueryResponse;
+    readonly variables: Search2ResultsList_Test_QueryVariables;
+    readonly rawResponse: Search2ResultsList_Test_QueryRawResponse;
 };
 
 
 
 /*
-query AlgoliaIndices_Test_Query {
+query Search2ResultsList_Test_Query {
   system {
     algolia {
-      ...AlgoliaIndices_algolia
+      ...Search2ResultsList_algolia
     }
   }
 }
 
-fragment AlgoliaIndices_algolia on Algolia {
+fragment Search2ResultsList_algolia on Algolia {
   indices {
     displayName
-    key
     name
   }
 }
@@ -53,7 +51,7 @@ const node: ConcreteRequest = {
     "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
-    "name": "AlgoliaIndices_Test_Query",
+    "name": "Search2ResultsList_Test_Query",
     "selections": [
       {
         "alias": null,
@@ -74,7 +72,7 @@ const node: ConcreteRequest = {
               {
                 "args": null,
                 "kind": "FragmentSpread",
-                "name": "AlgoliaIndices_algolia"
+                "name": "Search2ResultsList_algolia"
               }
             ],
             "storageKey": null
@@ -89,7 +87,7 @@ const node: ConcreteRequest = {
   "operation": {
     "argumentDefinitions": [],
     "kind": "Operation",
-    "name": "AlgoliaIndices_Test_Query",
+    "name": "Search2ResultsList_Test_Query",
     "selections": [
       {
         "alias": null,
@@ -126,13 +124,6 @@ const node: ConcreteRequest = {
                     "alias": null,
                     "args": null,
                     "kind": "ScalarField",
-                    "name": "key",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
                     "name": "name",
                     "storageKey": null
                   }
@@ -150,10 +141,10 @@ const node: ConcreteRequest = {
   "params": {
     "id": null,
     "metadata": {},
-    "name": "AlgoliaIndices_Test_Query",
+    "name": "Search2ResultsList_Test_Query",
     "operationKind": "query",
-    "text": "query AlgoliaIndices_Test_Query {\n  system {\n    algolia {\n      ...AlgoliaIndices_algolia\n    }\n  }\n}\n\nfragment AlgoliaIndices_algolia on Algolia {\n  indices {\n    displayName\n    key\n    name\n  }\n}\n"
+    "text": "query Search2ResultsList_Test_Query {\n  system {\n    algolia {\n      ...Search2ResultsList_algolia\n    }\n  }\n}\n\nfragment Search2ResultsList_algolia on Algolia {\n  indices {\n    displayName\n    name\n  }\n}\n"
   }
 };
-(node as any).hash = 'c8c9cea2b43afe976bced36a23a9a626';
+(node as any).hash = 'e75a6a204e1f7701e2889e8a2a758380';
 export default node;

@@ -1,7 +1,6 @@
 import { AppRouteConfig } from "v2/System/Router/Route"
 import { aboutRoutes } from "./Apps/_About2/aboutRoutes"
 import { articlesRoutes } from "v2/Apps/Articles/articlesRoutes"
-import { algoliaRoutes } from "./Apps/Algolia/algoliaRoutes"
 import { artistRoutes } from "v2/Apps/Artist/artistRoutes"
 import { artistSeriesRoutes } from "v2/Apps/ArtistSeries/artistSeriesRoutes"
 import { artistsRoutes } from "v2/Apps/Artists/artistsRoutes"
@@ -35,6 +34,7 @@ import { paymentRoutes } from "v2/Apps/Payment/paymentRoutes"
 import { priceDatabaseRoutes } from "./Apps/PriceDatabase/priceDatabaseRoutes"
 import { purchaseRoutes } from "v2/Apps/Purchase/purchaseRoutes"
 import { searchRoutes } from "v2/Apps/Search/searchRoutes"
+import { search2Routes } from "./Apps/Search2/search2Routes"
 import { securityRoutes } from "./Apps/_Security/securityRoutes"
 import { settingsRoutes } from "v2/Apps/Settings/settingsRoutes"
 import { shippingRoutes } from "v2/Apps/Shipping/shippingRoutes"
@@ -48,7 +48,6 @@ import { worksForYouRoutes } from "./Apps/_WorksForYou2/worksForYouRoutes"
 
 export function getAppRoutes(): AppRouteConfig[] {
   return buildAppRoutes([
-    { routes: algoliaRoutes },
     { routes: aboutRoutes },
     { routes: articlesRoutes },
     { routes: artistRoutes },
@@ -82,6 +81,7 @@ export function getAppRoutes(): AppRouteConfig[] {
     { routes: priceDatabaseRoutes },
     { routes: purchaseRoutes },
     { routes: searchRoutes },
+    { routes: search2Routes },
     { routes: securityRoutes },
     { routes: settingsRoutes },
     { routes: shippingRoutes },

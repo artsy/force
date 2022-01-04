@@ -3,18 +3,18 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type AlgoliaIndices_algolia = {
+export type Search2Indices_algolia = {
     readonly indices: ReadonlyArray<{
         readonly displayName: string;
         readonly key: string;
         readonly name: string;
     }>;
-    readonly " $refType": "AlgoliaIndices_algolia";
+    readonly " $refType": "Search2Indices_algolia";
 };
-export type AlgoliaIndices_algolia$data = AlgoliaIndices_algolia;
-export type AlgoliaIndices_algolia$key = {
-    readonly " $data"?: AlgoliaIndices_algolia$data;
-    readonly " $fragmentRefs": FragmentRefs<"AlgoliaIndices_algolia">;
+export type Search2Indices_algolia$data = Search2Indices_algolia;
+export type Search2Indices_algolia$key = {
+    readonly " $data"?: Search2Indices_algolia$data;
+    readonly " $fragmentRefs": FragmentRefs<"Search2Indices_algolia">;
 };
 
 
@@ -23,7 +23,7 @@ const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "AlgoliaIndices_algolia",
+  "name": "Search2Indices_algolia",
   "selections": [
     {
       "alias": null,
@@ -60,5 +60,5 @@ const node: ReaderFragment = {
   ],
   "type": "Algolia"
 };
-(node as any).hash = '86b12e44c92ee453eba5ac03b860ed5b';
+(node as any).hash = 'ae32ce9c5cd5d9e96fa6e11fa51ee52b';
 export default node;

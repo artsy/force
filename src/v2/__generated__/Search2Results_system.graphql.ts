@@ -3,7 +3,7 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type AlgoliaResults_system = {
+export type Search2Results_system = {
     readonly algolia: {
         readonly apiKey: string;
         readonly appID: string;
@@ -11,14 +11,14 @@ export type AlgoliaResults_system = {
             readonly displayName: string;
             readonly name: string;
         }>;
-        readonly " $fragmentRefs": FragmentRefs<"AlgoliaIndices_algolia" | "AlgoliaResultsList_algolia">;
+        readonly " $fragmentRefs": FragmentRefs<"Search2Indices_algolia" | "Search2ResultsList_algolia">;
     } | null;
-    readonly " $refType": "AlgoliaResults_system";
+    readonly " $refType": "Search2Results_system";
 };
-export type AlgoliaResults_system$data = AlgoliaResults_system;
-export type AlgoliaResults_system$key = {
-    readonly " $data"?: AlgoliaResults_system$data;
-    readonly " $fragmentRefs": FragmentRefs<"AlgoliaResults_system">;
+export type Search2Results_system$data = Search2Results_system;
+export type Search2Results_system$key = {
+    readonly " $data"?: Search2Results_system$data;
+    readonly " $fragmentRefs": FragmentRefs<"Search2Results_system">;
 };
 
 
@@ -27,7 +27,7 @@ const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "AlgoliaResults_system",
+  "name": "Search2Results_system",
   "selections": [
     {
       "alias": null,
@@ -79,12 +79,12 @@ const node: ReaderFragment = {
         {
           "args": null,
           "kind": "FragmentSpread",
-          "name": "AlgoliaIndices_algolia"
+          "name": "Search2Indices_algolia"
         },
         {
           "args": null,
           "kind": "FragmentSpread",
-          "name": "AlgoliaResultsList_algolia"
+          "name": "Search2ResultsList_algolia"
         }
       ],
       "storageKey": null
@@ -92,5 +92,5 @@ const node: ReaderFragment = {
   ],
   "type": "System"
 };
-(node as any).hash = '9141a695bf21bea53a4c4ba17be9ccdb';
+(node as any).hash = '81bd2f9ba691b6f07a5af2f2668e0abb';
 export default node;

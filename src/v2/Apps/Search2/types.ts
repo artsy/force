@@ -1,4 +1,4 @@
-export interface ArtistAlgoliaHit {
+export interface ArtistSearch2Hit {
   alternate_names?: string[] | null
   featured_names?: string[] | null
   nationality?: string[]
@@ -8,35 +8,35 @@ export interface ArtistAlgoliaHit {
   search_boost?: number
 }
 
-export interface FairAlgoliaHit {
+export interface FairSearch2Hit {
   city?: string | null
 }
 
-export interface ArticleAlgoliaHit {
+export interface ArticleSearch2Hit {
   author?: string
   description?: string
   tags?: string[]
   featured?: boolean
 }
 
-export interface AuctionAlgoliaHit {
+export interface AuctionSearch2Hit {
   start_at_i?: number
   start_at?: string
 }
 
-export interface ArtistSeriesAlgoliaHit {
+export interface ArtistSeriesSearch2Hit {
   keyword?: string | null
   category?: string | null
   search_boost?: number
 }
 
-export interface CollectionAlgoliaHit {
+export interface CollectionSearch2Hit {
   keyword?: string | null
   category?: string | null
   search_boost?: number
 }
 
-export interface ShowAlgoliaHit {
+export interface ShowSearch2Hit {
   venue?: string
   city?: string | null
   active?: boolean
@@ -44,22 +44,22 @@ export interface ShowAlgoliaHit {
   search_boost?: number
 }
 
-export interface GalleryAlgoliaHit {
+export interface GallerySearch2Hit {
   name?: string
   alternate_names?: string[] | null
   featured_names?: string[] | null
   search_boost?: number
 }
 
-export interface AlgoliaHit
-  extends ArtistAlgoliaHit,
-    FairAlgoliaHit,
-    ArticleAlgoliaHit,
-    AuctionAlgoliaHit,
-    ArtistSeriesAlgoliaHit,
-    CollectionAlgoliaHit,
-    ShowAlgoliaHit,
-    GalleryAlgoliaHit {
+export interface Search2Hit
+  extends ArtistSearch2Hit,
+    FairSearch2Hit,
+    ArticleSearch2Hit,
+    AuctionSearch2Hit,
+    ArtistSeriesSearch2Hit,
+    CollectionSearch2Hit,
+    ShowSearch2Hit,
+    GallerySearch2Hit {
   name: string
   image_url: string | null
   href: string
