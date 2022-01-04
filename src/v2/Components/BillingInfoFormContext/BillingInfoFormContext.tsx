@@ -37,6 +37,6 @@ function FormContext(
   )
 }
 
-export const BillingInfoFormContext = forwardRef<BillingInfoFormProps>(
+export const BillingInfoFormContextProvider = forwardRef<BillingInfoFormProps>(
   FormContext
 ) as React.ForwardRefExoticComponent<BillingInfoFormProps>

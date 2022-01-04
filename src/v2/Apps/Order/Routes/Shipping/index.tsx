@@ -74,7 +74,7 @@ import {
   ContextModule,
   OwnerType,
 } from "@artsy/cohesion"
-import { BillingInfoFormContext } from "v2/Components/BillingInfoFormContext"
+import { BillingInfoFormContextProvider } from "v2/Components/BillingInfoFormContext"
 import { Form } from "formik"
 
 export interface ShippingProps extends SystemContextProps {
@@ -617,7 +617,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
               </Collapse>
 
               <Collapse data-test="addressFormCollapse" open={showAddressForm}>
-                <BillingInfoFormContext
+                <BillingInfoFormContextProvider
                   ref={this.state.formRef}
                   formKeys={["addressWithPhone"]}
                   initialValues={{
@@ -652,7 +652,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
                       <Spacer mt={4} />
                     </Form>
                   )}
-                </BillingInfoFormContext>
+                </BillingInfoFormContextProvider>
               </Collapse>
 
               <Collapse

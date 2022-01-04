@@ -2,7 +2,7 @@ import { useState } from "react"
 import * as React from "react"
 import { Button, Modal, Spacer, Text } from "@artsy/palette"
 import {
-  BillingInfoFormContext,
+  BillingInfoFormContextProvider,
   BillingInfoFormValues,
 } from "v2/Components/BillingInfoFormContext"
 import { AddressForm } from "../AddressForm"
@@ -159,7 +159,7 @@ export const PaymentModal: React.FC<PaymentModalProps> = props => {
   }
   return (
     <Modal isWide title="Add credit card" show={show} onClose={closeModal}>
-      <BillingInfoFormContext
+      <BillingInfoFormContextProvider
         onSubmit={(values, actions) => addCreditCard(values, actions)}
         formKeys={["address"]}
       >
@@ -187,7 +187,7 @@ export const PaymentModal: React.FC<PaymentModalProps> = props => {
             </Button>
           </Form>
         )}
-      </BillingInfoFormContext>
+      </BillingInfoFormContextProvider>
     </Modal>
   )
 }

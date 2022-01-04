@@ -9,7 +9,7 @@ import { ConditionsOfSaleCheckbox } from "v2/Components/Auction/ConditionsOfSale
 import {
   BillingInfoFormValues,
   BillingInfoWithTerms,
-  BillingInfoFormContext,
+  BillingInfoFormContextProvider,
 } from "v2/Components/BillingInfoFormContext"
 import {
   OnSubmitValidationError,
@@ -32,7 +32,7 @@ export const RegistrationForm: React.FC<RegistrationFormProps> = ({
   needsIdentityVerification,
 }) => {
   return (
-    <BillingInfoFormContext
+    <BillingInfoFormContextProvider
       formKeys={["addressWithPhone", "agreeToTerms", "creditCard"]}
       onSubmit={onSubmit}
     >
@@ -89,6 +89,6 @@ export const RegistrationForm: React.FC<RegistrationFormProps> = ({
           />
         </Form>
       )}
-    </BillingInfoFormContext>
+    </BillingInfoFormContextProvider>
   )
 }

@@ -26,7 +26,7 @@ import { CreateUserAddressMutationResponse } from "v2/__generated__/CreateUserAd
 import {
   BillingInfo,
   BillingInfoFormValues,
-  BillingInfoFormContext,
+  BillingInfoFormContextProvider,
 } from "v2/Components/BillingInfoFormContext"
 
 export interface ModalDetails {
@@ -159,7 +159,7 @@ export const AddressModal: React.FC<Props> = ({
         onClose={handleModalClose}
         modalWidth={ModalWidth.Wide}
       >
-        <BillingInfoFormContext
+        <BillingInfoFormContextProvider
           onSubmit={onSubmit}
           initialValues={{ address: { ...address } }} // Spread to avoid immutability issues on changes
           formKeys={["addressWithPhone"]}
@@ -209,7 +209,7 @@ export const AddressModal: React.FC<Props> = ({
               </Button>
             </Form>
           )}
-        </BillingInfoFormContext>
+        </BillingInfoFormContextProvider>
       </Modal>
       <Dialog
         title="Delete address?"

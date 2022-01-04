@@ -40,7 +40,7 @@ import {
 } from "v2/System/SystemContext"
 import { createStripeWrapper } from "v2/Utils/createStripeWrapper"
 import { isNull, mergeWith } from "lodash"
-import { BillingInfoFormContext } from "v2/Components/BillingInfoFormContext"
+import { BillingInfoFormContextProvider } from "v2/Components/BillingInfoFormContext"
 import { Form } from "formik"
 
 export interface StripeProps {
@@ -279,7 +279,7 @@ export class PaymentPicker extends React.Component<
 
         <Collapse open={this.state.creditCardSelection.type === "new"}>
           {userHasExistingCards && <Spacer mb={2} />}
-          <BillingInfoFormContext
+          <BillingInfoFormContextProvider
             ref={this.state.formRef}
             formKeys={["address"]}
             onSubmit={() => {}}
@@ -330,7 +330,7 @@ export class PaymentPicker extends React.Component<
                 </Flex>
               </Form>
             )}
-          </BillingInfoFormContext>
+          </BillingInfoFormContextProvider>
         </Collapse>
       </>
     )

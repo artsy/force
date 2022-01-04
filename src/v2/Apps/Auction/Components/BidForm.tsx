@@ -33,7 +33,7 @@ import {
   getSelectedBid,
 } from "v2/Apps/Auction/Components/Utils/helpers"
 import {
-  BillingInfoFormContext,
+  BillingInfoFormContextProvider,
   BillingInfoWithBid,
   BillingInfoFormKeys,
 } from "v2/Components/BillingInfoFormContext"
@@ -93,7 +93,7 @@ export const BidForm: React.FC<Props> = ({
     : registeredUsers
 
   return (
-    <BillingInfoFormContext
+    <BillingInfoFormContextProvider
       formKeys={formKeys}
       initialValues={{ selectedBid }}
       onSubmit={onSubmit}
@@ -191,7 +191,7 @@ export const BidForm: React.FC<Props> = ({
           />
         </Form>
       )}
-    </BillingInfoFormContext>
+    </BillingInfoFormContextProvider>
   )
 }
 
