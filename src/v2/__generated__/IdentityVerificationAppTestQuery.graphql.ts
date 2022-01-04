@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -18,9 +17,9 @@ export type IdentityVerificationAppTestQueryRawResponse = {
             readonly internalID: string;
             readonly userID: string;
             readonly state: string;
-            readonly id: string;
+            readonly id: string | null;
         }) | null;
-        readonly id: string;
+        readonly id: string | null;
     }) | null;
 };
 export type IdentityVerificationAppTestQuery = {
@@ -74,16 +73,22 @@ v2 = {
   "storageKey": null
 },
 v3 = {
+  "type": "ID",
   "enumValues": null,
-  "nullable": false,
   "plural": false,
-  "type": "ID"
+  "nullable": true
 },
 v4 = {
+  "type": "ID",
   "enumValues": null,
-  "nullable": false,
   "plural": false,
-  "type": "String"
+  "nullable": false
+},
+v5 = {
+  "type": "String",
+  "enumValues": null,
+  "plural": false,
+  "nullable": false
 };
 return {
   "fragment": {
@@ -109,8 +114,7 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query",
-    "abstractKey": null
+    "type": "Query"
   },
   "kind": "Request",
   "operation": {
@@ -168,34 +172,33 @@ return {
     ]
   },
   "params": {
-    "cacheID": "8b65aa859d5eb88e45e38bd744455251",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "me": {
+          "type": "Me",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "Me"
-        },
-        "me.email": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "String"
+          "nullable": true
         },
         "me.id": (v3/*: any*/),
-        "me.identityVerification": {
+        "me.internalID": (v4/*: any*/),
+        "me.email": {
+          "type": "String",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "IdentityVerification"
+          "nullable": true
         },
-        "me.identityVerification.id": (v3/*: any*/),
-        "me.identityVerification.internalID": (v3/*: any*/),
-        "me.identityVerification.state": (v4/*: any*/),
-        "me.identityVerification.userID": (v4/*: any*/),
-        "me.internalID": (v3/*: any*/)
+        "me.identityVerification": {
+          "type": "IdentityVerification",
+          "enumValues": null,
+          "plural": false,
+          "nullable": true
+        },
+        "me.identityVerification.internalID": (v4/*: any*/),
+        "me.identityVerification.userID": (v5/*: any*/),
+        "me.identityVerification.state": (v5/*: any*/),
+        "me.identityVerification.id": (v3/*: any*/)
       }
     },
     "name": "IdentityVerificationAppTestQuery",

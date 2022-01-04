@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -31,14 +30,12 @@ query orderRoutes_RejectQuery(
 }
 
 fragment ArtworkSummaryItem_order on CommerceOrder {
-  __isCommerceOrder: __typename
   sellerDetails {
     __typename
     ... on Partner {
       name
     }
     ... on Node {
-      __isNode: __typename
       id
     }
     ... on User {
@@ -67,7 +64,6 @@ fragment ArtworkSummaryItem_order on CommerceOrder {
 }
 
 fragment Reject_order on CommerceOrder {
-  __isCommerceOrder: __typename
   internalID
   stateExpiresAt
   lineItems {
@@ -97,7 +93,8 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "orderID"
+    "name": "orderID",
+    "type": "ID!"
   }
 ],
 v1 = [
@@ -127,10 +124,7 @@ v4 = {
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
-},
-v5 = [
-  (v4/*: any*/)
-];
+};
 return {
   "fragment": {
     "argumentDefinitions": (v0/*: any*/),
@@ -155,8 +149,7 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query",
-    "abstractKey": null
+    "type": "Query"
   },
   "kind": "Request",
   "operation": {
@@ -173,10 +166,6 @@ return {
         "plural": false,
         "selections": [
           (v2/*: any*/),
-          {
-            "kind": "TypeDiscriminator",
-            "abstractKey": "__isCommerceOrder"
-          },
           (v3/*: any*/),
           {
             "alias": null,
@@ -310,6 +299,7 @@ return {
             "plural": false,
             "selections": [
               (v2/*: any*/),
+              (v4/*: any*/),
               {
                 "kind": "InlineFragment",
                 "selections": [
@@ -321,20 +311,7 @@ return {
                     "storageKey": null
                   }
                 ],
-                "type": "Partner",
-                "abstractKey": null
-              },
-              {
-                "kind": "InlineFragment",
-                "selections": (v5/*: any*/),
-                "type": "Node",
-                "abstractKey": "__isNode"
-              },
-              {
-                "kind": "InlineFragment",
-                "selections": (v5/*: any*/),
-                "type": "User",
-                "abstractKey": null
+                "type": "Partner"
               }
             ],
             "storageKey": null
@@ -364,8 +341,7 @@ return {
                 "storageKey": null
               }
             ],
-            "type": "CommerceOfferOrder",
-            "abstractKey": null
+            "type": "CommerceOfferOrder"
           }
         ],
         "storageKey": null
@@ -373,12 +349,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "6f494e321f0f3d765fb025cf3b01b00b",
     "id": null,
     "metadata": {},
     "name": "orderRoutes_RejectQuery",
     "operationKind": "query",
-    "text": "query orderRoutes_RejectQuery(\n  $orderID: ID!\n) {\n  order: commerceOrder(id: $orderID) {\n    __typename\n    ...Reject_order\n    id\n  }\n}\n\nfragment ArtworkSummaryItem_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  sellerDetails {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on User {\n      id\n    }\n  }\n  lineItems {\n    edges {\n      node {\n        artwork {\n          artistNames\n          title\n          date\n          shippingOrigin\n          image {\n            resized_ArtworkSummaryItem: resized(width: 55) {\n              url\n            }\n          }\n          id\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment Reject_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  internalID\n  stateExpiresAt\n  lineItems {\n    edges {\n      node {\n        artwork {\n          slug\n          id\n        }\n        id\n      }\n    }\n  }\n  ... on CommerceOfferOrder {\n    lastOffer {\n      internalID\n      createdAt\n      id\n    }\n  }\n  ...ArtworkSummaryItem_order\n}\n"
+    "text": "query orderRoutes_RejectQuery(\n  $orderID: ID!\n) {\n  order: commerceOrder(id: $orderID) {\n    __typename\n    ...Reject_order\n    id\n  }\n}\n\nfragment ArtworkSummaryItem_order on CommerceOrder {\n  sellerDetails {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on Node {\n      id\n    }\n    ... on User {\n      id\n    }\n  }\n  lineItems {\n    edges {\n      node {\n        artwork {\n          artistNames\n          title\n          date\n          shippingOrigin\n          image {\n            resized_ArtworkSummaryItem: resized(width: 55) {\n              url\n            }\n          }\n          id\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment Reject_order on CommerceOrder {\n  internalID\n  stateExpiresAt\n  lineItems {\n    edges {\n      node {\n        artwork {\n          slug\n          id\n        }\n        id\n      }\n    }\n  }\n  ... on CommerceOfferOrder {\n    lastOffer {\n      internalID\n      createdAt\n      id\n    }\n  }\n  ...ArtworkSummaryItem_order\n}\n"
   }
 };
 })();

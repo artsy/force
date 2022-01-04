@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -71,7 +70,6 @@ fragment SearchResultsArtists_viewer_2zsz5P on Viewer {
           bio
         }
         ... on Node {
-          __isNode: __typename
           id
         }
       }
@@ -85,12 +83,14 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "keyword"
+    "name": "keyword",
+    "type": "String!"
   },
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "page"
+    "name": "page",
+    "type": "Int"
   }
 ],
 v1 = {
@@ -154,8 +154,7 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query",
-    "abstractKey": null
+    "type": "Query"
   },
   "kind": "Request",
   "operation": {
@@ -294,6 +293,13 @@ return {
                         "storageKey": null
                       },
                       {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "id",
+                        "storageKey": null
+                      },
+                      {
                         "kind": "InlineFragment",
                         "selections": [
                           {
@@ -332,22 +338,7 @@ return {
                             "storageKey": null
                           }
                         ],
-                        "type": "Artist",
-                        "abstractKey": null
-                      },
-                      {
-                        "kind": "InlineFragment",
-                        "selections": [
-                          {
-                            "alias": null,
-                            "args": null,
-                            "kind": "ScalarField",
-                            "name": "id",
-                            "storageKey": null
-                          }
-                        ],
-                        "type": "Node",
-                        "abstractKey": "__isNode"
+                        "type": "Artist"
                       }
                     ],
                     "storageKey": null
@@ -364,12 +355,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "85cbc8bf5ec2caf0406fafdf8ea33743",
     "id": null,
     "metadata": {},
     "name": "searchRoutes_SearchResultsArtistsQuery",
     "operationKind": "query",
-    "text": "query searchRoutes_SearchResultsArtistsQuery(\n  $keyword: String!\n  $page: Int\n) {\n  viewer {\n    ...SearchResultsArtists_viewer_2zsz5P\n  }\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n\nfragment SearchResultsArtists_viewer_2zsz5P on Viewer {\n  searchConnection(query: $keyword, first: 10, page: $page, entities: [ARTIST]) @principalField {\n    pageInfo {\n      hasNextPage\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    edges {\n      node {\n        __typename\n        ... on Artist {\n          name\n          internalID\n          href\n          imageUrl\n          bio\n        }\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n      }\n    }\n  }\n}\n"
+    "text": "query searchRoutes_SearchResultsArtistsQuery(\n  $keyword: String!\n  $page: Int\n) {\n  viewer {\n    ...SearchResultsArtists_viewer_2zsz5P\n  }\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n\nfragment SearchResultsArtists_viewer_2zsz5P on Viewer {\n  searchConnection(query: $keyword, first: 10, page: $page, entities: [ARTIST]) @principalField {\n    pageInfo {\n      hasNextPage\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    edges {\n      node {\n        __typename\n        ... on Artist {\n          name\n          internalID\n          href\n          imageUrl\n          bio\n        }\n        ... on Node {\n          id\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();

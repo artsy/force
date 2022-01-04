@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -35,10 +34,10 @@ fragment SettingsEditSettingsInformation_me on Me {
 
 const node: ConcreteRequest = (function(){
 var v0 = {
+  "type": "String",
   "enumValues": null,
-  "nullable": true,
   "plural": false,
-  "type": "String"
+  "nullable": true
 };
 return {
   "fragment": {
@@ -64,8 +63,7 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query",
-    "abstractKey": null
+    "type": "Query"
   },
   "kind": "Request",
   "operation": {
@@ -122,23 +120,22 @@ return {
     ]
   },
   "params": {
-    "cacheID": "91824ee31706e1ce1a02ef530fad7257",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "me": {
+          "type": "Me",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "Me"
+          "nullable": true
+        },
+        "me.id": {
+          "type": "ID",
+          "enumValues": null,
+          "plural": false,
+          "nullable": true
         },
         "me.email": (v0/*: any*/),
-        "me.id": {
-          "enumValues": null,
-          "nullable": false,
-          "plural": false,
-          "type": "ID"
-        },
         "me.name": (v0/*: any*/),
         "me.paddleNumber": (v0/*: any*/),
         "me.phone": (v0/*: any*/)

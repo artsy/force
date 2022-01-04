@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -95,34 +94,34 @@ v3 = {
   "storageKey": null
 },
 v4 = {
+  "type": "ID",
   "enumValues": null,
-  "nullable": true,
   "plural": false,
-  "type": "String"
+  "nullable": true
 },
 v5 = {
+  "type": "String",
   "enumValues": null,
-  "nullable": false,
   "plural": false,
-  "type": "ID"
+  "nullable": true
 },
 v6 = {
+  "type": "CroppedImageUrl",
   "enumValues": null,
-  "nullable": true,
   "plural": false,
-  "type": "CroppedImageUrl"
+  "nullable": true
 },
 v7 = {
+  "type": "String",
   "enumValues": null,
-  "nullable": false,
   "plural": false,
-  "type": "Int"
+  "nullable": false
 },
 v8 = {
+  "type": "Int",
   "enumValues": null,
-  "nullable": false,
   "plural": false,
-  "type": "String"
+  "nullable": false
 };
 return {
   "fragment": {
@@ -148,8 +147,7 @@ return {
         "storageKey": "fair(id:\"example\")"
       }
     ],
-    "type": "Query",
-    "abstractKey": null
+    "type": "Query"
   },
   "kind": "Request",
   "operation": {
@@ -275,44 +273,43 @@ return {
     ]
   },
   "params": {
-    "cacheID": "8349d265a9eecfe9bbfe968af32acedc",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "fair": {
+          "type": "Fair",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "Fair"
+          "nullable": true
         },
-        "fair.exhibitionPeriod": (v4/*: any*/),
-        "fair.id": (v5/*: any*/),
-        "fair.name": (v4/*: any*/),
+        "fair.id": (v4/*: any*/),
+        "fair.name": (v5/*: any*/),
+        "fair.exhibitionPeriod": (v5/*: any*/),
         "fair.profile": {
+          "type": "Profile",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "Profile"
+          "nullable": true
         },
         "fair.profile.icon": {
+          "type": "Image",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "Image"
+          "nullable": true
         },
+        "fair.profile.id": (v4/*: any*/),
         "fair.profile.icon.desktop": (v6/*: any*/),
-        "fair.profile.icon.desktop.size": (v7/*: any*/),
-        "fair.profile.icon.desktop.src": (v8/*: any*/),
-        "fair.profile.icon.desktop.srcSet": (v8/*: any*/),
         "fair.profile.icon.mobile": (v6/*: any*/),
-        "fair.profile.icon.mobile.size": (v7/*: any*/),
-        "fair.profile.icon.mobile.src": (v8/*: any*/),
-        "fair.profile.icon.mobile.srcSet": (v8/*: any*/),
         "fair.profile.icon.sticky": (v6/*: any*/),
-        "fair.profile.icon.sticky.size": (v7/*: any*/),
-        "fair.profile.icon.sticky.src": (v8/*: any*/),
-        "fair.profile.icon.sticky.srcSet": (v8/*: any*/),
-        "fair.profile.id": (v5/*: any*/)
+        "fair.profile.icon.desktop.src": (v7/*: any*/),
+        "fair.profile.icon.desktop.srcSet": (v7/*: any*/),
+        "fair.profile.icon.desktop.size": (v8/*: any*/),
+        "fair.profile.icon.mobile.src": (v7/*: any*/),
+        "fair.profile.icon.mobile.srcSet": (v7/*: any*/),
+        "fair.profile.icon.mobile.size": (v8/*: any*/),
+        "fair.profile.icon.sticky.src": (v7/*: any*/),
+        "fair.profile.icon.sticky.srcSet": (v7/*: any*/),
+        "fair.profile.icon.sticky.size": (v8/*: any*/)
       }
     },
     "name": "FairHeader_Test_Query",

@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -42,8 +41,7 @@ const node: ReaderFragment = {
       "name": "FairTimer_fair"
     }
   ],
-  "type": "Fair",
-  "abstractKey": null
+  "type": "Fair"
 };
 (node as any).hash = '648a39c0f14cfdc5bd31a80ef0b4d532';
 export default node;

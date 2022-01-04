@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 export type ConfirmPasswordInput = {
@@ -43,7 +42,8 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "input"
+    "name": "input",
+    "type": "ConfirmPasswordInput!"
   }
 ],
 v1 = [
@@ -79,8 +79,7 @@ return {
     "metadata": null,
     "name": "ConfirmPasswordMutation",
     "selections": (v1/*: any*/),
-    "type": "Mutation",
-    "abstractKey": null
+    "type": "Mutation"
   },
   "kind": "Request",
   "operation": {
@@ -90,7 +89,6 @@ return {
     "selections": (v1/*: any*/)
   },
   "params": {
-    "cacheID": "17c95e53e5559d703015b84ac558ffaa",
     "id": null,
     "metadata": {},
     "name": "ConfirmPasswordMutation",

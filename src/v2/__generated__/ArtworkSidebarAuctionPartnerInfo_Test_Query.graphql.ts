@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -14,18 +13,18 @@ export type ArtworkSidebarAuctionPartnerInfo_Test_QueryRawResponse = {
     readonly artwork: ({
         readonly partner: ({
             readonly name: string | null;
-            readonly id: string;
+            readonly id: string | null;
         }) | null;
         readonly sale_artwork: ({
             readonly estimate: string | null;
-            readonly id: string;
+            readonly id: string | null;
         }) | null;
         readonly sale: ({
             readonly internalID: string;
             readonly is_closed: boolean | null;
-            readonly id: string;
+            readonly id: string | null;
         }) | null;
-        readonly id: string;
+        readonly id: string | null;
     }) | null;
 };
 export type ArtworkSidebarAuctionPartnerInfo_Test_Query = {
@@ -77,16 +76,16 @@ v1 = {
   "storageKey": null
 },
 v2 = {
+  "type": "ID",
   "enumValues": null,
-  "nullable": false,
   "plural": false,
-  "type": "ID"
+  "nullable": true
 },
 v3 = {
+  "type": "String",
   "enumValues": null,
-  "nullable": true,
   "plural": false,
-  "type": "String"
+  "nullable": true
 };
 return {
   "fragment": {
@@ -112,8 +111,7 @@ return {
         "storageKey": "artwork(id:\"auction_artwork_estimate_premium\")"
       }
     ],
-    "type": "Query",
-    "abstractKey": null
+    "type": "Query"
   },
   "kind": "Request",
   "operation": {
@@ -200,47 +198,51 @@ return {
     ]
   },
   "params": {
-    "cacheID": "f6cc3b67662fcadcaad2db702ba3a9fb",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "artwork": {
+          "type": "Artwork",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "Artwork"
+          "nullable": true
         },
         "artwork.id": (v2/*: any*/),
         "artwork.partner": {
+          "type": "Partner",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "Partner"
-        },
-        "artwork.partner.id": (v2/*: any*/),
-        "artwork.partner.name": (v3/*: any*/),
-        "artwork.sale": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "Sale"
-        },
-        "artwork.sale.id": (v2/*: any*/),
-        "artwork.sale.internalID": (v2/*: any*/),
-        "artwork.sale.is_closed": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "Boolean"
+          "nullable": true
         },
         "artwork.sale_artwork": {
+          "type": "SaleArtwork",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "SaleArtwork"
+          "nullable": true
         },
+        "artwork.sale": {
+          "type": "Sale",
+          "enumValues": null,
+          "plural": false,
+          "nullable": true
+        },
+        "artwork.partner.name": (v3/*: any*/),
+        "artwork.partner.id": (v2/*: any*/),
         "artwork.sale_artwork.estimate": (v3/*: any*/),
-        "artwork.sale_artwork.id": (v2/*: any*/)
+        "artwork.sale_artwork.id": (v2/*: any*/),
+        "artwork.sale.internalID": {
+          "type": "ID",
+          "enumValues": null,
+          "plural": false,
+          "nullable": false
+        },
+        "artwork.sale.is_closed": {
+          "type": "Boolean",
+          "enumValues": null,
+          "plural": false,
+          "nullable": true
+        },
+        "artwork.sale.id": (v2/*: any*/)
       }
     },
     "name": "ArtworkSidebarAuctionPartnerInfo_Test_Query",

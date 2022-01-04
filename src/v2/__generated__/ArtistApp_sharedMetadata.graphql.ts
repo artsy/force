@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -302,8 +301,7 @@ return {
       "storageKey": "biographyBlurb(format:\"HTML\",partnerBio:false)"
     }
   ],
-  "type": "Artist",
-  "abstractKey": null
+  "type": "Artist"
 };
 })();
 (node as any).hash = 'd8ed25b0f0386b0abc35b684cc1e72ec';

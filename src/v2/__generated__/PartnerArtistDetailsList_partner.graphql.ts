@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -29,14 +28,16 @@ export type PartnerArtistDetailsList_partner$key = {
 const node: ReaderFragment = {
   "argumentDefinitions": [
     {
-      "defaultValue": null,
-      "kind": "LocalArgument",
-      "name": "after"
-    },
-    {
       "defaultValue": 3,
       "kind": "LocalArgument",
-      "name": "first"
+      "name": "first",
+      "type": "Int"
+    },
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "after",
+      "type": "String"
     }
   ],
   "kind": "Fragment",
@@ -182,8 +183,7 @@ const node: ReaderFragment = {
       "storageKey": "__PartnerArtistDetailsList_artists_connection(displayOnPartnerProfile:true,hasPublishedArtworks:true)"
     }
   ],
-  "type": "Partner",
-  "abstractKey": null
+  "type": "Partner"
 };
 (node as any).hash = '5d4d6e70b06363b805148e223f96606d';
 export default node;

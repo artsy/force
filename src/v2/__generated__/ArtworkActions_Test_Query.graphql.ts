@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -145,40 +144,46 @@ v5 = {
   "storageKey": null
 },
 v6 = {
+  "type": "ID",
   "enumValues": null,
-  "nullable": false,
   "plural": false,
-  "type": "ID"
+  "nullable": false
 },
 v7 = {
+  "type": "String",
   "enumValues": null,
-  "nullable": true,
   "plural": false,
-  "type": "String"
+  "nullable": true
 },
 v8 = {
+  "type": "Boolean",
   "enumValues": null,
-  "nullable": true,
   "plural": false,
-  "type": "Float"
+  "nullable": true
 },
 v9 = {
+  "type": "ID",
   "enumValues": null,
-  "nullable": true,
   "plural": false,
-  "type": "Int"
+  "nullable": true
 },
 v10 = {
+  "type": "Int",
   "enumValues": null,
-  "nullable": false,
   "plural": false,
-  "type": "String"
+  "nullable": true
 },
 v11 = {
+  "type": "Float",
   "enumValues": null,
-  "nullable": true,
   "plural": false,
-  "type": "Boolean"
+  "nullable": true
+},
+v12 = {
+  "type": "String",
+  "enumValues": null,
+  "plural": false,
+  "nullable": false
 };
 return {
   "fragment": {
@@ -204,8 +209,7 @@ return {
         "storageKey": "artwork(id:\"example\")"
       }
     ],
-    "type": "Query",
-    "abstractKey": null
+    "type": "Query"
   },
   "kind": "Request",
   "operation": {
@@ -493,101 +497,95 @@ return {
     ]
   },
   "params": {
-    "cacheID": "f2125650812c713d81ea5c2665ada4c2",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "artwork": {
+          "type": "Artwork",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "Artwork"
+          "nullable": true
         },
+        "artwork.id": (v6/*: any*/),
         "artwork.artists": {
+          "type": "Artist",
           "enumValues": null,
-          "nullable": true,
           "plural": true,
-          "type": "Artist"
+          "nullable": true
         },
-        "artwork.artists.id": (v6/*: any*/),
-        "artwork.artists.name": (v7/*: any*/),
-        "artwork.artworkMeta": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "ArtworkMeta"
-        },
-        "artwork.artworkMeta.share": (v7/*: any*/),
         "artwork.date": (v7/*: any*/),
         "artwork.dimensions": {
+          "type": "dimensions",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "dimensions"
+          "nullable": true
         },
-        "artwork.dimensions.cm": (v7/*: any*/),
-        "artwork.downloadableImageUrl": (v7/*: any*/),
-        "artwork.heightCm": (v8/*: any*/),
-        "artwork.href": (v7/*: any*/),
-        "artwork.id": (v6/*: any*/),
-        "artwork.image": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "Image"
-        },
-        "artwork.image.height": (v9/*: any*/),
-        "artwork.image.internalID": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "ID"
-        },
-        "artwork.image.resized": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "ResizedImageUrl"
-        },
-        "artwork.image.resized.height": (v9/*: any*/),
-        "artwork.image.resized.src": (v10/*: any*/),
-        "artwork.image.resized.srcSet": (v10/*: any*/),
-        "artwork.image.resized.width": (v9/*: any*/),
-        "artwork.image.url": (v7/*: any*/),
-        "artwork.image.width": (v9/*: any*/),
-        "artwork.images": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": true,
-          "type": "Image"
-        },
-        "artwork.images.url": (v7/*: any*/),
-        "artwork.internalID": (v6/*: any*/),
-        "artwork.is_downloadable": (v11/*: any*/),
-        "artwork.is_hangable": (v11/*: any*/),
-        "artwork.is_saved": (v11/*: any*/),
-        "artwork.partner": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "Partner"
-        },
-        "artwork.partner.id": (v6/*: any*/),
-        "artwork.partner.slug": (v6/*: any*/),
-        "artwork.sale": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "Sale"
-        },
-        "artwork.sale.id": (v6/*: any*/),
-        "artwork.sale.isAuction": (v11/*: any*/),
-        "artwork.sale.isClosed": (v11/*: any*/),
-        "artwork.sale.is_auction": (v11/*: any*/),
-        "artwork.sale.is_closed": (v11/*: any*/),
         "artwork.slug": (v6/*: any*/),
+        "artwork.image": {
+          "type": "Image",
+          "enumValues": null,
+          "plural": false,
+          "nullable": true
+        },
+        "artwork.downloadableImageUrl": (v7/*: any*/),
+        "artwork.is_downloadable": (v8/*: any*/),
+        "artwork.is_hangable": (v8/*: any*/),
+        "artwork.partner": {
+          "type": "Partner",
+          "enumValues": null,
+          "plural": false,
+          "nullable": true
+        },
         "artwork.title": (v7/*: any*/),
-        "artwork.widthCm": (v8/*: any*/)
+        "artwork.sale": {
+          "type": "Sale",
+          "enumValues": null,
+          "plural": false,
+          "nullable": true
+        },
+        "artwork.is_saved": (v8/*: any*/),
+        "artwork.internalID": (v6/*: any*/),
+        "artwork.href": (v7/*: any*/),
+        "artwork.images": {
+          "type": "Image",
+          "enumValues": null,
+          "plural": true,
+          "nullable": true
+        },
+        "artwork.artworkMeta": {
+          "type": "ArtworkMeta",
+          "enumValues": null,
+          "plural": false,
+          "nullable": true
+        },
+        "artwork.artists.name": (v7/*: any*/),
+        "artwork.artists.id": (v9/*: any*/),
+        "artwork.dimensions.cm": (v7/*: any*/),
+        "artwork.image.internalID": (v9/*: any*/),
+        "artwork.image.url": (v7/*: any*/),
+        "artwork.image.height": (v10/*: any*/),
+        "artwork.image.width": (v10/*: any*/),
+        "artwork.partner.slug": (v6/*: any*/),
+        "artwork.partner.id": (v9/*: any*/),
+        "artwork.sale.is_closed": (v8/*: any*/),
+        "artwork.sale.is_auction": (v8/*: any*/),
+        "artwork.sale.id": (v9/*: any*/),
+        "artwork.sale.isAuction": (v8/*: any*/),
+        "artwork.sale.isClosed": (v8/*: any*/),
+        "artwork.images.url": (v7/*: any*/),
+        "artwork.artworkMeta.share": (v7/*: any*/),
+        "artwork.widthCm": (v11/*: any*/),
+        "artwork.heightCm": (v11/*: any*/),
+        "artwork.image.resized": {
+          "type": "ResizedImageUrl",
+          "enumValues": null,
+          "plural": false,
+          "nullable": true
+        },
+        "artwork.image.resized.src": (v12/*: any*/),
+        "artwork.image.resized.srcSet": (v12/*: any*/),
+        "artwork.image.resized.width": (v10/*: any*/),
+        "artwork.image.resized.height": (v10/*: any*/)
       }
     },
     "name": "ArtworkActions_Test_Query",

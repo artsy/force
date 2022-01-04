@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 export type PartnerClassification = "AUCTION" | "BRAND" | "DEMO" | "GALLERY" | "INSTITUTION" | "INSTITUTIONAL_SELLER" | "PRIVATE_COLLECTOR" | "PRIVATE_DEALER" | "%future added value";
@@ -49,22 +48,26 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "near"
+    "name": "near",
+    "type": "String"
   },
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "partnerCategories"
+    "name": "partnerCategories",
+    "type": "[String]"
   },
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "term"
+    "name": "term",
+    "type": "String"
   },
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "type"
+    "name": "type",
+    "type": "[PartnerClassification]"
   }
 ],
 v1 = [
@@ -170,8 +173,7 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query",
-    "abstractKey": null
+    "type": "Query"
   },
   "kind": "Request",
   "operation": {
@@ -214,7 +216,6 @@ return {
     ]
   },
   "params": {
-    "cacheID": "ae0dd24054f0bb323a02c978f9f32965",
     "id": null,
     "metadata": {},
     "name": "PartnersSearchQuery",

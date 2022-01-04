@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -43,26 +42,30 @@ export type WorksForYouArtistFeed_viewer$key = {
 const node: ReaderFragment = {
   "argumentDefinitions": [
     {
-      "defaultValue": "",
-      "kind": "LocalArgument",
-      "name": "artistID"
-    },
-    {
       "defaultValue": 10,
       "kind": "LocalArgument",
-      "name": "count"
+      "name": "count",
+      "type": "Int"
     },
     {
       "defaultValue": null,
       "kind": "LocalArgument",
-      "name": "cursor"
+      "name": "cursor",
+      "type": "String"
+    },
+    {
+      "defaultValue": "",
+      "kind": "LocalArgument",
+      "name": "artistID",
+      "type": "String!"
     },
     {
       "defaultValue": [
         "IS_FOR_SALE"
       ],
       "kind": "LocalArgument",
-      "name": "filter"
+      "name": "filter",
+      "type": "[ArtistArtworksFilters]"
     }
   ],
   "kind": "Fragment",
@@ -273,8 +276,7 @@ const node: ReaderFragment = {
       "storageKey": null
     }
   ],
-  "type": "Viewer",
-  "abstractKey": null
+  "type": "Viewer"
 };
 (node as any).hash = '108ebf12e061723fcad5a9f85fc4d787';
 export default node;

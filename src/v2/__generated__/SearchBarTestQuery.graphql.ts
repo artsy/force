@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -21,16 +20,14 @@ export type SearchBarTestQueryRawResponse = {
                     readonly displayLabel: string | null;
                     readonly href: string | null;
                     readonly __typename: "SearchableItem";
-                    readonly __isNode: "SearchableItem";
-                    readonly id: string;
+                    readonly id: string | null;
                     readonly displayType: string | null;
                     readonly slug: string;
                 } | {
                     readonly displayLabel: string | null;
                     readonly href: string | null;
                     readonly __typename: "Artist";
-                    readonly __isNode: "Artist";
-                    readonly id: string;
+                    readonly id: string | null;
                     readonly statuses: ({
                         readonly artworks: boolean | null;
                         readonly auctionLots: boolean | null;
@@ -39,8 +36,7 @@ export type SearchBarTestQueryRawResponse = {
                     readonly displayLabel: string | null;
                     readonly href: string | null;
                     readonly __typename: string;
-                    readonly __isNode: string;
-                    readonly id: string;
+                    readonly id: string | null;
                 }) | null;
             }) | null> | null;
         }) | null;
@@ -82,7 +78,6 @@ fragment SearchBar_viewer_2Mejjw on Viewer {
           }
         }
         ... on Node {
-          __isNode: __typename
           id
         }
       }
@@ -92,46 +87,35 @@ fragment SearchBar_viewer_2Mejjw on Viewer {
 */
 
 const node: ConcreteRequest = (function(){
-var v0 = {
-  "defaultValue": null,
-  "kind": "LocalArgument",
-  "name": "hasTerm"
-},
+var v0 = [
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "term",
+    "type": "String!"
+  },
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "hasTerm",
+    "type": "Boolean!"
+  }
+],
 v1 = {
-  "defaultValue": null,
-  "kind": "LocalArgument",
-  "name": "term"
+  "type": "String",
+  "enumValues": null,
+  "plural": false,
+  "nullable": true
 },
 v2 = {
+  "type": "Boolean",
   "enumValues": null,
-  "nullable": false,
   "plural": false,
-  "type": "String"
-},
-v3 = {
-  "enumValues": null,
-  "nullable": true,
-  "plural": false,
-  "type": "String"
-},
-v4 = {
-  "enumValues": null,
-  "nullable": false,
-  "plural": false,
-  "type": "ID"
-},
-v5 = {
-  "enumValues": null,
-  "nullable": true,
-  "plural": false,
-  "type": "Boolean"
+  "nullable": true
 };
 return {
   "fragment": {
-    "argumentDefinitions": [
-      (v0/*: any*/),
-      (v1/*: any*/)
-    ],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
     "name": "SearchBarTestQuery",
@@ -164,15 +148,11 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query",
-    "abstractKey": null
+    "type": "Query"
   },
   "kind": "Request",
   "operation": {
-    "argumentDefinitions": [
-      (v1/*: any*/),
-      (v0/*: any*/)
-    ],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
     "name": "SearchBarTestQuery",
     "selections": [
@@ -251,6 +231,13 @@ return {
                             "storageKey": null
                           },
                           {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "id",
+                            "storageKey": null
+                          },
+                          {
                             "kind": "InlineFragment",
                             "selections": [
                               {
@@ -268,8 +255,7 @@ return {
                                 "storageKey": null
                               }
                             ],
-                            "type": "SearchableItem",
-                            "abstractKey": null
+                            "type": "SearchableItem"
                           },
                           {
                             "kind": "InlineFragment",
@@ -300,22 +286,7 @@ return {
                                 "storageKey": null
                               }
                             ],
-                            "type": "Artist",
-                            "abstractKey": null
-                          },
-                          {
-                            "kind": "InlineFragment",
-                            "selections": [
-                              {
-                                "alias": null,
-                                "args": null,
-                                "kind": "ScalarField",
-                                "name": "id",
-                                "storageKey": null
-                              }
-                            ],
-                            "type": "Node",
-                            "abstractKey": "__isNode"
+                            "type": "Artist"
                           }
                         ],
                         "storageKey": null
@@ -334,54 +305,67 @@ return {
     ]
   },
   "params": {
-    "cacheID": "087ca3eef11b9ccc476afc30872654bd",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "viewer": {
+          "type": "Viewer",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "Viewer"
+          "nullable": true
         },
         "viewer.searchConnection": {
+          "type": "SearchableConnection",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "SearchableConnection"
+          "nullable": true
         },
         "viewer.searchConnection.edges": {
+          "type": "SearchableEdge",
           "enumValues": null,
-          "nullable": true,
           "plural": true,
-          "type": "SearchableEdge"
+          "nullable": true
         },
         "viewer.searchConnection.edges.node": {
+          "type": "Searchable",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "Searchable"
+          "nullable": true
         },
-        "viewer.searchConnection.edges.node.__isNode": (v2/*: any*/),
-        "viewer.searchConnection.edges.node.__typename": (v2/*: any*/),
-        "viewer.searchConnection.edges.node.displayLabel": (v3/*: any*/),
-        "viewer.searchConnection.edges.node.displayType": (v3/*: any*/),
-        "viewer.searchConnection.edges.node.href": (v3/*: any*/),
-        "viewer.searchConnection.edges.node.id": (v4/*: any*/),
-        "viewer.searchConnection.edges.node.slug": (v4/*: any*/),
+        "viewer.searchConnection.edges.node.displayLabel": (v1/*: any*/),
+        "viewer.searchConnection.edges.node.href": (v1/*: any*/),
+        "viewer.searchConnection.edges.node.__typename": {
+          "type": "String",
+          "enumValues": null,
+          "plural": false,
+          "nullable": false
+        },
+        "viewer.searchConnection.edges.node.displayType": (v1/*: any*/),
+        "viewer.searchConnection.edges.node.slug": {
+          "type": "ID",
+          "enumValues": null,
+          "plural": false,
+          "nullable": false
+        },
         "viewer.searchConnection.edges.node.statuses": {
+          "type": "ArtistStatuses",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "ArtistStatuses"
+          "nullable": true
         },
-        "viewer.searchConnection.edges.node.statuses.artworks": (v5/*: any*/),
-        "viewer.searchConnection.edges.node.statuses.auctionLots": (v5/*: any*/)
+        "viewer.searchConnection.edges.node.id": {
+          "type": "ID",
+          "enumValues": null,
+          "plural": false,
+          "nullable": true
+        },
+        "viewer.searchConnection.edges.node.statuses.artworks": (v2/*: any*/),
+        "viewer.searchConnection.edges.node.statuses.auctionLots": (v2/*: any*/)
       }
     },
     "name": "SearchBarTestQuery",
     "operationKind": "query",
-    "text": "query SearchBarTestQuery(\n  $term: String!\n  $hasTerm: Boolean!\n) {\n  viewer {\n    ...SearchBar_viewer_2Mejjw\n  }\n}\n\nfragment SearchBar_viewer_2Mejjw on Viewer {\n  searchConnection(query: $term, mode: AUTOSUGGEST, first: 7) @include(if: $hasTerm) {\n    edges {\n      node {\n        displayLabel\n        href\n        __typename\n        ... on SearchableItem {\n          displayType\n          slug\n        }\n        ... on Artist {\n          statuses {\n            artworks\n            auctionLots\n          }\n        }\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n      }\n    }\n  }\n}\n"
+    "text": "query SearchBarTestQuery(\n  $term: String!\n  $hasTerm: Boolean!\n) {\n  viewer {\n    ...SearchBar_viewer_2Mejjw\n  }\n}\n\nfragment SearchBar_viewer_2Mejjw on Viewer {\n  searchConnection(query: $term, mode: AUTOSUGGEST, first: 7) @include(if: $hasTerm) {\n    edges {\n      node {\n        displayLabel\n        href\n        __typename\n        ... on SearchableItem {\n          displayType\n          slug\n        }\n        ... on Artist {\n          statuses {\n            artworks\n            auctionLots\n          }\n        }\n        ... on Node {\n          id\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();

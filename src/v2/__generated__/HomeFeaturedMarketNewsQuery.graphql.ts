@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -133,8 +132,7 @@ return {
         "storageKey": "articles(featured:true,published:true,sort:\"PUBLISHED_AT_DESC\")"
       }
     ],
-    "type": "Query",
-    "abstractKey": null
+    "type": "Query"
   },
   "kind": "Request",
   "operation": {
@@ -284,7 +282,6 @@ return {
     ]
   },
   "params": {
-    "cacheID": "94e1010b40c49118279612c3055a32cd",
     "id": null,
     "metadata": {},
     "name": "HomeFeaturedMarketNewsQuery",

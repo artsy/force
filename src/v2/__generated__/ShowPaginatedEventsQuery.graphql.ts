@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -103,85 +102,93 @@ fragment ShowPaginatedEvents_partner_qVb3U on Partner {
 */
 
 const node: ConcreteRequest = (function(){
-var v0 = {
-  "defaultValue": null,
-  "kind": "LocalArgument",
-  "name": "after"
-},
-v1 = {
-  "defaultValue": null,
-  "kind": "LocalArgument",
-  "name": "before"
-},
-v2 = {
-  "defaultValue": null,
-  "kind": "LocalArgument",
-  "name": "first"
-},
-v3 = {
-  "defaultValue": null,
-  "kind": "LocalArgument",
-  "name": "last"
-},
-v4 = {
-  "defaultValue": null,
-  "kind": "LocalArgument",
-  "name": "partnerId"
-},
-v5 = {
-  "defaultValue": null,
-  "kind": "LocalArgument",
-  "name": "status"
-},
-v6 = [
+var v0 = [
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "partnerId",
+    "type": "String!"
+  },
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "first",
+    "type": "Int"
+  },
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "last",
+    "type": "Int"
+  },
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "after",
+    "type": "String"
+  },
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "before",
+    "type": "String"
+  },
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "status",
+    "type": "EventStatus"
+  }
+],
+v1 = [
   {
     "kind": "Variable",
     "name": "id",
     "variableName": "partnerId"
   }
 ],
-v7 = {
+v2 = {
   "kind": "Variable",
   "name": "after",
   "variableName": "after"
 },
-v8 = {
+v3 = {
   "kind": "Variable",
   "name": "before",
   "variableName": "before"
 },
-v9 = {
+v4 = {
   "kind": "Variable",
   "name": "first",
   "variableName": "first"
 },
-v10 = {
+v5 = {
   "kind": "Variable",
   "name": "last",
   "variableName": "last"
 },
-v11 = {
+v6 = {
   "kind": "Variable",
   "name": "status",
   "variableName": "status"
 },
-v12 = {
+v7 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "cursor",
   "storageKey": null
 },
-v13 = {
+v8 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "page",
   "storageKey": null
 },
-v14 = [
-  (v12/*: any*/),
-  (v13/*: any*/),
+v9 = [
+  (v7/*: any*/),
+  (v8/*: any*/),
   {
     "alias": null,
     "args": null,
@@ -190,7 +197,7 @@ v14 = [
     "storageKey": null
   }
 ],
-v15 = {
+v10 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -199,21 +206,14 @@ v15 = {
 };
 return {
   "fragment": {
-    "argumentDefinitions": [
-      (v0/*: any*/),
-      (v1/*: any*/),
-      (v2/*: any*/),
-      (v3/*: any*/),
-      (v4/*: any*/),
-      (v5/*: any*/)
-    ],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
     "name": "ShowPaginatedEventsQuery",
     "selections": [
       {
         "alias": null,
-        "args": (v6/*: any*/),
+        "args": (v1/*: any*/),
         "concreteType": "Partner",
         "kind": "LinkedField",
         "name": "partner",
@@ -221,11 +221,11 @@ return {
         "selections": [
           {
             "args": [
-              (v7/*: any*/),
-              (v8/*: any*/),
-              (v9/*: any*/),
-              (v10/*: any*/),
-              (v11/*: any*/)
+              (v2/*: any*/),
+              (v3/*: any*/),
+              (v4/*: any*/),
+              (v5/*: any*/),
+              (v6/*: any*/)
             ],
             "kind": "FragmentSpread",
             "name": "ShowPaginatedEvents_partner"
@@ -234,25 +234,17 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query",
-    "abstractKey": null
+    "type": "Query"
   },
   "kind": "Request",
   "operation": {
-    "argumentDefinitions": [
-      (v4/*: any*/),
-      (v2/*: any*/),
-      (v3/*: any*/),
-      (v0/*: any*/),
-      (v1/*: any*/),
-      (v5/*: any*/)
-    ],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
     "name": "ShowPaginatedEventsQuery",
     "selections": [
       {
         "alias": null,
-        "args": (v6/*: any*/),
+        "args": (v1/*: any*/),
         "concreteType": "Partner",
         "kind": "LinkedField",
         "name": "partner",
@@ -268,16 +260,16 @@ return {
           {
             "alias": "showsList",
             "args": [
-              (v7/*: any*/),
-              (v8/*: any*/),
-              (v9/*: any*/),
+              (v2/*: any*/),
+              (v3/*: any*/),
+              (v4/*: any*/),
               {
                 "kind": "Literal",
                 "name": "isDisplayable",
                 "value": true
               },
-              (v10/*: any*/),
-              (v11/*: any*/)
+              (v5/*: any*/),
+              (v6/*: any*/)
             ],
             "concreteType": "ShowConnection",
             "kind": "LinkedField",
@@ -324,7 +316,7 @@ return {
                     "kind": "LinkedField",
                     "name": "around",
                     "plural": true,
-                    "selections": (v14/*: any*/),
+                    "selections": (v9/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -334,7 +326,7 @@ return {
                     "kind": "LinkedField",
                     "name": "first",
                     "plural": false,
-                    "selections": (v14/*: any*/),
+                    "selections": (v9/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -344,7 +336,7 @@ return {
                     "kind": "LinkedField",
                     "name": "last",
                     "plural": false,
-                    "selections": (v14/*: any*/),
+                    "selections": (v9/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -355,8 +347,8 @@ return {
                     "name": "previous",
                     "plural": false,
                     "selections": [
-                      (v12/*: any*/),
-                      (v13/*: any*/)
+                      (v7/*: any*/),
+                      (v8/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -475,7 +467,7 @@ return {
                         ],
                         "storageKey": null
                       },
-                      (v15/*: any*/)
+                      (v10/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -485,14 +477,13 @@ return {
             ],
             "storageKey": null
           },
-          (v15/*: any*/)
+          (v10/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "9941a156473ead951aee4fae49560c7a",
     "id": null,
     "metadata": {},
     "name": "ShowPaginatedEventsQuery",

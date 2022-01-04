@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -95,34 +94,34 @@ v1 = [
   }
 ],
 v2 = {
+  "type": "ID",
   "enumValues": null,
-  "nullable": true,
   "plural": false,
-  "type": "String"
+  "nullable": false
 },
 v3 = {
+  "type": "String",
   "enumValues": null,
-  "nullable": false,
   "plural": false,
-  "type": "ID"
+  "nullable": true
 },
 v4 = {
+  "type": "CroppedImageUrl",
   "enumValues": null,
-  "nullable": true,
   "plural": false,
-  "type": "CroppedImageUrl"
+  "nullable": true
 },
 v5 = {
+  "type": "Int",
   "enumValues": null,
-  "nullable": false,
   "plural": false,
-  "type": "Int"
+  "nullable": false
 },
 v6 = {
+  "type": "String",
   "enumValues": null,
-  "nullable": false,
   "plural": false,
-  "type": "String"
+  "nullable": false
 };
 return {
   "fragment": {
@@ -148,8 +147,7 @@ return {
         "storageKey": "article(id:\"test\")"
       }
     ],
-    "type": "Query",
-    "abstractKey": null
+    "type": "Query"
   },
   "kind": "Request",
   "operation": {
@@ -279,39 +277,38 @@ return {
     ]
   },
   "params": {
-    "cacheID": "34f60ad6980971d3d36a605737027d10",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "article": {
+          "type": "Article",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "Article"
+          "nullable": true
         },
-        "article.href": (v2/*: any*/),
-        "article.id": (v3/*: any*/),
-        "article.internalID": (v3/*: any*/),
-        "article.publishedAt": (v2/*: any*/),
-        "article.slug": (v2/*: any*/),
+        "article.id": (v2/*: any*/),
+        "article.title": (v3/*: any*/),
+        "article.publishedAt": (v3/*: any*/),
+        "article.thumbnailTitle": (v3/*: any*/),
         "article.thumbnailImage": {
+          "type": "Image",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "Image"
+          "nullable": true
         },
         "article.thumbnailImage.large": (v4/*: any*/),
+        "article.thumbnailImage.small": (v4/*: any*/),
+        "article.internalID": (v2/*: any*/),
+        "article.slug": (v3/*: any*/),
+        "article.href": (v3/*: any*/),
+        "article.thumbnailImage.large.width": (v5/*: any*/),
         "article.thumbnailImage.large.height": (v5/*: any*/),
         "article.thumbnailImage.large.src": (v6/*: any*/),
         "article.thumbnailImage.large.srcSet": (v6/*: any*/),
-        "article.thumbnailImage.large.width": (v5/*: any*/),
-        "article.thumbnailImage.small": (v4/*: any*/),
+        "article.thumbnailImage.small.width": (v5/*: any*/),
         "article.thumbnailImage.small.height": (v5/*: any*/),
         "article.thumbnailImage.small.src": (v6/*: any*/),
-        "article.thumbnailImage.small.srcSet": (v6/*: any*/),
-        "article.thumbnailImage.small.width": (v5/*: any*/),
-        "article.thumbnailTitle": (v2/*: any*/),
-        "article.title": (v2/*: any*/)
+        "article.thumbnailImage.small.srcSet": (v6/*: any*/)
       }
     },
     "name": "FairEditorialItem_Test_Query",

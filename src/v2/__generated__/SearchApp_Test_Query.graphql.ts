@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -53,7 +52,6 @@ fragment SearchApp_viewer_2rc5k6 on Viewer {
           displayType
         }
         ... on Node {
-          __isNode: __typename
           id
         }
       }
@@ -80,22 +78,16 @@ v1 = {
   "storageKey": null
 },
 v2 = {
+  "type": "ID",
   "enumValues": null,
-  "nullable": false,
   "plural": false,
-  "type": "ID"
+  "nullable": true
 },
 v3 = {
+  "type": "String",
   "enumValues": null,
-  "nullable": false,
   "plural": false,
-  "type": "String"
-},
-v4 = {
-  "enumValues": null,
-  "nullable": true,
-  "plural": false,
-  "type": "String"
+  "nullable": true
 };
 return {
   "fragment": {
@@ -127,8 +119,7 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query",
-    "abstractKey": null
+    "type": "Query"
   },
   "kind": "Request",
   "operation": {
@@ -234,6 +225,7 @@ return {
                         "name": "__typename",
                         "storageKey": null
                       },
+                      (v1/*: any*/),
                       {
                         "kind": "InlineFragment",
                         "selections": [
@@ -259,16 +251,7 @@ return {
                             "storageKey": null
                           }
                         ],
-                        "type": "SearchableItem",
-                        "abstractKey": null
-                      },
-                      {
-                        "kind": "InlineFragment",
-                        "selections": [
-                          (v1/*: any*/)
-                        ],
-                        "type": "Node",
-                        "abstractKey": "__isNode"
+                        "type": "SearchableItem"
                       }
                     ],
                     "storageKey": null
@@ -333,89 +316,96 @@ return {
     ]
   },
   "params": {
-    "cacheID": "1e50f7d5c391e550993456d05e8fc046",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "viewer": {
+          "type": "Viewer",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "Viewer"
+          "nullable": true
+        },
+        "viewer.searchConnection": {
+          "type": "SearchableConnection",
+          "enumValues": null,
+          "plural": false,
+          "nullable": true
         },
         "viewer.artworksConnection": {
+          "type": "FilterArtworksConnection",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "FilterArtworksConnection"
-        },
-        "viewer.artworksConnection.counts": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "FilterArtworksCounts"
-        },
-        "viewer.artworksConnection.counts.total": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "FormattedNumber"
-        },
-        "viewer.artworksConnection.id": (v2/*: any*/),
-        "viewer.searchConnection": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "SearchableConnection"
+          "nullable": true
         },
         "viewer.searchConnection.aggregations": {
+          "type": "SearchAggregationResults",
           "enumValues": null,
-          "nullable": true,
           "plural": true,
-          "type": "SearchAggregationResults"
-        },
-        "viewer.searchConnection.aggregations.counts": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": true,
-          "type": "AggregationCount"
-        },
-        "viewer.searchConnection.aggregations.counts.count": {
-          "enumValues": null,
-          "nullable": false,
-          "plural": false,
-          "type": "Int"
-        },
-        "viewer.searchConnection.aggregations.counts.name": (v3/*: any*/),
-        "viewer.searchConnection.aggregations.slice": {
-          "enumValues": (v0/*: any*/),
-          "nullable": true,
-          "plural": false,
-          "type": "SearchAggregation"
+          "nullable": true
         },
         "viewer.searchConnection.edges": {
+          "type": "SearchableEdge",
           "enumValues": null,
-          "nullable": true,
           "plural": true,
-          "type": "SearchableEdge"
+          "nullable": true
+        },
+        "viewer.artworksConnection.counts": {
+          "type": "FilterArtworksCounts",
+          "enumValues": null,
+          "plural": false,
+          "nullable": true
+        },
+        "viewer.artworksConnection.id": (v2/*: any*/),
+        "viewer.searchConnection.aggregations.slice": {
+          "type": "SearchAggregation",
+          "enumValues": (v0/*: any*/),
+          "plural": false,
+          "nullable": true
+        },
+        "viewer.searchConnection.aggregations.counts": {
+          "type": "AggregationCount",
+          "enumValues": null,
+          "plural": true,
+          "nullable": true
         },
         "viewer.searchConnection.edges.node": {
+          "type": "Searchable",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "Searchable"
+          "nullable": true
         },
-        "viewer.searchConnection.edges.node.__isNode": (v3/*: any*/),
-        "viewer.searchConnection.edges.node.__typename": (v3/*: any*/),
-        "viewer.searchConnection.edges.node.displayLabel": (v4/*: any*/),
-        "viewer.searchConnection.edges.node.displayType": (v4/*: any*/),
-        "viewer.searchConnection.edges.node.id": (v2/*: any*/),
-        "viewer.searchConnection.edges.node.slug": (v2/*: any*/)
+        "viewer.artworksConnection.counts.total": {
+          "type": "FormattedNumber",
+          "enumValues": null,
+          "plural": false,
+          "nullable": true
+        },
+        "viewer.searchConnection.aggregations.counts.count": {
+          "type": "Int",
+          "enumValues": null,
+          "plural": false,
+          "nullable": false
+        },
+        "viewer.searchConnection.aggregations.counts.name": {
+          "type": "String",
+          "enumValues": null,
+          "plural": false,
+          "nullable": false
+        },
+        "viewer.searchConnection.edges.node.slug": {
+          "type": "ID",
+          "enumValues": null,
+          "plural": false,
+          "nullable": false
+        },
+        "viewer.searchConnection.edges.node.displayLabel": (v3/*: any*/),
+        "viewer.searchConnection.edges.node.displayType": (v3/*: any*/),
+        "viewer.searchConnection.edges.node.id": (v2/*: any*/)
       }
     },
     "name": "SearchApp_Test_Query",
     "operationKind": "query",
-    "text": "query SearchApp_Test_Query {\n  viewer {\n    ...SearchApp_viewer_2rc5k6\n  }\n}\n\nfragment NavigationTabs_searchableConnection on SearchableConnection {\n  aggregations {\n    slice\n    counts {\n      count\n      name\n    }\n  }\n}\n\nfragment SearchApp_viewer_2rc5k6 on Viewer {\n  searchConnection(query: \"andy\", first: 1, aggregations: [TYPE]) {\n    aggregations {\n      slice\n      counts {\n        count\n        name\n      }\n    }\n    ...NavigationTabs_searchableConnection\n    edges {\n      node {\n        __typename\n        ... on SearchableItem {\n          slug\n          displayLabel\n          displayType\n        }\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n      }\n    }\n  }\n  artworksConnection(keyword: \"andy\", size: 0, aggregations: [TOTAL]) {\n    counts {\n      total\n    }\n    id\n  }\n}\n"
+    "text": "query SearchApp_Test_Query {\n  viewer {\n    ...SearchApp_viewer_2rc5k6\n  }\n}\n\nfragment NavigationTabs_searchableConnection on SearchableConnection {\n  aggregations {\n    slice\n    counts {\n      count\n      name\n    }\n  }\n}\n\nfragment SearchApp_viewer_2rc5k6 on Viewer {\n  searchConnection(query: \"andy\", first: 1, aggregations: [TYPE]) {\n    aggregations {\n      slice\n      counts {\n        count\n        name\n      }\n    }\n    ...NavigationTabs_searchableConnection\n    edges {\n      node {\n        __typename\n        ... on SearchableItem {\n          slug\n          displayLabel\n          displayType\n        }\n        ... on Node {\n          id\n        }\n      }\n    }\n  }\n  artworksConnection(keyword: \"andy\", size: 0, aggregations: [TOTAL]) {\n    counts {\n      total\n    }\n    id\n  }\n}\n"
   }
 };
 })();

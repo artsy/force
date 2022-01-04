@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 export type UpdateMyPasswordMutationInput = {
@@ -39,7 +38,8 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "input"
+    "name": "input",
+    "type": "UpdateMyPasswordMutationInput!"
   }
 ],
 v1 = [
@@ -75,8 +75,7 @@ return {
     "metadata": null,
     "name": "useUpdateSettingsPasswordMutation",
     "selections": (v1/*: any*/),
-    "type": "Mutation",
-    "abstractKey": null
+    "type": "Mutation"
   },
   "kind": "Request",
   "operation": {
@@ -86,7 +85,6 @@ return {
     "selections": (v1/*: any*/)
   },
   "params": {
-    "cacheID": "336ca1e7c22c431ed0bed53039b1d2a7",
     "id": null,
     "metadata": {},
     "name": "useUpdateSettingsPasswordMutation",

@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -93,7 +92,6 @@ fragment ConversationSnippet_conversation on Conversation {
         }
       }
       ... on Node {
-        __isNode: __typename
         id
       }
     }
@@ -167,8 +165,7 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query",
-    "abstractKey": null
+    "type": "Query"
   },
   "kind": "Request",
   "operation": {
@@ -264,6 +261,7 @@ return {
                             "plural": false,
                             "selections": [
                               (v4/*: any*/),
+                              (v2/*: any*/),
                               {
                                 "kind": "InlineFragment",
                                 "selections": [
@@ -299,8 +297,7 @@ return {
                                     "storageKey": null
                                   }
                                 ],
-                                "type": "Artwork",
-                                "abstractKey": null
+                                "type": "Artwork"
                               },
                               {
                                 "kind": "InlineFragment",
@@ -327,16 +324,7 @@ return {
                                     "storageKey": null
                                   }
                                 ],
-                                "type": "Show",
-                                "abstractKey": null
-                              },
-                              {
-                                "kind": "InlineFragment",
-                                "selections": [
-                                  (v2/*: any*/)
-                                ],
-                                "type": "Node",
-                                "abstractKey": "__isNode"
+                                "type": "Show"
                               }
                             ],
                             "storageKey": null
@@ -416,12 +404,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "78cb72970ffaf4a7199668bc5534e1dc",
     "id": null,
     "metadata": {},
     "name": "conversationRoutes_ConversationQuery",
     "operationKind": "query",
-    "text": "query conversationRoutes_ConversationQuery {\n  me {\n    ...ConversationApp_me\n    id\n  }\n}\n\nfragment ConversationApp_me on Me {\n  conversationsConnection(first: 25) {\n    edges {\n      node {\n        internalID\n        to {\n          name\n          id\n        }\n        id\n      }\n    }\n  }\n  ...ConversationList_me\n}\n\nfragment ConversationList_me on Me {\n  conversationsConnection(first: 25) {\n    edges {\n      cursor\n      node {\n        id\n        internalID\n        lastMessage\n        ...ConversationSnippet_conversation\n        __typename\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n\nfragment ConversationSnippet_conversation on Conversation {\n  internalID\n  to {\n    name\n    id\n  }\n  lastMessage\n  lastMessageAt\n  unread\n  items {\n    item {\n      __typename\n      ... on Artwork {\n        date\n        title\n        artistNames\n        image {\n          url\n        }\n      }\n      ... on Show {\n        fair {\n          name\n          id\n        }\n        name\n        coverImage {\n          url\n        }\n      }\n      ... on Node {\n        __isNode: __typename\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query conversationRoutes_ConversationQuery {\n  me {\n    ...ConversationApp_me\n    id\n  }\n}\n\nfragment ConversationApp_me on Me {\n  conversationsConnection(first: 25) {\n    edges {\n      node {\n        internalID\n        to {\n          name\n          id\n        }\n        id\n      }\n    }\n  }\n  ...ConversationList_me\n}\n\nfragment ConversationList_me on Me {\n  conversationsConnection(first: 25) {\n    edges {\n      cursor\n      node {\n        id\n        internalID\n        lastMessage\n        ...ConversationSnippet_conversation\n        __typename\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n\nfragment ConversationSnippet_conversation on Conversation {\n  internalID\n  to {\n    name\n    id\n  }\n  lastMessage\n  lastMessageAt\n  unread\n  items {\n    item {\n      __typename\n      ... on Artwork {\n        date\n        title\n        artistNames\n        image {\n          url\n        }\n      }\n      ... on Show {\n        fair {\n          name\n          id\n        }\n        name\n        coverImage {\n          url\n        }\n      }\n      ... on Node {\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();

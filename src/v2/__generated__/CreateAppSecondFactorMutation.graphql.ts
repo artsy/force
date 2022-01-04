@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 export type CreateAppSecondFactorInput = {
@@ -50,7 +49,7 @@ export type CreateAppSecondFactorMutationRawResponse = {
                 readonly code: string;
             }>;
         } | {
-            readonly __typename: string;
+            readonly __typename: string | null;
         };
     }) | null;
 };
@@ -93,7 +92,8 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "input"
+    "name": "input",
+    "type": "CreateAppSecondFactorInput!"
   }
 ],
 v1 = [
@@ -111,57 +111,71 @@ v2 = {
   "storageKey": null
 },
 v3 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "internalID",
-  "storageKey": null
-},
-v4 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "otpSecret",
-  "storageKey": null
-},
-v5 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "otpProvisioningURI",
-  "storageKey": null
-},
-v6 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "name",
-  "storageKey": null
-},
-v7 = {
-  "alias": null,
-  "args": null,
-  "concreteType": "Error",
-  "kind": "LinkedField",
-  "name": "errors",
-  "plural": true,
+  "kind": "InlineFragment",
   "selections": [
+    (v2/*: any*/),
     {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "message",
+      "name": "internalID",
       "storageKey": null
     },
     {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "code",
+      "name": "otpSecret",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "otpProvisioningURI",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "name",
       "storageKey": null
     }
   ],
-  "storageKey": null
+  "type": "AppSecondFactor"
+},
+v4 = {
+  "kind": "InlineFragment",
+  "selections": [
+    (v2/*: any*/),
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "Error",
+      "kind": "LinkedField",
+      "name": "errors",
+      "plural": true,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "message",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "code",
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
+    }
+  ],
+  "type": "Errors"
 };
 return {
   "fragment": {
@@ -186,27 +200,8 @@ return {
             "name": "secondFactorOrErrors",
             "plural": false,
             "selections": [
-              {
-                "kind": "InlineFragment",
-                "selections": [
-                  (v2/*: any*/),
-                  (v3/*: any*/),
-                  (v4/*: any*/),
-                  (v5/*: any*/),
-                  (v6/*: any*/)
-                ],
-                "type": "AppSecondFactor",
-                "abstractKey": null
-              },
-              {
-                "kind": "InlineFragment",
-                "selections": [
-                  (v2/*: any*/),
-                  (v7/*: any*/)
-                ],
-                "type": "Errors",
-                "abstractKey": null
-              }
+              (v3/*: any*/),
+              (v4/*: any*/)
             ],
             "storageKey": null
           }
@@ -214,8 +209,7 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Mutation",
-    "abstractKey": null
+    "type": "Mutation"
   },
   "kind": "Request",
   "operation": {
@@ -240,25 +234,8 @@ return {
             "plural": false,
             "selections": [
               (v2/*: any*/),
-              {
-                "kind": "InlineFragment",
-                "selections": [
-                  (v3/*: any*/),
-                  (v4/*: any*/),
-                  (v5/*: any*/),
-                  (v6/*: any*/)
-                ],
-                "type": "AppSecondFactor",
-                "abstractKey": null
-              },
-              {
-                "kind": "InlineFragment",
-                "selections": [
-                  (v7/*: any*/)
-                ],
-                "type": "Errors",
-                "abstractKey": null
-              }
+              (v3/*: any*/),
+              (v4/*: any*/)
             ],
             "storageKey": null
           }
@@ -268,7 +245,6 @@ return {
     ]
   },
   "params": {
-    "cacheID": "1ec05b9437b8c677dac812951e7cbffa",
     "id": null,
     "metadata": {},
     "name": "CreateAppSecondFactorMutation",

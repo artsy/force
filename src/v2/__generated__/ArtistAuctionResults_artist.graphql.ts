@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -50,64 +49,76 @@ export type ArtistAuctionResults_artist$key = {
 const node: ReaderFragment = {
   "argumentDefinitions": [
     {
-      "defaultValue": null,
+      "defaultValue": "DATE_DESC",
       "kind": "LocalArgument",
-      "name": "after"
-    },
-    {
-      "defaultValue": null,
-      "kind": "LocalArgument",
-      "name": "allowEmptyCreatedDates"
-    },
-    {
-      "defaultValue": null,
-      "kind": "LocalArgument",
-      "name": "before"
-    },
-    {
-      "defaultValue": null,
-      "kind": "LocalArgument",
-      "name": "categories"
-    },
-    {
-      "defaultValue": null,
-      "kind": "LocalArgument",
-      "name": "createdAfterYear"
-    },
-    {
-      "defaultValue": null,
-      "kind": "LocalArgument",
-      "name": "createdBeforeYear"
+      "name": "sort",
+      "type": "AuctionResultSorts"
     },
     {
       "defaultValue": 10,
       "kind": "LocalArgument",
-      "name": "first"
+      "name": "first",
+      "type": "Int"
     },
     {
       "defaultValue": null,
       "kind": "LocalArgument",
-      "name": "keyword"
+      "name": "last",
+      "type": "Int"
     },
     {
       "defaultValue": null,
       "kind": "LocalArgument",
-      "name": "last"
+      "name": "after",
+      "type": "String"
     },
     {
       "defaultValue": null,
       "kind": "LocalArgument",
-      "name": "organizations"
+      "name": "before",
+      "type": "String"
     },
     {
       "defaultValue": null,
       "kind": "LocalArgument",
-      "name": "sizes"
+      "name": "organizations",
+      "type": "[String]"
     },
     {
-      "defaultValue": "DATE_DESC",
+      "defaultValue": null,
       "kind": "LocalArgument",
-      "name": "sort"
+      "name": "keyword",
+      "type": "String"
+    },
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "categories",
+      "type": "[String]"
+    },
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "sizes",
+      "type": "[ArtworkSizes]"
+    },
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "createdAfterYear",
+      "type": "Int"
+    },
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "createdBeforeYear",
+      "type": "Int"
+    },
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "allowEmptyCreatedDates",
+      "type": "Boolean"
     }
   ],
   "kind": "Fragment",
@@ -370,8 +381,7 @@ const node: ReaderFragment = {
       "storageKey": null
     }
   ],
-  "type": "Artist",
-  "abstractKey": null
+  "type": "Artist"
 };
 (node as any).hash = '6564a53d57824f81b3eeae63f0bfcc9c';
 export default node;

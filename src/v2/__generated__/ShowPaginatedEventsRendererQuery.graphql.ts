@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -99,65 +98,71 @@ fragment ShowPaginatedEvents_partner_JfDnP on Partner {
 */
 
 const node: ConcreteRequest = (function(){
-var v0 = {
-  "defaultValue": null,
-  "kind": "LocalArgument",
-  "name": "first"
-},
-v1 = {
-  "defaultValue": null,
-  "kind": "LocalArgument",
-  "name": "page"
-},
-v2 = {
-  "defaultValue": null,
-  "kind": "LocalArgument",
-  "name": "partnerId"
-},
-v3 = {
-  "defaultValue": null,
-  "kind": "LocalArgument",
-  "name": "status"
-},
-v4 = [
+var v0 = [
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "partnerId",
+    "type": "String!"
+  },
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "first",
+    "type": "Int"
+  },
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "page",
+    "type": "Int"
+  },
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "status",
+    "type": "EventStatus"
+  }
+],
+v1 = [
   {
     "kind": "Variable",
     "name": "id",
     "variableName": "partnerId"
   }
 ],
-v5 = {
+v2 = {
   "kind": "Variable",
   "name": "first",
   "variableName": "first"
 },
-v6 = {
+v3 = {
   "kind": "Variable",
   "name": "page",
   "variableName": "page"
 },
-v7 = {
+v4 = {
   "kind": "Variable",
   "name": "status",
   "variableName": "status"
 },
-v8 = {
+v5 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "cursor",
   "storageKey": null
 },
-v9 = {
+v6 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "page",
   "storageKey": null
 },
-v10 = [
-  (v8/*: any*/),
-  (v9/*: any*/),
+v7 = [
+  (v5/*: any*/),
+  (v6/*: any*/),
   {
     "alias": null,
     "args": null,
@@ -166,7 +171,7 @@ v10 = [
     "storageKey": null
   }
 ],
-v11 = {
+v8 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -175,19 +180,14 @@ v11 = {
 };
 return {
   "fragment": {
-    "argumentDefinitions": [
-      (v0/*: any*/),
-      (v1/*: any*/),
-      (v2/*: any*/),
-      (v3/*: any*/)
-    ],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
     "name": "ShowPaginatedEventsRendererQuery",
     "selections": [
       {
         "alias": null,
-        "args": (v4/*: any*/),
+        "args": (v1/*: any*/),
         "concreteType": "Partner",
         "kind": "LinkedField",
         "name": "partner",
@@ -195,9 +195,9 @@ return {
         "selections": [
           {
             "args": [
-              (v5/*: any*/),
-              (v6/*: any*/),
-              (v7/*: any*/)
+              (v2/*: any*/),
+              (v3/*: any*/),
+              (v4/*: any*/)
             ],
             "kind": "FragmentSpread",
             "name": "ShowPaginatedEvents_partner"
@@ -206,23 +206,17 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query",
-    "abstractKey": null
+    "type": "Query"
   },
   "kind": "Request",
   "operation": {
-    "argumentDefinitions": [
-      (v2/*: any*/),
-      (v0/*: any*/),
-      (v1/*: any*/),
-      (v3/*: any*/)
-    ],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
     "name": "ShowPaginatedEventsRendererQuery",
     "selections": [
       {
         "alias": null,
-        "args": (v4/*: any*/),
+        "args": (v1/*: any*/),
         "concreteType": "Partner",
         "kind": "LinkedField",
         "name": "partner",
@@ -238,14 +232,14 @@ return {
           {
             "alias": "showsList",
             "args": [
-              (v5/*: any*/),
+              (v2/*: any*/),
               {
                 "kind": "Literal",
                 "name": "isDisplayable",
                 "value": true
               },
-              (v6/*: any*/),
-              (v7/*: any*/)
+              (v3/*: any*/),
+              (v4/*: any*/)
             ],
             "concreteType": "ShowConnection",
             "kind": "LinkedField",
@@ -292,7 +286,7 @@ return {
                     "kind": "LinkedField",
                     "name": "around",
                     "plural": true,
-                    "selections": (v10/*: any*/),
+                    "selections": (v7/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -302,7 +296,7 @@ return {
                     "kind": "LinkedField",
                     "name": "first",
                     "plural": false,
-                    "selections": (v10/*: any*/),
+                    "selections": (v7/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -312,7 +306,7 @@ return {
                     "kind": "LinkedField",
                     "name": "last",
                     "plural": false,
-                    "selections": (v10/*: any*/),
+                    "selections": (v7/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -323,8 +317,8 @@ return {
                     "name": "previous",
                     "plural": false,
                     "selections": [
-                      (v8/*: any*/),
-                      (v9/*: any*/)
+                      (v5/*: any*/),
+                      (v6/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -443,7 +437,7 @@ return {
                         ],
                         "storageKey": null
                       },
-                      (v11/*: any*/)
+                      (v8/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -453,14 +447,13 @@ return {
             ],
             "storageKey": null
           },
-          (v11/*: any*/)
+          (v8/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "35a6e25a9c96ba18ce31e7efa639227a",
     "id": null,
     "metadata": {},
     "name": "ShowPaginatedEventsRendererQuery",

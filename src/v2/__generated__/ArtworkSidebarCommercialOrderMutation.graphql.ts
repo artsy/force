@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 export type CommerceOrderModeEnum = "BUY" | "OFFER" | "%future added value";
@@ -69,7 +68,8 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "input"
+    "name": "input",
+    "type": "CommerceCreateOrderWithArtworkInput!"
   }
 ],
 v1 = [
@@ -136,8 +136,7 @@ v5 = {
       "storageKey": null
     }
   ],
-  "type": "CommerceOrderWithMutationFailure",
-  "abstractKey": null
+  "type": "CommerceOrderWithMutationFailure"
 };
 return {
   "fragment": {
@@ -180,8 +179,7 @@ return {
                     "storageKey": null
                   }
                 ],
-                "type": "CommerceOrderWithMutationSuccess",
-                "abstractKey": null
+                "type": "CommerceOrderWithMutationSuccess"
               },
               (v5/*: any*/)
             ],
@@ -191,8 +189,7 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Mutation",
-    "abstractKey": null
+    "type": "Mutation"
   },
   "kind": "Request",
   "operation": {
@@ -220,6 +217,7 @@ return {
               {
                 "kind": "InlineFragment",
                 "selections": [
+                  (v2/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -242,8 +240,7 @@ return {
                     "storageKey": null
                   }
                 ],
-                "type": "CommerceOrderWithMutationSuccess",
-                "abstractKey": null
+                "type": "CommerceOrderWithMutationSuccess"
               },
               (v5/*: any*/)
             ],
@@ -255,7 +252,6 @@ return {
     ]
   },
   "params": {
-    "cacheID": "e0b2ec3f35512adebe78de86e1090d8f",
     "id": null,
     "metadata": {},
     "name": "ArtworkSidebarCommercialOrderMutation",

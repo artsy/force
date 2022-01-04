@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -50,7 +49,6 @@ fragment FairBoothRail_show on Show {
       id
     }
     ... on Node {
-      __isNode: __typename
       id
     }
   }
@@ -83,7 +81,6 @@ fragment FairBooths_fair_1HMhop on Fair {
             id
           }
           ... on Node {
-            __isNode: __typename
             id
           }
         }
@@ -117,72 +114,78 @@ fragment Pagination_pageCursors on PageCursors {
 */
 
 const node: ConcreteRequest = (function(){
-var v0 = {
-  "defaultValue": null,
-  "kind": "LocalArgument",
-  "name": "first"
-},
-v1 = {
-  "defaultValue": null,
-  "kind": "LocalArgument",
-  "name": "id"
-},
-v2 = {
-  "defaultValue": null,
-  "kind": "LocalArgument",
-  "name": "page"
-},
-v3 = {
-  "defaultValue": null,
-  "kind": "LocalArgument",
-  "name": "sort"
-},
-v4 = [
+var v0 = [
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "id",
+    "type": "String!"
+  },
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "first",
+    "type": "Int"
+  },
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "page",
+    "type": "Int"
+  },
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "sort",
+    "type": "ShowSorts"
+  }
+],
+v1 = [
   {
     "kind": "Variable",
     "name": "id",
     "variableName": "id"
   }
 ],
-v5 = {
+v2 = {
   "kind": "Variable",
   "name": "first",
   "variableName": "first"
 },
-v6 = {
+v3 = {
   "kind": "Variable",
   "name": "page",
   "variableName": "page"
 },
-v7 = {
+v4 = {
   "kind": "Variable",
   "name": "sort",
   "variableName": "sort"
 },
-v8 = {
+v5 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "slug",
   "storageKey": null
 },
-v9 = {
+v6 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "cursor",
   "storageKey": null
 },
-v10 = {
+v7 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "page",
   "storageKey": null
 },
-v11 = [
-  (v9/*: any*/),
-  (v10/*: any*/),
+v8 = [
+  (v6/*: any*/),
+  (v7/*: any*/),
   {
     "alias": null,
     "args": null,
@@ -191,15 +194,14 @@ v11 = [
     "storageKey": null
   }
 ],
-v12 = {
+v9 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v13 = [
-  (v12/*: any*/),
+v10 = [
   {
     "alias": null,
     "args": null,
@@ -210,19 +212,14 @@ v13 = [
 ];
 return {
   "fragment": {
-    "argumentDefinitions": [
-      (v0/*: any*/),
-      (v1/*: any*/),
-      (v2/*: any*/),
-      (v3/*: any*/)
-    ],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
     "name": "FairBoothsQuery",
     "selections": [
       {
         "alias": null,
-        "args": (v4/*: any*/),
+        "args": (v1/*: any*/),
         "concreteType": "Fair",
         "kind": "LinkedField",
         "name": "fair",
@@ -230,9 +227,9 @@ return {
         "selections": [
           {
             "args": [
-              (v5/*: any*/),
-              (v6/*: any*/),
-              (v7/*: any*/)
+              (v2/*: any*/),
+              (v3/*: any*/),
+              (v4/*: any*/)
             ],
             "kind": "FragmentSpread",
             "name": "FairBooths_fair"
@@ -241,35 +238,29 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query",
-    "abstractKey": null
+    "type": "Query"
   },
   "kind": "Request",
   "operation": {
-    "argumentDefinitions": [
-      (v1/*: any*/),
-      (v0/*: any*/),
-      (v2/*: any*/),
-      (v3/*: any*/)
-    ],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
     "name": "FairBoothsQuery",
     "selections": [
       {
         "alias": null,
-        "args": (v4/*: any*/),
+        "args": (v1/*: any*/),
         "concreteType": "Fair",
         "kind": "LinkedField",
         "name": "fair",
         "plural": false,
         "selections": [
-          (v8/*: any*/),
+          (v5/*: any*/),
           {
             "alias": "exhibitors",
             "args": [
-              (v5/*: any*/),
-              (v6/*: any*/),
-              (v7/*: any*/),
+              (v2/*: any*/),
+              (v3/*: any*/),
+              (v4/*: any*/),
               {
                 "kind": "Literal",
                 "name": "totalCount",
@@ -314,7 +305,7 @@ return {
                     "kind": "LinkedField",
                     "name": "around",
                     "plural": true,
-                    "selections": (v11/*: any*/),
+                    "selections": (v8/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -324,7 +315,7 @@ return {
                     "kind": "LinkedField",
                     "name": "first",
                     "plural": false,
-                    "selections": (v11/*: any*/),
+                    "selections": (v8/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -334,7 +325,7 @@ return {
                     "kind": "LinkedField",
                     "name": "last",
                     "plural": false,
-                    "selections": (v11/*: any*/),
+                    "selections": (v8/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -345,8 +336,8 @@ return {
                     "name": "previous",
                     "plural": false,
                     "selections": [
-                      (v9/*: any*/),
-                      (v10/*: any*/)
+                      (v6/*: any*/),
+                      (v7/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -369,7 +360,7 @@ return {
                     "name": "node",
                     "plural": false,
                     "selections": [
-                      (v12/*: any*/),
+                      (v9/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -403,25 +394,16 @@ return {
                             "name": "__typename",
                             "storageKey": null
                           },
+                          (v9/*: any*/),
                           {
                             "kind": "InlineFragment",
-                            "selections": (v13/*: any*/),
-                            "type": "Partner",
-                            "abstractKey": null
+                            "selections": (v10/*: any*/),
+                            "type": "Partner"
                           },
                           {
                             "kind": "InlineFragment",
-                            "selections": (v13/*: any*/),
-                            "type": "ExternalPartner",
-                            "abstractKey": null
-                          },
-                          {
-                            "kind": "InlineFragment",
-                            "selections": [
-                              (v12/*: any*/)
-                            ],
-                            "type": "Node",
-                            "abstractKey": "__isNode"
+                            "selections": (v10/*: any*/),
+                            "type": "ExternalPartner"
                           }
                         ],
                         "storageKey": null
@@ -433,7 +415,7 @@ return {
                         "name": "internalID",
                         "storageKey": null
                       },
-                      (v8/*: any*/),
+                      (v5/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -450,19 +432,18 @@ return {
             ],
             "storageKey": null
           },
-          (v12/*: any*/)
+          (v9/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "991ceb36889ff360078f276185ac6c1f",
     "id": null,
     "metadata": {},
     "name": "FairBoothsQuery",
     "operationKind": "query",
-    "text": "query FairBoothsQuery(\n  $id: String!\n  $first: Int\n  $page: Int\n  $sort: ShowSorts\n) {\n  fair(id: $id) {\n    ...FairBooths_fair_1HMhop\n    id\n  }\n}\n\nfragment FairBoothRail_show on Show {\n  internalID\n  slug\n  href\n  partner {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on ExternalPartner {\n      name\n      id\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n  counts {\n    artworks\n  }\n}\n\nfragment FairBooths_fair_1HMhop on Fair {\n  slug\n  exhibitors: showsConnection(sort: $sort, first: $first, page: $page, totalCount: true) {\n    pageInfo {\n      hasNextPage\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    edges {\n      node {\n        id\n        counts {\n          artworks\n        }\n        partner {\n          __typename\n          ... on Partner {\n            id\n          }\n          ... on ExternalPartner {\n            id\n          }\n          ... on Node {\n            __isNode: __typename\n            id\n          }\n        }\n        ...FairBoothRail_show\n      }\n    }\n  }\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n"
+    "text": "query FairBoothsQuery(\n  $id: String!\n  $first: Int\n  $page: Int\n  $sort: ShowSorts\n) {\n  fair(id: $id) {\n    ...FairBooths_fair_1HMhop\n    id\n  }\n}\n\nfragment FairBoothRail_show on Show {\n  internalID\n  slug\n  href\n  partner {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on ExternalPartner {\n      name\n      id\n    }\n    ... on Node {\n      id\n    }\n  }\n  counts {\n    artworks\n  }\n}\n\nfragment FairBooths_fair_1HMhop on Fair {\n  slug\n  exhibitors: showsConnection(sort: $sort, first: $first, page: $page, totalCount: true) {\n    pageInfo {\n      hasNextPage\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    edges {\n      node {\n        id\n        counts {\n          artworks\n        }\n        partner {\n          __typename\n          ... on Partner {\n            id\n          }\n          ... on ExternalPartner {\n            id\n          }\n          ... on Node {\n            id\n          }\n        }\n        ...FairBoothRail_show\n      }\n    }\n  }\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n"
   }
 };
 })();

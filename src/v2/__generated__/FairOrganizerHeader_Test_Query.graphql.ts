@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -120,34 +119,40 @@ v3 = [
   }
 ],
 v4 = {
+  "type": "ID",
   "enumValues": null,
-  "nullable": true,
   "plural": false,
-  "type": "String"
+  "nullable": true
 },
 v5 = {
+  "type": "String",
   "enumValues": null,
-  "nullable": false,
   "plural": false,
-  "type": "ID"
+  "nullable": true
 },
 v6 = {
+  "type": "ID",
   "enumValues": null,
-  "nullable": true,
   "plural": false,
-  "type": "CroppedImageUrl"
+  "nullable": false
 },
 v7 = {
+  "type": "CroppedImageUrl",
   "enumValues": null,
-  "nullable": false,
   "plural": false,
-  "type": "Int"
+  "nullable": true
 },
 v8 = {
+  "type": "String",
   "enumValues": null,
-  "nullable": false,
   "plural": false,
-  "type": "String"
+  "nullable": false
+},
+v9 = {
+  "type": "Int",
+  "enumValues": null,
+  "plural": false,
+  "nullable": false
 };
 return {
   "fragment": {
@@ -173,8 +178,7 @@ return {
         "storageKey": "fairOrganizer(id:\"example\")"
       }
     ],
-    "type": "Query",
-    "abstractKey": null
+    "type": "Query"
   },
   "kind": "Request",
   "operation": {
@@ -371,70 +375,69 @@ return {
     ]
   },
   "params": {
-    "cacheID": "3d25dbaf63c7bdb4585d35a1e65a66d8",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "fairOrganizer": {
+          "type": "FairOrganizer",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "FairOrganizer"
+          "nullable": true
         },
-        "fairOrganizer.about": (v4/*: any*/),
+        "fairOrganizer.id": (v4/*: any*/),
+        "fairOrganizer.name": (v5/*: any*/),
         "fairOrganizer.fairsConnection": {
+          "type": "FairConnection",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "FairConnection"
+          "nullable": true
         },
         "fairOrganizer.fairsConnection.edges": {
+          "type": "FairEdge",
           "enumValues": null,
-          "nullable": true,
           "plural": true,
-          "type": "FairEdge"
+          "nullable": true
         },
-        "fairOrganizer.fairsConnection.edges.node": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "Fair"
-        },
-        "fairOrganizer.fairsConnection.edges.node.exhibitionPeriod": (v4/*: any*/),
-        "fairOrganizer.fairsConnection.edges.node.href": (v4/*: any*/),
-        "fairOrganizer.fairsConnection.edges.node.id": (v5/*: any*/),
-        "fairOrganizer.fairsConnection.edges.node.startAt": (v4/*: any*/),
-        "fairOrganizer.id": (v5/*: any*/),
-        "fairOrganizer.name": (v4/*: any*/),
         "fairOrganizer.profile": {
+          "type": "Profile",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "Profile"
+          "nullable": true
+        },
+        "fairOrganizer.slug": (v6/*: any*/),
+        "fairOrganizer.about": (v5/*: any*/),
+        "fairOrganizer.fairsConnection.edges.node": {
+          "type": "Fair",
+          "enumValues": null,
+          "plural": false,
+          "nullable": true
         },
         "fairOrganizer.profile.icon": {
+          "type": "Image",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "Image"
+          "nullable": true
         },
-        "fairOrganizer.profile.icon.desktop": (v6/*: any*/),
-        "fairOrganizer.profile.icon.desktop.size": (v7/*: any*/),
+        "fairOrganizer.profile.id": (v6/*: any*/),
+        "fairOrganizer.profile.internalID": (v6/*: any*/),
+        "fairOrganizer.profile.isFollowed": {
+          "type": "Boolean",
+          "enumValues": null,
+          "plural": false,
+          "nullable": true
+        },
+        "fairOrganizer.fairsConnection.edges.node.href": (v5/*: any*/),
+        "fairOrganizer.fairsConnection.edges.node.startAt": (v5/*: any*/),
+        "fairOrganizer.fairsConnection.edges.node.exhibitionPeriod": (v5/*: any*/),
+        "fairOrganizer.fairsConnection.edges.node.id": (v4/*: any*/),
+        "fairOrganizer.profile.icon.desktop": (v7/*: any*/),
+        "fairOrganizer.profile.icon.mobile": (v7/*: any*/),
         "fairOrganizer.profile.icon.desktop.src": (v8/*: any*/),
         "fairOrganizer.profile.icon.desktop.srcSet": (v8/*: any*/),
-        "fairOrganizer.profile.icon.mobile": (v6/*: any*/),
-        "fairOrganizer.profile.icon.mobile.size": (v7/*: any*/),
+        "fairOrganizer.profile.icon.desktop.size": (v9/*: any*/),
         "fairOrganizer.profile.icon.mobile.src": (v8/*: any*/),
         "fairOrganizer.profile.icon.mobile.srcSet": (v8/*: any*/),
-        "fairOrganizer.profile.id": (v5/*: any*/),
-        "fairOrganizer.profile.internalID": (v5/*: any*/),
-        "fairOrganizer.profile.isFollowed": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "Boolean"
-        },
-        "fairOrganizer.slug": (v5/*: any*/)
+        "fairOrganizer.profile.icon.mobile.size": (v9/*: any*/)
       }
     },
     "name": "FairOrganizerHeader_Test_Query",

@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -55,24 +54,28 @@ v1 = {
 return {
   "argumentDefinitions": [
     {
-      "defaultValue": null,
-      "kind": "LocalArgument",
-      "name": "after"
-    },
-    {
-      "defaultValue": null,
-      "kind": "LocalArgument",
-      "name": "before"
-    },
-    {
       "defaultValue": 30,
       "kind": "LocalArgument",
-      "name": "first"
+      "name": "first",
+      "type": "Int"
     },
     {
       "defaultValue": null,
       "kind": "LocalArgument",
-      "name": "last"
+      "name": "last",
+      "type": "Int"
+    },
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "after",
+      "type": "String"
+    },
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "before",
+      "type": "String"
     }
   ],
   "kind": "Fragment",
@@ -220,8 +223,7 @@ return {
       "name": "SavedAddresses_me"
     }
   ],
-  "type": "Me",
-  "abstractKey": null
+  "type": "Me"
 };
 })();
 (node as any).hash = '96b6c7e43b19453cb277783ef53e311c';

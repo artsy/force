@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 export type InquiryAuctionHousesYouWorkWithQueryVariables = {
@@ -40,7 +39,8 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "term"
+    "name": "term",
+    "type": "String!"
   }
 ],
 v1 = [
@@ -101,8 +101,7 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query",
-    "abstractKey": null
+    "type": "Query"
   },
   "kind": "Request",
   "operation": {
@@ -144,7 +143,6 @@ return {
     ]
   },
   "params": {
-    "cacheID": "e2e4605ff2601595267a0ca271c0dd8a",
     "id": null,
     "metadata": {},
     "name": "InquiryAuctionHousesYouWorkWithQuery",

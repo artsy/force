@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -122,7 +121,8 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "input"
+    "name": "input",
+    "type": "UpdateMyProfileInput!"
   }
 ],
 v1 = [
@@ -203,8 +203,7 @@ v5 = {
       "storageKey": null
     }
   ],
-  "type": "UpdateMyProfileMutationFailure",
-  "abstractKey": null
+  "type": "UpdateMyProfileMutationFailure"
 },
 v6 = {
   "alias": null,
@@ -268,8 +267,7 @@ return {
                     "storageKey": null
                   }
                 ],
-                "type": "UpdateMyProfileMutationSuccess",
-                "abstractKey": null
+                "type": "UpdateMyProfileMutationSuccess"
               },
               (v5/*: any*/)
             ],
@@ -279,8 +277,7 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Mutation",
-    "abstractKey": null
+    "type": "Mutation"
   },
   "kind": "Request",
   "operation": {
@@ -362,8 +359,7 @@ return {
                     "storageKey": null
                   }
                 ],
-                "type": "UpdateMyProfileMutationSuccess",
-                "abstractKey": null
+                "type": "UpdateMyProfileMutationSuccess"
               },
               (v5/*: any*/)
             ],
@@ -375,7 +371,6 @@ return {
     ]
   },
   "params": {
-    "cacheID": "37d94d71b7a7ac3672af3289d66d45bd",
     "id": null,
     "metadata": {},
     "name": "useUpdateSettingsInformationMutation",

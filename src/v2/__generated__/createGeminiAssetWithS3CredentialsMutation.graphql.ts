@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 export type CreateGeminiEntryForAssetInput = {
@@ -44,7 +43,8 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "input"
+    "name": "input",
+    "type": "CreateGeminiEntryForAssetInput!"
   }
 ],
 v1 = [
@@ -91,8 +91,7 @@ return {
     "metadata": null,
     "name": "createGeminiAssetWithS3CredentialsMutation",
     "selections": (v1/*: any*/),
-    "type": "Mutation",
-    "abstractKey": null
+    "type": "Mutation"
   },
   "kind": "Request",
   "operation": {
@@ -102,7 +101,6 @@ return {
     "selections": (v1/*: any*/)
   },
   "params": {
-    "cacheID": "55a8c7797e0ad70ce3351836d4745c74",
     "id": null,
     "metadata": {},
     "name": "createGeminiAssetWithS3CredentialsMutation",

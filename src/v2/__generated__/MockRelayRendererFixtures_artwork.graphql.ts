@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -70,8 +69,7 @@ const node: ReaderFragment = {
       "name": "MockRelayRendererFixtures_artworkMetadata"
     }
   ],
-  "type": "Artwork",
-  "abstractKey": null
+  "type": "Artwork"
 };
 (node as any).hash = '35b0d2a11cf28fcc477de58eac475015';
 export default node;

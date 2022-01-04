@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -89,28 +88,34 @@ v4 = {
   "storageKey": null
 },
 v5 = {
+  "type": "ID",
   "enumValues": null,
-  "nullable": false,
   "plural": false,
-  "type": "ID"
+  "nullable": true
 },
 v6 = {
+  "type": "ID",
   "enumValues": null,
-  "nullable": true,
   "plural": false,
-  "type": "String"
+  "nullable": false
 },
 v7 = {
+  "type": "String",
   "enumValues": null,
-  "nullable": false,
   "plural": false,
-  "type": "Int"
+  "nullable": true
 },
 v8 = {
+  "type": "Int",
   "enumValues": null,
-  "nullable": false,
   "plural": false,
-  "type": "String"
+  "nullable": false
+},
+v9 = {
+  "type": "String",
+  "enumValues": null,
+  "plural": false,
+  "nullable": false
 };
 return {
   "fragment": {
@@ -136,8 +141,7 @@ return {
         "storageKey": "artist(id:\"test\")"
       }
     ],
-    "type": "Query",
-    "abstractKey": null
+    "type": "Query"
   },
   "kind": "Request",
   "operation": {
@@ -291,60 +295,59 @@ return {
     ]
   },
   "params": {
-    "cacheID": "7f643ecb55a9310a0bff55861380137c",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "artist": {
+          "type": "Artist",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "Artist"
+          "nullable": true
         },
         "artist.id": (v5/*: any*/),
-        "artist.internalID": (v5/*: any*/),
-        "artist.name": (v6/*: any*/),
+        "artist.internalID": (v6/*: any*/),
+        "artist.name": (v7/*: any*/),
+        "artist.slug": (v6/*: any*/),
         "artist.showsConnection": {
+          "type": "ShowConnection",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "ShowConnection"
+          "nullable": true
         },
         "artist.showsConnection.edges": {
+          "type": "ShowEdge",
           "enumValues": null,
-          "nullable": true,
           "plural": true,
-          "type": "ShowEdge"
+          "nullable": true
         },
         "artist.showsConnection.edges.node": {
+          "type": "Show",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "Show"
+          "nullable": true
         },
         "artist.showsConnection.edges.node.coverImage": {
+          "type": "Image",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "Image"
+          "nullable": true
         },
-        "artist.showsConnection.edges.node.coverImage.cropped": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "CroppedImageUrl"
-        },
-        "artist.showsConnection.edges.node.coverImage.cropped.height": (v7/*: any*/),
-        "artist.showsConnection.edges.node.coverImage.cropped.src": (v8/*: any*/),
-        "artist.showsConnection.edges.node.coverImage.cropped.srcSet": (v8/*: any*/),
-        "artist.showsConnection.edges.node.coverImage.cropped.width": (v7/*: any*/),
-        "artist.showsConnection.edges.node.exhibitionPeriod": (v6/*: any*/),
-        "artist.showsConnection.edges.node.href": (v6/*: any*/),
+        "artist.showsConnection.edges.node.exhibitionPeriod": (v7/*: any*/),
+        "artist.showsConnection.edges.node.href": (v7/*: any*/),
+        "artist.showsConnection.edges.node.internalID": (v6/*: any*/),
+        "artist.showsConnection.edges.node.name": (v7/*: any*/),
+        "artist.showsConnection.edges.node.slug": (v6/*: any*/),
         "artist.showsConnection.edges.node.id": (v5/*: any*/),
-        "artist.showsConnection.edges.node.internalID": (v5/*: any*/),
-        "artist.showsConnection.edges.node.name": (v6/*: any*/),
-        "artist.showsConnection.edges.node.slug": (v5/*: any*/),
-        "artist.slug": (v5/*: any*/)
+        "artist.showsConnection.edges.node.coverImage.cropped": {
+          "type": "CroppedImageUrl",
+          "enumValues": null,
+          "plural": false,
+          "nullable": true
+        },
+        "artist.showsConnection.edges.node.coverImage.cropped.width": (v8/*: any*/),
+        "artist.showsConnection.edges.node.coverImage.cropped.height": (v8/*: any*/),
+        "artist.showsConnection.edges.node.coverImage.cropped.srcSet": (v9/*: any*/),
+        "artist.showsConnection.edges.node.coverImage.cropped.src": (v9/*: any*/)
       }
     },
     "name": "ArtistCurrentShowsRail_Test_Query",

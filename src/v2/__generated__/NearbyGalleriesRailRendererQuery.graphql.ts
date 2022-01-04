@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -79,7 +78,8 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "near"
+    "name": "near",
+    "type": "String!"
   }
 ],
 v1 = [
@@ -165,8 +165,7 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query",
-    "abstractKey": null
+    "type": "Query"
   },
   "kind": "Request",
   "operation": {
@@ -354,7 +353,6 @@ return {
     ]
   },
   "params": {
-    "cacheID": "5193a97423d4ca698c0232317cb26923",
     "id": null,
     "metadata": {},
     "name": "NearbyGalleriesRailRendererQuery",

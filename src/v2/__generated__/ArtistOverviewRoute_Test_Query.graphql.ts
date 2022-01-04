@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -44,10 +43,10 @@ var v0 = [
   }
 ],
 v1 = {
+  "type": "ID",
   "enumValues": null,
-  "nullable": false,
   "plural": false,
-  "type": "ID"
+  "nullable": false
 };
 return {
   "fragment": {
@@ -73,8 +72,7 @@ return {
         "storageKey": "artist(id:\"test\")"
       }
     ],
-    "type": "Query",
-    "abstractKey": null
+    "type": "Query"
   },
   "kind": "Request",
   "operation": {
@@ -142,37 +140,41 @@ return {
     ]
   },
   "params": {
-    "cacheID": "b773ebca58c63c99ff9d379ce2c05939",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "artist": {
+          "type": "Artist",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "Artist"
+          "nullable": true
+        },
+        "artist.id": {
+          "type": "ID",
+          "enumValues": null,
+          "plural": false,
+          "nullable": true
+        },
+        "artist.slug": (v1/*: any*/),
+        "artist.name": {
+          "type": "String",
+          "enumValues": null,
+          "plural": false,
+          "nullable": true
         },
         "artist.counts": {
+          "type": "ArtistCounts",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "ArtistCounts"
+          "nullable": true
         },
-        "artist.counts.artworks": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "FormattedNumber"
-        },
-        "artist.id": (v1/*: any*/),
         "artist.internalID": (v1/*: any*/),
-        "artist.name": {
+        "artist.counts.artworks": {
+          "type": "FormattedNumber",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "String"
-        },
-        "artist.slug": (v1/*: any*/)
+          "nullable": true
+        }
       }
     },
     "name": "ArtistOverviewRoute_Test_Query",

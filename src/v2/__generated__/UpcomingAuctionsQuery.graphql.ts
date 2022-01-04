@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -183,90 +182,94 @@ fragment UpcomingAuctions_viewer_2HEEH6 on Viewer {
 */
 
 const node: ConcreteRequest = (function(){
-var v0 = {
-  "defaultValue": null,
-  "kind": "LocalArgument",
-  "name": "after"
-},
+var v0 = [
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "first",
+    "type": "Int!"
+  },
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "after",
+    "type": "String"
+  }
+],
 v1 = {
-  "defaultValue": null,
-  "kind": "LocalArgument",
-  "name": "first"
-},
-v2 = {
   "kind": "Variable",
   "name": "after",
   "variableName": "after"
 },
-v3 = {
+v2 = {
   "kind": "Variable",
   "name": "first",
   "variableName": "first"
 },
-v4 = [
-  (v2/*: any*/),
+v3 = [
+  (v1/*: any*/),
   {
     "kind": "Literal",
     "name": "auctionState",
     "value": "UPCOMING"
   },
-  (v3/*: any*/),
+  (v2/*: any*/),
   {
     "kind": "Literal",
     "name": "sort",
     "value": "START_AT_ASC"
   }
 ],
-v5 = {
+v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "slug",
   "storageKey": null
 },
-v6 = {
+v5 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "name",
   "storageKey": null
 },
-v7 = {
+v6 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "href",
   "storageKey": null
 },
-v8 = {
+v7 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "internalID",
   "storageKey": null
 },
-v9 = {
+v8 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "height",
   "storageKey": null
 },
-v10 = [
+v9 = [
   {
     "kind": "Literal",
     "name": "shallow",
     "value": true
   }
 ],
-v11 = {
+v10 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v12 = [
+v11 = [
   {
     "alias": null,
     "args": null,
@@ -277,10 +280,7 @@ v12 = [
 ];
 return {
   "fragment": {
-    "argumentDefinitions": [
-      (v0/*: any*/),
-      (v1/*: any*/)
-    ],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
     "name": "UpcomingAuctionsQuery",
@@ -295,8 +295,8 @@ return {
         "selections": [
           {
             "args": [
-              (v2/*: any*/),
-              (v3/*: any*/)
+              (v1/*: any*/),
+              (v2/*: any*/)
             ],
             "kind": "FragmentSpread",
             "name": "UpcomingAuctions_viewer"
@@ -305,15 +305,11 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query",
-    "abstractKey": null
+    "type": "Query"
   },
   "kind": "Request",
   "operation": {
-    "argumentDefinitions": [
-      (v1/*: any*/),
-      (v0/*: any*/)
-    ],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
     "name": "UpcomingAuctionsQuery",
     "selections": [
@@ -327,7 +323,7 @@ return {
         "selections": [
           {
             "alias": null,
-            "args": (v4/*: any*/),
+            "args": (v3/*: any*/),
             "concreteType": "SaleConnection",
             "kind": "LinkedField",
             "name": "salesConnection",
@@ -356,9 +352,9 @@ return {
                     "name": "node",
                     "plural": false,
                     "selections": [
+                      (v4/*: any*/),
                       (v5/*: any*/),
                       (v6/*: any*/),
-                      (v7/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -417,8 +413,8 @@ return {
                                 "name": "node",
                                 "plural": false,
                                 "selections": [
-                                  (v8/*: any*/),
-                                  (v5/*: any*/),
+                                  (v7/*: any*/),
+                                  (v4/*: any*/),
                                   {
                                     "alias": null,
                                     "args": null,
@@ -462,7 +458,7 @@ return {
                                             "name": "width",
                                             "storageKey": null
                                           },
-                                          (v9/*: any*/)
+                                          (v8/*: any*/)
                                         ],
                                         "storageKey": "resized(width:200)"
                                       },
@@ -473,7 +469,7 @@ return {
                                         "name": "aspectRatio",
                                         "storageKey": null
                                       },
-                                      (v9/*: any*/)
+                                      (v8/*: any*/)
                                     ],
                                     "storageKey": null
                                   },
@@ -491,7 +487,7 @@ return {
                                     "name": "title",
                                     "storageKey": null
                                   },
-                                  (v7/*: any*/),
+                                  (v6/*: any*/),
                                   {
                                     "alias": "is_saved",
                                     "args": null,
@@ -522,15 +518,15 @@ return {
                                   },
                                   {
                                     "alias": null,
-                                    "args": (v10/*: any*/),
+                                    "args": (v9/*: any*/),
                                     "concreteType": "Artist",
                                     "kind": "LinkedField",
                                     "name": "artists",
                                     "plural": true,
                                     "selections": [
-                                      (v11/*: any*/),
-                                      (v7/*: any*/),
-                                      (v6/*: any*/)
+                                      (v10/*: any*/),
+                                      (v6/*: any*/),
+                                      (v5/*: any*/)
                                     ],
                                     "storageKey": "artists(shallow:true)"
                                   },
@@ -543,15 +539,15 @@ return {
                                   },
                                   {
                                     "alias": null,
-                                    "args": (v10/*: any*/),
+                                    "args": (v9/*: any*/),
                                     "concreteType": "Partner",
                                     "kind": "LinkedField",
                                     "name": "partner",
                                     "plural": false,
                                     "selections": [
+                                      (v5/*: any*/),
                                       (v6/*: any*/),
-                                      (v7/*: any*/),
-                                      (v11/*: any*/),
+                                      (v10/*: any*/),
                                       {
                                         "alias": null,
                                         "args": null,
@@ -584,7 +580,7 @@ return {
                                         "name": "isClosed",
                                         "storageKey": null
                                       },
-                                      (v11/*: any*/),
+                                      (v10/*: any*/),
                                       {
                                         "alias": "is_live_open",
                                         "args": null,
@@ -649,7 +645,7 @@ return {
                                         "kind": "LinkedField",
                                         "name": "highestBid",
                                         "plural": false,
-                                        "selections": (v12/*: any*/),
+                                        "selections": (v11/*: any*/),
                                         "storageKey": null
                                       },
                                       {
@@ -659,10 +655,10 @@ return {
                                         "kind": "LinkedField",
                                         "name": "openingBid",
                                         "plural": false,
-                                        "selections": (v12/*: any*/),
+                                        "selections": (v11/*: any*/),
                                         "storageKey": null
                                       },
-                                      (v11/*: any*/)
+                                      (v10/*: any*/)
                                     ],
                                     "storageKey": null
                                   },
@@ -673,7 +669,7 @@ return {
                                     "name": "isInquireable",
                                     "storageKey": null
                                   },
-                                  (v11/*: any*/),
+                                  (v10/*: any*/),
                                   {
                                     "alias": "is_biddable",
                                     "args": null,
@@ -690,8 +686,8 @@ return {
                         ],
                         "storageKey": "artworksConnection(first:20)"
                       },
-                      (v8/*: any*/),
-                      (v11/*: any*/),
+                      (v7/*: any*/),
+                      (v10/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -742,7 +738,7 @@ return {
           },
           {
             "alias": null,
-            "args": (v4/*: any*/),
+            "args": (v3/*: any*/),
             "filters": [
               "sort",
               "auctionState"
@@ -758,7 +754,6 @@ return {
     ]
   },
   "params": {
-    "cacheID": "f090df9410732055633df9dbff249448",
     "id": null,
     "metadata": {},
     "name": "UpcomingAuctionsQuery",

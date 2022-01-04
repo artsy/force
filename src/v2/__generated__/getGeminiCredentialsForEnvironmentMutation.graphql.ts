@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 export type RequestCredentialsForAssetUploadInput = {
@@ -64,7 +63,8 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "input"
+    "name": "input",
+    "type": "RequestCredentialsForAssetUploadInput!"
   }
 ],
 v1 = [
@@ -182,8 +182,7 @@ return {
     "metadata": null,
     "name": "getGeminiCredentialsForEnvironmentMutation",
     "selections": (v1/*: any*/),
-    "type": "Mutation",
-    "abstractKey": null
+    "type": "Mutation"
   },
   "kind": "Request",
   "operation": {
@@ -193,7 +192,6 @@ return {
     "selections": (v1/*: any*/)
   },
   "params": {
-    "cacheID": "390163a2c0e0d6080e2fc0a6780e2530",
     "id": null,
     "metadata": {},
     "name": "getGeminiCredentialsForEnvironmentMutation",

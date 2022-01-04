@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -36,7 +35,6 @@ fragment ConversationCTA_conversation on Conversation {
         isOfferableFromInquiry
       }
       ... on Node {
-        __isNode: __typename
         id
       }
     }
@@ -46,7 +44,6 @@ fragment ConversationCTA_conversation on Conversation {
         internalID
       }
       ... on Node {
-        __isNode: __typename
         id
       }
     }
@@ -171,7 +168,6 @@ fragment Conversation_conversation on Conversation {
       }
       ...Item_item
       ... on Node {
-        __isNode: __typename
         id
       }
     }
@@ -183,7 +179,6 @@ fragment Conversation_conversation on Conversation {
         __typename
       }
       ... on Node {
-        __isNode: __typename
         id
       }
     }
@@ -192,7 +187,6 @@ fragment Conversation_conversation on Conversation {
 }
 
 fragment Item_item on ConversationItemType {
-  __isConversationItemType: __typename
   __typename
   ... on Artwork {
     internalID
@@ -257,7 +251,6 @@ fragment OpenInquiryModalCTA_conversation on Conversation {
 }
 
 fragment OrderUpdate_event on CommerceOrderEventUnion {
-  __isCommerceOrderEventUnion: __typename
   __typename
   ... on CommerceOrderStateChangedEvent {
     createdAt
@@ -400,38 +393,67 @@ v15 = [
   }
 ],
 v16 = {
-  "kind": "InlineFragment",
-  "selections": [
-    (v2/*: any*/)
-  ],
-  "type": "Node",
-  "abstractKey": "__isNode"
+  "type": "ID",
+  "enumValues": null,
+  "plural": false,
+  "nullable": false
 },
 v17 = {
+  "type": "ID",
   "enumValues": null,
-  "nullable": false,
   "plural": false,
-  "type": "String"
+  "nullable": true
 },
 v18 = {
+  "type": "String",
   "enumValues": null,
-  "nullable": true,
   "plural": false,
-  "type": "CommerceOrderConnectionWithTotalCount"
+  "nullable": false
 },
 v19 = {
+  "type": "String",
   "enumValues": null,
-  "nullable": true,
-  "plural": true,
-  "type": "CommerceOrderEdge"
+  "plural": false,
+  "nullable": true
 },
 v20 = {
+  "type": "Boolean",
   "enumValues": null,
-  "nullable": true,
   "plural": false,
-  "type": "CommerceOrder"
+  "nullable": true
 },
 v21 = {
+  "type": "CommerceOrderConnectionWithTotalCount",
+  "enumValues": null,
+  "plural": false,
+  "nullable": true
+},
+v22 = {
+  "type": "CommerceOrderEdge",
+  "enumValues": null,
+  "plural": true,
+  "nullable": true
+},
+v23 = {
+  "type": "ConversationItemType",
+  "enumValues": null,
+  "plural": false,
+  "nullable": true
+},
+v24 = {
+  "type": "CommerceOrder",
+  "enumValues": null,
+  "plural": false,
+  "nullable": true
+},
+v25 = {
+  "type": "Boolean",
+  "enumValues": null,
+  "plural": false,
+  "nullable": false
+},
+v26 = {
+  "type": "CommerceBuyerOfferActionEnum",
   "enumValues": [
     "OFFER_ACCEPTED",
     "OFFER_ACCEPTED_CONFIRM_NEEDED",
@@ -440,23 +462,17 @@ v21 = {
     "PAYMENT_FAILED",
     "PROVISIONAL_OFFER_ACCEPTED"
   ],
-  "nullable": true,
   "plural": false,
-  "type": "CommerceBuyerOfferActionEnum"
+  "nullable": true
 },
-v22 = {
+v27 = {
+  "type": "Image",
   "enumValues": null,
-  "nullable": false,
   "plural": false,
-  "type": "ID"
+  "nullable": true
 },
-v23 = {
-  "enumValues": null,
-  "nullable": true,
-  "plural": false,
-  "type": "CommerceOffer"
-},
-v24 = {
+v28 = {
+  "type": "CommerceOrderStateEnum",
   "enumValues": [
     "ABANDONED",
     "APPROVED",
@@ -466,48 +482,23 @@ v24 = {
     "REFUNDED",
     "SUBMITTED"
   ],
-  "nullable": false,
   "plural": false,
-  "type": "CommerceOrderStateEnum"
-},
-v25 = {
-  "enumValues": null,
-  "nullable": true,
-  "plural": false,
-  "type": "String"
-},
-v26 = {
-  "enumValues": null,
-  "nullable": true,
-  "plural": false,
-  "type": "Boolean"
-},
-v27 = {
-  "enumValues": null,
-  "nullable": true,
-  "plural": false,
-  "type": "ConversationItemType"
-},
-v28 = {
-  "enumValues": null,
-  "nullable": true,
-  "plural": false,
-  "type": "Image"
+  "nullable": false
 },
 v29 = {
+  "type": "CommerceOffer",
   "enumValues": null,
-  "nullable": false,
   "plural": false,
-  "type": "Boolean"
+  "nullable": true
 },
 v30 = {
+  "type": "CommerceOrderParticipantEnum",
   "enumValues": [
     "BUYER",
     "SELLER"
   ],
-  "nullable": true,
   "plural": false,
-  "type": "CommerceOrderParticipantEnum"
+  "nullable": true
 };
 return {
   "fragment": {
@@ -533,8 +524,7 @@ return {
         "storageKey": "node(id:\"example\")"
       }
     ],
-    "type": "Query",
-    "abstractKey": null
+    "type": "Query"
   },
   "kind": "Request",
   "operation": {
@@ -683,10 +673,6 @@ return {
                             "name": "orderHistory",
                             "plural": true,
                             "selections": [
-                              {
-                                "kind": "TypeDiscriminator",
-                                "abstractKey": "__isCommerceOrderEventUnion"
-                              },
                               (v1/*: any*/),
                               {
                                 "kind": "InlineFragment",
@@ -695,8 +681,7 @@ return {
                                   (v8/*: any*/),
                                   (v9/*: any*/)
                                 ],
-                                "type": "CommerceOrderStateChangedEvent",
-                                "abstractKey": null
+                                "type": "CommerceOrderStateChangedEvent"
                               },
                               {
                                 "kind": "InlineFragment",
@@ -750,8 +735,7 @@ return {
                                     "storageKey": null
                                   }
                                 ],
-                                "type": "CommerceOfferSubmittedEvent",
-                                "abstractKey": null
+                                "type": "CommerceOfferSubmittedEvent"
                               }
                             ],
                             "storageKey": null
@@ -761,8 +745,7 @@ return {
                             "selections": [
                               (v11/*: any*/)
                             ],
-                            "type": "CommerceOfferOrder",
-                            "abstractKey": null
+                            "type": "CommerceOfferOrder"
                           }
                         ],
                         "storageKey": null
@@ -949,14 +932,10 @@ return {
                     "plural": false,
                     "selections": [
                       (v1/*: any*/),
-                      {
-                        "kind": "TypeDiscriminator",
-                        "abstractKey": "__isConversationItemType"
-                      },
+                      (v2/*: any*/),
                       {
                         "kind": "InlineFragment",
                         "selections": [
-                          (v2/*: any*/),
                           (v13/*: any*/),
                           (v3/*: any*/),
                           {
@@ -1019,26 +998,22 @@ return {
                               {
                                 "kind": "InlineFragment",
                                 "selections": (v15/*: any*/),
-                                "type": "Money",
-                                "abstractKey": null
+                                "type": "Money"
                               },
                               {
                                 "kind": "InlineFragment",
                                 "selections": (v15/*: any*/),
-                                "type": "PriceRange",
-                                "abstractKey": null
+                                "type": "PriceRange"
                               }
                             ],
                             "storageKey": null
                           }
                         ],
-                        "type": "Artwork",
-                        "abstractKey": null
+                        "type": "Artwork"
                       },
                       {
                         "kind": "InlineFragment",
                         "selections": [
-                          (v2/*: any*/),
                           {
                             "alias": null,
                             "args": null,
@@ -1099,10 +1074,8 @@ return {
                             "storageKey": null
                           }
                         ],
-                        "type": "Show",
-                        "abstractKey": null
-                      },
-                      (v16/*: any*/)
+                        "type": "Show"
+                      }
                     ],
                     "storageKey": null
                   },
@@ -1115,16 +1088,16 @@ return {
                     "plural": false,
                     "selections": [
                       (v1/*: any*/),
+                      (v2/*: any*/),
                       {
                         "kind": "InlineFragment",
                         "selections": [
                           (v13/*: any*/),
-                          (v3/*: any*/)
+                          (v3/*: any*/),
+                          (v1/*: any*/)
                         ],
-                        "type": "Artwork",
-                        "abstractKey": null
-                      },
-                      (v16/*: any*/)
+                        "type": "Artwork"
+                      }
                     ],
                     "storageKey": null
                   }
@@ -1225,8 +1198,7 @@ return {
                                 "storageKey": "offers(first:5)"
                               }
                             ],
-                            "type": "CommerceOfferOrder",
-                            "abstractKey": null
+                            "type": "CommerceOfferOrder"
                           }
                         ],
                         "storageKey": null
@@ -1238,8 +1210,7 @@ return {
                 "storageKey": "orderConnection(first:10,states:[\"APPROVED\",\"FULFILLED\",\"SUBMITTED\",\"REFUNDED\"])"
               }
             ],
-            "type": "Conversation",
-            "abstractKey": null
+            "type": "Conversation"
           }
         ],
         "storageKey": "node(id:\"example\")"
@@ -1247,222 +1218,209 @@ return {
     ]
   },
   "params": {
-    "cacheID": "d64372728eaac516c9aedcffd59cbbe9",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "node": {
+          "type": "Node",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "Node"
+          "nullable": true
         },
-        "node.__typename": (v17/*: any*/),
-        "node.activeOrders": (v18/*: any*/),
-        "node.activeOrders.edges": (v19/*: any*/),
-        "node.activeOrders.edges.node": (v20/*: any*/),
-        "node.activeOrders.edges.node.__typename": (v17/*: any*/),
-        "node.activeOrders.edges.node.buyerAction": (v21/*: any*/),
-        "node.activeOrders.edges.node.id": (v22/*: any*/),
-        "node.activeOrders.edges.node.internalID": (v22/*: any*/),
-        "node.activeOrders.edges.node.offers": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "CommerceOfferConnection"
-        },
-        "node.activeOrders.edges.node.offers.edges": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": true,
-          "type": "CommerceOfferEdge"
-        },
-        "node.activeOrders.edges.node.offers.edges.node": (v23/*: any*/),
-        "node.activeOrders.edges.node.offers.edges.node.id": (v22/*: any*/),
-        "node.activeOrders.edges.node.offers.edges.node.internalID": (v22/*: any*/),
-        "node.activeOrders.edges.node.state": (v24/*: any*/),
-        "node.activeOrders.edges.node.stateExpiresAt": (v25/*: any*/),
-        "node.activeOrders.edges.node.stateReason": (v25/*: any*/),
+        "node.id": (v16/*: any*/),
+        "node.internalID": (v17/*: any*/),
         "node.from": {
+          "type": "ConversationInitiator",
           "enumValues": null,
-          "nullable": false,
           "plural": false,
-          "type": "ConversationInitiator"
+          "nullable": false
         },
-        "node.from.email": (v17/*: any*/),
-        "node.from.id": (v22/*: any*/),
-        "node.from.name": (v17/*: any*/),
-        "node.fromLastViewedMessageID": (v25/*: any*/),
-        "node.id": (v22/*: any*/),
-        "node.initialMessage": (v17/*: any*/),
-        "node.internalID": {
+        "node.to": {
+          "type": "ConversationResponder",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "ID"
+          "nullable": false
         },
-        "node.isLastMessageToUser": (v26/*: any*/),
-        "node.items": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": true,
-          "type": "ConversationItem"
-        },
-        "node.items.item": (v27/*: any*/),
-        "node.items.item.__isConversationItemType": (v17/*: any*/),
-        "node.items.item.__isNode": (v17/*: any*/),
-        "node.items.item.__typename": (v17/*: any*/),
-        "node.items.item.artistNames": (v25/*: any*/),
-        "node.items.item.coverImage": (v28/*: any*/),
-        "node.items.item.coverImage.url": (v25/*: any*/),
-        "node.items.item.date": (v25/*: any*/),
-        "node.items.item.fair": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "Fair"
-        },
-        "node.items.item.fair.exhibitionPeriod": (v25/*: any*/),
-        "node.items.item.fair.id": (v22/*: any*/),
-        "node.items.item.fair.location": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "Location"
-        },
-        "node.items.item.fair.location.city": (v25/*: any*/),
-        "node.items.item.fair.location.id": (v22/*: any*/),
-        "node.items.item.fair.name": (v25/*: any*/),
-        "node.items.item.href": (v25/*: any*/),
-        "node.items.item.id": (v22/*: any*/),
-        "node.items.item.image": (v28/*: any*/),
-        "node.items.item.image.url": (v25/*: any*/),
-        "node.items.item.internalID": (v22/*: any*/),
-        "node.items.item.isOfferableFromInquiry": (v26/*: any*/),
-        "node.items.item.listPrice": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "ListPrice"
-        },
-        "node.items.item.listPrice.__typename": (v17/*: any*/),
-        "node.items.item.listPrice.display": (v25/*: any*/),
-        "node.items.item.name": (v25/*: any*/),
-        "node.items.item.title": (v25/*: any*/),
-        "node.items.liveArtwork": (v27/*: any*/),
-        "node.items.liveArtwork.__isNode": (v17/*: any*/),
-        "node.items.liveArtwork.__typename": (v17/*: any*/),
-        "node.items.liveArtwork.id": (v22/*: any*/),
-        "node.items.liveArtwork.internalID": (v22/*: any*/),
-        "node.items.liveArtwork.isOfferableFromInquiry": (v26/*: any*/),
-        "node.lastMessageID": (v25/*: any*/),
+        "node.initialMessage": (v18/*: any*/),
+        "node.lastMessageID": (v19/*: any*/),
+        "node.fromLastViewedMessageID": (v19/*: any*/),
+        "node.isLastMessageToUser": (v20/*: any*/),
+        "node.unread": (v20/*: any*/),
+        "node.orderConnection": (v21/*: any*/),
         "node.messagesConnection": {
+          "type": "MessageConnection",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "MessageConnection"
+          "nullable": true
+        },
+        "node.items": {
+          "type": "ConversationItem",
+          "enumValues": null,
+          "plural": true,
+          "nullable": true
+        },
+        "node.from.name": (v18/*: any*/),
+        "node.from.email": (v18/*: any*/),
+        "node.from.id": (v17/*: any*/),
+        "node.to.name": (v18/*: any*/),
+        "node.to.initials": (v19/*: any*/),
+        "node.to.id": (v17/*: any*/),
+        "node.orderConnection.edges": (v22/*: any*/),
+        "node.messagesConnection.pageInfo": {
+          "type": "PageInfo",
+          "enumValues": null,
+          "plural": false,
+          "nullable": false
         },
         "node.messagesConnection.edges": {
+          "type": "MessageEdge",
           "enumValues": null,
-          "nullable": true,
           "plural": true,
-          "type": "MessageEdge"
+          "nullable": true
         },
-        "node.messagesConnection.edges.cursor": (v17/*: any*/),
-        "node.messagesConnection.edges.node": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "Message"
-        },
-        "node.messagesConnection.edges.node.__typename": (v17/*: any*/),
-        "node.messagesConnection.edges.node.attachments": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": true,
-          "type": "Attachment"
-        },
-        "node.messagesConnection.edges.node.attachments.contentType": (v17/*: any*/),
-        "node.messagesConnection.edges.node.attachments.downloadURL": (v17/*: any*/),
-        "node.messagesConnection.edges.node.attachments.fileName": (v17/*: any*/),
-        "node.messagesConnection.edges.node.attachments.id": (v22/*: any*/),
-        "node.messagesConnection.edges.node.body": (v25/*: any*/),
-        "node.messagesConnection.edges.node.createdAt": (v25/*: any*/),
-        "node.messagesConnection.edges.node.from": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "MessageInitiator"
-        },
-        "node.messagesConnection.edges.node.from.email": (v25/*: any*/),
-        "node.messagesConnection.edges.node.from.name": (v25/*: any*/),
-        "node.messagesConnection.edges.node.id": (v22/*: any*/),
-        "node.messagesConnection.edges.node.internalID": (v22/*: any*/),
-        "node.messagesConnection.edges.node.isFromUser": (v26/*: any*/),
-        "node.messagesConnection.pageInfo": {
-          "enumValues": null,
-          "nullable": false,
-          "plural": false,
-          "type": "PageInfo"
-        },
-        "node.messagesConnection.pageInfo.endCursor": (v25/*: any*/),
-        "node.messagesConnection.pageInfo.hasNextPage": (v29/*: any*/),
-        "node.messagesConnection.pageInfo.hasPreviousPage": (v29/*: any*/),
-        "node.messagesConnection.pageInfo.startCursor": (v25/*: any*/),
         "node.messagesConnection.totalCount": {
+          "type": "Int",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "Int"
+          "nullable": true
         },
-        "node.orderConnection": (v18/*: any*/),
-        "node.orderConnection.edges": (v19/*: any*/),
-        "node.orderConnection.edges.node": (v20/*: any*/),
-        "node.orderConnection.edges.node.__typename": (v17/*: any*/),
-        "node.orderConnection.edges.node.buyerAction": (v21/*: any*/),
-        "node.orderConnection.edges.node.id": (v22/*: any*/),
-        "node.orderConnection.edges.node.internalID": (v22/*: any*/),
+        "node.items.item": (v23/*: any*/),
+        "node.items.liveArtwork": (v23/*: any*/),
+        "node.activeOrders": (v21/*: any*/),
+        "node.orderConnection.edges.node": (v24/*: any*/),
+        "node.messagesConnection.pageInfo.startCursor": (v19/*: any*/),
+        "node.messagesConnection.pageInfo.endCursor": (v19/*: any*/),
+        "node.messagesConnection.pageInfo.hasPreviousPage": (v25/*: any*/),
+        "node.messagesConnection.pageInfo.hasNextPage": (v25/*: any*/),
+        "node.messagesConnection.edges.node": {
+          "type": "Message",
+          "enumValues": null,
+          "plural": false,
+          "nullable": true
+        },
+        "node.items.item.__typename": (v18/*: any*/),
+        "node.activeOrders.edges": (v22/*: any*/),
+        "node.orderConnection.edges.node.internalID": (v16/*: any*/),
+        "node.orderConnection.edges.node.updatedAt": (v18/*: any*/),
+        "node.orderConnection.edges.node.id": (v17/*: any*/),
+        "node.messagesConnection.edges.node.id": (v16/*: any*/),
+        "node.messagesConnection.edges.cursor": (v18/*: any*/),
+        "node.items.item.id": (v17/*: any*/),
+        "node.items.item.isOfferableFromInquiry": (v20/*: any*/),
+        "node.items.item.internalID": (v16/*: any*/),
+        "node.items.liveArtwork.isOfferableFromInquiry": (v20/*: any*/),
+        "node.items.liveArtwork.internalID": (v16/*: any*/),
+        "node.items.liveArtwork.__typename": (v18/*: any*/),
+        "node.items.liveArtwork.id": (v17/*: any*/),
+        "node.activeOrders.edges.node": (v24/*: any*/),
+        "node.orderConnection.edges.node.buyerAction": (v26/*: any*/),
         "node.orderConnection.edges.node.orderHistory": {
+          "type": "CommerceOrderEventUnion",
           "enumValues": null,
-          "nullable": false,
           "plural": true,
-          "type": "CommerceOrderEventUnion"
+          "nullable": false
         },
-        "node.orderConnection.edges.node.orderHistory.__isCommerceOrderEventUnion": (v17/*: any*/),
-        "node.orderConnection.edges.node.orderHistory.__typename": (v17/*: any*/),
-        "node.orderConnection.edges.node.orderHistory.createdAt": (v17/*: any*/),
+        "node.messagesConnection.edges.node.__typename": (v18/*: any*/),
+        "node.messagesConnection.edges.node.internalID": (v16/*: any*/),
+        "node.messagesConnection.edges.node.createdAt": (v19/*: any*/),
+        "node.messagesConnection.edges.node.isFromUser": (v20/*: any*/),
+        "node.messagesConnection.edges.node.body": (v19/*: any*/),
+        "node.items.item.date": (v19/*: any*/),
+        "node.items.item.title": (v19/*: any*/),
+        "node.items.item.artistNames": (v19/*: any*/),
+        "node.items.item.href": (v19/*: any*/),
+        "node.items.item.image": (v27/*: any*/),
+        "node.items.item.listPrice": {
+          "type": "ListPrice",
+          "enumValues": null,
+          "plural": false,
+          "nullable": true
+        },
+        "node.items.item.fair": {
+          "type": "Fair",
+          "enumValues": null,
+          "plural": false,
+          "nullable": true
+        },
+        "node.items.item.name": (v19/*: any*/),
+        "node.items.item.coverImage": (v27/*: any*/),
+        "node.activeOrders.edges.node.internalID": (v16/*: any*/),
+        "node.activeOrders.edges.node.state": (v28/*: any*/),
+        "node.activeOrders.edges.node.stateReason": (v19/*: any*/),
+        "node.activeOrders.edges.node.stateExpiresAt": (v19/*: any*/),
+        "node.activeOrders.edges.node.id": (v17/*: any*/),
+        "node.orderConnection.edges.node.orderHistory.__typename": (v18/*: any*/),
+        "node.messagesConnection.edges.node.from": {
+          "type": "MessageInitiator",
+          "enumValues": null,
+          "plural": false,
+          "nullable": true
+        },
+        "node.messagesConnection.edges.node.attachments": {
+          "type": "Attachment",
+          "enumValues": null,
+          "plural": true,
+          "nullable": true
+        },
+        "node.items.item.image.url": (v19/*: any*/),
+        "node.items.item.listPrice.__typename": (v18/*: any*/),
+        "node.items.item.fair.name": (v19/*: any*/),
+        "node.items.item.fair.exhibitionPeriod": (v19/*: any*/),
+        "node.items.item.fair.location": {
+          "type": "Location",
+          "enumValues": null,
+          "plural": false,
+          "nullable": true
+        },
+        "node.items.item.fair.id": (v17/*: any*/),
+        "node.items.item.coverImage.url": (v19/*: any*/),
+        "node.activeOrders.edges.node.buyerAction": (v26/*: any*/),
+        "node.activeOrders.edges.node.offers": {
+          "type": "CommerceOfferConnection",
+          "enumValues": null,
+          "plural": false,
+          "nullable": true
+        },
+        "node.orderConnection.edges.node.orderHistory.state": (v28/*: any*/),
+        "node.orderConnection.edges.node.orderHistory.stateReason": (v19/*: any*/),
+        "node.orderConnection.edges.node.orderHistory.createdAt": (v18/*: any*/),
+        "node.messagesConnection.edges.node.from.name": (v19/*: any*/),
+        "node.messagesConnection.edges.node.from.email": (v19/*: any*/),
+        "node.messagesConnection.edges.node.attachments.id": (v16/*: any*/),
+        "node.messagesConnection.edges.node.attachments.contentType": (v18/*: any*/),
+        "node.messagesConnection.edges.node.attachments.fileName": (v18/*: any*/),
+        "node.messagesConnection.edges.node.attachments.downloadURL": (v18/*: any*/),
+        "node.items.item.listPrice.display": (v19/*: any*/),
+        "node.items.item.fair.location.city": (v19/*: any*/),
+        "node.items.item.fair.location.id": (v17/*: any*/),
+        "node.activeOrders.edges.node.offers.edges": {
+          "type": "CommerceOfferEdge",
+          "enumValues": null,
+          "plural": true,
+          "nullable": true
+        },
         "node.orderConnection.edges.node.orderHistory.offer": {
+          "type": "CommerceOffer",
           "enumValues": null,
-          "nullable": false,
           "plural": false,
-          "type": "CommerceOffer"
+          "nullable": false
         },
-        "node.orderConnection.edges.node.orderHistory.offer.amount": (v25/*: any*/),
-        "node.orderConnection.edges.node.orderHistory.offer.definesTotal": (v29/*: any*/),
+        "node.activeOrders.edges.node.offers.edges.node": (v29/*: any*/),
+        "node.orderConnection.edges.node.orderHistory.offer.amount": (v19/*: any*/),
         "node.orderConnection.edges.node.orderHistory.offer.fromParticipant": (v30/*: any*/),
-        "node.orderConnection.edges.node.orderHistory.offer.id": (v22/*: any*/),
-        "node.orderConnection.edges.node.orderHistory.offer.offerAmountChanged": (v29/*: any*/),
-        "node.orderConnection.edges.node.orderHistory.offer.respondsTo": (v23/*: any*/),
+        "node.orderConnection.edges.node.orderHistory.offer.definesTotal": (v25/*: any*/),
+        "node.orderConnection.edges.node.orderHistory.offer.offerAmountChanged": (v25/*: any*/),
+        "node.orderConnection.edges.node.orderHistory.offer.respondsTo": (v29/*: any*/),
+        "node.orderConnection.edges.node.orderHistory.offer.id": (v17/*: any*/),
+        "node.activeOrders.edges.node.offers.edges.node.internalID": (v16/*: any*/),
+        "node.activeOrders.edges.node.offers.edges.node.id": (v17/*: any*/),
         "node.orderConnection.edges.node.orderHistory.offer.respondsTo.fromParticipant": (v30/*: any*/),
-        "node.orderConnection.edges.node.orderHistory.offer.respondsTo.id": (v22/*: any*/),
-        "node.orderConnection.edges.node.orderHistory.state": (v24/*: any*/),
-        "node.orderConnection.edges.node.orderHistory.stateReason": (v25/*: any*/),
-        "node.orderConnection.edges.node.updatedAt": (v17/*: any*/),
-        "node.to": {
-          "enumValues": null,
-          "nullable": false,
-          "plural": false,
-          "type": "ConversationResponder"
-        },
-        "node.to.id": (v22/*: any*/),
-        "node.to.initials": (v25/*: any*/),
-        "node.to.name": (v17/*: any*/),
-        "node.unread": (v26/*: any*/)
+        "node.orderConnection.edges.node.orderHistory.offer.respondsTo.id": (v17/*: any*/)
       }
     },
     "name": "ConversationPagination_Test_Query",
     "operationKind": "query",
-    "text": "query ConversationPagination_Test_Query {\n  node(id: \"example\") {\n    __typename\n    ...Conversation_conversation\n    id\n  }\n}\n\nfragment ConversationCTA_conversation on Conversation {\n  internalID\n  items {\n    liveArtwork {\n      __typename\n      ... on Artwork {\n        __typename\n        isOfferableFromInquiry\n      }\n      ... on Node {\n        __isNode: __typename\n        id\n      }\n    }\n    item {\n      __typename\n      ... on Artwork {\n        internalID\n      }\n      ... on Node {\n        __isNode: __typename\n        id\n      }\n    }\n  }\n  activeOrders: orderConnection(first: 10, states: [APPROVED, FULFILLED, SUBMITTED, REFUNDED]) {\n    edges {\n      node {\n        __typename\n        internalID\n        state\n        stateReason\n        stateExpiresAt\n        ... on CommerceOfferOrder {\n          buyerAction\n          offers(first: 5) {\n            edges {\n              node {\n                internalID\n                id\n              }\n            }\n          }\n        }\n        id\n      }\n    }\n  }\n  ...OpenInquiryModalCTA_conversation\n}\n\nfragment ConversationMessages_events on CommerceOrderConnectionWithTotalCount {\n  edges {\n    node {\n      __typename\n      orderHistory {\n        ...OrderUpdate_event\n        __typename\n        ... on CommerceOrderStateChangedEvent {\n          state\n          stateReason\n          createdAt\n        }\n        ... on CommerceOfferSubmittedEvent {\n          createdAt\n        }\n      }\n      id\n    }\n  }\n}\n\nfragment ConversationMessages_messages on MessageConnection {\n  edges {\n    node {\n      __typename\n      id\n      internalID\n      createdAt\n      isFromUser\n      body\n      ...Message_message\n    }\n  }\n}\n\nfragment Conversation_conversation on Conversation {\n  id\n  internalID\n  from {\n    name\n    email\n    id\n  }\n  to {\n    name\n    initials\n    id\n  }\n  initialMessage\n  lastMessageID\n  fromLastViewedMessageID\n  isLastMessageToUser\n  unread\n  orderConnection(first: 10, states: [APPROVED, FULFILLED, SUBMITTED, REFUNDED, CANCELED], participantType: BUYER) {\n    edges {\n      node {\n        __typename\n        internalID\n        updatedAt\n        ... on CommerceOfferOrder {\n          buyerAction\n        }\n        id\n      }\n    }\n    ...ConversationMessages_events\n  }\n  messagesConnection(first: 30, sort: DESC) {\n    pageInfo {\n      startCursor\n      endCursor\n      hasPreviousPage\n      hasNextPage\n    }\n    edges {\n      node {\n        id\n        __typename\n      }\n      cursor\n    }\n    totalCount\n    ...ConversationMessages_messages\n  }\n  items {\n    item {\n      __typename\n      ... on Artwork {\n        id\n        isOfferableFromInquiry\n        internalID\n      }\n      ...Item_item\n      ... on Node {\n        __isNode: __typename\n        id\n      }\n    }\n    liveArtwork {\n      __typename\n      ... on Artwork {\n        isOfferableFromInquiry\n        internalID\n        __typename\n      }\n      ... on Node {\n        __isNode: __typename\n        id\n      }\n    }\n  }\n  ...ConversationCTA_conversation\n}\n\nfragment Item_item on ConversationItemType {\n  __isConversationItemType: __typename\n  __typename\n  ... on Artwork {\n    internalID\n    id\n    date\n    title\n    artistNames\n    href\n    isOfferableFromInquiry\n    image {\n      url(version: [\"large\"])\n    }\n    listPrice {\n      __typename\n      ... on Money {\n        display\n      }\n      ... on PriceRange {\n        display\n      }\n    }\n  }\n  ... on Show {\n    id\n    fair {\n      name\n      exhibitionPeriod\n      location {\n        city\n        id\n      }\n      id\n    }\n    href\n    name\n    coverImage {\n      url\n    }\n  }\n}\n\nfragment Message_message on Message {\n  __typename\n  internalID\n  body\n  createdAt\n  isFromUser\n  from {\n    name\n    email\n  }\n  attachments {\n    id\n    contentType\n    fileName\n    downloadURL\n  }\n}\n\nfragment OpenInquiryModalCTA_conversation on Conversation {\n  internalID\n}\n\nfragment OrderUpdate_event on CommerceOrderEventUnion {\n  __isCommerceOrderEventUnion: __typename\n  __typename\n  ... on CommerceOrderStateChangedEvent {\n    createdAt\n    stateReason\n    state\n  }\n  ... on CommerceOfferSubmittedEvent {\n    createdAt\n    offer {\n      amount\n      fromParticipant\n      definesTotal\n      offerAmountChanged\n      respondsTo {\n        fromParticipant\n        id\n      }\n      id\n    }\n  }\n}\n"
+    "text": "query ConversationPagination_Test_Query {\n  node(id: \"example\") {\n    __typename\n    ...Conversation_conversation\n    id\n  }\n}\n\nfragment ConversationCTA_conversation on Conversation {\n  internalID\n  items {\n    liveArtwork {\n      __typename\n      ... on Artwork {\n        __typename\n        isOfferableFromInquiry\n      }\n      ... on Node {\n        id\n      }\n    }\n    item {\n      __typename\n      ... on Artwork {\n        internalID\n      }\n      ... on Node {\n        id\n      }\n    }\n  }\n  activeOrders: orderConnection(first: 10, states: [APPROVED, FULFILLED, SUBMITTED, REFUNDED]) {\n    edges {\n      node {\n        __typename\n        internalID\n        state\n        stateReason\n        stateExpiresAt\n        ... on CommerceOfferOrder {\n          buyerAction\n          offers(first: 5) {\n            edges {\n              node {\n                internalID\n                id\n              }\n            }\n          }\n        }\n        id\n      }\n    }\n  }\n  ...OpenInquiryModalCTA_conversation\n}\n\nfragment ConversationMessages_events on CommerceOrderConnectionWithTotalCount {\n  edges {\n    node {\n      __typename\n      orderHistory {\n        ...OrderUpdate_event\n        __typename\n        ... on CommerceOrderStateChangedEvent {\n          state\n          stateReason\n          createdAt\n        }\n        ... on CommerceOfferSubmittedEvent {\n          createdAt\n        }\n      }\n      id\n    }\n  }\n}\n\nfragment ConversationMessages_messages on MessageConnection {\n  edges {\n    node {\n      __typename\n      id\n      internalID\n      createdAt\n      isFromUser\n      body\n      ...Message_message\n    }\n  }\n}\n\nfragment Conversation_conversation on Conversation {\n  id\n  internalID\n  from {\n    name\n    email\n    id\n  }\n  to {\n    name\n    initials\n    id\n  }\n  initialMessage\n  lastMessageID\n  fromLastViewedMessageID\n  isLastMessageToUser\n  unread\n  orderConnection(first: 10, states: [APPROVED, FULFILLED, SUBMITTED], participantType: BUYER) {\n    edges {\n      node {\n        __typename\n        internalID\n        updatedAt\n        ... on CommerceOfferOrder {\n          buyerAction\n        }\n        id\n      }\n    }\n    ...ConversationMessages_events\n  }\n  messagesConnection(first: 30, sort: DESC) {\n    pageInfo {\n      startCursor\n      endCursor\n      hasPreviousPage\n      hasNextPage\n    }\n    edges {\n      node {\n        id\n        __typename\n      }\n      cursor\n    }\n    totalCount\n    ...ConversationMessages_messages\n  }\n  items {\n    item {\n      __typename\n      ... on Artwork {\n        id\n        isOfferableFromInquiry\n        internalID\n      }\n      ...Item_item\n      ... on Node {\n        id\n      }\n    }\n    liveArtwork {\n      __typename\n      ... on Artwork {\n        isOfferableFromInquiry\n        internalID\n        __typename\n      }\n      ... on Node {\n        id\n      }\n    }\n  }\n  ...ConversationCTA_conversation\n}\n\nfragment Item_item on ConversationItemType {\n  __typename\n  ... on Artwork {\n    internalID\n    id\n    date\n    title\n    artistNames\n    href\n    isOfferableFromInquiry\n    image {\n      url(version: [\"large\"])\n    }\n    listPrice {\n      __typename\n      ... on Money {\n        display\n      }\n      ... on PriceRange {\n        display\n      }\n    }\n  }\n  ... on Show {\n    id\n    fair {\n      name\n      exhibitionPeriod\n      location {\n        city\n        id\n      }\n      id\n    }\n    href\n    name\n    coverImage {\n      url\n    }\n  }\n}\n\nfragment Message_message on Message {\n  __typename\n  internalID\n  body\n  createdAt\n  isFromUser\n  from {\n    name\n    email\n  }\n  attachments {\n    id\n    contentType\n    fileName\n    downloadURL\n  }\n}\n\nfragment OpenInquiryModalCTA_conversation on Conversation {\n  internalID\n}\n\nfragment OrderUpdate_event on CommerceOrderEventUnion {\n  __typename\n  ... on CommerceOrderStateChangedEvent {\n    createdAt\n    stateReason\n    state\n  }\n  ... on CommerceOfferSubmittedEvent {\n    createdAt\n    offer {\n      amount\n      fromParticipant\n      definesTotal\n      offerAmountChanged\n      respondsTo {\n        fromParticipant\n        id\n      }\n      id\n    }\n  }\n}\n"
   }
 };
 })();

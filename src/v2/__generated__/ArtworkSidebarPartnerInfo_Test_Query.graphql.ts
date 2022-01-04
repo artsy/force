@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -17,16 +16,16 @@ export type ArtworkSidebarPartnerInfo_Test_QueryRawResponse = {
             readonly href: string | null;
             readonly locations: ReadonlyArray<({
                 readonly city: string | null;
-                readonly id: string;
+                readonly id: string | null;
             }) | null> | null;
-            readonly id: string;
+            readonly id: string | null;
         }) | null;
         readonly sale: ({
             readonly name: string | null;
             readonly href: string | null;
-            readonly id: string;
+            readonly id: string | null;
         }) | null;
-        readonly id: string;
+        readonly id: string | null;
     }) | null;
 };
 export type ArtworkSidebarPartnerInfo_Test_Query = {
@@ -93,16 +92,16 @@ v3 = {
   "storageKey": null
 },
 v4 = {
+  "type": "ID",
   "enumValues": null,
-  "nullable": false,
   "plural": false,
-  "type": "ID"
+  "nullable": true
 },
 v5 = {
+  "type": "String",
   "enumValues": null,
-  "nullable": true,
   "plural": false,
-  "type": "String"
+  "nullable": true
 };
 return {
   "fragment": {
@@ -128,8 +127,7 @@ return {
         "storageKey": "artwork(id:\"artwork_from_partner_with_locations\")"
       }
     ],
-    "type": "Query",
-    "abstractKey": null
+    "type": "Query"
   },
   "kind": "Request",
   "operation": {
@@ -199,43 +197,42 @@ return {
     ]
   },
   "params": {
-    "cacheID": "405b9532fe786c0825194ba0d3166f6d",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "artwork": {
+          "type": "Artwork",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "Artwork"
+          "nullable": true
         },
         "artwork.id": (v4/*: any*/),
         "artwork.partner": {
+          "type": "Partner",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "Partner"
+          "nullable": true
         },
-        "artwork.partner.href": (v5/*: any*/),
-        "artwork.partner.id": (v4/*: any*/),
-        "artwork.partner.locations": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": true,
-          "type": "Location"
-        },
-        "artwork.partner.locations.city": (v5/*: any*/),
-        "artwork.partner.locations.id": (v4/*: any*/),
-        "artwork.partner.name": (v5/*: any*/),
         "artwork.sale": {
+          "type": "Sale",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "Sale"
+          "nullable": true
         },
+        "artwork.partner.name": (v5/*: any*/),
+        "artwork.partner.href": (v5/*: any*/),
+        "artwork.partner.locations": {
+          "type": "Location",
+          "enumValues": null,
+          "plural": true,
+          "nullable": true
+        },
+        "artwork.partner.id": (v4/*: any*/),
+        "artwork.sale.name": (v5/*: any*/),
         "artwork.sale.href": (v5/*: any*/),
         "artwork.sale.id": (v4/*: any*/),
-        "artwork.sale.name": (v5/*: any*/)
+        "artwork.partner.locations.city": (v5/*: any*/),
+        "artwork.partner.locations.id": (v4/*: any*/)
       }
     },
     "name": "ArtworkSidebarPartnerInfo_Test_Query",

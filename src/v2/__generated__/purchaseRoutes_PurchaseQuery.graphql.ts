@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -26,7 +25,6 @@ query purchaseRoutes_PurchaseQuery {
 }
 
 fragment OrderRow_order on CommerceOrder {
-  __isCommerceOrder: __typename
   internalID
   code
   displayState
@@ -168,21 +166,24 @@ v2 = {
   "name": "internalID",
   "storageKey": null
 },
-v3 = {
+v3 = [
+  (v1/*: any*/)
+],
+v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v4 = {
+v5 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "slug",
   "storageKey": null
 },
-v5 = [
+v6 = [
   {
     "alias": null,
     "args": null,
@@ -229,8 +230,7 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query",
-    "abstractKey": null
+    "type": "Query"
   },
   "kind": "Request",
   "operation": {
@@ -296,10 +296,6 @@ return {
                         "name": "code",
                         "storageKey": null
                       },
-                      {
-                        "kind": "TypeDiscriminator",
-                        "abstractKey": "__isCommerceOrder"
-                      },
                       (v2/*: any*/),
                       {
                         "alias": null,
@@ -330,7 +326,22 @@ return {
                         "name": "requestedFulfillment",
                         "plural": false,
                         "selections": [
-                          (v1/*: any*/)
+                          (v1/*: any*/),
+                          {
+                            "kind": "InlineFragment",
+                            "selections": (v3/*: any*/),
+                            "type": "CommerceShip"
+                          },
+                          {
+                            "kind": "InlineFragment",
+                            "selections": (v3/*: any*/),
+                            "type": "CommercePickup"
+                          },
+                          {
+                            "kind": "InlineFragment",
+                            "selections": (v3/*: any*/),
+                            "type": "CommerceShipArta"
+                          }
                         ],
                         "storageKey": null
                       },
@@ -349,7 +360,7 @@ return {
                             "name": "lastDigits",
                             "storageKey": null
                           },
-                          (v3/*: any*/)
+                          (v4/*: any*/)
                         ],
                         "storageKey": null
                       },
@@ -419,7 +430,7 @@ return {
                                     "name": "artwork",
                                     "plural": false,
                                     "selections": [
-                                      (v4/*: any*/),
+                                      (v5/*: any*/),
                                       {
                                         "alias": null,
                                         "args": null,
@@ -517,11 +528,11 @@ return {
                                                 ],
                                                 "storageKey": null
                                               },
-                                              (v3/*: any*/)
+                                              (v4/*: any*/)
                                             ],
                                             "storageKey": null
                                           },
-                                          (v3/*: any*/)
+                                          (v4/*: any*/)
                                         ],
                                         "storageKey": null
                                       },
@@ -555,12 +566,12 @@ return {
                                         "name": "artists",
                                         "plural": true,
                                         "selections": [
-                                          (v4/*: any*/),
-                                          (v3/*: any*/)
+                                          (v5/*: any*/),
+                                          (v4/*: any*/)
                                         ],
                                         "storageKey": null
                                       },
-                                      (v3/*: any*/)
+                                      (v4/*: any*/)
                                     ],
                                     "storageKey": null
                                   },
@@ -601,7 +612,7 @@ return {
                                                 "name": "trackingId",
                                                 "storageKey": null
                                               },
-                                              (v3/*: any*/)
+                                              (v4/*: any*/)
                                             ],
                                             "storageKey": null
                                           }
@@ -611,7 +622,7 @@ return {
                                     ],
                                     "storageKey": "fulfillments(first:1)"
                                   },
-                                  (v3/*: any*/)
+                                  (v4/*: any*/)
                                 ],
                                 "storageKey": null
                               }
@@ -621,7 +632,7 @@ return {
                         ],
                         "storageKey": null
                       },
-                      (v3/*: any*/)
+                      (v4/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -643,7 +654,7 @@ return {
                     "kind": "LinkedField",
                     "name": "around",
                     "plural": true,
-                    "selections": (v5/*: any*/),
+                    "selections": (v6/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -653,7 +664,7 @@ return {
                     "kind": "LinkedField",
                     "name": "first",
                     "plural": false,
-                    "selections": (v5/*: any*/),
+                    "selections": (v6/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -663,7 +674,7 @@ return {
                     "kind": "LinkedField",
                     "name": "last",
                     "plural": false,
-                    "selections": (v5/*: any*/),
+                    "selections": (v6/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -673,7 +684,7 @@ return {
                     "kind": "LinkedField",
                     "name": "previous",
                     "plural": false,
-                    "selections": (v5/*: any*/),
+                    "selections": (v6/*: any*/),
                     "storageKey": null
                   }
                 ],
@@ -721,19 +732,18 @@ return {
             ],
             "storageKey": "orders(first:10,states:[\"APPROVED\",\"CANCELED\",\"FULFILLED\",\"REFUNDED\",\"SUBMITTED\"])"
           },
-          (v3/*: any*/)
+          (v4/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "32d885b845c8c6165a74a88329197fa7",
     "id": null,
     "metadata": {},
     "name": "purchaseRoutes_PurchaseQuery",
     "operationKind": "query",
-    "text": "query purchaseRoutes_PurchaseQuery {\n  me {\n    ...PurchaseApp_me\n    id\n  }\n}\n\nfragment OrderRow_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  internalID\n  code\n  displayState\n  state\n  mode\n  requestedFulfillment {\n    __typename\n    ... on CommerceShip {\n      __typename\n    }\n    ... on CommercePickup {\n      __typename\n    }\n    ... on CommerceShipArta {\n      __typename\n    }\n  }\n  creditCard {\n    lastDigits\n    id\n  }\n  buyerTotal(precision: 2)\n  createdAt\n  itemsTotal\n  currencyCode\n  lineItems {\n    edges {\n      node {\n        artwork {\n          slug\n          date\n          image {\n            resized(width: 55) {\n              url\n            }\n          }\n          partner {\n            href\n            initials\n            name\n            profile {\n              icon {\n                url(version: \"square140\")\n              }\n              id\n            }\n            id\n          }\n          shippingOrigin\n          internalID\n          title\n          artistNames\n          artists {\n            slug\n            id\n          }\n          id\n        }\n        fulfillments(first: 1) {\n          edges {\n            node {\n              trackingId\n              id\n            }\n          }\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment PurchaseApp_me on Me {\n  ...PurchaseHistory_me\n}\n\nfragment PurchaseHistory_me on Me {\n  name\n  orders(states: [APPROVED, CANCELED, FULFILLED, REFUNDED, SUBMITTED], first: 10) {\n    edges {\n      node {\n        __typename\n        code\n        ...OrderRow_order\n        id\n      }\n    }\n    pageCursors {\n      around {\n        cursor\n        isCurrent\n        page\n      }\n      first {\n        cursor\n        isCurrent\n        page\n      }\n      last {\n        cursor\n        isCurrent\n        page\n      }\n      previous {\n        cursor\n        isCurrent\n        page\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n"
+    "text": "query purchaseRoutes_PurchaseQuery {\n  me {\n    ...PurchaseApp_me\n    id\n  }\n}\n\nfragment OrderRow_order on CommerceOrder {\n  internalID\n  code\n  displayState\n  state\n  mode\n  requestedFulfillment {\n    __typename\n    ... on CommerceShip {\n      __typename\n    }\n    ... on CommercePickup {\n      __typename\n    }\n    ... on CommerceShipArta {\n      __typename\n    }\n  }\n  creditCard {\n    lastDigits\n    id\n  }\n  buyerTotal(precision: 2)\n  createdAt\n  itemsTotal\n  currencyCode\n  lineItems {\n    edges {\n      node {\n        artwork {\n          slug\n          date\n          image {\n            resized(width: 55) {\n              url\n            }\n          }\n          partner {\n            href\n            initials\n            name\n            profile {\n              icon {\n                url(version: \"square140\")\n              }\n              id\n            }\n            id\n          }\n          shippingOrigin\n          internalID\n          title\n          artistNames\n          artists {\n            slug\n            id\n          }\n          id\n        }\n        fulfillments(first: 1) {\n          edges {\n            node {\n              trackingId\n              id\n            }\n          }\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment PurchaseApp_me on Me {\n  ...PurchaseHistory_me\n}\n\nfragment PurchaseHistory_me on Me {\n  name\n  orders(states: [APPROVED, CANCELED, FULFILLED, REFUNDED, SUBMITTED], first: 10) {\n    edges {\n      node {\n        __typename\n        code\n        ...OrderRow_order\n        id\n      }\n    }\n    pageCursors {\n      around {\n        cursor\n        isCurrent\n        page\n      }\n      first {\n        cursor\n        isCurrent\n        page\n      }\n      last {\n        cursor\n        isCurrent\n        page\n      }\n      previous {\n        cursor\n        isCurrent\n        page\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n"
   }
 };
 })();

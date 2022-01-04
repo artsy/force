@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -68,7 +67,8 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "partnerId"
+    "name": "partnerId",
+    "type": "String!"
   }
 ],
 v1 = [
@@ -100,22 +100,28 @@ v4 = {
   "storageKey": null
 },
 v5 = {
+  "type": "ID",
   "enumValues": null,
-  "nullable": false,
   "plural": false,
-  "type": "ID"
+  "nullable": true
 },
 v6 = {
+  "type": "String",
   "enumValues": null,
-  "nullable": true,
   "plural": false,
-  "type": "String"
+  "nullable": true
 },
 v7 = {
+  "type": "ID",
   "enumValues": null,
-  "nullable": false,
   "plural": false,
-  "type": "String"
+  "nullable": false
+},
+v8 = {
+  "type": "String",
+  "enumValues": null,
+  "plural": false,
+  "nullable": false
 };
 return {
   "fragment": {
@@ -141,8 +147,7 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query",
-    "abstractKey": null
+    "type": "Query"
   },
   "kind": "Request",
   "operation": {
@@ -308,71 +313,70 @@ return {
     ]
   },
   "params": {
-    "cacheID": "88bbe5b628437d486be39fe7750b372b",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "partner": {
+          "type": "Partner",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "Partner"
+          "nullable": true
         },
         "partner.id": (v5/*: any*/),
-        "partner.locationsConnection": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "LocationConnection"
-        },
-        "partner.locationsConnection.edges": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": true,
-          "type": "LocationEdge"
-        },
-        "partner.locationsConnection.edges.node": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "Location"
-        },
-        "partner.locationsConnection.edges.node.city": (v6/*: any*/),
-        "partner.locationsConnection.edges.node.displayCountry": (v6/*: any*/),
-        "partner.locationsConnection.edges.node.id": (v5/*: any*/),
         "partner.name": (v6/*: any*/),
+        "partner.slug": (v7/*: any*/),
+        "partner.type": (v6/*: any*/),
         "partner.profile": {
+          "type": "Profile",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "Profile"
+          "nullable": true
         },
-        "partner.profile.id": (v5/*: any*/),
-        "partner.profile.image": {
+        "partner.locationsConnection": {
+          "type": "LocationConnection",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "Image"
+          "nullable": true
+        },
+        "partner.profile.image": {
+          "type": "Image",
+          "enumValues": null,
+          "plural": false,
+          "nullable": true
+        },
+        "partner.profile.id": (v7/*: any*/),
+        "partner.locationsConnection.edges": {
+          "type": "LocationEdge",
+          "enumValues": null,
+          "plural": true,
+          "nullable": true
         },
         "partner.profile.image.cropped": {
+          "type": "CroppedImageUrl",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "CroppedImageUrl"
+          "nullable": true
         },
-        "partner.profile.image.cropped.src": (v7/*: any*/),
-        "partner.profile.image.cropped.srcSet": (v7/*: any*/),
-        "partner.profile.internalID": (v5/*: any*/),
-        "partner.profile.is_followed": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "Boolean"
-        },
+        "partner.profile.slug": (v7/*: any*/),
         "partner.profile.name": (v6/*: any*/),
-        "partner.profile.slug": (v5/*: any*/),
-        "partner.slug": (v5/*: any*/),
-        "partner.type": (v6/*: any*/)
+        "partner.profile.internalID": (v7/*: any*/),
+        "partner.profile.is_followed": {
+          "type": "Boolean",
+          "enumValues": null,
+          "plural": false,
+          "nullable": true
+        },
+        "partner.locationsConnection.edges.node": {
+          "type": "Location",
+          "enumValues": null,
+          "plural": false,
+          "nullable": true
+        },
+        "partner.profile.image.cropped.src": (v8/*: any*/),
+        "partner.profile.image.cropped.srcSet": (v8/*: any*/),
+        "partner.locationsConnection.edges.node.city": (v6/*: any*/),
+        "partner.locationsConnection.edges.node.displayCountry": (v6/*: any*/),
+        "partner.locationsConnection.edges.node.id": (v5/*: any*/)
       }
     },
     "name": "NearbyGalleryCard_Test_Query",

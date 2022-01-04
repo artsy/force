@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -44,10 +43,10 @@ fragment SuggestedGenes_suggested_genes on Gene {
 
 const node: ConcreteRequest = (function(){
 var v0 = {
+  "type": "ID",
   "enumValues": null,
-  "nullable": false,
   "plural": false,
-  "type": "ID"
+  "nullable": false
 };
 return {
   "fragment": {
@@ -84,8 +83,7 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query",
-    "abstractKey": null
+    "type": "Query"
   },
   "kind": "Request",
   "operation": {
@@ -186,49 +184,48 @@ return {
     ]
   },
   "params": {
-    "cacheID": "9bc3f741e9894d151c01b16863a22062",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "highlights": {
+          "type": "Highlights",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "Highlights"
+          "nullable": true
         },
         "highlights.suggested_genes": {
+          "type": "Gene",
           "enumValues": null,
-          "nullable": true,
           "plural": true,
-          "type": "Gene"
+          "nullable": true
         },
         "highlights.suggested_genes.id": (v0/*: any*/),
-        "highlights.suggested_genes.image": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "Image"
-        },
-        "highlights.suggested_genes.image.cropped": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "CroppedImageUrl"
-        },
-        "highlights.suggested_genes.image.cropped.url": {
-          "enumValues": null,
-          "nullable": false,
-          "plural": false,
-          "type": "String"
-        },
+        "highlights.suggested_genes.slug": (v0/*: any*/),
         "highlights.suggested_genes.internalID": (v0/*: any*/),
         "highlights.suggested_genes.name": {
+          "type": "String",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "String"
+          "nullable": true
         },
-        "highlights.suggested_genes.slug": (v0/*: any*/)
+        "highlights.suggested_genes.image": {
+          "type": "Image",
+          "enumValues": null,
+          "plural": false,
+          "nullable": true
+        },
+        "highlights.suggested_genes.image.cropped": {
+          "type": "CroppedImageUrl",
+          "enumValues": null,
+          "plural": false,
+          "nullable": true
+        },
+        "highlights.suggested_genes.image.cropped.url": {
+          "type": "String",
+          "enumValues": null,
+          "plural": false,
+          "nullable": false
+        }
       }
     },
     "name": "SuggestedGenes_Test_Query",

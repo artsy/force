@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 export type CommerceSetPaymentInput = {
@@ -83,7 +82,8 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "input"
+    "name": "input",
+    "type": "CommerceSetPaymentInput!"
   }
 ],
 v1 = [
@@ -192,8 +192,7 @@ v11 = {
       "storageKey": null
     }
   ],
-  "type": "CommerceOrderWithMutationFailure",
-  "abstractKey": null
+  "type": "CommerceOrderWithMutationFailure"
 },
 v12 = {
   "alias": null,
@@ -260,8 +259,7 @@ return {
                     "storageKey": null
                   }
                 ],
-                "type": "CommerceOrderWithMutationSuccess",
-                "abstractKey": null
+                "type": "CommerceOrderWithMutationSuccess"
               },
               (v11/*: any*/)
             ],
@@ -271,8 +269,7 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Mutation",
-    "abstractKey": null
+    "type": "Mutation"
   },
   "kind": "Request",
   "operation": {
@@ -334,8 +331,7 @@ return {
                     "storageKey": null
                   }
                 ],
-                "type": "CommerceOrderWithMutationSuccess",
-                "abstractKey": null
+                "type": "CommerceOrderWithMutationSuccess"
               },
               (v11/*: any*/)
             ],
@@ -347,7 +343,6 @@ return {
     ]
   },
   "params": {
-    "cacheID": "7fee53d0f619278501d5ea29d6d70bec",
     "id": null,
     "metadata": {},
     "name": "PaymentRouteSetOrderPaymentMutation",

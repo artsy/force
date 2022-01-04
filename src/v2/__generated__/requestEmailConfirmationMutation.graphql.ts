@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 export type requestEmailConfirmationMutationVariables = {};
@@ -60,8 +59,7 @@ v1 = {
       "storageKey": null
     }
   ],
-  "type": "SendConfirmationEmailMutationSuccess",
-  "abstractKey": null
+  "type": "SendConfirmationEmailMutationSuccess"
 },
 v2 = {
   "kind": "InlineFragment",
@@ -92,8 +90,7 @@ v2 = {
       "storageKey": null
     }
   ],
-  "type": "SendConfirmationEmailMutationFailure",
-  "abstractKey": null
+  "type": "SendConfirmationEmailMutationFailure"
 };
 return {
   "fragment": {
@@ -127,8 +124,7 @@ return {
         "storageKey": "sendConfirmationEmail(input:{})"
       }
     ],
-    "type": "Mutation",
-    "abstractKey": null
+    "type": "Mutation"
   },
   "kind": "Request",
   "operation": {
@@ -170,7 +166,6 @@ return {
     ]
   },
   "params": {
-    "cacheID": "3f27fd254bd0e8266181e52a8da62776",
     "id": null,
     "metadata": {},
     "name": "requestEmailConfirmationMutation",

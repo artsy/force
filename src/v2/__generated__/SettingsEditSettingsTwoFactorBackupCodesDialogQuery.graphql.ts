@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -59,8 +58,7 @@ const node: ConcreteRequest = {
         "storageKey": null
       }
     ],
-    "type": "Query",
-    "abstractKey": null
+    "type": "Query"
   },
   "kind": "Request",
   "operation": {
@@ -110,8 +108,7 @@ const node: ConcreteRequest = {
                     "storageKey": null
                   }
                 ],
-                "type": "BackupSecondFactor",
-                "abstractKey": null
+                "type": "BackupSecondFactor"
               }
             ],
             "storageKey": "secondFactors(kinds:[\"backup\"])"
@@ -129,7 +126,6 @@ const node: ConcreteRequest = {
     ]
   },
   "params": {
-    "cacheID": "7ea1e0571ad11d9a39628f1c3ecab821",
     "id": null,
     "metadata": {},
     "name": "SettingsEditSettingsTwoFactorBackupCodesDialogQuery",

@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 export type getConvectionGeminiKeyQueryVariables = {};
@@ -82,8 +81,7 @@ return {
     "metadata": null,
     "name": "getConvectionGeminiKeyQuery",
     "selections": (v0/*: any*/),
-    "type": "Query",
-    "abstractKey": null
+    "type": "Query"
   },
   "kind": "Request",
   "operation": {
@@ -93,7 +91,6 @@ return {
     "selections": (v0/*: any*/)
   },
   "params": {
-    "cacheID": "d2759d79e2c03e7a4f20054093419f41",
     "id": null,
     "metadata": {},
     "name": "getConvectionGeminiKeyQuery",

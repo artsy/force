@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -205,8 +204,7 @@ return {
               "storageKey": null
             }
           ],
-          "type": "Partner",
-          "abstractKey": null
+          "type": "Partner"
         }
       ],
       "storageKey": null
@@ -217,8 +215,7 @@ return {
       "name": "FollowProfileButton_profile"
     }
   ],
-  "type": "Profile",
-  "abstractKey": null
+  "type": "Profile"
 };
 })();
 (node as any).hash = '96f2438a5e38ecb4f1902def2992ea57';

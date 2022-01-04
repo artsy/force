@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -196,46 +195,52 @@ v5 = [
   }
 ],
 v6 = {
+  "type": "SaleArtworkCounts",
   "enumValues": null,
-  "nullable": true,
   "plural": false,
-  "type": "SaleArtworkCounts"
+  "nullable": true
 },
 v7 = {
+  "type": "ID",
   "enumValues": null,
-  "nullable": true,
   "plural": false,
-  "type": "FormattedNumber"
+  "nullable": true
 },
 v8 = {
+  "type": "FormattedNumber",
   "enumValues": null,
-  "nullable": false,
   "plural": false,
-  "type": "ID"
+  "nullable": true
 },
 v9 = {
+  "type": "ID",
   "enumValues": null,
-  "nullable": true,
   "plural": false,
-  "type": "String"
+  "nullable": false
 },
 v10 = {
+  "type": "String",
   "enumValues": null,
-  "nullable": true,
   "plural": false,
-  "type": "Int"
+  "nullable": true
 },
 v11 = {
+  "type": "Boolean",
   "enumValues": null,
-  "nullable": false,
   "plural": false,
-  "type": "String"
+  "nullable": true
 },
 v12 = {
+  "type": "Int",
   "enumValues": null,
-  "nullable": true,
   "plural": false,
-  "type": "Boolean"
+  "nullable": true
+},
+v13 = {
+  "type": "String",
+  "enumValues": null,
+  "plural": false,
+  "nullable": false
 };
 return {
   "fragment": {
@@ -261,8 +266,7 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query",
-    "abstractKey": null
+    "type": "Query"
   },
   "kind": "Request",
   "operation": {
@@ -628,128 +632,127 @@ return {
     ]
   },
   "params": {
-    "cacheID": "af156c7e50eabcfe1ba393809ef4e770",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "viewer": {
+          "type": "Viewer",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "Viewer"
+          "nullable": true
         },
         "viewer.trendingLotsConnection": {
+          "type": "SaleArtworksConnection",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "SaleArtworksConnection"
+          "nullable": true
         },
         "viewer.trendingLotsConnection.edges": {
+          "type": "SaleArtwork",
           "enumValues": null,
-          "nullable": true,
           "plural": true,
-          "type": "SaleArtwork"
+          "nullable": true
         },
         "viewer.trendingLotsConnection.edges.counts": (v6/*: any*/),
-        "viewer.trendingLotsConnection.edges.counts.bidderPositions": (v7/*: any*/),
-        "viewer.trendingLotsConnection.edges.id": (v8/*: any*/),
         "viewer.trendingLotsConnection.edges.node": {
+          "type": "Artwork",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "Artwork"
+          "nullable": true
         },
-        "viewer.trendingLotsConnection.edges.node.artists": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": true,
-          "type": "Artist"
-        },
-        "viewer.trendingLotsConnection.edges.node.artists.href": (v9/*: any*/),
-        "viewer.trendingLotsConnection.edges.node.artists.id": (v8/*: any*/),
-        "viewer.trendingLotsConnection.edges.node.artists.name": (v9/*: any*/),
-        "viewer.trendingLotsConnection.edges.node.collecting_institution": (v9/*: any*/),
-        "viewer.trendingLotsConnection.edges.node.cultural_maker": (v9/*: any*/),
-        "viewer.trendingLotsConnection.edges.node.date": (v9/*: any*/),
-        "viewer.trendingLotsConnection.edges.node.href": (v9/*: any*/),
-        "viewer.trendingLotsConnection.edges.node.id": (v8/*: any*/),
+        "viewer.trendingLotsConnection.edges.id": (v7/*: any*/),
+        "viewer.trendingLotsConnection.edges.counts.bidderPositions": (v8/*: any*/),
+        "viewer.trendingLotsConnection.edges.node.internalID": (v9/*: any*/),
+        "viewer.trendingLotsConnection.edges.node.slug": (v9/*: any*/),
+        "viewer.trendingLotsConnection.edges.node.id": (v9/*: any*/),
         "viewer.trendingLotsConnection.edges.node.image": {
+          "type": "Image",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "Image"
+          "nullable": true
+        },
+        "viewer.trendingLotsConnection.edges.node.imageTitle": (v10/*: any*/),
+        "viewer.trendingLotsConnection.edges.node.title": (v10/*: any*/),
+        "viewer.trendingLotsConnection.edges.node.href": (v10/*: any*/),
+        "viewer.trendingLotsConnection.edges.node.is_saved": (v11/*: any*/),
+        "viewer.trendingLotsConnection.edges.node.image.resized": {
+          "type": "ResizedImageUrl",
+          "enumValues": null,
+          "plural": false,
+          "nullable": true
         },
         "viewer.trendingLotsConnection.edges.node.image.aspectRatio": {
+          "type": "Float",
           "enumValues": null,
-          "nullable": false,
           "plural": false,
-          "type": "Float"
+          "nullable": false
         },
-        "viewer.trendingLotsConnection.edges.node.image.height": (v10/*: any*/),
-        "viewer.trendingLotsConnection.edges.node.image.resized": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "ResizedImageUrl"
-        },
-        "viewer.trendingLotsConnection.edges.node.image.resized.height": (v10/*: any*/),
-        "viewer.trendingLotsConnection.edges.node.image.resized.src": (v11/*: any*/),
-        "viewer.trendingLotsConnection.edges.node.image.resized.srcSet": (v11/*: any*/),
-        "viewer.trendingLotsConnection.edges.node.image.resized.width": (v10/*: any*/),
-        "viewer.trendingLotsConnection.edges.node.imageTitle": (v9/*: any*/),
-        "viewer.trendingLotsConnection.edges.node.internalID": (v8/*: any*/),
-        "viewer.trendingLotsConnection.edges.node.is_biddable": (v12/*: any*/),
-        "viewer.trendingLotsConnection.edges.node.is_inquireable": (v12/*: any*/),
-        "viewer.trendingLotsConnection.edges.node.is_saved": (v12/*: any*/),
-        "viewer.trendingLotsConnection.edges.node.partner": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "Partner"
-        },
-        "viewer.trendingLotsConnection.edges.node.partner.href": (v9/*: any*/),
-        "viewer.trendingLotsConnection.edges.node.partner.id": (v8/*: any*/),
-        "viewer.trendingLotsConnection.edges.node.partner.name": (v9/*: any*/),
-        "viewer.trendingLotsConnection.edges.node.partner.type": (v9/*: any*/),
+        "viewer.trendingLotsConnection.edges.node.image.height": (v12/*: any*/),
+        "viewer.trendingLotsConnection.edges.node.is_biddable": (v11/*: any*/),
         "viewer.trendingLotsConnection.edges.node.sale": {
+          "type": "Sale",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "Sale"
+          "nullable": true
         },
-        "viewer.trendingLotsConnection.edges.node.sale.display_timely_at": (v9/*: any*/),
-        "viewer.trendingLotsConnection.edges.node.sale.id": (v8/*: any*/),
-        "viewer.trendingLotsConnection.edges.node.sale.is_auction": (v12/*: any*/),
-        "viewer.trendingLotsConnection.edges.node.sale.is_closed": (v12/*: any*/),
-        "viewer.trendingLotsConnection.edges.node.sale.is_live_open": (v12/*: any*/),
-        "viewer.trendingLotsConnection.edges.node.sale.is_open": (v12/*: any*/),
-        "viewer.trendingLotsConnection.edges.node.sale.is_preview": (v12/*: any*/),
+        "viewer.trendingLotsConnection.edges.node.image.resized.src": (v13/*: any*/),
+        "viewer.trendingLotsConnection.edges.node.image.resized.srcSet": (v13/*: any*/),
+        "viewer.trendingLotsConnection.edges.node.image.resized.width": (v12/*: any*/),
+        "viewer.trendingLotsConnection.edges.node.image.resized.height": (v12/*: any*/),
+        "viewer.trendingLotsConnection.edges.node.date": (v10/*: any*/),
+        "viewer.trendingLotsConnection.edges.node.sale_message": (v10/*: any*/),
+        "viewer.trendingLotsConnection.edges.node.cultural_maker": (v10/*: any*/),
+        "viewer.trendingLotsConnection.edges.node.artists": {
+          "type": "Artist",
+          "enumValues": null,
+          "plural": true,
+          "nullable": true
+        },
+        "viewer.trendingLotsConnection.edges.node.collecting_institution": (v10/*: any*/),
+        "viewer.trendingLotsConnection.edges.node.partner": {
+          "type": "Partner",
+          "enumValues": null,
+          "plural": false,
+          "nullable": true
+        },
         "viewer.trendingLotsConnection.edges.node.sale_artwork": {
+          "type": "SaleArtwork",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "SaleArtwork"
+          "nullable": true
         },
+        "viewer.trendingLotsConnection.edges.node.is_inquireable": (v11/*: any*/),
+        "viewer.trendingLotsConnection.edges.node.sale.is_preview": (v11/*: any*/),
+        "viewer.trendingLotsConnection.edges.node.sale.display_timely_at": (v10/*: any*/),
+        "viewer.trendingLotsConnection.edges.node.sale.id": (v7/*: any*/),
+        "viewer.trendingLotsConnection.edges.node.artists.id": (v9/*: any*/),
+        "viewer.trendingLotsConnection.edges.node.artists.href": (v10/*: any*/),
+        "viewer.trendingLotsConnection.edges.node.artists.name": (v10/*: any*/),
+        "viewer.trendingLotsConnection.edges.node.partner.name": (v10/*: any*/),
+        "viewer.trendingLotsConnection.edges.node.partner.href": (v10/*: any*/),
+        "viewer.trendingLotsConnection.edges.node.partner.id": (v7/*: any*/),
+        "viewer.trendingLotsConnection.edges.node.sale.is_auction": (v11/*: any*/),
+        "viewer.trendingLotsConnection.edges.node.sale.is_closed": (v11/*: any*/),
         "viewer.trendingLotsConnection.edges.node.sale_artwork.counts": (v6/*: any*/),
-        "viewer.trendingLotsConnection.edges.node.sale_artwork.counts.bidder_positions": (v7/*: any*/),
         "viewer.trendingLotsConnection.edges.node.sale_artwork.highest_bid": {
+          "type": "SaleArtworkHighestBid",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "SaleArtworkHighestBid"
+          "nullable": true
         },
-        "viewer.trendingLotsConnection.edges.node.sale_artwork.highest_bid.display": (v9/*: any*/),
-        "viewer.trendingLotsConnection.edges.node.sale_artwork.id": (v8/*: any*/),
         "viewer.trendingLotsConnection.edges.node.sale_artwork.opening_bid": {
+          "type": "SaleArtworkOpeningBid",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "SaleArtworkOpeningBid"
+          "nullable": true
         },
-        "viewer.trendingLotsConnection.edges.node.sale_artwork.opening_bid.display": (v9/*: any*/),
-        "viewer.trendingLotsConnection.edges.node.sale_message": (v9/*: any*/),
-        "viewer.trendingLotsConnection.edges.node.slug": (v8/*: any*/),
-        "viewer.trendingLotsConnection.edges.node.title": (v9/*: any*/)
+        "viewer.trendingLotsConnection.edges.node.sale_artwork.id": (v7/*: any*/),
+        "viewer.trendingLotsConnection.edges.node.sale.is_live_open": (v11/*: any*/),
+        "viewer.trendingLotsConnection.edges.node.sale.is_open": (v11/*: any*/),
+        "viewer.trendingLotsConnection.edges.node.partner.type": (v10/*: any*/),
+        "viewer.trendingLotsConnection.edges.node.sale_artwork.counts.bidder_positions": (v8/*: any*/),
+        "viewer.trendingLotsConnection.edges.node.sale_artwork.highest_bid.display": (v10/*: any*/),
+        "viewer.trendingLotsConnection.edges.node.sale_artwork.opening_bid.display": (v10/*: any*/)
       }
     },
     "name": "TrendingLotsRail_Test_Query",

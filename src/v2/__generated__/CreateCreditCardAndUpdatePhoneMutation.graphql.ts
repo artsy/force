@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 export type CreditCardInput = {
@@ -119,12 +118,14 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "creditCardInput"
+    "name": "creditCardInput",
+    "type": "CreditCardInput!"
   },
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "profileInput"
+    "name": "profileInput",
+    "type": "UpdateMyProfileInput!"
   }
 ],
 v1 = [
@@ -191,8 +192,7 @@ v5 = {
       "storageKey": null
     }
   ],
-  "type": "CreditCardMutationFailure",
-  "abstractKey": null
+  "type": "CreditCardMutationFailure"
 },
 v6 = {
   "alias": null,
@@ -274,8 +274,7 @@ return {
                     "storageKey": null
                   }
                 ],
-                "type": "CreditCardMutationSuccess",
-                "abstractKey": null
+                "type": "CreditCardMutationSuccess"
               },
               (v5/*: any*/)
             ],
@@ -285,8 +284,7 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Mutation",
-    "abstractKey": null
+    "type": "Mutation"
   },
   "kind": "Request",
   "operation": {
@@ -369,8 +367,7 @@ return {
                     "storageKey": null
                   }
                 ],
-                "type": "CreditCardMutationSuccess",
-                "abstractKey": null
+                "type": "CreditCardMutationSuccess"
               },
               (v5/*: any*/)
             ],
@@ -382,7 +379,6 @@ return {
     ]
   },
   "params": {
-    "cacheID": "26e06492f97f2709d70422249281b164",
     "id": null,
     "metadata": {},
     "name": "CreateCreditCardAndUpdatePhoneMutation",

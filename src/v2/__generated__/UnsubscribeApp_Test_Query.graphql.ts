@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -59,8 +58,7 @@ const node: ConcreteRequest = {
         "storageKey": null
       }
     ],
-    "type": "Query",
-    "abstractKey": null
+    "type": "Query"
   },
   "kind": "Request",
   "operation": {
@@ -96,27 +94,26 @@ const node: ConcreteRequest = {
     ]
   },
   "params": {
-    "cacheID": "d8eb6f0d7b8d2c7ac0d6d79525737d24",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "me": {
+          "type": "Me",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "Me"
-        },
-        "me.emailFrequency": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "String"
+          "nullable": true
         },
         "me.id": {
+          "type": "ID",
           "enumValues": null,
-          "nullable": false,
           "plural": false,
-          "type": "ID"
+          "nullable": false
+        },
+        "me.emailFrequency": {
+          "type": "String",
+          "enumValues": null,
+          "plural": false,
+          "nullable": true
         }
       }
     },

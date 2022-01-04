@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -44,16 +43,16 @@ var v0 = {
   "storageKey": null
 },
 v1 = {
+  "type": "ID",
   "enumValues": null,
-  "nullable": false,
   "plural": false,
-  "type": "ID"
+  "nullable": true
 },
 v2 = {
+  "type": "String",
   "enumValues": null,
-  "nullable": true,
   "plural": false,
-  "type": "String"
+  "nullable": true
 };
 return {
   "fragment": {
@@ -79,8 +78,7 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query",
-    "abstractKey": null
+    "type": "Query"
   },
   "kind": "Request",
   "operation": {
@@ -136,32 +134,31 @@ return {
     ]
   },
   "params": {
-    "cacheID": "e4e439f1ccb87e8beaa8ba06e779956d",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "me": {
+          "type": "Me",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "Me"
+          "nullable": true
         },
         "me.id": (v1/*: any*/),
         "me.location": {
+          "type": "MyLocation",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "MyLocation"
+          "nullable": true
         },
-        "me.location.display": (v2/*: any*/),
-        "me.location.id": (v1/*: any*/),
         "me.profession": (v2/*: any*/),
         "me.shareFollows": {
+          "type": "Boolean",
           "enumValues": null,
-          "nullable": false,
           "plural": false,
-          "type": "Boolean"
-        }
+          "nullable": false
+        },
+        "me.location.display": (v2/*: any*/),
+        "me.location.id": (v1/*: any*/)
       }
     },
     "name": "SettingsEditProfileAboutYou_Test_Query",

@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -40,10 +39,10 @@ fragment ContactInformation_me on Me {
 
 const node: ConcreteRequest = (function(){
 var v0 = {
+  "type": "String",
   "enumValues": null,
-  "nullable": true,
   "plural": false,
-  "type": "String"
+  "nullable": true
 };
 return {
   "fragment": {
@@ -69,8 +68,7 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query",
-    "abstractKey": null
+    "type": "Query"
   },
   "kind": "Request",
   "operation": {
@@ -171,38 +169,37 @@ return {
     ]
   },
   "params": {
-    "cacheID": "518bdad8ad1c6349193a9ab622f36c0d",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "me": {
+          "type": "Me",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "Me"
+          "nullable": true
         },
-        "me.email": (v0/*: any*/),
         "me.id": {
+          "type": "ID",
           "enumValues": null,
-          "nullable": false,
           "plural": false,
-          "type": "ID"
+          "nullable": true
         },
         "me.name": (v0/*: any*/),
+        "me.email": (v0/*: any*/),
         "me.phone": (v0/*: any*/),
         "me.phoneNumber": {
+          "type": "PhoneNumberType",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "PhoneNumberType"
+          "nullable": true
+        },
+        "me.phoneNumber.isValid": {
+          "type": "Boolean",
+          "enumValues": null,
+          "plural": false,
+          "nullable": true
         },
         "me.phoneNumber.international": (v0/*: any*/),
-        "me.phoneNumber.isValid": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "Boolean"
-        },
         "me.phoneNumber.national": (v0/*: any*/),
         "me.phoneNumber.regionCode": (v0/*: any*/)
       }

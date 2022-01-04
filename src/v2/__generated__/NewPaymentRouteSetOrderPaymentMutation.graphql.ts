@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 export type CommerceOrderParticipantEnum = "BUYER" | "SELLER" | "%future added value";
@@ -98,7 +97,8 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "input"
+    "name": "input",
+    "type": "CommerceFixFailedPaymentInput!"
   }
 ],
 v1 = [
@@ -175,8 +175,7 @@ v10 = {
       "storageKey": null
     }
   ],
-  "type": "CommerceOfferOrder",
-  "abstractKey": null
+  "type": "CommerceOfferOrder"
 },
 v11 = {
   "kind": "InlineFragment",
@@ -200,8 +199,7 @@ v11 = {
       "storageKey": null
     }
   ],
-  "type": "CommerceOrderRequiresAction",
-  "abstractKey": null
+  "type": "CommerceOrderRequiresAction"
 },
 v12 = {
   "kind": "InlineFragment",
@@ -239,8 +237,7 @@ v12 = {
       "storageKey": null
     }
   ],
-  "type": "CommerceOrderWithMutationFailure",
-  "abstractKey": null
+  "type": "CommerceOrderWithMutationFailure"
 },
 v13 = {
   "alias": null,
@@ -315,8 +312,7 @@ return {
                     "storageKey": null
                   }
                 ],
-                "type": "CommerceOrderWithMutationSuccess",
-                "abstractKey": null
+                "type": "CommerceOrderWithMutationSuccess"
               },
               (v11/*: any*/),
               (v12/*: any*/)
@@ -327,8 +323,7 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Mutation",
-    "abstractKey": null
+    "type": "Mutation"
   },
   "kind": "Request",
   "operation": {
@@ -392,8 +387,7 @@ return {
                     "storageKey": null
                   }
                 ],
-                "type": "CommerceOrderWithMutationSuccess",
-                "abstractKey": null
+                "type": "CommerceOrderWithMutationSuccess"
               },
               (v11/*: any*/),
               (v12/*: any*/)
@@ -406,7 +400,6 @@ return {
     ]
   },
   "params": {
-    "cacheID": "0a81834d4f18678ed3f966919caf94ef",
     "id": null,
     "metadata": {},
     "name": "NewPaymentRouteSetOrderPaymentMutation",

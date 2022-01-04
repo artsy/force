@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -79,7 +78,6 @@ fragment ArtworkBanner_artwork on Artwork {
       }
     }
     ... on Node {
-      __isNode: __typename
       id
     }
   }
@@ -173,46 +171,46 @@ v4 = {
   "storageKey": null
 },
 v5 = {
+  "type": "ID",
   "enumValues": null,
-  "nullable": false,
   "plural": false,
-  "type": "String"
+  "nullable": true
 },
 v6 = {
+  "type": "String",
   "enumValues": null,
-  "nullable": true,
   "plural": false,
-  "type": "String"
+  "nullable": true
 },
 v7 = {
+  "type": "Boolean",
   "enumValues": null,
-  "nullable": false,
   "plural": false,
-  "type": "ID"
+  "nullable": true
 },
 v8 = {
+  "type": "Image",
   "enumValues": null,
-  "nullable": true,
   "plural": false,
-  "type": "Image"
+  "nullable": true
 },
 v9 = {
+  "type": "String",
   "enumValues": null,
-  "nullable": true,
   "plural": false,
-  "type": "CroppedImageUrl"
+  "nullable": false
 },
 v10 = {
+  "type": "CroppedImageUrl",
   "enumValues": null,
-  "nullable": false,
   "plural": false,
-  "type": "Int"
+  "nullable": true
 },
 v11 = {
+  "type": "Int",
   "enumValues": null,
-  "nullable": true,
   "plural": false,
-  "type": "Boolean"
+  "nullable": false
 };
 return {
   "fragment": {
@@ -238,8 +236,7 @@ return {
         "storageKey": "artwork(id:\"richard-anuszkiewicz-lino-yellow-318\")"
       }
     ],
-    "type": "Query",
-    "abstractKey": null
+    "type": "Query"
   },
   "kind": "Request",
   "operation": {
@@ -326,14 +323,14 @@ return {
                 "name": "__typename",
                 "storageKey": null
               },
+              (v2/*: any*/),
               {
                 "kind": "InlineFragment",
                 "selections": [
                   (v1/*: any*/),
                   (v4/*: any*/)
                 ],
-                "type": "Sale",
-                "abstractKey": null
+                "type": "Sale"
               },
               {
                 "kind": "InlineFragment",
@@ -363,8 +360,7 @@ return {
                     "storageKey": null
                   }
                 ],
-                "type": "Fair",
-                "abstractKey": null
+                "type": "Fair"
               },
               {
                 "kind": "InlineFragment",
@@ -389,16 +385,7 @@ return {
                     "storageKey": null
                   }
                 ],
-                "type": "Show",
-                "abstractKey": null
-              },
-              {
-                "kind": "InlineFragment",
-                "selections": [
-                  (v2/*: any*/)
-                ],
-                "type": "Node",
-                "abstractKey": "__isNode"
+                "type": "Show"
               }
             ],
             "storageKey": null
@@ -410,77 +397,75 @@ return {
     ]
   },
   "params": {
-    "cacheID": "889db42b90aa72e9032f34dfc83cfe31",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "artwork": {
+          "type": "Artwork",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "Artwork"
+          "nullable": true
+        },
+        "artwork.id": (v5/*: any*/),
+        "artwork.partner": {
+          "type": "Partner",
+          "enumValues": null,
+          "plural": false,
+          "nullable": true
+        },
+        "artwork.sale": {
+          "type": "Sale",
+          "enumValues": null,
+          "plural": false,
+          "nullable": true
         },
         "artwork.context": {
+          "type": "ArtworkContext",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "ArtworkContext"
+          "nullable": true
         },
-        "artwork.context.__isNode": (v5/*: any*/),
-        "artwork.context.__typename": (v5/*: any*/),
-        "artwork.context.href": (v6/*: any*/),
-        "artwork.context.id": (v7/*: any*/),
+        "artwork.partner.name": (v6/*: any*/),
+        "artwork.partner.id": (v5/*: any*/),
+        "artwork.sale.isAuction": (v7/*: any*/),
+        "artwork.sale.isBenefit": (v7/*: any*/),
+        "artwork.sale.isGalleryAuction": (v7/*: any*/),
+        "artwork.sale.coverImage": (v8/*: any*/),
+        "artwork.sale.id": (v5/*: any*/),
+        "artwork.context.__typename": (v9/*: any*/),
+        "artwork.sale.coverImage.cropped": (v10/*: any*/),
         "artwork.context.name": (v6/*: any*/),
+        "artwork.context.href": (v6/*: any*/),
         "artwork.context.profile": {
+          "type": "Profile",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "Profile"
+          "nullable": true
         },
-        "artwork.context.profile.icon": (v8/*: any*/),
-        "artwork.context.profile.icon.cropped": (v9/*: any*/),
-        "artwork.context.profile.icon.cropped.height": (v10/*: any*/),
-        "artwork.context.profile.icon.cropped.src": (v5/*: any*/),
-        "artwork.context.profile.icon.cropped.srcSet": (v5/*: any*/),
-        "artwork.context.profile.icon.cropped.width": (v10/*: any*/),
-        "artwork.context.profile.id": (v7/*: any*/),
         "artwork.context.status": (v6/*: any*/),
         "artwork.context.thumbnail": (v8/*: any*/),
-        "artwork.context.thumbnail.cropped": (v9/*: any*/),
-        "artwork.context.thumbnail.cropped.height": (v10/*: any*/),
-        "artwork.context.thumbnail.cropped.src": (v5/*: any*/),
-        "artwork.context.thumbnail.cropped.srcSet": (v5/*: any*/),
-        "artwork.context.thumbnail.cropped.width": (v10/*: any*/),
-        "artwork.id": (v7/*: any*/),
-        "artwork.partner": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "Partner"
-        },
-        "artwork.partner.id": (v7/*: any*/),
-        "artwork.partner.name": (v6/*: any*/),
-        "artwork.sale": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "Sale"
-        },
-        "artwork.sale.coverImage": (v8/*: any*/),
-        "artwork.sale.coverImage.cropped": (v9/*: any*/),
-        "artwork.sale.coverImage.cropped.height": (v10/*: any*/),
-        "artwork.sale.coverImage.cropped.src": (v5/*: any*/),
-        "artwork.sale.coverImage.cropped.srcSet": (v5/*: any*/),
-        "artwork.sale.coverImage.cropped.width": (v10/*: any*/),
-        "artwork.sale.id": (v7/*: any*/),
-        "artwork.sale.isAuction": (v11/*: any*/),
-        "artwork.sale.isBenefit": (v11/*: any*/),
-        "artwork.sale.isGalleryAuction": (v11/*: any*/)
+        "artwork.context.id": (v5/*: any*/),
+        "artwork.sale.coverImage.cropped.src": (v9/*: any*/),
+        "artwork.sale.coverImage.cropped.srcSet": (v9/*: any*/),
+        "artwork.sale.coverImage.cropped.width": (v11/*: any*/),
+        "artwork.sale.coverImage.cropped.height": (v11/*: any*/),
+        "artwork.context.profile.icon": (v8/*: any*/),
+        "artwork.context.profile.id": (v5/*: any*/),
+        "artwork.context.thumbnail.cropped": (v10/*: any*/),
+        "artwork.context.profile.icon.cropped": (v10/*: any*/),
+        "artwork.context.thumbnail.cropped.src": (v9/*: any*/),
+        "artwork.context.thumbnail.cropped.srcSet": (v9/*: any*/),
+        "artwork.context.thumbnail.cropped.width": (v11/*: any*/),
+        "artwork.context.thumbnail.cropped.height": (v11/*: any*/),
+        "artwork.context.profile.icon.cropped.src": (v9/*: any*/),
+        "artwork.context.profile.icon.cropped.srcSet": (v9/*: any*/),
+        "artwork.context.profile.icon.cropped.width": (v11/*: any*/),
+        "artwork.context.profile.icon.cropped.height": (v11/*: any*/)
       }
     },
     "name": "ArtworkBanner_Test_Query",
     "operationKind": "query",
-    "text": "query ArtworkBanner_Test_Query {\n  artwork(id: \"richard-anuszkiewicz-lino-yellow-318\") {\n    ...ArtworkBanner_artwork\n    id\n  }\n}\n\nfragment ArtworkBanner_artwork on Artwork {\n  partner {\n    name\n    id\n  }\n  sale {\n    isAuction\n    isBenefit\n    isGalleryAuction\n    coverImage {\n      cropped(width: 30, height: 30, version: \"square\") {\n        src\n        srcSet\n        width\n        height\n      }\n    }\n    id\n  }\n  context {\n    __typename\n    ... on Sale {\n      name\n      href\n    }\n    ... on Fair {\n      name\n      href\n      profile {\n        icon {\n          cropped(width: 30, height: 30, version: \"square\") {\n            src\n            srcSet\n            width\n            height\n          }\n        }\n        id\n      }\n    }\n    ... on Show {\n      name\n      href\n      status\n      thumbnail: coverImage {\n        cropped(width: 30, height: 30, version: \"square\") {\n          src\n          srcSet\n          width\n          height\n        }\n      }\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n}\n"
+    "text": "query ArtworkBanner_Test_Query {\n  artwork(id: \"richard-anuszkiewicz-lino-yellow-318\") {\n    ...ArtworkBanner_artwork\n    id\n  }\n}\n\nfragment ArtworkBanner_artwork on Artwork {\n  partner {\n    name\n    id\n  }\n  sale {\n    isAuction\n    isBenefit\n    isGalleryAuction\n    coverImage {\n      cropped(width: 30, height: 30, version: \"square\") {\n        src\n        srcSet\n        width\n        height\n      }\n    }\n    id\n  }\n  context {\n    __typename\n    ... on Sale {\n      name\n      href\n    }\n    ... on Fair {\n      name\n      href\n      profile {\n        icon {\n          cropped(width: 30, height: 30, version: \"square\") {\n            src\n            srcSet\n            width\n            height\n          }\n        }\n        id\n      }\n    }\n    ... on Show {\n      name\n      href\n      status\n      thumbnail: coverImage {\n        cropped(width: 30, height: 30, version: \"square\") {\n          src\n          srcSet\n          width\n          height\n        }\n      }\n    }\n    ... on Node {\n      id\n    }\n  }\n}\n"
   }
 };
 })();

@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -30,7 +29,8 @@ const node: ReaderFragment = {
     {
       "defaultValue": null,
       "kind": "LocalArgument",
-      "name": "id"
+      "name": "id",
+      "type": "String!"
     }
   ],
   "kind": "Fragment",
@@ -97,8 +97,7 @@ const node: ReaderFragment = {
                           "name": "PartnersFeaturedCarouselCell_profile"
                         }
                       ],
-                      "type": "Profile",
-                      "abstractKey": null
+                      "type": "Profile"
                     }
                   ],
                   "storageKey": null
@@ -113,8 +112,7 @@ const node: ReaderFragment = {
       "storageKey": null
     }
   ],
-  "type": "Viewer",
-  "abstractKey": null
+  "type": "Viewer"
 };
 (node as any).hash = '3cde7259fe9f6d1b5010399bf2c6b469';
 export default node;

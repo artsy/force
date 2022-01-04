@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 export type buildServerAppTestQueryVariables = {};
@@ -52,8 +51,7 @@ return {
     "metadata": null,
     "name": "buildServerAppTestQuery",
     "selections": (v0/*: any*/),
-    "type": "Query",
-    "abstractKey": null
+    "type": "Query"
   },
   "kind": "Request",
   "operation": {
@@ -63,21 +61,20 @@ return {
     "selections": (v0/*: any*/)
   },
   "params": {
-    "cacheID": "59a7359c797c58e73d055e96eca311f1",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "me": {
+          "type": "Me",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "Me"
+          "nullable": true
         },
         "me.id": {
+          "type": "ID",
           "enumValues": null,
-          "nullable": false,
           "plural": false,
-          "type": "ID"
+          "nullable": false
         }
       }
     },

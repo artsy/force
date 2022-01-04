@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 export type startIdentityVerificationMutationInput = {
@@ -56,7 +55,8 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "input"
+    "name": "input",
+    "type": "startIdentityVerificationMutationInput!"
   }
 ],
 v1 = [
@@ -77,8 +77,7 @@ v2 = {
       "storageKey": null
     }
   ],
-  "type": "StartIdentityVerificationSuccess",
-  "abstractKey": null
+  "type": "StartIdentityVerificationSuccess"
 },
 v3 = {
   "kind": "InlineFragment",
@@ -116,8 +115,7 @@ v3 = {
       "storageKey": null
     }
   ],
-  "type": "StartIdentityVerificationFailure",
-  "abstractKey": null
+  "type": "StartIdentityVerificationFailure"
 };
 return {
   "fragment": {
@@ -151,8 +149,7 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Mutation",
-    "abstractKey": null
+    "type": "Mutation"
   },
   "kind": "Request",
   "operation": {
@@ -194,7 +191,6 @@ return {
     ]
   },
   "params": {
-    "cacheID": "2f05867d8850e6b7dd5b60bc193f489e",
     "id": null,
     "metadata": {},
     "name": "IdentityVerificationAppStartMutation",

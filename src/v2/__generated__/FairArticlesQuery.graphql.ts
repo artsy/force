@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -76,29 +75,34 @@ fragment FairArticles_fair_2HEEH6 on Fair {
 */
 
 const node: ConcreteRequest = (function(){
-var v0 = {
-  "defaultValue": null,
-  "kind": "LocalArgument",
-  "name": "after"
-},
-v1 = {
-  "defaultValue": null,
-  "kind": "LocalArgument",
-  "name": "first"
-},
-v2 = {
-  "defaultValue": null,
-  "kind": "LocalArgument",
-  "name": "id"
-},
-v3 = [
+var v0 = [
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "id",
+    "type": "String!"
+  },
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "first",
+    "type": "Int!"
+  },
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "after",
+    "type": "String"
+  }
+],
+v1 = [
   {
     "kind": "Variable",
     "name": "id",
     "variableName": "id"
   }
 ],
-v4 = [
+v2 = [
   {
     "kind": "Variable",
     "name": "after",
@@ -110,14 +114,14 @@ v4 = [
     "variableName": "first"
   }
 ],
-v5 = {
+v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v6 = [
+v4 = [
   {
     "alias": null,
     "args": null,
@@ -149,25 +153,21 @@ v6 = [
 ];
 return {
   "fragment": {
-    "argumentDefinitions": [
-      (v0/*: any*/),
-      (v1/*: any*/),
-      (v2/*: any*/)
-    ],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
     "name": "FairArticlesQuery",
     "selections": [
       {
         "alias": null,
-        "args": (v3/*: any*/),
+        "args": (v1/*: any*/),
         "concreteType": "Fair",
         "kind": "LinkedField",
         "name": "fair",
         "plural": false,
         "selections": [
           {
-            "args": (v4/*: any*/),
+            "args": (v2/*: any*/),
             "kind": "FragmentSpread",
             "name": "FairArticles_fair"
           }
@@ -175,22 +175,17 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query",
-    "abstractKey": null
+    "type": "Query"
   },
   "kind": "Request",
   "operation": {
-    "argumentDefinitions": [
-      (v2/*: any*/),
-      (v1/*: any*/),
-      (v0/*: any*/)
-    ],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
     "name": "FairArticlesQuery",
     "selections": [
       {
         "alias": null,
-        "args": (v3/*: any*/),
+        "args": (v1/*: any*/),
         "concreteType": "Fair",
         "kind": "LinkedField",
         "name": "fair",
@@ -205,7 +200,7 @@ return {
           },
           {
             "alias": null,
-            "args": (v4/*: any*/),
+            "args": (v2/*: any*/),
             "concreteType": "ArticleConnection",
             "kind": "LinkedField",
             "name": "articlesConnection",
@@ -270,7 +265,7 @@ return {
                             "name": "name",
                             "storageKey": null
                           },
-                          (v5/*: any*/)
+                          (v3/*: any*/)
                         ],
                         "storageKey": null
                       },
@@ -320,7 +315,7 @@ return {
                             "kind": "LinkedField",
                             "name": "cropped",
                             "plural": false,
-                            "selections": (v6/*: any*/),
+                            "selections": (v4/*: any*/),
                             "storageKey": "cropped(height:550,width:733)"
                           },
                           {
@@ -341,13 +336,13 @@ return {
                             "kind": "LinkedField",
                             "name": "cropped",
                             "plural": false,
-                            "selections": (v6/*: any*/),
+                            "selections": (v4/*: any*/),
                             "storageKey": "cropped(height:150,width:267)"
                           }
                         ],
                         "storageKey": null
                       },
-                      (v5/*: any*/),
+                      (v3/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -398,21 +393,20 @@ return {
           },
           {
             "alias": null,
-            "args": (v4/*: any*/),
+            "args": (v2/*: any*/),
             "filters": null,
             "handle": "connection",
             "key": "FairArticlesQuery_articlesConnection",
             "kind": "LinkedHandle",
             "name": "articlesConnection"
           },
-          (v5/*: any*/)
+          (v3/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "877fd2a14419ca816da7e668177b8678",
     "id": null,
     "metadata": {},
     "name": "FairArticlesQuery",

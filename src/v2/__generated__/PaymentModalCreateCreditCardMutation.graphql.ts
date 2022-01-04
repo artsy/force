@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 export type CreditCardInput = {
@@ -77,7 +76,8 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "input"
+    "name": "input",
+    "type": "CreditCardInput!"
   }
 ],
 v1 = [
@@ -163,8 +163,7 @@ v3 = {
       "storageKey": null
     }
   ],
-  "type": "CreditCardMutationSuccess",
-  "abstractKey": null
+  "type": "CreditCardMutationSuccess"
 },
 v4 = {
   "kind": "InlineFragment",
@@ -202,8 +201,7 @@ v4 = {
       "storageKey": null
     }
   ],
-  "type": "CreditCardMutationFailure",
-  "abstractKey": null
+  "type": "CreditCardMutationFailure"
 };
 return {
   "fragment": {
@@ -237,8 +235,7 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Mutation",
-    "abstractKey": null
+    "type": "Mutation"
   },
   "kind": "Request",
   "operation": {
@@ -274,7 +271,6 @@ return {
     ]
   },
   "params": {
-    "cacheID": "8e462cc4de1038ca77be73fd85733959",
     "id": null,
     "metadata": {},
     "name": "PaymentModalCreateCreditCardMutation",

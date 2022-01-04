@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -43,10 +42,10 @@ var v0 = [
   }
 ],
 v1 = {
+  "type": "ID",
   "enumValues": null,
-  "nullable": false,
   "plural": false,
-  "type": "ID"
+  "nullable": false
 };
 return {
   "fragment": {
@@ -72,8 +71,7 @@ return {
         "storageKey": "artwork(id:\"example-artwork-id\")"
       }
     ],
-    "type": "Query",
-    "abstractKey": null
+    "type": "Query"
   },
   "kind": "Request",
   "operation": {
@@ -130,30 +128,29 @@ return {
     ]
   },
   "params": {
-    "cacheID": "e1cbe5325f819672486b47a6c3c8326f",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "artwork": {
+          "type": "Artwork",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "Artwork"
+          "nullable": true
         },
         "artwork.id": (v1/*: any*/),
         "artwork.internalID": (v1/*: any*/),
-        "artwork.is_saved": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "Boolean"
-        },
         "artwork.slug": (v1/*: any*/),
-        "artwork.title": {
+        "artwork.is_saved": {
+          "type": "Boolean",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "String"
+          "nullable": true
+        },
+        "artwork.title": {
+          "type": "String",
+          "enumValues": null,
+          "plural": false,
+          "nullable": true
         }
       }
     },

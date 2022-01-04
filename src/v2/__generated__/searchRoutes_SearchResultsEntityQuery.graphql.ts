@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -76,7 +75,6 @@ fragment SearchResultsEntity_viewer_gkVBu on Viewer {
           displayType
         }
         ... on Node {
-          __isNode: __typename
           id
         }
       }
@@ -86,48 +84,53 @@ fragment SearchResultsEntity_viewer_gkVBu on Viewer {
 */
 
 const node: ConcreteRequest = (function(){
-var v0 = {
-  "defaultValue": null,
-  "kind": "LocalArgument",
-  "name": "entities"
-},
+var v0 = [
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "keyword",
+    "type": "String!"
+  },
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "entities",
+    "type": "[SearchEntity]"
+  },
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "page",
+    "type": "Int"
+  }
+],
 v1 = {
-  "defaultValue": null,
-  "kind": "LocalArgument",
-  "name": "keyword"
-},
-v2 = {
-  "defaultValue": null,
-  "kind": "LocalArgument",
-  "name": "page"
-},
-v3 = {
   "kind": "Variable",
   "name": "entities",
   "variableName": "entities"
 },
-v4 = {
+v2 = {
   "kind": "Variable",
   "name": "page",
   "variableName": "page"
 },
-v5 = {
+v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "cursor",
   "storageKey": null
 },
-v6 = {
+v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "page",
   "storageKey": null
 },
-v7 = [
-  (v5/*: any*/),
-  (v6/*: any*/),
+v5 = [
+  (v3/*: any*/),
+  (v4/*: any*/),
   {
     "alias": null,
     "args": null,
@@ -138,11 +141,7 @@ v7 = [
 ];
 return {
   "fragment": {
-    "argumentDefinitions": [
-      (v0/*: any*/),
-      (v1/*: any*/),
-      (v2/*: any*/)
-    ],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
     "name": "searchRoutes_SearchResultsEntityQuery",
@@ -157,8 +156,8 @@ return {
         "selections": [
           {
             "args": [
-              (v3/*: any*/),
-              (v4/*: any*/),
+              (v1/*: any*/),
+              (v2/*: any*/),
               {
                 "kind": "Variable",
                 "name": "term",
@@ -172,16 +171,11 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query",
-    "abstractKey": null
+    "type": "Query"
   },
   "kind": "Request",
   "operation": {
-    "argumentDefinitions": [
-      (v1/*: any*/),
-      (v0/*: any*/),
-      (v2/*: any*/)
-    ],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
     "name": "searchRoutes_SearchResultsEntityQuery",
     "selections": [
@@ -196,13 +190,13 @@ return {
           {
             "alias": null,
             "args": [
-              (v3/*: any*/),
+              (v1/*: any*/),
               {
                 "kind": "Literal",
                 "name": "first",
                 "value": 10
               },
-              (v4/*: any*/),
+              (v2/*: any*/),
               {
                 "kind": "Variable",
                 "name": "query",
@@ -254,7 +248,7 @@ return {
                     "kind": "LinkedField",
                     "name": "around",
                     "plural": true,
-                    "selections": (v7/*: any*/),
+                    "selections": (v5/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -264,7 +258,7 @@ return {
                     "kind": "LinkedField",
                     "name": "first",
                     "plural": false,
-                    "selections": (v7/*: any*/),
+                    "selections": (v5/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -274,7 +268,7 @@ return {
                     "kind": "LinkedField",
                     "name": "last",
                     "plural": false,
-                    "selections": (v7/*: any*/),
+                    "selections": (v5/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -285,8 +279,8 @@ return {
                     "name": "previous",
                     "plural": false,
                     "selections": [
-                      (v5/*: any*/),
-                      (v6/*: any*/)
+                      (v3/*: any*/),
+                      (v4/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -314,6 +308,13 @@ return {
                         "args": null,
                         "kind": "ScalarField",
                         "name": "__typename",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "id",
                         "storageKey": null
                       },
                       {
@@ -362,22 +363,7 @@ return {
                             "storageKey": null
                           }
                         ],
-                        "type": "SearchableItem",
-                        "abstractKey": null
-                      },
-                      {
-                        "kind": "InlineFragment",
-                        "selections": [
-                          {
-                            "alias": null,
-                            "args": null,
-                            "kind": "ScalarField",
-                            "name": "id",
-                            "storageKey": null
-                          }
-                        ],
-                        "type": "Node",
-                        "abstractKey": "__isNode"
+                        "type": "SearchableItem"
                       }
                     ],
                     "storageKey": null
@@ -394,12 +380,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "7d1f126429a4f113d2d97c2ae1164c12",
     "id": null,
     "metadata": {},
     "name": "searchRoutes_SearchResultsEntityQuery",
     "operationKind": "query",
-    "text": "query searchRoutes_SearchResultsEntityQuery(\n  $keyword: String!\n  $entities: [SearchEntity]\n  $page: Int\n) {\n  viewer {\n    ...SearchResultsEntity_viewer_gkVBu\n  }\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n\nfragment SearchResultsEntity_viewer_gkVBu on Viewer {\n  searchConnection(query: $keyword, first: 10, page: $page, entities: $entities) @principalField {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    edges {\n      node {\n        __typename\n        ... on SearchableItem {\n          description\n          displayLabel\n          href\n          internalID\n          imageUrl\n          displayType\n        }\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n      }\n    }\n  }\n}\n"
+    "text": "query searchRoutes_SearchResultsEntityQuery(\n  $keyword: String!\n  $entities: [SearchEntity]\n  $page: Int\n) {\n  viewer {\n    ...SearchResultsEntity_viewer_gkVBu\n  }\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n\nfragment SearchResultsEntity_viewer_gkVBu on Viewer {\n  searchConnection(query: $keyword, first: 10, page: $page, entities: $entities) @principalField {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    edges {\n      node {\n        __typename\n        ... on SearchableItem {\n          description\n          displayLabel\n          href\n          internalID\n          imageUrl\n          displayType\n        }\n        ... on Node {\n          id\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();

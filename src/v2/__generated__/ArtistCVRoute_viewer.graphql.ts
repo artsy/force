@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -36,28 +35,33 @@ var v0 = [
 return {
   "argumentDefinitions": [
     {
+      "defaultValue": false,
+      "kind": "LocalArgument",
+      "name": "soloShowsAtAFair",
+      "type": "Boolean"
+    },
+    {
+      "defaultValue": true,
+      "kind": "LocalArgument",
+      "name": "soloShowsSoloShow",
+      "type": "Boolean"
+    },
+    {
+      "defaultValue": false,
+      "kind": "LocalArgument",
+      "name": "groupShowsAtAFair",
+      "type": "Boolean"
+    },
+    {
+      "defaultValue": true,
+      "kind": "LocalArgument",
+      "name": "fairBoothsAtAFair",
+      "type": "Boolean"
+    },
+    {
       "kind": "RootArgument",
-      "name": "artistID"
-    },
-    {
-      "defaultValue": true,
-      "kind": "LocalArgument",
-      "name": "fairBoothsAtAFair"
-    },
-    {
-      "defaultValue": false,
-      "kind": "LocalArgument",
-      "name": "groupShowsAtAFair"
-    },
-    {
-      "defaultValue": false,
-      "kind": "LocalArgument",
-      "name": "soloShowsAtAFair"
-    },
-    {
-      "defaultValue": true,
-      "kind": "LocalArgument",
-      "name": "soloShowsSoloShow"
+      "name": "artistID",
+      "type": "String!"
     }
   ],
   "kind": "Fragment",
@@ -143,8 +147,7 @@ return {
       "storageKey": null
     }
   ],
-  "type": "Viewer",
-  "abstractKey": null
+  "type": "Viewer"
 };
 })();
 (node as any).hash = '9779a6baedba0adc1ed197819481ce40';

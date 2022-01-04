@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -31,14 +30,16 @@ export type CurrentAuctions_viewer$key = {
 const node: ReaderFragment = {
   "argumentDefinitions": [
     {
-      "defaultValue": null,
-      "kind": "LocalArgument",
-      "name": "after"
-    },
-    {
       "defaultValue": 10,
       "kind": "LocalArgument",
-      "name": "first"
+      "name": "first",
+      "type": "Int"
+    },
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "after",
+      "type": "String"
     }
   ],
   "kind": "Fragment",
@@ -197,8 +198,7 @@ const node: ReaderFragment = {
       "storageKey": "__CurrentAuctions_salesConnection_connection(auctionState:\"OPEN\",live:true,published:true,sort:\"TIMELY_AT_NAME_ASC\")"
     }
   ],
-  "type": "Viewer",
-  "abstractKey": null
+  "type": "Viewer"
 };
 (node as any).hash = '1006d009e3c5df9ad2e6807bcee56612';
 export default node;

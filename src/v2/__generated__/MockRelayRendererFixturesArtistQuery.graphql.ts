@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -15,7 +14,7 @@ export type MockRelayRendererFixturesArtistQueryResponse = {
 export type MockRelayRendererFixturesArtistQueryRawResponse = {
     readonly artist: ({
         readonly name: string | null;
-        readonly id: string;
+        readonly id: string | null;
     }) | null;
 };
 export type MockRelayRendererFixturesArtistQuery = {
@@ -46,7 +45,8 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "id"
+    "name": "id",
+    "type": "String!"
   }
 ],
 v1 = [
@@ -80,8 +80,7 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query",
-    "abstractKey": null
+    "type": "Query"
   },
   "kind": "Request",
   "operation": {
@@ -117,7 +116,6 @@ return {
     ]
   },
   "params": {
-    "cacheID": "cbf4686647f004d150e5f1a608cbe861",
     "id": null,
     "metadata": {},
     "name": "MockRelayRendererFixturesArtistQuery",

@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 export type SaveArtworkInput = {
@@ -46,7 +45,8 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "input"
+    "name": "input",
+    "type": "SaveArtworkInput!"
   }
 ],
 v1 = [
@@ -107,8 +107,7 @@ return {
     "metadata": null,
     "name": "SaveArtworkMutation",
     "selections": (v1/*: any*/),
-    "type": "Mutation",
-    "abstractKey": null
+    "type": "Mutation"
   },
   "kind": "Request",
   "operation": {
@@ -118,7 +117,6 @@ return {
     "selections": (v1/*: any*/)
   },
   "params": {
-    "cacheID": "8c2b0539cae87f8ea3d4d7b5fdadab16",
     "id": null,
     "metadata": {},
     "name": "SaveArtworkMutation",

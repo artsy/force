@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 export type FollowArtistInput = {
@@ -74,24 +73,28 @@ mutation FollowArtistPopoverRowMutation(
 */
 
 const node: ConcreteRequest = (function(){
-var v0 = {
-  "defaultValue": null,
-  "kind": "LocalArgument",
-  "name": "excludeArtistIds"
-},
+var v0 = [
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "input",
+    "type": "FollowArtistInput!"
+  },
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "excludeArtistIds",
+    "type": "[String]!"
+  }
+],
 v1 = {
-  "defaultValue": null,
-  "kind": "LocalArgument",
-  "name": "input"
-},
-v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v3 = [
+v2 = [
   {
     "alias": null,
     "args": [
@@ -114,7 +117,7 @@ v3 = [
         "name": "artist",
         "plural": false,
         "selections": [
-          (v2/*: any*/),
+          (v1/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -163,7 +166,7 @@ v3 = [
                         "name": "node",
                         "plural": false,
                         "selections": [
-                          (v2/*: any*/),
+                          (v1/*: any*/),
                           {
                             "alias": null,
                             "args": null,
@@ -246,29 +249,21 @@ v3 = [
 ];
 return {
   "fragment": {
-    "argumentDefinitions": [
-      (v0/*: any*/),
-      (v1/*: any*/)
-    ],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
     "name": "FollowArtistPopoverRowMutation",
-    "selections": (v3/*: any*/),
-    "type": "Mutation",
-    "abstractKey": null
+    "selections": (v2/*: any*/),
+    "type": "Mutation"
   },
   "kind": "Request",
   "operation": {
-    "argumentDefinitions": [
-      (v1/*: any*/),
-      (v0/*: any*/)
-    ],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
     "name": "FollowArtistPopoverRowMutation",
-    "selections": (v3/*: any*/)
+    "selections": (v2/*: any*/)
   },
   "params": {
-    "cacheID": "700d867ded95b25ee7d2acbb70d4bfd7",
     "id": null,
     "metadata": {},
     "name": "FollowArtistPopoverRowMutation",

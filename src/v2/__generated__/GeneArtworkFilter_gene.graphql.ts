@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -40,17 +39,20 @@ const node: ReaderFragment = {
     {
       "defaultValue": null,
       "kind": "LocalArgument",
-      "name": "aggregations"
+      "name": "input",
+      "type": "FilterArtworksInput"
     },
     {
       "defaultValue": null,
       "kind": "LocalArgument",
-      "name": "input"
+      "name": "aggregations",
+      "type": "[ArtworkAggregation]"
     },
     {
       "defaultValue": false,
       "kind": "LocalArgument",
-      "name": "shouldFetchCounts"
+      "name": "shouldFetchCounts",
+      "type": "Boolean!"
     }
   ],
   "kind": "Fragment",
@@ -203,8 +205,7 @@ const node: ReaderFragment = {
       "storageKey": null
     }
   ],
-  "type": "Gene",
-  "abstractKey": null
+  "type": "Gene"
 };
 (node as any).hash = 'e96fd22ac7be9124dbc79bc63a3f6623';
 export default node;

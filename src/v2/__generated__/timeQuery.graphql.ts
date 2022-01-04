@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 export type timeQueryVariables = {};
@@ -67,8 +66,7 @@ return {
     "metadata": null,
     "name": "timeQuery",
     "selections": (v0/*: any*/),
-    "type": "Query",
-    "abstractKey": null
+    "type": "Query"
   },
   "kind": "Request",
   "operation": {
@@ -78,7 +76,6 @@ return {
     "selections": (v0/*: any*/)
   },
   "params": {
-    "cacheID": "91e2cf635c0b6d86e89128b7faeb2318",
     "id": null,
     "metadata": {},
     "name": "timeQuery",

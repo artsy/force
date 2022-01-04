@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 export type createMockNetworkLayerTestQueryVariables = {};
@@ -67,8 +66,7 @@ return {
     "metadata": null,
     "name": "createMockNetworkLayerTestQuery",
     "selections": (v0/*: any*/),
-    "type": "Query",
-    "abstractKey": null
+    "type": "Query"
   },
   "kind": "Request",
   "operation": {
@@ -78,7 +76,6 @@ return {
     "selections": (v0/*: any*/)
   },
   "params": {
-    "cacheID": "b53c8e2c03e8297b889d5cb83bf29ab0",
     "id": null,
     "metadata": {},
     "name": "createMockNetworkLayerTestQuery",

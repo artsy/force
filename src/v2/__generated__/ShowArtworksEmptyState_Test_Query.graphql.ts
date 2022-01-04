@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -63,8 +62,7 @@ return {
         "storageKey": "show(id:\"example-show-id\")"
       }
     ],
-    "type": "Query",
-    "abstractKey": null
+    "type": "Query"
   },
   "kind": "Request",
   "operation": {
@@ -107,33 +105,32 @@ return {
     ]
   },
   "params": {
-    "cacheID": "75d8219d862fd0a45178ea701cfa40db",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "show": {
+          "type": "Show",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "Show"
+          "nullable": true
         },
         "show.id": {
+          "type": "ID",
           "enumValues": null,
-          "nullable": false,
           "plural": false,
-          "type": "ID"
+          "nullable": true
         },
         "show.isFairBooth": {
+          "type": "Boolean",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "Boolean"
+          "nullable": true
         },
         "show.status": {
+          "type": "String",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "String"
+          "nullable": true
         }
       }
     },

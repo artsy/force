@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -53,16 +52,16 @@ v1 = {
   "storageKey": null
 },
 v2 = {
+  "type": "ID",
   "enumValues": null,
-  "nullable": false,
   "plural": false,
-  "type": "ID"
+  "nullable": true
 },
 v3 = {
+  "type": "String",
   "enumValues": null,
-  "nullable": true,
   "plural": false,
-  "type": "String"
+  "nullable": true
 };
 return {
   "fragment": {
@@ -88,8 +87,7 @@ return {
         "storageKey": "partner(id:\"unit-london\")"
       }
     ],
-    "type": "Query",
-    "abstractKey": null
+    "type": "Query"
   },
   "kind": "Request",
   "operation": {
@@ -159,34 +157,33 @@ return {
     ]
   },
   "params": {
-    "cacheID": "6878cdd431ec07a8b8064e3cdf3bbdd5",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "partner": {
+          "type": "Partner",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "Partner"
-        },
-        "partner.displayFullPartnerPage": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "Boolean"
+          "nullable": true
         },
         "partner.id": (v2/*: any*/),
         "partner.profile": {
+          "type": "Profile",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "Profile"
+          "nullable": true
         },
-        "partner.profile.bio": (v3/*: any*/),
-        "partner.profile.fullBio": (v3/*: any*/),
-        "partner.profile.id": (v2/*: any*/),
+        "partner.website": (v3/*: any*/),
         "partner.vatNumber": (v3/*: any*/),
-        "partner.website": (v3/*: any*/)
+        "partner.displayFullPartnerPage": {
+          "type": "Boolean",
+          "enumValues": null,
+          "plural": false,
+          "nullable": true
+        },
+        "partner.profile.fullBio": (v3/*: any*/),
+        "partner.profile.bio": (v3/*: any*/),
+        "partner.profile.id": (v2/*: any*/)
       }
     },
     "name": "AboutPartner_Test_Query",

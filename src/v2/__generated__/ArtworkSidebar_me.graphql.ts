@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -28,8 +27,7 @@ const node: ReaderFragment = {
       "name": "ArtworkSidebarBidAction_me"
     }
   ],
-  "type": "Me",
-  "abstractKey": null
+  "type": "Me"
 };
 (node as any).hash = 'dae43a7cd24d3adbf9bb5ab1333ede35';
 export default node;

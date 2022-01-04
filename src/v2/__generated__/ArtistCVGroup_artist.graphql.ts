@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -52,39 +51,46 @@ v1 = {
 return {
   "argumentDefinitions": [
     {
-      "defaultValue": false,
-      "kind": "LocalArgument",
-      "name": "atAFair"
-    },
-    {
       "defaultValue": 10,
       "kind": "LocalArgument",
-      "name": "count"
+      "name": "count",
+      "type": "Int"
     },
     {
       "defaultValue": null,
       "kind": "LocalArgument",
-      "name": "cursor"
-    },
-    {
-      "defaultValue": true,
-      "kind": "LocalArgument",
-      "name": "isReference"
-    },
-    {
-      "defaultValue": false,
-      "kind": "LocalArgument",
-      "name": "soloShow"
+      "name": "cursor",
+      "type": "String"
     },
     {
       "defaultValue": "START_AT_DESC",
       "kind": "LocalArgument",
-      "name": "sort"
+      "name": "sort",
+      "type": "ShowSorts"
     },
     {
       "defaultValue": false,
       "kind": "LocalArgument",
-      "name": "visibleToPublic"
+      "name": "atAFair",
+      "type": "Boolean"
+    },
+    {
+      "defaultValue": false,
+      "kind": "LocalArgument",
+      "name": "soloShow",
+      "type": "Boolean"
+    },
+    {
+      "defaultValue": true,
+      "kind": "LocalArgument",
+      "name": "isReference",
+      "type": "Boolean"
+    },
+    {
+      "defaultValue": false,
+      "kind": "LocalArgument",
+      "name": "visibleToPublic",
+      "type": "Boolean"
     }
   ],
   "kind": "Fragment",
@@ -204,8 +210,7 @@ return {
                       "selections": [
                         (v0/*: any*/)
                       ],
-                      "type": "ExternalPartner",
-                      "abstractKey": null
+                      "type": "ExternalPartner"
                     },
                     {
                       "kind": "InlineFragment",
@@ -213,8 +218,7 @@ return {
                         (v0/*: any*/),
                         (v1/*: any*/)
                       ],
-                      "type": "Partner",
-                      "abstractKey": null
+                      "type": "Partner"
                     }
                   ],
                   "storageKey": null
@@ -265,8 +269,7 @@ return {
       "storageKey": null
     }
   ],
-  "type": "Artist",
-  "abstractKey": null
+  "type": "Artist"
 };
 })();
 (node as any).hash = '54b80d5c989039c4be5cd687b5399c1e';

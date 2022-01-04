@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -80,29 +79,33 @@ fragment FairsPastFairs_viewer_2HEEH6 on Viewer {
 */
 
 const node: ConcreteRequest = (function(){
-var v0 = {
-  "defaultValue": null,
-  "kind": "LocalArgument",
-  "name": "after"
-},
+var v0 = [
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "first",
+    "type": "Int!"
+  },
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "after",
+    "type": "String"
+  }
+],
 v1 = {
-  "defaultValue": null,
-  "kind": "LocalArgument",
-  "name": "first"
-},
-v2 = {
   "kind": "Variable",
   "name": "after",
   "variableName": "after"
 },
-v3 = {
+v2 = {
   "kind": "Variable",
   "name": "first",
   "variableName": "first"
 },
-v4 = [
+v3 = [
+  (v1/*: any*/),
   (v2/*: any*/),
-  (v3/*: any*/),
   {
     "kind": "Literal",
     "name": "hasFullFeature",
@@ -124,21 +127,21 @@ v4 = [
     "value": "CLOSED"
   }
 ],
-v5 = {
+v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "isPublished",
   "storageKey": null
 },
-v6 = {
+v5 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v7 = {
+v6 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -147,10 +150,7 @@ v7 = {
 };
 return {
   "fragment": {
-    "argumentDefinitions": [
-      (v0/*: any*/),
-      (v1/*: any*/)
-    ],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
     "name": "FairsPastFairsQuery",
@@ -165,8 +165,8 @@ return {
         "selections": [
           {
             "args": [
-              (v2/*: any*/),
-              (v3/*: any*/)
+              (v1/*: any*/),
+              (v2/*: any*/)
             ],
             "kind": "FragmentSpread",
             "name": "FairsPastFairs_viewer"
@@ -175,15 +175,11 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query",
-    "abstractKey": null
+    "type": "Query"
   },
   "kind": "Request",
   "operation": {
-    "argumentDefinitions": [
-      (v1/*: any*/),
-      (v0/*: any*/)
-    ],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
     "name": "FairsPastFairsQuery",
     "selections": [
@@ -197,7 +193,7 @@ return {
         "selections": [
           {
             "alias": "pastFairs",
-            "args": (v4/*: any*/),
+            "args": (v3/*: any*/),
             "concreteType": "FairConnection",
             "kind": "LinkedField",
             "name": "fairsConnection",
@@ -226,7 +222,7 @@ return {
                         "name": "internalID",
                         "storageKey": null
                       },
-                      (v5/*: any*/),
+                      (v4/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -235,8 +231,8 @@ return {
                         "name": "profile",
                         "plural": false,
                         "selections": [
+                          (v4/*: any*/),
                           (v5/*: any*/),
-                          (v6/*: any*/),
                           {
                             "alias": null,
                             "args": null,
@@ -306,7 +302,7 @@ return {
                         ],
                         "storageKey": null
                       },
-                      (v7/*: any*/),
+                      (v6/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -344,16 +340,16 @@ return {
                             "name": "profile",
                             "plural": false,
                             "selections": [
-                              (v7/*: any*/),
-                              (v6/*: any*/)
+                              (v6/*: any*/),
+                              (v5/*: any*/)
                             ],
                             "storageKey": null
                           },
-                          (v6/*: any*/)
+                          (v5/*: any*/)
                         ],
                         "storageKey": null
                       },
-                      (v6/*: any*/),
+                      (v5/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -404,7 +400,7 @@ return {
           },
           {
             "alias": "pastFairs",
-            "args": (v4/*: any*/),
+            "args": (v3/*: any*/),
             "filters": [
               "hasListing",
               "hasFullFeature",
@@ -422,7 +418,6 @@ return {
     ]
   },
   "params": {
-    "cacheID": "9505012093aa40f2edf64d54a6f752bd",
     "id": null,
     "metadata": {},
     "name": "FairsPastFairsQuery",

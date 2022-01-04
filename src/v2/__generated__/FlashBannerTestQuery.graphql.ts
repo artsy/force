@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 export type FlashBannerTestQueryVariables = {};
@@ -12,7 +11,7 @@ export type FlashBannerTestQueryResponse = {
 export type FlashBannerTestQueryRawResponse = {
     readonly me: ({
         readonly canRequestEmailConfirmation: boolean;
-        readonly id: string;
+        readonly id: string | null;
     }) | null;
 };
 export type FlashBannerTestQuery = {
@@ -60,8 +59,7 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query",
-    "abstractKey": null
+    "type": "Query"
   },
   "kind": "Request",
   "operation": {
@@ -91,27 +89,26 @@ return {
     ]
   },
   "params": {
-    "cacheID": "3100e134abd39082018558b8616c21bd",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "me": {
+          "type": "Me",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "Me"
+          "nullable": true
         },
         "me.canRequestEmailConfirmation": {
+          "type": "Boolean",
           "enumValues": null,
-          "nullable": false,
           "plural": false,
-          "type": "Boolean"
+          "nullable": false
         },
         "me.id": {
+          "type": "ID",
           "enumValues": null,
-          "nullable": false,
           "plural": false,
-          "type": "ID"
+          "nullable": true
         }
       }
     },

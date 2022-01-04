@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -51,16 +50,16 @@ v1 = {
   "storageKey": null
 },
 v2 = {
+  "type": "ID",
   "enumValues": null,
-  "nullable": false,
   "plural": false,
-  "type": "ID"
+  "nullable": true
 },
 v3 = {
+  "type": "Boolean",
   "enumValues": null,
-  "nullable": true,
   "plural": false,
-  "type": "Boolean"
+  "nullable": true
 };
 return {
   "fragment": {
@@ -86,8 +85,7 @@ return {
         "storageKey": "artwork(id:\"whatevs\")"
       }
     ],
-    "type": "Query",
-    "abstractKey": null
+    "type": "Query"
   },
   "kind": "Request",
   "operation": {
@@ -143,32 +141,31 @@ return {
     ]
   },
   "params": {
-    "cacheID": "266407a3e6a21a2606e73e5025d2e0df",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "artwork": {
+          "type": "Artwork",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "Artwork"
+          "nullable": true
         },
         "artwork.id": (v2/*: any*/),
         "artwork.is_biddable": (v3/*: any*/),
         "artwork.partner": {
+          "type": "Partner",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "Partner"
+          "nullable": true
         },
-        "artwork.partner.id": (v2/*: any*/),
         "artwork.partner.isVerifiedSeller": (v3/*: any*/),
         "artwork.partner.name": {
+          "type": "String",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "String"
-        }
+          "nullable": true
+        },
+        "artwork.partner.id": (v2/*: any*/)
       }
     },
     "name": "VerifiedSellerTestQuery",

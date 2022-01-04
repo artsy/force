@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -55,8 +54,7 @@ const node: ConcreteRequest = {
         "storageKey": null
       }
     ],
-    "type": "Query",
-    "abstractKey": null
+    "type": "Query"
   },
   "kind": "Request",
   "operation": {
@@ -99,7 +97,6 @@ const node: ConcreteRequest = {
     ]
   },
   "params": {
-    "cacheID": "76d9ca236aa01d121759c56f226c9ae5",
     "id": null,
     "metadata": {},
     "name": "NavBarMobileMenuAuthenticationQuery",
