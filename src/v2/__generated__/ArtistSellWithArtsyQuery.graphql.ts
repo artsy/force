@@ -49,8 +49,7 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "slug",
-    "type": "String!"
+    "name": "slug"
   }
 ],
 v1 = [
@@ -188,7 +187,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "4ca78d4c9c7e5dd63825c34a90064e68",
+    "cacheID": "4bb5687b5a6be4b4b1e141ae58bf0ba3",
     "id": null,
     "metadata": {},
     "name": "ArtistSellWithArtsyQuery",

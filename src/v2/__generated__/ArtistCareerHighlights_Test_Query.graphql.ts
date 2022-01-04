@@ -155,18 +155,6 @@ v7 = {
   "nullable": true,
   "plural": false,
   "type": "Partner"
-},
-v8 = {
-  "enumValues": null,
-  "nullable": false,
-  "plural": false,
-  "type": "String"
-},
-v9 = {
-  "enumValues": null,
-  "nullable": true,
-  "plural": false,
-  "type": "Boolean"
 };
 return {
   "fragment": {
@@ -536,7 +524,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "975635d7511b3e047267c52fcc45b28c",
+    "cacheID": "f0b303ef9f6e10c54f884e55da22d5d1",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -621,22 +609,7 @@ return {
         "artist.highlights.partnersConnection.edges.node.categories.id": (v5/*: any*/),
         "artist.highlights.partnersConnection.edges.node.categories.slug": (v5/*: any*/),
         "artist.highlights.partnersConnection.edges.node.id": (v5/*: any*/),
-        "artist.href": (v6/*: any*/),
         "artist.id": (v5/*: any*/),
-        "artist.image": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "Image"
-        },
-        "artist.image.cropped": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "CroppedImageUrl"
-        },
-        "artist.image.cropped.src": (v8/*: any*/),
-        "artist.image.cropped.srcSet": (v8/*: any*/),
         "artist.insights": {
           "enumValues": null,
           "nullable": true,
@@ -651,7 +624,6 @@ return {
         },
         "artist.insights.label": (v6/*: any*/),
         "artist.insights.type": (v6/*: any*/),
-        "artist.internalID": (v5/*: any*/),
         "artist.name": (v6/*: any*/),
         "artist.related": {
           "enumValues": null,
@@ -680,15 +652,7 @@ return {
         "artist.related.genes.edges.node.href": (v6/*: any*/),
         "artist.related.genes.edges.node.id": (v5/*: any*/),
         "artist.related.genes.edges.node.name": (v6/*: any*/),
-        "artist.slug": (v5/*: any*/),
-        "artist.targetSupply": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "ArtistTargetSupply"
-        },
-        "artist.targetSupply.isInMicrofunnel": (v9/*: any*/),
-        "artist.targetSupply.isTargetSupply": (v9/*: any*/)
+        "artist.slug": (v5/*: any*/)
       }
     },
     "name": "ArtistCareerHighlights_Test_Query",

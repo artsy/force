@@ -517,7 +517,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "3a98b5c5757b688a3f39f676de7c3cd6",
+    "cacheID": "3a5991a12c59b7ecf5429042152fb44f",
     "id": null,
     "metadata": {},
     "name": "ArtistCareerHighlightsQuery",
