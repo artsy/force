@@ -16,7 +16,7 @@ const { getWrapper } = setupTestWrapper<HomeFeaturedGalleriesRail_Test_Query>({
     )
   },
   query: graphql`
-    query HomeFeaturedGalleriesRail_Test_Query {
+    query HomeFeaturedGalleriesRail_Test_Query @relay_test_operation {
       orderedSet(id: "example") {
         ...HomeFeaturedGalleriesRail_orderedSet
       }
@@ -75,8 +75,8 @@ describe("HomeFeaturedGalleriesRail", () => {
         action: "clickedGalleryGroup",
         context_module: "featuredGalleriesRail",
         context_page_owner_type: "home",
-        destination_page_owner_id: '<mock-value-for-field-"internalID">',
-        destination_page_owner_slug: '<mock-value-for-field-"slug">',
+        destination_page_owner_id: "<Partner-mock-id-1>",
+        destination_page_owner_slug: "<Partner-mock-id-2>",
         destination_page_owner_type: "galleries",
         type: "thumbnail",
       })

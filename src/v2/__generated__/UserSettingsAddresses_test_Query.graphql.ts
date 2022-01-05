@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -93,6 +94,42 @@ v3 = {
   "kind": "ScalarField",
   "name": "totalCount",
   "storageKey": null
+},
+v4 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "UserAddressConnection"
+},
+v5 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "String"
+},
+v6 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "String"
+},
+v7 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "ID"
+},
+v8 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "Boolean"
+},
+v9 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "Int"
 };
 return {
   "fragment": {
@@ -118,7 +155,8 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -322,13 +360,65 @@ return {
     ]
   },
   "params": {
+    "cacheID": "813beb03349d2758b45b63c2c9a5729f",
     "id": null,
-    "metadata": {},
+    "metadata": {
+      "relayTestingSelectionTypeInfo": {
+        "me": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Me"
+        },
+        "me.addressConnection": (v4/*: any*/),
+        "me.addressConnection.edges": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": true,
+          "type": "UserAddressEdge"
+        },
+        "me.addressConnection.edges.cursor": (v5/*: any*/),
+        "me.addressConnection.edges.node": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "UserAddress"
+        },
+        "me.addressConnection.edges.node.__typename": (v5/*: any*/),
+        "me.addressConnection.edges.node.addressLine1": (v5/*: any*/),
+        "me.addressConnection.edges.node.addressLine2": (v6/*: any*/),
+        "me.addressConnection.edges.node.addressLine3": (v6/*: any*/),
+        "me.addressConnection.edges.node.city": (v5/*: any*/),
+        "me.addressConnection.edges.node.country": (v5/*: any*/),
+        "me.addressConnection.edges.node.id": (v7/*: any*/),
+        "me.addressConnection.edges.node.internalID": (v7/*: any*/),
+        "me.addressConnection.edges.node.isDefault": (v8/*: any*/),
+        "me.addressConnection.edges.node.name": (v6/*: any*/),
+        "me.addressConnection.edges.node.phoneNumber": (v6/*: any*/),
+        "me.addressConnection.edges.node.postalCode": (v6/*: any*/),
+        "me.addressConnection.edges.node.region": (v6/*: any*/),
+        "me.addressConnection.pageInfo": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": false,
+          "type": "PageInfo"
+        },
+        "me.addressConnection.pageInfo.endCursor": (v6/*: any*/),
+        "me.addressConnection.pageInfo.hasNextPage": (v8/*: any*/),
+        "me.addressConnection.pageInfo.hasPreviousPage": (v8/*: any*/),
+        "me.addressConnection.pageInfo.startCursor": (v6/*: any*/),
+        "me.addressConnection.totalCount": (v9/*: any*/),
+        "me.addresses": (v4/*: any*/),
+        "me.addresses.totalCount": (v9/*: any*/),
+        "me.id": (v7/*: any*/),
+        "me.internalID": (v7/*: any*/)
+      }
+    },
     "name": "UserSettingsAddresses_test_Query",
     "operationKind": "query",
     "text": "query UserSettingsAddresses_test_Query {\n  me {\n    ...UserSettingsAddresses_me\n    id\n  }\n}\n\nfragment SavedAddresses_me on Me {\n  id\n  addressConnection(first: 30) {\n    totalCount\n    edges {\n      node {\n        id\n        internalID\n        addressLine1\n        addressLine2\n        addressLine3\n        city\n        country\n        isDefault\n        name\n        phoneNumber\n        postalCode\n        region\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n\nfragment UserSettingsAddresses_me on Me {\n  id\n  internalID\n  ...SavedAddresses_me\n  addresses: addressConnection {\n    totalCount\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '0eb01558192719bbc626183bc4792fce';
+(node as any).hash = 'ae062e29dc73da92b72346949afba66b';
 export default node;

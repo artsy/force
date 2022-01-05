@@ -15,7 +15,7 @@ describe("StandoutLotsRail", () => {
       return <StandoutLotsRailFragmentContainer viewer={props.viewer} />
     },
     query: graphql`
-      query StandoutLotsRail_Test_Query {
+      query StandoutLotsRail_Test_Query @relay_test_operation {
         viewer {
           ...StandoutLotsRail_viewer
         }
@@ -77,8 +77,8 @@ describe("StandoutLotsRail", () => {
           "action": "clickedArtworkGroup",
           "context_module": "standoutLots",
           "context_page_owner_type": undefined,
-          "destination_page_owner_id": "<mock-value-for-field-\\"internalID\\">",
-          "destination_page_owner_slug": "<mock-value-for-field-\\"slug\\">",
+          "destination_page_owner_id": "<Artwork-mock-id-1>",
+          "destination_page_owner_slug": "<Artwork-mock-id-2>",
           "destination_page_owner_type": "artwork",
           "horizontal_slide_position": 0,
           "type": "thumbnail",

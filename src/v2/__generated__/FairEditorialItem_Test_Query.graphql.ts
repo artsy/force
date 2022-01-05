@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -92,7 +93,37 @@ v1 = [
     "name": "srcSet",
     "storageKey": null
   }
-];
+],
+v2 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "String"
+},
+v3 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "ID"
+},
+v4 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "CroppedImageUrl"
+},
+v5 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "Int"
+},
+v6 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "String"
+};
 return {
   "fragment": {
     "argumentDefinitions": [],
@@ -117,7 +148,8 @@ return {
         "storageKey": "article(id:\"test\")"
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -247,13 +279,46 @@ return {
     ]
   },
   "params": {
+    "cacheID": "34f60ad6980971d3d36a605737027d10",
     "id": null,
-    "metadata": {},
+    "metadata": {
+      "relayTestingSelectionTypeInfo": {
+        "article": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Article"
+        },
+        "article.href": (v2/*: any*/),
+        "article.id": (v3/*: any*/),
+        "article.internalID": (v3/*: any*/),
+        "article.publishedAt": (v2/*: any*/),
+        "article.slug": (v2/*: any*/),
+        "article.thumbnailImage": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Image"
+        },
+        "article.thumbnailImage.large": (v4/*: any*/),
+        "article.thumbnailImage.large.height": (v5/*: any*/),
+        "article.thumbnailImage.large.src": (v6/*: any*/),
+        "article.thumbnailImage.large.srcSet": (v6/*: any*/),
+        "article.thumbnailImage.large.width": (v5/*: any*/),
+        "article.thumbnailImage.small": (v4/*: any*/),
+        "article.thumbnailImage.small.height": (v5/*: any*/),
+        "article.thumbnailImage.small.src": (v6/*: any*/),
+        "article.thumbnailImage.small.srcSet": (v6/*: any*/),
+        "article.thumbnailImage.small.width": (v5/*: any*/),
+        "article.thumbnailTitle": (v2/*: any*/),
+        "article.title": (v2/*: any*/)
+      }
+    },
     "name": "FairEditorialItem_Test_Query",
     "operationKind": "query",
     "text": "query FairEditorialItem_Test_Query {\n  article(id: \"test\") {\n    ...FairEditorialItem_article\n    id\n  }\n}\n\nfragment FairEditorialItemLink_article on Article {\n  internalID\n  slug\n  title\n  href\n  publishedAt(format: \"MMMM D, YYYY\")\n}\n\nfragment FairEditorialItem_article on Article {\n  id\n  title\n  publishedAt(format: \"MMMM D, YYYY\")\n  thumbnailTitle\n  thumbnailImage {\n    large: cropped(width: 670, height: 720) {\n      width\n      height\n      src\n      srcSet\n    }\n    small: cropped(width: 325, height: 240) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n  ...FairEditorialItemLink_article\n}\n"
   }
 };
 })();
-(node as any).hash = 'a9d036c4e6d42e9e7a216ca1d722fa8b';
+(node as any).hash = '36537dc525d6d806edadddd274fa7d10';
 export default node;

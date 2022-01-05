@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -33,7 +34,8 @@ const node: ReaderFragment = {
       "name": "PartnersFeaturedCarousel_viewer"
     }
   ],
-  "type": "Viewer"
+  "type": "Viewer",
+  "abstractKey": null
 };
 (node as any).hash = '8c395bc11a0178f10f342c07631bf2f2';
 export default node;

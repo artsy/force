@@ -193,7 +193,7 @@ describe("test envs", () => {
       ...creditCardSuccess,
     },
     query: graphql`
-      query createTestEnvQuery @raw_response_type {
+      query createTestEnvQuery @raw_response_type @relay_test_operation {
         artwork(id: "unused") {
           ...createTestEnv_artwork
         }

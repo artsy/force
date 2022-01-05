@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -54,6 +55,7 @@ query OrderUpdate_Test_Query(
 }
 
 fragment OrderUpdate_event on CommerceOrderEventUnion {
+  __isCommerceOrderEventUnion: __typename
   __typename
   ... on CommerceOrderStateChangedEvent {
     createdAt
@@ -82,8 +84,7 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "conversationID",
-    "type": "String!"
+    "name": "conversationID"
   }
 ],
 v1 = [
@@ -132,6 +133,39 @@ v6 = {
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
+},
+v7 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "ID"
+},
+v8 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "String"
+},
+v9 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "String"
+},
+v10 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "Boolean"
+},
+v11 = {
+  "enumValues": [
+    "BUYER",
+    "SELLER"
+  ],
+  "nullable": true,
+  "plural": false,
+  "type": "CommerceOrderParticipantEnum"
 };
 return {
   "fragment": {
@@ -213,7 +247,8 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -272,6 +307,10 @@ return {
                             "selections": [
                               (v3/*: any*/),
                               {
+                                "kind": "TypeDiscriminator",
+                                "abstractKey": "__isCommerceOrderEventUnion"
+                              },
+                              {
                                 "kind": "InlineFragment",
                                 "selections": [
                                   (v4/*: any*/),
@@ -290,7 +329,8 @@ return {
                                     "storageKey": null
                                   }
                                 ],
-                                "type": "CommerceOrderStateChangedEvent"
+                                "type": "CommerceOrderStateChangedEvent",
+                                "abstractKey": null
                               },
                               {
                                 "kind": "InlineFragment",
@@ -344,7 +384,8 @@ return {
                                     "storageKey": null
                                   }
                                 ],
-                                "type": "CommerceOfferSubmittedEvent"
+                                "type": "CommerceOfferSubmittedEvent",
+                                "abstractKey": null
                               }
                             ],
                             "storageKey": null
@@ -370,13 +411,94 @@ return {
     ]
   },
   "params": {
+    "cacheID": "4adb98caa6a7744e6f7936053144a8c9",
     "id": null,
-    "metadata": {},
+    "metadata": {
+      "relayTestingSelectionTypeInfo": {
+        "me": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Me"
+        },
+        "me.conversation": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Conversation"
+        },
+        "me.conversation.id": (v7/*: any*/),
+        "me.conversation.orderConnection": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "CommerceOrderConnectionWithTotalCount"
+        },
+        "me.conversation.orderConnection.edges": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": true,
+          "type": "CommerceOrderEdge"
+        },
+        "me.conversation.orderConnection.edges.node": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "CommerceOrder"
+        },
+        "me.conversation.orderConnection.edges.node.__typename": (v8/*: any*/),
+        "me.conversation.orderConnection.edges.node.id": (v7/*: any*/),
+        "me.conversation.orderConnection.edges.node.orderHistory": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": true,
+          "type": "CommerceOrderEventUnion"
+        },
+        "me.conversation.orderConnection.edges.node.orderHistory.__isCommerceOrderEventUnion": (v8/*: any*/),
+        "me.conversation.orderConnection.edges.node.orderHistory.__typename": (v8/*: any*/),
+        "me.conversation.orderConnection.edges.node.orderHistory.createdAt": (v8/*: any*/),
+        "me.conversation.orderConnection.edges.node.orderHistory.offer": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": false,
+          "type": "CommerceOffer"
+        },
+        "me.conversation.orderConnection.edges.node.orderHistory.offer.amount": (v9/*: any*/),
+        "me.conversation.orderConnection.edges.node.orderHistory.offer.definesTotal": (v10/*: any*/),
+        "me.conversation.orderConnection.edges.node.orderHistory.offer.fromParticipant": (v11/*: any*/),
+        "me.conversation.orderConnection.edges.node.orderHistory.offer.id": (v7/*: any*/),
+        "me.conversation.orderConnection.edges.node.orderHistory.offer.offerAmountChanged": (v10/*: any*/),
+        "me.conversation.orderConnection.edges.node.orderHistory.offer.respondsTo": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "CommerceOffer"
+        },
+        "me.conversation.orderConnection.edges.node.orderHistory.offer.respondsTo.fromParticipant": (v11/*: any*/),
+        "me.conversation.orderConnection.edges.node.orderHistory.offer.respondsTo.id": (v7/*: any*/),
+        "me.conversation.orderConnection.edges.node.orderHistory.state": {
+          "enumValues": [
+            "ABANDONED",
+            "APPROVED",
+            "CANCELED",
+            "FULFILLED",
+            "PENDING",
+            "REFUNDED",
+            "SUBMITTED"
+          ],
+          "nullable": false,
+          "plural": false,
+          "type": "CommerceOrderStateEnum"
+        },
+        "me.conversation.orderConnection.edges.node.orderHistory.stateReason": (v9/*: any*/),
+        "me.id": (v7/*: any*/)
+      }
+    },
     "name": "OrderUpdate_Test_Query",
     "operationKind": "query",
-    "text": "query OrderUpdate_Test_Query(\n  $conversationID: String!\n) {\n  me {\n    conversation(id: $conversationID) {\n      orderConnection(first: 10, participantType: BUYER) {\n        edges {\n          node {\n            __typename\n            orderHistory {\n              __typename\n              ...OrderUpdate_event\n            }\n            id\n          }\n        }\n      }\n      id\n    }\n    id\n  }\n}\n\nfragment OrderUpdate_event on CommerceOrderEventUnion {\n  __typename\n  ... on CommerceOrderStateChangedEvent {\n    createdAt\n    stateReason\n    state\n  }\n  ... on CommerceOfferSubmittedEvent {\n    createdAt\n    offer {\n      amount\n      fromParticipant\n      definesTotal\n      offerAmountChanged\n      respondsTo {\n        fromParticipant\n        id\n      }\n      id\n    }\n  }\n}\n"
+    "text": "query OrderUpdate_Test_Query(\n  $conversationID: String!\n) {\n  me {\n    conversation(id: $conversationID) {\n      orderConnection(first: 10, participantType: BUYER) {\n        edges {\n          node {\n            __typename\n            orderHistory {\n              __typename\n              ...OrderUpdate_event\n            }\n            id\n          }\n        }\n      }\n      id\n    }\n    id\n  }\n}\n\nfragment OrderUpdate_event on CommerceOrderEventUnion {\n  __isCommerceOrderEventUnion: __typename\n  __typename\n  ... on CommerceOrderStateChangedEvent {\n    createdAt\n    stateReason\n    state\n  }\n  ... on CommerceOfferSubmittedEvent {\n    createdAt\n    offer {\n      amount\n      fromParticipant\n      definesTotal\n      offerAmountChanged\n      respondsTo {\n        fromParticipant\n        id\n      }\n      id\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '58dacc86944663a450d97795ff39b5d9';
+(node as any).hash = 'bfd3e0a8a2a60fdbd34f225d5180542e';
 export default node;

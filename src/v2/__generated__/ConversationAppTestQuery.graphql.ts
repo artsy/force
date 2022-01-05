@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -17,16 +18,17 @@ export type ConversationAppTestQueryRawResponse = {
                     readonly internalID: string | null;
                     readonly to: {
                         readonly name: string;
-                        readonly id: string | null;
+                        readonly id: string;
                     };
-                    readonly id: string | null;
+                    readonly id: string;
                     readonly lastMessage: string | null;
                     readonly lastMessageAt: string | null;
                     readonly unread: boolean | null;
                     readonly items: ReadonlyArray<({
                         readonly item: ({
                             readonly __typename: "Artwork";
-                            readonly id: string | null;
+                            readonly __isNode: "Artwork";
+                            readonly id: string;
                             readonly date: string | null;
                             readonly title: string | null;
                             readonly artistNames: string | null;
@@ -35,10 +37,11 @@ export type ConversationAppTestQueryRawResponse = {
                             }) | null;
                         } | {
                             readonly __typename: "Show";
-                            readonly id: string | null;
+                            readonly __isNode: "Show";
+                            readonly id: string;
                             readonly fair: ({
                                 readonly name: string | null;
-                                readonly id: string | null;
+                                readonly id: string;
                             }) | null;
                             readonly name: string | null;
                             readonly coverImage: ({
@@ -46,7 +49,8 @@ export type ConversationAppTestQueryRawResponse = {
                             }) | null;
                         } | {
                             readonly __typename: string;
-                            readonly id: string | null;
+                            readonly __isNode: string;
+                            readonly id: string;
                         }) | null;
                     }) | null> | null;
                     readonly __typename: "Conversation";
@@ -60,7 +64,7 @@ export type ConversationAppTestQueryRawResponse = {
                 readonly startCursor: string | null;
             };
         }) | null;
-        readonly id: string | null;
+        readonly id: string;
     }) | null;
 };
 export type ConversationAppTestQuery = {
@@ -147,6 +151,7 @@ fragment ConversationSnippet_conversation on Conversation {
         }
       }
       ... on Node {
+        __isNode: __typename
         id
       }
     }
@@ -195,7 +200,37 @@ v5 = [
     "name": "url",
     "storageKey": null
   }
-];
+],
+v6 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "String"
+},
+v7 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "ID"
+},
+v8 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "String"
+},
+v9 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "Image"
+},
+v10 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "Boolean"
+};
 return {
   "fragment": {
     "argumentDefinitions": [],
@@ -220,7 +255,8 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -316,7 +352,6 @@ return {
                             "plural": false,
                             "selections": [
                               (v4/*: any*/),
-                              (v2/*: any*/),
                               {
                                 "kind": "InlineFragment",
                                 "selections": [
@@ -352,7 +387,8 @@ return {
                                     "storageKey": null
                                   }
                                 ],
-                                "type": "Artwork"
+                                "type": "Artwork",
+                                "abstractKey": null
                               },
                               {
                                 "kind": "InlineFragment",
@@ -379,7 +415,16 @@ return {
                                     "storageKey": null
                                   }
                                 ],
-                                "type": "Show"
+                                "type": "Show",
+                                "abstractKey": null
+                              },
+                              {
+                                "kind": "InlineFragment",
+                                "selections": [
+                                  (v2/*: any*/)
+                                ],
+                                "type": "Node",
+                                "abstractKey": "__isNode"
                               }
                             ],
                             "storageKey": null
@@ -459,13 +504,108 @@ return {
     ]
   },
   "params": {
+    "cacheID": "61db404b0a2582a8797f7af66b22cd5c",
     "id": null,
-    "metadata": {},
+    "metadata": {
+      "relayTestingSelectionTypeInfo": {
+        "me": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Me"
+        },
+        "me.conversationsConnection": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "ConversationConnection"
+        },
+        "me.conversationsConnection.edges": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": true,
+          "type": "ConversationEdge"
+        },
+        "me.conversationsConnection.edges.cursor": (v6/*: any*/),
+        "me.conversationsConnection.edges.node": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Conversation"
+        },
+        "me.conversationsConnection.edges.node.__typename": (v6/*: any*/),
+        "me.conversationsConnection.edges.node.id": (v7/*: any*/),
+        "me.conversationsConnection.edges.node.internalID": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "ID"
+        },
+        "me.conversationsConnection.edges.node.items": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": true,
+          "type": "ConversationItem"
+        },
+        "me.conversationsConnection.edges.node.items.item": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "ConversationItemType"
+        },
+        "me.conversationsConnection.edges.node.items.item.__isNode": (v6/*: any*/),
+        "me.conversationsConnection.edges.node.items.item.__typename": (v6/*: any*/),
+        "me.conversationsConnection.edges.node.items.item.artistNames": (v8/*: any*/),
+        "me.conversationsConnection.edges.node.items.item.coverImage": (v9/*: any*/),
+        "me.conversationsConnection.edges.node.items.item.coverImage.url": (v8/*: any*/),
+        "me.conversationsConnection.edges.node.items.item.date": (v8/*: any*/),
+        "me.conversationsConnection.edges.node.items.item.fair": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Fair"
+        },
+        "me.conversationsConnection.edges.node.items.item.fair.id": (v7/*: any*/),
+        "me.conversationsConnection.edges.node.items.item.fair.name": (v8/*: any*/),
+        "me.conversationsConnection.edges.node.items.item.id": (v7/*: any*/),
+        "me.conversationsConnection.edges.node.items.item.image": (v9/*: any*/),
+        "me.conversationsConnection.edges.node.items.item.image.url": (v8/*: any*/),
+        "me.conversationsConnection.edges.node.items.item.name": (v8/*: any*/),
+        "me.conversationsConnection.edges.node.items.item.title": (v8/*: any*/),
+        "me.conversationsConnection.edges.node.lastMessage": (v8/*: any*/),
+        "me.conversationsConnection.edges.node.lastMessageAt": (v8/*: any*/),
+        "me.conversationsConnection.edges.node.to": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": false,
+          "type": "ConversationResponder"
+        },
+        "me.conversationsConnection.edges.node.to.id": (v7/*: any*/),
+        "me.conversationsConnection.edges.node.to.name": (v6/*: any*/),
+        "me.conversationsConnection.edges.node.unread": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Boolean"
+        },
+        "me.conversationsConnection.pageInfo": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": false,
+          "type": "PageInfo"
+        },
+        "me.conversationsConnection.pageInfo.endCursor": (v8/*: any*/),
+        "me.conversationsConnection.pageInfo.hasNextPage": (v10/*: any*/),
+        "me.conversationsConnection.pageInfo.hasPreviousPage": (v10/*: any*/),
+        "me.conversationsConnection.pageInfo.startCursor": (v8/*: any*/),
+        "me.id": (v7/*: any*/)
+      }
+    },
     "name": "ConversationAppTestQuery",
     "operationKind": "query",
-    "text": "query ConversationAppTestQuery {\n  me {\n    ...ConversationApp_me\n    id\n  }\n}\n\nfragment ConversationApp_me on Me {\n  conversationsConnection(first: 25) {\n    edges {\n      node {\n        internalID\n        to {\n          name\n          id\n        }\n        id\n      }\n    }\n  }\n  ...ConversationList_me\n}\n\nfragment ConversationList_me on Me {\n  conversationsConnection(first: 25) {\n    edges {\n      cursor\n      node {\n        id\n        internalID\n        lastMessage\n        ...ConversationSnippet_conversation\n        __typename\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n\nfragment ConversationSnippet_conversation on Conversation {\n  internalID\n  to {\n    name\n    id\n  }\n  lastMessage\n  lastMessageAt\n  unread\n  items {\n    item {\n      __typename\n      ... on Artwork {\n        date\n        title\n        artistNames\n        image {\n          url\n        }\n      }\n      ... on Show {\n        fair {\n          name\n          id\n        }\n        name\n        coverImage {\n          url\n        }\n      }\n      ... on Node {\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query ConversationAppTestQuery {\n  me {\n    ...ConversationApp_me\n    id\n  }\n}\n\nfragment ConversationApp_me on Me {\n  conversationsConnection(first: 25) {\n    edges {\n      node {\n        internalID\n        to {\n          name\n          id\n        }\n        id\n      }\n    }\n  }\n  ...ConversationList_me\n}\n\nfragment ConversationList_me on Me {\n  conversationsConnection(first: 25) {\n    edges {\n      cursor\n      node {\n        id\n        internalID\n        lastMessage\n        ...ConversationSnippet_conversation\n        __typename\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n\nfragment ConversationSnippet_conversation on Conversation {\n  internalID\n  to {\n    name\n    id\n  }\n  lastMessage\n  lastMessageAt\n  unread\n  items {\n    item {\n      __typename\n      ... on Artwork {\n        date\n        title\n        artistNames\n        image {\n          url\n        }\n      }\n      ... on Show {\n        fair {\n          name\n          id\n        }\n        name\n        coverImage {\n          url\n        }\n      }\n      ... on Node {\n        __isNode: __typename\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '8f031f004367183b87690f1f4b25e449';
+(node as any).hash = '147aa4e89f37fe45ef44d5211bcfc0d9';
 export default node;

@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -53,6 +54,18 @@ v1 = {
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
+},
+v2 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "ID"
+},
+v3 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "String"
 };
 return {
   "fragment": {
@@ -78,7 +91,8 @@ return {
         "storageKey": "artist(id:\"example\")"
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -160,13 +174,51 @@ return {
     ]
   },
   "params": {
+    "cacheID": "2cc26d2483a51f256942ec328ca967ce",
     "id": null,
-    "metadata": {},
+    "metadata": {
+      "relayTestingSelectionTypeInfo": {
+        "artist": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Artist"
+        },
+        "artist.id": (v2/*: any*/),
+        "artist.related": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "ArtistRelatedData"
+        },
+        "artist.related.genes": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "GeneConnection"
+        },
+        "artist.related.genes.edges": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": true,
+          "type": "GeneEdge"
+        },
+        "artist.related.genes.edges.node": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Gene"
+        },
+        "artist.related.genes.edges.node.href": (v3/*: any*/),
+        "artist.related.genes.edges.node.id": (v2/*: any*/),
+        "artist.related.genes.edges.node.name": (v3/*: any*/)
+      }
+    },
     "name": "ArtistGenes_Test_Query",
     "operationKind": "query",
     "text": "query ArtistGenes_Test_Query {\n  artist(id: \"example\") {\n    ...ArtistGenes_artist\n    id\n  }\n}\n\nfragment ArtistGenes_artist on Artist {\n  related {\n    genes {\n      edges {\n        node {\n          href\n          name\n          id\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '04404860141589fec8fdb96d4341c9d3';
+(node as any).hash = 'efd1d0624e66e48949097221e0d1f5e5';
 export default node;

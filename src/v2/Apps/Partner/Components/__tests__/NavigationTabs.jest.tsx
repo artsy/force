@@ -11,7 +11,9 @@ const { getWrapper } = setupTestWrapper<NavigationTabs_Test_PartnerQuery>({
     return <NavigationTabs partner={partner} />
   },
   query: graphql`
-    query NavigationTabs_Test_PartnerQuery @raw_response_type {
+    query NavigationTabs_Test_PartnerQuery
+      @raw_response_type
+      @relay_test_operation {
       partner(id: "white-cube") {
         ...NavigationTabs_partner
       }
@@ -28,6 +30,7 @@ describe("PartnerNavigationTabs", () => {
         displayArtistsSection: true,
         representedArtists: { totalCount: 10 },
         notRepresentedArtists: { totalCount: 10 },
+        displayWorksSection: true,
       }),
     })
     const html = wrapper.html()
@@ -46,6 +49,7 @@ describe("PartnerNavigationTabs", () => {
       Partner: () => ({
         id: "white-cube",
         partnerType: "Brand",
+        displayWorksSection: true,
       }),
     })
     const html = wrapper.html()

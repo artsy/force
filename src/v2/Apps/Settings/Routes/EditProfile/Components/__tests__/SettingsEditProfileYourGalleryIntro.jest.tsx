@@ -8,7 +8,7 @@ jest.unmock("react-relay")
 const { renderWithRelay } = setupTestWrapperTL({
   Component: SettingsEditProfileYourGalleryIntroFragmentContainer,
   query: graphql`
-    query SettingsEditProfileYourGalleryIntro_Test_Query {
+    query SettingsEditProfileYourGalleryIntro_Test_Query @relay_test_operation {
       me {
         ...SettingsEditProfileYourGalleryIntro_me
       }

@@ -16,7 +16,7 @@ const { getWrapper } = setupTestWrapper<
     </MockBoot>
   ),
   query: graphql`
-    query ArtistsIndexFragmentContainer_Test_Query {
+    query ArtistsIndexFragmentContainer_Test_Query @relay_test_operation {
       featuredArtists: orderedSets(key: "homepage:featured-artists") {
         ...ArtistsIndex_featuredArtists
       }

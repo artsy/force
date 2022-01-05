@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -69,7 +70,25 @@ v2 = [
     "name": "first",
     "value": 100
   }
-];
+],
+v3 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "String"
+},
+v4 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "Int"
+},
+v5 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "ID"
+};
 return {
   "fragment": {
     "argumentDefinitions": [],
@@ -94,7 +113,8 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -229,13 +249,69 @@ return {
     ]
   },
   "params": {
+    "cacheID": "56515f17201f9e47ec40419ea9f2ae35",
     "id": null,
-    "metadata": {},
+    "metadata": {
+      "relayTestingSelectionTypeInfo": {
+        "me": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Me"
+        },
+        "me.creditCards": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "CreditCardConnection"
+        },
+        "me.creditCards.edges": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": true,
+          "type": "CreditCardEdge"
+        },
+        "me.creditCards.edges.cursor": (v3/*: any*/),
+        "me.creditCards.edges.node": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "CreditCard"
+        },
+        "me.creditCards.edges.node.__typename": (v3/*: any*/),
+        "me.creditCards.edges.node.brand": (v3/*: any*/),
+        "me.creditCards.edges.node.expirationMonth": (v4/*: any*/),
+        "me.creditCards.edges.node.expirationYear": (v4/*: any*/),
+        "me.creditCards.edges.node.id": (v5/*: any*/),
+        "me.creditCards.edges.node.internalID": (v5/*: any*/),
+        "me.creditCards.edges.node.lastDigits": (v3/*: any*/),
+        "me.creditCards.pageInfo": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": false,
+          "type": "PageInfo"
+        },
+        "me.creditCards.pageInfo.endCursor": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "String"
+        },
+        "me.creditCards.pageInfo.hasNextPage": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": false,
+          "type": "Boolean"
+        },
+        "me.id": (v5/*: any*/),
+        "me.internalID": (v5/*: any*/)
+      }
+    },
     "name": "PaymentSection_Test_Query",
     "operationKind": "query",
     "text": "query PaymentSection_Test_Query {\n  me {\n    ...PaymentSection_me\n    id\n  }\n}\n\nfragment PaymentSection_me on Me {\n  id\n  internalID\n  creditCards(first: 100) {\n    edges {\n      node {\n        id\n        internalID\n        brand\n        lastDigits\n        expirationYear\n        expirationMonth\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '42299a52d52953d294757597d8a52733';
+(node as any).hash = 'e36739e9a9ffc81564012548dc782328';
 export default node;

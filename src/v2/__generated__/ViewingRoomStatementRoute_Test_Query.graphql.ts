@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -31,7 +32,7 @@ export type ViewingRoomStatementRoute_Test_QueryRawResponse = {
                             readonly height: number | null;
                         }) | null;
                     }) | null;
-                    readonly id: string | null;
+                    readonly id: string;
                 }) | null;
             }) | null> | null;
         }) | null;
@@ -145,8 +146,7 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "slug",
-    "type": "ID!"
+    "name": "slug"
   }
 ],
 v1 = [
@@ -190,6 +190,30 @@ v6 = {
   "kind": "ScalarField",
   "name": "body",
   "storageKey": null
+},
+v7 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "String"
+},
+v8 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "ID"
+},
+v9 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "Int"
+},
+v10 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "String"
 };
 return {
   "fragment": {
@@ -215,7 +239,8 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -424,13 +449,92 @@ return {
     ]
   },
   "params": {
+    "cacheID": "cfb84bd9d30f51d49c43da8b0feb49b2",
     "id": null,
-    "metadata": {},
+    "metadata": {
+      "relayTestingSelectionTypeInfo": {
+        "viewingRoom": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "ViewingRoom"
+        },
+        "viewingRoom.artworksConnection": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "ArtworkConnection"
+        },
+        "viewingRoom.artworksConnection.edges": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": true,
+          "type": "ArtworkEdge"
+        },
+        "viewingRoom.artworksConnection.edges.node": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Artwork"
+        },
+        "viewingRoom.artworksConnection.edges.node.artistNames": (v7/*: any*/),
+        "viewingRoom.artworksConnection.edges.node.date": (v7/*: any*/),
+        "viewingRoom.artworksConnection.edges.node.id": (v8/*: any*/),
+        "viewingRoom.artworksConnection.edges.node.image": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Image"
+        },
+        "viewingRoom.artworksConnection.edges.node.image.resized": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "ResizedImageUrl"
+        },
+        "viewingRoom.artworksConnection.edges.node.image.resized.height": (v9/*: any*/),
+        "viewingRoom.artworksConnection.edges.node.image.resized.src": (v10/*: any*/),
+        "viewingRoom.artworksConnection.edges.node.image.resized.srcSet": (v10/*: any*/),
+        "viewingRoom.artworksConnection.edges.node.image.resized.width": (v9/*: any*/),
+        "viewingRoom.artworksConnection.edges.node.internalID": (v8/*: any*/),
+        "viewingRoom.artworksConnection.edges.node.saleMessage": (v7/*: any*/),
+        "viewingRoom.artworksConnection.edges.node.title": (v7/*: any*/),
+        "viewingRoom.artworksConnection.totalCount": (v9/*: any*/),
+        "viewingRoom.body": (v7/*: any*/),
+        "viewingRoom.introStatement": (v7/*: any*/),
+        "viewingRoom.pullQuote": (v7/*: any*/),
+        "viewingRoom.subsections": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": true,
+          "type": "ViewingRoomSubsection"
+        },
+        "viewingRoom.subsections.body": (v7/*: any*/),
+        "viewingRoom.subsections.caption": (v7/*: any*/),
+        "viewingRoom.subsections.image": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "ARImage"
+        },
+        "viewingRoom.subsections.image.height": (v9/*: any*/),
+        "viewingRoom.subsections.image.imageURLs": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "ImageURLs"
+        },
+        "viewingRoom.subsections.image.imageURLs.normalized": (v7/*: any*/),
+        "viewingRoom.subsections.image.width": (v9/*: any*/),
+        "viewingRoom.subsections.internalID": (v8/*: any*/),
+        "viewingRoom.subsections.title": (v7/*: any*/)
+      }
+    },
     "name": "ViewingRoomStatementRoute_Test_Query",
     "operationKind": "query",
     "text": "query ViewingRoomStatementRoute_Test_Query(\n  $slug: ID!\n) {\n  viewingRoom(id: $slug) {\n    ...ViewingRoomStatementRoute_viewingRoom\n  }\n}\n\nfragment ViewingRoomBody_viewingRoom on ViewingRoom {\n  body\n}\n\nfragment ViewingRoomIntro_viewingRoom on ViewingRoom {\n  introStatement\n}\n\nfragment ViewingRoomPullQuote_viewingRoom on ViewingRoom {\n  pullQuote\n}\n\nfragment ViewingRoomStatementRoute_viewingRoom on ViewingRoom {\n  ...ViewingRoomIntro_viewingRoom\n  ...ViewingRoomWorks_viewingRoom\n  ...ViewingRoomPullQuote_viewingRoom\n  ...ViewingRoomBody_viewingRoom\n  ...ViewingRoomSubsections_viewingRoom\n  artworksConnection(first: 2) {\n    totalCount\n  }\n  subsections {\n    internalID\n  }\n}\n\nfragment ViewingRoomSubsections_viewingRoom on ViewingRoom {\n  subsections {\n    internalID\n    title\n    body\n    image {\n      width\n      height\n      imageURLs {\n        normalized\n      }\n    }\n    caption\n  }\n}\n\nfragment ViewingRoomWorksArtwork_artwork on Artwork {\n  artistNames\n  date\n  saleMessage\n  title\n  image {\n    resized(width: 445) {\n      src\n      srcSet\n      width\n      height\n    }\n  }\n}\n\nfragment ViewingRoomWorks_viewingRoom on ViewingRoom {\n  artworksConnection(first: 2) {\n    totalCount\n    edges {\n      node {\n        internalID\n        ...ViewingRoomWorksArtwork_artwork\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'dbc42307812dd0d08bbe05338619ef80';
+(node as any).hash = 'ff6fa30c7a24fd5b06c3ff3ec9e030a4';
 export default node;

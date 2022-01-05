@@ -15,7 +15,7 @@ describe("MyBids", () => {
       return <MyBidsFragmentContainer me={props.me} />
     },
     query: graphql`
-      query MyBids_Test_Query {
+      query MyBids_Test_Query @relay_test_operation {
         me {
           ...MyBids_me
         }

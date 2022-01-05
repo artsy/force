@@ -18,6 +18,7 @@ import {
   PageOwnerType,
 } from "@artsy/cohesion"
 import { HttpError } from "found"
+import { useRouter } from "v2/System/Router/useRouter"
 import { userIsAdmin } from "v2/Utils/user"
 import { FairHeaderImageFragmentContainer } from "./Components/FairHeader/FairHeaderImage"
 import { FairHeaderFragmentContainer } from "./Components/FairHeader"
@@ -26,6 +27,7 @@ import { Sticky, StickyProvider } from "v2/Components/Sticky"
 import { AppContainer } from "../Components/AppContainer"
 import { HorizontalPadding } from "../Components/HorizontalPadding"
 import styled from "styled-components"
+import { ExhibitorsLetterNavFragmentContainer as ExhibitorsLetterNav } from "./Components/ExhibitorsLetterNav"
 
 interface FairAppProps {
   fair: FairApp_fair
@@ -39,6 +41,7 @@ const FairApp: React.FC<FairAppProps> = ({ children, fair }) => {
     contextPageOwnerType,
   } = useAnalyticsContext()
   const lastClickedTab = useRef(ContextModule.fairInfo)
+  const { match } = useRouter()
 
   const fairHref = fair.href ?? ""
 
@@ -138,6 +141,9 @@ const FairApp: React.FC<FairAppProps> = ({ children, fair }) => {
                       </FairRouteTab>
                     )}
                   </RouteTabs>
+                  {match.location.pathname.includes("/exhibitors") && (
+                    <ExhibitorsLetterNav fair={fair} />
+                  )}
                 </HorizontalPadding>
               </AppContainer>
             </FullBleed>
@@ -196,6 +202,7 @@ export const FairAppFragmentContainer = createFragmentContainer(
         ...FairMeta_fair
         ...FairHeader_fair
         ...FairHeaderImage_fair
+        ...ExhibitorsLetterNav_fair
         counts {
           artworks
         }

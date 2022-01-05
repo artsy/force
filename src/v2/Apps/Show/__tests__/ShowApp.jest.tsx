@@ -33,7 +33,7 @@ const useRouter = jest.spyOn(require("v2/System/Router/useRouter"), "useRouter")
 const { getWrapper } = setupTestWrapper<ShowApp_Test_Query>({
   Component: ShowAppFragmentContainer,
   query: graphql`
-    query ShowApp_Test_Query {
+    query ShowApp_Test_Query @relay_test_operation {
       show(id: "xxx") {
         ...ShowApp_show
       }

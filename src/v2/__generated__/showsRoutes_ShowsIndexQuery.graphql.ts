@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -60,6 +61,7 @@ fragment ShowsFeaturedShow_show on Show {
       id
     }
     ... on Node {
+      __isNode: __typename
       id
     }
   }
@@ -85,6 +87,7 @@ fragment ShowsIndex_featuredShows on OrderedSet {
       ...ShowsFeaturedShow_show
     }
     ... on Node {
+      __isNode: __typename
       id
     }
     ... on FeaturedLink {
@@ -195,8 +198,14 @@ v6 = [
   }
 ],
 v7 = [
-  (v2/*: any*/)
-];
+  (v4/*: any*/)
+],
+v8 = {
+  "kind": "InlineFragment",
+  "selections": (v7/*: any*/),
+  "type": "Node",
+  "abstractKey": "__isNode"
+};
 return {
   "fragment": {
     "argumentDefinitions": [],
@@ -237,7 +246,8 @@ return {
         "storageKey": "orderedSet(id:\"530ebe92139b21efd6000071\")"
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -300,10 +310,10 @@ return {
             "plural": true,
             "selections": [
               (v3/*: any*/),
-              (v4/*: any*/),
               {
                 "kind": "InlineFragment",
                 "selections": [
+                  (v4/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -428,22 +438,43 @@ return {
                     "plural": false,
                     "selections": [
                       (v3/*: any*/),
-                      (v4/*: any*/),
                       {
                         "kind": "InlineFragment",
-                        "selections": (v7/*: any*/),
-                        "type": "Partner"
+                        "selections": [
+                          (v2/*: any*/)
+                        ],
+                        "type": "Partner",
+                        "abstractKey": null
                       },
                       {
                         "kind": "InlineFragment",
-                        "selections": (v7/*: any*/),
-                        "type": "ExternalPartner"
-                      }
+                        "selections": [
+                          (v2/*: any*/),
+                          (v4/*: any*/)
+                        ],
+                        "type": "ExternalPartner",
+                        "abstractKey": null
+                      },
+                      (v8/*: any*/)
                     ],
                     "storageKey": null
                   }
                 ],
-                "type": "Show"
+                "type": "Show",
+                "abstractKey": null
+              },
+              (v8/*: any*/),
+              {
+                "kind": "InlineFragment",
+                "selections": (v7/*: any*/),
+                "type": "FeaturedLink",
+                "abstractKey": null
+              },
+              {
+                "kind": "InlineFragment",
+                "selections": (v7/*: any*/),
+                "type": "Profile",
+                "abstractKey": null
               }
             ],
             "storageKey": null
@@ -455,11 +486,12 @@ return {
     ]
   },
   "params": {
+    "cacheID": "903e534aca0cc832d3a09236dbc038d8",
     "id": null,
     "metadata": {},
     "name": "showsRoutes_ShowsIndexQuery",
     "operationKind": "query",
-    "text": "query showsRoutes_ShowsIndexQuery {\n  viewer {\n    ...ShowsIndex_viewer\n  }\n  featuredShows: orderedSet(id: \"530ebe92139b21efd6000071\") {\n    ...ShowsIndex_featuredShows\n    id\n  }\n}\n\nfragment ShowsFeaturedShow_show on Show {\n  ...ShowsShowDates_show\n  id\n  name\n  href\n  coverImage {\n    title\n    large: cropped(width: 910, height: 683) {\n      width\n      height\n      src\n      srcSet\n    }\n    small: cropped(width: 600, height: 450) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n  partner {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on ExternalPartner {\n      name\n      id\n    }\n    ... on Node {\n      id\n    }\n  }\n}\n\nfragment ShowsHeader_viewer on Viewer {\n  allCities: cities {\n    text: name\n    value: slug\n  }\n  featuredCities: cities(featured: true) {\n    text: name\n    value: slug\n  }\n}\n\nfragment ShowsIndex_featuredShows on OrderedSet {\n  name\n  items {\n    __typename\n    ... on Show {\n      id\n      ...ShowsFeaturedShow_show\n    }\n    ... on Node {\n      id\n    }\n    ... on FeaturedLink {\n      id\n    }\n    ... on Profile {\n      id\n    }\n  }\n}\n\nfragment ShowsIndex_viewer on Viewer {\n  ...ShowsHeader_viewer\n}\n\nfragment ShowsShowDates_show on Show {\n  startAt\n  endAt\n  formattedStartAt: startAt(format: \"MMM D\")\n  formattedEndAt: endAt(format: \"MMM D\")\n  location {\n    city\n    id\n  }\n}\n"
+    "text": "query showsRoutes_ShowsIndexQuery {\n  viewer {\n    ...ShowsIndex_viewer\n  }\n  featuredShows: orderedSet(id: \"530ebe92139b21efd6000071\") {\n    ...ShowsIndex_featuredShows\n    id\n  }\n}\n\nfragment ShowsFeaturedShow_show on Show {\n  ...ShowsShowDates_show\n  id\n  name\n  href\n  coverImage {\n    title\n    large: cropped(width: 910, height: 683) {\n      width\n      height\n      src\n      srcSet\n    }\n    small: cropped(width: 600, height: 450) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n  partner {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on ExternalPartner {\n      name\n      id\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n}\n\nfragment ShowsHeader_viewer on Viewer {\n  allCities: cities {\n    text: name\n    value: slug\n  }\n  featuredCities: cities(featured: true) {\n    text: name\n    value: slug\n  }\n}\n\nfragment ShowsIndex_featuredShows on OrderedSet {\n  name\n  items {\n    __typename\n    ... on Show {\n      id\n      ...ShowsFeaturedShow_show\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on FeaturedLink {\n      id\n    }\n    ... on Profile {\n      id\n    }\n  }\n}\n\nfragment ShowsIndex_viewer on Viewer {\n  ...ShowsHeader_viewer\n}\n\nfragment ShowsShowDates_show on Show {\n  startAt\n  endAt\n  formattedStartAt: startAt(format: \"MMM D\")\n  formattedEndAt: endAt(format: \"MMM D\")\n  location {\n    city\n    id\n  }\n}\n"
   }
 };
 })();

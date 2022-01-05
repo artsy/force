@@ -15,7 +15,7 @@ const { renderWithRelay } = setupTestWrapperTL({
     )
   },
   query: graphql`
-    query ConversationMessages_Test_Query {
+    query ConversationMessages_Test_Query @relay_test_operation {
       me {
         conversation(id: "1234") {
           messagesConnection(first: 10) {

@@ -12,7 +12,7 @@ describe("FairOrganizerPastEventsRail", () => {
   >({
     Component: FairOrganizerPastEventsRail,
     query: graphql`
-      query FairOrganizerPastEventsRail_Test_Query {
+      query FairOrganizerPastEventsRail_Test_Query @relay_test_operation {
         fairOrganizer(id: "the-armory-show") {
           ...FairOrganizerPastEventsRail_fairOrganizer
         }

@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -28,38 +29,32 @@ const node: ReaderFragment = {
     {
       "defaultValue": null,
       "kind": "LocalArgument",
-      "name": "collectionRailItemIDs",
-      "type": "[String!]"
+      "name": "auctionRailItemIDs"
     },
     {
       "defaultValue": null,
       "kind": "LocalArgument",
-      "name": "auctionRailItemIDs",
-      "type": "[String!]"
+      "name": "collectionRailItemIDs"
     },
     {
       "defaultValue": null,
       "kind": "LocalArgument",
-      "name": "fairRailItemIDs",
-      "type": "[String!]"
+      "name": "fairRailItemIDs"
     },
     {
       "defaultValue": null,
       "kind": "LocalArgument",
-      "name": "hasCollectionRailItems",
-      "type": "Boolean!"
+      "name": "hasAuctionRailItems"
     },
     {
       "defaultValue": null,
       "kind": "LocalArgument",
-      "name": "hasAuctionRailItems",
-      "type": "Boolean!"
+      "name": "hasCollectionRailItems"
     },
     {
       "defaultValue": null,
       "kind": "LocalArgument",
-      "name": "hasFairRailItems",
-      "type": "Boolean!"
+      "name": "hasFairRailItems"
     }
   ],
   "kind": "Fragment",
@@ -159,7 +154,8 @@ const node: ReaderFragment = {
       ]
     }
   ],
-  "type": "Viewer"
+  "type": "Viewer",
+  "abstractKey": null
 };
 (node as any).hash = 'ba391e3daccaeda0cdcefe24f1e66c7f';
 export default node;

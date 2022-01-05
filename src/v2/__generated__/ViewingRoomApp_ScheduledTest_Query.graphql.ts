@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -24,7 +25,7 @@ export type ViewingRoomApp_ScheduledTest_QueryRawResponse = {
         readonly partner: ({
             readonly name: string | null;
             readonly href: string | null;
-            readonly id: string | null;
+            readonly id: string;
             readonly internalID: string;
         }) | null;
         readonly distanceToOpen: string | null;
@@ -102,8 +103,7 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "slug",
-    "type": "ID!"
+    "name": "slug"
   }
 ],
 v1 = [
@@ -119,6 +119,24 @@ v2 = {
   "kind": "ScalarField",
   "name": "href",
   "storageKey": null
+},
+v3 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "String"
+},
+v4 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "ID"
+},
+v5 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "String"
 };
 return {
   "fragment": {
@@ -144,7 +162,8 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -264,13 +283,52 @@ return {
     ]
   },
   "params": {
+    "cacheID": "8e55ad76766571c76959d338b77eb60c",
     "id": null,
-    "metadata": {},
+    "metadata": {
+      "relayTestingSelectionTypeInfo": {
+        "viewingRoom": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "ViewingRoom"
+        },
+        "viewingRoom.distanceToClose": (v3/*: any*/),
+        "viewingRoom.distanceToOpen": (v3/*: any*/),
+        "viewingRoom.href": (v3/*: any*/),
+        "viewingRoom.image": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "ARImage"
+        },
+        "viewingRoom.image.imageURLs": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "ImageURLs"
+        },
+        "viewingRoom.image.imageURLs.normalized": (v3/*: any*/),
+        "viewingRoom.partner": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Partner"
+        },
+        "viewingRoom.partner.href": (v3/*: any*/),
+        "viewingRoom.partner.id": (v4/*: any*/),
+        "viewingRoom.partner.internalID": (v4/*: any*/),
+        "viewingRoom.partner.name": (v3/*: any*/),
+        "viewingRoom.pullQuote": (v3/*: any*/),
+        "viewingRoom.status": (v5/*: any*/),
+        "viewingRoom.title": (v5/*: any*/)
+      }
+    },
     "name": "ViewingRoomApp_ScheduledTest_Query",
     "operationKind": "query",
     "text": "query ViewingRoomApp_ScheduledTest_Query(\n  $slug: ID!\n) {\n  viewingRoom(id: $slug) {\n    ...ViewingRoomApp_viewingRoom\n  }\n}\n\nfragment ViewingRoomApp_viewingRoom on ViewingRoom {\n  ...ViewingRoomMeta_viewingRoom\n  ...ViewingRoomHeader_viewingRoom\n  ...ViewingRoomContentNotAccessible_viewingRoom\n  partner {\n    internalID\n    id\n  }\n  status\n}\n\nfragment ViewingRoomContentNotAccessible_viewingRoom on ViewingRoom {\n  status\n  partner {\n    href\n    id\n  }\n}\n\nfragment ViewingRoomHeader_viewingRoom on ViewingRoom {\n  image {\n    imageURLs {\n      normalized\n    }\n  }\n  title\n  partner {\n    name\n    href\n    id\n  }\n  distanceToOpen\n  distanceToClose\n  status\n}\n\nfragment ViewingRoomMeta_viewingRoom on ViewingRoom {\n  title\n  href\n  pullQuote\n  image {\n    imageURLs {\n      normalized\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'f0712f4bd7f1887b835f68512a651d16';
+(node as any).hash = '933e6c276d4e72ada01aa8c5da1cfa2e';
 export default node;

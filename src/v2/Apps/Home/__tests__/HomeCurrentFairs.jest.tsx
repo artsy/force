@@ -12,7 +12,7 @@ const { getWrapper } = setupTestWrapper<HomeCurrentFairs_Test_Query>({
     return <HomeCurrentFairsFragmentContainer viewer={props.viewer!} />
   },
   query: graphql`
-    query HomeCurrentFairs_Test_Query {
+    query HomeCurrentFairs_Test_Query @relay_test_operation {
       viewer {
         ...HomeCurrentFairs_viewer
       }
@@ -67,8 +67,8 @@ describe("HomeCurrentFairs", () => {
         action: "clickedFairGroup",
         context_module: "fairRail",
         context_page_owner_type: "home",
-        destination_page_owner_id: '<mock-value-for-field-"internalID">',
-        destination_page_owner_slug: '<mock-value-for-field-"slug">',
+        destination_page_owner_id: "<Fair-mock-id-1>",
+        destination_page_owner_slug: "<Fair-mock-id-2>",
         destination_page_owner_type: "fair",
         type: "thumbnail",
       })

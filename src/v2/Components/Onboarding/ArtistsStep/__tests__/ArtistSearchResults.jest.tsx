@@ -25,7 +25,8 @@ describe("ArtistSearchResults", () => {
       )
     },
     query: graphql`
-      query ArtistSearchResults_Test_Query($term: String!) {
+      query ArtistSearchResults_Test_Query($term: String!)
+        @relay_test_operation {
         viewer {
           ...ArtistSearchResults_viewer
         }

@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -60,7 +61,38 @@ fragment HomeTrendingArtistsRail_viewer on Viewer {
 }
 */
 
-const node: ConcreteRequest = {
+const node: ConcreteRequest = (function(){
+var v0 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "String"
+},
+v1 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "ID"
+},
+v2 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "Int"
+},
+v3 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "String"
+},
+v4 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "Boolean"
+};
+return {
   "fragment": {
     "argumentDefinitions": [],
     "kind": "Fragment",
@@ -84,7 +116,8 @@ const node: ConcreteRequest = {
         "storageKey": null
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -285,12 +318,77 @@ const node: ConcreteRequest = {
     ]
   },
   "params": {
+    "cacheID": "fa1bcc72df64ff92f9d247730071e21f",
     "id": null,
-    "metadata": {},
+    "metadata": {
+      "relayTestingSelectionTypeInfo": {
+        "viewer": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Viewer"
+        },
+        "viewer.artistsConnection": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "ArtistConnection"
+        },
+        "viewer.artistsConnection.edges": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": true,
+          "type": "ArtistEdge"
+        },
+        "viewer.artistsConnection.edges.node": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Artist"
+        },
+        "viewer.artistsConnection.edges.node.counts": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "ArtistCounts"
+        },
+        "viewer.artistsConnection.edges.node.counts.follows": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "FormattedNumber"
+        },
+        "viewer.artistsConnection.edges.node.formattedNationalityAndBirthday": (v0/*: any*/),
+        "viewer.artistsConnection.edges.node.href": (v0/*: any*/),
+        "viewer.artistsConnection.edges.node.id": (v1/*: any*/),
+        "viewer.artistsConnection.edges.node.image": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Image"
+        },
+        "viewer.artistsConnection.edges.node.image.cropped": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "CroppedImageUrl"
+        },
+        "viewer.artistsConnection.edges.node.image.cropped.height": (v2/*: any*/),
+        "viewer.artistsConnection.edges.node.image.cropped.src": (v3/*: any*/),
+        "viewer.artistsConnection.edges.node.image.cropped.srcSet": (v3/*: any*/),
+        "viewer.artistsConnection.edges.node.image.cropped.width": (v2/*: any*/),
+        "viewer.artistsConnection.edges.node.internalID": (v1/*: any*/),
+        "viewer.artistsConnection.edges.node.isFollowed": (v4/*: any*/),
+        "viewer.artistsConnection.edges.node.is_followed": (v4/*: any*/),
+        "viewer.artistsConnection.edges.node.name": (v0/*: any*/),
+        "viewer.artistsConnection.edges.node.slug": (v1/*: any*/)
+      }
+    },
     "name": "HomeTrendingArtistsRail_Test_Query",
     "operationKind": "query",
     "text": "query HomeTrendingArtistsRail_Test_Query {\n  viewer {\n    ...HomeTrendingArtistsRail_viewer\n  }\n}\n\nfragment FollowArtistButton_artist on Artist {\n  id\n  internalID\n  name\n  slug\n  is_followed: isFollowed\n  counts {\n    follows\n  }\n}\n\nfragment HomeTrendingArtistsRail_viewer on Viewer {\n  artistsConnection(sort: TRENDING_DESC, first: 99) {\n    edges {\n      node {\n        ...FollowArtistButton_artist\n        internalID\n        isFollowed\n        name\n        slug\n        href\n        formattedNationalityAndBirthday\n        image {\n          cropped(width: 325, height: 230) {\n            src\n            srcSet\n            width\n            height\n          }\n        }\n        id\n      }\n    }\n  }\n}\n"
   }
 };
-(node as any).hash = '28228066e3aff7d576bfa284d276a113';
+})();
+(node as any).hash = '576106e6e2155f43eb26a3c6386095aa';
 export default node;

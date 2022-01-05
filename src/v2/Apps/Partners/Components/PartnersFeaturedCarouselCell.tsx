@@ -42,7 +42,7 @@ const PartnersFeaturedCarouselCell: FC<PartnersFeaturedCarouselCellProps> = ({
         py={2}
       >
         <RouterLink
-          to={`/partner${partner.href}`}
+          to={`${partner.href}`}
           display="block"
           textDecoration="none"
         >

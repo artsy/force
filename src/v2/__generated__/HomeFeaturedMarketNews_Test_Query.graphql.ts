@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -90,6 +91,36 @@ v1 = {
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
+},
+v2 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "ID"
+},
+v3 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "String"
+},
+v4 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "CroppedImageUrl"
+},
+v5 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "Int"
+},
+v6 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "String"
 };
 return {
   "fragment": {
@@ -115,7 +146,8 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -265,13 +297,55 @@ return {
     ]
   },
   "params": {
+    "cacheID": "29d59e1ac1d375c0a1d07685a43feb54",
     "id": null,
-    "metadata": {},
+    "metadata": {
+      "relayTestingSelectionTypeInfo": {
+        "articles": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": true,
+          "type": "Article"
+        },
+        "articles.author": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Author"
+        },
+        "articles.author.id": (v2/*: any*/),
+        "articles.author.name": (v3/*: any*/),
+        "articles.href": (v3/*: any*/),
+        "articles.id": (v2/*: any*/),
+        "articles.internalID": (v2/*: any*/),
+        "articles.publishedAt": (v3/*: any*/),
+        "articles.slug": (v3/*: any*/),
+        "articles.thumbnailImage": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Image"
+        },
+        "articles.thumbnailImage.large": (v4/*: any*/),
+        "articles.thumbnailImage.large.height": (v5/*: any*/),
+        "articles.thumbnailImage.large.src": (v6/*: any*/),
+        "articles.thumbnailImage.large.srcSet": (v6/*: any*/),
+        "articles.thumbnailImage.large.width": (v5/*: any*/),
+        "articles.thumbnailImage.small": (v4/*: any*/),
+        "articles.thumbnailImage.small.height": (v5/*: any*/),
+        "articles.thumbnailImage.small.src": (v6/*: any*/),
+        "articles.thumbnailImage.small.srcSet": (v6/*: any*/),
+        "articles.thumbnailImage.small.width": (v5/*: any*/),
+        "articles.thumbnailTitle": (v3/*: any*/),
+        "articles.title": (v3/*: any*/),
+        "articles.vertical": (v3/*: any*/)
+      }
+    },
     "name": "HomeFeaturedMarketNews_Test_Query",
     "operationKind": "query",
     "text": "query HomeFeaturedMarketNews_Test_Query {\n  articles {\n    ...HomeFeaturedMarketNews_articles\n    id\n  }\n}\n\nfragment HomeFeaturedMarketNews_articles on Article {\n  internalID\n  href\n  slug\n  title\n  publishedAt(format: \"MMM D YYYY\")\n  vertical\n  thumbnailTitle\n  thumbnailImage {\n    large: cropped(width: 670, height: 720) {\n      width\n      height\n      src\n      srcSet\n    }\n    small: cropped(width: 325, height: 240) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n  author {\n    name\n    id\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '40dca964711f6194bf54326edad403cc';
+(node as any).hash = '4eb01c1267af550f1e7fc29c9bba7b8e';
 export default node;

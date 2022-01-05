@@ -10,7 +10,7 @@ const TermsApp = loadable(
 
 export const termsRoutes: AppRouteConfig[] = [
   {
-    path: "terms-and-conditions2",
+    path: "/terms-and-conditions2",
     getComponent: () => TermsApp,
   },
 ]

@@ -15,7 +15,7 @@ describe("ArtistArticlesRoute", () => {
   const { getWrapper } = setupTestWrapper<ArtistArticlesRoute_Test_Query>({
     Component: ArtistArticlesRouteFragmentContainer,
     query: graphql`
-      query ArtistArticlesRoute_Test_Query {
+      query ArtistArticlesRoute_Test_Query @relay_test_operation {
         artist(id: "example") {
           ...ArtistArticlesRoute_artist
         }

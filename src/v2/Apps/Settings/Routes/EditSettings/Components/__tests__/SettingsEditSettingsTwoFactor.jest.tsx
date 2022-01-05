@@ -13,7 +13,7 @@ jest.mock(
 const { renderWithRelay } = setupTestWrapperTL({
   Component: SettingsEditSettingsTwoFactorFragmentContainer,
   query: graphql`
-    query SettingsEditSettingsTwoFactor_Test_Query {
+    query SettingsEditSettingsTwoFactor_Test_Query @relay_test_operation {
       me {
         ...SettingsEditSettingsTwoFactor_me
       }
@@ -96,7 +96,9 @@ describe("TwoFactorAuthentication", () => {
 
   describe("BackupSecondFactor", () => {
     it("can display BackupSecondFactor", () => {
-      renderWithRelay()
+      renderWithRelay({
+        Me: () => ({ backupSecondFactors: null, hasSecondFactorEnabled: true }),
+      })
 
       expect(
         screen.getByText(
@@ -106,13 +108,17 @@ describe("TwoFactorAuthentication", () => {
     })
 
     it("prompts to setup if no codes are available", () => {
-      renderWithRelay({ Me: () => ({ backupSecondFactors: null }) })
+      renderWithRelay({
+        Me: () => ({ backupSecondFactors: null, hasSecondFactorEnabled: true }),
+      })
 
       expect(screen.getByText("Set up")).toBeInTheDocument()
     })
 
     it("creates backup codes and displays codes in a modal", async () => {
-      renderWithRelay({ Me: () => ({ backupSecondFactors: null }) })
+      renderWithRelay({
+        Me: () => ({ backupSecondFactors: null, hasSecondFactorEnabled: true }),
+      })
 
       const setupButton = screen.getByText("Set up")
 

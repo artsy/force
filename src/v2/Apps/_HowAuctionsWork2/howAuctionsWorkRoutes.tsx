@@ -13,7 +13,7 @@ const HowAuctionsWorkApp = loadable(
 
 export const howAuctionsWorkRoutes: AppRouteConfig[] = [
   {
-    path: "how-auctions-work2",
+    path: "/how-auctions-work2",
     getComponent: () => HowAuctionsWorkApp,
   },
 ]

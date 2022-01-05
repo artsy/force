@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -37,7 +38,7 @@ export type Offer_order = {
         } | null> | null;
     } | null;
     readonly isInquiryOrder?: boolean;
-    readonly " $fragmentRefs": FragmentRefs<"ArtworkSummaryItem_order" | "TransactionDetailsSummaryItem_order">;
+    readonly " $fragmentRefs": FragmentRefs<"ArtworkSummaryItem_order" | "TransactionDetailsSummaryItem_order" | "PriceOptions_order">;
     readonly " $refType": "Offer_order";
 };
 export type Offer_order$data = Offer_order;
@@ -180,12 +181,14 @@ return {
                     {
                       "kind": "InlineFragment",
                       "selections": (v1/*: any*/),
-                      "type": "Artwork"
+                      "type": "Artwork",
+                      "abstractKey": null
                     },
                     {
                       "kind": "InlineFragment",
                       "selections": (v1/*: any*/),
-                      "type": "EditionSet"
+                      "type": "EditionSet",
+                      "abstractKey": null
                     }
                   ],
                   "storageKey": null
@@ -210,7 +213,8 @@ return {
           "storageKey": null
         }
       ],
-      "type": "CommerceOfferOrder"
+      "type": "CommerceOfferOrder",
+      "abstractKey": null
     },
     {
       "args": null,
@@ -221,10 +225,16 @@ return {
       "args": null,
       "kind": "FragmentSpread",
       "name": "TransactionDetailsSummaryItem_order"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "PriceOptions_order"
     }
   ],
-  "type": "CommerceOrder"
+  "type": "CommerceOrder",
+  "abstractKey": "__isCommerceOrder"
 };
 })();
-(node as any).hash = '58af1ba5da576befdf9eb261a412d96f';
+(node as any).hash = '41a1d51fa10160fc67d63def6bc5bb5d';
 export default node;

@@ -28,7 +28,7 @@ const { getWrapper } = setupTestWrapper<PaymentSection_Test_Query>({
     return <PaymentSectionFragmentContainer {...props} />
   },
   query: graphql`
-    query PaymentSection_Test_Query {
+    query PaymentSection_Test_Query @relay_test_operation {
       me {
         ...PaymentSection_me
       }
@@ -44,10 +44,7 @@ describe("PaymentSection", () => {
     const savedCreditCardText = wrapper.find("SavedCreditCards").text()
 
     expect(savedCreditCardText).toContain(
-      'credit card•••• <mock-value-for-field-"lastDigits">'
-    )
-    expect(savedCreditCardText).toContain(
-      'Exp <mock-value-for-field-"expirationMonth">/">Remove'
+      'credit card•••• <mock-value-for-field-"lastDigits">   Exp 42/42Remove'
     )
   })
 

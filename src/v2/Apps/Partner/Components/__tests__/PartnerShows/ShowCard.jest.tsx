@@ -11,7 +11,7 @@ const { getWrapper } = setupTestWrapper({
     )
   },
   query: graphql`
-    query ShowCard_Test_Query {
+    query ShowCard_Test_Query @relay_test_operation {
       partner(id: "white-cube") @principalField {
         showsConnection(first: 10) {
           edges {

@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -39,6 +40,7 @@ fragment ConversationCTA_conversation on Conversation {
         isOfferableFromInquiry
       }
       ... on Node {
+        __isNode: __typename
         id
       }
     }
@@ -48,6 +50,7 @@ fragment ConversationCTA_conversation on Conversation {
         internalID
       }
       ... on Node {
+        __isNode: __typename
         id
       }
     }
@@ -111,6 +114,38 @@ v3 = {
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
+},
+v4 = {
+  "kind": "InlineFragment",
+  "selections": [
+    (v3/*: any*/)
+  ],
+  "type": "Node",
+  "abstractKey": "__isNode"
+},
+v5 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "String"
+},
+v6 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "ID"
+},
+v7 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "String"
+},
+v8 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "ConversationItemType"
 };
 return {
   "fragment": {
@@ -147,7 +182,8 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -189,11 +225,9 @@ return {
                     "plural": false,
                     "selections": [
                       (v2/*: any*/),
-                      (v3/*: any*/),
                       {
                         "kind": "InlineFragment",
                         "selections": [
-                          (v2/*: any*/),
                           {
                             "alias": null,
                             "args": null,
@@ -202,8 +236,10 @@ return {
                             "storageKey": null
                           }
                         ],
-                        "type": "Artwork"
-                      }
+                        "type": "Artwork",
+                        "abstractKey": null
+                      },
+                      (v4/*: any*/)
                     ],
                     "storageKey": null
                   },
@@ -216,14 +252,15 @@ return {
                     "plural": false,
                     "selections": [
                       (v2/*: any*/),
-                      (v3/*: any*/),
                       {
                         "kind": "InlineFragment",
                         "selections": [
                           (v1/*: any*/)
                         ],
-                        "type": "Artwork"
-                      }
+                        "type": "Artwork",
+                        "abstractKey": null
+                      },
+                      (v4/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -346,7 +383,8 @@ return {
                                 "storageKey": "offers(first:5)"
                               }
                             ],
-                            "type": "CommerceOfferOrder"
+                            "type": "CommerceOfferOrder",
+                            "abstractKey": null
                           }
                         ],
                         "storageKey": null
@@ -368,13 +406,128 @@ return {
     ]
   },
   "params": {
+    "cacheID": "c5c606e36de02ee745caa5f9b96c1c64",
     "id": null,
-    "metadata": {},
+    "metadata": {
+      "relayTestingSelectionTypeInfo": {
+        "me": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Me"
+        },
+        "me.conversation": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Conversation"
+        },
+        "me.conversation.activeOrders": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "CommerceOrderConnectionWithTotalCount"
+        },
+        "me.conversation.activeOrders.edges": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": true,
+          "type": "CommerceOrderEdge"
+        },
+        "me.conversation.activeOrders.edges.node": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "CommerceOrder"
+        },
+        "me.conversation.activeOrders.edges.node.__typename": (v5/*: any*/),
+        "me.conversation.activeOrders.edges.node.buyerAction": {
+          "enumValues": [
+            "OFFER_ACCEPTED",
+            "OFFER_ACCEPTED_CONFIRM_NEEDED",
+            "OFFER_RECEIVED",
+            "OFFER_RECEIVED_CONFIRM_NEEDED",
+            "PAYMENT_FAILED",
+            "PROVISIONAL_OFFER_ACCEPTED"
+          ],
+          "nullable": true,
+          "plural": false,
+          "type": "CommerceBuyerOfferActionEnum"
+        },
+        "me.conversation.activeOrders.edges.node.id": (v6/*: any*/),
+        "me.conversation.activeOrders.edges.node.internalID": (v6/*: any*/),
+        "me.conversation.activeOrders.edges.node.offers": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "CommerceOfferConnection"
+        },
+        "me.conversation.activeOrders.edges.node.offers.edges": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": true,
+          "type": "CommerceOfferEdge"
+        },
+        "me.conversation.activeOrders.edges.node.offers.edges.node": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "CommerceOffer"
+        },
+        "me.conversation.activeOrders.edges.node.offers.edges.node.id": (v6/*: any*/),
+        "me.conversation.activeOrders.edges.node.offers.edges.node.internalID": (v6/*: any*/),
+        "me.conversation.activeOrders.edges.node.state": {
+          "enumValues": [
+            "ABANDONED",
+            "APPROVED",
+            "CANCELED",
+            "FULFILLED",
+            "PENDING",
+            "REFUNDED",
+            "SUBMITTED"
+          ],
+          "nullable": false,
+          "plural": false,
+          "type": "CommerceOrderStateEnum"
+        },
+        "me.conversation.activeOrders.edges.node.stateExpiresAt": (v7/*: any*/),
+        "me.conversation.activeOrders.edges.node.stateReason": (v7/*: any*/),
+        "me.conversation.id": (v6/*: any*/),
+        "me.conversation.internalID": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "ID"
+        },
+        "me.conversation.items": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": true,
+          "type": "ConversationItem"
+        },
+        "me.conversation.items.item": (v8/*: any*/),
+        "me.conversation.items.item.__isNode": (v5/*: any*/),
+        "me.conversation.items.item.__typename": (v5/*: any*/),
+        "me.conversation.items.item.id": (v6/*: any*/),
+        "me.conversation.items.item.internalID": (v6/*: any*/),
+        "me.conversation.items.liveArtwork": (v8/*: any*/),
+        "me.conversation.items.liveArtwork.__isNode": (v5/*: any*/),
+        "me.conversation.items.liveArtwork.__typename": (v5/*: any*/),
+        "me.conversation.items.liveArtwork.id": (v6/*: any*/),
+        "me.conversation.items.liveArtwork.isOfferableFromInquiry": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Boolean"
+        },
+        "me.id": (v6/*: any*/)
+      }
+    },
     "name": "ConversationCTA_Test_Query",
     "operationKind": "query",
-    "text": "query ConversationCTA_Test_Query {\n  me {\n    conversation(id: \"1234\") {\n      ...ConversationCTA_conversation\n      id\n    }\n    id\n  }\n}\n\nfragment ConversationCTA_conversation on Conversation {\n  internalID\n  items {\n    liveArtwork {\n      __typename\n      ... on Artwork {\n        __typename\n        isOfferableFromInquiry\n      }\n      ... on Node {\n        id\n      }\n    }\n    item {\n      __typename\n      ... on Artwork {\n        internalID\n      }\n      ... on Node {\n        id\n      }\n    }\n  }\n  activeOrders: orderConnection(first: 10, states: [APPROVED, FULFILLED, SUBMITTED, REFUNDED]) {\n    edges {\n      node {\n        __typename\n        internalID\n        state\n        stateReason\n        stateExpiresAt\n        ... on CommerceOfferOrder {\n          buyerAction\n          offers(first: 5) {\n            edges {\n              node {\n                internalID\n                id\n              }\n            }\n          }\n        }\n        id\n      }\n    }\n  }\n  ...OpenInquiryModalCTA_conversation\n}\n\nfragment OpenInquiryModalCTA_conversation on Conversation {\n  internalID\n}\n"
+    "text": "query ConversationCTA_Test_Query {\n  me {\n    conversation(id: \"1234\") {\n      ...ConversationCTA_conversation\n      id\n    }\n    id\n  }\n}\n\nfragment ConversationCTA_conversation on Conversation {\n  internalID\n  items {\n    liveArtwork {\n      __typename\n      ... on Artwork {\n        __typename\n        isOfferableFromInquiry\n      }\n      ... on Node {\n        __isNode: __typename\n        id\n      }\n    }\n    item {\n      __typename\n      ... on Artwork {\n        internalID\n      }\n      ... on Node {\n        __isNode: __typename\n        id\n      }\n    }\n  }\n  activeOrders: orderConnection(first: 10, states: [APPROVED, FULFILLED, SUBMITTED, REFUNDED]) {\n    edges {\n      node {\n        __typename\n        internalID\n        state\n        stateReason\n        stateExpiresAt\n        ... on CommerceOfferOrder {\n          buyerAction\n          offers(first: 5) {\n            edges {\n              node {\n                internalID\n                id\n              }\n            }\n          }\n        }\n        id\n      }\n    }\n  }\n  ...OpenInquiryModalCTA_conversation\n}\n\nfragment OpenInquiryModalCTA_conversation on Conversation {\n  internalID\n}\n"
   }
 };
 })();
-(node as any).hash = '58e1f41f2905a56a0d92b26f229f483d';
+(node as any).hash = 'dc66794bee212b760a8b1c0d31f0dc68';
 export default node;

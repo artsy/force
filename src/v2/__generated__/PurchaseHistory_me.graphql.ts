@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -78,6 +79,26 @@ var v0 = [
 return {
   "argumentDefinitions": [
     {
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "after"
+    },
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "before"
+    },
+    {
+      "defaultValue": 10,
+      "kind": "LocalArgument",
+      "name": "first"
+    },
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "last"
+    },
+    {
       "defaultValue": [
         "APPROVED",
         "CANCELED",
@@ -86,32 +107,7 @@ return {
         "SUBMITTED"
       ],
       "kind": "LocalArgument",
-      "name": "states",
-      "type": "[CommerceOrderStateEnum!]"
-    },
-    {
-      "defaultValue": 10,
-      "kind": "LocalArgument",
-      "name": "first",
-      "type": "Int"
-    },
-    {
-      "defaultValue": null,
-      "kind": "LocalArgument",
-      "name": "last",
-      "type": "Int"
-    },
-    {
-      "defaultValue": null,
-      "kind": "LocalArgument",
-      "name": "after",
-      "type": "String"
-    },
-    {
-      "defaultValue": null,
-      "kind": "LocalArgument",
-      "name": "before",
-      "type": "String"
+      "name": "states"
     }
   ],
   "kind": "Fragment",
@@ -287,7 +283,8 @@ return {
       "storageKey": null
     }
   ],
-  "type": "Me"
+  "type": "Me",
+  "abstractKey": null
 };
 })();
 (node as any).hash = '1209e7134c684e4488134dfc5ac291a5';

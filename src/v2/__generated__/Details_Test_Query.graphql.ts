@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -25,12 +26,12 @@ export type Details_Test_QueryRawResponse = {
         readonly partner: ({
             readonly name: string | null;
             readonly href: string | null;
-            readonly id: string | null;
+            readonly id: string;
         }) | null;
         readonly sale: ({
             readonly is_auction: boolean | null;
             readonly is_closed: boolean | null;
-            readonly id: string | null;
+            readonly id: string;
         }) | null;
         readonly sale_artwork: ({
             readonly counts: ({
@@ -42,9 +43,9 @@ export type Details_Test_QueryRawResponse = {
             readonly opening_bid: ({
                 readonly display: string | null;
             }) | null;
-            readonly id: string | null;
+            readonly id: string;
         }) | null;
-        readonly id: string | null;
+        readonly id: string;
     }) | null;
 };
 export type Details_Test_Query = {
@@ -144,7 +145,25 @@ v5 = [
     "name": "display",
     "storageKey": null
   }
-];
+],
+v6 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "String"
+},
+v7 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "ID"
+},
+v8 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "Boolean"
+};
 return {
   "fragment": {
     "argumentDefinitions": [],
@@ -169,7 +188,8 @@ return {
         "storageKey": "artwork(id:\"gerhard-richter-bagdad-ii-flow-p10-1\")"
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -332,13 +352,90 @@ return {
     ]
   },
   "params": {
+    "cacheID": "b6bb23c02bec205fddd1feafcc11adbc",
     "id": null,
-    "metadata": {},
+    "metadata": {
+      "relayTestingSelectionTypeInfo": {
+        "artwork": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Artwork"
+        },
+        "artwork.artists": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": true,
+          "type": "Artist"
+        },
+        "artwork.artists.href": (v6/*: any*/),
+        "artwork.artists.id": (v7/*: any*/),
+        "artwork.artists.name": (v6/*: any*/),
+        "artwork.collecting_institution": (v6/*: any*/),
+        "artwork.cultural_maker": (v6/*: any*/),
+        "artwork.date": (v6/*: any*/),
+        "artwork.href": (v6/*: any*/),
+        "artwork.id": (v7/*: any*/),
+        "artwork.partner": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Partner"
+        },
+        "artwork.partner.href": (v6/*: any*/),
+        "artwork.partner.id": (v7/*: any*/),
+        "artwork.partner.name": (v6/*: any*/),
+        "artwork.sale": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Sale"
+        },
+        "artwork.sale.id": (v7/*: any*/),
+        "artwork.sale.is_auction": (v8/*: any*/),
+        "artwork.sale.is_closed": (v8/*: any*/),
+        "artwork.sale_artwork": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "SaleArtwork"
+        },
+        "artwork.sale_artwork.counts": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "SaleArtworkCounts"
+        },
+        "artwork.sale_artwork.counts.bidder_positions": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "FormattedNumber"
+        },
+        "artwork.sale_artwork.highest_bid": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "SaleArtworkHighestBid"
+        },
+        "artwork.sale_artwork.highest_bid.display": (v6/*: any*/),
+        "artwork.sale_artwork.id": (v7/*: any*/),
+        "artwork.sale_artwork.opening_bid": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "SaleArtworkOpeningBid"
+        },
+        "artwork.sale_artwork.opening_bid.display": (v6/*: any*/),
+        "artwork.sale_message": (v6/*: any*/),
+        "artwork.title": (v6/*: any*/)
+      }
+    },
     "name": "Details_Test_Query",
     "operationKind": "query",
     "text": "query Details_Test_Query {\n  artwork(id: \"gerhard-richter-bagdad-ii-flow-p10-1\") {\n    ...Details_artwork\n    id\n  }\n}\n\nfragment Details_artwork on Artwork {\n  href\n  title\n  date\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'deec89798483473295135935c897dfa8';
+(node as any).hash = '01119da99c9b8742b1bd28e198996a2c';
 export default node;

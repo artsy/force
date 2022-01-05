@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 export type CreditCardInput = {
@@ -26,6 +27,7 @@ export type UpdateMyProfileInput = {
     phone?: string | null;
     priceRangeMax?: number | null;
     priceRangeMin?: number | null;
+    privacy?: number | null;
     profession?: string | null;
     receiveLotOpeningSoonNotification?: boolean | null;
     receiveNewSalesNotification?: boolean | null;
@@ -117,14 +119,12 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "creditCardInput",
-    "type": "CreditCardInput!"
+    "name": "creditCardInput"
   },
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "profileInput",
-    "type": "UpdateMyProfileInput!"
+    "name": "profileInput"
   }
 ],
 v1 = [
@@ -191,7 +191,8 @@ v5 = {
       "storageKey": null
     }
   ],
-  "type": "CreditCardMutationFailure"
+  "type": "CreditCardMutationFailure",
+  "abstractKey": null
 },
 v6 = {
   "alias": null,
@@ -273,7 +274,8 @@ return {
                     "storageKey": null
                   }
                 ],
-                "type": "CreditCardMutationSuccess"
+                "type": "CreditCardMutationSuccess",
+                "abstractKey": null
               },
               (v5/*: any*/)
             ],
@@ -283,7 +285,8 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Mutation"
+    "type": "Mutation",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -366,7 +369,8 @@ return {
                     "storageKey": null
                   }
                 ],
-                "type": "CreditCardMutationSuccess"
+                "type": "CreditCardMutationSuccess",
+                "abstractKey": null
               },
               (v5/*: any*/)
             ],
@@ -378,6 +382,7 @@ return {
     ]
   },
   "params": {
+    "cacheID": "26e06492f97f2709d70422249281b164",
     "id": null,
     "metadata": {},
     "name": "CreateCreditCardAndUpdatePhoneMutation",

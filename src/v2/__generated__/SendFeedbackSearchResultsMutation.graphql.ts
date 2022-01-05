@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 export type SendFeedbackMutationInput = {
@@ -63,8 +64,7 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "input",
-    "type": "SendFeedbackMutationInput!"
+    "name": "input"
   }
 ],
 v1 = [
@@ -111,7 +111,8 @@ v3 = {
       "storageKey": null
     }
   ],
-  "type": "SendFeedbackMutationFailure"
+  "type": "SendFeedbackMutationFailure",
+  "abstractKey": null
 };
 return {
   "fragment": {
@@ -152,7 +153,8 @@ return {
                     "storageKey": null
                   }
                 ],
-                "type": "SendFeedbackMutationSuccess"
+                "type": "SendFeedbackMutationSuccess",
+                "abstractKey": null
               },
               (v3/*: any*/)
             ],
@@ -162,7 +164,8 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Mutation"
+    "type": "Mutation",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -216,7 +219,8 @@ return {
                     "storageKey": null
                   }
                 ],
-                "type": "SendFeedbackMutationSuccess"
+                "type": "SendFeedbackMutationSuccess",
+                "abstractKey": null
               },
               (v3/*: any*/)
             ],
@@ -228,6 +232,7 @@ return {
     ]
   },
   "params": {
+    "cacheID": "ad934762c83c4ade27adbb55c70f8835",
     "id": null,
     "metadata": {},
     "name": "SendFeedbackSearchResultsMutation",

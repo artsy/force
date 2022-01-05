@@ -38,7 +38,7 @@ const { getWrapper } = setupTestWrapper<ShowArtworks_Test_Query>({
     </MockBoot>
   ),
   query: graphql`
-    query ShowArtworks_Test_Query {
+    query ShowArtworks_Test_Query @relay_test_operation {
       show(id: "catty-show") {
         ...ShowArtworks_show
       }
@@ -58,7 +58,7 @@ describe("ShowArtworks", () => {
   })
 
   it("renders correctly", () => {
-    const wrapper = getWrapper()
+    const wrapper = getWrapper({ Show: () => ({ __typename: "Show" }) })
 
     expect(wrapper.find("ArtworkFilterArtworkGrid").length).toBe(1)
     expect(wrapper.find("ArtworkGridItem").length).toBe(1)

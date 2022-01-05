@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -40,7 +41,13 @@ var v0 = [
     "name": "id",
     "value": "example-artwork-id"
   }
-];
+],
+v1 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "ID"
+};
 return {
   "fragment": {
     "argumentDefinitions": [],
@@ -65,7 +72,8 @@ return {
         "storageKey": "artwork(id:\"example-artwork-id\")"
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -122,13 +130,38 @@ return {
     ]
   },
   "params": {
+    "cacheID": "e1cbe5325f819672486b47a6c3c8326f",
     "id": null,
-    "metadata": {},
+    "metadata": {
+      "relayTestingSelectionTypeInfo": {
+        "artwork": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Artwork"
+        },
+        "artwork.id": (v1/*: any*/),
+        "artwork.internalID": (v1/*: any*/),
+        "artwork.is_saved": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Boolean"
+        },
+        "artwork.slug": (v1/*: any*/),
+        "artwork.title": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "String"
+        }
+      }
+    },
     "name": "SaveButtonTestQuery",
     "operationKind": "query",
     "text": "query SaveButtonTestQuery {\n  artwork(id: \"example-artwork-id\") {\n    ...SaveButton_artwork\n    id\n  }\n}\n\nfragment SaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  is_saved: isSaved\n  title\n}\n"
   }
 };
 })();
-(node as any).hash = '6ba6441c08c8c9955087d6684075fb0c';
+(node as any).hash = '4197398aea6751a896b08a6a2465ca4a';
 export default node;

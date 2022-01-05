@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -37,7 +38,14 @@ fragment ContactInformation_me on Me {
 }
 */
 
-const node: ConcreteRequest = {
+const node: ConcreteRequest = (function(){
+var v0 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "String"
+};
+return {
   "fragment": {
     "argumentDefinitions": [],
     "kind": "Fragment",
@@ -61,7 +69,8 @@ const node: ConcreteRequest = {
         "storageKey": null
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -162,12 +171,47 @@ const node: ConcreteRequest = {
     ]
   },
   "params": {
+    "cacheID": "518bdad8ad1c6349193a9ab622f36c0d",
     "id": null,
-    "metadata": {},
+    "metadata": {
+      "relayTestingSelectionTypeInfo": {
+        "me": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Me"
+        },
+        "me.email": (v0/*: any*/),
+        "me.id": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": false,
+          "type": "ID"
+        },
+        "me.name": (v0/*: any*/),
+        "me.phone": (v0/*: any*/),
+        "me.phoneNumber": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "PhoneNumberType"
+        },
+        "me.phoneNumber.international": (v0/*: any*/),
+        "me.phoneNumber.isValid": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Boolean"
+        },
+        "me.phoneNumber.national": (v0/*: any*/),
+        "me.phoneNumber.regionCode": (v0/*: any*/)
+      }
+    },
     "name": "ContactInformationTestQuery",
     "operationKind": "query",
     "text": "query ContactInformationTestQuery {\n  me {\n    ...ContactInformation_me\n    id\n  }\n}\n\nfragment ContactInformation_me on Me {\n  name\n  email\n  phone\n  phoneNumber {\n    isValid\n    international: display(format: INTERNATIONAL)\n    national: display(format: NATIONAL)\n    regionCode\n  }\n}\n"
   }
 };
-(node as any).hash = '915ba484cb210763fa4744cac757923f';
+})();
+(node as any).hash = '9c1bf7f75f2780e1bbfe696235d8c373';
 export default node;

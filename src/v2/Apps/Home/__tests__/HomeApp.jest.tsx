@@ -30,7 +30,7 @@ describe("HomeApp", () => {
       </MockBoot>
     ),
     query: graphql`
-      query HomeApp_Test_Query {
+      query HomeApp_Test_Query @relay_test_operation {
         homePage {
           ...HomeApp_homePage
         }

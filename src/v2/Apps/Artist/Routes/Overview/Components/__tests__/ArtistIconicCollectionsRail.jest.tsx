@@ -20,7 +20,7 @@ describe("ArtistIconicCollectionsRail", () => {
         $isFeaturedArtistContent: Boolean
         $size: Int
         $artistID: String
-      ) {
+      ) @relay_test_operation {
         marketingCollections(
           isFeaturedArtistContent: $isFeaturedArtistContent
           size: $size
@@ -65,7 +65,7 @@ describe("ArtistIconicCollectionsRail", () => {
     expect(wrapper.find("Shelf").length).toBe(1)
     expect(wrapper.find("RouterLink").length).toBe(1)
     expect(wrapper.find("Image").length).toBe(1)
-    expect(wrapper.text()).toContain("From $0")
+    expect(wrapper.text()).toContain("From $4")
   })
 
   it("tracks correctly", () => {

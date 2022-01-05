@@ -29,7 +29,7 @@ const { getWrapper } = setupTestWrapper<SearchApp_Test_Query>({
     )
   },
   query: graphql`
-    query SearchApp_Test_Query {
+    query SearchApp_Test_Query @relay_test_operation {
       viewer {
         ...SearchApp_viewer @arguments(term: "andy")
       }

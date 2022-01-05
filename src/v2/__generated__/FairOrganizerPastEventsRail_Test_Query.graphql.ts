@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -63,6 +64,24 @@ v1 = {
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
+},
+v2 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "ID"
+},
+v3 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "Int"
+},
+v4 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "String"
 };
 return {
   "fragment": {
@@ -88,7 +107,8 @@ return {
         "storageKey": "fairOrganizer(id:\"the-armory-show\")"
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -241,13 +261,66 @@ return {
     ]
   },
   "params": {
+    "cacheID": "7386bdfb7dc7b35a3ec13a67aae86838",
     "id": null,
-    "metadata": {},
+    "metadata": {
+      "relayTestingSelectionTypeInfo": {
+        "fairOrganizer": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "FairOrganizer"
+        },
+        "fairOrganizer.id": (v2/*: any*/),
+        "fairOrganizer.pastFairs": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "FairConnection"
+        },
+        "fairOrganizer.pastFairs.edges": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": true,
+          "type": "FairEdge"
+        },
+        "fairOrganizer.pastFairs.edges.node": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Fair"
+        },
+        "fairOrganizer.pastFairs.edges.node.id": (v2/*: any*/),
+        "fairOrganizer.pastFairs.edges.node.image": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Image"
+        },
+        "fairOrganizer.pastFairs.edges.node.image.cropped": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "CroppedImageUrl"
+        },
+        "fairOrganizer.pastFairs.edges.node.image.cropped.height": (v3/*: any*/),
+        "fairOrganizer.pastFairs.edges.node.image.cropped.src": (v4/*: any*/),
+        "fairOrganizer.pastFairs.edges.node.image.cropped.srcSet": (v4/*: any*/),
+        "fairOrganizer.pastFairs.edges.node.image.cropped.width": (v3/*: any*/),
+        "fairOrganizer.pastFairs.edges.node.name": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "String"
+        },
+        "fairOrganizer.pastFairs.edges.node.slug": (v2/*: any*/)
+      }
+    },
     "name": "FairOrganizerPastEventsRail_Test_Query",
     "operationKind": "query",
     "text": "query FairOrganizerPastEventsRail_Test_Query {\n  fairOrganizer(id: \"the-armory-show\") {\n    ...FairOrganizerPastEventsRail_fairOrganizer\n    id\n  }\n}\n\nfragment FairOrganizerPastEventRailCell_fair on Fair {\n  slug\n  name\n  image {\n    cropped(width: 325, height: 244) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment FairOrganizerPastEventsRail_fairOrganizer on FairOrganizer {\n  pastFairs: fairsConnection(first: 20, sort: START_AT_DESC, status: CLOSED, hasFullFeature: true) {\n    edges {\n      node {\n        id\n        ...FairOrganizerPastEventRailCell_fair\n      }\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'c841708254f9af7b50b80b26e748db9d';
+(node as any).hash = 'dddd73919a036a5a81a2c45083847f89';
 export default node;

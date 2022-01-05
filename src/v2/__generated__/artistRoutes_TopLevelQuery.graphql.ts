@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -366,8 +367,7 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "artistID",
-    "type": "String!"
+    "name": "artistID"
   }
 ],
 v1 = [
@@ -791,7 +791,8 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -1221,12 +1222,14 @@ return {
                                 "storageKey": null
                               }
                             ],
-                            "type": "PriceRange"
+                            "type": "PriceRange",
+                            "abstractKey": null
                           },
                           {
                             "kind": "InlineFragment",
                             "selections": (v24/*: any*/),
-                            "type": "Money"
+                            "type": "Money",
+                            "abstractKey": null
                           }
                         ],
                         "storageKey": null
@@ -1420,6 +1423,7 @@ return {
     ]
   },
   "params": {
+    "cacheID": "bd05d79a8edd03526b7657d084c4312f",
     "id": null,
     "metadata": {},
     "name": "artistRoutes_TopLevelQuery",

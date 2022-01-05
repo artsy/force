@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -14,9 +15,9 @@ export type createTestEnvQueryRawResponse = {
         readonly title: string | null;
         readonly artist: ({
             readonly name: string | null;
-            readonly id: string | null;
+            readonly id: string;
         }) | null;
-        readonly id: string | null;
+        readonly id: string;
     }) | null;
 };
 export type createTestEnvQuery = {
@@ -58,6 +59,18 @@ v1 = {
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
+},
+v2 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "ID"
+},
+v3 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "String"
 };
 return {
   "fragment": {
@@ -83,7 +96,8 @@ return {
         "storageKey": "artwork(id:\"unused\")"
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -132,13 +146,33 @@ return {
     ]
   },
   "params": {
+    "cacheID": "4b1d5d56fe44157d5741390cb8eba295",
     "id": null,
-    "metadata": {},
+    "metadata": {
+      "relayTestingSelectionTypeInfo": {
+        "artwork": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Artwork"
+        },
+        "artwork.artist": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Artist"
+        },
+        "artwork.artist.id": (v2/*: any*/),
+        "artwork.artist.name": (v3/*: any*/),
+        "artwork.id": (v2/*: any*/),
+        "artwork.title": (v3/*: any*/)
+      }
+    },
     "name": "createTestEnvQuery",
     "operationKind": "query",
     "text": "query createTestEnvQuery {\n  artwork(id: \"unused\") {\n    ...createTestEnv_artwork\n    id\n  }\n}\n\nfragment createTestEnv_artwork on Artwork {\n  title\n  artist {\n    name\n    id\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'cf719bb91f4483f92327cfaf171f249a';
+(node as any).hash = '269f6794cf21b26557a57a6b61cc5864';
 export default node;

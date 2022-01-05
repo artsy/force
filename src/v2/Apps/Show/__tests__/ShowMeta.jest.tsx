@@ -19,7 +19,7 @@ describe("ShowMeta", () => {
       )
     },
     query: graphql`
-      query ShowMeta_Test_Query {
+      query ShowMeta_Test_Query @relay_test_operation {
         show(id: "some-show") {
           ...ShowMeta_show
         }

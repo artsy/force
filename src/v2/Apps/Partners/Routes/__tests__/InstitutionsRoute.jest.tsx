@@ -37,7 +37,7 @@ const { renderWithRelay } = setupTestWrapperTL<
     )
   },
   query: graphql`
-    query InstitutionsRouteFragmentContainer_Test_Query {
+    query InstitutionsRouteFragmentContainer_Test_Query @relay_test_operation {
       viewer {
         ...InstitutionsRoute_viewer
       }

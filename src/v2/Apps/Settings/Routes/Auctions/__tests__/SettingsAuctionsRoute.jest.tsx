@@ -11,7 +11,7 @@ describe("SettingsAuctionsRoute", () => {
   >({
     Component: SettingsAuctionsRouteFragmentContainer,
     query: graphql`
-      query SettingsAuctionsRouteQuery_Test_Query {
+      query SettingsAuctionsRouteQuery_Test_Query @relay_test_operation {
         me {
           ...SettingsAuctionsRoute_me
         }

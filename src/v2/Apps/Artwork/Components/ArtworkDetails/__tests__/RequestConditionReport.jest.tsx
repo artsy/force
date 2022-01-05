@@ -23,7 +23,9 @@ const setupTestEnv = () => {
       <RequestConditionReportFragmentContainer {...props} />
     ),
     query: graphql`
-      query RequestConditionReportTestQuery @raw_response_type {
+      query RequestConditionReportTestQuery
+        @raw_response_type
+        @relay_test_operation {
         me {
           ...RequestConditionReport_me
         }

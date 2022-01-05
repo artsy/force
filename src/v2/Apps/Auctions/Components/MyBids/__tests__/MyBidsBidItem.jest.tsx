@@ -20,7 +20,7 @@ describe("MyBidsBidItem", () => {
       )
     },
     query: graphql`
-      query MyBidsBidItem_Test_Query {
+      query MyBidsBidItem_Test_Query @relay_test_operation {
         saleArtwork(id: "foo") {
           ...MyBidsBidItem_saleArtwork
         }
@@ -164,8 +164,8 @@ describe("MyBidsBidItem", () => {
           "action": "clickedArtworkGroup",
           "context_module": "yourActiveBids",
           "context_page_owner_type": undefined,
-          "destination_page_owner_id": "<mock-value-for-field-\\"internalID\\">",
-          "destination_page_owner_slug": "<mock-value-for-field-\\"slug\\">",
+          "destination_page_owner_id": "<SaleArtwork-mock-id-2>",
+          "destination_page_owner_slug": "<SaleArtwork-mock-id-3>",
           "destination_page_owner_type": "artwork",
           "horizontal_slide_position": 2,
           "type": "thumbnail",

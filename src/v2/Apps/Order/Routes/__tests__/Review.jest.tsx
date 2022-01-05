@@ -89,7 +89,7 @@ describe("Review", () => {
       ...submitOfferOrderSuccess,
     },
     query: graphql`
-      query ReviewTestQuery @raw_response_type {
+      query ReviewTestQuery @raw_response_type @relay_test_operation {
         order: commerceOrder(id: "unused") {
           ...Review_order
         }

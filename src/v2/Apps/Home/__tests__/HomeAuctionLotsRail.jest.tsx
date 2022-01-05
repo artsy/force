@@ -12,7 +12,7 @@ const { getWrapper } = setupTestWrapper<HomeAuctionLotsRail_Test_Query>({
     return <HomeAuctionLotsRailFragmentContainer viewer={props.viewer!} />
   },
   query: graphql`
-    query HomeAuctionLotsRail_Test_Query {
+    query HomeAuctionLotsRail_Test_Query @relay_test_operation {
       viewer {
         ...HomeAuctionLotsRail_viewer
       }
@@ -82,8 +82,8 @@ describe("HomeAuctionLotsRail", () => {
         action: "clickedArtworkGroup",
         context_module: "auctionLots",
         context_page_owner_type: "home",
-        destination_page_owner_id: '<mock-value-for-field-"internalID">',
-        destination_page_owner_slug: '<mock-value-for-field-"slug">',
+        destination_page_owner_id: "<Artwork-mock-id-6>",
+        destination_page_owner_slug: "<Artwork-mock-id-7>",
         destination_page_owner_type: "artwork",
         type: "thumbnail",
       })

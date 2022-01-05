@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 export type UploadPhotosQueryVariables = {};
@@ -57,7 +58,8 @@ return {
     "metadata": null,
     "name": "UploadPhotosQuery",
     "selections": (v0/*: any*/),
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -67,13 +69,29 @@ return {
     "selections": (v0/*: any*/)
   },
   "params": {
+    "cacheID": "34193bf2a191a7ddb193d08bc4ca46c0",
     "id": null,
-    "metadata": {},
+    "metadata": {
+      "relayTestingSelectionTypeInfo": {
+        "submission": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "ConsignmentSubmission"
+        },
+        "submission.id": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": false,
+          "type": "ID"
+        }
+      }
+    },
     "name": "UploadPhotosQuery",
     "operationKind": "query",
     "text": "query UploadPhotosQuery {\n  submission(id: \"\") {\n    id\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '6d1cae658b2459df58ce5e4f506bcfaf';
+(node as any).hash = 'fbc05e73bd89cfbbcc4702c6f731d4f8';
 export default node;

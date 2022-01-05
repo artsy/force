@@ -11,7 +11,7 @@ describe("BackLink", () => {
   const { getWrapper } = setupTestWrapper<BackLink_Test_Query>({
     Component: BackLinkFragmentContainer,
     query: graphql`
-      query BackLink_Test_Query {
+      query BackLink_Test_Query @relay_test_operation {
         artist(id: "example") {
           ...BackLink_artist
         }

@@ -16,7 +16,7 @@ const { getWrapper } = setupTestWrapper<PaymentApp_Test_Query>({
     )
   },
   query: graphql`
-    query PaymentApp_Test_Query {
+    query PaymentApp_Test_Query @relay_test_operation {
       me {
         ...PaymentApp_me
       }
@@ -48,10 +48,7 @@ describe("PaymentApp", () => {
     const savedCreditCardText = paymentSection.find("SavedCreditCards").text()
 
     expect(savedCreditCardText).toContain(
-      'credit card•••• <mock-value-for-field-"lastDigits">'
-    )
-    expect(savedCreditCardText).toContain(
-      'Exp <mock-value-for-field-"expirationMonth">/">Remove'
+      'credit card•••• <mock-value-for-field-"lastDigits">   Exp 42/42Remove'
     )
   })
 })

@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -18,18 +19,18 @@ export type ArtworkSidebarExtraLinks_Test_QueryRawResponse = {
         readonly is_inquireable: boolean | null;
         readonly artists: ReadonlyArray<({
             readonly is_consignable: boolean | null;
-            readonly id: string | null;
+            readonly id: string;
         }) | null> | null;
         readonly sale: ({
             readonly is_closed: boolean | null;
             readonly isBenefit: boolean | null;
             readonly partner: ({
                 readonly name: string | null;
-                readonly id: string | null;
+                readonly id: string;
             }) | null;
-            readonly id: string | null;
+            readonly id: string;
         }) | null;
-        readonly id: string | null;
+        readonly id: string;
     }) | null;
 };
 export type ArtworkSidebarExtraLinks_Test_Query = {
@@ -84,6 +85,18 @@ v1 = {
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
+},
+v2 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "ID"
+},
+v3 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "Boolean"
 };
 return {
   "fragment": {
@@ -109,7 +122,8 @@ return {
         "storageKey": "artwork(id:\"josef-albers-homage-to-the-square-85\")"
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -231,13 +245,59 @@ return {
     ]
   },
   "params": {
+    "cacheID": "2f3d7bb557d7f15752b4ae615d0e6f0f",
     "id": null,
-    "metadata": {},
+    "metadata": {
+      "relayTestingSelectionTypeInfo": {
+        "artwork": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Artwork"
+        },
+        "artwork.artists": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": true,
+          "type": "Artist"
+        },
+        "artwork.artists.id": (v2/*: any*/),
+        "artwork.artists.is_consignable": (v3/*: any*/),
+        "artwork.id": (v2/*: any*/),
+        "artwork.internalID": (v2/*: any*/),
+        "artwork.is_acquireable": (v3/*: any*/),
+        "artwork.is_for_sale": (v3/*: any*/),
+        "artwork.is_in_auction": (v3/*: any*/),
+        "artwork.is_inquireable": (v3/*: any*/),
+        "artwork.sale": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Sale"
+        },
+        "artwork.sale.id": (v2/*: any*/),
+        "artwork.sale.isBenefit": (v3/*: any*/),
+        "artwork.sale.is_closed": (v3/*: any*/),
+        "artwork.sale.partner": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Partner"
+        },
+        "artwork.sale.partner.id": (v2/*: any*/),
+        "artwork.sale.partner.name": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "String"
+        }
+      }
+    },
     "name": "ArtworkSidebarExtraLinks_Test_Query",
     "operationKind": "query",
     "text": "query ArtworkSidebarExtraLinks_Test_Query {\n  artwork(id: \"josef-albers-homage-to-the-square-85\") {\n    ...ArtworkSidebarExtraLinks_artwork\n    id\n  }\n}\n\nfragment ArtworkSidebarExtraLinks_artwork on Artwork {\n  internalID\n  is_in_auction: isInAuction\n  is_for_sale: isForSale\n  is_acquireable: isAcquireable\n  is_inquireable: isInquireable\n  artists {\n    is_consignable: isConsignable\n    id\n  }\n  sale {\n    is_closed: isClosed\n    isBenefit\n    partner {\n      name\n      id\n    }\n    id\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '0539f2867a3fb30a8f29529d8f731ebd';
+(node as any).hash = 'fc746ceaf76e3b8a6e448430d14a7c8a';
 export default node;

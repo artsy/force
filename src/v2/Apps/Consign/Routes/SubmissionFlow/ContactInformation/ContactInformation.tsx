@@ -110,7 +110,7 @@ export const ContactInformation: React.FC<ContactInformationProps> = ({
         Let us know how to reach you
       </Text>
       <Text mt={1} variant="md" color="black60">
-        We&#39;ll only use these details to share updates on your submission.
+        We will only use these details to contact you regarding your submission.
       </Text>
 
       <Formik<ContactInformationFormModel>

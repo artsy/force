@@ -15,7 +15,7 @@ const { getWrapper } = setupTestWrapper<FairOrganizerApp_Test_Query>({
     )
   },
   query: graphql`
-    query FairOrganizerApp_Test_Query {
+    query FairOrganizerApp_Test_Query @relay_test_operation {
       fairOrganizer(id: "example") {
         ...FairOrganizerApp_fairOrganizer
       }

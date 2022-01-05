@@ -114,7 +114,7 @@ const getWrapperWithProps = (user?: User) =>
       )
     },
     query: graphql`
-      query ContactInformationTestQuery {
+      query ContactInformationTestQuery @relay_test_operation {
         me {
           ...ContactInformation_me
         }
@@ -163,7 +163,7 @@ describe("Contact Information step", () => {
       })
       expect(text).toContain("Let us know how to reach you")
       expect(text).toContain(
-        "We'll only use these details to share updates on your submission."
+        "We will only use these details to contact you regarding your submission."
       )
       expect(wrapper.find(ContactInformationForm).length).toBe(1)
       expect(wrapper.find("button[type='submit']").length).toBe(1)

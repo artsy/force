@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"
 import { Separator, FullBleed } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { NavigationTabsFragmentContainer as NavigationTabs } from "v2/Apps/Partner/Components/NavigationTabs"

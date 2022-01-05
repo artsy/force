@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -88,7 +89,7 @@ return {
         {
           "kind": "Literal",
           "name": "first",
-          "value": 35
+          "value": 99
         }
       ],
       "concreteType": "OrderedSetItemConnection",
@@ -122,12 +123,14 @@ return {
                 {
                   "kind": "InlineFragment",
                   "selections": (v1/*: any*/),
-                  "type": "Artwork"
+                  "type": "Artwork",
+                  "abstractKey": null
                 },
                 {
                   "kind": "InlineFragment",
                   "selections": (v1/*: any*/),
-                  "type": "FeaturedLink"
+                  "type": "FeaturedLink",
+                  "abstractKey": null
                 },
                 {
                   "args": null,
@@ -141,7 +144,7 @@ return {
           "storageKey": null
         }
       ],
-      "storageKey": "orderedItemsConnection(first:35)"
+      "storageKey": "orderedItemsConnection(first:99)"
     },
     {
       "args": null,
@@ -154,8 +157,9 @@ return {
       "name": "FeatureSetContainer_set"
     }
   ],
-  "type": "OrderedSet"
+  "type": "OrderedSet",
+  "abstractKey": null
 };
 })();
-(node as any).hash = '906377816f34b9a6b67fca92aefbb3bc';
+(node as any).hash = '6477bebfd7bcb4bb613c4f780af6c886';
 export default node;

@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -58,14 +59,12 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "near",
-    "type": "String"
+    "name": "near"
   },
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "type",
-    "type": "[PartnerClassification]"
+    "name": "type"
   }
 ],
 v1 = {
@@ -163,7 +162,8 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -241,6 +241,7 @@ return {
     ]
   },
   "params": {
+    "cacheID": "69e06ee9bf32121c0703aff518686263",
     "id": null,
     "metadata": {},
     "name": "PartnersSpecialtyAutocompleteQuery",

@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -70,7 +71,31 @@ v1 = [
     "name": "first",
     "value": 30
   }
-];
+],
+v2 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "String"
+},
+v3 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "String"
+},
+v4 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "ID"
+},
+v5 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "Boolean"
+};
 return {
   "fragment": {
     "argumentDefinitions": [],
@@ -95,7 +120,8 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -298,13 +324,72 @@ return {
     ]
   },
   "params": {
+    "cacheID": "e57f8261a6a58598bb2402b1a885f396",
     "id": null,
-    "metadata": {},
+    "metadata": {
+      "relayTestingSelectionTypeInfo": {
+        "me": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Me"
+        },
+        "me.addressConnection": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "UserAddressConnection"
+        },
+        "me.addressConnection.edges": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": true,
+          "type": "UserAddressEdge"
+        },
+        "me.addressConnection.edges.cursor": (v2/*: any*/),
+        "me.addressConnection.edges.node": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "UserAddress"
+        },
+        "me.addressConnection.edges.node.__typename": (v2/*: any*/),
+        "me.addressConnection.edges.node.addressLine1": (v2/*: any*/),
+        "me.addressConnection.edges.node.addressLine2": (v3/*: any*/),
+        "me.addressConnection.edges.node.addressLine3": (v3/*: any*/),
+        "me.addressConnection.edges.node.city": (v2/*: any*/),
+        "me.addressConnection.edges.node.country": (v2/*: any*/),
+        "me.addressConnection.edges.node.id": (v4/*: any*/),
+        "me.addressConnection.edges.node.internalID": (v4/*: any*/),
+        "me.addressConnection.edges.node.isDefault": (v5/*: any*/),
+        "me.addressConnection.edges.node.name": (v3/*: any*/),
+        "me.addressConnection.edges.node.phoneNumber": (v3/*: any*/),
+        "me.addressConnection.edges.node.postalCode": (v3/*: any*/),
+        "me.addressConnection.edges.node.region": (v3/*: any*/),
+        "me.addressConnection.pageInfo": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": false,
+          "type": "PageInfo"
+        },
+        "me.addressConnection.pageInfo.endCursor": (v3/*: any*/),
+        "me.addressConnection.pageInfo.hasNextPage": (v5/*: any*/),
+        "me.addressConnection.pageInfo.hasPreviousPage": (v5/*: any*/),
+        "me.addressConnection.pageInfo.startCursor": (v3/*: any*/),
+        "me.addressConnection.totalCount": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": false,
+          "type": "Int"
+        },
+        "me.id": (v4/*: any*/)
+      }
+    },
     "name": "SavedAddressesMutation_Test_Query",
     "operationKind": "query",
     "text": "query SavedAddressesMutation_Test_Query {\n  me {\n    ...SavedAddresses_me\n    id\n  }\n}\n\nfragment SavedAddresses_me on Me {\n  id\n  addressConnection(first: 30) {\n    totalCount\n    edges {\n      node {\n        id\n        internalID\n        addressLine1\n        addressLine2\n        addressLine3\n        city\n        country\n        isDefault\n        name\n        phoneNumber\n        postalCode\n        region\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'c6710d5ae92dd11f27e703ff1e98d631';
+(node as any).hash = 'c6f79486cca76dfa5ede1061cda32ff9';
 export default node;

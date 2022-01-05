@@ -61,7 +61,7 @@ const { getWrapper } = setupTestWrapper({
     )
   },
   query: graphql`
-    query UploadPhotosQuery {
+    query UploadPhotosQuery @relay_test_operation {
       submission(id: "") {
         id
       }
@@ -99,6 +99,12 @@ describe("UploadPhotos", () => {
     const text = wrapper.text()
 
     expect(text).toContain("Upload photos of your artwork")
+    expect(text).toContain(
+      "To evaluate your submission faster, please upload high-quality photos of the work's front and back."
+    )
+    expect(text).toContain(
+      "If possible, include photos of any signatures or certificates of authenticity."
+    )
     expect(wrapper.find(UploadPhotosForm).length).toBe(1)
     expect(wrapper.find("button[type='submit']").length).toBe(1)
     expect(wrapper.find("BackLink")).toHaveLength(1)

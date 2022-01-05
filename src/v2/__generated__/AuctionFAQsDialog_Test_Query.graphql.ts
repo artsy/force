@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -81,7 +82,31 @@ var v0 = [
     "name": "id",
     "storageKey": null
   }
-];
+],
+v1 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "Page"
+},
+v2 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "String"
+},
+v3 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "ID"
+},
+v4 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "String"
+};
 return {
   "fragment": {
     "argumentDefinitions": [],
@@ -106,7 +131,8 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -208,13 +234,43 @@ return {
     ]
   },
   "params": {
+    "cacheID": "3f3162249896d5db65c95e6cfdeebe14",
     "id": null,
-    "metadata": {},
+    "metadata": {
+      "relayTestingSelectionTypeInfo": {
+        "viewer": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Viewer"
+        },
+        "viewer.bidding": (v1/*: any*/),
+        "viewer.bidding.content": (v2/*: any*/),
+        "viewer.bidding.id": (v3/*: any*/),
+        "viewer.bidding.name": (v4/*: any*/),
+        "viewer.buyersPremium": (v1/*: any*/),
+        "viewer.buyersPremium.content": (v2/*: any*/),
+        "viewer.buyersPremium.id": (v3/*: any*/),
+        "viewer.buyersPremium.name": (v4/*: any*/),
+        "viewer.conditionsOfSale": (v1/*: any*/),
+        "viewer.conditionsOfSale.content": (v2/*: any*/),
+        "viewer.conditionsOfSale.id": (v3/*: any*/),
+        "viewer.conditionsOfSale.name": (v4/*: any*/),
+        "viewer.emailsAndAlerts": (v1/*: any*/),
+        "viewer.emailsAndAlerts.content": (v2/*: any*/),
+        "viewer.emailsAndAlerts.id": (v3/*: any*/),
+        "viewer.emailsAndAlerts.name": (v4/*: any*/),
+        "viewer.paymentsAndShipping": (v1/*: any*/),
+        "viewer.paymentsAndShipping.content": (v2/*: any*/),
+        "viewer.paymentsAndShipping.id": (v3/*: any*/),
+        "viewer.paymentsAndShipping.name": (v4/*: any*/)
+      }
+    },
     "name": "AuctionFAQsDialog_Test_Query",
     "operationKind": "query",
     "text": "query AuctionFAQsDialog_Test_Query {\n  viewer {\n    ...AuctionFAQsDialog_viewer\n  }\n}\n\nfragment AuctionFAQsDialog_viewer on Viewer {\n  bidding: page(id: \"how-auctions-work-bidding\") {\n    name\n    content(format: HTML)\n    id\n  }\n  buyersPremium: page(id: \"how-auctions-work-buyers-premium-taxes-and-fees\") {\n    name\n    content(format: HTML)\n    id\n  }\n  paymentsAndShipping: page(id: \"how-auctions-work-payments-and-shipping\") {\n    name\n    content(format: HTML)\n    id\n  }\n  emailsAndAlerts: page(id: \"how-auctions-work-emails-and-alerts\") {\n    name\n    content(format: HTML)\n    id\n  }\n  conditionsOfSale: page(id: \"how-auctions-work-conditions-of-sale\") {\n    name\n    content(format: HTML)\n    id\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '62694747d09e2580251145089e8bfc95';
+(node as any).hash = '175fc2bbd27ccf82b0175bdc54ef184e';
 export default node;

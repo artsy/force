@@ -12,7 +12,7 @@ const { getWrapper } = setupTestWrapper<
     return <DedicatedArticlesBreadcrumbsFragmentContainer {...(props as any)} />
   },
   query: graphql`
-    query DedicatedArticlesBreadcrumbs_Test_Query {
+    query DedicatedArticlesBreadcrumbs_Test_Query @relay_test_operation {
       fairOrganizer(id: "example") {
         ...DedicatedArticlesBreadcrumbs_fairOrganizer
       }

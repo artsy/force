@@ -9,7 +9,7 @@ describe("UserBidHistory", () => {
   const { getWrapper } = setupTestWrapper<UserBidHistory_Test_Query>({
     Component: UserBidHistoryFragmentContainer,
     query: graphql`
-      query UserBidHistory_Test_Query {
+      query UserBidHistory_Test_Query @relay_test_operation {
         me {
           ...UserBidHistory_me
         }

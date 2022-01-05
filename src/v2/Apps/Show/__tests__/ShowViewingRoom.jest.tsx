@@ -25,7 +25,7 @@ const { getWrapper } = setupTestWrapper<ShowViewingRoom_Test_Query>({
     )
   },
   query: graphql`
-    query ShowViewingRoom_Test_Query {
+    query ShowViewingRoom_Test_Query @relay_test_operation {
       show(id: "example-show-id") {
         ...ShowViewingRoom_show
       }

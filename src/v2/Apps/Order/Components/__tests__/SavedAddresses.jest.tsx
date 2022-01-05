@@ -41,7 +41,7 @@ describe("Saved Addresses", () => {
       defaultData: userAddressMutation,
       TestPage: SavedAddressesTestPage,
       query: graphql`
-        query SavedAddressesMutation_Test_Query {
+        query SavedAddressesMutation_Test_Query @relay_test_operation {
           me {
             ...SavedAddresses_me
           }
@@ -76,7 +76,8 @@ describe("Saved Addresses", () => {
         <SavedAddressesFragmentContainer inCollectorProfile {...props} />
       ),
       query: graphql`
-        query SavedAddressesInCollectorProfile_Test_Query {
+        query SavedAddressesInCollectorProfile_Test_Query
+          @relay_test_operation {
           me {
             ...SavedAddresses_me
           }
@@ -186,7 +187,8 @@ describe("Saved Addresses", () => {
         />
       ),
       query: graphql`
-        query SavedAddressesOutsiseCollectorProfile_Test_Query {
+        query SavedAddressesOutsiseCollectorProfile_Test_Query
+          @relay_test_operation {
           me {
             ...SavedAddresses_me
           }

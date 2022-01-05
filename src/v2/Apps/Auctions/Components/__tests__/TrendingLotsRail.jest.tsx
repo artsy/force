@@ -15,7 +15,7 @@ describe("TrendingLotsRail", () => {
       return <TrendingLotsRailFragmentContainer viewer={props.viewer} />
     },
     query: graphql`
-      query TrendingLotsRail_Test_Query {
+      query TrendingLotsRail_Test_Query @relay_test_operation {
         viewer {
           ...TrendingLotsRail_viewer
         }
@@ -77,8 +77,8 @@ describe("TrendingLotsRail", () => {
           "action": "clickedArtworkGroup",
           "context_module": "trendingLots",
           "context_page_owner_type": undefined,
-          "destination_page_owner_id": "<mock-value-for-field-\\"internalID\\">",
-          "destination_page_owner_slug": "<mock-value-for-field-\\"slug\\">",
+          "destination_page_owner_id": "<Artwork-mock-id-1>",
+          "destination_page_owner_slug": "<Artwork-mock-id-2>",
           "destination_page_owner_type": "artwork",
           "horizontal_slide_position": 0,
           "type": "thumbnail",

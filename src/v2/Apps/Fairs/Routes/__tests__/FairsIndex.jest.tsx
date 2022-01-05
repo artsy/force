@@ -16,7 +16,7 @@ const { getWrapper } = setupTestWrapper<FairsIndex_Test_Query>({
     )
   },
   query: graphql`
-    query FairsIndex_Test_Query {
+    query FairsIndex_Test_Query @relay_test_operation {
       featuredFairs: orderedSets(key: "art-fairs:featured") {
         ...FairsIndex_featuredFairs
       }
@@ -29,7 +29,16 @@ const { getWrapper } = setupTestWrapper<FairsIndex_Test_Query>({
 
 describe("FairsIndex", () => {
   it("renders correctly", () => {
-    const wrapper = getWrapper()
+    const wrapper = getWrapper({
+      Viewer: () => ({
+        runningFairs: [
+          {
+            isPublished: true,
+            profile: { isPublished: true },
+          },
+        ],
+      }),
+    })
 
     const html = wrapper.html()
 

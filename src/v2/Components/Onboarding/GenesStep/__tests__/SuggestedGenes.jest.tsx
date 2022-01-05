@@ -22,7 +22,7 @@ describe("SuggestedGenes", () => {
       )
     },
     query: graphql`
-      query SuggestedGenes_Test_Query {
+      query SuggestedGenes_Test_Query @relay_test_operation {
         highlights {
           suggested_genes: broadCollectingGenes {
             ...SuggestedGenes_suggested_genes

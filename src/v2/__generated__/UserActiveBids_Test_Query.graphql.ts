@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -66,6 +67,24 @@ var v0 = {
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
+},
+v1 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "ID"
+},
+v2 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "String"
+},
+v3 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "String"
 };
 return {
   "fragment": {
@@ -91,7 +110,8 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -291,13 +311,101 @@ return {
     ]
   },
   "params": {
+    "cacheID": "070825d940a0a28ac8c87b81acf07b58",
     "id": null,
-    "metadata": {},
+    "metadata": {
+      "relayTestingSelectionTypeInfo": {
+        "me": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Me"
+        },
+        "me.id": (v1/*: any*/),
+        "me.lotStandings": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": true,
+          "type": "LotStanding"
+        },
+        "me.lotStandings.activeBid": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "BidderPosition"
+        },
+        "me.lotStandings.activeBid.id": (v1/*: any*/),
+        "me.lotStandings.isLeadingBidder": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Boolean"
+        },
+        "me.lotStandings.saleArtwork": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "SaleArtwork"
+        },
+        "me.lotStandings.saleArtwork.artwork": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Artwork"
+        },
+        "me.lotStandings.saleArtwork.artwork.artist": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Artist"
+        },
+        "me.lotStandings.saleArtwork.artwork.artist.id": (v1/*: any*/),
+        "me.lotStandings.saleArtwork.artwork.artist.name": (v2/*: any*/),
+        "me.lotStandings.saleArtwork.artwork.href": (v2/*: any*/),
+        "me.lotStandings.saleArtwork.artwork.id": (v1/*: any*/),
+        "me.lotStandings.saleArtwork.artwork.image": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Image"
+        },
+        "me.lotStandings.saleArtwork.artwork.image.cropped": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "CroppedImageUrl"
+        },
+        "me.lotStandings.saleArtwork.artwork.image.cropped.src": (v3/*: any*/),
+        "me.lotStandings.saleArtwork.artwork.image.cropped.srcSet": (v3/*: any*/),
+        "me.lotStandings.saleArtwork.artwork.title": (v2/*: any*/),
+        "me.lotStandings.saleArtwork.counts": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "SaleArtworkCounts"
+        },
+        "me.lotStandings.saleArtwork.counts.bidderPositions": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "FormattedNumber"
+        },
+        "me.lotStandings.saleArtwork.highestBid": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "SaleArtworkHighestBid"
+        },
+        "me.lotStandings.saleArtwork.highestBid.display": (v2/*: any*/),
+        "me.lotStandings.saleArtwork.id": (v1/*: any*/),
+        "me.lotStandings.saleArtwork.lotLabel": (v2/*: any*/)
+      }
+    },
     "name": "UserActiveBids_Test_Query",
     "operationKind": "query",
     "text": "query UserActiveBids_Test_Query {\n  me {\n    ...UserActiveBids_me\n    id\n  }\n}\n\nfragment UserActiveBids_me on Me {\n  lotStandings {\n    isLeadingBidder\n    activeBid {\n      id\n    }\n    saleArtwork {\n      lotLabel\n      highestBid {\n        display\n      }\n      counts {\n        bidderPositions\n      }\n      artwork {\n        title\n        href\n        image {\n          cropped(height: 100, width: 100) {\n            src\n            srcSet\n          }\n        }\n        artist {\n          name\n          id\n        }\n        id\n      }\n      id\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '985ab0b6d8026aa6244945da08af16d6';
+(node as any).hash = '9abf3e432254a11c9347732b6a4b1906';
 export default node;

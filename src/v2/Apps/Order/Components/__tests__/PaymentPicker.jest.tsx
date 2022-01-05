@@ -156,7 +156,7 @@ describe("PaymentPickerFragmentContainer", () => {
       ...creatingCreditCardSuccess,
     },
     query: graphql`
-      query PaymentPickerTestQuery @raw_response_type {
+      query PaymentPickerTestQuery @raw_response_type @relay_test_operation {
         me {
           ...PaymentPicker_me
         }
@@ -176,7 +176,9 @@ describe("PaymentPickerFragmentContainer", () => {
       ...creatingCreditCardSuccess,
     },
     query: graphql`
-      query PaymentPickerEigenTestQuery @raw_response_type {
+      query PaymentPickerEigenTestQuery
+        @raw_response_type
+        @relay_test_operation {
         me {
           ...PaymentPicker_me
         }

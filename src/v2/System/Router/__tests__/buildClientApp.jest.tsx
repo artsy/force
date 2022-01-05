@@ -177,7 +177,7 @@ describe("buildClientApp", () => {
               path: "/",
               Component: () => null,
               query: graphql`
-                query buildClientAppTestQuery {
+                query buildClientAppTestQuery @relay_test_operation {
                   me {
                     id
                   }

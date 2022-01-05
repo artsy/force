@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -46,8 +47,7 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "partnerId",
-    "type": "String!"
+    "name": "partnerId"
   }
 ],
 v1 = [
@@ -70,7 +70,25 @@ v3 = [
     "name": "totalCount",
     "storageKey": null
   }
-];
+],
+v4 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "ArtistPartnerConnection"
+},
+v5 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "Int"
+},
+v6 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "ID"
+};
 return {
   "fragment": {
     "argumentDefinitions": (v0/*: any*/),
@@ -95,7 +113,8 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -184,13 +203,41 @@ return {
     ]
   },
   "params": {
+    "cacheID": "d3ddc01e6e897e18b469e29349dbf5c8",
     "id": null,
-    "metadata": {},
+    "metadata": {
+      "relayTestingSelectionTypeInfo": {
+        "partner": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Partner"
+        },
+        "partner.artistsWithPublishedArtworks": (v4/*: any*/),
+        "partner.artistsWithPublishedArtworks.totalCount": (v5/*: any*/),
+        "partner.displayFullPartnerPage": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Boolean"
+        },
+        "partner.id": (v6/*: any*/),
+        "partner.profileArtistsLayout": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "String"
+        },
+        "partner.representedArtistsWithoutPublishedArtworks": (v4/*: any*/),
+        "partner.representedArtistsWithoutPublishedArtworks.totalCount": (v5/*: any*/),
+        "partner.slug": (v6/*: any*/)
+      }
+    },
     "name": "ArtistsRail_Test_Query",
     "operationKind": "query",
     "text": "query ArtistsRail_Test_Query(\n  $partnerId: String!\n) {\n  partner(id: $partnerId) @principalField {\n    ...ArtistsRail_partner\n    id\n  }\n}\n\nfragment ArtistsRail_partner on Partner {\n  slug\n  profileArtistsLayout\n  displayFullPartnerPage\n  artistsWithPublishedArtworks: artistsConnection(hasPublishedArtworks: true, displayOnPartnerProfile: true) {\n    totalCount\n  }\n  representedArtistsWithoutPublishedArtworks: artistsConnection(representedBy: true, hasPublishedArtworks: false, displayOnPartnerProfile: true) {\n    totalCount\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'ea84c8c740a36a35c076a43c1d19605e';
+(node as any).hash = 'fe6a6fad0020c4c863a1e00cc34eba06';
 export default node;
