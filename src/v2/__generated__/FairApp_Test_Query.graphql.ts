@@ -430,7 +430,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "b2144787dc89e73130ea34c8acafd28a",
+    "cacheID": "5148e486828b71eb2a205b70cde73e89",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -453,6 +453,13 @@ return {
           "type": "FormattedNumber"
         },
         "fair.exhibitionPeriod": (v4/*: any*/),
+        "fair.exhibitorsGroupedByName": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": true,
+          "type": "FairExhibitorsGroup"
+        },
+        "fair.exhibitorsGroupedByName.letter": (v4/*: any*/),
         "fair.href": (v4/*: any*/),
         "fair.id": (v5/*: any*/),
         "fair.image": (v6/*: any*/),
