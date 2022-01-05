@@ -33,7 +33,7 @@ const mapStateToProps = (state, props) => {
     artworkItem: { artwork, counts, current_bid },
   } = props
   let bidLabel
-  const bidCounts = get(artwork, "sale_artwork.counts") || counts
+  const bidCounts = get(artwork, "saleArtwork.counts") || counts
   const bidderPositions = get(bidCounts, "bidder_positions")
 
   if (bidderPositions) {
