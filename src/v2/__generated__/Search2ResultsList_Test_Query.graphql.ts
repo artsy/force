@@ -47,7 +47,14 @@ fragment Search2ResultsList_algolia on Algolia {
 }
 */
 
-const node: ConcreteRequest = {
+const node: ConcreteRequest = (function(){
+var v0 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "String"
+};
+return {
   "fragment": {
     "argumentDefinitions": [],
     "kind": "Fragment",
@@ -143,11 +150,35 @@ const node: ConcreteRequest = {
   "params": {
     "cacheID": "4d8e439fff382ff26cda69769a2c59dc",
     "id": null,
-    "metadata": {},
+    "metadata": {
+      "relayTestingSelectionTypeInfo": {
+        "system": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "System"
+        },
+        "system.algolia": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Algolia"
+        },
+        "system.algolia.indices": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": true,
+          "type": "AlgoliaIndex"
+        },
+        "system.algolia.indices.displayName": (v0/*: any*/),
+        "system.algolia.indices.name": (v0/*: any*/)
+      }
+    },
     "name": "Search2ResultsList_Test_Query",
     "operationKind": "query",
     "text": "query Search2ResultsList_Test_Query {\n  system {\n    algolia {\n      ...Search2ResultsList_algolia\n    }\n  }\n}\n\nfragment Search2ResultsList_algolia on Algolia {\n  indices {\n    displayName\n    name\n  }\n}\n"
   }
 };
-(node as any).hash = 'e75a6a204e1f7701e2889e8a2a758380';
+})();
+(node as any).hash = '0f587725c71eeaf92c64037f65b668ab';
 export default node;

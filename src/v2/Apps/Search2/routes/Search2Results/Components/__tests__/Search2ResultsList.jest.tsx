@@ -53,7 +53,9 @@ describe("Search2ResultsList", () => {
         return null
       },
       query: graphql`
-        query Search2ResultsList_Test_Query @raw_response_type {
+        query Search2ResultsList_Test_Query
+          @raw_response_type
+          @relay_test_operation {
           system {
             algolia {
               ...Search2ResultsList_algolia

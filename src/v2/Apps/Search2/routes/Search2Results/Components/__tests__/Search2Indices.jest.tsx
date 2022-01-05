@@ -26,7 +26,7 @@ const { renderWithRelay } = setupTestWrapperTL<Search2Indices_Test_Query>({
     return null
   },
   query: graphql`
-    query Search2Indices_Test_Query @raw_response_type {
+    query Search2Indices_Test_Query @raw_response_type @relay_test_operation {
       system {
         algolia {
           ...Search2Indices_algolia
