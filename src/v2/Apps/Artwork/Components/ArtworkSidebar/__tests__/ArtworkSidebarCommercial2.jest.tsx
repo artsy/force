@@ -2,6 +2,7 @@ import {
   ArtworkOfferableFromInquiryPriceExact,
   ArtworkOfferableFromInquiryPriceRange,
   ArtworkOfferableAndInquireablePriceHidden,
+  ForSaleArtworkWithMultipleEditions,
 } from "v2/Apps/__tests__/Fixtures/Artwork/ArtworkSidebar/ArtworkSidebarCommercial"
 
 import { commitMutation as _commitMutation, graphql } from "react-relay"
@@ -59,5 +60,13 @@ describe("ArtworkSidebarCommercial RTL", () => {
 
     expect(screen.queryByText("Make offer")).not.toBeInTheDocument()
     expect(screen.getByText("Contact Gallery")).toBeInTheDocument()
+  })
+
+  it("displays radio buttons for Edition Sets for inquirable artworks", () => {
+    renderWithRelay({
+      Artwork: () => ForSaleArtworkWithMultipleEditions,
+    })
+
+    expect(screen.getAllByRole("radio").length).toBe(4)
   })
 })

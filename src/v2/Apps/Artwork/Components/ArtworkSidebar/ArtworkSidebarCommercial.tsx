@@ -98,9 +98,15 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
     )
   }
 
-  renderEditionSet(editionSet: EditionSet, includeSelectOption: boolean) {
+  renderEditionSet(
+    editionSet: EditionSet,
+    includeSelectOption: boolean,
+    editionSelectableOnInquireable: boolean
+  ) {
     const editionEcommerceAvailable =
-      editionSet?.is_acquireable || editionSet?.is_offerable
+      editionSet?.is_acquireable ||
+      editionSet?.is_offerable ||
+      editionSelectableOnInquireable
 
     const editionFragment = (
       <Flex justifyContent="space-between" flex={1}>
@@ -130,14 +136,21 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
     }
   }
 
-  renderEditionSets(includeSelectOption: boolean) {
+  renderEditionSets(
+    includeSelectOption: boolean,
+    editionSelectableOnInquireable: boolean
+  ) {
     const editionSets = this.props.artwork.edition_sets
 
     const editionSetsFragment = editionSets?.map((editionSet, index) => {
       return (
         <React.Fragment key={editionSet?.id}>
           <Box py={2}>
-            {this.renderEditionSet(editionSet, includeSelectOption)}
+            {this.renderEditionSet(
+              editionSet,
+              includeSelectOption,
+              editionSelectableOnInquireable
+            )}
           </Box>
           {index !== editionSets.length - 1 && <Separator />}
         </React.Fragment>
@@ -377,7 +390,14 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
       selectedEditionSet,
     } = this.state
 
-    const artworkEcommerceAvailable = !!(isAcquireable || isOfferable)
+    const editionSelectableOnInquireable = !!(
+      artwork.is_inquireable && labFeatureEnabled
+    )
+    const artworkEcommerceAvailable = !!(
+      artwork.is_acquireable ||
+      artwork.is_offerable ||
+      editionSelectableOnInquireable
+    )
 
     if (!artwork.sale_message && !isInquireable) {
       return <Separator />
@@ -409,7 +429,10 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
             )
           ) : (
             <>
-              {this.renderEditionSets(artworkEcommerceAvailable)}
+              {this.renderEditionSets(
+                artworkEcommerceAvailable,
+                editionSelectableOnInquireable
+              )}
 
               {selectedEditionSet && (
                 <>
