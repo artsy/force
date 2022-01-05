@@ -30,13 +30,11 @@ BidStatus.propTypes = {
 
 const mapStateToProps = (state, props) => {
   const {
-    artworkItem: { artwork, counts },
+    artworkItem: { artwork, counts, current_bid },
   } = props
   let bidLabel
-
   const bidCounts = get(artwork, "saleArtwork.counts") || counts
   const bidderPositions = get(bidCounts, "bidder_positions")
-  const currentBid = get(artwork, "saleArtwork.current_bid")
 
   if (bidderPositions) {
     const bidOrBids = bidderPositions > 1 ? "Bids" : "Bid"
@@ -47,7 +45,7 @@ const mapStateToProps = (state, props) => {
 
   return {
     isSold: artwork.is_sold,
-    currentBidDisplay: currentBid?.display,
+    currentBidDisplay: current_bid?.display,
     bidLabel,
   }
 }
