@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 export type UpdateMyProfileInput = {
@@ -70,7 +71,7 @@ export type UpdateUserInformationMutationRawResponse = {
             readonly __typename: "UpdateMyProfileMutationSuccess";
             readonly user: ({
                 readonly internalID: string;
-                readonly id: string | null;
+                readonly id: string;
             }) | null;
         } | {
             readonly __typename: "UpdateMyProfileMutationFailure";
@@ -85,7 +86,7 @@ export type UpdateUserInformationMutationRawResponse = {
                 }) | null> | null;
             }) | null;
         } | {
-            readonly __typename: string | null;
+            readonly __typename: string;
         }) | null;
     }) | null;
 };
@@ -132,8 +133,7 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "input",
-    "type": "UpdateMyProfileInput!"
+    "name": "input"
   }
 ],
 v1 = [
@@ -213,7 +213,8 @@ v4 = {
       "storageKey": null
     }
   ],
-  "type": "UpdateMyProfileMutationFailure"
+  "type": "UpdateMyProfileMutationFailure",
+  "abstractKey": null
 };
 return {
   "fragment": {
@@ -254,7 +255,8 @@ return {
                     "storageKey": null
                   }
                 ],
-                "type": "UpdateMyProfileMutationSuccess"
+                "type": "UpdateMyProfileMutationSuccess",
+                "abstractKey": null
               },
               (v4/*: any*/)
             ],
@@ -264,7 +266,8 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Mutation"
+    "type": "Mutation",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -318,7 +321,8 @@ return {
                     "storageKey": null
                   }
                 ],
-                "type": "UpdateMyProfileMutationSuccess"
+                "type": "UpdateMyProfileMutationSuccess",
+                "abstractKey": null
               },
               (v4/*: any*/)
             ],
@@ -330,6 +334,7 @@ return {
     ]
   },
   "params": {
+    "cacheID": "ee3c2605d4230b9d6037177a7b2c10f9",
     "id": null,
     "metadata": {},
     "name": "UpdateUserInformationMutation",

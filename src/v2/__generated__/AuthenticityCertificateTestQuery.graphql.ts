@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -39,10 +40,10 @@ var v0 = [
   }
 ],
 v1 = {
-  "type": "Boolean",
   "enumValues": null,
+  "nullable": true,
   "plural": false,
-  "nullable": true
+  "type": "Boolean"
 };
 return {
   "fragment": {
@@ -68,7 +69,8 @@ return {
         "storageKey": "artwork(id:\"whatevs\")"
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -111,22 +113,23 @@ return {
     ]
   },
   "params": {
+    "cacheID": "3d9f17f1026c9c31b3b3d3c0bf568d11",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "artwork": {
-          "type": "Artwork",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
-        },
-        "artwork.id": {
-          "type": "ID",
-          "enumValues": null,
-          "plural": false,
-          "nullable": true
+          "type": "Artwork"
         },
         "artwork.hasCertificateOfAuthenticity": (v1/*: any*/),
+        "artwork.id": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": false,
+          "type": "ID"
+        },
         "artwork.is_biddable": (v1/*: any*/)
       }
     },

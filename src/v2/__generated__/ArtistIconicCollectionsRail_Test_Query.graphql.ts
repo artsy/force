@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -58,27 +59,22 @@ fragment ArtistIconicCollectionsRail_marketingCollections on MarketingCollection
 */
 
 const node: ConcreteRequest = (function(){
-var v0 = [
-  {
-    "defaultValue": null,
-    "kind": "LocalArgument",
-    "name": "isFeaturedArtistContent",
-    "type": "Boolean"
-  },
-  {
-    "defaultValue": null,
-    "kind": "LocalArgument",
-    "name": "size",
-    "type": "Int"
-  },
-  {
-    "defaultValue": null,
-    "kind": "LocalArgument",
-    "name": "artistID",
-    "type": "String"
-  }
-],
-v1 = [
+var v0 = {
+  "defaultValue": null,
+  "kind": "LocalArgument",
+  "name": "artistID"
+},
+v1 = {
+  "defaultValue": null,
+  "kind": "LocalArgument",
+  "name": "isFeaturedArtistContent"
+},
+v2 = {
+  "defaultValue": null,
+  "kind": "LocalArgument",
+  "name": "size"
+},
+v3 = [
   {
     "kind": "Variable",
     "name": "artistID",
@@ -95,47 +91,51 @@ v1 = [
     "variableName": "size"
   }
 ],
-v2 = {
+v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v3 = {
-  "type": "ID",
-  "enumValues": null,
-  "plural": false,
-  "nullable": true
-},
-v4 = {
-  "type": "String",
-  "enumValues": null,
-  "plural": false,
-  "nullable": true
-},
 v5 = {
-  "type": "String",
   "enumValues": null,
+  "nullable": false,
   "plural": false,
-  "nullable": false
+  "type": "ID"
 },
 v6 = {
-  "type": "Int",
   "enumValues": null,
+  "nullable": true,
   "plural": false,
-  "nullable": true
+  "type": "Int"
+},
+v7 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "String"
+},
+v8 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "String"
 };
 return {
   "fragment": {
-    "argumentDefinitions": (v0/*: any*/),
+    "argumentDefinitions": [
+      (v0/*: any*/),
+      (v1/*: any*/),
+      (v2/*: any*/)
+    ],
     "kind": "Fragment",
     "metadata": null,
     "name": "ArtistIconicCollectionsRail_Test_Query",
     "selections": [
       {
         "alias": null,
-        "args": (v1/*: any*/),
+        "args": (v3/*: any*/),
         "concreteType": "MarketingCollection",
         "kind": "LinkedField",
         "name": "marketingCollections",
@@ -150,17 +150,22 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
-    "argumentDefinitions": (v0/*: any*/),
+    "argumentDefinitions": [
+      (v1/*: any*/),
+      (v2/*: any*/),
+      (v0/*: any*/)
+    ],
     "kind": "Operation",
     "name": "ArtistIconicCollectionsRail_Test_Query",
     "selections": [
       {
         "alias": null,
-        "args": (v1/*: any*/),
+        "args": (v3/*: any*/),
         "concreteType": "MarketingCollection",
         "kind": "LinkedField",
         "name": "marketingCollections",
@@ -304,80 +309,81 @@ return {
                         ],
                         "storageKey": null
                       },
-                      (v2/*: any*/)
+                      (v4/*: any*/)
                     ],
                     "storageKey": null
                   }
                 ],
                 "storageKey": null
               },
-              (v2/*: any*/)
+              (v4/*: any*/)
             ],
             "storageKey": "artworksConnection(aggregations:[\"TOTAL\"],first:1,sort:\"-decayed_merch\")"
           },
-          (v2/*: any*/)
+          (v4/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
+    "cacheID": "5ab281aa4ab75b0f63c2af5dfbfbb253",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "marketingCollections": {
-          "type": "MarketingCollection",
           "enumValues": null,
+          "nullable": false,
           "plural": true,
-          "nullable": false
-        },
-        "marketingCollections.id": (v3/*: any*/),
-        "marketingCollections.headerImage": (v4/*: any*/),
-        "marketingCollections.thumbnail": (v4/*: any*/),
-        "marketingCollections.slug": (v5/*: any*/),
-        "marketingCollections.title": (v5/*: any*/),
-        "marketingCollections.priceGuidance": {
-          "type": "Float",
-          "enumValues": null,
-          "plural": false,
-          "nullable": true
+          "type": "MarketingCollection"
         },
         "marketingCollections.artworksConnection": {
-          "type": "FilterArtworksConnection",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "FilterArtworksConnection"
         },
         "marketingCollections.artworksConnection.edges": {
-          "type": "FilterArtworksEdge",
           "enumValues": null,
+          "nullable": true,
           "plural": true,
-          "nullable": true
+          "type": "FilterArtworksEdge"
         },
-        "marketingCollections.artworksConnection.id": (v3/*: any*/),
         "marketingCollections.artworksConnection.edges.node": {
-          "type": "Artwork",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "Artwork"
         },
+        "marketingCollections.artworksConnection.edges.node.id": (v5/*: any*/),
         "marketingCollections.artworksConnection.edges.node.image": {
-          "type": "Image",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "Image"
         },
-        "marketingCollections.artworksConnection.edges.node.id": (v3/*: any*/),
         "marketingCollections.artworksConnection.edges.node.image.resized": {
-          "type": "ResizedImageUrl",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "ResizedImageUrl"
         },
-        "marketingCollections.artworksConnection.edges.node.image.resized.width": (v6/*: any*/),
         "marketingCollections.artworksConnection.edges.node.image.resized.height": (v6/*: any*/),
-        "marketingCollections.artworksConnection.edges.node.image.resized.src": (v5/*: any*/),
-        "marketingCollections.artworksConnection.edges.node.image.resized.srcSet": (v5/*: any*/)
+        "marketingCollections.artworksConnection.edges.node.image.resized.src": (v7/*: any*/),
+        "marketingCollections.artworksConnection.edges.node.image.resized.srcSet": (v7/*: any*/),
+        "marketingCollections.artworksConnection.edges.node.image.resized.width": (v6/*: any*/),
+        "marketingCollections.artworksConnection.id": (v5/*: any*/),
+        "marketingCollections.headerImage": (v8/*: any*/),
+        "marketingCollections.id": (v5/*: any*/),
+        "marketingCollections.priceGuidance": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Float"
+        },
+        "marketingCollections.slug": (v7/*: any*/),
+        "marketingCollections.thumbnail": (v8/*: any*/),
+        "marketingCollections.title": (v7/*: any*/)
       }
     },
     "name": "ArtistIconicCollectionsRail_Test_Query",

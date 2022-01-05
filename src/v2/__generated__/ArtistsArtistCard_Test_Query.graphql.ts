@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -64,34 +65,34 @@ var v0 = [
   }
 ],
 v1 = {
-  "type": "ID",
   "enumValues": null,
+  "nullable": true,
   "plural": false,
-  "nullable": false
+  "type": "FormattedNumber"
 },
 v2 = {
-  "type": "String",
   "enumValues": null,
+  "nullable": true,
   "plural": false,
-  "nullable": true
+  "type": "String"
 },
 v3 = {
-  "type": "FormattedNumber",
   "enumValues": null,
+  "nullable": false,
   "plural": false,
-  "nullable": true
+  "type": "ID"
 },
 v4 = {
-  "type": "Int",
   "enumValues": null,
+  "nullable": false,
   "plural": false,
-  "nullable": false
+  "type": "Int"
 },
 v5 = {
-  "type": "String",
   "enumValues": null,
+  "nullable": false,
   "plural": false,
-  "nullable": false
+  "type": "String"
 };
 return {
   "fragment": {
@@ -117,7 +118,8 @@ return {
         "storageKey": "artist(id:\"example\")"
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -281,52 +283,53 @@ return {
     ]
   },
   "params": {
+    "cacheID": "090694b9685df87def776ece5aa228db",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "artist": {
-          "type": "Artist",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "Artist"
         },
-        "artist.id": (v1/*: any*/),
-        "artist.name": (v2/*: any*/),
-        "artist.href": (v2/*: any*/),
-        "artist.formattedNationalityAndBirthday": (v2/*: any*/),
         "artist.counts": {
-          "type": "ArtistCounts",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "ArtistCounts"
         },
+        "artist.counts.artworks": (v1/*: any*/),
+        "artist.counts.follows": (v1/*: any*/),
+        "artist.counts.forSaleArtworks": (v1/*: any*/),
+        "artist.formattedNationalityAndBirthday": (v2/*: any*/),
+        "artist.href": (v2/*: any*/),
+        "artist.id": (v3/*: any*/),
         "artist.image": {
-          "type": "Image",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "Image"
         },
-        "artist.internalID": (v1/*: any*/),
-        "artist.slug": (v1/*: any*/),
-        "artist.is_followed": {
-          "type": "Boolean",
-          "enumValues": null,
-          "plural": false,
-          "nullable": true
-        },
-        "artist.counts.artworks": (v3/*: any*/),
-        "artist.counts.forSaleArtworks": (v3/*: any*/),
         "artist.image.thumb": {
-          "type": "CroppedImageUrl",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "CroppedImageUrl"
         },
-        "artist.counts.follows": (v3/*: any*/),
-        "artist.image.thumb.width": (v4/*: any*/),
         "artist.image.thumb.height": (v4/*: any*/),
         "artist.image.thumb.src": (v5/*: any*/),
-        "artist.image.thumb.srcSet": (v5/*: any*/)
+        "artist.image.thumb.srcSet": (v5/*: any*/),
+        "artist.image.thumb.width": (v4/*: any*/),
+        "artist.internalID": (v3/*: any*/),
+        "artist.is_followed": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Boolean"
+        },
+        "artist.name": (v2/*: any*/),
+        "artist.slug": (v3/*: any*/)
       }
     },
     "name": "ArtistsArtistCard_Test_Query",

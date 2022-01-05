@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -15,9 +16,9 @@ export type BackupSecondFactorModalContentQueryRawResponse = {
             readonly __typename: "BackupSecondFactor";
             readonly code: string;
         } | {
-            readonly __typename: string | null;
+            readonly __typename: string;
         }) | null> | null;
-        readonly id: string | null;
+        readonly id: string;
     }) | null;
 };
 export type BackupSecondFactorModalContentQuery = {
@@ -70,7 +71,8 @@ const node: ConcreteRequest = {
         "storageKey": null
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -120,7 +122,8 @@ const node: ConcreteRequest = {
                     "storageKey": null
                   }
                 ],
-                "type": "BackupSecondFactor"
+                "type": "BackupSecondFactor",
+                "abstractKey": null
               }
             ],
             "storageKey": "secondFactors(kinds:[\"backup\"])"
@@ -138,6 +141,7 @@ const node: ConcreteRequest = {
     ]
   },
   "params": {
+    "cacheID": "20d89a5ee545aa979e81962740a74e07",
     "id": null,
     "metadata": {},
     "name": "BackupSecondFactorModalContentQuery",

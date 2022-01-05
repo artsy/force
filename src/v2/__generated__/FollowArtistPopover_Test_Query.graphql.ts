@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -30,7 +31,7 @@ export type FollowArtistPopover_Test_QueryRawResponse = {
                 }) | null> | null;
             }) | null;
         }) | null;
-        readonly id: string | null;
+        readonly id: string;
     }) | null;
 };
 export type FollowArtistPopover_Test_Query = {
@@ -82,8 +83,7 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "artistID",
-    "type": "String!"
+    "name": "artistID"
   }
 ],
 v1 = [
@@ -101,22 +101,22 @@ v2 = {
   "storageKey": null
 },
 v3 = {
-  "type": "Artist",
   "enumValues": null,
+  "nullable": true,
   "plural": false,
-  "nullable": true
+  "type": "Artist"
 },
 v4 = {
-  "type": "ID",
   "enumValues": null,
+  "nullable": false,
   "plural": false,
-  "nullable": false
+  "type": "ID"
 },
 v5 = {
-  "type": "String",
   "enumValues": null,
+  "nullable": true,
   "plural": false,
-  "nullable": true
+  "type": "String"
 };
 return {
   "fragment": {
@@ -142,7 +142,8 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -282,57 +283,53 @@ return {
     ]
   },
   "params": {
+    "cacheID": "02a44b171ccaae157487cd93f020d71d",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "artist": (v3/*: any*/),
-        "artist.id": {
-          "type": "ID",
-          "enumValues": null,
-          "plural": false,
-          "nullable": true
-        },
+        "artist.id": (v4/*: any*/),
         "artist.related": {
-          "type": "ArtistRelatedData",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "ArtistRelatedData"
         },
         "artist.related.suggestedConnection": {
-          "type": "ArtistConnection",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "ArtistConnection"
         },
         "artist.related.suggestedConnection.edges": {
-          "type": "ArtistEdge",
           "enumValues": null,
+          "nullable": true,
           "plural": true,
-          "nullable": true
+          "type": "ArtistEdge"
         },
         "artist.related.suggestedConnection.edges.node": (v3/*: any*/),
-        "artist.related.suggestedConnection.edges.node.id": (v4/*: any*/),
-        "artist.related.suggestedConnection.edges.node.internalID": (v4/*: any*/),
-        "artist.related.suggestedConnection.edges.node.name": (v5/*: any*/),
         "artist.related.suggestedConnection.edges.node.formattedNationalityAndBirthday": (v5/*: any*/),
+        "artist.related.suggestedConnection.edges.node.id": (v4/*: any*/),
         "artist.related.suggestedConnection.edges.node.image": {
-          "type": "Image",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "Image"
         },
         "artist.related.suggestedConnection.edges.node.image.cropped": {
-          "type": "CroppedImageUrl",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "CroppedImageUrl"
         },
         "artist.related.suggestedConnection.edges.node.image.cropped.url": {
-          "type": "String",
           "enumValues": null,
+          "nullable": false,
           "plural": false,
-          "nullable": false
-        }
+          "type": "String"
+        },
+        "artist.related.suggestedConnection.edges.node.internalID": (v4/*: any*/),
+        "artist.related.suggestedConnection.edges.node.name": (v5/*: any*/)
       }
     },
     "name": "FollowArtistPopover_Test_Query",

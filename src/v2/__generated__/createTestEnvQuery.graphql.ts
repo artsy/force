@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -14,9 +15,9 @@ export type createTestEnvQueryRawResponse = {
         readonly title: string | null;
         readonly artist: ({
             readonly name: string | null;
-            readonly id: string | null;
+            readonly id: string;
         }) | null;
-        readonly id: string | null;
+        readonly id: string;
     }) | null;
 };
 export type createTestEnvQuery = {
@@ -60,16 +61,16 @@ v1 = {
   "storageKey": null
 },
 v2 = {
-  "type": "ID",
   "enumValues": null,
+  "nullable": false,
   "plural": false,
-  "nullable": true
+  "type": "ID"
 },
 v3 = {
-  "type": "String",
   "enumValues": null,
+  "nullable": true,
   "plural": false,
-  "nullable": true
+  "type": "String"
 };
 return {
   "fragment": {
@@ -95,7 +96,8 @@ return {
         "storageKey": "artwork(id:\"unused\")"
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -144,25 +146,26 @@ return {
     ]
   },
   "params": {
+    "cacheID": "4b1d5d56fe44157d5741390cb8eba295",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "artwork": {
-          "type": "Artwork",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "Artwork"
         },
-        "artwork.id": (v2/*: any*/),
-        "artwork.title": (v3/*: any*/),
         "artwork.artist": {
-          "type": "Artist",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "Artist"
         },
+        "artwork.artist.id": (v2/*: any*/),
         "artwork.artist.name": (v3/*: any*/),
-        "artwork.artist.id": (v2/*: any*/)
+        "artwork.id": (v2/*: any*/),
+        "artwork.title": (v3/*: any*/)
       }
     },
     "name": "createTestEnvQuery",

@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -86,28 +87,28 @@ var v0 = [
   }
 ],
 v1 = {
-  "type": "City",
   "enumValues": null,
+  "nullable": false,
   "plural": true,
-  "nullable": false
+  "type": "City"
 },
 v2 = {
-  "type": "String",
   "enumValues": null,
+  "nullable": true,
   "plural": false,
-  "nullable": false
+  "type": "LatLng"
 },
 v3 = {
-  "type": "LatLng",
   "enumValues": null,
+  "nullable": true,
   "plural": false,
-  "nullable": true
+  "type": "Float"
 },
 v4 = {
-  "type": "Float",
   "enumValues": null,
+  "nullable": false,
   "plural": false,
-  "nullable": true
+  "type": "String"
 };
 return {
   "fragment": {
@@ -133,7 +134,8 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -181,27 +183,28 @@ return {
     ]
   },
   "params": {
+    "cacheID": "a9e0fc7220fdb48cc8459a1fa95c9201",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "viewer": {
-          "type": "Viewer",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "Viewer"
         },
-        "viewer.featuredCities": (v1/*: any*/),
         "viewer.allCities": (v1/*: any*/),
-        "viewer.featuredCities.text": (v2/*: any*/),
-        "viewer.featuredCities.value": (v2/*: any*/),
-        "viewer.featuredCities.coordinates": (v3/*: any*/),
-        "viewer.allCities.text": (v2/*: any*/),
-        "viewer.allCities.value": (v2/*: any*/),
-        "viewer.allCities.coordinates": (v3/*: any*/),
-        "viewer.featuredCities.coordinates.lat": (v4/*: any*/),
-        "viewer.featuredCities.coordinates.lng": (v4/*: any*/),
-        "viewer.allCities.coordinates.lat": (v4/*: any*/),
-        "viewer.allCities.coordinates.lng": (v4/*: any*/)
+        "viewer.allCities.coordinates": (v2/*: any*/),
+        "viewer.allCities.coordinates.lat": (v3/*: any*/),
+        "viewer.allCities.coordinates.lng": (v3/*: any*/),
+        "viewer.allCities.text": (v4/*: any*/),
+        "viewer.allCities.value": (v4/*: any*/),
+        "viewer.featuredCities": (v1/*: any*/),
+        "viewer.featuredCities.coordinates": (v2/*: any*/),
+        "viewer.featuredCities.coordinates.lat": (v3/*: any*/),
+        "viewer.featuredCities.coordinates.lng": (v3/*: any*/),
+        "viewer.featuredCities.text": (v4/*: any*/),
+        "viewer.featuredCities.value": (v4/*: any*/)
       }
     },
     "name": "PartnersLocationAutocomplete_Test_Query",

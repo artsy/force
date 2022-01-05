@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -50,8 +51,7 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "input",
-    "type": "UnlinkAuthenticationMutationInput!"
+    "name": "input"
   }
 ],
 v1 = [
@@ -103,7 +103,8 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Mutation"
+    "type": "Mutation",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -156,6 +157,7 @@ return {
     ]
   },
   "params": {
+    "cacheID": "0d93dd39b9e7eb1a49d2b4c73bd27579",
     "id": null,
     "metadata": {},
     "name": "useUnlinkSettingsLinkedAccountMutation",

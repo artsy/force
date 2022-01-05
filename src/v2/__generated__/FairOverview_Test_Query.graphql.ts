@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -353,76 +354,70 @@ v10 = [
   }
 ],
 v11 = {
-  "type": "ID",
   "enumValues": null,
+  "nullable": true,
   "plural": false,
-  "nullable": true
+  "type": "String"
 },
 v12 = {
-  "type": "String",
   "enumValues": null,
+  "nullable": false,
   "plural": false,
-  "nullable": true
+  "type": "String"
 },
 v13 = {
-  "type": "ID",
   "enumValues": null,
+  "nullable": false,
   "plural": false,
-  "nullable": false
+  "type": "ID"
 },
 v14 = {
-  "type": "FilterArtworksConnection",
   "enumValues": null,
+  "nullable": true,
   "plural": false,
-  "nullable": true
+  "type": "Image"
 },
 v15 = {
-  "type": "String",
   "enumValues": null,
+  "nullable": true,
   "plural": false,
-  "nullable": false
+  "type": "CroppedImageUrl"
 },
 v16 = {
-  "type": "FilterArtworksEdge",
   "enumValues": null,
-  "plural": true,
-  "nullable": true
+  "nullable": false,
+  "plural": false,
+  "type": "Int"
 },
 v17 = {
-  "type": "Artwork",
   "enumValues": null,
+  "nullable": true,
   "plural": false,
-  "nullable": true
+  "type": "FilterArtworksConnection"
 },
 v18 = {
-  "type": "FormattedNumber",
   "enumValues": null,
-  "plural": false,
-  "nullable": true
+  "nullable": true,
+  "plural": true,
+  "type": "FilterArtworksEdge"
 },
 v19 = {
-  "type": "Image",
   "enumValues": null,
+  "nullable": true,
   "plural": false,
-  "nullable": true
+  "type": "Artwork"
 },
 v20 = {
-  "type": "Boolean",
   "enumValues": null,
+  "nullable": true,
   "plural": false,
-  "nullable": true
+  "type": "Boolean"
 },
 v21 = {
-  "type": "CroppedImageUrl",
   "enumValues": null,
+  "nullable": true,
   "plural": false,
-  "nullable": true
-},
-v22 = {
-  "type": "Int",
-  "enumValues": null,
-  "plural": false,
-  "nullable": false
+  "type": "FormattedNumber"
 };
 return {
   "fragment": {
@@ -448,7 +443,8 @@ return {
         "storageKey": "fair(id:\"example\")"
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -985,172 +981,173 @@ return {
     ]
   },
   "params": {
+    "cacheID": "34ef005d8d53027ab08560549f928d50",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "fair": {
-          "type": "Fair",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "Fair"
         },
-        "fair.id": (v11/*: any*/),
-        "fair.href": (v12/*: any*/),
-        "fair.slug": (v13/*: any*/),
+        "fair.about": (v11/*: any*/),
         "fair.articlesConnection": {
-          "type": "ArticleConnection",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
-        },
-        "fair.marketingCollections": {
-          "type": "MarketingCollection",
-          "enumValues": null,
-          "plural": true,
-          "nullable": false
-        },
-        "fair.internalID": (v13/*: any*/),
-        "fair.followedArtistArtworks": (v14/*: any*/),
-        "fair.about": (v12/*: any*/),
-        "fair.articlesConnection.totalCount": {
-          "type": "Int",
-          "enumValues": null,
-          "plural": false,
-          "nullable": true
+          "type": "ArticleConnection"
         },
         "fair.articlesConnection.edges": {
-          "type": "ArticleEdge",
           "enumValues": null,
+          "nullable": true,
           "plural": true,
-          "nullable": true
+          "type": "ArticleEdge"
         },
-        "fair.marketingCollections.id": (v13/*: any*/),
-        "fair.marketingCollections.slug": (v15/*: any*/),
-        "fair.followedArtistArtworks.edges": (v16/*: any*/),
-        "fair.followedArtistArtworks.id": (v11/*: any*/),
-        "fair.endAt": (v12/*: any*/),
-        "fair.articlesConnection.edges.__typename": (v15/*: any*/),
-        "fair.marketingCollections.title": (v15/*: any*/),
-        "fair.marketingCollections.artworks": (v14/*: any*/),
-        "fair.followedArtistArtworks.edges.artwork": (v17/*: any*/),
+        "fair.articlesConnection.edges.__typename": (v12/*: any*/),
         "fair.articlesConnection.edges.node": {
-          "type": "Article",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "Article"
         },
-        "fair.marketingCollections.artworks.counts": {
-          "type": "FilterArtworksCounts",
-          "enumValues": null,
-          "plural": false,
-          "nullable": true
-        },
-        "fair.marketingCollections.artworks.edges": (v16/*: any*/),
-        "fair.marketingCollections.artworks.id": (v11/*: any*/),
-        "fair.followedArtistArtworks.edges.artwork.internalID": (v13/*: any*/),
-        "fair.followedArtistArtworks.edges.artwork.slug": (v13/*: any*/),
-        "fair.followedArtistArtworks.edges.artwork.id": (v13/*: any*/),
+        "fair.articlesConnection.edges.node.href": (v11/*: any*/),
         "fair.articlesConnection.edges.node.id": (v13/*: any*/),
-        "fair.marketingCollections.artworks.counts.total": (v18/*: any*/),
-        "fair.marketingCollections.artworks.edges.node": (v17/*: any*/),
-        "fair.followedArtistArtworks.edges.artwork.image": (v19/*: any*/),
-        "fair.followedArtistArtworks.edges.artwork.imageTitle": (v12/*: any*/),
-        "fair.followedArtistArtworks.edges.artwork.title": (v12/*: any*/),
-        "fair.followedArtistArtworks.edges.artwork.href": (v12/*: any*/),
-        "fair.followedArtistArtworks.edges.artwork.is_saved": (v20/*: any*/),
-        "fair.articlesConnection.edges.node.title": (v12/*: any*/),
-        "fair.articlesConnection.edges.node.publishedAt": (v12/*: any*/),
-        "fair.articlesConnection.edges.node.thumbnailTitle": (v12/*: any*/),
-        "fair.articlesConnection.edges.node.thumbnailImage": (v19/*: any*/),
-        "fair.marketingCollections.artworks.edges.node.image": (v19/*: any*/),
-        "fair.marketingCollections.artworks.edges.node.id": (v11/*: any*/),
-        "fair.followedArtistArtworks.edges.artwork.image.url": (v12/*: any*/),
-        "fair.followedArtistArtworks.edges.artwork.image.aspectRatio": {
-          "type": "Float",
-          "enumValues": null,
-          "plural": false,
-          "nullable": false
-        },
-        "fair.followedArtistArtworks.edges.artwork.is_biddable": (v20/*: any*/),
-        "fair.followedArtistArtworks.edges.artwork.sale": {
-          "type": "Sale",
-          "enumValues": null,
-          "plural": false,
-          "nullable": true
-        },
-        "fair.articlesConnection.edges.node.thumbnailImage.large": (v21/*: any*/),
-        "fair.articlesConnection.edges.node.thumbnailImage.small": (v21/*: any*/),
         "fair.articlesConnection.edges.node.internalID": (v13/*: any*/),
-        "fair.articlesConnection.edges.node.slug": (v12/*: any*/),
-        "fair.articlesConnection.edges.node.href": (v12/*: any*/),
-        "fair.marketingCollections.artworks.edges.node.image.url": (v12/*: any*/),
-        "fair.followedArtistArtworks.edges.artwork.date": (v12/*: any*/),
-        "fair.followedArtistArtworks.edges.artwork.sale_message": (v12/*: any*/),
-        "fair.followedArtistArtworks.edges.artwork.cultural_maker": (v12/*: any*/),
+        "fair.articlesConnection.edges.node.publishedAt": (v11/*: any*/),
+        "fair.articlesConnection.edges.node.slug": (v11/*: any*/),
+        "fair.articlesConnection.edges.node.thumbnailImage": (v14/*: any*/),
+        "fair.articlesConnection.edges.node.thumbnailImage.large": (v15/*: any*/),
+        "fair.articlesConnection.edges.node.thumbnailImage.large.height": (v16/*: any*/),
+        "fair.articlesConnection.edges.node.thumbnailImage.large.src": (v12/*: any*/),
+        "fair.articlesConnection.edges.node.thumbnailImage.large.srcSet": (v12/*: any*/),
+        "fair.articlesConnection.edges.node.thumbnailImage.large.width": (v16/*: any*/),
+        "fair.articlesConnection.edges.node.thumbnailImage.small": (v15/*: any*/),
+        "fair.articlesConnection.edges.node.thumbnailImage.small.height": (v16/*: any*/),
+        "fair.articlesConnection.edges.node.thumbnailImage.small.src": (v12/*: any*/),
+        "fair.articlesConnection.edges.node.thumbnailImage.small.srcSet": (v12/*: any*/),
+        "fair.articlesConnection.edges.node.thumbnailImage.small.width": (v16/*: any*/),
+        "fair.articlesConnection.edges.node.thumbnailTitle": (v11/*: any*/),
+        "fair.articlesConnection.edges.node.title": (v11/*: any*/),
+        "fair.articlesConnection.totalCount": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Int"
+        },
+        "fair.endAt": (v11/*: any*/),
+        "fair.followedArtistArtworks": (v17/*: any*/),
+        "fair.followedArtistArtworks.edges": (v18/*: any*/),
+        "fair.followedArtistArtworks.edges.artwork": (v19/*: any*/),
         "fair.followedArtistArtworks.edges.artwork.artists": {
-          "type": "Artist",
           "enumValues": null,
+          "nullable": true,
           "plural": true,
-          "nullable": true
+          "type": "Artist"
         },
-        "fair.followedArtistArtworks.edges.artwork.collecting_institution": (v12/*: any*/),
-        "fair.followedArtistArtworks.edges.artwork.partner": {
-          "type": "Partner",
-          "enumValues": null,
-          "plural": false,
-          "nullable": true
-        },
-        "fair.followedArtistArtworks.edges.artwork.sale_artwork": {
-          "type": "SaleArtwork",
-          "enumValues": null,
-          "plural": false,
-          "nullable": true
-        },
-        "fair.followedArtistArtworks.edges.artwork.is_inquireable": (v20/*: any*/),
-        "fair.followedArtistArtworks.edges.artwork.sale.is_preview": (v20/*: any*/),
-        "fair.followedArtistArtworks.edges.artwork.sale.display_timely_at": (v12/*: any*/),
-        "fair.followedArtistArtworks.edges.artwork.sale.id": (v11/*: any*/),
-        "fair.articlesConnection.edges.node.thumbnailImage.large.width": (v22/*: any*/),
-        "fair.articlesConnection.edges.node.thumbnailImage.large.height": (v22/*: any*/),
-        "fair.articlesConnection.edges.node.thumbnailImage.large.src": (v15/*: any*/),
-        "fair.articlesConnection.edges.node.thumbnailImage.large.srcSet": (v15/*: any*/),
-        "fair.articlesConnection.edges.node.thumbnailImage.small.width": (v22/*: any*/),
-        "fair.articlesConnection.edges.node.thumbnailImage.small.height": (v22/*: any*/),
-        "fair.articlesConnection.edges.node.thumbnailImage.small.src": (v15/*: any*/),
-        "fair.articlesConnection.edges.node.thumbnailImage.small.srcSet": (v15/*: any*/),
+        "fair.followedArtistArtworks.edges.artwork.artists.href": (v11/*: any*/),
         "fair.followedArtistArtworks.edges.artwork.artists.id": (v13/*: any*/),
-        "fair.followedArtistArtworks.edges.artwork.artists.href": (v12/*: any*/),
-        "fair.followedArtistArtworks.edges.artwork.artists.name": (v12/*: any*/),
-        "fair.followedArtistArtworks.edges.artwork.partner.name": (v12/*: any*/),
-        "fair.followedArtistArtworks.edges.artwork.partner.href": (v12/*: any*/),
-        "fair.followedArtistArtworks.edges.artwork.partner.id": (v11/*: any*/),
+        "fair.followedArtistArtworks.edges.artwork.artists.name": (v11/*: any*/),
+        "fair.followedArtistArtworks.edges.artwork.collecting_institution": (v11/*: any*/),
+        "fair.followedArtistArtworks.edges.artwork.cultural_maker": (v11/*: any*/),
+        "fair.followedArtistArtworks.edges.artwork.date": (v11/*: any*/),
+        "fair.followedArtistArtworks.edges.artwork.href": (v11/*: any*/),
+        "fair.followedArtistArtworks.edges.artwork.id": (v13/*: any*/),
+        "fair.followedArtistArtworks.edges.artwork.image": (v14/*: any*/),
+        "fair.followedArtistArtworks.edges.artwork.image.aspectRatio": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": false,
+          "type": "Float"
+        },
+        "fair.followedArtistArtworks.edges.artwork.image.url": (v11/*: any*/),
+        "fair.followedArtistArtworks.edges.artwork.imageTitle": (v11/*: any*/),
+        "fair.followedArtistArtworks.edges.artwork.internalID": (v13/*: any*/),
+        "fair.followedArtistArtworks.edges.artwork.is_biddable": (v20/*: any*/),
+        "fair.followedArtistArtworks.edges.artwork.is_inquireable": (v20/*: any*/),
+        "fair.followedArtistArtworks.edges.artwork.is_saved": (v20/*: any*/),
+        "fair.followedArtistArtworks.edges.artwork.partner": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Partner"
+        },
+        "fair.followedArtistArtworks.edges.artwork.partner.href": (v11/*: any*/),
+        "fair.followedArtistArtworks.edges.artwork.partner.id": (v13/*: any*/),
+        "fair.followedArtistArtworks.edges.artwork.partner.name": (v11/*: any*/),
+        "fair.followedArtistArtworks.edges.artwork.partner.type": (v11/*: any*/),
+        "fair.followedArtistArtworks.edges.artwork.sale": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Sale"
+        },
+        "fair.followedArtistArtworks.edges.artwork.sale.display_timely_at": (v11/*: any*/),
+        "fair.followedArtistArtworks.edges.artwork.sale.id": (v13/*: any*/),
         "fair.followedArtistArtworks.edges.artwork.sale.is_auction": (v20/*: any*/),
         "fair.followedArtistArtworks.edges.artwork.sale.is_closed": (v20/*: any*/),
-        "fair.followedArtistArtworks.edges.artwork.sale_artwork.counts": {
-          "type": "SaleArtworkCounts",
-          "enumValues": null,
-          "plural": false,
-          "nullable": true
-        },
-        "fair.followedArtistArtworks.edges.artwork.sale_artwork.highest_bid": {
-          "type": "SaleArtworkHighestBid",
-          "enumValues": null,
-          "plural": false,
-          "nullable": true
-        },
-        "fair.followedArtistArtworks.edges.artwork.sale_artwork.opening_bid": {
-          "type": "SaleArtworkOpeningBid",
-          "enumValues": null,
-          "plural": false,
-          "nullable": true
-        },
-        "fair.followedArtistArtworks.edges.artwork.sale_artwork.id": (v11/*: any*/),
         "fair.followedArtistArtworks.edges.artwork.sale.is_live_open": (v20/*: any*/),
         "fair.followedArtistArtworks.edges.artwork.sale.is_open": (v20/*: any*/),
-        "fair.followedArtistArtworks.edges.artwork.partner.type": (v12/*: any*/),
-        "fair.followedArtistArtworks.edges.artwork.sale_artwork.counts.bidder_positions": (v18/*: any*/),
-        "fair.followedArtistArtworks.edges.artwork.sale_artwork.highest_bid.display": (v12/*: any*/),
-        "fair.followedArtistArtworks.edges.artwork.sale_artwork.opening_bid.display": (v12/*: any*/)
+        "fair.followedArtistArtworks.edges.artwork.sale.is_preview": (v20/*: any*/),
+        "fair.followedArtistArtworks.edges.artwork.sale_artwork": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "SaleArtwork"
+        },
+        "fair.followedArtistArtworks.edges.artwork.sale_artwork.counts": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "SaleArtworkCounts"
+        },
+        "fair.followedArtistArtworks.edges.artwork.sale_artwork.counts.bidder_positions": (v21/*: any*/),
+        "fair.followedArtistArtworks.edges.artwork.sale_artwork.highest_bid": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "SaleArtworkHighestBid"
+        },
+        "fair.followedArtistArtworks.edges.artwork.sale_artwork.highest_bid.display": (v11/*: any*/),
+        "fair.followedArtistArtworks.edges.artwork.sale_artwork.id": (v13/*: any*/),
+        "fair.followedArtistArtworks.edges.artwork.sale_artwork.opening_bid": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "SaleArtworkOpeningBid"
+        },
+        "fair.followedArtistArtworks.edges.artwork.sale_artwork.opening_bid.display": (v11/*: any*/),
+        "fair.followedArtistArtworks.edges.artwork.sale_message": (v11/*: any*/),
+        "fair.followedArtistArtworks.edges.artwork.slug": (v13/*: any*/),
+        "fair.followedArtistArtworks.edges.artwork.title": (v11/*: any*/),
+        "fair.followedArtistArtworks.id": (v13/*: any*/),
+        "fair.href": (v11/*: any*/),
+        "fair.id": (v13/*: any*/),
+        "fair.internalID": (v13/*: any*/),
+        "fair.marketingCollections": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": true,
+          "type": "MarketingCollection"
+        },
+        "fair.marketingCollections.artworks": (v17/*: any*/),
+        "fair.marketingCollections.artworks.counts": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "FilterArtworksCounts"
+        },
+        "fair.marketingCollections.artworks.counts.total": (v21/*: any*/),
+        "fair.marketingCollections.artworks.edges": (v18/*: any*/),
+        "fair.marketingCollections.artworks.edges.node": (v19/*: any*/),
+        "fair.marketingCollections.artworks.edges.node.id": (v13/*: any*/),
+        "fair.marketingCollections.artworks.edges.node.image": (v14/*: any*/),
+        "fair.marketingCollections.artworks.edges.node.image.url": (v11/*: any*/),
+        "fair.marketingCollections.artworks.id": (v13/*: any*/),
+        "fair.marketingCollections.id": (v13/*: any*/),
+        "fair.marketingCollections.slug": (v12/*: any*/),
+        "fair.marketingCollections.title": (v12/*: any*/),
+        "fair.slug": (v13/*: any*/)
       }
     },
     "name": "FairOverview_Test_Query",

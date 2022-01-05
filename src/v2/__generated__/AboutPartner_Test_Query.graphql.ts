@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -52,16 +53,16 @@ v1 = {
   "storageKey": null
 },
 v2 = {
-  "type": "ID",
   "enumValues": null,
+  "nullable": false,
   "plural": false,
-  "nullable": true
+  "type": "ID"
 },
 v3 = {
-  "type": "String",
   "enumValues": null,
+  "nullable": true,
   "plural": false,
-  "nullable": true
+  "type": "String"
 };
 return {
   "fragment": {
@@ -87,7 +88,8 @@ return {
         "storageKey": "partner(id:\"unit-london\")"
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -157,33 +159,34 @@ return {
     ]
   },
   "params": {
+    "cacheID": "6878cdd431ec07a8b8064e3cdf3bbdd5",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "partner": {
-          "type": "Partner",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "Partner"
+        },
+        "partner.displayFullPartnerPage": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Boolean"
         },
         "partner.id": (v2/*: any*/),
         "partner.profile": {
-          "type": "Profile",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "Profile"
         },
-        "partner.website": (v3/*: any*/),
-        "partner.vatNumber": (v3/*: any*/),
-        "partner.displayFullPartnerPage": {
-          "type": "Boolean",
-          "enumValues": null,
-          "plural": false,
-          "nullable": true
-        },
-        "partner.profile.fullBio": (v3/*: any*/),
         "partner.profile.bio": (v3/*: any*/),
-        "partner.profile.id": (v2/*: any*/)
+        "partner.profile.fullBio": (v3/*: any*/),
+        "partner.profile.id": (v2/*: any*/),
+        "partner.vatNumber": (v3/*: any*/),
+        "partner.website": (v3/*: any*/)
       }
     },
     "name": "AboutPartner_Test_Query",

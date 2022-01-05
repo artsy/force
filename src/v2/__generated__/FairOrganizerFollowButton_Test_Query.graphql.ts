@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -44,8 +45,7 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "id",
-    "type": "String!"
+    "name": "id"
   }
 ],
 v1 = [
@@ -63,10 +63,10 @@ v2 = {
   "storageKey": null
 },
 v3 = {
-  "type": "ID",
   "enumValues": null,
+  "nullable": false,
   "plural": false,
-  "nullable": false
+  "type": "ID"
 };
 return {
   "fragment": {
@@ -92,7 +92,8 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -155,42 +156,38 @@ return {
     ]
   },
   "params": {
+    "cacheID": "76c259741d94ef5c3baeb0160f91cf3a",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "fairOrganizer": {
-          "type": "FairOrganizer",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "FairOrganizer"
         },
-        "fairOrganizer.id": {
-          "type": "ID",
-          "enumValues": null,
-          "plural": false,
-          "nullable": true
-        },
-        "fairOrganizer.slug": (v3/*: any*/),
+        "fairOrganizer.id": (v3/*: any*/),
         "fairOrganizer.name": {
-          "type": "String",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "String"
         },
         "fairOrganizer.profile": {
-          "type": "Profile",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "Profile"
         },
         "fairOrganizer.profile.id": (v3/*: any*/),
         "fairOrganizer.profile.internalID": (v3/*: any*/),
         "fairOrganizer.profile.isFollowed": {
-          "type": "Boolean",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
-        }
+          "type": "Boolean"
+        },
+        "fairOrganizer.slug": (v3/*: any*/)
       }
     },
     "name": "FairOrganizerFollowButton_Test_Query",

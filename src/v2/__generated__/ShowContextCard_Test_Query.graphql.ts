@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -65,6 +66,7 @@ fragment ShowContextCard_show on Show {
       }
     }
     ... on Node {
+      __isNode: __typename
       id
     }
     ... on ExternalPartner {
@@ -96,72 +98,69 @@ v1 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "id",
+  "name": "internalID",
   "storageKey": null
 },
 v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "internalID",
+  "name": "slug",
   "storageKey": null
 },
 v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "slug",
+  "name": "href",
   "storageKey": null
 },
 v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "href",
+  "name": "name",
   "storageKey": null
 },
 v5 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "name",
+  "name": "id",
   "storageKey": null
 },
-v6 = {
-  "type": "ID",
-  "enumValues": null,
-  "plural": false,
-  "nullable": true
-},
+v6 = [
+  (v5/*: any*/)
+],
 v7 = {
-  "type": "Boolean",
   "enumValues": null,
+  "nullable": true,
   "plural": false,
-  "nullable": true
+  "type": "String"
 },
 v8 = {
-  "type": "ID",
   "enumValues": null,
+  "nullable": false,
   "plural": false,
-  "nullable": false
+  "type": "ID"
 },
 v9 = {
-  "type": "String",
   "enumValues": null,
+  "nullable": true,
   "plural": false,
-  "nullable": true
+  "type": "Image"
 },
 v10 = {
-  "type": "Image",
   "enumValues": null,
+  "nullable": false,
   "plural": false,
-  "nullable": true
+  "type": "String"
 },
 v11 = {
-  "type": "String",
   "enumValues": null,
+  "nullable": true,
   "plural": false,
-  "nullable": false
+  "type": "Boolean"
 };
 return {
   "fragment": {
@@ -187,7 +186,8 @@ return {
         "storageKey": "show(id:\"xxx\")"
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -225,14 +225,13 @@ return {
                 "name": "__typename",
                 "storageKey": null
               },
-              (v1/*: any*/),
               {
                 "kind": "InlineFragment",
                 "selections": [
+                  (v1/*: any*/),
                   (v2/*: any*/),
                   (v3/*: any*/),
                   (v4/*: any*/),
-                  (v5/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -248,7 +247,7 @@ return {
                         "name": "city",
                         "storageKey": null
                       },
-                      (v1/*: any*/)
+                      (v5/*: any*/)
                     ],
                     "storageKey": null
                   },
@@ -311,7 +310,7 @@ return {
                                 ],
                                 "storageKey": null
                               },
-                              (v1/*: any*/)
+                              (v5/*: any*/)
                             ],
                             "storageKey": null
                           }
@@ -322,7 +321,20 @@ return {
                     "storageKey": "artworksConnection(first:3,sort:\"MERCHANDISABILITY_DESC\")"
                   }
                 ],
-                "type": "Partner"
+                "type": "Partner",
+                "abstractKey": null
+              },
+              {
+                "kind": "InlineFragment",
+                "selections": (v6/*: any*/),
+                "type": "Node",
+                "abstractKey": "__isNode"
+              },
+              {
+                "kind": "InlineFragment",
+                "selections": (v6/*: any*/),
+                "type": "ExternalPartner",
+                "abstractKey": null
               }
             ],
             "storageKey": null
@@ -335,7 +347,7 @@ return {
             "name": "fair",
             "plural": false,
             "selections": [
-              (v2/*: any*/),
+              (v1/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -343,9 +355,9 @@ return {
                 "name": "isActive",
                 "storageKey": null
               },
+              (v2/*: any*/),
               (v3/*: any*/),
               (v4/*: any*/),
-              (v5/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -419,97 +431,100 @@ return {
                 ],
                 "storageKey": null
               },
-              (v1/*: any*/)
+              (v5/*: any*/)
             ],
             "storageKey": null
           },
-          (v1/*: any*/)
+          (v5/*: any*/)
         ],
         "storageKey": "show(id:\"xxx\")"
       }
     ]
   },
   "params": {
+    "cacheID": "fb7d7202bfc43bd73749e915995fb41c",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "show": {
-          "type": "Show",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
-        },
-        "show.id": (v6/*: any*/),
-        "show.isFairBooth": (v7/*: any*/),
-        "show.partner": {
-          "type": "PartnerTypes",
-          "enumValues": null,
-          "plural": false,
-          "nullable": true
+          "type": "Show"
         },
         "show.fair": {
-          "type": "Fair",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "Fair"
         },
-        "show.fair.internalID": (v8/*: any*/),
-        "show.fair.isActive": (v7/*: any*/),
-        "show.fair.slug": (v8/*: any*/),
-        "show.fair.href": (v9/*: any*/),
-        "show.fair.name": (v9/*: any*/),
-        "show.fair.id": (v6/*: any*/),
-        "show.partner.internalID": (v8/*: any*/),
-        "show.partner.slug": (v8/*: any*/),
-        "show.partner.href": (v9/*: any*/),
-        "show.partner.name": (v9/*: any*/),
-        "show.partner.locations": {
-          "type": "Location",
-          "enumValues": null,
-          "plural": true,
-          "nullable": true
-        },
-        "show.partner.artworksConnection": {
-          "type": "ArtworkConnection",
-          "enumValues": null,
-          "plural": false,
-          "nullable": true
-        },
-        "show.partner.id": (v6/*: any*/),
-        "show.fair.exhibitionPeriod": (v9/*: any*/),
-        "show.fair.startAt": (v9/*: any*/),
-        "show.fair.endAt": (v9/*: any*/),
-        "show.fair.image": (v10/*: any*/),
-        "show.partner.locations.city": (v9/*: any*/),
-        "show.partner.locations.id": (v6/*: any*/),
-        "show.partner.artworksConnection.edges": {
-          "type": "ArtworkEdge",
-          "enumValues": null,
-          "plural": true,
-          "nullable": true
-        },
+        "show.fair.endAt": (v7/*: any*/),
+        "show.fair.exhibitionPeriod": (v7/*: any*/),
+        "show.fair.href": (v7/*: any*/),
+        "show.fair.id": (v8/*: any*/),
+        "show.fair.image": (v9/*: any*/),
         "show.fair.image.cropped": {
-          "type": "CroppedImageUrl",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "CroppedImageUrl"
+        },
+        "show.fair.image.cropped.src": (v10/*: any*/),
+        "show.fair.image.cropped.srcSet": (v10/*: any*/),
+        "show.fair.internalID": (v8/*: any*/),
+        "show.fair.isActive": (v11/*: any*/),
+        "show.fair.name": (v7/*: any*/),
+        "show.fair.slug": (v8/*: any*/),
+        "show.fair.startAt": (v7/*: any*/),
+        "show.id": (v8/*: any*/),
+        "show.isFairBooth": (v11/*: any*/),
+        "show.partner": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "PartnerTypes"
+        },
+        "show.partner.__isNode": (v10/*: any*/),
+        "show.partner.__typename": (v10/*: any*/),
+        "show.partner.artworksConnection": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "ArtworkConnection"
+        },
+        "show.partner.artworksConnection.edges": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": true,
+          "type": "ArtworkEdge"
         },
         "show.partner.artworksConnection.edges.node": {
-          "type": "Artwork",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "Artwork"
         },
-        "show.fair.image.cropped.src": (v11/*: any*/),
-        "show.fair.image.cropped.srcSet": (v11/*: any*/),
-        "show.partner.artworksConnection.edges.node.image": (v10/*: any*/),
-        "show.partner.artworksConnection.edges.node.id": (v6/*: any*/),
-        "show.partner.artworksConnection.edges.node.image.url": (v9/*: any*/)
+        "show.partner.artworksConnection.edges.node.id": (v8/*: any*/),
+        "show.partner.artworksConnection.edges.node.image": (v9/*: any*/),
+        "show.partner.artworksConnection.edges.node.image.url": (v7/*: any*/),
+        "show.partner.href": (v7/*: any*/),
+        "show.partner.id": (v8/*: any*/),
+        "show.partner.internalID": (v8/*: any*/),
+        "show.partner.locations": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": true,
+          "type": "Location"
+        },
+        "show.partner.locations.city": (v7/*: any*/),
+        "show.partner.locations.id": (v8/*: any*/),
+        "show.partner.name": (v7/*: any*/),
+        "show.partner.slug": (v8/*: any*/)
       }
     },
     "name": "ShowContextCard_Test_Query",
     "operationKind": "query",
-    "text": "query ShowContextCard_Test_Query {\n  show(id: \"xxx\") {\n    ...ShowContextCard_show\n    id\n  }\n}\n\nfragment FairCard_fair on Fair {\n  name\n  image {\n    cropped(width: 768, height: 512, version: \"wide\") {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment FairTiming_fair on Fair {\n  exhibitionPeriod\n  startAt\n  endAt\n}\n\nfragment ShowContextCard_show on Show {\n  isFairBooth\n  partner {\n    __typename\n    ... on Partner {\n      internalID\n      slug\n      href\n      name\n      locations {\n        city\n        id\n      }\n      artworksConnection(first: 3, sort: MERCHANDISABILITY_DESC) {\n        edges {\n          node {\n            image {\n              url(version: \"larger\")\n            }\n            id\n          }\n        }\n      }\n    }\n    ... on Node {\n      id\n    }\n    ... on ExternalPartner {\n      id\n    }\n  }\n  fair {\n    internalID\n    isActive\n    slug\n    href\n    name\n    ...FairTiming_fair\n    ...FairCard_fair\n    id\n  }\n}\n"
+    "text": "query ShowContextCard_Test_Query {\n  show(id: \"xxx\") {\n    ...ShowContextCard_show\n    id\n  }\n}\n\nfragment FairCard_fair on Fair {\n  name\n  image {\n    cropped(width: 768, height: 512, version: \"wide\") {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment FairTiming_fair on Fair {\n  exhibitionPeriod\n  startAt\n  endAt\n}\n\nfragment ShowContextCard_show on Show {\n  isFairBooth\n  partner {\n    __typename\n    ... on Partner {\n      internalID\n      slug\n      href\n      name\n      locations {\n        city\n        id\n      }\n      artworksConnection(first: 3, sort: MERCHANDISABILITY_DESC) {\n        edges {\n          node {\n            image {\n              url(version: \"larger\")\n            }\n            id\n          }\n        }\n      }\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on ExternalPartner {\n      id\n    }\n  }\n  fair {\n    internalID\n    isActive\n    slug\n    href\n    name\n    ...FairTiming_fair\n    ...FairCard_fair\n    id\n  }\n}\n"
   }
 };
 })();

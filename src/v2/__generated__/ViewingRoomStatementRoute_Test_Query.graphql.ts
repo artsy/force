@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -31,7 +32,7 @@ export type ViewingRoomStatementRoute_Test_QueryRawResponse = {
                             readonly height: number | null;
                         }) | null;
                     }) | null;
-                    readonly id: string | null;
+                    readonly id: string;
                 }) | null;
             }) | null> | null;
         }) | null;
@@ -145,8 +146,7 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "slug",
-    "type": "ID!"
+    "name": "slug"
   }
 ],
 v1 = [
@@ -192,28 +192,28 @@ v6 = {
   "storageKey": null
 },
 v7 = {
-  "type": "String",
   "enumValues": null,
+  "nullable": true,
   "plural": false,
-  "nullable": true
+  "type": "String"
 },
 v8 = {
-  "type": "Int",
   "enumValues": null,
+  "nullable": false,
   "plural": false,
-  "nullable": true
+  "type": "ID"
 },
 v9 = {
-  "type": "ID",
   "enumValues": null,
+  "nullable": true,
   "plural": false,
-  "nullable": false
+  "type": "Int"
 },
 v10 = {
-  "type": "String",
   "enumValues": null,
+  "nullable": false,
   "plural": false,
-  "nullable": false
+  "type": "String"
 };
 return {
   "fragment": {
@@ -239,7 +239,8 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -448,89 +449,85 @@ return {
     ]
   },
   "params": {
+    "cacheID": "cfb84bd9d30f51d49c43da8b0feb49b2",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "viewingRoom": {
-          "type": "ViewingRoom",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "ViewingRoom"
         },
         "viewingRoom.artworksConnection": {
-          "type": "ArtworkConnection",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "ArtworkConnection"
         },
-        "viewingRoom.subsections": {
-          "type": "ViewingRoomSubsection",
-          "enumValues": null,
-          "plural": true,
-          "nullable": false
-        },
-        "viewingRoom.introStatement": (v7/*: any*/),
-        "viewingRoom.pullQuote": (v7/*: any*/),
-        "viewingRoom.body": (v7/*: any*/),
-        "viewingRoom.artworksConnection.totalCount": (v8/*: any*/),
-        "viewingRoom.subsections.internalID": (v9/*: any*/),
         "viewingRoom.artworksConnection.edges": {
-          "type": "ArtworkEdge",
           "enumValues": null,
+          "nullable": true,
           "plural": true,
-          "nullable": true
+          "type": "ArtworkEdge"
         },
-        "viewingRoom.subsections.title": (v7/*: any*/),
-        "viewingRoom.subsections.body": (v7/*: any*/),
-        "viewingRoom.subsections.image": {
-          "type": "ARImage",
-          "enumValues": null,
-          "plural": false,
-          "nullable": true
-        },
-        "viewingRoom.subsections.caption": (v7/*: any*/),
         "viewingRoom.artworksConnection.edges.node": {
-          "type": "Artwork",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "Artwork"
         },
-        "viewingRoom.subsections.image.width": (v8/*: any*/),
-        "viewingRoom.subsections.image.height": (v8/*: any*/),
-        "viewingRoom.subsections.image.imageURLs": {
-          "type": "ImageURLs",
-          "enumValues": null,
-          "plural": false,
-          "nullable": true
-        },
-        "viewingRoom.artworksConnection.edges.node.internalID": (v9/*: any*/),
-        "viewingRoom.artworksConnection.edges.node.id": {
-          "type": "ID",
-          "enumValues": null,
-          "plural": false,
-          "nullable": true
-        },
-        "viewingRoom.subsections.image.imageURLs.normalized": (v7/*: any*/),
         "viewingRoom.artworksConnection.edges.node.artistNames": (v7/*: any*/),
         "viewingRoom.artworksConnection.edges.node.date": (v7/*: any*/),
-        "viewingRoom.artworksConnection.edges.node.saleMessage": (v7/*: any*/),
-        "viewingRoom.artworksConnection.edges.node.title": (v7/*: any*/),
+        "viewingRoom.artworksConnection.edges.node.id": (v8/*: any*/),
         "viewingRoom.artworksConnection.edges.node.image": {
-          "type": "Image",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "Image"
         },
         "viewingRoom.artworksConnection.edges.node.image.resized": {
-          "type": "ResizedImageUrl",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "ResizedImageUrl"
         },
+        "viewingRoom.artworksConnection.edges.node.image.resized.height": (v9/*: any*/),
         "viewingRoom.artworksConnection.edges.node.image.resized.src": (v10/*: any*/),
         "viewingRoom.artworksConnection.edges.node.image.resized.srcSet": (v10/*: any*/),
-        "viewingRoom.artworksConnection.edges.node.image.resized.width": (v8/*: any*/),
-        "viewingRoom.artworksConnection.edges.node.image.resized.height": (v8/*: any*/)
+        "viewingRoom.artworksConnection.edges.node.image.resized.width": (v9/*: any*/),
+        "viewingRoom.artworksConnection.edges.node.internalID": (v8/*: any*/),
+        "viewingRoom.artworksConnection.edges.node.saleMessage": (v7/*: any*/),
+        "viewingRoom.artworksConnection.edges.node.title": (v7/*: any*/),
+        "viewingRoom.artworksConnection.totalCount": (v9/*: any*/),
+        "viewingRoom.body": (v7/*: any*/),
+        "viewingRoom.introStatement": (v7/*: any*/),
+        "viewingRoom.pullQuote": (v7/*: any*/),
+        "viewingRoom.subsections": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": true,
+          "type": "ViewingRoomSubsection"
+        },
+        "viewingRoom.subsections.body": (v7/*: any*/),
+        "viewingRoom.subsections.caption": (v7/*: any*/),
+        "viewingRoom.subsections.image": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "ARImage"
+        },
+        "viewingRoom.subsections.image.height": (v9/*: any*/),
+        "viewingRoom.subsections.image.imageURLs": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "ImageURLs"
+        },
+        "viewingRoom.subsections.image.imageURLs.normalized": (v7/*: any*/),
+        "viewingRoom.subsections.image.width": (v9/*: any*/),
+        "viewingRoom.subsections.internalID": (v8/*: any*/),
+        "viewingRoom.subsections.title": (v7/*: any*/)
       }
     },
     "name": "ViewingRoomStatementRoute_Test_Query",

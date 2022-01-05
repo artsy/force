@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -65,22 +66,22 @@ v1 = {
   "storageKey": null
 },
 v2 = {
-  "type": "ID",
   "enumValues": null,
+  "nullable": false,
   "plural": false,
-  "nullable": false
+  "type": "ID"
 },
 v3 = {
-  "type": "Int",
   "enumValues": null,
+  "nullable": false,
   "plural": false,
-  "nullable": false
+  "type": "Int"
 },
 v4 = {
-  "type": "String",
   "enumValues": null,
+  "nullable": false,
   "plural": false,
-  "nullable": false
+  "type": "String"
 };
 return {
   "fragment": {
@@ -106,7 +107,8 @@ return {
         "storageKey": "fairOrganizer(id:\"the-armory-show\")"
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -259,63 +261,59 @@ return {
     ]
   },
   "params": {
+    "cacheID": "7386bdfb7dc7b35a3ec13a67aae86838",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "fairOrganizer": {
-          "type": "FairOrganizer",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "FairOrganizer"
         },
-        "fairOrganizer.id": {
-          "type": "ID",
-          "enumValues": null,
-          "plural": false,
-          "nullable": true
-        },
+        "fairOrganizer.id": (v2/*: any*/),
         "fairOrganizer.pastFairs": {
-          "type": "FairConnection",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "FairConnection"
         },
         "fairOrganizer.pastFairs.edges": {
-          "type": "FairEdge",
           "enumValues": null,
+          "nullable": true,
           "plural": true,
-          "nullable": true
+          "type": "FairEdge"
         },
         "fairOrganizer.pastFairs.edges.node": {
-          "type": "Fair",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "Fair"
         },
         "fairOrganizer.pastFairs.edges.node.id": (v2/*: any*/),
-        "fairOrganizer.pastFairs.edges.node.slug": (v2/*: any*/),
-        "fairOrganizer.pastFairs.edges.node.name": {
-          "type": "String",
-          "enumValues": null,
-          "plural": false,
-          "nullable": true
-        },
         "fairOrganizer.pastFairs.edges.node.image": {
-          "type": "Image",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "Image"
         },
         "fairOrganizer.pastFairs.edges.node.image.cropped": {
-          "type": "CroppedImageUrl",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "CroppedImageUrl"
         },
-        "fairOrganizer.pastFairs.edges.node.image.cropped.width": (v3/*: any*/),
         "fairOrganizer.pastFairs.edges.node.image.cropped.height": (v3/*: any*/),
         "fairOrganizer.pastFairs.edges.node.image.cropped.src": (v4/*: any*/),
-        "fairOrganizer.pastFairs.edges.node.image.cropped.srcSet": (v4/*: any*/)
+        "fairOrganizer.pastFairs.edges.node.image.cropped.srcSet": (v4/*: any*/),
+        "fairOrganizer.pastFairs.edges.node.image.cropped.width": (v3/*: any*/),
+        "fairOrganizer.pastFairs.edges.node.name": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "String"
+        },
+        "fairOrganizer.pastFairs.edges.node.slug": (v2/*: any*/)
       }
     },
     "name": "FairOrganizerPastEventsRail_Test_Query",

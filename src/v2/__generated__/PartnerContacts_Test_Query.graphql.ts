@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -33,7 +34,7 @@ export type PartnerContacts_Test_QueryRawResponse = {
                 }) | null;
             }) | null> | null;
         }) | null;
-        readonly id: string | null;
+        readonly id: string;
     }) | null;
 };
 export type PartnerContacts_Test_Query = {
@@ -116,16 +117,22 @@ v2 = {
   "storageKey": null
 },
 v3 = {
-  "type": "String",
   "enumValues": null,
+  "nullable": false,
   "plural": false,
-  "nullable": true
+  "type": "ID"
 },
 v4 = {
-  "type": "Float",
   "enumValues": null,
+  "nullable": true,
   "plural": false,
-  "nullable": true
+  "type": "String"
+},
+v5 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "Float"
 };
 return {
   "fragment": {
@@ -173,7 +180,8 @@ return {
         "storageKey": "partner(id:\"white-cube\")"
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -304,60 +312,51 @@ return {
     ]
   },
   "params": {
+    "cacheID": "71f07a37256f0b1ba2ced9768f36ea37",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "partner": {
-          "type": "Partner",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "Partner"
         },
+        "partner.id": (v3/*: any*/),
         "partner.locations": {
-          "type": "LocationConnection",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
-        },
-        "partner.id": {
-          "type": "ID",
-          "enumValues": null,
-          "plural": false,
-          "nullable": true
+          "type": "LocationConnection"
         },
         "partner.locations.edges": {
-          "type": "LocationEdge",
           "enumValues": null,
+          "nullable": true,
           "plural": true,
-          "nullable": true
+          "type": "LocationEdge"
         },
         "partner.locations.edges.node": {
-          "type": "Location",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "Location"
         },
-        "partner.locations.edges.node.id": {
-          "type": "ID",
-          "enumValues": null,
-          "plural": false,
-          "nullable": false
-        },
-        "partner.locations.edges.node.city": (v3/*: any*/),
-        "partner.locations.edges.node.phone": (v3/*: any*/),
-        "partner.locations.edges.node.state": (v3/*: any*/),
-        "partner.locations.edges.node.address": (v3/*: any*/),
-        "partner.locations.edges.node.address2": (v3/*: any*/),
-        "partner.locations.edges.node.postalCode": (v3/*: any*/),
-        "partner.locations.edges.node.displayCountry": (v3/*: any*/),
+        "partner.locations.edges.node.address": (v4/*: any*/),
+        "partner.locations.edges.node.address2": (v4/*: any*/),
+        "partner.locations.edges.node.city": (v4/*: any*/),
         "partner.locations.edges.node.coordinates": {
-          "type": "LatLng",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "LatLng"
         },
-        "partner.locations.edges.node.coordinates.lat": (v4/*: any*/),
-        "partner.locations.edges.node.coordinates.lng": (v4/*: any*/)
+        "partner.locations.edges.node.coordinates.lat": (v5/*: any*/),
+        "partner.locations.edges.node.coordinates.lng": (v5/*: any*/),
+        "partner.locations.edges.node.displayCountry": (v4/*: any*/),
+        "partner.locations.edges.node.id": (v3/*: any*/),
+        "partner.locations.edges.node.phone": (v4/*: any*/),
+        "partner.locations.edges.node.postalCode": (v4/*: any*/),
+        "partner.locations.edges.node.state": (v4/*: any*/)
       }
     },
     "name": "PartnerContacts_Test_Query",

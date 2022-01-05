@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -13,26 +14,30 @@ export type OfferHistoryItemTestQueryResponse = {
 export type OfferHistoryItemTestQueryRawResponse = {
     readonly order: ({
         readonly __typename: "CommerceOfferOrder";
+        readonly __isCommerceOrder: "CommerceOfferOrder";
         readonly lineItems: ({
             readonly edges: ReadonlyArray<({
                 readonly node: ({
                     readonly artworkOrEditionSet: ({
                         readonly __typename: "Artwork";
-                        readonly id: string | null;
+                        readonly __isNode: "Artwork";
+                        readonly id: string;
                         readonly price: string | null;
                     } | {
                         readonly __typename: "EditionSet";
-                        readonly id: string | null;
+                        readonly __isNode: "EditionSet";
+                        readonly id: string;
                         readonly price: string | null;
                     } | {
                         readonly __typename: string;
-                        readonly id: string | null;
+                        readonly __isNode: string;
+                        readonly id: string;
                     }) | null;
-                    readonly id: string | null;
+                    readonly id: string;
                 }) | null;
             }) | null> | null;
         }) | null;
-        readonly id: string | null;
+        readonly id: string;
         readonly offers: ({
             readonly edges: ReadonlyArray<({
                 readonly node: ({
@@ -40,7 +45,7 @@ export type OfferHistoryItemTestQueryRawResponse = {
                     readonly amount: string | null;
                     readonly createdAt: string;
                     readonly fromParticipant: CommerceOrderParticipantEnum | null;
-                    readonly id: string | null;
+                    readonly id: string;
                 }) | null;
             }) | null> | null;
         }) | null;
@@ -52,30 +57,34 @@ export type OfferHistoryItemTestQueryRawResponse = {
             readonly shippingTotal: string | null;
             readonly taxTotal: string | null;
             readonly note: string | null;
-            readonly id: string | null;
+            readonly id: string;
         }) | null;
     } | {
-        readonly __typename: string | null;
+        readonly __typename: string;
+        readonly __isCommerceOrder: string;
         readonly lineItems: ({
             readonly edges: ReadonlyArray<({
                 readonly node: ({
                     readonly artworkOrEditionSet: ({
                         readonly __typename: "Artwork";
-                        readonly id: string | null;
+                        readonly __isNode: "Artwork";
+                        readonly id: string;
                         readonly price: string | null;
                     } | {
                         readonly __typename: "EditionSet";
-                        readonly id: string | null;
+                        readonly __isNode: "EditionSet";
+                        readonly id: string;
                         readonly price: string | null;
                     } | {
                         readonly __typename: string;
-                        readonly id: string | null;
+                        readonly __isNode: string;
+                        readonly id: string;
                     }) | null;
-                    readonly id: string | null;
+                    readonly id: string;
                 }) | null;
             }) | null> | null;
         }) | null;
-        readonly id: string | null;
+        readonly id: string;
     }) | null;
 };
 export type OfferHistoryItemTestQuery = {
@@ -96,6 +105,7 @@ query OfferHistoryItemTestQuery {
 }
 
 fragment OfferHistoryItem_order on CommerceOrder {
+  __isCommerceOrder: __typename
   lineItems {
     edges {
       node {
@@ -109,6 +119,7 @@ fragment OfferHistoryItem_order on CommerceOrder {
             id
           }
           ... on Node {
+            __isNode: __typename
             id
           }
         }
@@ -161,18 +172,16 @@ v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
+  "name": "price",
+  "storageKey": null
+},
+v3 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v3 = [
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "price",
-    "storageKey": null
-  }
-],
 v4 = {
   "alias": null,
   "args": null,
@@ -202,43 +211,37 @@ v7 = {
   "storageKey": null
 },
 v8 = {
-  "type": "ID",
   "enumValues": null,
+  "nullable": false,
   "plural": false,
-  "nullable": true
+  "type": "String"
 },
 v9 = {
-  "type": "String",
   "enumValues": null,
+  "nullable": false,
   "plural": false,
-  "nullable": false
+  "type": "ID"
 },
 v10 = {
-  "type": "CommerceOffer",
   "enumValues": null,
+  "nullable": true,
   "plural": false,
-  "nullable": true
+  "type": "CommerceOffer"
 },
 v11 = {
-  "type": "ID",
   "enumValues": null,
+  "nullable": true,
   "plural": false,
-  "nullable": false
+  "type": "String"
 },
 v12 = {
-  "type": "CommerceOrderParticipantEnum",
   "enumValues": [
     "BUYER",
     "SELLER"
   ],
+  "nullable": true,
   "plural": false,
-  "nullable": true
-},
-v13 = {
-  "type": "String",
-  "enumValues": null,
-  "plural": false,
-  "nullable": true
+  "type": "CommerceOrderParticipantEnum"
 };
 return {
   "fragment": {
@@ -264,7 +267,8 @@ return {
         "storageKey": "commerceOrder(id:\"foo\")"
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -281,6 +285,10 @@ return {
         "plural": false,
         "selections": [
           (v1/*: any*/),
+          {
+            "kind": "TypeDiscriminator",
+            "abstractKey": "__isCommerceOrder"
+          },
           {
             "alias": null,
             "args": null,
@@ -314,21 +322,35 @@ return {
                         "plural": false,
                         "selections": [
                           (v1/*: any*/),
-                          (v2/*: any*/),
                           {
                             "kind": "InlineFragment",
-                            "selections": (v3/*: any*/),
-                            "type": "Artwork"
+                            "selections": [
+                              (v2/*: any*/)
+                            ],
+                            "type": "Artwork",
+                            "abstractKey": null
                           },
                           {
                             "kind": "InlineFragment",
-                            "selections": (v3/*: any*/),
-                            "type": "EditionSet"
+                            "selections": [
+                              (v2/*: any*/),
+                              (v3/*: any*/)
+                            ],
+                            "type": "EditionSet",
+                            "abstractKey": null
+                          },
+                          {
+                            "kind": "InlineFragment",
+                            "selections": [
+                              (v3/*: any*/)
+                            ],
+                            "type": "Node",
+                            "abstractKey": "__isNode"
                           }
                         ],
                         "storageKey": null
                       },
-                      (v2/*: any*/)
+                      (v3/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -338,7 +360,7 @@ return {
             ],
             "storageKey": null
           },
-          (v2/*: any*/),
+          (v3/*: any*/),
           {
             "kind": "InlineFragment",
             "selections": [
@@ -382,7 +404,7 @@ return {
                             "storageKey": "createdAt(format:\"MMM D\")"
                           },
                           (v7/*: any*/),
-                          (v2/*: any*/)
+                          (v3/*: any*/)
                         ],
                         "storageKey": null
                       }
@@ -431,12 +453,13 @@ return {
                     "name": "note",
                     "storageKey": null
                   },
-                  (v2/*: any*/)
+                  (v3/*: any*/)
                 ],
                 "storageKey": null
               }
             ],
-            "type": "CommerceOfferOrder"
+            "type": "CommerceOfferOrder",
+            "abstractKey": null
           }
         ],
         "storageKey": "commerceOrder(id:\"foo\")"
@@ -444,76 +467,80 @@ return {
     ]
   },
   "params": {
+    "cacheID": "5d4669f74fce276f53e92ecde8a7218a",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "order": {
-          "type": "CommerceOrder",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "CommerceOrder"
         },
-        "order.id": (v8/*: any*/),
+        "order.__isCommerceOrder": (v8/*: any*/),
+        "order.__typename": (v8/*: any*/),
+        "order.currencyCode": (v8/*: any*/),
+        "order.id": (v9/*: any*/),
+        "order.lastOffer": (v10/*: any*/),
+        "order.lastOffer.amount": (v11/*: any*/),
+        "order.lastOffer.fromParticipant": (v12/*: any*/),
+        "order.lastOffer.id": (v9/*: any*/),
+        "order.lastOffer.internalID": (v9/*: any*/),
+        "order.lastOffer.note": (v11/*: any*/),
+        "order.lastOffer.shippingTotal": (v11/*: any*/),
+        "order.lastOffer.taxTotal": (v11/*: any*/),
         "order.lineItems": {
-          "type": "CommerceLineItemConnection",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "CommerceLineItemConnection"
         },
         "order.lineItems.edges": {
-          "type": "CommerceLineItemEdge",
           "enumValues": null,
+          "nullable": true,
           "plural": true,
-          "nullable": true
+          "type": "CommerceLineItemEdge"
         },
-        "order.offers": {
-          "type": "CommerceOfferConnection",
-          "enumValues": null,
-          "plural": false,
-          "nullable": true
-        },
-        "order.currencyCode": (v9/*: any*/),
-        "order.lastOffer": (v10/*: any*/),
         "order.lineItems.edges.node": {
-          "type": "CommerceLineItem",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "CommerceLineItem"
+        },
+        "order.lineItems.edges.node.artworkOrEditionSet": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "ArtworkOrEditionSetType"
+        },
+        "order.lineItems.edges.node.artworkOrEditionSet.__isNode": (v8/*: any*/),
+        "order.lineItems.edges.node.artworkOrEditionSet.__typename": (v8/*: any*/),
+        "order.lineItems.edges.node.artworkOrEditionSet.id": (v9/*: any*/),
+        "order.lineItems.edges.node.artworkOrEditionSet.price": (v11/*: any*/),
+        "order.lineItems.edges.node.id": (v9/*: any*/),
+        "order.offers": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "CommerceOfferConnection"
         },
         "order.offers.edges": {
-          "type": "CommerceOfferEdge",
           "enumValues": null,
+          "nullable": true,
           "plural": true,
-          "nullable": true
+          "type": "CommerceOfferEdge"
         },
-        "order.lastOffer.internalID": (v11/*: any*/),
-        "order.lastOffer.fromParticipant": (v12/*: any*/),
-        "order.lastOffer.amount": (v13/*: any*/),
-        "order.lastOffer.shippingTotal": (v13/*: any*/),
-        "order.lastOffer.taxTotal": (v13/*: any*/),
-        "order.lastOffer.note": (v13/*: any*/),
-        "order.lastOffer.id": (v8/*: any*/),
-        "order.lineItems.edges.node.artworkOrEditionSet": {
-          "type": "ArtworkOrEditionSetType",
-          "enumValues": null,
-          "plural": false,
-          "nullable": true
-        },
-        "order.lineItems.edges.node.id": (v8/*: any*/),
         "order.offers.edges.node": (v10/*: any*/),
-        "order.lineItems.edges.node.artworkOrEditionSet.__typename": (v9/*: any*/),
-        "order.offers.edges.node.internalID": (v11/*: any*/),
-        "order.offers.edges.node.amount": (v13/*: any*/),
-        "order.offers.edges.node.createdAt": (v9/*: any*/),
+        "order.offers.edges.node.amount": (v11/*: any*/),
+        "order.offers.edges.node.createdAt": (v8/*: any*/),
         "order.offers.edges.node.fromParticipant": (v12/*: any*/),
-        "order.offers.edges.node.id": (v8/*: any*/),
-        "order.lineItems.edges.node.artworkOrEditionSet.price": (v13/*: any*/),
-        "order.lineItems.edges.node.artworkOrEditionSet.id": (v8/*: any*/)
+        "order.offers.edges.node.id": (v9/*: any*/),
+        "order.offers.edges.node.internalID": (v9/*: any*/)
       }
     },
     "name": "OfferHistoryItemTestQuery",
     "operationKind": "query",
-    "text": "query OfferHistoryItemTestQuery {\n  order: commerceOrder(id: \"foo\") {\n    __typename\n    ...OfferHistoryItem_order\n    id\n  }\n}\n\nfragment OfferHistoryItem_order on CommerceOrder {\n  lineItems {\n    edges {\n      node {\n        artworkOrEditionSet {\n          __typename\n          ... on Artwork {\n            price\n          }\n          ... on EditionSet {\n            price\n            id\n          }\n          ... on Node {\n            id\n          }\n        }\n        id\n      }\n    }\n  }\n  ... on CommerceOfferOrder {\n    offers {\n      edges {\n        node {\n          internalID\n          amount(precision: 2)\n          createdAt(format: \"MMM D\")\n          fromParticipant\n          id\n        }\n      }\n    }\n    currencyCode\n    lastOffer {\n      internalID\n      fromParticipant\n      amount(precision: 2)\n      shippingTotal(precision: 2)\n      taxTotal(precision: 2)\n      note\n      id\n    }\n  }\n}\n"
+    "text": "query OfferHistoryItemTestQuery {\n  order: commerceOrder(id: \"foo\") {\n    __typename\n    ...OfferHistoryItem_order\n    id\n  }\n}\n\nfragment OfferHistoryItem_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  lineItems {\n    edges {\n      node {\n        artworkOrEditionSet {\n          __typename\n          ... on Artwork {\n            price\n          }\n          ... on EditionSet {\n            price\n            id\n          }\n          ... on Node {\n            __isNode: __typename\n            id\n          }\n        }\n        id\n      }\n    }\n  }\n  ... on CommerceOfferOrder {\n    offers {\n      edges {\n        node {\n          internalID\n          amount(precision: 2)\n          createdAt(format: \"MMM D\")\n          fromParticipant\n          id\n        }\n      }\n    }\n    currencyCode\n    lastOffer {\n      internalID\n      fromParticipant\n      amount(precision: 2)\n      shippingTotal(precision: 2)\n      taxTotal(precision: 2)\n      note\n      id\n    }\n  }\n}\n"
   }
 };
 })();

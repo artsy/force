@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -133,40 +134,34 @@ v4 = [
   }
 ],
 v5 = {
-  "type": "ID",
   "enumValues": null,
+  "nullable": false,
   "plural": false,
-  "nullable": true
+  "type": "ID"
 },
 v6 = {
-  "type": "ID",
   "enumValues": null,
+  "nullable": true,
   "plural": false,
-  "nullable": false
+  "type": "Image"
 },
 v7 = {
-  "type": "Image",
   "enumValues": null,
+  "nullable": false,
   "plural": false,
-  "nullable": true
+  "type": "String"
 },
 v8 = {
-  "type": "String",
   "enumValues": null,
+  "nullable": true,
   "plural": false,
-  "nullable": true
+  "type": "String"
 },
 v9 = {
-  "type": "Boolean",
   "enumValues": null,
+  "nullable": true,
   "plural": false,
-  "nullable": true
-},
-v10 = {
-  "type": "String",
-  "enumValues": null,
-  "plural": false,
-  "nullable": false
+  "type": "Boolean"
 };
 return {
   "fragment": {
@@ -192,7 +187,8 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -440,111 +436,112 @@ return {
     ]
   },
   "params": {
+    "cacheID": "cd42075dcd6364248db67e433418d777",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "me": {
-          "type": "Me",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "Me"
         },
         "me.id": (v5/*: any*/),
         "me.myBids": {
-          "type": "MyBids",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "MyBids"
         },
         "me.myBids.active": {
-          "type": "MyBid",
           "enumValues": null,
+          "nullable": true,
           "plural": true,
-          "nullable": true
+          "type": "MyBid"
         },
         "me.myBids.active.sale": {
-          "type": "Sale",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "Sale"
         },
-        "me.myBids.active.saleArtworks": {
-          "type": "SaleArtwork",
+        "me.myBids.active.sale.coverImage": (v6/*: any*/),
+        "me.myBids.active.sale.coverImage.cropped": {
           "enumValues": null,
-          "plural": true,
-          "nullable": true
+          "nullable": true,
+          "plural": false,
+          "type": "CroppedImageUrl"
         },
-        "me.myBids.active.sale.slug": (v6/*: any*/),
-        "me.myBids.active.sale.id": (v5/*: any*/),
-        "me.myBids.active.saleArtworks.id": (v5/*: any*/),
-        "me.myBids.active.sale.coverImage": (v7/*: any*/),
+        "me.myBids.active.sale.coverImage.cropped.src": (v7/*: any*/),
+        "me.myBids.active.sale.coverImage.cropped.srcSet": (v7/*: any*/),
         "me.myBids.active.sale.formattedStartDateTime": (v8/*: any*/),
+        "me.myBids.active.sale.id": (v5/*: any*/),
         "me.myBids.active.sale.name": (v8/*: any*/),
         "me.myBids.active.sale.partner": {
-          "type": "Partner",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "Partner"
+        },
+        "me.myBids.active.sale.partner.id": (v5/*: any*/),
+        "me.myBids.active.sale.partner.name": (v8/*: any*/),
+        "me.myBids.active.sale.slug": (v5/*: any*/),
+        "me.myBids.active.saleArtworks": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": true,
+          "type": "SaleArtwork"
         },
         "me.myBids.active.saleArtworks.artwork": {
-          "type": "Artwork",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "Artwork"
         },
-        "me.myBids.active.saleArtworks.estimate": (v8/*: any*/),
+        "me.myBids.active.saleArtworks.artwork.artistNames": (v8/*: any*/),
+        "me.myBids.active.saleArtworks.artwork.id": (v5/*: any*/),
+        "me.myBids.active.saleArtworks.artwork.image": (v6/*: any*/),
+        "me.myBids.active.saleArtworks.artwork.image.resized": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "ResizedImageUrl"
+        },
+        "me.myBids.active.saleArtworks.artwork.image.resized.src": (v7/*: any*/),
+        "me.myBids.active.saleArtworks.artwork.image.resized.srcSet": (v7/*: any*/),
         "me.myBids.active.saleArtworks.currentBid": {
-          "type": "SaleArtworkCurrentBid",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "SaleArtworkCurrentBid"
         },
-        "me.myBids.active.saleArtworks.internalID": (v6/*: any*/),
+        "me.myBids.active.saleArtworks.currentBid.display": (v8/*: any*/),
+        "me.myBids.active.saleArtworks.estimate": (v8/*: any*/),
+        "me.myBids.active.saleArtworks.id": (v5/*: any*/),
+        "me.myBids.active.saleArtworks.internalID": (v5/*: any*/),
         "me.myBids.active.saleArtworks.isHighestBidder": (v9/*: any*/),
         "me.myBids.active.saleArtworks.isWatching": (v9/*: any*/),
-        "me.myBids.active.saleArtworks.lotState": {
-          "type": "CausalityLotState",
-          "enumValues": null,
-          "plural": false,
-          "nullable": true
-        },
         "me.myBids.active.saleArtworks.lotLabel": (v8/*: any*/),
-        "me.myBids.active.saleArtworks.slug": (v6/*: any*/),
-        "me.myBids.active.sale.coverImage.cropped": {
-          "type": "CroppedImageUrl",
+        "me.myBids.active.saleArtworks.lotState": {
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "CausalityLotState"
         },
-        "me.myBids.active.sale.partner.name": (v8/*: any*/),
-        "me.myBids.active.sale.partner.id": (v5/*: any*/),
-        "me.myBids.active.saleArtworks.artwork.artistNames": (v8/*: any*/),
-        "me.myBids.active.saleArtworks.artwork.image": (v7/*: any*/),
-        "me.myBids.active.saleArtworks.artwork.id": (v5/*: any*/),
-        "me.myBids.active.saleArtworks.currentBid.display": (v8/*: any*/),
         "me.myBids.active.saleArtworks.lotState.bidCount": {
-          "type": "Int",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "Int"
         },
         "me.myBids.active.saleArtworks.lotState.sellingPrice": {
-          "type": "Money",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
-        },
-        "me.myBids.active.sale.coverImage.cropped.src": (v10/*: any*/),
-        "me.myBids.active.sale.coverImage.cropped.srcSet": (v10/*: any*/),
-        "me.myBids.active.saleArtworks.artwork.image.resized": {
-          "type": "ResizedImageUrl",
-          "enumValues": null,
-          "plural": false,
-          "nullable": true
+          "type": "Money"
         },
         "me.myBids.active.saleArtworks.lotState.sellingPrice.display": (v8/*: any*/),
-        "me.myBids.active.saleArtworks.artwork.image.resized.src": (v10/*: any*/),
-        "me.myBids.active.saleArtworks.artwork.image.resized.srcSet": (v10/*: any*/)
+        "me.myBids.active.saleArtworks.slug": (v5/*: any*/)
       }
     },
     "name": "MyBids_Test_Query",

@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -32,11 +33,11 @@ export type PartnerHeader_Test_QueryRawResponse = {
             readonly edges: ReadonlyArray<({
                 readonly node: ({
                     readonly city: string | null;
-                    readonly id: string | null;
+                    readonly id: string;
                 }) | null;
             }) | null> | null;
         }) | null;
-        readonly id: string | null;
+        readonly id: string;
     }) | null;
 };
 export type PartnerHeader_Test_Query = {
@@ -119,28 +120,22 @@ v3 = {
   "storageKey": null
 },
 v4 = {
-  "type": "ID",
   "enumValues": null,
+  "nullable": false,
   "plural": false,
-  "nullable": true
+  "type": "ID"
 },
 v5 = {
-  "type": "String",
   "enumValues": null,
+  "nullable": true,
   "plural": false,
-  "nullable": true
+  "type": "String"
 },
 v6 = {
-  "type": "ID",
   "enumValues": null,
+  "nullable": false,
   "plural": false,
-  "nullable": false
-},
-v7 = {
-  "type": "String",
-  "enumValues": null,
-  "plural": false,
-  "nullable": false
+  "type": "String"
 };
 return {
   "fragment": {
@@ -166,7 +161,8 @@ return {
         "storageKey": "partner(id:\"white-cube\")"
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -332,75 +328,76 @@ return {
     ]
   },
   "params": {
+    "cacheID": "787df13f06f3422cee9fe1286bd9e366",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "partner": {
-          "type": "Partner",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "Partner"
         },
         "partner.id": (v4/*: any*/),
-        "partner.name": (v5/*: any*/),
-        "partner.type": (v5/*: any*/),
-        "partner.slug": (v6/*: any*/),
-        "partner.profile": {
-          "type": "Profile",
-          "enumValues": null,
-          "plural": false,
-          "nullable": true
-        },
         "partner.locations": {
-          "type": "LocationConnection",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
-        },
-        "partner.profile.icon": {
-          "type": "Image",
-          "enumValues": null,
-          "plural": false,
-          "nullable": true
-        },
-        "partner.profile.id": (v6/*: any*/),
-        "partner.locations.totalCount": {
-          "type": "Int",
-          "enumValues": null,
-          "plural": false,
-          "nullable": true
+          "type": "LocationConnection"
         },
         "partner.locations.edges": {
-          "type": "LocationEdge",
           "enumValues": null,
+          "nullable": true,
           "plural": true,
-          "nullable": true
-        },
-        "partner.profile.icon.resized": {
-          "type": "ResizedImageUrl",
-          "enumValues": null,
-          "plural": false,
-          "nullable": true
-        },
-        "partner.profile.slug": (v6/*: any*/),
-        "partner.profile.name": (v5/*: any*/),
-        "partner.profile.internalID": (v6/*: any*/),
-        "partner.profile.is_followed": {
-          "type": "Boolean",
-          "enumValues": null,
-          "plural": false,
-          "nullable": true
+          "type": "LocationEdge"
         },
         "partner.locations.edges.node": {
-          "type": "Location",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "Location"
         },
-        "partner.profile.icon.resized.src": (v7/*: any*/),
-        "partner.profile.icon.resized.srcSet": (v7/*: any*/),
         "partner.locations.edges.node.city": (v5/*: any*/),
-        "partner.locations.edges.node.id": (v4/*: any*/)
+        "partner.locations.edges.node.id": (v4/*: any*/),
+        "partner.locations.totalCount": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Int"
+        },
+        "partner.name": (v5/*: any*/),
+        "partner.profile": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Profile"
+        },
+        "partner.profile.icon": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Image"
+        },
+        "partner.profile.icon.resized": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "ResizedImageUrl"
+        },
+        "partner.profile.icon.resized.src": (v6/*: any*/),
+        "partner.profile.icon.resized.srcSet": (v6/*: any*/),
+        "partner.profile.id": (v4/*: any*/),
+        "partner.profile.internalID": (v4/*: any*/),
+        "partner.profile.is_followed": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Boolean"
+        },
+        "partner.profile.name": (v5/*: any*/),
+        "partner.profile.slug": (v4/*: any*/),
+        "partner.slug": (v4/*: any*/),
+        "partner.type": (v5/*: any*/)
       }
     },
     "name": "PartnerHeader_Test_Query",

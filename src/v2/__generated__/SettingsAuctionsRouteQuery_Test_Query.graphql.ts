@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -129,40 +130,34 @@ v3 = [
   }
 ],
 v4 = {
-  "type": "ID",
   "enumValues": null,
+  "nullable": false,
   "plural": false,
-  "nullable": true
+  "type": "ID"
 },
 v5 = {
-  "type": "Boolean",
   "enumValues": null,
+  "nullable": true,
   "plural": false,
-  "nullable": true
+  "type": "Boolean"
 },
 v6 = {
-  "type": "ID",
   "enumValues": null,
+  "nullable": true,
   "plural": false,
-  "nullable": false
+  "type": "String"
 },
 v7 = {
-  "type": "String",
   "enumValues": null,
+  "nullable": false,
   "plural": false,
-  "nullable": true
+  "type": "String"
 },
 v8 = {
-  "type": "Sale",
   "enumValues": null,
+  "nullable": true,
   "plural": false,
-  "nullable": true
-},
-v9 = {
-  "type": "String",
-  "enumValues": null,
-  "plural": false,
-  "nullable": false
+  "type": "Sale"
 };
 return {
   "fragment": {
@@ -188,7 +183,8 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -526,138 +522,139 @@ return {
     ]
   },
   "params": {
+    "cacheID": "96767ee7a3c1154be12e6bb92faec2c9",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "me": {
-          "type": "Me",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "Me"
         },
         "me.id": (v4/*: any*/),
         "me.lotStandings": {
-          "type": "LotStanding",
           "enumValues": null,
+          "nullable": true,
           "plural": true,
-          "nullable": true
+          "type": "LotStanding"
         },
-        "me.myBids": {
-          "type": "MyBids",
-          "enumValues": null,
-          "plural": false,
-          "nullable": true
-        },
-        "me.saleRegistrationsConnection": {
-          "type": "SaleRegistrationConnection",
-          "enumValues": null,
-          "plural": false,
-          "nullable": true
-        },
-        "me.lotStandings.isLeadingBidder": (v5/*: any*/),
         "me.lotStandings.activeBid": {
-          "type": "BidderPosition",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "BidderPosition"
         },
+        "me.lotStandings.activeBid.id": (v4/*: any*/),
+        "me.lotStandings.isLeadingBidder": (v5/*: any*/),
         "me.lotStandings.saleArtwork": {
-          "type": "SaleArtwork",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
-        },
-        "me.myBids.closed": {
-          "type": "MyBid",
-          "enumValues": null,
-          "plural": true,
-          "nullable": true
-        },
-        "me.saleRegistrationsConnection.edges": {
-          "type": "SaleRegistrationEdge",
-          "enumValues": null,
-          "plural": true,
-          "nullable": true
-        },
-        "me.lotStandings.activeBid.id": (v6/*: any*/),
-        "me.lotStandings.saleArtwork.lotLabel": (v7/*: any*/),
-        "me.lotStandings.saleArtwork.highestBid": {
-          "type": "SaleArtworkHighestBid",
-          "enumValues": null,
-          "plural": false,
-          "nullable": true
-        },
-        "me.lotStandings.saleArtwork.counts": {
-          "type": "SaleArtworkCounts",
-          "enumValues": null,
-          "plural": false,
-          "nullable": true
+          "type": "SaleArtwork"
         },
         "me.lotStandings.saleArtwork.artwork": {
-          "type": "Artwork",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
-        },
-        "me.lotStandings.saleArtwork.id": (v4/*: any*/),
-        "me.myBids.closed.sale": (v8/*: any*/),
-        "me.saleRegistrationsConnection.edges.node": {
-          "type": "SaleRegistration",
-          "enumValues": null,
-          "plural": false,
-          "nullable": true
-        },
-        "me.lotStandings.saleArtwork.highestBid.display": (v7/*: any*/),
-        "me.lotStandings.saleArtwork.counts.bidderPositions": {
-          "type": "FormattedNumber",
-          "enumValues": null,
-          "plural": false,
-          "nullable": true
-        },
-        "me.lotStandings.saleArtwork.artwork.title": (v7/*: any*/),
-        "me.lotStandings.saleArtwork.artwork.href": (v7/*: any*/),
-        "me.lotStandings.saleArtwork.artwork.image": {
-          "type": "Image",
-          "enumValues": null,
-          "plural": false,
-          "nullable": true
+          "type": "Artwork"
         },
         "me.lotStandings.saleArtwork.artwork.artist": {
-          "type": "Artist",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "Artist"
         },
-        "me.lotStandings.saleArtwork.artwork.id": (v4/*: any*/),
-        "me.myBids.closed.sale.name": (v7/*: any*/),
-        "me.myBids.closed.sale.href": (v7/*: any*/),
-        "me.myBids.closed.sale.endAt": (v7/*: any*/),
-        "me.myBids.closed.sale.profile": {
-          "type": "Profile",
-          "enumValues": null,
-          "plural": false,
-          "nullable": true
-        },
-        "me.myBids.closed.sale.id": (v4/*: any*/),
-        "me.saleRegistrationsConnection.edges.node.sale": (v8/*: any*/),
-        "me.saleRegistrationsConnection.edges.node.id": (v4/*: any*/),
-        "me.lotStandings.saleArtwork.artwork.image.cropped": {
-          "type": "CroppedImageUrl",
-          "enumValues": null,
-          "plural": false,
-          "nullable": true
-        },
-        "me.lotStandings.saleArtwork.artwork.artist.name": (v7/*: any*/),
         "me.lotStandings.saleArtwork.artwork.artist.id": (v4/*: any*/),
-        "me.myBids.closed.sale.profile.bio": (v7/*: any*/),
+        "me.lotStandings.saleArtwork.artwork.artist.name": (v6/*: any*/),
+        "me.lotStandings.saleArtwork.artwork.href": (v6/*: any*/),
+        "me.lotStandings.saleArtwork.artwork.id": (v4/*: any*/),
+        "me.lotStandings.saleArtwork.artwork.image": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Image"
+        },
+        "me.lotStandings.saleArtwork.artwork.image.cropped": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "CroppedImageUrl"
+        },
+        "me.lotStandings.saleArtwork.artwork.image.cropped.src": (v7/*: any*/),
+        "me.lotStandings.saleArtwork.artwork.image.cropped.srcSet": (v7/*: any*/),
+        "me.lotStandings.saleArtwork.artwork.title": (v6/*: any*/),
+        "me.lotStandings.saleArtwork.counts": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "SaleArtworkCounts"
+        },
+        "me.lotStandings.saleArtwork.counts.bidderPositions": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "FormattedNumber"
+        },
+        "me.lotStandings.saleArtwork.highestBid": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "SaleArtworkHighestBid"
+        },
+        "me.lotStandings.saleArtwork.highestBid.display": (v6/*: any*/),
+        "me.lotStandings.saleArtwork.id": (v4/*: any*/),
+        "me.lotStandings.saleArtwork.lotLabel": (v6/*: any*/),
+        "me.myBids": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "MyBids"
+        },
+        "me.myBids.closed": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": true,
+          "type": "MyBid"
+        },
+        "me.myBids.closed.sale": (v8/*: any*/),
+        "me.myBids.closed.sale.endAt": (v6/*: any*/),
+        "me.myBids.closed.sale.href": (v6/*: any*/),
+        "me.myBids.closed.sale.id": (v4/*: any*/),
+        "me.myBids.closed.sale.name": (v6/*: any*/),
+        "me.myBids.closed.sale.profile": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Profile"
+        },
+        "me.myBids.closed.sale.profile.bio": (v6/*: any*/),
         "me.myBids.closed.sale.profile.id": (v4/*: any*/),
-        "me.saleRegistrationsConnection.edges.node.sale.id": (v6/*: any*/),
-        "me.saleRegistrationsConnection.edges.node.sale.name": (v7/*: any*/),
-        "me.saleRegistrationsConnection.edges.node.sale.href": (v7/*: any*/),
-        "me.saleRegistrationsConnection.edges.node.sale.startAt": (v7/*: any*/),
+        "me.saleRegistrationsConnection": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "SaleRegistrationConnection"
+        },
+        "me.saleRegistrationsConnection.edges": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": true,
+          "type": "SaleRegistrationEdge"
+        },
+        "me.saleRegistrationsConnection.edges.node": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "SaleRegistration"
+        },
+        "me.saleRegistrationsConnection.edges.node.id": (v4/*: any*/),
+        "me.saleRegistrationsConnection.edges.node.sale": (v8/*: any*/),
+        "me.saleRegistrationsConnection.edges.node.sale.href": (v6/*: any*/),
+        "me.saleRegistrationsConnection.edges.node.sale.id": (v4/*: any*/),
         "me.saleRegistrationsConnection.edges.node.sale.isClosed": (v5/*: any*/),
-        "me.lotStandings.saleArtwork.artwork.image.cropped.src": (v9/*: any*/),
-        "me.lotStandings.saleArtwork.artwork.image.cropped.srcSet": (v9/*: any*/)
+        "me.saleRegistrationsConnection.edges.node.sale.name": (v6/*: any*/),
+        "me.saleRegistrationsConnection.edges.node.sale.startAt": (v6/*: any*/)
       }
     },
     "name": "SettingsAuctionsRouteQuery_Test_Query",

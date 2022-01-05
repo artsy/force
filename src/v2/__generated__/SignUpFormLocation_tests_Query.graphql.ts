@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -37,8 +38,7 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "ip",
-    "type": "String!"
+    "name": "ip"
   }
 ],
 v1 = [
@@ -72,7 +72,8 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -101,20 +102,21 @@ return {
     ]
   },
   "params": {
+    "cacheID": "7ff510343d17f80cac21e75a084f7b80",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "requestLocation": {
-          "type": "RequestLocation",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "RequestLocation"
         },
         "requestLocation.countryCode": {
-          "type": "String",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "String"
         }
       }
     },

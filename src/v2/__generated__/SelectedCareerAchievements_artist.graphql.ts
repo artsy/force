@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -59,8 +60,7 @@ return {
         "top-emerging"
       ],
       "kind": "LocalArgument",
-      "name": "partnerCategory",
-      "type": "[String]"
+      "name": "partnerCategory"
     }
   ],
   "kind": "Fragment",
@@ -271,7 +271,8 @@ return {
     },
     (v0/*: any*/)
   ],
-  "type": "Artist"
+  "type": "Artist",
+  "abstractKey": null
 };
 })();
 (node as any).hash = '8e829ce6cc9df224ffb965345017b4a0';

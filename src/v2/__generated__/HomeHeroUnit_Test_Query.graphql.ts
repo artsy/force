@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -48,10 +49,10 @@ var v0 = [
   }
 ],
 v1 = {
-  "type": "String",
   "enumValues": null,
+  "nullable": true,
   "plural": false,
-  "nullable": true
+  "type": "String"
 };
 return {
   "fragment": {
@@ -88,7 +89,8 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -177,34 +179,35 @@ return {
     ]
   },
   "params": {
+    "cacheID": "817f70b8c004ebb48ca5b7b3543f8947",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "homePage": {
-          "type": "HomePage",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "HomePage"
         },
         "homePage.heroUnits": {
-          "type": "HomePageHeroUnit",
           "enumValues": null,
+          "nullable": true,
           "plural": true,
-          "nullable": true
-        },
-        "homePage.heroUnits.id": {
-          "type": "ID",
-          "enumValues": null,
-          "plural": false,
-          "nullable": true
+          "type": "HomePageHeroUnit"
         },
         "homePage.heroUnits.backgroundImageURL": (v1/*: any*/),
+        "homePage.heroUnits.creditLine": (v1/*: any*/),
         "homePage.heroUnits.heading": (v1/*: any*/),
-        "homePage.heroUnits.title": (v1/*: any*/),
-        "homePage.heroUnits.subtitle": (v1/*: any*/),
-        "homePage.heroUnits.linkText": (v1/*: any*/),
         "homePage.heroUnits.href": (v1/*: any*/),
-        "homePage.heroUnits.creditLine": (v1/*: any*/)
+        "homePage.heroUnits.id": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": false,
+          "type": "ID"
+        },
+        "homePage.heroUnits.linkText": (v1/*: any*/),
+        "homePage.heroUnits.subtitle": (v1/*: any*/),
+        "homePage.heroUnits.title": (v1/*: any*/)
       }
     },
     "name": "HomeHeroUnit_Test_Query",

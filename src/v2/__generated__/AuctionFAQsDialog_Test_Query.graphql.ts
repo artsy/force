@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -83,28 +84,28 @@ var v0 = [
   }
 ],
 v1 = {
-  "type": "Page",
   "enumValues": null,
+  "nullable": false,
   "plural": false,
-  "nullable": false
+  "type": "Page"
 },
 v2 = {
-  "type": "String",
   "enumValues": null,
+  "nullable": true,
   "plural": false,
-  "nullable": false
+  "type": "String"
 },
 v3 = {
-  "type": "String",
   "enumValues": null,
+  "nullable": false,
   "plural": false,
-  "nullable": true
+  "type": "ID"
 },
 v4 = {
-  "type": "ID",
   "enumValues": null,
+  "nullable": false,
   "plural": false,
-  "nullable": true
+  "type": "String"
 };
 return {
   "fragment": {
@@ -130,7 +131,8 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -232,35 +234,36 @@ return {
     ]
   },
   "params": {
+    "cacheID": "3f3162249896d5db65c95e6cfdeebe14",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "viewer": {
-          "type": "Viewer",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "Viewer"
         },
         "viewer.bidding": (v1/*: any*/),
+        "viewer.bidding.content": (v2/*: any*/),
+        "viewer.bidding.id": (v3/*: any*/),
+        "viewer.bidding.name": (v4/*: any*/),
         "viewer.buyersPremium": (v1/*: any*/),
-        "viewer.paymentsAndShipping": (v1/*: any*/),
-        "viewer.emailsAndAlerts": (v1/*: any*/),
+        "viewer.buyersPremium.content": (v2/*: any*/),
+        "viewer.buyersPremium.id": (v3/*: any*/),
+        "viewer.buyersPremium.name": (v4/*: any*/),
         "viewer.conditionsOfSale": (v1/*: any*/),
-        "viewer.bidding.name": (v2/*: any*/),
-        "viewer.bidding.content": (v3/*: any*/),
-        "viewer.bidding.id": (v4/*: any*/),
-        "viewer.buyersPremium.name": (v2/*: any*/),
-        "viewer.buyersPremium.content": (v3/*: any*/),
-        "viewer.buyersPremium.id": (v4/*: any*/),
-        "viewer.paymentsAndShipping.name": (v2/*: any*/),
-        "viewer.paymentsAndShipping.content": (v3/*: any*/),
-        "viewer.paymentsAndShipping.id": (v4/*: any*/),
-        "viewer.emailsAndAlerts.name": (v2/*: any*/),
-        "viewer.emailsAndAlerts.content": (v3/*: any*/),
-        "viewer.emailsAndAlerts.id": (v4/*: any*/),
-        "viewer.conditionsOfSale.name": (v2/*: any*/),
-        "viewer.conditionsOfSale.content": (v3/*: any*/),
-        "viewer.conditionsOfSale.id": (v4/*: any*/)
+        "viewer.conditionsOfSale.content": (v2/*: any*/),
+        "viewer.conditionsOfSale.id": (v3/*: any*/),
+        "viewer.conditionsOfSale.name": (v4/*: any*/),
+        "viewer.emailsAndAlerts": (v1/*: any*/),
+        "viewer.emailsAndAlerts.content": (v2/*: any*/),
+        "viewer.emailsAndAlerts.id": (v3/*: any*/),
+        "viewer.emailsAndAlerts.name": (v4/*: any*/),
+        "viewer.paymentsAndShipping": (v1/*: any*/),
+        "viewer.paymentsAndShipping.content": (v2/*: any*/),
+        "viewer.paymentsAndShipping.id": (v3/*: any*/),
+        "viewer.paymentsAndShipping.name": (v4/*: any*/)
       }
     },
     "name": "AuctionFAQsDialog_Test_Query",

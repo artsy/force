@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -34,7 +35,7 @@ export type NavigationTabs_Test_PartnerQueryRawResponse = {
         readonly viewingRooms: ({
             readonly totalCount: number | null;
         }) | null;
-        readonly id: string | null;
+        readonly id: string;
     }) | null;
 };
 export type NavigationTabs_Test_PartnerQuery = {
@@ -103,28 +104,34 @@ v2 = {
   "value": true
 },
 v3 = {
-  "type": "Boolean",
   "enumValues": null,
+  "nullable": true,
   "plural": false,
-  "nullable": true
+  "type": "Int"
 },
 v4 = {
-  "type": "ArtistPartnerConnection",
   "enumValues": null,
+  "nullable": true,
   "plural": false,
-  "nullable": true
+  "type": "FormattedNumber"
 },
 v5 = {
-  "type": "FormattedNumber",
   "enumValues": null,
+  "nullable": true,
   "plural": false,
-  "nullable": true
+  "type": "Boolean"
 },
 v6 = {
-  "type": "Int",
   "enumValues": null,
+  "nullable": false,
   "plural": false,
-  "nullable": true
+  "type": "ID"
+},
+v7 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "ArtistPartnerConnection"
 };
 return {
   "fragment": {
@@ -150,7 +157,8 @@ return {
         "storageKey": "partner(id:\"white-cube\")"
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -317,68 +325,59 @@ return {
     ]
   },
   "params": {
+    "cacheID": "d66bb51acde386d5ed4cc0dc0ca51425",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "partner": {
-          "type": "Partner",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
-        },
-        "partner.id": {
-          "type": "ID",
-          "enumValues": null,
-          "plural": false,
-          "nullable": true
-        },
-        "partner.slug": {
-          "type": "ID",
-          "enumValues": null,
-          "plural": false,
-          "nullable": false
-        },
-        "partner.partnerType": {
-          "type": "String",
-          "enumValues": null,
-          "plural": false,
-          "nullable": true
-        },
-        "partner.displayArtistsSection": (v3/*: any*/),
-        "partner.displayWorksSection": (v3/*: any*/),
-        "partner.counts": {
-          "type": "PartnerCounts",
-          "enumValues": null,
-          "plural": false,
-          "nullable": true
-        },
-        "partner.locations": {
-          "type": "LocationConnection",
-          "enumValues": null,
-          "plural": false,
-          "nullable": true
+          "type": "Partner"
         },
         "partner.articles": {
-          "type": "ArticleConnection",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "ArticleConnection"
         },
-        "partner.representedArtists": (v4/*: any*/),
-        "partner.notRepresentedArtists": (v4/*: any*/),
+        "partner.articles.totalCount": (v3/*: any*/),
+        "partner.counts": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "PartnerCounts"
+        },
+        "partner.counts.displayableShows": (v4/*: any*/),
+        "partner.counts.eligibleArtworks": (v4/*: any*/),
+        "partner.displayArtistsSection": (v5/*: any*/),
+        "partner.displayWorksSection": (v5/*: any*/),
+        "partner.id": (v6/*: any*/),
+        "partner.locations": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "LocationConnection"
+        },
+        "partner.locations.totalCount": (v3/*: any*/),
+        "partner.notRepresentedArtists": (v7/*: any*/),
+        "partner.notRepresentedArtists.totalCount": (v3/*: any*/),
+        "partner.partnerType": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "String"
+        },
+        "partner.representedArtists": (v7/*: any*/),
+        "partner.representedArtists.totalCount": (v3/*: any*/),
+        "partner.slug": (v6/*: any*/),
         "partner.viewingRooms": {
-          "type": "ViewingRoomsConnection",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "ViewingRoomsConnection"
         },
-        "partner.counts.eligibleArtworks": (v5/*: any*/),
-        "partner.counts.displayableShows": (v5/*: any*/),
-        "partner.locations.totalCount": (v6/*: any*/),
-        "partner.articles.totalCount": (v6/*: any*/),
-        "partner.representedArtists.totalCount": (v6/*: any*/),
-        "partner.notRepresentedArtists.totalCount": (v6/*: any*/),
-        "partner.viewingRooms.totalCount": (v6/*: any*/)
+        "partner.viewingRooms.totalCount": (v3/*: any*/)
       }
     },
     "name": "NavigationTabs_Test_PartnerQuery",

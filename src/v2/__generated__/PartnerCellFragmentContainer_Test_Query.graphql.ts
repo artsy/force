@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -97,34 +98,28 @@ v4 = {
   "storageKey": null
 },
 v5 = {
-  "type": "ID",
   "enumValues": null,
+  "nullable": true,
   "plural": false,
-  "nullable": true
+  "type": "String"
 },
 v6 = {
-  "type": "ID",
   "enumValues": null,
+  "nullable": false,
   "plural": false,
-  "nullable": false
+  "type": "ID"
 },
 v7 = {
-  "type": "String",
   "enumValues": null,
+  "nullable": false,
   "plural": false,
-  "nullable": true
+  "type": "String"
 },
 v8 = {
-  "type": "Boolean",
   "enumValues": null,
+  "nullable": true,
   "plural": false,
-  "nullable": true
-},
-v9 = {
-  "type": "String",
-  "enumValues": null,
-  "plural": false,
-  "nullable": false
+  "type": "Boolean"
 };
 return {
   "fragment": {
@@ -150,7 +145,8 @@ return {
         "storageKey": "partner(id:\"example\")"
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -323,67 +319,68 @@ return {
     ]
   },
   "params": {
+    "cacheID": "24d0675592562b182e9efa7ccb327f89",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "partner": {
-          "type": "Partner",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "Partner"
         },
-        "partner.id": (v5/*: any*/),
+        "partner.href": (v5/*: any*/),
+        "partner.id": (v6/*: any*/),
+        "partner.initials": (v5/*: any*/),
         "partner.internalID": (v6/*: any*/),
-        "partner.slug": (v6/*: any*/),
-        "partner.name": (v7/*: any*/),
-        "partner.href": (v7/*: any*/),
-        "partner.initials": (v7/*: any*/),
         "partner.locationsConnection": {
-          "type": "LocationConnection",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
-        },
-        "partner.profile": {
-          "type": "Profile",
-          "enumValues": null,
-          "plural": false,
-          "nullable": true
+          "type": "LocationConnection"
         },
         "partner.locationsConnection.edges": {
-          "type": "LocationEdge",
           "enumValues": null,
+          "nullable": true,
           "plural": true,
-          "nullable": true
+          "type": "LocationEdge"
         },
-        "partner.profile.isFollowed": (v8/*: any*/),
-        "partner.profile.image": {
-          "type": "Image",
+        "partner.locationsConnection.edges.node": {
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "Location"
+        },
+        "partner.locationsConnection.edges.node.city": (v5/*: any*/),
+        "partner.locationsConnection.edges.node.id": (v6/*: any*/),
+        "partner.name": (v5/*: any*/),
+        "partner.profile": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Profile"
         },
         "partner.profile.id": (v6/*: any*/),
-        "partner.locationsConnection.edges.node": {
-          "type": "Location",
+        "partner.profile.image": {
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "Image"
         },
-        "partner.profile.slug": (v6/*: any*/),
-        "partner.profile.name": (v7/*: any*/),
-        "partner.profile.internalID": (v6/*: any*/),
-        "partner.profile.is_followed": (v8/*: any*/),
         "partner.profile.image.cropped": {
-          "type": "CroppedImageUrl",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "CroppedImageUrl"
         },
-        "partner.locationsConnection.edges.node.city": (v7/*: any*/),
-        "partner.locationsConnection.edges.node.id": (v5/*: any*/),
-        "partner.profile.image.cropped.src": (v9/*: any*/),
-        "partner.profile.image.cropped.srcSet": (v9/*: any*/)
+        "partner.profile.image.cropped.src": (v7/*: any*/),
+        "partner.profile.image.cropped.srcSet": (v7/*: any*/),
+        "partner.profile.internalID": (v6/*: any*/),
+        "partner.profile.isFollowed": (v8/*: any*/),
+        "partner.profile.is_followed": (v8/*: any*/),
+        "partner.profile.name": (v5/*: any*/),
+        "partner.profile.slug": (v6/*: any*/),
+        "partner.slug": (v6/*: any*/)
       }
     },
     "name": "PartnerCellFragmentContainer_Test_Query",

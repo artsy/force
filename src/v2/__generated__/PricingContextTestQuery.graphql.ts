@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -29,7 +30,7 @@ export type PricingContextTestQueryRawResponse = {
         }) | null;
         readonly artists: ReadonlyArray<({
             readonly slug: string;
-            readonly id: string | null;
+            readonly id: string;
         }) | null> | null;
         readonly category: string | null;
         readonly pricingContext: ({
@@ -46,7 +47,7 @@ export type PricingContextTestQueryRawResponse = {
                 readonly numArtworks: number;
             }>;
         }) | null;
-        readonly id: string | null;
+        readonly id: string;
     }) | null;
 };
 export type PricingContextTestQuery = {
@@ -134,28 +135,28 @@ v3 = {
   "storageKey": null
 },
 v4 = {
-  "type": "ID",
   "enumValues": null,
+  "nullable": false,
   "plural": false,
-  "nullable": true
+  "type": "ID"
 },
 v5 = {
-  "type": "String",
   "enumValues": null,
+  "nullable": true,
   "plural": false,
-  "nullable": true
+  "type": "String"
 },
 v6 = {
-  "type": "Money",
   "enumValues": null,
+  "nullable": true,
   "plural": false,
-  "nullable": true
+  "type": "Money"
 },
 v7 = {
-  "type": "Int",
   "enumValues": null,
+  "nullable": false,
   "plural": false,
-  "nullable": false
+  "type": "Int"
 };
 return {
   "fragment": {
@@ -181,7 +182,8 @@ return {
         "storageKey": "artwork(id:\"unused\")"
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -236,12 +238,14 @@ return {
                     "storageKey": null
                   }
                 ],
-                "type": "PriceRange"
+                "type": "PriceRange",
+                "abstractKey": null
               },
               {
                 "kind": "InlineFragment",
                 "selections": (v1/*: any*/),
-                "type": "Money"
+                "type": "Money",
+                "abstractKey": null
               }
             ],
             "storageKey": null
@@ -356,76 +360,56 @@ return {
     ]
   },
   "params": {
+    "cacheID": "b1e971a4dff21b591743d4062e780480",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "artwork": {
-          "type": "Artwork",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
-        },
-        "artwork.id": (v4/*: any*/),
-        "artwork.listPrice": {
-          "type": "ListPrice",
-          "enumValues": null,
-          "plural": false,
-          "nullable": true
+          "type": "Artwork"
         },
         "artwork.artists": {
-          "type": "Artist",
           "enumValues": null,
+          "nullable": true,
           "plural": true,
-          "nullable": true
-        },
-        "artwork.category": (v5/*: any*/),
-        "artwork.pricingContext": {
-          "type": "AnalyticsPricingContext",
-          "enumValues": null,
-          "plural": false,
-          "nullable": true
-        },
-        "artwork.listPrice.__typename": {
-          "type": "String",
-          "enumValues": null,
-          "plural": false,
-          "nullable": false
-        },
-        "artwork.artists.slug": {
-          "type": "ID",
-          "enumValues": null,
-          "plural": false,
-          "nullable": false
+          "type": "Artist"
         },
         "artwork.artists.id": (v4/*: any*/),
-        "artwork.pricingContext.appliedFiltersDisplay": (v5/*: any*/),
-        "artwork.pricingContext.appliedFilters": {
-          "type": "AnalyticsPriceContextFilterType",
+        "artwork.artists.slug": (v4/*: any*/),
+        "artwork.category": (v5/*: any*/),
+        "artwork.id": (v4/*: any*/),
+        "artwork.listPrice": {
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": false
+          "type": "ListPrice"
         },
-        "artwork.pricingContext.bins": {
-          "type": "AnalyticsHistogramBin",
+        "artwork.listPrice.__typename": {
           "enumValues": null,
-          "plural": true,
-          "nullable": false
+          "nullable": false,
+          "plural": false,
+          "type": "String"
         },
         "artwork.listPrice.maxPrice": (v6/*: any*/),
+        "artwork.listPrice.maxPrice.minor": (v7/*: any*/),
         "artwork.listPrice.minPrice": (v6/*: any*/),
+        "artwork.listPrice.minPrice.minor": (v7/*: any*/),
         "artwork.listPrice.minor": (v7/*: any*/),
-        "artwork.pricingContext.appliedFilters.dimension": {
-          "type": "AnalyticsPricingContextDimensionEnum",
-          "enumValues": [
-            "LARGE",
-            "MEDIUM",
-            "SMALL"
-          ],
+        "artwork.pricingContext": {
+          "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "AnalyticsPricingContext"
+        },
+        "artwork.pricingContext.appliedFilters": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": false,
+          "type": "AnalyticsPriceContextFilterType"
         },
         "artwork.pricingContext.appliedFilters.category": {
-          "type": "AnalyticsPricingContextCategoryEnum",
           "enumValues": [
             "ARCHITECTURE",
             "BOOKS_AND_PORTFOLIOS",
@@ -447,16 +431,32 @@ return {
             "VIDEO_FILM_ANIMATION",
             "WORK_ON_PAPER"
           ],
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "AnalyticsPricingContextCategoryEnum"
+        },
+        "artwork.pricingContext.appliedFilters.dimension": {
+          "enumValues": [
+            "LARGE",
+            "MEDIUM",
+            "SMALL"
+          ],
+          "nullable": true,
+          "plural": false,
+          "type": "AnalyticsPricingContextDimensionEnum"
+        },
+        "artwork.pricingContext.appliedFiltersDisplay": (v5/*: any*/),
+        "artwork.pricingContext.bins": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": true,
+          "type": "AnalyticsHistogramBin"
         },
         "artwork.pricingContext.bins.maxPrice": (v5/*: any*/),
         "artwork.pricingContext.bins.maxPriceCents": (v7/*: any*/),
         "artwork.pricingContext.bins.minPrice": (v5/*: any*/),
         "artwork.pricingContext.bins.minPriceCents": (v7/*: any*/),
-        "artwork.pricingContext.bins.numArtworks": (v7/*: any*/),
-        "artwork.listPrice.maxPrice.minor": (v7/*: any*/),
-        "artwork.listPrice.minPrice.minor": (v7/*: any*/)
+        "artwork.pricingContext.bins.numArtworks": (v7/*: any*/)
       }
     },
     "name": "PricingContextTestQuery",

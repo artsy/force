@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -18,12 +19,12 @@ export type RegisterValidTestQueryRawResponse = {
         readonly internalID: string;
         readonly status: string | null;
         readonly requireIdentityVerification: boolean | null;
-        readonly id: string | null;
+        readonly id: string;
     }) | null;
     readonly me: ({
         readonly internalID: string;
         readonly identityVerified: boolean | null;
-        readonly id: string | null;
+        readonly id: string;
     }) | null;
 };
 export type RegisterValidTestQuery = {
@@ -82,22 +83,16 @@ v2 = {
   "storageKey": null
 },
 v3 = {
-  "type": "ID",
   "enumValues": null,
+  "nullable": false,
   "plural": false,
-  "nullable": true
+  "type": "ID"
 },
 v4 = {
-  "type": "ID",
   "enumValues": null,
+  "nullable": true,
   "plural": false,
-  "nullable": false
-},
-v5 = {
-  "type": "Boolean",
-  "enumValues": null,
-  "plural": false,
-  "nullable": true
+  "type": "Boolean"
 };
 return {
   "fragment": {
@@ -139,7 +134,8 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -204,34 +200,35 @@ return {
     ]
   },
   "params": {
+    "cacheID": "3725d1fc5453f47190c6d7d172403372",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
-        "sale": {
-          "type": "Sale",
-          "enumValues": null,
-          "plural": false,
-          "nullable": true
-        },
         "me": {
-          "type": "Me",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "Me"
+        },
+        "me.id": (v3/*: any*/),
+        "me.identityVerified": (v4/*: any*/),
+        "me.internalID": (v3/*: any*/),
+        "sale": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Sale"
         },
         "sale.id": (v3/*: any*/),
-        "me.id": (v3/*: any*/),
-        "sale.slug": (v4/*: any*/),
-        "sale.internalID": (v4/*: any*/),
+        "sale.internalID": (v3/*: any*/),
+        "sale.requireIdentityVerification": (v4/*: any*/),
+        "sale.slug": (v3/*: any*/),
         "sale.status": {
-          "type": "String",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
-        },
-        "sale.requireIdentityVerification": (v5/*: any*/),
-        "me.internalID": (v4/*: any*/),
-        "me.identityVerified": (v5/*: any*/)
+          "type": "String"
+        }
       }
     },
     "name": "RegisterValidTestQuery",

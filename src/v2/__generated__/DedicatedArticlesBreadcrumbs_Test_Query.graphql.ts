@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -55,16 +56,16 @@ v1 = {
   "storageKey": null
 },
 v2 = {
-  "type": "ID",
   "enumValues": null,
+  "nullable": false,
   "plural": false,
-  "nullable": true
+  "type": "ID"
 },
 v3 = {
-  "type": "String",
   "enumValues": null,
+  "nullable": false,
   "plural": false,
-  "nullable": false
+  "type": "String"
 };
 return {
   "fragment": {
@@ -90,7 +91,8 @@ return {
         "storageKey": "fairOrganizer(id:\"example\")"
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -191,49 +193,45 @@ return {
     ]
   },
   "params": {
+    "cacheID": "2df6ba381ddfe63972a0899de2e26f73",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "fairOrganizer": {
-          "type": "FairOrganizer",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "FairOrganizer"
         },
         "fairOrganizer.id": (v2/*: any*/),
-        "fairOrganizer.slug": {
-          "type": "ID",
-          "enumValues": null,
-          "plural": false,
-          "nullable": false
-        },
         "fairOrganizer.name": {
-          "type": "String",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "String"
         },
         "fairOrganizer.profile": {
-          "type": "Profile",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
-        },
-        "fairOrganizer.profile.image": {
-          "type": "Image",
-          "enumValues": null,
-          "plural": false,
-          "nullable": true
+          "type": "Profile"
         },
         "fairOrganizer.profile.id": (v2/*: any*/),
-        "fairOrganizer.profile.image.resized": {
-          "type": "ResizedImageUrl",
+        "fairOrganizer.profile.image": {
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "Image"
+        },
+        "fairOrganizer.profile.image.resized": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "ResizedImageUrl"
         },
         "fairOrganizer.profile.image.resized.src": (v3/*: any*/),
-        "fairOrganizer.profile.image.resized.srcSet": (v3/*: any*/)
+        "fairOrganizer.profile.image.resized.srcSet": (v3/*: any*/),
+        "fairOrganizer.slug": (v2/*: any*/)
       }
     },
     "name": "DedicatedArticlesBreadcrumbs_Test_Query",

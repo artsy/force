@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -61,6 +62,7 @@ fragment HomeFeaturedEventsRail_orderedSet on OrderedSet {
       id
     }
     ... on Node {
+      __isNode: __typename
       id
     }
     ... on Profile {
@@ -154,35 +156,38 @@ v8 = {
   "name": "srcSet",
   "storageKey": null
 },
-v9 = {
-  "type": "ID",
-  "enumValues": null,
-  "plural": false,
-  "nullable": true
-},
+v9 = [
+  (v5/*: any*/)
+],
 v10 = {
-  "type": "String",
   "enumValues": null,
+  "nullable": false,
   "plural": false,
-  "nullable": false
+  "type": "ID"
 },
 v11 = {
-  "type": "String",
   "enumValues": null,
+  "nullable": false,
   "plural": false,
-  "nullable": true
+  "type": "String"
 },
 v12 = {
-  "type": "CroppedImageUrl",
   "enumValues": null,
+  "nullable": true,
   "plural": false,
-  "nullable": true
+  "type": "String"
 },
 v13 = {
-  "type": "Int",
   "enumValues": null,
+  "nullable": true,
   "plural": false,
-  "nullable": false
+  "type": "CroppedImageUrl"
+},
+v14 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "Int"
 };
 return {
   "fragment": {
@@ -224,7 +229,8 @@ return {
         "storageKey": "orderedSet(id:\"example\")"
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -316,7 +322,6 @@ return {
                 "name": "__typename",
                 "storageKey": null
               },
-              (v5/*: any*/),
               {
                 "kind": "InlineFragment",
                 "selections": [
@@ -398,9 +403,23 @@ return {
                       }
                     ],
                     "storageKey": null
-                  }
+                  },
+                  (v5/*: any*/)
                 ],
-                "type": "FeaturedLink"
+                "type": "FeaturedLink",
+                "abstractKey": null
+              },
+              {
+                "kind": "InlineFragment",
+                "selections": (v9/*: any*/),
+                "type": "Node",
+                "abstractKey": "__isNode"
+              },
+              {
+                "kind": "InlineFragment",
+                "selections": (v9/*: any*/),
+                "type": "Profile",
+                "abstractKey": null
               }
             ],
             "storageKey": null
@@ -412,73 +431,70 @@ return {
     ]
   },
   "params": {
+    "cacheID": "332b298d5f32a9bb1d41f1c3cdb7d084",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
-        "homePage": {
-          "type": "HomePage",
-          "enumValues": null,
-          "plural": false,
-          "nullable": true
-        },
         "featuredEventsOrderedSet": {
-          "type": "OrderedSet",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "OrderedSet"
         },
-        "featuredEventsOrderedSet.id": (v9/*: any*/),
-        "homePage.heroUnits": {
-          "type": "HomePageHeroUnit",
-          "enumValues": null,
-          "plural": true,
-          "nullable": true
-        },
+        "featuredEventsOrderedSet.id": (v10/*: any*/),
         "featuredEventsOrderedSet.items": {
-          "type": "OrderedSetItem",
           "enumValues": null,
+          "nullable": true,
           "plural": true,
-          "nullable": true
+          "type": "OrderedSetItem"
         },
-        "homePage.heroUnits.internalID": {
-          "type": "ID",
-          "enumValues": null,
-          "plural": false,
-          "nullable": false
-        },
-        "homePage.heroUnits.id": (v9/*: any*/),
-        "featuredEventsOrderedSet.items.__typename": (v10/*: any*/),
-        "homePage.heroUnits.backgroundImageURL": (v11/*: any*/),
-        "homePage.heroUnits.heading": (v11/*: any*/),
-        "homePage.heroUnits.title": (v11/*: any*/),
-        "homePage.heroUnits.subtitle": (v11/*: any*/),
-        "homePage.heroUnits.linkText": (v11/*: any*/),
-        "homePage.heroUnits.href": (v11/*: any*/),
-        "homePage.heroUnits.creditLine": (v11/*: any*/),
-        "featuredEventsOrderedSet.items.internalID": (v11/*: any*/),
-        "featuredEventsOrderedSet.items.title": (v11/*: any*/),
-        "featuredEventsOrderedSet.items.subtitle": (v11/*: any*/),
-        "featuredEventsOrderedSet.items.href": (v11/*: any*/),
+        "featuredEventsOrderedSet.items.__isNode": (v11/*: any*/),
+        "featuredEventsOrderedSet.items.__typename": (v11/*: any*/),
+        "featuredEventsOrderedSet.items.href": (v12/*: any*/),
+        "featuredEventsOrderedSet.items.id": (v10/*: any*/),
         "featuredEventsOrderedSet.items.image": {
-          "type": "Image",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "Image"
         },
-        "featuredEventsOrderedSet.items.id": (v9/*: any*/),
-        "featuredEventsOrderedSet.items.image.small": (v12/*: any*/),
-        "featuredEventsOrderedSet.items.image.large": (v12/*: any*/),
-        "featuredEventsOrderedSet.items.image.small.src": (v10/*: any*/),
-        "featuredEventsOrderedSet.items.image.small.srcSet": (v10/*: any*/),
-        "featuredEventsOrderedSet.items.image.small.width": (v13/*: any*/),
-        "featuredEventsOrderedSet.items.image.small.height": (v13/*: any*/),
-        "featuredEventsOrderedSet.items.image.large.src": (v10/*: any*/),
-        "featuredEventsOrderedSet.items.image.large.srcSet": (v10/*: any*/)
+        "featuredEventsOrderedSet.items.image.large": (v13/*: any*/),
+        "featuredEventsOrderedSet.items.image.large.src": (v11/*: any*/),
+        "featuredEventsOrderedSet.items.image.large.srcSet": (v11/*: any*/),
+        "featuredEventsOrderedSet.items.image.small": (v13/*: any*/),
+        "featuredEventsOrderedSet.items.image.small.height": (v14/*: any*/),
+        "featuredEventsOrderedSet.items.image.small.src": (v11/*: any*/),
+        "featuredEventsOrderedSet.items.image.small.srcSet": (v11/*: any*/),
+        "featuredEventsOrderedSet.items.image.small.width": (v14/*: any*/),
+        "featuredEventsOrderedSet.items.internalID": (v12/*: any*/),
+        "featuredEventsOrderedSet.items.subtitle": (v12/*: any*/),
+        "featuredEventsOrderedSet.items.title": (v12/*: any*/),
+        "homePage": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "HomePage"
+        },
+        "homePage.heroUnits": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": true,
+          "type": "HomePageHeroUnit"
+        },
+        "homePage.heroUnits.backgroundImageURL": (v12/*: any*/),
+        "homePage.heroUnits.creditLine": (v12/*: any*/),
+        "homePage.heroUnits.heading": (v12/*: any*/),
+        "homePage.heroUnits.href": (v12/*: any*/),
+        "homePage.heroUnits.id": (v10/*: any*/),
+        "homePage.heroUnits.internalID": (v10/*: any*/),
+        "homePage.heroUnits.linkText": (v12/*: any*/),
+        "homePage.heroUnits.subtitle": (v12/*: any*/),
+        "homePage.heroUnits.title": (v12/*: any*/)
       }
     },
     "name": "HomeApp_Test_Query",
     "operationKind": "query",
-    "text": "query HomeApp_Test_Query {\n  homePage {\n    ...HomeApp_homePage\n  }\n  featuredEventsOrderedSet: orderedSet(id: \"example\") {\n    ...HomeApp_featuredEventsOrderedSet\n    id\n  }\n}\n\nfragment HomeApp_featuredEventsOrderedSet on OrderedSet {\n  ...HomeFeaturedEventsRail_orderedSet\n}\n\nfragment HomeApp_homePage on HomePage {\n  ...HomeHeroUnits_homePage\n}\n\nfragment HomeFeaturedEventsRail_orderedSet on OrderedSet {\n  items {\n    __typename\n    ... on FeaturedLink {\n      internalID\n      title\n      subtitle\n      href\n      image {\n        small: cropped(width: 95, height: 63, version: [\"main\", \"wide\", \"large_rectangle\"]) {\n          src\n          srcSet\n          width\n          height\n        }\n        large: cropped(width: 445, height: 297, version: [\"main\", \"wide\", \"large_rectangle\"]) {\n          src\n          srcSet\n        }\n      }\n      id\n    }\n    ... on Node {\n      id\n    }\n    ... on Profile {\n      id\n    }\n  }\n}\n\nfragment HomeHeroUnit_heroUnit on HomePageHeroUnit {\n  backgroundImageURL\n  heading\n  title\n  subtitle\n  linkText\n  href\n  creditLine\n}\n\nfragment HomeHeroUnits_homePage on HomePage {\n  heroUnits(platform: DESKTOP) {\n    internalID\n    ...HomeHeroUnit_heroUnit\n    id\n  }\n}\n"
+    "text": "query HomeApp_Test_Query {\n  homePage {\n    ...HomeApp_homePage\n  }\n  featuredEventsOrderedSet: orderedSet(id: \"example\") {\n    ...HomeApp_featuredEventsOrderedSet\n    id\n  }\n}\n\nfragment HomeApp_featuredEventsOrderedSet on OrderedSet {\n  ...HomeFeaturedEventsRail_orderedSet\n}\n\nfragment HomeApp_homePage on HomePage {\n  ...HomeHeroUnits_homePage\n}\n\nfragment HomeFeaturedEventsRail_orderedSet on OrderedSet {\n  items {\n    __typename\n    ... on FeaturedLink {\n      internalID\n      title\n      subtitle\n      href\n      image {\n        small: cropped(width: 95, height: 63, version: [\"main\", \"wide\", \"large_rectangle\"]) {\n          src\n          srcSet\n          width\n          height\n        }\n        large: cropped(width: 445, height: 297, version: [\"main\", \"wide\", \"large_rectangle\"]) {\n          src\n          srcSet\n        }\n      }\n      id\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on Profile {\n      id\n    }\n  }\n}\n\nfragment HomeHeroUnit_heroUnit on HomePageHeroUnit {\n  backgroundImageURL\n  heading\n  title\n  subtitle\n  linkText\n  href\n  creditLine\n}\n\nfragment HomeHeroUnits_homePage on HomePage {\n  heroUnits(platform: DESKTOP) {\n    internalID\n    ...HomeHeroUnit_heroUnit\n    id\n  }\n}\n"
   }
 };
 })();

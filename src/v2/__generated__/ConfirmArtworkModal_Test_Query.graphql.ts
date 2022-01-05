@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -155,52 +156,46 @@ v6 = [
   }
 ],
 v7 = {
-  "type": "ID",
   "enumValues": null,
+  "nullable": true,
   "plural": false,
-  "nullable": true
+  "type": "String"
 },
 v8 = {
-  "type": "ID",
   "enumValues": null,
+  "nullable": false,
   "plural": false,
-  "nullable": false
+  "type": "ID"
 },
 v9 = {
-  "type": "Boolean",
   "enumValues": null,
+  "nullable": true,
   "plural": false,
-  "nullable": true
+  "type": "ArtworkInfoRow"
 },
 v10 = {
-  "type": "String",
   "enumValues": null,
+  "nullable": true,
   "plural": false,
-  "nullable": true
+  "type": "dimensions"
 },
 v11 = {
-  "type": "ArtworkInfoRow",
   "enumValues": null,
+  "nullable": true,
   "plural": false,
-  "nullable": true
+  "type": "Boolean"
 },
 v12 = {
-  "type": "dimensions",
   "enumValues": null,
+  "nullable": false,
   "plural": false,
-  "nullable": true
+  "type": "String"
 },
 v13 = {
-  "type": "String",
   "enumValues": null,
+  "nullable": true,
   "plural": false,
-  "nullable": false
-},
-v14 = {
-  "type": "Int",
-  "enumValues": null,
-  "plural": false,
-  "nullable": true
+  "type": "Int"
 };
 return {
   "fragment": {
@@ -226,7 +221,8 @@ return {
         "storageKey": "artwork(id:\"xxx\")"
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -480,12 +476,14 @@ return {
                   {
                     "kind": "InlineFragment",
                     "selections": (v6/*: any*/),
-                    "type": "Money"
+                    "type": "Money",
+                    "abstractKey": null
                   },
                   {
                     "kind": "InlineFragment",
                     "selections": (v6/*: any*/),
-                    "type": "PriceRange"
+                    "type": "PriceRange",
+                    "abstractKey": null
                   }
                 ],
                 "storageKey": null
@@ -514,81 +512,83 @@ return {
     ]
   },
   "params": {
+    "cacheID": "4eee81aeba0a29e602f93477efdbf4ea",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "artwork": {
-          "type": "Artwork",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "Artwork"
         },
-        "artwork.id": (v7/*: any*/),
-        "artwork.internalID": (v8/*: any*/),
-        "artwork.isEdition": (v9/*: any*/),
-        "artwork.editionSets": {
-          "type": "EditionSet",
-          "enumValues": null,
-          "plural": true,
-          "nullable": true
-        },
-        "artwork.image": {
-          "type": "Image",
-          "enumValues": null,
-          "plural": false,
-          "nullable": true
-        },
-        "artwork.title": (v10/*: any*/),
-        "artwork.date": (v10/*: any*/),
-        "artwork.saleMessage": (v10/*: any*/),
+        "artwork.artistNames": (v7/*: any*/),
         "artwork.attributionClass": {
-          "type": "AttributionClass",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "AttributionClass"
         },
-        "artwork.category": (v10/*: any*/),
-        "artwork.manufacturer": (v10/*: any*/),
-        "artwork.publisher": (v10/*: any*/),
-        "artwork.medium": (v10/*: any*/),
-        "artwork.conditionDescription": (v11/*: any*/),
-        "artwork.certificateOfAuthenticity": (v11/*: any*/),
-        "artwork.framed": (v11/*: any*/),
-        "artwork.dimensions": (v12/*: any*/),
-        "artwork.signatureInfo": (v11/*: any*/),
-        "artwork.artistNames": (v10/*: any*/),
+        "artwork.attributionClass.id": (v8/*: any*/),
+        "artwork.attributionClass.name": (v7/*: any*/),
+        "artwork.category": (v7/*: any*/),
+        "artwork.certificateOfAuthenticity": (v9/*: any*/),
+        "artwork.certificateOfAuthenticity.details": (v7/*: any*/),
+        "artwork.conditionDescription": (v9/*: any*/),
+        "artwork.conditionDescription.details": (v7/*: any*/),
+        "artwork.date": (v7/*: any*/),
+        "artwork.dimensions": (v10/*: any*/),
+        "artwork.dimensions.cm": (v7/*: any*/),
+        "artwork.dimensions.in": (v7/*: any*/),
+        "artwork.editionSets": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": true,
+          "type": "EditionSet"
+        },
+        "artwork.editionSets.dimensions": (v10/*: any*/),
+        "artwork.editionSets.dimensions.cm": (v7/*: any*/),
+        "artwork.editionSets.dimensions.in": (v7/*: any*/),
+        "artwork.editionSets.editionOf": (v7/*: any*/),
+        "artwork.editionSets.id": (v8/*: any*/),
         "artwork.editionSets.internalID": (v8/*: any*/),
-        "artwork.editionSets.id": (v7/*: any*/),
-        "artwork.image.resized": {
-          "type": "ResizedImageUrl",
-          "enumValues": null,
-          "plural": false,
-          "nullable": true
-        },
-        "artwork.attributionClass.name": (v10/*: any*/),
-        "artwork.attributionClass.id": (v7/*: any*/),
-        "artwork.conditionDescription.details": (v10/*: any*/),
-        "artwork.certificateOfAuthenticity.details": (v10/*: any*/),
-        "artwork.framed.details": (v10/*: any*/),
-        "artwork.dimensions.in": (v10/*: any*/),
-        "artwork.dimensions.cm": (v10/*: any*/),
-        "artwork.signatureInfo.details": (v10/*: any*/),
-        "artwork.editionSets.editionOf": (v10/*: any*/),
-        "artwork.editionSets.isOfferableFromInquiry": (v9/*: any*/),
+        "artwork.editionSets.isOfferableFromInquiry": (v11/*: any*/),
         "artwork.editionSets.listPrice": {
-          "type": "ListPrice",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "ListPrice"
         },
-        "artwork.editionSets.dimensions": (v12/*: any*/),
-        "artwork.image.resized.src": (v13/*: any*/),
-        "artwork.image.resized.srcSet": (v13/*: any*/),
-        "artwork.image.resized.width": (v14/*: any*/),
-        "artwork.image.resized.height": (v14/*: any*/),
-        "artwork.editionSets.dimensions.cm": (v10/*: any*/),
-        "artwork.editionSets.dimensions.in": (v10/*: any*/),
-        "artwork.editionSets.listPrice.display": (v10/*: any*/)
+        "artwork.editionSets.listPrice.__typename": (v12/*: any*/),
+        "artwork.editionSets.listPrice.display": (v7/*: any*/),
+        "artwork.framed": (v9/*: any*/),
+        "artwork.framed.details": (v7/*: any*/),
+        "artwork.id": (v8/*: any*/),
+        "artwork.image": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Image"
+        },
+        "artwork.image.resized": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "ResizedImageUrl"
+        },
+        "artwork.image.resized.height": (v13/*: any*/),
+        "artwork.image.resized.src": (v12/*: any*/),
+        "artwork.image.resized.srcSet": (v12/*: any*/),
+        "artwork.image.resized.width": (v13/*: any*/),
+        "artwork.internalID": (v8/*: any*/),
+        "artwork.isEdition": (v11/*: any*/),
+        "artwork.manufacturer": (v7/*: any*/),
+        "artwork.medium": (v7/*: any*/),
+        "artwork.publisher": (v7/*: any*/),
+        "artwork.saleMessage": (v7/*: any*/),
+        "artwork.signatureInfo": (v9/*: any*/),
+        "artwork.signatureInfo.details": (v7/*: any*/),
+        "artwork.title": (v7/*: any*/)
       }
     },
     "name": "ConfirmArtworkModal_Test_Query",

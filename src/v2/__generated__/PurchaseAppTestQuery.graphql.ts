@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -18,24 +19,19 @@ export type PurchaseAppTestQueryRawResponse = {
         readonly orders: ({
             readonly edges: ReadonlyArray<({
                 readonly node: ({
-                    readonly __typename: string | null;
+                    readonly __typename: string;
                     readonly code: string;
+                    readonly __isCommerceOrder: string;
                     readonly internalID: string;
                     readonly displayState: CommerceOrderDisplayStateEnum;
                     readonly state: CommerceOrderStateEnum;
                     readonly mode: CommerceOrderModeEnum | null;
                     readonly requestedFulfillment: ({
-                        readonly __typename: "CommerceShip";
-                    } | {
-                        readonly __typename: "CommercePickup";
-                    } | {
-                        readonly __typename: "CommerceShipArta";
-                    } | {
-                        readonly __typename: string | null;
+                        readonly __typename: string;
                     }) | null;
                     readonly creditCard: ({
                         readonly lastDigits: string;
-                        readonly id: string | null;
+                        readonly id: string;
                     }) | null;
                     readonly buyerTotal: string | null;
                     readonly createdAt: string;
@@ -60,9 +56,9 @@ export type PurchaseAppTestQueryRawResponse = {
                                             readonly icon: ({
                                                 readonly url: string | null;
                                             }) | null;
-                                            readonly id: string | null;
+                                            readonly id: string;
                                         }) | null;
-                                        readonly id: string | null;
+                                        readonly id: string;
                                     }) | null;
                                     readonly shippingOrigin: string | null;
                                     readonly internalID: string;
@@ -70,23 +66,23 @@ export type PurchaseAppTestQueryRawResponse = {
                                     readonly artistNames: string | null;
                                     readonly artists: ReadonlyArray<({
                                         readonly slug: string;
-                                        readonly id: string | null;
+                                        readonly id: string;
                                     }) | null> | null;
-                                    readonly id: string | null;
+                                    readonly id: string;
                                 }) | null;
                                 readonly fulfillments: ({
                                     readonly edges: ReadonlyArray<({
                                         readonly node: ({
                                             readonly trackingId: string | null;
-                                            readonly id: string | null;
+                                            readonly id: string;
                                         }) | null;
                                     }) | null> | null;
                                 }) | null;
-                                readonly id: string | null;
+                                readonly id: string;
                             }) | null;
                         }) | null> | null;
                     }) | null;
-                    readonly id: string | null;
+                    readonly id: string;
                 }) | null;
             }) | null> | null;
             readonly pageCursors: ({
@@ -118,7 +114,7 @@ export type PurchaseAppTestQueryRawResponse = {
                 readonly startCursor: string | null;
             };
         }) | null;
-        readonly id: string | null;
+        readonly id: string;
     }) | null;
 };
 export type PurchaseAppTestQuery = {
@@ -138,6 +134,7 @@ query PurchaseAppTestQuery {
 }
 
 fragment OrderRow_order on CommerceOrder {
+  __isCommerceOrder: __typename
   internalID
   code
   displayState
@@ -279,24 +276,21 @@ v2 = {
   "name": "internalID",
   "storageKey": null
 },
-v3 = [
-  (v1/*: any*/)
-],
-v4 = {
+v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v5 = {
+v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "slug",
   "storageKey": null
 },
-v6 = [
+v5 = [
   {
     "alias": null,
     "args": null,
@@ -319,53 +313,47 @@ v6 = [
     "storageKey": null
   }
 ],
-v7 = {
-  "type": "ID",
+v6 = {
   "enumValues": null,
+  "nullable": false,
   "plural": false,
-  "nullable": true
+  "type": "ID"
+},
+v7 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "String"
 },
 v8 = {
-  "type": "String",
   "enumValues": null,
+  "nullable": false,
   "plural": false,
-  "nullable": true
+  "type": "String"
 },
 v9 = {
-  "type": "CommercePageCursor",
   "enumValues": null,
+  "nullable": true,
   "plural": false,
-  "nullable": true
+  "type": "Image"
 },
 v10 = {
-  "type": "Boolean",
   "enumValues": null,
+  "nullable": false,
   "plural": false,
-  "nullable": false
+  "type": "Boolean"
 },
 v11 = {
-  "type": "String",
   "enumValues": null,
+  "nullable": false,
   "plural": false,
-  "nullable": false
+  "type": "Int"
 },
 v12 = {
-  "type": "Int",
   "enumValues": null,
+  "nullable": true,
   "plural": false,
-  "nullable": false
-},
-v13 = {
-  "type": "ID",
-  "enumValues": null,
-  "plural": false,
-  "nullable": false
-},
-v14 = {
-  "type": "Image",
-  "enumValues": null,
-  "plural": false,
-  "nullable": true
+  "type": "CommercePageCursor"
 };
 return {
   "fragment": {
@@ -391,7 +379,8 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -457,6 +446,10 @@ return {
                         "name": "code",
                         "storageKey": null
                       },
+                      {
+                        "kind": "TypeDiscriminator",
+                        "abstractKey": "__isCommerceOrder"
+                      },
                       (v2/*: any*/),
                       {
                         "alias": null,
@@ -487,22 +480,7 @@ return {
                         "name": "requestedFulfillment",
                         "plural": false,
                         "selections": [
-                          (v1/*: any*/),
-                          {
-                            "kind": "InlineFragment",
-                            "selections": (v3/*: any*/),
-                            "type": "CommerceShip"
-                          },
-                          {
-                            "kind": "InlineFragment",
-                            "selections": (v3/*: any*/),
-                            "type": "CommercePickup"
-                          },
-                          {
-                            "kind": "InlineFragment",
-                            "selections": (v3/*: any*/),
-                            "type": "CommerceShipArta"
-                          }
+                          (v1/*: any*/)
                         ],
                         "storageKey": null
                       },
@@ -521,7 +499,7 @@ return {
                             "name": "lastDigits",
                             "storageKey": null
                           },
-                          (v4/*: any*/)
+                          (v3/*: any*/)
                         ],
                         "storageKey": null
                       },
@@ -591,7 +569,7 @@ return {
                                     "name": "artwork",
                                     "plural": false,
                                     "selections": [
-                                      (v5/*: any*/),
+                                      (v4/*: any*/),
                                       {
                                         "alias": null,
                                         "args": null,
@@ -689,11 +667,11 @@ return {
                                                 ],
                                                 "storageKey": null
                                               },
-                                              (v4/*: any*/)
+                                              (v3/*: any*/)
                                             ],
                                             "storageKey": null
                                           },
-                                          (v4/*: any*/)
+                                          (v3/*: any*/)
                                         ],
                                         "storageKey": null
                                       },
@@ -727,12 +705,12 @@ return {
                                         "name": "artists",
                                         "plural": true,
                                         "selections": [
-                                          (v5/*: any*/),
-                                          (v4/*: any*/)
+                                          (v4/*: any*/),
+                                          (v3/*: any*/)
                                         ],
                                         "storageKey": null
                                       },
-                                      (v4/*: any*/)
+                                      (v3/*: any*/)
                                     ],
                                     "storageKey": null
                                   },
@@ -773,7 +751,7 @@ return {
                                                 "name": "trackingId",
                                                 "storageKey": null
                                               },
-                                              (v4/*: any*/)
+                                              (v3/*: any*/)
                                             ],
                                             "storageKey": null
                                           }
@@ -783,7 +761,7 @@ return {
                                     ],
                                     "storageKey": "fulfillments(first:1)"
                                   },
-                                  (v4/*: any*/)
+                                  (v3/*: any*/)
                                 ],
                                 "storageKey": null
                               }
@@ -793,7 +771,7 @@ return {
                         ],
                         "storageKey": null
                       },
-                      (v4/*: any*/)
+                      (v3/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -815,7 +793,7 @@ return {
                     "kind": "LinkedField",
                     "name": "around",
                     "plural": true,
-                    "selections": (v6/*: any*/),
+                    "selections": (v5/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -825,7 +803,7 @@ return {
                     "kind": "LinkedField",
                     "name": "first",
                     "plural": false,
-                    "selections": (v6/*: any*/),
+                    "selections": (v5/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -835,7 +813,7 @@ return {
                     "kind": "LinkedField",
                     "name": "last",
                     "plural": false,
-                    "selections": (v6/*: any*/),
+                    "selections": (v5/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -845,7 +823,7 @@ return {
                     "kind": "LinkedField",
                     "name": "previous",
                     "plural": false,
-                    "selections": (v6/*: any*/),
+                    "selections": (v5/*: any*/),
                     "storageKey": null
                   }
                 ],
@@ -893,84 +871,58 @@ return {
             ],
             "storageKey": "orders(first:10,states:[\"APPROVED\",\"CANCELED\",\"FULFILLED\",\"REFUNDED\",\"SUBMITTED\"])"
           },
-          (v4/*: any*/)
+          (v3/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
+    "cacheID": "e9a433f1acb71bde359f7be6e4818e90",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "me": {
-          "type": "Me",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "Me"
         },
-        "me.id": (v7/*: any*/),
-        "me.name": (v8/*: any*/),
+        "me.id": (v6/*: any*/),
+        "me.name": (v7/*: any*/),
         "me.orders": {
-          "type": "CommerceOrderConnectionWithTotalCount",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "CommerceOrderConnectionWithTotalCount"
         },
         "me.orders.edges": {
-          "type": "CommerceOrderEdge",
           "enumValues": null,
+          "nullable": true,
           "plural": true,
-          "nullable": true
-        },
-        "me.orders.pageCursors": {
-          "type": "CommercePageCursors",
-          "enumValues": null,
-          "plural": false,
-          "nullable": true
-        },
-        "me.orders.pageInfo": {
-          "type": "CommercePageInfo",
-          "enumValues": null,
-          "plural": false,
-          "nullable": false
+          "type": "CommerceOrderEdge"
         },
         "me.orders.edges.node": {
-          "type": "CommerceOrder",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "CommerceOrder"
         },
-        "me.orders.pageCursors.around": {
-          "type": "CommercePageCursor",
+        "me.orders.edges.node.__isCommerceOrder": (v8/*: any*/),
+        "me.orders.edges.node.__typename": (v8/*: any*/),
+        "me.orders.edges.node.buyerTotal": (v7/*: any*/),
+        "me.orders.edges.node.code": (v8/*: any*/),
+        "me.orders.edges.node.createdAt": (v8/*: any*/),
+        "me.orders.edges.node.creditCard": {
           "enumValues": null,
-          "plural": true,
-          "nullable": false
+          "nullable": true,
+          "plural": false,
+          "type": "CreditCard"
         },
-        "me.orders.pageCursors.first": (v9/*: any*/),
-        "me.orders.pageCursors.last": (v9/*: any*/),
-        "me.orders.pageCursors.previous": (v9/*: any*/),
-        "me.orders.pageInfo.endCursor": (v8/*: any*/),
-        "me.orders.pageInfo.hasNextPage": (v10/*: any*/),
-        "me.orders.pageInfo.hasPreviousPage": (v10/*: any*/),
-        "me.orders.pageInfo.startCursor": (v8/*: any*/),
-        "me.orders.edges.node.code": (v11/*: any*/),
-        "me.orders.edges.node.id": (v7/*: any*/),
-        "me.orders.pageCursors.around.cursor": (v11/*: any*/),
-        "me.orders.pageCursors.around.isCurrent": (v10/*: any*/),
-        "me.orders.pageCursors.around.page": (v12/*: any*/),
-        "me.orders.pageCursors.first.cursor": (v11/*: any*/),
-        "me.orders.pageCursors.first.isCurrent": (v10/*: any*/),
-        "me.orders.pageCursors.first.page": (v12/*: any*/),
-        "me.orders.pageCursors.last.cursor": (v11/*: any*/),
-        "me.orders.pageCursors.last.isCurrent": (v10/*: any*/),
-        "me.orders.pageCursors.last.page": (v12/*: any*/),
-        "me.orders.pageCursors.previous.cursor": (v11/*: any*/),
-        "me.orders.pageCursors.previous.isCurrent": (v10/*: any*/),
-        "me.orders.pageCursors.previous.page": (v12/*: any*/),
-        "me.orders.edges.node.internalID": (v13/*: any*/),
+        "me.orders.edges.node.creditCard.id": (v6/*: any*/),
+        "me.orders.edges.node.creditCard.lastDigits": (v8/*: any*/),
+        "me.orders.edges.node.currencyCode": (v8/*: any*/),
         "me.orders.edges.node.displayState": {
-          "type": "CommerceOrderDisplayStateEnum",
           "enumValues": [
             "ABANDONED",
             "APPROVED",
@@ -982,11 +934,117 @@ return {
             "REFUNDED",
             "SUBMITTED"
           ],
+          "nullable": false,
           "plural": false,
-          "nullable": false
+          "type": "CommerceOrderDisplayStateEnum"
         },
+        "me.orders.edges.node.id": (v6/*: any*/),
+        "me.orders.edges.node.internalID": (v6/*: any*/),
+        "me.orders.edges.node.itemsTotal": (v7/*: any*/),
+        "me.orders.edges.node.lineItems": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "CommerceLineItemConnection"
+        },
+        "me.orders.edges.node.lineItems.edges": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": true,
+          "type": "CommerceLineItemEdge"
+        },
+        "me.orders.edges.node.lineItems.edges.node": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "CommerceLineItem"
+        },
+        "me.orders.edges.node.lineItems.edges.node.artwork": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Artwork"
+        },
+        "me.orders.edges.node.lineItems.edges.node.artwork.artistNames": (v7/*: any*/),
+        "me.orders.edges.node.lineItems.edges.node.artwork.artists": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": true,
+          "type": "Artist"
+        },
+        "me.orders.edges.node.lineItems.edges.node.artwork.artists.id": (v6/*: any*/),
+        "me.orders.edges.node.lineItems.edges.node.artwork.artists.slug": (v6/*: any*/),
+        "me.orders.edges.node.lineItems.edges.node.artwork.date": (v7/*: any*/),
+        "me.orders.edges.node.lineItems.edges.node.artwork.id": (v6/*: any*/),
+        "me.orders.edges.node.lineItems.edges.node.artwork.image": (v9/*: any*/),
+        "me.orders.edges.node.lineItems.edges.node.artwork.image.resized": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "ResizedImageUrl"
+        },
+        "me.orders.edges.node.lineItems.edges.node.artwork.image.resized.url": (v8/*: any*/),
+        "me.orders.edges.node.lineItems.edges.node.artwork.internalID": (v6/*: any*/),
+        "me.orders.edges.node.lineItems.edges.node.artwork.partner": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Partner"
+        },
+        "me.orders.edges.node.lineItems.edges.node.artwork.partner.href": (v7/*: any*/),
+        "me.orders.edges.node.lineItems.edges.node.artwork.partner.id": (v6/*: any*/),
+        "me.orders.edges.node.lineItems.edges.node.artwork.partner.initials": (v7/*: any*/),
+        "me.orders.edges.node.lineItems.edges.node.artwork.partner.name": (v7/*: any*/),
+        "me.orders.edges.node.lineItems.edges.node.artwork.partner.profile": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Profile"
+        },
+        "me.orders.edges.node.lineItems.edges.node.artwork.partner.profile.icon": (v9/*: any*/),
+        "me.orders.edges.node.lineItems.edges.node.artwork.partner.profile.icon.url": (v7/*: any*/),
+        "me.orders.edges.node.lineItems.edges.node.artwork.partner.profile.id": (v6/*: any*/),
+        "me.orders.edges.node.lineItems.edges.node.artwork.shippingOrigin": (v7/*: any*/),
+        "me.orders.edges.node.lineItems.edges.node.artwork.slug": (v6/*: any*/),
+        "me.orders.edges.node.lineItems.edges.node.artwork.title": (v7/*: any*/),
+        "me.orders.edges.node.lineItems.edges.node.fulfillments": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "CommerceFulfillmentConnection"
+        },
+        "me.orders.edges.node.lineItems.edges.node.fulfillments.edges": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": true,
+          "type": "CommerceFulfillmentEdge"
+        },
+        "me.orders.edges.node.lineItems.edges.node.fulfillments.edges.node": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "CommerceFulfillment"
+        },
+        "me.orders.edges.node.lineItems.edges.node.fulfillments.edges.node.id": (v6/*: any*/),
+        "me.orders.edges.node.lineItems.edges.node.fulfillments.edges.node.trackingId": (v7/*: any*/),
+        "me.orders.edges.node.lineItems.edges.node.id": (v6/*: any*/),
+        "me.orders.edges.node.mode": {
+          "enumValues": [
+            "BUY",
+            "OFFER"
+          ],
+          "nullable": true,
+          "plural": false,
+          "type": "CommerceOrderModeEnum"
+        },
+        "me.orders.edges.node.requestedFulfillment": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "CommerceRequestedFulfillmentUnion"
+        },
+        "me.orders.edges.node.requestedFulfillment.__typename": (v8/*: any*/),
         "me.orders.edges.node.state": {
-          "type": "CommerceOrderStateEnum",
           "enumValues": [
             "ABANDONED",
             "APPROVED",
@@ -996,129 +1054,52 @@ return {
             "REFUNDED",
             "SUBMITTED"
           ],
+          "nullable": false,
           "plural": false,
-          "nullable": false
+          "type": "CommerceOrderStateEnum"
         },
-        "me.orders.edges.node.mode": {
-          "type": "CommerceOrderModeEnum",
-          "enumValues": [
-            "BUY",
-            "OFFER"
-          ],
-          "plural": false,
-          "nullable": true
-        },
-        "me.orders.edges.node.requestedFulfillment": {
-          "type": "CommerceRequestedFulfillmentUnion",
+        "me.orders.pageCursors": {
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "CommercePageCursors"
         },
-        "me.orders.edges.node.creditCard": {
-          "type": "CreditCard",
+        "me.orders.pageCursors.around": {
           "enumValues": null,
-          "plural": false,
-          "nullable": true
-        },
-        "me.orders.edges.node.buyerTotal": (v8/*: any*/),
-        "me.orders.edges.node.createdAt": (v11/*: any*/),
-        "me.orders.edges.node.itemsTotal": (v8/*: any*/),
-        "me.orders.edges.node.currencyCode": (v11/*: any*/),
-        "me.orders.edges.node.lineItems": {
-          "type": "CommerceLineItemConnection",
-          "enumValues": null,
-          "plural": false,
-          "nullable": true
-        },
-        "me.orders.edges.node.creditCard.lastDigits": (v11/*: any*/),
-        "me.orders.edges.node.creditCard.id": (v7/*: any*/),
-        "me.orders.edges.node.lineItems.edges": {
-          "type": "CommerceLineItemEdge",
-          "enumValues": null,
+          "nullable": false,
           "plural": true,
-          "nullable": true
+          "type": "CommercePageCursor"
         },
-        "me.orders.edges.node.requestedFulfillment.__typename": (v11/*: any*/),
-        "me.orders.edges.node.lineItems.edges.node": {
-          "type": "CommerceLineItem",
+        "me.orders.pageCursors.around.cursor": (v8/*: any*/),
+        "me.orders.pageCursors.around.isCurrent": (v10/*: any*/),
+        "me.orders.pageCursors.around.page": (v11/*: any*/),
+        "me.orders.pageCursors.first": (v12/*: any*/),
+        "me.orders.pageCursors.first.cursor": (v8/*: any*/),
+        "me.orders.pageCursors.first.isCurrent": (v10/*: any*/),
+        "me.orders.pageCursors.first.page": (v11/*: any*/),
+        "me.orders.pageCursors.last": (v12/*: any*/),
+        "me.orders.pageCursors.last.cursor": (v8/*: any*/),
+        "me.orders.pageCursors.last.isCurrent": (v10/*: any*/),
+        "me.orders.pageCursors.last.page": (v11/*: any*/),
+        "me.orders.pageCursors.previous": (v12/*: any*/),
+        "me.orders.pageCursors.previous.cursor": (v8/*: any*/),
+        "me.orders.pageCursors.previous.isCurrent": (v10/*: any*/),
+        "me.orders.pageCursors.previous.page": (v11/*: any*/),
+        "me.orders.pageInfo": {
           "enumValues": null,
+          "nullable": false,
           "plural": false,
-          "nullable": true
+          "type": "CommercePageInfo"
         },
-        "me.orders.edges.node.lineItems.edges.node.artwork": {
-          "type": "Artwork",
-          "enumValues": null,
-          "plural": false,
-          "nullable": true
-        },
-        "me.orders.edges.node.lineItems.edges.node.fulfillments": {
-          "type": "CommerceFulfillmentConnection",
-          "enumValues": null,
-          "plural": false,
-          "nullable": true
-        },
-        "me.orders.edges.node.lineItems.edges.node.id": (v7/*: any*/),
-        "me.orders.edges.node.lineItems.edges.node.artwork.slug": (v13/*: any*/),
-        "me.orders.edges.node.lineItems.edges.node.artwork.date": (v8/*: any*/),
-        "me.orders.edges.node.lineItems.edges.node.artwork.image": (v14/*: any*/),
-        "me.orders.edges.node.lineItems.edges.node.artwork.partner": {
-          "type": "Partner",
-          "enumValues": null,
-          "plural": false,
-          "nullable": true
-        },
-        "me.orders.edges.node.lineItems.edges.node.artwork.shippingOrigin": (v8/*: any*/),
-        "me.orders.edges.node.lineItems.edges.node.artwork.internalID": (v13/*: any*/),
-        "me.orders.edges.node.lineItems.edges.node.artwork.title": (v8/*: any*/),
-        "me.orders.edges.node.lineItems.edges.node.artwork.artistNames": (v8/*: any*/),
-        "me.orders.edges.node.lineItems.edges.node.artwork.artists": {
-          "type": "Artist",
-          "enumValues": null,
-          "plural": true,
-          "nullable": true
-        },
-        "me.orders.edges.node.lineItems.edges.node.artwork.id": (v7/*: any*/),
-        "me.orders.edges.node.lineItems.edges.node.fulfillments.edges": {
-          "type": "CommerceFulfillmentEdge",
-          "enumValues": null,
-          "plural": true,
-          "nullable": true
-        },
-        "me.orders.edges.node.lineItems.edges.node.artwork.image.resized": {
-          "type": "ResizedImageUrl",
-          "enumValues": null,
-          "plural": false,
-          "nullable": true
-        },
-        "me.orders.edges.node.lineItems.edges.node.artwork.partner.href": (v8/*: any*/),
-        "me.orders.edges.node.lineItems.edges.node.artwork.partner.initials": (v8/*: any*/),
-        "me.orders.edges.node.lineItems.edges.node.artwork.partner.name": (v8/*: any*/),
-        "me.orders.edges.node.lineItems.edges.node.artwork.partner.profile": {
-          "type": "Profile",
-          "enumValues": null,
-          "plural": false,
-          "nullable": true
-        },
-        "me.orders.edges.node.lineItems.edges.node.artwork.partner.id": (v7/*: any*/),
-        "me.orders.edges.node.lineItems.edges.node.artwork.artists.slug": (v13/*: any*/),
-        "me.orders.edges.node.lineItems.edges.node.artwork.artists.id": (v7/*: any*/),
-        "me.orders.edges.node.lineItems.edges.node.fulfillments.edges.node": {
-          "type": "CommerceFulfillment",
-          "enumValues": null,
-          "plural": false,
-          "nullable": true
-        },
-        "me.orders.edges.node.lineItems.edges.node.artwork.image.resized.url": (v11/*: any*/),
-        "me.orders.edges.node.lineItems.edges.node.artwork.partner.profile.icon": (v14/*: any*/),
-        "me.orders.edges.node.lineItems.edges.node.artwork.partner.profile.id": (v7/*: any*/),
-        "me.orders.edges.node.lineItems.edges.node.fulfillments.edges.node.trackingId": (v8/*: any*/),
-        "me.orders.edges.node.lineItems.edges.node.fulfillments.edges.node.id": (v7/*: any*/),
-        "me.orders.edges.node.lineItems.edges.node.artwork.partner.profile.icon.url": (v8/*: any*/)
+        "me.orders.pageInfo.endCursor": (v7/*: any*/),
+        "me.orders.pageInfo.hasNextPage": (v10/*: any*/),
+        "me.orders.pageInfo.hasPreviousPage": (v10/*: any*/),
+        "me.orders.pageInfo.startCursor": (v7/*: any*/)
       }
     },
     "name": "PurchaseAppTestQuery",
     "operationKind": "query",
-    "text": "query PurchaseAppTestQuery {\n  me {\n    ...PurchaseApp_me\n    id\n  }\n}\n\nfragment OrderRow_order on CommerceOrder {\n  internalID\n  code\n  displayState\n  state\n  mode\n  requestedFulfillment {\n    __typename\n    ... on CommerceShip {\n      __typename\n    }\n    ... on CommercePickup {\n      __typename\n    }\n    ... on CommerceShipArta {\n      __typename\n    }\n  }\n  creditCard {\n    lastDigits\n    id\n  }\n  buyerTotal(precision: 2)\n  createdAt\n  itemsTotal\n  currencyCode\n  lineItems {\n    edges {\n      node {\n        artwork {\n          slug\n          date\n          image {\n            resized(width: 55) {\n              url\n            }\n          }\n          partner {\n            href\n            initials\n            name\n            profile {\n              icon {\n                url(version: \"square140\")\n              }\n              id\n            }\n            id\n          }\n          shippingOrigin\n          internalID\n          title\n          artistNames\n          artists {\n            slug\n            id\n          }\n          id\n        }\n        fulfillments(first: 1) {\n          edges {\n            node {\n              trackingId\n              id\n            }\n          }\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment PurchaseApp_me on Me {\n  ...PurchaseHistory_me\n}\n\nfragment PurchaseHistory_me on Me {\n  name\n  orders(states: [APPROVED, CANCELED, FULFILLED, REFUNDED, SUBMITTED], first: 10) {\n    edges {\n      node {\n        __typename\n        code\n        ...OrderRow_order\n        id\n      }\n    }\n    pageCursors {\n      around {\n        cursor\n        isCurrent\n        page\n      }\n      first {\n        cursor\n        isCurrent\n        page\n      }\n      last {\n        cursor\n        isCurrent\n        page\n      }\n      previous {\n        cursor\n        isCurrent\n        page\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n"
+    "text": "query PurchaseAppTestQuery {\n  me {\n    ...PurchaseApp_me\n    id\n  }\n}\n\nfragment OrderRow_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  internalID\n  code\n  displayState\n  state\n  mode\n  requestedFulfillment {\n    __typename\n    ... on CommerceShip {\n      __typename\n    }\n    ... on CommercePickup {\n      __typename\n    }\n    ... on CommerceShipArta {\n      __typename\n    }\n  }\n  creditCard {\n    lastDigits\n    id\n  }\n  buyerTotal(precision: 2)\n  createdAt\n  itemsTotal\n  currencyCode\n  lineItems {\n    edges {\n      node {\n        artwork {\n          slug\n          date\n          image {\n            resized(width: 55) {\n              url\n            }\n          }\n          partner {\n            href\n            initials\n            name\n            profile {\n              icon {\n                url(version: \"square140\")\n              }\n              id\n            }\n            id\n          }\n          shippingOrigin\n          internalID\n          title\n          artistNames\n          artists {\n            slug\n            id\n          }\n          id\n        }\n        fulfillments(first: 1) {\n          edges {\n            node {\n              trackingId\n              id\n            }\n          }\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment PurchaseApp_me on Me {\n  ...PurchaseHistory_me\n}\n\nfragment PurchaseHistory_me on Me {\n  name\n  orders(states: [APPROVED, CANCELED, FULFILLED, REFUNDED, SUBMITTED], first: 10) {\n    edges {\n      node {\n        __typename\n        code\n        ...OrderRow_order\n        id\n      }\n    }\n    pageCursors {\n      around {\n        cursor\n        isCurrent\n        page\n      }\n      first {\n        cursor\n        isCurrent\n        page\n      }\n      last {\n        cursor\n        isCurrent\n        page\n      }\n      previous {\n        cursor\n        isCurrent\n        page\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n"
   }
 };
 })();

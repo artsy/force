@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -35,6 +36,7 @@ fragment ShowViewingRoom_show on Show {
       id
     }
     ... on Node {
+      __isNode: __typename
       id
     }
   }
@@ -71,18 +73,16 @@ v1 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
+  "name": "name",
+  "storageKey": null
+},
+v2 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v2 = [
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "name",
-    "storageKey": null
-  }
-],
 v3 = [
   {
     "kind": "Literal",
@@ -91,22 +91,22 @@ v3 = [
   }
 ],
 v4 = {
-  "type": "ID",
   "enumValues": null,
+  "nullable": false,
   "plural": false,
-  "nullable": true
+  "type": "ID"
 },
 v5 = {
-  "type": "String",
   "enumValues": null,
+  "nullable": false,
   "plural": false,
-  "nullable": true
+  "type": "String"
 },
 v6 = {
-  "type": "String",
   "enumValues": null,
+  "nullable": true,
   "plural": false,
-  "nullable": false
+  "type": "String"
 };
 return {
   "fragment": {
@@ -132,7 +132,8 @@ return {
         "storageKey": "show(id:\"example-show-id\")"
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -163,16 +164,30 @@ return {
                 "name": "__typename",
                 "storageKey": null
               },
-              (v1/*: any*/),
               {
                 "kind": "InlineFragment",
-                "selections": (v2/*: any*/),
-                "type": "Partner"
+                "selections": [
+                  (v1/*: any*/)
+                ],
+                "type": "Partner",
+                "abstractKey": null
               },
               {
                 "kind": "InlineFragment",
-                "selections": (v2/*: any*/),
-                "type": "ExternalPartner"
+                "selections": [
+                  (v1/*: any*/),
+                  (v2/*: any*/)
+                ],
+                "type": "ExternalPartner",
+                "abstractKey": null
+              },
+              {
+                "kind": "InlineFragment",
+                "selections": [
+                  (v2/*: any*/)
+                ],
+                "type": "Node",
+                "abstractKey": "__isNode"
               }
             ],
             "storageKey": null
@@ -288,79 +303,77 @@ return {
             ],
             "storageKey": null
           },
-          (v1/*: any*/)
+          (v2/*: any*/)
         ],
         "storageKey": "show(id:\"example-show-id\")"
       }
     ]
   },
   "params": {
+    "cacheID": "9b3da345db736cfe2bdb3918b63648c1",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "show": {
-          "type": "Show",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "Show"
         },
         "show.id": (v4/*: any*/),
         "show.partner": {
-          "type": "PartnerTypes",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "PartnerTypes"
         },
+        "show.partner.__isNode": (v5/*: any*/),
+        "show.partner.__typename": (v5/*: any*/),
+        "show.partner.id": (v4/*: any*/),
+        "show.partner.name": (v6/*: any*/),
         "show.viewingRoomsConnection": {
-          "type": "ViewingRoomsConnection",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "ViewingRoomsConnection"
         },
         "show.viewingRoomsConnection.edges": {
-          "type": "ViewingRoomsEdge",
           "enumValues": null,
+          "nullable": true,
           "plural": true,
-          "nullable": true
+          "type": "ViewingRoomsEdge"
         },
-        "show.partner.name": (v5/*: any*/),
-        "show.partner.id": (v4/*: any*/),
         "show.viewingRoomsConnection.edges.node": {
-          "type": "ViewingRoom",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "ViewingRoom"
         },
-        "show.viewingRoomsConnection.edges.node.internalID": {
-          "type": "ID",
-          "enumValues": null,
-          "plural": false,
-          "nullable": false
-        },
-        "show.viewingRoomsConnection.edges.node.slug": (v6/*: any*/),
-        "show.viewingRoomsConnection.edges.node.status": (v6/*: any*/),
-        "show.viewingRoomsConnection.edges.node.distanceToOpen": (v5/*: any*/),
-        "show.viewingRoomsConnection.edges.node.distanceToClose": (v5/*: any*/),
-        "show.viewingRoomsConnection.edges.node.title": (v6/*: any*/),
-        "show.viewingRoomsConnection.edges.node.href": (v5/*: any*/),
+        "show.viewingRoomsConnection.edges.node.distanceToClose": (v6/*: any*/),
+        "show.viewingRoomsConnection.edges.node.distanceToOpen": (v6/*: any*/),
+        "show.viewingRoomsConnection.edges.node.href": (v6/*: any*/),
         "show.viewingRoomsConnection.edges.node.image": {
-          "type": "ARImage",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "ARImage"
         },
         "show.viewingRoomsConnection.edges.node.image.imageURLs": {
-          "type": "ImageURLs",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "ImageURLs"
         },
-        "show.viewingRoomsConnection.edges.node.image.imageURLs.normalized": (v5/*: any*/)
+        "show.viewingRoomsConnection.edges.node.image.imageURLs.normalized": (v6/*: any*/),
+        "show.viewingRoomsConnection.edges.node.internalID": (v4/*: any*/),
+        "show.viewingRoomsConnection.edges.node.slug": (v5/*: any*/),
+        "show.viewingRoomsConnection.edges.node.status": (v5/*: any*/),
+        "show.viewingRoomsConnection.edges.node.title": (v5/*: any*/)
       }
     },
     "name": "ShowViewingRoom_Test_Query",
     "operationKind": "query",
-    "text": "query ShowViewingRoom_Test_Query {\n  show(id: \"example-show-id\") {\n    ...ShowViewingRoom_show\n    id\n  }\n}\n\nfragment ShowViewingRoom_show on Show {\n  partner {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on ExternalPartner {\n      name\n      id\n    }\n    ... on Node {\n      id\n    }\n  }\n  viewingRoomsConnection {\n    edges {\n      node {\n        internalID\n        slug\n        status\n        distanceToOpen(short: true)\n        distanceToClose(short: true)\n        title\n        href\n        image {\n          imageURLs {\n            normalized\n          }\n        }\n      }\n    }\n  }\n}\n"
+    "text": "query ShowViewingRoom_Test_Query {\n  show(id: \"example-show-id\") {\n    ...ShowViewingRoom_show\n    id\n  }\n}\n\nfragment ShowViewingRoom_show on Show {\n  partner {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on ExternalPartner {\n      name\n      id\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n  viewingRoomsConnection {\n    edges {\n      node {\n        internalID\n        slug\n        status\n        distanceToOpen(short: true)\n        distanceToClose(short: true)\n        title\n        href\n        image {\n          imageURLs {\n            normalized\n          }\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();
