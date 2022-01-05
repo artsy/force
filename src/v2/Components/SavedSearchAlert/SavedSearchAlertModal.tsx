@@ -183,7 +183,7 @@ export const SavedSearchAlertModal: React.FC<SavedSearchAlertFormProps> = ({
               </Box>
             </Box>
 
-            <DownloadAppBanner />
+            <DownloadAppBanner savedSearchAttributes={savedSearchAttributes} />
           </Join>
         </Modal>
       </Form>
