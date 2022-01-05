@@ -97,6 +97,7 @@ export class ModalContainer extends Component<any> {
           signup: sd.AP.signupPagePath,
           apple: sd.AP.applePath,
           facebook: sd.AP.facebookPath,
+          google: sd.AP.googlePath,
           twitter: sd.AP.twitterPath,
         }}
         csrf={Cookies && Cookies.get && Cookies.get("CSRF_TOKEN")}

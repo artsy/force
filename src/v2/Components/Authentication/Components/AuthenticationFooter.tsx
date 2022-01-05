@@ -8,6 +8,7 @@ interface AuthenticationFooterProps extends BoxProps {
   mode?: ModalType
   onAppleLogin?: (e: any) => void
   onFacebookLogin?: (e: any) => void
+  onGoogleLogin?: (e: any) => void
   showRecaptchaDisclaimer?: boolean
 }
 
@@ -16,6 +17,7 @@ export const AuthenticationFooter: React.FC<AuthenticationFooterProps> = ({
   mode,
   onAppleLogin,
   onFacebookLogin,
+  onGoogleLogin,
   showRecaptchaDisclaimer,
   ...rest
 }) => {
@@ -92,7 +94,14 @@ export const AuthenticationFooter: React.FC<AuthenticationFooterProps> = ({
                     onClick={onAppleLogin}
                   >
                     Apple
-                  </Clickable>{" "}
+                  </Clickable>{", "}
+                  <Clickable
+                    color="black60"
+                    textDecoration="underline"
+                    onClick={onGoogleLogin}
+                  >
+                    Google
+                  </Clickable>{", "}
                   {" or "}
                   <Clickable
                     color="black60"

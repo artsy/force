@@ -27,6 +27,7 @@ sd.AP = {
   loginPagePath: "/login",
   signupPagePath: "/signup",
   facebookPath: "/facebook",
+  googlePath: "/facebook",
   twitterPath: "/twitter",
 }
 sd.APP_URL = "http://artsy.net"

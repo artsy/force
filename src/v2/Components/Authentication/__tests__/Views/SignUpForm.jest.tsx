@@ -44,6 +44,7 @@ describe("SignUpForm", () => {
       intent: Intent.consign,
       onAppleLogin: jest.fn(),
       onFacebookLogin: jest.fn(),
+      onGoogleLogin: jest.fn(),
       showRecaptchaDisclaimer: false,
       values: SignupValues,
     }
@@ -103,7 +104,7 @@ describe("SignUpForm", () => {
     })
   })
 
-  describe("signup with Apple", () => {
+  describe("signup with social auth providers", () => {
     it("calls apple callback on tapping the button", done => {
       passedProps.values.accepted_terms_of_service = true
       const wrapper = getWrapper()
@@ -138,6 +139,25 @@ describe("SignUpForm", () => {
 
       setTimeout(() => {
         expect(passedProps.onFacebookLogin).toHaveBeenCalled()
+        done()
+      })
+    })
+
+    it("calls google callback on tapping the button", done => {
+      passedProps.values.accepted_terms_of_service = true
+      const wrapper = getWrapper()
+
+      const googleLink = wrapper
+        .find("Clickable")
+        .findWhere(node => node.text() === "Google")
+        .first()
+
+      expect(googleLink.text()).toEqual("Google")
+
+      googleLink.simulate("click")
+
+      setTimeout(() => {
+        expect(passedProps.onGoogleLogin).toHaveBeenCalled()
         done()
       })
     })

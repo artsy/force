@@ -268,6 +268,14 @@ export class SignUpForm extends Component<SignUpFormProps, SignUpFormState> {
                       this.props.onFacebookLogin?.(e)
                     }
                   }}
+                  onGoogleLogin={async e => {
+                    if (!values.accepted_terms_of_service) {
+                      setTouched({ accepted_terms_of_service: true })
+                      await validateForm()
+                    } else {
+                      this.props.onGoogleLogin?.(e)
+                    }
+                  }}
                   showRecaptchaDisclaimer={this.props.showRecaptchaDisclaimer}
                 />
               </Join>

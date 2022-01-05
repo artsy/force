@@ -9,6 +9,25 @@ import { getServerParam } from "./Utils/getServerParam"
 import { getRouteConfig } from "./System/Router/getRouteConfig"
 import { getV2SharifyScript } from "./System/Server/sharifyHelpers"
 
+import artsyPassport from "@artsy/passport"
+import {
+  API_URL,
+  APP_URL,
+  APPLE_CLIENT_ID,
+  APPLE_KEY_ID,
+  APPLE_PRIVATE_KEY,
+  APPLE_TEAM_ID,
+  CLIENT_ID,
+  CLIENT_SECRET,
+  FACEBOOK_ID,
+  FACEBOOK_SECRET,
+  GOOGLE_CLIENT_ID,
+  GOOGLE_SECRET,
+  SEGMENT_WRITE_KEY_SERVER,
+} from "config"
+
+const { CurrentUser } = require("lib/current_user")
+
 // TODO: Use the same variables as the asset middleware. Both config and sharify
 // have a default CDN_URL while this does not.
 const { CDN_URL, NODE_ENV } = process.env
@@ -22,6 +41,39 @@ if (!NOVO_MANIFEST) {
 
 const app = express()
 const { routes, routePaths } = getRouteConfig()
+
+// Passport middleware for authentication.
+app.use(
+  artsyPassport({
+    APP_URL,
+    APPLE_CLIENT_ID,
+    APPLE_KEY_ID,
+    APPLE_PRIVATE_KEY,
+    APPLE_TEAM_ID,
+    ARTSY_ID: CLIENT_ID,
+    ARTSY_SECRET: CLIENT_SECRET,
+    ARTSY_URL: API_URL,
+    CurrentUser: CurrentUser,
+    FACEBOOK_ID,
+    FACEBOOK_SECRET,
+    GOOGLE_CLIENT_ID,
+    GOOGLE_SECRET,
+    SEGMENT_WRITE_KEY: SEGMENT_WRITE_KEY_SERVER,
+    userKeys: [
+      "collector_level",
+      "default_profile_id",
+      "email",
+      "has_partner_access",
+      "id",
+      "lab_features",
+      "name",
+      "paddle_number",
+      "phone",
+      "roles",
+      "type",
+    ],
+  })
+)
 
 /**
  * Mount routes that will connect to global SSR router

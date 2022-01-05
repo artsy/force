@@ -110,6 +110,8 @@ app.use((req, res, next) => {
 mountAndReload(path.resolve("src/desktop"), {
   watchModules: [
     path.resolve(process.cwd(), "src/v2"),
+    path.resolve(process.cwd(), "src"),
+    "@artsy/passport",
     "@artsy/cohesion",
     "@artsy/fresnel",
     "@artsy/palette",

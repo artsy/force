@@ -34,6 +34,7 @@ export interface FormProps {
   intent: AuthIntent
   onAppleLogin?: (e: Event) => void
   onFacebookLogin?: (e: Event) => void
+  onGoogleLogin?: (e: Event) => void
   onBackButtonClicked?: (e: Event) => void
   title?: string
   entityName?: string
