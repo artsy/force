@@ -2,6 +2,7 @@ import { mount, ReactWrapper } from "enzyme"
 import {
   LocationAutocompleteInput,
   normalizePlace,
+  Place,
 } from "../LocationAutocompleteInput"
 import { Input } from "@artsy/palette"
 import { flushPromiseQueue } from "v2/DevTools"
@@ -145,7 +146,7 @@ describe("LocationAutocompleteInput", () => {
 
 describe("normalizePlace", () => {
   it("returns a more Gravity friendly place object", () => {
-    expect(normalizePlace(fullPlace)).toEqual({
+    expect(normalizePlace(fullPlace as Place)).toEqual({
       city: "Katonah",
       state: "New York",
       stateCode: "NY",
@@ -199,18 +200,6 @@ const fullPlace = {
     },
   ],
   formatted_address: "Katonah, NY 10536, USA",
-  geometry: {
-    location: {
-      lat: () => 41.2587043,
-      lng: () => -73.6854137,
-    },
-    viewport: {
-      south: 41.24574093184339,
-      west: -73.69507691334579,
-      north: 41.26628995634204,
-      east: -73.67639103901101,
-    },
-  },
   place_id: "ChIJ8bo5-U6wwokR59MuIVs88nQ",
   types: ["locality", "political"],
 }

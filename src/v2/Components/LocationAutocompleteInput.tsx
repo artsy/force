@@ -45,14 +45,13 @@ export const LocationAutocompleteInput: FC<LocationAutocompleteInputProps> = ({
   >([])
   const [ready, setReady] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
-
-  const autocompleteServiceRef = useRef<any | null>(null)
-  const geocoderRef = useRef<any | null>(null)
+  const autocompleteServiceRef = useRef<google.maps.places.AutocompleteService | null>(
+    null
+  )
+  const geocoderRef = useRef<google.maps.Geocoder | null>(null)
 
   useEffect(() => {
-    // @ts-ignore
     if (typeof google === "undefined") {
-      // @ts-ignore
       window.__googleMapsCallback = () => {
         setReady(true)
       }
@@ -63,18 +62,15 @@ export const LocationAutocompleteInput: FC<LocationAutocompleteInputProps> = ({
   }, [])
 
   useEffect(() => {
-    // @ts-ignore
     if (typeof google === "undefined" || !ready) return
-    // @ts-ignore
     autocompleteServiceRef.current = new google.maps.places.AutocompleteService()
-    // @ts-ignore
     geocoderRef.current = new google.maps.Geocoder()
   }, [ready])
 
   useLoadScript({ id: "google-maps-js", src: GOOGLE_PLACES_API_SRC })
 
   const fetchSuggestions = async (searchQuery: string) => {
-    const res = await autocompleteServiceRef.current.getPlacePredictions({
+    const res = await autocompleteServiceRef.current?.getPlacePredictions({
       input: searchQuery,
       types: ["(cities)"],
     })
@@ -105,13 +101,12 @@ export const LocationAutocompleteInput: FC<LocationAutocompleteInputProps> = ({
 
   const handleSuggestionsFetchRequested = useMemo(
     () => debounce(updateSuggestions, DEBOUNCE_DELAY),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     []
   )
 
   const handleSelect = async (option: AutocompleteInputOptionType) => {
-    const place = await geocoderRef.current.geocode({ placeId: option.value })
-    onChange?.(place?.results[0])
+    const place = await geocoderRef.current?.geocode({ placeId: option.value })
+    place?.results[0] && onChange?.(place?.results[0])
   }
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -161,21 +156,7 @@ export const LocationAutocompleteInput: FC<LocationAutocompleteInputProps> = ({
   )
 }
 
-type AddressComponent = {
-  long_name: string
-  short_name: string
-  types: string[]
-}
-
-export type Place =
-  | { city: string }
-  | {
-      address_components: AddressComponent[]
-      formatted_address: string
-      geometry: {}
-      place_id: string
-      types: string[]
-    }
+export type Place = { city: string } | google.maps.GeocoderResult
 
 export type Location = {
   city: string
@@ -192,14 +173,14 @@ export const normalizePlace = (place: Place): Location => {
   }
 
   const components = place.address_components.reduce<{
-    [key: string]: AddressComponent
+    [key: string]: google.maps.GeocoderAddressComponent
   }>(
     (
       acc: {
-        city: AddressComponent
-        state?: AddressComponent
-        postalCode?: AddressComponent
-        country?: AddressComponent
+        city: google.maps.GeocoderAddressComponent
+        state?: google.maps.GeocoderAddressComponent
+        postalCode?: google.maps.GeocoderAddressComponent
+        country?: google.maps.GeocoderAddressComponent
       },
       component
     ) => {

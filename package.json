@@ -285,6 +285,7 @@
     "@types/enzyme": "3.1.11",
     "@types/express": "4.16.1",
     "@types/flickity": "2.2.2",
+    "@types/google-maps": "^3.2.3",
     "@types/isomorphic-fetch": "0.0.34",
     "@types/jest": "27.0.2",
     "@types/jwt-decode": "2.2.0",
