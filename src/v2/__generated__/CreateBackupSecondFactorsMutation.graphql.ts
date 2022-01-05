@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 export type CreateBackupSecondFactorsInput = {
@@ -67,7 +66,8 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "input"
+    "name": "input",
+    "type": "CreateBackupSecondFactorsInput!"
   }
 ],
 v1 = [
@@ -92,35 +92,49 @@ v3 = {
   "storageKey": null
 },
 v4 = {
-  "alias": null,
-  "args": null,
-  "concreteType": "BackupSecondFactor",
-  "kind": "LinkedField",
-  "name": "secondFactors",
-  "plural": true,
+  "kind": "InlineFragment",
   "selections": [
-    (v3/*: any*/)
-  ],
-  "storageKey": null
-},
-v5 = {
-  "alias": null,
-  "args": null,
-  "concreteType": "Error",
-  "kind": "LinkedField",
-  "name": "errors",
-  "plural": true,
-  "selections": [
-    (v3/*: any*/),
+    (v2/*: any*/),
     {
       "alias": null,
       "args": null,
-      "kind": "ScalarField",
-      "name": "message",
+      "concreteType": "BackupSecondFactor",
+      "kind": "LinkedField",
+      "name": "secondFactors",
+      "plural": true,
+      "selections": [
+        (v3/*: any*/)
+      ],
       "storageKey": null
     }
   ],
-  "storageKey": null
+  "type": "BackupSecondFactors"
+},
+v5 = {
+  "kind": "InlineFragment",
+  "selections": [
+    (v2/*: any*/),
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "Error",
+      "kind": "LinkedField",
+      "name": "errors",
+      "plural": true,
+      "selections": [
+        (v3/*: any*/),
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "message",
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
+    }
+  ],
+  "type": "Errors"
 };
 return {
   "fragment": {
@@ -145,24 +159,8 @@ return {
             "name": "secondFactorsOrErrors",
             "plural": false,
             "selections": [
-              {
-                "kind": "InlineFragment",
-                "selections": [
-                  (v2/*: any*/),
-                  (v4/*: any*/)
-                ],
-                "type": "BackupSecondFactors",
-                "abstractKey": null
-              },
-              {
-                "kind": "InlineFragment",
-                "selections": [
-                  (v2/*: any*/),
-                  (v5/*: any*/)
-                ],
-                "type": "Errors",
-                "abstractKey": null
-              }
+              (v4/*: any*/),
+              (v5/*: any*/)
             ],
             "storageKey": null
           }
@@ -170,8 +168,7 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Mutation",
-    "abstractKey": null
+    "type": "Mutation"
   },
   "kind": "Request",
   "operation": {
@@ -196,22 +193,8 @@ return {
             "plural": false,
             "selections": [
               (v2/*: any*/),
-              {
-                "kind": "InlineFragment",
-                "selections": [
-                  (v4/*: any*/)
-                ],
-                "type": "BackupSecondFactors",
-                "abstractKey": null
-              },
-              {
-                "kind": "InlineFragment",
-                "selections": [
-                  (v5/*: any*/)
-                ],
-                "type": "Errors",
-                "abstractKey": null
-              }
+              (v4/*: any*/),
+              (v5/*: any*/)
             ],
             "storageKey": null
           }
@@ -221,7 +204,6 @@ return {
     ]
   },
   "params": {
-    "cacheID": "3dac7c0aea63ee923203d821af1d1443",
     "id": null,
     "metadata": {},
     "name": "CreateBackupSecondFactorsMutation",

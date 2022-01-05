@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -68,34 +67,40 @@ v1 = {
   "storageKey": null
 },
 v2 = {
+  "type": "ID",
   "enumValues": null,
-  "nullable": true,
   "plural": false,
-  "type": "String"
+  "nullable": false
 },
 v3 = {
+  "type": "String",
   "enumValues": null,
-  "nullable": false,
   "plural": false,
-  "type": "ID"
+  "nullable": true
 },
 v4 = {
+  "type": "Boolean",
   "enumValues": null,
-  "nullable": false,
   "plural": false,
-  "type": "Int"
+  "nullable": true
 },
 v5 = {
+  "type": "ID",
   "enumValues": null,
-  "nullable": false,
   "plural": false,
-  "type": "String"
+  "nullable": true
 },
 v6 = {
+  "type": "String",
   "enumValues": null,
-  "nullable": true,
   "plural": false,
-  "type": "Boolean"
+  "nullable": false
+},
+v7 = {
+  "type": "Int",
+  "enumValues": null,
+  "plural": false,
+  "nullable": false
 };
 return {
   "fragment": {
@@ -121,8 +126,7 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query",
-    "abstractKey": null
+    "type": "Query"
   },
   "kind": "Request",
   "operation": {
@@ -325,56 +329,55 @@ return {
     ]
   },
   "params": {
-    "cacheID": "592a02c16f813dfbe77aab629544e6c3",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "viewer": {
+          "type": "Viewer",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "Viewer"
+          "nullable": true
         },
         "viewer.fairs": {
+          "type": "Fair",
           "enumValues": null,
-          "nullable": true,
           "plural": true,
-          "type": "Fair"
+          "nullable": true
         },
-        "viewer.fairs.bannerSize": (v2/*: any*/),
-        "viewer.fairs.endAt": (v2/*: any*/),
-        "viewer.fairs.exhibitionPeriod": (v2/*: any*/),
-        "viewer.fairs.href": (v2/*: any*/),
-        "viewer.fairs.id": (v3/*: any*/),
-        "viewer.fairs.image": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "Image"
-        },
-        "viewer.fairs.image.cropped": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "CroppedImageUrl"
-        },
-        "viewer.fairs.image.cropped.height": (v4/*: any*/),
-        "viewer.fairs.image.cropped.src": (v5/*: any*/),
-        "viewer.fairs.image.cropped.srcSet": (v5/*: any*/),
-        "viewer.fairs.image.cropped.width": (v4/*: any*/),
-        "viewer.fairs.internalID": (v3/*: any*/),
-        "viewer.fairs.isPublished": (v6/*: any*/),
-        "viewer.fairs.name": (v2/*: any*/),
+        "viewer.fairs.internalID": (v2/*: any*/),
+        "viewer.fairs.slug": (v2/*: any*/),
+        "viewer.fairs.bannerSize": (v3/*: any*/),
+        "viewer.fairs.isPublished": (v4/*: any*/),
         "viewer.fairs.profile": {
+          "type": "Profile",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "Profile"
+          "nullable": true
         },
-        "viewer.fairs.profile.id": (v3/*: any*/),
-        "viewer.fairs.profile.isPublished": (v6/*: any*/),
-        "viewer.fairs.slug": (v3/*: any*/),
-        "viewer.fairs.startAt": (v2/*: any*/)
+        "viewer.fairs.href": (v3/*: any*/),
+        "viewer.fairs.name": (v3/*: any*/),
+        "viewer.fairs.startAt": (v3/*: any*/),
+        "viewer.fairs.endAt": (v3/*: any*/),
+        "viewer.fairs.exhibitionPeriod": (v3/*: any*/),
+        "viewer.fairs.image": {
+          "type": "Image",
+          "enumValues": null,
+          "plural": false,
+          "nullable": true
+        },
+        "viewer.fairs.id": (v5/*: any*/),
+        "viewer.fairs.profile.isPublished": (v4/*: any*/),
+        "viewer.fairs.profile.id": (v5/*: any*/),
+        "viewer.fairs.image.cropped": {
+          "type": "CroppedImageUrl",
+          "enumValues": null,
+          "plural": false,
+          "nullable": true
+        },
+        "viewer.fairs.image.cropped.src": (v6/*: any*/),
+        "viewer.fairs.image.cropped.srcSet": (v6/*: any*/),
+        "viewer.fairs.image.cropped.width": (v7/*: any*/),
+        "viewer.fairs.image.cropped.height": (v7/*: any*/)
       }
     },
     "name": "HomeCurrentFairs_Test_Query",

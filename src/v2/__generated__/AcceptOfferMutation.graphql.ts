@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 export type CommerceOrderParticipantEnum = "BUYER" | "SELLER" | "%future added value";
@@ -69,7 +68,8 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "input"
+    "name": "input",
+    "type": "CommerceBuyerAcceptOfferInput!"
   }
 ],
 v1 = [
@@ -104,8 +104,7 @@ v4 = {
       "storageKey": null
     }
   ],
-  "type": "CommerceOfferOrder",
-  "abstractKey": null
+  "type": "CommerceOfferOrder"
 },
 v5 = {
   "kind": "InlineFragment",
@@ -143,8 +142,7 @@ v5 = {
       "storageKey": null
     }
   ],
-  "type": "CommerceOrderWithMutationFailure",
-  "abstractKey": null
+  "type": "CommerceOrderWithMutationFailure"
 };
 return {
   "fragment": {
@@ -187,8 +185,7 @@ return {
                     "storageKey": null
                   }
                 ],
-                "type": "CommerceOrderWithMutationSuccess",
-                "abstractKey": null
+                "type": "CommerceOrderWithMutationSuccess"
               },
               (v5/*: any*/)
             ],
@@ -198,8 +195,7 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Mutation",
-    "abstractKey": null
+    "type": "Mutation"
   },
   "kind": "Request",
   "operation": {
@@ -227,6 +223,7 @@ return {
               {
                 "kind": "InlineFragment",
                 "selections": [
+                  (v2/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -249,8 +246,7 @@ return {
                     "storageKey": null
                   }
                 ],
-                "type": "CommerceOrderWithMutationSuccess",
-                "abstractKey": null
+                "type": "CommerceOrderWithMutationSuccess"
               },
               (v5/*: any*/)
             ],
@@ -262,7 +258,6 @@ return {
     ]
   },
   "params": {
-    "cacheID": "5bd6cad2fd4cf41037248759d2390452",
     "id": null,
     "metadata": {},
     "name": "AcceptOfferMutation",

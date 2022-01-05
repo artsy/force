@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 export type CreateAccountRequestMutationInput = {
@@ -65,7 +64,8 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "input"
+    "name": "input",
+    "type": "CreateAccountRequestMutationInput!"
   }
 ],
 v1 = [
@@ -118,8 +118,7 @@ v3 = {
       "storageKey": null
     }
   ],
-  "type": "CreateAccountRequestMutationFailure",
-  "abstractKey": null
+  "type": "CreateAccountRequestMutationFailure"
 };
 return {
   "fragment": {
@@ -160,8 +159,7 @@ return {
                     "storageKey": null
                   }
                 ],
-                "type": "CreateAccountRequestMutationSuccess",
-                "abstractKey": null
+                "type": "CreateAccountRequestMutationSuccess"
               },
               (v3/*: any*/)
             ],
@@ -171,8 +169,7 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Mutation",
-    "abstractKey": null
+    "type": "Mutation"
   },
   "kind": "Request",
   "operation": {
@@ -226,8 +223,7 @@ return {
                     "storageKey": null
                   }
                 ],
-                "type": "CreateAccountRequestMutationSuccess",
-                "abstractKey": null
+                "type": "CreateAccountRequestMutationSuccess"
               },
               (v3/*: any*/)
             ],
@@ -239,7 +235,6 @@ return {
     ]
   },
   "params": {
-    "cacheID": "c204624ec6199106e9a4fa62d39f8f3e",
     "id": null,
     "metadata": {},
     "name": "CCPARequestMutation",

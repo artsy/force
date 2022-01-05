@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -65,8 +64,7 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query",
-    "abstractKey": null
+    "type": "Query"
   },
   "kind": "Request",
   "operation": {
@@ -108,7 +106,6 @@ return {
     ]
   },
   "params": {
-    "cacheID": "80873362a12b6f0256e1534d3b35f5d2",
     "id": null,
     "metadata": {},
     "name": "SettingsEditSettingsLinkedAccounts_Test_Query",

@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -150,8 +149,7 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query",
-    "abstractKey": null
+    "type": "Query"
   },
   "kind": "Request",
   "operation": {
@@ -223,11 +221,11 @@ return {
               {
                 "kind": "InlineFragment",
                 "selections": [
+                  (v1/*: any*/),
                   (v2/*: any*/),
                   (v0/*: any*/)
                 ],
-                "type": "AppSecondFactor",
-                "abstractKey": null
+                "type": "AppSecondFactor"
               }
             ],
             "storageKey": "secondFactors(kinds:[\"app\"])"
@@ -252,6 +250,7 @@ return {
               {
                 "kind": "InlineFragment",
                 "selections": [
+                  (v1/*: any*/),
                   (v2/*: any*/),
                   {
                     "alias": null,
@@ -261,8 +260,7 @@ return {
                     "storageKey": null
                   }
                 ],
-                "type": "SmsSecondFactor",
-                "abstractKey": null
+                "type": "SmsSecondFactor"
               }
             ],
             "storageKey": "secondFactors(kinds:[\"sms\"])"
@@ -283,7 +281,14 @@ return {
             "name": "secondFactors",
             "plural": true,
             "selections": [
-              (v1/*: any*/)
+              (v1/*: any*/),
+              {
+                "kind": "InlineFragment",
+                "selections": [
+                  (v1/*: any*/)
+                ],
+                "type": "BackupSecondFactor"
+              }
             ],
             "storageKey": "secondFactors(kinds:[\"backup\"])"
           },
@@ -320,7 +325,6 @@ return {
     ]
   },
   "params": {
-    "cacheID": "617b32768b451ef2303dba1a596941cd",
     "id": null,
     "metadata": {},
     "name": "settingsRoutes_SettingsEditSettingsRouteQuery",

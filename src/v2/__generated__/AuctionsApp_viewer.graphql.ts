@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -28,8 +27,7 @@ const node: ReaderFragment = {
       "name": "CuritorialRailsTabBar_viewer"
     }
   ],
-  "type": "Viewer",
-  "abstractKey": null
+  "type": "Viewer"
 };
 (node as any).hash = 'a21e446dcd4d92f163c3a4cc47bb561a';
 export default node;

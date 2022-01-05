@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -147,145 +146,160 @@ fragment Pagination_pageCursors on PageCursors {
 */
 
 const node: ConcreteRequest = (function(){
-var v0 = {
-  "defaultValue": null,
-  "kind": "LocalArgument",
-  "name": "after"
-},
-v1 = {
-  "defaultValue": null,
-  "kind": "LocalArgument",
-  "name": "allowEmptyCreatedDates"
-},
-v2 = {
-  "defaultValue": null,
-  "kind": "LocalArgument",
-  "name": "artistID"
-},
-v3 = {
-  "defaultValue": null,
-  "kind": "LocalArgument",
-  "name": "before"
-},
-v4 = {
-  "defaultValue": null,
-  "kind": "LocalArgument",
-  "name": "categories"
-},
-v5 = {
-  "defaultValue": null,
-  "kind": "LocalArgument",
-  "name": "createdAfterYear"
-},
-v6 = {
-  "defaultValue": null,
-  "kind": "LocalArgument",
-  "name": "createdBeforeYear"
-},
-v7 = {
-  "defaultValue": null,
-  "kind": "LocalArgument",
-  "name": "first"
-},
-v8 = {
-  "defaultValue": null,
-  "kind": "LocalArgument",
-  "name": "keyword"
-},
-v9 = {
-  "defaultValue": null,
-  "kind": "LocalArgument",
-  "name": "last"
-},
-v10 = {
-  "defaultValue": null,
-  "kind": "LocalArgument",
-  "name": "organizations"
-},
-v11 = {
-  "defaultValue": null,
-  "kind": "LocalArgument",
-  "name": "sizes"
-},
-v12 = {
-  "defaultValue": null,
-  "kind": "LocalArgument",
-  "name": "sort"
-},
-v13 = [
+var v0 = [
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "first",
+    "type": "Int"
+  },
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "last",
+    "type": "Int"
+  },
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "after",
+    "type": "String"
+  },
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "before",
+    "type": "String"
+  },
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "sort",
+    "type": "AuctionResultSorts"
+  },
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "artistID",
+    "type": "String!"
+  },
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "organizations",
+    "type": "[String]"
+  },
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "keyword",
+    "type": "String"
+  },
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "categories",
+    "type": "[String]"
+  },
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "sizes",
+    "type": "[ArtworkSizes]"
+  },
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "createdBeforeYear",
+    "type": "Int"
+  },
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "createdAfterYear",
+    "type": "Int"
+  },
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "allowEmptyCreatedDates",
+    "type": "Boolean"
+  }
+],
+v1 = [
   {
     "kind": "Variable",
     "name": "id",
     "variableName": "artistID"
   }
 ],
-v14 = {
+v2 = {
   "kind": "Variable",
   "name": "after",
   "variableName": "after"
 },
-v15 = {
+v3 = {
   "kind": "Variable",
   "name": "allowEmptyCreatedDates",
   "variableName": "allowEmptyCreatedDates"
 },
-v16 = {
+v4 = {
   "kind": "Variable",
   "name": "before",
   "variableName": "before"
 },
-v17 = {
+v5 = {
   "kind": "Variable",
   "name": "categories",
   "variableName": "categories"
 },
-v18 = {
+v6 = {
   "kind": "Variable",
   "name": "first",
   "variableName": "first"
 },
-v19 = {
+v7 = {
   "kind": "Variable",
   "name": "keyword",
   "variableName": "keyword"
 },
-v20 = {
+v8 = {
   "kind": "Variable",
   "name": "last",
   "variableName": "last"
 },
-v21 = {
+v9 = {
   "kind": "Variable",
   "name": "organizations",
   "variableName": "organizations"
 },
-v22 = {
+v10 = {
   "kind": "Variable",
   "name": "sizes",
   "variableName": "sizes"
 },
-v23 = {
+v11 = {
   "kind": "Variable",
   "name": "sort",
   "variableName": "sort"
 },
-v24 = {
+v12 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "cursor",
   "storageKey": null
 },
-v25 = {
+v13 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "page",
   "storageKey": null
 },
-v26 = [
-  (v24/*: any*/),
-  (v25/*: any*/),
+v14 = [
+  (v12/*: any*/),
+  (v13/*: any*/),
   {
     "alias": null,
     "args": null,
@@ -294,14 +308,14 @@ v26 = [
     "storageKey": null
   }
 ],
-v27 = {
+v15 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "display",
   "storageKey": null
 },
-v28 = {
+v16 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -310,28 +324,14 @@ v28 = {
 };
 return {
   "fragment": {
-    "argumentDefinitions": [
-      (v0/*: any*/),
-      (v1/*: any*/),
-      (v2/*: any*/),
-      (v3/*: any*/),
-      (v4/*: any*/),
-      (v5/*: any*/),
-      (v6/*: any*/),
-      (v7/*: any*/),
-      (v8/*: any*/),
-      (v9/*: any*/),
-      (v10/*: any*/),
-      (v11/*: any*/),
-      (v12/*: any*/)
-    ],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
     "name": "ArtistAuctionResultsQuery",
     "selections": [
       {
         "alias": null,
-        "args": (v13/*: any*/),
+        "args": (v1/*: any*/),
         "concreteType": "Artist",
         "kind": "LinkedField",
         "name": "artist",
@@ -339,10 +339,10 @@ return {
         "selections": [
           {
             "args": [
-              (v14/*: any*/),
-              (v15/*: any*/),
-              (v16/*: any*/),
-              (v17/*: any*/),
+              (v2/*: any*/),
+              (v3/*: any*/),
+              (v4/*: any*/),
+              (v5/*: any*/),
               {
                 "kind": "Variable",
                 "name": "createdAfterYear",
@@ -353,12 +353,12 @@ return {
                 "name": "createdBeforeYear",
                 "variableName": "createdBeforeYear"
               },
-              (v18/*: any*/),
-              (v19/*: any*/),
-              (v20/*: any*/),
-              (v21/*: any*/),
-              (v22/*: any*/),
-              (v23/*: any*/)
+              (v6/*: any*/),
+              (v7/*: any*/),
+              (v8/*: any*/),
+              (v9/*: any*/),
+              (v10/*: any*/),
+              (v11/*: any*/)
             ],
             "kind": "FragmentSpread",
             "name": "ArtistAuctionResults_artist"
@@ -367,32 +367,17 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query",
-    "abstractKey": null
+    "type": "Query"
   },
   "kind": "Request",
   "operation": {
-    "argumentDefinitions": [
-      (v7/*: any*/),
-      (v9/*: any*/),
-      (v0/*: any*/),
-      (v3/*: any*/),
-      (v12/*: any*/),
-      (v2/*: any*/),
-      (v10/*: any*/),
-      (v8/*: any*/),
-      (v4/*: any*/),
-      (v11/*: any*/),
-      (v6/*: any*/),
-      (v5/*: any*/),
-      (v1/*: any*/)
-    ],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
     "name": "ArtistAuctionResultsQuery",
     "selections": [
       {
         "alias": null,
-        "args": (v13/*: any*/),
+        "args": (v1/*: any*/),
         "concreteType": "Artist",
         "kind": "LinkedField",
         "name": "artist",
@@ -422,26 +407,26 @@ return {
           {
             "alias": null,
             "args": [
-              (v14/*: any*/),
-              (v15/*: any*/),
-              (v16/*: any*/),
-              (v17/*: any*/),
+              (v2/*: any*/),
+              (v3/*: any*/),
+              (v4/*: any*/),
+              (v5/*: any*/),
               {
                 "kind": "Variable",
                 "name": "earliestCreatedYear",
                 "variableName": "createdAfterYear"
               },
-              (v18/*: any*/),
-              (v19/*: any*/),
-              (v20/*: any*/),
+              (v6/*: any*/),
+              (v7/*: any*/),
+              (v8/*: any*/),
               {
                 "kind": "Variable",
                 "name": "latestCreatedYear",
                 "variableName": "createdBeforeYear"
               },
-              (v21/*: any*/),
-              (v22/*: any*/),
-              (v23/*: any*/)
+              (v9/*: any*/),
+              (v10/*: any*/),
+              (v11/*: any*/)
             ],
             "concreteType": "AuctionResultConnection",
             "kind": "LinkedField",
@@ -520,7 +505,7 @@ return {
                     "kind": "LinkedField",
                     "name": "around",
                     "plural": true,
-                    "selections": (v26/*: any*/),
+                    "selections": (v14/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -530,7 +515,7 @@ return {
                     "kind": "LinkedField",
                     "name": "first",
                     "plural": false,
-                    "selections": (v26/*: any*/),
+                    "selections": (v14/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -540,7 +525,7 @@ return {
                     "kind": "LinkedField",
                     "name": "last",
                     "plural": false,
-                    "selections": (v26/*: any*/),
+                    "selections": (v14/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -551,8 +536,8 @@ return {
                     "name": "previous",
                     "plural": false,
                     "selections": [
-                      (v24/*: any*/),
-                      (v25/*: any*/)
+                      (v12/*: any*/),
+                      (v13/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -682,7 +667,7 @@ return {
                         "name": "priceRealized",
                         "plural": false,
                         "selections": [
-                          (v27/*: any*/),
+                          (v15/*: any*/),
                           {
                             "alias": "display_usd",
                             "args": null,
@@ -726,11 +711,11 @@ return {
                         "name": "estimate",
                         "plural": false,
                         "selections": [
-                          (v27/*: any*/)
+                          (v15/*: any*/)
                         ],
                         "storageKey": null
                       },
-                      (v28/*: any*/)
+                      (v16/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -740,14 +725,13 @@ return {
             ],
             "storageKey": null
           },
-          (v28/*: any*/)
+          (v16/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "3825df4fe974929ccadc47095384e236",
     "id": null,
     "metadata": {},
     "name": "ArtistAuctionResultsQuery",

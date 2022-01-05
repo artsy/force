@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -127,8 +126,7 @@ return {
       "storageKey": "staticContent(id:\"how-auctions-work-conditions-of-sale\")"
     }
   ],
-  "type": "Viewer",
-  "abstractKey": null
+  "type": "Viewer"
 };
 })();
 (node as any).hash = 'e29df207450f132c887a37fde758a3ac';

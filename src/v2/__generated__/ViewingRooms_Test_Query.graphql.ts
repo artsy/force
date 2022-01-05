@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -175,58 +174,58 @@ v2 = [
   }
 ],
 v3 = {
+  "type": "ID",
   "enumValues": null,
-  "nullable": true,
   "plural": false,
-  "type": "ViewingRoomsConnection"
+  "nullable": false
 },
 v4 = {
+  "type": "ViewingRoomsConnection",
   "enumValues": null,
-  "nullable": true,
-  "plural": true,
-  "type": "ViewingRoomsEdge"
+  "plural": false,
+  "nullable": true
 },
 v5 = {
+  "type": "ViewingRoomsEdge",
   "enumValues": null,
-  "nullable": true,
-  "plural": false,
-  "type": "ViewingRoom"
+  "plural": true,
+  "nullable": true
 },
 v6 = {
+  "type": "ViewingRoom",
   "enumValues": null,
-  "nullable": true,
   "plural": false,
-  "type": "ARImage"
+  "nullable": true
 },
 v7 = {
+  "type": "String",
   "enumValues": null,
-  "nullable": true,
   "plural": false,
-  "type": "Int"
+  "nullable": true
 },
 v8 = {
+  "type": "String",
   "enumValues": null,
-  "nullable": true,
   "plural": false,
-  "type": "ImageURLs"
+  "nullable": false
 },
 v9 = {
+  "type": "ARImage",
   "enumValues": null,
-  "nullable": true,
   "plural": false,
-  "type": "String"
+  "nullable": true
 },
 v10 = {
+  "type": "ImageURLs",
   "enumValues": null,
-  "nullable": false,
   "plural": false,
-  "type": "ID"
+  "nullable": true
 },
 v11 = {
+  "type": "Int",
   "enumValues": null,
-  "nullable": false,
   "plural": false,
-  "type": "String"
+  "nullable": true
 };
 return {
   "fragment": {
@@ -252,8 +251,7 @@ return {
         "storageKey": "partner(id:\"white-cube\")"
       }
     ],
-    "type": "Query",
-    "abstractKey": null
+    "type": "Query"
   },
   "kind": "Request",
   "operation": {
@@ -323,42 +321,46 @@ return {
     ]
   },
   "params": {
-    "cacheID": "41e928d4fef094b1010b34b3a3c6f098",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "partner": {
+          "type": "Partner",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "Partner"
+          "nullable": true
         },
-        "partner.currentViewingRooms": (v3/*: any*/),
-        "partner.currentViewingRooms.edges": (v4/*: any*/),
-        "partner.currentViewingRooms.edges.node": (v5/*: any*/),
-        "partner.currentViewingRooms.edges.node.coverImage": (v6/*: any*/),
-        "partner.currentViewingRooms.edges.node.coverImage.height": (v7/*: any*/),
-        "partner.currentViewingRooms.edges.node.coverImage.imageURLs": (v8/*: any*/),
-        "partner.currentViewingRooms.edges.node.coverImage.imageURLs.normalized": (v9/*: any*/),
-        "partner.currentViewingRooms.edges.node.coverImage.width": (v7/*: any*/),
-        "partner.currentViewingRooms.edges.node.exhibitionPeriod": (v9/*: any*/),
-        "partner.currentViewingRooms.edges.node.href": (v9/*: any*/),
-        "partner.currentViewingRooms.edges.node.internalID": (v10/*: any*/),
-        "partner.currentViewingRooms.edges.node.title": (v11/*: any*/),
-        "partner.id": (v10/*: any*/),
-        "partner.slug": (v10/*: any*/),
-        "partner.upcomingViewingRooms": (v3/*: any*/),
-        "partner.upcomingViewingRooms.edges": (v4/*: any*/),
-        "partner.upcomingViewingRooms.edges.node": (v5/*: any*/),
-        "partner.upcomingViewingRooms.edges.node.coverImage": (v6/*: any*/),
-        "partner.upcomingViewingRooms.edges.node.coverImage.height": (v7/*: any*/),
-        "partner.upcomingViewingRooms.edges.node.coverImage.imageURLs": (v8/*: any*/),
-        "partner.upcomingViewingRooms.edges.node.coverImage.imageURLs.normalized": (v9/*: any*/),
-        "partner.upcomingViewingRooms.edges.node.coverImage.width": (v7/*: any*/),
-        "partner.upcomingViewingRooms.edges.node.exhibitionPeriod": (v9/*: any*/),
-        "partner.upcomingViewingRooms.edges.node.href": (v9/*: any*/),
-        "partner.upcomingViewingRooms.edges.node.internalID": (v10/*: any*/),
-        "partner.upcomingViewingRooms.edges.node.title": (v11/*: any*/)
+        "partner.id": {
+          "type": "ID",
+          "enumValues": null,
+          "plural": false,
+          "nullable": true
+        },
+        "partner.slug": (v3/*: any*/),
+        "partner.currentViewingRooms": (v4/*: any*/),
+        "partner.upcomingViewingRooms": (v4/*: any*/),
+        "partner.currentViewingRooms.edges": (v5/*: any*/),
+        "partner.upcomingViewingRooms.edges": (v5/*: any*/),
+        "partner.currentViewingRooms.edges.node": (v6/*: any*/),
+        "partner.upcomingViewingRooms.edges.node": (v6/*: any*/),
+        "partner.currentViewingRooms.edges.node.internalID": (v3/*: any*/),
+        "partner.upcomingViewingRooms.edges.node.internalID": (v3/*: any*/),
+        "partner.currentViewingRooms.edges.node.href": (v7/*: any*/),
+        "partner.currentViewingRooms.edges.node.title": (v8/*: any*/),
+        "partner.currentViewingRooms.edges.node.exhibitionPeriod": (v7/*: any*/),
+        "partner.currentViewingRooms.edges.node.coverImage": (v9/*: any*/),
+        "partner.upcomingViewingRooms.edges.node.href": (v7/*: any*/),
+        "partner.upcomingViewingRooms.edges.node.title": (v8/*: any*/),
+        "partner.upcomingViewingRooms.edges.node.exhibitionPeriod": (v7/*: any*/),
+        "partner.upcomingViewingRooms.edges.node.coverImage": (v9/*: any*/),
+        "partner.currentViewingRooms.edges.node.coverImage.imageURLs": (v10/*: any*/),
+        "partner.currentViewingRooms.edges.node.coverImage.width": (v11/*: any*/),
+        "partner.currentViewingRooms.edges.node.coverImage.height": (v11/*: any*/),
+        "partner.upcomingViewingRooms.edges.node.coverImage.imageURLs": (v10/*: any*/),
+        "partner.upcomingViewingRooms.edges.node.coverImage.width": (v11/*: any*/),
+        "partner.upcomingViewingRooms.edges.node.coverImage.height": (v11/*: any*/),
+        "partner.currentViewingRooms.edges.node.coverImage.imageURLs.normalized": (v7/*: any*/),
+        "partner.upcomingViewingRooms.edges.node.coverImage.imageURLs.normalized": (v7/*: any*/)
       }
     },
     "name": "ViewingRooms_Test_Query",

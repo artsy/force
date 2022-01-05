@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 export type ConsignInDemandNowQueryVariables = {
@@ -146,17 +145,20 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "artistInternalId"
+    "name": "artistInternalId",
+    "type": "ID!"
   },
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "artistSlug"
+    "name": "artistSlug",
+    "type": "String!"
   },
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "medium"
+    "name": "medium",
+    "type": "String!"
   }
 ],
 v1 = [
@@ -606,8 +608,7 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query",
-    "abstractKey": null
+    "type": "Query"
   },
   "kind": "Request",
   "operation": {
@@ -712,7 +713,6 @@ return {
     ]
   },
   "params": {
-    "cacheID": "341eb496fdc17c3ddcb498395541f3ad",
     "id": null,
     "metadata": {},
     "name": "ConsignInDemandNowQuery",

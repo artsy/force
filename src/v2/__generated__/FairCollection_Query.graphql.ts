@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -26,10 +25,10 @@ export type FairCollection_QueryRawResponse = {
                     readonly image: ({
                         readonly url: string | null;
                     }) | null;
-                    readonly id: string;
+                    readonly id: string | null;
                 }) | null;
             }) | null> | null;
-            readonly id: string;
+            readonly id: string | null;
         }) | null;
     }) | null;
 };
@@ -77,7 +76,8 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "slug"
+    "name": "slug",
+    "type": "String!"
   }
 ],
 v1 = [
@@ -95,16 +95,16 @@ v2 = {
   "storageKey": null
 },
 v3 = {
+  "type": "String",
   "enumValues": null,
-  "nullable": false,
   "plural": false,
-  "type": "ID"
+  "nullable": false
 },
 v4 = {
+  "type": "ID",
   "enumValues": null,
-  "nullable": false,
   "plural": false,
-  "type": "String"
+  "nullable": true
 };
 return {
   "fragment": {
@@ -130,8 +130,7 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query",
-    "abstractKey": null
+    "type": "Query"
   },
   "kind": "Request",
   "operation": {
@@ -251,63 +250,67 @@ return {
     ]
   },
   "params": {
-    "cacheID": "5e865ed859305a24d9624c2a9e29ee26",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "marketingCollection": {
+          "type": "MarketingCollection",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "MarketingCollection"
+          "nullable": true
         },
-        "marketingCollection.artworks": {
+        "marketingCollection.id": {
+          "type": "ID",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "FilterArtworksConnection"
+          "nullable": false
+        },
+        "marketingCollection.slug": (v3/*: any*/),
+        "marketingCollection.title": (v3/*: any*/),
+        "marketingCollection.artworks": {
+          "type": "FilterArtworksConnection",
+          "enumValues": null,
+          "plural": false,
+          "nullable": true
         },
         "marketingCollection.artworks.counts": {
+          "type": "FilterArtworksCounts",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "FilterArtworksCounts"
-        },
-        "marketingCollection.artworks.counts.total": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "FormattedNumber"
+          "nullable": true
         },
         "marketingCollection.artworks.edges": {
+          "type": "FilterArtworksEdge",
           "enumValues": null,
-          "nullable": true,
           "plural": true,
-          "type": "FilterArtworksEdge"
+          "nullable": true
+        },
+        "marketingCollection.artworks.id": (v4/*: any*/),
+        "marketingCollection.artworks.counts.total": {
+          "type": "FormattedNumber",
+          "enumValues": null,
+          "plural": false,
+          "nullable": true
         },
         "marketingCollection.artworks.edges.node": {
+          "type": "Artwork",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "Artwork"
+          "nullable": true
         },
-        "marketingCollection.artworks.edges.node.id": (v3/*: any*/),
         "marketingCollection.artworks.edges.node.image": {
+          "type": "Image",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "Image"
+          "nullable": true
         },
+        "marketingCollection.artworks.edges.node.id": (v4/*: any*/),
         "marketingCollection.artworks.edges.node.image.url": {
+          "type": "String",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "String"
-        },
-        "marketingCollection.artworks.id": (v3/*: any*/),
-        "marketingCollection.id": (v3/*: any*/),
-        "marketingCollection.slug": (v4/*: any*/),
-        "marketingCollection.title": (v4/*: any*/)
+          "nullable": true
+        }
       }
     },
     "name": "FairCollection_Query",

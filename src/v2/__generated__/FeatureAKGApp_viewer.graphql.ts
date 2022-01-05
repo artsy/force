@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -21,42 +20,50 @@ const node: ReaderFragment = {
     {
       "defaultValue": null,
       "kind": "LocalArgument",
-      "name": "articleIDs"
+      "name": "articleIDs",
+      "type": "[String]!"
     },
     {
       "defaultValue": null,
       "kind": "LocalArgument",
-      "name": "auctionRailItemIDs"
+      "name": "selectedWorksSetID",
+      "type": "String!"
     },
     {
       "defaultValue": null,
       "kind": "LocalArgument",
-      "name": "collectionRailItemIDs"
+      "name": "collectionRailItemIDs",
+      "type": "[String!]"
     },
     {
       "defaultValue": null,
       "kind": "LocalArgument",
-      "name": "fairRailItemIDs"
+      "name": "auctionRailItemIDs",
+      "type": "[String!]"
     },
     {
       "defaultValue": null,
       "kind": "LocalArgument",
-      "name": "hasAuctionRailItems"
+      "name": "fairRailItemIDs",
+      "type": "[String!]"
     },
     {
       "defaultValue": null,
       "kind": "LocalArgument",
-      "name": "hasCollectionRailItems"
+      "name": "hasCollectionRailItems",
+      "type": "Boolean!"
     },
     {
       "defaultValue": null,
       "kind": "LocalArgument",
-      "name": "hasFairRailItems"
+      "name": "hasAuctionRailItems",
+      "type": "Boolean!"
     },
     {
       "defaultValue": null,
       "kind": "LocalArgument",
-      "name": "selectedWorksSetID"
+      "name": "hasFairRailItems",
+      "type": "Boolean!"
     }
   ],
   "kind": "Fragment",
@@ -110,8 +117,7 @@ const node: ReaderFragment = {
       "name": "Feature_viewer"
     }
   ],
-  "type": "Viewer",
-  "abstractKey": null
+  "type": "Viewer"
 };
 (node as any).hash = '7e462965607113d556dfbd202e44b165';
 export default node;

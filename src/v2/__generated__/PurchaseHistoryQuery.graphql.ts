@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -39,7 +38,6 @@ query PurchaseHistoryQuery(
 }
 
 fragment OrderRow_order on CommerceOrder {
-  __isCommerceOrder: __typename
   internalID
   code
   displayState
@@ -156,32 +154,39 @@ fragment PurchaseHistory_me_2dCEyL on Me {
 */
 
 const node: ConcreteRequest = (function(){
-var v0 = {
-  "defaultValue": null,
-  "kind": "LocalArgument",
-  "name": "after"
-},
-v1 = {
-  "defaultValue": null,
-  "kind": "LocalArgument",
-  "name": "before"
-},
-v2 = {
-  "defaultValue": null,
-  "kind": "LocalArgument",
-  "name": "first"
-},
-v3 = {
-  "defaultValue": null,
-  "kind": "LocalArgument",
-  "name": "last"
-},
-v4 = {
-  "defaultValue": null,
-  "kind": "LocalArgument",
-  "name": "states"
-},
-v5 = [
+var v0 = [
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "states",
+    "type": "[CommerceOrderStateEnum!]"
+  },
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "first",
+    "type": "Int!"
+  },
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "last",
+    "type": "Int"
+  },
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "after",
+    "type": "String"
+  },
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "before",
+    "type": "String"
+  }
+],
+v1 = [
   {
     "kind": "Variable",
     "name": "after",
@@ -208,42 +213,45 @@ v5 = [
     "variableName": "states"
   }
 ],
-v6 = {
+v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "name",
   "storageKey": null
 },
-v7 = {
+v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "__typename",
   "storageKey": null
 },
-v8 = {
+v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "internalID",
   "storageKey": null
 },
-v9 = {
+v5 = [
+  (v3/*: any*/)
+],
+v6 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v10 = {
+v7 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "slug",
   "storageKey": null
 },
-v11 = [
+v8 = [
   {
     "alias": null,
     "args": null,
@@ -268,13 +276,7 @@ v11 = [
 ];
 return {
   "fragment": {
-    "argumentDefinitions": [
-      (v0/*: any*/),
-      (v1/*: any*/),
-      (v2/*: any*/),
-      (v3/*: any*/),
-      (v4/*: any*/)
-    ],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
     "name": "PurchaseHistoryQuery",
@@ -288,7 +290,7 @@ return {
         "plural": false,
         "selections": [
           {
-            "args": (v5/*: any*/),
+            "args": (v1/*: any*/),
             "kind": "FragmentSpread",
             "name": "PurchaseHistory_me"
           }
@@ -296,18 +298,11 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query",
-    "abstractKey": null
+    "type": "Query"
   },
   "kind": "Request",
   "operation": {
-    "argumentDefinitions": [
-      (v4/*: any*/),
-      (v2/*: any*/),
-      (v3/*: any*/),
-      (v0/*: any*/),
-      (v1/*: any*/)
-    ],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
     "name": "PurchaseHistoryQuery",
     "selections": [
@@ -319,10 +314,10 @@ return {
         "name": "me",
         "plural": false,
         "selections": [
-          (v6/*: any*/),
+          (v2/*: any*/),
           {
             "alias": null,
-            "args": (v5/*: any*/),
+            "args": (v1/*: any*/),
             "concreteType": "CommerceOrderConnectionWithTotalCount",
             "kind": "LinkedField",
             "name": "orders",
@@ -344,7 +339,7 @@ return {
                     "name": "node",
                     "plural": false,
                     "selections": [
-                      (v7/*: any*/),
+                      (v3/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -352,11 +347,7 @@ return {
                         "name": "code",
                         "storageKey": null
                       },
-                      {
-                        "kind": "TypeDiscriminator",
-                        "abstractKey": "__isCommerceOrder"
-                      },
-                      (v8/*: any*/),
+                      (v4/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -386,7 +377,22 @@ return {
                         "name": "requestedFulfillment",
                         "plural": false,
                         "selections": [
-                          (v7/*: any*/)
+                          (v3/*: any*/),
+                          {
+                            "kind": "InlineFragment",
+                            "selections": (v5/*: any*/),
+                            "type": "CommerceShip"
+                          },
+                          {
+                            "kind": "InlineFragment",
+                            "selections": (v5/*: any*/),
+                            "type": "CommercePickup"
+                          },
+                          {
+                            "kind": "InlineFragment",
+                            "selections": (v5/*: any*/),
+                            "type": "CommerceShipArta"
+                          }
                         ],
                         "storageKey": null
                       },
@@ -405,7 +411,7 @@ return {
                             "name": "lastDigits",
                             "storageKey": null
                           },
-                          (v9/*: any*/)
+                          (v6/*: any*/)
                         ],
                         "storageKey": null
                       },
@@ -475,7 +481,7 @@ return {
                                     "name": "artwork",
                                     "plural": false,
                                     "selections": [
-                                      (v10/*: any*/),
+                                      (v7/*: any*/),
                                       {
                                         "alias": null,
                                         "args": null,
@@ -540,7 +546,7 @@ return {
                                             "name": "initials",
                                             "storageKey": null
                                           },
-                                          (v6/*: any*/),
+                                          (v2/*: any*/),
                                           {
                                             "alias": null,
                                             "args": null,
@@ -573,11 +579,11 @@ return {
                                                 ],
                                                 "storageKey": null
                                               },
-                                              (v9/*: any*/)
+                                              (v6/*: any*/)
                                             ],
                                             "storageKey": null
                                           },
-                                          (v9/*: any*/)
+                                          (v6/*: any*/)
                                         ],
                                         "storageKey": null
                                       },
@@ -588,7 +594,7 @@ return {
                                         "name": "shippingOrigin",
                                         "storageKey": null
                                       },
-                                      (v8/*: any*/),
+                                      (v4/*: any*/),
                                       {
                                         "alias": null,
                                         "args": null,
@@ -611,12 +617,12 @@ return {
                                         "name": "artists",
                                         "plural": true,
                                         "selections": [
-                                          (v10/*: any*/),
-                                          (v9/*: any*/)
+                                          (v7/*: any*/),
+                                          (v6/*: any*/)
                                         ],
                                         "storageKey": null
                                       },
-                                      (v9/*: any*/)
+                                      (v6/*: any*/)
                                     ],
                                     "storageKey": null
                                   },
@@ -657,7 +663,7 @@ return {
                                                 "name": "trackingId",
                                                 "storageKey": null
                                               },
-                                              (v9/*: any*/)
+                                              (v6/*: any*/)
                                             ],
                                             "storageKey": null
                                           }
@@ -667,7 +673,7 @@ return {
                                     ],
                                     "storageKey": "fulfillments(first:1)"
                                   },
-                                  (v9/*: any*/)
+                                  (v6/*: any*/)
                                 ],
                                 "storageKey": null
                               }
@@ -677,7 +683,7 @@ return {
                         ],
                         "storageKey": null
                       },
-                      (v9/*: any*/)
+                      (v6/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -699,7 +705,7 @@ return {
                     "kind": "LinkedField",
                     "name": "around",
                     "plural": true,
-                    "selections": (v11/*: any*/),
+                    "selections": (v8/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -709,7 +715,7 @@ return {
                     "kind": "LinkedField",
                     "name": "first",
                     "plural": false,
-                    "selections": (v11/*: any*/),
+                    "selections": (v8/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -719,7 +725,7 @@ return {
                     "kind": "LinkedField",
                     "name": "last",
                     "plural": false,
-                    "selections": (v11/*: any*/),
+                    "selections": (v8/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -729,7 +735,7 @@ return {
                     "kind": "LinkedField",
                     "name": "previous",
                     "plural": false,
-                    "selections": (v11/*: any*/),
+                    "selections": (v8/*: any*/),
                     "storageKey": null
                   }
                 ],
@@ -777,19 +783,18 @@ return {
             ],
             "storageKey": null
           },
-          (v9/*: any*/)
+          (v6/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "2b575b7df17e9fd02e1402ed22fcfb8a",
     "id": null,
     "metadata": {},
     "name": "PurchaseHistoryQuery",
     "operationKind": "query",
-    "text": "query PurchaseHistoryQuery(\n  $states: [CommerceOrderStateEnum!]\n  $first: Int!\n  $last: Int\n  $after: String\n  $before: String\n) {\n  me {\n    ...PurchaseHistory_me_2dCEyL\n    id\n  }\n}\n\nfragment OrderRow_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  internalID\n  code\n  displayState\n  state\n  mode\n  requestedFulfillment {\n    __typename\n    ... on CommerceShip {\n      __typename\n    }\n    ... on CommercePickup {\n      __typename\n    }\n    ... on CommerceShipArta {\n      __typename\n    }\n  }\n  creditCard {\n    lastDigits\n    id\n  }\n  buyerTotal(precision: 2)\n  createdAt\n  itemsTotal\n  currencyCode\n  lineItems {\n    edges {\n      node {\n        artwork {\n          slug\n          date\n          image {\n            resized(width: 55) {\n              url\n            }\n          }\n          partner {\n            href\n            initials\n            name\n            profile {\n              icon {\n                url(version: \"square140\")\n              }\n              id\n            }\n            id\n          }\n          shippingOrigin\n          internalID\n          title\n          artistNames\n          artists {\n            slug\n            id\n          }\n          id\n        }\n        fulfillments(first: 1) {\n          edges {\n            node {\n              trackingId\n              id\n            }\n          }\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment PurchaseHistory_me_2dCEyL on Me {\n  name\n  orders(states: $states, first: $first, last: $last, before: $before, after: $after) {\n    edges {\n      node {\n        __typename\n        code\n        ...OrderRow_order\n        id\n      }\n    }\n    pageCursors {\n      around {\n        cursor\n        isCurrent\n        page\n      }\n      first {\n        cursor\n        isCurrent\n        page\n      }\n      last {\n        cursor\n        isCurrent\n        page\n      }\n      previous {\n        cursor\n        isCurrent\n        page\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n"
+    "text": "query PurchaseHistoryQuery(\n  $states: [CommerceOrderStateEnum!]\n  $first: Int!\n  $last: Int\n  $after: String\n  $before: String\n) {\n  me {\n    ...PurchaseHistory_me_2dCEyL\n    id\n  }\n}\n\nfragment OrderRow_order on CommerceOrder {\n  internalID\n  code\n  displayState\n  state\n  mode\n  requestedFulfillment {\n    __typename\n    ... on CommerceShip {\n      __typename\n    }\n    ... on CommercePickup {\n      __typename\n    }\n    ... on CommerceShipArta {\n      __typename\n    }\n  }\n  creditCard {\n    lastDigits\n    id\n  }\n  buyerTotal(precision: 2)\n  createdAt\n  itemsTotal\n  currencyCode\n  lineItems {\n    edges {\n      node {\n        artwork {\n          slug\n          date\n          image {\n            resized(width: 55) {\n              url\n            }\n          }\n          partner {\n            href\n            initials\n            name\n            profile {\n              icon {\n                url(version: \"square140\")\n              }\n              id\n            }\n            id\n          }\n          shippingOrigin\n          internalID\n          title\n          artistNames\n          artists {\n            slug\n            id\n          }\n          id\n        }\n        fulfillments(first: 1) {\n          edges {\n            node {\n              trackingId\n              id\n            }\n          }\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment PurchaseHistory_me_2dCEyL on Me {\n  name\n  orders(states: $states, first: $first, last: $last, before: $before, after: $after) {\n    edges {\n      node {\n        __typename\n        code\n        ...OrderRow_order\n        id\n      }\n    }\n    pageCursors {\n      around {\n        cursor\n        isCurrent\n        page\n      }\n      first {\n        cursor\n        isCurrent\n        page\n      }\n      last {\n        cursor\n        isCurrent\n        page\n      }\n      previous {\n        cursor\n        isCurrent\n        page\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n"
   }
 };
 })();

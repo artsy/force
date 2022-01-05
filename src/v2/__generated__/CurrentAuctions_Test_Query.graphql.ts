@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -261,40 +260,46 @@ v8 = [
   }
 ],
 v9 = {
+  "type": "Int",
   "enumValues": null,
-  "nullable": false,
   "plural": false,
-  "type": "String"
+  "nullable": true
 },
 v10 = {
+  "type": "Sale",
   "enumValues": null,
-  "nullable": true,
   "plural": false,
-  "type": "Sale"
+  "nullable": true
 },
 v11 = {
+  "type": "ID",
   "enumValues": null,
-  "nullable": true,
   "plural": false,
-  "type": "String"
+  "nullable": false
 },
 v12 = {
+  "type": "String",
   "enumValues": null,
-  "nullable": false,
   "plural": false,
-  "type": "ID"
+  "nullable": true
 },
 v13 = {
+  "type": "Boolean",
   "enumValues": null,
-  "nullable": true,
   "plural": false,
-  "type": "Int"
+  "nullable": true
 },
 v14 = {
+  "type": "ID",
   "enumValues": null,
-  "nullable": true,
   "plural": false,
-  "type": "Boolean"
+  "nullable": true
+},
+v15 = {
+  "type": "String",
+  "enumValues": null,
+  "plural": false,
+  "nullable": false
 };
 return {
   "fragment": {
@@ -320,8 +325,7 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query",
-    "abstractKey": null
+    "type": "Query"
   },
   "kind": "Request",
   "operation": {
@@ -765,167 +769,166 @@ return {
     ]
   },
   "params": {
-    "cacheID": "2c87499405db3446c91feac6fcd11d75",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "viewer": {
+          "type": "Viewer",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "Viewer"
+          "nullable": true
         },
         "viewer.salesConnection": {
+          "type": "SaleConnection",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "SaleConnection"
+          "nullable": true
         },
+        "viewer.salesConnection.totalCount": (v9/*: any*/),
         "viewer.salesConnection.edges": {
+          "type": "SaleEdge",
           "enumValues": null,
-          "nullable": true,
           "plural": true,
-          "type": "SaleEdge"
+          "nullable": true
         },
-        "viewer.salesConnection.edges.cursor": (v9/*: any*/),
-        "viewer.salesConnection.edges.node": (v10/*: any*/),
-        "viewer.salesConnection.edges.node.__typename": (v9/*: any*/),
-        "viewer.salesConnection.edges.node.artworksConnection": {
+        "viewer.salesConnection.pageInfo": {
+          "type": "PageInfo",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "ArtworkConnection"
+          "nullable": false
         },
-        "viewer.salesConnection.edges.node.artworksConnection.edges": {
+        "viewer.salesConnection.edges.node": (v10/*: any*/),
+        "viewer.salesConnection.edges.node.slug": (v11/*: any*/),
+        "viewer.salesConnection.edges.node.name": (v12/*: any*/),
+        "viewer.salesConnection.edges.node.href": (v12/*: any*/),
+        "viewer.salesConnection.edges.node.liveStartAt": (v12/*: any*/),
+        "viewer.salesConnection.edges.node.isLiveOpen": (v13/*: any*/),
+        "viewer.salesConnection.edges.node.id": (v14/*: any*/),
+        "viewer.salesConnection.edges.cursor": (v15/*: any*/),
+        "viewer.salesConnection.pageInfo.endCursor": (v12/*: any*/),
+        "viewer.salesConnection.pageInfo.hasNextPage": {
+          "type": "Boolean",
           "enumValues": null,
-          "nullable": true,
+          "plural": false,
+          "nullable": false
+        },
+        "viewer.salesConnection.edges.node.artworksConnection": {
+          "type": "ArtworkConnection",
+          "enumValues": null,
+          "plural": false,
+          "nullable": true
+        },
+        "viewer.salesConnection.edges.node.internalID": (v11/*: any*/),
+        "viewer.salesConnection.edges.node.formattedStartDateTime": (v12/*: any*/),
+        "viewer.salesConnection.edges.node.__typename": (v15/*: any*/),
+        "viewer.salesConnection.edges.node.artworksConnection.edges": {
+          "type": "ArtworkEdge",
+          "enumValues": null,
           "plural": true,
-          "type": "ArtworkEdge"
+          "nullable": true
         },
         "viewer.salesConnection.edges.node.artworksConnection.edges.node": {
+          "type": "Artwork",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "Artwork"
+          "nullable": true
         },
-        "viewer.salesConnection.edges.node.artworksConnection.edges.node.artists": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": true,
-          "type": "Artist"
-        },
-        "viewer.salesConnection.edges.node.artworksConnection.edges.node.artists.href": (v11/*: any*/),
-        "viewer.salesConnection.edges.node.artworksConnection.edges.node.artists.id": (v12/*: any*/),
-        "viewer.salesConnection.edges.node.artworksConnection.edges.node.artists.name": (v11/*: any*/),
-        "viewer.salesConnection.edges.node.artworksConnection.edges.node.collecting_institution": (v11/*: any*/),
-        "viewer.salesConnection.edges.node.artworksConnection.edges.node.cultural_maker": (v11/*: any*/),
-        "viewer.salesConnection.edges.node.artworksConnection.edges.node.date": (v11/*: any*/),
-        "viewer.salesConnection.edges.node.artworksConnection.edges.node.href": (v11/*: any*/),
-        "viewer.salesConnection.edges.node.artworksConnection.edges.node.id": (v12/*: any*/),
+        "viewer.salesConnection.edges.node.artworksConnection.edges.node.internalID": (v11/*: any*/),
+        "viewer.salesConnection.edges.node.artworksConnection.edges.node.slug": (v11/*: any*/),
+        "viewer.salesConnection.edges.node.artworksConnection.edges.node.id": (v11/*: any*/),
         "viewer.salesConnection.edges.node.artworksConnection.edges.node.image": {
+          "type": "Image",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "Image"
+          "nullable": true
+        },
+        "viewer.salesConnection.edges.node.artworksConnection.edges.node.imageTitle": (v12/*: any*/),
+        "viewer.salesConnection.edges.node.artworksConnection.edges.node.title": (v12/*: any*/),
+        "viewer.salesConnection.edges.node.artworksConnection.edges.node.href": (v12/*: any*/),
+        "viewer.salesConnection.edges.node.artworksConnection.edges.node.is_saved": (v13/*: any*/),
+        "viewer.salesConnection.edges.node.artworksConnection.edges.node.image.resized": {
+          "type": "ResizedImageUrl",
+          "enumValues": null,
+          "plural": false,
+          "nullable": true
         },
         "viewer.salesConnection.edges.node.artworksConnection.edges.node.image.aspectRatio": {
+          "type": "Float",
           "enumValues": null,
-          "nullable": false,
           "plural": false,
-          "type": "Float"
+          "nullable": false
         },
-        "viewer.salesConnection.edges.node.artworksConnection.edges.node.image.height": (v13/*: any*/),
-        "viewer.salesConnection.edges.node.artworksConnection.edges.node.image.resized": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "ResizedImageUrl"
-        },
-        "viewer.salesConnection.edges.node.artworksConnection.edges.node.image.resized.height": (v13/*: any*/),
-        "viewer.salesConnection.edges.node.artworksConnection.edges.node.image.resized.src": (v9/*: any*/),
-        "viewer.salesConnection.edges.node.artworksConnection.edges.node.image.resized.srcSet": (v9/*: any*/),
-        "viewer.salesConnection.edges.node.artworksConnection.edges.node.image.resized.width": (v13/*: any*/),
-        "viewer.salesConnection.edges.node.artworksConnection.edges.node.imageTitle": (v11/*: any*/),
-        "viewer.salesConnection.edges.node.artworksConnection.edges.node.internalID": (v12/*: any*/),
-        "viewer.salesConnection.edges.node.artworksConnection.edges.node.is_biddable": (v14/*: any*/),
-        "viewer.salesConnection.edges.node.artworksConnection.edges.node.is_inquireable": (v14/*: any*/),
-        "viewer.salesConnection.edges.node.artworksConnection.edges.node.is_saved": (v14/*: any*/),
-        "viewer.salesConnection.edges.node.artworksConnection.edges.node.partner": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "Partner"
-        },
-        "viewer.salesConnection.edges.node.artworksConnection.edges.node.partner.href": (v11/*: any*/),
-        "viewer.salesConnection.edges.node.artworksConnection.edges.node.partner.id": (v12/*: any*/),
-        "viewer.salesConnection.edges.node.artworksConnection.edges.node.partner.name": (v11/*: any*/),
-        "viewer.salesConnection.edges.node.artworksConnection.edges.node.partner.type": (v11/*: any*/),
+        "viewer.salesConnection.edges.node.artworksConnection.edges.node.image.height": (v9/*: any*/),
+        "viewer.salesConnection.edges.node.artworksConnection.edges.node.is_biddable": (v13/*: any*/),
         "viewer.salesConnection.edges.node.artworksConnection.edges.node.sale": (v10/*: any*/),
-        "viewer.salesConnection.edges.node.artworksConnection.edges.node.sale.display_timely_at": (v11/*: any*/),
-        "viewer.salesConnection.edges.node.artworksConnection.edges.node.sale.id": (v12/*: any*/),
-        "viewer.salesConnection.edges.node.artworksConnection.edges.node.sale.is_auction": (v14/*: any*/),
-        "viewer.salesConnection.edges.node.artworksConnection.edges.node.sale.is_closed": (v14/*: any*/),
-        "viewer.salesConnection.edges.node.artworksConnection.edges.node.sale.is_live_open": (v14/*: any*/),
-        "viewer.salesConnection.edges.node.artworksConnection.edges.node.sale.is_open": (v14/*: any*/),
-        "viewer.salesConnection.edges.node.artworksConnection.edges.node.sale.is_preview": (v14/*: any*/),
+        "viewer.salesConnection.edges.node.artworksConnection.edges.node.image.resized.src": (v15/*: any*/),
+        "viewer.salesConnection.edges.node.artworksConnection.edges.node.image.resized.srcSet": (v15/*: any*/),
+        "viewer.salesConnection.edges.node.artworksConnection.edges.node.image.resized.width": (v9/*: any*/),
+        "viewer.salesConnection.edges.node.artworksConnection.edges.node.image.resized.height": (v9/*: any*/),
+        "viewer.salesConnection.edges.node.artworksConnection.edges.node.date": (v12/*: any*/),
+        "viewer.salesConnection.edges.node.artworksConnection.edges.node.sale_message": (v12/*: any*/),
+        "viewer.salesConnection.edges.node.artworksConnection.edges.node.cultural_maker": (v12/*: any*/),
+        "viewer.salesConnection.edges.node.artworksConnection.edges.node.artists": {
+          "type": "Artist",
+          "enumValues": null,
+          "plural": true,
+          "nullable": true
+        },
+        "viewer.salesConnection.edges.node.artworksConnection.edges.node.collecting_institution": (v12/*: any*/),
+        "viewer.salesConnection.edges.node.artworksConnection.edges.node.partner": {
+          "type": "Partner",
+          "enumValues": null,
+          "plural": false,
+          "nullable": true
+        },
         "viewer.salesConnection.edges.node.artworksConnection.edges.node.sale_artwork": {
+          "type": "SaleArtwork",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "SaleArtwork"
+          "nullable": true
         },
+        "viewer.salesConnection.edges.node.artworksConnection.edges.node.is_inquireable": (v13/*: any*/),
+        "viewer.salesConnection.edges.node.artworksConnection.edges.node.sale.is_preview": (v13/*: any*/),
+        "viewer.salesConnection.edges.node.artworksConnection.edges.node.sale.display_timely_at": (v12/*: any*/),
+        "viewer.salesConnection.edges.node.artworksConnection.edges.node.sale.id": (v14/*: any*/),
+        "viewer.salesConnection.edges.node.artworksConnection.edges.node.artists.id": (v11/*: any*/),
+        "viewer.salesConnection.edges.node.artworksConnection.edges.node.artists.href": (v12/*: any*/),
+        "viewer.salesConnection.edges.node.artworksConnection.edges.node.artists.name": (v12/*: any*/),
+        "viewer.salesConnection.edges.node.artworksConnection.edges.node.partner.name": (v12/*: any*/),
+        "viewer.salesConnection.edges.node.artworksConnection.edges.node.partner.href": (v12/*: any*/),
+        "viewer.salesConnection.edges.node.artworksConnection.edges.node.partner.id": (v14/*: any*/),
+        "viewer.salesConnection.edges.node.artworksConnection.edges.node.sale.is_auction": (v13/*: any*/),
+        "viewer.salesConnection.edges.node.artworksConnection.edges.node.sale.is_closed": (v13/*: any*/),
         "viewer.salesConnection.edges.node.artworksConnection.edges.node.sale_artwork.counts": {
+          "type": "SaleArtworkCounts",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "SaleArtworkCounts"
-        },
-        "viewer.salesConnection.edges.node.artworksConnection.edges.node.sale_artwork.counts.bidder_positions": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "FormattedNumber"
+          "nullable": true
         },
         "viewer.salesConnection.edges.node.artworksConnection.edges.node.sale_artwork.highest_bid": {
+          "type": "SaleArtworkHighestBid",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "SaleArtworkHighestBid"
+          "nullable": true
         },
-        "viewer.salesConnection.edges.node.artworksConnection.edges.node.sale_artwork.highest_bid.display": (v11/*: any*/),
-        "viewer.salesConnection.edges.node.artworksConnection.edges.node.sale_artwork.id": (v12/*: any*/),
         "viewer.salesConnection.edges.node.artworksConnection.edges.node.sale_artwork.opening_bid": {
+          "type": "SaleArtworkOpeningBid",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "SaleArtworkOpeningBid"
+          "nullable": true
         },
-        "viewer.salesConnection.edges.node.artworksConnection.edges.node.sale_artwork.opening_bid.display": (v11/*: any*/),
-        "viewer.salesConnection.edges.node.artworksConnection.edges.node.sale_message": (v11/*: any*/),
-        "viewer.salesConnection.edges.node.artworksConnection.edges.node.slug": (v12/*: any*/),
-        "viewer.salesConnection.edges.node.artworksConnection.edges.node.title": (v11/*: any*/),
-        "viewer.salesConnection.edges.node.formattedStartDateTime": (v11/*: any*/),
-        "viewer.salesConnection.edges.node.href": (v11/*: any*/),
-        "viewer.salesConnection.edges.node.id": (v12/*: any*/),
-        "viewer.salesConnection.edges.node.internalID": (v12/*: any*/),
-        "viewer.salesConnection.edges.node.isLiveOpen": (v14/*: any*/),
-        "viewer.salesConnection.edges.node.liveStartAt": (v11/*: any*/),
-        "viewer.salesConnection.edges.node.name": (v11/*: any*/),
-        "viewer.salesConnection.edges.node.slug": (v12/*: any*/),
-        "viewer.salesConnection.pageInfo": {
+        "viewer.salesConnection.edges.node.artworksConnection.edges.node.sale_artwork.id": (v14/*: any*/),
+        "viewer.salesConnection.edges.node.artworksConnection.edges.node.sale.is_live_open": (v13/*: any*/),
+        "viewer.salesConnection.edges.node.artworksConnection.edges.node.sale.is_open": (v13/*: any*/),
+        "viewer.salesConnection.edges.node.artworksConnection.edges.node.partner.type": (v12/*: any*/),
+        "viewer.salesConnection.edges.node.artworksConnection.edges.node.sale_artwork.counts.bidder_positions": {
+          "type": "FormattedNumber",
           "enumValues": null,
-          "nullable": false,
           "plural": false,
-          "type": "PageInfo"
+          "nullable": true
         },
-        "viewer.salesConnection.pageInfo.endCursor": (v11/*: any*/),
-        "viewer.salesConnection.pageInfo.hasNextPage": {
-          "enumValues": null,
-          "nullable": false,
-          "plural": false,
-          "type": "Boolean"
-        },
-        "viewer.salesConnection.totalCount": (v13/*: any*/)
+        "viewer.salesConnection.edges.node.artworksConnection.edges.node.sale_artwork.highest_bid.display": (v12/*: any*/),
+        "viewer.salesConnection.edges.node.artworksConnection.edges.node.sale_artwork.opening_bid.display": (v12/*: any*/)
       }
     },
     "name": "CurrentAuctions_Test_Query",

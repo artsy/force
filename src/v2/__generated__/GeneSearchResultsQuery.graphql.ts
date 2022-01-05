@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -45,7 +44,6 @@ fragment GeneSearchResults_viewer on Viewer {
           }
         }
         ... on Node {
-          __isNode: __typename
           id
         }
       }
@@ -59,16 +57,10 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "term"
+    "name": "term",
+    "type": "String!"
   }
-],
-v1 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "id",
-  "storageKey": null
-};
+];
 return {
   "fragment": {
     "argumentDefinitions": (v0/*: any*/),
@@ -93,8 +85,7 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query",
-    "abstractKey": null
+    "type": "Query"
   },
   "kind": "Request",
   "operation": {
@@ -165,6 +156,13 @@ return {
                         "storageKey": null
                       },
                       {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "id",
+                        "storageKey": null
+                      },
+                      {
                         "kind": "InlineFragment",
                         "selections": [
                           {
@@ -174,7 +172,6 @@ return {
                             "name": "name",
                             "storageKey": null
                           },
-                          (v1/*: any*/),
                           {
                             "alias": null,
                             "args": null,
@@ -230,16 +227,7 @@ return {
                             "storageKey": null
                           }
                         ],
-                        "type": "Gene",
-                        "abstractKey": null
-                      },
-                      {
-                        "kind": "InlineFragment",
-                        "selections": [
-                          (v1/*: any*/)
-                        ],
-                        "type": "Node",
-                        "abstractKey": "__isNode"
+                        "type": "Gene"
                       }
                     ],
                     "storageKey": null
@@ -256,12 +244,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "c1ea6ab1a0c8f49a9658a0086514b444",
     "id": null,
     "metadata": {},
     "name": "GeneSearchResultsQuery",
     "operationKind": "query",
-    "text": "query GeneSearchResultsQuery(\n  $term: String!\n) {\n  viewer {\n    ...GeneSearchResults_viewer\n  }\n}\n\nfragment GeneSearchResults_viewer on Viewer {\n  match_gene: searchConnection(query: $term, mode: AUTOSUGGEST, entities: [GENE], first: 10) {\n    edges {\n      node {\n        __typename\n        ... on Gene {\n          name\n          id\n          slug\n          internalID\n          image {\n            cropped(width: 100, height: 100) {\n              url\n            }\n          }\n        }\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n      }\n    }\n  }\n}\n"
+    "text": "query GeneSearchResultsQuery(\n  $term: String!\n) {\n  viewer {\n    ...GeneSearchResults_viewer\n  }\n}\n\nfragment GeneSearchResults_viewer on Viewer {\n  match_gene: searchConnection(query: $term, mode: AUTOSUGGEST, entities: [GENE], first: 10) {\n    edges {\n      node {\n        __typename\n        ... on Gene {\n          name\n          id\n          slug\n          internalID\n          image {\n            cropped(width: 100, height: 100) {\n              url\n            }\n          }\n        }\n        ... on Node {\n          id\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();

@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -26,12 +25,12 @@ export type Details_Test_QueryRawResponse = {
         readonly partner: ({
             readonly name: string | null;
             readonly href: string | null;
-            readonly id: string;
+            readonly id: string | null;
         }) | null;
         readonly sale: ({
             readonly is_auction: boolean | null;
             readonly is_closed: boolean | null;
-            readonly id: string;
+            readonly id: string | null;
         }) | null;
         readonly sale_artwork: ({
             readonly counts: ({
@@ -43,9 +42,9 @@ export type Details_Test_QueryRawResponse = {
             readonly opening_bid: ({
                 readonly display: string | null;
             }) | null;
-            readonly id: string;
+            readonly id: string | null;
         }) | null;
-        readonly id: string;
+        readonly id: string | null;
     }) | null;
 };
 export type Details_Test_Query = {
@@ -147,22 +146,22 @@ v5 = [
   }
 ],
 v6 = {
+  "type": "ID",
   "enumValues": null,
-  "nullable": true,
   "plural": false,
-  "type": "String"
+  "nullable": true
 },
 v7 = {
+  "type": "String",
   "enumValues": null,
-  "nullable": false,
   "plural": false,
-  "type": "ID"
+  "nullable": true
 },
 v8 = {
+  "type": "Boolean",
   "enumValues": null,
-  "nullable": true,
   "plural": false,
-  "type": "Boolean"
+  "nullable": true
 };
 return {
   "fragment": {
@@ -188,8 +187,7 @@ return {
         "storageKey": "artwork(id:\"gerhard-richter-bagdad-ii-flow-p10-1\")"
       }
     ],
-    "type": "Query",
-    "abstractKey": null
+    "type": "Query"
   },
   "kind": "Request",
   "operation": {
@@ -352,83 +350,87 @@ return {
     ]
   },
   "params": {
-    "cacheID": "b6bb23c02bec205fddd1feafcc11adbc",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "artwork": {
+          "type": "Artwork",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "Artwork"
+          "nullable": true
         },
+        "artwork.id": (v6/*: any*/),
+        "artwork.href": (v7/*: any*/),
+        "artwork.title": (v7/*: any*/),
+        "artwork.date": (v7/*: any*/),
+        "artwork.sale_message": (v7/*: any*/),
+        "artwork.cultural_maker": (v7/*: any*/),
         "artwork.artists": {
+          "type": "Artist",
           "enumValues": null,
-          "nullable": true,
           "plural": true,
-          "type": "Artist"
+          "nullable": true
         },
-        "artwork.artists.href": (v6/*: any*/),
-        "artwork.artists.id": (v7/*: any*/),
-        "artwork.artists.name": (v6/*: any*/),
-        "artwork.collecting_institution": (v6/*: any*/),
-        "artwork.cultural_maker": (v6/*: any*/),
-        "artwork.date": (v6/*: any*/),
-        "artwork.href": (v6/*: any*/),
-        "artwork.id": (v7/*: any*/),
+        "artwork.collecting_institution": (v7/*: any*/),
         "artwork.partner": {
+          "type": "Partner",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "Partner"
+          "nullable": true
         },
-        "artwork.partner.href": (v6/*: any*/),
-        "artwork.partner.id": (v7/*: any*/),
-        "artwork.partner.name": (v6/*: any*/),
         "artwork.sale": {
+          "type": "Sale",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "Sale"
+          "nullable": true
         },
-        "artwork.sale.id": (v7/*: any*/),
+        "artwork.sale_artwork": {
+          "type": "SaleArtwork",
+          "enumValues": null,
+          "plural": false,
+          "nullable": true
+        },
+        "artwork.artists.id": {
+          "type": "ID",
+          "enumValues": null,
+          "plural": false,
+          "nullable": false
+        },
+        "artwork.artists.href": (v7/*: any*/),
+        "artwork.artists.name": (v7/*: any*/),
+        "artwork.partner.name": (v7/*: any*/),
+        "artwork.partner.href": (v7/*: any*/),
+        "artwork.partner.id": (v6/*: any*/),
         "artwork.sale.is_auction": (v8/*: any*/),
         "artwork.sale.is_closed": (v8/*: any*/),
-        "artwork.sale_artwork": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "SaleArtwork"
-        },
+        "artwork.sale.id": (v6/*: any*/),
         "artwork.sale_artwork.counts": {
+          "type": "SaleArtworkCounts",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "SaleArtworkCounts"
-        },
-        "artwork.sale_artwork.counts.bidder_positions": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "FormattedNumber"
+          "nullable": true
         },
         "artwork.sale_artwork.highest_bid": {
+          "type": "SaleArtworkHighestBid",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "SaleArtworkHighestBid"
+          "nullable": true
         },
-        "artwork.sale_artwork.highest_bid.display": (v6/*: any*/),
-        "artwork.sale_artwork.id": (v7/*: any*/),
         "artwork.sale_artwork.opening_bid": {
+          "type": "SaleArtworkOpeningBid",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "SaleArtworkOpeningBid"
+          "nullable": true
         },
-        "artwork.sale_artwork.opening_bid.display": (v6/*: any*/),
-        "artwork.sale_message": (v6/*: any*/),
-        "artwork.title": (v6/*: any*/)
+        "artwork.sale_artwork.id": (v6/*: any*/),
+        "artwork.sale_artwork.counts.bidder_positions": {
+          "type": "FormattedNumber",
+          "enumValues": null,
+          "plural": false,
+          "nullable": true
+        },
+        "artwork.sale_artwork.highest_bid.display": (v7/*: any*/),
+        "artwork.sale_artwork.opening_bid.display": (v7/*: any*/)
       }
     },
     "name": "Details_Test_Query",

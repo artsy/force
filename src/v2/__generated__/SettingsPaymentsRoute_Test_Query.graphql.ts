@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -76,22 +75,22 @@ v2 = [
   }
 ],
 v3 = {
+  "type": "ID",
   "enumValues": null,
-  "nullable": false,
   "plural": false,
-  "type": "String"
+  "nullable": false
 },
 v4 = {
+  "type": "String",
   "enumValues": null,
-  "nullable": false,
   "plural": false,
-  "type": "Int"
+  "nullable": false
 },
 v5 = {
+  "type": "Int",
   "enumValues": null,
-  "nullable": false,
   "plural": false,
-  "type": "ID"
+  "nullable": false
 };
 return {
   "fragment": {
@@ -117,8 +116,7 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query",
-    "abstractKey": null
+    "type": "Query"
   },
   "kind": "Request",
   "operation": {
@@ -253,62 +251,66 @@ return {
     ]
   },
   "params": {
-    "cacheID": "99a80b5e6ab585160d6ebc8d31dfb3b7",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "me": {
+          "type": "Me",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "Me"
+          "nullable": true
         },
+        "me.id": (v3/*: any*/),
+        "me.internalID": (v3/*: any*/),
         "me.creditCards": {
+          "type": "CreditCardConnection",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "CreditCardConnection"
+          "nullable": true
         },
         "me.creditCards.edges": {
+          "type": "CreditCardEdge",
           "enumValues": null,
-          "nullable": true,
           "plural": true,
-          "type": "CreditCardEdge"
+          "nullable": true
         },
-        "me.creditCards.edges.cursor": (v3/*: any*/),
-        "me.creditCards.edges.node": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "CreditCard"
-        },
-        "me.creditCards.edges.node.__typename": (v3/*: any*/),
-        "me.creditCards.edges.node.brand": (v3/*: any*/),
-        "me.creditCards.edges.node.expirationMonth": (v4/*: any*/),
-        "me.creditCards.edges.node.expirationYear": (v4/*: any*/),
-        "me.creditCards.edges.node.id": (v5/*: any*/),
-        "me.creditCards.edges.node.internalID": (v5/*: any*/),
-        "me.creditCards.edges.node.lastDigits": (v3/*: any*/),
         "me.creditCards.pageInfo": {
+          "type": "PageInfo",
           "enumValues": null,
-          "nullable": false,
           "plural": false,
-          "type": "PageInfo"
+          "nullable": false
         },
-        "me.creditCards.pageInfo.endCursor": {
+        "me.creditCards.edges.node": {
+          "type": "CreditCard",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "String"
+          "nullable": true
+        },
+        "me.creditCards.edges.node.id": {
+          "type": "ID",
+          "enumValues": null,
+          "plural": false,
+          "nullable": true
+        },
+        "me.creditCards.edges.cursor": (v4/*: any*/),
+        "me.creditCards.pageInfo.endCursor": {
+          "type": "String",
+          "enumValues": null,
+          "plural": false,
+          "nullable": true
         },
         "me.creditCards.pageInfo.hasNextPage": {
+          "type": "Boolean",
           "enumValues": null,
-          "nullable": false,
           "plural": false,
-          "type": "Boolean"
+          "nullable": false
         },
-        "me.id": (v5/*: any*/),
-        "me.internalID": (v5/*: any*/)
+        "me.creditCards.edges.node.internalID": (v3/*: any*/),
+        "me.creditCards.edges.node.brand": (v4/*: any*/),
+        "me.creditCards.edges.node.lastDigits": (v4/*: any*/),
+        "me.creditCards.edges.node.expirationYear": (v5/*: any*/),
+        "me.creditCards.edges.node.expirationMonth": (v5/*: any*/),
+        "me.creditCards.edges.node.__typename": (v4/*: any*/)
       }
     },
     "name": "SettingsPaymentsRoute_Test_Query",

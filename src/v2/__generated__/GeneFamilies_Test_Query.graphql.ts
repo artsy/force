@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -78,16 +77,16 @@ v3 = {
   "storageKey": null
 },
 v4 = {
+  "type": "ID",
   "enumValues": null,
-  "nullable": true,
   "plural": false,
-  "type": "String"
+  "nullable": false
 },
 v5 = {
+  "type": "String",
   "enumValues": null,
-  "nullable": false,
   "plural": false,
-  "type": "ID"
+  "nullable": true
 };
 return {
   "fragment": {
@@ -113,8 +112,7 @@ return {
         "storageKey": "geneFamiliesConnection(first:20)"
       }
     ],
-    "type": "Query",
-    "abstractKey": null
+    "type": "Query"
   },
   "kind": "Request",
   "operation": {
@@ -196,53 +194,52 @@ return {
     ]
   },
   "params": {
-    "cacheID": "2a90f21b2ffb40eb036bc02bc2cded7e",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "geneFamiliesConnection": {
+          "type": "GeneFamilyConnection",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "GeneFamilyConnection"
+          "nullable": true
         },
         "geneFamiliesConnection.edges": {
+          "type": "GeneFamilyEdge",
           "enumValues": null,
-          "nullable": true,
           "plural": true,
-          "type": "GeneFamilyEdge"
+          "nullable": true
         },
         "geneFamiliesConnection.edges.node": {
+          "type": "GeneFamily",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "GeneFamily"
+          "nullable": true
+        },
+        "geneFamiliesConnection.edges.node.internalID": (v4/*: any*/),
+        "geneFamiliesConnection.edges.node.id": (v4/*: any*/),
+        "geneFamiliesConnection.edges.node.slug": (v4/*: any*/),
+        "geneFamiliesConnection.edges.node.name": {
+          "type": "String",
+          "enumValues": null,
+          "plural": false,
+          "nullable": false
         },
         "geneFamiliesConnection.edges.node.genes": {
+          "type": "Gene",
           "enumValues": null,
-          "nullable": true,
           "plural": true,
-          "type": "Gene"
+          "nullable": true
         },
-        "geneFamiliesConnection.edges.node.genes.displayName": (v4/*: any*/),
-        "geneFamiliesConnection.edges.node.genes.id": (v5/*: any*/),
         "geneFamiliesConnection.edges.node.genes.isPublished": {
+          "type": "Boolean",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "Boolean"
+          "nullable": true
         },
-        "geneFamiliesConnection.edges.node.genes.name": (v4/*: any*/),
-        "geneFamiliesConnection.edges.node.genes.slug": (v5/*: any*/),
-        "geneFamiliesConnection.edges.node.id": (v5/*: any*/),
-        "geneFamiliesConnection.edges.node.internalID": (v5/*: any*/),
-        "geneFamiliesConnection.edges.node.name": {
-          "enumValues": null,
-          "nullable": false,
-          "plural": false,
-          "type": "String"
-        },
-        "geneFamiliesConnection.edges.node.slug": (v5/*: any*/)
+        "geneFamiliesConnection.edges.node.genes.id": (v4/*: any*/),
+        "geneFamiliesConnection.edges.node.genes.displayName": (v5/*: any*/),
+        "geneFamiliesConnection.edges.node.genes.name": (v5/*: any*/),
+        "geneFamiliesConnection.edges.node.genes.slug": (v4/*: any*/)
       }
     },
     "name": "GeneFamilies_Test_Query",

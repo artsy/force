@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -56,16 +55,16 @@ v1 = {
   "storageKey": null
 },
 v2 = {
+  "type": "ID",
   "enumValues": null,
-  "nullable": false,
   "plural": false,
-  "type": "ID"
+  "nullable": true
 },
 v3 = {
+  "type": "String",
   "enumValues": null,
-  "nullable": true,
   "plural": false,
-  "type": "String"
+  "nullable": true
 };
 return {
   "fragment": {
@@ -91,8 +90,7 @@ return {
         "storageKey": "artist(id:\"example\")"
       }
     ],
-    "type": "Query",
-    "abstractKey": null
+    "type": "Query"
   },
   "kind": "Request",
   "operation": {
@@ -174,44 +172,43 @@ return {
     ]
   },
   "params": {
-    "cacheID": "2cc26d2483a51f256942ec328ca967ce",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "artist": {
+          "type": "Artist",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "Artist"
+          "nullable": true
         },
         "artist.id": (v2/*: any*/),
         "artist.related": {
+          "type": "ArtistRelatedData",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "ArtistRelatedData"
+          "nullable": true
         },
         "artist.related.genes": {
+          "type": "GeneConnection",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "GeneConnection"
+          "nullable": true
         },
         "artist.related.genes.edges": {
+          "type": "GeneEdge",
           "enumValues": null,
-          "nullable": true,
           "plural": true,
-          "type": "GeneEdge"
+          "nullable": true
         },
         "artist.related.genes.edges.node": {
+          "type": "Gene",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "Gene"
+          "nullable": true
         },
         "artist.related.genes.edges.node.href": (v3/*: any*/),
-        "artist.related.genes.edges.node.id": (v2/*: any*/),
-        "artist.related.genes.edges.node.name": (v3/*: any*/)
+        "artist.related.genes.edges.node.name": (v3/*: any*/),
+        "artist.related.genes.edges.node.id": (v2/*: any*/)
       }
     },
     "name": "ArtistGenes_Test_Query",

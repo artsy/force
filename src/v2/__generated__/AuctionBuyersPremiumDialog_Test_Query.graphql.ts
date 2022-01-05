@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -66,8 +65,7 @@ return {
         "storageKey": "sale(id:\"example\")"
       }
     ],
-    "type": "Query",
-    "abstractKey": null
+    "type": "Query"
   },
   "kind": "Request",
   "operation": {
@@ -128,45 +126,44 @@ return {
     ]
   },
   "params": {
-    "cacheID": "a68ed85b846d0425622c52593e65d909",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "sale": {
+          "type": "Sale",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "Sale"
-        },
-        "sale.buyersPremium": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": true,
-          "type": "BuyersPremium"
-        },
-        "sale.buyersPremium.amount": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "String"
-        },
-        "sale.buyersPremium.cents": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "Int"
-        },
-        "sale.buyersPremium.percent": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "Float"
+          "nullable": true
         },
         "sale.id": {
+          "type": "ID",
           "enumValues": null,
-          "nullable": false,
           "plural": false,
-          "type": "ID"
+          "nullable": true
+        },
+        "sale.buyersPremium": {
+          "type": "BuyersPremium",
+          "enumValues": null,
+          "plural": true,
+          "nullable": true
+        },
+        "sale.buyersPremium.amount": {
+          "type": "String",
+          "enumValues": null,
+          "plural": false,
+          "nullable": true
+        },
+        "sale.buyersPremium.cents": {
+          "type": "Int",
+          "enumValues": null,
+          "plural": false,
+          "nullable": true
+        },
+        "sale.buyersPremium.percent": {
+          "type": "Float",
+          "enumValues": null,
+          "plural": false,
+          "nullable": true
         }
       }
     },

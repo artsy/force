@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -35,19 +34,22 @@ export type SearchResultsArtists_viewer$key = {
 const node: ReaderFragment = {
   "argumentDefinitions": [
     {
+      "defaultValue": "",
+      "kind": "LocalArgument",
+      "name": "term",
+      "type": "String!"
+    },
+    {
       "defaultValue": 10,
       "kind": "LocalArgument",
-      "name": "first"
+      "name": "first",
+      "type": "Int"
     },
     {
       "defaultValue": null,
       "kind": "LocalArgument",
-      "name": "page"
-    },
-    {
-      "defaultValue": "",
-      "kind": "LocalArgument",
-      "name": "term"
+      "name": "page",
+      "type": "Int"
     }
   ],
   "kind": "Fragment",
@@ -174,8 +176,7 @@ const node: ReaderFragment = {
                       "storageKey": null
                     }
                   ],
-                  "type": "Artist",
-                  "abstractKey": null
+                  "type": "Artist"
                 }
               ],
               "storageKey": null
@@ -187,8 +188,7 @@ const node: ReaderFragment = {
       "storageKey": null
     }
   ],
-  "type": "Viewer",
-  "abstractKey": null
+  "type": "Viewer"
 };
 (node as any).hash = 'e56ba60404a845353821326cf3f1a678';
 export default node;

@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 export type FollowGeneInput = {
@@ -44,7 +43,8 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "input"
+    "name": "input",
+    "type": "FollowGeneInput!"
   }
 ],
 v1 = [
@@ -98,8 +98,7 @@ return {
     "metadata": null,
     "name": "AuthIntentFollowGeneMutation",
     "selections": (v1/*: any*/),
-    "type": "Mutation",
-    "abstractKey": null
+    "type": "Mutation"
   },
   "kind": "Request",
   "operation": {
@@ -109,7 +108,6 @@ return {
     "selections": (v1/*: any*/)
   },
   "params": {
-    "cacheID": "110b2ca1cf5c520da14160fb867091fa",
     "id": null,
     "metadata": {},
     "name": "AuthIntentFollowGeneMutation",

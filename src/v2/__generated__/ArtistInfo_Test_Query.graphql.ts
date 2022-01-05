@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -30,18 +29,15 @@ export type ArtistInfo_Test_QueryRawResponse = {
         readonly exhibition_highlights: ReadonlyArray<({
             readonly partner: ({
                 readonly __typename: "ExternalPartner";
-                readonly __isNode: "ExternalPartner";
-                readonly id: string;
+                readonly id: string | null;
                 readonly name: string | null;
             } | {
                 readonly __typename: "Partner";
-                readonly __isNode: "Partner";
-                readonly id: string;
+                readonly id: string | null;
                 readonly name: string | null;
             } | {
-                readonly __typename: string;
-                readonly __isNode: string;
-                readonly id: string;
+                readonly __typename: string | null;
+                readonly id: string | null;
             }) | null;
             readonly name: string | null;
             readonly start_at: string | null;
@@ -51,7 +47,7 @@ export type ArtistInfo_Test_QueryRawResponse = {
                 }) | null;
             }) | null;
             readonly city: string | null;
-            readonly id: string;
+            readonly id: string | null;
         }) | null> | null;
         readonly collections: ReadonlyArray<string | null> | null;
         readonly highlights: ({
@@ -59,13 +55,13 @@ export type ArtistInfo_Test_QueryRawResponse = {
                 readonly edges: ReadonlyArray<({
                     readonly node: ({
                         readonly __typename: "Partner";
-                        readonly id: string;
+                        readonly id: string | null;
                         readonly categories: ReadonlyArray<({
                             readonly slug: string;
-                            readonly id: string;
+                            readonly id: string | null;
                         }) | null> | null;
                     }) | null;
-                    readonly id: string;
+                    readonly id: string | null;
                 }) | null> | null;
             }) | null;
         }) | null;
@@ -73,7 +69,7 @@ export type ArtistInfo_Test_QueryRawResponse = {
             readonly edges: ReadonlyArray<({
                 readonly node: ({
                     readonly __typename: "AuctionResult";
-                    readonly id: string;
+                    readonly id: string | null;
                     readonly price_realized: ({
                         readonly display: string | null;
                     }) | null;
@@ -214,7 +210,6 @@ fragment SelectedExhibitions_exhibitions on Show {
       name
     }
     ... on Node {
-      __isNode: __typename
       id
     }
   }
@@ -266,6 +261,9 @@ v4 = {
   "storageKey": null
 },
 v5 = [
+  (v2/*: any*/)
+],
+v6 = [
   {
     "kind": "Literal",
     "name": "format",
@@ -296,8 +294,7 @@ return {
         "storageKey": "artist(id:\"banksy\")"
       }
     ],
-    "type": "Query",
-    "abstractKey": null
+    "type": "Query"
   },
   "kind": "Request",
   "operation": {
@@ -431,30 +428,16 @@ return {
                 "plural": false,
                 "selections": [
                   (v3/*: any*/),
+                  (v4/*: any*/),
                   {
                     "kind": "InlineFragment",
-                    "selections": [
-                      (v2/*: any*/),
-                      (v4/*: any*/)
-                    ],
-                    "type": "ExternalPartner",
-                    "abstractKey": null
+                    "selections": (v5/*: any*/),
+                    "type": "ExternalPartner"
                   },
                   {
                     "kind": "InlineFragment",
-                    "selections": [
-                      (v2/*: any*/)
-                    ],
-                    "type": "Partner",
-                    "abstractKey": null
-                  },
-                  {
-                    "kind": "InlineFragment",
-                    "selections": [
-                      (v4/*: any*/)
-                    ],
-                    "type": "Node",
-                    "abstractKey": "__isNode"
+                    "selections": (v5/*: any*/),
+                    "type": "Partner"
                   }
                 ],
                 "storageKey": null
@@ -462,7 +445,7 @@ return {
               (v2/*: any*/),
               {
                 "alias": "start_at",
-                "args": (v5/*: any*/),
+                "args": (v6/*: any*/),
                 "kind": "ScalarField",
                 "name": "startAt",
                 "storageKey": "startAt(format:\"YYYY\")"
@@ -685,7 +668,7 @@ return {
                       },
                       {
                         "alias": "sale_date",
-                        "args": (v5/*: any*/),
+                        "args": (v6/*: any*/),
                         "kind": "ScalarField",
                         "name": "saleDate",
                         "storageKey": "saleDate(format:\"YYYY\")"
@@ -756,12 +739,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "5d6e8d14e5be88ec1467e5f97cfafca5",
     "id": null,
     "metadata": {},
     "name": "ArtistInfo_Test_Query",
     "operationKind": "query",
-    "text": "query ArtistInfo_Test_Query {\n  artist(id: \"banksy\") {\n    ...ArtistInfo_artist\n    id\n  }\n}\n\nfragment ArtistBio_bio on Artist {\n  biographyBlurb(format: HTML, partnerBio: false) {\n    credit\n    partnerID\n    text\n  }\n}\n\nfragment ArtistInfo_artist on Artist {\n  internalID\n  slug\n  name\n  href\n  image {\n    cropped(width: 45, height: 45) {\n      src\n      srcSet\n    }\n  }\n  formatted_nationality_and_birthday: formattedNationalityAndBirthday\n  counts {\n    partner_shows: partnerShows\n  }\n  exhibition_highlights: exhibitionHighlights(size: 3) {\n    ...SelectedExhibitions_exhibitions\n    id\n  }\n  collections\n  highlights {\n    partnersConnection(first: 10, displayOnPartnerProfile: true, representedBy: true, partnerCategory: [\"blue-chip\", \"top-established\", \"top-emerging\"]) {\n      edges {\n        node {\n          __typename\n          id\n        }\n        id\n      }\n    }\n  }\n  auctionResultsConnection(recordsTrusted: true, first: 1, sort: PRICE_AND_DATE_DESC) {\n    edges {\n      node {\n        __typename\n        id\n      }\n    }\n  }\n  ...ArtistBio_bio\n  ...ArtistMarketInsights_artist\n  ...FollowArtistButton_artist\n  biographyBlurb(format: HTML, partnerBio: false) {\n    text\n  }\n}\n\nfragment ArtistMarketInsights_artist on Artist {\n  collections\n  highlights {\n    partnersConnection(first: 10, displayOnPartnerProfile: true, representedBy: true, partnerCategory: [\"blue-chip\", \"top-established\", \"top-emerging\"]) {\n      edges {\n        node {\n          categories {\n            slug\n            id\n          }\n          id\n        }\n        id\n      }\n    }\n  }\n  auctionResultsConnection(recordsTrusted: true, first: 1, sort: PRICE_AND_DATE_DESC) {\n    edges {\n      node {\n        price_realized: priceRealized {\n          display(format: \"0.0a\")\n        }\n        organization\n        sale_date: saleDate(format: \"YYYY\")\n        id\n      }\n    }\n  }\n}\n\nfragment FollowArtistButton_artist on Artist {\n  id\n  internalID\n  name\n  slug\n  is_followed: isFollowed\n  counts {\n    follows\n  }\n}\n\nfragment SelectedExhibitions_exhibitions on Show {\n  partner {\n    __typename\n    ... on ExternalPartner {\n      name\n      id\n    }\n    ... on Partner {\n      name\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n  name\n  start_at: startAt(format: \"YYYY\")\n  cover_image: coverImage {\n    cropped(width: 800, height: 600) {\n      url\n    }\n  }\n  city\n}\n"
+    "text": "query ArtistInfo_Test_Query {\n  artist(id: \"banksy\") {\n    ...ArtistInfo_artist\n    id\n  }\n}\n\nfragment ArtistBio_bio on Artist {\n  biographyBlurb(format: HTML, partnerBio: false) {\n    credit\n    partnerID\n    text\n  }\n}\n\nfragment ArtistInfo_artist on Artist {\n  internalID\n  slug\n  name\n  href\n  image {\n    cropped(width: 45, height: 45) {\n      src\n      srcSet\n    }\n  }\n  formatted_nationality_and_birthday: formattedNationalityAndBirthday\n  counts {\n    partner_shows: partnerShows\n  }\n  exhibition_highlights: exhibitionHighlights(size: 3) {\n    ...SelectedExhibitions_exhibitions\n    id\n  }\n  collections\n  highlights {\n    partnersConnection(first: 10, displayOnPartnerProfile: true, representedBy: true, partnerCategory: [\"blue-chip\", \"top-established\", \"top-emerging\"]) {\n      edges {\n        node {\n          __typename\n          id\n        }\n        id\n      }\n    }\n  }\n  auctionResultsConnection(recordsTrusted: true, first: 1, sort: PRICE_AND_DATE_DESC) {\n    edges {\n      node {\n        __typename\n        id\n      }\n    }\n  }\n  ...ArtistBio_bio\n  ...ArtistMarketInsights_artist\n  ...FollowArtistButton_artist\n  biographyBlurb(format: HTML, partnerBio: false) {\n    text\n  }\n}\n\nfragment ArtistMarketInsights_artist on Artist {\n  collections\n  highlights {\n    partnersConnection(first: 10, displayOnPartnerProfile: true, representedBy: true, partnerCategory: [\"blue-chip\", \"top-established\", \"top-emerging\"]) {\n      edges {\n        node {\n          categories {\n            slug\n            id\n          }\n          id\n        }\n        id\n      }\n    }\n  }\n  auctionResultsConnection(recordsTrusted: true, first: 1, sort: PRICE_AND_DATE_DESC) {\n    edges {\n      node {\n        price_realized: priceRealized {\n          display(format: \"0.0a\")\n        }\n        organization\n        sale_date: saleDate(format: \"YYYY\")\n        id\n      }\n    }\n  }\n}\n\nfragment FollowArtistButton_artist on Artist {\n  id\n  internalID\n  name\n  slug\n  is_followed: isFollowed\n  counts {\n    follows\n  }\n}\n\nfragment SelectedExhibitions_exhibitions on Show {\n  partner {\n    __typename\n    ... on ExternalPartner {\n      name\n      id\n    }\n    ... on Partner {\n      name\n    }\n    ... on Node {\n      id\n    }\n  }\n  name\n  start_at: startAt(format: \"YYYY\")\n  cover_image: coverImage {\n    cropped(width: 800, height: 600) {\n      url\n    }\n  }\n  city\n}\n"
   }
 };
 })();

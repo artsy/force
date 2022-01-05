@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 export type CreateBackupSecondFactorsInput = {
@@ -54,7 +53,8 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "input"
+    "name": "input",
+    "type": "CreateBackupSecondFactorsInput!"
   }
 ],
 v1 = [
@@ -72,22 +72,29 @@ v2 = {
   "storageKey": null
 },
 v3 = {
-  "alias": null,
-  "args": null,
-  "concreteType": "BackupSecondFactor",
-  "kind": "LinkedField",
-  "name": "secondFactors",
-  "plural": true,
+  "kind": "InlineFragment",
   "selections": [
+    (v2/*: any*/),
     {
       "alias": null,
       "args": null,
-      "kind": "ScalarField",
-      "name": "code",
+      "concreteType": "BackupSecondFactor",
+      "kind": "LinkedField",
+      "name": "secondFactors",
+      "plural": true,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "code",
+          "storageKey": null
+        }
+      ],
       "storageKey": null
     }
   ],
-  "storageKey": null
+  "type": "BackupSecondFactors"
 };
 return {
   "fragment": {
@@ -112,15 +119,7 @@ return {
             "name": "secondFactorsOrErrors",
             "plural": false,
             "selections": [
-              {
-                "kind": "InlineFragment",
-                "selections": [
-                  (v2/*: any*/),
-                  (v3/*: any*/)
-                ],
-                "type": "BackupSecondFactors",
-                "abstractKey": null
-              }
+              (v3/*: any*/)
             ],
             "storageKey": null
           }
@@ -128,8 +127,7 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Mutation",
-    "abstractKey": null
+    "type": "Mutation"
   },
   "kind": "Request",
   "operation": {
@@ -154,14 +152,7 @@ return {
             "plural": false,
             "selections": [
               (v2/*: any*/),
-              {
-                "kind": "InlineFragment",
-                "selections": [
-                  (v3/*: any*/)
-                ],
-                "type": "BackupSecondFactors",
-                "abstractKey": null
-              }
+              (v3/*: any*/)
             ],
             "storageKey": null
           }
@@ -171,7 +162,6 @@ return {
     ]
   },
   "params": {
-    "cacheID": "4114903b103c095c825571daddc6f56b",
     "id": null,
     "metadata": {},
     "name": "useCreateSettingsBackupSecondFactorsMutation",

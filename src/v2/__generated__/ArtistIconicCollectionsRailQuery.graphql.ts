@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -59,22 +58,27 @@ fragment ArtistIconicCollectionsRail_marketingCollections on MarketingCollection
 */
 
 const node: ConcreteRequest = (function(){
-var v0 = {
-  "defaultValue": null,
-  "kind": "LocalArgument",
-  "name": "internalID"
-},
-v1 = {
-  "defaultValue": null,
-  "kind": "LocalArgument",
-  "name": "isFeaturedArtistContent"
-},
-v2 = {
-  "defaultValue": null,
-  "kind": "LocalArgument",
-  "name": "size"
-},
-v3 = [
+var v0 = [
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "isFeaturedArtistContent",
+    "type": "Boolean"
+  },
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "size",
+    "type": "Int"
+  },
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "internalID",
+    "type": "String"
+  }
+],
+v1 = [
   {
     "kind": "Variable",
     "name": "artistID",
@@ -91,7 +95,7 @@ v3 = [
     "variableName": "size"
   }
 ],
-v4 = {
+v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -100,18 +104,14 @@ v4 = {
 };
 return {
   "fragment": {
-    "argumentDefinitions": [
-      (v0/*: any*/),
-      (v1/*: any*/),
-      (v2/*: any*/)
-    ],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
     "name": "ArtistIconicCollectionsRailQuery",
     "selections": [
       {
         "alias": null,
-        "args": (v3/*: any*/),
+        "args": (v1/*: any*/),
         "concreteType": "MarketingCollection",
         "kind": "LinkedField",
         "name": "marketingCollections",
@@ -126,22 +126,17 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query",
-    "abstractKey": null
+    "type": "Query"
   },
   "kind": "Request",
   "operation": {
-    "argumentDefinitions": [
-      (v1/*: any*/),
-      (v2/*: any*/),
-      (v0/*: any*/)
-    ],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
     "name": "ArtistIconicCollectionsRailQuery",
     "selections": [
       {
         "alias": null,
-        "args": (v3/*: any*/),
+        "args": (v1/*: any*/),
         "concreteType": "MarketingCollection",
         "kind": "LinkedField",
         "name": "marketingCollections",
@@ -285,25 +280,24 @@ return {
                         ],
                         "storageKey": null
                       },
-                      (v4/*: any*/)
+                      (v2/*: any*/)
                     ],
                     "storageKey": null
                   }
                 ],
                 "storageKey": null
               },
-              (v4/*: any*/)
+              (v2/*: any*/)
             ],
             "storageKey": "artworksConnection(aggregations:[\"TOTAL\"],first:1,sort:\"-decayed_merch\")"
           },
-          (v4/*: any*/)
+          (v2/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "392600a76593a9e8b2afd01af2d859c4",
     "id": null,
     "metadata": {},
     "name": "ArtistIconicCollectionsRailQuery",

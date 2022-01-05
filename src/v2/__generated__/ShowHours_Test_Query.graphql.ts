@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -122,8 +121,7 @@ v2 = {
               "storageKey": null
             }
           ],
-          "type": "OpeningHoursArray",
-          "abstractKey": null
+          "type": "OpeningHoursArray"
         },
         {
           "kind": "InlineFragment",
@@ -136,8 +134,7 @@ v2 = {
               "storageKey": null
             }
           ],
-          "type": "OpeningHoursText",
-          "abstractKey": null
+          "type": "OpeningHoursText"
         }
       ],
       "storageKey": null
@@ -147,40 +144,34 @@ v2 = {
   "storageKey": null
 },
 v3 = {
+  "type": "ID",
   "enumValues": null,
-  "nullable": false,
   "plural": false,
-  "type": "ID"
+  "nullable": true
 },
 v4 = {
+  "type": "Location",
   "enumValues": null,
-  "nullable": true,
   "plural": false,
-  "type": "Location"
+  "nullable": true
 },
 v5 = {
+  "type": "OpeningHoursUnion",
   "enumValues": null,
-  "nullable": true,
   "plural": false,
-  "type": "OpeningHoursUnion"
+  "nullable": true
 },
 v6 = {
+  "type": "FormattedDaySchedules",
   "enumValues": null,
-  "nullable": false,
-  "plural": false,
-  "type": "String"
+  "plural": true,
+  "nullable": true
 },
 v7 = {
+  "type": "String",
   "enumValues": null,
-  "nullable": true,
-  "plural": true,
-  "type": "FormattedDaySchedules"
-},
-v8 = {
-  "enumValues": null,
-  "nullable": true,
   "plural": false,
-  "type": "String"
+  "nullable": true
 };
 return {
   "fragment": {
@@ -206,8 +197,7 @@ return {
         "storageKey": "show(id:\"example\")"
       }
     ],
-    "type": "Query",
-    "abstractKey": null
+    "type": "Query"
   },
   "kind": "Request",
   "operation": {
@@ -244,40 +234,37 @@ return {
     ]
   },
   "params": {
-    "cacheID": "4549037f7266f13a5496fd0b030325d7",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "show": {
+          "type": "Show",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "Show"
+          "nullable": true
         },
-        "show.fair": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "Fair"
-        },
-        "show.fair.id": (v3/*: any*/),
-        "show.fair.location": (v4/*: any*/),
-        "show.fair.location.id": (v3/*: any*/),
-        "show.fair.location.openingHours": (v5/*: any*/),
-        "show.fair.location.openingHours.__typename": (v6/*: any*/),
-        "show.fair.location.openingHours.schedules": (v7/*: any*/),
-        "show.fair.location.openingHours.schedules.days": (v8/*: any*/),
-        "show.fair.location.openingHours.schedules.hours": (v8/*: any*/),
-        "show.fair.location.openingHours.text": (v8/*: any*/),
         "show.id": (v3/*: any*/),
         "show.location": (v4/*: any*/),
+        "show.fair": {
+          "type": "Fair",
+          "enumValues": null,
+          "plural": false,
+          "nullable": true
+        },
         "show.location.id": (v3/*: any*/),
+        "show.fair.location": (v4/*: any*/),
+        "show.fair.id": (v3/*: any*/),
         "show.location.openingHours": (v5/*: any*/),
-        "show.location.openingHours.__typename": (v6/*: any*/),
-        "show.location.openingHours.schedules": (v7/*: any*/),
-        "show.location.openingHours.schedules.days": (v8/*: any*/),
-        "show.location.openingHours.schedules.hours": (v8/*: any*/),
-        "show.location.openingHours.text": (v8/*: any*/)
+        "show.fair.location.id": (v3/*: any*/),
+        "show.fair.location.openingHours": (v5/*: any*/),
+        "show.location.openingHours.schedules": (v6/*: any*/),
+        "show.location.openingHours.text": (v7/*: any*/),
+        "show.location.openingHours.schedules.days": (v7/*: any*/),
+        "show.location.openingHours.schedules.hours": (v7/*: any*/),
+        "show.fair.location.openingHours.schedules": (v6/*: any*/),
+        "show.fair.location.openingHours.text": (v7/*: any*/),
+        "show.fair.location.openingHours.schedules.days": (v7/*: any*/),
+        "show.fair.location.openingHours.schedules.hours": (v7/*: any*/)
       }
     },
     "name": "ShowHours_Test_Query",

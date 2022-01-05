@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 export type DeleteCreditCardInput = {
@@ -62,7 +61,8 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "input"
+    "name": "input",
+    "type": "DeleteCreditCardInput!"
   }
 ],
 v1 = [
@@ -101,8 +101,7 @@ v2 = {
       "storageKey": null
     }
   ],
-  "type": "CreditCardMutationSuccess",
-  "abstractKey": null
+  "type": "CreditCardMutationSuccess"
 },
 v3 = {
   "kind": "InlineFragment",
@@ -140,8 +139,7 @@ v3 = {
       "storageKey": null
     }
   ],
-  "type": "CreditCardMutationFailure",
-  "abstractKey": null
+  "type": "CreditCardMutationFailure"
 };
 return {
   "fragment": {
@@ -175,8 +173,7 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Mutation",
-    "abstractKey": null
+    "type": "Mutation"
   },
   "kind": "Request",
   "operation": {
@@ -218,7 +215,6 @@ return {
     ]
   },
   "params": {
-    "cacheID": "5551149e87c5332ab3082f81549e4d0e",
     "id": null,
     "metadata": {},
     "name": "SavedCreditCardsDeleteCreditCardMutation",

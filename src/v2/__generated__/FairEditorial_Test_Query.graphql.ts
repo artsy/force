@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -117,34 +116,34 @@ v2 = [
   }
 ],
 v3 = {
+  "type": "ID",
   "enumValues": null,
-  "nullable": true,
   "plural": false,
-  "type": "String"
+  "nullable": false
 },
 v4 = {
+  "type": "String",
   "enumValues": null,
-  "nullable": false,
   "plural": false,
-  "type": "ID"
+  "nullable": true
 },
 v5 = {
+  "type": "CroppedImageUrl",
   "enumValues": null,
-  "nullable": true,
   "plural": false,
-  "type": "CroppedImageUrl"
+  "nullable": true
 },
 v6 = {
+  "type": "Int",
   "enumValues": null,
-  "nullable": false,
   "plural": false,
-  "type": "Int"
+  "nullable": false
 },
 v7 = {
+  "type": "String",
   "enumValues": null,
-  "nullable": false,
   "plural": false,
-  "type": "String"
+  "nullable": false
 };
 return {
   "fragment": {
@@ -170,8 +169,7 @@ return {
         "storageKey": "fair(id:\"test\")"
       }
     ],
-    "type": "Query",
-    "abstractKey": null
+    "type": "Query"
   },
   "kind": "Request",
   "operation": {
@@ -340,58 +338,62 @@ return {
     ]
   },
   "params": {
-    "cacheID": "5dfacf9136a29965782c9aff931ed76e",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "fair": {
+          "type": "Fair",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "Fair"
+          "nullable": true
+        },
+        "fair.id": {
+          "type": "ID",
+          "enumValues": null,
+          "plural": false,
+          "nullable": true
         },
         "fair.articlesConnection": {
+          "type": "ArticleConnection",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "ArticleConnection"
+          "nullable": true
         },
         "fair.articlesConnection.edges": {
+          "type": "ArticleEdge",
           "enumValues": null,
-          "nullable": true,
           "plural": true,
-          "type": "ArticleEdge"
+          "nullable": true
         },
         "fair.articlesConnection.edges.node": {
+          "type": "Article",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "Article"
+          "nullable": true
         },
-        "fair.articlesConnection.edges.node.href": (v3/*: any*/),
-        "fair.articlesConnection.edges.node.id": (v4/*: any*/),
-        "fair.articlesConnection.edges.node.internalID": (v4/*: any*/),
-        "fair.articlesConnection.edges.node.publishedAt": (v3/*: any*/),
-        "fair.articlesConnection.edges.node.slug": (v3/*: any*/),
+        "fair.articlesConnection.edges.node.id": (v3/*: any*/),
+        "fair.articlesConnection.edges.node.title": (v4/*: any*/),
+        "fair.articlesConnection.edges.node.publishedAt": (v4/*: any*/),
+        "fair.articlesConnection.edges.node.thumbnailTitle": (v4/*: any*/),
         "fair.articlesConnection.edges.node.thumbnailImage": {
+          "type": "Image",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "Image"
+          "nullable": true
         },
         "fair.articlesConnection.edges.node.thumbnailImage.large": (v5/*: any*/),
+        "fair.articlesConnection.edges.node.thumbnailImage.small": (v5/*: any*/),
+        "fair.articlesConnection.edges.node.internalID": (v3/*: any*/),
+        "fair.articlesConnection.edges.node.slug": (v4/*: any*/),
+        "fair.articlesConnection.edges.node.href": (v4/*: any*/),
+        "fair.articlesConnection.edges.node.thumbnailImage.large.width": (v6/*: any*/),
         "fair.articlesConnection.edges.node.thumbnailImage.large.height": (v6/*: any*/),
         "fair.articlesConnection.edges.node.thumbnailImage.large.src": (v7/*: any*/),
         "fair.articlesConnection.edges.node.thumbnailImage.large.srcSet": (v7/*: any*/),
-        "fair.articlesConnection.edges.node.thumbnailImage.large.width": (v6/*: any*/),
-        "fair.articlesConnection.edges.node.thumbnailImage.small": (v5/*: any*/),
+        "fair.articlesConnection.edges.node.thumbnailImage.small.width": (v6/*: any*/),
         "fair.articlesConnection.edges.node.thumbnailImage.small.height": (v6/*: any*/),
         "fair.articlesConnection.edges.node.thumbnailImage.small.src": (v7/*: any*/),
-        "fair.articlesConnection.edges.node.thumbnailImage.small.srcSet": (v7/*: any*/),
-        "fair.articlesConnection.edges.node.thumbnailImage.small.width": (v6/*: any*/),
-        "fair.articlesConnection.edges.node.thumbnailTitle": (v3/*: any*/),
-        "fair.articlesConnection.edges.node.title": (v3/*: any*/),
-        "fair.id": (v4/*: any*/)
+        "fair.articlesConnection.edges.node.thumbnailImage.small.srcSet": (v7/*: any*/)
       }
     },
     "name": "FairEditorial_Test_Query",

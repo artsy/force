@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -185,76 +184,82 @@ v7 = {
   "value": true
 },
 v8 = {
+  "type": "ID",
   "enumValues": null,
-  "nullable": true,
   "plural": false,
-  "type": "Int"
+  "nullable": true
 },
 v9 = {
+  "type": "String",
   "enumValues": null,
-  "nullable": true,
   "plural": false,
-  "type": "FormattedNumber"
+  "nullable": true
 },
 v10 = {
+  "type": "Boolean",
   "enumValues": null,
-  "nullable": true,
   "plural": false,
-  "type": "Boolean"
+  "nullable": true
 },
 v11 = {
+  "type": "ID",
   "enumValues": null,
-  "nullable": false,
   "plural": false,
-  "type": "ID"
+  "nullable": false
 },
 v12 = {
+  "type": "LocationConnection",
   "enumValues": null,
-  "nullable": true,
   "plural": false,
-  "type": "LocationConnection"
+  "nullable": true
 },
 v13 = {
+  "type": "ArtistPartnerConnection",
   "enumValues": null,
-  "nullable": true,
-  "plural": true,
-  "type": "LocationEdge"
+  "plural": false,
+  "nullable": true
 },
 v14 = {
+  "type": "Image",
   "enumValues": null,
-  "nullable": true,
   "plural": false,
-  "type": "Location"
+  "nullable": true
 },
 v15 = {
+  "type": "LocationEdge",
   "enumValues": null,
-  "nullable": true,
-  "plural": false,
-  "type": "String"
+  "plural": true,
+  "nullable": true
 },
 v16 = {
+  "type": "Int",
   "enumValues": null,
-  "nullable": true,
   "plural": false,
-  "type": "Float"
+  "nullable": true
 },
 v17 = {
+  "type": "FormattedNumber",
   "enumValues": null,
-  "nullable": true,
   "plural": false,
-  "type": "ArtistPartnerConnection"
+  "nullable": true
 },
 v18 = {
+  "type": "Location",
   "enumValues": null,
-  "nullable": true,
   "plural": false,
-  "type": "Image"
+  "nullable": true
 },
 v19 = {
+  "type": "String",
   "enumValues": null,
-  "nullable": false,
   "plural": false,
-  "type": "String"
+  "nullable": false
+},
+v20 = {
+  "type": "Float",
+  "enumValues": null,
+  "plural": false,
+  "nullable": true
 };
 return {
   "fragment": {
@@ -280,8 +285,7 @@ return {
         "storageKey": "partner(id:\"example\")"
       }
     ],
-    "type": "Query",
-    "abstractKey": null
+    "type": "Query"
   },
   "kind": "Request",
   "operation": {
@@ -735,108 +739,107 @@ return {
     ]
   },
   "params": {
-    "cacheID": "f82ab7af3e9899e3457a61703d46d1f6",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "partner": {
+          "type": "Partner",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "Partner"
+          "nullable": true
+        },
+        "partner.id": (v8/*: any*/),
+        "partner.partnerType": (v9/*: any*/),
+        "partner.displayFullPartnerPage": (v10/*: any*/),
+        "partner.partnerPageEligible": (v10/*: any*/),
+        "partner.isDefaultProfilePublic": (v10/*: any*/),
+        "partner.profile": {
+          "type": "Profile",
+          "enumValues": null,
+          "plural": false,
+          "nullable": true
+        },
+        "partner.profile.id": (v11/*: any*/),
+        "partner.locationsConnection": (v12/*: any*/),
+        "partner.meta": {
+          "type": "PartnerMeta",
+          "enumValues": null,
+          "plural": false,
+          "nullable": true
+        },
+        "partner.name": (v9/*: any*/),
+        "partner.slug": (v11/*: any*/),
+        "partner.type": (v9/*: any*/),
+        "partner.locations": (v12/*: any*/),
+        "partner.displayArtistsSection": (v10/*: any*/),
+        "partner.displayWorksSection": (v10/*: any*/),
+        "partner.counts": {
+          "type": "PartnerCounts",
+          "enumValues": null,
+          "plural": false,
+          "nullable": true
         },
         "partner.articles": {
+          "type": "ArticleConnection",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "ArticleConnection"
+          "nullable": true
         },
-        "partner.articles.totalCount": (v8/*: any*/),
-        "partner.counts": {
+        "partner.representedArtists": (v13/*: any*/),
+        "partner.notRepresentedArtists": (v13/*: any*/),
+        "partner.viewingRooms": {
+          "type": "ViewingRoomsConnection",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "PartnerCounts"
+          "nullable": true
         },
-        "partner.counts.displayableShows": (v9/*: any*/),
-        "partner.counts.eligibleArtworks": (v9/*: any*/),
-        "partner.displayArtistsSection": (v10/*: any*/),
-        "partner.displayFullPartnerPage": (v10/*: any*/),
-        "partner.displayWorksSection": (v10/*: any*/),
-        "partner.id": (v11/*: any*/),
-        "partner.isDefaultProfilePublic": (v10/*: any*/),
-        "partner.locations": (v12/*: any*/),
-        "partner.locations.edges": (v13/*: any*/),
-        "partner.locations.edges.node": (v14/*: any*/),
-        "partner.locations.edges.node.city": (v15/*: any*/),
-        "partner.locations.edges.node.id": (v11/*: any*/),
-        "partner.locations.totalCount": (v8/*: any*/),
-        "partner.locationsConnection": (v12/*: any*/),
-        "partner.locationsConnection.edges": (v13/*: any*/),
-        "partner.locationsConnection.edges.node": (v14/*: any*/),
-        "partner.locationsConnection.edges.node.address": (v15/*: any*/),
-        "partner.locationsConnection.edges.node.address2": (v15/*: any*/),
-        "partner.locationsConnection.edges.node.city": (v15/*: any*/),
-        "partner.locationsConnection.edges.node.coordinates": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "LatLng"
-        },
-        "partner.locationsConnection.edges.node.coordinates.lat": (v16/*: any*/),
-        "partner.locationsConnection.edges.node.coordinates.lng": (v16/*: any*/),
-        "partner.locationsConnection.edges.node.country": (v15/*: any*/),
-        "partner.locationsConnection.edges.node.id": (v11/*: any*/),
-        "partner.locationsConnection.edges.node.phone": (v15/*: any*/),
-        "partner.locationsConnection.edges.node.postalCode": (v15/*: any*/),
-        "partner.locationsConnection.edges.node.state": (v15/*: any*/),
-        "partner.meta": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "PartnerMeta"
-        },
-        "partner.meta.description": (v15/*: any*/),
-        "partner.meta.image": (v15/*: any*/),
-        "partner.meta.title": (v15/*: any*/),
-        "partner.name": (v15/*: any*/),
-        "partner.notRepresentedArtists": (v17/*: any*/),
-        "partner.notRepresentedArtists.totalCount": (v8/*: any*/),
-        "partner.partnerPageEligible": (v10/*: any*/),
-        "partner.partnerType": (v15/*: any*/),
-        "partner.profile": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "Profile"
-        },
-        "partner.profile.icon": (v18/*: any*/),
+        "partner.profile.image": (v14/*: any*/),
+        "partner.locationsConnection.edges": (v15/*: any*/),
+        "partner.meta.image": (v9/*: any*/),
+        "partner.meta.title": (v9/*: any*/),
+        "partner.meta.description": (v9/*: any*/),
+        "partner.profile.icon": (v14/*: any*/),
+        "partner.locations.totalCount": (v16/*: any*/),
+        "partner.locations.edges": (v15/*: any*/),
+        "partner.counts.eligibleArtworks": (v17/*: any*/),
+        "partner.counts.displayableShows": (v17/*: any*/),
+        "partner.articles.totalCount": (v16/*: any*/),
+        "partner.representedArtists.totalCount": (v16/*: any*/),
+        "partner.notRepresentedArtists.totalCount": (v16/*: any*/),
+        "partner.viewingRooms.totalCount": (v16/*: any*/),
+        "partner.profile.image.url": (v9/*: any*/),
+        "partner.locationsConnection.edges.node": (v18/*: any*/),
         "partner.profile.icon.resized": {
+          "type": "ResizedImageUrl",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "ResizedImageUrl"
+          "nullable": true
         },
-        "partner.profile.icon.resized.src": (v19/*: any*/),
-        "partner.profile.icon.resized.srcSet": (v19/*: any*/),
-        "partner.profile.id": (v11/*: any*/),
-        "partner.profile.image": (v18/*: any*/),
-        "partner.profile.image.url": (v15/*: any*/),
+        "partner.profile.slug": (v11/*: any*/),
+        "partner.profile.name": (v9/*: any*/),
         "partner.profile.internalID": (v11/*: any*/),
         "partner.profile.is_followed": (v10/*: any*/),
-        "partner.profile.name": (v15/*: any*/),
-        "partner.profile.slug": (v11/*: any*/),
-        "partner.representedArtists": (v17/*: any*/),
-        "partner.representedArtists.totalCount": (v8/*: any*/),
-        "partner.slug": (v11/*: any*/),
-        "partner.type": (v15/*: any*/),
-        "partner.viewingRooms": {
+        "partner.locations.edges.node": (v18/*: any*/),
+        "partner.locationsConnection.edges.node.address": (v9/*: any*/),
+        "partner.locationsConnection.edges.node.address2": (v9/*: any*/),
+        "partner.locationsConnection.edges.node.city": (v9/*: any*/),
+        "partner.locationsConnection.edges.node.coordinates": {
+          "type": "LatLng",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "ViewingRoomsConnection"
+          "nullable": true
         },
-        "partner.viewingRooms.totalCount": (v8/*: any*/)
+        "partner.locationsConnection.edges.node.country": (v9/*: any*/),
+        "partner.locationsConnection.edges.node.phone": (v9/*: any*/),
+        "partner.locationsConnection.edges.node.postalCode": (v9/*: any*/),
+        "partner.locationsConnection.edges.node.state": (v9/*: any*/),
+        "partner.locationsConnection.edges.node.id": (v8/*: any*/),
+        "partner.profile.icon.resized.src": (v19/*: any*/),
+        "partner.profile.icon.resized.srcSet": (v19/*: any*/),
+        "partner.locations.edges.node.city": (v9/*: any*/),
+        "partner.locations.edges.node.id": (v8/*: any*/),
+        "partner.locationsConnection.edges.node.coordinates.lat": (v20/*: any*/),
+        "partner.locationsConnection.edges.node.coordinates.lng": (v20/*: any*/)
       }
     },
     "name": "PartnerApp_Test_Query",

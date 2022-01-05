@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -43,7 +42,6 @@ fragment HomeFeaturedGalleriesRail_orderedSet on OrderedSet {
             __typename
             ...PartnerCell_partner
             ... on Node {
-              __isNode: __typename
               id
             }
             ... on FairOrganizer {
@@ -53,7 +51,6 @@ fragment HomeFeaturedGalleriesRail_orderedSet on OrderedSet {
           id
         }
         ... on Node {
-          __isNode: __typename
           id
         }
         ... on FeaturedLink {
@@ -111,62 +108,59 @@ v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "internalID",
+  "name": "id",
   "storageKey": null
 },
 v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "slug",
+  "name": "internalID",
   "storageKey": null
 },
 v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "name",
+  "name": "slug",
   "storageKey": null
 },
 v5 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "id",
+  "name": "name",
   "storageKey": null
 },
-v6 = [
-  (v5/*: any*/)
-],
+v6 = {
+  "type": "ID",
+  "enumValues": null,
+  "plural": false,
+  "nullable": true
+},
 v7 = {
-  "kind": "InlineFragment",
-  "selections": (v6/*: any*/),
-  "type": "Node",
-  "abstractKey": "__isNode"
+  "type": "String",
+  "enumValues": null,
+  "plural": false,
+  "nullable": false
 },
 v8 = {
+  "type": "ID",
   "enumValues": null,
-  "nullable": false,
   "plural": false,
-  "type": "ID"
+  "nullable": false
 },
 v9 = {
+  "type": "String",
   "enumValues": null,
-  "nullable": false,
   "plural": false,
-  "type": "String"
+  "nullable": true
 },
 v10 = {
+  "type": "Boolean",
   "enumValues": null,
-  "nullable": true,
   "plural": false,
-  "type": "String"
-},
-v11 = {
-  "enumValues": null,
-  "nullable": true,
-  "plural": false,
-  "type": "Boolean"
+  "nullable": true
 };
 return {
   "fragment": {
@@ -192,8 +186,7 @@ return {
         "storageKey": "orderedSet(id:\"example\")"
       }
     ],
-    "type": "Query",
-    "abstractKey": null
+    "type": "Query"
   },
   "kind": "Request",
   "operation": {
@@ -240,6 +233,7 @@ return {
                     "plural": false,
                     "selections": [
                       (v1/*: any*/),
+                      (v2/*: any*/),
                       {
                         "kind": "InlineFragment",
                         "selections": [
@@ -252,12 +246,13 @@ return {
                             "plural": false,
                             "selections": [
                               (v1/*: any*/),
+                              (v2/*: any*/),
                               {
                                 "kind": "InlineFragment",
                                 "selections": [
-                                  (v2/*: any*/),
                                   (v3/*: any*/),
                                   (v4/*: any*/),
+                                  (v5/*: any*/),
                                   {
                                     "alias": null,
                                     "args": null,
@@ -309,7 +304,7 @@ return {
                                                 "name": "city",
                                                 "storageKey": null
                                               },
-                                              (v5/*: any*/)
+                                              (v2/*: any*/)
                                             ],
                                             "storageKey": null
                                           }
@@ -327,10 +322,10 @@ return {
                                     "name": "profile",
                                     "plural": false,
                                     "selections": [
+                                      (v2/*: any*/),
+                                      (v4/*: any*/),
                                       (v5/*: any*/),
                                       (v3/*: any*/),
-                                      (v4/*: any*/),
-                                      (v2/*: any*/),
                                       {
                                         "alias": "is_followed",
                                         "args": null,
@@ -406,30 +401,13 @@ return {
                                     "storageKey": null
                                   }
                                 ],
-                                "type": "Partner",
-                                "abstractKey": null
-                              },
-                              (v7/*: any*/),
-                              {
-                                "kind": "InlineFragment",
-                                "selections": (v6/*: any*/),
-                                "type": "FairOrganizer",
-                                "abstractKey": null
+                                "type": "Partner"
                               }
                             ],
                             "storageKey": null
-                          },
-                          (v5/*: any*/)
+                          }
                         ],
-                        "type": "Profile",
-                        "abstractKey": null
-                      },
-                      (v7/*: any*/),
-                      {
-                        "kind": "InlineFragment",
-                        "selections": (v6/*: any*/),
-                        "type": "FeaturedLink",
-                        "abstractKey": null
+                        "type": "Profile"
                       }
                     ],
                     "storageKey": null
@@ -440,110 +418,106 @@ return {
             ],
             "storageKey": "orderedItemsConnection(first:20)"
           },
-          (v5/*: any*/)
+          (v2/*: any*/)
         ],
         "storageKey": "orderedSet(id:\"example\")"
       }
     ]
   },
   "params": {
-    "cacheID": "4be6630b80bed88a3c35a24dca6ba5cb",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "orderedSet": {
+          "type": "OrderedSet",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "OrderedSet"
+          "nullable": true
         },
-        "orderedSet.id": (v8/*: any*/),
+        "orderedSet.id": (v6/*: any*/),
         "orderedSet.orderedItemsConnection": {
+          "type": "OrderedSetItemConnection",
           "enumValues": null,
-          "nullable": false,
           "plural": false,
-          "type": "OrderedSetItemConnection"
+          "nullable": false
         },
         "orderedSet.orderedItemsConnection.edges": {
+          "type": "OrderedSetItemEdge",
           "enumValues": null,
-          "nullable": true,
           "plural": true,
-          "type": "OrderedSetItemEdge"
+          "nullable": true
         },
         "orderedSet.orderedItemsConnection.edges.node": {
+          "type": "OrderedSetItem",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "OrderedSetItem"
+          "nullable": true
         },
-        "orderedSet.orderedItemsConnection.edges.node.__isNode": (v9/*: any*/),
-        "orderedSet.orderedItemsConnection.edges.node.__typename": (v9/*: any*/),
-        "orderedSet.orderedItemsConnection.edges.node.id": (v8/*: any*/),
+        "orderedSet.orderedItemsConnection.edges.node.__typename": (v7/*: any*/),
         "orderedSet.orderedItemsConnection.edges.node.owner": {
+          "type": "ProfileOwnerType",
           "enumValues": null,
-          "nullable": false,
           "plural": false,
-          "type": "ProfileOwnerType"
+          "nullable": false
         },
-        "orderedSet.orderedItemsConnection.edges.node.owner.__isNode": (v9/*: any*/),
-        "orderedSet.orderedItemsConnection.edges.node.owner.__typename": (v9/*: any*/),
-        "orderedSet.orderedItemsConnection.edges.node.owner.href": (v10/*: any*/),
-        "orderedSet.orderedItemsConnection.edges.node.owner.id": (v8/*: any*/),
-        "orderedSet.orderedItemsConnection.edges.node.owner.initials": (v10/*: any*/),
+        "orderedSet.orderedItemsConnection.edges.node.id": (v6/*: any*/),
         "orderedSet.orderedItemsConnection.edges.node.owner.internalID": (v8/*: any*/),
+        "orderedSet.orderedItemsConnection.edges.node.owner.slug": (v8/*: any*/),
+        "orderedSet.orderedItemsConnection.edges.node.owner.name": (v9/*: any*/),
+        "orderedSet.orderedItemsConnection.edges.node.owner.href": (v9/*: any*/),
+        "orderedSet.orderedItemsConnection.edges.node.owner.initials": (v9/*: any*/),
         "orderedSet.orderedItemsConnection.edges.node.owner.locationsConnection": {
+          "type": "LocationConnection",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "LocationConnection"
+          "nullable": true
         },
-        "orderedSet.orderedItemsConnection.edges.node.owner.locationsConnection.edges": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": true,
-          "type": "LocationEdge"
-        },
-        "orderedSet.orderedItemsConnection.edges.node.owner.locationsConnection.edges.node": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "Location"
-        },
-        "orderedSet.orderedItemsConnection.edges.node.owner.locationsConnection.edges.node.city": (v10/*: any*/),
-        "orderedSet.orderedItemsConnection.edges.node.owner.locationsConnection.edges.node.id": (v8/*: any*/),
-        "orderedSet.orderedItemsConnection.edges.node.owner.name": (v10/*: any*/),
         "orderedSet.orderedItemsConnection.edges.node.owner.profile": {
+          "type": "Profile",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "Profile"
+          "nullable": true
+        },
+        "orderedSet.orderedItemsConnection.edges.node.owner.id": (v6/*: any*/),
+        "orderedSet.orderedItemsConnection.edges.node.owner.locationsConnection.edges": {
+          "type": "LocationEdge",
+          "enumValues": null,
+          "plural": true,
+          "nullable": true
+        },
+        "orderedSet.orderedItemsConnection.edges.node.owner.profile.isFollowed": (v10/*: any*/),
+        "orderedSet.orderedItemsConnection.edges.node.owner.profile.image": {
+          "type": "Image",
+          "enumValues": null,
+          "plural": false,
+          "nullable": true
         },
         "orderedSet.orderedItemsConnection.edges.node.owner.profile.id": (v8/*: any*/),
-        "orderedSet.orderedItemsConnection.edges.node.owner.profile.image": {
+        "orderedSet.orderedItemsConnection.edges.node.owner.locationsConnection.edges.node": {
+          "type": "Location",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "Image"
+          "nullable": true
         },
-        "orderedSet.orderedItemsConnection.edges.node.owner.profile.image.cropped": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "CroppedImageUrl"
-        },
-        "orderedSet.orderedItemsConnection.edges.node.owner.profile.image.cropped.src": (v9/*: any*/),
-        "orderedSet.orderedItemsConnection.edges.node.owner.profile.image.cropped.srcSet": (v9/*: any*/),
-        "orderedSet.orderedItemsConnection.edges.node.owner.profile.internalID": (v8/*: any*/),
-        "orderedSet.orderedItemsConnection.edges.node.owner.profile.isFollowed": (v11/*: any*/),
-        "orderedSet.orderedItemsConnection.edges.node.owner.profile.is_followed": (v11/*: any*/),
-        "orderedSet.orderedItemsConnection.edges.node.owner.profile.name": (v10/*: any*/),
         "orderedSet.orderedItemsConnection.edges.node.owner.profile.slug": (v8/*: any*/),
-        "orderedSet.orderedItemsConnection.edges.node.owner.slug": (v8/*: any*/)
+        "orderedSet.orderedItemsConnection.edges.node.owner.profile.name": (v9/*: any*/),
+        "orderedSet.orderedItemsConnection.edges.node.owner.profile.internalID": (v8/*: any*/),
+        "orderedSet.orderedItemsConnection.edges.node.owner.profile.is_followed": (v10/*: any*/),
+        "orderedSet.orderedItemsConnection.edges.node.owner.profile.image.cropped": {
+          "type": "CroppedImageUrl",
+          "enumValues": null,
+          "plural": false,
+          "nullable": true
+        },
+        "orderedSet.orderedItemsConnection.edges.node.owner.locationsConnection.edges.node.city": (v9/*: any*/),
+        "orderedSet.orderedItemsConnection.edges.node.owner.locationsConnection.edges.node.id": (v6/*: any*/),
+        "orderedSet.orderedItemsConnection.edges.node.owner.profile.image.cropped.src": (v7/*: any*/),
+        "orderedSet.orderedItemsConnection.edges.node.owner.profile.image.cropped.srcSet": (v7/*: any*/)
       }
     },
     "name": "HomeFeaturedGalleriesRail_Test_Query",
     "operationKind": "query",
-    "text": "query HomeFeaturedGalleriesRail_Test_Query {\n  orderedSet(id: \"example\") {\n    ...HomeFeaturedGalleriesRail_orderedSet\n    id\n  }\n}\n\nfragment FollowProfileButton_profile on Profile {\n  id\n  slug\n  name\n  internalID\n  is_followed: isFollowed\n}\n\nfragment HomeFeaturedGalleriesRail_orderedSet on OrderedSet {\n  orderedItemsConnection(first: 20) {\n    edges {\n      node {\n        __typename\n        ... on Profile {\n          owner {\n            __typename\n            ...PartnerCell_partner\n            ... on Node {\n              __isNode: __typename\n              id\n            }\n            ... on FairOrganizer {\n              id\n            }\n          }\n          id\n        }\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n        ... on FeaturedLink {\n          id\n        }\n      }\n    }\n  }\n}\n\nfragment PartnerCell_partner on Partner {\n  internalID\n  slug\n  name\n  href\n  initials\n  locationsConnection(first: 15) {\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n  profile {\n    ...FollowProfileButton_profile\n    isFollowed\n    image {\n      cropped(width: 445, height: 334, version: [\"wide\", \"large\", \"featured\", \"larger\"]) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n"
+    "text": "query HomeFeaturedGalleriesRail_Test_Query {\n  orderedSet(id: \"example\") {\n    ...HomeFeaturedGalleriesRail_orderedSet\n    id\n  }\n}\n\nfragment FollowProfileButton_profile on Profile {\n  id\n  slug\n  name\n  internalID\n  is_followed: isFollowed\n}\n\nfragment HomeFeaturedGalleriesRail_orderedSet on OrderedSet {\n  orderedItemsConnection(first: 20) {\n    edges {\n      node {\n        __typename\n        ... on Profile {\n          owner {\n            __typename\n            ...PartnerCell_partner\n            ... on Node {\n              id\n            }\n            ... on FairOrganizer {\n              id\n            }\n          }\n          id\n        }\n        ... on Node {\n          id\n        }\n        ... on FeaturedLink {\n          id\n        }\n      }\n    }\n  }\n}\n\nfragment PartnerCell_partner on Partner {\n  internalID\n  slug\n  name\n  href\n  initials\n  locationsConnection(first: 15) {\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n  profile {\n    ...FollowProfileButton_profile\n    isFollowed\n    image {\n      cropped(width: 445, height: 334, version: [\"wide\", \"large\", \"featured\", \"larger\"]) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n"
   }
 };
 })();

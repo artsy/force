@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 export type DeliverSecondFactorInput = {
@@ -40,7 +39,7 @@ export type DeliverSecondFactorMutationRawResponse = {
                 readonly code: string;
             }>;
         } | {
-            readonly __typename: string;
+            readonly __typename: string | null;
         };
     }) | null;
 };
@@ -80,7 +79,8 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "input"
+    "name": "input",
+    "type": "DeliverSecondFactorInput!"
   }
 ],
 v1 = [
@@ -98,36 +98,50 @@ v2 = {
   "storageKey": null
 },
 v3 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "formattedPhoneNumber",
-  "storageKey": null
-},
-v4 = {
-  "alias": null,
-  "args": null,
-  "concreteType": "Error",
-  "kind": "LinkedField",
-  "name": "errors",
-  "plural": true,
+  "kind": "InlineFragment",
   "selections": [
+    (v2/*: any*/),
     {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "message",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "code",
+      "name": "formattedPhoneNumber",
       "storageKey": null
     }
   ],
-  "storageKey": null
+  "type": "SmsSecondFactor"
+},
+v4 = {
+  "kind": "InlineFragment",
+  "selections": [
+    (v2/*: any*/),
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "Error",
+      "kind": "LinkedField",
+      "name": "errors",
+      "plural": true,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "message",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "code",
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
+    }
+  ],
+  "type": "Errors"
 };
 return {
   "fragment": {
@@ -152,24 +166,8 @@ return {
             "name": "secondFactorOrErrors",
             "plural": false,
             "selections": [
-              {
-                "kind": "InlineFragment",
-                "selections": [
-                  (v2/*: any*/),
-                  (v3/*: any*/)
-                ],
-                "type": "SmsSecondFactor",
-                "abstractKey": null
-              },
-              {
-                "kind": "InlineFragment",
-                "selections": [
-                  (v2/*: any*/),
-                  (v4/*: any*/)
-                ],
-                "type": "Errors",
-                "abstractKey": null
-              }
+              (v3/*: any*/),
+              (v4/*: any*/)
             ],
             "storageKey": null
           }
@@ -177,8 +175,7 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Mutation",
-    "abstractKey": null
+    "type": "Mutation"
   },
   "kind": "Request",
   "operation": {
@@ -203,22 +200,8 @@ return {
             "plural": false,
             "selections": [
               (v2/*: any*/),
-              {
-                "kind": "InlineFragment",
-                "selections": [
-                  (v3/*: any*/)
-                ],
-                "type": "SmsSecondFactor",
-                "abstractKey": null
-              },
-              {
-                "kind": "InlineFragment",
-                "selections": [
-                  (v4/*: any*/)
-                ],
-                "type": "Errors",
-                "abstractKey": null
-              }
+              (v3/*: any*/),
+              (v4/*: any*/)
             ],
             "storageKey": null
           }
@@ -228,7 +211,6 @@ return {
     ]
   },
   "params": {
-    "cacheID": "e9fd78d472e42f3544ba78102bdeebf8",
     "id": null,
     "metadata": {},
     "name": "DeliverSecondFactorMutation",

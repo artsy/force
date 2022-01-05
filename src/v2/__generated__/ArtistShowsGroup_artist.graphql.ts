@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -56,34 +55,40 @@ v1 = [
 return {
   "argumentDefinitions": [
     {
-      "defaultValue": null,
-      "kind": "LocalArgument",
-      "name": "after"
-    },
-    {
-      "defaultValue": null,
-      "kind": "LocalArgument",
-      "name": "before"
-    },
-    {
       "defaultValue": 10,
       "kind": "LocalArgument",
-      "name": "first"
+      "name": "first",
+      "type": "Int"
     },
     {
       "defaultValue": null,
       "kind": "LocalArgument",
-      "name": "last"
+      "name": "last",
+      "type": "Int"
     },
     {
       "defaultValue": null,
       "kind": "LocalArgument",
-      "name": "sort"
+      "name": "after",
+      "type": "String"
     },
     {
       "defaultValue": null,
       "kind": "LocalArgument",
-      "name": "status"
+      "name": "before",
+      "type": "String"
+    },
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "sort",
+      "type": "ShowSorts"
+    },
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "status",
+      "type": "String"
     }
   ],
   "kind": "Fragment",
@@ -204,14 +209,12 @@ return {
                     {
                       "kind": "InlineFragment",
                       "selections": (v1/*: any*/),
-                      "type": "ExternalPartner",
-                      "abstractKey": null
+                      "type": "ExternalPartner"
                     },
                     {
                       "kind": "InlineFragment",
                       "selections": (v1/*: any*/),
-                      "type": "Partner",
-                      "abstractKey": null
+                      "type": "Partner"
                     }
                   ],
                   "storageKey": null
@@ -295,8 +298,7 @@ return {
       "storageKey": null
     }
   ],
-  "type": "Artist",
-  "abstractKey": null
+  "type": "Artist"
 };
 })();
 (node as any).hash = '3d1d8ee0545cad9313550d5b6031aa57';

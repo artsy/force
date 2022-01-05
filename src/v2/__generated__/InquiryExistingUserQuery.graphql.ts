@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 export type InquiryExistingUserQueryVariables = {
@@ -34,7 +33,8 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "email"
+    "name": "email",
+    "type": "String!"
   }
 ],
 v1 = [
@@ -71,8 +71,7 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query",
-    "abstractKey": null
+    "type": "Query"
   },
   "kind": "Request",
   "operation": {
@@ -102,7 +101,6 @@ return {
     ]
   },
   "params": {
-    "cacheID": "73cdd43aaba4894344d8d33f67dc928e",
     "id": null,
     "metadata": {},
     "name": "InquiryExistingUserQuery",

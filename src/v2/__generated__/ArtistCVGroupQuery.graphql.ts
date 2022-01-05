@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -65,7 +64,6 @@ fragment ArtistCVGroup_artist_4A66pF on Artist {
             href
           }
           ... on Node {
-            __isNode: __typename
             id
           }
         }
@@ -82,117 +80,127 @@ fragment ArtistCVGroup_artist_4A66pF on Artist {
 */
 
 const node: ConcreteRequest = (function(){
-var v0 = {
-  "defaultValue": null,
-  "kind": "LocalArgument",
-  "name": "atAFair"
-},
-v1 = {
-  "defaultValue": null,
-  "kind": "LocalArgument",
-  "name": "count"
-},
-v2 = {
-  "defaultValue": null,
-  "kind": "LocalArgument",
-  "name": "cursor"
-},
-v3 = {
-  "defaultValue": null,
-  "kind": "LocalArgument",
-  "name": "isReference"
-},
-v4 = {
-  "defaultValue": null,
-  "kind": "LocalArgument",
-  "name": "slug"
-},
-v5 = {
-  "defaultValue": null,
-  "kind": "LocalArgument",
-  "name": "soloShow"
-},
-v6 = {
-  "defaultValue": null,
-  "kind": "LocalArgument",
-  "name": "sort"
-},
-v7 = {
-  "defaultValue": null,
-  "kind": "LocalArgument",
-  "name": "visibleToPublic"
-},
-v8 = [
+var v0 = [
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "count",
+    "type": "Int"
+  },
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "cursor",
+    "type": "String"
+  },
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "slug",
+    "type": "String!"
+  },
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "sort",
+    "type": "ShowSorts"
+  },
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "atAFair",
+    "type": "Boolean"
+  },
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "soloShow",
+    "type": "Boolean"
+  },
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "isReference",
+    "type": "Boolean"
+  },
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "visibleToPublic",
+    "type": "Boolean"
+  }
+],
+v1 = [
   {
     "kind": "Variable",
     "name": "id",
     "variableName": "slug"
   }
 ],
-v9 = {
+v2 = {
   "kind": "Variable",
   "name": "atAFair",
   "variableName": "atAFair"
 },
-v10 = {
+v3 = {
   "kind": "Variable",
   "name": "isReference",
   "variableName": "isReference"
 },
-v11 = {
+v4 = {
   "kind": "Variable",
   "name": "soloShow",
   "variableName": "soloShow"
 },
-v12 = {
+v5 = {
   "kind": "Variable",
   "name": "sort",
   "variableName": "sort"
 },
-v13 = {
+v6 = {
   "kind": "Variable",
   "name": "visibleToPublic",
   "variableName": "visibleToPublic"
 },
-v14 = [
+v7 = [
   {
     "kind": "Variable",
     "name": "after",
     "variableName": "cursor"
   },
-  (v9/*: any*/),
+  (v2/*: any*/),
   {
     "kind": "Variable",
     "name": "first",
     "variableName": "count"
   },
-  (v10/*: any*/),
-  (v11/*: any*/),
-  (v12/*: any*/),
-  (v13/*: any*/)
+  (v3/*: any*/),
+  (v4/*: any*/),
+  (v5/*: any*/),
+  (v6/*: any*/)
 ],
-v15 = {
+v8 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v16 = {
+v9 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "__typename",
   "storageKey": null
 },
-v17 = {
+v10 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "name",
   "storageKey": null
 },
-v18 = {
+v11 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -201,23 +209,14 @@ v18 = {
 };
 return {
   "fragment": {
-    "argumentDefinitions": [
-      (v0/*: any*/),
-      (v1/*: any*/),
-      (v2/*: any*/),
-      (v3/*: any*/),
-      (v4/*: any*/),
-      (v5/*: any*/),
-      (v6/*: any*/),
-      (v7/*: any*/)
-    ],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
     "name": "ArtistCVGroupQuery",
     "selections": [
       {
         "alias": null,
-        "args": (v8/*: any*/),
+        "args": (v1/*: any*/),
         "concreteType": "Artist",
         "kind": "LinkedField",
         "name": "artist",
@@ -225,7 +224,7 @@ return {
         "selections": [
           {
             "args": [
-              (v9/*: any*/),
+              (v2/*: any*/),
               {
                 "kind": "Variable",
                 "name": "count",
@@ -236,10 +235,10 @@ return {
                 "name": "cursor",
                 "variableName": "cursor"
               },
-              (v10/*: any*/),
-              (v11/*: any*/),
-              (v12/*: any*/),
-              (v13/*: any*/)
+              (v3/*: any*/),
+              (v4/*: any*/),
+              (v5/*: any*/),
+              (v6/*: any*/)
             ],
             "kind": "FragmentSpread",
             "name": "ArtistCVGroup_artist"
@@ -248,27 +247,17 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query",
-    "abstractKey": null
+    "type": "Query"
   },
   "kind": "Request",
   "operation": {
-    "argumentDefinitions": [
-      (v1/*: any*/),
-      (v2/*: any*/),
-      (v4/*: any*/),
-      (v6/*: any*/),
-      (v0/*: any*/),
-      (v5/*: any*/),
-      (v3/*: any*/),
-      (v7/*: any*/)
-    ],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
     "name": "ArtistCVGroupQuery",
     "selections": [
       {
         "alias": null,
-        "args": (v8/*: any*/),
+        "args": (v1/*: any*/),
         "concreteType": "Artist",
         "kind": "LinkedField",
         "name": "artist",
@@ -283,7 +272,7 @@ return {
           },
           {
             "alias": null,
-            "args": (v14/*: any*/),
+            "args": (v7/*: any*/),
             "concreteType": "ShowConnection",
             "kind": "LinkedField",
             "name": "showsConnection",
@@ -330,7 +319,7 @@ return {
                     "name": "node",
                     "plural": false,
                     "selections": [
-                      (v15/*: any*/),
+                      (v8/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -339,37 +328,27 @@ return {
                         "name": "partner",
                         "plural": false,
                         "selections": [
-                          (v16/*: any*/),
+                          (v9/*: any*/),
+                          (v8/*: any*/),
                           {
                             "kind": "InlineFragment",
                             "selections": [
-                              (v17/*: any*/),
-                              (v15/*: any*/)
+                              (v10/*: any*/)
                             ],
-                            "type": "ExternalPartner",
-                            "abstractKey": null
+                            "type": "ExternalPartner"
                           },
                           {
                             "kind": "InlineFragment",
                             "selections": [
-                              (v17/*: any*/),
-                              (v18/*: any*/)
+                              (v10/*: any*/),
+                              (v11/*: any*/)
                             ],
-                            "type": "Partner",
-                            "abstractKey": null
-                          },
-                          {
-                            "kind": "InlineFragment",
-                            "selections": [
-                              (v15/*: any*/)
-                            ],
-                            "type": "Node",
-                            "abstractKey": "__isNode"
+                            "type": "Partner"
                           }
                         ],
                         "storageKey": null
                       },
-                      (v17/*: any*/),
+                      (v10/*: any*/),
                       {
                         "alias": null,
                         "args": [
@@ -390,8 +369,8 @@ return {
                         "name": "city",
                         "storageKey": null
                       },
-                      (v18/*: any*/),
-                      (v16/*: any*/)
+                      (v11/*: any*/),
+                      (v9/*: any*/)
                     ],
                     "storageKey": null
                   },
@@ -410,7 +389,7 @@ return {
           },
           {
             "alias": null,
-            "args": (v14/*: any*/),
+            "args": (v7/*: any*/),
             "filters": [
               "sort",
               "atAFair",
@@ -423,19 +402,18 @@ return {
             "kind": "LinkedHandle",
             "name": "showsConnection"
           },
-          (v15/*: any*/)
+          (v8/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "66e0688a276a707eb85236d8e3a07b3a",
     "id": null,
     "metadata": {},
     "name": "ArtistCVGroupQuery",
     "operationKind": "query",
-    "text": "query ArtistCVGroupQuery(\n  $count: Int\n  $cursor: String\n  $slug: String!\n  $sort: ShowSorts\n  $atAFair: Boolean\n  $soloShow: Boolean\n  $isReference: Boolean\n  $visibleToPublic: Boolean\n) {\n  artist(id: $slug) {\n    ...ArtistCVGroup_artist_4A66pF\n    id\n  }\n}\n\nfragment ArtistCVGroup_artist_4A66pF on Artist {\n  slug\n  showsConnection(first: $count, after: $cursor, sort: $sort, atAFair: $atAFair, soloShow: $soloShow, isReference: $isReference, visibleToPublic: $visibleToPublic) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    edges {\n      node {\n        id\n        partner {\n          __typename\n          ... on ExternalPartner {\n            name\n            id\n          }\n          ... on Partner {\n            name\n            href\n          }\n          ... on Node {\n            __isNode: __typename\n            id\n          }\n        }\n        name\n        startAt(format: \"YYYY\")\n        city\n        href\n        __typename\n      }\n      cursor\n    }\n  }\n}\n"
+    "text": "query ArtistCVGroupQuery(\n  $count: Int\n  $cursor: String\n  $slug: String!\n  $sort: ShowSorts\n  $atAFair: Boolean\n  $soloShow: Boolean\n  $isReference: Boolean\n  $visibleToPublic: Boolean\n) {\n  artist(id: $slug) {\n    ...ArtistCVGroup_artist_4A66pF\n    id\n  }\n}\n\nfragment ArtistCVGroup_artist_4A66pF on Artist {\n  slug\n  showsConnection(first: $count, after: $cursor, sort: $sort, atAFair: $atAFair, soloShow: $soloShow, isReference: $isReference, visibleToPublic: $visibleToPublic) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    edges {\n      node {\n        id\n        partner {\n          __typename\n          ... on ExternalPartner {\n            name\n            id\n          }\n          ... on Partner {\n            name\n            href\n          }\n          ... on Node {\n            id\n          }\n        }\n        name\n        startAt(format: \"YYYY\")\n        city\n        href\n        __typename\n      }\n      cursor\n    }\n  }\n}\n"
   }
 };
 })();

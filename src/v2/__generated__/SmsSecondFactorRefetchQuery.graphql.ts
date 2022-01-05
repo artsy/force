@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -38,7 +37,15 @@ fragment SmsSecondFactor_me on Me {
 }
 */
 
-const node: ConcreteRequest = {
+const node: ConcreteRequest = (function(){
+var v0 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "__typename",
+  "storageKey": null
+};
+return {
   "fragment": {
     "argumentDefinitions": [],
     "kind": "Fragment",
@@ -62,8 +69,7 @@ const node: ConcreteRequest = {
         "storageKey": null
       }
     ],
-    "type": "Query",
-    "abstractKey": null
+    "type": "Query"
   },
   "kind": "Request",
   "operation": {
@@ -102,16 +108,11 @@ const node: ConcreteRequest = {
             "name": "secondFactors",
             "plural": true,
             "selections": [
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "__typename",
-                "storageKey": null
-              },
+              (v0/*: any*/),
               {
                 "kind": "InlineFragment",
                 "selections": [
+                  (v0/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -127,8 +128,7 @@ const node: ConcreteRequest = {
                     "storageKey": null
                   }
                 ],
-                "type": "SmsSecondFactor",
-                "abstractKey": null
+                "type": "SmsSecondFactor"
               }
             ],
             "storageKey": "secondFactors(kinds:[\"sms\"])"
@@ -146,7 +146,6 @@ const node: ConcreteRequest = {
     ]
   },
   "params": {
-    "cacheID": "c69fc0ea5dfcec9b9ca6d8e73e5aefb0",
     "id": null,
     "metadata": {},
     "name": "SmsSecondFactorRefetchQuery",
@@ -154,5 +153,6 @@ const node: ConcreteRequest = {
     "text": "query SmsSecondFactorRefetchQuery {\n  me {\n    ...SmsSecondFactor_me\n    id\n  }\n}\n\nfragment SmsSecondFactor_me on Me {\n  hasSecondFactorEnabled\n  smsSecondFactors: secondFactors(kinds: [sms]) {\n    __typename\n    ... on SmsSecondFactor {\n      __typename\n      internalID\n      formattedPhoneNumber\n    }\n  }\n}\n"
   }
 };
+})();
 (node as any).hash = 'bb3f464bd834c3a55e0098e887384d50';
 export default node;

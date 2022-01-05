@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -132,40 +131,46 @@ v3 = {
   "storageKey": null
 },
 v4 = {
+  "type": "ID",
   "enumValues": null,
-  "nullable": true,
   "plural": false,
-  "type": "String"
+  "nullable": true
 },
 v5 = {
+  "type": "ID",
   "enumValues": null,
-  "nullable": false,
   "plural": false,
-  "type": "ID"
+  "nullable": false
 },
 v6 = {
+  "type": "String",
   "enumValues": null,
-  "nullable": true,
   "plural": false,
-  "type": "Image"
+  "nullable": true
 },
 v7 = {
+  "type": "Image",
   "enumValues": null,
-  "nullable": true,
   "plural": false,
-  "type": "CroppedImageUrl"
+  "nullable": true
 },
 v8 = {
+  "type": "CroppedImageUrl",
   "enumValues": null,
-  "nullable": false,
   "plural": false,
-  "type": "Int"
+  "nullable": true
 },
 v9 = {
+  "type": "String",
   "enumValues": null,
-  "nullable": false,
   "plural": false,
-  "type": "String"
+  "nullable": false
+},
+v10 = {
+  "type": "Int",
+  "enumValues": null,
+  "plural": false,
+  "nullable": false
 };
 return {
   "fragment": {
@@ -191,8 +196,7 @@ return {
         "storageKey": "fair(id:\"example\")"
       }
     ],
-    "type": "Query",
-    "abstractKey": null
+    "type": "Query"
   },
   "kind": "Request",
   "operation": {
@@ -430,66 +434,65 @@ return {
     ]
   },
   "params": {
-    "cacheID": "5148e486828b71eb2a205b70cde73e89",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "fair": {
+          "type": "Fair",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "Fair"
+          "nullable": true
         },
+        "fair.id": (v4/*: any*/),
+        "fair.internalID": (v5/*: any*/),
+        "fair.href": (v6/*: any*/),
+        "fair.slug": (v5/*: any*/),
         "fair.counts": {
+          "type": "FairCounts",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "FairCounts"
+          "nullable": true
+        },
+        "fair.profile": {
+          "type": "Profile",
+          "enumValues": null,
+          "plural": false,
+          "nullable": true
+        },
+        "fair.name": (v6/*: any*/),
+        "fair.metaDescription": (v6/*: any*/),
+        "fair.metaImage": (v7/*: any*/),
+        "fair.exhibitionPeriod": (v6/*: any*/),
+        "fair.image": (v7/*: any*/),
+        "fair.exhibitorsGroupedByName": {
+          "type": "FairExhibitorsGroup",
+          "enumValues": null,
+          "plural": true,
+          "nullable": true
         },
         "fair.counts.artworks": {
+          "type": "FormattedNumber",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "FormattedNumber"
+          "nullable": true
         },
-        "fair.exhibitionPeriod": (v4/*: any*/),
-        "fair.exhibitorsGroupedByName": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": true,
-          "type": "FairExhibitorsGroup"
-        },
-        "fair.exhibitorsGroupedByName.letter": (v4/*: any*/),
-        "fair.href": (v4/*: any*/),
-        "fair.id": (v5/*: any*/),
-        "fair.image": (v6/*: any*/),
-        "fair.image.url": (v4/*: any*/),
-        "fair.internalID": (v5/*: any*/),
-        "fair.metaDescription": (v4/*: any*/),
-        "fair.metaImage": (v6/*: any*/),
-        "fair.metaImage.src": (v4/*: any*/),
-        "fair.name": (v4/*: any*/),
-        "fair.profile": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "Profile"
-        },
-        "fair.profile.icon": (v6/*: any*/),
-        "fair.profile.icon.desktop": (v7/*: any*/),
-        "fair.profile.icon.desktop.size": (v8/*: any*/),
+        "fair.profile.id": (v4/*: any*/),
+        "fair.metaImage.src": (v6/*: any*/),
+        "fair.profile.icon": (v7/*: any*/),
+        "fair.image.url": (v6/*: any*/),
+        "fair.exhibitorsGroupedByName.letter": (v6/*: any*/),
+        "fair.profile.icon.desktop": (v8/*: any*/),
+        "fair.profile.icon.mobile": (v8/*: any*/),
+        "fair.profile.icon.sticky": (v8/*: any*/),
         "fair.profile.icon.desktop.src": (v9/*: any*/),
         "fair.profile.icon.desktop.srcSet": (v9/*: any*/),
-        "fair.profile.icon.mobile": (v7/*: any*/),
-        "fair.profile.icon.mobile.size": (v8/*: any*/),
+        "fair.profile.icon.desktop.size": (v10/*: any*/),
         "fair.profile.icon.mobile.src": (v9/*: any*/),
         "fair.profile.icon.mobile.srcSet": (v9/*: any*/),
-        "fair.profile.icon.sticky": (v7/*: any*/),
-        "fair.profile.icon.sticky.size": (v8/*: any*/),
+        "fair.profile.icon.mobile.size": (v10/*: any*/),
         "fair.profile.icon.sticky.src": (v9/*: any*/),
         "fair.profile.icon.sticky.srcSet": (v9/*: any*/),
-        "fair.profile.id": (v5/*: any*/),
-        "fair.slug": (v5/*: any*/)
+        "fair.profile.icon.sticky.size": (v10/*: any*/)
       }
     },
     "name": "FairApp_Test_Query",

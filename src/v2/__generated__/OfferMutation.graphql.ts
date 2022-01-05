@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 export type CommerceOrderModeEnum = "BUY" | "OFFER" | "%future added value";
@@ -84,7 +83,8 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "input"
+    "name": "input",
+    "type": "CommerceAddInitialOfferToOrderInput!"
   }
 ],
 v1 = [
@@ -172,8 +172,7 @@ v8 = {
       "storageKey": null
     }
   ],
-  "type": "CommerceOrderWithMutationFailure",
-  "abstractKey": null
+  "type": "CommerceOrderWithMutationFailure"
 },
 v9 = {
   "alias": null,
@@ -238,15 +237,13 @@ return {
                             "storageKey": null
                           }
                         ],
-                        "type": "CommerceOfferOrder",
-                        "abstractKey": null
+                        "type": "CommerceOfferOrder"
                       }
                     ],
                     "storageKey": null
                   }
                 ],
-                "type": "CommerceOrderWithMutationSuccess",
-                "abstractKey": null
+                "type": "CommerceOrderWithMutationSuccess"
               },
               (v8/*: any*/)
             ],
@@ -256,8 +253,7 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Mutation",
-    "abstractKey": null
+    "type": "Mutation"
   },
   "kind": "Request",
   "operation": {
@@ -285,6 +281,7 @@ return {
               {
                 "kind": "InlineFragment",
                 "selections": [
+                  (v2/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -317,15 +314,13 @@ return {
                             "storageKey": null
                           }
                         ],
-                        "type": "CommerceOfferOrder",
-                        "abstractKey": null
+                        "type": "CommerceOfferOrder"
                       }
                     ],
                     "storageKey": null
                   }
                 ],
-                "type": "CommerceOrderWithMutationSuccess",
-                "abstractKey": null
+                "type": "CommerceOrderWithMutationSuccess"
               },
               (v8/*: any*/)
             ],
@@ -337,7 +332,6 @@ return {
     ]
   },
   "params": {
-    "cacheID": "a603c2392788751cc7bdca82490074e1",
     "id": null,
     "metadata": {},
     "name": "OfferMutation",

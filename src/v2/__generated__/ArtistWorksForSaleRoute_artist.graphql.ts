@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -47,12 +46,14 @@ return {
     {
       "defaultValue": null,
       "kind": "LocalArgument",
-      "name": "aggregations"
+      "name": "aggregations",
+      "type": "[ArtworkAggregation]"
     },
     {
       "defaultValue": null,
       "kind": "LocalArgument",
-      "name": "input"
+      "name": "input",
+      "type": "FilterArtworksInput"
     }
   ],
   "kind": "Fragment",
@@ -182,8 +183,7 @@ return {
       "name": "ArtistArtworkFilter_artist"
     }
   ],
-  "type": "Artist",
-  "abstractKey": null
+  "type": "Artist"
 };
 })();
 (node as any).hash = '1caba76af2e780b916149edcbf4e9b64';

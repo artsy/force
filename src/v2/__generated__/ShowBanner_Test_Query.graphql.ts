@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -82,22 +81,22 @@ v2 = {
   "storageKey": null
 },
 v3 = {
+  "type": "ID",
   "enumValues": null,
-  "nullable": false,
   "plural": false,
-  "type": "ID"
+  "nullable": true
 },
 v4 = {
+  "type": "String",
   "enumValues": null,
-  "nullable": false,
   "plural": false,
-  "type": "String"
+  "nullable": true
 },
 v5 = {
+  "type": "String",
   "enumValues": null,
-  "nullable": true,
   "plural": false,
-  "type": "String"
+  "nullable": false
 };
 return {
   "fragment": {
@@ -156,8 +155,7 @@ return {
         "storageKey": "partner(id:\"white-cube\")"
       }
     ],
-    "type": "Query",
-    "abstractKey": null
+    "type": "Query"
   },
   "kind": "Request",
   "operation": {
@@ -338,70 +336,74 @@ return {
     ]
   },
   "params": {
-    "cacheID": "b341d9493a617df6dabcc29ca7521c68",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "partner": {
+          "type": "Partner",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "Partner"
+          "nullable": true
+        },
+        "partner.showsConnection": {
+          "type": "ShowConnection",
+          "enumValues": null,
+          "plural": false,
+          "nullable": true
         },
         "partner.id": (v3/*: any*/),
-        "partner.showsConnection": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "ShowConnection"
-        },
         "partner.showsConnection.edges": {
+          "type": "ShowEdge",
           "enumValues": null,
-          "nullable": true,
           "plural": true,
-          "type": "ShowEdge"
+          "nullable": true
         },
         "partner.showsConnection.edges.node": {
+          "type": "Show",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "Show"
+          "nullable": true
+        },
+        "partner.showsConnection.edges.node.id": (v3/*: any*/),
+        "partner.showsConnection.edges.node.slug": {
+          "type": "ID",
+          "enumValues": null,
+          "plural": false,
+          "nullable": false
+        },
+        "partner.showsConnection.edges.node.name": (v4/*: any*/),
+        "partner.showsConnection.edges.node.href": (v4/*: any*/),
+        "partner.showsConnection.edges.node.isFairBooth": {
+          "type": "Boolean",
+          "enumValues": null,
+          "plural": false,
+          "nullable": true
+        },
+        "partner.showsConnection.edges.node.exhibitionPeriod": (v4/*: any*/),
+        "partner.showsConnection.edges.node.status": (v4/*: any*/),
+        "partner.showsConnection.edges.node.description": (v4/*: any*/),
+        "partner.showsConnection.edges.node.location": {
+          "type": "Location",
+          "enumValues": null,
+          "plural": false,
+          "nullable": true
         },
         "partner.showsConnection.edges.node.coverImage": {
+          "type": "Image",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "Image"
+          "nullable": true
         },
-        "partner.showsConnection.edges.node.coverImage.medium": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "CroppedImageUrl"
-        },
-        "partner.showsConnection.edges.node.coverImage.medium.src": (v4/*: any*/),
-        "partner.showsConnection.edges.node.coverImage.medium.srcSet": (v4/*: any*/),
-        "partner.showsConnection.edges.node.description": (v5/*: any*/),
-        "partner.showsConnection.edges.node.exhibitionPeriod": (v5/*: any*/),
-        "partner.showsConnection.edges.node.href": (v5/*: any*/),
-        "partner.showsConnection.edges.node.id": (v3/*: any*/),
-        "partner.showsConnection.edges.node.isFairBooth": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "Boolean"
-        },
-        "partner.showsConnection.edges.node.location": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "Location"
-        },
-        "partner.showsConnection.edges.node.location.city": (v5/*: any*/),
+        "partner.showsConnection.edges.node.location.city": (v4/*: any*/),
         "partner.showsConnection.edges.node.location.id": (v3/*: any*/),
-        "partner.showsConnection.edges.node.name": (v5/*: any*/),
-        "partner.showsConnection.edges.node.slug": (v3/*: any*/),
-        "partner.showsConnection.edges.node.status": (v5/*: any*/)
+        "partner.showsConnection.edges.node.coverImage.medium": {
+          "type": "CroppedImageUrl",
+          "enumValues": null,
+          "plural": false,
+          "nullable": true
+        },
+        "partner.showsConnection.edges.node.coverImage.medium.src": (v5/*: any*/),
+        "partner.showsConnection.edges.node.coverImage.medium.srcSet": (v5/*: any*/)
       }
     },
     "name": "ShowBanner_Test_Query",

@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -42,10 +41,10 @@ var v0 = [
   }
 ],
 v1 = {
+  "type": "String",
   "enumValues": null,
-  "nullable": true,
   "plural": false,
-  "type": "String"
+  "nullable": true
 };
 return {
   "fragment": {
@@ -71,8 +70,7 @@ return {
         "storageKey": "artwork(id:\"xxx\")"
       }
     ],
-    "type": "Query",
-    "abstractKey": null
+    "type": "Query"
   },
   "kind": "Request",
   "operation": {
@@ -126,30 +124,29 @@ return {
     ]
   },
   "params": {
-    "cacheID": "0fd66eaa028a2588bcc93afabfdf956e",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "artwork": {
+          "type": "Artwork",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "Artwork"
+          "nullable": true
         },
         "artwork.id": {
+          "type": "ID",
           "enumValues": null,
-          "nullable": false,
           "plural": false,
-          "type": "ID"
+          "nullable": true
         },
         "artwork.mediumType": {
+          "type": "ArtworkMedium",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "ArtworkMedium"
+          "nullable": true
         },
-        "artwork.mediumType.longDescription": (v1/*: any*/),
-        "artwork.mediumType.name": (v1/*: any*/)
+        "artwork.mediumType.name": (v1/*: any*/),
+        "artwork.mediumType.longDescription": (v1/*: any*/)
       }
     },
     "name": "ArtworkDetailsMediumModal_Test_Query",

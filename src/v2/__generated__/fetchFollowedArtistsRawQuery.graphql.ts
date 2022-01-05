@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 export type fetchFollowedArtistsRawQueryVariables = {};
@@ -154,8 +153,7 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query",
-    "abstractKey": null
+    "type": "Query"
   },
   "kind": "Request",
   "operation": {
@@ -237,7 +235,6 @@ return {
     ]
   },
   "params": {
-    "cacheID": "16df52be1de60e2c406ac50db5062c16",
     "id": null,
     "metadata": {},
     "name": "fetchFollowedArtistsRawQuery",

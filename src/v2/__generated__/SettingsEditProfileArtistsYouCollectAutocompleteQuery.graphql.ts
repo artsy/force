@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 export type SettingsEditProfileArtistsYouCollectAutocompleteQueryVariables = {
@@ -36,7 +35,6 @@ query SettingsEditProfileArtistsYouCollectAutocompleteQuery(
           value: internalID
         }
         ... on Node {
-          __isNode: __typename
           id
         }
       }
@@ -50,7 +48,8 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "term"
+    "name": "term",
+    "type": "String!"
   }
 ],
 v1 = [
@@ -88,8 +87,7 @@ v3 = {
       "storageKey": null
     }
   ],
-  "type": "Artist",
-  "abstractKey": null
+  "type": "Artist"
 };
 return {
   "fragment": {
@@ -134,8 +132,7 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query",
-    "abstractKey": null
+    "type": "Query"
   },
   "kind": "Request",
   "operation": {
@@ -175,21 +172,14 @@ return {
                     "storageKey": null
                   },
                   (v2/*: any*/),
-                  (v3/*: any*/),
                   {
-                    "kind": "InlineFragment",
-                    "selections": [
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "id",
-                        "storageKey": null
-                      }
-                    ],
-                    "type": "Node",
-                    "abstractKey": "__isNode"
-                  }
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "id",
+                    "storageKey": null
+                  },
+                  (v3/*: any*/)
                 ],
                 "storageKey": null
               }
@@ -202,12 +192,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "3a7a2fa496666cf641764cbbc90eb006",
     "id": null,
     "metadata": {},
     "name": "SettingsEditProfileArtistsYouCollectAutocompleteQuery",
     "operationKind": "query",
-    "text": "query SettingsEditProfileArtistsYouCollectAutocompleteQuery(\n  $term: String!\n) {\n  searchConnection(query: $term, entities: ARTIST, first: 5) {\n    edges {\n      node {\n        __typename\n        text: displayLabel\n        ... on Artist {\n          value: internalID\n        }\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n      }\n    }\n  }\n}\n"
+    "text": "query SettingsEditProfileArtistsYouCollectAutocompleteQuery(\n  $term: String!\n) {\n  searchConnection(query: $term, entities: ARTIST, first: 5) {\n    edges {\n      node {\n        __typename\n        text: displayLabel\n        ... on Artist {\n          value: internalID\n        }\n        ... on Node {\n          id\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();

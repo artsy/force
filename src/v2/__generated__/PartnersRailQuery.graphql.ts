@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -85,85 +84,90 @@ fragment PartnersRail_partnerCategory_43V8rY on PartnerCategory {
 */
 
 const node: ConcreteRequest = (function(){
-var v0 = {
-  "defaultValue": null,
-  "kind": "LocalArgument",
-  "name": "category"
-},
-v1 = {
-  "defaultValue": null,
-  "kind": "LocalArgument",
-  "name": "id"
-},
-v2 = {
-  "defaultValue": null,
-  "kind": "LocalArgument",
-  "name": "type"
-},
-v3 = [
+var v0 = [
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "id",
+    "type": "String!"
+  },
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "category",
+    "type": "[String]"
+  },
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "type",
+    "type": "[PartnerClassification!]!"
+  }
+],
+v1 = [
   {
     "kind": "Variable",
     "name": "id",
     "variableName": "id"
   }
 ],
-v4 = {
+v2 = {
   "kind": "Variable",
   "name": "type",
   "variableName": "type"
 },
-v5 = {
+v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "name",
   "storageKey": null
 },
-v6 = {
+v4 = {
   "kind": "Literal",
   "name": "defaultProfilePublic",
   "value": true
 },
-v7 = {
+v5 = {
   "kind": "Literal",
   "name": "eligibleForListing",
   "value": true
 },
-v8 = {
+v6 = {
   "kind": "Variable",
   "name": "partnerCategories",
   "variableName": "category"
 },
-v9 = {
+v7 = {
   "kind": "Literal",
   "name": "sort",
   "value": "RANDOM_SCORE_DESC"
 },
-v10 = {
+v8 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "internalID",
   "storageKey": null
 },
-v11 = {
+v9 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "slug",
   "storageKey": null
 },
-v12 = {
+v10 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v13 = [
-  (v10/*: any*/),
-  (v11/*: any*/),
-  (v5/*: any*/),
+v11 = [
+  (v8/*: any*/),
+  (v9/*: any*/),
+  (v3/*: any*/),
   {
     "alias": null,
     "args": null,
@@ -215,7 +219,7 @@ v13 = [
                 "name": "city",
                 "storageKey": null
               },
-              (v12/*: any*/)
+              (v10/*: any*/)
             ],
             "storageKey": null
           }
@@ -233,10 +237,10 @@ v13 = [
     "name": "profile",
     "plural": false,
     "selections": [
-      (v12/*: any*/),
-      (v11/*: any*/),
-      (v5/*: any*/),
       (v10/*: any*/),
+      (v9/*: any*/),
+      (v3/*: any*/),
+      (v8/*: any*/),
       {
         "alias": "is_followed",
         "args": null,
@@ -311,22 +315,18 @@ v13 = [
     ],
     "storageKey": null
   },
-  (v12/*: any*/)
+  (v10/*: any*/)
 ];
 return {
   "fragment": {
-    "argumentDefinitions": [
-      (v0/*: any*/),
-      (v1/*: any*/),
-      (v2/*: any*/)
-    ],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
     "name": "PartnersRailQuery",
     "selections": [
       {
         "alias": null,
-        "args": (v3/*: any*/),
+        "args": (v1/*: any*/),
         "concreteType": "PartnerCategory",
         "kind": "LinkedField",
         "name": "partnerCategory",
@@ -339,7 +339,7 @@ return {
                 "name": "category",
                 "variableName": "category"
               },
-              (v4/*: any*/)
+              (v2/*: any*/)
             ],
             "kind": "FragmentSpread",
             "name": "PartnersRail_partnerCategory"
@@ -348,78 +348,72 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query",
-    "abstractKey": null
+    "type": "Query"
   },
   "kind": "Request",
   "operation": {
-    "argumentDefinitions": [
-      (v1/*: any*/),
-      (v0/*: any*/),
-      (v2/*: any*/)
-    ],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
     "name": "PartnersRailQuery",
     "selections": [
       {
         "alias": null,
-        "args": (v3/*: any*/),
+        "args": (v1/*: any*/),
         "concreteType": "PartnerCategory",
         "kind": "LinkedField",
         "name": "partnerCategory",
         "plural": false,
         "selections": [
-          (v5/*: any*/),
+          (v3/*: any*/),
           {
             "alias": "primary",
             "args": [
-              (v6/*: any*/),
-              (v7/*: any*/),
+              (v4/*: any*/),
+              (v5/*: any*/),
               {
                 "kind": "Literal",
                 "name": "eligibleForPrimaryBucket",
                 "value": true
               },
-              (v8/*: any*/),
-              (v9/*: any*/),
-              (v4/*: any*/)
+              (v6/*: any*/),
+              (v7/*: any*/),
+              (v2/*: any*/)
             ],
             "concreteType": "Partner",
             "kind": "LinkedField",
             "name": "partners",
             "plural": true,
-            "selections": (v13/*: any*/),
+            "selections": (v11/*: any*/),
             "storageKey": null
           },
           {
             "alias": "secondary",
             "args": [
-              (v6/*: any*/),
-              (v7/*: any*/),
+              (v4/*: any*/),
+              (v5/*: any*/),
               {
                 "kind": "Literal",
                 "name": "eligibleForSecondaryBucket",
                 "value": true
               },
-              (v8/*: any*/),
-              (v9/*: any*/),
-              (v4/*: any*/)
+              (v6/*: any*/),
+              (v7/*: any*/),
+              (v2/*: any*/)
             ],
             "concreteType": "Partner",
             "kind": "LinkedField",
             "name": "partners",
             "plural": true,
-            "selections": (v13/*: any*/),
+            "selections": (v11/*: any*/),
             "storageKey": null
           },
-          (v12/*: any*/)
+          (v10/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "09d00f84f9231e280aa8db97a10cf40a",
     "id": null,
     "metadata": {},
     "name": "PartnersRailQuery",

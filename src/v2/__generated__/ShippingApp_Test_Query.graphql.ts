@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -108,40 +107,40 @@ v4 = {
   "storageKey": null
 },
 v5 = {
+  "type": "ID",
   "enumValues": null,
-  "nullable": true,
   "plural": false,
-  "type": "UserAddressConnection"
+  "nullable": false
 },
 v6 = {
+  "type": "String",
   "enumValues": null,
-  "nullable": false,
   "plural": false,
-  "type": "String"
+  "nullable": true
 },
 v7 = {
+  "type": "UserAddressConnection",
   "enumValues": null,
-  "nullable": true,
   "plural": false,
-  "type": "String"
+  "nullable": true
 },
 v8 = {
+  "type": "Int",
   "enumValues": null,
-  "nullable": false,
   "plural": false,
-  "type": "ID"
+  "nullable": false
 },
 v9 = {
+  "type": "String",
   "enumValues": null,
-  "nullable": false,
   "plural": false,
-  "type": "Boolean"
+  "nullable": false
 },
 v10 = {
+  "type": "Boolean",
   "enumValues": null,
-  "nullable": false,
   "plural": false,
-  "type": "Int"
+  "nullable": false
 };
 return {
   "fragment": {
@@ -167,8 +166,7 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query",
-    "abstractKey": null
+    "type": "Query"
   },
   "kind": "Request",
   "operation": {
@@ -367,59 +365,63 @@ return {
     ]
   },
   "params": {
-    "cacheID": "3896b2b2e0d5b3ba7c863d8dbe61c560",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "me": {
+          "type": "Me",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "Me"
+          "nullable": true
         },
-        "me.addressConnection": (v5/*: any*/),
+        "me.id": (v5/*: any*/),
+        "me.name": (v6/*: any*/),
+        "me.internalID": (v5/*: any*/),
+        "me.addresses": (v7/*: any*/),
+        "me.addressConnection": (v7/*: any*/),
+        "me.addresses.totalCount": (v8/*: any*/),
+        "me.addressConnection.totalCount": (v8/*: any*/),
         "me.addressConnection.edges": {
+          "type": "UserAddressEdge",
           "enumValues": null,
-          "nullable": true,
           "plural": true,
-          "type": "UserAddressEdge"
+          "nullable": true
         },
-        "me.addressConnection.edges.cursor": (v6/*: any*/),
-        "me.addressConnection.edges.node": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "UserAddress"
-        },
-        "me.addressConnection.edges.node.__typename": (v6/*: any*/),
-        "me.addressConnection.edges.node.addressLine1": (v6/*: any*/),
-        "me.addressConnection.edges.node.addressLine2": (v7/*: any*/),
-        "me.addressConnection.edges.node.addressLine3": (v7/*: any*/),
-        "me.addressConnection.edges.node.city": (v6/*: any*/),
-        "me.addressConnection.edges.node.country": (v6/*: any*/),
-        "me.addressConnection.edges.node.id": (v8/*: any*/),
-        "me.addressConnection.edges.node.internalID": (v8/*: any*/),
-        "me.addressConnection.edges.node.isDefault": (v9/*: any*/),
-        "me.addressConnection.edges.node.name": (v7/*: any*/),
-        "me.addressConnection.edges.node.phoneNumber": (v7/*: any*/),
-        "me.addressConnection.edges.node.postalCode": (v7/*: any*/),
-        "me.addressConnection.edges.node.region": (v7/*: any*/),
         "me.addressConnection.pageInfo": {
+          "type": "PageInfo",
           "enumValues": null,
-          "nullable": false,
           "plural": false,
-          "type": "PageInfo"
+          "nullable": false
         },
-        "me.addressConnection.pageInfo.endCursor": (v7/*: any*/),
-        "me.addressConnection.pageInfo.hasNextPage": (v9/*: any*/),
-        "me.addressConnection.pageInfo.hasPreviousPage": (v9/*: any*/),
-        "me.addressConnection.pageInfo.startCursor": (v7/*: any*/),
-        "me.addressConnection.totalCount": (v10/*: any*/),
-        "me.addresses": (v5/*: any*/),
-        "me.addresses.totalCount": (v10/*: any*/),
-        "me.id": (v8/*: any*/),
-        "me.internalID": (v8/*: any*/),
-        "me.name": (v7/*: any*/)
+        "me.addressConnection.edges.node": {
+          "type": "UserAddress",
+          "enumValues": null,
+          "plural": false,
+          "nullable": true
+        },
+        "me.addressConnection.edges.node.id": {
+          "type": "ID",
+          "enumValues": null,
+          "plural": false,
+          "nullable": true
+        },
+        "me.addressConnection.edges.node.internalID": (v5/*: any*/),
+        "me.addressConnection.edges.node.addressLine1": (v9/*: any*/),
+        "me.addressConnection.edges.node.addressLine2": (v6/*: any*/),
+        "me.addressConnection.edges.node.addressLine3": (v6/*: any*/),
+        "me.addressConnection.edges.node.city": (v9/*: any*/),
+        "me.addressConnection.edges.node.country": (v9/*: any*/),
+        "me.addressConnection.edges.node.isDefault": (v10/*: any*/),
+        "me.addressConnection.edges.node.name": (v6/*: any*/),
+        "me.addressConnection.edges.node.phoneNumber": (v6/*: any*/),
+        "me.addressConnection.edges.node.postalCode": (v6/*: any*/),
+        "me.addressConnection.edges.node.region": (v6/*: any*/),
+        "me.addressConnection.edges.cursor": (v9/*: any*/),
+        "me.addressConnection.pageInfo.endCursor": (v6/*: any*/),
+        "me.addressConnection.pageInfo.hasNextPage": (v10/*: any*/),
+        "me.addressConnection.pageInfo.hasPreviousPage": (v10/*: any*/),
+        "me.addressConnection.pageInfo.startCursor": (v6/*: any*/),
+        "me.addressConnection.edges.node.__typename": (v9/*: any*/)
       }
     },
     "name": "ShippingApp_Test_Query",

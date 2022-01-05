@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 export type useRecordArtworkViewMutationVariables = {
@@ -33,7 +32,8 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "artworkID"
+    "name": "artworkID",
+    "type": "String!"
   }
 ],
 v1 = [
@@ -75,8 +75,7 @@ return {
     "metadata": null,
     "name": "useRecordArtworkViewMutation",
     "selections": (v1/*: any*/),
-    "type": "Mutation",
-    "abstractKey": null
+    "type": "Mutation"
   },
   "kind": "Request",
   "operation": {
@@ -86,7 +85,6 @@ return {
     "selections": (v1/*: any*/)
   },
   "params": {
-    "cacheID": "1878a771aa159ee5adf200a2f061815d",
     "id": null,
     "metadata": {},
     "name": "useRecordArtworkViewMutation",

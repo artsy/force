@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -76,22 +75,16 @@ v2 = {
   "storageKey": null
 },
 v3 = {
+  "type": "String",
   "enumValues": null,
-  "nullable": false,
   "plural": false,
-  "type": "ID"
+  "nullable": true
 },
 v4 = {
+  "type": "Int",
   "enumValues": null,
-  "nullable": true,
   "plural": false,
-  "type": "Int"
-},
-v5 = {
-  "enumValues": null,
-  "nullable": true,
-  "plural": false,
-  "type": "String"
+  "nullable": true
 };
 return {
   "fragment": {
@@ -151,8 +144,7 @@ return {
         "storageKey": "partner(id:\"white-cube\")"
       }
     ],
-    "type": "Query",
-    "abstractKey": null
+    "type": "Query"
   },
   "kind": "Request",
   "operation": {
@@ -279,59 +271,68 @@ return {
     ]
   },
   "params": {
-    "cacheID": "f9d3fe4997800804c4d5f6f28cbe5961",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "partner": {
+          "type": "Partner",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "Partner"
+          "nullable": true
         },
-        "partner.id": (v3/*: any*/),
         "partner.viewingRoomsConnection": {
+          "type": "ViewingRoomsConnection",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "ViewingRoomsConnection"
+          "nullable": true
+        },
+        "partner.id": {
+          "type": "ID",
+          "enumValues": null,
+          "plural": false,
+          "nullable": true
         },
         "partner.viewingRoomsConnection.edges": {
+          "type": "ViewingRoomsEdge",
           "enumValues": null,
-          "nullable": true,
           "plural": true,
-          "type": "ViewingRoomsEdge"
+          "nullable": true
         },
         "partner.viewingRoomsConnection.edges.node": {
+          "type": "ViewingRoom",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "ViewingRoom"
+          "nullable": true
         },
-        "partner.viewingRoomsConnection.edges.node.coverImage": {
+        "partner.viewingRoomsConnection.edges.node.internalID": {
+          "type": "ID",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "ARImage"
+          "nullable": false
         },
-        "partner.viewingRoomsConnection.edges.node.coverImage.height": (v4/*: any*/),
-        "partner.viewingRoomsConnection.edges.node.coverImage.imageURLs": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "ImageURLs"
-        },
-        "partner.viewingRoomsConnection.edges.node.coverImage.imageURLs.normalized": (v5/*: any*/),
-        "partner.viewingRoomsConnection.edges.node.coverImage.width": (v4/*: any*/),
-        "partner.viewingRoomsConnection.edges.node.exhibitionPeriod": (v5/*: any*/),
-        "partner.viewingRoomsConnection.edges.node.href": (v5/*: any*/),
-        "partner.viewingRoomsConnection.edges.node.internalID": (v3/*: any*/),
+        "partner.viewingRoomsConnection.edges.node.href": (v3/*: any*/),
         "partner.viewingRoomsConnection.edges.node.title": {
+          "type": "String",
           "enumValues": null,
-          "nullable": false,
           "plural": false,
-          "type": "String"
-        }
+          "nullable": false
+        },
+        "partner.viewingRoomsConnection.edges.node.exhibitionPeriod": (v3/*: any*/),
+        "partner.viewingRoomsConnection.edges.node.coverImage": {
+          "type": "ARImage",
+          "enumValues": null,
+          "plural": false,
+          "nullable": true
+        },
+        "partner.viewingRoomsConnection.edges.node.coverImage.imageURLs": {
+          "type": "ImageURLs",
+          "enumValues": null,
+          "plural": false,
+          "nullable": true
+        },
+        "partner.viewingRoomsConnection.edges.node.coverImage.width": (v4/*: any*/),
+        "partner.viewingRoomsConnection.edges.node.coverImage.height": (v4/*: any*/),
+        "partner.viewingRoomsConnection.edges.node.coverImage.imageURLs.normalized": (v3/*: any*/)
       }
     },
     "name": "ViewingRoomCard_Test_Query",

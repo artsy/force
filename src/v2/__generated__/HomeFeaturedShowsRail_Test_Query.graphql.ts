@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -44,7 +43,6 @@ fragment HomeFeaturedShow_show on Show {
       id
     }
     ... on Node {
-      __isNode: __typename
       id
     }
   }
@@ -66,7 +64,6 @@ fragment HomeFeaturedShowsRail_orderedSet on OrderedSet {
       ...HomeFeaturedShow_show
     }
     ... on Node {
-      __isNode: __typename
       id
     }
     ... on FeaturedLink {
@@ -98,55 +95,55 @@ v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+},
+v3 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
   "name": "name",
   "storageKey": null
 },
-v3 = [
+v4 = [
   {
     "kind": "Literal",
     "name": "format",
     "value": "MMM D"
   }
 ],
-v4 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "id",
-  "storageKey": null
-},
 v5 = [
-  (v4/*: any*/)
+  (v3/*: any*/)
 ],
 v6 = {
-  "kind": "InlineFragment",
-  "selections": (v5/*: any*/),
-  "type": "Node",
-  "abstractKey": "__isNode"
+  "type": "ID",
+  "enumValues": null,
+  "plural": false,
+  "nullable": true
 },
 v7 = {
+  "type": "String",
   "enumValues": null,
-  "nullable": false,
   "plural": false,
-  "type": "ID"
+  "nullable": false
 },
 v8 = {
+  "type": "ID",
   "enumValues": null,
-  "nullable": false,
   "plural": false,
-  "type": "String"
+  "nullable": false
 },
 v9 = {
+  "type": "String",
   "enumValues": null,
-  "nullable": false,
   "plural": false,
-  "type": "Int"
+  "nullable": true
 },
 v10 = {
+  "type": "Int",
   "enumValues": null,
-  "nullable": true,
   "plural": false,
-  "type": "String"
+  "nullable": false
 };
 return {
   "fragment": {
@@ -172,8 +169,7 @@ return {
         "storageKey": "orderedSet(id:\"example\")"
       }
     ],
-    "type": "Query",
-    "abstractKey": null
+    "type": "Query"
   },
   "kind": "Request",
   "operation": {
@@ -198,6 +194,7 @@ return {
             "plural": true,
             "selections": [
               (v1/*: any*/),
+              (v2/*: any*/),
               {
                 "kind": "InlineFragment",
                 "selections": [
@@ -215,7 +212,7 @@ return {
                     "name": "slug",
                     "storageKey": null
                   },
-                  (v2/*: any*/),
+                  (v3/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -239,14 +236,14 @@ return {
                   },
                   {
                     "alias": "formattedStartAt",
-                    "args": (v3/*: any*/),
+                    "args": (v4/*: any*/),
                     "kind": "ScalarField",
                     "name": "startAt",
                     "storageKey": "startAt(format:\"MMM D\")"
                   },
                   {
                     "alias": "formattedEndAt",
-                    "args": (v3/*: any*/),
+                    "args": (v4/*: any*/),
                     "kind": "ScalarField",
                     "name": "endAt",
                     "storageKey": "endAt(format:\"MMM D\")"
@@ -260,24 +257,17 @@ return {
                     "plural": false,
                     "selections": [
                       (v1/*: any*/),
+                      (v2/*: any*/),
                       {
                         "kind": "InlineFragment",
-                        "selections": [
-                          (v2/*: any*/)
-                        ],
-                        "type": "Partner",
-                        "abstractKey": null
+                        "selections": (v5/*: any*/),
+                        "type": "Partner"
                       },
                       {
                         "kind": "InlineFragment",
-                        "selections": [
-                          (v2/*: any*/),
-                          (v4/*: any*/)
-                        ],
-                        "type": "ExternalPartner",
-                        "abstractKey": null
-                      },
-                      (v6/*: any*/)
+                        "selections": (v5/*: any*/),
+                        "type": "ExternalPartner"
+                      }
                     ],
                     "storageKey": null
                   },
@@ -343,91 +333,73 @@ return {
                     "storageKey": null
                   }
                 ],
-                "type": "Show",
-                "abstractKey": null
-              },
-              (v6/*: any*/),
-              {
-                "kind": "InlineFragment",
-                "selections": (v5/*: any*/),
-                "type": "FeaturedLink",
-                "abstractKey": null
-              },
-              {
-                "kind": "InlineFragment",
-                "selections": (v5/*: any*/),
-                "type": "Profile",
-                "abstractKey": null
+                "type": "Show"
               }
             ],
             "storageKey": null
           },
-          (v4/*: any*/)
+          (v2/*: any*/)
         ],
         "storageKey": "orderedSet(id:\"example\")"
       }
     ]
   },
   "params": {
-    "cacheID": "d13f7aa619adf1ee0bb0e46086509bdf",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "orderedSet": {
+          "type": "OrderedSet",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "OrderedSet"
+          "nullable": true
         },
-        "orderedSet.id": (v7/*: any*/),
+        "orderedSet.id": (v6/*: any*/),
         "orderedSet.items": {
+          "type": "OrderedSetItem",
           "enumValues": null,
-          "nullable": true,
           "plural": true,
-          "type": "OrderedSetItem"
+          "nullable": true
         },
-        "orderedSet.items.__isNode": (v8/*: any*/),
-        "orderedSet.items.__typename": (v8/*: any*/),
-        "orderedSet.items.coverImage": {
+        "orderedSet.items.__typename": (v7/*: any*/),
+        "orderedSet.items.internalID": (v8/*: any*/),
+        "orderedSet.items.id": (v6/*: any*/),
+        "orderedSet.items.slug": (v8/*: any*/),
+        "orderedSet.items.name": (v9/*: any*/),
+        "orderedSet.items.href": (v9/*: any*/),
+        "orderedSet.items.startAt": (v9/*: any*/),
+        "orderedSet.items.endAt": (v9/*: any*/),
+        "orderedSet.items.formattedStartAt": (v9/*: any*/),
+        "orderedSet.items.formattedEndAt": (v9/*: any*/),
+        "orderedSet.items.partner": {
+          "type": "PartnerTypes",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "Image"
+          "nullable": true
+        },
+        "orderedSet.items.coverImage": {
+          "type": "Image",
+          "enumValues": null,
+          "plural": false,
+          "nullable": true
         },
         "orderedSet.items.coverImage.cropped": {
+          "type": "CroppedImageUrl",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "CroppedImageUrl"
+          "nullable": true
         },
-        "orderedSet.items.coverImage.cropped.height": (v9/*: any*/),
-        "orderedSet.items.coverImage.cropped.src": (v8/*: any*/),
-        "orderedSet.items.coverImage.cropped.srcSet": (v8/*: any*/),
-        "orderedSet.items.coverImage.cropped.width": (v9/*: any*/),
-        "orderedSet.items.endAt": (v10/*: any*/),
-        "orderedSet.items.formattedEndAt": (v10/*: any*/),
-        "orderedSet.items.formattedStartAt": (v10/*: any*/),
-        "orderedSet.items.href": (v10/*: any*/),
-        "orderedSet.items.id": (v7/*: any*/),
-        "orderedSet.items.internalID": (v7/*: any*/),
-        "orderedSet.items.name": (v10/*: any*/),
-        "orderedSet.items.partner": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "PartnerTypes"
-        },
-        "orderedSet.items.partner.__isNode": (v8/*: any*/),
-        "orderedSet.items.partner.__typename": (v8/*: any*/),
-        "orderedSet.items.partner.id": (v7/*: any*/),
-        "orderedSet.items.partner.name": (v10/*: any*/),
-        "orderedSet.items.slug": (v7/*: any*/),
-        "orderedSet.items.startAt": (v10/*: any*/)
+        "orderedSet.items.partner.name": (v9/*: any*/),
+        "orderedSet.items.partner.id": (v6/*: any*/),
+        "orderedSet.items.coverImage.cropped.src": (v7/*: any*/),
+        "orderedSet.items.coverImage.cropped.srcSet": (v7/*: any*/),
+        "orderedSet.items.coverImage.cropped.width": (v10/*: any*/),
+        "orderedSet.items.coverImage.cropped.height": (v10/*: any*/)
       }
     },
     "name": "HomeFeaturedShowsRail_Test_Query",
     "operationKind": "query",
-    "text": "query HomeFeaturedShowsRail_Test_Query {\n  orderedSet(id: \"example\") {\n    ...HomeFeaturedShowsRail_orderedSet\n    id\n  }\n}\n\nfragment HomeFeaturedShow_show on Show {\n  internalID\n  slug\n  name\n  href\n  startAt\n  endAt\n  formattedStartAt: startAt(format: \"MMM D\")\n  formattedEndAt: endAt(format: \"MMM D\")\n  partner {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on ExternalPartner {\n      name\n      id\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n  coverImage {\n    cropped(width: 325, height: 230) {\n      src\n      srcSet\n      width\n      height\n    }\n  }\n}\n\nfragment HomeFeaturedShowsRail_orderedSet on OrderedSet {\n  items {\n    __typename\n    ... on Show {\n      internalID\n      ...HomeFeaturedShow_show\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on FeaturedLink {\n      id\n    }\n    ... on Profile {\n      id\n    }\n  }\n}\n"
+    "text": "query HomeFeaturedShowsRail_Test_Query {\n  orderedSet(id: \"example\") {\n    ...HomeFeaturedShowsRail_orderedSet\n    id\n  }\n}\n\nfragment HomeFeaturedShow_show on Show {\n  internalID\n  slug\n  name\n  href\n  startAt\n  endAt\n  formattedStartAt: startAt(format: \"MMM D\")\n  formattedEndAt: endAt(format: \"MMM D\")\n  partner {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on ExternalPartner {\n      name\n      id\n    }\n    ... on Node {\n      id\n    }\n  }\n  coverImage {\n    cropped(width: 325, height: 230) {\n      src\n      srcSet\n      width\n      height\n    }\n  }\n}\n\nfragment HomeFeaturedShowsRail_orderedSet on OrderedSet {\n  items {\n    __typename\n    ... on Show {\n      internalID\n      ...HomeFeaturedShow_show\n    }\n    ... on Node {\n      id\n    }\n    ... on FeaturedLink {\n      id\n    }\n    ... on Profile {\n      id\n    }\n  }\n}\n"
   }
 };
 })();

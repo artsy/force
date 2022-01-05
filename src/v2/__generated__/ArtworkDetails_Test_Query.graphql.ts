@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -225,46 +224,52 @@ v8 = [
   }
 ],
 v9 = {
+  "type": "ID",
   "enumValues": null,
-  "nullable": true,
   "plural": false,
-  "type": "String"
+  "nullable": true
 },
 v10 = {
+  "type": "String",
   "enumValues": null,
-  "nullable": false,
   "plural": false,
-  "type": "ID"
+  "nullable": true
 },
 v11 = {
+  "type": "Boolean",
   "enumValues": null,
-  "nullable": true,
   "plural": false,
-  "type": "Image"
+  "nullable": true
 },
 v12 = {
+  "type": "ID",
   "enumValues": null,
-  "nullable": true,
   "plural": false,
-  "type": "CroppedImageUrl"
+  "nullable": false
 },
 v13 = {
+  "type": "ArtworkInfoRow",
   "enumValues": null,
-  "nullable": false,
   "plural": false,
-  "type": "String"
+  "nullable": true
 },
 v14 = {
+  "type": "String",
   "enumValues": null,
-  "nullable": true,
   "plural": false,
-  "type": "Boolean"
+  "nullable": false
 },
 v15 = {
+  "type": "Image",
   "enumValues": null,
-  "nullable": true,
   "plural": false,
-  "type": "ArtworkInfoRow"
+  "nullable": true
+},
+v16 = {
+  "type": "CroppedImageUrl",
+  "enumValues": null,
+  "plural": false,
+  "nullable": true
 };
 return {
   "fragment": {
@@ -290,8 +295,7 @@ return {
         "storageKey": "artwork(id:\"example\")"
       }
     ],
-    "type": "Query",
-    "abstractKey": null
+    "type": "Query"
   },
   "kind": "Request",
   "operation": {
@@ -679,119 +683,118 @@ return {
     ]
   },
   "params": {
-    "cacheID": "e9be102424c9de70570d5e130b39a2de",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "artwork": {
+          "type": "Artwork",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "Artwork"
+          "nullable": true
         },
-        "artwork.additional_information": (v9/*: any*/),
+        "artwork.id": (v9/*: any*/),
         "artwork.articles": {
+          "type": "Article",
           "enumValues": null,
-          "nullable": true,
           "plural": true,
-          "type": "Article"
+          "nullable": true
         },
-        "artwork.articles.author": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "Author"
-        },
-        "artwork.articles.author.id": (v10/*: any*/),
-        "artwork.articles.author.name": (v9/*: any*/),
-        "artwork.articles.href": (v9/*: any*/),
-        "artwork.articles.id": (v10/*: any*/),
-        "artwork.articles.publishedAt": (v9/*: any*/),
-        "artwork.articles.slug": (v9/*: any*/),
-        "artwork.articles.thumbnailImage": (v11/*: any*/),
-        "artwork.articles.thumbnailImage.cropped": (v12/*: any*/),
-        "artwork.articles.thumbnailImage.cropped.src": (v13/*: any*/),
-        "artwork.articles.thumbnailImage.cropped.srcSet": (v13/*: any*/),
-        "artwork.articles.thumbnailTitle": (v9/*: any*/),
-        "artwork.canRequestLotConditionsReport": (v14/*: any*/),
-        "artwork.category": (v9/*: any*/),
-        "artwork.certificateOfAuthenticity": (v15/*: any*/),
-        "artwork.certificateOfAuthenticity.details": (v9/*: any*/),
-        "artwork.certificateOfAuthenticity.label": (v9/*: any*/),
-        "artwork.conditionDescription": (v15/*: any*/),
-        "artwork.conditionDescription.details": (v9/*: any*/),
-        "artwork.conditionDescription.label": (v9/*: any*/),
-        "artwork.description": (v9/*: any*/),
-        "artwork.exhibition_history": (v9/*: any*/),
-        "artwork.framed": (v15/*: any*/),
-        "artwork.framed.details": (v9/*: any*/),
-        "artwork.framed.label": (v9/*: any*/),
-        "artwork.id": (v10/*: any*/),
-        "artwork.image_rights": (v9/*: any*/),
-        "artwork.internalID": (v10/*: any*/),
-        "artwork.literature": (v9/*: any*/),
-        "artwork.manufacturer": (v9/*: any*/),
-        "artwork.mediumType": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "ArtworkMedium"
-        },
-        "artwork.mediumType.__typename": (v13/*: any*/),
-        "artwork.mediumType.longDescription": (v9/*: any*/),
-        "artwork.mediumType.name": (v9/*: any*/),
-        "artwork.partner": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "Partner"
-        },
-        "artwork.partner.href": (v9/*: any*/),
-        "artwork.partner.id": (v10/*: any*/),
-        "artwork.partner.initials": (v9/*: any*/),
-        "artwork.partner.internalID": (v10/*: any*/),
-        "artwork.partner.is_default_profile_public": (v14/*: any*/),
-        "artwork.partner.locations": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": true,
-          "type": "Location"
-        },
-        "artwork.partner.locations.city": (v9/*: any*/),
-        "artwork.partner.locations.id": (v10/*: any*/),
-        "artwork.partner.name": (v9/*: any*/),
-        "artwork.partner.profile": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "Profile"
-        },
-        "artwork.partner.profile.icon": (v11/*: any*/),
-        "artwork.partner.profile.icon.cropped": (v12/*: any*/),
-        "artwork.partner.profile.icon.cropped.src": (v13/*: any*/),
-        "artwork.partner.profile.icon.cropped.srcSet": (v13/*: any*/),
-        "artwork.partner.profile.id": (v10/*: any*/),
-        "artwork.partner.profile.internalID": (v10/*: any*/),
-        "artwork.partner.profile.is_followed": (v14/*: any*/),
-        "artwork.partner.profile.name": (v9/*: any*/),
-        "artwork.partner.profile.slug": (v10/*: any*/),
-        "artwork.partner.slug": (v10/*: any*/),
-        "artwork.partner.type": (v9/*: any*/),
-        "artwork.provenance": (v9/*: any*/),
-        "artwork.publisher": (v9/*: any*/),
+        "artwork.literature": (v10/*: any*/),
+        "artwork.exhibition_history": (v10/*: any*/),
+        "artwork.provenance": (v10/*: any*/),
+        "artwork.description": (v10/*: any*/),
+        "artwork.additional_information": (v10/*: any*/),
         "artwork.sale": {
+          "type": "Sale",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "Sale"
+          "nullable": true
         },
-        "artwork.sale.id": (v10/*: any*/),
-        "artwork.sale.isBenefit": (v14/*: any*/),
-        "artwork.sale.isGalleryAuction": (v14/*: any*/),
-        "artwork.series": (v9/*: any*/),
-        "artwork.signatureInfo": (v15/*: any*/),
-        "artwork.signatureInfo.details": (v9/*: any*/),
-        "artwork.signatureInfo.label": (v9/*: any*/)
+        "artwork.partner": {
+          "type": "Partner",
+          "enumValues": null,
+          "plural": false,
+          "nullable": true
+        },
+        "artwork.category": (v10/*: any*/),
+        "artwork.series": (v10/*: any*/),
+        "artwork.publisher": (v10/*: any*/),
+        "artwork.manufacturer": (v10/*: any*/),
+        "artwork.image_rights": (v10/*: any*/),
+        "artwork.canRequestLotConditionsReport": (v11/*: any*/),
+        "artwork.internalID": (v12/*: any*/),
+        "artwork.framed": (v13/*: any*/),
+        "artwork.signatureInfo": (v13/*: any*/),
+        "artwork.conditionDescription": (v13/*: any*/),
+        "artwork.certificateOfAuthenticity": (v13/*: any*/),
+        "artwork.mediumType": {
+          "type": "ArtworkMedium",
+          "enumValues": null,
+          "plural": false,
+          "nullable": true
+        },
+        "artwork.articles.slug": (v10/*: any*/),
+        "artwork.articles.id": (v9/*: any*/),
+        "artwork.sale.isBenefit": (v11/*: any*/),
+        "artwork.sale.isGalleryAuction": (v11/*: any*/),
+        "artwork.sale.id": (v9/*: any*/),
+        "artwork.partner.internalID": (v12/*: any*/),
+        "artwork.partner.slug": (v12/*: any*/),
+        "artwork.partner.type": (v10/*: any*/),
+        "artwork.partner.href": (v10/*: any*/),
+        "artwork.partner.name": (v10/*: any*/),
+        "artwork.partner.initials": (v10/*: any*/),
+        "artwork.partner.locations": {
+          "type": "Location",
+          "enumValues": null,
+          "plural": true,
+          "nullable": true
+        },
+        "artwork.partner.is_default_profile_public": (v11/*: any*/),
+        "artwork.partner.profile": {
+          "type": "Profile",
+          "enumValues": null,
+          "plural": false,
+          "nullable": true
+        },
+        "artwork.partner.id": (v9/*: any*/),
+        "artwork.framed.label": (v10/*: any*/),
+        "artwork.framed.details": (v10/*: any*/),
+        "artwork.signatureInfo.label": (v10/*: any*/),
+        "artwork.signatureInfo.details": (v10/*: any*/),
+        "artwork.conditionDescription.label": (v10/*: any*/),
+        "artwork.conditionDescription.details": (v10/*: any*/),
+        "artwork.certificateOfAuthenticity.label": (v10/*: any*/),
+        "artwork.certificateOfAuthenticity.details": (v10/*: any*/),
+        "artwork.mediumType.__typename": (v14/*: any*/),
+        "artwork.articles.author": {
+          "type": "Author",
+          "enumValues": null,
+          "plural": false,
+          "nullable": true
+        },
+        "artwork.articles.href": (v10/*: any*/),
+        "artwork.articles.publishedAt": (v10/*: any*/),
+        "artwork.articles.thumbnailImage": (v15/*: any*/),
+        "artwork.articles.thumbnailTitle": (v10/*: any*/),
+        "artwork.partner.locations.city": (v10/*: any*/),
+        "artwork.partner.locations.id": (v9/*: any*/),
+        "artwork.partner.profile.slug": (v12/*: any*/),
+        "artwork.partner.profile.icon": (v15/*: any*/),
+        "artwork.partner.profile.id": (v12/*: any*/),
+        "artwork.mediumType.name": (v10/*: any*/),
+        "artwork.mediumType.longDescription": (v10/*: any*/),
+        "artwork.articles.author.name": (v10/*: any*/),
+        "artwork.articles.author.id": (v9/*: any*/),
+        "artwork.articles.thumbnailImage.cropped": (v16/*: any*/),
+        "artwork.partner.profile.name": (v10/*: any*/),
+        "artwork.partner.profile.internalID": (v12/*: any*/),
+        "artwork.partner.profile.is_followed": (v11/*: any*/),
+        "artwork.partner.profile.icon.cropped": (v16/*: any*/),
+        "artwork.articles.thumbnailImage.cropped.src": (v14/*: any*/),
+        "artwork.articles.thumbnailImage.cropped.srcSet": (v14/*: any*/),
+        "artwork.partner.profile.icon.cropped.src": (v14/*: any*/),
+        "artwork.partner.profile.icon.cropped.srcSet": (v14/*: any*/)
       }
     },
     "name": "ArtworkDetails_Test_Query",

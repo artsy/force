@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 export type UpdateAppSecondFactorInput = {
@@ -34,13 +33,15 @@ export type UpdateAppSecondFactorMutationResponse = {
 export type UpdateAppSecondFactorMutationRawResponse = {
     readonly updateAppSecondFactor: ({
         readonly secondFactorOrErrors: {
+            readonly __typename: "AppSecondFactor";
+        } | {
             readonly __typename: "Errors";
             readonly errors: ReadonlyArray<{
                 readonly message: string;
                 readonly code: string;
             }>;
         } | {
-            readonly __typename: string;
+            readonly __typename: string | null;
         };
     }) | null;
 };
@@ -79,7 +80,8 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "input"
+    "name": "input",
+    "type": "UpdateAppSecondFactorInput!"
   }
 ],
 v1 = [
@@ -97,29 +99,43 @@ v2 = {
   "storageKey": null
 },
 v3 = {
-  "alias": null,
-  "args": null,
-  "concreteType": "Error",
-  "kind": "LinkedField",
-  "name": "errors",
-  "plural": true,
+  "kind": "InlineFragment",
   "selections": [
+    (v2/*: any*/)
+  ],
+  "type": "AppSecondFactor"
+},
+v4 = {
+  "kind": "InlineFragment",
+  "selections": [
+    (v2/*: any*/),
     {
       "alias": null,
       "args": null,
-      "kind": "ScalarField",
-      "name": "message",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "code",
+      "concreteType": "Error",
+      "kind": "LinkedField",
+      "name": "errors",
+      "plural": true,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "message",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "code",
+          "storageKey": null
+        }
+      ],
       "storageKey": null
     }
   ],
-  "storageKey": null
+  "type": "Errors"
 };
 return {
   "fragment": {
@@ -144,23 +160,8 @@ return {
             "name": "secondFactorOrErrors",
             "plural": false,
             "selections": [
-              {
-                "kind": "InlineFragment",
-                "selections": [
-                  (v2/*: any*/)
-                ],
-                "type": "AppSecondFactor",
-                "abstractKey": null
-              },
-              {
-                "kind": "InlineFragment",
-                "selections": [
-                  (v2/*: any*/),
-                  (v3/*: any*/)
-                ],
-                "type": "Errors",
-                "abstractKey": null
-              }
+              (v3/*: any*/),
+              (v4/*: any*/)
             ],
             "storageKey": null
           }
@@ -168,8 +169,7 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Mutation",
-    "abstractKey": null
+    "type": "Mutation"
   },
   "kind": "Request",
   "operation": {
@@ -194,14 +194,8 @@ return {
             "plural": false,
             "selections": [
               (v2/*: any*/),
-              {
-                "kind": "InlineFragment",
-                "selections": [
-                  (v3/*: any*/)
-                ],
-                "type": "Errors",
-                "abstractKey": null
-              }
+              (v3/*: any*/),
+              (v4/*: any*/)
             ],
             "storageKey": null
           }
@@ -211,7 +205,6 @@ return {
     ]
   },
   "params": {
-    "cacheID": "59d4d1d54b0ed11accd68172132e3b93",
     "id": null,
     "metadata": {},
     "name": "UpdateAppSecondFactorMutation",

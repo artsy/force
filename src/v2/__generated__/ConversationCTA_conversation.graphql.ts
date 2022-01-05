@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -108,8 +107,7 @@ return {
                   "storageKey": null
                 }
               ],
-              "type": "Artwork",
-              "abstractKey": null
+              "type": "Artwork"
             }
           ],
           "storageKey": null
@@ -126,8 +124,7 @@ return {
             {
               "kind": "InlineFragment",
               "selections": (v2/*: any*/),
-              "type": "Artwork",
-              "abstractKey": null
+              "type": "Artwork"
             }
           ],
           "storageKey": null
@@ -246,8 +243,7 @@ return {
                       "storageKey": "offers(first:5)"
                     }
                   ],
-                  "type": "CommerceOfferOrder",
-                  "abstractKey": null
+                  "type": "CommerceOfferOrder"
                 }
               ],
               "storageKey": null
@@ -264,8 +260,7 @@ return {
       "name": "OpenInquiryModalCTA_conversation"
     }
   ],
-  "type": "Conversation",
-  "abstractKey": null
+  "type": "Conversation"
 };
 })();
 (node as any).hash = 'c59d15f5504451a7e41ae6b4e3df0cbb';

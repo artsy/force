@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 export type CommerceCreateOrderWithArtworkInput = {
@@ -60,7 +59,8 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "input"
+    "name": "input",
+    "type": "CommerceCreateOrderWithArtworkInput!"
   }
 ],
 v1 = [
@@ -99,8 +99,7 @@ v3 = {
       "storageKey": null
     }
   ],
-  "type": "CommerceOrderWithMutationFailure",
-  "abstractKey": null
+  "type": "CommerceOrderWithMutationFailure"
 },
 v4 = {
   "alias": null,
@@ -148,8 +147,7 @@ return {
                     "storageKey": null
                   }
                 ],
-                "type": "CommerceOrderWithMutationSuccess",
-                "abstractKey": null
+                "type": "CommerceOrderWithMutationSuccess"
               },
               (v3/*: any*/)
             ],
@@ -159,8 +157,7 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Mutation",
-    "abstractKey": null
+    "type": "Mutation"
   },
   "kind": "Request",
   "operation": {
@@ -209,8 +206,7 @@ return {
                     "storageKey": null
                   }
                 ],
-                "type": "CommerceOrderWithMutationSuccess",
-                "abstractKey": null
+                "type": "CommerceOrderWithMutationSuccess"
               },
               (v3/*: any*/)
             ],
@@ -222,7 +218,6 @@ return {
     ]
   },
   "params": {
-    "cacheID": "e8a2a3f71f9bae58a8bf0d00955721e9",
     "id": null,
     "metadata": {},
     "name": "createTestEnvOrderMutation",

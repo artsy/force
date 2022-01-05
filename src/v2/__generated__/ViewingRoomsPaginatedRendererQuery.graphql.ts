@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -93,55 +92,60 @@ fragment ViewingRooms_edges on ViewingRoomsEdge {
 */
 
 const node: ConcreteRequest = (function(){
-var v0 = {
-  "defaultValue": null,
-  "kind": "LocalArgument",
-  "name": "after"
-},
-v1 = {
-  "defaultValue": null,
-  "kind": "LocalArgument",
-  "name": "first"
-},
-v2 = {
-  "defaultValue": null,
-  "kind": "LocalArgument",
-  "name": "partnerId"
-},
-v3 = [
+var v0 = [
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "partnerId",
+    "type": "String!"
+  },
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "first",
+    "type": "Int"
+  },
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "after",
+    "type": "String"
+  }
+],
+v1 = [
   {
     "kind": "Variable",
     "name": "id",
     "variableName": "partnerId"
   }
 ],
-v4 = {
+v2 = {
   "kind": "Variable",
   "name": "after",
   "variableName": "after"
 },
-v5 = {
+v3 = {
   "kind": "Variable",
   "name": "first",
   "variableName": "first"
 },
-v6 = {
+v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "cursor",
   "storageKey": null
 },
-v7 = {
+v5 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "page",
   "storageKey": null
 },
-v8 = [
-  (v6/*: any*/),
-  (v7/*: any*/),
+v6 = [
+  (v4/*: any*/),
+  (v5/*: any*/),
   {
     "alias": null,
     "args": null,
@@ -152,18 +156,14 @@ v8 = [
 ];
 return {
   "fragment": {
-    "argumentDefinitions": [
-      (v0/*: any*/),
-      (v1/*: any*/),
-      (v2/*: any*/)
-    ],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
     "name": "ViewingRoomsPaginatedRendererQuery",
     "selections": [
       {
         "alias": null,
-        "args": (v3/*: any*/),
+        "args": (v1/*: any*/),
         "concreteType": "Partner",
         "kind": "LinkedField",
         "name": "partner",
@@ -171,8 +171,8 @@ return {
         "selections": [
           {
             "args": [
-              (v4/*: any*/),
-              (v5/*: any*/)
+              (v2/*: any*/),
+              (v3/*: any*/)
             ],
             "kind": "FragmentSpread",
             "name": "ViewingRoomsPaginated_partner"
@@ -181,22 +181,17 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query",
-    "abstractKey": null
+    "type": "Query"
   },
   "kind": "Request",
   "operation": {
-    "argumentDefinitions": [
-      (v2/*: any*/),
-      (v1/*: any*/),
-      (v0/*: any*/)
-    ],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
     "name": "ViewingRoomsPaginatedRendererQuery",
     "selections": [
       {
         "alias": null,
-        "args": (v3/*: any*/),
+        "args": (v1/*: any*/),
         "concreteType": "Partner",
         "kind": "LinkedField",
         "name": "partner",
@@ -212,8 +207,8 @@ return {
           {
             "alias": "viewingRoomsList",
             "args": [
-              (v4/*: any*/),
-              (v5/*: any*/),
+              (v2/*: any*/),
+              (v3/*: any*/),
               {
                 "kind": "Literal",
                 "name": "statuses",
@@ -267,7 +262,7 @@ return {
                     "kind": "LinkedField",
                     "name": "around",
                     "plural": true,
-                    "selections": (v8/*: any*/),
+                    "selections": (v6/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -277,7 +272,7 @@ return {
                     "kind": "LinkedField",
                     "name": "first",
                     "plural": false,
-                    "selections": (v8/*: any*/),
+                    "selections": (v6/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -287,7 +282,7 @@ return {
                     "kind": "LinkedField",
                     "name": "last",
                     "plural": false,
-                    "selections": (v8/*: any*/),
+                    "selections": (v6/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -298,8 +293,8 @@ return {
                     "name": "previous",
                     "plural": false,
                     "selections": [
-                      (v6/*: any*/),
-                      (v7/*: any*/)
+                      (v4/*: any*/),
+                      (v5/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -415,7 +410,6 @@ return {
     ]
   },
   "params": {
-    "cacheID": "2c3886eb94893a71a00f2de0a43657e2",
     "id": null,
     "metadata": {},
     "name": "ViewingRoomsPaginatedRendererQuery",

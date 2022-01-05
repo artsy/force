@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -47,7 +46,8 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "partnerId"
+    "name": "partnerId",
+    "type": "String!"
   }
 ],
 v1 = [
@@ -72,22 +72,16 @@ v3 = [
   }
 ],
 v4 = {
+  "type": "ArtistPartnerConnection",
   "enumValues": null,
-  "nullable": true,
   "plural": false,
-  "type": "ArtistPartnerConnection"
+  "nullable": true
 },
 v5 = {
+  "type": "Int",
   "enumValues": null,
-  "nullable": true,
   "plural": false,
-  "type": "Int"
-},
-v6 = {
-  "enumValues": null,
-  "nullable": false,
-  "plural": false,
-  "type": "ID"
+  "nullable": true
 };
 return {
   "fragment": {
@@ -113,8 +107,7 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query",
-    "abstractKey": null
+    "type": "Query"
   },
   "kind": "Request",
   "operation": {
@@ -203,34 +196,43 @@ return {
     ]
   },
   "params": {
-    "cacheID": "d3ddc01e6e897e18b469e29349dbf5c8",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "partner": {
+          "type": "Partner",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "Partner"
+          "nullable": true
+        },
+        "partner.id": {
+          "type": "ID",
+          "enumValues": null,
+          "plural": false,
+          "nullable": true
+        },
+        "partner.slug": {
+          "type": "ID",
+          "enumValues": null,
+          "plural": false,
+          "nullable": false
+        },
+        "partner.profileArtistsLayout": {
+          "type": "String",
+          "enumValues": null,
+          "plural": false,
+          "nullable": true
+        },
+        "partner.displayFullPartnerPage": {
+          "type": "Boolean",
+          "enumValues": null,
+          "plural": false,
+          "nullable": true
         },
         "partner.artistsWithPublishedArtworks": (v4/*: any*/),
-        "partner.artistsWithPublishedArtworks.totalCount": (v5/*: any*/),
-        "partner.displayFullPartnerPage": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "Boolean"
-        },
-        "partner.id": (v6/*: any*/),
-        "partner.profileArtistsLayout": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "String"
-        },
         "partner.representedArtistsWithoutPublishedArtworks": (v4/*: any*/),
-        "partner.representedArtistsWithoutPublishedArtworks.totalCount": (v5/*: any*/),
-        "partner.slug": (v6/*: any*/)
+        "partner.artistsWithPublishedArtworks.totalCount": (v5/*: any*/),
+        "partner.representedArtistsWithoutPublishedArtworks.totalCount": (v5/*: any*/)
       }
     },
     "name": "ArtistsRail_Test_Query",

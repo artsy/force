@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -78,7 +77,8 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "id"
+    "name": "id",
+    "type": "String!"
   }
 ],
 v1 = [
@@ -117,16 +117,22 @@ v5 = {
   "storageKey": null
 },
 v6 = {
+  "type": "ID",
   "enumValues": null,
-  "nullable": false,
   "plural": false,
-  "type": "ID"
+  "nullable": true
 },
 v7 = {
+  "type": "String",
   "enumValues": null,
-  "nullable": true,
   "plural": false,
-  "type": "String"
+  "nullable": true
+},
+v8 = {
+  "type": "ID",
+  "enumValues": null,
+  "plural": false,
+  "nullable": false
 };
 return {
   "fragment": {
@@ -152,8 +158,7 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query",
-    "abstractKey": null
+    "type": "Query"
   },
   "kind": "Request",
   "operation": {
@@ -263,64 +268,63 @@ return {
     ]
   },
   "params": {
-    "cacheID": "f0fc17405b92dd7813a3b9128ce9e549",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "fair": {
+          "type": "Fair",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "Fair"
+          "nullable": true
         },
+        "fair.id": (v6/*: any*/),
         "fair.exhibitorsGroupedByName": {
+          "type": "FairExhibitorsGroup",
           "enumValues": null,
-          "nullable": true,
           "plural": true,
-          "type": "FairExhibitorsGroup"
+          "nullable": true
         },
-        "fair.exhibitorsGroupedByName.exhibitors": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": true,
-          "type": "FairExhibitor"
-        },
-        "fair.exhibitorsGroupedByName.exhibitors.partner": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "Partner"
-        },
-        "fair.exhibitorsGroupedByName.exhibitors.partner.cities": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": true,
-          "type": "String"
-        },
-        "fair.exhibitorsGroupedByName.exhibitors.partner.id": (v6/*: any*/),
-        "fair.exhibitorsGroupedByName.exhibitors.partner.internalID": (v6/*: any*/),
-        "fair.exhibitorsGroupedByName.exhibitors.partner.name": (v7/*: any*/),
-        "fair.exhibitorsGroupedByName.exhibitors.partner.profile": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "Profile"
-        },
-        "fair.exhibitorsGroupedByName.exhibitors.partner.profile.id": (v6/*: any*/),
-        "fair.exhibitorsGroupedByName.exhibitors.partner.profile.internalID": (v6/*: any*/),
-        "fair.exhibitorsGroupedByName.exhibitors.partner.profile.is_followed": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "Boolean"
-        },
-        "fair.exhibitorsGroupedByName.exhibitors.partner.profile.name": (v7/*: any*/),
-        "fair.exhibitorsGroupedByName.exhibitors.partner.profile.slug": (v6/*: any*/),
-        "fair.exhibitorsGroupedByName.exhibitors.partner.slug": (v6/*: any*/),
-        "fair.exhibitorsGroupedByName.exhibitors.partnerID": (v7/*: any*/),
-        "fair.exhibitorsGroupedByName.exhibitors.profileID": (v7/*: any*/),
         "fair.exhibitorsGroupedByName.letter": (v7/*: any*/),
-        "fair.id": (v6/*: any*/)
+        "fair.exhibitorsGroupedByName.exhibitors": {
+          "type": "FairExhibitor",
+          "enumValues": null,
+          "plural": true,
+          "nullable": true
+        },
+        "fair.exhibitorsGroupedByName.exhibitors.partnerID": (v7/*: any*/),
+        "fair.exhibitorsGroupedByName.exhibitors.partner": {
+          "type": "Partner",
+          "enumValues": null,
+          "plural": false,
+          "nullable": true
+        },
+        "fair.exhibitorsGroupedByName.exhibitors.partner.internalID": (v8/*: any*/),
+        "fair.exhibitorsGroupedByName.exhibitors.partner.id": (v6/*: any*/),
+        "fair.exhibitorsGroupedByName.exhibitors.profileID": (v7/*: any*/),
+        "fair.exhibitorsGroupedByName.exhibitors.partner.name": (v7/*: any*/),
+        "fair.exhibitorsGroupedByName.exhibitors.partner.slug": (v8/*: any*/),
+        "fair.exhibitorsGroupedByName.exhibitors.partner.cities": {
+          "type": "String",
+          "enumValues": null,
+          "plural": true,
+          "nullable": true
+        },
+        "fair.exhibitorsGroupedByName.exhibitors.partner.profile": {
+          "type": "Profile",
+          "enumValues": null,
+          "plural": false,
+          "nullable": true
+        },
+        "fair.exhibitorsGroupedByName.exhibitors.partner.profile.id": (v8/*: any*/),
+        "fair.exhibitorsGroupedByName.exhibitors.partner.profile.slug": (v8/*: any*/),
+        "fair.exhibitorsGroupedByName.exhibitors.partner.profile.name": (v7/*: any*/),
+        "fair.exhibitorsGroupedByName.exhibitors.partner.profile.internalID": (v8/*: any*/),
+        "fair.exhibitorsGroupedByName.exhibitors.partner.profile.is_followed": {
+          "type": "Boolean",
+          "enumValues": null,
+          "plural": false,
+          "nullable": true
+        }
       }
     },
     "name": "FairExhibitors_Test_Query",

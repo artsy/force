@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -47,7 +46,6 @@ fragment SettingsEditProfileArtistsYouCollect_me on Me {
           slug
         }
         ... on Node {
-          __isNode: __typename
           id
         }
       }
@@ -107,8 +105,7 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query",
-    "abstractKey": null
+    "type": "Query"
   },
   "kind": "Request",
   "operation": {
@@ -196,6 +193,7 @@ return {
                         "name": "__typename",
                         "storageKey": null
                       },
+                      (v0/*: any*/),
                       {
                         "kind": "InlineFragment",
                         "selections": [
@@ -215,16 +213,7 @@ return {
                             "storageKey": null
                           }
                         ],
-                        "type": "Artist",
-                        "abstractKey": null
-                      },
-                      {
-                        "kind": "InlineFragment",
-                        "selections": [
-                          (v0/*: any*/)
-                        ],
-                        "type": "Node",
-                        "abstractKey": "__isNode"
+                        "type": "Artist"
                       }
                     ],
                     "storageKey": null
@@ -251,12 +240,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "846b32cc686d6eb93e6d6e21a7e4d223",
     "id": null,
     "metadata": {},
     "name": "settingsRoutes_EditProfileRouteQuery",
     "operationKind": "query",
-    "text": "query settingsRoutes_EditProfileRouteQuery {\n  me {\n    ...SettingsEditProfileRoute_me\n    id\n  }\n}\n\nfragment SettingsEditProfileAboutYou_me on Me {\n  location {\n    display\n    id\n  }\n  profession\n  shareFollows\n}\n\nfragment SettingsEditProfileArtistsYouCollect_me on Me {\n  collectorProfile {\n    userInterests {\n      internalID\n      category\n      interest {\n        __typename\n        ... on Artist {\n          internalID\n          name\n          slug\n        }\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n      }\n      id\n    }\n    id\n  }\n}\n\nfragment SettingsEditProfileRoute_me on Me {\n  ...SettingsEditProfileAboutYou_me\n  ...SettingsEditProfileArtistsYouCollect_me\n  ...SettingsEditProfileYourGalleryIntro_me\n}\n\nfragment SettingsEditProfileYourGalleryIntro_me on Me {\n  inquiryIntroduction\n}\n"
+    "text": "query settingsRoutes_EditProfileRouteQuery {\n  me {\n    ...SettingsEditProfileRoute_me\n    id\n  }\n}\n\nfragment SettingsEditProfileAboutYou_me on Me {\n  location {\n    display\n    id\n  }\n  profession\n  shareFollows\n}\n\nfragment SettingsEditProfileArtistsYouCollect_me on Me {\n  collectorProfile {\n    userInterests {\n      internalID\n      category\n      interest {\n        __typename\n        ... on Artist {\n          internalID\n          name\n          slug\n        }\n        ... on Node {\n          id\n        }\n      }\n      id\n    }\n    id\n  }\n}\n\nfragment SettingsEditProfileRoute_me on Me {\n  ...SettingsEditProfileAboutYou_me\n  ...SettingsEditProfileArtistsYouCollect_me\n  ...SettingsEditProfileYourGalleryIntro_me\n}\n\nfragment SettingsEditProfileYourGalleryIntro_me on Me {\n  inquiryIntroduction\n}\n"
   }
 };
 })();

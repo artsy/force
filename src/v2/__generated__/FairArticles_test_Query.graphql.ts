@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -76,29 +75,34 @@ fragment FairArticles_fair_2HEEH6 on Fair {
 */
 
 const node: ConcreteRequest = (function(){
-var v0 = {
-  "defaultValue": null,
-  "kind": "LocalArgument",
-  "name": "after"
-},
-v1 = {
-  "defaultValue": null,
-  "kind": "LocalArgument",
-  "name": "first"
-},
-v2 = {
-  "defaultValue": null,
-  "kind": "LocalArgument",
-  "name": "id"
-},
-v3 = [
+var v0 = [
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "id",
+    "type": "String!"
+  },
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "first",
+    "type": "Int!"
+  },
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "after",
+    "type": "String"
+  }
+],
+v1 = [
   {
     "kind": "Variable",
     "name": "id",
     "variableName": "id"
   }
 ],
-v4 = [
+v2 = [
   {
     "kind": "Variable",
     "name": "after",
@@ -110,14 +114,14 @@ v4 = [
     "variableName": "first"
   }
 ],
-v5 = {
+v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v6 = [
+v4 = [
   {
     "alias": null,
     "args": null,
@@ -147,57 +151,59 @@ v6 = [
     "storageKey": null
   }
 ],
-v7 = {
+v5 = {
+  "type": "ID",
   "enumValues": null,
-  "nullable": false,
   "plural": false,
-  "type": "String"
+  "nullable": true
+},
+v6 = {
+  "type": "ID",
+  "enumValues": null,
+  "plural": false,
+  "nullable": false
+},
+v7 = {
+  "type": "String",
+  "enumValues": null,
+  "plural": false,
+  "nullable": true
 },
 v8 = {
+  "type": "String",
   "enumValues": null,
-  "nullable": false,
   "plural": false,
-  "type": "ID"
+  "nullable": false
 },
 v9 = {
+  "type": "CroppedImageUrl",
   "enumValues": null,
-  "nullable": true,
   "plural": false,
-  "type": "String"
+  "nullable": true
 },
 v10 = {
+  "type": "Int",
   "enumValues": null,
-  "nullable": true,
   "plural": false,
-  "type": "CroppedImageUrl"
-},
-v11 = {
-  "enumValues": null,
-  "nullable": false,
-  "plural": false,
-  "type": "Int"
+  "nullable": false
 };
 return {
   "fragment": {
-    "argumentDefinitions": [
-      (v0/*: any*/),
-      (v1/*: any*/),
-      (v2/*: any*/)
-    ],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
     "name": "FairArticles_test_Query",
     "selections": [
       {
         "alias": null,
-        "args": (v3/*: any*/),
+        "args": (v1/*: any*/),
         "concreteType": "Fair",
         "kind": "LinkedField",
         "name": "fair",
         "plural": false,
         "selections": [
           {
-            "args": (v4/*: any*/),
+            "args": (v2/*: any*/),
             "kind": "FragmentSpread",
             "name": "FairArticles_fair"
           }
@@ -205,22 +211,17 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query",
-    "abstractKey": null
+    "type": "Query"
   },
   "kind": "Request",
   "operation": {
-    "argumentDefinitions": [
-      (v2/*: any*/),
-      (v1/*: any*/),
-      (v0/*: any*/)
-    ],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
     "name": "FairArticles_test_Query",
     "selections": [
       {
         "alias": null,
-        "args": (v3/*: any*/),
+        "args": (v1/*: any*/),
         "concreteType": "Fair",
         "kind": "LinkedField",
         "name": "fair",
@@ -235,7 +236,7 @@ return {
           },
           {
             "alias": null,
-            "args": (v4/*: any*/),
+            "args": (v2/*: any*/),
             "concreteType": "ArticleConnection",
             "kind": "LinkedField",
             "name": "articlesConnection",
@@ -300,7 +301,7 @@ return {
                             "name": "name",
                             "storageKey": null
                           },
-                          (v5/*: any*/)
+                          (v3/*: any*/)
                         ],
                         "storageKey": null
                       },
@@ -350,7 +351,7 @@ return {
                             "kind": "LinkedField",
                             "name": "cropped",
                             "plural": false,
-                            "selections": (v6/*: any*/),
+                            "selections": (v4/*: any*/),
                             "storageKey": "cropped(height:550,width:733)"
                           },
                           {
@@ -371,13 +372,13 @@ return {
                             "kind": "LinkedField",
                             "name": "cropped",
                             "plural": false,
-                            "selections": (v6/*: any*/),
+                            "selections": (v4/*: any*/),
                             "storageKey": "cropped(height:150,width:267)"
                           }
                         ],
                         "storageKey": null
                       },
-                      (v5/*: any*/),
+                      (v3/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -428,101 +429,100 @@ return {
           },
           {
             "alias": null,
-            "args": (v4/*: any*/),
+            "args": (v2/*: any*/),
             "filters": null,
             "handle": "connection",
             "key": "FairArticlesQuery_articlesConnection",
             "kind": "LinkedHandle",
             "name": "articlesConnection"
           },
-          (v5/*: any*/)
+          (v3/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "9bbc60e4bdc05461de8b29289997df61",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "fair": {
+          "type": "Fair",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "Fair"
+          "nullable": true
         },
+        "fair.id": (v5/*: any*/),
+        "fair.slug": (v6/*: any*/),
         "fair.articlesConnection": {
+          "type": "ArticleConnection",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "ArticleConnection"
-        },
-        "fair.articlesConnection.edges": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": true,
-          "type": "ArticleEdge"
-        },
-        "fair.articlesConnection.edges.cursor": (v7/*: any*/),
-        "fair.articlesConnection.edges.node": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "Article"
-        },
-        "fair.articlesConnection.edges.node.__typename": (v7/*: any*/),
-        "fair.articlesConnection.edges.node.author": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "Author"
-        },
-        "fair.articlesConnection.edges.node.author.id": (v8/*: any*/),
-        "fair.articlesConnection.edges.node.author.name": (v9/*: any*/),
-        "fair.articlesConnection.edges.node.href": (v9/*: any*/),
-        "fair.articlesConnection.edges.node.id": (v8/*: any*/),
-        "fair.articlesConnection.edges.node.internalID": (v8/*: any*/),
-        "fair.articlesConnection.edges.node.publishedAt": (v9/*: any*/),
-        "fair.articlesConnection.edges.node.thumbnailImage": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "Image"
-        },
-        "fair.articlesConnection.edges.node.thumbnailImage.large": (v10/*: any*/),
-        "fair.articlesConnection.edges.node.thumbnailImage.large.height": (v11/*: any*/),
-        "fair.articlesConnection.edges.node.thumbnailImage.large.src": (v7/*: any*/),
-        "fair.articlesConnection.edges.node.thumbnailImage.large.srcSet": (v7/*: any*/),
-        "fair.articlesConnection.edges.node.thumbnailImage.large.width": (v11/*: any*/),
-        "fair.articlesConnection.edges.node.thumbnailImage.medium": (v10/*: any*/),
-        "fair.articlesConnection.edges.node.thumbnailImage.medium.height": (v11/*: any*/),
-        "fair.articlesConnection.edges.node.thumbnailImage.medium.src": (v7/*: any*/),
-        "fair.articlesConnection.edges.node.thumbnailImage.medium.srcSet": (v7/*: any*/),
-        "fair.articlesConnection.edges.node.thumbnailImage.medium.width": (v11/*: any*/),
-        "fair.articlesConnection.edges.node.thumbnailTitle": (v9/*: any*/),
-        "fair.articlesConnection.edges.node.title": (v9/*: any*/),
-        "fair.articlesConnection.pageInfo": {
-          "enumValues": null,
-          "nullable": false,
-          "plural": false,
-          "type": "PageInfo"
-        },
-        "fair.articlesConnection.pageInfo.endCursor": (v9/*: any*/),
-        "fair.articlesConnection.pageInfo.hasNextPage": {
-          "enumValues": null,
-          "nullable": false,
-          "plural": false,
-          "type": "Boolean"
+          "nullable": true
         },
         "fair.articlesConnection.totalCount": {
+          "type": "Int",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "Int"
+          "nullable": true
         },
-        "fair.id": (v8/*: any*/),
-        "fair.slug": (v8/*: any*/)
+        "fair.articlesConnection.edges": {
+          "type": "ArticleEdge",
+          "enumValues": null,
+          "plural": true,
+          "nullable": true
+        },
+        "fair.articlesConnection.pageInfo": {
+          "type": "PageInfo",
+          "enumValues": null,
+          "plural": false,
+          "nullable": false
+        },
+        "fair.articlesConnection.edges.node": {
+          "type": "Article",
+          "enumValues": null,
+          "plural": false,
+          "nullable": true
+        },
+        "fair.articlesConnection.edges.node.internalID": (v6/*: any*/),
+        "fair.articlesConnection.edges.node.title": (v7/*: any*/),
+        "fair.articlesConnection.edges.node.href": (v7/*: any*/),
+        "fair.articlesConnection.edges.node.author": {
+          "type": "Author",
+          "enumValues": null,
+          "plural": false,
+          "nullable": true
+        },
+        "fair.articlesConnection.edges.node.publishedAt": (v7/*: any*/),
+        "fair.articlesConnection.edges.node.thumbnailTitle": (v7/*: any*/),
+        "fair.articlesConnection.edges.node.thumbnailImage": {
+          "type": "Image",
+          "enumValues": null,
+          "plural": false,
+          "nullable": true
+        },
+        "fair.articlesConnection.edges.node.id": (v5/*: any*/),
+        "fair.articlesConnection.edges.cursor": (v8/*: any*/),
+        "fair.articlesConnection.pageInfo.endCursor": (v7/*: any*/),
+        "fair.articlesConnection.pageInfo.hasNextPage": {
+          "type": "Boolean",
+          "enumValues": null,
+          "plural": false,
+          "nullable": false
+        },
+        "fair.articlesConnection.edges.node.author.name": (v7/*: any*/),
+        "fair.articlesConnection.edges.node.author.id": (v5/*: any*/),
+        "fair.articlesConnection.edges.node.thumbnailImage.large": (v9/*: any*/),
+        "fair.articlesConnection.edges.node.thumbnailImage.medium": (v9/*: any*/),
+        "fair.articlesConnection.edges.node.__typename": (v8/*: any*/),
+        "fair.articlesConnection.edges.node.thumbnailImage.large.width": (v10/*: any*/),
+        "fair.articlesConnection.edges.node.thumbnailImage.large.height": (v10/*: any*/),
+        "fair.articlesConnection.edges.node.thumbnailImage.large.src": (v8/*: any*/),
+        "fair.articlesConnection.edges.node.thumbnailImage.large.srcSet": (v8/*: any*/),
+        "fair.articlesConnection.edges.node.thumbnailImage.medium.width": (v10/*: any*/),
+        "fair.articlesConnection.edges.node.thumbnailImage.medium.height": (v10/*: any*/),
+        "fair.articlesConnection.edges.node.thumbnailImage.medium.src": (v8/*: any*/),
+        "fair.articlesConnection.edges.node.thumbnailImage.medium.srcSet": (v8/*: any*/)
       }
     },
     "name": "FairArticles_test_Query",

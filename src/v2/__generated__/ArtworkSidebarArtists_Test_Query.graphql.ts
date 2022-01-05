@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -48,7 +47,7 @@ export type ArtworkSidebarArtists_Test_QueryRawResponse = {
                 }) | null;
             }) | null;
         }) | null> | null;
-        readonly id: string;
+        readonly id: string | null;
     }) | null;
 };
 export type ArtworkSidebarArtists_Test_Query = {
@@ -196,8 +195,7 @@ return {
         "storageKey": "artwork(id:\"josef-albers-homage-to-the-square-85\")"
       }
     ],
-    "type": "Query",
-    "abstractKey": null
+    "type": "Query"
   },
   "kind": "Request",
   "operation": {
@@ -405,7 +403,6 @@ return {
     ]
   },
   "params": {
-    "cacheID": "c555233c93212d0d7b7a2f936e1e7887",
     "id": null,
     "metadata": {},
     "name": "ArtworkSidebarArtists_Test_Query",

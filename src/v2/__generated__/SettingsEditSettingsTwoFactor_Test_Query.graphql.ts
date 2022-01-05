@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -82,28 +81,28 @@ v1 = {
   "storageKey": null
 },
 v2 = {
+  "type": "SecondFactor",
   "enumValues": null,
-  "nullable": true,
   "plural": true,
-  "type": "SecondFactor"
+  "nullable": true
 },
 v3 = {
+  "type": "String",
   "enumValues": null,
-  "nullable": false,
   "plural": false,
-  "type": "String"
+  "nullable": false
 },
 v4 = {
+  "type": "ID",
   "enumValues": null,
-  "nullable": false,
   "plural": false,
-  "type": "ID"
+  "nullable": false
 },
 v5 = {
+  "type": "String",
   "enumValues": null,
-  "nullable": true,
   "plural": false,
-  "type": "String"
+  "nullable": true
 };
 return {
   "fragment": {
@@ -129,8 +128,7 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query",
-    "abstractKey": null
+    "type": "Query"
   },
   "kind": "Request",
   "operation": {
@@ -173,6 +171,7 @@ return {
               {
                 "kind": "InlineFragment",
                 "selections": [
+                  (v0/*: any*/),
                   (v1/*: any*/),
                   {
                     "alias": null,
@@ -182,8 +181,7 @@ return {
                     "storageKey": null
                   }
                 ],
-                "type": "AppSecondFactor",
-                "abstractKey": null
+                "type": "AppSecondFactor"
               }
             ],
             "storageKey": "secondFactors(kinds:[\"app\"])"
@@ -208,6 +206,7 @@ return {
               {
                 "kind": "InlineFragment",
                 "selections": [
+                  (v0/*: any*/),
                   (v1/*: any*/),
                   {
                     "alias": null,
@@ -217,8 +216,7 @@ return {
                     "storageKey": null
                   }
                 ],
-                "type": "SmsSecondFactor",
-                "abstractKey": null
+                "type": "SmsSecondFactor"
               }
             ],
             "storageKey": "secondFactors(kinds:[\"sms\"])"
@@ -239,7 +237,14 @@ return {
             "name": "secondFactors",
             "plural": true,
             "selections": [
-              (v0/*: any*/)
+              (v0/*: any*/),
+              {
+                "kind": "InlineFragment",
+                "selections": [
+                  (v0/*: any*/)
+                ],
+                "type": "BackupSecondFactor"
+              }
             ],
             "storageKey": "secondFactors(kinds:[\"backup\"])"
           },
@@ -256,33 +261,37 @@ return {
     ]
   },
   "params": {
-    "cacheID": "d31692bf899880f727790bc32dd58e6b",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "me": {
+          "type": "Me",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "Me"
+          "nullable": true
+        },
+        "me.id": {
+          "type": "ID",
+          "enumValues": null,
+          "plural": false,
+          "nullable": true
+        },
+        "me.hasSecondFactorEnabled": {
+          "type": "Boolean",
+          "enumValues": null,
+          "plural": false,
+          "nullable": false
         },
         "me.appSecondFactors": (v2/*: any*/),
+        "me.smsSecondFactors": (v2/*: any*/),
+        "me.backupSecondFactors": (v2/*: any*/),
         "me.appSecondFactors.__typename": (v3/*: any*/),
         "me.appSecondFactors.internalID": (v4/*: any*/),
         "me.appSecondFactors.name": (v5/*: any*/),
-        "me.backupSecondFactors": (v2/*: any*/),
-        "me.backupSecondFactors.__typename": (v3/*: any*/),
-        "me.hasSecondFactorEnabled": {
-          "enumValues": null,
-          "nullable": false,
-          "plural": false,
-          "type": "Boolean"
-        },
-        "me.id": (v4/*: any*/),
-        "me.smsSecondFactors": (v2/*: any*/),
         "me.smsSecondFactors.__typename": (v3/*: any*/),
+        "me.smsSecondFactors.internalID": (v4/*: any*/),
         "me.smsSecondFactors.formattedPhoneNumber": (v5/*: any*/),
-        "me.smsSecondFactors.internalID": (v4/*: any*/)
+        "me.backupSecondFactors.__typename": (v3/*: any*/)
       }
     },
     "name": "SettingsEditSettingsTwoFactor_Test_Query",

@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -37,39 +36,46 @@ export type SearchResultsEntity_viewer$key = {
 const node: ReaderFragment = {
   "argumentDefinitions": [
     {
-      "defaultValue": null,
+      "defaultValue": "",
       "kind": "LocalArgument",
-      "name": "after"
-    },
-    {
-      "defaultValue": null,
-      "kind": "LocalArgument",
-      "name": "before"
-    },
-    {
-      "defaultValue": null,
-      "kind": "LocalArgument",
-      "name": "entities"
+      "name": "term",
+      "type": "String!"
     },
     {
       "defaultValue": 10,
       "kind": "LocalArgument",
-      "name": "first"
+      "name": "first",
+      "type": "Int"
     },
     {
       "defaultValue": null,
       "kind": "LocalArgument",
-      "name": "last"
+      "name": "last",
+      "type": "Int"
     },
     {
       "defaultValue": null,
       "kind": "LocalArgument",
-      "name": "page"
+      "name": "after",
+      "type": "String"
     },
     {
-      "defaultValue": "",
+      "defaultValue": null,
       "kind": "LocalArgument",
-      "name": "term"
+      "name": "before",
+      "type": "String"
+    },
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "page",
+      "type": "Int"
+    },
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "entities",
+      "type": "[SearchEntity]"
     }
   ],
   "kind": "Fragment",
@@ -223,8 +229,7 @@ const node: ReaderFragment = {
                       "storageKey": null
                     }
                   ],
-                  "type": "SearchableItem",
-                  "abstractKey": null
+                  "type": "SearchableItem"
                 }
               ],
               "storageKey": null
@@ -236,8 +241,7 @@ const node: ReaderFragment = {
       "storageKey": null
     }
   ],
-  "type": "Viewer",
-  "abstractKey": null
+  "type": "Viewer"
 };
 (node as any).hash = '5815db449614a1ba927017f63ab148bf';
 export default node;

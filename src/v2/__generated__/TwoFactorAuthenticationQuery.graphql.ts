@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -18,19 +17,21 @@ export type TwoFactorAuthenticationQueryRawResponse = {
             readonly internalID: string;
             readonly name: string | null;
         } | {
-            readonly __typename: string;
+            readonly __typename: string | null;
         }) | null> | null;
         readonly smsSecondFactors: ReadonlyArray<({
             readonly __typename: "SmsSecondFactor";
             readonly internalID: string;
             readonly formattedPhoneNumber: string | null;
         } | {
-            readonly __typename: string;
+            readonly __typename: string | null;
         }) | null> | null;
         readonly backupSecondFactors: ReadonlyArray<({
-            readonly __typename: string;
+            readonly __typename: "BackupSecondFactor";
+        } | {
+            readonly __typename: string | null;
         }) | null> | null;
-        readonly id: string;
+        readonly id: string | null;
     }) | null;
 };
 export type TwoFactorAuthenticationQuery = {
@@ -129,8 +130,7 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query",
-    "abstractKey": null
+    "type": "Query"
   },
   "kind": "Request",
   "operation": {
@@ -173,6 +173,7 @@ return {
               {
                 "kind": "InlineFragment",
                 "selections": [
+                  (v0/*: any*/),
                   (v1/*: any*/),
                   {
                     "alias": null,
@@ -182,8 +183,7 @@ return {
                     "storageKey": null
                   }
                 ],
-                "type": "AppSecondFactor",
-                "abstractKey": null
+                "type": "AppSecondFactor"
               }
             ],
             "storageKey": "secondFactors(kinds:[\"app\"])"
@@ -208,6 +208,7 @@ return {
               {
                 "kind": "InlineFragment",
                 "selections": [
+                  (v0/*: any*/),
                   (v1/*: any*/),
                   {
                     "alias": null,
@@ -217,8 +218,7 @@ return {
                     "storageKey": null
                   }
                 ],
-                "type": "SmsSecondFactor",
-                "abstractKey": null
+                "type": "SmsSecondFactor"
               }
             ],
             "storageKey": "secondFactors(kinds:[\"sms\"])"
@@ -239,7 +239,14 @@ return {
             "name": "secondFactors",
             "plural": true,
             "selections": [
-              (v0/*: any*/)
+              (v0/*: any*/),
+              {
+                "kind": "InlineFragment",
+                "selections": [
+                  (v0/*: any*/)
+                ],
+                "type": "BackupSecondFactor"
+              }
             ],
             "storageKey": "secondFactors(kinds:[\"backup\"])"
           },
@@ -256,7 +263,6 @@ return {
     ]
   },
   "params": {
-    "cacheID": "c48035070ee723b6e5af62bc444888ef",
     "id": null,
     "metadata": {},
     "name": "TwoFactorAuthenticationQuery",

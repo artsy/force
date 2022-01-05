@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -25,15 +24,14 @@ export type PaymentPickerTestQueryRawResponse = {
                     readonly lastDigits: string;
                     readonly expirationMonth: number;
                     readonly expirationYear: number;
-                    readonly id: string;
+                    readonly id: string | null;
                 }) | null;
             }) | null> | null;
         }) | null;
-        readonly id: string;
+        readonly id: string | null;
     }) | null;
     readonly order: ({
-        readonly __typename: string;
-        readonly __isCommerceOrder: string;
+        readonly __typename: string | null;
         readonly internalID: string;
         readonly mode: CommerceOrderModeEnum | null;
         readonly state: CommerceOrderStateEnum;
@@ -50,7 +48,7 @@ export type PaymentPickerTestQueryRawResponse = {
             readonly expirationYear: number;
             readonly lastDigits: string;
             readonly brand: string;
-            readonly id: string;
+            readonly id: string | null;
         }) | null;
         readonly requestedFulfillment: ({
             readonly __typename: "CommerceShip";
@@ -72,13 +70,13 @@ export type PaymentPickerTestQueryRawResponse = {
                 readonly node: ({
                     readonly artwork: ({
                         readonly slug: string;
-                        readonly id: string;
+                        readonly id: string | null;
                     }) | null;
-                    readonly id: string;
+                    readonly id: string | null;
                 }) | null;
             }) | null> | null;
         }) | null;
-        readonly id: string;
+        readonly id: string | null;
     }) | null;
 };
 export type PaymentPickerTestQuery = {
@@ -118,7 +116,6 @@ fragment PaymentPicker_me on Me {
 }
 
 fragment PaymentPicker_order on CommerceOrder {
-  __isCommerceOrder: __typename
   internalID
   mode
   state
@@ -259,34 +256,40 @@ v12 = {
   "storageKey": null
 },
 v13 = {
+  "type": "ID",
   "enumValues": null,
-  "nullable": true,
   "plural": false,
-  "type": "CreditCard"
+  "nullable": true
 },
 v14 = {
+  "type": "ID",
   "enumValues": null,
-  "nullable": false,
   "plural": false,
-  "type": "String"
+  "nullable": false
 },
 v15 = {
+  "type": "CreditCard",
   "enumValues": null,
-  "nullable": false,
   "plural": false,
-  "type": "Int"
+  "nullable": true
 },
 v16 = {
+  "type": "String",
   "enumValues": null,
-  "nullable": false,
   "plural": false,
-  "type": "ID"
+  "nullable": true
 },
 v17 = {
+  "type": "Int",
   "enumValues": null,
-  "nullable": true,
   "plural": false,
-  "type": "String"
+  "nullable": false
+},
+v18 = {
+  "type": "String",
+  "enumValues": null,
+  "plural": false,
+  "nullable": false
 };
 return {
   "fragment": {
@@ -328,8 +331,7 @@ return {
         "storageKey": "commerceOrder(id:\"unused\")"
       }
     ],
-    "type": "Query",
-    "abstractKey": null
+    "type": "Query"
   },
   "kind": "Request",
   "operation": {
@@ -403,10 +405,6 @@ return {
         "plural": false,
         "selections": [
           (v7/*: any*/),
-          {
-            "kind": "TypeDiscriminator",
-            "abstractKey": "__isCommerceOrder"
-          },
           (v1/*: any*/),
           {
             "alias": null,
@@ -490,8 +488,7 @@ return {
                   (v11/*: any*/),
                   (v12/*: any*/)
                 ],
-                "type": "CommerceShip",
-                "abstractKey": null
+                "type": "CommerceShip"
               },
               {
                 "kind": "InlineFragment",
@@ -504,8 +501,7 @@ return {
                     "storageKey": null
                   }
                 ],
-                "type": "CommercePickup",
-                "abstractKey": null
+                "type": "CommercePickup"
               }
             ],
             "storageKey": null
@@ -570,112 +566,41 @@ return {
     ]
   },
   "params": {
-    "cacheID": "d9f656749fa25291272352eb6b0e37bb",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "me": {
+          "type": "Me",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "Me"
+          "nullable": true
         },
-        "me.creditCards": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "CreditCardConnection"
-        },
-        "me.creditCards.edges": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": true,
-          "type": "CreditCardEdge"
-        },
-        "me.creditCards.edges.node": (v13/*: any*/),
-        "me.creditCards.edges.node.brand": (v14/*: any*/),
-        "me.creditCards.edges.node.expirationMonth": (v15/*: any*/),
-        "me.creditCards.edges.node.expirationYear": (v15/*: any*/),
-        "me.creditCards.edges.node.id": (v16/*: any*/),
-        "me.creditCards.edges.node.internalID": (v16/*: any*/),
-        "me.creditCards.edges.node.lastDigits": (v14/*: any*/),
-        "me.id": (v16/*: any*/),
         "order": {
+          "type": "CommerceOrder",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "CommerceOrder"
+          "nullable": true
         },
-        "order.__isCommerceOrder": (v14/*: any*/),
-        "order.__typename": (v14/*: any*/),
-        "order.creditCard": (v13/*: any*/),
-        "order.creditCard.brand": (v14/*: any*/),
-        "order.creditCard.city": (v17/*: any*/),
-        "order.creditCard.country": (v17/*: any*/),
-        "order.creditCard.expirationMonth": (v15/*: any*/),
-        "order.creditCard.expirationYear": (v15/*: any*/),
-        "order.creditCard.id": (v16/*: any*/),
-        "order.creditCard.internalID": (v16/*: any*/),
-        "order.creditCard.lastDigits": (v14/*: any*/),
-        "order.creditCard.name": (v17/*: any*/),
-        "order.creditCard.postalCode": (v17/*: any*/),
-        "order.creditCard.state": (v17/*: any*/),
-        "order.creditCard.street1": (v17/*: any*/),
-        "order.creditCard.street2": (v17/*: any*/),
-        "order.id": (v16/*: any*/),
-        "order.internalID": (v16/*: any*/),
-        "order.lineItems": {
+        "me.id": (v13/*: any*/),
+        "order.id": (v13/*: any*/),
+        "me.creditCards": {
+          "type": "CreditCardConnection",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "CommerceLineItemConnection"
+          "nullable": true
         },
-        "order.lineItems.edges": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": true,
-          "type": "CommerceLineItemEdge"
-        },
-        "order.lineItems.edges.node": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "CommerceLineItem"
-        },
-        "order.lineItems.edges.node.artwork": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "Artwork"
-        },
-        "order.lineItems.edges.node.artwork.id": (v16/*: any*/),
-        "order.lineItems.edges.node.artwork.slug": (v16/*: any*/),
-        "order.lineItems.edges.node.id": (v16/*: any*/),
+        "order.internalID": (v14/*: any*/),
         "order.mode": {
+          "type": "CommerceOrderModeEnum",
           "enumValues": [
             "BUY",
             "OFFER"
           ],
-          "nullable": true,
           "plural": false,
-          "type": "CommerceOrderModeEnum"
+          "nullable": true
         },
-        "order.requestedFulfillment": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "CommerceRequestedFulfillmentUnion"
-        },
-        "order.requestedFulfillment.__typename": (v14/*: any*/),
-        "order.requestedFulfillment.addressLine1": (v17/*: any*/),
-        "order.requestedFulfillment.addressLine2": (v17/*: any*/),
-        "order.requestedFulfillment.city": (v17/*: any*/),
-        "order.requestedFulfillment.country": (v17/*: any*/),
-        "order.requestedFulfillment.fulfillmentType": (v14/*: any*/),
-        "order.requestedFulfillment.name": (v17/*: any*/),
-        "order.requestedFulfillment.postalCode": (v17/*: any*/),
-        "order.requestedFulfillment.region": (v17/*: any*/),
         "order.state": {
+          "type": "CommerceOrderStateEnum",
           "enumValues": [
             "ABANDONED",
             "APPROVED",
@@ -685,15 +610,83 @@ return {
             "REFUNDED",
             "SUBMITTED"
           ],
-          "nullable": false,
           "plural": false,
-          "type": "CommerceOrderStateEnum"
-        }
+          "nullable": false
+        },
+        "order.creditCard": (v15/*: any*/),
+        "order.requestedFulfillment": {
+          "type": "CommerceRequestedFulfillmentUnion",
+          "enumValues": null,
+          "plural": false,
+          "nullable": true
+        },
+        "order.lineItems": {
+          "type": "CommerceLineItemConnection",
+          "enumValues": null,
+          "plural": false,
+          "nullable": true
+        },
+        "me.creditCards.edges": {
+          "type": "CreditCardEdge",
+          "enumValues": null,
+          "plural": true,
+          "nullable": true
+        },
+        "order.creditCard.internalID": (v14/*: any*/),
+        "order.creditCard.name": (v16/*: any*/),
+        "order.creditCard.street1": (v16/*: any*/),
+        "order.creditCard.street2": (v16/*: any*/),
+        "order.creditCard.city": (v16/*: any*/),
+        "order.creditCard.state": (v16/*: any*/),
+        "order.creditCard.country": (v16/*: any*/),
+        "order.creditCard.postalCode": (v16/*: any*/),
+        "order.creditCard.expirationMonth": (v17/*: any*/),
+        "order.creditCard.expirationYear": (v17/*: any*/),
+        "order.creditCard.lastDigits": (v18/*: any*/),
+        "order.creditCard.brand": (v18/*: any*/),
+        "order.creditCard.id": (v13/*: any*/),
+        "order.requestedFulfillment.__typename": (v18/*: any*/),
+        "order.lineItems.edges": {
+          "type": "CommerceLineItemEdge",
+          "enumValues": null,
+          "plural": true,
+          "nullable": true
+        },
+        "me.creditCards.edges.node": (v15/*: any*/),
+        "order.requestedFulfillment.name": (v16/*: any*/),
+        "order.requestedFulfillment.addressLine1": (v16/*: any*/),
+        "order.requestedFulfillment.addressLine2": (v16/*: any*/),
+        "order.requestedFulfillment.city": (v16/*: any*/),
+        "order.requestedFulfillment.region": (v16/*: any*/),
+        "order.requestedFulfillment.country": (v16/*: any*/),
+        "order.requestedFulfillment.postalCode": (v16/*: any*/),
+        "order.requestedFulfillment.fulfillmentType": (v18/*: any*/),
+        "order.lineItems.edges.node": {
+          "type": "CommerceLineItem",
+          "enumValues": null,
+          "plural": false,
+          "nullable": true
+        },
+        "me.creditCards.edges.node.internalID": (v14/*: any*/),
+        "me.creditCards.edges.node.brand": (v18/*: any*/),
+        "me.creditCards.edges.node.lastDigits": (v18/*: any*/),
+        "me.creditCards.edges.node.expirationMonth": (v17/*: any*/),
+        "me.creditCards.edges.node.expirationYear": (v17/*: any*/),
+        "me.creditCards.edges.node.id": (v13/*: any*/),
+        "order.lineItems.edges.node.artwork": {
+          "type": "Artwork",
+          "enumValues": null,
+          "plural": false,
+          "nullable": true
+        },
+        "order.lineItems.edges.node.id": (v13/*: any*/),
+        "order.lineItems.edges.node.artwork.slug": (v14/*: any*/),
+        "order.lineItems.edges.node.artwork.id": (v13/*: any*/)
       }
     },
     "name": "PaymentPickerTestQuery",
     "operationKind": "query",
-    "text": "query PaymentPickerTestQuery {\n  me {\n    ...PaymentPicker_me\n    id\n  }\n  order: commerceOrder(id: \"unused\") {\n    __typename\n    ...PaymentPicker_order\n    id\n  }\n}\n\nfragment PaymentPicker_me on Me {\n  creditCards(first: 100) {\n    edges {\n      node {\n        internalID\n        brand\n        lastDigits\n        expirationMonth\n        expirationYear\n        id\n      }\n    }\n  }\n}\n\nfragment PaymentPicker_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  internalID\n  mode\n  state\n  creditCard {\n    internalID\n    name\n    street1\n    street2\n    city\n    state\n    country\n    postalCode\n    expirationMonth\n    expirationYear\n    lastDigits\n    brand\n    id\n  }\n  requestedFulfillment {\n    __typename\n    ... on CommerceShip {\n      name\n      addressLine1\n      addressLine2\n      city\n      region\n      country\n      postalCode\n    }\n    ... on CommercePickup {\n      fulfillmentType\n    }\n  }\n  lineItems {\n    edges {\n      node {\n        artwork {\n          slug\n          id\n        }\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query PaymentPickerTestQuery {\n  me {\n    ...PaymentPicker_me\n    id\n  }\n  order: commerceOrder(id: \"unused\") {\n    __typename\n    ...PaymentPicker_order\n    id\n  }\n}\n\nfragment PaymentPicker_me on Me {\n  creditCards(first: 100) {\n    edges {\n      node {\n        internalID\n        brand\n        lastDigits\n        expirationMonth\n        expirationYear\n        id\n      }\n    }\n  }\n}\n\nfragment PaymentPicker_order on CommerceOrder {\n  internalID\n  mode\n  state\n  creditCard {\n    internalID\n    name\n    street1\n    street2\n    city\n    state\n    country\n    postalCode\n    expirationMonth\n    expirationYear\n    lastDigits\n    brand\n    id\n  }\n  requestedFulfillment {\n    __typename\n    ... on CommerceShip {\n      name\n      addressLine1\n      addressLine2\n      city\n      region\n      country\n      postalCode\n    }\n    ... on CommercePickup {\n      fulfillmentType\n    }\n  }\n  lineItems {\n    edges {\n      node {\n        artwork {\n          slug\n          id\n        }\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();

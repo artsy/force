@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -14,23 +13,23 @@ export type AuctionFAQ_QueryRawResponse = {
     readonly viewer: ({
         readonly bidding: ({
             readonly content: string | null;
-            readonly id: string;
+            readonly id: string | null;
         }) | null;
         readonly buyersPremiumTaxesAndFees: ({
             readonly content: string | null;
-            readonly id: string;
+            readonly id: string | null;
         }) | null;
         readonly paymentsAndShipping: ({
             readonly content: string | null;
-            readonly id: string;
+            readonly id: string | null;
         }) | null;
         readonly emailsAndAlerts: ({
             readonly content: string | null;
-            readonly id: string;
+            readonly id: string | null;
         }) | null;
         readonly conditionsOfSale: ({
             readonly content: string | null;
-            readonly id: string;
+            readonly id: string | null;
         }) | null;
     }) | null;
 };
@@ -91,22 +90,22 @@ var v0 = [
   }
 ],
 v1 = {
+  "type": "StaticContent",
   "enumValues": null,
-  "nullable": true,
   "plural": false,
-  "type": "StaticContent"
+  "nullable": true
 },
 v2 = {
+  "type": "String",
   "enumValues": null,
-  "nullable": true,
   "plural": false,
-  "type": "String"
+  "nullable": true
 },
 v3 = {
+  "type": "ID",
   "enumValues": null,
-  "nullable": false,
   "plural": false,
-  "type": "ID"
+  "nullable": true
 };
 return {
   "fragment": {
@@ -132,8 +131,7 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query",
-    "abstractKey": null
+    "type": "Query"
   },
   "kind": "Request",
   "operation": {
@@ -235,31 +233,30 @@ return {
     ]
   },
   "params": {
-    "cacheID": "b869a5209002072384d42e9d8e4eb423",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "viewer": {
+          "type": "Viewer",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "Viewer"
+          "nullable": true
         },
         "viewer.bidding": (v1/*: any*/),
+        "viewer.buyersPremiumTaxesAndFees": (v1/*: any*/),
+        "viewer.paymentsAndShipping": (v1/*: any*/),
+        "viewer.emailsAndAlerts": (v1/*: any*/),
+        "viewer.conditionsOfSale": (v1/*: any*/),
         "viewer.bidding.content": (v2/*: any*/),
         "viewer.bidding.id": (v3/*: any*/),
-        "viewer.buyersPremiumTaxesAndFees": (v1/*: any*/),
         "viewer.buyersPremiumTaxesAndFees.content": (v2/*: any*/),
         "viewer.buyersPremiumTaxesAndFees.id": (v3/*: any*/),
-        "viewer.conditionsOfSale": (v1/*: any*/),
-        "viewer.conditionsOfSale.content": (v2/*: any*/),
-        "viewer.conditionsOfSale.id": (v3/*: any*/),
-        "viewer.emailsAndAlerts": (v1/*: any*/),
+        "viewer.paymentsAndShipping.content": (v2/*: any*/),
+        "viewer.paymentsAndShipping.id": (v3/*: any*/),
         "viewer.emailsAndAlerts.content": (v2/*: any*/),
         "viewer.emailsAndAlerts.id": (v3/*: any*/),
-        "viewer.paymentsAndShipping": (v1/*: any*/),
-        "viewer.paymentsAndShipping.content": (v2/*: any*/),
-        "viewer.paymentsAndShipping.id": (v3/*: any*/)
+        "viewer.conditionsOfSale.content": (v2/*: any*/),
+        "viewer.conditionsOfSale.id": (v3/*: any*/)
       }
     },
     "name": "AuctionFAQ_Query",

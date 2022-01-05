@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -50,7 +49,6 @@ fragment ArtistShowsGroup_artist_12Fjro on Artist {
             name
           }
           ... on Node {
-            __isNode: __typename
             id
           }
         }
@@ -92,7 +90,6 @@ fragment ArtistShowsGroup_artist_43oec1 on Artist {
             name
           }
           ... on Node {
-            __isNode: __typename
             id
           }
         }
@@ -152,7 +149,8 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "artistID"
+    "name": "artistID",
+    "type": "String!"
   }
 ],
 v1 = [
@@ -203,17 +201,20 @@ v7 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "name",
+  "name": "id",
   "storageKey": null
 },
 v8 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "id",
+  "name": "name",
   "storageKey": null
 },
 v9 = [
+  (v8/*: any*/)
+],
+v10 = [
   {
     "alias": null,
     "args": null,
@@ -324,35 +325,21 @@ v9 = [
                 "name": "__typename",
                 "storageKey": null
               },
+              (v7/*: any*/),
               {
                 "kind": "InlineFragment",
-                "selections": [
-                  (v7/*: any*/),
-                  (v8/*: any*/)
-                ],
-                "type": "ExternalPartner",
-                "abstractKey": null
+                "selections": (v9/*: any*/),
+                "type": "ExternalPartner"
               },
               {
                 "kind": "InlineFragment",
-                "selections": [
-                  (v7/*: any*/)
-                ],
-                "type": "Partner",
-                "abstractKey": null
-              },
-              {
-                "kind": "InlineFragment",
-                "selections": [
-                  (v8/*: any*/)
-                ],
-                "type": "Node",
-                "abstractKey": "__isNode"
+                "selections": (v9/*: any*/),
+                "type": "Partner"
               }
             ],
             "storageKey": null
           },
-          (v7/*: any*/),
+          (v8/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -421,7 +408,7 @@ v9 = [
             "name": "city",
             "storageKey": null
           },
-          (v8/*: any*/)
+          (v7/*: any*/)
         ],
         "storageKey": null
       }
@@ -453,8 +440,7 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query",
-    "abstractKey": null
+    "type": "Query"
   },
   "kind": "Request",
   "operation": {
@@ -498,11 +484,11 @@ return {
                 "kind": "LinkedField",
                 "name": "showsConnection",
                 "plural": false,
-                "selections": (v9/*: any*/),
+                "selections": (v10/*: any*/),
                 "storageKey": "showsConnection(first:10,sort:\"END_AT_ASC\",status:\"running\")"
               },
-              (v7/*: any*/),
-              (v8/*: any*/)
+              (v8/*: any*/),
+              (v7/*: any*/)
             ],
             "storageKey": null
           },
@@ -534,10 +520,10 @@ return {
                 "kind": "LinkedField",
                 "name": "showsConnection",
                 "plural": false,
-                "selections": (v9/*: any*/),
+                "selections": (v10/*: any*/),
                 "storageKey": "showsConnection(first:10,sort:\"START_AT_ASC\",status:\"upcoming\")"
               },
-              (v8/*: any*/)
+              (v7/*: any*/)
             ],
             "storageKey": null
           }
@@ -547,12 +533,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "86c973ea1bdda0df330c907c04cd1699",
     "id": null,
     "metadata": {},
     "name": "artistRoutes_ShowsQuery",
     "operationKind": "query",
-    "text": "query artistRoutes_ShowsQuery(\n  $artistID: String!\n) {\n  viewer {\n    ...ArtistShowsRoute_viewer\n  }\n}\n\nfragment ArtistShowsGroup_artist_12Fjro on Artist {\n  slug\n  showsConnection(first: 10, sort: START_AT_ASC, status: \"upcoming\") {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    edges {\n      node {\n        partner {\n          __typename\n          ... on ExternalPartner {\n            name\n            id\n          }\n          ... on Partner {\n            name\n          }\n          ... on Node {\n            __isNode: __typename\n            id\n          }\n        }\n        name\n        href\n        exhibitionPeriod\n        coverImage {\n          cropped(width: 440, height: 315) {\n            src\n            srcSet\n          }\n        }\n        city\n        id\n      }\n    }\n  }\n}\n\nfragment ArtistShowsGroup_artist_43oec1 on Artist {\n  slug\n  showsConnection(first: 10, sort: END_AT_ASC, status: \"running\") {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    edges {\n      node {\n        partner {\n          __typename\n          ... on ExternalPartner {\n            name\n            id\n          }\n          ... on Partner {\n            name\n          }\n          ... on Node {\n            __isNode: __typename\n            id\n          }\n        }\n        name\n        href\n        exhibitionPeriod\n        coverImage {\n          cropped(width: 440, height: 315) {\n            src\n            srcSet\n          }\n        }\n        city\n        id\n      }\n    }\n  }\n}\n\nfragment ArtistShowsRoute_viewer on Viewer {\n  currentShows: artist(id: $artistID) {\n    ...ArtistShowsGroup_artist_43oec1\n    name\n    id\n  }\n  upcomingShows: artist(id: $artistID) {\n    ...ArtistShowsGroup_artist_12Fjro\n    id\n  }\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n"
+    "text": "query artistRoutes_ShowsQuery(\n  $artistID: String!\n) {\n  viewer {\n    ...ArtistShowsRoute_viewer\n  }\n}\n\nfragment ArtistShowsGroup_artist_12Fjro on Artist {\n  slug\n  showsConnection(first: 10, sort: START_AT_ASC, status: \"upcoming\") {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    edges {\n      node {\n        partner {\n          __typename\n          ... on ExternalPartner {\n            name\n            id\n          }\n          ... on Partner {\n            name\n          }\n          ... on Node {\n            id\n          }\n        }\n        name\n        href\n        exhibitionPeriod\n        coverImage {\n          cropped(width: 440, height: 315) {\n            src\n            srcSet\n          }\n        }\n        city\n        id\n      }\n    }\n  }\n}\n\nfragment ArtistShowsGroup_artist_43oec1 on Artist {\n  slug\n  showsConnection(first: 10, sort: END_AT_ASC, status: \"running\") {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    edges {\n      node {\n        partner {\n          __typename\n          ... on ExternalPartner {\n            name\n            id\n          }\n          ... on Partner {\n            name\n          }\n          ... on Node {\n            id\n          }\n        }\n        name\n        href\n        exhibitionPeriod\n        coverImage {\n          cropped(width: 440, height: 315) {\n            src\n            srcSet\n          }\n        }\n        city\n        id\n      }\n    }\n  }\n}\n\nfragment ArtistShowsRoute_viewer on Viewer {\n  currentShows: artist(id: $artistID) {\n    ...ArtistShowsGroup_artist_43oec1\n    name\n    id\n  }\n  upcomingShows: artist(id: $artistID) {\n    ...ArtistShowsGroup_artist_12Fjro\n    id\n  }\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n"
   }
 };
 })();

@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -133,7 +132,6 @@ fragment SettingsSavesProfiles_me_WGPvJ on Me {
                 id
               }
               ... on Node {
-                __isNode: __typename
                 id
               }
             }
@@ -158,7 +156,8 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "after"
+    "name": "after",
+    "type": "String"
   }
 ],
 v1 = {
@@ -253,21 +252,21 @@ v8 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "slug",
+  "name": "id",
   "storageKey": null
 },
 v9 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "initials",
+  "name": "slug",
   "storageKey": null
 },
 v10 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "id",
+  "name": "initials",
   "storageKey": null
 },
 v11 = {
@@ -310,8 +309,7 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query",
-    "abstractKey": null
+    "type": "Query"
   },
   "kind": "Request",
   "operation": {
@@ -387,13 +385,14 @@ return {
                                 "plural": false,
                                 "selections": [
                                   (v7/*: any*/),
+                                  (v8/*: any*/),
                                   {
                                     "kind": "InlineFragment",
                                     "selections": [
                                       (v4/*: any*/),
-                                      (v8/*: any*/),
-                                      (v5/*: any*/),
                                       (v9/*: any*/),
+                                      (v5/*: any*/),
+                                      (v10/*: any*/),
                                       {
                                         "alias": null,
                                         "args": [
@@ -431,7 +430,7 @@ return {
                                                     "name": "city",
                                                     "storageKey": null
                                                   },
-                                                  (v10/*: any*/)
+                                                  (v8/*: any*/)
                                                 ],
                                                 "storageKey": null
                                               }
@@ -449,8 +448,8 @@ return {
                                         "name": "profile",
                                         "plural": false,
                                         "selections": [
-                                          (v10/*: any*/),
                                           (v8/*: any*/),
+                                          (v9/*: any*/),
                                           (v5/*: any*/),
                                           (v4/*: any*/),
                                           (v11/*: any*/),
@@ -460,14 +459,13 @@ return {
                                         "storageKey": null
                                       }
                                     ],
-                                    "type": "Partner",
-                                    "abstractKey": null
+                                    "type": "Partner"
                                   },
                                   {
                                     "kind": "InlineFragment",
                                     "selections": [
                                       (v4/*: any*/),
-                                      (v8/*: any*/),
+                                      (v9/*: any*/),
                                       (v5/*: any*/),
                                       {
                                         "alias": null,
@@ -504,25 +502,24 @@ return {
                                         "name": "profile",
                                         "plural": false,
                                         "selections": [
-                                          (v10/*: any*/),
                                           (v8/*: any*/),
+                                          (v9/*: any*/),
                                           (v5/*: any*/),
                                           (v4/*: any*/),
                                           (v11/*: any*/),
                                           (v12/*: any*/),
-                                          (v9/*: any*/)
+                                          (v10/*: any*/)
                                         ],
                                         "storageKey": null
                                       }
                                     ],
-                                    "type": "Fair",
-                                    "abstractKey": null
+                                    "type": "Fair"
                                   },
                                   {
                                     "kind": "InlineFragment",
                                     "selections": [
                                       (v4/*: any*/),
-                                      (v8/*: any*/),
+                                      (v9/*: any*/),
                                       (v5/*: any*/),
                                       {
                                         "alias": null,
@@ -544,38 +541,28 @@ return {
                                         "name": "profile",
                                         "plural": false,
                                         "selections": [
-                                          (v10/*: any*/),
                                           (v8/*: any*/),
+                                          (v9/*: any*/),
                                           (v5/*: any*/),
                                           (v4/*: any*/),
                                           (v11/*: any*/),
                                           (v12/*: any*/),
-                                          (v9/*: any*/),
+                                          (v10/*: any*/),
                                           (v6/*: any*/)
                                         ],
                                         "storageKey": null
-                                      },
-                                      (v10/*: any*/)
+                                      }
                                     ],
-                                    "type": "FairOrganizer",
-                                    "abstractKey": null
-                                  },
-                                  {
-                                    "kind": "InlineFragment",
-                                    "selections": [
-                                      (v10/*: any*/)
-                                    ],
-                                    "type": "Node",
-                                    "abstractKey": "__isNode"
+                                    "type": "FairOrganizer"
                                   }
                                 ],
                                 "storageKey": null
                               },
-                              (v10/*: any*/)
+                              (v8/*: any*/)
                             ],
                             "storageKey": null
                           },
-                          (v10/*: any*/),
+                          (v8/*: any*/),
                           (v7/*: any*/)
                         ],
                         "storageKey": null
@@ -630,19 +617,18 @@ return {
             ],
             "storageKey": null
           },
-          (v10/*: any*/)
+          (v8/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "e60c8e911560dfc948bcb1d057abd730",
     "id": null,
     "metadata": {},
     "name": "SettingsSavesProfilesQuery",
     "operationKind": "query",
-    "text": "query SettingsSavesProfilesQuery(\n  $after: String\n) {\n  me {\n    ...SettingsSavesProfiles_me_WGPvJ\n    id\n  }\n}\n\nfragment FairEntityHeader_fair on Fair {\n  internalID\n  slug\n  name\n  startAt(format: \"MMM Do\")\n  endAt(format: \"MMM Do YYYY\")\n  avatar: image {\n    cropped(width: 45, height: 45) {\n      src\n      srcSet\n    }\n  }\n  profile {\n    ...FollowProfileButton_profile\n    isFollowed\n    initials\n    id\n  }\n}\n\nfragment FairOrganizerEntityHeader_fairOrganizer on FairOrganizer {\n  internalID\n  slug\n  name\n  fairsConnection {\n    totalCount\n  }\n  profile {\n    ...FollowProfileButton_profile\n    isFollowed\n    initials\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment FollowProfileButton_profile on Profile {\n  id\n  slug\n  name\n  internalID\n  is_followed: isFollowed\n}\n\nfragment PartnerEntityHeader_partner on Partner {\n  internalID\n  slug\n  name\n  initials\n  locationsConnection(first: 15) {\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n  profile {\n    ...FollowProfileButton_profile\n    isFollowed\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment SettingsSavesProfiles_me_WGPvJ on Me {\n  followsAndSaves {\n    profilesConnection(first: 12, after: $after) {\n      totalCount\n      edges {\n        node {\n          internalID\n          profile {\n            name\n            href\n            avatar: image {\n              cropped(width: 45, height: 45) {\n                src\n                srcSet\n              }\n            }\n            owner {\n              __typename\n              ... on Partner {\n                ...PartnerEntityHeader_partner\n              }\n              ... on Fair {\n                ...FairEntityHeader_fair\n              }\n              ... on FairOrganizer {\n                ...FairOrganizerEntityHeader_fairOrganizer\n                id\n              }\n              ... on Node {\n                __isNode: __typename\n                id\n              }\n            }\n            id\n          }\n          id\n          __typename\n        }\n        cursor\n      }\n      pageInfo {\n        endCursor\n        hasNextPage\n      }\n    }\n  }\n}\n"
+    "text": "query SettingsSavesProfilesQuery(\n  $after: String\n) {\n  me {\n    ...SettingsSavesProfiles_me_WGPvJ\n    id\n  }\n}\n\nfragment FairEntityHeader_fair on Fair {\n  internalID\n  slug\n  name\n  startAt(format: \"MMM Do\")\n  endAt(format: \"MMM Do YYYY\")\n  avatar: image {\n    cropped(width: 45, height: 45) {\n      src\n      srcSet\n    }\n  }\n  profile {\n    ...FollowProfileButton_profile\n    isFollowed\n    initials\n    id\n  }\n}\n\nfragment FairOrganizerEntityHeader_fairOrganizer on FairOrganizer {\n  internalID\n  slug\n  name\n  fairsConnection {\n    totalCount\n  }\n  profile {\n    ...FollowProfileButton_profile\n    isFollowed\n    initials\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment FollowProfileButton_profile on Profile {\n  id\n  slug\n  name\n  internalID\n  is_followed: isFollowed\n}\n\nfragment PartnerEntityHeader_partner on Partner {\n  internalID\n  slug\n  name\n  initials\n  locationsConnection(first: 15) {\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n  profile {\n    ...FollowProfileButton_profile\n    isFollowed\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment SettingsSavesProfiles_me_WGPvJ on Me {\n  followsAndSaves {\n    profilesConnection(first: 12, after: $after) {\n      totalCount\n      edges {\n        node {\n          internalID\n          profile {\n            name\n            href\n            avatar: image {\n              cropped(width: 45, height: 45) {\n                src\n                srcSet\n              }\n            }\n            owner {\n              __typename\n              ... on Partner {\n                ...PartnerEntityHeader_partner\n              }\n              ... on Fair {\n                ...FairEntityHeader_fair\n              }\n              ... on FairOrganizer {\n                ...FairOrganizerEntityHeader_fairOrganizer\n                id\n              }\n              ... on Node {\n                id\n              }\n            }\n            id\n          }\n          id\n          __typename\n        }\n        cursor\n      }\n      pageInfo {\n        endCursor\n        hasNextPage\n      }\n    }\n  }\n}\n"
   }
 };
 })();

@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -57,8 +56,7 @@ const node: ConcreteRequest = {
         "storageKey": null
       }
     ],
-    "type": "Query",
-    "abstractKey": null
+    "type": "Query"
   },
   "kind": "Request",
   "operation": {
@@ -112,7 +110,6 @@ const node: ConcreteRequest = {
     ]
   },
   "params": {
-    "cacheID": "2a1d12cd5a9d8f35d6a39b8f94cb234f",
     "id": null,
     "metadata": {},
     "name": "ArtworkSidebarClassificationsModalQuery",

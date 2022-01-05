@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 export type BidderPositionInput = {
@@ -71,7 +70,8 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "input"
+    "name": "input",
+    "type": "BidderPositionInput!"
   }
 ],
 v1 = [
@@ -195,8 +195,7 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Mutation",
-    "abstractKey": null
+    "type": "Mutation"
   },
   "kind": "Request",
   "operation": {
@@ -282,7 +281,6 @@ return {
     ]
   },
   "params": {
-    "cacheID": "71be49e34b5bd81c5cc003d2f9e7c82e",
     "id": null,
     "metadata": {},
     "name": "ConfirmBidCreateBidderPositionMutation",

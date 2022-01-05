@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -117,8 +116,7 @@ return {
         "storageKey": "geneFamiliesConnection(first:20)"
       }
     ],
-    "type": "Query",
-    "abstractKey": null
+    "type": "Query"
   },
   "kind": "Request",
   "operation": {
@@ -200,7 +198,6 @@ return {
     ]
   },
   "params": {
-    "cacheID": "31d0b3b2fccaa7842340fd274b369df3",
     "id": null,
     "metadata": {},
     "name": "categoriesRoutes_Query",

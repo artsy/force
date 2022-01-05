@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -64,8 +63,7 @@ return {
         "storageKey": "fair(id:\"one-x-artsy\")"
       }
     ],
-    "type": "Query",
-    "abstractKey": null
+    "type": "Query"
   },
   "kind": "Request",
   "operation": {
@@ -112,33 +110,32 @@ return {
     ]
   },
   "params": {
-    "cacheID": "e425374b6e7a15a42e687dfbf664f554",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "fair": {
+          "type": "Fair",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "Fair"
-        },
-        "fair.exhibitorsGroupedByName": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": true,
-          "type": "FairExhibitorsGroup"
-        },
-        "fair.exhibitorsGroupedByName.letter": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "String"
+          "nullable": true
         },
         "fair.id": {
+          "type": "ID",
           "enumValues": null,
-          "nullable": false,
           "plural": false,
-          "type": "ID"
+          "nullable": true
+        },
+        "fair.exhibitorsGroupedByName": {
+          "type": "FairExhibitorsGroup",
+          "enumValues": null,
+          "plural": true,
+          "nullable": true
+        },
+        "fair.exhibitorsGroupedByName.letter": {
+          "type": "String",
+          "enumValues": null,
+          "plural": false,
+          "nullable": true
         }
       }
     },

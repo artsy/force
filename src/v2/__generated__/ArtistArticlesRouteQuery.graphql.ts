@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -96,75 +95,82 @@ fragment Pagination_pageCursors on PageCursors {
 */
 
 const node: ConcreteRequest = (function(){
-var v0 = {
-  "defaultValue": null,
-  "kind": "LocalArgument",
-  "name": "after"
-},
-v1 = {
-  "defaultValue": null,
-  "kind": "LocalArgument",
-  "name": "artistID"
-},
-v2 = {
-  "defaultValue": null,
-  "kind": "LocalArgument",
-  "name": "before"
-},
-v3 = {
-  "defaultValue": null,
-  "kind": "LocalArgument",
-  "name": "first"
-},
-v4 = {
-  "defaultValue": null,
-  "kind": "LocalArgument",
-  "name": "last"
-},
-v5 = [
+var v0 = [
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "first",
+    "type": "Int"
+  },
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "last",
+    "type": "Int"
+  },
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "after",
+    "type": "String"
+  },
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "before",
+    "type": "String"
+  },
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "artistID",
+    "type": "String!"
+  }
+],
+v1 = [
   {
     "kind": "Variable",
     "name": "id",
     "variableName": "artistID"
   }
 ],
-v6 = {
+v2 = {
   "kind": "Variable",
   "name": "after",
   "variableName": "after"
 },
-v7 = {
+v3 = {
   "kind": "Variable",
   "name": "before",
   "variableName": "before"
 },
-v8 = {
+v4 = {
   "kind": "Variable",
   "name": "first",
   "variableName": "first"
 },
-v9 = {
+v5 = {
   "kind": "Variable",
   "name": "last",
   "variableName": "last"
 },
-v10 = {
+v6 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "cursor",
   "storageKey": null
 },
-v11 = {
+v7 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "page",
   "storageKey": null
 },
-v12 = [
-  (v10/*: any*/),
-  (v11/*: any*/),
+v8 = [
+  (v6/*: any*/),
+  (v7/*: any*/),
   {
     "alias": null,
     "args": null,
@@ -173,14 +179,14 @@ v12 = [
     "storageKey": null
   }
 ],
-v13 = {
+v9 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "name",
   "storageKey": null
 },
-v14 = {
+v10 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -189,20 +195,14 @@ v14 = {
 };
 return {
   "fragment": {
-    "argumentDefinitions": [
-      (v0/*: any*/),
-      (v1/*: any*/),
-      (v2/*: any*/),
-      (v3/*: any*/),
-      (v4/*: any*/)
-    ],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
     "name": "ArtistArticlesRouteQuery",
     "selections": [
       {
         "alias": null,
-        "args": (v5/*: any*/),
+        "args": (v1/*: any*/),
         "concreteType": "Artist",
         "kind": "LinkedField",
         "name": "artist",
@@ -210,10 +210,10 @@ return {
         "selections": [
           {
             "args": [
-              (v6/*: any*/),
-              (v7/*: any*/),
-              (v8/*: any*/),
-              (v9/*: any*/)
+              (v2/*: any*/),
+              (v3/*: any*/),
+              (v4/*: any*/),
+              (v5/*: any*/)
             ],
             "kind": "FragmentSpread",
             "name": "ArtistArticlesRoute_artist"
@@ -222,24 +222,17 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query",
-    "abstractKey": null
+    "type": "Query"
   },
   "kind": "Request",
   "operation": {
-    "argumentDefinitions": [
-      (v3/*: any*/),
-      (v4/*: any*/),
-      (v0/*: any*/),
-      (v2/*: any*/),
-      (v1/*: any*/)
-    ],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
     "name": "ArtistArticlesRouteQuery",
     "selections": [
       {
         "alias": null,
-        "args": (v5/*: any*/),
+        "args": (v1/*: any*/),
         "concreteType": "Artist",
         "kind": "LinkedField",
         "name": "artist",
@@ -248,15 +241,15 @@ return {
           {
             "alias": null,
             "args": [
-              (v6/*: any*/),
-              (v7/*: any*/),
-              (v8/*: any*/),
+              (v2/*: any*/),
+              (v3/*: any*/),
+              (v4/*: any*/),
               {
                 "kind": "Literal",
                 "name": "inEditorialFeed",
                 "value": true
               },
-              (v9/*: any*/),
+              (v5/*: any*/),
               {
                 "kind": "Literal",
                 "name": "sort",
@@ -308,7 +301,7 @@ return {
                     "kind": "LinkedField",
                     "name": "around",
                     "plural": true,
-                    "selections": (v12/*: any*/),
+                    "selections": (v8/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -318,7 +311,7 @@ return {
                     "kind": "LinkedField",
                     "name": "first",
                     "plural": false,
-                    "selections": (v12/*: any*/),
+                    "selections": (v8/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -328,7 +321,7 @@ return {
                     "kind": "LinkedField",
                     "name": "last",
                     "plural": false,
-                    "selections": (v12/*: any*/),
+                    "selections": (v8/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -339,8 +332,8 @@ return {
                     "name": "previous",
                     "plural": false,
                     "selections": [
-                      (v10/*: any*/),
-                      (v11/*: any*/)
+                      (v6/*: any*/),
+                      (v7/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -392,8 +385,8 @@ return {
                         "name": "author",
                         "plural": false,
                         "selections": [
-                          (v13/*: any*/),
-                          (v14/*: any*/)
+                          (v9/*: any*/),
+                          (v10/*: any*/)
                         ],
                         "storageKey": null
                       },
@@ -471,7 +464,7 @@ return {
                         ],
                         "storageKey": null
                       },
-                      (v14/*: any*/)
+                      (v10/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -481,7 +474,7 @@ return {
             ],
             "storageKey": null
           },
-          (v13/*: any*/),
+          (v9/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -489,14 +482,13 @@ return {
             "name": "slug",
             "storageKey": null
           },
-          (v14/*: any*/)
+          (v10/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "37938bcf160ca32e0d9460813c1bf32b",
     "id": null,
     "metadata": {},
     "name": "ArtistArticlesRouteQuery",

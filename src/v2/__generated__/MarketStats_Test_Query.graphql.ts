@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -47,7 +46,8 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "artistInternalID"
+    "name": "artistInternalID",
+    "type": "ID!"
   }
 ],
 v1 = [
@@ -63,10 +63,10 @@ v1 = [
   }
 ],
 v2 = {
+  "type": "Int",
   "enumValues": null,
-  "nullable": true,
   "plural": false,
-  "type": "Int"
+  "nullable": true
 };
 return {
   "fragment": {
@@ -92,8 +92,7 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query",
-    "abstractKey": null
+    "type": "Query"
   },
   "kind": "Request",
   "operation": {
@@ -179,53 +178,52 @@ return {
     ]
   },
   "params": {
-    "cacheID": "8c98db6a8df16f080ab0cdacba936001",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "priceInsightsConnection": {
+          "type": "PriceInsightConnection",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "PriceInsightConnection"
+          "nullable": true
         },
         "priceInsightsConnection.edges": {
+          "type": "PriceInsightEdge",
           "enumValues": null,
-          "nullable": true,
           "plural": true,
-          "type": "PriceInsightEdge"
+          "nullable": true
         },
         "priceInsightsConnection.edges.node": {
+          "type": "MarketPriceInsights",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "MarketPriceInsights"
+          "nullable": true
+        },
+        "priceInsightsConnection.edges.node.medium": {
+          "type": "String",
+          "enumValues": null,
+          "plural": false,
+          "nullable": true
         },
         "priceInsightsConnection.edges.node.annualLotsSold": (v2/*: any*/),
         "priceInsightsConnection.edges.node.annualValueSoldCents": {
+          "type": "BigInt",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "BigInt"
-        },
-        "priceInsightsConnection.edges.node.id": {
-          "enumValues": null,
-          "nullable": false,
-          "plural": false,
-          "type": "ID"
-        },
-        "priceInsightsConnection.edges.node.medianSaleOverEstimatePercentage": (v2/*: any*/),
-        "priceInsightsConnection.edges.node.medium": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "String"
+          "nullable": true
         },
         "priceInsightsConnection.edges.node.sellThroughRate": {
+          "type": "Float",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "Float"
+          "nullable": true
+        },
+        "priceInsightsConnection.edges.node.medianSaleOverEstimatePercentage": (v2/*: any*/),
+        "priceInsightsConnection.edges.node.id": {
+          "type": "ID",
+          "enumValues": null,
+          "plural": false,
+          "nullable": true
         }
       }
     },

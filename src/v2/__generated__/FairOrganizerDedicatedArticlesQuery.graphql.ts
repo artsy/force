@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -122,62 +121,67 @@ fragment Pagination_pageCursors on PageCursors {
 */
 
 const node: ConcreteRequest = (function(){
-var v0 = {
-  "defaultValue": null,
-  "kind": "LocalArgument",
-  "name": "first"
-},
-v1 = {
-  "defaultValue": null,
-  "kind": "LocalArgument",
-  "name": "id"
-},
-v2 = {
-  "defaultValue": null,
-  "kind": "LocalArgument",
-  "name": "page"
-},
-v3 = [
+var v0 = [
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "id",
+    "type": "String!"
+  },
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "first",
+    "type": "Int"
+  },
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "page",
+    "type": "Int"
+  }
+],
+v1 = [
   {
     "kind": "Variable",
     "name": "id",
     "variableName": "id"
   }
 ],
-v4 = {
+v2 = {
   "kind": "Variable",
   "name": "first",
   "variableName": "first"
 },
-v5 = {
+v3 = {
   "kind": "Variable",
   "name": "page",
   "variableName": "page"
 },
-v6 = {
+v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "slug",
   "storageKey": null
 },
-v7 = {
+v5 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "cursor",
   "storageKey": null
 },
-v8 = {
+v6 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "page",
   "storageKey": null
 },
-v9 = [
-  (v7/*: any*/),
-  (v8/*: any*/),
+v7 = [
+  (v5/*: any*/),
+  (v6/*: any*/),
   {
     "alias": null,
     "args": null,
@@ -186,28 +190,28 @@ v9 = [
     "storageKey": null
   }
 ],
-v10 = {
+v8 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v11 = {
+v9 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "src",
   "storageKey": null
 },
-v12 = {
+v10 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "srcSet",
   "storageKey": null
 },
-v13 = [
+v11 = [
   {
     "alias": null,
     "args": null,
@@ -222,23 +226,19 @@ v13 = [
     "name": "height",
     "storageKey": null
   },
-  (v11/*: any*/),
-  (v12/*: any*/)
+  (v9/*: any*/),
+  (v10/*: any*/)
 ];
 return {
   "fragment": {
-    "argumentDefinitions": [
-      (v0/*: any*/),
-      (v1/*: any*/),
-      (v2/*: any*/)
-    ],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
     "name": "FairOrganizerDedicatedArticlesQuery",
     "selections": [
       {
         "alias": null,
-        "args": (v3/*: any*/),
+        "args": (v1/*: any*/),
         "concreteType": "FairOrganizer",
         "kind": "LinkedField",
         "name": "fairOrganizer",
@@ -246,8 +246,8 @@ return {
         "selections": [
           {
             "args": [
-              (v4/*: any*/),
-              (v5/*: any*/)
+              (v2/*: any*/),
+              (v3/*: any*/)
             ],
             "kind": "FragmentSpread",
             "name": "FairOrganizerDedicatedArticles_fairOrganizer"
@@ -256,28 +256,23 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query",
-    "abstractKey": null
+    "type": "Query"
   },
   "kind": "Request",
   "operation": {
-    "argumentDefinitions": [
-      (v1/*: any*/),
-      (v0/*: any*/),
-      (v2/*: any*/)
-    ],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
     "name": "FairOrganizerDedicatedArticlesQuery",
     "selections": [
       {
         "alias": null,
-        "args": (v3/*: any*/),
+        "args": (v1/*: any*/),
         "concreteType": "FairOrganizer",
         "kind": "LinkedField",
         "name": "fairOrganizer",
         "plural": false,
         "selections": [
-          (v6/*: any*/),
+          (v4/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -288,8 +283,8 @@ return {
           {
             "alias": null,
             "args": [
-              (v4/*: any*/),
-              (v5/*: any*/),
+              (v2/*: any*/),
+              (v3/*: any*/),
               {
                 "kind": "Literal",
                 "name": "sort",
@@ -341,7 +336,7 @@ return {
                     "kind": "LinkedField",
                     "name": "around",
                     "plural": true,
-                    "selections": (v9/*: any*/),
+                    "selections": (v7/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -351,7 +346,7 @@ return {
                     "kind": "LinkedField",
                     "name": "first",
                     "plural": false,
-                    "selections": (v9/*: any*/),
+                    "selections": (v7/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -361,7 +356,7 @@ return {
                     "kind": "LinkedField",
                     "name": "last",
                     "plural": false,
-                    "selections": (v9/*: any*/),
+                    "selections": (v7/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -372,8 +367,8 @@ return {
                     "name": "previous",
                     "plural": false,
                     "selections": [
-                      (v7/*: any*/),
-                      (v8/*: any*/)
+                      (v5/*: any*/),
+                      (v6/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -396,7 +391,7 @@ return {
                     "name": "node",
                     "plural": false,
                     "selections": [
-                      (v10/*: any*/),
+                      (v8/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -450,7 +445,7 @@ return {
                             "kind": "LinkedField",
                             "name": "cropped",
                             "plural": false,
-                            "selections": (v13/*: any*/),
+                            "selections": (v11/*: any*/),
                             "storageKey": "cropped(height:720,width:670)"
                           },
                           {
@@ -471,7 +466,7 @@ return {
                             "kind": "LinkedField",
                             "name": "cropped",
                             "plural": false,
-                            "selections": (v13/*: any*/),
+                            "selections": (v11/*: any*/),
                             "storageKey": "cropped(height:240,width:325)"
                           }
                         ],
@@ -484,7 +479,7 @@ return {
                         "name": "internalID",
                         "storageKey": null
                       },
-                      (v6/*: any*/),
+                      (v4/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -541,26 +536,25 @@ return {
                     "name": "resized",
                     "plural": false,
                     "selections": [
-                      (v11/*: any*/),
-                      (v12/*: any*/)
+                      (v9/*: any*/),
+                      (v10/*: any*/)
                     ],
                     "storageKey": "resized(height:30,version:\"square\",width:30)"
                   }
                 ],
                 "storageKey": null
               },
-              (v10/*: any*/)
+              (v8/*: any*/)
             ],
             "storageKey": null
           },
-          (v10/*: any*/)
+          (v8/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "c89d9e89a9e595855113dc6c5516f4e6",
     "id": null,
     "metadata": {},
     "name": "FairOrganizerDedicatedArticlesQuery",

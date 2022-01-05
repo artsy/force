@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -18,11 +17,11 @@ export type SelectedCareerAchievementsTestQueryRawResponse = {
                     readonly node: ({
                         readonly categories: ReadonlyArray<({
                             readonly slug: string;
-                            readonly id: string;
+                            readonly id: string | null;
                         }) | null> | null;
-                        readonly id: string;
+                        readonly id: string | null;
                     }) | null;
-                    readonly id: string;
+                    readonly id: string | null;
                 }) | null> | null;
             }) | null;
         }) | null;
@@ -39,12 +38,12 @@ export type SelectedCareerAchievementsTestQueryRawResponse = {
                     }) | null;
                     readonly organization: string | null;
                     readonly sale_date: string | null;
-                    readonly id: string;
+                    readonly id: string | null;
                 }) | null;
             }) | null> | null;
         }) | null;
         readonly slug: string;
-        readonly id: string;
+        readonly id: string | null;
     }) | null;
 };
 export type SelectedCareerAchievementsTestQuery = {
@@ -122,16 +121,22 @@ v2 = {
   "storageKey": null
 },
 v3 = {
+  "type": "ID",
   "enumValues": null,
-  "nullable": false,
   "plural": false,
-  "type": "ID"
+  "nullable": true
 },
 v4 = {
+  "type": "ID",
   "enumValues": null,
-  "nullable": true,
   "plural": false,
-  "type": "String"
+  "nullable": false
+},
+v5 = {
+  "type": "String",
+  "enumValues": null,
+  "plural": false,
+  "nullable": true
 };
 return {
   "fragment": {
@@ -157,8 +162,7 @@ return {
         "storageKey": "artist(id:\"pablo-picasso\")"
       }
     ],
-    "type": "Query",
-    "abstractKey": null
+    "type": "Query"
   },
   "kind": "Request",
   "operation": {
@@ -392,94 +396,93 @@ return {
     ]
   },
   "params": {
-    "cacheID": "b291001f917daaa4195c1a37e3bad541",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "artist": {
+          "type": "Artist",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "Artist"
+          "nullable": true
+        },
+        "artist.id": (v3/*: any*/),
+        "artist.highlights": {
+          "type": "ArtistHighlights",
+          "enumValues": null,
+          "plural": false,
+          "nullable": true
+        },
+        "artist.insights": {
+          "type": "ArtistInsight",
+          "enumValues": null,
+          "plural": true,
+          "nullable": true
         },
         "artist.auctionResultsConnection": {
+          "type": "AuctionResultConnection",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "AuctionResultConnection"
+          "nullable": true
+        },
+        "artist.slug": (v4/*: any*/),
+        "artist.highlights.partnersConnection": {
+          "type": "PartnerArtistConnection",
+          "enumValues": null,
+          "plural": false,
+          "nullable": true
+        },
+        "artist.insights.type": (v5/*: any*/),
+        "artist.insights.label": (v5/*: any*/),
+        "artist.insights.entities": {
+          "type": "String",
+          "enumValues": null,
+          "plural": true,
+          "nullable": true
         },
         "artist.auctionResultsConnection.edges": {
+          "type": "AuctionResultEdge",
           "enumValues": null,
-          "nullable": true,
           "plural": true,
-          "type": "AuctionResultEdge"
-        },
-        "artist.auctionResultsConnection.edges.node": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "AuctionResult"
-        },
-        "artist.auctionResultsConnection.edges.node.id": (v3/*: any*/),
-        "artist.auctionResultsConnection.edges.node.organization": (v4/*: any*/),
-        "artist.auctionResultsConnection.edges.node.price_realized": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "AuctionResultPriceRealized"
-        },
-        "artist.auctionResultsConnection.edges.node.price_realized.display": (v4/*: any*/),
-        "artist.auctionResultsConnection.edges.node.sale_date": (v4/*: any*/),
-        "artist.highlights": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "ArtistHighlights"
-        },
-        "artist.highlights.partnersConnection": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "PartnerArtistConnection"
+          "nullable": true
         },
         "artist.highlights.partnersConnection.edges": {
+          "type": "PartnerArtistEdge",
           "enumValues": null,
-          "nullable": true,
           "plural": true,
-          "type": "PartnerArtistEdge"
+          "nullable": true
+        },
+        "artist.auctionResultsConnection.edges.node": {
+          "type": "AuctionResult",
+          "enumValues": null,
+          "plural": false,
+          "nullable": true
+        },
+        "artist.highlights.partnersConnection.edges.node": {
+          "type": "Partner",
+          "enumValues": null,
+          "plural": false,
+          "nullable": true
         },
         "artist.highlights.partnersConnection.edges.id": (v3/*: any*/),
-        "artist.highlights.partnersConnection.edges.node": {
+        "artist.auctionResultsConnection.edges.node.price_realized": {
+          "type": "AuctionResultPriceRealized",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "Partner"
+          "nullable": true
         },
+        "artist.auctionResultsConnection.edges.node.organization": (v5/*: any*/),
+        "artist.auctionResultsConnection.edges.node.sale_date": (v5/*: any*/),
+        "artist.auctionResultsConnection.edges.node.id": (v3/*: any*/),
         "artist.highlights.partnersConnection.edges.node.categories": {
+          "type": "PartnerCategory",
           "enumValues": null,
-          "nullable": true,
           "plural": true,
-          "type": "PartnerCategory"
+          "nullable": true
         },
-        "artist.highlights.partnersConnection.edges.node.categories.id": (v3/*: any*/),
-        "artist.highlights.partnersConnection.edges.node.categories.slug": (v3/*: any*/),
         "artist.highlights.partnersConnection.edges.node.id": (v3/*: any*/),
-        "artist.id": (v3/*: any*/),
-        "artist.insights": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": true,
-          "type": "ArtistInsight"
-        },
-        "artist.insights.entities": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": true,
-          "type": "String"
-        },
-        "artist.insights.label": (v4/*: any*/),
-        "artist.insights.type": (v4/*: any*/),
-        "artist.slug": (v3/*: any*/)
+        "artist.auctionResultsConnection.edges.node.price_realized.display": (v5/*: any*/),
+        "artist.highlights.partnersConnection.edges.node.categories.slug": (v4/*: any*/),
+        "artist.highlights.partnersConnection.edges.node.categories.id": (v3/*: any*/)
       }
     },
     "name": "SelectedCareerAchievementsTestQuery",

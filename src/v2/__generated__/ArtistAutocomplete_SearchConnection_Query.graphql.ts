@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 export type ArtistAutocomplete_SearchConnection_QueryVariables = {
@@ -52,7 +51,6 @@ query ArtistAutocomplete_SearchConnection_Query(
           }
         }
         ... on Node {
-          __isNode: __typename
           id
         }
       }
@@ -66,7 +64,8 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "searchQuery"
+    "name": "searchQuery",
+    "type": "String!"
   }
 ],
 v1 = [
@@ -170,8 +169,7 @@ v3 = {
       "storageKey": null
     }
   ],
-  "type": "Artist",
-  "abstractKey": null
+  "type": "Artist"
 };
 return {
   "fragment": {
@@ -216,8 +214,7 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query",
-    "abstractKey": null
+    "type": "Query"
   },
   "kind": "Request",
   "operation": {
@@ -257,21 +254,14 @@ return {
                     "storageKey": null
                   },
                   (v2/*: any*/),
-                  (v3/*: any*/),
                   {
-                    "kind": "InlineFragment",
-                    "selections": [
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "id",
-                        "storageKey": null
-                      }
-                    ],
-                    "type": "Node",
-                    "abstractKey": "__isNode"
-                  }
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "id",
+                    "storageKey": null
+                  },
+                  (v3/*: any*/)
                 ],
                 "storageKey": null
               }
@@ -284,12 +274,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "8e4e0ae92c09eafd2198c8dbb2e835d6",
     "id": null,
     "metadata": {},
     "name": "ArtistAutocomplete_SearchConnection_Query",
     "operationKind": "query",
-    "text": "query ArtistAutocomplete_SearchConnection_Query(\n  $searchQuery: String!\n) {\n  searchConnection(query: $searchQuery, entities: ARTIST, mode: AUTOSUGGEST, first: 3) {\n    edges {\n      node {\n        __typename\n        displayLabel\n        ... on Artist {\n          internalID\n          image {\n            cropped(width: 44, height: 44) {\n              height\n              src\n              srcSet\n              width\n            }\n          }\n        }\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n      }\n    }\n  }\n}\n"
+    "text": "query ArtistAutocomplete_SearchConnection_Query(\n  $searchQuery: String!\n) {\n  searchConnection(query: $searchQuery, entities: ARTIST, mode: AUTOSUGGEST, first: 3) {\n    edges {\n      node {\n        __typename\n        displayLabel\n        ... on Artist {\n          internalID\n          image {\n            cropped(width: 44, height: 44) {\n              height\n              src\n              srcSet\n              width\n            }\n          }\n        }\n        ... on Node {\n          id\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();

@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -48,7 +47,6 @@ fragment SearchBar_viewer_2Mejjw on Viewer {
           }
         }
         ... on Node {
-          __isNode: __typename
           id
         }
       }
@@ -58,22 +56,23 @@ fragment SearchBar_viewer_2Mejjw on Viewer {
 */
 
 const node: ConcreteRequest = (function(){
-var v0 = {
-  "defaultValue": null,
-  "kind": "LocalArgument",
-  "name": "hasTerm"
-},
-v1 = {
-  "defaultValue": null,
-  "kind": "LocalArgument",
-  "name": "term"
-};
+var v0 = [
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "term",
+    "type": "String!"
+  },
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "hasTerm",
+    "type": "Boolean!"
+  }
+];
 return {
   "fragment": {
-    "argumentDefinitions": [
-      (v0/*: any*/),
-      (v1/*: any*/)
-    ],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
     "name": "SearchBarRefetchQuery",
@@ -106,15 +105,11 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query",
-    "abstractKey": null
+    "type": "Query"
   },
   "kind": "Request",
   "operation": {
-    "argumentDefinitions": [
-      (v1/*: any*/),
-      (v0/*: any*/)
-    ],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
     "name": "SearchBarRefetchQuery",
     "selections": [
@@ -193,6 +188,13 @@ return {
                             "storageKey": null
                           },
                           {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "id",
+                            "storageKey": null
+                          },
+                          {
                             "kind": "InlineFragment",
                             "selections": [
                               {
@@ -210,8 +212,7 @@ return {
                                 "storageKey": null
                               }
                             ],
-                            "type": "SearchableItem",
-                            "abstractKey": null
+                            "type": "SearchableItem"
                           },
                           {
                             "kind": "InlineFragment",
@@ -242,22 +243,7 @@ return {
                                 "storageKey": null
                               }
                             ],
-                            "type": "Artist",
-                            "abstractKey": null
-                          },
-                          {
-                            "kind": "InlineFragment",
-                            "selections": [
-                              {
-                                "alias": null,
-                                "args": null,
-                                "kind": "ScalarField",
-                                "name": "id",
-                                "storageKey": null
-                              }
-                            ],
-                            "type": "Node",
-                            "abstractKey": "__isNode"
+                            "type": "Artist"
                           }
                         ],
                         "storageKey": null
@@ -276,12 +262,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "32c3e1aa544ac03d121bbbc8f0343f07",
     "id": null,
     "metadata": {},
     "name": "SearchBarRefetchQuery",
     "operationKind": "query",
-    "text": "query SearchBarRefetchQuery(\n  $term: String!\n  $hasTerm: Boolean!\n) {\n  viewer {\n    ...SearchBar_viewer_2Mejjw\n  }\n}\n\nfragment SearchBar_viewer_2Mejjw on Viewer {\n  searchConnection(query: $term, mode: AUTOSUGGEST, first: 7) @include(if: $hasTerm) {\n    edges {\n      node {\n        displayLabel\n        href\n        __typename\n        ... on SearchableItem {\n          displayType\n          slug\n        }\n        ... on Artist {\n          statuses {\n            artworks\n            auctionLots\n          }\n        }\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n      }\n    }\n  }\n}\n"
+    "text": "query SearchBarRefetchQuery(\n  $term: String!\n  $hasTerm: Boolean!\n) {\n  viewer {\n    ...SearchBar_viewer_2Mejjw\n  }\n}\n\nfragment SearchBar_viewer_2Mejjw on Viewer {\n  searchConnection(query: $term, mode: AUTOSUGGEST, first: 7) @include(if: $hasTerm) {\n    edges {\n      node {\n        displayLabel\n        href\n        __typename\n        ... on SearchableItem {\n          displayType\n          slug\n        }\n        ... on Artist {\n          statuses {\n            artworks\n            auctionLots\n          }\n        }\n        ... on Node {\n          id\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();

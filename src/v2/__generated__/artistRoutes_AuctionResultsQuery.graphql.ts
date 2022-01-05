@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -138,85 +137,94 @@ fragment Pagination_pageCursors on PageCursors {
 */
 
 const node: ConcreteRequest = (function(){
-var v0 = {
-  "defaultValue": null,
-  "kind": "LocalArgument",
-  "name": "allowEmptyCreatedDates"
-},
-v1 = {
-  "defaultValue": null,
-  "kind": "LocalArgument",
-  "name": "artistID"
-},
-v2 = {
-  "defaultValue": null,
-  "kind": "LocalArgument",
-  "name": "categories"
-},
-v3 = {
-  "defaultValue": null,
-  "kind": "LocalArgument",
-  "name": "createdAfterYear"
-},
-v4 = {
-  "defaultValue": null,
-  "kind": "LocalArgument",
-  "name": "createdBeforeYear"
-},
-v5 = {
-  "defaultValue": null,
-  "kind": "LocalArgument",
-  "name": "organizations"
-},
-v6 = {
-  "defaultValue": null,
-  "kind": "LocalArgument",
-  "name": "sizes"
-},
-v7 = [
+var v0 = [
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "artistID",
+    "type": "String!"
+  },
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "organizations",
+    "type": "[String]"
+  },
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "categories",
+    "type": "[String]"
+  },
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "sizes",
+    "type": "[ArtworkSizes]"
+  },
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "createdAfterYear",
+    "type": "Int"
+  },
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "createdBeforeYear",
+    "type": "Int"
+  },
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "allowEmptyCreatedDates",
+    "type": "Boolean"
+  }
+],
+v1 = [
   {
     "kind": "Variable",
     "name": "id",
     "variableName": "artistID"
   }
 ],
-v8 = {
+v2 = {
   "kind": "Variable",
   "name": "allowEmptyCreatedDates",
   "variableName": "allowEmptyCreatedDates"
 },
-v9 = {
+v3 = {
   "kind": "Variable",
   "name": "categories",
   "variableName": "categories"
 },
-v10 = {
+v4 = {
   "kind": "Variable",
   "name": "organizations",
   "variableName": "organizations"
 },
-v11 = {
+v5 = {
   "kind": "Variable",
   "name": "sizes",
   "variableName": "sizes"
 },
-v12 = {
+v6 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "cursor",
   "storageKey": null
 },
-v13 = {
+v7 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "page",
   "storageKey": null
 },
-v14 = [
-  (v12/*: any*/),
-  (v13/*: any*/),
+v8 = [
+  (v6/*: any*/),
+  (v7/*: any*/),
   {
     "alias": null,
     "args": null,
@@ -225,14 +233,14 @@ v14 = [
     "storageKey": null
   }
 ],
-v15 = {
+v9 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "display",
   "storageKey": null
 },
-v16 = {
+v10 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -241,22 +249,14 @@ v16 = {
 };
 return {
   "fragment": {
-    "argumentDefinitions": [
-      (v0/*: any*/),
-      (v1/*: any*/),
-      (v2/*: any*/),
-      (v3/*: any*/),
-      (v4/*: any*/),
-      (v5/*: any*/),
-      (v6/*: any*/)
-    ],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
     "name": "artistRoutes_AuctionResultsQuery",
     "selections": [
       {
         "alias": null,
-        "args": (v7/*: any*/),
+        "args": (v1/*: any*/),
         "concreteType": "Artist",
         "kind": "LinkedField",
         "name": "artist",
@@ -264,8 +264,8 @@ return {
         "selections": [
           {
             "args": [
-              (v8/*: any*/),
-              (v9/*: any*/),
+              (v2/*: any*/),
+              (v3/*: any*/),
               {
                 "kind": "Variable",
                 "name": "createdAfterYear",
@@ -276,8 +276,8 @@ return {
                 "name": "createdBeforeYear",
                 "variableName": "createdBeforeYear"
               },
-              (v10/*: any*/),
-              (v11/*: any*/)
+              (v4/*: any*/),
+              (v5/*: any*/)
             ],
             "kind": "FragmentSpread",
             "name": "ArtistAuctionResultsRoute_artist"
@@ -286,26 +286,17 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query",
-    "abstractKey": null
+    "type": "Query"
   },
   "kind": "Request",
   "operation": {
-    "argumentDefinitions": [
-      (v1/*: any*/),
-      (v5/*: any*/),
-      (v2/*: any*/),
-      (v6/*: any*/),
-      (v3/*: any*/),
-      (v4/*: any*/),
-      (v0/*: any*/)
-    ],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
     "name": "artistRoutes_AuctionResultsQuery",
     "selections": [
       {
         "alias": null,
-        "args": (v7/*: any*/),
+        "args": (v1/*: any*/),
         "concreteType": "Artist",
         "kind": "LinkedField",
         "name": "artist",
@@ -335,8 +326,8 @@ return {
           {
             "alias": null,
             "args": [
-              (v8/*: any*/),
-              (v9/*: any*/),
+              (v2/*: any*/),
+              (v3/*: any*/),
               {
                 "kind": "Variable",
                 "name": "earliestCreatedYear",
@@ -352,8 +343,8 @@ return {
                 "name": "latestCreatedYear",
                 "variableName": "createdBeforeYear"
               },
-              (v10/*: any*/),
-              (v11/*: any*/),
+              (v4/*: any*/),
+              (v5/*: any*/),
               {
                 "kind": "Literal",
                 "name": "sort",
@@ -437,7 +428,7 @@ return {
                     "kind": "LinkedField",
                     "name": "around",
                     "plural": true,
-                    "selections": (v14/*: any*/),
+                    "selections": (v8/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -447,7 +438,7 @@ return {
                     "kind": "LinkedField",
                     "name": "first",
                     "plural": false,
-                    "selections": (v14/*: any*/),
+                    "selections": (v8/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -457,7 +448,7 @@ return {
                     "kind": "LinkedField",
                     "name": "last",
                     "plural": false,
-                    "selections": (v14/*: any*/),
+                    "selections": (v8/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -468,8 +459,8 @@ return {
                     "name": "previous",
                     "plural": false,
                     "selections": [
-                      (v12/*: any*/),
-                      (v13/*: any*/)
+                      (v6/*: any*/),
+                      (v7/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -599,7 +590,7 @@ return {
                         "name": "priceRealized",
                         "plural": false,
                         "selections": [
-                          (v15/*: any*/),
+                          (v9/*: any*/),
                           {
                             "alias": "display_usd",
                             "args": null,
@@ -643,11 +634,11 @@ return {
                         "name": "estimate",
                         "plural": false,
                         "selections": [
-                          (v15/*: any*/)
+                          (v9/*: any*/)
                         ],
                         "storageKey": null
                       },
-                      (v16/*: any*/)
+                      (v10/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -657,14 +648,13 @@ return {
             ],
             "storageKey": null
           },
-          (v16/*: any*/)
+          (v10/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "e406fc4494011fd1b4dbf224ee99e838",
     "id": null,
     "metadata": {},
     "name": "artistRoutes_AuctionResultsQuery",

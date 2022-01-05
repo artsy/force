@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -63,34 +62,34 @@ fragment HomeTrendingArtistsRail_viewer on Viewer {
 
 const node: ConcreteRequest = (function(){
 var v0 = {
+  "type": "ID",
   "enumValues": null,
-  "nullable": true,
   "plural": false,
-  "type": "String"
+  "nullable": false
 },
 v1 = {
+  "type": "Boolean",
   "enumValues": null,
-  "nullable": false,
   "plural": false,
-  "type": "ID"
+  "nullable": true
 },
 v2 = {
+  "type": "String",
   "enumValues": null,
-  "nullable": false,
   "plural": false,
-  "type": "Int"
+  "nullable": true
 },
 v3 = {
+  "type": "String",
   "enumValues": null,
-  "nullable": false,
   "plural": false,
-  "type": "String"
+  "nullable": false
 },
 v4 = {
+  "type": "Int",
   "enumValues": null,
-  "nullable": true,
   "plural": false,
-  "type": "Boolean"
+  "nullable": false
 };
 return {
   "fragment": {
@@ -116,8 +115,7 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query",
-    "abstractKey": null
+    "type": "Query"
   },
   "kind": "Request",
   "operation": {
@@ -318,70 +316,69 @@ return {
     ]
   },
   "params": {
-    "cacheID": "fa1bcc72df64ff92f9d247730071e21f",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "viewer": {
+          "type": "Viewer",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "Viewer"
+          "nullable": true
         },
         "viewer.artistsConnection": {
+          "type": "ArtistConnection",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "ArtistConnection"
+          "nullable": true
         },
         "viewer.artistsConnection.edges": {
+          "type": "ArtistEdge",
           "enumValues": null,
-          "nullable": true,
           "plural": true,
-          "type": "ArtistEdge"
+          "nullable": true
         },
         "viewer.artistsConnection.edges.node": {
+          "type": "Artist",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "Artist"
+          "nullable": true
         },
-        "viewer.artistsConnection.edges.node.counts": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "ArtistCounts"
-        },
-        "viewer.artistsConnection.edges.node.counts.follows": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "FormattedNumber"
-        },
-        "viewer.artistsConnection.edges.node.formattedNationalityAndBirthday": (v0/*: any*/),
-        "viewer.artistsConnection.edges.node.href": (v0/*: any*/),
-        "viewer.artistsConnection.edges.node.id": (v1/*: any*/),
+        "viewer.artistsConnection.edges.node.internalID": (v0/*: any*/),
+        "viewer.artistsConnection.edges.node.isFollowed": (v1/*: any*/),
+        "viewer.artistsConnection.edges.node.name": (v2/*: any*/),
+        "viewer.artistsConnection.edges.node.slug": (v0/*: any*/),
+        "viewer.artistsConnection.edges.node.href": (v2/*: any*/),
+        "viewer.artistsConnection.edges.node.formattedNationalityAndBirthday": (v2/*: any*/),
         "viewer.artistsConnection.edges.node.image": {
+          "type": "Image",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "Image"
+          "nullable": true
+        },
+        "viewer.artistsConnection.edges.node.id": (v0/*: any*/),
+        "viewer.artistsConnection.edges.node.is_followed": (v1/*: any*/),
+        "viewer.artistsConnection.edges.node.counts": {
+          "type": "ArtistCounts",
+          "enumValues": null,
+          "plural": false,
+          "nullable": true
         },
         "viewer.artistsConnection.edges.node.image.cropped": {
+          "type": "CroppedImageUrl",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "CroppedImageUrl"
+          "nullable": true
         },
-        "viewer.artistsConnection.edges.node.image.cropped.height": (v2/*: any*/),
+        "viewer.artistsConnection.edges.node.counts.follows": {
+          "type": "FormattedNumber",
+          "enumValues": null,
+          "plural": false,
+          "nullable": true
+        },
         "viewer.artistsConnection.edges.node.image.cropped.src": (v3/*: any*/),
         "viewer.artistsConnection.edges.node.image.cropped.srcSet": (v3/*: any*/),
-        "viewer.artistsConnection.edges.node.image.cropped.width": (v2/*: any*/),
-        "viewer.artistsConnection.edges.node.internalID": (v1/*: any*/),
-        "viewer.artistsConnection.edges.node.isFollowed": (v4/*: any*/),
-        "viewer.artistsConnection.edges.node.is_followed": (v4/*: any*/),
-        "viewer.artistsConnection.edges.node.name": (v0/*: any*/),
-        "viewer.artistsConnection.edges.node.slug": (v1/*: any*/)
+        "viewer.artistsConnection.edges.node.image.cropped.width": (v4/*: any*/),
+        "viewer.artistsConnection.edges.node.image.cropped.height": (v4/*: any*/)
       }
     },
     "name": "HomeTrendingArtistsRail_Test_Query",

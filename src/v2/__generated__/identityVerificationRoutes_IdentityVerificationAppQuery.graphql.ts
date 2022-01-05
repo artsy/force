@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -20,9 +19,9 @@ export type identityVerificationRoutes_IdentityVerificationAppQueryRawResponse =
             readonly internalID: string;
             readonly userID: string;
             readonly state: string;
-            readonly id: string;
+            readonly id: string | null;
         }) | null;
-        readonly id: string;
+        readonly id: string | null;
     }) | null;
 };
 export type identityVerificationRoutes_IdentityVerificationAppQuery = {
@@ -60,7 +59,8 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "id"
+    "name": "id",
+    "type": "String!"
   }
 ],
 v1 = [
@@ -108,8 +108,7 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query",
-    "abstractKey": null
+    "type": "Query"
   },
   "kind": "Request",
   "operation": {
@@ -167,7 +166,6 @@ return {
     ]
   },
   "params": {
-    "cacheID": "5a6e5e29529fcf826d283a8597ffae57",
     "id": null,
     "metadata": {},
     "name": "identityVerificationRoutes_IdentityVerificationAppQuery",

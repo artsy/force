@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 export type FollowArtistInput = {
@@ -52,7 +51,8 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "input"
+    "name": "input",
+    "type": "FollowArtistInput!"
   }
 ],
 v1 = [
@@ -131,8 +131,7 @@ return {
     "metadata": null,
     "name": "FollowArtistButtonMutation",
     "selections": (v1/*: any*/),
-    "type": "Mutation",
-    "abstractKey": null
+    "type": "Mutation"
   },
   "kind": "Request",
   "operation": {
@@ -142,7 +141,6 @@ return {
     "selections": (v1/*: any*/)
   },
   "params": {
-    "cacheID": "11f15ef7b2c9a5bc9feae01fe5b9e56e",
     "id": null,
     "metadata": {},
     "name": "FollowArtistButtonMutation",

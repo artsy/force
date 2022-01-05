@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 export type FollowGeneInput = {
@@ -69,31 +68,35 @@ mutation GeneSearchResultsFollowGeneMutation(
 */
 
 const node: ConcreteRequest = (function(){
-var v0 = {
-  "defaultValue": null,
-  "kind": "LocalArgument",
-  "name": "excludedGeneIds"
-},
-v1 = {
-  "defaultValue": null,
-  "kind": "LocalArgument",
-  "name": "input"
-},
-v2 = [
+var v0 = [
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "input",
+    "type": "FollowGeneInput!"
+  },
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "excludedGeneIds",
+    "type": "[String]!"
+  }
+],
+v1 = [
   {
     "kind": "Variable",
     "name": "input",
     "variableName": "input"
   }
 ],
-v3 = {
+v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v4 = {
+v3 = {
   "alias": null,
   "args": [
     {
@@ -142,7 +145,7 @@ v4 = {
               "name": "internalID",
               "storageKey": null
             },
-            (v3/*: any*/),
+            (v2/*: any*/),
             {
               "alias": null,
               "args": null,
@@ -201,17 +204,14 @@ v4 = {
 };
 return {
   "fragment": {
-    "argumentDefinitions": [
-      (v0/*: any*/),
-      (v1/*: any*/)
-    ],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
     "name": "GeneSearchResultsFollowGeneMutation",
     "selections": [
       {
         "alias": null,
-        "args": (v2/*: any*/),
+        "args": (v1/*: any*/),
         "concreteType": "FollowGenePayload",
         "kind": "LinkedField",
         "name": "followGene",
@@ -225,7 +225,7 @@ return {
             "name": "gene",
             "plural": false,
             "selections": [
-              (v4/*: any*/)
+              (v3/*: any*/)
             ],
             "storageKey": null
           }
@@ -233,21 +233,17 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Mutation",
-    "abstractKey": null
+    "type": "Mutation"
   },
   "kind": "Request",
   "operation": {
-    "argumentDefinitions": [
-      (v1/*: any*/),
-      (v0/*: any*/)
-    ],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
     "name": "GeneSearchResultsFollowGeneMutation",
     "selections": [
       {
         "alias": null,
-        "args": (v2/*: any*/),
+        "args": (v1/*: any*/),
         "concreteType": "FollowGenePayload",
         "kind": "LinkedField",
         "name": "followGene",
@@ -261,8 +257,8 @@ return {
             "name": "gene",
             "plural": false,
             "selections": [
-              (v4/*: any*/),
-              (v3/*: any*/)
+              (v3/*: any*/),
+              (v2/*: any*/)
             ],
             "storageKey": null
           }
@@ -272,7 +268,6 @@ return {
     ]
   },
   "params": {
-    "cacheID": "c496b12f0b93637c9f84c138405034a5",
     "id": null,
     "metadata": {},
     "name": "GeneSearchResultsFollowGeneMutation",

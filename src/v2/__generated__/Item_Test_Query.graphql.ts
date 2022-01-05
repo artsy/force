@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -32,7 +31,6 @@ query Item_Test_Query {
           __typename
           ...Item_item
           ... on Node {
-            __isNode: __typename
             id
           }
         }
@@ -44,7 +42,6 @@ query Item_Test_Query {
 }
 
 fragment Item_item on ConversationItemType {
-  __isConversationItemType: __typename
   __typename
   ... on Artwork {
     internalID
@@ -189,8 +186,7 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query",
-    "abstractKey": null
+    "type": "Query"
   },
   "kind": "Request",
   "operation": {
@@ -231,10 +227,7 @@ return {
                     "plural": false,
                     "selections": [
                       (v1/*: any*/),
-                      {
-                        "kind": "TypeDiscriminator",
-                        "abstractKey": "__isConversationItemType"
-                      },
+                      (v2/*: any*/),
                       {
                         "kind": "InlineFragment",
                         "selections": [
@@ -245,7 +238,6 @@ return {
                             "name": "internalID",
                             "storageKey": null
                           },
-                          (v2/*: any*/),
                           {
                             "alias": null,
                             "args": null,
@@ -313,26 +305,22 @@ return {
                               {
                                 "kind": "InlineFragment",
                                 "selections": (v4/*: any*/),
-                                "type": "Money",
-                                "abstractKey": null
+                                "type": "Money"
                               },
                               {
                                 "kind": "InlineFragment",
                                 "selections": (v4/*: any*/),
-                                "type": "PriceRange",
-                                "abstractKey": null
+                                "type": "PriceRange"
                               }
                             ],
                             "storageKey": null
                           }
                         ],
-                        "type": "Artwork",
-                        "abstractKey": null
+                        "type": "Artwork"
                       },
                       {
                         "kind": "InlineFragment",
                         "selections": [
-                          (v2/*: any*/),
                           {
                             "alias": null,
                             "args": null,
@@ -393,16 +381,7 @@ return {
                             "storageKey": null
                           }
                         ],
-                        "type": "Show",
-                        "abstractKey": null
-                      },
-                      {
-                        "kind": "InlineFragment",
-                        "selections": [
-                          (v2/*: any*/)
-                        ],
-                        "type": "Node",
-                        "abstractKey": "__isNode"
+                        "type": "Show"
                       }
                     ],
                     "storageKey": null
@@ -421,12 +400,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "f0500160eda75310ca46ca80f41309ce",
     "id": null,
     "metadata": {},
     "name": "Item_Test_Query",
     "operationKind": "query",
-    "text": "query Item_Test_Query {\n  me {\n    conversation(id: \"test-id\") {\n      items {\n        item {\n          __typename\n          ...Item_item\n          ... on Node {\n            __isNode: __typename\n            id\n          }\n        }\n      }\n      id\n    }\n    id\n  }\n}\n\nfragment Item_item on ConversationItemType {\n  __isConversationItemType: __typename\n  __typename\n  ... on Artwork {\n    internalID\n    id\n    date\n    title\n    artistNames\n    href\n    isOfferableFromInquiry\n    image {\n      url(version: [\"large\"])\n    }\n    listPrice {\n      __typename\n      ... on Money {\n        display\n      }\n      ... on PriceRange {\n        display\n      }\n    }\n  }\n  ... on Show {\n    id\n    fair {\n      name\n      exhibitionPeriod\n      location {\n        city\n        id\n      }\n      id\n    }\n    href\n    name\n    coverImage {\n      url\n    }\n  }\n}\n"
+    "text": "query Item_Test_Query {\n  me {\n    conversation(id: \"test-id\") {\n      items {\n        item {\n          __typename\n          ...Item_item\n          ... on Node {\n            id\n          }\n        }\n      }\n      id\n    }\n    id\n  }\n}\n\nfragment Item_item on ConversationItemType {\n  __typename\n  ... on Artwork {\n    internalID\n    id\n    date\n    title\n    artistNames\n    href\n    isOfferableFromInquiry\n    image {\n      url(version: [\"large\"])\n    }\n    listPrice {\n      __typename\n      ... on Money {\n        display\n      }\n      ... on PriceRange {\n        display\n      }\n    }\n  }\n  ... on Show {\n    id\n    fair {\n      name\n      exhibitionPeriod\n      location {\n        city\n        id\n      }\n      id\n    }\n    href\n    name\n    coverImage {\n      url\n    }\n  }\n}\n"
   }
 };
 })();

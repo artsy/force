@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -17,7 +16,7 @@ export type ArtistBioTestQueryRawResponse = {
             readonly partnerID: string | null;
             readonly text: string | null;
         }) | null;
-        readonly id: string;
+        readonly id: string | null;
     }) | null;
 };
 export type ArtistBioTestQuery = {
@@ -54,10 +53,10 @@ var v0 = [
   }
 ],
 v1 = {
+  "type": "String",
   "enumValues": null,
-  "nullable": true,
   "plural": false,
-  "type": "String"
+  "nullable": true
 };
 return {
   "fragment": {
@@ -83,8 +82,7 @@ return {
         "storageKey": "artist(id:\"unused\")"
       }
     ],
-    "type": "Query",
-    "abstractKey": null
+    "type": "Query"
   },
   "kind": "Request",
   "operation": {
@@ -156,31 +154,30 @@ return {
     ]
   },
   "params": {
-    "cacheID": "05ebe8eb11518db5711bac9b45daaf90",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "bio": {
+          "type": "Artist",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "Artist"
+          "nullable": true
+        },
+        "bio.id": {
+          "type": "ID",
+          "enumValues": null,
+          "plural": false,
+          "nullable": true
         },
         "bio.biographyBlurb": {
+          "type": "ArtistBlurb",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "ArtistBlurb"
+          "nullable": true
         },
         "bio.biographyBlurb.credit": (v1/*: any*/),
         "bio.biographyBlurb.partnerID": (v1/*: any*/),
-        "bio.biographyBlurb.text": (v1/*: any*/),
-        "bio.id": {
-          "enumValues": null,
-          "nullable": false,
-          "plural": false,
-          "type": "ID"
-        }
+        "bio.biographyBlurb.text": (v1/*: any*/)
       }
     },
     "name": "ArtistBioTestQuery",

@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -17,16 +16,16 @@ export type RequestConditionReportTestQueryRawResponse = {
     readonly me: ({
         readonly email: string | null;
         readonly internalID: string;
-        readonly id: string;
+        readonly id: string | null;
     }) | null;
     readonly artwork: ({
         readonly internalID: string;
         readonly slug: string;
         readonly saleArtwork: ({
             readonly internalID: string;
-            readonly id: string;
+            readonly id: string | null;
         }) | null;
-        readonly id: string;
+        readonly id: string | null;
     }) | null;
 };
 export type RequestConditionReportTestQuery = {
@@ -87,10 +86,16 @@ v2 = {
   "storageKey": null
 },
 v3 = {
+  "type": "ID",
   "enumValues": null,
-  "nullable": false,
   "plural": false,
-  "type": "ID"
+  "nullable": true
+},
+v4 = {
+  "type": "ID",
+  "enumValues": null,
+  "plural": false,
+  "nullable": false
 };
 return {
   "fragment": {
@@ -132,8 +137,7 @@ return {
         "storageKey": "artwork(id:\"artwork-id\")"
       }
     ],
-    "type": "Query",
-    "abstractKey": null
+    "type": "Query"
   },
   "kind": "Request",
   "operation": {
@@ -197,41 +201,40 @@ return {
     ]
   },
   "params": {
-    "cacheID": "96e5136e1d518b2c9a0724fd52938694",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
-        "artwork": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "Artwork"
-        },
-        "artwork.id": (v3/*: any*/),
-        "artwork.internalID": (v3/*: any*/),
-        "artwork.saleArtwork": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "SaleArtwork"
-        },
-        "artwork.saleArtwork.id": (v3/*: any*/),
-        "artwork.saleArtwork.internalID": (v3/*: any*/),
-        "artwork.slug": (v3/*: any*/),
         "me": {
+          "type": "Me",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "Me"
+          "nullable": true
         },
-        "me.email": {
+        "artwork": {
+          "type": "Artwork",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "String"
+          "nullable": true
         },
         "me.id": (v3/*: any*/),
-        "me.internalID": (v3/*: any*/)
+        "artwork.id": (v3/*: any*/),
+        "me.email": {
+          "type": "String",
+          "enumValues": null,
+          "plural": false,
+          "nullable": true
+        },
+        "me.internalID": (v4/*: any*/),
+        "artwork.internalID": (v4/*: any*/),
+        "artwork.slug": (v4/*: any*/),
+        "artwork.saleArtwork": {
+          "type": "SaleArtwork",
+          "enumValues": null,
+          "plural": false,
+          "nullable": true
+        },
+        "artwork.saleArtwork.internalID": (v4/*: any*/),
+        "artwork.saleArtwork.id": (v3/*: any*/)
       }
     },
     "name": "RequestConditionReportTestQuery",

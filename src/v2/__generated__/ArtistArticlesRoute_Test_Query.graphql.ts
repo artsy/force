@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -131,40 +130,46 @@ v5 = {
   "storageKey": null
 },
 v6 = {
+  "type": "ID",
   "enumValues": null,
-  "nullable": false,
   "plural": false,
-  "type": "ID"
+  "nullable": true
 },
 v7 = {
+  "type": "String",
   "enumValues": null,
-  "nullable": true,
   "plural": false,
-  "type": "String"
+  "nullable": true
 },
 v8 = {
+  "type": "ID",
   "enumValues": null,
-  "nullable": false,
   "plural": false,
-  "type": "Int"
+  "nullable": false
 },
 v9 = {
+  "type": "Boolean",
   "enumValues": null,
-  "nullable": false,
   "plural": false,
-  "type": "String"
+  "nullable": false
 },
 v10 = {
+  "type": "PageCursor",
   "enumValues": null,
-  "nullable": false,
   "plural": false,
-  "type": "Boolean"
+  "nullable": true
 },
 v11 = {
+  "type": "String",
   "enumValues": null,
-  "nullable": true,
   "plural": false,
-  "type": "PageCursor"
+  "nullable": false
+},
+v12 = {
+  "type": "Int",
+  "enumValues": null,
+  "plural": false,
+  "nullable": false
 };
 return {
   "fragment": {
@@ -190,8 +195,7 @@ return {
         "storageKey": "artist(id:\"example\")"
       }
     ],
-    "type": "Query",
-    "abstractKey": null
+    "type": "Query"
   },
   "kind": "Request",
   "operation": {
@@ -459,100 +463,99 @@ return {
     ]
   },
   "params": {
-    "cacheID": "e4354e1531d6e53eb51ebc2590dd922e",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "artist": {
+          "type": "Artist",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "Artist"
+          "nullable": true
         },
+        "artist.id": (v6/*: any*/),
         "artist.articlesConnection": {
+          "type": "ArticleConnection",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "ArticleConnection"
+          "nullable": true
+        },
+        "artist.name": (v7/*: any*/),
+        "artist.slug": (v8/*: any*/),
+        "artist.articlesConnection.pageInfo": {
+          "type": "PageInfo",
+          "enumValues": null,
+          "plural": false,
+          "nullable": false
+        },
+        "artist.articlesConnection.pageCursors": {
+          "type": "PageCursors",
+          "enumValues": null,
+          "plural": false,
+          "nullable": false
         },
         "artist.articlesConnection.edges": {
+          "type": "ArticleEdge",
           "enumValues": null,
-          "nullable": true,
           "plural": true,
-          "type": "ArticleEdge"
+          "nullable": true
         },
+        "artist.articlesConnection.pageInfo.hasNextPage": (v9/*: any*/),
+        "artist.articlesConnection.pageInfo.endCursor": (v7/*: any*/),
         "artist.articlesConnection.edges.node": {
+          "type": "Article",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "Article"
-        },
-        "artist.articlesConnection.edges.node.author": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "Author"
-        },
-        "artist.articlesConnection.edges.node.author.id": (v6/*: any*/),
-        "artist.articlesConnection.edges.node.author.name": (v7/*: any*/),
-        "artist.articlesConnection.edges.node.href": (v7/*: any*/),
-        "artist.articlesConnection.edges.node.id": (v6/*: any*/),
-        "artist.articlesConnection.edges.node.internalID": (v6/*: any*/),
-        "artist.articlesConnection.edges.node.publishedAt": (v7/*: any*/),
-        "artist.articlesConnection.edges.node.thumbnailImage": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "Image"
-        },
-        "artist.articlesConnection.edges.node.thumbnailImage.cropped": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "CroppedImageUrl"
-        },
-        "artist.articlesConnection.edges.node.thumbnailImage.cropped.height": (v8/*: any*/),
-        "artist.articlesConnection.edges.node.thumbnailImage.cropped.src": (v9/*: any*/),
-        "artist.articlesConnection.edges.node.thumbnailImage.cropped.srcSet": (v9/*: any*/),
-        "artist.articlesConnection.edges.node.thumbnailImage.cropped.width": (v8/*: any*/),
-        "artist.articlesConnection.edges.node.thumbnailTitle": (v7/*: any*/),
-        "artist.articlesConnection.pageCursors": {
-          "enumValues": null,
-          "nullable": false,
-          "plural": false,
-          "type": "PageCursors"
+          "nullable": true
         },
         "artist.articlesConnection.pageCursors.around": {
+          "type": "PageCursor",
           "enumValues": null,
-          "nullable": false,
           "plural": true,
-          "type": "PageCursor"
+          "nullable": false
         },
-        "artist.articlesConnection.pageCursors.around.cursor": (v9/*: any*/),
-        "artist.articlesConnection.pageCursors.around.isCurrent": (v10/*: any*/),
-        "artist.articlesConnection.pageCursors.around.page": (v8/*: any*/),
-        "artist.articlesConnection.pageCursors.first": (v11/*: any*/),
-        "artist.articlesConnection.pageCursors.first.cursor": (v9/*: any*/),
-        "artist.articlesConnection.pageCursors.first.isCurrent": (v10/*: any*/),
-        "artist.articlesConnection.pageCursors.first.page": (v8/*: any*/),
-        "artist.articlesConnection.pageCursors.last": (v11/*: any*/),
-        "artist.articlesConnection.pageCursors.last.cursor": (v9/*: any*/),
-        "artist.articlesConnection.pageCursors.last.isCurrent": (v10/*: any*/),
-        "artist.articlesConnection.pageCursors.last.page": (v8/*: any*/),
-        "artist.articlesConnection.pageCursors.previous": (v11/*: any*/),
-        "artist.articlesConnection.pageCursors.previous.cursor": (v9/*: any*/),
-        "artist.articlesConnection.pageCursors.previous.page": (v8/*: any*/),
-        "artist.articlesConnection.pageInfo": {
+        "artist.articlesConnection.pageCursors.first": (v10/*: any*/),
+        "artist.articlesConnection.pageCursors.last": (v10/*: any*/),
+        "artist.articlesConnection.pageCursors.previous": (v10/*: any*/),
+        "artist.articlesConnection.edges.node.internalID": (v8/*: any*/),
+        "artist.articlesConnection.edges.node.href": (v7/*: any*/),
+        "artist.articlesConnection.edges.node.thumbnailTitle": (v7/*: any*/),
+        "artist.articlesConnection.edges.node.author": {
+          "type": "Author",
           "enumValues": null,
-          "nullable": false,
           "plural": false,
-          "type": "PageInfo"
+          "nullable": true
         },
-        "artist.articlesConnection.pageInfo.endCursor": (v7/*: any*/),
-        "artist.articlesConnection.pageInfo.hasNextPage": (v10/*: any*/),
-        "artist.id": (v6/*: any*/),
-        "artist.name": (v7/*: any*/),
-        "artist.slug": (v6/*: any*/)
+        "artist.articlesConnection.edges.node.publishedAt": (v7/*: any*/),
+        "artist.articlesConnection.edges.node.thumbnailImage": {
+          "type": "Image",
+          "enumValues": null,
+          "plural": false,
+          "nullable": true
+        },
+        "artist.articlesConnection.edges.node.id": (v6/*: any*/),
+        "artist.articlesConnection.pageCursors.around.cursor": (v11/*: any*/),
+        "artist.articlesConnection.pageCursors.around.page": (v12/*: any*/),
+        "artist.articlesConnection.pageCursors.around.isCurrent": (v9/*: any*/),
+        "artist.articlesConnection.pageCursors.first.cursor": (v11/*: any*/),
+        "artist.articlesConnection.pageCursors.first.page": (v12/*: any*/),
+        "artist.articlesConnection.pageCursors.first.isCurrent": (v9/*: any*/),
+        "artist.articlesConnection.pageCursors.last.cursor": (v11/*: any*/),
+        "artist.articlesConnection.pageCursors.last.page": (v12/*: any*/),
+        "artist.articlesConnection.pageCursors.last.isCurrent": (v9/*: any*/),
+        "artist.articlesConnection.pageCursors.previous.cursor": (v11/*: any*/),
+        "artist.articlesConnection.pageCursors.previous.page": (v12/*: any*/),
+        "artist.articlesConnection.edges.node.author.name": (v7/*: any*/),
+        "artist.articlesConnection.edges.node.author.id": (v6/*: any*/),
+        "artist.articlesConnection.edges.node.thumbnailImage.cropped": {
+          "type": "CroppedImageUrl",
+          "enumValues": null,
+          "plural": false,
+          "nullable": true
+        },
+        "artist.articlesConnection.edges.node.thumbnailImage.cropped.src": (v11/*: any*/),
+        "artist.articlesConnection.edges.node.thumbnailImage.cropped.srcSet": (v11/*: any*/),
+        "artist.articlesConnection.edges.node.thumbnailImage.cropped.width": (v12/*: any*/),
+        "artist.articlesConnection.edges.node.thumbnailImage.cropped.height": (v12/*: any*/)
       }
     },
     "name": "ArtistArticlesRoute_Test_Query",

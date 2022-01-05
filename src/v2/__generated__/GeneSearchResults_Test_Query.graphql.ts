@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -45,7 +44,6 @@ fragment GeneSearchResults_viewer on Viewer {
           }
         }
         ... on Node {
-          __isNode: __typename
           id
         }
       }
@@ -59,27 +57,15 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "term"
+    "name": "term",
+    "type": "String!"
   }
 ],
 v1 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "id",
-  "storageKey": null
-},
-v2 = {
+  "type": "ID",
   "enumValues": null,
-  "nullable": false,
   "plural": false,
-  "type": "String"
-},
-v3 = {
-  "enumValues": null,
-  "nullable": false,
-  "plural": false,
-  "type": "ID"
+  "nullable": false
 };
 return {
   "fragment": {
@@ -105,8 +91,7 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query",
-    "abstractKey": null
+    "type": "Query"
   },
   "kind": "Request",
   "operation": {
@@ -177,6 +162,13 @@ return {
                         "storageKey": null
                       },
                       {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "id",
+                        "storageKey": null
+                      },
+                      {
                         "kind": "InlineFragment",
                         "selections": [
                           {
@@ -186,7 +178,6 @@ return {
                             "name": "name",
                             "storageKey": null
                           },
-                          (v1/*: any*/),
                           {
                             "alias": null,
                             "args": null,
@@ -242,16 +233,7 @@ return {
                             "storageKey": null
                           }
                         ],
-                        "type": "Gene",
-                        "abstractKey": null
-                      },
-                      {
-                        "kind": "InlineFragment",
-                        "selections": [
-                          (v1/*: any*/)
-                        ],
-                        "type": "Node",
-                        "abstractKey": "__isNode"
+                        "type": "Gene"
                       }
                     ],
                     "storageKey": null
@@ -268,63 +250,70 @@ return {
     ]
   },
   "params": {
-    "cacheID": "2728c109b67045c24632c432eaa9a864",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "viewer": {
+          "type": "Viewer",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "Viewer"
+          "nullable": true
         },
         "viewer.match_gene": {
+          "type": "SearchableConnection",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "SearchableConnection"
+          "nullable": true
         },
         "viewer.match_gene.edges": {
+          "type": "SearchableEdge",
           "enumValues": null,
-          "nullable": true,
           "plural": true,
-          "type": "SearchableEdge"
+          "nullable": true
         },
         "viewer.match_gene.edges.node": {
+          "type": "Searchable",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "Searchable"
+          "nullable": true
         },
-        "viewer.match_gene.edges.node.__isNode": (v2/*: any*/),
-        "viewer.match_gene.edges.node.__typename": (v2/*: any*/),
-        "viewer.match_gene.edges.node.id": (v3/*: any*/),
-        "viewer.match_gene.edges.node.image": {
+        "viewer.match_gene.edges.node.name": {
+          "type": "String",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "Image"
+          "nullable": true
+        },
+        "viewer.match_gene.edges.node.id": {
+          "type": "ID",
+          "enumValues": null,
+          "plural": false,
+          "nullable": true
+        },
+        "viewer.match_gene.edges.node.slug": (v1/*: any*/),
+        "viewer.match_gene.edges.node.internalID": (v1/*: any*/),
+        "viewer.match_gene.edges.node.image": {
+          "type": "Image",
+          "enumValues": null,
+          "plural": false,
+          "nullable": true
         },
         "viewer.match_gene.edges.node.image.cropped": {
+          "type": "CroppedImageUrl",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "CroppedImageUrl"
+          "nullable": true
         },
-        "viewer.match_gene.edges.node.image.cropped.url": (v2/*: any*/),
-        "viewer.match_gene.edges.node.internalID": (v3/*: any*/),
-        "viewer.match_gene.edges.node.name": {
+        "viewer.match_gene.edges.node.image.cropped.url": {
+          "type": "String",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "String"
-        },
-        "viewer.match_gene.edges.node.slug": (v3/*: any*/)
+          "nullable": false
+        }
       }
     },
     "name": "GeneSearchResults_Test_Query",
     "operationKind": "query",
-    "text": "query GeneSearchResults_Test_Query(\n  $term: String!\n) {\n  viewer {\n    ...GeneSearchResults_viewer\n  }\n}\n\nfragment GeneSearchResults_viewer on Viewer {\n  match_gene: searchConnection(query: $term, mode: AUTOSUGGEST, entities: [GENE], first: 10) {\n    edges {\n      node {\n        __typename\n        ... on Gene {\n          name\n          id\n          slug\n          internalID\n          image {\n            cropped(width: 100, height: 100) {\n              url\n            }\n          }\n        }\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n      }\n    }\n  }\n}\n"
+    "text": "query GeneSearchResults_Test_Query(\n  $term: String!\n) {\n  viewer {\n    ...GeneSearchResults_viewer\n  }\n}\n\nfragment GeneSearchResults_viewer on Viewer {\n  match_gene: searchConnection(query: $term, mode: AUTOSUGGEST, entities: [GENE], first: 10) {\n    edges {\n      node {\n        __typename\n        ... on Gene {\n          name\n          id\n          slug\n          internalID\n          image {\n            cropped(width: 100, height: 100) {\n              url\n            }\n          }\n        }\n        ... on Node {\n          id\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();

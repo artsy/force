@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -77,8 +76,7 @@ const node: ConcreteRequest = {
         "storageKey": null
       }
     ],
-    "type": "Query",
-    "abstractKey": null
+    "type": "Query"
   },
   "kind": "Request",
   "operation": {
@@ -179,7 +177,6 @@ const node: ConcreteRequest = {
     ]
   },
   "params": {
-    "cacheID": "b8c2dc4b1cc9f1269a48bc9d2c8a5906",
     "id": null,
     "metadata": {},
     "name": "SuggestedGenesQuery",

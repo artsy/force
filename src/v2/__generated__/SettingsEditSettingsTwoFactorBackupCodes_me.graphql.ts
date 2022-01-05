@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -55,15 +54,13 @@ const node: ReaderFragment = {
               "storageKey": null
             }
           ],
-          "type": "BackupSecondFactor",
-          "abstractKey": null
+          "type": "BackupSecondFactor"
         }
       ],
       "storageKey": "secondFactors(kinds:[\"backup\"])"
     }
   ],
-  "type": "Me",
-  "abstractKey": null
+  "type": "Me"
 };
 (node as any).hash = 'c102dd2ab6c438622429024b2e26e437';
 export default node;

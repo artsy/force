@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -31,39 +30,46 @@ export type ShowPaginatedEvents_partner$key = {
 const node: ReaderFragment = {
   "argumentDefinitions": [
     {
-      "defaultValue": null,
-      "kind": "LocalArgument",
-      "name": "after"
-    },
-    {
-      "defaultValue": null,
-      "kind": "LocalArgument",
-      "name": "before"
-    },
-    {
       "defaultValue": 40,
       "kind": "LocalArgument",
-      "name": "first"
-    },
-    {
-      "defaultValue": true,
-      "kind": "LocalArgument",
-      "name": "isDisplayable"
+      "name": "first",
+      "type": "Int"
     },
     {
       "defaultValue": null,
       "kind": "LocalArgument",
-      "name": "last"
+      "name": "last",
+      "type": "Int"
     },
     {
       "defaultValue": null,
       "kind": "LocalArgument",
-      "name": "page"
+      "name": "page",
+      "type": "Int"
+    },
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "after",
+      "type": "String"
+    },
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "before",
+      "type": "String"
     },
     {
       "defaultValue": "CLOSED",
       "kind": "LocalArgument",
-      "name": "status"
+      "name": "status",
+      "type": "EventStatus"
+    },
+    {
+      "defaultValue": true,
+      "kind": "LocalArgument",
+      "name": "isDisplayable",
+      "type": "Boolean"
     }
   ],
   "kind": "Fragment",
@@ -182,8 +188,7 @@ const node: ReaderFragment = {
       "storageKey": null
     }
   ],
-  "type": "Partner",
-  "abstractKey": null
+  "type": "Partner"
 };
 (node as any).hash = '0af75016e048646a50556989af3d7c4e';
 export default node;

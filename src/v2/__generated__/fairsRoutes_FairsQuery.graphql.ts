@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -105,7 +104,6 @@ fragment FairsIndex_featuredFairs on OrderedSet {
       id
     }
     ... on Node {
-      __isNode: __typename
       id
     }
     ... on Profile {
@@ -206,81 +204,78 @@ v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "internalID",
+  "name": "id",
   "storageKey": null
 },
 v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "width",
+  "name": "internalID",
   "storageKey": null
 },
 v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "height",
+  "name": "width",
   "storageKey": null
 },
 v5 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "src",
+  "name": "height",
   "storageKey": null
 },
 v6 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "srcSet",
+  "name": "src",
   "storageKey": null
 },
-v7 = [
-  (v3/*: any*/),
-  (v4/*: any*/),
-  (v5/*: any*/),
-  (v6/*: any*/)
-],
-v8 = {
+v7 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "id",
+  "name": "srcSet",
   "storageKey": null
 },
-v9 = [
-  (v8/*: any*/)
+v8 = [
+  (v4/*: any*/),
+  (v5/*: any*/),
+  (v6/*: any*/),
+  (v7/*: any*/)
 ],
-v10 = {
+v9 = {
   "kind": "Literal",
   "name": "hasFullFeature",
   "value": true
 },
-v11 = {
+v10 = {
   "kind": "Literal",
   "name": "hasListing",
   "value": true
 },
-v12 = {
+v11 = {
   "kind": "Literal",
   "name": "size",
   "value": 25
 },
-v13 = {
+v12 = {
   "kind": "Literal",
   "name": "sort",
   "value": "START_AT_DESC"
 },
-v14 = {
+v13 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "isPublished",
   "storageKey": null
 },
-v15 = {
+v14 = {
   "alias": null,
   "args": null,
   "concreteType": "Profile",
@@ -288,8 +283,8 @@ v15 = {
   "name": "profile",
   "plural": false,
   "selections": [
-    (v14/*: any*/),
-    (v8/*: any*/),
+    (v13/*: any*/),
+    (v2/*: any*/),
     {
       "alias": null,
       "args": null,
@@ -321,7 +316,7 @@ v15 = {
           "kind": "LinkedField",
           "name": "resized",
           "plural": false,
-          "selections": (v7/*: any*/),
+          "selections": (v8/*: any*/),
           "storageKey": "resized(height:80,version:\"square140\",width:80)"
         }
       ],
@@ -330,48 +325,48 @@ v15 = {
   ],
   "storageKey": null
 },
-v16 = {
+v15 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "href",
   "storageKey": null
 },
-v17 = {
+v16 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "name",
   "storageKey": null
 },
-v18 = {
+v17 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "exhibitionPeriod",
   "storageKey": null
 },
-v19 = {
+v18 = {
   "kind": "Literal",
   "name": "version",
   "value": [
     "wide"
   ]
 },
-v20 = [
-  (v5/*: any*/),
+v19 = [
   (v6/*: any*/),
-  (v3/*: any*/),
-  (v4/*: any*/)
+  (v7/*: any*/),
+  (v4/*: any*/),
+  (v5/*: any*/)
 ],
-v21 = {
+v20 = {
   "alias": "isoStartAt",
   "args": null,
   "kind": "ScalarField",
   "name": "startAt",
   "storageKey": null
 },
-v22 = {
+v21 = {
   "alias": null,
   "args": null,
   "concreteType": "FairOrganizer",
@@ -387,30 +382,30 @@ v22 = {
       "name": "profile",
       "plural": false,
       "selections": [
-        (v16/*: any*/),
-        (v8/*: any*/)
+        (v15/*: any*/),
+        (v2/*: any*/)
       ],
       "storageKey": null
     },
-    (v8/*: any*/)
+    (v2/*: any*/)
   ],
   "storageKey": null
 },
-v23 = {
+v22 = {
   "kind": "Literal",
   "name": "status",
   "value": "CLOSED"
 },
-v24 = [
+v23 = [
   {
     "kind": "Literal",
     "name": "first",
     "value": 15
   },
+  (v9/*: any*/),
   (v10/*: any*/),
-  (v11/*: any*/),
-  (v13/*: any*/),
-  (v23/*: any*/)
+  (v12/*: any*/),
+  (v22/*: any*/)
 ];
 return {
   "fragment": {
@@ -452,8 +447,7 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query",
-    "abstractKey": null
+    "type": "Query"
   },
   "kind": "Request",
   "operation": {
@@ -478,10 +472,11 @@ return {
             "plural": true,
             "selections": [
               (v1/*: any*/),
+              (v2/*: any*/),
               {
                 "kind": "InlineFragment",
                 "selections": [
-                  (v2/*: any*/),
+                  (v3/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -515,33 +510,19 @@ return {
                         "kind": "LinkedField",
                         "name": "cropped",
                         "plural": false,
-                        "selections": (v7/*: any*/),
+                        "selections": (v8/*: any*/),
                         "storageKey": "cropped(height:410,width:547)"
                       }
                     ],
                     "storageKey": null
-                  },
-                  (v8/*: any*/)
+                  }
                 ],
-                "type": "FeaturedLink",
-                "abstractKey": null
-              },
-              {
-                "kind": "InlineFragment",
-                "selections": (v9/*: any*/),
-                "type": "Node",
-                "abstractKey": "__isNode"
-              },
-              {
-                "kind": "InlineFragment",
-                "selections": (v9/*: any*/),
-                "type": "Profile",
-                "abstractKey": null
+                "type": "FeaturedLink"
               }
             ],
             "storageKey": null
           },
-          (v8/*: any*/)
+          (v2/*: any*/)
         ],
         "storageKey": "orderedSets(key:\"art-fairs:featured\")"
       },
@@ -556,10 +537,10 @@ return {
           {
             "alias": "runningFairs",
             "args": [
+              (v9/*: any*/),
               (v10/*: any*/),
               (v11/*: any*/),
               (v12/*: any*/),
-              (v13/*: any*/),
               {
                 "kind": "Literal",
                 "name": "status",
@@ -571,7 +552,7 @@ return {
             "name": "fairs",
             "plural": true,
             "selections": [
-              (v2/*: any*/),
+              (v3/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -579,11 +560,11 @@ return {
                 "name": "bannerSize",
                 "storageKey": null
               },
+              (v13/*: any*/),
               (v14/*: any*/),
               (v15/*: any*/),
               (v16/*: any*/),
               (v17/*: any*/),
-              (v18/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -600,7 +581,7 @@ return {
                         "name": "height",
                         "value": 790
                       },
-                      (v19/*: any*/),
+                      (v18/*: any*/),
                       {
                         "kind": "Literal",
                         "name": "width",
@@ -611,7 +592,7 @@ return {
                     "kind": "LinkedField",
                     "name": "cropped",
                     "plural": false,
-                    "selections": (v20/*: any*/),
+                    "selections": (v19/*: any*/),
                     "storageKey": "cropped(height:790,version:[\"wide\"],width:1840)"
                   },
                   {
@@ -622,7 +603,7 @@ return {
                         "name": "height",
                         "value": 512
                       },
-                      (v19/*: any*/),
+                      (v18/*: any*/),
                       {
                         "kind": "Literal",
                         "name": "width",
@@ -633,50 +614,50 @@ return {
                     "kind": "LinkedField",
                     "name": "cropped",
                     "plural": false,
-                    "selections": (v20/*: any*/),
+                    "selections": (v19/*: any*/),
                     "storageKey": "cropped(height:512,version:[\"wide\"],width:910)"
                   }
                 ],
                 "storageKey": null
               },
+              (v20/*: any*/),
               (v21/*: any*/),
-              (v22/*: any*/),
-              (v8/*: any*/)
+              (v2/*: any*/)
             ],
             "storageKey": "fairs(hasFullFeature:true,hasListing:true,size:25,sort:\"START_AT_DESC\",status:\"RUNNING\")"
           },
           {
             "alias": "closedFairs",
             "args": [
+              (v9/*: any*/),
               (v10/*: any*/),
               (v11/*: any*/),
               (v12/*: any*/),
-              (v13/*: any*/),
-              (v23/*: any*/)
+              (v22/*: any*/)
             ],
             "concreteType": "Fair",
             "kind": "LinkedField",
             "name": "fairs",
             "plural": true,
             "selections": [
-              (v2/*: any*/),
+              (v3/*: any*/),
+              (v13/*: any*/),
               (v14/*: any*/),
               (v15/*: any*/),
               (v16/*: any*/),
+              (v20/*: any*/),
               (v17/*: any*/),
               (v21/*: any*/),
-              (v18/*: any*/),
-              (v22/*: any*/),
-              (v8/*: any*/)
+              (v2/*: any*/)
             ],
             "storageKey": "fairs(hasFullFeature:true,hasListing:true,size:25,sort:\"START_AT_DESC\",status:\"CLOSED\")"
           },
           {
             "alias": "upcomingFairs",
             "args": [
+              (v9/*: any*/),
               (v10/*: any*/),
               (v11/*: any*/),
-              (v12/*: any*/),
               {
                 "kind": "Literal",
                 "name": "sort",
@@ -693,9 +674,9 @@ return {
             "name": "fairs",
             "plural": true,
             "selections": [
-              (v2/*: any*/),
+              (v3/*: any*/),
+              (v16/*: any*/),
               (v17/*: any*/),
-              (v18/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -711,22 +692,22 @@ return {
                     "name": "city",
                     "storageKey": null
                   },
-                  (v8/*: any*/)
+                  (v2/*: any*/)
                 ],
                 "storageKey": null
               },
+              (v13/*: any*/),
               (v14/*: any*/),
-              (v15/*: any*/),
-              (v22/*: any*/),
-              (v16/*: any*/),
               (v21/*: any*/),
-              (v8/*: any*/)
+              (v15/*: any*/),
+              (v20/*: any*/),
+              (v2/*: any*/)
             ],
             "storageKey": "fairs(hasFullFeature:true,hasListing:true,size:25,sort:\"START_AT_ASC\",status:\"UPCOMING\")"
           },
           {
             "alias": "pastFairs",
-            "args": (v24/*: any*/),
+            "args": (v23/*: any*/),
             "concreteType": "FairConnection",
             "kind": "LinkedField",
             "name": "fairsConnection",
@@ -748,15 +729,15 @@ return {
                     "name": "node",
                     "plural": false,
                     "selections": [
-                      (v2/*: any*/),
+                      (v3/*: any*/),
+                      (v13/*: any*/),
                       (v14/*: any*/),
                       (v15/*: any*/),
                       (v16/*: any*/),
+                      (v20/*: any*/),
                       (v17/*: any*/),
                       (v21/*: any*/),
-                      (v18/*: any*/),
-                      (v22/*: any*/),
-                      (v8/*: any*/),
+                      (v2/*: any*/),
                       (v1/*: any*/)
                     ],
                     "storageKey": null
@@ -801,7 +782,7 @@ return {
           },
           {
             "alias": "pastFairs",
-            "args": (v24/*: any*/),
+            "args": (v23/*: any*/),
             "filters": [
               "hasListing",
               "hasFullFeature",
@@ -819,12 +800,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "772ddb529a04cc1ffe1eb9fbf29c3d0b",
     "id": null,
     "metadata": {},
     "name": "fairsRoutes_FairsQuery",
     "operationKind": "query",
-    "text": "query fairsRoutes_FairsQuery {\n  featuredFairs: orderedSets(key: \"art-fairs:featured\") {\n    ...FairsIndex_featuredFairs\n    id\n  }\n  viewer {\n    ...FairsIndex_viewer\n  }\n}\n\nfragment FairsFairBanner_fair on Fair {\n  href\n  name\n  exhibitionPeriod\n  bannerSize\n  image {\n    large: cropped(width: 1840, height: 790, version: [\"wide\"]) {\n      src\n      srcSet\n      width\n      height\n    }\n    small: cropped(width: 910, height: 512, version: [\"wide\"]) {\n      src\n      srcSet\n      width\n      height\n    }\n  }\n  profile {\n    icon {\n      resized(width: 80, height: 80, version: \"square140\") {\n        width\n        height\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment FairsFairRow_fair on Fair {\n  href\n  name\n  isoStartAt: startAt\n  exhibitionPeriod\n  profile {\n    icon {\n      resized(width: 80, height: 80, version: \"square140\") {\n        width\n        height\n        src\n        srcSet\n      }\n    }\n    id\n  }\n  organizer {\n    profile {\n      href\n      id\n    }\n    id\n  }\n}\n\nfragment FairsIndex_featuredFairs on OrderedSet {\n  items {\n    __typename\n    ... on FeaturedLink {\n      internalID\n      title\n      image {\n        cropped(width: 547, height: 410) {\n          width\n          height\n          src\n          srcSet\n        }\n      }\n      id\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on Profile {\n      id\n    }\n  }\n}\n\nfragment FairsIndex_viewer on Viewer {\n  runningFairs: fairs(hasListing: true, hasFullFeature: true, sort: START_AT_DESC, size: 25, status: RUNNING) {\n    internalID\n    bannerSize\n    isPublished\n    profile {\n      isPublished\n      id\n    }\n    ...FairsFairBanner_fair\n    ...FairsFairRow_fair\n    id\n  }\n  closedFairs: fairs(hasListing: true, hasFullFeature: true, sort: START_AT_DESC, size: 25, status: CLOSED) {\n    internalID\n    isPublished\n    profile {\n      isPublished\n      id\n    }\n    ...FairsFairRow_fair\n    id\n  }\n  upcomingFairs: fairs(hasListing: true, hasFullFeature: true, sort: START_AT_ASC, size: 25, status: UPCOMING) {\n    internalID\n    name\n    exhibitionPeriod\n    location {\n      city\n      id\n    }\n    isPublished\n    profile {\n      isPublished\n      id\n    }\n    organizer {\n      profile {\n        href\n        id\n      }\n      id\n    }\n    ...FairsFairRow_fair\n    id\n  }\n  ...FairsPastFairs_viewer\n}\n\nfragment FairsPastFairs_viewer on Viewer {\n  pastFairs: fairsConnection(hasListing: true, hasFullFeature: true, sort: START_AT_DESC, status: CLOSED, first: 15) {\n    edges {\n      node {\n        internalID\n        isPublished\n        profile {\n          isPublished\n          id\n        }\n        ...FairsFairRow_fair\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query fairsRoutes_FairsQuery {\n  featuredFairs: orderedSets(key: \"art-fairs:featured\") {\n    ...FairsIndex_featuredFairs\n    id\n  }\n  viewer {\n    ...FairsIndex_viewer\n  }\n}\n\nfragment FairsFairBanner_fair on Fair {\n  href\n  name\n  exhibitionPeriod\n  bannerSize\n  image {\n    large: cropped(width: 1840, height: 790, version: [\"wide\"]) {\n      src\n      srcSet\n      width\n      height\n    }\n    small: cropped(width: 910, height: 512, version: [\"wide\"]) {\n      src\n      srcSet\n      width\n      height\n    }\n  }\n  profile {\n    icon {\n      resized(width: 80, height: 80, version: \"square140\") {\n        width\n        height\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment FairsFairRow_fair on Fair {\n  href\n  name\n  isoStartAt: startAt\n  exhibitionPeriod\n  profile {\n    icon {\n      resized(width: 80, height: 80, version: \"square140\") {\n        width\n        height\n        src\n        srcSet\n      }\n    }\n    id\n  }\n  organizer {\n    profile {\n      href\n      id\n    }\n    id\n  }\n}\n\nfragment FairsIndex_featuredFairs on OrderedSet {\n  items {\n    __typename\n    ... on FeaturedLink {\n      internalID\n      title\n      image {\n        cropped(width: 547, height: 410) {\n          width\n          height\n          src\n          srcSet\n        }\n      }\n      id\n    }\n    ... on Node {\n      id\n    }\n    ... on Profile {\n      id\n    }\n  }\n}\n\nfragment FairsIndex_viewer on Viewer {\n  runningFairs: fairs(hasListing: true, hasFullFeature: true, sort: START_AT_DESC, size: 25, status: RUNNING) {\n    internalID\n    bannerSize\n    isPublished\n    profile {\n      isPublished\n      id\n    }\n    ...FairsFairBanner_fair\n    ...FairsFairRow_fair\n    id\n  }\n  closedFairs: fairs(hasListing: true, hasFullFeature: true, sort: START_AT_DESC, size: 25, status: CLOSED) {\n    internalID\n    isPublished\n    profile {\n      isPublished\n      id\n    }\n    ...FairsFairRow_fair\n    id\n  }\n  upcomingFairs: fairs(hasListing: true, hasFullFeature: true, sort: START_AT_ASC, size: 25, status: UPCOMING) {\n    internalID\n    name\n    exhibitionPeriod\n    location {\n      city\n      id\n    }\n    isPublished\n    profile {\n      isPublished\n      id\n    }\n    organizer {\n      profile {\n        href\n        id\n      }\n      id\n    }\n    ...FairsFairRow_fair\n    id\n  }\n  ...FairsPastFairs_viewer\n}\n\nfragment FairsPastFairs_viewer on Viewer {\n  pastFairs: fairsConnection(hasListing: true, hasFullFeature: true, sort: START_AT_DESC, status: CLOSED, first: 15) {\n    edges {\n      node {\n        internalID\n        isPublished\n        profile {\n          isPublished\n          id\n        }\n        ...FairsFairRow_fair\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();

@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 export type FollowArtistInput = {
@@ -92,34 +91,38 @@ mutation ArtistSearchResultsArtistMutation(
 */
 
 const node: ConcreteRequest = (function(){
-var v0 = {
-  "defaultValue": null,
-  "kind": "LocalArgument",
-  "name": "excludedArtistIds"
-},
+var v0 = [
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "input",
+    "type": "FollowArtistInput!"
+  },
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "excludedArtistIds",
+    "type": "[String]!"
+  }
+],
 v1 = {
-  "defaultValue": null,
-  "kind": "LocalArgument",
-  "name": "input"
-},
-v2 = {
   "kind": "Variable",
   "name": "excludeArtistIDs",
   "variableName": "excludedArtistIds"
 },
-v3 = {
+v2 = {
   "kind": "Literal",
   "name": "excludeFollowedArtists",
   "value": true
 },
-v4 = {
+v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v5 = [
+v4 = [
   {
     "alias": null,
     "args": null,
@@ -127,7 +130,7 @@ v5 = [
     "name": "internalID",
     "storageKey": null
   },
-  (v4/*: any*/),
+  (v3/*: any*/),
   {
     "alias": null,
     "args": null,
@@ -176,7 +179,7 @@ v5 = [
     "storageKey": null
   }
 ],
-v6 = [
+v5 = [
   {
     "alias": null,
     "args": [
@@ -194,8 +197,8 @@ v6 = [
       {
         "alias": "popular_artists",
         "args": [
+          (v1/*: any*/),
           (v2/*: any*/),
-          (v3/*: any*/),
           {
             "kind": "Literal",
             "name": "size",
@@ -206,7 +209,7 @@ v6 = [
         "kind": "LinkedField",
         "name": "popularArtists",
         "plural": true,
-        "selections": (v5/*: any*/),
+        "selections": (v4/*: any*/),
         "storageKey": null
       },
       {
@@ -217,7 +220,7 @@ v6 = [
         "name": "artist",
         "plural": false,
         "selections": [
-          (v4/*: any*/),
+          (v3/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -229,8 +232,8 @@ v6 = [
               {
                 "alias": null,
                 "args": [
+                  (v1/*: any*/),
                   (v2/*: any*/),
-                  (v3/*: any*/),
                   {
                     "kind": "Literal",
                     "name": "first",
@@ -257,7 +260,7 @@ v6 = [
                         "kind": "LinkedField",
                         "name": "node",
                         "plural": false,
-                        "selections": (v5/*: any*/),
+                        "selections": (v4/*: any*/),
                         "storageKey": null
                       }
                     ],
@@ -278,29 +281,21 @@ v6 = [
 ];
 return {
   "fragment": {
-    "argumentDefinitions": [
-      (v0/*: any*/),
-      (v1/*: any*/)
-    ],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
     "name": "ArtistSearchResultsArtistMutation",
-    "selections": (v6/*: any*/),
-    "type": "Mutation",
-    "abstractKey": null
+    "selections": (v5/*: any*/),
+    "type": "Mutation"
   },
   "kind": "Request",
   "operation": {
-    "argumentDefinitions": [
-      (v1/*: any*/),
-      (v0/*: any*/)
-    ],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
     "name": "ArtistSearchResultsArtistMutation",
-    "selections": (v6/*: any*/)
+    "selections": (v5/*: any*/)
   },
   "params": {
-    "cacheID": "a5d7003a8bc96b09881db8fc6fc4f1f9",
     "id": null,
     "metadata": {},
     "name": "ArtistSearchResultsArtistMutation",

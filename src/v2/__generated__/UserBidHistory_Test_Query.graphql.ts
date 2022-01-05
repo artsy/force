@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -52,16 +51,16 @@ var v0 = {
   "storageKey": null
 },
 v1 = {
+  "type": "ID",
   "enumValues": null,
-  "nullable": false,
   "plural": false,
-  "type": "ID"
+  "nullable": true
 },
 v2 = {
+  "type": "String",
   "enumValues": null,
-  "nullable": true,
   "plural": false,
-  "type": "String"
+  "nullable": true
 };
 return {
   "fragment": {
@@ -87,8 +86,7 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query",
-    "abstractKey": null
+    "type": "Query"
   },
   "kind": "Request",
   "operation": {
@@ -191,45 +189,44 @@ return {
     ]
   },
   "params": {
-    "cacheID": "fe890568feee3c0c5a4c2572dc7193da",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "me": {
+          "type": "Me",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "Me"
+          "nullable": true
         },
         "me.id": (v1/*: any*/),
         "me.myBids": {
+          "type": "MyBids",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "MyBids"
+          "nullable": true
         },
         "me.myBids.closed": {
+          "type": "MyBid",
           "enumValues": null,
-          "nullable": true,
           "plural": true,
-          "type": "MyBid"
+          "nullable": true
         },
         "me.myBids.closed.sale": {
+          "type": "Sale",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "Sale"
+          "nullable": true
         },
-        "me.myBids.closed.sale.endAt": (v2/*: any*/),
-        "me.myBids.closed.sale.href": (v2/*: any*/),
-        "me.myBids.closed.sale.id": (v1/*: any*/),
         "me.myBids.closed.sale.name": (v2/*: any*/),
+        "me.myBids.closed.sale.href": (v2/*: any*/),
+        "me.myBids.closed.sale.endAt": (v2/*: any*/),
         "me.myBids.closed.sale.profile": {
+          "type": "Profile",
           "enumValues": null,
-          "nullable": true,
           "plural": false,
-          "type": "Profile"
+          "nullable": true
         },
+        "me.myBids.closed.sale.id": (v1/*: any*/),
         "me.myBids.closed.sale.profile.bio": (v2/*: any*/),
         "me.myBids.closed.sale.profile.id": (v1/*: any*/)
       }

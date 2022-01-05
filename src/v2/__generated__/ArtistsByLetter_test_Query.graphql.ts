@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -76,22 +75,27 @@ fragment Pagination_pageCursors on PageCursors {
 */
 
 const node: ConcreteRequest = (function(){
-var v0 = {
-  "defaultValue": null,
-  "kind": "LocalArgument",
-  "name": "letter"
-},
-v1 = {
-  "defaultValue": null,
-  "kind": "LocalArgument",
-  "name": "page"
-},
-v2 = {
-  "defaultValue": null,
-  "kind": "LocalArgument",
-  "name": "size"
-},
-v3 = [
+var v0 = [
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "letter",
+    "type": "String!"
+  },
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "size",
+    "type": "Int"
+  },
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "page",
+    "type": "Int"
+  }
+],
+v1 = [
   {
     "kind": "Variable",
     "name": "letter",
@@ -108,23 +112,23 @@ v3 = [
     "variableName": "size"
   }
 ],
-v4 = {
+v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "cursor",
   "storageKey": null
 },
-v5 = {
+v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "page",
   "storageKey": null
 },
-v6 = [
-  (v4/*: any*/),
-  (v5/*: any*/),
+v4 = [
+  (v2/*: any*/),
+  (v3/*: any*/),
   {
     "alias": null,
     "args": null,
@@ -135,11 +139,7 @@ v6 = [
 ];
 return {
   "fragment": {
-    "argumentDefinitions": [
-      (v0/*: any*/),
-      (v1/*: any*/),
-      (v2/*: any*/)
-    ],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
     "name": "ArtistsByLetter_test_Query",
@@ -153,7 +153,7 @@ return {
         "plural": false,
         "selections": [
           {
-            "args": (v3/*: any*/),
+            "args": (v1/*: any*/),
             "kind": "FragmentSpread",
             "name": "ArtistsByLetter_viewer"
           }
@@ -161,16 +161,11 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query",
-    "abstractKey": null
+    "type": "Query"
   },
   "kind": "Request",
   "operation": {
-    "argumentDefinitions": [
-      (v0/*: any*/),
-      (v2/*: any*/),
-      (v1/*: any*/)
-    ],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
     "name": "ArtistsByLetter_test_Query",
     "selections": [
@@ -184,7 +179,7 @@ return {
         "selections": [
           {
             "alias": null,
-            "args": (v3/*: any*/),
+            "args": (v1/*: any*/),
             "concreteType": "ArtistConnection",
             "kind": "LinkedField",
             "name": "artistsConnection",
@@ -230,7 +225,7 @@ return {
                     "kind": "LinkedField",
                     "name": "around",
                     "plural": true,
-                    "selections": (v6/*: any*/),
+                    "selections": (v4/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -240,7 +235,7 @@ return {
                     "kind": "LinkedField",
                     "name": "first",
                     "plural": false,
-                    "selections": (v6/*: any*/),
+                    "selections": (v4/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -250,7 +245,7 @@ return {
                     "kind": "LinkedField",
                     "name": "last",
                     "plural": false,
-                    "selections": (v6/*: any*/),
+                    "selections": (v4/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -261,8 +256,8 @@ return {
                     "name": "previous",
                     "plural": false,
                     "selections": [
-                      (v4/*: any*/),
-                      (v5/*: any*/)
+                      (v2/*: any*/),
+                      (v3/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -328,7 +323,6 @@ return {
     ]
   },
   "params": {
-    "cacheID": "56d40f0167525b7dbe3d8473d66c5459",
     "id": null,
     "metadata": {},
     "name": "ArtistsByLetter_test_Query",

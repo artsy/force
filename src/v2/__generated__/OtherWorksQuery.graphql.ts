@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -81,7 +80,6 @@ fragment ArtistSeriesRail_artist on Artist {
 }
 
 fragment ArtworkGrid_artworks on ArtworkConnectionInterface {
-  __isArtworkConnectionInterface: __typename
   edges {
     __typename
     node {
@@ -95,7 +93,6 @@ fragment ArtworkGrid_artworks on ArtworkConnectionInterface {
       ...GridItem_artwork
     }
     ... on Node {
-      __isNode: __typename
       id
     }
   }
@@ -225,7 +222,6 @@ fragment OtherWorks_artwork on Artwork {
   context {
     __typename
     ... on Node {
-      __isNode: __typename
       id
     }
   }
@@ -291,7 +287,8 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "slug"
+    "name": "slug",
+    "type": "String!"
   }
 ],
 v1 = [
@@ -319,14 +316,14 @@ v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "slug",
+  "name": "id",
   "storageKey": null
 },
 v5 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "id",
+  "name": "slug",
   "storageKey": null
 },
 v6 = {
@@ -393,7 +390,7 @@ v14 = {
   "name": "artists",
   "plural": true,
   "selections": [
-    (v5/*: any*/),
+    (v4/*: any*/),
     (v6/*: any*/),
     (v13/*: any*/)
   ],
@@ -416,7 +413,7 @@ v16 = {
   "selections": [
     (v13/*: any*/),
     (v6/*: any*/),
-    (v5/*: any*/),
+    (v4/*: any*/),
     {
       "alias": null,
       "args": null,
@@ -450,7 +447,7 @@ v18 = {
       "storageKey": null
     },
     (v17/*: any*/),
-    (v5/*: any*/),
+    (v4/*: any*/),
     {
       "alias": "is_live_open",
       "args": null,
@@ -537,7 +534,7 @@ v20 = {
       "selections": (v19/*: any*/),
       "storageKey": null
     },
-    (v5/*: any*/)
+    (v4/*: any*/)
   ],
   "storageKey": null
 },
@@ -556,14 +553,6 @@ v22 = {
   "storageKey": null
 },
 v23 = {
-  "kind": "InlineFragment",
-  "selections": [
-    (v5/*: any*/)
-  ],
-  "type": "Node",
-  "abstractKey": "__isNode"
-},
-v24 = {
   "alias": null,
   "args": [
     {
@@ -580,11 +569,12 @@ v24 = {
     {
       "alias": null,
       "args": null,
-      "concreteType": "ArtworkEdge",
+      "concreteType": null,
       "kind": "LinkedField",
       "name": "edges",
       "plural": true,
       "selections": [
+        (v2/*: any*/),
         {
           "alias": null,
           "args": null,
@@ -594,135 +584,105 @@ v24 = {
           "plural": false,
           "selections": [
             (v4/*: any*/),
-            (v5/*: any*/)
-          ],
-          "storageKey": null
-        }
-      ],
-      "storageKey": null
-    },
-    {
-      "kind": "InlineFragment",
-      "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "concreteType": null,
-          "kind": "LinkedField",
-          "name": "edges",
-          "plural": true,
-          "selections": [
-            (v2/*: any*/),
+            (v5/*: any*/),
+            (v6/*: any*/),
+            (v7/*: any*/),
             {
               "alias": null,
               "args": null,
-              "concreteType": "Artwork",
+              "concreteType": "Image",
               "kind": "LinkedField",
-              "name": "node",
+              "name": "image",
               "plural": false,
               "selections": [
-                (v6/*: any*/),
-                (v7/*: any*/),
+                {
+                  "alias": "aspect_ratio",
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "aspectRatio",
+                  "storageKey": null
+                },
                 {
                   "alias": null,
                   "args": null,
-                  "concreteType": "Image",
-                  "kind": "LinkedField",
-                  "name": "image",
-                  "plural": false,
-                  "selections": [
+                  "kind": "ScalarField",
+                  "name": "placeholder",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": [
                     {
-                      "alias": "aspect_ratio",
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "aspectRatio",
-                      "storageKey": null
-                    },
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "placeholder",
-                      "storageKey": null
-                    },
-                    {
-                      "alias": null,
-                      "args": [
-                        {
-                          "kind": "Literal",
-                          "name": "version",
-                          "value": "large"
-                        }
-                      ],
-                      "kind": "ScalarField",
-                      "name": "url",
-                      "storageKey": "url(version:\"large\")"
+                      "kind": "Literal",
+                      "name": "version",
+                      "value": "large"
                     }
                   ],
-                  "storageKey": null
-                },
-                (v3/*: any*/),
-                {
-                  "alias": "image_title",
-                  "args": null,
                   "kind": "ScalarField",
-                  "name": "imageTitle",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "artistNames",
-                  "storageKey": null
-                },
-                (v8/*: any*/),
-                (v9/*: any*/),
-                (v10/*: any*/),
-                (v11/*: any*/),
-                (v14/*: any*/),
-                (v15/*: any*/),
-                (v16/*: any*/),
-                (v18/*: any*/),
-                (v20/*: any*/),
-                (v21/*: any*/),
-                (v22/*: any*/)
+                  "name": "url",
+                  "storageKey": "url(version:\"large\")"
+                }
               ],
               "storageKey": null
             },
-            (v23/*: any*/)
+            (v3/*: any*/),
+            {
+              "alias": "image_title",
+              "args": null,
+              "kind": "ScalarField",
+              "name": "imageTitle",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "artistNames",
+              "storageKey": null
+            },
+            (v8/*: any*/),
+            (v9/*: any*/),
+            (v10/*: any*/),
+            (v11/*: any*/),
+            (v14/*: any*/),
+            (v15/*: any*/),
+            (v16/*: any*/),
+            (v18/*: any*/),
+            (v20/*: any*/),
+            (v21/*: any*/),
+            (v22/*: any*/)
           ],
           "storageKey": null
-        }
+        },
+        (v4/*: any*/)
       ],
-      "type": "ArtworkConnectionInterface",
-      "abstractKey": "__isArtworkConnectionInterface"
+      "storageKey": null
     }
   ],
   "storageKey": "artworksConnection(first:8)"
 },
-v25 = {
+v24 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "src",
   "storageKey": null
 },
-v26 = {
+v25 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "srcSet",
   "storageKey": null
 },
-v27 = {
+v26 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "width",
   "storageKey": null
 },
-v28 = {
+v27 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -753,8 +713,7 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query",
-    "abstractKey": null
+    "type": "Query"
   },
   "kind": "Request",
   "operation": {
@@ -794,7 +753,7 @@ return {
                 "name": "ctaHref",
                 "storageKey": null
               },
-              (v24/*: any*/)
+              (v23/*: any*/)
             ],
             "storageKey": null
           },
@@ -808,11 +767,11 @@ return {
             "selections": [
               (v13/*: any*/),
               (v7/*: any*/),
-              (v5/*: any*/)
+              (v4/*: any*/)
             ],
             "storageKey": null
           },
-          (v4/*: any*/),
+          (v5/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -822,8 +781,8 @@ return {
             "plural": false,
             "selections": [
               (v13/*: any*/),
-              (v24/*: any*/),
-              (v5/*: any*/)
+              (v23/*: any*/),
+              (v4/*: any*/)
             ],
             "storageKey": null
           },
@@ -858,7 +817,7 @@ return {
                     "name": "node",
                     "plural": false,
                     "selections": [
-                      (v4/*: any*/),
+                      (v5/*: any*/),
                       (v7/*: any*/),
                       {
                         "alias": null,
@@ -895,7 +854,7 @@ return {
                                 "name": "node",
                                 "plural": false,
                                 "selections": [
-                                  (v4/*: any*/),
+                                  (v5/*: any*/),
                                   (v7/*: any*/),
                                   {
                                     "alias": null,
@@ -919,10 +878,10 @@ return {
                                         "name": "resized",
                                         "plural": false,
                                         "selections": [
+                                          (v24/*: any*/),
                                           (v25/*: any*/),
                                           (v26/*: any*/),
-                                          (v27/*: any*/),
-                                          (v28/*: any*/)
+                                          (v27/*: any*/)
                                         ],
                                         "storageKey": "resized(width:200)"
                                       },
@@ -933,7 +892,7 @@ return {
                                         "name": "aspectRatio",
                                         "storageKey": null
                                       },
-                                      (v28/*: any*/)
+                                      (v27/*: any*/)
                                     ],
                                     "storageKey": null
                                   },
@@ -956,7 +915,7 @@ return {
                                   (v18/*: any*/),
                                   (v20/*: any*/),
                                   (v21/*: any*/),
-                                  (v5/*: any*/),
+                                  (v4/*: any*/),
                                   (v22/*: any*/)
                                 ],
                                 "storageKey": null
@@ -964,7 +923,7 @@ return {
                             ],
                             "storageKey": null
                           },
-                          (v5/*: any*/)
+                          (v4/*: any*/)
                         ],
                         "storageKey": "filterArtworksConnection(first:20,sort:\"-decayed_merch\")"
                       }
@@ -986,7 +945,7 @@ return {
             "plural": false,
             "selections": [
               (v17/*: any*/),
-              (v5/*: any*/)
+              (v4/*: any*/)
             ],
             "storageKey": null
           },
@@ -999,7 +958,7 @@ return {
             "plural": false,
             "selections": [
               (v2/*: any*/),
-              (v23/*: any*/)
+              (v4/*: any*/)
             ],
             "storageKey": null
           },
@@ -1043,7 +1002,7 @@ return {
                         "selections": [
                           (v7/*: any*/),
                           (v3/*: any*/),
-                          (v4/*: any*/),
+                          (v5/*: any*/),
                           {
                             "alias": null,
                             "args": null,
@@ -1085,10 +1044,10 @@ return {
                                 "name": "cropped",
                                 "plural": false,
                                 "selections": [
+                                  (v26/*: any*/),
                                   (v27/*: any*/),
-                                  (v28/*: any*/),
-                                  (v25/*: any*/),
-                                  (v26/*: any*/)
+                                  (v24/*: any*/),
+                                  (v25/*: any*/)
                                 ],
                                 "storageKey": "cropped(height:244,width:325)"
                               }
@@ -1104,23 +1063,22 @@ return {
                 ],
                 "storageKey": "artistSeriesConnection(first:50)"
               },
-              (v5/*: any*/)
+              (v4/*: any*/)
             ],
             "storageKey": "artist(shallow:true)"
           },
-          (v5/*: any*/)
+          (v4/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "8b3b1cfa7565fc25c07cb7e87af72013",
     "id": null,
     "metadata": {},
     "name": "OtherWorksQuery",
     "operationKind": "query",
-    "text": "query OtherWorksQuery(\n  $slug: String!\n) {\n  artwork(id: $slug) {\n    ...OtherWorks_artwork\n    id\n  }\n}\n\nfragment ArtistSeriesArtworkRail_artwork on Artwork {\n  internalID\n  slug\n  artistSeriesConnection(first: 1) {\n    edges {\n      node {\n        slug\n        internalID\n        filterArtworksConnection(sort: \"-decayed_merch\", first: 20) {\n          edges {\n            node {\n              slug\n              internalID\n              ...ShelfArtwork_artwork\n              id\n            }\n          }\n          id\n        }\n      }\n    }\n  }\n}\n\nfragment ArtistSeriesItem_artistSeries on ArtistSeries {\n  title\n  slug\n  featured\n  internalID\n  artworksCountMessage\n  image {\n    cropped(width: 325, height: 244) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment ArtistSeriesRail_artist on Artist {\n  artistSeriesConnection(first: 50) {\n    edges {\n      node {\n        internalID\n        ...ArtistSeriesItem_artistSeries\n      }\n    }\n  }\n}\n\nfragment ArtworkGrid_artworks on ArtworkConnectionInterface {\n  __isArtworkConnectionInterface: __typename\n  edges {\n    __typename\n    node {\n      id\n      slug\n      href\n      internalID\n      image {\n        aspect_ratio: aspectRatio\n      }\n      ...GridItem_artwork\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n}\n\nfragment Badge_artwork on Artwork {\n  is_biddable: isBiddable\n  href\n  sale {\n    is_preview: isPreview\n    display_timely_at: displayTimelyAt\n    id\n  }\n}\n\nfragment Contact_artwork on Artwork {\n  href\n  is_inquireable: isInquireable\n  sale {\n    is_auction: isAuction\n    is_live_open: isLiveOpen\n    is_open: isOpen\n    is_closed: isClosed\n    id\n  }\n  partner(shallow: true) {\n    type\n    id\n  }\n  sale_artwork: saleArtwork {\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    counts {\n      bidder_positions: bidderPositions\n    }\n    id\n  }\n}\n\nfragment Details_artwork on Artwork {\n  href\n  title\n  date\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n}\n\nfragment GridItem_artwork on Artwork {\n  internalID\n  title\n  image_title: imageTitle\n  image {\n    placeholder\n    url(version: \"large\")\n    aspect_ratio: aspectRatio\n  }\n  artistNames\n  href\n  is_saved: isSaved\n  ...Metadata_artwork\n  ...SaveButton_artwork\n  ...Badge_artwork\n}\n\nfragment Metadata_artwork on Artwork {\n  ...Details_artwork\n  ...Contact_artwork\n  href\n}\n\nfragment OtherWorks_artwork on Artwork {\n  contextGrids {\n    __typename\n    title\n    ctaTitle\n    ctaHref\n    artworksConnection(first: 8) {\n      ...ArtworkGrid_artworks\n      edges {\n        node {\n          slug\n          id\n        }\n      }\n    }\n  }\n  ...RelatedWorksArtworkGrid_artwork\n  ...ArtistSeriesArtworkRail_artwork\n  slug\n  internalID\n  sale {\n    is_closed: isClosed\n    id\n  }\n  context {\n    __typename\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n  seriesArtist: artist(shallow: true) {\n    ...ArtistSeriesRail_artist\n    id\n  }\n}\n\nfragment RelatedWorksArtworkGrid_artwork on Artwork {\n  layers {\n    name\n    internalID\n    id\n  }\n  slug\n  layer {\n    name\n    artworksConnection(first: 8) {\n      ...ArtworkGrid_artworks\n      edges {\n        node {\n          slug\n          id\n        }\n      }\n    }\n    id\n  }\n}\n\nfragment SaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  is_saved: isSaved\n  title\n}\n\nfragment ShelfArtwork_artwork on Artwork {\n  image {\n    resized(width: 200) {\n      src\n      srcSet\n      width\n      height\n    }\n    aspectRatio\n    height\n  }\n  imageTitle\n  title\n  href\n  is_saved: isSaved\n  ...Metadata_artwork\n  ...SaveButton_artwork\n  ...Badge_artwork\n}\n"
+    "text": "query OtherWorksQuery(\n  $slug: String!\n) {\n  artwork(id: $slug) {\n    ...OtherWorks_artwork\n    id\n  }\n}\n\nfragment ArtistSeriesArtworkRail_artwork on Artwork {\n  internalID\n  slug\n  artistSeriesConnection(first: 1) {\n    edges {\n      node {\n        slug\n        internalID\n        filterArtworksConnection(sort: \"-decayed_merch\", first: 20) {\n          edges {\n            node {\n              slug\n              internalID\n              ...ShelfArtwork_artwork\n              id\n            }\n          }\n          id\n        }\n      }\n    }\n  }\n}\n\nfragment ArtistSeriesItem_artistSeries on ArtistSeries {\n  title\n  slug\n  featured\n  internalID\n  artworksCountMessage\n  image {\n    cropped(width: 325, height: 244) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment ArtistSeriesRail_artist on Artist {\n  artistSeriesConnection(first: 50) {\n    edges {\n      node {\n        internalID\n        ...ArtistSeriesItem_artistSeries\n      }\n    }\n  }\n}\n\nfragment ArtworkGrid_artworks on ArtworkConnectionInterface {\n  edges {\n    __typename\n    node {\n      id\n      slug\n      href\n      internalID\n      image {\n        aspect_ratio: aspectRatio\n      }\n      ...GridItem_artwork\n    }\n    ... on Node {\n      id\n    }\n  }\n}\n\nfragment Badge_artwork on Artwork {\n  is_biddable: isBiddable\n  href\n  sale {\n    is_preview: isPreview\n    display_timely_at: displayTimelyAt\n    id\n  }\n}\n\nfragment Contact_artwork on Artwork {\n  href\n  is_inquireable: isInquireable\n  sale {\n    is_auction: isAuction\n    is_live_open: isLiveOpen\n    is_open: isOpen\n    is_closed: isClosed\n    id\n  }\n  partner(shallow: true) {\n    type\n    id\n  }\n  sale_artwork: saleArtwork {\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    counts {\n      bidder_positions: bidderPositions\n    }\n    id\n  }\n}\n\nfragment Details_artwork on Artwork {\n  href\n  title\n  date\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n}\n\nfragment GridItem_artwork on Artwork {\n  internalID\n  title\n  image_title: imageTitle\n  image {\n    placeholder\n    url(version: \"large\")\n    aspect_ratio: aspectRatio\n  }\n  artistNames\n  href\n  is_saved: isSaved\n  ...Metadata_artwork\n  ...SaveButton_artwork\n  ...Badge_artwork\n}\n\nfragment Metadata_artwork on Artwork {\n  ...Details_artwork\n  ...Contact_artwork\n  href\n}\n\nfragment OtherWorks_artwork on Artwork {\n  contextGrids {\n    __typename\n    title\n    ctaTitle\n    ctaHref\n    artworksConnection(first: 8) {\n      ...ArtworkGrid_artworks\n      edges {\n        node {\n          slug\n          id\n        }\n      }\n    }\n  }\n  ...RelatedWorksArtworkGrid_artwork\n  ...ArtistSeriesArtworkRail_artwork\n  slug\n  internalID\n  sale {\n    is_closed: isClosed\n    id\n  }\n  context {\n    __typename\n    ... on Node {\n      id\n    }\n  }\n  seriesArtist: artist(shallow: true) {\n    ...ArtistSeriesRail_artist\n    id\n  }\n}\n\nfragment RelatedWorksArtworkGrid_artwork on Artwork {\n  layers {\n    name\n    internalID\n    id\n  }\n  slug\n  layer {\n    name\n    artworksConnection(first: 8) {\n      ...ArtworkGrid_artworks\n      edges {\n        node {\n          slug\n          id\n        }\n      }\n    }\n    id\n  }\n}\n\nfragment SaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  is_saved: isSaved\n  title\n}\n\nfragment ShelfArtwork_artwork on Artwork {\n  image {\n    resized(width: 200) {\n      src\n      srcSet\n      width\n      height\n    }\n    aspectRatio\n    height\n  }\n  imageTitle\n  title\n  href\n  is_saved: isSaved\n  ...Metadata_artwork\n  ...SaveButton_artwork\n  ...Badge_artwork\n}\n"
   }
 };
 })();
