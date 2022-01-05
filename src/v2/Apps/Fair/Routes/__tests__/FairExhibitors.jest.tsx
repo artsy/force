@@ -1,7 +1,8 @@
 import { FairExhibitors_Test_Query } from "v2/__generated__/FairExhibitors_Test_Query.graphql"
 import { graphql } from "react-relay"
 import { FairExhibitorsFragmentContainer } from "../FairExhibitors"
-import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
+import { setupTestWrapperTL } from "v2/DevTools/setupTestWrapper"
+import { screen } from "@testing-library/react"
 
 jest.unmock("react-relay")
 
@@ -20,7 +21,7 @@ jest.mock("v2/System/Router/useRouter", () => ({
 }))
 
 describe("FairExhibitors", () => {
-  const { getWrapper } = setupTestWrapper<FairExhibitors_Test_Query>({
+  const { renderWithRelay } = setupTestWrapperTL<FairExhibitors_Test_Query>({
     Component: FairExhibitorsFragmentContainer,
     query: graphql`
       query FairExhibitors_Test_Query($id: String!) @relay_test_operation {
@@ -36,35 +37,20 @@ describe("FairExhibitors", () => {
     jest.clearAllMocks()
   })
 
-  it("renders the letters nav", () => {
-    const wrapper = getWrapper(FAIR_FIXTURE)
-    expect(wrapper.find("ExhibitorsLetterNav").length).toBe(1)
-  })
-
-  it("scrolls down the page on letter click", () => {
-    document.querySelector = jest.fn().mockReturnValue({
-      getBoundingClientRect: () => ({
-        top: 0,
-      }),
-    })
-
-    const spy = jest.fn()
-    window.scrollTo = spy
-
-    const wrapper = getWrapper(FAIR_FIXTURE)
-
-    const letter = wrapper.find("ExhibitorsLetterNav").find("Letter").at(3)
-
-    letter.simulate("click")
-    expect(spy).toHaveBeenCalledTimes(1)
-  })
-
   it("renders the exhibitors group", () => {
-    const wrapper = getWrapper(FAIR_FIXTURE)
+    renderWithRelay(FAIR_FIXTURE)
 
-    const exhibitorsGroups = wrapper.find("FairExhibitorsGroup")
+    expect(screen.getByText("A")).toBeInTheDocument()
+    expect(screen.getByText("C")).toBeInTheDocument()
+    expect(screen.getByText("D")).toBeInTheDocument()
+  })
 
-    expect(exhibitorsGroups.length).toBe(3)
+  it("renders partners", () => {
+    renderWithRelay(FAIR_FIXTURE)
+
+    expect(screen.getByText("Partner 1")).toBeInTheDocument()
+    expect(screen.getByText("Partner 3")).toBeInTheDocument()
+    expect(screen.getByText("Partner 4")).toBeInTheDocument()
   })
 })
 
@@ -77,12 +63,14 @@ const FAIR_FIXTURE = {
           {
             partner: {
               internalID: "551db9a6726169422f4d0600",
+              name: "Partner 1",
               cities: [],
             },
           },
           {
             partner: {
               internalID: "5a2025c78b0c144e0bba965e",
+              name: "Partner 2",
               cities: [],
             },
           },
@@ -94,6 +82,7 @@ const FAIR_FIXTURE = {
           {
             partner: {
               internalID: "5266d825a09a67eac50001f1",
+              name: "Partner 3",
               cities: [],
             },
           },
@@ -105,6 +94,7 @@ const FAIR_FIXTURE = {
           {
             partner: {
               internalID: "5694406501925b322c00010b",
+              name: "Partner 4",
               cities: [],
             },
           },

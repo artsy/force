@@ -6,7 +6,6 @@ import { ProfileIcon } from "v2/Components/ProfileIcon"
 import styled from "styled-components"
 import { growAndFadeIn, shrinkAndFadeOut } from "v2/Assets/Animations"
 import { Media } from "v2/Utils/Responsive"
-import { BorderBoxBase } from "@artsy/palette/dist/elements/BorderBox/BorderBoxBase"
 
 const SUBTITLE_HEIGHT = "38px"
 
@@ -59,12 +58,7 @@ const FairHeader: React.FC<FairHeaderProps> = ({ fair, stuck = false }) => {
   const { name, exhibitionPeriod, profile } = fair
 
   return (
-    <BorderBoxBase
-      p={0}
-      py={1}
-      borderColor="transparent"
-      borderBottomColor={stuck ? "black10" : "transparent"}
-    >
+    <Box p={0} py={1} display="flex" flexDirection="row">
       <ProfileIcon
         profile={{ icon: profile?.icon, name: name! }}
         stuck={stuck}
@@ -76,7 +70,7 @@ const FairHeader: React.FC<FairHeaderProps> = ({ fair, stuck = false }) => {
           {exhibitionPeriod}
         </FadingText>
       </Box>
-    </BorderBoxBase>
+    </Box>
   )
 }
 

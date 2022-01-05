@@ -29,12 +29,6 @@ query FairExhibitors_Test_Query(
   }
 }
 
-fragment ExhibitorsLetterNav_fair on Fair {
-  exhibitorsGroupedByName {
-    letter
-  }
-}
-
 fragment FairExhibitorCard_exhibitor on FairExhibitor {
   profileID
   partner {
@@ -68,7 +62,6 @@ fragment FairExhibitors_fair on Fair {
     }
     ...FairExhibitorsGroup_exhibitorsGroup
   }
-  ...ExhibitorsLetterNav_fair
 }
 
 fragment FollowProfileButton_profile on Profile {
@@ -270,7 +263,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "25eb105a7abd4a3e1ecec79ce27cb4b9",
+    "cacheID": "f0fc17405b92dd7813a3b9128ce9e549",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -332,7 +325,7 @@ return {
     },
     "name": "FairExhibitors_Test_Query",
     "operationKind": "query",
-    "text": "query FairExhibitors_Test_Query(\n  $id: String!\n) {\n  fair(id: $id) @principalField {\n    ...FairExhibitors_fair\n    id\n  }\n}\n\nfragment ExhibitorsLetterNav_fair on Fair {\n  exhibitorsGroupedByName {\n    letter\n  }\n}\n\nfragment FairExhibitorCard_exhibitor on FairExhibitor {\n  profileID\n  partner {\n    name\n    internalID\n    slug\n    cities\n    profile {\n      ...FollowProfileButton_profile\n      id\n    }\n    id\n  }\n}\n\nfragment FairExhibitorsGroup_exhibitorsGroup on FairExhibitorsGroup {\n  exhibitors {\n    partner {\n      internalID\n      id\n    }\n    ...FairExhibitorCard_exhibitor\n  }\n}\n\nfragment FairExhibitors_fair on Fair {\n  exhibitorsGroupedByName {\n    letter\n    exhibitors {\n      partnerID\n    }\n    ...FairExhibitorsGroup_exhibitorsGroup\n  }\n  ...ExhibitorsLetterNav_fair\n}\n\nfragment FollowProfileButton_profile on Profile {\n  id\n  slug\n  name\n  internalID\n  is_followed: isFollowed\n}\n"
+    "text": "query FairExhibitors_Test_Query(\n  $id: String!\n) {\n  fair(id: $id) @principalField {\n    ...FairExhibitors_fair\n    id\n  }\n}\n\nfragment FairExhibitorCard_exhibitor on FairExhibitor {\n  profileID\n  partner {\n    name\n    internalID\n    slug\n    cities\n    profile {\n      ...FollowProfileButton_profile\n      id\n    }\n    id\n  }\n}\n\nfragment FairExhibitorsGroup_exhibitorsGroup on FairExhibitorsGroup {\n  exhibitors {\n    partner {\n      internalID\n      id\n    }\n    ...FairExhibitorCard_exhibitor\n  }\n}\n\nfragment FairExhibitors_fair on Fair {\n  exhibitorsGroupedByName {\n    letter\n    exhibitors {\n      partnerID\n    }\n    ...FairExhibitorsGroup_exhibitorsGroup\n  }\n}\n\nfragment FollowProfileButton_profile on Profile {\n  id\n  slug\n  name\n  internalID\n  is_followed: isFollowed\n}\n"
   }
 };
 })();
