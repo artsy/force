@@ -53,8 +53,8 @@ export const DownloadAppBanner: React.FC<DownloadAppBannerProps> = ({
   }
 
   return (
-    <Box p={2} backgroundColor="black5">
-      <Text variant="md" mb={2} textAlign="center">
+    <Box p={2} pb={1} backgroundColor="black5">
+      <Text variant="md" mb={1} textAlign="center">
         Download the app to stay current as new artworks are available on Artsy.
       </Text>
       <Flex justifyContent="center" flexWrap="wrap">
@@ -62,6 +62,7 @@ export const DownloadAppBanner: React.FC<DownloadAppBannerProps> = ({
           <RouterLink
             to={DOWNLOAD_APP_URLS[Device.iPhone]}
             mx={2}
+            my={1}
             textDecoration="none"
             onClick={() => handleClick("iOS")}
           >
@@ -79,6 +80,7 @@ export const DownloadAppBanner: React.FC<DownloadAppBannerProps> = ({
           <RouterLink
             to={DOWNLOAD_APP_URLS[Device.Android]}
             mx={2}
+            my={1}
             textDecoration="none"
             onClick={() => handleClick("Android")}
           >
