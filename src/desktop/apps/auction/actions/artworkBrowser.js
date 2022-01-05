@@ -374,6 +374,7 @@ function formatDataForMPv2(saleArtworksConnection) {
     .map(saleArtwork => {
       const props = {
         ...saleArtwork,
+        ...saleArtwork.saleArtwork,
         ...saleArtwork.sale_artwork,
       }
       return {
