@@ -21,6 +21,7 @@ export type DetailsSidebar_conversation = {
                 readonly displayState: CommerceOrderDisplayStateEnum;
                 readonly mode: CommerceOrderModeEnum | null;
                 readonly stateReason: string | null;
+                readonly code: string;
                 readonly stateExpiresAt: string | null;
                 readonly requestedFulfillment: {
                     readonly __typename: string;
@@ -35,6 +36,9 @@ export type DetailsSidebar_conversation = {
                 readonly lineItems: {
                     readonly edges: ReadonlyArray<{
                         readonly node: {
+                            readonly artwork: {
+                                readonly shippingOrigin: string | null;
+                            } | null;
                             readonly shipment: {
                                 readonly trackingNumber: string | null;
                                 readonly trackingUrl: string | null;
@@ -56,7 +60,7 @@ export type DetailsSidebar_conversation = {
                         } | null;
                     } | null> | null;
                 } | null;
-                readonly " $fragmentRefs": FragmentRefs<"TransactionDetailsSummaryItem_order" | "ShippingSummaryItem_order">;
+                readonly " $fragmentRefs": FragmentRefs<"TransactionDetailsSummaryItem_order" | "ShippingSummaryItem_order" | "CreditCardSummaryItem_order">;
             } | null;
         } | null> | null;
     } | null;
@@ -262,6 +266,13 @@ return {
                 },
                 {
                   "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "code",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
                   "args": [
                     {
                       "kind": "Literal",
@@ -353,6 +364,24 @@ return {
                           "name": "node",
                           "plural": false,
                           "selections": [
+                            {
+                              "alias": null,
+                              "args": null,
+                              "concreteType": "Artwork",
+                              "kind": "LinkedField",
+                              "name": "artwork",
+                              "plural": false,
+                              "selections": [
+                                {
+                                  "alias": null,
+                                  "args": null,
+                                  "kind": "ScalarField",
+                                  "name": "shippingOrigin",
+                                  "storageKey": null
+                                }
+                              ],
+                              "storageKey": null
+                            },
                             {
                               "alias": null,
                               "args": null,
@@ -488,6 +517,11 @@ return {
                   "args": null,
                   "kind": "FragmentSpread",
                   "name": "ShippingSummaryItem_order"
+                },
+                {
+                  "args": null,
+                  "kind": "FragmentSpread",
+                  "name": "CreditCardSummaryItem_order"
                 }
               ],
               "storageKey": null
@@ -672,5 +706,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = 'aa8ac3430c97b04b7ed24e1a8f5e75c4';
+(node as any).hash = '7d8b61d84c500c194f165c7ac3eaeaf7';
 export default node;

@@ -46,17 +46,11 @@ export class TransactionDetailsSummaryItem extends React.Component<
       placeholderOverride,
       isEigen,
       showCongratulationMessage = false,
-      showOrderNumberHeader,
       ...others
     } = this.props
 
     return (
       <StepSummaryItem {...others}>
-        {showOrderNumberHeader && (
-          <Text variant="md" mb={2}>
-            Order No. {order.code}
-          </Text>
-        )}
         {this.renderPriceEntry()}
         <Spacer mb={2} />
         <Entry

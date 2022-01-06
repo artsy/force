@@ -30,6 +30,8 @@ import { ShippingAddressFragmentContainer } from "v2/Apps/Order/Components/Shipp
 import { CreditCardDetails } from "v2/Apps/Order/Components/CreditCardDetails"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { getStatusCopy } from "v2/Apps/Order/Utils/getStatusCopy"
+import { ShippingSummaryItemFragmentContainer } from "v2/Apps/Order/Components/ShippingSummaryItem"
+import { CreditCardSummaryItemFragmentContainer } from "v2/Apps/Order/Components/CreditCardSummaryItem"
 
 const DETAIL_BOX_XL_ANIMATION = `transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);`
 const DETAIL_BOX_XS_ANIMATION = `transition: opacity 0.3s, z-index 0.3s;`
@@ -145,16 +147,6 @@ export const DetailsSidebar: FC<DetailsProps> = ({
   }
 
   const activeOrder = extractNodes(conversation.sidebarOrderConnection)[0]
-
-  let cardInfoWithTextColor
-
-  if (activeOrder) {
-    cardInfoWithTextColor = {
-      ...activeOrder.creditCard!,
-      ...{ textColor: "black60" },
-    }
-  }
-
   const { description } = getStatusCopy(activeOrder)
 
   return (
@@ -189,7 +181,7 @@ export const DetailsSidebar: FC<DetailsProps> = ({
       {item && (
         <>
           <StackableBorderBox flexDirection="column" p={2}>
-            <Text variant="md" mb={2}>
+            <Text variant="md" mb={2} fontWeight="bold">
               {item.__typename}
             </Text>
             <Flex>
@@ -219,32 +211,23 @@ export const DetailsSidebar: FC<DetailsProps> = ({
           <TransactionDetailsSummaryItemFragmentContainer
             order={activeOrder}
             showOrderNumberHeader
+            title={`Order No. ${activeOrder.code}`}
           />
-          <StackableBorderBox>
-            <Box>
-              <Text variant="md" mb={2}>
-                Ship To
-              </Text>
-              <ShippingAddressFragmentContainer
-                ship={activeOrder.requestedFulfillment!}
-                textColor="black60"
-              />
-            </Box>
-          </StackableBorderBox>
-          <StackableBorderBox>
-            <Box>
-              <Text variant="md" mb={2}>
-                Payment Method
-              </Text>
-              <CreditCardDetails {...cardInfoWithTextColor} />
-            </Box>
-          </StackableBorderBox>
+          <ShippingSummaryItemFragmentContainer
+            order={activeOrder}
+            textColor="black60"
+          />
+          <CreditCardSummaryItemFragmentContainer
+            title="Payment Method"
+            order={activeOrder}
+            textColor="black60"
+          />
         </>
       )}
       {!!attachments?.length && (
         <StackableBorderBox>
           <Box>
-            <Text variant="md" mb={2}>
+            <Text variant="md" mb={2} fontWeight="bold">
               Attachments
             </Text>
             <Join separator={<Spacer mb={1} />}>{attachmentItems}</Join>
@@ -253,7 +236,7 @@ export const DetailsSidebar: FC<DetailsProps> = ({
       )}
       <StackableBorderBox height="100%">
         <Flex flexDirection="column">
-          <Text variant="md" mb={2}>
+          <Text variant="md" mb={2} fontWeight="bold">
             Support
           </Text>
           <RouterLink
@@ -297,9 +280,11 @@ export const DetailsSidebarFragmentContainer = createFragmentContainer(
               displayState
               mode
               stateReason
+              code
               stateExpiresAt(format: "MMM D")
               ...TransactionDetailsSummaryItem_order
               ...ShippingSummaryItem_order
+              ...CreditCardSummaryItem_order
               requestedFulfillment {
                 __typename
                 ...ShippingAddress_ship
@@ -313,6 +298,9 @@ export const DetailsSidebarFragmentContainer = createFragmentContainer(
               lineItems {
                 edges {
                   node {
+                    artwork {
+                      shippingOrigin
+                    }
                     shipment {
                       trackingNumber
                       trackingUrl
