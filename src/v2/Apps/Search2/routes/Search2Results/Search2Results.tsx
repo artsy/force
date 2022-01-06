@@ -17,11 +17,7 @@ import {
   DEBOUNCE_TIME,
 } from "../../constants"
 import { Box } from "@artsy/palette"
-import {
-  createURL,
-  searchStateToUrl,
-  urlToSearchState,
-} from "v2/Apps/Search2/Utils/url"
+import { createURL, searchStateToUrl } from "v2/Apps/Search2/Utils/url"
 import { Search2ResultsListFragmentContainer } from "./Components/Search2ResultsList"
 import { Search2ResultsMeta } from "./Components/Search2ResultsMeta"
 
@@ -37,9 +33,8 @@ const ConnectedSearch2Results = connectStateResults(
 export const Search2Results: React.FC<Search2ResultsProps> = ({ system }) => {
   const { algolia } = system
   const { match } = useRouter()
-  const [searchState, setSearchState] = useState(
-    urlToSearchState(match.location.search)
-  )
+
+  const [searchState, setSearchState] = useState(match.location.query)
   const [selectedTabIndex, setSelectedTabIndex] = useState(0)
   const debouncedSetStateRef = useRef<NodeJS.Timeout | null>(null)
   const searchClient = useMemo(() => {
@@ -70,13 +65,13 @@ export const Search2Results: React.FC<Search2ResultsProps> = ({ system }) => {
     setSelectedTabIndex(indice)
     setSearchState({
       ...searchState,
-      page: 1,
+      page: "1",
     })
   }
 
   useEffect(() => {
-    setSearchState(urlToSearchState(match.location.search))
-  }, [match.location])
+    setSearchState(match.location.query)
+  }, [match.location.query])
 
   if (searchClient && selectedIndice) {
     return (

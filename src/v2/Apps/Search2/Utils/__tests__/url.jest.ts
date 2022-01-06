@@ -1,4 +1,4 @@
-import { createURL, searchStateToUrl, urlToSearchState } from "../url"
+import { createURL, searchStateToUrl } from "../url"
 
 describe("createURL", () => {
   it("should correctly convert object to url string", () => {
@@ -25,22 +25,6 @@ describe("createURL", () => {
     }
 
     expect(createURL(state)).toBe("?query=abc&page=2")
-  })
-})
-
-describe("urlToSearchState", () => {
-  it("should correctly parse url into state object", () => {
-    const search =
-      "?query=abc&page=2&items%5B0%5D=1&items%5B1%5D=2&user%5Bname%5D=name"
-
-    expect(urlToSearchState(search)).toEqual({
-      query: "abc",
-      page: "2",
-      items: ["1", "2"],
-      user: {
-        name: "name",
-      },
-    })
   })
 })
 
