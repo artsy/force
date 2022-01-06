@@ -261,7 +261,7 @@ interface EntryProps extends SecondaryEntryProps {
 const Entry: React.FC<EntryProps> = ({ label, value, final }) => (
   <Flex justifyContent="space-between" alignItems="baseline">
     <div>
-      <Text variant={["xs", "sm"]} color="black60">
+      <Text variant={["xs", "sm"]} color={final ? "black100" : "black60"}>
         {label}
       </Text>
     </div>
