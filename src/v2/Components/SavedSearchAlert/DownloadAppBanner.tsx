@@ -41,7 +41,7 @@ export const DownloadAppBanner: React.FC<DownloadAppBannerProps> = ({
 
     const clickedAppDownload: ClickedAppDownload = {
       action: ActionType.clickedAppDownload,
-      context_module: "createAlert" as ContextModule, // TODO: Use ContextModule.createAlert
+      context_module: ContextModule.createAlert,
       context_page_owner_type: OwnerType.artist,
       context_page_owner_slug: savedSearchAttributes.slug,
       context_page_owner_id: savedSearchAttributes.id,
