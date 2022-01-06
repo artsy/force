@@ -24,7 +24,7 @@ export const filterQuery = `
       aggregations {
         slice
         counts {
-          value
+          id: value
           name
           count
         }
