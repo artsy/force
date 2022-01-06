@@ -6422,7 +6422,14 @@ enum EditionSetSorts {
   PRICE_ASC
 }
 
-type EditorialAnon1005 {
+type EditorialAnon1007 {
+  author: String
+  custom_text: String
+  headline: String
+  image_url: String
+}
+
+type EditorialAnon1013 {
   footer_blurb: String
   footer_title: String
   partner_fullscreen_header_logo: String
@@ -6436,7 +6443,7 @@ type EditorialAnon1005 {
   secondary_partner_logo: String
 }
 
-type EditorialAnon101 {
+type EditorialAnon102 {
   cover_image_url: String
   credits: String
   description: String
@@ -6446,24 +6453,24 @@ type EditorialAnon101 {
   url: String
 }
 
-type EditorialAnon1033 {
+type EditorialAnon1041 {
   title: String
   url: String
 }
 
-type EditorialAnon1081 {
+type EditorialAnon1089 {
   auction_ids: [String]
-  author: EditorialAnon1086
+  author: EditorialAnon1095
   author_id: String
   author_ids: [String]
-  authors: [EditorialAnon1197]
+  authors: [EditorialAnon1206]
   biography_for_artist_id: String
   channel: EditorialChannel
   channel_id: String
   contributing_authors: [EditorialContributingAuthor]
   daily_email: Boolean
   description: String
-  email_metadata: EditorialAnon1159
+  email_metadata: EditorialAnon1168
   exclude_google_news: Boolean
   fair_about_ids: [String]
   fair_artsy_ids: [String]
@@ -6473,16 +6480,17 @@ type EditorialAnon1081 {
   featured_artist_ids: [String]
   featured_artwork_ids: [String]
   gravity_id: String
-  hero_section: EditorialAnon1108
+  hero_section: EditorialAnon1117
   id: String
   indexable: Boolean
+  internalID: String
   is_super_article: Boolean
   is_super_sub_article: Boolean
   keywords: [String]
   layout: String
   lead_paragraph: String
-  media: EditorialAnon1113
-  news_source: EditorialAnon1193
+  media: EditorialAnon1122
+  news_source: EditorialAnon1202
   partner_channel_id: String
   partner_ids: [String]
   postscript: String
@@ -6490,9 +6498,9 @@ type EditorialAnon1081 {
   published: Boolean
   published_at: String
   related_article_ids: [String]
-  relatedArticles: [EditorialAnon1441]
-  relatedArticlesCanvas: [EditorialAnon1204]
-  relatedArticlesPanel: [EditorialAnon1326]
+  relatedArticles: [EditorialAnon1452]
+  relatedArticlesCanvas: [EditorialAnon1213]
+  relatedArticlesPanel: [EditorialAnon1336]
   scheduled_publish_at: String
   search_description: String
   search_title: String
@@ -6500,15 +6508,15 @@ type EditorialAnon1081 {
   sections: [EditorialObjectOrObjectOrObjectOrObjectOrObjectOrObjectOrObjectOrObject]
   send_body: Boolean
   seo_keyword: String
-  series: EditorialAnon1109
+  series: EditorialAnon1118
   seriesArticle: EditorialSeriesArticle
   show_ids: [String]
   slug: String
   social_description: String
   social_image: String
   social_title: String
-  sponsor: EditorialAnon1151
-  super_article: EditorialAnon1165
+  sponsor: EditorialAnon1160
+  super_article: EditorialAnon1174
   tags: [String]
   thumbnail_image: String
   thumbnail_teaser: String
@@ -6517,33 +6525,33 @@ type EditorialAnon1081 {
   title: String
   tracking_tags: [String]
   updated_at: String
-  vertical: EditorialAnon1097
+  vertical: EditorialAnon1106
   weekly_email: Boolean
 }
 
-type EditorialAnon1086 {
+type EditorialAnon1095 {
   id: String
   name: String
 }
 
-type EditorialAnon1097 {
+type EditorialAnon1106 {
   id: String
   name: String
 }
 
-union EditorialAnon1108 =
+union EditorialAnon1117 =
     EditorialFeatureHeader
   | EditorialImage
   | EditorialImageCollection
   | EditorialSeriesHeader
   | EditorialVideo
 
-type EditorialAnon1109 {
+type EditorialAnon1118 {
   description: String
   sub_title: String
 }
 
-type EditorialAnon1113 {
+type EditorialAnon1122 {
   cover_image_url: String
   credits: String
   description: String
@@ -6553,7 +6561,7 @@ type EditorialAnon1113 {
   url: String
 }
 
-type EditorialAnon1151 {
+type EditorialAnon1160 {
   description: String
   partner_condensed_logo: String
   partner_dark_logo: String
@@ -6563,14 +6571,14 @@ type EditorialAnon1151 {
   sub_title: String
 }
 
-type EditorialAnon1159 {
+type EditorialAnon1168 {
   author: String
   custom_text: String
   headline: String
   image_url: String
 }
 
-type EditorialAnon1165 {
+type EditorialAnon1174 {
   footer_blurb: String
   footer_title: String
   partner_fullscreen_header_logo: String
@@ -6584,12 +6592,12 @@ type EditorialAnon1165 {
   secondary_partner_logo: String
 }
 
-type EditorialAnon1193 {
+type EditorialAnon1202 {
   title: String
   url: String
 }
 
-type EditorialAnon1197 {
+type EditorialAnon1206 {
   bio: String
   id: String
   image_url: String
@@ -6597,18 +6605,18 @@ type EditorialAnon1197 {
   twitter_handle: String
 }
 
-type EditorialAnon1204 {
+type EditorialAnon1213 {
   auction_ids: [String]
-  author: EditorialAnon1209
+  author: EditorialAnon1219
   author_id: String
   author_ids: [String]
-  authors: [EditorialAnon1320]
+  authors: [EditorialAnon1330]
   biography_for_artist_id: String
   channel_id: String
   contributing_authors: [EditorialContributingAuthor]
   daily_email: Boolean
   description: String
-  email_metadata: EditorialAnon1282
+  email_metadata: EditorialAnon1292
   exclude_google_news: Boolean
   fair_about_ids: [String]
   fair_artsy_ids: [String]
@@ -6618,15 +6626,16 @@ type EditorialAnon1204 {
   featured_artist_ids: [String]
   featured_artwork_ids: [String]
   gravity_id: String
-  hero_section: EditorialAnon1231
+  hero_section: EditorialAnon1241
   id: String
   indexable: Boolean
+  internalID: String
   is_super_article: Boolean
   keywords: [String]
   layout: String
   lead_paragraph: String
-  media: EditorialAnon1236
-  news_source: EditorialAnon1316
+  media: EditorialAnon1246
+  news_source: EditorialAnon1326
   partner_channel_id: String
   partner_ids: [String]
   postscript: String
@@ -6641,14 +6650,14 @@ type EditorialAnon1204 {
   sections: [EditorialObjectOrObjectOrObjectOrObjectOrObjectOrObjectOrObjectOrObject]
   send_body: Boolean
   seo_keyword: String
-  series: EditorialAnon1232
+  series: EditorialAnon1242
   show_ids: [String]
   slug: String
   social_description: String
   social_image: String
   social_title: String
-  sponsor: EditorialAnon1274
-  super_article: EditorialAnon1288
+  sponsor: EditorialAnon1284
+  super_article: EditorialAnon1298
   tags: [String]
   thumbnail_image: String
   thumbnail_teaser: String
@@ -6657,33 +6666,33 @@ type EditorialAnon1204 {
   title: String
   tracking_tags: [String]
   updated_at: String
-  vertical: EditorialAnon1220
+  vertical: EditorialAnon1230
   weekly_email: Boolean
 }
 
-type EditorialAnon1209 {
+type EditorialAnon1219 {
   id: String
   name: String
 }
 
-type EditorialAnon1220 {
+type EditorialAnon1230 {
   id: String
   name: String
 }
 
-union EditorialAnon1231 =
+union EditorialAnon1241 =
     EditorialFeatureHeader
   | EditorialImage
   | EditorialImageCollection
   | EditorialSeriesHeader
   | EditorialVideo
 
-type EditorialAnon1232 {
+type EditorialAnon1242 {
   description: String
   sub_title: String
 }
 
-type EditorialAnon1236 {
+type EditorialAnon1246 {
   cover_image_url: String
   credits: String
   description: String
@@ -6693,7 +6702,7 @@ type EditorialAnon1236 {
   url: String
 }
 
-type EditorialAnon1274 {
+type EditorialAnon1284 {
   description: String
   partner_condensed_logo: String
   partner_dark_logo: String
@@ -6703,14 +6712,14 @@ type EditorialAnon1274 {
   sub_title: String
 }
 
-type EditorialAnon1282 {
+type EditorialAnon1292 {
   author: String
   custom_text: String
   headline: String
   image_url: String
 }
 
-type EditorialAnon1288 {
+type EditorialAnon1298 {
   footer_blurb: String
   footer_title: String
   partner_fullscreen_header_logo: String
@@ -6722,24 +6731,24 @@ type EditorialAnon1288 {
   secondary_logo_link: String
   secondary_logo_text: String
   secondary_partner_logo: String
-}
-
-type EditorialAnon1316 {
-  title: String
-  url: String
-}
-
-type EditorialAnon1320 {
-  bio: String
-  id: String
-  image_url: String
-  name: String
-  twitter_handle: String
 }
 
 type EditorialAnon1326 {
+  title: String
+  url: String
+}
+
+type EditorialAnon1330 {
+  bio: String
+  id: String
+  image_url: String
+  name: String
+  twitter_handle: String
+}
+
+type EditorialAnon1336 {
   auction_ids: [String]
-  author: EditorialAnon1331
+  author: EditorialAnon1342
   author_id: String
   author_ids: [String]
   biography_for_artist_id: String
@@ -6747,7 +6756,7 @@ type EditorialAnon1326 {
   contributing_authors: [EditorialContributingAuthor]
   daily_email: Boolean
   description: String
-  email_metadata: EditorialAnon1404
+  email_metadata: EditorialAnon1415
   exclude_google_news: Boolean
   fair_about_ids: [String]
   fair_artsy_ids: [String]
@@ -6757,15 +6766,16 @@ type EditorialAnon1326 {
   featured_artist_ids: [String]
   featured_artwork_ids: [String]
   gravity_id: String
-  hero_section: EditorialAnon1353
+  hero_section: EditorialAnon1364
   id: String
   indexable: Boolean
+  internalID: String
   is_super_article: Boolean
   keywords: [String]
   layout: String
   lead_paragraph: String
-  media: EditorialAnon1358
-  news_source: EditorialAnon1438
+  media: EditorialAnon1369
+  news_source: EditorialAnon1449
   partner_channel_id: String
   partner_ids: [String]
   postscript: String
@@ -6780,14 +6790,14 @@ type EditorialAnon1326 {
   sections: [EditorialObjectOrObjectOrObjectOrObjectOrObjectOrObjectOrObjectOrObject]
   send_body: Boolean
   seo_keyword: String
-  series: EditorialAnon1354
+  series: EditorialAnon1365
   show_ids: [String]
   slug: String
   social_description: String
   social_image: String
   social_title: String
-  sponsor: EditorialAnon1396
-  super_article: EditorialAnon1410
+  sponsor: EditorialAnon1407
+  super_article: EditorialAnon1421
   tags: [String]
   thumbnail_image: String
   thumbnail_teaser: String
@@ -6796,13 +6806,8 @@ type EditorialAnon1326 {
   title: String
   tracking_tags: [String]
   updated_at: String
-  vertical: EditorialAnon1342
+  vertical: EditorialAnon1353
   weekly_email: Boolean
-}
-
-type EditorialAnon1331 {
-  id: String
-  name: String
 }
 
 type EditorialAnon1342 {
@@ -6810,19 +6815,24 @@ type EditorialAnon1342 {
   name: String
 }
 
-union EditorialAnon1353 =
+type EditorialAnon1353 {
+  id: String
+  name: String
+}
+
+union EditorialAnon1364 =
     EditorialFeatureHeader
   | EditorialImage
   | EditorialImageCollection
   | EditorialSeriesHeader
   | EditorialVideo
 
-type EditorialAnon1354 {
+type EditorialAnon1365 {
   description: String
   sub_title: String
 }
 
-type EditorialAnon1358 {
+type EditorialAnon1369 {
   cover_image_url: String
   credits: String
   description: String
@@ -6832,7 +6842,7 @@ type EditorialAnon1358 {
   url: String
 }
 
-type EditorialAnon1396 {
+type EditorialAnon1407 {
   description: String
   partner_condensed_logo: String
   partner_dark_logo: String
@@ -6842,14 +6852,14 @@ type EditorialAnon1396 {
   sub_title: String
 }
 
-type EditorialAnon1404 {
+type EditorialAnon1415 {
   author: String
   custom_text: String
   headline: String
   image_url: String
 }
 
-type EditorialAnon141 {
+type EditorialAnon142 {
   description: String
   partner_condensed_logo: String
   partner_dark_logo: String
@@ -6859,7 +6869,7 @@ type EditorialAnon141 {
   sub_title: String
 }
 
-type EditorialAnon1410 {
+type EditorialAnon1421 {
   footer_blurb: String
   footer_title: String
   partner_fullscreen_header_logo: String
@@ -6873,23 +6883,23 @@ type EditorialAnon1410 {
   secondary_partner_logo: String
 }
 
-type EditorialAnon1438 {
+type EditorialAnon1449 {
   title: String
   url: String
 }
 
-type EditorialAnon1441 {
+type EditorialAnon1452 {
   auction_ids: [String]
-  author: EditorialAnon1446
+  author: EditorialAnon1458
   author_id: String
   author_ids: [String]
-  authors: [EditorialAnon1557]
+  authors: [EditorialAnon1569]
   biography_for_artist_id: String
   channel_id: String
   contributing_authors: [EditorialContributingAuthor]
   daily_email: Boolean
   description: String
-  email_metadata: EditorialAnon1519
+  email_metadata: EditorialAnon1531
   exclude_google_news: Boolean
   fair_about_ids: [String]
   fair_artsy_ids: [String]
@@ -6899,15 +6909,16 @@ type EditorialAnon1441 {
   featured_artist_ids: [String]
   featured_artwork_ids: [String]
   gravity_id: String
-  hero_section: EditorialAnon1468
+  hero_section: EditorialAnon1480
   id: String
   indexable: Boolean
+  internalID: String
   is_super_article: Boolean
   keywords: [String]
   layout: String
   lead_paragraph: String
-  media: EditorialAnon1473
-  news_source: EditorialAnon1553
+  media: EditorialAnon1485
+  news_source: EditorialAnon1565
   partner_channel_id: String
   partner_ids: [String]
   postscript: String
@@ -6915,7 +6926,7 @@ type EditorialAnon1441 {
   published: Boolean
   published_at: String
   related_article_ids: [String]
-  relatedArticles: [EditorialAnon1679]
+  relatedArticles: [EditorialAnon1692]
   scheduled_publish_at: String
   search_description: String
   search_title: String
@@ -6923,15 +6934,15 @@ type EditorialAnon1441 {
   sections: [EditorialObjectOrObjectOrObjectOrObjectOrObjectOrObjectOrObjectOrObject]
   send_body: Boolean
   seo_keyword: String
-  series: EditorialAnon1469
-  seriesArticle: EditorialAnon1563
+  series: EditorialAnon1481
+  seriesArticle: EditorialAnon1575
   show_ids: [String]
   slug: String
   social_description: String
   social_image: String
   social_title: String
-  sponsor: EditorialAnon1511
-  super_article: EditorialAnon1525
+  sponsor: EditorialAnon1523
+  super_article: EditorialAnon1537
   tags: [String]
   thumbnail_image: String
   thumbnail_teaser: String
@@ -6940,33 +6951,33 @@ type EditorialAnon1441 {
   title: String
   tracking_tags: [String]
   updated_at: String
-  vertical: EditorialAnon1457
+  vertical: EditorialAnon1469
   weekly_email: Boolean
 }
 
-type EditorialAnon1446 {
+type EditorialAnon1458 {
   id: String
   name: String
 }
 
-type EditorialAnon1457 {
+type EditorialAnon1469 {
   id: String
   name: String
 }
 
-union EditorialAnon1468 =
+union EditorialAnon1480 =
     EditorialFeatureHeader
   | EditorialImage
   | EditorialImageCollection
   | EditorialSeriesHeader
   | EditorialVideo
 
-type EditorialAnon1469 {
+type EditorialAnon1481 {
   description: String
   sub_title: String
 }
 
-type EditorialAnon1473 {
+type EditorialAnon1485 {
   cover_image_url: String
   credits: String
   description: String
@@ -6976,14 +6987,14 @@ type EditorialAnon1473 {
   url: String
 }
 
-type EditorialAnon149 {
+type EditorialAnon150 {
   author: String
   custom_text: String
   headline: String
   image_url: String
 }
 
-type EditorialAnon1511 {
+type EditorialAnon1523 {
   description: String
   partner_condensed_logo: String
   partner_dark_logo: String
@@ -6993,14 +7004,14 @@ type EditorialAnon1511 {
   sub_title: String
 }
 
-type EditorialAnon1519 {
+type EditorialAnon1531 {
   author: String
   custom_text: String
   headline: String
   image_url: String
 }
 
-type EditorialAnon1525 {
+type EditorialAnon1537 {
   footer_blurb: String
   footer_title: String
   partner_fullscreen_header_logo: String
@@ -7014,7 +7025,7 @@ type EditorialAnon1525 {
   secondary_partner_logo: String
 }
 
-type EditorialAnon155 {
+type EditorialAnon156 {
   footer_blurb: String
   footer_title: String
   partner_fullscreen_header_logo: String
@@ -7028,12 +7039,12 @@ type EditorialAnon155 {
   secondary_partner_logo: String
 }
 
-type EditorialAnon1553 {
+type EditorialAnon1565 {
   title: String
   url: String
 }
 
-type EditorialAnon1557 {
+type EditorialAnon1569 {
   bio: String
   id: String
   image_url: String
@@ -7041,9 +7052,9 @@ type EditorialAnon1557 {
   twitter_handle: String
 }
 
-type EditorialAnon1563 {
+type EditorialAnon1575 {
   auction_ids: [String]
-  author: EditorialAnon1568
+  author: EditorialAnon1581
   author_id: String
   author_ids: [String]
   biography_for_artist_id: String
@@ -7051,7 +7062,7 @@ type EditorialAnon1563 {
   contributing_authors: [EditorialContributingAuthor]
   daily_email: Boolean
   description: String
-  email_metadata: EditorialAnon1641
+  email_metadata: EditorialAnon1654
   exclude_google_news: Boolean
   fair_about_ids: [String]
   fair_artsy_ids: [String]
@@ -7061,15 +7072,16 @@ type EditorialAnon1563 {
   featured_artist_ids: [String]
   featured_artwork_ids: [String]
   gravity_id: String
-  hero_section: EditorialAnon1590
+  hero_section: EditorialAnon1603
   id: String
   indexable: Boolean
+  internalID: String
   is_super_article: Boolean
   keywords: [String]
   layout: String
   lead_paragraph: String
-  media: EditorialAnon1595
-  news_source: EditorialAnon1675
+  media: EditorialAnon1608
+  news_source: EditorialAnon1688
   partner_channel_id: String
   partner_ids: [String]
   postscript: String
@@ -7084,14 +7096,14 @@ type EditorialAnon1563 {
   sections: [EditorialObjectOrObjectOrObjectOrObjectOrObjectOrObjectOrObjectOrObject]
   send_body: Boolean
   seo_keyword: String
-  series: EditorialAnon1591
+  series: EditorialAnon1604
   show_ids: [String]
   slug: String
   social_description: String
   social_image: String
   social_title: String
-  sponsor: EditorialAnon1633
-  super_article: EditorialAnon1647
+  sponsor: EditorialAnon1646
+  super_article: EditorialAnon1660
   tags: [String]
   thumbnail_image: String
   thumbnail_teaser: String
@@ -7100,33 +7112,33 @@ type EditorialAnon1563 {
   title: String
   tracking_tags: [String]
   updated_at: String
-  vertical: EditorialAnon1579
+  vertical: EditorialAnon1592
   weekly_email: Boolean
 }
 
-type EditorialAnon1568 {
+type EditorialAnon1581 {
   id: String
   name: String
 }
 
-type EditorialAnon1579 {
+type EditorialAnon1592 {
   id: String
   name: String
 }
 
-union EditorialAnon1590 =
+union EditorialAnon1603 =
     EditorialFeatureHeader
   | EditorialImage
   | EditorialImageCollection
   | EditorialSeriesHeader
   | EditorialVideo
 
-type EditorialAnon1591 {
+type EditorialAnon1604 {
   description: String
   sub_title: String
 }
 
-type EditorialAnon1595 {
+type EditorialAnon1608 {
   cover_image_url: String
   credits: String
   description: String
@@ -7136,7 +7148,7 @@ type EditorialAnon1595 {
   url: String
 }
 
-type EditorialAnon1633 {
+type EditorialAnon1646 {
   description: String
   partner_condensed_logo: String
   partner_dark_logo: String
@@ -7146,14 +7158,14 @@ type EditorialAnon1633 {
   sub_title: String
 }
 
-type EditorialAnon1641 {
+type EditorialAnon1654 {
   author: String
   custom_text: String
   headline: String
   image_url: String
 }
 
-type EditorialAnon1647 {
+type EditorialAnon1660 {
   footer_blurb: String
   footer_title: String
   partner_fullscreen_header_logo: String
@@ -7167,23 +7179,23 @@ type EditorialAnon1647 {
   secondary_partner_logo: String
 }
 
-type EditorialAnon1675 {
+type EditorialAnon1688 {
   title: String
   url: String
 }
 
-type EditorialAnon1679 {
+type EditorialAnon1692 {
   auction_ids: [String]
-  author: EditorialAnon1684
+  author: EditorialAnon1698
   author_id: String
   author_ids: [String]
-  authors: [EditorialAnon1795]
+  authors: [EditorialAnon1809]
   biography_for_artist_id: String
   channel_id: String
   contributing_authors: [EditorialContributingAuthor]
   daily_email: Boolean
   description: String
-  email_metadata: EditorialAnon1757
+  email_metadata: EditorialAnon1771
   exclude_google_news: Boolean
   fair_about_ids: [String]
   fair_artsy_ids: [String]
@@ -7193,15 +7205,16 @@ type EditorialAnon1679 {
   featured_artist_ids: [String]
   featured_artwork_ids: [String]
   gravity_id: String
-  hero_section: EditorialAnon1706
+  hero_section: EditorialAnon1720
   id: String
   indexable: Boolean
+  internalID: String
   is_super_article: Boolean
   keywords: [String]
   layout: String
   lead_paragraph: String
-  media: EditorialAnon1711
-  news_source: EditorialAnon1791
+  media: EditorialAnon1725
+  news_source: EditorialAnon1805
   partner_channel_id: String
   partner_ids: [String]
   postscript: String
@@ -7216,15 +7229,15 @@ type EditorialAnon1679 {
   sections: [EditorialObjectOrObjectOrObjectOrObjectOrObjectOrObjectOrObjectOrObject]
   send_body: Boolean
   seo_keyword: String
-  series: EditorialAnon1707
-  seriesArticle: EditorialAnon1801
+  series: EditorialAnon1721
+  seriesArticle: EditorialAnon1815
   show_ids: [String]
   slug: String
   social_description: String
   social_image: String
   social_title: String
-  sponsor: EditorialAnon1749
-  super_article: EditorialAnon1763
+  sponsor: EditorialAnon1763
+  super_article: EditorialAnon1777
   tags: [String]
   thumbnail_image: String
   thumbnail_teaser: String
@@ -7233,33 +7246,33 @@ type EditorialAnon1679 {
   title: String
   tracking_tags: [String]
   updated_at: String
-  vertical: EditorialAnon1695
+  vertical: EditorialAnon1709
   weekly_email: Boolean
 }
 
-type EditorialAnon1684 {
+type EditorialAnon1698 {
   id: String
   name: String
 }
 
-type EditorialAnon1695 {
+type EditorialAnon1709 {
   id: String
   name: String
 }
 
-union EditorialAnon1706 =
+union EditorialAnon1720 =
     EditorialFeatureHeader
   | EditorialImage
   | EditorialImageCollection
   | EditorialSeriesHeader
   | EditorialVideo
 
-type EditorialAnon1707 {
+type EditorialAnon1721 {
   description: String
   sub_title: String
 }
 
-type EditorialAnon1711 {
+type EditorialAnon1725 {
   cover_image_url: String
   credits: String
   description: String
@@ -7267,26 +7280,26 @@ type EditorialAnon1711 {
   published: Boolean
   release_date: String
   url: String
-}
-
-type EditorialAnon1749 {
-  description: String
-  partner_condensed_logo: String
-  partner_dark_logo: String
-  partner_light_logo: String
-  partner_logo_link: String
-  pixel_tracking_code: String
-  sub_title: String
-}
-
-type EditorialAnon1757 {
-  author: String
-  custom_text: String
-  headline: String
-  image_url: String
 }
 
 type EditorialAnon1763 {
+  description: String
+  partner_condensed_logo: String
+  partner_dark_logo: String
+  partner_light_logo: String
+  partner_logo_link: String
+  pixel_tracking_code: String
+  sub_title: String
+}
+
+type EditorialAnon1771 {
+  author: String
+  custom_text: String
+  headline: String
+  image_url: String
+}
+
+type EditorialAnon1777 {
   footer_blurb: String
   footer_title: String
   partner_fullscreen_header_logo: String
@@ -7300,12 +7313,12 @@ type EditorialAnon1763 {
   secondary_partner_logo: String
 }
 
-type EditorialAnon1791 {
+type EditorialAnon1805 {
   title: String
   url: String
 }
 
-type EditorialAnon1795 {
+type EditorialAnon1809 {
   bio: String
   id: String
   image_url: String
@@ -7313,14 +7326,9 @@ type EditorialAnon1795 {
   twitter_handle: String
 }
 
-type EditorialAnon18 {
-  id: String
-  name: String
-}
-
-type EditorialAnon1801 {
+type EditorialAnon1815 {
   auction_ids: [String]
-  author: EditorialAnon1806
+  author: EditorialAnon1821
   author_id: String
   author_ids: [String]
   biography_for_artist_id: String
@@ -7328,7 +7336,7 @@ type EditorialAnon1801 {
   contributing_authors: [EditorialContributingAuthor]
   daily_email: Boolean
   description: String
-  email_metadata: EditorialAnon1879
+  email_metadata: EditorialAnon1894
   exclude_google_news: Boolean
   fair_about_ids: [String]
   fair_artsy_ids: [String]
@@ -7338,15 +7346,16 @@ type EditorialAnon1801 {
   featured_artist_ids: [String]
   featured_artwork_ids: [String]
   gravity_id: String
-  hero_section: EditorialAnon1828
+  hero_section: EditorialAnon1843
   id: String
   indexable: Boolean
+  internalID: String
   is_super_article: Boolean
   keywords: [String]
   layout: String
   lead_paragraph: String
-  media: EditorialAnon1833
-  news_source: EditorialAnon1913
+  media: EditorialAnon1848
+  news_source: EditorialAnon1928
   partner_channel_id: String
   partner_ids: [String]
   postscript: String
@@ -7361,14 +7370,14 @@ type EditorialAnon1801 {
   sections: [EditorialObjectOrObjectOrObjectOrObjectOrObjectOrObjectOrObjectOrObject]
   send_body: Boolean
   seo_keyword: String
-  series: EditorialAnon1829
+  series: EditorialAnon1844
   show_ids: [String]
   slug: String
   social_description: String
   social_image: String
   social_title: String
-  sponsor: EditorialAnon1871
-  super_article: EditorialAnon1885
+  sponsor: EditorialAnon1886
+  super_article: EditorialAnon1900
   tags: [String]
   thumbnail_image: String
   thumbnail_teaser: String
@@ -7377,38 +7386,38 @@ type EditorialAnon1801 {
   title: String
   tracking_tags: [String]
   updated_at: String
-  vertical: EditorialAnon1817
+  vertical: EditorialAnon1832
   weekly_email: Boolean
 }
 
-type EditorialAnon1806 {
+type EditorialAnon1821 {
   id: String
   name: String
 }
 
-type EditorialAnon1817 {
+type EditorialAnon1832 {
   id: String
   name: String
 }
 
-union EditorialAnon1828 =
+type EditorialAnon184 {
+  title: String
+  url: String
+}
+
+union EditorialAnon1843 =
     EditorialFeatureHeader
   | EditorialImage
   | EditorialImageCollection
   | EditorialSeriesHeader
   | EditorialVideo
 
-type EditorialAnon1829 {
+type EditorialAnon1844 {
   description: String
   sub_title: String
 }
 
-type EditorialAnon183 {
-  title: String
-  url: String
-}
-
-type EditorialAnon1833 {
+type EditorialAnon1848 {
   cover_image_url: String
   credits: String
   description: String
@@ -7418,7 +7427,7 @@ type EditorialAnon1833 {
   url: String
 }
 
-type EditorialAnon187 {
+type EditorialAnon188 {
   bio: String
   id: String
   image_url: String
@@ -7426,7 +7435,7 @@ type EditorialAnon187 {
   twitter_handle: String
 }
 
-type EditorialAnon1871 {
+type EditorialAnon1886 {
   description: String
   partner_condensed_logo: String
   partner_dark_logo: String
@@ -7436,14 +7445,19 @@ type EditorialAnon1871 {
   sub_title: String
 }
 
-type EditorialAnon1879 {
+type EditorialAnon1894 {
   author: String
   custom_text: String
   headline: String
   image_url: String
 }
 
-type EditorialAnon1885 {
+type EditorialAnon19 {
+  id: String
+  name: String
+}
+
+type EditorialAnon1900 {
   footer_blurb: String
   footer_title: String
   partner_fullscreen_header_logo: String
@@ -7457,12 +7471,12 @@ type EditorialAnon1885 {
   secondary_partner_logo: String
 }
 
-type EditorialAnon1913 {
+type EditorialAnon1928 {
   title: String
   url: String
 }
 
-type EditorialAnon1918 {
+type EditorialAnon1933 {
   bio: String
   id: String
   image_url: String
@@ -7470,34 +7484,34 @@ type EditorialAnon1918 {
   twitter_handle: String
 }
 
-type EditorialAnon1931 {
+type EditorialAnon1946 {
   id: String
   name: String
 }
 
-type EditorialAnon1937 {
+type EditorialAnon1952 {
   id: String
   image_url: String
-  links: [EditorialAnon1946]
+  links: [EditorialAnon1961]
   name: String
-  pinned_articles: [EditorialAnon1951]
+  pinned_articles: [EditorialAnon1966]
   slug: String
   tagline: String
   type: String
   user_ids: [String]
 }
 
-type EditorialAnon1946 {
+type EditorialAnon1961 {
   text: String
   url: String
 }
 
-type EditorialAnon1951 {
+type EditorialAnon1966 {
   id: String
   index: Float
 }
 
-type EditorialAnon1960 {
+type EditorialAnon1975 {
   id: String
   name: String
   public: Boolean
@@ -7505,17 +7519,17 @@ type EditorialAnon1960 {
 
 type EditorialAnon2 {
   auction_ids: [String]
-  author: EditorialAnon7
+  author: EditorialAnon8
   author_id: String
   author_ids: [String]
-  authors: [EditorialAnon187]
+  authors: [EditorialAnon188]
   biography_for_artist_id: String
   channel: EditorialChannel
   channel_id: String
   contributing_authors: [EditorialContributingAuthor]
   daily_email: Boolean
   description: String
-  email_metadata: EditorialAnon149
+  email_metadata: EditorialAnon150
   exclude_google_news: Boolean
   fair_about_ids: [String]
   fair_artsy_ids: [String]
@@ -7525,16 +7539,17 @@ type EditorialAnon2 {
   featured_artist_ids: [String]
   featured_artwork_ids: [String]
   gravity_id: String
-  hero_section: EditorialAnon29
+  hero_section: EditorialAnon30
   id: String
   indexable: Boolean
+  internalID: String
   is_super_article: Boolean
   is_super_sub_article: Boolean
   keywords: [String]
   layout: String
   lead_paragraph: String
-  media: EditorialAnon101
-  news_source: EditorialAnon183
+  media: EditorialAnon102
+  news_source: EditorialAnon184
   partner_channel_id: String
   partner_ids: [String]
   postscript: String
@@ -7542,9 +7557,9 @@ type EditorialAnon2 {
   published: Boolean
   published_at: String
   related_article_ids: [String]
-  relatedArticles: [EditorialAnon447]
-  relatedArticlesCanvas: [EditorialAnon210]
-  relatedArticlesPanel: [EditorialAnon332]
+  relatedArticles: [EditorialAnon450]
+  relatedArticlesCanvas: [EditorialAnon211]
+  relatedArticlesPanel: [EditorialAnon334]
   scheduled_publish_at: String
   search_description: String
   search_title: String
@@ -7552,15 +7567,15 @@ type EditorialAnon2 {
   sections: [EditorialObjectOrObjectOrObjectOrObjectOrObjectOrObjectOrObjectOrObject]
   send_body: Boolean
   seo_keyword: String
-  series: EditorialAnon71
+  series: EditorialAnon72
   seriesArticle: EditorialSeriesArticle
   show_ids: [String]
   slug: String
   social_description: String
   social_image: String
   social_title: String
-  sponsor: EditorialAnon141
-  super_article: EditorialAnon155
+  sponsor: EditorialAnon142
+  super_article: EditorialAnon156
   tags: [String]
   thumbnail_image: String
   thumbnail_teaser: String
@@ -7569,32 +7584,32 @@ type EditorialAnon2 {
   title: String
   tracking_tags: [String]
   updated_at: String
-  vertical: EditorialAnon18
+  vertical: EditorialAnon19
   weekly_email: Boolean
 }
 
-type EditorialAnon201 {
+type EditorialAnon202 {
   text: String
   url: String
 }
 
-type EditorialAnon206 {
+type EditorialAnon207 {
   id: String
   index: Float
 }
 
-type EditorialAnon210 {
+type EditorialAnon211 {
   auction_ids: [String]
-  author: EditorialAnon215
+  author: EditorialAnon217
   author_id: String
   author_ids: [String]
-  authors: [EditorialAnon326]
+  authors: [EditorialAnon328]
   biography_for_artist_id: String
   channel_id: String
   contributing_authors: [EditorialContributingAuthor]
   daily_email: Boolean
   description: String
-  email_metadata: EditorialAnon288
+  email_metadata: EditorialAnon290
   exclude_google_news: Boolean
   fair_about_ids: [String]
   fair_artsy_ids: [String]
@@ -7604,15 +7619,16 @@ type EditorialAnon210 {
   featured_artist_ids: [String]
   featured_artwork_ids: [String]
   gravity_id: String
-  hero_section: EditorialAnon237
+  hero_section: EditorialAnon239
   id: String
   indexable: Boolean
+  internalID: String
   is_super_article: Boolean
   keywords: [String]
   layout: String
   lead_paragraph: String
-  media: EditorialAnon242
-  news_source: EditorialAnon322
+  media: EditorialAnon244
+  news_source: EditorialAnon324
   partner_channel_id: String
   partner_ids: [String]
   postscript: String
@@ -7627,14 +7643,14 @@ type EditorialAnon210 {
   sections: [EditorialObjectOrObjectOrObjectOrObjectOrObjectOrObjectOrObjectOrObject]
   send_body: Boolean
   seo_keyword: String
-  series: EditorialAnon238
+  series: EditorialAnon240
   show_ids: [String]
   slug: String
   social_description: String
   social_image: String
   social_title: String
-  sponsor: EditorialAnon280
-  super_article: EditorialAnon294
+  sponsor: EditorialAnon282
+  super_article: EditorialAnon296
   tags: [String]
   thumbnail_image: String
   thumbnail_teaser: String
@@ -7643,33 +7659,33 @@ type EditorialAnon210 {
   title: String
   tracking_tags: [String]
   updated_at: String
-  vertical: EditorialAnon226
+  vertical: EditorialAnon228
   weekly_email: Boolean
 }
 
-type EditorialAnon215 {
+type EditorialAnon217 {
   id: String
   name: String
 }
 
-type EditorialAnon226 {
+type EditorialAnon228 {
   id: String
   name: String
 }
 
-union EditorialAnon237 =
+union EditorialAnon239 =
     EditorialFeatureHeader
   | EditorialImage
   | EditorialImageCollection
   | EditorialSeriesHeader
   | EditorialVideo
 
-type EditorialAnon238 {
+type EditorialAnon240 {
   description: String
   sub_title: String
 }
 
-type EditorialAnon242 {
+type EditorialAnon244 {
   cover_image_url: String
   credits: String
   description: String
@@ -7679,7 +7695,7 @@ type EditorialAnon242 {
   url: String
 }
 
-type EditorialAnon280 {
+type EditorialAnon282 {
   description: String
   partner_condensed_logo: String
   partner_dark_logo: String
@@ -7689,21 +7705,14 @@ type EditorialAnon280 {
   sub_title: String
 }
 
-type EditorialAnon288 {
+type EditorialAnon290 {
   author: String
   custom_text: String
   headline: String
   image_url: String
 }
 
-union EditorialAnon29 =
-    EditorialFeatureHeader
-  | EditorialImage
-  | EditorialImageCollection
-  | EditorialSeriesHeader
-  | EditorialVideo
-
-type EditorialAnon294 {
+type EditorialAnon296 {
   footer_blurb: String
   footer_title: String
   partner_fullscreen_header_logo: String
@@ -7717,12 +7726,19 @@ type EditorialAnon294 {
   secondary_partner_logo: String
 }
 
-type EditorialAnon322 {
+union EditorialAnon30 =
+    EditorialFeatureHeader
+  | EditorialImage
+  | EditorialImageCollection
+  | EditorialSeriesHeader
+  | EditorialVideo
+
+type EditorialAnon324 {
   title: String
   url: String
 }
 
-type EditorialAnon326 {
+type EditorialAnon328 {
   bio: String
   id: String
   image_url: String
@@ -7730,9 +7746,9 @@ type EditorialAnon326 {
   twitter_handle: String
 }
 
-type EditorialAnon332 {
+type EditorialAnon334 {
   auction_ids: [String]
-  author: EditorialAnon337
+  author: EditorialAnon340
   author_id: String
   author_ids: [String]
   biography_for_artist_id: String
@@ -7740,7 +7756,7 @@ type EditorialAnon332 {
   contributing_authors: [EditorialContributingAuthor]
   daily_email: Boolean
   description: String
-  email_metadata: EditorialAnon410
+  email_metadata: EditorialAnon413
   exclude_google_news: Boolean
   fair_about_ids: [String]
   fair_artsy_ids: [String]
@@ -7750,15 +7766,16 @@ type EditorialAnon332 {
   featured_artist_ids: [String]
   featured_artwork_ids: [String]
   gravity_id: String
-  hero_section: EditorialAnon359
+  hero_section: EditorialAnon362
   id: String
   indexable: Boolean
+  internalID: String
   is_super_article: Boolean
   keywords: [String]
   layout: String
   lead_paragraph: String
-  media: EditorialAnon364
-  news_source: EditorialAnon444
+  media: EditorialAnon367
+  news_source: EditorialAnon447
   partner_channel_id: String
   partner_ids: [String]
   postscript: String
@@ -7773,14 +7790,14 @@ type EditorialAnon332 {
   sections: [EditorialObjectOrObjectOrObjectOrObjectOrObjectOrObjectOrObjectOrObject]
   send_body: Boolean
   seo_keyword: String
-  series: EditorialAnon360
+  series: EditorialAnon363
   show_ids: [String]
   slug: String
   social_description: String
   social_image: String
   social_title: String
-  sponsor: EditorialAnon402
-  super_article: EditorialAnon416
+  sponsor: EditorialAnon405
+  super_article: EditorialAnon419
   tags: [String]
   thumbnail_image: String
   thumbnail_teaser: String
@@ -7789,33 +7806,33 @@ type EditorialAnon332 {
   title: String
   tracking_tags: [String]
   updated_at: String
-  vertical: EditorialAnon348
+  vertical: EditorialAnon351
   weekly_email: Boolean
 }
 
-type EditorialAnon337 {
+type EditorialAnon340 {
   id: String
   name: String
 }
 
-type EditorialAnon348 {
+type EditorialAnon351 {
   id: String
   name: String
 }
 
-union EditorialAnon359 =
+union EditorialAnon362 =
     EditorialFeatureHeader
   | EditorialImage
   | EditorialImageCollection
   | EditorialSeriesHeader
   | EditorialVideo
 
-type EditorialAnon360 {
+type EditorialAnon363 {
   description: String
   sub_title: String
 }
 
-type EditorialAnon364 {
+type EditorialAnon367 {
   cover_image_url: String
   credits: String
   description: String
@@ -7825,7 +7842,7 @@ type EditorialAnon364 {
   url: String
 }
 
-type EditorialAnon402 {
+type EditorialAnon405 {
   description: String
   partner_condensed_logo: String
   partner_dark_logo: String
@@ -7835,14 +7852,14 @@ type EditorialAnon402 {
   sub_title: String
 }
 
-type EditorialAnon410 {
+type EditorialAnon413 {
   author: String
   custom_text: String
   headline: String
   image_url: String
 }
 
-type EditorialAnon416 {
+type EditorialAnon419 {
   footer_blurb: String
   footer_title: String
   partner_fullscreen_header_logo: String
@@ -7854,25 +7871,25 @@ type EditorialAnon416 {
   secondary_logo_link: String
   secondary_logo_text: String
   secondary_partner_logo: String
-}
-
-type EditorialAnon444 {
-  title: String
-  url: String
 }
 
 type EditorialAnon447 {
+  title: String
+  url: String
+}
+
+type EditorialAnon450 {
   auction_ids: [String]
-  author: EditorialAnon452
+  author: EditorialAnon456
   author_id: String
   author_ids: [String]
-  authors: [EditorialAnon563]
+  authors: [EditorialAnon567]
   biography_for_artist_id: String
   channel_id: String
   contributing_authors: [EditorialContributingAuthor]
   daily_email: Boolean
   description: String
-  email_metadata: EditorialAnon525
+  email_metadata: EditorialAnon529
   exclude_google_news: Boolean
   fair_about_ids: [String]
   fair_artsy_ids: [String]
@@ -7882,15 +7899,16 @@ type EditorialAnon447 {
   featured_artist_ids: [String]
   featured_artwork_ids: [String]
   gravity_id: String
-  hero_section: EditorialAnon474
+  hero_section: EditorialAnon478
   id: String
   indexable: Boolean
+  internalID: String
   is_super_article: Boolean
   keywords: [String]
   layout: String
   lead_paragraph: String
-  media: EditorialAnon479
-  news_source: EditorialAnon559
+  media: EditorialAnon483
+  news_source: EditorialAnon563
   partner_channel_id: String
   partner_ids: [String]
   postscript: String
@@ -7898,7 +7916,7 @@ type EditorialAnon447 {
   published: Boolean
   published_at: String
   related_article_ids: [String]
-  relatedArticles: [EditorialAnon685]
+  relatedArticles: [EditorialAnon690]
   scheduled_publish_at: String
   search_description: String
   search_title: String
@@ -7906,15 +7924,15 @@ type EditorialAnon447 {
   sections: [EditorialObjectOrObjectOrObjectOrObjectOrObjectOrObjectOrObjectOrObject]
   send_body: Boolean
   seo_keyword: String
-  series: EditorialAnon475
-  seriesArticle: EditorialAnon569
+  series: EditorialAnon479
+  seriesArticle: EditorialAnon573
   show_ids: [String]
   slug: String
   social_description: String
   social_image: String
   social_title: String
-  sponsor: EditorialAnon517
-  super_article: EditorialAnon531
+  sponsor: EditorialAnon521
+  super_article: EditorialAnon535
   tags: [String]
   thumbnail_image: String
   thumbnail_teaser: String
@@ -7923,38 +7941,38 @@ type EditorialAnon447 {
   title: String
   tracking_tags: [String]
   updated_at: String
-  vertical: EditorialAnon463
+  vertical: EditorialAnon467
   weekly_email: Boolean
 }
 
-type EditorialAnon45 {
+type EditorialAnon456 {
+  id: String
+  name: String
+}
+
+type EditorialAnon46 {
   name: String
   slug: String
 }
 
-type EditorialAnon452 {
+type EditorialAnon467 {
   id: String
   name: String
 }
 
-type EditorialAnon463 {
-  id: String
-  name: String
-}
-
-union EditorialAnon474 =
+union EditorialAnon478 =
     EditorialFeatureHeader
   | EditorialImage
   | EditorialImageCollection
   | EditorialSeriesHeader
   | EditorialVideo
 
-type EditorialAnon475 {
+type EditorialAnon479 {
   description: String
   sub_title: String
 }
 
-type EditorialAnon479 {
+type EditorialAnon483 {
   cover_image_url: String
   credits: String
   description: String
@@ -7964,12 +7982,12 @@ type EditorialAnon479 {
   url: String
 }
 
-type EditorialAnon49 {
+type EditorialAnon50 {
   name: String
   slug: String
 }
 
-type EditorialAnon517 {
+type EditorialAnon521 {
   description: String
   partner_condensed_logo: String
   partner_dark_logo: String
@@ -7979,19 +7997,19 @@ type EditorialAnon517 {
   sub_title: String
 }
 
-type EditorialAnon52 {
-  name: String
-  slug: String
-}
-
-type EditorialAnon525 {
+type EditorialAnon529 {
   author: String
   custom_text: String
   headline: String
   image_url: String
 }
 
-type EditorialAnon531 {
+type EditorialAnon53 {
+  name: String
+  slug: String
+}
+
+type EditorialAnon535 {
   footer_blurb: String
   footer_title: String
   partner_fullscreen_header_logo: String
@@ -8003,14 +8021,14 @@ type EditorialAnon531 {
   secondary_logo_link: String
   secondary_logo_text: String
   secondary_partner_logo: String
-}
-
-type EditorialAnon559 {
-  title: String
-  url: String
 }
 
 type EditorialAnon563 {
+  title: String
+  url: String
+}
+
+type EditorialAnon567 {
   bio: String
   id: String
   image_url: String
@@ -8018,9 +8036,9 @@ type EditorialAnon563 {
   twitter_handle: String
 }
 
-type EditorialAnon569 {
+type EditorialAnon573 {
   auction_ids: [String]
-  author: EditorialAnon574
+  author: EditorialAnon579
   author_id: String
   author_ids: [String]
   biography_for_artist_id: String
@@ -8028,7 +8046,7 @@ type EditorialAnon569 {
   contributing_authors: [EditorialContributingAuthor]
   daily_email: Boolean
   description: String
-  email_metadata: EditorialAnon647
+  email_metadata: EditorialAnon652
   exclude_google_news: Boolean
   fair_about_ids: [String]
   fair_artsy_ids: [String]
@@ -8038,15 +8056,16 @@ type EditorialAnon569 {
   featured_artist_ids: [String]
   featured_artwork_ids: [String]
   gravity_id: String
-  hero_section: EditorialAnon596
+  hero_section: EditorialAnon601
   id: String
   indexable: Boolean
+  internalID: String
   is_super_article: Boolean
   keywords: [String]
   layout: String
   lead_paragraph: String
-  media: EditorialAnon601
-  news_source: EditorialAnon681
+  media: EditorialAnon606
+  news_source: EditorialAnon686
   partner_channel_id: String
   partner_ids: [String]
   postscript: String
@@ -8061,14 +8080,14 @@ type EditorialAnon569 {
   sections: [EditorialObjectOrObjectOrObjectOrObjectOrObjectOrObjectOrObjectOrObject]
   send_body: Boolean
   seo_keyword: String
-  series: EditorialAnon597
+  series: EditorialAnon602
   show_ids: [String]
   slug: String
   social_description: String
   social_image: String
   social_title: String
-  sponsor: EditorialAnon639
-  super_article: EditorialAnon653
+  sponsor: EditorialAnon644
+  super_article: EditorialAnon658
   tags: [String]
   thumbnail_image: String
   thumbnail_teaser: String
@@ -8077,33 +8096,33 @@ type EditorialAnon569 {
   title: String
   tracking_tags: [String]
   updated_at: String
-  vertical: EditorialAnon585
+  vertical: EditorialAnon590
   weekly_email: Boolean
 }
 
-type EditorialAnon574 {
+type EditorialAnon579 {
   id: String
   name: String
 }
 
-type EditorialAnon585 {
+type EditorialAnon590 {
   id: String
   name: String
 }
 
-union EditorialAnon596 =
+union EditorialAnon601 =
     EditorialFeatureHeader
   | EditorialImage
   | EditorialImageCollection
   | EditorialSeriesHeader
   | EditorialVideo
 
-type EditorialAnon597 {
+type EditorialAnon602 {
   description: String
   sub_title: String
 }
 
-type EditorialAnon601 {
+type EditorialAnon606 {
   cover_image_url: String
   credits: String
   description: String
@@ -8113,7 +8132,7 @@ type EditorialAnon601 {
   url: String
 }
 
-type EditorialAnon639 {
+type EditorialAnon644 {
   description: String
   partner_condensed_logo: String
   partner_dark_logo: String
@@ -8123,14 +8142,14 @@ type EditorialAnon639 {
   sub_title: String
 }
 
-type EditorialAnon647 {
+type EditorialAnon652 {
   author: String
   custom_text: String
   headline: String
   image_url: String
 }
 
-type EditorialAnon653 {
+type EditorialAnon658 {
   footer_blurb: String
   footer_title: String
   partner_fullscreen_header_logo: String
@@ -8144,173 +8163,23 @@ type EditorialAnon653 {
   secondary_partner_logo: String
 }
 
-type EditorialAnon681 {
+type EditorialAnon686 {
   title: String
   url: String
-}
-
-type EditorialAnon685 {
-  auction_ids: [String]
-  author: EditorialAnon690
-  author_id: String
-  author_ids: [String]
-  authors: [EditorialAnon801]
-  biography_for_artist_id: String
-  channel_id: String
-  contributing_authors: [EditorialContributingAuthor]
-  daily_email: Boolean
-  description: String
-  email_metadata: EditorialAnon763
-  exclude_google_news: Boolean
-  fair_about_ids: [String]
-  fair_artsy_ids: [String]
-  fair_ids: [String]
-  fair_programming_ids: [String]
-  featured: Boolean
-  featured_artist_ids: [String]
-  featured_artwork_ids: [String]
-  gravity_id: String
-  hero_section: EditorialAnon712
-  id: String
-  indexable: Boolean
-  is_super_article: Boolean
-  keywords: [String]
-  layout: String
-  lead_paragraph: String
-  media: EditorialAnon717
-  news_source: EditorialAnon797
-  partner_channel_id: String
-  partner_ids: [String]
-  postscript: String
-  primary_featured_artist_ids: [String]
-  published: Boolean
-  published_at: String
-  related_article_ids: [String]
-  scheduled_publish_at: String
-  search_description: String
-  search_title: String
-  section_ids: [String]
-  sections: [EditorialObjectOrObjectOrObjectOrObjectOrObjectOrObjectOrObjectOrObject]
-  send_body: Boolean
-  seo_keyword: String
-  series: EditorialAnon713
-  seriesArticle: EditorialAnon807
-  show_ids: [String]
-  slug: String
-  social_description: String
-  social_image: String
-  social_title: String
-  sponsor: EditorialAnon755
-  super_article: EditorialAnon769
-  tags: [String]
-  thumbnail_image: String
-  thumbnail_teaser: String
-  thumbnail_title: String
-  tier: Float
-  title: String
-  tracking_tags: [String]
-  updated_at: String
-  vertical: EditorialAnon701
-  weekly_email: Boolean
 }
 
 type EditorialAnon690 {
-  id: String
-  name: String
-}
-
-type EditorialAnon7 {
-  id: String
-  name: String
-}
-
-type EditorialAnon701 {
-  id: String
-  name: String
-}
-
-type EditorialAnon71 {
-  description: String
-  sub_title: String
-}
-
-union EditorialAnon712 =
-    EditorialFeatureHeader
-  | EditorialImage
-  | EditorialImageCollection
-  | EditorialSeriesHeader
-  | EditorialVideo
-
-type EditorialAnon713 {
-  description: String
-  sub_title: String
-}
-
-type EditorialAnon717 {
-  cover_image_url: String
-  credits: String
-  description: String
-  duration: Float
-  published: Boolean
-  release_date: String
-  url: String
-}
-
-type EditorialAnon755 {
-  description: String
-  partner_condensed_logo: String
-  partner_dark_logo: String
-  partner_light_logo: String
-  partner_logo_link: String
-  pixel_tracking_code: String
-  sub_title: String
-}
-
-type EditorialAnon763 {
-  author: String
-  custom_text: String
-  headline: String
-  image_url: String
-}
-
-type EditorialAnon769 {
-  footer_blurb: String
-  footer_title: String
-  partner_fullscreen_header_logo: String
-  partner_link: String
-  partner_link_title: String
-  partner_logo: String
-  partner_logo_link: String
-  related_articles: [String]
-  secondary_logo_link: String
-  secondary_logo_text: String
-  secondary_partner_logo: String
-}
-
-type EditorialAnon797 {
-  title: String
-  url: String
-}
-
-type EditorialAnon801 {
-  bio: String
-  id: String
-  image_url: String
-  name: String
-  twitter_handle: String
-}
-
-type EditorialAnon807 {
   auction_ids: [String]
-  author: EditorialAnon812
+  author: EditorialAnon696
   author_id: String
   author_ids: [String]
+  authors: [EditorialAnon807]
   biography_for_artist_id: String
   channel_id: String
   contributing_authors: [EditorialContributingAuthor]
   daily_email: Boolean
   description: String
-  email_metadata: EditorialAnon885
+  email_metadata: EditorialAnon769
   exclude_google_news: Boolean
   fair_about_ids: [String]
   fair_artsy_ids: [String]
@@ -8320,15 +8189,16 @@ type EditorialAnon807 {
   featured_artist_ids: [String]
   featured_artwork_ids: [String]
   gravity_id: String
-  hero_section: EditorialAnon834
+  hero_section: EditorialAnon718
   id: String
   indexable: Boolean
+  internalID: String
   is_super_article: Boolean
   keywords: [String]
   layout: String
   lead_paragraph: String
-  media: EditorialAnon839
-  news_source: EditorialAnon919
+  media: EditorialAnon723
+  news_source: EditorialAnon803
   partner_channel_id: String
   partner_ids: [String]
   postscript: String
@@ -8343,14 +8213,15 @@ type EditorialAnon807 {
   sections: [EditorialObjectOrObjectOrObjectOrObjectOrObjectOrObjectOrObjectOrObject]
   send_body: Boolean
   seo_keyword: String
-  series: EditorialAnon835
+  series: EditorialAnon719
+  seriesArticle: EditorialAnon813
   show_ids: [String]
   slug: String
   social_description: String
   social_image: String
   social_title: String
-  sponsor: EditorialAnon877
-  super_article: EditorialAnon891
+  sponsor: EditorialAnon761
+  super_article: EditorialAnon775
   tags: [String]
   thumbnail_image: String
   thumbnail_teaser: String
@@ -8359,33 +8230,38 @@ type EditorialAnon807 {
   title: String
   tracking_tags: [String]
   updated_at: String
-  vertical: EditorialAnon823
+  vertical: EditorialAnon707
   weekly_email: Boolean
 }
 
-type EditorialAnon812 {
+type EditorialAnon696 {
   id: String
   name: String
 }
 
-type EditorialAnon823 {
+type EditorialAnon707 {
   id: String
   name: String
 }
 
-union EditorialAnon834 =
+union EditorialAnon718 =
     EditorialFeatureHeader
   | EditorialImage
   | EditorialImageCollection
   | EditorialSeriesHeader
   | EditorialVideo
 
-type EditorialAnon835 {
+type EditorialAnon719 {
   description: String
   sub_title: String
 }
 
-type EditorialAnon839 {
+type EditorialAnon72 {
+  description: String
+  sub_title: String
+}
+
+type EditorialAnon723 {
   cover_image_url: String
   credits: String
   description: String
@@ -8395,7 +8271,7 @@ type EditorialAnon839 {
   url: String
 }
 
-type EditorialAnon877 {
+type EditorialAnon761 {
   description: String
   partner_condensed_logo: String
   partner_dark_logo: String
@@ -8405,14 +8281,14 @@ type EditorialAnon877 {
   sub_title: String
 }
 
-type EditorialAnon885 {
+type EditorialAnon769 {
   author: String
   custom_text: String
   headline: String
   image_url: String
 }
 
-type EditorialAnon891 {
+type EditorialAnon775 {
   footer_blurb: String
   footer_title: String
   partner_fullscreen_header_logo: String
@@ -8426,39 +8302,184 @@ type EditorialAnon891 {
   secondary_partner_logo: String
 }
 
-type EditorialAnon919 {
+type EditorialAnon8 {
+  id: String
+  name: String
+}
+
+type EditorialAnon803 {
   title: String
   url: String
 }
 
+type EditorialAnon807 {
+  bio: String
+  id: String
+  image_url: String
+  name: String
+  twitter_handle: String
+}
+
+type EditorialAnon813 {
+  auction_ids: [String]
+  author: EditorialAnon819
+  author_id: String
+  author_ids: [String]
+  biography_for_artist_id: String
+  channel_id: String
+  contributing_authors: [EditorialContributingAuthor]
+  daily_email: Boolean
+  description: String
+  email_metadata: EditorialAnon892
+  exclude_google_news: Boolean
+  fair_about_ids: [String]
+  fair_artsy_ids: [String]
+  fair_ids: [String]
+  fair_programming_ids: [String]
+  featured: Boolean
+  featured_artist_ids: [String]
+  featured_artwork_ids: [String]
+  gravity_id: String
+  hero_section: EditorialAnon841
+  id: String
+  indexable: Boolean
+  internalID: String
+  is_super_article: Boolean
+  keywords: [String]
+  layout: String
+  lead_paragraph: String
+  media: EditorialAnon846
+  news_source: EditorialAnon926
+  partner_channel_id: String
+  partner_ids: [String]
+  postscript: String
+  primary_featured_artist_ids: [String]
+  published: Boolean
+  published_at: String
+  related_article_ids: [String]
+  scheduled_publish_at: String
+  search_description: String
+  search_title: String
+  section_ids: [String]
+  sections: [EditorialObjectOrObjectOrObjectOrObjectOrObjectOrObjectOrObjectOrObject]
+  send_body: Boolean
+  seo_keyword: String
+  series: EditorialAnon842
+  show_ids: [String]
+  slug: String
+  social_description: String
+  social_image: String
+  social_title: String
+  sponsor: EditorialAnon884
+  super_article: EditorialAnon898
+  tags: [String]
+  thumbnail_image: String
+  thumbnail_teaser: String
+  thumbnail_title: String
+  tier: Float
+  title: String
+  tracking_tags: [String]
+  updated_at: String
+  vertical: EditorialAnon830
+  weekly_email: Boolean
+}
+
+type EditorialAnon819 {
+  id: String
+  name: String
+}
+
+type EditorialAnon830 {
+  id: String
+  name: String
+}
+
+union EditorialAnon841 =
+    EditorialFeatureHeader
+  | EditorialImage
+  | EditorialImageCollection
+  | EditorialSeriesHeader
+  | EditorialVideo
+
+type EditorialAnon842 {
+  description: String
+  sub_title: String
+}
+
+type EditorialAnon846 {
+  cover_image_url: String
+  credits: String
+  description: String
+  duration: Float
+  published: Boolean
+  release_date: String
+  url: String
+}
+
+type EditorialAnon884 {
+  description: String
+  partner_condensed_logo: String
+  partner_dark_logo: String
+  partner_light_logo: String
+  partner_logo_link: String
+  pixel_tracking_code: String
+  sub_title: String
+}
+
+type EditorialAnon892 {
+  author: String
+  custom_text: String
+  headline: String
+  image_url: String
+}
+
+type EditorialAnon898 {
+  footer_blurb: String
+  footer_title: String
+  partner_fullscreen_header_logo: String
+  partner_link: String
+  partner_link_title: String
+  partner_logo: String
+  partner_logo_link: String
+  related_articles: [String]
+  secondary_logo_link: String
+  secondary_logo_text: String
+  secondary_partner_logo: String
+}
+
 type EditorialAnon926 {
+  title: String
+  url: String
+}
+
+type EditorialAnon934 {
   id: String
   name: String
 }
 
-type EditorialAnon937 {
+type EditorialAnon945 {
   id: String
   name: String
 }
 
-type EditorialAnon94 {
+type EditorialAnon95 {
   id: String
   type: String
 }
 
-union EditorialAnon948 =
+union EditorialAnon956 =
     EditorialFeatureHeader
   | EditorialImage
   | EditorialImageCollection
   | EditorialSeriesHeader
   | EditorialVideo
 
-type EditorialAnon949 {
+type EditorialAnon957 {
   description: String
   sub_title: String
 }
 
-type EditorialAnon953 {
+type EditorialAnon961 {
   cover_image_url: String
   credits: String
   description: String
@@ -8468,7 +8489,7 @@ type EditorialAnon953 {
   url: String
 }
 
-type EditorialAnon991 {
+type EditorialAnon999 {
   description: String
   partner_condensed_logo: String
   partner_dark_logo: String
@@ -8478,22 +8499,15 @@ type EditorialAnon991 {
   sub_title: String
 }
 
-type EditorialAnon999 {
-  author: String
-  custom_text: String
-  headline: String
-  image_url: String
-}
-
 type EditorialArtwork {
-  artist: EditorialAnon52
-  artists: [EditorialAnon49]
+  artist: EditorialAnon53
+  artists: [EditorialAnon50]
   credit: String
   date: String
   height: Float
   id: String
   image: String
-  partner: EditorialAnon45
+  partner: EditorialAnon46
   slug: String
   title: String
   type: String
@@ -8512,9 +8526,9 @@ type EditorialCallout {
 type EditorialChannel {
   id: String
   image_url: String
-  links: [EditorialAnon201]
+  links: [EditorialAnon202]
   name: String
-  pinned_articles: [EditorialAnon206]
+  pinned_articles: [EditorialAnon207]
   slug: String
   tagline: String
   type: String
@@ -8567,7 +8581,7 @@ type EditorialImageSet {
 union EditorialObjectOrObject = EditorialArtwork | EditorialImage
 
 union EditorialObjectOrObjectOrObject =
-    EditorialAnon94
+    EditorialAnon95
   | EditorialImage
   | EditorialVideo
 
@@ -8583,7 +8597,7 @@ union EditorialObjectOrObjectOrObjectOrObjectOrObjectOrObjectOrObjectOrObject =
 
 type EditorialSeriesArticle {
   auction_ids: [String]
-  author: EditorialAnon926
+  author: EditorialAnon934
   author_id: String
   author_ids: [String]
   biography_for_artist_id: String
@@ -8591,7 +8605,7 @@ type EditorialSeriesArticle {
   contributing_authors: [EditorialContributingAuthor]
   daily_email: Boolean
   description: String
-  email_metadata: EditorialAnon999
+  email_metadata: EditorialAnon1007
   exclude_google_news: Boolean
   fair_about_ids: [String]
   fair_artsy_ids: [String]
@@ -8601,15 +8615,16 @@ type EditorialSeriesArticle {
   featured_artist_ids: [String]
   featured_artwork_ids: [String]
   gravity_id: String
-  hero_section: EditorialAnon948
+  hero_section: EditorialAnon956
   id: String
   indexable: Boolean
+  internalID: String
   is_super_article: Boolean
   keywords: [String]
   layout: String
   lead_paragraph: String
-  media: EditorialAnon953
-  news_source: EditorialAnon1033
+  media: EditorialAnon961
+  news_source: EditorialAnon1041
   partner_channel_id: String
   partner_ids: [String]
   postscript: String
@@ -8624,14 +8639,14 @@ type EditorialSeriesArticle {
   sections: [EditorialObjectOrObjectOrObjectOrObjectOrObjectOrObjectOrObjectOrObject]
   send_body: Boolean
   seo_keyword: String
-  series: EditorialAnon949
+  series: EditorialAnon957
   show_ids: [String]
   slug: String
   social_description: String
   social_image: String
   social_title: String
-  sponsor: EditorialAnon991
-  super_article: EditorialAnon1005
+  sponsor: EditorialAnon999
+  super_article: EditorialAnon1013
   tags: [String]
   thumbnail_image: String
   thumbnail_teaser: String
@@ -8640,7 +8655,7 @@ type EditorialSeriesArticle {
   title: String
   tracking_tags: [String]
   updated_at: String
-  vertical: EditorialAnon937
+  vertical: EditorialAnon945
   weekly_email: Boolean
 }
 
@@ -13125,7 +13140,7 @@ type Query {
     # The ID of the Credit Card
     id: String!
   ): CreditCard
-  editorialArticle(id: String): EditorialAnon1081
+  editorialArticle(id: String): EditorialAnon1089
   editorialArticles(
     access_token: String
     all_by_author: String
@@ -13174,15 +13189,15 @@ type Query {
     limit: Float
     offset: Float
     q: String
-  ): [EditorialAnon1918]
+  ): [EditorialAnon1933]
   editorialChannels(
     limit: Float
     offset: Float
     q: String
     sort: String
     user_id: String
-  ): [EditorialAnon1937]
-  editorialCurations(limit: Float, offset: Float): [EditorialAnon1931]
+  ): [EditorialAnon1952]
+  editorialCurations(limit: Float, offset: Float): [EditorialAnon1946]
   editorialTags(
     count: Boolean
     limit: Float
@@ -13190,7 +13205,7 @@ type Query {
     public: Boolean
     q: String
     strict: Boolean
-  ): [EditorialAnon1960]
+  ): [EditorialAnon1975]
 
   # A namespace external partners (provided by Galaxy)
   external: External!
