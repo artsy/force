@@ -1,62 +1,63 @@
 export const filterQuery = `
   query AuctionFilterSaleArtworks(
-    $aggregations: [SaleArtworkAggregation],
-    $page: Int,
-    $size: Int,
-    $estimate_range: String,
-    $gene_ids: [String],
-    $artist_ids: [String],
-    $sale_id: ID,
-    $sort: String,
+    $aggregations: [SaleArtworkAggregation]
+    $page: Int
+    $size: Int
+    $estimate_range: String
+    $gene_ids: [String]
+    $artist_ids: [String]
+    $sale_id: ID
+    $sort: String
     $include_artworks_by_followed_artists: Boolean
-  ){
-    filter_sale_artworks(
-      aggregations: $aggregations,
-      page: $page,
-      size: $size,
-      estimate_range: $estimate_range,
-      gene_ids: $gene_ids,
-      artist_ids: $artist_ids,
-      sale_id: $sale_id,
-      sort: $sort,
-      include_artworks_by_followed_artists: $include_artworks_by_followed_artists
-    ){
+  ) {
+    saleArtworksConnection(
+      aggregations: $aggregations
+      page: $page
+      size: $size
+      estimateRange: $estimate_range
+      geneIDs: $gene_ids
+      artistIDs: $artist_ids
+      saleID: $sale_id
+      sort: $sort
+      includeArtworksByFollowedArtists: $include_artworks_by_followed_artists
+    ) {
       aggregations {
         slice
         counts {
-          id
+          id: value
           name
           count
         }
       }
       counts {
         total
-        followed_artists
+        followed_artists: followedArtists
       }
-      hits {
-        id
-        lot_label
-        counts {
-          bidder_positions
-        }
-        current_bid {
-          display
-        }
-        artwork {
-          __id
-          _id
-          id
+      edges {
+        node {
+          saleArtwork {
+            lot_label: lotLabel
+            counts {
+              bidder_positions: bidderPositions
+            }
+            current_bid: currentBid {
+              display
+            }
+          }
+          id: slug
+          _id: internalID
+          sale_message: saleMessage
+          slug
           date
           href
           title
-          is_sold
+          is_sold: isSold
           image {
             url
           }
-          sale_message
           images {
-            aspect_ratio,
-            id
+            _id: internalID
+            aspect_ratio: aspectRatio
             image_url: url(version: "large")
             image_large: url(version: "large")
             image_medium: url(version: "medium")
@@ -65,7 +66,6 @@ export const filterQuery = `
               image_url: url
             }
           }
-
           artist {
             name
           }
@@ -76,4 +76,5 @@ export const filterQuery = `
         }
       }
     }
-  }`
+  }
+`

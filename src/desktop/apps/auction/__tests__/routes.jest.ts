@@ -6,7 +6,6 @@ jest.mock("lib/metaphysics", () => ({
 }))
 jest.mock("lib/metaphysics2", () => ({ metaphysics2: jest.fn() }))
 
-const metaphysics = require("lib/metaphysics").metaphysics as jest.Mock
 const { metaphysics2 } = require("lib/metaphysics2")
 const CurrentUser = require("desktop/models/current_user")
 
@@ -69,7 +68,7 @@ describe("routes", () => {
     })
 
     it("renders the index with the correct variables", async () => {
-      metaphysics.mockResolvedValue({ articles: [] })
+      metaphysics2.mockResolvedValue({ articles: [] })
       metaphysics2.mockResolvedValue({
         me: meV2,
         sale: saleV2,
@@ -89,7 +88,7 @@ describe("routes", () => {
     })
 
     it("renders the index with a promoted sale", async () => {
-      metaphysics.mockResolvedValue({ articles: [] })
+      metaphysics2.mockResolvedValue({ articles: [] })
       metaphysics2.mockResolvedValue({
         me: null,
         sale: saleV2,
@@ -109,7 +108,7 @@ describe("routes", () => {
     })
 
     it("works even with the Metaphysics module throwing an error", async () => {
-      metaphysics
+      metaphysics2
         .mockReturnValueOnce({ sale: { is_auction: true } })
         .mockRejectedValue("oops!")
 
@@ -161,7 +160,7 @@ describe("routes", () => {
         },
       }
 
-      metaphysics.mockResolvedValue(mockAuctionQueries)
+      metaphysics2.mockResolvedValue(mockAuctionQueries)
 
       await routes.redirectLive(req, res, next)
       expect(res.redirect).toBeCalledWith("undefined/foo/login")
@@ -188,7 +187,7 @@ describe("routes", () => {
         },
       }
 
-      metaphysics.mockResolvedValue(mockAuctionQueries)
+      metaphysics2.mockResolvedValue(mockAuctionQueries)
 
       await routes.redirectLive(req, res, next)
       expect(res.redirect).not.toBeCalled()
@@ -216,7 +215,7 @@ describe("routes", () => {
         },
       }
 
-      metaphysics.mockResolvedValue(mockAuctionQueries)
+      metaphysics2.mockResolvedValue(mockAuctionQueries)
 
       await routes.redirectLive(req, res, next)
       expect(res.redirect).not.toBeCalled()

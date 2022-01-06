@@ -1,34 +1,45 @@
 export const worksByFollowedArtists = `
   query AuctionWorksByFollowedArtistsQuery(
-    $page: Int,
-    $size: Int,
+    $page: Int
+    $size: Int
     $sale_id: ID
-  ){
-    filter_sale_artworks(
-      aggregations: [TOTAL],
-      page: $page,
-      size: $size,
-      sale_id: $sale_id,
-      include_artworks_by_followed_artists: true
-    ){
+  ) {
+    saleArtworksConnection(
+      aggregations: [TOTAL]
+      page: $page
+      size: $size
+      saleID: $sale_id
+      includeArtworksByFollowedArtists: true
+    ) {
       counts {
         total
       }
-      hits {
-        id
-        lot_label
-        current_bid {
-          display
-        }
-        artwork {
+      edges {
+        node {
           id
+          sale_artwork: saleArtwork {
+            lot_label: lotLabel
+            current_bid: currentBid {
+              display
+            }
+            counts {
+              bidder_positions: bidderPositions
+            }
+            highest_bid: highestBid {
+              display
+            }
+            opening_bid: openingBid {
+              display
+            }
+          }
+          slug
           title
           date
-          sale_message
-          is_sold
+          sale_message: saleMessage
+          is_sold: isSold
           sale {
-            is_auction
-            is_closed
+            is_auction: isAuction
+            is_closed: isClosed
           }
           artists {
             id
@@ -37,10 +48,10 @@ export const worksByFollowedArtists = `
           image {
             placeholder
             url
-            aspect_ratio
+            aspect_ratio: aspectRatio
           }
           images {
-            id
+            internalID
             image_medium: url(version: "medium")
             image_versions: versions
             placeholder: resized(width: 30, height: 30, version: "tall") {
@@ -55,19 +66,9 @@ export const worksByFollowedArtists = `
             name
           }
           href
-          is_acquireable
-          sale_artwork {
-            counts {
-              bidder_positions
-            }
-            highest_bid {
-              display
-            }
-            opening_bid {
-              display
-            }
-          }
+          is_acquireable: isAcquireable
         }
       }
     }
-  }`
+  }
+`

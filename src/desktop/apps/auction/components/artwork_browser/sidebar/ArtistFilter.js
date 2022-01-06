@@ -85,7 +85,7 @@ const mapStateToProps = state => {
     filterParams.include_artworks_by_followed_artists
   const allArtists = { id: "artists-all", name: "All" }
   const allArtistsSelected =
-    artistIds.length === 0 && !filterParams.include_artworks_by_followed_artists
+    artistIds.length === 0 && !includeArtworksByFollowedArtists
   const countDisplay = numArtistsYouFollow > 0 ? numArtistsYouFollow : undefined
   const artistsYouFollow = {
     id: "artists-you-follow",

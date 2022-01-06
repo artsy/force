@@ -2,59 +2,77 @@ export default function SaleQuery(id) {
   return `
   query SaleQuery {
     sale(id: "${id}") {
-      _id
-      associated_sale {
-        ${require("../../../components/react/auction_block/query.js").default}
+      internalID
+      associated_sale: associatedSale {
+        cover_image: coverImage {
+          cropped(width: 260, height: 110) {
+            url
+          }
+        }
+        end_at: endAt
+        href
+        id: slug
+        is_closed: isClosed
+        is_live_open: isLiveOpen
+        is_preview: isPreview
+        live_start_at: liveStartAt
+        name
+        start_at: startAt
       }
-      auction_state
-      cover_image {
-        cropped(width: 1800 height: 600 version: "wide") {
+      status
+      cover_image: coverImage {
+        cropped(width: 1800, height: 600, version: "wide") {
           url
         }
       }
       currency
       description
-      eligible_sale_artworks_count
-      end_at
+      eligible_sale_artworks_count: eligibleSaleArtworksCount
+      end_at: endAt
       id
-      is_auction
-      is_closed
-      is_live_open
-      is_open
-      live_start_at
+      is_auction: isAuction
+      is_closed: isClosed
+      is_live_open: isLiveOpen
+      is_open: isOpen
+      live_start_at: liveStartAt
       name
-      promoted_sale {
+      promoted_sale: promotedSale {
         id
         name
-        sale_artworks {
-          artwork {
-            id
-            title
-            date
-            sale_message
-            is_in_auction
-            image {
-              placeholder
-              url
-              aspect_ratio
+        saleArtworksConnection(first: 99) {
+          edges {
+            node {
+              artwork {
+                id
+                title
+                date
+                sale_message: saleMessage
+                is_in_auction: isInAuction
+                image {
+                  placeholder
+                  url
+                  aspect_ratio: aspectRatio
+                }
+                artists {
+                  id
+                  href
+                  name
+                }
+                partner {
+                  name
+                }
+                href
+                is_acquireable: isAcquireable
+              }
             }
-            artists {
-              id
-              href
-              name
-            }
-            partner {
-              name
-            }
-            href
-            is_acquireable
           }
         }
       }
-      registration_ends_at
-      start_at
+      registration_ends_at: registrationEndsAt
+      start_at: startAt
       status
       symbol
     }
-  }`
+  }
+`
 }

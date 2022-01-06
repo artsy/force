@@ -33,8 +33,11 @@ describe("auction/actions/artworkBrowser.test.js", () => {
           "metaphysics",
           sinon.stub().returns(
             Promise.resolve({
-              filter_sale_artworks: {
-                hits: [{ id: "artwork1" }, { id: "artwork2" }],
+              saleArtworksConnection: {
+                edges: [
+                  { node: { id: "artwork1" } },
+                  { node: { id: "artwork2" } },
+                ],
                 counts: {
                   total: 123,
                 },
@@ -43,7 +46,7 @@ describe("auction/actions/artworkBrowser.test.js", () => {
           )
         )
       })
-      xit("calls the correct actions", () => {
+      it.skip("calls the correct actions", () => {
         const expectedActions = [
           {
             type: "UPDATE_SALE_ARTWORKS_BY_FOLLOWED_ARTISTS",

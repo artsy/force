@@ -11,12 +11,13 @@ import auctionReducer from "desktop/apps/auction/reducers"
 import configureStore from "desktop/components/react/utils/configureStore"
 import { get, isEmpty } from "lodash"
 import { metaphysics } from "lib/metaphysics"
-import { metaphysics2} from "lib/metaphysics2"
+import { metaphysics2 } from "lib/metaphysics2"
 import u from "updeep"
 import { initialState as appInitialState } from "desktop/apps/auction/reducers/app"
 import { initialState as auctionWorksInitialState } from "desktop/apps/auction/reducers/artworkBrowser"
 import { getLiveAuctionUrl } from "desktop/apps/auction/utils/urls"
 import { stitch } from "@artsy/stitch"
+import ReactDOM from "react-dom/server"
 
 export async function index(req, res, next) {
   const saleId = req.params.id
@@ -29,8 +30,8 @@ export async function index(req, res, next) {
     })
 
     // For compatibility for MP V1
-    if (!isEmpty(sale?.promoted_sale?.sale_artworks?.edges)) {
-      sale.promoted_sale.sale_artworks = sale.promoted_sale.sale_artworks.edges.map(
+    if (!isEmpty(sale?.promoted_sale?.saleArtworksConnection?.edges)) {
+      sale.promoted_sale.saleArtworksConnection = sale.promoted_sale.saleArtworksConnection.edges.map(
         ({ node }) => node
       )
     }
@@ -41,7 +42,7 @@ export async function index(req, res, next) {
     let articles = []
 
     try {
-      ;({ articles } = await metaphysics({
+      ;({ articles } = await metaphysics2({
         query: ArticlesQuery(sale._id),
         req,
       }))
@@ -129,6 +130,10 @@ export async function index(req, res, next) {
       store.dispatch(actions.fetchArtworks()),
     ])
 
+    // For debugging server-side runtime errors uncomment this line. Proper
+    // statck traces are being consumed in the `await stitch` call below.
+    // return res.send(ReactDOM.renderToString(<App store={store} />))
+
     try {
       const layout = await stitch({
         basePath: res.app.get("views"),
@@ -163,14 +168,14 @@ export async function index(req, res, next) {
 
 export async function redirectLive(req, res, next) {
   try {
-    const { sale } = await metaphysics({
+    const { sale } = await metaphysics2({
       query: SaleQuery(req.params.id),
       req,
     })
     const isLiveOpen = get(sale, "is_live_open")
 
     if (isLiveOpen) {
-      const { me } = await metaphysics({
+      const { me } = await metaphysics2({
         query: MeQuery(req.params.id),
         req,
       })
