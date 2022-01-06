@@ -1,5 +1,5 @@
 import { Join, Spacer } from "@artsy/palette"
-import * as React from "react";
+import * as React from "react"
 import { Title } from "react-head"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtistIconicCollectionsRailQueryRenderer } from "v2/Apps/Artist/Routes/Overview/Components/ArtistIconicCollectionsRail"
@@ -9,6 +9,7 @@ import { ArtistCurrentShowsRailQueryRenderer } from "./Components/ArtistCurrentS
 import { ArtistCurrentArticlesRailQueryRenderer } from "./Components/ArtistCurrentArticlesRail"
 import { ArtistCareerHighlightsQueryRenderer } from "./Components/ArtistCareerHighlights"
 import { ArtistRelatedArtistsRailQueryRenderer } from "./Components/ArtistRelatedArtistsRail"
+import { ArtistSellWithArtsyQueryRenderer } from "./Components/ArtistSellWithArtsy"
 import { computeTitle } from "../../Utils/computeTitle"
 
 interface ArtistOverviewRouteProps {
@@ -27,6 +28,7 @@ const ArtistOverviewRoute: React.FC<ArtistOverviewRouteProps> = ({
       <Join separator={<Spacer mb={6} />}>
         <ArtistNotableWorksRailQueryRenderer slug={artist.slug} />
         <ArtistCareerHighlightsQueryRenderer slug={artist.slug} />
+        <ArtistSellWithArtsyQueryRenderer slug={artist.slug} />
         <ArtistIconicCollectionsRailQueryRenderer
           internalID={artist.internalID}
         />

@@ -7,9 +7,6 @@ jest.unmock("react-relay")
 jest.mock("v2/Components/SelectedCareerAchievements", () => ({
   SelectedCareerAchievementsFragmentContainer: () => null,
 }))
-jest.mock("../ArtistConsignButton", () => ({
-  ArtistConsignButtonFragmentContainer: () => null,
-}))
 jest.mock("../ArtistGenes", () => ({
   ArtistGenesFragmentContainer: () => null,
 }))
@@ -40,7 +37,6 @@ describe("ArtistCareerHighlights", () => {
     expect(
       wrapper.find("SelectedCareerAchievementsFragmentContainer").length
     ).toBe(1)
-    expect(wrapper.find("ArtistConsignButtonFragmentContainer").length).toBe(1)
     expect(wrapper.text()).not.toContain("bio")
     expect(wrapper.text()).toContain("Related categories")
     expect(wrapper.find("ArtistGenesFragmentContainer").length).toBe(1)
