@@ -43,10 +43,14 @@ import { termsRoutes } from "./Apps/_Terms2/termsRoutes"
 import { unsubscribeRoutes } from "./Apps/Unsubscribe/unsubscribeRoutes"
 import { viewingRoomRoutes } from "v2/Apps/ViewingRoom/viewingRoomRoutes"
 import { worksForYouRoutes } from "./Apps/_WorksForYou2/worksForYouRoutes"
+import { articleRoutes } from "./Apps/Article/articleRoutes"
+import { articlesRoutes } from "./Apps/Articles/articlesRoutes"
 
 export function getAppRoutes(): AppRouteConfig[] {
   return buildAppRoutes([
     { routes: aboutRoutes },
+    { routes: articleRoutes },
+    { routes: articlesRoutes },
     { routes: artistRoutes },
     { routes: artistSeriesRoutes },
     { routes: artistsRoutes },
