@@ -1,5 +1,6 @@
 import { AppRouteConfig } from "v2/System/Router/Route"
 import { aboutRoutes } from "./Apps/_About2/aboutRoutes"
+import { articlesRoutes } from "v2/Apps/Articles/articlesRoutes"
 import { artistRoutes } from "v2/Apps/Artist/artistRoutes"
 import { artistSeriesRoutes } from "v2/Apps/ArtistSeries/artistSeriesRoutes"
 import { artistsRoutes } from "v2/Apps/Artists/artistsRoutes"
@@ -47,13 +48,14 @@ import { worksForYouRoutes } from "./Apps/_WorksForYou2/worksForYouRoutes"
 export function getAppRoutes(): AppRouteConfig[] {
   return buildAppRoutes([
     { routes: aboutRoutes },
+    { routes: articlesRoutes },
     { routes: artistRoutes },
     { routes: artistSeriesRoutes },
     { routes: artistsRoutes },
     { routes: artsyEducation },
     { routes: artworkRoutes },
-    { routes: auctionsRoutes },
     { routes: auction2Routes },
+    { routes: auctionsRoutes },
     { routes: auctionPartnershipsRoutes },
     { routes: authenticationRoutes },
     { routes: buyerGuaranteeRoutes },
