@@ -1584,6 +1584,9 @@ type Artwork implements Node & Searchable & Sellable {
   # Whether this artwork is unlisted or not
   unlisted: Boolean
 
+  # Based on artwork location and status, verify that partner needs VAT exemption approval from Artsy.
+  vatExemptApprovalRequired: Boolean
+
   # Based on artwork location verify that VAT info for the partner is complete.
   vatRequirementComplete: Boolean
 
