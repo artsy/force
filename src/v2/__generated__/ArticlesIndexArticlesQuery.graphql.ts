@@ -1,0 +1,342 @@
+/* tslint:disable */
+/* eslint-disable */
+// @ts-nocheck
+
+import { ConcreteRequest } from "relay-runtime";
+import { FragmentRefs } from "relay-runtime";
+export type ArticlesIndexArticlesQueryVariables = {
+    after?: string | null;
+};
+export type ArticlesIndexArticlesQueryResponse = {
+    readonly viewer: {
+        readonly " $fragmentRefs": FragmentRefs<"ArticlesIndexArticles_viewer">;
+    } | null;
+};
+export type ArticlesIndexArticlesQuery = {
+    readonly response: ArticlesIndexArticlesQueryResponse;
+    readonly variables: ArticlesIndexArticlesQueryVariables;
+};
+
+
+
+/*
+query ArticlesIndexArticlesQuery(
+  $after: String
+) {
+  viewer {
+    ...ArticlesIndexArticles_viewer_WGPvJ
+  }
+}
+
+fragment ArticlesIndexArticle_article on Article {
+  href
+  title
+  publishedAt(format: "MMMM Do YYYY")
+  author {
+    name
+    id
+  }
+  thumbnailImage {
+    cropped(width: 910, height: 511) {
+      src
+      srcSet
+    }
+  }
+}
+
+fragment ArticlesIndexArticles_viewer_WGPvJ on Viewer {
+  articlesConnection(first: 15, after: $after, sort: PUBLISHED_AT_DESC) {
+    edges {
+      node {
+        internalID
+        ...ArticlesIndexArticle_article
+        id
+        __typename
+      }
+      cursor
+    }
+    pageInfo {
+      endCursor
+      hasNextPage
+    }
+  }
+}
+*/
+
+const node: ConcreteRequest = (function(){
+var v0 = [
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "after"
+  }
+],
+v1 = {
+  "kind": "Variable",
+  "name": "after",
+  "variableName": "after"
+},
+v2 = [
+  (v1/*: any*/),
+  {
+    "kind": "Literal",
+    "name": "first",
+    "value": 15
+  },
+  {
+    "kind": "Literal",
+    "name": "sort",
+    "value": "PUBLISHED_AT_DESC"
+  }
+],
+v3 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+};
+return {
+  "fragment": {
+    "argumentDefinitions": (v0/*: any*/),
+    "kind": "Fragment",
+    "metadata": null,
+    "name": "ArticlesIndexArticlesQuery",
+    "selections": [
+      {
+        "alias": null,
+        "args": null,
+        "concreteType": "Viewer",
+        "kind": "LinkedField",
+        "name": "viewer",
+        "plural": false,
+        "selections": [
+          {
+            "args": [
+              (v1/*: any*/)
+            ],
+            "kind": "FragmentSpread",
+            "name": "ArticlesIndexArticles_viewer"
+          }
+        ],
+        "storageKey": null
+      }
+    ],
+    "type": "Query",
+    "abstractKey": null
+  },
+  "kind": "Request",
+  "operation": {
+    "argumentDefinitions": (v0/*: any*/),
+    "kind": "Operation",
+    "name": "ArticlesIndexArticlesQuery",
+    "selections": [
+      {
+        "alias": null,
+        "args": null,
+        "concreteType": "Viewer",
+        "kind": "LinkedField",
+        "name": "viewer",
+        "plural": false,
+        "selections": [
+          {
+            "alias": null,
+            "args": (v2/*: any*/),
+            "concreteType": "ArticleConnection",
+            "kind": "LinkedField",
+            "name": "articlesConnection",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "ArticleEdge",
+                "kind": "LinkedField",
+                "name": "edges",
+                "plural": true,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "Article",
+                    "kind": "LinkedField",
+                    "name": "node",
+                    "plural": false,
+                    "selections": [
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "internalID",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "href",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "title",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": [
+                          {
+                            "kind": "Literal",
+                            "name": "format",
+                            "value": "MMMM Do YYYY"
+                          }
+                        ],
+                        "kind": "ScalarField",
+                        "name": "publishedAt",
+                        "storageKey": "publishedAt(format:\"MMMM Do YYYY\")"
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "concreteType": "Author",
+                        "kind": "LinkedField",
+                        "name": "author",
+                        "plural": false,
+                        "selections": [
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "name",
+                            "storageKey": null
+                          },
+                          (v3/*: any*/)
+                        ],
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "concreteType": "Image",
+                        "kind": "LinkedField",
+                        "name": "thumbnailImage",
+                        "plural": false,
+                        "selections": [
+                          {
+                            "alias": null,
+                            "args": [
+                              {
+                                "kind": "Literal",
+                                "name": "height",
+                                "value": 511
+                              },
+                              {
+                                "kind": "Literal",
+                                "name": "width",
+                                "value": 910
+                              }
+                            ],
+                            "concreteType": "CroppedImageUrl",
+                            "kind": "LinkedField",
+                            "name": "cropped",
+                            "plural": false,
+                            "selections": [
+                              {
+                                "alias": null,
+                                "args": null,
+                                "kind": "ScalarField",
+                                "name": "src",
+                                "storageKey": null
+                              },
+                              {
+                                "alias": null,
+                                "args": null,
+                                "kind": "ScalarField",
+                                "name": "srcSet",
+                                "storageKey": null
+                              }
+                            ],
+                            "storageKey": "cropped(height:511,width:910)"
+                          }
+                        ],
+                        "storageKey": null
+                      },
+                      (v3/*: any*/),
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "__typename",
+                        "storageKey": null
+                      }
+                    ],
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "cursor",
+                    "storageKey": null
+                  }
+                ],
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "PageInfo",
+                "kind": "LinkedField",
+                "name": "pageInfo",
+                "plural": false,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "endCursor",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "hasNextPage",
+                    "storageKey": null
+                  }
+                ],
+                "storageKey": null
+              }
+            ],
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": (v2/*: any*/),
+            "filters": [
+              "sort"
+            ],
+            "handle": "connection",
+            "key": "ArticlesIndexArticles_articlesConnection",
+            "kind": "LinkedHandle",
+            "name": "articlesConnection"
+          }
+        ],
+        "storageKey": null
+      }
+    ]
+  },
+  "params": {
+    "cacheID": "40327213efe94a4b8fee7a094bda3a2a",
+    "id": null,
+    "metadata": {},
+    "name": "ArticlesIndexArticlesQuery",
+    "operationKind": "query",
+    "text": "query ArticlesIndexArticlesQuery(\n  $after: String\n) {\n  viewer {\n    ...ArticlesIndexArticles_viewer_WGPvJ\n  }\n}\n\nfragment ArticlesIndexArticle_article on Article {\n  href\n  title\n  publishedAt(format: \"MMMM Do YYYY\")\n  author {\n    name\n    id\n  }\n  thumbnailImage {\n    cropped(width: 910, height: 511) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment ArticlesIndexArticles_viewer_WGPvJ on Viewer {\n  articlesConnection(first: 15, after: $after, sort: PUBLISHED_AT_DESC) {\n    edges {\n      node {\n        internalID\n        ...ArticlesIndexArticle_article\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+  }
+};
+})();
+(node as any).hash = '22669ec45f06ff7ad273003a9c747912';
+export default node;
