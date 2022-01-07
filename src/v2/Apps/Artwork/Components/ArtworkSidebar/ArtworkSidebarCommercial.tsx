@@ -358,11 +358,14 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
 
   render() {
     const { artwork, inquiryComponent } = this.props
-    const isPriceListed = !artwork?.isPriceHidden
-    const isOfferableFromInquiry = artwork?.isOfferableFromInquiry
-    const isOfferable = artwork?.is_offerable
-    const isAcquireable = artwork?.is_acquireable
-    const isInquireable = artwork?.is_inquireable
+    const {
+      isPriceHidden,
+      isOfferableFromInquiry,
+      is_offerable: isOfferable,
+      is_acquireable: isAcquireable,
+      is_inquireable: isInquireable,
+    } = artwork
+    const isPriceListed = !isPriceHidden
     const labFeatureEnabled = userHasLabFeature(
       this.props.user,
       "Make Offer On All Eligible Artworks"
@@ -380,28 +383,15 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
       return <Separator />
     }
 
-    const shouldDisplayMakeOfferButton = (): boolean => {
-      if (
-        isOfferable ||
-        (isPriceListed && isOfferableFromInquiry && labFeatureEnabled)
-      ) {
-        return true
-      }
-      return false
-    }
+    const shouldDisplayContactGalleryButton: boolean | null =
+      isInquireable && !isAcquireable && !isOfferable
 
-    const shouldDisplayMakeOfferAsPrimary = (): boolean => {
-      return (
-        shouldDisplayMakeOfferButton() && shouldDisplayContactGalleryButton()
-      )
-    }
+    const shouldDisplayMakeOfferButton: boolean | null =
+      isOfferable ||
+      (isPriceListed && isOfferableFromInquiry && labFeatureEnabled)
 
-    const shouldDisplayContactGalleryButton = (): boolean => {
-      if (isInquireable && !isAcquireable && !isOfferable) {
-        return true
-      }
-      return false
-    }
+    const shouldDisplayMakeOfferAsPrimary: boolean | null =
+      shouldDisplayMakeOfferButton && shouldDisplayContactGalleryButton
 
     return (
       <>
@@ -469,7 +459,7 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
               Buy now
             </Button>
           )}
-          {shouldDisplayMakeOfferButton() && (
+          {shouldDisplayMakeOfferButton && (
             <>
               <Spacer mt={2} />
               <Button
@@ -483,20 +473,22 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
               </Button>
             </>
           )}
-          {shouldDisplayContactGalleryButton() && (
-            <Button
-              width="100%"
-              size="medium"
-              onClick={this.handleInquiry.bind(this)}
-              mt={shouldDisplayMakeOfferAsPrimary() ? 2 : 0}
-              variant={
-                shouldDisplayMakeOfferAsPrimary()
-                  ? "secondaryOutline"
-                  : "primaryBlack"
-              }
-            >
-              Contact Gallery
-            </Button>
+          {shouldDisplayContactGalleryButton && (
+            <>
+              <Spacer mt={shouldDisplayMakeOfferAsPrimary ? 2 : 0} />
+              <Button
+                width="100%"
+                size="medium"
+                onClick={this.handleInquiry.bind(this)}
+                variant={
+                  shouldDisplayMakeOfferAsPrimary
+                    ? "secondaryOutline"
+                    : "primaryBlack"
+                }
+              >
+                Contact Gallery
+              </Button>
+            </>
           )}
 
           <ErrorModal
