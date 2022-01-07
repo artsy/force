@@ -7,6 +7,7 @@ orbs:
   hokusai: artsy/hokusai@0.10.0
   horizon: artsy/release@0.0.1
   node: artsy/node@2.0.0
+  slack: circleci/slack@4.5.1
   yarn: artsy/yarn@6.1.0
 
 jobs:
@@ -30,6 +31,22 @@ jobs:
       - run:
           name: Validate Production Schema
           command: node scripts/validateSchemas.js production
+      - slack/notify:
+          event: fail
+          custom: |
+            {
+              "blocks": [
+                {
+                  "type": "section",
+                  "fields": [
+                    {
+                      "type": "plain_text",
+                      "text": "Local MP schema is not compatible with MP production. Force was deployed to staging but will not be deployable to production."
+                    }
+                  ]
+                }
+              ]
+            }
 
   create_or_update_review_app:
     executor: hokusai/deploy
@@ -354,6 +371,23 @@ workflows:
           project-name: force
           requires:
             - production-image-push
+          post-steps:
+            - slack/notify:
+                event: fail
+                custom: |
+                  {
+                    "blocks": [
+                      {
+                        "type": "section",
+                        "fields": [
+                          {
+                            "type": "plain_text",
+                            "text": "Force staging deploy has failed!"
+                          }
+                        ]
+                      }
+                    ]
+                  }
 
       # Release
       - horizon/block:
@@ -373,12 +407,18 @@ workflows:
       - validate_production_schema:
           <<: *only_release
 
+      # Production
       - hokusai/deploy-production:
           <<: *only_release
           name: deploy-production
           requires:
             - horizon/block
             - validate_production_schema
+          post-steps:
+            - slack/notify:
+                event: fail
+                channel: "practice-web"
+                template: basic_fail_1
 
       # Other
       - run_deepcrawl_automator:
