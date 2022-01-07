@@ -32,10 +32,6 @@ export const articles = (req, res, next) => {
     .catch(next)
 }
 
-export const redirectMagazine = (_req, res, _next) => {
-  res.redirect(301, "/articles")
-}
-
 export const section = (_req, res, next) => {
   new Section({ id: "venice-biennale-2015" }).fetch({
     cache: true,

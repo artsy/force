@@ -12,8 +12,6 @@ app.locals.resize = resize
 app.locals.crop = crop
 app.locals.toSentence = toSentence
 
-app.get("/posts", routes.redirectMagazine)
-app.get("/magazine", routes.redirectMagazine)
 app.get("/articles", routes.articles)
 app.get("/news", routes.news)
 app.get(sd.TEAM_BLOGS, routes.teamChannel)
