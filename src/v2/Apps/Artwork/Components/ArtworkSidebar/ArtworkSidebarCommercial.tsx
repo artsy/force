@@ -1,3 +1,4 @@
+import { userHasLabFeature } from "v2/Utils/user"
 import { ContextModule, Intent } from "@artsy/cohesion"
 import {
   Box,
@@ -357,6 +358,18 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
 
   render() {
     const { artwork, inquiryComponent } = this.props
+    const {
+      isPriceHidden,
+      isOfferableFromInquiry,
+      is_offerable: isOfferable,
+      is_acquireable: isAcquireable,
+      is_inquireable: isInquireable,
+    } = artwork
+    const isPriceListed = !isPriceHidden
+    const labFeatureEnabled = userHasLabFeature(
+      this.props.user,
+      "Make Offer On All Eligible Artworks"
+    )
 
     const {
       isCommittingCreateOrderMutation,
@@ -364,13 +377,21 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
       selectedEditionSet,
     } = this.state
 
-    const artworkEcommerceAvailable = !!(
-      artwork.is_acquireable || artwork.is_offerable
-    )
+    const artworkEcommerceAvailable = !!(isAcquireable || isOfferable)
 
-    if (!artwork.sale_message && !artwork.is_inquireable) {
+    if (!artwork.sale_message && !isInquireable) {
       return <Separator />
     }
+
+    const shouldDisplayContactGalleryButton: boolean | null =
+      isInquireable && !isAcquireable && !isOfferable
+
+    const shouldDisplayMakeOfferButton: boolean | null =
+      isOfferable ||
+      (isPriceListed && isOfferableFromInquiry && labFeatureEnabled)
+
+    const shouldDisplayMakeOfferAsPrimary: boolean | null =
+      shouldDisplayMakeOfferButton && shouldDisplayContactGalleryButton
 
     return (
       <>
@@ -422,15 +443,13 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
             </Text>
           )}
 
-          {artwork.is_inquireable ||
-          artwork.is_acquireable ||
-          artwork.is_offerable ? (
+          {isInquireable || isAcquireable || isOfferable ? (
             artwork.sale_message && <Spacer mt={2} />
           ) : (
             <Separator my={2} />
           )}
 
-          {artwork.is_acquireable && (
+          {isAcquireable && (
             <Button
               width="100%"
               size="medium"
@@ -440,13 +459,11 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
               Buy now
             </Button>
           )}
-          {artwork.is_offerable && (
+          {shouldDisplayMakeOfferButton && (
             <>
               <Spacer mt={2} />
               <Button
-                variant={
-                  artwork.is_acquireable ? "secondaryOutline" : "primaryBlack"
-                }
+                variant={isAcquireable ? "secondaryOutline" : "primaryBlack"}
                 width="100%"
                 size="medium"
                 loading={isCommittingCreateOfferOrderMutation}
@@ -456,17 +473,23 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
               </Button>
             </>
           )}
-          {artwork.is_inquireable &&
-            !artwork.is_acquireable &&
-            !artwork.is_offerable && (
+          {shouldDisplayContactGalleryButton && (
+            <>
+              <Spacer mt={shouldDisplayMakeOfferAsPrimary ? 2 : 0} />
               <Button
                 width="100%"
                 size="medium"
                 onClick={this.handleInquiry.bind(this)}
+                variant={
+                  shouldDisplayMakeOfferAsPrimary
+                    ? "secondaryOutline"
+                    : "primaryBlack"
+                }
               >
                 Contact Gallery
               </Button>
-            )}
+            </>
+          )}
 
           <ErrorModal
             onClose={this.onCloseModal}
@@ -510,10 +533,19 @@ export const ArtworkSidebarCommercialFragmentContainer = createFragmentContainer
   {
     artwork: graphql`
       fragment ArtworkSidebarCommercial_artwork on Artwork {
-        slug
+        edition_sets: editionSets {
+          internalID
+          id
+          is_acquireable: isAcquireable
+          is_offerable: isOfferable
+          sale_message: saleMessage
+          ...ArtworkSidebarSizeInfo_piece
+        }
         internalID
-        is_for_sale: isForSale
+        isOfferableFromInquiry
+        isPriceHidden
         is_acquireable: isAcquireable
+        is_for_sale: isForSale
         is_inquireable: isInquireable
         is_offerable: isOfferable
         listPrice {
@@ -528,14 +560,7 @@ export const ArtworkSidebarCommercialFragmentContainer = createFragmentContainer
         sale_message: saleMessage
         shippingInfo
         shippingOrigin
-        edition_sets: editionSets {
-          internalID
-          id
-          is_acquireable: isAcquireable
-          is_offerable: isOfferable
-          sale_message: saleMessage
-          ...ArtworkSidebarSizeInfo_piece
-        }
+        slug
       }
     `,
   }

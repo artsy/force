@@ -32,7 +32,9 @@ const commitMutation = _commitMutation as jest.Mock<any>
 const ArtworkSidebarCommercialContainerWithInquiry = withInquiry(
   ArtworkSidebarCommercialContainer
 )
-
+// TODO: Migrate these tests from Enzyme to React Testing Library
+// If you find yourself needing to add a new test to ArtworkSidebarCommercial please do it
+// using RTL in src/v2/Apps/Artwork/Components/ArtworkSidebar/__tests__/ArtworkSidebarCommercial2.jest.tsx
 describe("ArtworkSidebarCommercial", () => {
   let user
   beforeAll(() => {
