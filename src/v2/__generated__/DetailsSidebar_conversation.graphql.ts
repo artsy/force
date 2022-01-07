@@ -23,10 +23,6 @@ export type DetailsSidebar_conversation = {
                 readonly stateReason: string | null;
                 readonly code: string;
                 readonly stateExpiresAt: string | null;
-                readonly requestedFulfillment: {
-                    readonly __typename: string;
-                    readonly " $fragmentRefs": FragmentRefs<"ShippingAddress_ship">;
-                } | null;
                 readonly creditCard: {
                     readonly brand: string;
                     readonly lastDigits: string;
@@ -283,23 +279,6 @@ return {
                   "kind": "ScalarField",
                   "name": "stateExpiresAt",
                   "storageKey": "stateExpiresAt(format:\"MMM D\")"
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "concreteType": null,
-                  "kind": "LinkedField",
-                  "name": "requestedFulfillment",
-                  "plural": false,
-                  "selections": [
-                    (v0/*: any*/),
-                    {
-                      "args": null,
-                      "kind": "FragmentSpread",
-                      "name": "ShippingAddress_ship"
-                    }
-                  ],
-                  "storageKey": null
                 },
                 {
                   "alias": null,
@@ -706,5 +685,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '7d8b61d84c500c194f165c7ac3eaeaf7';
+(node as any).hash = 'daac32f2fe2bf68958bf5b62e60d91c9';
 export default node;

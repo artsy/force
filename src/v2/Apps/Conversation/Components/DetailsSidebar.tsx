@@ -26,8 +26,6 @@ import { DetailsHeader } from "./DetailsHeader"
 import { DetailsSidebar_conversation } from "v2/__generated__/DetailsSidebar_conversation.graphql"
 import { extractNodes } from "v2/Utils/extractNodes"
 import { TransactionDetailsSummaryItemFragmentContainer } from "v2/Apps/Order/Components/TransactionDetailsSummaryItem"
-import { ShippingAddressFragmentContainer } from "v2/Apps/Order/Components/ShippingAddress"
-import { CreditCardDetails } from "v2/Apps/Order/Components/CreditCardDetails"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { getStatusCopy } from "v2/Apps/Order/Utils/getStatusCopy"
 import { ShippingSummaryItemFragmentContainer } from "v2/Apps/Order/Components/ShippingSummaryItem"
@@ -285,10 +283,6 @@ export const DetailsSidebarFragmentContainer = createFragmentContainer(
               ...TransactionDetailsSummaryItem_order
               ...ShippingSummaryItem_order
               ...CreditCardSummaryItem_order
-              requestedFulfillment {
-                __typename
-                ...ShippingAddress_ship
-              }
               creditCard {
                 brand
                 lastDigits
