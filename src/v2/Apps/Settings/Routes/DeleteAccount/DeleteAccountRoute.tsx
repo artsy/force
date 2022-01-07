@@ -1,4 +1,4 @@
-import { Button, Checkbox, Separator, Text, TextArea, Toast, useToasts
+import { Button, Checkbox, Separator, Text, TextArea, useToasts
 } from "@artsy/palette"
 import * as React from "react"
 import { useState } from "react"
