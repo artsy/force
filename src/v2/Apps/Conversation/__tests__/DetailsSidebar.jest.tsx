@@ -119,7 +119,7 @@ describe("Conversation", () => {
           ],
         }),
       })
-      expect(screen.getByText("Ship To")).toBeInTheDocument()
+      expect(screen.getByText("Ship to")).toBeInTheDocument()
       expect(screen.getByText("Seattle, WA 98112")).toBeInTheDocument()
     })
   })
@@ -132,7 +132,7 @@ describe("Conversation", () => {
         }),
       })
 
-      expect(screen.queryByText("Ship To")).not.toBeInTheDocument()
+      expect(screen.queryByText("Ship to")).not.toBeInTheDocument()
     })
 
     it("doesn't show any credit card info", () => {
