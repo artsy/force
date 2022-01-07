@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -9,48 +10,9 @@ export type ArtworkSidebarCommercial2_Test_QueryResponse = {
         readonly " $fragmentRefs": FragmentRefs<"ArtworkSidebarCommercial_artwork">;
     } | null;
 };
-export type ArtworkSidebarCommercial2_Test_QueryRawResponse = {
-    readonly artwork: ({
-        readonly edition_sets: ReadonlyArray<({
-            readonly internalID: string;
-            readonly id: string;
-            readonly is_acquireable: boolean | null;
-            readonly is_offerable: boolean | null;
-            readonly sale_message: string | null;
-            readonly dimensions: ({
-                readonly in: string | null;
-                readonly cm: string | null;
-            }) | null;
-            readonly edition_of: string | null;
-        }) | null> | null;
-        readonly internalID: string;
-        readonly isOfferableFromInquiry: boolean | null;
-        readonly isPriceHidden: boolean | null;
-        readonly is_acquireable: boolean | null;
-        readonly is_for_sale: boolean | null;
-        readonly is_inquireable: boolean | null;
-        readonly is_offerable: boolean | null;
-        readonly listPrice: ({
-            readonly __typename: "PriceRange";
-            readonly display: string | null;
-        } | {
-            readonly __typename: "Money";
-            readonly display: string | null;
-        } | {
-            readonly __typename: string | null;
-        }) | null;
-        readonly priceIncludesTaxDisplay: string | null;
-        readonly sale_message: string | null;
-        readonly shippingInfo: string | null;
-        readonly shippingOrigin: string | null;
-        readonly slug: string;
-        readonly id: string | null;
-    }) | null;
-};
 export type ArtworkSidebarCommercial2_Test_Query = {
     readonly response: ArtworkSidebarCommercial2_Test_QueryResponse;
     readonly variables: ArtworkSidebarCommercial2_Test_QueryVariables;
-    readonly rawResponse: ArtworkSidebarCommercial2_Test_QueryRawResponse;
 };
 
 
@@ -96,6 +58,7 @@ fragment ArtworkSidebarCommercial_artwork on Artwork {
 }
 
 fragment ArtworkSidebarSizeInfo_piece on Sellable {
+  __isSellable: __typename
   dimensions {
     in
     cm
@@ -155,7 +118,31 @@ v6 = [
     "name": "display",
     "storageKey": null
   }
-];
+],
+v7 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "String"
+},
+v8 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "String"
+},
+v9 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "ID"
+},
+v10 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "Boolean"
+};
 return {
   "fragment": {
     "argumentDefinitions": [],
@@ -180,7 +167,8 @@ return {
         "storageKey": "artwork(id:\"pretty-drawing-111\")"
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -210,36 +198,43 @@ return {
               (v4/*: any*/),
               (v5/*: any*/),
               {
-                "alias": null,
-                "args": null,
-                "concreteType": "dimensions",
-                "kind": "LinkedField",
-                "name": "dimensions",
-                "plural": false,
+                "kind": "InlineFragment",
                 "selections": [
                   {
                     "alias": null,
                     "args": null,
-                    "kind": "ScalarField",
-                    "name": "in",
+                    "concreteType": "dimensions",
+                    "kind": "LinkedField",
+                    "name": "dimensions",
+                    "plural": false,
+                    "selections": [
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "in",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "cm",
+                        "storageKey": null
+                      }
+                    ],
                     "storageKey": null
                   },
                   {
-                    "alias": null,
+                    "alias": "edition_of",
                     "args": null,
                     "kind": "ScalarField",
-                    "name": "cm",
+                    "name": "editionOf",
                     "storageKey": null
                   }
                 ],
-                "storageKey": null
-              },
-              {
-                "alias": "edition_of",
-                "args": null,
-                "kind": "ScalarField",
-                "name": "editionOf",
-                "storageKey": null
+                "type": "Sellable",
+                "abstractKey": "__isSellable"
               }
             ],
             "storageKey": null
@@ -293,12 +288,14 @@ return {
               {
                 "kind": "InlineFragment",
                 "selections": (v6/*: any*/),
-                "type": "PriceRange"
+                "type": "PriceRange",
+                "abstractKey": null
               },
               {
                 "kind": "InlineFragment",
                 "selections": (v6/*: any*/),
-                "type": "Money"
+                "type": "Money",
+                "abstractKey": null
               }
             ],
             "storageKey": null
@@ -339,13 +336,65 @@ return {
     ]
   },
   "params": {
+    "cacheID": "2ba97500f3b1f182c0819f34a490f5e2",
     "id": null,
-    "metadata": {},
+    "metadata": {
+      "relayTestingSelectionTypeInfo": {
+        "artwork": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Artwork"
+        },
+        "artwork.edition_sets": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": true,
+          "type": "EditionSet"
+        },
+        "artwork.edition_sets.__isSellable": (v7/*: any*/),
+        "artwork.edition_sets.dimensions": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "dimensions"
+        },
+        "artwork.edition_sets.dimensions.cm": (v8/*: any*/),
+        "artwork.edition_sets.dimensions.in": (v8/*: any*/),
+        "artwork.edition_sets.edition_of": (v8/*: any*/),
+        "artwork.edition_sets.id": (v9/*: any*/),
+        "artwork.edition_sets.internalID": (v9/*: any*/),
+        "artwork.edition_sets.is_acquireable": (v10/*: any*/),
+        "artwork.edition_sets.is_offerable": (v10/*: any*/),
+        "artwork.edition_sets.sale_message": (v8/*: any*/),
+        "artwork.id": (v9/*: any*/),
+        "artwork.internalID": (v9/*: any*/),
+        "artwork.isOfferableFromInquiry": (v10/*: any*/),
+        "artwork.isPriceHidden": (v10/*: any*/),
+        "artwork.is_acquireable": (v10/*: any*/),
+        "artwork.is_for_sale": (v10/*: any*/),
+        "artwork.is_inquireable": (v10/*: any*/),
+        "artwork.is_offerable": (v10/*: any*/),
+        "artwork.listPrice": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "ListPrice"
+        },
+        "artwork.listPrice.__typename": (v7/*: any*/),
+        "artwork.listPrice.display": (v8/*: any*/),
+        "artwork.priceIncludesTaxDisplay": (v8/*: any*/),
+        "artwork.sale_message": (v8/*: any*/),
+        "artwork.shippingInfo": (v8/*: any*/),
+        "artwork.shippingOrigin": (v8/*: any*/),
+        "artwork.slug": (v9/*: any*/)
+      }
+    },
     "name": "ArtworkSidebarCommercial2_Test_Query",
     "operationKind": "query",
-    "text": "query ArtworkSidebarCommercial2_Test_Query {\n  artwork(id: \"pretty-drawing-111\") {\n    ...ArtworkSidebarCommercial_artwork\n    id\n  }\n}\n\nfragment ArtworkSidebarCommercial_artwork on Artwork {\n  edition_sets: editionSets {\n    internalID\n    id\n    is_acquireable: isAcquireable\n    is_offerable: isOfferable\n    sale_message: saleMessage\n    ...ArtworkSidebarSizeInfo_piece\n  }\n  internalID\n  isOfferableFromInquiry\n  isPriceHidden\n  is_acquireable: isAcquireable\n  is_for_sale: isForSale\n  is_inquireable: isInquireable\n  is_offerable: isOfferable\n  listPrice {\n    __typename\n    ... on PriceRange {\n      display\n    }\n    ... on Money {\n      display\n    }\n  }\n  priceIncludesTaxDisplay\n  sale_message: saleMessage\n  shippingInfo\n  shippingOrigin\n  slug\n}\n\nfragment ArtworkSidebarSizeInfo_piece on Sellable {\n  dimensions {\n    in\n    cm\n  }\n  edition_of: editionOf\n}\n"
+    "text": "query ArtworkSidebarCommercial2_Test_Query {\n  artwork(id: \"pretty-drawing-111\") {\n    ...ArtworkSidebarCommercial_artwork\n    id\n  }\n}\n\nfragment ArtworkSidebarCommercial_artwork on Artwork {\n  edition_sets: editionSets {\n    internalID\n    id\n    is_acquireable: isAcquireable\n    is_offerable: isOfferable\n    sale_message: saleMessage\n    ...ArtworkSidebarSizeInfo_piece\n  }\n  internalID\n  isOfferableFromInquiry\n  isPriceHidden\n  is_acquireable: isAcquireable\n  is_for_sale: isForSale\n  is_inquireable: isInquireable\n  is_offerable: isOfferable\n  listPrice {\n    __typename\n    ... on PriceRange {\n      display\n    }\n    ... on Money {\n      display\n    }\n  }\n  priceIncludesTaxDisplay\n  sale_message: saleMessage\n  shippingInfo\n  shippingOrigin\n  slug\n}\n\nfragment ArtworkSidebarSizeInfo_piece on Sellable {\n  __isSellable: __typename\n  dimensions {\n    in\n    cm\n  }\n  edition_of: editionOf\n}\n"
   }
 };
 })();
-(node as any).hash = 'f784917b861ddc759e639c1b95aa6bae';
+(node as any).hash = 'fbc9dc27695ae4adce44a3e0ded3d53e';
 export default node;

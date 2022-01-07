@@ -26,7 +26,7 @@ describe("ArtworkSidebarCommercial RTL", () => {
       )
     },
     query: graphql`
-      query ArtworkSidebarCommercial2_Test_Query @raw_response_type {
+      query ArtworkSidebarCommercial2_Test_Query @relay_test_operation {
         artwork(id: "pretty-drawing-111") {
           ...ArtworkSidebarCommercial_artwork
         }

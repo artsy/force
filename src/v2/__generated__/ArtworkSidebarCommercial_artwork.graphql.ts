@@ -150,13 +150,13 @@ return {
       "selections": [
         {
           "kind": "InlineFragment",
-          "selections": (v3/*: any*/),
+          "selections": (v4/*: any*/),
           "type": "PriceRange",
           "abstractKey": null
         },
         {
           "kind": "InlineFragment",
-          "selections": (v3/*: any*/),
+          "selections": (v4/*: any*/),
           "type": "Money",
           "abstractKey": null
         }
