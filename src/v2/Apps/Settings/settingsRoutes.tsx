@@ -87,6 +87,16 @@ const ShippingRoute = loadable(
       component.SettingsShippingRouteFragmentContainer,
   }
 )
+const DeleteAccountRoute = loadable(
+  () =>
+    import(
+      /* webpackChunkName: "settingsBundle" */ "./Routes/DeleteAccount/DeleteAccountRoute"
+    ),
+  {
+    resolveComponent: component =>
+      component.DeleteAccountRoute,
+  }
+)
 
 export const settingsRoutes: AppRouteConfig[] = [
   {
@@ -194,6 +204,13 @@ export const settingsRoutes: AppRouteConfig[] = [
             }
           }
         `,
+      },
+      {
+        path: "delete",
+        getComponent: () => DeleteAccountRoute,
+        onClientSideRender: () => {
+          DeleteAccountRoute.preload()
+        },
       },
       {
         path: "shipping",

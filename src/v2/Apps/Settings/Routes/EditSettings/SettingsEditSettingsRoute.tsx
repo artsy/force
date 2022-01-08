@@ -6,6 +6,7 @@ import { SettingsEditSettingsTwoFactorFragmentContainer } from "./Components/Set
 import { SettingsEditSettingsEmailPreferencesFragmentContainer } from "./Components/SettingsEditSettingsEmailPreferences/SettingsEditSettingsEmailPreferences"
 import { SettingsEditSettingsPasswordFragmentContainer } from "./Components/SettingsEditSettingsPassword"
 import { SettingsEditSettingsRoute_me } from "v2/__generated__/SettingsEditSettingsRoute_me.graphql"
+import { SettingsEditSettingsDeleteAccount } from "./Components/SettingsEditSettingsDeleteAccount/SettingsEditSettingsDeleteAccount"
 import { SettingsEditSettingsLinkedAccountsFragmentContainer } from "./Components/SettingsEditSettingsLinkedAccounts"
 
 interface SettingsEditRouteProps {
@@ -27,7 +28,7 @@ const SettingsEditRoute: React.FC<SettingsEditRouteProps> = ({ me }) => {
 
           <SettingsEditSettingsEmailPreferencesFragmentContainer me={me} />
 
-          {/* TODO: SettingsEditSettingsDeleteAccount */}
+          <SettingsEditSettingsDeleteAccount />
         </Join>
       </Column>
     </GridColumns>

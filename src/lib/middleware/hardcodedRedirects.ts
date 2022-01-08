@@ -69,6 +69,7 @@ const redirects = {
   "/shanghai": "/shows/shanghai-china",
   "/tokyo": "/shows/tokyo-japan",
   "/toronto": "/shows/toronto-canada",
+  "/settings2": "/settings2/edit-settings",
 }
 
 for (let from in redirects) {
