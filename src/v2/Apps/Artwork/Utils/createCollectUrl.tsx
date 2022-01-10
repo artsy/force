@@ -63,4 +63,5 @@ const filterCategories = {
   "Textile Arts": "textiles",
   "Video/Film/Animation": "film-slash-video",
   "Work on Paper": "work-on-paper",
+  NFT: "nft",
 }
