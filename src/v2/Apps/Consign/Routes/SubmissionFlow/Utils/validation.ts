@@ -40,7 +40,7 @@ export const artworkDetailsValidationSchema = yup.object().shape({
   location: yup
     .object()
     .shape({
-      city: yup.string().trim().required(),
+      city: yup.string().trim().required("Please select a city from the list"),
       state: yup.string(),
       stateCode: yup.string(),
       postalCode: yup.string(),

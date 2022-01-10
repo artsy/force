@@ -24,6 +24,7 @@ import {
   Location,
   LocationAutocompleteInput,
   normalizePlace,
+  Place,
 } from "v2/Components/LocationAutocompleteInput"
 
 export const getArtworkDetailsFormInitialValues = (
@@ -79,9 +80,15 @@ export const ArtworkDetailsForm: React.FC = () => {
   const [isRarityModalOpen, setIsRarityModalOpen] = useState(false)
   const [isProvenanceModalOpen, setIsProvenanceModalOpen] = useState(false)
 
-  const { values, handleChange, setFieldValue, handleBlur } = useFormikContext<
-    ArtworkDetailsFormModel
-  >()
+  const {
+    values,
+    handleChange,
+    setFieldValue,
+    handleBlur,
+    touched,
+    errors,
+    setFieldTouched,
+  } = useFormikContext<ArtworkDetailsFormModel>()
 
   const limitedEditionRarity = values.rarity === "limited edition"
 
@@ -93,6 +100,16 @@ export const ArtworkDetailsForm: React.FC = () => {
 
     setFieldValue("artistName", "")
     setFieldValue("artistId", "")
+  }
+
+  const handleLocationClose = () => setFieldTouched("location")
+  const handleLocationClick = () => setFieldTouched("location", false)
+  const handleLocationChange = () => {
+    setFieldValue("location", {})
+    setFieldTouched("artistName", false)
+  }
+  const handleLocationSelect = (place?: Place) => {
+    setFieldValue("location", normalizePlace(place))
   }
 
   return (
@@ -322,9 +339,11 @@ export const ArtworkDetailsForm: React.FC = () => {
             maxLength={256}
             spellCheck={false}
             defaultValue={values.location.city}
-            onChange={place => {
-              setFieldValue("location", normalizePlace(place))
-            }}
+            error={touched.location && errors.location?.city}
+            onClose={handleLocationClose}
+            onSelect={handleLocationSelect}
+            onChange={handleLocationChange}
+            onClick={handleLocationClick}
           />
         </Column>
       </GridColumns>
