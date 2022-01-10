@@ -6,12 +6,15 @@ import { MetaTags } from "v2/Components/MetaTags"
 import { ArticlesIndexArticlesPaginationContainer } from "./Components/ArticlesIndexArticles"
 import { getENV } from "v2/Utils/getENV"
 import { ArticlesApp_viewer } from "v2/__generated__/ArticlesApp_viewer.graphql"
+import { useScrollingAuthModal } from "./Utils/useScrollingAuthModal"
 
 interface ArticlesAppProps {
   viewer: ArticlesApp_viewer
 }
 
 const ArticlesApp: FC<ArticlesAppProps> = ({ viewer }) => {
+  useScrollingAuthModal()
+
   return (
     <>
       <MetaTags
