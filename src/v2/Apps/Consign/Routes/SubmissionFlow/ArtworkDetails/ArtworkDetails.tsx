@@ -19,6 +19,9 @@ import {
 } from "v2/__generated__/ArtworkDetails_submission.graphql"
 import { UtmParams } from "../Utils/types"
 import { getENV } from "v2/Utils/getENV"
+import createLogger from "v2/Utils/logger"
+
+const logger = createLogger("SubmissionFlow/ArtworkDetails.tsx")
 
 export interface ArtworkDetailsProps {
   submission?: ArtworkDetails_submission
@@ -84,6 +87,10 @@ export const ArtworkDetails: React.FC<ArtworkDetailsProps> = ({
           sessionID: !isLoggedIn ? getENV("SESSION_ID") : undefined,
         })
       } catch (error) {
+        logger.error(
+          `Submission not ${submission?.id ? "updated" : "created"}`,
+          error
+        )
         openErrorModal()
         return
       }
