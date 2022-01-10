@@ -31,7 +31,7 @@ const ArticlesIndexArticle: FC<ArticlesIndexArticleProps> = ({ article }) => {
           <Text variant="xl">{article.title}</Text>
 
           <Text variant="xl" color="black60">
-            {article.author?.name ?? "Artsy Editorial"}
+            {article.byline}
           </Text>
         </RouterLink>
 
@@ -79,10 +79,8 @@ export const ArticlesIndexArticleFragmentContainer = createFragmentContainer(
       fragment ArticlesIndexArticle_article on Article {
         href
         title
+        byline
         publishedAt(format: "MMMM Do YYYY")
-        author {
-          name
-        }
         thumbnailImage {
           cropped(width: 910, height: 511) {
             src

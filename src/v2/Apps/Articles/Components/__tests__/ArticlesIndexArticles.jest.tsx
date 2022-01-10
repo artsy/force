@@ -24,9 +24,7 @@ describe("ArticlesIndexArticles", () => {
       Article: () => ({
         title: "Example Article",
         publishedAt: "March 20th, 2020",
-      }),
-      Author: () => ({
-        name: "Example Author",
+        byline: "Example Author",
       }),
     })
 
