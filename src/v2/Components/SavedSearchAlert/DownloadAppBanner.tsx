@@ -36,7 +36,7 @@ export const DownloadAppBanner: React.FC<DownloadAppBannerProps> = ({
 
     if (platform === "Android") {
       destinationPath = DOWNLOAD_APP_URLS[Device.Android]
-      subject = "Download on the Google Play"
+      subject = "Get it on Google Play"
     }
 
     const clickedAppDownload: ClickedAppDownload = {

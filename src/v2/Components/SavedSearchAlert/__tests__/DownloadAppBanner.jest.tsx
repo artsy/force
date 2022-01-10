@@ -57,7 +57,7 @@ describe("DownloadAppBanner", () => {
       context_page_owner_id: "artistId",
       destination_path:
         "https://play.google.com/store/apps/details?id=net.artsy.app",
-      subject: "Download on the Google Play",
+      subject: "Get it on Google Play",
     })
   })
 })
