@@ -114,7 +114,7 @@ export const uploadPhoto = async (
       },
     })
   } catch (error) {
-    logger.error("Photo upload failed", error)
+    logger.error("Error during Photo Upload", error)
     return
   }
 }
