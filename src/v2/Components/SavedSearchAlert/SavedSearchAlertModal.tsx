@@ -28,6 +28,7 @@ import { SavedSearchAttributes } from "../ArtworkFilter/SavedSearch/types"
 import { FilterPill } from "../ArtworkFilter/SavedSearch/Utils/FilterPillsContext"
 import { extractPills } from "./Utils/extractPills"
 import { Pills } from "../ArtworkFilter/SavedSearch/Components/Pills"
+import { DownloadAppBanner } from "./DownloadAppBanner"
 
 interface SavedSearchAlertFormProps {
   savedSearchAttributes: SavedSearchAttributes
@@ -181,6 +182,8 @@ export const SavedSearchAlertModal: React.FC<SavedSearchAlertFormProps> = ({
                 />
               </Box>
             </Box>
+
+            <DownloadAppBanner savedSearchAttributes={savedSearchAttributes} />
           </Join>
         </Modal>
       </Form>
