@@ -9,7 +9,7 @@ import {
 import { ErrorCode, FileRejection } from "react-dropzone"
 import createLogger from "v2/Utils/logger"
 
-const logger = createLogger("uploadFileToS3.ts")
+const logger = createLogger("SubmissionFlow/uploadFileToS3.ts")
 
 export const KBSize = 1000
 export const MBSize = Math.pow(KBSize, 2)
@@ -114,7 +114,7 @@ export const uploadPhoto = async (
       },
     })
   } catch (error) {
-    logger.error("Consign submission operation error", error)
+    logger.error("Photo upload failed", error)
     return
   }
 }

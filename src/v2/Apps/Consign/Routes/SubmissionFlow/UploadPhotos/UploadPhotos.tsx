@@ -20,7 +20,7 @@ import {
 } from "../Mutations"
 import createLogger from "v2/Utils/logger"
 
-const logger = createLogger("UploadPhotos.tsx")
+const logger = createLogger("SubmissionFlow/UploadPhotos.tsx")
 
 export interface UploadPhotosProps {
   submission?: UploadPhotos_submission
@@ -111,7 +111,7 @@ export const UploadPhotos: React.FC<UploadPhotosProps> = ({ submission }) => {
                   sessionID: !isLoggedIn ? getENV("SESSION_ID") : undefined,
                 },
               }).catch(error => {
-                logger.error("Consign submission: remove asset error", error)
+                logger.error("Remove asset error", error)
               })
             }
 
@@ -138,7 +138,7 @@ export const UploadPhotos: React.FC<UploadPhotosProps> = ({ submission }) => {
                 photo.assetId =
                   response.addAssetToConsignmentSubmission?.asset?.id
               } catch (error) {
-                logger.error("Consign submission: add asset error", error)
+                logger.error("Add asset error", error)
               } finally {
                 photo.loading = false
                 setFieldValue("photos", values.photos, true)

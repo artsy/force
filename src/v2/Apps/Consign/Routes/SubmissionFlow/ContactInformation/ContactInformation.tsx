@@ -20,6 +20,9 @@ import { useErrorModal } from "../Utils/useErrorModal"
 import { getENV } from "v2/Utils/getENV"
 import { recaptcha, RecaptchaAction } from "v2/Utils/recaptcha"
 import { ActionType } from "@artsy/cohesion"
+import createLogger from "v2/Utils/logger"
+
+const logger = createLogger("SubmissionFlow/ContactInformation.tsx")
 
 const getContactInformationFormInitialValues = (
   me: ContactInformation_me
@@ -83,7 +86,7 @@ export const ContactInformation: React.FC<ContactInformationProps> = ({
 
         router.push(`/consign/submission/${submission?.id}/thank-you`)
       } catch (error) {
-        console.log(error)
+        logger.error("Submission not submitted", error)
         openErrorModal()
         return
       }
