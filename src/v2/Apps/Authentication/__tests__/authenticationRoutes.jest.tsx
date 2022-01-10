@@ -116,7 +116,7 @@ describe("authenticationRoutes", () => {
       it("renders login by default", async () => {
         renderClientRoute("/login")
         expect((await screen.findAllByText("EnableRecaptcha")).length).toBe(1)
-        expect((await screen.findAllByText("Login to Artsy")).length).toBe(2)
+        expect((await screen.findAllByText("Log in to Artsy")).length).toBe(2)
       })
 
       it("sets cookie with passed login params on mount", async () => {
@@ -194,7 +194,7 @@ describe("authenticationRoutes", () => {
       it("renders signup", async () => {
         renderClientRoute(`/signup`)
         expect((await screen.findAllByText("EnableRecaptcha")).length).toBe(1)
-        expect((await screen.findAllByText("Signup to Artsy")).length).toBe(2)
+        expect((await screen.findAllByText("Sign up for Artsy")).length).toBe(2)
       })
 
       it("sets cookie with passed login params on mount", async () => {
