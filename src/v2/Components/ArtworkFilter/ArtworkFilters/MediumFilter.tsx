@@ -138,4 +138,8 @@ export const hardcodedMediums = [
     value: "ephemera-or-merchandise",
     name: "Ephemera or Merchandise",
   },
+  {
+    value: "nft",
+    name: "NFT",
+  },
 ]
