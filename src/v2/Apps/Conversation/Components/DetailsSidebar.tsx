@@ -3,17 +3,16 @@ import { createFragmentContainer, graphql } from "react-relay"
 import {
   Box,
   DocumentIcon,
-  EntityHeader,
   Flex,
   FlexProps,
   Join,
   Link,
   QuestionCircleIcon,
   Text,
-  Separator,
   Spacer,
   breakpoints,
   media,
+  StackableBorderBox,
 } from "@artsy/palette"
 import styled from "styled-components"
 import { debounce } from "lodash"
@@ -24,8 +23,13 @@ import { useWindowSize } from "v2/Utils/Hooks/useWindowSize"
 import ArtworkDetails from "v2/Components/Artwork/Metadata"
 import { getViewportDimensions } from "v2/Utils/viewport"
 import { DetailsHeader } from "./DetailsHeader"
-
-import { Details_conversation } from "v2/__generated__/Details_conversation.graphql"
+import { DetailsSidebar_conversation } from "v2/__generated__/DetailsSidebar_conversation.graphql"
+import { extractNodes } from "v2/Utils/extractNodes"
+import { TransactionDetailsSummaryItemFragmentContainer } from "v2/Apps/Order/Components/TransactionDetailsSummaryItem"
+import { RouterLink } from "v2/System/Router/RouterLink"
+import { getStatusCopy } from "v2/Apps/Order/Utils/getStatusCopy"
+import { ShippingSummaryItemFragmentContainer } from "v2/Apps/Order/Components/ShippingSummaryItem"
+import { CreditCardSummaryItemFragmentContainer } from "v2/Apps/Order/Components/CreditCardSummaryItem"
 
 const DETAIL_BOX_XL_ANIMATION = `transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);`
 const DETAIL_BOX_XS_ANIMATION = `transition: opacity 0.3s, z-index 0.3s;`
@@ -35,7 +39,6 @@ const DETAIL_BOX_MD_ANIMATION = `transition: transform 0.3s;`
 // in XL screen it is animated with `width` because animation needs to push the mid column content
 // in L screens it is animated with `translate` for better performance (than `width`)
 const DetailsContainer = styled(Flex)<{ transform?: string }>`
-  border-left: 1px solid ${themeGet("colors.black10")};
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   background-color: ${themeGet("colors.white100")};
   transform: none;
@@ -62,12 +65,12 @@ const TruncatedLine = styled(Text)`
 `
 
 interface DetailsProps extends FlexProps {
-  conversation: Details_conversation
+  conversation: DetailsSidebar_conversation
   showDetails: boolean
   setShowDetails: (showDetails: boolean) => void
 }
 
-export const Details: FC<DetailsProps> = ({
+export const DetailsSidebar: FC<DetailsProps> = ({
   conversation,
   setShowDetails,
   showDetails,
@@ -141,15 +144,18 @@ export const Details: FC<DetailsProps> = ({
     return 1
   }
 
+  const activeOrder = extractNodes(conversation.sidebarOrderConnection)[0]
+  const { description } = getStatusCopy(activeOrder)
+
   return (
     <DetailsContainer
       flexDirection="column"
       justifyContent="flex-start"
       height={[
-        "calc(100% - 122px)",
-        "calc(100% - 175px)",
-        "calc(100% - 122px)",
-        "calc(100% - 122px)",
+        "calc(100% - 114px)",
+        "calc(100% - 173px)",
+        "calc(100% - 173px)",
+        "calc(100% - 173px)",
         "100%",
       ]}
       flexShrink={0}
@@ -165,17 +171,15 @@ export const Details: FC<DetailsProps> = ({
         showDetails={showDetails}
         setShowDetails={setShowDetails}
       />
-      <EntityHeader
-        px={2}
-        py={1}
-        name={conversation.to.name}
-        initials={conversation.to.initials ?? undefined}
-      />
+      {!!activeOrder && !!description && (
+        <StackableBorderBox>
+          <Text>{description}</Text>
+        </StackableBorderBox>
+      )}
       {item && (
         <>
-          <Separator />
-          <Flex flexDirection="column" p={2}>
-            <Text variant="xs" mb={2}>
+          <StackableBorderBox flexDirection="column" p={2}>
+            <Text variant="md" mb={2} fontWeight="bold">
               {item.__typename}
             </Text>
             <Flex>
@@ -197,82 +201,156 @@ export const Details: FC<DetailsProps> = ({
                 )}
               </Flex>
             </Flex>
-          </Flex>
+          </StackableBorderBox>
+        </>
+      )}
+      {!!activeOrder && (
+        <>
+          <TransactionDetailsSummaryItemFragmentContainer
+            order={activeOrder}
+            showOrderNumberHeader
+            title={`Order No. ${activeOrder.code}`}
+          />
+          <ShippingSummaryItemFragmentContainer
+            order={activeOrder}
+            textColor="black60"
+          />
+          <CreditCardSummaryItemFragmentContainer
+            title="Payment Method"
+            order={activeOrder}
+            textColor="black60"
+          />
         </>
       )}
       {!!attachments?.length && (
-        <>
-          <Separator my={2} />
-          <Box px={2}>
-            <Text variant="xs" mb={2}>
+        <StackableBorderBox>
+          <Box>
+            <Text variant="md" mb={2} fontWeight="bold">
               Attachments
             </Text>
             <Join separator={<Spacer mb={1} />}>{attachmentItems}</Join>
           </Box>
-        </>
+        </StackableBorderBox>
       )}
-      <Separator my={2} />
-      <Flex flexDirection="column" px={2}>
-        <Text variant="xs" mb={2}>
-          Support
-        </Text>
-        <Link
-          href="https://support.artsy.net/hc/en-us/sections/360008203054-Contact-a-gallery"
-          target="_blank"
-          noUnderline
-        >
-          <Flex alignItems="center" mb={1}>
-            <QuestionCircleIcon mr={1} />
-            <Text variant="xs">Inquiries FAQ</Text>
-          </Flex>
-        </Link>
-      </Flex>
+      <StackableBorderBox height="100%">
+        <Flex flexDirection="column">
+          <Text variant="md" mb={2} fontWeight="bold">
+            Support
+          </Text>
+          <RouterLink
+            to={`https://support.artsy.net/hc/en-us/sections/360008203054-Contact-a-gallery`}
+            target="_blank"
+            noUnderline
+          >
+            <Flex alignItems="center" mb={1}>
+              <QuestionCircleIcon mr={1} />
+              <Text variant="xs">Inquiries FAQ</Text>
+            </Flex>
+          </RouterLink>
+        </Flex>
+      </StackableBorderBox>
     </DetailsContainer>
   )
 }
 
-export const DetailsFragmentContainer = createFragmentContainer(Details, {
-  conversation: graphql`
-    fragment Details_conversation on Conversation
-      @argumentDefinitions(
-        count: { type: "Int", defaultValue: 30 }
-        after: { type: "String" }
-      ) {
-      to {
-        name
-        initials
-      }
-      messagesConnection(first: $count, after: $after, sort: DESC)
-        @connection(key: "Messages_messagesConnection", filters: []) {
-        edges {
-          node {
-            attachments {
-              id
-              contentType
-              fileName
-              downloadURL
+export const DetailsSidebarFragmentContainer = createFragmentContainer(
+  DetailsSidebar,
+  {
+    conversation: graphql`
+      fragment DetailsSidebar_conversation on Conversation
+        @argumentDefinitions(
+          count: { type: "Int", defaultValue: 30 }
+          after: { type: "String" }
+        ) {
+        to {
+          name
+          initials
+        }
+        sidebarOrderConnection: orderConnection(
+          first: 10
+          states: [APPROVED, FULFILLED, SUBMITTED]
+        ) {
+          edges {
+            node {
+              __typename
+              internalID
+              state
+              displayState
+              mode
+              stateReason
+              code
+              stateExpiresAt(format: "MMM D")
+              ...TransactionDetailsSummaryItem_order
+              ...ShippingSummaryItem_order
+              ...CreditCardSummaryItem_order
+              creditCard {
+                brand
+                lastDigits
+                expirationYear
+                expirationMonth
+              }
+              lineItems {
+                edges {
+                  node {
+                    artwork {
+                      shippingOrigin
+                    }
+                    shipment {
+                      trackingNumber
+                      trackingUrl
+                      carrierName
+                      estimatedDeliveryWindow
+                    }
+                    selectedShippingQuote {
+                      displayName
+                    }
+                    fulfillments {
+                      edges {
+                        node {
+                          courier
+                          trackingId
+                          estimatedDelivery(format: "MMM Do, YYYY")
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+        messagesConnection(first: $count, after: $after, sort: DESC)
+          @connection(key: "Messages_messagesConnection", filters: []) {
+          edges {
+            node {
+              attachments {
+                id
+                contentType
+                fileName
+                downloadURL
+              }
+            }
+          }
+        }
+        items {
+          item {
+            __typename
+            ... on Artwork {
+              href
+              ...Metadata_artwork
+              image {
+                thumbnailUrl: url(version: "small")
+              }
+            }
+            ... on Show {
+              href
+              image: coverImage {
+                thumbnailUrl: url(version: "small")
+              }
             }
           }
         }
       }
-      items {
-        item {
-          __typename
-          ... on Artwork {
-            href
-            ...Metadata_artwork
-            image {
-              thumbnailUrl: url(version: "small")
-            }
-          }
-          ... on Show {
-            href
-            image: coverImage {
-              thumbnailUrl: url(version: "small")
-            }
-          }
-        }
-      }
-    }
-  `,
-})
+    `,
+  }
+)

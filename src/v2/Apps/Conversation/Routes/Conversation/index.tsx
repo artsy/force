@@ -1,5 +1,5 @@
-import { useState } from "react";
-import * as React from "react";
+import { useState } from "react"
+import * as React from "react"
 import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
 import { Box, Flex, FullBleed, Title, ThemeProviderV3 } from "@artsy/palette"
 import { Match } from "found"
@@ -9,9 +9,8 @@ import { themeGet } from "@styled-system/theme-get"
 import { ConversationPaginationContainer as Conversation } from "v2/Apps/Conversation/Components/Conversation"
 import { ConversationListPaginationContainer as ConversationList } from "v2/Apps/Conversation/Components/ConversationList"
 import { Media } from "v2/Utils/Responsive"
-import { DetailsFragmentContainer as Details } from "../../Components/Details"
-
 import { Conversation_me } from "v2/__generated__/Conversation_me.graphql"
+import { DetailsSidebarFragmentContainer } from "../../Components/DetailsSidebar"
 interface ConversationRouteProps {
   me: Conversation_me
   conversationID: string
@@ -60,7 +59,7 @@ export const ConversationRoute: React.FC<ConversationRouteProps> = props => {
                 setShowDetails={setShowDetails}
                 refetch={props.relay.refetch}
               />
-              <Details
+              <DetailsSidebarFragmentContainer
                 conversation={me.conversation!}
                 showDetails={showDetails}
                 setShowDetails={setShowDetails}
@@ -84,7 +83,7 @@ export const ConversationPaginationContainer = createRefetchContainer(
           internalID
           ...Conversation_conversation
           ...ConversationCTA_conversation
-          ...Details_conversation
+          ...DetailsSidebar_conversation
         }
       }
     `,

@@ -11,6 +11,7 @@ export type TransactionDetailsSummaryItem_order = {
     readonly requestedFulfillment: {
         readonly __typename: string;
     } | null;
+    readonly code: string;
     readonly lineItems: {
         readonly edges: ReadonlyArray<{
             readonly node: {
@@ -205,6 +206,13 @@ return {
     {
       "alias": null,
       "args": null,
+      "kind": "ScalarField",
+      "name": "code",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
       "concreteType": "CommerceLineItemConnection",
       "kind": "LinkedField",
       "name": "lineItems",
@@ -335,5 +343,5 @@ return {
   "abstractKey": "__isCommerceOrder"
 };
 })();
-(node as any).hash = '460efd58f92b46576b9cb1acfbfcc3b9';
+(node as any).hash = '71d925480aee61f68ce09f24eea756c8';
 export default node;
