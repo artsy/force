@@ -9,7 +9,7 @@ import {
   Text,
 } from "@artsy/palette"
 import { compact } from "lodash"
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useSystemContext } from "v2/System"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
@@ -79,12 +79,16 @@ const AuctionBuyersPremiumDialog: React.FC<AuctionBuyersPremiumDialogProps> = ({
             </Text>
           ) : (
             schedule.map((premium, i) => {
+              const percent = (premium.percent ?? 0) * 100
+              const hasDecimal = percent - Math.floor(percent) !== 0
+              const fixed = percent.toFixed(1)
+              const displayPercentage = hasDecimal ? fixed : percent
               // First
               if (i === 0) {
                 return (
                   <Text key={i} variant="sm" mb={0.5}>
                     On the hammer price up to and including{" "}
-                    {schedule[i + 1]?.amount}: {(premium.percent ?? 0) * 100}%
+                    {schedule[i + 1]?.amount}: {displayPercentage}%
                   </Text>
                 )
               }
@@ -94,7 +98,7 @@ const AuctionBuyersPremiumDialog: React.FC<AuctionBuyersPremiumDialogProps> = ({
                 return (
                   <Text key={i} variant="sm">
                     On the portion of the hammer price in excess of{" "}
-                    {premium?.amount}: {(premium.percent ?? 0) * 100}%
+                    {premium?.amount}: {displayPercentage}%
                   </Text>
                 )
               }
@@ -102,8 +106,7 @@ const AuctionBuyersPremiumDialog: React.FC<AuctionBuyersPremiumDialogProps> = ({
               return (
                 <Text key={i} variant="sm" mb={0.5}>
                   On the hammer price in excess of {premium.amount} up to and
-                  including {schedule[i + 1].amount}:{" "}
-                  {(premium.percent ?? 0) * 100}%
+                  including {schedule[i + 1].amount}: {displayPercentage}%
                 </Text>
               )
             })

@@ -1,10 +1,14 @@
 import { graphql } from "react-relay"
-import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
+import { setupTestWrapperTL } from "v2/DevTools/setupTestWrapper"
 import { AuctionBuyersPremiumDialogFragmentContainer } from "../AuctionBuyersPremiumDialog"
+import { AuctionBuyersPremiumDialog_Test_Query } from "v2/__generated__/AuctionBuyersPremiumDialog_Test_Query.graphql"
+import { screen } from "@testing-library/react"
 
 jest.unmock("react-relay")
 
-const { getWrapper } = setupTestWrapper({
+const { renderWithRelay } = setupTestWrapperTL<
+  AuctionBuyersPremiumDialog_Test_Query
+>({
   Component: AuctionBuyersPremiumDialogFragmentContainer,
   query: graphql`
     query AuctionBuyersPremiumDialog_Test_Query @relay_test_operation {
@@ -18,21 +22,19 @@ const { getWrapper } = setupTestWrapper({
 describe("AuctionBuyersPremiumDialog", () => {
   describe("one point", () => {
     it("renders the schedule correctly", () => {
-      const wrapper = getWrapper({
+      renderWithRelay({
         Sale: () => ({
           buyersPremium: [{ amount: "$0", cents: 0, percent: 0.2 }],
         }),
       })
 
-      const text = wrapper.text()
-
-      expect(text).toContain("20% on the hammer price")
+      expect(screen.getByText("20% on the hammer price")).toBeInTheDocument()
     })
   })
 
   describe("two points", () => {
     it("renders the schedule correctly", () => {
-      const wrapper = getWrapper({
+      renderWithRelay({
         Sale: () => ({
           buyersPremium: [
             { amount: "$0", cents: 0, percent: 0.25 },
@@ -41,20 +43,22 @@ describe("AuctionBuyersPremiumDialog", () => {
         }),
       })
 
-      const text = wrapper.text()
-
-      expect(text).toContain(
-        "On the hammer price up to and including $500,000: 25%"
-      )
-      expect(text).toContain(
-        "On the portion of the hammer price in excess of $500,000: 20%"
-      )
+      expect(
+        screen.getByText(
+          "On the hammer price up to and including $500,000: 25%"
+        )
+      ).toBeInTheDocument()
+      expect(
+        screen.getByText(
+          "On the portion of the hammer price in excess of $500,000: 20%"
+        )
+      ).toBeInTheDocument()
     })
   })
 
   describe("three or more points", () => {
     it("renders the schedule correctly", () => {
-      const wrapper = getWrapper({
+      renderWithRelay({
         Sale: () => ({
           buyersPremium: [
             { amount: "$0", cents: 0, percent: 0.25 },
@@ -64,17 +68,37 @@ describe("AuctionBuyersPremiumDialog", () => {
         }),
       })
 
-      const text = wrapper.text()
+      expect(
+        screen.getByText(
+          "On the hammer price up to and including $250,000: 25%"
+        )
+      ).toBeInTheDocument()
 
-      expect(text).toContain(
-        "On the hammer price up to and including $250,000: 25%"
-      )
-      expect(text).toContain(
-        "On the hammer price in excess of $250,000 up to and including $2,500,000: 20%"
-      )
-      expect(text).toContain(
-        "On the portion of the hammer price in excess of $2,500,000: 12%"
-      )
+      expect(
+        screen.getByText(
+          "On the hammer price in excess of $250,000 up to and including $2,500,000: 20%"
+        )
+      ).toBeInTheDocument()
+
+      expect(
+        screen.getByText(
+          "On the portion of the hammer price in excess of $2,500,000: 12%"
+        )
+      ).toBeInTheDocument()
+    })
+
+    describe("with a percentage that isn't a whole number", () => {
+      it("rounds to a single decimal place", () => {
+        renderWithRelay({
+          Sale: () => ({
+            buyersPremium: [{ amount: "$0", cents: 0, percent: 0.225 }],
+          }),
+        })
+
+        expect(
+          screen.getByText("22.5% on the hammer price")
+        ).toBeInTheDocument()
+      })
     })
   })
 })
