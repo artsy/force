@@ -7,10 +7,8 @@ import { FragmentRefs } from "relay-runtime";
 export type ArticlesIndexArticle_article = {
     readonly href: string | null;
     readonly title: string | null;
+    readonly byline: string | null;
     readonly publishedAt: string | null;
-    readonly author: {
-        readonly name: string | null;
-    } | null;
     readonly thumbnailImage: {
         readonly cropped: {
             readonly src: string;
@@ -49,6 +47,13 @@ const node: ReaderFragment = {
     },
     {
       "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "byline",
+      "storageKey": null
+    },
+    {
+      "alias": null,
       "args": [
         {
           "kind": "Literal",
@@ -59,24 +64,6 @@ const node: ReaderFragment = {
       "kind": "ScalarField",
       "name": "publishedAt",
       "storageKey": "publishedAt(format:\"MMMM Do YYYY\")"
-    },
-    {
-      "alias": null,
-      "args": null,
-      "concreteType": "Author",
-      "kind": "LinkedField",
-      "name": "author",
-      "plural": false,
-      "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "name",
-          "storageKey": null
-        }
-      ],
-      "storageKey": null
     },
     {
       "alias": null,
@@ -129,5 +116,5 @@ const node: ReaderFragment = {
   "type": "Article",
   "abstractKey": null
 };
-(node as any).hash = '81562b81bddab7c236c0e815d1412bcf';
+(node as any).hash = '063575b816db5cbb8da8f6befc0838ac';
 export default node;

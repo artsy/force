@@ -31,11 +31,8 @@ query ArticlesIndexArticles_test_Query(
 fragment ArticlesIndexArticle_article on Article {
   href
   title
+  byline
   publishedAt(format: "MMMM Do YYYY")
-  author {
-    name
-    id
-  }
   thumbnailImage {
     cropped(width: 910, height: 511) {
       src
@@ -45,7 +42,7 @@ fragment ArticlesIndexArticle_article on Article {
 }
 
 fragment ArticlesIndexArticles_viewer_WGPvJ on Viewer {
-  articlesConnection(first: 15, after: $after, sort: PUBLISHED_AT_DESC) {
+  articlesConnection(first: 15, after: $after, sort: PUBLISHED_AT_DESC, featured: true) {
     edges {
       node {
         internalID
@@ -80,6 +77,11 @@ v2 = [
   (v1/*: any*/),
   {
     "kind": "Literal",
+    "name": "featured",
+    "value": true
+  },
+  {
+    "kind": "Literal",
     "name": "first",
     "value": 15
   },
@@ -90,15 +92,14 @@ v2 = [
   }
 ],
 v3 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "id",
-  "storageKey": null
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "String"
 },
 v4 = {
   "enumValues": null,
-  "nullable": false,
+  "nullable": true,
   "plural": false,
   "type": "String"
 },
@@ -107,12 +108,6 @@ v5 = {
   "nullable": false,
   "plural": false,
   "type": "ID"
-},
-v6 = {
-  "enumValues": null,
-  "nullable": true,
-  "plural": false,
-  "type": "String"
 };
 return {
   "fragment": {
@@ -204,6 +199,13 @@ return {
                       },
                       {
                         "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "byline",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
                         "args": [
                           {
                             "kind": "Literal",
@@ -214,25 +216,6 @@ return {
                         "kind": "ScalarField",
                         "name": "publishedAt",
                         "storageKey": "publishedAt(format:\"MMMM Do YYYY\")"
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "concreteType": "Author",
-                        "kind": "LinkedField",
-                        "name": "author",
-                        "plural": false,
-                        "selections": [
-                          {
-                            "alias": null,
-                            "args": null,
-                            "kind": "ScalarField",
-                            "name": "name",
-                            "storageKey": null
-                          },
-                          (v3/*: any*/)
-                        ],
-                        "storageKey": null
                       },
                       {
                         "alias": null,
@@ -281,7 +264,13 @@ return {
                         ],
                         "storageKey": null
                       },
-                      (v3/*: any*/),
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "id",
+                        "storageKey": null
+                      },
                       {
                         "alias": null,
                         "args": null,
@@ -334,7 +323,8 @@ return {
             "alias": null,
             "args": (v2/*: any*/),
             "filters": [
-              "sort"
+              "sort",
+              "featured"
             ],
             "handle": "connection",
             "key": "ArticlesIndexArticles_articlesConnection",
@@ -347,7 +337,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "d076d1c2a4e3482e8c2a5adb949fa4aa",
+    "cacheID": "86bd583c2ad1384165497523c4f0cf51",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -369,26 +359,19 @@ return {
           "plural": true,
           "type": "ArticleEdge"
         },
-        "viewer.articlesConnection.edges.cursor": (v4/*: any*/),
+        "viewer.articlesConnection.edges.cursor": (v3/*: any*/),
         "viewer.articlesConnection.edges.node": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "Article"
         },
-        "viewer.articlesConnection.edges.node.__typename": (v4/*: any*/),
-        "viewer.articlesConnection.edges.node.author": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "Author"
-        },
-        "viewer.articlesConnection.edges.node.author.id": (v5/*: any*/),
-        "viewer.articlesConnection.edges.node.author.name": (v6/*: any*/),
-        "viewer.articlesConnection.edges.node.href": (v6/*: any*/),
+        "viewer.articlesConnection.edges.node.__typename": (v3/*: any*/),
+        "viewer.articlesConnection.edges.node.byline": (v4/*: any*/),
+        "viewer.articlesConnection.edges.node.href": (v4/*: any*/),
         "viewer.articlesConnection.edges.node.id": (v5/*: any*/),
         "viewer.articlesConnection.edges.node.internalID": (v5/*: any*/),
-        "viewer.articlesConnection.edges.node.publishedAt": (v6/*: any*/),
+        "viewer.articlesConnection.edges.node.publishedAt": (v4/*: any*/),
         "viewer.articlesConnection.edges.node.thumbnailImage": {
           "enumValues": null,
           "nullable": true,
@@ -401,16 +384,16 @@ return {
           "plural": false,
           "type": "CroppedImageUrl"
         },
-        "viewer.articlesConnection.edges.node.thumbnailImage.cropped.src": (v4/*: any*/),
-        "viewer.articlesConnection.edges.node.thumbnailImage.cropped.srcSet": (v4/*: any*/),
-        "viewer.articlesConnection.edges.node.title": (v6/*: any*/),
+        "viewer.articlesConnection.edges.node.thumbnailImage.cropped.src": (v3/*: any*/),
+        "viewer.articlesConnection.edges.node.thumbnailImage.cropped.srcSet": (v3/*: any*/),
+        "viewer.articlesConnection.edges.node.title": (v4/*: any*/),
         "viewer.articlesConnection.pageInfo": {
           "enumValues": null,
           "nullable": false,
           "plural": false,
           "type": "PageInfo"
         },
-        "viewer.articlesConnection.pageInfo.endCursor": (v6/*: any*/),
+        "viewer.articlesConnection.pageInfo.endCursor": (v4/*: any*/),
         "viewer.articlesConnection.pageInfo.hasNextPage": {
           "enumValues": null,
           "nullable": false,
@@ -421,7 +404,7 @@ return {
     },
     "name": "ArticlesIndexArticles_test_Query",
     "operationKind": "query",
-    "text": "query ArticlesIndexArticles_test_Query(\n  $after: String\n) {\n  viewer {\n    ...ArticlesIndexArticles_viewer_WGPvJ\n  }\n}\n\nfragment ArticlesIndexArticle_article on Article {\n  href\n  title\n  publishedAt(format: \"MMMM Do YYYY\")\n  author {\n    name\n    id\n  }\n  thumbnailImage {\n    cropped(width: 910, height: 511) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment ArticlesIndexArticles_viewer_WGPvJ on Viewer {\n  articlesConnection(first: 15, after: $after, sort: PUBLISHED_AT_DESC) {\n    edges {\n      node {\n        internalID\n        ...ArticlesIndexArticle_article\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query ArticlesIndexArticles_test_Query(\n  $after: String\n) {\n  viewer {\n    ...ArticlesIndexArticles_viewer_WGPvJ\n  }\n}\n\nfragment ArticlesIndexArticle_article on Article {\n  href\n  title\n  byline\n  publishedAt(format: \"MMMM Do YYYY\")\n  thumbnailImage {\n    cropped(width: 910, height: 511) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment ArticlesIndexArticles_viewer_WGPvJ on Viewer {\n  articlesConnection(first: 15, after: $after, sort: PUBLISHED_AT_DESC, featured: true) {\n    edges {\n      node {\n        internalID\n        ...ArticlesIndexArticle_article\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();

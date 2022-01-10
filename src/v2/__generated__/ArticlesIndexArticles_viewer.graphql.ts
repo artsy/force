@@ -51,6 +51,11 @@ const node: ReaderFragment = {
       "args": [
         {
           "kind": "Literal",
+          "name": "featured",
+          "value": true
+        },
+        {
+          "kind": "Literal",
           "name": "sort",
           "value": "PUBLISHED_AT_DESC"
         }
@@ -134,11 +139,11 @@ const node: ReaderFragment = {
           "storageKey": null
         }
       ],
-      "storageKey": "__ArticlesIndexArticles_articlesConnection_connection(sort:\"PUBLISHED_AT_DESC\")"
+      "storageKey": "__ArticlesIndexArticles_articlesConnection_connection(featured:true,sort:\"PUBLISHED_AT_DESC\")"
     }
   ],
   "type": "Viewer",
   "abstractKey": null
 };
-(node as any).hash = '0970951e21a4f4a6eb0215ac56cb0ba0';
+(node as any).hash = 'fc09df8765785f4d0d08b5e79341262f';
 export default node;

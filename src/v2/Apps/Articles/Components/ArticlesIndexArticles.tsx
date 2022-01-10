@@ -75,10 +75,12 @@ export const ArticlesIndexArticlesPaginationContainer = createPaginationContaine
     viewer: graphql`
       fragment ArticlesIndexArticles_viewer on Viewer
         @argumentDefinitions(after: { type: "String" }) {
-        articlesConnection(first: 15, after: $after, sort: PUBLISHED_AT_DESC)
-          # published: true TODO
-          # featured: true TODO
-          @connection(key: "ArticlesIndexArticles_articlesConnection") {
+        articlesConnection(
+          first: 15
+          after: $after
+          sort: PUBLISHED_AT_DESC
+          featured: true
+        ) @connection(key: "ArticlesIndexArticles_articlesConnection") {
           edges {
             node {
               internalID

@@ -31,11 +31,8 @@ query ArticlesIndexArticlesQuery(
 fragment ArticlesIndexArticle_article on Article {
   href
   title
+  byline
   publishedAt(format: "MMMM Do YYYY")
-  author {
-    name
-    id
-  }
   thumbnailImage {
     cropped(width: 910, height: 511) {
       src
@@ -45,7 +42,7 @@ fragment ArticlesIndexArticle_article on Article {
 }
 
 fragment ArticlesIndexArticles_viewer_WGPvJ on Viewer {
-  articlesConnection(first: 15, after: $after, sort: PUBLISHED_AT_DESC) {
+  articlesConnection(first: 15, after: $after, sort: PUBLISHED_AT_DESC, featured: true) {
     edges {
       node {
         internalID
@@ -80,6 +77,11 @@ v2 = [
   (v1/*: any*/),
   {
     "kind": "Literal",
+    "name": "featured",
+    "value": true
+  },
+  {
+    "kind": "Literal",
     "name": "first",
     "value": 15
   },
@@ -88,14 +90,7 @@ v2 = [
     "name": "sort",
     "value": "PUBLISHED_AT_DESC"
   }
-],
-v3 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "id",
-  "storageKey": null
-};
+];
 return {
   "fragment": {
     "argumentDefinitions": (v0/*: any*/),
@@ -186,6 +181,13 @@ return {
                       },
                       {
                         "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "byline",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
                         "args": [
                           {
                             "kind": "Literal",
@@ -196,25 +198,6 @@ return {
                         "kind": "ScalarField",
                         "name": "publishedAt",
                         "storageKey": "publishedAt(format:\"MMMM Do YYYY\")"
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "concreteType": "Author",
-                        "kind": "LinkedField",
-                        "name": "author",
-                        "plural": false,
-                        "selections": [
-                          {
-                            "alias": null,
-                            "args": null,
-                            "kind": "ScalarField",
-                            "name": "name",
-                            "storageKey": null
-                          },
-                          (v3/*: any*/)
-                        ],
-                        "storageKey": null
                       },
                       {
                         "alias": null,
@@ -263,7 +246,13 @@ return {
                         ],
                         "storageKey": null
                       },
-                      (v3/*: any*/),
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "id",
+                        "storageKey": null
+                      },
                       {
                         "alias": null,
                         "args": null,
@@ -316,7 +305,8 @@ return {
             "alias": null,
             "args": (v2/*: any*/),
             "filters": [
-              "sort"
+              "sort",
+              "featured"
             ],
             "handle": "connection",
             "key": "ArticlesIndexArticles_articlesConnection",
@@ -329,12 +319,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "40327213efe94a4b8fee7a094bda3a2a",
+    "cacheID": "b3629dbf6c9f0ad5f863ceb2240204f5",
     "id": null,
     "metadata": {},
     "name": "ArticlesIndexArticlesQuery",
     "operationKind": "query",
-    "text": "query ArticlesIndexArticlesQuery(\n  $after: String\n) {\n  viewer {\n    ...ArticlesIndexArticles_viewer_WGPvJ\n  }\n}\n\nfragment ArticlesIndexArticle_article on Article {\n  href\n  title\n  publishedAt(format: \"MMMM Do YYYY\")\n  author {\n    name\n    id\n  }\n  thumbnailImage {\n    cropped(width: 910, height: 511) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment ArticlesIndexArticles_viewer_WGPvJ on Viewer {\n  articlesConnection(first: 15, after: $after, sort: PUBLISHED_AT_DESC) {\n    edges {\n      node {\n        internalID\n        ...ArticlesIndexArticle_article\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query ArticlesIndexArticlesQuery(\n  $after: String\n) {\n  viewer {\n    ...ArticlesIndexArticles_viewer_WGPvJ\n  }\n}\n\nfragment ArticlesIndexArticle_article on Article {\n  href\n  title\n  byline\n  publishedAt(format: \"MMMM Do YYYY\")\n  thumbnailImage {\n    cropped(width: 910, height: 511) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment ArticlesIndexArticles_viewer_WGPvJ on Viewer {\n  articlesConnection(first: 15, after: $after, sort: PUBLISHED_AT_DESC, featured: true) {\n    edges {\n      node {\n        internalID\n        ...ArticlesIndexArticle_article\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();
