@@ -1,10 +1,6 @@
-{ toSentence } = require 'underscore.string'
-sd = require('sharify').data
-request = require 'superagent'
 { Article } = require '../../models/article'
 { Articles } = require '../../collections/articles'
 { Section } = require '../../models/section'
-{ stringifyJSONForWeb } = require '../../components/util/json'
 
 module.exports.article = (req, res, next) ->
   # Handles fair and partner articles
@@ -40,33 +36,3 @@ module.exports.section = (req, res, next) ->
           res.locals.sd.SECTION = section
           email = res.locals.sd.CURRENT_USER?.email
           res.render 'section', featuredSection: section, articles: articles
-
-module.exports.articles = (req, res, next) ->
-  query = """
-    {
-      articles(published: true, limit: 10, sort: "-published_at", featured: true ) {
-        slug
-        thumbnail_title
-        thumbnail_image
-        tier
-        published_at
-        channel_id
-        author{
-          name
-        }
-        contributing_authors{
-          name
-        }
-      }
-    }
-  """
-  # fetch recent articles
-  request.post(sd.POSITRON_URL + '/api/graphql')
-    .send(
-      query: query
-    ).end (err, response) ->
-      return next() if err
-      articles = response.body.data?.articles
-      email = res.locals.sd.CURRENT_USER?.email
-      res.locals.sd.ARTICLES = articles
-      res.render 'articles', articles: articles

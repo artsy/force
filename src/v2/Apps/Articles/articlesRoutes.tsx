@@ -11,7 +11,7 @@ const ArticlesApp = loadable(
 
 export const articlesRoutes: AppRouteConfig[] = [
   {
-    path: "/articles2",
+    path: "/articles",
     Component: ArticlesApp,
     onClientSideRender: () => {
       ArticlesApp.preload()

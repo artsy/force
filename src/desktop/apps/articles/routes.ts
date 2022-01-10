@@ -7,7 +7,6 @@ import { PARSELY_KEY, PARSELY_SECRET } from "../../../config"
 const { crop } = require("desktop/components/resizer/index.coffee")
 const _topParselyArticles = require("desktop/components/util/parsely.coffee")
   .topParselyArticles
-const magazineQuery = require("./queries/editorial_articles.coffee")
 const { Articles } = require("desktop/collections/articles")
 const { Channel } = require("desktop/models/channel")
 const { Section } = require("desktop/models/section")
@@ -16,21 +15,6 @@ const { Section } = require("desktop/models/section")
 let positronql = _positronql
 let topParselyArticles = _topParselyArticles
 let stitch = _stitch
-
-export const articles = (req, res, next) => {
-  const limit = 50
-  const page = Math.max(parseInt(req.query.page, 10) || 1, 1)
-  const offset = limit * (page - 1)
-  const query = { query: magazineQuery(limit, offset) }
-  return positronql(query)
-    .then(async result => {
-      const articles = new Articles(result.articles)
-      res.locals.sd.ARTICLES = articles.toJSON()
-      res.locals.sd.PAGE = page
-      res.render("articles", { articles, crop, page })
-    })
-    .catch(next)
-}
 
 export const section = (_req, res, next) => {
   new Section({ id: "venice-biennale-2015" }).fetch({
