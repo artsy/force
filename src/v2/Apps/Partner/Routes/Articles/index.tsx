@@ -87,7 +87,7 @@ const Articles: React.FC<ArticlesProps> = ({ partner, relay }) => {
         </GridColumns>
       </LoadingArea>
 
-      <Box mt={9}>
+      <Box mt={6}>
         <PaginationFragmentContainer
           hasNextPage={hasNextPage}
           pageCursors={pageCursors}

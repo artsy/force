@@ -31,7 +31,7 @@ export const ShowBannersRailPlaceholder: React.FC<ShowBannersRailPlaceholderProp
             eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
             ad minim veniam, quis nostrud exercitation ullam
           </SkeletonText>
-          <GridColumns mt={[2, 3]}>
+          <GridColumns mt={[2, 4]}>
             <Column span={6}>
               <SkeletonBox width="100%" height={40} />
             </Column>

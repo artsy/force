@@ -32,16 +32,16 @@ const Overview: React.FC<OverviewProps> = ({ partner }) => {
   return displayFullPartnerPage ? (
     <>
       {profileBannerDisplay === "Artworks" ? (
-        <ArtworksRailRenderer mt={4} mb={[4, 80]} partnerId={slug} />
+        <ArtworksRailRenderer mt={4} mb={[4, 12]} partnerId={slug} />
       ) : (
-        <ShowBannersRailRenderer mt={4} mb={[4, 80]} partnerId={slug} />
+        <ShowBannersRailRenderer mt={4} mb={[4, 12]} partnerId={slug} />
       )}
 
       <AboutPartnerFragmentContainer partner={partner} />
 
-      <ShowsRailFragmentContainer mt={4} mb={[4, 80]} partner={partner} />
+      <ShowsRailFragmentContainer mt={4} mb={[4, 12]} partner={partner} />
       {displayArtistsSection && (
-        <ArtistsRailFragmentContainer mt={4} mb={[4, 80]} partner={partner} />
+        <ArtistsRailFragmentContainer mt={4} mb={[4, 12]} partner={partner} />
       )}
       {articles.length > 0 && (
         <ArticlesRailFragmentContainer partnerSlug={slug} articles={articles} />
@@ -55,10 +55,10 @@ const Overview: React.FC<OverviewProps> = ({ partner }) => {
 
       <AboutPartnerFragmentContainer partner={partner} />
 
-      <ShowsRailFragmentContainer mt={4} mb={[4, 80]} partner={partner} />
+      <ShowsRailFragmentContainer mt={4} mb={[4, 12]} partner={partner} />
 
       {displayArtistsSection && (
-        <ArtistsRailFragmentContainer mt={4} mb={[4, 80]} partner={partner} />
+        <ArtistsRailFragmentContainer mt={4} mb={[4, 12]} partner={partner} />
       )}
 
       {location && location.coordinates && (
