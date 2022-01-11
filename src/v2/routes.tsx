@@ -4,7 +4,6 @@ import { articlesRoutes } from "v2/Apps/Articles/articlesRoutes"
 import { artistRoutes } from "v2/Apps/Artist/artistRoutes"
 import { artistSeriesRoutes } from "v2/Apps/ArtistSeries/artistSeriesRoutes"
 import { artistsRoutes } from "v2/Apps/Artists/artistsRoutes"
-import { artsyEducation } from "./Apps/_ArtsyEducation2/artsyEducationRoutes"
 import { artworkRoutes } from "v2/Apps/Artwork/artworkRoutes"
 import { auction2Routes } from "./Apps/Auction2/auction2Routes"
 import { auctionPartnershipsRoutes } from "./Apps/_AuctionPartnerships2/auctionPartnershipsRoutes"
@@ -39,8 +38,8 @@ import { settingsRoutes } from "v2/Apps/Settings/settingsRoutes"
 import { shippingRoutes } from "v2/Apps/Shipping/shippingRoutes"
 import { showRoutes } from "v2/Apps/Show/showRoutes"
 import { showsRoutes } from "v2/Apps/Shows/showsRoutes"
+import { staticPageRoutes } from "v2/Apps/StaticPage/staticPageRoutes"
 import { tagRoutes } from "./Apps/Tag/tagRoutes"
-import { termsRoutes } from "./Apps/_Terms2/termsRoutes"
 import { unsubscribeRoutes } from "./Apps/Unsubscribe/unsubscribeRoutes"
 import { viewingRoomRoutes } from "v2/Apps/ViewingRoom/viewingRoomRoutes"
 import { worksForYouRoutes } from "./Apps/_WorksForYou2/worksForYouRoutes"
@@ -52,7 +51,6 @@ export function getAppRoutes(): AppRouteConfig[] {
     { routes: artistRoutes },
     { routes: artistSeriesRoutes },
     { routes: artistsRoutes },
-    { routes: artsyEducation },
     { routes: artworkRoutes },
     { routes: auction2Routes },
     { routes: auctionsRoutes },
@@ -79,6 +77,7 @@ export function getAppRoutes(): AppRouteConfig[] {
     { routes: paymentRoutes },
     { routes: priceDatabaseRoutes },
     { routes: purchaseRoutes },
+    { routes: staticPageRoutes },
     { routes: searchRoutes },
     { routes: securityRoutes },
     { routes: settingsRoutes },
@@ -86,7 +85,6 @@ export function getAppRoutes(): AppRouteConfig[] {
     { routes: showRoutes },
     { routes: showsRoutes },
     { routes: tagRoutes },
-    { routes: termsRoutes },
     { routes: unsubscribeRoutes },
     { routes: viewingRoomRoutes },
     { routes: worksForYouRoutes },
