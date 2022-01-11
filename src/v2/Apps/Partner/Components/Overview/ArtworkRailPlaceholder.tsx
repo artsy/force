@@ -1,5 +1,4 @@
 import { Box, BoxProps, Flex, SkeletonBox, SkeletonText } from "@artsy/palette"
-import * as React from "react";
 import { Carousel } from "../Carousel"
 import { ARTWORK_CAROUSEL_ITEM_HEIGHT } from "./ArtworksRail"
 
@@ -14,7 +13,7 @@ export const ArtworksRailPlaceholder: React.FC<ArtworksRailPlaceholderProps> = (
   return (
     <Box {...rest}>
       <Flex mb={4} justifyContent="space-between" alignItems="center">
-        <SkeletonText variant="title">Featured Artworks</SkeletonText>
+        <SkeletonText variant="lg">Featured Artworks</SkeletonText>
         <SkeletonText>View all</SkeletonText>
       </Flex>
 

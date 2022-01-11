@@ -29,7 +29,7 @@ const ArticlesRail: React.FC<ArticlesRailProps> = ({
         mb={4}
         position="relative"
       >
-        <Text variant="title">Articles</Text>
+        <Text variant="lg">Articles</Text>
 
         <ViewAllButton to={`/partner/${partnerSlug}/articles`} />
       </Flex>

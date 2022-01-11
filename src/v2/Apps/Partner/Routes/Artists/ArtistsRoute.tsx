@@ -1,5 +1,4 @@
-import { useEffect } from "react";
-import * as React from "react";
+import { useEffect } from "react"
 import { Box, Text, themeProps } from "@artsy/palette"
 import { Match } from "found"
 import {
@@ -47,7 +46,7 @@ export const ArtistsRoute: React.FC<ArtistsRouteProps> = ({
 
   return (
     <Box mt={4}>
-      <Text variant="title" mb={6}>
+      <Text variant="lg" mb={6}>
         Artists
       </Text>
       <Media greaterThan="xs">

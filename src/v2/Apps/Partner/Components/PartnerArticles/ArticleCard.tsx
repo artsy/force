@@ -45,24 +45,19 @@ const ArticleCard: React.FC<ArticleCardProps> = ({ article }): JSX.Element => {
       </RouterLink>
 
       {channelID && (
-        <Text
-          textTransform="capitalize"
-          color="black"
-          variant="mediumText"
-          mt={1}
-        >
+        <Text textTransform="capitalize" color="black" variant="md" mt={1}>
           {editorialName}
         </Text>
       )}
 
       <RouterLink to={href} textDecoration="none">
-        <Text as="h3" variant="title" color="black" mt={1}>
+        <Text as="h3" variant="lg" color="black" mt={1}>
           {thumbnailTitle}
         </Text>
       </RouterLink>
 
       {author && (
-        <Text textTransform="capitalize" color="black60" variant="text" mt={1}>
+        <Text textTransform="capitalize" color="black60" variant="sm" mt={1}>
           {authorName}
         </Text>
       )}

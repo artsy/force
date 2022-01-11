@@ -59,7 +59,7 @@ export const PartnerHeader: React.FC<PartnerHeaderProps> = ({ partner }) => {
             </Flex>
           )}
           <Box>
-            <Text as="h1" variant="largeTitle">
+            <Text as="h1" variant="xl">
               <RouterLink
                 style={{
                   textDecoration: "none",
@@ -70,7 +70,7 @@ export const PartnerHeader: React.FC<PartnerHeaderProps> = ({ partner }) => {
               </RouterLink>
             </Text>
             {hasLocations && (
-              <Text color="black60" variant="text">
+              <Text color="black60" variant="sm">
                 {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
                 <PartnerHeaderAddress {...partner.locations} />
               </Text>

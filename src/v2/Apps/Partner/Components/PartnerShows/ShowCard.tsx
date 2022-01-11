@@ -40,19 +40,19 @@ const ShowCard: React.FC<ShowCardProps> = ({ show }): JSX.Element => {
           as="h5"
           textTransform="capitalize"
           color="black"
-          variant="mediumText"
+          variant="md"
           mt={1}
         >
           {showType}
         </Text>
       )}
       {name && (
-        <Text as="h4" variant="subtitle" color="black">
+        <Text as="h4" variant="lg" color="black">
           {name}
         </Text>
       )}
       {exhibitionPeriod && (
-        <Text as="h6" textTransform="capitalize" color="black60" variant="text">
+        <Text as="h6" textTransform="capitalize" color="black60" variant="sm">
           {exhibitionPeriod}
         </Text>
       )}

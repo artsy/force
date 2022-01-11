@@ -44,7 +44,7 @@ const ArtworksRail: React.FC<ArtworksRailProps> = ({ partner, ...rest }) => {
         alignItems="center"
         position="relative"
       >
-        <Text variant="title">Featured Artworks</Text>
+        <Text variant="lg">Featured Artworks</Text>
 
         <ViewAllButton to={`/partner/${slug}/works`} />
       </Flex>

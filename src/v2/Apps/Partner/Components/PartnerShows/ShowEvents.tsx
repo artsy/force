@@ -15,7 +15,7 @@ const ShowEvents: React.FC<ShowEventsProps> = ({
 }): JSX.Element => {
   return (
     <>
-      <Text color="black" variant="title" mb={6}>
+      <Text color="black" variant="lg" mb={6}>
         {eventTitle}
       </Text>
 

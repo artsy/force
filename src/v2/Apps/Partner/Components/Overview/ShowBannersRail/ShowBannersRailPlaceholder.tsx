@@ -1,4 +1,3 @@
-import * as React from "react";
 import {
   Box,
   BoxProps,
@@ -21,12 +20,12 @@ export const ShowBannersRailPlaceholder: React.FC<ShowBannersRailPlaceholderProp
     <Box {...rest}>
       <GridColumns gridRowGap={[3, 2]}>
         <Column span={6}>
-          <SkeletonText variant="mediumText" mb={1}>
+          <SkeletonText variant="md" mb={1}>
             Show type
           </SkeletonText>
-          <SkeletonText variant="largeTitle">Show name</SkeletonText>
-          <SkeletonText variant="title">Exhibition period</SkeletonText>
-          <SkeletonText variant="subtitle">Location</SkeletonText>
+          <SkeletonText variant="xl">Show name</SkeletonText>
+          <SkeletonText variant="lg">Exhibition period</SkeletonText>
+          <SkeletonText variant="lg">Location</SkeletonText>
           <SkeletonText mt={1}>
             lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
             eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim

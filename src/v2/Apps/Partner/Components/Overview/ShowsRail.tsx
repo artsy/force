@@ -1,5 +1,4 @@
 import { useState } from "react"
-import * as React from "react"
 import { Box, BoxProps, Flex, ResponsiveBox, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ShowsRail_partner } from "v2/__generated__/ShowsRail_partner.graphql"
@@ -45,7 +44,7 @@ const ShowsRail: React.FC<ShowsRailProps> = ({ partner, ...rest }) => {
         alignItems="center"
         position="relative"
       >
-        <Text variant="title">All Events</Text>
+        <Text variant="lg">All Events</Text>
 
         {canShowAll && <ViewAllButton to={`/partner/${slug}/shows`} />}
       </Flex>
