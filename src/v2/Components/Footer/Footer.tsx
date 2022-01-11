@@ -94,10 +94,6 @@ export const Footer: React.FC<FooterProps> = props => {
               <FooterLink my={2} to="/categories">
                 The Art Genome Project
               </FooterLink>
-
-              <FooterLink mt={2} to="/artsy-education">
-                Education
-              </FooterLink>
             </Text>
           </Column>
 

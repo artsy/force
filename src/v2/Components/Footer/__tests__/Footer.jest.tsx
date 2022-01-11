@@ -21,34 +21,32 @@ describe("Footer", () => {
 
     it("renders correct routes to partnerships", () => {
       const wrapper = getWrapper("lg")
-      const links = wrapper.find("FooterLink")
 
-      expect(links.at(8).text()).toBe("Artsy for Galleries")
-      expect(links.at(8).prop("to")).toBe("https://partners.artsy.net")
+      expect(wrapper.text()).toContain("Artsy for Galleries")
+      expect(wrapper.html()).toContain("https://partners.artsy.net")
 
-      expect(links.at(9).text()).toBe("Artsy for Museums")
-      expect(links.at(9).prop("to")).toBe("/institution-partnerships")
+      expect(wrapper.text()).toContain("Artsy for Museums")
+      expect(wrapper.html()).toContain("/institution-partnerships")
 
-      expect(links.at(10).text()).toBe("Artsy for Auctions")
-      expect(links.at(10).prop("to")).toBe("/auction-partnerships")
+      expect(wrapper.text()).toContain("Artsy for Auctions")
+      expect(wrapper.html()).toContain("/auction-partnerships")
 
-      expect(links.at(11).text()).toBe("Artsy for Fairs")
-      expect(links.at(11).prop("to")).toBe(
+      expect(wrapper.text()).toContain("Artsy for Fairs")
+      expect(wrapper.html()).toContain(
         "https://partners.artsy.net/artsy-fair-partnerships/"
       )
     })
 
     it("renders links to download the app", () => {
       const wrapper = getWrapper("lg")
-      const links = wrapper.find("FooterLink")
 
-      expect(links.at(15).text()).toBe("iOS App")
-      expect(links.at(15).prop("to")).toBe(
+      expect(wrapper.text()).toContain("iOS App")
+      expect(wrapper.html()).toContain(
         "https://apps.apple.com/us/app/artsy-buy-sell-original-art/id703796080"
       )
 
-      expect(links.at(16).text()).toBe("Android App")
-      expect(links.at(16).prop("to")).toBe(
+      expect(wrapper.text()).toContain("Android App")
+      expect(wrapper.html()).toContain(
         "https://play.google.com/store/apps/details?id=net.artsy.app"
       )
     })
