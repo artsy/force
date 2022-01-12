@@ -10,7 +10,7 @@ export type ShowBannersRail_partner = {
         readonly edges: ReadonlyArray<{
             readonly node: {
                 readonly id: string;
-                readonly " $fragmentRefs": FragmentRefs<"ShowBannersMobileCarousel_shows" | "ShowBannersDesktopCarousel_shows">;
+                readonly " $fragmentRefs": FragmentRefs<"ShowBanner_show">;
             } | null;
         } | null> | null;
     } | null;
@@ -18,7 +18,7 @@ export type ShowBannersRail_partner = {
         readonly edges: ReadonlyArray<{
             readonly node: {
                 readonly id: string;
-                readonly " $fragmentRefs": FragmentRefs<"ShowBannersMobileCarousel_shows" | "ShowBannersDesktopCarousel_shows">;
+                readonly " $fragmentRefs": FragmentRefs<"ShowBanner_show">;
             } | null;
         } | null> | null;
     } | null;
@@ -26,7 +26,7 @@ export type ShowBannersRail_partner = {
         readonly edges: ReadonlyArray<{
             readonly node: {
                 readonly id: string;
-                readonly " $fragmentRefs": FragmentRefs<"ShowBannersMobileCarousel_shows" | "ShowBannersDesktopCarousel_shows">;
+                readonly " $fragmentRefs": FragmentRefs<"ShowBanner_show">;
             } | null;
         } | null> | null;
     } | null;
@@ -34,7 +34,7 @@ export type ShowBannersRail_partner = {
         readonly edges: ReadonlyArray<{
             readonly node: {
                 readonly id: string;
-                readonly " $fragmentRefs": FragmentRefs<"ShowBannersMobileCarousel_shows" | "ShowBannersDesktopCarousel_shows">;
+                readonly " $fragmentRefs": FragmentRefs<"ShowBanner_show">;
             } | null;
         } | null> | null;
     } | null;
@@ -81,12 +81,7 @@ v1 = [
           {
             "args": null,
             "kind": "FragmentSpread",
-            "name": "ShowBannersMobileCarousel_shows"
-          },
-          {
-            "args": null,
-            "kind": "FragmentSpread",
-            "name": "ShowBannersDesktopCarousel_shows"
+            "name": "ShowBanner_show"
           }
         ],
         "storageKey": null
@@ -218,5 +213,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '6a233f2c2f99e642d7abd91071dd463b';
+(node as any).hash = 'ddf964e8e3581a95807af242947a9369';
 export default node;
