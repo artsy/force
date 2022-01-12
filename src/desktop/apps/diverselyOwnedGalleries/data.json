@@ -17,11 +17,137 @@
       "slug": "tiwani-contemporary"
 
     },
-    "50-golborne":{
+    "50-golborne": {
       "name": "50 Golborne",
       "id": "57d0230debad646389000000",
       "slug": "50-golborne"
-    }
+    },
+    "tafeta": {
+      "name": "TAFETA",
+      "id": "57d0230debad646389000000",
+      "slug": "tafeta"
+    },
+    "signature-african-art": {
+      "name": "Signature African Art",
+      "id": "57d0230debad646389000000",
+      "slug": "signature-african-art"
+    },
+    "addis-fine-art": {
+      "name": "Addis Fine Art",
+      "id": "57d0230debad646389000000",
+      "slug": "addis-fine-art"
+    },
+    "mmarthouse": {
+      "name": "mmARThouse",
+      "id": "57d0230debad646389000000",
+      "slug": "mmarthouse"
+    },
+    "mariane-ibrahim-gallery": {
+      "name": "Mariane Ibrahim Gallery",
+      "id": "57d0230debad646389000000",
+      "slug": "mariane-ibrahim-gallery"
+    },
+    "mocada": {
+      "name": "moCADA",
+      "id": "57d0230debad646389000000",
+      "slug": "mocada"
+    },
+    "hourglass-gallery": {
+      "name": "Hourglass Gallery",
+      "id": "57d0230debad646389000000",
+      "slug": "hourglass-gallery"
+    },
+    "house-of-african-art": {
+      "name": "House of African Art",
+      "id": "57d0230debad646389000000",
+      "slug": "house-of-african-art"
+    },
+    "madlozi-art-gallery": {
+      "name": "Madlozi Art Gallery",
+      "id": "57d0230debad646389000000",
+      "slug": "madlozi-art-gallery"
+    },
+    "krystel-ann-art": {
+      "name": "Krystel Ann Art",
+      "id": "57d0230debad646389000000",
+      "slug": "krystel-ann-art"
+    },
+    "ground-floor-gallery": {
+      "name": "Ground Floor Gallery",
+      "id": "5b100f16139b217021c948a1",
+      "slug": "ground-floor-gallery"
+    },
+    "arnika-dawkins-gallery": {
+      "name": "Arnika Dawkins Gallery",
+      "id": "5b100f16139b217021c948a1",
+      "slug": "arnika-dawkins-gallery"
+    },
+    "gugsa-black-arts-collective": {
+      "name": "Gugsa Black Arts Collective",
+      "id": "5b100f16139b217021c948a1",
+      "slug": "gugsa-black-arts-collective"
+    },
+    "welancora-gallery": {
+      "name": "Welancora Gallery",
+      "id": "5b100f16139b217021c948a1",
+      "slug": "welancora-gallery"
+    },
+    "galerie-alain-hens": {
+      "name": "Galery Alain Hens",
+      "id": "5b100f16139b217021c948a1",
+      "slug": "galerie-alain-hens"
+    },
+    "retro-africa": {
+      "name": "Retro Africa",
+      "id": "5b100f16139b217021c948a1",
+      "slug": "retro-africa"
+    },
+    "norwest-gallery-of-art": {
+      "name": "Norwest Gallery of Art",
+      "id": "5b100f16139b217021c948a1",
+      "slug": "norwest-gallery-of-art"
+    },
+    "overdue-recognition-art-gallery": {
+      "name": "Overdue Recognition Art Gallery",
+      "id": "5b100f16139b217021c948a1",
+      "slug": "overdue-recognition-art-gallery"
+    },
+    "zucot-gallery": {
+      "name": "Zucot Gallery",
+      "id": "5b100f16139b217021c948a1",
+      "slug": "zucot-gallery"
+    },
+    "bim-bam-gallery": {
+      "name": "Bim Bam Gallery",
+      "id": "5b100f16139b217021c948a1",
+      "slug": "bim-bam-gallery"
+    },
+    "galerie-carole-kvasnevski": {
+      "name": "Galerie Carole Kvasnevski",
+      "id": "5b100f16139b217021c948a1",
+      "slug": "galerie-carole-kvasnevski"
+    },
+    "september-gray-fine-art": {
+      "name": "September Gray Fine Art",
+      "id": "5b100f16139b217021c948a1",
+      "slug": "september-gray-fine-art"
+    },
+    "paulson-fontaine-press": {
+      "name": "Paulson Fontaine press",
+      "id": "5b100f16139b217021c948a1",
+      "slug": "paulson-fontaine-press"
+    },
+    "aaron-payne-fine-art": {
+      "name": "Aaron Payne Fine Art",
+      "id": "5b100f16139b217021c948a1",
+      "slug": "aaron-payne-fine-art"
+    },
+    "overdue-recognition-art-gallery": {
+      "name": "Overdue Recognition Art Gallery",
+      "id": "5b100f16139b217021c948a1",
+      "slug": "overdue-recognition-art-gallery"
+    },
+
   },
   "lgbtq+OwnedGalleries": {
     "partner-slug-1": {
