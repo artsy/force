@@ -20,10 +20,16 @@ import { ArtistAutoComplete } from "./ArtistAutocomplete"
 import { ArtworkSidebarClassificationsModalQueryRenderer } from "v2/Apps/Artwork/Components/ArtworkSidebarClassificationsModal"
 import { useErrorModal } from "../../Utils/useErrorModal"
 import { ArtworkDetails_submission } from "v2/__generated__/ArtworkDetails_submission.graphql"
+import {
+  Location,
+  LocationAutocompleteInput,
+  normalizePlace,
+  Place,
+} from "v2/Components/LocationAutocompleteInput"
 
 export const getArtworkDetailsFormInitialValues = (
   submission?: ArtworkDetails_submission
-) => ({
+): ArtworkDetailsFormModel => ({
   artistId: submission?.artist?.internalID ?? "",
   artistName: submission?.artist?.name ?? "",
   year: submission?.year ?? "",
@@ -37,8 +43,11 @@ export const getArtworkDetailsFormInitialValues = (
   depth: submission?.depth ?? "",
   units: submission?.dimensionsMetric ?? "in",
   provenance: submission?.provenance ?? "",
-  // locationId: "",
-  location: submission?.locationCity ?? "",
+  location: {
+    city: submission?.locationCity ?? "",
+    country: submission?.locationCountry ?? undefined,
+    state: submission?.locationState ?? undefined,
+  },
 })
 
 const rarityOptions = checkboxValues.map(({ name, value }) => ({
@@ -62,8 +71,7 @@ export interface ArtworkDetailsFormModel {
   depth: string
   units: string
   provenance: string
-  location?: string
-  locationId?: string
+  location: Location
 }
 
 export const ArtworkDetailsForm: React.FC = () => {
@@ -72,9 +80,15 @@ export const ArtworkDetailsForm: React.FC = () => {
   const [isRarityModalOpen, setIsRarityModalOpen] = useState(false)
   const [isProvenanceModalOpen, setIsProvenanceModalOpen] = useState(false)
 
-  const { values, handleChange, setFieldValue, handleBlur } = useFormikContext<
-    ArtworkDetailsFormModel
-  >()
+  const {
+    values,
+    handleChange,
+    setFieldValue,
+    handleBlur,
+    touched,
+    errors,
+    setFieldTouched,
+  } = useFormikContext<ArtworkDetailsFormModel>()
 
   const limitedEditionRarity = values.rarity === "limited edition"
 
@@ -86,6 +100,16 @@ export const ArtworkDetailsForm: React.FC = () => {
 
     setFieldValue("artistName", "")
     setFieldValue("artistId", "")
+  }
+
+  const handleLocationClose = () => setFieldTouched("location")
+  const handleLocationClick = () => setFieldTouched("location", false)
+  const handleLocationChange = () => {
+    setFieldValue("location", {})
+    setFieldTouched("artistName", false)
+  }
+  const handleLocationSelect = (place?: Place) => {
+    setFieldValue("location", normalizePlace(place))
   }
 
   return (
@@ -308,16 +332,19 @@ export const ArtworkDetailsForm: React.FC = () => {
           />
         </Column>
         <Column span={6} mt={[30, 0]}>
-          <Input
-            title="Location"
+          <LocationAutocompleteInput
             name="location"
+            title="Location"
             placeholder="Enter City Where Artwork Is Located"
             maxLength={256}
-            onBlur={handleBlur}
-            onChange={handleChange}
-            value={values.location}
+            spellCheck={false}
+            defaultValue={values.location.city}
+            error={touched.location && errors.location?.city}
+            onClose={handleLocationClose}
+            onSelect={handleLocationSelect}
+            onChange={handleLocationChange}
+            onClick={handleLocationClick}
           />
-          {/* <LocationAutoComplete onError={() => openErrorModal()} /> */}
         </Column>
       </GridColumns>
     </>

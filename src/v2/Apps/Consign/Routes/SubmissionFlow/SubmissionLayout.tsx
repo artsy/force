@@ -1,13 +1,20 @@
 import { AppContainer } from "v2/Apps/Components/AppContainer"
 import { HorizontalPadding } from "v2/Apps/Components/HorizontalPadding"
-import { MinimalNavBar } from "v2/Components/NavBar/MinimalNavBar"
 import { MetaTags } from "v2/Components/MetaTags"
 import { ErrorModalProvider } from "./Utils/useErrorModal"
 import { EnableRecaptcha } from "v2/Utils/EnableRecaptcha"
+import { ArtsyLogoBlackIcon, Box } from "@artsy/palette"
+import { RouterLink } from "v2/System/Router/RouterLink"
 
 export const SubmissionLayout: React.FC = ({ children }) => {
   return (
-    <MinimalNavBar to="/consign">
+    <Box pt={4} mx={[-2, -4]}>
+      <Box height={70} px={[2, 4]}>
+        <RouterLink to="/consign">
+          <ArtsyLogoBlackIcon />
+        </RouterLink>
+      </Box>
+
       <MetaTags
         pathname="consign/submission"
         title="Sell Art from Your Collection | Consignments | Artsy"
@@ -19,6 +26,6 @@ export const SubmissionLayout: React.FC = ({ children }) => {
           <ErrorModalProvider>{children}</ErrorModalProvider>
         </HorizontalPadding>
       </AppContainer>
-    </MinimalNavBar>
+    </Box>
   )
 }

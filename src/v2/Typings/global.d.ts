@@ -31,6 +31,7 @@ declare global {
       show: () => void
       hide: () => void
     }
+    __googleMapsCallback?: () => void
   }
 }
 

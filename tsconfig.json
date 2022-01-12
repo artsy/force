@@ -22,7 +22,7 @@
     "sourceMap": true,
     "target": "es2016",
     "typeRoots": ["./src/typings", "./node_modules/@types"],
-    "types": ["node", "jest", "express", "webpack-env"],
+    "types": ["node", "jest", "express", "webpack-env", "google-maps"],
     "paths": {
       "package.json": ["./package.json"],
       "v2/*": ["./v2/*"]
