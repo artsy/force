@@ -75,6 +75,16 @@ export const PartnerHeader: React.FC<PartnerHeaderProps> = ({ partner }) => {
                 <PartnerHeaderAddress {...partner.locations} />
               </Text>
             )}
+            <Box backgroundColor={"black100"} width={100} mb={1}>
+              <Text variant="caption" color="white100" textAlign={"center"}>
+                Black owned
+              </Text>
+            </Box>
+            <Box backgroundColor={"black100"} width={100}>
+              <Text variant="caption" color="white100" textAlign={"center"}>
+                Woman owned
+              </Text>
+            </Box>
           </Box>
         </Flex>
       </Column>

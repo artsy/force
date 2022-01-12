@@ -1,0 +1,76 @@
+{
+  "blackOwnedGalleries": {
+    "jenkins-johnson-gallery": {
+      "name": "Jenkins Johnson Gallery",
+      "id": "525592dfc9dc244c0400011f",
+      "slug": "jenkins-johnson-gallery"
+    },
+    "richard-beavers-gallery": {
+      "name": "Richard Beavers Gallery",
+      "id": "574328e39c18db3ccf0039e7",
+      "slug": "richard-beavers-gallery"
+
+    },
+    "tiwani-contemporary": {
+      "name": "Tiwani Contemporary",
+      "id": "546ccf197261691969e10000",
+      "slug": "tiwani-contemporary"
+
+    },
+    "50-golborne":{
+      "name": "50 Golborne",
+      "id": "57d0230debad646389000000",
+      "slug": "50-golborne"
+    }
+  },
+  "lgbtq+OwnedGalleries": {
+    "partner-slug-1": {
+      "name": "",
+      "id": ""
+    },
+    "partner-slug-2": {
+      "name": "",
+      "id": ""
+    }
+  },
+  "latinxOwnedGalleries": {
+    "partner-slug-1": {
+      "name": "",
+      "id": ""
+    },
+    "partner-slug-2": {
+      "name": "",
+      "id": ""
+    }
+  },
+  "asianOwnedGalleries": {
+    "partner-slug-1": {
+      "name": "",
+      "id": ""
+    },
+    "partner-slug-2": {
+      "name": "",
+      "id": ""
+    }
+  },
+  "womenOwnedGalleries": {
+    "partner-slug-1": {
+      "name": "",
+      "id": ""
+    },
+    "partner-slug-2": {
+      "name": "",
+      "id": ""
+    }
+  },
+  "nonProfitOwnedGalleries": {
+    "partner-slug-1": {
+      "name": "",
+      "id": ""
+    },
+    "partner-slug-2": {
+      "name": "",
+      "id": ""
+    }
+  }
+}
