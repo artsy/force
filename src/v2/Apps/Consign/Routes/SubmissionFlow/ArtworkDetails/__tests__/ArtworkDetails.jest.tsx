@@ -1,183 +1,187 @@
-import { mount } from "enzyme"
-import { ArtworkDetails } from "../ArtworkDetails"
-import {
-  ArtworkDetailsForm,
-  ArtworkDetailsFormModel,
-  getArtworkDetailsFormInitialValues,
-} from "../Components/ArtworkDetailsForm"
-import {
-  submissionFlowSteps,
-  submissionFlowStepsMobile,
-  SubmissionStepper,
-} from "v2/Apps/Consign/Components/SubmissionStepper"
 import { MockBoot } from "v2/DevTools"
 import { Breakpoint } from "v2/Utils/Responsive"
 import { flushPromiseQueue } from "v2/DevTools"
+import { setupTestWrapperTL } from "v2/DevTools/setupTestWrapper"
+import { graphql } from "react-relay"
+import { fireEvent, screen } from "@testing-library/react"
+import { ArtworkDetailsFragmentContainer } from "../ArtworkDetails"
+import { ArtworkDetails_submission } from "v2/__generated__/ArtworkDetails_submission.graphql"
+import {
+  submissionFlowSteps,
+  submissionFlowStepsMobile,
+} from "v2/Apps/Consign/Components/SubmissionStepper"
+import { createOrUpdateConsignSubmission } from "../../Utils/createOrUpdateConsignSubmission"
 
-const validForm: ArtworkDetailsFormModel = {
-  artistId: "artistId",
-  artistName: "Banksy",
+const validForm = {
+  id: "1",
+  artist: {
+    internalID: "artistId",
+    name: "Banksy",
+  },
+  locationCity: "NY, USA",
+  locationCountry: "",
+  locationState: "",
   year: "2021",
   title: "Some title",
-  materials: "materials",
-  rarity: "limited edition",
+  medium: "materials",
+  attributionClass: "LIMITED_EDITION",
   editionNumber: "1",
   editionSize: "2",
   height: "3",
   width: "4",
   depth: "5",
-  units: "cm",
+  dimensionsMetric: "cm",
   provenance: "provenance",
-  location: "NY, USA",
-  locationId: "locationId",
-}
-
-const validFormWithSpaces: ArtworkDetailsFormModel = {
-  artistId: "artistId",
-  artistName: "Banksy",
-  year: " 2021 ",
-  title: " Some title ",
-  materials: "  materials  ",
-  rarity: "limited edition",
-  editionNumber: " 1 ",
-  editionSize: " 2 ",
-  height: " 3 ",
-  width: " 4 ",
-  depth: " 5 ",
-  units: " cm ",
-  provenance: "  provenance  ",
-  location: "  NY, USA  ",
-  locationId: "locationId",
-}
+} as ArtworkDetails_submission
 
 const utmParams = { utmMedium: "Medium", utmSource: "Source", utmTerm: "Term" }
 
 const mockRouterPush = jest.fn()
 const mockRouterReplace = jest.fn()
+
 jest.mock("v2/System/Router/useRouter", () => ({
   useRouter: jest.fn(() => ({
     router: { push: mockRouterPush, replace: mockRouterReplace },
-    match: { params: { id: "1" } },
   })),
 }))
+
+jest.unmock("react-relay")
 
 let sessionStore = {}
 Object.defineProperty(window, "sessionStorage", {
   value: { getItem: key => sessionStore[key] || null, setItem: jest.fn() },
 })
 
+jest.mock("../../Utils/createOrUpdateConsignSubmission", () => ({
+  ...jest.requireActual("../../Utils/createOrUpdateConsignSubmission"),
+  createOrUpdateConsignSubmission: jest.fn().mockResolvedValue("1"),
+}))
+
+jest.mock("v2/Utils/getENV")
+
 const getWrapper = (breakpoint: Breakpoint = "lg") =>
-  mount(
-    <MockBoot breakpoint={breakpoint}>
-      <ArtworkDetails />
-    </MockBoot>
-  )
+  setupTestWrapperTL({
+    Component: (props: any) => {
+      return (
+        <MockBoot breakpoint={breakpoint}>
+          <ArtworkDetailsFragmentContainer {...props} />
+        </MockBoot>
+      )
+    },
+    query: graphql`
+      query ArtworkDetails_SubmissionFlowTest_Query($id: ID!)
+        @relay_test_operation {
+        submission(id: $id) {
+          ...ArtworkDetails_submission
+        }
+      }
+    `,
+    variables: {
+      id: "1",
+    },
+  })
 
 describe("ArtworkDetails", () => {
   beforeEach(() => {
-    sessionStore = {
-      "submission-1": JSON.stringify({
-        artworkDetailsForm: getArtworkDetailsFormInitialValues(),
-      }),
-    }
+    sessionStore = {}
   })
 
   describe("Initial render", () => {
     it("renders correctly", async () => {
-      const wrapper = getWrapper()
-      await flushPromiseQueue()
-      wrapper.update()
+      getWrapper().renderWithRelay()
 
-      const text = wrapper.text()
+      expect(screen.getByText("Artwork Details")).toBeInTheDocument()
+      expect(screen.getByText("Tell us about your artwork")).toBeInTheDocument()
+      expect(
+        screen.getByText("• All fields are required to submit a work.")
+      ).toBeInTheDocument()
+      expect(
+        screen.getByText(
+          "• We currently do not allow artists to sell their own work on Artsy."
+        )
+      ).toBeInTheDocument()
 
-      const artworkCurrentStep = wrapper
-        .find("button")
-        .filterWhere(n => n.prop("aria-selected") === true)
-
-      artworkCurrentStep.forEach(n => {
-        expect(n.text()).toContain("Artwork")
-      })
-
-      expect(wrapper.find(SubmissionStepper)).toBeTruthy()
-      expect(text).toContain("Tell us about your artwork")
-      expect(text).toContain("All fields are required to submit a work.")
-      expect(text).toContain(
-        "We currently do not allow artists to sell their own work on Artsy."
-      )
-      expect(wrapper.find(ArtworkDetailsForm)).toBeTruthy()
-      expect(wrapper.find("[data-test-id='save-button']")).toBeTruthy()
-      expect(wrapper.find("BackLink")).toHaveLength(1)
-      expect(wrapper.find("BackLink").prop("to")).toEqual("/consign")
-    })
-
-    it("fields are pre-populating from session storage", async () => {
-      sessionStore = {
-        "submission-1": JSON.stringify({
-          artworkDetailsForm: { ...validForm },
-        }),
-      }
-      const wrapper = getWrapper()
-      await flushPromiseQueue()
-      wrapper.update()
+      expect(screen.getByTestId("save-button")).toBeInTheDocument()
+      expect(screen.getByText("Back")).toBeInTheDocument()
 
       expect(
-        wrapper.find("input[data-test-id='autocomplete-input']").prop("value")
-      ).toBe("Banksy")
+        screen.getAllByRole("link").find(c => c.textContent?.includes("Back"))
+      ).toHaveAttribute("href", "/consign")
+    })
 
-      expect(wrapper.find("input[name='year']").prop("value")).toBe("2021")
-      expect(wrapper.find("input[name='title']").prop("value")).toBe(
-        "Some title"
+    it("fields are pre-populating from server", async () => {
+      getWrapper().renderWithRelay({
+        ConsignmentSubmission: () => validForm,
+      })
+
+      expect(screen.getByPlaceholderText("Enter Full Name")).toHaveValue(
+        "Banksy"
       )
-      expect(wrapper.find("input[name='materials']").prop("value")).toBe(
+      expect(screen.getByPlaceholderText("YYYY")).toHaveValue("2021")
+      expect(
+        screen.getByPlaceholderText("Add Title or Write 'Unknown'")
+      ).toHaveValue("Some title")
+      expect(screen.getByPlaceholderText("Add Materials")).toHaveValue(
         "materials"
       )
-      expect(wrapper.find("select[name='rarity']").prop("value")).toBe(
-        "limited edition"
+      expect(screen.getByPlaceholderText("Add Materials")).toHaveValue(
+        "materials"
       )
-      expect(wrapper.find("input[name='editionNumber']").prop("value")).toBe(
-        "1"
-      )
-      expect(wrapper.find("input[name='editionSize']").prop("value")).toBe("2")
-      expect(wrapper.find("input[name='height']").prop("value")).toBe("3")
-      expect(wrapper.find("input[name='width']").prop("value")).toBe("4")
-      expect(wrapper.find("input[name='depth']").prop("value")).toBe("5")
-      expect(wrapper.find("Radio[value='cm']").prop("selected")).toBe(true)
-      expect(wrapper.find("input[name='provenance']").prop("value")).toBe(
-        "provenance"
-      )
-      // expect(
-      //   wrapper
-      //     .find("input[data-test-id='autocomplete-location']")
-      //     .prop("value")
-      // ).toBe("NY, USA")
+      expect(
+        screen
+          .getAllByRole("combobox")
+          .find(c => c.getAttribute("name") == "rarity")
+      ).toHaveValue("limited edition")
+      expect(screen.getByPlaceholderText("Your Work's #")).toHaveValue("1")
+      expect(screen.getByPlaceholderText("Total # in Edition")).toHaveValue("2")
+      expect(
+        screen
+          .getAllByRole("textbox")
+          .find(c => c.getAttribute("name") == "height")
+      ).toHaveValue("3")
+      expect(
+        screen
+          .getAllByRole("textbox")
+          .find(c => c.getAttribute("name") == "width")
+      ).toHaveValue("4")
+      expect(
+        screen
+          .getAllByRole("textbox")
+          .find(c => c.getAttribute("name") == "depth")
+      ).toHaveValue("5")
+      expect(
+        screen.getAllByRole("radio").find(c => c.textContent == "cm")
+      ).toBeChecked()
+      expect(
+        screen.getByPlaceholderText("Describe How You Acquired the Work")
+      ).toHaveValue("provenance")
+      expect(
+        screen.getByPlaceholderText("Enter City Where Artwork Is Located")
+      ).toHaveValue("NY, USA")
     })
 
     describe("Correct steps", () => {
       it("on mobile", async () => {
-        const wrapper = getWrapper("xs")
-        await flushPromiseQueue()
-        wrapper.update()
+        getWrapper("xs").renderWithRelay()
 
-        const steps = wrapper
-          .find("button")
-          .filterWhere(n => n.prop("aria-selected") !== undefined)
+        const steps = screen
+          .getAllByRole("button")
+          .filter(c => c.getAttribute("disabled"))
 
         steps.forEach((n, idx) => {
-          expect(n.text()).toBe(submissionFlowStepsMobile[idx])
+          expect(n).toHaveTextContent(submissionFlowStepsMobile[idx])
         })
       })
 
       it("on desktop", async () => {
-        const wrapper = getWrapper("lg")
-        await flushPromiseQueue()
-        wrapper.update()
+        getWrapper("lg").renderWithRelay()
 
-        const steps = wrapper
-          .find("button")
-          .filterWhere(n => n.prop("aria-selected") !== undefined)
+        const steps = screen
+          .getAllByRole("button")
+          .filter(c => c.getAttribute("disabled"))
 
         steps.forEach((n, idx) => {
-          expect(n.text()).toBe(submissionFlowSteps[idx])
+          expect(n).toHaveTextContent(submissionFlowSteps[idx])
         })
       })
     })
@@ -185,107 +189,122 @@ describe("ArtworkDetails", () => {
 
   describe("Save and Continue button", () => {
     it("is disabled if form isn't valid", async () => {
-      const wrapper = getWrapper()
-      await flushPromiseQueue()
-      wrapper.update()
-      const button = wrapper.find("button[data-test-id='save-button']")
+      getWrapper().renderWithRelay({
+        ConsignmentSubmission: () => ({
+          ...validForm,
+          title: "",
+        }),
+      })
 
-      expect(button.prop("disabled")).toBe(true)
+      expect(screen.getByTestId("save-button")).toBeDisabled()
     })
 
     it("is enabled if form is valid", async () => {
-      sessionStore = {
-        "submission-1": JSON.stringify({
-          artworkDetailsForm: { ...validForm },
-        }),
-      }
-      const wrapper = getWrapper()
-      await flushPromiseQueue()
-      const button = wrapper.find("button[data-test-id='save-button']")
+      getWrapper().renderWithRelay({
+        ConsignmentSubmission: () => validForm,
+      })
 
-      expect(button.prop("disabled")).toBe(false)
+      expect(screen.getByTestId("save-button")).toBeEnabled()
     })
 
     describe("Valid form submit", () => {
       it("replace current route and redirects to Upload photos step", async () => {
-        sessionStore = {
-          "submission-1": JSON.stringify({
-            artworkDetailsForm: { ...validForm },
-          }),
-        }
-        const wrapper = getWrapper()
-        await flushPromiseQueue()
+        getWrapper().renderWithRelay({
+          ConsignmentSubmission: () => validForm,
+        })
 
-        wrapper.find("Form").simulate("submit")
+        fireEvent.click(screen.getByText("Save and Continue"))
 
         await flushPromiseQueue()
 
         expect(mockRouterReplace).toHaveBeenCalledWith({
           pathname: "/consign/submission/1/artwork-details",
         })
-
         expect(mockRouterPush).toHaveBeenCalledWith({
           pathname: "/consign/submission/1/upload-photos",
         })
       })
 
-      it("data without UTM params is saved in session storage and submition created", async () => {
-        sessionStore = {
-          "submission-1": JSON.stringify({
-            artworkDetailsForm: { ...validForm },
-          }),
-        }
-        const wrapper = getWrapper()
-        await flushPromiseQueue()
-
-        wrapper.find("Form").simulate("submit")
-
-        await flushPromiseQueue()
-
-        expect(sessionStorage.setItem).toHaveBeenCalledWith(
-          "submission-1",
-          JSON.stringify({ artworkDetailsForm: { ...validForm } })
-        )
-      })
-
       it("data with UTM params is saved in session storage and submition created", async () => {
         sessionStore = {
-          "submission-1": JSON.stringify({
-            artworkDetailsForm: { ...validForm },
-          }),
           utmParams: JSON.stringify(utmParams),
         }
 
-        const wrapper = getWrapper()
+        getWrapper().renderWithRelay({
+          ConsignmentSubmission: () => validForm,
+        })
+
+        fireEvent.click(screen.getByText("Save and Continue"))
+
         await flushPromiseQueue()
 
-        wrapper.find("Form").simulate("submit")
-
-        await flushPromiseQueue()
-
-        expect(sessionStorage.setItem).toHaveBeenCalledWith(
-          "submission-1",
-          JSON.stringify({ artworkDetailsForm: { ...validForm }, utmParams })
+        expect(createOrUpdateConsignSubmission).toHaveBeenLastCalledWith(
+          expect.anything(),
+          {
+            artistID: "artistId",
+            attributionClass: "LIMITED_EDITION",
+            depth: "5",
+            dimensionsMetric: "cm",
+            editionNumber: "1",
+            editionSizeFormatted: "2",
+            height: "3",
+            id: "1",
+            locationCity: "NY, USA",
+            medium: "materials",
+            provenance: "provenance",
+            sessionID: undefined,
+            state: "DRAFT",
+            title: "Some title",
+            utmMedium: "Medium",
+            utmSource: "Source",
+            utmTerm: "Term",
+            width: "4",
+            year: "2021",
+          }
         )
       })
 
       it("delete spaces before saving to session storage", async () => {
-        sessionStore = {
-          "submission-1": JSON.stringify({
-            artworkDetailsForm: { ...validFormWithSpaces },
+        getWrapper().renderWithRelay({
+          ConsignmentSubmission: () => ({
+            ...validForm,
+            locationCity: "  NY, USA  ",
+            year: "  2021  ",
+            title: "  Some title  ",
+            medium: "  materials  ",
+            editionNumber: "  1  ",
+            editionSize: "  2  ",
+            height: "  3  ",
+            width: "  4  ",
+            depth: "  5  ",
+            provenance: "  provenance  ",
           }),
-        }
+        })
 
-        const wrapper = getWrapper()
-        await flushPromiseQueue()
-
-        wrapper.find("Form").simulate("submit")
+        fireEvent.click(screen.getByText("Save and Continue"))
 
         await flushPromiseQueue()
 
-        expect(sessionStorage.setItem).toHaveBeenCalledWith(
-          "submission-1",
-          JSON.stringify({ artworkDetailsForm: { ...validForm } })
+        expect(createOrUpdateConsignSubmission).toHaveBeenLastCalledWith(
+          expect.anything(),
+          {
+            artistID: "artistId",
+            attributionClass: "LIMITED_EDITION",
+            depth: "5",
+            dimensionsMetric: "cm",
+            editionNumber: "1",
+            editionSizeFormatted: "2",
+            height: "3",
+            id: "1",
+            locationCity: "NY, USA",
+            medium: "materials",
+            provenance: "provenance",
+            sessionID: undefined,
+            state: "DRAFT",
+            title: "Some title",
+            width: "4",
+            year: "2021",
+          }
         )
       })
     })

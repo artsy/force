@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import {
   Box,
   Column,
@@ -16,27 +16,29 @@ import {
 } from "@artsy/palette"
 import { useFormikContext } from "formik"
 import { checkboxValues } from "v2/Components/ArtworkFilter/ArtworkFilters/AttributionClassFilter"
-import { useRouter } from "v2/System/Router/useRouter"
-import { useSubmission } from "../../Utils/useSubmission"
 import { ArtistAutoComplete } from "./ArtistAutocomplete"
 import { ArtworkSidebarClassificationsModalQueryRenderer } from "v2/Apps/Artwork/Components/ArtworkSidebarClassificationsModal"
 import { useErrorModal } from "../../Utils/useErrorModal"
+import { ArtworkDetails_submission } from "v2/__generated__/ArtworkDetails_submission.graphql"
 
-export const getArtworkDetailsFormInitialValues = () => ({
-  artistId: "",
-  artistName: "",
-  year: "",
-  title: "",
-  materials: "",
-  rarity: "",
-  editionNumber: "",
-  editionSize: undefined,
-  height: "",
-  width: "",
-  depth: "",
-  units: "in",
-  provenance: "",
-  location: "",
+export const getArtworkDetailsFormInitialValues = (
+  submission?: ArtworkDetails_submission
+) => ({
+  artistId: submission?.artist?.internalID ?? "",
+  artistName: submission?.artist?.name ?? "",
+  year: submission?.year ?? "",
+  title: submission?.title ?? "",
+  materials: submission?.medium ?? "",
+  rarity: submission?.attributionClass?.replace("_", " ").toLowerCase() ?? "",
+  editionNumber: submission?.editionNumber ?? "",
+  editionSize: submission?.editionSize ?? undefined,
+  height: submission?.height ?? "",
+  width: submission?.width ?? "",
+  depth: submission?.depth ?? "",
+  units: submission?.dimensionsMetric ?? "in",
+  provenance: submission?.provenance ?? "",
+  // locationId: "",
+  location: submission?.locationCity ?? "",
 })
 
 const rarityOptions = checkboxValues.map(({ name, value }) => ({
@@ -65,37 +67,16 @@ export interface ArtworkDetailsFormModel {
 }
 
 export const ArtworkDetailsForm: React.FC = () => {
-  const {
-    match: {
-      params: { id },
-    },
-  } = useRouter()
-
   const { openErrorModal } = useErrorModal()
 
   const [isRarityModalOpen, setIsRarityModalOpen] = useState(false)
   const [isProvenanceModalOpen, setIsProvenanceModalOpen] = useState(false)
 
-  const {
-    values,
-    handleChange,
-    setFieldValue,
-    handleBlur,
-    resetForm,
-    validateForm,
-  } = useFormikContext<ArtworkDetailsFormModel>()
+  const { values, handleChange, setFieldValue, handleBlur } = useFormikContext<
+    ArtworkDetailsFormModel
+  >()
 
   const limitedEditionRarity = values.rarity === "limited edition"
-  const { submission } = useSubmission(id)
-
-  useEffect(() => {
-    if (submission) {
-      resetForm({ values: submission.artworkDetailsForm })
-      validateForm(submission.artworkDetailsForm)
-    } else {
-      resetForm({ values: getArtworkDetailsFormInitialValues() })
-    }
-  }, [submission])
 
   const handleAutosuggestError = (isError: boolean) => {
     if (isError) {

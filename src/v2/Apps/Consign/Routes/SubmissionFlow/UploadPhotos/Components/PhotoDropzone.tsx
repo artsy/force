@@ -114,7 +114,7 @@ export const PhotoDropzone: React.FC<PhotoDropzoneProps> = ({
   return (
     <>
       <Box {...rest} data-test-id="image-dropzone" {...getRootProps()}>
-        <input {...getInputProps()} />
+        <input data-testid="image-dropzone-input" {...getInputProps()} />
 
         <Media greaterThan="xs">
           <Text variant="lg">Drag and drop photos here</Text>

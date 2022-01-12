@@ -4,11 +4,12 @@ import { uploadFileToS3 } from "./uploadFileToS3"
 import {
   getConvectionGeminiKey,
   getGeminiCredentialsForEnvironment,
+  createGeminiAssetWithS3Credentials,
 } from "../Mutations"
 import { ErrorCode, FileRejection } from "react-dropzone"
 import createLogger from "v2/Utils/logger"
 
-const logger = createLogger("uploadFileToS3.ts")
+const logger = createLogger("SubmissionFlow/uploadFileToS3.ts")
 
 export const KBSize = 1000
 export const MBSize = Math.pow(KBSize, 2)
@@ -21,10 +22,12 @@ export function formatFileSize(size: number): string {
 
 export interface Photo {
   id: string
+  assetId?: string
   file?: File
   name: string
   size: number
-  s3Key?: string
+  url?: string
+  geminiToken?: string
   abortUploading?: () => void
   progress?: number
   removed: boolean
@@ -36,10 +39,11 @@ export interface Photo {
 export function normalizePhoto(file: File, errorMessage?: string): Photo {
   return {
     id: uuid(),
+    assetId: undefined,
     file,
     name: file.name,
     size: file.size,
-    s3Key: undefined,
+    geminiToken: undefined,
     abortUploading: undefined,
     progress: undefined,
     removed: false,
@@ -67,6 +71,7 @@ export const getErrorMessage = (fileRejection: FileRejection) => {
 }
 
 export const uploadPhoto = async (
+  submissionId,
   relayEnvironment: Environment,
   photo: Photo,
   updateProgress: (progress: number) => void,
@@ -78,7 +83,7 @@ export const uploadPhoto = async (
     if (!convectionKey) return
 
     // Get S3 Credentials from Gemini
-    let assetCredentials = await getGeminiCredentialsForEnvironment(
+    const assetCredentials = await getGeminiCredentialsForEnvironment(
       relayEnvironment,
       {
         acl: acl,
@@ -88,9 +93,28 @@ export const uploadPhoto = async (
 
     if (photo.removed) return
 
-    return await uploadFileToS3(photo, acl, assetCredentials, updateProgress)
+    // upload photo to S3
+    const sourceKey = await uploadFileToS3(
+      photo,
+      acl,
+      assetCredentials,
+      updateProgress
+    )
+
+    if (!sourceKey) return
+
+    // create asset in Gemini
+    return await createGeminiAssetWithS3Credentials(relayEnvironment, {
+      sourceKey,
+      sourceBucket: photo.bucket!,
+      templateKey: convectionKey,
+      metadata: {
+        id: submissionId,
+        _type: "Consignment",
+      },
+    })
   } catch (error) {
-    logger.error("Consign submission operation error", error)
+    logger.error("Error during Photo Upload", error)
     return
   }
 }

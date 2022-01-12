@@ -3,37 +3,33 @@
 // @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
-export type AddAssetToConsignmentSubmissionInput = {
-    assetType?: string | null;
+export type RemoveAssetFromConsignmentSubmissionInput = {
+    assetID?: string | null;
     clientMutationId?: string | null;
-    filename?: string | null;
-    geminiToken: string;
     sessionID?: string | null;
-    size?: string | null;
-    submissionID: string;
 };
-export type addAssetToConsignmentMutationVariables = {
-    input: AddAssetToConsignmentSubmissionInput;
+export type removeAssetFromConsignmentSubmissionMutationVariables = {
+    input: RemoveAssetFromConsignmentSubmissionInput;
 };
-export type addAssetToConsignmentMutationResponse = {
-    readonly addAssetToConsignmentSubmission: {
+export type removeAssetFromConsignmentSubmissionMutationResponse = {
+    readonly removeAssetFromConsignmentSubmission: {
         readonly asset: {
             readonly id: string;
         } | null;
     } | null;
 };
-export type addAssetToConsignmentMutation = {
-    readonly response: addAssetToConsignmentMutationResponse;
-    readonly variables: addAssetToConsignmentMutationVariables;
+export type removeAssetFromConsignmentSubmissionMutation = {
+    readonly response: removeAssetFromConsignmentSubmissionMutationResponse;
+    readonly variables: removeAssetFromConsignmentSubmissionMutationVariables;
 };
 
 
 
 /*
-mutation addAssetToConsignmentMutation(
-  $input: AddAssetToConsignmentSubmissionInput!
+mutation removeAssetFromConsignmentSubmissionMutation(
+  $input: RemoveAssetFromConsignmentSubmissionInput!
 ) {
-  addAssetToConsignmentSubmission(input: $input) {
+  removeAssetFromConsignmentSubmission(input: $input) {
     asset {
       id
     }
@@ -59,9 +55,9 @@ v1 = [
         "variableName": "input"
       }
     ],
-    "concreteType": "AddAssetToConsignmentSubmissionPayload",
+    "concreteType": "RemoveAssetFromConsignmentSubmissionPayload",
     "kind": "LinkedField",
-    "name": "addAssetToConsignmentSubmission",
+    "name": "removeAssetFromConsignmentSubmission",
     "plural": false,
     "selections": [
       {
@@ -91,7 +87,7 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "addAssetToConsignmentMutation",
+    "name": "removeAssetFromConsignmentSubmissionMutation",
     "selections": (v1/*: any*/),
     "type": "Mutation",
     "abstractKey": null
@@ -100,18 +96,18 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "addAssetToConsignmentMutation",
+    "name": "removeAssetFromConsignmentSubmissionMutation",
     "selections": (v1/*: any*/)
   },
   "params": {
-    "cacheID": "53b49286981715cbc6bbd45a3f554854",
+    "cacheID": "d6ba79ba74aba724eb08852f5bff49b9",
     "id": null,
     "metadata": {},
-    "name": "addAssetToConsignmentMutation",
+    "name": "removeAssetFromConsignmentSubmissionMutation",
     "operationKind": "mutation",
-    "text": "mutation addAssetToConsignmentMutation(\n  $input: AddAssetToConsignmentSubmissionInput!\n) {\n  addAssetToConsignmentSubmission(input: $input) {\n    asset {\n      id\n    }\n  }\n}\n"
+    "text": "mutation removeAssetFromConsignmentSubmissionMutation(\n  $input: RemoveAssetFromConsignmentSubmissionInput!\n) {\n  removeAssetFromConsignmentSubmission(input: $input) {\n    asset {\n      id\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'aea8b17459481b03abe5183958a36ad0';
+(node as any).hash = '1843ec8e41ecb33b9f6a47bb0c5fa547';
 export default node;

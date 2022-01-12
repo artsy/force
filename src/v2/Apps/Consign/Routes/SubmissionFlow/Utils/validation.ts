@@ -1,5 +1,6 @@
 import * as yup from "yup"
 import { email } from "v2/Components/Authentication/Validators"
+import { FormikErrors, yupToFormErrors } from "formik"
 
 export const artworkDetailsValidationSchema = yup.object().shape({
   artistId: yup
@@ -51,11 +52,7 @@ export const uploadPhotosValidationSchema = yup.object().shape({
     .array()
     .min(1)
     .transform(fields => fields.filter(c => !c.errorMessage))
-    .of(
-      yup.object().shape({
-        s3Key: yup.string().required(),
-      })
-    ),
+    .of(yup.object().test("photos", value => value.assetId)),
 })
 
 export const contactInformationValidationSchema = yup.object().shape({
@@ -71,3 +68,17 @@ export const contactInformationValidationSchema = yup.object().shape({
       value => value.isValid
     ),
 })
+
+export const validate = <T>(values: T, validationSchema: yup.AnySchema) => {
+  let errors: FormikErrors<T> = {}
+
+  try {
+    validationSchema.validateSync(values, {
+      abortEarly: false,
+    })
+  } catch (error) {
+    errors = yupToFormErrors(error)
+  }
+
+  return errors
+}
