@@ -1,0 +1,62 @@
+{
+  "blackOwnedGalleries": {
+    "partner-slug-1": {
+      "name": "",
+      "id": ""
+    },
+    "partner-slug-2": {
+      "name": "",
+      "id": ""
+    }
+  },
+  "lgbtq+OwnedGalleries": {
+    "partner-slug-1": {
+      "name": "",
+      "id": ""
+    },
+    "partner-slug-2": {
+      "name": "",
+      "id": ""
+    }
+  },
+  "latinxOwnedGalleries": {
+    "partner-slug-1": {
+      "name": "",
+      "id": ""
+    },
+    "partner-slug-2": {
+      "name": "",
+      "id": ""
+    }
+  },
+  "asianOwnedGalleries": {
+    "partner-slug-1": {
+      "name": "",
+      "id": ""
+    },
+    "partner-slug-2": {
+      "name": "",
+      "id": ""
+    }
+  },
+  "womenOwnedGalleries": {
+    "partner-slug-1": {
+      "name": "",
+      "id": ""
+    },
+    "partner-slug-2": {
+      "name": "",
+      "id": ""
+    }
+  },
+  "nonProfitOwnedGalleries": {
+    "partner-slug-1": {
+      "name": "",
+      "id": ""
+    },
+    "partner-slug-2": {
+      "name": "",
+      "id": ""
+    }
+  }
+}
