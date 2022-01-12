@@ -54,6 +54,7 @@ export interface ArtworkSidebarCommercialContainerState {
   isCommittingCreateOfferOrderMutation: boolean
   isErrorModalOpen: boolean
   selectedEditionSet: EditionSet
+  walletAddress: any
 }
 
 const Row: React.FC<FlexProps> = ({ children, ...others }) => (
@@ -76,6 +77,7 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
     isCommittingCreateOfferOrderMutation: false,
     isErrorModalOpen: false,
     selectedEditionSet: this.firstAvailableEcommerceEditionSet(),
+    walletAddress: null
   }
 
   firstAvailableEcommerceEditionSet(): EditionSet {
@@ -198,6 +200,15 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
       },
     ],
   }))
+  async handleWalletConnect() {
+    const wallet = await window.ethereum.request({ method: 'eth_requestAccounts' });
+    this.setState({
+      walletAddress: wallet
+    })
+  }
+  handleCreateOrderEth() {
+    // TODO: Do eth transaction here.
+  }
   handleCreateOrder() {
     const { user, mediator } = this.props
     if (user && user.id) {
@@ -377,17 +388,19 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
       is_offerable: isOfferable,
       is_acquireable: isAcquireable,
       is_inquireable: isInquireable,
+      category,
     } = artwork
     const isPriceListed = !isPriceHidden
     const labFeatureEnabled = userHasLabFeature(
       this.props.user,
       "Make Offer On All Eligible Artworks"
     )
-
+    console.log(artwork)
     const {
       isCommittingCreateOrderMutation,
       isCommittingCreateOfferOrderMutation,
       selectedEditionSet,
+      walletAddress,
     } = this.state
 
     const editionSelectableOnInquireable = !!(
@@ -412,6 +425,10 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
 
     const shouldDisplayMakeOfferAsPrimary: boolean | null =
       shouldDisplayMakeOfferButton && shouldDisplayContactGalleryButton
+
+    const isNFT = category === 'NFT'
+    const isMetamaskInstalled = typeof window !== 'undefined' && typeof window.ethereum !== 'undefined'
+    const isWalletConnected = walletAddress !== null
 
     return (
       <>
@@ -472,17 +489,49 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
             <Separator my={2} />
           )}
 
-          {isAcquireable && (
+          {isNFT && !isMetamaskInstalled && (
             <Button
               width="100%"
               size="medium"
-              loading={isCommittingCreateOrderMutation}
-              onClick={this.handleCreateOrder.bind(this)}
             >
-              Buy now
+              Please install Metamask to purchase NFTs
             </Button>
           )}
-          {shouldDisplayMakeOfferButton && (
+
+          {isNFT && isMetamaskInstalled && !isWalletConnected && (
+            <Button
+              width="100%"
+              size="medium"
+              onClick={this.handleWalletConnect.bind(this)}
+            >
+              {walletAddress}
+              Log in with wallet
+            </Button>
+          )}
+
+          {isNFT && isMetamaskInstalled && isWalletConnected && (
+            <Button
+              width="100%"
+              size="medium"
+              onClick={this.handleCreateOrderEth.bind(this)}
+            >
+              Buy now with ETH
+            </Button>
+          )}
+
+          {!isNFT && isAcquireable && (
+            <div>
+              <Button
+                width="100%"
+                size="medium"
+                loading={isCommittingCreateOrderMutation}
+                onClick={this.handleCreateOrder.bind(this)}
+              >
+                Buy now
+              </Button>
+            </div>
+          )}
+          {!isNFT && shouldDisplayMakeOfferButton && (
             <>
               <Spacer mt={2} />
               <Button
@@ -496,7 +545,7 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
               </Button>
             </>
           )}
-          {shouldDisplayContactGalleryButton && (
+          {!isNFT && shouldDisplayContactGalleryButton && (
             <>
               <Spacer mt={shouldDisplayMakeOfferAsPrimary ? 2 : 0} />
               <Button
@@ -564,6 +613,7 @@ export const ArtworkSidebarCommercialFragmentContainer = createFragmentContainer
           sale_message: saleMessage
           ...ArtworkSidebarSizeInfo_piece
         }
+        category
         internalID
         isOfferableFromInquiry
         isPriceHidden

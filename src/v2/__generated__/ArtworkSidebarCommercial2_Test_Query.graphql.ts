@@ -34,6 +34,7 @@ fragment ArtworkSidebarCommercial_artwork on Artwork {
     sale_message: saleMessage
     ...ArtworkSidebarSizeInfo_piece
   }
+  category
   internalID
   isOfferableFromInquiry
   isPriceHidden
@@ -121,13 +122,13 @@ v6 = [
 ],
 v7 = {
   "enumValues": null,
-  "nullable": false,
+  "nullable": true,
   "plural": false,
   "type": "String"
 },
 v8 = {
   "enumValues": null,
-  "nullable": true,
+  "nullable": false,
   "plural": false,
   "type": "String"
 },
@@ -239,6 +240,13 @@ return {
             ],
             "storageKey": null
           },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "category",
+            "storageKey": null
+          },
           (v1/*: any*/),
           {
             "alias": null,
@@ -336,7 +344,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "2ba97500f3b1f182c0819f34a490f5e2",
+    "cacheID": "66ba2fa3a603dc29a44039c24acb99d1",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -346,27 +354,28 @@ return {
           "plural": false,
           "type": "Artwork"
         },
+        "artwork.category": (v7/*: any*/),
         "artwork.edition_sets": {
           "enumValues": null,
           "nullable": true,
           "plural": true,
           "type": "EditionSet"
         },
-        "artwork.edition_sets.__isSellable": (v7/*: any*/),
+        "artwork.edition_sets.__isSellable": (v8/*: any*/),
         "artwork.edition_sets.dimensions": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "dimensions"
         },
-        "artwork.edition_sets.dimensions.cm": (v8/*: any*/),
-        "artwork.edition_sets.dimensions.in": (v8/*: any*/),
-        "artwork.edition_sets.edition_of": (v8/*: any*/),
+        "artwork.edition_sets.dimensions.cm": (v7/*: any*/),
+        "artwork.edition_sets.dimensions.in": (v7/*: any*/),
+        "artwork.edition_sets.edition_of": (v7/*: any*/),
         "artwork.edition_sets.id": (v9/*: any*/),
         "artwork.edition_sets.internalID": (v9/*: any*/),
         "artwork.edition_sets.is_acquireable": (v10/*: any*/),
         "artwork.edition_sets.is_offerable": (v10/*: any*/),
-        "artwork.edition_sets.sale_message": (v8/*: any*/),
+        "artwork.edition_sets.sale_message": (v7/*: any*/),
         "artwork.id": (v9/*: any*/),
         "artwork.internalID": (v9/*: any*/),
         "artwork.isOfferableFromInquiry": (v10/*: any*/),
@@ -381,18 +390,18 @@ return {
           "plural": false,
           "type": "ListPrice"
         },
-        "artwork.listPrice.__typename": (v7/*: any*/),
-        "artwork.listPrice.display": (v8/*: any*/),
-        "artwork.priceIncludesTaxDisplay": (v8/*: any*/),
-        "artwork.sale_message": (v8/*: any*/),
-        "artwork.shippingInfo": (v8/*: any*/),
-        "artwork.shippingOrigin": (v8/*: any*/),
+        "artwork.listPrice.__typename": (v8/*: any*/),
+        "artwork.listPrice.display": (v7/*: any*/),
+        "artwork.priceIncludesTaxDisplay": (v7/*: any*/),
+        "artwork.sale_message": (v7/*: any*/),
+        "artwork.shippingInfo": (v7/*: any*/),
+        "artwork.shippingOrigin": (v7/*: any*/),
         "artwork.slug": (v9/*: any*/)
       }
     },
     "name": "ArtworkSidebarCommercial2_Test_Query",
     "operationKind": "query",
-    "text": "query ArtworkSidebarCommercial2_Test_Query {\n  artwork(id: \"pretty-drawing-111\") {\n    ...ArtworkSidebarCommercial_artwork\n    id\n  }\n}\n\nfragment ArtworkSidebarCommercial_artwork on Artwork {\n  edition_sets: editionSets {\n    internalID\n    id\n    is_acquireable: isAcquireable\n    is_offerable: isOfferable\n    sale_message: saleMessage\n    ...ArtworkSidebarSizeInfo_piece\n  }\n  internalID\n  isOfferableFromInquiry\n  isPriceHidden\n  is_acquireable: isAcquireable\n  is_for_sale: isForSale\n  is_inquireable: isInquireable\n  is_offerable: isOfferable\n  listPrice {\n    __typename\n    ... on PriceRange {\n      display\n    }\n    ... on Money {\n      display\n    }\n  }\n  priceIncludesTaxDisplay\n  sale_message: saleMessage\n  shippingInfo\n  shippingOrigin\n  slug\n}\n\nfragment ArtworkSidebarSizeInfo_piece on Sellable {\n  __isSellable: __typename\n  dimensions {\n    in\n    cm\n  }\n  edition_of: editionOf\n}\n"
+    "text": "query ArtworkSidebarCommercial2_Test_Query {\n  artwork(id: \"pretty-drawing-111\") {\n    ...ArtworkSidebarCommercial_artwork\n    id\n  }\n}\n\nfragment ArtworkSidebarCommercial_artwork on Artwork {\n  edition_sets: editionSets {\n    internalID\n    id\n    is_acquireable: isAcquireable\n    is_offerable: isOfferable\n    sale_message: saleMessage\n    ...ArtworkSidebarSizeInfo_piece\n  }\n  category\n  internalID\n  isOfferableFromInquiry\n  isPriceHidden\n  is_acquireable: isAcquireable\n  is_for_sale: isForSale\n  is_inquireable: isInquireable\n  is_offerable: isOfferable\n  listPrice {\n    __typename\n    ... on PriceRange {\n      display\n    }\n    ... on Money {\n      display\n    }\n  }\n  priceIncludesTaxDisplay\n  sale_message: saleMessage\n  shippingInfo\n  shippingOrigin\n  slug\n}\n\nfragment ArtworkSidebarSizeInfo_piece on Sellable {\n  __isSellable: __typename\n  dimensions {\n    in\n    cm\n  }\n  edition_of: editionOf\n}\n"
   }
 };
 })();

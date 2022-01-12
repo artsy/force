@@ -13,6 +13,7 @@ export type ArtworkSidebarCommercial_artwork = {
         readonly sale_message: string | null;
         readonly " $fragmentRefs": FragmentRefs<"ArtworkSidebarSizeInfo_piece">;
     } | null> | null;
+    readonly category: string | null;
     readonly internalID: string;
     readonly isOfferableFromInquiry: boolean | null;
     readonly isPriceHidden: boolean | null;
@@ -109,6 +110,13 @@ return {
       ],
       "storageKey": null
     },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "category",
+      "storageKey": null
+    },
     (v0/*: any*/),
     {
       "alias": null,
@@ -197,5 +205,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '8148293620c60ce8feafe199eb1560a0';
+(node as any).hash = 'ebf4dac69c7a75ecbbd973d1b848ef3e';
 export default node;

@@ -74,6 +74,14 @@
   </script>
   <%% } %>
 
+  <script>
+    if (typeof window.ethereum !== 'undefined') {
+      console.log('MetaMask is installed!');
+    } else {
+      console.log('No Metamask')
+    }
+  </script>
+
 </body>
 
 </html>

@@ -2,6 +2,7 @@ import { Column, Flex, GridColumns, HTML, Spacer, Text } from "@artsy/palette"
 import { data as sd } from "sharify"
 import { createFragmentContainer, graphql } from "react-relay"
 import { AddToCalendar } from "./AddToCalendar"
+// TODO: No
 import { getLiveAuctionUrl } from "desktop/apps/auction/utils/urls"
 import { useSystemContext } from "v2/System"
 import { formatIsoDateNoZoneOffset } from "v2/Components/AddToCalendar/helpers"
