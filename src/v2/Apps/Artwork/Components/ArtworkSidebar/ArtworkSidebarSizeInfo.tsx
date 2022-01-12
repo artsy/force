@@ -1,5 +1,5 @@
 import { Box, Text } from "@artsy/palette"
-import { Component } from "react";
+import { Component } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 
 import { ArtworkSidebarSizeInfo_piece } from "v2/__generated__/ArtworkSidebarSizeInfo_piece.graphql"
@@ -11,16 +11,22 @@ export interface ArtworkSidebarSizeInfoProps {
 export class ArtworkSidebarSizeInfo extends Component<
   ArtworkSidebarSizeInfoProps
 > {
+  sizeInfoMissing = (dimensions, edition_of) => {
+    const dimensionsPresent =
+      /\d/.test(dimensions?.in) || /\d/.test(dimensions?.cm)
+
+    return !edition_of?.length && !dimensionsPresent
+  }
+
   render() {
     const {
       piece: { dimensions, edition_of },
     } = this.props
-    if (
-      !(edition_of && edition_of.length) &&
-      !(dimensions && (dimensions.in || dimensions.cm))
-    ) {
+
+    if (this.sizeInfoMissing(dimensions, edition_of)) {
       return null
     }
+
     return (
       <Box color="black60">
         {dimensions?.in && <Text variant="md">{dimensions.in}</Text>}
