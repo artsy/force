@@ -64,7 +64,7 @@ fragment ShowCard_show on Show {
   isFairBooth
   exhibitionPeriod
   coverImage {
-    medium: cropped(width: 263, height: 222) {
+    medium: cropped(width: 320, height: 240) {
       width
       height
       src
@@ -396,12 +396,12 @@ return {
                               {
                                 "kind": "Literal",
                                 "name": "height",
-                                "value": 222
+                                "value": 240
                               },
                               {
                                 "kind": "Literal",
                                 "name": "width",
-                                "value": 263
+                                "value": 320
                               }
                             ],
                             "concreteType": "CroppedImageUrl",
@@ -438,7 +438,7 @@ return {
                                 "storageKey": null
                               }
                             ],
-                            "storageKey": "cropped(height:222,width:263)"
+                            "storageKey": "cropped(height:240,width:320)"
                           }
                         ],
                         "storageKey": null
@@ -460,12 +460,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "35a6e25a9c96ba18ce31e7efa639227a",
+    "cacheID": "4f7055a0c83c066f28c4ac8c25b8bf86",
     "id": null,
     "metadata": {},
     "name": "ShowPaginatedEventsRendererQuery",
     "operationKind": "query",
-    "text": "query ShowPaginatedEventsRendererQuery(\n  $partnerId: String!\n  $first: Int\n  $page: Int\n  $status: EventStatus\n) {\n  partner(id: $partnerId) @principalField {\n    ...ShowPaginatedEvents_partner_JfDnP\n    id\n  }\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n\nfragment ShowCard_show on Show {\n  href\n  name\n  isFairBooth\n  exhibitionPeriod\n  coverImage {\n    medium: cropped(width: 263, height: 222) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment ShowEvents_edges on ShowEdge {\n  node {\n    internalID\n    ...ShowCard_show\n    id\n  }\n}\n\nfragment ShowPaginatedEvents_partner_JfDnP on Partner {\n  slug\n  showsList: showsConnection(first: $first, status: $status, page: $page, isDisplayable: true) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    edges {\n      ...ShowEvents_edges\n    }\n  }\n}\n"
+    "text": "query ShowPaginatedEventsRendererQuery(\n  $partnerId: String!\n  $first: Int\n  $page: Int\n  $status: EventStatus\n) {\n  partner(id: $partnerId) @principalField {\n    ...ShowPaginatedEvents_partner_JfDnP\n    id\n  }\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n\nfragment ShowCard_show on Show {\n  href\n  name\n  isFairBooth\n  exhibitionPeriod\n  coverImage {\n    medium: cropped(width: 320, height: 240) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment ShowEvents_edges on ShowEdge {\n  node {\n    internalID\n    ...ShowCard_show\n    id\n  }\n}\n\nfragment ShowPaginatedEvents_partner_JfDnP on Partner {\n  slug\n  showsList: showsConnection(first: $first, status: $status, page: $page, isDisplayable: true) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    edges {\n      ...ShowEvents_edges\n    }\n  }\n}\n"
   }
 };
 })();

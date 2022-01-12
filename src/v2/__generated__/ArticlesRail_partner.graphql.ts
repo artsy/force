@@ -4,24 +4,23 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type ShowsRail_partner = {
+export type ArticlesRail_partner = {
     readonly slug: string;
-    readonly displayFullPartnerPage: boolean | null;
-    readonly showsConnection: {
+    readonly articlesConnection: {
         readonly totalCount: number | null;
         readonly edges: ReadonlyArray<{
             readonly node: {
-                readonly id: string;
-                readonly " $fragmentRefs": FragmentRefs<"ShowCard_show">;
+                readonly internalID: string;
+                readonly " $fragmentRefs": FragmentRefs<"ArticleCard_article">;
             } | null;
         } | null> | null;
     } | null;
-    readonly " $refType": "ShowsRail_partner";
+    readonly " $refType": "ArticlesRail_partner";
 };
-export type ShowsRail_partner$data = ShowsRail_partner;
-export type ShowsRail_partner$key = {
-    readonly " $data"?: ShowsRail_partner$data;
-    readonly " $fragmentRefs": FragmentRefs<"ShowsRail_partner">;
+export type ArticlesRail_partner$data = ArticlesRail_partner;
+export type ArticlesRail_partner$key = {
+    readonly " $data"?: ArticlesRail_partner$data;
+    readonly " $fragmentRefs": FragmentRefs<"ArticlesRail_partner">;
 };
 
 
@@ -30,7 +29,7 @@ const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "ShowsRail_partner",
+  "name": "ArticlesRail_partner",
   "selections": [
     {
       "alias": null,
@@ -41,33 +40,16 @@ const node: ReaderFragment = {
     },
     {
       "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "displayFullPartnerPage",
-      "storageKey": null
-    },
-    {
-      "alias": null,
       "args": [
         {
           "kind": "Literal",
           "name": "first",
-          "value": 20
-        },
-        {
-          "kind": "Literal",
-          "name": "isDisplayable",
-          "value": true
-        },
-        {
-          "kind": "Literal",
-          "name": "status",
-          "value": "ALL"
+          "value": 8
         }
       ],
-      "concreteType": "ShowConnection",
+      "concreteType": "ArticleConnection",
       "kind": "LinkedField",
-      "name": "showsConnection",
+      "name": "articlesConnection",
       "plural": false,
       "selections": [
         {
@@ -80,7 +62,7 @@ const node: ReaderFragment = {
         {
           "alias": null,
           "args": null,
-          "concreteType": "ShowEdge",
+          "concreteType": "ArticleEdge",
           "kind": "LinkedField",
           "name": "edges",
           "plural": true,
@@ -88,7 +70,7 @@ const node: ReaderFragment = {
             {
               "alias": null,
               "args": null,
-              "concreteType": "Show",
+              "concreteType": "Article",
               "kind": "LinkedField",
               "name": "node",
               "plural": false,
@@ -97,13 +79,13 @@ const node: ReaderFragment = {
                   "alias": null,
                   "args": null,
                   "kind": "ScalarField",
-                  "name": "id",
+                  "name": "internalID",
                   "storageKey": null
                 },
                 {
                   "args": null,
                   "kind": "FragmentSpread",
-                  "name": "ShowCard_show"
+                  "name": "ArticleCard_article"
                 }
               ],
               "storageKey": null
@@ -112,11 +94,11 @@ const node: ReaderFragment = {
           "storageKey": null
         }
       ],
-      "storageKey": "showsConnection(first:20,isDisplayable:true,status:\"ALL\")"
+      "storageKey": "articlesConnection(first:8)"
     }
   ],
   "type": "Partner",
   "abstractKey": null
 };
-(node as any).hash = 'd6e77342a610708d73c1b06cb0b3bed2';
+(node as any).hash = '50a2283e656ae27db2886ecdded198af';
 export default node;

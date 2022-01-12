@@ -6,35 +6,44 @@ import { ShowCard_show } from "v2/__generated__/ShowCard_show.graphql"
 
 interface ShowCardProps {
   show: ShowCard_show
+  isResponsive?: boolean
 }
 
-const ShowCard: React.FC<ShowCardProps> = ({ show }): JSX.Element => {
+const ShowCard: React.FC<ShowCardProps> = ({
+  show,
+  isResponsive,
+}): JSX.Element => {
   const { coverImage, name, isFairBooth, href, exhibitionPeriod } = show
   const showType = isFairBooth ? "fair booth" : "show"
 
   return (
     <RouterLink to={href} textDecoration="none">
-      {coverImage && (
-        <ResponsiveBox
-          // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-          aspectWidth={coverImage.medium.width}
-          // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-          aspectHeight={coverImage.medium.height}
-          maxWidth="100%"
-        >
+      {coverImage &&
+        (isResponsive ? (
+          <ResponsiveBox
+            aspectWidth={coverImage.medium?.width ?? 4}
+            aspectHeight={coverImage.medium?.height ?? 3}
+            maxWidth="100%"
+          >
+            <Image
+              lazyLoad
+              alt={name ?? undefined}
+              width="100%"
+              height="100%"
+              src={coverImage.medium?.src}
+              srcSet={coverImage.medium?.srcSet}
+            />
+          </ResponsiveBox>
+        ) : (
           <Image
-            // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-            src={coverImage.medium.src}
-            // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-            srcSet={coverImage.medium.srcSet}
-            // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-            alt={name}
-            width="100%"
-            height="100%"
             lazyLoad
+            alt={name ?? undefined}
+            src={coverImage.medium?.src}
+            srcSet={coverImage.medium?.srcSet}
+            width={coverImage.medium?.width}
+            height={coverImage.medium?.height}
           />
-        </ResponsiveBox>
-      )}
+        ))}
       {isFairBooth != null && (
         <Text
           as="h5"
@@ -68,7 +77,7 @@ export const ShowCardFragmentContainer = createFragmentContainer(ShowCard, {
       isFairBooth
       exhibitionPeriod
       coverImage {
-        medium: cropped(width: 263, height: 222) {
+        medium: cropped(width: 320, height: 240) {
           width
           height
           src

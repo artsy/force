@@ -25,7 +25,7 @@ const ShowEvents: React.FC<ShowEventsProps> = ({
             // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
             <Column key={show.internalID} span={[6, 6, 3, 3]}>
               {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
-              <ShowCardFragmentContainer show={show} />
+              <ShowCardFragmentContainer isResponsive show={show} />
             </Column>
           )
         })}

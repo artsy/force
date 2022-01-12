@@ -80,7 +80,7 @@ const Articles: React.FC<ArticlesProps> = ({ partner, relay }) => {
           {articles.map(({ node: article }) => {
             return (
               <Column key={article.internalID} span={4}>
-                <ArticleCardFragmentContainer article={article} />
+                <ArticleCardFragmentContainer isResponsive article={article} />
               </Column>
             )
           })}

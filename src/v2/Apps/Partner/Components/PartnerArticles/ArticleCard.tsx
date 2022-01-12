@@ -7,9 +7,13 @@ import { ArticleCard_article } from "v2/__generated__/ArticleCard_article.graphq
 
 interface ArticleCardProps {
   article: ArticleCard_article
+  isResponsive?: boolean
 }
 
-const ArticleCard: React.FC<ArticleCardProps> = ({ article }): JSX.Element => {
+const ArticleCard: React.FC<ArticleCardProps> = ({
+  article,
+  isResponsive,
+}): JSX.Element => {
   const {
     thumbnailTitle,
     author,
@@ -28,20 +32,32 @@ const ArticleCard: React.FC<ArticleCardProps> = ({ article }): JSX.Element => {
   return (
     <>
       <RouterLink to={href} textDecoration="none">
-        {thumbnailImage && (
-          <ResponsiveBox aspectWidth={4} aspectHeight={3} maxWidth="100%">
+        {thumbnailImage &&
+          (isResponsive ? (
+            <ResponsiveBox
+              aspectWidth={thumbnailImage.medium?.width ?? 4}
+              aspectHeight={thumbnailImage.medium?.height ?? 3}
+              maxWidth="100%"
+            >
+              <Image
+                lazyLoad
+                alt=""
+                width="100%"
+                height="100%"
+                src={thumbnailImage.medium?.src}
+                srcSet={thumbnailImage.medium?.srcSet}
+              />
+            </ResponsiveBox>
+          ) : (
             <Image
-              // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-              src={thumbnailImage.medium.src}
-              // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-              srcSet={thumbnailImage.medium.srcSet}
-              alt=""
-              width="100%"
-              height="100%"
               lazyLoad
+              alt=""
+              src={thumbnailImage.medium?.src}
+              srcSet={thumbnailImage.medium?.srcSet}
+              width={thumbnailImage.medium?.width}
+              height={thumbnailImage.medium?.height}
             />
-          </ResponsiveBox>
-        )}
+          ))}
       </RouterLink>
 
       {channelID && (
