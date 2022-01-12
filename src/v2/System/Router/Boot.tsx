@@ -10,6 +10,7 @@ import { AppRouteConfig } from "v2/System/Router/Route"
 import { useEffect } from "react"
 import * as React from "react"
 import { HeadProvider } from "react-head"
+import { InternationalizationProvider } from "v2/System/i18n/InternationalizationProvider"
 import { Environment } from "relay-runtime"
 // eslint-disable-next-line no-restricted-imports
 import { data as sd } from "sharify"
@@ -84,12 +85,14 @@ export const Boot = track(undefined, {
                     initialMatchingMediaQueries={onlyMatchMediaQueries as any}
                   >
                     <ToastsProvider>
-                      <Grid fluid maxWidth="100%">
-                        <FlashMessage />
-                        <FocusVisible />
-                        <SiftContainer />
-                        {children}
-                      </Grid>
+                      <InternationalizationProvider>
+                        <Grid fluid maxWidth="100%">
+                          <FlashMessage />
+                          <FocusVisible />
+                          <SiftContainer />
+                          {children}
+                        </Grid>
+                      </InternationalizationProvider>
                     </ToastsProvider>
                   </ResponsiveProvider>
                 </MediaContextProvider>
