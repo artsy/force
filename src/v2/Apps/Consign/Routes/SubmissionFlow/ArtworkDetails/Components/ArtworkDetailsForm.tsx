@@ -29,7 +29,7 @@ import {
 
 export const getArtworkDetailsFormInitialValues = (
   submission?: ArtworkDetails_submission
-) => ({
+): ArtworkDetailsFormModel => ({
   artistId: submission?.artist?.internalID ?? "",
   artistName: submission?.artist?.name ?? "",
   year: submission?.year ?? "",
@@ -44,9 +44,9 @@ export const getArtworkDetailsFormInitialValues = (
   units: submission?.dimensionsMetric ?? "in",
   provenance: submission?.provenance ?? "",
   location: {
-    city: submission?.locationCity,
-    country: submission?.locationCountry,
-    state: submission?.locationState,
+    city: submission?.locationCity ?? "",
+    country: submission?.locationCountry ?? undefined,
+    state: submission?.locationState ?? undefined,
   },
 })
 

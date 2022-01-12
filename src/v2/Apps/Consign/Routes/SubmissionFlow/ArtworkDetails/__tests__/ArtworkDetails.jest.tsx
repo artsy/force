@@ -19,8 +19,8 @@ const validForm = {
     name: "Banksy",
   },
   locationCity: "NY, USA",
-  locationCountry: "",
-  locationState: "",
+  locationCountry: null,
+  locationState: null,
   year: "2021",
   title: "Some title",
   medium: "materials",
@@ -32,7 +32,6 @@ const validForm = {
   depth: "5",
   dimensionsMetric: "cm",
   provenance: "provenance",
-  location: { city: "New York" },
 } as ArtworkDetails_submission
 
 const utmParams = { utmMedium: "Medium", utmSource: "Source", utmTerm: "Term" }
