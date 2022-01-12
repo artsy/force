@@ -1,0 +1,17 @@
+{
+  "navbar.show": {
+    "defaultMessage": "Show"
+  },
+  "navbar.buy": {
+    "defaultMessage": "Buy"
+  },
+  "navbar.artists": {
+    "defaultMessage": "Artists"
+  },
+  "navbar.artworks": {
+    "defaultMessage": "Artworks"
+  },
+  "navbar.auctions": {
+    "defaultMessage": "Auctions"
+  }
+}

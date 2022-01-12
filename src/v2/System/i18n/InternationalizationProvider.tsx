@@ -1,9 +1,8 @@
 import { IntlProvider } from "react-intl"
+import locale_en_us from "v2/__generated_i18n__/en-us.json"
 
 const localizations = {
-  en_US: {
-    message: "",
-  },
+  en_US: locale_en_us,
 }
 
 export const InternationalizationProvider: React.FC = ({ children }) => {
@@ -13,7 +12,8 @@ export const InternationalizationProvider: React.FC = ({ children }) => {
     <IntlProvider
       messages={localizations["en_US"]}
       locale="en-us"
-      defaultLocale="en-us" >
+      defaultLocale="en-us"
+    >
       {children}
     </IntlProvider>
   )
