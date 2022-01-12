@@ -16,6 +16,7 @@ import { useSystemContext } from "v2/System"
 import { ContextModule } from "@artsy/cohesion"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { PartnerHeader_partner } from "v2/__generated__/PartnerHeader_partner.graphql"
+import { PartnerBanner } from "v2/Apps/Badges/Components/PartnerBanner"
 
 export interface PartnerHeaderProps {
   partner: PartnerHeader_partner
@@ -75,16 +76,7 @@ export const PartnerHeader: React.FC<PartnerHeaderProps> = ({ partner }) => {
                 <PartnerHeaderAddress {...partner.locations} />
               </Text>
             )}
-            <Box backgroundColor={"black100"} width={100} mb={1}>
-              <Text variant="caption" color="white100" textAlign={"center"}>
-                Black owned
-              </Text>
-            </Box>
-            <Box backgroundColor={"black100"} width={100}>
-              <Text variant="caption" color="white100" textAlign={"center"}>
-                Woman owned
-              </Text>
-            </Box>
+            <PartnerBanner />
           </Box>
         </Flex>
       </Column>
