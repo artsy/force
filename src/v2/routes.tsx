@@ -26,6 +26,7 @@ import { geneRoutes } from "v2/Apps/Gene/geneRoutes"
 import { homeRoutes } from "v2/Apps/Home/homeRoutes"
 import { howAuctionsWorkRoutes } from "./Apps/_HowAuctionsWork2/howAuctionsWorkRoutes"
 import { identityVerificationRoutes } from "v2/Apps/IdentityVerification/identityVerificationRoutes"
+import { meetTheSpecialistsRoutes } from "v2/Apps/MeetTheSpecialists/meetTheSpecialistsRoutes"
 import { orderRoutes } from "v2/Apps/Order/orderRoutes"
 import { partnerRoutes } from "v2/Apps/Partner/partnerRoutes"
 import { partnersRoutes } from "v2/Apps/Partners/partnersRoutes"
@@ -71,6 +72,7 @@ export function getAppRoutes(): AppRouteConfig[] {
     { routes: homeRoutes },
     { routes: howAuctionsWorkRoutes },
     { routes: identityVerificationRoutes },
+    { routes: meetTheSpecialistsRoutes },
     { routes: orderRoutes },
     { routes: partnerRoutes },
     { routes: partnersRoutes },
