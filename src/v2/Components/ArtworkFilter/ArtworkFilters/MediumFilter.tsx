@@ -9,6 +9,7 @@ import { intersection } from "lodash"
 import { sortResults } from "./ResultsFilter"
 import { FilterExpandable } from "./FilterExpandable"
 import { useFilterLabelCountByKey } from "../Utils/useFilterLabelCountByKey"
+import { userIsAdmin } from "v2/Utils/user"
 
 export interface MediumFilterProps {
   expanded?: boolean
@@ -26,8 +27,13 @@ export const MediumFilter: FC<MediumFilterProps> = ({ expanded }) => {
     slice: "",
     counts: [],
   }
+
+  const filteredHardcodedMediums = userIsAdmin()
+    ? hardcodedMediums
+    : hardcodedMediums.filter(medium => medium.value !== "nft")
+
   const allowedMediums =
-    mediums && mediums.counts.length ? mediums.counts : hardcodedMediums
+    mediums && mediums.counts.length ? mediums.counts : filteredHardcodedMediums
 
   const toggleMediumSelection = (selected, slug) => {
     let geneIDs =
