@@ -143,9 +143,21 @@ export async function apiAuthWithRedirectUrl(
   response: Response,
   redirectPath: URL
 ): Promise<URL> {
-  const redirectUrl = sd.APP_URL + redirectPath.pathname + redirectPath.search
+  let redirectURL = redirectPath
+
+  const allowedHosts = sd.AUTH_REDIRECT_ALLOWED_HOSTS?.split(",") || []
+
+  if (!allowedHosts.includes(redirectPath.hostname)) {
+    redirectURL = new URL("/", sd.APP_URL)
+  }
+
+  // const strippedRedirectURL =
+  //   redirectURL.origin + redirectURL.pathname + redirectURL.search
+
   const accessToken = (response["user"] || {}).accessToken
-  const appRedirectURL = new URL(redirectUrl)
+
+  // TODO: Update to remove indirection pending discussion
+  const appRedirectURL = redirectURL
 
   // There isn't an access token when we don't have a valid session, for example,
   // when the user is resetting their password.

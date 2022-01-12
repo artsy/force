@@ -34,6 +34,7 @@ sharify.data = _.extend(
     "APPLICATION_NAME",
     "ARTSY_EDITORIAL_CHANNEL",
     "AUCTION_ZENDESK_KEY",
+    "AUTH_REDIRECT_ALLOWED_HOSTS",
     "AUTO_GRAVITY_LOGIN",
     "CDN_URL",
     "CMS_URL",
