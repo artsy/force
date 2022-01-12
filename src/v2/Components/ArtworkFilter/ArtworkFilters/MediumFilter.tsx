@@ -1,5 +1,5 @@
 import { Checkbox, Flex, useThemeConfig } from "@artsy/palette"
-import { FC, useContext } from "react"
+import { FC } from "react"
 import {
   SelectedFiltersCountsLabels,
   useArtworkFilterContext,
@@ -10,7 +10,7 @@ import { sortResults } from "./ResultsFilter"
 import { FilterExpandable } from "./FilterExpandable"
 import { useFilterLabelCountByKey } from "../Utils/useFilterLabelCountByKey"
 import { userIsAdmin } from "v2/Utils/user"
-import { SystemContext } from "v2/System"
+import { useSystemContext } from "v2/System"
 
 export interface MediumFilterProps {
   expanded?: boolean
@@ -18,7 +18,7 @@ export interface MediumFilterProps {
 
 export const MediumFilter: FC<MediumFilterProps> = ({ expanded }) => {
   const { aggregations, counts, ...filterContext } = useArtworkFilterContext()
-  const { user } = useContext(SystemContext)
+  const { user } = useSystemContext()
 
   const filtersCount = useFilterLabelCountByKey(
     SelectedFiltersCountsLabels.additionalGeneIDs

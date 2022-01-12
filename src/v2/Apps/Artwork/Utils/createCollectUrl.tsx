@@ -52,6 +52,7 @@ const filterCategories = {
   Installation: "installation",
   Jewelry: "jewelry",
   "Mixed Media": "mixed-media",
+  NFT: "nft",
   Other: "",
   Painting: "painting",
   "Performance Art": "performance-art",
@@ -63,5 +64,4 @@ const filterCategories = {
   "Textile Arts": "textiles",
   "Video/Film/Animation": "film-slash-video",
   "Work on Paper": "work-on-paper",
-  NFT: "nft",
 }
