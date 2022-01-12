@@ -24,6 +24,7 @@ Links should point to specific commits, and not a branch (in case the branch or 
 - [Write unit tests for new components](#write-unit-tests-for-new-components)
 - [Add smoke tests for new routes](#add-smoke-tests-for-new-routes)
 - [Adding global script tags](#adding-global-script-tags)
+- [Adding or removing a Segment destination](#adding-or-removing-a-segment-destination)
 
 ## Current Preferred Practices
 
@@ -195,3 +196,7 @@ We use [Cypress.io](https://docs.cypress.io/guides/overview/why-cypress.html#In-
 ### Adding global script tags
 
 When adding global script tags (for, say, marketing-related needs), we need to add it to two places: our old app template and our new. See [this PR](https://github.com/artsy/force/pull/7640) for an implementation example.
+
+### Adding or removing a Segment destination
+
+Due to us having [integrated Segment with OneTrust Cookie Consent](https://github.com/artsy/force/pull/8853), each Segment Destination must be assigned a proper cookie category. When we add or remove a Destination, we have to update the Destination/category mapping in [this table](https://www.notion.so/artsy/Cookie-Consent-01dace52a765476ea4e9353260ce9a7f#3ec509bfb40b4d08985f6d81a306f7bf) and [object](https://github.com/artsy/force/blob/7a1b74c0736d01c67facb9108da14af043f2ee9b/src/lib/analytics/segmentOneTrustIntegration/setSegmentDestinationPref.ts#L7). This applies only to Destinations that are associated with Segment `force-staging` and `force-production` Sources and that are actually enabled.
