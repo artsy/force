@@ -1,4 +1,4 @@
-{
+export const diverseGalleries = {
   "blackOwnedGalleries": {
     "jenkins-johnson-gallery": {
       "name": "Jenkins Johnson Gallery",
