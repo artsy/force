@@ -24,7 +24,6 @@ jest.mock("sharify", () => {
         loginPagePath: "/login",
         signupPagePath: "/signup",
       },
-      AUTH_REDIRECT_ALLOWED_HOSTS: "artsy.net,api.artsy.net",
       SESSION_ID: "session-id",
       SET_PASSWORD: "true",
       RESET_PASSWORD_REDIRECT_TO: "/fairs",
@@ -376,7 +375,7 @@ describe("Authentication Helpers", () => {
             ]
           `)
         expect(window.location.assign).toBeCalledWith(
-          "https://api.artsy.net/oauth2/authorize?response_type=code&redirect_uri=https%3A%2F%2Flive-staging.artsy.net%2Fauth-callback&client_id=foo"
+          "/auth-redirect?redirectTo=https%3A%2F%2Fapi.artsy.net%2Foauth2%2Fauthorize%3Fresponse_type%3Dcode%26redirect_uri%3Dhttps%253A%252F%252Flive-staging.artsy.net%252Fauth-callback%26client_id%3Dfoo"
         )
       })
     })

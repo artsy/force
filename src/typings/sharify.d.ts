@@ -19,7 +19,6 @@ declare module "sharify" {
       readonly ADMIN_URL: string
       readonly APP_URL: string
       readonly ARTIST_COLLECTIONS_RAIL?: string // TODO: remove after CollectionsRail a/b test
-      readonly AUTH_REDIRECT_ALLOWED_HOSTS: string
       readonly CDN_URL: string
       readonly CMS_URL: string
       CURRENT_PATH: string

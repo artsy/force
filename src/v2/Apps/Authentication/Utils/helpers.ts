@@ -103,7 +103,13 @@ export const handleSubmit = async (
 
       const result = await apiAuthWithRedirectUrl(res, afterAuthURL)
 
-      window.location.assign(result.href)
+      if (result.origin === sd.APP_URL) {
+        window.location.assign(result.href)
+      }
+
+      window.location.assign(
+        `/auth-redirect?redirectTo=${encodeURIComponent(result.href)}`
+      )
     },
     error: error => {
       formikBag.setStatus(error)
@@ -144,13 +150,6 @@ export async function apiAuthWithRedirectUrl(
   redirectPath: URL
 ): Promise<URL> {
   let redirectURL = redirectPath
-
-  const allowedHosts = sd.AUTH_REDIRECT_ALLOWED_HOSTS?.split(",") || []
-
-  if (!allowedHosts.includes(redirectPath.hostname)) {
-    redirectURL = new URL("/", sd.APP_URL)
-  }
-
   // const strippedRedirectURL =
   //   redirectURL.origin + redirectURL.pathname + redirectURL.search
 
