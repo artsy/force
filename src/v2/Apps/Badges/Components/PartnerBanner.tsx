@@ -6,7 +6,8 @@ interface PartnerBannerProps {
 }
 
 const renderCulturalBadge = (galleries, name) => {
-  if (galleries["blackOwnedGalleries"].hasOwnProperty(name)) {
+  if (galleries['blackOwnedGalleries']) {
+    console.log("BLACK")
     return (
       <Text variant="md" color="black100" textAlign={"center"}>
         Black Owned
