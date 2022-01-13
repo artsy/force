@@ -2,7 +2,7 @@ export function redirectPostAuth({ req, res }) {
   const redirectTo = req.query["redirectTo"]
 
   const configuredAllowedHosts =
-    process.env.AUTH_REDIRECT_ALLOWED_HOSTS?.split(",") || []
+    process.env.ALLOWED_REDIRECT_HOSTS?.split(",") || []
 
   // verify that this is a *.artsy.net domain
   const allowedHosts = configuredAllowedHosts.filter(url => {

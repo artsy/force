@@ -7,7 +7,7 @@ describe("redirectPostAuth", () => {
   beforeAll(() => {
     originalEnv = process.env
     process.env = Object.assign({}, originalEnv, {
-      AUTH_REDIRECT_ALLOWED_HOSTS:
+      ALLOWED_REDIRECT_HOSTS:
         "api.artsy.net,live.artsy.net,foo.test.com,localhost",
     })
   })
