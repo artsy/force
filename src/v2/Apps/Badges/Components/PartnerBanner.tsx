@@ -1,4 +1,4 @@
-import { Box, Text } from "@artsy/palette"
+import { Flex, Text } from "@artsy/palette"
 import * as React from "react"
 interface PartnerBannerProps {
   badgeCategory: string
@@ -9,11 +9,11 @@ export const PartnerBanner: React.FC<PartnerBannerProps> = ({
 }) => {
   return (
     <>
-      <Box backgroundColor={"black10"} width={100} mb={1}>
-        <Text variant="xs" color="black100" textAlign={"center"}>
-          {badgeCategory}woooo
+      <Flex display="inline-block" backgroundColor={"black5"} mr={1} px={0.5}>
+        <Text variant="text" color="black100" textAlign={"center"}>
+          {badgeCategory}
         </Text>
-      </Box>
+      </Flex>
     </>
   )
 }

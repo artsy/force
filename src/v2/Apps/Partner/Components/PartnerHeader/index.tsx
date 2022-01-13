@@ -38,10 +38,6 @@ export const PartnerHeader: React.FC<PartnerHeaderProps> = ({ partner }) => {
 
   const diversityBadges = (diverseGalleriesList, partnerSlug) => {
     let badges: Array<string> = []
-    console.log(
-      "woooo",
-      Object.keys(diverseGalleriesList["blackOwnedGalleries"])
-    )
     if (
       Object.keys(diverseGalleriesList["blackOwnedGalleries"]).includes(
         partnerSlug
