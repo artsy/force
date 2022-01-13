@@ -37,6 +37,86 @@ import { ArtworkSidebarSizeInfoFragmentContainer as SizeInfo } from "./ArtworkSi
 import { Mediator } from "lib/mediator"
 import { useInquiry, WithInquiryProps } from "v2/Components/Inquiry/useInquiry"
 
+
+// NFT stuff
+import { ethers, Contract, getDefaultProvider } from 'ethers'
+import axios from 'axios'
+// import { useAtom } from 'jotai'
+// import { atomWithStorage } from 'jotai/utils'
+// import { Address, Fetcher, NftProvider, useNft } from 'use-nft'
+import abiNft from './abi-nft.json'
+import abiNftSales from './abi-artsy-nft-sales.json'
+// import { useEffect, useState } from 'react'
+
+// const networks = {
+// 	ethRopsten: {
+// 		displayName: 'eth ropsten',
+// 		baseApiUrl: 'https://api-ropsten.etherscan.io/api',
+// 		baseUrl: 'https://ropsten.etherscan.io',
+// 	},
+// }
+
+// const api = {
+// 	getNFTs: (network, address) =>
+// 		axios.get(networks[network].baseApiUrl, {
+// 			params: {
+// 				module: 'account',
+// 				action: 'tokennfttx',
+// 				address,
+// 				startblock: 0,
+// 				endblock: 999999999,
+// 				sort: 'asc',
+// 				apikey: 'YourApiKeyToken',
+// 			},
+// 		}),
+// }
+
+const testNftSalesContract = '0x59c2A591FBf7036063962ee26a211ED905033fef'
+
+// TODO: Needs to reflect the owner of the current NFT, this is a plaholder account we are minting NFTs into.
+const galleryAddressWallet = '0xbC19Bd22fefcbC9a62d8DF37a7eBdC1f3510c9df'
+
+// Prep NFT for sale.
+
+// ...
+
+// Set sales contract here
+const testNftContract = '0xf7e5d002e621626f66882413754b80a57461bd99';
+
+async function getPrice() {
+  const ours = new Contract(testNftSalesContract, abiNftSales, getDefaultProvider('ropsten'))
+  const out = await ours.price()
+  console.log({ out })
+  return out
+}
+
+// const nftListAtom = atomWithStorage('nftList', [])
+// const toAtom = atomWithStorage('to', '')
+// const amountAtom = atomWithStorage('amount', '')
+
+// This is the NFT image url
+async function getTokenUri(tokenId) {
+  const ours = new Contract(testNftContract, abiNft, getDefaultProvider('ropsten'))
+  const out = await ours.tokenURI(tokenId)
+  console.log({ out })
+}
+
+// Send eth to the contract, this should do the transfer
+const sendEth = async () => {
+  if (!window.ethereum) {
+    console.log('No wallet connected')
+  }
+  await window.ethereum.send('eth_requestAccounts')
+  const provider = new ethers.providers.Web3Provider(window.ethereum)
+  const signer = provider.getSigner()
+  ethers.utils.getAddress(galleryAddressWallet)
+  await signer.sendTransaction({
+    to: galleryAddressWallet,
+    value: ethers.utils.parseEther(await getPrice()),
+  })
+  console.log('doing it')
+}
+
 type EditionSet = NonNullable<
   ArtworkSidebarCommercial_artwork["edition_sets"]
 >[0]
@@ -55,6 +135,7 @@ export interface ArtworkSidebarCommercialContainerState {
   isErrorModalOpen: boolean
   selectedEditionSet: EditionSet
   walletAddress: any
+  ethPrice: number
 }
 
 const Row: React.FC<FlexProps> = ({ children, ...others }) => (
@@ -77,7 +158,8 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
     isCommittingCreateOfferOrderMutation: false,
     isErrorModalOpen: false,
     selectedEditionSet: this.firstAvailableEcommerceEditionSet(),
-    walletAddress: null
+    walletAddress: null,
+    ethPrice: 0,
   }
 
   firstAvailableEcommerceEditionSet(): EditionSet {
@@ -207,7 +289,7 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
     })
   }
   handleCreateOrderEth() {
-    // TODO: Do eth transaction here.
+    sendEth()
   }
   handleCreateOrder() {
     const { user, mediator } = this.props
@@ -380,6 +462,12 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
     }
   }
 
+  async componentDidMount() {
+    this.setState({
+      ethPrice: await getPrice()
+    })
+  }
+
   render() {
     const { artwork, inquiryComponent } = this.props
     const {
@@ -401,6 +489,7 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
       isCommittingCreateOfferOrderMutation,
       selectedEditionSet,
       walletAddress,
+      ethPrice,
     } = this.state
 
     const editionSelectableOnInquireable = !!(
@@ -437,7 +526,17 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
         <Box textAlign="left">
           {artwork.sale_message && <Separator />}
 
-          {(artwork.edition_sets?.length ?? 0) < 2 ? (
+          {isNFT && (
+            <>
+              <Spacer mt={2} />
+              {this.renderSaleMessage(`ETH ${ethers.utils.formatEther(ethPrice)}`)}
+              <Text variant="xs" color="black60">
+                Contract <a href={`https://ropsten.etherscan.io/address/${testNftSalesContract}`}>{testNftSalesContract}</a>
+              </Text>
+            </>
+          )}
+
+          {!isNFT && (artwork.edition_sets?.length ?? 0) < 2 ? (
             artwork.sale_message && (
               <>
                 <Spacer mt={2} />
