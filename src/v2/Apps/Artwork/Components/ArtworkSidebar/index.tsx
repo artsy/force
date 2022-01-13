@@ -1,12 +1,10 @@
 import { Box, Spacer, Join } from "@artsy/palette"
 import { AuctionTimerFragmentContainer } from "v2/Components/AuctionTimer"
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtworkSidebarArtistsFragmentContainer } from "./ArtworkSidebarArtists"
 import { ArtworkSidebarAuctionPartnerInfoFragmentContainer } from "./ArtworkSidebarAuctionPartnerInfo"
-import { ArtworkSidebarBidActionFragmentContainer } from "./ArtworkSidebarBidAction"
 import { ArtworkSidebarCommercialFragmentContainer } from "./ArtworkSidebarCommercial"
-import { ArtworkSidebarCurrentBidInfoFragmentContainer } from "./ArtworkSidebarCurrentBidInfo"
 import { ArtworkSidebarMetadataFragmentContainer } from "./ArtworkSidebarMetadata"
 import { ArtworkSidebarPartnerInfoFragmentContainer } from "./ArtworkSidebarPartnerInfo"
 import { ContextModule } from "@artsy/cohesion"
@@ -17,6 +15,7 @@ import { SecurePaymentFragmentContainer } from "../TrustSignals/SecurePayment"
 import { VerifiedSellerFragmentContainer } from "../TrustSignals/VerifiedSeller"
 import { BuyerGuaranteeFragmentContainer } from "../TrustSignals/BuyerGuarantee"
 import { ArtworkSidebarExtraLinksFragmentContainer } from "./ArtworkSidebarExtraLinks"
+import { ArtworkSidebarAuctionPollingRefetchContainer } from "./ArtworkSidebarAuctionInfoPolling"
 
 export interface ArtworkSidebarProps {
   artwork: ArtworkSidebar_artwork
@@ -42,8 +41,7 @@ export const ArtworkSidebar: React.FC<ArtworkSidebarProps> = ({
             <ArtworkSidebarAuctionPartnerInfoFragmentContainer
               artwork={artwork}
             />
-            <ArtworkSidebarCurrentBidInfoFragmentContainer artwork={artwork} />
-            <ArtworkSidebarBidActionFragmentContainer
+            <ArtworkSidebarAuctionPollingRefetchContainer
               artwork={artwork}
               me={me}
             />
@@ -83,8 +81,7 @@ export const ArtworkSidebarFragmentContainer = createFragmentContainer(
         ...ArtworkSidebarArtists_artwork
         ...ArtworkSidebarMetadata_artwork
         ...ArtworkSidebarAuctionPartnerInfo_artwork
-        ...ArtworkSidebarCurrentBidInfo_artwork
-        ...ArtworkSidebarBidAction_artwork
+        ...ArtworkSidebarAuctionInfoPolling_artwork
         ...ArtworkSidebarCommercial_artwork
         ...ArtworkSidebarPartnerInfo_artwork
         ...ArtworkSidebarExtraLinks_artwork
@@ -100,7 +97,7 @@ export const ArtworkSidebarFragmentContainer = createFragmentContainer(
     `,
     me: graphql`
       fragment ArtworkSidebar_me on Me {
-        ...ArtworkSidebarBidAction_me
+        ...ArtworkSidebarAuctionInfoPolling_me
       }
     `,
   }
