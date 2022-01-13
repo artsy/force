@@ -8,14 +8,9 @@ interface PartnerBannerProps {
 export const PartnerBanner: React.FC<PartnerBannerProps> = () => {
   return (
     <>
-      <Box backgroundColor={"black100"} width={100} mb={1}>
-        <Text variant="caption" color="white100" textAlign={"center"}>
+      <Box backgroundColor={"black60"} width={100} mb={1}>
+        <Text variant="md" color="black100" textAlign={"center"}>
           Black owned
-        </Text>
-      </Box>
-      <Box backgroundColor={"black100"} width={100}>
-        <Text variant="caption" color="white100" textAlign={"center"}>
-          Woman owned
         </Text>
       </Box>
     </>
