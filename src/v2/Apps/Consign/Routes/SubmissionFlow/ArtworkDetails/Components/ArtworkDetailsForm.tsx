@@ -26,6 +26,7 @@ import {
   normalizePlace,
   Place,
 } from "v2/Components/LocationAutocompleteInput"
+import { compact } from "lodash"
 
 export const getArtworkDetailsFormInitialValues = (
   submission?: ArtworkDetails_submission
@@ -91,6 +92,11 @@ export const ArtworkDetailsForm: React.FC = () => {
   } = useFormikContext<ArtworkDetailsFormModel>()
 
   const limitedEditionRarity = values.rarity === "limited edition"
+  const defaultLocation = compact([
+    values.location.city,
+    values.location.state,
+    values.location.country,
+  ]).join(", ")
 
   const handleAutosuggestError = (isError: boolean) => {
     if (isError) {
@@ -338,7 +344,7 @@ export const ArtworkDetailsForm: React.FC = () => {
             placeholder="Enter City Where Artwork Is Located"
             maxLength={256}
             spellCheck={false}
-            defaultValue={values.location.city}
+            defaultValue={defaultLocation}
             error={touched.location && errors.location?.city}
             onClose={handleLocationClose}
             onSelect={handleLocationSelect}
