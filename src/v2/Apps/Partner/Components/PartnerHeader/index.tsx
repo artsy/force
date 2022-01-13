@@ -36,6 +36,60 @@ export const PartnerHeader: React.FC<PartnerHeaderProps> = ({ partner }) => {
   const canFollow =
     partner && partner.type !== "Auction House" && !!partner.profile
 
+  const diversityBadges = (diverseGalleriesList, partnerSlug) => {
+    let badges: Array<string> = []
+    console.log(
+      "woooo",
+      Object.keys(diverseGalleriesList["blackOwnedGalleries"])
+    )
+    if (
+      Object.keys(diverseGalleriesList["blackOwnedGalleries"]).includes(
+        partnerSlug
+      )
+    ) {
+      badges.push("Black owned")
+    }
+    if (
+      Object.keys(diverseGalleriesList["lgbtq+OwnedGalleries"]).includes(
+        partnerSlug
+      )
+    ) {
+      badges.push("LGBTQ+ owned")
+    }
+    if (
+      Object.keys(diverseGalleriesList["latinxOwnedGalleries"]).includes(
+        partnerSlug
+      )
+    ) {
+      badges.push("Latinx owned")
+    }
+    if (
+      Object.keys(diverseGalleriesList["asianOwnedGalleries"]).includes(
+        partnerSlug
+      )
+    ) {
+      badges.push("Asian owned")
+    }
+    if (
+      Object.keys(diverseGalleriesList["womenOwnedGalleries"]).includes(
+        partnerSlug
+      )
+    ) {
+      badges.push("Women owned")
+    }
+    if (
+      Object.keys(diverseGalleriesList["nonProfitOwnedGalleries"]).includes(
+        partnerSlug
+      )
+    ) {
+      badges.push("Non profit")
+    }
+
+    return badges
+  }
+
+  const allBadges = diversityBadges(diverseGalleries, partner.slug)
+
   return (
     <GridColumns id="jumpto--PartnerHeader" gridRowGap={2} py={[2, 4]}>
       <Column span={[12, 10]}>
@@ -76,17 +130,15 @@ export const PartnerHeader: React.FC<PartnerHeaderProps> = ({ partner }) => {
                 <PartnerHeaderAddress {...partner.locations} />
               </Text>
             )}
-            <PartnerBanner 
-              galleries={diverseGalleries}
-              partnerName={partner.name} 
-            />
+            {allBadges.map(badge => (
+              <PartnerBanner badgeCategory={badge} />
+            ))}
           </Box>
         </Flex>
       </Column>
       <Column span={[12, 2]}>
         {canFollow && (
           <FollowProfileButton
-            // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
             profile={partner.profile}
             user={user}
             contextModule={ContextModule.partnerHeader}
