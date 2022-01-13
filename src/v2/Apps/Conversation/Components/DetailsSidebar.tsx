@@ -24,41 +24,46 @@ import { RouterLink } from "v2/System/Router/RouterLink"
 import { getStatusCopy } from "v2/Apps/Order/Utils/getStatusCopy"
 import { ShippingSummaryItemFragmentContainer } from "v2/Apps/Order/Components/ShippingSummaryItem"
 import { CreditCardSummaryItemFragmentContainer } from "v2/Apps/Order/Components/CreditCardSummaryItem"
+import { SMALL_SCREEN_HEADER_HEIGHT } from "./ConversationHeader"
 
 const DETAIL_BOX_WIDTH = "376px"
 
-// in XS/S/M screens transition is animated with `opacity`. z-index: -1 is also needed when showDetail is false
+// in XS/SM screens transition is animated with `opacity`. z-index: -1 is also needed when showDetail is false
+// in MD screens it is animated with `translate` for better performance (than `width`)
 // in XL screen it is animated with `width` because animation needs to push the mid column content
-// in L screens it is animated with `translate` for better performance (than `width`)
 const DetailsContainer = styled(Flex)<{
   showDetails: boolean
 }>`
+  /* More or less global */
   background-color: ${themeGet("colors.white100")};
-  @media (max-width: ${breakpoints.md}) {
-    position: fixed;
-    top: 114px;
-    width: 100%;
-    transition: opacity 0.3s, z-index 0.3s;
-    opacity: ${({ showDetails }) => (showDetails ? 1 : 0)};
-    z-index: ${({ showDetails }) => (showDetails ? 0 : -1)};
-  }
+  position: absolute;
+  top: ${SMALL_SCREEN_HEADER_HEIGHT};
+  height: 100%;
+
+  /* XS-S-M: Full screen details */
+  width: 100%;
+  transition: opacity 0.3s, z-index 0.3s;
+  opacity: ${({ showDetails }) => (showDetails ? 1 : 0)};
+  z-index: ${({ showDetails }) => (showDetails ? 0 : -1)};
 
   @media (min-width: ${breakpoints.md}) {
+    opacity: initial;
+    z-index: initial;
+    top: 0;
+    width: ${DETAIL_BOX_WIDTH};
+    z-index: 1;
     border-left: 1px solid ${themeGet("colors.black10")};
-  }
-
-  @media (min-width: ${breakpoints.md}) and (max-width: ${breakpoints.xl}) {
-    position: fixed;
     transition: transform 0.3s;
     transform: ${({ showDetails }) =>
       showDetails ? "translateX(0)" : `translateX(${DETAIL_BOX_WIDTH})`};
   }
 
   @media (min-width: ${breakpoints.xl}) {
+    transform: initial;
     position: static;
+    z-index: 0;
     transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     width: ${({ showDetails }) => (showDetails ? DETAIL_BOX_WIDTH : 0)};
-    z-index: 0;
   }
 `
 
@@ -84,7 +89,7 @@ export const DetailsSidebar: FC<DetailsProps> = ({
     conversation.items?.[0]?.item?.__typename !== "%other" &&
     conversation.items?.[0]?.item
 
-  const attachments = conversation?.messagesConnection?.edges
+  const attachments = conversation?.attachmentsConnection?.edges
     ?.map(edge => edge?.node?.attachments)
     ?.filter(attachments => attachments?.length)
     ?.flat()
@@ -272,8 +277,11 @@ export const DetailsSidebarFragmentContainer = createFragmentContainer(
             }
           }
         }
-        messagesConnection(first: $count, after: $after, sort: DESC)
-          @connection(key: "Messages_messagesConnection", filters: []) {
+        attachmentsConnection: messagesConnection(
+          first: $count
+          after: $after
+          sort: DESC
+        ) @connection(key: "Details_attachmentsConnection", filters: []) {
           edges {
             node {
               attachments {

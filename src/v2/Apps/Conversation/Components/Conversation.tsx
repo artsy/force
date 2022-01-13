@@ -119,10 +119,12 @@ const Conversation: React.FC<ConversationProps> = props => {
 
   const { match } = useRouter()
 
+  const conversationID = match?.params?.conversationID
+
   // TODO: refactor
   useEffect(() => {
     initialScroll.current = false
-  }, [match?.params?.conversationID])
+  }, [conversationID])
 
   useEffect(() => {
     initialScroll.current = !fetchingMore
