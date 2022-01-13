@@ -108,11 +108,13 @@ const sendEth = async () => {
   }
   await window.ethereum.send('eth_requestAccounts')
   const provider = new ethers.providers.Web3Provider(window.ethereum)
+  console.log('almost doing it')
   const signer = provider.getSigner()
   ethers.utils.getAddress(galleryAddressWallet)
+  const price = await getPrice()
   await signer.sendTransaction({
     to: galleryAddressWallet,
-    value: ethers.utils.parseEther(await getPrice()),
+    value: price,
   })
   console.log('doing it')
 }
