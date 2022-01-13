@@ -9,13 +9,11 @@
       "name": "Richard Beavers Gallery",
       "id": "574328e39c18db3ccf0039e7",
       "slug": "richard-beavers-gallery"
-
     },
     "tiwani-contemporary": {
       "name": "Tiwani Contemporary",
       "id": "546ccf197261691969e10000",
       "slug": "tiwani-contemporary"
-
     },
     "50-golborne": {
       "name": "50 Golborne",
@@ -196,56 +194,134 @@
       "name": "Espace D'art Contemporain 14N 61W",
       "id": "5b1fe2da5b2fba137bcda83e",
       "slug": "espace-dart-contemporain-14n-61w"
+    },
+    "art-lead-her": {
+      "name": "Art Lead Her",
+      "id": "5ff756f6c41b29001206784f",
+      "slug": "art-lead-her"
     }
   },
   "lgbtq+OwnedGalleries": {
-    "partner-slug-1": {
-      "name": "",
-      "id": ""
+    "clampart": {
+      "name": "ClampArt",
+      "id": "5141c8b2bf12487ca00003db"
     },
-    "partner-slug-2": {
-      "name": "",
-      "id": ""
+    "jessica-silverman": {
+      "name": "Jessica Silverman",
+      "id": "50d099927f9dd087e3000a97",
+      "slug" : "jessica-silverman"
     }
   },
   "latinxOwnedGalleries": {
-    "partner-slug-1": {
-      "name": "",
-      "id": ""
+    "moran-moran": {
+      "name": "Morán Morán",
+      "id": "51686138ef3bd9becd0003fa",
+      "slug": "moran-moran"
     },
-    "partner-slug-2": {
-      "name": "",
-      "id": ""
+    "bermudez-projects": {
+      "name": "Bermudez Projects",
+      "id": "5cf1a950eb39800011e83cda",
+      "slug": "bermudez-projects"
+    },
+    "lgm-galeria": {
+      "name": "LGM Galería",
+      "id": "52b7bd99ebad6427d500041d",
+      "slug": "lgm-galeria"
     }
   },
   "asianOwnedGalleries": {
-    "partner-slug-1": {
-      "name": "",
-      "id": ""
+    "prithvi-fine-art-and-cultural-centre": {
+      "name": "Prithvi Fine Art and Cultural Centre",
+      "id": "60659dd8fa00f5000dddcbe1",
+      "slug": "prithvi-fine-art-and-cultural-centre"
     },
-    "partner-slug-2": {
-      "name": "",
-      "id": ""
+    "warin-lab-contemporary": {
+      "name": "Warin Lab Contemporary",
+      "id": "616e5ae3f69f03000bdb0314",
+      "slug": "warin-lab-contemporary"
+    },
+    "taguchi-fine-art": {
+      "name": "Taguchi Fine Art",
+      "id": "54ff4d52776f725aa6900100",
+      "slug": "taguchi-fine-art"
     }
   },
   "womenOwnedGalleries": {
-    "partner-slug-1": {
-      "name": "",
-      "id": ""
+    "mariane-ibrahim-gallery": {
+      "name": "Mariane Ibrahim Gallery",
+      "id": "53d26e7b776f723ccc140100",
+      "slug": "mariane-ibrahim-gallery"
     },
-    "partner-slug-2": {
-      "name": "",
-      "id": ""
+    "marian-goodman-gallery": {
+      "name": "Marian Goodman Gallery",
+      "id": "51912367a0134c6130000015",
+      "slug": "marian-goodman-gallery"
+    },
+    "paula-cooper-gallery": {
+      "name": "Paula Cooper Gallery",
+      "id": "51912367a0134c6130000019"
+    },
+    "gladstone-gallery": {
+      "name": "Gladstone Gallery",
+      "id": "51912367a0134c613000001d",
+      "slug": "gladstone-gallery"
+    },
+    "jenkins-johnson-gallery": {
+      "name": "Jenkins Johnson Gallery",
+      "id": "525592dfc9dc244c0400011f",
+      "slug": "jenkins-johnson-gallery"
+    },
+    "salon-94": {
+      "name": "Salon 94",
+      "id": "4e259f0a9441930001006a25",
+      "slug": "salon-94"
+    },
+    "gavlak": {
+      "name": "Gavlak",
+      "id": "50c5551c4822d3150900003e",
+      "slug": "gavlak"
+    },
+    "jessica-silverman": {
+      "name": "Jessica Silverman",
+      "id": "50d099927f9dd087e3000a97",
+      "slug" : "jessica-silverman"
+    },
+    "arnika-dawkins-gallery": {
+      "name": "Arnika Dawkins Gallery",
+      "id": "58a37fd3ab60ca4ae173c30a",
+      "slug": "arnika-dawkins-gallery"
+    },
+    "galerie-carole-kvasnevski": {
+      "name": "Galerie Carole Kvasnevski",
+      "id": "5d7787ffae107a0012c7efc1",
+      "slug": "galerie-carole-kvasnevski"
+    },
+    "stella-jones-gallery": {
+      "name": "Stella Jones Gallery",
+      "id": "5f3bf08dc0b6340012922d9f",
+      "slug": "stella-jones-gallery"
+    },
+    "art-lead-her": {
+      "name": "Art Lead Her",
+      "id": "5ff756f6c41b29001206784f",
+      "slug": "art-lead-her"
     }
   },
   "nonProfitOwnedGalleries": {
-    "partner-slug-1": {
-      "name": "",
-      "id": ""
+    "prithvi-fine-art-and-cultural-centre": {
+      "name": "Prithvi Fine Art and Cultural Centre",
+      "id": "60659dd8fa00f5000dddcbe1",
+      "slug": "prithvi-fine-art-and-cultural-centre"
     },
-    "partner-slug-2": {
-      "name": "",
-      "id": ""
+    "art-lead-her": {
+      "name": "Art Lead Her",
+      "id": "5ff756f6c41b29001206784f",
+      "slug": "art-lead-her"
+    },
+    "fountain-house-gallery": {
+      "name": "Fountain House Gallery",
+      "id": "55a3ed79726169063d0000b7",
+      "slug": "fountain-house-gallery"
     }
   }
 }
