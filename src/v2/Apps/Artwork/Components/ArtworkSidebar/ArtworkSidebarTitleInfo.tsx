@@ -10,8 +10,17 @@ export interface ArtworkSidebarTitleInfoProps {
   artwork: ArtworkSidebarTitleInfo_artwork
 }
 
-export async function getNFTMetadata(tokenID: string) {
-  const ourNFTContractAddr = "0xA3fBe7EC8D3d4b9452654C666AFC98ac13eeBF6E"
+// nfts for sale
+export const tokenID = "5"
+export const nftMap = {
+  "2": "0x64fF572AAED39Ebccaa322ab931c6F908f46e0bB",
+  "3": "0x5c401E8e99239aD36fDab581f57536a2F4659b4B",
+  "5": "0x1a414ACfB6c35fb4732B276ea7639383440f99e7",
+  "7": "0x3E12BaD7F1BE5b54E1a664758C3b5e6008e34112",
+  "9": "0xEb7e908E1Ea86d47A86694A7F6CCdae5151337db",
+}
+export const ourNFTContractAddr = "0xA3fBe7EC8D3d4b9452654C666AFC98ac13eeBF6E"
+export async function getNFTMetadata() {
   const provider = getDefaultProvider("ropsten")
 
   const ourNFTContract = new Contract(
@@ -37,7 +46,7 @@ export class ArtworkSidebarTitleInfo extends Component<
   state = { metadata: { name: "" } }
 
   async componentDidMount() {
-    const metadata = await getNFTMetadata("1")
+    const metadata = await getNFTMetadata()
     this.setState({ metadata })
   }
 

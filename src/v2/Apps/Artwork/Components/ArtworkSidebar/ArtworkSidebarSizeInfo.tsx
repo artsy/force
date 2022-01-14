@@ -16,7 +16,7 @@ export class ArtworkSidebarSizeInfo extends Component<
   state = { metadata: { attributes: [], description: "" } }
 
   async componentDidMount() {
-    const metadata = await getNFTMetadata("1")
+    const metadata = await getNFTMetadata()
     this.setState({ metadata })
   }
 

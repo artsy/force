@@ -20,7 +20,7 @@ export const ArtworkImageBrowser: React.FC<ArtworkImageBrowserProps> = ({
   const [image, setImage] = React.useState("")
   React.useEffect(() => {
     const doIt = async () => {
-      const metadata = await getNFTMetadata("1")
+      const metadata = await getNFTMetadata()
       setImage(metadata.image)
     }
     doIt()

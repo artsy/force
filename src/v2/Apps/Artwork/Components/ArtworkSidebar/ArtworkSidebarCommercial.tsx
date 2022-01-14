@@ -40,20 +40,17 @@ import { useInquiry, WithInquiryProps } from "v2/Components/Inquiry/useInquiry"
 // NFT stuff
 import { ethers, Contract, getDefaultProvider } from "ethers"
 import abiNftSales from "./abi-artsy-nft-sales.json"
-
-const testNftSalesContract = "0x59c2A591FBf7036063962ee26a211ED905033fef"
+import { nftMap, ourNFTContractAddr, tokenID } from "./ArtworkSidebarTitleInfo"
 
 // TODO: Needs to reflect the owner of the current NFT, this is a plaholder account we are minting NFTs into.
-const galleryAddressWallet = "0xbC19Bd22fefcbC9a62d8DF37a7eBdC1f3510c9df"
 
 async function getPrice() {
   const ours = new Contract(
-    testNftSalesContract,
+    nftMap[tokenID],
     abiNftSales,
     getDefaultProvider("ropsten")
   )
   const out = await ours.price()
-  console.log({ out })
   return out
 }
 
@@ -66,13 +63,18 @@ const sendEth = async () => {
   const provider = new ethers.providers.Web3Provider(window.ethereum)
   console.log("almost doing it")
   const signer = provider.getSigner()
-  ethers.utils.getAddress(galleryAddressWallet)
+  //   ethers.utils.getAddress(nftMap[tokenID])
   const price = await getPrice()
+  //   const from = (
+  //     await window.ethereum.request({ method: "eth_requestAccounts" })
+  //   )[0]
   await signer.sendTransaction({
-    to: galleryAddressWallet,
+    // from,
+    to: nftMap[tokenID],
     value: price,
+    // gasLimit: 1000000,
   })
-  console.log("doing it")
+  console.log("doing it", price, signer)
 }
 
 type EditionSet = NonNullable<
@@ -494,11 +496,20 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
                 `ETH ${ethers.utils.formatEther(ethPrice)}`
               )}
               <Text variant="xs" color="black60">
-                Contract{" "}
+                Token ID:{" "}
                 <a
-                  href={`https://ropsten.etherscan.io/address/${testNftSalesContract}`}
+                  href={`https://ropsten.etherscan.io/token/${ourNFTContractAddr}?a=${tokenID}`}
                 >
-                  {testNftSalesContract}
+                  {tokenID}
+                </a>
+              </Text>
+              <Text variant="xs" color="black60">
+                Contract:{" "}
+                <a
+                  href={`https://ropsten.etherscan.io/address/${ourNFTContractAddr}`}
+                >
+                  {ourNFTContractAddr.slice(0, 7)}…
+                  {ourNFTContractAddr.slice(-5)}
                 </a>
               </Text>
             </>
@@ -527,28 +538,31 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
             </>
           )}
 
-          {artworkEcommerceAvailable &&
+          {!isNFT &&
+            artworkEcommerceAvailable &&
             (artwork.shippingOrigin || artwork.shippingInfo) && (
               <Spacer mt={1} />
             )}
 
-          {artworkEcommerceAvailable && artwork.shippingOrigin && (
+          {!isNFT && artworkEcommerceAvailable && artwork.shippingOrigin && (
             <Text variant="xs" color="black60">
               Ships from {artwork.shippingOrigin}
             </Text>
           )}
 
-          {artworkEcommerceAvailable && artwork.shippingInfo && (
+          {!isNFT && artworkEcommerceAvailable && artwork.shippingInfo && (
             <Text variant="xs" color="black60">
               {artwork.shippingInfo}
             </Text>
           )}
 
-          {artworkEcommerceAvailable && artwork.priceIncludesTaxDisplay && (
-            <Text variant="xs" color="black60">
-              {artwork.priceIncludesTaxDisplay}
-            </Text>
-          )}
+          {!isNFT &&
+            artworkEcommerceAvailable &&
+            artwork.priceIncludesTaxDisplay && (
+              <Text variant="xs" color="black60">
+                {artwork.priceIncludesTaxDisplay}
+              </Text>
+            )}
 
           {isInquireable || isAcquireable || isOfferable ? (
             artwork.sale_message && <Spacer mt={2} />
