@@ -9,7 +9,6 @@ import { ArtworksRailPlaceholder } from "./ArtworkRailPlaceholder"
 import { ViewAllButton } from "./ViewAllButton"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import { extractNodes } from "v2/Utils/extractNodes"
-import { ContextModule } from "@artsy/cohesion"
 
 interface ArtworksRailProps extends BoxProps {
   partner: ArtworksRail_partner
