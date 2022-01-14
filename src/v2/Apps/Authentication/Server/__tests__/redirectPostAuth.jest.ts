@@ -1,23 +1,29 @@
 import { redirectPostAuth } from "../redirectPostAuth"
+import { getENV } from "v2/Utils/getENV"
+
+jest.mock("v2/Utils/getENV", () => ({
+  getENV: jest.fn(),
+}))
 
 describe("redirectPostAuth", () => {
+  const mockGetENV = getENV as jest.Mock
   const redirectSpy = jest.fn()
-  let originalEnv
 
-  beforeAll(() => {
-    originalEnv = process.env
-    process.env = Object.assign({}, originalEnv, {
-      ALLOWED_REDIRECT_HOSTS:
-        "api.artsy.net,live.artsy.net,foo.test.com,localhost",
+  beforeEach(() => {
+    mockGetENV.mockImplementation(key => {
+      switch (key) {
+        case "APP_URL":
+          return "https://artsy.net"
+        case "ALLOWED_REDIRECT_HOSTS":
+          return "api.artsy.net,live.artsy.net,foo.test.com,localhost"
+        case "NODE_ENV":
+          return "development"
+      }
     })
   })
 
   afterEach(() => {
     jest.resetAllMocks()
-  })
-
-  afterAll(() => {
-    process.env = originalEnv!
   })
 
   const setup = ({ req = {}, res = {} }) => {
@@ -67,7 +73,16 @@ describe("redirectPostAuth", () => {
   })
 
   it("does not redirect to localhost if not in development", () => {
-    process.env.NODE_ENV = "production"
+    mockGetENV.mockImplementation(key => {
+      switch (key) {
+        case "APP_URL":
+          return "https://artsy.net"
+        case "ALLOWED_REDIRECT_HOSTS":
+          return "api.artsy.net,live.artsy.net,foo.test.com,localhost"
+        case "NODE_ENV":
+          return "production"
+      }
+    })
     const url = "http://localhost:3000/foo"
 
     setup({
@@ -78,7 +93,6 @@ describe("redirectPostAuth", () => {
   })
 
   it("redirects to localhost if in development", () => {
-    process.env.NODE_ENV = "development"
     const url = "http://localhost:3000/foo"
 
     setup({

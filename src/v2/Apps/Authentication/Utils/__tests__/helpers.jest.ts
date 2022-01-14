@@ -8,12 +8,16 @@ import { ModalType } from "v2/Components/Authentication/Types"
 import { ContextModule, Intent } from "@artsy/cohesion"
 import { mockLocation } from "v2/DevTools/mockLocation"
 import { mediator } from "lib/mediator"
+import { getENV } from "v2/Utils/getENV"
 
 jest.mock("cookies-js", () => ({
   set: jest.fn(),
   get: jest.fn().mockReturnValue("csrf-token"),
 }))
 const CookiesSet = require("cookies-js").set as jest.Mock
+jest.mock("v2/Utils/getENV", () => ({
+  getENV: jest.fn(),
+}))
 
 jest.mock("sharify", () => {
   return {
@@ -32,6 +36,8 @@ jest.mock("sharify", () => {
 })
 
 describe("Authentication Helpers", () => {
+  const mockGetENV = getENV as jest.Mock
+
   beforeEach(() => {
     mockLocation({
       pathname: "/articles",
@@ -52,6 +58,15 @@ describe("Authentication Helpers", () => {
           }),
       })
     )
+
+    mockGetENV.mockImplementation(key => {
+      switch (key) {
+        case "APP_URL":
+          return "https://artsy.net"
+        case "ALLOWED_REDIRECT_HOSTS":
+          return "off.artsy.net"
+      }
+    })
   })
 
   describe("#setCookies", () => {

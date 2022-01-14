@@ -17,6 +17,7 @@ import { pick } from "lodash"
 import { mediator } from "lib/mediator"
 import { reportError } from "v2/Utils/errors"
 import { trackEvent } from "lib/analytics/helpers"
+import { getENV } from "v2/Utils/getENV"
 
 interface AnalyticsOptions {
   auth_redirect: string
@@ -103,7 +104,7 @@ export const handleSubmit = async (
 
       const result = await apiAuthWithRedirectUrl(res, afterAuthURL)
 
-      if (result.origin === sd.APP_URL) {
+      if (result.origin === getENV("APP_URL")) {
         window.location.assign(result.href)
       }
 
@@ -149,14 +150,9 @@ export async function apiAuthWithRedirectUrl(
   response: Response,
   redirectPath: URL
 ): Promise<URL> {
-  let redirectURL = redirectPath
-  // const strippedRedirectURL =
-  //   redirectURL.origin + redirectURL.pathname + redirectURL.search
-
   const accessToken = (response["user"] || {}).accessToken
 
-  // TODO: Update to remove indirection pending discussion
-  const appRedirectURL = redirectURL
+  const appRedirectURL = redirectPath
 
   // There isn't an access token when we don't have a valid session, for example,
   // when the user is resetting their password.

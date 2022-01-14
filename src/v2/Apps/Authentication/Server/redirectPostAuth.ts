@@ -1,13 +1,14 @@
+import { getENV } from "v2/Utils/getENV"
+
 export function redirectPostAuth({ req, res }) {
   const redirectTo = req.query["redirectTo"]
 
   const configuredAllowedHosts =
-    process.env.ALLOWED_REDIRECT_HOSTS?.split(",") || []
+    getENV("ALLOWED_REDIRECT_HOSTS")?.split(",") || []
 
   // verify that this is a *.artsy.net domain
   const allowedHosts = configuredAllowedHosts.filter(url => {
-    if (url === "localhost" && process.env.NODE_ENV === "development")
-      return true
+    if (url === "localhost" && getENV("NODE_ENV") === "development") return true
 
     const splitHostname = url.split(".")
     splitHostname.shift()
@@ -17,7 +18,7 @@ export function redirectPostAuth({ req, res }) {
   let redirectURL = new URL(redirectTo)
 
   if (!allowedHosts.includes(redirectURL.hostname)) {
-    redirectURL = new URL("/", res.locals.sd.APP_URL)
+    redirectURL = new URL("/", getENV("APP_URL"))
   }
 
   res.redirect(redirectURL.href)
