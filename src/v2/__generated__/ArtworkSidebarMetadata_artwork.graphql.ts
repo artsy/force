@@ -12,6 +12,7 @@ export type ArtworkSidebarMetadata_artwork = {
     readonly sale_artwork: {
         readonly lot_label: string | null;
     } | null;
+    readonly category: string | null;
     readonly " $fragmentRefs": FragmentRefs<"ArtworkSidebarTitleInfo_artwork" | "ArtworkSidebarSizeInfo_piece" | "ArtworkSidebarClassification_artwork">;
     readonly " $refType": "ArtworkSidebarMetadata_artwork";
 };
@@ -73,6 +74,13 @@ const node: ReaderFragment = {
       "storageKey": null
     },
     {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "category",
+      "storageKey": null
+    },
+    {
       "args": null,
       "kind": "FragmentSpread",
       "name": "ArtworkSidebarTitleInfo_artwork"
@@ -91,5 +99,5 @@ const node: ReaderFragment = {
   "type": "Artwork",
   "abstractKey": null
 };
-(node as any).hash = 'ee1d620cfeeb5424fe48e300e387ffa4';
+(node as any).hash = '7a2f60e7fb47876c8df110c1ecd67f43';
 export default node;

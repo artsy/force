@@ -1,5 +1,5 @@
 import { Text } from "@artsy/palette"
-import { Component } from "react";
+import { Component } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtworkSidebarClassificationFragmentContainer } from "./ArtworkSidebarClassification"
 import { ArtworkSidebarSizeInfoFragmentContainer } from "./ArtworkSidebarSizeInfo"
@@ -20,6 +20,8 @@ export class ArtworkSidebarMetadata extends Component<
       ? artwork.sale_artwork?.lot_label
       : null
 
+    const isNFT = artwork.category === "NFT"
+
     return (
       <>
         {lotLabel && (
@@ -36,7 +38,10 @@ export class ArtworkSidebarMetadata extends Component<
         <ArtworkSidebarTitleInfoFragmentContainer artwork={artwork} />
 
         {(artwork.edition_sets?.length ?? 0) < 2 && (
-          <ArtworkSidebarSizeInfoFragmentContainer piece={artwork} />
+          <ArtworkSidebarSizeInfoFragmentContainer
+            piece={artwork}
+            isNFT={isNFT}
+          />
         )}
 
         <ArtworkSidebarClassificationFragmentContainer artwork={artwork} />
@@ -57,6 +62,7 @@ export const ArtworkSidebarMetadataFragmentContainer = createFragmentContainer(
         sale_artwork: saleArtwork {
           lot_label: lotLabel
         }
+        category
         ...ArtworkSidebarTitleInfo_artwork
         ...ArtworkSidebarSizeInfo_piece
         ...ArtworkSidebarClassification_artwork

@@ -37,15 +37,14 @@ import { ArtworkSidebarSizeInfoFragmentContainer as SizeInfo } from "./ArtworkSi
 import { Mediator } from "lib/mediator"
 import { useInquiry, WithInquiryProps } from "v2/Components/Inquiry/useInquiry"
 
-
 // NFT stuff
-import { ethers, Contract, getDefaultProvider } from 'ethers'
-import axios from 'axios'
+import { ethers, Contract, getDefaultProvider } from "ethers"
+import axios from "axios"
 // import { useAtom } from 'jotai'
 // import { atomWithStorage } from 'jotai/utils'
 // import { Address, Fetcher, NftProvider, useNft } from 'use-nft'
-import abiNft from './abi-nft.json'
-import abiNftSales from './abi-artsy-nft-sales.json'
+import abiNft from "./abi-nft.json"
+import abiNftSales from "./abi-artsy-nft-sales.json"
 // import { useEffect, useState } from 'react'
 
 // const networks = {
@@ -71,20 +70,24 @@ import abiNftSales from './abi-artsy-nft-sales.json'
 // 		}),
 // }
 
-const testNftSalesContract = '0x59c2A591FBf7036063962ee26a211ED905033fef'
+const testNftSalesContract = "0x59c2A591FBf7036063962ee26a211ED905033fef"
 
 // TODO: Needs to reflect the owner of the current NFT, this is a plaholder account we are minting NFTs into.
-const galleryAddressWallet = '0xbC19Bd22fefcbC9a62d8DF37a7eBdC1f3510c9df'
+const galleryAddressWallet = "0xbC19Bd22fefcbC9a62d8DF37a7eBdC1f3510c9df"
 
 // Prep NFT for sale.
 
 // ...
 
 // Set sales contract here
-const testNftContract = '0xf7e5d002e621626f66882413754b80a57461bd99';
+const testNftContract = "0xf7e5d002e621626f66882413754b80a57461bd99"
 
 async function getPrice() {
-  const ours = new Contract(testNftSalesContract, abiNftSales, getDefaultProvider('ropsten'))
+  const ours = new Contract(
+    testNftSalesContract,
+    abiNftSales,
+    getDefaultProvider("ropsten")
+  )
   const out = await ours.price()
   console.log({ out })
   return out
@@ -94,21 +97,14 @@ async function getPrice() {
 // const toAtom = atomWithStorage('to', '')
 // const amountAtom = atomWithStorage('amount', '')
 
-// This is the NFT image url
-async function getTokenUri(tokenId) {
-  const ours = new Contract(testNftContract, abiNft, getDefaultProvider('ropsten'))
-  const out = await ours.tokenURI(tokenId)
-  console.log({ out })
-}
-
 // Send eth to the contract, this should do the transfer
 const sendEth = async () => {
   if (!window.ethereum) {
-    console.log('No wallet connected')
+    console.log("No wallet connected")
   }
-  await window.ethereum.send('eth_requestAccounts')
+  await window.ethereum.send("eth_requestAccounts")
   const provider = new ethers.providers.Web3Provider(window.ethereum)
-  console.log('almost doing it')
+  console.log("almost doing it")
   const signer = provider.getSigner()
   ethers.utils.getAddress(galleryAddressWallet)
   const price = await getPrice()
@@ -116,7 +112,7 @@ const sendEth = async () => {
     to: galleryAddressWallet,
     value: price,
   })
-  console.log('doing it')
+  console.log("doing it")
 }
 
 type EditionSet = NonNullable<
@@ -285,9 +281,11 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
     ],
   }))
   async handleWalletConnect() {
-    const wallet = await window.ethereum.request({ method: 'eth_requestAccounts' });
+    const wallet = await window.ethereum.request({
+      method: "eth_requestAccounts",
+    })
     this.setState({
-      walletAddress: wallet
+      walletAddress: wallet,
     })
   }
   handleCreateOrderEth() {
@@ -466,7 +464,7 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
 
   async componentDidMount() {
     this.setState({
-      ethPrice: await getPrice()
+      ethPrice: await getPrice(),
     })
   }
 
@@ -517,8 +515,9 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
     const shouldDisplayMakeOfferAsPrimary: boolean | null =
       shouldDisplayMakeOfferButton && shouldDisplayContactGalleryButton
 
-    const isNFT = category === 'NFT'
-    const isMetamaskInstalled = typeof window !== 'undefined' && typeof window.ethereum !== 'undefined'
+    const isNFT = category === "NFT"
+    const isMetamaskInstalled =
+      typeof window !== "undefined" && typeof window.ethereum !== "undefined"
     const isWalletConnected = walletAddress !== null
 
     return (
@@ -531,9 +530,16 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
           {isNFT && (
             <>
               <Spacer mt={2} />
-              {this.renderSaleMessage(`ETH ${ethers.utils.formatEther(ethPrice)}`)}
+              {this.renderSaleMessage(
+                `ETH ${ethers.utils.formatEther(ethPrice)}`
+              )}
               <Text variant="xs" color="black60">
-                Contract <a href={`https://ropsten.etherscan.io/address/${testNftSalesContract}`}>{testNftSalesContract}</a>
+                Contract{" "}
+                <a
+                  href={`https://ropsten.etherscan.io/address/${testNftSalesContract}`}
+                >
+                  {testNftSalesContract}
+                </a>
               </Text>
             </>
           )}
@@ -591,10 +597,7 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
           )}
 
           {isNFT && !isMetamaskInstalled && (
-            <Button
-              width="100%"
-              size="medium"
-            >
+            <Button width="100%" size="medium">
               Please install Metamask to purchase NFTs
             </Button>
           )}

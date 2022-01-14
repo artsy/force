@@ -1,6 +1,6 @@
 import { Box, Spacer, Join } from "@artsy/palette"
 import { AuctionTimerFragmentContainer } from "v2/Components/AuctionTimer"
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtworkSidebarArtistsFragmentContainer } from "./ArtworkSidebarArtists"
 import { ArtworkSidebarAuctionPartnerInfoFragmentContainer } from "./ArtworkSidebarAuctionPartnerInfo"
