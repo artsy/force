@@ -22,6 +22,27 @@ export const FilledOutMetadataNoEditions: ArtworkSidebarMetadata_Test_QueryRawRe
   title: "Easel (Vydock)",
 }
 
+export const FilledOutMetadataNoSizeInfo: ArtworkSidebarMetadata_Test_QueryRawResponse["artwork"] = {
+  ...FullArtworkFixture,
+  __isSellable: "Artwork",
+  attributionClass: {
+    id: "opaque-attribution-class-id",
+    shortDescription: "This is a unique work",
+  },
+  date: "1995",
+  dimensions: {
+    cm: null,
+    in: null,
+  },
+  edition_of: "",
+  edition_sets: [],
+  id: "filled_out_metadata_no_editions",
+  is_biddable: false,
+  medium: "Acrylic and graphite on bonded aluminium",
+  sale_artwork: null,
+  title: "Easel (Vydock)",
+}
+
 export const FilledOutMetadataOneEditionSet: ArtworkSidebarMetadata_Test_QueryRawResponse["artwork"] = {
   ...FullArtworkFixture,
   __isSellable: "Artwork",
