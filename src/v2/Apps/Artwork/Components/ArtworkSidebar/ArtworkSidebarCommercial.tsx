@@ -493,7 +493,9 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
             <>
               <Spacer mt={2} />
               {this.renderSaleMessage(
-                `ETH ${ethers.utils.formatEther(ethPrice)}`
+                ethers.utils.formatEther(ethPrice) === "0.0"
+                  ? "SOLD"
+                  : `ETH ${ethers.utils.formatEther(ethPrice)}`
               )}
               <Text variant="xs" color="black60">
                 Token ID:{" "}
