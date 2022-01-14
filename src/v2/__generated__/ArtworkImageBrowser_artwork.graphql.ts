@@ -6,6 +6,7 @@ import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkImageBrowser_artwork = {
     readonly internalID: string;
+    readonly category: string | null;
     readonly images: ReadonlyArray<{
         readonly internalID: string | null;
         readonly isDefault: boolean | null;
@@ -36,6 +37,13 @@ return {
   "name": "ArtworkImageBrowser_artwork",
   "selections": [
     (v0/*: any*/),
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "category",
+      "storageKey": null
+    },
     {
       "alias": null,
       "args": null,
@@ -75,5 +83,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = 'e8fb9e7d20d42ae658fa5c0c8e46063f';
+(node as any).hash = 'c3d428cc896597b89668d43937db8775';
 export default node;

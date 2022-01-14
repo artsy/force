@@ -1,5 +1,5 @@
 import { ArtworkImageBrowser_artwork } from "v2/__generated__/ArtworkImageBrowser_artwork.graphql"
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtworkActionsFragmentContainer as ArtworkActions } from "./ArtworkActions"
 import { Box, Spacer } from "@artsy/palette"
@@ -8,6 +8,7 @@ import { ArtworkImageBrowserLargeFragmentContainer } from "./ArtworkImageBrowser
 import { ArtworkImageBrowserSmallFragmentContainer } from "./ArtworkImageBrowserSmall"
 import { Media } from "v2/Utils/Responsive"
 import { useCursor } from "use-cursor"
+import { getNFTMetadata } from "../ArtworkSidebar/ArtworkSidebarTitleInfo"
 
 export interface ArtworkImageBrowserProps {
   artwork: ArtworkImageBrowser_artwork
@@ -16,6 +17,15 @@ export interface ArtworkImageBrowserProps {
 export const ArtworkImageBrowser: React.FC<ArtworkImageBrowserProps> = ({
   artwork,
 }) => {
+  const [image, setImage] = React.useState("")
+  React.useEffect(() => {
+    const doIt = async () => {
+      const metadata = await getNFTMetadata("1")
+      setImage(metadata.image)
+    }
+    doIt()
+  }, [])
+
   const { images } = artwork
 
   const { index, handleNext, handlePrev, setCursor } = useCursor({
@@ -31,28 +41,56 @@ export const ArtworkImageBrowser: React.FC<ArtworkImageBrowserProps> = ({
     return null
   }
 
+  const isNFT = artwork.category === "NFT"
+
   return (
     <Box
       // Keyed to the artwork ID so that state is reset on route changes
       key={artwork.internalID}
       data-test={ContextModule.artworkImage}
     >
-      <Media at="xs">
-        <ArtworkImageBrowserSmallFragmentContainer
-          artwork={artwork}
-          index={index}
-          setIndex={setCursor}
-        />
-      </Media>
+      {isNFT && (
+        <div
+          style={{
+            flex: 1,
+            marginTop: 20,
+            paddingLeft: 150,
+            width: "60%",
+            height: 700,
+            paddingTop: 100,
+          }}
+        >
+          <img
+            src={image}
+            style={{
+              width: "100%",
+              transform: "scale(1.5)",
+            }}
+            alt="some nft"
+          />
+        </div>
+      )}
 
-      <Media greaterThan="xs">
-        <ArtworkImageBrowserLargeFragmentContainer
-          artwork={artwork}
-          index={index}
-          onNext={handleNext}
-          onPrev={handlePrev}
-        />
-      </Media>
+      {!isNFT && (
+        <>
+          <Media at="xs">
+            <ArtworkImageBrowserSmallFragmentContainer
+              artwork={artwork}
+              index={index}
+              setIndex={setCursor}
+            />
+          </Media>
+
+          <Media greaterThan="xs">
+            <ArtworkImageBrowserLargeFragmentContainer
+              artwork={artwork}
+              index={index}
+              onNext={handleNext}
+              onPrev={handlePrev}
+            />
+          </Media>
+        </>
+      )}
 
       <Spacer mt={2} />
 
@@ -73,6 +111,7 @@ export const ArtworkImageBrowserFragmentContainer = createFragmentContainer<
       ...ArtworkImageBrowserSmall_artwork
       ...ArtworkImageBrowserLarge_artwork
       internalID
+      category
       images {
         internalID
         isDefault

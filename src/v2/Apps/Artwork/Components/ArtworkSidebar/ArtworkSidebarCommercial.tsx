@@ -39,48 +39,12 @@ import { useInquiry, WithInquiryProps } from "v2/Components/Inquiry/useInquiry"
 
 // NFT stuff
 import { ethers, Contract, getDefaultProvider } from "ethers"
-import axios from "axios"
-// import { useAtom } from 'jotai'
-// import { atomWithStorage } from 'jotai/utils'
-// import { Address, Fetcher, NftProvider, useNft } from 'use-nft'
-import abiNft from "./abi-nft.json"
 import abiNftSales from "./abi-artsy-nft-sales.json"
-// import { useEffect, useState } from 'react'
-
-// const networks = {
-// 	ethRopsten: {
-// 		displayName: 'eth ropsten',
-// 		baseApiUrl: 'https://api-ropsten.etherscan.io/api',
-// 		baseUrl: 'https://ropsten.etherscan.io',
-// 	},
-// }
-
-// const api = {
-// 	getNFTs: (network, address) =>
-// 		axios.get(networks[network].baseApiUrl, {
-// 			params: {
-// 				module: 'account',
-// 				action: 'tokennfttx',
-// 				address,
-// 				startblock: 0,
-// 				endblock: 999999999,
-// 				sort: 'asc',
-// 				apikey: 'YourApiKeyToken',
-// 			},
-// 		}),
-// }
 
 const testNftSalesContract = "0x59c2A591FBf7036063962ee26a211ED905033fef"
 
 // TODO: Needs to reflect the owner of the current NFT, this is a plaholder account we are minting NFTs into.
 const galleryAddressWallet = "0xbC19Bd22fefcbC9a62d8DF37a7eBdC1f3510c9df"
-
-// Prep NFT for sale.
-
-// ...
-
-// Set sales contract here
-const testNftContract = "0xf7e5d002e621626f66882413754b80a57461bd99"
 
 async function getPrice() {
   const ours = new Contract(
@@ -92,10 +56,6 @@ async function getPrice() {
   console.log({ out })
   return out
 }
-
-// const nftListAtom = atomWithStorage('nftList', [])
-// const toAtom = atomWithStorage('to', '')
-// const amountAtom = atomWithStorage('amount', '')
 
 // Send eth to the contract, this should do the transfer
 const sendEth = async () => {
