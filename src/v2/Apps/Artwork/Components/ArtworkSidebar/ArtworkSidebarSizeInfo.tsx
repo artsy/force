@@ -13,7 +13,7 @@ export interface ArtworkSidebarSizeInfoProps {
 export class ArtworkSidebarSizeInfo extends Component<
   ArtworkSidebarSizeInfoProps
 > {
-  state = { metadata: { attributes: [] } }
+  state = { metadata: { attributes: [], description: "" } }
 
   async componentDidMount() {
     const metadata = await getNFTMetadata("1")
@@ -30,6 +30,9 @@ export class ArtworkSidebarSizeInfo extends Component<
     if (isNFT) {
       return (
         <Box color="black60">
+          <Text variant="md" mb={1}>
+            {this.state.metadata.description}
+          </Text>
           {this.state.metadata.attributes.map(attr => (
             <Text variant="md">
               {attr.trait_type}: {attr.value}
