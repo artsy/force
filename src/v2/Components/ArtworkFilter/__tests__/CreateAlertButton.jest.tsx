@@ -1,4 +1,4 @@
-import { render, screen, within, fireEvent } from "@testing-library/react"
+import { render, screen, fireEvent } from "@testing-library/react"
 import { useSystemContext } from "v2/System/useSystemContext"
 import { useTracking } from "v2/System/Analytics/useTracking"
 import * as openAuthModal from "v2/Utils/openAuthModal"
@@ -75,14 +75,12 @@ describe("CreateAlertButton", () => {
 
     it("pops up the Create an Alert modal when clicked", () => {
       renderButton()
-      expect(
-        within(screen.getByRole("form")).queryByText("Create an Alert")
-      ).not.toBeInTheDocument()
+      expect(screen.queryByTestId("CreateAlertModal")).not.toBeInTheDocument()
+
       const button = screen.getByText("Create an Alert")
       fireEvent.click(button)
-      expect(
-        within(screen.getByRole("form")).getByText("Create an Alert")
-      ).toBeInTheDocument()
+
+      expect(screen.getByTestId("CreateAlertModal")).toBeInTheDocument()
     })
 
     it("tracks event", () => {

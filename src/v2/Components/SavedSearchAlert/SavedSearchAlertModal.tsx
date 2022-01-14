@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { Form, FormikProvider, useFormik } from "formik"
+import { FormikProvider, useFormik } from "formik"
 import {
   SavedSearchAleftFormValues,
   SavedSearchAlertMutationResult,
@@ -11,7 +11,7 @@ import {
   Flex,
   Input,
   Join,
-  Modal,
+  ModalDialog,
   Spacer,
   Text,
 } from "@artsy/palette"
@@ -127,17 +127,18 @@ export const SavedSearchAlertModal: React.FC<SavedSearchAlertFormProps> = ({
 
   return (
     <FormikProvider value={formik}>
-      <Form onSubmit={formik.handleSubmit} role="form">
-        <Modal
-          show={visible}
+      {visible && (
+        <ModalDialog
           onClose={onClose}
           title="Create an Alert"
-          FixedButton={
+          data-testid="CreateAlertModal"
+          footer={
             <Button
               type="submit"
               disabled={isSaveAlertButtonDisabled}
               loading={formik.isSubmitting}
               width="100%"
+              onClick={() => formik.handleSubmit()}
             >
               Save Alert
             </Button>
@@ -185,8 +186,8 @@ export const SavedSearchAlertModal: React.FC<SavedSearchAlertFormProps> = ({
 
             <DownloadAppBanner savedSearchAttributes={savedSearchAttributes} />
           </Join>
-        </Modal>
-      </Form>
+        </ModalDialog>
+      )}
     </FormikProvider>
   )
 }
