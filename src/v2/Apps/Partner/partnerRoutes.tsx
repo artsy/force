@@ -275,6 +275,7 @@ export const partnerRoutes: AppRouteConfig[] = [
       },
       {
         path: "artists/:artistId?",
+        ignoreScrollBehavior: true,
         getComponent: () => ArtistsRoute,
         onClientSideRender: () => {
           ArtistsRoute.preload()
