@@ -4,9 +4,9 @@ import { useTracking } from "v2/System/Analytics/useTracking"
 import * as openAuthModal from "v2/Utils/openAuthModal"
 import { SavedSearchAttributes } from "v2/Components/ArtworkFilter/SavedSearch/types"
 import { ExtractProps } from "v2/Utils/ExtractProps"
-import { CreateAlertButton } from "../SavedSearch/Components/CreateAlertButton"
+import { CreateAlertButton } from "../CreateAlertButton"
 import { mediator } from "lib/mediator"
-import { ArtworkFilterContextProvider } from "../ArtworkFilterContext"
+import { ArtworkFilterContextProvider } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
 
 jest.mock("v2/System/useSystemContext")
 jest.mock("v2/System/Analytics/useTracking")
@@ -119,6 +119,20 @@ describe("CreateAlertButton", () => {
         contextModule: "artworkGrid",
         intent: "createAlert",
       })
+    })
+
+    it("tracks event", () => {
+      renderButton()
+      const button = screen.getByText("Create an Alert")
+      fireEvent.click(button)
+      expect(trackEvent).toHaveBeenCalledWith(
+        expect.objectContaining({
+          action: "clickedCreateAlert",
+          context_page_owner_type: "artist",
+          context_page_owner_id: "test-artist-id",
+          context_page_owner_slug: "example-slug",
+        })
+      )
     })
   })
 })
