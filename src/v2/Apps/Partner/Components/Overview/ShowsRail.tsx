@@ -36,7 +36,9 @@ const ShowsRail: React.FC<ShowsRailProps> = ({ partner, ...rest }) => {
       </Flex>
       <Shelf alignItems="flex-start">
         {shows.map(show => (
-          <ShowCardFragmentContainer key={show?.id} show={show} />
+          <Box maxWidth={320}>
+            <ShowCardFragmentContainer key={show?.id} show={show} />
+          </Box>
         ))}
       </Shelf>
     </Box>

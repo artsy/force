@@ -1,28 +1,11 @@
-import * as React from "react";
-import styled from "styled-components"
-import {
-  Box,
-  ResponsiveBox,
-  Image,
-  EntityHeader,
-  Flex,
-  space,
-} from "@artsy/palette"
+import * as React from "react"
+import { Image, EntityHeader, Flex } from "@artsy/palette"
 import { ContextModule } from "@artsy/cohesion"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { FollowArtistButtonFragmentContainer } from "v2/Components/FollowButton/FollowArtistButton"
 import { PartnerArtistsCarouselItem_artist } from "v2/__generated__/PartnerArtistsCarouselItem_artist.graphql"
 import { extractNodes } from "v2/Utils/extractNodes"
-
-export const ResponsiveImage = styled(ResponsiveBox).attrs({
-  aspectWidth: 3,
-  aspectHeight: 2,
-  maxWidth: "100%",
-  maxHeight: "100%",
-  width: "100%",
-  bg: "black10",
-})<any>``
 
 export interface PartnerArtistsCarouselItemProps {
   artist: PartnerArtistsCarouselItem_artist
@@ -38,19 +21,16 @@ export const PartnerArtistsCarouselItem: React.FC<PartnerArtistsCarouselItemProp
   if (!artist || !artist.node || artwork.length === 0) return null
 
   return (
-    <Box width={[300, "100%"]}>
-      <ResponsiveImage>
-        <RouterLink to={partnerArtistHref}>
-          {artwork[0].image?.cropped && (
-            <Image
-              src={artwork[0].image.cropped.src}
-              srcSet={artwork[0].image.cropped.srcSet}
-              width="100%"
-              height="100%"
-            />
-          )}
-        </RouterLink>
-      </ResponsiveImage>
+    <>
+      <RouterLink to={partnerArtistHref}>
+        <Image
+          lazyLoad
+          width={artwork[0].image?.cropped?.width ?? 320}
+          height={artwork[0].image?.cropped?.height ?? 240}
+          src={artwork[0].image?.cropped?.src}
+          srcSet={artwork[0].image?.cropped?.srcSet}
+        />
+      </RouterLink>
 
       <Flex mt={1} justifyContent="space-between">
         <EntityHeader
@@ -65,11 +45,10 @@ export const PartnerArtistsCarouselItem: React.FC<PartnerArtistsCarouselItemProp
           buttonProps={{
             variant: "secondaryOutline",
             size: "small",
-            width: [space(5), space(3)],
           }}
         />
       </Flex>
-    </Box>
+    </>
   )
 }
 
@@ -82,9 +61,11 @@ export const PartnerArtistsCarouselItemFragmentContainer = createFragmentContain
           edges {
             node {
               image {
-                cropped(height: 200, width: 300) {
+                cropped(width: 320, height: 240) {
                   src
                   srcSet
+                  height
+                  width
                 }
               }
             }

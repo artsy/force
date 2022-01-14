@@ -1,5 +1,5 @@
 import * as React from "react"
-import { Flex, Text, Shelf } from "@artsy/palette"
+import { Flex, Text, Shelf, Box } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArticleCardFragmentContainer } from "v2/Apps/Partner/Components/PartnerArticles/ArticleCard"
 import { ArticlesRail_partner } from "v2/__generated__/ArticlesRail_partner.graphql"
@@ -13,6 +13,10 @@ interface ArticlesRailProps {
 const ArticlesRail: React.FC<ArticlesRailProps> = ({ partner }) => {
   const { articlesConnection, slug } = partner
   const articles = extractNodes(articlesConnection)
+
+  if (!articles.length) {
+    return null
+  }
 
   return (
     <>
@@ -30,10 +34,12 @@ const ArticlesRail: React.FC<ArticlesRailProps> = ({ partner }) => {
       <Shelf alignItems="flex-start">
         {articles.map(article => {
           return (
-            <ArticleCardFragmentContainer
-              key={article.internalID}
-              article={article}
-            />
+            <Box maxWidth={400}>
+              <ArticleCardFragmentContainer
+                key={article.internalID}
+                article={article}
+              />
+            </Box>
           )
         })}
       </Shelf>

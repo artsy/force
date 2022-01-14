@@ -1,5 +1,11 @@
-import { Box, BoxProps, Flex, SkeletonBox, SkeletonText } from "@artsy/palette"
-import { Carousel } from "../Carousel"
+import {
+  Box,
+  BoxProps,
+  Flex,
+  Shelf,
+  SkeletonBox,
+  SkeletonText,
+} from "@artsy/palette"
 import { ARTWORK_CAROUSEL_ITEM_HEIGHT } from "./ArtworksRail"
 
 export interface ArtworksRailPlaceholderProps extends BoxProps {
@@ -17,7 +23,7 @@ export const ArtworksRailPlaceholder: React.FC<ArtworksRailPlaceholderProps> = (
         <SkeletonText>View all</SkeletonText>
       </Flex>
 
-      <Carousel>
+      <Shelf alignItems="flex-start">
         {[...Array(count)].map((_, i) => {
           return (
             <Box width={[300, "100%"]} key={i}>
@@ -41,7 +47,7 @@ export const ArtworksRailPlaceholder: React.FC<ArtworksRailPlaceholderProps> = (
             </Box>
           )
         })}
-      </Carousel>
+      </Shelf>
     </Box>
   )
 }
