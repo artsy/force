@@ -10066,15 +10066,10 @@ focus-visible@5.1.0:
   resolved "https://registry.yarnpkg.com/focus-visible/-/focus-visible-5.1.0.tgz#4b9d40143b865f53eafbd93ca66672b3bf9e7b6a"
   integrity sha512-nPer0rjtzdZ7csVIu233P2cUm/ks/4aVSI+5KUkYrYpgA7ujgC3p6J7FtFU+AIMWwnwYQOB/yeiOITxFeYIXiw==
 
-follow-redirects@^1.0.0:
-  version "1.13.0"
-  resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.13.0.tgz#b42e8d93a2a7eea5ed88633676d6597bc8e384db"
-  integrity sha512-aq6gF1BEKje4a9i9+5jimNFIpq4Q1WiwBToeRK5NvZBd/TRsmW8BsJfOEGkr76TbOyPVD3OVDN910EcUNtRYEA==
-
-follow-redirects@^1.14.0:
-  version "1.14.6"
-  resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.14.6.tgz#8cfb281bbc035b3c067d6cd975b0f6ade6e855cd"
-  integrity sha512-fhUl5EwSJbbl8AR+uYL2KQDxLkdSjZGR36xy46AO7cOMTrCMON6Sa28FmAnC2tRTDbd/Uuzz3aJBv7EBN7JH8A==
+follow-redirects@^1.0.0, follow-redirects@^1.14.0:
+  version "1.14.7"
+  resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.14.7.tgz#2004c02eb9436eee9a21446a6477debf17e81685"
+  integrity sha512-+hbxoLbFMbRKDwohX8GkTataGqO6Jb7jGwpAlwgy2bIz25XtRm7KEzJM76R1WiNT5SwZkX4Y75SwBolkpmE7iQ==
 
 for-each@^0.3.3:
   version "0.3.3"
