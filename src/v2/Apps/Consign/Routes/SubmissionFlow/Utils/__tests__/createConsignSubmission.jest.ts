@@ -32,7 +32,7 @@ describe("createOrUpdateConsignSubmission", () => {
       relayEnvironment,
       submission
     )
-    const userAgent = `${navigator.userAgent} Artsy-Force`
+    const userAgent = `${navigator.userAgent} Artsy-Web Force`
 
     expect(mockCreateMutation).toHaveBeenCalled()
     expect(mockCreateMutation).toHaveBeenCalledWith(relayEnvironment, {
