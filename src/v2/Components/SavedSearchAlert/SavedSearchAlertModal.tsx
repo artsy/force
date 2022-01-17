@@ -59,7 +59,7 @@ export const SavedSearchAlertModal: React.FC<SavedSearchAlertFormProps> = ({
     filterContext.aggregations,
     savedSearchAttributes
   )
-  const namePlaceholder = getNamePlaceholder(name, pills.length)
+  const namePlaceholder = getNamePlaceholder(name, pills)
 
   useEffect(() => {
     setFilters(filtersFromContext)
