@@ -5,7 +5,6 @@ import {
 } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
 import { SavedSearchAttributes } from "v2/Components/ArtworkFilter/SavedSearch/types"
 import { ExtractProps } from "v2/Utils/ExtractProps"
-import { Breakpoint } from "v2/Utils/Responsive"
 import { SavedSearchAlertModal } from "../SavedSearchAlertModal"
 
 const formInitialValues = {
@@ -29,16 +28,15 @@ const defaultFilters: ArtworkFiltersState = {
 const onCloseMock = jest.fn()
 const onCompleteMock = jest.fn()
 
+interface Props extends Partial<ExtractProps<typeof SavedSearchAlertModal>> {
+  filters?: ArtworkFiltersState
+}
+
 describe("SavedSearchAlertModal", () => {
-  const renderModal = ({
-    props = {},
-    filters = defaultFilters,
-  }: {
-    breakpoint?: Breakpoint
-    filters?: ArtworkFiltersState
-    props?: Partial<ExtractProps<typeof SavedSearchAlertModal>>
-  }) => {
-    render(
+  const TestComponent = (props: Props) => {
+    const { filters = defaultFilters, ...rest } = props
+
+    return (
       <ArtworkFilterContextProvider filters={filters}>
         <SavedSearchAlertModal
           visible
@@ -46,14 +44,14 @@ describe("SavedSearchAlertModal", () => {
           savedSearchAttributes={savedSearchProps}
           onClose={onCloseMock}
           onComplete={onCompleteMock}
-          {...props}
+          {...rest}
         />
       </ArtworkFilterContextProvider>
     )
   }
 
   it("is not rendered when visible=false", () => {
-    renderModal({ props: { visible: false } })
+    render(<TestComponent visible={false} />)
     expect(screen.queryByText("Name")).not.toBeInTheDocument()
     expect(screen.queryByText("Filters")).not.toBeInTheDocument()
     expect(screen.queryByText("Test Artist")).not.toBeInTheDocument()
@@ -65,7 +63,7 @@ describe("SavedSearchAlertModal", () => {
   })
 
   it("renders correctly", () => {
-    renderModal({})
+    render(<TestComponent />)
     expect(screen.getByText("Name")).toBeInTheDocument()
     expect(screen.getByText("Filters")).toBeInTheDocument()
     expect(screen.getByText("Test Artist")).toBeInTheDocument()
@@ -80,7 +78,7 @@ describe("SavedSearchAlertModal", () => {
   })
 
   it("name generated correctly", () => {
-    renderModal({})
+    render(<TestComponent />)
     expect(screen.getByRole("textbox")).toHaveAttribute(
       "placeholder",
       "Test Artist • 2 filters"
@@ -88,31 +86,54 @@ describe("SavedSearchAlertModal", () => {
   })
 
   it("email value changes correctly", () => {
-    renderModal({})
+    render(<TestComponent />)
     expect(screen.getAllByRole("checkbox")[0]).toBeChecked()
     fireEvent.click(screen.getAllByRole("checkbox")[0])
     expect(screen.getAllByRole("checkbox")[0]).not.toBeChecked()
   })
 
   it("push value changes correctly", () => {
-    renderModal({})
+    render(<TestComponent />)
     expect(screen.getAllByRole("checkbox")[1]).not.toBeChecked()
     fireEvent.click(screen.getAllByRole("checkbox")[1])
     expect(screen.getAllByRole("checkbox")[1]).toBeChecked()
   })
 
   it("saved alert button is disabled when no one notification option selected", () => {
-    renderModal({
-      props: { initialValues: { ...formInitialValues, email: false } },
-    })
+    render(
+      <TestComponent initialValues={{ ...formInitialValues, email: false }} />
+    )
     const saveAlertButton = screen.getByRole("button", { name: "Save Alert" })
 
     expect(saveAlertButton).toBeDisabled()
   })
 
   it("saved alert button is enabled when at least one notification option selected", () => {
-    renderModal({})
+    render(<TestComponent />)
 
     expect(screen.getByText("Save Alert")).toBeEnabled()
+  })
+
+  it("clear entered data when modal is closed", () => {
+    const { rerender } = render(<TestComponent />)
+
+    fireEvent.change(screen.getByRole("textbox"), {
+      target: {
+        value: "New Name",
+      },
+    })
+    fireEvent.click(screen.getAllByRole("checkbox")[0])
+    fireEvent.click(screen.getAllByRole("checkbox")[1])
+
+    expect(screen.getByRole("textbox")).toHaveValue("New Name")
+    expect(screen.getAllByRole("checkbox")[0]).not.toBeChecked()
+    expect(screen.getAllByRole("checkbox")[1]).toBeChecked()
+
+    rerender(<TestComponent visible={false} />)
+    rerender(<TestComponent visible={true} />)
+
+    expect(screen.getByRole("textbox")).toHaveValue("")
+    expect(screen.getAllByRole("checkbox")[0]).toBeChecked()
+    expect(screen.getAllByRole("checkbox")[1]).not.toBeChecked()
   })
 })
