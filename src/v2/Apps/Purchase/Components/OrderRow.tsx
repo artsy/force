@@ -265,7 +265,7 @@ const OrderRow: React.FC<OrderRowProps> = props => {
           </Text>
         </Flex>
         <Flex flexDirection="column" width="25%">
-          <Text variant="sm">Fulfillment</Text>
+          <Text variant="sm">Delivery method</Text>
           <Text variant="sm" color="black60">
             {isPickup ? "Pickup" : "Delivery"}
           </Text>
