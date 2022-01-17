@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { FormikProvider, useFormik } from "formik"
+import { Formik } from "formik"
 import {
   SavedSearchAleftFormValues,
   SavedSearchAlertMutationResult,
@@ -62,49 +62,10 @@ export const SavedSearchAlertModal: React.FC<SavedSearchAlertFormProps> = ({
   const namePlaceholder = getNamePlaceholder(name, pills)
 
   useEffect(() => {
-    setFilters(filtersFromContext)
+    if (visible) {
+      setFilters(filtersFromContext)
+    }
   }, [visible])
-
-  const formik = useFormik<SavedSearchAleftFormValues>({
-    initialValues,
-    initialErrors: {},
-    onSubmit: async values => {
-      if (!relayEnvironment) {
-        return null
-      }
-
-      const alertName = values.name || namePlaceholder
-
-      const userAlertSettings: SavedSearchAleftFormValues = {
-        name: alertName,
-        email: values.email,
-        push: values.push,
-      }
-
-      try {
-        const criteria = getSearchCriteriaFromFilters(id, filters)
-        const response = await createSavedSearchAlert(
-          relayEnvironment,
-          userAlertSettings,
-          criteria
-        )
-        const result = {
-          id: response.createSavedSearch?.savedSearchOrErrors.internalID!,
-        }
-        onComplete?.(result)
-      } catch (error) {
-        logger.error(error)
-      }
-    },
-  })
-
-  const isSaveAlertButtonDisabled = !formik.values.email && !formik.values.push
-
-  const handleToggleNotification = (name: "email" | "push") => (
-    enabled: boolean
-  ) => {
-    formik.setFieldValue(name, enabled)
-  }
 
   const handleRemovePillPress = (pill: FilterPill) => {
     if (pill.isDefault) {
@@ -125,69 +86,121 @@ export const SavedSearchAlertModal: React.FC<SavedSearchAlertFormProps> = ({
     })
   }
 
-  return (
-    <FormikProvider value={formik}>
-      {visible && (
-        <ModalDialog
-          onClose={onClose}
-          title="Create an Alert"
-          data-testid="CreateAlertModal"
-          footer={
-            <Button
-              type="submit"
-              disabled={isSaveAlertButtonDisabled}
-              loading={formik.isSubmitting}
-              width="100%"
-              onClick={() => formik.handleSubmit()}
+  const handleSubmit = async (values: SavedSearchAleftFormValues) => {
+    if (!relayEnvironment) {
+      return null
+    }
+
+    const alertName = values.name || namePlaceholder
+
+    const userAlertSettings: SavedSearchAleftFormValues = {
+      name: alertName,
+      email: values.email,
+      push: values.push,
+    }
+
+    try {
+      const criteria = getSearchCriteriaFromFilters(id, filters)
+      const response = await createSavedSearchAlert(
+        relayEnvironment,
+        userAlertSettings,
+        criteria
+      )
+      const result = {
+        id: response.createSavedSearch?.savedSearchOrErrors.internalID!,
+      }
+      onComplete?.(result)
+    } catch (error) {
+      logger.error(error)
+    }
+  }
+
+  if (visible) {
+    return (
+      <Formik<SavedSearchAleftFormValues>
+        initialValues={initialValues}
+        onSubmit={handleSubmit}
+      >
+        {({
+          values,
+          errors,
+          isSubmitting,
+          handleSubmit,
+          handleChange,
+          handleBlur,
+          setFieldValue,
+        }) => {
+          const isSaveAlertButtonDisabled = !values.email && !values.push
+
+          return (
+            <ModalDialog
+              onClose={onClose}
+              title="Create an Alert"
+              data-testid="CreateAlertModal"
+              footer={
+                <Button
+                  disabled={isSaveAlertButtonDisabled}
+                  loading={isSubmitting}
+                  onClick={() => handleSubmit()}
+                  width="100%"
+                >
+                  Save Alert
+                </Button>
+              }
             >
-              Save Alert
-            </Button>
-          }
-        >
-          <Join separator={<Spacer mt={4} />}>
-            <Input
-              title="Name"
-              name="name"
-              placeholder={namePlaceholder}
-              value={formik.values.name}
-              onChange={formik.handleChange("name")}
-              onBlur={formik.handleBlur("name")}
-              error={formik.errors.name}
-              maxLength={75}
-            />
-
-            <Box>
-              <Text variant="xs" textTransform="uppercase">
-                Filters
-              </Text>
-              <Spacer mt={2} />
-              <Flex flexWrap="wrap" mx={-0.5}>
-                <Pills items={pills} onDeletePress={handleRemovePillPress} />
-              </Flex>
-            </Box>
-
-            <Box>
-              <Box display="flex" justifyContent="space-between">
-                <Text>Email Alerts</Text>
-                <Checkbox
-                  onSelect={handleToggleNotification("email")}
-                  selected={formik.values.email}
+              <Join separator={<Spacer mt={4} />}>
+                <Input
+                  title="Name"
+                  name="name"
+                  placeholder={namePlaceholder}
+                  value={values.name}
+                  onChange={handleChange("name")}
+                  onBlur={handleBlur("name")}
+                  error={errors.name}
+                  maxLength={75}
                 />
-              </Box>
-              <Spacer mt={4} />
-              <Box display="flex" justifyContent="space-between">
-                <Text>Mobile Alerts</Text>
-                <Checkbox
-                  onSelect={handleToggleNotification("push")}
-                  selected={formik.values.push}
-                />
-              </Box>
-            </Box>
 
-            <DownloadAppBanner savedSearchAttributes={savedSearchAttributes} />
-          </Join>
-        </ModalDialog>
-      )}
-    </FormikProvider>
-  )
+                <Box>
+                  <Text variant="xs" textTransform="uppercase">
+                    Filters
+                  </Text>
+                  <Spacer mt={2} />
+                  <Flex flexWrap="wrap" mx={-0.5}>
+                    <Pills
+                      items={pills}
+                      onDeletePress={handleRemovePillPress}
+                    />
+                  </Flex>
+                </Box>
+
+                <Box>
+                  <Box display="flex" justifyContent="space-between">
+                    <Text>Email Alerts</Text>
+                    <Checkbox
+                      onSelect={selected => setFieldValue("email", selected)}
+                      selected={values.email}
+                    />
+                  </Box>
+                  <Spacer mt={4} />
+                  <Box display="flex" justifyContent="space-between">
+                    <Text>Mobile Alerts</Text>
+                    <Checkbox
+                      onSelect={selected => setFieldValue("push", selected)}
+                      selected={values.push}
+                    />
+                  </Box>
+                </Box>
+
+                <DownloadAppBanner
+                  savedSearchAttributes={savedSearchAttributes}
+                />
+              </Join>
+            </ModalDialog>
+          )
+        }}
+      </Formik>
+    )
+  }
+
+  return null
 }
