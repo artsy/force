@@ -25,7 +25,7 @@ export const createOrUpdateConsignSubmission = async (
   } else {
     submissionId = await createConsignSubmissionMutation(relayEnvironment, {
       ...submission,
-      userAgent: `Artsy-Force ${navigator.userAgent}`,
+      userAgent: `${navigator.userAgent} Artsy-Web Force`,
     } as CreateSubmissionMutationInput)
   }
 
