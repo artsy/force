@@ -40,7 +40,9 @@ describe("FairArtworks", () => {
         )
       },
       query: graphql`
-        query FairArtworks_Query($slug: String!) @raw_response_type {
+        query FairArtworks_Query($slug: String!)
+          @raw_response_type
+          @relay_test_operation {
           fair(id: $slug) {
             ...FairArtworks_fair @arguments(shouldFetchCounts: true)
           }
@@ -74,6 +76,7 @@ const FAIR_ARTWORKS_FIXTURE: FairArtworks_QueryRawResponse = {
     slug: "cool-fair",
     internalID: "bson-fair",
     filtered_artworks: {
+      __isArtworkConnectionInterface: "FilterArtworksConnection",
       id: "filteredartworksabc123",
       counts: {
         followedArtists: 10,

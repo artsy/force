@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -30,7 +31,7 @@ export type FollowArtistPopover_Test_QueryRawResponse = {
                 }) | null> | null;
             }) | null;
         }) | null;
-        readonly id: string | null;
+        readonly id: string;
     }) | null;
 };
 export type FollowArtistPopover_Test_Query = {
@@ -82,8 +83,7 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "artistID",
-    "type": "String!"
+    "name": "artistID"
   }
 ],
 v1 = [
@@ -99,6 +99,24 @@ v2 = {
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
+},
+v3 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "Artist"
+},
+v4 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "ID"
+},
+v5 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "String"
 };
 return {
   "fragment": {
@@ -124,7 +142,8 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -264,13 +283,60 @@ return {
     ]
   },
   "params": {
+    "cacheID": "02a44b171ccaae157487cd93f020d71d",
     "id": null,
-    "metadata": {},
+    "metadata": {
+      "relayTestingSelectionTypeInfo": {
+        "artist": (v3/*: any*/),
+        "artist.id": (v4/*: any*/),
+        "artist.related": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "ArtistRelatedData"
+        },
+        "artist.related.suggestedConnection": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "ArtistConnection"
+        },
+        "artist.related.suggestedConnection.edges": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": true,
+          "type": "ArtistEdge"
+        },
+        "artist.related.suggestedConnection.edges.node": (v3/*: any*/),
+        "artist.related.suggestedConnection.edges.node.formattedNationalityAndBirthday": (v5/*: any*/),
+        "artist.related.suggestedConnection.edges.node.id": (v4/*: any*/),
+        "artist.related.suggestedConnection.edges.node.image": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Image"
+        },
+        "artist.related.suggestedConnection.edges.node.image.cropped": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "CroppedImageUrl"
+        },
+        "artist.related.suggestedConnection.edges.node.image.cropped.url": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": false,
+          "type": "String"
+        },
+        "artist.related.suggestedConnection.edges.node.internalID": (v4/*: any*/),
+        "artist.related.suggestedConnection.edges.node.name": (v5/*: any*/)
+      }
+    },
     "name": "FollowArtistPopover_Test_Query",
     "operationKind": "query",
     "text": "query FollowArtistPopover_Test_Query(\n  $artistID: String!\n) {\n  artist(id: $artistID) {\n    ...FollowArtistPopover_artist\n    id\n  }\n}\n\nfragment FollowArtistPopoverRow_artist on Artist {\n  internalID\n  name\n  formattedNationalityAndBirthday\n  image {\n    cropped(width: 45, height: 45) {\n      url\n    }\n  }\n}\n\nfragment FollowArtistPopover_artist on Artist {\n  related {\n    suggestedConnection(first: 3, excludeFollowedArtists: true) {\n      edges {\n        node {\n          id\n          internalID\n          ...FollowArtistPopoverRow_artist\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'cc361bd4469ff0c28dba34434eec1f17';
+(node as any).hash = '70db3c337bc950f984734cba24990a60';
 export default node;

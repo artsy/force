@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -49,6 +50,18 @@ var v0 = {
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
+},
+v1 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "ID"
+},
+v2 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "String"
 };
 return {
   "fragment": {
@@ -74,7 +87,8 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -203,13 +217,59 @@ return {
     ]
   },
   "params": {
+    "cacheID": "6ba99489b79965b19ef624b0ba88cc8c",
     "id": null,
-    "metadata": {},
+    "metadata": {
+      "relayTestingSelectionTypeInfo": {
+        "me": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Me"
+        },
+        "me.id": (v1/*: any*/),
+        "me.saleRegistrationsConnection": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "SaleRegistrationConnection"
+        },
+        "me.saleRegistrationsConnection.edges": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": true,
+          "type": "SaleRegistrationEdge"
+        },
+        "me.saleRegistrationsConnection.edges.node": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "SaleRegistration"
+        },
+        "me.saleRegistrationsConnection.edges.node.id": (v1/*: any*/),
+        "me.saleRegistrationsConnection.edges.node.sale": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Sale"
+        },
+        "me.saleRegistrationsConnection.edges.node.sale.href": (v2/*: any*/),
+        "me.saleRegistrationsConnection.edges.node.sale.id": (v1/*: any*/),
+        "me.saleRegistrationsConnection.edges.node.sale.isClosed": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Boolean"
+        },
+        "me.saleRegistrationsConnection.edges.node.sale.name": (v2/*: any*/),
+        "me.saleRegistrationsConnection.edges.node.sale.startAt": (v2/*: any*/)
+      }
+    },
     "name": "UserRegistrationAuctions_Test_Query",
     "operationKind": "query",
     "text": "query UserRegistrationAuctions_Test_Query {\n  me {\n    ...UserRegistrationAuctions_me\n    id\n  }\n}\n\nfragment UserRegistrationAuctions_me on Me {\n  saleRegistrationsConnection(published: true, isAuction: true, sort: CREATED_AT_DESC, first: 10, registered: false) {\n    edges {\n      node {\n        sale {\n          id\n          name\n          href\n          startAt(format: \"MMMM D, h:mmA\")\n          isClosed\n        }\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '9dbce8c86796dcdfbb68b35f08ea52d1';
+(node as any).hash = '73a75f1453c0aa9132600328932d6f7b';
 export default node;

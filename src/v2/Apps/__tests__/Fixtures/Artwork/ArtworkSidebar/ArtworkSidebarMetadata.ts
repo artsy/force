@@ -3,6 +3,7 @@ import { FullArtworkFixture } from "v2/Apps/__tests__/Fixtures/Artwork/FullArtwo
 
 export const FilledOutMetadataNoEditions: ArtworkSidebarMetadata_Test_QueryRawResponse["artwork"] = {
   ...FullArtworkFixture,
+  __isSellable: "Artwork",
   attributionClass: {
     id: "opaque-attribution-class-id",
     shortDescription: "This is a unique work",
@@ -21,8 +22,30 @@ export const FilledOutMetadataNoEditions: ArtworkSidebarMetadata_Test_QueryRawRe
   title: "Easel (Vydock)",
 }
 
+export const FilledOutMetadataNoSizeInfo: ArtworkSidebarMetadata_Test_QueryRawResponse["artwork"] = {
+  ...FullArtworkFixture,
+  __isSellable: "Artwork",
+  attributionClass: {
+    id: "opaque-attribution-class-id",
+    shortDescription: "This is a unique work",
+  },
+  date: "1995",
+  dimensions: {
+    cm: null,
+    in: null,
+  },
+  edition_of: "",
+  edition_sets: [],
+  id: "filled_out_metadata_no_editions",
+  is_biddable: false,
+  medium: "Acrylic and graphite on bonded aluminium",
+  sale_artwork: null,
+  title: "Easel (Vydock)",
+}
+
 export const FilledOutMetadataOneEditionSet: ArtworkSidebarMetadata_Test_QueryRawResponse["artwork"] = {
   ...FullArtworkFixture,
+  __isSellable: "Artwork",
   attributionClass: {
     id: "opauqe-attribution-class-id",
     shortDescription: "This is part of a limited edition set",
@@ -49,6 +72,7 @@ export const FilledOutMetadataOneEditionSet: ArtworkSidebarMetadata_Test_QueryRa
 
 export const FilledOutMetadataMultipleEditionSets: ArtworkSidebarMetadata_Test_QueryRawResponse["artwork"] = {
   ...FullArtworkFixture,
+  __isSellable: "Artwork",
   attributionClass: {
     id: "opauqe-attribution-class-id",
     shortDescription: "This is part of a limited edition set",
@@ -83,6 +107,7 @@ export const FilledOutMetadataMultipleEditionSets: ArtworkSidebarMetadata_Test_Q
 
 export const EmptyMetadataNoEditions: ArtworkSidebarMetadata_Test_QueryRawResponse["artwork"] = {
   ...FullArtworkFixture,
+  __isSellable: "Artwork",
   attributionClass: null,
   date: " ",
   dimensions: { cm: null, in: null },
@@ -97,6 +122,7 @@ export const EmptyMetadataNoEditions: ArtworkSidebarMetadata_Test_QueryRawRespon
 
 export const EmptyMetadataOneEditionSet: ArtworkSidebarMetadata_Test_QueryRawResponse["artwork"] = {
   ...FullArtworkFixture,
+  __isSellable: "Artwork",
   attributionClass: null,
   date: " ",
   dimensions: { cm: null, in: null },
@@ -118,6 +144,7 @@ export const EmptyMetadataOneEditionSet: ArtworkSidebarMetadata_Test_QueryRawRes
 
 export const EmptyMetadataMultipleEditionSets: ArtworkSidebarMetadata_Test_QueryRawResponse["artwork"] = {
   ...FullArtworkFixture,
+  __isSellable: "Artwork",
   attributionClass: null,
   date: " ",
   dimensions: { cm: null, in: null },
@@ -145,6 +172,7 @@ export const EmptyMetadataMultipleEditionSets: ArtworkSidebarMetadata_Test_Query
 
 export const MetadataForAuctionWork: ArtworkSidebarMetadata_Test_QueryRawResponse["artwork"] = {
   ...FullArtworkFixture,
+  __isSellable: "Artwork",
   attributionClass: {
     id: "opauqe-attribution-class-id",
     shortDescription: "This is part of a limited edition set",

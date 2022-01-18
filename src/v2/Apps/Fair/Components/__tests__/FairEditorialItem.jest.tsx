@@ -32,7 +32,7 @@ describe("FairEditorialItem", () => {
       )
     },
     query: graphql`
-      query FairEditorialItem_Test_Query {
+      query FairEditorialItem_Test_Query @relay_test_operation {
         article(id: "test") {
           ...FairEditorialItem_article
         }

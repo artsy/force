@@ -49,7 +49,7 @@ const { getWrapper } = setupTestWrapper<CollectionArtworksFilter_Query>({
     query CollectionArtworksFilter_Query(
       $input: FilterArtworksInput
       $slug: String!
-    ) {
+    ) @relay_test_operation {
       collection: marketingCollection(slug: $slug) {
         ...CollectionArtworksFilter_collection @arguments(input: $input)
       }

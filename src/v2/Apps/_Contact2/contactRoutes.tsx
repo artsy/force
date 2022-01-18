@@ -10,7 +10,7 @@ const ContactApp = loadable(
 
 export const contactRoutes: AppRouteConfig[] = [
   {
-    path: "contact2",
+    path: "/contact2",
     getComponent: () => ContactApp,
   },
 ]

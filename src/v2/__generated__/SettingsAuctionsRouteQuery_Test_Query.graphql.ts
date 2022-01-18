@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -127,7 +128,37 @@ v3 = [
     "name": "format",
     "value": "MMMM D, h:mmA"
   }
-];
+],
+v4 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "ID"
+},
+v5 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "Boolean"
+},
+v6 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "String"
+},
+v7 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "String"
+},
+v8 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "Sale"
+};
 return {
   "fragment": {
     "argumentDefinitions": [],
@@ -152,7 +183,8 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -490,13 +522,146 @@ return {
     ]
   },
   "params": {
+    "cacheID": "96767ee7a3c1154be12e6bb92faec2c9",
     "id": null,
-    "metadata": {},
+    "metadata": {
+      "relayTestingSelectionTypeInfo": {
+        "me": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Me"
+        },
+        "me.id": (v4/*: any*/),
+        "me.lotStandings": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": true,
+          "type": "LotStanding"
+        },
+        "me.lotStandings.activeBid": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "BidderPosition"
+        },
+        "me.lotStandings.activeBid.id": (v4/*: any*/),
+        "me.lotStandings.isLeadingBidder": (v5/*: any*/),
+        "me.lotStandings.saleArtwork": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "SaleArtwork"
+        },
+        "me.lotStandings.saleArtwork.artwork": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Artwork"
+        },
+        "me.lotStandings.saleArtwork.artwork.artist": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Artist"
+        },
+        "me.lotStandings.saleArtwork.artwork.artist.id": (v4/*: any*/),
+        "me.lotStandings.saleArtwork.artwork.artist.name": (v6/*: any*/),
+        "me.lotStandings.saleArtwork.artwork.href": (v6/*: any*/),
+        "me.lotStandings.saleArtwork.artwork.id": (v4/*: any*/),
+        "me.lotStandings.saleArtwork.artwork.image": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Image"
+        },
+        "me.lotStandings.saleArtwork.artwork.image.cropped": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "CroppedImageUrl"
+        },
+        "me.lotStandings.saleArtwork.artwork.image.cropped.src": (v7/*: any*/),
+        "me.lotStandings.saleArtwork.artwork.image.cropped.srcSet": (v7/*: any*/),
+        "me.lotStandings.saleArtwork.artwork.title": (v6/*: any*/),
+        "me.lotStandings.saleArtwork.counts": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "SaleArtworkCounts"
+        },
+        "me.lotStandings.saleArtwork.counts.bidderPositions": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "FormattedNumber"
+        },
+        "me.lotStandings.saleArtwork.highestBid": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "SaleArtworkHighestBid"
+        },
+        "me.lotStandings.saleArtwork.highestBid.display": (v6/*: any*/),
+        "me.lotStandings.saleArtwork.id": (v4/*: any*/),
+        "me.lotStandings.saleArtwork.lotLabel": (v6/*: any*/),
+        "me.myBids": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "MyBids"
+        },
+        "me.myBids.closed": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": true,
+          "type": "MyBid"
+        },
+        "me.myBids.closed.sale": (v8/*: any*/),
+        "me.myBids.closed.sale.endAt": (v6/*: any*/),
+        "me.myBids.closed.sale.href": (v6/*: any*/),
+        "me.myBids.closed.sale.id": (v4/*: any*/),
+        "me.myBids.closed.sale.name": (v6/*: any*/),
+        "me.myBids.closed.sale.profile": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Profile"
+        },
+        "me.myBids.closed.sale.profile.bio": (v6/*: any*/),
+        "me.myBids.closed.sale.profile.id": (v4/*: any*/),
+        "me.saleRegistrationsConnection": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "SaleRegistrationConnection"
+        },
+        "me.saleRegistrationsConnection.edges": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": true,
+          "type": "SaleRegistrationEdge"
+        },
+        "me.saleRegistrationsConnection.edges.node": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "SaleRegistration"
+        },
+        "me.saleRegistrationsConnection.edges.node.id": (v4/*: any*/),
+        "me.saleRegistrationsConnection.edges.node.sale": (v8/*: any*/),
+        "me.saleRegistrationsConnection.edges.node.sale.href": (v6/*: any*/),
+        "me.saleRegistrationsConnection.edges.node.sale.id": (v4/*: any*/),
+        "me.saleRegistrationsConnection.edges.node.sale.isClosed": (v5/*: any*/),
+        "me.saleRegistrationsConnection.edges.node.sale.name": (v6/*: any*/),
+        "me.saleRegistrationsConnection.edges.node.sale.startAt": (v6/*: any*/)
+      }
+    },
     "name": "SettingsAuctionsRouteQuery_Test_Query",
     "operationKind": "query",
     "text": "query SettingsAuctionsRouteQuery_Test_Query {\n  me {\n    ...SettingsAuctionsRoute_me\n    id\n  }\n}\n\nfragment SettingsAuctionsRoute_me on Me {\n  ...UserActiveBids_me\n  ...UserBidHistory_me\n  ...UserRegistrationAuctions_me\n}\n\nfragment UserActiveBids_me on Me {\n  lotStandings {\n    isLeadingBidder\n    activeBid {\n      id\n    }\n    saleArtwork {\n      lotLabel\n      highestBid {\n        display\n      }\n      counts {\n        bidderPositions\n      }\n      artwork {\n        title\n        href\n        image {\n          cropped(height: 100, width: 100) {\n            src\n            srcSet\n          }\n        }\n        artist {\n          name\n          id\n        }\n        id\n      }\n      id\n    }\n  }\n}\n\nfragment UserBidHistory_me on Me {\n  myBids {\n    closed {\n      sale {\n        name\n        href\n        endAt(format: \"MMMM D, h:mmA\")\n        profile {\n          bio\n          id\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment UserRegistrationAuctions_me on Me {\n  saleRegistrationsConnection(published: true, isAuction: true, sort: CREATED_AT_DESC, first: 10, registered: false) {\n    edges {\n      node {\n        sale {\n          id\n          name\n          href\n          startAt(format: \"MMMM D, h:mmA\")\n          isClosed\n        }\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '57cd2ce66cdc3318bccdcff2e9afa044';
+(node as any).hash = '40a6dfae10813d606d91b054d59e896d';
 export default node;

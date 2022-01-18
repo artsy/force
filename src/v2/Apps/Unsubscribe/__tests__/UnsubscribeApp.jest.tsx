@@ -22,7 +22,7 @@ const { getWrapper } = setupTestWrapper<UnsubscribeApp_Test_Query>({
     </MockBoot>
   ),
   query: graphql`
-    query UnsubscribeApp_Test_Query {
+    query UnsubscribeApp_Test_Query @relay_test_operation {
       me {
         ...UnsubscribeApp_me
       }

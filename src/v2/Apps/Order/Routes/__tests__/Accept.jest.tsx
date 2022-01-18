@@ -76,7 +76,7 @@ describe("Accept seller offer", () => {
   const { mutations, buildPage, routes } = createTestEnv({
     Component: AcceptFragmentContainer,
     query: graphql`
-      query AcceptTestQuery @raw_response_type {
+      query AcceptTestQuery @raw_response_type @relay_test_operation {
         order: commerceOrder(id: "") {
           ...Accept_order
         }

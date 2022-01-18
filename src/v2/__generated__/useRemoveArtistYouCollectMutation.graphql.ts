@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -54,6 +55,7 @@ fragment SettingsEditProfileArtistsYouCollect_me on Me {
           slug
         }
         ... on Node {
+          __isNode: __typename
           id
         }
       }
@@ -73,8 +75,7 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "input",
-    "type": "DeleteUserInterestMutationInput!"
+    "name": "input"
   }
 ],
 v1 = [
@@ -146,7 +147,8 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Mutation"
+    "type": "Mutation",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -210,7 +212,6 @@ return {
                             "name": "__typename",
                             "storageKey": null
                           },
-                          (v4/*: any*/),
                           {
                             "kind": "InlineFragment",
                             "selections": [
@@ -230,7 +231,16 @@ return {
                                 "storageKey": null
                               }
                             ],
-                            "type": "Artist"
+                            "type": "Artist",
+                            "abstractKey": null
+                          },
+                          {
+                            "kind": "InlineFragment",
+                            "selections": [
+                              (v4/*: any*/)
+                            ],
+                            "type": "Node",
+                            "abstractKey": "__isNode"
                           }
                         ],
                         "storageKey": null
@@ -260,11 +270,12 @@ return {
     ]
   },
   "params": {
+    "cacheID": "311470e90a00163bcc8766816885bea5",
     "id": null,
     "metadata": {},
     "name": "useRemoveArtistYouCollectMutation",
     "operationKind": "mutation",
-    "text": "mutation useRemoveArtistYouCollectMutation(\n  $input: DeleteUserInterestMutationInput!\n) {\n  deleteUserInterest(input: $input) {\n    clientMutationId\n    me {\n      ...SettingsEditProfileArtistsYouCollect_me\n      ...SettingsEditProfileYourGalleryIntro_me\n      id\n    }\n  }\n}\n\nfragment SettingsEditProfileArtistsYouCollect_me on Me {\n  collectorProfile {\n    userInterests {\n      internalID\n      category\n      interest {\n        __typename\n        ... on Artist {\n          internalID\n          name\n          slug\n        }\n        ... on Node {\n          id\n        }\n      }\n      id\n    }\n    id\n  }\n}\n\nfragment SettingsEditProfileYourGalleryIntro_me on Me {\n  inquiryIntroduction\n}\n"
+    "text": "mutation useRemoveArtistYouCollectMutation(\n  $input: DeleteUserInterestMutationInput!\n) {\n  deleteUserInterest(input: $input) {\n    clientMutationId\n    me {\n      ...SettingsEditProfileArtistsYouCollect_me\n      ...SettingsEditProfileYourGalleryIntro_me\n      id\n    }\n  }\n}\n\nfragment SettingsEditProfileArtistsYouCollect_me on Me {\n  collectorProfile {\n    userInterests {\n      internalID\n      category\n      interest {\n        __typename\n        ... on Artist {\n          internalID\n          name\n          slug\n        }\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n      }\n      id\n    }\n    id\n  }\n}\n\nfragment SettingsEditProfileYourGalleryIntro_me on Me {\n  inquiryIntroduction\n}\n"
   }
 };
 })();

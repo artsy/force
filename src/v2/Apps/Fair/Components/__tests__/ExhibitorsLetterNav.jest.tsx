@@ -18,7 +18,7 @@ const getWrapperWithBreakpoint = (breakpoint: Breakpoint = "lg") =>
       </MockBoot>
     ),
     query: graphql`
-      query ExhibitorsLetterNav_Test_Query {
+      query ExhibitorsLetterNav_Test_Query @relay_test_operation {
         fair(id: "one-x-artsy") {
           ...ExhibitorsLetterNav_fair
         }

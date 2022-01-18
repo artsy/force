@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -86,6 +87,30 @@ v4 = {
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
+},
+v5 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "ID"
+},
+v6 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "String"
+},
+v7 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "Int"
+},
+v8 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "String"
 };
 return {
   "fragment": {
@@ -111,7 +136,8 @@ return {
         "storageKey": "artist(id:\"test\")"
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -265,13 +291,67 @@ return {
     ]
   },
   "params": {
+    "cacheID": "7f643ecb55a9310a0bff55861380137c",
     "id": null,
-    "metadata": {},
+    "metadata": {
+      "relayTestingSelectionTypeInfo": {
+        "artist": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Artist"
+        },
+        "artist.id": (v5/*: any*/),
+        "artist.internalID": (v5/*: any*/),
+        "artist.name": (v6/*: any*/),
+        "artist.showsConnection": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "ShowConnection"
+        },
+        "artist.showsConnection.edges": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": true,
+          "type": "ShowEdge"
+        },
+        "artist.showsConnection.edges.node": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Show"
+        },
+        "artist.showsConnection.edges.node.coverImage": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Image"
+        },
+        "artist.showsConnection.edges.node.coverImage.cropped": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "CroppedImageUrl"
+        },
+        "artist.showsConnection.edges.node.coverImage.cropped.height": (v7/*: any*/),
+        "artist.showsConnection.edges.node.coverImage.cropped.src": (v8/*: any*/),
+        "artist.showsConnection.edges.node.coverImage.cropped.srcSet": (v8/*: any*/),
+        "artist.showsConnection.edges.node.coverImage.cropped.width": (v7/*: any*/),
+        "artist.showsConnection.edges.node.exhibitionPeriod": (v6/*: any*/),
+        "artist.showsConnection.edges.node.href": (v6/*: any*/),
+        "artist.showsConnection.edges.node.id": (v5/*: any*/),
+        "artist.showsConnection.edges.node.internalID": (v5/*: any*/),
+        "artist.showsConnection.edges.node.name": (v6/*: any*/),
+        "artist.showsConnection.edges.node.slug": (v5/*: any*/),
+        "artist.slug": (v5/*: any*/)
+      }
+    },
     "name": "ArtistCurrentShowsRail_Test_Query",
     "operationKind": "query",
     "text": "query ArtistCurrentShowsRail_Test_Query {\n  artist(id: \"test\") {\n    ...ArtistCurrentShowsRail_artist\n    id\n  }\n}\n\nfragment ArtistCurrentShowsRail_artist on Artist {\n  internalID\n  name\n  slug\n  showsConnection(first: 5, sort: END_AT_ASC, status: \"running\") {\n    edges {\n      node {\n        coverImage {\n          cropped(width: 325, height: 230) {\n            width\n            height\n            srcSet\n            src\n          }\n        }\n        exhibitionPeriod\n        href\n        internalID\n        name\n        slug\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'c2fb992125f9554735b8ca18b1bf3572';
+(node as any).hash = '71aa6c6728c5b37aa5e6ddcf67e50900';
 export default node;

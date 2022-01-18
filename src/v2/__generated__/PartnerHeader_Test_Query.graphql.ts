@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -32,11 +33,11 @@ export type PartnerHeader_Test_QueryRawResponse = {
             readonly edges: ReadonlyArray<({
                 readonly node: ({
                     readonly city: string | null;
-                    readonly id: string | null;
+                    readonly id: string;
                 }) | null;
             }) | null> | null;
         }) | null;
-        readonly id: string | null;
+        readonly id: string;
     }) | null;
 };
 export type PartnerHeader_Test_Query = {
@@ -117,6 +118,24 @@ v3 = {
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
+},
+v4 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "ID"
+},
+v5 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "String"
+},
+v6 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "String"
 };
 return {
   "fragment": {
@@ -142,7 +161,8 @@ return {
         "storageKey": "partner(id:\"white-cube\")"
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -308,13 +328,83 @@ return {
     ]
   },
   "params": {
+    "cacheID": "787df13f06f3422cee9fe1286bd9e366",
     "id": null,
-    "metadata": {},
+    "metadata": {
+      "relayTestingSelectionTypeInfo": {
+        "partner": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Partner"
+        },
+        "partner.id": (v4/*: any*/),
+        "partner.locations": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "LocationConnection"
+        },
+        "partner.locations.edges": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": true,
+          "type": "LocationEdge"
+        },
+        "partner.locations.edges.node": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Location"
+        },
+        "partner.locations.edges.node.city": (v5/*: any*/),
+        "partner.locations.edges.node.id": (v4/*: any*/),
+        "partner.locations.totalCount": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Int"
+        },
+        "partner.name": (v5/*: any*/),
+        "partner.profile": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Profile"
+        },
+        "partner.profile.icon": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Image"
+        },
+        "partner.profile.icon.resized": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "ResizedImageUrl"
+        },
+        "partner.profile.icon.resized.src": (v6/*: any*/),
+        "partner.profile.icon.resized.srcSet": (v6/*: any*/),
+        "partner.profile.id": (v4/*: any*/),
+        "partner.profile.internalID": (v4/*: any*/),
+        "partner.profile.is_followed": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Boolean"
+        },
+        "partner.profile.name": (v5/*: any*/),
+        "partner.profile.slug": (v4/*: any*/),
+        "partner.slug": (v4/*: any*/),
+        "partner.type": (v5/*: any*/)
+      }
+    },
     "name": "PartnerHeader_Test_Query",
     "operationKind": "query",
     "text": "query PartnerHeader_Test_Query {\n  partner(id: \"white-cube\") {\n    ...PartnerHeader_partner\n    id\n  }\n}\n\nfragment FollowProfileButton_profile on Profile {\n  id\n  slug\n  name\n  internalID\n  is_followed: isFollowed\n}\n\nfragment PartnerHeader_partner on Partner {\n  name\n  type\n  slug\n  profile {\n    icon {\n      resized(width: 80, height: 80, version: \"square140\") {\n        src\n        srcSet\n      }\n    }\n    ...FollowProfileButton_profile\n    id\n  }\n  locations: locationsConnection(first: 20) {\n    totalCount\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '6d448fea989962f873735f54cd4c8cc1';
+(node as any).hash = '943e764421e6e26489f307efbdbdc041';
 export default node;

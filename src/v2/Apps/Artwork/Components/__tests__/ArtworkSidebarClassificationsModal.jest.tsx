@@ -1,8 +1,6 @@
-import {
-  ArtworkSidebarClassificationsModalFragmentContainer,
-  ARTWORK_SIDEBAR_CLASSIFICATIONS_MODAL_QUERY,
-} from "../ArtworkSidebarClassificationsModal"
+import { ArtworkSidebarClassificationsModalFragmentContainer } from "../ArtworkSidebarClassificationsModal"
 import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
+import { graphql } from "react-relay"
 
 jest.mock("@artsy/palette", () => {
   return {
@@ -22,7 +20,14 @@ const getWrapperWithResponsibilityMessage = (showDisclaimer?: boolean) =>
         />
       )
     },
-    query: ARTWORK_SIDEBAR_CLASSIFICATIONS_MODAL_QUERY,
+    query: graphql`
+      query ArtworkSidebarClassificationsModal_test_Query
+        @relay_test_operation {
+        viewer {
+          ...ArtworkSidebarClassificationsModal_viewer
+        }
+      }
+    `,
   })
 
 describe("ArtworkSidebarClassificationsModal", () => {

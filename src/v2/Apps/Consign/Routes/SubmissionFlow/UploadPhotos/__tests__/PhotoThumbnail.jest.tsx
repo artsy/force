@@ -16,7 +16,7 @@ const defaultProps: PhotoThumbnailProps = {
     name: "foo.png",
     size: file.size,
     removed: false,
-    s3Key: "key",
+    geminiToken: "key",
   },
   onDelete: deleteFn,
 }

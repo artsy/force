@@ -9,7 +9,7 @@ describe("UserActiveBids", () => {
   const { getWrapper } = setupTestWrapper<UserActiveBids_Test_Query>({
     Component: UserActiveBidsFragmentContainer,
     query: graphql`
-      query UserActiveBids_Test_Query {
+      query UserActiveBids_Test_Query @relay_test_operation {
         me {
           ...UserActiveBids_me
         }

@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -37,8 +38,7 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "ip",
-    "type": "String!"
+    "name": "ip"
   }
 ],
 v1 = [
@@ -72,7 +72,8 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -101,13 +102,29 @@ return {
     ]
   },
   "params": {
+    "cacheID": "7ff510343d17f80cac21e75a084f7b80",
     "id": null,
-    "metadata": {},
+    "metadata": {
+      "relayTestingSelectionTypeInfo": {
+        "requestLocation": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "RequestLocation"
+        },
+        "requestLocation.countryCode": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "String"
+        }
+      }
+    },
     "name": "SignUpFormLocation_tests_Query",
     "operationKind": "query",
     "text": "query SignUpFormLocation_tests_Query(\n  $ip: String!\n) {\n  requestLocation(ip: $ip) {\n    ...SignUpForm_requestLocation\n  }\n}\n\nfragment SignUpForm_requestLocation on RequestLocation {\n  countryCode\n}\n"
   }
 };
 })();
-(node as any).hash = '2153ee92824b55469cfa43e08e1ccfbd';
+(node as any).hash = '4902fe6fc6c22dcb9596a2d6b7ea89e2';
 export default node;

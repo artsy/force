@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -42,6 +43,7 @@ fragment HomeFeaturedGalleriesRail_orderedSet on OrderedSet {
             __typename
             ...PartnerCell_partner
             ... on Node {
+              __isNode: __typename
               id
             }
             ... on FairOrganizer {
@@ -51,6 +53,7 @@ fragment HomeFeaturedGalleriesRail_orderedSet on OrderedSet {
           id
         }
         ... on Node {
+          __isNode: __typename
           id
         }
         ... on FeaturedLink {
@@ -108,29 +111,38 @@ v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "id",
+  "name": "internalID",
   "storageKey": null
 },
 v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "internalID",
+  "name": "slug",
   "storageKey": null
 },
 v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "slug",
+  "name": "name",
   "storageKey": null
 },
 v5 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "name",
+  "name": "id",
   "storageKey": null
+},
+v6 = [
+  (v5/*: any*/)
+],
+v7 = {
+  "kind": "InlineFragment",
+  "selections": (v6/*: any*/),
+  "type": "Node",
+  "abstractKey": "__isNode"
 };
 return {
   "fragment": {
@@ -156,7 +168,8 @@ return {
         "storageKey": "orderedSet(id:\"6193c9ede70512000fbf3e8d\")"
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -203,7 +216,6 @@ return {
                     "plural": false,
                     "selections": [
                       (v1/*: any*/),
-                      (v2/*: any*/),
                       {
                         "kind": "InlineFragment",
                         "selections": [
@@ -216,13 +228,12 @@ return {
                             "plural": false,
                             "selections": [
                               (v1/*: any*/),
-                              (v2/*: any*/),
                               {
                                 "kind": "InlineFragment",
                                 "selections": [
+                                  (v2/*: any*/),
                                   (v3/*: any*/),
                                   (v4/*: any*/),
-                                  (v5/*: any*/),
                                   {
                                     "alias": null,
                                     "args": null,
@@ -274,7 +285,7 @@ return {
                                                 "name": "city",
                                                 "storageKey": null
                                               },
-                                              (v2/*: any*/)
+                                              (v5/*: any*/)
                                             ],
                                             "storageKey": null
                                           }
@@ -292,10 +303,10 @@ return {
                                     "name": "profile",
                                     "plural": false,
                                     "selections": [
-                                      (v2/*: any*/),
-                                      (v4/*: any*/),
                                       (v5/*: any*/),
                                       (v3/*: any*/),
+                                      (v4/*: any*/),
+                                      (v2/*: any*/),
                                       {
                                         "alias": "is_followed",
                                         "args": null,
@@ -371,13 +382,30 @@ return {
                                     "storageKey": null
                                   }
                                 ],
-                                "type": "Partner"
+                                "type": "Partner",
+                                "abstractKey": null
+                              },
+                              (v7/*: any*/),
+                              {
+                                "kind": "InlineFragment",
+                                "selections": (v6/*: any*/),
+                                "type": "FairOrganizer",
+                                "abstractKey": null
                               }
                             ],
                             "storageKey": null
-                          }
+                          },
+                          (v5/*: any*/)
                         ],
-                        "type": "Profile"
+                        "type": "Profile",
+                        "abstractKey": null
+                      },
+                      (v7/*: any*/),
+                      {
+                        "kind": "InlineFragment",
+                        "selections": (v6/*: any*/),
+                        "type": "FeaturedLink",
+                        "abstractKey": null
                       }
                     ],
                     "storageKey": null
@@ -388,18 +416,19 @@ return {
             ],
             "storageKey": "orderedItemsConnection(first:20)"
           },
-          (v2/*: any*/)
+          (v5/*: any*/)
         ],
         "storageKey": "orderedSet(id:\"6193c9ede70512000fbf3e8d\")"
       }
     ]
   },
   "params": {
+    "cacheID": "44c72d35f5502d241e058afd8b5c5b77",
     "id": null,
     "metadata": {},
     "name": "HomeFeaturedGalleriesRailQuery",
     "operationKind": "query",
-    "text": "query HomeFeaturedGalleriesRailQuery {\n  orderedSet(id: \"6193c9ede70512000fbf3e8d\") {\n    ...HomeFeaturedGalleriesRail_orderedSet\n    id\n  }\n}\n\nfragment FollowProfileButton_profile on Profile {\n  id\n  slug\n  name\n  internalID\n  is_followed: isFollowed\n}\n\nfragment HomeFeaturedGalleriesRail_orderedSet on OrderedSet {\n  orderedItemsConnection(first: 20) {\n    edges {\n      node {\n        __typename\n        ... on Profile {\n          owner {\n            __typename\n            ...PartnerCell_partner\n            ... on Node {\n              id\n            }\n            ... on FairOrganizer {\n              id\n            }\n          }\n          id\n        }\n        ... on Node {\n          id\n        }\n        ... on FeaturedLink {\n          id\n        }\n      }\n    }\n  }\n}\n\nfragment PartnerCell_partner on Partner {\n  internalID\n  slug\n  name\n  href\n  initials\n  locationsConnection(first: 15) {\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n  profile {\n    ...FollowProfileButton_profile\n    isFollowed\n    image {\n      cropped(width: 445, height: 334, version: [\"wide\", \"large\", \"featured\", \"larger\"]) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n"
+    "text": "query HomeFeaturedGalleriesRailQuery {\n  orderedSet(id: \"6193c9ede70512000fbf3e8d\") {\n    ...HomeFeaturedGalleriesRail_orderedSet\n    id\n  }\n}\n\nfragment FollowProfileButton_profile on Profile {\n  id\n  slug\n  name\n  internalID\n  is_followed: isFollowed\n}\n\nfragment HomeFeaturedGalleriesRail_orderedSet on OrderedSet {\n  orderedItemsConnection(first: 20) {\n    edges {\n      node {\n        __typename\n        ... on Profile {\n          owner {\n            __typename\n            ...PartnerCell_partner\n            ... on Node {\n              __isNode: __typename\n              id\n            }\n            ... on FairOrganizer {\n              id\n            }\n          }\n          id\n        }\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n        ... on FeaturedLink {\n          id\n        }\n      }\n    }\n  }\n}\n\nfragment PartnerCell_partner on Partner {\n  internalID\n  slug\n  name\n  href\n  initials\n  locationsConnection(first: 15) {\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n  profile {\n    ...FollowProfileButton_profile\n    isFollowed\n    image {\n      cropped(width: 445, height: 334, version: [\"wide\", \"large\", \"featured\", \"larger\"]) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n"
   }
 };
 })();

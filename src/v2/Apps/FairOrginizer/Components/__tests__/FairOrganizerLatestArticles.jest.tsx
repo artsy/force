@@ -13,7 +13,7 @@ const { getWrapper } = setupTestWrapper<FairOrganizerLatestArticles_Test_Query>(
       )
     },
     query: graphql`
-      query FairOrganizerLatestArticles_Test_Query {
+      query FairOrganizerLatestArticles_Test_Query @relay_test_operation {
         fairOrganizer(id: "example") {
           ...FairOrganizerLatestArticles_fairOrganizer
         }
@@ -65,7 +65,9 @@ describe("FairOrganizerLatestArticles", () => {
   })
 
   it("doesn't render read all button if articles count is not greater than 7", () => {
-    const wrapper = getWrapper({})
+    const wrapper = getWrapper({
+      FairOrganizer: () => ({ articlesConnection: articlesFixture }),
+    })
     expect(wrapper.find("Button").length).toBe(0)
   })
 

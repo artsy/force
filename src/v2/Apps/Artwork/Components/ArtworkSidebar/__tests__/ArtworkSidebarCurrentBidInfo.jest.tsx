@@ -32,7 +32,9 @@ describe("ArtworkSidebarCurrentBidInfo", () => {
     return renderRelayTree({
       Component,
       query: graphql`
-        query ArtworkSidebarCurrentBidInfo_Test_Query @raw_response_type {
+        query ArtworkSidebarCurrentBidInfo_Test_Query
+          @raw_response_type
+          @relay_test_operation {
           artwork(id: "auction_artwork_estimate_premium") {
             ...ArtworkSidebarCurrentBidInfo_artwork
           }

@@ -10,7 +10,7 @@ describe("FairTimer", () => {
   const { getWrapper } = setupTestWrapper<FairTimer_Test_Query>({
     Component: FairTimerFragmentContainer,
     query: graphql`
-      query FairTimer_Test_Query {
+      query FairTimer_Test_Query @relay_test_operation {
         fair(id: "example") {
           ...FairTimer_fair
         }

@@ -2,7 +2,7 @@ import renderTestComponent from "desktop/apps/auction/__tests__/utils/renderTest
 import { ArtworkRail } from "../ArtworkRail"
 import { promotedSaleArtworks } from "../../artwork_browser/__tests__/fixtures/promotedSaleArtworks"
 
-xdescribe("auction/components/artwork_rail/ArtworkRail", () => {
+describe.skip("auction/components/artwork_rail/ArtworkRail", () => {
   const data = {
     app: {
       auction: {
@@ -10,14 +10,14 @@ xdescribe("auction/components/artwork_rail/ArtworkRail", () => {
         sale_type: "auction promo",
         eligible_sale_artworks_count: 0,
         promoted_sale: {
-          sale_artworks: promotedSaleArtworks,
+          saleArtworksConnection: promotedSaleArtworks,
         },
       },
     },
   }
 
   // FIXME: Reenable
-  xit("renders an interactive rail", () => {
+  it.skip("renders an interactive rail", () => {
     const { wrapper } = renderTestComponent({
       Component: ArtworkRail,
       options: { renderMode: "mount" },

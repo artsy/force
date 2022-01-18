@@ -20,7 +20,7 @@ const { getWrapper } = setupTestWrapper<ArtworkDetails_Test_Query>({
     )
   },
   query: graphql`
-    query ArtworkDetails_Test_Query {
+    query ArtworkDetails_Test_Query @relay_test_operation {
       artwork(id: "example") {
         ...ArtworkDetails_artwork
       }

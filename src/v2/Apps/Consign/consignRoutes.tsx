@@ -1,7 +1,9 @@
 import loadable from "@loadable/component"
-import { Redirect } from "found"
+import { Redirect, RedirectException } from "found"
 import { graphql } from "react-relay"
 import { AppRouteConfig } from "v2/System/Router/Route"
+import { getENV } from "v2/Utils/getENV"
+import { getRedirect } from "./Routes/SubmissionFlow/Utils/redirects"
 
 const MarketingLandingApp = loadable(
   () =>
@@ -32,6 +34,16 @@ const SubmissionLayout = loadable(
   }
 )
 
+const ArtworkDetailsFragmentContainer = loadable(
+  () =>
+    import(
+      /* webpackChunkName: "consignBundle" */ "./Routes/SubmissionFlow/ArtworkDetails/ArtworkDetails"
+    ),
+  {
+    resolveComponent: component => component.ArtworkDetailsFragmentContainer,
+  }
+)
+
 const ArtworkDetails = loadable(
   () =>
     import(
@@ -42,13 +54,13 @@ const ArtworkDetails = loadable(
   }
 )
 
-const UploadPhotos = loadable(
+const UploadPhotosFragmentContainer = loadable(
   () =>
     import(
       /* webpackChunkName: "consignBundle" */ "./Routes/SubmissionFlow/UploadPhotos/UploadPhotos"
     ),
   {
-    resolveComponent: component => component.UploadPhotos,
+    resolveComponent: component => component.UploadPhotosFragmentContainer,
   }
 )
 
@@ -72,6 +84,30 @@ const ThankYou = loadable(
     resolveComponent: component => component.ThankYou,
   }
 )
+
+const renderSubmissionFlowStep = ({ Component, props, match, resolving }) => {
+  if (!(Component && props)) {
+    return undefined
+  }
+
+  if (resolving) {
+    const { submission } = props as any
+    const redirectTo = getRedirect(props.router, match, submission)
+
+    if (redirectTo) {
+      throw new RedirectException(redirectTo)
+    }
+  }
+
+  return <Component {...props} />
+}
+
+const prepareSubmissionFlowStepVariables = data => {
+  return {
+    ...data,
+    sessionID: getENV("SESSION_ID"),
+  }
+}
 
 export const consignRoutes: AppRouteConfig[] = [
   {
@@ -102,19 +138,42 @@ export const consignRoutes: AppRouteConfig[] = [
         path: ":id/artwork-details",
         hideNav: true,
         hideFooter: true,
-        getComponent: () => ArtworkDetails,
+        getComponent: () => ArtworkDetailsFragmentContainer,
         onClientSideRender: () => {
-          ArtworkDetails.preload()
+          ArtworkDetailsFragmentContainer.preload()
         },
+        query: graphql`
+          query consignRoutes_artworkDetailsQuery(
+            $id: ID!
+            $sessionID: String
+          ) {
+            submission(id: $id, sessionID: $sessionID) {
+              ...ArtworkDetails_submission
+              ...redirects_submission @relay(mask: false)
+            }
+          }
+        `,
+        prepareVariables: prepareSubmissionFlowStepVariables,
+        render: renderSubmissionFlowStep,
       },
       {
         path: ":id/upload-photos",
         hideNav: true,
         hideFooter: true,
-        getComponent: () => UploadPhotos,
+        getComponent: () => UploadPhotosFragmentContainer,
         onClientSideRender: () => {
-          UploadPhotos.preload()
+          UploadPhotosFragmentContainer.preload()
         },
+        query: graphql`
+          query consignRoutes_uploadPhotosQuery($id: ID!, $sessionID: String) {
+            submission(id: $id, sessionID: $sessionID) {
+              ...UploadPhotos_submission
+              ...redirects_submission @relay(mask: false)
+            }
+          }
+        `,
+        prepareVariables: prepareSubmissionFlowStepVariables,
+        render: renderSubmissionFlowStep,
       },
       {
         path: ":id/contact-information",
@@ -125,12 +184,21 @@ export const consignRoutes: AppRouteConfig[] = [
           ContactInformation.preload()
         },
         query: graphql`
-          query consignRoutes_ContactInformationQuery {
+          query consignRoutes_contactInformationQuery(
+            $id: ID!
+            $sessionID: String
+          ) {
+            submission(id: $id, sessionID: $sessionID) {
+              ...ContactInformation_submission
+              ...redirects_submission @relay(mask: false)
+            }
             me {
               ...ContactInformation_me
             }
           }
         `,
+        render: renderSubmissionFlowStep,
+        prepareVariables: prepareSubmissionFlowStepVariables,
       },
       {
         path: ":id/thank-you",

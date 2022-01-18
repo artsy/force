@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -91,6 +92,18 @@ v3 = {
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
+},
+v4 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "String"
+},
+v5 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "ID"
 };
 return {
   "fragment": {
@@ -116,7 +129,8 @@ return {
         "storageKey": "geneFamiliesConnection(first:20)"
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -198,13 +212,60 @@ return {
     ]
   },
   "params": {
+    "cacheID": "dbca649d5251c369bbfc4ec14a7b974a",
     "id": null,
-    "metadata": {},
+    "metadata": {
+      "relayTestingSelectionTypeInfo": {
+        "geneFamiliesConnection": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "GeneFamilyConnection"
+        },
+        "geneFamiliesConnection.edges": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": true,
+          "type": "GeneFamilyEdge"
+        },
+        "geneFamiliesConnection.edges.node": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "GeneFamily"
+        },
+        "geneFamiliesConnection.edges.node.genes": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": true,
+          "type": "Gene"
+        },
+        "geneFamiliesConnection.edges.node.genes.displayName": (v4/*: any*/),
+        "geneFamiliesConnection.edges.node.genes.id": (v5/*: any*/),
+        "geneFamiliesConnection.edges.node.genes.isPublished": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Boolean"
+        },
+        "geneFamiliesConnection.edges.node.genes.name": (v4/*: any*/),
+        "geneFamiliesConnection.edges.node.genes.slug": (v5/*: any*/),
+        "geneFamiliesConnection.edges.node.id": (v5/*: any*/),
+        "geneFamiliesConnection.edges.node.internalID": (v5/*: any*/),
+        "geneFamiliesConnection.edges.node.name": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": false,
+          "type": "String"
+        },
+        "geneFamiliesConnection.edges.node.slug": (v5/*: any*/)
+      }
+    },
     "name": "CategoriesApp_Test_Query",
     "operationKind": "query",
     "text": "query CategoriesApp_Test_Query {\n  geneFamiliesConnection(first: 20) {\n    ...CategoriesApp_geneFamiliesConnection\n  }\n}\n\nfragment CategoriesApp_geneFamiliesConnection on GeneFamilyConnection {\n  ...StickyNav_geneFamiliesConnection\n  ...GeneFamilies_geneFamiliesConnection\n}\n\nfragment GeneFamilies_geneFamiliesConnection on GeneFamilyConnection {\n  edges {\n    node {\n      internalID\n      ...GeneFamily_geneFamily\n      id\n    }\n  }\n}\n\nfragment GeneFamily_geneFamily on GeneFamily {\n  id\n  slug\n  name\n  genes {\n    isPublished\n    id\n    displayName\n    name\n    slug\n  }\n}\n\nfragment StickyNav_geneFamiliesConnection on GeneFamilyConnection {\n  edges {\n    node {\n      internalID\n      slug\n      name\n      id\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '4f7c4472ca1fb6b197c14859b61fef5e';
+(node as any).hash = '59bcc4dc0101c4b7d18d920d14968697';
 export default node;

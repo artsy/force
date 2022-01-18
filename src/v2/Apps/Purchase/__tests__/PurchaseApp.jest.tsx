@@ -42,7 +42,7 @@ const render = (me: PurchaseAppTestQueryRawResponse["me"], user: User) =>
     ),
     mockData: { me } as PurchaseAppTestQueryRawResponse,
     query: graphql`
-      query PurchaseAppTestQuery @raw_response_type {
+      query PurchaseAppTestQuery @raw_response_type @relay_test_operation {
         me {
           ...PurchaseApp_me
         }
@@ -60,24 +60,6 @@ const render = (me: PurchaseAppTestQueryRawResponse["me"], user: User) =>
 describe("Purchase app", () => {
   const userType = { type: "User" }
   describe("A logged in user", () => {
-    describe("having previous orders", () => {
-      it("renders orders", async () => {
-        const mockMe = {
-          id: "34343267",
-          name: "Moira Rose",
-          orders: {
-            edges: [{ node: UntouchedBuyOrder }],
-            pageCursors,
-            pageInfo,
-          },
-        }
-        const component = await render(mockMe, userType)
-        const text = component.text()
-        expect(text).toContain(
-          "Moira RoseSaves & FollowsCollector ProfileOrder HistoryBidsSettingsPaymentsShipping Dec 19, 2019PendingPending•Track orderLisa BreslowGramercy Park SouthAGA Gallery New York, NYOrder No.abcdefgTotalUS$12,000Payment MethodN/AFulfillmentDeliveryMore infoNeed Help? Contact Us.1234…7Navigate leftPrevNextNavigate right"
-        )
-      })
-    })
     describe("with around pages", () => {
       it("renders pagination component", async () => {
         const mockMe = {

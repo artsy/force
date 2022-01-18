@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -9,7 +10,7 @@ export type ArtworkSidebar_artwork = {
         readonly is_closed: boolean | null;
         readonly " $fragmentRefs": FragmentRefs<"AuctionTimer_sale">;
     } | null;
-    readonly " $fragmentRefs": FragmentRefs<"ArtworkSidebarArtists_artwork" | "ArtworkSidebarMetadata_artwork" | "ArtworkSidebarAuctionPartnerInfo_artwork" | "ArtworkSidebarCurrentBidInfo_artwork" | "ArtworkSidebarBidAction_artwork" | "ArtworkSidebarCommercial_artwork" | "ArtworkSidebarPartnerInfo_artwork" | "ArtworkSidebarExtraLinks_artwork" | "SecurePayment_artwork" | "VerifiedSeller_artwork" | "AuthenticityCertificate_artwork" | "BuyerGuarantee_artwork">;
+    readonly " $fragmentRefs": FragmentRefs<"ArtworkSidebarArtists_artwork" | "ArtworkSidebarMetadata_artwork" | "ArtworkSidebarAuctionPartnerInfo_artwork" | "ArtworkSidebarAuctionInfoPolling_artwork" | "ArtworkSidebarCommercial_artwork" | "ArtworkSidebarPartnerInfo_artwork" | "ArtworkSidebarExtraLinks_artwork" | "SecurePayment_artwork" | "VerifiedSeller_artwork" | "AuthenticityCertificate_artwork" | "BuyerGuarantee_artwork">;
     readonly " $refType": "ArtworkSidebar_artwork";
 };
 export type ArtworkSidebar_artwork$data = ArtworkSidebar_artwork;
@@ -74,12 +75,7 @@ const node: ReaderFragment = {
     {
       "args": null,
       "kind": "FragmentSpread",
-      "name": "ArtworkSidebarCurrentBidInfo_artwork"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "ArtworkSidebarBidAction_artwork"
+      "name": "ArtworkSidebarAuctionInfoPolling_artwork"
     },
     {
       "args": null,
@@ -117,7 +113,8 @@ const node: ReaderFragment = {
       "name": "BuyerGuarantee_artwork"
     }
   ],
-  "type": "Artwork"
+  "type": "Artwork",
+  "abstractKey": null
 };
-(node as any).hash = 'b93f4d14f5b0227b92c5f4f508185beb';
+(node as any).hash = '0fb9758fb87fb4a7b953ad1df8374dec';
 export default node;

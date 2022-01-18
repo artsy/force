@@ -34,7 +34,7 @@ const { renderWithRelay } = setupTestWrapperTL<SearchResultsArtworks_Query>({
     </MockBoot>
   ),
   query: graphql`
-    query SearchResultsArtworks_Query {
+    query SearchResultsArtworks_Query @relay_test_operation {
       viewer {
         ...SearchResultsArtworks_viewer @arguments(shouldFetchCounts: true)
       }

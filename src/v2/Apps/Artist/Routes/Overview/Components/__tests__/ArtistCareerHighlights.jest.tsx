@@ -7,9 +7,6 @@ jest.unmock("react-relay")
 jest.mock("v2/Components/SelectedCareerAchievements", () => ({
   SelectedCareerAchievementsFragmentContainer: () => null,
 }))
-jest.mock("../ArtistConsignButton", () => ({
-  ArtistConsignButtonFragmentContainer: () => null,
-}))
 jest.mock("../ArtistGenes", () => ({
   ArtistGenesFragmentContainer: () => null,
 }))
@@ -21,7 +18,7 @@ describe("ArtistCareerHighlights", () => {
   const { getWrapper } = setupTestWrapper<ArtistCareerHighlights_Test_Query>({
     Component: ArtistCareerHighlightsFragmentContainer,
     query: graphql`
-      query ArtistCareerHighlights_Test_Query {
+      query ArtistCareerHighlights_Test_Query @relay_test_operation {
         artist(id: "example") {
           ...ArtistCareerHighlights_artist
         }
@@ -40,7 +37,6 @@ describe("ArtistCareerHighlights", () => {
     expect(
       wrapper.find("SelectedCareerAchievementsFragmentContainer").length
     ).toBe(1)
-    expect(wrapper.find("ArtistConsignButtonFragmentContainer").length).toBe(1)
     expect(wrapper.text()).not.toContain("bio")
     expect(wrapper.text()).toContain("Related categories")
     expect(wrapper.find("ArtistGenesFragmentContainer").length).toBe(1)

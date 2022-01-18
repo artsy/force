@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -79,6 +80,30 @@ v3 = {
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
+},
+v4 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "String"
+},
+v5 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "ID"
+},
+v6 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "Int"
+},
+v7 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "String"
 };
 return {
   "fragment": {
@@ -104,7 +129,8 @@ return {
         "storageKey": "artist(id:\"test\")"
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -276,13 +302,67 @@ return {
     ]
   },
   "params": {
+    "cacheID": "d1dd826dff83de2467027b30ba325afb",
     "id": null,
-    "metadata": {},
+    "metadata": {
+      "relayTestingSelectionTypeInfo": {
+        "artist": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Artist"
+        },
+        "artist.articlesConnection": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "ArticleConnection"
+        },
+        "artist.articlesConnection.edges": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": true,
+          "type": "ArticleEdge"
+        },
+        "artist.articlesConnection.edges.node": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Article"
+        },
+        "artist.articlesConnection.edges.node.href": (v4/*: any*/),
+        "artist.articlesConnection.edges.node.id": (v5/*: any*/),
+        "artist.articlesConnection.edges.node.internalID": (v5/*: any*/),
+        "artist.articlesConnection.edges.node.publishedAt": (v4/*: any*/),
+        "artist.articlesConnection.edges.node.slug": (v4/*: any*/),
+        "artist.articlesConnection.edges.node.thumbnailImage": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Image"
+        },
+        "artist.articlesConnection.edges.node.thumbnailImage.cropped": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "CroppedImageUrl"
+        },
+        "artist.articlesConnection.edges.node.thumbnailImage.cropped.height": (v6/*: any*/),
+        "artist.articlesConnection.edges.node.thumbnailImage.cropped.src": (v7/*: any*/),
+        "artist.articlesConnection.edges.node.thumbnailImage.cropped.srcSet": (v7/*: any*/),
+        "artist.articlesConnection.edges.node.thumbnailImage.cropped.width": (v6/*: any*/),
+        "artist.articlesConnection.edges.node.thumbnailTitle": (v4/*: any*/),
+        "artist.id": (v5/*: any*/),
+        "artist.internalID": (v5/*: any*/),
+        "artist.name": (v4/*: any*/),
+        "artist.slug": (v5/*: any*/)
+      }
+    },
     "name": "ArtistCurrentArticlesRail_Test_Query",
     "operationKind": "query",
     "text": "query ArtistCurrentArticlesRail_Test_Query {\n  artist(id: \"test\") {\n    ...ArtistCurrentArticlesRail_artist\n    id\n  }\n}\n\nfragment ArtistCurrentArticlesRail_artist on Artist {\n  articlesConnection(first: 10, sort: PUBLISHED_AT_DESC, inEditorialFeed: true) {\n    edges {\n      node {\n        internalID\n        slug\n        href\n        thumbnailTitle\n        publishedAt(format: \"MMM Do, YYYY\")\n        thumbnailImage {\n          cropped(width: 325, height: 230) {\n            width\n            height\n            src\n            srcSet\n          }\n        }\n        id\n      }\n    }\n  }\n  internalID\n  name\n  slug\n}\n"
   }
 };
 })();
-(node as any).hash = '42b4222e5f8193294f17ddb5b387361e';
+(node as any).hash = '657c4df676abd28381caff8e95e67023';
 export default node;

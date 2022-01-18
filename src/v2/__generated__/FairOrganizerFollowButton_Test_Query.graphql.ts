@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -44,8 +45,7 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "id",
-    "type": "String!"
+    "name": "id"
   }
 ],
 v1 = [
@@ -61,6 +61,12 @@ v2 = {
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
+},
+v3 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "ID"
 };
 return {
   "fragment": {
@@ -86,7 +92,8 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -149,13 +156,45 @@ return {
     ]
   },
   "params": {
+    "cacheID": "76c259741d94ef5c3baeb0160f91cf3a",
     "id": null,
-    "metadata": {},
+    "metadata": {
+      "relayTestingSelectionTypeInfo": {
+        "fairOrganizer": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "FairOrganizer"
+        },
+        "fairOrganizer.id": (v3/*: any*/),
+        "fairOrganizer.name": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "String"
+        },
+        "fairOrganizer.profile": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Profile"
+        },
+        "fairOrganizer.profile.id": (v3/*: any*/),
+        "fairOrganizer.profile.internalID": (v3/*: any*/),
+        "fairOrganizer.profile.isFollowed": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Boolean"
+        },
+        "fairOrganizer.slug": (v3/*: any*/)
+      }
+    },
     "name": "FairOrganizerFollowButton_Test_Query",
     "operationKind": "query",
     "text": "query FairOrganizerFollowButton_Test_Query(\n  $id: String!\n) {\n  fairOrganizer(id: $id) {\n    ...FairOrganizerFollowButton_fairOrganizer\n    id\n  }\n}\n\nfragment FairOrganizerFollowButton_fairOrganizer on FairOrganizer {\n  slug\n  name\n  profile {\n    id\n    internalID\n    isFollowed\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'd6b1f282fc153c1ba563b4c3fa1934c7';
+(node as any).hash = 'e786f3e32ea273cb52989dfa99e228fd';
 export default node;

@@ -12,6 +12,10 @@ interface ToastComponentProps {
   onCloseToast: () => void
 }
 
+/**
+ * @deprecated in favor of our Toast components in @artsy/palette
+ * https://palette-storybook.artsy.net/?path=/story/components-toast--default
+ */
 const ToastComponent: React.FC<ToastComponentProps> = ({
   notificationAction,
   showNotification,

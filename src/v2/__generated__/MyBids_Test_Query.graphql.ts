@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -131,7 +132,37 @@ v4 = [
     "name": "display",
     "storageKey": null
   }
-];
+],
+v5 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "ID"
+},
+v6 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "Image"
+},
+v7 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "String"
+},
+v8 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "String"
+},
+v9 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "Boolean"
+};
 return {
   "fragment": {
     "argumentDefinitions": [],
@@ -156,7 +187,8 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -404,13 +436,119 @@ return {
     ]
   },
   "params": {
+    "cacheID": "cd42075dcd6364248db67e433418d777",
     "id": null,
-    "metadata": {},
+    "metadata": {
+      "relayTestingSelectionTypeInfo": {
+        "me": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Me"
+        },
+        "me.id": (v5/*: any*/),
+        "me.myBids": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "MyBids"
+        },
+        "me.myBids.active": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": true,
+          "type": "MyBid"
+        },
+        "me.myBids.active.sale": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Sale"
+        },
+        "me.myBids.active.sale.coverImage": (v6/*: any*/),
+        "me.myBids.active.sale.coverImage.cropped": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "CroppedImageUrl"
+        },
+        "me.myBids.active.sale.coverImage.cropped.src": (v7/*: any*/),
+        "me.myBids.active.sale.coverImage.cropped.srcSet": (v7/*: any*/),
+        "me.myBids.active.sale.formattedStartDateTime": (v8/*: any*/),
+        "me.myBids.active.sale.id": (v5/*: any*/),
+        "me.myBids.active.sale.name": (v8/*: any*/),
+        "me.myBids.active.sale.partner": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Partner"
+        },
+        "me.myBids.active.sale.partner.id": (v5/*: any*/),
+        "me.myBids.active.sale.partner.name": (v8/*: any*/),
+        "me.myBids.active.sale.slug": (v5/*: any*/),
+        "me.myBids.active.saleArtworks": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": true,
+          "type": "SaleArtwork"
+        },
+        "me.myBids.active.saleArtworks.artwork": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Artwork"
+        },
+        "me.myBids.active.saleArtworks.artwork.artistNames": (v8/*: any*/),
+        "me.myBids.active.saleArtworks.artwork.id": (v5/*: any*/),
+        "me.myBids.active.saleArtworks.artwork.image": (v6/*: any*/),
+        "me.myBids.active.saleArtworks.artwork.image.resized": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "ResizedImageUrl"
+        },
+        "me.myBids.active.saleArtworks.artwork.image.resized.src": (v7/*: any*/),
+        "me.myBids.active.saleArtworks.artwork.image.resized.srcSet": (v7/*: any*/),
+        "me.myBids.active.saleArtworks.currentBid": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "SaleArtworkCurrentBid"
+        },
+        "me.myBids.active.saleArtworks.currentBid.display": (v8/*: any*/),
+        "me.myBids.active.saleArtworks.estimate": (v8/*: any*/),
+        "me.myBids.active.saleArtworks.id": (v5/*: any*/),
+        "me.myBids.active.saleArtworks.internalID": (v5/*: any*/),
+        "me.myBids.active.saleArtworks.isHighestBidder": (v9/*: any*/),
+        "me.myBids.active.saleArtworks.isWatching": (v9/*: any*/),
+        "me.myBids.active.saleArtworks.lotLabel": (v8/*: any*/),
+        "me.myBids.active.saleArtworks.lotState": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "CausalityLotState"
+        },
+        "me.myBids.active.saleArtworks.lotState.bidCount": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Int"
+        },
+        "me.myBids.active.saleArtworks.lotState.sellingPrice": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Money"
+        },
+        "me.myBids.active.saleArtworks.lotState.sellingPrice.display": (v8/*: any*/),
+        "me.myBids.active.saleArtworks.slug": (v5/*: any*/)
+      }
+    },
     "name": "MyBids_Test_Query",
     "operationKind": "query",
     "text": "query MyBids_Test_Query {\n  me {\n    ...MyBids_me\n    id\n  }\n}\n\nfragment MyBidsBidHeader_sale on Sale {\n  coverImage {\n    cropped(width: 330, height: 100) {\n      src\n      srcSet\n    }\n  }\n  formattedStartDateTime\n  name\n  partner {\n    name\n    id\n  }\n  slug\n}\n\nfragment MyBidsBidItem_saleArtwork on SaleArtwork {\n  artwork {\n    artistNames\n    image {\n      resized(width: 55, height: 55) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n  estimate\n  currentBid {\n    display\n  }\n  internalID\n  isHighestBidder\n  isWatching\n  lotState {\n    bidCount\n    sellingPrice {\n      display\n    }\n  }\n  lotLabel\n  slug\n}\n\nfragment MyBids_me on Me {\n  myBids {\n    active {\n      sale {\n        slug\n        ...MyBidsBidHeader_sale\n        id\n      }\n      saleArtworks {\n        ...MyBidsBidItem_saleArtwork\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'f5404f5f973a91da4f43cbd18f97b02b';
+(node as any).hash = 'd73525e93af1b239024242559ac1cec8';
 export default node;

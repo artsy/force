@@ -61,62 +61,6 @@ describe("Articles routes", () => {
     Backbone.sync.restore()
   })
 
-  describe("#articles", () => {
-    it("fetches published articles", () => {
-      articles(req, res, next).then(() => {
-        res.render.args[0][0].should.equal("articles")
-        res.render.args[0][1].articles.length.should.equal(5)
-      })
-    })
-
-    it("requests less than 50 articles with no offset by default", () => {
-      articles(req, res, next).then(() => {
-        positronql.args[0][0].query.should.containEql("limit: 50")
-        positronql.args[0][0].query.should.containEql("offset: 0")
-      })
-    })
-    describe("pagination", () => {
-      it("accepts a page query parameter that offsets the results by limit * (page - 1)", () => {
-        req.query.page = 3
-        articles(req, res, next).then(() => {
-          positronql.args[0][0].query.should.containEql("offset: 100")
-          res.render.args[0][1].page.should.equal(3)
-          res.locals.sd.PAGE.should.equal(3)
-        })
-      })
-
-      it("gracefully handles invalid page input", () => {
-        req.query.page = "foo"
-        articles(req, res, next).then(() => {
-          positronql.args[0][0].query.should.containEql("offset: 0")
-          res.render.args[0][1].page.should.equal(1)
-          res.locals.sd.PAGE.should.equal(1)
-        })
-
-        req.query.page = ""
-        articles(req, res, next).then(() => {
-          positronql.args[0][0].query.should.containEql("offset: 0")
-          res.render.args[0][1].page.should.equal(1)
-          res.locals.sd.PAGE.should.equal(1)
-        })
-
-        req.query.page = 0
-        articles(req, res, next).then(() => {
-          positronql.args[0][0].query.should.containEql("offset: 0")
-          res.render.args[0][1].page.should.equal(1)
-          res.locals.sd.PAGE.should.equal(1)
-        })
-
-        req.query.page = -1
-        articles(req, res, next).then(() => {
-          positronql.args[0][0].query.should.containEql("offset: 0")
-          res.render.args[0][1].page.should.equal(1)
-          res.locals.sd.PAGE.should.equal(1)
-        })
-      })
-    })
-  })
-
   describe("#section", () => {
     it("renders the section with articles", () => {
       const sectionObject = extend(cloneDeep(fixtures.section), {

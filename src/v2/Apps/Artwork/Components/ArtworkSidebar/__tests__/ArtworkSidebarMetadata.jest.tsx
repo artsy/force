@@ -6,6 +6,7 @@ import {
   FilledOutMetadataMultipleEditionSets,
   FilledOutMetadataNoEditions,
   FilledOutMetadataOneEditionSet,
+  FilledOutMetadataNoSizeInfo,
   MetadataForAuctionWork,
 } from "../../../../__tests__/Fixtures/Artwork/ArtworkSidebar/ArtworkSidebarMetadata"
 import { ArtworkSidebarClassification } from "../../ArtworkSidebar/ArtworkSidebarClassification"
@@ -23,7 +24,9 @@ describe("ArtworkSidebarMetadata", () => {
     return await renderRelayTree({
       Component: ArtworkSidebarMetadataFragmentContainer,
       query: graphql`
-        query ArtworkSidebarMetadata_Test_Query @raw_response_type {
+        query ArtworkSidebarMetadata_Test_Query
+          @raw_response_type
+          @relay_test_operation {
           artwork(id: "josef-albers-homage-to-the-square-85") {
             ...ArtworkSidebarMetadata_artwork
           }
@@ -53,7 +56,7 @@ describe("ArtworkSidebarMetadata", () => {
       )
     })
 
-    it("displays dimentions", () => {
+    it("displays dimensions", () => {
       // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       const html = wrapper.html()
 
@@ -83,7 +86,7 @@ describe("ArtworkSidebarMetadata", () => {
       expect(wrapper.html()).toContain("Serigraph")
     })
 
-    it("displays edition dimentions", () => {
+    it("displays edition dimensions", () => {
       // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       const html = wrapper.html()
       expect(html).toContain("14 × 18 in")
@@ -117,7 +120,7 @@ describe("ArtworkSidebarMetadata", () => {
       expect(wrapper.html()).toContain("Premium high gloss archival print")
     })
 
-    it("does not render edition dimentions or details", () => {
+    it("does not render edition dimensions or details", () => {
       // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       expect(wrapper.find(ArtworkSidebarSizeInfo).length).toBe(0)
       // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
@@ -145,6 +148,17 @@ describe("ArtworkSidebarMetadata", () => {
       expect(wrapper.find(ArtworkSidebarSizeInfo).html()).toBe(null)
       // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       expect(wrapper.find(ArtworkSidebarClassification).html()).toBe(null)
+    })
+  })
+
+  describe("for artwork with no size info", () => {
+    it("does not render any size info", async () => {
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
+      wrapper = await getWrapper(FilledOutMetadataNoSizeInfo)
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
+      const html = wrapper.html()
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
+      expect(wrapper.find(ArtworkSidebarSizeInfo).html()).toBe(null)
     })
   })
 
@@ -182,7 +196,7 @@ describe("ArtworkSidebarMetadata", () => {
       expect(wrapper.html()).toContain("Lithograph in colors, on laid paper")
     })
 
-    it("displays edition dimentions", () => {
+    it("displays edition dimensions", () => {
       // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       const html = wrapper.html()
 

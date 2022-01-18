@@ -31,7 +31,7 @@ const { getWrapper } = setupTestWrapper<Works_Query>({
     </MockBoot>
   ),
   query: graphql`
-    query Works_Query($partnerId: String!) {
+    query Works_Query($partnerId: String!) @relay_test_operation {
       partner(id: $partnerId) {
         ...Works_partner
       }

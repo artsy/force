@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -63,6 +64,7 @@ fragment ArtistShowsGroup_artist_1Q1mII on Artist {
             name
           }
           ... on Node {
+            __isNode: __typename
             id
           }
         }
@@ -106,58 +108,49 @@ fragment Pagination_pageCursors on PageCursors {
 */
 
 const node: ConcreteRequest = (function(){
-var v0 = [
-  {
-    "defaultValue": null,
-    "kind": "LocalArgument",
-    "name": "first",
-    "type": "Int"
-  },
-  {
-    "defaultValue": null,
-    "kind": "LocalArgument",
-    "name": "last",
-    "type": "Int"
-  },
-  {
-    "defaultValue": null,
-    "kind": "LocalArgument",
-    "name": "after",
-    "type": "String"
-  },
-  {
-    "defaultValue": null,
-    "kind": "LocalArgument",
-    "name": "before",
-    "type": "String"
-  },
-  {
-    "defaultValue": null,
-    "kind": "LocalArgument",
-    "name": "artistID",
-    "type": "String!"
-  },
-  {
-    "defaultValue": null,
-    "kind": "LocalArgument",
-    "name": "sort",
-    "type": "ShowSorts"
-  },
-  {
-    "defaultValue": null,
-    "kind": "LocalArgument",
-    "name": "status",
-    "type": "String!"
-  }
-],
-v1 = [
+var v0 = {
+  "defaultValue": null,
+  "kind": "LocalArgument",
+  "name": "after"
+},
+v1 = {
+  "defaultValue": null,
+  "kind": "LocalArgument",
+  "name": "artistID"
+},
+v2 = {
+  "defaultValue": null,
+  "kind": "LocalArgument",
+  "name": "before"
+},
+v3 = {
+  "defaultValue": null,
+  "kind": "LocalArgument",
+  "name": "first"
+},
+v4 = {
+  "defaultValue": null,
+  "kind": "LocalArgument",
+  "name": "last"
+},
+v5 = {
+  "defaultValue": null,
+  "kind": "LocalArgument",
+  "name": "sort"
+},
+v6 = {
+  "defaultValue": null,
+  "kind": "LocalArgument",
+  "name": "status"
+},
+v7 = [
   {
     "kind": "Variable",
     "name": "id",
     "variableName": "artistID"
   }
 ],
-v2 = [
+v8 = [
   {
     "kind": "Variable",
     "name": "after",
@@ -189,23 +182,23 @@ v2 = [
     "variableName": "status"
   }
 ],
-v3 = {
+v9 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "cursor",
   "storageKey": null
 },
-v4 = {
+v10 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "page",
   "storageKey": null
 },
-v5 = [
-  (v3/*: any*/),
-  (v4/*: any*/),
+v11 = [
+  (v9/*: any*/),
+  (v10/*: any*/),
   {
     "alias": null,
     "args": null,
@@ -214,40 +207,45 @@ v5 = [
     "storageKey": null
   }
 ],
-v6 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "id",
-  "storageKey": null
-},
-v7 = {
+v12 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "name",
   "storageKey": null
 },
-v8 = [
-  (v7/*: any*/)
-];
+v13 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+};
 return {
   "fragment": {
-    "argumentDefinitions": (v0/*: any*/),
+    "argumentDefinitions": [
+      (v0/*: any*/),
+      (v1/*: any*/),
+      (v2/*: any*/),
+      (v3/*: any*/),
+      (v4/*: any*/),
+      (v5/*: any*/),
+      (v6/*: any*/)
+    ],
     "kind": "Fragment",
     "metadata": null,
     "name": "ArtistShowsGroupQuery",
     "selections": [
       {
         "alias": null,
-        "args": (v1/*: any*/),
+        "args": (v7/*: any*/),
         "concreteType": "Artist",
         "kind": "LinkedField",
         "name": "artist",
         "plural": false,
         "selections": [
           {
-            "args": (v2/*: any*/),
+            "args": (v8/*: any*/),
             "kind": "FragmentSpread",
             "name": "ArtistShowsGroup_artist"
           }
@@ -255,17 +253,26 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
-    "argumentDefinitions": (v0/*: any*/),
+    "argumentDefinitions": [
+      (v3/*: any*/),
+      (v4/*: any*/),
+      (v0/*: any*/),
+      (v2/*: any*/),
+      (v1/*: any*/),
+      (v5/*: any*/),
+      (v6/*: any*/)
+    ],
     "kind": "Operation",
     "name": "ArtistShowsGroupQuery",
     "selections": [
       {
         "alias": null,
-        "args": (v1/*: any*/),
+        "args": (v7/*: any*/),
         "concreteType": "Artist",
         "kind": "LinkedField",
         "name": "artist",
@@ -280,7 +287,7 @@ return {
           },
           {
             "alias": null,
-            "args": (v2/*: any*/),
+            "args": (v8/*: any*/),
             "concreteType": "ShowConnection",
             "kind": "LinkedField",
             "name": "showsConnection",
@@ -326,7 +333,7 @@ return {
                     "kind": "LinkedField",
                     "name": "around",
                     "plural": true,
-                    "selections": (v5/*: any*/),
+                    "selections": (v11/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -336,7 +343,7 @@ return {
                     "kind": "LinkedField",
                     "name": "first",
                     "plural": false,
-                    "selections": (v5/*: any*/),
+                    "selections": (v11/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -346,7 +353,7 @@ return {
                     "kind": "LinkedField",
                     "name": "last",
                     "plural": false,
-                    "selections": (v5/*: any*/),
+                    "selections": (v11/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -357,8 +364,8 @@ return {
                     "name": "previous",
                     "plural": false,
                     "selections": [
-                      (v3/*: any*/),
-                      (v4/*: any*/)
+                      (v9/*: any*/),
+                      (v10/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -396,21 +403,35 @@ return {
                             "name": "__typename",
                             "storageKey": null
                           },
-                          (v6/*: any*/),
                           {
                             "kind": "InlineFragment",
-                            "selections": (v8/*: any*/),
-                            "type": "ExternalPartner"
+                            "selections": [
+                              (v12/*: any*/),
+                              (v13/*: any*/)
+                            ],
+                            "type": "ExternalPartner",
+                            "abstractKey": null
                           },
                           {
                             "kind": "InlineFragment",
-                            "selections": (v8/*: any*/),
-                            "type": "Partner"
+                            "selections": [
+                              (v12/*: any*/)
+                            ],
+                            "type": "Partner",
+                            "abstractKey": null
+                          },
+                          {
+                            "kind": "InlineFragment",
+                            "selections": [
+                              (v13/*: any*/)
+                            ],
+                            "type": "Node",
+                            "abstractKey": "__isNode"
                           }
                         ],
                         "storageKey": null
                       },
-                      (v7/*: any*/),
+                      (v12/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -479,7 +500,7 @@ return {
                         "name": "city",
                         "storageKey": null
                       },
-                      (v6/*: any*/)
+                      (v13/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -489,18 +510,19 @@ return {
             ],
             "storageKey": null
           },
-          (v6/*: any*/)
+          (v13/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
+    "cacheID": "d739a1b6e8e52855e4918d7b411ceeae",
     "id": null,
     "metadata": {},
     "name": "ArtistShowsGroupQuery",
     "operationKind": "query",
-    "text": "query ArtistShowsGroupQuery(\n  $first: Int\n  $last: Int\n  $after: String\n  $before: String\n  $artistID: String!\n  $sort: ShowSorts\n  $status: String!\n) {\n  artist(id: $artistID) {\n    ...ArtistShowsGroup_artist_1Q1mII\n    id\n  }\n}\n\nfragment ArtistShowsGroup_artist_1Q1mII on Artist {\n  slug\n  showsConnection(first: $first, after: $after, before: $before, last: $last, sort: $sort, status: $status) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    edges {\n      node {\n        partner {\n          __typename\n          ... on ExternalPartner {\n            name\n            id\n          }\n          ... on Partner {\n            name\n          }\n          ... on Node {\n            id\n          }\n        }\n        name\n        href\n        exhibitionPeriod\n        coverImage {\n          cropped(width: 440, height: 315) {\n            src\n            srcSet\n          }\n        }\n        city\n        id\n      }\n    }\n  }\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n"
+    "text": "query ArtistShowsGroupQuery(\n  $first: Int\n  $last: Int\n  $after: String\n  $before: String\n  $artistID: String!\n  $sort: ShowSorts\n  $status: String!\n) {\n  artist(id: $artistID) {\n    ...ArtistShowsGroup_artist_1Q1mII\n    id\n  }\n}\n\nfragment ArtistShowsGroup_artist_1Q1mII on Artist {\n  slug\n  showsConnection(first: $first, after: $after, before: $before, last: $last, sort: $sort, status: $status) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    edges {\n      node {\n        partner {\n          __typename\n          ... on ExternalPartner {\n            name\n            id\n          }\n          ... on Partner {\n            name\n          }\n          ... on Node {\n            __isNode: __typename\n            id\n          }\n        }\n        name\n        href\n        exhibitionPeriod\n        coverImage {\n          cropped(width: 440, height: 315) {\n            src\n            srcSet\n          }\n        }\n        city\n        id\n      }\n    }\n  }\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n"
   }
 };
 })();

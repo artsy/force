@@ -22,7 +22,7 @@ describe("PopularArtists", () => {
       )
     },
     query: graphql`
-      query PopularArtists_Test_Query {
+      query PopularArtists_Test_Query @relay_test_operation {
         highlights {
           popular_artists: popularArtists(excludeFollowedArtists: true) {
             ...PopularArtists_popular_artists

@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -18,12 +19,12 @@ export type RegisterValidTestQueryRawResponse = {
         readonly internalID: string;
         readonly status: string | null;
         readonly requireIdentityVerification: boolean | null;
-        readonly id: string | null;
+        readonly id: string;
     }) | null;
     readonly me: ({
         readonly internalID: string;
         readonly identityVerified: boolean | null;
-        readonly id: string | null;
+        readonly id: string;
     }) | null;
 };
 export type RegisterValidTestQuery = {
@@ -80,6 +81,18 @@ v2 = {
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
+},
+v3 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "ID"
+},
+v4 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "Boolean"
 };
 return {
   "fragment": {
@@ -121,7 +134,8 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -186,13 +200,42 @@ return {
     ]
   },
   "params": {
+    "cacheID": "3725d1fc5453f47190c6d7d172403372",
     "id": null,
-    "metadata": {},
+    "metadata": {
+      "relayTestingSelectionTypeInfo": {
+        "me": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Me"
+        },
+        "me.id": (v3/*: any*/),
+        "me.identityVerified": (v4/*: any*/),
+        "me.internalID": (v3/*: any*/),
+        "sale": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Sale"
+        },
+        "sale.id": (v3/*: any*/),
+        "sale.internalID": (v3/*: any*/),
+        "sale.requireIdentityVerification": (v4/*: any*/),
+        "sale.slug": (v3/*: any*/),
+        "sale.status": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "String"
+        }
+      }
+    },
     "name": "RegisterValidTestQuery",
     "operationKind": "query",
     "text": "query RegisterValidTestQuery {\n  sale(id: \"example-auction-id\") {\n    ...Register_sale\n    id\n  }\n  me {\n    ...Register_me\n    id\n  }\n}\n\nfragment Register_me on Me {\n  internalID\n  identityVerified\n}\n\nfragment Register_sale on Sale {\n  slug\n  internalID\n  status\n  requireIdentityVerification\n}\n"
   }
 };
 })();
-(node as any).hash = 'a4c265e5981c01e987b8ac249f776df2';
+(node as any).hash = 'e845527731162b24c2e711b3b4a4f4f3';
 export default node;

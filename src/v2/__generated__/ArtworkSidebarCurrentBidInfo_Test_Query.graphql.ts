@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -16,7 +17,7 @@ export type ArtworkSidebarCurrentBidInfo_Test_QueryRawResponse = {
             readonly is_live_open: boolean | null;
             readonly internalID: string;
             readonly is_with_buyers_premium: boolean | null;
-            readonly id: string | null;
+            readonly id: string;
         }) | null;
         readonly sale_artwork: ({
             readonly is_with_reserve: boolean | null;
@@ -28,21 +29,21 @@ export type ArtworkSidebarCurrentBidInfo_Test_QueryRawResponse = {
             readonly counts: ({
                 readonly bidder_positions: number | null;
             }) | null;
-            readonly id: string | null;
+            readonly id: string;
         }) | null;
         readonly myLotStanding: ReadonlyArray<{
             readonly active_bid: ({
                 readonly is_winning: boolean | null;
-                readonly id: string | null;
+                readonly id: string;
             }) | null;
             readonly most_recent_bid: ({
                 readonly max_bid: ({
                     readonly display: string | null;
                 }) | null;
-                readonly id: string | null;
+                readonly id: string;
             }) | null;
         }> | null;
-        readonly id: string | null;
+        readonly id: string;
     }) | null;
 };
 export type ArtworkSidebarCurrentBidInfo_Test_Query = {
@@ -119,7 +120,31 @@ v2 = [
     "name": "display",
     "storageKey": null
   }
-];
+],
+v3 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "ID"
+},
+v4 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "BidderPosition"
+},
+v5 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "Boolean"
+},
+v6 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "String"
+};
 return {
   "fragment": {
     "argumentDefinitions": [],
@@ -144,7 +169,8 @@ return {
         "storageKey": "artwork(id:\"auction_artwork_estimate_premium\")"
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -326,13 +352,82 @@ return {
     ]
   },
   "params": {
+    "cacheID": "60c3871f8ca3b3b48e2673cc8d1aaa91",
     "id": null,
-    "metadata": {},
+    "metadata": {
+      "relayTestingSelectionTypeInfo": {
+        "artwork": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Artwork"
+        },
+        "artwork.id": (v3/*: any*/),
+        "artwork.myLotStanding": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": true,
+          "type": "LotStanding"
+        },
+        "artwork.myLotStanding.active_bid": (v4/*: any*/),
+        "artwork.myLotStanding.active_bid.id": (v3/*: any*/),
+        "artwork.myLotStanding.active_bid.is_winning": (v5/*: any*/),
+        "artwork.myLotStanding.most_recent_bid": (v4/*: any*/),
+        "artwork.myLotStanding.most_recent_bid.id": (v3/*: any*/),
+        "artwork.myLotStanding.most_recent_bid.max_bid": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "BidderPositionMaxBid"
+        },
+        "artwork.myLotStanding.most_recent_bid.max_bid.display": (v6/*: any*/),
+        "artwork.sale": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Sale"
+        },
+        "artwork.sale.id": (v3/*: any*/),
+        "artwork.sale.internalID": (v3/*: any*/),
+        "artwork.sale.is_closed": (v5/*: any*/),
+        "artwork.sale.is_live_open": (v5/*: any*/),
+        "artwork.sale.is_with_buyers_premium": (v5/*: any*/),
+        "artwork.sale_artwork": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "SaleArtwork"
+        },
+        "artwork.sale_artwork.counts": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "SaleArtworkCounts"
+        },
+        "artwork.sale_artwork.counts.bidder_positions": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "FormattedNumber"
+        },
+        "artwork.sale_artwork.current_bid": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "SaleArtworkCurrentBid"
+        },
+        "artwork.sale_artwork.current_bid.display": (v6/*: any*/),
+        "artwork.sale_artwork.id": (v3/*: any*/),
+        "artwork.sale_artwork.is_with_reserve": (v5/*: any*/),
+        "artwork.sale_artwork.reserve_message": (v6/*: any*/),
+        "artwork.sale_artwork.reserve_status": (v6/*: any*/)
+      }
+    },
     "name": "ArtworkSidebarCurrentBidInfo_Test_Query",
     "operationKind": "query",
     "text": "query ArtworkSidebarCurrentBidInfo_Test_Query {\n  artwork(id: \"auction_artwork_estimate_premium\") {\n    ...ArtworkSidebarCurrentBidInfo_artwork\n    id\n  }\n}\n\nfragment ArtworkSidebarCurrentBidInfo_artwork on Artwork {\n  sale {\n    is_closed: isClosed\n    is_live_open: isLiveOpen\n    internalID\n    is_with_buyers_premium: isWithBuyersPremium\n    id\n  }\n  sale_artwork: saleArtwork {\n    is_with_reserve: isWithReserve\n    reserve_message: reserveMessage\n    reserve_status: reserveStatus\n    current_bid: currentBid {\n      display\n    }\n    counts {\n      bidder_positions: bidderPositions\n    }\n    id\n  }\n  myLotStanding(live: true) {\n    active_bid: activeBid {\n      is_winning: isWinning\n      id\n    }\n    most_recent_bid: mostRecentBid {\n      max_bid: maxBid {\n        display\n      }\n      id\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '8ddf50200304994b30c1daf0736d8180';
+(node as any).hash = '9f53bea289b18fcf11082e0ef5bc824a';
 export default node;

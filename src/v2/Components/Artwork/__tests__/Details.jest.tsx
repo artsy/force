@@ -21,7 +21,7 @@ describe("Details", () => {
         <DetailsFragmentContainer {...(props as any)} {...restProps} />
       ),
       query: graphql`
-        query Details_Test_Query @raw_response_type {
+        query Details_Test_Query @raw_response_type @relay_test_operation {
           artwork(id: "gerhard-richter-bagdad-ii-flow-p10-1") {
             ...Details_artwork
           }

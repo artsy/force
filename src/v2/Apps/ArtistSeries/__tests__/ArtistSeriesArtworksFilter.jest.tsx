@@ -39,7 +39,7 @@ const { getWrapper } = setupTestWrapper<ArtistSeriesArtworksFilter_Query>({
     </MockBoot>
   ),
   query: graphql`
-    query ArtistSeriesArtworksFilter_Query($slug: ID!) {
+    query ArtistSeriesArtworksFilter_Query($slug: ID!) @relay_test_operation {
       artistSeries(id: $slug) {
         ...ArtistSeriesArtworksFilter_artistSeries
       }

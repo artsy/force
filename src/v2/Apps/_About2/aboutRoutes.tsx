@@ -10,7 +10,7 @@ const AboutApp = loadable(
 
 export const aboutRoutes: AppRouteConfig[] = [
   {
-    path: "about2",
+    path: "/about2",
     getComponent: () => AboutApp,
   },
 ]

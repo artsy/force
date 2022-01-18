@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -128,6 +129,42 @@ v5 = {
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
+},
+v6 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "ID"
+},
+v7 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "String"
+},
+v8 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "Int"
+},
+v9 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "String"
+},
+v10 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "Boolean"
+},
+v11 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "PageCursor"
 };
 return {
   "fragment": {
@@ -153,7 +190,8 @@ return {
         "storageKey": "artist(id:\"example\")"
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -421,13 +459,107 @@ return {
     ]
   },
   "params": {
+    "cacheID": "e4354e1531d6e53eb51ebc2590dd922e",
     "id": null,
-    "metadata": {},
+    "metadata": {
+      "relayTestingSelectionTypeInfo": {
+        "artist": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Artist"
+        },
+        "artist.articlesConnection": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "ArticleConnection"
+        },
+        "artist.articlesConnection.edges": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": true,
+          "type": "ArticleEdge"
+        },
+        "artist.articlesConnection.edges.node": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Article"
+        },
+        "artist.articlesConnection.edges.node.author": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Author"
+        },
+        "artist.articlesConnection.edges.node.author.id": (v6/*: any*/),
+        "artist.articlesConnection.edges.node.author.name": (v7/*: any*/),
+        "artist.articlesConnection.edges.node.href": (v7/*: any*/),
+        "artist.articlesConnection.edges.node.id": (v6/*: any*/),
+        "artist.articlesConnection.edges.node.internalID": (v6/*: any*/),
+        "artist.articlesConnection.edges.node.publishedAt": (v7/*: any*/),
+        "artist.articlesConnection.edges.node.thumbnailImage": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Image"
+        },
+        "artist.articlesConnection.edges.node.thumbnailImage.cropped": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "CroppedImageUrl"
+        },
+        "artist.articlesConnection.edges.node.thumbnailImage.cropped.height": (v8/*: any*/),
+        "artist.articlesConnection.edges.node.thumbnailImage.cropped.src": (v9/*: any*/),
+        "artist.articlesConnection.edges.node.thumbnailImage.cropped.srcSet": (v9/*: any*/),
+        "artist.articlesConnection.edges.node.thumbnailImage.cropped.width": (v8/*: any*/),
+        "artist.articlesConnection.edges.node.thumbnailTitle": (v7/*: any*/),
+        "artist.articlesConnection.pageCursors": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": false,
+          "type": "PageCursors"
+        },
+        "artist.articlesConnection.pageCursors.around": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": true,
+          "type": "PageCursor"
+        },
+        "artist.articlesConnection.pageCursors.around.cursor": (v9/*: any*/),
+        "artist.articlesConnection.pageCursors.around.isCurrent": (v10/*: any*/),
+        "artist.articlesConnection.pageCursors.around.page": (v8/*: any*/),
+        "artist.articlesConnection.pageCursors.first": (v11/*: any*/),
+        "artist.articlesConnection.pageCursors.first.cursor": (v9/*: any*/),
+        "artist.articlesConnection.pageCursors.first.isCurrent": (v10/*: any*/),
+        "artist.articlesConnection.pageCursors.first.page": (v8/*: any*/),
+        "artist.articlesConnection.pageCursors.last": (v11/*: any*/),
+        "artist.articlesConnection.pageCursors.last.cursor": (v9/*: any*/),
+        "artist.articlesConnection.pageCursors.last.isCurrent": (v10/*: any*/),
+        "artist.articlesConnection.pageCursors.last.page": (v8/*: any*/),
+        "artist.articlesConnection.pageCursors.previous": (v11/*: any*/),
+        "artist.articlesConnection.pageCursors.previous.cursor": (v9/*: any*/),
+        "artist.articlesConnection.pageCursors.previous.page": (v8/*: any*/),
+        "artist.articlesConnection.pageInfo": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": false,
+          "type": "PageInfo"
+        },
+        "artist.articlesConnection.pageInfo.endCursor": (v7/*: any*/),
+        "artist.articlesConnection.pageInfo.hasNextPage": (v10/*: any*/),
+        "artist.id": (v6/*: any*/),
+        "artist.name": (v7/*: any*/),
+        "artist.slug": (v6/*: any*/)
+      }
+    },
     "name": "ArtistArticlesRoute_Test_Query",
     "operationKind": "query",
     "text": "query ArtistArticlesRoute_Test_Query {\n  artist(id: \"example\") {\n    ...ArtistArticlesRoute_artist\n    id\n  }\n}\n\nfragment ArtistArticlesRoute_artist on Artist {\n  articlesConnection(first: 10, sort: PUBLISHED_AT_DESC, inEditorialFeed: true) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    edges {\n      node {\n        internalID\n        href\n        thumbnailTitle\n        author {\n          name\n          id\n        }\n        publishedAt(format: \"MMM Do, YYYY\")\n        thumbnailImage {\n          cropped(width: 210, height: 150) {\n            src\n            srcSet\n            width\n            height\n          }\n        }\n        id\n      }\n    }\n  }\n  name\n  slug\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'b538158edda18924909306d2402fd1d1';
+(node as any).hash = '20e1b1e5caf2dd7fe9aafb03733f626b';
 export default node;

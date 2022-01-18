@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -29,7 +30,7 @@ export type ViewingRoomsApp_Test_QueryRawResponse = {
                     readonly distanceToClose: string | null;
                     readonly partner: ({
                         readonly name: string | null;
-                        readonly id: string | null;
+                        readonly id: string;
                     }) | null;
                     readonly __typename: "ViewingRoom";
                 }) | null;
@@ -56,7 +57,7 @@ export type ViewingRoomsApp_Test_QueryRawResponse = {
                 readonly distanceToClose: string | null;
                 readonly partner: ({
                     readonly name: string | null;
-                    readonly id: string | null;
+                    readonly id: string;
                 }) | null;
             }) | null;
         }) | null> | null;
@@ -242,6 +243,48 @@ v8 = {
     }
   ],
   "storageKey": null
+},
+v9 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "String"
+},
+v10 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "ViewingRoom"
+},
+v11 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "String"
+},
+v12 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "ARImage"
+},
+v13 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "ImageURLs"
+},
+v14 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "Partner"
+},
+v15 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "ID"
 };
 return {
   "fragment": {
@@ -283,7 +326,8 @@ return {
         "storageKey": "viewingRooms(featured:true)"
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -433,13 +477,86 @@ return {
     ]
   },
   "params": {
+    "cacheID": "53e3bf63daf2dd0330e5f28853b03b3d",
     "id": null,
-    "metadata": {},
+    "metadata": {
+      "relayTestingSelectionTypeInfo": {
+        "allViewingRooms": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Viewer"
+        },
+        "allViewingRooms.viewingRoomsConnection": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "ViewingRoomsConnection"
+        },
+        "allViewingRooms.viewingRoomsConnection.edges": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": true,
+          "type": "ViewingRoomsEdge"
+        },
+        "allViewingRooms.viewingRoomsConnection.edges.cursor": (v9/*: any*/),
+        "allViewingRooms.viewingRoomsConnection.edges.node": (v10/*: any*/),
+        "allViewingRooms.viewingRoomsConnection.edges.node.__typename": (v9/*: any*/),
+        "allViewingRooms.viewingRoomsConnection.edges.node.distanceToClose": (v11/*: any*/),
+        "allViewingRooms.viewingRoomsConnection.edges.node.distanceToOpen": (v11/*: any*/),
+        "allViewingRooms.viewingRoomsConnection.edges.node.image": (v12/*: any*/),
+        "allViewingRooms.viewingRoomsConnection.edges.node.image.imageURLs": (v13/*: any*/),
+        "allViewingRooms.viewingRoomsConnection.edges.node.image.imageURLs.normalized": (v11/*: any*/),
+        "allViewingRooms.viewingRoomsConnection.edges.node.partner": (v14/*: any*/),
+        "allViewingRooms.viewingRoomsConnection.edges.node.partner.id": (v15/*: any*/),
+        "allViewingRooms.viewingRoomsConnection.edges.node.partner.name": (v11/*: any*/),
+        "allViewingRooms.viewingRoomsConnection.edges.node.slug": (v9/*: any*/),
+        "allViewingRooms.viewingRoomsConnection.edges.node.status": (v9/*: any*/),
+        "allViewingRooms.viewingRoomsConnection.edges.node.title": (v9/*: any*/),
+        "allViewingRooms.viewingRoomsConnection.pageInfo": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": false,
+          "type": "PageInfo"
+        },
+        "allViewingRooms.viewingRoomsConnection.pageInfo.endCursor": (v11/*: any*/),
+        "allViewingRooms.viewingRoomsConnection.pageInfo.hasNextPage": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": false,
+          "type": "Boolean"
+        },
+        "featuredViewingRooms": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "ViewingRoomConnection"
+        },
+        "featuredViewingRooms.edges": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": true,
+          "type": "ViewingRoomEdge"
+        },
+        "featuredViewingRooms.edges.node": (v10/*: any*/),
+        "featuredViewingRooms.edges.node.distanceToClose": (v11/*: any*/),
+        "featuredViewingRooms.edges.node.distanceToOpen": (v11/*: any*/),
+        "featuredViewingRooms.edges.node.image": (v12/*: any*/),
+        "featuredViewingRooms.edges.node.image.imageURLs": (v13/*: any*/),
+        "featuredViewingRooms.edges.node.image.imageURLs.normalized": (v11/*: any*/),
+        "featuredViewingRooms.edges.node.partner": (v14/*: any*/),
+        "featuredViewingRooms.edges.node.partner.id": (v15/*: any*/),
+        "featuredViewingRooms.edges.node.partner.name": (v11/*: any*/),
+        "featuredViewingRooms.edges.node.slug": (v9/*: any*/),
+        "featuredViewingRooms.edges.node.status": (v9/*: any*/),
+        "featuredViewingRooms.edges.node.title": (v9/*: any*/)
+      }
+    },
     "name": "ViewingRoomsApp_Test_Query",
     "operationKind": "query",
     "text": "query ViewingRoomsApp_Test_Query {\n  allViewingRooms: viewer {\n    ...ViewingRoomsApp_allViewingRooms\n  }\n  featuredViewingRooms: viewingRooms(featured: true) {\n    ...ViewingRoomsApp_featuredViewingRooms\n  }\n}\n\nfragment ViewingRoomsApp_allViewingRooms on Viewer {\n  ...ViewingRoomsLatestGrid_viewingRooms_9Znkm\n}\n\nfragment ViewingRoomsApp_featuredViewingRooms on ViewingRoomConnection {\n  ...ViewingRoomsFeaturedRail_featuredViewingRooms\n}\n\nfragment ViewingRoomsFeaturedRail_featuredViewingRooms on ViewingRoomConnection {\n  edges {\n    node {\n      status\n      slug\n      title\n      image {\n        imageURLs {\n          normalized\n        }\n      }\n      distanceToOpen(short: true)\n      distanceToClose(short: true)\n      partner {\n        name\n        id\n      }\n    }\n  }\n}\n\nfragment ViewingRoomsLatestGrid_viewingRooms_9Znkm on Viewer {\n  viewingRoomsConnection {\n    edges {\n      node {\n        slug\n        status\n        title\n        image {\n          imageURLs {\n            normalized\n          }\n        }\n        distanceToOpen(short: true)\n        distanceToClose(short: true)\n        partner {\n          name\n          id\n        }\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '2bc02bd85bb6be749cc2e3a289aace6b';
+(node as any).hash = '5e8709a6467d35395b4d7066db2c1669';
 export default node;

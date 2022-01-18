@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -83,6 +84,30 @@ v3 = {
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
+},
+v4 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "ID"
+},
+v5 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "Int"
+},
+v6 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "String"
+},
+v7 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "String"
 };
 return {
   "fragment": {
@@ -142,7 +167,8 @@ return {
         "storageKey": "partner(id:\"white-cube\")"
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -289,13 +315,69 @@ return {
     ]
   },
   "params": {
+    "cacheID": "a6e0bf858d5d726da259057a40ec2abc",
     "id": null,
-    "metadata": {},
+    "metadata": {
+      "relayTestingSelectionTypeInfo": {
+        "partner": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Partner"
+        },
+        "partner.id": (v4/*: any*/),
+        "partner.showsConnection": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "ShowConnection"
+        },
+        "partner.showsConnection.edges": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": true,
+          "type": "ShowEdge"
+        },
+        "partner.showsConnection.edges.node": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Show"
+        },
+        "partner.showsConnection.edges.node.coverImage": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Image"
+        },
+        "partner.showsConnection.edges.node.coverImage.medium": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "CroppedImageUrl"
+        },
+        "partner.showsConnection.edges.node.coverImage.medium.height": (v5/*: any*/),
+        "partner.showsConnection.edges.node.coverImage.medium.src": (v6/*: any*/),
+        "partner.showsConnection.edges.node.coverImage.medium.srcSet": (v6/*: any*/),
+        "partner.showsConnection.edges.node.coverImage.medium.width": (v5/*: any*/),
+        "partner.showsConnection.edges.node.exhibitionPeriod": (v7/*: any*/),
+        "partner.showsConnection.edges.node.href": (v7/*: any*/),
+        "partner.showsConnection.edges.node.id": (v4/*: any*/),
+        "partner.showsConnection.edges.node.internalID": (v4/*: any*/),
+        "partner.showsConnection.edges.node.isFairBooth": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Boolean"
+        },
+        "partner.showsConnection.edges.node.name": (v7/*: any*/)
+      }
+    },
     "name": "ShowCard_Test_Query",
     "operationKind": "query",
     "text": "query ShowCard_Test_Query {\n  partner(id: \"white-cube\") @principalField {\n    showsConnection(first: 10) {\n      edges {\n        node {\n          internalID\n          ...ShowCard_show\n          id\n        }\n      }\n    }\n    id\n  }\n}\n\nfragment ShowCard_show on Show {\n  href\n  name\n  isFairBooth\n  exhibitionPeriod\n  coverImage {\n    medium: cropped(width: 263, height: 222) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '6fd059f9a63595b88dbf03844a038373';
+(node as any).hash = '2f166c8eb0f5bd81cc29e37ea9efd2da';
 export default node;

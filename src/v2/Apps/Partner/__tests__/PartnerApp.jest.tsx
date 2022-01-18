@@ -31,7 +31,7 @@ const { getWrapper } = setupTestWrapper<PartnerApp_Test_Query>({
     )
   },
   query: graphql`
-    query PartnerApp_Test_Query {
+    query PartnerApp_Test_Query @relay_test_operation {
       partner(id: "example") {
         ...PartnerApp_partner
       }
@@ -44,6 +44,8 @@ describe("PartnerApp", () => {
     const wrapper = getWrapper({
       Partner: () => ({
         displayFullPartnerPage: true,
+        isDefaultProfilePublic: true,
+        partnerPageEligible: true,
       }),
     })
     expect(wrapper.find("NavigationTabs").length).toBe(1)
@@ -53,6 +55,8 @@ describe("PartnerApp", () => {
     const wrapper = getWrapper({
       Partner: () => ({
         displayFullPartnerPage: false,
+        isDefaultProfilePublic: true,
+        partnerPageEligible: true,
       }),
     })
     expect(wrapper.find("NavigationTabs").length).toBe(0)
@@ -63,6 +67,8 @@ describe("PartnerApp", () => {
       Partner: () => ({
         displayFullPartnerPage: false,
         partnerType: "Brand",
+        isDefaultProfilePublic: true,
+        partnerPageEligible: true,
       }),
     })
     expect(wrapper.find("NavigationTabs").length).toBe(1)
@@ -79,6 +85,9 @@ describe("PartnerApp", () => {
             },
           },
         },
+        isDefaultProfilePublic: true,
+        partnerPageEligible: true,
+        displayFullPartnerPage: true,
       }),
     })
 
@@ -93,9 +102,7 @@ describe("PartnerApp", () => {
         },
       }),
     })
-    const profileImageHtml = wrapper.find(PartnerHeaderImage).html()
-
-    expect(profileImageHtml).toBe("")
+    expect(wrapper.find(PartnerHeaderImage).length).toBe(0)
   })
 
   it("doesn't display profile image if the partner isn't eligible for a full profile", () => {

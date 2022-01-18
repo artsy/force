@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -10,6 +11,7 @@ export type TransactionDetailsSummaryItem_order = {
     readonly requestedFulfillment: {
         readonly __typename: string;
     } | null;
+    readonly code: string;
     readonly lineItems: {
         readonly edges: ReadonlyArray<{
             readonly node: {
@@ -204,6 +206,13 @@ return {
     {
       "alias": null,
       "args": null,
+      "kind": "ScalarField",
+      "name": "code",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
       "concreteType": "CommerceLineItemConnection",
       "kind": "LinkedField",
       "name": "lineItems",
@@ -237,12 +246,14 @@ return {
                     {
                       "kind": "InlineFragment",
                       "selections": (v1/*: any*/),
-                      "type": "Artwork"
+                      "type": "Artwork",
+                      "abstractKey": null
                     },
                     {
                       "kind": "InlineFragment",
                       "selections": (v1/*: any*/),
-                      "type": "EditionSet"
+                      "type": "EditionSet",
+                      "abstractKey": null
                     }
                   ],
                   "storageKey": null
@@ -324,11 +335,13 @@ return {
           "storageKey": null
         }
       ],
-      "type": "CommerceOfferOrder"
+      "type": "CommerceOfferOrder",
+      "abstractKey": null
     }
   ],
-  "type": "CommerceOrder"
+  "type": "CommerceOrder",
+  "abstractKey": "__isCommerceOrder"
 };
 })();
-(node as any).hash = '460efd58f92b46576b9cb1acfbfcc3b9';
+(node as any).hash = '71d925480aee61f68ce09f24eea756c8';
 export default node;

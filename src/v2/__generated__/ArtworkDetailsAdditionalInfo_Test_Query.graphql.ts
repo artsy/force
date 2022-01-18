@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -85,7 +86,25 @@ v1 = [
     "name": "details",
     "storageKey": null
   }
-];
+],
+v2 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "String"
+},
+v3 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "ArtworkInfoRow"
+},
+v4 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "ID"
+};
 return {
   "fragment": {
     "argumentDefinitions": [],
@@ -110,7 +129,8 @@ return {
         "storageKey": "artwork(id:\"xxx\")"
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -260,13 +280,62 @@ return {
     ]
   },
   "params": {
+    "cacheID": "b91dd6a2d41c185fde8bd566c1301da5",
     "id": null,
-    "metadata": {},
+    "metadata": {
+      "relayTestingSelectionTypeInfo": {
+        "artwork": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Artwork"
+        },
+        "artwork.canRequestLotConditionsReport": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Boolean"
+        },
+        "artwork.category": (v2/*: any*/),
+        "artwork.certificateOfAuthenticity": (v3/*: any*/),
+        "artwork.certificateOfAuthenticity.details": (v2/*: any*/),
+        "artwork.certificateOfAuthenticity.label": (v2/*: any*/),
+        "artwork.conditionDescription": (v3/*: any*/),
+        "artwork.conditionDescription.details": (v2/*: any*/),
+        "artwork.conditionDescription.label": (v2/*: any*/),
+        "artwork.framed": (v3/*: any*/),
+        "artwork.framed.details": (v2/*: any*/),
+        "artwork.framed.label": (v2/*: any*/),
+        "artwork.id": (v4/*: any*/),
+        "artwork.image_rights": (v2/*: any*/),
+        "artwork.internalID": (v4/*: any*/),
+        "artwork.manufacturer": (v2/*: any*/),
+        "artwork.mediumType": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "ArtworkMedium"
+        },
+        "artwork.mediumType.__typename": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": false,
+          "type": "String"
+        },
+        "artwork.mediumType.longDescription": (v2/*: any*/),
+        "artwork.mediumType.name": (v2/*: any*/),
+        "artwork.publisher": (v2/*: any*/),
+        "artwork.series": (v2/*: any*/),
+        "artwork.signatureInfo": (v3/*: any*/),
+        "artwork.signatureInfo.details": (v2/*: any*/),
+        "artwork.signatureInfo.label": (v2/*: any*/)
+      }
+    },
     "name": "ArtworkDetailsAdditionalInfo_Test_Query",
     "operationKind": "query",
     "text": "query ArtworkDetailsAdditionalInfo_Test_Query {\n  artwork(id: \"xxx\") {\n    ...ArtworkDetailsAdditionalInfo_artwork\n    id\n  }\n}\n\nfragment ArtworkDetailsAdditionalInfo_artwork on Artwork {\n  category\n  series\n  publisher\n  manufacturer\n  image_rights: imageRights\n  canRequestLotConditionsReport\n  internalID\n  framed {\n    label\n    details\n  }\n  signatureInfo {\n    label\n    details\n  }\n  conditionDescription {\n    label\n    details\n  }\n  certificateOfAuthenticity {\n    label\n    details\n  }\n  mediumType {\n    __typename\n  }\n  ...ArtworkDetailsMediumModal_artwork\n}\n\nfragment ArtworkDetailsMediumModal_artwork on Artwork {\n  mediumType {\n    name\n    longDescription\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'a24b9d890e603816d53f79949e4481a5';
+(node as any).hash = 'e0f7252c95c40eaddf28cc6d72e341aa';
 export default node;

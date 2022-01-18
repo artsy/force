@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -34,7 +35,7 @@ export type NavigationTabs_Test_PartnerQueryRawResponse = {
         readonly viewingRooms: ({
             readonly totalCount: number | null;
         }) | null;
-        readonly id: string | null;
+        readonly id: string;
     }) | null;
 };
 export type NavigationTabs_Test_PartnerQuery = {
@@ -101,6 +102,36 @@ v2 = {
   "kind": "Literal",
   "name": "displayOnPartnerProfile",
   "value": true
+},
+v3 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "Int"
+},
+v4 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "FormattedNumber"
+},
+v5 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "Boolean"
+},
+v6 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "ID"
+},
+v7 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "ArtistPartnerConnection"
 };
 return {
   "fragment": {
@@ -126,7 +157,8 @@ return {
         "storageKey": "partner(id:\"white-cube\")"
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -293,13 +325,66 @@ return {
     ]
   },
   "params": {
+    "cacheID": "d66bb51acde386d5ed4cc0dc0ca51425",
     "id": null,
-    "metadata": {},
+    "metadata": {
+      "relayTestingSelectionTypeInfo": {
+        "partner": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Partner"
+        },
+        "partner.articles": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "ArticleConnection"
+        },
+        "partner.articles.totalCount": (v3/*: any*/),
+        "partner.counts": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "PartnerCounts"
+        },
+        "partner.counts.displayableShows": (v4/*: any*/),
+        "partner.counts.eligibleArtworks": (v4/*: any*/),
+        "partner.displayArtistsSection": (v5/*: any*/),
+        "partner.displayWorksSection": (v5/*: any*/),
+        "partner.id": (v6/*: any*/),
+        "partner.locations": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "LocationConnection"
+        },
+        "partner.locations.totalCount": (v3/*: any*/),
+        "partner.notRepresentedArtists": (v7/*: any*/),
+        "partner.notRepresentedArtists.totalCount": (v3/*: any*/),
+        "partner.partnerType": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "String"
+        },
+        "partner.representedArtists": (v7/*: any*/),
+        "partner.representedArtists.totalCount": (v3/*: any*/),
+        "partner.slug": (v6/*: any*/),
+        "partner.viewingRooms": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "ViewingRoomsConnection"
+        },
+        "partner.viewingRooms.totalCount": (v3/*: any*/)
+      }
+    },
     "name": "NavigationTabs_Test_PartnerQuery",
     "operationKind": "query",
     "text": "query NavigationTabs_Test_PartnerQuery {\n  partner(id: \"white-cube\") {\n    ...NavigationTabs_partner\n    id\n  }\n}\n\nfragment NavigationTabs_partner on Partner {\n  slug\n  partnerType\n  displayArtistsSection\n  displayWorksSection\n  counts {\n    eligibleArtworks\n    displayableShows\n  }\n  locations: locationsConnection(first: 20) {\n    totalCount\n  }\n  articles: articlesConnection {\n    totalCount\n  }\n  representedArtists: artistsConnection(representedBy: true, displayOnPartnerProfile: true) {\n    totalCount\n  }\n  notRepresentedArtists: artistsConnection(representedBy: false, hasPublishedArtworks: true, displayOnPartnerProfile: true) {\n    totalCount\n  }\n  viewingRooms: viewingRoomsConnection(statuses: [live, closed, scheduled]) {\n    totalCount\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'c84bdc912b3f9fed0de3f5762759a1ed';
+(node as any).hash = '85ae05fcd987cc2b4213941dc3a37bb9';
 export default node;

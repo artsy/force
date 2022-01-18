@@ -1,9 +1,7 @@
 import { screen } from "@testing-library/react"
+import { graphql } from "react-relay"
 import { setupTestWrapperTL } from "v2/DevTools/setupTestWrapper"
-import {
-  SettingsSavesArtworksRefetchContainer,
-  SETTINGS_SAVES_ARTWORKS_QUERY,
-} from "../SettingsSavesArtworks"
+import { SettingsSavesArtworksRefetchContainer } from "../SettingsSavesArtworks"
 
 jest.unmock("react-relay")
 
@@ -17,7 +15,13 @@ jest.mock("v2/Utils/Hooks/useScrollTo", () => ({
 
 const { renderWithRelay } = setupTestWrapperTL({
   Component: SettingsSavesArtworksRefetchContainer,
-  query: SETTINGS_SAVES_ARTWORKS_QUERY,
+  query: graphql`
+    query SettingsSavesArtworks_test_Query($page: Int) @relay_test_operation {
+      me {
+        ...SettingsSavesArtworks_me @arguments(page: $page)
+      }
+    }
+  `,
 })
 
 describe("SettingsSavesArtworks", () => {

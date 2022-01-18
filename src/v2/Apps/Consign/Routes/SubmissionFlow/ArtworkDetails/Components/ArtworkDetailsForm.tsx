@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import {
   Box,
   Column,
@@ -16,27 +16,39 @@ import {
 } from "@artsy/palette"
 import { useFormikContext } from "formik"
 import { checkboxValues } from "v2/Components/ArtworkFilter/ArtworkFilters/AttributionClassFilter"
-import { useRouter } from "v2/System/Router/useRouter"
-import { useSubmission } from "../../Utils/useSubmission"
 import { ArtistAutoComplete } from "./ArtistAutocomplete"
 import { ArtworkSidebarClassificationsModalQueryRenderer } from "v2/Apps/Artwork/Components/ArtworkSidebarClassificationsModal"
 import { useErrorModal } from "../../Utils/useErrorModal"
+import { ArtworkDetails_submission } from "v2/__generated__/ArtworkDetails_submission.graphql"
+import {
+  Location,
+  LocationAutocompleteInput,
+  normalizePlace,
+  Place,
+} from "v2/Components/LocationAutocompleteInput"
+import { compact } from "lodash"
 
-export const getArtworkDetailsFormInitialValues = () => ({
-  artistId: "",
-  artistName: "",
-  year: "",
-  title: "",
-  materials: "",
-  rarity: "",
-  editionNumber: "",
-  editionSize: undefined,
-  height: "",
-  width: "",
-  depth: "",
-  units: "in",
-  provenance: "",
-  location: "",
+export const getArtworkDetailsFormInitialValues = (
+  submission?: ArtworkDetails_submission
+): ArtworkDetailsFormModel => ({
+  artistId: submission?.artist?.internalID ?? "",
+  artistName: submission?.artist?.name ?? "",
+  year: submission?.year ?? "",
+  title: submission?.title ?? "",
+  materials: submission?.medium ?? "",
+  rarity: submission?.attributionClass?.replace("_", " ").toLowerCase() ?? "",
+  editionNumber: submission?.editionNumber ?? "",
+  editionSize: submission?.editionSize ?? undefined,
+  height: submission?.height ?? "",
+  width: submission?.width ?? "",
+  depth: submission?.depth ?? "",
+  units: submission?.dimensionsMetric ?? "in",
+  provenance: submission?.provenance ?? "",
+  location: {
+    city: submission?.locationCity ?? "",
+    country: submission?.locationCountry ?? undefined,
+    state: submission?.locationState ?? undefined,
+  },
 })
 
 const rarityOptions = checkboxValues.map(({ name, value }) => ({
@@ -60,17 +72,10 @@ export interface ArtworkDetailsFormModel {
   depth: string
   units: string
   provenance: string
-  location?: string
-  locationId?: string
+  location: Location
 }
 
 export const ArtworkDetailsForm: React.FC = () => {
-  const {
-    match: {
-      params: { id },
-    },
-  } = useRouter()
-
   const { openErrorModal } = useErrorModal()
 
   const [isRarityModalOpen, setIsRarityModalOpen] = useState(false)
@@ -81,21 +86,17 @@ export const ArtworkDetailsForm: React.FC = () => {
     handleChange,
     setFieldValue,
     handleBlur,
-    resetForm,
-    validateForm,
+    touched,
+    errors,
+    setFieldTouched,
   } = useFormikContext<ArtworkDetailsFormModel>()
 
   const limitedEditionRarity = values.rarity === "limited edition"
-  const { submission } = useSubmission(id)
-
-  useEffect(() => {
-    if (submission) {
-      resetForm({ values: submission.artworkDetailsForm })
-      validateForm(submission.artworkDetailsForm)
-    } else {
-      resetForm({ values: getArtworkDetailsFormInitialValues() })
-    }
-  }, [submission])
+  const defaultLocation = compact([
+    values.location.city,
+    values.location.state,
+    values.location.country,
+  ]).join(", ")
 
   const handleAutosuggestError = (isError: boolean) => {
     if (isError) {
@@ -105,6 +106,16 @@ export const ArtworkDetailsForm: React.FC = () => {
 
     setFieldValue("artistName", "")
     setFieldValue("artistId", "")
+  }
+
+  const handleLocationClose = () => setFieldTouched("location")
+  const handleLocationClick = () => setFieldTouched("location", false)
+  const handleLocationChange = () => {
+    setFieldValue("location", {})
+    setFieldTouched("artistName", false)
+  }
+  const handleLocationSelect = (place?: Place) => {
+    setFieldValue("location", normalizePlace(place))
   }
 
   return (
@@ -327,16 +338,19 @@ export const ArtworkDetailsForm: React.FC = () => {
           />
         </Column>
         <Column span={6} mt={[30, 0]}>
-          <Input
-            title="Location"
+          <LocationAutocompleteInput
             name="location"
+            title="Location"
             placeholder="Enter City Where Artwork Is Located"
             maxLength={256}
-            onBlur={handleBlur}
-            onChange={handleChange}
-            value={values.location}
+            spellCheck={false}
+            defaultValue={defaultLocation}
+            error={touched.location && errors.location?.city}
+            onClose={handleLocationClose}
+            onSelect={handleLocationSelect}
+            onChange={handleLocationChange}
+            onClick={handleLocationClick}
           />
-          {/* <LocationAutoComplete onError={() => openErrorModal()} /> */}
         </Column>
       </GridColumns>
     </>

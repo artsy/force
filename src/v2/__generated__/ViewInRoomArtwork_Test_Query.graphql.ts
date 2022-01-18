@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -45,7 +46,25 @@ var v0 = [
     "name": "id",
     "value": "example"
   }
-];
+],
+v1 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "Float"
+},
+v2 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "Int"
+},
+v3 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "String"
+};
 return {
   "fragment": {
     "argumentDefinitions": [],
@@ -70,7 +89,8 @@ return {
         "storageKey": "artwork(id:\"example\")"
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -183,13 +203,47 @@ return {
     ]
   },
   "params": {
+    "cacheID": "c463d5b2664aecdd09c78cb93f0d34f4",
     "id": null,
-    "metadata": {},
+    "metadata": {
+      "relayTestingSelectionTypeInfo": {
+        "artwork": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Artwork"
+        },
+        "artwork.heightCm": (v1/*: any*/),
+        "artwork.id": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": false,
+          "type": "ID"
+        },
+        "artwork.image": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Image"
+        },
+        "artwork.image.resized": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "ResizedImageUrl"
+        },
+        "artwork.image.resized.height": (v2/*: any*/),
+        "artwork.image.resized.src": (v3/*: any*/),
+        "artwork.image.resized.srcSet": (v3/*: any*/),
+        "artwork.image.resized.width": (v2/*: any*/),
+        "artwork.widthCm": (v1/*: any*/)
+      }
+    },
     "name": "ViewInRoomArtwork_Test_Query",
     "operationKind": "query",
     "text": "query ViewInRoomArtwork_Test_Query {\n  artwork(id: \"example\") {\n    ...ViewInRoomArtwork_artwork\n    id\n  }\n}\n\nfragment ViewInRoomArtwork_artwork on Artwork {\n  widthCm\n  heightCm\n  image {\n    resized(width: 800, height: 800, version: [\"normalized\", \"larger\", \"large\"]) {\n      src\n      srcSet\n      width\n      height\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'd60654c5f3c2b3d361c0f0930a64e292';
+(node as any).hash = 'c0c76955f46c8946a5856d9746b93d73';
 export default node;

@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -16,7 +17,7 @@ export type ArtistBioTestQueryRawResponse = {
             readonly partnerID: string | null;
             readonly text: string | null;
         }) | null;
-        readonly id: string | null;
+        readonly id: string;
     }) | null;
 };
 export type ArtistBioTestQuery = {
@@ -51,7 +52,13 @@ var v0 = [
     "name": "id",
     "value": "unused"
   }
-];
+],
+v1 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "String"
+};
 return {
   "fragment": {
     "argumentDefinitions": [],
@@ -76,7 +83,8 @@ return {
         "storageKey": "artist(id:\"unused\")"
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -148,13 +156,38 @@ return {
     ]
   },
   "params": {
+    "cacheID": "05ebe8eb11518db5711bac9b45daaf90",
     "id": null,
-    "metadata": {},
+    "metadata": {
+      "relayTestingSelectionTypeInfo": {
+        "bio": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Artist"
+        },
+        "bio.biographyBlurb": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "ArtistBlurb"
+        },
+        "bio.biographyBlurb.credit": (v1/*: any*/),
+        "bio.biographyBlurb.partnerID": (v1/*: any*/),
+        "bio.biographyBlurb.text": (v1/*: any*/),
+        "bio.id": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": false,
+          "type": "ID"
+        }
+      }
+    },
     "name": "ArtistBioTestQuery",
     "operationKind": "query",
     "text": "query ArtistBioTestQuery {\n  bio: artist(id: \"unused\") {\n    ...ArtistBio_bio\n    id\n  }\n}\n\nfragment ArtistBio_bio on Artist {\n  biographyBlurb(format: HTML, partnerBio: false) {\n    credit\n    partnerID\n    text\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'b0bfe8de06ea988344d1c91d36e66bfd';
+(node as any).hash = '3f1ee721b84fbe1f4678f268c11573b3';
 export default node;

@@ -39,15 +39,16 @@ export const CreateAlertButton: React.FC<CreateAlertButtonProps> = ({
 
   const handleOpenForm = () => {
     openModal()
+  }
+
+  const handleClick = () => {
     tracking.trackEvent({
       action: ActionType.clickedCreateAlert,
       context_page_owner_type: savedSearchAttributes.type as PageOwnerType,
       context_page_owner_id: savedSearchAttributes.id,
       context_page_owner_slug: savedSearchAttributes.slug,
     })
-  }
 
-  const handleClick = () => {
     if (isLoggedIn) {
       handleOpenForm()
     } else {

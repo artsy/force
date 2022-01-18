@@ -7,7 +7,7 @@ jest.unmock("react-relay")
 const { getWrapper } = setupTestWrapper({
   Component: BuyerGuaranteeFragmentContainer,
   query: graphql`
-    query BuyerGuaranteeTestQuery {
+    query BuyerGuaranteeTestQuery @relay_test_operation {
       artwork(id: "whatevs") {
         ...BuyerGuarantee_artwork
       }

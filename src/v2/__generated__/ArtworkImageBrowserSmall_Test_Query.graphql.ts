@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -128,7 +129,37 @@ v2 = [
     "name": "srcSet",
     "storageKey": null
   }
-];
+],
+v3 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "String"
+},
+v4 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "Int"
+},
+v5 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "Int"
+},
+v6 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "String"
+},
+v7 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "Boolean"
+};
 return {
   "fragment": {
     "argumentDefinitions": [],
@@ -153,7 +184,8 @@ return {
         "storageKey": "artwork(id:\"example\")"
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -339,13 +371,90 @@ return {
     ]
   },
   "params": {
+    "cacheID": "b516208a8a0c676e6e269612f29e4c98",
     "id": null,
-    "metadata": {},
+    "metadata": {
+      "relayTestingSelectionTypeInfo": {
+        "artwork": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Artwork"
+        },
+        "artwork.formattedMetadata": (v3/*: any*/),
+        "artwork.id": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": false,
+          "type": "ID"
+        },
+        "artwork.images": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": true,
+          "type": "Image"
+        },
+        "artwork.images.deepZoom": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "DeepZoom"
+        },
+        "artwork.images.deepZoom.Image": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "DeepZoomImage"
+        },
+        "artwork.images.deepZoom.Image.Format": (v3/*: any*/),
+        "artwork.images.deepZoom.Image.Overlap": (v4/*: any*/),
+        "artwork.images.deepZoom.Image.Size": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "DeepZoomImageSize"
+        },
+        "artwork.images.deepZoom.Image.Size.Height": (v4/*: any*/),
+        "artwork.images.deepZoom.Image.Size.Width": (v4/*: any*/),
+        "artwork.images.deepZoom.Image.TileSize": (v4/*: any*/),
+        "artwork.images.deepZoom.Image.Url": (v3/*: any*/),
+        "artwork.images.deepZoom.Image.xmlns": (v3/*: any*/),
+        "artwork.images.fallback": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "CroppedImageUrl"
+        },
+        "artwork.images.fallback.height": (v5/*: any*/),
+        "artwork.images.fallback.src": (v6/*: any*/),
+        "artwork.images.fallback.srcSet": (v6/*: any*/),
+        "artwork.images.fallback.width": (v5/*: any*/),
+        "artwork.images.internalID": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "ID"
+        },
+        "artwork.images.isDefault": (v7/*: any*/),
+        "artwork.images.isZoomable": (v7/*: any*/),
+        "artwork.images.placeholder": (v3/*: any*/),
+        "artwork.images.resized": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "ResizedImageUrl"
+        },
+        "artwork.images.resized.height": (v4/*: any*/),
+        "artwork.images.resized.src": (v6/*: any*/),
+        "artwork.images.resized.srcSet": (v6/*: any*/),
+        "artwork.images.resized.width": (v4/*: any*/)
+      }
+    },
     "name": "ArtworkImageBrowserSmall_Test_Query",
     "operationKind": "query",
     "text": "query ArtworkImageBrowserSmall_Test_Query {\n  artwork(id: \"example\") {\n    ...ArtworkImageBrowserSmall_artwork\n    id\n  }\n}\n\nfragment ArtworkImageBrowserSmall_artwork on Artwork {\n  ...ArtworkLightbox_artwork\n  images {\n    internalID\n    isZoomable\n    ...DeepZoom_image\n  }\n}\n\nfragment ArtworkLightbox_artwork on Artwork {\n  formattedMetadata\n  images {\n    isDefault\n    placeholder: url(version: [\"small\", \"medium\"])\n    fallback: cropped(width: 800, height: 800, version: [\"normalized\", \"larger\", \"large\"]) {\n      width\n      height\n      src\n      srcSet\n    }\n    resized(width: 800, height: 800, version: [\"normalized\", \"larger\", \"large\"]) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment DeepZoom_image on Image {\n  deepZoom {\n    Image {\n      xmlns\n      Url\n      Format\n      TileSize\n      Overlap\n      Size {\n        Width\n        Height\n      }\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'ca9070726ea1cee4a5b73da45d2b64be';
+(node as any).hash = 'fdbda1bd449b994caa156c4f650743e3';
 export default node;

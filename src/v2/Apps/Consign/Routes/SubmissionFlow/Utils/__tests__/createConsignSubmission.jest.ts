@@ -1,230 +1,60 @@
-import { ActionType } from "@artsy/cohesion"
-import { trackEvent } from "lib/analytics/helpers"
 import { Environment } from "relay-runtime"
 import {
-  addAssetToConsignment,
   createConsignSubmissionMutation,
-  createGeminiAssetWithS3Credentials,
+  updateConsignSubmissionMutation,
 } from "../../Mutations"
-import { createConsignSubmission } from "../createConsignSubmission"
-import { SubmissionModel } from "../useSubmission"
-
-jest.mock("../../../../../../../lib/analytics/helpers", () => ({
-  ...jest.requireActual("../../../../../../../lib/analytics/helpers"),
-  trackEvent: jest.fn(),
-}))
+import {
+  createOrUpdateConsignSubmission,
+  SubmissionInput,
+} from "../createOrUpdateConsignSubmission"
 
 jest.mock("../../Mutations/CreateConsignSubmissionMutation", () => ({
   ...jest.requireActual("../../Mutations/CreateConsignSubmissionMutation"),
-  createConsignSubmissionMutation: jest.fn().mockResolvedValue("123"),
+  createConsignSubmissionMutation: jest.fn().mockResolvedValue("111"),
 }))
-
-jest.mock("../../Mutations/addAssetToConsignment", () => ({
-  ...jest.requireActual("../../Mutations/addAssetToConsignment"),
-  addAssetToConsignment: jest.fn(),
+jest.mock("../../Mutations/UpdateConsignSubmissionMutation", () => ({
+  ...jest.requireActual("../../Mutations/UpdateConsignSubmissionMutation"),
+  updateConsignSubmissionMutation: jest.fn().mockResolvedValue("222"),
 }))
+const mockCreateMutation = createConsignSubmissionMutation as jest.Mock
+const mockUpdateMutation = updateConsignSubmissionMutation as jest.Mock
 
-jest.mock("../../Mutations/Gemini/getConvectionGeminiKey", () => ({
-  ...jest.requireActual("../../Mutations/Gemini/getConvectionGeminiKey"),
-  getConvectionGeminiKey: jest.fn().mockResolvedValue("convectionKey"),
-}))
-
-jest.mock("../../Mutations/Gemini/createGeminiAssetWithS3Credentials", () => ({
-  ...jest.requireActual(
-    "../../Mutations/Gemini/createGeminiAssetWithS3Credentials"
-  ),
-  createGeminiAssetWithS3Credentials: jest
-    .fn()
-    .mockResolvedValue("geminiToken"),
-}))
-
-const file = new File([new Array(10000).join(" ")], "foo.png", {
-  type: "image/png",
-})
-
-describe("createConsignSubmission", () => {
-  let submission: SubmissionModel, relayEnvironment
+describe("createOrUpdateConsignSubmission", () => {
+  let submission: SubmissionInput, relayEnvironment: Environment
 
   beforeEach(() => {
-    submission = {
-      artworkDetailsForm: {
-        artistId: "artistId",
-        height: "height",
-        rarity: "rarity",
-        title: "title",
-        units: "units",
-        width: "width",
-        year: "year",
-        materials: "materials",
-        artistName: "",
-        editionNumber: "",
-        editionSize: "",
-        depth: "",
-        provenance: "provenance",
-        // location: "location",
-        // locationId: "locationID",
-      },
-      uploadPhotosForm: {
-        photos: [
-          {
-            file: file,
-            id: "id",
-            name: "foo.png",
-            size: file.size,
-            removed: false,
-            s3Key: "key",
-            bucket: "bucket1",
-          },
-        ],
-      },
-      contactInformationForm: {
-        name: "name",
-        email: "test@test.test",
-        phone: {
-          isValid: true,
-          international: "+1 415-555-0132",
-          national: "(415) 555-0132",
-          regionCode: "us",
-        },
-      },
-    }
-    relayEnvironment = {} as Environment
-    ;(createGeminiAssetWithS3Credentials as jest.Mock).mockClear()
-    ;(addAssetToConsignment as jest.Mock).mockClear()
-    ;(createConsignSubmissionMutation as jest.Mock).mockClear()
+    submission = { artistID: "artistId" }
+    jest.clearAllMocks()
   })
 
-  describe("returns undefined if", () => {
-    it("submition empty", async () => {
-      const result = await createConsignSubmission(
-        relayEnvironment,
-        (null as unknown) as SubmissionModel
-      )
+  it("creates submission", async () => {
+    const result = await createOrUpdateConsignSubmission(
+      relayEnvironment,
+      submission
+    )
+    const userAgent = `${navigator.userAgent} Artsy-Web Force`
 
-      expect(result).toBeUndefined()
+    expect(mockCreateMutation).toHaveBeenCalled()
+    expect(mockCreateMutation).toHaveBeenCalledWith(relayEnvironment, {
+      ...submission,
+      userAgent: userAgent,
     })
-
-    it("uploadPhotosForm empty", async () => {
-      const result = await createConsignSubmission(
-        relayEnvironment,
-        {} as SubmissionModel
-      )
-
-      expect(result).toBeUndefined()
-    })
+    expect(result).toEqual("111")
   })
 
-  it("creates submission if logged-in", async () => {
-    const result = await createConsignSubmission(
+  it("updates submission", async () => {
+    submission = { artistID: "artistId", id: "123" }
+
+    const result = await updateConsignSubmissionMutation(
       relayEnvironment,
-      submission,
-      "userId",
-      undefined
-    )
-    const input = {
-      artistID: "artistId",
-      year: "year",
-      title: "title",
-      medium: "materials",
-      attributionClass: "RARITY",
-      editionNumber: "",
-      editionSizeFormatted: "",
-      height: "height",
-      width: "width",
-      depth: "",
-      dimensionsMetric: "units",
-      state: "SUBMITTED",
-      userEmail: "test@test.test",
-      userName: "name",
-      userPhone: "+1 415-555-0132",
-      provenance: "provenance",
-      // locationCity: "location",
-      sessionID: undefined,
-    }
-
-    expect(createConsignSubmissionMutation).toHaveBeenCalled()
-    expect(createConsignSubmissionMutation).toHaveBeenCalledWith(
-      relayEnvironment,
-      input
-    )
-    expect(result).toEqual("123")
-  })
-
-  it("creates submission if not logged-in", async () => {
-    const result = await createConsignSubmission(
-      relayEnvironment,
-      submission,
-      undefined,
-      "sessionId"
-    )
-    const input = {
-      artistID: "artistId",
-      year: "year",
-      title: "title",
-      medium: "materials",
-      attributionClass: "RARITY",
-      editionNumber: "",
-      editionSizeFormatted: "",
-      height: "height",
-      width: "width",
-      depth: "",
-      dimensionsMetric: "units",
-      state: "SUBMITTED",
-      userEmail: "test@test.test",
-      userName: "name",
-      userPhone: "+1 415-555-0132",
-      provenance: "provenance",
-      // locationCity: "location",
-      sessionID: "sessionId",
-    }
-
-    expect(createConsignSubmissionMutation).toHaveBeenCalled()
-    expect(createConsignSubmissionMutation).toHaveBeenCalledWith(
-      relayEnvironment,
-      input
-    )
-    expect(result).toEqual("123")
-  })
-
-  it("tracks consignment submitted event", async () => {
-    await createConsignSubmission(relayEnvironment, submission)
-
-    expect(trackEvent).toHaveBeenCalled()
-    expect(trackEvent).toHaveBeenCalledWith({
-      action: ActionType.consignmentSubmitted,
-      submission_id: "123",
-      user_id: undefined,
-      user_email: "test@test.test",
-    })
-  })
-
-  it("saves images", async () => {
-    await createConsignSubmission(
-      relayEnvironment,
-      submission,
-      undefined,
-      "sessionId"
+      submission
     )
 
-    expect(createGeminiAssetWithS3Credentials).toHaveBeenCalledTimes(1)
-    expect(createGeminiAssetWithS3Credentials).toHaveBeenCalledWith(
+    expect(mockUpdateMutation).toHaveBeenCalled()
+    expect(mockUpdateMutation).toHaveBeenCalledWith(
       relayEnvironment,
-      {
-        sourceKey: "key",
-        sourceBucket: "bucket1",
-        templateKey: "convectionKey",
-        metadata: {
-          id: "123",
-          _type: "Consignment",
-        },
-      }
+      submission
     )
-    expect(addAssetToConsignment).toHaveBeenCalledTimes(1)
-    expect(addAssetToConsignment).toHaveBeenCalledWith(relayEnvironment, {
-      assetType: "image",
-      geminiToken: "geminiToken",
-      submissionID: "123",
-      sessionID: "sessionId",
-    })
+    expect(result).toEqual("222")
   })
 })

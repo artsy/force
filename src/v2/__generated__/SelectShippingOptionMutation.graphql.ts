@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -96,8 +97,7 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "input",
-    "type": "CommerceSelectShippingOptionInput!"
+    "name": "input"
   }
 ],
 v1 = [
@@ -150,7 +150,8 @@ v3 = {
       "storageKey": null
     }
   ],
-  "type": "CommerceOrderWithMutationFailure"
+  "type": "CommerceOrderWithMutationFailure",
+  "abstractKey": null
 },
 v4 = {
   "alias": null,
@@ -258,7 +259,8 @@ return {
                     "storageKey": null
                   }
                 ],
-                "type": "CommerceOrderWithMutationSuccess"
+                "type": "CommerceOrderWithMutationSuccess",
+                "abstractKey": null
               },
               (v3/*: any*/)
             ],
@@ -268,7 +270,8 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Mutation"
+    "type": "Mutation",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -296,7 +299,6 @@ return {
               {
                 "kind": "InlineFragment",
                 "selections": [
-                  (v2/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -413,7 +415,8 @@ return {
                     "storageKey": null
                   }
                 ],
-                "type": "CommerceOrderWithMutationSuccess"
+                "type": "CommerceOrderWithMutationSuccess",
+                "abstractKey": null
               },
               (v3/*: any*/)
             ],
@@ -425,6 +428,7 @@ return {
     ]
   },
   "params": {
+    "cacheID": "b358f1687199340d8b319e522cdbc47d",
     "id": null,
     "metadata": {},
     "name": "SelectShippingOptionMutation",

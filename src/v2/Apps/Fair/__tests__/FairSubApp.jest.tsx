@@ -34,7 +34,9 @@ describe("FairSubApp", () => {
       },
       mockData: response,
       query: graphql`
-        query FairSubApp_Query($slug: String!) @raw_response_type {
+        query FairSubApp_Query($slug: String!)
+          @raw_response_type
+          @relay_test_operation {
           fair(id: $slug) {
             ...FairSubApp_fair
           }

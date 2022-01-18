@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -25,16 +26,14 @@ export type PartnerArtistArtworksRail_partnerArtist$key = {
 const node: ReaderFragment = {
   "argumentDefinitions": [
     {
-      "defaultValue": 12,
-      "kind": "LocalArgument",
-      "name": "first",
-      "type": "Int"
-    },
-    {
       "defaultValue": null,
       "kind": "LocalArgument",
-      "name": "after",
-      "type": "String"
+      "name": "after"
+    },
+    {
+      "defaultValue": 12,
+      "kind": "LocalArgument",
+      "name": "first"
     }
   ],
   "kind": "Fragment",
@@ -137,7 +136,8 @@ const node: ReaderFragment = {
       "storageKey": null
     }
   ],
-  "type": "ArtistPartnerEdge"
+  "type": "ArtistPartnerEdge",
+  "abstractKey": null
 };
 (node as any).hash = '292a7fb2cf8a823f690116e4c56469b5';
 export default node;

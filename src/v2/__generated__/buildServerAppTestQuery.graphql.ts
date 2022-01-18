@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 export type buildServerAppTestQueryVariables = {};
@@ -51,7 +52,8 @@ return {
     "metadata": null,
     "name": "buildServerAppTestQuery",
     "selections": (v0/*: any*/),
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -61,13 +63,29 @@ return {
     "selections": (v0/*: any*/)
   },
   "params": {
+    "cacheID": "59a7359c797c58e73d055e96eca311f1",
     "id": null,
-    "metadata": {},
+    "metadata": {
+      "relayTestingSelectionTypeInfo": {
+        "me": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Me"
+        },
+        "me.id": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": false,
+          "type": "ID"
+        }
+      }
+    },
     "name": "buildServerAppTestQuery",
     "operationKind": "query",
     "text": "query buildServerAppTestQuery {\n  me {\n    id\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'd34e9263d0745de3f84fb7f2be7855c7';
+(node as any).hash = '9e4e27bbc46d09e8de447d782682b1c0';
 export default node;

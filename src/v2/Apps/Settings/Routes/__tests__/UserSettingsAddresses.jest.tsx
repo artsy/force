@@ -18,7 +18,7 @@ describe("ToastComponent", () => {
       return <UserSettingsAddressesFragmentContainer me={props.me} />
     },
     query: graphql`
-      query UserSettingsAddresses_test_Query {
+      query UserSettingsAddresses_test_Query @relay_test_operation {
         me {
           ...UserSettingsAddresses_me
         }

@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -17,11 +18,11 @@ export type SelectedCareerAchievementsTestQueryRawResponse = {
                     readonly node: ({
                         readonly categories: ReadonlyArray<({
                             readonly slug: string;
-                            readonly id: string | null;
+                            readonly id: string;
                         }) | null> | null;
-                        readonly id: string | null;
+                        readonly id: string;
                     }) | null;
-                    readonly id: string | null;
+                    readonly id: string;
                 }) | null> | null;
             }) | null;
         }) | null;
@@ -38,12 +39,12 @@ export type SelectedCareerAchievementsTestQueryRawResponse = {
                     }) | null;
                     readonly organization: string | null;
                     readonly sale_date: string | null;
-                    readonly id: string | null;
+                    readonly id: string;
                 }) | null;
             }) | null> | null;
         }) | null;
         readonly slug: string;
-        readonly id: string | null;
+        readonly id: string;
     }) | null;
 };
 export type SelectedCareerAchievementsTestQuery = {
@@ -119,6 +120,18 @@ v2 = {
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
+},
+v3 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "ID"
+},
+v4 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "String"
 };
 return {
   "fragment": {
@@ -144,7 +157,8 @@ return {
         "storageKey": "artist(id:\"pablo-picasso\")"
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -378,13 +392,101 @@ return {
     ]
   },
   "params": {
+    "cacheID": "b291001f917daaa4195c1a37e3bad541",
     "id": null,
-    "metadata": {},
+    "metadata": {
+      "relayTestingSelectionTypeInfo": {
+        "artist": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Artist"
+        },
+        "artist.auctionResultsConnection": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "AuctionResultConnection"
+        },
+        "artist.auctionResultsConnection.edges": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": true,
+          "type": "AuctionResultEdge"
+        },
+        "artist.auctionResultsConnection.edges.node": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "AuctionResult"
+        },
+        "artist.auctionResultsConnection.edges.node.id": (v3/*: any*/),
+        "artist.auctionResultsConnection.edges.node.organization": (v4/*: any*/),
+        "artist.auctionResultsConnection.edges.node.price_realized": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "AuctionResultPriceRealized"
+        },
+        "artist.auctionResultsConnection.edges.node.price_realized.display": (v4/*: any*/),
+        "artist.auctionResultsConnection.edges.node.sale_date": (v4/*: any*/),
+        "artist.highlights": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "ArtistHighlights"
+        },
+        "artist.highlights.partnersConnection": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "PartnerArtistConnection"
+        },
+        "artist.highlights.partnersConnection.edges": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": true,
+          "type": "PartnerArtistEdge"
+        },
+        "artist.highlights.partnersConnection.edges.id": (v3/*: any*/),
+        "artist.highlights.partnersConnection.edges.node": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Partner"
+        },
+        "artist.highlights.partnersConnection.edges.node.categories": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": true,
+          "type": "PartnerCategory"
+        },
+        "artist.highlights.partnersConnection.edges.node.categories.id": (v3/*: any*/),
+        "artist.highlights.partnersConnection.edges.node.categories.slug": (v3/*: any*/),
+        "artist.highlights.partnersConnection.edges.node.id": (v3/*: any*/),
+        "artist.id": (v3/*: any*/),
+        "artist.insights": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": true,
+          "type": "ArtistInsight"
+        },
+        "artist.insights.entities": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": true,
+          "type": "String"
+        },
+        "artist.insights.label": (v4/*: any*/),
+        "artist.insights.type": (v4/*: any*/),
+        "artist.slug": (v3/*: any*/)
+      }
+    },
     "name": "SelectedCareerAchievementsTestQuery",
     "operationKind": "query",
     "text": "query SelectedCareerAchievementsTestQuery {\n  artist(id: \"pablo-picasso\") {\n    ...SelectedCareerAchievements_artist\n    id\n  }\n}\n\nfragment SelectedCareerAchievements_artist on Artist {\n  highlights {\n    partnersConnection(first: 10, displayOnPartnerProfile: true, representedBy: true, partnerCategory: [\"blue-chip\", \"top-established\", \"top-emerging\"]) {\n      edges {\n        node {\n          categories {\n            slug\n            id\n          }\n          id\n        }\n        id\n      }\n    }\n  }\n  insights {\n    type\n    label\n    entities\n  }\n  auctionResultsConnection(recordsTrusted: true, first: 1, sort: PRICE_AND_DATE_DESC) {\n    edges {\n      node {\n        price_realized: priceRealized {\n          display(format: \"0.0a\")\n        }\n        organization\n        sale_date: saleDate(format: \"YYYY\")\n        id\n      }\n    }\n  }\n  slug\n}\n"
   }
 };
 })();
-(node as any).hash = 'b0f16286362248ef7c9b792bc8d82581';
+(node as any).hash = '0e91591c11c74eacd472b689b0f1ac5d';
 export default node;

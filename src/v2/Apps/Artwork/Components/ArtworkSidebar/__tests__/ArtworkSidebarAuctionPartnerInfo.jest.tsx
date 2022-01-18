@@ -13,7 +13,9 @@ describe("ArtworkSidebarAuctionPartnerInfo", () => {
     return renderRelayTree({
       Component: ArtworkSidebarAuctionPartnerInfoFragmentContainer,
       query: graphql`
-        query ArtworkSidebarAuctionPartnerInfo_Test_Query @raw_response_type {
+        query ArtworkSidebarAuctionPartnerInfo_Test_Query
+          @raw_response_type
+          @relay_test_operation {
           artwork(id: "auction_artwork_estimate_premium") {
             ...ArtworkSidebarAuctionPartnerInfo_artwork
           }

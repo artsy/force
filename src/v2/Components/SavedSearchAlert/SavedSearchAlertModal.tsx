@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { Form, FormikProvider, useFormik } from "formik"
+import { FormikProvider, useFormik } from "formik"
 import {
   SavedSearchAleftFormValues,
   SavedSearchAlertMutationResult,
@@ -11,7 +11,7 @@ import {
   Flex,
   Input,
   Join,
-  Modal,
+  ModalDialog,
   Spacer,
   Text,
 } from "@artsy/palette"
@@ -28,6 +28,7 @@ import { SavedSearchAttributes } from "../ArtworkFilter/SavedSearch/types"
 import { FilterPill } from "../ArtworkFilter/SavedSearch/Utils/FilterPillsContext"
 import { extractPills } from "./Utils/extractPills"
 import { Pills } from "../ArtworkFilter/SavedSearch/Components/Pills"
+import { DownloadAppBanner } from "./DownloadAppBanner"
 
 interface SavedSearchAlertFormProps {
   savedSearchAttributes: SavedSearchAttributes
@@ -58,7 +59,7 @@ export const SavedSearchAlertModal: React.FC<SavedSearchAlertFormProps> = ({
     filterContext.aggregations,
     savedSearchAttributes
   )
-  const namePlaceholder = getNamePlaceholder(name, pills.length)
+  const namePlaceholder = getNamePlaceholder(name, pills)
 
   useEffect(() => {
     setFilters(filtersFromContext)
@@ -126,17 +127,18 @@ export const SavedSearchAlertModal: React.FC<SavedSearchAlertFormProps> = ({
 
   return (
     <FormikProvider value={formik}>
-      <Form onSubmit={formik.handleSubmit} role="form">
-        <Modal
-          show={visible}
+      {visible && (
+        <ModalDialog
           onClose={onClose}
           title="Create an Alert"
-          FixedButton={
+          data-testid="CreateAlertModal"
+          footer={
             <Button
               type="submit"
               disabled={isSaveAlertButtonDisabled}
               loading={formik.isSubmitting}
               width="100%"
+              onClick={() => formik.handleSubmit()}
             >
               Save Alert
             </Button>
@@ -181,9 +183,11 @@ export const SavedSearchAlertModal: React.FC<SavedSearchAlertFormProps> = ({
                 />
               </Box>
             </Box>
+
+            <DownloadAppBanner savedSearchAttributes={savedSearchAttributes} />
           </Join>
-        </Modal>
-      </Form>
+        </ModalDialog>
+      )}
     </FormikProvider>
   )
 }

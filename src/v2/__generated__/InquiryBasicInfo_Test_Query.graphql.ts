@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -62,6 +63,18 @@ v1 = {
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
+},
+v2 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "ID"
+},
+v3 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "String"
 };
 return {
   "fragment": {
@@ -103,7 +116,8 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -190,13 +204,49 @@ return {
     ]
   },
   "params": {
+    "cacheID": "63b28423738c12d0a249d1f77d6bdb66",
     "id": null,
-    "metadata": {},
+    "metadata": {
+      "relayTestingSelectionTypeInfo": {
+        "artwork": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Artwork"
+        },
+        "artwork.id": (v2/*: any*/),
+        "artwork.partner": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Partner"
+        },
+        "artwork.partner.id": (v2/*: any*/),
+        "artwork.partner.name": (v3/*: any*/),
+        "me": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Me"
+        },
+        "me.id": (v2/*: any*/),
+        "me.location": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "MyLocation"
+        },
+        "me.location.display": (v3/*: any*/),
+        "me.location.id": (v2/*: any*/),
+        "me.phone": (v3/*: any*/),
+        "me.profession": (v3/*: any*/)
+      }
+    },
     "name": "InquiryBasicInfo_Test_Query",
     "operationKind": "query",
     "text": "query InquiryBasicInfo_Test_Query {\n  artwork(id: \"example\") {\n    ...InquiryBasicInfo_artwork\n    id\n  }\n  me {\n    ...InquiryBasicInfo_me\n    id\n  }\n}\n\nfragment InquiryBasicInfo_artwork on Artwork {\n  partner {\n    name\n    id\n  }\n}\n\nfragment InquiryBasicInfo_me on Me {\n  location {\n    display\n    id\n  }\n  phone\n  profession\n}\n"
   }
 };
 })();
-(node as any).hash = 'ac5d7ac52094619ada68ee5e746ea2c7';
+(node as any).hash = '365e94690199b0fa004e41d220f5bfac';
 export default node;

@@ -10,7 +10,7 @@ const SecurityApp = loadable(
 
 export const securityRoutes: AppRouteConfig[] = [
   {
-    path: "security2",
+    path: "/security2",
     getComponent: () => SecurityApp,
   },
 ]

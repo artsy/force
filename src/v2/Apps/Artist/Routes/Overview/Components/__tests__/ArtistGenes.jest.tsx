@@ -12,7 +12,7 @@ describe("ArtistGenes", () => {
   const { getWrapper } = setupTestWrapper<ArtistGenes_Test_Query>({
     Component: ArtistGenesFragmentContainer,
     query: graphql`
-      query ArtistGenes_Test_Query {
+      query ArtistGenes_Test_Query @relay_test_operation {
         artist(id: "example") {
           ...ArtistGenes_artist
         }

@@ -64,7 +64,7 @@ const setupTestEnv = (
       updateMyUserProfile: {},
     },
     query: graphql`
-      query RegisterValidTestQuery @raw_response_type {
+      query RegisterValidTestQuery @raw_response_type @relay_test_operation {
         sale(id: "example-auction-id") {
           ...Register_sale
         }

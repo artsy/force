@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -88,7 +89,31 @@ v3 = [
   },
   (v1/*: any*/),
   (v2/*: any*/)
-];
+],
+v4 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "String"
+},
+v5 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "ResizedImageUrl"
+},
+v6 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "Int"
+},
+v7 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "String"
+};
 return {
   "fragment": {
     "argumentDefinitions": [],
@@ -113,7 +138,8 @@ return {
         "storageKey": "show(id:\"xxx\")"
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -249,13 +275,56 @@ return {
     ]
   },
   "params": {
+    "cacheID": "16ada786e67ea01c9f7eaa1c913bc6fd",
     "id": null,
-    "metadata": {},
+    "metadata": {
+      "relayTestingSelectionTypeInfo": {
+        "show": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Show"
+        },
+        "show.id": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": false,
+          "type": "ID"
+        },
+        "show.images": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": true,
+          "type": "Image"
+        },
+        "show.images.caption": (v4/*: any*/),
+        "show.images.desktop": (v5/*: any*/),
+        "show.images.desktop.height": (v6/*: any*/),
+        "show.images.desktop.src": (v7/*: any*/),
+        "show.images.desktop.srcSet": (v7/*: any*/),
+        "show.images.desktop.width": (v6/*: any*/),
+        "show.images.internalID": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "ID"
+        },
+        "show.images.mobile": (v5/*: any*/),
+        "show.images.mobile.height": (v6/*: any*/),
+        "show.images.mobile.width": (v6/*: any*/),
+        "show.images.zoom": (v5/*: any*/),
+        "show.images.zoom.height": (v6/*: any*/),
+        "show.images.zoom.src": (v7/*: any*/),
+        "show.images.zoom.srcSet": (v7/*: any*/),
+        "show.images.zoom.width": (v6/*: any*/),
+        "show.name": (v4/*: any*/)
+      }
+    },
     "name": "ShowInstallShots_Test_Query",
     "operationKind": "query",
     "text": "query ShowInstallShots_Test_Query {\n  show(id: \"xxx\") {\n    ...ShowInstallShots_show\n    id\n  }\n}\n\nfragment ShowInstallShots_show on Show {\n  name\n  images(default: false, size: 100) {\n    internalID\n    caption\n    mobile: resized(width: 200) {\n      width\n      height\n    }\n    desktop: resized(width: 325) {\n      src\n      srcSet\n      width\n      height\n    }\n    zoom: resized(width: 900, height: 900, version: [\"larger\", \"large\"]) {\n      src\n      srcSet\n      width\n      height\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '5e5440a7341ea09d022f5e312808c3f7';
+(node as any).hash = 'c0c1d39b4bf1f57873328a7bce4868c1';
 export default node;

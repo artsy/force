@@ -19,7 +19,7 @@ jest.unmock("react-relay")
 const { getWrapper } = setupTestWrapper({
   Component: ShowInstallShotsFragmentContainer,
   query: graphql`
-    query ShowInstallShots_Test_Query {
+    query ShowInstallShots_Test_Query @relay_test_operation {
       show(id: "xxx") {
         ...ShowInstallShots_show
       }

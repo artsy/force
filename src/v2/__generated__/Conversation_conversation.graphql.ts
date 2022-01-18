@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -113,16 +114,14 @@ v4 = {
 return {
   "argumentDefinitions": [
     {
-      "defaultValue": 30,
-      "kind": "LocalArgument",
-      "name": "count",
-      "type": "Int"
-    },
-    {
       "defaultValue": null,
       "kind": "LocalArgument",
-      "name": "after",
-      "type": "String"
+      "name": "after"
+    },
+    {
+      "defaultValue": 30,
+      "kind": "LocalArgument",
+      "name": "count"
     }
   ],
   "kind": "Fragment",
@@ -234,9 +233,7 @@ return {
           "value": [
             "APPROVED",
             "FULFILLED",
-            "SUBMITTED",
-            "REFUNDED",
-            "CANCELED"
+            "SUBMITTED"
           ]
         }
       ],
@@ -280,7 +277,8 @@ return {
                       "storageKey": null
                     }
                   ],
-                  "type": "CommerceOfferOrder"
+                  "type": "CommerceOfferOrder",
+                  "abstractKey": null
                 }
               ],
               "storageKey": null
@@ -294,7 +292,7 @@ return {
           "name": "ConversationMessages_events"
         }
       ],
-      "storageKey": "orderConnection(first:10,participantType:\"BUYER\",states:[\"APPROVED\",\"FULFILLED\",\"SUBMITTED\",\"REFUNDED\",\"CANCELED\"])"
+      "storageKey": "orderConnection(first:10,participantType:\"BUYER\",states:[\"APPROVED\",\"FULFILLED\",\"SUBMITTED\"])"
     },
     {
       "alias": "messagesConnection",
@@ -413,7 +411,8 @@ return {
                 (v4/*: any*/),
                 (v1/*: any*/)
               ],
-              "type": "Artwork"
+              "type": "Artwork",
+              "abstractKey": null
             },
             {
               "args": null,
@@ -438,7 +437,8 @@ return {
                 (v1/*: any*/),
                 (v3/*: any*/)
               ],
-              "type": "Artwork"
+              "type": "Artwork",
+              "abstractKey": null
             }
           ],
           "storageKey": null
@@ -452,8 +452,9 @@ return {
       "name": "ConversationCTA_conversation"
     }
   ],
-  "type": "Conversation"
+  "type": "Conversation",
+  "abstractKey": null
 };
 })();
-(node as any).hash = '3ba3d5c05fa28d7e0e212562c89a5f4b';
+(node as any).hash = 'a2c2719506831f7a381533e19821ee9e';
 export default node;

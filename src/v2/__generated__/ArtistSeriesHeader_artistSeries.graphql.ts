@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -229,7 +230,8 @@ return {
       "storageKey": "artists(size:1)"
     }
   ],
-  "type": "ArtistSeries"
+  "type": "ArtistSeries",
+  "abstractKey": null
 };
 })();
 (node as any).hash = 'f00900bdae79e095ac650f42524691da';

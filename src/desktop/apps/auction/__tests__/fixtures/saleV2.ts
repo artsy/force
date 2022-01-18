@@ -33,7 +33,7 @@ export const saleV2 = {
   promoted_sale: {
     id: "wright-art-plus-design-part-2",
     name: "Wright: Art + Design Part 2",
-    sale_artworks: {
+    saleArtworksConnection: {
       edges: [
         {
           node: {

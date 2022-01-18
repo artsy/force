@@ -22,7 +22,7 @@ describe("SoldRecently", () => {
       )
     },
     query: graphql`
-      query SoldRecently_tests_Query {
+      query SoldRecently_tests_Query @relay_test_operation {
         targetSupply {
           ...SoldRecently_targetSupply
         }

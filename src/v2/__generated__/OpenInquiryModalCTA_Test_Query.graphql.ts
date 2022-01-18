@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -48,6 +49,12 @@ v1 = {
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
+},
+v2 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "ID"
 };
 return {
   "fragment": {
@@ -84,7 +91,8 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -126,13 +134,37 @@ return {
     ]
   },
   "params": {
+    "cacheID": "ea1543c41bdf0b25597cb48eea65499f",
     "id": null,
-    "metadata": {},
+    "metadata": {
+      "relayTestingSelectionTypeInfo": {
+        "me": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Me"
+        },
+        "me.conversation": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Conversation"
+        },
+        "me.conversation.id": (v2/*: any*/),
+        "me.conversation.internalID": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "ID"
+        },
+        "me.id": (v2/*: any*/)
+      }
+    },
     "name": "OpenInquiryModalCTA_Test_Query",
     "operationKind": "query",
     "text": "query OpenInquiryModalCTA_Test_Query {\n  me {\n    conversation(id: \"123\") {\n      ...OpenInquiryModalCTA_conversation\n      id\n    }\n    id\n  }\n}\n\nfragment OpenInquiryModalCTA_conversation on Conversation {\n  internalID\n}\n"
   }
 };
 })();
-(node as any).hash = 'eaa060aba56af73db52bed890a157d39';
+(node as any).hash = 'e870b65b35253ed30121ba9911df012d';
 export default node;
