@@ -10,7 +10,7 @@ import {
 import { graphql, createFragmentContainer } from "react-relay"
 import { ArticlesIndexArticle_article } from "v2/__generated__/ArticlesIndexArticle_article.graphql"
 import { RouterLink } from "v2/System/Router/RouterLink"
-import { ArticlesIndexArticleShare } from "./ArticlesIndexArticleShare"
+import { ArticleShare } from "v2/Components/ArticleShare"
 import { getENV } from "v2/Utils/getENV"
 
 interface ArticlesIndexArticleProps {
@@ -37,7 +37,7 @@ const ArticlesIndexArticle: FC<ArticlesIndexArticleProps> = ({ article }) => {
 
         <Spacer mt={2} />
 
-        <ArticlesIndexArticleShare
+        <ArticleShare
           description={article.title ?? "Artsy Editorial"}
           url={`${getENV("APP_URL")}${article.href}`}
         />
