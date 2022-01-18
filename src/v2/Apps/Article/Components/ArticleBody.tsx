@@ -1,0 +1,210 @@
+import {
+  Box,
+  Column,
+  GridColumns,
+  HTML,
+  Join,
+  Spacer,
+  Text,
+  Image,
+} from "@artsy/palette"
+import { FC } from "react"
+import { createFragmentContainer, graphql } from "react-relay"
+import { ArticleBody_article } from "v2/__generated__/ArticleBody_article.graphql"
+import { ArticleShare } from "v2/Components/ArticleShare"
+import { getENV } from "v2/Utils/getENV"
+import { ArticleSectionImageCollectionFragmentContainer } from "./Sections/ArticleSectionImageCollection"
+import { ArticleSectionTextFragmentContainer } from "./Sections/ArticleSectionText"
+import { ArticleSectionImageSetFragmentContainer } from "./Sections/ArticleSectionImageSet"
+import { RouterLink } from "v2/System/Router/RouterLink"
+import { ArticleHeaderFragmentContainer } from "./ArticleHeader"
+
+interface ArticleBodyProps {
+  article: ArticleBody_article
+}
+
+const ArticleBody: FC<ArticleBodyProps> = ({ article }) => {
+  return (
+    <>
+      <ArticleHeaderFragmentContainer article={article} />
+
+      <Spacer mt={4} />
+
+      <GridColumns gridRowGap={4}>
+        <Column
+          span={[12, 8, 8, 6]}
+          // Centers layout for features
+          {...(article.layout === "FEATURE" ? { start: [1, 3, 3, 4] } : {})}
+        >
+          <Text
+            variant="xs"
+            textTransform="uppercase"
+            display="flex"
+            alignItems="center"
+            lineHeight={1}
+          >
+            {article.publishedAt}
+
+            <Spacer ml={2} />
+
+            <ArticleShare
+              description={article.title ?? "Artsy Editorial"}
+              url={`${getENV("APP_URL")}${article.href}`}
+            />
+          </Text>
+
+          <Spacer mt={4} />
+
+          <Join separator={<Spacer mt={4} />}>
+            {article.sections.map((section, i) => {
+              const isFirst = i === 0
+              const isLast = i === article.sections.length - 1
+
+              switch (section.__typename) {
+                case "ArticleSectionText": {
+                  return (
+                    <ArticleSectionTextFragmentContainer
+                      key={i}
+                      section={section}
+                      isFirst={article.layout === "FEATURE" && isFirst}
+                      isLast={isLast}
+                    />
+                  )
+                }
+
+                case "ArticleSectionImageCollection": {
+                  return (
+                    <ArticleSectionImageCollectionFragmentContainer
+                      key={i}
+                      section={section}
+                    />
+                  )
+                }
+
+                case "ArticleSectionImageSet": {
+                  return (
+                    <ArticleSectionImageSetFragmentContainer
+                      key={i}
+                      section={section}
+                    />
+                  )
+                }
+
+                default: {
+                  return (
+                    <Text key={i} variant="sm">
+                      {section.__typename}
+                    </Text>
+                  )
+                }
+              }
+            })}
+          </Join>
+
+          <Text variant="md" fontWeight="bold" mt={4}>
+            —{article.byline}
+          </Text>
+
+          {article.postscript && (
+            <HTML
+              variant="sm"
+              mt={4}
+              fontStyle="italic"
+              html={article.postscript}
+            />
+          )}
+        </Column>
+
+        {article.layout === "STANDARD" && (
+          <Column span={4}>
+            {article.relatedArticles.length > 0 && (
+              <>
+                <Text variant="xs" textTransform="uppercase" mb={4}>
+                  Related Stories
+                </Text>
+
+                <Join separator={<Spacer mt={1} />}>
+                  {article.relatedArticles.map(relatedArticle => {
+                    const img = relatedArticle.thumbnailImage?.cropped
+
+                    return (
+                      <RouterLink
+                        key={relatedArticle.internalID}
+                        display="flex"
+                        to={relatedArticle.href}
+                        textDecoration="none"
+                        aria-label={`${relatedArticle.title} by ${relatedArticle.byline}`}
+                      >
+                        <Box mr={1} flexShrink={0}>
+                          {img ? (
+                            <Image
+                              width={80}
+                              height={60}
+                              src={img.src}
+                              srcSet={img.srcSet}
+                              alt=""
+                              lazyLoad
+                            />
+                          ) : (
+                            <Box bg="black10" width={80} height={60} />
+                          )}
+                        </Box>
+
+                        <Box>
+                          <Text variant="md" lineClamp={2}>
+                            {relatedArticle.title}
+                          </Text>
+
+                          <Text variant="md" color="black60" lineClamp={1}>
+                            {relatedArticle.byline}
+                          </Text>
+                        </Box>
+                      </RouterLink>
+                    )
+                  })}
+                </Join>
+              </>
+            )}
+
+            {/* TODO: Ad placement */}
+          </Column>
+        )}
+      </GridColumns>
+    </>
+  )
+}
+
+export const ArticleBodyFragmentContainer = createFragmentContainer(
+  ArticleBody,
+  {
+    article: graphql`
+      fragment ArticleBody_article on Article {
+        ...ArticleHeader_article
+        layout
+        title
+        byline
+        href
+        publishedAt(format: "MMM D, YYYY h:mma")
+        sections {
+          __typename
+          ...ArticleSectionText_section
+          ...ArticleSectionImageCollection_section
+          ...ArticleSectionImageSet_section
+        }
+        postscript
+        relatedArticles {
+          internalID
+          title
+          href
+          byline
+          thumbnailImage {
+            cropped(width: 80, height: 60) {
+              src
+              srcSet
+            }
+          }
+        }
+      }
+    `,
+  }
+)
