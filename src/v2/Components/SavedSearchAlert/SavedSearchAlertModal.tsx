@@ -175,7 +175,7 @@ export const SavedSearchAlertModal: React.FC<SavedSearchAlertFormProps> = ({
 
                 <Box>
                   <Box display="flex" justifyContent="space-between">
-                    <Text>Email Alerts</Text>
+                    <Text variant="md">Email Alerts</Text>
                     <Checkbox
                       onSelect={selected => setFieldValue("email", selected)}
                       selected={values.email}
@@ -183,7 +183,7 @@ export const SavedSearchAlertModal: React.FC<SavedSearchAlertFormProps> = ({
                   </Box>
                   <Spacer mt={4} />
                   <Box display="flex" justifyContent="space-between">
-                    <Text>Mobile Alerts</Text>
+                    <Text variant="md">Mobile Alerts</Text>
                     <Checkbox
                       onSelect={selected => setFieldValue("push", selected)}
                       selected={values.push}
