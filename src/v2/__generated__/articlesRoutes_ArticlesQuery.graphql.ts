@@ -34,9 +34,11 @@ fragment ArticlesIndexArticle_article on Article {
   byline
   publishedAt(format: "MMMM Do YYYY")
   thumbnailImage {
-    cropped(width: 910, height: 511) {
+    cropped(width: 910, height: 607) {
       src
       srcSet
+      width
+      height
     }
   }
 }
@@ -198,7 +200,7 @@ return {
                               {
                                 "kind": "Literal",
                                 "name": "height",
-                                "value": 511
+                                "value": 607
                               },
                               {
                                 "kind": "Literal",
@@ -224,9 +226,23 @@ return {
                                 "kind": "ScalarField",
                                 "name": "srcSet",
                                 "storageKey": null
+                              },
+                              {
+                                "alias": null,
+                                "args": null,
+                                "kind": "ScalarField",
+                                "name": "width",
+                                "storageKey": null
+                              },
+                              {
+                                "alias": null,
+                                "args": null,
+                                "kind": "ScalarField",
+                                "name": "height",
+                                "storageKey": null
                               }
                             ],
-                            "storageKey": "cropped(height:511,width:910)"
+                            "storageKey": "cropped(height:607,width:910)"
                           }
                         ],
                         "storageKey": null
@@ -304,12 +320,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "0d62c72fa3d2430379756080cec04cb9",
+    "cacheID": "6aa047934e36cc7b8b931432fa374a2d",
     "id": null,
     "metadata": {},
     "name": "articlesRoutes_ArticlesQuery",
     "operationKind": "query",
-    "text": "query articlesRoutes_ArticlesQuery {\n  viewer {\n    ...ArticlesApp_viewer\n  }\n}\n\nfragment ArticlesApp_viewer on Viewer {\n  ...ArticlesIndexArticles_viewer\n}\n\nfragment ArticlesIndexArticle_article on Article {\n  href\n  title\n  byline\n  publishedAt(format: \"MMMM Do YYYY\")\n  thumbnailImage {\n    cropped(width: 910, height: 511) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment ArticlesIndexArticles_viewer on Viewer {\n  articlesConnection(first: 15, sort: PUBLISHED_AT_DESC, featured: true) {\n    edges {\n      node {\n        internalID\n        ...ArticlesIndexArticle_article\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query articlesRoutes_ArticlesQuery {\n  viewer {\n    ...ArticlesApp_viewer\n  }\n}\n\nfragment ArticlesApp_viewer on Viewer {\n  ...ArticlesIndexArticles_viewer\n}\n\nfragment ArticlesIndexArticle_article on Article {\n  href\n  title\n  byline\n  publishedAt(format: \"MMMM Do YYYY\")\n  thumbnailImage {\n    cropped(width: 910, height: 607) {\n      src\n      srcSet\n      width\n      height\n    }\n  }\n}\n\nfragment ArticlesIndexArticles_viewer on Viewer {\n  articlesConnection(first: 15, sort: PUBLISHED_AT_DESC, featured: true) {\n    edges {\n      node {\n        internalID\n        ...ArticlesIndexArticle_article\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();
