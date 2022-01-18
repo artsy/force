@@ -106,7 +106,7 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
   // trackClick("We recommend changing your offer", priceOptions[0]?.value!)
 
   const { scrollTo } = useScrollTo({
-    selectorOrRef: "#price-option-custom",
+    selectorOrRef: "#scrollTo--price-option-custom",
     behavior: "smooth",
   })
 
@@ -134,7 +134,7 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
         ))
         .concat(
           <BorderedRadio
-            id="price-option-custom"
+            id="scrollTo--price-option-custom"
             value="custom"
             label="Different amount"
             onSelect={() => {
