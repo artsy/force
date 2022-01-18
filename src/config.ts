@@ -29,7 +29,6 @@ export const APPLICATION_NAME: any = "force-staging"
 export const APPLY_URL: any = "http://apply.artsy.net"
 export const ARTSY_EDITORIAL_CHANNEL: any = "5759e3efb5989e6f98f77993"
 export const AUCTION_ZENDESK_KEY: any = null
-export const ALLOWED_REDIRECT_HOSTS: any = "localhost"
 export const CDN_URL: any = "https://d1s2w0upia4e9w.cloudfront.net"
 export const CLIENT_ID: any = null
 export const CLIENT_SECRET: any = null

@@ -6,7 +6,6 @@ import { setReferer } from "./Server/setReferer"
 import { flow } from "lodash"
 import { redirectIfLoggedIn } from "./Server/redirectIfLoggedIn"
 import { setCookies } from "./Utils/helpers"
-import { redirectPostAuth } from "./Server/redirectPostAuth"
 
 const ForgotPasswordRoute = loadable(
   () =>
@@ -112,12 +111,6 @@ export const authenticationRoutes: AppRouteConfig[] = [
     path: "/sign_up",
     render: ({ match }) => {
       throw new RedirectException(`/signup${match.location.search}`, 301)
-    },
-  },
-  {
-    path: "/auth-redirect",
-    onServerSideRender: props => {
-      redirectPostAuth(props)
     },
   },
 ]
