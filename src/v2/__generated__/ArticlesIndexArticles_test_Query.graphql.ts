@@ -34,9 +34,11 @@ fragment ArticlesIndexArticle_article on Article {
   byline
   publishedAt(format: "MMMM Do YYYY")
   thumbnailImage {
-    cropped(width: 910, height: 511) {
+    cropped(width: 910, height: 607) {
       src
       srcSet
+      width
+      height
     }
   }
 }
@@ -108,6 +110,12 @@ v5 = {
   "nullable": false,
   "plural": false,
   "type": "ID"
+},
+v6 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "Int"
 };
 return {
   "fragment": {
@@ -231,7 +239,7 @@ return {
                               {
                                 "kind": "Literal",
                                 "name": "height",
-                                "value": 511
+                                "value": 607
                               },
                               {
                                 "kind": "Literal",
@@ -257,9 +265,23 @@ return {
                                 "kind": "ScalarField",
                                 "name": "srcSet",
                                 "storageKey": null
+                              },
+                              {
+                                "alias": null,
+                                "args": null,
+                                "kind": "ScalarField",
+                                "name": "width",
+                                "storageKey": null
+                              },
+                              {
+                                "alias": null,
+                                "args": null,
+                                "kind": "ScalarField",
+                                "name": "height",
+                                "storageKey": null
                               }
                             ],
-                            "storageKey": "cropped(height:511,width:910)"
+                            "storageKey": "cropped(height:607,width:910)"
                           }
                         ],
                         "storageKey": null
@@ -337,7 +359,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "86bd583c2ad1384165497523c4f0cf51",
+    "cacheID": "40ab6045abf687986604f40b0acd2133",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -384,8 +406,10 @@ return {
           "plural": false,
           "type": "CroppedImageUrl"
         },
+        "viewer.articlesConnection.edges.node.thumbnailImage.cropped.height": (v6/*: any*/),
         "viewer.articlesConnection.edges.node.thumbnailImage.cropped.src": (v3/*: any*/),
         "viewer.articlesConnection.edges.node.thumbnailImage.cropped.srcSet": (v3/*: any*/),
+        "viewer.articlesConnection.edges.node.thumbnailImage.cropped.width": (v6/*: any*/),
         "viewer.articlesConnection.edges.node.title": (v4/*: any*/),
         "viewer.articlesConnection.pageInfo": {
           "enumValues": null,
@@ -404,7 +428,7 @@ return {
     },
     "name": "ArticlesIndexArticles_test_Query",
     "operationKind": "query",
-    "text": "query ArticlesIndexArticles_test_Query(\n  $after: String\n) {\n  viewer {\n    ...ArticlesIndexArticles_viewer_WGPvJ\n  }\n}\n\nfragment ArticlesIndexArticle_article on Article {\n  href\n  title\n  byline\n  publishedAt(format: \"MMMM Do YYYY\")\n  thumbnailImage {\n    cropped(width: 910, height: 511) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment ArticlesIndexArticles_viewer_WGPvJ on Viewer {\n  articlesConnection(first: 15, after: $after, sort: PUBLISHED_AT_DESC, featured: true) {\n    edges {\n      node {\n        internalID\n        ...ArticlesIndexArticle_article\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query ArticlesIndexArticles_test_Query(\n  $after: String\n) {\n  viewer {\n    ...ArticlesIndexArticles_viewer_WGPvJ\n  }\n}\n\nfragment ArticlesIndexArticle_article on Article {\n  href\n  title\n  byline\n  publishedAt(format: \"MMMM Do YYYY\")\n  thumbnailImage {\n    cropped(width: 910, height: 607) {\n      src\n      srcSet\n      width\n      height\n    }\n  }\n}\n\nfragment ArticlesIndexArticles_viewer_WGPvJ on Viewer {\n  articlesConnection(first: 15, after: $after, sort: PUBLISHED_AT_DESC, featured: true) {\n    edges {\n      node {\n        internalID\n        ...ArticlesIndexArticle_article\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();

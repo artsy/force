@@ -13,6 +13,8 @@ export type ArticlesIndexArticle_article = {
         readonly cropped: {
             readonly src: string;
             readonly srcSet: string;
+            readonly width: number;
+            readonly height: number;
         } | null;
     } | null;
     readonly " $refType": "ArticlesIndexArticle_article";
@@ -79,7 +81,7 @@ const node: ReaderFragment = {
             {
               "kind": "Literal",
               "name": "height",
-              "value": 511
+              "value": 607
             },
             {
               "kind": "Literal",
@@ -105,9 +107,23 @@ const node: ReaderFragment = {
               "kind": "ScalarField",
               "name": "srcSet",
               "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "width",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "height",
+              "storageKey": null
             }
           ],
-          "storageKey": "cropped(height:511,width:910)"
+          "storageKey": "cropped(height:607,width:910)"
         }
       ],
       "storageKey": null
@@ -116,5 +132,5 @@ const node: ReaderFragment = {
   "type": "Article",
   "abstractKey": null
 };
-(node as any).hash = '063575b816db5cbb8da8f6befc0838ac';
+(node as any).hash = 'ed27de1850ba2a152eed111a3e6837f4';
 export default node;
