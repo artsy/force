@@ -1,17 +1,11 @@
 import { FC } from "react"
-import {
-  ArrowLeftIcon,
-  Box,
-  Flex,
-  Text,
-  Separator,
-  breakpoints,
-} from "@artsy/palette"
+import { ArrowLeftIcon, Box, Flex, Text, Separator } from "@artsy/palette"
 import styled from "styled-components"
 import { themeGet } from "@styled-system/theme-get"
 
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { DetailIcon, DetailsProps } from "./DetailsHeader"
+import { Media } from "@artsy/reaction/dist/Utils/Responsive"
 
 export const LARGE_SCREEN_HEADER_HEIGHT = "85px"
 export const SMALL_SCREEN_HEADER_HEIGHT = "55px"
@@ -24,34 +18,26 @@ const SmallConversationHeaderContainer = styled(Flex)`
   border-bottom: 1px solid ${themeGet("colors.black10")};
   background: white;
   z-index: 1;
-
-  @media (min-width: ${breakpoints.md}) {
-    display: none;
-  }
-`
-
-const LargeConversationHeaderContainer = styled(Flex)`
-  display: none;
-
-  @media (min-width: ${breakpoints.md}) {
-    display: initial;
-  }
 `
 
 export const ConversationHeader: FC<ConversationHeaderProps> = props => {
   const { partnerName, showDetails, setShowDetails } = props
   return (
     <>
-      <SmallConversationHeader
-        showDetails={showDetails}
-        setShowDetails={setShowDetails}
-        partnerName={partnerName}
-      />
-      <LargeConversationHeader
-        showDetails={showDetails}
-        setShowDetails={setShowDetails}
-        partnerName={partnerName}
-      />
+      <Media lessThan="md">
+        <SmallConversationHeader
+          showDetails={showDetails}
+          setShowDetails={setShowDetails}
+          partnerName={partnerName}
+        />
+      </Media>
+      <Media greaterThanOrEqual="md">
+        <LargeConversationHeader
+          showDetails={showDetails}
+          setShowDetails={setShowDetails}
+          partnerName={partnerName}
+        />
+      </Media>
     </>
   )
 }
@@ -88,11 +74,7 @@ const SmallConversationHeader: FC<ConversationHeaderProps> = props => {
 const LargeConversationHeader: FC<ConversationHeaderProps> = props => {
   const { partnerName, showDetails, setShowDetails } = props
   return (
-    <LargeConversationHeaderContainer
-      flexDirection="column"
-      width="100%"
-      justifyContent="flex-end"
-    >
+    <Flex flexDirection="column" width="100%" justifyContent="flex-end">
       <Flex
         justifyContent="space-between"
         alignItems="flex-end"
@@ -112,6 +94,6 @@ const LargeConversationHeader: FC<ConversationHeaderProps> = props => {
         <DetailIcon showDetails={showDetails} setShowDetails={setShowDetails} />
       </Flex>
       <Separator />
-    </LargeConversationHeaderContainer>
+    </Flex>
   )
 }
