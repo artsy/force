@@ -86,7 +86,7 @@ export class Accept extends Component<AcceptProps & StripeProps> {
 
   onSubmit = async () => {
     try {
-      let orderOrError = (await this.acceptOffer()).commerceBuyerAcceptOffer
+      const orderOrError = (await this.acceptOffer()).commerceBuyerAcceptOffer
         ?.orderOrError
 
       if (!orderOrError?.error) {
