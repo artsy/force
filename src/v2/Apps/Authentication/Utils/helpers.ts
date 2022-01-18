@@ -17,6 +17,7 @@ import { pick } from "lodash"
 import { mediator } from "lib/mediator"
 import { reportError } from "v2/Utils/errors"
 import { trackEvent } from "lib/analytics/helpers"
+import { getENV } from "v2/Utils/getENV"
 
 interface AnalyticsOptions {
   auth_redirect: string
@@ -103,7 +104,13 @@ export const handleSubmit = async (
 
       const result = await apiAuthWithRedirectUrl(res, afterAuthURL)
 
-      window.location.assign(result.href)
+      if (result.origin === getENV("APP_URL")) {
+        window.location.assign(result.href)
+      }
+
+      window.location.assign(
+        `/auth-redirect?redirectTo=${encodeURIComponent(result.href)}`
+      )
     },
     error: error => {
       formikBag.setStatus(error)
@@ -143,9 +150,9 @@ export async function apiAuthWithRedirectUrl(
   response: Response,
   redirectPath: URL
 ): Promise<URL> {
-  const redirectUrl = sd.APP_URL + redirectPath.pathname + redirectPath.search
   const accessToken = (response["user"] || {}).accessToken
-  const appRedirectURL = new URL(redirectUrl)
+
+  const appRedirectURL = redirectPath
 
   // There isn't an access token when we don't have a valid session, for example,
   // when the user is resetting their password.
