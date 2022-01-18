@@ -3,7 +3,7 @@ import { Accept_order } from "v2/__generated__/Accept_order.graphql"
 import { TwoColumnLayout } from "v2/Apps/Order/Components/TwoColumnLayout"
 import { track } from "v2/System/Analytics"
 import { RouteConfig, Router } from "found"
-import { Component } from "react";
+import { Component } from "react"
 import { Media } from "v2/Utils/Responsive"
 import {
   OrderStepper,
@@ -86,7 +86,7 @@ export class Accept extends Component<AcceptProps & StripeProps> {
 
   onSubmit = async () => {
     try {
-      const orderOrError = (await this.acceptOffer()).commerceBuyerAcceptOffer
+      let orderOrError = (await this.acceptOffer()).commerceBuyerAcceptOffer
         ?.orderOrError
 
       if (!orderOrError?.error) {
@@ -124,7 +124,7 @@ export class Accept extends Component<AcceptProps & StripeProps> {
         })
       }
 
-      this.props.router.push(`/orders/${this.props.order.internalID}/status`)
+      this.onSubmit()
     } catch (error) {
       logger.error(error)
       this.props.dialog.showErrorDialog()
