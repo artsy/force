@@ -2,17 +2,8 @@ import * as React from "react"
 import { Avatar, Box, Flex, Spacer, Text } from "@artsy/palette"
 import { __internal__useMatchMedia } from "v2/Utils/Hooks/useMatchMedia"
 import { RouterLink } from "v2/System/Router/RouterLink"
-import { userIsAdmin } from "v2/Utils/user"
-import { useSystemContext } from "@artsy/reaction/dist/Artsy"
 import { Media } from "v2/Utils/Responsive"
 export const MeetTheSpecialistsIndex: React.FC = () => {
-  const { user } = useSystemContext()
-  const isAdmin = userIsAdmin(user)
-
-  if (!isAdmin) {
-    return null
-  }
-
   return (
     <>
       <Box mt={4}>
