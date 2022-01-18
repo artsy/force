@@ -151,7 +151,7 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
                   showError={showError}
                   onChange={setCustomValue}
                   onFocus={() => {
-                    onFocus
+                    onFocus()
                     scrollTo()
                   }}
                   noTitle
