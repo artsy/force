@@ -3,15 +3,22 @@
  * feedback loop and access to our themed values, then extract and copy them
  * into the template in the onetrust.com dashboard.
  *
- * To develop locally: in Boot.tsx
+ * To develop locally:
+ * - Go to OneTrust: https://app-eu.onetrust.com/cookies/templates
+ * - Edit the CCPA and GDPR templates to remove the Styling > Custom CSS (delete
+ *   any code present)
+ * - Go to Integration > Scripts: https://app-eu.onetrust.com/cookies/script-integration
+ * - Click staging.artsy.net
+ * - Click "Publish Test" > "Confirm" > "Publish Test Scripts"
+ * - in Boot.tsx:
  * `import { OneTrustConsentStyles } from "v2/Components/OneTrustConsentStyles"`
  * and include the `<OneTrustConsentStyles />` component in the render method.
  *
  * When you're ready, you can just return only the `<OneTrustConsentStyles />`
- * component, then copy out the compiled styles. Log into onetrust.com and find
- * the template. Click on "Styling", then paste into the "Custom CSS" field.
- * Save the template, then go to "Integration" > "Scripts". Click the environment
- * and publish.
+ * component from Boot.tsx, then copy out the compiled styles. Log into
+ * onetrust.com and find the template. Click on "Styling", then paste into the
+ * "Custom CSS" field. Save the template, then go to "Integration" > "Scripts".
+ * Click the environment and publish.
  *
  * This is not good code. This is not good CSS. What this is, is an effort to
  * overwrite the default styles from OneTrust. We can't blanket reset/remove the
@@ -86,6 +93,10 @@ const modalDialogFooterMobileHeight = `calc((${BUTTON_SIZES.medium.height} * 2) 
 
 export const OneTrustConsentStyles = createGlobalStyle`
   #onetrust-consent-sdk {
+    ${toStyle({
+      fontFamily: THEME.fonts.sans,
+    })}
+
     /* Modal Dialog */
     .ot-pc-header {
       ${toStyle({
@@ -469,28 +480,33 @@ export const OneTrustConsentStyles = createGlobalStyle`
       }
     }
 
-    #onetrust-button-group#onetrust-button-group#onetrust-button-group {
+    #onetrust-button-group {
       ${toStyle({
         all: "unset",
         display: "flex",
       })}
 
-      @media (max-width: ${THEME.breakpoints.sm}) {
-        ${toStyle({
-          flexDirection: "column",
-        })}
-      }
-
       > button {
-        ${baseButtonMixin}
-
         &:first-child {
-          ${toStyle({ marginRight: THEME.space[1] })}
-          ${buttonVariants.secondaryOutline}
+          ${toStyle({
+            ...baseButtonStyles,
+            border: "none",
+            color: THEME.colors.black100,
+            backgroundColor: THEME.colors.white100,
+            marginRight: THEME.space[1],
+            textDecoration: "underline",
+          })}
+
+          &:hover {
+            ${toStyle({
+              textDecoration: "none",
+            })}
+          }
         }
 
         &:last-child {
           ${toStyle({ marginLeft: THEME.space[1] })}
+          ${baseButtonMixin}
           ${buttonVariants.primaryBlack}
         }
       }
@@ -498,7 +514,7 @@ export const OneTrustConsentStyles = createGlobalStyle`
       @media (max-width: ${THEME.breakpoints.sm}) {
         ${toStyle({
           width: "100%",
-          flexDirection: "column",
+          flexDirection: "column-reverse",
         })}
 
         > button {
@@ -508,11 +524,11 @@ export const OneTrustConsentStyles = createGlobalStyle`
           })}
 
           &:first-child {
-            ${toStyle({ marginTop: THEME.space[2], marginRight: 0 })},
+            ${toStyle({ marginTop: THEME.space[1], marginRight: 0 })},
           }
 
           &:last-child {
-            ${toStyle({ marginTop: THEME.space[1], marginLeft: 0 })},
+            ${toStyle({ marginTop: THEME.space[2], marginLeft: 0 })},
           }
         }
       }
