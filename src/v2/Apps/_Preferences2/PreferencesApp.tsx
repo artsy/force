@@ -8,8 +8,15 @@ import {
   Spacer, 
   Text 
 } from "@artsy/palette"
+import { useState } from "react"
 
 export const PreferencesApp: React.FC = () => {
+  const [checkedAll, setCheckedAll] = useState(false);
+  // const [checked, setChecked] = useState({
+  //   nr1: false,
+  //   nr2: false
+  // });
+
   return (
     <>
       <Text variant="xl" mt={4}>Preferences Center</Text>
@@ -38,7 +45,12 @@ export const PreferencesApp: React.FC = () => {
           <Box
             flexBasis={"50%"}
           >
-            <Checkbox>Email</Checkbox>
+            <Checkbox
+              onSelect={(result) => setCheckedAll(result)}
+              selected={checkedAll}
+            >
+              Email
+            </Checkbox>
           </Box>
         </Flex>
       </Column>
@@ -76,7 +88,11 @@ export const PreferencesApp: React.FC = () => {
           <Box
             flexBasis={"50%"}
           >
-            <Checkbox>Email</Checkbox>
+            <Checkbox
+            selected={checkedAll}
+            >
+              Email
+            </Checkbox>
           </Box>
         </Flex>
       </Column>
@@ -111,7 +127,7 @@ export const PreferencesApp: React.FC = () => {
           <Box
             flexBasis={"50%"}
           >
-            <Checkbox>Email</Checkbox>
+            <Checkbox selected={checkedAll}>Email</Checkbox>
           </Box>
         </Flex>
       </Column>
@@ -146,7 +162,7 @@ export const PreferencesApp: React.FC = () => {
           <Box
             flexBasis={"50%"}
           >
-            <Checkbox>Email</Checkbox>
+            <Checkbox selected={checkedAll}>Email</Checkbox>
           </Box>
         </Flex>
       </Column>
@@ -181,7 +197,7 @@ export const PreferencesApp: React.FC = () => {
           <Box
             flexBasis={"50%"}
           >
-            <Checkbox>Email</Checkbox>
+            <Checkbox selected={checkedAll}>Email</Checkbox>
           </Box>
         </Flex>
       </Column>
@@ -216,7 +232,7 @@ export const PreferencesApp: React.FC = () => {
           <Box
             flexBasis={"50%"}
           >
-            <Checkbox>Email</Checkbox>
+            <Checkbox selected={checkedAll}>Email</Checkbox>
           </Box>
         </Flex>
       </Column>
@@ -248,7 +264,7 @@ export const PreferencesApp: React.FC = () => {
           <Box
             flexBasis={"50%"}
           >
-            <Checkbox>Email</Checkbox>
+            <Checkbox selected={!checkedAll}>Email</Checkbox>
           </Box>
         </Flex>
       </Column>
