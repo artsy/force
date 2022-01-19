@@ -11,37 +11,13 @@ import {
 import { useState } from "react"
 
 export const PreferencesApp: React.FC = () => {
-  const [checkedAll, setCheckedAll] = useState(false)
+  const [uncheckedAll, setUncheckedAll] = useState(false)
 
   return (
     <>
       <Text variant="xl" mt={4}>
         Preferences Center
       </Text>
-      <Column
-        span={12}
-        pb={2}
-        pr={12}
-        mt={6}
-        display="flex"
-        justifyContent="space-between"
-      >
-        <Flex p={2} flexDirection="column">
-          <Box flexBasis={"50%"}>
-            <Text variant={"md"}>Subscribe to all</Text>
-          </Box>
-        </Flex>
-        <Flex p={2} flexDirection={"column"}>
-          <Box flexBasis={"50%"}>
-            <Checkbox
-              onSelect={result => setCheckedAll(result)}
-              selected={checkedAll}
-            >
-              Email
-            </Checkbox>
-          </Box>
-        </Flex>
-      </Column>
 
       <Separator mt={2} />
 
@@ -64,7 +40,7 @@ export const PreferencesApp: React.FC = () => {
         </Flex>
         <Flex p={2} flexDirection={"column"}>
           <Box flexBasis={"50%"}>
-            <Checkbox selected={checkedAll}>Email</Checkbox>
+            <Checkbox selected={!uncheckedAll}>Email</Checkbox>
           </Box>
         </Flex>
       </Column>
@@ -87,7 +63,7 @@ export const PreferencesApp: React.FC = () => {
         </Flex>
         <Flex p={2} flexDirection={"column"}>
           <Box flexBasis={"50%"}>
-            <Checkbox selected={checkedAll}>Email</Checkbox>
+            <Checkbox selected={!uncheckedAll}>Email</Checkbox>
           </Box>
         </Flex>
       </Column>
@@ -109,7 +85,7 @@ export const PreferencesApp: React.FC = () => {
         </Flex>
         <Flex p={2} flexDirection={"column"}>
           <Box flexBasis={"50%"}>
-            <Checkbox selected={checkedAll}>Email</Checkbox>
+            <Checkbox selected={!uncheckedAll}>Email</Checkbox>
           </Box>
         </Flex>
       </Column>
@@ -132,7 +108,7 @@ export const PreferencesApp: React.FC = () => {
         </Flex>
         <Flex p={2} flexDirection={"column"}>
           <Box flexBasis={"50%"}>
-            <Checkbox selected={checkedAll}>Email</Checkbox>
+            <Checkbox selected={!uncheckedAll}>Email</Checkbox>
           </Box>
         </Flex>
       </Column>
@@ -154,7 +130,7 @@ export const PreferencesApp: React.FC = () => {
         </Flex>
         <Flex p={2} flexDirection={"column"}>
           <Box flexBasis={"50%"}>
-            <Checkbox selected={checkedAll}>Email</Checkbox>
+            <Checkbox selected={!uncheckedAll}>Email</Checkbox>
           </Box>
         </Flex>
       </Column>
@@ -176,7 +152,12 @@ export const PreferencesApp: React.FC = () => {
         </Flex>
         <Flex p={2} flexDirection={"column"}>
           <Box flexBasis={"50%"}>
-            <Checkbox selected={!checkedAll}>Email</Checkbox>
+            <Checkbox
+              onSelect={result => setUncheckedAll(result)}
+              selected={uncheckedAll}
+            >
+              Email
+            </Checkbox>
           </Box>
         </Flex>
       </Column>

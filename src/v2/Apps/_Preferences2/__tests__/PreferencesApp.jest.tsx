@@ -8,23 +8,20 @@ describe("PreferencesApp", () => {
     expect(screen.getByText("Preferences Center")).toBeInTheDocument()
   })
 
-  it("allows user to check all boxes with subscribe all", () => {
+  it("allows user to uncheck all boxes with unsubscribe all", () => {
     render(<PreferencesApp></PreferencesApp>)
 
     let checkboxes = screen.getAllByRole("checkbox")
-    const subscribeToAllCheckbox = checkboxes[0]
     const unsubscribeFromAllCheckbox = checkboxes[checkboxes.length - 1]
 
-    fireEvent.click(subscribeToAllCheckbox)
+    fireEvent.click(unsubscribeFromAllCheckbox)
 
-    expect(subscribeToAllCheckbox).toBeChecked()
-    expect(unsubscribeFromAllCheckbox).not.toBeChecked()
+    expect(unsubscribeFromAllCheckbox).toBeChecked()
 
-    checkboxes.shift()
     checkboxes.pop()
 
     checkboxes.forEach(checkbox => {
-      expect(checkbox).toBeChecked()
+      expect(checkbox).not.toBeChecked()
     })
   })
 })
