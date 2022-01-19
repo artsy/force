@@ -2,7 +2,7 @@ import loadable from "@loadable/component"
 import { AppRouteConfig } from "v2/System/Router/Route"
 
 const PreferencesApp = loadable(
-  () => import(/* webpackChunkName: "aboutBundle" */ "./PreferencesApp"),
+  () => import(/* webpackChunkName: "preferencesBundle" */ "./PreferencesApp"),
   {
     resolveComponent: component => component.PreferencesApp,
   }
