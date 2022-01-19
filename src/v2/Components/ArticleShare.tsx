@@ -8,15 +8,12 @@ import {
 } from "@artsy/palette"
 import { FC } from "react"
 
-interface ArticlesIndexArticleShareProps {
+interface ArticleShareProps {
   description: string
   url: string
 }
 
-export const ArticlesIndexArticleShare: FC<ArticlesIndexArticleShareProps> = ({
-  description,
-  url,
-}) => {
+export const ArticleShare: FC<ArticleShareProps> = ({ description, url }) => {
   return (
     <Flex>
       <Tooltip content="Share via email">

@@ -55,7 +55,7 @@ export const DetailsHeader: FC<DetailsHeaderProps> = props => {
 export const DetailIcon: React.FC<DetailsProps> = props => {
   const { showDetails, setShowDetails } = props
   return (
-    <Box display={showDetails ? "none" : "inline"}>
+    <Box display={["initial", "initial", showDetails ? "none" : "inline"]}>
       <Flex flexDirection="row" alignItems="center" pr={1}>
         <InfoCircleIcon />
         <Clickable cursor="pointer" textDecoration="underline">

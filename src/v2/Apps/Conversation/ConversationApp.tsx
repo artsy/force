@@ -1,9 +1,8 @@
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import * as React from "react"
 import { Title } from "react-head"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Match, Router } from "found"
-import debounce from "lodash/debounce"
 import compact from "lodash/compact"
 import { Flex, Spinner, breakpoints } from "@artsy/palette"
 
@@ -11,6 +10,7 @@ import { NoMessages } from "./Components/NoMessages"
 
 import { ConversationListPaginationContainer as ConversationList } from "v2/Apps/Conversation/Components/ConversationList"
 import { ConversationApp_me } from "v2/__generated__/ConversationApp_me.graphql"
+import { useWindowSize } from "v2/Utils/Hooks/useWindowSize"
 interface ConversationAppProps {
   me: ConversationApp_me
   match: Match
@@ -21,13 +21,6 @@ interface InboxProps {
   me: ConversationApp_me
   // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
   selectedConversation: ConversationApp_me["conversationsConnection"]["edges"][0]["node"]
-}
-
-const getViewWidth = () => {
-  return Math.max(
-    window.document.documentElement.clientWidth,
-    window.innerWidth || 0
-  )
 }
 
 const Inbox: React.FC<InboxProps> = ({ selectedConversation, me }) => {
@@ -52,18 +45,9 @@ const Inbox: React.FC<InboxProps> = ({ selectedConversation, me }) => {
 
 export const ConversationApp: React.FC<ConversationAppProps> = props => {
   const { me, router } = props
-  const [width, setWidth] = useState(0)
+  const { width } = useWindowSize()
 
   const firstConversation = compact(me?.conversationsConnection?.edges)[0]?.node
-
-  useEffect(() => {
-    setWidth(getViewWidth())
-    const listenForResize = debounce(() => {
-      setWidth(getViewWidth())
-    })
-    window.addEventListener("resize", listenForResize)
-    return () => window.removeEventListener("resize", listenForResize)
-  }, [])
 
   useEffect(() => {
     if (width > parseInt(breakpoints.md, 10) && firstConversation && router) {

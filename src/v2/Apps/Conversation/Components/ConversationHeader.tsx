@@ -1,36 +1,18 @@
-import { FC } from "react";
-import {
-  ArrowLeftIcon,
-  Box,
-  Flex,
-  FlexProps,
-  Text,
-  Separator,
-} from "@artsy/palette"
+import { FC } from "react"
+import { ArrowLeftIcon, Box, Flex, Text, Separator } from "@artsy/palette"
 import styled from "styled-components"
 import { themeGet } from "@styled-system/theme-get"
 
 import { RouterLink } from "v2/System/Router/RouterLink"
-import { Media } from "v2/Utils/Responsive"
 import { DetailIcon, DetailsProps } from "./DetailsHeader"
+import { Media } from "@artsy/reaction/dist/Utils/Responsive"
 
 export const LARGE_SCREEN_HEADER_HEIGHT = "85px"
-const SMALL_SCREEN_HEADER_HEIGHT = "55px"
-
-interface BorderedFlexProps extends FlexProps {
-  bordered?: boolean
-}
-const BorderedFlex = styled(Flex)<BorderedFlexProps>`
-  ${props =>
-    props.bordered
-      ? `border-right: 1px solid ${themeGet("colors.black10")};`
-      : ""}
-  height: 100%;
-`
+export const SMALL_SCREEN_HEADER_HEIGHT = "55px"
 
 const SmallConversationHeaderContainer = styled(Flex)`
-  position: fixed;
-  top: 59px;
+  position: relative;
+  top: 0;
   left: 0;
   right: 0;
   border-bottom: 1px solid ${themeGet("colors.black10")};
@@ -42,14 +24,14 @@ export const ConversationHeader: FC<ConversationHeaderProps> = props => {
   const { partnerName, showDetails, setShowDetails } = props
   return (
     <>
-      <Media between={["xs", "sm"]}>
+      <Media lessThan="md">
         <SmallConversationHeader
           showDetails={showDetails}
           setShowDetails={setShowDetails}
           partnerName={partnerName}
         />
       </Media>
-      <Media greaterThan="sm">
+      <Media greaterThanOrEqual="md">
         <LargeConversationHeader
           showDetails={showDetails}
           setShowDetails={setShowDetails}
@@ -69,6 +51,7 @@ const SmallConversationHeader: FC<ConversationHeaderProps> = props => {
   return (
     <SmallConversationHeaderContainer
       height={SMALL_SCREEN_HEADER_HEIGHT}
+      flexShrink={0}
       px={[1, 1, 1, 2]}
       alignItems="center"
       justifyContent="space-between"
@@ -91,12 +74,7 @@ const SmallConversationHeader: FC<ConversationHeaderProps> = props => {
 const LargeConversationHeader: FC<ConversationHeaderProps> = props => {
   const { partnerName, showDetails, setShowDetails } = props
   return (
-    <BorderedFlex
-      bordered
-      flexDirection="column"
-      width="100%"
-      justifyContent="flex-end"
-    >
+    <Flex flexDirection="column" width="100%" justifyContent="flex-end">
       <Flex
         justifyContent="space-between"
         alignItems="flex-end"
@@ -116,6 +94,6 @@ const LargeConversationHeader: FC<ConversationHeaderProps> = props => {
         <DetailIcon showDetails={showDetails} setShowDetails={setShowDetails} />
       </Flex>
       <Separator />
-    </BorderedFlex>
+    </Flex>
   )
 }
