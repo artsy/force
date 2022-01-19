@@ -199,7 +199,7 @@ const SettingsPurchasesRow: FC<SettingsPurchasesRowProps> = ({ order }) => {
         </Column>
 
         <Column span={3}>
-          <Text variant="md">Fulfillment</Text>
+          <Text variant="md">Delivery method</Text>
 
           <Text variant="md" color="black60">
             {requestedFulfillment?.__typename === "CommercePickup"
@@ -337,7 +337,7 @@ export const SettingsPurchasesRowPlaceholder: FC = () => {
           </Column>
 
           <Column span={3}>
-            <SkeletonText variant="md">Fulfillment</SkeletonText>
+            <SkeletonText variant="md">Delivery method</SkeletonText>
             <SkeletonText variant="md">Delivery</SkeletonText>
           </Column>
         </GridColumns>
