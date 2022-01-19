@@ -14,8 +14,10 @@ describe("redirectPostAuth", () => {
       switch (key) {
         case "APP_URL":
           return "https://artsy.net"
+        case "API_URL":
+          return "https://api.artsy.net"
         case "ALLOWED_REDIRECT_HOSTS":
-          return "api.artsy.net,live.artsy.net,foo.test.com,localhost"
+          return "live.artsy.net,foo.test.com,localhost"
         case "NODE_ENV":
           return "development"
       }
@@ -43,7 +45,7 @@ describe("redirectPostAuth", () => {
   }
 
   it("redirects to an allowed external URL", () => {
-    const url = "https://api.artsy.net/foo"
+    const url = "https://live.artsy.net/foo"
     const encodedUrl = encodeURI(url)
 
     setup({
@@ -54,6 +56,16 @@ describe("redirectPostAuth", () => {
 
   it("redirects to the APP_URL", () => {
     const url = "https://artsy.net/collect"
+    const encodedUrl = encodeURI(url)
+
+    setup({
+      req: { query: { redirectTo: encodedUrl } },
+    })
+    expect(redirectSpy).toHaveBeenCalledWith(encodedUrl)
+  })
+
+  it("redirects to the API_URL", () => {
+    const url = "https://api.artsy.net/auth"
     const encodedUrl = encodeURI(url)
 
     setup({

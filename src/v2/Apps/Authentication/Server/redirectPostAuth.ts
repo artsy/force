@@ -19,7 +19,8 @@ export function redirectPostAuth({ req, res }) {
 
   if (
     !allowedHosts.includes(redirectURL.hostname) &&
-    redirectURL.origin !== getENV("APP_URL")
+    redirectURL.origin !== getENV("APP_URL") &&
+    redirectURL.origin !== getENV("API_URL")
   ) {
     redirectURL = new URL("/", getENV("APP_URL"))
   }
