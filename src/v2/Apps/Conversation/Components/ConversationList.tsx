@@ -1,5 +1,5 @@
-import { useState } from "react";
-import * as React from "react";
+import { useState } from "react"
+import * as React from "react"
 import {
   RelayPaginationProp,
   createPaginationContainer,
@@ -7,23 +7,12 @@ import {
 } from "react-relay"
 import styled from "styled-components"
 import compact from "lodash/compact"
-import { themeGet } from "@styled-system/theme-get"
-import { Box, Spinner, media } from "@artsy/palette"
+import { Box, Spinner } from "@artsy/palette"
 
 import { ConversationSnippetFragmentContainer as ConversationSnippet } from "./ConversationSnippet"
 import { ConversationListHeader } from "./ConversationListHeader"
 
 import { ConversationList_me } from "v2/__generated__/ConversationList_me.graphql"
-
-const Container = styled(Box)`
-  height: 100%;
-  overflow: hidden;
-  border-right: 1px solid ${themeGet("colors.black10")};
-  ${media.xs`
-    border-right: none;
-    border-bottom: none;
-  `};
-`
 
 const ScrollContainer = styled(Box)`
   overflow-y: auto;
@@ -72,7 +61,7 @@ const ConversationList: React.FC<ConversationsProps> = props => {
   }
 
   return (
-    <Container width={["100%", "100%", "375px"]}>
+    <Box height="100%" width="100" overflow="hidden">
       <>
         <ConversationListHeader />
         <ScrollContainer onScroll={handleScroll}>
@@ -95,7 +84,7 @@ const ConversationList: React.FC<ConversationsProps> = props => {
           ) : null}
         </ScrollContainer>
       </>
-    </Container>
+    </Box>
   )
 }
 

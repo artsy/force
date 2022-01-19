@@ -60,7 +60,7 @@ export type DetailsSidebar_conversation = {
             } | null;
         } | null> | null;
     } | null;
-    readonly messagesConnection: {
+    readonly attachmentsConnection: {
         readonly edges: ReadonlyArray<{
             readonly node: {
                 readonly attachments: ReadonlyArray<{
@@ -153,7 +153,7 @@ return {
         "cursor": "after",
         "direction": "forward",
         "path": [
-          "messagesConnection"
+          "attachmentsConnection"
         ]
       }
     ]
@@ -512,11 +512,11 @@ return {
       "storageKey": "orderConnection(first:10,states:[\"APPROVED\",\"FULFILLED\",\"SUBMITTED\"])"
     },
     {
-      "alias": "messagesConnection",
+      "alias": "attachmentsConnection",
       "args": null,
       "concreteType": "MessageConnection",
       "kind": "LinkedField",
-      "name": "__Messages_messagesConnection_connection",
+      "name": "__Details_attachmentsConnection_connection",
       "plural": false,
       "selections": [
         {
@@ -685,5 +685,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = 'daac32f2fe2bf68958bf5b62e60d91c9';
+(node as any).hash = '3875ad3f21d379a8594e72bb6f8f4416';
 export default node;

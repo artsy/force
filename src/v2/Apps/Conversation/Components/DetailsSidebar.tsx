@@ -1,4 +1,4 @@
-import { FC, useEffect } from "react"
+import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import {
   Box,
@@ -6,22 +6,16 @@ import {
   Flex,
   FlexProps,
   Join,
-  Link,
   QuestionCircleIcon,
   Text,
   Spacer,
   breakpoints,
-  media,
   StackableBorderBox,
 } from "@artsy/palette"
 import styled from "styled-components"
-import { debounce } from "lodash"
-import { zIndex } from "styled-system"
 import { themeGet } from "@styled-system/theme-get"
 
-import { useWindowSize } from "v2/Utils/Hooks/useWindowSize"
 import ArtworkDetails from "v2/Components/Artwork/Metadata"
-import { getViewportDimensions } from "v2/Utils/viewport"
 import { DetailsHeader } from "./DetailsHeader"
 import { DetailsSidebar_conversation } from "v2/__generated__/DetailsSidebar_conversation.graphql"
 import { extractNodes } from "v2/Utils/extractNodes"
@@ -30,32 +24,47 @@ import { RouterLink } from "v2/System/Router/RouterLink"
 import { getStatusCopy } from "v2/Apps/Order/Utils/getStatusCopy"
 import { ShippingSummaryItemFragmentContainer } from "v2/Apps/Order/Components/ShippingSummaryItem"
 import { CreditCardSummaryItemFragmentContainer } from "v2/Apps/Order/Components/CreditCardSummaryItem"
+import { SMALL_SCREEN_HEADER_HEIGHT } from "./ConversationHeader"
 
-const DETAIL_BOX_XL_ANIMATION = `transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);`
-const DETAIL_BOX_XS_ANIMATION = `transition: opacity 0.3s, z-index 0.3s;`
-const DETAIL_BOX_MD_ANIMATION = `transition: transform 0.3s;`
+const DETAIL_BOX_WIDTH = "376px"
 
-// in XS/S/M screens transition is animated with `opacity`. z-index: -1 is also needed when showDetail is false
+// in XS/SM screens transition is animated with `opacity`. z-index: -1 is also needed when showDetail is false
+// in MD screens it is animated with `translate` for better performance (than `width`)
 // in XL screen it is animated with `width` because animation needs to push the mid column content
-// in L screens it is animated with `translate` for better performance (than `width`)
-const DetailsContainer = styled(Flex)<{ transform?: string }>`
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+const DetailsContainer = styled(Flex)<{
+  showDetails: boolean
+}>`
+  /* More or less global */
   background-color: ${themeGet("colors.white100")};
-  transform: none;
-  ${DETAIL_BOX_XL_ANIMATION}
-  ${media.xl`
-    transform: ${({ transform }: { transform?: string }) => transform};
-    ${DETAIL_BOX_MD_ANIMATION}
+  position: absolute;
+  top: ${SMALL_SCREEN_HEADER_HEIGHT};
+  height: 100%;
+
+  /* XS-S-M: Full screen details */
+  width: 100%;
+  transition: opacity 0.3s, z-index 0.3s;
+  opacity: ${({ showDetails }) => (showDetails ? 1 : 0)};
+  z-index: ${({ showDetails }) => (showDetails ? 0 : -1)};
+
+  @media (min-width: ${breakpoints.md}) {
+    opacity: initial;
+    z-index: initial;
+    top: 0;
+    width: ${DETAIL_BOX_WIDTH};
+    z-index: 1;
+    border-left: 1px solid ${themeGet("colors.black10")};
+    transition: transform 0.3s;
+    transform: ${({ showDetails }) =>
+      showDetails ? "translateX(0)" : `translateX(${DETAIL_BOX_WIDTH})`};
+  }
+
+  @media (min-width: ${breakpoints.xl}) {
+    transform: initial;
+    position: static;
     z-index: 0;
-  `}
-  ${media.md`
-    ${DETAIL_BOX_XS_ANIMATION}
-    transform: none;
-    opacity: ${({ opacity }) => opacity};
-    top: 114px;
-    position: fixed;
-    ${zIndex}
-  `}
+    transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    width: ${({ showDetails }) => (showDetails ? DETAIL_BOX_WIDTH : 0)};
+  }
 `
 
 const TruncatedLine = styled(Text)`
@@ -76,31 +85,11 @@ export const DetailsSidebar: FC<DetailsProps> = ({
   showDetails,
   ...props
 }) => {
-  const { width } = useWindowSize()
-
-  useEffect(() => {
-    const initialWidth = width
-    const listenForResize = debounce(() => {
-      const screenWidth = getViewportDimensions().width
-      // Check if the screen width got smaller while the details panel was open
-      if (
-        screenWidth <= parseInt(breakpoints.xs, 10) &&
-        initialWidth > parseInt(breakpoints.xs, 10) &&
-        showDetails
-      ) {
-        setShowDetails(false)
-      }
-    })
-    window.addEventListener("resize", listenForResize)
-    return () => window.removeEventListener("resize", listenForResize)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [showDetails])
-
   const item =
     conversation.items?.[0]?.item?.__typename !== "%other" &&
     conversation.items?.[0]?.item
 
-  const attachments = conversation?.messagesConnection?.edges
+  const attachments = conversation?.attachmentsConnection?.edges
     ?.map(edge => edge?.node?.attachments)
     ?.filter(attachments => attachments?.length)
     ?.flat()
@@ -109,9 +98,9 @@ export const DetailsSidebar: FC<DetailsProps> = ({
     ?.filter(attachment => attachment?.id && attachment?.downloadURL)
     ?.map(attachment => {
       return (
-        <Link
+        <RouterLink
           key={attachment!.id}
-          href={attachment!.downloadURL}
+          to={attachment!.downloadURL}
           target="_blank"
           noUnderline
         >
@@ -119,52 +108,21 @@ export const DetailsSidebar: FC<DetailsProps> = ({
             <DocumentIcon mr={0.5} />
             <TruncatedLine variant="xs">{attachment?.fileName}</TruncatedLine>
           </Flex>
-        </Link>
+        </RouterLink>
       )
     })
-
-  const getDetailsContainerWidth = () => {
-    // For big screens
-    if (width > parseInt(breakpoints.xs, 10)) {
-      if (showDetails) {
-        return "376px"
-      }
-      return ["376px", "376px", "376px", "376px", "0"]
-    }
-
-    // For small screens
-    return "100%"
-  }
-
-  const getDetailsContainerOpacity = (): number => {
-    // opacity 0 is only needed on xs/sm/md screen for fade in/out
-    if (width < parseInt(breakpoints.md, 10) && !showDetails) {
-      return 0
-    }
-    return 1
-  }
 
   const activeOrder = extractNodes(conversation.sidebarOrderConnection)[0]
   const { description } = getStatusCopy(activeOrder)
 
   return (
     <DetailsContainer
+      showDetails={showDetails}
       flexDirection="column"
       justifyContent="flex-start"
-      height={[
-        "calc(100% - 114px)",
-        "calc(100% - 173px)",
-        "calc(100% - 173px)",
-        "calc(100% - 173px)",
-        "100%",
-      ]}
+      height="100%"
       flexShrink={0}
-      position={["fixed", "fixed", "fixed", "fixed", "static"]}
-      right={[0, 0, 0, 0, "auto"]}
-      width={getDetailsContainerWidth()}
-      opacity={getDetailsContainerOpacity()}
-      transform={showDetails ? "translateX(0)" : "translateX(376px)"}
-      zIndex={showDetails ? 1 : -1}
+      right={0}
       {...props}
     >
       <DetailsHeader
@@ -319,8 +277,11 @@ export const DetailsSidebarFragmentContainer = createFragmentContainer(
             }
           }
         }
-        messagesConnection(first: $count, after: $after, sort: DESC)
-          @connection(key: "Messages_messagesConnection", filters: []) {
+        attachmentsConnection: messagesConnection(
+          first: $count
+          after: $after
+          sort: DESC
+        ) @connection(key: "Details_attachmentsConnection", filters: []) {
           edges {
             node {
               attachments {
