@@ -3,7 +3,23 @@ import { Avatar, Box, Flex, Spacer, Text } from "@artsy/palette"
 import { __internal__useMatchMedia } from "v2/Utils/Hooks/useMatchMedia"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { Media } from "v2/Utils/Responsive"
+import { crop } from "v2/Utils/resizer"
+
 export const MeetTheSpecialistsIndex: React.FC = () => {
+  const resizeImage = (
+    url: string,
+    width = 100,
+    height = 100,
+    quality = 100,
+    convert_to = "jpg"
+  ) =>
+    crop(url, {
+      width,
+      height,
+      quality,
+      convert_to,
+    })
+
   return (
     <>
       <Box mt={4}>
@@ -64,7 +80,7 @@ export const MeetTheSpecialistsIndex: React.FC = () => {
                 <Flex flexDirection={["column", "row"]}>
                   <Avatar
                     size="md"
-                    src={specialist.photo}
+                    src={resizeImage(specialist.photo.url!)!}
                     mr={[0, 2]}
                     mb={[2, 0]}
                   />
@@ -98,15 +114,16 @@ export const MeetTheSpecialistsIndex: React.FC = () => {
     </>
   )
 }
-
 const specialists = [
   {
     name: "Alex Forbes",
     title: "Head of Collector Services & Private Sales",
     location: "New York",
     email: "alexander.forbes@artsy.net",
-    photo:
-      "http://files.artsy.net/images/alexander-forbes-artsy-headshot-2019.jpg",
+    photo: {
+      url:
+        "http://files.artsy.net/images/alexander-forbes-artsy-headshot-2019.jpg",
+    },
   },
   {
     name: "Natasha Prince",
@@ -114,7 +131,7 @@ const specialists = [
     location: "London",
     email: "natasha.prince@artsy.net",
     phone: "+1 646 420 4995",
-    photo: "http://files.artsy.net/images/natasha.jpeg",
+    photo: { url: "http://files.artsy.net/images/natasha.jpeg" },
   },
   {
     name: "Robin Roche",
@@ -122,7 +139,7 @@ const specialists = [
     location: "New York",
     email: "robin.roche@artsy.net",
     phone: "+1 646 707 9450",
-    photo: "http://files.artsy.net/images/robin.jpeg",
+    photo: { url: "http://files.artsy.net/images/robin.jpeg" },
   },
   {
     name: "Daniela Bianco-Duppen",
@@ -130,7 +147,7 @@ const specialists = [
     location: "London",
     email: "daniela.bianco-duppen@artsy.net",
     phone: "+44 7503 236844",
-    photo: "http://files.artsy.net/images/daniela-bianco-duppen.jpeg",
+    photo: { url: "http://files.artsy.net/images/daniela-bianco-duppen.jpeg" },
   },
   {
     name: "Alexandra Freedman",
@@ -138,14 +155,14 @@ const specialists = [
     location: "New York",
     email: "alexandra.freedman@artsy.net",
     phone: "+1 610 405 7151",
-    photo: "http://files.artsy.net/images/alexandra.jpeg",
+    photo: { url: "http://files.artsy.net/images/alexandra.jpeg" },
   },
   {
     name: "Meave Hamill",
     title: "Advisor",
     location: "London",
     email: "meave@artsy.net",
-    photo: "http://files.artsy.net/images/meave.jpeg",
+    photo: { url: "http://files.artsy.net/images/meave.jpeg" },
   },
   {
     name: "George King",
@@ -153,7 +170,7 @@ const specialists = [
     location: "London",
     email: "george.king@artsy.net",
     phone: "+44 7850 739913",
-    photo: "http://files.artsy.net/images/george.jpeg",
+    photo: { url: "http://files.artsy.net/images/george.jpeg" },
   },
   {
     name: "Agnieszka Perche",
@@ -161,7 +178,7 @@ const specialists = [
     location: "London",
     email: "agnieszka.perche@artsy.net",
     phone: "+44 7842 548576",
-    photo: "http://files.artsy.net/images/agnieszka.jpg",
+    photo: { url: "http://files.artsy.net/images/agnieszka.jpg" },
   },
   {
     name: "Caroline Perkins",
@@ -169,7 +186,7 @@ const specialists = [
     location: "New York",
     email: "caroline.perkins@artsy.net",
     phone: "+1 540 588 1371",
-    photo: "http://files.artsy.net/images/cperkins_headshot-copy.jpg",
+    photo: { url: "http://files.artsy.net/images/cperkins_headshot-copy.jpg" },
   },
   {
     name: "Ipi Ramos Ricoy",
@@ -177,42 +194,45 @@ const specialists = [
     location: "London",
     email: "itziar.ramos@artsy.net",
     phone: "+44 7429 093319",
-    photo: "http://files.artsy.net/images/itziar.jpeg",
+    photo: { url: "http://files.artsy.net/images/itziar.jpeg" },
   },
   {
     name: "Shlomi Rabi",
     title: "VP and Head of Auctions",
     location: "New York",
     email: "shlomi.rabi@artsy.net",
-    photo: "http://files.artsy.net/images/shlomi.jpg",
+    photo: { url: "http://files.artsy.net/images/shlomi.jpg" },
   },
   {
     name: "Lauren Carpinelli",
     title: "Specialist, Prints and Contemporary",
     location: "New York",
     email: "lauren.carpinelli@artsy.net",
-    photo: "http://files.artsy.net/images/lauren.jpg",
+    photo: {
+      url: "http://files.artsy.net/images/lauren.jpg",
+      height: 120,
+    },
   },
   {
     name: "Erica Lyon",
     title: "Associate Director of Partner Auctions",
     location: "New York",
     email: "erica@artsy.net",
-    photo: "http://files.artsy.net/images/ericalyonheadshot.jpeg",
+    photo: { url: "http://files.artsy.net/images/ericalyonheadshot.jpeg" },
   },
   {
     name: "Laura Martin",
     title: "Specialist, Post-War & Contemporary",
     location: "Los Angeles",
     email: "laura.martin@artsy.net",
-    photo: "http://files.artsy.net/images/laura.jpg",
+    photo: { url: "http://files.artsy.net/images/laura.jpg" },
   },
   {
     name: "Adam McCoy",
     title: "Senior Specialist and Head of Prints",
     location: "New York",
     email: "adam.mccoy@artsy.net",
-    photo: "http://files.artsy.net/images/adam.jpg",
+    photo: { url: "http://files.artsy.net/images/adam.jpg" },
   },
 
   {
@@ -220,6 +240,6 @@ const specialists = [
     title: "Senior Specialist, Street Art",
     location: "New York",
     email: "alan.zeng@artsy.net",
-    photo: "http://files.artsy.net/images/alan.png",
+    photo: { url: "http://files.artsy.net/images/alan.png" },
   },
 ]
