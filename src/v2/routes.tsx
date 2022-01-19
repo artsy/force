@@ -1,5 +1,6 @@
-import { AppRouteConfig } from "v2/System/Router/Route"
 import { aboutRoutes } from "./Apps/_About2/aboutRoutes"
+import { AppRouteConfig } from "v2/System/Router/Route"
+import { articleRoutes } from "v2/Apps/Article/articleRoutes"
 import { articlesRoutes } from "v2/Apps/Articles/articlesRoutes"
 import { artistRoutes } from "v2/Apps/Artist/artistRoutes"
 import { artistSeriesRoutes } from "v2/Apps/ArtistSeries/artistSeriesRoutes"
@@ -49,6 +50,7 @@ import { worksForYouRoutes } from "./Apps/_WorksForYou2/worksForYouRoutes"
 export function getAppRoutes(): AppRouteConfig[] {
   return buildAppRoutes([
     { routes: aboutRoutes },
+    { routes: articleRoutes },
     { routes: articlesRoutes },
     { routes: artistRoutes },
     { routes: artistSeriesRoutes },
