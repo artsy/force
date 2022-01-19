@@ -1,10 +1,30 @@
-import { render } from "enzyme"
+import { render, screen, fireEvent } from "@testing-library/react"
 import { PreferencesApp } from "../PreferencesApp"
 
 describe("PreferencesApp", () => {
   it("renders the preference center", () => {
-    const wrapper = render(<PreferencesApp></PreferencesApp>)
+    render(<PreferencesApp></PreferencesApp>)
 
-    expect(wrapper.text()).toContain("Preferences Center")
+    expect(screen.getByText("Preferences Center")).toBeInTheDocument()
+  })
+
+  it("allows user to check all boxes with subscribe all", () => {
+    render(<PreferencesApp></PreferencesApp>)
+
+    let checkboxes = screen.getAllByRole("checkbox")
+    const subscribeToAllCheckbox = checkboxes[0]
+    const unsubscribeFromAllCheckbox = checkboxes[checkboxes.length - 1]
+
+    fireEvent.click(subscribeToAllCheckbox)
+
+    expect(subscribeToAllCheckbox).toBeChecked()
+    expect(unsubscribeFromAllCheckbox).not.toBeChecked()
+
+    checkboxes.shift()
+    checkboxes.pop()
+
+    checkboxes.forEach(checkbox => {
+      expect(checkbox).toBeChecked()
+    })
   })
 })
