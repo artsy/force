@@ -53,7 +53,7 @@ const ArticlesIndexArticle: FC<ArticlesIndexArticleProps> = ({ article }) => {
           <ResponsiveBox
             bg="black30"
             aspectWidth={910}
-            aspectHeight={511}
+            aspectHeight={607}
             maxWidth="100%"
           >
             {image && (
@@ -82,9 +82,12 @@ export const ArticlesIndexArticleFragmentContainer = createFragmentContainer(
         byline
         publishedAt(format: "MMMM Do YYYY")
         thumbnailImage {
-          cropped(width: 910, height: 511) {
+          # 3:2 aspect ratio
+          cropped(width: 910, height: 607) {
             src
             srcSet
+            width
+            height
           }
         }
       }
