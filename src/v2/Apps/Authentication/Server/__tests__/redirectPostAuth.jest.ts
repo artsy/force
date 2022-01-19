@@ -52,6 +52,16 @@ describe("redirectPostAuth", () => {
     expect(redirectSpy).toHaveBeenCalledWith(encodedUrl)
   })
 
+  it("redirects to the APP_URL", () => {
+    const url = "https://artsy.net/collect"
+    const encodedUrl = encodeURI(url)
+
+    setup({
+      req: { query: { redirectTo: encodedUrl } },
+    })
+    expect(redirectSpy).toHaveBeenCalledWith(encodedUrl)
+  })
+
   it("does not redirect to a disallowed external URL", () => {
     const url = "https://another.web.site/foo"
 
