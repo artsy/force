@@ -11,7 +11,7 @@ const MeetTheSpecialistsApp = loadable(
 const MeetTheSpecialistsIndexRoute = loadable(
   () =>
     import(
-      /* webpackChunkName: "buyerBundle" */ "./Routes/MeetTheSpecialistsIndex"
+      /* webpackChunkName: "meetTheSpecialistsBundle" */ "./Routes/MeetTheSpecialistsIndex"
     ),
   {
     resolveComponent: component => component.MeetTheSpecialistsIndex,
