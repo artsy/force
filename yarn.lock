@@ -77,12 +77,12 @@
   dependencies:
     dotenv "^10.0.0"
 
-"@artsy/palette-charts@17.15.1":
-  version "17.15.1"
-  resolved "https://registry.yarnpkg.com/@artsy/palette-charts/-/palette-charts-17.15.1.tgz#65ac5cde028af9c374c3f84e950a1e50937bb781"
-  integrity sha512-dCba7BbzeG8/GNDHzEn0QRMwf16Mz52xS6KmZNrhAZNvSs5+YNWqBSYpEfHHiVv3XtCYq7yzT2Ir73r7iDWsBA==
+"@artsy/palette-charts@17.12.2":
+  version "17.12.2"
+  resolved "https://registry.yarnpkg.com/@artsy/palette-charts/-/palette-charts-17.12.2.tgz#f8cd9bdb62ed1940ce3b00f36f9d8c96e882000c"
+  integrity sha512-572tflIV17ms4664uA2dtRCHOX3VS1Sf2hKk4keFR32geRT9iw/iDIHd1A7xPBjKLEJwm2FRyHsnVZxLjdiDUg==
   dependencies:
-    "@artsy/palette" "^18.15.1"
+    "@artsy/palette" "^18.12.2"
     "@seznam/compose-react-refs" "^1.0.6"
     "@styled-system/theme-get" "^5.1.2"
     d3-interpolate "^1.3.2"
@@ -94,7 +94,7 @@
   resolved "https://registry.yarnpkg.com/@artsy/palette-tokens/-/palette-tokens-2.6.0.tgz#3d780ff65994fef0daadef29d43d11f89470b728"
   integrity sha512-UQP6P+xv/5hm82ep0z5X3kCFFnk03H6y8kdW/wTU+xPq45ESUay7aNFYXeub47tmW2v6dXJ8Oa01Z0iwc6BVpA==
 
-"@artsy/palette@18.15.1", "@artsy/palette@^18.15.1":
+"@artsy/palette@18.15.1":
   version "18.15.1"
   resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-18.15.1.tgz#f99b291819c16083f0b58f27445ceab07c629be8"
   integrity sha512-NZy3JS0AgXtMITYX5iTk9ObYLVkvtnOtgDHJAJKQkYvgeQZ9/W9WOdOzRMKWzI9jnYIbpGkF0qkQ5mh2RgibyA==
@@ -106,6 +106,24 @@
     lodash.orderby "^4.6.0"
     lodash.reject "^4.6.0"
     lodash.uniqby "^4.7.0"
+    luxon "^1.15"
+    proportional-scale "^4.0.0"
+    react-lazy-load-image-component "1.5.0"
+    react-remove-scroll "^2.3.0"
+    styled-bootstrap-grid "3.1.0"
+    styled-system "^5.1.5"
+    trunc-html "^1.1.2"
+    use-cursor "^1.2.3"
+    use-keyboard-list-navigation "2.4.2"
+
+"@artsy/palette@^18.12.2":
+  version "18.12.2"
+  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-18.12.2.tgz#64fb62ce3e3c33e36ae6064072f8ff2990d637a4"
+  integrity sha512-mB5YjeZlePhGalPTEcuPVejbX2psr8Ys8gFha+QuWP3hoO+VVQ/37YTDqCpHA7E8lqBc+oha0ZUYSdHRHVLvig==
+  dependencies:
+    "@artsy/palette-tokens" "^2.6.0"
+    "@seznam/compose-react-refs" "^1.0.6"
+    "@styled-system/theme-get" "^5.1.2"
     luxon "^1.15"
     proportional-scale "^4.0.0"
     react-lazy-load-image-component "1.5.0"
