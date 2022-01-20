@@ -9,9 +9,7 @@ export type LotInfo_saleArtwork = {
         readonly bidderPositions: number | null;
     } | null;
     readonly lotLabel: string | null;
-    readonly minimumNextBid: {
-        readonly amount: string | null;
-        readonly cents: number | null;
+    readonly currentBid: {
         readonly display: string | null;
     } | null;
     readonly " $refType": "LotInfo_saleArtwork";
@@ -58,25 +56,11 @@ const node: ReaderFragment = {
     {
       "alias": null,
       "args": null,
-      "concreteType": "SaleArtworkMinimumNextBid",
+      "concreteType": "SaleArtworkCurrentBid",
       "kind": "LinkedField",
-      "name": "minimumNextBid",
+      "name": "currentBid",
       "plural": false,
       "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "amount",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "cents",
-          "storageKey": null
-        },
         {
           "alias": null,
           "args": null,
@@ -91,5 +75,5 @@ const node: ReaderFragment = {
   "type": "SaleArtwork",
   "abstractKey": null
 };
-(node as any).hash = 'd63876e2627bde421ea90ea82620a1f1';
+(node as any).hash = '00087830b5b89b40ca14bb55d7e163d9';
 export default node;

@@ -20,7 +20,7 @@ export const Pills: React.FC<PillsProps> = props => {
 
         if (item.isDefault) {
           return (
-            <DefaultPill key={key} variant="textSquare" mx={0.5}>
+            <DefaultPill key={key} variant="textSquare" mx={0.5} mb={1}>
               {item.displayName}
             </DefaultPill>
           )
@@ -31,6 +31,7 @@ export const Pills: React.FC<PillsProps> = props => {
             key={key}
             variant="textSquare"
             mx={0.5}
+            mb={1}
             onClick={() => onDeletePress(item)}
           >
             {item.displayName}

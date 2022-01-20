@@ -42,7 +42,7 @@ export const ArtworkGridFilterPills: FC<ArtworkGridFilterPillsProps> = ({
   }
 
   return (
-    <Flex flexWrap="wrap" mx={-PILL_HORIZONTAL_MARGIN_SIZE} mb={2}>
+    <Flex flexWrap="wrap" mx={-PILL_HORIZONTAL_MARGIN_SIZE}>
       <Pills items={pills} onDeletePress={removePill} />
       {savedSearchAttributes && (
         <CreateAlertButton
