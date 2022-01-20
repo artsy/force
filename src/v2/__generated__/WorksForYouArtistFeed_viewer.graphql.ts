@@ -4,7 +4,7 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type WorksForYou2ArtistFeed_viewer = {
+export type WorksForYouArtistFeed_viewer = {
     readonly artist: {
         readonly internalID: string;
         readonly name: string | null;
@@ -32,12 +32,12 @@ export type WorksForYou2ArtistFeed_viewer = {
             readonly " $fragmentRefs": FragmentRefs<"ArtworkGrid_artworks">;
         } | null;
     } | null;
-    readonly " $refType": "WorksForYou2ArtistFeed_viewer";
+    readonly " $refType": "WorksForYouArtistFeed_viewer";
 };
-export type WorksForYou2ArtistFeed_viewer$data = WorksForYou2ArtistFeed_viewer;
-export type WorksForYou2ArtistFeed_viewer$key = {
-    readonly " $data"?: WorksForYou2ArtistFeed_viewer$data;
-    readonly " $fragmentRefs": FragmentRefs<"WorksForYou2ArtistFeed_viewer">;
+export type WorksForYouArtistFeed_viewer$data = WorksForYouArtistFeed_viewer;
+export type WorksForYouArtistFeed_viewer$key = {
+    readonly " $data"?: WorksForYouArtistFeed_viewer$data;
+    readonly " $fragmentRefs": FragmentRefs<"WorksForYouArtistFeed_viewer">;
 };
 
 
@@ -81,7 +81,7 @@ const node: ReaderFragment = {
       }
     ]
   },
-  "name": "WorksForYou2ArtistFeed_viewer",
+  "name": "WorksForYouArtistFeed_viewer",
   "selections": [
     {
       "alias": null,
@@ -206,7 +206,7 @@ const node: ReaderFragment = {
           ],
           "concreteType": "ArtworkConnection",
           "kind": "LinkedField",
-          "name": "__WorksForYou2ArtistFeed_artworksConnection_connection",
+          "name": "__WorksForYouArtistFeed_artworksConnection_connection",
           "plural": false,
           "selections": [
             {
@@ -292,5 +292,5 @@ const node: ReaderFragment = {
   "type": "Viewer",
   "abstractKey": null
 };
-(node as any).hash = '04bb1caa06fa59b457a668b34120cb8a';
+(node as any).hash = 'a86b452e78e54f9c19a3008ae780ae74';
 export default node;

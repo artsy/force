@@ -4,7 +4,7 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type WorksForYou2App_viewerMe = {
+export type WorksForYouApp_viewerMe = {
     readonly me: {
         readonly followsAndSaves: {
             readonly bundledArtworksByArtistConnection: {
@@ -16,12 +16,12 @@ export type WorksForYou2App_viewerMe = {
             } | null;
         } | null;
     } | null;
-    readonly " $refType": "WorksForYou2App_viewerMe";
+    readonly " $refType": "WorksForYouApp_viewerMe";
 };
-export type WorksForYou2App_viewerMe$data = WorksForYou2App_viewerMe;
-export type WorksForYou2App_viewerMe$key = {
-    readonly " $data"?: WorksForYou2App_viewerMe$data;
-    readonly " $fragmentRefs": FragmentRefs<"WorksForYou2App_viewerMe">;
+export type WorksForYouApp_viewerMe$data = WorksForYouApp_viewerMe;
+export type WorksForYouApp_viewerMe$key = {
+    readonly " $data"?: WorksForYouApp_viewerMe$data;
+    readonly " $fragmentRefs": FragmentRefs<"WorksForYouApp_viewerMe">;
 };
 
 
@@ -30,7 +30,7 @@ const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "WorksForYou2App_viewerMe",
+  "name": "WorksForYouApp_viewerMe",
   "selections": [
     {
       "alias": null,
@@ -109,5 +109,5 @@ const node: ReaderFragment = {
   "type": "Viewer",
   "abstractKey": null
 };
-(node as any).hash = '33c8270c06e2c1f2f1de6a079c8f2fdd';
+(node as any).hash = '5431c8b86b3a270ae920743cd1044a39';
 export default node;

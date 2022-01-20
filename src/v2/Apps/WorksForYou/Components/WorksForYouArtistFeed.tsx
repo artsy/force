@@ -7,14 +7,14 @@ import {
 } from "react-relay"
 import ArtworkGrid from "v2/Components/ArtworkGrid"
 import { useSystemContext } from "v2/System"
-import { WorksForYou2ArtistFeed_viewer } from "v2/__generated__/WorksForYou2ArtistFeed_viewer.graphql"
+import { WorksForYouArtistFeed_viewer } from "v2/__generated__/WorksForYouArtistFeed_viewer.graphql"
 
-interface WorksForYou2ArtistFeedProps {
+interface WorksForYouArtistFeedProps {
   relay: RelayPaginationProp
-  viewer: WorksForYou2ArtistFeed_viewer
+  viewer: WorksForYouArtistFeed_viewer
 }
 
-const WorksForYou2ArtistFeed: React.FC<WorksForYou2ArtistFeedProps> = ({
+const WorksForYouArtistFeed: React.FC<WorksForYouArtistFeedProps> = ({
   relay,
   viewer,
 }) => {
@@ -57,7 +57,7 @@ const WorksForYou2ArtistFeed: React.FC<WorksForYou2ArtistFeedProps> = ({
 
       <ArtworkGrid
         artworks={artist.artworksConnection!}
-        columnCount={3}
+        columnCount={[2, 3]}
         itemMargin={40}
         onLoadMore={handleLoadMore}
         user={user}
@@ -74,11 +74,11 @@ const WorksForYou2ArtistFeed: React.FC<WorksForYou2ArtistFeedProps> = ({
   )
 }
 
-export const WorksForYou2ArtistFeedPaginationContainer = createPaginationContainer(
-  WorksForYou2ArtistFeed,
+export const WorksForYouArtistFeedPaginationContainer = createPaginationContainer(
+  WorksForYouArtistFeed,
   {
     viewer: graphql`
-      fragment WorksForYou2ArtistFeed_viewer on Viewer
+      fragment WorksForYouArtistFeed_viewer on Viewer
         @argumentDefinitions(
           count: { type: "Int", defaultValue: 25 }
           cursor: { type: "String" }
@@ -107,7 +107,7 @@ export const WorksForYou2ArtistFeedPaginationContainer = createPaginationContain
             first: $count
             after: $cursor
             filter: $filter
-          ) @connection(key: "WorksForYou2ArtistFeed_artworksConnection") {
+          ) @connection(key: "WorksForYouArtistFeed_artworksConnection") {
             ...ArtworkGrid_artworks
             pageInfo {
               hasNextPage
@@ -139,14 +139,14 @@ export const WorksForYou2ArtistFeedPaginationContainer = createPaginationContain
       }
     },
     query: graphql`
-      query WorksForYou2ArtistFeedPaginationQuery(
+      query WorksForYouArtistFeedPaginationQuery(
         $artistSlug: String!
         $count: Int!
         $cursor: String
         $filter: [ArtistArtworksFilters]
       ) {
         viewer {
-          ...WorksForYou2ArtistFeed_viewer
+          ...WorksForYouArtistFeed_viewer
             @arguments(
               artistSlug: $artistSlug
               count: $count

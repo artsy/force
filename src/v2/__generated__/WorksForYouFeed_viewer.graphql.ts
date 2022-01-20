@@ -4,7 +4,7 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type WorksForYou2Feed_viewer = {
+export type WorksForYouFeed_viewer = {
     readonly me: {
         readonly followsAndSaves: {
             readonly bundledArtworksByArtistConnection: {
@@ -33,12 +33,12 @@ export type WorksForYou2Feed_viewer = {
             } | null;
         } | null;
     } | null;
-    readonly " $refType": "WorksForYou2Feed_viewer";
+    readonly " $refType": "WorksForYouFeed_viewer";
 };
-export type WorksForYou2Feed_viewer$data = WorksForYou2Feed_viewer;
-export type WorksForYou2Feed_viewer$key = {
-    readonly " $data"?: WorksForYou2Feed_viewer$data;
-    readonly " $fragmentRefs": FragmentRefs<"WorksForYou2Feed_viewer">;
+export type WorksForYouFeed_viewer$data = WorksForYouFeed_viewer;
+export type WorksForYouFeed_viewer$key = {
+    readonly " $data"?: WorksForYouFeed_viewer$data;
+    readonly " $fragmentRefs": FragmentRefs<"WorksForYouFeed_viewer">;
 };
 
 
@@ -71,7 +71,7 @@ const node: ReaderFragment = {
       }
     ]
   },
-  "name": "WorksForYou2Feed_viewer",
+  "name": "WorksForYouFeed_viewer",
   "selections": [
     {
       "alias": null,
@@ -105,7 +105,7 @@ const node: ReaderFragment = {
               ],
               "concreteType": "FollowedArtistsArtworksGroupConnection",
               "kind": "LinkedField",
-              "name": "__WorksForYou2Feed_bundledArtworksByArtistConnection_connection",
+              "name": "__WorksForYouFeed_bundledArtworksByArtistConnection_connection",
               "plural": false,
               "selections": [
                 {
@@ -274,7 +274,7 @@ const node: ReaderFragment = {
                   "storageKey": null
                 }
               ],
-              "storageKey": "__WorksForYou2Feed_bundledArtworksByArtistConnection_connection(forSale:true,sort:\"PUBLISHED_AT_DESC\")"
+              "storageKey": "__WorksForYouFeed_bundledArtworksByArtistConnection_connection(forSale:true,sort:\"PUBLISHED_AT_DESC\")"
             }
           ],
           "storageKey": null
@@ -286,5 +286,5 @@ const node: ReaderFragment = {
   "type": "Viewer",
   "abstractKey": null
 };
-(node as any).hash = '9fd22901c933047f39b228d067b21e5a';
+(node as any).hash = 'c9ef9a5f21d694b314ea44b6d85ac7eb';
 export default node;

@@ -8,14 +8,14 @@ import {
 import ArtworkGrid from "v2/Components/ArtworkGrid"
 import { useSystemContext } from "v2/System"
 import { extractNodes } from "v2/Utils/extractNodes"
-import { WorksForYou2Feed_viewer } from "v2/__generated__/WorksForYou2Feed_viewer.graphql"
+import { WorksForYouFeed_viewer } from "v2/__generated__/WorksForYouFeed_viewer.graphql"
 
-interface WorksForYou2FeedProps {
-  viewer: WorksForYou2Feed_viewer
+interface WorksForYouFeedProps {
+  viewer: WorksForYouFeed_viewer
   relay: RelayPaginationProp
 }
 
-export const WorksForYou2Feed: React.FC<WorksForYou2FeedProps> = ({
+export const WorksForYouFeed: React.FC<WorksForYouFeedProps> = ({
   viewer,
   relay,
 }) => {
@@ -63,7 +63,7 @@ export const WorksForYou2Feed: React.FC<WorksForYou2FeedProps> = ({
 
             <ArtworkGrid
               artworks={artwork.artworksConnection!}
-              columnCount={3}
+              columnCount={[2, 3]}
               itemMargin={40}
               user={user}
             />
@@ -82,11 +82,11 @@ export const WorksForYou2Feed: React.FC<WorksForYou2FeedProps> = ({
   )
 }
 
-export const WorksForYou2FeedPaginationContainer = createPaginationContainer(
-  WorksForYou2Feed,
+export const WorksForYouFeedPaginationContainer = createPaginationContainer(
+  WorksForYouFeed,
   {
     viewer: graphql`
-      fragment WorksForYou2Feed_viewer on Viewer
+      fragment WorksForYouFeed_viewer on Viewer
         @argumentDefinitions(
           count: { type: "Int", defaultValue: 25 }
           cursor: { type: "String" }
@@ -100,7 +100,7 @@ export const WorksForYou2FeedPaginationContainer = createPaginationContainer(
               forSale: true
             )
               @connection(
-                key: "WorksForYou2Feed_bundledArtworksByArtistConnection"
+                key: "WorksForYouFeed_bundledArtworksByArtistConnection"
               ) {
               pageInfo {
                 hasNextPage
@@ -146,9 +146,9 @@ export const WorksForYou2FeedPaginationContainer = createPaginationContainer(
       }
     },
     query: graphql`
-      query WorksForYou2FeedPaginationQuery($count: Int!, $cursor: String) {
+      query WorksForYouFeedPaginationQuery($count: Int!, $cursor: String) {
         viewer {
-          ...WorksForYou2Feed_viewer @arguments(count: $count, cursor: $cursor)
+          ...WorksForYouFeed_viewer @arguments(count: $count, cursor: $cursor)
         }
       }
     `,
