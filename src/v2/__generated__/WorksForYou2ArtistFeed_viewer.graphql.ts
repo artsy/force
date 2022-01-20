@@ -15,7 +15,8 @@ export type WorksForYou2ArtistFeed_viewer = {
         } | null;
         readonly image: {
             readonly resized: {
-                readonly url: string;
+                readonly src: string;
+                readonly srcSet: string;
             } | null;
         } | null;
         readonly artworksConnection: {
@@ -173,7 +174,14 @@ const node: ReaderFragment = {
                   "alias": null,
                   "args": null,
                   "kind": "ScalarField",
-                  "name": "url",
+                  "name": "src",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "srcSet",
                   "storageKey": null
                 }
               ],
@@ -284,5 +292,5 @@ const node: ReaderFragment = {
   "type": "Viewer",
   "abstractKey": null
 };
-(node as any).hash = '9d72be530d30d8ce77c8ba8aba02169e';
+(node as any).hash = '04bb1caa06fa59b457a668b34120cb8a';
 export default node;

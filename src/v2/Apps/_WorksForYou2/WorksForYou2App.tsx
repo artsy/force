@@ -6,6 +6,7 @@ import { WorksForYou2App_viewerMe } from "v2/__generated__/WorksForYou2App_viewe
 import { WorksForYou2App_viewerSidebarAggregations } from "v2/__generated__/WorksForYou2App_viewerSidebarAggregations.graphql"
 import { WorksForYou2FeedPaginationContainer } from "./Components/WorksForYou2Feed"
 import {
+  Button,
   Column,
   FilterSelect,
   FilterSelectChangeState,
@@ -54,7 +55,10 @@ const WorksForYou2App: React.FC<WorksForYou2Props> = ({
 
   return (
     <>
-      <MetaTags title="Works For You | Artsy" description="TODO" />
+      <MetaTags
+        title="Works by Artists You Follow | Artsy"
+        description="TODO"
+      />
 
       <Text variant="xl" my={4}>
         Works By Artists You Follow
@@ -90,6 +94,30 @@ const WorksForYou2App: React.FC<WorksForYou2Props> = ({
           </Column>
 
           <Column span={9}>
+            <GridColumns mt={0.5}>
+              <Column span={9}>
+                <Text variant="md" fontWeight="medium">
+                  In-demand artworks, available to buy now
+                </Text>
+                <Text variant="md" color="black60">
+                  Collect works by today’s top artists, with transparent
+                  pricing, easy shipping, and a simple checkout process.
+                </Text>
+              </Column>
+              <Column span={3}>
+                <Button
+                  size="medium"
+                  // @ts-ignore
+                  as={RouterLink}
+                  to="/collect"
+                >
+                  Browse Works
+                </Button>
+              </Column>
+            </GridColumns>
+
+            <Spacer my={4} />
+
             {viewerArtist && (
               <WorksForYou2ArtistFeedPaginationContainer
                 viewer={viewerArtist}

@@ -24,7 +24,8 @@ export type WorksForYou2Feed_viewer = {
                         } | null;
                         readonly image: {
                             readonly resized: {
-                                readonly url: string;
+                                readonly src: string;
+                                readonly srcSet: string;
                             } | null;
                         } | null;
                     } | null;
@@ -236,7 +237,14 @@ const node: ReaderFragment = {
                                   "alias": null,
                                   "args": null,
                                   "kind": "ScalarField",
-                                  "name": "url",
+                                  "name": "src",
+                                  "storageKey": null
+                                },
+                                {
+                                  "alias": null,
+                                  "args": null,
+                                  "kind": "ScalarField",
+                                  "name": "srcSet",
                                   "storageKey": null
                                 }
                               ],
@@ -278,5 +286,5 @@ const node: ReaderFragment = {
   "type": "Viewer",
   "abstractKey": null
 };
-(node as any).hash = '37b154f2e51b69e6c58574186be7b7fb';
+(node as any).hash = '9fd22901c933047f39b228d067b21e5a';
 export default node;

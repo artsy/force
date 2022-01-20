@@ -26,7 +26,7 @@ const WorksForYou2ArtistFeed: React.FC<WorksForYou2ArtistFeedProps> = ({
     return null
   }
 
-  const avatarImageUrl = artist?.image?.resized?.url
+  const avatarImage = artist?.image?.resized
   const meta = artist?.counts?.forSaleArtworks?.toLocaleString()
   const worksForSaleHref = artist.href + "/works-for-sale"
 
@@ -46,7 +46,10 @@ const WorksForYou2ArtistFeed: React.FC<WorksForYou2ArtistFeedProps> = ({
       <EntityHeader
         name={artist.name!}
         meta={meta}
-        imageUrl={avatarImageUrl}
+        image={{
+          ...avatarImage,
+          lazyLoad: true,
+        }}
         href={worksForSaleHref}
       />
 
@@ -95,7 +98,8 @@ export const WorksForYou2ArtistFeedPaginationContainer = createPaginationContain
           }
           image {
             resized(height: 80, width: 80) {
-              url
+              src
+              srcSet
             }
           }
           artworksConnection(

@@ -43,7 +43,7 @@ export const WorksForYou2Feed: React.FC<WorksForYou2FeedProps> = ({
   return (
     <>
       {artworks.map((artwork, index) => {
-        const avatarImageUrl = artwork.image?.resized?.url
+        const avatarImage = artwork.image?.resized
         const meta = `${artwork.summary}, ${artwork.publishedAt}`
         const worksForSaleHref = artwork.href + "/works-for-sale"
 
@@ -52,7 +52,10 @@ export const WorksForYou2Feed: React.FC<WorksForYou2FeedProps> = ({
             <EntityHeader
               name={artwork.artists!}
               meta={meta}
-              imageUrl={avatarImageUrl}
+              image={{
+                ...avatarImage,
+                lazyLoad: true,
+              }}
               href={worksForSaleHref}
             />
 
@@ -115,7 +118,8 @@ export const WorksForYou2FeedPaginationContainer = createPaginationContainer(
                   }
                   image {
                     resized(height: 80, width: 80) {
-                      url
+                      src
+                      srcSet
                     }
                   }
                 }
