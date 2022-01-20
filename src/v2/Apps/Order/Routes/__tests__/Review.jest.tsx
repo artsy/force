@@ -28,15 +28,18 @@ import {
 } from "../__fixtures__/MutationResults"
 import { ReviewFragmentContainer } from "../Review"
 import { OrderAppTestPage } from "./Utils/OrderAppTestPage"
-import { GlobalData } from "sharify"
 import { mockLocation } from "v2/DevTools/mockLocation"
 import { mockStripe } from "v2/DevTools/mockStripe"
 import { TransactionDetailsSummaryItem } from "../../Components/TransactionDetailsSummaryItem"
 import { cloneDeep } from "lodash"
 import { useTracking } from "v2/System"
+import { useSystemContext } from "v2/System/useSystemContext"
+import { userHasLabFeature } from "v2/Utils/user"
 
 jest.unmock("react-relay")
 
+jest.mock("v2/System/useSystemContext")
+jest.mock("v2/Utils/user")
 jest.mock("v2/System/Analytics/useTracking")
 jest.mock("@stripe/stripe-js", () => {
   let mock = null
@@ -69,14 +72,19 @@ class ReviewTestPage extends OrderAppTestPage {
 
 describe("Review", () => {
   beforeAll(() => {
-    window.sd = { STRIPE_PUBLISHABLE_KEY: "" } as GlobalData
+    window.sd = { STRIPE_PUBLISHABLE_KEY: "" }
     ;(useTracking as jest.Mock).mockImplementation(() => ({
       trackEvent: jest.fn(),
+    }))
+    ;(useSystemContext as jest.Mock).mockImplementation(() => ({
+      user: { lab_features: [] },
+      mediator: { on: jest.fn() },
     }))
   })
 
   beforeEach(() => {
     mockLocation()
+    ;(userHasLabFeature as jest.Mock).mockImplementation(() => false)
   })
 
   const { buildPage, mutations, routes, ...hooks } = createTestEnv({
@@ -109,6 +117,18 @@ describe("Review", () => {
     })
 
     it("enables the button and routes to the payoff page", async () => {
+      await page.clickSubmit()
+      expect(mutations.mockFetch).toHaveBeenCalledTimes(1)
+      expect(routes.mockPushRoute).toBeCalledWith("/orders/1234/status")
+    })
+
+    it("enables the button and routes to the artwork page (under feature flag)", async () => {
+      ;(useSystemContext as jest.Mock).mockImplementation(() => ({
+        user: { lab_features: ["Make Offer On All Eligible Artworks"] },
+        mediator: { on: jest.fn() },
+      }))
+      ;(userHasLabFeature as jest.Mock).mockImplementation(() => true)
+
       await page.clickSubmit()
       expect(mutations.mockFetch).toHaveBeenCalledTimes(1)
       expect(routes.mockPushRoute).toBeCalledWith("/orders/1234/status")
@@ -252,6 +272,21 @@ describe("Review", () => {
       expect(routes.mockPushRoute).toBeCalledWith("/user/conversations/5665")
     })
 
+    it("enables the button and routes to the artwork page based on the order source", async () => {
+      ;(useSystemContext as jest.Mock).mockImplementation(() => ({
+        user: { lab_features: ["Make Offer On All Eligible Artworks"] },
+        mediator: { on: jest.fn() },
+      }))
+      ;(userHasLabFeature as jest.Mock).mockImplementation(() => true)
+
+      await page.clickSubmit()
+      expect(mutations.mockFetch).toHaveBeenCalledTimes(1)
+      expect(routes.mockPushRoute).toBeCalledWith({
+        pathname: "/artwork/artworkId",
+        state: { offerOrderHasBeenSubmitted: true },
+      })
+    })
+
     it("shows an error modal when there is an error in submitOrderPayload", async () => {
       mutations.useResultsOnce(submitOfferOrderWithFailure)
       await page.clickSubmit()
@@ -354,29 +389,19 @@ describe("Review", () => {
 
   describe("Inquiry offer orders", () => {
     let page: ReviewTestPage
-
-    it("shows a placeholder override for inquiry offers with missing metadata", async () => {
+    beforeEach(async () => {
       page = await buildPage({
-        mockData: {
-          order: {
-            ...OfferOrderWithMissingMetadata,
-          },
-        },
+        mockData: { order: { ...OfferOrderWithMissingMetadata } },
       })
+    })
 
+    it("shows a placeholder override for inquiry offers with missing metadata", () => {
       expect(page.root.find(TransactionDetailsSummaryItem).text()).toMatch(
         "To be confirmed*"
       )
     })
 
-    it("shows message about shipping and tax confirmation for inquiry offers with missing metadata", async () => {
-      page = await buildPage({
-        mockData: {
-          order: {
-            ...OfferOrderWithMissingMetadata,
-          },
-        },
-      })
+    it("shows message about shipping and tax confirmation for inquiry offers with missing metadata", () => {
       expect(page.text()).toMatch(
         "*Shipping and taxes to be confirmed by gallery"
       )
@@ -393,6 +418,24 @@ describe("Review", () => {
       expect(page.text()).not.toMatch(
         "*Shipping and taxes to be confirmed by gallery"
       )
+    })
+
+    it("enables the button and routes to the conversation", async () => {
+      await page.clickSubmit()
+      expect(mutations.mockFetch).toHaveBeenCalledTimes(1)
+      expect(routes.mockPushRoute).toBeCalledWith("/user/conversations/5665")
+    })
+
+    it("enables the button and routes to the conversation based on the order source", async () => {
+      ;(useSystemContext as jest.Mock).mockImplementation(() => ({
+        user: { lab_features: ["Make Offer On All Eligible Artworks"] },
+        mediator: { on: jest.fn() },
+      }))
+      ;(userHasLabFeature as jest.Mock).mockImplementation(() => true)
+
+      await page.clickSubmit()
+      expect(mutations.mockFetch).toHaveBeenCalledTimes(1)
+      expect(routes.mockPushRoute).toBeCalledWith("/user/conversations/5665")
     })
   })
 })

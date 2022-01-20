@@ -52,6 +52,7 @@ export interface ReviewProps extends SystemContextProps {
   dialog: Dialog
   commitMutation: CommitMutation
   isCommittingMutation: boolean
+  user?: User
   isEigen: boolean | undefined
 }
 
@@ -123,13 +124,34 @@ export class ReviewRoute extends Component<ReviewProps> {
             }
           })
       } else {
-        this.props.order.conversation && !this.props.isEigen
-          ? this.props.router.push(
-              `/user/conversations/${this.props.order.conversation.internalID}`
-            )
-          : this.props.router.push(
-              `/orders/${this.props.order.internalID}/status`
-            )
+        const { order, router, user, isEigen } = this.props
+
+        if (!userHasLabFeature(user, "Make Offer On All Eligible Artworks")) {
+          return order.conversation && !isEigen
+            ? router.push(
+                `/user/conversations/${order.conversation.internalID}`
+              )
+            : router.push(`/orders/${order.internalID}/status`)
+        }
+        // Buy-mode order redirects to the status page
+        if (order.mode !== "OFFER") {
+          return router.push(`/orders/${order.internalID}/status`)
+        }
+        // Make offer in inquiry redirects to the conversation page
+        if (order.source === "inquiry" && !isEigen) {
+          return router.push(
+            `/user/conversations/${order.conversation?.internalID}`
+          )
+        }
+        // Make offer from artwork page redirects to the artwork page
+        const artworkId = get(
+          order,
+          o => o.lineItems?.edges?.[0]?.node?.artwork?.slug
+        )
+        return router.push({
+          pathname: `/artwork/${artworkId}`,
+          state: { offerOrderHasBeenSubmitted: true },
+        })
       }
     } catch (error) {
       logger.error(error)
@@ -452,6 +474,7 @@ export const ReviewFragmentContainer = createFragmentContainer(
       fragment Review_order on CommerceOrder {
         internalID
         mode
+        source
         itemsTotal(precision: 2)
         lineItems {
           edges {
