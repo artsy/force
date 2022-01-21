@@ -1,16 +1,13 @@
-import * as React from "react"
 import { Text } from "@artsy/palette"
+import { FC } from "react"
 import { RouterLink } from "v2/System/Router/RouterLink"
 
-
-export const SettingsEditSettingsDeleteAccount = () => {
+export const SettingsEditSettingsDeleteAccount: FC = () => {
   return (
-    <>
-    <RouterLink to="delete" textDecoration="none">
-        <Text color="black60">
-          Delete Account
-        </Text>
+    <Text variant="md" color="black60">
+      <RouterLink to="delete" textDecoration="none">
+        Delete Account
       </RouterLink>
-    </>
+    </Text>
   )
 }
