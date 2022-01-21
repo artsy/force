@@ -10,16 +10,16 @@ export type worksForYouRoutes_TopLevelQueryVariables = {
 };
 export type worksForYouRoutes_TopLevelQueryResponse = {
     readonly viewerArtist: {
-        readonly " $fragmentRefs": FragmentRefs<"WorksForYou2App_viewerArtist">;
+        readonly " $fragmentRefs": FragmentRefs<"WorksForYouApp_viewerArtist">;
     } | null;
     readonly viewerFeed: {
-        readonly " $fragmentRefs": FragmentRefs<"WorksForYou2App_viewerFeed">;
+        readonly " $fragmentRefs": FragmentRefs<"WorksForYouApp_viewerFeed">;
     } | null;
     readonly viewerMe: {
-        readonly " $fragmentRefs": FragmentRefs<"WorksForYou2App_viewerMe">;
+        readonly " $fragmentRefs": FragmentRefs<"WorksForYouApp_viewerMe">;
     } | null;
     readonly viewerSidebarAggregations: {
-        readonly " $fragmentRefs": FragmentRefs<"WorksForYou2App_viewerSidebarAggregations">;
+        readonly " $fragmentRefs": FragmentRefs<"WorksForYouApp_viewerSidebarAggregations">;
     } | null;
 };
 export type worksForYouRoutes_TopLevelQuery = {
@@ -35,16 +35,16 @@ query worksForYouRoutes_TopLevelQuery(
   $artistSlug: String!
 ) {
   viewerArtist: viewer {
-    ...WorksForYou2App_viewerArtist_1H2h5M @include(if: $includeSelectedArtist)
+    ...WorksForYouApp_viewerArtist_1H2h5M @include(if: $includeSelectedArtist)
   }
   viewerFeed: viewer {
-    ...WorksForYou2App_viewerFeed @skip(if: $includeSelectedArtist)
+    ...WorksForYouApp_viewerFeed @skip(if: $includeSelectedArtist)
   }
   viewerMe: viewer {
-    ...WorksForYou2App_viewerMe
+    ...WorksForYouApp_viewerMe
   }
   viewerSidebarAggregations: viewer {
-    ...WorksForYou2App_viewerSidebarAggregations
+    ...WorksForYouApp_viewerSidebarAggregations
   }
 }
 
@@ -174,15 +174,15 @@ fragment SaveButton_artwork on Artwork {
   title
 }
 
-fragment WorksForYou2App_viewerArtist_1H2h5M on Viewer {
-  ...WorksForYou2ArtistFeed_viewer_1H2h5M
+fragment WorksForYouApp_viewerArtist_1H2h5M on Viewer {
+  ...WorksForYouArtistFeed_viewer_1H2h5M
 }
 
-fragment WorksForYou2App_viewerFeed on Viewer {
-  ...WorksForYou2Feed_viewer
+fragment WorksForYouApp_viewerFeed on Viewer {
+  ...WorksForYouFeed_viewer
 }
 
-fragment WorksForYou2App_viewerMe on Viewer {
+fragment WorksForYouApp_viewerMe on Viewer {
   me {
     followsAndSaves {
       bundledArtworksByArtistConnection(first: 1, forSale: true) {
@@ -197,7 +197,7 @@ fragment WorksForYou2App_viewerMe on Viewer {
   }
 }
 
-fragment WorksForYou2App_viewerSidebarAggregations on Viewer {
+fragment WorksForYouApp_viewerSidebarAggregations on Viewer {
   sidebarAggregations: artworksConnection(aggregations: [ARTIST, FOLLOWED_ARTISTS], first: 1) {
     counts {
       followedArtists
@@ -213,7 +213,7 @@ fragment WorksForYou2App_viewerSidebarAggregations on Viewer {
   }
 }
 
-fragment WorksForYou2ArtistFeed_viewer_1H2h5M on Viewer {
+fragment WorksForYouArtistFeed_viewer_1H2h5M on Viewer {
   artist(id: $artistSlug) {
     internalID
     name
@@ -246,7 +246,7 @@ fragment WorksForYou2ArtistFeed_viewer_1H2h5M on Viewer {
   }
 }
 
-fragment WorksForYou2Feed_viewer on Viewer {
+fragment WorksForYouFeed_viewer on Viewer {
   me {
     followsAndSaves {
       bundledArtworksByArtistConnection(sort: PUBLISHED_AT_DESC, first: 25, forSale: true) {
@@ -753,7 +753,7 @@ return {
                   }
                 ],
                 "kind": "FragmentSpread",
-                "name": "WorksForYou2App_viewerArtist"
+                "name": "WorksForYouApp_viewerArtist"
               }
             ]
           }
@@ -776,7 +776,7 @@ return {
               {
                 "args": null,
                 "kind": "FragmentSpread",
-                "name": "WorksForYou2App_viewerFeed"
+                "name": "WorksForYouApp_viewerFeed"
               }
             ]
           }
@@ -794,7 +794,7 @@ return {
           {
             "args": null,
             "kind": "FragmentSpread",
-            "name": "WorksForYou2App_viewerMe"
+            "name": "WorksForYouApp_viewerMe"
           }
         ],
         "storageKey": null
@@ -810,7 +810,7 @@ return {
           {
             "args": null,
             "kind": "FragmentSpread",
-            "name": "WorksForYou2App_viewerSidebarAggregations"
+            "name": "WorksForYouApp_viewerSidebarAggregations"
           }
         ],
         "storageKey": null
@@ -978,7 +978,7 @@ return {
                       "filter"
                     ],
                     "handle": "connection",
-                    "key": "WorksForYou2ArtistFeed_artworksConnection",
+                    "key": "WorksForYouArtistFeed_artworksConnection",
                     "kind": "LinkedHandle",
                     "name": "artworksConnection"
                   },
@@ -1155,7 +1155,7 @@ return {
                           "forSale"
                         ],
                         "handle": "connection",
-                        "key": "WorksForYou2Feed_bundledArtworksByArtistConnection",
+                        "key": "WorksForYouFeed_bundledArtworksByArtistConnection",
                         "kind": "LinkedHandle",
                         "name": "bundledArtworksByArtistConnection"
                       }
@@ -1337,14 +1337,14 @@ return {
     ]
   },
   "params": {
-    "cacheID": "2c0478a5492000a3b21c71a7aea90d6c",
+    "cacheID": "7aa299e1435a41a5658b1c8d07fe8256",
     "id": null,
     "metadata": {},
     "name": "worksForYouRoutes_TopLevelQuery",
     "operationKind": "query",
-    "text": "query worksForYouRoutes_TopLevelQuery(\n  $includeSelectedArtist: Boolean!\n  $artistSlug: String!\n) {\n  viewerArtist: viewer {\n    ...WorksForYou2App_viewerArtist_1H2h5M @include(if: $includeSelectedArtist)\n  }\n  viewerFeed: viewer {\n    ...WorksForYou2App_viewerFeed @skip(if: $includeSelectedArtist)\n  }\n  viewerMe: viewer {\n    ...WorksForYou2App_viewerMe\n  }\n  viewerSidebarAggregations: viewer {\n    ...WorksForYou2App_viewerSidebarAggregations\n  }\n}\n\nfragment ArtworkGrid_artworks on ArtworkConnectionInterface {\n  __isArtworkConnectionInterface: __typename\n  edges {\n    __typename\n    node {\n      id\n      slug\n      href\n      internalID\n      image {\n        aspect_ratio: aspectRatio\n      }\n      ...GridItem_artwork\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n}\n\nfragment Badge_artwork on Artwork {\n  is_biddable: isBiddable\n  href\n  sale {\n    is_preview: isPreview\n    display_timely_at: displayTimelyAt\n    id\n  }\n}\n\nfragment Contact_artwork on Artwork {\n  href\n  is_inquireable: isInquireable\n  sale {\n    is_auction: isAuction\n    is_live_open: isLiveOpen\n    is_open: isOpen\n    is_closed: isClosed\n    id\n  }\n  partner(shallow: true) {\n    type\n    id\n  }\n  sale_artwork: saleArtwork {\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    counts {\n      bidder_positions: bidderPositions\n    }\n    id\n  }\n}\n\nfragment Details_artwork on Artwork {\n  href\n  title\n  date\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n}\n\nfragment GridItem_artwork on Artwork {\n  internalID\n  title\n  image_title: imageTitle\n  image {\n    placeholder\n    url(version: \"large\")\n    aspect_ratio: aspectRatio\n  }\n  artistNames\n  href\n  is_saved: isSaved\n  ...Metadata_artwork\n  ...SaveButton_artwork\n  ...Badge_artwork\n}\n\nfragment Metadata_artwork on Artwork {\n  ...Details_artwork\n  ...Contact_artwork\n  href\n}\n\nfragment SaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  is_saved: isSaved\n  title\n}\n\nfragment WorksForYou2App_viewerArtist_1H2h5M on Viewer {\n  ...WorksForYou2ArtistFeed_viewer_1H2h5M\n}\n\nfragment WorksForYou2App_viewerFeed on Viewer {\n  ...WorksForYou2Feed_viewer\n}\n\nfragment WorksForYou2App_viewerMe on Viewer {\n  me {\n    followsAndSaves {\n      bundledArtworksByArtistConnection(first: 1, forSale: true) {\n        edges {\n          node {\n            id\n          }\n        }\n      }\n    }\n    id\n  }\n}\n\nfragment WorksForYou2App_viewerSidebarAggregations on Viewer {\n  sidebarAggregations: artworksConnection(aggregations: [ARTIST, FOLLOWED_ARTISTS], first: 1) {\n    counts {\n      followedArtists\n    }\n    aggregations {\n      counts {\n        label: name\n        value\n        count\n      }\n    }\n    id\n  }\n}\n\nfragment WorksForYou2ArtistFeed_viewer_1H2h5M on Viewer {\n  artist(id: $artistSlug) {\n    internalID\n    name\n    href\n    counts {\n      artworks\n      forSaleArtworks\n    }\n    image {\n      resized(height: 80, width: 80) {\n        src\n        srcSet\n      }\n    }\n    artworksConnection(sort: PUBLISHED_AT_DESC, first: 25, filter: [IS_FOR_SALE]) {\n      ...ArtworkGrid_artworks\n      pageInfo {\n        hasNextPage\n        endCursor\n      }\n      edges {\n        node {\n          id\n          __typename\n        }\n        cursor\n      }\n    }\n    id\n  }\n}\n\nfragment WorksForYou2Feed_viewer on Viewer {\n  me {\n    followsAndSaves {\n      bundledArtworksByArtistConnection(sort: PUBLISHED_AT_DESC, first: 25, forSale: true) {\n        pageInfo {\n          hasNextPage\n          endCursor\n        }\n        edges {\n          node {\n            id\n            href\n            summary\n            artists\n            publishedAt(format: \"MMM DD\")\n            artworksConnection {\n              ...ArtworkGrid_artworks\n            }\n            image {\n              resized(height: 80, width: 80) {\n                src\n                srcSet\n              }\n            }\n            __typename\n          }\n          cursor\n        }\n      }\n    }\n    id\n  }\n}\n"
+    "text": "query worksForYouRoutes_TopLevelQuery(\n  $includeSelectedArtist: Boolean!\n  $artistSlug: String!\n) {\n  viewerArtist: viewer {\n    ...WorksForYouApp_viewerArtist_1H2h5M @include(if: $includeSelectedArtist)\n  }\n  viewerFeed: viewer {\n    ...WorksForYouApp_viewerFeed @skip(if: $includeSelectedArtist)\n  }\n  viewerMe: viewer {\n    ...WorksForYouApp_viewerMe\n  }\n  viewerSidebarAggregations: viewer {\n    ...WorksForYouApp_viewerSidebarAggregations\n  }\n}\n\nfragment ArtworkGrid_artworks on ArtworkConnectionInterface {\n  __isArtworkConnectionInterface: __typename\n  edges {\n    __typename\n    node {\n      id\n      slug\n      href\n      internalID\n      image {\n        aspect_ratio: aspectRatio\n      }\n      ...GridItem_artwork\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n}\n\nfragment Badge_artwork on Artwork {\n  is_biddable: isBiddable\n  href\n  sale {\n    is_preview: isPreview\n    display_timely_at: displayTimelyAt\n    id\n  }\n}\n\nfragment Contact_artwork on Artwork {\n  href\n  is_inquireable: isInquireable\n  sale {\n    is_auction: isAuction\n    is_live_open: isLiveOpen\n    is_open: isOpen\n    is_closed: isClosed\n    id\n  }\n  partner(shallow: true) {\n    type\n    id\n  }\n  sale_artwork: saleArtwork {\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    counts {\n      bidder_positions: bidderPositions\n    }\n    id\n  }\n}\n\nfragment Details_artwork on Artwork {\n  href\n  title\n  date\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n}\n\nfragment GridItem_artwork on Artwork {\n  internalID\n  title\n  image_title: imageTitle\n  image {\n    placeholder\n    url(version: \"large\")\n    aspect_ratio: aspectRatio\n  }\n  artistNames\n  href\n  is_saved: isSaved\n  ...Metadata_artwork\n  ...SaveButton_artwork\n  ...Badge_artwork\n}\n\nfragment Metadata_artwork on Artwork {\n  ...Details_artwork\n  ...Contact_artwork\n  href\n}\n\nfragment SaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  is_saved: isSaved\n  title\n}\n\nfragment WorksForYouApp_viewerArtist_1H2h5M on Viewer {\n  ...WorksForYouArtistFeed_viewer_1H2h5M\n}\n\nfragment WorksForYouApp_viewerFeed on Viewer {\n  ...WorksForYouFeed_viewer\n}\n\nfragment WorksForYouApp_viewerMe on Viewer {\n  me {\n    followsAndSaves {\n      bundledArtworksByArtistConnection(first: 1, forSale: true) {\n        edges {\n          node {\n            id\n          }\n        }\n      }\n    }\n    id\n  }\n}\n\nfragment WorksForYouApp_viewerSidebarAggregations on Viewer {\n  sidebarAggregations: artworksConnection(aggregations: [ARTIST, FOLLOWED_ARTISTS], first: 1) {\n    counts {\n      followedArtists\n    }\n    aggregations {\n      counts {\n        label: name\n        value\n        count\n      }\n    }\n    id\n  }\n}\n\nfragment WorksForYouArtistFeed_viewer_1H2h5M on Viewer {\n  artist(id: $artistSlug) {\n    internalID\n    name\n    href\n    counts {\n      artworks\n      forSaleArtworks\n    }\n    image {\n      resized(height: 80, width: 80) {\n        src\n        srcSet\n      }\n    }\n    artworksConnection(sort: PUBLISHED_AT_DESC, first: 25, filter: [IS_FOR_SALE]) {\n      ...ArtworkGrid_artworks\n      pageInfo {\n        hasNextPage\n        endCursor\n      }\n      edges {\n        node {\n          id\n          __typename\n        }\n        cursor\n      }\n    }\n    id\n  }\n}\n\nfragment WorksForYouFeed_viewer on Viewer {\n  me {\n    followsAndSaves {\n      bundledArtworksByArtistConnection(sort: PUBLISHED_AT_DESC, first: 25, forSale: true) {\n        pageInfo {\n          hasNextPage\n          endCursor\n        }\n        edges {\n          node {\n            id\n            href\n            summary\n            artists\n            publishedAt(format: \"MMM DD\")\n            artworksConnection {\n              ...ArtworkGrid_artworks\n            }\n            image {\n              resized(height: 80, width: 80) {\n                src\n                srcSet\n              }\n            }\n            __typename\n          }\n          cursor\n        }\n      }\n    }\n    id\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '411ec10512cc8581ff7472134cd69051';
+(node as any).hash = 'aec5a5eb775dd3b47f39c8f943de158e';
 export default node;

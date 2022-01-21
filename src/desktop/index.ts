@@ -52,7 +52,6 @@ app.use(require("./apps/inquiry"))
 app.use(require("./apps/partnerships"))
 app.use(require("./apps/geo"))
 app.use(require("./apps/jobs"))
-app.use(require("./apps/notifications"))
 app.use(require("./apps/personalize"))
 app.use(require("./apps/press"))
 

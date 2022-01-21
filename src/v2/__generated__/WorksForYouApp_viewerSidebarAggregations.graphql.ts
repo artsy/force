@@ -4,7 +4,7 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type WorksForYou2App_viewerSidebarAggregations = {
+export type WorksForYouApp_viewerSidebarAggregations = {
     readonly sidebarAggregations: {
         readonly counts: {
             readonly followedArtists: number | null;
@@ -17,12 +17,12 @@ export type WorksForYou2App_viewerSidebarAggregations = {
             } | null> | null;
         } | null> | null;
     } | null;
-    readonly " $refType": "WorksForYou2App_viewerSidebarAggregations";
+    readonly " $refType": "WorksForYouApp_viewerSidebarAggregations";
 };
-export type WorksForYou2App_viewerSidebarAggregations$data = WorksForYou2App_viewerSidebarAggregations;
-export type WorksForYou2App_viewerSidebarAggregations$key = {
-    readonly " $data"?: WorksForYou2App_viewerSidebarAggregations$data;
-    readonly " $fragmentRefs": FragmentRefs<"WorksForYou2App_viewerSidebarAggregations">;
+export type WorksForYouApp_viewerSidebarAggregations$data = WorksForYouApp_viewerSidebarAggregations;
+export type WorksForYouApp_viewerSidebarAggregations$key = {
+    readonly " $data"?: WorksForYouApp_viewerSidebarAggregations$data;
+    readonly " $fragmentRefs": FragmentRefs<"WorksForYouApp_viewerSidebarAggregations">;
 };
 
 
@@ -31,7 +31,7 @@ const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "WorksForYou2App_viewerSidebarAggregations",
+  "name": "WorksForYouApp_viewerSidebarAggregations",
   "selections": [
     {
       "alias": "sidebarAggregations",
@@ -123,5 +123,5 @@ const node: ReaderFragment = {
   "type": "Viewer",
   "abstractKey": null
 };
-(node as any).hash = 'ab2a812fdd0055149cead80dc83f1722';
+(node as any).hash = '7e36e409b95bf75382ba07f101eb702e';
 export default node;

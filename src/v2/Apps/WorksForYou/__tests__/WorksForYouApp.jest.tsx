@@ -1,7 +1,7 @@
 import { screen } from "@testing-library/react"
 import { graphql } from "relay-runtime"
 import { setupTestWrapperTL } from "v2/DevTools/setupTestWrapper"
-import { WorksForYou2AppFragmentContainer } from "../WorksForYou2App"
+import { WorksForYouAppFragmentContainer } from "../WorksForYouApp"
 import { useRouter } from "v2/System/Router/useRouter"
 
 jest.unmock("react-relay")
@@ -13,25 +13,25 @@ jest.mock("v2/System/Router/useRouter", () => ({
 }))
 
 const { renderWithRelay } = setupTestWrapperTL({
-  Component: WorksForYou2AppFragmentContainer,
+  Component: WorksForYouAppFragmentContainer,
   query: graphql`
-    query WorksForYou2App_test_Query(
+    query WorksForYouApp_test_Query(
       $includeSelectedArtist: Boolean!
       $artistSlug: String!
     ) @relay_test_operation {
       viewerArtist: viewer {
-        ...WorksForYou2App_viewerArtist
+        ...WorksForYouApp_viewerArtist
           @include(if: $includeSelectedArtist)
           @arguments(artistSlug: $artistSlug)
       }
       viewerFeed: viewer {
-        ...WorksForYou2App_viewerFeed @skip(if: $includeSelectedArtist)
+        ...WorksForYouApp_viewerFeed @skip(if: $includeSelectedArtist)
       }
       viewerMe: viewer {
-        ...WorksForYou2App_viewerMe
+        ...WorksForYouApp_viewerMe
       }
       viewerSidebarAggregations: viewer {
-        ...WorksForYou2App_viewerSidebarAggregations
+        ...WorksForYouApp_viewerSidebarAggregations
       }
     }
   `,

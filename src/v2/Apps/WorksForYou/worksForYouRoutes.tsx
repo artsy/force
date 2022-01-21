@@ -2,36 +2,43 @@ import loadable from "@loadable/component"
 import { graphql } from "relay-runtime"
 import { AppRouteConfig } from "v2/System/Router/Route"
 
-const WorksForYou2App = loadable(
-  () =>
-    import(/* webpackChunkName: "worksForYou2Bundle" */ "./WorksForYou2App"),
+const WorksForYouApp = loadable(
+  () => import(/* webpackChunkName: "worksForYouBundle" */ "./WorksForYouApp"),
   {
-    resolveComponent: component => component.WorksForYou2AppFragmentContainer,
+    resolveComponent: component => component.WorksForYouAppFragmentContainer,
   }
 )
 
 export const worksForYouRoutes: AppRouteConfig[] = [
   {
-    path: "/works-for-you2/:artistSlug?",
-    getComponent: () => WorksForYou2App,
+    path: "/works-for-you/:artistSlug?",
+    getComponent: () => WorksForYouApp,
+    onServerSideRender: ({ req, res }) => {
+      if (!req.user) {
+        res.redirect("/")
+      }
+    },
+    onClientSideRender: () => {
+      WorksForYouApp.preload()
+    },
     query: graphql`
       query worksForYouRoutes_TopLevelQuery(
         $includeSelectedArtist: Boolean!
         $artistSlug: String!
       ) {
         viewerArtist: viewer {
-          ...WorksForYou2App_viewerArtist
+          ...WorksForYouApp_viewerArtist
             @include(if: $includeSelectedArtist)
             @arguments(artistSlug: $artistSlug)
         }
         viewerFeed: viewer {
-          ...WorksForYou2App_viewerFeed @skip(if: $includeSelectedArtist)
+          ...WorksForYouApp_viewerFeed @skip(if: $includeSelectedArtist)
         }
         viewerMe: viewer {
-          ...WorksForYou2App_viewerMe
+          ...WorksForYouApp_viewerMe
         }
         viewerSidebarAggregations: viewer {
-          ...WorksForYou2App_viewerSidebarAggregations
+          ...WorksForYouApp_viewerSidebarAggregations
         }
       }
     `,

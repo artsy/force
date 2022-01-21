@@ -1,10 +1,10 @@
 import { createFragmentContainer, graphql } from "react-relay"
 import { MetaTags } from "v2/Components/MetaTags"
-import { WorksForYou2App_viewerArtist } from "v2/__generated__/WorksForYou2App_viewerArtist.graphql"
-import { WorksForYou2App_viewerFeed } from "v2/__generated__/WorksForYou2App_viewerFeed.graphql"
-import { WorksForYou2App_viewerMe } from "v2/__generated__/WorksForYou2App_viewerMe.graphql"
-import { WorksForYou2App_viewerSidebarAggregations } from "v2/__generated__/WorksForYou2App_viewerSidebarAggregations.graphql"
-import { WorksForYou2FeedPaginationContainer } from "./Components/WorksForYou2Feed"
+import { WorksForYouApp_viewerArtist } from "v2/__generated__/WorksForYouApp_viewerArtist.graphql"
+import { WorksForYouApp_viewerFeed } from "v2/__generated__/WorksForYouApp_viewerFeed.graphql"
+import { WorksForYouApp_viewerMe } from "v2/__generated__/WorksForYouApp_viewerMe.graphql"
+import { WorksForYouApp_viewerSidebarAggregations } from "v2/__generated__/WorksForYouApp_viewerSidebarAggregations.graphql"
+import { WorksForYouFeedPaginationContainer } from "./Components/WorksForYouFeed"
 import {
   Button,
   Column,
@@ -15,19 +15,19 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import { WorksForYou2ArtistFeedPaginationContainer } from "./Components/WorksForYou2ArtistFeed"
+import { WorksForYouArtistFeedPaginationContainer } from "./Components/WorksForYouArtistFeed"
 import { useRouter } from "v2/System/Router/useRouter"
 import { extractNodes } from "v2/Utils/extractNodes"
 import { RouterLink } from "v2/System/Router/RouterLink"
 
-interface WorksForYou2Props {
-  viewerArtist: WorksForYou2App_viewerArtist
-  viewerFeed: WorksForYou2App_viewerFeed
-  viewerMe: WorksForYou2App_viewerMe
-  viewerSidebarAggregations: WorksForYou2App_viewerSidebarAggregations
+interface WorksForYouProps {
+  viewerArtist: WorksForYouApp_viewerArtist
+  viewerFeed: WorksForYouApp_viewerFeed
+  viewerMe: WorksForYouApp_viewerMe
+  viewerSidebarAggregations: WorksForYouApp_viewerSidebarAggregations
 }
 
-const WorksForYou2App: React.FC<WorksForYou2Props> = ({
+const WorksForYouApp: React.FC<WorksForYouProps> = ({
   viewerArtist,
   viewerFeed,
   viewerMe,
@@ -47,20 +47,17 @@ const WorksForYou2App: React.FC<WorksForYou2Props> = ({
     const artistSlug = state.selectedItems[0]?.value
 
     if (artistSlug) {
-      router.push(`/works-for-you2/${artistSlug}`)
+      router.push(`/works-for-you/${artistSlug}`)
     } else {
-      router.push("/works-for-you2")
+      router.push("/works-for-you")
     }
   }
 
   return (
     <>
-      <MetaTags
-        title="Works by Artists You Follow | Artsy"
-        description="TODO"
-      />
+      <MetaTags title="Works by Artists You Follow | Artsy" />
 
-      <Text variant="xl" my={4}>
+      <Text variant={["lg", "xl"]} my={[2, 4]}>
         Works By Artists You Follow
       </Text>
 
@@ -79,7 +76,7 @@ const WorksForYou2App: React.FC<WorksForYou2Props> = ({
         </>
       ) : (
         <GridColumns>
-          <Column span={3}>
+          <Column span={3} display={["none", "block"]}>
             <FilterSelect
               placeholder="Filter by artist name"
               initialItemsToShow={6}
@@ -119,13 +116,11 @@ const WorksForYou2App: React.FC<WorksForYou2Props> = ({
             <Spacer my={4} />
 
             {viewerArtist && (
-              <WorksForYou2ArtistFeedPaginationContainer
-                viewer={viewerArtist}
-              />
+              <WorksForYouArtistFeedPaginationContainer viewer={viewerArtist} />
             )}
 
             {viewerFeed && (
-              <WorksForYou2FeedPaginationContainer viewer={viewerFeed} />
+              <WorksForYouFeedPaginationContainer viewer={viewerFeed} />
             )}
           </Column>
         </GridColumns>
@@ -134,24 +129,24 @@ const WorksForYou2App: React.FC<WorksForYou2Props> = ({
   )
 }
 
-export const WorksForYou2AppFragmentContainer = createFragmentContainer(
-  WorksForYou2App,
+export const WorksForYouAppFragmentContainer = createFragmentContainer(
+  WorksForYouApp,
   {
     viewerArtist: graphql`
-      fragment WorksForYou2App_viewerArtist on Viewer
+      fragment WorksForYouApp_viewerArtist on Viewer
         @argumentDefinitions(
           artistSlug: { type: "String!", defaultValue: "" }
         ) {
-        ...WorksForYou2ArtistFeed_viewer @arguments(artistSlug: $artistSlug)
+        ...WorksForYouArtistFeed_viewer @arguments(artistSlug: $artistSlug)
       }
     `,
     viewerFeed: graphql`
-      fragment WorksForYou2App_viewerFeed on Viewer {
-        ...WorksForYou2Feed_viewer
+      fragment WorksForYouApp_viewerFeed on Viewer {
+        ...WorksForYouFeed_viewer
       }
     `,
     viewerMe: graphql`
-      fragment WorksForYou2App_viewerMe on Viewer {
+      fragment WorksForYouApp_viewerMe on Viewer {
         me {
           followsAndSaves {
             bundledArtworksByArtistConnection(first: 1, forSale: true) {
@@ -166,7 +161,7 @@ export const WorksForYou2AppFragmentContainer = createFragmentContainer(
       }
     `,
     viewerSidebarAggregations: graphql`
-      fragment WorksForYou2App_viewerSidebarAggregations on Viewer {
+      fragment WorksForYouApp_viewerSidebarAggregations on Viewer {
         sidebarAggregations: artworksConnection(
           aggregations: [ARTIST, FOLLOWED_ARTISTS]
           first: 1

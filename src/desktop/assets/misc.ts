@@ -1,5 +1,4 @@
 import $ from "jquery"
-import qs from "qs"
 // FIXME: not sure why we require jquery/blueimp packages
 require("jquery-ui")
 require("blueimp-file-upload")
@@ -14,14 +13,6 @@ const routes = {
   "/contact": require("../apps/contact/client/index.coffee").init,
 
   "/jobs": require("../apps/jobs/client/index.coffee").init,
-
-  "/works-for-you": () => {
-    require("../apps/notifications/client/index.coffee").init()
-    const { artist, artist_id } = qs.parse(location.search.substring(1))
-    require("../apps/notifications/client/react_grid.js").default.setupReactGrid(
-      { artistID: artist || artist_id }
-    )
-  },
 
   "/profile/.*": require("../apps/user/client/index.coffee").init,
 
