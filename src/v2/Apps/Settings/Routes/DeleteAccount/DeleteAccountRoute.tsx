@@ -1,4 +1,10 @@
-import { Button, Checkbox, Separator, Text, TextArea, useToasts
+import {
+  Button,
+  Checkbox,
+  Separator,
+  Text,
+  TextArea,
+  useToasts,
 } from "@artsy/palette"
 import * as React from "react"
 import { useState } from "react"
@@ -16,7 +22,7 @@ export const DeleteAccountRoute = () => {
 
   const handleDeleteMyAccount = async () => {
     const url = window.location.href
-    try{
+    try {
       await deleteMyAccount(relayEnvironment!, enteredReason, url)
       window.location.href = "/"
       sendToast({
@@ -28,56 +34,56 @@ export const DeleteAccountRoute = () => {
       sendToast({
         variant: "error",
         message: "There was a problem",
-        description: parsedError.error
-        ,
+        description: parsedError.error,
       })
     }
   }
 
   return (
     <>
-        <Text 
-          color="black100" 
-          variant="lg"
-          mb={4}
-        >
-          Delete My Account
-        </Text>
-        <Checkbox 
-          onSelect={(result) => {
-            setConfirmed(result)
-          }}  
-          selected={isConfirmed}
-          mb={4}
-        >
-          I understand that this will permanently delete my account and cannot be undone.
-        </Checkbox>
-        <TextArea
-          width="50%"
-          name="required-text-area"
-          title="Please Tell Us Why"
-          onChange={(result) => {
-            setEnteredReason(result.value)
-          }}
-          required={true}
-          mb={4}
-        />
-        <Button
-          width="50%" 
-          size="medium" 
-          m={0.5} 
-          disabled={isDisabled}
-          onClick={() => handleDeleteMyAccount()}
-        >
-          Submit
-        </Button>
-        <Separator mt={12} width="50%"/>
+      <Text color="black100" variant="lg" mb={4}>
+        Delete My Account
+      </Text>
 
-        <RouterLink to="edit-settings" textDecoration="none">
-          <Text color="black60" mt={4}>
-            Cancel
-          </Text>
-        </RouterLink>
+      <Checkbox
+        onSelect={result => {
+          setConfirmed(result)
+        }}
+        selected={isConfirmed}
+        mb={4}
+      >
+        I understand that this will permanently delete my account and cannot be
+        undone.
+      </Checkbox>
+
+      <TextArea
+        width="50%"
+        name="required-text-area"
+        title="Please Tell Us Why"
+        onChange={result => {
+          setEnteredReason(result.value)
+        }}
+        required={true}
+        mb={4}
+      />
+
+      <Button
+        width="50%"
+        size="medium"
+        m={0.5}
+        disabled={isDisabled}
+        onClick={() => handleDeleteMyAccount()}
+      >
+        Submit
+      </Button>
+
+      <Separator mt={12} width="50%" />
+
+      <RouterLink to="edit-settings" textDecoration="none">
+        <Text color="black60" mt={4}>
+          Cancel
+        </Text>
+      </RouterLink>
     </>
   )
 }
