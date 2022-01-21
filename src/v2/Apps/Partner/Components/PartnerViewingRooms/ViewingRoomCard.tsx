@@ -1,6 +1,5 @@
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { Image, ResponsiveBox, Text } from "@artsy/palette"
-import * as React from "react";
 import { createFragmentContainer, graphql } from "react-relay"
 import { ViewingRoomCard_viewingRoom } from "v2/__generated__/ViewingRoomCard_viewingRoom.graphql"
 import { cropped } from "v2/Utils/resized"
@@ -35,19 +34,19 @@ const ViewingRoomCard: React.FC<ViewingRoomCardProps> = ({ viewingRoom }) => {
           as="h5"
           textTransform="capitalize"
           color="black"
-          variant="mediumText"
+          variant="md"
           mt={1}
         >
           Viewing Room
         </Text>
       )}
       {title && (
-        <Text as="h4" variant="subtitle" color="black">
+        <Text as="h4" variant="lg" color="black">
           {title}
         </Text>
       )}
       {exhibitionPeriod && (
-        <Text as="h6" textTransform="capitalize" color="black60" variant="text">
+        <Text as="h6" textTransform="capitalize" color="black60" variant="sm">
           {exhibitionPeriod}
         </Text>
       )}

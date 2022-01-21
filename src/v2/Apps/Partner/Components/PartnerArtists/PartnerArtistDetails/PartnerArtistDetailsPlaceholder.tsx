@@ -1,4 +1,3 @@
-import * as React from "react";
 import {
   Box,
   Column,
@@ -17,8 +16,8 @@ export const PartnerArtistDetailsPlaceholder: React.FC = () => {
         <Column span={6}>
           <GridColumns gridRowGap={2}>
             <Column span={12}>
-              <SkeletonText variant="largeTitle">Artist name</SkeletonText>
-              <SkeletonText variant="title">Artist brief info</SkeletonText>
+              <SkeletonText variant="xl">Artist name</SkeletonText>
+              <SkeletonText variant="lg">Artist brief info</SkeletonText>
             </Column>
             <Column span={[12, 6]}>
               <SkeletonBox width="100%" height={40} />
@@ -51,12 +50,12 @@ export const PartnerArtistArtworkCarouselItemPlaceholder: React.FC = () => (
   <Box>
     <SkeletonBox width={220} height={160} mb={1} />
 
-    <SkeletonText variant="mediumText">Artist name</SkeletonText>
+    <SkeletonText variant="md">Artist name</SkeletonText>
 
-    <SkeletonText variant="text">Artwork name</SkeletonText>
+    <SkeletonText variant="sm">Artwork name</SkeletonText>
 
-    <SkeletonText variant="text">Partner name</SkeletonText>
+    <SkeletonText variant="sm">Partner name</SkeletonText>
 
-    <SkeletonText variant="text">Contact For Price</SkeletonText>
+    <SkeletonText variant="sm">Contact For Price</SkeletonText>
   </Box>
 )

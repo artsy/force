@@ -1,4 +1,3 @@
-import * as React from "react";
 import { Column, GridColumns, Text } from "@artsy/palette"
 import { Media } from "v2/Utils/Responsive"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -27,20 +26,20 @@ export const AboutPartner: React.FC<AboutPartnerProps> = ({
   return (
     <GridColumns mb={12} gridRowGap={2}>
       <Column span={6}>
-        <Text variant="title">About</Text>
+        <Text variant="lg">About</Text>
       </Column>
 
       <Column span={6}>
         <Media at="xs">
           {bioDisplayable && (
-            <Text mb={2} variant="text">
+            <Text mb={2} variant="sm">
               {limitedBio ? limitedBio : fullBio}
             </Text>
           )}
         </Media>
         <Media greaterThan="xs">
           {bioDisplayable && (
-            <Text mb={2} variant="text">
+            <Text mb={2} variant="sm">
               {fullBio ? fullBio : limitedBio}
             </Text>
           )}
@@ -48,14 +47,14 @@ export const AboutPartner: React.FC<AboutPartnerProps> = ({
 
         {canRenderWebsite && (
           <RouterLink to={website!} target="_blank">
-            <Text mb={2} variant="text">
+            <Text mb={2} variant="sm">
               {website}
             </Text>
           </RouterLink>
         )}
 
         {canRenderVatNumber && (
-          <Text variant="text">{`VAT ID#: ${vatNumber}`}</Text>
+          <Text variant="sm">{`VAT ID#: ${vatNumber}`}</Text>
         )}
       </Column>
     </GridColumns>

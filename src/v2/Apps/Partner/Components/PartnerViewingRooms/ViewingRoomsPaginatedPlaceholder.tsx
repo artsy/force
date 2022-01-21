@@ -1,4 +1,3 @@
-import { FC } from "react";
 import {
   Box,
   BoxProps,
@@ -13,13 +12,13 @@ interface ViewingRoomsPaginatedPlaceholderProps extends BoxProps {
   count: number
 }
 
-export const ViewingRoomsPaginatedPlaceholder: FC<ViewingRoomsPaginatedPlaceholderProps> = ({
+export const ViewingRoomsPaginatedPlaceholder: React.FC<ViewingRoomsPaginatedPlaceholderProps> = ({
   count,
   ...rest
 }) => {
   return (
     <>
-      <SkeletonText variant="title" mb={6}>
+      <SkeletonText variant="lg" mb={6}>
         Past Viewing Rooms
       </SkeletonText>
       <GridColumns mb={6} gridRowGap={[2, 4]} {...rest}>
@@ -34,7 +33,7 @@ export const ViewingRoomsPaginatedPlaceholder: FC<ViewingRoomsPaginatedPlacehold
               />
               <Flex mt={1} justifyContent="space-between">
                 <Box>
-                  <SkeletonText variant="subtitle">Viewing Room</SkeletonText>
+                  <SkeletonText variant="lg">Viewing Room</SkeletonText>
                   <SkeletonText>Viewing Room Title</SkeletonText>
                   <SkeletonText>Exhibition Period</SkeletonText>
                 </Box>

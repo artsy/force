@@ -1,41 +1,23 @@
-import * as React from "react";
-import { Box, BoxProps, ProgressDots } from "@artsy/palette"
+import * as React from "react"
+import { Box, BoxProps } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ShowBannersRail_partner } from "v2/__generated__/ShowBannersRail_partner.graphql"
 import { ShowBannersRailRendererQuery } from "v2/__generated__/ShowBannersRailRendererQuery.graphql"
 import { compact, take, uniqBy } from "lodash"
 import { useSystemContext } from "v2/System"
 import { ShowBannersRailPlaceholder } from "./ShowBannersRailPlaceholder"
-import { Media } from "v2/Utils/Responsive"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
-import {
-  PartnerShowBannersContextProvider,
-  usePartnerShowBannersContext,
-} from "v2/Apps/Partner/Utils/PartnerShowBannersContex"
-import { ShowBannersDesktopCarouselFragmentContainer } from "./ShowBannersDesktopCarousel"
-import { ShowBannersMobileCarouselFragmentContainer } from "./ShowBannersMobileCarousel"
+import { HeroCarousel } from "v2/Components/HeroCarousel/HeroCarousel"
+import { ShowBannerFragmentContainer } from "../../PartnerShows"
 
 interface ShowBannersRailProps extends BoxProps {
   partner: ShowBannersRail_partner
-}
-
-const Progress = ({ count }) => {
-  const { currentPage } = usePartnerShowBannersContext()
-  return (
-    <>
-      {count > 1 && (
-        <ProgressDots mt={[2, 6]} activeIndex={currentPage!} amount={count} />
-      )}
-    </>
-  )
 }
 
 const ShowBannersRail: React.FC<ShowBannersRailProps> = ({
   partner,
   ...rest
 }) => {
-  const { setCurrentPage } = usePartnerShowBannersContext()
-
   if (!partner) return null
 
   const featured = compact(partner?.featuredShow?.edges)
@@ -61,19 +43,17 @@ const ShowBannersRail: React.FC<ShowBannersRailProps> = ({
 
   return (
     <Box {...rest}>
-      <Media greaterThan="xs">
-        <ShowBannersDesktopCarouselFragmentContainer
-          shows={showItems}
-          onChange={setCurrentPage}
-        />
-      </Media>
-      <Media at="xs">
-        <ShowBannersMobileCarouselFragmentContainer
-          shows={showItems}
-          onChange={setCurrentPage}
-        />
-      </Media>
-      <Progress count={showItems.length} />
+      <HeroCarousel fullBleed={false}>
+        {showItems.map(showItem => {
+          return (
+            <ShowBannerFragmentContainer
+              pr={[0.5, 0]}
+              key={showItem.id}
+              show={showItem}
+            />
+          )
+        })}
+      </HeroCarousel>
     </Box>
   )
 }
@@ -93,8 +73,7 @@ const ShowBannersRailFragmentContainer = createFragmentContainer(
           edges {
             node {
               id
-              ...ShowBannersMobileCarousel_shows
-              ...ShowBannersDesktopCarousel_shows
+              ...ShowBanner_show
             }
           }
         }
@@ -107,8 +86,7 @@ const ShowBannersRailFragmentContainer = createFragmentContainer(
           edges {
             node {
               id
-              ...ShowBannersMobileCarousel_shows
-              ...ShowBannersDesktopCarousel_shows
+              ...ShowBanner_show
             }
           }
         }
@@ -121,8 +99,7 @@ const ShowBannersRailFragmentContainer = createFragmentContainer(
           edges {
             node {
               id
-              ...ShowBannersMobileCarousel_shows
-              ...ShowBannersDesktopCarousel_shows
+              ...ShowBanner_show
             }
           }
         }
@@ -135,8 +112,7 @@ const ShowBannersRailFragmentContainer = createFragmentContainer(
           edges {
             node {
               id
-              ...ShowBannersMobileCarousel_shows
-              ...ShowBannersDesktopCarousel_shows
+              ...ShowBanner_show
             }
           }
         }
@@ -170,12 +146,10 @@ export const ShowBannersRailRenderer: React.FC<
           return <ShowBannersRailPlaceholder count={10} {...rest} />
 
         return (
-          <PartnerShowBannersContextProvider>
-            <ShowBannersRailFragmentContainer
-              {...rest}
-              partner={props.partner!}
-            />
-          </PartnerShowBannersContextProvider>
+          <ShowBannersRailFragmentContainer
+            {...rest}
+            partner={props.partner!}
+          />
         )
       }}
     />

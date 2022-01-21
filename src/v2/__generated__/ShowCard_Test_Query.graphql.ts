@@ -46,7 +46,7 @@ fragment ShowCard_show on Show {
   isFairBooth
   exhibitionPeriod
   coverImage {
-    medium: cropped(width: 263, height: 222) {
+    medium: cropped(width: 320, height: 240) {
       width
       height
       src
@@ -251,12 +251,12 @@ return {
                               {
                                 "kind": "Literal",
                                 "name": "height",
-                                "value": 222
+                                "value": 240
                               },
                               {
                                 "kind": "Literal",
                                 "name": "width",
-                                "value": 263
+                                "value": 320
                               }
                             ],
                             "concreteType": "CroppedImageUrl",
@@ -293,7 +293,7 @@ return {
                                 "storageKey": null
                               }
                             ],
-                            "storageKey": "cropped(height:222,width:263)"
+                            "storageKey": "cropped(height:240,width:320)"
                           }
                         ],
                         "storageKey": null
@@ -315,7 +315,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "a6e0bf858d5d726da259057a40ec2abc",
+    "cacheID": "cfbf16f687700dbd63041d8d4200b406",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -375,7 +375,7 @@ return {
     },
     "name": "ShowCard_Test_Query",
     "operationKind": "query",
-    "text": "query ShowCard_Test_Query {\n  partner(id: \"white-cube\") @principalField {\n    showsConnection(first: 10) {\n      edges {\n        node {\n          internalID\n          ...ShowCard_show\n          id\n        }\n      }\n    }\n    id\n  }\n}\n\nfragment ShowCard_show on Show {\n  href\n  name\n  isFairBooth\n  exhibitionPeriod\n  coverImage {\n    medium: cropped(width: 263, height: 222) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n"
+    "text": "query ShowCard_Test_Query {\n  partner(id: \"white-cube\") @principalField {\n    showsConnection(first: 10) {\n      edges {\n        node {\n          internalID\n          ...ShowCard_show\n          id\n        }\n      }\n    }\n    id\n  }\n}\n\nfragment ShowCard_show on Show {\n  href\n  name\n  isFairBooth\n  exhibitionPeriod\n  coverImage {\n    medium: cropped(width: 320, height: 240) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n"
   }
 };
 })();
