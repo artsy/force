@@ -8,10 +8,10 @@ export type DeleteAccountInput = {
     explanation?: string | null;
     url?: string | null;
 };
-export type DeleteMyAccountMutationVariables = {
+export type useDeleteAccountMutationVariables = {
     input: DeleteAccountInput;
 };
-export type DeleteMyAccountMutationResponse = {
+export type useDeleteAccountMutationResponse = {
     readonly deleteMyAccountMutation: {
         readonly userAccountOrError: {
             readonly success?: boolean | null;
@@ -23,15 +23,15 @@ export type DeleteMyAccountMutationResponse = {
         } | null;
     } | null;
 };
-export type DeleteMyAccountMutation = {
-    readonly response: DeleteMyAccountMutationResponse;
-    readonly variables: DeleteMyAccountMutationVariables;
+export type useDeleteAccountMutation = {
+    readonly response: useDeleteAccountMutationResponse;
+    readonly variables: useDeleteAccountMutationVariables;
 };
 
 
 
 /*
-mutation DeleteMyAccountMutation(
+mutation useDeleteAccountMutation(
   $input: DeleteAccountInput!
 ) {
   deleteMyAccountMutation(input: $input) {
@@ -125,7 +125,7 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "DeleteMyAccountMutation",
+    "name": "useDeleteAccountMutation",
     "selections": [
       {
         "alias": null,
@@ -159,7 +159,7 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "DeleteMyAccountMutation",
+    "name": "useDeleteAccountMutation",
     "selections": [
       {
         "alias": null,
@@ -195,14 +195,14 @@ return {
     ]
   },
   "params": {
-    "cacheID": "1fd0575a9e5cae32c922aaab8ee871e7",
+    "cacheID": "c5558559415a9d7bab2a700b4f47826f",
     "id": null,
     "metadata": {},
-    "name": "DeleteMyAccountMutation",
+    "name": "useDeleteAccountMutation",
     "operationKind": "mutation",
-    "text": "mutation DeleteMyAccountMutation(\n  $input: DeleteAccountInput!\n) {\n  deleteMyAccountMutation(input: $input) {\n    userAccountOrError {\n      __typename\n      ... on AccountMutationSuccess {\n        success\n      }\n      ... on AccountMutationFailure {\n        mutationError {\n          type\n          message\n          detail\n        }\n      }\n    }\n  }\n}\n"
+    "text": "mutation useDeleteAccountMutation(\n  $input: DeleteAccountInput!\n) {\n  deleteMyAccountMutation(input: $input) {\n    userAccountOrError {\n      __typename\n      ... on AccountMutationSuccess {\n        success\n      }\n      ... on AccountMutationFailure {\n        mutationError {\n          type\n          message\n          detail\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'ae3844c9eae47d613e519de88ff5aef8';
+(node as any).hash = 'b0ae491406ec68a04c85c5772175b2de';
 export default node;

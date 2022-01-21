@@ -8,42 +8,16 @@ import {
   TextArea,
   useToasts,
 } from "@artsy/palette"
-import { FC, useState } from "react"
+import * as Yup from "yup"
+import { FC } from "react"
 import { RouterLink } from "v2/System/Router/RouterLink"
-import { deleteMyAccount } from "../../Mutations/DeleteMyAccount"
-import { useSystemContext } from "v2/System/SystemContext"
+import { Formik, Form } from "formik"
+import { useDeleteAccount } from "./useDeleteAccount"
+import { logout } from "v2/Utils/auth"
 
 export const DeleteAccountRoute: FC = () => {
-  const { relayEnvironment } = useSystemContext()
   const { sendToast } = useToasts()
-
-  const [isConfirmed, setConfirmed] = useState(false)
-  const [enteredReason, setEnteredReason] = useState("")
-
-  const isDisabled = !isConfirmed || !enteredReason
-
-  const handleDeleteMyAccount = async () => {
-    const url = window.location.href
-
-    try {
-      await deleteMyAccount(relayEnvironment!, enteredReason, url)
-
-      window.location.href = "/"
-
-      sendToast({
-        variant: "success",
-        message: "Profile deleted successfully",
-      })
-    } catch (error) {
-      const parsedError = JSON.parse(error.message)
-
-      sendToast({
-        variant: "error",
-        message: "There was a problem",
-        description: parsedError.error,
-      })
-    }
-  }
+  const { submitMutation } = useDeleteAccount()
 
   return (
     <GridColumns>
@@ -52,23 +26,82 @@ export const DeleteAccountRoute: FC = () => {
           Delete My Account
         </Text>
 
-        <Checkbox onSelect={setConfirmed} selected={isConfirmed}>
-          I understand that this will permanently delete my account and cannot
-          be undone.
-        </Checkbox>
-
-        <TextArea
-          mt={2}
-          title="Please Tell Us Why"
-          onChange={({ value }) => {
-            setEnteredReason(value)
+        <Formik
+          validateOnMount
+          initialValues={{
+            explanation: "",
+            confirmation: false,
           }}
-          required
-        />
+          validationSchema={Yup.object().shape({
+            explanation: Yup.string().min(1).required(),
+            confirmation: Yup.boolean().oneOf([true]),
+          })}
+          onSubmit={async ({ explanation }) => {
+            try {
+              await submitMutation(
+                { input: { explanation, url: window.location.href } },
+                {
+                  checkForErrors: res => {
+                    return res.deleteMyAccountMutation?.userAccountOrError
+                      ?.mutationError
+                  },
+                }
+              )
 
-        <Button mt={4} disabled={isDisabled} onClick={handleDeleteMyAccount}>
-          Submit
-        </Button>
+              sendToast({
+                variant: "success",
+                message: "Profile deleted successfully",
+                description: "Redirecting you to the Artsy homepage",
+              })
+
+              await logout()
+
+              window.location.href = "/"
+            } catch (err) {
+              sendToast({
+                variant: "error",
+                message: "There was a problem",
+                description: err?.[0]?.message ?? err.message,
+              })
+            }
+          }}
+        >
+          {({ isSubmitting, values, isValid, setFieldValue }) => {
+            return (
+              <Form>
+                <Checkbox
+                  selected={values.confirmation}
+                  onSelect={selected => {
+                    setFieldValue("confirmation", selected)
+                  }}
+                >
+                  I understand that this will permanently delete my account and
+                  cannot be undone.
+                </Checkbox>
+
+                <TextArea
+                  name="explanation"
+                  mt={2}
+                  title="Please Tell Us Why"
+                  value={values.explanation}
+                  required
+                  onChange={({ value }) => {
+                    setFieldValue("explanation", value)
+                  }}
+                />
+
+                <Button
+                  mt={4}
+                  type="submit"
+                  disabled={!isValid}
+                  loading={isSubmitting}
+                >
+                  Submit
+                </Button>
+              </Form>
+            )
+          }}
+        </Formik>
 
         <Separator my={4} />
 
