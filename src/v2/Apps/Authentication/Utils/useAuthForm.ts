@@ -17,6 +17,7 @@ export function useAuthForm({ canonical, pageTitle, type }: UseAuthFormProps) {
   const {
     action,
     afterSignUpAction,
+    api_login,
     contextModule,
     copy: copyQueryParam,
     destination,
@@ -54,6 +55,7 @@ export function useAuthForm({ canonical, pageTitle, type }: UseAuthFormProps) {
   const options: ModalOptions = {
     action,
     afterSignUpAction,
+    api_login,
     contextModule,
     copy: copyQueryParam,
     destination,

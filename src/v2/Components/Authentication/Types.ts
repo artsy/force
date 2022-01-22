@@ -66,7 +66,10 @@ export interface ModalOptions {
    * }
    */
   afterSignUpAction?: AfterSignUpAction
-
+  /*
+   * Whether or not the user is using the form via gravity's oauth flow.
+   */
+  api_login?: boolean
   /*
    * the location where the modal was triggered.
    */

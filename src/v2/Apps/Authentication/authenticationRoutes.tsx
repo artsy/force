@@ -64,7 +64,10 @@ export const authenticationRoutes: AppRouteConfig[] = [
     hideFooter: true,
     getComponent: () => LoginRoute,
     onServerSideRender: props => {
-      redirectIfLoggedIn(props)
+      if (!props.req.query.api_login) {
+        redirectIfLoggedIn(props)
+      }
+
       runAuthMiddleware(props)
     },
     onClientSideRender: ({ match }) => {
@@ -100,7 +103,10 @@ export const authenticationRoutes: AppRouteConfig[] = [
     hideFooter: true,
     getComponent: () => SignupRoute,
     onServerSideRender: props => {
-      redirectIfLoggedIn(props)
+      if (!props.req.query.api_login) {
+        redirectIfLoggedIn(props)
+      }
+
       runAuthMiddleware(props)
     },
     onClientSideRender: ({ match }) => {
