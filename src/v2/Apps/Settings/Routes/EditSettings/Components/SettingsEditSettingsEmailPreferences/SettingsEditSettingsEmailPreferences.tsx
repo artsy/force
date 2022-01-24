@@ -19,8 +19,10 @@ export const SettingsEditSettingsEmailPreferences: React.FC<SettingEditSettingsE
           collections, and new works by artists you follow
         </Text>
         <Flex alignItems="center">
-          //@ts-ignore
-          <Button as={RouterLink} to="/preferences2">
+          <Button 
+            //@ts-ignore
+            as={RouterLink} to="/preferences2"
+          >
             Update Email Preferences
           </Button>
         </Flex>
