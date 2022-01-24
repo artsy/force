@@ -1,23 +1,20 @@
-import { Select } from "@artsy/palette"
-import { PositionProps, SpaceProps } from "styled-system"
+import { Select, SelectProps } from "@artsy/palette"
+import { FC } from "react"
 
-export interface CountrySelectProps extends PositionProps, SpaceProps {
-  selected?: string
-  disabled?: boolean
+export interface CountrySelectProps extends Omit<SelectProps, "options"> {
   euShippingOnly?: boolean
-  error?: string
-  onSelect?: (value) => void
 }
 
-export const CountrySelect = (props: CountrySelectProps) => {
+export const CountrySelect: FC<CountrySelectProps> = ({
+  euShippingOnly,
+  ...rest
+}) => {
   return (
     <Select
-      {...props}
       options={
-        props.euShippingOnly
-          ? EU_COUNTRY_SELECT_OPTIONS
-          : COUNTRY_SELECT_OPTIONS
+        euShippingOnly ? EU_COUNTRY_SELECT_OPTIONS : COUNTRY_SELECT_OPTIONS
       }
+      {...rest}
     />
   )
 }
