@@ -64,7 +64,13 @@ export const authenticationRoutes: AppRouteConfig[] = [
     hideFooter: true,
     getComponent: () => LoginRoute,
     onServerSideRender: props => {
-      redirectIfLoggedIn(props)
+      // We need this check so we allow someone to log into the API even if they
+      // have already logged into force. Otherwise, we short-circuit and risk
+      // taking the user into an infinite redirect loop.
+      if (!props.req.query.oauthLogin) {
+        redirectIfLoggedIn(props)
+      }
+
       runAuthMiddleware(props)
     },
     onClientSideRender: ({ match }) => {
@@ -100,7 +106,13 @@ export const authenticationRoutes: AppRouteConfig[] = [
     hideFooter: true,
     getComponent: () => SignupRoute,
     onServerSideRender: props => {
-      redirectIfLoggedIn(props)
+      // We need this check so we allow someone to log into the API even if they
+      // have already logged into force. Otherwise, we short-circuit and risk
+      // taking the user into an infinite redirect loop.
+      if (!props.req.query.oauthLogin) {
+        redirectIfLoggedIn(props)
+      }
+
       runAuthMiddleware(props)
     },
     onClientSideRender: ({ match }) => {

@@ -22,6 +22,7 @@ export function useAuthForm({ canonical, pageTitle, type }: UseAuthFormProps) {
     destination,
     intent,
     kind,
+    oauthLogin,
     objectId,
   } = match.location.query as ModalOptions
 
@@ -59,6 +60,7 @@ export function useAuthForm({ canonical, pageTitle, type }: UseAuthFormProps) {
     destination,
     intent,
     kind,
+    oauthLogin,
     objectId,
     redirectTo,
     signupReferer,
