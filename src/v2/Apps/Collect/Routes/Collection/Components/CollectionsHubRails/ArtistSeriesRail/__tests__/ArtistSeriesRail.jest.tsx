@@ -88,19 +88,23 @@ describe.skip("ArtistSeriesRail", () => {
       const component = getWrapper()
       component.find("a").at(2).simulate("click")
 
-      expect(trackEvent).toBeCalledWith({
-        action: "clickedArtistSeriesGroup",
-        context_module: "artistSeriesRail",
-        context_page_owner_id: "1234",
-        context_page_owner_slug: "slug",
-        context_page_owner_type: "collection",
-        curation_boost: false,
-        destination_page_owner_id: undefined,
-        destination_page_owner_slug: undefined,
-        destination_page_owner_type: "artistSeries",
-        horizontal_slide_position: 2,
-        type: "thumbnail",
-      })
+      expect(trackEvent.mock.calls[0]).toMatchInlineSnapshot(`
+            Array [
+              Object {
+                "action": "clickedArtistSeriesGroup",
+                "context_module": "context-module",
+                "context_page_owner_id": "context-page-owner-id",
+                "context_page_owner_slug": "context-page-owner-slug",
+                "context_page_owner_type": "artist",
+                "curation_boost": true,
+                "destination_page_owner_id": "internal-id",
+                "destination_page_owner_slug": "slug",
+                "destination_page_owner_type": "artistSeries",
+                "horizontal_slide_position": 2,
+                "type": "thumbnail",
+              },
+            ]
+          `)
     })
   })
 })
