@@ -158,7 +158,7 @@ describe("authenticationRoutes", () => {
         })
 
         it("skips the check for login if you are auth-ing with the API", () => {
-          renderServerRoute("/login?api_login=true").onServerSideRender()
+          renderServerRoute("/login?oauthLogin=true").onServerSideRender()
           expect(mockRedirectIfLoggedIn).not.toHaveBeenCalled()
           expect(mockCheckForRedirect).toHaveBeenCalled()
           expect(mockSetReferer).toHaveBeenCalled()
@@ -244,7 +244,7 @@ describe("authenticationRoutes", () => {
         })
 
         it("skips the check for login if you are auth-ing with the API", () => {
-          renderServerRoute("/signup?api_login=true").onServerSideRender()
+          renderServerRoute("/signup?oauthLogin=true").onServerSideRender()
           expect(mockRedirectIfLoggedIn).not.toHaveBeenCalled()
           expect(mockCheckForRedirect).toHaveBeenCalled()
           expect(mockSetReferer).toHaveBeenCalled()

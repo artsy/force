@@ -17,12 +17,12 @@ export function useAuthForm({ canonical, pageTitle, type }: UseAuthFormProps) {
   const {
     action,
     afterSignUpAction,
-    api_login,
     contextModule,
     copy: copyQueryParam,
     destination,
     intent,
     kind,
+    oauthLogin,
     objectId,
   } = match.location.query as ModalOptions
 
@@ -55,12 +55,12 @@ export function useAuthForm({ canonical, pageTitle, type }: UseAuthFormProps) {
   const options: ModalOptions = {
     action,
     afterSignUpAction,
-    api_login,
     contextModule,
     copy: copyQueryParam,
     destination,
     intent,
     kind,
+    oauthLogin,
     objectId,
     redirectTo,
     signupReferer,
