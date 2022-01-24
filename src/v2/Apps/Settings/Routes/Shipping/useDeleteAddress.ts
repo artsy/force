@@ -7,6 +7,9 @@ export const useDeleteAddress = () => {
     mutation: graphql`
       mutation useDeleteAddressMutation($input: DeleteUserAddressInput!) {
         deleteUserAddress(input: $input) {
+          me {
+            ...SettingsShippingAddresses_me
+          }
           userAddressOrErrors {
             ... on UserAddress {
               ...SettingsShippingAddress_address

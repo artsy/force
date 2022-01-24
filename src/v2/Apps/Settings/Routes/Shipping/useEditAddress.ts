@@ -7,6 +7,9 @@ export const useEditAddress = () => {
     mutation: graphql`
       mutation useEditAddressMutation($input: UpdateUserAddressInput!) {
         updateUserAddress(input: $input) {
+          me {
+            ...SettingsShippingAddresses_me
+          }
           userAddressOrErrors {
             ... on UserAddress {
               internalID

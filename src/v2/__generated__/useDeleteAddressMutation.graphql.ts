@@ -13,6 +13,9 @@ export type useDeleteAddressMutationVariables = {
 };
 export type useDeleteAddressMutationResponse = {
     readonly deleteUserAddress: {
+        readonly me: {
+            readonly " $fragmentRefs": FragmentRefs<"SettingsShippingAddresses_me">;
+        };
         readonly userAddressOrErrors: {
             readonly errors?: ReadonlyArray<{
                 readonly message: string;
@@ -33,6 +36,10 @@ mutation useDeleteAddressMutation(
   $input: DeleteUserAddressInput!
 ) {
   deleteUserAddress(input: $input) {
+    me {
+      ...SettingsShippingAddresses_me
+      id
+    }
     userAddressOrErrors {
       __typename
       ... on UserAddress {
@@ -59,6 +66,18 @@ fragment SettingsShippingAddress_address on UserAddress {
   phoneNumber
   postalCode
   region
+}
+
+fragment SettingsShippingAddresses_me on Me {
+  addresses: addressConnection {
+    edges {
+      node {
+        internalID
+        ...SettingsShippingAddress_address
+        id
+      }
+    }
+  }
 }
 */
 
@@ -101,7 +120,87 @@ v2 = {
   ],
   "type": "Errors",
   "abstractKey": null
-};
+},
+v3 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+},
+v4 = [
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "internalID",
+    "storageKey": null
+  },
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "addressLine1",
+    "storageKey": null
+  },
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "addressLine2",
+    "storageKey": null
+  },
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "city",
+    "storageKey": null
+  },
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "country",
+    "storageKey": null
+  },
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "isDefault",
+    "storageKey": null
+  },
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "name",
+    "storageKey": null
+  },
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "phoneNumber",
+    "storageKey": null
+  },
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "postalCode",
+    "storageKey": null
+  },
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "region",
+    "storageKey": null
+  },
+  (v3/*: any*/)
+];
 return {
   "fragment": {
     "argumentDefinitions": (v0/*: any*/),
@@ -117,6 +216,22 @@ return {
         "name": "deleteUserAddress",
         "plural": false,
         "selections": [
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "Me",
+            "kind": "LinkedField",
+            "name": "me",
+            "plural": false,
+            "selections": [
+              {
+                "args": null,
+                "kind": "FragmentSpread",
+                "name": "SettingsShippingAddresses_me"
+              }
+            ],
+            "storageKey": null
+          },
           {
             "alias": null,
             "args": null,
@@ -165,6 +280,50 @@ return {
           {
             "alias": null,
             "args": null,
+            "concreteType": "Me",
+            "kind": "LinkedField",
+            "name": "me",
+            "plural": false,
+            "selections": [
+              {
+                "alias": "addresses",
+                "args": null,
+                "concreteType": "UserAddressConnection",
+                "kind": "LinkedField",
+                "name": "addressConnection",
+                "plural": false,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "UserAddressEdge",
+                    "kind": "LinkedField",
+                    "name": "edges",
+                    "plural": true,
+                    "selections": [
+                      {
+                        "alias": null,
+                        "args": null,
+                        "concreteType": "UserAddress",
+                        "kind": "LinkedField",
+                        "name": "node",
+                        "plural": false,
+                        "selections": (v4/*: any*/),
+                        "storageKey": null
+                      }
+                    ],
+                    "storageKey": null
+                  }
+                ],
+                "storageKey": null
+              },
+              (v3/*: any*/)
+            ],
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
             "concreteType": null,
             "kind": "LinkedField",
             "name": "userAddressOrErrors",
@@ -179,85 +338,7 @@ return {
               },
               {
                 "kind": "InlineFragment",
-                "selections": [
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "internalID",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "addressLine1",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "addressLine2",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "city",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "country",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "isDefault",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "name",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "phoneNumber",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "postalCode",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "region",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "id",
-                    "storageKey": null
-                  }
-                ],
+                "selections": (v4/*: any*/),
                 "type": "UserAddress",
                 "abstractKey": null
               },
@@ -271,14 +352,14 @@ return {
     ]
   },
   "params": {
-    "cacheID": "34375220be19d656b33214f3c1ac2db7",
+    "cacheID": "ad2a73c3171eda7f4983bb8db99ceca9",
     "id": null,
     "metadata": {},
     "name": "useDeleteAddressMutation",
     "operationKind": "mutation",
-    "text": "mutation useDeleteAddressMutation(\n  $input: DeleteUserAddressInput!\n) {\n  deleteUserAddress(input: $input) {\n    userAddressOrErrors {\n      __typename\n      ... on UserAddress {\n        ...SettingsShippingAddress_address\n        id\n      }\n      ... on Errors {\n        errors {\n          message\n        }\n      }\n    }\n  }\n}\n\nfragment SettingsShippingAddress_address on UserAddress {\n  internalID\n  addressLine1\n  addressLine2\n  city\n  country\n  isDefault\n  name\n  phoneNumber\n  postalCode\n  region\n}\n"
+    "text": "mutation useDeleteAddressMutation(\n  $input: DeleteUserAddressInput!\n) {\n  deleteUserAddress(input: $input) {\n    me {\n      ...SettingsShippingAddresses_me\n      id\n    }\n    userAddressOrErrors {\n      __typename\n      ... on UserAddress {\n        ...SettingsShippingAddress_address\n        id\n      }\n      ... on Errors {\n        errors {\n          message\n        }\n      }\n    }\n  }\n}\n\nfragment SettingsShippingAddress_address on UserAddress {\n  internalID\n  addressLine1\n  addressLine2\n  city\n  country\n  isDefault\n  name\n  phoneNumber\n  postalCode\n  region\n}\n\nfragment SettingsShippingAddresses_me on Me {\n  addresses: addressConnection {\n    edges {\n      node {\n        internalID\n        ...SettingsShippingAddress_address\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'cef6b17fcc888614a29877517a95492a';
+(node as any).hash = '30cd5ab1fde3cfa766e7168a5a5d5911';
 export default node;

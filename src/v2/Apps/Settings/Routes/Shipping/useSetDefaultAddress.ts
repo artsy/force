@@ -9,6 +9,9 @@ export const useSetDefaultAddress = () => {
         $input: UpdateUserDefaultAddressInput!
       ) {
         updateUserDefaultAddress(input: $input) {
+          me {
+            ...SettingsShippingAddresses_me
+          }
           userAddressOrErrors {
             ... on UserAddress {
               ...SettingsShippingAddress_address
