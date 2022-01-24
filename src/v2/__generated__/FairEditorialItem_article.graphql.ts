@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -163,7 +164,8 @@ return {
       "name": "FairEditorialItemLink_article"
     }
   ],
-  "type": "Article"
+  "type": "Article",
+  "abstractKey": null
 };
 })();
 (node as any).hash = 'c75b6595a83db414fce5e180962b885e';

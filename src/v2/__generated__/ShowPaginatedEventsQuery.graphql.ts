@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -67,7 +68,7 @@ fragment ShowCard_show on Show {
   isFairBooth
   exhibitionPeriod
   coverImage {
-    medium: cropped(width: 263, height: 222) {
+    medium: cropped(width: 320, height: 240) {
       width
       height
       src
@@ -102,93 +103,85 @@ fragment ShowPaginatedEvents_partner_qVb3U on Partner {
 */
 
 const node: ConcreteRequest = (function(){
-var v0 = [
-  {
-    "defaultValue": null,
-    "kind": "LocalArgument",
-    "name": "partnerId",
-    "type": "String!"
-  },
-  {
-    "defaultValue": null,
-    "kind": "LocalArgument",
-    "name": "first",
-    "type": "Int"
-  },
-  {
-    "defaultValue": null,
-    "kind": "LocalArgument",
-    "name": "last",
-    "type": "Int"
-  },
-  {
-    "defaultValue": null,
-    "kind": "LocalArgument",
-    "name": "after",
-    "type": "String"
-  },
-  {
-    "defaultValue": null,
-    "kind": "LocalArgument",
-    "name": "before",
-    "type": "String"
-  },
-  {
-    "defaultValue": null,
-    "kind": "LocalArgument",
-    "name": "status",
-    "type": "EventStatus"
-  }
-],
-v1 = [
+var v0 = {
+  "defaultValue": null,
+  "kind": "LocalArgument",
+  "name": "after"
+},
+v1 = {
+  "defaultValue": null,
+  "kind": "LocalArgument",
+  "name": "before"
+},
+v2 = {
+  "defaultValue": null,
+  "kind": "LocalArgument",
+  "name": "first"
+},
+v3 = {
+  "defaultValue": null,
+  "kind": "LocalArgument",
+  "name": "last"
+},
+v4 = {
+  "defaultValue": null,
+  "kind": "LocalArgument",
+  "name": "partnerId"
+},
+v5 = {
+  "defaultValue": null,
+  "kind": "LocalArgument",
+  "name": "status"
+},
+v6 = [
   {
     "kind": "Variable",
     "name": "id",
     "variableName": "partnerId"
   }
 ],
-v2 = {
+v7 = {
   "kind": "Variable",
   "name": "after",
   "variableName": "after"
 },
-v3 = {
+v8 = {
   "kind": "Variable",
   "name": "before",
   "variableName": "before"
 },
-v4 = {
+v9 = {
   "kind": "Variable",
   "name": "first",
   "variableName": "first"
 },
-v5 = {
+v10 = {
   "kind": "Variable",
   "name": "last",
   "variableName": "last"
 },
-v6 = {
+v11 = {
   "kind": "Variable",
   "name": "status",
   "variableName": "status"
 },
-v7 = {
+v12 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "cursor",
   "storageKey": null
 },
-v8 = {
+v13 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "page",
   "storageKey": null
 },
-v9 = [
-  (v7/*: any*/),
-  (v8/*: any*/),
+v14 = [
+  (v12/*: any*/),
+  (v13/*: any*/),
   {
     "alias": null,
     "args": null,
@@ -197,7 +190,7 @@ v9 = [
     "storageKey": null
   }
 ],
-v10 = {
+v15 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -206,14 +199,21 @@ v10 = {
 };
 return {
   "fragment": {
-    "argumentDefinitions": (v0/*: any*/),
+    "argumentDefinitions": [
+      (v0/*: any*/),
+      (v1/*: any*/),
+      (v2/*: any*/),
+      (v3/*: any*/),
+      (v4/*: any*/),
+      (v5/*: any*/)
+    ],
     "kind": "Fragment",
     "metadata": null,
     "name": "ShowPaginatedEventsQuery",
     "selections": [
       {
         "alias": null,
-        "args": (v1/*: any*/),
+        "args": (v6/*: any*/),
         "concreteType": "Partner",
         "kind": "LinkedField",
         "name": "partner",
@@ -221,11 +221,11 @@ return {
         "selections": [
           {
             "args": [
-              (v2/*: any*/),
-              (v3/*: any*/),
-              (v4/*: any*/),
-              (v5/*: any*/),
-              (v6/*: any*/)
+              (v7/*: any*/),
+              (v8/*: any*/),
+              (v9/*: any*/),
+              (v10/*: any*/),
+              (v11/*: any*/)
             ],
             "kind": "FragmentSpread",
             "name": "ShowPaginatedEvents_partner"
@@ -234,17 +234,25 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
-    "argumentDefinitions": (v0/*: any*/),
+    "argumentDefinitions": [
+      (v4/*: any*/),
+      (v2/*: any*/),
+      (v3/*: any*/),
+      (v0/*: any*/),
+      (v1/*: any*/),
+      (v5/*: any*/)
+    ],
     "kind": "Operation",
     "name": "ShowPaginatedEventsQuery",
     "selections": [
       {
         "alias": null,
-        "args": (v1/*: any*/),
+        "args": (v6/*: any*/),
         "concreteType": "Partner",
         "kind": "LinkedField",
         "name": "partner",
@@ -260,16 +268,16 @@ return {
           {
             "alias": "showsList",
             "args": [
-              (v2/*: any*/),
-              (v3/*: any*/),
-              (v4/*: any*/),
+              (v7/*: any*/),
+              (v8/*: any*/),
+              (v9/*: any*/),
               {
                 "kind": "Literal",
                 "name": "isDisplayable",
                 "value": true
               },
-              (v5/*: any*/),
-              (v6/*: any*/)
+              (v10/*: any*/),
+              (v11/*: any*/)
             ],
             "concreteType": "ShowConnection",
             "kind": "LinkedField",
@@ -316,7 +324,7 @@ return {
                     "kind": "LinkedField",
                     "name": "around",
                     "plural": true,
-                    "selections": (v9/*: any*/),
+                    "selections": (v14/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -326,7 +334,7 @@ return {
                     "kind": "LinkedField",
                     "name": "first",
                     "plural": false,
-                    "selections": (v9/*: any*/),
+                    "selections": (v14/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -336,7 +344,7 @@ return {
                     "kind": "LinkedField",
                     "name": "last",
                     "plural": false,
-                    "selections": (v9/*: any*/),
+                    "selections": (v14/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -347,8 +355,8 @@ return {
                     "name": "previous",
                     "plural": false,
                     "selections": [
-                      (v7/*: any*/),
-                      (v8/*: any*/)
+                      (v12/*: any*/),
+                      (v13/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -420,12 +428,12 @@ return {
                               {
                                 "kind": "Literal",
                                 "name": "height",
-                                "value": 222
+                                "value": 240
                               },
                               {
                                 "kind": "Literal",
                                 "name": "width",
-                                "value": 263
+                                "value": 320
                               }
                             ],
                             "concreteType": "CroppedImageUrl",
@@ -462,12 +470,12 @@ return {
                                 "storageKey": null
                               }
                             ],
-                            "storageKey": "cropped(height:222,width:263)"
+                            "storageKey": "cropped(height:240,width:320)"
                           }
                         ],
                         "storageKey": null
                       },
-                      (v10/*: any*/)
+                      (v15/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -477,18 +485,19 @@ return {
             ],
             "storageKey": null
           },
-          (v10/*: any*/)
+          (v15/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
+    "cacheID": "9f0ff626dba09b96de34cd16c4222772",
     "id": null,
     "metadata": {},
     "name": "ShowPaginatedEventsQuery",
     "operationKind": "query",
-    "text": "query ShowPaginatedEventsQuery(\n  $partnerId: String!\n  $first: Int\n  $last: Int\n  $after: String\n  $before: String\n  $status: EventStatus\n) {\n  partner(id: $partnerId) @principalField {\n    ...ShowPaginatedEvents_partner_qVb3U\n    id\n  }\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n\nfragment ShowCard_show on Show {\n  href\n  name\n  isFairBooth\n  exhibitionPeriod\n  coverImage {\n    medium: cropped(width: 263, height: 222) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment ShowEvents_edges on ShowEdge {\n  node {\n    internalID\n    ...ShowCard_show\n    id\n  }\n}\n\nfragment ShowPaginatedEvents_partner_qVb3U on Partner {\n  slug\n  showsList: showsConnection(first: $first, last: $last, after: $after, before: $before, status: $status, isDisplayable: true) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    edges {\n      ...ShowEvents_edges\n    }\n  }\n}\n"
+    "text": "query ShowPaginatedEventsQuery(\n  $partnerId: String!\n  $first: Int\n  $last: Int\n  $after: String\n  $before: String\n  $status: EventStatus\n) {\n  partner(id: $partnerId) @principalField {\n    ...ShowPaginatedEvents_partner_qVb3U\n    id\n  }\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n\nfragment ShowCard_show on Show {\n  href\n  name\n  isFairBooth\n  exhibitionPeriod\n  coverImage {\n    medium: cropped(width: 320, height: 240) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment ShowEvents_edges on ShowEdge {\n  node {\n    internalID\n    ...ShowCard_show\n    id\n  }\n}\n\nfragment ShowPaginatedEvents_partner_qVb3U on Partner {\n  slug\n  showsList: showsConnection(first: $first, last: $last, after: $after, before: $before, status: $status, isDisplayable: true) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    edges {\n      ...ShowEvents_edges\n    }\n  }\n}\n"
   }
 };
 })();

@@ -30,7 +30,9 @@ describe("ArtworkSidebarBidAction", () => {
     return renderRelayTree({
       Component: ArtworkSidebarBidActionFragmentContainer,
       query: graphql`
-        query ArtworkSidebarBidAction_Test_Query @raw_response_type {
+        query ArtworkSidebarBidAction_Test_Query
+          @raw_response_type
+          @relay_test_operation {
           artwork(id: "auction_artwork") {
             ...ArtworkSidebarBidAction_artwork
           }

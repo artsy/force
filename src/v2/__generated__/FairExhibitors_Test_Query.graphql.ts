@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -25,12 +26,6 @@ query FairExhibitors_Test_Query(
   fair(id: $id) @principalField {
     ...FairExhibitors_fair
     id
-  }
-}
-
-fragment ExhibitorsLetterNav_fair on Fair {
-  exhibitorsGroupedByName {
-    letter
   }
 }
 
@@ -67,7 +62,6 @@ fragment FairExhibitors_fair on Fair {
     }
     ...FairExhibitorsGroup_exhibitorsGroup
   }
-  ...ExhibitorsLetterNav_fair
 }
 
 fragment FollowProfileButton_profile on Profile {
@@ -84,8 +78,7 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "id",
-    "type": "String!"
+    "name": "id"
   }
 ],
 v1 = [
@@ -122,6 +115,18 @@ v5 = {
   "kind": "ScalarField",
   "name": "slug",
   "storageKey": null
+},
+v6 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "ID"
+},
+v7 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "String"
 };
 return {
   "fragment": {
@@ -147,7 +152,8 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -257,13 +263,71 @@ return {
     ]
   },
   "params": {
+    "cacheID": "f0fc17405b92dd7813a3b9128ce9e549",
     "id": null,
-    "metadata": {},
+    "metadata": {
+      "relayTestingSelectionTypeInfo": {
+        "fair": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Fair"
+        },
+        "fair.exhibitorsGroupedByName": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": true,
+          "type": "FairExhibitorsGroup"
+        },
+        "fair.exhibitorsGroupedByName.exhibitors": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": true,
+          "type": "FairExhibitor"
+        },
+        "fair.exhibitorsGroupedByName.exhibitors.partner": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Partner"
+        },
+        "fair.exhibitorsGroupedByName.exhibitors.partner.cities": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": true,
+          "type": "String"
+        },
+        "fair.exhibitorsGroupedByName.exhibitors.partner.id": (v6/*: any*/),
+        "fair.exhibitorsGroupedByName.exhibitors.partner.internalID": (v6/*: any*/),
+        "fair.exhibitorsGroupedByName.exhibitors.partner.name": (v7/*: any*/),
+        "fair.exhibitorsGroupedByName.exhibitors.partner.profile": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Profile"
+        },
+        "fair.exhibitorsGroupedByName.exhibitors.partner.profile.id": (v6/*: any*/),
+        "fair.exhibitorsGroupedByName.exhibitors.partner.profile.internalID": (v6/*: any*/),
+        "fair.exhibitorsGroupedByName.exhibitors.partner.profile.is_followed": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Boolean"
+        },
+        "fair.exhibitorsGroupedByName.exhibitors.partner.profile.name": (v7/*: any*/),
+        "fair.exhibitorsGroupedByName.exhibitors.partner.profile.slug": (v6/*: any*/),
+        "fair.exhibitorsGroupedByName.exhibitors.partner.slug": (v6/*: any*/),
+        "fair.exhibitorsGroupedByName.exhibitors.partnerID": (v7/*: any*/),
+        "fair.exhibitorsGroupedByName.exhibitors.profileID": (v7/*: any*/),
+        "fair.exhibitorsGroupedByName.letter": (v7/*: any*/),
+        "fair.id": (v6/*: any*/)
+      }
+    },
     "name": "FairExhibitors_Test_Query",
     "operationKind": "query",
-    "text": "query FairExhibitors_Test_Query(\n  $id: String!\n) {\n  fair(id: $id) @principalField {\n    ...FairExhibitors_fair\n    id\n  }\n}\n\nfragment ExhibitorsLetterNav_fair on Fair {\n  exhibitorsGroupedByName {\n    letter\n  }\n}\n\nfragment FairExhibitorCard_exhibitor on FairExhibitor {\n  profileID\n  partner {\n    name\n    internalID\n    slug\n    cities\n    profile {\n      ...FollowProfileButton_profile\n      id\n    }\n    id\n  }\n}\n\nfragment FairExhibitorsGroup_exhibitorsGroup on FairExhibitorsGroup {\n  exhibitors {\n    partner {\n      internalID\n      id\n    }\n    ...FairExhibitorCard_exhibitor\n  }\n}\n\nfragment FairExhibitors_fair on Fair {\n  exhibitorsGroupedByName {\n    letter\n    exhibitors {\n      partnerID\n    }\n    ...FairExhibitorsGroup_exhibitorsGroup\n  }\n  ...ExhibitorsLetterNav_fair\n}\n\nfragment FollowProfileButton_profile on Profile {\n  id\n  slug\n  name\n  internalID\n  is_followed: isFollowed\n}\n"
+    "text": "query FairExhibitors_Test_Query(\n  $id: String!\n) {\n  fair(id: $id) @principalField {\n    ...FairExhibitors_fair\n    id\n  }\n}\n\nfragment FairExhibitorCard_exhibitor on FairExhibitor {\n  profileID\n  partner {\n    name\n    internalID\n    slug\n    cities\n    profile {\n      ...FollowProfileButton_profile\n      id\n    }\n    id\n  }\n}\n\nfragment FairExhibitorsGroup_exhibitorsGroup on FairExhibitorsGroup {\n  exhibitors {\n    partner {\n      internalID\n      id\n    }\n    ...FairExhibitorCard_exhibitor\n  }\n}\n\nfragment FairExhibitors_fair on Fair {\n  exhibitorsGroupedByName {\n    letter\n    exhibitors {\n      partnerID\n    }\n    ...FairExhibitorsGroup_exhibitorsGroup\n  }\n}\n\nfragment FollowProfileButton_profile on Profile {\n  id\n  slug\n  name\n  internalID\n  is_followed: isFollowed\n}\n"
   }
 };
 })();
-(node as any).hash = 'eaf5d5cf07b2362dac31136c98921118';
+(node as any).hash = '6b38f9188e36328f5a3fe8bb93b56862';
 export default node;

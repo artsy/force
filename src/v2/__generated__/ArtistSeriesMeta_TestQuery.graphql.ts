@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -18,7 +19,7 @@ export type ArtistSeriesMeta_TestQueryRawResponse = {
         readonly slug: string;
         readonly artists: ReadonlyArray<({
             readonly name: string | null;
-            readonly id: string | null;
+            readonly id: string;
         }) | null> | null;
     }) | null;
 };
@@ -55,8 +56,7 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "slug",
-    "type": "ID!"
+    "name": "slug"
   }
 ],
 v1 = [
@@ -65,7 +65,19 @@ v1 = [
     "name": "id",
     "variableName": "slug"
   }
-];
+],
+v2 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "String"
+},
+v3 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "String"
+};
 return {
   "fragment": {
     "argumentDefinitions": (v0/*: any*/),
@@ -90,7 +102,8 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -164,13 +177,39 @@ return {
     ]
   },
   "params": {
+    "cacheID": "868f3d4385f11ae2bdfc73c06bbae975",
     "id": null,
-    "metadata": {},
+    "metadata": {
+      "relayTestingSelectionTypeInfo": {
+        "artistSeries": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "ArtistSeries"
+        },
+        "artistSeries.artists": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": true,
+          "type": "Artist"
+        },
+        "artistSeries.artists.id": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": false,
+          "type": "ID"
+        },
+        "artistSeries.artists.name": (v2/*: any*/),
+        "artistSeries.description": (v2/*: any*/),
+        "artistSeries.slug": (v3/*: any*/),
+        "artistSeries.title": (v3/*: any*/)
+      }
+    },
     "name": "ArtistSeriesMeta_TestQuery",
     "operationKind": "query",
     "text": "query ArtistSeriesMeta_TestQuery(\n  $slug: ID!\n) {\n  artistSeries(id: $slug) {\n    ...ArtistSeriesMeta_artistSeries\n  }\n}\n\nfragment ArtistSeriesMeta_artistSeries on ArtistSeries {\n  title\n  description\n  slug\n  artists(size: 1) {\n    name\n    id\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '737771bec15cad6ff974ebf20864235b';
+(node as any).hash = '27c6e0b258d7f3cb315cc33ecabbd839';
 export default node;

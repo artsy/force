@@ -22,7 +22,7 @@ const { getWrapper } = setupTestWrapper<ShowsIndex_Test_Query>({
     )
   },
   query: graphql`
-    query ShowsIndex_Test_Query {
+    query ShowsIndex_Test_Query @relay_test_operation {
       viewer {
         ...ShowsIndex_viewer
       }

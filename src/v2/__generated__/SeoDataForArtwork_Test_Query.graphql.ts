@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -51,9 +52,9 @@ export type SeoDataForArtwork_Test_QueryRawResponse = {
                         readonly url: string;
                     }) | null;
                 }) | null;
-                readonly id: string | null;
+                readonly id: string;
             }) | null;
-            readonly id: string | null;
+            readonly id: string;
         }) | null;
         readonly artistNames: string | null;
         readonly availability: string | null;
@@ -61,7 +62,7 @@ export type SeoDataForArtwork_Test_QueryRawResponse = {
         readonly dimensions: ({
             readonly in: string | null;
         }) | null;
-        readonly id: string | null;
+        readonly id: string;
     }) | null;
 };
 export type SeoDataForArtwork_Test_Query = {
@@ -172,6 +173,60 @@ v4 = {
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
+},
+v5 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "String"
+},
+v6 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "ID"
+},
+v7 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "Boolean"
+},
+v8 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "String"
+},
+v9 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "Float"
+},
+v10 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "Money"
+},
+v11 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "Image"
+},
+v12 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "ResizedImageUrl"
+},
+v13 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "Int"
 };
 return {
   "fragment": {
@@ -197,7 +252,8 @@ return {
         "storageKey": "artwork(id:\"richard-anuszkiewicz-lino-yellow-318\")"
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -282,12 +338,14 @@ return {
                     "storageKey": null
                   }
                 ],
-                "type": "PriceRange"
+                "type": "PriceRange",
+                "abstractKey": null
               },
               {
                 "kind": "InlineFragment",
                 "selections": (v2/*: any*/),
-                "type": "Money"
+                "type": "Money",
+                "abstractKey": null
               }
             ],
             "storageKey": null
@@ -505,13 +563,84 @@ return {
     ]
   },
   "params": {
+    "cacheID": "f8392b0d6f9c82a9432ddf2ec1e103f5",
     "id": null,
-    "metadata": {},
+    "metadata": {
+      "relayTestingSelectionTypeInfo": {
+        "artwork": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Artwork"
+        },
+        "artwork.artistNames": (v5/*: any*/),
+        "artwork.availability": (v5/*: any*/),
+        "artwork.category": (v5/*: any*/),
+        "artwork.date": (v5/*: any*/),
+        "artwork.dimensions": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "dimensions"
+        },
+        "artwork.dimensions.in": (v5/*: any*/),
+        "artwork.href": (v5/*: any*/),
+        "artwork.id": (v6/*: any*/),
+        "artwork.is_price_hidden": (v7/*: any*/),
+        "artwork.is_price_range": (v7/*: any*/),
+        "artwork.listPrice": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "ListPrice"
+        },
+        "artwork.listPrice.__typename": (v8/*: any*/),
+        "artwork.listPrice.currencyCode": (v8/*: any*/),
+        "artwork.listPrice.major": (v9/*: any*/),
+        "artwork.listPrice.maxPrice": (v10/*: any*/),
+        "artwork.listPrice.maxPrice.major": (v9/*: any*/),
+        "artwork.listPrice.minPrice": (v10/*: any*/),
+        "artwork.listPrice.minPrice.currencyCode": (v8/*: any*/),
+        "artwork.listPrice.minPrice.major": (v9/*: any*/),
+        "artwork.meta": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "ArtworkMeta"
+        },
+        "artwork.meta.description": (v5/*: any*/),
+        "artwork.meta.title": (v5/*: any*/),
+        "artwork.meta_image": (v11/*: any*/),
+        "artwork.meta_image.resized": (v12/*: any*/),
+        "artwork.meta_image.resized.height": (v13/*: any*/),
+        "artwork.meta_image.resized.url": (v8/*: any*/),
+        "artwork.meta_image.resized.width": (v13/*: any*/),
+        "artwork.partner": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Partner"
+        },
+        "artwork.partner.id": (v6/*: any*/),
+        "artwork.partner.name": (v5/*: any*/),
+        "artwork.partner.profile": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Profile"
+        },
+        "artwork.partner.profile.id": (v6/*: any*/),
+        "artwork.partner.profile.image": (v11/*: any*/),
+        "artwork.partner.profile.image.resized": (v12/*: any*/),
+        "artwork.partner.profile.image.resized.url": (v8/*: any*/),
+        "artwork.partner.type": (v5/*: any*/)
+      }
+    },
     "name": "SeoDataForArtwork_Test_Query",
     "operationKind": "query",
     "text": "query SeoDataForArtwork_Test_Query {\n  artwork(id: \"richard-anuszkiewicz-lino-yellow-318\") {\n    ...SeoDataForArtwork_artwork\n    id\n  }\n}\n\nfragment SeoDataForArtwork_artwork on Artwork {\n  href\n  date\n  is_price_hidden: isPriceHidden\n  is_price_range: isPriceRange\n  listPrice {\n    __typename\n    ... on PriceRange {\n      minPrice {\n        major\n        currencyCode\n      }\n      maxPrice {\n        major\n      }\n    }\n    ... on Money {\n      major\n      currencyCode\n    }\n  }\n  meta_image: image {\n    resized(width: 640, height: 640, version: [\"large\", \"medium\", \"tall\"]) {\n      width\n      height\n      url\n    }\n  }\n  meta {\n    title\n    description(limit: 155)\n  }\n  partner {\n    name\n    type\n    profile {\n      image {\n        resized(width: 320, height: 320, version: [\"medium\"]) {\n          url\n        }\n      }\n      id\n    }\n    id\n  }\n  artistNames\n  availability\n  category\n  dimensions {\n    in\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '88926bb17622179196524fafba37bbdc';
+(node as any).hash = '42324582d26a2b149c439fb77a1ebb9b';
 export default node;

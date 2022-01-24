@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -61,7 +62,8 @@ return {
         "storageKey": "fair(id:\"example\")"
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -97,13 +99,35 @@ return {
     ]
   },
   "params": {
+    "cacheID": "de1c2ffe9f192b0a09d1e5757b6ddf88",
     "id": null,
-    "metadata": {},
+    "metadata": {
+      "relayTestingSelectionTypeInfo": {
+        "fair": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Fair"
+        },
+        "fair.endAt": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "String"
+        },
+        "fair.id": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": false,
+          "type": "ID"
+        }
+      }
+    },
     "name": "FairTimer_Test_Query",
     "operationKind": "query",
     "text": "query FairTimer_Test_Query {\n  fair(id: \"example\") {\n    ...FairTimer_fair\n    id\n  }\n}\n\nfragment FairTimer_fair on Fair {\n  endAt\n}\n"
   }
 };
 })();
-(node as any).hash = '97e0b9d4f5cdac0518b5177c4cbc2d0b';
+(node as any).hash = '64730289506a51ba11082469a99e4a0b';
 export default node;

@@ -16,7 +16,8 @@ describe("FairOrganizerFollowButton", () => {
     {
       Component: FairOrganizerFollowButtonFragmentContainer,
       query: graphql`
-        query FairOrganizerFollowButton_Test_Query($id: String!) {
+        query FairOrganizerFollowButton_Test_Query($id: String!)
+          @relay_test_operation {
           fairOrganizer(id: $id) {
             ...FairOrganizerFollowButton_fairOrganizer
           }

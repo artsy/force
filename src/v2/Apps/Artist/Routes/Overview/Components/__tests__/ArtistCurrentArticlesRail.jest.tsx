@@ -12,7 +12,7 @@ describe("ArtistCurrentArticlesRail", () => {
     {
       Component: ArtistCurrentArticlesRailFragmentContainer,
       query: graphql`
-        query ArtistCurrentArticlesRail_Test_Query {
+        query ArtistCurrentArticlesRail_Test_Query @relay_test_operation {
           artist(id: "test") {
             ...ArtistCurrentArticlesRail_artist
           }
@@ -68,8 +68,8 @@ describe("ArtistCurrentArticlesRail", () => {
       expect.objectContaining({
         action: "clickedArtistGroup",
         context_module: "relatedArticles",
-        destination_page_owner_id: '<mock-value-for-field-"internalID">',
-        destination_page_owner_slug: '<mock-value-for-field-"slug">',
+        destination_page_owner_id: "<Artist-mock-id-3>",
+        destination_page_owner_slug: "<Artist-mock-id-4>",
         destination_page_owner_type: "artist",
         type: "viewAll",
       })
@@ -83,7 +83,7 @@ describe("ArtistCurrentArticlesRail", () => {
       expect.objectContaining({
         action_type: "Click",
         contextModule: "relatedArticles",
-        destinationPageOwnerId: '<mock-value-for-field-"internalID">',
+        destinationPageOwnerId: "<Article-mock-id-1>",
         destinationPageOwnerSlug: '<mock-value-for-field-"slug">',
         destinationPageOwnerType: "artwork",
         destination_path: '<mock-value-for-field-"href">',

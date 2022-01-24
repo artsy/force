@@ -8,14 +8,20 @@ import { CreditCardDetails } from "./CreditCardDetails"
 
 const CreditCardSummaryItem = ({
   order: { creditCard },
+  textColor = "black100",
   ...others
 }: {
   order: CreditCardSummaryItem_order
+  textColor?: string
 } & StepSummaryItemProps) => {
+  const cardInfoWithTextColor = {
+    ...creditCard!,
+    ...{ textColor: textColor },
+  }
+
   return (
     <StepSummaryItem {...others}>
-      {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
-      <CreditCardDetails {...creditCard} />
+      <CreditCardDetails {...cardInfoWithTextColor} />
     </StepSummaryItem>
   )
 }

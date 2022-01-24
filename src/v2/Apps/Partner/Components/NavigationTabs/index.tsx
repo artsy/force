@@ -1,5 +1,4 @@
-import { breakpoints, DROP_SHADOW, FullBleed } from "@artsy/palette"
-import * as React from "react";
+import { DROP_SHADOW, FullBleed } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { HorizontalPadding } from "v2/Apps/Components/HorizontalPadding"
 import { useNavBarHeight } from "v2/Components/NavBar/useNavBarHeight"
@@ -106,7 +105,7 @@ export const NavigationTabs: React.FC<NavigationTabsProps> = ({ partner }) => {
             py={2}
             style={stuck ? { boxShadow: DROP_SHADOW } : undefined}
           >
-            <HorizontalPadding maxWidth={breakpoints.xl}>
+            <HorizontalPadding>
               <Media greaterThan="xs">
                 <RouteTabs fill>{renderTabs(desktop)}</RouteTabs>
               </Media>

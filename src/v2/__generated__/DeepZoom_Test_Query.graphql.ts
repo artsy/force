@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -52,7 +53,19 @@ var v0 = [
     "name": "id",
     "value": "example"
   }
-];
+],
+v1 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "String"
+},
+v2 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "Int"
+};
 return {
   "fragment": {
     "argumentDefinitions": [],
@@ -88,7 +101,8 @@ return {
         "storageKey": "artwork(id:\"example\")"
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -210,13 +224,60 @@ return {
     ]
   },
   "params": {
+    "cacheID": "0af34a87bb80a2043ccf5e692cd3d56e",
     "id": null,
-    "metadata": {},
+    "metadata": {
+      "relayTestingSelectionTypeInfo": {
+        "artwork": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Artwork"
+        },
+        "artwork.id": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": false,
+          "type": "ID"
+        },
+        "artwork.images": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": true,
+          "type": "Image"
+        },
+        "artwork.images.deepZoom": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "DeepZoom"
+        },
+        "artwork.images.deepZoom.Image": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "DeepZoomImage"
+        },
+        "artwork.images.deepZoom.Image.Format": (v1/*: any*/),
+        "artwork.images.deepZoom.Image.Overlap": (v2/*: any*/),
+        "artwork.images.deepZoom.Image.Size": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "DeepZoomImageSize"
+        },
+        "artwork.images.deepZoom.Image.Size.Height": (v2/*: any*/),
+        "artwork.images.deepZoom.Image.Size.Width": (v2/*: any*/),
+        "artwork.images.deepZoom.Image.TileSize": (v2/*: any*/),
+        "artwork.images.deepZoom.Image.Url": (v1/*: any*/),
+        "artwork.images.deepZoom.Image.xmlns": (v1/*: any*/)
+      }
+    },
     "name": "DeepZoom_Test_Query",
     "operationKind": "query",
     "text": "query DeepZoom_Test_Query {\n  artwork(id: \"example\") {\n    images {\n      ...DeepZoom_image\n    }\n    id\n  }\n}\n\nfragment DeepZoom_image on Image {\n  deepZoom {\n    Image {\n      xmlns\n      Url\n      Format\n      TileSize\n      Overlap\n      Size {\n        Width\n        Height\n      }\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'bedee44e5add2b79a325153b9165a966';
+(node as any).hash = 'bb3864a326c9787c58d501e5497d2d64';
 export default node;

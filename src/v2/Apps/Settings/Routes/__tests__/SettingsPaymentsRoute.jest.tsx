@@ -12,7 +12,7 @@ const { getWrapper } = setupTestWrapper<SettingsPaymentsRoute_Test_Query>({
     return <SettingsPaymentsRouteFragmentContainer me={me as any} />
   },
   query: graphql`
-    query SettingsPaymentsRoute_Test_Query {
+    query SettingsPaymentsRoute_Test_Query @relay_test_operation {
       me {
         ...SettingsPaymentsRoute_me
       }

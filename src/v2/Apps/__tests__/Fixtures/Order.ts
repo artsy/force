@@ -88,6 +88,7 @@ const OrderArtworkNodeWithoutShipping = {
   slug: "artworkId",
   title: "Gramercy Park South",
   isPriceRange: false,
+  isEdition: false,
 }
 
 const OrderArtworkNode = {
@@ -139,6 +140,7 @@ const InquiryOrderArtworkNode = {
 const OrderArtworkOrEditionSetkNode_Artwork = {
   artworkOrEditionSet: {
     __typename: "Artwork",
+    __isNode: "Artwork",
     displayPriceRange: false as boolean,
     id: "art123",
     price: "$12,000",
@@ -148,6 +150,7 @@ const OrderArtworkOrEditionSetkNode_Artwork = {
 const OfferArtworkOrEditionSetNode_Artwork = {
   artworkOrEditionSet: {
     __typename: "Artwork",
+    __isNode: "Artwork",
     displayPriceRange: false as boolean,
     id: "art123",
     price: "$16,000",
@@ -234,7 +237,7 @@ export const UntouchedOrder = {
   buyerTotal: "$12,000",
   itemsTotalCents: 1200000,
   code: "abcdefg",
-  createdAt: "2019-12-19T06:01:17.171Z",
+  createdAt: "2022-12-19T06:06:17.171Z",
   creditCard: null,
   currencyCode: "USD",
   displayState: "SUBMITTED",
@@ -261,6 +264,7 @@ export const UntouchedOrder = {
   requestedFulfillment: null,
   sellerDetails: {
     __typename: "Partner",
+    __isNode: "Partner",
     id: "partner-node-id",
     locations: [
       {
@@ -284,6 +288,7 @@ export const UntouchedOrder = {
 export const UntouchedBuyOrder = {
   ...UntouchedOrder,
   __typename: "CommerceBuyOrder",
+  __isCommerceOrder: "CommerceBuyOrder",
   mode: "BUY",
 } as const
 
@@ -507,6 +512,7 @@ export const OfferWithTotals = {
   createdAt: "2019-08-01T20:34:27.467Z",
   fromParticipant: "SELLER",
   note: "Another note!",
+  __isCommerceOrder: "CommerceOfferOrder",
 } as const
 
 export const OfferWithoutTotals = {
@@ -520,10 +526,12 @@ export const OfferWithoutTotals = {
   createdAt: "2019-08-01T20:34:27.467Z",
   fromParticipant: "SELLER",
   note: "Another note!",
+  __isCommerceOrder: "CommerceOfferOrder",
 } as const
 
 export const UntouchedOfferOrder = {
   ...UntouchedOrder,
+  __isCommerceOrder: "CommerceOfferOrder",
   __typename: "CommerceOfferOrder",
   awaitingResponseFrom: null,
   currencyCode: "USD",
@@ -538,6 +546,7 @@ export const UntouchedOfferOrder = {
           id: "line-item-node-id",
           selectedShippingQuote: null,
           shippingQuoteOptions: null,
+          __isCommerceOrder: "CommerceOfferOrder",
           ...OrderArtworkNode,
           ...OfferArtworkOrEditionSetNode_Artwork,
           ...OrderArtworkFulfillmentsNode,
@@ -628,6 +637,7 @@ export const UntouchedOfferOrderWithRange = {
 export const OfferOrderWithOffers = {
   ...UntouchedOfferOrder,
   lastOffer: OfferWithTotals,
+
   conversation: {
     internalID: "5665",
   },
@@ -661,6 +671,7 @@ export const ShippingDetails = {
   buyerPhoneNumber: "120938120983",
   requestedFulfillment: {
     __typename: "CommerceShip",
+    __isCommerceRequestedFulfillmentUnion: "CommerceShip",
     addressLine1: "401 Broadway",
     addressLine2: "Suite 25",
     city: "New York",

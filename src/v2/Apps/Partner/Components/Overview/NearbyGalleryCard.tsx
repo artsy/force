@@ -1,7 +1,6 @@
 import { ContextModule } from "@artsy/cohesion"
 import { Box, BoxProps, ResponsiveBox, Image, Flex, Text } from "@artsy/palette"
 import { capitalize, compact, uniq } from "lodash"
-import * as React from "react";
 import { createFragmentContainer, graphql } from "react-relay"
 import { useSystemContext } from "v2/System"
 import { RouterLink } from "v2/System/Router/RouterLink"
@@ -91,7 +90,7 @@ const NearbyGalleryCard: React.FC<NearbyGalleryCardProps> = ({
       <Flex justifyContent="space-between" mt={1}>
         <Box>
           <RouterLink noUnderline to={partnerHref}>
-            <Text variant="subtitle">{name}</Text>
+            <Text variant="lg">{name}</Text>
             {location && <Text color="black60">{location}</Text>}
           </RouterLink>
         </Box>

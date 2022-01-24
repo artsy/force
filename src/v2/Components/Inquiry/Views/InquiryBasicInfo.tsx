@@ -9,7 +9,6 @@ import {
   SkeletonText,
   Text,
 } from "@artsy/palette"
-import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import { useInquiryContext } from "../Hooks/useInquiryContext"

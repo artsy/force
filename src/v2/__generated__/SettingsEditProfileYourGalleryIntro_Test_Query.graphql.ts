@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -53,7 +54,8 @@ const node: ConcreteRequest = {
         "storageKey": null
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -89,12 +91,34 @@ const node: ConcreteRequest = {
     ]
   },
   "params": {
+    "cacheID": "de60e0d2338af6d043dcd9eb847681f3",
     "id": null,
-    "metadata": {},
+    "metadata": {
+      "relayTestingSelectionTypeInfo": {
+        "me": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Me"
+        },
+        "me.id": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": false,
+          "type": "ID"
+        },
+        "me.inquiryIntroduction": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "String"
+        }
+      }
+    },
     "name": "SettingsEditProfileYourGalleryIntro_Test_Query",
     "operationKind": "query",
     "text": "query SettingsEditProfileYourGalleryIntro_Test_Query {\n  me {\n    ...SettingsEditProfileYourGalleryIntro_me\n    id\n  }\n}\n\nfragment SettingsEditProfileYourGalleryIntro_me on Me {\n  inquiryIntroduction\n}\n"
   }
 };
-(node as any).hash = 'ea421bfd6b23778bc7d9a912f1162bf3';
+(node as any).hash = '21219f0ea58d8e6ca51cb2a38dcd76dd';
 export default node;

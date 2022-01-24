@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -46,8 +47,7 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "artistInternalID",
-    "type": "ID!"
+    "name": "artistInternalID"
   }
 ],
 v1 = [
@@ -61,7 +61,13 @@ v1 = [
     "name": "sort",
     "value": "ANNUAL_VALUE_SOLD_CENTS_DESC"
   }
-];
+],
+v2 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "Int"
+};
 return {
   "fragment": {
     "argumentDefinitions": (v0/*: any*/),
@@ -86,7 +92,8 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -172,13 +179,61 @@ return {
     ]
   },
   "params": {
+    "cacheID": "8c98db6a8df16f080ab0cdacba936001",
     "id": null,
-    "metadata": {},
+    "metadata": {
+      "relayTestingSelectionTypeInfo": {
+        "priceInsightsConnection": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "PriceInsightConnection"
+        },
+        "priceInsightsConnection.edges": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": true,
+          "type": "PriceInsightEdge"
+        },
+        "priceInsightsConnection.edges.node": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "MarketPriceInsights"
+        },
+        "priceInsightsConnection.edges.node.annualLotsSold": (v2/*: any*/),
+        "priceInsightsConnection.edges.node.annualValueSoldCents": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "BigInt"
+        },
+        "priceInsightsConnection.edges.node.id": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": false,
+          "type": "ID"
+        },
+        "priceInsightsConnection.edges.node.medianSaleOverEstimatePercentage": (v2/*: any*/),
+        "priceInsightsConnection.edges.node.medium": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "String"
+        },
+        "priceInsightsConnection.edges.node.sellThroughRate": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Float"
+        }
+      }
+    },
     "name": "MarketStats_Test_Query",
     "operationKind": "query",
     "text": "query MarketStats_Test_Query(\n  $artistInternalID: ID!\n) {\n  priceInsightsConnection: priceInsights(artistId: $artistInternalID, sort: ANNUAL_VALUE_SOLD_CENTS_DESC) {\n    ...MarketStats_priceInsightsConnection\n  }\n}\n\nfragment MarketStats_priceInsightsConnection on PriceInsightConnection {\n  edges {\n    node {\n      medium\n      annualLotsSold\n      annualValueSoldCents\n      sellThroughRate\n      medianSaleOverEstimatePercentage\n      id\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'b2181530eea7b0232d9b441980d6b3f3';
+(node as any).hash = '6af6dc9e71ce14051ef8e4af5624d77b';
 export default node;

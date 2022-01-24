@@ -9,7 +9,7 @@ const { getWrapper } = setupTestWrapper({
     return <ViewingRoomFragmentContainer partner={partner} />
   },
   query: graphql`
-    query ViewingRooms_Test_Query {
+    query ViewingRooms_Test_Query @relay_test_operation {
       partner(id: "white-cube") @principalField {
         ...ViewingRooms_partner
       }

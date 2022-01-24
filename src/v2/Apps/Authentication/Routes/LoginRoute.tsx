@@ -8,7 +8,7 @@ import { useAuthForm } from "../Utils/useAuthForm"
 export const LoginRoute: React.FC = () => {
   const { meta, options, type } = useAuthForm({
     canonical: `${getENV("APP_URL")}/login`,
-    pageTitle: "Login to Artsy",
+    pageTitle: "Log in to Artsy",
     type: ModalType.login,
   })
 

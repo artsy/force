@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -22,7 +23,7 @@ export type FairSubApp_QueryRawResponse = {
         readonly id: string;
         readonly profile: ({
             readonly __typename: "Profile";
-            readonly id: string | null;
+            readonly id: string;
         }) | null;
     }) | null;
 };
@@ -70,8 +71,7 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "slug",
-    "type": "String!"
+    "name": "slug"
   }
 ],
 v1 = [
@@ -87,6 +87,18 @@ v2 = {
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
+},
+v3 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "ID"
+},
+v4 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "String"
 };
 return {
   "fragment": {
@@ -112,7 +124,8 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -199,13 +212,47 @@ return {
     ]
   },
   "params": {
+    "cacheID": "19fd33aa842c238e44b218c6b8939b20",
     "id": null,
-    "metadata": {},
+    "metadata": {
+      "relayTestingSelectionTypeInfo": {
+        "fair": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Fair"
+        },
+        "fair.id": (v3/*: any*/),
+        "fair.metaDescription": (v4/*: any*/),
+        "fair.metaImage": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Image"
+        },
+        "fair.metaImage.src": (v4/*: any*/),
+        "fair.name": (v4/*: any*/),
+        "fair.profile": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Profile"
+        },
+        "fair.profile.__typename": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": false,
+          "type": "String"
+        },
+        "fair.profile.id": (v3/*: any*/),
+        "fair.slug": (v3/*: any*/)
+      }
+    },
     "name": "FairSubApp_Query",
     "operationKind": "query",
     "text": "query FairSubApp_Query(\n  $slug: String!\n) {\n  fair(id: $slug) {\n    ...FairSubApp_fair\n    id\n  }\n}\n\nfragment FairMeta_fair on Fair {\n  name\n  slug\n  metaDescription: summary\n  metaImage: image {\n    src: url(version: \"large_rectangle\")\n  }\n}\n\nfragment FairSubApp_fair on Fair {\n  ...FairMeta_fair\n  id\n  name\n  slug\n  profile {\n    __typename\n    id\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '4103242ad007a31de6d4f07f3666d749';
+(node as any).hash = 'cdf533d4f8f6c8aa7902c511a5cd3e9a';
 export default node;

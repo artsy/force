@@ -1,12 +1,13 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type Conversation_me = {
     readonly conversation: {
         readonly internalID: string | null;
-        readonly " $fragmentRefs": FragmentRefs<"Conversation_conversation" | "ConversationCTA_conversation" | "Details_conversation">;
+        readonly " $fragmentRefs": FragmentRefs<"Conversation_conversation" | "ConversationCTA_conversation" | "DetailsSidebar_conversation">;
     } | null;
     readonly " $fragmentRefs": FragmentRefs<"ConversationList_me">;
     readonly " $refType": "Conversation_me";
@@ -24,8 +25,7 @@ const node: ReaderFragment = {
     {
       "defaultValue": null,
       "kind": "LocalArgument",
-      "name": "conversationID",
-      "type": "String!"
+      "name": "conversationID"
     }
   ],
   "kind": "Fragment",
@@ -66,7 +66,7 @@ const node: ReaderFragment = {
         {
           "args": null,
           "kind": "FragmentSpread",
-          "name": "Details_conversation"
+          "name": "DetailsSidebar_conversation"
         }
       ],
       "storageKey": null
@@ -77,7 +77,8 @@ const node: ReaderFragment = {
       "name": "ConversationList_me"
     }
   ],
-  "type": "Me"
+  "type": "Me",
+  "abstractKey": null
 };
-(node as any).hash = '17825cd6e2eb83e2f6d08d8de9561b39';
+(node as any).hash = 'bc0d9d87bef35d4595f3ebcf50105543';
 export default node;

@@ -22,7 +22,9 @@ const setupTestEnv = () => {
     TestPage: IdentityVerificationAppTestPage,
     Component: IdentityVerificationAppFragmentContainer,
     query: graphql`
-      query IdentityVerificationAppTestQuery @raw_response_type {
+      query IdentityVerificationAppTestQuery
+        @raw_response_type
+        @relay_test_operation {
         me {
           ...IdentityVerificationApp_me @arguments(id: "idv-id")
         }

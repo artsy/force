@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 export type CommerceOrderParticipantEnum = "BUYER" | "SELLER" | "%future added value";
@@ -67,8 +68,7 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "input",
-    "type": "CommerceSubmitPendingOfferInput!"
+    "name": "input"
   }
 ],
 v1 = [
@@ -96,7 +96,8 @@ v3 = {
       "storageKey": null
     }
   ],
-  "type": "CommerceOfferOrder"
+  "type": "CommerceOfferOrder",
+  "abstractKey": null
 },
 v4 = {
   "kind": "InlineFragment",
@@ -134,7 +135,8 @@ v4 = {
       "storageKey": null
     }
   ],
-  "type": "CommerceOrderWithMutationFailure"
+  "type": "CommerceOrderWithMutationFailure",
+  "abstractKey": null
 },
 v5 = {
   "alias": null,
@@ -183,7 +185,8 @@ return {
                     "storageKey": null
                   }
                 ],
-                "type": "CommerceOrderWithMutationSuccess"
+                "type": "CommerceOrderWithMutationSuccess",
+                "abstractKey": null
               },
               (v4/*: any*/)
             ],
@@ -193,7 +196,8 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Mutation"
+    "type": "Mutation",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -243,7 +247,8 @@ return {
                     "storageKey": null
                   }
                 ],
-                "type": "CommerceOrderWithMutationSuccess"
+                "type": "CommerceOrderWithMutationSuccess",
+                "abstractKey": null
               },
               (v4/*: any*/)
             ],
@@ -255,6 +260,7 @@ return {
     ]
   },
   "params": {
+    "cacheID": "139c9ea66f61610625c885a03fef9e20",
     "id": null,
     "metadata": {},
     "name": "CounterSubmitMutation",

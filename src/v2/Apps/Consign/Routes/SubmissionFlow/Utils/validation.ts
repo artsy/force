@@ -1,5 +1,6 @@
 import * as yup from "yup"
 import { email } from "v2/Components/Authentication/Validators"
+import { FormikErrors, yupToFormErrors } from "formik"
 
 export const artworkDetailsValidationSchema = yup.object().shape({
   artistId: yup
@@ -36,14 +37,17 @@ export const artworkDetailsValidationSchema = yup.object().shape({
     .trim(),
   units: yup.string().required(),
   provenance: yup.string().required().trim(),
-  location: yup.string().required().trim(),
-  // locationId: yup.string().test((value, ctx) =>
-  //   value
-  //     ? true
-  //     : ctx.createError({
-  //         message: `Could not find ${ctx.parent.location}`,
-  //       })
-  // ),
+  location: yup
+    .object()
+    .shape({
+      city: yup.string().trim().required("Please select a city from the list"),
+      state: yup.string(),
+      stateCode: yup.string(),
+      postalCode: yup.string(),
+      country: yup.string(),
+      coordinates: yup.array(yup.number()),
+    })
+    .required(),
 })
 
 export const uploadPhotosValidationSchema = yup.object().shape({
@@ -51,11 +55,7 @@ export const uploadPhotosValidationSchema = yup.object().shape({
     .array()
     .min(1)
     .transform(fields => fields.filter(c => !c.errorMessage))
-    .of(
-      yup.object().shape({
-        s3Key: yup.string().required(),
-      })
-    ),
+    .of(yup.object().test("photos", value => value.assetId)),
 })
 
 export const contactInformationValidationSchema = yup.object().shape({
@@ -71,3 +71,17 @@ export const contactInformationValidationSchema = yup.object().shape({
       value => value.isValid
     ),
 })
+
+export const validate = <T>(values: T, validationSchema: yup.AnySchema) => {
+  let errors: FormikErrors<T> = {}
+
+  try {
+    validationSchema.validateSync(values, {
+      abortEarly: false,
+    })
+  } catch (error) {
+    errors = yupToFormErrors(error)
+  }
+
+  return errors
+}

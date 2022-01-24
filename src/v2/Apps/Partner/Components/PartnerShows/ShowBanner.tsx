@@ -76,25 +76,21 @@ const ShowBanner: React.FC<ShowBannerProps> = ({
   }, [withAnimation, selected])
 
   return (
-    <GridColumns width="100%" gridRowGap={[3, 2]} {...rest}>
+    <GridColumns width="100%" gridRowGap={[4, 2]} {...rest}>
       <Column span={6}>
         <FadeBox opacity={active ? 1 : 0}>
-          <Text textTransform="capitalize" variant="mediumText" mb={1}>
+          <Text textTransform="capitalize" variant="md" mb={1}>
             {showType}
           </Text>
           <RouterLink to={href} textDecoration="none">
-            {name && <Text variant="largeTitle">{name}</Text>}
+            {name && <Text variant="xl">{name}</Text>}
             {exhibitionPeriod && (
-              <Text color="black60" variant="title">
+              <Text color="black60" variant="lg">
                 {exhibitionPeriod}
               </Text>
             )}
             {location && location.city && (
-              <Text
-                color="black60"
-                variant="subtitle"
-                textTransform="capitalize"
-              >
+              <Text color="black60" variant="lg" textTransform="capitalize">
                 {location.city}
               </Text>
             )}
@@ -105,7 +101,7 @@ const ShowBanner: React.FC<ShowBannerProps> = ({
             )}
           </RouterLink>
 
-          <GridColumns mt={[2, 3]}>
+          <GridColumns mt={[2, 4]}>
             <Column span={6}>
               <RouterLink to={href}>
                 <Button width="100%">View More</Button>

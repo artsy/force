@@ -1,5 +1,5 @@
 import { BoxProps, Flex, HTML, FullBleed } from "@artsy/palette"
-import * as React from "react";
+import * as React from "react"
 import styled from "styled-components"
 import { useSizeAndPosition } from "v2/Utils/Hooks/useSizeAndPosition"
 import { cropped } from "v2/Utils/resized"
@@ -10,12 +10,14 @@ export interface FullBleedHeaderProps extends BoxProps {
   src: string
   caption?: string
   children?: React.ReactNode
+  fixed?: boolean
 }
 
 export const FullBleedHeader: React.FC<FullBleedHeaderProps> = ({
   src,
   children,
   caption,
+  fixed = true,
   ...rest
 }) => {
   const xs = cropped(src, { width: 450, height: 320 })
@@ -38,7 +40,19 @@ export const FullBleedHeader: React.FC<FullBleedHeaderProps> = ({
       position="relative"
       {...rest}
     >
-      <Picture style={{ top: `${top}px`, height: `${height}px` }}>
+      <picture
+        style={
+          fixed
+            ? {
+                top: `${top}px`,
+                height: `${height}px`,
+                position: "fixed",
+                width: "100%",
+                left: 0,
+              }
+            : {}
+        }
+      >
         <source srcSet={xl.srcSet} media="(min-width: 1720px)" />
         <source srcSet={lg.srcSet} media="(min-width: 1232px)" />
         <source srcSet={md.srcSet} media="(min-width: 896px)" />
@@ -46,12 +60,12 @@ export const FullBleedHeader: React.FC<FullBleedHeaderProps> = ({
         <source srcSet={xs.srcSet} media="(max-width: 766px)" />
 
         <Image src={sm.src} alt="" loading="lazy" />
-      </Picture>
+      </picture>
 
       {caption && (
-        <Overlay display={["none", "flex"]}>
+        <FullBleedHeaderOverlay display={["none", "flex"]}>
           <HTML html={caption} color="white100" variant="xs" px={2} py={1} />
-        </Overlay>
+        </FullBleedHeaderOverlay>
       )}
 
       {children}
@@ -59,7 +73,26 @@ export const FullBleedHeader: React.FC<FullBleedHeaderProps> = ({
   )
 }
 
-const MIN_HEIGHT = 360
+export const FullBleedHeaderOverlay = styled(Flex)`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  text-shadow: 0 0 15px rgba(0, 0, 0, 0.25);
+  background-image: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0),
+    rgba(0, 0, 0, 0.25)
+  );
+`
+
+FullBleedHeaderOverlay.defaultProps = {
+  alignItems: "flex-end",
+  justifyContent: "flex-end",
+}
+
+export const MIN_HEIGHT = 360
 
 const Container = styled(FullBleed)`
   overflow: hidden;
@@ -71,26 +104,4 @@ const Image = styled.img`
   width: 100%;
   height: 100%;
   object-fit: cover;
-`
-
-const Picture = styled.picture`
-  position: fixed;
-  width: 100%;
-  left: 0;
-`
-
-const Overlay = styled(Flex)`
-  position: absolute;
-  align-items: flex-end;
-  justify-content: flex-end;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  text-shadow: 0 0 15px rgba(0, 0, 0, 0.25);
-  background-image: linear-gradient(
-    to bottom,
-    rgba(0, 0, 0, 0),
-    rgba(0, 0, 0, 0.25)
-  );
 `

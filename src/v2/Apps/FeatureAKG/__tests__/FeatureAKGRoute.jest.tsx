@@ -52,7 +52,7 @@ describe("FeatureAKG", () => {
           $hasCollectionRailItems: Boolean!
           $hasAuctionRailItems: Boolean!
           $hasFairRailItems: Boolean!
-        ) @raw_response_type {
+        ) @raw_response_type @relay_test_operation {
           viewer {
             ...FeatureAKGApp_viewer
               @arguments(
@@ -1009,6 +1009,7 @@ const ArtKeepsGoingFixture: FeatureAKGRoute_Test_QueryRawResponse = {
     selectedWorks: {
       id: "selected-works",
       itemsConnection: {
+        __isArtworkConnectionInterface: "ArtworkConnection",
         edges: [
           {
             __typename: "Artwork",

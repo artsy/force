@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -53,6 +54,18 @@ v1 = {
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
+},
+v2 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "ID"
+},
+v3 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "String"
 };
 return {
   "fragment": {
@@ -78,7 +91,8 @@ return {
         "storageKey": "fairOrganizer(id:\"example\")"
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -179,13 +193,52 @@ return {
     ]
   },
   "params": {
+    "cacheID": "2df6ba381ddfe63972a0899de2e26f73",
     "id": null,
-    "metadata": {},
+    "metadata": {
+      "relayTestingSelectionTypeInfo": {
+        "fairOrganizer": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "FairOrganizer"
+        },
+        "fairOrganizer.id": (v2/*: any*/),
+        "fairOrganizer.name": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "String"
+        },
+        "fairOrganizer.profile": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Profile"
+        },
+        "fairOrganizer.profile.id": (v2/*: any*/),
+        "fairOrganizer.profile.image": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Image"
+        },
+        "fairOrganizer.profile.image.resized": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "ResizedImageUrl"
+        },
+        "fairOrganizer.profile.image.resized.src": (v3/*: any*/),
+        "fairOrganizer.profile.image.resized.srcSet": (v3/*: any*/),
+        "fairOrganizer.slug": (v2/*: any*/)
+      }
+    },
     "name": "DedicatedArticlesBreadcrumbs_Test_Query",
     "operationKind": "query",
     "text": "query DedicatedArticlesBreadcrumbs_Test_Query {\n  fairOrganizer(id: \"example\") {\n    ...DedicatedArticlesBreadcrumbs_fairOrganizer\n    id\n  }\n}\n\nfragment DedicatedArticlesBreadcrumbs_fairOrganizer on FairOrganizer {\n  slug\n  name\n  profile {\n    image {\n      resized(width: 30, height: 30, version: \"square\") {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '3a7760a96abc4e24de92f354c3d92ffc';
+(node as any).hash = 'afa30fa8497e508d19f3bc05ee3a7a75';
 export default node;

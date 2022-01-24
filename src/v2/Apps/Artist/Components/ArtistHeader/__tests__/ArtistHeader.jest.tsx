@@ -15,7 +15,7 @@ describe("ArtistHeader", () => {
   const { getWrapper } = setupTestWrapper<ArtistHeader_Test_Query>({
     Component: ArtistHeaderFragmentContainer,
     query: graphql`
-      query ArtistHeader_Test_Query {
+      query ArtistHeader_Test_Query @relay_test_operation {
         artist(id: "example") {
           ...ArtistHeader_artist
         }

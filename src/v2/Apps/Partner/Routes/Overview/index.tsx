@@ -8,7 +8,6 @@ import { SubscriberBannerFragmentContainer } from "../../Components/Overview/Sub
 import { ArtworksRailRenderer } from "../../Components/Overview/ArtworksRail"
 import { ShowBannersRailRenderer } from "../../Components/Overview/ShowBannersRail"
 import { NearbyGalleriesRailRenderer } from "../../Components/Overview/NearbyGalleriesRail"
-import { compact } from "lodash"
 
 interface OverviewProps {
   partner: Overview_partner
@@ -21,31 +20,28 @@ const Overview: React.FC<OverviewProps> = ({ partner }) => {
     displayFullPartnerPage,
     profileBannerDisplay,
     displayArtistsSection,
-    articlesConnection,
     locationsConnection,
   } = partner
 
   const location = locationsConnection?.edges![0]?.node
 
-  const articles = compact(articlesConnection?.edges)
-
   return displayFullPartnerPage ? (
     <>
       {profileBannerDisplay === "Artworks" ? (
-        <ArtworksRailRenderer mt={4} mb={[4, 80]} partnerId={slug} />
+        <ArtworksRailRenderer mt={4} mb={[4, 12]} partnerId={slug} />
       ) : (
-        <ShowBannersRailRenderer mt={4} mb={[4, 80]} partnerId={slug} />
+        <ShowBannersRailRenderer mt={4} mb={[4, 12]} partnerId={slug} />
       )}
 
       <AboutPartnerFragmentContainer partner={partner} />
 
-      <ShowsRailFragmentContainer mt={4} mb={[4, 80]} partner={partner} />
+      <ShowsRailFragmentContainer mt={4} mb={[4, 12]} partner={partner} />
+
       {displayArtistsSection && (
-        <ArtistsRailFragmentContainer mt={4} mb={[4, 80]} partner={partner} />
+        <ArtistsRailFragmentContainer mt={4} mb={[4, 12]} partner={partner} />
       )}
-      {articles.length > 0 && (
-        <ArticlesRailFragmentContainer partnerSlug={slug} articles={articles} />
-      )}
+
+      <ArticlesRailFragmentContainer partner={partner} />
     </>
   ) : (
     <>
@@ -55,10 +51,10 @@ const Overview: React.FC<OverviewProps> = ({ partner }) => {
 
       <AboutPartnerFragmentContainer partner={partner} />
 
-      <ShowsRailFragmentContainer mt={4} mb={[4, 80]} partner={partner} />
+      <ShowsRailFragmentContainer mt={4} mb={[4, 12]} partner={partner} />
 
       {displayArtistsSection && (
-        <ArtistsRailFragmentContainer mt={4} mb={[4, 80]} partner={partner} />
+        <ArtistsRailFragmentContainer mt={4} mb={[4, 12]} partner={partner} />
       )}
 
       {location && location.coordinates && (
@@ -84,6 +80,7 @@ export const OverviewFragmentContainer = createFragmentContainer(Overview, {
       ...ShowsRail_partner
       ...ArtistsRail_partner
       ...SubscriberBanner_partner
+      ...ArticlesRail_partner
       locationsConnection(first: 1) {
         edges {
           node {
@@ -93,13 +90,6 @@ export const OverviewFragmentContainer = createFragmentContainer(Overview, {
               lng
             }
           }
-        }
-      }
-      articlesConnection(first: 8)
-        @connection(key: "ArticlesQuery_articlesConnection") {
-        totalCount
-        edges {
-          ...ArticlesRail_articles
         }
       }
     }

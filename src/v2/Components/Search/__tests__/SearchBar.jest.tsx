@@ -17,6 +17,7 @@ const searchResults: SearchBarTestQueryRawResponse["viewer"] = {
     edges: [
       {
         node: {
+          __isNode: "SearchableItem",
           __typename: "SearchableItem",
           displayLabel: "Percy Z",
           href: "/cat/percy-z",
@@ -34,6 +35,7 @@ const searchResults: SearchBarTestQueryRawResponse["viewer"] = {
             artworks: true,
             auctionLots: true,
           },
+          __isNode: "Artist",
           id: "opaque-searchable-item-id2",
         },
       },
@@ -46,6 +48,7 @@ const searchResults: SearchBarTestQueryRawResponse["viewer"] = {
             artworks: false,
             auctionLots: false,
           },
+          __isNode: "Artist",
           id: "opaque-searchable-item-id3",
         },
       },
@@ -69,7 +72,8 @@ const getWrapper = (
     Component: SearchBar,
     query: graphql`
       query SearchBarTestQuery($term: String!, $hasTerm: Boolean!)
-        @raw_response_type {
+        @raw_response_type
+        @relay_test_operation {
         viewer {
           ...SearchBar_viewer @arguments(term: $term, hasTerm: $hasTerm)
         }

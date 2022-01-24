@@ -7,6 +7,7 @@ import qs from "qs"
 import { authenticationRoutes } from "../authenticationRoutes"
 import { checkForRedirect } from "../Server/checkForRedirect"
 import { setReferer } from "../Server/setReferer"
+import { getENV } from "v2/Utils/getENV"
 
 jest.mock("../Server/checkForRedirect", () => ({
   checkForRedirect: jest.fn(),
@@ -22,10 +23,14 @@ jest.mock("../Utils/helpers", () => ({
   setCookies: jest.fn(),
 }))
 jest.mock("v2/Utils/Hooks/useAuthValidation")
+jest.mock("v2/Utils/getENV", () => ({
+  getENV: jest.fn(),
+}))
 
 describe("authenticationRoutes", () => {
   const mockCheckForRedirect = checkForRedirect as jest.Mock
   const mockSetReferer = setReferer as jest.Mock
+  const mockGetENV = getENV as jest.Mock
 
   const renderClientRoute = route => {
     render(
@@ -116,7 +121,7 @@ describe("authenticationRoutes", () => {
       it("renders login by default", async () => {
         renderClientRoute("/login")
         expect((await screen.findAllByText("EnableRecaptcha")).length).toBe(1)
-        expect((await screen.findAllByText("Login to Artsy")).length).toBe(2)
+        expect((await screen.findAllByText("Log in to Artsy")).length).toBe(2)
       })
 
       it("sets cookie with passed login params on mount", async () => {
@@ -194,7 +199,7 @@ describe("authenticationRoutes", () => {
       it("renders signup", async () => {
         renderClientRoute(`/signup`)
         expect((await screen.findAllByText("EnableRecaptcha")).length).toBe(1)
-        expect((await screen.findAllByText("Signup to Artsy")).length).toBe(2)
+        expect((await screen.findAllByText("Sign up for Artsy")).length).toBe(2)
       })
 
       it("sets cookie with passed login params on mount", async () => {
@@ -240,6 +245,27 @@ describe("authenticationRoutes", () => {
             status: 301,
           })
         )
+      })
+    })
+  })
+
+  describe("/auth-redirect", () => {
+    mockGetENV.mockImplementation(key => {
+      switch (key) {
+        case "APP_URL":
+          return "https://artsy.net"
+        case "ALLOWED_REDIRECT_HOSTS":
+          return "off.artsy.net"
+      }
+    })
+
+    describe("server", () => {
+      it("redirects to redirectTo", () => {
+        const { res, onServerSideRender } = renderServerRoute(
+          "/auth-redirect?redirectTo=https://off.artsy.net/blah"
+        )
+        onServerSideRender()
+        expect(res.redirect).toHaveBeenCalledWith("https://off.artsy.net/blah")
       })
     })
   })

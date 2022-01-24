@@ -1,11 +1,12 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type PartnerArtistsCarousel_partner = {
     readonly slug: string;
-    readonly artists: {
+    readonly artistsConnection: {
         readonly edges: ReadonlyArray<{
             readonly counts: {
                 readonly artworks: number | null;
@@ -43,7 +44,7 @@ return {
   "selections": [
     (v0/*: any*/),
     {
-      "alias": "artists",
+      "alias": null,
       "args": [
         {
           "kind": "Literal",
@@ -53,7 +54,7 @@ return {
         {
           "kind": "Literal",
           "name": "first",
-          "value": 19
+          "value": 20
         },
         {
           "kind": "Literal",
@@ -120,11 +121,12 @@ return {
           "storageKey": null
         }
       ],
-      "storageKey": "artistsConnection(displayOnPartnerProfile:true,first:19,hasPublishedArtworks:true)"
+      "storageKey": "artistsConnection(displayOnPartnerProfile:true,first:20,hasPublishedArtworks:true)"
     }
   ],
-  "type": "Partner"
+  "type": "Partner",
+  "abstractKey": null
 };
 })();
-(node as any).hash = '2ce6d9009b596b4d17a0ce6d6b7cc4f4';
+(node as any).hash = 'b4252ea48c05f4c22efdc890b6891d28';
 export default node;

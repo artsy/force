@@ -33,7 +33,9 @@ describe("ViewingRoomWorksRoute", () => {
         )
       },
       query: graphql`
-        query ViewingRoomWorksRoute_Test_Query($slug: ID!) @raw_response_type {
+        query ViewingRoomWorksRoute_Test_Query($slug: ID!)
+          @raw_response_type
+          @relay_test_operation {
           viewingRoom(id: $slug) {
             ...ViewingRoomWorksRoute_viewingRoom
           }

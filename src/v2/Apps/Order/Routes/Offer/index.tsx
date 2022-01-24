@@ -236,6 +236,7 @@ export class OfferRoute extends Component<OfferProps, OfferState> {
 
     const artwork = this.props.order.lineItems?.edges?.[0]?.node?.artwork
     const isInquiryCheckout = !artwork?.isPriceRange && !artwork?.price
+    const isEdition = artwork?.isEdition
 
     const newOfferSubmissionEnabled = userHasLabFeature(
       this.props.user,
@@ -252,7 +253,9 @@ export class OfferRoute extends Component<OfferProps, OfferState> {
               style={isCommittingMutation ? { pointerEvents: "none" } : {}}
               id="offer-page-left-column"
             >
-              {(!newOfferSubmissionEnabled || isInquiryCheckout) && (
+              {(!newOfferSubmissionEnabled ||
+                isInquiryCheckout ||
+                isEdition) && (
                 <>
                   <Flex flexDirection="column">
                     <OfferInput
@@ -267,7 +270,7 @@ export class OfferRoute extends Component<OfferProps, OfferState> {
                   {priceNote}
                 </>
               )}
-              {newOfferSubmissionEnabled && !isInquiryCheckout && (
+              {newOfferSubmissionEnabled && !isInquiryCheckout && !isEdition && (
                 <>
                   <Text variant="lg" color="black80" marginTop={2}>
                     Select an Option
@@ -382,6 +385,7 @@ export const OfferFragmentContainer = createFragmentContainer(
                 slug
                 price
                 isPriceRange
+                isEdition
                 ...PriceOptions_artwork
               }
               artworkOrEditionSet {

@@ -1,7 +1,5 @@
-import { Box, Flex, SkeletonBox, SkeletonText } from "@artsy/palette"
-import * as React from "react";
-import { Carousel } from "../../Carousel/Carousel"
-import { ResponsiveImage } from "./PartnerArtistsCarouselItem"
+import { Box, Flex, Shelf, SkeletonBox, SkeletonText } from "@artsy/palette"
+import * as React from "react"
 
 export interface PartnerArtistsCarouselPlaceholderProps {
   count: number
@@ -11,13 +9,11 @@ export const PartnerArtistsCarouselPlaceholder: React.FC<PartnerArtistsCarouselP
   count,
 }) => {
   return (
-    <Carousel itemsPerViewport={[2, 2, 3, 4]}>
+    <Shelf alignItems="flex-start">
       {[...Array(count)].map((_, i) => {
         return (
-          <Box width={[300, "100%"]} key={i}>
-            <ResponsiveImage>
-              <SkeletonBox height="100%" width="100%" />
-            </ResponsiveImage>
+          <Box key={i}>
+            <SkeletonBox height={240} width={320} />
 
             <Flex mt={1} justifyContent="space-between">
               <Flex>
@@ -32,6 +28,6 @@ export const PartnerArtistsCarouselPlaceholder: React.FC<PartnerArtistsCarouselP
           </Box>
         )
       })}
-    </Carousel>
+    </Shelf>
   )
 }

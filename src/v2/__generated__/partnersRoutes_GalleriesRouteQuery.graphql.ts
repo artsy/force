@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -65,6 +66,7 @@ fragment PartnersFeaturedCarouselCell_profile on Profile {
       }
     }
     ... on Node {
+      __isNode: __typename
       id
     }
     ... on FairOrganizer {
@@ -85,6 +87,7 @@ fragment PartnersFeaturedCarousel_viewer_4uWBz4 on Viewer {
             id
           }
           ... on Node {
+            __isNode: __typename
             id
           }
           ... on FeaturedLink {
@@ -110,14 +113,14 @@ v1 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "id",
+  "name": "internalID",
   "storageKey": null
 },
 v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "internalID",
+  "name": "id",
   "storageKey": null
 },
 v3 = {
@@ -140,7 +143,16 @@ v5 = [
     "name": "format",
     "value": "MMM D"
   }
-];
+],
+v6 = [
+  (v2/*: any*/)
+],
+v7 = {
+  "kind": "InlineFragment",
+  "selections": (v6/*: any*/),
+  "type": "Node",
+  "abstractKey": "__isNode"
+};
 return {
   "fragment": {
     "argumentDefinitions": [],
@@ -165,7 +177,8 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -226,10 +239,10 @@ return {
                         "plural": false,
                         "selections": [
                           (v0/*: any*/),
-                          (v1/*: any*/),
                           {
                             "kind": "InlineFragment",
                             "selections": [
+                              (v1/*: any*/),
                               (v2/*: any*/),
                               {
                                 "alias": null,
@@ -255,11 +268,10 @@ return {
                                 "plural": false,
                                 "selections": [
                                   (v0/*: any*/),
-                                  (v1/*: any*/),
                                   {
                                     "kind": "InlineFragment",
                                     "selections": [
-                                      (v2/*: any*/),
+                                      (v1/*: any*/),
                                       (v4/*: any*/),
                                       (v3/*: any*/),
                                       {
@@ -322,7 +334,7 @@ return {
                                                 "name": "city",
                                                 "storageKey": null
                                               },
-                                              (v1/*: any*/)
+                                              (v2/*: any*/)
                                             ],
                                             "storageKey": null
                                           },
@@ -377,18 +389,34 @@ return {
                                             ],
                                             "storageKey": null
                                           },
-                                          (v1/*: any*/)
+                                          (v2/*: any*/)
                                         ],
                                         "storageKey": null
                                       }
                                     ],
-                                    "type": "Partner"
+                                    "type": "Partner",
+                                    "abstractKey": null
+                                  },
+                                  (v7/*: any*/),
+                                  {
+                                    "kind": "InlineFragment",
+                                    "selections": (v6/*: any*/),
+                                    "type": "FairOrganizer",
+                                    "abstractKey": null
                                   }
                                 ],
                                 "storageKey": null
                               }
                             ],
-                            "type": "Profile"
+                            "type": "Profile",
+                            "abstractKey": null
+                          },
+                          (v7/*: any*/),
+                          {
+                            "kind": "InlineFragment",
+                            "selections": (v6/*: any*/),
+                            "type": "FeaturedLink",
+                            "abstractKey": null
                           }
                         ],
                         "storageKey": null
@@ -399,7 +427,7 @@ return {
                 ],
                 "storageKey": "orderedItemsConnection(first:50)"
               },
-              (v1/*: any*/)
+              (v2/*: any*/)
             ],
             "storageKey": "orderedSet(id:\"5638fdfb7261690296000031\")"
           }
@@ -409,11 +437,12 @@ return {
     ]
   },
   "params": {
+    "cacheID": "ffcb4e0cf075e2fe0119715121908cb2",
     "id": null,
     "metadata": {},
     "name": "partnersRoutes_GalleriesRouteQuery",
     "operationKind": "query",
-    "text": "query partnersRoutes_GalleriesRouteQuery {\n  viewer {\n    ...GalleriesRoute_viewer\n  }\n}\n\nfragment FollowProfileButton_profile on Profile {\n  id\n  slug\n  name\n  internalID\n  is_followed: isFollowed\n}\n\nfragment GalleriesRoute_viewer on Viewer {\n  ...PartnersFeaturedCarousel_viewer_4uWBz4\n}\n\nfragment PartnersFeaturedCarouselCell_profile on Profile {\n  ...FollowProfileButton_profile\n  owner {\n    __typename\n    ... on Partner {\n      internalID\n      href\n      name\n      featuredShow {\n        href\n        name\n        status\n        statusUpdate\n        startAt(format: \"MMM D\")\n        endAt(format: \"MMM D\")\n        isOnlineExclusive\n        location {\n          city\n          id\n        }\n        coverImage {\n          resized(height: 500, version: [\"normalized\", \"larger\", \"large\"]) {\n            src\n            srcSet\n          }\n        }\n        id\n      }\n    }\n    ... on Node {\n      id\n    }\n    ... on FairOrganizer {\n      id\n    }\n  }\n}\n\nfragment PartnersFeaturedCarousel_viewer_4uWBz4 on Viewer {\n  orderedSet(id: \"5638fdfb7261690296000031\") {\n    orderedItemsConnection(first: 50) {\n      edges {\n        node {\n          __typename\n          ... on Profile {\n            internalID\n            ...PartnersFeaturedCarouselCell_profile\n            id\n          }\n          ... on Node {\n            id\n          }\n          ... on FeaturedLink {\n            id\n          }\n        }\n      }\n    }\n    id\n  }\n}\n"
+    "text": "query partnersRoutes_GalleriesRouteQuery {\n  viewer {\n    ...GalleriesRoute_viewer\n  }\n}\n\nfragment FollowProfileButton_profile on Profile {\n  id\n  slug\n  name\n  internalID\n  is_followed: isFollowed\n}\n\nfragment GalleriesRoute_viewer on Viewer {\n  ...PartnersFeaturedCarousel_viewer_4uWBz4\n}\n\nfragment PartnersFeaturedCarouselCell_profile on Profile {\n  ...FollowProfileButton_profile\n  owner {\n    __typename\n    ... on Partner {\n      internalID\n      href\n      name\n      featuredShow {\n        href\n        name\n        status\n        statusUpdate\n        startAt(format: \"MMM D\")\n        endAt(format: \"MMM D\")\n        isOnlineExclusive\n        location {\n          city\n          id\n        }\n        coverImage {\n          resized(height: 500, version: [\"normalized\", \"larger\", \"large\"]) {\n            src\n            srcSet\n          }\n        }\n        id\n      }\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on FairOrganizer {\n      id\n    }\n  }\n}\n\nfragment PartnersFeaturedCarousel_viewer_4uWBz4 on Viewer {\n  orderedSet(id: \"5638fdfb7261690296000031\") {\n    orderedItemsConnection(first: 50) {\n      edges {\n        node {\n          __typename\n          ... on Profile {\n            internalID\n            ...PartnersFeaturedCarouselCell_profile\n            id\n          }\n          ... on Node {\n            __isNode: __typename\n            id\n          }\n          ... on FeaturedLink {\n            id\n          }\n        }\n      }\n    }\n    id\n  }\n}\n"
   }
 };
 })();

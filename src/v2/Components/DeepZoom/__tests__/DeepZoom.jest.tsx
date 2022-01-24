@@ -13,7 +13,7 @@ const { getWrapper } = setupTestWrapper<DeepZoom_Test_Query>({
     return <DeepZoomFragmentContainer image={image} onClose={handleClose} />
   },
   query: graphql`
-    query DeepZoom_Test_Query {
+    query DeepZoom_Test_Query @relay_test_operation {
       artwork(id: "example") {
         images {
           ...DeepZoom_image

@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -28,28 +29,24 @@ export type ConversationApp_me$key = {
 const node: ReaderFragment = {
   "argumentDefinitions": [
     {
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "after"
+    },
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "before"
+    },
+    {
       "defaultValue": 25,
       "kind": "LocalArgument",
-      "name": "first",
-      "type": "Int"
+      "name": "first"
     },
     {
       "defaultValue": null,
       "kind": "LocalArgument",
-      "name": "last",
-      "type": "Int"
-    },
-    {
-      "defaultValue": null,
-      "kind": "LocalArgument",
-      "name": "after",
-      "type": "String"
-    },
-    {
-      "defaultValue": null,
-      "kind": "LocalArgument",
-      "name": "before",
-      "type": "String"
+      "name": "last"
     }
   ],
   "kind": "Fragment",
@@ -141,7 +138,8 @@ const node: ReaderFragment = {
       "name": "ConversationList_me"
     }
   ],
-  "type": "Me"
+  "type": "Me",
+  "abstractKey": null
 };
 (node as any).hash = '7b32208e71cb364f107200604f93ec26';
 export default node;

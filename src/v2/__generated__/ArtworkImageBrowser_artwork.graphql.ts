@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -70,7 +71,8 @@ return {
       "name": "ArtworkImageBrowserLarge_artwork"
     }
   ],
-  "type": "Artwork"
+  "type": "Artwork",
+  "abstractKey": null
 };
 })();
 (node as any).hash = 'e8fb9e7d20d42ae658fa5c0c8e46063f';

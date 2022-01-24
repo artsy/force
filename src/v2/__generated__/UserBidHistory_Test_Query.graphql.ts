@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -49,6 +50,18 @@ var v0 = {
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
+},
+v1 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "ID"
+},
+v2 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "String"
 };
 return {
   "fragment": {
@@ -74,7 +87,8 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -177,13 +191,54 @@ return {
     ]
   },
   "params": {
+    "cacheID": "fe890568feee3c0c5a4c2572dc7193da",
     "id": null,
-    "metadata": {},
+    "metadata": {
+      "relayTestingSelectionTypeInfo": {
+        "me": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Me"
+        },
+        "me.id": (v1/*: any*/),
+        "me.myBids": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "MyBids"
+        },
+        "me.myBids.closed": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": true,
+          "type": "MyBid"
+        },
+        "me.myBids.closed.sale": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Sale"
+        },
+        "me.myBids.closed.sale.endAt": (v2/*: any*/),
+        "me.myBids.closed.sale.href": (v2/*: any*/),
+        "me.myBids.closed.sale.id": (v1/*: any*/),
+        "me.myBids.closed.sale.name": (v2/*: any*/),
+        "me.myBids.closed.sale.profile": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Profile"
+        },
+        "me.myBids.closed.sale.profile.bio": (v2/*: any*/),
+        "me.myBids.closed.sale.profile.id": (v1/*: any*/)
+      }
+    },
     "name": "UserBidHistory_Test_Query",
     "operationKind": "query",
     "text": "query UserBidHistory_Test_Query {\n  me {\n    ...UserBidHistory_me\n    id\n  }\n}\n\nfragment UserBidHistory_me on Me {\n  myBids {\n    closed {\n      sale {\n        name\n        href\n        endAt(format: \"MMMM D, h:mmA\")\n        profile {\n          bio\n          id\n        }\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '2ab116d6b406597ea88737c73a1714f8';
+(node as any).hash = 'aab7c7a1013e923a09c9119116d89fa3';
 export default node;

@@ -1,22 +1,25 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type WorksForYouArtistFeed_viewer = {
     readonly artist: {
+        readonly internalID: string;
         readonly name: string | null;
         readonly href: string | null;
         readonly counts: {
             readonly artworks: number | null;
-            readonly for_sale_artworks: number | null;
+            readonly forSaleArtworks: number | null;
         } | null;
         readonly image: {
             readonly resized: {
-                readonly url: string;
+                readonly src: string;
+                readonly srcSet: string;
             } | null;
         } | null;
-        readonly artworks_connection: {
+        readonly artworksConnection: {
             readonly pageInfo: {
                 readonly hasNextPage: boolean;
                 readonly endCursor: string | null;
@@ -42,30 +45,26 @@ export type WorksForYouArtistFeed_viewer$key = {
 const node: ReaderFragment = {
   "argumentDefinitions": [
     {
-      "defaultValue": 10,
+      "defaultValue": "",
       "kind": "LocalArgument",
-      "name": "count",
-      "type": "Int"
+      "name": "artistSlug"
+    },
+    {
+      "defaultValue": 25,
+      "kind": "LocalArgument",
+      "name": "count"
     },
     {
       "defaultValue": null,
       "kind": "LocalArgument",
-      "name": "cursor",
-      "type": "String"
-    },
-    {
-      "defaultValue": "",
-      "kind": "LocalArgument",
-      "name": "artistID",
-      "type": "String!"
+      "name": "cursor"
     },
     {
       "defaultValue": [
         "IS_FOR_SALE"
       ],
       "kind": "LocalArgument",
-      "name": "filter",
-      "type": "[ArtistArtworksFilters]"
+      "name": "filter"
     }
   ],
   "kind": "Fragment",
@@ -77,7 +76,7 @@ const node: ReaderFragment = {
         "direction": "forward",
         "path": [
           "artist",
-          "artworks_connection"
+          "artworksConnection"
         ]
       }
     ]
@@ -90,7 +89,7 @@ const node: ReaderFragment = {
         {
           "kind": "Variable",
           "name": "id",
-          "variableName": "artistID"
+          "variableName": "artistSlug"
         }
       ],
       "concreteType": "Artist",
@@ -98,6 +97,13 @@ const node: ReaderFragment = {
       "name": "artist",
       "plural": false,
       "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "internalID",
+          "storageKey": null
+        },
         {
           "alias": null,
           "args": null,
@@ -128,7 +134,7 @@ const node: ReaderFragment = {
               "storageKey": null
             },
             {
-              "alias": "for_sale_artworks",
+              "alias": null,
               "args": null,
               "kind": "ScalarField",
               "name": "forSaleArtworks",
@@ -168,7 +174,14 @@ const node: ReaderFragment = {
                   "alias": null,
                   "args": null,
                   "kind": "ScalarField",
-                  "name": "url",
+                  "name": "src",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "srcSet",
                   "storageKey": null
                 }
               ],
@@ -178,7 +191,7 @@ const node: ReaderFragment = {
           "storageKey": null
         },
         {
-          "alias": "artworks_connection",
+          "alias": "artworksConnection",
           "args": [
             {
               "kind": "Variable",
@@ -193,7 +206,7 @@ const node: ReaderFragment = {
           ],
           "concreteType": "ArtworkConnection",
           "kind": "LinkedField",
-          "name": "__WorksForYouArtistFeed_artworks_connection_connection",
+          "name": "__WorksForYouArtistFeed_artworksConnection_connection",
           "plural": false,
           "selections": [
             {
@@ -276,7 +289,8 @@ const node: ReaderFragment = {
       "storageKey": null
     }
   ],
-  "type": "Viewer"
+  "type": "Viewer",
+  "abstractKey": null
 };
-(node as any).hash = '108ebf12e061723fcad5a9f85fc4d787';
+(node as any).hash = 'a86b452e78e54f9c19a3008ae780ae74';
 export default node;

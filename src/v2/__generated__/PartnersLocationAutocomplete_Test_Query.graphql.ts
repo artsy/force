@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -84,7 +85,31 @@ var v0 = [
     ],
     "storageKey": null
   }
-];
+],
+v1 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": true,
+  "type": "City"
+},
+v2 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "LatLng"
+},
+v3 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "Float"
+},
+v4 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "String"
+};
 return {
   "fragment": {
     "argumentDefinitions": [],
@@ -109,7 +134,8 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -157,13 +183,35 @@ return {
     ]
   },
   "params": {
+    "cacheID": "a9e0fc7220fdb48cc8459a1fa95c9201",
     "id": null,
-    "metadata": {},
+    "metadata": {
+      "relayTestingSelectionTypeInfo": {
+        "viewer": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Viewer"
+        },
+        "viewer.allCities": (v1/*: any*/),
+        "viewer.allCities.coordinates": (v2/*: any*/),
+        "viewer.allCities.coordinates.lat": (v3/*: any*/),
+        "viewer.allCities.coordinates.lng": (v3/*: any*/),
+        "viewer.allCities.text": (v4/*: any*/),
+        "viewer.allCities.value": (v4/*: any*/),
+        "viewer.featuredCities": (v1/*: any*/),
+        "viewer.featuredCities.coordinates": (v2/*: any*/),
+        "viewer.featuredCities.coordinates.lat": (v3/*: any*/),
+        "viewer.featuredCities.coordinates.lng": (v3/*: any*/),
+        "viewer.featuredCities.text": (v4/*: any*/),
+        "viewer.featuredCities.value": (v4/*: any*/)
+      }
+    },
     "name": "PartnersLocationAutocomplete_Test_Query",
     "operationKind": "query",
     "text": "query PartnersLocationAutocomplete_Test_Query {\n  viewer {\n    ...PartnersLocationAutocomplete_viewer\n  }\n}\n\nfragment PartnersLocationAutocomplete_viewer on Viewer {\n  featuredCities: cities(featured: true) {\n    text: name\n    value: slug\n    coordinates {\n      lat\n      lng\n    }\n  }\n  allCities: cities {\n    text: name\n    value: slug\n    coordinates {\n      lat\n      lng\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '753ea53a42f1bb9ae1bdb35a6ed84069';
+(node as any).hash = 'f2551224817da86f5f03c296130b63f3';
 export default node;

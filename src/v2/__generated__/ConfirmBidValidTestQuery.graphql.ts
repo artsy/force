@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -45,10 +46,11 @@ export type ConfirmBidValidTestQueryRawResponse = {
                 readonly bidderPositions: number | null;
             }) | null;
             readonly lotLabel: string | null;
-            readonly minimumNextBid: ({
-                readonly amount: string | null;
-                readonly cents: number | null;
+            readonly currentBid: ({
                 readonly display: string | null;
+            }) | null;
+            readonly minimumNextBid: ({
+                readonly cents: number | null;
             }) | null;
             readonly increments: ReadonlyArray<({
                 readonly cents: number | null;
@@ -58,10 +60,10 @@ export type ConfirmBidValidTestQueryRawResponse = {
                 readonly slug: string;
                 readonly registrationStatus: ({
                     readonly qualifiedForBidding: boolean | null;
-                    readonly id: string | null;
+                    readonly id: string;
                     readonly internalID: string;
                 }) | null;
-                readonly id: string | null;
+                readonly id: string;
                 readonly internalID: string;
                 readonly name: string | null;
                 readonly isClosed: boolean | null;
@@ -69,14 +71,14 @@ export type ConfirmBidValidTestQueryRawResponse = {
             }) | null;
             readonly internalID: string;
             readonly slug: string;
-            readonly id: string | null;
+            readonly id: string;
         }) | null;
-        readonly id: string | null;
+        readonly id: string;
     }) | null;
     readonly me: ({
         readonly internalID: string;
         readonly hasQualifiedCreditCards: boolean | null;
-        readonly id: string | null;
+        readonly id: string;
     }) | null;
 };
 export type ConfirmBidValidTestQuery = {
@@ -165,9 +167,7 @@ fragment LotInfo_saleArtwork on SaleArtwork {
     bidderPositions
   }
   lotLabel
-  minimumNextBid {
-    amount
-    cents
+  currentBid {
     display
   }
 }
@@ -241,14 +241,14 @@ v9 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "cents",
+  "name": "display",
   "storageKey": null
 },
 v10 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "display",
+  "name": "cents",
   "storageKey": null
 },
 v11 = {
@@ -354,7 +354,8 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -436,19 +437,23 @@ return {
               {
                 "alias": null,
                 "args": null,
+                "concreteType": "SaleArtworkCurrentBid",
+                "kind": "LinkedField",
+                "name": "currentBid",
+                "plural": false,
+                "selections": [
+                  (v9/*: any*/)
+                ],
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
                 "concreteType": "SaleArtworkMinimumNextBid",
                 "kind": "LinkedField",
                 "name": "minimumNextBid",
                 "plural": false,
                 "selections": [
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "amount",
-                    "storageKey": null
-                  },
-                  (v9/*: any*/),
                   (v10/*: any*/)
                 ],
                 "storageKey": null
@@ -467,8 +472,8 @@ return {
                 "name": "increments",
                 "plural": true,
                 "selections": [
-                  (v9/*: any*/),
-                  (v10/*: any*/)
+                  (v10/*: any*/),
+                  (v9/*: any*/)
                 ],
                 "storageKey": "increments(useMyMaxBid:true)"
               },
@@ -530,11 +535,12 @@ return {
     ]
   },
   "params": {
+    "cacheID": "6868c96d63254a69e3123b50aa275ec2",
     "id": null,
     "metadata": {},
     "name": "ConfirmBidValidTestQuery",
     "operationKind": "query",
-    "text": "query ConfirmBidValidTestQuery {\n  artwork(id: \"artwork-id\") {\n    ...LotInfo_artwork\n    internalID\n    slug\n    saleArtwork(saleID: \"example-auction-id\") {\n      ...LotInfo_saleArtwork\n      ...BidForm_saleArtwork\n      internalID\n      slug\n      sale {\n        registrationStatus {\n          internalID\n          qualifiedForBidding\n          id\n        }\n        internalID\n        slug\n        name\n        isClosed\n        isRegistrationClosed\n        id\n      }\n      id\n    }\n    id\n  }\n  me {\n    internalID\n    hasQualifiedCreditCards\n    ...ConfirmBid_me\n    id\n  }\n}\n\nfragment BidForm_me on Me {\n  hasQualifiedCreditCards\n}\n\nfragment BidForm_saleArtwork on SaleArtwork {\n  minimumNextBid {\n    cents\n  }\n  increments(useMyMaxBid: true) {\n    cents\n    display\n  }\n  sale {\n    slug\n    registrationStatus {\n      qualifiedForBidding\n      id\n    }\n    id\n  }\n}\n\nfragment ConfirmBid_me on Me {\n  internalID\n  hasQualifiedCreditCards\n  ...BidForm_me\n}\n\nfragment LotInfo_artwork on Artwork {\n  internalID\n  date\n  title\n  imageUrl\n  artistNames\n  slug\n}\n\nfragment LotInfo_saleArtwork on SaleArtwork {\n  counts {\n    bidderPositions\n  }\n  lotLabel\n  minimumNextBid {\n    amount\n    cents\n    display\n  }\n}\n"
+    "text": "query ConfirmBidValidTestQuery {\n  artwork(id: \"artwork-id\") {\n    ...LotInfo_artwork\n    internalID\n    slug\n    saleArtwork(saleID: \"example-auction-id\") {\n      ...LotInfo_saleArtwork\n      ...BidForm_saleArtwork\n      internalID\n      slug\n      sale {\n        registrationStatus {\n          internalID\n          qualifiedForBidding\n          id\n        }\n        internalID\n        slug\n        name\n        isClosed\n        isRegistrationClosed\n        id\n      }\n      id\n    }\n    id\n  }\n  me {\n    internalID\n    hasQualifiedCreditCards\n    ...ConfirmBid_me\n    id\n  }\n}\n\nfragment BidForm_me on Me {\n  hasQualifiedCreditCards\n}\n\nfragment BidForm_saleArtwork on SaleArtwork {\n  minimumNextBid {\n    cents\n  }\n  increments(useMyMaxBid: true) {\n    cents\n    display\n  }\n  sale {\n    slug\n    registrationStatus {\n      qualifiedForBidding\n      id\n    }\n    id\n  }\n}\n\nfragment ConfirmBid_me on Me {\n  internalID\n  hasQualifiedCreditCards\n  ...BidForm_me\n}\n\nfragment LotInfo_artwork on Artwork {\n  internalID\n  date\n  title\n  imageUrl\n  artistNames\n  slug\n}\n\nfragment LotInfo_saleArtwork on SaleArtwork {\n  counts {\n    bidderPositions\n  }\n  lotLabel\n  currentBid {\n    display\n  }\n}\n"
   }
 };
 })();

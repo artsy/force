@@ -32,7 +32,7 @@ const render = (extraOrderProps?: ShippingQuotes_Test_QueryResponse["order"]) =>
       },
     },
     query: graphql`
-      query ShippingQuotes_Test_Query @raw_response_type {
+      query ShippingQuotes_Test_Query @raw_response_type @relay_test_operation {
         order: commerceOrder {
           lineItems {
             edges {

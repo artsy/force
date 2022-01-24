@@ -47,7 +47,7 @@ describe("Payment", () => {
       ...settingOrderPaymentSuccess,
     },
     query: graphql`
-      query PaymentTestQuery @raw_response_type {
+      query PaymentTestQuery @raw_response_type @relay_test_operation {
         me {
           ...Payment_me
         }

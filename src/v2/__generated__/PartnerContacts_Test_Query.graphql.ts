@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -33,7 +34,7 @@ export type PartnerContacts_Test_QueryRawResponse = {
                 }) | null;
             }) | null> | null;
         }) | null;
-        readonly id: string | null;
+        readonly id: string;
     }) | null;
 };
 export type PartnerContacts_Test_Query = {
@@ -114,6 +115,24 @@ v2 = {
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
+},
+v3 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "ID"
+},
+v4 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "String"
+},
+v5 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "Float"
 };
 return {
   "fragment": {
@@ -161,7 +180,8 @@ return {
         "storageKey": "partner(id:\"white-cube\")"
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -292,13 +312,58 @@ return {
     ]
   },
   "params": {
+    "cacheID": "71f07a37256f0b1ba2ced9768f36ea37",
     "id": null,
-    "metadata": {},
+    "metadata": {
+      "relayTestingSelectionTypeInfo": {
+        "partner": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Partner"
+        },
+        "partner.id": (v3/*: any*/),
+        "partner.locations": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "LocationConnection"
+        },
+        "partner.locations.edges": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": true,
+          "type": "LocationEdge"
+        },
+        "partner.locations.edges.node": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Location"
+        },
+        "partner.locations.edges.node.address": (v4/*: any*/),
+        "partner.locations.edges.node.address2": (v4/*: any*/),
+        "partner.locations.edges.node.city": (v4/*: any*/),
+        "partner.locations.edges.node.coordinates": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "LatLng"
+        },
+        "partner.locations.edges.node.coordinates.lat": (v5/*: any*/),
+        "partner.locations.edges.node.coordinates.lng": (v5/*: any*/),
+        "partner.locations.edges.node.displayCountry": (v4/*: any*/),
+        "partner.locations.edges.node.id": (v3/*: any*/),
+        "partner.locations.edges.node.phone": (v4/*: any*/),
+        "partner.locations.edges.node.postalCode": (v4/*: any*/),
+        "partner.locations.edges.node.state": (v4/*: any*/)
+      }
+    },
     "name": "PartnerContacts_Test_Query",
     "operationKind": "query",
     "text": "query PartnerContacts_Test_Query {\n  partner(id: \"white-cube\") {\n    locations: locationsConnection(first: 50) {\n      edges {\n        ...PartnerContacts_edges\n      }\n    }\n    id\n  }\n}\n\nfragment PartnerContactAddress_location on Location {\n  city\n  phone\n  state\n  address\n  address2\n  postalCode\n  displayCountry\n}\n\nfragment PartnerContactCard_location on Location {\n  ...PartnerContactAddress_location\n  ...PartnerContactMap_location\n}\n\nfragment PartnerContactMap_location on Location {\n  city\n  phone\n  state\n  address\n  address2\n  postalCode\n  displayCountry\n  coordinates {\n    lat\n    lng\n  }\n}\n\nfragment PartnerContacts_edges on LocationEdge {\n  node {\n    id\n    ...PartnerContactCard_location\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '2525811f24797327eff17511e3d11c9b';
+(node as any).hash = 'eea07b8b392182a999f7f230b1b048aa';
 export default node;

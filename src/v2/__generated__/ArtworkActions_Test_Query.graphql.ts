@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -142,6 +143,42 @@ v5 = {
   "kind": "ScalarField",
   "name": "height",
   "storageKey": null
+},
+v6 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "ID"
+},
+v7 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "String"
+},
+v8 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "Float"
+},
+v9 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "Int"
+},
+v10 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "String"
+},
+v11 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "Boolean"
 };
 return {
   "fragment": {
@@ -167,7 +204,8 @@ return {
         "storageKey": "artwork(id:\"example\")"
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -455,13 +493,108 @@ return {
     ]
   },
   "params": {
+    "cacheID": "f2125650812c713d81ea5c2665ada4c2",
     "id": null,
-    "metadata": {},
+    "metadata": {
+      "relayTestingSelectionTypeInfo": {
+        "artwork": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Artwork"
+        },
+        "artwork.artists": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": true,
+          "type": "Artist"
+        },
+        "artwork.artists.id": (v6/*: any*/),
+        "artwork.artists.name": (v7/*: any*/),
+        "artwork.artworkMeta": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "ArtworkMeta"
+        },
+        "artwork.artworkMeta.share": (v7/*: any*/),
+        "artwork.date": (v7/*: any*/),
+        "artwork.dimensions": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "dimensions"
+        },
+        "artwork.dimensions.cm": (v7/*: any*/),
+        "artwork.downloadableImageUrl": (v7/*: any*/),
+        "artwork.heightCm": (v8/*: any*/),
+        "artwork.href": (v7/*: any*/),
+        "artwork.id": (v6/*: any*/),
+        "artwork.image": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Image"
+        },
+        "artwork.image.height": (v9/*: any*/),
+        "artwork.image.internalID": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "ID"
+        },
+        "artwork.image.resized": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "ResizedImageUrl"
+        },
+        "artwork.image.resized.height": (v9/*: any*/),
+        "artwork.image.resized.src": (v10/*: any*/),
+        "artwork.image.resized.srcSet": (v10/*: any*/),
+        "artwork.image.resized.width": (v9/*: any*/),
+        "artwork.image.url": (v7/*: any*/),
+        "artwork.image.width": (v9/*: any*/),
+        "artwork.images": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": true,
+          "type": "Image"
+        },
+        "artwork.images.url": (v7/*: any*/),
+        "artwork.internalID": (v6/*: any*/),
+        "artwork.is_downloadable": (v11/*: any*/),
+        "artwork.is_hangable": (v11/*: any*/),
+        "artwork.is_saved": (v11/*: any*/),
+        "artwork.partner": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Partner"
+        },
+        "artwork.partner.id": (v6/*: any*/),
+        "artwork.partner.slug": (v6/*: any*/),
+        "artwork.sale": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Sale"
+        },
+        "artwork.sale.id": (v6/*: any*/),
+        "artwork.sale.isAuction": (v11/*: any*/),
+        "artwork.sale.isClosed": (v11/*: any*/),
+        "artwork.sale.is_auction": (v11/*: any*/),
+        "artwork.sale.is_closed": (v11/*: any*/),
+        "artwork.slug": (v6/*: any*/),
+        "artwork.title": (v7/*: any*/),
+        "artwork.widthCm": (v8/*: any*/)
+      }
+    },
     "name": "ArtworkActions_Test_Query",
     "operationKind": "query",
     "text": "query ArtworkActions_Test_Query {\n  artwork(id: \"example\") {\n    ...ArtworkActions_artwork\n    id\n  }\n}\n\nfragment ArtworkActionsSaveButton_artwork on Artwork {\n  internalID\n  id\n  slug\n  title\n  sale {\n    isAuction\n    isClosed\n    id\n  }\n  is_saved: isSaved\n}\n\nfragment ArtworkActions_artwork on Artwork {\n  ...ArtworkActionsSaveButton_artwork\n  ...ArtworkSharePanel_artwork\n  ...ViewInRoom_artwork\n  artists {\n    name\n    id\n  }\n  date\n  dimensions {\n    cm\n  }\n  slug\n  image {\n    internalID\n    url(version: \"larger\")\n    height\n    width\n  }\n  downloadableImageUrl\n  is_downloadable: isDownloadable\n  is_hangable: isHangable\n  partner {\n    slug\n    id\n  }\n  title\n  sale {\n    is_closed: isClosed\n    is_auction: isAuction\n    id\n  }\n  is_saved: isSaved\n}\n\nfragment ArtworkSharePanel_artwork on Artwork {\n  href\n  images {\n    url\n  }\n  artworkMeta: meta {\n    share\n  }\n}\n\nfragment ViewInRoomArtwork_artwork on Artwork {\n  widthCm\n  heightCm\n  image {\n    resized(width: 800, height: 800, version: [\"normalized\", \"larger\", \"large\"]) {\n      src\n      srcSet\n      width\n      height\n    }\n  }\n}\n\nfragment ViewInRoom_artwork on Artwork {\n  ...ViewInRoomArtwork_artwork\n}\n"
   }
 };
 })();
-(node as any).hash = '90209d97b93da60c0fb4c25bb861d8a8';
+(node as any).hash = '104cf66f3d4d189b3c617eef0654c9dd';
 export default node;

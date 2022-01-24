@@ -21,7 +21,7 @@ const { getWrapper } = setupTestWrapper<HomeHeroUnit_Test_Query>({
     )
   },
   query: graphql`
-    query HomeHeroUnit_Test_Query {
+    query HomeHeroUnit_Test_Query @relay_test_operation {
       homePage {
         heroUnits(platform: DESKTOP) {
           ...HomeHeroUnit_heroUnit

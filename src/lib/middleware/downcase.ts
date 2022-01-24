@@ -11,7 +11,11 @@ export function downcaseMiddleware(
   if (url.pathname.includes("/browse/booths/section/")) {
     next()
   } else if (/[A-Z]/.test(url.pathname)) {
-    res.redirect(301, url.pathname.toLowerCase() + (url.search || ""))
+    // added a regex to replace all leading slashes with a simple slash to prevent open redirects
+    res.redirect(
+      301,
+      url.pathname.replace(/^\/*/, "/").toLowerCase() + (url.search || "")
+    )
   } else {
     next()
   }

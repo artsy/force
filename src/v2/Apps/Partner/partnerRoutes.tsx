@@ -65,7 +65,6 @@ const ContactRoute = loadable(
 export const partnerRoutes: AppRouteConfig[] = [
   {
     path: "/partner/:partnerId",
-    theme: "v2",
     ignoreScrollBehaviorBetweenChildren: true,
     getComponent: () => PartnerApp,
     onClientSideRender: () => {
@@ -106,7 +105,6 @@ export const partnerRoutes: AppRouteConfig[] = [
     children: [
       {
         path: "",
-        theme: "v2",
         getComponent: () => OverviewRoute,
         onClientSideRender: () => {
           OverviewRoute.preload()
@@ -121,7 +119,6 @@ export const partnerRoutes: AppRouteConfig[] = [
       },
       {
         path: "overview",
-        theme: "v2",
         render: props => {
           throw new RedirectException(
             `/partner/${props.match.params.partnerId}`,
@@ -131,7 +128,6 @@ export const partnerRoutes: AppRouteConfig[] = [
       },
       {
         path: "shows",
-        theme: "v2",
         getComponent: () => ShowsRoute,
         onClientSideRender: () => {
           ShowsRoute.preload()
@@ -173,7 +169,6 @@ export const partnerRoutes: AppRouteConfig[] = [
       },
       {
         path: "viewing-rooms",
-        theme: "v2",
         getComponent: () => ViewinRoomsRoute,
         onClientSideRender: () => {
           ViewinRoomsRoute.preload()
@@ -201,7 +196,6 @@ export const partnerRoutes: AppRouteConfig[] = [
       },
       {
         path: "works",
-        theme: "v2",
         getComponent: () => WorksRoute,
         onClientSideRender: () => {
           WorksRoute.preload()
@@ -281,7 +275,7 @@ export const partnerRoutes: AppRouteConfig[] = [
       },
       {
         path: "artists/:artistId?",
-        theme: "v2",
+        ignoreScrollBehavior: true,
         getComponent: () => ArtistsRoute,
         onClientSideRender: () => {
           ArtistsRoute.preload()
@@ -323,7 +317,6 @@ export const partnerRoutes: AppRouteConfig[] = [
       },
       {
         path: "articles",
-        theme: "v2",
         getComponent: () => ArticlesRoute,
         onClientSideRender: () => {
           ArticlesRoute.preload()
@@ -371,7 +364,6 @@ export const partnerRoutes: AppRouteConfig[] = [
       },
       {
         path: "contact",
-        theme: "v2",
         getComponent: () => ContactRoute,
         onClientSideRender: () => {
           ContactRoute.preload()

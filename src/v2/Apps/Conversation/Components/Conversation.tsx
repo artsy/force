@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState } from "react";
-import * as React from "react";
+import { useEffect, useRef, useState } from "react"
+import * as React from "react"
 import {
   RelayPaginationProp,
   RelayRefetchProp,
@@ -119,10 +119,12 @@ const Conversation: React.FC<ConversationProps> = props => {
 
   const { match } = useRouter()
 
+  const conversationID = match?.params?.conversationID
+
   // TODO: refactor
   useEffect(() => {
     initialScroll.current = false
-  }, [match?.params?.conversationID])
+  }, [conversationID])
 
   useEffect(() => {
     initialScroll.current = !fetchingMore
@@ -301,7 +303,7 @@ export const ConversationPaginationContainer = createPaginationContainer(
         unread
         orderConnection(
           first: 10
-          states: [APPROVED, FULFILLED, SUBMITTED, REFUNDED, CANCELED]
+          states: [APPROVED, FULFILLED, SUBMITTED]
           participantType: BUYER
         ) {
           edges {

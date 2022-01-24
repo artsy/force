@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 export type ConsignPriceEstimateContext_SearchConnection_QueryVariables = {
@@ -39,6 +40,7 @@ query ConsignPriceEstimateContext_SearchConnection_Query(
           imageUrl
         }
         ... on Node {
+          __isNode: __typename
           id
         }
       }
@@ -52,8 +54,7 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "searchQuery",
-    "type": "String!"
+    "name": "searchQuery"
   }
 ],
 v1 = [
@@ -110,7 +111,8 @@ v3 = {
       "storageKey": null
     }
   ],
-  "type": "Artist"
+  "type": "Artist",
+  "abstractKey": null
 };
 return {
   "fragment": {
@@ -155,7 +157,8 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -195,14 +198,21 @@ return {
                     "storageKey": null
                   },
                   (v2/*: any*/),
+                  (v3/*: any*/),
                   {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "id",
-                    "storageKey": null
-                  },
-                  (v3/*: any*/)
+                    "kind": "InlineFragment",
+                    "selections": [
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "id",
+                        "storageKey": null
+                      }
+                    ],
+                    "type": "Node",
+                    "abstractKey": "__isNode"
+                  }
                 ],
                 "storageKey": null
               }
@@ -215,11 +225,12 @@ return {
     ]
   },
   "params": {
+    "cacheID": "16f7c3aed48e657713dd91f3eaf979d0",
     "id": null,
     "metadata": {},
     "name": "ConsignPriceEstimateContext_SearchConnection_Query",
     "operationKind": "query",
-    "text": "query ConsignPriceEstimateContext_SearchConnection_Query(\n  $searchQuery: String!\n) {\n  searchConnection(query: $searchQuery, entities: ARTIST, mode: AUTOSUGGEST, first: 7) {\n    edges {\n      node {\n        __typename\n        displayLabel\n        ... on Artist {\n          slug\n          internalID\n          imageUrl\n        }\n        ... on Node {\n          id\n        }\n      }\n    }\n  }\n}\n"
+    "text": "query ConsignPriceEstimateContext_SearchConnection_Query(\n  $searchQuery: String!\n) {\n  searchConnection(query: $searchQuery, entities: ARTIST, mode: AUTOSUGGEST, first: 7) {\n    edges {\n      node {\n        __typename\n        displayLabel\n        ... on Artist {\n          slug\n          internalID\n          imageUrl\n        }\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();

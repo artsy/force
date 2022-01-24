@@ -7,7 +7,7 @@ jest.unmock("react-relay")
 const { getWrapper } = setupTestWrapper({
   Component: AuctionFAQsDialogFragmentContainer,
   query: graphql`
-    query AuctionFAQsDialog_Test_Query {
+    query AuctionFAQsDialog_Test_Query @relay_test_operation {
       viewer {
         ...AuctionFAQsDialog_viewer
       }

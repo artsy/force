@@ -1,22 +1,15 @@
-import { useState } from "react"
-import * as React from "react"
-import { Box, BoxProps, Flex, ResponsiveBox, Text } from "@artsy/palette"
+import { Box, BoxProps, Flex, Shelf, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ShowsRail_partner } from "v2/__generated__/ShowsRail_partner.graphql"
-import { RouterLink } from "v2/System/Router/RouterLink"
-import { flatten } from "lodash"
 import { ShowCardFragmentContainer } from "../PartnerShows/ShowCard"
-import { Carousel } from "../Carousel"
-import { ScrollToPartnerHeader } from "../ScrollToPartnerHeader"
 import { ViewAllButton } from "./ViewAllButton"
+import { extractNodes } from "v2/Utils/extractNodes"
 
 interface ShowsRailProps extends BoxProps {
   partner: ShowsRail_partner
 }
 
 const ShowsRail: React.FC<ShowsRailProps> = ({ partner, ...rest }) => {
-  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-  const [isSeeAllAvaliable, setIsSeeAllAvaliable] = useState<boolean>(undefined)
   if (
     !partner?.showsConnection?.edges ||
     partner.showsConnection.edges.length === 0
@@ -24,18 +17,8 @@ const ShowsRail: React.FC<ShowsRailProps> = ({ partner, ...rest }) => {
     return null
   }
 
-  const {
-    slug,
-    showsConnection: { edges },
-    displayFullPartnerPage,
-  } = partner
-
-  const canShowAll = isSeeAllAvaliable && displayFullPartnerPage
-  const shows = [...edges]
-
-  if (displayFullPartnerPage && shows.length === 20) {
-    shows.pop()
-  }
+  const { slug, showsConnection, displayFullPartnerPage } = partner
+  const shows = extractNodes(showsConnection)
 
   return (
     <Box {...rest}>
@@ -45,50 +28,19 @@ const ShowsRail: React.FC<ShowsRailProps> = ({ partner, ...rest }) => {
         alignItems="center"
         position="relative"
       >
-        <Text variant="title">All Events</Text>
+        <Text variant="lg">All Events</Text>
 
-        {canShowAll && <ViewAllButton to={`/partner/${slug}/shows`} />}
+        {displayFullPartnerPage && (
+          <ViewAllButton to={`/partner/${slug}/shows`} />
+        )}
       </Flex>
-      <Carousel
-        onRailOverflowChange={setIsSeeAllAvaliable}
-        itemsPerViewport={[2, 2, 3, 4]}
-      >
-        {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
-        {flatten([
-          shows.map(edge => {
-            return (
-              <Box key={edge?.node?.id} width={[300, "100%"]}>
-                {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
-                <ShowCardFragmentContainer show={edge.node} />
-              </Box>
-            )
-          }),
-          canShowAll && (
-            <Box key="see-all-button" width={[300, "100%"]}>
-              <RouterLink to={`/partner/${slug}/shows`}>
-                <ScrollToPartnerHeader width="100%">
-                  <ResponsiveBox
-                    aspectWidth={263}
-                    aspectHeight={222}
-                    maxWidth="100%"
-                    bg="black10"
-                  >
-                    <Flex
-                      height="100%"
-                      alignItems="center"
-                      justifyContent="center"
-                    >
-                      <Text style={{ textDecoration: "underline" }}>
-                        See all shows
-                      </Text>
-                    </Flex>
-                  </ResponsiveBox>
-                </ScrollToPartnerHeader>
-              </RouterLink>
-            </Box>
-          ),
-        ])}
-      </Carousel>
+      <Shelf alignItems="flex-start">
+        {shows.map(show => (
+          <Box maxWidth={320}>
+            <ShowCardFragmentContainer key={show?.id} show={show} />
+          </Box>
+        ))}
+      </Shelf>
     </Box>
   )
 }
@@ -98,7 +50,8 @@ export const ShowsRailFragmentContainer = createFragmentContainer(ShowsRail, {
     fragment ShowsRail_partner on Partner {
       slug
       displayFullPartnerPage
-      showsConnection(status: ALL, first: 19, isDisplayable: true) {
+      showsConnection(status: ALL, first: 20, isDisplayable: true) {
+        totalCount
         edges {
           node {
             id

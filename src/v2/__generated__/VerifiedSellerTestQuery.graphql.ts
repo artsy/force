@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -48,6 +49,18 @@ v1 = {
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
+},
+v2 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "ID"
+},
+v3 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "Boolean"
 };
 return {
   "fragment": {
@@ -73,7 +86,8 @@ return {
         "storageKey": "artwork(id:\"whatevs\")"
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -129,13 +143,39 @@ return {
     ]
   },
   "params": {
+    "cacheID": "266407a3e6a21a2606e73e5025d2e0df",
     "id": null,
-    "metadata": {},
+    "metadata": {
+      "relayTestingSelectionTypeInfo": {
+        "artwork": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Artwork"
+        },
+        "artwork.id": (v2/*: any*/),
+        "artwork.is_biddable": (v3/*: any*/),
+        "artwork.partner": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Partner"
+        },
+        "artwork.partner.id": (v2/*: any*/),
+        "artwork.partner.isVerifiedSeller": (v3/*: any*/),
+        "artwork.partner.name": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "String"
+        }
+      }
+    },
     "name": "VerifiedSellerTestQuery",
     "operationKind": "query",
     "text": "query VerifiedSellerTestQuery {\n  artwork(id: \"whatevs\") {\n    ...VerifiedSeller_artwork\n    id\n  }\n}\n\nfragment VerifiedSeller_artwork on Artwork {\n  is_biddable: isBiddable\n  partner {\n    isVerifiedSeller\n    name\n    id\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '84408f8b9b2e5182fb105912e8cb83a3';
+(node as any).hash = '99c1a37fc65e8b0255636404f65ab2a9';
 export default node;

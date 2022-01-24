@@ -1,4 +1,3 @@
-import * as React from "react";
 import { Box, BoxProps, Flex, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { NearbyGalleriesRail_partners } from "v2/__generated__/NearbyGalleriesRail_partners.graphql"
@@ -29,7 +28,7 @@ const NearbyGalleriesRail: React.FC<NearbyGalleriesRailProps> = ({
   return (
     <Box {...rest}>
       <Flex mb={4} justifyContent="space-between" alignItems="center">
-        <Text variant="title">Nearby Galleries</Text>
+        <Text variant="lg">Nearby Galleries</Text>
       </Flex>
 
       <Carousel itemsPerViewport={[2, 2, 3]}>

@@ -11,7 +11,7 @@ describe("ArtistWorksForSaleRail", () => {
   const { getWrapper } = setupTestWrapper<ArtistWorksForSaleRail_Test_Query>({
     Component: ArtistWorksForSaleRailFragmentContainer,
     query: graphql`
-      query ArtistWorksForSaleRail_Test_Query {
+      query ArtistWorksForSaleRail_Test_Query @relay_test_operation {
         artist(id: "test") {
           ...ArtistWorksForSaleRail_artist
         }
@@ -67,8 +67,6 @@ describe("ArtistWorksForSaleRail", () => {
       expect.objectContaining({
         action: "clickedArtistGroup",
         context_module: "worksForSaleRail",
-        destination_page_owner_id: '<mock-value-for-field-"internalID">',
-        destination_page_owner_slug: '<mock-value-for-field-"slug">',
         destination_page_owner_type: "artist",
         type: "viewAll",
       })
@@ -82,8 +80,6 @@ describe("ArtistWorksForSaleRail", () => {
       expect.objectContaining({
         action: "clickedArtworkGroup",
         context_module: "worksForSaleRail",
-        destination_page_owner_id: '<mock-value-for-field-"internalID">',
-        destination_page_owner_slug: '<mock-value-for-field-"slug">',
         destination_page_owner_type: "artwork",
         horizontal_slide_position: 1,
         type: "thumbnail",

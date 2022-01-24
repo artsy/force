@@ -4,7 +4,7 @@ import sinon from "sinon"
 
 const rewire = require("rewire")("../../../../actions/artworkBrowser")
 
-xdescribe("auction/components/artwork_browser/header/HeaderMobile.test", () => {
+describe.skip("auction/components/artwork_browser/header/HeaderMobile.test", () => {
   describe("<HeaderMobile />", () => {
     it("default sort is Default", () => {
       const { wrapper } = renderTestComponent({
@@ -28,7 +28,7 @@ xdescribe("auction/components/artwork_browser/header/HeaderMobile.test", () => {
       const updateSort = "bidder_positions_count"
 
       const auctionQueries = {
-        filter_sale_artworks: {
+        saleArtworksConnection: {
           aggregations: [
             {
               slice: "ARTIST",
@@ -40,10 +40,12 @@ xdescribe("auction/components/artwork_browser/header/HeaderMobile.test", () => {
             },
           ],
           counts: 10,
-          hits: [
+          edges: [
             {
-              artwork: {
-                _id: "foo",
+              node: {
+                artwork: {
+                  _id: "foo",
+                },
               },
             },
           ],

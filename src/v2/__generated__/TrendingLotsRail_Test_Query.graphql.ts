@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -193,7 +194,49 @@ v5 = [
     "name": "display",
     "storageKey": null
   }
-];
+],
+v6 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "SaleArtworkCounts"
+},
+v7 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "FormattedNumber"
+},
+v8 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "ID"
+},
+v9 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "String"
+},
+v10 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "Int"
+},
+v11 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "String"
+},
+v12 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "Boolean"
+};
 return {
   "fragment": {
     "argumentDefinitions": [],
@@ -218,7 +261,8 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -584,13 +628,135 @@ return {
     ]
   },
   "params": {
+    "cacheID": "af156c7e50eabcfe1ba393809ef4e770",
     "id": null,
-    "metadata": {},
+    "metadata": {
+      "relayTestingSelectionTypeInfo": {
+        "viewer": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Viewer"
+        },
+        "viewer.trendingLotsConnection": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "SaleArtworksConnection"
+        },
+        "viewer.trendingLotsConnection.edges": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": true,
+          "type": "SaleArtwork"
+        },
+        "viewer.trendingLotsConnection.edges.counts": (v6/*: any*/),
+        "viewer.trendingLotsConnection.edges.counts.bidderPositions": (v7/*: any*/),
+        "viewer.trendingLotsConnection.edges.id": (v8/*: any*/),
+        "viewer.trendingLotsConnection.edges.node": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Artwork"
+        },
+        "viewer.trendingLotsConnection.edges.node.artists": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": true,
+          "type": "Artist"
+        },
+        "viewer.trendingLotsConnection.edges.node.artists.href": (v9/*: any*/),
+        "viewer.trendingLotsConnection.edges.node.artists.id": (v8/*: any*/),
+        "viewer.trendingLotsConnection.edges.node.artists.name": (v9/*: any*/),
+        "viewer.trendingLotsConnection.edges.node.collecting_institution": (v9/*: any*/),
+        "viewer.trendingLotsConnection.edges.node.cultural_maker": (v9/*: any*/),
+        "viewer.trendingLotsConnection.edges.node.date": (v9/*: any*/),
+        "viewer.trendingLotsConnection.edges.node.href": (v9/*: any*/),
+        "viewer.trendingLotsConnection.edges.node.id": (v8/*: any*/),
+        "viewer.trendingLotsConnection.edges.node.image": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Image"
+        },
+        "viewer.trendingLotsConnection.edges.node.image.aspectRatio": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": false,
+          "type": "Float"
+        },
+        "viewer.trendingLotsConnection.edges.node.image.height": (v10/*: any*/),
+        "viewer.trendingLotsConnection.edges.node.image.resized": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "ResizedImageUrl"
+        },
+        "viewer.trendingLotsConnection.edges.node.image.resized.height": (v10/*: any*/),
+        "viewer.trendingLotsConnection.edges.node.image.resized.src": (v11/*: any*/),
+        "viewer.trendingLotsConnection.edges.node.image.resized.srcSet": (v11/*: any*/),
+        "viewer.trendingLotsConnection.edges.node.image.resized.width": (v10/*: any*/),
+        "viewer.trendingLotsConnection.edges.node.imageTitle": (v9/*: any*/),
+        "viewer.trendingLotsConnection.edges.node.internalID": (v8/*: any*/),
+        "viewer.trendingLotsConnection.edges.node.is_biddable": (v12/*: any*/),
+        "viewer.trendingLotsConnection.edges.node.is_inquireable": (v12/*: any*/),
+        "viewer.trendingLotsConnection.edges.node.is_saved": (v12/*: any*/),
+        "viewer.trendingLotsConnection.edges.node.partner": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Partner"
+        },
+        "viewer.trendingLotsConnection.edges.node.partner.href": (v9/*: any*/),
+        "viewer.trendingLotsConnection.edges.node.partner.id": (v8/*: any*/),
+        "viewer.trendingLotsConnection.edges.node.partner.name": (v9/*: any*/),
+        "viewer.trendingLotsConnection.edges.node.partner.type": (v9/*: any*/),
+        "viewer.trendingLotsConnection.edges.node.sale": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Sale"
+        },
+        "viewer.trendingLotsConnection.edges.node.sale.display_timely_at": (v9/*: any*/),
+        "viewer.trendingLotsConnection.edges.node.sale.id": (v8/*: any*/),
+        "viewer.trendingLotsConnection.edges.node.sale.is_auction": (v12/*: any*/),
+        "viewer.trendingLotsConnection.edges.node.sale.is_closed": (v12/*: any*/),
+        "viewer.trendingLotsConnection.edges.node.sale.is_live_open": (v12/*: any*/),
+        "viewer.trendingLotsConnection.edges.node.sale.is_open": (v12/*: any*/),
+        "viewer.trendingLotsConnection.edges.node.sale.is_preview": (v12/*: any*/),
+        "viewer.trendingLotsConnection.edges.node.sale_artwork": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "SaleArtwork"
+        },
+        "viewer.trendingLotsConnection.edges.node.sale_artwork.counts": (v6/*: any*/),
+        "viewer.trendingLotsConnection.edges.node.sale_artwork.counts.bidder_positions": (v7/*: any*/),
+        "viewer.trendingLotsConnection.edges.node.sale_artwork.highest_bid": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "SaleArtworkHighestBid"
+        },
+        "viewer.trendingLotsConnection.edges.node.sale_artwork.highest_bid.display": (v9/*: any*/),
+        "viewer.trendingLotsConnection.edges.node.sale_artwork.id": (v8/*: any*/),
+        "viewer.trendingLotsConnection.edges.node.sale_artwork.opening_bid": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "SaleArtworkOpeningBid"
+        },
+        "viewer.trendingLotsConnection.edges.node.sale_artwork.opening_bid.display": (v9/*: any*/),
+        "viewer.trendingLotsConnection.edges.node.sale_message": (v9/*: any*/),
+        "viewer.trendingLotsConnection.edges.node.slug": (v8/*: any*/),
+        "viewer.trendingLotsConnection.edges.node.title": (v9/*: any*/)
+      }
+    },
     "name": "TrendingLotsRail_Test_Query",
     "operationKind": "query",
     "text": "query TrendingLotsRail_Test_Query {\n  viewer {\n    ...TrendingLotsRail_viewer\n  }\n}\n\nfragment Badge_artwork on Artwork {\n  is_biddable: isBiddable\n  href\n  sale {\n    is_preview: isPreview\n    display_timely_at: displayTimelyAt\n    id\n  }\n}\n\nfragment Contact_artwork on Artwork {\n  href\n  is_inquireable: isInquireable\n  sale {\n    is_auction: isAuction\n    is_live_open: isLiveOpen\n    is_open: isOpen\n    is_closed: isClosed\n    id\n  }\n  partner(shallow: true) {\n    type\n    id\n  }\n  sale_artwork: saleArtwork {\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    counts {\n      bidder_positions: bidderPositions\n    }\n    id\n  }\n}\n\nfragment Details_artwork on Artwork {\n  href\n  title\n  date\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n}\n\nfragment Metadata_artwork on Artwork {\n  ...Details_artwork\n  ...Contact_artwork\n  href\n}\n\nfragment SaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  is_saved: isSaved\n  title\n}\n\nfragment ShelfArtwork_artwork_20bRBg on Artwork {\n  image {\n    resized(width: 325) {\n      src\n      srcSet\n      width\n      height\n    }\n    aspectRatio\n    height\n  }\n  imageTitle\n  title\n  href\n  is_saved: isSaved\n  ...Metadata_artwork\n  ...SaveButton_artwork\n  ...Badge_artwork\n}\n\nfragment TrendingLotsRail_viewer on Viewer {\n  trendingLotsConnection: saleArtworksConnection(biddableSale: true, first: 10, sort: \"-bidder_positions_count\") {\n    edges {\n      counts {\n        bidderPositions\n      }\n      node {\n        internalID\n        slug\n        ...ShelfArtwork_artwork_20bRBg\n        id\n      }\n      id\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '77e754b0b2daf4f50cc2ba13e19277e5';
+(node as any).hash = '13e07efe3913341abc19761d7450f18e';
 export default node;

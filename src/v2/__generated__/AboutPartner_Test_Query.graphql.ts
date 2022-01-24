@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -50,6 +51,18 @@ v1 = {
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
+},
+v2 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "ID"
+},
+v3 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "String"
 };
 return {
   "fragment": {
@@ -75,7 +88,8 @@ return {
         "storageKey": "partner(id:\"unit-london\")"
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -145,13 +159,41 @@ return {
     ]
   },
   "params": {
+    "cacheID": "6878cdd431ec07a8b8064e3cdf3bbdd5",
     "id": null,
-    "metadata": {},
+    "metadata": {
+      "relayTestingSelectionTypeInfo": {
+        "partner": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Partner"
+        },
+        "partner.displayFullPartnerPage": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Boolean"
+        },
+        "partner.id": (v2/*: any*/),
+        "partner.profile": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Profile"
+        },
+        "partner.profile.bio": (v3/*: any*/),
+        "partner.profile.fullBio": (v3/*: any*/),
+        "partner.profile.id": (v2/*: any*/),
+        "partner.vatNumber": (v3/*: any*/),
+        "partner.website": (v3/*: any*/)
+      }
+    },
     "name": "AboutPartner_Test_Query",
     "operationKind": "query",
     "text": "query AboutPartner_Test_Query {\n  partner(id: \"unit-london\") @principalField {\n    ...AboutPartner_partner\n    id\n  }\n}\n\nfragment AboutPartner_partner on Partner {\n  profile {\n    fullBio\n    bio\n    id\n  }\n  website\n  vatNumber\n  displayFullPartnerPage\n}\n"
   }
 };
 })();
-(node as any).hash = '13305afd5f8a7db8136e9db18578c429';
+(node as any).hash = '502ee49997d2a6376b9f5147418508e7';
 export default node;

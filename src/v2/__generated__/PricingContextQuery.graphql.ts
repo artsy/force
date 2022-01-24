@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -70,8 +71,7 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "slug",
-    "type": "String!"
+    "name": "slug"
   }
 ],
 v1 = [
@@ -128,7 +128,8 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -183,12 +184,14 @@ return {
                     "storageKey": null
                   }
                 ],
-                "type": "PriceRange"
+                "type": "PriceRange",
+                "abstractKey": null
               },
               {
                 "kind": "InlineFragment",
                 "selections": (v2/*: any*/),
-                "type": "Money"
+                "type": "Money",
+                "abstractKey": null
               }
             ],
             "storageKey": null
@@ -303,6 +306,7 @@ return {
     ]
   },
   "params": {
+    "cacheID": "6c94083e35662a9037d41dc2e41e68de",
     "id": null,
     "metadata": {},
     "name": "PricingContextQuery",

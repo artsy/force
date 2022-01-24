@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -21,7 +22,7 @@ export type ShippingQuotes_Test_QueryResponse = {
 };
 export type ShippingQuotes_Test_QueryRawResponse = {
     readonly order: ({
-        readonly __typename: string | null;
+        readonly __typename: string;
         readonly lineItems: ({
             readonly edges: ReadonlyArray<({
                 readonly node: ({
@@ -36,11 +37,11 @@ export type ShippingQuotes_Test_QueryRawResponse = {
                             }) | null;
                         }) | null> | null;
                     }) | null;
-                    readonly id: string | null;
+                    readonly id: string;
                 }) | null;
             }) | null> | null;
         }) | null;
-        readonly id: string | null;
+        readonly id: string;
     }) | null;
 };
 export type ShippingQuotes_Test_Query = {
@@ -89,6 +90,18 @@ var v0 = {
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
+},
+v1 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "String"
+},
+v2 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "ID"
 };
 return {
   "fragment": {
@@ -169,7 +182,8 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -301,13 +315,82 @@ return {
     ]
   },
   "params": {
+    "cacheID": "3dd0ee3660ed7f5f75174180d9a0f597",
     "id": null,
-    "metadata": {},
+    "metadata": {
+      "relayTestingSelectionTypeInfo": {
+        "order": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "CommerceOrder"
+        },
+        "order.__typename": (v1/*: any*/),
+        "order.id": (v2/*: any*/),
+        "order.lineItems": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "CommerceLineItemConnection"
+        },
+        "order.lineItems.edges": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": true,
+          "type": "CommerceLineItemEdge"
+        },
+        "order.lineItems.edges.node": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "CommerceLineItem"
+        },
+        "order.lineItems.edges.node.id": (v2/*: any*/),
+        "order.lineItems.edges.node.shippingQuoteOptions": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "CommerceShippingQuoteConnection"
+        },
+        "order.lineItems.edges.node.shippingQuoteOptions.edges": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": true,
+          "type": "CommerceShippingQuoteEdge"
+        },
+        "order.lineItems.edges.node.shippingQuoteOptions.edges.node": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "CommerceShippingQuote"
+        },
+        "order.lineItems.edges.node.shippingQuoteOptions.edges.node.displayName": (v1/*: any*/),
+        "order.lineItems.edges.node.shippingQuoteOptions.edges.node.id": (v2/*: any*/),
+        "order.lineItems.edges.node.shippingQuoteOptions.edges.node.isSelected": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": false,
+          "type": "Boolean"
+        },
+        "order.lineItems.edges.node.shippingQuoteOptions.edges.node.price": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "String"
+        },
+        "order.lineItems.edges.node.shippingQuoteOptions.edges.node.priceCents": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": false,
+          "type": "Int"
+        }
+      }
+    },
     "name": "ShippingQuotes_Test_Query",
     "operationKind": "query",
     "text": "query ShippingQuotes_Test_Query {\n  order: commerceOrder {\n    __typename\n    lineItems {\n      edges {\n        node {\n          shippingQuoteOptions {\n            edges {\n              ...ShippingQuotes_shippingQuotes\n            }\n          }\n          id\n        }\n      }\n    }\n    id\n  }\n}\n\nfragment ShippingQuotes_shippingQuotes on CommerceShippingQuoteEdge {\n  node {\n    id\n    displayName\n    isSelected\n    price(precision: 2)\n    priceCents\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '4dac5e210a9086537685cd4c7fb167e1';
+(node as any).hash = '188340a940545057b5b1dcd13a548121';
 export default node;

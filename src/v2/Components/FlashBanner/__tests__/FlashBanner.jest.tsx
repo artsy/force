@@ -32,7 +32,7 @@ const getRelayWrapper = async ({
       return <FlashBanner {...props} {...passedProps} />
     },
     query: graphql`
-      query FlashBannerTestQuery @raw_response_type {
+      query FlashBannerTestQuery @raw_response_type @relay_test_operation {
         me {
           canRequestEmailConfirmation
         }

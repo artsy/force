@@ -25,7 +25,7 @@ describe("GeneSearchResults", () => {
       )
     },
     query: graphql`
-      query GeneSearchResults_Test_Query($term: String!) {
+      query GeneSearchResults_Test_Query($term: String!) @relay_test_operation {
         viewer {
           ...GeneSearchResults_viewer
         }

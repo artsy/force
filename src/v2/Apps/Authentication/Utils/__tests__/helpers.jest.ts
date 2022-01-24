@@ -8,12 +8,16 @@ import { ModalType } from "v2/Components/Authentication/Types"
 import { ContextModule, Intent } from "@artsy/cohesion"
 import { mockLocation } from "v2/DevTools/mockLocation"
 import { mediator } from "lib/mediator"
+import { getENV } from "v2/Utils/getENV"
 
 jest.mock("cookies-js", () => ({
   set: jest.fn(),
   get: jest.fn().mockReturnValue("csrf-token"),
 }))
 const CookiesSet = require("cookies-js").set as jest.Mock
+jest.mock("v2/Utils/getENV", () => ({
+  getENV: jest.fn(),
+}))
 
 jest.mock("sharify", () => {
   return {
@@ -32,6 +36,8 @@ jest.mock("sharify", () => {
 })
 
 describe("Authentication Helpers", () => {
+  const mockGetENV = getENV as jest.Mock
+
   beforeEach(() => {
     mockLocation({
       pathname: "/articles",
@@ -52,6 +58,15 @@ describe("Authentication Helpers", () => {
           }),
       })
     )
+
+    mockGetENV.mockImplementation(key => {
+      switch (key) {
+        case "APP_URL":
+          return "https://artsy.net"
+        case "ALLOWED_REDIRECT_HOSTS":
+          return "off.artsy.net"
+      }
+    })
   })
 
   describe("#setCookies", () => {
@@ -313,6 +328,69 @@ describe("Authentication Helpers", () => {
         expect(mediator.trigger).toBeCalledWith(
           "auth:error",
           "Incorrect email or password"
+        )
+      })
+    })
+
+    it("can handle a redirectTo that is outside of artsy.net", async () => {
+      // @ts-ignore
+      global.fetch.mockImplementationOnce(() =>
+        Promise.resolve({
+          status: 200,
+          ok: true,
+          json: () =>
+            Promise.resolve({
+              success: true,
+            }),
+        })
+      )
+      await handleSubmit(
+        ModalType.login,
+        {
+          contextModule: ContextModule.popUpModal,
+          intent: Intent.viewEditorial,
+          redirectTo:
+            "https://api.artsy.net/oauth2/authorize?response_type=code&redirect_uri=https%3A%2F%2Flive-staging.artsy.net%2Fauth-callback&client_id=foo",
+        },
+        {
+          email: "foo@foo.com",
+          password: "password", // pragma: allowlist secret
+          otp_attempt: 123456,
+        },
+        formikBag
+      ).then(() => {
+        // @ts-ignore
+        const [url, request] = global.fetch.mock.calls[0]
+
+        expect(url).toBe("https://artsy.net/login")
+        expect(JSON.parse(request.body)).toEqual({
+          _csrf: "csrf-token",
+          email: "foo@foo.com",
+          otp_attempt: 123456,
+          password: "password", // pragma: allowlist secret
+          session_id: "session-id",
+        })
+        expect(formikBag.setSubmitting).toBeCalledWith(false)
+        expect((window.analytics?.track as jest.Mock).mock.calls[0])
+          .toMatchInlineSnapshot(`
+            Array [
+              "successfullyLoggedIn",
+              Object {
+                "auth_redirect": "https://api.artsy.net/oauth2/authorize?response_type=code&redirect_uri=https%3A%2F%2Flive-staging.artsy.net%2Fauth-callback&client_id=foo",
+                "context_module": "popUpModal",
+                "intent": "viewEditorial",
+                "modal_copy": undefined,
+                "service": "email",
+                "trigger": "timed",
+                "trigger_seconds": undefined,
+                "type": "login",
+                "user_id": undefined,
+              },
+              Object {},
+            ]
+          `)
+        expect(window.location.assign).toBeCalledWith(
+          "/auth-redirect?redirectTo=https%3A%2F%2Fapi.artsy.net%2Foauth2%2Fauthorize%3Fresponse_type%3Dcode%26redirect_uri%3Dhttps%253A%252F%252Flive-staging.artsy.net%252Fauth-callback%26client_id%3Dfoo"
         )
       })
     })

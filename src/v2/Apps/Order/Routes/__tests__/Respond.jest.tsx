@@ -42,6 +42,7 @@ import { OrderAppTestPage } from "./Utils/OrderAppTestPage"
 const testOrder = {
   ...OfferOrderWithShippingDetails,
   stateExpiresAt: DateTime.fromISO(NOW).plus({ days: 1 }).toString(),
+  __isCommerceOrder: "CommerceOfferOrder",
   lastOffer: {
     ...OfferWithTotals,
     createdAt: DateTime.fromISO(NOW).minus({ days: 1 }).toString(),
@@ -91,19 +92,19 @@ class RespondTestPage extends OrderAppTestPage {
 describe("The respond page", () => {
   const { buildPage, mutations, routes, ...hooks } = createTestEnv({
     Component: RespondFragmentContainer,
-    defaultData: {
+    defaultData: ({
       order: testOrder,
       system: {
         time: {
           unix: 222,
         },
       },
-    } as RespondTestQueryRawResponse,
+    } as unknown) as RespondTestQueryRawResponse,
     defaultMutationResults: {
       ...buyerCounterOfferSuccess,
     },
     query: graphql`
-      query RespondTestQuery @raw_response_type {
+      query RespondTestQuery @raw_response_type @relay_test_operation {
         order: commerceOrder(id: "unused") {
           ...Respond_order
         }
@@ -129,6 +130,7 @@ describe("The respond page", () => {
         mockData: {
           order: {
             ...testOrder,
+
             stateExpiresAt: DateTime.fromISO(NOW)
               .plus({ days: 1, hours: 4, minutes: 22, seconds: 59 })
               .toString(),
@@ -161,6 +163,7 @@ describe("The respond page", () => {
         mockData: {
           order: {
             ...OfferOrderWithShippingDetailsAndNote,
+
             stateExpiresAt: DateTime.fromISO(NOW)
               .plus({ days: 1, hours: 4, minutes: 22, seconds: 59 })
               .toString(),

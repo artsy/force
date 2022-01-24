@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -128,7 +129,8 @@ return {
       "storageKey": "orderConnection(last:1,states:[\"APPROVED\",\"FULFILLED\",\"SUBMITTED\",\"REFUNDED\"])"
     }
   ],
-  "type": "Conversation"
+  "type": "Conversation",
+  "abstractKey": null
 };
 })();
 (node as any).hash = '4d34587b33e35fafafec625b2e57f5b2';

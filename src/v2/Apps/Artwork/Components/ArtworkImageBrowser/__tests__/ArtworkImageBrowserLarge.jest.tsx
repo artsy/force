@@ -25,7 +25,7 @@ const { getWrapper } = setupTestWrapper<ArtworkImageBrowserLarge_Test_Query>({
     )
   },
   query: graphql`
-    query ArtworkImageBrowserLarge_Test_Query {
+    query ArtworkImageBrowserLarge_Test_Query @relay_test_operation {
       artwork(id: "example") {
         ...ArtworkImageBrowserLarge_artwork
       }

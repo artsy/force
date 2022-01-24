@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -44,9 +45,11 @@ fragment PartnerArtistsCarouselItem_artist on ArtistPartnerEdge {
     edges {
       node {
         image {
-          cropped(height: 200, width: 300) {
+          cropped(width: 320, height: 240) {
             src
             srcSet
+            height
+            width
           }
         }
         id
@@ -68,7 +71,7 @@ fragment PartnerArtistsCarouselItem_artist on ArtistPartnerEdge {
 
 fragment PartnerArtistsCarousel_partner on Partner {
   slug
-  artists: artistsConnection(first: 19, hasPublishedArtworks: true, displayOnPartnerProfile: true) {
+  artistsConnection(first: 20, hasPublishedArtworks: true, displayOnPartnerProfile: true) {
     edges {
       counts {
         artworks
@@ -89,8 +92,7 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "partnerId",
-    "type": "String!"
+    "name": "partnerId"
   }
 ],
 v1 = [
@@ -138,7 +140,8 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -156,7 +159,7 @@ return {
         "selections": [
           (v2/*: any*/),
           {
-            "alias": "artists",
+            "alias": null,
             "args": [
               {
                 "kind": "Literal",
@@ -166,7 +169,7 @@ return {
               {
                 "kind": "Literal",
                 "name": "first",
-                "value": 19
+                "value": 20
               },
               {
                 "kind": "Literal",
@@ -348,12 +351,12 @@ return {
                                       {
                                         "kind": "Literal",
                                         "name": "height",
-                                        "value": 200
+                                        "value": 240
                                       },
                                       {
                                         "kind": "Literal",
                                         "name": "width",
-                                        "value": 300
+                                        "value": 320
                                       }
                                     ],
                                     "concreteType": "CroppedImageUrl",
@@ -374,9 +377,23 @@ return {
                                         "kind": "ScalarField",
                                         "name": "srcSet",
                                         "storageKey": null
+                                      },
+                                      {
+                                        "alias": null,
+                                        "args": null,
+                                        "kind": "ScalarField",
+                                        "name": "height",
+                                        "storageKey": null
+                                      },
+                                      {
+                                        "alias": null,
+                                        "args": null,
+                                        "kind": "ScalarField",
+                                        "name": "width",
+                                        "storageKey": null
                                       }
                                     ],
-                                    "storageKey": "cropped(height:200,width:300)"
+                                    "storageKey": "cropped(height:240,width:320)"
                                   }
                                 ],
                                 "storageKey": null
@@ -396,7 +413,7 @@ return {
                 "storageKey": null
               }
             ],
-            "storageKey": "artistsConnection(displayOnPartnerProfile:true,first:19,hasPublishedArtworks:true)"
+            "storageKey": "artistsConnection(displayOnPartnerProfile:true,first:20,hasPublishedArtworks:true)"
           },
           (v3/*: any*/)
         ],
@@ -405,11 +422,12 @@ return {
     ]
   },
   "params": {
+    "cacheID": "25d2015a5d01a3a932bf0547f27517d8",
     "id": null,
     "metadata": {},
     "name": "PartnerArtistsCarouselRendererQuery",
     "operationKind": "query",
-    "text": "query PartnerArtistsCarouselRendererQuery(\n  $partnerId: String!\n) {\n  partner(id: $partnerId) @principalField {\n    ...PartnerArtistsCarousel_partner\n    id\n  }\n}\n\nfragment FollowArtistButton_artist on Artist {\n  id\n  internalID\n  name\n  slug\n  is_followed: isFollowed\n  counts {\n    follows\n  }\n}\n\nfragment PartnerArtistsCarouselItem_artist on ArtistPartnerEdge {\n  artworksConnection(first: 1) {\n    edges {\n      node {\n        image {\n          cropped(height: 200, width: 300) {\n            src\n            srcSet\n          }\n        }\n        id\n      }\n    }\n  }\n  node {\n    id\n    name\n    formattedNationalityAndBirthday\n    ...FollowArtistButton_artist\n    image {\n      cropped(width: 100, height: 100) {\n        url\n      }\n    }\n  }\n}\n\nfragment PartnerArtistsCarousel_partner on Partner {\n  slug\n  artists: artistsConnection(first: 19, hasPublishedArtworks: true, displayOnPartnerProfile: true) {\n    edges {\n      counts {\n        artworks\n      }\n      node {\n        id\n        slug\n      }\n      ...PartnerArtistsCarouselItem_artist\n      id\n    }\n  }\n}\n"
+    "text": "query PartnerArtistsCarouselRendererQuery(\n  $partnerId: String!\n) {\n  partner(id: $partnerId) @principalField {\n    ...PartnerArtistsCarousel_partner\n    id\n  }\n}\n\nfragment FollowArtistButton_artist on Artist {\n  id\n  internalID\n  name\n  slug\n  is_followed: isFollowed\n  counts {\n    follows\n  }\n}\n\nfragment PartnerArtistsCarouselItem_artist on ArtistPartnerEdge {\n  artworksConnection(first: 1) {\n    edges {\n      node {\n        image {\n          cropped(width: 320, height: 240) {\n            src\n            srcSet\n            height\n            width\n          }\n        }\n        id\n      }\n    }\n  }\n  node {\n    id\n    name\n    formattedNationalityAndBirthday\n    ...FollowArtistButton_artist\n    image {\n      cropped(width: 100, height: 100) {\n        url\n      }\n    }\n  }\n}\n\nfragment PartnerArtistsCarousel_partner on Partner {\n  slug\n  artistsConnection(first: 20, hasPublishedArtworks: true, displayOnPartnerProfile: true) {\n    edges {\n      counts {\n        artworks\n      }\n      node {\n        id\n        slug\n      }\n      ...PartnerArtistsCarouselItem_artist\n      id\n    }\n  }\n}\n"
   }
 };
 })();

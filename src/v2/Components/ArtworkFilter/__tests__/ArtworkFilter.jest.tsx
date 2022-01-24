@@ -224,7 +224,9 @@ describe("ArtworkFilter", () => {
         }),
       })
 
-      fireEvent.click(screen.getByAltText("Andy Warhol, ‘Kenny Burrell’, 1956"))
+      fireEvent.click(
+        screen.getAllByAltText("Andy Warhol, ‘Kenny Burrell’, 1956")[0]
+      )
 
       expect(trackEvent).toHaveBeenCalledWith({
         action: "clickedMainArtworkGrid",

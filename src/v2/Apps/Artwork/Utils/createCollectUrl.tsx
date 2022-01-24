@@ -52,6 +52,7 @@ const filterCategories = {
   Installation: "installation",
   Jewelry: "jewelry",
   "Mixed Media": "mixed-media",
+  NFT: "nft",
   Other: "",
   Painting: "painting",
   "Performance Art": "performance-art",

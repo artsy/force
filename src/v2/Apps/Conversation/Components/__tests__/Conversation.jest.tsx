@@ -31,7 +31,7 @@ const { renderWithRelay } = setupTestWrapperTL<
     )
   },
   query: graphql`
-    query ConversationPagination_Test_Query {
+    query ConversationPagination_Test_Query @relay_test_operation {
       node(id: "example") {
         ...Conversation_conversation
       }

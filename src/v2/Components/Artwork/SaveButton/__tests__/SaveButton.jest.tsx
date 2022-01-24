@@ -90,7 +90,7 @@ describe("Save artwork", () => {
       defaultData,
       defaultMutationResults,
       query: graphql`
-        query SaveButtonTestQuery {
+        query SaveButtonTestQuery @relay_test_operation {
           artwork(id: "example-artwork-id") {
             ...SaveButton_artwork
           }

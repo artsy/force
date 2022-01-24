@@ -16,16 +16,18 @@ const showPickupCopy = state => state !== "FULFILLED" && state !== "CANCELED"
 
 const ShippingSummaryItem = ({
   order: { state, requestedFulfillment, lineItems },
+  textColor = "black100",
   ...others
 }: {
   order: ShippingSummaryItem_order
+  textColor?: string
 } & StepSummaryItemProps) => {
   if (!requestedFulfillment) return null
 
   return requestedFulfillment.__typename === "CommerceShip" ||
     requestedFulfillment.__typename === "CommerceShipArta" ? (
     <StepSummaryItem title="Ship to" {...others}>
-      <ShippingAddress ship={requestedFulfillment} />
+      <ShippingAddress ship={requestedFulfillment} textColor={textColor} />
     </StepSummaryItem>
   ) : (
     <StepSummaryItem
@@ -37,7 +39,7 @@ const ShippingSummaryItem = ({
       {...others}
     >
       {showPickupCopy(state) && (
-        <Text variant="xs">
+        <Text variant="xs" color={textColor}>
           After your order is confirmed, a specialist will contact you within 2
           business days to coordinate pickup.
         </Text>

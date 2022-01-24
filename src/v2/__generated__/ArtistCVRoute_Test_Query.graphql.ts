@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -48,6 +49,7 @@ fragment ArtistCVGroup_artist_47e96d on Artist {
             href
           }
           ... on Node {
+            __isNode: __typename
             id
           }
         }
@@ -83,6 +85,7 @@ fragment ArtistCVGroup_artist_4DszuY on Artist {
             href
           }
           ... on Node {
+            __isNode: __typename
             id
           }
         }
@@ -118,6 +121,7 @@ fragment ArtistCVGroup_artist_ieWPx on Artist {
             href
           }
           ... on Node {
+            __isNode: __typename
             id
           }
         }
@@ -154,8 +158,7 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "artistID",
-    "type": "String!"
+    "name": "artistID"
   }
 ],
 v1 = [
@@ -289,13 +292,14 @@ v13 = [
             "plural": false,
             "selections": [
               (v10/*: any*/),
-              (v9/*: any*/),
               {
                 "kind": "InlineFragment",
                 "selections": [
-                  (v11/*: any*/)
+                  (v11/*: any*/),
+                  (v9/*: any*/)
                 ],
-                "type": "ExternalPartner"
+                "type": "ExternalPartner",
+                "abstractKey": null
               },
               {
                 "kind": "InlineFragment",
@@ -303,7 +307,16 @@ v13 = [
                   (v11/*: any*/),
                   (v12/*: any*/)
                 ],
-                "type": "Partner"
+                "type": "Partner",
+                "abstractKey": null
+              },
+              {
+                "kind": "InlineFragment",
+                "selections": [
+                  (v9/*: any*/)
+                ],
+                "type": "Node",
+                "abstractKey": "__isNode"
               }
             ],
             "storageKey": null
@@ -376,7 +389,67 @@ v17 = [
   (v15/*: any*/),
   (v6/*: any*/),
   (v7/*: any*/)
-];
+],
+v18 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "Artist"
+},
+v19 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "ID"
+},
+v20 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "ShowConnection"
+},
+v21 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": true,
+  "type": "ShowEdge"
+},
+v22 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "String"
+},
+v23 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "Show"
+},
+v24 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "String"
+},
+v25 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "PartnerTypes"
+},
+v26 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "PageInfo"
+},
+v27 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "Boolean"
+};
 return {
   "fragment": {
     "argumentDefinitions": (v0/*: any*/),
@@ -401,7 +474,8 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -520,13 +594,90 @@ return {
     ]
   },
   "params": {
+    "cacheID": "6d2a030a7240705d611b6453656c93fd",
     "id": null,
-    "metadata": {},
+    "metadata": {
+      "relayTestingSelectionTypeInfo": {
+        "viewer": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Viewer"
+        },
+        "viewer.fairBooths": (v18/*: any*/),
+        "viewer.fairBooths.id": (v19/*: any*/),
+        "viewer.fairBooths.showsConnection": (v20/*: any*/),
+        "viewer.fairBooths.showsConnection.edges": (v21/*: any*/),
+        "viewer.fairBooths.showsConnection.edges.cursor": (v22/*: any*/),
+        "viewer.fairBooths.showsConnection.edges.node": (v23/*: any*/),
+        "viewer.fairBooths.showsConnection.edges.node.__typename": (v22/*: any*/),
+        "viewer.fairBooths.showsConnection.edges.node.city": (v24/*: any*/),
+        "viewer.fairBooths.showsConnection.edges.node.href": (v24/*: any*/),
+        "viewer.fairBooths.showsConnection.edges.node.id": (v19/*: any*/),
+        "viewer.fairBooths.showsConnection.edges.node.name": (v24/*: any*/),
+        "viewer.fairBooths.showsConnection.edges.node.partner": (v25/*: any*/),
+        "viewer.fairBooths.showsConnection.edges.node.partner.__isNode": (v22/*: any*/),
+        "viewer.fairBooths.showsConnection.edges.node.partner.__typename": (v22/*: any*/),
+        "viewer.fairBooths.showsConnection.edges.node.partner.href": (v24/*: any*/),
+        "viewer.fairBooths.showsConnection.edges.node.partner.id": (v19/*: any*/),
+        "viewer.fairBooths.showsConnection.edges.node.partner.name": (v24/*: any*/),
+        "viewer.fairBooths.showsConnection.edges.node.startAt": (v24/*: any*/),
+        "viewer.fairBooths.showsConnection.pageInfo": (v26/*: any*/),
+        "viewer.fairBooths.showsConnection.pageInfo.endCursor": (v24/*: any*/),
+        "viewer.fairBooths.showsConnection.pageInfo.hasNextPage": (v27/*: any*/),
+        "viewer.fairBooths.slug": (v19/*: any*/),
+        "viewer.groupShows": (v18/*: any*/),
+        "viewer.groupShows.id": (v19/*: any*/),
+        "viewer.groupShows.showsConnection": (v20/*: any*/),
+        "viewer.groupShows.showsConnection.edges": (v21/*: any*/),
+        "viewer.groupShows.showsConnection.edges.cursor": (v22/*: any*/),
+        "viewer.groupShows.showsConnection.edges.node": (v23/*: any*/),
+        "viewer.groupShows.showsConnection.edges.node.__typename": (v22/*: any*/),
+        "viewer.groupShows.showsConnection.edges.node.city": (v24/*: any*/),
+        "viewer.groupShows.showsConnection.edges.node.href": (v24/*: any*/),
+        "viewer.groupShows.showsConnection.edges.node.id": (v19/*: any*/),
+        "viewer.groupShows.showsConnection.edges.node.name": (v24/*: any*/),
+        "viewer.groupShows.showsConnection.edges.node.partner": (v25/*: any*/),
+        "viewer.groupShows.showsConnection.edges.node.partner.__isNode": (v22/*: any*/),
+        "viewer.groupShows.showsConnection.edges.node.partner.__typename": (v22/*: any*/),
+        "viewer.groupShows.showsConnection.edges.node.partner.href": (v24/*: any*/),
+        "viewer.groupShows.showsConnection.edges.node.partner.id": (v19/*: any*/),
+        "viewer.groupShows.showsConnection.edges.node.partner.name": (v24/*: any*/),
+        "viewer.groupShows.showsConnection.edges.node.startAt": (v24/*: any*/),
+        "viewer.groupShows.showsConnection.pageInfo": (v26/*: any*/),
+        "viewer.groupShows.showsConnection.pageInfo.endCursor": (v24/*: any*/),
+        "viewer.groupShows.showsConnection.pageInfo.hasNextPage": (v27/*: any*/),
+        "viewer.groupShows.slug": (v19/*: any*/),
+        "viewer.soloShows": (v18/*: any*/),
+        "viewer.soloShows.id": (v19/*: any*/),
+        "viewer.soloShows.name": (v24/*: any*/),
+        "viewer.soloShows.showsConnection": (v20/*: any*/),
+        "viewer.soloShows.showsConnection.edges": (v21/*: any*/),
+        "viewer.soloShows.showsConnection.edges.cursor": (v22/*: any*/),
+        "viewer.soloShows.showsConnection.edges.node": (v23/*: any*/),
+        "viewer.soloShows.showsConnection.edges.node.__typename": (v22/*: any*/),
+        "viewer.soloShows.showsConnection.edges.node.city": (v24/*: any*/),
+        "viewer.soloShows.showsConnection.edges.node.href": (v24/*: any*/),
+        "viewer.soloShows.showsConnection.edges.node.id": (v19/*: any*/),
+        "viewer.soloShows.showsConnection.edges.node.name": (v24/*: any*/),
+        "viewer.soloShows.showsConnection.edges.node.partner": (v25/*: any*/),
+        "viewer.soloShows.showsConnection.edges.node.partner.__isNode": (v22/*: any*/),
+        "viewer.soloShows.showsConnection.edges.node.partner.__typename": (v22/*: any*/),
+        "viewer.soloShows.showsConnection.edges.node.partner.href": (v24/*: any*/),
+        "viewer.soloShows.showsConnection.edges.node.partner.id": (v19/*: any*/),
+        "viewer.soloShows.showsConnection.edges.node.partner.name": (v24/*: any*/),
+        "viewer.soloShows.showsConnection.edges.node.startAt": (v24/*: any*/),
+        "viewer.soloShows.showsConnection.pageInfo": (v26/*: any*/),
+        "viewer.soloShows.showsConnection.pageInfo.endCursor": (v24/*: any*/),
+        "viewer.soloShows.showsConnection.pageInfo.hasNextPage": (v27/*: any*/),
+        "viewer.soloShows.slug": (v19/*: any*/)
+      }
+    },
     "name": "ArtistCVRoute_Test_Query",
     "operationKind": "query",
-    "text": "query ArtistCVRoute_Test_Query(\n  $artistID: String!\n) {\n  viewer {\n    ...ArtistCVRoute_viewer\n  }\n}\n\nfragment ArtistCVGroup_artist_47e96d on Artist {\n  slug\n  showsConnection(first: 10, sort: START_AT_DESC, atAFair: true, soloShow: false, isReference: true, visibleToPublic: false) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    edges {\n      node {\n        id\n        partner {\n          __typename\n          ... on ExternalPartner {\n            name\n            id\n          }\n          ... on Partner {\n            name\n            href\n          }\n          ... on Node {\n            id\n          }\n        }\n        name\n        startAt(format: \"YYYY\")\n        city\n        href\n        __typename\n      }\n      cursor\n    }\n  }\n}\n\nfragment ArtistCVGroup_artist_4DszuY on Artist {\n  slug\n  showsConnection(first: 10, sort: START_AT_DESC, atAFair: false, soloShow: false, isReference: true, visibleToPublic: false) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    edges {\n      node {\n        id\n        partner {\n          __typename\n          ... on ExternalPartner {\n            name\n            id\n          }\n          ... on Partner {\n            name\n            href\n          }\n          ... on Node {\n            id\n          }\n        }\n        name\n        startAt(format: \"YYYY\")\n        city\n        href\n        __typename\n      }\n      cursor\n    }\n  }\n}\n\nfragment ArtistCVGroup_artist_ieWPx on Artist {\n  slug\n  showsConnection(first: 10, sort: START_AT_DESC, atAFair: false, soloShow: true, isReference: true, visibleToPublic: false) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    edges {\n      node {\n        id\n        partner {\n          __typename\n          ... on ExternalPartner {\n            name\n            id\n          }\n          ... on Partner {\n            name\n            href\n          }\n          ... on Node {\n            id\n          }\n        }\n        name\n        startAt(format: \"YYYY\")\n        city\n        href\n        __typename\n      }\n      cursor\n    }\n  }\n}\n\nfragment ArtistCVRoute_viewer on Viewer {\n  soloShows: artist(id: $artistID) {\n    ...ArtistCVGroup_artist_ieWPx\n    name\n    id\n  }\n  groupShows: artist(id: $artistID) {\n    ...ArtistCVGroup_artist_4DszuY\n    id\n  }\n  fairBooths: artist(id: $artistID) {\n    ...ArtistCVGroup_artist_47e96d\n    id\n  }\n}\n"
+    "text": "query ArtistCVRoute_Test_Query(\n  $artistID: String!\n) {\n  viewer {\n    ...ArtistCVRoute_viewer\n  }\n}\n\nfragment ArtistCVGroup_artist_47e96d on Artist {\n  slug\n  showsConnection(first: 10, sort: START_AT_DESC, atAFair: true, soloShow: false, isReference: true, visibleToPublic: false) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    edges {\n      node {\n        id\n        partner {\n          __typename\n          ... on ExternalPartner {\n            name\n            id\n          }\n          ... on Partner {\n            name\n            href\n          }\n          ... on Node {\n            __isNode: __typename\n            id\n          }\n        }\n        name\n        startAt(format: \"YYYY\")\n        city\n        href\n        __typename\n      }\n      cursor\n    }\n  }\n}\n\nfragment ArtistCVGroup_artist_4DszuY on Artist {\n  slug\n  showsConnection(first: 10, sort: START_AT_DESC, atAFair: false, soloShow: false, isReference: true, visibleToPublic: false) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    edges {\n      node {\n        id\n        partner {\n          __typename\n          ... on ExternalPartner {\n            name\n            id\n          }\n          ... on Partner {\n            name\n            href\n          }\n          ... on Node {\n            __isNode: __typename\n            id\n          }\n        }\n        name\n        startAt(format: \"YYYY\")\n        city\n        href\n        __typename\n      }\n      cursor\n    }\n  }\n}\n\nfragment ArtistCVGroup_artist_ieWPx on Artist {\n  slug\n  showsConnection(first: 10, sort: START_AT_DESC, atAFair: false, soloShow: true, isReference: true, visibleToPublic: false) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    edges {\n      node {\n        id\n        partner {\n          __typename\n          ... on ExternalPartner {\n            name\n            id\n          }\n          ... on Partner {\n            name\n            href\n          }\n          ... on Node {\n            __isNode: __typename\n            id\n          }\n        }\n        name\n        startAt(format: \"YYYY\")\n        city\n        href\n        __typename\n      }\n      cursor\n    }\n  }\n}\n\nfragment ArtistCVRoute_viewer on Viewer {\n  soloShows: artist(id: $artistID) {\n    ...ArtistCVGroup_artist_ieWPx\n    name\n    id\n  }\n  groupShows: artist(id: $artistID) {\n    ...ArtistCVGroup_artist_4DszuY\n    id\n  }\n  fairBooths: artist(id: $artistID) {\n    ...ArtistCVGroup_artist_47e96d\n    id\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'ffc2acdde5e291925270e12eb40152b4';
+(node as any).hash = '92886ab208264c4dadb13edb2dc26542';
 export default node;

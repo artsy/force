@@ -1,4 +1,3 @@
-import * as React from "react";
 import { createFragmentContainer, graphql } from "react-relay"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import { PartnerArtistDetails_partnerArtist } from "v2/__generated__/PartnerArtistDetails_partnerArtist.graphql"
@@ -42,9 +41,9 @@ export const PartnerArtistDetails: React.FC<PartnerArtistDetailsProps> = ({
           <GridColumns gridRowGap={2}>
             <Column span={12}>
               <RouterLink to={href} textDecoration="none">
-                <Text variant="largeTitle">{name}</Text>
+                <Text variant="xl">{name}</Text>
               </RouterLink>
-              <Text color="black60" variant="title">
+              <Text color="black60" variant="lg">
                 {formattedNationalityAndBirthday}
               </Text>
             </Column>

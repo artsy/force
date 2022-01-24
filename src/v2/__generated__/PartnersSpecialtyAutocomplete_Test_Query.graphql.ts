@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -104,6 +105,36 @@ v3 = {
     }
   ],
   "storageKey": null
+},
+v4 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "FilterPartners"
+},
+v5 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": true,
+  "type": "PartnersAggregationResults"
+},
+v6 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": true,
+  "type": "AggregationCount"
+},
+v7 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "Int"
+},
+v8 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "String"
 };
 return {
   "fragment": {
@@ -129,7 +160,8 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -205,13 +237,41 @@ return {
     ]
   },
   "params": {
+    "cacheID": "c453652cf50ad24c7da6508942566537",
     "id": null,
-    "metadata": {},
+    "metadata": {
+      "relayTestingSelectionTypeInfo": {
+        "viewer": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Viewer"
+        },
+        "viewer.allOptions": (v4/*: any*/),
+        "viewer.allOptions.aggregations": (v5/*: any*/),
+        "viewer.allOptions.aggregations.counts": (v6/*: any*/),
+        "viewer.allOptions.aggregations.counts.count": (v7/*: any*/),
+        "viewer.allOptions.aggregations.counts.text": (v8/*: any*/),
+        "viewer.allOptions.aggregations.counts.value": (v8/*: any*/),
+        "viewer.filterPartners": (v4/*: any*/),
+        "viewer.filterPartners.aggregations": (v5/*: any*/),
+        "viewer.filterPartners.aggregations.counts": (v6/*: any*/),
+        "viewer.filterPartners.aggregations.counts.count": (v7/*: any*/),
+        "viewer.filterPartners.aggregations.counts.text": (v8/*: any*/),
+        "viewer.filterPartners.aggregations.counts.value": (v8/*: any*/),
+        "viewer.filterPartners.total": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Int"
+        }
+      }
+    },
     "name": "PartnersSpecialtyAutocomplete_Test_Query",
     "operationKind": "query",
     "text": "query PartnersSpecialtyAutocomplete_Test_Query {\n  viewer {\n    ...PartnersSpecialtyAutocomplete_viewer\n  }\n}\n\nfragment PartnersSpecialtyAutocomplete_viewer on Viewer {\n  allOptions: filterPartners(aggregations: [CATEGORY], defaultProfilePublic: true, eligibleForListing: true, size: 0) {\n    aggregations {\n      counts {\n        text: name\n        value\n        count\n      }\n    }\n  }\n  filterPartners(aggregations: [CATEGORY, TOTAL], defaultProfilePublic: true, eligibleForListing: true, size: 0) {\n    total\n    aggregations {\n      counts {\n        text: name\n        value\n        count\n      }\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '229934365b6d20de56170f3618ecd104';
+(node as any).hash = 'ca2bb8fe0eb8a309e237fa2875cfe2d7';
 export default node;

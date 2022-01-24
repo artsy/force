@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -65,7 +66,8 @@ return {
         "storageKey": "sale(id:\"example\")"
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -126,13 +128,53 @@ return {
     ]
   },
   "params": {
+    "cacheID": "a68ed85b846d0425622c52593e65d909",
     "id": null,
-    "metadata": {},
+    "metadata": {
+      "relayTestingSelectionTypeInfo": {
+        "sale": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Sale"
+        },
+        "sale.buyersPremium": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": true,
+          "type": "BuyersPremium"
+        },
+        "sale.buyersPremium.amount": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "String"
+        },
+        "sale.buyersPremium.cents": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Int"
+        },
+        "sale.buyersPremium.percent": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Float"
+        },
+        "sale.id": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": false,
+          "type": "ID"
+        }
+      }
+    },
     "name": "AuctionBuyersPremiumDialog_Test_Query",
     "operationKind": "query",
     "text": "query AuctionBuyersPremiumDialog_Test_Query {\n  sale(id: \"example\") {\n    ...AuctionBuyersPremiumDialog_sale\n    id\n  }\n}\n\nfragment AuctionBuyersPremiumDialog_sale on Sale {\n  buyersPremium {\n    amount\n    cents\n    percent\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '63a4cfceea8621f9335ae96c210ea7c1';
+(node as any).hash = '6fe93d0d301eb094ae71261190b1ca21';
 export default node;

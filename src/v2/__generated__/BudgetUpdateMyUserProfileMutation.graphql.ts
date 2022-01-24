@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 export type UpdateMyProfileInput = {
@@ -17,10 +18,12 @@ export type UpdateMyProfileInput = {
     location?: EditableLocation | null;
     name?: string | null;
     notes?: string | null;
+    otherRelevantPosition?: string | null;
     password?: string | null;
     phone?: string | null;
     priceRangeMax?: number | null;
     priceRangeMin?: number | null;
+    privacy?: string | null;
     profession?: string | null;
     receiveLotOpeningSoonNotification?: boolean | null;
     receiveNewSalesNotification?: boolean | null;
@@ -76,8 +79,7 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "input",
-    "type": "UpdateMyProfileInput!"
+    "name": "input"
   }
 ],
 v1 = [
@@ -125,7 +127,8 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Mutation"
+    "type": "Mutation",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -166,6 +169,7 @@ return {
     ]
   },
   "params": {
+    "cacheID": "8709bbfc006309acb491e271cbcb4e9f",
     "id": null,
     "metadata": {},
     "name": "BudgetUpdateMyUserProfileMutation",

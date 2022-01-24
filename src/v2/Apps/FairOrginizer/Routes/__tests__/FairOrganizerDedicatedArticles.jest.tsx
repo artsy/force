@@ -23,7 +23,7 @@ const { getWrapper } = setupTestWrapper<
     )
   },
   query: graphql`
-    query FairOrganizerDedicatedArticles_Test_Query {
+    query FairOrganizerDedicatedArticles_Test_Query @relay_test_operation {
       fairOrganizer(id: "example") {
         ...FairOrganizerDedicatedArticles_fairOrganizer
       }

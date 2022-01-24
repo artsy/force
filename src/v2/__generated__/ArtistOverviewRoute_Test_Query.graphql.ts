@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -41,7 +42,13 @@ var v0 = [
     "name": "id",
     "value": "test"
   }
-];
+],
+v1 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "ID"
+};
 return {
   "fragment": {
     "argumentDefinitions": [],
@@ -66,7 +73,8 @@ return {
         "storageKey": "artist(id:\"test\")"
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -134,13 +142,44 @@ return {
     ]
   },
   "params": {
+    "cacheID": "b773ebca58c63c99ff9d379ce2c05939",
     "id": null,
-    "metadata": {},
+    "metadata": {
+      "relayTestingSelectionTypeInfo": {
+        "artist": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Artist"
+        },
+        "artist.counts": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "ArtistCounts"
+        },
+        "artist.counts.artworks": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "FormattedNumber"
+        },
+        "artist.id": (v1/*: any*/),
+        "artist.internalID": (v1/*: any*/),
+        "artist.name": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "String"
+        },
+        "artist.slug": (v1/*: any*/)
+      }
+    },
     "name": "ArtistOverviewRoute_Test_Query",
     "operationKind": "query",
     "text": "query ArtistOverviewRoute_Test_Query {\n  artist(id: \"test\") {\n    ...ArtistOverviewRoute_artist\n    id\n  }\n}\n\nfragment ArtistOverviewRoute_artist on Artist {\n  slug\n  name\n  counts {\n    artworks\n  }\n  internalID\n}\n"
   }
 };
 })();
-(node as any).hash = '243f1e49d55555672de3ee35008287d5';
+(node as any).hash = '7946d8b3859ab901fa36998f89fe62bd';
 export default node;

@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -46,7 +47,13 @@ var v0 = [
     "name": "platform",
     "value": "DESKTOP"
   }
-];
+],
+v1 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "String"
+};
 return {
   "fragment": {
     "argumentDefinitions": [],
@@ -82,7 +89,8 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -171,13 +179,42 @@ return {
     ]
   },
   "params": {
+    "cacheID": "817f70b8c004ebb48ca5b7b3543f8947",
     "id": null,
-    "metadata": {},
+    "metadata": {
+      "relayTestingSelectionTypeInfo": {
+        "homePage": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "HomePage"
+        },
+        "homePage.heroUnits": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": true,
+          "type": "HomePageHeroUnit"
+        },
+        "homePage.heroUnits.backgroundImageURL": (v1/*: any*/),
+        "homePage.heroUnits.creditLine": (v1/*: any*/),
+        "homePage.heroUnits.heading": (v1/*: any*/),
+        "homePage.heroUnits.href": (v1/*: any*/),
+        "homePage.heroUnits.id": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": false,
+          "type": "ID"
+        },
+        "homePage.heroUnits.linkText": (v1/*: any*/),
+        "homePage.heroUnits.subtitle": (v1/*: any*/),
+        "homePage.heroUnits.title": (v1/*: any*/)
+      }
+    },
     "name": "HomeHeroUnit_Test_Query",
     "operationKind": "query",
     "text": "query HomeHeroUnit_Test_Query {\n  homePage {\n    heroUnits(platform: DESKTOP) {\n      ...HomeHeroUnit_heroUnit\n      id\n    }\n  }\n}\n\nfragment HomeHeroUnit_heroUnit on HomePageHeroUnit {\n  backgroundImageURL\n  heading\n  title\n  subtitle\n  linkText\n  href\n  creditLine\n}\n"
   }
 };
 })();
-(node as any).hash = '172ce520d09dd0452178520b045ca271';
+(node as any).hash = 'ce2de92aeb13b3f33c94c8b628f88848';
 export default node;

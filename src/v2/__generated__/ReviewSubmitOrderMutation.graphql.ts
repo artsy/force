@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 export type CommerceOrderStateEnum = "ABANDONED" | "APPROVED" | "CANCELED" | "FULFILLED" | "PENDING" | "REFUNDED" | "SUBMITTED" | "%future added value";
@@ -70,8 +71,7 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "input",
-    "type": "CommerceSubmitOrderInput!"
+    "name": "input"
   }
 ],
 v1 = [
@@ -110,7 +110,8 @@ v3 = {
       "storageKey": null
     }
   ],
-  "type": "CommerceOrderRequiresAction"
+  "type": "CommerceOrderRequiresAction",
+  "abstractKey": null
 },
 v4 = {
   "kind": "InlineFragment",
@@ -148,7 +149,8 @@ v4 = {
       "storageKey": null
     }
   ],
-  "type": "CommerceOrderWithMutationFailure"
+  "type": "CommerceOrderWithMutationFailure",
+  "abstractKey": null
 },
 v5 = {
   "alias": null,
@@ -196,7 +198,8 @@ return {
                     "storageKey": null
                   }
                 ],
-                "type": "CommerceOrderWithMutationSuccess"
+                "type": "CommerceOrderWithMutationSuccess",
+                "abstractKey": null
               },
               (v3/*: any*/),
               (v4/*: any*/)
@@ -207,7 +210,8 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Mutation"
+    "type": "Mutation",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -256,7 +260,8 @@ return {
                     "storageKey": null
                   }
                 ],
-                "type": "CommerceOrderWithMutationSuccess"
+                "type": "CommerceOrderWithMutationSuccess",
+                "abstractKey": null
               },
               (v3/*: any*/),
               (v4/*: any*/)
@@ -269,6 +274,7 @@ return {
     ]
   },
   "params": {
+    "cacheID": "a2e3931a91db54d5b667319af31b66ab",
     "id": null,
     "metadata": {},
     "name": "ReviewSubmitOrderMutation",

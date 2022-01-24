@@ -19,7 +19,7 @@ const { renderWithRelay } = setupTestWrapperTL({
     )
   },
   query: graphql`
-    query OpenInquiryModalCTA_Test_Query {
+    query OpenInquiryModalCTA_Test_Query @relay_test_operation {
       me {
         conversation(id: "123") {
           ...OpenInquiryModalCTA_conversation

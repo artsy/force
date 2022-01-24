@@ -8,7 +8,8 @@ import { FollowProfileButtonFragmentContainer } from "v2/Components/FollowButton
 jest.unmock("react-relay")
 
 const NearbyGalleryCardTestQuery = graphql`
-  query NearbyGalleryCard_Test_Query($partnerId: String!) {
+  query NearbyGalleryCard_Test_Query($partnerId: String!)
+    @relay_test_operation {
     partner(id: $partnerId) @principalField {
       ...NearbyGalleryCard_partner
     }

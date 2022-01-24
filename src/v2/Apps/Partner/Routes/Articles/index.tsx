@@ -80,14 +80,14 @@ const Articles: React.FC<ArticlesProps> = ({ partner, relay }) => {
           {articles.map(({ node: article }) => {
             return (
               <Column key={article.internalID} span={4}>
-                <ArticleCardFragmentContainer article={article} />
+                <ArticleCardFragmentContainer isResponsive article={article} />
               </Column>
             )
           })}
         </GridColumns>
       </LoadingArea>
 
-      <Box mt={9}>
+      <Box mt={6}>
         <PaginationFragmentContainer
           hasNextPage={hasNextPage}
           pageCursors={pageCursors}

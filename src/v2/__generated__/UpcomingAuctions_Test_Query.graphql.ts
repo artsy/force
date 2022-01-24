@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -250,7 +251,43 @@ v8 = [
     "name": "display",
     "storageKey": null
   }
-];
+],
+v9 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "String"
+},
+v10 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "Sale"
+},
+v11 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "String"
+},
+v12 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "ID"
+},
+v13 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "Int"
+},
+v14 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "Boolean"
+};
 return {
   "fragment": {
     "argumentDefinitions": [],
@@ -275,7 +312,8 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -724,13 +762,175 @@ return {
     ]
   },
   "params": {
+    "cacheID": "848c14b47aa2b142f333c5cb6317033b",
     "id": null,
-    "metadata": {},
+    "metadata": {
+      "relayTestingSelectionTypeInfo": {
+        "viewer": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Viewer"
+        },
+        "viewer.salesConnection": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "SaleConnection"
+        },
+        "viewer.salesConnection.edges": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": true,
+          "type": "SaleEdge"
+        },
+        "viewer.salesConnection.edges.cursor": (v9/*: any*/),
+        "viewer.salesConnection.edges.node": (v10/*: any*/),
+        "viewer.salesConnection.edges.node.__typename": (v9/*: any*/),
+        "viewer.salesConnection.edges.node.artworksConnection": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "ArtworkConnection"
+        },
+        "viewer.salesConnection.edges.node.artworksConnection.edges": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": true,
+          "type": "ArtworkEdge"
+        },
+        "viewer.salesConnection.edges.node.artworksConnection.edges.node": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Artwork"
+        },
+        "viewer.salesConnection.edges.node.artworksConnection.edges.node.artists": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": true,
+          "type": "Artist"
+        },
+        "viewer.salesConnection.edges.node.artworksConnection.edges.node.artists.href": (v11/*: any*/),
+        "viewer.salesConnection.edges.node.artworksConnection.edges.node.artists.id": (v12/*: any*/),
+        "viewer.salesConnection.edges.node.artworksConnection.edges.node.artists.name": (v11/*: any*/),
+        "viewer.salesConnection.edges.node.artworksConnection.edges.node.collecting_institution": (v11/*: any*/),
+        "viewer.salesConnection.edges.node.artworksConnection.edges.node.cultural_maker": (v11/*: any*/),
+        "viewer.salesConnection.edges.node.artworksConnection.edges.node.date": (v11/*: any*/),
+        "viewer.salesConnection.edges.node.artworksConnection.edges.node.href": (v11/*: any*/),
+        "viewer.salesConnection.edges.node.artworksConnection.edges.node.id": (v12/*: any*/),
+        "viewer.salesConnection.edges.node.artworksConnection.edges.node.image": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Image"
+        },
+        "viewer.salesConnection.edges.node.artworksConnection.edges.node.image.aspectRatio": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": false,
+          "type": "Float"
+        },
+        "viewer.salesConnection.edges.node.artworksConnection.edges.node.image.height": (v13/*: any*/),
+        "viewer.salesConnection.edges.node.artworksConnection.edges.node.image.resized": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "ResizedImageUrl"
+        },
+        "viewer.salesConnection.edges.node.artworksConnection.edges.node.image.resized.height": (v13/*: any*/),
+        "viewer.salesConnection.edges.node.artworksConnection.edges.node.image.resized.src": (v9/*: any*/),
+        "viewer.salesConnection.edges.node.artworksConnection.edges.node.image.resized.srcSet": (v9/*: any*/),
+        "viewer.salesConnection.edges.node.artworksConnection.edges.node.image.resized.width": (v13/*: any*/),
+        "viewer.salesConnection.edges.node.artworksConnection.edges.node.imageTitle": (v11/*: any*/),
+        "viewer.salesConnection.edges.node.artworksConnection.edges.node.internalID": (v12/*: any*/),
+        "viewer.salesConnection.edges.node.artworksConnection.edges.node.is_biddable": (v14/*: any*/),
+        "viewer.salesConnection.edges.node.artworksConnection.edges.node.is_inquireable": (v14/*: any*/),
+        "viewer.salesConnection.edges.node.artworksConnection.edges.node.is_saved": (v14/*: any*/),
+        "viewer.salesConnection.edges.node.artworksConnection.edges.node.partner": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Partner"
+        },
+        "viewer.salesConnection.edges.node.artworksConnection.edges.node.partner.href": (v11/*: any*/),
+        "viewer.salesConnection.edges.node.artworksConnection.edges.node.partner.id": (v12/*: any*/),
+        "viewer.salesConnection.edges.node.artworksConnection.edges.node.partner.name": (v11/*: any*/),
+        "viewer.salesConnection.edges.node.artworksConnection.edges.node.partner.type": (v11/*: any*/),
+        "viewer.salesConnection.edges.node.artworksConnection.edges.node.sale": (v10/*: any*/),
+        "viewer.salesConnection.edges.node.artworksConnection.edges.node.sale.display_timely_at": (v11/*: any*/),
+        "viewer.salesConnection.edges.node.artworksConnection.edges.node.sale.id": (v12/*: any*/),
+        "viewer.salesConnection.edges.node.artworksConnection.edges.node.sale.is_auction": (v14/*: any*/),
+        "viewer.salesConnection.edges.node.artworksConnection.edges.node.sale.is_closed": (v14/*: any*/),
+        "viewer.salesConnection.edges.node.artworksConnection.edges.node.sale.is_live_open": (v14/*: any*/),
+        "viewer.salesConnection.edges.node.artworksConnection.edges.node.sale.is_open": (v14/*: any*/),
+        "viewer.salesConnection.edges.node.artworksConnection.edges.node.sale.is_preview": (v14/*: any*/),
+        "viewer.salesConnection.edges.node.artworksConnection.edges.node.sale_artwork": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "SaleArtwork"
+        },
+        "viewer.salesConnection.edges.node.artworksConnection.edges.node.sale_artwork.counts": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "SaleArtworkCounts"
+        },
+        "viewer.salesConnection.edges.node.artworksConnection.edges.node.sale_artwork.counts.bidder_positions": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "FormattedNumber"
+        },
+        "viewer.salesConnection.edges.node.artworksConnection.edges.node.sale_artwork.highest_bid": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "SaleArtworkHighestBid"
+        },
+        "viewer.salesConnection.edges.node.artworksConnection.edges.node.sale_artwork.highest_bid.display": (v11/*: any*/),
+        "viewer.salesConnection.edges.node.artworksConnection.edges.node.sale_artwork.id": (v12/*: any*/),
+        "viewer.salesConnection.edges.node.artworksConnection.edges.node.sale_artwork.opening_bid": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "SaleArtworkOpeningBid"
+        },
+        "viewer.salesConnection.edges.node.artworksConnection.edges.node.sale_artwork.opening_bid.display": (v11/*: any*/),
+        "viewer.salesConnection.edges.node.artworksConnection.edges.node.sale_message": (v11/*: any*/),
+        "viewer.salesConnection.edges.node.artworksConnection.edges.node.slug": (v12/*: any*/),
+        "viewer.salesConnection.edges.node.artworksConnection.edges.node.title": (v11/*: any*/),
+        "viewer.salesConnection.edges.node.eventStartAt": (v11/*: any*/),
+        "viewer.salesConnection.edges.node.formattedStartDateTime": (v11/*: any*/),
+        "viewer.salesConnection.edges.node.href": (v11/*: any*/),
+        "viewer.salesConnection.edges.node.id": (v12/*: any*/),
+        "viewer.salesConnection.edges.node.internalID": (v12/*: any*/),
+        "viewer.salesConnection.edges.node.isLiveOpen": (v14/*: any*/),
+        "viewer.salesConnection.edges.node.name": (v11/*: any*/),
+        "viewer.salesConnection.edges.node.slug": (v12/*: any*/),
+        "viewer.salesConnection.edges.node.status": (v11/*: any*/),
+        "viewer.salesConnection.pageInfo": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": false,
+          "type": "PageInfo"
+        },
+        "viewer.salesConnection.pageInfo.endCursor": (v11/*: any*/),
+        "viewer.salesConnection.pageInfo.hasNextPage": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": false,
+          "type": "Boolean"
+        },
+        "viewer.salesConnection.totalCount": (v13/*: any*/)
+      }
+    },
     "name": "UpcomingAuctions_Test_Query",
     "operationKind": "query",
     "text": "query UpcomingAuctions_Test_Query {\n  viewer {\n    ...UpcomingAuctions_viewer\n  }\n}\n\nfragment AuctionArtworksRail_sale on Sale {\n  artworksConnection(first: 20) {\n    edges {\n      node {\n        internalID\n        slug\n        ...ShelfArtwork_artwork_OqwQs\n        id\n      }\n    }\n  }\n  internalID\n  slug\n  href\n  name\n  formattedStartDateTime\n}\n\nfragment Badge_artwork on Artwork {\n  is_biddable: isBiddable\n  href\n  sale {\n    is_preview: isPreview\n    display_timely_at: displayTimelyAt\n    id\n  }\n}\n\nfragment Contact_artwork on Artwork {\n  href\n  is_inquireable: isInquireable\n  sale {\n    is_auction: isAuction\n    is_live_open: isLiveOpen\n    is_open: isOpen\n    is_closed: isClosed\n    id\n  }\n  partner(shallow: true) {\n    type\n    id\n  }\n  sale_artwork: saleArtwork {\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    counts {\n      bidder_positions: bidderPositions\n    }\n    id\n  }\n}\n\nfragment Details_artwork on Artwork {\n  href\n  title\n  date\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n}\n\nfragment Metadata_artwork on Artwork {\n  ...Details_artwork\n  ...Contact_artwork\n  href\n}\n\nfragment SaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  is_saved: isSaved\n  title\n}\n\nfragment ShelfArtwork_artwork_OqwQs on Artwork {\n  image {\n    resized(width: 200) {\n      src\n      srcSet\n      width\n      height\n    }\n    aspectRatio\n    height\n  }\n  imageTitle\n  title\n  href\n  is_saved: isSaved\n  ...Metadata_artwork\n  ...SaveButton_artwork\n  ...Badge_artwork\n}\n\nfragment UpcomingAuctions_viewer on Viewer {\n  salesConnection(first: 10, sort: START_AT_ASC, auctionState: UPCOMING) {\n    totalCount\n    edges {\n      node {\n        slug\n        name\n        href\n        status\n        formattedStartDateTime\n        eventStartAt\n        isLiveOpen\n        ...AuctionArtworksRail_sale\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '7e3087ceb2c24c216d44474818b670b4';
+(node as any).hash = '525a14e5c6bd187ed22a9ab3407b564e';
 export default node;

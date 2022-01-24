@@ -47,7 +47,7 @@ export const deleteUserAddress = (
       onError: e => {
         onError(e.message)
       },
-      onCompleted: (data, e) => {
+      onCompleted: (data) => {
         const errors = data.deleteUserAddress?.userAddressOrErrors.errors
         if (errors) {
           onError(errors.map(error => error.message).join(", "))
