@@ -4,6 +4,7 @@ import {
   Checkbox,
   Column,
   Flex,
+  GridColumns,
   Separator,
   Spacer,
   Text,
@@ -15,167 +16,160 @@ export const PreferencesApp: React.FC = () => {
 
   return (
     <>
-      <Text variant="xl" mt={4}>
+      <Text variant="xl" mt={4} mb={6}>
         Preferences Center
       </Text>
 
       <Separator mt={2} />
 
-      <Column
-        span={12}
-        pb={2}
-        pr={12}
-        mt={2}
-        display="flex"
-        justifyContent="space-between"
-      >
-        <Flex p={2} flexDirection="column">
-          <Box flexBasis={"50%"}>
-            <Text variant="md">Recommended By Artsy</Text>
-            <Text variant="sm" color="black60">
-              Artworks, shows, fairs, auctions, and collections we think you'll
-              love
-            </Text>
-          </Box>
-        </Flex>
-        <Flex p={2} flexDirection={"column"}>
-          <Box flexBasis={"50%"}>
-            <Checkbox selected={!uncheckedAll}>Email</Checkbox>
-          </Box>
-        </Flex>
-      </Column>
+      <GridColumns>
+        <Column
+          span={12}
+          pr={12}
+          mt={2}
+          display="flex"
+          justifyContent="space-between"
+        >
+          <Flex p={2}>
+            <Box>
+              <Text variant="md">Recommended By Artsy</Text>
+              <Text variant="sm" color="black60">
+                Artworks, shows, fairs, auctions, and collections we think you'll
+                love
+              </Text>
+            </Box>
+          </Flex>
+          <Flex p={2}>
+            <Box>
+              <Checkbox selected={!uncheckedAll}>Email</Checkbox>
+            </Box>
+          </Flex>
+        </Column>
 
-      <Column
-        span={12}
-        pb={2}
-        pr={12}
-        display="flex"
-        justifyContent="space-between"
-      >
-        <Flex p={2} flexDirection="column">
-          <Box flexBasis={"50%"}>
-            <Text variant="md">Art World Insights</Text>
-            <Text variant="sm" color="black60">
-              Market stories, artist profiles, exhibition reviews, and more art
-              world insights
-            </Text>
-          </Box>
-        </Flex>
-        <Flex p={2} flexDirection={"column"}>
-          <Box flexBasis={"50%"}>
-            <Checkbox selected={!uncheckedAll}>Email</Checkbox>
-          </Box>
-        </Flex>
-      </Column>
+        <Column
+          span={12}
+          pr={12}
+          display="flex"
+          justifyContent="space-between"
+        >
+          <Flex p={2}>
+            <Box>
+              <Text variant="md">Art World Insights</Text>
+              <Text variant="sm" color="black60">
+                Market stories, artist profiles, exhibition reviews, and more art
+                world insights
+              </Text>
+            </Box>
+          </Flex>
+          <Flex p={2}>
+            <Box>
+              <Checkbox selected={!uncheckedAll}>Email</Checkbox>
+            </Box>
+          </Flex>
+        </Column>
 
-      <Column
-        span={12}
-        pb={2}
-        pr={12}
-        display="flex"
-        justifyContent="space-between"
-      >
-        <Flex p={2} flexDirection="column">
-          <Box flexBasis={"50%"}>
-            <Text variant="md">Product Updates</Text>
-            <Text variant="sm" color="black60">
-              Announcements of new features on Artsy.net and the mobile app
-            </Text>
-          </Box>
-        </Flex>
-        <Flex p={2} flexDirection={"column"}>
-          <Box flexBasis={"50%"}>
-            <Checkbox selected={!uncheckedAll}>Email</Checkbox>
-          </Box>
-        </Flex>
-      </Column>
+        <Column
+          span={12}
+          pr={12}
+          display="flex"
+          justifyContent="space-between"
+        >
+          <Flex p={2}>
+            <Box>
+              <Text variant="md">Product Updates</Text>
+              <Text variant="sm" color="black60">
+                Announcements of new features on Artsy.net and the mobile app
+              </Text>
+            </Box>
+          </Flex>
+          <Flex p={2}>
+            <Box>
+              <Checkbox selected={!uncheckedAll}>Email</Checkbox>
+            </Box>
+          </Flex>
+        </Column>
 
-      <Column
-        span={12}
-        pb={2}
-        pr={12}
-        display="flex"
-        justifyContent="space-between"
-      >
-        <Flex p={2} flexDirection="column">
-          <Box flexBasis={"50%"}>
-            <Text variant="md">Guidance on Collecting</Text>
-            <Text variant="sm" color="black60">
-              Expert advice on buying and selling art, directly from an Artsy
-              specialist
-            </Text>
-          </Box>
-        </Flex>
-        <Flex p={2} flexDirection={"column"}>
-          <Box flexBasis={"50%"}>
-            <Checkbox selected={!uncheckedAll}>Email</Checkbox>
-          </Box>
-        </Flex>
-      </Column>
+        <Column
+          span={12}
+          pr={12}
+          display="flex"
+          justifyContent="space-between"
+        >
+          <Flex p={2}>
+            <Box>
+              <Text variant="md">Guidance on Collecting</Text>
+              <Text variant="sm" color="black60">
+                Expert advice on buying and selling art, directly from an Artsy
+                specialist
+              </Text>
+            </Box>
+          </Flex>
+          <Flex p={2}>
+            <Box>
+              <Checkbox selected={!uncheckedAll}>Email</Checkbox>
+            </Box>
+          </Flex>
+        </Column>
 
-      <Column
-        span={12}
-        pb={2}
-        pr={12}
-        display="flex"
-        justifyContent="space-between"
-      >
-        <Flex p={2} flexDirection="column">
-          <Box flexBasis={"50%"}>
-            <Text variant="md">Custom Alerts</Text>
-            <Text variant="sm" color="black60">
-              A round up of updates on your favorite artists, chosen by you
-            </Text>
-          </Box>
-        </Flex>
-        <Flex p={2} flexDirection={"column"}>
-          <Box flexBasis={"50%"}>
-            <Checkbox selected={!uncheckedAll}>Email</Checkbox>
-          </Box>
-        </Flex>
-      </Column>
+        <Column
+          span={12}
+          pr={12}
+          display="flex"
+          justifyContent="space-between"
+        >
+          <Flex p={2}>
+            <Box>
+              <Text variant="md">Custom Alerts</Text>
+              <Text variant="sm" color="black60">
+                A round up of updates on your favorite artists, chosen by you
+              </Text>
+            </Box>
+          </Flex>
+          <Flex p={2}>
+            <Box>
+              <Checkbox selected={!uncheckedAll}>Email</Checkbox>
+            </Box>
+          </Flex>
+        </Column>
+      </GridColumns>
 
       <Separator mt={2} />
 
-      <Column
-        span={12}
-        pb={2}
-        pr={12}
-        pt={2}
-        display="flex"
-        justifyContent="space-between"
-      >
-        <Flex p={2} flexDirection="column">
-          <Box flexBasis={"50%"}>
-            <Text variant="md">Unsubscribe from all</Text>
-          </Box>
-        </Flex>
-        <Flex p={2} flexDirection={"column"}>
-          <Box flexBasis={"50%"}>
-            <Checkbox
-              onSelect={result => setUncheckedAll(result)}
-              selected={uncheckedAll}
-            >
-              Email
-            </Checkbox>
-          </Box>
-        </Flex>
-      </Column>
+      <GridColumns>
+        <Column
+          span={12}
+          pb={2}
+          pr={12}
+          pt={2}
+          display="flex"
+          justifyContent="space-between"
+        >
+          <Flex p={2}>
+            <Box>
+              <Text variant="md">Unsubscribe from all</Text>
+            </Box>
+          </Flex>
+          <Flex p={2}>
+            <Box>
+              <Checkbox
+                onSelect={result => setUncheckedAll(result)}
+                selected={uncheckedAll}
+              >
+                Email
+              </Checkbox>
+            </Box>
+          </Flex>
+        </Column>
+      </GridColumns>
 
       <Flex
-        flexBasis="50%"
-        alignItems="center"
         justifyContent="flex-end"
         pt={2}
         pr={4}
       >
-        <>
-          <Button width={["100%", "auto"]}>Cancel</Button>
-
-          <Spacer ml={1} />
-
-          <Button width={["100%", "auto"]}>Save</Button>
-        </>
+        <Button width={["100%", "auto"]}>Cancel</Button>
+        <Spacer ml={1} />
+        <Button width={["100%", "auto"]}>Save</Button>
       </Flex>
     </>
   )
