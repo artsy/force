@@ -1,11 +1,8 @@
-import { FC } from "react"
-import { Select, Text, useToasts } from "@artsy/palette"
+import * as React from "react"
+import { Button, Flex, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { SettingsEditSettingsEmailPreferences_me } from "v2/__generated__/SettingsEditSettingsEmailPreferences_me.graphql"
-import { useUpdateSettingsEmailPreferences } from "./useUpdateSettingsEmailPreferences"
-
-const DEFAULT_FREQUENCY = "weekly"
-
+import { RouterLink } from "v2/System/Router/RouterLink"
 interface SettingEditSettingsEmailPreferencesProps {
   me: SettingsEditSettingsEmailPreferences_me
 }
@@ -13,51 +10,22 @@ interface SettingEditSettingsEmailPreferencesProps {
 export const SettingsEditSettingsEmailPreferences: FC<SettingEditSettingsEmailPreferencesProps> = ({
   me,
 }) => {
-  const { sendToast } = useToasts()
-  const { submitMutation } = useUpdateSettingsEmailPreferences()
-
-  const handleSelect = async (emailFrequency: string) => {
-    try {
-      submitMutation({ variables: { input: { emailFrequency } } })
-
-      sendToast({
-        variant: "success",
-        message: "Preferences Updated",
-      })
-    } catch (err) {
-      const error = Array.isArray(err) ? err[0] : err
-
-      sendToast({
-        variant: "error",
-        message: "Something went wrong",
-        description: error.message,
-      })
-    }
-  }
-
   return (
     <>
       <Text color="black100" variant="lg" mb={4}>
         Email Preferences
       </Text>
-
-      <Text color="black60" variant="sm" mb={2}>
-        Receive emails from Artsy with auctions, articles, curated collections,
-        and new works by artists you follow
-      </Text>
-
-      <Select
-        name="frequency"
-        title="Frequency"
-        onSelect={handleSelect}
-        options={[
-          { text: "None", value: "none" },
-          { text: "Daily", value: "daily" },
-          { text: "Weekly", value: "weekly" },
-          { text: "Alerts Only", value: "alerts_only" },
-        ]}
-        selected={me.emailFrequency || DEFAULT_FREQUENCY}
-      />
+      <Flex mt="2" justifyContent="space-between">
+        <Text color="black60" variant="sm">
+          Receive emails from Artsy with auctions, articles, curated
+          collections, and new works by artists you follow
+        </Text>
+        <Flex alignItems="center">
+          <RouterLink to="/preferences2">
+            <Button>Update Email Preferences</Button>
+          </RouterLink>
+        </Flex>
+      </Flex>
     </>
   )
 }
