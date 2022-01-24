@@ -291,6 +291,7 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
         modalDetails={modalDetails}
         closeModal={() => setShowAddressModal(false)}
         address={address || undefined}
+        onClearAddress={() => setAddress(({} as unknown) as undefined)}
         onSuccess={createOrUpdateAddressSuccess}
         onDeleteAddress={handleDeleteAddress}
         onError={onError}

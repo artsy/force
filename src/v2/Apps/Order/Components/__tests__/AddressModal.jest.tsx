@@ -46,6 +46,7 @@ describe("AddressModal", () => {
     testAddressModalProps = {
       show: true,
       address: savedAddress,
+      onClearAddress: jest.fn(),
       onSuccess: jest.fn(),
       onError: jest.fn(),
       onDeleteAddress: jest.fn(),

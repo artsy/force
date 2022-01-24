@@ -38,6 +38,7 @@ export interface Props {
   show: boolean
   closeModal: () => void
   address?: BillingInfo
+  onClearAddress: () => void
   onSuccess: (
     address?: UpdateUserAddressMutationResponse &
       CreateUserAddressMutationResponse
@@ -66,6 +67,7 @@ export const AddressModal: React.FC<Props> = ({
   show,
   closeModal,
   address,
+  onClearAddress,
   onSuccess,
   onDeleteAddress,
   onError,
@@ -84,9 +86,14 @@ export const AddressModal: React.FC<Props> = ({
   const createMutation =
     modalDetails?.addressModalAction === "createUserAddress"
 
+  const handleClearAddress = (): void => {
+    console.log("handleClearAddress")
+    onClearAddress()
+  }
   const handleModalClose = () => {
     closeModal()
     setCreateUpdateError(null)
+    handleClearAddress()
   }
 
   const onSubmit = (
@@ -222,16 +229,21 @@ export const AddressModal: React.FC<Props> = ({
             if (address?.internalID) {
               onDeleteAddress(address.internalID)
             }
+            handleClearAddress()
           },
           text: "Delete",
         }}
         secondaryCta={{
           action: () => {
             setShowDialog(false)
+            handleClearAddress()
           },
           text: "Cancel",
         }}
-        onClose={() => setShowDialog(false)}
+        onClose={() => {
+          setShowDialog(false)
+          handleClearAddress()
+        }}
       />
     </>
   )
