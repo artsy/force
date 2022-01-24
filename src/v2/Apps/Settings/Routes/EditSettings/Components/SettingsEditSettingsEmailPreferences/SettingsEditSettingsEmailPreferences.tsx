@@ -7,9 +7,7 @@ interface SettingEditSettingsEmailPreferencesProps {
   me: SettingsEditSettingsEmailPreferences_me
 }
 
-export const SettingsEditSettingsEmailPreferences: FC<SettingEditSettingsEmailPreferencesProps> = ({
-  me,
-}) => {
+export const SettingsEditSettingsEmailPreferences: React.FC<SettingEditSettingsEmailPreferencesProps> = () => {
   return (
     <>
       <Text color="black100" variant="lg" mb={4}>
@@ -21,9 +19,10 @@ export const SettingsEditSettingsEmailPreferences: FC<SettingEditSettingsEmailPr
           collections, and new works by artists you follow
         </Text>
         <Flex alignItems="center">
-          <RouterLink to="/preferences2">
-            <Button>Update Email Preferences</Button>
-          </RouterLink>
+          //@ts-ignore
+          <Button as={RouterLink} to="/preferences2">
+            Update Email Preferences
+          </Button>
         </Flex>
       </Flex>
     </>
