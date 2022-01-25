@@ -84,41 +84,31 @@ export const PreferencesApp: React.FC = () => {
             pl={2}
             pt={2}
           >
-            <Box>
-              <Checkbox selected={!uncheckedAll}>Email</Checkbox>
-            </Box>
+            <Checkbox selected={!uncheckedAll}>Email</Checkbox>
           </Flex>
           <Flex 
             pl={2}
             pt={6}
           >
-            <Box>
-              <Checkbox selected={!uncheckedAll}>Email</Checkbox>
-            </Box>
+            <Checkbox selected={!uncheckedAll}>Email</Checkbox>
           </Flex>
           <Flex 
             pl={2}
             pt={6}
           >
-            <Box>
-              <Checkbox selected={!uncheckedAll}>Email</Checkbox>
-            </Box>
+            <Checkbox selected={!uncheckedAll}>Email</Checkbox>
           </Flex>
           <Flex 
             pl={2}
             pt={6}
           >
-            <Box>
-              <Checkbox selected={!uncheckedAll}>Email</Checkbox>
-            </Box>
+            <Checkbox selected={!uncheckedAll}>Email</Checkbox>
           </Flex>
           <Flex 
             pl={2}
             pt={6}
           >
-            <Box>
-              <Checkbox selected={!uncheckedAll}>Email</Checkbox>
-            </Box>
+            <Checkbox selected={!uncheckedAll}>Email</Checkbox>
           </Flex>
         </Column>
 
@@ -143,14 +133,12 @@ export const PreferencesApp: React.FC = () => {
           mt={2}
         >
           <Flex p={2}>
-            <Box>
-              <Checkbox
-                onSelect={result => setUncheckedAll(result)}
-                selected={uncheckedAll}
-              >
-                Email
-              </Checkbox>
-            </Box>
+            <Checkbox
+              onSelect={result => setUncheckedAll(result)}
+              selected={uncheckedAll}
+            >
+              Email
+            </Checkbox>
           </Flex>
         </Column>
       </GridColumns>
