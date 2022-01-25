@@ -133,12 +133,12 @@ export class ReviewRoute extends Component<ReviewProps> {
               )
             : router.push(`/orders/${order.internalID}/status`)
         }
-        // Buy-mode order redirects to the status page
-        if (order.mode !== "OFFER") {
+        // Buy-mode order redirects to the status page. Eigen must keep the user inside the webview.
+        if (order.mode !== "OFFER" || isEigen) {
           return router.push(`/orders/${order.internalID}/status`)
         }
         // Make offer in inquiry redirects to the conversation page
-        if (order.source === "inquiry" && !isEigen) {
+        if (order.source === "inquiry") {
           return router.push(
             `/user/conversations/${order.conversation?.internalID}`
           )

@@ -57,6 +57,9 @@ jest.mock("@stripe/stripe-js", () => {
   }
 })
 
+const mockUseHasLabFeature = userHasLabFeature as jest.Mock
+const mockUseSystemContext = useSystemContext as jest.Mock
+
 const { _mockStripe } = require("@stripe/stripe-js")
 
 const testOrder: ReviewTestQueryRawResponse["order"] = {
@@ -76,7 +79,7 @@ describe("Review", () => {
     ;(useTracking as jest.Mock).mockImplementation(() => ({
       trackEvent: jest.fn(),
     }))
-    ;(useSystemContext as jest.Mock).mockImplementation(() => ({
+    mockUseSystemContext.mockImplementation(() => ({
       user: { lab_features: [] },
       mediator: { on: jest.fn() },
     }))
@@ -84,7 +87,7 @@ describe("Review", () => {
 
   beforeEach(() => {
     mockLocation()
-    ;(userHasLabFeature as jest.Mock).mockImplementation(() => false)
+    mockUseHasLabFeature.mockImplementation(() => false)
   })
 
   const { buildPage, mutations, routes, ...hooks } = createTestEnv({
@@ -123,11 +126,11 @@ describe("Review", () => {
     })
 
     it("enables the button and routes to the artwork page (under feature flag)", async () => {
-      ;(useSystemContext as jest.Mock).mockImplementation(() => ({
+      mockUseSystemContext.mockImplementation(() => ({
         user: { lab_features: ["Make Offer On All Eligible Artworks"] },
         mediator: { on: jest.fn() },
       }))
-      ;(userHasLabFeature as jest.Mock).mockImplementation(() => true)
+      mockUseHasLabFeature.mockImplementation(() => true)
 
       await page.clickSubmit()
       expect(mutations.mockFetch).toHaveBeenCalledTimes(1)
@@ -273,11 +276,11 @@ describe("Review", () => {
     })
 
     it("enables the button and routes to the artwork page based on the order source", async () => {
-      ;(useSystemContext as jest.Mock).mockImplementation(() => ({
+      mockUseSystemContext.mockImplementation(() => ({
         user: { lab_features: ["Make Offer On All Eligible Artworks"] },
         mediator: { on: jest.fn() },
       }))
-      ;(userHasLabFeature as jest.Mock).mockImplementation(() => true)
+      mockUseHasLabFeature.mockImplementation(() => true)
 
       await page.clickSubmit()
       expect(mutations.mockFetch).toHaveBeenCalledTimes(1)
@@ -427,11 +430,11 @@ describe("Review", () => {
     })
 
     it("enables the button and routes to the conversation based on the order source", async () => {
-      ;(useSystemContext as jest.Mock).mockImplementation(() => ({
+      mockUseSystemContext.mockImplementation(() => ({
         user: { lab_features: ["Make Offer On All Eligible Artworks"] },
         mediator: { on: jest.fn() },
       }))
-      ;(userHasLabFeature as jest.Mock).mockImplementation(() => true)
+      mockUseHasLabFeature.mockImplementation(() => true)
 
       await page.clickSubmit()
       expect(mutations.mockFetch).toHaveBeenCalledTimes(1)
