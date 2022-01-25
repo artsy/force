@@ -403,15 +403,12 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
       return <Separator />
     }
 
-    const shouldDisplayContactGalleryButton: boolean | null =
-      isInquireable && !isAcquireable && !isOfferable
-
     const shouldDisplayMakeOfferButton: boolean | null =
       isOfferable ||
       (isPriceListed && isOfferableFromInquiry && labFeatureEnabled)
 
     const shouldDisplayMakeOfferAsPrimary: boolean | null =
-      shouldDisplayMakeOfferButton && shouldDisplayContactGalleryButton
+      shouldDisplayMakeOfferButton && isInquireable
 
     return (
       <>
@@ -496,7 +493,7 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
               </Button>
             </>
           )}
-          {shouldDisplayContactGalleryButton && (
+          {isInquireable && (
             <>
               <Spacer mt={shouldDisplayMakeOfferAsPrimary ? 2 : 0} />
               <Button
