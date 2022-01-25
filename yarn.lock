@@ -123,10 +123,10 @@
   dependencies:
     passport-strategy "1.x.x"
 
-"@artsy/passport@3.6.0":
-  version "3.6.0"
-  resolved "https://registry.yarnpkg.com/@artsy/passport/-/passport-3.6.0.tgz#872191e51505ecc3b9e112794763b08fbc184842"
-  integrity sha512-uD9sLiY+U0lLXlNR1hcrRD+u8a+Bgv24jILrCzjfyO/QADF7VNpcvQDaCYQhq/N/2SvOvi+I5yJ79WjG4cLf+w==
+"@artsy/passport@^3.7.0--canary.193.653.0":
+  version "3.7.0--canary.193.653.0"
+  resolved "https://registry.yarnpkg.com/@artsy/passport/-/passport-3.7.0--canary.193.653.0.tgz#8d9ef129e2a93045983435cae4f9b1f8781ce234"
+  integrity sha512-+UBBO9ot/93OC/SYM+DURuqQj395jACWZfX7RAANs8S8ZymheM2ezM2ZDA6cYDNvbzgSBBWHElvpjOYPLw5UVA==
   dependencies:
     "@artsy/passport-local-with-otp" "0.3.1"
     "@artsy/xapp" "1.0.6"
@@ -139,6 +139,7 @@
     passport "0.3.2"
     passport-apple "https://github.com/artsy/passport-apple#f41adb7822c8344b72bc36a7d68312f6592cb14f"
     passport-facebook "2.1.1"
+    passport-google-oidc "^0.1.0"
     superagent "^1.8.4"
     underscore.string "^3.3.5"
 
@@ -16161,7 +16162,7 @@ pascalcase@^0.1.1:
   resolved "https://registry.yarnpkg.com/pascalcase/-/pascalcase-0.1.1.tgz#b363e55e8006ca6fe21784d2db22bd15d7917f14"
   integrity sha1-s2PlXoAGym/iF4TS2yK9FdeRfxQ=
 
-"passport-apple@https://github.com/artsy/passport-apple#f41adb7822c8344b72bc36a7d68312f6592cb14f":
+"passport-apple@git+https://github.com/artsy/passport-apple.git#f41adb7822c8344b72bc36a7d68312f6592cb14f":
   version "1.1.2"
   resolved "git+https://github.com/artsy/passport-apple.git#f41adb7822c8344b72bc36a7d68312f6592cb14f"
   dependencies:
@@ -16175,6 +16176,13 @@ passport-facebook@2.1.1:
   dependencies:
     passport-oauth2 "1.x.x"
 
+passport-google-oidc@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/passport-google-oidc/-/passport-google-oidc-0.1.0.tgz#585790ba03864c0238cb89912d7e2a958086b5b0"
+  integrity sha512-/TtFXaWvmubm5kXNoJMyzBfxhnZ0lnBPA6w6rmQMP9klmHZf0ArE8IrIEt3yAHoiDzGx4eTO7YasKQFbPsNtVA==
+  dependencies:
+    passport-openidconnect "0.1.x"
+
 passport-oauth2@1.x.x, passport-oauth2@^1.5.0:
   version "1.6.1"
   resolved "https://registry.yarnpkg.com/passport-oauth2/-/passport-oauth2-1.6.1.tgz#c5aee8f849ce8bd436c7f81d904a3cd1666f181b"
@@ -16185,6 +16193,14 @@ passport-oauth2@1.x.x, passport-oauth2@^1.5.0:
     passport-strategy "1.x.x"
     uid2 "0.0.x"
     utils-merge "1.x.x"
+
+passport-openidconnect@0.1.x:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/passport-openidconnect/-/passport-openidconnect-0.1.1.tgz#83921ff5f87f634079f65262dada834af1972244"
+  integrity sha512-r0QJiWEzwCg2MeCIXVP5G6YxVRqnEsZ2HpgKRthZ9AiQHJrgGUytXpsdcGF9BRwd3yMrEesb/uG/Yxb86rrY0g==
+  dependencies:
+    oauth "0.9.x"
+    passport-strategy "1.x.x"
 
 passport-strategy@1.x.x:
   version "1.0.0"
