@@ -64,7 +64,7 @@ export const ContactInformationForm: React.FC<ContactInformationFormProps> = ({
       />
 
       {/* render email error separately to have its design aligned with PhoneNumberInput */}
-      {errors.email && values.email && (
+      {errors.email && (values.email || touched.email) && (
         <Text variant="xs" mt={0.5} color="red100">
           {errors.email}
         </Text>
