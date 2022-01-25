@@ -180,6 +180,27 @@ describe("Contact Information step", () => {
       expect(getSubmitButton()).toBeEnabled()
     })
 
+    it("is disabled after when number is removed by user", async () => {
+      getWrapper().renderWithRelay({
+        Me: () => mockEmptyMe,
+        ConsignmentSubmission: () => mockSubmission,
+      })
+
+      simulateTyping("name", "Banksy")
+      simulateTyping("email", "banksy@test.test")
+      simulateTyping("phone", "+1 415-555-0132")
+
+      await waitFor(() => {
+        expect(getSubmitButton()).toBeEnabled()
+      })
+
+      simulateTyping("phone", "")
+
+      await waitFor(() => {
+        expect(getSubmitButton()).toBeDisabled()
+      })
+    })
+
     it("show error modal if consingment submission fails", async () => {
       mockCreateConsignSubmission.mockRejectedValueOnce("rejected")
       getWrapper().renderWithRelay({
