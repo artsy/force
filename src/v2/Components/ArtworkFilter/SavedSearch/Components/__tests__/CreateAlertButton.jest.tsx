@@ -118,6 +118,7 @@ describe("CreateAlertButton", () => {
         },
         contextModule: "artworkGrid",
         intent: "createAlert",
+        redirectTo: "http://localhost/",
       })
     })
 
