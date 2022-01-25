@@ -1,25 +1,92 @@
-import { Box, Text } from "@artsy/palette"
+import {
+  Box,
+  Text,
+  GridColumns,
+  Column,
+  Flex,
+  Spacer,
+  FullBleed,
+  Separator,
+  CloseIcon,
+  Clickable,
+} from "@artsy/palette"
 import { createPaginationContainer, graphql } from "react-relay"
 import { SavedSearchAlertsList_me } from "v2/__generated__/SavedSearchAlertsList_me.graphql"
 import { extractNodes } from "v2/Utils/extractNodes"
+import { useState } from "react"
 
 interface SavedSearchAlertsListProps {
   me: SavedSearchAlertsList_me
 }
 
+interface EditAlertEntity {
+  id: string
+  name: string
+}
+
 export const SavedSearchAlertsList: React.FC<SavedSearchAlertsListProps> = ({
   me,
 }) => {
+  const [
+    editAlertEntity,
+    setEditAlertEntity,
+  ] = useState<EditAlertEntity | null>(null)
   const alerts = extractNodes(me.savedSearchesConnection)
+  const isEditMode = editAlertEntity !== null
 
   return (
-    <Box>
-      {alerts.map(edge => (
-        <Box key={edge.internalID} my={1}>
-          <Text>{edge.userAlertSettings.name}</Text>
-        </Box>
-      ))}
-    </Box>
+    <FullBleed>
+      <Separator backgroundColor="black15" />
+      <GridColumns>
+        <Column span={isEditMode ? 6 : 12}>
+          {alerts.map(edge => (
+            <Box key={edge.internalID} p={4}>
+              <Flex
+                flexDirection="row"
+                alignItems="center"
+                justifyContent="space-between"
+              >
+                <Text variant="lg">{edge.userAlertSettings.name}</Text>
+                <Flex flexDirection="row" alignItems="center">
+                  <Clickable
+                    textDecoration="underline"
+                    onClick={() => {
+                      setEditAlertEntity({
+                        id: edge.internalID,
+                        name: edge.userAlertSettings.name!,
+                      })
+                    }}
+                  >
+                    <Text variant="sm">Edit</Text>
+                  </Clickable>
+                  <Spacer ml={2} />
+                  <Clickable textDecoration="underline">
+                    <Text variant="sm">View All</Text>
+                  </Clickable>
+                </Flex>
+              </Flex>
+            </Box>
+          ))}
+        </Column>
+        {isEditMode && (
+          <Column span={6}>
+            <Flex flexDirection="row" height="100%">
+              <Box width="1px" height="100%" backgroundColor="black15" />
+              <Box p={4} flex={1}>
+                <Flex flexDirection="row" justifyContent="space-between">
+                  <Text variant="lg" flex={1} mr={1}>
+                    {editAlertEntity!.name}
+                  </Text>
+                  <Clickable onClick={() => setEditAlertEntity(null)} mt={0.5}>
+                    <CloseIcon />
+                  </Clickable>
+                </Flex>
+              </Box>
+            </Flex>
+          </Column>
+        )}
+      </GridColumns>
+    </FullBleed>
   )
 }
 
