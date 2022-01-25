@@ -92,7 +92,7 @@
     "@artsy/multienv": "^1.2.0",
     "@artsy/palette": "18.15.1",
     "@artsy/palette-charts": "17.15.1",
-    "@artsy/passport": "3.6.0",
+    "@artsy/passport": "3.7.0--canary.193.653.0",
     "@artsy/reaction": "29.2.1",
     "@artsy/stitch": "6.4.2",
     "@artsy/to-title-case": "1.1.0",
