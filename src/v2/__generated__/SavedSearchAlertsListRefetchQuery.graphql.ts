@@ -4,28 +4,28 @@
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type SavedSearchAlertsOverviewRouteRefetchQueryVariables = {};
-export type SavedSearchAlertsOverviewRouteRefetchQueryResponse = {
+export type SavedSearchAlertsListRefetchQueryVariables = {};
+export type SavedSearchAlertsListRefetchQueryResponse = {
     readonly me: {
-        readonly " $fragmentRefs": FragmentRefs<"SavedSearchAlertsOverviewRoute_me">;
+        readonly " $fragmentRefs": FragmentRefs<"SavedSearchAlertsList_me">;
     } | null;
 };
-export type SavedSearchAlertsOverviewRouteRefetchQuery = {
-    readonly response: SavedSearchAlertsOverviewRouteRefetchQueryResponse;
-    readonly variables: SavedSearchAlertsOverviewRouteRefetchQueryVariables;
+export type SavedSearchAlertsListRefetchQuery = {
+    readonly response: SavedSearchAlertsListRefetchQueryResponse;
+    readonly variables: SavedSearchAlertsListRefetchQueryVariables;
 };
 
 
 
 /*
-query SavedSearchAlertsOverviewRouteRefetchQuery {
+query SavedSearchAlertsListRefetchQuery {
   me {
-    ...SavedSearchAlertsOverviewRoute_me
+    ...SavedSearchAlertsList_me
     id
   }
 }
 
-fragment SavedSearchAlertsOverviewRoute_me on Me {
+fragment SavedSearchAlertsList_me on Me {
   savedSearchesConnection(first: 50) {
     edges {
       node {
@@ -58,7 +58,7 @@ return {
     "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
-    "name": "SavedSearchAlertsOverviewRouteRefetchQuery",
+    "name": "SavedSearchAlertsListRefetchQuery",
     "selections": [
       {
         "alias": null,
@@ -71,7 +71,7 @@ return {
           {
             "args": null,
             "kind": "FragmentSpread",
-            "name": "SavedSearchAlertsOverviewRoute_me"
+            "name": "SavedSearchAlertsList_me"
           }
         ],
         "storageKey": null
@@ -84,7 +84,7 @@ return {
   "operation": {
     "argumentDefinitions": [],
     "kind": "Operation",
-    "name": "SavedSearchAlertsOverviewRouteRefetchQuery",
+    "name": "SavedSearchAlertsListRefetchQuery",
     "selections": [
       {
         "alias": null,
@@ -196,7 +196,7 @@ return {
             "args": (v0/*: any*/),
             "filters": null,
             "handle": "connection",
-            "key": "SavedSearchAlertsOverviewRoute_savedSearchesConnection",
+            "key": "SavedSearchAlertsList_savedSearchesConnection",
             "kind": "LinkedHandle",
             "name": "savedSearchesConnection"
           },
@@ -213,14 +213,14 @@ return {
     ]
   },
   "params": {
-    "cacheID": "0c4d34d43ec4d42f378c82badea9eef7",
+    "cacheID": "a0fd41fbc403142fe731feec56a0ed1b",
     "id": null,
     "metadata": {},
-    "name": "SavedSearchAlertsOverviewRouteRefetchQuery",
+    "name": "SavedSearchAlertsListRefetchQuery",
     "operationKind": "query",
-    "text": "query SavedSearchAlertsOverviewRouteRefetchQuery {\n  me {\n    ...SavedSearchAlertsOverviewRoute_me\n    id\n  }\n}\n\nfragment SavedSearchAlertsOverviewRoute_me on Me {\n  savedSearchesConnection(first: 50) {\n    edges {\n      node {\n        internalID\n        userAlertSettings {\n          name\n        }\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query SavedSearchAlertsListRefetchQuery {\n  me {\n    ...SavedSearchAlertsList_me\n    id\n  }\n}\n\nfragment SavedSearchAlertsList_me on Me {\n  savedSearchesConnection(first: 50) {\n    edges {\n      node {\n        internalID\n        userAlertSettings {\n          name\n        }\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '467788a21b760bbe1f380db3f8a0b002';
+(node as any).hash = 'fc9879011b39b5b3508202d9acfcc417';
 export default node;

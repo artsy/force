@@ -25,7 +25,7 @@ query savedSearchAlertsRoutes_SavedSearchAlertsOverviewRouteQuery {
   }
 }
 
-fragment SavedSearchAlertsOverviewRoute_me on Me {
+fragment SavedSearchAlertsList_me on Me {
   savedSearchesConnection(first: 50) {
     edges {
       node {
@@ -42,6 +42,10 @@ fragment SavedSearchAlertsOverviewRoute_me on Me {
       hasNextPage
     }
   }
+}
+
+fragment SavedSearchAlertsOverviewRoute_me on Me {
+  ...SavedSearchAlertsList_me
 }
 */
 
@@ -196,7 +200,7 @@ return {
             "args": (v0/*: any*/),
             "filters": null,
             "handle": "connection",
-            "key": "SavedSearchAlertsOverviewRoute_savedSearchesConnection",
+            "key": "SavedSearchAlertsList_savedSearchesConnection",
             "kind": "LinkedHandle",
             "name": "savedSearchesConnection"
           },
@@ -213,12 +217,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "07df302418fb7e7f2f31745e253bd7fc",
+    "cacheID": "1fa3caf7283a3bf02b984a0c9a5cf8a0",
     "id": null,
     "metadata": {},
     "name": "savedSearchAlertsRoutes_SavedSearchAlertsOverviewRouteQuery",
     "operationKind": "query",
-    "text": "query savedSearchAlertsRoutes_SavedSearchAlertsOverviewRouteQuery {\n  me {\n    ...SavedSearchAlertsOverviewRoute_me\n    id\n  }\n}\n\nfragment SavedSearchAlertsOverviewRoute_me on Me {\n  savedSearchesConnection(first: 50) {\n    edges {\n      node {\n        internalID\n        userAlertSettings {\n          name\n        }\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query savedSearchAlertsRoutes_SavedSearchAlertsOverviewRouteQuery {\n  me {\n    ...SavedSearchAlertsOverviewRoute_me\n    id\n  }\n}\n\nfragment SavedSearchAlertsList_me on Me {\n  savedSearchesConnection(first: 50) {\n    edges {\n      node {\n        internalID\n        userAlertSettings {\n          name\n        }\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment SavedSearchAlertsOverviewRoute_me on Me {\n  ...SavedSearchAlertsList_me\n}\n"
   }
 };
 })();
