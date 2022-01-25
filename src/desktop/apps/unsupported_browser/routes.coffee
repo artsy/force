@@ -1,4 +1,4 @@
-sanitizeRedirect = require '@artsy/passport/sanitize-redirect'
+sanitizeRedirect = require '../../../lib/passport/sanitize-redirect'
 
 #
 # Message users of unsupported browsers to upgrade
