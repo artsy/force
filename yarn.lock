@@ -123,25 +123,6 @@
   dependencies:
     passport-strategy "1.x.x"
 
-"@artsy/passport@3.6.0":
-  version "3.6.0"
-  resolved "https://registry.yarnpkg.com/@artsy/passport/-/passport-3.6.0.tgz#872191e51505ecc3b9e112794763b08fbc184842"
-  integrity sha512-uD9sLiY+U0lLXlNR1hcrRD+u8a+Bgv24jILrCzjfyO/QADF7VNpcvQDaCYQhq/N/2SvOvi+I5yJ79WjG4cLf+w==
-  dependencies:
-    "@artsy/passport-local-with-otp" "0.3.1"
-    "@artsy/xapp" "1.0.6"
-    analytics-node "^2.4.1"
-    async "^1.5.2"
-    csurf "^1.9.0"
-    express "^4.14.0"
-    ip "^1.1.5"
-    lodash "^4.17.21"
-    passport "0.3.2"
-    passport-apple "https://github.com/artsy/passport-apple#f41adb7822c8344b72bc36a7d68312f6592cb14f"
-    passport-facebook "2.1.1"
-    superagent "^1.8.4"
-    underscore.string "^3.3.5"
-
 "@artsy/react-html-parser@^3.0.2":
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/@artsy/react-html-parser/-/react-html-parser-3.0.2.tgz#6213d662441acf0bd8c9ee953aa77ac8d9cf1cdd"
@@ -4760,7 +4741,7 @@ amdefine@>=0.0.4:
   resolved "https://registry.yarnpkg.com/amdefine/-/amdefine-1.0.1.tgz#4a5282ac164729e93619bcfd3ad151f817ce91f5"
   integrity sha1-SlKCrBZHKek2Gbz9OtFR+BfOkfU=
 
-analytics-node@2.4.1, analytics-node@^2.4.1:
+analytics-node@2.4.1:
   version "2.4.1"
   resolved "https://registry.yarnpkg.com/analytics-node/-/analytics-node-2.4.1.tgz#1f96c8eb887b6c47691044ac7fc9a1231fb020f7"
   integrity sha1-H5bI64h7bEdpEESsf8mhIx+wIPc=
@@ -9529,7 +9510,7 @@ express@4.16.4:
     utils-merge "1.0.1"
     vary "~1.1.2"
 
-express@^4.14.0, express@^4.15.0, express@^4.16.3, express@^4.17.1:
+express@^4.15.0, express@^4.16.3, express@^4.17.1:
   version "4.17.1"
   resolved "https://registry.yarnpkg.com/express/-/express-4.17.1.tgz#4491fc38605cf51f8629d39c2b5d026f98a4c134"
   integrity sha512-mHJ9O79RqluphRrcw2X/GTh3k9tVv8YcoyY4Kkh4WDMUYKRZUq0h1o0w2rrrxBqM7VoeUVqgb27xlEMXTnYt4g==
@@ -19824,7 +19805,7 @@ superagent-retry@^0.6.0:
   resolved "https://registry.yarnpkg.com/superagent-retry/-/superagent-retry-0.6.0.tgz#e49b35ca96c0e3b1d0e3f49605136df0e0a028b7"
   integrity sha1-5Js1ypbA47HQ4/SWBRNt8OCgKLc=
 
-superagent@*, superagent@3.8.3, superagent@^1.2.0, superagent@^1.8.4, superagent@^2.0.0, superagent@^3.5.0, superagent@^3.6.3:
+superagent@*, superagent@3.8.3, superagent@^1.2.0, superagent@^2.0.0, superagent@^3.5.0, superagent@^3.6.3:
   version "3.8.3"
   resolved "https://registry.yarnpkg.com/superagent/-/superagent-3.8.3.tgz#460ea0dbdb7d5b11bc4f78deba565f86a178e128"
   integrity sha512-GLQtLMCoEIK4eDv6OGtkOoSMt3D+oq0y3dsxMuYuDvaNUvuT8eFBuLmfR0iYYzHC1e8hpzC6ZsxbuP6DIalMFA==

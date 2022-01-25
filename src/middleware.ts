@@ -6,7 +6,7 @@ import "./lib/DOMParser"
 // TODO: Export a function instead of loading on import.
 import "./lib/setup_sharify"
 
-import artsyPassport from "@artsy/passport"
+import artsyPassport from "lib/passport"
 import addRequestId from "express-request-id"
 import compression from "compression"
 import cookieParser from "cookie-parser"
