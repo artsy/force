@@ -36,9 +36,16 @@ export const ContactInformationForm: React.FC<ContactInformationFormProps> = ({
         relayEnvironment,
         region
       )
-
       setFieldValue("phone", phoneInformation)
+      return
     }
+
+    setFieldValue("phone", {
+      international: "",
+      isValid: false,
+      national: "",
+      originalNumber: "",
+    })
   }
 
   return (
