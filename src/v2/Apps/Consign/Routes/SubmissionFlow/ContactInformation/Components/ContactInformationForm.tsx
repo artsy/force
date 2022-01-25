@@ -62,6 +62,7 @@ export const ContactInformationForm: React.FC<ContactInformationFormProps> = ({
         onChange={handleChange}
         onBlur={handleBlur}
         error={touched.email && errors.email}
+        data-testid="emaill"
       />
 
       <PhoneNumberInput

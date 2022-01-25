@@ -25,8 +25,6 @@ export interface PhoneNumberInputProps extends BoxProps {
   error?: string
 }
 
-const errorBorderColor = "#C82400"
-
 export const PhoneNumberInput: React.FC<PhoneNumberInputProps> = ({
   phoneNumber: { isValid, national, regionCode },
   onChange,
@@ -96,8 +94,8 @@ export const PhoneNumberInput: React.FC<PhoneNumberInputProps> = ({
             onFocus={handleFocus(true, selectProps?.onFocus)}
             onMouseOver={handleHover(true, selectProps?.onMouseOver)}
             onMouseOut={handleHover(false, selectProps?.onMouseOut)}
+            error={!!error}
             style={{
-              borderColor: error ? errorBorderColor : "",
               borderRight: "none",
               letterSpacing: "1px",
             }}
@@ -118,9 +116,9 @@ export const PhoneNumberInput: React.FC<PhoneNumberInputProps> = ({
             onMouseOut={handleHover(false, inputProps?.onMouseOut)}
             onChange={handleNumberChange}
             style={{
-              borderColor: error ? errorBorderColor : "",
               borderLeft: "none",
             }}
+            error={!!error}
           />
         </Flex>
       </Flex>
