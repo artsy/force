@@ -123,7 +123,7 @@
   dependencies:
     passport-strategy "1.x.x"
 
-"@artsy/passport@^3.7.0--canary.193.653.0":
+"@artsy/passport@3.7.0--canary.193.653.0":
   version "3.7.0--canary.193.653.0"
   resolved "https://registry.yarnpkg.com/@artsy/passport/-/passport-3.7.0--canary.193.653.0.tgz#8d9ef129e2a93045983435cae4f9b1f8781ce234"
   integrity sha512-+UBBO9ot/93OC/SYM+DURuqQj395jACWZfX7RAANs8S8ZymheM2ezM2ZDA6cYDNvbzgSBBWHElvpjOYPLw5UVA==
