@@ -180,7 +180,7 @@ describe("Contact Information step", () => {
       expect(getSubmitButton()).toBeEnabled()
     })
 
-    it("is disabled after when number is removed by user", async () => {
+    it("is disabled when number is removed by user", async () => {
       getWrapper().renderWithRelay({
         Me: () => mockEmptyMe,
         ConsignmentSubmission: () => mockSubmission,
