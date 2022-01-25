@@ -1,4 +1,4 @@
-import { Box, BoxProps, Input } from "@artsy/palette"
+import { Box, BoxProps, Input, Text } from "@artsy/palette"
 import { useFormikContext } from "formik"
 import { ContactInformation_me } from "v2/__generated__/ContactInformation_me.graphql"
 import { getPhoneNumberInformation } from "../../Utils/phoneNumberUtils"
@@ -62,6 +62,13 @@ export const ContactInformationForm: React.FC<ContactInformationFormProps> = ({
         onChange={handleChange}
         onBlur={handleBlur}
       />
+
+      {/* render email error separately to have its design aligned with PhoneNumberInput */}
+      {errors.email && values.email && (
+        <Text variant="xs" mt={0.5} color="red100">
+          {errors.email}
+        </Text>
+      )}
 
       <PhoneNumberInput
         mt={4}

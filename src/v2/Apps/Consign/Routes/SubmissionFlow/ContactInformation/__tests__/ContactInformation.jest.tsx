@@ -143,6 +143,23 @@ describe("Contact Information step", () => {
     })
   })
 
+  describe("Email Input", () => {
+    it("displays error message when email is not valid", async () => {
+      getWrapper().renderWithRelay({
+        Me: () => mockEmptyMe,
+        ConsignmentSubmission: () => mockSubmission,
+      })
+
+      simulateTyping("email", "banksy@test,test")
+
+      await waitFor(() => {
+        expect(
+          screen.getByText("Please enter a valid email.")
+        ).toBeInTheDocument()
+      })
+    })
+  })
+
   describe("Save and Continue button", () => {
     it("is disabled if at least one field is not valid", async () => {
       getWrapper().renderWithRelay({
