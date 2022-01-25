@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import * as React from "react";
+import { useEffect, useState } from "react"
+import * as React from "react"
 import {
   Button,
   Flex,
@@ -377,19 +377,21 @@ export const NavBar: React.FC = track(
                   Shows
                 </NavBarItemLink>
 
+                <NavBarItemLink href="/institutions" onClick={handleClick}>
+                  Museums
+                </NavBarItemLink>
+
                 <NavBarItemLink
-                  // Hide link at smaller viewports — corresponding display inside of `MoreNavMenu`
-                  // If we need to do this again, consider a more abstract solution
-                  display={["none", "none", "flex", "flex"]}
-                  href="/institutions"
+                  href="https://nft.artsy.net"
                   onClick={handleClick}
                 >
-                  Museums
+                  NFTs
                 </NavBarItemLink>
               </Flex>
 
               <Flex alignItems="stretch" display={["none", "none", "flex"]}>
                 <NavBarItemButton
+                  display={["none", "none", "flex", "flex"]}
                   px={0}
                   pl={1}
                   onClick={() => {
