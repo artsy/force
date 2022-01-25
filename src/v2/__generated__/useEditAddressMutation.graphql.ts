@@ -28,7 +28,7 @@ export type useEditAddressMutationResponse = {
     readonly updateUserAddress: {
         readonly me: {
             readonly " $fragmentRefs": FragmentRefs<"SettingsShippingAddresses_me">;
-        };
+        } | null;
         readonly userAddressOrErrors: {
             readonly internalID?: string;
             readonly errors?: ReadonlyArray<{

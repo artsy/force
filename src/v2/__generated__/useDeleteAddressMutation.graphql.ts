@@ -15,7 +15,7 @@ export type useDeleteAddressMutationResponse = {
     readonly deleteUserAddress: {
         readonly me: {
             readonly " $fragmentRefs": FragmentRefs<"SettingsShippingAddresses_me">;
-        };
+        } | null;
         readonly userAddressOrErrors: {
             readonly errors?: ReadonlyArray<{
                 readonly message: string;
