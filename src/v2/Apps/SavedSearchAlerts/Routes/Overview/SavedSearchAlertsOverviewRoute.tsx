@@ -11,12 +11,12 @@ import {
   Clickable,
 } from "@artsy/palette"
 import { createPaginationContainer, graphql } from "react-relay"
-import { SavedSearchAlertsList_me } from "v2/__generated__/SavedSearchAlertsList_me.graphql"
+import { SavedSearchAlertsOverviewRoute_me } from "v2/__generated__/SavedSearchAlertsOverviewRoute_me.graphql"
 import { extractNodes } from "v2/Utils/extractNodes"
 import { useState } from "react"
 
-interface SavedSearchAlertsListProps {
-  me: SavedSearchAlertsList_me
+interface SavedSearchAlertsOverviewRouteProps {
+  me: SavedSearchAlertsOverviewRoute_me
 }
 
 interface EditAlertEntity {
@@ -24,7 +24,7 @@ interface EditAlertEntity {
   name: string
 }
 
-export const SavedSearchAlertsList: React.FC<SavedSearchAlertsListProps> = ({
+export const SavedSearchAlertsOverviewRoute: React.FC<SavedSearchAlertsOverviewRouteProps> = ({
   me,
 }) => {
   const [
@@ -90,13 +90,15 @@ export const SavedSearchAlertsList: React.FC<SavedSearchAlertsListProps> = ({
   )
 }
 
-export const SavedSearchAlertsListPaginationContainer = createPaginationContainer(
-  SavedSearchAlertsList,
+export const SavedSearchAlertsOverviewRoutePaginationContainer = createPaginationContainer(
+  SavedSearchAlertsOverviewRoute,
   {
     me: graphql`
-      fragment SavedSearchAlertsList_me on Me {
+      fragment SavedSearchAlertsOverviewRoute_me on Me {
         savedSearchesConnection(first: 50)
-          @connection(key: "SavedSearchAlertsList_savedSearchesConnection") {
+          @connection(
+            key: "SavedSearchAlertsOverviewRoute_savedSearchesConnection"
+          ) {
           edges {
             node {
               internalID
@@ -122,9 +124,9 @@ export const SavedSearchAlertsListPaginationContainer = createPaginationContaine
       }
     },
     query: graphql`
-      query SavedSearchAlertsListRefetchQuery {
+      query SavedSearchAlertsOverviewRouteRefetchQuery {
         me {
-          ...SavedSearchAlertsList_me
+          ...SavedSearchAlertsOverviewRoute_me
         }
       }
     `,

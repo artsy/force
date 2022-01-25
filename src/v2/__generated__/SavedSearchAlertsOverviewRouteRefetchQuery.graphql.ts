@@ -4,28 +4,28 @@
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type savedSearchAlertsRoutes_SavedSearchAlertsListRouteQueryVariables = {};
-export type savedSearchAlertsRoutes_SavedSearchAlertsListRouteQueryResponse = {
+export type SavedSearchAlertsOverviewRouteRefetchQueryVariables = {};
+export type SavedSearchAlertsOverviewRouteRefetchQueryResponse = {
     readonly me: {
-        readonly " $fragmentRefs": FragmentRefs<"SavedSearchAlertsList_me">;
+        readonly " $fragmentRefs": FragmentRefs<"SavedSearchAlertsOverviewRoute_me">;
     } | null;
 };
-export type savedSearchAlertsRoutes_SavedSearchAlertsListRouteQuery = {
-    readonly response: savedSearchAlertsRoutes_SavedSearchAlertsListRouteQueryResponse;
-    readonly variables: savedSearchAlertsRoutes_SavedSearchAlertsListRouteQueryVariables;
+export type SavedSearchAlertsOverviewRouteRefetchQuery = {
+    readonly response: SavedSearchAlertsOverviewRouteRefetchQueryResponse;
+    readonly variables: SavedSearchAlertsOverviewRouteRefetchQueryVariables;
 };
 
 
 
 /*
-query savedSearchAlertsRoutes_SavedSearchAlertsListRouteQuery {
+query SavedSearchAlertsOverviewRouteRefetchQuery {
   me {
-    ...SavedSearchAlertsList_me
+    ...SavedSearchAlertsOverviewRoute_me
     id
   }
 }
 
-fragment SavedSearchAlertsList_me on Me {
+fragment SavedSearchAlertsOverviewRoute_me on Me {
   savedSearchesConnection(first: 50) {
     edges {
       node {
@@ -58,7 +58,7 @@ return {
     "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
-    "name": "savedSearchAlertsRoutes_SavedSearchAlertsListRouteQuery",
+    "name": "SavedSearchAlertsOverviewRouteRefetchQuery",
     "selections": [
       {
         "alias": null,
@@ -71,7 +71,7 @@ return {
           {
             "args": null,
             "kind": "FragmentSpread",
-            "name": "SavedSearchAlertsList_me"
+            "name": "SavedSearchAlertsOverviewRoute_me"
           }
         ],
         "storageKey": null
@@ -84,7 +84,7 @@ return {
   "operation": {
     "argumentDefinitions": [],
     "kind": "Operation",
-    "name": "savedSearchAlertsRoutes_SavedSearchAlertsListRouteQuery",
+    "name": "SavedSearchAlertsOverviewRouteRefetchQuery",
     "selections": [
       {
         "alias": null,
@@ -196,7 +196,7 @@ return {
             "args": (v0/*: any*/),
             "filters": null,
             "handle": "connection",
-            "key": "SavedSearchAlertsList_savedSearchesConnection",
+            "key": "SavedSearchAlertsOverviewRoute_savedSearchesConnection",
             "kind": "LinkedHandle",
             "name": "savedSearchesConnection"
           },
@@ -213,14 +213,14 @@ return {
     ]
   },
   "params": {
-    "cacheID": "127a783b4c261ea204d42d648aa979c4",
+    "cacheID": "0c4d34d43ec4d42f378c82badea9eef7",
     "id": null,
     "metadata": {},
-    "name": "savedSearchAlertsRoutes_SavedSearchAlertsListRouteQuery",
+    "name": "SavedSearchAlertsOverviewRouteRefetchQuery",
     "operationKind": "query",
-    "text": "query savedSearchAlertsRoutes_SavedSearchAlertsListRouteQuery {\n  me {\n    ...SavedSearchAlertsList_me\n    id\n  }\n}\n\nfragment SavedSearchAlertsList_me on Me {\n  savedSearchesConnection(first: 50) {\n    edges {\n      node {\n        internalID\n        userAlertSettings {\n          name\n        }\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query SavedSearchAlertsOverviewRouteRefetchQuery {\n  me {\n    ...SavedSearchAlertsOverviewRoute_me\n    id\n  }\n}\n\nfragment SavedSearchAlertsOverviewRoute_me on Me {\n  savedSearchesConnection(first: 50) {\n    edges {\n      node {\n        internalID\n        userAlertSettings {\n          name\n        }\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '13aa3fbabc0d4597e513b25ae1507ee2';
+(node as any).hash = '467788a21b760bbe1f380db3f8a0b002';
 export default node;
