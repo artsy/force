@@ -35,6 +35,7 @@ import { paymentRoutes } from "v2/Apps/Payment/paymentRoutes"
 import { preferencesRoutes } from "./Apps/_Preferences2/preferencesRoutes"
 import { priceDatabaseRoutes } from "./Apps/PriceDatabase/priceDatabaseRoutes"
 import { purchaseRoutes } from "v2/Apps/Purchase/purchaseRoutes"
+import { savedSearchAlertsRoutes } from "v2/Apps/SavedSearchAlerts/savedSearchAlertsRoutes"
 import { searchRoutes } from "v2/Apps/Search/searchRoutes"
 import { settingsRoutes } from "v2/Apps/Settings/settingsRoutes"
 import { shippingRoutes } from "v2/Apps/Shipping/shippingRoutes"
@@ -82,6 +83,7 @@ export function getAppRoutes(): AppRouteConfig[] {
     { routes: preferencesRoutes },
     { routes: priceDatabaseRoutes },
     { routes: purchaseRoutes },
+    { routes: savedSearchAlertsRoutes },
     { routes: staticPageRoutes },
     { routes: searchRoutes },
     { routes: settingsRoutes },
