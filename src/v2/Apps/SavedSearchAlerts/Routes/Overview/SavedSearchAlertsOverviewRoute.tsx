@@ -19,7 +19,7 @@ import { SavedSearchAlertsOverviewRoute_me } from "v2/__generated__/SavedSearchA
 import { SavedSearchAlertsListPaginationContainer } from "./components/SavedSearchAlertsList"
 import { Media } from "v2/Utils/Responsive"
 import { EditAlertEntity } from "./types"
-import { SavedSearchAlertEditQueryRenderer } from "./components/SavedSearchEditAlertQueryRenderer"
+import { SavedSearchAlertEditQueryRenderer } from "./components/SavedSearchEditAlert"
 
 interface SavedSearchAlertsOverviewRouteProps {
   me: SavedSearchAlertsOverviewRoute_me
@@ -34,11 +34,15 @@ export const SavedSearchAlertsOverviewRoute: React.FC<SavedSearchAlertsOverviewR
   ] = useState<EditAlertEntity | null>(null)
   const isEditMode = editAlertEntity !== null
 
+  const handleCloseClick = () => {
+    setEditAlertEntity(null)
+  }
+
   return (
     <FullBleed>
       <Separator backgroundColor="black15" />
 
-      <Media greaterThanOrEqual="sm">
+      <Media greaterThanOrEqual="md">
         <GridColumns>
           <Column span={isEditMode ? 6 : 12}>
             <SavedSearchAlertsListPaginationContainer
@@ -55,14 +59,15 @@ export const SavedSearchAlertsOverviewRoute: React.FC<SavedSearchAlertsOverviewR
                     <Text variant="lg" flex={1} mr={1}>
                       {editAlertEntity.name}
                     </Text>
-                    <Clickable
-                      onClick={() => setEditAlertEntity(null)}
-                      mt={0.5}
-                    >
+                    <Clickable onClick={handleCloseClick} mt={0.5}>
                       <CloseIcon />
                     </Clickable>
                   </Flex>
-                  <SavedSearchAlertEditQueryRenderer id={editAlertEntity.id} />
+                  <SavedSearchAlertEditQueryRenderer
+                    id={editAlertEntity.id}
+                    artistId={editAlertEntity.artistId}
+                    onCompleted={handleCloseClick}
+                  />
                   <Flex>
                     <Button variant="secondaryOutline" flex={1}>
                       Delete Alert
@@ -77,7 +82,7 @@ export const SavedSearchAlertsOverviewRoute: React.FC<SavedSearchAlertsOverviewR
         </GridColumns>
       </Media>
 
-      <Media lessThan="sm">
+      <Media lessThan="md">
         <SavedSearchAlertsListPaginationContainer
           me={me}
           onEditAlertClick={setEditAlertEntity}
@@ -85,7 +90,7 @@ export const SavedSearchAlertsOverviewRoute: React.FC<SavedSearchAlertsOverviewR
         {isEditMode && editAlertEntity && (
           <ModalDialog
             title={editAlertEntity.name}
-            onClose={() => setEditAlertEntity(null)}
+            onClose={handleCloseClick}
             footer={
               <Join separator={<Spacer mt={1} />}>
                 <Button width="100%">Save Alert</Button>
@@ -95,7 +100,11 @@ export const SavedSearchAlertsOverviewRoute: React.FC<SavedSearchAlertsOverviewR
               </Join>
             }
           >
-            <SavedSearchAlertEditQueryRenderer id={editAlertEntity.id} />
+            <SavedSearchAlertEditQueryRenderer
+              id={editAlertEntity.id}
+              artistId={editAlertEntity.artistId}
+              onCompleted={handleCloseClick}
+            />
           </ModalDialog>
         )}
       </Media>

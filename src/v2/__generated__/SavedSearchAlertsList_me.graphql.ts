@@ -9,6 +9,7 @@ export type SavedSearchAlertsList_me = {
         readonly edges: ReadonlyArray<{
             readonly node: {
                 readonly internalID: string;
+                readonly artistID: string | null;
                 readonly userAlertSettings: {
                     readonly name: string | null;
                 };
@@ -71,6 +72,13 @@ const node: ReaderFragment = {
                   "args": null,
                   "kind": "ScalarField",
                   "name": "internalID",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "artistID",
                   "storageKey": null
                 },
                 {
@@ -143,5 +151,5 @@ const node: ReaderFragment = {
   "type": "Me",
   "abstractKey": null
 };
-(node as any).hash = 'c2bf6b2deca0b4259ca6e7982f1cb3bc';
+(node as any).hash = '167aefd4e05b7a4e03066e621a8a814c';
 export default node;

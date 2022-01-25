@@ -32,6 +32,7 @@ export const SavedSearchAlertsList: React.FC<SavedSearchAlertsListProps> = ({
                   onEditAlertClick({
                     id: edge.internalID,
                     name: edge.userAlertSettings.name!,
+                    artistId: edge.artistID!,
                   })
                 }}
               >
@@ -59,6 +60,7 @@ export const SavedSearchAlertsListPaginationContainer = createPaginationContaine
           edges {
             node {
               internalID
+              artistID
               userAlertSettings {
                 name
               }

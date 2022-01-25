@@ -30,6 +30,7 @@ fragment SavedSearchAlertsList_me on Me {
     edges {
       node {
         internalID
+        artistID
         userAlertSettings {
           name
         }
@@ -132,6 +133,13 @@ return {
                       {
                         "alias": null,
                         "args": null,
+                        "kind": "ScalarField",
+                        "name": "artistID",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
                         "concreteType": "SavedSearchUserAlertSettings",
                         "kind": "LinkedField",
                         "name": "userAlertSettings",
@@ -217,12 +225,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "1fa3caf7283a3bf02b984a0c9a5cf8a0",
+    "cacheID": "8a4b2d4ad37c29383a3ed21efbc9cf73",
     "id": null,
     "metadata": {},
     "name": "savedSearchAlertsRoutes_SavedSearchAlertsOverviewRouteQuery",
     "operationKind": "query",
-    "text": "query savedSearchAlertsRoutes_SavedSearchAlertsOverviewRouteQuery {\n  me {\n    ...SavedSearchAlertsOverviewRoute_me\n    id\n  }\n}\n\nfragment SavedSearchAlertsList_me on Me {\n  savedSearchesConnection(first: 50) {\n    edges {\n      node {\n        internalID\n        userAlertSettings {\n          name\n        }\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment SavedSearchAlertsOverviewRoute_me on Me {\n  ...SavedSearchAlertsList_me\n}\n"
+    "text": "query savedSearchAlertsRoutes_SavedSearchAlertsOverviewRouteQuery {\n  me {\n    ...SavedSearchAlertsOverviewRoute_me\n    id\n  }\n}\n\nfragment SavedSearchAlertsList_me on Me {\n  savedSearchesConnection(first: 50) {\n    edges {\n      node {\n        internalID\n        artistID\n        userAlertSettings {\n          name\n        }\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment SavedSearchAlertsOverviewRoute_me on Me {\n  ...SavedSearchAlertsList_me\n}\n"
   }
 };
 })();

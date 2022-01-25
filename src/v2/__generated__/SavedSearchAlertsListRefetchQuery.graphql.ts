@@ -30,6 +30,7 @@ fragment SavedSearchAlertsList_me on Me {
     edges {
       node {
         internalID
+        artistID
         userAlertSettings {
           name
         }
@@ -128,6 +129,13 @@ return {
                       {
                         "alias": null,
                         "args": null,
+                        "kind": "ScalarField",
+                        "name": "artistID",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
                         "concreteType": "SavedSearchUserAlertSettings",
                         "kind": "LinkedField",
                         "name": "userAlertSettings",
@@ -213,12 +221,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "a0fd41fbc403142fe731feec56a0ed1b",
+    "cacheID": "648c46fb5ff67360e012e7f5bcda159c",
     "id": null,
     "metadata": {},
     "name": "SavedSearchAlertsListRefetchQuery",
     "operationKind": "query",
-    "text": "query SavedSearchAlertsListRefetchQuery {\n  me {\n    ...SavedSearchAlertsList_me\n    id\n  }\n}\n\nfragment SavedSearchAlertsList_me on Me {\n  savedSearchesConnection(first: 50) {\n    edges {\n      node {\n        internalID\n        userAlertSettings {\n          name\n        }\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query SavedSearchAlertsListRefetchQuery {\n  me {\n    ...SavedSearchAlertsList_me\n    id\n  }\n}\n\nfragment SavedSearchAlertsList_me on Me {\n  savedSearchesConnection(first: 50) {\n    edges {\n      node {\n        internalID\n        artistID\n        userAlertSettings {\n          name\n        }\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();
