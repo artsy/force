@@ -5,7 +5,7 @@
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type SettingsPaymentsRoute_me = {
-    readonly " $fragmentRefs": FragmentRefs<"PaymentSection_me">;
+    readonly " $fragmentRefs": FragmentRefs<"SettingsPaymentsMethods_me">;
     readonly " $refType": "SettingsPaymentsRoute_me";
 };
 export type SettingsPaymentsRoute_me$data = SettingsPaymentsRoute_me;
@@ -25,11 +25,11 @@ const node: ReaderFragment = {
     {
       "args": null,
       "kind": "FragmentSpread",
-      "name": "PaymentSection_me"
+      "name": "SettingsPaymentsMethods_me"
     }
   ],
   "type": "Me",
   "abstractKey": null
 };
-(node as any).hash = '6a41b67b15b9cfc1c1630c5b0499332f';
+(node as any).hash = 'd5e17350fd5b99c456131babc0debbb3';
 export default node;
