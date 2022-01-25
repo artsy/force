@@ -4,7 +4,7 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type SavedSearchAlertsList_me = {
+export type SavedSearchAlertsOverviewRoute_me = {
     readonly savedSearchesConnection: {
         readonly edges: ReadonlyArray<{
             readonly node: {
@@ -15,12 +15,12 @@ export type SavedSearchAlertsList_me = {
             } | null;
         } | null> | null;
     } | null;
-    readonly " $refType": "SavedSearchAlertsList_me";
+    readonly " $refType": "SavedSearchAlertsOverviewRoute_me";
 };
-export type SavedSearchAlertsList_me$data = SavedSearchAlertsList_me;
-export type SavedSearchAlertsList_me$key = {
-    readonly " $data"?: SavedSearchAlertsList_me$data;
-    readonly " $fragmentRefs": FragmentRefs<"SavedSearchAlertsList_me">;
+export type SavedSearchAlertsOverviewRoute_me$data = SavedSearchAlertsOverviewRoute_me;
+export type SavedSearchAlertsOverviewRoute_me$key = {
+    readonly " $data"?: SavedSearchAlertsOverviewRoute_me$data;
+    readonly " $fragmentRefs": FragmentRefs<"SavedSearchAlertsOverviewRoute_me">;
 };
 
 
@@ -40,14 +40,14 @@ const node: ReaderFragment = {
       }
     ]
   },
-  "name": "SavedSearchAlertsList_me",
+  "name": "SavedSearchAlertsOverviewRoute_me",
   "selections": [
     {
       "alias": "savedSearchesConnection",
       "args": null,
       "concreteType": "SearchCriteriaConnection",
       "kind": "LinkedField",
-      "name": "__SavedSearchAlertsList_savedSearchesConnection_connection",
+      "name": "__SavedSearchAlertsOverviewRoute_savedSearchesConnection_connection",
       "plural": false,
       "selections": [
         {
@@ -143,5 +143,5 @@ const node: ReaderFragment = {
   "type": "Me",
   "abstractKey": null
 };
-(node as any).hash = 'c2bf6b2deca0b4259ca6e7982f1cb3bc';
+(node as any).hash = 'ecc7fbfabdf7098405d21ef8373eb78e';
 export default node;
