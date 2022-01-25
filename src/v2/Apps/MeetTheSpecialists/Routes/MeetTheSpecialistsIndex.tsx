@@ -36,9 +36,9 @@ export const MeetTheSpecialistsIndex: React.FC = () => {
         </Text>
         <Spacer mb={2} />
         <Text color="black60" variant={["lg", "xl"]} width={["100%", "50%"]}>
-          Whether you are seeking a specific artwork for your growing collection
-          or wish to sell, our global team of sale directors is ready to source,
-          sell, advise and research on your behalf.
+          Whether you’re seeking a specific work for your growing collection or
+          wish to sell, our globe-spanning team is ready to source, sell,
+          advise, and research on your behalf.
         </Text>
       </Box>
       <Spacer mb={120} />
@@ -145,7 +145,7 @@ export const MeetTheSpecialistsIndex: React.FC = () => {
 
 const advisorySpecialists = [
   {
-    name: "Alex Forbes",
+    name: "Alexander Forbes",
     title: "Head of Collector Services & Private Sales",
     location: "New York",
     email: "alexander.forbes@artsy.net",
@@ -155,16 +155,23 @@ const advisorySpecialists = [
     },
   },
   {
+    name: "Akanksha Ballaney",
+    title: "Associate Director",
+    location: "New York",
+    email: "akanksha@artsy.net",
+    photo: { url: "http://files.artsy.net/images/akanksha.jpeg" },
+  },
+  {
     name: "Natasha Prince",
     title: "Senior Advisor",
     location: "London",
     email: "natasha.prince@artsy.net",
-    phone: "+1 646 420 4995",
+    phone: " +44 7889 403808 ",
     photo: { url: "http://files.artsy.net/images/natasha.jpeg" },
   },
   {
     name: "Robin Roche",
-    title: "Senior Advisor, Private Sales",
+    title: "Senior Advisor",
     location: "New York",
     email: "robin.roche@artsy.net",
     phone: "+1 646 707 9450",
@@ -218,8 +225,8 @@ const advisorySpecialists = [
     photo: { url: "http://files.artsy.net/images/cperkins_headshot-copy.jpg" },
   },
   {
-    name: "Ipi Ramos Ricoy",
-    title: "Advisor, Private Sales",
+    name: "Itziar Ramos Ricoy",
+    title: "Advisor",
     location: "London",
     email: "itziar.ramos@artsy.net",
     phone: "+44 7429 093319",
