@@ -13,12 +13,12 @@ export const PartnersFilter: React.FC<PartnersFilterProps> = ({
 }) => {
   return (
     <ResultsFilter
+      expanded={expanded}
       facetName="partnerIDs"
-      slice="PARTNER"
+      filtersCountKey={SelectedFiltersCountsLabels.partnerIDs}
       label={label}
       placeholder="Enter a gallery"
-      filtersCountKey={SelectedFiltersCountsLabels.partnerIDs}
-      expanded={expanded}
+      slice="PARTNER"
     />
   )
 }

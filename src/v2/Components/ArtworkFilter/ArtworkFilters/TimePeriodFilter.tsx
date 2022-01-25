@@ -7,8 +7,8 @@ import {
 } from "../ArtworkFilterContext"
 import { FilterExpandable } from "./FilterExpandable"
 import { INITIAL_ITEMS_TO_SHOW, ShowMore } from "./ShowMore"
-import { sortResults } from "./ResultsFilter"
 import { useFilterLabelCountByKey } from "../Utils/useFilterLabelCountByKey"
+import { sortResults } from "./Utils/sortResults"
 
 export interface TimePeriodFilterProps {
   expanded?: boolean // set to true to force expansion
