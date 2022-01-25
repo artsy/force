@@ -12,6 +12,8 @@ export type PartnerArtistsCarouselItem_artist = {
                     readonly cropped: {
                         readonly src: string;
                         readonly srcSet: string;
+                        readonly height: number;
+                        readonly width: number;
                     } | null;
                 } | null;
             } | null;
@@ -88,12 +90,12 @@ const node: ReaderFragment = {
                         {
                           "kind": "Literal",
                           "name": "height",
-                          "value": 200
+                          "value": 240
                         },
                         {
                           "kind": "Literal",
                           "name": "width",
-                          "value": 300
+                          "value": 320
                         }
                       ],
                       "concreteType": "CroppedImageUrl",
@@ -114,9 +116,23 @@ const node: ReaderFragment = {
                           "kind": "ScalarField",
                           "name": "srcSet",
                           "storageKey": null
+                        },
+                        {
+                          "alias": null,
+                          "args": null,
+                          "kind": "ScalarField",
+                          "name": "height",
+                          "storageKey": null
+                        },
+                        {
+                          "alias": null,
+                          "args": null,
+                          "kind": "ScalarField",
+                          "name": "width",
+                          "storageKey": null
                         }
                       ],
-                      "storageKey": "cropped(height:200,width:300)"
+                      "storageKey": "cropped(height:240,width:320)"
                     }
                   ],
                   "storageKey": null
@@ -211,5 +227,5 @@ const node: ReaderFragment = {
   "type": "ArtistPartnerEdge",
   "abstractKey": null
 };
-(node as any).hash = 'bd771a8403270904df8aa46763677611';
+(node as any).hash = '5c477a5d45c3bb4dcd4b18bc5ffe3af4';
 export default node;

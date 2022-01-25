@@ -1,5 +1,4 @@
-import { useState } from "react";
-import * as React from "react";
+import { useState } from "react"
 import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
 import { Box } from "@artsy/palette"
 import { compact } from "lodash"
@@ -96,7 +95,7 @@ const ViewingRoomsPaginated: React.FC<ViewingRoomsProps> = ({
       </LoadingArea>
 
       {pageCursors && (
-        <Box mt={9}>
+        <Box mt={6}>
           <PaginationFragmentContainer
             hasNextPage={hasNextPage}
             pageCursors={pageCursors}

@@ -8,6 +8,7 @@ export type ShowsRail_partner = {
     readonly slug: string;
     readonly displayFullPartnerPage: boolean | null;
     readonly showsConnection: {
+        readonly totalCount: number | null;
         readonly edges: ReadonlyArray<{
             readonly node: {
                 readonly id: string;
@@ -51,7 +52,7 @@ const node: ReaderFragment = {
         {
           "kind": "Literal",
           "name": "first",
-          "value": 19
+          "value": 20
         },
         {
           "kind": "Literal",
@@ -69,6 +70,13 @@ const node: ReaderFragment = {
       "name": "showsConnection",
       "plural": false,
       "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "totalCount",
+          "storageKey": null
+        },
         {
           "alias": null,
           "args": null,
@@ -104,11 +112,11 @@ const node: ReaderFragment = {
           "storageKey": null
         }
       ],
-      "storageKey": "showsConnection(first:19,isDisplayable:true,status:\"ALL\")"
+      "storageKey": "showsConnection(first:20,isDisplayable:true,status:\"ALL\")"
     }
   ],
   "type": "Partner",
   "abstractKey": null
 };
-(node as any).hash = '4e547524cd3e0462299f54f5ff932a5d';
+(node as any).hash = 'd6e77342a610708d73c1b06cb0b3bed2';
 export default node;

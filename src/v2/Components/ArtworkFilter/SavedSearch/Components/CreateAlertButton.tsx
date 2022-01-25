@@ -59,6 +59,7 @@ export const CreateAlertButton: React.FC<CreateAlertButtonProps> = ({
         },
         contextModule: ContextModule.artworkGrid,
         intent: Intent.createAlert,
+        redirectTo: location.href,
       })
     }
   }

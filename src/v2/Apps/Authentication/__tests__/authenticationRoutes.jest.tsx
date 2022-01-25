@@ -7,6 +7,7 @@ import qs from "qs"
 import { authenticationRoutes } from "../authenticationRoutes"
 import { checkForRedirect } from "../Server/checkForRedirect"
 import { setReferer } from "../Server/setReferer"
+import { redirectIfLoggedIn } from "../Server/redirectIfLoggedIn"
 import { getENV } from "v2/Utils/getENV"
 
 jest.mock("../Server/checkForRedirect", () => ({
@@ -14,6 +15,9 @@ jest.mock("../Server/checkForRedirect", () => ({
 }))
 jest.mock("../Server/setReferer", () => ({
   setReferer: jest.fn(),
+}))
+jest.mock("../Server/redirectIfLoggedIn", () => ({
+  redirectIfLoggedIn: jest.fn(),
 }))
 jest.mock("v2/Utils/EnableRecaptcha", () => ({
   EnableRecaptcha: () => "EnableRecaptcha",
@@ -31,6 +35,7 @@ describe("authenticationRoutes", () => {
   const mockCheckForRedirect = checkForRedirect as jest.Mock
   const mockSetReferer = setReferer as jest.Mock
   const mockGetENV = getENV as jest.Mock
+  const mockRedirectIfLoggedIn = redirectIfLoggedIn as jest.Mock
 
   const renderClientRoute = route => {
     render(
@@ -74,6 +79,7 @@ describe("authenticationRoutes", () => {
 
   afterEach(() => {
     jest.restoreAllMocks()
+    mockRedirectIfLoggedIn.mockReset()
   })
 
   describe("/forgot", () => {
@@ -146,6 +152,14 @@ describe("authenticationRoutes", () => {
       describe("onServerSideRender", () => {
         it("runs middleware", () => {
           renderServerRoute("/login").onServerSideRender()
+          expect(mockRedirectIfLoggedIn).toHaveBeenCalled()
+          expect(mockCheckForRedirect).toHaveBeenCalled()
+          expect(mockSetReferer).toHaveBeenCalled()
+        })
+
+        it("skips the check for login if you are auth-ing with the API", () => {
+          renderServerRoute("/login?oauthLogin=true").onServerSideRender()
+          expect(mockRedirectIfLoggedIn).not.toHaveBeenCalled()
           expect(mockCheckForRedirect).toHaveBeenCalled()
           expect(mockSetReferer).toHaveBeenCalled()
         })
@@ -224,6 +238,14 @@ describe("authenticationRoutes", () => {
       describe("onServerSideRender", () => {
         it("runs middleware", () => {
           renderServerRoute("/signup").onServerSideRender()
+          expect(mockRedirectIfLoggedIn).toHaveBeenCalled()
+          expect(mockCheckForRedirect).toHaveBeenCalled()
+          expect(mockSetReferer).toHaveBeenCalled()
+        })
+
+        it("skips the check for login if you are auth-ing with the API", () => {
+          renderServerRoute("/signup?oauthLogin=true").onServerSideRender()
+          expect(mockRedirectIfLoggedIn).not.toHaveBeenCalled()
           expect(mockCheckForRedirect).toHaveBeenCalled()
           expect(mockSetReferer).toHaveBeenCalled()
         })

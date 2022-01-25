@@ -7,7 +7,7 @@ import { FragmentRefs } from "relay-runtime";
 export type WorksForYouFeed_viewer = {
     readonly me: {
         readonly followsAndSaves: {
-            readonly notifications: {
+            readonly bundledArtworksByArtistConnection: {
                 readonly pageInfo: {
                     readonly hasNextPage: boolean;
                     readonly endCursor: string | null;
@@ -18,13 +18,14 @@ export type WorksForYouFeed_viewer = {
                         readonly href: string | null;
                         readonly summary: string | null;
                         readonly artists: string | null;
-                        readonly published_at: string | null;
+                        readonly publishedAt: string | null;
                         readonly artworksConnection: {
                             readonly " $fragmentRefs": FragmentRefs<"ArtworkGrid_artworks">;
                         } | null;
                         readonly image: {
                             readonly resized: {
-                                readonly url: string;
+                                readonly src: string;
+                                readonly srcSet: string;
                             } | null;
                         } | null;
                     } | null;
@@ -45,7 +46,7 @@ export type WorksForYouFeed_viewer$key = {
 const node: ReaderFragment = {
   "argumentDefinitions": [
     {
-      "defaultValue": 10,
+      "defaultValue": 25,
       "kind": "LocalArgument",
       "name": "count"
     },
@@ -53,11 +54,6 @@ const node: ReaderFragment = {
       "defaultValue": null,
       "kind": "LocalArgument",
       "name": "cursor"
-    },
-    {
-      "defaultValue": true,
-      "kind": "LocalArgument",
-      "name": "forSale"
     }
   ],
   "kind": "Fragment",
@@ -70,7 +66,7 @@ const node: ReaderFragment = {
         "path": [
           "me",
           "followsAndSaves",
-          "notifications"
+          "bundledArtworksByArtistConnection"
         ]
       }
     ]
@@ -94,12 +90,12 @@ const node: ReaderFragment = {
           "plural": false,
           "selections": [
             {
-              "alias": "notifications",
+              "alias": "bundledArtworksByArtistConnection",
               "args": [
                 {
-                  "kind": "Variable",
+                  "kind": "Literal",
                   "name": "forSale",
-                  "variableName": "forSale"
+                  "value": true
                 },
                 {
                   "kind": "Literal",
@@ -109,7 +105,7 @@ const node: ReaderFragment = {
               ],
               "concreteType": "FollowedArtistsArtworksGroupConnection",
               "kind": "LinkedField",
-              "name": "__WorksForYou_notifications_connection",
+              "name": "__WorksForYouFeed_bundledArtworksByArtistConnection_connection",
               "plural": false,
               "selections": [
                 {
@@ -182,7 +178,7 @@ const node: ReaderFragment = {
                           "storageKey": null
                         },
                         {
-                          "alias": "published_at",
+                          "alias": null,
                           "args": [
                             {
                               "kind": "Literal",
@@ -241,7 +237,14 @@ const node: ReaderFragment = {
                                   "alias": null,
                                   "args": null,
                                   "kind": "ScalarField",
-                                  "name": "url",
+                                  "name": "src",
+                                  "storageKey": null
+                                },
+                                {
+                                  "alias": null,
+                                  "args": null,
+                                  "kind": "ScalarField",
+                                  "name": "srcSet",
                                   "storageKey": null
                                 }
                               ],
@@ -271,7 +274,7 @@ const node: ReaderFragment = {
                   "storageKey": null
                 }
               ],
-              "storageKey": null
+              "storageKey": "__WorksForYouFeed_bundledArtworksByArtistConnection_connection(forSale:true,sort:\"PUBLISHED_AT_DESC\")"
             }
           ],
           "storageKey": null
@@ -283,5 +286,5 @@ const node: ReaderFragment = {
   "type": "Viewer",
   "abstractKey": null
 };
-(node as any).hash = 'bd5d74879f1919eade9e0b94cdbcb3f6';
+(node as any).hash = 'c9ef9a5f21d694b314ea44b6d85ac7eb';
 export default node;

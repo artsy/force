@@ -93,7 +93,7 @@ const ShowPaginatedEvents: React.FC<ShowEventsProps> = ({
         <ShowEventsFragmentContainer edges={shows} eventTitle={eventTitle} />
       </LoadingArea>
 
-      <Box mt={9}>
+      <Box mt={6}>
         <PaginationFragmentContainer
           hasNextPage={hasNextPage}
           pageCursors={pageCursors}

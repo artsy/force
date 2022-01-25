@@ -117,7 +117,7 @@ export const ContactApp: React.FC = () => {
       <Section
         title="Address"
         content={
-          <Item content="401 Broadway, 26th Floor, New York, NY 10013" />
+          <Item content="401 Broadway, 24th Floor, New York, NY 10013" />
         }
       />
     </>

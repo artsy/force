@@ -21,13 +21,7 @@ export type Overview_partner = {
             } | null;
         } | null> | null;
     } | null;
-    readonly articlesConnection: {
-        readonly totalCount: number | null;
-        readonly edges: ReadonlyArray<{
-            readonly " $fragmentRefs": FragmentRefs<"ArticlesRail_articles">;
-        } | null> | null;
-    } | null;
-    readonly " $fragmentRefs": FragmentRefs<"AboutPartner_partner" | "ShowsRail_partner" | "ArtistsRail_partner" | "SubscriberBanner_partner">;
+    readonly " $fragmentRefs": FragmentRefs<"AboutPartner_partner" | "ShowsRail_partner" | "ArtistsRail_partner" | "SubscriberBanner_partner" | "ArticlesRail_partner">;
     readonly " $refType": "Overview_partner";
 };
 export type Overview_partner$data = Overview_partner;
@@ -41,18 +35,7 @@ export type Overview_partner$key = {
 const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
-  "metadata": {
-    "connection": [
-      {
-        "count": null,
-        "cursor": null,
-        "direction": "forward",
-        "path": [
-          "articlesConnection"
-        ]
-      }
-    ]
-  },
+  "metadata": null,
   "name": "Overview_partner",
   "selections": [
     {
@@ -162,90 +145,6 @@ const node: ReaderFragment = {
       "storageKey": "locationsConnection(first:1)"
     },
     {
-      "alias": "articlesConnection",
-      "args": null,
-      "concreteType": "ArticleConnection",
-      "kind": "LinkedField",
-      "name": "__ArticlesQuery_articlesConnection_connection",
-      "plural": false,
-      "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "totalCount",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "concreteType": "ArticleEdge",
-          "kind": "LinkedField",
-          "name": "edges",
-          "plural": true,
-          "selections": [
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "cursor",
-              "storageKey": null
-            },
-            {
-              "alias": null,
-              "args": null,
-              "concreteType": "Article",
-              "kind": "LinkedField",
-              "name": "node",
-              "plural": false,
-              "selections": [
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "__typename",
-                  "storageKey": null
-                }
-              ],
-              "storageKey": null
-            },
-            {
-              "args": null,
-              "kind": "FragmentSpread",
-              "name": "ArticlesRail_articles"
-            }
-          ],
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "concreteType": "PageInfo",
-          "kind": "LinkedField",
-          "name": "pageInfo",
-          "plural": false,
-          "selections": [
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "endCursor",
-              "storageKey": null
-            },
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "hasNextPage",
-              "storageKey": null
-            }
-          ],
-          "storageKey": null
-        }
-      ],
-      "storageKey": null
-    },
-    {
       "args": null,
       "kind": "FragmentSpread",
       "name": "AboutPartner_partner"
@@ -264,10 +163,15 @@ const node: ReaderFragment = {
       "args": null,
       "kind": "FragmentSpread",
       "name": "SubscriberBanner_partner"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ArticlesRail_partner"
     }
   ],
   "type": "Partner",
   "abstractKey": null
 };
-(node as any).hash = 'cdd71967fb06ff63cc1ca846941f29be';
+(node as any).hash = '4e1d8553d209e9165110e72fba323106';
 export default node;
