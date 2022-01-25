@@ -16,7 +16,7 @@ export const PreferencesApp: React.FC = () => {
 
   return (
     <>
-      <Text variant="xl" mt={4} mb={6}>
+      <Text variant="xl" mt={4} mb={12}>
         Preferences Center
       </Text>
 
@@ -24,11 +24,8 @@ export const PreferencesApp: React.FC = () => {
 
       <GridColumns>
         <Column
-          span={12}
-          pr={12}
+          span={10}
           mt={2}
-          display="flex"
-          justifyContent="space-between"
         >
           <Flex p={2}>
             <Box>
@@ -39,19 +36,7 @@ export const PreferencesApp: React.FC = () => {
               </Text>
             </Box>
           </Flex>
-          <Flex p={2}>
-            <Box>
-              <Checkbox selected={!uncheckedAll}>Email</Checkbox>
-            </Box>
-          </Flex>
-        </Column>
 
-        <Column
-          span={12}
-          pr={12}
-          display="flex"
-          justifyContent="space-between"
-        >
           <Flex p={2}>
             <Box>
               <Text variant="md">Art World Insights</Text>
@@ -61,19 +46,7 @@ export const PreferencesApp: React.FC = () => {
               </Text>
             </Box>
           </Flex>
-          <Flex p={2}>
-            <Box>
-              <Checkbox selected={!uncheckedAll}>Email</Checkbox>
-            </Box>
-          </Flex>
-        </Column>
 
-        <Column
-          span={12}
-          pr={12}
-          display="flex"
-          justifyContent="space-between"
-        >
           <Flex p={2}>
             <Box>
               <Text variant="md">Product Updates</Text>
@@ -82,19 +55,7 @@ export const PreferencesApp: React.FC = () => {
               </Text>
             </Box>
           </Flex>
-          <Flex p={2}>
-            <Box>
-              <Checkbox selected={!uncheckedAll}>Email</Checkbox>
-            </Box>
-          </Flex>
-        </Column>
 
-        <Column
-          span={12}
-          pr={12}
-          display="flex"
-          justifyContent="space-between"
-        >
           <Flex p={2}>
             <Box>
               <Text variant="md">Guidance on Collecting</Text>
@@ -104,19 +65,7 @@ export const PreferencesApp: React.FC = () => {
               </Text>
             </Box>
           </Flex>
-          <Flex p={2}>
-            <Box>
-              <Checkbox selected={!uncheckedAll}>Email</Checkbox>
-            </Box>
-          </Flex>
-        </Column>
 
-        <Column
-          span={12}
-          pr={12}
-          display="flex"
-          justifyContent="space-between"
-        >
           <Flex p={2}>
             <Box>
               <Text variant="md">Custom Alerts</Text>
@@ -125,30 +74,74 @@ export const PreferencesApp: React.FC = () => {
               </Text>
             </Box>
           </Flex>
-          <Flex p={2}>
+        </Column>
+
+        <Column
+          span={2}
+          mt={4}
+        >
+          <Flex 
+            pl={2}
+            pt={2}
+          >
+            <Box>
+              <Checkbox selected={!uncheckedAll}>Email</Checkbox>
+            </Box>
+          </Flex>
+          <Flex 
+            pl={2}
+            pt={6}
+          >
+            <Box>
+              <Checkbox selected={!uncheckedAll}>Email</Checkbox>
+            </Box>
+          </Flex>
+          <Flex 
+            pl={2}
+            pt={6}
+          >
+            <Box>
+              <Checkbox selected={!uncheckedAll}>Email</Checkbox>
+            </Box>
+          </Flex>
+          <Flex 
+            pl={2}
+            pt={6}
+          >
+            <Box>
+              <Checkbox selected={!uncheckedAll}>Email</Checkbox>
+            </Box>
+          </Flex>
+          <Flex 
+            pl={2}
+            pt={6}
+          >
             <Box>
               <Checkbox selected={!uncheckedAll}>Email</Checkbox>
             </Box>
           </Flex>
         </Column>
+
       </GridColumns>
 
       <Separator mt={2} />
 
       <GridColumns>
         <Column
-          span={12}
-          pb={2}
-          pr={12}
-          pt={2}
-          display="flex"
-          justifyContent="space-between"
+          span={10}
+          mt={2}
         >
           <Flex p={2}>
             <Box>
               <Text variant="md">Unsubscribe from all</Text>
             </Box>
           </Flex>
+        </Column>
+
+        <Column
+          span={2}
+          mt={2}
+        >
           <Flex p={2}>
             <Box>
               <Checkbox
@@ -164,7 +157,7 @@ export const PreferencesApp: React.FC = () => {
 
       <Flex
         justifyContent="flex-end"
-        pt={2}
+        pt={4}
         pr={4}
       >
         <Button width={["100%", "auto"]}>Cancel</Button>
