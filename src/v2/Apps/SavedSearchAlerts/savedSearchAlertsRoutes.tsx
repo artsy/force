@@ -24,7 +24,7 @@ const OverviewRoute = loadable(
 
 export const savedSearchAlertsRoutes: AppRouteConfig[] = [
   {
-    path: "/alerts",
+    path: "/user/alerts",
     theme: "v3",
     getComponent: () => SavedSearchAlertsApp,
     onClientSideRender: () => {

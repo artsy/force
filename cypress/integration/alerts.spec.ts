@@ -1,9 +1,8 @@
-describe("/alerts", () => {
-  before(() => {
-    cy.visit("/alerts")
-  })
-
-  it("Alerts", () => {
-    cy.title().should("eq", "Your Alerts | Artsy")
+describe("user/alerts", () => {
+  describe("unauthenticated", () => {
+    it("redirects to the login page", () => {
+      cy.visit("user/alerts")
+      cy.contains("Log in to Artsy")
+    })
   })
 })
