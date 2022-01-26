@@ -25,7 +25,7 @@ query savedSearchAlertsRoutes_SavedSearchAlertsOverviewRouteQuery {
   }
 }
 
-fragment SavedSearchAlertsList_me on Me {
+fragment SavedSearchAlertsOverviewRoute_me on Me {
   savedSearchesConnection(first: 50) {
     edges {
       node {
@@ -43,10 +43,6 @@ fragment SavedSearchAlertsList_me on Me {
       hasNextPage
     }
   }
-}
-
-fragment SavedSearchAlertsOverviewRoute_me on Me {
-  ...SavedSearchAlertsList_me
 }
 */
 
@@ -208,7 +204,7 @@ return {
             "args": (v0/*: any*/),
             "filters": null,
             "handle": "connection",
-            "key": "SavedSearchAlertsList_savedSearchesConnection",
+            "key": "SavedSearchAlertsOverviewRoute_savedSearchesConnection",
             "kind": "LinkedHandle",
             "name": "savedSearchesConnection"
           },
@@ -225,12 +221,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "8a4b2d4ad37c29383a3ed21efbc9cf73",
+    "cacheID": "0c306a61c03a7aab94ee364ff3f827f4",
     "id": null,
     "metadata": {},
     "name": "savedSearchAlertsRoutes_SavedSearchAlertsOverviewRouteQuery",
     "operationKind": "query",
-    "text": "query savedSearchAlertsRoutes_SavedSearchAlertsOverviewRouteQuery {\n  me {\n    ...SavedSearchAlertsOverviewRoute_me\n    id\n  }\n}\n\nfragment SavedSearchAlertsList_me on Me {\n  savedSearchesConnection(first: 50) {\n    edges {\n      node {\n        internalID\n        artistID\n        userAlertSettings {\n          name\n        }\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment SavedSearchAlertsOverviewRoute_me on Me {\n  ...SavedSearchAlertsList_me\n}\n"
+    "text": "query savedSearchAlertsRoutes_SavedSearchAlertsOverviewRouteQuery {\n  me {\n    ...SavedSearchAlertsOverviewRoute_me\n    id\n  }\n}\n\nfragment SavedSearchAlertsOverviewRoute_me on Me {\n  savedSearchesConnection(first: 50) {\n    edges {\n      node {\n        internalID\n        artistID\n        userAlertSettings {\n          name\n        }\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();

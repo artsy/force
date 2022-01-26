@@ -13,30 +13,76 @@ import {
   Join,
   Spacer,
 } from "@artsy/palette"
-import { createFragmentContainer, graphql } from "react-relay"
+import {
+  createPaginationContainer,
+  graphql,
+  RelayPaginationProp,
+} from "react-relay"
 import { useState } from "react"
 import { SavedSearchAlertsOverviewRoute_me } from "v2/__generated__/SavedSearchAlertsOverviewRoute_me.graphql"
-import { SavedSearchAlertsListPaginationContainer } from "./components/SavedSearchAlertsList"
 import { Media } from "v2/Utils/Responsive"
 import { EditAlertEntity } from "./types"
 import { SavedSearchAlertEditQueryRenderer } from "./components/SavedSearchEditAlert"
+import { extractNodes } from "v2/Utils/extractNodes"
 
 interface SavedSearchAlertsOverviewRouteProps {
   me: SavedSearchAlertsOverviewRoute_me
+  relay: RelayPaginationProp
 }
 
 export const SavedSearchAlertsOverviewRoute: React.FC<SavedSearchAlertsOverviewRouteProps> = ({
   me,
+  relay,
 }) => {
   const [
     editAlertEntity,
     setEditAlertEntity,
   ] = useState<EditAlertEntity | null>(null)
+  const alerts = extractNodes(me.savedSearchesConnection)
   const isEditMode = editAlertEntity !== null
 
   const handleCloseClick = () => {
     setEditAlertEntity(null)
   }
+
+  const handleCompleted = () => {
+    handleCloseClick()
+    relay.refetchConnection(50)
+  }
+
+  const list = (
+    <>
+      {alerts.map(edge => (
+        <Box key={edge.internalID} p={4}>
+          <Flex
+            flexDirection="row"
+            alignItems="center"
+            justifyContent="space-between"
+          >
+            <Text variant="lg">{edge.userAlertSettings.name}</Text>
+            <Flex flexDirection="row" alignItems="center">
+              <Clickable
+                textDecoration="underline"
+                onClick={() => {
+                  setEditAlertEntity({
+                    id: edge.internalID,
+                    name: edge.userAlertSettings.name!,
+                    artistId: edge.artistID!,
+                  })
+                }}
+              >
+                <Text variant="sm">Edit</Text>
+              </Clickable>
+              <Spacer ml={2} />
+              <Clickable textDecoration="underline">
+                <Text variant="sm">View All</Text>
+              </Clickable>
+            </Flex>
+          </Flex>
+        </Box>
+      ))}
+    </>
+  )
 
   return (
     <FullBleed>
@@ -44,12 +90,7 @@ export const SavedSearchAlertsOverviewRoute: React.FC<SavedSearchAlertsOverviewR
 
       <Media greaterThanOrEqual="md">
         <GridColumns>
-          <Column span={isEditMode ? 6 : 12}>
-            <SavedSearchAlertsListPaginationContainer
-              me={me}
-              onEditAlertClick={setEditAlertEntity}
-            />
-          </Column>
+          <Column span={isEditMode ? 6 : 12}>{list}</Column>
           {isEditMode && editAlertEntity && (
             <Column span={6}>
               <Flex height="100%">
@@ -66,7 +107,7 @@ export const SavedSearchAlertsOverviewRoute: React.FC<SavedSearchAlertsOverviewR
                   <SavedSearchAlertEditQueryRenderer
                     id={editAlertEntity.id}
                     artistId={editAlertEntity.artistId}
-                    onCompleted={handleCloseClick}
+                    onCompleted={handleCompleted}
                   />
                   <Flex>
                     <Button variant="secondaryOutline" flex={1}>
@@ -83,10 +124,7 @@ export const SavedSearchAlertsOverviewRoute: React.FC<SavedSearchAlertsOverviewR
       </Media>
 
       <Media lessThan="md">
-        <SavedSearchAlertsListPaginationContainer
-          me={me}
-          onEditAlertClick={setEditAlertEntity}
-        />
+        {list}
         {isEditMode && editAlertEntity && (
           <ModalDialog
             title={editAlertEntity.name}
@@ -103,7 +141,7 @@ export const SavedSearchAlertsOverviewRoute: React.FC<SavedSearchAlertsOverviewR
             <SavedSearchAlertEditQueryRenderer
               id={editAlertEntity.id}
               artistId={editAlertEntity.artistId}
-              onCompleted={handleCloseClick}
+              onCompleted={handleCompleted}
             />
           </ModalDialog>
         )}
@@ -112,12 +150,45 @@ export const SavedSearchAlertsOverviewRoute: React.FC<SavedSearchAlertsOverviewR
   )
 }
 
-export const SavedSearchAlertsOverviewRouteFragmentContainer = createFragmentContainer(
+export const SavedSearchAlertsOverviewRoutePaginationContainer = createPaginationContainer(
   SavedSearchAlertsOverviewRoute,
   {
     me: graphql`
       fragment SavedSearchAlertsOverviewRoute_me on Me {
-        ...SavedSearchAlertsList_me
+        savedSearchesConnection(first: 50)
+          @connection(
+            key: "SavedSearchAlertsOverviewRoute_savedSearchesConnection"
+          ) {
+          edges {
+            node {
+              internalID
+              artistID
+              userAlertSettings {
+                name
+              }
+            }
+          }
+        }
+      }
+    `,
+  },
+  {
+    direction: "forward",
+    getFragmentVariables(prevVars, totalCount) {
+      return { ...prevVars, totalCount }
+    },
+    getVariables(_, { count, cursor }, fragmentVariables) {
+      return {
+        ...fragmentVariables,
+        count,
+        after: cursor,
+      }
+    },
+    query: graphql`
+      query SavedSearchAlertsOverviewRouteRefetchQuery {
+        me {
+          ...SavedSearchAlertsOverviewRoute_me
+        }
       }
     `,
   }
