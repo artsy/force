@@ -9,11 +9,9 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import { useState } from "react"
+import { Formik } from "formik"
 
 export const PreferencesApp: React.FC = () => {
-  const [uncheckedAll, setUncheckedAll] = useState(false)
-
   return (
     <>
       <Text variant="xl" mt={4} mb={12}>
@@ -23,124 +21,173 @@ export const PreferencesApp: React.FC = () => {
       <Separator mt={2} />
 
       <GridColumns>
-        <Column
-          span={10}
-          mt={2}
-        >
-          <Flex p={2}>
-            <Box>
-              <Text variant="md">Recommended By Artsy</Text>
-              <Text variant="sm" color="black60">
-                Artworks, shows, fairs, auctions, and collections we think you'll
-                love
-              </Text>
-            </Box>
-          </Flex>
-
-          <Flex p={2}>
-            <Box>
-              <Text variant="md">Art World Insights</Text>
-              <Text variant="sm" color="black60">
-                Market stories, artist profiles, exhibition reviews, and more art
-                world insights
-              </Text>
-            </Box>
-          </Flex>
-
-          <Flex p={2}>
-            <Box>
-              <Text variant="md">Product Updates</Text>
-              <Text variant="sm" color="black60">
-                Announcements of new features on Artsy.net and the mobile app
-              </Text>
-            </Box>
-          </Flex>
-
-          <Flex p={2}>
-            <Box>
-              <Text variant="md">Guidance on Collecting</Text>
-              <Text variant="sm" color="black60">
-                Expert advice on buying and selling art, directly from an Artsy
-                specialist
-              </Text>
-            </Box>
-          </Flex>
-
-          <Flex p={2}>
-            <Box>
-              <Text variant="md">Custom Alerts</Text>
-              <Text variant="sm" color="black60">
-                A round up of updates on your favorite artists, chosen by you
-              </Text>
-            </Box>
-          </Flex>
-        </Column>
-
-        <Column
-          span={2}
-          mt={4}
-        >
-          <Flex 
-            pl={2}
-            pt={2}
+          <Column
+            span={10}
+            mt={2}
           >
-            <Checkbox selected={!uncheckedAll}>Email</Checkbox>
-          </Flex>
-          <Flex 
-            pl={2}
-            pt={6}
-          >
-            <Checkbox selected={!uncheckedAll}>Email</Checkbox>
-          </Flex>
-          <Flex 
-            pl={2}
-            pt={6}
-          >
-            <Checkbox selected={!uncheckedAll}>Email</Checkbox>
-          </Flex>
-          <Flex 
-            pl={2}
-            pt={6}
-          >
-            <Checkbox selected={!uncheckedAll}>Email</Checkbox>
-          </Flex>
-          <Flex 
-            pl={2}
-            pt={6}
-          >
-            <Checkbox selected={!uncheckedAll}>Email</Checkbox>
-          </Flex>
-        </Column>
+            <Flex p={2}>
+              <Box>
+                <Text variant="md">Recommended By Artsy</Text>
+                <Text variant="sm" color="black60">
+                  Artworks, shows, fairs, auctions, and collections we think you'll
+                  love
+                </Text>
+              </Box>
+            </Flex>
 
-      </GridColumns>
+            <Flex p={2}>
+              <Box>
+                <Text variant="md">Art World Insights</Text>
+                <Text variant="sm" color="black60">
+                  Market stories, artist profiles, exhibition reviews, and more art
+                  world insights
+                </Text>
+              </Box>
+            </Flex>
 
-      <Separator mt={2} />
+            <Flex p={2}>
+              <Box>
+                <Text variant="md">Product Updates</Text>
+                <Text variant="sm" color="black60">
+                  Announcements of new features on Artsy.net and the mobile app
+                </Text>
+              </Box>
+            </Flex>
 
-      <GridColumns>
-        <Column
-          span={10}
-          mt={2}
-        >
-          <Flex p={2}>
-            <Box>
+            <Flex p={2}>
+              <Box>
+                <Text variant="md">Guidance on Collecting</Text>
+                <Text variant="sm" color="black60">
+                  Expert advice on buying and selling art, directly from an Artsy
+                  specialist
+                </Text>
+              </Box>
+            </Flex>
+
+            <Flex p={2}>
+              <Box>
+                <Text variant="md">Custom Alerts</Text>
+                <Text variant="sm" color="black60">
+                  A round up of updates on your favorite artists, chosen by you
+                </Text>
+              </Box>
+            </Flex>
+
+            <Flex pt={6} pl={2}>
               <Text variant="md">Unsubscribe from all</Text>
-            </Box>
-          </Flex>
-        </Column>
+            </Flex>
+          </Column>
 
-        <Column
-          span={2}
-          mt={2}
-        >
-          <Flex p={2}>
-            <Checkbox
-              onSelect={result => setUncheckedAll(result)}
-              selected={uncheckedAll}
+          <Column
+            span={2}
+            mt={4}
+          >
+            <Formik
+              initialValues={{
+                first: false,
+                second: false,
+                third: false,
+                fourth: false,
+                fifth: false
+              }}
+              onSubmit={values => {
+                console.log(values)
+              }}
             >
-              Email
-            </Checkbox>
-          </Flex>
-        </Column>
+              {({ values, setFieldValue }) => {
+                return (
+                  <>
+                    <Flex 
+                      pl={2}
+                      pt={2}
+                    >
+                      <Checkbox
+                        selected={values.first}
+                        onSelect={value => {
+                          setFieldValue("first", value)
+                        }}
+                      >
+                        Email
+                      </Checkbox>
+                    </Flex>
+                    
+                    <Flex
+                      pl={2}
+                      pt={6}
+                    >
+                      <Checkbox
+                        selected={values.second}
+                        onSelect={value => {
+                          setFieldValue("second", value)
+                        }}
+                      >
+                        Email
+                      </Checkbox>
+                    </Flex>
+
+                    <Flex
+                      pl={2}
+                      pt={6}
+                    >
+                      <Checkbox
+                        selected={values.third}
+                        onSelect={value => {
+                          setFieldValue("third", value)
+                        }}
+                      >
+                        Email
+                      </Checkbox>
+                    </Flex>
+                    
+                    <Flex
+                      pl={2}
+                      pt={6}
+                    >
+                      <Checkbox
+                        selected={values.fourth}
+                        onSelect={value => {
+                          setFieldValue("fourth", value)
+                        }}
+                      >
+                        Email
+                      </Checkbox>
+                    </Flex>
+                    
+                    <Flex
+                      pl={2}
+                      pt={6}
+                    >
+                      <Checkbox
+                        selected={values.fifth}
+                        onSelect={value => {
+                          setFieldValue("fifth", value)
+                        }}
+                      >
+                        Email
+                      </Checkbox>
+                    </Flex>
+
+                    <Flex
+                      pl={2}
+                      pt={6}
+                      mt={2}
+                    >
+                      <Checkbox
+                        selected={Object.values(values).every(v => !v)}
+                        onSelect={value => {
+                          ;Object.keys(values).forEach(field => {
+                            setFieldValue(field, !value)
+                          })
+                        }}
+                      >
+                        Unselect all
+                      </Checkbox>
+                    </Flex>
+                  </>
+                )
+              }}
+            </Formik>
+          </Column>
       </GridColumns>
 
       <Flex
