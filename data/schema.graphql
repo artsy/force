@@ -6079,6 +6079,7 @@ input CreateUserAddressInput {
 type CreateUserAddressPayload {
   # A unique identifier for the client performing the mutation.
   clientMutationId: String
+  me: Me
   userAddressOrErrors: UserAddressOrErrorsUnion!
 }
 
@@ -6340,6 +6341,7 @@ input DeleteUserAddressInput {
 type DeleteUserAddressPayload {
   # A unique identifier for the client performing the mutation.
   clientMutationId: String
+  me: Me
   userAddressOrErrors: UserAddressOrErrorsUnion!
 }
 
@@ -8912,6 +8914,10 @@ type Me implements Node {
 
   # Collector's position with relevant institutions
   otherRelevantPosition: String
+    @deprecated(reason: "Use `otherRelevantPositions` instead")
+
+  # Collector's position with relevant institutions
+  otherRelevantPositions: String
   paddleNumber: String
 
   # A list of the current user’s managed partners
@@ -13192,8 +13198,8 @@ input UpdateMyProfileInput {
   # Additional personal notes.
   notes: String
 
-  # Collector's position with relevant institutions
-  otherRelevantPosition: String
+  # Collector's positions with relevant institutions
+  otherRelevantPositions: String
 
   # The user's password, required to change email address.
   password: String
@@ -13350,6 +13356,7 @@ input UpdateUserAddressInput {
 type UpdateUserAddressPayload {
   # A unique identifier for the client performing the mutation.
   clientMutationId: String
+  me: Me
   userAddressOrErrors: UserAddressOrErrorsUnion!
 }
 
@@ -13364,6 +13371,7 @@ input UpdateUserDefaultAddressInput {
 type UpdateUserDefaultAddressPayload {
   # A unique identifier for the client performing the mutation.
   clientMutationId: String
+  me: Me
   userAddressOrErrors: UserAddressOrErrorsUnion!
 }
 

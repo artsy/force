@@ -80,7 +80,7 @@ const EditSettingsRoute = loadable(
 const ShippingRoute = loadable(
   () =>
     import(
-      /* webpackChunkName: "settingsBundle" */ "./Routes/Shipping/Components/SettingsShippingRoute"
+      /* webpackChunkName: "settingsBundle" */ "./Routes/Shipping/SettingsShippingRoute"
     ),
   {
     resolveComponent: component =>
@@ -93,8 +93,7 @@ const DeleteAccountRoute = loadable(
       /* webpackChunkName: "settingsBundle" */ "./Routes/DeleteAccount/DeleteAccountRoute"
     ),
   {
-    resolveComponent: component =>
-      component.DeleteAccountRoute,
+    resolveComponent: component => component.DeleteAccountRoute,
   }
 )
 

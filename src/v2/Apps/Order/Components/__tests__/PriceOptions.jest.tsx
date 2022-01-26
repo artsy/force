@@ -13,6 +13,10 @@ const trackEvent = jest.fn()
 
 const mockUseTracking = useTracking as jest.Mock
 
+jest.mock("v2/Utils/Hooks/useMatchMedia", () => ({
+  __internal__useMatchMedia: () => ({}),
+}))
+
 const { renderWithRelay } = setupTestWrapperTL<PriceOptions_Test_Query>({
   Component: props => (
     <PriceOptionsFragmentContainer

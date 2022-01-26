@@ -112,22 +112,22 @@ export interface ArtworkFiltersState extends ArtworkFilters {
 }
 
 export type Slice =
+  | "ARTIST_NATIONALITY"
+  | "ARTIST"
   | "COLOR"
   | "DIMENSION_RANGE"
   | "GALLERY"
   | "INSTITUTION"
+  | "LOCATION_CITY"
   | "MAJOR_PERIOD"
+  | "MATERIALS_TERMS"
   | "MEDIUM"
   | "MERCHANDISABLE_ARTISTS"
   | "PARTNER_CITY"
+  | "PARTNER"
   | "PERIOD"
   | "PRICE_RANGE"
   | "TOTAL"
-  | "ARTIST"
-  | "PARTNER"
-  | "LOCATION_CITY"
-  | "ARTIST_NATIONALITY"
-  | "MATERIALS_TERMS"
 
 /**
  * Possible aggregations that can be passed

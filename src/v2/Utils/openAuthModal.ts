@@ -104,6 +104,7 @@ const getDesktopIntentToCreateAlert = ({
   contextModule,
   entity,
   intent,
+  redirectTo,
 }: AuthModalOptions): ModalOptions => {
   return {
     afterSignUpAction: {
@@ -113,6 +114,7 @@ const getDesktopIntentToCreateAlert = ({
     },
     contextModule,
     intent,
+    redirectTo,
     mode: ModalType.signup,
   }
 }

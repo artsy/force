@@ -25,48 +25,33 @@ query settingsRoutes_ShippingRouteQuery {
   }
 }
 
-fragment SavedAddresses_me on Me {
-  id
-  addressConnection(first: 30) {
-    totalCount
+fragment SettingsShippingAddress_address on UserAddress {
+  internalID
+  addressLine1
+  addressLine2
+  city
+  country
+  isDefault
+  name
+  phoneNumber
+  postalCode
+  region
+}
+
+fragment SettingsShippingAddresses_me on Me {
+  addresses: addressConnection {
     edges {
       node {
-        id
         internalID
-        addressLine1
-        addressLine2
-        addressLine3
-        city
-        country
-        isDefault
-        name
-        phoneNumber
-        postalCode
-        region
-        __typename
+        ...SettingsShippingAddress_address
+        id
       }
-      cursor
-    }
-    pageInfo {
-      endCursor
-      hasNextPage
-      hasPreviousPage
-      startCursor
     }
   }
 }
 
 fragment SettingsShippingRoute_me on Me {
-  ...UserSettingsAddresses_me
-}
-
-fragment UserSettingsAddresses_me on Me {
-  id
-  internalID
-  ...SavedAddresses_me
-  addresses: addressConnection {
-    totalCount
-  }
+  ...SettingsShippingAddresses_me
 }
 */
 
@@ -76,27 +61,6 @@ var v0 = {
   "args": null,
   "kind": "ScalarField",
   "name": "id",
-  "storageKey": null
-},
-v1 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "internalID",
-  "storageKey": null
-},
-v2 = [
-  {
-    "kind": "Literal",
-    "name": "first",
-    "value": 30
-  }
-],
-v3 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "totalCount",
   "storageKey": null
 };
 return {
@@ -140,17 +104,14 @@ return {
         "name": "me",
         "plural": false,
         "selections": [
-          (v0/*: any*/),
-          (v1/*: any*/),
           {
-            "alias": null,
-            "args": (v2/*: any*/),
+            "alias": "addresses",
+            "args": null,
             "concreteType": "UserAddressConnection",
             "kind": "LinkedField",
             "name": "addressConnection",
             "plural": false,
             "selections": [
-              (v3/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -167,8 +128,13 @@ return {
                     "name": "node",
                     "plural": false,
                     "selections": [
-                      (v0/*: any*/),
-                      (v1/*: any*/),
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "internalID",
+                        "storageKey": null
+                      },
                       {
                         "alias": null,
                         "args": null,
@@ -181,13 +147,6 @@ return {
                         "args": null,
                         "kind": "ScalarField",
                         "name": "addressLine2",
-                        "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "addressLine3",
                         "storageKey": null
                       },
                       {
@@ -239,101 +198,29 @@ return {
                         "name": "region",
                         "storageKey": null
                       },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "__typename",
-                        "storageKey": null
-                      }
+                      (v0/*: any*/)
                     ],
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "cursor",
-                    "storageKey": null
-                  }
-                ],
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "concreteType": "PageInfo",
-                "kind": "LinkedField",
-                "name": "pageInfo",
-                "plural": false,
-                "selections": [
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "endCursor",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "hasNextPage",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "hasPreviousPage",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "startCursor",
                     "storageKey": null
                   }
                 ],
                 "storageKey": null
               }
             ],
-            "storageKey": "addressConnection(first:30)"
-          },
-          {
-            "alias": null,
-            "args": (v2/*: any*/),
-            "filters": null,
-            "handle": "connection",
-            "key": "SavedAddresses_addressConnection",
-            "kind": "LinkedHandle",
-            "name": "addressConnection"
-          },
-          {
-            "alias": "addresses",
-            "args": null,
-            "concreteType": "UserAddressConnection",
-            "kind": "LinkedField",
-            "name": "addressConnection",
-            "plural": false,
-            "selections": [
-              (v3/*: any*/)
-            ],
             "storageKey": null
-          }
+          },
+          (v0/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "6b3847c9f1318e6b7616b2283d5753be",
+    "cacheID": "e0841261953e6ed7b48526f70dbebb28",
     "id": null,
     "metadata": {},
     "name": "settingsRoutes_ShippingRouteQuery",
     "operationKind": "query",
-    "text": "query settingsRoutes_ShippingRouteQuery {\n  me {\n    ...SettingsShippingRoute_me\n    id\n  }\n}\n\nfragment SavedAddresses_me on Me {\n  id\n  addressConnection(first: 30) {\n    totalCount\n    edges {\n      node {\n        id\n        internalID\n        addressLine1\n        addressLine2\n        addressLine3\n        city\n        country\n        isDefault\n        name\n        phoneNumber\n        postalCode\n        region\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n\nfragment SettingsShippingRoute_me on Me {\n  ...UserSettingsAddresses_me\n}\n\nfragment UserSettingsAddresses_me on Me {\n  id\n  internalID\n  ...SavedAddresses_me\n  addresses: addressConnection {\n    totalCount\n  }\n}\n"
+    "text": "query settingsRoutes_ShippingRouteQuery {\n  me {\n    ...SettingsShippingRoute_me\n    id\n  }\n}\n\nfragment SettingsShippingAddress_address on UserAddress {\n  internalID\n  addressLine1\n  addressLine2\n  city\n  country\n  isDefault\n  name\n  phoneNumber\n  postalCode\n  region\n}\n\nfragment SettingsShippingAddresses_me on Me {\n  addresses: addressConnection {\n    edges {\n      node {\n        internalID\n        ...SettingsShippingAddress_address\n        id\n      }\n    }\n  }\n}\n\nfragment SettingsShippingRoute_me on Me {\n  ...SettingsShippingAddresses_me\n}\n"
   }
 };
 })();

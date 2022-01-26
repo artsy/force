@@ -1,6 +1,6 @@
 import { getClientParam } from "v2/Utils/getClientParam"
 import { getURLHost } from "v2/Utils/url"
-import sanitizeRedirect from "@artsy/passport/sanitize-redirect"
+import sanitizeRedirect from "lib/passport/sanitize-redirect"
 
 export const afterUpdateRedirect = () => {
   const afterUpdateURL = getClientParam("after_update")
@@ -10,14 +10,14 @@ export const afterUpdateRedirect = () => {
     return sanitizedURL
   }
 
-  return ''
+  return ""
 }
 
-export const redirectMessage = (url) => {
+export const redirectMessage = url => {
   const urlHost = getURLHost(url)
   if (urlHost) {
-    return 'You will be redirected to: ' + urlHost
+    return "You will be redirected to: " + urlHost
   } else {
-    return ''
+    return ""
   }
 }

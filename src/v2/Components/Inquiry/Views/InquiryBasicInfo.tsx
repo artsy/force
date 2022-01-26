@@ -23,7 +23,8 @@ import {
 } from "v2/Components/LocationAutocompleteInput"
 import { useState } from "react"
 import { useUpdateMyUserProfile } from "../Hooks/useUpdateMyUserProfile"
-import { compactObject, logger } from "../util"
+import { logger } from "../util"
+import { compactObject } from "v2/Utils/compactObject"
 
 enum Mode {
   Pending,

@@ -1,0 +1,27 @@
+doctype html
+html(lang="en")
+  head
+    title Login
+  body
+    #intro
+      h1 Hello #{user.get('name')}
+      a( href=ap.logoutPath ) Logout
+      br
+      a( href='/deleteaccount' ) Delete Account
+      != sharify.script()
+      script( src='//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js' )
+      script( src='/client.js' )
+    #settings
+      h2 Linked Accounts
+      pre!= error
+      - providers = user.get('authentications').map(function(a) { return a.provider })
+      if providers.indexOf('facebook') > -1
+        a( href='/unlink/facebook' ) Disconnect Facebook
+      else
+        a( href=ap.facebookPath ) Connect Facebook
+      br
+      if providers.indexOf('apple') > -1
+        a( href='/unlink/apple' ) Disconnect Apple
+      else
+        a( href=ap.applePath ) Connect Apple
+      br

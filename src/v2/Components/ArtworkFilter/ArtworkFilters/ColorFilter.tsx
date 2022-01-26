@@ -14,10 +14,10 @@ import {
   SelectedFiltersCountsLabels,
   useArtworkFilterContext,
 } from "../ArtworkFilterContext"
-import { sortResults } from "./ResultsFilter"
 import { FilterExpandable } from "./FilterExpandable"
 import { INITIAL_ITEMS_TO_SHOW, ShowMore } from "./ShowMore"
 import { useFilterLabelCountByKey } from "../Utils/useFilterLabelCountByKey"
+import { sortResults } from "./Utils/sortResults"
 
 export const COLOR_OPTIONS = [
   { hex: "#ffffff", value: "black-and-white", name: "Black and White" },

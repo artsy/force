@@ -13,6 +13,7 @@ import { ActionType, ClickedOfferOption, PageOwnerType } from "@artsy/cohesion"
 import { PriceOptions_artwork } from "v2/__generated__/PriceOptions_artwork.graphql"
 import { PriceOptions_order } from "v2/__generated__/PriceOptions_order.graphql"
 import { appendCurrencySymbol } from "../Utils/currencyUtils"
+import { useScrollTo } from "v2/Utils/Hooks/useScrollTo"
 
 export interface PriceOptionsProps {
   onChange: (value: number) => void
@@ -112,6 +113,11 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
     onChange(minPrice)
   }
 
+  const { scrollTo } = useScrollTo({
+    selectorOrRef: "#scrollTo--price-option-custom",
+    behavior: "smooth",
+  })
+
   return (
     <RadioGroup onSelect={setSelectedRadio} defaultValue={selectedRadio}>
       {compact(priceOptions)
@@ -134,6 +140,7 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
         ))
         .concat(
           <BorderedRadio
+            id="scrollTo--price-option-custom"
             value="custom"
             label="Different amount"
             onSelect={() => {
@@ -150,9 +157,12 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
                   id="OfferForm_offerValue"
                   showError={showError}
                   onChange={setCustomValue}
-                  onFocus={onFocus}
                   onBlur={() => {
                     setDisplayWarning(true)
+                  }}
+                  onFocus={() => {
+                    onFocus()
+                    scrollTo()
                   }}
                   noTitle
                 />

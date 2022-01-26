@@ -6,11 +6,11 @@ import {
 } from "../ArtworkFilterContext"
 import { ShowMore, INITIAL_ITEMS_TO_SHOW } from "./ShowMore"
 import { intersection } from "lodash"
-import { sortResults } from "./ResultsFilter"
 import { FilterExpandable } from "./FilterExpandable"
 import { useFilterLabelCountByKey } from "../Utils/useFilterLabelCountByKey"
 import { userIsAdmin } from "v2/Utils/user"
 import { useSystemContext } from "v2/System"
+import { sortResults } from "./Utils/sortResults"
 
 export interface MediumFilterProps {
   expanded?: boolean

@@ -66,7 +66,6 @@ export interface ModalOptions {
    * }
    */
   afterSignUpAction?: AfterSignUpAction
-
   /*
    * the location where the modal was triggered.
    */
@@ -101,6 +100,10 @@ export interface ModalOptions {
    * the type of modal to display.
    */
   mode?: ModalType
+  /*
+   * Whether or not the user is using the form via gravity's oauth flow.
+   */
+  oauthLogin?: boolean
   /**
    * MOBILE ONLY
    * Used to construct afterSignupAction from query params
