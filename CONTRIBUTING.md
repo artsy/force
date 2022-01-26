@@ -10,6 +10,8 @@ We accept [pull requests](https://github.com/artsy/force/pulls), and you may [pr
 
 ## Setup Instructions
 
+> ⚠️ If you're an Artsy Engineer, be sure to run the [general setup script](https://github.com/artsy/potential/blob/main/scripts/setup) located in [Potential](https://github.com/artsy/potential) first. 
+
 Clone the [project on GitHub](https://github.com/artsy/force) and cd in:
 
 ```sh
