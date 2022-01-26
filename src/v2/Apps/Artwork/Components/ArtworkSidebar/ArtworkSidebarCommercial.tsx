@@ -379,9 +379,13 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
       is_inquireable: isInquireable,
     } = artwork
     const isPriceListed = !isPriceHidden
-    const labFeatureEnabled = userHasLabFeature(
+    const makeOfferEnabled = userHasLabFeature(
       this.props.user,
       "Make Offer On All Eligible Artworks"
+    )
+    const avalaraPhase2Enabled = userHasLabFeature(
+      this.props.user,
+      "Avalara Phase 2"
     )
 
     const {
@@ -391,7 +395,7 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
     } = this.state
 
     const editionSelectableOnInquireable = !!(
-      artwork.is_inquireable && labFeatureEnabled
+      artwork.is_inquireable && makeOfferEnabled
     )
     const artworkEcommerceAvailable = !!(
       artwork.is_acquireable ||
@@ -408,7 +412,7 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
 
     const shouldDisplayMakeOfferButton: boolean | null =
       isOfferable ||
-      (isPriceListed && isOfferableFromInquiry && labFeatureEnabled)
+      (isPriceListed && isOfferableFromInquiry && makeOfferEnabled)
 
     const shouldDisplayMakeOfferAsPrimary: boolean | null =
       shouldDisplayMakeOfferButton && shouldDisplayContactGalleryButton
@@ -460,11 +464,13 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
             </Text>
           )}
 
-          {artworkEcommerceAvailable && artwork.priceIncludesTaxDisplay && (
-            <Text variant="xs" color="black60">
-              {artwork.priceIncludesTaxDisplay}
-            </Text>
-          )}
+          {!avalaraPhase2Enabled &&
+            artworkEcommerceAvailable &&
+            artwork.priceIncludesTaxDisplay && (
+              <Text variant="xs" color="black60">
+                {artwork.priceIncludesTaxDisplay}
+              </Text>
+            )}
 
           {isInquireable || isAcquireable || isOfferable ? (
             artwork.sale_message && <Spacer mt={2} />
