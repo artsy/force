@@ -88,7 +88,7 @@ describe.skip("ArtistSeriesRail", () => {
       const component = getWrapper()
       component.find("a").at(2).simulate("click")
 
-      expect(trackEvent).toHaveBeenCalledWith({
+      expect(trackEvent).toBeCalledWith({
         action: "clickedArtistSeriesGroup",
         context_module: "artistSeriesRail",
         context_page_owner_id: "1234",
