@@ -5,7 +5,7 @@ import {
   ARTISTS_SUBMENU_DATA,
   ARTWORKS_SUBMENU_DATA,
 } from "v2/Components/NavBar/menuData"
-import * as React from "react";
+import * as React from "react"
 import { NavBarMobileMenuAuthentication } from "./NavBarMobileMenuAuthentication"
 import {
   NavBarMobileMenuItemLink,
@@ -109,6 +109,13 @@ export const NavBarMobileMenu: React.FC<NavBarMobileMenuProps> = ({
 
             <NavBarMobileMenuItemLink to="/institutions" onClick={handleClick}>
               Museums
+            </NavBarMobileMenuItemLink>
+
+            <NavBarMobileMenuItemLink
+              to="https://nft.artsy.net"
+              onClick={handleClick}
+            >
+              NFTs
             </NavBarMobileMenuItemLink>
 
             <Separator my={1} />
