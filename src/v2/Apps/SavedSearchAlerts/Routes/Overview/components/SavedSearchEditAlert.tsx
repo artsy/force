@@ -1,190 +1,116 @@
-import {
-  Box,
-  Button,
-  Checkbox,
-  Flex,
-  Input,
-  Join,
-  Spacer,
-  Text,
-} from "@artsy/palette"
-import { Formik, Form } from "formik"
-import { useState } from "react"
+import { Box, Checkbox, Flex, Input, Join, Spacer, Text } from "@artsy/palette"
+import { Form, useFormikContext } from "formik"
+import { useEffect } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import {
-  ArtworkFilters,
-  Aggregations,
-  initialArtworkFilterState,
-} from "v2/Components/ArtworkFilter/ArtworkFilterContext"
+import { Aggregations } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
 import { Pills } from "v2/Components/ArtworkFilter/SavedSearch/Components/Pills"
-import { SavedSearchAttributes } from "v2/Components/ArtworkFilter/SavedSearch/types"
-import { getSearchCriteriaFromFilters } from "v2/Components/ArtworkFilter/SavedSearch/Utils"
-import { FilterPill } from "v2/Components/ArtworkFilter/SavedSearch/Utils/FilterPillsContext"
+import {
+  SavedSearchAttributes,
+  SearchCriteriaAttributes,
+} from "v2/Components/ArtworkFilter/SavedSearch/types"
 import { SavedSearchAleftFormValues } from "v2/Components/SavedSearchAlert/SavedSearchAlertModel"
-import { extractPills } from "v2/Components/SavedSearchAlert/Utils/extractPills"
 import { getNamePlaceholder } from "v2/Components/SavedSearchAlert/Utils/getNamePlaceholder"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
-import createLogger from "v2/Utils/logger"
 import { SavedSearchEditAlertQuery } from "v2/__generated__/SavedSearchEditAlertQuery.graphql"
 import { SavedSearchEditAlert_savedSearch } from "v2/__generated__/SavedSearchEditAlert_savedSearch.graphql"
 import { SavedSearchEditAlert_artist } from "v2/__generated__/SavedSearchEditAlert_artist.graphql"
 import { SavedSearchEditAlert_artworksConnection } from "v2/__generated__/SavedSearchEditAlert_artworksConnection.graphql"
-import { useEditSavedSearchAlert } from "../useEditSavedSearchAlert"
-
-const logger = createLogger(
-  "v2/Apps/SavedSearchAlerts/Routes/Overview/components/SavedSearchEditAlert"
-)
+import { useSavedSearchAlertContext } from "../SavedSearchAlertContext"
 
 interface SavedSearchAlertEditQueryRendererProps {
   id: string
   artistId: string
-  onCompleted: () => void
 }
 
 interface SavedSearchEditAlertProps {
   savedSearch: SavedSearchEditAlert_savedSearch
   artist: SavedSearchEditAlert_artist
   artworksConnection: SavedSearchEditAlert_artworksConnection
-  onCompleted: () => void
 }
 
 const SavedSearchEditAlert: React.FC<SavedSearchEditAlertProps> = ({
   savedSearch,
   artist,
   artworksConnection,
-  onCompleted,
 }) => {
   const { userAlertSettings, internalID, ...other } = savedSearch
-  const [filters, setFilters] = useState((other as unknown) as ArtworkFilters)
-  const { submitMutation: submitEditAlert } = useEditSavedSearchAlert()
+  const { pills, attributes, init, removePill } = useSavedSearchAlertContext()
+  const {
+    values,
+    errors,
+    handleChange,
+    handleBlur,
+    setFieldValue,
+  } = useFormikContext<SavedSearchAleftFormValues>()
 
-  const initialValues: SavedSearchAleftFormValues = {
-    name: userAlertSettings.name ?? "",
-    push: userAlertSettings.push,
-    email: userAlertSettings.email,
-  }
-  const attributes: SavedSearchAttributes = {
-    type: "artist",
-    id: artist.internalID,
-    name: artist.name ?? "",
-    slug: artist.slug ?? "",
-  }
-  const pills = extractPills(
-    filters,
-    artworksConnection.aggregations as Aggregations,
-    attributes
-  )
-  const namePlaceholder = getNamePlaceholder(attributes.name, pills)
-
-  const handleSubmit = async (values: SavedSearchAleftFormValues) => {
-    try {
-      const criteria = getSearchCriteriaFromFilters(attributes.id, filters)
-      await submitEditAlert({
-        input: {
-          searchCriteriaID: savedSearch.internalID,
-          attributes: criteria,
-          userAlertSettings: {
-            ...values,
-            name: values.name || namePlaceholder,
-          },
-        },
-      })
-
-      onCompleted()
-    } catch (error) {
-      logger.error(error)
+  useEffect(() => {
+    const userSettings: SavedSearchAleftFormValues = {
+      name: userAlertSettings.name ?? "",
+      push: userAlertSettings.push,
+      email: userAlertSettings.email,
     }
-  }
-
-  const handleRemovePillPress = (pill: FilterPill) => {
-    if (pill.isDefault) {
-      return
+    const attributes: SavedSearchAttributes = {
+      type: "artist",
+      id: artist.internalID,
+      name: artist.name ?? "",
+      slug: artist.slug ?? "",
     }
+    const aggregations = artworksConnection.aggregations as Aggregations
+    const searchCriteriaAttributes = (other as unknown) as SearchCriteriaAttributes
 
-    let filterValue = filters[pill.filterName]
-
-    if (Array.isArray(filterValue)) {
-      filterValue = filterValue.filter(value => value !== pill.name)
-    } else {
-      filterValue = initialArtworkFilterState[pill.filterName]
-    }
-
-    setFilters({
-      ...filters,
-      [pill.filterName]: filterValue,
+    init({
+      userSettings,
+      aggregations,
+      searchCriteriaAttributes,
+      attributes,
     })
-  }
+  }, [])
+
+  const namePlaceholder = getNamePlaceholder(attributes?.name ?? "", pills)
 
   return (
-    <Formik<SavedSearchAleftFormValues>
-      initialValues={initialValues}
-      onSubmit={handleSubmit}
-    >
-      {({
-        values,
-        errors,
-        isSubmitting,
-        submitCount,
-        setFieldValue,
-        handleChange,
-        handleBlur,
-      }) => {
-        const isSaveAlertButtonDisabled = !values.email && !values.push
+    <Form>
+      <Join separator={<Spacer mt={4} />}>
+        <Input
+          title="Name"
+          name="name"
+          placeholder={namePlaceholder}
+          value={values.name}
+          onChange={handleChange("name")}
+          onBlur={handleBlur("name")}
+          error={errors.name}
+          maxLength={75}
+        />
 
-        return (
-          <Form>
-            <Join separator={<Spacer mt={4} />}>
-              <Input
-                title="Name"
-                name="name"
-                placeholder={namePlaceholder}
-                value={values.name}
-                onChange={handleChange("name")}
-                onBlur={handleBlur("name")}
-                error={errors.name}
-                maxLength={75}
-              />
+        <Box>
+          <Text variant="xs" textTransform="uppercase">
+            Filters
+          </Text>
+          <Spacer mt={2} />
+          <Flex flexWrap="wrap" mx={-0.5}>
+            <Pills items={pills} onDeletePress={removePill} />
+          </Flex>
+        </Box>
 
-              <Box>
-                <Text variant="xs" textTransform="uppercase">
-                  Filters
-                </Text>
-                <Spacer mt={2} />
-                <Flex flexWrap="wrap" mx={-0.5}>
-                  <Pills items={pills} onDeletePress={handleRemovePillPress} />
-                </Flex>
-              </Box>
-
-              <Box>
-                <Box display="flex" justifyContent="space-between">
-                  <Text>Email Alerts</Text>
-                  <Checkbox
-                    onSelect={selected => setFieldValue("email", selected)}
-                    selected={values.email}
-                  />
-                </Box>
-                <Spacer mt={4} />
-                <Box display="flex" justifyContent="space-between">
-                  <Text>Mobile Alerts</Text>
-                  <Checkbox
-                    onSelect={selected => setFieldValue("push", selected)}
-                    selected={values.push}
-                  />
-                </Box>
-              </Box>
-              <Button
-                type="submit"
-                disabled={isSaveAlertButtonDisabled}
-                loading={isSubmitting}
-                width="100%"
-              >
-                Save Alert ({submitCount})
-              </Button>
-            </Join>
-          </Form>
-        )
-      }}
-    </Formik>
+        <Box>
+          <Box display="flex" justifyContent="space-between">
+            <Text>Email Alerts</Text>
+            <Checkbox
+              onSelect={selected => setFieldValue("email", selected)}
+              selected={values.email}
+            />
+          </Box>
+          <Spacer mt={4} />
+          <Box display="flex" justifyContent="space-between">
+            <Text>Mobile Alerts</Text>
+            <Checkbox
+              onSelect={selected => setFieldValue("push", selected)}
+              selected={values.push}
+            />
+          </Box>
+        </Box>
+      </Join>
+    </Form>
   )
 }
 
@@ -279,7 +205,6 @@ const SAVED_SEARCH_EDIT_ALERT_QUERY = graphql`
 export const SavedSearchAlertEditQueryRenderer: React.FC<SavedSearchAlertEditQueryRendererProps> = ({
   id,
   artistId,
-  onCompleted,
 }) => {
   return (
     <SystemQueryRenderer<SavedSearchEditAlertQuery>
@@ -302,7 +227,6 @@ export const SavedSearchAlertEditQueryRenderer: React.FC<SavedSearchAlertEditQue
             savedSearch={props.me?.savedSearch!}
             artist={props.artist!}
             artworksConnection={props.artworksConnection!}
-            onCompleted={onCompleted}
           />
         )
       }}

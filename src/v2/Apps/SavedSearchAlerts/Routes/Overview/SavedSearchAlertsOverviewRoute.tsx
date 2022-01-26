@@ -6,11 +6,7 @@ import {
   Flex,
   FullBleed,
   Separator,
-  CloseIcon,
   Clickable,
-  ModalDialog,
-  Button,
-  Join,
   Spacer,
 } from "@artsy/palette"
 import {
@@ -22,12 +18,33 @@ import { useState } from "react"
 import { SavedSearchAlertsOverviewRoute_me } from "v2/__generated__/SavedSearchAlertsOverviewRoute_me.graphql"
 import { Media } from "v2/Utils/Responsive"
 import { EditAlertEntity } from "./types"
-import { SavedSearchAlertEditQueryRenderer } from "./components/SavedSearchEditAlert"
 import { extractNodes } from "v2/Utils/extractNodes"
+import {
+  SavedSearchAlertContextProvider,
+  useSavedSearchAlertContext,
+} from "./SavedSearchAlertContext"
+import { SavedSearchAleftFormValues } from "v2/Components/SavedSearchAlert/SavedSearchAlertModel"
+import { getSearchCriteriaFromFilters } from "v2/Components/ArtworkFilter/SavedSearch/Utils"
+import { useEditSavedSearchAlert } from "./useEditSavedSearchAlert"
+import createLogger from "v2/Utils/logger"
+import { ArtworkFilters } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
+import { getNamePlaceholder } from "v2/Components/SavedSearchAlert/Utils/getNamePlaceholder"
+import { SavedSearchEditFormDesktop } from "./components/SavedSearchEditFormDesktop"
+import { SavedSearchEditFormMobile } from "./components/SavedSearchEditFormMobile"
+
+const logger = createLogger(
+  "v2/Apps/SavedSearchAlerts/Routes/Overview/SavedSearchAlertsOverviewRoute.tsx"
+)
 
 interface SavedSearchAlertsOverviewRouteProps {
   me: SavedSearchAlertsOverviewRoute_me
   relay: RelayPaginationProp
+}
+
+const defaultUserSettings: SavedSearchAleftFormValues = {
+  name: "",
+  push: false,
+  email: false,
 }
 
 export const SavedSearchAlertsOverviewRoute: React.FC<SavedSearchAlertsOverviewRouteProps> = ({
@@ -38,16 +55,50 @@ export const SavedSearchAlertsOverviewRoute: React.FC<SavedSearchAlertsOverviewR
     editAlertEntity,
     setEditAlertEntity,
   ] = useState<EditAlertEntity | null>(null)
+  const {
+    userSettings,
+    attributes,
+    searchCriteriaAttributes,
+    pills,
+    reset,
+  } = useSavedSearchAlertContext()
+  const { submitMutation: submitEditAlert } = useEditSavedSearchAlert()
   const alerts = extractNodes(me.savedSearchesConnection)
   const isEditMode = editAlertEntity !== null
+  const initialValues = userSettings ?? defaultUserSettings
 
   const handleCloseClick = () => {
     setEditAlertEntity(null)
+    reset()
   }
 
   const handleCompleted = () => {
     handleCloseClick()
     relay.refetchConnection(50)
+  }
+
+  const handleSubmit = async (values: SavedSearchAleftFormValues) => {
+    try {
+      const namePlaceholder = getNamePlaceholder(attributes!.name, pills)
+      const searchCriteria = getSearchCriteriaFromFilters(
+        attributes!.id,
+        searchCriteriaAttributes as ArtworkFilters
+      )
+      await submitEditAlert({
+        input: {
+          searchCriteriaID: editAlertEntity!.id,
+          attributes: searchCriteria,
+          userAlertSettings: {
+            ...values,
+            name: values.name || namePlaceholder,
+          },
+        },
+      })
+
+      handleCompleted()
+    } catch (error) {
+      logger.error(error)
+    }
   }
 
   const list = (
@@ -93,31 +144,12 @@ export const SavedSearchAlertsOverviewRoute: React.FC<SavedSearchAlertsOverviewR
           <Column span={isEditMode ? 6 : 12}>{list}</Column>
           {isEditMode && editAlertEntity && (
             <Column span={6}>
-              <Flex height="100%">
-                <Box width="1px" height="100%" backgroundColor="black15" />
-                <Box p={4} flex={1}>
-                  <Flex justifyContent="space-between">
-                    <Text variant="lg" flex={1} mr={1}>
-                      {editAlertEntity.name}
-                    </Text>
-                    <Clickable onClick={handleCloseClick} mt={0.5}>
-                      <CloseIcon />
-                    </Clickable>
-                  </Flex>
-                  <SavedSearchAlertEditQueryRenderer
-                    id={editAlertEntity.id}
-                    artistId={editAlertEntity.artistId}
-                    onCompleted={handleCompleted}
-                  />
-                  <Flex>
-                    <Button variant="secondaryOutline" flex={1}>
-                      Delete Alert
-                    </Button>
-                    <Spacer ml={2} />
-                    <Button flex={1}>Save Alert</Button>
-                  </Flex>
-                </Box>
-              </Flex>
+              <SavedSearchEditFormDesktop
+                initialValues={initialValues}
+                editAlertEntity={editAlertEntity}
+                onSubmit={handleSubmit}
+                onCloseClick={handleCloseClick}
+              />
             </Column>
           )}
         </GridColumns>
@@ -126,32 +158,28 @@ export const SavedSearchAlertsOverviewRoute: React.FC<SavedSearchAlertsOverviewR
       <Media lessThan="md">
         {list}
         {isEditMode && editAlertEntity && (
-          <ModalDialog
-            title={editAlertEntity.name}
-            onClose={handleCloseClick}
-            footer={
-              <Join separator={<Spacer mt={1} />}>
-                <Button width="100%">Save Alert</Button>
-                <Button variant="secondaryOutline" width="100%">
-                  Delete Alert
-                </Button>
-              </Join>
-            }
-          >
-            <SavedSearchAlertEditQueryRenderer
-              id={editAlertEntity.id}
-              artistId={editAlertEntity.artistId}
-              onCompleted={handleCompleted}
-            />
-          </ModalDialog>
+          <SavedSearchEditFormMobile
+            initialValues={initialValues}
+            editAlertEntity={editAlertEntity}
+            onSubmit={handleSubmit}
+            onCloseClick={handleCloseClick}
+          />
         )}
       </Media>
     </FullBleed>
   )
 }
 
+const SavedSearchAlertsOverviewRouteContainer: React.FC<SavedSearchAlertsOverviewRouteProps> = props => {
+  return (
+    <SavedSearchAlertContextProvider>
+      <SavedSearchAlertsOverviewRoute {...props} />
+    </SavedSearchAlertContextProvider>
+  )
+}
+
 export const SavedSearchAlertsOverviewRoutePaginationContainer = createPaginationContainer(
-  SavedSearchAlertsOverviewRoute,
+  SavedSearchAlertsOverviewRouteContainer,
   {
     me: graphql`
       fragment SavedSearchAlertsOverviewRoute_me on Me {
