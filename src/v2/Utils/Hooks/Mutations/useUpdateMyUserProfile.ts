@@ -35,6 +35,9 @@ export const useUpdateMyUserProfile = ({
             ) {
               updateMyUserProfile(input: $input) {
                 clientMutationId
+                me {
+                  ...SettingsEditProfileYourGalleryIntro_me
+                }
               }
             }
           `,
