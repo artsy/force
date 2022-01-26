@@ -9,35 +9,14 @@ interface SettingsAppProps {
   me: SettingsApp_me
 }
 
-const tabs = [
-  {
-    name: "Saves & Follows",
-    url: "/settings2/saves",
-  },
-  {
-    name: "Collector Profile",
-    url: "/settings2/edit-profile",
-  },
-  {
-    name: "Order History",
-    url: "/settings2/purchases",
-  },
-  {
-    name: "Bids",
-    url: "/settings2/auctions",
-  },
-  {
-    name: "Edit Settings",
-    url: "/settings2/edit-settings",
-  },
-  {
-    name: "Payments",
-    url: "/settings2/payments",
-  },
-  {
-    name: "Shipping",
-    url: "/settings2/shipping",
-  },
+const TABS = [
+  { name: "Edit Settings", url: "/settings2/edit-settings" },
+  { name: "Collector Profile", url: "/settings2/edit-profile" },
+  { name: "Saves & Follows", url: "/settings2/saves" },
+  { name: "Order History", url: "/settings2/purchases" },
+  { name: "Bids", url: "/settings2/auctions" },
+  { name: "Payments", url: "/settings2/payments" },
+  { name: "Shipping", url: "/settings2/shipping" },
 ]
 
 const SettingsApp: React.FC<SettingsAppProps> = ({ me, children }) => {
@@ -50,7 +29,7 @@ const SettingsApp: React.FC<SettingsAppProps> = ({ me, children }) => {
       </Text>
 
       <RouteTabs my={4}>
-        {tabs.map(tab => {
+        {TABS.map(tab => {
           return (
             <RouteTab key={tab.url} to={tab.url}>
               {tab.name}
