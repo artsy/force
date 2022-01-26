@@ -31,7 +31,7 @@ export const MinPriceWarning: React.FC<MinPriceWarningProps> = ({
       ; any lower is likely to be rejected.
       <br />
       <Clickable textDecoration="underline" cursor="pointer" onClick={onClick}>
-        {`We recommend changing your offer to ${minPrice}.`}
+        We recommend changing your offer to {minPrice}.
       </Clickable>
     </Message>
   )

@@ -149,7 +149,6 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
               trackClick("Different amount", 0)
             }}
             key="price-option-custom"
-            name="radio"
           >
             {toggle && (
               <Flex flexDirection="column" mt={2}>
