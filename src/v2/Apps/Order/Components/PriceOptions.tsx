@@ -1,6 +1,7 @@
 import { BorderedRadio, Flex, RadioGroup, Text } from "@artsy/palette"
 import { useEffect, useState } from "react"
 import { OfferInput } from "v2/Apps/Order/Components/OfferInput"
+import { MinPriceWarning } from "./MinPriceWarning"
 import { compact } from "lodash"
 import { createFragmentContainer, graphql } from "react-relay"
 import {
@@ -32,6 +33,17 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
   const tracking = useTracking()
   const { contextPageOwnerId, contextPageOwnerType } = useAnalyticsContext()
 
+  const [customValue, setCustomValue] = useState<number>()
+  const [toggle, setToggle] = useState(false)
+  const [displayWarning, setDisplayWarning] = useState(false)
+  const [selectedRadio, setSelectedRadio] = useState<string>()
+  const listPrice = artwork?.listPrice
+
+  useEffect(() => {
+    if (!!customValue) onChange(customValue)
+    setDisplayWarning(false)
+  }, [customValue])
+
   const trackClick = (offer: string, amount: number) => {
     const trackingData: ClickedOfferOption = {
       action: ActionType.clickedOfferOption,
@@ -48,48 +60,37 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
   }
 
   const asCurrency = (value: number) =>
-    value?.toLocaleString("en-US", {
-      currency: artwork?.priceCurrency!,
-      minimumFractionDigits: 2,
-      style: "currency",
-    })
-
-  const [customValue, setCustomValue] = useState<number>()
-  useEffect(() => {
-    customValue && onChange(customValue)
-    // TODO: move this call if necessary once the feature is implemented
-    if (toggle && customValue && customValue < priceOptions[0]?.value!) {
-      tracking.trackEvent({
-        action_type: AnalyticsSchema.ActionType.ViewedOfferTooLow,
-        flow: AnalyticsSchema.Flow.MakeOffer,
-        order_id: order.internalID,
-      })
-    }
-  }, [customValue, onChange])
-
-  const [toggle, setToggle] = useState(false)
-
-  const listPrice = artwork?.listPrice
-  const minPriceRange = listPrice?.minPrice?.major
-  const maxPriceRange = listPrice?.maxPrice?.major
-  const midPriceRange = (Number(minPriceRange) + Number(maxPriceRange)) / 2
+    appendCurrencySymbol(
+      value?.toLocaleString("en-US", {
+        currency: artwork?.priceCurrency!,
+        minimumFractionDigits: 2,
+        style: "currency",
+      }),
+      artwork?.priceCurrency!
+    )
 
   const getRangeOptions = () => {
+    const minPriceRange = listPrice?.minPrice?.major
+    const maxPriceRange = listPrice?.maxPrice?.major
+    const midPriceRange = (Number(minPriceRange) + Number(maxPriceRange)) / 2
+
     const getRangeDetails = [
       { value: minPriceRange, description: "Low-end of range" },
       { value: midPriceRange, description: "Midpoint" },
       { value: maxPriceRange, description: "Top-end of range" },
     ]
-    return getRangeDetails.map(rangePrice => ({
+    return getRangeDetails.map((rangePrice, idx) => ({
+      key: `price-option-${idx}`,
       value: rangePrice.value!,
       description: rangePrice.description,
     }))
   }
 
   const getPercentageOptions = () => {
-    return [0.2, 0.15, 0.1].map(pricePercentage => {
+    return [0.2, 0.15, 0.1].map((pricePercentage, idx) => {
       if (listPrice?.major) {
         return {
+          key: `price-option-${idx}`,
           value: listPrice.major * (1 - pricePercentage),
           description: `${pricePercentage * 100}% below the list price`,
         }
@@ -101,9 +102,16 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
   const priceOptions = artwork?.isPriceRange
     ? getRangeOptions()
     : getPercentageOptions()
+  const minPrice = priceOptions[0]?.value!
 
-  // TODO: add call bellow when the feature is implemented
-  // trackClick("We recommend changing your offer", priceOptions[0]?.value!)
+  const selectMinPrice = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation()
+    trackClick("We recommend changing your offer", minPrice)
+    setSelectedRadio("price-option-0")
+    setToggle(false)
+    setCustomValue(undefined)
+    onChange(minPrice)
+  }
 
   const { scrollTo } = useScrollTo({
     selectorOrRef: "#scrollTo--price-option-custom",
@@ -111,21 +119,19 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
   })
 
   return (
-    <RadioGroup>
+    <RadioGroup onSelect={setSelectedRadio} defaultValue={selectedRadio}>
       {compact(priceOptions)
-        .map(({ value, description }) => (
+        .map(({ value, description, key }) => (
           <BorderedRadio
-            value={`price-option-${value}`}
-            label={appendCurrencySymbol(
-              asCurrency(value!),
-              artwork?.priceCurrency!
-            )}
+            value={key}
+            label={asCurrency(value!)}
             onSelect={() => {
               onChange(value!)
               setToggle(false)
+              setCustomValue(undefined)
               trackClick(description, value)
             }}
-            key={`price-option-${value}`}
+            key={key}
           >
             <Text variant="sm" color="black60">
               {description}
@@ -145,17 +151,28 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
             key="price-option-custom"
           >
             {toggle && (
-              <Flex flexDirection="column" marginTop={2}>
+              <Flex flexDirection="column" mt={2}>
                 <OfferInput
                   id="OfferForm_offerValue"
                   showError={showError}
                   onChange={setCustomValue}
+                  onBlur={() => {
+                    setDisplayWarning(true)
+                  }}
                   onFocus={() => {
                     onFocus()
                     scrollTo()
                   }}
                   noTitle
                 />
+                {displayWarning && !!customValue && customValue < minPrice && (
+                  <MinPriceWarning
+                    isPriceRange={!!artwork?.isPriceRange}
+                    onClick={selectMinPrice}
+                    minPrice={asCurrency(minPrice) as string}
+                    orderID={order.internalID}
+                  />
+                )}
               </Flex>
             )}
           </BorderedRadio>
