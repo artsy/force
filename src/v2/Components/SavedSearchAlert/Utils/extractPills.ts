@@ -37,7 +37,7 @@ export const extractPillFromAggregation = (
 
     return (paramValue as string[]).map(value => ({
       name: value,
-      displayName: aggregationByValue[value].name,
+      displayName: aggregationByValue[value]?.name ?? "",
       filterName: paramName,
     }))
   }

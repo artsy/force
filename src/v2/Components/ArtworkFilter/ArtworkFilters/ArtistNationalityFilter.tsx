@@ -11,12 +11,12 @@ export const ArtistNationalityFilter: React.FC<ArtistNationalityFilterProps> = (
 }) => {
   return (
     <ResultsFilter
+      expanded={expanded}
       facetName="artistNationalities"
-      slice="ARTIST_NATIONALITY"
+      filtersCountKey={SelectedFiltersCountsLabels.artistNationalities}
       label="Artist Nationality or Ethnicity"
       placeholder="Enter a nationality or ethnicity"
-      filtersCountKey={SelectedFiltersCountsLabels.artistNationalities}
-      expanded={expanded}
+      slice="ARTIST_NATIONALITY"
     />
   )
 }

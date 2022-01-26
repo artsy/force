@@ -11,12 +11,12 @@ export const ArtworkLocationFilter: React.FC<ArtworkLocationFilterProps> = ({
 }) => {
   return (
     <ResultsFilter
+      expanded={expanded}
       facetName="locationCities"
-      slice="LOCATION_CITY"
+      filtersCountKey={SelectedFiltersCountsLabels.locationCities}
       label="Artwork Location"
       placeholder="Enter a city"
-      filtersCountKey={SelectedFiltersCountsLabels.locationCities}
-      expanded={expanded}
+      slice="LOCATION_CITY"
     />
   )
 }
