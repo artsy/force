@@ -4,7 +4,6 @@ import {
   Column,
   GridColumns,
   Separator,
-  Spacer,
   Text,
 } from "@artsy/palette"
 import { Formik } from "formik"
@@ -32,7 +31,7 @@ export const PreferencesApp: React.FC = () => {
       >
         {({ values, setFieldValue }) => {
           return (
-            <GridColumns>
+            <GridColumns gridRowGap={4}>
               <Column span={10}>
                 <Text variant="md">Recommended By Artsy</Text>
                 <Text variant="sm" color="black60">
@@ -147,13 +146,13 @@ export const PreferencesApp: React.FC = () => {
                 </Checkbox>
               </Column>
 
-              <Column span={2} start={9}>
+              <Column span={2} start={9} mt={2}>
                 <Button width="100%" variant="secondaryOutline">
                   Cancel
                 </Button>
               </Column>
 
-              <Column span={2}>
+              <Column span={2} mt={2}>
                 <Button width="100%">Save</Button>
               </Column>
             </GridColumns>
