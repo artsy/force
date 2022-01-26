@@ -18,7 +18,7 @@ const OverviewRoute = loadable(
     ),
   {
     resolveComponent: component =>
-      component.SavedSearchAlertsOverviewRoutePaginationContainer,
+      component.SavedSearchAlertsOverviewRouteFragmentContainer,
   }
 )
 

@@ -5,16 +5,7 @@
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type SavedSearchAlertsOverviewRoute_me = {
-    readonly savedSearchesConnection: {
-        readonly edges: ReadonlyArray<{
-            readonly node: {
-                readonly internalID: string;
-                readonly userAlertSettings: {
-                    readonly name: string | null;
-                };
-            } | null;
-        } | null> | null;
-    } | null;
+    readonly " $fragmentRefs": FragmentRefs<"SavedSearchAlertsList_me">;
     readonly " $refType": "SavedSearchAlertsOverviewRoute_me";
 };
 export type SavedSearchAlertsOverviewRoute_me$data = SavedSearchAlertsOverviewRoute_me;
@@ -28,120 +19,17 @@ export type SavedSearchAlertsOverviewRoute_me$key = {
 const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
-  "metadata": {
-    "connection": [
-      {
-        "count": null,
-        "cursor": null,
-        "direction": "forward",
-        "path": [
-          "savedSearchesConnection"
-        ]
-      }
-    ]
-  },
+  "metadata": null,
   "name": "SavedSearchAlertsOverviewRoute_me",
   "selections": [
     {
-      "alias": "savedSearchesConnection",
       "args": null,
-      "concreteType": "SearchCriteriaConnection",
-      "kind": "LinkedField",
-      "name": "__SavedSearchAlertsOverviewRoute_savedSearchesConnection_connection",
-      "plural": false,
-      "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "concreteType": "SearchCriteriaEdge",
-          "kind": "LinkedField",
-          "name": "edges",
-          "plural": true,
-          "selections": [
-            {
-              "alias": null,
-              "args": null,
-              "concreteType": "SearchCriteria",
-              "kind": "LinkedField",
-              "name": "node",
-              "plural": false,
-              "selections": [
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "internalID",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "concreteType": "SavedSearchUserAlertSettings",
-                  "kind": "LinkedField",
-                  "name": "userAlertSettings",
-                  "plural": false,
-                  "selections": [
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "name",
-                      "storageKey": null
-                    }
-                  ],
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "__typename",
-                  "storageKey": null
-                }
-              ],
-              "storageKey": null
-            },
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "cursor",
-              "storageKey": null
-            }
-          ],
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "concreteType": "PageInfo",
-          "kind": "LinkedField",
-          "name": "pageInfo",
-          "plural": false,
-          "selections": [
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "endCursor",
-              "storageKey": null
-            },
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "hasNextPage",
-              "storageKey": null
-            }
-          ],
-          "storageKey": null
-        }
-      ],
-      "storageKey": null
+      "kind": "FragmentSpread",
+      "name": "SavedSearchAlertsList_me"
     }
   ],
   "type": "Me",
   "abstractKey": null
 };
-(node as any).hash = 'ecc7fbfabdf7098405d21ef8373eb78e';
+(node as any).hash = '0de25a125e7c4725c96e70077604230a';
 export default node;
