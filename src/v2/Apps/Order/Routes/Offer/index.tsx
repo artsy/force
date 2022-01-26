@@ -272,7 +272,7 @@ export class OfferRoute extends Component<OfferProps, OfferState> {
               )}
               {newOfferSubmissionEnabled && !isInquiryCheckout && !isEdition && (
                 <>
-                  <Text variant="lg" color="black80" marginTop={2}>
+                  <Text variant="lg" color="black80" mt={2}>
                     Select an Option
                   </Text>
                   {priceNote}
@@ -280,8 +280,8 @@ export class OfferRoute extends Component<OfferProps, OfferState> {
                     variant="md"
                     color="black80"
                     textTransform="uppercase"
-                    marginTop={4}
-                    marginBottom={2}
+                    mt={4}
+                    mb={2}
                   >
                     your offer
                   </Text>
