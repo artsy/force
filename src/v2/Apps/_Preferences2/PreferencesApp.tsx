@@ -1,5 +1,4 @@
 import {
-  Box,
   Button,
   Checkbox,
   Column,
@@ -18,79 +17,66 @@ export const PreferencesApp: React.FC = () => {
         Preferences Center
       </Text>
 
-      <Separator mt={2} />
+      <Separator mt={2} mb={4} />
 
       <GridColumns>
-          <Column
-            span={10}
-            mt={2}
-          >
-            <Flex p={2}>
-              <Box>
+        <Column span={10}>
+          <GridColumns gridRowGap={[4, 4]}>
+            <>
+              <Column span={10}>
                 <Text variant="md">Recommended By Artsy</Text>
                 <Text variant="sm" color="black60">
-                  Artworks, shows, fairs, auctions, and collections we think you'll
-                  love
+                  Artworks, shows, fairs, auctions, and collections we think
+                  you'll love
                 </Text>
-              </Box>
-            </Flex>
+              </Column>
 
-            <Flex p={2}>
-              <Box>
+              <Column span={10}>
                 <Text variant="md">Art World Insights</Text>
                 <Text variant="sm" color="black60">
-                  Market stories, artist profiles, exhibition reviews, and more art
-                  world insights
+                  Market stories, artist profiles, exhibition reviews, and more
+                  art world insights
                 </Text>
-              </Box>
-            </Flex>
+              </Column>
 
-            <Flex p={2}>
-              <Box>
+              <Column span={10}>
                 <Text variant="md">Product Updates</Text>
                 <Text variant="sm" color="black60">
                   Announcements of new features on Artsy.net and the mobile app
                 </Text>
-              </Box>
-            </Flex>
+              </Column>
 
-            <Flex p={2}>
-              <Box>
+              <Column span={10}>
                 <Text variant="md">Guidance on Collecting</Text>
                 <Text variant="sm" color="black60">
-                  Expert advice on buying and selling art, directly from an Artsy
-                  specialist
+                  Expert advice on buying and selling art, directly from an
+                  Artsy specialist
                 </Text>
-              </Box>
-            </Flex>
+              </Column>
 
-            <Flex p={2}>
-              <Box>
+              <Column span={10}>
                 <Text variant="md">Custom Alerts</Text>
                 <Text variant="sm" color="black60">
                   A round up of updates on your favorite artists, chosen by you
                 </Text>
-              </Box>
-            </Flex>
+              </Column>
 
-            <Separator mt={2}/>
+              <Column span={10} mt={2}>
+                <Text variant="md">Unsubscribe from all</Text>
+              </Column>
+            </>
+          </GridColumns>
+        </Column>
 
-            <Flex pt={6} pl={2}>
-              <Text variant="md">Unsubscribe from all</Text>
-            </Flex>
-          </Column>
-
-          <Column
-            span={2}
-            mt={4}
-          >
+        <Column span={2}>
+          <GridColumns gridRowGap={[6, 6]} mt={2}>
             <Formik
               initialValues={{
                 first: false,
                 second: false,
                 third: false,
                 fourth: false,
-                fifth: false
+                fifth: false,
               }}
               onSubmit={values => {
                 console.log(values)
@@ -99,10 +85,7 @@ export const PreferencesApp: React.FC = () => {
               {({ values, setFieldValue }) => {
                 return (
                   <>
-                    <Flex 
-                      pl={2}
-                      pt={2}
-                    >
+                    <Column span={10}>
                       <Checkbox
                         selected={values.first}
                         onSelect={value => {
@@ -111,12 +94,9 @@ export const PreferencesApp: React.FC = () => {
                       >
                         Email
                       </Checkbox>
-                    </Flex>
-                    
-                    <Flex
-                      pl={2}
-                      pt={6}
-                    >
+                    </Column>
+
+                    <Column span={10}>
                       <Checkbox
                         selected={values.second}
                         onSelect={value => {
@@ -125,12 +105,9 @@ export const PreferencesApp: React.FC = () => {
                       >
                         Email
                       </Checkbox>
-                    </Flex>
+                    </Column>
 
-                    <Flex
-                      pl={2}
-                      pt={6}
-                    >
+                    <Column span={10}>
                       <Checkbox
                         selected={values.third}
                         onSelect={value => {
@@ -139,12 +116,9 @@ export const PreferencesApp: React.FC = () => {
                       >
                         Email
                       </Checkbox>
-                    </Flex>
-                    
-                    <Flex
-                      pl={2}
-                      pt={6}
-                    >
+                    </Column>
+
+                    <Column span={10}>
                       <Checkbox
                         selected={values.fourth}
                         onSelect={value => {
@@ -153,12 +127,9 @@ export const PreferencesApp: React.FC = () => {
                       >
                         Email
                       </Checkbox>
-                    </Flex>
-                    
-                    <Flex
-                      pl={2}
-                      pt={6}
-                    >
+                    </Column>
+
+                    <Column span={10}>
                       <Checkbox
                         selected={values.fifth}
                         onSelect={value => {
@@ -167,38 +138,29 @@ export const PreferencesApp: React.FC = () => {
                       >
                         Email
                       </Checkbox>
-                    </Flex>
+                    </Column>
 
-                    <Separator mt={6}/>
-
-                    <Flex
-                      pl={2}
-                      pt={2}
-                      mt={2}
-                    >
+                    <Column span={10} mt={2}>
                       <Checkbox
                         selected={Object.values(values).every(v => !v)}
                         onSelect={value => {
-                          ;Object.keys(values).forEach(field => {
+                          Object.keys(values).forEach(field => {
                             setFieldValue(field, !value)
                           })
                         }}
                       >
                         Unselect all
                       </Checkbox>
-                    </Flex>
+                    </Column>
                   </>
                 )
               }}
             </Formik>
-          </Column>
+          </GridColumns>
+        </Column>
       </GridColumns>
 
-      <Flex
-        justifyContent="flex-end"
-        pt={4}
-        pr={4}
-      >
+      <Flex justifyContent="flex-end" mt={4} pt={4} pr={4}>
         <Button width={["100%", "auto"]}>Cancel</Button>
         <Spacer ml={1} />
         <Button width={["100%", "auto"]}>Save</Button>
