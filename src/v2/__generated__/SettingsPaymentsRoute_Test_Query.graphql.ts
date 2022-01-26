@@ -25,31 +25,29 @@ query SettingsPaymentsRoute_Test_Query {
   }
 }
 
-fragment PaymentSection_me on Me {
-  id
+fragment SettingsPaymentsMethod_method on CreditCard {
   internalID
-  creditCards(first: 100) {
+  name
+  brand
+  lastDigits
+  expirationYear
+  expirationMonth
+}
+
+fragment SettingsPaymentsMethods_me on Me {
+  creditCards(first: 50) {
     edges {
       node {
-        id
         internalID
-        brand
-        lastDigits
-        expirationYear
-        expirationMonth
-        __typename
+        ...SettingsPaymentsMethod_method
+        id
       }
-      cursor
-    }
-    pageInfo {
-      endCursor
-      hasNextPage
     }
   }
 }
 
 fragment SettingsPaymentsRoute_me on Me {
-  ...PaymentSection_me
+  ...SettingsPaymentsMethods_me
 }
 */
 
@@ -62,32 +60,18 @@ var v0 = {
   "storageKey": null
 },
 v1 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "internalID",
-  "storageKey": null
-},
-v2 = [
-  {
-    "kind": "Literal",
-    "name": "first",
-    "value": 100
-  }
-],
-v3 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "String"
 },
-v4 = {
+v2 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "Int"
 },
-v5 = {
+v3 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
@@ -134,11 +118,15 @@ return {
         "name": "me",
         "plural": false,
         "selections": [
-          (v0/*: any*/),
-          (v1/*: any*/),
           {
             "alias": null,
-            "args": (v2/*: any*/),
+            "args": [
+              {
+                "kind": "Literal",
+                "name": "first",
+                "value": 50
+              }
+            ],
             "concreteType": "CreditCardConnection",
             "kind": "LinkedField",
             "name": "creditCards",
@@ -160,8 +148,20 @@ return {
                     "name": "node",
                     "plural": false,
                     "selections": [
-                      (v0/*: any*/),
-                      (v1/*: any*/),
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "internalID",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "name",
+                        "storageKey": null
+                      },
                       {
                         "alias": null,
                         "args": null,
@@ -190,70 +190,24 @@ return {
                         "name": "expirationMonth",
                         "storageKey": null
                       },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "__typename",
-                        "storageKey": null
-                      }
+                      (v0/*: any*/)
                     ],
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "cursor",
-                    "storageKey": null
-                  }
-                ],
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "concreteType": "PageInfo",
-                "kind": "LinkedField",
-                "name": "pageInfo",
-                "plural": false,
-                "selections": [
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "endCursor",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "hasNextPage",
                     "storageKey": null
                   }
                 ],
                 "storageKey": null
               }
             ],
-            "storageKey": "creditCards(first:100)"
+            "storageKey": "creditCards(first:50)"
           },
-          {
-            "alias": null,
-            "args": (v2/*: any*/),
-            "filters": [],
-            "handle": "connection",
-            "key": "PaymentSection_creditCards",
-            "kind": "LinkedHandle",
-            "name": "creditCards"
-          }
+          (v0/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "99a80b5e6ab585160d6ebc8d31dfb3b7",
+    "cacheID": "2d2697a9f4da55a32e1fbb21966f5fd7",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -275,45 +229,30 @@ return {
           "plural": true,
           "type": "CreditCardEdge"
         },
-        "me.creditCards.edges.cursor": (v3/*: any*/),
         "me.creditCards.edges.node": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "CreditCard"
         },
-        "me.creditCards.edges.node.__typename": (v3/*: any*/),
-        "me.creditCards.edges.node.brand": (v3/*: any*/),
-        "me.creditCards.edges.node.expirationMonth": (v4/*: any*/),
-        "me.creditCards.edges.node.expirationYear": (v4/*: any*/),
-        "me.creditCards.edges.node.id": (v5/*: any*/),
-        "me.creditCards.edges.node.internalID": (v5/*: any*/),
-        "me.creditCards.edges.node.lastDigits": (v3/*: any*/),
-        "me.creditCards.pageInfo": {
-          "enumValues": null,
-          "nullable": false,
-          "plural": false,
-          "type": "PageInfo"
-        },
-        "me.creditCards.pageInfo.endCursor": {
+        "me.creditCards.edges.node.brand": (v1/*: any*/),
+        "me.creditCards.edges.node.expirationMonth": (v2/*: any*/),
+        "me.creditCards.edges.node.expirationYear": (v2/*: any*/),
+        "me.creditCards.edges.node.id": (v3/*: any*/),
+        "me.creditCards.edges.node.internalID": (v3/*: any*/),
+        "me.creditCards.edges.node.lastDigits": (v1/*: any*/),
+        "me.creditCards.edges.node.name": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "String"
         },
-        "me.creditCards.pageInfo.hasNextPage": {
-          "enumValues": null,
-          "nullable": false,
-          "plural": false,
-          "type": "Boolean"
-        },
-        "me.id": (v5/*: any*/),
-        "me.internalID": (v5/*: any*/)
+        "me.id": (v3/*: any*/)
       }
     },
     "name": "SettingsPaymentsRoute_Test_Query",
     "operationKind": "query",
-    "text": "query SettingsPaymentsRoute_Test_Query {\n  me {\n    ...SettingsPaymentsRoute_me\n    id\n  }\n}\n\nfragment PaymentSection_me on Me {\n  id\n  internalID\n  creditCards(first: 100) {\n    edges {\n      node {\n        id\n        internalID\n        brand\n        lastDigits\n        expirationYear\n        expirationMonth\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment SettingsPaymentsRoute_me on Me {\n  ...PaymentSection_me\n}\n"
+    "text": "query SettingsPaymentsRoute_Test_Query {\n  me {\n    ...SettingsPaymentsRoute_me\n    id\n  }\n}\n\nfragment SettingsPaymentsMethod_method on CreditCard {\n  internalID\n  name\n  brand\n  lastDigits\n  expirationYear\n  expirationMonth\n}\n\nfragment SettingsPaymentsMethods_me on Me {\n  creditCards(first: 50) {\n    edges {\n      node {\n        internalID\n        ...SettingsPaymentsMethod_method\n        id\n      }\n    }\n  }\n}\n\nfragment SettingsPaymentsRoute_me on Me {\n  ...SettingsPaymentsMethods_me\n}\n"
   }
 };
 })();

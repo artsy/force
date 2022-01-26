@@ -9,7 +9,7 @@ import {
   TextVariant,
 } from "@artsy/palette"
 import { borderMixin, v3BorderMixin } from "v2/Components/Mixins"
-import * as React from "react";
+import * as React from "react"
 import type {
   StripeCardNumberElementChangeEvent,
   StripeError,
@@ -57,6 +57,9 @@ interface CreditCardInputProps {
   onChange?: (response: StripeCardNumberElementChangeEvent) => void
 }
 
+/**
+ * @deprecated Use `v2/Components/CreditCardInput` instead
+ */
 export const CreditCardInput: React.FC<CreditCardInputProps> = props => {
   const [focused, setFocused] = useState(false)
 
