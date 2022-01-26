@@ -8,6 +8,7 @@ export type UserRegistrationAuctions_me = {
     readonly saleRegistrationsConnection: {
         readonly edges: ReadonlyArray<{
             readonly node: {
+                readonly isRegistered: boolean | null;
                 readonly sale: {
                     readonly id: string;
                     readonly name: string | null;
@@ -87,6 +88,13 @@ const node: ReaderFragment = {
                 {
                   "alias": null,
                   "args": null,
+                  "kind": "ScalarField",
+                  "name": "isRegistered",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
                   "concreteType": "Sale",
                   "kind": "LinkedField",
                   "name": "sale",
@@ -149,5 +157,5 @@ const node: ReaderFragment = {
   "type": "Me",
   "abstractKey": null
 };
-(node as any).hash = 'b40a1ab8dcc416b4b057d71e3741fd93';
+(node as any).hash = '1a20023edef68ff5df24b4207ff8afb4';
 export default node;
