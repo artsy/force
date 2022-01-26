@@ -4,6 +4,6 @@ describe("/alerts", () => {
   })
 
   it("Alerts", () => {
-    cy.title().should("eq", "Your Alerts")
+    cy.title().should("eq", "Your Alerts | Artsy")
   })
 })
