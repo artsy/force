@@ -10,7 +10,7 @@ import { useFilterLabelCountByKey } from "../../Utils/useFilterLabelCountByKey"
 export interface UseFilterSelectResultsProps {
   facetName: keyof MultiSelectArtworkFilters
   filtersCountKey: SelectedFiltersCountsLabels
-  label
+  label: string
   slice: Slice
 }
 
@@ -47,7 +47,7 @@ export const useFilterSelectResults = ({
 
   return {
     handleFilterSelectChange,
-    items,
+    items: items ?? [],
     labelWithCount,
     selectedItems,
   }

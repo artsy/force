@@ -30,6 +30,10 @@ export const ResultsFilter: React.FC<ResultsFilterProps> = ({
     slice,
   })
 
+  if (items.length === 0) {
+    return null
+  }
+
   return (
     <FilterExpandable label={labelWithCount} expanded={expanded}>
       <FilterSelect
