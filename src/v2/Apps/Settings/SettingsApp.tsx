@@ -41,11 +41,6 @@ const tabs = [
 ]
 
 const SettingsApp: React.FC<SettingsAppProps> = ({ me, children }) => {
-  if (!me) {
-    // TODO: `@principalField` isn't working here and can't get `onServerSideRender` to work
-    return null
-  }
-
   return (
     <>
       <MetaTags title="Settings | Artsy" />
