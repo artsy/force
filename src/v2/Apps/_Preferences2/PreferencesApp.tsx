@@ -2,7 +2,6 @@ import {
   Button,
   Checkbox,
   Column,
-  Flex,
   GridColumns,
   Separator,
   Spacer,
@@ -13,22 +12,44 @@ import { Formik } from "formik"
 export const PreferencesApp: React.FC = () => {
   return (
     <>
-      <Text variant="xl" mt={4} mb={12}>
+      <Text variant="xl" my={4}>
         Preferences Center
       </Text>
 
-      <Separator mt={2} mb={4} />
+      <Separator my={4} />
 
-      <GridColumns>
-        <Column span={10}>
-          <GridColumns gridRowGap={[4, 4]}>
-            <>
+      <Formik
+        initialValues={{
+          first: false,
+          second: false,
+          third: false,
+          fourth: false,
+          fifth: false,
+        }}
+        onSubmit={values => {
+          console.log(values)
+        }}
+      >
+        {({ values, setFieldValue }) => {
+          return (
+            <GridColumns>
               <Column span={10}>
                 <Text variant="md">Recommended By Artsy</Text>
                 <Text variant="sm" color="black60">
                   Artworks, shows, fairs, auctions, and collections we think
                   you'll love
                 </Text>
+              </Column>
+
+              <Column span={2}>
+                <Checkbox
+                  selected={values.first}
+                  onSelect={value => {
+                    setFieldValue("first", value)
+                  }}
+                >
+                  Email
+                </Checkbox>
               </Column>
 
               <Column span={10}>
@@ -39,11 +60,33 @@ export const PreferencesApp: React.FC = () => {
                 </Text>
               </Column>
 
+              <Column span={2}>
+                <Checkbox
+                  selected={values.second}
+                  onSelect={value => {
+                    setFieldValue("second", value)
+                  }}
+                >
+                  Email
+                </Checkbox>
+              </Column>
+
               <Column span={10}>
                 <Text variant="md">Product Updates</Text>
                 <Text variant="sm" color="black60">
                   Announcements of new features on Artsy.net and the mobile app
                 </Text>
+              </Column>
+
+              <Column span={2}>
+                <Checkbox
+                  selected={values.third}
+                  onSelect={value => {
+                    setFieldValue("third", value)
+                  }}
+                >
+                  Email
+                </Checkbox>
               </Column>
 
               <Column span={10}>
@@ -54,6 +97,17 @@ export const PreferencesApp: React.FC = () => {
                 </Text>
               </Column>
 
+              <Column span={2}>
+                <Checkbox
+                  selected={values.fourth}
+                  onSelect={value => {
+                    setFieldValue("fourth", value)
+                  }}
+                >
+                  Email
+                </Checkbox>
+              </Column>
+
               <Column span={10}>
                 <Text variant="md">Custom Alerts</Text>
                 <Text variant="sm" color="black60">
@@ -61,110 +115,51 @@ export const PreferencesApp: React.FC = () => {
                 </Text>
               </Column>
 
-              <Column span={10} mt={2}>
+              <Column span={2}>
+                <Checkbox
+                  selected={values.fifth}
+                  onSelect={value => {
+                    setFieldValue("fifth", value)
+                  }}
+                >
+                  Email
+                </Checkbox>
+              </Column>
+
+              <Column span={12}>
+                <Separator my={2} />
+              </Column>
+
+              <Column span={10}>
                 <Text variant="md">Unsubscribe from all</Text>
               </Column>
-            </>
-          </GridColumns>
-        </Column>
 
-        <Column span={2}>
-          <GridColumns gridRowGap={[6, 6]} mt={2}>
-            <Formik
-              initialValues={{
-                first: false,
-                second: false,
-                third: false,
-                fourth: false,
-                fifth: false,
-              }}
-              onSubmit={values => {
-                console.log(values)
-              }}
-            >
-              {({ values, setFieldValue }) => {
-                return (
-                  <>
-                    <Column span={10}>
-                      <Checkbox
-                        selected={values.first}
-                        onSelect={value => {
-                          setFieldValue("first", value)
-                        }}
-                      >
-                        Email
-                      </Checkbox>
-                    </Column>
+              <Column span={2}>
+                <Checkbox
+                  selected={Object.values(values).every(v => !v)}
+                  onSelect={value => {
+                    Object.keys(values).forEach(field => {
+                      setFieldValue(field, !value)
+                    })
+                  }}
+                >
+                  Unselect all
+                </Checkbox>
+              </Column>
 
-                    <Column span={10}>
-                      <Checkbox
-                        selected={values.second}
-                        onSelect={value => {
-                          setFieldValue("second", value)
-                        }}
-                      >
-                        Email
-                      </Checkbox>
-                    </Column>
+              <Column span={12} display="flex" justifyContent="flex-end" pt={2}>
+                <Button width={["100%", "auto"]} variant="secondaryOutline">
+                  Cancel
+                </Button>
 
-                    <Column span={10}>
-                      <Checkbox
-                        selected={values.third}
-                        onSelect={value => {
-                          setFieldValue("third", value)
-                        }}
-                      >
-                        Email
-                      </Checkbox>
-                    </Column>
+                <Spacer ml={1} />
 
-                    <Column span={10}>
-                      <Checkbox
-                        selected={values.fourth}
-                        onSelect={value => {
-                          setFieldValue("fourth", value)
-                        }}
-                      >
-                        Email
-                      </Checkbox>
-                    </Column>
-
-                    <Column span={10}>
-                      <Checkbox
-                        selected={values.fifth}
-                        onSelect={value => {
-                          setFieldValue("fifth", value)
-                        }}
-                      >
-                        Email
-                      </Checkbox>
-                    </Column>
-
-                    <Column span={10} mt={2}>
-                      <Checkbox
-                        selected={Object.values(values).every(v => !v)}
-                        onSelect={value => {
-                          Object.keys(values).forEach(field => {
-                            setFieldValue(field, !value)
-                          })
-                        }}
-                      >
-                        Unselect all
-                      </Checkbox>
-                    </Column>
-                  </>
-                )
-              }}
-            </Formik>
-          </GridColumns>
-        </Column>
-      </GridColumns>
-
-      <Flex justifyContent="flex-end" mt={4} pt={4} pr={4}>
-        <Button width={["100%", "auto"]}>Cancel</Button>
-        <Spacer ml={1} />
-        <Button width={["100%", "auto"]}>Save</Button>
-      </Flex>
+                <Button width={["100%", "auto"]}>Save</Button>
+              </Column>
+            </GridColumns>
+          )
+        }}
+      </Formik>
     </>
   )
 }
