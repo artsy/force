@@ -122,15 +122,37 @@ describe("PriceOptions", () => {
         expect.objectContaining(getTrackingObject("Different amount", 0, "USD"))
       )
     })
-    it("tracks the offer too low notice", async () => {
+    it("display and tracks the offer too low notice", async () => {
       fireEvent.click(radios[3])
       const input = await within(radios[3]).findByRole("textbox")
       fireEvent.change(input, { target: { value: 50 } })
+      fireEvent.blur(input)
+      const notice = await screen.findByText(
+        "We recommend changing your offer to US$100.00."
+      )
+      expect(notice).toBeInTheDocument()
       expect(trackEvent).toHaveBeenLastCalledWith(
         expect.objectContaining({
           action_type: "Viewed offer too low",
           flow: "Make offer",
         })
+      )
+    })
+    it("selects the first option when clicking on the low price notice", async () => {
+      fireEvent.click(radios[3])
+      const input = await within(radios[3]).findByRole("textbox")
+      fireEvent.change(input, { target: { value: 50 } })
+      fireEvent.blur(input)
+      const notice = await screen.findByText(
+        "We recommend changing your offer to US$100.00."
+      )
+      fireEvent.click(notice)
+      const selected = screen.getAllByRole("radio", { checked: true })
+      expect(selected[0]).toHaveTextContent("US$100.00")
+      expect(trackEvent).toHaveBeenLastCalledWith(
+        expect.objectContaining(
+          getTrackingObject("We recommend changing your offer", 100, "USD")
+        )
       )
     })
   })

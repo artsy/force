@@ -103,17 +103,6 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
     : getPercentageOptions()
   const minPrice = priceOptions[0]?.value!
 
-  const showMinPriceNotice = () => {
-    if (toggle && !!customValue && customValue < minPrice) {
-      setDisplayWarning(true)
-      tracking.trackEvent({
-        action_type: AnalyticsSchema.ActionType.ViewedOfferTooLow,
-        flow: AnalyticsSchema.Flow.MakeOffer,
-        order_id: order.internalID,
-      })
-    }
-  }
-
   const selectMinPrice = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation()
     trackClick("We recommend changing your offer", minPrice)
@@ -162,14 +151,17 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
                   showError={showError}
                   onChange={setCustomValue}
                   onFocus={onFocus}
-                  onBlur={showMinPriceNotice}
+                  onBlur={() => {
+                    setDisplayWarning(true)
+                  }}
                   noTitle
                 />
-                {!!displayWarning && (
+                {displayWarning && !!customValue && customValue < minPrice && (
                   <MinPriceWarning
                     isPriceRange={!!artwork?.isPriceRange}
                     onClick={selectMinPrice}
                     minPrice={asCurrency(minPrice) as string}
+                    orderID={order.internalID}
                   />
                 )}
               </Flex>
