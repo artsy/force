@@ -9,8 +9,8 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import { useState } from "react";
-import * as React from "react";
+import { useState } from "react"
+import * as React from "react"
 import { createRelaySSREnvironment } from "v2/System/Relay/createRelaySSREnvironment"
 import { wait } from "v2/Utils/wait"
 import { useInquiryContext } from "../Hooks/useInquiryContext"
@@ -27,14 +27,13 @@ import {
   SuccessfullyLoggedIn,
 } from "@artsy/cohesion"
 
-enum Mode {
-  Pending,
-  Loading,
-  TwoFactor,
-  OnDemand,
-  Error,
-  Success,
-}
+type Mode =
+  | "Pending"
+  | "Loading"
+  | "TwoFactor"
+  | "OnDemand"
+  | "Error"
+  | "Success"
 
 interface InquiryLoginState {
   password: string
@@ -52,7 +51,7 @@ export const InquiryLogin: React.FC = () => {
   } = useInquiryContext()
   const { navigateTo } = useInquiryAccountContext()
 
-  const [mode, setMode] = useState<Mode>(Mode.Pending)
+  const [mode, setMode] = useState<Mode>("Pending")
 
   const [state, setState] = useState<InquiryLoginState>({
     password: "",
@@ -66,7 +65,7 @@ export const InquiryLogin: React.FC = () => {
   const handleSubmit = async (event: React.FormEvent<HTMLElement>) => {
     event.preventDefault()
 
-    setMode(Mode.Loading)
+    setMode("Loading")
 
     try {
       const { user } = await login({ email: inquiry.email!, ...state })
@@ -99,7 +98,7 @@ export const InquiryLogin: React.FC = () => {
         contactGallery: !engine.decide("askSpecialist"),
       })
 
-      setMode(Mode.Success)
+      setMode("Success")
       await wait(500)
       next()
 
@@ -117,7 +116,7 @@ export const InquiryLogin: React.FC = () => {
       trackEvent(options)
     } catch (err) {
       if (err.message === "missing on-demand authentication code") {
-        setMode(Mode.OnDemand)
+        setMode("OnDemand")
         return
       }
 
@@ -125,12 +124,12 @@ export const InquiryLogin: React.FC = () => {
         err.message === "missing two-factor authentication code" ||
         err.message === "invalid two-factor authentication code"
       ) {
-        setMode(Mode.TwoFactor)
+        setMode("TwoFactor")
         return
       }
 
       // TODO: Improve error messaging
-      setMode(Mode.Error)
+      setMode("Error")
       logger.error(err)
     }
   }
@@ -139,7 +138,7 @@ export const InquiryLogin: React.FC = () => {
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     setState(prevState => ({ ...prevState, [name]: event.target.value }))
-    mode === Mode.Error && setMode(Mode.Pending)
+    mode === "Error" && setMode("Pending")
   }
 
   const handleClick = () => {
@@ -165,20 +164,20 @@ export const InquiryLogin: React.FC = () => {
           placeholder="Enter your password"
           onChange={handleInputChange("password")}
           type="password"
-          error={mode === Mode.Error && "Invalid password"}
+          error={mode === "Error" && "Invalid password"}
           required
           autoFocus
           my={1}
         />
 
-        {mode === Mode.OnDemand && (
+        {mode === "OnDemand" && (
           <Message mt={2} mb={1}>
             Your safety and security are important to us. Please check your
             email for a one-time authentication code to complete your login.
           </Message>
         )}
 
-        {(mode === Mode.TwoFactor || mode === Mode.OnDemand) && (
+        {(mode === "TwoFactor" || mode === "OnDemand") && (
           <Input
             name="authenticationCode"
             title="Authentication Code"
@@ -196,8 +195,8 @@ export const InquiryLogin: React.FC = () => {
           type="submit"
           display="block"
           width="100%"
-          loading={mode === Mode.Loading}
-          disabled={mode === Mode.Success}
+          loading={mode === "Loading"}
+          disabled={mode === "Success"}
         >
           Login and Send Message
         </Button>

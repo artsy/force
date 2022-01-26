@@ -1,8 +1,9 @@
 import { CloseIcon, Spinner } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
-import { FC, ImgHTMLAttributes, useEffect, useRef, useState } from "react"
+import { FC, ImgHTMLAttributes, useEffect, useRef } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
+import { useMode } from "v2/Utils/Hooks/useMode"
 import { ArticleZoomGalleryFigure_figure } from "v2/__generated__/ArticleZoomGalleryFigure_figure.graphql"
 
 interface ArticleZoomGalleryFigureProps {
@@ -82,33 +83,29 @@ const Img = styled.img`
   transition: opacity 250ms;
 `
 
-enum Mode {
-  Loading,
-  Ready,
-  Error,
-}
+type Mode = "Loading" | "Ready" | "Error"
 
 const Image: FC<ImgHTMLAttributes<HTMLImageElement>> = props => {
-  const [mode, setMode] = useState<Mode>(Mode.Loading)
+  const [mode, setMode] = useMode<Mode>("Loading")
 
   const ref = useRef<HTMLImageElement>(null)
 
   useEffect(() => {
     if (ref.current?.complete) {
-      setMode(Mode.Ready)
+      setMode("Ready")
     }
   }, [ref])
 
   return (
     <>
-      {mode === Mode.Loading && <Spinner />}
-      {mode === Mode.Error && <ImgError />}
+      {mode === "Loading" && <Spinner />}
+      {mode === "Error" && <ImgError />}
 
       <Img
         ref={ref as any}
         alt=""
-        onLoad={() => setMode(Mode.Ready)}
-        onError={() => setMode(Mode.Error)}
+        onLoad={() => setMode("Ready")}
+        onError={() => setMode("Error")}
         {...props}
       />
     </>

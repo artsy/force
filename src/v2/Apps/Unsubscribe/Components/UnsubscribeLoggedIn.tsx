@@ -5,17 +5,13 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { useSystemContext } from "v2/System"
 import { UpdateUserEmailPreferencesMutation } from "v2/Components/UserSettings/UserEmailPreferences/UserEmailPreferencesMutation"
 import { UnsubscribeLoggedIn_me } from "v2/__generated__/UnsubscribeLoggedIn_me.graphql"
-
-enum Mode {
-  Pending,
-  Loading,
-  Success,
-  Error,
-}
+import { useMode } from "v2/Utils/Hooks/useMode"
 
 interface UnsubscribeLoggedInProps {
   me: UnsubscribeLoggedIn_me
 }
+
+type Mode = "Pending" | "Loading" | "Success" | "Error"
 
 export const UnsubscribeLoggedIn: React.FC<UnsubscribeLoggedInProps> = ({
   me,
@@ -25,7 +21,7 @@ export const UnsubscribeLoggedIn: React.FC<UnsubscribeLoggedInProps> = ({
   const [emailFrequency, setEmailFrequency] = useState(
     me.emailFrequency ?? "daily"
   )
-  const [mode, setMode] = useState(Mode.Pending)
+  const [mode, setMode] = useMode<Mode>("Pending")
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   const { sendToast } = useToasts()
@@ -34,7 +30,7 @@ export const UnsubscribeLoggedIn: React.FC<UnsubscribeLoggedInProps> = ({
     try {
       timeoutRef.current && clearTimeout(timeoutRef.current)
 
-      setMode(Mode.Loading)
+      setMode("Loading")
 
       await UpdateUserEmailPreferencesMutation(
         relayEnvironment!,
@@ -47,8 +43,8 @@ export const UnsubscribeLoggedIn: React.FC<UnsubscribeLoggedInProps> = ({
         message: "Your email preferences have been updated.",
       })
 
-      setMode(Mode.Success)
-      timeoutRef.current = setTimeout(() => setMode(Mode.Pending), 5000)
+      setMode("Success")
+      timeoutRef.current = setTimeout(() => setMode("Pending"), 5000)
     } catch (err) {
       console.error(err)
 
@@ -58,8 +54,8 @@ export const UnsubscribeLoggedIn: React.FC<UnsubscribeLoggedInProps> = ({
         description: err.message,
       })
 
-      setMode(Mode.Error)
-      timeoutRef.current = setTimeout(() => setMode(Mode.Pending), 5000)
+      setMode("Error")
+      timeoutRef.current = setTimeout(() => setMode("Pending"), 5000)
     }
   }
 
@@ -81,15 +77,15 @@ export const UnsubscribeLoggedIn: React.FC<UnsubscribeLoggedInProps> = ({
 
       <Button
         onClick={handleClick}
-        loading={mode === Mode.Loading}
+        loading={mode === "Loading"}
         width={["100%", "auto"]}
       >
         {
           {
-            [Mode.Pending]: "Update preferences",
-            [Mode.Loading]: "Update preferences",
-            [Mode.Success]: "Updated preferences",
-            [Mode.Error]: "There was an error",
+            ["Pending"]: "Update preferences",
+            ["Loading"]: "Update preferences",
+            ["Success"]: "Updated preferences",
+            ["Error"]: "There was an error",
           }[mode]
         }
       </Button>

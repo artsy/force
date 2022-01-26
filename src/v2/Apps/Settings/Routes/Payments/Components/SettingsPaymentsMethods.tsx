@@ -1,37 +1,35 @@
 import { Text, Button, Message, GridColumns, Column } from "@artsy/palette"
-import { FC, useState } from "react"
+import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { CreditCardInputProvider } from "v2/Components/CreditCardInput"
 import { extractNodes } from "v2/Utils/extractNodes"
+import { useMode } from "v2/Utils/Hooks/useMode"
 import { SettingsPaymentsMethods_me } from "v2/__generated__/SettingsPaymentsMethods_me.graphql"
 import { SettingsPaymentsMethodFragmentContainer } from "./SettingsPaymentsMethod"
 import { SettingsPaymentsMethodForm } from "./SettingsPaymentsMethodForm"
-
-enum Mode {
-  Pending,
-  Adding,
-}
 
 interface SettingsPaymentsMethodsProps {
   me: SettingsPaymentsMethods_me
 }
 
+type Mode = "Pending" | "Adding"
+
 const SettingsPaymentsMethods: FC<SettingsPaymentsMethodsProps> = ({ me }) => {
   const methods = extractNodes(me.creditCards)
 
-  const [mode, setMode] = useState(Mode.Pending)
+  const [mode, setMode] = useMode<Mode>("Pending")
 
   const handleClick = () => {
-    setMode(Mode.Adding)
+    setMode("Adding")
   }
 
   const handleClose = () => {
-    setMode(Mode.Pending)
+    setMode("Pending")
   }
 
   return (
     <>
-      {mode === Mode.Adding && (
+      {mode === "Adding" && (
         <CreditCardInputProvider>
           <SettingsPaymentsMethodForm onClose={handleClose} />
         </CreditCardInputProvider>

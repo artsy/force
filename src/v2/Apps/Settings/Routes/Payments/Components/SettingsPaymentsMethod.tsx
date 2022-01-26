@@ -5,30 +5,28 @@ import {
   Text,
   useToasts,
 } from "@artsy/palette"
-import { FC, useState } from "react"
+import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
+import { useMode } from "v2/Utils/Hooks/useMode"
 import { SettingsPaymentsMethod_method } from "v2/__generated__/SettingsPaymentsMethod_method.graphql"
 import { useDeleteCreditCard } from "../useDeleteCreditCard"
-
-enum Mode {
-  Pending,
-  Deleting,
-}
 
 interface SettingsPaymentsMethodProps {
   method: SettingsPaymentsMethod_method
 }
 
+type Mode = "Pending" | "Deleting"
+
 const SettingsPaymentsMethod: FC<SettingsPaymentsMethodProps> = ({
   method,
 }) => {
-  const [mode, setMode] = useState(Mode.Pending)
+  const [mode, setMode] = useMode<Mode>("Pending")
 
   const { sendToast } = useToasts()
   const { submitMutation } = useDeleteCreditCard()
 
   const handleClick = async () => {
-    setMode(Mode.Deleting)
+    setMode("Deleting")
 
     try {
       await submitMutation(
@@ -88,9 +86,9 @@ const SettingsPaymentsMethod: FC<SettingsPaymentsMethodProps> = ({
         </Text>
       </Flex>
 
-      <Clickable onClick={handleClick} disabled={mode === Mode.Deleting}>
+      <Clickable onClick={handleClick} disabled={mode === "Deleting"}>
         <Text variant="md" color="red100">
-          {mode === Mode.Deleting ? "Removing" : "Remove"}
+          {mode === "Deleting" ? "Removing" : "Remove"}
         </Text>
       </Clickable>
     </Flex>

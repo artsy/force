@@ -1,24 +1,20 @@
 import { Button, Checkbox, Spacer, useToasts } from "@artsy/palette"
-import { useRef, useState } from "react";
-import * as React from "react";
-import { data as sd } from "sharify"
-
-enum Mode {
-  Pending,
-  Loading,
-  Success,
-  Error,
-}
+import { useRef, useState } from "react"
+import * as React from "react"
+import { getENV } from "v2/Utils/getENV"
+import { useMode } from "v2/Utils/Hooks/useMode"
 
 interface UnsubscribeLoggedOutProps {
   authenticationToken: string
 }
 
+type Mode = "Pending" | "Loading" | "Success" | "Error"
+
 export const UnsubscribeLoggedOut: React.FC<UnsubscribeLoggedOutProps> = ({
   authenticationToken,
 }) => {
   const [emailTypes, setEmailTypes] = useState<string[]>([])
-  const [mode, setMode] = useState(Mode.Pending)
+  const [mode, setMode] = useMode<Mode>("Pending")
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   const { sendToast } = useToasts()
@@ -27,14 +23,14 @@ export const UnsubscribeLoggedOut: React.FC<UnsubscribeLoggedOutProps> = ({
     try {
       timeoutRef.current && clearTimeout(timeoutRef.current)
 
-      setMode(Mode.Loading)
+      setMode("Loading")
 
-      const res = await fetch(`${sd.API_URL}/api/v1/me/unsubscribe`, {
+      const res = await fetch(`${getENV("API_URL")}/api/v1/me/unsubscribe`, {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
           "X-Requested-With": "XMLHttpRequest",
-          "X-Xapp-Token": sd.ARTSY_XAPP_TOKEN,
+          "X-Xapp-Token": getENV("ARTSY_XAPP_TOKEN"),
         },
         method: "POST",
         credentials: "same-origin",
@@ -45,7 +41,7 @@ export const UnsubscribeLoggedOut: React.FC<UnsubscribeLoggedOutProps> = ({
       })
 
       if (res.ok) {
-        setMode(Mode.Success)
+        setMode("Success")
 
         sendToast({
           variant: "success",
@@ -63,8 +59,8 @@ export const UnsubscribeLoggedOut: React.FC<UnsubscribeLoggedOutProps> = ({
         description: err.text,
       })
 
-      setMode(Mode.Error)
-      timeoutRef.current = setTimeout(() => setMode(Mode.Pending), 5000)
+      setMode("Error")
+      timeoutRef.current = setTimeout(() => setMode("Pending"), 5000)
     } catch (err) {
       console.error(err)
 
@@ -74,8 +70,8 @@ export const UnsubscribeLoggedOut: React.FC<UnsubscribeLoggedOutProps> = ({
         description: err.message,
       })
 
-      setMode(Mode.Error)
-      timeoutRef.current = setTimeout(() => setMode(Mode.Pending), 5000)
+      setMode("Error")
+      timeoutRef.current = setTimeout(() => setMode("Pending"), 5000)
     }
   }
 
@@ -91,7 +87,7 @@ export const UnsubscribeLoggedOut: React.FC<UnsubscribeLoggedOutProps> = ({
       <Checkbox
         onSelect={handleSelect("all")}
         selected={emailTypes.includes("all")}
-        disabled={mode === Mode.Success}
+        disabled={mode === "Success"}
       >
         Opt out of all email
       </Checkbox>
@@ -100,15 +96,15 @@ export const UnsubscribeLoggedOut: React.FC<UnsubscribeLoggedOutProps> = ({
 
       <Button
         onClick={handleClick}
-        loading={mode === Mode.Loading}
-        disabled={emailTypes.length === 0 || mode === Mode.Success}
+        loading={mode === "Loading"}
+        disabled={emailTypes.length === 0 || mode === "Success"}
       >
         {
           {
-            [Mode.Pending]: "Update preferences",
-            [Mode.Loading]: "Update preferences",
-            [Mode.Success]: "Updated preferences",
-            [Mode.Error]: "There was an error",
+            ["Pending"]: "Update preferences",
+            ["Loading"]: "Update preferences",
+            ["Success"]: "Updated preferences",
+            ["Error"]: "There was an error",
           }[mode]
         }
       </Button>

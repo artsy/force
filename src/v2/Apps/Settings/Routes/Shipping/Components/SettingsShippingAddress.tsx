@@ -7,9 +7,10 @@ import {
   useToasts,
 } from "@artsy/palette"
 import { pick } from "lodash"
-import { FC, useState } from "react"
+import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { compactObject } from "v2/Utils/compactObject"
+import { useMode } from "v2/Utils/Hooks/useMode"
 import { SettingsShippingAddress_address } from "v2/__generated__/SettingsShippingAddress_address.graphql"
 import { useDeleteAddress } from "../useDeleteAddress"
 import {
@@ -17,20 +18,16 @@ import {
   SettingsShippingAddressForm,
 } from "./SettingsShippingAddressForm"
 
-enum Mode {
-  Pending,
-  Editing,
-  Deleting,
-}
-
 interface SettingsShippingAddressProps {
   address: SettingsShippingAddress_address
 }
 
+type Mode = "Pending" | "Editing" | "Deleting"
+
 const SettingsShippingAddress: FC<SettingsShippingAddressProps> = ({
   address,
 }) => {
-  const [mode, setMode] = useState(Mode.Pending)
+  const [mode, setMode] = useMode<Mode>("Pending")
   const { submitMutation } = useDeleteAddress()
   const { sendToast } = useToasts()
 
@@ -44,11 +41,11 @@ const SettingsShippingAddress: FC<SettingsShippingAddressProps> = ({
   ].filter(Boolean)
 
   const handleEdit = () => {
-    setMode(Mode.Editing)
+    setMode("Editing")
   }
 
   const handleDelete = async () => {
-    setMode(Mode.Deleting)
+    setMode("Deleting")
     try {
       await submitMutation(
         { input: { userAddressID: address.internalID } },
@@ -78,12 +75,12 @@ const SettingsShippingAddress: FC<SettingsShippingAddressProps> = ({
   }
 
   const handleClose = () => {
-    setMode(Mode.Pending)
+    setMode("Pending")
   }
 
   return (
     <>
-      {mode === Mode.Editing && (
+      {mode === "Editing" && (
         <SettingsShippingAddressForm
           onClose={handleClose}
           address={{
@@ -128,17 +125,17 @@ const SettingsShippingAddress: FC<SettingsShippingAddressProps> = ({
             <Clickable
               mr={1}
               onClick={handleEdit}
-              disabled={mode === Mode.Editing}
+              disabled={mode === "Editing"}
             >
-              {mode === Mode.Editing ? "Editing" : "Edit"}
+              {mode === "Editing" ? "Editing" : "Edit"}
             </Clickable>
 
             <Clickable
               color="red100"
               onClick={handleDelete}
-              disabled={mode === Mode.Deleting}
+              disabled={mode === "Deleting"}
             >
-              {mode === Mode.Deleting ? "Deleting" : "Delete"}
+              {mode === "Deleting" ? "Deleting" : "Delete"}
             </Clickable>
           </Text>
         </Flex>
