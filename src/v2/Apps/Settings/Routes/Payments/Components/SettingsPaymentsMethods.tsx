@@ -56,7 +56,7 @@ const SettingsPaymentsMethods: FC<SettingsPaymentsMethodsProps> = ({ me }) => {
       )}
 
       <Button mt={4} onClick={handleClick}>
-        Add a New Card
+        Add New Card
       </Button>
     </>
   )

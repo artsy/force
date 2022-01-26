@@ -124,7 +124,7 @@ export const SettingsPaymentsMethodForm: FC<SettingsPaymentsMethodFormProps> = (
       }) => {
         return (
           <ModalDialog
-            title="Add New Card"
+            title="Add Credit Card"
             width={800}
             onClose={onClose}
             footer={
