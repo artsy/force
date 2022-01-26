@@ -147,14 +147,14 @@ export const PreferencesApp: React.FC = () => {
                 </Checkbox>
               </Column>
 
-              <Column span={12} display="flex" justifyContent="flex-end" pt={2}>
-                <Button width={["100%", "auto"]} variant="secondaryOutline">
+              <Column span={2} start={9}>
+                <Button width="100%" variant="secondaryOutline">
                   Cancel
                 </Button>
+              </Column>
 
-                <Spacer ml={1} />
-
-                <Button width={["100%", "auto"]}>Save</Button>
+              <Column span={2}>
+                <Button width="100%">Save</Button>
               </Column>
             </GridColumns>
           )
