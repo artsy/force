@@ -73,6 +73,8 @@ export const PreferencesApp: React.FC = () => {
               </Box>
             </Flex>
 
+            <Separator mt={2}/>
+
             <Flex pt={6} pl={2}>
               <Text variant="md">Unsubscribe from all</Text>
             </Flex>
@@ -167,9 +169,11 @@ export const PreferencesApp: React.FC = () => {
                       </Checkbox>
                     </Flex>
 
+                    <Separator mt={6}/>
+
                     <Flex
                       pl={2}
-                      pt={6}
+                      pt={2}
                       mt={2}
                     >
                       <Checkbox
