@@ -203,7 +203,11 @@ const SettingsEditProfileArtistsYouCollectAutocompleteInput: FC<SettingsEditProf
           <AutocompleteInput
             onChange={handleChange}
             onSelect={onSelect}
-            options={options}
+            options={
+              options.length > 0 || term === ""
+                ? options
+                : [{ text: "No results", value: "" }]
+            }
             placeholder="Search artists"
             {...rest}
           />
