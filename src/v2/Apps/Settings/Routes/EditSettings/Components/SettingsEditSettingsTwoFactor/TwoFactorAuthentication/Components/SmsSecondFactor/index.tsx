@@ -1,12 +1,4 @@
-import {
-  Box,
-  Button,
-  Flex,
-  ModalDialog,
-  Spacer,
-  Sup,
-  Text,
-} from "@artsy/palette"
+import { Box, Button, Flex, ModalDialog, Spacer, Text } from "@artsy/palette"
 import { useState } from "react"
 import * as React from "react"
 import { RelayRefetchProp, graphql, createRefetchContainer } from "react-relay"
@@ -146,15 +138,15 @@ export const SmsSecondFactor: React.FC<SmsSecondFactorProps> = ({
         flexDirection={["column", "row"]}
       >
         <Box flexBasis="50%">
-          <Text variant="lg" mb={2}>
-            Use Text Messages
-            {enabledSecondFactorLabel && (
-              <>
-                {" "}
-                <Sup color="black60">{enabledSecondFactorLabel}</Sup>
-              </>
-            )}
-          </Text>
+          <Text variant="lg">Use Text Messages</Text>
+
+          {enabledSecondFactorLabel && (
+            <Text variant="lg" color="black60">
+              {enabledSecondFactorLabel}
+            </Text>
+          )}
+
+          <Spacer mt={2} />
 
           <Text variant="sm" color="black60">
             Security codes will be sent to your mobile phone.
