@@ -7,9 +7,6 @@ import { FragmentRefs } from "relay-runtime";
 export type UserActiveBids_me = {
     readonly lotStandings: ReadonlyArray<{
         readonly isLeadingBidder: boolean | null;
-        readonly activeBid: {
-            readonly id: string;
-        } | null;
         readonly saleArtwork: {
             readonly lotLabel: string | null;
             readonly highestBid: {
@@ -19,7 +16,6 @@ export type UserActiveBids_me = {
                 readonly bidderPositions: number | null;
             } | null;
             readonly artwork: {
-                readonly title: string | null;
                 readonly href: string | null;
                 readonly image: {
                     readonly cropped: {
@@ -27,9 +23,7 @@ export type UserActiveBids_me = {
                         readonly srcSet: string;
                     } | null;
                 } | null;
-                readonly artist: {
-                    readonly name: string | null;
-                } | null;
+                readonly " $fragmentRefs": FragmentRefs<"Details_artwork">;
             } | null;
         } | null;
     } | null> | null;
@@ -51,7 +45,13 @@ const node: ReaderFragment = {
   "selections": [
     {
       "alias": null,
-      "args": null,
+      "args": [
+        {
+          "kind": "Literal",
+          "name": "live",
+          "value": true
+        }
+      ],
       "concreteType": "LotStanding",
       "kind": "LinkedField",
       "name": "lotStandings",
@@ -62,24 +62,6 @@ const node: ReaderFragment = {
           "args": null,
           "kind": "ScalarField",
           "name": "isLeadingBidder",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "concreteType": "BidderPosition",
-          "kind": "LinkedField",
-          "name": "activeBid",
-          "plural": false,
-          "selections": [
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "id",
-              "storageKey": null
-            }
-          ],
           "storageKey": null
         },
         {
@@ -145,13 +127,6 @@ const node: ReaderFragment = {
                   "alias": null,
                   "args": null,
                   "kind": "ScalarField",
-                  "name": "title",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
                   "name": "href",
                   "storageKey": null
                 },
@@ -203,22 +178,9 @@ const node: ReaderFragment = {
                   "storageKey": null
                 },
                 {
-                  "alias": null,
                   "args": null,
-                  "concreteType": "Artist",
-                  "kind": "LinkedField",
-                  "name": "artist",
-                  "plural": false,
-                  "selections": [
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "name",
-                      "storageKey": null
-                    }
-                  ],
-                  "storageKey": null
+                  "kind": "FragmentSpread",
+                  "name": "Details_artwork"
                 }
               ],
               "storageKey": null
@@ -227,11 +189,11 @@ const node: ReaderFragment = {
           "storageKey": null
         }
       ],
-      "storageKey": null
+      "storageKey": "lotStandings(live:true)"
     }
   ],
   "type": "Me",
   "abstractKey": null
 };
-(node as any).hash = '04b1e610faba8e0050547ea09803333e';
+(node as any).hash = '62c08bb6c7ab107b09dbce6edd10debe';
 export default node;
