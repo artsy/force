@@ -11,4 +11,5 @@ export interface EditFormProps {
   editAlertEntity: EditAlertEntity
   onSubmit: (values: SavedSearchAleftFormValues) => void
   onCloseClick: () => void
+  onDeleteClick: () => void
 }

@@ -16,6 +16,7 @@ export const SavedSearchEditFormDesktop: React.FC<EditFormProps> = ({
   editAlertEntity,
   onSubmit,
   onCloseClick,
+  onDeleteClick,
 }) => {
   return (
     <Formik
@@ -46,7 +47,11 @@ export const SavedSearchEditFormDesktop: React.FC<EditFormProps> = ({
             <Spacer mt={6} />
 
             <Flex>
-              <Button variant="secondaryOutline" flex={1}>
+              <Button
+                variant="secondaryOutline"
+                flex={1}
+                onClick={onDeleteClick}
+              >
                 Delete Alert
               </Button>
               <Spacer ml={2} />

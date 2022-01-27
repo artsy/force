@@ -8,6 +8,7 @@ export const SavedSearchEditFormMobile: React.FC<EditFormProps> = ({
   editAlertEntity,
   onSubmit,
   onCloseClick,
+  onDeleteClick,
 }) => {
   return (
     <Formik
@@ -28,7 +29,11 @@ export const SavedSearchEditFormMobile: React.FC<EditFormProps> = ({
               >
                 Save Alert
               </Button>
-              <Button variant="secondaryOutline" width="100%">
+              <Button
+                variant="secondaryOutline"
+                width="100%"
+                onClick={onDeleteClick}
+              >
                 Delete Alert
               </Button>
             </Join>
