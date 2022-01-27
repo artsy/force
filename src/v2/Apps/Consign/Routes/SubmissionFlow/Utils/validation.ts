@@ -67,7 +67,7 @@ export const contactInformationValidationSchema = yup.object().shape({
     .required()
     .test(
       "phone-number",
-      "Please enter a valid phone number",
+      "Please enter a valid phone number.",
       value => value.isValid
     ),
 })

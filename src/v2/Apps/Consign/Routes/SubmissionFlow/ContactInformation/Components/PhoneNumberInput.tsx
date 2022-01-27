@@ -94,6 +94,7 @@ export const PhoneNumberInput: React.FC<PhoneNumberInputProps> = ({
             onFocus={handleFocus(true, selectProps?.onFocus)}
             onMouseOver={handleHover(true, selectProps?.onMouseOver)}
             onMouseOut={handleHover(false, selectProps?.onMouseOut)}
+            error={!!error}
             style={{
               borderRight: "none",
               letterSpacing: "1px",
@@ -114,7 +115,10 @@ export const PhoneNumberInput: React.FC<PhoneNumberInputProps> = ({
             onMouseOver={handleHover(true, inputProps?.onMouseOver)}
             onMouseOut={handleHover(false, inputProps?.onMouseOut)}
             onChange={handleNumberChange}
-            style={{ borderLeft: "none" }}
+            style={{
+              borderLeft: "none",
+            }}
+            error={!!error}
           />
         </Flex>
       </Flex>

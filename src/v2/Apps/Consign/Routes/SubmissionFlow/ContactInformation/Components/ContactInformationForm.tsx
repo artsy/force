@@ -61,8 +61,8 @@ export const ContactInformationForm: React.FC<ContactInformationFormProps> = ({
         value={values.email}
         onChange={handleChange}
         onBlur={handleBlur}
+        error={touched.email && errors.email}
       />
-
       <PhoneNumberInput
         mt={4}
         phoneNumber={values.phone}
