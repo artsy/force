@@ -16,7 +16,7 @@ interface InitOptions {
   userSettings: SavedSearchAleftFormValues
   aggregations: Aggregations
   searchCriteriaAttributes: SearchCriteriaAttributes
-  attributes: SavedSearchAttributes
+  entity: SavedSearchAttributes
 }
 
 type UserSettingsState = SavedSearchAleftFormValues | null
@@ -28,7 +28,7 @@ export type SavedSearchAlertContextState = {
   aggregations: Aggregations | []
   searchCriteriaAttributes: SearchCriteriaAttributesState
   pills: FilterPill[]
-  attributes: AttributesState
+  entity: AttributesState
   reset: () => void
   init: (options: InitOptions) => void
   removePill: (pill: FilterPill) => void
@@ -41,35 +41,35 @@ export const SavedSearchAlertContext = createContext<
 export const SavedSearchAlertContextProvider: React.FC = ({ children }) => {
   const [userSettings, setUserSettings] = useState<UserSettingsState>(null)
   const [aggregations, setAggregations] = useState<Aggregations>([])
-  const [attributes, setAttributes] = useState<AttributesState>(null)
+  const [entity, setEntity] = useState<AttributesState>(null)
   const [searchCriteriaAttributes, setSearchCriteriaAttributes] = useState<
     SearchCriteriaAttributesState
   >(null)
 
   const pills = useMemo<FilterPill[]>(() => {
-    if (searchCriteriaAttributes && attributes) {
+    if (searchCriteriaAttributes && entity) {
       return extractPills(
         searchCriteriaAttributes as ArtworkFilters,
         aggregations,
-        attributes!
+        entity!
       )
     }
 
     return []
-  }, [aggregations, searchCriteriaAttributes, attributes])
+  }, [aggregations, searchCriteriaAttributes, entity])
 
   const reset = () => {
     setUserSettings(null)
     setAggregations([])
     setSearchCriteriaAttributes(null)
-    setAttributes(null)
+    setEntity(null)
   }
 
   const init = (options: InitOptions) => {
     setUserSettings(options.userSettings)
     setAggregations(options.aggregations)
     setSearchCriteriaAttributes(options.searchCriteriaAttributes)
-    setAttributes(options.attributes)
+    setEntity(options.entity)
   }
 
   const removePill = (pill: FilterPill) => {
@@ -96,7 +96,7 @@ export const SavedSearchAlertContextProvider: React.FC = ({ children }) => {
     aggregations,
     pills,
     searchCriteriaAttributes,
-    attributes,
+    entity,
     init,
     reset,
     removePill,

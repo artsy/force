@@ -34,7 +34,7 @@ const SavedSearchEditAlert: React.FC<SavedSearchEditAlertProps> = ({
   artworksConnection,
 }) => {
   const { userAlertSettings, internalID, ...other } = savedSearch
-  const { pills, attributes, init, removePill } = useSavedSearchAlertContext()
+  const { pills, entity, init, removePill } = useSavedSearchAlertContext()
   const {
     values,
     errors,
@@ -49,7 +49,7 @@ const SavedSearchEditAlert: React.FC<SavedSearchEditAlertProps> = ({
       push: userAlertSettings.push,
       email: userAlertSettings.email,
     }
-    const attributes: SavedSearchAttributes = {
+    const entity: SavedSearchAttributes = {
       type: "artist",
       id: artist.internalID,
       name: artist.name ?? "",
@@ -62,11 +62,11 @@ const SavedSearchEditAlert: React.FC<SavedSearchEditAlertProps> = ({
       userSettings,
       aggregations,
       searchCriteriaAttributes,
-      attributes,
+      entity,
     })
   }, [])
 
-  const namePlaceholder = getNamePlaceholder(attributes?.name ?? "", pills)
+  const namePlaceholder = getNamePlaceholder(entity?.name ?? "", pills)
 
   return (
     <Form>

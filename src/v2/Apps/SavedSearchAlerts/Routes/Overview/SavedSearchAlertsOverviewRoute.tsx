@@ -57,7 +57,7 @@ export const SavedSearchAlertsOverviewRoute: React.FC<SavedSearchAlertsOverviewR
   ] = useState<EditAlertEntity | null>(null)
   const {
     userSettings,
-    attributes,
+    entity,
     searchCriteriaAttributes,
     pills,
     reset,
@@ -79,9 +79,9 @@ export const SavedSearchAlertsOverviewRoute: React.FC<SavedSearchAlertsOverviewR
 
   const handleSubmit = async (values: SavedSearchAleftFormValues) => {
     try {
-      const namePlaceholder = getNamePlaceholder(attributes!.name, pills)
+      const namePlaceholder = getNamePlaceholder(entity!.name, pills)
       const searchCriteria = getSearchCriteriaFromFilters(
-        attributes!.id,
+        entity!.id,
         searchCriteriaAttributes as ArtworkFilters
       )
       await submitEditAlert({
