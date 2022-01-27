@@ -104,11 +104,10 @@ const renderSubmissionFlowStep = ({ Component, props, match, resolving }) => {
 }
 
 const prepareSubmissionFlowStepVariables = data => {
-  // logic to detect id/uuid
-  // in data there will be an :id key
-  const reg = new RegExp(/^\d+$/)
   let searchFields = { id: data.id, externalId: null }
-  if (!reg.test(data.id)) {
+
+  const sequentialIdRegex = new RegExp(/^\d+$/)
+  if (!sequentialIdRegex.test(data.id)) {
     searchFields.externalId = data.id
     searchFields.id = null
   }
