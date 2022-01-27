@@ -43,13 +43,13 @@ describe("Footer", () => {
       const wrapper = getWrapper("lg")
       const links = wrapper.find("FooterLink")
 
-      expect(links.at(14).text()).toBe("iOS App")
-      expect(links.at(14).prop("to")).toBe(
+      expect(links.at(15).text()).toBe("iOS App")
+      expect(links.at(15).prop("to")).toBe(
         "https://apps.apple.com/us/app/artsy-buy-sell-original-art/id703796080"
       )
 
-      expect(links.at(15).text()).toBe("Android App")
-      expect(links.at(15).prop("to")).toBe(
+      expect(links.at(16).text()).toBe("Android App")
+      expect(links.at(16).prop("to")).toBe(
         "https://play.google.com/store/apps/details?id=net.artsy.app"
       )
     })
