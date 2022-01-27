@@ -64,7 +64,7 @@ export const ArtworkDetails: React.FC<ArtworkDetailsProps> = ({
     if (relayEnvironment) {
       try {
         submissionId = await createOrUpdateConsignSubmission(relayEnvironment, {
-          id: submission?.id,
+          externalId: submission?.externalId,
           artistID: artworkDetailsForm.artistId,
           year: artworkDetailsForm.year,
           title: artworkDetailsForm.title,
@@ -169,6 +169,7 @@ export const ArtworkDetailsFragmentContainer = createFragmentContainer(
     submission: graphql`
       fragment ArtworkDetails_submission on ConsignmentSubmission {
         id
+        externalId
         artist {
           internalID
           name

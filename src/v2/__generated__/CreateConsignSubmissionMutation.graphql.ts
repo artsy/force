@@ -55,7 +55,7 @@ export type CreateConsignSubmissionMutationVariables = {
 export type CreateConsignSubmissionMutationResponse = {
     readonly createConsignmentSubmission: {
         readonly consignmentSubmission: {
-            readonly internalID: string | null;
+            readonly externalId: string;
         } | null;
     } | null;
 };
@@ -72,7 +72,7 @@ mutation CreateConsignSubmissionMutation(
 ) {
   createConsignmentSubmission(input: $input) {
     consignmentSubmission {
-      internalID
+      externalId
       id
     }
   }
@@ -98,7 +98,7 @@ v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "internalID",
+  "name": "externalId",
   "storageKey": null
 };
 return {
@@ -174,14 +174,14 @@ return {
     ]
   },
   "params": {
-    "cacheID": "f4fddd69cff7300ab3d9af267f20997a",
+    "cacheID": "fd5e681e3324029e8cbd7a79a9fb08e6",
     "id": null,
     "metadata": {},
     "name": "CreateConsignSubmissionMutation",
     "operationKind": "mutation",
-    "text": "mutation CreateConsignSubmissionMutation(\n  $input: CreateSubmissionMutationInput!\n) {\n  createConsignmentSubmission(input: $input) {\n    consignmentSubmission {\n      internalID\n      id\n    }\n  }\n}\n"
+    "text": "mutation CreateConsignSubmissionMutation(\n  $input: CreateSubmissionMutationInput!\n) {\n  createConsignmentSubmission(input: $input) {\n    consignmentSubmission {\n      externalId\n      id\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '0d4e8537477a6dc0d3ad8342f4db98d1';
+(node as any).hash = '3594c743b90e28b37cf944e971ad8a33';
 export default node;

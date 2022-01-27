@@ -5,7 +5,7 @@
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type ContactInformation_SubmissionFlowTest_QueryVariables = {
-    id: string;
+    externalId?: string | null | undefined;
 };
 export type ContactInformation_SubmissionFlowTest_QueryResponse = {
     readonly me: {
@@ -24,13 +24,13 @@ export type ContactInformation_SubmissionFlowTest_Query = {
 
 /*
 query ContactInformation_SubmissionFlowTest_Query(
-  $id: ID!
+  $externalId: ID
 ) {
   me {
     ...ContactInformation_me
     id
   }
-  submission(id: $id) {
+  submission(id: $externalId) {
     ...ContactInformation_submission
     id
   }
@@ -51,6 +51,7 @@ fragment ContactInformation_me on Me {
 
 fragment ContactInformation_submission on ConsignmentSubmission {
   id
+  externalId
 }
 */
 
@@ -59,14 +60,14 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "id"
+    "name": "externalId"
   }
 ],
 v1 = [
   {
     "kind": "Variable",
     "name": "id",
-    "variableName": "id"
+    "variableName": "externalId"
   }
 ],
 v2 = {
@@ -236,14 +237,21 @@ return {
         "name": "submission",
         "plural": false,
         "selections": [
-          (v2/*: any*/)
+          (v2/*: any*/),
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "externalId",
+            "storageKey": null
+          }
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "da8ff598599ff203d0f22309c3252c39",
+    "cacheID": "5c916dbda5b57a8cf592575b9f2dd3ac",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -279,14 +287,15 @@ return {
           "plural": false,
           "type": "ConsignmentSubmission"
         },
+        "submission.externalId": (v4/*: any*/),
         "submission.id": (v4/*: any*/)
       }
     },
     "name": "ContactInformation_SubmissionFlowTest_Query",
     "operationKind": "query",
-    "text": "query ContactInformation_SubmissionFlowTest_Query(\n  $id: ID!\n) {\n  me {\n    ...ContactInformation_me\n    id\n  }\n  submission(id: $id) {\n    ...ContactInformation_submission\n    id\n  }\n}\n\nfragment ContactInformation_me on Me {\n  internalID\n  name\n  email\n  phone\n  phoneNumber {\n    isValid\n    international: display(format: INTERNATIONAL)\n    national: display(format: NATIONAL)\n    regionCode\n  }\n}\n\nfragment ContactInformation_submission on ConsignmentSubmission {\n  id\n}\n"
+    "text": "query ContactInformation_SubmissionFlowTest_Query(\n  $externalId: ID\n) {\n  me {\n    ...ContactInformation_me\n    id\n  }\n  submission(id: $externalId) {\n    ...ContactInformation_submission\n    id\n  }\n}\n\nfragment ContactInformation_me on Me {\n  internalID\n  name\n  email\n  phone\n  phoneNumber {\n    isValid\n    international: display(format: INTERNATIONAL)\n    national: display(format: NATIONAL)\n    regionCode\n  }\n}\n\nfragment ContactInformation_submission on ConsignmentSubmission {\n  id\n  externalId\n}\n"
   }
 };
 })();
-(node as any).hash = '86f083359efd9e6383c8c3dcc335e3c4';
+(node as any).hash = '63a8362b8f7c72ba59d83e2186b97ad0';
 export default node;

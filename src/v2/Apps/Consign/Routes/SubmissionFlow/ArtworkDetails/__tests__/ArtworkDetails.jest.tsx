@@ -13,7 +13,7 @@ import {
 import { createOrUpdateConsignSubmission } from "../../Utils/createOrUpdateConsignSubmission"
 
 const validForm = {
-  id: "1",
+  externalId: "b2449fe2-e828-4a32-ace7-ff0753cd01ef",
   artist: {
     internalID: "artistId",
     name: "Banksy",
@@ -71,15 +71,15 @@ const getWrapper = (breakpoint: Breakpoint = "lg") =>
       )
     },
     query: graphql`
-      query ArtworkDetails_SubmissionFlowTest_Query($id: ID!)
+      query ArtworkDetails_SubmissionFlowTest_Query($externalId: ID)
         @relay_test_operation {
-        submission(id: $id) {
+        submission(id: $externalId) {
           ...ArtworkDetails_submission
         }
       }
     `,
     variables: {
-      id: "1",
+      externalId: validForm.externalId,
     },
   })
 
@@ -287,7 +287,7 @@ describe("ArtworkDetails", () => {
             editionNumber: "1",
             editionSizeFormatted: "2",
             height: "3",
-            id: "1",
+            externalId: "b2449fe2-e828-4a32-ace7-ff0753cd01ef",
             locationCity: "NY, USA",
             locationPostalCode: "12345",
             locationCountryCode: "US",
@@ -336,7 +336,7 @@ describe("ArtworkDetails", () => {
             editionNumber: "1",
             editionSizeFormatted: "2",
             height: "3",
-            id: "1",
+            externalId: "b2449fe2-e828-4a32-ace7-ff0753cd01ef",
             locationCity: "NY, USA",
             locationPostalCode: "12345",
             locationCountryCode: "US",

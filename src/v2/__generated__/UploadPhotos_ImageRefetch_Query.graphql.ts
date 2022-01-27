@@ -9,7 +9,7 @@ export type UploadPhotos_ImageRefetch_QueryVariables = {
 };
 export type UploadPhotos_ImageRefetch_QueryResponse = {
     readonly submission: {
-        readonly id: string;
+        readonly externalId: string;
         readonly assets: ReadonlyArray<{
             readonly id: string;
             readonly imageUrls: unknown | null;
@@ -31,8 +31,8 @@ query UploadPhotos_ImageRefetch_Query(
   $id: ID!
   $sessionID: String
 ) {
-  submission(id: $id, sessionID: $sessionID) {
-    id
+  submission(externalId: $id, sessionID: $sessionID) {
+    externalId
     assets {
       id
       imageUrls
@@ -40,6 +40,7 @@ query UploadPhotos_ImageRefetch_Query(
       size
       filename
     }
+    id
   }
 }
 */
@@ -57,85 +58,93 @@ var v0 = [
     "name": "sessionID"
   }
 ],
-v1 = {
+v1 = [
+  {
+    "kind": "Variable",
+    "name": "externalId",
+    "variableName": "id"
+  },
+  {
+    "kind": "Variable",
+    "name": "sessionID",
+    "variableName": "sessionID"
+  }
+],
+v2 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "externalId",
+  "storageKey": null
+},
+v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v2 = [
-  {
-    "alias": null,
-    "args": [
-      {
-        "kind": "Variable",
-        "name": "id",
-        "variableName": "id"
-      },
-      {
-        "kind": "Variable",
-        "name": "sessionID",
-        "variableName": "sessionID"
-      }
-    ],
-    "concreteType": "ConsignmentSubmission",
-    "kind": "LinkedField",
-    "name": "submission",
-    "plural": false,
-    "selections": [
-      (v1/*: any*/),
-      {
-        "alias": null,
-        "args": null,
-        "concreteType": "ConsignmentSubmissionCategoryAsset",
-        "kind": "LinkedField",
-        "name": "assets",
-        "plural": true,
-        "selections": [
-          (v1/*: any*/),
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "imageUrls",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "geminiToken",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "size",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "filename",
-            "storageKey": null
-          }
-        ],
-        "storageKey": null
-      }
-    ],
-    "storageKey": null
-  }
-];
+v4 = {
+  "alias": null,
+  "args": null,
+  "concreteType": "ConsignmentSubmissionCategoryAsset",
+  "kind": "LinkedField",
+  "name": "assets",
+  "plural": true,
+  "selections": [
+    (v3/*: any*/),
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "imageUrls",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "geminiToken",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "size",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "filename",
+      "storageKey": null
+    }
+  ],
+  "storageKey": null
+};
 return {
   "fragment": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
     "name": "UploadPhotos_ImageRefetch_Query",
-    "selections": (v2/*: any*/),
+    "selections": [
+      {
+        "alias": null,
+        "args": (v1/*: any*/),
+        "concreteType": "ConsignmentSubmission",
+        "kind": "LinkedField",
+        "name": "submission",
+        "plural": false,
+        "selections": [
+          (v2/*: any*/),
+          (v4/*: any*/)
+        ],
+        "storageKey": null
+      }
+    ],
     "type": "Query",
     "abstractKey": null
   },
@@ -144,17 +153,32 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
     "name": "UploadPhotos_ImageRefetch_Query",
-    "selections": (v2/*: any*/)
+    "selections": [
+      {
+        "alias": null,
+        "args": (v1/*: any*/),
+        "concreteType": "ConsignmentSubmission",
+        "kind": "LinkedField",
+        "name": "submission",
+        "plural": false,
+        "selections": [
+          (v2/*: any*/),
+          (v4/*: any*/),
+          (v3/*: any*/)
+        ],
+        "storageKey": null
+      }
+    ]
   },
   "params": {
-    "cacheID": "0adfbc258a8ab403d98dd5913fbdddf4",
+    "cacheID": "f813b36dce7c3d23e2dca6faf1f7aacb",
     "id": null,
     "metadata": {},
     "name": "UploadPhotos_ImageRefetch_Query",
     "operationKind": "query",
-    "text": "query UploadPhotos_ImageRefetch_Query(\n  $id: ID!\n  $sessionID: String\n) {\n  submission(id: $id, sessionID: $sessionID) {\n    id\n    assets {\n      id\n      imageUrls\n      geminiToken\n      size\n      filename\n    }\n  }\n}\n"
+    "text": "query UploadPhotos_ImageRefetch_Query(\n  $id: ID!\n  $sessionID: String\n) {\n  submission(externalId: $id, sessionID: $sessionID) {\n    externalId\n    assets {\n      id\n      imageUrls\n      geminiToken\n      size\n      filename\n    }\n    id\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '7040a50cc1e19f9ea5255fbeb1b1b390';
+(node as any).hash = '2f7b3686a145a8ea1a718ae0baf9bac3';
 export default node;

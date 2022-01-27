@@ -34,6 +34,7 @@ const mockEmptyMe = {
 
 const mockSubmission = {
   id: "1",
+  externalId: "b2449fe2-e828-4a32-ace7-ff0753cd01ef",
 }
 
 const mockRouterPush = jest.fn()
@@ -41,7 +42,6 @@ const mockRouterPush = jest.fn()
 jest.mock("v2/System/Router/useRouter", () => ({
   useRouter: jest.fn(() => ({
     router: { push: mockRouterPush },
-    match: { params: { id: "1" } },
   })),
 }))
 
@@ -64,7 +64,7 @@ jest.mock("../../Utils/phoneNumberUtils", () => ({
   getPhoneNumberInformation: jest.fn(),
 }))
 
-const mockCreateConsignSubmission = createOrUpdateConsignSubmission as jest.Mock
+const mockCreateOrUpdateConsignSubmission = createOrUpdateConsignSubmission as jest.Mock
 const mockGetPhoneNumberInformation = getPhoneNumberInformation as jest.Mock
 const mockUseErrorModal = useErrorModal as jest.Mock
 const mockTracking = useTracking as jest.Mock
@@ -80,18 +80,18 @@ const getWrapper = (user?: User) =>
       )
     },
     query: graphql`
-      query ContactInformation_SubmissionFlowTest_Query($id: ID!)
+      query ContactInformation_SubmissionFlowTest_Query($externalId: ID)
         @relay_test_operation {
         me {
           ...ContactInformation_me
         }
-        submission(id: $id) {
+        submission(id: $externalId) {
           ...ContactInformation_submission
         }
       }
     `,
     variables: {
-      id: "1",
+      externalId: mockSubmission.externalId,
     },
   })
 
@@ -137,7 +137,10 @@ describe("Contact Information step", () => {
       expect(screen.getByText("Back")).toBeInTheDocument()
       expect(
         screen.getAllByRole("link").find(c => c.textContent?.includes("Back"))
-      ).toHaveAttribute("href", "/sell/submission/1/upload-photos")
+      ).toHaveAttribute(
+        "href",
+        `/sell/submission/${mockSubmission.externalId}/upload-photos`
+      )
 
       expect(getSubmitButton()).toBeInTheDocument()
     })
@@ -202,7 +205,7 @@ describe("Contact Information step", () => {
     })
 
     it("show error modal if consingment submission fails", async () => {
-      mockCreateConsignSubmission.mockRejectedValueOnce("rejected")
+      mockCreateOrUpdateConsignSubmission.mockRejectedValueOnce("rejected")
       getWrapper().renderWithRelay({
         Me: () => mockMe,
         ConsignmentSubmission: () => mockSubmission,
@@ -244,9 +247,9 @@ describe("Contact Information step", () => {
         expect(window.grecaptcha.execute).toBeCalledWith("recaptcha-api-key", {
           action: "submission_submit",
         })
-        expect(mockCreateConsignSubmission).toHaveBeenCalled()
-        expect(mockCreateConsignSubmission.mock.calls[0][1]).toEqual({
-          id: "1",
+        expect(mockCreateOrUpdateConsignSubmission).toHaveBeenCalled()
+        expect(mockCreateOrUpdateConsignSubmission.mock.calls[0][1]).toEqual({
+          externalId: mockSubmission.externalId,
           userName: "Banksy",
           userEmail: "banksy@test.test",
           userPhone: "+1 415-555-0132",
@@ -254,7 +257,7 @@ describe("Contact Information step", () => {
           sessionID: "SessionID",
         })
         expect(mockRouterPush).toHaveBeenCalledWith(
-          "/sell/submission/1/thank-you"
+          `/sell/submission/${mockSubmission.externalId}/thank-you`
         )
       })
     })
@@ -284,9 +287,9 @@ describe("Contact Information step", () => {
         expect(window.grecaptcha.execute).toBeCalledWith("recaptcha-api-key", {
           action: "submission_submit",
         })
-        expect(mockCreateConsignSubmission).toHaveBeenCalled()
-        expect(mockCreateConsignSubmission.mock.calls[0][1]).toEqual({
-          id: "1",
+        expect(mockCreateOrUpdateConsignSubmission).toHaveBeenCalled()
+        expect(mockCreateOrUpdateConsignSubmission.mock.calls[0][1]).toEqual({
+          externalId: mockSubmission.externalId,
           userName: "Serge",
           userEmail: "serge@test.test",
           userPhone: "+1 415-555-0132",
@@ -294,7 +297,7 @@ describe("Contact Information step", () => {
           sessionID: "SessionID",
         })
         expect(mockRouterPush).toHaveBeenCalledWith(
-          "/sell/submission/1/thank-you"
+          `/sell/submission/${mockSubmission.externalId}/thank-you`
         )
       })
     })
@@ -317,9 +320,9 @@ describe("Contact Information step", () => {
     fireEvent.click(getSubmitButton())
 
     await waitFor(() => {
-      expect(mockCreateConsignSubmission).toHaveBeenCalled()
-      expect(mockCreateConsignSubmission.mock.calls[0][1]).toEqual({
-        id: "1",
+      expect(mockCreateOrUpdateConsignSubmission).toHaveBeenCalled()
+      expect(mockCreateOrUpdateConsignSubmission.mock.calls[0][1]).toEqual({
+        externalId: mockSubmission.externalId,
         userName: "Banksy",
         userEmail: "banksy@test.test",
         userPhone: "+1 415-555-0132",

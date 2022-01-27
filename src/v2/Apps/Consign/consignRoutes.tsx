@@ -104,8 +104,18 @@ const renderSubmissionFlowStep = ({ Component, props, match, resolving }) => {
 }
 
 const prepareSubmissionFlowStepVariables = data => {
+  // logic to detect id/uuid
+  // in data there will be an :id key
+  const reg = new RegExp(/^\d+$/)
+  let searchFields = { id: data.id, externalId: null }
+  if (!reg.test(data.id)) {
+    searchFields.externalId = data.id
+    searchFields.id = null
+  }
+
   return {
     ...data,
+    ...searchFields,
     sessionID: getENV("SESSION_ID"),
   }
 }
@@ -167,10 +177,15 @@ export const consignRoutes: AppRouteConfig[] = [
         },
         query: graphql`
           query consignRoutes_artworkDetailsQuery(
-            $id: ID!
+            $id: ID
+            $externalId: ID
             $sessionID: String
           ) {
-            submission(id: $id, sessionID: $sessionID) {
+            submission(
+              id: $id
+              externalId: $externalId
+              sessionID: $sessionID
+            ) {
               ...ArtworkDetails_submission
               ...redirects_submission @relay(mask: false)
             }
@@ -188,8 +203,16 @@ export const consignRoutes: AppRouteConfig[] = [
           UploadPhotosFragmentContainer.preload()
         },
         query: graphql`
-          query consignRoutes_uploadPhotosQuery($id: ID!, $sessionID: String) {
-            submission(id: $id, sessionID: $sessionID) {
+          query consignRoutes_uploadPhotosQuery(
+            $id: ID
+            $externalId: ID
+            $sessionID: String
+          ) {
+            submission(
+              id: $id
+              externalId: $externalId
+              sessionID: $sessionID
+            ) {
               ...UploadPhotos_submission
               ...redirects_submission @relay(mask: false)
             }
@@ -208,10 +231,15 @@ export const consignRoutes: AppRouteConfig[] = [
         },
         query: graphql`
           query consignRoutes_contactInformationQuery(
-            $id: ID!
+            $id: ID
+            $externalId: ID
             $sessionID: String
           ) {
-            submission(id: $id, sessionID: $sessionID) {
+            submission(
+              id: $id
+              externalId: $externalId
+              sessionID: $sessionID
+            ) {
               ...ContactInformation_submission
               ...redirects_submission @relay(mask: false)
             }

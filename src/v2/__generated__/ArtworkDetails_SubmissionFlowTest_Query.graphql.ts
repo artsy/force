@@ -5,7 +5,7 @@
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkDetails_SubmissionFlowTest_QueryVariables = {
-    id: string;
+    externalId?: string | null | undefined;
 };
 export type ArtworkDetails_SubmissionFlowTest_QueryResponse = {
     readonly submission: {
@@ -21,9 +21,9 @@ export type ArtworkDetails_SubmissionFlowTest_Query = {
 
 /*
 query ArtworkDetails_SubmissionFlowTest_Query(
-  $id: ID!
+  $externalId: ID
 ) {
-  submission(id: $id) {
+  submission(id: $externalId) {
     ...ArtworkDetails_submission
     id
   }
@@ -31,6 +31,7 @@ query ArtworkDetails_SubmissionFlowTest_Query(
 
 fragment ArtworkDetails_submission on ConsignmentSubmission {
   id
+  externalId
   artist {
     internalID
     name
@@ -60,14 +61,14 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "id"
+    "name": "externalId"
   }
 ],
 v1 = [
   {
     "kind": "Variable",
     "name": "id",
-    "variableName": "id"
+    "variableName": "externalId"
   }
 ],
 v2 = {
@@ -131,6 +132,13 @@ return {
         "plural": false,
         "selections": [
           (v2/*: any*/),
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "externalId",
+            "storageKey": null
+          },
           {
             "alias": null,
             "args": null,
@@ -275,7 +283,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "873a95b10fe5e28c3fea51e31f54ec2e",
+    "cacheID": "95a1aacce8f826391904c7f7a7385dbb",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -309,6 +317,7 @@ return {
         "submission.dimensionsMetric": (v4/*: any*/),
         "submission.editionNumber": (v4/*: any*/),
         "submission.editionSize": (v4/*: any*/),
+        "submission.externalId": (v3/*: any*/),
         "submission.height": (v4/*: any*/),
         "submission.id": (v3/*: any*/),
         "submission.locationCity": (v4/*: any*/),
@@ -325,9 +334,9 @@ return {
     },
     "name": "ArtworkDetails_SubmissionFlowTest_Query",
     "operationKind": "query",
-    "text": "query ArtworkDetails_SubmissionFlowTest_Query(\n  $id: ID!\n) {\n  submission(id: $id) {\n    ...ArtworkDetails_submission\n    id\n  }\n}\n\nfragment ArtworkDetails_submission on ConsignmentSubmission {\n  id\n  artist {\n    internalID\n    name\n    id\n  }\n  locationCity\n  locationCountry\n  locationState\n  locationPostalCode\n  locationCountryCode\n  year\n  title\n  medium\n  attributionClass\n  editionNumber\n  editionSize\n  height\n  width\n  depth\n  dimensionsMetric\n  provenance\n}\n"
+    "text": "query ArtworkDetails_SubmissionFlowTest_Query(\n  $externalId: ID\n) {\n  submission(id: $externalId) {\n    ...ArtworkDetails_submission\n    id\n  }\n}\n\nfragment ArtworkDetails_submission on ConsignmentSubmission {\n  id\n  externalId\n  artist {\n    internalID\n    name\n    id\n  }\n  locationCity\n  locationCountry\n  locationState\n  locationPostalCode\n  locationCountryCode\n  year\n  title\n  medium\n  attributionClass\n  editionNumber\n  editionSize\n  height\n  width\n  depth\n  dimensionsMetric\n  provenance\n}\n"
   }
 };
 })();
-(node as any).hash = 'd8bbfe0bd79359f3c18de6c33f50d622';
+(node as any).hash = 'e8762e63c84ab40531fa8b9d4f97893a';
 export default node;
