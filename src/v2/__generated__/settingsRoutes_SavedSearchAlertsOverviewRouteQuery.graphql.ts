@@ -4,21 +4,21 @@
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type savedSearchAlertsRoutes_SavedSearchAlertsOverviewRouteQueryVariables = {};
-export type savedSearchAlertsRoutes_SavedSearchAlertsOverviewRouteQueryResponse = {
+export type settingsRoutes_SavedSearchAlertsOverviewRouteQueryVariables = {};
+export type settingsRoutes_SavedSearchAlertsOverviewRouteQueryResponse = {
     readonly me: {
         readonly " $fragmentRefs": FragmentRefs<"SavedSearchAlertsOverviewRoute_me">;
     } | null;
 };
-export type savedSearchAlertsRoutes_SavedSearchAlertsOverviewRouteQuery = {
-    readonly response: savedSearchAlertsRoutes_SavedSearchAlertsOverviewRouteQueryResponse;
-    readonly variables: savedSearchAlertsRoutes_SavedSearchAlertsOverviewRouteQueryVariables;
+export type settingsRoutes_SavedSearchAlertsOverviewRouteQuery = {
+    readonly response: settingsRoutes_SavedSearchAlertsOverviewRouteQueryResponse;
+    readonly variables: settingsRoutes_SavedSearchAlertsOverviewRouteQueryVariables;
 };
 
 
 
 /*
-query savedSearchAlertsRoutes_SavedSearchAlertsOverviewRouteQuery {
+query settingsRoutes_SavedSearchAlertsOverviewRouteQuery {
   me {
     ...SavedSearchAlertsOverviewRoute_me
     id
@@ -62,7 +62,7 @@ return {
     "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
-    "name": "savedSearchAlertsRoutes_SavedSearchAlertsOverviewRouteQuery",
+    "name": "settingsRoutes_SavedSearchAlertsOverviewRouteQuery",
     "selections": [
       {
         "alias": null,
@@ -88,7 +88,7 @@ return {
   "operation": {
     "argumentDefinitions": [],
     "kind": "Operation",
-    "name": "savedSearchAlertsRoutes_SavedSearchAlertsOverviewRouteQuery",
+    "name": "settingsRoutes_SavedSearchAlertsOverviewRouteQuery",
     "selections": [
       {
         "alias": null,
@@ -217,14 +217,14 @@ return {
     ]
   },
   "params": {
-    "cacheID": "1fa3caf7283a3bf02b984a0c9a5cf8a0",
+    "cacheID": "39de2662e1b4409952c8f8ccf024216c",
     "id": null,
     "metadata": {},
-    "name": "savedSearchAlertsRoutes_SavedSearchAlertsOverviewRouteQuery",
+    "name": "settingsRoutes_SavedSearchAlertsOverviewRouteQuery",
     "operationKind": "query",
-    "text": "query savedSearchAlertsRoutes_SavedSearchAlertsOverviewRouteQuery {\n  me {\n    ...SavedSearchAlertsOverviewRoute_me\n    id\n  }\n}\n\nfragment SavedSearchAlertsList_me on Me {\n  savedSearchesConnection(first: 50) {\n    edges {\n      node {\n        internalID\n        userAlertSettings {\n          name\n        }\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment SavedSearchAlertsOverviewRoute_me on Me {\n  ...SavedSearchAlertsList_me\n}\n"
+    "text": "query settingsRoutes_SavedSearchAlertsOverviewRouteQuery {\n  me {\n    ...SavedSearchAlertsOverviewRoute_me\n    id\n  }\n}\n\nfragment SavedSearchAlertsList_me on Me {\n  savedSearchesConnection(first: 50) {\n    edges {\n      node {\n        internalID\n        userAlertSettings {\n          name\n        }\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment SavedSearchAlertsOverviewRoute_me on Me {\n  ...SavedSearchAlertsList_me\n}\n"
   }
 };
 })();
-(node as any).hash = '32342d50db1b204cf16d3eba0862e5fb';
+(node as any).hash = '2a45ad1ca59288c23a90412ffcc15299';
 export default node;
