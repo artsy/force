@@ -99,18 +99,13 @@ export const SettingsEditSettingsTwoFactorBackupCodes: FC<SettingsEditSettingsTw
               <Button
                 onClick={handleGenerate}
                 loading={mode === "Creating"}
-                variant="secondaryGray"
                 width={["100%", "auto"]}
               >
                 Regenerate
               </Button>
             </>
           ) : (
-            <Button
-              onClick={handleGenerate}
-              loading={mode === "Creating"}
-              variant="secondaryGray"
-            >
+            <Button onClick={handleGenerate} loading={mode === "Creating"}>
               Set up
             </Button>
           )}

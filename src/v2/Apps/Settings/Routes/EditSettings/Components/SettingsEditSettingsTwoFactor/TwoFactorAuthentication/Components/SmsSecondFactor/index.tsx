@@ -179,7 +179,6 @@ export const SmsSecondFactor: React.FC<SmsSecondFactorProps> = ({
               <Spacer ml={1} />
 
               <Button
-                variant="secondaryGray"
                 width={["100%", "auto"]}
                 onClick={() => setShowConfirmPassword(true)}
                 loading={isCreating}

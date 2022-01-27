@@ -194,7 +194,6 @@ export const AppSecondFactor: React.FC<AppSecondFactorProps> = ({
 
               <Button
                 width={["100%", "auto"]}
-                variant="secondaryGray"
                 onClick={() => setShowConfirmPassword(true)}
                 loading={isCreating}
                 disabled={isCreating}
