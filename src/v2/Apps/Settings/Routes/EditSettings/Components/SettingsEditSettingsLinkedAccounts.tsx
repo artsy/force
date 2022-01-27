@@ -1,4 +1,4 @@
-import { FC, useState, useEffect } from "react"
+import { FC, useEffect } from "react"
 import {
   Box,
   Button,
@@ -15,6 +15,7 @@ import {
 import { useRouter } from "v2/System/Router/useRouter"
 import { useUnlinkSettingsLinkedAccount } from "./useUnlinkSettingsLinkedAccount"
 import { getENV } from "v2/Utils/getENV"
+import { useMode } from "v2/Utils/Hooks/useMode"
 
 interface SettingsEditSettingsLinkedAccountsProps {
   me: SettingsEditSettingsLinkedAccounts_me
@@ -84,19 +85,14 @@ export const SettingsEditSettingsLinkedAccountsFragmentContainer = createFragmen
   }
 )
 
-enum Mode {
-  Disconnected,
-  Connecting,
-  Connected,
-  Disconnecting,
-}
-
 interface SettingsEditSettingsLinkedAccountsButtonProps {
   icon: JSX.Element
   me: SettingsEditSettingsLinkedAccounts_me
   href?: string
   provider: AuthenticationProvider
 }
+
+type Mode = "Disconnected" | "Connecting" | "Connected" | "Disconnecting"
 
 const SettingsEditSettingsLinkedAccountsButton: FC<SettingsEditSettingsLinkedAccountsButtonProps> = ({
   icon,
@@ -111,20 +107,20 @@ const SettingsEditSettingsLinkedAccountsButton: FC<SettingsEditSettingsLinkedAcc
   const { sendToast } = useToasts()
   const { submitMutation } = useUnlinkSettingsLinkedAccount()
 
-  const [mode, setMode] = useState(
-    isConnected ? Mode.Connected : Mode.Disconnected
+  const [mode, setMode] = useMode<Mode>(
+    isConnected ? "Connected" : "Disconnected"
   )
 
   const handleClick = async (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
-    if (mode === Mode.Disconnected) {
-      setMode(Mode.Connecting)
+    if (mode === "Disconnected") {
+      setMode("Connecting")
       return // Pass through
     }
 
     event.preventDefault()
-    setMode(Mode.Disconnecting)
+    setMode("Disconnecting")
 
     try {
       await submitMutation({ input: { provider } })
@@ -134,7 +130,7 @@ const SettingsEditSettingsLinkedAccountsButton: FC<SettingsEditSettingsLinkedAcc
         message: "Account disconnected.",
       })
 
-      setMode(Mode.Disconnected)
+      setMode("Disconnected")
     } catch (err) {
       console.error(err)
 
@@ -144,22 +140,22 @@ const SettingsEditSettingsLinkedAccountsButton: FC<SettingsEditSettingsLinkedAcc
         description: err.message,
       })
 
-      setMode(Mode.Connected)
+      setMode("Connected")
     }
   }
 
   const action = {
-    [Mode.Connecting]: "Connect",
-    [Mode.Connected]: "Disconnect",
-    [Mode.Disconnected]: "Connect",
-    [Mode.Disconnecting]: "Connect",
+    ["Connecting"]: "Connect",
+    ["Connected"]: "Disconnect",
+    ["Disconnected"]: "Connect",
+    ["Disconnecting"]: "Connect",
   }[mode]
 
   return (
     <Button
       onClick={handleClick}
-      loading={mode === Mode.Connecting || mode === Mode.Disconnecting}
-      {...(mode === Mode.Connected
+      loading={mode === "Connecting" || mode === "Disconnecting"}
+      {...(mode === "Connected"
         ? { variant: "secondaryOutline" }
         : {
             variant: "primaryBlack",

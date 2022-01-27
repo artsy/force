@@ -1,38 +1,36 @@
 import { Button, Column, GridColumns, Message, Text } from "@artsy/palette"
-import { FC, useState } from "react"
+import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { extractNodes } from "v2/Utils/extractNodes"
 import { SettingsShippingAddresses_me } from "v2/__generated__/SettingsShippingAddresses_me.graphql"
 import { SettingsShippingAddressForm } from "./SettingsShippingAddressForm"
 import { SettingsShippingAddressFragmentContainer } from "./SettingsShippingAddress"
-
-enum Mode {
-  Pending,
-  Adding,
-}
+import { useMode } from "v2/Utils/Hooks/useMode"
 
 interface SettingsShippingAddressesProps {
   me: SettingsShippingAddresses_me
 }
+
+type Mode = "Pending" | "Adding"
 
 export const SettingsShippingAddresses: FC<SettingsShippingAddressesProps> = ({
   me,
 }) => {
   const addresses = extractNodes(me.addresses)
 
-  const [mode, setMode] = useState(Mode.Pending)
+  const [mode, setMode] = useMode<Mode>("Pending")
 
   const handleClick = () => {
-    setMode(Mode.Adding)
+    setMode("Adding")
   }
 
   const handleClose = () => {
-    setMode(Mode.Pending)
+    setMode("Pending")
   }
 
   return (
     <>
-      {mode === Mode.Adding && (
+      {mode === "Adding" && (
         <SettingsShippingAddressForm onClose={handleClose} />
       )}
 

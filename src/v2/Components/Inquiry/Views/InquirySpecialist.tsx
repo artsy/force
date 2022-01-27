@@ -7,27 +7,22 @@ import {
   Text,
   TextArea,
 } from "@artsy/palette"
-import { useState } from "react";
-import * as React from "react";
+import * as React from "react"
 import { useSystemContext } from "v2/System/useSystemContext"
 import { wait } from "v2/Utils/wait"
 import { useArtworkInquiryRequest } from "../Hooks/useArtworkInquiryRequest"
 import { InquiryState, useInquiryContext } from "../Hooks/useInquiryContext"
 import { logger } from "../util"
+import { useMode } from "v2/Utils/Hooks/useMode"
 
-enum Mode {
-  Pending,
-  Sending,
-  Error,
-  Success,
-}
+type Mode = "Pending" | "Sending" | "Error" | "Success"
 
 export const InquirySpecialist: React.FC = () => {
   const { user } = useSystemContext()
 
   const { next, setInquiry, inquiry, artworkID } = useInquiryContext()
 
-  const [mode, setMode] = useState<Mode>(Mode.Pending)
+  const [mode, setMode] = useMode<Mode>("Pending")
 
   const handleTextAreaChange = ({ value }: { value: string }) => {
     setInquiry(prevState => ({ ...prevState, message: value }))
@@ -51,7 +46,7 @@ export const InquirySpecialist: React.FC = () => {
       return
     }
 
-    setMode(Mode.Sending)
+    setMode("Sending")
 
     try {
       await submitArtworkInquiryRequest({
@@ -59,20 +54,20 @@ export const InquirySpecialist: React.FC = () => {
         message: inquiry.message,
         contactGallery: false,
       })
-      setMode(Mode.Success)
+      setMode("Success")
       await wait(500)
       next()
     } catch (err) {
       logger.error(err)
-      setMode(Mode.Error)
+      setMode("Error")
     }
   }
 
   const label = {
-    [Mode.Pending]: "Send",
-    [Mode.Sending]: "Send",
-    [Mode.Success]: "Sent",
-    [Mode.Error]: "Error",
+    ["Pending"]: "Send",
+    ["Sending"]: "Send",
+    ["Success"]: "Sent",
+    ["Error"]: "Error",
   }[mode]
 
   return (
@@ -147,8 +142,8 @@ export const InquirySpecialist: React.FC = () => {
         type="submit"
         display="block"
         width="100%"
-        loading={mode === Mode.Sending}
-        disabled={mode === Mode.Success}
+        loading={mode === "Sending"}
+        disabled={mode === "Success"}
       >
         {label}
       </Button>

@@ -20,6 +20,7 @@ import { themeGet } from "@styled-system/theme-get"
 import { FilterExpandable } from "./FilterExpandable"
 import { isCustomValue } from "./Utils/isCustomValue"
 import { useFilterLabelCountByKey } from "../Utils/useFilterLabelCountByKey"
+import { useMode } from "v2/Utils/Hooks/useMode"
 
 // Disables arrows in numeric inputs
 export const NumericInput = styled(LabeledInput).attrs({ type: "number" })`
@@ -73,10 +74,12 @@ export interface PriceRangeFilterProps {
   expanded?: boolean
 }
 
+type Mode = "resting" | "done"
+
 export const PriceRangeFilter: React.FC<PriceRangeFilterProps> = ({
   expanded,
 }) => {
-  const [mode, setMode] = useState<"resting" | "done">("resting")
+  const [mode, setMode] = useMode<Mode>("resting")
 
   const { currentlySelectedFilters, setFilter } = useArtworkFilterContext()
   const { priceRange: initialRange, reset } = currentlySelectedFilters?.() ?? {}

@@ -1,4 +1,4 @@
-import { FC, useState } from "react"
+import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import {
   Text,
@@ -14,29 +14,27 @@ import { Form, Formik } from "formik"
 import { useUpdateSettingsPassword } from "../useUpdateSettingsPassword"
 import { logout } from "v2/Utils/auth"
 import { SettingsEditSettingsPassword_me } from "v2/__generated__/SettingsEditSettingsPassword_me.graphql"
-
-enum Mode {
-  Pending,
-  Active,
-}
+import { useMode } from "v2/Utils/Hooks/useMode"
 
 interface SettingsEditSettingsPasswordProps {
   me: SettingsEditSettingsPassword_me
 }
 
+type Mode = "Pending" | "Active"
+
 export const SettingsEditSettingsPassword: FC<SettingsEditSettingsPasswordProps> = ({
   me: { hasPassword },
 }) => {
-  const [mode, setMode] = useState(Mode.Pending)
+  const [mode, setMode] = useMode<Mode>("Pending")
   const { sendToast } = useToasts()
   const { submitUpdateSettingsPassword } = useUpdateSettingsPassword()
 
   const handleActivate = () => {
-    setMode(Mode.Active)
+    setMode("Active")
   }
 
   const handleCancel = () => {
-    setMode(Mode.Pending)
+    setMode("Pending")
   }
 
   return (
@@ -45,7 +43,7 @@ export const SettingsEditSettingsPassword: FC<SettingsEditSettingsPasswordProps>
         Password
       </Text>
 
-      {mode === Mode.Pending ? (
+      {mode === "Pending" ? (
         <>
           {hasPassword && (
             <Input

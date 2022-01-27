@@ -16,14 +16,9 @@ import {
   Intent,
 } from "@artsy/cohesion"
 import { useTracking } from "v2/System/Analytics/useTracking"
+import { useMode } from "v2/Utils/Hooks/useMode"
 
-enum Mode {
-  Pending,
-  Loading,
-  Error,
-  Done,
-  Success,
-}
+type Mode = "Pending" | "Loading" | "Error" | "Done" | "Success"
 
 interface InquirySignUpState {
   name: string
@@ -32,7 +27,7 @@ interface InquirySignUpState {
 }
 
 export const InquirySignUp: React.FC = () => {
-  const [mode, setMode] = useState<Mode>(Mode.Pending)
+  const [mode, setMode] = useMode<Mode>("Pending")
   const [error, setError] = useState("")
 
   const {
@@ -57,7 +52,7 @@ export const InquirySignUp: React.FC = () => {
   const handleSubmit = async (event: React.FormEvent<HTMLElement>) => {
     event.preventDefault()
 
-    setMode(Mode.Loading)
+    setMode("Loading")
 
     try {
       const { user } = await signUp(state)
@@ -76,7 +71,7 @@ export const InquirySignUp: React.FC = () => {
         contactGallery: !engine.decide("askSpecialist"),
       })
 
-      setMode(Mode.Success)
+      setMode("Success")
       await wait(500)
       next()
 
@@ -95,7 +90,7 @@ export const InquirySignUp: React.FC = () => {
       trackEvent(options)
     } catch (err) {
       setError(err.message)
-      setMode(Mode.Error)
+      setMode("Error")
       logger.error(err)
     }
   }
@@ -104,7 +99,7 @@ export const InquirySignUp: React.FC = () => {
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     setState(prevState => ({ ...prevState, [name]: event.target.value }))
-    mode === Mode.Error && setMode(Mode.Pending)
+    mode === "Error" && setMode("Pending")
   }
 
   return (
@@ -146,7 +141,7 @@ export const InquirySignUp: React.FC = () => {
           placeholder="Your password"
           onChange={handleInputChange("password")}
           defaultValue={state.password}
-          error={mode === Mode.Error && error}
+          error={mode === "Error" && error}
           type="password"
           required
           my={1}
@@ -158,8 +153,8 @@ export const InquirySignUp: React.FC = () => {
           type="submit"
           display="block"
           width="100%"
-          loading={mode === Mode.Loading}
-          disabled={mode === Mode.Success}
+          loading={mode === "Loading"}
+          disabled={mode === "Success"}
         >
           Create Account and Send Message
         </Button>
