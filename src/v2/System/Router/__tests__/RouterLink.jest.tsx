@@ -39,7 +39,7 @@ describe("RouterLink", () => {
   // TODO: uncomment this not sure why its failing
   it.skip("uses the <Link> component if within a router context", async () => {
     renderTestRoute()
-    screen.debug()
+    // screen.debug()
     expect((await screen.findAllByText("Link")).length).toBe(1)
   })
 
