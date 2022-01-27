@@ -8,8 +8,6 @@ import {
   Separator,
   Clickable,
   Spacer,
-  ModalDialog,
-  Button,
 } from "@artsy/palette"
 import {
   createPaginationContainer,
@@ -33,7 +31,7 @@ import { ArtworkFilters } from "v2/Components/ArtworkFilter/ArtworkFilterContext
 import { getNamePlaceholder } from "v2/Components/SavedSearchAlert/Utils/getNamePlaceholder"
 import { SavedSearchEditFormDesktop } from "./components/SavedSearchEditFormDesktop"
 import { SavedSearchEditFormMobile } from "./components/SavedSearchEditFormMobile"
-import { useDeleteSavedSearchAlert } from "./useDeleteSavedSearchAlert"
+import { SavedSearchAlertDeleteModal } from "./components/SavedSearchAlertDeleteModal"
 
 const logger = createLogger(
   "v2/Apps/SavedSearchAlerts/Routes/Overview/SavedSearchAlertsOverviewRoute.tsx"
@@ -59,7 +57,6 @@ export const SavedSearchAlertsOverviewRoute: React.FC<SavedSearchAlertsOverviewR
     setEditAlertEntity,
   ] = useState<EditAlertEntity | null>(null)
   const [showDeleteModal, setShowDeleteModal] = useState(false)
-  const [isDeleting, setIsDeleting] = useState(false)
   const {
     userSettings,
     entity,
@@ -68,7 +65,6 @@ export const SavedSearchAlertsOverviewRoute: React.FC<SavedSearchAlertsOverviewR
     reset,
   } = useSavedSearchAlertContext()
   const { submitMutation: submitEditAlert } = useEditSavedSearchAlert()
-  const { submitMutation: submitDeleteAlert } = useDeleteSavedSearchAlert()
   const alerts = extractNodes(me.savedSearchesConnection)
   const isEditMode = editAlertEntity !== null
   const initialValues = userSettings ?? defaultUserSettings
@@ -91,21 +87,9 @@ export const SavedSearchAlertsOverviewRoute: React.FC<SavedSearchAlertsOverviewR
     setShowDeleteModal(false)
   }
 
-  const deleteAlertById = async () => {
-    try {
-      setIsDeleting(true)
-      await submitDeleteAlert({
-        input: {
-          searchCriteriaID: editAlertEntity!.id,
-        },
-      })
-    } catch (error) {
-      logger.error(error)
-    } finally {
-      setIsDeleting(false)
-      handleCloseDeleteModal()
-      handleCompleted()
-    }
+  const handleDeleted = () => {
+    handleCompleted()
+    handleCloseDeleteModal()
   }
 
   const handleSubmit = async (values: SavedSearchAleftFormValues) => {
@@ -200,35 +184,12 @@ export const SavedSearchAlertsOverviewRoute: React.FC<SavedSearchAlertsOverviewR
         )}
       </Media>
 
-      {showDeleteModal && (
-        <ModalDialog
-          title="Delete Alert"
-          onClose={handleCloseDeleteModal}
-          footer={
-            <Flex justifyContent="flex-end">
-              <Button
-                variant="noOutline"
-                size="small"
-                onClick={handleCloseDeleteModal}
-                mr={1}
-              >
-                Cancel
-              </Button>
-              <Button
-                loading={isDeleting}
-                size="small"
-                onClick={deleteAlertById}
-              >
-                Delete
-              </Button>
-            </Flex>
-          }
-        >
-          <Text variant="sm">
-            Once you delete this alert, you will have to recreate it to continue
-            receiving alerts on your favorite artworks.
-          </Text>
-        </ModalDialog>
+      {showDeleteModal && editAlertEntity && (
+        <SavedSearchAlertDeleteModal
+          id={editAlertEntity!.id}
+          onCloseClick={handleCloseDeleteModal}
+          onDeleted={handleDeleted}
+        />
       )}
     </FullBleed>
   )
