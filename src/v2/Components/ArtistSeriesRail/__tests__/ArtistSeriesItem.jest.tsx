@@ -42,19 +42,23 @@ describe("Artist Series Rail Item", () => {
     const elem = component.find(RouterLink).first()
     elem.props().onClick({} as any)
 
-    expect(trackEvent).toHaveBeenCalledWith({
-      action: "clickedArtistSeriesGroup",
-      context_module: "context-module",
-      context_page_owner_id: "context-page-owner-id",
-      context_page_owner_slug: "context-page-owner-slug",
-      context_page_owner_type: "artist",
-      curation_boost: true,
-      destination_page_owner_id: "internal-id",
-      destination_page_owner_slug: "slug",
-      destination_page_owner_type: "artistSeries",
-      horizontal_slide_position: 2,
-      type: "thumbnail",
-    })
+    expect(trackEvent.mock.calls[0]).toMatchInlineSnapshot(`
+            Array [
+              Object {
+                "action": "clickedArtistSeriesGroup",
+                "context_module": "context-module",
+                "context_page_owner_id": "context-page-owner-id",
+                "context_page_owner_slug": "context-page-owner-slug",
+                "context_page_owner_type": "artist",
+                "curation_boost": true,
+                "destination_page_owner_id": "internal-id",
+                "destination_page_owner_slug": "slug",
+                "destination_page_owner_type": "artistSeries",
+                "horizontal_slide_position": 2,
+                "type": "thumbnail",
+              },
+            ]
+          `)
   })
 
   it("does not try to render a null image", () => {

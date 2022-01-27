@@ -2,7 +2,12 @@ import { Box, Image, Text } from "@artsy/palette"
 import { ArtistSeriesItem_artistSeries } from "v2/__generated__/ArtistSeriesItem_artistSeries.graphql"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ContextModule, clickedArtistSeriesGroup } from "@artsy/cohesion"
+import {
+  ActionType,
+  ClickedArtistSeriesGroup,
+  ContextModule,
+  OwnerType,
+} from "@artsy/cohesion"
 import { useTracking } from "v2/System/Analytics/useTracking"
 import {
   AnalyticsContextProps,
@@ -37,19 +42,18 @@ export const ArtistSeriesItem: React.FC<ArtistSeriesItemProps> = ({
   } = useAnalyticsContext()
 
   const onClick = () => {
-    trackEvent(
-      clickedArtistSeriesGroup({
-        contextModule,
-        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-        contextPageOwnerType,
-        destinationPageOwnerId: internalID,
-        destinationPageOwnerSlug: slug,
-        contextPageOwnerId,
-        contextPageOwnerSlug,
-        horizontalSlidePosition: index,
-        curationBoost: featured,
-      })
-    )
+    const analyticsOptions: Partial<ClickedArtistSeriesGroup> = {
+      context_module: contextModule,
+      context_page_owner_type: contextPageOwnerType!,
+      destination_page_owner_id: internalID,
+      destination_page_owner_slug: slug,
+      destination_page_owner_type: OwnerType.artistSeries,
+      context_page_owner_id: contextPageOwnerId,
+      context_page_owner_slug: contextPageOwnerSlug,
+      horizontal_slide_position: index,
+      curation_boost: featured,
+    }
+    trackEvent(tracks.clickedArtistSeriesGroup(analyticsOptions))
   }
   return (
     <RouterLink
@@ -104,3 +108,11 @@ export const ArtistSeriesItemFragmentContainer = createFragmentContainer(
     `,
   }
 )
+
+const tracks = {
+  clickedArtistSeriesGroup: (options): ClickedArtistSeriesGroup => ({
+    action: ActionType.clickedArtistSeriesGroup,
+    type: "thumbnail",
+    ...options,
+  }),
+}
