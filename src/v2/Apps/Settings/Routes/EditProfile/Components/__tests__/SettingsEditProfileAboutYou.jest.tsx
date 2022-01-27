@@ -52,8 +52,8 @@ describe("SettingsEditProfileAboutYou", () => {
     })
 
     expect(mockSubmitUpdateMyUserProfile).toHaveBeenCalledWith({
-      priceRangeMax: null,
-      priceRangeMin: null,
+      priceRangeMax: 4.2,
+      priceRangeMin: 4.2,
       profession: "Artist",
       shareFollows: false,
     })

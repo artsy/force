@@ -1,4 +1,4 @@
-import { Button, Column, Flex, Text } from "@artsy/palette"
+import { Button, Column, Separator, Text } from "@artsy/palette"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -23,42 +23,47 @@ export const UserRegistrationAuctions: React.FC<UserRegistrationAuctionsProps> =
 
   return (
     <SectionContainer title="Registration for Upcoming Auctions">
-      {saleRegistrations.map((sale, i, a) => {
-        if (!sale?.sale) {
+      {saleRegistrations.map(({ isRegistered, sale }, i) => {
+        if (!sale) {
           return null
         }
 
         return (
-          <Column
-            key={i}
-            span={12}
-            pb={2}
-            display="flex"
-            justifyContent="space-between"
-            borderBottom={i + 1 < a.length ? "1px solid" : ""}
-            borderColor="black10"
-          >
-            <Flex flexDirection="column">
-              <Text color="black80" variant="sm">
-                {sale.sale.name ?? ""}
-              </Text>
-              <Text color="black60" variant="sm">
-                {sale.sale.startAt ?? ""}
-              </Text>
-            </Flex>
+          <React.Fragment key={i}>
+            <Column span={10}>
+              <RouterLink to={sale.href} display="block" textDecoration="none">
+                {sale.name && (
+                  <Text color="black80" variant="sm">
+                    {sale.name}
+                  </Text>
+                )}
 
-            <Flex>
+                {sale.startAt && (
+                  <Text color="black60" variant="sm">
+                    {sale.startAt}
+                  </Text>
+                )}
+              </RouterLink>
+            </Column>
+
+            <Column span={2}>
               <Button
+                width="100%"
                 // @ts-ignore
                 as={RouterLink}
-                to={sale.sale.href ?? ""}
-                size="medium"
-                width="150px"
+                to={sale.href}
+                disabled={!!isRegistered}
               >
-                Register
+                {isRegistered ? "Registered" : "Register"}
               </Button>
-            </Flex>
-          </Column>
+            </Column>
+
+            {i !== saleRegistrations.length - 1 && (
+              <Column span={12}>
+                <Separator />
+              </Column>
+            )}
+          </React.Fragment>
         )
       })}
     </SectionContainer>
@@ -79,6 +84,7 @@ export const UserRegistrationAuctionsFragmentContainer = createFragmentContainer
         ) {
           edges {
             node {
+              isRegistered
               sale {
                 id
                 name

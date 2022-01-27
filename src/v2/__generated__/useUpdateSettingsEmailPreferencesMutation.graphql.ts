@@ -45,39 +45,38 @@ export type EditableLocation = {
     stateCode?: string | null;
     summary?: string | null;
 };
-export type useUpdateMyUserProfileMutationVariables = {
+export type useUpdateSettingsEmailPreferencesMutationVariables = {
     input: UpdateMyProfileInput;
 };
-export type useUpdateMyUserProfileMutationResponse = {
+export type useUpdateSettingsEmailPreferencesMutationResponse = {
     readonly updateMyUserProfile: {
-        readonly clientMutationId: string | null;
         readonly me: {
-            readonly " $fragmentRefs": FragmentRefs<"SettingsEditProfileYourGalleryIntro_me">;
+            readonly " $fragmentRefs": FragmentRefs<"SettingsEditSettingsEmailPreferences_me">;
         } | null;
     } | null;
 };
-export type useUpdateMyUserProfileMutation = {
-    readonly response: useUpdateMyUserProfileMutationResponse;
-    readonly variables: useUpdateMyUserProfileMutationVariables;
+export type useUpdateSettingsEmailPreferencesMutation = {
+    readonly response: useUpdateSettingsEmailPreferencesMutationResponse;
+    readonly variables: useUpdateSettingsEmailPreferencesMutationVariables;
 };
 
 
 
 /*
-mutation useUpdateMyUserProfileMutation(
+mutation useUpdateSettingsEmailPreferencesMutation(
   $input: UpdateMyProfileInput!
 ) {
   updateMyUserProfile(input: $input) {
-    clientMutationId
     me {
-      ...SettingsEditProfileYourGalleryIntro_me
+      ...SettingsEditSettingsEmailPreferences_me
       id
     }
   }
 }
 
-fragment SettingsEditProfileYourGalleryIntro_me on Me {
-  inquiryIntroduction
+fragment SettingsEditSettingsEmailPreferences_me on Me {
+  emailFrequency
+  id
 }
 */
 
@@ -95,20 +94,13 @@ v1 = [
     "name": "input",
     "variableName": "input"
   }
-],
-v2 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "clientMutationId",
-  "storageKey": null
-};
+];
 return {
   "fragment": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "useUpdateMyUserProfileMutation",
+    "name": "useUpdateSettingsEmailPreferencesMutation",
     "selections": [
       {
         "alias": null,
@@ -118,7 +110,6 @@ return {
         "name": "updateMyUserProfile",
         "plural": false,
         "selections": [
-          (v2/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -130,7 +121,7 @@ return {
               {
                 "args": null,
                 "kind": "FragmentSpread",
-                "name": "SettingsEditProfileYourGalleryIntro_me"
+                "name": "SettingsEditSettingsEmailPreferences_me"
               }
             ],
             "storageKey": null
@@ -146,7 +137,7 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "useUpdateMyUserProfileMutation",
+    "name": "useUpdateSettingsEmailPreferencesMutation",
     "selections": [
       {
         "alias": null,
@@ -156,7 +147,6 @@ return {
         "name": "updateMyUserProfile",
         "plural": false,
         "selections": [
-          (v2/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -169,7 +159,7 @@ return {
                 "alias": null,
                 "args": null,
                 "kind": "ScalarField",
-                "name": "inquiryIntroduction",
+                "name": "emailFrequency",
                 "storageKey": null
               },
               {
@@ -188,14 +178,14 @@ return {
     ]
   },
   "params": {
-    "cacheID": "b84f5b19e450bba97fe3c6f5e0f7f415",
+    "cacheID": "812cc727a30491320975840eb236b00e",
     "id": null,
     "metadata": {},
-    "name": "useUpdateMyUserProfileMutation",
+    "name": "useUpdateSettingsEmailPreferencesMutation",
     "operationKind": "mutation",
-    "text": "mutation useUpdateMyUserProfileMutation(\n  $input: UpdateMyProfileInput!\n) {\n  updateMyUserProfile(input: $input) {\n    clientMutationId\n    me {\n      ...SettingsEditProfileYourGalleryIntro_me\n      id\n    }\n  }\n}\n\nfragment SettingsEditProfileYourGalleryIntro_me on Me {\n  inquiryIntroduction\n}\n"
+    "text": "mutation useUpdateSettingsEmailPreferencesMutation(\n  $input: UpdateMyProfileInput!\n) {\n  updateMyUserProfile(input: $input) {\n    me {\n      ...SettingsEditSettingsEmailPreferences_me\n      id\n    }\n  }\n}\n\nfragment SettingsEditSettingsEmailPreferences_me on Me {\n  emailFrequency\n  id\n}\n"
   }
 };
 })();
-(node as any).hash = 'edc3801caa91842ffe2a71d69e00c4ff';
+(node as any).hash = '51dbf7983b96b406c515eb03ced961c1';
 export default node;

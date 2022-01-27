@@ -1,12 +1,4 @@
-import {
-  Button,
-  Flex,
-  Box,
-  Text,
-  Sup,
-  Spacer,
-  ModalDialog,
-} from "@artsy/palette"
+import { Button, Flex, Box, Text, Spacer, ModalDialog } from "@artsy/palette"
 import { useState } from "react"
 import * as React from "react"
 import { RelayRefetchProp, graphql, createRefetchContainer } from "react-relay"
@@ -144,15 +136,15 @@ export const AppSecondFactor: React.FC<AppSecondFactorProps> = ({
         flexDirection={["column", "row"]}
       >
         <Box flexBasis="50%">
-          <Text variant="lg" mb={2}>
-            App Authenticator
-            {enabledSecondFactorLabel && (
-              <>
-                {" "}
-                <Sup color="black60">{enabledSecondFactorLabel}</Sup>
-              </>
-            )}
-          </Text>
+          <Text variant="lg">App Authenticator</Text>
+
+          {enabledSecondFactorLabel && (
+            <Text variant="lg" color="black60">
+              {enabledSecondFactorLabel}
+            </Text>
+          )}
+
+          <Spacer mt={2} />
 
           <Text variant="sm" color="black60">
             Generate secure authentication codes using an application such as{" "}
@@ -194,7 +186,6 @@ export const AppSecondFactor: React.FC<AppSecondFactorProps> = ({
 
               <Button
                 width={["100%", "auto"]}
-                variant="secondaryGray"
                 onClick={() => setShowConfirmPassword(true)}
                 loading={isCreating}
                 disabled={isCreating}

@@ -41,7 +41,9 @@ const SettingsEditSettingsTwoFactorBackupCodesDialog: FC<SettingsEditSettingsTwo
               )
             })}
           </GridColumns>
+
           <SettingsEditSettingsTwoFactorBackupCodesActions
+            mt={4}
             backupSecondFactors={me.backupSecondFactors!.map(factor =>
               factor!.code!.toString()
             )}

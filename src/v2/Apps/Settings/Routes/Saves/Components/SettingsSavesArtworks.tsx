@@ -117,7 +117,7 @@ export const SettingsSavesArtworksRefetchContainer = createRefetchContainer(
       fragment SettingsSavesArtworks_me on Me
         @argumentDefinitions(page: { type: "Int" }) {
         followsAndSaves {
-          artworksConnection(first: 12, private: true, page: $page)
+          artworksConnection(first: 10, private: true, page: $page)
             @connection(key: "SettingsSavesArtworks_artworksConnection") {
             totalCount
             pageInfo {
@@ -148,7 +148,7 @@ const SETTINGS_SAVES_ARTWORKS_PLACEHOLDER = (
     </SkeletonText>
 
     <Masonry columnCount={[2, 3, 4]}>
-      {[...new Array(12)].map((_, i) => {
+      {[...new Array(10)].map((_, i) => {
         return (
           <div key={i}>
             <ResponsiveBox

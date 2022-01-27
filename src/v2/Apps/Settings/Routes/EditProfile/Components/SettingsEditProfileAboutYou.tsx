@@ -78,9 +78,9 @@ const SettingsEditProfileAboutYou: FC<SettingsEditProfileAboutYouProps> = ({
         initialValues={{
           displayLocation: me.location ?? { display: "" },
           location: null,
-          priceRange: "", // TODO: Expose `me#priceRange` in Metaphysics
-          priceRangeMax: null, // TODO: Expose `me#priceRangeMax` in Metaphysics
-          priceRangeMin: null, // TODO: Expose `me#priceRangeMin` in Metaphysics
+          priceRange: me.priceRange ?? "",
+          priceRangeMax: me.priceRangeMax,
+          priceRangeMin: me.priceRangeMin,
           profession: me.profession ?? "",
           shareFollows: !!me.shareFollows,
         }}
@@ -157,6 +157,9 @@ export const SettingsEditProfileAboutYouFragmentContainer = createFragmentContai
         }
         profession
         shareFollows
+        priceRange
+        priceRangeMin
+        priceRangeMax
       }
     `,
   }

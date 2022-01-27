@@ -8,16 +8,6 @@ const SettingsApp = loadable(
     resolveComponent: component => component.SettingsAppFragmentContainer,
   }
 )
-const OverviewRoute = loadable(
-  () =>
-    import(
-      /* webpackChunkName: "settingsBundle" */ "./Routes/Overview/SettingsOverviewRoute"
-    ),
-  {
-    resolveComponent: component =>
-      component.SettingsOverviewRouteFragmentContainer,
-  }
-)
 const AuctionsRoute = loadable(
   () =>
     import(
@@ -97,6 +87,13 @@ const DeleteAccountRoute = loadable(
   }
 )
 
+// Redirect home if the user is not logged in
+const handleServerSideRender = ({ req, res }) => {
+  if (!req.user) {
+    res.redirect("/")
+  }
+}
+
 export const settingsRoutes: AppRouteConfig[] = [
   {
     path: "/settings2",
@@ -114,18 +111,12 @@ export const settingsRoutes: AppRouteConfig[] = [
     `,
     children: [
       {
-        path: "/",
-        getComponent: () => OverviewRoute,
-        onClientSideRender: () => {
-          OverviewRoute.preload()
-        },
-      },
-      {
         path: "auctions",
         getComponent: () => AuctionsRoute,
         onClientSideRender: () => {
           AuctionsRoute.preload()
         },
+        onServerSideRender: handleServerSideRender,
         query: graphql`
           query settingsRoutes_SettingsAuctionsRouteQuery {
             me {
@@ -140,6 +131,7 @@ export const settingsRoutes: AppRouteConfig[] = [
         onClientSideRender: () => {
           EditProfileRoute.preload()
         },
+        onServerSideRender: handleServerSideRender,
         query: graphql`
           query settingsRoutes_EditProfileRouteQuery {
             me {
@@ -154,6 +146,7 @@ export const settingsRoutes: AppRouteConfig[] = [
         onClientSideRender: () => {
           PaymentsRoute.preload()
         },
+        onServerSideRender: handleServerSideRender,
         query: graphql`
           query settingsRoutes_PaymentsRouteQuery {
             me {
@@ -168,6 +161,7 @@ export const settingsRoutes: AppRouteConfig[] = [
         onClientSideRender: () => {
           PurchasesRoute.preload()
         },
+        onServerSideRender: handleServerSideRender,
         query: graphql`
           query settingsRoutes_PurchasesRouteQuery {
             me {
@@ -182,6 +176,7 @@ export const settingsRoutes: AppRouteConfig[] = [
         onClientSideRender: () => {
           SavesRoute.preload()
         },
+        onServerSideRender: handleServerSideRender,
         query: graphql`
           query settingsRoutes_SavesRouteQuery {
             me {
@@ -196,6 +191,7 @@ export const settingsRoutes: AppRouteConfig[] = [
         onClientSideRender: () => {
           EditSettingsRoute.preload()
         },
+        onServerSideRender: handleServerSideRender,
         query: graphql`
           query settingsRoutes_SettingsEditSettingsRouteQuery {
             me {
@@ -210,6 +206,7 @@ export const settingsRoutes: AppRouteConfig[] = [
         onClientSideRender: () => {
           DeleteAccountRoute.preload()
         },
+        onServerSideRender: handleServerSideRender,
       },
       {
         path: "shipping",
@@ -217,6 +214,7 @@ export const settingsRoutes: AppRouteConfig[] = [
         onClientSideRender: () => {
           ShippingRoute.preload()
         },
+        onServerSideRender: handleServerSideRender,
         query: graphql`
           query settingsRoutes_ShippingRouteQuery {
             me {

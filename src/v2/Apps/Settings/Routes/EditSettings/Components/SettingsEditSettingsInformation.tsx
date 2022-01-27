@@ -32,8 +32,6 @@ export const SettingsEditSettingsInformation: React.FC<SettingsEditSettingsInfor
       </Text>
 
       <Formik
-        validateOnBlur
-        validateOnChange
         initialValues={{
           name: me.name ?? "",
           email: me.email ?? "",
@@ -48,6 +46,17 @@ export const SettingsEditSettingsInformation: React.FC<SettingsEditSettingsInfor
             is: email => email !== me.email,
             otherwise: field => field.notRequired(),
           }),
+          phone: Yup.string().test(
+            "Phone must be valid",
+            "Phone number must be valid",
+            value => {
+              // https://github.com/artsy/gravity/blob/a8227694da735dc03c8ba50928325d84e4b2846b/app/models/util/phone_validation.rb#L2
+              if (!value) return false
+              const digits = (value.match(/\d/g) ?? []).length
+              const validChars = /^[+\/\-()\.\s0-9A-Za-z]+$/g.test(value)
+              return digits >= 3 && validChars
+            }
+          ),
         })}
         onSubmit={async ({ email, name, password, phone }) => {
           try {
@@ -65,15 +74,24 @@ export const SettingsEditSettingsInformation: React.FC<SettingsEditSettingsInfor
           } catch (err) {
             console.error(err)
 
+            const error = Array.isArray(err) ? err[0] : err
+
             sendToast({
               variant: "error",
               message: "There was a problem",
-              description: err.message,
+              description: error.message,
             })
           }
         }}
       >
-        {({ errors, handleBlur, handleChange, isSubmitting, values }) => (
+        {({
+          errors,
+          handleBlur,
+          handleChange,
+          isSubmitting,
+          values,
+          isValid,
+        }) => (
           <Form>
             <Join separator={<Spacer mt={2} />}>
               <Input
@@ -110,6 +128,7 @@ export const SettingsEditSettingsInformation: React.FC<SettingsEditSettingsInfor
                 onBlur={handleBlur}
                 type="tel"
                 autoComplete="tel"
+                error={errors.phone}
               />
 
               {me.paddleNumber && (
@@ -136,7 +155,12 @@ export const SettingsEditSettingsInformation: React.FC<SettingsEditSettingsInfor
                 />
               )}
 
-              <Button mt={2} type="submit" loading={isSubmitting}>
+              <Button
+                mt={2}
+                type="submit"
+                loading={isSubmitting}
+                disabled={!isValid}
+              >
                 Save Changes
               </Button>
             </Join>

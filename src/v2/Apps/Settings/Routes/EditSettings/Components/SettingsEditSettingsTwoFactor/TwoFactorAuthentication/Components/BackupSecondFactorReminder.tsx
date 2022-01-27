@@ -38,7 +38,9 @@ export const BackupSecondFactorReminder: React.FC<BackupSecondFactorReminderProp
           )
         })}
       </GridColumns>
+
       <SettingsEditSettingsTwoFactorBackupCodesActions
+        mt={4}
         backupSecondFactors={backupSecondFactors}
       />
     </>

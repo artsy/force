@@ -1,3 +1,4 @@
+import * as Yup from "yup"
 import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import {
@@ -61,11 +62,25 @@ export const SettingsEditSettingsPassword: FC<SettingsEditSettingsPasswordProps>
         </>
       ) : (
         <Formik
+          validateOnMount
           initialValues={{
             currentPassword: "",
             newPassword: "",
             passwordConfirmation: "",
           }}
+          validationSchema={Yup.object().shape({
+            currentPassword: Yup.string()
+              .required("Current password required")
+              .when("email", {
+                is: () => hasPassword,
+                otherwise: field => field.notRequired(),
+              }),
+            newPassword: Yup.string().required("New password required"),
+            passwordConfirmation: Yup.string().oneOf(
+              [Yup.ref("newPassword"), null],
+              "Passwords must match"
+            ),
+          })}
           onSubmit={async ({
             currentPassword,
             newPassword,
@@ -101,7 +116,15 @@ export const SettingsEditSettingsPassword: FC<SettingsEditSettingsPasswordProps>
             }
           }}
         >
-          {({ errors, handleBlur, handleChange, isSubmitting, values }) => {
+          {({
+            errors,
+            handleBlur,
+            handleChange,
+            isSubmitting,
+            values,
+            isValid,
+            touched,
+          }) => {
             return (
               <Form>
                 <Join separator={<Spacer mt={2} />}>
@@ -109,8 +132,8 @@ export const SettingsEditSettingsPassword: FC<SettingsEditSettingsPasswordProps>
                     <PasswordInput
                       name="currentPassword"
                       title="Current Password"
-                      error={errors.currentPassword}
-                      placeholder="Enter your password"
+                      error={touched.currentPassword && errors.currentPassword}
+                      placeholder="Enter your current password"
                       value={values.currentPassword}
                       onChange={handleChange}
                       onBlur={handleBlur}
@@ -122,8 +145,8 @@ export const SettingsEditSettingsPassword: FC<SettingsEditSettingsPasswordProps>
                   <PasswordInput
                     name="newPassword"
                     title="New Password"
-                    error={errors.newPassword}
-                    placeholder="Enter your password"
+                    error={touched.newPassword && errors.newPassword}
+                    placeholder="Enter your new password"
                     value={values.newPassword}
                     onChange={handleChange}
                     onBlur={handleBlur}
@@ -134,8 +157,11 @@ export const SettingsEditSettingsPassword: FC<SettingsEditSettingsPasswordProps>
                   <PasswordInput
                     name="passwordConfirmation"
                     title="Repeat New Password"
-                    error={errors.passwordConfirmation}
-                    placeholder="Enter your password"
+                    error={
+                      touched.passwordConfirmation &&
+                      errors.passwordConfirmation
+                    }
+                    placeholder="Confirm your new password"
                     value={values.passwordConfirmation}
                     onChange={handleChange}
                     onBlur={handleBlur}
@@ -144,7 +170,11 @@ export const SettingsEditSettingsPassword: FC<SettingsEditSettingsPasswordProps>
                   />
 
                   <Flex mt={4}>
-                    <Button type="submit" loading={isSubmitting}>
+                    <Button
+                      type="submit"
+                      loading={isSubmitting}
+                      disabled={!isValid}
+                    >
                       Save Changes
                     </Button>
 

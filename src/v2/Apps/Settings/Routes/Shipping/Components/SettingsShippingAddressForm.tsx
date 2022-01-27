@@ -8,6 +8,7 @@ import {
   Message,
   ModalDialog,
   useToasts,
+  VisuallyHidden,
 } from "@artsy/palette"
 import { Formik, Form } from "formik"
 import { FC } from "react"
@@ -127,12 +128,24 @@ export const SettingsShippingAddressForm: FC<SettingsShippingAddressFormProps> =
         setFieldValue,
         isValid,
         isSubmitting,
+        submitForm,
       }) => {
         return (
           <ModalDialog
             title={isEditing ? "Edit Address" : "Add New Address"}
             width={800}
             onClose={onClose}
+            footer={
+              <Button
+                width="100%"
+                type="submit"
+                disabled={!isValid}
+                loading={isSubmitting}
+                onClick={submitForm}
+              >
+                Save
+              </Button>
+            }
           >
             <Form>
               <GridColumns>
@@ -286,16 +299,12 @@ export const SettingsShippingAddressForm: FC<SettingsShippingAddressFormProps> =
                   </Column>
                 )}
 
-                <Column span={12}>
-                  <Button
-                    width="100%"
-                    type="submit"
-                    disabled={!isValid}
-                    loading={isSubmitting}
-                  >
+                {/* Modal footer button is outside the form element. Hidden button supports <enter> */}
+                <VisuallyHidden>
+                  <button type="submit" tabIndex={-1} disabled={!isValid}>
                     Save
-                  </Button>
-                </Column>
+                  </button>
+                </VisuallyHidden>
               </GridColumns>
             </Form>
           </ModalDialog>
