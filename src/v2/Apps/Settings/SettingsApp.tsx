@@ -24,7 +24,7 @@ const SettingsApp: React.FC<SettingsAppProps> = ({ me, children }) => {
     <>
       <MetaTags title="Settings | Artsy" />
 
-      <Text variant="lg" mt={4}>
+      <Text variant="xl" mt={4}>
         Hi {me.name}!
       </Text>
 
