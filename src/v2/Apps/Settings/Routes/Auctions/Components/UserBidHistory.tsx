@@ -13,7 +13,7 @@ export const UserBidHistory: React.FC<UserBidHistoryProps> = ({
   me: { inactiveLotStandings: lotStandings },
 }) => {
   if (!lotStandings || lotStandings.length === 0) {
-    return <SectionContainer title="Active Bids"></SectionContainer>
+    return <SectionContainer title="Bid History"></SectionContainer>
   }
 
   return (
