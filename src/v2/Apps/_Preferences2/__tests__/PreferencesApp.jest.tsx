@@ -1,4 +1,6 @@
-import { render, screen, fireEvent } from "@testing-library/react"
+import { render, screen, fireEvent, waitFor } from "@testing-library/react"
+import userEvent from "@testing-library/user-event"
+import { flushPromiseQueue } from "v2/DevTools"
 import { PreferencesApp } from "../PreferencesApp"
 
 describe("PreferencesApp", () => {
@@ -8,15 +10,17 @@ describe("PreferencesApp", () => {
     expect(screen.getByText("Preferences Center")).toBeInTheDocument()
   })
 
-  it("allows user to uncheck all boxes with unsubscribe all", () => {
+  it.skip("allows user to uncheck all boxes with unsubscribe all", async () => {
     render(<PreferencesApp></PreferencesApp>)
 
     let checkboxes = screen.getAllByRole("checkbox")
     const unsubscribeFromAllCheckbox = checkboxes[checkboxes.length - 1]
 
-    fireEvent.click(unsubscribeFromAllCheckbox)
+    userEvent.click(unsubscribeFromAllCheckbox)
 
-    expect(unsubscribeFromAllCheckbox).toBeChecked()
+    await flushPromiseQueue()
+
+    await waitFor(() => expect(unsubscribeFromAllCheckbox).toBeChecked())
 
     checkboxes.pop()
 
