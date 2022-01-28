@@ -94,6 +94,26 @@ const handleServerSideRender = ({ req, res }) => {
   }
 }
 
+const SavedSearchAlertsApp = loadable(
+  () =>
+    import(
+      /* webpackChunkName: "settingsBundle" */ "./Routes/SavedSearchAlerts/SavedSearchAlertsApp"
+    ),
+  {
+    resolveComponent: component => component.SavedSearchAlertsApp,
+  }
+)
+const SavedSearchAlertsOverviewRoute = loadable(
+  () =>
+    import(
+      /* webpackChunkName: "settingsBundle" */ "./Routes/SavedSearchAlerts/SavedSearchAlertsOverviewRoute"
+    ),
+  {
+    resolveComponent: component =>
+      component.SavedSearchAlertsOverviewRouteFragmentContainer,
+  }
+)
+
 export const settingsRoutes: AppRouteConfig[] = [
   {
     path: "/settings2",
@@ -219,6 +239,31 @@ export const settingsRoutes: AppRouteConfig[] = [
           query settingsRoutes_ShippingRouteQuery {
             me {
               ...SettingsShippingRoute_me
+            }
+          }
+        `,
+      },
+    ],
+  },
+
+  {
+    path: "/user/alerts",
+    theme: "v3",
+    getComponent: () => SavedSearchAlertsApp,
+    onClientSideRender: () => {
+      SavedSearchAlertsApp.preload()
+    },
+    children: [
+      {
+        path: "/",
+        getComponent: () => SavedSearchAlertsOverviewRoute,
+        onClientSideRender: () => {
+          SavedSearchAlertsOverviewRoute.preload()
+        },
+        query: graphql`
+          query settingsRoutes_SavedSearchAlertsOverviewRouteQuery {
+            me {
+              ...SavedSearchAlertsOverviewRoute_me
             }
           }
         `,
