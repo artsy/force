@@ -11,11 +11,9 @@ import { Formik } from "formik"
 export const PreferencesApp: React.FC = () => {
   return (
     <>
-      <Text variant="xl" my={4}>
+      <Text variant="xl" mt={6} mb={12}>
         Preferences Center
       </Text>
-
-      <Separator my={4} />
 
       <Formik
         initialValues={{
@@ -32,6 +30,31 @@ export const PreferencesApp: React.FC = () => {
         {({ values, setFieldValue }) => {
           return (
             <GridColumns gridRowGap={4}>
+              <Column span={10}>
+                <Text variant="md">Subscribe to all</Text>
+                <Text variant="sm" color="black60">
+                  If you subscribe to all, you can expect to receive around two
+                  Artsy emails per day from these categories.
+                </Text>
+              </Column>
+
+              <Column span={2}>
+                <Checkbox
+                  selected={Object.values(values).every(Boolean)}
+                  onSelect={value => {
+                    Object.keys(values).forEach(field => {
+                      setFieldValue(field, value)
+                    })
+                  }}
+                >
+                  Email
+                </Checkbox>
+              </Column>
+
+              <Column span={12}>
+                <Separator />
+              </Column>
+
               <Column span={10}>
                 <Text variant="md">Recommended By Artsy</Text>
                 <Text variant="sm" color="black60">
