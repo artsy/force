@@ -84,7 +84,7 @@ export const CreateAlertButton: React.FC<CreateAlertButtonProps> = ({
         size="small"
         {...props}
       >
-        <BellIcon mr={0.5} color="currentColor" />
+        <BellIcon mr={0.5} fill="currentColor" />
         Create an Alert
       </Button>
       <SavedSearchAlertModal
