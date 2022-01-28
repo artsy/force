@@ -1,6 +1,4 @@
-import { render, screen, waitFor } from "@testing-library/react"
-import userEvent from "@testing-library/user-event"
-import { flushPromiseQueue } from "v2/DevTools"
+import { render, screen, fireEvent } from "@testing-library/react"
 import { PreferencesApp } from "../PreferencesApp"
 
 describe("PreferencesApp", () => {
@@ -10,22 +8,58 @@ describe("PreferencesApp", () => {
     expect(screen.getByText("Preferences Center")).toBeInTheDocument()
   })
 
-  it.skip("allows user to uncheck all boxes with unsubscribe all", async () => {
+  it("allows user to uncheck all boxes with unsubscribe from all", () => {
     render(<PreferencesApp></PreferencesApp>)
 
+    expect(screen.getByText("Subscribe to all")).toBeInTheDocument()
+
     let checkboxes = screen.getAllByRole("checkbox")
-    const unsubscribeFromAllCheckbox = checkboxes[checkboxes.length - 1]
+    let unsubscribeFromAllCheckbox = checkboxes.pop()!
 
-    userEvent.click(unsubscribeFromAllCheckbox)
+    fireEvent.click(checkboxes[3])
+    fireEvent.click(checkboxes[4])
 
-    await flushPromiseQueue()
+    fireEvent.click(unsubscribeFromAllCheckbox)
 
-    await waitFor(() => expect(unsubscribeFromAllCheckbox).toBeChecked())
+    expect(unsubscribeFromAllCheckbox).toBeChecked()
 
-    checkboxes.pop()
+    checkboxes?.forEach(checkbox => {
+      expect(checkbox).not.toBeChecked()
+    })
+  })
+
+  it("unchecks unsubscribe/subscribe all when other checkboxes are checked", () => {
+    render(<PreferencesApp></PreferencesApp>)
+
+    expect(screen.getByText("Unsubscribe from all")).toBeInTheDocument()
+
+    let checkboxes = screen.getAllByRole("checkbox")
+    let subscribeToAllCheckbox = checkboxes[0]
+    let unsubscribeFromAllCheckbox = checkboxes.pop()
+
+    fireEvent.click(checkboxes[3])
+
+    expect(subscribeToAllCheckbox).not.toBeChecked()
+    expect(unsubscribeFromAllCheckbox).not.toBeChecked()
+  })
+
+  it("allows user to check all boxes with subscribe to all", () => {
+    render(<PreferencesApp></PreferencesApp>)
+
+    expect(screen.getByText("Unsubscribe from all")).toBeInTheDocument()
+
+    let checkboxes = screen.getAllByRole("checkbox")
+    let subscribeToAllCheckbox = checkboxes[0]
+    let unsubscribeFromAllCheckbox = checkboxes.pop()
+
+    fireEvent.click(subscribeToAllCheckbox)
+
+    expect(subscribeToAllCheckbox).toBeChecked()
+
+    expect(unsubscribeFromAllCheckbox).not.toBeChecked()
 
     checkboxes.forEach(checkbox => {
-      expect(checkbox).not.toBeChecked()
+      expect(checkbox).toBeChecked()
     })
   })
 })
