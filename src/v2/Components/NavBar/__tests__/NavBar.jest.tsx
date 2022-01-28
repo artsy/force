@@ -1,6 +1,6 @@
 import { BellIcon, EnvelopeIcon, SoloIcon } from "@artsy/palette"
 import { SystemContextProvider } from "v2/System"
-import { useTracking } from "v2/System/Analytics/useTracking"
+import { useTracking } from "react-tracking"
 import { mount } from "enzyme"
 import { NavBar } from "../NavBar"
 import { NavBarMobileMenuInboxNotificationCount } from "../NavBarMobileMenu/NavBarMobileMenuInboxNotificationCount"
@@ -12,7 +12,7 @@ jest.mock("v2/Components/Search/SearchBar", () => {
   }
 })
 
-jest.mock("v2/System/Analytics/useTracking")
+jest.mock("react-tracking")
 jest.mock("v2/Utils/Hooks/useMatchMedia", () => ({
   __internal__useMatchMedia: () => ({}),
 }))

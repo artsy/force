@@ -255,7 +255,12 @@ export function buildServerApp(
         // extractor.getLinkTags()
 
         // Get serializable Relay data for rehydration on the client
-        const _relayData = await (relayEnvironment.relaySSRMiddleware as RelayServerSSR).getCache()
+        let _relayData = [] as any[]
+        try {
+          _relayData = await (relayEnvironment.relaySSRMiddleware as RelayServerSSR).getCache()
+        } catch (error) {
+          console.error(error)
+        }
 
         // Extract CSS styleTags to inject for SSR pass
         const styleTags = sheet.getStyleTags()
