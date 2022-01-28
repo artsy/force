@@ -1,16 +1,8 @@
-import {
-  Box,
-  Button,
-  Clickable,
-  Flex,
-  Separator,
-  Spacer,
-  Text,
-} from "@artsy/palette"
+import { Box, Clickable, Flex, Separator, Spacer, Text } from "@artsy/palette"
 import { createPaginationContainer, graphql } from "react-relay"
-import { RouterLink } from "v2/System/Router/RouterLink"
 import { extractNodes } from "v2/Utils/extractNodes"
 import { SavedSearchAlertsList_me } from "v2/__generated__/SavedSearchAlertsList_me.graphql"
+import { SavedSearchAlertsEmptyResults } from "./Components/SavedSearchAlertsEmptyResults"
 
 interface SavedSearchAlertsListProps {
   me: SavedSearchAlertsList_me
@@ -48,33 +40,7 @@ const SavedSearchAlertsList: React.FC<SavedSearchAlertsListProps> = ({
           </Box>
         ))
       ) : (
-        <Box
-          mx="auto"
-          px={[2, 0, 0, 0]}
-          justifyContent="center"
-          maxWidth="540px"
-          pt={6}
-          pb={100}
-        >
-          <Flex flexDirection="column" alignItems="center">
-            <Text textAlign="center" variant="xl">
-              You haven't created any Alerts yet.
-            </Text>
-            <Text py={2} variant="sm" color="black60" textAlign="center">
-              Filter for the artworks you love on an Artist Page and tap ‘Create
-              Alert’ to be notified when new works are added to Artsy.
-            </Text>
-            <Button
-              // @ts-ignore
-              as={RouterLink}
-              to="/artists"
-              width="100%"
-              size="medium"
-            >
-              Explore Artists
-            </Button>
-          </Flex>
-        </Box>
+        <SavedSearchAlertsEmptyResults />
       )}
     </>
   )
