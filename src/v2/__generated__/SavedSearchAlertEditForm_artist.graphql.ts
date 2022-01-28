@@ -4,16 +4,16 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type SavedSearchEditAlert_artist = {
+export type SavedSearchAlertEditForm_artist = {
     readonly internalID: string;
     readonly name: string | null;
     readonly slug: string;
-    readonly " $refType": "SavedSearchEditAlert_artist";
+    readonly " $refType": "SavedSearchAlertEditForm_artist";
 };
-export type SavedSearchEditAlert_artist$data = SavedSearchEditAlert_artist;
-export type SavedSearchEditAlert_artist$key = {
-    readonly " $data"?: SavedSearchEditAlert_artist$data;
-    readonly " $fragmentRefs": FragmentRefs<"SavedSearchEditAlert_artist">;
+export type SavedSearchAlertEditForm_artist$data = SavedSearchAlertEditForm_artist;
+export type SavedSearchAlertEditForm_artist$key = {
+    readonly " $data"?: SavedSearchAlertEditForm_artist$data;
+    readonly " $fragmentRefs": FragmentRefs<"SavedSearchAlertEditForm_artist">;
 };
 
 
@@ -22,7 +22,7 @@ const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "SavedSearchEditAlert_artist",
+  "name": "SavedSearchAlertEditForm_artist",
   "selections": [
     {
       "alias": null,
@@ -49,5 +49,5 @@ const node: ReaderFragment = {
   "type": "Artist",
   "abstractKey": null
 };
-(node as any).hash = 'c38dd9b2ba7ea4c5ff3765ef29c1ab4d';
+(node as any).hash = 'ccdcd948b1202d1dc9a3c87bab8c71fc';
 export default node;

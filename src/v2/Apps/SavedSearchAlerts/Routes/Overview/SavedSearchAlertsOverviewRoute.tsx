@@ -9,37 +9,17 @@ import { SavedSearchAlertsOverviewRoute_me } from "v2/__generated__/SavedSearchA
 import { Media } from "v2/Utils/Responsive"
 import { EditAlertEntity } from "./types"
 import { extractNodes } from "v2/Utils/extractNodes"
-import {
-  SavedSearchAlertContextProvider,
-  useSavedSearchAlertContext,
-} from "./SavedSearchAlertContext"
-import { SavedSearchAleftFormValues } from "v2/Components/SavedSearchAlert/SavedSearchAlertModel"
-import { getSearchCriteriaFromFilters } from "v2/Components/ArtworkFilter/SavedSearch/Utils"
-import { useEditSavedSearchAlert } from "./useEditSavedSearchAlert"
-import createLogger from "v2/Utils/logger"
-import { ArtworkFilters } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
-import { getNamePlaceholder } from "v2/Components/SavedSearchAlert/Utils/getNamePlaceholder"
-import { SavedSearchEditFormDesktop } from "./components/SavedSearchEditFormDesktop"
-import { SavedSearchEditFormMobile } from "./components/SavedSearchEditFormMobile"
 import { SavedSearchAlertDeleteModal } from "./components/SavedSearchAlertDeleteModal"
 import {
   SavedSearchAlertListItemFragmentContainer,
   SavedSearchAlertListItemVariant,
 } from "./components/SavedSearchAlertListItem"
-
-const logger = createLogger(
-  "v2/Apps/SavedSearchAlerts/Routes/Overview/SavedSearchAlertsOverviewRoute.tsx"
-)
+import { SavedSearchAlertEditDesktop } from "./components/SavedSearchAlertEditDesktop"
+import { SavedSearchAlertEditMobile } from "./components/SavedSearchAlertEditMobile"
 
 interface SavedSearchAlertsOverviewRouteProps {
   me: SavedSearchAlertsOverviewRoute_me
   relay: RelayPaginationProp
-}
-
-const defaultUserSettings: SavedSearchAleftFormValues = {
-  name: "",
-  push: false,
-  email: false,
 }
 
 export const SavedSearchAlertsOverviewRoute: React.FC<SavedSearchAlertsOverviewRouteProps> = ({
@@ -51,21 +31,11 @@ export const SavedSearchAlertsOverviewRoute: React.FC<SavedSearchAlertsOverviewR
     setEditAlertEntity,
   ] = useState<EditAlertEntity | null>(null)
   const [showDeleteModal, setShowDeleteModal] = useState(false)
-  const {
-    userSettings,
-    entity,
-    searchCriteriaAttributes,
-    pills,
-    reset,
-  } = useSavedSearchAlertContext()
-  const { submitMutation: submitEditAlert } = useEditSavedSearchAlert()
   const alerts = extractNodes(me.savedSearchesConnection)
   const isEditMode = editAlertEntity !== null
-  const initialValues = userSettings ?? defaultUserSettings
 
   const handleCloseClick = () => {
     setEditAlertEntity(null)
-    reset()
   }
 
   const handleCompleted = () => {
@@ -84,30 +54,6 @@ export const SavedSearchAlertsOverviewRoute: React.FC<SavedSearchAlertsOverviewR
   const handleDeleted = () => {
     handleCompleted()
     handleCloseDeleteModal()
-  }
-
-  const handleSubmit = async (values: SavedSearchAleftFormValues) => {
-    try {
-      const namePlaceholder = getNamePlaceholder(entity!.name, pills)
-      const searchCriteria = getSearchCriteriaFromFilters(
-        entity!.id,
-        searchCriteriaAttributes as ArtworkFilters
-      )
-      await submitEditAlert({
-        input: {
-          searchCriteriaID: editAlertEntity!.id,
-          attributes: searchCriteria,
-          userAlertSettings: {
-            ...values,
-            name: values.name || namePlaceholder,
-          },
-        },
-      })
-
-      handleCompleted()
-    } catch (error) {
-      logger.error(error)
-    }
   }
 
   const list = (
@@ -143,11 +89,10 @@ export const SavedSearchAlertsOverviewRoute: React.FC<SavedSearchAlertsOverviewR
           <Column span={isEditMode ? 6 : 12}>{list}</Column>
           {isEditMode && editAlertEntity && (
             <Column span={6}>
-              <SavedSearchEditFormDesktop
-                initialValues={initialValues}
+              <SavedSearchAlertEditDesktop
                 editAlertEntity={editAlertEntity}
-                onSubmit={handleSubmit}
                 onCloseClick={handleCloseClick}
+                onCompleted={handleCompleted}
                 onDeleteClick={handleDeleteClick}
               />
             </Column>
@@ -156,15 +101,15 @@ export const SavedSearchAlertsOverviewRoute: React.FC<SavedSearchAlertsOverviewR
       </Media>
 
       <Media lessThan="md">
-        {list}
-        {isEditMode && editAlertEntity && (
-          <SavedSearchEditFormMobile
-            initialValues={initialValues}
+        {isEditMode && editAlertEntity ? (
+          <SavedSearchAlertEditMobile
             editAlertEntity={editAlertEntity}
-            onSubmit={handleSubmit}
             onCloseClick={handleCloseClick}
+            onCompleted={handleCompleted}
             onDeleteClick={handleDeleteClick}
           />
+        ) : (
+          list
         )}
       </Media>
 
@@ -179,16 +124,8 @@ export const SavedSearchAlertsOverviewRoute: React.FC<SavedSearchAlertsOverviewR
   )
 }
 
-const SavedSearchAlertsOverviewRouteContainer: React.FC<SavedSearchAlertsOverviewRouteProps> = props => {
-  return (
-    <SavedSearchAlertContextProvider>
-      <SavedSearchAlertsOverviewRoute {...props} />
-    </SavedSearchAlertContextProvider>
-  )
-}
-
 export const SavedSearchAlertsOverviewRoutePaginationContainer = createPaginationContainer(
-  SavedSearchAlertsOverviewRouteContainer,
+  SavedSearchAlertsOverviewRoute,
   {
     me: graphql`
       fragment SavedSearchAlertsOverviewRoute_me on Me {

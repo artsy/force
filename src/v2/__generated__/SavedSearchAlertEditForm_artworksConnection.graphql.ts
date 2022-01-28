@@ -5,7 +5,7 @@
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkAggregation = "ARTIST" | "ARTIST_NATIONALITY" | "ATTRIBUTION_CLASS" | "COLOR" | "DIMENSION_RANGE" | "FOLLOWED_ARTISTS" | "GALLERY" | "INSTITUTION" | "LOCATION_CITY" | "MAJOR_PERIOD" | "MATERIALS_TERMS" | "MEDIUM" | "MERCHANDISABLE_ARTISTS" | "PARTNER" | "PARTNER_CITY" | "PERIOD" | "PRICE_RANGE" | "TOTAL" | "%future added value";
-export type SavedSearchEditAlert_artworksConnection = {
+export type SavedSearchAlertEditForm_artworksConnection = {
     readonly aggregations: ReadonlyArray<{
         readonly slice: ArtworkAggregation | null;
         readonly counts: ReadonlyArray<{
@@ -14,12 +14,12 @@ export type SavedSearchEditAlert_artworksConnection = {
             readonly value: string;
         } | null> | null;
     } | null> | null;
-    readonly " $refType": "SavedSearchEditAlert_artworksConnection";
+    readonly " $refType": "SavedSearchAlertEditForm_artworksConnection";
 };
-export type SavedSearchEditAlert_artworksConnection$data = SavedSearchEditAlert_artworksConnection;
-export type SavedSearchEditAlert_artworksConnection$key = {
-    readonly " $data"?: SavedSearchEditAlert_artworksConnection$data;
-    readonly " $fragmentRefs": FragmentRefs<"SavedSearchEditAlert_artworksConnection">;
+export type SavedSearchAlertEditForm_artworksConnection$data = SavedSearchAlertEditForm_artworksConnection;
+export type SavedSearchAlertEditForm_artworksConnection$key = {
+    readonly " $data"?: SavedSearchAlertEditForm_artworksConnection$data;
+    readonly " $fragmentRefs": FragmentRefs<"SavedSearchAlertEditForm_artworksConnection">;
 };
 
 
@@ -28,7 +28,7 @@ const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "SavedSearchEditAlert_artworksConnection",
+  "name": "SavedSearchAlertEditForm_artworksConnection",
   "selections": [
     {
       "alias": null,
@@ -84,5 +84,5 @@ const node: ReaderFragment = {
   "type": "FilterArtworksConnection",
   "abstractKey": null
 };
-(node as any).hash = 'f638f5b0fffb6c90f466999150fcc71e';
+(node as any).hash = '05f610f94df2d649145406f055a3c373';
 export default node;

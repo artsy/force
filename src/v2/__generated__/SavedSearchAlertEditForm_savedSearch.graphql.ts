@@ -4,7 +4,7 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type SavedSearchEditAlert_savedSearch = {
+export type SavedSearchAlertEditForm_savedSearch = {
     readonly internalID: string;
     readonly acquireable: boolean | null;
     readonly additionalGeneIDs: ReadonlyArray<string>;
@@ -28,12 +28,12 @@ export type SavedSearchEditAlert_savedSearch = {
         readonly push: boolean;
     };
     readonly width: string | null;
-    readonly " $refType": "SavedSearchEditAlert_savedSearch";
+    readonly " $refType": "SavedSearchAlertEditForm_savedSearch";
 };
-export type SavedSearchEditAlert_savedSearch$data = SavedSearchEditAlert_savedSearch;
-export type SavedSearchEditAlert_savedSearch$key = {
-    readonly " $data"?: SavedSearchEditAlert_savedSearch$data;
-    readonly " $fragmentRefs": FragmentRefs<"SavedSearchEditAlert_savedSearch">;
+export type SavedSearchAlertEditForm_savedSearch$data = SavedSearchAlertEditForm_savedSearch;
+export type SavedSearchAlertEditForm_savedSearch$key = {
+    readonly " $data"?: SavedSearchAlertEditForm_savedSearch$data;
+    readonly " $fragmentRefs": FragmentRefs<"SavedSearchAlertEditForm_savedSearch">;
 };
 
 
@@ -42,7 +42,7 @@ const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "SavedSearchEditAlert_savedSearch",
+  "name": "SavedSearchAlertEditForm_savedSearch",
   "selections": [
     {
       "alias": null,
@@ -206,5 +206,5 @@ const node: ReaderFragment = {
   "type": "SearchCriteria",
   "abstractKey": null
 };
-(node as any).hash = '8e881734182975a179d797d229d647b6';
+(node as any).hash = 'f6c5751d54f3aa0df707345dd8abc620';
 export default node;
