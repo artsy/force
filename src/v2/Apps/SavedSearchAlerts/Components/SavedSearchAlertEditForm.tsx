@@ -32,6 +32,7 @@ import { getSearchCriteriaFromFilters } from "v2/Components/ArtworkFilter/SavedS
 import { useEditSavedSearchAlert } from "../useEditSavedSearchAlert"
 import createLogger from "v2/Utils/logger"
 import { Media } from "v2/Utils/Responsive"
+import { SavedSearchAlertEditFormPlaceholder } from "./SavedSearchAlertEditFormPlaceholder"
 
 const logger = createLogger(
   "v2/Apps/SavedSearchAlerts/Routes/Overview/Components/SavedSearchAlertEditForm"
@@ -167,21 +168,19 @@ const SavedSearchAlertEditForm: React.FC<SavedSearchAlertEditFormProps> = ({
             </Box>
 
             <Box>
-              <Box display="flex" justifyContent="space-between">
-                <Text>Email Alerts</Text>
-                <Checkbox
-                  onSelect={selected => setFieldValue("email", selected)}
-                  selected={values.email}
-                />
-              </Box>
+              <Checkbox
+                onSelect={selected => setFieldValue("email", selected)}
+                selected={values.email}
+              >
+                Email Alerts
+              </Checkbox>
               <Spacer mt={4} />
-              <Box display="flex" justifyContent="space-between">
-                <Text>Mobile Alerts</Text>
-                <Checkbox
-                  onSelect={selected => setFieldValue("push", selected)}
-                  selected={values.push}
-                />
-              </Box>
+              <Checkbox
+                onSelect={selected => setFieldValue("push", selected)}
+                selected={values.push}
+              >
+                Mobile Alerts
+              </Checkbox>
             </Box>
 
             <Media greaterThanOrEqual="md">
@@ -287,14 +286,6 @@ const SavedSearchAlertEditFormFragmentContainer = createFragmentContainer(
   }
 )
 
-const SavedSearchAlertEditFormPlaceholder = () => {
-  return (
-    <Box>
-      <Text>SavedSearchAlertEditFormPlaceholder</Text>
-    </Box>
-  )
-}
-
 const SAVED_SEARCH_ALERT_EDIT_FORM_QUERY = graphql`
   query SavedSearchAlertEditFormQuery($id: ID!, $artistId: String!) {
     me {
@@ -334,6 +325,7 @@ export const SavedSearchAlertEditFormQueryRenderer: React.FC<SavedSearchAlertEdi
       placeholder={<SavedSearchAlertEditFormPlaceholder />}
       cacheConfig={{ force: true }}
       render={({ props, error }) => {
+        // return <SavedSearchAlertEditFormPlaceholder />
         if (error) {
           console.error(error)
           return null
