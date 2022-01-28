@@ -1,6 +1,4 @@
-import { render, screen, waitFor } from "@testing-library/react"
-import userEvent from "@testing-library/user-event"
-import { flushPromiseQueue } from "v2/DevTools"
+import { render, screen, fireEvent } from "@testing-library/react"
 import { PreferencesApp } from "../PreferencesApp"
 
 describe("PreferencesApp", () => {
@@ -10,17 +8,17 @@ describe("PreferencesApp", () => {
     expect(screen.getByText("Preferences Center")).toBeInTheDocument()
   })
 
-  it.skip("allows user to uncheck all boxes with unsubscribe all", async () => {
+  it("allows user to uncheck all boxes with unsubscribe all", () => {
     render(<PreferencesApp></PreferencesApp>)
 
     let checkboxes = screen.getAllByRole("checkbox")
-    const unsubscribeFromAllCheckbox = checkboxes[checkboxes.length - 1]
+    let unsubscribeFromAllCheckbox = checkboxes[checkboxes.length - 1]
 
-    userEvent.click(unsubscribeFromAllCheckbox)
+    // Unsubscribe from all defaults to checked, so we click it twice!
+    fireEvent.click(unsubscribeFromAllCheckbox)
+    fireEvent.click(unsubscribeFromAllCheckbox)
 
-    await flushPromiseQueue()
-
-    await waitFor(() => expect(unsubscribeFromAllCheckbox).toBeChecked())
+    expect(screen.getAllByRole("checkbox")[checkboxes.length - 1]).toBeChecked()
 
     checkboxes.pop()
 
