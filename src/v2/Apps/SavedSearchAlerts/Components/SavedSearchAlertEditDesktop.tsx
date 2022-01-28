@@ -14,7 +14,7 @@ export const SavedSearchAlertEditDesktop: React.FC<EditFormProps> = ({
       <Box p={4} flex={1}>
         <Flex justifyContent="space-between" mb={6}>
           <Text variant="lg" flex={1} mr={1}>
-            {editAlertEntity.name}
+            Edit {editAlertEntity.name}
           </Text>
           <Clickable onClick={onCloseClick} mt={0.5}>
             <CloseIcon />

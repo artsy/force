@@ -14,7 +14,7 @@ export const SavedSearchAlertEditMobile: React.FC<EditFormProps> = ({
         <Clickable onClick={onCloseClick} mr={2}>
           <ArrowLeftIcon display="flex" aria-label="Back" title="Back" />
         </Clickable>
-        <Text variant="lg">{editAlertEntity.name}</Text>
+        <Text variant="lg">Edit {editAlertEntity.name}</Text>
       </Flex>
 
       <SavedSearchAlertEditFormQueryRenderer
