@@ -34,7 +34,7 @@ import createLogger from "v2/Utils/logger"
 import { Media } from "v2/Utils/Responsive"
 
 const logger = createLogger(
-  "v2/Apps/SavedSearchAlerts/Routes/Overview/components/SavedSearchAlertEditForm"
+  "v2/Apps/SavedSearchAlerts/Routes/Overview/Components/SavedSearchAlertEditForm"
 )
 
 interface SavedSearchAlertEditFormQueryRendererProps {

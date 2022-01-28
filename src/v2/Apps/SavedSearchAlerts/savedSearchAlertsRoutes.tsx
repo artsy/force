@@ -8,17 +8,8 @@ const SavedSearchAlertsApp = loadable(
       /* webpackChunkName: "savedSearchAlertsAppBundle" */ "./SavedSearchAlertsApp"
     ),
   {
-    resolveComponent: component => component.SavedSearchAlertsApp,
-  }
-)
-const OverviewRoute = loadable(
-  () =>
-    import(
-      /* webpackChunkName: "savedSearchAlertsAppBundle" */ "./Routes/Overview/SavedSearchAlertsOverviewRoute"
-    ),
-  {
     resolveComponent: component =>
-      component.SavedSearchAlertsOverviewRoutePaginationContainer,
+      component.SavedSearchAlertsAppPaginationContainer,
   }
 )
 
@@ -30,21 +21,12 @@ export const savedSearchAlertsRoutes: AppRouteConfig[] = [
     onClientSideRender: () => {
       SavedSearchAlertsApp.preload()
     },
-    children: [
-      {
-        path: "/",
-        getComponent: () => OverviewRoute,
-        onClientSideRender: () => {
-          OverviewRoute.preload()
-        },
-        query: graphql`
-          query savedSearchAlertsRoutes_SavedSearchAlertsOverviewRouteQuery {
-            me {
-              ...SavedSearchAlertsOverviewRoute_me
-            }
-          }
-        `,
-      },
-    ],
+    query: graphql`
+      query savedSearchAlertsRoutes_SavedSearchAlertsOverviewRouteQuery {
+        me {
+          ...SavedSearchAlertsApp_me
+        }
+      }
+    `,
   },
 ]

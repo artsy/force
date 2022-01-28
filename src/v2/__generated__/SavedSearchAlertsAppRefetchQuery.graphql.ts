@@ -4,23 +4,23 @@
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type SavedSearchAlertsOverviewRouteRefetchQueryVariables = {};
-export type SavedSearchAlertsOverviewRouteRefetchQueryResponse = {
+export type SavedSearchAlertsAppRefetchQueryVariables = {};
+export type SavedSearchAlertsAppRefetchQueryResponse = {
     readonly me: {
-        readonly " $fragmentRefs": FragmentRefs<"SavedSearchAlertsOverviewRoute_me">;
+        readonly " $fragmentRefs": FragmentRefs<"SavedSearchAlertsApp_me">;
     } | null;
 };
-export type SavedSearchAlertsOverviewRouteRefetchQuery = {
-    readonly response: SavedSearchAlertsOverviewRouteRefetchQueryResponse;
-    readonly variables: SavedSearchAlertsOverviewRouteRefetchQueryVariables;
+export type SavedSearchAlertsAppRefetchQuery = {
+    readonly response: SavedSearchAlertsAppRefetchQueryResponse;
+    readonly variables: SavedSearchAlertsAppRefetchQueryVariables;
 };
 
 
 
 /*
-query SavedSearchAlertsOverviewRouteRefetchQuery {
+query SavedSearchAlertsAppRefetchQuery {
   me {
-    ...SavedSearchAlertsOverviewRoute_me
+    ...SavedSearchAlertsApp_me
     id
   }
 }
@@ -33,7 +33,7 @@ fragment SavedSearchAlertListItem_item on SearchCriteria {
   }
 }
 
-fragment SavedSearchAlertsOverviewRoute_me on Me {
+fragment SavedSearchAlertsApp_me on Me {
   savedSearchesConnection(first: 50) {
     edges {
       node {
@@ -64,7 +64,7 @@ return {
     "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
-    "name": "SavedSearchAlertsOverviewRouteRefetchQuery",
+    "name": "SavedSearchAlertsAppRefetchQuery",
     "selections": [
       {
         "alias": null,
@@ -77,7 +77,7 @@ return {
           {
             "args": null,
             "kind": "FragmentSpread",
-            "name": "SavedSearchAlertsOverviewRoute_me"
+            "name": "SavedSearchAlertsApp_me"
           }
         ],
         "storageKey": null
@@ -90,7 +90,7 @@ return {
   "operation": {
     "argumentDefinitions": [],
     "kind": "Operation",
-    "name": "SavedSearchAlertsOverviewRouteRefetchQuery",
+    "name": "SavedSearchAlertsAppRefetchQuery",
     "selections": [
       {
         "alias": null,
@@ -209,7 +209,7 @@ return {
             "args": (v0/*: any*/),
             "filters": null,
             "handle": "connection",
-            "key": "SavedSearchAlertsOverviewRoute_savedSearchesConnection",
+            "key": "SavedSearchAlertsApp_savedSearchesConnection",
             "kind": "LinkedHandle",
             "name": "savedSearchesConnection"
           },
@@ -226,14 +226,14 @@ return {
     ]
   },
   "params": {
-    "cacheID": "f55e13901ce017fee40bec1d94d57fd1",
+    "cacheID": "2a3443aaa6a889983339541ab47a66ad",
     "id": null,
     "metadata": {},
-    "name": "SavedSearchAlertsOverviewRouteRefetchQuery",
+    "name": "SavedSearchAlertsAppRefetchQuery",
     "operationKind": "query",
-    "text": "query SavedSearchAlertsOverviewRouteRefetchQuery {\n  me {\n    ...SavedSearchAlertsOverviewRoute_me\n    id\n  }\n}\n\nfragment SavedSearchAlertListItem_item on SearchCriteria {\n  internalID\n  artistID\n  userAlertSettings {\n    name\n  }\n}\n\nfragment SavedSearchAlertsOverviewRoute_me on Me {\n  savedSearchesConnection(first: 50) {\n    edges {\n      node {\n        internalID\n        ...SavedSearchAlertListItem_item\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query SavedSearchAlertsAppRefetchQuery {\n  me {\n    ...SavedSearchAlertsApp_me\n    id\n  }\n}\n\nfragment SavedSearchAlertListItem_item on SearchCriteria {\n  internalID\n  artistID\n  userAlertSettings {\n    name\n  }\n}\n\nfragment SavedSearchAlertsApp_me on Me {\n  savedSearchesConnection(first: 50) {\n    edges {\n      node {\n        internalID\n        ...SavedSearchAlertListItem_item\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '467788a21b760bbe1f380db3f8a0b002';
+(node as any).hash = '51e7ac341cad1c867b93ae596e934826';
 export default node;

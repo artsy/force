@@ -4,7 +4,7 @@ import createLogger from "v2/Utils/logger"
 import { useDeleteSavedSearchAlert } from "../useDeleteSavedSearchAlert"
 
 const logger = createLogger(
-  "v2/Apps/SavedSearchAlerts/Routes/Overview/components/SavedSearchAlertDeleteModal"
+  "v2/Apps/SavedSearchAlerts/Routes/Overview/Components/SavedSearchAlertDeleteModal"
 )
 
 interface SavedSearchAlertDeleteModalProps {
