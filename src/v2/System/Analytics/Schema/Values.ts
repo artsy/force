@@ -146,6 +146,7 @@ export enum ActionType {
    */
   ClickedArtworkGroup = "clickedArtworkGroup",
   ClickedBuyViewingGroup = "clickedBuyViewingRoom",
+  SubmitAnotherArtwork = "submitAnotherArtwork",
 }
 
 /**
@@ -427,6 +428,7 @@ export enum ContextModule {
    * Viewing Room
    */
   ViewingRoomArtworkRail = "viewingRoomArtworkRail",
+  ConsignSubmissionFlow = "consignSubmissionFlow",
 }
 
 export enum Flow {
