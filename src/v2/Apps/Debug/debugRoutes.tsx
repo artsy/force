@@ -1,5 +1,8 @@
+import { Text } from "@artsy/palette"
 import loadable from "@loadable/component"
+import { HttpError } from "found"
 import { AppRouteConfig } from "v2/System/Router/Route"
+import { RouterLink } from "v2/System/Router/RouterLink"
 import { DebugInquiryApp } from "./DebugInquiryApp"
 
 const DebugApp = loadable(
@@ -23,6 +26,29 @@ export const debugRoutes: AppRouteConfig[] = [
         path: "baseline",
         Component: DebugApp,
       },
+      {
+        path: "error-404",
+        onServerSideRender: () => {
+          throw new HttpError(404)
+        },
+      },
+      {
+        path: "client-error-404",
+        Component: () => {
+          return (
+            <Text mt={4} variant="md">
+              <RouterLink to="/artist/example-404">Click to 404</RouterLink>
+            </Text>
+          )
+        },
+      },
+      {
+        path: "error-500",
+        onServerSideRender: () => {
+          throw new Error("500")
+        },
+      },
+
       // TODO: Remove once inquiry is complete
       {
         path: "inquiry",

@@ -23,7 +23,7 @@ const logger = createLogger("Apps/Components/AppShell")
 
 interface AppShellProps {
   children: React.ReactNode
-  match: Match
+  match?: Match
 }
 
 export const AppShell: React.FC<AppShellProps> = props => {
@@ -31,19 +31,19 @@ export const AppShell: React.FC<AppShellProps> = props => {
   useAuthValidation()
 
   const { children, match } = props
-  const routeConfig = findCurrentRoute(match)!
+  const routeConfig = match ? findCurrentRoute(match) : null
   const { isEigen } = useSystemContext()
-  const showNav = !routeConfig.hideNav
-  const showFooter = !isEigen && !routeConfig.hideFooter
-  const appContainerMaxWidth = routeConfig.displayFullPage ? "100%" : null
+  const showNav = !routeConfig?.hideNav
+  const showFooter = !isEigen && !routeConfig?.hideFooter
+  const appContainerMaxWidth = routeConfig?.displayFullPage ? "100%" : null
 
   // Check to see if a route has a onServerSideRender key; if so call it. Used
   // typically to preload bundle-split components (import()) while the route is
   // fetching data in the background.
   useEffect(() => {
-    if (isFunction(routeConfig.onClientSideRender)) {
+    if (isFunction(routeConfig?.onClientSideRender) && match) {
       try {
-        routeConfig.onClientSideRender({ match })
+        routeConfig?.onClientSideRender({ match })
       } catch (error) {
         logger.error(error)
       }
@@ -63,7 +63,7 @@ export const AppShell: React.FC<AppShellProps> = props => {
    * will cause the styles to update out of sync with the page change. Here we
    * wait for the route to finish rendering before setting the next theme.
    */
-  const nextTheme = routeConfig.theme ?? "v3"
+  const nextTheme = routeConfig?.theme ?? "v3"
   const [theme, setTheme] = useState<"v2" | "v3">(nextTheme)
   useRouteComplete({ onComplete: () => setTheme(nextTheme) })
 

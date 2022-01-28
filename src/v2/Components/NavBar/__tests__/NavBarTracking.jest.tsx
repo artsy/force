@@ -1,10 +1,10 @@
 import { mount } from "enzyme"
 import { AnalyticsSchema, SystemContextProvider } from "v2/System"
-import { useTracking } from "v2/System/Analytics/useTracking"
+import { useTracking } from "react-tracking"
 import { NavBarUserMenu } from "../Menus"
 import { NavBar } from "../NavBar"
 
-jest.mock("v2/System/Analytics/useTracking")
+jest.mock("react-tracking")
 jest.mock("v2/Utils/Hooks/useMatchMedia", () => ({
   __internal__useMatchMedia: () => ({ sm: false }),
 }))

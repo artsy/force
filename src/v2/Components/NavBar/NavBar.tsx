@@ -25,7 +25,7 @@ import {
 import { openAuthModal } from "v2/Utils/openAuthModal"
 import { ContextModule, Intent } from "@artsy/cohesion"
 import { AnalyticsSchema } from "v2/System"
-import { track, useTracking } from "v2/System/Analytics"
+import { track } from "v2/System/Analytics"
 import Events from "v2/Utils/Events"
 import { __internal__useMatchMedia } from "v2/Utils/Hooks/useMatchMedia"
 import { NavBarPrimaryLogo } from "./NavBarPrimaryLogo"
@@ -41,6 +41,7 @@ import { AppContainer } from "v2/Apps/Components/AppContainer"
 import { HorizontalPadding } from "v2/Apps/Components/HorizontalPadding"
 import { useNavBarHeight } from "./useNavBarHeight"
 import { RouterLink } from "v2/System/Router/RouterLink"
+import { useTracking } from "react-tracking"
 
 /**
  * Old Force pages have the navbar height hardcoded in several places. If

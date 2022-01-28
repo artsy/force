@@ -7,10 +7,11 @@ import {
 } from "@artsy/palette"
 import { SystemContextProvider, track } from "v2/System"
 import { AppRouteConfig } from "v2/System/Router/Route"
-import { useEffect } from "react";
-import * as React from "react";
+import { useEffect } from "react"
+import * as React from "react"
 import { HeadProvider } from "react-head"
 import { Environment } from "relay-runtime"
+// eslint-disable-next-line no-restricted-imports
 import { data as sd } from "sharify"
 import { Provider as StateProvider } from "unstated"
 import Events from "v2/Utils/Events"
@@ -70,6 +71,8 @@ export const Boot = track(undefined, {
 
   return (
     <Theme>
+      <GlobalStyles />
+
       <HeadProvider headTags={headTags}>
         <StateProvider>
           <SystemContextProvider {...contextProps}>
@@ -82,7 +85,6 @@ export const Boot = track(undefined, {
                   >
                     <ToastsProvider>
                       <Grid fluid maxWidth="100%">
-                        <GlobalStyles />
                         <FlashMessage />
                         <FocusVisible />
                         <SiftContainer />

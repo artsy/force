@@ -24,15 +24,18 @@ describe("ErrorBoundary", () => {
 
   it("calls componentDidCatch if error", () => {
     jest.spyOn(ErrorBoundary.prototype, "componentDidCatch")
+
     const ErrorComponent = () => {
       throw new Error("throw error")
       return null
     }
+
     mount(
       <ErrorBoundary>
         <ErrorComponent />
       </ErrorBoundary>
     )
+
     expect(ErrorBoundary.prototype.componentDidCatch).toHaveBeenCalled()
   })
 
@@ -41,16 +44,19 @@ describe("ErrorBoundary", () => {
       throw new Error("throw error")
       return null
     }
+
     const wrapper = mount(
       <ErrorBoundary>
         <ErrorComponent />
       </ErrorBoundary>
     )
+
     const state = wrapper.state() as any
-    expect(state.errorStack).toContain("Error: throw error")
+
+    expect(state.detail).toContain("Error: throw error")
   })
 
-  it("shows error modal when genericError is true", () => {
+  it("shows error page when genericError is true", () => {
     const wrapper = mount(
       <ErrorBoundary>
         <div>erroneous render</div>
@@ -58,15 +64,16 @@ describe("ErrorBoundary", () => {
     )
 
     wrapper.setState({
+      isError: true,
       genericError: true,
     })
 
     wrapper.update()
     expect(wrapper.text()).not.toContain("erroneous render")
-    expect(wrapper.find("ErrorModalWithReload").length).toEqual(1)
+    expect(wrapper.find("ErrorPage").length).toEqual(1)
   })
 
-  it("shows error modal when asyncChunkLoadError is true", () => {
+  it("shows error page when asyncChunkLoadError is true", () => {
     const wrapper = mount(
       <ErrorBoundary>
         <div>erroneous render</div>
@@ -74,28 +81,36 @@ describe("ErrorBoundary", () => {
     )
 
     wrapper.setState({
+      isError: true,
       asyncChunkLoadError: true,
     })
 
     wrapper.update()
     expect(wrapper.text()).not.toContain("erroneous render")
-    expect(wrapper.find("ErrorModalWithReload").length).toEqual(1)
+    expect(wrapper.find("ErrorPage").length).toEqual(1)
   })
 
-  it("it only shows ErrorModalWithReload if error is related to failed chunks", () => {
+  it("sets async chunk load error", () => {
     expect(
       ErrorBoundary.getDerivedStateFromError({
+        name: "error",
         message: "generic error",
       })
     ).toEqual({
       genericError: true,
+      isError: true,
+      message: "generic error",
     })
+
     expect(
       ErrorBoundary.getDerivedStateFromError({
+        name: "error",
         message: "Loading chunk c3495.js failed",
       })
     ).toEqual({
       asyncChunkLoadError: true,
+      isError: true,
+      message: "Loading chunk c3495.js failed",
     })
   })
 })
