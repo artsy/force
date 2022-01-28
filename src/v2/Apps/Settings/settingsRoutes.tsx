@@ -97,7 +97,7 @@ const handleServerSideRender = ({ req, res }) => {
 const SavedSearchAlertsApp = loadable(
   () =>
     import(
-      /* webpackChunkName: "savedSearchAlertsAppBundle" */ "./Routes/SavedSearchAlerts/SavedSearchAlertsApp"
+      /* webpackChunkName: "settingsBundle" */ "./Routes/SavedSearchAlerts/SavedSearchAlertsApp"
     ),
   {
     resolveComponent: component => component.SavedSearchAlertsApp,
@@ -106,7 +106,7 @@ const SavedSearchAlertsApp = loadable(
 const SavedSearchAlertsOverviewRoute = loadable(
   () =>
     import(
-      /* webpackChunkName: "savedSearchAlertsAppBundle" */ "./Routes/SavedSearchAlerts/SavedSearchAlertsOverviewRoute"
+      /* webpackChunkName: "settingsBundle" */ "./Routes/SavedSearchAlerts/SavedSearchAlertsOverviewRoute"
     ),
   {
     resolveComponent: component =>
