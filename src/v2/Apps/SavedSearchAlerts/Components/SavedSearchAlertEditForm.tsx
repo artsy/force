@@ -35,7 +35,7 @@ import { Media } from "v2/Utils/Responsive"
 import { SavedSearchAlertEditFormPlaceholder } from "./SavedSearchAlertEditFormPlaceholder"
 
 const logger = createLogger(
-  "v2/Apps/SavedSearchAlerts/Routes/Overview/Components/SavedSearchAlertEditForm"
+  "v2/Apps/SavedSearchAlerts/Components/SavedSearchAlertEditForm"
 )
 
 interface SavedSearchAlertEditFormQueryRendererProps {
@@ -61,7 +61,6 @@ const SavedSearchAlertEditForm: React.FC<SavedSearchAlertEditFormProps> = ({
   onDeleteClick,
   onCompleted,
 }) => {
-  console.log("[debug] savedSearch", savedSearch)
   const { userAlertSettings, internalID, ...other } = savedSearch
   const { submitMutation: submitEditAlert } = useEditSavedSearchAlert()
   const [searchCriteriaAttributes, setSearchCriteriaAttributes] = useState(
@@ -104,8 +103,6 @@ const SavedSearchAlertEditForm: React.FC<SavedSearchAlertEditFormProps> = ({
   }
 
   const handleSubmit = async (values: SavedSearchAleftFormValues) => {
-    console.log("[debug] submit")
-
     try {
       const namePlaceholder = getNamePlaceholder(entity!.name, pills)
       const searchCriteria = getSearchCriteriaFromFilters(

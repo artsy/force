@@ -85,12 +85,11 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
     <Box>
       <Media greaterThanOrEqual="md">
         <SavedSearchAlertHeader />
+        <Separator backgroundColor="black15" />
       </Media>
       <Media lessThan="md">{!isEditMode && <SavedSearchAlertHeader />}</Media>
 
       <FullBleed>
-        <Separator backgroundColor="black15" />
-
         <Media greaterThanOrEqual="md">
           <GridColumns gridColumnGap={0}>
             <Column span={isEditMode ? 6 : 12}>{list}</Column>
