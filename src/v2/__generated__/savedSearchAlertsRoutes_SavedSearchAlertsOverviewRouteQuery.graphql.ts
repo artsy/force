@@ -25,15 +25,20 @@ query savedSearchAlertsRoutes_SavedSearchAlertsOverviewRouteQuery {
   }
 }
 
+fragment SavedSearchAlertListItem_item on SearchCriteria {
+  internalID
+  artistID
+  userAlertSettings {
+    name
+  }
+}
+
 fragment SavedSearchAlertsOverviewRoute_me on Me {
   savedSearchesConnection(first: 50) {
     edges {
       node {
         internalID
-        artistID
-        userAlertSettings {
-          name
-        }
+        ...SavedSearchAlertListItem_item
         __typename
       }
       cursor
@@ -221,12 +226,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "0c306a61c03a7aab94ee364ff3f827f4",
+    "cacheID": "b661ddbe06d9b615504a448748953678",
     "id": null,
     "metadata": {},
     "name": "savedSearchAlertsRoutes_SavedSearchAlertsOverviewRouteQuery",
     "operationKind": "query",
-    "text": "query savedSearchAlertsRoutes_SavedSearchAlertsOverviewRouteQuery {\n  me {\n    ...SavedSearchAlertsOverviewRoute_me\n    id\n  }\n}\n\nfragment SavedSearchAlertsOverviewRoute_me on Me {\n  savedSearchesConnection(first: 50) {\n    edges {\n      node {\n        internalID\n        artistID\n        userAlertSettings {\n          name\n        }\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query savedSearchAlertsRoutes_SavedSearchAlertsOverviewRouteQuery {\n  me {\n    ...SavedSearchAlertsOverviewRoute_me\n    id\n  }\n}\n\nfragment SavedSearchAlertListItem_item on SearchCriteria {\n  internalID\n  artistID\n  userAlertSettings {\n    name\n  }\n}\n\nfragment SavedSearchAlertsOverviewRoute_me on Me {\n  savedSearchesConnection(first: 50) {\n    edges {\n      node {\n        internalID\n        ...SavedSearchAlertListItem_item\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();

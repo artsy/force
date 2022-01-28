@@ -1,14 +1,4 @@
-import {
-  Box,
-  Text,
-  GridColumns,
-  Column,
-  Flex,
-  FullBleed,
-  Separator,
-  Clickable,
-  Spacer,
-} from "@artsy/palette"
+import { GridColumns, Column, FullBleed, Separator } from "@artsy/palette"
 import {
   createPaginationContainer,
   graphql,
@@ -32,6 +22,10 @@ import { getNamePlaceholder } from "v2/Components/SavedSearchAlert/Utils/getName
 import { SavedSearchEditFormDesktop } from "./components/SavedSearchEditFormDesktop"
 import { SavedSearchEditFormMobile } from "./components/SavedSearchEditFormMobile"
 import { SavedSearchAlertDeleteModal } from "./components/SavedSearchAlertDeleteModal"
+import {
+  SavedSearchAlertListItemFragmentContainer,
+  SavedSearchAlertListItemVariant,
+} from "./components/SavedSearchAlertListItem"
 
 const logger = createLogger(
   "v2/Apps/SavedSearchAlerts/Routes/Overview/SavedSearchAlertsOverviewRoute.tsx"
@@ -118,35 +112,25 @@ export const SavedSearchAlertsOverviewRoute: React.FC<SavedSearchAlertsOverviewR
 
   const list = (
     <>
-      {alerts.map(edge => (
-        <Box key={edge.internalID} p={4}>
-          <Flex
-            flexDirection="row"
-            alignItems="center"
-            justifyContent="space-between"
-          >
-            <Text variant="lg">{edge.userAlertSettings.name}</Text>
-            <Flex flexDirection="row" alignItems="center">
-              <Clickable
-                textDecoration="underline"
-                onClick={() => {
-                  setEditAlertEntity({
-                    id: edge.internalID,
-                    name: edge.userAlertSettings.name!,
-                    artistId: edge.artistID!,
-                  })
-                }}
-              >
-                <Text variant="sm">Edit</Text>
-              </Clickable>
-              <Spacer ml={2} />
-              <Clickable textDecoration="underline">
-                <Text variant="sm">View All</Text>
-              </Clickable>
-            </Flex>
-          </Flex>
-        </Box>
-      ))}
+      {alerts.map(edge => {
+        const isSelected = editAlertEntity?.id === edge.internalID
+        let variant: SavedSearchAlertListItemVariant | undefined
+
+        if (editAlertEntity?.id === edge.internalID) {
+          variant = "active"
+        } else if (!!editAlertEntity && !isSelected) {
+          variant = "inactive"
+        }
+
+        return (
+          <SavedSearchAlertListItemFragmentContainer
+            key={edge.internalID}
+            item={edge}
+            variant={variant}
+            onEditAlertClick={setEditAlertEntity}
+          />
+        )
+      })}
     </>
   )
 
@@ -155,7 +139,7 @@ export const SavedSearchAlertsOverviewRoute: React.FC<SavedSearchAlertsOverviewR
       <Separator backgroundColor="black15" />
 
       <Media greaterThanOrEqual="md">
-        <GridColumns>
+        <GridColumns gridColumnGap={0}>
           <Column span={isEditMode ? 6 : 12}>{list}</Column>
           {isEditMode && editAlertEntity && (
             <Column span={6}>
@@ -215,10 +199,7 @@ export const SavedSearchAlertsOverviewRoutePaginationContainer = createPaginatio
           edges {
             node {
               internalID
-              artistID
-              userAlertSettings {
-                name
-              }
+              ...SavedSearchAlertListItem_item
             }
           }
         }

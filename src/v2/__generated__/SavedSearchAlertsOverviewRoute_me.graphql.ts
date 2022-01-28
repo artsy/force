@@ -9,10 +9,7 @@ export type SavedSearchAlertsOverviewRoute_me = {
         readonly edges: ReadonlyArray<{
             readonly node: {
                 readonly internalID: string;
-                readonly artistID: string | null;
-                readonly userAlertSettings: {
-                    readonly name: string | null;
-                };
+                readonly " $fragmentRefs": FragmentRefs<"SavedSearchAlertListItem_item">;
             } | null;
         } | null> | null;
     } | null;
@@ -78,33 +75,13 @@ const node: ReaderFragment = {
                   "alias": null,
                   "args": null,
                   "kind": "ScalarField",
-                  "name": "artistID",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "concreteType": "SavedSearchUserAlertSettings",
-                  "kind": "LinkedField",
-                  "name": "userAlertSettings",
-                  "plural": false,
-                  "selections": [
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "name",
-                      "storageKey": null
-                    }
-                  ],
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
                   "name": "__typename",
                   "storageKey": null
+                },
+                {
+                  "args": null,
+                  "kind": "FragmentSpread",
+                  "name": "SavedSearchAlertListItem_item"
                 }
               ],
               "storageKey": null
@@ -151,5 +128,5 @@ const node: ReaderFragment = {
   "type": "Me",
   "abstractKey": null
 };
-(node as any).hash = 'bb876fd05d5b2ab605f4d4c7368bf6b8';
+(node as any).hash = '8929c934dc3923a4f8530731295a4f9c';
 export default node;
