@@ -33,6 +33,7 @@ import { useEditSavedSearchAlert } from "../useEditSavedSearchAlert"
 import createLogger from "v2/Utils/logger"
 import { Media } from "v2/Utils/Responsive"
 import { SavedSearchAlertEditFormPlaceholder } from "./SavedSearchAlertEditFormPlaceholder"
+import { isEqual } from "lodash"
 
 const logger = createLogger(
   "v2/Apps/SavedSearchAlerts/Components/SavedSearchAlertEditForm"
@@ -63,6 +64,7 @@ const SavedSearchAlertEditForm: React.FC<SavedSearchAlertEditFormProps> = ({
 }) => {
   const { userAlertSettings, internalID, ...other } = savedSearch
   const { submitMutation: submitEditAlert } = useEditSavedSearchAlert()
+  const [hasChangedFilters, setHasChangedFilters] = useState(false)
   const [searchCriteriaAttributes, setSearchCriteriaAttributes] = useState(
     (other as unknown) as ArtworkFilters
   )
@@ -96,6 +98,7 @@ const SavedSearchAlertEditForm: React.FC<SavedSearchAlertEditFormProps> = ({
       filterValue = initialArtworkFilterState[pill.filterName]
     }
 
+    setHasChangedFilters(true)
     setSearchCriteriaAttributes({
       ...searchCriteriaAttributes,
       [pill.filterName]: filterValue,
@@ -127,11 +130,7 @@ const SavedSearchAlertEditForm: React.FC<SavedSearchAlertEditFormProps> = ({
   }
 
   return (
-    <Formik
-      initialValues={initialValues}
-      enableReinitialize
-      onSubmit={handleSubmit}
-    >
+    <Formik initialValues={{ ...initialValues }} onSubmit={handleSubmit}>
       {({
         isSubmitting,
         values,
@@ -140,92 +139,106 @@ const SavedSearchAlertEditForm: React.FC<SavedSearchAlertEditFormProps> = ({
         handleBlur,
         setFieldValue,
         handleSubmit,
-      }) => (
-        <Box>
-          <Join separator={<Spacer mt={4} />}>
-            <Input
-              title="Name"
-              name="name"
-              placeholder={namePlaceholder}
-              value={values.name}
-              onChange={handleChange("name")}
-              onBlur={handleBlur("name")}
-              error={errors.name}
-              maxLength={75}
-            />
+      }) => {
+        let isSaveAlertButtonDisabled = true
 
-            <Box>
-              <Text variant="xs" textTransform="uppercase">
-                Filters
-              </Text>
-              <Spacer mt={2} />
-              <Flex flexWrap="wrap" mx={-0.5}>
-                <Pills items={pills} onDeletePress={removePill} />
-              </Flex>
-            </Box>
+        if (hasChangedFilters || !isEqual(initialValues, values)) {
+          isSaveAlertButtonDisabled = false
+        }
 
-            <Box>
-              <Checkbox
-                onSelect={selected => setFieldValue("email", selected)}
-                selected={values.email}
-              >
-                Email Alerts
-              </Checkbox>
-              <Spacer mt={4} />
-              <Checkbox
-                onSelect={selected => setFieldValue("push", selected)}
-                selected={values.push}
-              >
-                Mobile Alerts
-              </Checkbox>
-            </Box>
+        if (!values.email && !values.push) {
+          isSaveAlertButtonDisabled = true
+        }
 
-            <Media greaterThanOrEqual="md">
-              <Spacer mt={6} />
+        return (
+          <Box>
+            <Join separator={<Spacer mt={4} />}>
+              <Input
+                title="Name"
+                name="name"
+                placeholder={namePlaceholder}
+                value={values.name}
+                onChange={handleChange("name")}
+                onBlur={handleBlur("name")}
+                error={errors.name}
+                maxLength={75}
+              />
 
-              <Flex>
+              <Box>
+                <Text variant="xs" textTransform="uppercase">
+                  Filters
+                </Text>
+                <Spacer mt={2} />
+                <Flex flexWrap="wrap" mx={-0.5}>
+                  <Pills items={pills} onDeletePress={removePill} />
+                </Flex>
+              </Box>
+
+              <Box>
+                <Checkbox
+                  onSelect={selected => setFieldValue("email", selected)}
+                  selected={values.email}
+                >
+                  Email Alerts
+                </Checkbox>
+                <Spacer mt={4} />
+                <Checkbox
+                  onSelect={selected => setFieldValue("push", selected)}
+                  selected={values.push}
+                >
+                  Mobile Alerts
+                </Checkbox>
+              </Box>
+
+              <Media greaterThanOrEqual="md">
+                <Spacer mt={6} />
+
+                <Flex>
+                  <Button
+                    variant="secondaryOutline"
+                    flex={1}
+                    onClick={onDeleteClick}
+                  >
+                    Delete Alert
+                  </Button>
+                  <Spacer ml={2} />
+                  <Button
+                    flex={1}
+                    loading={isSubmitting}
+                    onClick={() => handleSubmit()}
+                    disabled={isSaveAlertButtonDisabled}
+                  >
+                    Save Alert
+                  </Button>
+                </Flex>
+              </Media>
+
+              <Media lessThan="md">
+                <Spacer mt={4} />
+
+                <Button
+                  loading={isSubmitting}
+                  width="100%"
+                  onClick={() => handleSubmit()}
+                  disabled={isSaveAlertButtonDisabled}
+                >
+                  Save Alert
+                </Button>
+
+                <Spacer mt={1} />
+
                 <Button
                   variant="secondaryOutline"
-                  flex={1}
+                  width="100%"
                   onClick={onDeleteClick}
                 >
                   Delete Alert
                 </Button>
-                <Spacer ml={2} />
-                <Button
-                  flex={1}
-                  loading={isSubmitting}
-                  onClick={() => handleSubmit()}
-                >
-                  Save Alert
-                </Button>
-              </Flex>
-            </Media>
-
-            <Media lessThan="md">
-              <Spacer mt={4} />
-
-              <Button
-                loading={isSubmitting}
-                width="100%"
-                onClick={() => handleSubmit()}
-              >
-                Save Alert
-              </Button>
-
-              <Spacer mt={1} />
-
-              <Button
-                variant="secondaryOutline"
-                width="100%"
-                onClick={onDeleteClick}
-              >
-                Delete Alert
-              </Button>
-            </Media>
-          </Join>
-        </Box>
-      )}
+              </Media>
+            </Join>
+          </Box>
+        )
+      }}
     </Formik>
   )
 }
