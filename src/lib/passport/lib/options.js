@@ -4,6 +4,8 @@ module.exports = {
   appleCallbackPath: "/users/auth/apple/callback",
   facebookPath: "/users/auth/facebook",
   facebookCallbackPath: "/users/auth/facebook/callback",
+  googlePath: "/users/auth/google",
+  googleCallbackPath: "/users/auth/google/callback",
 
   // Landing pages
   loginPagePath: "/log_in",

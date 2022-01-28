@@ -16,6 +16,7 @@ html(lang="en")
       pre!= error
       a( href=ap.facebookPath ) Login via Facebook
       a( href=ap.applePath ) Login via Apple
+      a( href=ap.googlePath ) Login via Google
       form( action=ap.loginPagePath, method='POST' )
         h3 Login via Email
         label Email
@@ -30,6 +31,7 @@ html(lang="en")
       pre!= error
       a( href=ap.facebookPath ) Signup via Facebook
       a( href=ap.applePath ) Signup via Apple
+      a( href=ap.googlePath ) Signup via Google
       form( action=ap.signupPagePath, method='POST' )
         h3 Signup via Email
         label Name

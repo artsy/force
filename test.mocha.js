@@ -11,7 +11,7 @@ require("should")
 require("./src/lib/jade_hook")
 
 const path = require("path")
-const Adapter = require('@wojtekmaj/enzyme-adapter-react-17')
+const Adapter = require("@wojtekmaj/enzyme-adapter-react-17")
 const Enzyme = require("enzyme")
 const sd = require("sharify").data
 
@@ -27,6 +27,7 @@ sd.AP = {
   loginPagePath: "/login",
   signupPagePath: "/signup",
   facebookPath: "/facebook",
+  googlePath: "/google",
   twitterPath: "/twitter",
 }
 sd.APP_URL = "http://artsy.net"

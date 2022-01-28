@@ -25,6 +25,8 @@ module.exports = function (req, res, next) {
       "appleCallbackPath",
       "facebookPath",
       "facebookCallbackPath",
+      "googlePath",
+      "googleCallbackPath",
       "loginPagePath",
       "signupPagePath",
       "settingsPagePath",

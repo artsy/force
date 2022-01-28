@@ -95,6 +95,50 @@ module.exports.facebook = function (req, token, refreshToken, profile, done) {
   }
 }
 
+module.exports.google = function (
+  req,
+  accessToken,
+  refreshToken,
+  profile,
+  done
+) {
+  // Link Google account
+  if (req.user) {
+    return request
+      .post(`${opts.ARTSY_URL}/api/v1/me/authentications/google`)
+      .set({ "User-Agent": req.get("user-agent") })
+      .send({
+        oauth_token: accessToken,
+        access_token: req.user.get("accessToken"),
+      })
+      .end(err => done(err, req.user))
+    // Login or signup with Google
+  } else {
+    const post = request
+      .post(`${opts.ARTSY_URL}/oauth2/access_token`)
+      .set({ "User-Agent": req.get("user-agent") })
+      .query({
+        client_id: opts.ARTSY_ID,
+        client_secret: opts.ARTSY_SECRET,
+        grant_type: "oauth_token",
+        oauth_token: accessToken,
+        oauth_provider: "google",
+      })
+
+    if (req && req.connection && req.connection.remoteAddress) {
+      post.set("X-Forwarded-For", resolveProxies(req))
+    }
+
+    post.end(
+      onAccessToken(req, done, {
+        oauth_token: accessToken,
+        provider: "google",
+        name: profile != null ? profile.displayName : undefined,
+      })
+    )
+  }
+}
+
 module.exports.apple = function (
   req,
   idToken,

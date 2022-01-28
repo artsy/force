@@ -25,3 +25,8 @@ html(lang="en")
       else
         a( href=ap.applePath ) Connect Apple
       br
+      if providers.indexOf('google') > -1
+        a( href='/unlink/google' ) Disconnect Google
+      else
+        a( href=ap.googlePath ) Connect Google
+      br

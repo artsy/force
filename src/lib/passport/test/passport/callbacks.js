@@ -3,6 +3,9 @@ const rewire = require("rewire")
 const sinon = require("sinon")
 const cbs = rewire("../../lib/passport/callbacks")
 
+/* eslint-disable jest/expect-expect, jest/no-done-callback */
+// TODO: Refactor artsy-passport code and take care of these warnings!
+
 describe("passport callbacks", function () {
   let req
   let request
@@ -68,6 +71,21 @@ describe("passport callbacks", function () {
     request.end.args[0][0](null, res)
   })
 
+  it("gets a user with an access token google", function (done) {
+    cbs.google(req, "foo-token", "refresh-token", {}, function (err, user) {
+      user.get("accessToken").should.equal("access-token")
+      done()
+    })
+    request.post.args[0][0].should.equal(
+      "http://apiz.artsy.net/oauth2/access_token"
+    )
+    const queryParams = request.query.args[0][0]
+    queryParams.oauth_provider.should.equal("google")
+    queryParams.oauth_token.should.equal("foo-token")
+    const res = { body: { access_token: "access-token" }, status: 200 }
+    request.end.args[0][0](null, res)
+  })
+
   it("gets a user with an access token apple", function (done) {
     const decodedIdToken = {
       email: "some-email@some.com",
@@ -124,3 +142,5 @@ describe("passport callbacks", function () {
     request.set.args[1][0]["User-Agent"].should.equal("foo-bar-baz-ua")
   })
 })
+
+/* eslint-enable jest/expect-expect, jest/no-done-callback */

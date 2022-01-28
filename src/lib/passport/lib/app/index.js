@@ -62,6 +62,15 @@ module.exports = function () {
     ssoAndRedirectBack
   )
 
+  // Google OAuth
+  app.get(opts.googlePath, setCampaign, beforeSocialAuth("google"))
+  app.get(
+    opts.googleCallbackPath,
+    afterSocialAuth("google"),
+    trackSignup("google"),
+    ssoAndRedirectBack
+  )
+
   // Logout middleware
   app.get(opts.logoutPath, denyBadLogoutLinks, logout)
   app.delete(opts.logoutPath, logout)
