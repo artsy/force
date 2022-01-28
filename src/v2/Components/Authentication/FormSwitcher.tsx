@@ -23,6 +23,7 @@ export interface FormSwitcherProps {
   isStatic?: boolean
   onAppleLogin?: (e: Event) => void
   onFacebookLogin?: (e: Event) => void
+  onGoogleLogin?: (e: Event) => void
   onTwitterLogin?: (e: Event) => void
   options: ModalOptions
   title?: string
@@ -30,6 +31,7 @@ export interface FormSwitcherProps {
   submitUrls: { [P in ModalType]: string } & {
     apple: string
     facebook: string
+    google: string
     twitter?: string
   }
   tracking?: TrackingProp
@@ -223,6 +225,21 @@ export class FormSwitcher extends Component<FormSwitcherProps, State> {
                 this.props.submitUrls.facebook +
                 `?${authQueryData}` +
                 "&service=facebook"
+              window.location.assign(href)
+            }
+          }}
+          onGoogleLogin={() => {
+            if (this.props.onSocialAuthEvent) {
+              this.props.onSocialAuthEvent({
+                ...options,
+                service: "google",
+              })
+            }
+            if (typeof window !== "undefined") {
+              const href =
+                this.props.submitUrls.google +
+                `?${authQueryData}` +
+                "&service=google"
               window.location.assign(href)
             }
           }}

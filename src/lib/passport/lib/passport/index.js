@@ -5,6 +5,7 @@
 const passport = require("passport")
 const FacebookStrategy = require("passport-facebook").Strategy
 const AppleStrategy = require("passport-apple")
+const GoogleStrategy = require("passport-google-oauth20").Strategy
 const LocalWithOtpStrategy = require("@artsy/passport-local-with-otp").Strategy
 const callbacks = require("./callbacks")
 const { serialize, deserialize } = require("./serializers")
@@ -35,6 +36,21 @@ module.exports = function () {
           callbackURL: `${opts.APP_URL}${opts.facebookCallbackPath}`,
         },
         callbacks.facebook
+      )
+    )
+  }
+
+  if (opts.GOOGLE_CLIENT_ID && opts.GOOGLE_SECRET) {
+    passport.use(
+      new GoogleStrategy(
+        {
+          state: true,
+          clientID: opts.GOOGLE_CLIENT_ID,
+          clientSecret: opts.GOOGLE_SECRET,
+          passReqToCallback: true,
+          callbackURL: `${opts.APP_URL}${opts.googleCallbackPath}`,
+        },
+        callbacks.google
       )
     )
   }

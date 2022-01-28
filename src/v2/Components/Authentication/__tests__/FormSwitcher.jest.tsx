@@ -105,6 +105,7 @@ describe("FormSwitcher", () => {
         submitURLs: {
           apple: "/users/auth/apple",
           facebook: "/users/auth/facebook",
+          google: "/users/auth/google",
           forgot: "/forgot",
           login: "/login",
           signup: "/signup",

@@ -16,6 +16,7 @@ const getWrapper = (
       submitUrls={{
         apple: "/users/auth/apple",
         facebook: "/users/auth/facebook",
+        google: "/users/auth/google",
         login: "/login",
         signup: "/signup",
         forgot: "/forgot",

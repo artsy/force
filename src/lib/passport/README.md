@@ -28,6 +28,8 @@ app.use artsyPassport
   FACEBOOK_SECRET: # Facebook app secret
   ARTSY_ID: # Artsy client id
   ARTSY_SECRET: # Artsy client secret
+  GOOGLE_ID: # Google client id
+  GOOGLE_SECRET: # Google client secret
   ARTSY_URL: # SSL Artsy url e.g. https://artsy.net
   APP_URL: # Url pointing back to your app e.g. http://flare.artsy.net
   SEGMENT_WRITE_KEY: # Segment write key to track signup
@@ -36,8 +38,12 @@ app.use artsyPassport
   # -----------------------------------------
 
   # Social auth
-  facebookPath: '/users/auth/facebook'
-  facebookCallbackPath: '/users/auth/facebook/callback'
+  applePath: '/users/auth/apple',
+  appleCallbackPath: '/users/auth/apple/callback',
+  facebookPath: '/users/auth/facebook',
+  facebookCallbackPath: '/users/auth/facebook/callback',
+  googlePath: '/users/auth/google',
+  googleCallbackPath: '/users/auth/google/callback',
 
   # Landing pages
   loginPagePath: '/log_in'

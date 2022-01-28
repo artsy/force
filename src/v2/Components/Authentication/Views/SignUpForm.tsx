@@ -11,7 +11,7 @@ import { Formik, FormikProps } from "formik"
 import { Component } from "react"
 import * as React from "react"
 import { recaptcha } from "v2/Utils/recaptcha"
-import { data as sd } from "sharify"
+import { data as sd } from "sharify" // eslint-disable-line no-restricted-imports
 import { SignUpForm_requestLocation } from "v2/__generated__/SignUpForm_requestLocation.graphql"
 import { Banner, Box, Button, Input, Join, Spacer, Text } from "@artsy/palette"
 import { AuthenticationPasswordInput } from "../Components/AuthenticationPasswordInput"
@@ -266,6 +266,14 @@ export class SignUpForm extends Component<SignUpFormProps, SignUpFormState> {
                       await validateForm()
                     } else {
                       this.props.onFacebookLogin?.(e)
+                    }
+                  }}
+                  onGoogleLogin={async e => {
+                    if (!values.accepted_terms_of_service) {
+                      setTouched({ accepted_terms_of_service: true })
+                      await validateForm()
+                    } else {
+                      this.props.onGoogleLogin?.(e)
                     }
                   }}
                   showRecaptchaDisclaimer={this.props.showRecaptchaDisclaimer}
