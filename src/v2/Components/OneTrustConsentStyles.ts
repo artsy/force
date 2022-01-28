@@ -404,10 +404,19 @@ export const OneTrustConsentStyles = createGlobalStyle`
         boxShadow: DROP_SHADOW,
       })}
 
+      .ot-sdk-container {
+        ${toStyle({
+          display: "flex",
+        })}
+      }
+
       .ot-sdk-row {
         ${toStyle({
           display: "flex",
+          width: "100%",
+          maxWidth: THEME.breakpoints.lg,
           padding: THEME.space[4],
+          margin: "auto",
         })}
 
         @media (max-width: ${THEME.breakpoints.sm}) {
@@ -433,6 +442,7 @@ export const OneTrustConsentStyles = createGlobalStyle`
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
+        flex: 1,
       })}
     }
 
