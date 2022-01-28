@@ -13,6 +13,7 @@ export type SearchCriteriaAttributes = {
     acquireable?: boolean | null;
     additionalGeneIDs?: Array<string> | null;
     artistID?: string | null;
+    artistIDs?: Array<string> | null;
     atAuction?: boolean | null;
     attributionClass?: Array<string> | null;
     colors?: Array<string> | null;
