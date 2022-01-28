@@ -106,6 +106,10 @@ const renderSubmissionFlowStep = ({ Component, props, match, resolving }) => {
 const prepareSubmissionFlowStepVariables = data => {
   let searchFields = { id: data.id, externalId: null }
 
+  // This code is here to support externalId UUIDs in url
+  // (i.e. /submissions/:id/something and :id is an UUID).
+  // If :id in url is not a number - the code passes
+  // externalId to metaphysics instead of id.
   const sequentialIdRegex = new RegExp(/^\d+$/)
   if (!sequentialIdRegex.test(data.id)) {
     searchFields.externalId = data.id
