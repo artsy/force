@@ -60,6 +60,7 @@ const SavedSearchAlertEditForm: React.FC<SavedSearchAlertEditFormProps> = ({
   onDeleteClick,
   onCompleted,
 }) => {
+  console.log("[debug] savedSearch", savedSearch)
   const { userAlertSettings, internalID, ...other } = savedSearch
   const { submitMutation: submitEditAlert } = useEditSavedSearchAlert()
   const [searchCriteriaAttributes, setSearchCriteriaAttributes] = useState(
@@ -338,20 +339,20 @@ export const SavedSearchAlertEditFormQueryRenderer: React.FC<SavedSearchAlertEdi
           return null
         }
 
-        if (!props) {
-          return <SavedSearchAlertEditFormPlaceholder />
+        if (props?.artist && props.artworksConnection && props.me) {
+          return (
+            <SavedSearchAlertEditFormFragmentContainer
+              savedSearch={props.me?.savedSearch!}
+              artist={props.artist!}
+              artworksConnection={props.artworksConnection!}
+              editAlertEntity={editAlertEntity}
+              onDeleteClick={onDeleteClick}
+              onCompleted={onCompleted}
+            />
+          )
         }
 
-        return (
-          <SavedSearchAlertEditFormFragmentContainer
-            savedSearch={props.me?.savedSearch!}
-            artist={props.artist!}
-            artworksConnection={props.artworksConnection!}
-            editAlertEntity={editAlertEntity}
-            onDeleteClick={onDeleteClick}
-            onCompleted={onCompleted}
-          />
-        )
+        return <SavedSearchAlertEditFormPlaceholder />
       }}
     />
   )
