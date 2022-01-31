@@ -452,6 +452,19 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
               <Spacer mt={1} />
             )}
 
+          {avalaraPhase2Enabled && (
+            <Text variant="xs" color="black60">
+              Taxes may apply at checkout.{" "}
+              <a
+                href="https://support.artsy.net/hc/en-us/articles/360047294733-How-is-sales-tax-and-VAT-handled-on-works-listed-with-secure-checkout-"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Learn more.
+              </a>
+            </Text>
+          )}
+
           {artworkEcommerceAvailable && artwork.shippingOrigin && (
             <Text variant="xs" color="black60">
               Ships from {artwork.shippingOrigin}
