@@ -36,7 +36,7 @@ const SavedSearchAlertsList: React.FC<SavedSearchAlertsListProps> = ({
                 </Clickable>
               </Flex>
             </Flex>
-            {!(alerts.length === i + 1) && <Separator mt={4} mr={[2, 4]} />}
+            {!(alerts.length === i + 1) && <Separator mt={4} />}
           </Box>
         ))
       ) : (

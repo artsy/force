@@ -59,23 +59,37 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
 
   const list = (
     <>
-      {alerts.map(edge => {
-        const isSelected = editAlertEntity?.id === edge.internalID
+      {alerts.map((edge, index) => {
+        const isLastEdge = alerts.length === index + 1
+        const isCurrentEdgeSelected = editAlertEntity?.id === edge.internalID
+        const nextEdgeId = alerts[index + 1]?.internalID
+        const isNextEdgeSelected =
+          !!nextEdgeId && nextEdgeId === editAlertEntity?.id
+
+        const isInvisibleSeparator =
+          isCurrentEdgeSelected || isNextEdgeSelected || isLastEdge
         let variant: SavedSearchAlertListItemVariant | undefined
 
         if (editAlertEntity?.id === edge.internalID) {
           variant = "active"
-        } else if (!!editAlertEntity && !isSelected) {
+        } else if (!!editAlertEntity && !isCurrentEdgeSelected) {
           variant = "inactive"
         }
 
         return (
-          <SavedSearchAlertListItemFragmentContainer
-            key={edge.internalID}
-            item={edge}
-            variant={variant}
-            onEditAlertClick={setEditAlertEntity}
-          />
+          <>
+            <SavedSearchAlertListItemFragmentContainer
+              key={edge.internalID}
+              item={edge}
+              variant={variant}
+              onEditAlertClick={setEditAlertEntity}
+            />
+            <Box mx={[2, 4]}>
+              <Separator
+                color={isInvisibleSeparator ? "transparent" : undefined}
+              />
+            </Box>
+          </>
         )
       })}
     </>

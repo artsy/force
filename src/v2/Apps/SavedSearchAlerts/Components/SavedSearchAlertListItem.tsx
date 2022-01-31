@@ -19,7 +19,8 @@ export const SavedSearchAlertListItem: React.FC<SavedSearchAlertListItemProps> =
   return (
     <Box
       key={item.internalID}
-      p={4}
+      px={[2, 4]}
+      py={4}
       opacity={variant === "inactive" ? 0.24 : 1}
       bg={variant === "active" ? "black5" : "transparent"}
     >
@@ -28,12 +29,14 @@ export const SavedSearchAlertListItem: React.FC<SavedSearchAlertListItemProps> =
         alignItems="center"
         justifyContent="space-between"
       >
-        <Text
-          variant="lg"
-          color={variant === "active" ? "blue100" : "black100"}
-        >
-          {item.userAlertSettings.name}
-        </Text>
+        <Flex flex={1} flexWrap="wrap">
+          <Text
+            variant="lg"
+            color={variant === "active" ? "blue100" : "black100"}
+          >
+            {item.userAlertSettings.name}
+          </Text>
+        </Flex>
         <Flex flexDirection="row" alignItems="center">
           <Clickable
             textDecoration="underline"
