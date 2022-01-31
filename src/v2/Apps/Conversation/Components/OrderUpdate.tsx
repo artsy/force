@@ -26,7 +26,7 @@ export const OrderUpdate: React.FC<OrderUpdateProps> = ({
   let color: Color
   let message: string
   let Icon: React.FC<IconProps> = MoneyFillIcon
-  let renderShowDetails: boolean = false
+  let action: { label?: string; onClick?: () => void } = {}
 
   if (event.__typename === "CommerceOfferSubmittedEvent") {
     const { offer } = event
@@ -36,7 +36,9 @@ export const OrderUpdate: React.FC<OrderUpdateProps> = ({
       message = `You sent ${isCounter ? "a counteroffer" : "an offer"} for ${
         event.offer.amount
       }`
-      renderShowDetails = !isCounter
+      if (!isCounter) {
+        action = { label: "See details", onClick: () => setShowDetails(true) }
+      }
     } else if (offer.fromParticipant === "SELLER") {
       color = "copper100"
       Icon = AlertCircleFillIcon
@@ -82,14 +84,14 @@ export const OrderUpdate: React.FC<OrderUpdateProps> = ({
           <Flex flexDirection="column" pl={1}>
             <Text color={color} variant="xs">
               {message}
-              {renderShowDetails && (
+              {action.label && action.onClick && (
                 <>
                   {". "}
                   <Clickable
-                    onClick={() => setShowDetails(true)}
+                    onClick={action.onClick}
                     textDecoration="underline"
                   >
-                    See details.
+                    {action.label}.
                   </Clickable>
                 </>
               )}
