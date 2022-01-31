@@ -16,6 +16,7 @@ import { useUpdateSettingsPassword } from "../useUpdateSettingsPassword"
 import { logout } from "v2/Utils/auth"
 import { SettingsEditSettingsPassword_me } from "v2/__generated__/SettingsEditSettingsPassword_me.graphql"
 import { useMode } from "v2/Utils/Hooks/useMode"
+import { password } from "v2/Components/Authentication/Validators"
 
 interface SettingsEditSettingsPasswordProps {
   me: SettingsEditSettingsPassword_me
@@ -75,11 +76,10 @@ export const SettingsEditSettingsPassword: FC<SettingsEditSettingsPasswordProps>
                 is: () => hasPassword,
                 otherwise: field => field.notRequired(),
               }),
-            newPassword: Yup.string().required("New password required"),
-            passwordConfirmation: Yup.string().oneOf(
-              [Yup.ref("newPassword"), null],
-              "Passwords must match"
-            ),
+            newPassword: password,
+            passwordConfirmation: Yup.string()
+              .required("Password confirmation required")
+              .oneOf([Yup.ref("newPassword"), null], "Passwords must match"),
           })}
           onSubmit={async ({
             currentPassword,

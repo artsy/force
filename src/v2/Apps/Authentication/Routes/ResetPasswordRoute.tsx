@@ -8,12 +8,15 @@ import {
   PasswordInput,
   useToasts,
 } from "@artsy/palette"
-import React, { useState } from "react"
+import { Formik } from "formik"
+import React from "react"
 import { MetaTags } from "v2/Components/MetaTags"
 import { useRouter } from "v2/System/Router/useRouter"
 import { resetPassword } from "v2/Utils/auth"
 import { getENV } from "v2/Utils/getENV"
 import { useMode } from "v2/Utils/Hooks/useMode"
+import * as Yup from "yup"
+import { password } from "v2/Components/Authentication/Validators"
 
 interface ResetPasswordRouteProps {}
 
@@ -28,47 +31,6 @@ export const ResetPasswordRoute: React.FC<ResetPasswordRouteProps> = () => {
   const { sendToast } = useToasts()
 
   const [mode, setMode] = useMode<Mode>("Pending")
-  const [state, setState] = useState({ password: "", passwordConfirmation: "" })
-
-  const handleSubmit = async (event: React.FormEvent<HTMLElement>) => {
-    event.preventDefault()
-
-    if (!resetPasswordToken) {
-      return sendToast({
-        variant: "error",
-        message: "Reset password token is missing.",
-        description:
-          "Check your email for instructions for resetting your password.",
-      })
-    }
-
-    setMode("Loading")
-
-    try {
-      await resetPassword({ ...state, resetPasswordToken })
-
-      sendToast({
-        variant: "success",
-        message: "Password successfully reset. Redirecting...",
-        ttl: 10000,
-      })
-
-      setMode("Success")
-
-      window.location.assign(query.reset_password_redirect_to || "/login")
-    } catch (err) {
-      console.error(err)
-
-      sendToast({ variant: "error", message: err.message })
-
-      setMode("Error")
-    }
-  }
-
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target
-    setState(prevState => ({ ...prevState, [name]: value }))
-  }
 
   const verb = query.set_password ? "Set" : "Change"
 
@@ -83,56 +45,121 @@ export const ResetPasswordRoute: React.FC<ResetPasswordRouteProps> = () => {
     <>
       <MetaTags title="Reset Password | Artsy" />
 
-      <Flex
-        as="form"
-        data-test="ResetPasswordForm"
-        alignItems="center"
-        flexDirection="column"
-        minHeight="100vh"
-        justifyContent="center"
-        mx="auto"
-        py={4}
-        maxWidth={440}
-        // @ts-ignore
-        onSubmit={handleSubmit}
+      <Formik
+        validateOnMount
+        validationSchema={Yup.object({
+          password,
+          passwordConfirmation: Yup.string()
+            .required("Password confirmation required")
+            .oneOf([Yup.ref("password"), null], "Passwords must match"),
+        })}
+        initialValues={{
+          password: "",
+          passwordConfirmation: "",
+        }}
+        onSubmit={async values => {
+          if (!resetPasswordToken) {
+            return sendToast({
+              variant: "error",
+              message: "Reset password token is missing.",
+              description:
+                "Check your email for instructions for resetting your password.",
+            })
+          }
+
+          setMode("Loading")
+
+          try {
+            await resetPassword({ ...values, resetPasswordToken })
+
+            sendToast({
+              variant: "success",
+              message: "Password successfully reset. Redirecting...",
+              ttl: 10000,
+            })
+
+            setMode("Success")
+
+            window.location.assign(query.reset_password_redirect_to || "/login")
+          } catch (err) {
+            console.error(err)
+
+            sendToast({ variant: "error", message: err.message })
+
+            setMode("Error")
+          }
+        }}
       >
-        <Join separator={<Spacer mt={2} />}>
-          <ArtsyLogoBlackIcon />
+        {({
+          handleChange,
+          handleSubmit,
+          handleBlur,
+          values,
+          errors,
+          touched,
+          isValid,
+          isSubmitting,
+        }) => {
+          return (
+            <Flex
+              as="form"
+              data-test="ResetPasswordForm"
+              alignItems="center"
+              flexDirection="column"
+              minHeight="100vh"
+              justifyContent="center"
+              mx="auto"
+              py={4}
+              maxWidth={440}
+              // @ts-ignore
+              onSubmit={handleSubmit}
+            >
+              <Join separator={<Spacer mt={2} />}>
+                <ArtsyLogoBlackIcon />
 
-          <Text variant="lg">{verb} Your Password</Text>
+                <Text variant="lg">{verb} Your Password</Text>
 
-          <PasswordInput
-            name="password"
-            title="New Password"
-            placeholder="New Password"
-            width="100%"
-            onChange={handleChange}
-            required
-            autoFocus
-            pattern=".{8,}"
-            autoComplete="new-password"
-          />
+                <PasswordInput
+                  name="password"
+                  title="New Password"
+                  placeholder="New Password"
+                  width="100%"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  required
+                  autoFocus
+                  autoComplete="new-password"
+                  error={touched.password && errors.password}
+                  value={values.password}
+                />
 
-          <PasswordInput
-            name="passwordConfirmation"
-            title="Confirm New Password"
-            placeholder="Confirm New Password"
-            width="100%"
-            onChange={handleChange}
-            required
-            pattern=".{8,}"
-            autoComplete="new-password"
-          />
+                <PasswordInput
+                  name="passwordConfirmation"
+                  title="Confirm New Password"
+                  placeholder="Confirm New Password"
+                  width="100%"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  required
+                  autoComplete="new-password"
+                  error={
+                    touched.passwordConfirmation && errors.passwordConfirmation
+                  }
+                  value={values.passwordConfirmation}
+                />
 
-          <Button
-            width="100%"
-            loading={mode === "Loading"}
-            disabled={mode === "Success"}
-          >
-            {label}
-          </Button>
-        </Join>
-      </Flex>
+                <Button
+                  width="100%"
+                  loading={isSubmitting}
+                  disabled={mode === "Success" || isSubmitting || !isValid}
+                >
+                  {label}
+                </Button>
+              </Join>
+            </Flex>
+          )
+        }}
+      </Formik>
     </>
   )
 }
