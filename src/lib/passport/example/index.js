@@ -72,7 +72,7 @@ const setup = function (app) {
   } = artsyPassport.options
 
   // App specific routes that render a login/signup form and logged in view
-  app.get("(/|/log_in|/sign_up|/user/edit)", function (req, res) {
+  app.get("(/|/log_in|/sign_up|/settings)", function (req, res) {
     if (req.user != null) {
       return res.render("loggedin")
     } else {

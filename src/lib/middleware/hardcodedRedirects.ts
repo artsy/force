@@ -28,7 +28,6 @@ const redirects = {
   "/fair-application": "/apply/fair",
   "/fairs": "art-fairs",
   "/feature/art-fairs": "art-fairs",
-  "/settings": "/user/edit",
   "/collector/edit": "/profile/edit",
   "/how-auctions-work":
     "https://support.artsy.net/hc/en-us/articles/4419870291351-The-Complete-Guide-to-Auctions-on-Artsy",
@@ -71,9 +70,17 @@ const redirects = {
   "/shanghai": "/shows/shanghai-china",
   "/tokyo": "/shows/tokyo-japan",
   "/toronto": "/shows/toronto-canada",
-  "/settings2": "/settings2/edit-settings",
   "/posts": "/articles",
   "/magazine": "/articles",
+  "/settings": "/settings/edit-settings",
+  "/profile/edit": "/settings/edit-profile",
+  "/user/edit": "/settings/edit-settings",
+  "/user/delete": "/settings/delete",
+  "/user/saves": "/settings/saves",
+  "/user/auctions": "/settings/auctions",
+  "/user/shipping": "/settings/shipping",
+  "/user/purchases": "/settings/purchases",
+  "/user/payments": "/settings/payments",
 }
 
 for (let from in redirects) {

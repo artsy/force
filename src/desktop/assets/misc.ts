@@ -13,10 +13,6 @@ const routes = {
   "/contact": require("../apps/contact/client/index.coffee").init,
 
   "/jobs": require("../apps/jobs/client/index.coffee").init,
-
-  "/profile/.*": require("../apps/user/client/index.coffee").init,
-
-  "/user/.*": require("../apps/user/client/index.coffee").init,
 }
 
 for (let path in routes) {

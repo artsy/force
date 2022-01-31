@@ -30,13 +30,10 @@ import { meetTheSpecialistsRoutes } from "v2/Apps/MeetTheSpecialists/meetTheSpec
 import { orderRoutes } from "v2/Apps/Order/orderRoutes"
 import { partnerRoutes } from "v2/Apps/Partner/partnerRoutes"
 import { partnersRoutes } from "v2/Apps/Partners/partnersRoutes"
-import { paymentRoutes } from "v2/Apps/Payment/paymentRoutes"
 import { preferencesRoutes } from "./Apps/_Preferences2/preferencesRoutes"
 import { priceDatabaseRoutes } from "./Apps/PriceDatabase/priceDatabaseRoutes"
-import { purchaseRoutes } from "v2/Apps/Purchase/purchaseRoutes"
 import { searchRoutes } from "v2/Apps/Search/searchRoutes"
 import { settingsRoutes } from "v2/Apps/Settings/settingsRoutes"
-import { shippingRoutes } from "v2/Apps/Shipping/shippingRoutes"
 import { showRoutes } from "v2/Apps/Show/showRoutes"
 import { showsRoutes } from "v2/Apps/Shows/showsRoutes"
 import { staticPageRoutes } from "v2/Apps/StaticPage/staticPageRoutes"
@@ -76,14 +73,11 @@ export function getAppRoutes(): AppRouteConfig[] {
     { routes: orderRoutes },
     { routes: partnerRoutes },
     { routes: partnersRoutes },
-    { routes: paymentRoutes },
     { routes: preferencesRoutes },
     { routes: priceDatabaseRoutes },
-    { routes: purchaseRoutes },
     { routes: staticPageRoutes },
     { routes: searchRoutes },
     { routes: settingsRoutes },
-    { routes: shippingRoutes },
     { routes: showRoutes },
     { routes: showsRoutes },
     { routes: tagRoutes },

@@ -10,7 +10,7 @@ module.exports = {
   // Landing pages
   loginPagePath: "/log_in",
   signupPagePath: "/sign_up",
-  settingsPagePath: "/user/edit",
+  settingsPagePath: "/settings",
   afterSignupPagePath: "/personalize",
 
   // Misc

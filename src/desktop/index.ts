@@ -75,9 +75,6 @@ app.use(require("./apps/articles").app)
 app.use(require("./apps/page"))
 app.use(require("./apps/shortcuts"))
 
-// User profiles
-app.use(require("./apps/user"))
-
 // Apps that need to fetch a profile.
 // Because profile routes are usually top-level and use wild-card matchers in their routers,
 // it's best to keep them last. Otherwise it's easy for these to unexpectedly

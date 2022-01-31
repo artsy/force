@@ -1,5 +1,3 @@
-// TODO: Delete this file once settings2 is launched
-
 import { Box, Flex, Sans, Serif, Spacer } from "@artsy/palette"
 import * as React from "react"
 import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"

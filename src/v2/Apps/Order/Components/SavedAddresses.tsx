@@ -324,7 +324,8 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
             collectorProfileAddressItems
           ) : (
             <Text color="black60" variant="sm">
-              Please add an address for a faster checkout experience in future.
+              Please add an address for a faster checkout experience in the
+              future.
             </Text>
           )}
         </Join>

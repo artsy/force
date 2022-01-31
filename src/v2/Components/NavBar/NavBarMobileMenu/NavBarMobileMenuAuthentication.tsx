@@ -1,5 +1,5 @@
-import { useContext } from "react";
-import * as React from "react";
+import { useContext } from "react"
+import * as React from "react"
 import { Box } from "@artsy/palette"
 import { isServer } from "lib/isServer"
 import { SystemContext, useSystemContext } from "v2/System"
@@ -29,31 +29,31 @@ export const NavBarMobileMenuLoggedIn: React.FC<NavBarMobileMenuLoggedInProps> =
     links: [
       {
         text: "Order history",
-        href: "/user/purchases",
+        href: "/settings/purchases",
       },
       {
         text: "Saves & Follows",
-        href: "/user/saves",
+        href: "/settings/saves",
       },
       {
         text: "Auctions",
-        href: "/user/auctions",
+        href: "/settings/auctions",
       },
       {
         text: "Collector Profile",
-        href: "/profile/edit",
+        href: "/settings/edit-profile",
       },
       {
         text: "Settings",
-        href: "/user/edit",
+        href: "/settings/edit-settings",
       },
       {
         text: "Payments",
-        href: "/user/payments",
+        href: "/settings/payments",
       },
       {
         text: "Shipping",
-        href: "/user/shipping",
+        href: "/settings/shipping",
       },
       {
         // TODO: Should be a button

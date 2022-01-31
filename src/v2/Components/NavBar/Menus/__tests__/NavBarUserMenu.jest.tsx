@@ -28,10 +28,10 @@ describe("NavBarUserMenu", () => {
 
     expect(links.map(a => [a.prop("href"), a.text()])).toEqual([
       // Label also includes SVG image title
-      ["/user/purchases", "Pending Order History"],
-      ["/user/saves", "Save Saves & Follows"],
-      ["/profile/edit", "User Collector Profile"],
-      ["/user/edit", "Settings Settings"],
+      ["/settings/purchases", "Pending Order History"],
+      ["/settings/saves", "Save Saves & Follows"],
+      ["/settings/edit-profile", "User Collector Profile"],
+      ["/settings/edit-settings", "Settings Settings"],
     ])
 
     expect(wrapper.find("button").last().text()).toContain("Log out")
