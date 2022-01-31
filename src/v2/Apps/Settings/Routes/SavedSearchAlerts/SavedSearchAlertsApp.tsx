@@ -64,12 +64,6 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
       {alerts.map((edge, index) => {
         const isLastEdge = alerts.length === index + 1
         const isCurrentEdgeSelected = editAlertEntity?.id === edge.internalID
-        const nextEdgeId = alerts[index + 1]?.internalID
-        const isNextEdgeSelected =
-          !!nextEdgeId && nextEdgeId === editAlertEntity?.id
-
-        const isInvisibleSeparator =
-          isCurrentEdgeSelected || isNextEdgeSelected || isLastEdge
         let variant: SavedSearchAlertListItemVariant | undefined
 
         if (editAlertEntity?.id === edge.internalID) {
@@ -85,11 +79,7 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
               variant={variant}
               onEditAlertClick={setEditAlertEntity}
             />
-            <Box mx={[2, 4]}>
-              <Separator
-                color={isInvisibleSeparator ? "transparent" : undefined}
-              />
-            </Box>
+            {!isLastEdge && <Separator color="black15" />}
           </Fragment>
         )
       })}
@@ -98,15 +88,22 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
 
   return (
     <Box>
-      <MetaTags title="Your Alerts | Artsy" pathname="/alerts" />
+      <MetaTags title="Your Alerts | Artsy" pathname="/user/alerts" />
 
       <Media greaterThanOrEqual="md">
         <SavedSearchAlertHeader />
-        <Separator backgroundColor="black15" />
       </Media>
       <Media lessThan="md">{!isEditMode && <SavedSearchAlertHeader />}</Media>
 
       <FullBleed>
+        <Media greaterThanOrEqual="md">
+          <Separator color="black15" />
+        </Media>
+
+        <Media lessThan="md">
+          {!isEditMode && <Separator color="black15" />}
+        </Media>
+
         {alerts.length === 0 ? (
           <SavedSearchAlertsEmptyResults />
         ) : (
