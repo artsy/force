@@ -1,5 +1,6 @@
 import { fireEvent, screen, waitFor } from "@testing-library/react"
 import { graphql } from "react-relay"
+import { MockBoot } from "v2/DevTools"
 import { setupTestWrapperTL } from "v2/DevTools/setupTestWrapper"
 import { SavedSearchAlertEditForm_Test_Query } from "v2/__generated__/SavedSearchAlertEditForm_Test_Query.graphql"
 import { EditAlertEntity } from "../../types"
@@ -33,14 +34,16 @@ describe("SavedSearchAlertEditForm", () => {
   >({
     Component: props => {
       return (
-        <SavedSearchAlertEditFormFragmentContainer
-          savedSearch={props.me?.savedSearch!}
-          artist={props.artist!}
-          artworksConnection={props.artworksConnection!}
-          editAlertEntity={defaultEditAlertEntity}
-          onCompleted={mockOnCompleted}
-          onDeleteClick={mockOnDeleteClick}
-        />
+        <MockBoot breakpoint="lg">
+          <SavedSearchAlertEditFormFragmentContainer
+            savedSearch={props.me?.savedSearch!}
+            artist={props.artist!}
+            artworksConnection={props.artworksConnection!}
+            editAlertEntity={defaultEditAlertEntity}
+            onCompleted={mockOnCompleted}
+            onDeleteClick={mockOnDeleteClick}
+          />
+        </MockBoot>
       )
     },
     query: graphql`
@@ -92,7 +95,7 @@ describe("SavedSearchAlertEditForm", () => {
       SearchCriteria: () => savedSearchAlertMocked,
     })
 
-    fireEvent.click(screen.getAllByText("Delete Alert")[0])
+    fireEvent.click(screen.getByText("Delete Alert"))
 
     expect(mockOnDeleteClick).toBeCalled()
   })
@@ -108,11 +111,11 @@ describe("SavedSearchAlertEditForm", () => {
       target: { value: "Updated Name" },
     })
 
-    const saveAlertButtons = screen.getAllByRole("button", {
+    const saveAlertButton = screen.getByRole("button", {
       name: "Save Alert",
     })
 
-    fireEvent.click(saveAlertButtons[0])
+    fireEvent.click(saveAlertButton)
 
     await waitFor(() => expect(mockOnCompleted).toBeCalled())
   })
@@ -124,11 +127,11 @@ describe("SavedSearchAlertEditForm", () => {
         FilterArtworksConnection: () => filterArtworksConnectionMocked,
         SearchCriteria: () => savedSearchAlertMocked,
       })
-      const saveAlertButtons = screen.getAllByRole("button", {
+      const saveAlertButton = screen.getByRole("button", {
         name: "Save Alert",
       })
 
-      expect(saveAlertButtons[0]).toBeDisabled()
+      expect(saveAlertButton).toBeDisabled()
     })
 
     it("should be enabled if alert name is changed", () => {
@@ -142,11 +145,11 @@ describe("SavedSearchAlertEditForm", () => {
         target: { value: "Updated Name" },
       })
 
-      const saveAlertButtons = screen.getAllByRole("button", {
+      const saveAlertButton = screen.getByRole("button", {
         name: "Save Alert",
       })
 
-      expect(saveAlertButtons[0]).toBeEnabled()
+      expect(saveAlertButton).toBeEnabled()
     })
 
     it("should be disabled if all notification checkboxes are disabled", () => {
@@ -161,11 +164,11 @@ describe("SavedSearchAlertEditForm", () => {
 
       fireEvent.click(checkbox)
 
-      const saveAlertButtons = screen.getAllByRole("button", {
+      const saveAlertButton = screen.getByRole("button", {
         name: "Save Alert",
       })
 
-      expect(saveAlertButtons[0]).toBeDisabled()
+      expect(saveAlertButton).toBeDisabled()
     })
 
     it("should be enabled if pills are changed", () => {
@@ -177,11 +180,11 @@ describe("SavedSearchAlertEditForm", () => {
 
       fireEvent.click(screen.getByText("Buy Now"))
 
-      const saveAlertButtons = screen.getAllByRole("button", {
+      const saveAlertButton = screen.getByRole("button", {
         name: "Save Alert",
       })
 
-      expect(saveAlertButtons[0]).toBeEnabled()
+      expect(saveAlertButton).toBeEnabled()
     })
 
     it("should be enabled if notification checkboxes are changed", () => {
@@ -196,11 +199,11 @@ describe("SavedSearchAlertEditForm", () => {
 
       fireEvent.click(checkbox)
 
-      const saveAlertButtons = screen.getAllByRole("button", {
+      const saveAlertButton = screen.getByRole("button", {
         name: "Save Alert",
       })
 
-      expect(saveAlertButtons[0]).toBeEnabled()
+      expect(saveAlertButton).toBeEnabled()
     })
   })
 })
