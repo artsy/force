@@ -1,4 +1,4 @@
-import { Clickable, Message } from "@artsy/palette"
+import { Clickable, Message, Text } from "@artsy/palette"
 import { useEffect } from "react"
 import { AnalyticsSchema, useTracking } from "v2/System/Analytics"
 
@@ -25,14 +25,19 @@ export const MinPriceWarning: React.FC<MinPriceWarningProps> = ({
   }, [])
 
   return (
-    <Message variant="default" p={2} mt={2}>
-      Galleries usually accept offers within
-      {isPriceRange ? " the displayed price range" : " 20% of the listed price"}
-      ; any lower is likely to be rejected.
-      <br />
-      <Clickable textDecoration="underline" cursor="pointer" onClick={onClick}>
-        We recommend changing your offer to {minPrice}.
-      </Clickable>
-    </Message>
+    <Clickable cursor="pointer" onClick={onClick} mt={2}>
+      <Message variant="warning" p={2}>
+        <Text>
+          Galleries usually accept offers within
+          {isPriceRange
+            ? " the displayed price range"
+            : " 20% of the listed price"}
+          ; any lower is likely to be rejected.
+        </Text>
+        <Text style={{ textDecoration: "underline" }}>
+          We recommend changing your offer to {minPrice}.
+        </Text>
+      </Message>
+    </Clickable>
   )
 }

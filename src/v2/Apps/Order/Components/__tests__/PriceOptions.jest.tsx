@@ -10,6 +10,7 @@ jest.unmock("react-relay")
 const onChange = jest.fn()
 const onFocus = jest.fn()
 const trackEvent = jest.fn()
+const showError = jest.fn().mockReturnValue(false)
 
 const mockUseTracking = useTracking as jest.Mock
 
@@ -24,6 +25,7 @@ const { renderWithRelay } = setupTestWrapperTL<PriceOptions_Test_Query>({
       order={props.order!}
       onChange={onChange}
       onFocus={onFocus}
+      showError={showError()}
     />
   ),
   query: graphql`
@@ -207,6 +209,38 @@ describe("PriceOptions", () => {
       expect(trackEvent).toHaveBeenLastCalledWith(
         expect.objectContaining(getTrackingObject("Different amount", 0, "EUR"))
       )
+    })
+  })
+  describe("Error Handling", () => {
+    beforeEach(() => {
+      showError.mockReturnValueOnce(false).mockReturnValueOnce(true)
+      renderWithRelay({
+        Artwork: () => ({
+          priceCurrency: "AUD",
+          isPriceRange: false,
+          listPrice: {
+            __typename: "Money",
+            major: 99,
+          },
+        }),
+      })
+      radios = screen.getAllByRole("radio")
+    })
+    it("doesn't display an error when none is passed", () => {
+      expect(
+        screen.queryByText("Offer amount missing or invalid.")
+      ).not.toBeInTheDocument()
+    })
+    it("displays the error and automatically selects the custom value option when an error is passed", async () => {
+      const selected = await screen.findByRole("radio", { checked: true })
+      expect(selected).toBeInTheDocument()
+      expect(selected[0]).toHaveTextContent("Different amount")
+      expect(selected[0]).toHaveTextContent("Offer amount missing or invalid.")
+    })
+    it("correctly rounds the values and displays the currency symbol", () => {
+      expect(radios[0]).toHaveTextContent("A$79.00") // %80 would be A$79.20
+      expect(radios[1]).toHaveTextContent("A$84.00") // %85 would be A$84.15
+      expect(radios[2]).toHaveTextContent("A$89.00") // %90 would be A$89.10
     })
   })
 })
