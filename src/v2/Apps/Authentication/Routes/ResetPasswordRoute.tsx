@@ -12,6 +12,7 @@ import React, { useState } from "react"
 import { MetaTags } from "v2/Components/MetaTags"
 import { useRouter } from "v2/System/Router/useRouter"
 import { resetPassword } from "v2/Utils/auth"
+import { getENV } from "v2/Utils/getENV"
 import { useMode } from "v2/Utils/Hooks/useMode"
 
 interface ResetPasswordRouteProps {}
@@ -22,6 +23,7 @@ export const ResetPasswordRoute: React.FC<ResetPasswordRouteProps> = () => {
   const { match } = useRouter()
 
   const query = match?.location?.query ?? {}
+  const resetPasswordToken = getENV("RESET_PASSWORD_TOKEN")
 
   const { sendToast } = useToasts()
 
@@ -31,24 +33,19 @@ export const ResetPasswordRoute: React.FC<ResetPasswordRouteProps> = () => {
   const handleSubmit = async (event: React.FormEvent<HTMLElement>) => {
     event.preventDefault()
 
-    if (!("reset_password_token" in query)) {
-      sendToast({
+    if (!resetPasswordToken) {
+      return sendToast({
         variant: "error",
         message: "Reset password token is missing.",
         description:
           "Check your email for instructions for resetting your password.",
       })
-
-      return
     }
 
     setMode("Loading")
 
     try {
-      await resetPassword({
-        ...state,
-        resetPasswordToken: query.reset_password_token,
-      })
+      await resetPassword({ ...state, resetPasswordToken })
 
       sendToast({
         variant: "success",

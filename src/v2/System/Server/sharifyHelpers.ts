@@ -8,9 +8,9 @@ const V2_SHARIFY_ALLOWLIST = [
   "API_URL",
   "APP_URL",
   "APPLICATION_NAME",
-  "ARTSY_EDITORIAL_CHANNEL",
-  "ARTIST_PAGE_CTA_ENABLED",
   "ARTIST_PAGE_CTA_ARTIST_ID",
+  "ARTIST_PAGE_CTA_ENABLED",
+  "ARTSY_EDITORIAL_CHANNEL",
   "AUCTION_ZENDESK_KEY",
   "AUTHENTICATION_REDIRECT_TO",
   "AUTHENTICATION_REFERER",
@@ -33,6 +33,7 @@ const V2_SHARIFY_ALLOWLIST = [
   "ONETRUST_SCRIPT_ID",
   "PREDICTION_URL",
   "RECAPTCHA_KEY",
+  "RESET_PASSWORD_TOKEN",
   "SEGMENT_WRITE_KEY",
   "SENTRY_PUBLIC_DSN",
   "SHOW_ANALYTICS_CALLS",
@@ -44,7 +45,9 @@ const V2_SHARIFY_ALLOWLIST = [
   "VOLLEY_ENDPOINT",
   "WEBFONT_URL",
   "ZENDESK_KEY",
-]
+] as const
+
+export type SharifyKey = typeof V2_SHARIFY_ALLOWLIST[number]
 
 // Required so that we can control limit the data being injected in to the page.
 function generateCustomSharifyScript(sharifyData) {
@@ -64,7 +67,7 @@ function generateCustomSharifyScript(sharifyData) {
 
 export function getV2SharifyScript(sharifyData) {
   const script = generateCustomSharifyScript(
-    pick(sharifyData, V2_SHARIFY_ALLOWLIST)
+    pick(sharifyData, [...V2_SHARIFY_ALLOWLIST])
   )
   return script
 }
