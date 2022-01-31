@@ -243,7 +243,7 @@ const SavedSearchAlertEditForm: React.FC<SavedSearchAlertEditFormProps> = ({
   )
 }
 
-const SavedSearchAlertEditFormFragmentContainer = createFragmentContainer(
+export const SavedSearchAlertEditFormFragmentContainer = createFragmentContainer(
   SavedSearchAlertEditForm,
   {
     savedSearch: graphql`
