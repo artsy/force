@@ -14,11 +14,10 @@ import {
   SavedSearchAlertListItemFragmentContainer,
   SavedSearchAlertListItemVariant,
 } from "./Components/SavedSearchAlertListItem"
-import { SavedSearchAlertEditDesktop } from "./Components/SavedSearchAlertEditDesktop"
-import { SavedSearchAlertEditMobile } from "./Components/SavedSearchAlertEditMobile"
 import { SavedSearchAlertHeader } from "./Components/SavedSearchAlertHeader"
 import { MetaTags } from "v2/Components/MetaTags"
 import { SavedSearchAlertsEmptyResults } from "./Components/SavedSearchAlertsEmptyResults"
+import { SavedSearchAlertEditFormContainer } from "./Components/SavedSearchAlertEditFormContainter"
 
 interface SavedSearchAlertsAppProps {
   me: SavedSearchAlertsApp_me
@@ -113,7 +112,7 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
                 <Column span={isEditMode ? 6 : 12}>{list}</Column>
                 {isEditMode && editAlertEntity && (
                   <Column span={6}>
-                    <SavedSearchAlertEditDesktop
+                    <SavedSearchAlertEditFormContainer
                       editAlertEntity={editAlertEntity}
                       onCloseClick={handleCloseClick}
                       onCompleted={handleCompleted}
@@ -126,7 +125,7 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
 
             <Media lessThan="md">
               {isEditMode && editAlertEntity ? (
-                <SavedSearchAlertEditMobile
+                <SavedSearchAlertEditFormContainer
                   editAlertEntity={editAlertEntity}
                   onCloseClick={handleCloseClick}
                   onCompleted={handleCompleted}
