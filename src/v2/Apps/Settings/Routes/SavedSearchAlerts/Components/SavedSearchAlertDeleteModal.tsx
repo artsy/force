@@ -2,6 +2,7 @@ import { Text, Flex, ModalDialog, Button } from "@artsy/palette"
 import { useState } from "react"
 import createLogger from "v2/Utils/logger"
 import { useDeleteSavedSearchAlert } from "../useDeleteSavedSearchAlert"
+import { Media } from "v2/Utils/Responsive"
 
 const logger = createLogger(
   "v2/Apps/SavedSearchAlerts/Components/SavedSearchAlertDeleteModal"
@@ -42,24 +43,53 @@ export const SavedSearchAlertDeleteModal: React.FC<SavedSearchAlertDeleteModalPr
       title="Delete Alert"
       onClose={onCloseClick}
       footer={
-        <Flex justifyContent="flex-end">
-          <Button
-            variant="noOutline"
-            size="small"
-            onClick={onCloseClick}
-            mr={1}
-          >
-            Cancel
-          </Button>
-          <Button loading={isDeleting} size="small" onClick={deleteAlertById}>
-            Delete
-          </Button>
-        </Flex>
+        <>
+          <Media greaterThanOrEqual="md">
+            <Flex>
+              <Button
+                flex={1}
+                variant="secondaryOutline"
+                size="large"
+                onClick={onCloseClick}
+                mr={1}
+              >
+                Cancel
+              </Button>
+              <Button
+                flex={1}
+                loading={isDeleting}
+                size="large"
+                onClick={deleteAlertById}
+              >
+                Delete
+              </Button>
+            </Flex>
+          </Media>
+          <Media lessThan="md">
+            <Button
+              loading={isDeleting}
+              size="large"
+              onClick={deleteAlertById}
+              width="100%"
+              mb={1}
+            >
+              Delete
+            </Button>
+            <Button
+              variant="secondaryOutline"
+              size="large"
+              width="100%"
+              onClick={onCloseClick}
+            >
+              Cancel
+            </Button>
+          </Media>
+        </>
       }
     >
       <Text variant="sm">
-        Once you delete this alert, you will have to recreate it to continue
-        receiving alerts on your favorite artworks.
+        You will no longer receive notifications for artworks matching the
+        criteria in this alert.
       </Text>
     </ModalDialog>
   )
