@@ -15,11 +15,6 @@ const routes = {
 /auction/.*/bid/.*
 /auction/.*/buyers-premium\
 `]: require("../apps/auction_support/client/index.coffee").init,
-
-  [`\
-/how-auctions-work
-/how-auctions-work/edit\
-`]: require("../apps/how_auctions_work/client/index.coffee").init,
 }
 
 for (let paths in routes) {
