@@ -146,11 +146,7 @@ export const FAQ: React.FC = () => {
       </Text>
       <Join separator={<Spacer mt={4} />}>
         {FAQList.map(({ label, value }) => (
-          <Expandable
-            onFocus={() => trackClickedFAQ(label)}
-            label={label}
-            data-test-id="X-submit-another-work"
-          >
+          <Expandable onFocus={() => trackClickedFAQ(label)} label={label}>
             <TextItem>{value}</TextItem>
           </Expandable>
         ))}
