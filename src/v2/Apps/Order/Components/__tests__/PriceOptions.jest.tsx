@@ -233,9 +233,8 @@ describe("PriceOptions", () => {
     })
     it("displays the error and automatically selects the custom value option when an error is passed", async () => {
       const selected = await screen.findByRole("radio", { checked: true })
-      expect(selected).toBeInTheDocument()
-      expect(selected[0]).toHaveTextContent("Different amount")
-      expect(selected[0]).toHaveTextContent("Offer amount missing or invalid.")
+      expect(selected).toHaveTextContent("Different amount")
+      expect(selected).toHaveTextContent("Offer amount missing or invalid.")
     })
     it("correctly rounds the values and displays the currency symbol", () => {
       expect(radios[0]).toHaveTextContent("A$79.00") // %80 would be A$79.20
