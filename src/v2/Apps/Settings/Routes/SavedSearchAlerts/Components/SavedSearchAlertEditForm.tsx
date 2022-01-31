@@ -335,7 +335,6 @@ export const SavedSearchAlertEditFormQueryRenderer: React.FC<SavedSearchAlertEdi
       placeholder={<SavedSearchAlertEditFormPlaceholder />}
       cacheConfig={{ force: true }}
       render={({ props, error }) => {
-        // return <SavedSearchAlertEditFormPlaceholder />
         if (error) {
           console.error(error)
           return null
