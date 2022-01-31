@@ -1,12 +1,8 @@
 import { mount } from "enzyme"
 import { ThankYou } from "../ThankYou"
-import {
-  AnalyticsSchema,
-  ContextModule,
-  useTracking,
-  useSystemContext,
-} from "v2/System"
+import { AnalyticsSchema, useTracking, useSystemContext } from "v2/System"
 import { useRouter } from "v2/System/Router/useRouter"
+import { ContextModule, OwnerType } from "@artsy/cohesion"
 
 jest.mock("../../../MarketingLanding/Components/SoldRecently", () => ({
   SoldRecentlyQueryRenderer: () => <div />,
@@ -75,7 +71,7 @@ describe("ThankYou page", () => {
   })
 
   describe("when there is no logged in user", () => {
-    it("tracks submit another artwork event with correct body", async () => {
+    it("tracks submit another artwork event with correct params", async () => {
       const wrapper = mount(<ThankYou />)
 
       const submitAnotherButton = wrapper.find(
@@ -86,7 +82,8 @@ describe("ThankYou page", () => {
       expect(trackEvent).toHaveBeenCalled()
       expect(trackEvent).toHaveBeenCalledWith({
         action_type: AnalyticsSchema.ActionType.SubmitAnotherArtwork,
-        context_module: ContextModule.ConsignSubmissionFlow,
+        context_module: ContextModule.consignSubmissionFlow,
+        context_owner_type: OwnerType.consignmentSubmission,
         submission_id: "12345",
         user_email: "",
         user_id: "",
@@ -116,7 +113,8 @@ describe("ThankYou page", () => {
         expect(trackEvent).toHaveBeenCalled()
         expect(trackEvent).toHaveBeenCalledWith({
           action_type: AnalyticsSchema.ActionType.SubmitAnotherArtwork,
-          context_module: ContextModule.ConsignSubmissionFlow,
+          context_module: ContextModule.consignSubmissionFlow,
+          context_owner_type: OwnerType.consignmentSubmission,
           submission_id: "12345",
           user_email: "a@b.c",
           user_id: "0000",

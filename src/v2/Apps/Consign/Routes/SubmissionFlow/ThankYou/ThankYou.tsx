@@ -2,12 +2,8 @@ import { Button, Flex, Text, Spacer, Box } from "@artsy/palette"
 import { FAQ } from "../../MarketingLanding/Components/FAQ"
 import { SoldRecentlyQueryRenderer } from "../../MarketingLanding/Components/SoldRecently"
 import { RouterLink } from "v2/System/Router/RouterLink"
-import {
-  AnalyticsSchema,
-  ContextModule,
-  useSystemContext,
-  useTracking,
-} from "v2/System"
+import { AnalyticsSchema, useSystemContext, useTracking } from "v2/System"
+import { ContextModule, OwnerType } from "@artsy/cohesion"
 import { useRouter } from "v2/System/Router/useRouter"
 
 export const ThankYou: React.FC = () => {
@@ -15,10 +11,11 @@ export const ThankYou: React.FC = () => {
   const { match } = useRouter()
   const { trackEvent } = useTracking()
 
-  const handleSubmitAnotherWorkClick = () =>
+  const trackSubmitAnotherWorkClick = () =>
     trackEvent({
       action_type: AnalyticsSchema.ActionType.SubmitAnotherArtwork,
-      context_module: ContextModule.ConsignSubmissionFlow,
+      context_module: ContextModule.consignSubmissionFlow,
+      context_owner_type: OwnerType.consignmentSubmission,
       submission_id: match.params.id,
       user_email: isLoggedIn ? user?.email : "",
       user_id: isLoggedIn ? user?.id : "",
@@ -53,7 +50,7 @@ export const ThankYou: React.FC = () => {
             data-test-id="submit-another-work"
             size="medium"
             variant="primaryBlack"
-            onClick={handleSubmitAnotherWorkClick}
+            onClick={trackSubmitAnotherWorkClick}
           >
             Submit Another Work
           </Button>
