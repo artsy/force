@@ -1,43 +1,37 @@
+/**
+ * @generated SignedSource<<aff1c8123fc5fef66f0450245906278e>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type UserInterestCategory = "COLLECTED_BEFORE" | "INTERESTED_IN_COLLECTING" | "%future added value";
 export type UserInterestInterestType = "ARTIST" | "GENE" | "%future added value";
 export type CreateUserInterestMutationInput = {
-    anonymousSessionId?: string | null;
-    body?: string | null;
-    category: UserInterestCategory;
-    clientMutationId?: string | null;
-    interestId: string;
-    interestType: UserInterestInterestType;
-    sessionID?: string | null;
+  anonymousSessionId?: string | null;
+  body?: string | null;
+  category: UserInterestCategory;
+  clientMutationId?: string | null;
+  interestId: string;
+  interestType: UserInterestInterestType;
+  sessionID?: string | null;
 };
-export type useCreateUserInterestMutationVariables = {
-    input: CreateUserInterestMutationInput;
+export type useCreateUserInterestMutation$variables = {
+  input: CreateUserInterestMutationInput;
 };
-export type useCreateUserInterestMutationResponse = {
-    readonly createUserInterest: {
-        readonly clientMutationId: string | null;
-    } | null;
+export type useCreateUserInterestMutation$data = {
+  readonly createUserInterest: {
+    readonly clientMutationId: string | null;
+  } | null;
 };
 export type useCreateUserInterestMutation = {
-    readonly response: useCreateUserInterestMutationResponse;
-    readonly variables: useCreateUserInterestMutationVariables;
+  variables: useCreateUserInterestMutation$variables;
+  response: useCreateUserInterestMutation$data;
 };
-
-
-
-/*
-mutation useCreateUserInterestMutation(
-  $input: CreateUserInterestMutationInput!
-) {
-  createUserInterest(input: $input) {
-    clientMutationId
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -100,5 +94,7 @@ return {
   }
 };
 })();
-(node as any).hash = '7f5bf40c5ad5bde76689681e8b3787f5';
+
+(node as any).hash = "7f5bf40c5ad5bde76689681e8b3787f5";
+
 export default node;

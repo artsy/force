@@ -1,29 +1,32 @@
+/**
+ * @generated SignedSource<<b78366cc2f68bb25e3a3c01a6d1ef842>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type PartnersFeaturedCarousel_viewer = {
-    readonly orderedSet: {
-        readonly orderedItemsConnection: {
-            readonly edges: ReadonlyArray<{
-                readonly node: {
-                    readonly internalID?: string;
-                    readonly " $fragmentRefs": FragmentRefs<"PartnersFeaturedCarouselCell_profile">;
-                } | null;
-            } | null> | null;
-        };
-    } | null;
-    readonly " $refType": "PartnersFeaturedCarousel_viewer";
+export type PartnersFeaturedCarousel_viewer$data = {
+  readonly orderedSet: {
+    readonly orderedItemsConnection: {
+      readonly edges: ReadonlyArray<{
+        readonly node: {
+          readonly internalID?: string;
+          readonly " $fragmentSpreads": FragmentRefs<"PartnersFeaturedCarouselCell_profile">;
+        } | null;
+      } | null> | null;
+    };
+  } | null;
+  readonly " $fragmentType": "PartnersFeaturedCarousel_viewer";
 };
-export type PartnersFeaturedCarousel_viewer$data = PartnersFeaturedCarousel_viewer;
 export type PartnersFeaturedCarousel_viewer$key = {
-    readonly " $data"?: PartnersFeaturedCarousel_viewer$data;
-    readonly " $fragmentRefs": FragmentRefs<"PartnersFeaturedCarousel_viewer">;
+  readonly " $data"?: PartnersFeaturedCarousel_viewer$data;
+  readonly " $fragmentSpreads": FragmentRefs<"PartnersFeaturedCarousel_viewer">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [
@@ -116,5 +119,7 @@ const node: ReaderFragment = {
   "type": "Viewer",
   "abstractKey": null
 };
-(node as any).hash = '3cde7259fe9f6d1b5010399bf2c6b469';
+
+(node as any).hash = "3cde7259fe9f6d1b5010399bf2c6b469";
+
 export default node;

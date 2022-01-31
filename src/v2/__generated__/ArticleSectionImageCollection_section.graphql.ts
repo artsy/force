@@ -1,50 +1,53 @@
+/**
+ * @generated SignedSource<<5442fcc67175481d82c965635131aecc>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
-import { FragmentRefs } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 export type ArticleSectionImageCollectionLayout = "COLUMN_WIDTH" | "FILLWIDTH" | "OVERFLOW_FILLWIDTH" | "%future added value";
-export type ArticleSectionImageCollection_section = {
-    readonly layout: ArticleSectionImageCollectionLayout;
-    readonly figures: ReadonlyArray<{
-        readonly __typename: "ArticleImageSection";
-        readonly id: string;
-        readonly caption: string | null;
-        readonly image: {
-            readonly resized: {
-                readonly src: string;
-                readonly srcSet: string;
-                readonly height: number | null;
-                readonly width: number | null;
-            } | null;
-        } | null;
-    } | {
-        readonly __typename: "Artwork";
-        readonly id: string;
-        readonly image: {
-            readonly resized: {
-                readonly src: string;
-                readonly srcSet: string;
-                readonly height: number | null;
-                readonly width: number | null;
-            } | null;
-        } | null;
-        readonly " $fragmentRefs": FragmentRefs<"Metadata_artwork">;
-    } | {
-        /*This will never be '%other', but we need some
-        value in case none of the concrete values match.*/
-        readonly __typename: "%other";
-    }>;
-    readonly " $refType": "ArticleSectionImageCollection_section";
+import { FragmentRefs } from "relay-runtime";
+export type ArticleSectionImageCollection_section$data = {
+  readonly layout: ArticleSectionImageCollectionLayout;
+  readonly figures: ReadonlyArray<{
+    readonly __typename: "ArticleImageSection";
+    readonly id: string;
+    readonly caption: string | null;
+    readonly image: {
+      readonly resized: {
+        readonly src: string;
+        readonly srcSet: string;
+        readonly height: number | null;
+        readonly width: number | null;
+      } | null;
+    } | null;
+  } | {
+    readonly __typename: "Artwork";
+    readonly id: string;
+    readonly image: {
+      readonly resized: {
+        readonly src: string;
+        readonly srcSet: string;
+        readonly height: number | null;
+        readonly width: number | null;
+      } | null;
+    } | null;
+    readonly " $fragmentSpreads": FragmentRefs<"Metadata_artwork">;
+  } | {
+    // This will never be '%other', but we need some
+    // value in case none of the concrete values match.
+    readonly __typename: "%other";
+  }>;
+  readonly " $fragmentType": "ArticleSectionImageCollection_section";
 };
-export type ArticleSectionImageCollection_section$data = ArticleSectionImageCollection_section;
 export type ArticleSectionImageCollection_section$key = {
-    readonly " $data"?: ArticleSectionImageCollection_section$data;
-    readonly " $fragmentRefs": FragmentRefs<"ArticleSectionImageCollection_section">;
+  readonly " $data"?: ArticleSectionImageCollection_section$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ArticleSectionImageCollection_section">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = {
@@ -166,13 +169,13 @@ return {
         {
           "kind": "InlineFragment",
           "selections": [
-            (v0/*: any*/),
-            (v1/*: any*/),
             {
               "args": null,
               "kind": "FragmentSpread",
               "name": "Metadata_artwork"
-            }
+            },
+            (v0/*: any*/),
+            (v1/*: any*/)
           ],
           "type": "Artwork",
           "abstractKey": null
@@ -185,5 +188,7 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '8b0a0cf164dd48f2cf3d1ec9e0bbce17';
+
+(node as any).hash = "8b0a0cf164dd48f2cf3d1ec9e0bbce17";
+
 export default node;

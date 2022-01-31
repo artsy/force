@@ -1,76 +1,27 @@
+/**
+ * @generated SignedSource<<9d2fcfa8950bb42a55d2d67e5bddec32>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type searchRoutes_SearchResultsTopLevelQueryVariables = {
-    keyword: string;
+export type searchRoutes_SearchResultsTopLevelQuery$variables = {
+  keyword: string;
 };
-export type searchRoutes_SearchResultsTopLevelQueryResponse = {
-    readonly viewer: {
-        readonly " $fragmentRefs": FragmentRefs<"SearchApp_viewer">;
-    } | null;
+export type searchRoutes_SearchResultsTopLevelQuery$data = {
+  readonly viewer: {
+    readonly " $fragmentSpreads": FragmentRefs<"SearchApp_viewer">;
+  } | null;
 };
 export type searchRoutes_SearchResultsTopLevelQuery = {
-    readonly response: searchRoutes_SearchResultsTopLevelQueryResponse;
-    readonly variables: searchRoutes_SearchResultsTopLevelQueryVariables;
+  variables: searchRoutes_SearchResultsTopLevelQuery$variables;
+  response: searchRoutes_SearchResultsTopLevelQuery$data;
 };
-
-
-
-/*
-query searchRoutes_SearchResultsTopLevelQuery(
-  $keyword: String!
-) {
-  viewer {
-    ...SearchApp_viewer_2hPz0N
-  }
-}
-
-fragment NavigationTabs_searchableConnection on SearchableConnection {
-  aggregations {
-    slice
-    counts {
-      count
-      name
-    }
-  }
-}
-
-fragment SearchApp_viewer_2hPz0N on Viewer {
-  searchConnection(query: $keyword, first: 1, aggregations: [TYPE]) {
-    aggregations {
-      slice
-      counts {
-        count
-        name
-      }
-    }
-    ...NavigationTabs_searchableConnection
-    edges {
-      node {
-        __typename
-        ... on SearchableItem {
-          slug
-          displayLabel
-          displayType
-        }
-        ... on Node {
-          __isNode: __typename
-          id
-        }
-      }
-    }
-  }
-  artworksConnection(keyword: $keyword, size: 0, aggregations: [TOTAL]) {
-    counts {
-      total
-    }
-    id
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -334,5 +285,7 @@ return {
   }
 };
 })();
-(node as any).hash = '93376127136ef5f8b5a24a34d8e4a9fa';
+
+(node as any).hash = "93376127136ef5f8b5a24a34d8e4a9fa";
+
 export default node;

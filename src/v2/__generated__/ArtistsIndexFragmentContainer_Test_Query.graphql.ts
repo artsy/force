@@ -1,128 +1,28 @@
+/**
+ * @generated SignedSource<<1b07ae0b85bd2968917487a887e4cc74>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtistsIndexFragmentContainer_Test_QueryVariables = {};
-export type ArtistsIndexFragmentContainer_Test_QueryResponse = {
-    readonly featuredArtists: ReadonlyArray<{
-        readonly " $fragmentRefs": FragmentRefs<"ArtistsIndex_featuredArtists">;
-    } | null> | null;
-    readonly featuredGenes: ReadonlyArray<{
-        readonly " $fragmentRefs": FragmentRefs<"ArtistsIndex_featuredGenes">;
-    } | null> | null;
+export type ArtistsIndexFragmentContainer_Test_Query$variables = {};
+export type ArtistsIndexFragmentContainer_Test_Query$data = {
+  readonly featuredArtists: ReadonlyArray<{
+    readonly " $fragmentSpreads": FragmentRefs<"ArtistsIndex_featuredArtists">;
+  } | null> | null;
+  readonly featuredGenes: ReadonlyArray<{
+    readonly " $fragmentSpreads": FragmentRefs<"ArtistsIndex_featuredGenes">;
+  } | null> | null;
 };
 export type ArtistsIndexFragmentContainer_Test_Query = {
-    readonly response: ArtistsIndexFragmentContainer_Test_QueryResponse;
-    readonly variables: ArtistsIndexFragmentContainer_Test_QueryVariables;
+  variables: ArtistsIndexFragmentContainer_Test_Query$variables;
+  response: ArtistsIndexFragmentContainer_Test_Query$data;
 };
-
-
-
-/*
-query ArtistsIndexFragmentContainer_Test_Query {
-  featuredArtists: orderedSets(key: "homepage:featured-artists") {
-    ...ArtistsIndex_featuredArtists
-    id
-  }
-  featuredGenes: orderedSets(key: "artists:featured-genes") {
-    ...ArtistsIndex_featuredGenes
-    id
-  }
-}
-
-fragment ArtistsArtistCard_artist on Artist {
-  ...FollowArtistButton_artist
-  name
-  href
-  formattedNationalityAndBirthday
-  counts {
-    artworks
-    forSaleArtworks
-  }
-  image {
-    thumb: cropped(width: 445, height: 334) {
-      width
-      height
-      src
-      srcSet
-    }
-  }
-}
-
-fragment ArtistsCarouselCell_featuredLink on FeaturedLink {
-  internalID
-  title
-  subtitle
-  href
-  image {
-    thumb: cropped(width: 600, height: 450, version: "wide") {
-      width
-      height
-      src
-      srcSet
-    }
-  }
-}
-
-fragment ArtistsIndex_featuredArtists on OrderedSet {
-  name
-  artists: items {
-    __typename
-    ... on FeaturedLink {
-      internalID
-      id
-    }
-    ...ArtistsCarouselCell_featuredLink
-    ... on Node {
-      __isNode: __typename
-      id
-    }
-    ... on Profile {
-      id
-    }
-  }
-}
-
-fragment ArtistsIndex_featuredGenes on OrderedSet {
-  name
-  genes: items {
-    __typename
-    ... on Gene {
-      internalID
-      name
-      href
-      trendingArtists(sample: 4) {
-        internalID
-        ...ArtistsArtistCard_artist
-        id
-      }
-    }
-    ... on Node {
-      __isNode: __typename
-      id
-    }
-    ... on FeaturedLink {
-      id
-    }
-    ... on Profile {
-      id
-    }
-  }
-}
-
-fragment FollowArtistButton_artist on Artist {
-  id
-  internalID
-  name
-  slug
-  is_followed: isFollowed
-  counts {
-    follows
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -634,5 +534,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'fd6a2873ad604b1fc666c9950c458a4d';
+
+(node as any).hash = "fd6a2873ad604b1fc666c9950c458a4d";
+
 export default node;

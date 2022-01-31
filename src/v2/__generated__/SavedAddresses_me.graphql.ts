@@ -1,39 +1,42 @@
+/**
+ * @generated SignedSource<<40b1a09ac39701650a330753caf34e2b>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type SavedAddresses_me = {
-    readonly id: string;
-    readonly addressConnection: {
-        readonly totalCount: number;
-        readonly edges: ReadonlyArray<{
-            readonly node: {
-                readonly id: string;
-                readonly internalID: string;
-                readonly addressLine1: string;
-                readonly addressLine2: string | null;
-                readonly addressLine3: string | null;
-                readonly city: string;
-                readonly country: string;
-                readonly isDefault: boolean;
-                readonly name: string | null;
-                readonly phoneNumber: string | null;
-                readonly postalCode: string | null;
-                readonly region: string | null;
-            } | null;
-        } | null> | null;
-    } | null;
-    readonly " $refType": "SavedAddresses_me";
+export type SavedAddresses_me$data = {
+  readonly id: string;
+  readonly addressConnection: {
+    readonly totalCount: number;
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly id: string;
+        readonly internalID: string;
+        readonly addressLine1: string;
+        readonly addressLine2: string | null;
+        readonly addressLine3: string | null;
+        readonly city: string;
+        readonly country: string;
+        readonly isDefault: boolean;
+        readonly name: string | null;
+        readonly phoneNumber: string | null;
+        readonly postalCode: string | null;
+        readonly region: string | null;
+      } | null;
+    } | null> | null;
+  } | null;
+  readonly " $fragmentType": "SavedAddresses_me";
 };
-export type SavedAddresses_me$data = SavedAddresses_me;
 export type SavedAddresses_me$key = {
-    readonly " $data"?: SavedAddresses_me$data;
-    readonly " $fragmentRefs": FragmentRefs<"SavedAddresses_me">;
+  readonly " $data"?: SavedAddresses_me$data;
+  readonly " $fragmentSpreads": FragmentRefs<"SavedAddresses_me">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = {
@@ -258,5 +261,7 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '81a45053db6c6122c064c0735e6b84f0';
+
+(node as any).hash = "81a45053db6c6122c064c0735e6b84f0";
+
 export default node;

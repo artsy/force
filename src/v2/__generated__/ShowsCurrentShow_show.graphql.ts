@@ -1,38 +1,41 @@
+/**
+ * @generated SignedSource<<44151dce32fa1106912a4f8709287712>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ShowsCurrentShow_show = {
-    readonly name: string | null;
-    readonly href: string | null;
-    readonly startAt: string | null;
-    readonly endAt: string | null;
-    readonly partner: {
-        readonly name?: string | null;
-    } | null;
-    readonly location: {
-        readonly city: string | null;
-    } | null;
-    readonly artworksConnection: {
-        readonly totalCount: number | null;
-        readonly edges: ReadonlyArray<{
-            readonly node: {
-                readonly internalID: string;
-                readonly " $fragmentRefs": FragmentRefs<"GridItem_artwork">;
-            } | null;
-        } | null> | null;
-    } | null;
-    readonly " $refType": "ShowsCurrentShow_show";
+export type ShowsCurrentShow_show$data = {
+  readonly name: string | null;
+  readonly href: string | null;
+  readonly startAt: string | null;
+  readonly endAt: string | null;
+  readonly partner: {
+    readonly name?: string | null;
+  } | null;
+  readonly location: {
+    readonly city: string | null;
+  } | null;
+  readonly artworksConnection: {
+    readonly totalCount: number | null;
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly internalID: string;
+        readonly " $fragmentSpreads": FragmentRefs<"GridItem_artwork">;
+      } | null;
+    } | null> | null;
+  } | null;
+  readonly " $fragmentType": "ShowsCurrentShow_show";
 };
-export type ShowsCurrentShow_show$data = ShowsCurrentShow_show;
 export type ShowsCurrentShow_show$key = {
-    readonly " $data"?: ShowsCurrentShow_show$data;
-    readonly " $fragmentRefs": FragmentRefs<"ShowsCurrentShow_show">;
+  readonly " $data"?: ShowsCurrentShow_show$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ShowsCurrentShow_show">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = {
@@ -184,5 +187,7 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '7ccedb11f973c68631c16d4ba02a567a';
+
+(node as any).hash = "7ccedb11f973c68631c16d4ba02a567a";
+
 export default node;

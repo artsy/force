@@ -1,147 +1,27 @@
+/**
+ * @generated SignedSource<<2a1b33db188bb038912aea8362315a94>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type partnerRoutes_OverviewQueryVariables = {
-    partnerId: string;
+export type partnerRoutes_OverviewQuery$variables = {
+  partnerId: string;
 };
-export type partnerRoutes_OverviewQueryResponse = {
-    readonly partner: {
-        readonly " $fragmentRefs": FragmentRefs<"Overview_partner">;
-    } | null;
+export type partnerRoutes_OverviewQuery$data = {
+  readonly partner: {
+    readonly " $fragmentSpreads": FragmentRefs<"Overview_partner">;
+  } | null;
 };
 export type partnerRoutes_OverviewQuery = {
-    readonly response: partnerRoutes_OverviewQueryResponse;
-    readonly variables: partnerRoutes_OverviewQueryVariables;
+  variables: partnerRoutes_OverviewQuery$variables;
+  response: partnerRoutes_OverviewQuery$data;
 };
-
-
-
-/*
-query partnerRoutes_OverviewQuery(
-  $partnerId: String!
-) {
-  partner(id: $partnerId) @principalField {
-    ...Overview_partner
-    id
-  }
-}
-
-fragment AboutPartner_partner on Partner {
-  profile {
-    fullBio
-    bio
-    id
-  }
-  website
-  vatNumber
-  displayFullPartnerPage
-}
-
-fragment ArticleCell_article on Article {
-  vertical
-  internalID
-  title
-  byline
-  href
-  publishedAt(format: "MMM D, YYYY")
-  thumbnailImage {
-    cropped(width: 445, height: 334) {
-      width
-      height
-      src
-      srcSet
-    }
-  }
-}
-
-fragment ArticlesRail_partner on Partner {
-  slug
-  articlesConnection(first: 8) {
-    totalCount
-    edges {
-      node {
-        internalID
-        ...ArticleCell_article
-        id
-      }
-    }
-  }
-}
-
-fragment ArtistsRail_partner on Partner {
-  slug
-  profileArtistsLayout
-  displayFullPartnerPage
-  artistsWithPublishedArtworks: artistsConnection(hasPublishedArtworks: true, displayOnPartnerProfile: true) {
-    totalCount
-  }
-  representedArtistsWithoutPublishedArtworks: artistsConnection(representedBy: true, hasPublishedArtworks: false, displayOnPartnerProfile: true) {
-    totalCount
-  }
-}
-
-fragment Overview_partner on Partner {
-  slug
-  partnerType
-  displayFullPartnerPage
-  profileBannerDisplay
-  displayArtistsSection
-  ...AboutPartner_partner
-  ...ShowsRail_partner
-  ...ArtistsRail_partner
-  ...SubscriberBanner_partner
-  ...ArticlesRail_partner
-  locationsConnection(first: 1) {
-    edges {
-      node {
-        city
-        coordinates {
-          lat
-          lng
-        }
-        id
-      }
-    }
-  }
-}
-
-fragment ShowCard_show on Show {
-  href
-  name
-  isFairBooth
-  exhibitionPeriod
-  coverImage {
-    medium: cropped(width: 320, height: 240) {
-      width
-      height
-      src
-      srcSet
-    }
-  }
-}
-
-fragment ShowsRail_partner on Partner {
-  slug
-  displayFullPartnerPage
-  showsConnection(status: ALL, first: 20, isDisplayable: true) {
-    totalCount
-    edges {
-      node {
-        id
-        ...ShowCard_show
-      }
-    }
-  }
-}
-
-fragment SubscriberBanner_partner on Partner {
-  hasFairPartnership
-  name
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -696,5 +576,7 @@ return {
   }
 };
 })();
-(node as any).hash = '43c49ea345dc3fc5f0b2e85bba1d3daa';
+
+(node as any).hash = "43c49ea345dc3fc5f0b2e85bba1d3daa";
+
 export default node;

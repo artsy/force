@@ -1,207 +1,29 @@
+/**
+ * @generated SignedSource<<85f279c3370ea36b3cb4f0355475da15>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type PartnerArtistDetailsListQueryVariables = {
-    partnerId: string;
-    first: number;
-    after?: string | null;
+export type PartnerArtistDetailsListQuery$variables = {
+  partnerId: string;
+  first: number;
+  after?: string | null;
 };
-export type PartnerArtistDetailsListQueryResponse = {
-    readonly partner: {
-        readonly " $fragmentRefs": FragmentRefs<"PartnerArtistDetailsList_partner">;
-    } | null;
+export type PartnerArtistDetailsListQuery$data = {
+  readonly partner: {
+    readonly " $fragmentSpreads": FragmentRefs<"PartnerArtistDetailsList_partner">;
+  } | null;
 };
 export type PartnerArtistDetailsListQuery = {
-    readonly response: PartnerArtistDetailsListQueryResponse;
-    readonly variables: PartnerArtistDetailsListQueryVariables;
+  variables: PartnerArtistDetailsListQuery$variables;
+  response: PartnerArtistDetailsListQuery$data;
 };
-
-
-
-/*
-query PartnerArtistDetailsListQuery(
-  $partnerId: String!
-  $first: Int!
-  $after: String
-) {
-  partner(id: $partnerId) @principalField {
-    ...PartnerArtistDetailsList_partner_2HEEH6
-    id
-  }
-}
-
-fragment Badge_artwork on Artwork {
-  is_biddable: isBiddable
-  href
-  sale {
-    is_preview: isPreview
-    display_timely_at: displayTimelyAt
-    id
-  }
-}
-
-fragment Contact_artwork on Artwork {
-  href
-  is_inquireable: isInquireable
-  sale {
-    is_auction: isAuction
-    is_live_open: isLiveOpen
-    is_open: isOpen
-    is_closed: isClosed
-    id
-  }
-  partner(shallow: true) {
-    type
-    id
-  }
-  sale_artwork: saleArtwork {
-    highest_bid: highestBid {
-      display
-    }
-    opening_bid: openingBid {
-      display
-    }
-    counts {
-      bidder_positions: bidderPositions
-    }
-    id
-  }
-}
-
-fragment Details_artwork on Artwork {
-  href
-  title
-  date
-  sale_message: saleMessage
-  cultural_maker: culturalMaker
-  artists(shallow: true) {
-    id
-    href
-    name
-  }
-  collecting_institution: collectingInstitution
-  partner(shallow: true) {
-    name
-    href
-    id
-  }
-  sale {
-    is_auction: isAuction
-    is_closed: isClosed
-    id
-  }
-  sale_artwork: saleArtwork {
-    counts {
-      bidder_positions: bidderPositions
-    }
-    highest_bid: highestBid {
-      display
-    }
-    opening_bid: openingBid {
-      display
-    }
-    id
-  }
-}
-
-fragment FillwidthItem_artwork on Artwork {
-  image {
-    url(version: "larger")
-    aspectRatio
-  }
-  imageTitle
-  title
-  href
-  is_saved: isSaved
-  ...Metadata_artwork
-  ...SaveButton_artwork
-  ...Badge_artwork
-}
-
-fragment FollowArtistButton_artist on Artist {
-  id
-  internalID
-  name
-  slug
-  is_followed: isFollowed
-  counts {
-    follows
-  }
-}
-
-fragment Metadata_artwork on Artwork {
-  ...Details_artwork
-  ...Contact_artwork
-  href
-}
-
-fragment PartnerArtistArtworksRail_partnerArtist on ArtistPartnerEdge {
-  artworksConnection(first: 12) {
-    edges {
-      node {
-        id
-        ...FillwidthItem_artwork
-        __typename
-      }
-      cursor
-    }
-    pageInfo {
-      endCursor
-      hasNextPage
-    }
-  }
-}
-
-fragment PartnerArtistDetailsList_partner_2HEEH6 on Partner {
-  slug
-  artists: artistsConnection(first: $first, after: $after, hasPublishedArtworks: true, displayOnPartnerProfile: true) {
-    edges {
-      id
-      representedBy
-      counts {
-        artworks
-      }
-      ...PartnerArtistDetails_partnerArtist
-      cursor
-      node {
-        __typename
-        id
-      }
-    }
-    pageInfo {
-      endCursor
-      hasNextPage
-    }
-  }
-}
-
-fragment PartnerArtistDetails_partnerArtist on ArtistPartnerEdge {
-  biographyBlurb(format: HTML) {
-    text
-    credit
-  }
-  ...PartnerArtistArtworksRail_partnerArtist
-  node {
-    slug
-    name
-    href
-    formattedNationalityAndBirthday
-    ...FollowArtistButton_artist
-    id
-  }
-}
-
-fragment SaveButton_artwork on Artwork {
-  id
-  internalID
-  slug
-  is_saved: isSaved
-  title
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = {
@@ -840,5 +662,7 @@ return {
   }
 };
 })();
-(node as any).hash = '87181afafb23c6a4b59c4a72e73b59b8';
+
+(node as any).hash = "87181afafb23c6a4b59c4a72e73b59b8";
+
 export default node;

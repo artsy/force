@@ -1,64 +1,67 @@
+/**
+ * @generated SignedSource<<f496527e860cc8bdd24162571e6cde0c>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type Auction2App_me = {
+export type Auction2App_me$data = {
+  readonly internalID: string;
+  readonly hasCreditCards: boolean | null;
+  readonly identityVerified: boolean | null;
+  readonly pendingIdentityVerification: {
     readonly internalID: string;
-    readonly hasCreditCards: boolean | null;
-    readonly identityVerified: boolean | null;
-    readonly pendingIdentityVerification: {
-        readonly internalID: string;
+  } | null;
+  readonly bidders: ReadonlyArray<{
+    readonly qualifiedForBidding: boolean | null;
+  } | null> | null;
+  readonly lotStandings: ReadonlyArray<{
+    readonly activeBid: {
+      readonly internalID: string;
     } | null;
-    readonly bidders: ReadonlyArray<{
-        readonly qualifiedForBidding: boolean | null;
-    } | null> | null;
-    readonly lotStandings: ReadonlyArray<{
-        readonly activeBid: {
-            readonly internalID: string;
+    readonly isLeadingBidder: boolean | null;
+    readonly saleArtwork: {
+      readonly slug: string;
+      readonly lotLabel: string | null;
+      readonly reserveStatus: string | null;
+      readonly counts: {
+        readonly bidderPositions: Int | null;
+      } | null;
+      readonly saleID: string | null;
+      readonly highestBid: {
+        readonly display: string | null;
+      } | null;
+      readonly sale: {
+        readonly liveStartAt: string | null;
+        readonly endAt: string | null;
+        readonly isLiveOpen: boolean | null;
+        readonly isClosed: boolean | null;
+      } | null;
+      readonly artwork: {
+        readonly href: string | null;
+        readonly title: string | null;
+        readonly date: string | null;
+        readonly image: {
+          readonly url: string | null;
         } | null;
-        readonly isLeadingBidder: boolean | null;
-        readonly saleArtwork: {
-            readonly slug: string;
-            readonly lotLabel: string | null;
-            readonly reserveStatus: string | null;
-            readonly counts: {
-                readonly bidderPositions: number | null;
-            } | null;
-            readonly saleID: string | null;
-            readonly highestBid: {
-                readonly display: string | null;
-            } | null;
-            readonly sale: {
-                readonly liveStartAt: string | null;
-                readonly endAt: string | null;
-                readonly isLiveOpen: boolean | null;
-                readonly isClosed: boolean | null;
-            } | null;
-            readonly artwork: {
-                readonly href: string | null;
-                readonly title: string | null;
-                readonly date: string | null;
-                readonly image: {
-                    readonly url: string | null;
-                } | null;
-                readonly artist: {
-                    readonly name: string | null;
-                } | null;
-            } | null;
+        readonly artist: {
+          readonly name: string | null;
         } | null;
-    } | null> | null;
-    readonly " $fragmentRefs": FragmentRefs<"AuctionDetails_me">;
-    readonly " $refType": "Auction2App_me";
+      } | null;
+    } | null;
+  } | null> | null;
+  readonly " $fragmentSpreads": FragmentRefs<"AuctionDetails_me">;
+  readonly " $fragmentType": "Auction2App_me";
 };
-export type Auction2App_me$data = Auction2App_me;
 export type Auction2App_me$key = {
-    readonly " $data"?: Auction2App_me$data;
-    readonly " $fragmentRefs": FragmentRefs<"Auction2App_me">;
+  readonly " $data"?: Auction2App_me$data;
+  readonly " $fragmentSpreads": FragmentRefs<"Auction2App_me">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = {
@@ -87,6 +90,11 @@ return {
   "metadata": null,
   "name": "Auction2App_me",
   "selections": [
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "AuctionDetails_me"
+    },
     (v0/*: any*/),
     {
       "alias": null,
@@ -354,16 +362,13 @@ return {
         }
       ],
       "storageKey": null
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "AuctionDetails_me"
     }
   ],
   "type": "Me",
   "abstractKey": null
 };
 })();
-(node as any).hash = '751f54cbe42e37407c5d7e980200e3fb';
+
+(node as any).hash = "751f54cbe42e37407c5d7e980200e3fb";
+
 export default node;

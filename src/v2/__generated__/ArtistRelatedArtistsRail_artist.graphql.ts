@@ -1,58 +1,61 @@
+/**
+ * @generated SignedSource<<2bf3135c99fce12ce017eb5e9db0348f>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtistRelatedArtistsRail_artist = {
-    readonly name: string | null;
-    readonly href: string | null;
-    readonly related: {
-        readonly artistsConnection: {
+export type ArtistRelatedArtistsRail_artist$data = {
+  readonly name: string | null;
+  readonly href: string | null;
+  readonly related: {
+    readonly artistsConnection: {
+      readonly edges: ReadonlyArray<{
+        readonly node: {
+          readonly name: string | null;
+          readonly href: string | null;
+          readonly internalID: string;
+          readonly isFollowed: boolean | null;
+          readonly slug: string;
+          readonly nationality: string | null;
+          readonly birthday: string | null;
+          readonly filterArtworksConnection: {
             readonly edges: ReadonlyArray<{
-                readonly node: {
-                    readonly name: string | null;
-                    readonly href: string | null;
-                    readonly internalID: string;
-                    readonly isFollowed: boolean | null;
-                    readonly slug: string;
-                    readonly nationality: string | null;
-                    readonly birthday: string | null;
-                    readonly filterArtworksConnection: {
-                        readonly edges: ReadonlyArray<{
-                            readonly node: {
-                                readonly internalID: string;
-                                readonly slug: string;
-                                readonly image: {
-                                    readonly cropped: {
-                                        readonly width: number;
-                                        readonly height: number;
-                                        readonly src: string;
-                                        readonly srcSet: string;
-                                    } | null;
-                                } | null;
-                            } | null;
-                        } | null> | null;
-                    } | null;
-                    readonly image: {
-                        readonly cropped: {
-                            readonly url: string;
-                        } | null;
-                    } | null;
-                    readonly " $fragmentRefs": FragmentRefs<"FollowArtistButton_artist">;
+              readonly node: {
+                readonly internalID: string;
+                readonly slug: string;
+                readonly image: {
+                  readonly cropped: {
+                    readonly width: number;
+                    readonly height: number;
+                    readonly src: string;
+                    readonly srcSet: string;
+                  } | null;
                 } | null;
+              } | null;
             } | null> | null;
+          } | null;
+          readonly image: {
+            readonly cropped: {
+              readonly url: string;
+            } | null;
+          } | null;
+          readonly " $fragmentSpreads": FragmentRefs<"FollowArtistButton_artist">;
         } | null;
+      } | null> | null;
     } | null;
-    readonly " $refType": "ArtistRelatedArtistsRail_artist";
+  } | null;
+  readonly " $fragmentType": "ArtistRelatedArtistsRail_artist";
 };
-export type ArtistRelatedArtistsRail_artist$data = ArtistRelatedArtistsRail_artist;
 export type ArtistRelatedArtistsRail_artist$key = {
-    readonly " $data"?: ArtistRelatedArtistsRail_artist$data;
-    readonly " $fragmentRefs": FragmentRefs<"ArtistRelatedArtistsRail_artist">;
+  readonly " $data"?: ArtistRelatedArtistsRail_artist$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtistRelatedArtistsRail_artist">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = {
@@ -134,6 +137,11 @@ return {
                   "name": "node",
                   "plural": false,
                   "selections": [
+                    {
+                      "args": null,
+                      "kind": "FragmentSpread",
+                      "name": "FollowArtistButton_artist"
+                    },
                     (v0/*: any*/),
                     (v1/*: any*/),
                     (v2/*: any*/),
@@ -305,11 +313,6 @@ return {
                         }
                       ],
                       "storageKey": null
-                    },
-                    {
-                      "args": null,
-                      "kind": "FragmentSpread",
-                      "name": "FollowArtistButton_artist"
                     }
                   ],
                   "storageKey": null
@@ -328,5 +331,7 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '9b43c5b91bd9eeb8d5ada9cd9ceb7d6b';
+
+(node as any).hash = "9b43c5b91bd9eeb8d5ada9cd9ceb7d6b";
+
 export default node;

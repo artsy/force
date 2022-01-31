@@ -1,83 +1,25 @@
+/**
+ * @generated SignedSource<<cb7774bcab23ed26ce31f4c841e6ddf1>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type HomeFeaturedShowsRailQueryVariables = {};
-export type HomeFeaturedShowsRailQueryResponse = {
-    readonly orderedSet: {
-        readonly " $fragmentRefs": FragmentRefs<"HomeFeaturedShowsRail_orderedSet">;
-    } | null;
+export type HomeFeaturedShowsRailQuery$variables = {};
+export type HomeFeaturedShowsRailQuery$data = {
+  readonly orderedSet: {
+    readonly " $fragmentSpreads": FragmentRefs<"HomeFeaturedShowsRail_orderedSet">;
+  } | null;
 };
 export type HomeFeaturedShowsRailQuery = {
-    readonly response: HomeFeaturedShowsRailQueryResponse;
-    readonly variables: HomeFeaturedShowsRailQueryVariables;
+  variables: HomeFeaturedShowsRailQuery$variables;
+  response: HomeFeaturedShowsRailQuery$data;
 };
-
-
-
-/*
-query HomeFeaturedShowsRailQuery {
-  orderedSet(id: "530ebe92139b21efd6000071") {
-    ...HomeFeaturedShowsRail_orderedSet
-    id
-  }
-}
-
-fragment HomeFeaturedShow_show on Show {
-  internalID
-  slug
-  name
-  href
-  startAt
-  endAt
-  formattedStartAt: startAt(format: "MMM D")
-  formattedEndAt: endAt(format: "MMM D")
-  partner {
-    __typename
-    ... on Partner {
-      name
-    }
-    ... on ExternalPartner {
-      name
-      id
-    }
-    ... on Node {
-      __isNode: __typename
-      id
-    }
-  }
-  coverImage {
-    cropped(width: 325, height: 230) {
-      src
-      srcSet
-      width
-      height
-    }
-  }
-}
-
-fragment HomeFeaturedShowsRail_orderedSet on OrderedSet {
-  items {
-    __typename
-    ... on Show {
-      internalID
-      ...HomeFeaturedShow_show
-    }
-    ... on Node {
-      __isNode: __typename
-      id
-    }
-    ... on FeaturedLink {
-      id
-    }
-    ... on Profile {
-      id
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -354,5 +296,7 @@ return {
   }
 };
 })();
-(node as any).hash = '790e9f6329d58e4b6b83a54cebdb8d70';
+
+(node as any).hash = "790e9f6329d58e4b6b83a54cebdb8d70";
+
 export default node;

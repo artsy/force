@@ -1,34 +1,37 @@
+/**
+ * @generated SignedSource<<5361935e42486b37ce153121592ef392>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type FairCollection_collection = {
-    readonly id: string;
-    readonly slug: string;
-    readonly title: string;
-    readonly artworks: {
-        readonly counts: {
-            readonly total: number | null;
-        } | null;
-        readonly edges: ReadonlyArray<{
-            readonly node: {
-                readonly image: {
-                    readonly url: string | null;
-                } | null;
-            } | null;
-        } | null> | null;
+export type FairCollection_collection$data = {
+  readonly id: string;
+  readonly slug: string;
+  readonly title: string;
+  readonly artworks: {
+    readonly counts: {
+      readonly total: Int | null;
     } | null;
-    readonly " $refType": "FairCollection_collection";
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly image: {
+          readonly url: string | null;
+        } | null;
+      } | null;
+    } | null> | null;
+  } | null;
+  readonly " $fragmentType": "FairCollection_collection";
 };
-export type FairCollection_collection$data = FairCollection_collection;
 export type FairCollection_collection$key = {
-    readonly " $data"?: FairCollection_collection$data;
-    readonly " $fragmentRefs": FragmentRefs<"FairCollection_collection">;
+  readonly " $data"?: FairCollection_collection$data;
+  readonly " $fragmentSpreads": FragmentRefs<"FairCollection_collection">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -142,5 +145,7 @@ const node: ReaderFragment = {
   "type": "MarketingCollection",
   "abstractKey": null
 };
-(node as any).hash = 'c3b384ef9db0ce56407b1eff92a137a5';
+
+(node as any).hash = "c3b384ef9db0ce56407b1eff92a137a5";
+
 export default node;

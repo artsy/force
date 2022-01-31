@@ -1,76 +1,49 @@
+/**
+ * @generated SignedSource<<961b1b73dc843c34d30f4f8f9a550bb1>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type FairCollection_QueryVariables = {
-    slug: string;
+export type FairCollection_Query$variables = {
+  slug: string;
 };
-export type FairCollection_QueryResponse = {
-    readonly marketingCollection: {
-        readonly " $fragmentRefs": FragmentRefs<"FairCollection_collection">;
+export type FairCollection_Query$data = {
+  readonly marketingCollection: {
+    readonly " $fragmentSpreads": FragmentRefs<"FairCollection_collection">;
+  } | null;
+};
+export type FairCollection_Query$rawResponse = {
+  readonly marketingCollection: {
+    readonly id: string;
+    readonly slug: string;
+    readonly title: string;
+    readonly artworks: {
+      readonly counts: {
+        readonly total: Int | null;
+      } | null;
+      readonly edges: ReadonlyArray<{
+        readonly node: {
+          readonly image: {
+            readonly url: string | null;
+          } | null;
+          readonly id: string;
+        } | null;
+      } | null> | null;
+      readonly id: string;
     } | null;
-};
-export type FairCollection_QueryRawResponse = {
-    readonly marketingCollection: ({
-        readonly id: string;
-        readonly slug: string;
-        readonly title: string;
-        readonly artworks: ({
-            readonly counts: ({
-                readonly total: number | null;
-            }) | null;
-            readonly edges: ReadonlyArray<({
-                readonly node: ({
-                    readonly image: ({
-                        readonly url: string | null;
-                    }) | null;
-                    readonly id: string;
-                }) | null;
-            }) | null> | null;
-            readonly id: string;
-        }) | null;
-    }) | null;
+  } | null;
 };
 export type FairCollection_Query = {
-    readonly response: FairCollection_QueryResponse;
-    readonly variables: FairCollection_QueryVariables;
-    readonly rawResponse: FairCollection_QueryRawResponse;
+  variables: FairCollection_Query$variables;
+  response: FairCollection_Query$data;
+  rawResponse: FairCollection_Query$rawResponse;
 };
-
-
-
-/*
-query FairCollection_Query(
-  $slug: String!
-) {
-  marketingCollection(slug: $slug) {
-    ...FairCollection_collection
-    id
-  }
-}
-
-fragment FairCollection_collection on MarketingCollection {
-  id
-  slug
-  title
-  artworks: artworksConnection(first: 3) {
-    counts {
-      total
-    }
-    edges {
-      node {
-        image {
-          url(version: "larger")
-        }
-        id
-      }
-    }
-    id
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -316,5 +289,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'fbce895b61391f46b1a84c74a2734ad9';
+
+(node as any).hash = "fbce895b61391f46b1a84c74a2734ad9";
+
 export default node;

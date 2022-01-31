@@ -1,106 +1,33 @@
+/**
+ * @generated SignedSource<<99dfac586c1533ec72cfe5ce5ea4b6cc>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type EventStatus = "ALL" | "CLOSED" | "CLOSING_SOON" | "CURRENT" | "RUNNING" | "RUNNING_AND_UPCOMING" | "UPCOMING" | "%future added value";
-export type ShowPaginatedEventsQueryVariables = {
-    partnerId: string;
-    first?: number | null;
-    last?: number | null;
-    after?: string | null;
-    before?: string | null;
-    status?: EventStatus | null;
+export type ShowPaginatedEventsQuery$variables = {
+  partnerId: string;
+  first?: number | null;
+  last?: number | null;
+  after?: string | null;
+  before?: string | null;
+  status?: EventStatus | null;
 };
-export type ShowPaginatedEventsQueryResponse = {
-    readonly partner: {
-        readonly " $fragmentRefs": FragmentRefs<"ShowPaginatedEvents_partner">;
-    } | null;
+export type ShowPaginatedEventsQuery$data = {
+  readonly partner: {
+    readonly " $fragmentSpreads": FragmentRefs<"ShowPaginatedEvents_partner">;
+  } | null;
 };
 export type ShowPaginatedEventsQuery = {
-    readonly response: ShowPaginatedEventsQueryResponse;
-    readonly variables: ShowPaginatedEventsQueryVariables;
+  variables: ShowPaginatedEventsQuery$variables;
+  response: ShowPaginatedEventsQuery$data;
 };
-
-
-
-/*
-query ShowPaginatedEventsQuery(
-  $partnerId: String!
-  $first: Int
-  $last: Int
-  $after: String
-  $before: String
-  $status: EventStatus
-) {
-  partner(id: $partnerId) @principalField {
-    ...ShowPaginatedEvents_partner_qVb3U
-    id
-  }
-}
-
-fragment Pagination_pageCursors on PageCursors {
-  around {
-    cursor
-    page
-    isCurrent
-  }
-  first {
-    cursor
-    page
-    isCurrent
-  }
-  last {
-    cursor
-    page
-    isCurrent
-  }
-  previous {
-    cursor
-    page
-  }
-}
-
-fragment ShowCard_show on Show {
-  href
-  name
-  isFairBooth
-  exhibitionPeriod
-  coverImage {
-    medium: cropped(width: 320, height: 240) {
-      width
-      height
-      src
-      srcSet
-    }
-  }
-}
-
-fragment ShowEvents_edges on ShowEdge {
-  node {
-    internalID
-    ...ShowCard_show
-    id
-  }
-}
-
-fragment ShowPaginatedEvents_partner_qVb3U on Partner {
-  slug
-  showsList: showsConnection(first: $first, last: $last, after: $after, before: $before, status: $status, isDisplayable: true) {
-    pageInfo {
-      hasNextPage
-      endCursor
-    }
-    pageCursors {
-      ...Pagination_pageCursors
-    }
-    edges {
-      ...ShowEvents_edges
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = {
@@ -501,5 +428,7 @@ return {
   }
 };
 })();
-(node as any).hash = '99cf0323eeaf8155ebfb4acccd308e9d';
+
+(node as any).hash = "99cf0323eeaf8155ebfb4acccd308e9d";
+
 export default node;

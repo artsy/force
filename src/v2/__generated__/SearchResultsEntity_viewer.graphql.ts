@@ -1,38 +1,41 @@
+/**
+ * @generated SignedSource<<fbb5f83acfc3db16daf7dc5a52c39600>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type SearchResultsEntity_viewer = {
-    readonly searchConnection: {
-        readonly pageInfo: {
-            readonly hasNextPage: boolean;
-            readonly endCursor: string | null;
-        };
-        readonly pageCursors: {
-            readonly " $fragmentRefs": FragmentRefs<"Pagination_pageCursors">;
-        };
-        readonly edges: ReadonlyArray<{
-            readonly node: {
-                readonly description?: string | null;
-                readonly displayLabel?: string | null;
-                readonly href?: string | null;
-                readonly internalID?: string;
-                readonly imageUrl?: string | null;
-                readonly displayType?: string | null;
-            } | null;
-        } | null> | null;
-    } | null;
-    readonly " $refType": "SearchResultsEntity_viewer";
+export type SearchResultsEntity_viewer$data = {
+  readonly searchConnection: {
+    readonly pageInfo: {
+      readonly hasNextPage: boolean;
+      readonly endCursor: string | null;
+    };
+    readonly pageCursors: {
+      readonly " $fragmentSpreads": FragmentRefs<"Pagination_pageCursors">;
+    };
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly description?: string | null;
+        readonly displayLabel?: string | null;
+        readonly href?: string | null;
+        readonly internalID?: string;
+        readonly imageUrl?: string | null;
+        readonly displayType?: string | null;
+      } | null;
+    } | null> | null;
+  } | null;
+  readonly " $fragmentType": "SearchResultsEntity_viewer";
 };
-export type SearchResultsEntity_viewer$data = SearchResultsEntity_viewer;
 export type SearchResultsEntity_viewer$key = {
-    readonly " $data"?: SearchResultsEntity_viewer$data;
-    readonly " $fragmentRefs": FragmentRefs<"SearchResultsEntity_viewer">;
+  readonly " $data"?: SearchResultsEntity_viewer$data;
+  readonly " $fragmentSpreads": FragmentRefs<"SearchResultsEntity_viewer">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [
@@ -239,5 +242,7 @@ const node: ReaderFragment = {
   "type": "Viewer",
   "abstractKey": null
 };
-(node as any).hash = '5815db449614a1ba927017f63ab148bf';
+
+(node as any).hash = "5815db449614a1ba927017f63ab148bf";
+
 export default node;

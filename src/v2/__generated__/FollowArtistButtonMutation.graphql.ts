@@ -1,51 +1,38 @@
+/**
+ * @generated SignedSource<<9e4c94ed314f04bd3cab3f1318dec056>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type FollowArtistInput = {
-    artistID: string;
-    clientMutationId?: string | null;
-    unfollow?: boolean | null;
+  artistID: string;
+  clientMutationId?: string | null;
+  unfollow?: boolean | null;
 };
-export type FollowArtistButtonMutationVariables = {
-    input: FollowArtistInput;
+export type FollowArtistButtonMutation$variables = {
+  input: FollowArtistInput;
 };
-export type FollowArtistButtonMutationResponse = {
-    readonly followArtist: {
-        readonly artist: {
-            readonly id: string;
-            readonly slug: string;
-            readonly is_followed: boolean | null;
-            readonly counts: {
-                readonly follows: number | null;
-            } | null;
-        } | null;
+export type FollowArtistButtonMutation$data = {
+  readonly followArtist: {
+    readonly artist: {
+      readonly id: string;
+      readonly slug: string;
+      readonly is_followed: boolean | null;
+      readonly counts: {
+        readonly follows: Int | null;
+      } | null;
     } | null;
+  } | null;
 };
 export type FollowArtistButtonMutation = {
-    readonly response: FollowArtistButtonMutationResponse;
-    readonly variables: FollowArtistButtonMutationVariables;
+  variables: FollowArtistButtonMutation$variables;
+  response: FollowArtistButtonMutation$data;
 };
-
-
-
-/*
-mutation FollowArtistButtonMutation(
-  $input: FollowArtistInput!
-) {
-  followArtist(input: $input) {
-    artist {
-      id
-      slug
-      is_followed: isFollowed
-      counts {
-        follows
-      }
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -151,5 +138,7 @@ return {
   }
 };
 })();
-(node as any).hash = '63005133474b3c70e897441c947a1bab';
+
+(node as any).hash = "63005133474b3c70e897441c947a1bab";
+
 export default node;

@@ -1,79 +1,29 @@
+/**
+ * @generated SignedSource<<2348c841103b84ebe0f6b30dec6e5c85>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type FairArticles_test_QueryVariables = {
-    id: string;
-    first: number;
-    after?: string | null;
+export type FairArticles_test_Query$variables = {
+  id: string;
+  first: number;
+  after?: string | null;
 };
-export type FairArticles_test_QueryResponse = {
-    readonly fair: {
-        readonly " $fragmentRefs": FragmentRefs<"FairArticles_fair">;
-    } | null;
+export type FairArticles_test_Query$data = {
+  readonly fair: {
+    readonly " $fragmentSpreads": FragmentRefs<"FairArticles_fair">;
+  } | null;
 };
 export type FairArticles_test_Query = {
-    readonly response: FairArticles_test_QueryResponse;
-    readonly variables: FairArticles_test_QueryVariables;
+  variables: FairArticles_test_Query$variables;
+  response: FairArticles_test_Query$data;
 };
-
-
-
-/*
-query FairArticles_test_Query(
-  $id: String!
-  $first: Int!
-  $after: String
-) {
-  fair(id: $id) {
-    ...FairArticles_fair_2HEEH6
-    id
-  }
-}
-
-fragment FairArticles_fair_2HEEH6 on Fair {
-  slug
-  articlesConnection(first: $first, after: $after) {
-    totalCount
-    edges {
-      node {
-        internalID
-        title
-        href
-        author {
-          name
-          id
-        }
-        publishedAt(format: "MMM Do, YYYY")
-        thumbnailTitle
-        thumbnailImage {
-          large: cropped(width: 733, height: 550) {
-            width
-            height
-            src
-            srcSet
-          }
-          medium: cropped(width: 267, height: 150) {
-            width
-            height
-            src
-            srcSet
-          }
-        }
-        id
-        __typename
-      }
-      cursor
-    }
-    pageInfo {
-      endCursor
-      hasNextPage
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = {
@@ -531,5 +481,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'e5a588806bbc0ae5c361527adb307e32';
+
+(node as any).hash = "e5a588806bbc0ae5c361527adb307e32";
+
 export default node;

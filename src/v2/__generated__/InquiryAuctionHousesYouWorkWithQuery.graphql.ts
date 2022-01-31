@@ -1,39 +1,29 @@
+/**
+ * @generated SignedSource<<08904e464db92a236aa0b8c7e3f0d4c2>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
-export type InquiryAuctionHousesYouWorkWithQueryVariables = {
-    term: string;
+import { ConcreteRequest, Query } from 'relay-runtime';
+export type InquiryAuctionHousesYouWorkWithQuery$variables = {
+  term: string;
 };
-export type InquiryAuctionHousesYouWorkWithQueryResponse = {
-    readonly external: {
-        readonly auctionHouses: ReadonlyArray<{
-            readonly internalID: string;
-            readonly name: string;
-        }>;
-    };
+export type InquiryAuctionHousesYouWorkWithQuery$data = {
+  readonly external: {
+    readonly auctionHouses: ReadonlyArray<{
+      readonly internalID: string;
+      readonly name: string;
+    }>;
+  };
 };
 export type InquiryAuctionHousesYouWorkWithQuery = {
-    readonly response: InquiryAuctionHousesYouWorkWithQueryResponse;
-    readonly variables: InquiryAuctionHousesYouWorkWithQueryVariables;
+  variables: InquiryAuctionHousesYouWorkWithQuery$variables;
+  response: InquiryAuctionHousesYouWorkWithQuery$data;
 };
-
-
-
-/*
-query InquiryAuctionHousesYouWorkWithQuery(
-  $term: String!
-) {
-  external {
-    auctionHouses(size: 5, term: $term) {
-      internalID
-      name
-      id
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -153,5 +143,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'f5cacd67efc799a7387e076ab088afda';
+
+(node as any).hash = "f5cacd67efc799a7387e076ab088afda";
+
 export default node;

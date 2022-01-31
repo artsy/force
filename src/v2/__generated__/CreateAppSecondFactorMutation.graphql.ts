@@ -1,92 +1,70 @@
+/**
+ * @generated SignedSource<<76a5a2e9187600a7b0be01055498a7d4>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type CreateAppSecondFactorInput = {
-    attributes: AppSecondFactorAttributes;
-    clientMutationId?: string | null;
-    password: string;
+  attributes: AppSecondFactorAttributes;
+  clientMutationId?: string | null;
+  password: string;
 };
 export type AppSecondFactorAttributes = {
-    name?: string | null;
+  name?: string | null;
 };
-export type CreateAppSecondFactorMutationVariables = {
-    input: CreateAppSecondFactorInput;
+export type CreateAppSecondFactorMutation$variables = {
+  input: CreateAppSecondFactorInput;
 };
-export type CreateAppSecondFactorMutationResponse = {
-    readonly createAppSecondFactor: {
-        readonly secondFactorOrErrors: {
-            readonly __typename: "AppSecondFactor";
-            readonly internalID: string;
-            readonly otpSecret: string | null;
-            readonly otpProvisioningURI: string | null;
-            readonly name: string | null;
-        } | {
-            readonly __typename: "Errors";
-            readonly errors: ReadonlyArray<{
-                readonly message: string;
-                readonly code: string;
-            }>;
-        } | {
-            /*This will never be '%other', but we need some
-            value in case none of the concrete values match.*/
-            readonly __typename: "%other";
-        };
-    } | null;
+export type CreateAppSecondFactorMutation$data = {
+  readonly createAppSecondFactor: {
+    readonly secondFactorOrErrors: {
+      readonly __typename: "AppSecondFactor";
+      readonly internalID: string;
+      readonly otpSecret: string | null;
+      readonly otpProvisioningURI: string | null;
+      readonly name: string | null;
+    } | {
+      readonly __typename: "Errors";
+      readonly errors: ReadonlyArray<{
+        readonly message: string;
+        readonly code: string;
+      }>;
+    } | {
+      // This will never be '%other', but we need some
+      // value in case none of the concrete values match.
+      readonly __typename: "%other";
+    };
+  } | null;
 };
-export type CreateAppSecondFactorMutationRawResponse = {
-    readonly createAppSecondFactor: ({
-        readonly secondFactorOrErrors: {
-            readonly __typename: "AppSecondFactor";
-            readonly internalID: string;
-            readonly otpSecret: string | null;
-            readonly otpProvisioningURI: string | null;
-            readonly name: string | null;
-        } | {
-            readonly __typename: "Errors";
-            readonly errors: ReadonlyArray<{
-                readonly message: string;
-                readonly code: string;
-            }>;
-        } | {
-            readonly __typename: string;
-        };
-    }) | null;
+export type CreateAppSecondFactorMutation$rawResponse = {
+  readonly createAppSecondFactor: {
+    readonly secondFactorOrErrors: {
+      readonly __typename: "AppSecondFactor";
+      readonly internalID: string;
+      readonly otpSecret: string | null;
+      readonly otpProvisioningURI: string | null;
+      readonly name: string | null;
+    } | {
+      readonly __typename: "Errors";
+      readonly errors: ReadonlyArray<{
+        readonly message: string;
+        readonly code: string;
+      }>;
+    } | {
+      readonly __typename: string;
+    };
+  } | null;
 };
 export type CreateAppSecondFactorMutation = {
-    readonly response: CreateAppSecondFactorMutationResponse;
-    readonly variables: CreateAppSecondFactorMutationVariables;
-    readonly rawResponse: CreateAppSecondFactorMutationRawResponse;
+  variables: CreateAppSecondFactorMutation$variables;
+  response: CreateAppSecondFactorMutation$data;
+  rawResponse: CreateAppSecondFactorMutation$rawResponse;
 };
-
-
-
-/*
-mutation CreateAppSecondFactorMutation(
-  $input: CreateAppSecondFactorInput!
-) {
-  createAppSecondFactor(input: $input) {
-    secondFactorOrErrors {
-      __typename
-      ... on AppSecondFactor {
-        __typename
-        internalID
-        otpSecret
-        otpProvisioningURI
-        name
-      }
-      ... on Errors {
-        __typename
-        errors {
-          message
-          code
-        }
-      }
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -277,5 +255,7 @@ return {
   }
 };
 })();
-(node as any).hash = '6c55f2fcf9ffd17825721a9443d0cb4d';
+
+(node as any).hash = "6c55f2fcf9ffd17825721a9443d0cb4d";
+
 export default node;

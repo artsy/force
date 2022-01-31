@@ -1,228 +1,168 @@
+/**
+ * @generated SignedSource<<16e5c5fb3c94934792c8b015673fa81d>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 export type CommerceOrderModeEnum = "BUY" | "OFFER" | "%future added value";
 export type CommerceOrderParticipantEnum = "BUYER" | "SELLER" | "%future added value";
 export type CommerceOrderStateEnum = "ABANDONED" | "APPROVED" | "CANCELED" | "FULFILLED" | "PENDING" | "REFUNDED" | "SUBMITTED" | "%future added value";
-export type orderRoutes_OrderQueryVariables = {
-    orderID: string;
+export type orderRoutes_OrderQuery$variables = {
+  orderID: string;
 };
-export type orderRoutes_OrderQueryResponse = {
-    readonly me: {
-        readonly name: string | null;
+export type orderRoutes_OrderQuery$data = {
+  readonly me: {
+    readonly name: string | null;
+  } | null;
+  readonly order: {
+    readonly internalID: string;
+    readonly mode: CommerceOrderModeEnum | null;
+    readonly state: CommerceOrderStateEnum;
+    readonly lastTransactionFailed: boolean | null;
+    readonly requestedFulfillment: {
+      readonly __typename: string;
     } | null;
-    readonly order: {
-        readonly internalID: string;
-        readonly mode: CommerceOrderModeEnum | null;
-        readonly state: CommerceOrderStateEnum;
-        readonly lastTransactionFailed: boolean | null;
-        readonly requestedFulfillment: {
-            readonly __typename: string;
-        } | null;
-        readonly lineItems: {
+    readonly lineItems: {
+      readonly edges: ReadonlyArray<{
+        readonly node: {
+          readonly artwork: {
+            readonly slug: string;
+            readonly href: string | null;
+            readonly is_acquireable: boolean | null;
+            readonly is_offerable: boolean | null;
+          } | null;
+          readonly shippingQuoteOptions: {
             readonly edges: ReadonlyArray<{
-                readonly node: {
-                    readonly artwork: {
-                        readonly slug: string;
-                        readonly href: string | null;
-                        readonly is_acquireable: boolean | null;
-                        readonly is_offerable: boolean | null;
-                    } | null;
-                    readonly shippingQuoteOptions: {
-                        readonly edges: ReadonlyArray<{
-                            readonly node: {
-                                readonly isSelected: boolean;
-                            } | null;
-                        } | null> | null;
-                    } | null;
-                } | null;
+              readonly node: {
+                readonly isSelected: boolean;
+              } | null;
             } | null> | null;
+          } | null;
         } | null;
-        readonly creditCard: {
-            readonly internalID: string;
-        } | null;
-        readonly currencyCode: string;
-        readonly itemsTotalCents: number | null;
-        readonly myLastOffer?: {
-            readonly internalID: string;
-            readonly createdAt: string;
-        } | null;
-        readonly lastOffer?: {
-            readonly internalID: string;
-            readonly createdAt: string;
-        } | null;
-        readonly awaitingResponseFrom?: CommerceOrderParticipantEnum | null;
+      } | null> | null;
     } | null;
+    readonly creditCard: {
+      readonly internalID: string;
+    } | null;
+    readonly currencyCode: string;
+    readonly itemsTotalCents: number | null;
+    readonly myLastOffer?: {
+      readonly internalID: string;
+      readonly createdAt: string;
+    } | null;
+    readonly lastOffer?: {
+      readonly internalID: string;
+      readonly createdAt: string;
+    } | null;
+    readonly awaitingResponseFrom?: CommerceOrderParticipantEnum | null;
+  } | null;
 };
-export type orderRoutes_OrderQueryRawResponse = {
-    readonly me: ({
-        readonly name: string | null;
-        readonly id: string;
-    }) | null;
-    readonly order: ({
-        readonly __typename: "CommerceOfferOrder";
-        readonly __isCommerceOrder: "CommerceOfferOrder";
-        readonly internalID: string;
-        readonly mode: CommerceOrderModeEnum | null;
-        readonly state: CommerceOrderStateEnum;
-        readonly lastTransactionFailed: boolean | null;
-        readonly requestedFulfillment: ({
-            readonly __typename: string;
-        }) | null;
-        readonly lineItems: ({
-            readonly edges: ReadonlyArray<({
-                readonly node: ({
-                    readonly artwork: ({
-                        readonly slug: string;
-                        readonly id: string;
-                        readonly href: string | null;
-                        readonly is_acquireable: boolean | null;
-                        readonly is_offerable: boolean | null;
-                    }) | null;
-                    readonly shippingQuoteOptions: ({
-                        readonly edges: ReadonlyArray<({
-                            readonly node: ({
-                                readonly isSelected: boolean;
-                                readonly id: string;
-                            }) | null;
-                        }) | null> | null;
-                    }) | null;
-                    readonly id: string;
-                }) | null;
-            }) | null> | null;
-        }) | null;
-        readonly creditCard: ({
-            readonly internalID: string;
+export type orderRoutes_OrderQuery$rawResponse = {
+  readonly me: {
+    readonly name: string | null;
+    readonly id: string;
+  } | null;
+  readonly order: {
+    readonly __typename: "CommerceOfferOrder";
+    readonly __isCommerceOrder: "CommerceOfferOrder";
+    readonly internalID: string;
+    readonly mode: CommerceOrderModeEnum | null;
+    readonly state: CommerceOrderStateEnum;
+    readonly lastTransactionFailed: boolean | null;
+    readonly requestedFulfillment: {
+      readonly __typename: string;
+    } | null;
+    readonly lineItems: {
+      readonly edges: ReadonlyArray<{
+        readonly node: {
+          readonly artwork: {
+            readonly slug: string;
             readonly id: string;
-        }) | null;
-        readonly currencyCode: string;
-        readonly itemsTotalCents: number | null;
-        readonly id: string;
-        readonly myLastOffer: ({
-            readonly internalID: string;
-            readonly createdAt: string;
+            readonly href: string | null;
+            readonly is_acquireable: boolean | null;
+            readonly is_offerable: boolean | null;
+          } | null;
+          readonly shippingQuoteOptions: {
+            readonly edges: ReadonlyArray<{
+              readonly node: {
+                readonly isSelected: boolean;
+                readonly id: string;
+              } | null;
+            } | null> | null;
+          } | null;
+          readonly id: string;
+        } | null;
+      } | null> | null;
+    } | null;
+    readonly creditCard: {
+      readonly internalID: string;
+      readonly id: string;
+    } | null;
+    readonly currencyCode: string;
+    readonly itemsTotalCents: number | null;
+    readonly id: string;
+    readonly myLastOffer: {
+      readonly internalID: string;
+      readonly createdAt: string;
+      readonly id: string;
+    } | null;
+    readonly lastOffer: {
+      readonly internalID: string;
+      readonly createdAt: string;
+      readonly id: string;
+    } | null;
+    readonly awaitingResponseFrom: CommerceOrderParticipantEnum | null;
+  } | {
+    readonly __typename: string;
+    readonly __isCommerceOrder: string;
+    readonly internalID: string;
+    readonly mode: CommerceOrderModeEnum | null;
+    readonly state: CommerceOrderStateEnum;
+    readonly lastTransactionFailed: boolean | null;
+    readonly requestedFulfillment: {
+      readonly __typename: string;
+    } | null;
+    readonly lineItems: {
+      readonly edges: ReadonlyArray<{
+        readonly node: {
+          readonly artwork: {
+            readonly slug: string;
             readonly id: string;
-        }) | null;
-        readonly lastOffer: ({
-            readonly internalID: string;
-            readonly createdAt: string;
-            readonly id: string;
-        }) | null;
-        readonly awaitingResponseFrom: CommerceOrderParticipantEnum | null;
-    } | {
-        readonly __typename: string;
-        readonly __isCommerceOrder: string;
-        readonly internalID: string;
-        readonly mode: CommerceOrderModeEnum | null;
-        readonly state: CommerceOrderStateEnum;
-        readonly lastTransactionFailed: boolean | null;
-        readonly requestedFulfillment: ({
-            readonly __typename: string;
-        }) | null;
-        readonly lineItems: ({
-            readonly edges: ReadonlyArray<({
-                readonly node: ({
-                    readonly artwork: ({
-                        readonly slug: string;
-                        readonly id: string;
-                        readonly href: string | null;
-                        readonly is_acquireable: boolean | null;
-                        readonly is_offerable: boolean | null;
-                    }) | null;
-                    readonly shippingQuoteOptions: ({
-                        readonly edges: ReadonlyArray<({
-                            readonly node: ({
-                                readonly isSelected: boolean;
-                                readonly id: string;
-                            }) | null;
-                        }) | null> | null;
-                    }) | null;
-                    readonly id: string;
-                }) | null;
-            }) | null> | null;
-        }) | null;
-        readonly creditCard: ({
-            readonly internalID: string;
-            readonly id: string;
-        }) | null;
-        readonly currencyCode: string;
-        readonly itemsTotalCents: number | null;
-        readonly id: string;
-    }) | null;
+            readonly href: string | null;
+            readonly is_acquireable: boolean | null;
+            readonly is_offerable: boolean | null;
+          } | null;
+          readonly shippingQuoteOptions: {
+            readonly edges: ReadonlyArray<{
+              readonly node: {
+                readonly isSelected: boolean;
+                readonly id: string;
+              } | null;
+            } | null> | null;
+          } | null;
+          readonly id: string;
+        } | null;
+      } | null> | null;
+    } | null;
+    readonly creditCard: {
+      readonly internalID: string;
+      readonly id: string;
+    } | null;
+    readonly currencyCode: string;
+    readonly itemsTotalCents: number | null;
+    readonly id: string;
+  } | null;
 };
 export type orderRoutes_OrderQuery = {
-    readonly response: orderRoutes_OrderQueryResponse;
-    readonly variables: orderRoutes_OrderQueryVariables;
-    readonly rawResponse: orderRoutes_OrderQueryRawResponse;
+  variables: orderRoutes_OrderQuery$variables;
+  response: orderRoutes_OrderQuery$data;
+  rawResponse: orderRoutes_OrderQuery$rawResponse;
 };
-
-
-
-/*
-query orderRoutes_OrderQuery(
-  $orderID: ID!
-) {
-  me {
-    name
-    id
-  }
-  order: commerceOrder(id: $orderID) @principalField {
-    __typename
-    __isCommerceOrder: __typename
-    internalID
-    mode
-    state
-    lastTransactionFailed
-    ... on CommerceOfferOrder {
-      myLastOffer {
-        internalID
-        createdAt
-        id
-      }
-      lastOffer {
-        internalID
-        createdAt
-        id
-      }
-      awaitingResponseFrom
-    }
-    requestedFulfillment {
-      __typename
-    }
-    lineItems {
-      edges {
-        node {
-          artwork {
-            slug
-            id
-            href
-            is_acquireable: isAcquireable
-            is_offerable: isOfferable
-          }
-          shippingQuoteOptions {
-            edges {
-              node {
-                isSelected
-                id
-              }
-            }
-          }
-          id
-        }
-      }
-    }
-    creditCard {
-      internalID
-      id
-    }
-    currencyCode
-    itemsTotalCents
-    id
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -278,10 +218,28 @@ v7 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
+  "name": "createdAt",
+  "storageKey": null
+},
+v8 = [
+  (v3/*: any*/),
+  (v7/*: any*/)
+],
+v9 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "awaitingResponseFrom",
+  "storageKey": null
+},
+v10 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
   "name": "__typename",
   "storageKey": null
 },
-v8 = {
+v11 = {
   "alias": null,
   "args": null,
   "concreteType": null,
@@ -289,75 +247,57 @@ v8 = {
   "name": "requestedFulfillment",
   "plural": false,
   "selections": [
-    (v7/*: any*/)
+    (v10/*: any*/)
   ],
   "storageKey": null
 },
-v9 = {
+v12 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "slug",
   "storageKey": null
 },
-v10 = {
+v13 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "href",
   "storageKey": null
 },
-v11 = {
+v14 = {
   "alias": "is_acquireable",
   "args": null,
   "kind": "ScalarField",
   "name": "isAcquireable",
   "storageKey": null
 },
-v12 = {
+v15 = {
   "alias": "is_offerable",
   "args": null,
   "kind": "ScalarField",
   "name": "isOfferable",
   "storageKey": null
 },
-v13 = {
+v16 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "isSelected",
   "storageKey": null
 },
-v14 = {
+v17 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "currencyCode",
   "storageKey": null
 },
-v15 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "itemsTotalCents",
-  "storageKey": null
-},
-v16 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "createdAt",
-  "storageKey": null
-},
-v17 = [
-  (v3/*: any*/),
-  (v16/*: any*/)
-],
 v18 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "awaitingResponseFrom",
+  "name": "itemsTotalCents",
   "storageKey": null
 },
 v19 = {
@@ -369,7 +309,7 @@ v19 = {
 },
 v20 = [
   (v3/*: any*/),
-  (v16/*: any*/),
+  (v7/*: any*/),
   (v19/*: any*/)
 ];
 return {
@@ -403,7 +343,35 @@ return {
           (v4/*: any*/),
           (v5/*: any*/),
           (v6/*: any*/),
-          (v8/*: any*/),
+          {
+            "kind": "InlineFragment",
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "CommerceOffer",
+                "kind": "LinkedField",
+                "name": "myLastOffer",
+                "plural": false,
+                "selections": (v8/*: any*/),
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "CommerceOffer",
+                "kind": "LinkedField",
+                "name": "lastOffer",
+                "plural": false,
+                "selections": (v8/*: any*/),
+                "storageKey": null
+              },
+              (v9/*: any*/)
+            ],
+            "type": "CommerceOfferOrder",
+            "abstractKey": null
+          },
+          (v11/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -436,10 +404,10 @@ return {
                         "name": "artwork",
                         "plural": false,
                         "selections": [
-                          (v9/*: any*/),
-                          (v10/*: any*/),
-                          (v11/*: any*/),
-                          (v12/*: any*/)
+                          (v12/*: any*/),
+                          (v13/*: any*/),
+                          (v14/*: any*/),
+                          (v15/*: any*/)
                         ],
                         "storageKey": null
                       },
@@ -467,7 +435,7 @@ return {
                                 "name": "node",
                                 "plural": false,
                                 "selections": [
-                                  (v13/*: any*/)
+                                  (v16/*: any*/)
                                 ],
                                 "storageKey": null
                               }
@@ -498,36 +466,8 @@ return {
             ],
             "storageKey": null
           },
-          (v14/*: any*/),
-          (v15/*: any*/),
-          {
-            "kind": "InlineFragment",
-            "selections": [
-              {
-                "alias": null,
-                "args": null,
-                "concreteType": "CommerceOffer",
-                "kind": "LinkedField",
-                "name": "myLastOffer",
-                "plural": false,
-                "selections": (v17/*: any*/),
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "concreteType": "CommerceOffer",
-                "kind": "LinkedField",
-                "name": "lastOffer",
-                "plural": false,
-                "selections": (v17/*: any*/),
-                "storageKey": null
-              },
-              (v18/*: any*/)
-            ],
-            "type": "CommerceOfferOrder",
-            "abstractKey": null
-          }
+          (v17/*: any*/),
+          (v18/*: any*/)
         ],
         "storageKey": null
       }
@@ -562,7 +502,7 @@ return {
         "name": "commerceOrder",
         "plural": false,
         "selections": [
-          (v7/*: any*/),
+          (v10/*: any*/),
           {
             "kind": "TypeDiscriminator",
             "abstractKey": "__isCommerceOrder"
@@ -571,7 +511,35 @@ return {
           (v4/*: any*/),
           (v5/*: any*/),
           (v6/*: any*/),
-          (v8/*: any*/),
+          {
+            "kind": "InlineFragment",
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "CommerceOffer",
+                "kind": "LinkedField",
+                "name": "myLastOffer",
+                "plural": false,
+                "selections": (v20/*: any*/),
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "CommerceOffer",
+                "kind": "LinkedField",
+                "name": "lastOffer",
+                "plural": false,
+                "selections": (v20/*: any*/),
+                "storageKey": null
+              },
+              (v9/*: any*/)
+            ],
+            "type": "CommerceOfferOrder",
+            "abstractKey": null
+          },
+          (v11/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -604,11 +572,11 @@ return {
                         "name": "artwork",
                         "plural": false,
                         "selections": [
-                          (v9/*: any*/),
+                          (v12/*: any*/),
                           (v19/*: any*/),
-                          (v10/*: any*/),
-                          (v11/*: any*/),
-                          (v12/*: any*/)
+                          (v13/*: any*/),
+                          (v14/*: any*/),
+                          (v15/*: any*/)
                         ],
                         "storageKey": null
                       },
@@ -636,7 +604,7 @@ return {
                                 "name": "node",
                                 "plural": false,
                                 "selections": [
-                                  (v13/*: any*/),
+                                  (v16/*: any*/),
                                   (v19/*: any*/)
                                 ],
                                 "storageKey": null
@@ -670,37 +638,9 @@ return {
             ],
             "storageKey": null
           },
-          (v14/*: any*/),
-          (v15/*: any*/),
-          (v19/*: any*/),
-          {
-            "kind": "InlineFragment",
-            "selections": [
-              {
-                "alias": null,
-                "args": null,
-                "concreteType": "CommerceOffer",
-                "kind": "LinkedField",
-                "name": "myLastOffer",
-                "plural": false,
-                "selections": (v20/*: any*/),
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "concreteType": "CommerceOffer",
-                "kind": "LinkedField",
-                "name": "lastOffer",
-                "plural": false,
-                "selections": (v20/*: any*/),
-                "storageKey": null
-              },
-              (v18/*: any*/)
-            ],
-            "type": "CommerceOfferOrder",
-            "abstractKey": null
-          }
+          (v17/*: any*/),
+          (v18/*: any*/),
+          (v19/*: any*/)
         ],
         "storageKey": null
       }
@@ -716,5 +656,7 @@ return {
   }
 };
 })();
-(node as any).hash = '54b653b3508e65f0e52c15414969e0de';
+
+(node as any).hash = "54b653b3508e65f0e52c15414969e0de";
+
 export default node;

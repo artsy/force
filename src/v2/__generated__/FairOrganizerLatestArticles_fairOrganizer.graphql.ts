@@ -1,30 +1,33 @@
+/**
+ * @generated SignedSource<<2e92445a0cad4748ddf4cf5a813f9cc7>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type FairOrganizerLatestArticles_fairOrganizer = {
-    readonly name: string | null;
-    readonly slug: string;
-    readonly articlesConnection: {
-        readonly totalCount: number | null;
-        readonly edges: ReadonlyArray<{
-            readonly node: {
-                readonly id: string;
-                readonly " $fragmentRefs": FragmentRefs<"FairEditorialItem_article">;
-            } | null;
-        } | null> | null;
-    } | null;
-    readonly " $refType": "FairOrganizerLatestArticles_fairOrganizer";
+export type FairOrganizerLatestArticles_fairOrganizer$data = {
+  readonly name: string | null;
+  readonly slug: string;
+  readonly articlesConnection: {
+    readonly totalCount: number | null;
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly id: string;
+        readonly " $fragmentSpreads": FragmentRefs<"FairEditorialItem_article">;
+      } | null;
+    } | null> | null;
+  } | null;
+  readonly " $fragmentType": "FairOrganizerLatestArticles_fairOrganizer";
 };
-export type FairOrganizerLatestArticles_fairOrganizer$data = FairOrganizerLatestArticles_fairOrganizer;
 export type FairOrganizerLatestArticles_fairOrganizer$key = {
-    readonly " $data"?: FairOrganizerLatestArticles_fairOrganizer$data;
-    readonly " $fragmentRefs": FragmentRefs<"FairOrganizerLatestArticles_fairOrganizer">;
+  readonly " $data"?: FairOrganizerLatestArticles_fairOrganizer$data;
+  readonly " $fragmentSpreads": FragmentRefs<"FairOrganizerLatestArticles_fairOrganizer">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -113,5 +116,7 @@ const node: ReaderFragment = {
   "type": "FairOrganizer",
   "abstractKey": null
 };
-(node as any).hash = '08eab3e0ca5787bd7579e94cf7139f38';
+
+(node as any).hash = "08eab3e0ca5787bd7579e94cf7139f38";
+
 export default node;

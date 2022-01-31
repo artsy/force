@@ -1,29 +1,32 @@
+/**
+ * @generated SignedSource<<2d0bbc1dd6c373e983644ddd7dae7507>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtistsIndex_featuredGenes = ReadonlyArray<{
-    readonly name: string | null;
-    readonly genes: ReadonlyArray<{
-        readonly internalID?: string;
-        readonly name?: string | null;
-        readonly href?: string | null;
-        readonly trendingArtists?: ReadonlyArray<{
-            readonly internalID: string;
-            readonly " $fragmentRefs": FragmentRefs<"ArtistsArtistCard_artist">;
-        } | null> | null;
+export type ArtistsIndex_featuredGenes$data = ReadonlyArray<{
+  readonly name: string | null;
+  readonly genes: ReadonlyArray<{
+    readonly internalID?: string;
+    readonly name?: string | null;
+    readonly href?: string | null;
+    readonly trendingArtists?: ReadonlyArray<{
+      readonly internalID: string;
+      readonly " $fragmentSpreads": FragmentRefs<"ArtistsArtistCard_artist">;
     } | null> | null;
-    readonly " $refType": "ArtistsIndex_featuredGenes";
+  } | null> | null;
+  readonly " $fragmentType": "ArtistsIndex_featuredGenes";
 }>;
-export type ArtistsIndex_featuredGenes$data = ArtistsIndex_featuredGenes;
 export type ArtistsIndex_featuredGenes$key = ReadonlyArray<{
-    readonly " $data"?: ArtistsIndex_featuredGenes$data;
-    readonly " $fragmentRefs": FragmentRefs<"ArtistsIndex_featuredGenes">;
+  readonly " $data"?: ArtistsIndex_featuredGenes$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtistsIndex_featuredGenes">;
 }>;
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = {
@@ -104,5 +107,7 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '64b07efb8dc9cb2ad5f98213e6216081';
+
+(node as any).hash = "64b07efb8dc9cb2ad5f98213e6216081";
+
 export default node;

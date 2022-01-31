@@ -1,37 +1,40 @@
+/**
+ * @generated SignedSource<<22e1e440deb1e820589f279471cd63ad>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtistConsignHeaderImages_artist = {
-    readonly targetSupply: {
-        readonly microfunnel: {
-            readonly artworksConnection: {
-                readonly edges: ReadonlyArray<{
-                    readonly node: {
-                        readonly image: {
-                            readonly resized: {
-                                readonly width: number | null;
-                                readonly height: number | null;
-                                readonly url: string;
-                            } | null;
-                        } | null;
-                        readonly " $fragmentRefs": FragmentRefs<"FillwidthItem_artwork">;
-                    } | null;
-                } | null> | null;
+export type ArtistConsignHeaderImages_artist$data = {
+  readonly targetSupply: {
+    readonly microfunnel: {
+      readonly artworksConnection: {
+        readonly edges: ReadonlyArray<{
+          readonly node: {
+            readonly image: {
+              readonly resized: {
+                readonly width: number | null;
+                readonly height: number | null;
+                readonly url: string;
+              } | null;
             } | null;
-        } | null;
+            readonly " $fragmentSpreads": FragmentRefs<"FillwidthItem_artwork">;
+          } | null;
+        } | null> | null;
+      } | null;
     } | null;
-    readonly " $refType": "ArtistConsignHeaderImages_artist";
+  } | null;
+  readonly " $fragmentType": "ArtistConsignHeaderImages_artist";
 };
-export type ArtistConsignHeaderImages_artist$data = ArtistConsignHeaderImages_artist;
 export type ArtistConsignHeaderImages_artist$key = {
-    readonly " $data"?: ArtistConsignHeaderImages_artist$data;
-    readonly " $fragmentRefs": FragmentRefs<"ArtistConsignHeaderImages_artist">;
+  readonly " $data"?: ArtistConsignHeaderImages_artist$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtistConsignHeaderImages_artist">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -152,5 +155,7 @@ const node: ReaderFragment = {
   "type": "Artist",
   "abstractKey": null
 };
-(node as any).hash = '64c51ded546f812a6837400f30c8ca29';
+
+(node as any).hash = "64c51ded546f812a6837400f30c8ca29";
+
 export default node;

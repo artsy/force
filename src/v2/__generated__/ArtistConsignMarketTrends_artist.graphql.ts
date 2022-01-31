@@ -1,29 +1,32 @@
+/**
+ * @generated SignedSource<<384d1a215a70f3af3d0b7dc0de50b733>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtistConsignMarketTrends_artist = {
-    readonly href: string | null;
-    readonly targetSupply: {
-        readonly microfunnel: {
-            readonly metadata: {
-                readonly highestRealized: string | null;
-                readonly str: string | null;
-                readonly realized: string | null;
-            } | null;
-        } | null;
+export type ArtistConsignMarketTrends_artist$data = {
+  readonly href: string | null;
+  readonly targetSupply: {
+    readonly microfunnel: {
+      readonly metadata: {
+        readonly highestRealized: string | null;
+        readonly str: string | null;
+        readonly realized: string | null;
+      } | null;
     } | null;
-    readonly " $refType": "ArtistConsignMarketTrends_artist";
+  } | null;
+  readonly " $fragmentType": "ArtistConsignMarketTrends_artist";
 };
-export type ArtistConsignMarketTrends_artist$data = ArtistConsignMarketTrends_artist;
 export type ArtistConsignMarketTrends_artist$key = {
-    readonly " $data"?: ArtistConsignMarketTrends_artist$data;
-    readonly " $fragmentRefs": FragmentRefs<"ArtistConsignMarketTrends_artist">;
+  readonly " $data"?: ArtistConsignMarketTrends_artist$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtistConsignMarketTrends_artist">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -96,5 +99,7 @@ const node: ReaderFragment = {
   "type": "Artist",
   "abstractKey": null
 };
-(node as any).hash = '91c1ebf56415fcb86b69ff9fa6f2a918';
+
+(node as any).hash = "91c1ebf56415fcb86b69ff9fa6f2a918";
+
 export default node;

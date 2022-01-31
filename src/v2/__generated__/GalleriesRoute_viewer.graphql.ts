@@ -1,20 +1,23 @@
+/**
+ * @generated SignedSource<<e8c6666bca3eef1482c029d5a43b133c>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type GalleriesRoute_viewer = {
-    readonly " $fragmentRefs": FragmentRefs<"PartnersFeaturedCarousel_viewer">;
-    readonly " $refType": "GalleriesRoute_viewer";
+export type GalleriesRoute_viewer$data = {
+  readonly " $fragmentSpreads": FragmentRefs<"PartnersFeaturedCarousel_viewer">;
+  readonly " $fragmentType": "GalleriesRoute_viewer";
 };
-export type GalleriesRoute_viewer$data = GalleriesRoute_viewer;
 export type GalleriesRoute_viewer$key = {
-    readonly " $data"?: GalleriesRoute_viewer$data;
-    readonly " $fragmentRefs": FragmentRefs<"GalleriesRoute_viewer">;
+  readonly " $data"?: GalleriesRoute_viewer$data;
+  readonly " $fragmentSpreads": FragmentRefs<"GalleriesRoute_viewer">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -37,5 +40,7 @@ const node: ReaderFragment = {
   "type": "Viewer",
   "abstractKey": null
 };
-(node as any).hash = 'ce6e81cc90204e38ed5a0a996d92e310';
+
+(node as any).hash = "ce6e81cc90204e38ed5a0a996d92e310";
+
 export default node;

@@ -40,7 +40,6 @@ describe("ArtistCard", () => {
         slug: "percy",
         // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         " $fragmentRefs": null,
-        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         " $refType": null,
       },
     }

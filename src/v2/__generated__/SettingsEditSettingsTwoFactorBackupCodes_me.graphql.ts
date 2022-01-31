@@ -1,26 +1,29 @@
+/**
+ * @generated SignedSource<<e585b3be440e2ad99bf39d459f4f1ec7>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type SettingsEditSettingsTwoFactorBackupCodes_me = {
-    readonly backupSecondFactors: ReadonlyArray<({
-        readonly __typename: "BackupSecondFactor";
-    } | {
-        /*This will never be '%other', but we need some
-        value in case none of the concrete values match.*/
-        readonly __typename: "%other";
-    }) | null> | null;
-    readonly " $refType": "SettingsEditSettingsTwoFactorBackupCodes_me";
+export type SettingsEditSettingsTwoFactorBackupCodes_me$data = {
+  readonly backupSecondFactors: ReadonlyArray<{
+    readonly __typename: "BackupSecondFactor";
+  } | {
+    // This will never be '%other', but we need some
+    // value in case none of the concrete values match.
+    readonly __typename: "%other";
+  } | null> | null;
+  readonly " $fragmentType": "SettingsEditSettingsTwoFactorBackupCodes_me";
 };
-export type SettingsEditSettingsTwoFactorBackupCodes_me$data = SettingsEditSettingsTwoFactorBackupCodes_me;
 export type SettingsEditSettingsTwoFactorBackupCodes_me$key = {
-    readonly " $data"?: SettingsEditSettingsTwoFactorBackupCodes_me$data;
-    readonly " $fragmentRefs": FragmentRefs<"SettingsEditSettingsTwoFactorBackupCodes_me">;
+  readonly " $data"?: SettingsEditSettingsTwoFactorBackupCodes_me$data;
+  readonly " $fragmentSpreads": FragmentRefs<"SettingsEditSettingsTwoFactorBackupCodes_me">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -65,5 +68,7 @@ const node: ReaderFragment = {
   "type": "Me",
   "abstractKey": null
 };
-(node as any).hash = 'c102dd2ab6c438622429024b2e26e437';
+
+(node as any).hash = "c102dd2ab6c438622429024b2e26e437";
+
 export default node;

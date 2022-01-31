@@ -1,45 +1,34 @@
+/**
+ * @generated SignedSource<<2e0c4d7683c0f6ad4442bdf91e6a75f2>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type MockRelayRendererFixturesArtistQueryVariables = {
-    id: string;
+export type MockRelayRendererFixturesArtistQuery$variables = {
+  id: string;
 };
-export type MockRelayRendererFixturesArtistQueryResponse = {
-    readonly artist: {
-        readonly " $fragmentRefs": FragmentRefs<"MockRelayRendererFixtures_artist">;
-    } | null;
+export type MockRelayRendererFixturesArtistQuery$data = {
+  readonly artist: {
+    readonly " $fragmentSpreads": FragmentRefs<"MockRelayRendererFixtures_artist">;
+  } | null;
 };
-export type MockRelayRendererFixturesArtistQueryRawResponse = {
-    readonly artist: ({
-        readonly name: string | null;
-        readonly id: string;
-    }) | null;
+export type MockRelayRendererFixturesArtistQuery$rawResponse = {
+  readonly artist: {
+    readonly name: string | null;
+    readonly id: string;
+  } | null;
 };
 export type MockRelayRendererFixturesArtistQuery = {
-    readonly response: MockRelayRendererFixturesArtistQueryResponse;
-    readonly variables: MockRelayRendererFixturesArtistQueryVariables;
-    readonly rawResponse: MockRelayRendererFixturesArtistQueryRawResponse;
+  variables: MockRelayRendererFixturesArtistQuery$variables;
+  response: MockRelayRendererFixturesArtistQuery$data;
+  rawResponse: MockRelayRendererFixturesArtistQuery$rawResponse;
 };
-
-
-
-/*
-query MockRelayRendererFixturesArtistQuery(
-  $id: String!
-) {
-  artist(id: $id) {
-    ...MockRelayRendererFixtures_artist
-    id
-  }
-}
-
-fragment MockRelayRendererFixtures_artist on Artist {
-  name
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -126,5 +115,7 @@ return {
   }
 };
 })();
-(node as any).hash = '8c4a637a093bfbe6fe9591999d35c879';
+
+(node as any).hash = "8c4a637a093bfbe6fe9591999d35c879";
+
 export default node;

@@ -1,55 +1,37 @@
+/**
+ * @generated SignedSource<<31ca8481210d967f3a53fe6b933096d1>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type startIdentityVerificationMutationInput = {
-    clientMutationId?: string | null;
-    identityVerificationId: string;
+  clientMutationId?: string | null;
+  identityVerificationId: string;
 };
-export type IdentityVerificationAppStartMutationVariables = {
-    input: startIdentityVerificationMutationInput;
+export type IdentityVerificationAppStartMutation$variables = {
+  input: startIdentityVerificationMutationInput;
 };
-export type IdentityVerificationAppStartMutationResponse = {
-    readonly startIdentityVerification: {
-        readonly startIdentityVerificationResponseOrError: {
-            readonly identityVerificationFlowUrl?: string | null;
-            readonly mutationError?: {
-                readonly detail: string | null;
-                readonly error: string | null;
-                readonly message: string;
-            } | null;
-        } | null;
+export type IdentityVerificationAppStartMutation$data = {
+  readonly startIdentityVerification: {
+    readonly startIdentityVerificationResponseOrError: {
+      readonly identityVerificationFlowUrl?: string | null;
+      readonly mutationError?: {
+        readonly detail: string | null;
+        readonly error: string | null;
+        readonly message: string;
+      } | null;
     } | null;
+  } | null;
 };
 export type IdentityVerificationAppStartMutation = {
-    readonly response: IdentityVerificationAppStartMutationResponse;
-    readonly variables: IdentityVerificationAppStartMutationVariables;
+  variables: IdentityVerificationAppStartMutation$variables;
+  response: IdentityVerificationAppStartMutation$data;
 };
-
-
-
-/*
-mutation IdentityVerificationAppStartMutation(
-  $input: startIdentityVerificationMutationInput!
-) {
-  startIdentityVerification(input: $input) {
-    startIdentityVerificationResponseOrError {
-      __typename
-      ... on StartIdentityVerificationSuccess {
-        identityVerificationFlowUrl
-      }
-      ... on StartIdentityVerificationFailure {
-        mutationError {
-          detail
-          error
-          message
-        }
-      }
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -203,5 +185,7 @@ return {
   }
 };
 })();
-(node as any).hash = '5fb8327f4b811236854bf71ccdb299bd';
+
+(node as any).hash = "5fb8327f4b811236854bf71ccdb299bd";
+
 export default node;

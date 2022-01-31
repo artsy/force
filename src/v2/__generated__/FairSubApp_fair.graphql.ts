@@ -1,26 +1,29 @@
+/**
+ * @generated SignedSource<<8710f1c241c0d909d7b068405b76064a>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type FairSubApp_fair = {
-    readonly id: string;
-    readonly name: string | null;
-    readonly slug: string;
-    readonly profile: {
-        readonly __typename: string;
-    } | null;
-    readonly " $fragmentRefs": FragmentRefs<"FairMeta_fair">;
-    readonly " $refType": "FairSubApp_fair";
+export type FairSubApp_fair$data = {
+  readonly id: string;
+  readonly name: string | null;
+  readonly slug: string;
+  readonly profile: {
+    readonly __typename: string;
+  } | null;
+  readonly " $fragmentSpreads": FragmentRefs<"FairMeta_fair">;
+  readonly " $fragmentType": "FairSubApp_fair";
 };
-export type FairSubApp_fair$data = FairSubApp_fair;
 export type FairSubApp_fair$key = {
-    readonly " $data"?: FairSubApp_fair$data;
-    readonly " $fragmentRefs": FragmentRefs<"FairSubApp_fair">;
+  readonly " $data"?: FairSubApp_fair$data;
+  readonly " $fragmentSpreads": FragmentRefs<"FairSubApp_fair">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -28,6 +31,11 @@ const node: ReaderFragment = {
   "metadata": null,
   "name": "FairSubApp_fair",
   "selections": [
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "FairMeta_fair"
+    },
     {
       "alias": null,
       "args": null,
@@ -66,15 +74,12 @@ const node: ReaderFragment = {
         }
       ],
       "storageKey": null
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "FairMeta_fair"
     }
   ],
   "type": "Fair",
   "abstractKey": null
 };
-(node as any).hash = '6e764f17377d6510ad976161b446cef9';
+
+(node as any).hash = "6e764f17377d6510ad976161b446cef9";
+
 export default node;

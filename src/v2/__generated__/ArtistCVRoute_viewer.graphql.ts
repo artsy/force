@@ -1,29 +1,32 @@
+/**
+ * @generated SignedSource<<929e2e7322c0890ea857faea8d2ba44a>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtistCVRoute_viewer = {
-    readonly soloShows: {
-        readonly name: string | null;
-        readonly " $fragmentRefs": FragmentRefs<"ArtistCVGroup_artist">;
-    } | null;
-    readonly groupShows: {
-        readonly " $fragmentRefs": FragmentRefs<"ArtistCVGroup_artist">;
-    } | null;
-    readonly fairBooths: {
-        readonly " $fragmentRefs": FragmentRefs<"ArtistCVGroup_artist">;
-    } | null;
-    readonly " $refType": "ArtistCVRoute_viewer";
+export type ArtistCVRoute_viewer$data = {
+  readonly soloShows: {
+    readonly name: string | null;
+    readonly " $fragmentSpreads": FragmentRefs<"ArtistCVGroup_artist">;
+  } | null;
+  readonly groupShows: {
+    readonly " $fragmentSpreads": FragmentRefs<"ArtistCVGroup_artist">;
+  } | null;
+  readonly fairBooths: {
+    readonly " $fragmentSpreads": FragmentRefs<"ArtistCVGroup_artist">;
+  } | null;
+  readonly " $fragmentType": "ArtistCVRoute_viewer";
 };
-export type ArtistCVRoute_viewer$data = ArtistCVRoute_viewer;
 export type ArtistCVRoute_viewer$key = {
-    readonly " $data"?: ArtistCVRoute_viewer$data;
-    readonly " $fragmentRefs": FragmentRefs<"ArtistCVRoute_viewer">;
+  readonly " $data"?: ArtistCVRoute_viewer$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtistCVRoute_viewer">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = [
@@ -73,13 +76,6 @@ return {
       "plural": false,
       "selections": [
         {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "name",
-          "storageKey": null
-        },
-        {
           "args": [
             {
               "kind": "Variable",
@@ -94,6 +90,13 @@ return {
           ],
           "kind": "FragmentSpread",
           "name": "ArtistCVGroup_artist"
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "name",
+          "storageKey": null
         }
       ],
       "storageKey": null
@@ -147,5 +150,7 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '9779a6baedba0adc1ed197819481ce40';
+
+(node as any).hash = "9779a6baedba0adc1ed197819481ce40";
+
 export default node;

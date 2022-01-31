@@ -1,30 +1,33 @@
+/**
+ * @generated SignedSource<<1c282a8b2d1a9d737a56d464c25ad07e>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtistSellWithArtsy_artist = {
-    readonly internalID: string;
-    readonly slug: string;
-    readonly href: string | null;
-    readonly targetSupply: {
-        readonly isInMicrofunnel: boolean | null;
+export type ArtistSellWithArtsy_artist$data = {
+  readonly internalID: string;
+  readonly slug: string;
+  readonly href: string | null;
+  readonly targetSupply: {
+    readonly isInMicrofunnel: boolean | null;
+  } | null;
+  readonly image: {
+    readonly resized: {
+      readonly src: string;
     } | null;
-    readonly image: {
-        readonly resized: {
-            readonly src: string;
-        } | null;
-    } | null;
-    readonly " $refType": "ArtistSellWithArtsy_artist";
+  } | null;
+  readonly " $fragmentType": "ArtistSellWithArtsy_artist";
 };
-export type ArtistSellWithArtsy_artist$data = ArtistSellWithArtsy_artist;
 export type ArtistSellWithArtsy_artist$key = {
-    readonly " $data"?: ArtistSellWithArtsy_artist$data;
-    readonly " $fragmentRefs": FragmentRefs<"ArtistSellWithArtsy_artist">;
+  readonly " $data"?: ArtistSellWithArtsy_artist$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtistSellWithArtsy_artist">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -110,5 +113,7 @@ const node: ReaderFragment = {
   "type": "Artist",
   "abstractKey": null
 };
-(node as any).hash = 'f7a5d349a177b4933b261a3561b6ef37';
+
+(node as any).hash = "f7a5d349a177b4933b261a3561b6ef37";
+
 export default node;

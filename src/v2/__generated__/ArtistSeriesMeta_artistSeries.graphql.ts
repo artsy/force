@@ -1,25 +1,28 @@
+/**
+ * @generated SignedSource<<47be1f70f4fc0ddd084bd06cc58f56dd>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtistSeriesMeta_artistSeries = {
-    readonly title: string;
-    readonly description: string | null;
-    readonly slug: string;
-    readonly artists: ReadonlyArray<{
-        readonly name: string | null;
-    } | null> | null;
-    readonly " $refType": "ArtistSeriesMeta_artistSeries";
+export type ArtistSeriesMeta_artistSeries$data = {
+  readonly title: string;
+  readonly description: string | null;
+  readonly slug: string;
+  readonly artists: ReadonlyArray<{
+    readonly name: string | null;
+  } | null> | null;
+  readonly " $fragmentType": "ArtistSeriesMeta_artistSeries";
 };
-export type ArtistSeriesMeta_artistSeries$data = ArtistSeriesMeta_artistSeries;
 export type ArtistSeriesMeta_artistSeries$key = {
-    readonly " $data"?: ArtistSeriesMeta_artistSeries$data;
-    readonly " $fragmentRefs": FragmentRefs<"ArtistSeriesMeta_artistSeries">;
+  readonly " $data"?: ArtistSeriesMeta_artistSeries$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtistSeriesMeta_artistSeries">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -76,5 +79,7 @@ const node: ReaderFragment = {
   "type": "ArtistSeries",
   "abstractKey": null
 };
-(node as any).hash = 'b0ed3a62e7c6a2e1813211b69487c2de';
+
+(node as any).hash = "b0ed3a62e7c6a2e1813211b69487c2de";
+
 export default node;

@@ -1,28 +1,31 @@
+/**
+ * @generated SignedSource<<a766d2aac2f3d99dffd70723db25ada1>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type FairBoothRailArtworks_show = {
-    readonly artworksConnection: {
-        readonly edges: ReadonlyArray<{
-            readonly node: {
-                readonly internalID: string;
-                readonly slug: string;
-                readonly " $fragmentRefs": FragmentRefs<"ShelfArtwork_artwork">;
-            } | null;
-        } | null> | null;
-    } | null;
-    readonly " $refType": "FairBoothRailArtworks_show";
+export type FairBoothRailArtworks_show$data = {
+  readonly artworksConnection: {
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly internalID: string;
+        readonly slug: string;
+        readonly " $fragmentSpreads": FragmentRefs<"ShelfArtwork_artwork">;
+      } | null;
+    } | null> | null;
+  } | null;
+  readonly " $fragmentType": "FairBoothRailArtworks_show";
 };
-export type FairBoothRailArtworks_show$data = FairBoothRailArtworks_show;
 export type FairBoothRailArtworks_show$key = {
-    readonly " $data"?: FairBoothRailArtworks_show$data;
-    readonly " $fragmentRefs": FragmentRefs<"FairBoothRailArtworks_show">;
+  readonly " $data"?: FairBoothRailArtworks_show$data;
+  readonly " $fragmentSpreads": FragmentRefs<"FairBoothRailArtworks_show">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -98,5 +101,7 @@ const node: ReaderFragment = {
   "type": "Show",
   "abstractKey": null
 };
-(node as any).hash = 'c39c78268ad7b633fe073db484642ced';
+
+(node as any).hash = "c39c78268ad7b633fe073db484642ced";
+
 export default node;

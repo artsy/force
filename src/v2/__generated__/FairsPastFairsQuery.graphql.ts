@@ -1,83 +1,28 @@
+/**
+ * @generated SignedSource<<a603c0ea100711159cf7fa79a4be1e48>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type FairsPastFairsQueryVariables = {
-    first: number;
-    after?: string | null;
+export type FairsPastFairsQuery$variables = {
+  first: number;
+  after?: string | null;
 };
-export type FairsPastFairsQueryResponse = {
-    readonly viewer: {
-        readonly " $fragmentRefs": FragmentRefs<"FairsPastFairs_viewer">;
-    } | null;
+export type FairsPastFairsQuery$data = {
+  readonly viewer: {
+    readonly " $fragmentSpreads": FragmentRefs<"FairsPastFairs_viewer">;
+  } | null;
 };
 export type FairsPastFairsQuery = {
-    readonly response: FairsPastFairsQueryResponse;
-    readonly variables: FairsPastFairsQueryVariables;
+  variables: FairsPastFairsQuery$variables;
+  response: FairsPastFairsQuery$data;
 };
-
-
-
-/*
-query FairsPastFairsQuery(
-  $first: Int!
-  $after: String
-) {
-  viewer {
-    ...FairsPastFairs_viewer_2HEEH6
-  }
-}
-
-fragment FairsFairRow_fair on Fair {
-  href
-  name
-  isoStartAt: startAt
-  exhibitionPeriod
-  profile {
-    icon {
-      resized(width: 80, height: 80, version: "square140") {
-        width
-        height
-        src
-        srcSet
-      }
-    }
-    id
-  }
-  organizer {
-    profile {
-      href
-      id
-    }
-    id
-  }
-}
-
-fragment FairsPastFairs_viewer_2HEEH6 on Viewer {
-  pastFairs: fairsConnection(hasListing: true, hasFullFeature: true, sort: START_AT_DESC, status: CLOSED, first: $first, after: $after) {
-    edges {
-      node {
-        internalID
-        isPublished
-        profile {
-          isPublished
-          id
-        }
-        ...FairsFairRow_fair
-        id
-        __typename
-      }
-      cursor
-    }
-    pageInfo {
-      endCursor
-      hasNextPage
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = {
@@ -431,5 +376,7 @@ return {
   }
 };
 })();
-(node as any).hash = '7f80f8f97ce6a0ea32f24a95205a4395';
+
+(node as any).hash = "7f80f8f97ce6a0ea32f24a95205a4395";
+
 export default node;

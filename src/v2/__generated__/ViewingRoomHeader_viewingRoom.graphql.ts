@@ -1,32 +1,35 @@
+/**
+ * @generated SignedSource<<662cec6c9df318b2e0278d922c9ede1d>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ViewingRoomHeader_viewingRoom = {
-    readonly image: {
-        readonly imageURLs: {
-            readonly normalized: string | null;
-        } | null;
+export type ViewingRoomHeader_viewingRoom$data = {
+  readonly image: {
+    readonly imageURLs: {
+      readonly normalized: string | null;
     } | null;
-    readonly title: string;
-    readonly partner: {
-        readonly name: string | null;
-        readonly href: string | null;
-    } | null;
-    readonly distanceToOpen: string | null;
-    readonly distanceToClose: string | null;
-    readonly status: string;
-    readonly " $refType": "ViewingRoomHeader_viewingRoom";
+  } | null;
+  readonly title: string;
+  readonly partner: {
+    readonly name: string | null;
+    readonly href: string | null;
+  } | null;
+  readonly distanceToOpen: string | null;
+  readonly distanceToClose: string | null;
+  readonly status: string;
+  readonly " $fragmentType": "ViewingRoomHeader_viewingRoom";
 };
-export type ViewingRoomHeader_viewingRoom$data = ViewingRoomHeader_viewingRoom;
 export type ViewingRoomHeader_viewingRoom$key = {
-    readonly " $data"?: ViewingRoomHeader_viewingRoom$data;
-    readonly " $fragmentRefs": FragmentRefs<"ViewingRoomHeader_viewingRoom">;
+  readonly " $data"?: ViewingRoomHeader_viewingRoom$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ViewingRoomHeader_viewingRoom">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -120,5 +123,7 @@ const node: ReaderFragment = {
   "type": "ViewingRoom",
   "abstractKey": null
 };
-(node as any).hash = '796ee6ac5f38b0a78475ca0706e2dbad';
+
+(node as any).hash = "796ee6ac5f38b0a78475ca0706e2dbad";
+
 export default node;

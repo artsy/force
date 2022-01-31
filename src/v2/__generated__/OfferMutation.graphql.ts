@@ -1,83 +1,50 @@
+/**
+ * @generated SignedSource<<84cfb1645d4f497e0690539b7caa7ffa>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type CommerceOrderModeEnum = "BUY" | "OFFER" | "%future added value";
 export type CommerceAddInitialOfferToOrderInput = {
-    amountCents: number;
-    clientMutationId?: string | null;
-    note?: string | null;
-    orderId: string;
+  amountCents: number;
+  clientMutationId?: string | null;
+  note?: string | null;
+  orderId: string;
 };
-export type OfferMutationVariables = {
-    input: CommerceAddInitialOfferToOrderInput;
+export type OfferMutation$variables = {
+  input: CommerceAddInitialOfferToOrderInput;
 };
-export type OfferMutationResponse = {
-    readonly commerceAddInitialOfferToOrder: {
-        readonly orderOrError: {
-            readonly __typename: "CommerceOrderWithMutationSuccess";
-            readonly order?: {
-                readonly internalID: string;
-                readonly mode: CommerceOrderModeEnum | null;
-                readonly totalListPriceCents: number;
-                readonly myLastOffer?: {
-                    readonly internalID: string;
-                    readonly amountCents: number;
-                    readonly note: string | null;
-                } | null;
-            };
-            readonly error?: {
-                readonly type: string;
-                readonly code: string;
-                readonly data: string | null;
-            };
-        };
-    } | null;
+export type OfferMutation$data = {
+  readonly commerceAddInitialOfferToOrder: {
+    readonly orderOrError: {
+      readonly __typename: "CommerceOrderWithMutationSuccess";
+      readonly order?: {
+        readonly internalID: string;
+        readonly mode: CommerceOrderModeEnum | null;
+        readonly totalListPriceCents: number;
+        readonly myLastOffer?: {
+          readonly internalID: string;
+          readonly amountCents: number;
+          readonly note: string | null;
+        } | null;
+      };
+      readonly error?: {
+        readonly type: string;
+        readonly code: string;
+        readonly data: string | null;
+      };
+    };
+  } | null;
 };
 export type OfferMutation = {
-    readonly response: OfferMutationResponse;
-    readonly variables: OfferMutationVariables;
+  variables: OfferMutation$variables;
+  response: OfferMutation$data;
 };
-
-
-
-/*
-mutation OfferMutation(
-  $input: CommerceAddInitialOfferToOrderInput!
-) {
-  commerceAddInitialOfferToOrder(input: $input) {
-    orderOrError {
-      __typename
-      ... on CommerceOrderWithMutationSuccess {
-        __typename
-        order {
-          __typename
-          internalID
-          mode
-          totalListPriceCents
-          ... on CommerceOfferOrder {
-            myLastOffer {
-              internalID
-              amountCents
-              note
-              id
-            }
-          }
-          id
-        }
-      }
-      ... on CommerceOrderWithMutationFailure {
-        error {
-          type
-          code
-          data
-        }
-      }
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -297,7 +264,6 @@ return {
                       (v3/*: any*/),
                       (v4/*: any*/),
                       (v5/*: any*/),
-                      (v9/*: any*/),
                       {
                         "kind": "InlineFragment",
                         "selections": [
@@ -319,7 +285,8 @@ return {
                         ],
                         "type": "CommerceOfferOrder",
                         "abstractKey": null
-                      }
+                      },
+                      (v9/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -346,5 +313,7 @@ return {
   }
 };
 })();
-(node as any).hash = '7caa8b8452afa1cbc95f845c77fec29e';
+
+(node as any).hash = "7caa8b8452afa1cbc95f845c77fec29e";
+
 export default node;

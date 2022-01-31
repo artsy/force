@@ -1,30 +1,33 @@
+/**
+ * @generated SignedSource<<dd4d63965e76fffd051122a45d151a25>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type PriceOptions_artwork = {
-    readonly priceCurrency: string | null;
-    readonly isPriceRange: boolean | null;
-    readonly listPrice: {
-        readonly major?: number;
-        readonly maxPrice?: {
-            readonly major: number;
-        } | null;
-        readonly minPrice?: {
-            readonly major: number;
-        } | null;
+export type PriceOptions_artwork$data = {
+  readonly priceCurrency: string | null;
+  readonly isPriceRange: boolean | null;
+  readonly listPrice: {
+    readonly major?: number;
+    readonly maxPrice?: {
+      readonly major: number;
     } | null;
-    readonly " $refType": "PriceOptions_artwork";
+    readonly minPrice?: {
+      readonly major: number;
+    } | null;
+  } | null;
+  readonly " $fragmentType": "PriceOptions_artwork";
 };
-export type PriceOptions_artwork$data = PriceOptions_artwork;
 export type PriceOptions_artwork$key = {
-    readonly " $data"?: PriceOptions_artwork$data;
-    readonly " $fragmentRefs": FragmentRefs<"PriceOptions_artwork">;
+  readonly " $data"?: PriceOptions_artwork$data;
+  readonly " $fragmentSpreads": FragmentRefs<"PriceOptions_artwork">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = [
@@ -105,5 +108,7 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = 'e2c55f754102f8e520054da7374d459f';
+
+(node as any).hash = "e2c55f754102f8e520054da7374d459f";
+
 export default node;

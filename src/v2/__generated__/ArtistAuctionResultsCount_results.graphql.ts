@@ -1,20 +1,23 @@
+/**
+ * @generated SignedSource<<c76cf23b9fc0de227765f35cd6e901c8>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtistAuctionResultsCount_results = {
-    readonly totalCount: number | null;
-    readonly " $refType": "ArtistAuctionResultsCount_results";
+export type ArtistAuctionResultsCount_results$data = {
+  readonly totalCount: number | null;
+  readonly " $fragmentType": "ArtistAuctionResultsCount_results";
 };
-export type ArtistAuctionResultsCount_results$data = ArtistAuctionResultsCount_results;
 export type ArtistAuctionResultsCount_results$key = {
-    readonly " $data"?: ArtistAuctionResultsCount_results$data;
-    readonly " $fragmentRefs": FragmentRefs<"ArtistAuctionResultsCount_results">;
+  readonly " $data"?: ArtistAuctionResultsCount_results$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtistAuctionResultsCount_results">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -33,5 +36,7 @@ const node: ReaderFragment = {
   "type": "AuctionResultConnection",
   "abstractKey": null
 };
-(node as any).hash = 'c6a26630e78d0b6735a7642c4a88ccc8';
+
+(node as any).hash = "c6a26630e78d0b6735a7642c4a88ccc8";
+
 export default node;

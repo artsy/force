@@ -1,34 +1,37 @@
+/**
+ * @generated SignedSource<<cced3d50364632441bb1742fac7938c3>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArticleZoomGalleryFigure_figure = {
-    readonly __typename: "Artwork";
-    readonly image: {
-        readonly url: string | null;
-    } | null;
-    readonly " $refType": "ArticleZoomGalleryFigure_figure";
+export type ArticleZoomGalleryFigure_figure$data = {
+  readonly __typename: "Artwork";
+  readonly image: {
+    readonly url: string | null;
+  } | null;
+  readonly " $fragmentType": "ArticleZoomGalleryFigure_figure";
 } | {
-    readonly __typename: "ArticleImageSection";
-    readonly image: {
-        readonly url: string | null;
-    } | null;
-    readonly " $refType": "ArticleZoomGalleryFigure_figure";
+  readonly __typename: "ArticleImageSection";
+  readonly image: {
+    readonly url: string | null;
+  } | null;
+  readonly " $fragmentType": "ArticleZoomGalleryFigure_figure";
 } | {
-    /*This will never be '%other', but we need some
-    value in case none of the concrete values match.*/
-    readonly __typename: "%other";
-    readonly " $refType": "ArticleZoomGalleryFigure_figure";
+  // This will never be '%other', but we need some
+  // value in case none of the concrete values match.
+  readonly __typename: "%other";
+  readonly " $fragmentType": "ArticleZoomGalleryFigure_figure";
 };
-export type ArticleZoomGalleryFigure_figure$data = ArticleZoomGalleryFigure_figure;
 export type ArticleZoomGalleryFigure_figure$key = {
-    readonly " $data"?: ArticleZoomGalleryFigure_figure$data;
-    readonly " $fragmentRefs": FragmentRefs<"ArticleZoomGalleryFigure_figure">;
+  readonly " $data"?: ArticleZoomGalleryFigure_figure$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ArticleZoomGalleryFigure_figure">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = [
@@ -91,5 +94,7 @@ return {
   "abstractKey": "__isArticleSectionImageCollectionFigure"
 };
 })();
-(node as any).hash = '968004f71e412c2ee561e68639669652';
+
+(node as any).hash = "968004f71e412c2ee561e68639669652";
+
 export default node;

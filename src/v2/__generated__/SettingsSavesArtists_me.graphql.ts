@@ -1,32 +1,35 @@
+/**
+ * @generated SignedSource<<434abe32dd73f30f5ff7a8a5a3e0a879>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type SettingsSavesArtists_me = {
-    readonly followsAndSaves: {
-        readonly artistsConnection: {
-            readonly totalCount: number | null;
-            readonly edges: ReadonlyArray<{
-                readonly node: {
-                    readonly internalID: string;
-                    readonly artist: {
-                        readonly " $fragmentRefs": FragmentRefs<"ArtistRail_artist">;
-                    } | null;
-                } | null;
-            } | null> | null;
+export type SettingsSavesArtists_me$data = {
+  readonly followsAndSaves: {
+    readonly artistsConnection: {
+      readonly totalCount: number | null;
+      readonly edges: ReadonlyArray<{
+        readonly node: {
+          readonly internalID: string;
+          readonly artist: {
+            readonly " $fragmentSpreads": FragmentRefs<"ArtistRail_artist">;
+          } | null;
         } | null;
+      } | null> | null;
     } | null;
-    readonly " $refType": "SettingsSavesArtists_me";
+  } | null;
+  readonly " $fragmentType": "SettingsSavesArtists_me";
 };
-export type SettingsSavesArtists_me$data = SettingsSavesArtists_me;
 export type SettingsSavesArtists_me$key = {
-    readonly " $data"?: SettingsSavesArtists_me$data;
-    readonly " $fragmentRefs": FragmentRefs<"SettingsSavesArtists_me">;
+  readonly " $data"?: SettingsSavesArtists_me$data;
+  readonly " $fragmentSpreads": FragmentRefs<"SettingsSavesArtists_me">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [
@@ -169,5 +172,7 @@ const node: ReaderFragment = {
   "type": "Me",
   "abstractKey": null
 };
-(node as any).hash = 'ffa043b4ef434bb2b5511984a0cb6df5';
+
+(node as any).hash = "ffa043b4ef434bb2b5511984a0cb6df5";
+
 export default node;

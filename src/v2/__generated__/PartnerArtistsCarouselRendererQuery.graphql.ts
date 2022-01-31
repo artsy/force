@@ -1,91 +1,27 @@
+/**
+ * @generated SignedSource<<eda7520448cf5df18643a9f0cb485b68>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type PartnerArtistsCarouselRendererQueryVariables = {
-    partnerId: string;
+export type PartnerArtistsCarouselRendererQuery$variables = {
+  partnerId: string;
 };
-export type PartnerArtistsCarouselRendererQueryResponse = {
-    readonly partner: {
-        readonly " $fragmentRefs": FragmentRefs<"PartnerArtistsCarousel_partner">;
-    } | null;
+export type PartnerArtistsCarouselRendererQuery$data = {
+  readonly partner: {
+    readonly " $fragmentSpreads": FragmentRefs<"PartnerArtistsCarousel_partner">;
+  } | null;
 };
 export type PartnerArtistsCarouselRendererQuery = {
-    readonly response: PartnerArtistsCarouselRendererQueryResponse;
-    readonly variables: PartnerArtistsCarouselRendererQueryVariables;
+  variables: PartnerArtistsCarouselRendererQuery$variables;
+  response: PartnerArtistsCarouselRendererQuery$data;
 };
-
-
-
-/*
-query PartnerArtistsCarouselRendererQuery(
-  $partnerId: String!
-) {
-  partner(id: $partnerId) @principalField {
-    ...PartnerArtistsCarousel_partner
-    id
-  }
-}
-
-fragment FollowArtistButton_artist on Artist {
-  id
-  internalID
-  name
-  slug
-  is_followed: isFollowed
-  counts {
-    follows
-  }
-}
-
-fragment PartnerArtistsCarouselItem_artist on ArtistPartnerEdge {
-  artworksConnection(first: 1) {
-    edges {
-      node {
-        image {
-          cropped(width: 320, height: 240) {
-            src
-            srcSet
-            height
-            width
-          }
-        }
-        id
-      }
-    }
-  }
-  node {
-    id
-    name
-    formattedNationalityAndBirthday
-    ...FollowArtistButton_artist
-    image {
-      cropped(width: 100, height: 100) {
-        url
-      }
-    }
-  }
-}
-
-fragment PartnerArtistsCarousel_partner on Partner {
-  slug
-  artistsConnection(first: 20, hasPublishedArtworks: true, displayOnPartnerProfile: true) {
-    edges {
-      counts {
-        artworks
-      }
-      node {
-        id
-        slug
-      }
-      ...PartnerArtistsCarouselItem_artist
-      id
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -431,5 +367,7 @@ return {
   }
 };
 })();
-(node as any).hash = '4ea1c14baceebd785a7395bfe99f186d';
+
+(node as any).hash = "4ea1c14baceebd785a7395bfe99f186d";
+
 export default node;

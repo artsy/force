@@ -1,65 +1,25 @@
+/**
+ * @generated SignedSource<<7b6fbec25f669c5f4778e3eef8e5eb80>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type HomeTrendingArtistsRailQueryVariables = {};
-export type HomeTrendingArtistsRailQueryResponse = {
-    readonly viewer: {
-        readonly " $fragmentRefs": FragmentRefs<"HomeTrendingArtistsRail_viewer">;
-    } | null;
+export type HomeTrendingArtistsRailQuery$variables = {};
+export type HomeTrendingArtistsRailQuery$data = {
+  readonly viewer: {
+    readonly " $fragmentSpreads": FragmentRefs<"HomeTrendingArtistsRail_viewer">;
+  } | null;
 };
 export type HomeTrendingArtistsRailQuery = {
-    readonly response: HomeTrendingArtistsRailQueryResponse;
-    readonly variables: HomeTrendingArtistsRailQueryVariables;
+  variables: HomeTrendingArtistsRailQuery$variables;
+  response: HomeTrendingArtistsRailQuery$data;
 };
-
-
-
-/*
-query HomeTrendingArtistsRailQuery {
-  viewer {
-    ...HomeTrendingArtistsRail_viewer
-  }
-}
-
-fragment FollowArtistButton_artist on Artist {
-  id
-  internalID
-  name
-  slug
-  is_followed: isFollowed
-  counts {
-    follows
-  }
-}
-
-fragment HomeTrendingArtistsRail_viewer on Viewer {
-  artistsConnection(sort: TRENDING_DESC, first: 99) {
-    edges {
-      node {
-        ...FollowArtistButton_artist
-        internalID
-        isFollowed
-        name
-        slug
-        href
-        formattedNationalityAndBirthday
-        image {
-          cropped(width: 325, height: 230) {
-            src
-            srcSet
-            width
-            height
-          }
-        }
-        id
-      }
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = {
   "fragment": {
@@ -295,5 +255,7 @@ const node: ConcreteRequest = {
     "text": "query HomeTrendingArtistsRailQuery {\n  viewer {\n    ...HomeTrendingArtistsRail_viewer\n  }\n}\n\nfragment FollowArtistButton_artist on Artist {\n  id\n  internalID\n  name\n  slug\n  is_followed: isFollowed\n  counts {\n    follows\n  }\n}\n\nfragment HomeTrendingArtistsRail_viewer on Viewer {\n  artistsConnection(sort: TRENDING_DESC, first: 99) {\n    edges {\n      node {\n        ...FollowArtistButton_artist\n        internalID\n        isFollowed\n        name\n        slug\n        href\n        formattedNationalityAndBirthday\n        image {\n          cropped(width: 325, height: 230) {\n            src\n            srcSet\n            width\n            height\n          }\n        }\n        id\n      }\n    }\n  }\n}\n"
   }
 };
-(node as any).hash = 'ba5b4a81fc58c141a3f8c4e5deb9fb8a';
+
+(node as any).hash = "ba5b4a81fc58c141a3f8c4e5deb9fb8a";
+
 export default node;

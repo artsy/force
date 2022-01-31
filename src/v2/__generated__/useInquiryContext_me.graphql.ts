@@ -1,26 +1,29 @@
+/**
+ * @generated SignedSource<<165467a9c2c301017b7a08a8a1b163be>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type useInquiryContext_me = {
-    readonly collectorLevel: number | null;
-    readonly location: {
-        readonly city: string | null;
-    } | null;
-    readonly phone: string | null;
-    readonly profession: string | null;
-    readonly shareFollows: boolean;
-    readonly " $refType": "useInquiryContext_me";
+export type useInquiryContext_me$data = {
+  readonly collectorLevel: number | null;
+  readonly location: {
+    readonly city: string | null;
+  } | null;
+  readonly phone: string | null;
+  readonly profession: string | null;
+  readonly shareFollows: boolean;
+  readonly " $fragmentType": "useInquiryContext_me";
 };
-export type useInquiryContext_me$data = useInquiryContext_me;
 export type useInquiryContext_me$key = {
-    readonly " $data"?: useInquiryContext_me$data;
-    readonly " $fragmentRefs": FragmentRefs<"useInquiryContext_me">;
+  readonly " $data"?: useInquiryContext_me$data;
+  readonly " $fragmentSpreads": FragmentRefs<"useInquiryContext_me">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -78,5 +81,7 @@ const node: ReaderFragment = {
   "type": "Me",
   "abstractKey": null
 };
-(node as any).hash = 'f6f02118337f7dc8e2bdc79c66959b04';
+
+(node as any).hash = "f6f02118337f7dc8e2bdc79c66959b04";
+
 export default node;

@@ -1,41 +1,44 @@
+/**
+ * @generated SignedSource<<27750e86b16a9213482f3792fae7447a>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type HomeFeaturedMarketNews_articles = ReadonlyArray<{
-    readonly internalID: string;
-    readonly href: string | null;
-    readonly byline: string | null;
-    readonly slug: string | null;
-    readonly title: string | null;
-    readonly publishedAt: string | null;
-    readonly vertical: string | null;
-    readonly thumbnailTitle: string | null;
-    readonly thumbnailImage: {
-        readonly large: {
-            readonly width: number;
-            readonly height: number;
-            readonly src: string;
-            readonly srcSet: string;
-        } | null;
-        readonly small: {
-            readonly width: number;
-            readonly height: number;
-            readonly src: string;
-            readonly srcSet: string;
-        } | null;
+export type HomeFeaturedMarketNews_articles$data = ReadonlyArray<{
+  readonly internalID: string;
+  readonly href: string | null;
+  readonly byline: string | null;
+  readonly slug: string | null;
+  readonly title: string | null;
+  readonly publishedAt: string | null;
+  readonly vertical: string | null;
+  readonly thumbnailTitle: string | null;
+  readonly thumbnailImage: {
+    readonly large: {
+      readonly width: number;
+      readonly height: number;
+      readonly src: string;
+      readonly srcSet: string;
     } | null;
-    readonly " $refType": "HomeFeaturedMarketNews_articles";
+    readonly small: {
+      readonly width: number;
+      readonly height: number;
+      readonly src: string;
+      readonly srcSet: string;
+    } | null;
+  } | null;
+  readonly " $fragmentType": "HomeFeaturedMarketNews_articles";
 }>;
-export type HomeFeaturedMarketNews_articles$data = HomeFeaturedMarketNews_articles;
 export type HomeFeaturedMarketNews_articles$key = ReadonlyArray<{
-    readonly " $data"?: HomeFeaturedMarketNews_articles$data;
-    readonly " $fragmentRefs": FragmentRefs<"HomeFeaturedMarketNews_articles">;
+  readonly " $data"?: HomeFeaturedMarketNews_articles$data;
+  readonly " $fragmentSpreads": FragmentRefs<"HomeFeaturedMarketNews_articles">;
 }>;
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = [
@@ -196,5 +199,7 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '6621a96fea6a270326d3f30f39a7d49d';
+
+(node as any).hash = "6621a96fea6a270326d3f30f39a7d49d";
+
 export default node;

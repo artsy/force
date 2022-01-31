@@ -1,148 +1,30 @@
+/**
+ * @generated SignedSource<<ee19a61016ffe0ed3f3052aa0a9b12ae>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type CommerceOrderStateEnum = "ABANDONED" | "APPROVED" | "CANCELED" | "FULFILLED" | "PENDING" | "REFUNDED" | "SUBMITTED" | "%future added value";
-export type SettingsPurchasesQueryVariables = {
-    states?: Array<CommerceOrderStateEnum> | null;
-    first: number;
-    after?: string | null;
+export type SettingsPurchasesQuery$variables = {
+  states?: ReadonlyArray<CommerceOrderStateEnum> | null;
+  first: number;
+  after?: string | null;
 };
-export type SettingsPurchasesQueryResponse = {
-    readonly me: {
-        readonly " $fragmentRefs": FragmentRefs<"SettingsPurchases_me">;
-    } | null;
+export type SettingsPurchasesQuery$data = {
+  readonly me: {
+    readonly " $fragmentSpreads": FragmentRefs<"SettingsPurchases_me">;
+  } | null;
 };
 export type SettingsPurchasesQuery = {
-    readonly response: SettingsPurchasesQueryResponse;
-    readonly variables: SettingsPurchasesQueryVariables;
+  variables: SettingsPurchasesQuery$variables;
+  response: SettingsPurchasesQuery$data;
 };
-
-
-
-/*
-query SettingsPurchasesQuery(
-  $states: [CommerceOrderStateEnum!]
-  $first: Int!
-  $after: String
-) {
-  me {
-    ...SettingsPurchases_me_4tp0sF
-    id
-  }
-}
-
-fragment CommercePagination_pageCursors on CommercePageCursors {
-  around {
-    cursor
-    page
-    isCurrent
-  }
-  first {
-    cursor
-    page
-    isCurrent
-  }
-  last {
-    cursor
-    page
-    isCurrent
-  }
-  previous {
-    cursor
-    page
-  }
-}
-
-fragment SettingsPurchasesRow_order on CommerceOrder {
-  __isCommerceOrder: __typename
-  internalID
-  code
-  displayState
-  state
-  requestedFulfillment {
-    __typename
-  }
-  creditCard {
-    lastDigits
-    id
-  }
-  buyerTotal(precision: 2)
-  createdAt
-  currencyCode
-  lineItems {
-    edges {
-      node {
-        artwork {
-          href
-          image {
-            cropped(width: 45, height: 45) {
-              src
-              srcSet
-            }
-          }
-          partner {
-            href
-            initials
-            name
-            profile {
-              icon {
-                cropped(width: 45, height: 45) {
-                  src
-                  srcSet
-                }
-              }
-              id
-            }
-            id
-          }
-          shippingOrigin
-          title
-          artistNames
-          artists {
-            href
-            id
-          }
-          id
-        }
-        fulfillments(first: 1) {
-          edges {
-            node {
-              trackingId
-              id
-            }
-          }
-        }
-        id
-      }
-    }
-  }
-}
-
-fragment SettingsPurchases_me_4tp0sF on Me {
-  name
-  orders(states: $states, first: $first, after: $after) {
-    totalCount
-    pageInfo {
-      hasNextPage
-      endCursor
-    }
-    pageCursors {
-      ...CommercePagination_pageCursors
-    }
-    edges {
-      node {
-        __typename
-        code
-        ...SettingsPurchasesRow_order
-        id
-      }
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = {
@@ -726,5 +608,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'd50a867e789e22c22a6f8704d4650a0f';
+
+(node as any).hash = "d50a867e789e22c22a6f8704d4650a0f";
+
 export default node;

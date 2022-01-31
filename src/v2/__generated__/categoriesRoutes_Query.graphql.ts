@@ -1,68 +1,25 @@
+/**
+ * @generated SignedSource<<79900dc226ac07b8c8058a191e86783f>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type categoriesRoutes_QueryVariables = {};
-export type categoriesRoutes_QueryResponse = {
-    readonly geneFamiliesConnection: {
-        readonly " $fragmentRefs": FragmentRefs<"CategoriesApp_geneFamiliesConnection">;
-    } | null;
+export type categoriesRoutes_Query$variables = {};
+export type categoriesRoutes_Query$data = {
+  readonly geneFamiliesConnection: {
+    readonly " $fragmentSpreads": FragmentRefs<"CategoriesApp_geneFamiliesConnection">;
+  } | null;
 };
 export type categoriesRoutes_Query = {
-    readonly response: categoriesRoutes_QueryResponse;
-    readonly variables: categoriesRoutes_QueryVariables;
+  variables: categoriesRoutes_Query$variables;
+  response: categoriesRoutes_Query$data;
 };
-
-
-
-/*
-query categoriesRoutes_Query {
-  geneFamiliesConnection(first: 20) {
-    ...CategoriesApp_geneFamiliesConnection
-  }
-}
-
-fragment CategoriesApp_geneFamiliesConnection on GeneFamilyConnection {
-  ...StickyNav_geneFamiliesConnection
-  ...GeneFamilies_geneFamiliesConnection
-}
-
-fragment GeneFamilies_geneFamiliesConnection on GeneFamilyConnection {
-  edges {
-    node {
-      internalID
-      ...GeneFamily_geneFamily
-      id
-    }
-  }
-}
-
-fragment GeneFamily_geneFamily on GeneFamily {
-  id
-  slug
-  name
-  genes {
-    isPublished
-    id
-    displayName
-    name
-    slug
-  }
-}
-
-fragment StickyNav_geneFamiliesConnection on GeneFamilyConnection {
-  edges {
-    node {
-      internalID
-      slug
-      name
-      id
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -209,5 +166,7 @@ return {
   }
 };
 })();
-(node as any).hash = '483513cb4356510874f412b71a6fd773';
+
+(node as any).hash = "483513cb4356510874f412b71a6fd773";
+
 export default node;

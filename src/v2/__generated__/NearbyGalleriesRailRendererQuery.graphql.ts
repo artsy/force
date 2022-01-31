@@ -1,78 +1,29 @@
+/**
+ * @generated SignedSource<<7369ae27434a1f568dafe1acdcf8603f>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type NearbyGalleriesRailRendererQueryVariables = {
-    near: string;
+export type NearbyGalleriesRailRendererQuery$variables = {
+  near: string;
 };
-export type NearbyGalleriesRailRendererQueryResponse = {
-    readonly partnersConnection: {
-        readonly edges: ReadonlyArray<{
-            readonly " $fragmentRefs": FragmentRefs<"NearbyGalleriesRail_partners">;
-        } | null> | null;
-    } | null;
+export type NearbyGalleriesRailRendererQuery$data = {
+  readonly partnersConnection: {
+    readonly edges: ReadonlyArray<{
+      readonly " $fragmentSpreads": FragmentRefs<"NearbyGalleriesRail_partners">;
+    } | null> | null;
+  } | null;
 };
 export type NearbyGalleriesRailRendererQuery = {
-    readonly response: NearbyGalleriesRailRendererQueryResponse;
-    readonly variables: NearbyGalleriesRailRendererQueryVariables;
+  variables: NearbyGalleriesRailRendererQuery$variables;
+  response: NearbyGalleriesRailRendererQuery$data;
 };
-
-
-
-/*
-query NearbyGalleriesRailRendererQuery(
-  $near: String!
-) {
-  partnersConnection(first: 12, near: $near, eligibleForListing: true, defaultProfilePublic: true, sort: RANDOM_SCORE_DESC) {
-    edges {
-      ...NearbyGalleriesRail_partners
-    }
-  }
-}
-
-fragment FollowProfileButton_profile on Profile {
-  id
-  slug
-  name
-  internalID
-  is_followed: isFollowed
-}
-
-fragment NearbyGalleriesRail_partners on PartnerEdge {
-  node {
-    id
-    slug
-    ...NearbyGalleryCard_partner
-  }
-}
-
-fragment NearbyGalleryCard_partner on Partner {
-  name
-  slug
-  type
-  profile {
-    image {
-      cropped(height: 300, width: 400, version: "wide") {
-        src
-        srcSet
-      }
-    }
-    ...FollowProfileButton_profile
-    id
-  }
-  locationsConnection(first: 20) {
-    edges {
-      node {
-        city
-        displayCountry
-        id
-      }
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -363,5 +314,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'e1a8202ed2c0aaba45d3bf3481b9ddc3';
+
+(node as any).hash = "e1a8202ed2c0aaba45d3bf3481b9ddc3";
+
 export default node;

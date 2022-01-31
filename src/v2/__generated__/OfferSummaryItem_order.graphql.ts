@@ -1,41 +1,44 @@
+/**
+ * @generated SignedSource<<3382bb39ef41e0ac3375b95b69ff6aa0>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type OfferSummaryItem_order = {
-    readonly currencyCode: string;
-    readonly lineItems: {
-        readonly edges: ReadonlyArray<{
-            readonly node: {
-                readonly artworkOrEditionSet: ({
-                    readonly __typename: "Artwork";
-                    readonly price: string | null;
-                } | {
-                    readonly __typename: "EditionSet";
-                    readonly price: string | null;
-                } | {
-                    /*This will never be '%other', but we need some
-                    value in case none of the concrete values match.*/
-                    readonly __typename: "%other";
-                }) | null;
-            } | null;
-        } | null> | null;
-    } | null;
-    readonly myLastOffer?: {
-        readonly amount: string | null;
-        readonly note: string | null;
-    } | null;
-    readonly " $refType": "OfferSummaryItem_order";
+export type OfferSummaryItem_order$data = {
+  readonly currencyCode: string;
+  readonly lineItems: {
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly artworkOrEditionSet: {
+          readonly __typename: "Artwork";
+          readonly price: string | null;
+        } | {
+          readonly __typename: "EditionSet";
+          readonly price: string | null;
+        } | {
+          // This will never be '%other', but we need some
+          // value in case none of the concrete values match.
+          readonly __typename: "%other";
+        } | null;
+      } | null;
+    } | null> | null;
+  } | null;
+  readonly myLastOffer?: {
+    readonly amount: string | null;
+    readonly note: string | null;
+  } | null;
+  readonly " $fragmentType": "OfferSummaryItem_order";
 };
-export type OfferSummaryItem_order$data = OfferSummaryItem_order;
 export type OfferSummaryItem_order$key = {
-    readonly " $data"?: OfferSummaryItem_order$data;
-    readonly " $fragmentRefs": FragmentRefs<"OfferSummaryItem_order">;
+  readonly " $data"?: OfferSummaryItem_order$data;
+  readonly " $fragmentSpreads": FragmentRefs<"OfferSummaryItem_order">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = [
@@ -166,5 +169,7 @@ return {
   "abstractKey": "__isCommerceOrder"
 };
 })();
-(node as any).hash = '838d32e682c55dbaf42bdf7f04d25ed7';
+
+(node as any).hash = "838d32e682c55dbaf42bdf7f04d25ed7";
+
 export default node;

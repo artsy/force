@@ -1,141 +1,34 @@
+/**
+ * @generated SignedSource<<f3a2832b6e3cdb3a3ab6174b1d3f838e>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkSizes = "LARGE" | "MEDIUM" | "SMALL" | "%future added value";
-export type artistRoutes_AuctionResultsQueryVariables = {
-    artistID: string;
-    organizations?: Array<string | null> | null;
-    categories?: Array<string | null> | null;
-    sizes?: Array<ArtworkSizes | null> | null;
-    createdAfterYear?: number | null;
-    createdBeforeYear?: number | null;
-    allowEmptyCreatedDates?: boolean | null;
+export type artistRoutes_AuctionResultsQuery$variables = {
+  artistID: string;
+  organizations?: ReadonlyArray<string | null> | null;
+  categories?: ReadonlyArray<string | null> | null;
+  sizes?: ReadonlyArray<ArtworkSizes | null> | null;
+  createdAfterYear?: number | null;
+  createdBeforeYear?: number | null;
+  allowEmptyCreatedDates?: boolean | null;
 };
-export type artistRoutes_AuctionResultsQueryResponse = {
-    readonly artist: {
-        readonly " $fragmentRefs": FragmentRefs<"ArtistAuctionResultsRoute_artist">;
-    } | null;
+export type artistRoutes_AuctionResultsQuery$data = {
+  readonly artist: {
+    readonly " $fragmentSpreads": FragmentRefs<"ArtistAuctionResultsRoute_artist">;
+  } | null;
 };
 export type artistRoutes_AuctionResultsQuery = {
-    readonly response: artistRoutes_AuctionResultsQueryResponse;
-    readonly variables: artistRoutes_AuctionResultsQueryVariables;
+  variables: artistRoutes_AuctionResultsQuery$variables;
+  response: artistRoutes_AuctionResultsQuery$data;
 };
-
-
-
-/*
-query artistRoutes_AuctionResultsQuery(
-  $artistID: String!
-  $organizations: [String]
-  $categories: [String]
-  $sizes: [ArtworkSizes]
-  $createdAfterYear: Int
-  $createdBeforeYear: Int
-  $allowEmptyCreatedDates: Boolean
-) {
-  artist(id: $artistID) {
-    ...ArtistAuctionResultsRoute_artist_20ZuLB
-    id
-  }
-}
-
-fragment ArtistAuctionResultItem_auctionResult on AuctionResult {
-  title
-  dimension_text: dimensionText
-  organization
-  images {
-    thumbnail {
-      url
-    }
-  }
-  mediumText
-  categoryText
-  date_text: dateText
-  saleDate
-  boughtIn
-  currency
-  price_realized: priceRealized {
-    display
-    display_usd: displayUSD
-    cents_usd: centsUSD
-  }
-  performance {
-    mid
-  }
-  estimate {
-    display
-  }
-}
-
-fragment ArtistAuctionResultsCount_results on AuctionResultConnection {
-  totalCount
-}
-
-fragment ArtistAuctionResultsRoute_artist_20ZuLB on Artist {
-  ...ArtistAuctionResults_artist_20ZuLB
-}
-
-fragment ArtistAuctionResults_artist_20ZuLB on Artist {
-  slug
-  internalID
-  name
-  auctionResultsConnection(first: 10, sort: DATE_DESC, organizations: $organizations, categories: $categories, sizes: $sizes, earliestCreatedYear: $createdAfterYear, latestCreatedYear: $createdBeforeYear, allowEmptyCreatedDates: $allowEmptyCreatedDates) {
-    ...ArtistAuctionResultsCount_results
-    createdYearRange {
-      startAt
-      endAt
-    }
-    pageInfo {
-      hasNextPage
-      endCursor
-    }
-    pageCursors {
-      ...Pagination_pageCursors
-    }
-    totalCount
-    edges {
-      node {
-        title
-        dimension_text: dimensionText
-        images {
-          thumbnail {
-            url
-          }
-        }
-        description
-        date_text: dateText
-        ...ArtistAuctionResultItem_auctionResult
-        id
-      }
-    }
-  }
-}
-
-fragment Pagination_pageCursors on PageCursors {
-  around {
-    cursor
-    page
-    isCurrent
-  }
-  first {
-    cursor
-    page
-    isCurrent
-  }
-  last {
-    cursor
-    page
-    isCurrent
-  }
-  previous {
-    cursor
-    page
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = {
@@ -673,5 +566,7 @@ return {
   }
 };
 })();
-(node as any).hash = '82704008ad4e2236c5df200923977111';
+
+(node as any).hash = "82704008ad4e2236c5df200923977111";
+
 export default node;

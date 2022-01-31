@@ -1,32 +1,35 @@
+/**
+ * @generated SignedSource<<a0f1d32f87bf4be207857b63537bd2d7>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtistConsignRecentlySold_artist = {
-    readonly targetSupply: {
-        readonly microfunnel: {
-            readonly artworksConnection: {
-                readonly edges: ReadonlyArray<{
-                    readonly node: {
-                        readonly realizedPrice: string | null;
-                        readonly " $fragmentRefs": FragmentRefs<"FillwidthItem_artwork">;
-                    } | null;
-                } | null> | null;
-            } | null;
-        } | null;
+export type ArtistConsignRecentlySold_artist$data = {
+  readonly targetSupply: {
+    readonly microfunnel: {
+      readonly artworksConnection: {
+        readonly edges: ReadonlyArray<{
+          readonly node: {
+            readonly realizedPrice: string | null;
+            readonly " $fragmentSpreads": FragmentRefs<"FillwidthItem_artwork">;
+          } | null;
+        } | null> | null;
+      } | null;
     } | null;
-    readonly name: string | null;
-    readonly " $refType": "ArtistConsignRecentlySold_artist";
+  } | null;
+  readonly name: string | null;
+  readonly " $fragmentType": "ArtistConsignRecentlySold_artist";
 };
-export type ArtistConsignRecentlySold_artist$data = ArtistConsignRecentlySold_artist;
 export type ArtistConsignRecentlySold_artist$key = {
-    readonly " $data"?: ArtistConsignRecentlySold_artist$data;
-    readonly " $fragmentRefs": FragmentRefs<"ArtistConsignRecentlySold_artist">;
+  readonly " $data"?: ArtistConsignRecentlySold_artist$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtistConsignRecentlySold_artist">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -75,16 +78,16 @@ const node: ReaderFragment = {
                       "plural": false,
                       "selections": [
                         {
+                          "args": null,
+                          "kind": "FragmentSpread",
+                          "name": "FillwidthItem_artwork"
+                        },
+                        {
                           "alias": null,
                           "args": null,
                           "kind": "ScalarField",
                           "name": "realizedPrice",
                           "storageKey": null
-                        },
-                        {
-                          "args": null,
-                          "kind": "FragmentSpread",
-                          "name": "FillwidthItem_artwork"
                         }
                       ],
                       "storageKey": null
@@ -112,5 +115,7 @@ const node: ReaderFragment = {
   "type": "Artist",
   "abstractKey": null
 };
-(node as any).hash = '4bb367f104df6c1ffe6a26b0eeb0555b';
+
+(node as any).hash = "4bb367f104df6c1ffe6a26b0eeb0555b";
+
 export default node;

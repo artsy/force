@@ -1,57 +1,38 @@
+/**
+ * @generated SignedSource<<f1588478fdd731255c17e2450ecc9c48>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type CreditCardInput = {
-    clientMutationId?: string | null;
-    oneTimeUse?: boolean | null;
-    token: string;
+  clientMutationId?: string | null;
+  oneTimeUse?: boolean | null;
+  token: string;
 };
-export type createTestEnvCreditCardMutationVariables = {
-    input: CreditCardInput;
+export type createTestEnvCreditCardMutation$variables = {
+  input: CreditCardInput;
 };
-export type createTestEnvCreditCardMutationResponse = {
-    readonly createCreditCard: {
-        readonly creditCardOrError: {
-            readonly creditCard?: {
-                readonly brand: string;
-            } | null;
-            readonly mutationError?: {
-                readonly type: string | null;
-            } | null;
-        } | null;
+export type createTestEnvCreditCardMutation$data = {
+  readonly createCreditCard: {
+    readonly creditCardOrError: {
+      readonly creditCard?: {
+        readonly brand: string;
+      } | null;
+      readonly mutationError?: {
+        readonly type: string | null;
+      } | null;
     } | null;
+  } | null;
 };
 export type createTestEnvCreditCardMutation = {
-    readonly response: createTestEnvCreditCardMutationResponse;
-    readonly variables: createTestEnvCreditCardMutationVariables;
+  variables: createTestEnvCreditCardMutation$variables;
+  response: createTestEnvCreditCardMutation$data;
 };
-
-
-
-/*
-mutation createTestEnvCreditCardMutation(
-  $input: CreditCardInput!
-) {
-  createCreditCard(input: $input) {
-    creditCardOrError {
-      __typename
-      ... on CreditCardMutationSuccess {
-        creditCard {
-          brand
-          id
-        }
-      }
-      ... on CreditCardMutationFailure {
-        mutationError {
-          type
-        }
-      }
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -227,5 +208,7 @@ return {
   }
 };
 })();
-(node as any).hash = '4a8e9a9778e885c2061bbb99d3f158d1';
+
+(node as any).hash = "4a8e9a9778e885c2061bbb99d3f158d1";
+
 export default node;

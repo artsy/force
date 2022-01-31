@@ -1,45 +1,37 @@
+/**
+ * @generated SignedSource<<703956abb96be8e5a2b0fab5dd375038>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type AddAssetToConsignmentSubmissionInput = {
-    assetType?: string | null;
-    clientMutationId?: string | null;
-    filename?: string | null;
-    geminiToken: string;
-    sessionID?: string | null;
-    size?: string | null;
-    submissionID: string;
+  assetType?: string | null;
+  clientMutationId?: string | null;
+  filename?: string | null;
+  geminiToken: string;
+  sessionID?: string | null;
+  size?: string | null;
+  submissionID: string;
 };
-export type addAssetToConsignmentMutationVariables = {
-    input: AddAssetToConsignmentSubmissionInput;
+export type addAssetToConsignmentMutation$variables = {
+  input: AddAssetToConsignmentSubmissionInput;
 };
-export type addAssetToConsignmentMutationResponse = {
-    readonly addAssetToConsignmentSubmission: {
-        readonly asset: {
-            readonly id: string;
-        } | null;
+export type addAssetToConsignmentMutation$data = {
+  readonly addAssetToConsignmentSubmission: {
+    readonly asset: {
+      readonly id: string;
     } | null;
+  } | null;
 };
 export type addAssetToConsignmentMutation = {
-    readonly response: addAssetToConsignmentMutationResponse;
-    readonly variables: addAssetToConsignmentMutationVariables;
+  variables: addAssetToConsignmentMutation$variables;
+  response: addAssetToConsignmentMutation$data;
 };
-
-
-
-/*
-mutation addAssetToConsignmentMutation(
-  $input: AddAssetToConsignmentSubmissionInput!
-) {
-  addAssetToConsignmentSubmission(input: $input) {
-    asset {
-      id
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -113,5 +105,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'aea8b17459481b03abe5183958a36ad0';
+
+(node as any).hash = "aea8b17459481b03abe5183958a36ad0";
+
 export default node;

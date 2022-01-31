@@ -1,22 +1,25 @@
+/**
+ * @generated SignedSource<<c33ed6e7ea54aa522a6672df77b17859>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type FairHeaderImage_fair = {
-    readonly image: {
-        readonly url: string | null;
-    } | null;
-    readonly " $refType": "FairHeaderImage_fair";
+export type FairHeaderImage_fair$data = {
+  readonly image: {
+    readonly url: string | null;
+  } | null;
+  readonly " $fragmentType": "FairHeaderImage_fair";
 };
-export type FairHeaderImage_fair$data = FairHeaderImage_fair;
 export type FairHeaderImage_fair$key = {
-    readonly " $data"?: FairHeaderImage_fair$data;
-    readonly " $fragmentRefs": FragmentRefs<"FairHeaderImage_fair">;
+  readonly " $data"?: FairHeaderImage_fair$data;
+  readonly " $fragmentSpreads": FragmentRefs<"FairHeaderImage_fair">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -52,5 +55,7 @@ const node: ReaderFragment = {
   "type": "Fair",
   "abstractKey": null
 };
-(node as any).hash = '40752f782c9a021ce3c61024afab0962';
+
+(node as any).hash = "40752f782c9a021ce3c61024afab0962";
+
 export default node;

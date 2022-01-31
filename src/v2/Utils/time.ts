@@ -24,10 +24,10 @@ export async function getOffsetBetweenGravityClock(
       relayEnvironment,
       query,
       {},
-      // FIXME: Update after definitely-typed and relay docs are updated
-      // @ts-ignore
       {
-        force: true,
+        networkCacheConfig: {
+          force: true,
+        },
       }
     )
   }

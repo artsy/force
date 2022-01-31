@@ -1,128 +1,67 @@
+/**
+ * @generated SignedSource<<02551a343ebb1a4e8942dd12bee2b372>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtworkSidebarArtists_Test_QueryVariables = {};
-export type ArtworkSidebarArtists_Test_QueryResponse = {
-    readonly artwork: {
-        readonly " $fragmentRefs": FragmentRefs<"ArtworkSidebarArtists_artwork">;
-    } | null;
+export type ArtworkSidebarArtists_Test_Query$variables = {};
+export type ArtworkSidebarArtists_Test_Query$data = {
+  readonly artwork: {
+    readonly " $fragmentSpreads": FragmentRefs<"ArtworkSidebarArtists_artwork">;
+  } | null;
 };
-export type ArtworkSidebarArtists_Test_QueryRawResponse = {
-    readonly artwork: ({
-        readonly cultural_maker: string | null;
-        readonly artists: ReadonlyArray<({
-            readonly id: string;
-            readonly internalID: string;
-            readonly slug: string;
-            readonly name: string | null;
-            readonly formattedNationalityAndBirthday: string | null;
-            readonly href: string | null;
-            readonly avatar: ({
-                readonly cropped: ({
-                    readonly src: string;
-                    readonly srcSet: string;
-                }) | null;
-            }) | null;
-            readonly is_followed: boolean | null;
-            readonly counts: ({
-                readonly follows: number | null;
-            }) | null;
-            readonly related: ({
-                readonly suggestedConnection: ({
-                    readonly edges: ReadonlyArray<({
-                        readonly node: ({
-                            readonly id: string;
-                            readonly internalID: string;
-                            readonly name: string | null;
-                            readonly formattedNationalityAndBirthday: string | null;
-                            readonly image: ({
-                                readonly cropped: ({
-                                    readonly url: string;
-                                }) | null;
-                            }) | null;
-                        }) | null;
-                    }) | null> | null;
-                }) | null;
-            }) | null;
-        }) | null> | null;
-        readonly id: string;
-    }) | null;
+export type ArtworkSidebarArtists_Test_Query$rawResponse = {
+  readonly artwork: {
+    readonly cultural_maker: string | null;
+    readonly artists: ReadonlyArray<{
+      readonly id: string;
+      readonly internalID: string;
+      readonly slug: string;
+      readonly name: string | null;
+      readonly formattedNationalityAndBirthday: string | null;
+      readonly href: string | null;
+      readonly avatar: {
+        readonly cropped: {
+          readonly src: string;
+          readonly srcSet: string;
+        } | null;
+      } | null;
+      readonly is_followed: boolean | null;
+      readonly counts: {
+        readonly follows: Int | null;
+      } | null;
+      readonly related: {
+        readonly suggestedConnection: {
+          readonly edges: ReadonlyArray<{
+            readonly node: {
+              readonly id: string;
+              readonly internalID: string;
+              readonly name: string | null;
+              readonly formattedNationalityAndBirthday: string | null;
+              readonly image: {
+                readonly cropped: {
+                  readonly url: string;
+                } | null;
+              } | null;
+            } | null;
+          } | null> | null;
+        } | null;
+      } | null;
+    } | null> | null;
+    readonly id: string;
+  } | null;
 };
 export type ArtworkSidebarArtists_Test_Query = {
-    readonly response: ArtworkSidebarArtists_Test_QueryResponse;
-    readonly variables: ArtworkSidebarArtists_Test_QueryVariables;
-    readonly rawResponse: ArtworkSidebarArtists_Test_QueryRawResponse;
+  variables: ArtworkSidebarArtists_Test_Query$variables;
+  response: ArtworkSidebarArtists_Test_Query$data;
+  rawResponse: ArtworkSidebarArtists_Test_Query$rawResponse;
 };
-
-
-
-/*
-query ArtworkSidebarArtists_Test_Query {
-  artwork(id: "josef-albers-homage-to-the-square-85") {
-    ...ArtworkSidebarArtists_artwork
-    id
-  }
-}
-
-fragment ArtworkSidebarArtists_artwork on Artwork {
-  cultural_maker: culturalMaker
-  artists {
-    id
-    internalID
-    slug
-    name
-    formattedNationalityAndBirthday
-    href
-    avatar: image {
-      cropped(width: 45, height: 45) {
-        src
-        srcSet
-      }
-    }
-    ...FollowArtistButton_artist_2eN9lh
-  }
-}
-
-fragment FollowArtistButton_artist_2eN9lh on Artist {
-  id
-  internalID
-  name
-  slug
-  is_followed: isFollowed
-  counts {
-    follows
-  }
-  ...FollowArtistPopover_artist
-}
-
-fragment FollowArtistPopoverRow_artist on Artist {
-  internalID
-  name
-  formattedNationalityAndBirthday
-  image {
-    cropped(width: 45, height: 45) {
-      url
-    }
-  }
-}
-
-fragment FollowArtistPopover_artist on Artist {
-  related {
-    suggestedConnection(first: 3, excludeFollowedArtists: true) {
-      edges {
-        node {
-          id
-          internalID
-          ...FollowArtistPopoverRow_artist
-        }
-      }
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -414,5 +353,7 @@ return {
   }
 };
 })();
-(node as any).hash = '9d93389299295dce0d7b038563f6cd0a';
+
+(node as any).hash = "9d93389299295dce0d7b038563f6cd0a";
+
 export default node;

@@ -1,26 +1,29 @@
+/**
+ * @generated SignedSource<<fd528f6d08dcfddd2af9ee62fae550b3>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ViewingRoomStatementRoute_viewingRoom = {
-    readonly artworksConnection: {
-        readonly totalCount: number | null;
-    } | null;
-    readonly subsections: ReadonlyArray<{
-        readonly internalID: string;
-    }>;
-    readonly " $fragmentRefs": FragmentRefs<"ViewingRoomIntro_viewingRoom" | "ViewingRoomWorks_viewingRoom" | "ViewingRoomPullQuote_viewingRoom" | "ViewingRoomBody_viewingRoom" | "ViewingRoomSubsections_viewingRoom">;
-    readonly " $refType": "ViewingRoomStatementRoute_viewingRoom";
+export type ViewingRoomStatementRoute_viewingRoom$data = {
+  readonly artworksConnection: {
+    readonly totalCount: number | null;
+  } | null;
+  readonly subsections: ReadonlyArray<{
+    readonly internalID: string;
+  }>;
+  readonly " $fragmentSpreads": FragmentRefs<"ViewingRoomIntro_viewingRoom" | "ViewingRoomWorks_viewingRoom" | "ViewingRoomPullQuote_viewingRoom" | "ViewingRoomBody_viewingRoom" | "ViewingRoomSubsections_viewingRoom">;
+  readonly " $fragmentType": "ViewingRoomStatementRoute_viewingRoom";
 };
-export type ViewingRoomStatementRoute_viewingRoom$data = ViewingRoomStatementRoute_viewingRoom;
 export type ViewingRoomStatementRoute_viewingRoom$key = {
-    readonly " $data"?: ViewingRoomStatementRoute_viewingRoom$data;
-    readonly " $fragmentRefs": FragmentRefs<"ViewingRoomStatementRoute_viewingRoom">;
+  readonly " $data"?: ViewingRoomStatementRoute_viewingRoom$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ViewingRoomStatementRoute_viewingRoom">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -28,6 +31,31 @@ const node: ReaderFragment = {
   "metadata": null,
   "name": "ViewingRoomStatementRoute_viewingRoom",
   "selections": [
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ViewingRoomIntro_viewingRoom"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ViewingRoomWorks_viewingRoom"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ViewingRoomPullQuote_viewingRoom"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ViewingRoomBody_viewingRoom"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ViewingRoomSubsections_viewingRoom"
+    },
     {
       "alias": null,
       "args": [
@@ -69,35 +97,12 @@ const node: ReaderFragment = {
         }
       ],
       "storageKey": null
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "ViewingRoomIntro_viewingRoom"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "ViewingRoomWorks_viewingRoom"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "ViewingRoomPullQuote_viewingRoom"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "ViewingRoomBody_viewingRoom"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "ViewingRoomSubsections_viewingRoom"
     }
   ],
   "type": "ViewingRoom",
   "abstractKey": null
 };
-(node as any).hash = '972a80266e3f961f175170538f981767';
+
+(node as any).hash = "972a80266e3f961f175170538f981767";
+
 export default node;

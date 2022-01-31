@@ -1,5 +1,5 @@
-import { auctionRoutes_ConfirmBidQueryRawResponse } from "v2/__generated__/auctionRoutes_ConfirmBidQuery.graphql"
-import { auctionRoutes_RegisterQueryRawResponse } from "v2/__generated__/auctionRoutes_RegisterQuery.graphql"
+import { auctionRoutes_ConfirmBidQuery$rawResponse } from "v2/__generated__/auctionRoutes_ConfirmBidQuery.graphql"
+import { auctionRoutes_RegisterQuery$rawResponse } from "v2/__generated__/auctionRoutes_RegisterQuery.graphql"
 import { ConfirmBidQueryResponseFixture } from "v2/Apps/Auction/__fixtures__/routes_ConfirmBidQuery"
 import { RegisterQueryResponseFixture } from "v2/Apps/Auction/__fixtures__/routes_RegisterQuery"
 import { auctionRoutes } from "v2/Apps/Auction/auctionRoutes"
@@ -16,8 +16,8 @@ describe("Auction/routes", () => {
   async function render(
     url,
     mockData:
-      | auctionRoutes_ConfirmBidQueryRawResponse
-      | auctionRoutes_RegisterQueryRawResponse
+      | auctionRoutes_ConfirmBidQuery$rawResponse
+      | auctionRoutes_RegisterQuery$rawResponse
   ) {
     const network = createMockNetworkLayer2({ mockData })
     const source = new RecordSource()
@@ -33,18 +33,18 @@ describe("Auction/routes", () => {
   }
 
   const mockRegisterResolver = (
-    data: auctionRoutes_RegisterQueryRawResponse
-  ): auctionRoutes_RegisterQueryRawResponse => ({
+    data: auctionRoutes_RegisterQuery$rawResponse
+  ): auctionRoutes_RegisterQuery$rawResponse => ({
     me: data.me,
     sale: data.sale,
   })
 
   const mockConfirmBidResolver = (
-    data: DeepPartial<auctionRoutes_ConfirmBidQueryRawResponse> = {}
-  ): auctionRoutes_ConfirmBidQueryRawResponse =>
+    data: DeepPartial<auctionRoutes_ConfirmBidQuery$rawResponse> = {}
+  ): auctionRoutes_ConfirmBidQuery$rawResponse =>
     deepMerge<
-      auctionRoutes_ConfirmBidQueryRawResponse,
-      DeepPartial<auctionRoutes_ConfirmBidQueryRawResponse>
+      auctionRoutes_ConfirmBidQuery$rawResponse,
+      DeepPartial<auctionRoutes_ConfirmBidQuery$rawResponse>
     >(ConfirmBidQueryResponseFixture, data)
 
   it("renders the Auction FAQ view", async () => {
@@ -173,7 +173,6 @@ describe("Auction/routes", () => {
   describe("Register: /auction-registration/:saleId", () => {
     it("does not redirect if a sale is found", async () => {
       const { redirect, status } = await render(
-        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         `/auction-registration/${RegisterQueryResponseFixture.sale.slug}`,
         mockRegisterResolver(RegisterQueryResponseFixture)
       )
@@ -184,7 +183,6 @@ describe("Auction/routes", () => {
 
     it("also responds to auction-registration2 route", async () => {
       const { status } = await render(
-        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         `/auction-registration2/${RegisterQueryResponseFixture.sale.slug}`,
         mockRegisterResolver(RegisterQueryResponseFixture)
       )
@@ -194,11 +192,9 @@ describe("Auction/routes", () => {
 
     it("redirects to the auction registration modal if the user has a qualified credit card", async () => {
       const { redirect } = await render(
-        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         `/auction-registration/${RegisterQueryResponseFixture.sale.slug}`,
         mockRegisterResolver({
           ...RegisterQueryResponseFixture,
-          // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
           me: {
             ...RegisterQueryResponseFixture.me,
             hasQualifiedCreditCards: true,
@@ -208,18 +204,15 @@ describe("Auction/routes", () => {
 
       // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       expect(redirect.url).toBe(
-        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         `/auction/${RegisterQueryResponseFixture.sale.slug}/registration-flow`
       )
     })
 
     it("redirects back to the auction if the registration window has closed", async () => {
       const { redirect } = await render(
-        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         `/auction-registration/${RegisterQueryResponseFixture.sale.slug}`,
         mockRegisterResolver({
           ...RegisterQueryResponseFixture,
-          // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
           sale: {
             ...RegisterQueryResponseFixture.sale,
             isRegistrationClosed: true,
@@ -229,22 +222,18 @@ describe("Auction/routes", () => {
 
       // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       expect(redirect.url).toBe(
-        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         `/auction/${RegisterQueryResponseFixture.sale.slug}`
       )
     })
 
     it("redirects to the auction confirm registration route if bidder has already registered", async () => {
       const { redirect } = await render(
-        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         `/auction-registration/${RegisterQueryResponseFixture.sale.slug}`,
         mockRegisterResolver({
           ...RegisterQueryResponseFixture,
           sale: {
             ...RegisterQueryResponseFixture.sale,
-            // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
             registrationStatus: {
-              // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
               ...RegisterQueryResponseFixture.sale.registrationStatus,
               qualifiedForBidding: true,
             },
@@ -254,7 +243,6 @@ describe("Auction/routes", () => {
 
       // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       expect(redirect.url).toBe(
-        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         `/auction/${RegisterQueryResponseFixture.sale.slug}/confirm-registration`
       )
     })

@@ -1,29 +1,32 @@
+/**
+ * @generated SignedSource<<d8651eca5dd59317ff49448fc113bdce>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ViewingRoomCard_viewingRoom = {
-    readonly href: string | null;
-    readonly title: string;
-    readonly exhibitionPeriod: string | null;
-    readonly coverImage: {
-        readonly imageURLs: {
-            readonly normalized: string | null;
-        } | null;
-        readonly width: number | null;
-        readonly height: number | null;
+export type ViewingRoomCard_viewingRoom$data = {
+  readonly href: string | null;
+  readonly title: string;
+  readonly exhibitionPeriod: string | null;
+  readonly coverImage: {
+    readonly imageURLs: {
+      readonly normalized: string | null;
     } | null;
-    readonly " $refType": "ViewingRoomCard_viewingRoom";
+    readonly width: number | null;
+    readonly height: number | null;
+  } | null;
+  readonly " $fragmentType": "ViewingRoomCard_viewingRoom";
 };
-export type ViewingRoomCard_viewingRoom$data = ViewingRoomCard_viewingRoom;
 export type ViewingRoomCard_viewingRoom$key = {
-    readonly " $data"?: ViewingRoomCard_viewingRoom$data;
-    readonly " $fragmentRefs": FragmentRefs<"ViewingRoomCard_viewingRoom">;
+  readonly " $data"?: ViewingRoomCard_viewingRoom$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ViewingRoomCard_viewingRoom">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -99,5 +102,7 @@ const node: ReaderFragment = {
   "type": "ViewingRoom",
   "abstractKey": null
 };
-(node as any).hash = 'ed15b3a17e438b1e4a1949abe4cb5341';
+
+(node as any).hash = "ed15b3a17e438b1e4a1949abe4cb5341";
+
 export default node;

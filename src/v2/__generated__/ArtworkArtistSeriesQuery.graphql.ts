@@ -1,217 +1,27 @@
+/**
+ * @generated SignedSource<<deb11389e72507ed8c45ee6f511789e9>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtworkArtistSeriesQueryVariables = {
-    slug: string;
+export type ArtworkArtistSeriesQuery$variables = {
+  slug: string;
 };
-export type ArtworkArtistSeriesQueryResponse = {
-    readonly artwork: {
-        readonly " $fragmentRefs": FragmentRefs<"ArtworkArtistSeries_artwork">;
-    } | null;
+export type ArtworkArtistSeriesQuery$data = {
+  readonly artwork: {
+    readonly " $fragmentSpreads": FragmentRefs<"ArtworkArtistSeries_artwork">;
+  } | null;
 };
 export type ArtworkArtistSeriesQuery = {
-    readonly response: ArtworkArtistSeriesQueryResponse;
-    readonly variables: ArtworkArtistSeriesQueryVariables;
+  variables: ArtworkArtistSeriesQuery$variables;
+  response: ArtworkArtistSeriesQuery$data;
 };
-
-
-
-/*
-query ArtworkArtistSeriesQuery(
-  $slug: String!
-) {
-  artwork(id: $slug) {
-    ...ArtworkArtistSeries_artwork
-    id
-  }
-}
-
-fragment ArtistSeriesArtworkRail_artwork on Artwork {
-  internalID
-  slug
-  artistSeriesConnection(first: 1) {
-    edges {
-      node {
-        slug
-        internalID
-        filterArtworksConnection(sort: "-decayed_merch", first: 20) {
-          edges {
-            node {
-              slug
-              internalID
-              ...ShelfArtwork_artwork
-              id
-            }
-          }
-          id
-        }
-      }
-    }
-  }
-}
-
-fragment ArtistSeriesItem_artistSeries on ArtistSeries {
-  title
-  slug
-  featured
-  internalID
-  artworksCountMessage
-  image {
-    cropped(width: 325, height: 244) {
-      width
-      height
-      src
-      srcSet
-    }
-  }
-}
-
-fragment ArtistSeriesRail_artist on Artist {
-  artistSeriesConnection(first: 50) {
-    edges {
-      node {
-        internalID
-        ...ArtistSeriesItem_artistSeries
-      }
-    }
-  }
-}
-
-fragment ArtworkArtistSeries_artwork on Artwork {
-  ...ArtistSeriesArtworkRail_artwork
-  internalID
-  slug
-  seriesArtist: artist(shallow: true) {
-    artistSeriesConnection(first: 50) {
-      edges {
-        node {
-          internalID
-        }
-      }
-    }
-    ...ArtistSeriesRail_artist
-    id
-  }
-  seriesForCounts: artistSeriesConnection(first: 1) {
-    edges {
-      node {
-        artworksCount
-      }
-    }
-  }
-}
-
-fragment Badge_artwork on Artwork {
-  is_biddable: isBiddable
-  href
-  sale {
-    is_preview: isPreview
-    display_timely_at: displayTimelyAt
-    id
-  }
-}
-
-fragment Contact_artwork on Artwork {
-  href
-  is_inquireable: isInquireable
-  sale {
-    is_auction: isAuction
-    is_live_open: isLiveOpen
-    is_open: isOpen
-    is_closed: isClosed
-    id
-  }
-  partner(shallow: true) {
-    type
-    id
-  }
-  sale_artwork: saleArtwork {
-    highest_bid: highestBid {
-      display
-    }
-    opening_bid: openingBid {
-      display
-    }
-    counts {
-      bidder_positions: bidderPositions
-    }
-    id
-  }
-}
-
-fragment Details_artwork on Artwork {
-  href
-  title
-  date
-  sale_message: saleMessage
-  cultural_maker: culturalMaker
-  artists(shallow: true) {
-    id
-    href
-    name
-  }
-  collecting_institution: collectingInstitution
-  partner(shallow: true) {
-    name
-    href
-    id
-  }
-  sale {
-    is_auction: isAuction
-    is_closed: isClosed
-    id
-  }
-  sale_artwork: saleArtwork {
-    counts {
-      bidder_positions: bidderPositions
-    }
-    highest_bid: highestBid {
-      display
-    }
-    opening_bid: openingBid {
-      display
-    }
-    id
-  }
-}
-
-fragment Metadata_artwork on Artwork {
-  ...Details_artwork
-  ...Contact_artwork
-  href
-}
-
-fragment SaveButton_artwork on Artwork {
-  id
-  internalID
-  slug
-  is_saved: isSaved
-  title
-}
-
-fragment ShelfArtwork_artwork on Artwork {
-  image {
-    resized(width: 200) {
-      src
-      srcSet
-      width
-      height
-    }
-    aspectRatio
-    height
-  }
-  imageTitle
-  title
-  href
-  is_saved: isSaved
-  ...Metadata_artwork
-  ...SaveButton_artwork
-  ...Badge_artwork
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -845,5 +655,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'e964f2379b951ebd9776152fb8ea56c5';
+
+(node as any).hash = "e964f2379b951ebd9776152fb8ea56c5";
+
 export default node;

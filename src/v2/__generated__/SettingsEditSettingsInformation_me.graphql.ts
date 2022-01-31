@@ -1,23 +1,26 @@
+/**
+ * @generated SignedSource<<ca86b304c89fcb50d7ff4eb6e1db156c>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type SettingsEditSettingsInformation_me = {
-    readonly email: string | null;
-    readonly name: string | null;
-    readonly paddleNumber: string | null;
-    readonly phone: string | null;
-    readonly " $refType": "SettingsEditSettingsInformation_me";
+export type SettingsEditSettingsInformation_me$data = {
+  readonly email: string | null;
+  readonly name: string | null;
+  readonly paddleNumber: string | null;
+  readonly phone: string | null;
+  readonly " $fragmentType": "SettingsEditSettingsInformation_me";
 };
-export type SettingsEditSettingsInformation_me$data = SettingsEditSettingsInformation_me;
 export type SettingsEditSettingsInformation_me$key = {
-    readonly " $data"?: SettingsEditSettingsInformation_me$data;
-    readonly " $fragmentRefs": FragmentRefs<"SettingsEditSettingsInformation_me">;
+  readonly " $data"?: SettingsEditSettingsInformation_me$data;
+  readonly " $fragmentSpreads": FragmentRefs<"SettingsEditSettingsInformation_me">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -57,5 +60,7 @@ const node: ReaderFragment = {
   "type": "Me",
   "abstractKey": null
 };
-(node as any).hash = '4b58a8c8a4bb4bcbc13fd9519056de2a';
+
+(node as any).hash = "4b58a8c8a4bb4bcbc13fd9519056de2a";
+
 export default node;

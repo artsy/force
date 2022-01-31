@@ -1,27 +1,30 @@
+/**
+ * @generated SignedSource<<8ae7894f29d1cbe82faa09d730ec04ee>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type fetchFollowedArtists_response = {
-    readonly edges: ReadonlyArray<{
-        readonly node: {
-            readonly artist: {
-                readonly slug: string;
-                readonly internalID: string;
-            } | null;
-        } | null;
-    } | null> | null;
-    readonly " $refType": "fetchFollowedArtists_response";
+export type fetchFollowedArtists_response$data = {
+  readonly edges: ReadonlyArray<{
+    readonly node: {
+      readonly artist: {
+        readonly slug: string;
+        readonly internalID: string;
+      } | null;
+    } | null;
+  } | null> | null;
+  readonly " $fragmentType": "fetchFollowedArtists_response";
 };
-export type fetchFollowedArtists_response$data = fetchFollowedArtists_response;
 export type fetchFollowedArtists_response$key = {
-    readonly " $data"?: fetchFollowedArtists_response$data;
-    readonly " $fragmentRefs": FragmentRefs<"fetchFollowedArtists_response">;
+  readonly " $data"?: fetchFollowedArtists_response$data;
+  readonly " $fragmentSpreads": FragmentRefs<"fetchFollowedArtists_response">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -80,5 +83,7 @@ const node: ReaderFragment = {
   "type": "FollowArtistConnection",
   "abstractKey": null
 };
-(node as any).hash = 'bb1a53bce6e3d27121c49ccbf4fa9a8b';
+
+(node as any).hash = "bb1a53bce6e3d27121c49ccbf4fa9a8b";
+
 export default node;

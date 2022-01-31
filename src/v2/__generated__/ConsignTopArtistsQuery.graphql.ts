@@ -1,59 +1,39 @@
+/**
+ * @generated SignedSource<<9df485c88c352bd6a8eb0439db12f5a4>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
-export type ConsignTopArtistsQueryVariables = {};
-export type ConsignTopArtistsQueryResponse = {
-    readonly targetSupply: {
-        readonly microfunnel: ReadonlyArray<{
-            readonly artworksConnection: {
-                readonly edges: ReadonlyArray<{
-                    readonly node: {
-                        readonly slug: string;
-                        readonly internalID: string;
-                        readonly href: string | null;
-                        readonly artistNames: string | null;
-                        readonly image: {
-                            readonly imageURL: string | null;
-                        } | null;
-                        readonly realizedPrice: string | null;
-                    } | null;
-                } | null> | null;
+import { ConcreteRequest, Query } from 'relay-runtime';
+export type ConsignTopArtistsQuery$variables = {};
+export type ConsignTopArtistsQuery$data = {
+  readonly targetSupply: {
+    readonly microfunnel: ReadonlyArray<{
+      readonly artworksConnection: {
+        readonly edges: ReadonlyArray<{
+          readonly node: {
+            readonly slug: string;
+            readonly internalID: string;
+            readonly href: string | null;
+            readonly artistNames: string | null;
+            readonly image: {
+              readonly imageURL: string | null;
             } | null;
+            readonly realizedPrice: string | null;
+          } | null;
         } | null> | null;
-    } | null;
+      } | null;
+    } | null> | null;
+  } | null;
 };
 export type ConsignTopArtistsQuery = {
-    readonly response: ConsignTopArtistsQueryResponse;
-    readonly variables: ConsignTopArtistsQueryVariables;
+  variables: ConsignTopArtistsQuery$variables;
+  response: ConsignTopArtistsQuery$data;
 };
-
-
-
-/*
-query ConsignTopArtistsQuery {
-  targetSupply {
-    microfunnel {
-      artworksConnection(first: 10) {
-        edges {
-          node {
-            slug
-            internalID
-            href
-            artistNames
-            image {
-              imageURL
-            }
-            realizedPrice
-            id
-          }
-        }
-      }
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -274,5 +254,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'ba6ed510e0104cf8bcb1953dcae2e2b2';
+
+(node as any).hash = "ba6ed510e0104cf8bcb1953dcae2e2b2";
+
 export default node;

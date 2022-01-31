@@ -1,191 +1,28 @@
+/**
+ * @generated SignedSource<<6e250d7f4127fd5681d1e2263d9a74e4>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type FairsIndex_Test_QueryVariables = {};
-export type FairsIndex_Test_QueryResponse = {
-    readonly featuredFairs: ReadonlyArray<{
-        readonly " $fragmentRefs": FragmentRefs<"FairsIndex_featuredFairs">;
-    } | null> | null;
-    readonly viewer: {
-        readonly " $fragmentRefs": FragmentRefs<"FairsIndex_viewer">;
-    } | null;
+export type FairsIndex_Test_Query$variables = {};
+export type FairsIndex_Test_Query$data = {
+  readonly featuredFairs: ReadonlyArray<{
+    readonly " $fragmentSpreads": FragmentRefs<"FairsIndex_featuredFairs">;
+  } | null> | null;
+  readonly viewer: {
+    readonly " $fragmentSpreads": FragmentRefs<"FairsIndex_viewer">;
+  } | null;
 };
 export type FairsIndex_Test_Query = {
-    readonly response: FairsIndex_Test_QueryResponse;
-    readonly variables: FairsIndex_Test_QueryVariables;
+  variables: FairsIndex_Test_Query$variables;
+  response: FairsIndex_Test_Query$data;
 };
-
-
-
-/*
-query FairsIndex_Test_Query {
-  featuredFairs: orderedSets(key: "art-fairs:featured") {
-    ...FairsIndex_featuredFairs
-    id
-  }
-  viewer {
-    ...FairsIndex_viewer
-  }
-}
-
-fragment FairsFairBanner_fair on Fair {
-  href
-  name
-  exhibitionPeriod
-  bannerSize
-  image {
-    large: cropped(width: 1840, height: 790, version: ["wide"]) {
-      src
-      srcSet
-      width
-      height
-    }
-    small: cropped(width: 910, height: 512, version: ["wide"]) {
-      src
-      srcSet
-      width
-      height
-    }
-  }
-  profile {
-    icon {
-      resized(width: 80, height: 80, version: "square140") {
-        width
-        height
-        src
-        srcSet
-      }
-    }
-    id
-  }
-}
-
-fragment FairsFairRow_fair on Fair {
-  href
-  name
-  isoStartAt: startAt
-  exhibitionPeriod
-  profile {
-    icon {
-      resized(width: 80, height: 80, version: "square140") {
-        width
-        height
-        src
-        srcSet
-      }
-    }
-    id
-  }
-  organizer {
-    profile {
-      href
-      id
-    }
-    id
-  }
-}
-
-fragment FairsIndex_featuredFairs on OrderedSet {
-  items {
-    __typename
-    ... on FeaturedLink {
-      internalID
-      title
-      image {
-        cropped(width: 547, height: 410) {
-          width
-          height
-          src
-          srcSet
-        }
-      }
-      id
-    }
-    ... on Node {
-      __isNode: __typename
-      id
-    }
-    ... on Profile {
-      id
-    }
-  }
-}
-
-fragment FairsIndex_viewer on Viewer {
-  runningFairs: fairs(hasListing: true, hasFullFeature: true, sort: START_AT_DESC, size: 25, status: RUNNING) {
-    internalID
-    bannerSize
-    isPublished
-    profile {
-      isPublished
-      id
-    }
-    ...FairsFairBanner_fair
-    ...FairsFairRow_fair
-    id
-  }
-  closedFairs: fairs(hasListing: true, hasFullFeature: true, sort: START_AT_DESC, size: 25, status: CLOSED) {
-    internalID
-    isPublished
-    profile {
-      isPublished
-      id
-    }
-    ...FairsFairRow_fair
-    id
-  }
-  upcomingFairs: fairs(hasListing: true, hasFullFeature: true, sort: START_AT_ASC, size: 25, status: UPCOMING) {
-    internalID
-    name
-    exhibitionPeriod
-    location {
-      city
-      id
-    }
-    isPublished
-    profile {
-      isPublished
-      id
-    }
-    organizer {
-      profile {
-        href
-        id
-      }
-      id
-    }
-    ...FairsFairRow_fair
-    id
-  }
-  ...FairsPastFairs_viewer
-}
-
-fragment FairsPastFairs_viewer on Viewer {
-  pastFairs: fairsConnection(hasListing: true, hasFullFeature: true, sort: START_AT_DESC, status: CLOSED, first: 15) {
-    edges {
-      node {
-        internalID
-        isPublished
-        profile {
-          isPublished
-          id
-        }
-        ...FairsFairRow_fair
-        id
-        __typename
-      }
-      cursor
-    }
-    pageInfo {
-      endCursor
-      hasNextPage
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -1073,5 +910,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'a4ec4099482420eff47b1546822880b8';
+
+(node as any).hash = "a4ec4099482420eff47b1546822880b8";
+
 export default node;

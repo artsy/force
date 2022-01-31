@@ -1,74 +1,25 @@
+/**
+ * @generated SignedSource<<e4f465f95949dbdc3cf31b4bcb9c8c91>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type FairOrganizerLatestArticles_Test_QueryVariables = {};
-export type FairOrganizerLatestArticles_Test_QueryResponse = {
-    readonly fairOrganizer: {
-        readonly " $fragmentRefs": FragmentRefs<"FairOrganizerLatestArticles_fairOrganizer">;
-    } | null;
+export type FairOrganizerLatestArticles_Test_Query$variables = {};
+export type FairOrganizerLatestArticles_Test_Query$data = {
+  readonly fairOrganizer: {
+    readonly " $fragmentSpreads": FragmentRefs<"FairOrganizerLatestArticles_fairOrganizer">;
+  } | null;
 };
 export type FairOrganizerLatestArticles_Test_Query = {
-    readonly response: FairOrganizerLatestArticles_Test_QueryResponse;
-    readonly variables: FairOrganizerLatestArticles_Test_QueryVariables;
+  variables: FairOrganizerLatestArticles_Test_Query$variables;
+  response: FairOrganizerLatestArticles_Test_Query$data;
 };
-
-
-
-/*
-query FairOrganizerLatestArticles_Test_Query {
-  fairOrganizer(id: "example") {
-    ...FairOrganizerLatestArticles_fairOrganizer
-    id
-  }
-}
-
-fragment FairEditorialItemLink_article on Article {
-  internalID
-  slug
-  title
-  href
-  publishedAt(format: "MMMM D, YYYY")
-}
-
-fragment FairEditorialItem_article on Article {
-  id
-  title
-  publishedAt(format: "MMMM D, YYYY")
-  thumbnailTitle
-  thumbnailImage {
-    large: cropped(width: 670, height: 720) {
-      width
-      height
-      src
-      srcSet
-    }
-    small: cropped(width: 325, height: 240) {
-      width
-      height
-      src
-      srcSet
-    }
-  }
-  ...FairEditorialItemLink_article
-}
-
-fragment FairOrganizerLatestArticles_fairOrganizer on FairOrganizer {
-  name
-  slug
-  articlesConnection(first: 7, sort: PUBLISHED_AT_DESC) {
-    totalCount
-    edges {
-      node {
-        id
-        ...FairEditorialItem_article
-      }
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -423,5 +374,7 @@ return {
   }
 };
 })();
-(node as any).hash = '4c1fca36670e5bf3e2abebce7c25b913';
+
+(node as any).hash = "4c1fca36670e5bf3e2abebce7c25b913";
+
 export default node;

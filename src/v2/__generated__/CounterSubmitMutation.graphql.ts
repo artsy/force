@@ -1,67 +1,42 @@
+/**
+ * @generated SignedSource<<9efe02deb922fa0aaee2dcb6a7d411a2>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type CommerceOrderParticipantEnum = "BUYER" | "SELLER" | "%future added value";
 export type CommerceOrderStateEnum = "ABANDONED" | "APPROVED" | "CANCELED" | "FULFILLED" | "PENDING" | "REFUNDED" | "SUBMITTED" | "%future added value";
 export type CommerceSubmitPendingOfferInput = {
-    clientMutationId?: string | null;
-    offerId: string;
+  clientMutationId?: string | null;
+  offerId: string;
 };
-export type CounterSubmitMutationVariables = {
-    input: CommerceSubmitPendingOfferInput;
+export type CounterSubmitMutation$variables = {
+  input: CommerceSubmitPendingOfferInput;
 };
-export type CounterSubmitMutationResponse = {
-    readonly commerceSubmitPendingOffer: {
-        readonly orderOrError: {
-            readonly order?: {
-                readonly state: CommerceOrderStateEnum;
-                readonly awaitingResponseFrom?: CommerceOrderParticipantEnum | null;
-            };
-            readonly error?: {
-                readonly type: string;
-                readonly code: string;
-                readonly data: string | null;
-            };
-        };
-    } | null;
+export type CounterSubmitMutation$data = {
+  readonly commerceSubmitPendingOffer: {
+    readonly orderOrError: {
+      readonly order?: {
+        readonly state: CommerceOrderStateEnum;
+        readonly awaitingResponseFrom?: CommerceOrderParticipantEnum | null;
+      };
+      readonly error?: {
+        readonly type: string;
+        readonly code: string;
+        readonly data: string | null;
+      };
+    };
+  } | null;
 };
 export type CounterSubmitMutation = {
-    readonly response: CounterSubmitMutationResponse;
-    readonly variables: CounterSubmitMutationVariables;
+  variables: CounterSubmitMutation$variables;
+  response: CounterSubmitMutation$data;
 };
-
-
-
-/*
-mutation CounterSubmitMutation(
-  $input: CommerceSubmitPendingOfferInput!
-) {
-  commerceSubmitPendingOffer(input: $input) {
-    orderOrError {
-      __typename
-      ... on CommerceOrderWithMutationSuccess {
-        order {
-          __typename
-          state
-          ... on CommerceOfferOrder {
-            awaitingResponseFrom
-          }
-          id
-        }
-      }
-      ... on CommerceOrderWithMutationFailure {
-        error {
-          type
-          code
-          data
-        }
-      }
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -235,14 +210,14 @@ return {
                     "selections": [
                       (v5/*: any*/),
                       (v2/*: any*/),
+                      (v3/*: any*/),
                       {
                         "alias": null,
                         "args": null,
                         "kind": "ScalarField",
                         "name": "id",
                         "storageKey": null
-                      },
-                      (v3/*: any*/)
+                      }
                     ],
                     "storageKey": null
                   }
@@ -269,5 +244,7 @@ return {
   }
 };
 })();
-(node as any).hash = '498e2167e61dc5b2ecbb9fa2738cf453';
+
+(node as any).hash = "498e2167e61dc5b2ecbb9fa2738cf453";
+
 export default node;

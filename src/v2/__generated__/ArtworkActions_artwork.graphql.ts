@@ -1,46 +1,49 @@
+/**
+ * @generated SignedSource<<5f2bec106f31dd5dd94146dd35b79126>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtworkActions_artwork = {
-    readonly artists: ReadonlyArray<{
-        readonly name: string | null;
-    } | null> | null;
-    readonly date: string | null;
-    readonly dimensions: {
-        readonly cm: string | null;
-    } | null;
+export type ArtworkActions_artwork$data = {
+  readonly artists: ReadonlyArray<{
+    readonly name: string | null;
+  } | null> | null;
+  readonly date: string | null;
+  readonly dimensions: {
+    readonly cm: string | null;
+  } | null;
+  readonly slug: string;
+  readonly image: {
+    readonly internalID: string | null;
+    readonly url: string | null;
+    readonly height: number | null;
+    readonly width: number | null;
+  } | null;
+  readonly downloadableImageUrl: string | null;
+  readonly is_downloadable: boolean | null;
+  readonly is_hangable: boolean | null;
+  readonly partner: {
     readonly slug: string;
-    readonly image: {
-        readonly internalID: string | null;
-        readonly url: string | null;
-        readonly height: number | null;
-        readonly width: number | null;
-    } | null;
-    readonly downloadableImageUrl: string | null;
-    readonly is_downloadable: boolean | null;
-    readonly is_hangable: boolean | null;
-    readonly partner: {
-        readonly slug: string;
-    } | null;
-    readonly title: string | null;
-    readonly sale: {
-        readonly is_closed: boolean | null;
-        readonly is_auction: boolean | null;
-    } | null;
-    readonly is_saved: boolean | null;
-    readonly " $fragmentRefs": FragmentRefs<"ArtworkActionsSaveButton_artwork" | "ArtworkSharePanel_artwork" | "ViewInRoom_artwork">;
-    readonly " $refType": "ArtworkActions_artwork";
+  } | null;
+  readonly title: string | null;
+  readonly sale: {
+    readonly is_closed: boolean | null;
+    readonly is_auction: boolean | null;
+  } | null;
+  readonly is_saved: boolean | null;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtworkActionsSaveButton_artwork" | "ArtworkSharePanel_artwork" | "ViewInRoom_artwork">;
+  readonly " $fragmentType": "ArtworkActions_artwork";
 };
-export type ArtworkActions_artwork$data = ArtworkActions_artwork;
 export type ArtworkActions_artwork$key = {
-    readonly " $data"?: ArtworkActions_artwork$data;
-    readonly " $fragmentRefs": FragmentRefs<"ArtworkActions_artwork">;
+  readonly " $data"?: ArtworkActions_artwork$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtworkActions_artwork">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = {
@@ -56,6 +59,21 @@ return {
   "metadata": null,
   "name": "ArtworkActions_artwork",
   "selections": [
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ArtworkActionsSaveButton_artwork"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ArtworkSharePanel_artwork"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ViewInRoom_artwork"
+    },
     {
       "alias": null,
       "args": null,
@@ -216,26 +234,13 @@ return {
       "kind": "ScalarField",
       "name": "isSaved",
       "storageKey": null
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "ArtworkActionsSaveButton_artwork"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "ArtworkSharePanel_artwork"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "ViewInRoom_artwork"
     }
   ],
   "type": "Artwork",
   "abstractKey": null
 };
 })();
-(node as any).hash = '26c251982bdcff889e2e3995c70cc533';
+
+(node as any).hash = "26c251982bdcff889e2e3995c70cc533";
+
 export default node;

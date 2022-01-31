@@ -1,20 +1,23 @@
+/**
+ * @generated SignedSource<<fe9170a6403b876b25f7cc4b58f7a612>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ResponseForm_offer = {
-    readonly id: string;
-    readonly " $refType": "ResponseForm_offer";
+export type ResponseForm_offer$data = {
+  readonly id: string;
+  readonly " $fragmentType": "ResponseForm_offer";
 };
-export type ResponseForm_offer$data = ResponseForm_offer;
 export type ResponseForm_offer$key = {
-    readonly " $data"?: ResponseForm_offer$data;
-    readonly " $fragmentRefs": FragmentRefs<"ResponseForm_offer">;
+  readonly " $data"?: ResponseForm_offer$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ResponseForm_offer">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -33,5 +36,7 @@ const node: ReaderFragment = {
   "type": "ConsignmentOffer",
   "abstractKey": null
 };
-(node as any).hash = 'fb724895fbbee96b863701cb60123d7b';
+
+(node as any).hash = "fb724895fbbee96b863701cb60123d7b";
+
 export default node;

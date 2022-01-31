@@ -1,38 +1,41 @@
+/**
+ * @generated SignedSource<<43b9568476a2184b19ee851229efc9dd>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtistRail_artist = {
-    readonly name: string | null;
-    readonly href: string | null;
-    readonly initials: string | null;
-    readonly formattedNationalityAndBirthday: string | null;
-    readonly avatar: {
-        readonly cropped: {
-            readonly src: string;
-            readonly srcSet: string;
-        } | null;
+export type ArtistRail_artist$data = {
+  readonly name: string | null;
+  readonly href: string | null;
+  readonly initials: string | null;
+  readonly formattedNationalityAndBirthday: string | null;
+  readonly avatar: {
+    readonly cropped: {
+      readonly src: string;
+      readonly srcSet: string;
     } | null;
-    readonly artworksConnection: {
-        readonly edges: ReadonlyArray<{
-            readonly node: {
-                readonly internalID: string;
-                readonly " $fragmentRefs": FragmentRefs<"ShelfArtwork_artwork">;
-            } | null;
-        } | null> | null;
-    } | null;
-    readonly " $fragmentRefs": FragmentRefs<"FollowArtistButton_artist">;
-    readonly " $refType": "ArtistRail_artist";
+  } | null;
+  readonly artworksConnection: {
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly internalID: string;
+        readonly " $fragmentSpreads": FragmentRefs<"ShelfArtwork_artwork">;
+      } | null;
+    } | null> | null;
+  } | null;
+  readonly " $fragmentSpreads": FragmentRefs<"FollowArtistButton_artist">;
+  readonly " $fragmentType": "ArtistRail_artist";
 };
-export type ArtistRail_artist$data = ArtistRail_artist;
 export type ArtistRail_artist$key = {
-    readonly " $data"?: ArtistRail_artist$data;
-    readonly " $fragmentRefs": FragmentRefs<"ArtistRail_artist">;
+  readonly " $data"?: ArtistRail_artist$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtistRail_artist">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -116,6 +119,11 @@ const node: ReaderFragment = {
       "storageKey": null
     },
     {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "FollowArtistButton_artist"
+    },
+    {
       "alias": null,
       "args": [
         {
@@ -165,15 +173,12 @@ const node: ReaderFragment = {
         }
       ],
       "storageKey": "artworksConnection(first:10)"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "FollowArtistButton_artist"
     }
   ],
   "type": "Artist",
   "abstractKey": null
 };
-(node as any).hash = 'bdc42a5b2d30681b3865ef26be9dff31';
+
+(node as any).hash = "bdc42a5b2d30681b3865ef26be9dff31";
+
 export default node;

@@ -1,65 +1,25 @@
+/**
+ * @generated SignedSource<<71b492931b76ce2d77274146e05370df>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type HomeTrendingArtistsRail_Test_QueryVariables = {};
-export type HomeTrendingArtistsRail_Test_QueryResponse = {
-    readonly viewer: {
-        readonly " $fragmentRefs": FragmentRefs<"HomeTrendingArtistsRail_viewer">;
-    } | null;
+export type HomeTrendingArtistsRail_Test_Query$variables = {};
+export type HomeTrendingArtistsRail_Test_Query$data = {
+  readonly viewer: {
+    readonly " $fragmentSpreads": FragmentRefs<"HomeTrendingArtistsRail_viewer">;
+  } | null;
 };
 export type HomeTrendingArtistsRail_Test_Query = {
-    readonly response: HomeTrendingArtistsRail_Test_QueryResponse;
-    readonly variables: HomeTrendingArtistsRail_Test_QueryVariables;
+  variables: HomeTrendingArtistsRail_Test_Query$variables;
+  response: HomeTrendingArtistsRail_Test_Query$data;
 };
-
-
-
-/*
-query HomeTrendingArtistsRail_Test_Query {
-  viewer {
-    ...HomeTrendingArtistsRail_viewer
-  }
-}
-
-fragment FollowArtistButton_artist on Artist {
-  id
-  internalID
-  name
-  slug
-  is_followed: isFollowed
-  counts {
-    follows
-  }
-}
-
-fragment HomeTrendingArtistsRail_viewer on Viewer {
-  artistsConnection(sort: TRENDING_DESC, first: 99) {
-    edges {
-      node {
-        ...FollowArtistButton_artist
-        internalID
-        isFollowed
-        name
-        slug
-        href
-        formattedNationalityAndBirthday
-        image {
-          cropped(width: 325, height: 230) {
-            src
-            srcSet
-            width
-            height
-          }
-        }
-        id
-      }
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = {
@@ -390,5 +350,7 @@ return {
   }
 };
 })();
-(node as any).hash = '576106e6e2155f43eb26a3c6386095aa';
+
+(node as any).hash = "576106e6e2155f43eb26a3c6386095aa";
+
 export default node;

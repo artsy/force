@@ -1,59 +1,39 @@
+/**
+ * @generated SignedSource<<b9dad931c2ccf537812fab26829d4707>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type CommerceCreateOrderWithArtworkInput = {
-    artworkId: string;
-    clientMutationId?: string | null;
-    editionSetId?: string | null;
-    quantity?: number | null;
+  artworkId: string;
+  clientMutationId?: string | null;
+  editionSetId?: string | null;
+  quantity?: number | null;
 };
-export type createTestEnvOrderMutationVariables = {
-    input: CommerceCreateOrderWithArtworkInput;
+export type createTestEnvOrderMutation$variables = {
+  input: CommerceCreateOrderWithArtworkInput;
 };
-export type createTestEnvOrderMutationResponse = {
-    readonly commerceCreateOrderWithArtwork: {
-        readonly orderOrError: {
-            readonly order?: {
-                readonly internalID: string;
-            };
-            readonly error?: {
-                readonly type: string;
-            };
-        };
-    } | null;
+export type createTestEnvOrderMutation$data = {
+  readonly commerceCreateOrderWithArtwork: {
+    readonly orderOrError: {
+      readonly order?: {
+        readonly internalID: string;
+      };
+      readonly error?: {
+        readonly type: string;
+      };
+    };
+  } | null;
 };
 export type createTestEnvOrderMutation = {
-    readonly response: createTestEnvOrderMutationResponse;
-    readonly variables: createTestEnvOrderMutationVariables;
+  variables: createTestEnvOrderMutation$variables;
+  response: createTestEnvOrderMutation$data;
 };
-
-
-
-/*
-mutation createTestEnvOrderMutation(
-  $input: CommerceCreateOrderWithArtworkInput!
-) {
-  commerceCreateOrderWithArtwork(input: $input) {
-    orderOrError {
-      __typename
-      ... on CommerceOrderWithMutationSuccess {
-        order {
-          __typename
-          internalID
-          id
-        }
-      }
-      ... on CommerceOrderWithMutationFailure {
-        error {
-          type
-        }
-      }
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -231,5 +211,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'cdf960352134f20fd9667d17292b6e97';
+
+(node as any).hash = "cdf960352134f20fd9667d17292b6e97";
+
 export default node;

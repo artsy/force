@@ -1,79 +1,60 @@
+/**
+ * @generated SignedSource<<c3dd1cb2bb3961d261f133df43e2f15d>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type DeliverSecondFactorInput = {
-    clientMutationId?: string | null;
-    secondFactorID: string;
+  clientMutationId?: string | null;
+  secondFactorID: string;
 };
-export type DeliverSecondFactorMutationVariables = {
-    input: DeliverSecondFactorInput;
+export type DeliverSecondFactorMutation$variables = {
+  input: DeliverSecondFactorInput;
 };
-export type DeliverSecondFactorMutationResponse = {
-    readonly deliverSecondFactor: {
-        readonly secondFactorOrErrors: {
-            readonly __typename: "SmsSecondFactor";
-            readonly formattedPhoneNumber: string | null;
-        } | {
-            readonly __typename: "Errors";
-            readonly errors: ReadonlyArray<{
-                readonly message: string;
-                readonly code: string;
-            }>;
-        } | {
-            /*This will never be '%other', but we need some
-            value in case none of the concrete values match.*/
-            readonly __typename: "%other";
-        };
-    } | null;
+export type DeliverSecondFactorMutation$data = {
+  readonly deliverSecondFactor: {
+    readonly secondFactorOrErrors: {
+      readonly __typename: "SmsSecondFactor";
+      readonly formattedPhoneNumber: string | null;
+    } | {
+      readonly __typename: "Errors";
+      readonly errors: ReadonlyArray<{
+        readonly message: string;
+        readonly code: string;
+      }>;
+    } | {
+      // This will never be '%other', but we need some
+      // value in case none of the concrete values match.
+      readonly __typename: "%other";
+    };
+  } | null;
 };
-export type DeliverSecondFactorMutationRawResponse = {
-    readonly deliverSecondFactor: ({
-        readonly secondFactorOrErrors: {
-            readonly __typename: "SmsSecondFactor";
-            readonly formattedPhoneNumber: string | null;
-        } | {
-            readonly __typename: "Errors";
-            readonly errors: ReadonlyArray<{
-                readonly message: string;
-                readonly code: string;
-            }>;
-        } | {
-            readonly __typename: string;
-        };
-    }) | null;
+export type DeliverSecondFactorMutation$rawResponse = {
+  readonly deliverSecondFactor: {
+    readonly secondFactorOrErrors: {
+      readonly __typename: "SmsSecondFactor";
+      readonly formattedPhoneNumber: string | null;
+    } | {
+      readonly __typename: "Errors";
+      readonly errors: ReadonlyArray<{
+        readonly message: string;
+        readonly code: string;
+      }>;
+    } | {
+      readonly __typename: string;
+    };
+  } | null;
 };
 export type DeliverSecondFactorMutation = {
-    readonly response: DeliverSecondFactorMutationResponse;
-    readonly variables: DeliverSecondFactorMutationVariables;
-    readonly rawResponse: DeliverSecondFactorMutationRawResponse;
+  variables: DeliverSecondFactorMutation$variables;
+  response: DeliverSecondFactorMutation$data;
+  rawResponse: DeliverSecondFactorMutation$rawResponse;
 };
-
-
-
-/*
-mutation DeliverSecondFactorMutation(
-  $input: DeliverSecondFactorInput!
-) {
-  deliverSecondFactor(input: $input) {
-    secondFactorOrErrors {
-      __typename
-      ... on SmsSecondFactor {
-        __typename
-        formattedPhoneNumber
-      }
-      ... on Errors {
-        __typename
-        errors {
-          message
-          code
-        }
-      }
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -237,5 +218,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'df969678bd1a9ce3e240489af95504c0';
+
+(node as any).hash = "df969678bd1a9ce3e240489af95504c0";
+
 export default node;

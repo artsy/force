@@ -1,28 +1,31 @@
+/**
+ * @generated SignedSource<<d3eedc073a3bdcda5c6dfe0a33cfc5b9>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type FeaturedRails_viewer = {
-    readonly collections?: ReadonlyArray<{
-        readonly " $fragmentRefs": FragmentRefs<"FeaturedCollections_collections">;
-    } | null> | null;
-    readonly auctions?: {
-        readonly " $fragmentRefs": FragmentRefs<"FeaturedAuctions_auctions">;
-    } | null;
-    readonly fairs?: ReadonlyArray<{
-        readonly " $fragmentRefs": FragmentRefs<"FeaturedFairs_fairs">;
-    } | null> | null;
-    readonly " $refType": "FeaturedRails_viewer";
+export type FeaturedRails_viewer$data = {
+  readonly collections?: ReadonlyArray<{
+    readonly " $fragmentSpreads": FragmentRefs<"FeaturedCollections_collections">;
+  } | null> | null;
+  readonly auctions?: {
+    readonly " $fragmentSpreads": FragmentRefs<"FeaturedAuctions_auctions">;
+  } | null;
+  readonly fairs?: ReadonlyArray<{
+    readonly " $fragmentSpreads": FragmentRefs<"FeaturedFairs_fairs">;
+  } | null> | null;
+  readonly " $fragmentType": "FeaturedRails_viewer";
 };
-export type FeaturedRails_viewer$data = FeaturedRails_viewer;
 export type FeaturedRails_viewer$key = {
-    readonly " $data"?: FeaturedRails_viewer$data;
-    readonly " $fragmentRefs": FragmentRefs<"FeaturedRails_viewer">;
+  readonly " $data"?: FeaturedRails_viewer$data;
+  readonly " $fragmentSpreads": FragmentRefs<"FeaturedRails_viewer">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [
@@ -157,5 +160,7 @@ const node: ReaderFragment = {
   "type": "Viewer",
   "abstractKey": null
 };
-(node as any).hash = 'ba391e3daccaeda0cdcefe24f1e66c7f';
+
+(node as any).hash = "ba391e3daccaeda0cdcefe24f1e66c7f";
+
 export default node;

@@ -1,147 +1,29 @@
+/**
+ * @generated SignedSource<<7477678773698ed468e5cb0feced95cb>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ShowsCityQueryVariables = {
-    slug: string;
-    after?: string | null;
-    page?: number | null;
+export type ShowsCityQuery$variables = {
+  slug: string;
+  after?: string | null;
+  page?: number | null;
 };
-export type ShowsCityQueryResponse = {
-    readonly city: {
-        readonly " $fragmentRefs": FragmentRefs<"ShowsCity_city">;
-    } | null;
+export type ShowsCityQuery$data = {
+  readonly city: {
+    readonly " $fragmentSpreads": FragmentRefs<"ShowsCity_city">;
+  } | null;
 };
 export type ShowsCityQuery = {
-    readonly response: ShowsCityQueryResponse;
-    readonly variables: ShowsCityQueryVariables;
+  variables: ShowsCityQuery$variables;
+  response: ShowsCityQuery$data;
 };
-
-
-
-/*
-query ShowsCityQuery(
-  $slug: String!
-  $after: String
-  $page: Int
-) {
-  city(slug: $slug) {
-    ...ShowsCity_city_3Wi2mG
-  }
-}
-
-fragment Pagination_pageCursors on PageCursors {
-  around {
-    cursor
-    page
-    isCurrent
-  }
-  first {
-    cursor
-    page
-    isCurrent
-  }
-  last {
-    cursor
-    page
-    isCurrent
-  }
-  previous {
-    cursor
-    page
-  }
-}
-
-fragment ShowsCity_city_3Wi2mG on City {
-  name
-  slug
-  upcomingShows: showsConnection(first: 18, status: UPCOMING, sort: START_AT_ASC) {
-    edges {
-      node {
-        internalID
-        startAt
-        ...ShowsFeaturedShow_show
-        id
-      }
-    }
-  }
-  currentShows: showsConnection(first: 18, status: RUNNING, after: $after, page: $page, sort: END_AT_ASC) {
-    pageInfo {
-      hasNextPage
-      endCursor
-    }
-    pageCursors {
-      ...Pagination_pageCursors
-    }
-    totalCount
-    edges {
-      node {
-        internalID
-        ...ShowsFeaturedShow_show
-        id
-      }
-    }
-  }
-  pastShows: showsConnection(first: 18, status: CLOSED) {
-    edges {
-      node {
-        internalID
-        ...ShowsFeaturedShow_show
-        id
-      }
-    }
-  }
-}
-
-fragment ShowsFeaturedShow_show on Show {
-  ...ShowsShowDates_show
-  id
-  name
-  href
-  coverImage {
-    title
-    large: cropped(width: 910, height: 683) {
-      width
-      height
-      src
-      srcSet
-    }
-    small: cropped(width: 600, height: 450) {
-      width
-      height
-      src
-      srcSet
-    }
-  }
-  partner {
-    __typename
-    ... on Partner {
-      name
-    }
-    ... on ExternalPartner {
-      name
-      id
-    }
-    ... on Node {
-      __isNode: __typename
-      id
-    }
-  }
-}
-
-fragment ShowsShowDates_show on Show {
-  startAt
-  endAt
-  formattedStartAt: startAt(format: "MMM D")
-  formattedEndAt: endAt(format: "MMM D")
-  location {
-    city
-    id
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = {
@@ -674,5 +556,7 @@ return {
   }
 };
 })();
-(node as any).hash = '616794a1025604d59d5337b86e43a29a';
+
+(node as any).hash = "616794a1025604d59d5337b86e43a29a";
+
 export default node;

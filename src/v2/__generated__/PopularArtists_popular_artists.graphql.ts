@@ -1,28 +1,31 @@
+/**
+ * @generated SignedSource<<57ae6ad13d520c201b476fd85c24d5d7>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type PopularArtists_popular_artists = ReadonlyArray<{
-    readonly slug: string;
-    readonly internalID: string;
-    readonly id: string;
-    readonly name: string | null;
-    readonly image: {
-        readonly cropped: {
-            readonly url: string;
-        } | null;
+export type PopularArtists_popular_artists$data = ReadonlyArray<{
+  readonly slug: string;
+  readonly internalID: string;
+  readonly id: string;
+  readonly name: string | null;
+  readonly image: {
+    readonly cropped: {
+      readonly url: string;
     } | null;
-    readonly " $refType": "PopularArtists_popular_artists";
+  } | null;
+  readonly " $fragmentType": "PopularArtists_popular_artists";
 }>;
-export type PopularArtists_popular_artists$data = PopularArtists_popular_artists;
 export type PopularArtists_popular_artists$key = ReadonlyArray<{
-    readonly " $data"?: PopularArtists_popular_artists$data;
-    readonly " $fragmentRefs": FragmentRefs<"PopularArtists_popular_artists">;
+  readonly " $data"?: PopularArtists_popular_artists$data;
+  readonly " $fragmentSpreads": FragmentRefs<"PopularArtists_popular_artists">;
 }>;
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -104,5 +107,7 @@ const node: ReaderFragment = {
   "type": "Artist",
   "abstractKey": null
 };
-(node as any).hash = '3d46c81e197d7d6f1f6a27595f5291b6';
+
+(node as any).hash = "3d46c81e197d7d6f1f6a27595f5291b6";
+
 export default node;

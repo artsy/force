@@ -1,254 +1,30 @@
+/**
+ * @generated SignedSource<<a28afe24c4fd672841bdc106a7c439d9>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type artistRoutes_ArtistConsignQueryVariables = {
-    artistID: string;
+export type artistRoutes_ArtistConsignQuery$variables = {
+  artistID: string;
 };
-export type artistRoutes_ArtistConsignQueryResponse = {
-    readonly artist: {
-        readonly targetSupply: {
-            readonly isInMicrofunnel: boolean | null;
-        } | null;
-        readonly " $fragmentRefs": FragmentRefs<"ArtistConsignRoute_artist">;
+export type artistRoutes_ArtistConsignQuery$data = {
+  readonly artist: {
+    readonly targetSupply: {
+      readonly isInMicrofunnel: boolean | null;
     } | null;
+    readonly " $fragmentSpreads": FragmentRefs<"ArtistConsignRoute_artist">;
+  } | null;
 };
 export type artistRoutes_ArtistConsignQuery = {
-    readonly response: artistRoutes_ArtistConsignQueryResponse;
-    readonly variables: artistRoutes_ArtistConsignQueryVariables;
+  variables: artistRoutes_ArtistConsignQuery$variables;
+  response: artistRoutes_ArtistConsignQuery$data;
 };
-
-
-
-/*
-query artistRoutes_ArtistConsignQuery(
-  $artistID: String!
-) {
-  artist(id: $artistID) {
-    ...ArtistConsignRoute_artist
-    targetSupply {
-      isInMicrofunnel
-    }
-    id
-  }
-}
-
-fragment ArtistConsignFAQ_artist on Artist {
-  href
-}
-
-fragment ArtistConsignHeaderImages_artist on Artist {
-  targetSupply {
-    microfunnel {
-      artworksConnection {
-        edges {
-          node {
-            image {
-              resized(height: 395) {
-                width
-                height
-                url
-              }
-            }
-            ...FillwidthItem_artwork
-            id
-          }
-        }
-      }
-    }
-  }
-}
-
-fragment ArtistConsignHeader_artist on Artist {
-  ...ArtistConsignHeaderImages_artist
-  name
-  href
-}
-
-fragment ArtistConsignHowToSell_artist on Artist {
-  href
-}
-
-fragment ArtistConsignMarketTrends_artist on Artist {
-  href
-  targetSupply {
-    microfunnel {
-      metadata {
-        highestRealized
-        str
-        realized
-      }
-    }
-  }
-}
-
-fragment ArtistConsignMeta_artist on Artist {
-  name
-  href
-  targetSupply {
-    microfunnel {
-      artworksConnection {
-        edges {
-          node {
-            image {
-              imageURL: url(version: "medium")
-            }
-            id
-          }
-        }
-      }
-    }
-  }
-}
-
-fragment ArtistConsignPageViews_artist on Artist {
-  name
-  targetSupply {
-    microfunnel {
-      metadata {
-        roundedViews
-        roundedUniqueVisitors
-      }
-    }
-  }
-}
-
-fragment ArtistConsignRecentlySold_artist on Artist {
-  targetSupply {
-    microfunnel {
-      artworksConnection {
-        edges {
-          node {
-            ...FillwidthItem_artwork
-            realizedPrice
-            id
-          }
-        }
-      }
-    }
-  }
-  name
-}
-
-fragment ArtistConsignRoute_artist on Artist {
-  ...ArtistConsignMeta_artist
-  ...ArtistConsignHeader_artist
-  ...ArtistConsignRecentlySold_artist
-  ...ArtistConsignPageViews_artist
-  ...ArtistConsignMarketTrends_artist
-  ...ArtistConsignHowToSell_artist
-  ...ArtistConsignFAQ_artist
-  ...ArtistConsignSellArt_artist
-}
-
-fragment ArtistConsignSellArt_artist on Artist {
-  href
-}
-
-fragment Badge_artwork on Artwork {
-  is_biddable: isBiddable
-  href
-  sale {
-    is_preview: isPreview
-    display_timely_at: displayTimelyAt
-    id
-  }
-}
-
-fragment Contact_artwork on Artwork {
-  href
-  is_inquireable: isInquireable
-  sale {
-    is_auction: isAuction
-    is_live_open: isLiveOpen
-    is_open: isOpen
-    is_closed: isClosed
-    id
-  }
-  partner(shallow: true) {
-    type
-    id
-  }
-  sale_artwork: saleArtwork {
-    highest_bid: highestBid {
-      display
-    }
-    opening_bid: openingBid {
-      display
-    }
-    counts {
-      bidder_positions: bidderPositions
-    }
-    id
-  }
-}
-
-fragment Details_artwork on Artwork {
-  href
-  title
-  date
-  sale_message: saleMessage
-  cultural_maker: culturalMaker
-  artists(shallow: true) {
-    id
-    href
-    name
-  }
-  collecting_institution: collectingInstitution
-  partner(shallow: true) {
-    name
-    href
-    id
-  }
-  sale {
-    is_auction: isAuction
-    is_closed: isClosed
-    id
-  }
-  sale_artwork: saleArtwork {
-    counts {
-      bidder_positions: bidderPositions
-    }
-    highest_bid: highestBid {
-      display
-    }
-    opening_bid: openingBid {
-      display
-    }
-    id
-  }
-}
-
-fragment FillwidthItem_artwork on Artwork {
-  image {
-    url(version: "larger")
-    aspectRatio
-  }
-  imageTitle
-  title
-  href
-  is_saved: isSaved
-  ...Metadata_artwork
-  ...SaveButton_artwork
-  ...Badge_artwork
-}
-
-fragment Metadata_artwork on Artwork {
-  ...Details_artwork
-  ...Contact_artwork
-  href
-}
-
-fragment SaveButton_artwork on Artwork {
-  id
-  internalID
-  slug
-  is_saved: isSaved
-  title
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -325,6 +101,11 @@ return {
         "plural": false,
         "selections": [
           {
+            "args": null,
+            "kind": "FragmentSpread",
+            "name": "ArtistConsignRoute_artist"
+          },
+          {
             "alias": null,
             "args": null,
             "concreteType": "ArtistTargetSupply",
@@ -335,11 +116,6 @@ return {
               (v2/*: any*/)
             ],
             "storageKey": null
-          },
-          {
-            "args": null,
-            "kind": "FragmentSpread",
-            "name": "ArtistConsignRoute_artist"
           }
         ],
         "storageKey": null
@@ -789,5 +565,7 @@ return {
   }
 };
 })();
-(node as any).hash = '1c543ebf7dbaf870dd02b598cb7e94b3';
+
+(node as any).hash = "1c543ebf7dbaf870dd02b598cb7e94b3";
+
 export default node;

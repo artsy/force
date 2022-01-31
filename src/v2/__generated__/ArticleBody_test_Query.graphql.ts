@@ -1,285 +1,25 @@
+/**
+ * @generated SignedSource<<70d11ef5c26465c0a7df75bdc62b51bf>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArticleBody_test_QueryVariables = {};
-export type ArticleBody_test_QueryResponse = {
-    readonly article: {
-        readonly " $fragmentRefs": FragmentRefs<"ArticleBody_article">;
-    } | null;
+export type ArticleBody_test_Query$variables = {};
+export type ArticleBody_test_Query$data = {
+  readonly article: {
+    readonly " $fragmentSpreads": FragmentRefs<"ArticleBody_article">;
+  } | null;
 };
 export type ArticleBody_test_Query = {
-    readonly response: ArticleBody_test_QueryResponse;
-    readonly variables: ArticleBody_test_QueryVariables;
+  variables: ArticleBody_test_Query$variables;
+  response: ArticleBody_test_Query$data;
 };
-
-
-
-/*
-query ArticleBody_test_Query {
-  article(id: "example") {
-    ...ArticleBody_article
-    id
-  }
-}
-
-fragment ArticleBody_article on Article {
-  ...ArticleHeader_article
-  ...ArticleByline_article
-  layout
-  title
-  newsSource {
-    title
-    url
-  }
-  href
-  publishedAt(format: "MMM D, YYYY h:mma")
-  sections {
-    __typename
-    ...ArticleSectionText_section
-    ...ArticleSectionImageCollection_section
-    ...ArticleSectionImageSet_section
-    ...ArticleSectionVideo_section
-    ...ArticleSectionSocialEmbed_section
-    ...ArticleSectionEmbed_section
-  }
-  postscript
-  relatedArticles {
-    internalID
-    title
-    href
-    byline
-    thumbnailImage {
-      cropped(width: 80, height: 60) {
-        src
-        srcSet
-      }
-    }
-    id
-  }
-}
-
-fragment ArticleByline_article on Article {
-  byline
-  authors {
-    name
-    initials
-    bio
-    image {
-      cropped(width: 60, height: 60) {
-        src
-        srcSet
-      }
-    }
-    id
-  }
-}
-
-fragment ArticleHeader_article on Article {
-  title
-  vertical
-  byline
-  hero {
-    __typename
-    ... on ArticleFeatureSection {
-      layout
-      embed
-      image {
-        url
-        split: resized(width: 900) {
-          src
-          srcSet
-        }
-        text: cropped(width: 1600, height: 900) {
-          src
-          srcSet
-        }
-      }
-    }
-  }
-}
-
-fragment ArticleSectionEmbed_section on ArticleSectionEmbed {
-  url
-  height
-  mobileHeight
-}
-
-fragment ArticleSectionImageCollection_section on ArticleSectionImageCollection {
-  layout
-  figures {
-    __typename
-    ... on ArticleImageSection {
-      id
-      caption
-      image {
-        resized(width: 1220, version: ["normalized", "larger", "large"]) {
-          src
-          srcSet
-          height
-          width
-        }
-      }
-    }
-    ... on Artwork {
-      ...Metadata_artwork
-      id
-      image {
-        resized(width: 1220, version: ["normalized", "larger", "large"]) {
-          src
-          srcSet
-          height
-          width
-        }
-      }
-    }
-    ... on Node {
-      __isNode: __typename
-      id
-    }
-  }
-}
-
-fragment ArticleSectionImageSet_section on ArticleSectionImageSet {
-  setLayout: layout
-  title
-  counts {
-    figures
-  }
-  cover {
-    __typename
-    ... on ArticleImageSection {
-      id
-      image {
-        small: cropped(width: 80, height: 80, version: ["normalized", "larger", "large"]) {
-          src
-          srcSet
-          height
-          width
-        }
-        large: resized(width: 1220, version: ["normalized", "larger", "large"]) {
-          src
-          srcSet
-          height
-          width
-        }
-      }
-    }
-    ... on Artwork {
-      id
-      image {
-        small: cropped(width: 80, height: 80, version: ["normalized", "larger", "large"]) {
-          src
-          srcSet
-          height
-          width
-        }
-        large: resized(width: 1220, version: ["normalized", "larger", "large"]) {
-          src
-          srcSet
-          height
-          width
-        }
-      }
-    }
-    ... on Node {
-      __isNode: __typename
-      id
-    }
-  }
-}
-
-fragment ArticleSectionSocialEmbed_section on ArticleSectionSocialEmbed {
-  url
-  embed
-}
-
-fragment ArticleSectionText_section on ArticleSectionText {
-  body
-}
-
-fragment ArticleSectionVideo_section on ArticleSectionVideo {
-  embed(autoPlay: true)
-  image {
-    cropped(width: 910, height: 512) {
-      src
-      srcSet
-    }
-  }
-}
-
-fragment Contact_artwork on Artwork {
-  href
-  is_inquireable: isInquireable
-  sale {
-    is_auction: isAuction
-    is_live_open: isLiveOpen
-    is_open: isOpen
-    is_closed: isClosed
-    id
-  }
-  partner(shallow: true) {
-    type
-    id
-  }
-  sale_artwork: saleArtwork {
-    highest_bid: highestBid {
-      display
-    }
-    opening_bid: openingBid {
-      display
-    }
-    counts {
-      bidder_positions: bidderPositions
-    }
-    id
-  }
-}
-
-fragment Details_artwork on Artwork {
-  href
-  title
-  date
-  sale_message: saleMessage
-  cultural_maker: culturalMaker
-  artists(shallow: true) {
-    id
-    href
-    name
-  }
-  collecting_institution: collectingInstitution
-  partner(shallow: true) {
-    name
-    href
-    id
-  }
-  sale {
-    is_auction: isAuction
-    is_closed: isClosed
-    id
-  }
-  sale_artwork: saleArtwork {
-    counts {
-      bidder_positions: bidderPositions
-    }
-    highest_bid: highestBid {
-      display
-    }
-    opening_bid: openingBid {
-      display
-    }
-    id
-  }
-}
-
-fragment Metadata_artwork on Artwork {
-  ...Details_artwork
-  ...Contact_artwork
-  href
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -1440,5 +1180,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'aa04a3448b96c85f66845792eb69cea7';
+
+(node as any).hash = "aa04a3448b96c85f66845792eb69cea7";
+
 export default node;

@@ -1,70 +1,27 @@
+/**
+ * @generated SignedSource<<d3123b9b897e2a0ec7fa59ef52cc5f12>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type PricingContextQueryVariables = {
-    slug: string;
+export type PricingContextQuery$variables = {
+  slug: string;
 };
-export type PricingContextQueryResponse = {
-    readonly artwork: {
-        readonly " $fragmentRefs": FragmentRefs<"PricingContext_artwork">;
-    } | null;
+export type PricingContextQuery$data = {
+  readonly artwork: {
+    readonly " $fragmentSpreads": FragmentRefs<"PricingContext_artwork">;
+  } | null;
 };
 export type PricingContextQuery = {
-    readonly response: PricingContextQueryResponse;
-    readonly variables: PricingContextQueryVariables;
+  variables: PricingContextQuery$variables;
+  response: PricingContextQuery$data;
 };
-
-
-
-/*
-query PricingContextQuery(
-  $slug: String!
-) {
-  artwork(id: $slug) {
-    ...PricingContext_artwork
-    id
-  }
-}
-
-fragment PricingContext_artwork on Artwork {
-  listPrice {
-    __typename
-    ... on PriceRange {
-      maxPrice {
-        minor
-      }
-      minPrice {
-        minor
-      }
-    }
-    ... on Money {
-      minor
-    }
-  }
-  artists {
-    slug
-    id
-  }
-  category
-  pricingContext {
-    appliedFiltersDisplay
-    appliedFilters {
-      dimension
-      category
-    }
-    bins {
-      maxPrice
-      maxPriceCents
-      minPrice
-      minPriceCents
-      numArtworks
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -315,5 +272,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'b583a7fd1a66ffb72488456478598aa9';
+
+(node as any).hash = "b583a7fd1a66ffb72488456478598aa9";
+
 export default node;

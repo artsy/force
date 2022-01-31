@@ -1,83 +1,38 @@
+/**
+ * @generated SignedSource<<f6e6d90b91c7dfd085b2fda038293014>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type OrderUpdate_Test_QueryVariables = {
-    conversationID: string;
+export type OrderUpdate_Test_Query$variables = {
+  conversationID: string;
 };
-export type OrderUpdate_Test_QueryResponse = {
-    readonly me: {
-        readonly conversation: {
-            readonly orderConnection: {
-                readonly edges: ReadonlyArray<{
-                    readonly node: {
-                        readonly orderHistory: ReadonlyArray<{
-                            readonly __typename: string;
-                            readonly " $fragmentRefs": FragmentRefs<"OrderUpdate_event">;
-                        }>;
-                    } | null;
-                } | null> | null;
-            } | null;
-        } | null;
+export type OrderUpdate_Test_Query$data = {
+  readonly me: {
+    readonly conversation: {
+      readonly orderConnection: {
+        readonly edges: ReadonlyArray<{
+          readonly node: {
+            readonly orderHistory: ReadonlyArray<{
+              readonly __typename: string;
+              readonly " $fragmentSpreads": FragmentRefs<"OrderUpdate_event">;
+            }>;
+          } | null;
+        } | null> | null;
+      } | null;
     } | null;
+  } | null;
 };
 export type OrderUpdate_Test_Query = {
-    readonly response: OrderUpdate_Test_QueryResponse;
-    readonly variables: OrderUpdate_Test_QueryVariables;
+  variables: OrderUpdate_Test_Query$variables;
+  response: OrderUpdate_Test_Query$data;
 };
-
-
-
-/*
-query OrderUpdate_Test_Query(
-  $conversationID: String!
-) {
-  me {
-    conversation(id: $conversationID) {
-      orderConnection(first: 10, participantType: BUYER) {
-        edges {
-          node {
-            __typename
-            orderHistory {
-              __typename
-              ...OrderUpdate_event
-            }
-            id
-          }
-        }
-      }
-      id
-    }
-    id
-  }
-}
-
-fragment OrderUpdate_event on CommerceOrderEventUnion {
-  __isCommerceOrderEventUnion: __typename
-  __typename
-  ... on CommerceOrderStateChangedEvent {
-    createdAt
-    stateReason
-    state
-  }
-  ... on CommerceOfferSubmittedEvent {
-    createdAt
-    offer {
-      amount
-      fromParticipant
-      definesTotal
-      offerAmountChanged
-      respondsTo {
-        fromParticipant
-        id
-      }
-      id
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -500,5 +455,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'bfd3e0a8a2a60fdbd34f225d5180542e';
+
+(node as any).hash = "bfd3e0a8a2a60fdbd34f225d5180542e";
+
 export default node;

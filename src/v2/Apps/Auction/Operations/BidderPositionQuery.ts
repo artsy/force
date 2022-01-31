@@ -30,7 +30,9 @@ export const bidderPositionQuery = (
     `,
     variables,
     {
-      force: true,
+      networkCacheConfig: {
+        force: true,
+      },
     }
-  )
+  ).toPromise()
 }

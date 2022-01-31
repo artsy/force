@@ -1,35 +1,25 @@
+/**
+ * @generated SignedSource<<283c27637febc8c5fd4dd8b2016acc26>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type BackLink_Test_QueryVariables = {};
-export type BackLink_Test_QueryResponse = {
-    readonly artist: {
-        readonly " $fragmentRefs": FragmentRefs<"BackLink_artist">;
-    } | null;
+export type BackLink_Test_Query$variables = {};
+export type BackLink_Test_Query$data = {
+  readonly artist: {
+    readonly " $fragmentSpreads": FragmentRefs<"BackLink_artist">;
+  } | null;
 };
 export type BackLink_Test_Query = {
-    readonly response: BackLink_Test_QueryResponse;
-    readonly variables: BackLink_Test_QueryVariables;
+  variables: BackLink_Test_Query$variables;
+  response: BackLink_Test_Query$data;
 };
-
-
-
-/*
-query BackLink_Test_Query {
-  artist(id: "example") {
-    ...BackLink_artist
-    id
-  }
-}
-
-fragment BackLink_artist on Artist {
-  name
-  slug
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -139,5 +129,7 @@ return {
   }
 };
 })();
-(node as any).hash = '857fa2bb422c485fa6892edd4832e014';
+
+(node as any).hash = "857fa2bb422c485fa6892edd4832e014";
+
 export default node;

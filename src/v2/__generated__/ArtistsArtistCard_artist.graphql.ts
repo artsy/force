@@ -1,35 +1,38 @@
+/**
+ * @generated SignedSource<<52bf8664503d57ea8613cb1c058d500c>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtistsArtistCard_artist = {
-    readonly name: string | null;
-    readonly href: string | null;
-    readonly formattedNationalityAndBirthday: string | null;
-    readonly counts: {
-        readonly artworks: number | null;
-        readonly forSaleArtworks: number | null;
+export type ArtistsArtistCard_artist$data = {
+  readonly name: string | null;
+  readonly href: string | null;
+  readonly formattedNationalityAndBirthday: string | null;
+  readonly counts: {
+    readonly artworks: Int | null;
+    readonly forSaleArtworks: Int | null;
+  } | null;
+  readonly image: {
+    readonly thumb: {
+      readonly width: number;
+      readonly height: number;
+      readonly src: string;
+      readonly srcSet: string;
     } | null;
-    readonly image: {
-        readonly thumb: {
-            readonly width: number;
-            readonly height: number;
-            readonly src: string;
-            readonly srcSet: string;
-        } | null;
-    } | null;
-    readonly " $fragmentRefs": FragmentRefs<"FollowArtistButton_artist">;
-    readonly " $refType": "ArtistsArtistCard_artist";
+  } | null;
+  readonly " $fragmentSpreads": FragmentRefs<"FollowArtistButton_artist">;
+  readonly " $fragmentType": "ArtistsArtistCard_artist";
 };
-export type ArtistsArtistCard_artist$data = ArtistsArtistCard_artist;
 export type ArtistsArtistCard_artist$key = {
-    readonly " $data"?: ArtistsArtistCard_artist$data;
-    readonly " $fragmentRefs": FragmentRefs<"ArtistsArtistCard_artist">;
+  readonly " $data"?: ArtistsArtistCard_artist$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtistsArtistCard_artist">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -37,6 +40,11 @@ const node: ReaderFragment = {
   "metadata": null,
   "name": "ArtistsArtistCard_artist",
   "selections": [
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "FollowArtistButton_artist"
+    },
     {
       "alias": null,
       "args": null,
@@ -143,15 +151,12 @@ const node: ReaderFragment = {
         }
       ],
       "storageKey": null
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "FollowArtistButton_artist"
     }
   ],
   "type": "Artist",
   "abstractKey": null
 };
-(node as any).hash = '5b42b8de56eb19c4a5b9637279bc14dd';
+
+(node as any).hash = "5b42b8de56eb19c4a5b9637279bc14dd";
+
 export default node;

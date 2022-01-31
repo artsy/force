@@ -1,96 +1,63 @@
+/**
+ * @generated SignedSource<<9d802ad1e4062865eceb05c3aa246bfe>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type auctionRoutes_RegisterQueryVariables = {
-    saleID: string;
+export type auctionRoutes_RegisterQuery$variables = {
+  saleID: string;
 };
-export type auctionRoutes_RegisterQueryResponse = {
-    readonly sale: {
-        readonly slug: string;
-        readonly isAuction: boolean | null;
-        readonly isRegistrationClosed: boolean | null;
-        readonly isPreview: boolean | null;
-        readonly isOpen: boolean | null;
-        readonly registrationStatus: {
-            readonly qualifiedForBidding: boolean | null;
-        } | null;
-        readonly " $fragmentRefs": FragmentRefs<"Register_sale">;
+export type auctionRoutes_RegisterQuery$data = {
+  readonly sale: {
+    readonly slug: string;
+    readonly isAuction: boolean | null;
+    readonly isRegistrationClosed: boolean | null;
+    readonly isPreview: boolean | null;
+    readonly isOpen: boolean | null;
+    readonly registrationStatus: {
+      readonly qualifiedForBidding: boolean | null;
     } | null;
-    readonly me: {
-        readonly hasQualifiedCreditCards: boolean | null;
-        readonly " $fragmentRefs": FragmentRefs<"Register_me">;
-    } | null;
+    readonly " $fragmentSpreads": FragmentRefs<"Register_sale">;
+  } | null;
+  readonly me: {
+    readonly hasQualifiedCreditCards: boolean | null;
+    readonly " $fragmentSpreads": FragmentRefs<"Register_me">;
+  } | null;
 };
-export type auctionRoutes_RegisterQueryRawResponse = {
-    readonly sale: ({
-        readonly slug: string;
-        readonly isAuction: boolean | null;
-        readonly isRegistrationClosed: boolean | null;
-        readonly isPreview: boolean | null;
-        readonly isOpen: boolean | null;
-        readonly registrationStatus: ({
-            readonly qualifiedForBidding: boolean | null;
-            readonly id: string;
-        }) | null;
-        readonly internalID: string;
-        readonly status: string | null;
-        readonly requireIdentityVerification: boolean | null;
-        readonly id: string;
-    }) | null;
-    readonly me: ({
-        readonly hasQualifiedCreditCards: boolean | null;
-        readonly internalID: string;
-        readonly identityVerified: boolean | null;
-        readonly id: string;
-    }) | null;
+export type auctionRoutes_RegisterQuery$rawResponse = {
+  readonly sale: {
+    readonly slug: string;
+    readonly isAuction: boolean | null;
+    readonly isRegistrationClosed: boolean | null;
+    readonly isPreview: boolean | null;
+    readonly isOpen: boolean | null;
+    readonly registrationStatus: {
+      readonly qualifiedForBidding: boolean | null;
+      readonly id: string;
+    } | null;
+    readonly internalID: string;
+    readonly status: string | null;
+    readonly requireIdentityVerification: boolean | null;
+    readonly id: string;
+  } | null;
+  readonly me: {
+    readonly hasQualifiedCreditCards: boolean | null;
+    readonly internalID: string;
+    readonly identityVerified: boolean | null;
+    readonly id: string;
+  } | null;
 };
 export type auctionRoutes_RegisterQuery = {
-    readonly response: auctionRoutes_RegisterQueryResponse;
-    readonly variables: auctionRoutes_RegisterQueryVariables;
-    readonly rawResponse: auctionRoutes_RegisterQueryRawResponse;
+  variables: auctionRoutes_RegisterQuery$variables;
+  response: auctionRoutes_RegisterQuery$data;
+  rawResponse: auctionRoutes_RegisterQuery$rawResponse;
 };
-
-
-
-/*
-query auctionRoutes_RegisterQuery(
-  $saleID: String!
-) {
-  sale(id: $saleID) @principalField {
-    slug
-    isAuction
-    isRegistrationClosed
-    isPreview
-    isOpen
-    registrationStatus {
-      qualifiedForBidding
-      id
-    }
-    ...Register_sale
-    id
-  }
-  me {
-    hasQualifiedCreditCards
-    ...Register_me
-    id
-  }
-}
-
-fragment Register_me on Me {
-  internalID
-  identityVerified
-}
-
-fragment Register_sale on Sale {
-  slug
-  internalID
-  status
-  requireIdentityVerification
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -315,5 +282,7 @@ return {
   }
 };
 })();
-(node as any).hash = '2e36b2d57293f4499d55e0e52d3045e6';
+
+(node as any).hash = "2e36b2d57293f4499d55e0e52d3045e6";
+
 export default node;

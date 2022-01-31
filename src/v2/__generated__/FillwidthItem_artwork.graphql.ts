@@ -1,28 +1,31 @@
+/**
+ * @generated SignedSource<<60cae6ac9e6f69460954c5f097545720>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type FillwidthItem_artwork = {
-    readonly image: {
-        readonly url: string | null;
-        readonly aspectRatio: number;
-    } | null;
-    readonly imageTitle: string | null;
-    readonly title: string | null;
-    readonly href: string | null;
-    readonly is_saved: boolean | null;
-    readonly " $fragmentRefs": FragmentRefs<"Metadata_artwork" | "SaveButton_artwork" | "Badge_artwork">;
-    readonly " $refType": "FillwidthItem_artwork";
+export type FillwidthItem_artwork$data = {
+  readonly image: {
+    readonly url: string | null;
+    readonly aspectRatio: number;
+  } | null;
+  readonly imageTitle: string | null;
+  readonly title: string | null;
+  readonly href: string | null;
+  readonly is_saved: boolean | null;
+  readonly " $fragmentSpreads": FragmentRefs<"Metadata_artwork" | "SaveButton_artwork" | "Badge_artwork">;
+  readonly " $fragmentType": "FillwidthItem_artwork";
 };
-export type FillwidthItem_artwork$data = FillwidthItem_artwork;
 export type FillwidthItem_artwork$key = {
-    readonly " $data"?: FillwidthItem_artwork$data;
-    readonly " $fragmentRefs": FragmentRefs<"FillwidthItem_artwork">;
+  readonly " $data"?: FillwidthItem_artwork$data;
+  readonly " $fragmentSpreads": FragmentRefs<"FillwidthItem_artwork">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -108,5 +111,7 @@ const node: ReaderFragment = {
   "type": "Artwork",
   "abstractKey": null
 };
-(node as any).hash = '0e9fa6945304edc19779cd3c0654a318';
+
+(node as any).hash = "0e9fa6945304edc19779cd3c0654a318";
+
 export default node;

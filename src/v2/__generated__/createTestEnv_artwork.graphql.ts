@@ -1,23 +1,26 @@
+/**
+ * @generated SignedSource<<93385225e2f96ad267c9f1a833e4f77f>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type createTestEnv_artwork = {
-    readonly title: string | null;
-    readonly artist: {
-        readonly name: string | null;
-    } | null;
-    readonly " $refType": "createTestEnv_artwork";
+export type createTestEnv_artwork$data = {
+  readonly title: string | null;
+  readonly artist: {
+    readonly name: string | null;
+  } | null;
+  readonly " $fragmentType": "createTestEnv_artwork";
 };
-export type createTestEnv_artwork$data = createTestEnv_artwork;
 export type createTestEnv_artwork$key = {
-    readonly " $data"?: createTestEnv_artwork$data;
-    readonly " $fragmentRefs": FragmentRefs<"createTestEnv_artwork">;
+  readonly " $data"?: createTestEnv_artwork$data;
+  readonly " $fragmentSpreads": FragmentRefs<"createTestEnv_artwork">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -54,5 +57,7 @@ const node: ReaderFragment = {
   "type": "Artwork",
   "abstractKey": null
 };
-(node as any).hash = '77748b446a7cb5332e22b3fc524700a1';
+
+(node as any).hash = "77748b446a7cb5332e22b3fc524700a1";
+
 export default node;

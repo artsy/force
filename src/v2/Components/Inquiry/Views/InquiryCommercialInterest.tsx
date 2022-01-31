@@ -13,6 +13,7 @@ export const InquiryCommercialInterest: React.FC = () => {
   const [mode, setMode] = useState<Mode>("Pending")
 
   const { submitUpdateMyUserProfile } = useUpdateMyUserProfile({
+    // @ts-ignore UPGRADE RELAY 13
     relayEnvironment: relayEnvironment.current!,
   })
 

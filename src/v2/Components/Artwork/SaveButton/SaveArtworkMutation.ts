@@ -28,6 +28,7 @@ export const SaveArtwork = (
       variables: {
         input,
       },
+      // @ts-ignore UPGRADE RELAY 13
       optimisticResponse,
     })
   })

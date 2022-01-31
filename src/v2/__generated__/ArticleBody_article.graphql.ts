@@ -1,46 +1,49 @@
+/**
+ * @generated SignedSource<<57638f02d4007813c12f8d2645c40bc5>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
-import { FragmentRefs } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 export type ArticleLayout = "CLASSIC" | "FEATURE" | "NEWS" | "SERIES" | "STANDARD" | "VIDEO" | "%future added value";
-export type ArticleBody_article = {
-    readonly layout: ArticleLayout;
+import { FragmentRefs } from "relay-runtime";
+export type ArticleBody_article$data = {
+  readonly layout: ArticleLayout;
+  readonly title: string | null;
+  readonly newsSource: {
     readonly title: string | null;
-    readonly newsSource: {
-        readonly title: string | null;
-        readonly url: string | null;
-    } | null;
+    readonly url: string | null;
+  } | null;
+  readonly href: string | null;
+  readonly publishedAt: string | null;
+  readonly sections: ReadonlyArray<{
+    readonly __typename: string;
+    readonly " $fragmentSpreads": FragmentRefs<"ArticleSectionText_section" | "ArticleSectionImageCollection_section" | "ArticleSectionImageSet_section" | "ArticleSectionVideo_section" | "ArticleSectionSocialEmbed_section" | "ArticleSectionEmbed_section">;
+  }>;
+  readonly postscript: string | null;
+  readonly relatedArticles: ReadonlyArray<{
+    readonly internalID: string;
+    readonly title: string | null;
     readonly href: string | null;
-    readonly publishedAt: string | null;
-    readonly sections: ReadonlyArray<{
-        readonly __typename: string;
-        readonly " $fragmentRefs": FragmentRefs<"ArticleSectionText_section" | "ArticleSectionImageCollection_section" | "ArticleSectionImageSet_section" | "ArticleSectionVideo_section" | "ArticleSectionSocialEmbed_section" | "ArticleSectionEmbed_section">;
-    }>;
-    readonly postscript: string | null;
-    readonly relatedArticles: ReadonlyArray<{
-        readonly internalID: string;
-        readonly title: string | null;
-        readonly href: string | null;
-        readonly byline: string | null;
-        readonly thumbnailImage: {
-            readonly cropped: {
-                readonly src: string;
-                readonly srcSet: string;
-            } | null;
-        } | null;
-    }>;
-    readonly " $fragmentRefs": FragmentRefs<"ArticleHeader_article" | "ArticleByline_article">;
-    readonly " $refType": "ArticleBody_article";
+    readonly byline: string | null;
+    readonly thumbnailImage: {
+      readonly cropped: {
+        readonly src: string;
+        readonly srcSet: string;
+      } | null;
+    } | null;
+  }>;
+  readonly " $fragmentSpreads": FragmentRefs<"ArticleHeader_article" | "ArticleByline_article">;
+  readonly " $fragmentType": "ArticleBody_article";
 };
-export type ArticleBody_article$data = ArticleBody_article;
 export type ArticleBody_article$key = {
-    readonly " $data"?: ArticleBody_article$data;
-    readonly " $fragmentRefs": FragmentRefs<"ArticleBody_article">;
+  readonly " $data"?: ArticleBody_article$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ArticleBody_article">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = {
@@ -63,6 +66,16 @@ return {
   "metadata": null,
   "name": "ArticleBody_article",
   "selections": [
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ArticleHeader_article"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ArticleByline_article"
+    },
     {
       "alias": null,
       "args": null,
@@ -232,21 +245,13 @@ return {
         }
       ],
       "storageKey": null
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "ArticleHeader_article"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "ArticleByline_article"
     }
   ],
   "type": "Article",
   "abstractKey": null
 };
 })();
-(node as any).hash = '2bed116448c476603b7eccbf3bdb2cda';
+
+(node as any).hash = "2bed116448c476603b7eccbf3bdb2cda";
+
 export default node;

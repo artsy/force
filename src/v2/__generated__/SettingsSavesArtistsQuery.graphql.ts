@@ -1,200 +1,27 @@
+/**
+ * @generated SignedSource<<bac3724ab0509b4b3454ee86ae689a27>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type SettingsSavesArtistsQueryVariables = {
-    after?: string | null;
+export type SettingsSavesArtistsQuery$variables = {
+  after?: string | null;
 };
-export type SettingsSavesArtistsQueryResponse = {
-    readonly me: {
-        readonly " $fragmentRefs": FragmentRefs<"SettingsSavesArtists_me">;
-    } | null;
+export type SettingsSavesArtistsQuery$data = {
+  readonly me: {
+    readonly " $fragmentSpreads": FragmentRefs<"SettingsSavesArtists_me">;
+  } | null;
 };
 export type SettingsSavesArtistsQuery = {
-    readonly response: SettingsSavesArtistsQueryResponse;
-    readonly variables: SettingsSavesArtistsQueryVariables;
+  variables: SettingsSavesArtistsQuery$variables;
+  response: SettingsSavesArtistsQuery$data;
 };
-
-
-
-/*
-query SettingsSavesArtistsQuery(
-  $after: String
-) {
-  me {
-    ...SettingsSavesArtists_me_WGPvJ
-    id
-  }
-}
-
-fragment ArtistRail_artist on Artist {
-  name
-  href
-  initials
-  formattedNationalityAndBirthday
-  avatar: image {
-    cropped(width: 45, height: 45) {
-      src
-      srcSet
-    }
-  }
-  ...FollowArtistButton_artist
-  artworksConnection(first: 10) {
-    edges {
-      node {
-        internalID
-        ...ShelfArtwork_artwork
-        id
-      }
-    }
-  }
-}
-
-fragment Badge_artwork on Artwork {
-  is_biddable: isBiddable
-  href
-  sale {
-    is_preview: isPreview
-    display_timely_at: displayTimelyAt
-    id
-  }
-}
-
-fragment Contact_artwork on Artwork {
-  href
-  is_inquireable: isInquireable
-  sale {
-    is_auction: isAuction
-    is_live_open: isLiveOpen
-    is_open: isOpen
-    is_closed: isClosed
-    id
-  }
-  partner(shallow: true) {
-    type
-    id
-  }
-  sale_artwork: saleArtwork {
-    highest_bid: highestBid {
-      display
-    }
-    opening_bid: openingBid {
-      display
-    }
-    counts {
-      bidder_positions: bidderPositions
-    }
-    id
-  }
-}
-
-fragment Details_artwork on Artwork {
-  href
-  title
-  date
-  sale_message: saleMessage
-  cultural_maker: culturalMaker
-  artists(shallow: true) {
-    id
-    href
-    name
-  }
-  collecting_institution: collectingInstitution
-  partner(shallow: true) {
-    name
-    href
-    id
-  }
-  sale {
-    is_auction: isAuction
-    is_closed: isClosed
-    id
-  }
-  sale_artwork: saleArtwork {
-    counts {
-      bidder_positions: bidderPositions
-    }
-    highest_bid: highestBid {
-      display
-    }
-    opening_bid: openingBid {
-      display
-    }
-    id
-  }
-}
-
-fragment FollowArtistButton_artist on Artist {
-  id
-  internalID
-  name
-  slug
-  is_followed: isFollowed
-  counts {
-    follows
-  }
-}
-
-fragment Metadata_artwork on Artwork {
-  ...Details_artwork
-  ...Contact_artwork
-  href
-}
-
-fragment SaveButton_artwork on Artwork {
-  id
-  internalID
-  slug
-  is_saved: isSaved
-  title
-}
-
-fragment SettingsSavesArtists_me_WGPvJ on Me {
-  followsAndSaves {
-    artistsConnection(first: 4, after: $after) {
-      totalCount
-      edges {
-        node {
-          internalID
-          artist {
-            ...ArtistRail_artist
-            id
-          }
-          id
-          __typename
-        }
-        cursor
-      }
-      pageInfo {
-        endCursor
-        hasNextPage
-      }
-    }
-  }
-}
-
-fragment ShelfArtwork_artwork on Artwork {
-  image {
-    resized(width: 200) {
-      src
-      srcSet
-      width
-      height
-    }
-    aspectRatio
-    height
-  }
-  imageTitle
-  title
-  href
-  is_saved: isSaved
-  ...Metadata_artwork
-  ...SaveButton_artwork
-  ...Badge_artwork
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -830,5 +657,7 @@ return {
   }
 };
 })();
-(node as any).hash = '08501f9c1c55086b7f08caa20ce0f0b6';
+
+(node as any).hash = "08501f9c1c55086b7f08caa20ce0f0b6";
+
 export default node;

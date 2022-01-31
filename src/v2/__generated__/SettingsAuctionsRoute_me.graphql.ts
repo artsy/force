@@ -1,20 +1,23 @@
+/**
+ * @generated SignedSource<<e9796466b2e4ded0caa1c63da1251344>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type SettingsAuctionsRoute_me = {
-    readonly " $fragmentRefs": FragmentRefs<"UserActiveBids_me" | "UserBidHistory_me" | "UserRegistrationAuctions_me">;
-    readonly " $refType": "SettingsAuctionsRoute_me";
+export type SettingsAuctionsRoute_me$data = {
+  readonly " $fragmentSpreads": FragmentRefs<"UserActiveBids_me" | "UserBidHistory_me" | "UserRegistrationAuctions_me">;
+  readonly " $fragmentType": "SettingsAuctionsRoute_me";
 };
-export type SettingsAuctionsRoute_me$data = SettingsAuctionsRoute_me;
 export type SettingsAuctionsRoute_me$key = {
-    readonly " $data"?: SettingsAuctionsRoute_me$data;
-    readonly " $fragmentRefs": FragmentRefs<"SettingsAuctionsRoute_me">;
+  readonly " $data"?: SettingsAuctionsRoute_me$data;
+  readonly " $fragmentSpreads": FragmentRefs<"SettingsAuctionsRoute_me">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -41,5 +44,7 @@ const node: ReaderFragment = {
   "type": "Me",
   "abstractKey": null
 };
-(node as any).hash = 'dcf8570839e3ca23ab567bfa554876bf';
+
+(node as any).hash = "dcf8570839e3ca23ab567bfa554876bf";
+
 export default node;

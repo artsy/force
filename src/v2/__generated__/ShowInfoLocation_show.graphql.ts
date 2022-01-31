@@ -1,39 +1,42 @@
+/**
+ * @generated SignedSource<<b359881489427ff1d679331c68b93fba>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ShowInfoLocation_show = {
-    readonly fair: {
-        readonly location: {
-            readonly display: string | null;
-            readonly address: string | null;
-            readonly address2: string | null;
-            readonly city: string | null;
-            readonly state: string | null;
-            readonly country: string | null;
-            readonly summary: string | null;
-        } | null;
-    } | null;
+export type ShowInfoLocation_show$data = {
+  readonly fair: {
     readonly location: {
-        readonly display: string | null;
-        readonly address: string | null;
-        readonly address2: string | null;
-        readonly city: string | null;
-        readonly state: string | null;
-        readonly country: string | null;
-        readonly summary: string | null;
+      readonly display: string | null;
+      readonly address: string | null;
+      readonly address2: string | null;
+      readonly city: string | null;
+      readonly state: string | null;
+      readonly country: string | null;
+      readonly summary: string | null;
     } | null;
-    readonly " $refType": "ShowInfoLocation_show";
+  } | null;
+  readonly location: {
+    readonly display: string | null;
+    readonly address: string | null;
+    readonly address2: string | null;
+    readonly city: string | null;
+    readonly state: string | null;
+    readonly country: string | null;
+    readonly summary: string | null;
+  } | null;
+  readonly " $fragmentType": "ShowInfoLocation_show";
 };
-export type ShowInfoLocation_show$data = ShowInfoLocation_show;
 export type ShowInfoLocation_show$key = {
-    readonly " $data"?: ShowInfoLocation_show$data;
-    readonly " $fragmentRefs": FragmentRefs<"ShowInfoLocation_show">;
+  readonly " $data"?: ShowInfoLocation_show$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ShowInfoLocation_show">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = {
@@ -120,5 +123,7 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '85703778e703310bfac0d88513c68778';
+
+(node as any).hash = "85703778e703310bfac0d88513c68778";
+
 export default node;

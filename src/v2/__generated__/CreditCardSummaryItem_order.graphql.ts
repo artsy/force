@@ -1,25 +1,28 @@
+/**
+ * @generated SignedSource<<f77456f4d31988a78d46c20bdae075a1>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type CreditCardSummaryItem_order = {
-    readonly creditCard: {
-        readonly brand: string;
-        readonly lastDigits: string;
-        readonly expirationYear: number;
-        readonly expirationMonth: number;
-    } | null;
-    readonly " $refType": "CreditCardSummaryItem_order";
+export type CreditCardSummaryItem_order$data = {
+  readonly creditCard: {
+    readonly brand: string;
+    readonly lastDigits: string;
+    readonly expirationYear: number;
+    readonly expirationMonth: number;
+  } | null;
+  readonly " $fragmentType": "CreditCardSummaryItem_order";
 };
-export type CreditCardSummaryItem_order$data = CreditCardSummaryItem_order;
 export type CreditCardSummaryItem_order$key = {
-    readonly " $data"?: CreditCardSummaryItem_order$data;
-    readonly " $fragmentRefs": FragmentRefs<"CreditCardSummaryItem_order">;
+  readonly " $data"?: CreditCardSummaryItem_order$data;
+  readonly " $fragmentSpreads": FragmentRefs<"CreditCardSummaryItem_order">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -70,5 +73,7 @@ const node: ReaderFragment = {
   "type": "CommerceOrder",
   "abstractKey": "__isCommerceOrder"
 };
-(node as any).hash = 'a92d2e7b3be6db434a54e7812b352637';
+
+(node as any).hash = "a92d2e7b3be6db434a54e7812b352637";
+
 export default node;

@@ -1,44 +1,47 @@
+/**
+ * @generated SignedSource<<f5b5df4ad552f1b1e0bd0a16e786db2e>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type SeoProductsForCollections_ascending_artworks = {
-    readonly edges: ReadonlyArray<{
-        readonly node: {
-            readonly id: string;
-            readonly availability: string | null;
-            readonly listPrice: ({
-                readonly __typename: "PriceRange";
-                readonly minPrice: {
-                    readonly major: number;
-                    readonly currencyCode: string;
-                } | null;
-                readonly maxPrice: {
-                    readonly major: number;
-                    readonly currencyCode: string;
-                } | null;
-            } | {
-                readonly __typename: "Money";
-                readonly major: number;
-                readonly currencyCode: string;
-            } | {
-                /*This will never be '%other', but we need some
-                value in case none of the concrete values match.*/
-                readonly __typename: "%other";
-            }) | null;
+export type SeoProductsForCollections_ascending_artworks$data = {
+  readonly edges: ReadonlyArray<{
+    readonly node: {
+      readonly id: string;
+      readonly availability: string | null;
+      readonly listPrice: {
+        readonly __typename: "PriceRange";
+        readonly minPrice: {
+          readonly major: number;
+          readonly currencyCode: string;
         } | null;
-    } | null> | null;
-    readonly " $refType": "SeoProductsForCollections_ascending_artworks";
+        readonly maxPrice: {
+          readonly major: number;
+          readonly currencyCode: string;
+        } | null;
+      } | {
+        readonly __typename: "Money";
+        readonly major: number;
+        readonly currencyCode: string;
+      } | {
+        // This will never be '%other', but we need some
+        // value in case none of the concrete values match.
+        readonly __typename: "%other";
+      } | null;
+    } | null;
+  } | null> | null;
+  readonly " $fragmentType": "SeoProductsForCollections_ascending_artworks";
 };
-export type SeoProductsForCollections_ascending_artworks$data = SeoProductsForCollections_ascending_artworks;
 export type SeoProductsForCollections_ascending_artworks$key = {
-    readonly " $data"?: SeoProductsForCollections_ascending_artworks$data;
-    readonly " $fragmentRefs": FragmentRefs<"SeoProductsForCollections_ascending_artworks">;
+  readonly " $data"?: SeoProductsForCollections_ascending_artworks$data;
+  readonly " $fragmentSpreads": FragmentRefs<"SeoProductsForCollections_ascending_artworks">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = [
@@ -161,5 +164,7 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = 'baa3ae179bf675aae89ff4ebe677be01';
+
+(node as any).hash = "baa3ae179bf675aae89ff4ebe677be01";
+
 export default node;

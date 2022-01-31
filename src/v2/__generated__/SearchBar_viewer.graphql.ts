@@ -1,34 +1,37 @@
+/**
+ * @generated SignedSource<<b7def8f0bb66ae30ca3f3e1e5f4f269f>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type SearchBar_viewer = {
-    readonly searchConnection?: {
-        readonly edges: ReadonlyArray<{
-            readonly node: {
-                readonly displayLabel: string | null;
-                readonly href: string | null;
-                readonly __typename: string;
-                readonly displayType?: string | null;
-                readonly slug?: string;
-                readonly statuses?: {
-                    readonly artworks: boolean | null;
-                    readonly auctionLots: boolean | null;
-                } | null;
-            } | null;
-        } | null> | null;
-    } | null;
-    readonly " $refType": "SearchBar_viewer";
+export type SearchBar_viewer$data = {
+  readonly searchConnection?: {
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly displayLabel: string | null;
+        readonly href: string | null;
+        readonly __typename: string;
+        readonly displayType?: string | null;
+        readonly slug?: string;
+        readonly statuses?: {
+          readonly artworks: boolean | null;
+          readonly auctionLots: boolean | null;
+        } | null;
+      } | null;
+    } | null> | null;
+  } | null;
+  readonly " $fragmentType": "SearchBar_viewer";
 };
-export type SearchBar_viewer$data = SearchBar_viewer;
 export type SearchBar_viewer$key = {
-    readonly " $data"?: SearchBar_viewer$data;
-    readonly " $fragmentRefs": FragmentRefs<"SearchBar_viewer">;
+  readonly " $data"?: SearchBar_viewer$data;
+  readonly " $fragmentSpreads": FragmentRefs<"SearchBar_viewer">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [
@@ -181,5 +184,7 @@ const node: ReaderFragment = {
   "type": "Viewer",
   "abstractKey": null
 };
-(node as any).hash = 'd1b44d00fe49c0ef5f9236590d3604f8';
+
+(node as any).hash = "d1b44d00fe49c0ef5f9236590d3604f8";
+
 export default node;

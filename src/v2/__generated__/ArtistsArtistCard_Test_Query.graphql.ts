@@ -1,60 +1,25 @@
+/**
+ * @generated SignedSource<<2a0ded12c6e58320ba3ff14cd429b948>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtistsArtistCard_Test_QueryVariables = {};
-export type ArtistsArtistCard_Test_QueryResponse = {
-    readonly artist: {
-        readonly " $fragmentRefs": FragmentRefs<"ArtistsArtistCard_artist">;
-    } | null;
+export type ArtistsArtistCard_Test_Query$variables = {};
+export type ArtistsArtistCard_Test_Query$data = {
+  readonly artist: {
+    readonly " $fragmentSpreads": FragmentRefs<"ArtistsArtistCard_artist">;
+  } | null;
 };
 export type ArtistsArtistCard_Test_Query = {
-    readonly response: ArtistsArtistCard_Test_QueryResponse;
-    readonly variables: ArtistsArtistCard_Test_QueryVariables;
+  variables: ArtistsArtistCard_Test_Query$variables;
+  response: ArtistsArtistCard_Test_Query$data;
 };
-
-
-
-/*
-query ArtistsArtistCard_Test_Query {
-  artist(id: "example") {
-    ...ArtistsArtistCard_artist
-    id
-  }
-}
-
-fragment ArtistsArtistCard_artist on Artist {
-  ...FollowArtistButton_artist
-  name
-  href
-  formattedNationalityAndBirthday
-  counts {
-    artworks
-    forSaleArtworks
-  }
-  image {
-    thumb: cropped(width: 445, height: 334) {
-      width
-      height
-      src
-      srcSet
-    }
-  }
-}
-
-fragment FollowArtistButton_artist on Artist {
-  id
-  internalID
-  name
-  slug
-  is_followed: isFollowed
-  counts {
-    follows
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -338,5 +303,7 @@ return {
   }
 };
 })();
-(node as any).hash = '187b8f4dda0ef6b7394507080251b7f5';
+
+(node as any).hash = "187b8f4dda0ef6b7394507080251b7f5";
+
 export default node;

@@ -1,28 +1,31 @@
+/**
+ * @generated SignedSource<<74685d33ec3fee39c914cb86ece935fb>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type SuggestedGenes_suggested_genes = ReadonlyArray<{
-    readonly id: string;
-    readonly slug: string;
-    readonly internalID: string;
-    readonly name: string | null;
-    readonly image: {
-        readonly cropped: {
-            readonly url: string;
-        } | null;
+export type SuggestedGenes_suggested_genes$data = ReadonlyArray<{
+  readonly id: string;
+  readonly slug: string;
+  readonly internalID: string;
+  readonly name: string | null;
+  readonly image: {
+    readonly cropped: {
+      readonly url: string;
     } | null;
-    readonly " $refType": "SuggestedGenes_suggested_genes";
+  } | null;
+  readonly " $fragmentType": "SuggestedGenes_suggested_genes";
 }>;
-export type SuggestedGenes_suggested_genes$data = SuggestedGenes_suggested_genes;
 export type SuggestedGenes_suggested_genes$key = ReadonlyArray<{
-    readonly " $data"?: SuggestedGenes_suggested_genes$data;
-    readonly " $fragmentRefs": FragmentRefs<"SuggestedGenes_suggested_genes">;
+  readonly " $data"?: SuggestedGenes_suggested_genes$data;
+  readonly " $fragmentSpreads": FragmentRefs<"SuggestedGenes_suggested_genes">;
 }>;
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -104,5 +107,7 @@ const node: ReaderFragment = {
   "type": "Gene",
   "abstractKey": null
 };
-(node as any).hash = '5ed7e11fb2d04a9c8d275c8e203aeda1';
+
+(node as any).hash = "5ed7e11fb2d04a9c8d275c8e203aeda1";
+
 export default node;

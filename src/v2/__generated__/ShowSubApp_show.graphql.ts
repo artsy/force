@@ -1,29 +1,32 @@
+/**
+ * @generated SignedSource<<8fa60b81b97e936a07f46b501708dff9>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ShowSubApp_show = {
-    readonly id: string;
-    readonly internalID: string;
-    readonly slug: string;
-    readonly name: string | null;
-    readonly href: string | null;
-    readonly isFairBooth: boolean | null;
-    readonly partner: {
-        readonly name?: string | null;
-    } | null;
-    readonly " $fragmentRefs": FragmentRefs<"ShowMeta_show">;
-    readonly " $refType": "ShowSubApp_show";
+export type ShowSubApp_show$data = {
+  readonly id: string;
+  readonly internalID: string;
+  readonly slug: string;
+  readonly name: string | null;
+  readonly href: string | null;
+  readonly isFairBooth: boolean | null;
+  readonly partner: {
+    readonly name?: string | null;
+  } | null;
+  readonly " $fragmentSpreads": FragmentRefs<"ShowMeta_show">;
+  readonly " $fragmentType": "ShowSubApp_show";
 };
-export type ShowSubApp_show$data = ShowSubApp_show;
 export type ShowSubApp_show$key = {
-    readonly " $data"?: ShowSubApp_show$data;
-    readonly " $fragmentRefs": FragmentRefs<"ShowSubApp_show">;
+  readonly " $data"?: ShowSubApp_show$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ShowSubApp_show">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = {
@@ -111,5 +114,7 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = 'caf51c83f9a13f825d772ba7aabd2366';
+
+(node as any).hash = "caf51c83f9a13f825d772ba7aabd2366";
+
 export default node;

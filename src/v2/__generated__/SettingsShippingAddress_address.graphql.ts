@@ -1,29 +1,32 @@
+/**
+ * @generated SignedSource<<fbcf32f229a6d2456fd782c05d1b4b9f>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type SettingsShippingAddress_address = {
-    readonly internalID: string;
-    readonly addressLine1: string;
-    readonly addressLine2: string | null;
-    readonly city: string;
-    readonly country: string;
-    readonly isDefault: boolean;
-    readonly name: string | null;
-    readonly phoneNumber: string | null;
-    readonly postalCode: string | null;
-    readonly region: string | null;
-    readonly " $refType": "SettingsShippingAddress_address";
+export type SettingsShippingAddress_address$data = {
+  readonly internalID: string;
+  readonly addressLine1: string;
+  readonly addressLine2: string | null;
+  readonly city: string;
+  readonly country: string;
+  readonly isDefault: boolean;
+  readonly name: string | null;
+  readonly phoneNumber: string | null;
+  readonly postalCode: string | null;
+  readonly region: string | null;
+  readonly " $fragmentType": "SettingsShippingAddress_address";
 };
-export type SettingsShippingAddress_address$data = SettingsShippingAddress_address;
 export type SettingsShippingAddress_address$key = {
-    readonly " $data"?: SettingsShippingAddress_address$data;
-    readonly " $fragmentRefs": FragmentRefs<"SettingsShippingAddress_address">;
+  readonly " $data"?: SettingsShippingAddress_address$data;
+  readonly " $fragmentSpreads": FragmentRefs<"SettingsShippingAddress_address">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -105,5 +108,7 @@ const node: ReaderFragment = {
   "type": "UserAddress",
   "abstractKey": null
 };
-(node as any).hash = '5ddaa74cd5bb1ba03f7cb48fa204cffe';
+
+(node as any).hash = "5ddaa74cd5bb1ba03f7cb48fa204cffe";
+
 export default node;

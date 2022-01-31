@@ -1,90 +1,27 @@
+/**
+ * @generated SignedSource<<d937d5b1b9d8cede5f63e479eb812580>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ShowBannersRailRendererQueryVariables = {
-    partnerId: string;
+export type ShowBannersRailRendererQuery$variables = {
+  partnerId: string;
 };
-export type ShowBannersRailRendererQueryResponse = {
-    readonly partner: {
-        readonly " $fragmentRefs": FragmentRefs<"ShowBannersRail_partner">;
-    } | null;
+export type ShowBannersRailRendererQuery$data = {
+  readonly partner: {
+    readonly " $fragmentSpreads": FragmentRefs<"ShowBannersRail_partner">;
+  } | null;
 };
 export type ShowBannersRailRendererQuery = {
-    readonly response: ShowBannersRailRendererQueryResponse;
-    readonly variables: ShowBannersRailRendererQueryVariables;
+  variables: ShowBannersRailRendererQuery$variables;
+  response: ShowBannersRailRendererQuery$data;
 };
-
-
-
-/*
-query ShowBannersRailRendererQuery(
-  $partnerId: String!
-) {
-  partner(id: $partnerId) @principalField {
-    ...ShowBannersRail_partner
-    id
-  }
-}
-
-fragment ShowBanner_show on Show {
-  slug
-  name
-  href
-  isFairBooth
-  exhibitionPeriod
-  status
-  description
-  location {
-    city
-    id
-  }
-  coverImage {
-    medium: cropped(width: 600, height: 480, version: ["normalized", "larger", "large"]) {
-      src
-      srcSet
-    }
-  }
-}
-
-fragment ShowBannersRail_partner on Partner {
-  slug
-  featuredShow: showsConnection(first: 1, status: ALL, sort: FEATURED_DESC_END_AT_DESC, isDisplayable: true) {
-    edges {
-      node {
-        id
-        ...ShowBanner_show
-      }
-    }
-  }
-  currentShows: showsConnection(first: 10, status: CURRENT, sort: END_AT_ASC, isDisplayable: true) {
-    edges {
-      node {
-        id
-        ...ShowBanner_show
-      }
-    }
-  }
-  upcomingShows: showsConnection(first: 10, status: UPCOMING, sort: START_AT_ASC, isDisplayable: true) {
-    edges {
-      node {
-        id
-        ...ShowBanner_show
-      }
-    }
-  }
-  pastShows: showsConnection(first: 2, status: CLOSED, sort: END_AT_DESC, isDisplayable: true) {
-    edges {
-      node {
-        id
-        ...ShowBanner_show
-      }
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -426,5 +363,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'ed78181254cd76899a10d28072a86119';
+
+(node as any).hash = "ed78181254cd76899a10d28072a86119";
+
 export default node;

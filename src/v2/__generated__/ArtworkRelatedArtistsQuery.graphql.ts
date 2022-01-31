@@ -1,83 +1,27 @@
+/**
+ * @generated SignedSource<<3d32b01bf01c04fe31811dfc0d163232>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtworkRelatedArtistsQueryVariables = {
-    slug: string;
+export type ArtworkRelatedArtistsQuery$variables = {
+  slug: string;
 };
-export type ArtworkRelatedArtistsQueryResponse = {
-    readonly artwork: {
-        readonly " $fragmentRefs": FragmentRefs<"ArtworkRelatedArtists_artwork">;
-    } | null;
+export type ArtworkRelatedArtistsQuery$data = {
+  readonly artwork: {
+    readonly " $fragmentSpreads": FragmentRefs<"ArtworkRelatedArtists_artwork">;
+  } | null;
 };
 export type ArtworkRelatedArtistsQuery = {
-    readonly response: ArtworkRelatedArtistsQueryResponse;
-    readonly variables: ArtworkRelatedArtistsQueryVariables;
+  variables: ArtworkRelatedArtistsQuery$variables;
+  response: ArtworkRelatedArtistsQuery$data;
 };
-
-
-
-/*
-query ArtworkRelatedArtistsQuery(
-  $slug: String!
-) {
-  artwork(id: $slug) {
-    ...ArtworkRelatedArtists_artwork
-    id
-  }
-}
-
-fragment ArtistCard_artist on Artist {
-  name
-  slug
-  href
-  image {
-    cropped(width: 45, height: 45) {
-      src
-      srcSet
-    }
-  }
-  formatted_nationality_and_birthday: formattedNationalityAndBirthday
-  ...FollowArtistButton_artist
-}
-
-fragment ArtworkRelatedArtists_artwork on Artwork {
-  slug
-  artist {
-    href
-    related {
-      artistsConnection(kind: MAIN, first: 4, after: "") {
-        pageInfo {
-          hasNextPage
-          endCursor
-        }
-        edges {
-          node {
-            ...ArtistCard_artist
-            id
-            __typename
-          }
-          cursor
-        }
-      }
-    }
-    id
-  }
-}
-
-fragment FollowArtistButton_artist on Artist {
-  id
-  internalID
-  name
-  slug
-  is_followed: isFollowed
-  counts {
-    follows
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -393,5 +337,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'b70d8f1ea6766b10931ee952b9ab8c00';
+
+(node as any).hash = "b70d8f1ea6766b10931ee952b9ab8c00";
+
 export default node;

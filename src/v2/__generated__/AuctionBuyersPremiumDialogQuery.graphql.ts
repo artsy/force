@@ -1,42 +1,27 @@
+/**
+ * @generated SignedSource<<a9075503d207d7fe3bebe957cf2b73b6>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type AuctionBuyersPremiumDialogQueryVariables = {
-    saleID: string;
+export type AuctionBuyersPremiumDialogQuery$variables = {
+  saleID: string;
 };
-export type AuctionBuyersPremiumDialogQueryResponse = {
-    readonly sale: {
-        readonly " $fragmentRefs": FragmentRefs<"AuctionBuyersPremiumDialog_sale">;
-    } | null;
+export type AuctionBuyersPremiumDialogQuery$data = {
+  readonly sale: {
+    readonly " $fragmentSpreads": FragmentRefs<"AuctionBuyersPremiumDialog_sale">;
+  } | null;
 };
 export type AuctionBuyersPremiumDialogQuery = {
-    readonly response: AuctionBuyersPremiumDialogQueryResponse;
-    readonly variables: AuctionBuyersPremiumDialogQueryVariables;
+  variables: AuctionBuyersPremiumDialogQuery$variables;
+  response: AuctionBuyersPremiumDialogQuery$data;
 };
-
-
-
-/*
-query AuctionBuyersPremiumDialogQuery(
-  $saleID: String!
-) {
-  sale(id: $saleID) {
-    ...AuctionBuyersPremiumDialog_sale
-    id
-  }
-}
-
-fragment AuctionBuyersPremiumDialog_sale on Sale {
-  buyersPremium {
-    amount
-    cents
-    percent
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -148,5 +133,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'd41f67af63382fd59cacfa97d66245d4';
+
+(node as any).hash = "d41f67af63382fd59cacfa97d66245d4";
+
 export default node;

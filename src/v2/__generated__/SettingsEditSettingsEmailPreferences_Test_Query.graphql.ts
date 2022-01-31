@@ -1,35 +1,25 @@
+/**
+ * @generated SignedSource<<0f26d77c75935e1e6e6170efc4045a32>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type SettingsEditSettingsEmailPreferences_Test_QueryVariables = {};
-export type SettingsEditSettingsEmailPreferences_Test_QueryResponse = {
-    readonly me: {
-        readonly " $fragmentRefs": FragmentRefs<"SettingsEditSettingsEmailPreferences_me">;
-    } | null;
+export type SettingsEditSettingsEmailPreferences_Test_Query$variables = {};
+export type SettingsEditSettingsEmailPreferences_Test_Query$data = {
+  readonly me: {
+    readonly " $fragmentSpreads": FragmentRefs<"SettingsEditSettingsEmailPreferences_me">;
+  } | null;
 };
 export type SettingsEditSettingsEmailPreferences_Test_Query = {
-    readonly response: SettingsEditSettingsEmailPreferences_Test_QueryResponse;
-    readonly variables: SettingsEditSettingsEmailPreferences_Test_QueryVariables;
+  variables: SettingsEditSettingsEmailPreferences_Test_Query$variables;
+  response: SettingsEditSettingsEmailPreferences_Test_Query$data;
 };
-
-
-
-/*
-query SettingsEditSettingsEmailPreferences_Test_Query {
-  me {
-    ...SettingsEditSettingsEmailPreferences_me
-    id
-  }
-}
-
-fragment SettingsEditSettingsEmailPreferences_me on Me {
-  emailFrequency
-  id
-}
-*/
 
 const node: ConcreteRequest = {
   "fragment": {
@@ -100,5 +90,7 @@ const node: ConcreteRequest = {
     "text": "query SettingsEditSettingsEmailPreferences_Test_Query {\n  me {\n    ...SettingsEditSettingsEmailPreferences_me\n    id\n  }\n}\n\nfragment SettingsEditSettingsEmailPreferences_me on Me {\n  emailFrequency\n  id\n}\n"
   }
 };
-(node as any).hash = 'd36fbfd8b838f0d4c1258a1fb65c6613';
+
+(node as any).hash = "d36fbfd8b838f0d4c1258a1fb65c6613";
+
 export default node;

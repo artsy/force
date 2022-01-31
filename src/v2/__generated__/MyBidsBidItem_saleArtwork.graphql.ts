@@ -1,43 +1,46 @@
+/**
+ * @generated SignedSource<<c4f8330d2d64b0df95220c5bc0e3e5d7>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type MyBidsBidItem_saleArtwork = {
-    readonly artwork: {
-        readonly artistNames: string | null;
-        readonly image: {
-            readonly resized: {
-                readonly src: string;
-                readonly srcSet: string;
-            } | null;
-        } | null;
+export type MyBidsBidItem_saleArtwork$data = {
+  readonly artwork: {
+    readonly artistNames: string | null;
+    readonly image: {
+      readonly resized: {
+        readonly src: string;
+        readonly srcSet: string;
+      } | null;
     } | null;
-    readonly estimate: string | null;
-    readonly currentBid: {
-        readonly display: string | null;
+  } | null;
+  readonly estimate: string | null;
+  readonly currentBid: {
+    readonly display: string | null;
+  } | null;
+  readonly internalID: string;
+  readonly isHighestBidder: boolean | null;
+  readonly isWatching: boolean | null;
+  readonly lotState: {
+    readonly bidCount: number | null;
+    readonly sellingPrice: {
+      readonly display: string | null;
     } | null;
-    readonly internalID: string;
-    readonly isHighestBidder: boolean | null;
-    readonly isWatching: boolean | null;
-    readonly lotState: {
-        readonly bidCount: number | null;
-        readonly sellingPrice: {
-            readonly display: string | null;
-        } | null;
-    } | null;
-    readonly lotLabel: string | null;
-    readonly slug: string;
-    readonly " $refType": "MyBidsBidItem_saleArtwork";
+  } | null;
+  readonly lotLabel: string | null;
+  readonly slug: string;
+  readonly " $fragmentType": "MyBidsBidItem_saleArtwork";
 };
-export type MyBidsBidItem_saleArtwork$data = MyBidsBidItem_saleArtwork;
 export type MyBidsBidItem_saleArtwork$key = {
-    readonly " $data"?: MyBidsBidItem_saleArtwork$data;
-    readonly " $fragmentRefs": FragmentRefs<"MyBidsBidItem_saleArtwork">;
+  readonly " $data"?: MyBidsBidItem_saleArtwork$data;
+  readonly " $fragmentSpreads": FragmentRefs<"MyBidsBidItem_saleArtwork">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = [
@@ -205,5 +208,7 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '96aa172209d13cf0db980cf0357f473b';
+
+(node as any).hash = "96aa172209d13cf0db980cf0357f473b";
+
 export default node;

@@ -1,232 +1,25 @@
+/**
+ * @generated SignedSource<<60201f20eb47ff4228a0e6ce957db78a>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type TagApp_Test_QueryVariables = {};
-export type TagApp_Test_QueryResponse = {
-    readonly tag: {
-        readonly " $fragmentRefs": FragmentRefs<"TagApp_tag">;
-    } | null;
+export type TagApp_Test_Query$variables = {};
+export type TagApp_Test_Query$data = {
+  readonly tag: {
+    readonly " $fragmentSpreads": FragmentRefs<"TagApp_tag">;
+  } | null;
 };
 export type TagApp_Test_Query = {
-    readonly response: TagApp_Test_QueryResponse;
-    readonly variables: TagApp_Test_QueryVariables;
+  variables: TagApp_Test_Query$variables;
+  response: TagApp_Test_Query$data;
 };
-
-
-
-/*
-query TagApp_Test_Query {
-  tag(id: "example") {
-    ...TagApp_tag
-    id
-  }
-}
-
-fragment ArtworkFilterArtworkGrid_filtered_artworks on FilterArtworksConnection {
-  id
-  pageInfo {
-    hasNextPage
-    endCursor
-  }
-  pageCursors {
-    ...Pagination_pageCursors
-  }
-  edges {
-    node {
-      id
-    }
-  }
-  ...ArtworkGrid_artworks
-}
-
-fragment ArtworkGrid_artworks on ArtworkConnectionInterface {
-  __isArtworkConnectionInterface: __typename
-  edges {
-    __typename
-    node {
-      id
-      slug
-      href
-      internalID
-      image {
-        aspect_ratio: aspectRatio
-      }
-      ...GridItem_artwork
-    }
-    ... on Node {
-      __isNode: __typename
-      id
-    }
-  }
-}
-
-fragment Badge_artwork on Artwork {
-  is_biddable: isBiddable
-  href
-  sale {
-    is_preview: isPreview
-    display_timely_at: displayTimelyAt
-    id
-  }
-}
-
-fragment Contact_artwork on Artwork {
-  href
-  is_inquireable: isInquireable
-  sale {
-    is_auction: isAuction
-    is_live_open: isLiveOpen
-    is_open: isOpen
-    is_closed: isClosed
-    id
-  }
-  partner(shallow: true) {
-    type
-    id
-  }
-  sale_artwork: saleArtwork {
-    highest_bid: highestBid {
-      display
-    }
-    opening_bid: openingBid {
-      display
-    }
-    counts {
-      bidder_positions: bidderPositions
-    }
-    id
-  }
-}
-
-fragment Details_artwork on Artwork {
-  href
-  title
-  date
-  sale_message: saleMessage
-  cultural_maker: culturalMaker
-  artists(shallow: true) {
-    id
-    href
-    name
-  }
-  collecting_institution: collectingInstitution
-  partner(shallow: true) {
-    name
-    href
-    id
-  }
-  sale {
-    is_auction: isAuction
-    is_closed: isClosed
-    id
-  }
-  sale_artwork: saleArtwork {
-    counts {
-      bidder_positions: bidderPositions
-    }
-    highest_bid: highestBid {
-      display
-    }
-    opening_bid: openingBid {
-      display
-    }
-    id
-  }
-}
-
-fragment GridItem_artwork on Artwork {
-  internalID
-  title
-  image_title: imageTitle
-  image {
-    placeholder
-    url(version: "large")
-    aspect_ratio: aspectRatio
-  }
-  artistNames
-  href
-  is_saved: isSaved
-  ...Metadata_artwork
-  ...SaveButton_artwork
-  ...Badge_artwork
-}
-
-fragment Metadata_artwork on Artwork {
-  ...Details_artwork
-  ...Contact_artwork
-  href
-}
-
-fragment Pagination_pageCursors on PageCursors {
-  around {
-    cursor
-    page
-    isCurrent
-  }
-  first {
-    cursor
-    page
-    isCurrent
-  }
-  last {
-    cursor
-    page
-    isCurrent
-  }
-  previous {
-    cursor
-    page
-  }
-}
-
-fragment SaveButton_artwork on Artwork {
-  id
-  internalID
-  slug
-  is_saved: isSaved
-  title
-}
-
-fragment TagApp_tag on Tag {
-  ...TagArtworkFilter_tag_2NZCvC
-  ...TagMeta_tag
-  name
-}
-
-fragment TagArtworkFilter_tag_2NZCvC on Tag {
-  slug
-  internalID
-  sidebar: filterArtworksConnection(first: 1) {
-    aggregations {
-      slice
-      counts {
-        name
-        value
-        count
-      }
-    }
-    id
-  }
-  filtered_artworks: filterArtworksConnection(first: 30) {
-    id
-    ...ArtworkFilterArtworkGrid_filtered_artworks
-  }
-}
-
-fragment TagMeta_tag on Tag {
-  name
-  href
-  description
-  image {
-    cropped(width: 1200, height: 630) {
-      src
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -1154,5 +947,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'c14ce04dc9d657bb1554f90db208fd43';
+
+(node as any).hash = "c14ce04dc9d657bb1554f90db208fd43";
+
 export default node;

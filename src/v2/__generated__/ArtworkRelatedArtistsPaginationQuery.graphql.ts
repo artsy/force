@@ -1,87 +1,29 @@
+/**
+ * @generated SignedSource<<413aeacc7b8586cddf6dec1846e7a53c>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtworkRelatedArtistsPaginationQueryVariables = {
-    count: number;
-    cursor?: string | null;
-    artworkID: string;
+export type ArtworkRelatedArtistsPaginationQuery$variables = {
+  count: number;
+  cursor?: string | null;
+  artworkID: string;
 };
-export type ArtworkRelatedArtistsPaginationQueryResponse = {
-    readonly artwork: {
-        readonly " $fragmentRefs": FragmentRefs<"ArtworkRelatedArtists_artwork">;
-    } | null;
+export type ArtworkRelatedArtistsPaginationQuery$data = {
+  readonly artwork: {
+    readonly " $fragmentSpreads": FragmentRefs<"ArtworkRelatedArtists_artwork">;
+  } | null;
 };
 export type ArtworkRelatedArtistsPaginationQuery = {
-    readonly response: ArtworkRelatedArtistsPaginationQueryResponse;
-    readonly variables: ArtworkRelatedArtistsPaginationQueryVariables;
+  variables: ArtworkRelatedArtistsPaginationQuery$variables;
+  response: ArtworkRelatedArtistsPaginationQuery$data;
 };
-
-
-
-/*
-query ArtworkRelatedArtistsPaginationQuery(
-  $count: Int!
-  $cursor: String
-  $artworkID: String!
-) {
-  artwork(id: $artworkID) {
-    ...ArtworkRelatedArtists_artwork_1G22uz
-    id
-  }
-}
-
-fragment ArtistCard_artist on Artist {
-  name
-  slug
-  href
-  image {
-    cropped(width: 45, height: 45) {
-      src
-      srcSet
-    }
-  }
-  formatted_nationality_and_birthday: formattedNationalityAndBirthday
-  ...FollowArtistButton_artist
-}
-
-fragment ArtworkRelatedArtists_artwork_1G22uz on Artwork {
-  slug
-  artist {
-    href
-    related {
-      artistsConnection(kind: MAIN, first: $count, after: $cursor) {
-        pageInfo {
-          hasNextPage
-          endCursor
-        }
-        edges {
-          node {
-            ...ArtistCard_artist
-            id
-            __typename
-          }
-          cursor
-        }
-      }
-    }
-    id
-  }
-}
-
-fragment FollowArtistButton_artist on Artist {
-  id
-  internalID
-  name
-  slug
-  is_followed: isFollowed
-  counts {
-    follows
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = {
@@ -424,5 +366,7 @@ return {
   }
 };
 })();
-(node as any).hash = '13d2fdc8bc0e1a6015918727e1fa807f';
+
+(node as any).hash = "13d2fdc8bc0e1a6015918727e1fa807f";
+
 export default node;

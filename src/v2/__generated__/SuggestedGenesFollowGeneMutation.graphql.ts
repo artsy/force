@@ -1,72 +1,48 @@
+/**
+ * @generated SignedSource<<b8d83869c695153feedcb8376f224c3c>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type FollowGeneInput = {
-    clientMutationId?: string | null;
-    geneID?: string | null;
-    unfollow?: boolean | null;
+  clientMutationId?: string | null;
+  geneID?: string | null;
+  unfollow?: boolean | null;
 };
-export type SuggestedGenesFollowGeneMutationVariables = {
-    input: FollowGeneInput;
-    excludedGeneIds: Array<string | null>;
+export type SuggestedGenesFollowGeneMutation$variables = {
+  input: FollowGeneInput;
+  excludedGeneIds: ReadonlyArray<string | null>;
 };
-export type SuggestedGenesFollowGeneMutationResponse = {
-    readonly followGene: {
-        readonly gene: {
-            readonly similar: {
-                readonly edges: ReadonlyArray<{
-                    readonly node: {
-                        readonly slug: string;
-                        readonly internalID: string;
-                        readonly id: string;
-                        readonly name: string | null;
-                        readonly image: {
-                            readonly cropped: {
-                                readonly url: string;
-                            } | null;
-                        } | null;
-                    } | null;
-                } | null> | null;
+export type SuggestedGenesFollowGeneMutation$data = {
+  readonly followGene: {
+    readonly gene: {
+      readonly similar: {
+        readonly edges: ReadonlyArray<{
+          readonly node: {
+            readonly slug: string;
+            readonly internalID: string;
+            readonly id: string;
+            readonly name: string | null;
+            readonly image: {
+              readonly cropped: {
+                readonly url: string;
+              } | null;
             } | null;
-        } | null;
+          } | null;
+        } | null> | null;
+      } | null;
     } | null;
+  } | null;
 };
 export type SuggestedGenesFollowGeneMutation = {
-    readonly response: SuggestedGenesFollowGeneMutationResponse;
-    readonly variables: SuggestedGenesFollowGeneMutationVariables;
+  variables: SuggestedGenesFollowGeneMutation$variables;
+  response: SuggestedGenesFollowGeneMutation$data;
 };
-
-
-
-/*
-mutation SuggestedGenesFollowGeneMutation(
-  $input: FollowGeneInput!
-  $excludedGeneIds: [String]!
-) {
-  followGene(input: $input) {
-    gene {
-      similar(first: 1, excludeGeneIDs: $excludedGeneIds) {
-        edges {
-          node {
-            slug
-            internalID
-            id
-            name
-            image {
-              cropped(width: 100, height: 100) {
-                url
-              }
-            }
-          }
-        }
-      }
-      id
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = {
@@ -281,5 +257,7 @@ return {
   }
 };
 })();
-(node as any).hash = '0618468a113715e1372e4da80e9af468';
+
+(node as any).hash = "0618468a113715e1372e4da80e9af468";
+
 export default node;

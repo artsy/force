@@ -1,90 +1,27 @@
+/**
+ * @generated SignedSource<<4a95b1082f320adc00313d04f715e7ae>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ConversationCTA_Test_QueryVariables = {};
-export type ConversationCTA_Test_QueryResponse = {
-    readonly me: {
-        readonly conversation: {
-            readonly " $fragmentRefs": FragmentRefs<"ConversationCTA_conversation">;
-        } | null;
+export type ConversationCTA_Test_Query$variables = {};
+export type ConversationCTA_Test_Query$data = {
+  readonly me: {
+    readonly conversation: {
+      readonly " $fragmentSpreads": FragmentRefs<"ConversationCTA_conversation">;
     } | null;
+  } | null;
 };
 export type ConversationCTA_Test_Query = {
-    readonly response: ConversationCTA_Test_QueryResponse;
-    readonly variables: ConversationCTA_Test_QueryVariables;
+  variables: ConversationCTA_Test_Query$variables;
+  response: ConversationCTA_Test_Query$data;
 };
-
-
-
-/*
-query ConversationCTA_Test_Query {
-  me {
-    conversation(id: "1234") {
-      ...ConversationCTA_conversation
-      id
-    }
-    id
-  }
-}
-
-fragment ConversationCTA_conversation on Conversation {
-  internalID
-  items {
-    liveArtwork {
-      __typename
-      ... on Artwork {
-        __typename
-        isOfferableFromInquiry
-      }
-      ... on Node {
-        __isNode: __typename
-        id
-      }
-    }
-    item {
-      __typename
-      ... on Artwork {
-        internalID
-      }
-      ... on Node {
-        __isNode: __typename
-        id
-      }
-    }
-  }
-  activeOrders: orderConnection(first: 10, states: [APPROVED, FULFILLED, SUBMITTED, REFUNDED]) {
-    edges {
-      node {
-        __typename
-        internalID
-        state
-        stateReason
-        stateExpiresAt
-        ... on CommerceOfferOrder {
-          buyerAction
-          offers(first: 5) {
-            edges {
-              node {
-                internalID
-                id
-              }
-            }
-          }
-        }
-        id
-      }
-    }
-  }
-  ...OpenInquiryModalCTA_conversation
-}
-
-fragment OpenInquiryModalCTA_conversation on Conversation {
-  internalID
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -330,7 +267,6 @@ return {
                             "name": "stateExpiresAt",
                             "storageKey": null
                           },
-                          (v3/*: any*/),
                           {
                             "kind": "InlineFragment",
                             "selections": [
@@ -385,7 +321,8 @@ return {
                             ],
                             "type": "CommerceOfferOrder",
                             "abstractKey": null
-                          }
+                          },
+                          (v3/*: any*/)
                         ],
                         "storageKey": null
                       }
@@ -529,5 +466,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'dc66794bee212b760a8b1c0d31f0dc68';
+
+(node as any).hash = "dc66794bee212b760a8b1c0d31f0dc68";
+
 export default node;

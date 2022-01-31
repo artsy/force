@@ -1,172 +1,27 @@
+/**
+ * @generated SignedSource<<2fbc70a5be4049e3c80059ba69c45804>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type CategoryRailQueryVariables = {
-    id: string;
+export type CategoryRailQuery$variables = {
+  id: string;
 };
-export type CategoryRailQueryResponse = {
-    readonly category: {
-        readonly " $fragmentRefs": FragmentRefs<"CategoryRail_category">;
-    } | null;
+export type CategoryRailQuery$data = {
+  readonly category: {
+    readonly " $fragmentSpreads": FragmentRefs<"CategoryRail_category">;
+  } | null;
 };
 export type CategoryRailQuery = {
-    readonly response: CategoryRailQueryResponse;
-    readonly variables: CategoryRailQueryVariables;
+  variables: CategoryRailQuery$variables;
+  response: CategoryRailQuery$data;
 };
-
-
-
-/*
-query CategoryRailQuery(
-  $id: String!
-) {
-  category: gene(id: $id) {
-    ...CategoryRail_category
-    id
-  }
-}
-
-fragment Badge_artwork on Artwork {
-  is_biddable: isBiddable
-  href
-  sale {
-    is_preview: isPreview
-    display_timely_at: displayTimelyAt
-    id
-  }
-}
-
-fragment CategoryRail_category on Gene {
-  name
-  href
-  avatar: image {
-    cropped(width: 45, height: 45) {
-      src
-      srcSet
-    }
-  }
-  ...FollowGeneButton_gene
-  filterArtworksConnection(first: 10) {
-    edges {
-      node {
-        internalID
-        ...ShelfArtwork_artwork
-        id
-      }
-    }
-    id
-  }
-}
-
-fragment Contact_artwork on Artwork {
-  href
-  is_inquireable: isInquireable
-  sale {
-    is_auction: isAuction
-    is_live_open: isLiveOpen
-    is_open: isOpen
-    is_closed: isClosed
-    id
-  }
-  partner(shallow: true) {
-    type
-    id
-  }
-  sale_artwork: saleArtwork {
-    highest_bid: highestBid {
-      display
-    }
-    opening_bid: openingBid {
-      display
-    }
-    counts {
-      bidder_positions: bidderPositions
-    }
-    id
-  }
-}
-
-fragment Details_artwork on Artwork {
-  href
-  title
-  date
-  sale_message: saleMessage
-  cultural_maker: culturalMaker
-  artists(shallow: true) {
-    id
-    href
-    name
-  }
-  collecting_institution: collectingInstitution
-  partner(shallow: true) {
-    name
-    href
-    id
-  }
-  sale {
-    is_auction: isAuction
-    is_closed: isClosed
-    id
-  }
-  sale_artwork: saleArtwork {
-    counts {
-      bidder_positions: bidderPositions
-    }
-    highest_bid: highestBid {
-      display
-    }
-    opening_bid: openingBid {
-      display
-    }
-    id
-  }
-}
-
-fragment FollowGeneButton_gene on Gene {
-  id
-  slug
-  name
-  internalID
-  isFollowed
-}
-
-fragment Metadata_artwork on Artwork {
-  ...Details_artwork
-  ...Contact_artwork
-  href
-}
-
-fragment SaveButton_artwork on Artwork {
-  id
-  internalID
-  slug
-  is_saved: isSaved
-  title
-}
-
-fragment ShelfArtwork_artwork on Artwork {
-  image {
-    resized(width: 200) {
-      src
-      srcSet
-      width
-      height
-    }
-    aspectRatio
-    height
-  }
-  imageTitle
-  title
-  href
-  is_saved: isSaved
-  ...Metadata_artwork
-  ...SaveButton_artwork
-  ...Badge_artwork
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -650,5 +505,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'e1d2a5f847d67a73b2f339aab2371721';
+
+(node as any).hash = "e1d2a5f847d67a73b2f339aab2371721";
+
 export default node;

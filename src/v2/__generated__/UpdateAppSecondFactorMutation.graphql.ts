@@ -1,78 +1,60 @@
+/**
+ * @generated SignedSource<<75be9eb00dbb1c926478aecded5e5616>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type UpdateAppSecondFactorInput = {
-    attributes: AppSecondFactorAttributes;
-    clientMutationId?: string | null;
-    secondFactorID: string;
+  attributes: AppSecondFactorAttributes;
+  clientMutationId?: string | null;
+  secondFactorID: string;
 };
 export type AppSecondFactorAttributes = {
-    name?: string | null;
+  name?: string | null;
 };
-export type UpdateAppSecondFactorMutationVariables = {
-    input: UpdateAppSecondFactorInput;
+export type UpdateAppSecondFactorMutation$variables = {
+  input: UpdateAppSecondFactorInput;
 };
-export type UpdateAppSecondFactorMutationResponse = {
-    readonly updateAppSecondFactor: {
-        readonly secondFactorOrErrors: {
-            readonly __typename: "AppSecondFactor";
-        } | {
-            readonly __typename: "Errors";
-            readonly errors: ReadonlyArray<{
-                readonly message: string;
-                readonly code: string;
-            }>;
-        } | {
-            /*This will never be '%other', but we need some
-            value in case none of the concrete values match.*/
-            readonly __typename: "%other";
-        };
-    } | null;
+export type UpdateAppSecondFactorMutation$data = {
+  readonly updateAppSecondFactor: {
+    readonly secondFactorOrErrors: {
+      readonly __typename: "AppSecondFactor";
+    } | {
+      readonly __typename: "Errors";
+      readonly errors: ReadonlyArray<{
+        readonly message: string;
+        readonly code: string;
+      }>;
+    } | {
+      // This will never be '%other', but we need some
+      // value in case none of the concrete values match.
+      readonly __typename: "%other";
+    };
+  } | null;
 };
-export type UpdateAppSecondFactorMutationRawResponse = {
-    readonly updateAppSecondFactor: ({
-        readonly secondFactorOrErrors: {
-            readonly __typename: "Errors";
-            readonly errors: ReadonlyArray<{
-                readonly message: string;
-                readonly code: string;
-            }>;
-        } | {
-            readonly __typename: string;
-        };
-    }) | null;
+export type UpdateAppSecondFactorMutation$rawResponse = {
+  readonly updateAppSecondFactor: {
+    readonly secondFactorOrErrors: {
+      readonly __typename: "Errors";
+      readonly errors: ReadonlyArray<{
+        readonly message: string;
+        readonly code: string;
+      }>;
+    } | {
+      readonly __typename: string;
+    };
+  } | null;
 };
 export type UpdateAppSecondFactorMutation = {
-    readonly response: UpdateAppSecondFactorMutationResponse;
-    readonly variables: UpdateAppSecondFactorMutationVariables;
-    readonly rawResponse: UpdateAppSecondFactorMutationRawResponse;
+  variables: UpdateAppSecondFactorMutation$variables;
+  response: UpdateAppSecondFactorMutation$data;
+  rawResponse: UpdateAppSecondFactorMutation$rawResponse;
 };
-
-
-
-/*
-mutation UpdateAppSecondFactorMutation(
-  $input: UpdateAppSecondFactorInput!
-) {
-  updateAppSecondFactor(input: $input) {
-    secondFactorOrErrors {
-      __typename
-      ... on AppSecondFactor {
-        __typename
-      }
-      ... on Errors {
-        __typename
-        errors {
-          message
-          code
-        }
-      }
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -220,5 +202,7 @@ return {
   }
 };
 })();
-(node as any).hash = '013c7fe073e73339db609d4021ecaf9e';
+
+(node as any).hash = "013c7fe073e73339db609d4021ecaf9e";
+
 export default node;

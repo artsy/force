@@ -1,53 +1,33 @@
+/**
+ * @generated SignedSource<<bfbf17df5ffe3c6637168c2a693892d1>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
-export type ConsignPriceEstimateContext_SearchConnection_QueryVariables = {
-    searchQuery: string;
+import { ConcreteRequest, Query } from 'relay-runtime';
+export type ConsignPriceEstimateContext_SearchConnection_Query$variables = {
+  searchQuery: string;
 };
-export type ConsignPriceEstimateContext_SearchConnection_QueryResponse = {
-    readonly searchConnection: {
-        readonly edges: ReadonlyArray<{
-            readonly node: {
-                readonly displayLabel: string | null;
-                readonly slug?: string;
-                readonly internalID?: string;
-                readonly imageUrl?: string | null;
-            } | null;
-        } | null> | null;
-    } | null;
+export type ConsignPriceEstimateContext_SearchConnection_Query$data = {
+  readonly searchConnection: {
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly displayLabel: string | null;
+        readonly slug?: string;
+        readonly internalID?: string;
+        readonly imageUrl?: string | null;
+      } | null;
+    } | null> | null;
+  } | null;
 };
 export type ConsignPriceEstimateContext_SearchConnection_Query = {
-    readonly response: ConsignPriceEstimateContext_SearchConnection_QueryResponse;
-    readonly variables: ConsignPriceEstimateContext_SearchConnection_QueryVariables;
+  variables: ConsignPriceEstimateContext_SearchConnection_Query$variables;
+  response: ConsignPriceEstimateContext_SearchConnection_Query$data;
 };
-
-
-
-/*
-query ConsignPriceEstimateContext_SearchConnection_Query(
-  $searchQuery: String!
-) {
-  searchConnection(query: $searchQuery, entities: ARTIST, mode: AUTOSUGGEST, first: 7) {
-    edges {
-      node {
-        __typename
-        displayLabel
-        ... on Artist {
-          slug
-          internalID
-          imageUrl
-        }
-        ... on Node {
-          __isNode: __typename
-          id
-        }
-      }
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -234,5 +214,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'a4578f37f2d07686a62cc67a819c17f8';
+
+(node as any).hash = "a4578f37f2d07686a62cc67a819c17f8";
+
 export default node;

@@ -1,31 +1,34 @@
+/**
+ * @generated SignedSource<<923277845df1158387d70fe518e29318>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type FairsIndex_featuredFairs = ReadonlyArray<{
-    readonly items: ReadonlyArray<{
-        readonly internalID?: string | null;
-        readonly title?: string | null;
-        readonly image?: {
-            readonly cropped: {
-                readonly width: number;
-                readonly height: number;
-                readonly src: string;
-                readonly srcSet: string;
-            } | null;
-        } | null;
-    } | null> | null;
-    readonly " $refType": "FairsIndex_featuredFairs";
+export type FairsIndex_featuredFairs$data = ReadonlyArray<{
+  readonly items: ReadonlyArray<{
+    readonly internalID?: string | null;
+    readonly title?: string | null;
+    readonly image?: {
+      readonly cropped: {
+        readonly width: number;
+        readonly height: number;
+        readonly src: string;
+        readonly srcSet: string;
+      } | null;
+    } | null;
+  } | null> | null;
+  readonly " $fragmentType": "FairsIndex_featuredFairs";
 }>;
-export type FairsIndex_featuredFairs$data = FairsIndex_featuredFairs;
 export type FairsIndex_featuredFairs$key = ReadonlyArray<{
-    readonly " $data"?: FairsIndex_featuredFairs$data;
-    readonly " $fragmentRefs": FragmentRefs<"FairsIndex_featuredFairs">;
+  readonly " $data"?: FairsIndex_featuredFairs$data;
+  readonly " $fragmentSpreads": FragmentRefs<"FairsIndex_featuredFairs">;
 }>;
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -132,5 +135,7 @@ const node: ReaderFragment = {
   "type": "OrderedSet",
   "abstractKey": null
 };
-(node as any).hash = 'cc81fb4953a72c4ccea5b747da589837';
+
+(node as any).hash = "cc81fb4953a72c4ccea5b747da589837";
+
 export default node;

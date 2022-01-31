@@ -1,41 +1,44 @@
+/**
+ * @generated SignedSource<<3044e029a28dbc90dc130abbc76bb159>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type Contact_artwork = {
-    readonly href: string | null;
-    readonly is_inquireable: boolean | null;
-    readonly sale: {
-        readonly is_auction: boolean | null;
-        readonly is_live_open: boolean | null;
-        readonly is_open: boolean | null;
-        readonly is_closed: boolean | null;
+export type Contact_artwork$data = {
+  readonly href: string | null;
+  readonly is_inquireable: boolean | null;
+  readonly sale: {
+    readonly is_auction: boolean | null;
+    readonly is_live_open: boolean | null;
+    readonly is_open: boolean | null;
+    readonly is_closed: boolean | null;
+  } | null;
+  readonly partner: {
+    readonly type: string | null;
+  } | null;
+  readonly sale_artwork: {
+    readonly highest_bid: {
+      readonly display: string | null;
     } | null;
-    readonly partner: {
-        readonly type: string | null;
+    readonly opening_bid: {
+      readonly display: string | null;
     } | null;
-    readonly sale_artwork: {
-        readonly highest_bid: {
-            readonly display: string | null;
-        } | null;
-        readonly opening_bid: {
-            readonly display: string | null;
-        } | null;
-        readonly counts: {
-            readonly bidder_positions: number | null;
-        } | null;
+    readonly counts: {
+      readonly bidder_positions: Int | null;
     } | null;
-    readonly " $refType": "Contact_artwork";
+  } | null;
+  readonly " $fragmentType": "Contact_artwork";
 };
-export type Contact_artwork$data = Contact_artwork;
 export type Contact_artwork$key = {
-    readonly " $data"?: Contact_artwork$data;
-    readonly " $fragmentRefs": FragmentRefs<"Contact_artwork">;
+  readonly " $data"?: Contact_artwork$data;
+  readonly " $fragmentSpreads": FragmentRefs<"Contact_artwork">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = [
@@ -184,5 +187,7 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '9f34c3389ae10d7ea1db682424201582';
+
+(node as any).hash = "9f34c3389ae10d7ea1db682424201582";
+
 export default node;

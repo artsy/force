@@ -1,48 +1,35 @@
+/**
+ * @generated SignedSource<<f0d005425dd53359a8af00c201d00e5c>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type CommerceSetPaymentInput = {
-    clientMutationId?: string | null;
-    creditCardId: string;
-    id: string;
+  clientMutationId?: string | null;
+  creditCardId: string;
+  id: string;
 };
-export type commitMutationTest1MutationVariables = {
-    input: CommerceSetPaymentInput;
+export type commitMutationTest1Mutation$variables = {
+  input: CommerceSetPaymentInput;
 };
-export type commitMutationTest1MutationResponse = {
-    readonly commerceSetPayment: {
-        readonly orderOrError: {
-            readonly error?: {
-                readonly code: string;
-            };
-        };
-    } | null;
+export type commitMutationTest1Mutation$data = {
+  readonly commerceSetPayment: {
+    readonly orderOrError: {
+      readonly error?: {
+        readonly code: string;
+      };
+    };
+  } | null;
 };
 export type commitMutationTest1Mutation = {
-    readonly response: commitMutationTest1MutationResponse;
-    readonly variables: commitMutationTest1MutationVariables;
+  variables: commitMutationTest1Mutation$variables;
+  response: commitMutationTest1Mutation$data;
 };
-
-
-
-/*
-mutation commitMutationTest1Mutation(
-  $input: CommerceSetPaymentInput!
-) {
-  commerceSetPayment(input: $input) {
-    orderOrError {
-      __typename
-      ... on CommerceOrderWithMutationFailure {
-        error {
-          code
-        }
-      }
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -166,5 +153,7 @@ return {
   }
 };
 })();
-(node as any).hash = '00dce5aa5f8ecdb281f7afb350b5d5b8';
+
+(node as any).hash = "00dce5aa5f8ecdb281f7afb350b5d5b8";
+
 export default node;

@@ -1,185 +1,27 @@
+/**
+ * @generated SignedSource<<ba90be9a8f99d0cfe923d416238966fb>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type SettingsSavesArtworksQueryVariables = {
-    page?: number | null;
+export type SettingsSavesArtworksQuery$variables = {
+  page?: number | null;
 };
-export type SettingsSavesArtworksQueryResponse = {
-    readonly me: {
-        readonly " $fragmentRefs": FragmentRefs<"SettingsSavesArtworks_me">;
-    } | null;
+export type SettingsSavesArtworksQuery$data = {
+  readonly me: {
+    readonly " $fragmentSpreads": FragmentRefs<"SettingsSavesArtworks_me">;
+  } | null;
 };
 export type SettingsSavesArtworksQuery = {
-    readonly response: SettingsSavesArtworksQueryResponse;
-    readonly variables: SettingsSavesArtworksQueryVariables;
+  variables: SettingsSavesArtworksQuery$variables;
+  response: SettingsSavesArtworksQuery$data;
 };
-
-
-
-/*
-query SettingsSavesArtworksQuery(
-  $page: Int
-) {
-  me {
-    ...SettingsSavesArtworks_me_2Pg8Wv
-    id
-  }
-}
-
-fragment Badge_artwork on Artwork {
-  is_biddable: isBiddable
-  href
-  sale {
-    is_preview: isPreview
-    display_timely_at: displayTimelyAt
-    id
-  }
-}
-
-fragment Contact_artwork on Artwork {
-  href
-  is_inquireable: isInquireable
-  sale {
-    is_auction: isAuction
-    is_live_open: isLiveOpen
-    is_open: isOpen
-    is_closed: isClosed
-    id
-  }
-  partner(shallow: true) {
-    type
-    id
-  }
-  sale_artwork: saleArtwork {
-    highest_bid: highestBid {
-      display
-    }
-    opening_bid: openingBid {
-      display
-    }
-    counts {
-      bidder_positions: bidderPositions
-    }
-    id
-  }
-}
-
-fragment Details_artwork on Artwork {
-  href
-  title
-  date
-  sale_message: saleMessage
-  cultural_maker: culturalMaker
-  artists(shallow: true) {
-    id
-    href
-    name
-  }
-  collecting_institution: collectingInstitution
-  partner(shallow: true) {
-    name
-    href
-    id
-  }
-  sale {
-    is_auction: isAuction
-    is_closed: isClosed
-    id
-  }
-  sale_artwork: saleArtwork {
-    counts {
-      bidder_positions: bidderPositions
-    }
-    highest_bid: highestBid {
-      display
-    }
-    opening_bid: openingBid {
-      display
-    }
-    id
-  }
-}
-
-fragment GridItem_artwork on Artwork {
-  internalID
-  title
-  image_title: imageTitle
-  image {
-    placeholder
-    url(version: "large")
-    aspect_ratio: aspectRatio
-  }
-  artistNames
-  href
-  is_saved: isSaved
-  ...Metadata_artwork
-  ...SaveButton_artwork
-  ...Badge_artwork
-}
-
-fragment Metadata_artwork on Artwork {
-  ...Details_artwork
-  ...Contact_artwork
-  href
-}
-
-fragment Pagination_pageCursors on PageCursors {
-  around {
-    cursor
-    page
-    isCurrent
-  }
-  first {
-    cursor
-    page
-    isCurrent
-  }
-  last {
-    cursor
-    page
-    isCurrent
-  }
-  previous {
-    cursor
-    page
-  }
-}
-
-fragment SaveButton_artwork on Artwork {
-  id
-  internalID
-  slug
-  is_saved: isSaved
-  title
-}
-
-fragment SettingsSavesArtworks_me_2Pg8Wv on Me {
-  followsAndSaves {
-    artworksConnection(first: 10, private: true, page: $page) {
-      totalCount
-      pageInfo {
-        hasNextPage
-        endCursor
-      }
-      pageCursors {
-        ...Pagination_pageCursors
-      }
-      edges {
-        node {
-          internalID
-          ...GridItem_artwork
-          id
-          __typename
-        }
-        cursor
-      }
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -741,5 +583,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'a5f6d140e4a7123ab8e0b52248a5d91a';
+
+(node as any).hash = "a5f6d140e4a7123ab8e0b52248a5d91a";
+
 export default node;

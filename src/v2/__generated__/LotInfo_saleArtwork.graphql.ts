@@ -1,26 +1,29 @@
+/**
+ * @generated SignedSource<<c01d92b7a5135e37045d23f737d5b9c7>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type LotInfo_saleArtwork = {
-    readonly counts: {
-        readonly bidderPositions: number | null;
-    } | null;
-    readonly lotLabel: string | null;
-    readonly currentBid: {
-        readonly display: string | null;
-    } | null;
-    readonly " $refType": "LotInfo_saleArtwork";
+export type LotInfo_saleArtwork$data = {
+  readonly counts: {
+    readonly bidderPositions: Int | null;
+  } | null;
+  readonly lotLabel: string | null;
+  readonly currentBid: {
+    readonly display: string | null;
+  } | null;
+  readonly " $fragmentType": "LotInfo_saleArtwork";
 };
-export type LotInfo_saleArtwork$data = LotInfo_saleArtwork;
 export type LotInfo_saleArtwork$key = {
-    readonly " $data"?: LotInfo_saleArtwork$data;
-    readonly " $fragmentRefs": FragmentRefs<"LotInfo_saleArtwork">;
+  readonly " $data"?: LotInfo_saleArtwork$data;
+  readonly " $fragmentSpreads": FragmentRefs<"LotInfo_saleArtwork">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -75,5 +78,7 @@ const node: ReaderFragment = {
   "type": "SaleArtwork",
   "abstractKey": null
 };
-(node as any).hash = '00087830b5b89b40ca14bb55d7e163d9';
+
+(node as any).hash = "00087830b5b89b40ca14bb55d7e163d9";
+
 export default node;

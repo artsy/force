@@ -173,13 +173,10 @@ describe("SaleArtwork", () => {
           done()
         },
       })
-      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       _.last(Backone.sync.args)[2].success()
       testContext.saleArtwork.set({ highest_bid_amount_cents: 100 })
-      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       _.last(Backone.sync.args)[2].success()
       testContext.saleArtwork.set({ highest_bid_amount_cents: 200 })
-      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       _.last(Backone.sync.args)[2].success()
       // @ts-ignore
       setInterval.restore()

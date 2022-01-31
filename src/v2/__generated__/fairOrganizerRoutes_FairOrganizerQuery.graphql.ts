@@ -1,206 +1,40 @@
+/**
+ * @generated SignedSource<<3d4431387c928d4e07cd5ce5c9bb6e84>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type fairOrganizerRoutes_FairOrganizerQueryVariables = {
-    slug: string;
+export type fairOrganizerRoutes_FairOrganizerQuery$variables = {
+  slug: string;
 };
-export type fairOrganizerRoutes_FairOrganizerQueryResponse = {
-    readonly fairOrganizer: {
-        readonly profile: {
-            readonly __typename: string;
-        } | null;
-        readonly runningFairs: {
-            readonly edges: ReadonlyArray<{
-                readonly node: {
-                    readonly href: string | null;
-                    readonly profile: {
-                        readonly __typename: string;
-                    } | null;
-                } | null;
-            } | null> | null;
-        } | null;
-        readonly " $fragmentRefs": FragmentRefs<"FairOrganizerApp_fairOrganizer">;
+export type fairOrganizerRoutes_FairOrganizerQuery$data = {
+  readonly fairOrganizer: {
+    readonly profile: {
+      readonly __typename: string;
     } | null;
+    readonly runningFairs: {
+      readonly edges: ReadonlyArray<{
+        readonly node: {
+          readonly href: string | null;
+          readonly profile: {
+            readonly __typename: string;
+          } | null;
+        } | null;
+      } | null> | null;
+    } | null;
+    readonly " $fragmentSpreads": FragmentRefs<"FairOrganizerApp_fairOrganizer">;
+  } | null;
 };
 export type fairOrganizerRoutes_FairOrganizerQuery = {
-    readonly response: fairOrganizerRoutes_FairOrganizerQueryResponse;
-    readonly variables: fairOrganizerRoutes_FairOrganizerQueryVariables;
+  variables: fairOrganizerRoutes_FairOrganizerQuery$variables;
+  response: fairOrganizerRoutes_FairOrganizerQuery$data;
 };
-
-
-
-/*
-query fairOrganizerRoutes_FairOrganizerQuery(
-  $slug: String!
-) {
-  fairOrganizer(id: $slug) @principalField {
-    profile {
-      __typename
-      id
-    }
-    runningFairs: fairsConnection(first: 1, status: RUNNING, sort: START_AT_DESC) {
-      edges {
-        node {
-          href
-          profile {
-            __typename
-            id
-          }
-          id
-        }
-      }
-    }
-    ...FairOrganizerApp_fairOrganizer
-    id
-  }
-}
-
-fragment FairEditorialItemLink_article on Article {
-  internalID
-  slug
-  title
-  href
-  publishedAt(format: "MMMM D, YYYY")
-}
-
-fragment FairEditorialItem_article on Article {
-  id
-  title
-  publishedAt(format: "MMMM D, YYYY")
-  thumbnailTitle
-  thumbnailImage {
-    large: cropped(width: 670, height: 720) {
-      width
-      height
-      src
-      srcSet
-    }
-    small: cropped(width: 325, height: 240) {
-      width
-      height
-      src
-      srcSet
-    }
-  }
-  ...FairEditorialItemLink_article
-}
-
-fragment FairOrganizerApp_fairOrganizer on FairOrganizer {
-  name
-  slug
-  about(format: HTML)
-  profile {
-    image {
-      url(version: "wide")
-    }
-    id
-  }
-  ...FairOrganizerPastEventsRail_fairOrganizer
-  ...FairOrganizerHeaderImage_fairOrganizer
-  ...FairOrganizerHeader_fairOrganizer
-  ...FairOrganizerLatestArticles_fairOrganizer
-}
-
-fragment FairOrganizerFollowButton_fairOrganizer on FairOrganizer {
-  slug
-  name
-  profile {
-    id
-    internalID
-    isFollowed
-  }
-}
-
-fragment FairOrganizerHeaderIcon_fairOrganizer on FairOrganizer {
-  name
-  profile {
-    icon {
-      desktop: cropped(width: 80, height: 80, version: "square140") {
-        src
-        srcSet
-        size: width
-      }
-      mobile: cropped(width: 60, height: 60, version: "square140") {
-        src
-        srcSet
-        size: width
-      }
-    }
-    id
-  }
-}
-
-fragment FairOrganizerHeaderImage_fairOrganizer on FairOrganizer {
-  profile {
-    image {
-      url(version: "wide")
-    }
-    id
-  }
-}
-
-fragment FairOrganizerHeader_fairOrganizer on FairOrganizer {
-  name
-  fairsConnection(first: 1, sort: START_AT_DESC) {
-    edges {
-      node {
-        href
-        startAt
-        exhibitionPeriod
-        id
-      }
-    }
-  }
-  ...FairOrganizerHeaderIcon_fairOrganizer
-  ...FairOrganizerFollowButton_fairOrganizer
-  ...FairOrganizerInfo_fairOrganizer
-}
-
-fragment FairOrganizerInfo_fairOrganizer on FairOrganizer {
-  about(format: HTML)
-}
-
-fragment FairOrganizerLatestArticles_fairOrganizer on FairOrganizer {
-  name
-  slug
-  articlesConnection(first: 7, sort: PUBLISHED_AT_DESC) {
-    totalCount
-    edges {
-      node {
-        id
-        ...FairEditorialItem_article
-      }
-    }
-  }
-}
-
-fragment FairOrganizerPastEventRailCell_fair on Fair {
-  slug
-  name
-  image {
-    cropped(width: 325, height: 244) {
-      width
-      height
-      src
-      srcSet
-    }
-  }
-}
-
-fragment FairOrganizerPastEventsRail_fairOrganizer on FairOrganizer {
-  pastFairs: fairsConnection(first: 20, sort: START_AT_DESC, status: CLOSED, hasFullFeature: true) {
-    edges {
-      node {
-        id
-        ...FairOrganizerPastEventRailCell_fair
-      }
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -863,5 +697,7 @@ return {
   }
 };
 })();
-(node as any).hash = '172f34fcb252bada05202fc18b74a2a0';
+
+(node as any).hash = "172f34fcb252bada05202fc18b74a2a0";
+
 export default node;

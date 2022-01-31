@@ -1,43 +1,46 @@
+/**
+ * @generated SignedSource<<730a9ff57a984a9d85f9e47285c685a3>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArticleSeries_article = {
-    readonly title: string | null;
-    readonly byline: string | null;
+export type ArticleSeries_article$data = {
+  readonly title: string | null;
+  readonly byline: string | null;
+  readonly href: string | null;
+  readonly series: {
+    readonly description: string | null;
+  } | null;
+  readonly sponsor: {
+    readonly " $fragmentSpreads": FragmentRefs<"ArticleSponsor_sponsor">;
+  } | null;
+  readonly relatedArticles: ReadonlyArray<{
+    readonly internalID: string;
     readonly href: string | null;
-    readonly series: {
-        readonly description: string | null;
+    readonly title: string | null;
+    readonly thumbnailTitle: string | null;
+    readonly byline: string | null;
+    readonly description: string | null;
+    readonly publishedAt: string | null;
+    readonly thumbnailImage: {
+      readonly display: {
+        readonly src: string;
+        readonly srcSet: string;
+      } | null;
     } | null;
-    readonly sponsor: {
-        readonly " $fragmentRefs": FragmentRefs<"ArticleSponsor_sponsor">;
-    } | null;
-    readonly relatedArticles: ReadonlyArray<{
-        readonly internalID: string;
-        readonly href: string | null;
-        readonly title: string | null;
-        readonly thumbnailTitle: string | null;
-        readonly byline: string | null;
-        readonly description: string | null;
-        readonly publishedAt: string | null;
-        readonly thumbnailImage: {
-            readonly display: {
-                readonly src: string;
-                readonly srcSet: string;
-            } | null;
-        } | null;
-    }>;
-    readonly " $refType": "ArticleSeries_article";
+  }>;
+  readonly " $fragmentType": "ArticleSeries_article";
 };
-export type ArticleSeries_article$data = ArticleSeries_article;
 export type ArticleSeries_article$key = {
-    readonly " $data"?: ArticleSeries_article$data;
-    readonly " $fragmentRefs": FragmentRefs<"ArticleSeries_article">;
+  readonly " $data"?: ArticleSeries_article$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ArticleSeries_article">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = {
@@ -199,5 +202,7 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '54fd64505017c1fdb5a9dbff60a913b9';
+
+(node as any).hash = "54fd64505017c1fdb5a9dbff60a913b9";
+
 export default node;

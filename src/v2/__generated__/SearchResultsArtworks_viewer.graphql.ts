@@ -1,34 +1,37 @@
+/**
+ * @generated SignedSource<<848ff5f43628f32bda19127d1dfb05f6>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
-import { FragmentRefs } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 export type ArtworkAggregation = "ARTIST" | "ARTIST_NATIONALITY" | "ATTRIBUTION_CLASS" | "COLOR" | "DIMENSION_RANGE" | "FOLLOWED_ARTISTS" | "GALLERY" | "INSTITUTION" | "LOCATION_CITY" | "MAJOR_PERIOD" | "MATERIALS_TERMS" | "MEDIUM" | "MERCHANDISABLE_ARTISTS" | "PARTNER" | "PARTNER_CITY" | "PERIOD" | "PRICE_RANGE" | "TOTAL" | "%future added value";
-export type SearchResultsArtworks_viewer = {
-    readonly sidebar: {
-        readonly counts?: {
-            readonly followedArtists: number | null;
-        } | null;
-        readonly aggregations: ReadonlyArray<{
-            readonly slice: ArtworkAggregation | null;
-            readonly counts: ReadonlyArray<{
-                readonly name: string;
-                readonly value: string;
-                readonly count: number;
-            } | null> | null;
-        } | null> | null;
+import { FragmentRefs } from "relay-runtime";
+export type SearchResultsArtworks_viewer$data = {
+  readonly sidebar: {
+    readonly counts?: {
+      readonly followedArtists: Int | null;
     } | null;
-    readonly " $fragmentRefs": FragmentRefs<"ArtworkFilter_viewer">;
-    readonly " $refType": "SearchResultsArtworks_viewer";
+    readonly aggregations: ReadonlyArray<{
+      readonly slice: ArtworkAggregation | null;
+      readonly counts: ReadonlyArray<{
+        readonly name: string;
+        readonly value: string;
+        readonly count: number;
+      } | null> | null;
+    } | null> | null;
+  } | null;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtworkFilter_viewer">;
+  readonly " $fragmentType": "SearchResultsArtworks_viewer";
 };
-export type SearchResultsArtworks_viewer$data = SearchResultsArtworks_viewer;
 export type SearchResultsArtworks_viewer$key = {
-    readonly " $data"?: SearchResultsArtworks_viewer$data;
-    readonly " $fragmentRefs": FragmentRefs<"SearchResultsArtworks_viewer">;
+  readonly " $data"?: SearchResultsArtworks_viewer$data;
+  readonly " $fragmentSpreads": FragmentRefs<"SearchResultsArtworks_viewer">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [
@@ -71,6 +74,31 @@ const node: ReaderFragment = {
       "name": "artworksConnection",
       "plural": false,
       "selections": [
+        {
+          "condition": "shouldFetchCounts",
+          "kind": "Condition",
+          "passingValue": true,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "concreteType": "FilterArtworksCounts",
+              "kind": "LinkedField",
+              "name": "counts",
+              "plural": false,
+              "selections": [
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "followedArtists",
+                  "storageKey": null
+                }
+              ],
+              "storageKey": null
+            }
+          ]
+        },
         {
           "alias": null,
           "args": null,
@@ -120,31 +148,6 @@ const node: ReaderFragment = {
             }
           ],
           "storageKey": null
-        },
-        {
-          "condition": "shouldFetchCounts",
-          "kind": "Condition",
-          "passingValue": true,
-          "selections": [
-            {
-              "alias": null,
-              "args": null,
-              "concreteType": "FilterArtworksCounts",
-              "kind": "LinkedField",
-              "name": "counts",
-              "plural": false,
-              "selections": [
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "followedArtists",
-                  "storageKey": null
-                }
-              ],
-              "storageKey": null
-            }
-          ]
         }
       ],
       "storageKey": null
@@ -164,5 +167,7 @@ const node: ReaderFragment = {
   "type": "Viewer",
   "abstractKey": null
 };
-(node as any).hash = '0e069ef330942cb47f0b23ec352a3d96';
+
+(node as any).hash = "0e069ef330942cb47f0b23ec352a3d96";
+
 export default node;

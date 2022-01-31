@@ -1,13 +1,13 @@
 import { Box, Separator, Text } from "@artsy/palette"
 import { Match } from "found"
 
-import { BidderPositionQueryResponse } from "v2/__generated__/BidderPositionQuery.graphql"
-import { ConfirmBid_me } from "v2/__generated__/ConfirmBid_me.graphql"
+import { BidderPositionQuery$data } from "v2/__generated__/BidderPositionQuery.graphql"
+import { ConfirmBid_me$data } from "v2/__generated__/ConfirmBid_me.graphql"
 import {
   ConfirmBidCreateBidderPositionMutation,
-  ConfirmBidCreateBidderPositionMutationResponse,
+  ConfirmBidCreateBidderPositionMutation$data,
 } from "v2/__generated__/ConfirmBidCreateBidderPositionMutation.graphql"
-import { auctionRoutes_ConfirmBidQueryResponse } from "v2/__generated__/auctionRoutes_ConfirmBidQuery.graphql"
+import { auctionRoutes_ConfirmBidQuery$data } from "v2/__generated__/auctionRoutes_ConfirmBidQuery.graphql"
 import { BidFormFragmentContainer as BidForm } from "v2/Apps/Auction/Components/BidForm"
 import { LotInfoFragmentContainer as LotInfo } from "v2/Apps/Auction/Components/LotInfo"
 import { bidderPositionQuery } from "v2/Apps/Auction/Operations/BidderPositionQuery"
@@ -55,8 +55,8 @@ export interface StripeProps {
 }
 
 interface ConfirmBidProps {
-  artwork: auctionRoutes_ConfirmBidQueryResponse["artwork"]
-  me: ConfirmBid_me
+  artwork: auctionRoutes_ConfirmBidQuery$data["artwork"]
+  me: ConfirmBid_me$data
   relay: RelayProp
   match: Match
 }
@@ -84,7 +84,7 @@ export const ConfirmBidRoute: React.FC<
   let bidderId = sale.registrationStatus?.internalID
 
   function createBidderPosition(maxBidAmountCents: number) {
-    return new Promise<ConfirmBidCreateBidderPositionMutationResponse>(
+    return new Promise<auctionRoutes_ConfirmBidQuery$data>(
       (resolve, reject) => {
         commitMutation<ConfirmBidCreateBidderPositionMutation>(environment, {
           mutation: graphql`
@@ -110,12 +110,12 @@ export const ConfirmBidRoute: React.FC<
               }
             }
           `,
+          // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
           onCompleted: resolve,
           onError: reject,
           variables: {
             input: {
-              // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-              artworkID: artwork.internalID,
+              artworkID: artwork!.internalID,
               maxBidAmountCents,
               saleID: sale.internalID,
             },
@@ -213,7 +213,6 @@ export const ConfirmBidRoute: React.FC<
         // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         const { id } = token
         const {
-          // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
           createCreditCard: { creditCardOrError },
         } = await createCreditCardAndUpdatePhone(environment, phoneNumber, id)
 
@@ -233,6 +232,7 @@ export const ConfirmBidRoute: React.FC<
     }
 
     createBidderPosition(selectedBid)
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       .then(data => verifyBidderPosition({ actions, data, selectedBid }))
       .catch(error => onJsError(actions, error))
   }
@@ -243,7 +243,7 @@ export const ConfirmBidRoute: React.FC<
     selectedBid,
   }: {
     actions: BidFormActions
-    data: ConfirmBidCreateBidderPositionMutationResponse
+    data: ConfirmBidCreateBidderPositionMutation$data
     selectedBid: number
   }) {
     // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
@@ -268,7 +268,7 @@ export const ConfirmBidRoute: React.FC<
       bidderPositionQuery(environment, {
         bidderPositionID: position.internalID,
       })
-        .then(res => checkBidderPosition({ actions, data: res, selectedBid }))
+        .then(res => checkBidderPosition({ actions, data: res!, selectedBid }))
         .catch(error => onJsError(actions, error))
     } else {
       handleMutationError(actions, result)
@@ -281,7 +281,7 @@ export const ConfirmBidRoute: React.FC<
     selectedBid,
   }: {
     actions: BidFormActions
-    data: BidderPositionQueryResponse
+    data: BidderPositionQuery$data
     selectedBid: number
   }) {
     // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
@@ -297,7 +297,7 @@ export const ConfirmBidRoute: React.FC<
             bidderPositionID: position.internalID,
           })
             .then(res =>
-              checkBidderPosition({ actions, data: res, selectedBid })
+              checkBidderPosition({ actions, data: res!, selectedBid })
             )
             .catch(error => onJsError(actions, error)),
         1000
@@ -361,14 +361,15 @@ const TrackingWrappedConfirmBidRoute = track<ConfirmBidProps>(
   })
 )(StripeWrappedConfirmBidRoute)
 
-export const ConfirmBidRouteFragmentContainer = createFragmentContainer<
-  ConfirmBidProps
->(TrackingWrappedConfirmBidRoute, {
-  me: graphql`
-    fragment ConfirmBid_me on Me {
-      internalID
-      hasQualifiedCreditCards
-      ...BidForm_me
-    }
-  `,
-})
+export const ConfirmBidRouteFragmentContainer = createFragmentContainer(
+  TrackingWrappedConfirmBidRoute,
+  {
+    me: graphql`
+      fragment ConfirmBid_me on Me {
+        internalID
+        hasQualifiedCreditCards
+        ...BidForm_me
+      }
+    `,
+  }
+)

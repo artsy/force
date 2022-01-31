@@ -1,5 +1,12 @@
-import { createContext, useCallback, useContext, useEffect, useRef, useState } from "react";
-import * as React from "react";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react"
+import * as React from "react"
 import { Engine } from "../Engine"
 import { useEngine } from "../config"
 import { createFragmentContainer, graphql, Environment } from "react-relay"
@@ -143,6 +150,7 @@ export const InquiryProvider: React.FC<InquiryProviderProps> = ({
    * information, etc. We store the Relay environment in a ref then update it here.
    */
   const setRelayEnvironment = useCallback((updatedEnvironment: Environment) => {
+    // @ts-ignore UPGRADE RELAY 13
     relayEnvironment.current = updatedEnvironment
     return relayEnvironment
   }, [])

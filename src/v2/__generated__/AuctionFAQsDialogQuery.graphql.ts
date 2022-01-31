@@ -1,57 +1,25 @@
+/**
+ * @generated SignedSource<<c8b35cd4479a81fb0e8192204ee9cec6>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type AuctionFAQsDialogQueryVariables = {};
-export type AuctionFAQsDialogQueryResponse = {
-    readonly viewer: {
-        readonly " $fragmentRefs": FragmentRefs<"AuctionFAQsDialog_viewer">;
-    } | null;
+export type AuctionFAQsDialogQuery$variables = {};
+export type AuctionFAQsDialogQuery$data = {
+  readonly viewer: {
+    readonly " $fragmentSpreads": FragmentRefs<"AuctionFAQsDialog_viewer">;
+  } | null;
 };
 export type AuctionFAQsDialogQuery = {
-    readonly response: AuctionFAQsDialogQueryResponse;
-    readonly variables: AuctionFAQsDialogQueryVariables;
+  variables: AuctionFAQsDialogQuery$variables;
+  response: AuctionFAQsDialogQuery$data;
 };
-
-
-
-/*
-query AuctionFAQsDialogQuery {
-  viewer {
-    ...AuctionFAQsDialog_viewer
-  }
-}
-
-fragment AuctionFAQsDialog_viewer on Viewer {
-  bidding: page(id: "how-auctions-work-bidding") {
-    name
-    content(format: HTML)
-    id
-  }
-  buyersPremium: page(id: "how-auctions-work-buyers-premium-taxes-and-fees") {
-    name
-    content(format: HTML)
-    id
-  }
-  paymentsAndShipping: page(id: "how-auctions-work-payments-and-shipping") {
-    name
-    content(format: HTML)
-    id
-  }
-  emailsAndAlerts: page(id: "how-auctions-work-emails-and-alerts") {
-    name
-    content(format: HTML)
-    id
-  }
-  conditionsOfSale: page(id: "how-auctions-work-conditions-of-sale") {
-    name
-    content(format: HTML)
-    id
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -219,5 +187,7 @@ return {
   }
 };
 })();
-(node as any).hash = '6694e8dad93ca4f573070fe11f696181';
+
+(node as any).hash = "6694e8dad93ca4f573070fe11f696181";
+
 export default node;

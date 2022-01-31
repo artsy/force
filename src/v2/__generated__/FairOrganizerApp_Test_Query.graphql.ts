@@ -1,173 +1,25 @@
+/**
+ * @generated SignedSource<<98469ed70e40502db03eb8062830fb30>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type FairOrganizerApp_Test_QueryVariables = {};
-export type FairOrganizerApp_Test_QueryResponse = {
-    readonly fairOrganizer: {
-        readonly " $fragmentRefs": FragmentRefs<"FairOrganizerApp_fairOrganizer">;
-    } | null;
+export type FairOrganizerApp_Test_Query$variables = {};
+export type FairOrganizerApp_Test_Query$data = {
+  readonly fairOrganizer: {
+    readonly " $fragmentSpreads": FragmentRefs<"FairOrganizerApp_fairOrganizer">;
+  } | null;
 };
 export type FairOrganizerApp_Test_Query = {
-    readonly response: FairOrganizerApp_Test_QueryResponse;
-    readonly variables: FairOrganizerApp_Test_QueryVariables;
+  variables: FairOrganizerApp_Test_Query$variables;
+  response: FairOrganizerApp_Test_Query$data;
 };
-
-
-
-/*
-query FairOrganizerApp_Test_Query {
-  fairOrganizer(id: "example") {
-    ...FairOrganizerApp_fairOrganizer
-    id
-  }
-}
-
-fragment FairEditorialItemLink_article on Article {
-  internalID
-  slug
-  title
-  href
-  publishedAt(format: "MMMM D, YYYY")
-}
-
-fragment FairEditorialItem_article on Article {
-  id
-  title
-  publishedAt(format: "MMMM D, YYYY")
-  thumbnailTitle
-  thumbnailImage {
-    large: cropped(width: 670, height: 720) {
-      width
-      height
-      src
-      srcSet
-    }
-    small: cropped(width: 325, height: 240) {
-      width
-      height
-      src
-      srcSet
-    }
-  }
-  ...FairEditorialItemLink_article
-}
-
-fragment FairOrganizerApp_fairOrganizer on FairOrganizer {
-  name
-  slug
-  about(format: HTML)
-  profile {
-    image {
-      url(version: "wide")
-    }
-    id
-  }
-  ...FairOrganizerPastEventsRail_fairOrganizer
-  ...FairOrganizerHeaderImage_fairOrganizer
-  ...FairOrganizerHeader_fairOrganizer
-  ...FairOrganizerLatestArticles_fairOrganizer
-}
-
-fragment FairOrganizerFollowButton_fairOrganizer on FairOrganizer {
-  slug
-  name
-  profile {
-    id
-    internalID
-    isFollowed
-  }
-}
-
-fragment FairOrganizerHeaderIcon_fairOrganizer on FairOrganizer {
-  name
-  profile {
-    icon {
-      desktop: cropped(width: 80, height: 80, version: "square140") {
-        src
-        srcSet
-        size: width
-      }
-      mobile: cropped(width: 60, height: 60, version: "square140") {
-        src
-        srcSet
-        size: width
-      }
-    }
-    id
-  }
-}
-
-fragment FairOrganizerHeaderImage_fairOrganizer on FairOrganizer {
-  profile {
-    image {
-      url(version: "wide")
-    }
-    id
-  }
-}
-
-fragment FairOrganizerHeader_fairOrganizer on FairOrganizer {
-  name
-  fairsConnection(first: 1, sort: START_AT_DESC) {
-    edges {
-      node {
-        href
-        startAt
-        exhibitionPeriod
-        id
-      }
-    }
-  }
-  ...FairOrganizerHeaderIcon_fairOrganizer
-  ...FairOrganizerFollowButton_fairOrganizer
-  ...FairOrganizerInfo_fairOrganizer
-}
-
-fragment FairOrganizerInfo_fairOrganizer on FairOrganizer {
-  about(format: HTML)
-}
-
-fragment FairOrganizerLatestArticles_fairOrganizer on FairOrganizer {
-  name
-  slug
-  articlesConnection(first: 7, sort: PUBLISHED_AT_DESC) {
-    totalCount
-    edges {
-      node {
-        id
-        ...FairEditorialItem_article
-      }
-    }
-  }
-}
-
-fragment FairOrganizerPastEventRailCell_fair on Fair {
-  slug
-  name
-  image {
-    cropped(width: 325, height: 244) {
-      width
-      height
-      src
-      srcSet
-    }
-  }
-}
-
-fragment FairOrganizerPastEventsRail_fairOrganizer on FairOrganizer {
-  pastFairs: fairsConnection(first: 20, sort: START_AT_DESC, status: CLOSED, hasFullFeature: true) {
-    edges {
-      node {
-        id
-        ...FairOrganizerPastEventRailCell_fair
-      }
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -862,5 +714,7 @@ return {
   }
 };
 })();
-(node as any).hash = '2ad6f4a54abafbde7061ac08a7410afa';
+
+(node as any).hash = "2ad6f4a54abafbde7061ac08a7410afa";
+
 export default node;

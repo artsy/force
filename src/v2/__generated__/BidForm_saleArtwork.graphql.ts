@@ -1,32 +1,35 @@
+/**
+ * @generated SignedSource<<6945f16dadcad4890ff39b9cfca0b1ad>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type BidForm_saleArtwork = {
-    readonly minimumNextBid: {
-        readonly cents: number | null;
+export type BidForm_saleArtwork$data = {
+  readonly minimumNextBid: {
+    readonly cents: number | null;
+  } | null;
+  readonly increments: ReadonlyArray<{
+    readonly cents: number | null;
+    readonly display: string | null;
+  } | null> | null;
+  readonly sale: {
+    readonly slug: string;
+    readonly registrationStatus: {
+      readonly qualifiedForBidding: boolean | null;
     } | null;
-    readonly increments: ReadonlyArray<{
-        readonly cents: number | null;
-        readonly display: string | null;
-    } | null> | null;
-    readonly sale: {
-        readonly slug: string;
-        readonly registrationStatus: {
-            readonly qualifiedForBidding: boolean | null;
-        } | null;
-    } | null;
-    readonly " $refType": "BidForm_saleArtwork";
+  } | null;
+  readonly " $fragmentType": "BidForm_saleArtwork";
 };
-export type BidForm_saleArtwork$data = BidForm_saleArtwork;
 export type BidForm_saleArtwork$key = {
-    readonly " $data"?: BidForm_saleArtwork$data;
-    readonly " $fragmentRefs": FragmentRefs<"BidForm_saleArtwork">;
+  readonly " $data"?: BidForm_saleArtwork$data;
+  readonly " $fragmentSpreads": FragmentRefs<"BidForm_saleArtwork">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = {
@@ -120,5 +123,7 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '40cc7961713f7964a792ce4f22933426';
+
+(node as any).hash = "40cc7961713f7964a792ce4f22933426";
+
 export default node;

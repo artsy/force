@@ -1,36 +1,39 @@
+/**
+ * @generated SignedSource<<41970f7bded933c8a6528c338f61b9da>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ConversationList_me = {
-    readonly conversationsConnection: {
-        readonly edges: ReadonlyArray<{
-            readonly cursor: string;
-            readonly node: {
-                readonly id: string;
-                readonly internalID: string | null;
-                readonly lastMessage: string | null;
-                readonly " $fragmentRefs": FragmentRefs<"ConversationSnippet_conversation">;
-            } | null;
-        } | null> | null;
-        readonly pageInfo: {
-            readonly endCursor: string | null;
-            readonly hasNextPage: boolean;
-            readonly hasPreviousPage: boolean;
-            readonly startCursor: string | null;
-        };
-    } | null;
-    readonly " $refType": "ConversationList_me";
+export type ConversationList_me$data = {
+  readonly conversationsConnection: {
+    readonly edges: ReadonlyArray<{
+      readonly cursor: string;
+      readonly node: {
+        readonly id: string;
+        readonly internalID: string | null;
+        readonly lastMessage: string | null;
+        readonly " $fragmentSpreads": FragmentRefs<"ConversationSnippet_conversation">;
+      } | null;
+    } | null> | null;
+    readonly pageInfo: {
+      readonly endCursor: string | null;
+      readonly hasNextPage: boolean;
+      readonly hasPreviousPage: boolean;
+      readonly startCursor: string | null;
+    };
+  } | null;
+  readonly " $fragmentType": "ConversationList_me";
 };
-export type ConversationList_me$data = ConversationList_me;
 export type ConversationList_me$key = {
-    readonly " $data"?: ConversationList_me$data;
-    readonly " $fragmentRefs": FragmentRefs<"ConversationList_me">;
+  readonly " $data"?: ConversationList_me$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ConversationList_me">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [
@@ -123,16 +126,16 @@ const node: ReaderFragment = {
                   "storageKey": null
                 },
                 {
+                  "args": null,
+                  "kind": "FragmentSpread",
+                  "name": "ConversationSnippet_conversation"
+                },
+                {
                   "alias": null,
                   "args": null,
                   "kind": "ScalarField",
                   "name": "__typename",
                   "storageKey": null
-                },
-                {
-                  "args": null,
-                  "kind": "FragmentSpread",
-                  "name": "ConversationSnippet_conversation"
                 }
               ],
               "storageKey": null
@@ -186,5 +189,7 @@ const node: ReaderFragment = {
   "type": "Me",
   "abstractKey": null
 };
-(node as any).hash = '81c8754e57ad661670bdc6f4f9b0c5ca';
+
+(node as any).hash = "81c8754e57ad661670bdc6f4f9b0c5ca";
+
 export default node;

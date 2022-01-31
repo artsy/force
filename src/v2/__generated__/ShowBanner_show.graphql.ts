@@ -1,35 +1,38 @@
+/**
+ * @generated SignedSource<<6a5a46a5a779874e3c89604f5b9b0b74>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ShowBanner_show = {
-    readonly slug: string;
-    readonly name: string | null;
-    readonly href: string | null;
-    readonly isFairBooth: boolean | null;
-    readonly exhibitionPeriod: string | null;
-    readonly status: string | null;
-    readonly description: string | null;
-    readonly location: {
-        readonly city: string | null;
+export type ShowBanner_show$data = {
+  readonly slug: string;
+  readonly name: string | null;
+  readonly href: string | null;
+  readonly isFairBooth: boolean | null;
+  readonly exhibitionPeriod: string | null;
+  readonly status: string | null;
+  readonly description: string | null;
+  readonly location: {
+    readonly city: string | null;
+  } | null;
+  readonly coverImage: {
+    readonly medium: {
+      readonly src: string;
+      readonly srcSet: string;
     } | null;
-    readonly coverImage: {
-        readonly medium: {
-            readonly src: string;
-            readonly srcSet: string;
-        } | null;
-    } | null;
-    readonly " $refType": "ShowBanner_show";
+  } | null;
+  readonly " $fragmentType": "ShowBanner_show";
 };
-export type ShowBanner_show$data = ShowBanner_show;
 export type ShowBanner_show$key = {
-    readonly " $data"?: ShowBanner_show$data;
-    readonly " $fragmentRefs": FragmentRefs<"ShowBanner_show">;
+  readonly " $data"?: ShowBanner_show$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ShowBanner_show">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -164,5 +167,7 @@ const node: ReaderFragment = {
   "type": "Show",
   "abstractKey": null
 };
-(node as any).hash = '828b00d539d4b868d577519d06109017';
+
+(node as any).hash = "828b00d539d4b868d577519d06109017";
+
 export default node;

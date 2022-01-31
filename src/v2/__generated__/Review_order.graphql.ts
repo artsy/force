@@ -1,47 +1,50 @@
+/**
+ * @generated SignedSource<<5fdc2a074cf12b851db695d7c83d37b6>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
-import { FragmentRefs } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 export type CommerceOrderModeEnum = "BUY" | "OFFER" | "%future added value";
 export type CommerceOrderSourceEnum = "artwork_page" | "inquiry" | "%future added value";
-export type Review_order = {
+import { FragmentRefs } from "relay-runtime";
+export type Review_order$data = {
+  readonly internalID: string;
+  readonly mode: CommerceOrderModeEnum | null;
+  readonly source: CommerceOrderSourceEnum;
+  readonly itemsTotal: string | null;
+  readonly lineItems: {
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly artwork: {
+          readonly slug: string;
+          readonly internalID: string;
+          readonly artists: ReadonlyArray<{
+            readonly slug: string;
+          } | null> | null;
+        } | null;
+        readonly " $fragmentSpreads": FragmentRefs<"ItemReview_lineItem">;
+      } | null;
+    } | null> | null;
+  } | null;
+  readonly conversation?: {
+    readonly internalID: string | null;
+  } | null;
+  readonly myLastOffer?: {
+    readonly hasDefiniteTotal: boolean;
     readonly internalID: string;
-    readonly mode: CommerceOrderModeEnum | null;
-    readonly source: CommerceOrderSourceEnum;
-    readonly itemsTotal: string | null;
-    readonly lineItems: {
-        readonly edges: ReadonlyArray<{
-            readonly node: {
-                readonly artwork: {
-                    readonly slug: string;
-                    readonly internalID: string;
-                    readonly artists: ReadonlyArray<{
-                        readonly slug: string;
-                    } | null> | null;
-                } | null;
-                readonly " $fragmentRefs": FragmentRefs<"ItemReview_lineItem">;
-            } | null;
-        } | null> | null;
-    } | null;
-    readonly conversation?: {
-        readonly internalID: string | null;
-    } | null;
-    readonly myLastOffer?: {
-        readonly hasDefiniteTotal: boolean;
-        readonly internalID: string;
-    } | null;
-    readonly " $fragmentRefs": FragmentRefs<"ArtworkSummaryItem_order" | "TransactionDetailsSummaryItem_order" | "ShippingSummaryItem_order" | "CreditCardSummaryItem_order" | "ShippingArtaSummaryItem_order" | "OfferSummaryItem_order">;
-    readonly " $refType": "Review_order";
+  } | null;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtworkSummaryItem_order" | "TransactionDetailsSummaryItem_order" | "ShippingSummaryItem_order" | "CreditCardSummaryItem_order" | "ShippingArtaSummaryItem_order" | "OfferSummaryItem_order">;
+  readonly " $fragmentType": "Review_order";
 };
-export type Review_order$data = Review_order;
 export type Review_order$key = {
-    readonly " $data"?: Review_order$data;
-    readonly " $fragmentRefs": FragmentRefs<"Review_order">;
+  readonly " $data"?: Review_order$data;
+  readonly " $fragmentSpreads": FragmentRefs<"Review_order">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = {
@@ -117,6 +120,11 @@ return {
               "plural": false,
               "selections": [
                 {
+                  "args": null,
+                  "kind": "FragmentSpread",
+                  "name": "ItemReview_lineItem"
+                },
+                {
                   "alias": null,
                   "args": null,
                   "concreteType": "Artwork",
@@ -140,11 +148,6 @@ return {
                     }
                   ],
                   "storageKey": null
-                },
-                {
-                  "args": null,
-                  "kind": "FragmentSpread",
-                  "name": "ItemReview_lineItem"
                 }
               ],
               "storageKey": null
@@ -228,5 +231,7 @@ return {
   "abstractKey": "__isCommerceOrder"
 };
 })();
-(node as any).hash = '9f2fb427afbc623a5ba625f4b320fb41';
+
+(node as any).hash = "9f2fb427afbc623a5ba625f4b320fb41";
+
 export default node;

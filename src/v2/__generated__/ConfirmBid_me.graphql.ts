@@ -1,22 +1,25 @@
+/**
+ * @generated SignedSource<<c55cdb45dbaaaba1fee839c03050370c>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ConfirmBid_me = {
-    readonly internalID: string;
-    readonly hasQualifiedCreditCards: boolean | null;
-    readonly " $fragmentRefs": FragmentRefs<"BidForm_me">;
-    readonly " $refType": "ConfirmBid_me";
+export type ConfirmBid_me$data = {
+  readonly internalID: string;
+  readonly hasQualifiedCreditCards: boolean | null;
+  readonly " $fragmentSpreads": FragmentRefs<"BidForm_me">;
+  readonly " $fragmentType": "ConfirmBid_me";
 };
-export type ConfirmBid_me$data = ConfirmBid_me;
 export type ConfirmBid_me$key = {
-    readonly " $data"?: ConfirmBid_me$data;
-    readonly " $fragmentRefs": FragmentRefs<"ConfirmBid_me">;
+  readonly " $data"?: ConfirmBid_me$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ConfirmBid_me">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -47,5 +50,7 @@ const node: ReaderFragment = {
   "type": "Me",
   "abstractKey": null
 };
-(node as any).hash = 'bb8ac1b1d0c2ddcd9f84e73755eb4a7e';
+
+(node as any).hash = "bb8ac1b1d0c2ddcd9f84e73755eb4a7e";
+
 export default node;

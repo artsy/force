@@ -1,70 +1,25 @@
+/**
+ * @generated SignedSource<<7b338c7bed91215e0fe93d459b6d42f0>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type TwoFactorAuthenticationRefetchQueryVariables = {};
-export type TwoFactorAuthenticationRefetchQueryResponse = {
-    readonly me: {
-        readonly " $fragmentRefs": FragmentRefs<"TwoFactorAuthentication_me">;
-    } | null;
+export type TwoFactorAuthenticationRefetchQuery$variables = {};
+export type TwoFactorAuthenticationRefetchQuery$data = {
+  readonly me: {
+    readonly " $fragmentSpreads": FragmentRefs<"TwoFactorAuthentication_me">;
+  } | null;
 };
 export type TwoFactorAuthenticationRefetchQuery = {
-    readonly response: TwoFactorAuthenticationRefetchQueryResponse;
-    readonly variables: TwoFactorAuthenticationRefetchQueryVariables;
+  variables: TwoFactorAuthenticationRefetchQuery$variables;
+  response: TwoFactorAuthenticationRefetchQuery$data;
 };
-
-
-
-/*
-query TwoFactorAuthenticationRefetchQuery {
-  me {
-    ...TwoFactorAuthentication_me
-    id
-  }
-}
-
-fragment AppSecondFactor_me on Me {
-  hasSecondFactorEnabled
-  appSecondFactors: secondFactors(kinds: [app]) {
-    __typename
-    ... on AppSecondFactor {
-      __typename
-      internalID
-      name
-    }
-  }
-}
-
-fragment BackupSecondFactor_me on Me {
-  backupSecondFactors: secondFactors(kinds: [backup]) {
-    __typename
-    ... on BackupSecondFactor {
-      __typename
-    }
-  }
-}
-
-fragment SmsSecondFactor_me on Me {
-  hasSecondFactorEnabled
-  smsSecondFactors: secondFactors(kinds: [sms]) {
-    __typename
-    ... on SmsSecondFactor {
-      __typename
-      internalID
-      formattedPhoneNumber
-    }
-  }
-}
-
-fragment TwoFactorAuthentication_me on Me {
-  hasSecondFactorEnabled
-  ...AppSecondFactor_me
-  ...SmsSecondFactor_me
-  ...BackupSecondFactor_me
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = {
@@ -241,5 +196,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'b4bc1c478f26b9cef75a7e29d38d40d8';
+
+(node as any).hash = "b4bc1c478f26b9cef75a7e29d38d40d8";
+
 export default node;

@@ -1,63 +1,44 @@
+/**
+ * @generated SignedSource<<5e4d1e4ee9c50a5bb094842c41ebf576>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type RequestCredentialsForAssetUploadInput = {
-    acl: string;
-    clientMutationId?: string | null;
-    name: string;
+  acl: string;
+  clientMutationId?: string | null;
+  name: string;
 };
-export type getGeminiCredentialsForEnvironmentMutationVariables = {
-    input: RequestCredentialsForAssetUploadInput;
+export type getGeminiCredentialsForEnvironmentMutation$variables = {
+  input: RequestCredentialsForAssetUploadInput;
 };
-export type getGeminiCredentialsForEnvironmentMutationResponse = {
-    readonly requestCredentialsForAssetUpload: {
-        readonly asset: {
-            readonly signature: string;
-            readonly credentials: string;
-            readonly policyEncoded: string;
-            readonly policyDocument: {
-                readonly expiration: string;
-                readonly conditions: {
-                    readonly acl: string;
-                    readonly bucket: string;
-                    readonly geminiKey: string;
-                    readonly successActionStatus: string;
-                };
-            };
-        } | null;
+export type getGeminiCredentialsForEnvironmentMutation$data = {
+  readonly requestCredentialsForAssetUpload: {
+    readonly asset: {
+      readonly signature: string;
+      readonly credentials: string;
+      readonly policyEncoded: string;
+      readonly policyDocument: {
+        readonly expiration: string;
+        readonly conditions: {
+          readonly acl: string;
+          readonly bucket: string;
+          readonly geminiKey: string;
+          readonly successActionStatus: string;
+        };
+      };
     } | null;
+  } | null;
 };
 export type getGeminiCredentialsForEnvironmentMutation = {
-    readonly response: getGeminiCredentialsForEnvironmentMutationResponse;
-    readonly variables: getGeminiCredentialsForEnvironmentMutationVariables;
+  variables: getGeminiCredentialsForEnvironmentMutation$variables;
+  response: getGeminiCredentialsForEnvironmentMutation$data;
 };
-
-
-
-/*
-mutation getGeminiCredentialsForEnvironmentMutation(
-  $input: RequestCredentialsForAssetUploadInput!
-) {
-  requestCredentialsForAssetUpload(input: $input) {
-    asset {
-      signature
-      credentials
-      policyEncoded
-      policyDocument {
-        expiration
-        conditions {
-          acl
-          bucket
-          geminiKey
-          successActionStatus
-        }
-      }
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -202,5 +183,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'a0cc2049b62b05a1c93d0cae69fcda7a';
+
+(node as any).hash = "a0cc2049b62b05a1c93d0cae69fcda7a";
+
 export default node;

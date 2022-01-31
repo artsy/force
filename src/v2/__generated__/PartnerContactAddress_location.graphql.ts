@@ -1,26 +1,29 @@
+/**
+ * @generated SignedSource<<3a18734d47b1917603832dcf4ac552d4>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type PartnerContactAddress_location = {
-    readonly city: string | null;
-    readonly phone: string | null;
-    readonly state: string | null;
-    readonly address: string | null;
-    readonly address2: string | null;
-    readonly postalCode: string | null;
-    readonly displayCountry: string | null;
-    readonly " $refType": "PartnerContactAddress_location";
+export type PartnerContactAddress_location$data = {
+  readonly city: string | null;
+  readonly phone: string | null;
+  readonly state: string | null;
+  readonly address: string | null;
+  readonly address2: string | null;
+  readonly postalCode: string | null;
+  readonly displayCountry: string | null;
+  readonly " $fragmentType": "PartnerContactAddress_location";
 };
-export type PartnerContactAddress_location$data = PartnerContactAddress_location;
 export type PartnerContactAddress_location$key = {
-    readonly " $data"?: PartnerContactAddress_location$data;
-    readonly " $fragmentRefs": FragmentRefs<"PartnerContactAddress_location">;
+  readonly " $data"?: PartnerContactAddress_location$data;
+  readonly " $fragmentSpreads": FragmentRefs<"PartnerContactAddress_location">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -81,5 +84,7 @@ const node: ReaderFragment = {
   "type": "Location",
   "abstractKey": null
 };
-(node as any).hash = '22f6058e36dba8b51303698d218bcc35';
+
+(node as any).hash = "22f6058e36dba8b51303698d218bcc35";
+
 export default node;

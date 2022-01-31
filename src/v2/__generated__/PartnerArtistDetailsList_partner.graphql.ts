@@ -1,30 +1,33 @@
+/**
+ * @generated SignedSource<<cedd0be726078b65d7e000f26fcf592d>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type PartnerArtistDetailsList_partner = {
-    readonly slug: string;
-    readonly artists: {
-        readonly edges: ReadonlyArray<{
-            readonly id: string;
-            readonly representedBy: boolean | null;
-            readonly counts: {
-                readonly artworks: number | null;
-            } | null;
-            readonly " $fragmentRefs": FragmentRefs<"PartnerArtistDetails_partnerArtist">;
-        } | null> | null;
-    } | null;
-    readonly " $refType": "PartnerArtistDetailsList_partner";
+export type PartnerArtistDetailsList_partner$data = {
+  readonly slug: string;
+  readonly artists: {
+    readonly edges: ReadonlyArray<{
+      readonly id: string;
+      readonly representedBy: boolean | null;
+      readonly counts: {
+        readonly artworks: Int | null;
+      } | null;
+      readonly " $fragmentSpreads": FragmentRefs<"PartnerArtistDetails_partnerArtist">;
+    } | null> | null;
+  } | null;
+  readonly " $fragmentType": "PartnerArtistDetailsList_partner";
 };
-export type PartnerArtistDetailsList_partner$data = PartnerArtistDetailsList_partner;
 export type PartnerArtistDetailsList_partner$key = {
-    readonly " $data"?: PartnerArtistDetailsList_partner$data;
-    readonly " $fragmentRefs": FragmentRefs<"PartnerArtistDetailsList_partner">;
+  readonly " $data"?: PartnerArtistDetailsList_partner$data;
+  readonly " $fragmentSpreads": FragmentRefs<"PartnerArtistDetailsList_partner">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [
@@ -121,6 +124,11 @@ const node: ReaderFragment = {
               "storageKey": null
             },
             {
+              "args": null,
+              "kind": "FragmentSpread",
+              "name": "PartnerArtistDetails_partnerArtist"
+            },
+            {
               "alias": null,
               "args": null,
               "kind": "ScalarField",
@@ -144,11 +152,6 @@ const node: ReaderFragment = {
                 }
               ],
               "storageKey": null
-            },
-            {
-              "args": null,
-              "kind": "FragmentSpread",
-              "name": "PartnerArtistDetails_partnerArtist"
             }
           ],
           "storageKey": null
@@ -185,5 +188,7 @@ const node: ReaderFragment = {
   "type": "Partner",
   "abstractKey": null
 };
-(node as any).hash = '5d4d6e70b06363b805148e223f96606d';
+
+(node as any).hash = "5d4d6e70b06363b805148e223f96606d";
+
 export default node;

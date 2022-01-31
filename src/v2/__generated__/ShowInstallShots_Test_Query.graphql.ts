@@ -1,54 +1,25 @@
+/**
+ * @generated SignedSource<<8f61eaf8d8be05c4833e8f6c98de4b09>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ShowInstallShots_Test_QueryVariables = {};
-export type ShowInstallShots_Test_QueryResponse = {
-    readonly show: {
-        readonly " $fragmentRefs": FragmentRefs<"ShowInstallShots_show">;
-    } | null;
+export type ShowInstallShots_Test_Query$variables = {};
+export type ShowInstallShots_Test_Query$data = {
+  readonly show: {
+    readonly " $fragmentSpreads": FragmentRefs<"ShowInstallShots_show">;
+  } | null;
 };
 export type ShowInstallShots_Test_Query = {
-    readonly response: ShowInstallShots_Test_QueryResponse;
-    readonly variables: ShowInstallShots_Test_QueryVariables;
+  variables: ShowInstallShots_Test_Query$variables;
+  response: ShowInstallShots_Test_Query$data;
 };
-
-
-
-/*
-query ShowInstallShots_Test_Query {
-  show(id: "xxx") {
-    ...ShowInstallShots_show
-    id
-  }
-}
-
-fragment ShowInstallShots_show on Show {
-  name
-  images(default: false, size: 100) {
-    internalID
-    caption
-    mobile: resized(width: 200) {
-      width
-      height
-    }
-    desktop: resized(width: 325) {
-      src
-      srcSet
-      width
-      height
-    }
-    zoom: resized(width: 900, height: 900, version: ["larger", "large"]) {
-      src
-      srcSet
-      width
-      height
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -326,5 +297,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'c0c1d39b4bf1f57873328a7bce4868c1';
+
+(node as any).hash = "c0c1d39b4bf1f57873328a7bce4868c1";
+
 export default node;

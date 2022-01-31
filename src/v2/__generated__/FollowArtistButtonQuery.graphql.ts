@@ -1,45 +1,27 @@
+/**
+ * @generated SignedSource<<aacf7902807fbf18f11e16fc89bf6edb>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type FollowArtistButtonQueryVariables = {
-    id: string;
+export type FollowArtistButtonQuery$variables = {
+  id: string;
 };
-export type FollowArtistButtonQueryResponse = {
-    readonly artist: {
-        readonly " $fragmentRefs": FragmentRefs<"FollowArtistButton_artist">;
-    } | null;
+export type FollowArtistButtonQuery$data = {
+  readonly artist: {
+    readonly " $fragmentSpreads": FragmentRefs<"FollowArtistButton_artist">;
+  } | null;
 };
 export type FollowArtistButtonQuery = {
-    readonly response: FollowArtistButtonQueryResponse;
-    readonly variables: FollowArtistButtonQueryVariables;
+  variables: FollowArtistButtonQuery$variables;
+  response: FollowArtistButtonQuery$data;
 };
-
-
-
-/*
-query FollowArtistButtonQuery(
-  $id: String!
-) {
-  artist(id: $id) {
-    ...FollowArtistButton_artist
-    id
-  }
-}
-
-fragment FollowArtistButton_artist on Artist {
-  id
-  internalID
-  name
-  slug
-  is_followed: isFollowed
-  counts {
-    follows
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -165,5 +147,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'ee43e11ac6bdf463ccdb4945e8bb663f';
+
+(node as any).hash = "ee43e11ac6bdf463ccdb4945e8bb663f";
+
 export default node;

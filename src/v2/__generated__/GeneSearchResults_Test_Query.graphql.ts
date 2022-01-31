@@ -1,58 +1,27 @@
+/**
+ * @generated SignedSource<<5841b7c3f9fa3521b4c3635f455c5ab0>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type GeneSearchResults_Test_QueryVariables = {
-    term: string;
+export type GeneSearchResults_Test_Query$variables = {
+  term: string;
 };
-export type GeneSearchResults_Test_QueryResponse = {
-    readonly viewer: {
-        readonly " $fragmentRefs": FragmentRefs<"GeneSearchResults_viewer">;
-    } | null;
+export type GeneSearchResults_Test_Query$data = {
+  readonly viewer: {
+    readonly " $fragmentSpreads": FragmentRefs<"GeneSearchResults_viewer">;
+  } | null;
 };
 export type GeneSearchResults_Test_Query = {
-    readonly response: GeneSearchResults_Test_QueryResponse;
-    readonly variables: GeneSearchResults_Test_QueryVariables;
+  variables: GeneSearchResults_Test_Query$variables;
+  response: GeneSearchResults_Test_Query$data;
 };
-
-
-
-/*
-query GeneSearchResults_Test_Query(
-  $term: String!
-) {
-  viewer {
-    ...GeneSearchResults_viewer
-  }
-}
-
-fragment GeneSearchResults_viewer on Viewer {
-  match_gene: searchConnection(query: $term, mode: AUTOSUGGEST, entities: [GENE], first: 10) {
-    edges {
-      node {
-        __typename
-        ... on Gene {
-          name
-          id
-          slug
-          internalID
-          image {
-            cropped(width: 100, height: 100) {
-              url
-            }
-          }
-        }
-        ... on Node {
-          __isNode: __typename
-          id
-        }
-      }
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -328,5 +297,7 @@ return {
   }
 };
 })();
-(node as any).hash = '65eb583c80fd45315f58bca90288e872';
+
+(node as any).hash = "65eb583c80fd45315f58bca90288e872";
+
 export default node;

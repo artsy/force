@@ -1,233 +1,107 @@
+/**
+ * @generated SignedSource<<0243aa304e070d53e1a5aebf20c62347>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtistInfo_Test_QueryVariables = {};
-export type ArtistInfo_Test_QueryResponse = {
-    readonly artist: {
-        readonly " $fragmentRefs": FragmentRefs<"ArtistInfo_artist">;
-    } | null;
+export type ArtistInfo_Test_Query$variables = {};
+export type ArtistInfo_Test_Query$data = {
+  readonly artist: {
+    readonly " $fragmentSpreads": FragmentRefs<"ArtistInfo_artist">;
+  } | null;
 };
-export type ArtistInfo_Test_QueryRawResponse = {
-    readonly artist: ({
-        readonly internalID: string;
-        readonly slug: string;
-        readonly name: string | null;
-        readonly href: string | null;
-        readonly image: ({
-            readonly cropped: ({
-                readonly src: string;
-                readonly srcSet: string;
-            }) | null;
-        }) | null;
-        readonly formatted_nationality_and_birthday: string | null;
-        readonly counts: ({
-            readonly partner_shows: number | null;
-            readonly follows: number | null;
-        }) | null;
-        readonly exhibition_highlights: ReadonlyArray<({
-            readonly partner: ({
-                readonly __typename: "ExternalPartner";
-                readonly __isNode: "ExternalPartner";
-                readonly id: string;
-                readonly name: string | null;
-            } | {
-                readonly __typename: "Partner";
-                readonly __isNode: "Partner";
-                readonly id: string;
-                readonly name: string | null;
-            } | {
-                readonly __typename: string;
-                readonly __isNode: string;
-                readonly id: string;
-            }) | null;
-            readonly name: string | null;
-            readonly start_at: string | null;
-            readonly cover_image: ({
-                readonly cropped: ({
-                    readonly url: string;
-                }) | null;
-            }) | null;
-            readonly city: string | null;
-            readonly id: string;
-        }) | null> | null;
-        readonly collections: ReadonlyArray<string | null> | null;
-        readonly highlights: ({
-            readonly partnersConnection: ({
-                readonly edges: ReadonlyArray<({
-                    readonly node: ({
-                        readonly __typename: "Partner";
-                        readonly id: string;
-                        readonly categories: ReadonlyArray<({
-                            readonly slug: string;
-                            readonly id: string;
-                        }) | null> | null;
-                    }) | null;
-                    readonly id: string;
-                }) | null> | null;
-            }) | null;
-        }) | null;
-        readonly auctionResultsConnection: ({
-            readonly edges: ReadonlyArray<({
-                readonly node: ({
-                    readonly __typename: "AuctionResult";
-                    readonly id: string;
-                    readonly price_realized: ({
-                        readonly display: string | null;
-                    }) | null;
-                    readonly organization: string | null;
-                    readonly sale_date: string | null;
-                }) | null;
-            }) | null> | null;
-        }) | null;
-        readonly biographyBlurb: ({
-            readonly credit: string | null;
-            readonly partnerID: string | null;
-            readonly text: string | null;
-        }) | null;
+export type ArtistInfo_Test_Query$rawResponse = {
+  readonly artist: {
+    readonly internalID: string;
+    readonly slug: string;
+    readonly name: string | null;
+    readonly href: string | null;
+    readonly image: {
+      readonly cropped: {
+        readonly src: string;
+        readonly srcSet: string;
+      } | null;
+    } | null;
+    readonly formatted_nationality_and_birthday: string | null;
+    readonly counts: {
+      readonly partner_shows: Int | null;
+      readonly follows: Int | null;
+    } | null;
+    readonly exhibition_highlights: ReadonlyArray<{
+      readonly partner: {
+        readonly __typename: "ExternalPartner";
+        readonly __isNode: "ExternalPartner";
         readonly id: string;
-        readonly is_followed: boolean | null;
-    }) | null;
+        readonly name: string | null;
+      } | {
+        readonly __typename: "Partner";
+        readonly __isNode: "Partner";
+        readonly id: string;
+        readonly name: string | null;
+      } | {
+        readonly __typename: string;
+        readonly __isNode: string;
+        readonly id: string;
+      } | null;
+      readonly name: string | null;
+      readonly start_at: string | null;
+      readonly cover_image: {
+        readonly cropped: {
+          readonly url: string;
+        } | null;
+      } | null;
+      readonly city: string | null;
+      readonly id: string;
+    } | null> | null;
+    readonly collections: ReadonlyArray<string | null> | null;
+    readonly highlights: {
+      readonly partnersConnection: {
+        readonly edges: ReadonlyArray<{
+          readonly node: {
+            readonly __typename: "Partner";
+            readonly id: string;
+            readonly categories: ReadonlyArray<{
+              readonly slug: string;
+              readonly id: string;
+            } | null> | null;
+          } | null;
+          readonly id: string;
+        } | null> | null;
+      } | null;
+    } | null;
+    readonly auctionResultsConnection: {
+      readonly edges: ReadonlyArray<{
+        readonly node: {
+          readonly __typename: "AuctionResult";
+          readonly id: string;
+          readonly price_realized: {
+            readonly display: string | null;
+          } | null;
+          readonly organization: string | null;
+          readonly sale_date: string | null;
+        } | null;
+      } | null> | null;
+    } | null;
+    readonly biographyBlurb: {
+      readonly credit: string | null;
+      readonly partnerID: string | null;
+      readonly text: string | null;
+    } | null;
+    readonly id: string;
+    readonly is_followed: boolean | null;
+  } | null;
 };
 export type ArtistInfo_Test_Query = {
-    readonly response: ArtistInfo_Test_QueryResponse;
-    readonly variables: ArtistInfo_Test_QueryVariables;
-    readonly rawResponse: ArtistInfo_Test_QueryRawResponse;
+  variables: ArtistInfo_Test_Query$variables;
+  response: ArtistInfo_Test_Query$data;
+  rawResponse: ArtistInfo_Test_Query$rawResponse;
 };
-
-
-
-/*
-query ArtistInfo_Test_Query {
-  artist(id: "banksy") {
-    ...ArtistInfo_artist
-    id
-  }
-}
-
-fragment ArtistBio_bio on Artist {
-  biographyBlurb(format: HTML, partnerBio: false) {
-    credit
-    partnerID
-    text
-  }
-}
-
-fragment ArtistInfo_artist on Artist {
-  internalID
-  slug
-  name
-  href
-  image {
-    cropped(width: 45, height: 45) {
-      src
-      srcSet
-    }
-  }
-  formatted_nationality_and_birthday: formattedNationalityAndBirthday
-  counts {
-    partner_shows: partnerShows
-  }
-  exhibition_highlights: exhibitionHighlights(size: 3) {
-    ...SelectedExhibitions_exhibitions
-    id
-  }
-  collections
-  highlights {
-    partnersConnection(first: 10, displayOnPartnerProfile: true, representedBy: true, partnerCategory: ["blue-chip", "top-established", "top-emerging"]) {
-      edges {
-        node {
-          __typename
-          id
-        }
-        id
-      }
-    }
-  }
-  auctionResultsConnection(recordsTrusted: true, first: 1, sort: PRICE_AND_DATE_DESC) {
-    edges {
-      node {
-        __typename
-        id
-      }
-    }
-  }
-  ...ArtistBio_bio
-  ...ArtistMarketInsights_artist
-  ...FollowArtistButton_artist
-  biographyBlurb(format: HTML, partnerBio: false) {
-    text
-  }
-}
-
-fragment ArtistMarketInsights_artist on Artist {
-  collections
-  highlights {
-    partnersConnection(first: 10, displayOnPartnerProfile: true, representedBy: true, partnerCategory: ["blue-chip", "top-established", "top-emerging"]) {
-      edges {
-        node {
-          categories {
-            slug
-            id
-          }
-          id
-        }
-        id
-      }
-    }
-  }
-  auctionResultsConnection(recordsTrusted: true, first: 1, sort: PRICE_AND_DATE_DESC) {
-    edges {
-      node {
-        price_realized: priceRealized {
-          display(format: "0.0a")
-        }
-        organization
-        sale_date: saleDate(format: "YYYY")
-        id
-      }
-    }
-  }
-}
-
-fragment FollowArtistButton_artist on Artist {
-  id
-  internalID
-  name
-  slug
-  is_followed: isFollowed
-  counts {
-    follows
-  }
-}
-
-fragment SelectedExhibitions_exhibitions on Show {
-  partner {
-    __typename
-    ... on ExternalPartner {
-      name
-      id
-    }
-    ... on Partner {
-      name
-    }
-    ... on Node {
-      __isNode: __typename
-      id
-    }
-  }
-  name
-  start_at: startAt(format: "YYYY")
-  cover_image: coverImage {
-    cropped(width: 800, height: 600) {
-      url
-    }
-  }
-  city
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -765,5 +639,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'c949c558fa41a1e6dfee249dbb233c6b';
+
+(node as any).hash = "c949c558fa41a1e6dfee249dbb233c6b";
+
 export default node;

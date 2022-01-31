@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/alt-text */
-import { MockRelayRendererFixturesArtistQueryRawResponse } from "v2/__generated__/MockRelayRendererFixturesArtistQuery.graphql"
-import { MockRelayRendererFixturesQueryRawResponse } from "v2/__generated__/MockRelayRendererFixturesQuery.graphql"
-import * as React from "react";
+import { MockRelayRendererFixturesArtistQuery$rawResponse } from "v2/__generated__/MockRelayRendererFixturesArtistQuery.graphql"
+import { MockRelayRendererFixturesQuery$rawResponse } from "v2/__generated__/MockRelayRendererFixturesQuery.graphql"
+import * as React from "react"
 import { renderRelayTree } from "../renderRelayTree"
 import { Artwork, query, renderToString } from "./MockRelayRendererFixtures"
 import { flushPromiseQueue } from "../flushPromiseQueue"
@@ -10,8 +10,8 @@ jest.unmock("react-relay")
 
 describe("renderRelayTree", () => {
   it("resolves a promise once the full tree (including nested query renderers) has been rendered", async () => {
-    const mockData: MockRelayRendererFixturesQueryRawResponse &
-      MockRelayRendererFixturesArtistQueryRawResponse = {
+    const mockData: MockRelayRendererFixturesQuery$rawResponse &
+      MockRelayRendererFixturesArtistQuery$rawResponse = {
       artwork: {
         id: "opaque-artwork-id",
         title: "Mona Lisa",
@@ -69,7 +69,7 @@ describe("renderRelayTree", () => {
       }
     }
 
-    const mockData: MockRelayRendererFixturesQueryRawResponse = {
+    const mockData: MockRelayRendererFixturesQuery$rawResponse = {
       artwork: {
         id: "opaque-artwork-id",
         title: "Mona Lisa",

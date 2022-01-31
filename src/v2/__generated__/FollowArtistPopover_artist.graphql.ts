@@ -1,30 +1,33 @@
+/**
+ * @generated SignedSource<<32114bc011061cca13a84c2d997aaeeb>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type FollowArtistPopover_artist = {
-    readonly related: {
-        readonly suggestedConnection: {
-            readonly edges: ReadonlyArray<{
-                readonly node: {
-                    readonly id: string;
-                    readonly internalID: string;
-                    readonly " $fragmentRefs": FragmentRefs<"FollowArtistPopoverRow_artist">;
-                } | null;
-            } | null> | null;
+export type FollowArtistPopover_artist$data = {
+  readonly related: {
+    readonly suggestedConnection: {
+      readonly edges: ReadonlyArray<{
+        readonly node: {
+          readonly id: string;
+          readonly internalID: string;
+          readonly " $fragmentSpreads": FragmentRefs<"FollowArtistPopoverRow_artist">;
         } | null;
+      } | null> | null;
     } | null;
-    readonly " $refType": "FollowArtistPopover_artist";
+  } | null;
+  readonly " $fragmentType": "FollowArtistPopover_artist";
 };
-export type FollowArtistPopover_artist$data = FollowArtistPopover_artist;
 export type FollowArtistPopover_artist$key = {
-    readonly " $data"?: FollowArtistPopover_artist$data;
-    readonly " $fragmentRefs": FragmentRefs<"FollowArtistPopover_artist">;
+  readonly " $data"?: FollowArtistPopover_artist$data;
+  readonly " $fragmentSpreads": FragmentRefs<"FollowArtistPopover_artist">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -110,5 +113,7 @@ const node: ReaderFragment = {
   "type": "Artist",
   "abstractKey": null
 };
-(node as any).hash = '90657ea28fda4ad1f17942932ad1d208';
+
+(node as any).hash = "90657ea28fda4ad1f17942932ad1d208";
+
 export default node;

@@ -1,73 +1,46 @@
+/**
+ * @generated SignedSource<<b99d0139b539a09c3acacfacf7ab9362>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type DeleteUserAddressInput = {
-    clientMutationId?: string | null;
-    userAddressID: string;
+  clientMutationId?: string | null;
+  userAddressID: string;
 };
-export type DeleteUserAddressMutationVariables = {
-    input: DeleteUserAddressInput;
+export type DeleteUserAddressMutation$variables = {
+  input: DeleteUserAddressInput;
 };
-export type DeleteUserAddressMutationResponse = {
-    readonly deleteUserAddress: {
-        readonly userAddressOrErrors: {
-            readonly id?: string;
-            readonly internalID?: string;
-            readonly name?: string | null;
-            readonly addressLine1?: string;
-            readonly addressLine2?: string | null;
-            readonly isDefault?: boolean;
-            readonly phoneNumber?: string | null;
-            readonly city?: string;
-            readonly region?: string | null;
-            readonly postalCode?: string | null;
-            readonly country?: string;
-            readonly errors?: ReadonlyArray<{
-                readonly code: string;
-                readonly message: string;
-            }>;
-        };
-    } | null;
+export type DeleteUserAddressMutation$data = {
+  readonly deleteUserAddress: {
+    readonly userAddressOrErrors: {
+      readonly id?: string;
+      readonly internalID?: string;
+      readonly name?: string | null;
+      readonly addressLine1?: string;
+      readonly addressLine2?: string | null;
+      readonly isDefault?: boolean;
+      readonly phoneNumber?: string | null;
+      readonly city?: string;
+      readonly region?: string | null;
+      readonly postalCode?: string | null;
+      readonly country?: string;
+      readonly errors?: ReadonlyArray<{
+        readonly code: string;
+        readonly message: string;
+      }>;
+    };
+  } | null;
 };
 export type DeleteUserAddressMutation = {
-    readonly response: DeleteUserAddressMutationResponse;
-    readonly variables: DeleteUserAddressMutationVariables;
+  variables: DeleteUserAddressMutation$variables;
+  response: DeleteUserAddressMutation$data;
 };
-
-
-
-/*
-mutation DeleteUserAddressMutation(
-  $input: DeleteUserAddressInput!
-) {
-  deleteUserAddress(input: $input) {
-    userAddressOrErrors {
-      __typename
-      ... on UserAddress {
-        id
-        internalID
-        name
-        addressLine1
-        addressLine2
-        isDefault
-        phoneNumber
-        city
-        region
-        postalCode
-        country
-      }
-      ... on Errors {
-        errors {
-          code
-          message
-        }
-      }
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -284,5 +257,7 @@ return {
   }
 };
 })();
-(node as any).hash = '45a8df457122ee6ddb24c927e5997d24';
+
+(node as any).hash = "45a8df457122ee6ddb24c927e5997d24";
+
 export default node;

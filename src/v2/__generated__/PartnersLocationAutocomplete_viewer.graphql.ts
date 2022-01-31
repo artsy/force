@@ -1,35 +1,38 @@
+/**
+ * @generated SignedSource<<52a0ad7efc5b5a853d6d1857d05a3581>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type PartnersLocationAutocomplete_viewer = {
-    readonly featuredCities: ReadonlyArray<{
-        readonly text: string;
-        readonly value: string;
-        readonly coordinates: {
-            readonly lat: number | null;
-            readonly lng: number | null;
-        } | null;
-    }>;
-    readonly allCities: ReadonlyArray<{
-        readonly text: string;
-        readonly value: string;
-        readonly coordinates: {
-            readonly lat: number | null;
-            readonly lng: number | null;
-        } | null;
-    }>;
-    readonly " $refType": "PartnersLocationAutocomplete_viewer";
+export type PartnersLocationAutocomplete_viewer$data = {
+  readonly featuredCities: ReadonlyArray<{
+    readonly text: string;
+    readonly value: string;
+    readonly coordinates: {
+      readonly lat: number | null;
+      readonly lng: number | null;
+    } | null;
+  }>;
+  readonly allCities: ReadonlyArray<{
+    readonly text: string;
+    readonly value: string;
+    readonly coordinates: {
+      readonly lat: number | null;
+      readonly lng: number | null;
+    } | null;
+  }>;
+  readonly " $fragmentType": "PartnersLocationAutocomplete_viewer";
 };
-export type PartnersLocationAutocomplete_viewer$data = PartnersLocationAutocomplete_viewer;
 export type PartnersLocationAutocomplete_viewer$key = {
-    readonly " $data"?: PartnersLocationAutocomplete_viewer$data;
-    readonly " $fragmentRefs": FragmentRefs<"PartnersLocationAutocomplete_viewer">;
+  readonly " $data"?: PartnersLocationAutocomplete_viewer$data;
+  readonly " $fragmentSpreads": FragmentRefs<"PartnersLocationAutocomplete_viewer">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = [
@@ -110,5 +113,7 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '41d52d035e41c3b3153e08652a283937';
+
+(node as any).hash = "41d52d035e41c3b3153e08652a283937";
+
 export default node;

@@ -163,9 +163,9 @@ describe("createMockNetworkLayer", () => {
       mockData: {
         artwork: null,
       },
-    })
+    }).toPromise()
 
-    expect(data.artwork).toBeNull()
+    expect(data!.artwork).toBeNull()
   })
 
   it("uses data provided with an aliased name", async () => {

@@ -1,32 +1,35 @@
+/**
+ * @generated SignedSource<<414581afde95c166cc5d6b99ee12f7e3>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type SubmissionSummary_offer = {
-    readonly submission: {
-        readonly artist: {
-            readonly name: string | null;
-        } | null;
-        readonly title: string | null;
-        readonly year: string | null;
-        readonly assets: ReadonlyArray<{
-            readonly imageUrls: unknown | null;
-        } | null> | null;
-        readonly primaryImage: {
-            readonly imageUrls: unknown | null;
-        } | null;
-    };
-    readonly " $refType": "SubmissionSummary_offer";
+export type SubmissionSummary_offer$data = {
+  readonly submission: {
+    readonly artist: {
+      readonly name: string | null;
+    } | null;
+    readonly title: string | null;
+    readonly year: string | null;
+    readonly assets: ReadonlyArray<{
+      readonly imageUrls: any | null;
+    } | null> | null;
+    readonly primaryImage: {
+      readonly imageUrls: any | null;
+    } | null;
+  };
+  readonly " $fragmentType": "SubmissionSummary_offer";
 };
-export type SubmissionSummary_offer$data = SubmissionSummary_offer;
 export type SubmissionSummary_offer$key = {
-    readonly " $data"?: SubmissionSummary_offer$data;
-    readonly " $fragmentRefs": FragmentRefs<"SubmissionSummary_offer">;
+  readonly " $data"?: SubmissionSummary_offer$data;
+  readonly " $fragmentSpreads": FragmentRefs<"SubmissionSummary_offer">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = [
@@ -112,5 +115,7 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = 'f5e1a0b923edc7fa6da599850e5fc957';
+
+(node as any).hash = "f5e1a0b923edc7fa6da599850e5fc957";
+
 export default node;

@@ -1,34 +1,37 @@
+/**
+ * @generated SignedSource<<f5a00aec4d7ba0905459bdd2eb70d78e>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type UserRegistrationAuctions_me = {
-    readonly saleRegistrationsConnection: {
-        readonly edges: ReadonlyArray<{
-            readonly node: {
-                readonly isRegistered: boolean | null;
-                readonly sale: {
-                    readonly id: string;
-                    readonly name: string | null;
-                    readonly href: string | null;
-                    readonly startAt: string | null;
-                    readonly isClosed: boolean | null;
-                    readonly isRegistrationClosed: boolean | null;
-                } | null;
-            } | null;
-        } | null> | null;
-    } | null;
-    readonly " $refType": "UserRegistrationAuctions_me";
+export type UserRegistrationAuctions_me$data = {
+  readonly saleRegistrationsConnection: {
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly isRegistered: boolean | null;
+        readonly sale: {
+          readonly id: string;
+          readonly name: string | null;
+          readonly href: string | null;
+          readonly startAt: string | null;
+          readonly isClosed: boolean | null;
+          readonly isRegistrationClosed: boolean | null;
+        } | null;
+      } | null;
+    } | null> | null;
+  } | null;
+  readonly " $fragmentType": "UserRegistrationAuctions_me";
 };
-export type UserRegistrationAuctions_me$data = UserRegistrationAuctions_me;
 export type UserRegistrationAuctions_me$key = {
-    readonly " $data"?: UserRegistrationAuctions_me$data;
-    readonly " $fragmentRefs": FragmentRefs<"UserRegistrationAuctions_me">;
+  readonly " $data"?: UserRegistrationAuctions_me$data;
+  readonly " $fragmentSpreads": FragmentRefs<"UserRegistrationAuctions_me">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -165,5 +168,7 @@ const node: ReaderFragment = {
   "type": "Me",
   "abstractKey": null
 };
-(node as any).hash = '32afe03cbf742da4fd537cf62c91569f';
+
+(node as any).hash = "32afe03cbf742da4fd537cf62c91569f";
+
 export default node;

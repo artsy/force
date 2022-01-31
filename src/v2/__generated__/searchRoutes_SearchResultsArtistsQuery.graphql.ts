@@ -1,84 +1,28 @@
+/**
+ * @generated SignedSource<<d9bb06f1f2b688b76da1a4d28c22ce6d>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type searchRoutes_SearchResultsArtistsQueryVariables = {
-    keyword: string;
-    page?: number | null;
+export type searchRoutes_SearchResultsArtistsQuery$variables = {
+  keyword: string;
+  page?: number | null;
 };
-export type searchRoutes_SearchResultsArtistsQueryResponse = {
-    readonly viewer: {
-        readonly " $fragmentRefs": FragmentRefs<"SearchResultsArtists_viewer">;
-    } | null;
+export type searchRoutes_SearchResultsArtistsQuery$data = {
+  readonly viewer: {
+    readonly " $fragmentSpreads": FragmentRefs<"SearchResultsArtists_viewer">;
+  } | null;
 };
 export type searchRoutes_SearchResultsArtistsQuery = {
-    readonly response: searchRoutes_SearchResultsArtistsQueryResponse;
-    readonly variables: searchRoutes_SearchResultsArtistsQueryVariables;
+  variables: searchRoutes_SearchResultsArtistsQuery$variables;
+  response: searchRoutes_SearchResultsArtistsQuery$data;
 };
-
-
-
-/*
-query searchRoutes_SearchResultsArtistsQuery(
-  $keyword: String!
-  $page: Int
-) {
-  viewer {
-    ...SearchResultsArtists_viewer_2zsz5P
-  }
-}
-
-fragment Pagination_pageCursors on PageCursors {
-  around {
-    cursor
-    page
-    isCurrent
-  }
-  first {
-    cursor
-    page
-    isCurrent
-  }
-  last {
-    cursor
-    page
-    isCurrent
-  }
-  previous {
-    cursor
-    page
-  }
-}
-
-fragment SearchResultsArtists_viewer_2zsz5P on Viewer {
-  searchConnection(query: $keyword, first: 10, page: $page, entities: [ARTIST]) @principalField {
-    pageInfo {
-      hasNextPage
-    }
-    pageCursors {
-      ...Pagination_pageCursors
-    }
-    edges {
-      node {
-        __typename
-        ... on Artist {
-          name
-          internalID
-          href
-          imageUrl
-          bio
-        }
-        ... on Node {
-          __isNode: __typename
-          id
-        }
-      }
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -373,5 +317,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'ad8ae6a5cdaa083306637b64734c8d7c';
+
+(node as any).hash = "ad8ae6a5cdaa083306637b64734c8d7c";
+
 export default node;

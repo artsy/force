@@ -1,79 +1,29 @@
+/**
+ * @generated SignedSource<<437f9af07187b9fff6052967d3b2f0c3>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type FairArticlesQueryVariables = {
-    id: string;
-    first: number;
-    after?: string | null;
+export type FairArticlesQuery$variables = {
+  id: string;
+  first: number;
+  after?: string | null;
 };
-export type FairArticlesQueryResponse = {
-    readonly fair: {
-        readonly " $fragmentRefs": FragmentRefs<"FairArticles_fair">;
-    } | null;
+export type FairArticlesQuery$data = {
+  readonly fair: {
+    readonly " $fragmentSpreads": FragmentRefs<"FairArticles_fair">;
+  } | null;
 };
 export type FairArticlesQuery = {
-    readonly response: FairArticlesQueryResponse;
-    readonly variables: FairArticlesQueryVariables;
+  variables: FairArticlesQuery$variables;
+  response: FairArticlesQuery$data;
 };
-
-
-
-/*
-query FairArticlesQuery(
-  $id: String!
-  $first: Int!
-  $after: String
-) {
-  fair(id: $id) {
-    ...FairArticles_fair_2HEEH6
-    id
-  }
-}
-
-fragment FairArticles_fair_2HEEH6 on Fair {
-  slug
-  articlesConnection(first: $first, after: $after) {
-    totalCount
-    edges {
-      node {
-        internalID
-        title
-        href
-        author {
-          name
-          id
-        }
-        publishedAt(format: "MMM Do, YYYY")
-        thumbnailTitle
-        thumbnailImage {
-          large: cropped(width: 733, height: 550) {
-            width
-            height
-            src
-            srcSet
-          }
-          medium: cropped(width: 267, height: 150) {
-            width
-            height
-            src
-            srcSet
-          }
-        }
-        id
-        __typename
-      }
-      cursor
-    }
-    pageInfo {
-      endCursor
-      hasNextPage
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = {
@@ -421,5 +371,7 @@ return {
   }
 };
 })();
-(node as any).hash = '5a9982ee74c4d5ce1c506901a7d83f3c';
+
+(node as any).hash = "5a9982ee74c4d5ce1c506901a7d83f3c";
+
 export default node;

@@ -1,55 +1,39 @@
+/**
+ * @generated SignedSource<<0fffd1278cc1e64be241ade93dd45d63>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type IdentityVerificationAppTestQueryVariables = {};
-export type IdentityVerificationAppTestQueryResponse = {
-    readonly me: {
-        readonly " $fragmentRefs": FragmentRefs<"IdentityVerificationApp_me">;
-    } | null;
+export type IdentityVerificationAppTestQuery$variables = {};
+export type IdentityVerificationAppTestQuery$data = {
+  readonly me: {
+    readonly " $fragmentSpreads": FragmentRefs<"IdentityVerificationApp_me">;
+  } | null;
 };
-export type IdentityVerificationAppTestQueryRawResponse = {
-    readonly me: ({
-        readonly internalID: string;
-        readonly email: string | null;
-        readonly identityVerification: ({
-            readonly internalID: string;
-            readonly userID: string;
-            readonly state: string;
-            readonly id: string;
-        }) | null;
-        readonly id: string;
-    }) | null;
+export type IdentityVerificationAppTestQuery$rawResponse = {
+  readonly me: {
+    readonly internalID: string;
+    readonly email: string | null;
+    readonly identityVerification: {
+      readonly internalID: string;
+      readonly userID: string;
+      readonly state: string;
+      readonly id: string;
+    } | null;
+    readonly id: string;
+  } | null;
 };
 export type IdentityVerificationAppTestQuery = {
-    readonly response: IdentityVerificationAppTestQueryResponse;
-    readonly variables: IdentityVerificationAppTestQueryVariables;
-    readonly rawResponse: IdentityVerificationAppTestQueryRawResponse;
+  variables: IdentityVerificationAppTestQuery$variables;
+  response: IdentityVerificationAppTestQuery$data;
+  rawResponse: IdentityVerificationAppTestQuery$rawResponse;
 };
-
-
-
-/*
-query IdentityVerificationAppTestQuery {
-  me {
-    ...IdentityVerificationApp_me_3zaPSf
-    id
-  }
-}
-
-fragment IdentityVerificationApp_me_3zaPSf on Me {
-  internalID
-  email
-  identityVerification(id: "idv-id") {
-    internalID
-    userID
-    state
-    id
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -204,5 +188,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'ce0e064167e6a0c0679bcbb559733078';
+
+(node as any).hash = "ce0e064167e6a0c0679bcbb559733078";
+
 export default node;

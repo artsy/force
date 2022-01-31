@@ -1,30 +1,33 @@
+/**
+ * @generated SignedSource<<9b42e983ebd94d093b27fa643392cc4e>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type FairFollowedArtists_fair = {
-    readonly internalID: string;
-    readonly slug: string;
-    readonly followedArtistArtworks: {
-        readonly edges: ReadonlyArray<{
-            readonly artwork: {
-                readonly internalID: string;
-                readonly slug: string;
-                readonly " $fragmentRefs": FragmentRefs<"FillwidthItem_artwork">;
-            } | null;
-        } | null> | null;
-    } | null;
-    readonly " $refType": "FairFollowedArtists_fair";
+export type FairFollowedArtists_fair$data = {
+  readonly internalID: string;
+  readonly slug: string;
+  readonly followedArtistArtworks: {
+    readonly edges: ReadonlyArray<{
+      readonly artwork: {
+        readonly internalID: string;
+        readonly slug: string;
+        readonly " $fragmentSpreads": FragmentRefs<"FillwidthItem_artwork">;
+      } | null;
+    } | null> | null;
+  } | null;
+  readonly " $fragmentType": "FairFollowedArtists_fair";
 };
-export type FairFollowedArtists_fair$data = FairFollowedArtists_fair;
 export type FairFollowedArtists_fair$key = {
-    readonly " $data"?: FairFollowedArtists_fair$data;
-    readonly " $fragmentRefs": FragmentRefs<"FairFollowedArtists_fair">;
+  readonly " $data"?: FairFollowedArtists_fair$data;
+  readonly " $fragmentSpreads": FragmentRefs<"FairFollowedArtists_fair">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = {
@@ -105,5 +108,7 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '7ae10ce6625902d40dcc690d39252781';
+
+(node as any).hash = "7ae10ce6625902d40dcc690d39252781";
+
 export default node;

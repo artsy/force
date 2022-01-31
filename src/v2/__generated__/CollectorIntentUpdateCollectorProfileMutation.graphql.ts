@@ -1,45 +1,38 @@
+/**
+ * @generated SignedSource<<bff8bf860b42d7ce3ebc2921740e8ffa>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type Intents = "BUY_ART_AND_DESIGN" | "FIND_ART_EXHIBITS" | "LEARN_ABOUT_ART" | "READ_ART_MARKET_NEWS" | "RESEARCH_ART_PRICES" | "SELL_ART_AND_DESIGN" | "%future added value";
 export type UpdateCollectorProfileInput = {
-    affiliatedAuctionHouseIds?: Array<string | null> | null;
-    affiliatedFairIds?: Array<string | null> | null;
-    affiliatedGalleryIds?: Array<string | null> | null;
-    clientMutationId?: string | null;
-    institutionalAffiliations?: string | null;
-    intents?: Array<Intents | null> | null;
-    loyaltyApplicant?: boolean | null;
-    professionalBuyer?: boolean | null;
-    selfReportedPurchases?: string | null;
+  affiliatedAuctionHouseIds?: ReadonlyArray<string | null> | null;
+  affiliatedFairIds?: ReadonlyArray<string | null> | null;
+  affiliatedGalleryIds?: ReadonlyArray<string | null> | null;
+  clientMutationId?: string | null;
+  institutionalAffiliations?: string | null;
+  intents?: ReadonlyArray<Intents | null> | null;
+  loyaltyApplicant?: boolean | null;
+  professionalBuyer?: boolean | null;
+  selfReportedPurchases?: string | null;
 };
-export type CollectorIntentUpdateCollectorProfileMutationVariables = {
-    input: UpdateCollectorProfileInput;
+export type CollectorIntentUpdateCollectorProfileMutation$variables = {
+  input: UpdateCollectorProfileInput;
 };
-export type CollectorIntentUpdateCollectorProfileMutationResponse = {
-    readonly updateCollectorProfile: {
-        readonly intents: ReadonlyArray<string | null> | null;
-    } | null;
+export type CollectorIntentUpdateCollectorProfileMutation$data = {
+  readonly updateCollectorProfile: {
+    readonly intents: ReadonlyArray<string | null> | null;
+  } | null;
 };
 export type CollectorIntentUpdateCollectorProfileMutation = {
-    readonly response: CollectorIntentUpdateCollectorProfileMutationResponse;
-    readonly variables: CollectorIntentUpdateCollectorProfileMutationVariables;
+  variables: CollectorIntentUpdateCollectorProfileMutation$variables;
+  response: CollectorIntentUpdateCollectorProfileMutation$data;
 };
-
-
-
-/*
-mutation CollectorIntentUpdateCollectorProfileMutation(
-  $input: UpdateCollectorProfileInput!
-) {
-  updateCollectorProfile(input: $input) {
-    intents
-    id
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -123,5 +116,7 @@ return {
   }
 };
 })();
-(node as any).hash = '7587732c7a2cfaaf18f92a3330980598';
+
+(node as any).hash = "7587732c7a2cfaaf18f92a3330980598";
+
 export default node;

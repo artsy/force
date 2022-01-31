@@ -1,95 +1,25 @@
+/**
+ * @generated SignedSource<<f390fe4216ef2cfef3548fc2a56e3fde>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type UserActiveBids_Test_QueryVariables = {};
-export type UserActiveBids_Test_QueryResponse = {
-    readonly me: {
-        readonly " $fragmentRefs": FragmentRefs<"UserActiveBids_me">;
-    } | null;
+export type UserActiveBids_Test_Query$variables = {};
+export type UserActiveBids_Test_Query$data = {
+  readonly me: {
+    readonly " $fragmentSpreads": FragmentRefs<"UserActiveBids_me">;
+  } | null;
 };
 export type UserActiveBids_Test_Query = {
-    readonly response: UserActiveBids_Test_QueryResponse;
-    readonly variables: UserActiveBids_Test_QueryVariables;
+  variables: UserActiveBids_Test_Query$variables;
+  response: UserActiveBids_Test_Query$data;
 };
-
-
-
-/*
-query UserActiveBids_Test_Query {
-  me {
-    ...UserActiveBids_me
-    id
-  }
-}
-
-fragment Details_artwork on Artwork {
-  href
-  title
-  date
-  sale_message: saleMessage
-  cultural_maker: culturalMaker
-  artists(shallow: true) {
-    id
-    href
-    name
-  }
-  collecting_institution: collectingInstitution
-  partner(shallow: true) {
-    name
-    href
-    id
-  }
-  sale {
-    is_auction: isAuction
-    is_closed: isClosed
-    id
-  }
-  sale_artwork: saleArtwork {
-    counts {
-      bidder_positions: bidderPositions
-    }
-    highest_bid: highestBid {
-      display
-    }
-    opening_bid: openingBid {
-      display
-    }
-    id
-  }
-}
-
-fragment SettingsAuctionsLotStanding_lotStanding on LotStanding {
-  isLeadingBidder
-  saleArtwork {
-    lotLabel
-    sale {
-      isClosed
-      id
-    }
-    artwork {
-      ...Details_artwork
-      href
-      image {
-        cropped(height: 100, width: 100) {
-          src
-          srcSet
-        }
-      }
-      id
-    }
-    id
-  }
-}
-
-fragment UserActiveBids_me on Me {
-  activeLotStandings: lotStandings(live: true) {
-    ...SettingsAuctionsLotStanding_lotStanding
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = {
@@ -583,5 +513,7 @@ return {
   }
 };
 })();
-(node as any).hash = '9abf3e432254a11c9347732b6a4b1906';
+
+(node as any).hash = "9abf3e432254a11c9347732b6a4b1906";
+
 export default node;

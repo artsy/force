@@ -25,6 +25,7 @@ export const saveArtworkMutation: AuthIntentMutation = (
           }
         }
       `,
+      // @ts-ignore UPGRADE RELAY 13
       optimisticResponse: {
         saveArtwork: {
           artwork: {

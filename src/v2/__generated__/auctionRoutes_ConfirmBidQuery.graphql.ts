@@ -1,183 +1,100 @@
+/**
+ * @generated SignedSource<<ec22ae26de8114fc153c75404585d098>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type auctionRoutes_ConfirmBidQueryVariables = {
-    saleID: string;
-    artworkID: string;
+export type auctionRoutes_ConfirmBidQuery$variables = {
+  saleID: string;
+  artworkID: string;
 };
-export type auctionRoutes_ConfirmBidQueryResponse = {
-    readonly artwork: {
+export type auctionRoutes_ConfirmBidQuery$data = {
+  readonly artwork: {
+    readonly internalID: string;
+    readonly slug: string;
+    readonly saleArtwork: {
+      readonly internalID: string;
+      readonly slug: string;
+      readonly sale: {
         readonly internalID: string;
         readonly slug: string;
-        readonly saleArtwork: {
-            readonly internalID: string;
-            readonly slug: string;
-            readonly sale: {
-                readonly internalID: string;
-                readonly slug: string;
-                readonly name: string | null;
-                readonly isClosed: boolean | null;
-                readonly isRegistrationClosed: boolean | null;
-                readonly registrationStatus: {
-                    readonly internalID: string;
-                    readonly qualifiedForBidding: boolean | null;
-                } | null;
-            } | null;
-            readonly " $fragmentRefs": FragmentRefs<"LotInfo_saleArtwork" | "BidForm_saleArtwork">;
+        readonly name: string | null;
+        readonly isClosed: boolean | null;
+        readonly isRegistrationClosed: boolean | null;
+        readonly registrationStatus: {
+          readonly internalID: string;
+          readonly qualifiedForBidding: boolean | null;
         } | null;
-        readonly " $fragmentRefs": FragmentRefs<"LotInfo_artwork">;
+      } | null;
+      readonly " $fragmentSpreads": FragmentRefs<"LotInfo_saleArtwork" | "BidForm_saleArtwork">;
     } | null;
-    readonly me: {
-        readonly internalID: string;
-        readonly hasQualifiedCreditCards: boolean | null;
-        readonly " $fragmentRefs": FragmentRefs<"ConfirmBid_me">;
-    } | null;
+    readonly " $fragmentSpreads": FragmentRefs<"LotInfo_artwork">;
+  } | null;
+  readonly me: {
+    readonly internalID: string;
+    readonly hasQualifiedCreditCards: boolean | null;
+    readonly " $fragmentSpreads": FragmentRefs<"ConfirmBid_me">;
+  } | null;
 };
-export type auctionRoutes_ConfirmBidQueryRawResponse = {
-    readonly artwork: ({
+export type auctionRoutes_ConfirmBidQuery$rawResponse = {
+  readonly artwork: {
+    readonly internalID: string;
+    readonly slug: string;
+    readonly saleArtwork: {
+      readonly internalID: string;
+      readonly slug: string;
+      readonly sale: {
         readonly internalID: string;
         readonly slug: string;
-        readonly saleArtwork: ({
-            readonly internalID: string;
-            readonly slug: string;
-            readonly sale: ({
-                readonly internalID: string;
-                readonly slug: string;
-                readonly name: string | null;
-                readonly isClosed: boolean | null;
-                readonly isRegistrationClosed: boolean | null;
-                readonly registrationStatus: ({
-                    readonly internalID: string;
-                    readonly qualifiedForBidding: boolean | null;
-                    readonly id: string;
-                }) | null;
-                readonly id: string;
-            }) | null;
-            readonly counts: ({
-                readonly bidderPositions: number | null;
-            }) | null;
-            readonly lotLabel: string | null;
-            readonly currentBid: ({
-                readonly display: string | null;
-            }) | null;
-            readonly minimumNextBid: ({
-                readonly cents: number | null;
-            }) | null;
-            readonly increments: ReadonlyArray<({
-                readonly cents: number | null;
-                readonly display: string | null;
-            }) | null> | null;
-            readonly id: string;
-        }) | null;
-        readonly date: string | null;
-        readonly title: string | null;
-        readonly imageUrl: string | null;
-        readonly artistNames: string | null;
+        readonly name: string | null;
+        readonly isClosed: boolean | null;
+        readonly isRegistrationClosed: boolean | null;
+        readonly registrationStatus: {
+          readonly internalID: string;
+          readonly qualifiedForBidding: boolean | null;
+          readonly id: string;
+        } | null;
         readonly id: string;
-    }) | null;
-    readonly me: ({
-        readonly internalID: string;
-        readonly hasQualifiedCreditCards: boolean | null;
-        readonly id: string;
-    }) | null;
+      } | null;
+      readonly counts: {
+        readonly bidderPositions: Int | null;
+      } | null;
+      readonly lotLabel: string | null;
+      readonly currentBid: {
+        readonly display: string | null;
+      } | null;
+      readonly minimumNextBid: {
+        readonly cents: number | null;
+      } | null;
+      readonly increments: ReadonlyArray<{
+        readonly cents: number | null;
+        readonly display: string | null;
+      } | null> | null;
+      readonly id: string;
+    } | null;
+    readonly date: string | null;
+    readonly title: string | null;
+    readonly imageUrl: string | null;
+    readonly artistNames: string | null;
+    readonly id: string;
+  } | null;
+  readonly me: {
+    readonly internalID: string;
+    readonly hasQualifiedCreditCards: boolean | null;
+    readonly id: string;
+  } | null;
 };
 export type auctionRoutes_ConfirmBidQuery = {
-    readonly response: auctionRoutes_ConfirmBidQueryResponse;
-    readonly variables: auctionRoutes_ConfirmBidQueryVariables;
-    readonly rawResponse: auctionRoutes_ConfirmBidQueryRawResponse;
+  variables: auctionRoutes_ConfirmBidQuery$variables;
+  response: auctionRoutes_ConfirmBidQuery$data;
+  rawResponse: auctionRoutes_ConfirmBidQuery$rawResponse;
 };
-
-
-
-/*
-query auctionRoutes_ConfirmBidQuery(
-  $saleID: String!
-  $artworkID: String!
-) {
-  artwork(id: $artworkID) {
-    internalID
-    slug
-    saleArtwork(saleID: $saleID) {
-      internalID
-      slug
-      sale {
-        internalID
-        slug
-        name
-        isClosed
-        isRegistrationClosed
-        registrationStatus {
-          internalID
-          qualifiedForBidding
-          id
-        }
-        id
-      }
-      ...LotInfo_saleArtwork
-      ...BidForm_saleArtwork
-      id
-    }
-    ...LotInfo_artwork
-    id
-  }
-  me {
-    internalID
-    hasQualifiedCreditCards
-    ...ConfirmBid_me
-    id
-  }
-}
-
-fragment BidForm_me on Me {
-  hasQualifiedCreditCards
-}
-
-fragment BidForm_saleArtwork on SaleArtwork {
-  minimumNextBid {
-    cents
-  }
-  increments(useMyMaxBid: true) {
-    cents
-    display
-  }
-  sale {
-    slug
-    registrationStatus {
-      qualifiedForBidding
-      id
-    }
-    id
-  }
-}
-
-fragment ConfirmBid_me on Me {
-  internalID
-  hasQualifiedCreditCards
-  ...BidForm_me
-}
-
-fragment LotInfo_artwork on Artwork {
-  internalID
-  date
-  title
-  imageUrl
-  artistNames
-  slug
-}
-
-fragment LotInfo_saleArtwork on SaleArtwork {
-  counts {
-    bidderPositions
-  }
-  lotLabel
-  currentBid {
-    display
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = {
@@ -566,5 +483,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'adcf07972a148d0d3950e6621493023b';
+
+(node as any).hash = "adcf07972a148d0d3950e6621493023b";
+
 export default node;

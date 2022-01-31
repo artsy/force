@@ -1,23 +1,26 @@
+/**
+ * @generated SignedSource<<501055ef80f2e121cffb889806272081>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
-import { FragmentRefs } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 export type AuthenticationProvider = "APPLE" | "FACEBOOK" | "GOOGLE" | "%future added value";
-export type SettingsEditSettingsLinkedAccounts_me = {
-    readonly authentications: ReadonlyArray<{
-        readonly provider: AuthenticationProvider;
-    }>;
-    readonly " $refType": "SettingsEditSettingsLinkedAccounts_me";
+import { FragmentRefs } from "relay-runtime";
+export type SettingsEditSettingsLinkedAccounts_me$data = {
+  readonly authentications: ReadonlyArray<{
+    readonly provider: AuthenticationProvider;
+  }>;
+  readonly " $fragmentType": "SettingsEditSettingsLinkedAccounts_me";
 };
-export type SettingsEditSettingsLinkedAccounts_me$data = SettingsEditSettingsLinkedAccounts_me;
 export type SettingsEditSettingsLinkedAccounts_me$key = {
-    readonly " $data"?: SettingsEditSettingsLinkedAccounts_me$data;
-    readonly " $fragmentRefs": FragmentRefs<"SettingsEditSettingsLinkedAccounts_me">;
+  readonly " $data"?: SettingsEditSettingsLinkedAccounts_me$data;
+  readonly " $fragmentSpreads": FragmentRefs<"SettingsEditSettingsLinkedAccounts_me">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -47,5 +50,7 @@ const node: ReaderFragment = {
   "type": "Me",
   "abstractKey": null
 };
-(node as any).hash = 'a55e6069851be3fddb81897ba96a6c80';
+
+(node as any).hash = "a55e6069851be3fddb81897ba96a6c80";
+
 export default node;

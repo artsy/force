@@ -1,65 +1,25 @@
+/**
+ * @generated SignedSource<<b8c1e4e37023db6df5d756a641fb934b>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ShowViewingRoom_Test_QueryVariables = {};
-export type ShowViewingRoom_Test_QueryResponse = {
-    readonly show: {
-        readonly " $fragmentRefs": FragmentRefs<"ShowViewingRoom_show">;
-    } | null;
+export type ShowViewingRoom_Test_Query$variables = {};
+export type ShowViewingRoom_Test_Query$data = {
+  readonly show: {
+    readonly " $fragmentSpreads": FragmentRefs<"ShowViewingRoom_show">;
+  } | null;
 };
 export type ShowViewingRoom_Test_Query = {
-    readonly response: ShowViewingRoom_Test_QueryResponse;
-    readonly variables: ShowViewingRoom_Test_QueryVariables;
+  variables: ShowViewingRoom_Test_Query$variables;
+  response: ShowViewingRoom_Test_Query$data;
 };
-
-
-
-/*
-query ShowViewingRoom_Test_Query {
-  show(id: "example-show-id") {
-    ...ShowViewingRoom_show
-    id
-  }
-}
-
-fragment ShowViewingRoom_show on Show {
-  partner {
-    __typename
-    ... on Partner {
-      name
-    }
-    ... on ExternalPartner {
-      name
-      id
-    }
-    ... on Node {
-      __isNode: __typename
-      id
-    }
-  }
-  viewingRoomsConnection {
-    edges {
-      node {
-        internalID
-        slug
-        status
-        distanceToOpen(short: true)
-        distanceToClose(short: true)
-        title
-        href
-        image {
-          imageURLs {
-            normalized
-          }
-        }
-      }
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -377,5 +337,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'c2382b913f092b5f01c9ddf0c4399c9c';
+
+(node as any).hash = "c2382b913f092b5f01c9ddf0c4399c9c";
+
 export default node;

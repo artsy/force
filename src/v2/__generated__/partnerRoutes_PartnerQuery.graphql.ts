@@ -1,149 +1,29 @@
+/**
+ * @generated SignedSource<<47298ae1111498db96979018b291c4bb>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type partnerRoutes_PartnerQueryVariables = {
-    partnerId: string;
+export type partnerRoutes_PartnerQuery$variables = {
+  partnerId: string;
 };
-export type partnerRoutes_PartnerQueryResponse = {
-    readonly partner: {
-        readonly partnerType: string | null;
-        readonly displayFullPartnerPage: boolean | null;
-        readonly " $fragmentRefs": FragmentRefs<"PartnerApp_partner">;
-    } | null;
+export type partnerRoutes_PartnerQuery$data = {
+  readonly partner: {
+    readonly partnerType: string | null;
+    readonly displayFullPartnerPage: boolean | null;
+    readonly " $fragmentSpreads": FragmentRefs<"PartnerApp_partner">;
+  } | null;
 };
 export type partnerRoutes_PartnerQuery = {
-    readonly response: partnerRoutes_PartnerQueryResponse;
-    readonly variables: partnerRoutes_PartnerQueryVariables;
+  variables: partnerRoutes_PartnerQuery$variables;
+  response: partnerRoutes_PartnerQuery$data;
 };
-
-
-
-/*
-query partnerRoutes_PartnerQuery(
-  $partnerId: String!
-) {
-  partner(id: $partnerId) @principalField {
-    partnerType
-    displayFullPartnerPage
-    ...PartnerApp_partner
-    id
-  }
-}
-
-fragment FollowProfileButton_profile on Profile {
-  id
-  slug
-  name
-  internalID
-  is_followed: isFollowed
-}
-
-fragment NavigationTabs_partner on Partner {
-  slug
-  partnerType
-  displayArtistsSection
-  displayWorksSection
-  counts {
-    eligibleArtworks
-    displayableShows
-  }
-  locations: locationsConnection(first: 20) {
-    totalCount
-  }
-  articles: articlesConnection {
-    totalCount
-  }
-  representedArtists: artistsConnection(representedBy: true, displayOnPartnerProfile: true) {
-    totalCount
-  }
-  notRepresentedArtists: artistsConnection(representedBy: false, hasPublishedArtworks: true, displayOnPartnerProfile: true) {
-    totalCount
-  }
-  viewingRooms: viewingRoomsConnection(statuses: [live, closed, scheduled]) {
-    totalCount
-  }
-}
-
-fragment PartnerApp_partner on Partner {
-  partnerType
-  displayFullPartnerPage
-  partnerPageEligible
-  isDefaultProfilePublic
-  categories {
-    id
-    name
-  }
-  profile {
-    ...PartnerHeaderImage_profile
-    id
-  }
-  ...PartnerMeta_partner
-  ...PartnerHeader_partner
-  ...NavigationTabs_partner
-}
-
-fragment PartnerHeaderImage_profile on Profile {
-  image {
-    url(version: "wide")
-  }
-}
-
-fragment PartnerHeader_partner on Partner {
-  name
-  type
-  slug
-  profile {
-    icon {
-      resized(width: 80, height: 80, version: "square140") {
-        src
-        srcSet
-      }
-    }
-    ...FollowProfileButton_profile
-    id
-  }
-  locations: locationsConnection(first: 20) {
-    totalCount
-    edges {
-      node {
-        city
-        id
-      }
-    }
-  }
-}
-
-fragment PartnerMeta_partner on Partner {
-  locationsConnection(first: 1) {
-    edges {
-      node {
-        address
-        address2
-        city
-        coordinates {
-          lat
-          lng
-        }
-        country
-        phone
-        postalCode
-        state
-        id
-      }
-    }
-  }
-  meta {
-    image
-    title
-    description
-  }
-  name
-  slug
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -708,5 +588,7 @@ return {
   }
 };
 })();
-(node as any).hash = '5e532f359ab19802c093222a9ee4f204';
+
+(node as any).hash = "5e532f359ab19802c093222a9ee4f204";
+
 export default node;

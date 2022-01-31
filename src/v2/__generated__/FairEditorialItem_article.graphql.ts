@@ -1,38 +1,41 @@
+/**
+ * @generated SignedSource<<038b885f61af01d37400ceb57eb57005>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type FairEditorialItem_article = {
-    readonly id: string;
-    readonly title: string | null;
-    readonly publishedAt: string | null;
-    readonly thumbnailTitle: string | null;
-    readonly thumbnailImage: {
-        readonly large: {
-            readonly width: number;
-            readonly height: number;
-            readonly src: string;
-            readonly srcSet: string;
-        } | null;
-        readonly small: {
-            readonly width: number;
-            readonly height: number;
-            readonly src: string;
-            readonly srcSet: string;
-        } | null;
+export type FairEditorialItem_article$data = {
+  readonly id: string;
+  readonly title: string | null;
+  readonly publishedAt: string | null;
+  readonly thumbnailTitle: string | null;
+  readonly thumbnailImage: {
+    readonly large: {
+      readonly width: number;
+      readonly height: number;
+      readonly src: string;
+      readonly srcSet: string;
     } | null;
-    readonly " $fragmentRefs": FragmentRefs<"FairEditorialItemLink_article">;
-    readonly " $refType": "FairEditorialItem_article";
+    readonly small: {
+      readonly width: number;
+      readonly height: number;
+      readonly src: string;
+      readonly srcSet: string;
+    } | null;
+  } | null;
+  readonly " $fragmentSpreads": FragmentRefs<"FairEditorialItemLink_article">;
+  readonly " $fragmentType": "FairEditorialItem_article";
 };
-export type FairEditorialItem_article$data = FairEditorialItem_article;
 export type FairEditorialItem_article$key = {
-    readonly " $data"?: FairEditorialItem_article$data;
-    readonly " $fragmentRefs": FragmentRefs<"FairEditorialItem_article">;
+  readonly " $data"?: FairEditorialItem_article$data;
+  readonly " $fragmentSpreads": FragmentRefs<"FairEditorialItem_article">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = [
@@ -168,5 +171,7 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = 'c75b6595a83db414fce5e180962b885e';
+
+(node as any).hash = "c75b6595a83db414fce5e180962b885e";
+
 export default node;

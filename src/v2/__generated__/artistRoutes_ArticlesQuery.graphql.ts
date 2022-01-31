@@ -1,91 +1,27 @@
+/**
+ * @generated SignedSource<<68bfbf11c34154ac0e75957abb8b6ba5>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type artistRoutes_ArticlesQueryVariables = {
-    artistID: string;
+export type artistRoutes_ArticlesQuery$variables = {
+  artistID: string;
 };
-export type artistRoutes_ArticlesQueryResponse = {
-    readonly artist: {
-        readonly " $fragmentRefs": FragmentRefs<"ArtistArticlesRoute_artist">;
-    } | null;
+export type artistRoutes_ArticlesQuery$data = {
+  readonly artist: {
+    readonly " $fragmentSpreads": FragmentRefs<"ArtistArticlesRoute_artist">;
+  } | null;
 };
 export type artistRoutes_ArticlesQuery = {
-    readonly response: artistRoutes_ArticlesQueryResponse;
-    readonly variables: artistRoutes_ArticlesQueryVariables;
+  variables: artistRoutes_ArticlesQuery$variables;
+  response: artistRoutes_ArticlesQuery$data;
 };
-
-
-
-/*
-query artistRoutes_ArticlesQuery(
-  $artistID: String!
-) {
-  artist(id: $artistID) {
-    ...ArtistArticlesRoute_artist
-    id
-  }
-}
-
-fragment ArtistArticlesRoute_artist on Artist {
-  articlesConnection(first: 10, sort: PUBLISHED_AT_DESC, inEditorialFeed: true) {
-    pageInfo {
-      hasNextPage
-      endCursor
-    }
-    pageCursors {
-      ...Pagination_pageCursors
-    }
-    edges {
-      node {
-        internalID
-        href
-        thumbnailTitle
-        author {
-          name
-          id
-        }
-        publishedAt(format: "MMM Do, YYYY")
-        thumbnailImage {
-          cropped(width: 210, height: 150) {
-            src
-            srcSet
-            width
-            height
-          }
-        }
-        id
-      }
-    }
-  }
-  name
-  slug
-}
-
-fragment Pagination_pageCursors on PageCursors {
-  around {
-    cursor
-    page
-    isCurrent
-  }
-  first {
-    cursor
-    page
-    isCurrent
-  }
-  last {
-    cursor
-    page
-    isCurrent
-  }
-  previous {
-    cursor
-    page
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -443,5 +379,7 @@ return {
   }
 };
 })();
-(node as any).hash = '25e11d3d06186ba39f3e6fd032a39d73';
+
+(node as any).hash = "25e11d3d06186ba39f3e6fd032a39d73";
+
 export default node;

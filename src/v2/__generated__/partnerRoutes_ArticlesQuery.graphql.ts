@@ -1,101 +1,31 @@
+/**
+ * @generated SignedSource<<bfd31d930c65f85ea734f28496570ac3>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type partnerRoutes_ArticlesQueryVariables = {
-    partnerId: string;
-    page?: number | null;
+export type partnerRoutes_ArticlesQuery$variables = {
+  partnerId: string;
+  page?: number | null;
 };
-export type partnerRoutes_ArticlesQueryResponse = {
-    readonly partner: {
-        readonly articles: {
-            readonly totalCount: number | null;
-        } | null;
-        readonly " $fragmentRefs": FragmentRefs<"Articles_partner">;
+export type partnerRoutes_ArticlesQuery$data = {
+  readonly partner: {
+    readonly articles: {
+      readonly totalCount: number | null;
     } | null;
+    readonly " $fragmentSpreads": FragmentRefs<"Articles_partner">;
+  } | null;
 };
 export type partnerRoutes_ArticlesQuery = {
-    readonly response: partnerRoutes_ArticlesQueryResponse;
-    readonly variables: partnerRoutes_ArticlesQueryVariables;
+  variables: partnerRoutes_ArticlesQuery$variables;
+  response: partnerRoutes_ArticlesQuery$data;
 };
-
-
-
-/*
-query partnerRoutes_ArticlesQuery(
-  $partnerId: String!
-  $page: Int
-) {
-  partner(id: $partnerId) @principalField {
-    articles: articlesConnection(first: 0) {
-      totalCount
-    }
-    ...Articles_partner_2Pg8Wv
-    id
-  }
-}
-
-fragment ArticleCell_article on Article {
-  vertical
-  internalID
-  title
-  byline
-  href
-  publishedAt(format: "MMM D, YYYY")
-  thumbnailImage {
-    cropped(width: 445, height: 334) {
-      width
-      height
-      src
-      srcSet
-    }
-  }
-}
-
-fragment Articles_partner_2Pg8Wv on Partner {
-  slug
-  articlesConnection(first: 18, page: $page) {
-    pageInfo {
-      hasNextPage
-      endCursor
-    }
-    pageCursors {
-      ...Pagination_pageCursors
-    }
-    edges {
-      node {
-        internalID
-        ...ArticleCell_article
-        id
-      }
-    }
-  }
-}
-
-fragment Pagination_pageCursors on PageCursors {
-  around {
-    cursor
-    page
-    isCurrent
-  }
-  first {
-    cursor
-    page
-    isCurrent
-  }
-  last {
-    cursor
-    page
-    isCurrent
-  }
-  previous {
-    cursor
-    page
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = {
@@ -479,5 +409,7 @@ return {
   }
 };
 })();
-(node as any).hash = '52f276d97d7e5cbefc6644fcbedff846';
+
+(node as any).hash = "52f276d97d7e5cbefc6644fcbedff846";
+
 export default node;

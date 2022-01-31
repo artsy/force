@@ -1,99 +1,31 @@
+/**
+ * @generated SignedSource<<8f09747e0379a22a63d18c699704e79b>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type viewingRoomRoutes_ViewingRoomsAppQueryVariables = {
-    count: number;
-    after?: string | null;
+export type viewingRoomRoutes_ViewingRoomsAppQuery$variables = {
+  count: number;
+  after?: string | null;
 };
-export type viewingRoomRoutes_ViewingRoomsAppQueryResponse = {
-    readonly allViewingRooms: {
-        readonly " $fragmentRefs": FragmentRefs<"ViewingRoomsApp_allViewingRooms">;
-    } | null;
-    readonly featuredViewingRooms: {
-        readonly " $fragmentRefs": FragmentRefs<"ViewingRoomsApp_featuredViewingRooms">;
-    } | null;
+export type viewingRoomRoutes_ViewingRoomsAppQuery$data = {
+  readonly allViewingRooms: {
+    readonly " $fragmentSpreads": FragmentRefs<"ViewingRoomsApp_allViewingRooms">;
+  } | null;
+  readonly featuredViewingRooms: {
+    readonly " $fragmentSpreads": FragmentRefs<"ViewingRoomsApp_featuredViewingRooms">;
+  } | null;
 };
 export type viewingRoomRoutes_ViewingRoomsAppQuery = {
-    readonly response: viewingRoomRoutes_ViewingRoomsAppQueryResponse;
-    readonly variables: viewingRoomRoutes_ViewingRoomsAppQueryVariables;
+  variables: viewingRoomRoutes_ViewingRoomsAppQuery$variables;
+  response: viewingRoomRoutes_ViewingRoomsAppQuery$data;
 };
-
-
-
-/*
-query viewingRoomRoutes_ViewingRoomsAppQuery(
-  $count: Int!
-  $after: String
-) {
-  allViewingRooms: viewer {
-    ...ViewingRoomsApp_allViewingRooms_2QE1um
-  }
-  featuredViewingRooms: viewingRooms(featured: true) {
-    ...ViewingRoomsApp_featuredViewingRooms
-  }
-}
-
-fragment ViewingRoomsApp_allViewingRooms_2QE1um on Viewer {
-  ...ViewingRoomsLatestGrid_viewingRooms_2QE1um
-}
-
-fragment ViewingRoomsApp_featuredViewingRooms on ViewingRoomConnection {
-  ...ViewingRoomsFeaturedRail_featuredViewingRooms
-}
-
-fragment ViewingRoomsFeaturedRail_featuredViewingRooms on ViewingRoomConnection {
-  edges {
-    node {
-      status
-      slug
-      title
-      image {
-        imageURLs {
-          normalized
-        }
-      }
-      distanceToOpen(short: true)
-      distanceToClose(short: true)
-      partner {
-        name
-        id
-      }
-    }
-  }
-}
-
-fragment ViewingRoomsLatestGrid_viewingRooms_2QE1um on Viewer {
-  viewingRoomsConnection(first: $count, after: $after) {
-    edges {
-      node {
-        slug
-        status
-        title
-        image {
-          imageURLs {
-            normalized
-          }
-        }
-        distanceToOpen(short: true)
-        distanceToClose(short: true)
-        partner {
-          name
-          id
-        }
-        __typename
-      }
-      cursor
-    }
-    pageInfo {
-      endCursor
-      hasNextPage
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = {
@@ -435,5 +367,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'f2168552d83a3b86d1ec43cad3e9db67';
+
+(node as any).hash = "f2168552d83a3b86d1ec43cad3e9db67";
+
 export default node;

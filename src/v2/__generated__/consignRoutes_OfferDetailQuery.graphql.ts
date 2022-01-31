@@ -1,74 +1,27 @@
+/**
+ * @generated SignedSource<<b3d2c22b735cb81629b9bbf20d022109>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type consignRoutes_OfferDetailQueryVariables = {
-    offerID: string;
+export type consignRoutes_OfferDetailQuery$variables = {
+  offerID: string;
 };
-export type consignRoutes_OfferDetailQueryResponse = {
-    readonly offer: {
-        readonly " $fragmentRefs": FragmentRefs<"OfferDetailApp_offer">;
-    } | null;
+export type consignRoutes_OfferDetailQuery$data = {
+  readonly offer: {
+    readonly " $fragmentSpreads": FragmentRefs<"OfferDetailApp_offer">;
+  } | null;
 };
 export type consignRoutes_OfferDetailQuery = {
-    readonly response: consignRoutes_OfferDetailQueryResponse;
-    readonly variables: consignRoutes_OfferDetailQueryVariables;
+  variables: consignRoutes_OfferDetailQuery$variables;
+  response: consignRoutes_OfferDetailQuery$data;
 };
-
-
-
-/*
-query consignRoutes_OfferDetailQuery(
-  $offerID: ID!
-) {
-  offer(id: $offerID) {
-    ...OfferDetailApp_offer
-    id
-  }
-}
-
-fragment OfferDetailApp_offer on ConsignmentOffer {
-  ...ResponseForm_offer
-  ...Summary_offer
-}
-
-fragment OfferSummary_offer on ConsignmentOffer {
-  saleDate
-  saleLocation
-  saleName
-}
-
-fragment ResponseForm_offer on ConsignmentOffer {
-  id
-}
-
-fragment SubmissionSummary_offer on ConsignmentOffer {
-  submission {
-    artist {
-      name
-      id
-    }
-    title
-    year
-    assets {
-      imageUrls
-      id
-    }
-    primaryImage {
-      imageUrls
-      id
-    }
-    id
-  }
-}
-
-fragment Summary_offer on ConsignmentOffer {
-  ...SubmissionSummary_offer
-  ...OfferSummary_offer
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -245,5 +198,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'a0b8e054b0db5301b045a90b94898074';
+
+(node as any).hash = "a0b8e054b0db5301b045a90b94898074";
+
 export default node;

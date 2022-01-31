@@ -1,7 +1,7 @@
-import { createTestEnv_artwork } from "v2/__generated__/createTestEnv_artwork.graphql"
+import { createTestEnv_artwork$data } from "v2/__generated__/createTestEnv_artwork.graphql"
 import { createTestEnvCreditCardMutation } from "v2/__generated__/createTestEnvCreditCardMutation.graphql"
 import { createTestEnvOrderMutation } from "v2/__generated__/createTestEnvOrderMutation.graphql"
-import { createTestEnvQueryRawResponse } from "v2/__generated__/createTestEnvQuery.graphql"
+import { createTestEnvQuery$rawResponse } from "v2/__generated__/createTestEnvQuery.graphql"
 import { createTestEnv } from "v2/DevTools/createTestEnv"
 import { RootTestPage, expectOne } from "v2/DevTools/RootTestPage"
 import {
@@ -111,7 +111,7 @@ const Component = createFragmentContainer(
     artwork,
   }: {
     relay: RelayProp
-    artwork: createTestEnv_artwork
+    artwork: createTestEnv_artwork$data
   }) => (
     <div>
       <h1>This is the main heading</h1>
@@ -187,7 +187,7 @@ describe("test envs", () => {
         title: "Test Artwork",
         artist: { name: "David Sheldrick" },
       },
-    } as createTestEnvQueryRawResponse,
+    } as createTestEnvQuery$rawResponse,
     defaultMutationResults: {
       ...orderSuccess,
       ...creditCardSuccess,

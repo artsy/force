@@ -1,9 +1,9 @@
 import { ModalBase } from "@artsy/palette"
-import * as React from "react";
+import * as React from "react"
 import { useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { AnalyticsSchema, useTracking } from "v2/System"
-import { ViewInRoom_artwork } from "v2/__generated__/ViewInRoom_artwork.graphql"
+import { ViewInRoom_artwork$data } from "v2/__generated__/ViewInRoom_artwork.graphql"
 import { ViewInRoomArtworkFragmentContainer } from "./ViewInRoomArtwork"
 import { ViewInRoomCloseButton } from "./ViewInRoomCloseButton"
 import { ViewInRoomRoom } from "./ViewInRoomRoom"
@@ -11,7 +11,7 @@ import { ViewInRoomScale } from "./ViewInRoomScale"
 import { ViewInRoomTransition } from "./ViewInRoomTransition"
 
 interface ViewInRoomProps {
-  artwork: ViewInRoom_artwork
+  artwork: ViewInRoom_artwork$data
   onClose(): void
 }
 

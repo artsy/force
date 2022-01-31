@@ -1,31 +1,34 @@
+/**
+ * @generated SignedSource<<faf4b2f68c27741c5b33b0c7ac06cb33>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArticlesIndexArticle_article = {
-    readonly href: string | null;
-    readonly thumbnailTitle: string | null;
-    readonly byline: string | null;
-    readonly publishedAt: string | null;
-    readonly thumbnailImage: {
-        readonly cropped: {
-            readonly src: string;
-            readonly srcSet: string;
-            readonly width: number;
-            readonly height: number;
-        } | null;
+export type ArticlesIndexArticle_article$data = {
+  readonly href: string | null;
+  readonly thumbnailTitle: string | null;
+  readonly byline: string | null;
+  readonly publishedAt: string | null;
+  readonly thumbnailImage: {
+    readonly cropped: {
+      readonly src: string;
+      readonly srcSet: string;
+      readonly width: number;
+      readonly height: number;
     } | null;
-    readonly " $refType": "ArticlesIndexArticle_article";
+  } | null;
+  readonly " $fragmentType": "ArticlesIndexArticle_article";
 };
-export type ArticlesIndexArticle_article$data = ArticlesIndexArticle_article;
 export type ArticlesIndexArticle_article$key = {
-    readonly " $data"?: ArticlesIndexArticle_article$data;
-    readonly " $fragmentRefs": FragmentRefs<"ArticlesIndexArticle_article">;
+  readonly " $data"?: ArticlesIndexArticle_article$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ArticlesIndexArticle_article">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -132,5 +135,7 @@ const node: ReaderFragment = {
   "type": "Article",
   "abstractKey": null
 };
-(node as any).hash = '109c40fbe71db5b58dc39ba94dc7d227';
+
+(node as any).hash = "109c40fbe71db5b58dc39ba94dc7d227";
+
 export default node;

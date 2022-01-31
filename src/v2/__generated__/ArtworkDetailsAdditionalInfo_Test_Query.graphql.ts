@@ -1,67 +1,25 @@
+/**
+ * @generated SignedSource<<1eacab189c1e7fe3d2a7e903ad619f3c>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtworkDetailsAdditionalInfo_Test_QueryVariables = {};
-export type ArtworkDetailsAdditionalInfo_Test_QueryResponse = {
-    readonly artwork: {
-        readonly " $fragmentRefs": FragmentRefs<"ArtworkDetailsAdditionalInfo_artwork">;
-    } | null;
+export type ArtworkDetailsAdditionalInfo_Test_Query$variables = {};
+export type ArtworkDetailsAdditionalInfo_Test_Query$data = {
+  readonly artwork: {
+    readonly " $fragmentSpreads": FragmentRefs<"ArtworkDetailsAdditionalInfo_artwork">;
+  } | null;
 };
 export type ArtworkDetailsAdditionalInfo_Test_Query = {
-    readonly response: ArtworkDetailsAdditionalInfo_Test_QueryResponse;
-    readonly variables: ArtworkDetailsAdditionalInfo_Test_QueryVariables;
+  variables: ArtworkDetailsAdditionalInfo_Test_Query$variables;
+  response: ArtworkDetailsAdditionalInfo_Test_Query$data;
 };
-
-
-
-/*
-query ArtworkDetailsAdditionalInfo_Test_Query {
-  artwork(id: "xxx") {
-    ...ArtworkDetailsAdditionalInfo_artwork
-    id
-  }
-}
-
-fragment ArtworkDetailsAdditionalInfo_artwork on Artwork {
-  category
-  series
-  publisher
-  manufacturer
-  image_rights: imageRights
-  canRequestLotConditionsReport
-  internalID
-  framed {
-    label
-    details
-  }
-  signatureInfo {
-    label
-    details
-  }
-  conditionDescription {
-    label
-    details
-  }
-  certificateOfAuthenticity {
-    label
-    details
-  }
-  mediumType {
-    __typename
-  }
-  ...ArtworkDetailsMediumModal_artwork
-}
-
-fragment ArtworkDetailsMediumModal_artwork on Artwork {
-  mediumType {
-    name
-    longDescription
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -337,5 +295,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'e0f7252c95c40eaddf28cc6d72e341aa';
+
+(node as any).hash = "e0f7252c95c40eaddf28cc6d72e341aa";
+
 export default node;

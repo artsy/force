@@ -1,48 +1,34 @@
+/**
+ * @generated SignedSource<<bd3ffdad7c7b364f18482c64860ba441>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
-export type UploadPhotos_ImageRefetch_QueryVariables = {
-    id: string;
-    sessionID?: string | null;
+import { ConcreteRequest, Query } from 'relay-runtime';
+export type UploadPhotos_ImageRefetch_Query$variables = {
+  id: string;
+  sessionID?: string | null;
 };
-export type UploadPhotos_ImageRefetch_QueryResponse = {
-    readonly submission: {
-        readonly id: string;
-        readonly assets: ReadonlyArray<{
-            readonly id: string;
-            readonly imageUrls: unknown | null;
-            readonly geminiToken: string | null;
-            readonly size: string | null;
-            readonly filename: string | null;
-        } | null> | null;
-    } | null;
+export type UploadPhotos_ImageRefetch_Query$data = {
+  readonly submission: {
+    readonly id: string;
+    readonly assets: ReadonlyArray<{
+      readonly id: string;
+      readonly imageUrls: any | null;
+      readonly geminiToken: string | null;
+      readonly size: string | null;
+      readonly filename: string | null;
+    } | null> | null;
+  } | null;
 };
 export type UploadPhotos_ImageRefetch_Query = {
-    readonly response: UploadPhotos_ImageRefetch_QueryResponse;
-    readonly variables: UploadPhotos_ImageRefetch_QueryVariables;
+  variables: UploadPhotos_ImageRefetch_Query$variables;
+  response: UploadPhotos_ImageRefetch_Query$data;
 };
-
-
-
-/*
-query UploadPhotos_ImageRefetch_Query(
-  $id: ID!
-  $sessionID: String
-) {
-  submission(id: $id, sessionID: $sessionID) {
-    id
-    assets {
-      id
-      imageUrls
-      geminiToken
-      size
-      filename
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -156,5 +142,7 @@ return {
   }
 };
 })();
-(node as any).hash = '7040a50cc1e19f9ea5255fbeb1b1b390';
+
+(node as any).hash = "7040a50cc1e19f9ea5255fbeb1b1b390";
+
 export default node;

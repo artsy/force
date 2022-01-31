@@ -1,188 +1,106 @@
+/**
+ * @generated SignedSource<<9eac066172adffd40e3c2de4d443fbb7>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type CommerceOrderModeEnum = "BUY" | "OFFER" | "%future added value";
 export type CommerceOrderStateEnum = "ABANDONED" | "APPROVED" | "CANCELED" | "FULFILLED" | "PENDING" | "REFUNDED" | "SUBMITTED" | "%future added value";
-export type PaymentPickerTestQueryVariables = {};
-export type PaymentPickerTestQueryResponse = {
-    readonly me: {
-        readonly " $fragmentRefs": FragmentRefs<"PaymentPicker_me">;
-    } | null;
-    readonly order: {
-        readonly " $fragmentRefs": FragmentRefs<"PaymentPicker_order">;
-    } | null;
+export type PaymentPickerTestQuery$variables = {};
+export type PaymentPickerTestQuery$data = {
+  readonly me: {
+    readonly " $fragmentSpreads": FragmentRefs<"PaymentPicker_me">;
+  } | null;
+  readonly order: {
+    readonly " $fragmentSpreads": FragmentRefs<"PaymentPicker_order">;
+  } | null;
 };
-export type PaymentPickerTestQueryRawResponse = {
-    readonly me: ({
-        readonly creditCards: ({
-            readonly edges: ReadonlyArray<({
-                readonly node: ({
-                    readonly internalID: string;
-                    readonly brand: string;
-                    readonly lastDigits: string;
-                    readonly expirationMonth: number;
-                    readonly expirationYear: number;
-                    readonly id: string;
-                }) | null;
-            }) | null> | null;
-        }) | null;
-        readonly id: string;
-    }) | null;
-    readonly order: ({
-        readonly __typename: string;
-        readonly __isCommerceOrder: string;
-        readonly internalID: string;
-        readonly mode: CommerceOrderModeEnum | null;
-        readonly state: CommerceOrderStateEnum;
-        readonly creditCard: ({
-            readonly internalID: string;
-            readonly name: string | null;
-            readonly street1: string | null;
-            readonly street2: string | null;
-            readonly city: string | null;
-            readonly state: string | null;
-            readonly country: string | null;
-            readonly postalCode: string | null;
-            readonly expirationMonth: number;
-            readonly expirationYear: number;
-            readonly lastDigits: string;
-            readonly brand: string;
+export type PaymentPickerTestQuery$rawResponse = {
+  readonly me: {
+    readonly creditCards: {
+      readonly edges: ReadonlyArray<{
+        readonly node: {
+          readonly internalID: string;
+          readonly brand: string;
+          readonly lastDigits: string;
+          readonly expirationMonth: number;
+          readonly expirationYear: number;
+          readonly id: string;
+        } | null;
+      } | null> | null;
+    } | null;
+    readonly id: string;
+  } | null;
+  readonly order: {
+    readonly __typename: string;
+    readonly __isCommerceOrder: string;
+    readonly internalID: string;
+    readonly mode: CommerceOrderModeEnum | null;
+    readonly state: CommerceOrderStateEnum;
+    readonly creditCard: {
+      readonly internalID: string;
+      readonly name: string | null;
+      readonly street1: string | null;
+      readonly street2: string | null;
+      readonly city: string | null;
+      readonly state: string | null;
+      readonly country: string | null;
+      readonly postalCode: string | null;
+      readonly expirationMonth: number;
+      readonly expirationYear: number;
+      readonly lastDigits: string;
+      readonly brand: string;
+      readonly id: string;
+    } | null;
+    readonly requestedFulfillment: {
+      readonly __typename: "CommerceShip";
+      readonly name: string | null;
+      readonly addressLine1: string | null;
+      readonly addressLine2: string | null;
+      readonly city: string | null;
+      readonly region: string | null;
+      readonly country: string | null;
+      readonly postalCode: string | null;
+    } | {
+      readonly __typename: "CommerceShipArta";
+      readonly name: string | null;
+      readonly addressLine1: string | null;
+      readonly addressLine2: string | null;
+      readonly city: string | null;
+      readonly region: string | null;
+      readonly country: string | null;
+      readonly postalCode: string | null;
+    } | {
+      readonly __typename: "CommercePickup";
+      readonly fulfillmentType: string;
+    } | {
+      readonly __typename: string;
+    } | null;
+    readonly lineItems: {
+      readonly edges: ReadonlyArray<{
+        readonly node: {
+          readonly artwork: {
+            readonly slug: string;
             readonly id: string;
-        }) | null;
-        readonly requestedFulfillment: ({
-            readonly __typename: "CommerceShip";
-            readonly name: string | null;
-            readonly addressLine1: string | null;
-            readonly addressLine2: string | null;
-            readonly city: string | null;
-            readonly region: string | null;
-            readonly country: string | null;
-            readonly postalCode: string | null;
-        } | {
-            readonly __typename: "CommerceShipArta";
-            readonly name: string | null;
-            readonly addressLine1: string | null;
-            readonly addressLine2: string | null;
-            readonly city: string | null;
-            readonly region: string | null;
-            readonly country: string | null;
-            readonly postalCode: string | null;
-        } | {
-            readonly __typename: "CommercePickup";
-            readonly fulfillmentType: string;
-        } | {
-            readonly __typename: string;
-        }) | null;
-        readonly lineItems: ({
-            readonly edges: ReadonlyArray<({
-                readonly node: ({
-                    readonly artwork: ({
-                        readonly slug: string;
-                        readonly id: string;
-                    }) | null;
-                    readonly id: string;
-                }) | null;
-            }) | null> | null;
-        }) | null;
-        readonly id: string;
-    }) | null;
+          } | null;
+          readonly id: string;
+        } | null;
+      } | null> | null;
+    } | null;
+    readonly id: string;
+  } | null;
 };
 export type PaymentPickerTestQuery = {
-    readonly response: PaymentPickerTestQueryResponse;
-    readonly variables: PaymentPickerTestQueryVariables;
-    readonly rawResponse: PaymentPickerTestQueryRawResponse;
+  variables: PaymentPickerTestQuery$variables;
+  response: PaymentPickerTestQuery$data;
+  rawResponse: PaymentPickerTestQuery$rawResponse;
 };
-
-
-
-/*
-query PaymentPickerTestQuery {
-  me {
-    ...PaymentPicker_me
-    id
-  }
-  order: commerceOrder(id: "unused") {
-    __typename
-    ...PaymentPicker_order
-    id
-  }
-}
-
-fragment PaymentPicker_me on Me {
-  creditCards(first: 100) {
-    edges {
-      node {
-        internalID
-        brand
-        lastDigits
-        expirationMonth
-        expirationYear
-        id
-      }
-    }
-  }
-}
-
-fragment PaymentPicker_order on CommerceOrder {
-  __isCommerceOrder: __typename
-  internalID
-  mode
-  state
-  creditCard {
-    internalID
-    name
-    street1
-    street2
-    city
-    state
-    country
-    postalCode
-    expirationMonth
-    expirationYear
-    lastDigits
-    brand
-    id
-  }
-  requestedFulfillment {
-    __typename
-    ... on CommerceShip {
-      name
-      addressLine1
-      addressLine2
-      city
-      region
-      country
-      postalCode
-    }
-    ... on CommerceShipArta {
-      name
-      addressLine1
-      addressLine2
-      city
-      region
-      country
-      postalCode
-    }
-    ... on CommercePickup {
-      fulfillmentType
-    }
-  }
-  lineItems {
-    edges {
-      node {
-        artwork {
-          slug
-          id
-        }
-        id
-      }
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -722,5 +640,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'eeb08b3e6c2a669c906866374011426d';
+
+(node as any).hash = "eeb08b3e6c2a669c906866374011426d";
+
 export default node;

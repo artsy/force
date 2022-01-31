@@ -1,77 +1,51 @@
+/**
+ * @generated SignedSource<<790234714c8e99b2afbcb40835c2a3dc>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type FollowArtistInput = {
-    artistID: string;
-    clientMutationId?: string | null;
-    unfollow?: boolean | null;
+  artistID: string;
+  clientMutationId?: string | null;
+  unfollow?: boolean | null;
 };
-export type FollowArtistPopoverRowMutationVariables = {
-    input: FollowArtistInput;
-    excludeArtistIds: Array<string | null>;
+export type FollowArtistPopoverRowMutation$variables = {
+  input: FollowArtistInput;
+  excludeArtistIds: ReadonlyArray<string | null>;
 };
-export type FollowArtistPopoverRowMutationResponse = {
-    readonly followArtist: {
-        readonly artist: {
-            readonly id: string;
-            readonly related: {
-                readonly suggestedConnection: {
-                    readonly edges: ReadonlyArray<{
-                        readonly node: {
-                            readonly id: string;
-                            readonly internalID: string;
-                            readonly name: string | null;
-                            readonly formattedNationalityAndBirthday: string | null;
-                            readonly image: {
-                                readonly cropped: {
-                                    readonly url: string;
-                                } | null;
-                            } | null;
-                        } | null;
-                    } | null> | null;
+export type FollowArtistPopoverRowMutation$data = {
+  readonly followArtist: {
+    readonly artist: {
+      readonly id: string;
+      readonly related: {
+        readonly suggestedConnection: {
+          readonly edges: ReadonlyArray<{
+            readonly node: {
+              readonly id: string;
+              readonly internalID: string;
+              readonly name: string | null;
+              readonly formattedNationalityAndBirthday: string | null;
+              readonly image: {
+                readonly cropped: {
+                  readonly url: string;
                 } | null;
+              } | null;
             } | null;
+          } | null> | null;
         } | null;
+      } | null;
     } | null;
+  } | null;
 };
 export type FollowArtistPopoverRowMutation = {
-    readonly response: FollowArtistPopoverRowMutationResponse;
-    readonly variables: FollowArtistPopoverRowMutationVariables;
+  variables: FollowArtistPopoverRowMutation$variables;
+  response: FollowArtistPopoverRowMutation$data;
 };
-
-
-
-/*
-mutation FollowArtistPopoverRowMutation(
-  $input: FollowArtistInput!
-  $excludeArtistIds: [String]!
-) {
-  followArtist(input: $input) {
-    artist {
-      id
-      related {
-        suggestedConnection(first: 1, excludeFollowedArtists: true, excludeArtistIDs: $excludeArtistIds) {
-          edges {
-            node {
-              id
-              internalID
-              name
-              formattedNationalityAndBirthday
-              image {
-                cropped(width: 45, height: 45) {
-                  url
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = {
@@ -277,5 +251,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'e9b1a00dcc8137dfec48c9c65d2eb70b';
+
+(node as any).hash = "e9b1a00dcc8137dfec48c9c65d2eb70b";
+
 export default node;

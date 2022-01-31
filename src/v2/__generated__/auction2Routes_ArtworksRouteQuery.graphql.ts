@@ -1,38 +1,27 @@
+/**
+ * @generated SignedSource<<a22e0bc36a6f5c108c683cc3d096b1aa>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type auction2Routes_ArtworksRouteQueryVariables = {
-    slug: string;
+export type auction2Routes_ArtworksRouteQuery$variables = {
+  slug: string;
 };
-export type auction2Routes_ArtworksRouteQueryResponse = {
-    readonly sale: {
-        readonly " $fragmentRefs": FragmentRefs<"Auction2ArtworksRoute_sale">;
-    } | null;
+export type auction2Routes_ArtworksRouteQuery$data = {
+  readonly sale: {
+    readonly " $fragmentSpreads": FragmentRefs<"Auction2ArtworksRoute_sale">;
+  } | null;
 };
 export type auction2Routes_ArtworksRouteQuery = {
-    readonly response: auction2Routes_ArtworksRouteQueryResponse;
-    readonly variables: auction2Routes_ArtworksRouteQueryVariables;
+  variables: auction2Routes_ArtworksRouteQuery$variables;
+  response: auction2Routes_ArtworksRouteQuery$data;
 };
-
-
-
-/*
-query auction2Routes_ArtworksRouteQuery(
-  $slug: String!
-) {
-  sale(id: $slug) @principalField {
-    ...Auction2ArtworksRoute_sale
-    id
-  }
-}
-
-fragment Auction2ArtworksRoute_sale on Sale {
-  slug
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -119,5 +108,7 @@ return {
   }
 };
 })();
-(node as any).hash = '2b48cfb8fc05cb3452836ac286b7a0a6';
+
+(node as any).hash = "2b48cfb8fc05cb3452836ac286b7a0a6";
+
 export default node;

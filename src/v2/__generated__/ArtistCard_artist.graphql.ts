@@ -1,30 +1,33 @@
+/**
+ * @generated SignedSource<<2260a1862e3a2a5dcd892bf72cd93acf>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtistCard_artist = {
-    readonly name: string | null;
-    readonly slug: string;
-    readonly href: string | null;
-    readonly image: {
-        readonly cropped: {
-            readonly src: string;
-            readonly srcSet: string;
-        } | null;
+export type ArtistCard_artist$data = {
+  readonly name: string | null;
+  readonly slug: string;
+  readonly href: string | null;
+  readonly image: {
+    readonly cropped: {
+      readonly src: string;
+      readonly srcSet: string;
     } | null;
-    readonly formatted_nationality_and_birthday: string | null;
-    readonly " $fragmentRefs": FragmentRefs<"FollowArtistButton_artist">;
-    readonly " $refType": "ArtistCard_artist";
+  } | null;
+  readonly formatted_nationality_and_birthday: string | null;
+  readonly " $fragmentSpreads": FragmentRefs<"FollowArtistButton_artist">;
+  readonly " $fragmentType": "ArtistCard_artist";
 };
-export type ArtistCard_artist$data = ArtistCard_artist;
 export type ArtistCard_artist$key = {
-    readonly " $data"?: ArtistCard_artist$data;
-    readonly " $fragmentRefs": FragmentRefs<"ArtistCard_artist">;
+  readonly " $data"?: ArtistCard_artist$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtistCard_artist">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -116,5 +119,7 @@ const node: ReaderFragment = {
   "type": "Artist",
   "abstractKey": null
 };
-(node as any).hash = '18a86ab5601f4810038b3f2bf2c4014f';
+
+(node as any).hash = "18a86ab5601f4810038b3f2bf2c4014f";
+
 export default node;

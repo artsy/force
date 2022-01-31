@@ -1,7 +1,7 @@
 import { MockBoot, renderRelayTree } from "v2/DevTools"
 import { FairArtworksRefetchContainer } from "../FairArtworks"
 import { graphql } from "react-relay"
-import { FairArtworks_QueryRawResponse } from "v2/__generated__/FairArtworks_Query.graphql"
+import { FairArtworks_Query$rawResponse } from "v2/__generated__/FairArtworks_Query.graphql"
 import { useTracking } from "v2/System/Analytics/useTracking"
 
 jest.unmock("react-relay")
@@ -29,7 +29,7 @@ describe("FairArtworks", () => {
   })
 
   const getWrapper = async (
-    response: FairArtworks_QueryRawResponse = FAIR_ARTWORKS_FIXTURE
+    response: FairArtworks_Query$rawResponse = FAIR_ARTWORKS_FIXTURE
   ) => {
     return renderRelayTree({
       Component: ({ fair }) => {
@@ -70,7 +70,7 @@ describe("FairArtworks", () => {
   })
 })
 
-const FAIR_ARTWORKS_FIXTURE: FairArtworks_QueryRawResponse = {
+const FAIR_ARTWORKS_FIXTURE: FairArtworks_Query$rawResponse = {
   fair: {
     id: "xxx",
     slug: "cool-fair",

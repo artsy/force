@@ -1,24 +1,27 @@
+/**
+ * @generated SignedSource<<ac8d3ff7e058095fbd7c3a7597fa4922>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ViewingRoomApp_viewingRoom = {
-    readonly partner: {
-        readonly internalID: string;
-    } | null;
-    readonly status: string;
-    readonly " $fragmentRefs": FragmentRefs<"ViewingRoomMeta_viewingRoom" | "ViewingRoomHeader_viewingRoom" | "ViewingRoomContentNotAccessible_viewingRoom">;
-    readonly " $refType": "ViewingRoomApp_viewingRoom";
+export type ViewingRoomApp_viewingRoom$data = {
+  readonly partner: {
+    readonly internalID: string;
+  } | null;
+  readonly status: string;
+  readonly " $fragmentSpreads": FragmentRefs<"ViewingRoomMeta_viewingRoom" | "ViewingRoomHeader_viewingRoom" | "ViewingRoomContentNotAccessible_viewingRoom">;
+  readonly " $fragmentType": "ViewingRoomApp_viewingRoom";
 };
-export type ViewingRoomApp_viewingRoom$data = ViewingRoomApp_viewingRoom;
 export type ViewingRoomApp_viewingRoom$key = {
-    readonly " $data"?: ViewingRoomApp_viewingRoom$data;
-    readonly " $fragmentRefs": FragmentRefs<"ViewingRoomApp_viewingRoom">;
+  readonly " $data"?: ViewingRoomApp_viewingRoom$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ViewingRoomApp_viewingRoom">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -26,6 +29,21 @@ const node: ReaderFragment = {
   "metadata": null,
   "name": "ViewingRoomApp_viewingRoom",
   "selections": [
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ViewingRoomMeta_viewingRoom"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ViewingRoomHeader_viewingRoom"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ViewingRoomContentNotAccessible_viewingRoom"
+    },
     {
       "alias": null,
       "args": null,
@@ -50,25 +68,12 @@ const node: ReaderFragment = {
       "kind": "ScalarField",
       "name": "status",
       "storageKey": null
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "ViewingRoomMeta_viewingRoom"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "ViewingRoomHeader_viewingRoom"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "ViewingRoomContentNotAccessible_viewingRoom"
     }
   ],
   "type": "ViewingRoom",
   "abstractKey": null
 };
-(node as any).hash = '42b4a4acd26b4325cfef0fefd73552d6';
+
+(node as any).hash = "42b4a4acd26b4325cfef0fefd73552d6";
+
 export default node;

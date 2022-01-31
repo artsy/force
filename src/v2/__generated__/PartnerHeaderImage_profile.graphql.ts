@@ -1,22 +1,25 @@
+/**
+ * @generated SignedSource<<4ccdd490f7de22a3869b36df5b6864b4>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type PartnerHeaderImage_profile = {
-    readonly image: {
-        readonly url: string | null;
-    } | null;
-    readonly " $refType": "PartnerHeaderImage_profile";
+export type PartnerHeaderImage_profile$data = {
+  readonly image: {
+    readonly url: string | null;
+  } | null;
+  readonly " $fragmentType": "PartnerHeaderImage_profile";
 };
-export type PartnerHeaderImage_profile$data = PartnerHeaderImage_profile;
 export type PartnerHeaderImage_profile$key = {
-    readonly " $data"?: PartnerHeaderImage_profile$data;
-    readonly " $fragmentRefs": FragmentRefs<"PartnerHeaderImage_profile">;
+  readonly " $data"?: PartnerHeaderImage_profile$data;
+  readonly " $fragmentSpreads": FragmentRefs<"PartnerHeaderImage_profile">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -52,5 +55,7 @@ const node: ReaderFragment = {
   "type": "Profile",
   "abstractKey": null
 };
-(node as any).hash = '2892c6c4bdbfac989e8badf63f150514';
+
+(node as any).hash = "2892c6c4bdbfac989e8badf63f150514";
+
 export default node;

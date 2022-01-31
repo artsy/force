@@ -1,124 +1,73 @@
+/**
+ * @generated SignedSource<<6bfc7d0d4419205b5f2f0991edbac1bd>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtworkSidebarBidAction_Test_QueryVariables = {};
-export type ArtworkSidebarBidAction_Test_QueryResponse = {
-    readonly artwork: {
-        readonly " $fragmentRefs": FragmentRefs<"ArtworkSidebarBidAction_artwork">;
-    } | null;
-    readonly me: {
-        readonly " $fragmentRefs": FragmentRefs<"ArtworkSidebarBidAction_me">;
-    } | null;
+export type ArtworkSidebarBidAction_Test_Query$variables = {};
+export type ArtworkSidebarBidAction_Test_Query$data = {
+  readonly artwork: {
+    readonly " $fragmentSpreads": FragmentRefs<"ArtworkSidebarBidAction_artwork">;
+  } | null;
+  readonly me: {
+    readonly " $fragmentSpreads": FragmentRefs<"ArtworkSidebarBidAction_me">;
+  } | null;
 };
-export type ArtworkSidebarBidAction_Test_QueryRawResponse = {
-    readonly artwork: ({
-        readonly myLotStanding: ReadonlyArray<{
-            readonly most_recent_bid: ({
-                readonly max_bid: ({
-                    readonly cents: number | null;
-                }) | null;
-                readonly id: string;
-            }) | null;
-        }> | null;
-        readonly slug: string;
-        readonly internalID: string;
-        readonly sale: ({
-            readonly slug: string;
-            readonly registrationStatus: ({
-                readonly qualified_for_bidding: boolean | null;
-                readonly id: string;
-            }) | null;
-            readonly is_preview: boolean | null;
-            readonly is_open: boolean | null;
-            readonly is_live_open: boolean | null;
-            readonly is_closed: boolean | null;
-            readonly is_registration_closed: boolean | null;
-            readonly requireIdentityVerification: boolean | null;
-            readonly id: string;
-        }) | null;
-        readonly sale_artwork: ({
-            readonly increments: ReadonlyArray<({
-                readonly cents: number | null;
-                readonly display: string | null;
-            }) | null> | null;
-            readonly id: string;
-        }) | null;
+export type ArtworkSidebarBidAction_Test_Query$rawResponse = {
+  readonly artwork: {
+    readonly myLotStanding: ReadonlyArray<{
+      readonly most_recent_bid: {
+        readonly max_bid: {
+          readonly cents: number | null;
+        } | null;
         readonly id: string;
-    }) | null;
-    readonly me: ({
-        readonly identityVerified: boolean | null;
-        readonly pendingIdentityVerification: ({
-            readonly internalID: string;
-            readonly id: string;
-        }) | null;
+      } | null;
+    }> | null;
+    readonly slug: string;
+    readonly internalID: string;
+    readonly sale: {
+      readonly slug: string;
+      readonly registrationStatus: {
+        readonly qualified_for_bidding: boolean | null;
         readonly id: string;
-    }) | null;
+      } | null;
+      readonly is_preview: boolean | null;
+      readonly is_open: boolean | null;
+      readonly is_live_open: boolean | null;
+      readonly is_closed: boolean | null;
+      readonly is_registration_closed: boolean | null;
+      readonly requireIdentityVerification: boolean | null;
+      readonly id: string;
+    } | null;
+    readonly sale_artwork: {
+      readonly increments: ReadonlyArray<{
+        readonly cents: number | null;
+        readonly display: string | null;
+      } | null> | null;
+      readonly id: string;
+    } | null;
+    readonly id: string;
+  } | null;
+  readonly me: {
+    readonly identityVerified: boolean | null;
+    readonly pendingIdentityVerification: {
+      readonly internalID: string;
+      readonly id: string;
+    } | null;
+    readonly id: string;
+  } | null;
 };
 export type ArtworkSidebarBidAction_Test_Query = {
-    readonly response: ArtworkSidebarBidAction_Test_QueryResponse;
-    readonly variables: ArtworkSidebarBidAction_Test_QueryVariables;
-    readonly rawResponse: ArtworkSidebarBidAction_Test_QueryRawResponse;
+  variables: ArtworkSidebarBidAction_Test_Query$variables;
+  response: ArtworkSidebarBidAction_Test_Query$data;
+  rawResponse: ArtworkSidebarBidAction_Test_Query$rawResponse;
 };
-
-
-
-/*
-query ArtworkSidebarBidAction_Test_Query {
-  artwork(id: "auction_artwork") {
-    ...ArtworkSidebarBidAction_artwork
-    id
-  }
-  me {
-    ...ArtworkSidebarBidAction_me
-    id
-  }
-}
-
-fragment ArtworkSidebarBidAction_artwork on Artwork {
-  myLotStanding(live: true) {
-    most_recent_bid: mostRecentBid {
-      max_bid: maxBid {
-        cents
-      }
-      id
-    }
-  }
-  slug
-  internalID
-  sale {
-    slug
-    registrationStatus {
-      qualified_for_bidding: qualifiedForBidding
-      id
-    }
-    is_preview: isPreview
-    is_open: isOpen
-    is_live_open: isLiveOpen
-    is_closed: isClosed
-    is_registration_closed: isRegistrationClosed
-    requireIdentityVerification
-    id
-  }
-  sale_artwork: saleArtwork {
-    increments {
-      cents
-      display
-    }
-    id
-  }
-}
-
-fragment ArtworkSidebarBidAction_me on Me {
-  identityVerified
-  pendingIdentityVerification {
-    internalID
-    id
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -517,5 +466,7 @@ return {
   }
 };
 })();
-(node as any).hash = '69febe1492a563ce173be7ca02dc28c6';
+
+(node as any).hash = "69febe1492a563ce173be7ca02dc28c6";
+
 export default node;

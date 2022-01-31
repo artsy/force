@@ -1,4 +1,4 @@
-import { ArtworkSidebarMetadata_Test_QueryRawResponse } from "v2/__generated__/ArtworkSidebarMetadata_Test_Query.graphql"
+import { ArtworkSidebarMetadata_Test_Query$rawResponse } from "v2/__generated__/ArtworkSidebarMetadata_Test_Query.graphql"
 import { renderRelayTree } from "v2/DevTools"
 import { graphql } from "react-relay"
 import { ReactWrapper } from "enzyme"
@@ -20,7 +20,7 @@ describe("ArtworkSidebarMetadata", () => {
   let wrapper: ReactWrapper
 
   const getWrapper = async (
-    response: ArtworkSidebarMetadata_Test_QueryRawResponse["artwork"] = FilledOutMetadataNoEditions
+    response: ArtworkSidebarMetadata_Test_Query$rawResponse["artwork"] = FilledOutMetadataNoEditions
   ) => {
     return await renderRelayTree({
       Component: ArtworkSidebarMetadataFragmentContainer,
@@ -35,7 +35,7 @@ describe("ArtworkSidebarMetadata", () => {
       `,
       mockData: {
         artwork: response,
-      } as ArtworkSidebarMetadata_Test_QueryRawResponse,
+      } as ArtworkSidebarMetadata_Test_Query$rawResponse,
     })
   }
 
@@ -157,7 +157,6 @@ describe("ArtworkSidebarMetadata", () => {
         is_biddable: false,
       }
 
-      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       wrapper = await getWrapper(closedAuctionArtwork)
       expect(wrapper?.html()).not.toContain("Lot 210")
     })

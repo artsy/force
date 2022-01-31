@@ -1,35 +1,38 @@
+/**
+ * @generated SignedSource<<739d3dfd7c38e9c8ba58fe36277e6699>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtistsByLetter_viewer = {
-    readonly artistsConnection: {
-        readonly pageInfo: {
-            readonly endCursor: string | null;
-            readonly hasNextPage: boolean;
-        };
-        readonly pageCursors: {
-            readonly " $fragmentRefs": FragmentRefs<"Pagination_pageCursors">;
-        };
-        readonly artists: ReadonlyArray<{
-            readonly artist: {
-                readonly internalID: string;
-                readonly name: string | null;
-                readonly href: string | null;
-            } | null;
-        } | null> | null;
-    } | null;
-    readonly " $refType": "ArtistsByLetter_viewer";
+export type ArtistsByLetter_viewer$data = {
+  readonly artistsConnection: {
+    readonly pageInfo: {
+      readonly endCursor: string | null;
+      readonly hasNextPage: boolean;
+    };
+    readonly pageCursors: {
+      readonly " $fragmentSpreads": FragmentRefs<"Pagination_pageCursors">;
+    };
+    readonly artists: ReadonlyArray<{
+      readonly artist: {
+        readonly internalID: string;
+        readonly name: string | null;
+        readonly href: string | null;
+      } | null;
+    } | null> | null;
+  } | null;
+  readonly " $fragmentType": "ArtistsByLetter_viewer";
 };
-export type ArtistsByLetter_viewer$data = ArtistsByLetter_viewer;
 export type ArtistsByLetter_viewer$key = {
-    readonly " $data"?: ArtistsByLetter_viewer$data;
-    readonly " $fragmentRefs": FragmentRefs<"ArtistsByLetter_viewer">;
+  readonly " $data"?: ArtistsByLetter_viewer$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtistsByLetter_viewer">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [
@@ -168,5 +171,7 @@ const node: ReaderFragment = {
   "type": "Viewer",
   "abstractKey": null
 };
-(node as any).hash = '97218464334c75b3c3cf175a660276d8';
+
+(node as any).hash = "97218464334c75b3c3cf175a660276d8";
+
 export default node;

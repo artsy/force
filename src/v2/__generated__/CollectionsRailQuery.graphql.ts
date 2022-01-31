@@ -1,50 +1,29 @@
+/**
+ * @generated SignedSource<<79f3514b622349cfd8fb121fe41761e2>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type CollectionsRailQueryVariables = {
-    showOnEditorial?: boolean | null;
-    size?: number | null;
-    randomizationSeed?: string | null;
+export type CollectionsRailQuery$variables = {
+  showOnEditorial?: boolean | null;
+  size?: number | null;
+  randomizationSeed?: string | null;
 };
-export type CollectionsRailQueryResponse = {
-    readonly collections: ReadonlyArray<{
-        readonly " $fragmentRefs": FragmentRefs<"CollectionsRail_collections">;
-    }>;
+export type CollectionsRailQuery$data = {
+  readonly collections: ReadonlyArray<{
+    readonly " $fragmentSpreads": FragmentRefs<"CollectionsRail_collections">;
+  }>;
 };
 export type CollectionsRailQuery = {
-    readonly response: CollectionsRailQueryResponse;
-    readonly variables: CollectionsRailQueryVariables;
+  variables: CollectionsRailQuery$variables;
+  response: CollectionsRailQuery$data;
 };
-
-
-
-/*
-query CollectionsRailQuery(
-  $showOnEditorial: Boolean
-  $size: Int
-  $randomizationSeed: String
-) {
-  collections: marketingCollections(showOnEditorial: $showOnEditorial, size: $size, randomizationSeed: $randomizationSeed) {
-    ...CollectionsRail_collections
-    id
-  }
-}
-
-fragment CollectionEntity_collection on MarketingCollection {
-  slug
-  headerImage
-  title
-  price_guidance: priceGuidance
-  show_on_editorial: showOnEditorial
-}
-
-fragment CollectionsRail_collections on MarketingCollection {
-  ...CollectionEntity_collection
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = {
@@ -185,5 +164,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'e6e181f0317cc4947ddb0d4cf5613dca';
+
+(node as any).hash = "e6e181f0317cc4947ddb0d4cf5613dca";
+
 export default node;

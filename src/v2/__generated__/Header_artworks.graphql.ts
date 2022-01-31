@@ -1,33 +1,36 @@
+/**
+ * @generated SignedSource<<093861b98125c385c738d5c75c885486>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type Header_artworks = {
-    readonly merchandisableArtists: ReadonlyArray<{
-        readonly slug: string;
-        readonly internalID: string;
-        readonly name: string | null;
-        readonly image: {
-            readonly resized: {
-                readonly url: string;
-            } | null;
-        } | null;
-        readonly birthday: string | null;
-        readonly nationality: string | null;
-        readonly " $fragmentRefs": FragmentRefs<"FollowArtistButton_artist">;
-    } | null> | null;
-    readonly " $fragmentRefs": FragmentRefs<"DefaultHeader_headerArtworks">;
-    readonly " $refType": "Header_artworks";
+export type Header_artworks$data = {
+  readonly merchandisableArtists: ReadonlyArray<{
+    readonly slug: string;
+    readonly internalID: string;
+    readonly name: string | null;
+    readonly image: {
+      readonly resized: {
+        readonly url: string;
+      } | null;
+    } | null;
+    readonly birthday: string | null;
+    readonly nationality: string | null;
+    readonly " $fragmentSpreads": FragmentRefs<"FollowArtistButton_artist">;
+  } | null> | null;
+  readonly " $fragmentSpreads": FragmentRefs<"DefaultHeader_headerArtworks">;
+  readonly " $fragmentType": "Header_artworks";
 };
-export type Header_artworks$data = Header_artworks;
 export type Header_artworks$key = {
-    readonly " $data"?: Header_artworks$data;
-    readonly " $fragmentRefs": FragmentRefs<"Header_artworks">;
+  readonly " $data"?: Header_artworks$data;
+  readonly " $fragmentSpreads": FragmentRefs<"Header_artworks">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -35,6 +38,11 @@ const node: ReaderFragment = {
   "metadata": null,
   "name": "Header_artworks",
   "selections": [
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "DefaultHeader_headerArtworks"
+    },
     {
       "alias": null,
       "args": null,
@@ -130,15 +138,12 @@ const node: ReaderFragment = {
         }
       ],
       "storageKey": null
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "DefaultHeader_headerArtworks"
     }
   ],
   "type": "FilterArtworksConnection",
   "abstractKey": null
 };
-(node as any).hash = 'ee9a91cd2dac53afe39f913787441bc3';
+
+(node as any).hash = "ee9a91cd2dac53afe39f913787441bc3";
+
 export default node;

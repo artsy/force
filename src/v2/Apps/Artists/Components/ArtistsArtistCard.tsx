@@ -58,12 +58,10 @@ export const ArtistsArtistCard: React.FC<ArtistsArtistCardProps> = ({
               </Text>
             )}
 
-            {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
             {counts && counts.artworks > 0 && (
               <Text variant="xs" fontWeight="bold">
                 {counts.artworks} work
                 {counts.artworks === 1 ? "" : "s"}
-                {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
                 {counts.forSaleArtworks > 0 &&
                   counts.forSaleArtworks !== counts.artworks && (
                     <>, {counts.forSaleArtworks} for sale</>

@@ -1,26 +1,29 @@
+/**
+ * @generated SignedSource<<45cc831fbba73b4c6a567f026ce40c46>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ShowNavigationBanner_show = {
-    readonly partner: {
-        readonly internalID?: string;
-    } | null;
-    readonly fair: {
-        readonly name: string | null;
-        readonly href: string | null;
-    } | null;
-    readonly " $refType": "ShowNavigationBanner_show";
+export type ShowNavigationBanner_show$data = {
+  readonly partner: {
+    readonly internalID?: string;
+  } | null;
+  readonly fair: {
+    readonly name: string | null;
+    readonly href: string | null;
+  } | null;
+  readonly " $fragmentType": "ShowNavigationBanner_show";
 };
-export type ShowNavigationBanner_show$data = ShowNavigationBanner_show;
 export type ShowNavigationBanner_show$key = {
-    readonly " $data"?: ShowNavigationBanner_show$data;
-    readonly " $fragmentRefs": FragmentRefs<"ShowNavigationBanner_show">;
+  readonly " $data"?: ShowNavigationBanner_show$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ShowNavigationBanner_show">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = [
@@ -91,5 +94,7 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = 'd30ab7b1227f1703a550d00c5fa3f5a5';
+
+(node as any).hash = "d30ab7b1227f1703a550d00c5fa3f5a5";
+
 export default node;

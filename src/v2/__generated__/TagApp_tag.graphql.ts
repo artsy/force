@@ -1,21 +1,24 @@
+/**
+ * @generated SignedSource<<2350965ac7a987cf911fcffc6c73bcf6>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type TagApp_tag = {
-    readonly name: string | null;
-    readonly " $fragmentRefs": FragmentRefs<"TagArtworkFilter_tag" | "TagMeta_tag">;
-    readonly " $refType": "TagApp_tag";
+export type TagApp_tag$data = {
+  readonly name: string | null;
+  readonly " $fragmentSpreads": FragmentRefs<"TagArtworkFilter_tag" | "TagMeta_tag">;
+  readonly " $fragmentType": "TagApp_tag";
 };
-export type TagApp_tag$data = TagApp_tag;
 export type TagApp_tag$key = {
-    readonly " $data"?: TagApp_tag$data;
-    readonly " $fragmentRefs": FragmentRefs<"TagApp_tag">;
+  readonly " $data"?: TagApp_tag$data;
+  readonly " $fragmentSpreads": FragmentRefs<"TagApp_tag">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [
@@ -39,13 +42,6 @@ const node: ReaderFragment = {
   "metadata": null,
   "name": "TagApp_tag",
   "selections": [
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "name",
-      "storageKey": null
-    },
     {
       "args": [
         {
@@ -71,10 +67,19 @@ const node: ReaderFragment = {
       "args": null,
       "kind": "FragmentSpread",
       "name": "TagMeta_tag"
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "name",
+      "storageKey": null
     }
   ],
   "type": "Tag",
   "abstractKey": null
 };
-(node as any).hash = '15bfda47e4d0588e2e6ffeb5d7c2afdf';
+
+(node as any).hash = "15bfda47e4d0588e2e6ffeb5d7c2afdf";
+
 export default node;

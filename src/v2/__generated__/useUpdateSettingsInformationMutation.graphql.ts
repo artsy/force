@@ -1,126 +1,89 @@
+/**
+ * @generated SignedSource<<9fc86715f47c6c3a63e7cfcded1ab169>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Mutation } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type CurrencyPreference = "EUR" | "GBP" | "USD" | "%future added value";
 export type LengthUnitPreference = "CM" | "IN" | "%future added value";
 export type UpdateMyProfileInput = {
-    artworksPerYear?: string | null;
-    bio?: string | null;
-    clientMutationId?: string | null;
-    collectorLevel?: number | null;
-    completedOnboarding?: boolean | null;
-    currencyPreference?: CurrencyPreference | null;
-    email?: string | null;
-    emailFrequency?: string | null;
-    gender?: string | null;
-    iconUrl?: string | null;
-    industry?: string | null;
-    isCollector?: boolean | null;
-    lengthUnitPreference?: LengthUnitPreference | null;
-    location?: EditableLocation | null;
-    name?: string | null;
-    notes?: string | null;
-    otherRelevantPositions?: string | null;
-    password?: string | null;
-    phone?: string | null;
-    priceRangeMax?: number | null;
-    priceRangeMin?: number | null;
-    privacy?: string | null;
-    profession?: string | null;
-    receiveLotOpeningSoonNotification?: boolean | null;
-    receiveNewSalesNotification?: boolean | null;
-    receiveNewWorksNotification?: boolean | null;
-    receiveOutbidNotification?: boolean | null;
-    receivePromotionNotification?: boolean | null;
-    receivePurchaseNotification?: boolean | null;
-    receiveSaleOpeningClosingNotification?: boolean | null;
-    shareFollows?: boolean | null;
+  artworksPerYear?: string | null;
+  bio?: string | null;
+  clientMutationId?: string | null;
+  collectorLevel?: number | null;
+  completedOnboarding?: boolean | null;
+  currencyPreference?: CurrencyPreference | null;
+  email?: string | null;
+  emailFrequency?: string | null;
+  gender?: string | null;
+  iconUrl?: string | null;
+  industry?: string | null;
+  isCollector?: boolean | null;
+  lengthUnitPreference?: LengthUnitPreference | null;
+  location?: EditableLocation | null;
+  name?: string | null;
+  notes?: string | null;
+  otherRelevantPositions?: string | null;
+  password?: string | null;
+  phone?: string | null;
+  priceRangeMax?: number | null;
+  priceRangeMin?: number | null;
+  privacy?: string | null;
+  profession?: string | null;
+  receiveLotOpeningSoonNotification?: boolean | null;
+  receiveNewSalesNotification?: boolean | null;
+  receiveNewWorksNotification?: boolean | null;
+  receiveOutbidNotification?: boolean | null;
+  receivePromotionNotification?: boolean | null;
+  receivePurchaseNotification?: boolean | null;
+  receiveSaleOpeningClosingNotification?: boolean | null;
+  shareFollows?: boolean | null;
 };
 export type EditableLocation = {
-    address?: string | null;
-    address2?: string | null;
-    city?: string | null;
-    country?: string | null;
-    postalCode?: string | null;
-    state?: string | null;
-    stateCode?: string | null;
-    summary?: string | null;
+  address?: string | null;
+  address2?: string | null;
+  city?: string | null;
+  country?: string | null;
+  postalCode?: string | null;
+  state?: string | null;
+  stateCode?: string | null;
+  summary?: string | null;
 };
-export type useUpdateSettingsInformationMutationVariables = {
-    input: UpdateMyProfileInput;
+export type useUpdateSettingsInformationMutation$variables = {
+  input: UpdateMyProfileInput;
 };
-export type useUpdateSettingsInformationMutationResponse = {
-    readonly updateMyUserProfile: {
-        readonly me: {
-            readonly " $fragmentRefs": FragmentRefs<"SettingsEditSettingsInformation_me">;
-        } | null;
-        readonly userOrError: {
-            readonly user?: {
-                readonly internalID: string;
-            } | null;
-            readonly mutationError?: {
-                readonly type: string | null;
-                readonly message: string;
-                readonly detail: string | null;
-                readonly error: string | null;
-                readonly fieldErrors: ReadonlyArray<{
-                    readonly name: string;
-                    readonly message: string;
-                } | null> | null;
-            } | null;
-        } | null;
+export type useUpdateSettingsInformationMutation$data = {
+  readonly updateMyUserProfile: {
+    readonly me: {
+      readonly " $fragmentSpreads": FragmentRefs<"SettingsEditSettingsInformation_me">;
     } | null;
+    readonly userOrError: {
+      readonly user?: {
+        readonly internalID: string;
+      } | null;
+      readonly mutationError?: {
+        readonly type: string | null;
+        readonly message: string;
+        readonly detail: string | null;
+        readonly error: string | null;
+        readonly fieldErrors: ReadonlyArray<{
+          readonly name: string;
+          readonly message: string;
+        } | null> | null;
+      } | null;
+    } | null;
+  } | null;
 };
 export type useUpdateSettingsInformationMutation = {
-    readonly response: useUpdateSettingsInformationMutationResponse;
-    readonly variables: useUpdateSettingsInformationMutationVariables;
+  variables: useUpdateSettingsInformationMutation$variables;
+  response: useUpdateSettingsInformationMutation$data;
 };
-
-
-
-/*
-mutation useUpdateSettingsInformationMutation(
-  $input: UpdateMyProfileInput!
-) {
-  updateMyUserProfile(input: $input) {
-    me {
-      ...SettingsEditSettingsInformation_me
-      id
-    }
-    userOrError {
-      __typename
-      ... on UpdateMyProfileMutationSuccess {
-        user {
-          internalID
-          id
-        }
-      }
-      ... on UpdateMyProfileMutationFailure {
-        mutationError {
-          type
-          message
-          detail
-          error
-          fieldErrors {
-            name
-            message
-          }
-        }
-      }
-    }
-  }
-}
-
-fragment SettingsEditSettingsInformation_me on Me {
-  email
-  name
-  paddleNumber
-  phone
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -389,5 +352,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'c3ddab7400b980cba872ea195359ca0a';
+
+(node as any).hash = "c3ddab7400b980cba872ea195359ca0a";
+
 export default node;

@@ -1,4 +1,4 @@
-import { ConfirmBidValidTestQueryRawResponse } from "v2/__generated__/ConfirmBidValidTestQuery.graphql"
+import { ConfirmBidValidTestQuery$rawResponse } from "v2/__generated__/ConfirmBidValidTestQuery.graphql"
 import {
   createCreditCardAndUpdatePhoneFailed,
   createCreditCardAndUpdatePhoneSuccessful,
@@ -9,12 +9,10 @@ import { Location, Match } from "found"
 import { graphql } from "react-relay"
 import { Select } from "@artsy/palette"
 
-import { auctionRoutes_ConfirmBidQueryResponse } from "v2/__generated__/auctionRoutes_ConfirmBidQuery.graphql"
 import { ConfirmBidQueryResponseFixture } from "v2/Apps/Auction/__fixtures__/routes_ConfirmBidQuery"
 import { bidderPositionQuery } from "v2/Apps/Auction/Operations/BidderPositionQuery"
 import { AnalyticsSchema } from "v2/System/Analytics"
 import { createMockFetchQuery } from "v2/DevTools/createMockNetworkLayer"
-import { TrackingProp } from "react-tracking"
 import {
   confirmBidBidderPositionQueryWithOutbid,
   confirmBidBidderPositionQueryWithPending,
@@ -82,17 +80,14 @@ const setupTestEnv = ({
 } = {}) => {
   mockLocation(location)
   return createTestEnv({
-    Component: (
-      props: auctionRoutes_ConfirmBidQueryResponse & { tracking: TrackingProp }
-    ) => (
-      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
+    Component: props => (
       <ConfirmBidRouteFragmentContainer
         match={{ location } as Match}
         {...props}
       />
     ),
     TestPage: ConfirmBidTestPage,
-    defaultData: ConfirmBidQueryResponseFixture as ConfirmBidValidTestQueryRawResponse,
+    defaultData: ConfirmBidQueryResponseFixture as ConfirmBidValidTestQuery$rawResponse,
     defaultMutationResults: {
       createBidderPosition: {},
       createCreditCard: {},

@@ -1,41 +1,25 @@
+/**
+ * @generated SignedSource<<2382ad5b79d90eb270c976037635fe65>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type AboutPartner_Test_QueryVariables = {};
-export type AboutPartner_Test_QueryResponse = {
-    readonly partner: {
-        readonly " $fragmentRefs": FragmentRefs<"AboutPartner_partner">;
-    } | null;
+export type AboutPartner_Test_Query$variables = {};
+export type AboutPartner_Test_Query$data = {
+  readonly partner: {
+    readonly " $fragmentSpreads": FragmentRefs<"AboutPartner_partner">;
+  } | null;
 };
 export type AboutPartner_Test_Query = {
-    readonly response: AboutPartner_Test_QueryResponse;
-    readonly variables: AboutPartner_Test_QueryVariables;
+  variables: AboutPartner_Test_Query$variables;
+  response: AboutPartner_Test_Query$data;
 };
-
-
-
-/*
-query AboutPartner_Test_Query {
-  partner(id: "unit-london") @principalField {
-    ...AboutPartner_partner
-    id
-  }
-}
-
-fragment AboutPartner_partner on Partner {
-  profile {
-    fullBio
-    bio
-    id
-  }
-  website
-  vatNumber
-  displayFullPartnerPage
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -195,5 +179,7 @@ return {
   }
 };
 })();
-(node as any).hash = '502ee49997d2a6376b9f5147418508e7';
+
+(node as any).hash = "502ee49997d2a6376b9f5147418508e7";
+
 export default node;

@@ -1,76 +1,62 @@
+/**
+ * @generated SignedSource<<54a5c862c338a4ffec483a5b8e6637ef>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type UpdateSavedSearchInput = {
-    attributes?: SearchCriteriaAttributes | null;
-    clientMutationId?: string | null;
-    searchCriteriaID: string;
-    userAlertSettings?: UserAlertSettingsInput | null;
+  attributes?: SearchCriteriaAttributes | null;
+  clientMutationId?: string | null;
+  searchCriteriaID: string;
+  userAlertSettings?: UserAlertSettingsInput | null;
 };
 export type SearchCriteriaAttributes = {
-    acquireable?: boolean | null;
-    additionalGeneIDs?: Array<string> | null;
-    artistID?: string | null;
-    artistIDs?: Array<string> | null;
-    atAuction?: boolean | null;
-    attributionClass?: Array<string> | null;
-    colors?: Array<string> | null;
-    dimensionRange?: string | null;
-    height?: string | null;
-    inquireableOnly?: boolean | null;
-    locationCities?: Array<string> | null;
-    majorPeriods?: Array<string> | null;
-    materialsTerms?: Array<string> | null;
-    offerable?: boolean | null;
-    partnerIDs?: Array<string> | null;
-    priceRange?: string | null;
-    sizes?: Array<string> | null;
-    width?: string | null;
+  acquireable?: boolean | null;
+  additionalGeneIDs?: ReadonlyArray<string> | null;
+  artistID?: string | null;
+  artistIDs?: ReadonlyArray<string> | null;
+  atAuction?: boolean | null;
+  attributionClass?: ReadonlyArray<string> | null;
+  colors?: ReadonlyArray<string> | null;
+  dimensionRange?: string | null;
+  height?: string | null;
+  inquireableOnly?: boolean | null;
+  locationCities?: ReadonlyArray<string> | null;
+  majorPeriods?: ReadonlyArray<string> | null;
+  materialsTerms?: ReadonlyArray<string> | null;
+  offerable?: boolean | null;
+  partnerIDs?: ReadonlyArray<string> | null;
+  priceRange?: string | null;
+  sizes?: ReadonlyArray<string> | null;
+  width?: string | null;
 };
 export type UserAlertSettingsInput = {
-    email?: boolean | null;
-    name?: string | null;
-    push?: boolean | null;
+  email?: boolean | null;
+  name?: string | null;
+  push?: boolean | null;
 };
-export type useEditSavedSearchAlertMutationVariables = {
-    input: UpdateSavedSearchInput;
+export type useEditSavedSearchAlertMutation$variables = {
+  input: UpdateSavedSearchInput;
 };
-export type useEditSavedSearchAlertMutationResponse = {
-    readonly updateSavedSearch: {
-        readonly savedSearchOrErrors: {
-            readonly internalID?: string;
-            readonly userAlertSettings?: {
-                readonly name: string | null;
-            };
-        };
-    } | null;
+export type useEditSavedSearchAlertMutation$data = {
+  readonly updateSavedSearch: {
+    readonly savedSearchOrErrors: {
+      readonly internalID?: string;
+      readonly userAlertSettings?: {
+        readonly name: string | null;
+      };
+    };
+  } | null;
 };
 export type useEditSavedSearchAlertMutation = {
-    readonly response: useEditSavedSearchAlertMutationResponse;
-    readonly variables: useEditSavedSearchAlertMutationVariables;
+  variables: useEditSavedSearchAlertMutation$variables;
+  response: useEditSavedSearchAlertMutation$data;
 };
-
-
-
-/*
-mutation useEditSavedSearchAlertMutation(
-  $input: UpdateSavedSearchInput!
-) {
-  updateSavedSearch(input: $input) {
-    savedSearchOrErrors {
-      __typename
-      ... on SearchCriteria {
-        internalID
-        userAlertSettings {
-          name
-        }
-      }
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -201,5 +187,7 @@ return {
   }
 };
 })();
-(node as any).hash = '4f5012f259a490f2809f2da46ff1c9d3';
+
+(node as any).hash = "4f5012f259a490f2809f2da46ff1c9d3";
+
 export default node;

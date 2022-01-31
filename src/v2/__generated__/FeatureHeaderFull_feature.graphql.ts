@@ -1,35 +1,38 @@
+/**
+ * @generated SignedSource<<6efc3fc65066d833b18313013578ac61>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type FeatureHeaderFull_feature = {
-    readonly name: string;
-    readonly subheadline: string | null;
-    readonly fullImage: {
-        readonly sm: {
-            readonly src: string;
-            readonly srcSet: string;
-        } | null;
-        readonly md: {
-            readonly src: string;
-            readonly srcSet: string;
-        } | null;
-        readonly lg: {
-            readonly src: string;
-            readonly srcSet: string;
-        } | null;
+export type FeatureHeaderFull_feature$data = {
+  readonly name: string;
+  readonly subheadline: string | null;
+  readonly fullImage: {
+    readonly sm: {
+      readonly src: string;
+      readonly srcSet: string;
     } | null;
-    readonly " $refType": "FeatureHeaderFull_feature";
+    readonly md: {
+      readonly src: string;
+      readonly srcSet: string;
+    } | null;
+    readonly lg: {
+      readonly src: string;
+      readonly srcSet: string;
+    } | null;
+  } | null;
+  readonly " $fragmentType": "FeatureHeaderFull_feature";
 };
-export type FeatureHeaderFull_feature$data = FeatureHeaderFull_feature;
 export type FeatureHeaderFull_feature$key = {
-    readonly " $data"?: FeatureHeaderFull_feature$data;
-    readonly " $fragmentRefs": FragmentRefs<"FeatureHeaderFull_feature">;
+  readonly " $data"?: FeatureHeaderFull_feature$data;
+  readonly " $fragmentSpreads": FragmentRefs<"FeatureHeaderFull_feature">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = {
@@ -164,5 +167,7 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = 'dc3fc182dd2ed03d4af33ac63d0b50e2';
+
+(node as any).hash = "dc3fc182dd2ed03d4af33ac63d0b50e2";
+
 export default node;

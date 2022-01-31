@@ -1,171 +1,27 @@
+/**
+ * @generated SignedSource<<bbc71c8af6aadeccdfcda8005c0d3bbd>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArticleZoomGalleryQueryVariables = {
-    id: string;
+export type ArticleZoomGalleryQuery$variables = {
+  id: string;
 };
-export type ArticleZoomGalleryQueryResponse = {
-    readonly article: {
-        readonly " $fragmentRefs": FragmentRefs<"ArticleZoomGallery_article">;
-    } | null;
+export type ArticleZoomGalleryQuery$data = {
+  readonly article: {
+    readonly " $fragmentSpreads": FragmentRefs<"ArticleZoomGallery_article">;
+  } | null;
 };
 export type ArticleZoomGalleryQuery = {
-    readonly response: ArticleZoomGalleryQueryResponse;
-    readonly variables: ArticleZoomGalleryQueryVariables;
+  variables: ArticleZoomGalleryQuery$variables;
+  response: ArticleZoomGalleryQuery$data;
 };
-
-
-
-/*
-query ArticleZoomGalleryQuery(
-  $id: String!
-) {
-  article(id: $id) {
-    ...ArticleZoomGallery_article
-    id
-  }
-}
-
-fragment ArticleZoomGalleryCaption_figure on ArticleSectionImageCollectionFigure {
-  __isArticleSectionImageCollectionFigure: __typename
-  __typename
-  ... on Artwork {
-    ...Metadata_artwork
-  }
-  ... on ArticleImageSection {
-    caption
-  }
-}
-
-fragment ArticleZoomGalleryFigure_figure on ArticleSectionImageCollectionFigure {
-  __isArticleSectionImageCollectionFigure: __typename
-  __typename
-  ... on Artwork {
-    image {
-      url(version: ["normalized", "larger", "large"])
-    }
-  }
-  ... on ArticleImageSection {
-    image {
-      url(version: ["normalized", "larger", "large"])
-    }
-  }
-}
-
-fragment ArticleZoomGallery_article on Article {
-  sections {
-    __typename
-    ... on ArticleSectionImageCollection {
-      figures {
-        ...ArticleZoomGalleryFigure_figure
-        ...ArticleZoomGalleryCaption_figure
-        __typename
-        ... on Artwork {
-          id
-        }
-        ... on ArticleImageSection {
-          id
-        }
-        ... on Node {
-          __isNode: __typename
-          id
-        }
-      }
-    }
-    ... on ArticleSectionImageSet {
-      title
-      figures {
-        ...ArticleZoomGalleryFigure_figure
-        ...ArticleZoomGalleryCaption_figure
-        __typename
-        ... on Artwork {
-          id
-        }
-        ... on ArticleImageSection {
-          id
-        }
-        ... on Node {
-          __isNode: __typename
-          id
-        }
-      }
-    }
-  }
-}
-
-fragment Contact_artwork on Artwork {
-  href
-  is_inquireable: isInquireable
-  sale {
-    is_auction: isAuction
-    is_live_open: isLiveOpen
-    is_open: isOpen
-    is_closed: isClosed
-    id
-  }
-  partner(shallow: true) {
-    type
-    id
-  }
-  sale_artwork: saleArtwork {
-    highest_bid: highestBid {
-      display
-    }
-    opening_bid: openingBid {
-      display
-    }
-    counts {
-      bidder_positions: bidderPositions
-    }
-    id
-  }
-}
-
-fragment Details_artwork on Artwork {
-  href
-  title
-  date
-  sale_message: saleMessage
-  cultural_maker: culturalMaker
-  artists(shallow: true) {
-    id
-    href
-    name
-  }
-  collecting_institution: collectingInstitution
-  partner(shallow: true) {
-    name
-    href
-    id
-  }
-  sale {
-    is_auction: isAuction
-    is_closed: isClosed
-    id
-  }
-  sale_artwork: saleArtwork {
-    counts {
-      bidder_positions: bidderPositions
-    }
-    highest_bid: highestBid {
-      display
-    }
-    opening_bid: openingBid {
-      display
-    }
-    id
-  }
-}
-
-fragment Metadata_artwork on Artwork {
-  ...Details_artwork
-  ...Contact_artwork
-  href
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -628,5 +484,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'a60d1403ba560027786e81b0edfb2597';
+
+(node as any).hash = "a60d1403ba560027786e81b0edfb2597";
+
 export default node;

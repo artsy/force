@@ -1,61 +1,25 @@
+/**
+ * @generated SignedSource<<5aa2b8b18cca54a9df458ec6fcead507>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type SavedAddressesRefetchQueryVariables = {};
-export type SavedAddressesRefetchQueryResponse = {
-    readonly me: {
-        readonly " $fragmentRefs": FragmentRefs<"SavedAddresses_me">;
-    } | null;
+export type SavedAddressesRefetchQuery$variables = {};
+export type SavedAddressesRefetchQuery$data = {
+  readonly me: {
+    readonly " $fragmentSpreads": FragmentRefs<"SavedAddresses_me">;
+  } | null;
 };
 export type SavedAddressesRefetchQuery = {
-    readonly response: SavedAddressesRefetchQueryResponse;
-    readonly variables: SavedAddressesRefetchQueryVariables;
+  variables: SavedAddressesRefetchQuery$variables;
+  response: SavedAddressesRefetchQuery$data;
 };
-
-
-
-/*
-query SavedAddressesRefetchQuery {
-  me {
-    ...SavedAddresses_me
-    id
-  }
-}
-
-fragment SavedAddresses_me on Me {
-  id
-  addressConnection(first: 30) {
-    totalCount
-    edges {
-      node {
-        id
-        internalID
-        addressLine1
-        addressLine2
-        addressLine3
-        city
-        country
-        isDefault
-        name
-        phoneNumber
-        postalCode
-        region
-        __typename
-      }
-      cursor
-    }
-    pageInfo {
-      endCursor
-      hasNextPage
-      hasPreviousPage
-      startCursor
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = {
@@ -309,5 +273,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'e164d0b484f2f5634549c612711904c8';
+
+(node as any).hash = "e164d0b484f2f5634549c612711904c8";
+
 export default node;

@@ -1,6 +1,6 @@
 import {
   ConversationAppTestQuery,
-  ConversationAppTestQueryRawResponse,
+  ConversationAppTestQuery$rawResponse,
 } from "v2/__generated__/ConversationAppTestQuery.graphql"
 import { screen } from "@testing-library/react"
 import { MockedConversation } from "v2/Apps/__tests__/Fixtures/Conversation"
@@ -41,7 +41,7 @@ const { renderWithRelay } = setupTestWrapperTL<ConversationAppTestQuery>({
 
 const pageInfo: NonNullable<
   NonNullable<
-    ConversationAppTestQueryRawResponse["me"]
+    ConversationAppTestQuery$rawResponse["me"]
   >["conversationsConnection"]
 >["pageInfo"] = {
   startCursor: "NQ",

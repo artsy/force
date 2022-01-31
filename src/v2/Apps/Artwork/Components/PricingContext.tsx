@@ -10,7 +10,7 @@ import {
   Text,
 } from "@artsy/palette"
 import { BarChart, BarDescriptor } from "@artsy/palette-charts"
-import { PricingContext_artwork } from "v2/__generated__/PricingContext_artwork.graphql"
+import { PricingContext_artwork$data } from "v2/__generated__/PricingContext_artwork.graphql"
 import { track } from "v2/System/Analytics"
 import * as Schema from "v2/System/Analytics/Schema"
 import { once } from "lodash"
@@ -25,7 +25,7 @@ import { PricingContextQuery } from "v2/__generated__/PricingContextQuery.graphq
 import { useSystemContext } from "v2/System"
 
 interface PricingContextProps {
-  artwork: PricingContext_artwork
+  artwork: PricingContext_artwork$data
 }
 
 @track(

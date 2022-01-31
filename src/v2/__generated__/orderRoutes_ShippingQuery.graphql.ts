@@ -1,292 +1,30 @@
+/**
+ * @generated SignedSource<<ebb187e7a50dca16d4a261a23855c817>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type orderRoutes_ShippingQueryVariables = {
-    orderID: string;
+export type orderRoutes_ShippingQuery$variables = {
+  orderID: string;
 };
-export type orderRoutes_ShippingQueryResponse = {
-    readonly order: {
-        readonly " $fragmentRefs": FragmentRefs<"Shipping_order">;
-    } | null;
-    readonly me: {
-        readonly " $fragmentRefs": FragmentRefs<"Shipping_me">;
-    } | null;
+export type orderRoutes_ShippingQuery$data = {
+  readonly order: {
+    readonly " $fragmentSpreads": FragmentRefs<"Shipping_order">;
+  } | null;
+  readonly me: {
+    readonly " $fragmentSpreads": FragmentRefs<"Shipping_me">;
+  } | null;
 };
 export type orderRoutes_ShippingQuery = {
-    readonly response: orderRoutes_ShippingQueryResponse;
-    readonly variables: orderRoutes_ShippingQueryVariables;
+  variables: orderRoutes_ShippingQuery$variables;
+  response: orderRoutes_ShippingQuery$data;
 };
-
-
-
-/*
-query orderRoutes_ShippingQuery(
-  $orderID: ID!
-) {
-  order: commerceOrder(id: $orderID) {
-    __typename
-    ...Shipping_order
-    id
-  }
-  me {
-    ...Shipping_me
-    id
-  }
-}
-
-fragment ArtworkSummaryItem_order on CommerceOrder {
-  __isCommerceOrder: __typename
-  sellerDetails {
-    __typename
-    ... on Partner {
-      name
-    }
-    ... on Node {
-      __isNode: __typename
-      id
-    }
-    ... on User {
-      id
-    }
-  }
-  currencyCode
-  mode
-  lineItems {
-    edges {
-      node {
-        artworkOrEditionSet {
-          __typename
-          ... on Artwork {
-            price
-          }
-          ... on EditionSet {
-            price
-            id
-          }
-          ... on Node {
-            __isNode: __typename
-            id
-          }
-        }
-        artwork {
-          artistNames
-          title
-          date
-          shippingOrigin
-          image {
-            resized_ArtworkSummaryItem: resized(width: 55) {
-              url
-            }
-          }
-          id
-        }
-        id
-      }
-    }
-  }
-}
-
-fragment SavedAddresses_me on Me {
-  id
-  addressConnection(first: 30) {
-    totalCount
-    edges {
-      node {
-        id
-        internalID
-        addressLine1
-        addressLine2
-        addressLine3
-        city
-        country
-        isDefault
-        name
-        phoneNumber
-        postalCode
-        region
-        __typename
-      }
-      cursor
-    }
-    pageInfo {
-      endCursor
-      hasNextPage
-      hasPreviousPage
-      startCursor
-    }
-  }
-}
-
-fragment ShippingQuotes_shippingQuotes on CommerceShippingQuoteEdge {
-  node {
-    id
-    displayName
-    isSelected
-    price(precision: 2)
-    priceCents
-  }
-}
-
-fragment Shipping_me on Me {
-  name
-  email
-  id
-  ...SavedAddresses_me
-  addressConnection(first: 30) {
-    edges {
-      node {
-        id
-        internalID
-        addressLine1
-        addressLine2
-        addressLine3
-        city
-        country
-        isDefault
-        name
-        phoneNumber
-        postalCode
-        region
-      }
-    }
-  }
-}
-
-fragment Shipping_order on CommerceOrder {
-  __isCommerceOrder: __typename
-  internalID
-  mode
-  state
-  requestedFulfillment {
-    __typename
-    ... on CommercePickup {
-      phoneNumber
-    }
-    ... on CommerceShip {
-      name
-      addressLine1
-      addressLine2
-      city
-      region
-      country
-      postalCode
-      phoneNumber
-    }
-    ... on CommerceShipArta {
-      name
-      addressLine1
-      addressLine2
-      city
-      region
-      country
-      postalCode
-      phoneNumber
-    }
-  }
-  lineItems {
-    edges {
-      node {
-        artwork {
-          slug
-          processWithArtaShipping
-          pickup_available: pickupAvailable
-          onlyShipsDomestically
-          euShippingOrigin
-          shippingCountry
-          id
-        }
-        shippingQuoteOptions {
-          edges {
-            ...ShippingQuotes_shippingQuotes
-            node {
-              id
-              isSelected
-            }
-          }
-        }
-        id
-      }
-    }
-  }
-  ...ArtworkSummaryItem_order
-  ...TransactionDetailsSummaryItem_order
-}
-
-fragment TransactionDetailsSummaryItem_order on CommerceOrder {
-  __isCommerceOrder: __typename
-  __typename
-  requestedFulfillment {
-    __typename
-  }
-  code
-  lineItems {
-    edges {
-      node {
-        artworkOrEditionSet {
-          __typename
-          ... on Artwork {
-            price
-          }
-          ... on EditionSet {
-            price
-            id
-          }
-          ... on Node {
-            __isNode: __typename
-            id
-          }
-        }
-        selectedShippingQuote {
-          displayName
-          id
-        }
-        id
-      }
-    }
-  }
-  mode
-  shippingTotal(precision: 2)
-  shippingTotalCents
-  taxTotal(precision: 2)
-  taxTotalCents
-  itemsTotal(precision: 2)
-  buyerTotal(precision: 2)
-  currencyCode
-  ... on CommerceOfferOrder {
-    lastOffer {
-      internalID
-      amount(precision: 2)
-      amountCents
-      shippingTotal(precision: 2)
-      shippingTotalCents
-      taxTotal(precision: 2)
-      taxTotalCents
-      buyerTotal(precision: 2)
-      buyerTotalCents
-      fromParticipant
-      note
-      id
-    }
-    myLastOffer {
-      internalID
-      amount(precision: 2)
-      amountCents
-      shippingTotal(precision: 2)
-      shippingTotalCents
-      taxTotal(precision: 2)
-      taxTotalCents
-      buyerTotal(precision: 2)
-      buyerTotalCents
-      fromParticipant
-      note
-      id
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -918,7 +656,6 @@ return {
             "storageKey": "itemsTotal(precision:2)"
           },
           (v23/*: any*/),
-          (v13/*: any*/),
           {
             "kind": "InlineFragment",
             "selections": [
@@ -945,7 +682,8 @@ return {
             ],
             "type": "CommerceOfferOrder",
             "abstractKey": null
-          }
+          },
+          (v13/*: any*/)
         ],
         "storageKey": null
       },
@@ -1101,5 +839,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'c938c2056100bf9dd0e4a25132b4e347';
+
+(node as any).hash = "c938c2056100bf9dd0e4a25132b4e347";
+
 export default node;

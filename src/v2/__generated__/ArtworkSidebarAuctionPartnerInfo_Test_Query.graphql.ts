@@ -1,65 +1,44 @@
+/**
+ * @generated SignedSource<<8318895f9992f01079b524a1b90a678f>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtworkSidebarAuctionPartnerInfo_Test_QueryVariables = {};
-export type ArtworkSidebarAuctionPartnerInfo_Test_QueryResponse = {
-    readonly artwork: {
-        readonly " $fragmentRefs": FragmentRefs<"ArtworkSidebarAuctionPartnerInfo_artwork">;
-    } | null;
+export type ArtworkSidebarAuctionPartnerInfo_Test_Query$variables = {};
+export type ArtworkSidebarAuctionPartnerInfo_Test_Query$data = {
+  readonly artwork: {
+    readonly " $fragmentSpreads": FragmentRefs<"ArtworkSidebarAuctionPartnerInfo_artwork">;
+  } | null;
 };
-export type ArtworkSidebarAuctionPartnerInfo_Test_QueryRawResponse = {
-    readonly artwork: ({
-        readonly partner: ({
-            readonly name: string | null;
-            readonly id: string;
-        }) | null;
-        readonly sale_artwork: ({
-            readonly estimate: string | null;
-            readonly id: string;
-        }) | null;
-        readonly sale: ({
-            readonly internalID: string;
-            readonly is_closed: boolean | null;
-            readonly id: string;
-        }) | null;
-        readonly id: string;
-    }) | null;
+export type ArtworkSidebarAuctionPartnerInfo_Test_Query$rawResponse = {
+  readonly artwork: {
+    readonly partner: {
+      readonly name: string | null;
+      readonly id: string;
+    } | null;
+    readonly sale_artwork: {
+      readonly estimate: string | null;
+      readonly id: string;
+    } | null;
+    readonly sale: {
+      readonly internalID: string;
+      readonly is_closed: boolean | null;
+      readonly id: string;
+    } | null;
+    readonly id: string;
+  } | null;
 };
 export type ArtworkSidebarAuctionPartnerInfo_Test_Query = {
-    readonly response: ArtworkSidebarAuctionPartnerInfo_Test_QueryResponse;
-    readonly variables: ArtworkSidebarAuctionPartnerInfo_Test_QueryVariables;
-    readonly rawResponse: ArtworkSidebarAuctionPartnerInfo_Test_QueryRawResponse;
+  variables: ArtworkSidebarAuctionPartnerInfo_Test_Query$variables;
+  response: ArtworkSidebarAuctionPartnerInfo_Test_Query$data;
+  rawResponse: ArtworkSidebarAuctionPartnerInfo_Test_Query$rawResponse;
 };
-
-
-
-/*
-query ArtworkSidebarAuctionPartnerInfo_Test_Query {
-  artwork(id: "auction_artwork_estimate_premium") {
-    ...ArtworkSidebarAuctionPartnerInfo_artwork
-    id
-  }
-}
-
-fragment ArtworkSidebarAuctionPartnerInfo_artwork on Artwork {
-  partner {
-    name
-    id
-  }
-  sale_artwork: saleArtwork {
-    estimate
-    id
-  }
-  sale {
-    internalID
-    is_closed: isClosed
-    id
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -249,5 +228,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'e2f7cdebafe26a0d1df2eba514b54083';
+
+(node as any).hash = "e2f7cdebafe26a0d1df2eba514b54083";
+
 export default node;

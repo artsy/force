@@ -1,92 +1,25 @@
+/**
+ * @generated SignedSource<<953148f4dd711488df865525533ee69d>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type FairApp_Test_QueryVariables = {};
-export type FairApp_Test_QueryResponse = {
-    readonly fair: {
-        readonly " $fragmentRefs": FragmentRefs<"FairApp_fair">;
-    } | null;
+export type FairApp_Test_Query$variables = {};
+export type FairApp_Test_Query$data = {
+  readonly fair: {
+    readonly " $fragmentSpreads": FragmentRefs<"FairApp_fair">;
+  } | null;
 };
 export type FairApp_Test_Query = {
-    readonly response: FairApp_Test_QueryResponse;
-    readonly variables: FairApp_Test_QueryVariables;
+  variables: FairApp_Test_Query$variables;
+  response: FairApp_Test_Query$data;
 };
-
-
-
-/*
-query FairApp_Test_Query {
-  fair(id: "example") {
-    ...FairApp_fair
-    id
-  }
-}
-
-fragment ExhibitorsLetterNav_fair on Fair {
-  exhibitorsGroupedByName {
-    letter
-  }
-}
-
-fragment FairApp_fair on Fair {
-  internalID
-  href
-  slug
-  ...FairMeta_fair
-  ...FairHeader_fair
-  ...FairHeaderImage_fair
-  ...ExhibitorsLetterNav_fair
-  counts {
-    artworks
-  }
-  profile {
-    id
-  }
-}
-
-fragment FairHeaderImage_fair on Fair {
-  image {
-    url(version: "wide")
-  }
-}
-
-fragment FairHeader_fair on Fair {
-  name
-  exhibitionPeriod
-  profile {
-    icon {
-      desktop: cropped(width: 80, height: 80, version: "square140") {
-        src
-        srcSet
-        size: width
-      }
-      mobile: cropped(width: 60, height: 60, version: "square140") {
-        src
-        srcSet
-        size: width
-      }
-      sticky: cropped(width: 50, height: 50, version: "square140") {
-        src
-        srcSet
-        size: width
-      }
-    }
-    id
-  }
-}
-
-fragment FairMeta_fair on Fair {
-  name
-  slug
-  metaDescription: summary
-  metaImage: image {
-    src: url(version: "large_rectangle")
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -498,5 +431,7 @@ return {
   }
 };
 })();
-(node as any).hash = '0d24d146ba08a426b78f8dada6663446';
+
+(node as any).hash = "0d24d146ba08a426b78f8dada6663446";
+
 export default node;

@@ -1,54 +1,25 @@
+/**
+ * @generated SignedSource<<7f50c99ec856a03f8d2687f67e34c6bc>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ShowMeta_Test_QueryVariables = {};
-export type ShowMeta_Test_QueryResponse = {
-    readonly show: {
-        readonly " $fragmentRefs": FragmentRefs<"ShowMeta_show">;
-    } | null;
+export type ShowMeta_Test_Query$variables = {};
+export type ShowMeta_Test_Query$data = {
+  readonly show: {
+    readonly " $fragmentSpreads": FragmentRefs<"ShowMeta_show">;
+  } | null;
 };
 export type ShowMeta_Test_Query = {
-    readonly response: ShowMeta_Test_QueryResponse;
-    readonly variables: ShowMeta_Test_QueryVariables;
+  variables: ShowMeta_Test_Query$variables;
+  response: ShowMeta_Test_Query$data;
 };
-
-
-
-/*
-query ShowMeta_Test_Query {
-  show(id: "some-show") {
-    ...ShowMeta_show
-    id
-  }
-}
-
-fragment ShowMeta_show on Show {
-  name
-  slug
-  metaDescription: description
-  metaImage {
-    src: url(version: "large")
-  }
-  partner {
-    __typename
-    ... on Partner {
-      name
-    }
-    ... on Node {
-      __isNode: __typename
-      id
-    }
-    ... on ExternalPartner {
-      id
-    }
-  }
-  formattedStartAt: startAt(format: "MMMM D")
-  formattedEndAt: endAt(format: "MMMM D, YYYY")
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -285,5 +256,7 @@ return {
   }
 };
 })();
-(node as any).hash = '072a19223d51defe130b86944ef7f954';
+
+(node as any).hash = "072a19223d51defe130b86944ef7f954";
+
 export default node;

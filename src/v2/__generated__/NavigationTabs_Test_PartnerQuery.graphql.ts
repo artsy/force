@@ -1,85 +1,54 @@
+/**
+ * @generated SignedSource<<4affe39db127ac8910529b104f9e0d7d>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type NavigationTabs_Test_PartnerQueryVariables = {};
-export type NavigationTabs_Test_PartnerQueryResponse = {
-    readonly partner: {
-        readonly " $fragmentRefs": FragmentRefs<"NavigationTabs_partner">;
-    } | null;
+export type NavigationTabs_Test_PartnerQuery$variables = {};
+export type NavigationTabs_Test_PartnerQuery$data = {
+  readonly partner: {
+    readonly " $fragmentSpreads": FragmentRefs<"NavigationTabs_partner">;
+  } | null;
 };
-export type NavigationTabs_Test_PartnerQueryRawResponse = {
-    readonly partner: ({
-        readonly slug: string;
-        readonly partnerType: string | null;
-        readonly displayArtistsSection: boolean | null;
-        readonly displayWorksSection: boolean | null;
-        readonly counts: ({
-            readonly eligibleArtworks: number | null;
-            readonly displayableShows: number | null;
-        }) | null;
-        readonly locations: ({
-            readonly totalCount: number | null;
-        }) | null;
-        readonly articles: ({
-            readonly totalCount: number | null;
-        }) | null;
-        readonly representedArtists: ({
-            readonly totalCount: number | null;
-        }) | null;
-        readonly notRepresentedArtists: ({
-            readonly totalCount: number | null;
-        }) | null;
-        readonly viewingRooms: ({
-            readonly totalCount: number | null;
-        }) | null;
-        readonly id: string;
-    }) | null;
+export type NavigationTabs_Test_PartnerQuery$rawResponse = {
+  readonly partner: {
+    readonly slug: string;
+    readonly partnerType: string | null;
+    readonly displayArtistsSection: boolean | null;
+    readonly displayWorksSection: boolean | null;
+    readonly counts: {
+      readonly eligibleArtworks: Int | null;
+      readonly displayableShows: Int | null;
+    } | null;
+    readonly locations: {
+      readonly totalCount: number | null;
+    } | null;
+    readonly articles: {
+      readonly totalCount: number | null;
+    } | null;
+    readonly representedArtists: {
+      readonly totalCount: number | null;
+    } | null;
+    readonly notRepresentedArtists: {
+      readonly totalCount: number | null;
+    } | null;
+    readonly viewingRooms: {
+      readonly totalCount: number | null;
+    } | null;
+    readonly id: string;
+  } | null;
 };
 export type NavigationTabs_Test_PartnerQuery = {
-    readonly response: NavigationTabs_Test_PartnerQueryResponse;
-    readonly variables: NavigationTabs_Test_PartnerQueryVariables;
-    readonly rawResponse: NavigationTabs_Test_PartnerQueryRawResponse;
+  variables: NavigationTabs_Test_PartnerQuery$variables;
+  response: NavigationTabs_Test_PartnerQuery$data;
+  rawResponse: NavigationTabs_Test_PartnerQuery$rawResponse;
 };
-
-
-
-/*
-query NavigationTabs_Test_PartnerQuery {
-  partner(id: "white-cube") {
-    ...NavigationTabs_partner
-    id
-  }
-}
-
-fragment NavigationTabs_partner on Partner {
-  slug
-  partnerType
-  displayArtistsSection
-  displayWorksSection
-  counts {
-    eligibleArtworks
-    displayableShows
-  }
-  locations: locationsConnection(first: 20) {
-    totalCount
-  }
-  articles: articlesConnection {
-    totalCount
-  }
-  representedArtists: artistsConnection(representedBy: true, displayOnPartnerProfile: true) {
-    totalCount
-  }
-  notRepresentedArtists: artistsConnection(representedBy: false, hasPublishedArtworks: true, displayOnPartnerProfile: true) {
-    totalCount
-  }
-  viewingRooms: viewingRoomsConnection(statuses: [live, closed, scheduled]) {
-    totalCount
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -386,5 +355,7 @@ return {
   }
 };
 })();
-(node as any).hash = '85ae05fcd987cc2b4213941dc3a37bb9';
+
+(node as any).hash = "85ae05fcd987cc2b4213941dc3a37bb9";
+
 export default node;

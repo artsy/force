@@ -56,7 +56,7 @@ describe("AddressModal", () => {
           totalCount: 0,
           edges: [],
         },
-        " $refType": "SavedAddresses_me",
+        " $fragmentType": "SavedAddresses_me",
       },
       closeModal: jest.fn(),
     }
@@ -305,7 +305,7 @@ describe("AddressModal feature flag", () => {
           totalCount: 0,
           edges: [],
         },
-        " $refType": "SavedAddresses_me",
+        " $fragmentType": "SavedAddresses_me",
       },
       closeModal: jest.fn(),
     }

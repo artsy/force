@@ -1,99 +1,52 @@
+/**
+ * @generated SignedSource<<29e7344fc49f0130f1080ff63016f643>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Mutation } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type CreateUserAddressInput = {
-    attributes: UserAddressAttributes;
-    clientMutationId?: string | null;
+  attributes: UserAddressAttributes;
+  clientMutationId?: string | null;
 };
 export type UserAddressAttributes = {
-    addressLine1: string;
-    addressLine2?: string | null;
-    addressLine3?: string | null;
-    city: string;
-    country: string;
-    name: string;
-    phoneNumber?: string | null;
-    phoneNumberCountryCode?: string | null;
-    postalCode?: string | null;
-    region?: string | null;
+  addressLine1: string;
+  addressLine2?: string | null;
+  addressLine3?: string | null;
+  city: string;
+  country: string;
+  name: string;
+  phoneNumber?: string | null;
+  phoneNumberCountryCode?: string | null;
+  postalCode?: string | null;
+  region?: string | null;
 };
-export type useAddAddressMutationVariables = {
-    input: CreateUserAddressInput;
+export type useAddAddressMutation$variables = {
+  input: CreateUserAddressInput;
 };
-export type useAddAddressMutationResponse = {
-    readonly createUserAddress: {
-        readonly me: {
-            readonly " $fragmentRefs": FragmentRefs<"SettingsShippingAddresses_me">;
-        } | null;
-        readonly userAddressOrErrors: {
-            readonly internalID?: string;
-            readonly errors?: ReadonlyArray<{
-                readonly message: string;
-            }>;
-            readonly " $fragmentRefs": FragmentRefs<"SettingsShippingAddress_address">;
-        };
+export type useAddAddressMutation$data = {
+  readonly createUserAddress: {
+    readonly me: {
+      readonly " $fragmentSpreads": FragmentRefs<"SettingsShippingAddresses_me">;
     } | null;
+    readonly userAddressOrErrors: {
+      readonly internalID?: string;
+      readonly errors?: ReadonlyArray<{
+        readonly message: string;
+      }>;
+      readonly " $fragmentSpreads": FragmentRefs<"SettingsShippingAddress_address">;
+    };
+  } | null;
 };
 export type useAddAddressMutation = {
-    readonly response: useAddAddressMutationResponse;
-    readonly variables: useAddAddressMutationVariables;
+  variables: useAddAddressMutation$variables;
+  response: useAddAddressMutation$data;
 };
-
-
-
-/*
-mutation useAddAddressMutation(
-  $input: CreateUserAddressInput!
-) {
-  createUserAddress(input: $input) {
-    me {
-      ...SettingsShippingAddresses_me
-      id
-    }
-    userAddressOrErrors {
-      __typename
-      ... on UserAddress {
-        internalID
-        ...SettingsShippingAddress_address
-        id
-      }
-      ... on Errors {
-        errors {
-          message
-        }
-      }
-    }
-  }
-}
-
-fragment SettingsShippingAddress_address on UserAddress {
-  internalID
-  addressLine1
-  addressLine2
-  city
-  country
-  isDefault
-  name
-  phoneNumber
-  postalCode
-  region
-}
-
-fragment SettingsShippingAddresses_me on Me {
-  addresses: addressConnection {
-    edges {
-      node {
-        internalID
-        ...SettingsShippingAddress_address
-        id
-      }
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -377,5 +330,7 @@ return {
   }
 };
 })();
-(node as any).hash = '1737d7edd41c6537a7f06e0580f43baf';
+
+(node as any).hash = "1737d7edd41c6537a7f06e0580f43baf";
+
 export default node;

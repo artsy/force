@@ -1,63 +1,42 @@
+/**
+ * @generated SignedSource<<a2eb8485772d156f3701e72a7deb7b94>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type SendFeedbackMutationInput = {
-    clientMutationId?: string | null;
-    email?: string | null;
-    message: string;
-    name?: string | null;
-    url?: string | null;
+  clientMutationId?: string | null;
+  email?: string | null;
+  message: string;
+  name?: string | null;
+  url?: string | null;
 };
-export type SendFeedbackSearchResultsMutationVariables = {
-    input: SendFeedbackMutationInput;
+export type SendFeedbackSearchResultsMutation$variables = {
+  input: SendFeedbackMutationInput;
 };
-export type SendFeedbackSearchResultsMutationResponse = {
-    readonly sendFeedback: {
-        readonly feedbackOrError: {
-            readonly feedback?: {
-                readonly message: string;
-            } | null;
-            readonly mutationError?: {
-                readonly type: string | null;
-                readonly message: string;
-                readonly detail: string | null;
-            } | null;
-        } | null;
+export type SendFeedbackSearchResultsMutation$data = {
+  readonly sendFeedback: {
+    readonly feedbackOrError: {
+      readonly feedback?: {
+        readonly message: string;
+      } | null;
+      readonly mutationError?: {
+        readonly type: string | null;
+        readonly message: string;
+        readonly detail: string | null;
+      } | null;
     } | null;
+  } | null;
 };
 export type SendFeedbackSearchResultsMutation = {
-    readonly response: SendFeedbackSearchResultsMutationResponse;
-    readonly variables: SendFeedbackSearchResultsMutationVariables;
+  variables: SendFeedbackSearchResultsMutation$variables;
+  response: SendFeedbackSearchResultsMutation$data;
 };
-
-
-
-/*
-mutation SendFeedbackSearchResultsMutation(
-  $input: SendFeedbackMutationInput!
-) {
-  sendFeedback(input: $input) {
-    feedbackOrError {
-      __typename
-      ... on SendFeedbackMutationSuccess {
-        feedback {
-          message
-          id
-        }
-      }
-      ... on SendFeedbackMutationFailure {
-        mutationError {
-          type
-          message
-          detail
-        }
-      }
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -241,5 +220,7 @@ return {
   }
 };
 })();
-(node as any).hash = '37c6ef609611534460d2c76061671dac';
+
+(node as any).hash = "37c6ef609611534460d2c76061671dac";
+
 export default node;

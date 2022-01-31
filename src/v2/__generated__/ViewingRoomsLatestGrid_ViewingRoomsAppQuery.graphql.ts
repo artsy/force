@@ -1,68 +1,28 @@
+/**
+ * @generated SignedSource<<f2e701b05e7a99cee2e0c7b215769b79>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ViewingRoomsLatestGrid_ViewingRoomsAppQueryVariables = {
-    count: number;
-    after?: string | null;
+export type ViewingRoomsLatestGrid_ViewingRoomsAppQuery$variables = {
+  count: number;
+  after?: string | null;
 };
-export type ViewingRoomsLatestGrid_ViewingRoomsAppQueryResponse = {
-    readonly allViewingRooms: {
-        readonly " $fragmentRefs": FragmentRefs<"ViewingRoomsApp_allViewingRooms">;
-    } | null;
+export type ViewingRoomsLatestGrid_ViewingRoomsAppQuery$data = {
+  readonly allViewingRooms: {
+    readonly " $fragmentSpreads": FragmentRefs<"ViewingRoomsApp_allViewingRooms">;
+  } | null;
 };
 export type ViewingRoomsLatestGrid_ViewingRoomsAppQuery = {
-    readonly response: ViewingRoomsLatestGrid_ViewingRoomsAppQueryResponse;
-    readonly variables: ViewingRoomsLatestGrid_ViewingRoomsAppQueryVariables;
+  variables: ViewingRoomsLatestGrid_ViewingRoomsAppQuery$variables;
+  response: ViewingRoomsLatestGrid_ViewingRoomsAppQuery$data;
 };
-
-
-
-/*
-query ViewingRoomsLatestGrid_ViewingRoomsAppQuery(
-  $count: Int!
-  $after: String
-) {
-  allViewingRooms: viewer {
-    ...ViewingRoomsApp_allViewingRooms_2QE1um
-  }
-}
-
-fragment ViewingRoomsApp_allViewingRooms_2QE1um on Viewer {
-  ...ViewingRoomsLatestGrid_viewingRooms_2QE1um
-}
-
-fragment ViewingRoomsLatestGrid_viewingRooms_2QE1um on Viewer {
-  viewingRoomsConnection(first: $count, after: $after) {
-    edges {
-      node {
-        slug
-        status
-        title
-        image {
-          imageURLs {
-            normalized
-          }
-        }
-        distanceToOpen(short: true)
-        distanceToClose(short: true)
-        partner {
-          name
-          id
-        }
-        __typename
-      }
-      cursor
-    }
-    pageInfo {
-      endCursor
-      hasNextPage
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = {
@@ -334,5 +294,7 @@ return {
   }
 };
 })();
-(node as any).hash = '2282457bbb19405370e6cf71f4bf0811';
+
+(node as any).hash = "2282457bbb19405370e6cf71f4bf0811";
+
 export default node;

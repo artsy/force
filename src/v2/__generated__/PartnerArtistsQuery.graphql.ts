@@ -1,64 +1,27 @@
+/**
+ * @generated SignedSource<<1c389a16b26baeb9e7cc954e9ec9b97d>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type PartnerArtistsQueryVariables = {
-    partnerId: string;
+export type PartnerArtistsQuery$variables = {
+  partnerId: string;
 };
-export type PartnerArtistsQueryResponse = {
-    readonly partner: {
-        readonly " $fragmentRefs": FragmentRefs<"PartnerArtists_partner">;
-    } | null;
+export type PartnerArtistsQuery$data = {
+  readonly partner: {
+    readonly " $fragmentSpreads": FragmentRefs<"PartnerArtists_partner">;
+  } | null;
 };
 export type PartnerArtistsQuery = {
-    readonly response: PartnerArtistsQueryResponse;
-    readonly variables: PartnerArtistsQueryVariables;
+  variables: PartnerArtistsQuery$variables;
+  response: PartnerArtistsQuery$data;
 };
-
-
-
-/*
-query PartnerArtistsQuery(
-  $partnerId: String!
-) {
-  partner(id: $partnerId) @principalField {
-    ...PartnerArtists_partner
-    id
-  }
-}
-
-fragment PartnerArtistItem_artist on Artist {
-  name
-  slug
-  href
-}
-
-fragment PartnerArtistList_artists on ArtistPartnerEdge {
-  representedBy
-  counts {
-    artworks
-  }
-  node {
-    internalID
-    ...PartnerArtistItem_artist
-    id
-  }
-}
-
-fragment PartnerArtists_partner on Partner {
-  slug
-  distinguishRepresentedArtists
-  displayFullPartnerPage
-  allArtistsConnection(displayOnPartnerProfile: true, hasNotRepresentedArtistWithPublishedArtworks: true) {
-    edges {
-      ...PartnerArtistList_artists
-      id
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -254,5 +217,7 @@ return {
   }
 };
 })();
-(node as any).hash = '3dc0b320c725913caf67d58c3a19af9e';
+
+(node as any).hash = "3dc0b320c725913caf67d58c3a19af9e";
+
 export default node;

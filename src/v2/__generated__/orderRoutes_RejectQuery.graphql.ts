@@ -1,112 +1,27 @@
+/**
+ * @generated SignedSource<<70d065cb26f7f01a15b26d20570717eb>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type orderRoutes_RejectQueryVariables = {
-    orderID: string;
+export type orderRoutes_RejectQuery$variables = {
+  orderID: string;
 };
-export type orderRoutes_RejectQueryResponse = {
-    readonly order: {
-        readonly " $fragmentRefs": FragmentRefs<"Reject_order">;
-    } | null;
+export type orderRoutes_RejectQuery$data = {
+  readonly order: {
+    readonly " $fragmentSpreads": FragmentRefs<"Reject_order">;
+  } | null;
 };
 export type orderRoutes_RejectQuery = {
-    readonly response: orderRoutes_RejectQueryResponse;
-    readonly variables: orderRoutes_RejectQueryVariables;
+  variables: orderRoutes_RejectQuery$variables;
+  response: orderRoutes_RejectQuery$data;
 };
-
-
-
-/*
-query orderRoutes_RejectQuery(
-  $orderID: ID!
-) {
-  order: commerceOrder(id: $orderID) {
-    __typename
-    ...Reject_order
-    id
-  }
-}
-
-fragment ArtworkSummaryItem_order on CommerceOrder {
-  __isCommerceOrder: __typename
-  sellerDetails {
-    __typename
-    ... on Partner {
-      name
-    }
-    ... on Node {
-      __isNode: __typename
-      id
-    }
-    ... on User {
-      id
-    }
-  }
-  currencyCode
-  mode
-  lineItems {
-    edges {
-      node {
-        artworkOrEditionSet {
-          __typename
-          ... on Artwork {
-            price
-          }
-          ... on EditionSet {
-            price
-            id
-          }
-          ... on Node {
-            __isNode: __typename
-            id
-          }
-        }
-        artwork {
-          artistNames
-          title
-          date
-          shippingOrigin
-          image {
-            resized_ArtworkSummaryItem: resized(width: 55) {
-              url
-            }
-          }
-          id
-        }
-        id
-      }
-    }
-  }
-}
-
-fragment Reject_order on CommerceOrder {
-  __isCommerceOrder: __typename
-  internalID
-  stateExpiresAt
-  lineItems {
-    edges {
-      node {
-        artwork {
-          slug
-          id
-        }
-        id
-      }
-    }
-  }
-  ... on CommerceOfferOrder {
-    lastOffer {
-      internalID
-      createdAt
-      id
-    }
-  }
-  ...ArtworkSummaryItem_order
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -361,6 +276,33 @@ return {
             "storageKey": null
           },
           {
+            "kind": "InlineFragment",
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "CommerceOffer",
+                "kind": "LinkedField",
+                "name": "lastOffer",
+                "plural": false,
+                "selections": [
+                  (v3/*: any*/),
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "createdAt",
+                    "storageKey": null
+                  },
+                  (v4/*: any*/)
+                ],
+                "storageKey": null
+              }
+            ],
+            "type": "CommerceOfferOrder",
+            "abstractKey": null
+          },
+          {
             "alias": null,
             "args": null,
             "concreteType": null,
@@ -407,34 +349,7 @@ return {
             "name": "mode",
             "storageKey": null
           },
-          (v4/*: any*/),
-          {
-            "kind": "InlineFragment",
-            "selections": [
-              {
-                "alias": null,
-                "args": null,
-                "concreteType": "CommerceOffer",
-                "kind": "LinkedField",
-                "name": "lastOffer",
-                "plural": false,
-                "selections": [
-                  (v3/*: any*/),
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "createdAt",
-                    "storageKey": null
-                  },
-                  (v4/*: any*/)
-                ],
-                "storageKey": null
-              }
-            ],
-            "type": "CommerceOfferOrder",
-            "abstractKey": null
-          }
+          (v4/*: any*/)
         ],
         "storageKey": null
       }
@@ -450,5 +365,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'ea2eb61b46aba08c248ff9dcd715bca9';
+
+(node as any).hash = "ea2eb61b46aba08c248ff9dcd715bca9";
+
 export default node;

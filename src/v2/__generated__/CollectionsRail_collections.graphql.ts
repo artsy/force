@@ -1,20 +1,23 @@
+/**
+ * @generated SignedSource<<ee34f6d3324fcd05bc6f47bbaed3c33f>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type CollectionsRail_collections = ReadonlyArray<{
-    readonly " $fragmentRefs": FragmentRefs<"CollectionEntity_collection">;
-    readonly " $refType": "CollectionsRail_collections";
+export type CollectionsRail_collections$data = ReadonlyArray<{
+  readonly " $fragmentSpreads": FragmentRefs<"CollectionEntity_collection">;
+  readonly " $fragmentType": "CollectionsRail_collections";
 }>;
-export type CollectionsRail_collections$data = CollectionsRail_collections;
 export type CollectionsRail_collections$key = ReadonlyArray<{
-    readonly " $data"?: CollectionsRail_collections$data;
-    readonly " $fragmentRefs": FragmentRefs<"CollectionsRail_collections">;
+  readonly " $data"?: CollectionsRail_collections$data;
+  readonly " $fragmentSpreads": FragmentRefs<"CollectionsRail_collections">;
 }>;
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -33,5 +36,7 @@ const node: ReaderFragment = {
   "type": "MarketingCollection",
   "abstractKey": null
 };
-(node as any).hash = '35961dd8c6f3b9ed5fff404b9a586026';
+
+(node as any).hash = "35961dd8c6f3b9ed5fff404b9a586026";
+
 export default node;

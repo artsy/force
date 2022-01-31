@@ -1,41 +1,44 @@
+/**
+ * @generated SignedSource<<f3ba2a274cb944183af32ce6170f774a>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtistCurrentShowsRail_artist = {
-    readonly internalID: string;
-    readonly name: string | null;
-    readonly slug: string;
-    readonly showsConnection: {
-        readonly edges: ReadonlyArray<{
-            readonly node: {
-                readonly coverImage: {
-                    readonly cropped: {
-                        readonly width: number;
-                        readonly height: number;
-                        readonly srcSet: string;
-                        readonly src: string;
-                    } | null;
-                } | null;
-                readonly exhibitionPeriod: string | null;
-                readonly href: string | null;
-                readonly internalID: string;
-                readonly name: string | null;
-                readonly slug: string;
-            } | null;
-        } | null> | null;
-    } | null;
-    readonly " $refType": "ArtistCurrentShowsRail_artist";
+export type ArtistCurrentShowsRail_artist$data = {
+  readonly internalID: string;
+  readonly name: string | null;
+  readonly slug: string;
+  readonly showsConnection: {
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly coverImage: {
+          readonly cropped: {
+            readonly width: number;
+            readonly height: number;
+            readonly srcSet: string;
+            readonly src: string;
+          } | null;
+        } | null;
+        readonly exhibitionPeriod: string | null;
+        readonly href: string | null;
+        readonly internalID: string;
+        readonly name: string | null;
+        readonly slug: string;
+      } | null;
+    } | null> | null;
+  } | null;
+  readonly " $fragmentType": "ArtistCurrentShowsRail_artist";
 };
-export type ArtistCurrentShowsRail_artist$data = ArtistCurrentShowsRail_artist;
 export type ArtistCurrentShowsRail_artist$key = {
-    readonly " $data"?: ArtistCurrentShowsRail_artist$data;
-    readonly " $fragmentRefs": FragmentRefs<"ArtistCurrentShowsRail_artist">;
+  readonly " $data"?: ArtistCurrentShowsRail_artist$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtistCurrentShowsRail_artist">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = {
@@ -200,5 +203,7 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '6a4e331891476674b3d62947cf93c36b';
+
+(node as any).hash = "6a4e331891476674b3d62947cf93c36b";
+
 export default node;

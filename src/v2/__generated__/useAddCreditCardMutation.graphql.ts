@@ -1,86 +1,42 @@
+/**
+ * @generated SignedSource<<7e04e96b769ccac10e169d590f00fdf5>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Mutation } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type CreditCardInput = {
-    clientMutationId?: string | null;
-    oneTimeUse?: boolean | null;
-    token: string;
+  clientMutationId?: string | null;
+  oneTimeUse?: boolean | null;
+  token: string;
 };
-export type useAddCreditCardMutationVariables = {
-    input: CreditCardInput;
+export type useAddCreditCardMutation$variables = {
+  input: CreditCardInput;
 };
-export type useAddCreditCardMutationResponse = {
-    readonly createCreditCard: {
-        readonly me: {
-            readonly " $fragmentRefs": FragmentRefs<"SettingsPaymentsMethods_me">;
-        } | null;
-        readonly creditCardOrError: {
-            readonly creditCard?: {
-                readonly " $fragmentRefs": FragmentRefs<"SettingsPaymentsMethod_method">;
-            } | null;
-            readonly mutationError?: {
-                readonly message: string;
-            } | null;
-        } | null;
+export type useAddCreditCardMutation$data = {
+  readonly createCreditCard: {
+    readonly me: {
+      readonly " $fragmentSpreads": FragmentRefs<"SettingsPaymentsMethods_me">;
     } | null;
+    readonly creditCardOrError: {
+      readonly creditCard?: {
+        readonly " $fragmentSpreads": FragmentRefs<"SettingsPaymentsMethod_method">;
+      } | null;
+      readonly mutationError?: {
+        readonly message: string;
+      } | null;
+    } | null;
+  } | null;
 };
 export type useAddCreditCardMutation = {
-    readonly response: useAddCreditCardMutationResponse;
-    readonly variables: useAddCreditCardMutationVariables;
+  variables: useAddCreditCardMutation$variables;
+  response: useAddCreditCardMutation$data;
 };
-
-
-
-/*
-mutation useAddCreditCardMutation(
-  $input: CreditCardInput!
-) {
-  createCreditCard(input: $input) {
-    me {
-      ...SettingsPaymentsMethods_me
-      id
-    }
-    creditCardOrError {
-      __typename
-      ... on CreditCardMutationSuccess {
-        creditCard {
-          ...SettingsPaymentsMethod_method
-          id
-        }
-      }
-      ... on CreditCardMutationFailure {
-        mutationError {
-          message
-        }
-      }
-    }
-  }
-}
-
-fragment SettingsPaymentsMethod_method on CreditCard {
-  internalID
-  name
-  brand
-  lastDigits
-  expirationYear
-  expirationMonth
-}
-
-fragment SettingsPaymentsMethods_me on Me {
-  creditCards(first: 50) {
-    edges {
-      node {
-        internalID
-        ...SettingsPaymentsMethod_method
-        id
-      }
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -362,5 +318,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'd978bcbdc64c599355c7e9e58716c102';
+
+(node as any).hash = "d978bcbdc64c599355c7e9e58716c102";
+
 export default node;

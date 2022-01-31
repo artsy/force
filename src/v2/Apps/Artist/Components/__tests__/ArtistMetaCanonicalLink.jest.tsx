@@ -18,7 +18,7 @@ jest.mock("v2/System/Router/useRouter", () => ({
 }))
 
 const MISSING_OVERVIEW_ARTIST_FIXTURE: ArtistMetaCanonicalLink_artist = {
-  " $refType": "ArtistMetaCanonicalLink_artist",
+  " $fragmentType": "ArtistMetaCanonicalLink_artist",
   slug: "gina-lombardi-bratter",
   statuses: {
     shows: false,
@@ -44,7 +44,7 @@ const MISSING_OVERVIEW_ARTIST_FIXTURE: ArtistMetaCanonicalLink_artist = {
 }
 
 const OVERVIEW_ARTIST_FIXTURE: ArtistMetaCanonicalLink_artist = {
-  " $refType": "ArtistMetaCanonicalLink_artist",
+  " $fragmentType": "ArtistMetaCanonicalLink_artist",
   slug: "damon-zucconi",
   statuses: {
     shows: true,

@@ -1,20 +1,23 @@
+/**
+ * @generated SignedSource<<9a3da8cba940578287296db868a8c8c0>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type SettingsEditProfileYourGalleryIntro_me = {
-    readonly inquiryIntroduction: string | null;
-    readonly " $refType": "SettingsEditProfileYourGalleryIntro_me";
+export type SettingsEditProfileYourGalleryIntro_me$data = {
+  readonly inquiryIntroduction: string | null;
+  readonly " $fragmentType": "SettingsEditProfileYourGalleryIntro_me";
 };
-export type SettingsEditProfileYourGalleryIntro_me$data = SettingsEditProfileYourGalleryIntro_me;
 export type SettingsEditProfileYourGalleryIntro_me$key = {
-    readonly " $data"?: SettingsEditProfileYourGalleryIntro_me$data;
-    readonly " $fragmentRefs": FragmentRefs<"SettingsEditProfileYourGalleryIntro_me">;
+  readonly " $data"?: SettingsEditProfileYourGalleryIntro_me$data;
+  readonly " $fragmentSpreads": FragmentRefs<"SettingsEditProfileYourGalleryIntro_me">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -33,5 +36,7 @@ const node: ReaderFragment = {
   "type": "Me",
   "abstractKey": null
 };
-(node as any).hash = '38dc0be24336b7644ea3761c66c36590';
+
+(node as any).hash = "38dc0be24336b7644ea3761c66c36590";
+
 export default node;

@@ -1,74 +1,27 @@
+/**
+ * @generated SignedSource<<cfb5e36570ed5f755f86e45f631e28e6>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type partnerRoutes_ViewingRoomsQueryVariables = {
-    partnerId: string;
+export type partnerRoutes_ViewingRoomsQuery$variables = {
+  partnerId: string;
 };
-export type partnerRoutes_ViewingRoomsQueryResponse = {
-    readonly partner: {
-        readonly " $fragmentRefs": FragmentRefs<"ViewingRooms_partner">;
-    } | null;
+export type partnerRoutes_ViewingRoomsQuery$data = {
+  readonly partner: {
+    readonly " $fragmentSpreads": FragmentRefs<"ViewingRooms_partner">;
+  } | null;
 };
 export type partnerRoutes_ViewingRoomsQuery = {
-    readonly response: partnerRoutes_ViewingRoomsQueryResponse;
-    readonly variables: partnerRoutes_ViewingRoomsQueryVariables;
+  variables: partnerRoutes_ViewingRoomsQuery$variables;
+  response: partnerRoutes_ViewingRoomsQuery$data;
 };
-
-
-
-/*
-query partnerRoutes_ViewingRoomsQuery(
-  $partnerId: String!
-) {
-  partner(id: $partnerId) @principalField {
-    ...ViewingRooms_partner
-    id
-  }
-}
-
-fragment ViewingRoomCard_viewingRoom on ViewingRoom {
-  href
-  title
-  exhibitionPeriod
-  coverImage: image {
-    imageURLs {
-      normalized
-    }
-    width
-    height
-  }
-}
-
-fragment ViewingRooms_edges on ViewingRoomsEdge {
-  node {
-    internalID
-    ...ViewingRoomCard_viewingRoom
-  }
-}
-
-fragment ViewingRooms_partner on Partner {
-  slug
-  currentViewingRooms: viewingRoomsConnection(first: 12, statuses: live) {
-    edges {
-      node {
-        internalID
-      }
-      ...ViewingRooms_edges
-    }
-  }
-  upcomingViewingRooms: viewingRoomsConnection(first: 12, statuses: scheduled) {
-    edges {
-      node {
-        internalID
-      }
-      ...ViewingRooms_edges
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -289,5 +242,7 @@ return {
   }
 };
 })();
-(node as any).hash = '3a936bbe65b85f49b27e1d593215dbd4';
+
+(node as any).hash = "3a936bbe65b85f49b27e1d593215dbd4";
+
 export default node;

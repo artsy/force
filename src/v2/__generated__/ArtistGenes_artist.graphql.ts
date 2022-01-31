@@ -1,29 +1,32 @@
+/**
+ * @generated SignedSource<<d1e28ee766cef8d236942a7d9c9af1ca>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtistGenes_artist = {
-    readonly related: {
-        readonly genes: {
-            readonly edges: ReadonlyArray<{
-                readonly node: {
-                    readonly href: string | null;
-                    readonly name: string | null;
-                } | null;
-            } | null> | null;
+export type ArtistGenes_artist$data = {
+  readonly related: {
+    readonly genes: {
+      readonly edges: ReadonlyArray<{
+        readonly node: {
+          readonly href: string | null;
+          readonly name: string | null;
         } | null;
+      } | null> | null;
     } | null;
-    readonly " $refType": "ArtistGenes_artist";
+  } | null;
+  readonly " $fragmentType": "ArtistGenes_artist";
 };
-export type ArtistGenes_artist$data = ArtistGenes_artist;
 export type ArtistGenes_artist$key = {
-    readonly " $data"?: ArtistGenes_artist$data;
-    readonly " $fragmentRefs": FragmentRefs<"ArtistGenes_artist">;
+  readonly " $data"?: ArtistGenes_artist$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtistGenes_artist">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -93,5 +96,7 @@ const node: ReaderFragment = {
   "type": "Artist",
   "abstractKey": null
 };
-(node as any).hash = 'd189cc35fd05c837e26dd24421f73755';
+
+(node as any).hash = "d189cc35fd05c837e26dd24421f73755";
+
 export default node;

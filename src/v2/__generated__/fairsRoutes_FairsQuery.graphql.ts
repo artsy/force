@@ -1,191 +1,28 @@
+/**
+ * @generated SignedSource<<9a8bbdfd6ed5f1a6a074ea0a1742bcc0>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type fairsRoutes_FairsQueryVariables = {};
-export type fairsRoutes_FairsQueryResponse = {
-    readonly featuredFairs: ReadonlyArray<{
-        readonly " $fragmentRefs": FragmentRefs<"FairsIndex_featuredFairs">;
-    } | null> | null;
-    readonly viewer: {
-        readonly " $fragmentRefs": FragmentRefs<"FairsIndex_viewer">;
-    } | null;
+export type fairsRoutes_FairsQuery$variables = {};
+export type fairsRoutes_FairsQuery$data = {
+  readonly featuredFairs: ReadonlyArray<{
+    readonly " $fragmentSpreads": FragmentRefs<"FairsIndex_featuredFairs">;
+  } | null> | null;
+  readonly viewer: {
+    readonly " $fragmentSpreads": FragmentRefs<"FairsIndex_viewer">;
+  } | null;
 };
 export type fairsRoutes_FairsQuery = {
-    readonly response: fairsRoutes_FairsQueryResponse;
-    readonly variables: fairsRoutes_FairsQueryVariables;
+  variables: fairsRoutes_FairsQuery$variables;
+  response: fairsRoutes_FairsQuery$data;
 };
-
-
-
-/*
-query fairsRoutes_FairsQuery {
-  featuredFairs: orderedSets(key: "art-fairs:featured") {
-    ...FairsIndex_featuredFairs
-    id
-  }
-  viewer {
-    ...FairsIndex_viewer
-  }
-}
-
-fragment FairsFairBanner_fair on Fair {
-  href
-  name
-  exhibitionPeriod
-  bannerSize
-  image {
-    large: cropped(width: 1840, height: 790, version: ["wide"]) {
-      src
-      srcSet
-      width
-      height
-    }
-    small: cropped(width: 910, height: 512, version: ["wide"]) {
-      src
-      srcSet
-      width
-      height
-    }
-  }
-  profile {
-    icon {
-      resized(width: 80, height: 80, version: "square140") {
-        width
-        height
-        src
-        srcSet
-      }
-    }
-    id
-  }
-}
-
-fragment FairsFairRow_fair on Fair {
-  href
-  name
-  isoStartAt: startAt
-  exhibitionPeriod
-  profile {
-    icon {
-      resized(width: 80, height: 80, version: "square140") {
-        width
-        height
-        src
-        srcSet
-      }
-    }
-    id
-  }
-  organizer {
-    profile {
-      href
-      id
-    }
-    id
-  }
-}
-
-fragment FairsIndex_featuredFairs on OrderedSet {
-  items {
-    __typename
-    ... on FeaturedLink {
-      internalID
-      title
-      image {
-        cropped(width: 547, height: 410) {
-          width
-          height
-          src
-          srcSet
-        }
-      }
-      id
-    }
-    ... on Node {
-      __isNode: __typename
-      id
-    }
-    ... on Profile {
-      id
-    }
-  }
-}
-
-fragment FairsIndex_viewer on Viewer {
-  runningFairs: fairs(hasListing: true, hasFullFeature: true, sort: START_AT_DESC, size: 25, status: RUNNING) {
-    internalID
-    bannerSize
-    isPublished
-    profile {
-      isPublished
-      id
-    }
-    ...FairsFairBanner_fair
-    ...FairsFairRow_fair
-    id
-  }
-  closedFairs: fairs(hasListing: true, hasFullFeature: true, sort: START_AT_DESC, size: 25, status: CLOSED) {
-    internalID
-    isPublished
-    profile {
-      isPublished
-      id
-    }
-    ...FairsFairRow_fair
-    id
-  }
-  upcomingFairs: fairs(hasListing: true, hasFullFeature: true, sort: START_AT_ASC, size: 25, status: UPCOMING) {
-    internalID
-    name
-    exhibitionPeriod
-    location {
-      city
-      id
-    }
-    isPublished
-    profile {
-      isPublished
-      id
-    }
-    organizer {
-      profile {
-        href
-        id
-      }
-      id
-    }
-    ...FairsFairRow_fair
-    id
-  }
-  ...FairsPastFairs_viewer
-}
-
-fragment FairsPastFairs_viewer on Viewer {
-  pastFairs: fairsConnection(hasListing: true, hasFullFeature: true, sort: START_AT_DESC, status: CLOSED, first: 15) {
-    edges {
-      node {
-        internalID
-        isPublished
-        profile {
-          isPublished
-          id
-        }
-        ...FairsFairRow_fair
-        id
-        __typename
-      }
-      cursor
-    }
-    pageInfo {
-      endCursor
-      hasNextPage
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -828,5 +665,7 @@ return {
   }
 };
 })();
-(node as any).hash = '80026daec7f1a6020d34916a54a90def';
+
+(node as any).hash = "80026daec7f1a6020d34916a54a90def";
+
 export default node;

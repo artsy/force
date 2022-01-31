@@ -1,32 +1,35 @@
+/**
+ * @generated SignedSource<<ed78e81bccb4e110f1404694df718a3a>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
-import { FragmentRefs } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 export type CommerceOrderModeEnum = "BUY" | "OFFER" | "%future added value";
-export type Payment_order = {
-    readonly internalID: string;
-    readonly mode: CommerceOrderModeEnum | null;
-    readonly lineItems: {
-        readonly edges: ReadonlyArray<{
-            readonly node: {
-                readonly artwork: {
-                    readonly slug: string;
-                } | null;
-            } | null;
-        } | null> | null;
-    } | null;
-    readonly " $fragmentRefs": FragmentRefs<"PaymentPicker_order" | "ArtworkSummaryItem_order" | "TransactionDetailsSummaryItem_order">;
-    readonly " $refType": "Payment_order";
+import { FragmentRefs } from "relay-runtime";
+export type Payment_order$data = {
+  readonly internalID: string;
+  readonly mode: CommerceOrderModeEnum | null;
+  readonly lineItems: {
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly artwork: {
+          readonly slug: string;
+        } | null;
+      } | null;
+    } | null> | null;
+  } | null;
+  readonly " $fragmentSpreads": FragmentRefs<"PaymentPicker_order" | "ArtworkSummaryItem_order" | "TransactionDetailsSummaryItem_order">;
+  readonly " $fragmentType": "Payment_order";
 };
-export type Payment_order$data = Payment_order;
 export type Payment_order$key = {
-    readonly " $data"?: Payment_order$data;
-    readonly " $fragmentRefs": FragmentRefs<"Payment_order">;
+  readonly " $data"?: Payment_order$data;
+  readonly " $fragmentSpreads": FragmentRefs<"Payment_order">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -118,5 +121,7 @@ const node: ReaderFragment = {
   "type": "CommerceOrder",
   "abstractKey": "__isCommerceOrder"
 };
-(node as any).hash = 'd7d52f4d7c603a596b9c91b633ee8efc';
+
+(node as any).hash = "d7d52f4d7c603a596b9c91b633ee8efc";
+
 export default node;

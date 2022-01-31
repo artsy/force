@@ -1,62 +1,28 @@
+/**
+ * @generated SignedSource<<1903ddcf493979518d6ed0789585d735>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type SavedSearchAlertsAppRefetchQueryVariables = {
-    after?: string | null;
-    count: number;
+export type SavedSearchAlertsAppRefetchQuery$variables = {
+  after?: string | null;
+  count: number;
 };
-export type SavedSearchAlertsAppRefetchQueryResponse = {
-    readonly me: {
-        readonly " $fragmentRefs": FragmentRefs<"SavedSearchAlertsApp_me">;
-    } | null;
+export type SavedSearchAlertsAppRefetchQuery$data = {
+  readonly me: {
+    readonly " $fragmentSpreads": FragmentRefs<"SavedSearchAlertsApp_me">;
+  } | null;
 };
 export type SavedSearchAlertsAppRefetchQuery = {
-    readonly response: SavedSearchAlertsAppRefetchQueryResponse;
-    readonly variables: SavedSearchAlertsAppRefetchQueryVariables;
+  variables: SavedSearchAlertsAppRefetchQuery$variables;
+  response: SavedSearchAlertsAppRefetchQuery$data;
 };
-
-
-
-/*
-query SavedSearchAlertsAppRefetchQuery(
-  $after: String
-  $count: Int!
-) {
-  me {
-    ...SavedSearchAlertsApp_me_2QE1um
-    id
-  }
-}
-
-fragment SavedSearchAlertListItem_item on SearchCriteria {
-  internalID
-  artistIDs
-  href
-  userAlertSettings {
-    name
-  }
-}
-
-fragment SavedSearchAlertsApp_me_2QE1um on Me {
-  savedSearchesConnection(first: $count, after: $after) {
-    edges {
-      node {
-        internalID
-        ...SavedSearchAlertListItem_item
-        __typename
-      }
-      cursor
-    }
-    pageInfo {
-      endCursor
-      hasNextPage
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -274,5 +240,7 @@ return {
   }
 };
 })();
-(node as any).hash = '67fb652d034bc04efb73c22b2566f3f2';
+
+(node as any).hash = "67fb652d034bc04efb73c22b2566f3f2";
+
 export default node;

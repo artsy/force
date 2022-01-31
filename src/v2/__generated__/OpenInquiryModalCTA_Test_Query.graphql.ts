@@ -1,39 +1,27 @@
+/**
+ * @generated SignedSource<<f02d2b1d699bb4b436ec88da0b72558b>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type OpenInquiryModalCTA_Test_QueryVariables = {};
-export type OpenInquiryModalCTA_Test_QueryResponse = {
-    readonly me: {
-        readonly conversation: {
-            readonly " $fragmentRefs": FragmentRefs<"OpenInquiryModalCTA_conversation">;
-        } | null;
+export type OpenInquiryModalCTA_Test_Query$variables = {};
+export type OpenInquiryModalCTA_Test_Query$data = {
+  readonly me: {
+    readonly conversation: {
+      readonly " $fragmentSpreads": FragmentRefs<"OpenInquiryModalCTA_conversation">;
     } | null;
+  } | null;
 };
 export type OpenInquiryModalCTA_Test_Query = {
-    readonly response: OpenInquiryModalCTA_Test_QueryResponse;
-    readonly variables: OpenInquiryModalCTA_Test_QueryVariables;
+  variables: OpenInquiryModalCTA_Test_Query$variables;
+  response: OpenInquiryModalCTA_Test_Query$data;
 };
-
-
-
-/*
-query OpenInquiryModalCTA_Test_Query {
-  me {
-    conversation(id: "123") {
-      ...OpenInquiryModalCTA_conversation
-      id
-    }
-    id
-  }
-}
-
-fragment OpenInquiryModalCTA_conversation on Conversation {
-  internalID
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -166,5 +154,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'e870b65b35253ed30121ba9911df012d';
+
+(node as any).hash = "e870b65b35253ed30121ba9911df012d";
+
 export default node;

@@ -20,6 +20,16 @@ import { debounce } from "lodash"
 
 const DEBOUNCE_DELAY = 300
 
+type SearchConnectionNode = NonNullable<
+  NonNullable<
+    NonNullable<
+      NonNullable<
+        ArtistAutocomplete_SearchConnection_QueryResponse["searchConnection"]
+      >["edges"]
+    >[number]
+  >["node"]
+>
+
 type SubmissionImage =
   | NonNullable<
       NonNullable<
@@ -72,7 +82,7 @@ export const ArtistAutoComplete: React.FC<{ onError: () => void }> = ({
         setIsError(false)
         setIsLoading(false)
         if (suggestions?.edges?.length) {
-          const options = extractNodes(suggestions)
+          const options = extractNodes<SearchConnectionNode>(suggestions)
           setSuggestions(
             options.map(option => ({
               text: option.displayLabel!,
@@ -194,7 +204,7 @@ const fetchSuggestions = async (
       }
     `,
     { searchQuery }
-  )
+  ).toPromise()
 
-  return response.searchConnection
+  return response?.searchConnection
 }

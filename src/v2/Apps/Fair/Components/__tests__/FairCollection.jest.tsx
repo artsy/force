@@ -1,7 +1,7 @@
 import { renderRelayTree } from "v2/DevTools"
 import { graphql } from "react-relay"
 import { FairCollectionFragmentContainer } from "../FairCollections"
-import { FairCollection_QueryRawResponse } from "v2/__generated__/FairCollection_Query.graphql"
+import { FairCollection_Query$rawResponse } from "v2/__generated__/FairCollection_Query.graphql"
 import { useTracking } from "react-tracking"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { OwnerType } from "@artsy/cohesion"
@@ -14,7 +14,7 @@ describe("FairCollection", () => {
   let trackEvent
 
   const getWrapper = async (
-    response: FairCollection_QueryRawResponse = FAIR_COLLECTION_FIXTURE
+    response: FairCollection_Query$rawResponse = FAIR_COLLECTION_FIXTURE
   ) => {
     return renderRelayTree({
       Component: ({ marketingCollection: collection }) => {
@@ -138,7 +138,7 @@ describe("FairCollection", () => {
   })
 })
 
-const FAIR_COLLECTION_FIXTURE: FairCollection_QueryRawResponse = {
+const FAIR_COLLECTION_FIXTURE: FairCollection_Query$rawResponse = {
   marketingCollection: {
     id: "xxx",
     slug: "street-art-now",

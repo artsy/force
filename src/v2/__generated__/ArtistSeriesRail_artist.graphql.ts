@@ -1,27 +1,30 @@
+/**
+ * @generated SignedSource<<324d2f722a0e8f59c0875220e9b08622>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtistSeriesRail_artist = {
-    readonly artistSeriesConnection: {
-        readonly edges: ReadonlyArray<{
-            readonly node: {
-                readonly internalID: string;
-                readonly " $fragmentRefs": FragmentRefs<"ArtistSeriesItem_artistSeries">;
-            } | null;
-        } | null> | null;
-    } | null;
-    readonly " $refType": "ArtistSeriesRail_artist";
+export type ArtistSeriesRail_artist$data = {
+  readonly artistSeriesConnection: {
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly internalID: string;
+        readonly " $fragmentSpreads": FragmentRefs<"ArtistSeriesItem_artistSeries">;
+      } | null;
+    } | null> | null;
+  } | null;
+  readonly " $fragmentType": "ArtistSeriesRail_artist";
 };
-export type ArtistSeriesRail_artist$data = ArtistSeriesRail_artist;
 export type ArtistSeriesRail_artist$key = {
-    readonly " $data"?: ArtistSeriesRail_artist$data;
-    readonly " $fragmentRefs": FragmentRefs<"ArtistSeriesRail_artist">;
+  readonly " $data"?: ArtistSeriesRail_artist$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtistSeriesRail_artist">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -84,5 +87,7 @@ const node: ReaderFragment = {
   "type": "Artist",
   "abstractKey": null
 };
-(node as any).hash = 'f41faa52602d290ce693d20ece2885a7';
+
+(node as any).hash = "f41faa52602d290ce693d20ece2885a7";
+
 export default node;

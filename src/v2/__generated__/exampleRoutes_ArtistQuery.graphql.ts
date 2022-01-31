@@ -1,54 +1,28 @@
+/**
+ * @generated SignedSource<<a36e4ce4435405e0dfad4b5aa82eb41f>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type exampleRoutes_ArtistQueryVariables = {
-    slug: string;
+export type exampleRoutes_ArtistQuery$variables = {
+  slug: string;
 };
-export type exampleRoutes_ArtistQueryResponse = {
-    readonly artist: {
-        readonly id: string;
-        readonly " $fragmentRefs": FragmentRefs<"ExampleArtistRoute_artist">;
-    } | null;
+export type exampleRoutes_ArtistQuery$data = {
+  readonly artist: {
+    readonly id: string;
+    readonly " $fragmentSpreads": FragmentRefs<"ExampleArtistRoute_artist">;
+  } | null;
 };
 export type exampleRoutes_ArtistQuery = {
-    readonly response: exampleRoutes_ArtistQueryResponse;
-    readonly variables: exampleRoutes_ArtistQueryVariables;
+  variables: exampleRoutes_ArtistQuery$variables;
+  response: exampleRoutes_ArtistQuery$data;
 };
-
-
-
-/*
-query exampleRoutes_ArtistQuery(
-  $slug: String!
-) {
-  artist(id: $slug) @principalField {
-    id
-    ...ExampleArtistRoute_artist
-  }
-}
-
-fragment ExampleArtistRoute_artist on Artist {
-  ...FollowArtistButton_artist
-  name
-  bio
-  internalID
-  slug
-}
-
-fragment FollowArtistButton_artist on Artist {
-  id
-  internalID
-  name
-  slug
-  is_followed: isFollowed
-  counts {
-    follows
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -183,5 +157,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'f240123309eb71f60ebf184aef275d94';
+
+(node as any).hash = "f240123309eb71f60ebf184aef275d94";
+
 export default node;

@@ -1,48 +1,34 @@
+/**
+ * @generated SignedSource<<4af09d06cdbc0f27ca40563255a81e68>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 export type PartnerClassification = "AUCTION" | "BRAND" | "DEMO" | "GALLERY" | "INSTITUTION" | "INSTITUTIONAL_SELLER" | "PRIVATE_COLLECTOR" | "PRIVATE_DEALER" | "%future added value";
-export type PartnersSearchQueryVariables = {
-    near?: string | null;
-    partnerCategories?: Array<string | null> | null;
-    term?: string | null;
-    type?: Array<PartnerClassification | null> | null;
+export type PartnersSearchQuery$variables = {
+  near?: string | null;
+  partnerCategories?: ReadonlyArray<string | null> | null;
+  term?: string | null;
+  type?: ReadonlyArray<PartnerClassification | null> | null;
 };
-export type PartnersSearchQueryResponse = {
-    readonly filterPartners: {
-        readonly total: number | null;
-        readonly hits: ReadonlyArray<{
-            readonly text: string | null;
-            readonly value: string;
-        } | null> | null;
-    } | null;
+export type PartnersSearchQuery$data = {
+  readonly filterPartners: {
+    readonly total: number | null;
+    readonly hits: ReadonlyArray<{
+      readonly text: string | null;
+      readonly value: string;
+    } | null> | null;
+  } | null;
 };
 export type PartnersSearchQuery = {
-    readonly response: PartnersSearchQueryResponse;
-    readonly variables: PartnersSearchQueryVariables;
+  variables: PartnersSearchQuery$variables;
+  response: PartnersSearchQuery$data;
 };
-
-
-
-/*
-query PartnersSearchQuery(
-  $near: String
-  $partnerCategories: [String]
-  $term: String
-  $type: [PartnerClassification]
-) {
-  filterPartners(aggregations: [TOTAL], defaultProfilePublic: true, eligibleForListing: true, near: $near, partnerCategories: $partnerCategories, size: 9, sort: RANDOM_SCORE_DESC, term: $term, type: $type) {
-    total
-    hits {
-      text: name
-      value: slug
-      id
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -223,5 +209,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'dfcfa9f59c8ea96091be4c5343625c5a';
+
+(node as any).hash = "dfcfa9f59c8ea96091be4c5343625c5a";
+
 export default node;

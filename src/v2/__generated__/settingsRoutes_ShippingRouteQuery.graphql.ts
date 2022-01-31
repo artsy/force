@@ -1,59 +1,25 @@
+/**
+ * @generated SignedSource<<72476aa1526138beafa81c7b9beb73f3>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type settingsRoutes_ShippingRouteQueryVariables = {};
-export type settingsRoutes_ShippingRouteQueryResponse = {
-    readonly me: {
-        readonly " $fragmentRefs": FragmentRefs<"SettingsShippingRoute_me">;
-    } | null;
+export type settingsRoutes_ShippingRouteQuery$variables = {};
+export type settingsRoutes_ShippingRouteQuery$data = {
+  readonly me: {
+    readonly " $fragmentSpreads": FragmentRefs<"SettingsShippingRoute_me">;
+  } | null;
 };
 export type settingsRoutes_ShippingRouteQuery = {
-    readonly response: settingsRoutes_ShippingRouteQueryResponse;
-    readonly variables: settingsRoutes_ShippingRouteQueryVariables;
+  variables: settingsRoutes_ShippingRouteQuery$variables;
+  response: settingsRoutes_ShippingRouteQuery$data;
 };
-
-
-
-/*
-query settingsRoutes_ShippingRouteQuery {
-  me {
-    ...SettingsShippingRoute_me
-    id
-  }
-}
-
-fragment SettingsShippingAddress_address on UserAddress {
-  internalID
-  addressLine1
-  addressLine2
-  city
-  country
-  isDefault
-  name
-  phoneNumber
-  postalCode
-  region
-}
-
-fragment SettingsShippingAddresses_me on Me {
-  addresses: addressConnection {
-    edges {
-      node {
-        internalID
-        ...SettingsShippingAddress_address
-        id
-      }
-    }
-  }
-}
-
-fragment SettingsShippingRoute_me on Me {
-  ...SettingsShippingAddresses_me
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = {
@@ -224,5 +190,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'cd31c14d8951d621c32fafc96271888b';
+
+(node as any).hash = "cd31c14d8951d621c32fafc96271888b";
+
 export default node;

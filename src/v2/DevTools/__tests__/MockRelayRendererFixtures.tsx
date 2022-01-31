@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/alt-text */
-import { MockRelayRendererFixtures_artist } from "v2/__generated__/MockRelayRendererFixtures_artist.graphql"
-import { MockRelayRendererFixtures_artwork } from "v2/__generated__/MockRelayRendererFixtures_artwork.graphql"
-import { MockRelayRendererFixtures_artworkMetadata } from "v2/__generated__/MockRelayRendererFixtures_artworkMetadata.graphql"
+import { MockRelayRendererFixtures_artist$data } from "v2/__generated__/MockRelayRendererFixtures_artist.graphql"
+import { MockRelayRendererFixtures_artwork$data } from "v2/__generated__/MockRelayRendererFixtures_artwork.graphql"
+import { MockRelayRendererFixtures_artworkMetadata$data } from "v2/__generated__/MockRelayRendererFixtures_artworkMetadata.graphql"
 import { MockRelayRendererFixturesArtistQuery } from "v2/__generated__/MockRelayRendererFixturesArtistQuery.graphql"
 import { SystemContextConsumer } from "v2/System"
 import { renderWithLoadProgress } from "v2/System/Relay/renderWithLoadProgress"
@@ -11,9 +11,9 @@ import { render } from "enzyme"
 import { createFragmentContainer, graphql } from "react-relay"
 
 const Metadata = createFragmentContainer(
-  (props: { artworkMetadata: MockRelayRendererFixtures_artworkMetadata }) => (
-    <div>{props.artworkMetadata.title}</div>
-  ),
+  (props: {
+    artworkMetadata: MockRelayRendererFixtures_artworkMetadata$data
+  }) => <div>{props.artworkMetadata.title}</div>,
   {
     artworkMetadata: graphql`
       fragment MockRelayRendererFixtures_artworkMetadata on Artwork {
@@ -24,10 +24,9 @@ const Metadata = createFragmentContainer(
 )
 
 export const Artwork = createFragmentContainer(
-  (props: { artwork: MockRelayRendererFixtures_artwork }) => (
+  (props: { artwork: MockRelayRendererFixtures_artwork$data }) => (
     <div>
-      {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
-      <img src={props.artwork.image.url} />
+      <img src={props.artwork!.image!.url!} />
       <Metadata artworkMetadata={props.artwork} />
       {props.artwork.artist && (
         <ArtistQueryRenderer id={props.artwork.artist.slug} />
@@ -50,7 +49,7 @@ export const Artwork = createFragmentContainer(
 )
 
 const Artist = createFragmentContainer(
-  (props: { artist: MockRelayRendererFixtures_artist }) => (
+  (props: { artist: MockRelayRendererFixtures_artist$data }) => (
     <div>{props.artist.name}</div>
   ),
   {
@@ -85,7 +84,9 @@ const ArtistQueryRenderer = (props: { id: string }) => (
 )
 
 export const query = graphql`
-  query MockRelayRendererFixturesQuery @raw_response_type {
+  query MockRelayRendererFixturesQuery
+    @raw_response_type
+    @relay_test_operation {
     artwork(id: "mona-lisa") {
       ...MockRelayRendererFixtures_artwork
     }
@@ -94,7 +95,9 @@ export const query = graphql`
 
 // Bad query has a misnamed top-level property.
 export const badQuery = graphql`
-  query MockRelayRendererFixturesBadQuery @raw_response_type {
+  query MockRelayRendererFixturesBadQuery
+    @raw_response_type
+    @relay_test_operation {
     something_that_is_not_expected: artwork(id: "mona-lisa") {
       ...MockRelayRendererFixtures_artwork
     }

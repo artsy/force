@@ -1,26 +1,29 @@
+/**
+ * @generated SignedSource<<902cf3f4810b1a770ea8cc7e21d9dced>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type AboutPartner_partner = {
-    readonly profile: {
-        readonly fullBio: string | null;
-        readonly bio: string | null;
-    } | null;
-    readonly website: string | null;
-    readonly vatNumber: string | null;
-    readonly displayFullPartnerPage: boolean | null;
-    readonly " $refType": "AboutPartner_partner";
+export type AboutPartner_partner$data = {
+  readonly profile: {
+    readonly fullBio: string | null;
+    readonly bio: string | null;
+  } | null;
+  readonly website: string | null;
+  readonly vatNumber: string | null;
+  readonly displayFullPartnerPage: boolean | null;
+  readonly " $fragmentType": "AboutPartner_partner";
 };
-export type AboutPartner_partner$data = AboutPartner_partner;
 export type AboutPartner_partner$key = {
-    readonly " $data"?: AboutPartner_partner$data;
-    readonly " $fragmentRefs": FragmentRefs<"AboutPartner_partner">;
+  readonly " $data"?: AboutPartner_partner$data;
+  readonly " $fragmentSpreads": FragmentRefs<"AboutPartner_partner">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -78,5 +81,7 @@ const node: ReaderFragment = {
   "type": "Partner",
   "abstractKey": null
 };
-(node as any).hash = 'f4275bcda7bfe647ae27ca92d8475c3d';
+
+(node as any).hash = "f4275bcda7bfe647ae27ca92d8475c3d";
+
 export default node;

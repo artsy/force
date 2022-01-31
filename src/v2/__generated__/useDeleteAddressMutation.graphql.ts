@@ -1,85 +1,39 @@
+/**
+ * @generated SignedSource<<53c0f49bf27eeb8f8514b4d639e6092d>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Mutation } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type DeleteUserAddressInput = {
-    clientMutationId?: string | null;
-    userAddressID: string;
+  clientMutationId?: string | null;
+  userAddressID: string;
 };
-export type useDeleteAddressMutationVariables = {
-    input: DeleteUserAddressInput;
+export type useDeleteAddressMutation$variables = {
+  input: DeleteUserAddressInput;
 };
-export type useDeleteAddressMutationResponse = {
-    readonly deleteUserAddress: {
-        readonly me: {
-            readonly " $fragmentRefs": FragmentRefs<"SettingsShippingAddresses_me">;
-        } | null;
-        readonly userAddressOrErrors: {
-            readonly errors?: ReadonlyArray<{
-                readonly message: string;
-            }>;
-            readonly " $fragmentRefs": FragmentRefs<"SettingsShippingAddress_address">;
-        };
+export type useDeleteAddressMutation$data = {
+  readonly deleteUserAddress: {
+    readonly me: {
+      readonly " $fragmentSpreads": FragmentRefs<"SettingsShippingAddresses_me">;
     } | null;
+    readonly userAddressOrErrors: {
+      readonly errors?: ReadonlyArray<{
+        readonly message: string;
+      }>;
+      readonly " $fragmentSpreads": FragmentRefs<"SettingsShippingAddress_address">;
+    };
+  } | null;
 };
 export type useDeleteAddressMutation = {
-    readonly response: useDeleteAddressMutationResponse;
-    readonly variables: useDeleteAddressMutationVariables;
+  variables: useDeleteAddressMutation$variables;
+  response: useDeleteAddressMutation$data;
 };
-
-
-
-/*
-mutation useDeleteAddressMutation(
-  $input: DeleteUserAddressInput!
-) {
-  deleteUserAddress(input: $input) {
-    me {
-      ...SettingsShippingAddresses_me
-      id
-    }
-    userAddressOrErrors {
-      __typename
-      ... on UserAddress {
-        ...SettingsShippingAddress_address
-        id
-      }
-      ... on Errors {
-        errors {
-          message
-        }
-      }
-    }
-  }
-}
-
-fragment SettingsShippingAddress_address on UserAddress {
-  internalID
-  addressLine1
-  addressLine2
-  city
-  country
-  isDefault
-  name
-  phoneNumber
-  postalCode
-  region
-}
-
-fragment SettingsShippingAddresses_me on Me {
-  addresses: addressConnection {
-    edges {
-      node {
-        internalID
-        ...SettingsShippingAddress_address
-        id
-      }
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -361,5 +315,7 @@ return {
   }
 };
 })();
-(node as any).hash = '30cd5ab1fde3cfa766e7168a5a5d5911';
+
+(node as any).hash = "30cd5ab1fde3cfa766e7168a5a5d5911";
+
 export default node;

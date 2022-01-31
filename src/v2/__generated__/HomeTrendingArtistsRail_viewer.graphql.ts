@@ -1,40 +1,43 @@
+/**
+ * @generated SignedSource<<2f10e9c6e4b1f202e5e8c179c96fb7d9>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type HomeTrendingArtistsRail_viewer = {
-    readonly artistsConnection: {
-        readonly edges: ReadonlyArray<{
-            readonly node: {
-                readonly internalID: string;
-                readonly isFollowed: boolean | null;
-                readonly name: string | null;
-                readonly slug: string;
-                readonly href: string | null;
-                readonly formattedNationalityAndBirthday: string | null;
-                readonly image: {
-                    readonly cropped: {
-                        readonly src: string;
-                        readonly srcSet: string;
-                        readonly width: number;
-                        readonly height: number;
-                    } | null;
-                } | null;
-                readonly " $fragmentRefs": FragmentRefs<"FollowArtistButton_artist">;
-            } | null;
-        } | null> | null;
-    } | null;
-    readonly " $refType": "HomeTrendingArtistsRail_viewer";
+export type HomeTrendingArtistsRail_viewer$data = {
+  readonly artistsConnection: {
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly internalID: string;
+        readonly isFollowed: boolean | null;
+        readonly name: string | null;
+        readonly slug: string;
+        readonly href: string | null;
+        readonly formattedNationalityAndBirthday: string | null;
+        readonly image: {
+          readonly cropped: {
+            readonly src: string;
+            readonly srcSet: string;
+            readonly width: number;
+            readonly height: number;
+          } | null;
+        } | null;
+        readonly " $fragmentSpreads": FragmentRefs<"FollowArtistButton_artist">;
+      } | null;
+    } | null> | null;
+  } | null;
+  readonly " $fragmentType": "HomeTrendingArtistsRail_viewer";
 };
-export type HomeTrendingArtistsRail_viewer$data = HomeTrendingArtistsRail_viewer;
 export type HomeTrendingArtistsRail_viewer$key = {
-    readonly " $data"?: HomeTrendingArtistsRail_viewer$data;
-    readonly " $fragmentRefs": FragmentRefs<"HomeTrendingArtistsRail_viewer">;
+  readonly " $data"?: HomeTrendingArtistsRail_viewer$data;
+  readonly " $fragmentSpreads": FragmentRefs<"HomeTrendingArtistsRail_viewer">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -77,6 +80,11 @@ const node: ReaderFragment = {
               "name": "node",
               "plural": false,
               "selections": [
+                {
+                  "args": null,
+                  "kind": "FragmentSpread",
+                  "name": "FollowArtistButton_artist"
+                },
                 {
                   "alias": null,
                   "args": null,
@@ -179,11 +187,6 @@ const node: ReaderFragment = {
                     }
                   ],
                   "storageKey": null
-                },
-                {
-                  "args": null,
-                  "kind": "FragmentSpread",
-                  "name": "FollowArtistButton_artist"
                 }
               ],
               "storageKey": null
@@ -198,5 +201,7 @@ const node: ReaderFragment = {
   "type": "Viewer",
   "abstractKey": null
 };
-(node as any).hash = '36a8216ebf215e085480e876d9cf294e';
+
+(node as any).hash = "36a8216ebf215e085480e876d9cf294e";
+
 export default node;

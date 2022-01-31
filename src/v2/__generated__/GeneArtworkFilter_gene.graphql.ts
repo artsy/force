@@ -1,39 +1,42 @@
+/**
+ * @generated SignedSource<<779af3c095a7172eddd9d9d27dc72592>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
-import { FragmentRefs } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 export type ArtworkAggregation = "ARTIST" | "ARTIST_NATIONALITY" | "ATTRIBUTION_CLASS" | "COLOR" | "DIMENSION_RANGE" | "FOLLOWED_ARTISTS" | "GALLERY" | "INSTITUTION" | "LOCATION_CITY" | "MAJOR_PERIOD" | "MATERIALS_TERMS" | "MEDIUM" | "MERCHANDISABLE_ARTISTS" | "PARTNER" | "PARTNER_CITY" | "PERIOD" | "PRICE_RANGE" | "TOTAL" | "%future added value";
-export type GeneArtworkFilter_gene = {
-    readonly slug: string;
-    readonly internalID: string;
-    readonly sidebar: {
-        readonly counts?: {
-            readonly followedArtists: number | null;
-        } | null;
-        readonly aggregations: ReadonlyArray<{
-            readonly slice: ArtworkAggregation | null;
-            readonly counts: ReadonlyArray<{
-                readonly name: string;
-                readonly value: string;
-                readonly count: number;
-            } | null> | null;
-        } | null> | null;
+import { FragmentRefs } from "relay-runtime";
+export type GeneArtworkFilter_gene$data = {
+  readonly slug: string;
+  readonly internalID: string;
+  readonly sidebar: {
+    readonly counts?: {
+      readonly followedArtists: Int | null;
     } | null;
-    readonly filtered_artworks: {
-        readonly id: string;
-        readonly " $fragmentRefs": FragmentRefs<"ArtworkFilterArtworkGrid_filtered_artworks">;
-    } | null;
-    readonly " $refType": "GeneArtworkFilter_gene";
+    readonly aggregations: ReadonlyArray<{
+      readonly slice: ArtworkAggregation | null;
+      readonly counts: ReadonlyArray<{
+        readonly name: string;
+        readonly value: string;
+        readonly count: number;
+      } | null> | null;
+    } | null> | null;
+  } | null;
+  readonly filtered_artworks: {
+    readonly id: string;
+    readonly " $fragmentSpreads": FragmentRefs<"ArtworkFilterArtworkGrid_filtered_artworks">;
+  } | null;
+  readonly " $fragmentType": "GeneArtworkFilter_gene";
 };
-export type GeneArtworkFilter_gene$data = GeneArtworkFilter_gene;
 export type GeneArtworkFilter_gene$key = {
-    readonly " $data"?: GeneArtworkFilter_gene$data;
-    readonly " $fragmentRefs": FragmentRefs<"GeneArtworkFilter_gene">;
+  readonly " $data"?: GeneArtworkFilter_gene$data;
+  readonly " $fragmentSpreads": FragmentRefs<"GeneArtworkFilter_gene">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [
@@ -91,6 +94,31 @@ const node: ReaderFragment = {
       "plural": false,
       "selections": [
         {
+          "condition": "shouldFetchCounts",
+          "kind": "Condition",
+          "passingValue": true,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "concreteType": "FilterArtworksCounts",
+              "kind": "LinkedField",
+              "name": "counts",
+              "plural": false,
+              "selections": [
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "followedArtists",
+                  "storageKey": null
+                }
+              ],
+              "storageKey": null
+            }
+          ]
+        },
+        {
           "alias": null,
           "args": null,
           "concreteType": "ArtworksAggregationResults",
@@ -139,31 +167,6 @@ const node: ReaderFragment = {
             }
           ],
           "storageKey": null
-        },
-        {
-          "condition": "shouldFetchCounts",
-          "kind": "Condition",
-          "passingValue": true,
-          "selections": [
-            {
-              "alias": null,
-              "args": null,
-              "concreteType": "FilterArtworksCounts",
-              "kind": "LinkedField",
-              "name": "counts",
-              "plural": false,
-              "selections": [
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "followedArtists",
-                  "storageKey": null
-                }
-              ],
-              "storageKey": null
-            }
-          ]
         }
       ],
       "storageKey": null
@@ -206,5 +209,7 @@ const node: ReaderFragment = {
   "type": "Gene",
   "abstractKey": null
 };
-(node as any).hash = 'e96fd22ac7be9124dbc79bc63a3f6623';
+
+(node as any).hash = "e96fd22ac7be9124dbc79bc63a3f6623";
+
 export default node;

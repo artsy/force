@@ -1,50 +1,53 @@
+/**
+ * @generated SignedSource<<5059b4022a68dc80425e90d4068b33e2>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ConversationSnippet_conversation = {
-    readonly internalID: string | null;
-    readonly to: {
-        readonly name: string;
-    };
-    readonly lastMessage: string | null;
-    readonly lastMessageAt: string | null;
-    readonly unread: boolean | null;
-    readonly items: ReadonlyArray<{
-        readonly item: ({
-            readonly __typename: "Artwork";
-            readonly date: string | null;
-            readonly title: string | null;
-            readonly artistNames: string | null;
-            readonly image: {
-                readonly url: string | null;
-            } | null;
-        } | {
-            readonly __typename: "Show";
-            readonly fair: {
-                readonly name: string | null;
-            } | null;
-            readonly name: string | null;
-            readonly coverImage: {
-                readonly url: string | null;
-            } | null;
-        } | {
-            /*This will never be '%other', but we need some
-            value in case none of the concrete values match.*/
-            readonly __typename: "%other";
-        }) | null;
-    } | null> | null;
-    readonly " $refType": "ConversationSnippet_conversation";
+export type ConversationSnippet_conversation$data = {
+  readonly internalID: string | null;
+  readonly to: {
+    readonly name: string;
+  };
+  readonly lastMessage: string | null;
+  readonly lastMessageAt: string | null;
+  readonly unread: boolean | null;
+  readonly items: ReadonlyArray<{
+    readonly item: {
+      readonly __typename: "Artwork";
+      readonly date: string | null;
+      readonly title: string | null;
+      readonly artistNames: string | null;
+      readonly image: {
+        readonly url: string | null;
+      } | null;
+    } | {
+      readonly __typename: "Show";
+      readonly fair: {
+        readonly name: string | null;
+      } | null;
+      readonly name: string | null;
+      readonly coverImage: {
+        readonly url: string | null;
+      } | null;
+    } | {
+      // This will never be '%other', but we need some
+      // value in case none of the concrete values match.
+      readonly __typename: "%other";
+    } | null;
+  } | null> | null;
+  readonly " $fragmentType": "ConversationSnippet_conversation";
 };
-export type ConversationSnippet_conversation$data = ConversationSnippet_conversation;
 export type ConversationSnippet_conversation$key = {
-    readonly " $data"?: ConversationSnippet_conversation$data;
-    readonly " $fragmentRefs": FragmentRefs<"ConversationSnippet_conversation">;
+  readonly " $data"?: ConversationSnippet_conversation$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ConversationSnippet_conversation">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = {
@@ -210,5 +213,7 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '51a731d89429f7b46a9000aed66aec62';
+
+(node as any).hash = "51a731d89429f7b46a9000aed66aec62";
+
 export default node;

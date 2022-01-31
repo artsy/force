@@ -1,30 +1,33 @@
+/**
+ * @generated SignedSource<<4ee8667636d82d9b49503dd3b7974650>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ShowContextualLink_show = {
-    readonly isFairBooth: boolean | null;
-    readonly fair: {
-        readonly href: string | null;
-        readonly isActive: boolean | null;
-        readonly name: string | null;
-    } | null;
-    readonly partner: {
-        readonly isLinkable?: boolean | null;
-        readonly name?: string | null;
-        readonly href?: string | null;
-    } | null;
-    readonly " $refType": "ShowContextualLink_show";
+export type ShowContextualLink_show$data = {
+  readonly isFairBooth: boolean | null;
+  readonly fair: {
+    readonly href: string | null;
+    readonly isActive: boolean | null;
+    readonly name: string | null;
+  } | null;
+  readonly partner: {
+    readonly isLinkable?: boolean | null;
+    readonly name?: string | null;
+    readonly href?: string | null;
+  } | null;
+  readonly " $fragmentType": "ShowContextualLink_show";
 };
-export type ShowContextualLink_show$data = ShowContextualLink_show;
 export type ShowContextualLink_show$key = {
-    readonly " $data"?: ShowContextualLink_show$data;
-    readonly " $fragmentRefs": FragmentRefs<"ShowContextualLink_show">;
+  readonly " $data"?: ShowContextualLink_show$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ShowContextualLink_show">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = {
@@ -106,5 +109,7 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '650b5a3e83cb5f0cd65c87b33c8db18e';
+
+(node as any).hash = "650b5a3e83cb5f0cd65c87b33c8db18e";
+
 export default node;

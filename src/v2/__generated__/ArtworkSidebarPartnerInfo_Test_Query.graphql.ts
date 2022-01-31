@@ -1,67 +1,45 @@
+/**
+ * @generated SignedSource<<57e6d542af4758903ba23addea6149e0>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtworkSidebarPartnerInfo_Test_QueryVariables = {};
-export type ArtworkSidebarPartnerInfo_Test_QueryResponse = {
-    readonly artwork: {
-        readonly " $fragmentRefs": FragmentRefs<"ArtworkSidebarPartnerInfo_artwork">;
-    } | null;
+export type ArtworkSidebarPartnerInfo_Test_Query$variables = {};
+export type ArtworkSidebarPartnerInfo_Test_Query$data = {
+  readonly artwork: {
+    readonly " $fragmentSpreads": FragmentRefs<"ArtworkSidebarPartnerInfo_artwork">;
+  } | null;
 };
-export type ArtworkSidebarPartnerInfo_Test_QueryRawResponse = {
-    readonly artwork: ({
-        readonly partner: ({
-            readonly name: string | null;
-            readonly href: string | null;
-            readonly locations: ReadonlyArray<({
-                readonly city: string | null;
-                readonly id: string;
-            }) | null> | null;
-            readonly id: string;
-        }) | null;
-        readonly sale: ({
-            readonly name: string | null;
-            readonly href: string | null;
-            readonly id: string;
-        }) | null;
+export type ArtworkSidebarPartnerInfo_Test_Query$rawResponse = {
+  readonly artwork: {
+    readonly partner: {
+      readonly name: string | null;
+      readonly href: string | null;
+      readonly locations: ReadonlyArray<{
+        readonly city: string | null;
         readonly id: string;
-    }) | null;
+      } | null> | null;
+      readonly id: string;
+    } | null;
+    readonly sale: {
+      readonly name: string | null;
+      readonly href: string | null;
+      readonly id: string;
+    } | null;
+    readonly id: string;
+  } | null;
 };
 export type ArtworkSidebarPartnerInfo_Test_Query = {
-    readonly response: ArtworkSidebarPartnerInfo_Test_QueryResponse;
-    readonly variables: ArtworkSidebarPartnerInfo_Test_QueryVariables;
-    readonly rawResponse: ArtworkSidebarPartnerInfo_Test_QueryRawResponse;
+  variables: ArtworkSidebarPartnerInfo_Test_Query$variables;
+  response: ArtworkSidebarPartnerInfo_Test_Query$data;
+  rawResponse: ArtworkSidebarPartnerInfo_Test_Query$rawResponse;
 };
-
-
-
-/*
-query ArtworkSidebarPartnerInfo_Test_Query {
-  artwork(id: "artwork_from_partner_with_locations") {
-    ...ArtworkSidebarPartnerInfo_artwork
-    id
-  }
-}
-
-fragment ArtworkSidebarPartnerInfo_artwork on Artwork {
-  partner {
-    name
-    href
-    locations {
-      city
-      id
-    }
-    id
-  }
-  sale {
-    name
-    href
-    id
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -244,5 +222,7 @@ return {
   }
 };
 })();
-(node as any).hash = '56bce63add2affb95615b5d17250cf6c';
+
+(node as any).hash = "56bce63add2affb95615b5d17250cf6c";
+
 export default node;

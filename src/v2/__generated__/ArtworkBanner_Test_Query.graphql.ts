@@ -1,90 +1,25 @@
+/**
+ * @generated SignedSource<<1a66fdcb8ff5d047c5c65973ba78a3a4>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtworkBanner_Test_QueryVariables = {};
-export type ArtworkBanner_Test_QueryResponse = {
-    readonly artwork: {
-        readonly " $fragmentRefs": FragmentRefs<"ArtworkBanner_artwork">;
-    } | null;
+export type ArtworkBanner_Test_Query$variables = {};
+export type ArtworkBanner_Test_Query$data = {
+  readonly artwork: {
+    readonly " $fragmentSpreads": FragmentRefs<"ArtworkBanner_artwork">;
+  } | null;
 };
 export type ArtworkBanner_Test_Query = {
-    readonly response: ArtworkBanner_Test_QueryResponse;
-    readonly variables: ArtworkBanner_Test_QueryVariables;
+  variables: ArtworkBanner_Test_Query$variables;
+  response: ArtworkBanner_Test_Query$data;
 };
-
-
-
-/*
-query ArtworkBanner_Test_Query {
-  artwork(id: "richard-anuszkiewicz-lino-yellow-318") {
-    ...ArtworkBanner_artwork
-    id
-  }
-}
-
-fragment ArtworkBanner_artwork on Artwork {
-  partner {
-    name
-    id
-  }
-  sale {
-    isAuction
-    isBenefit
-    isGalleryAuction
-    coverImage {
-      cropped(width: 30, height: 30, version: "square") {
-        src
-        srcSet
-        width
-        height
-      }
-    }
-    id
-  }
-  context {
-    __typename
-    ... on Sale {
-      name
-      href
-    }
-    ... on Fair {
-      name
-      href
-      profile {
-        icon {
-          cropped(width: 30, height: 30, version: "square") {
-            src
-            srcSet
-            width
-            height
-          }
-        }
-        id
-      }
-    }
-    ... on Show {
-      name
-      href
-      status
-      thumbnail: coverImage {
-        cropped(width: 30, height: 30, version: "square") {
-          src
-          srcSet
-          width
-          height
-        }
-      }
-    }
-    ... on Node {
-      __isNode: __typename
-      id
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -484,5 +419,7 @@ return {
   }
 };
 })();
-(node as any).hash = '775cfca3f13c570a75bcf0ffe92c6ba7';
+
+(node as any).hash = "775cfca3f13c570a75bcf0ffe92c6ba7";
+
 export default node;

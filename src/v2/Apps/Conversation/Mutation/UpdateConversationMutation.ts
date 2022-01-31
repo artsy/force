@@ -25,6 +25,7 @@ export const UpdateConversation = (
         }
       }
     `,
+    // @ts-ignore UPGRADE RELAY 13
     optimisticResponse: {
       updateConversation: {
         conversation: {

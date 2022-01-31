@@ -1,43 +1,35 @@
+/**
+ * @generated SignedSource<<82ced2849afb204605803e3979e9bd7e>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type CreateGeminiEntryForAssetInput = {
-    clientMutationId?: string | null;
-    metadata: unknown;
-    sourceBucket: string;
-    sourceKey: string;
-    templateKey: string;
+  clientMutationId?: string | null;
+  metadata: any;
+  sourceBucket: string;
+  sourceKey: string;
+  templateKey: string;
 };
-export type createGeminiAssetWithS3CredentialsMutationVariables = {
-    input: CreateGeminiEntryForAssetInput;
+export type createGeminiAssetWithS3CredentialsMutation$variables = {
+  input: CreateGeminiEntryForAssetInput;
 };
-export type createGeminiAssetWithS3CredentialsMutationResponse = {
-    readonly createGeminiEntryForAsset: {
-        readonly asset: {
-            readonly token: string;
-        } | null;
+export type createGeminiAssetWithS3CredentialsMutation$data = {
+  readonly createGeminiEntryForAsset: {
+    readonly asset: {
+      readonly token: string;
     } | null;
+  } | null;
 };
 export type createGeminiAssetWithS3CredentialsMutation = {
-    readonly response: createGeminiAssetWithS3CredentialsMutationResponse;
-    readonly variables: createGeminiAssetWithS3CredentialsMutationVariables;
+  variables: createGeminiAssetWithS3CredentialsMutation$variables;
+  response: createGeminiAssetWithS3CredentialsMutation$data;
 };
-
-
-
-/*
-mutation createGeminiAssetWithS3CredentialsMutation(
-  $input: CreateGeminiEntryForAssetInput!
-) {
-  createGeminiEntryForAsset(input: $input) {
-    asset {
-      token
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -111,5 +103,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'e15ca704c55d48b26d15b9be3a699c47';
+
+(node as any).hash = "e15ca704c55d48b26d15b9be3a699c47";
+
 export default node;

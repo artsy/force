@@ -1,95 +1,53 @@
+/**
+ * @generated SignedSource<<30b4fa45e1cec3ad846493d457813c80>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtworkSidebarMetadata_Test_QueryVariables = {};
-export type ArtworkSidebarMetadata_Test_QueryResponse = {
-    readonly artwork: {
-        readonly " $fragmentRefs": FragmentRefs<"ArtworkSidebarMetadata_artwork">;
-    } | null;
+export type ArtworkSidebarMetadata_Test_Query$variables = {};
+export type ArtworkSidebarMetadata_Test_Query$data = {
+  readonly artwork: {
+    readonly " $fragmentSpreads": FragmentRefs<"ArtworkSidebarMetadata_artwork">;
+  } | null;
 };
-export type ArtworkSidebarMetadata_Test_QueryRawResponse = {
-    readonly artwork: ({
-        readonly is_biddable: boolean | null;
-        readonly edition_sets: ReadonlyArray<({
-            readonly __typename: string;
-            readonly id: string;
-        }) | null> | null;
-        readonly sale_artwork: ({
-            readonly lot_label: string | null;
-            readonly id: string;
-        }) | null;
-        readonly title: string | null;
-        readonly date: string | null;
-        readonly medium: string | null;
-        readonly attributionClass: ({
-            readonly shortDescription: string | null;
-            readonly id: string;
-        }) | null;
-        readonly id: string;
-        readonly __isSellable: "Artwork";
-        readonly dimensions: ({
-            readonly in: string | null;
-            readonly cm: string | null;
-        }) | null;
-        readonly edition_of: string | null;
-    }) | null;
+export type ArtworkSidebarMetadata_Test_Query$rawResponse = {
+  readonly artwork: {
+    readonly is_biddable: boolean | null;
+    readonly edition_sets: ReadonlyArray<{
+      readonly __typename: string;
+      readonly id: string;
+    } | null> | null;
+    readonly sale_artwork: {
+      readonly lot_label: string | null;
+      readonly id: string;
+    } | null;
+    readonly title: string | null;
+    readonly date: string | null;
+    readonly medium: string | null;
+    readonly __isSellable: "Artwork";
+    readonly dimensions: {
+      readonly in: string | null;
+      readonly cm: string | null;
+    } | null;
+    readonly edition_of: string | null;
+    readonly attributionClass: {
+      readonly shortDescription: string | null;
+      readonly id: string;
+    } | null;
+    readonly id: string;
+  } | null;
 };
 export type ArtworkSidebarMetadata_Test_Query = {
-    readonly response: ArtworkSidebarMetadata_Test_QueryResponse;
-    readonly variables: ArtworkSidebarMetadata_Test_QueryVariables;
-    readonly rawResponse: ArtworkSidebarMetadata_Test_QueryRawResponse;
+  variables: ArtworkSidebarMetadata_Test_Query$variables;
+  response: ArtworkSidebarMetadata_Test_Query$data;
+  rawResponse: ArtworkSidebarMetadata_Test_Query$rawResponse;
 };
-
-
-
-/*
-query ArtworkSidebarMetadata_Test_Query {
-  artwork(id: "josef-albers-homage-to-the-square-85") {
-    ...ArtworkSidebarMetadata_artwork
-    id
-  }
-}
-
-fragment ArtworkSidebarClassification_artwork on Artwork {
-  attributionClass {
-    shortDescription
-    id
-  }
-}
-
-fragment ArtworkSidebarMetadata_artwork on Artwork {
-  is_biddable: isBiddable
-  edition_sets: editionSets {
-    __typename
-    id
-  }
-  sale_artwork: saleArtwork {
-    lot_label: lotLabel
-    id
-  }
-  ...ArtworkSidebarTitleInfo_artwork
-  ...ArtworkSidebarSizeInfo_piece
-  ...ArtworkSidebarClassification_artwork
-}
-
-fragment ArtworkSidebarSizeInfo_piece on Sellable {
-  __isSellable: __typename
-  dimensions {
-    in
-    cm
-  }
-  edition_of: editionOf
-}
-
-fragment ArtworkSidebarTitleInfo_artwork on Artwork {
-  title
-  date
-  medium
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -232,26 +190,6 @@ return {
             "storageKey": null
           },
           {
-            "alias": null,
-            "args": null,
-            "concreteType": "AttributionClass",
-            "kind": "LinkedField",
-            "name": "attributionClass",
-            "plural": false,
-            "selections": [
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "shortDescription",
-                "storageKey": null
-              },
-              (v1/*: any*/)
-            ],
-            "storageKey": null
-          },
-          (v1/*: any*/),
-          {
             "kind": "InlineFragment",
             "selections": [
               {
@@ -289,7 +227,27 @@ return {
             ],
             "type": "Sellable",
             "abstractKey": "__isSellable"
-          }
+          },
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "AttributionClass",
+            "kind": "LinkedField",
+            "name": "attributionClass",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "shortDescription",
+                "storageKey": null
+              },
+              (v1/*: any*/)
+            ],
+            "storageKey": null
+          },
+          (v1/*: any*/)
         ],
         "storageKey": "artwork(id:\"josef-albers-homage-to-the-square-85\")"
       }
@@ -358,5 +316,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'dd4d5230349d325f3169449f95f19668';
+
+(node as any).hash = "dd4d5230349d325f3169449f95f19668";
+
 export default node;

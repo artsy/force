@@ -1,31 +1,34 @@
+/**
+ * @generated SignedSource<<80d28f0bbb55b38e496abf15be8d293d>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type PastAuctions_viewer = {
-    readonly salesConnection: {
-        readonly totalCount: number | null;
-        readonly edges: ReadonlyArray<{
-            readonly node: {
-                readonly slug: string;
-                readonly name: string | null;
-                readonly href: string | null;
-                readonly endAt: string | null;
-                readonly " $fragmentRefs": FragmentRefs<"AuctionArtworksRail_sale">;
-            } | null;
-        } | null> | null;
-    } | null;
-    readonly " $refType": "PastAuctions_viewer";
+export type PastAuctions_viewer$data = {
+  readonly salesConnection: {
+    readonly totalCount: number | null;
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly slug: string;
+        readonly name: string | null;
+        readonly href: string | null;
+        readonly endAt: string | null;
+        readonly " $fragmentSpreads": FragmentRefs<"AuctionArtworksRail_sale">;
+      } | null;
+    } | null> | null;
+  } | null;
+  readonly " $fragmentType": "PastAuctions_viewer";
 };
-export type PastAuctions_viewer$data = PastAuctions_viewer;
 export type PastAuctions_viewer$key = {
-    readonly " $data"?: PastAuctions_viewer$data;
-    readonly " $fragmentRefs": FragmentRefs<"PastAuctions_viewer">;
+  readonly " $data"?: PastAuctions_viewer$data;
+  readonly " $fragmentSpreads": FragmentRefs<"PastAuctions_viewer">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [
@@ -131,16 +134,16 @@ const node: ReaderFragment = {
                   "storageKey": null
                 },
                 {
+                  "args": null,
+                  "kind": "FragmentSpread",
+                  "name": "AuctionArtworksRail_sale"
+                },
+                {
                   "alias": null,
                   "args": null,
                   "kind": "ScalarField",
                   "name": "__typename",
                   "storageKey": null
-                },
-                {
-                  "args": null,
-                  "kind": "FragmentSpread",
-                  "name": "AuctionArtworksRail_sale"
                 }
               ],
               "storageKey": null
@@ -187,5 +190,7 @@ const node: ReaderFragment = {
   "type": "Viewer",
   "abstractKey": null
 };
-(node as any).hash = 'e488ae430e93d48cda1a365fdd145a14';
+
+(node as any).hash = "e488ae430e93d48cda1a365fdd145a14";
+
 export default node;

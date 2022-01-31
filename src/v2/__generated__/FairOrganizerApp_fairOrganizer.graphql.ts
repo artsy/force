@@ -1,28 +1,31 @@
+/**
+ * @generated SignedSource<<0132428626be513911d4a7b8c33608af>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type FairOrganizerApp_fairOrganizer = {
-    readonly name: string | null;
-    readonly slug: string;
-    readonly about: string | null;
-    readonly profile: {
-        readonly image: {
-            readonly url: string | null;
-        } | null;
+export type FairOrganizerApp_fairOrganizer$data = {
+  readonly name: string | null;
+  readonly slug: string;
+  readonly about: string | null;
+  readonly profile: {
+    readonly image: {
+      readonly url: string | null;
     } | null;
-    readonly " $fragmentRefs": FragmentRefs<"FairOrganizerPastEventsRail_fairOrganizer" | "FairOrganizerHeaderImage_fairOrganizer" | "FairOrganizerHeader_fairOrganizer" | "FairOrganizerLatestArticles_fairOrganizer">;
-    readonly " $refType": "FairOrganizerApp_fairOrganizer";
+  } | null;
+  readonly " $fragmentSpreads": FragmentRefs<"FairOrganizerPastEventsRail_fairOrganizer" | "FairOrganizerHeaderImage_fairOrganizer" | "FairOrganizerHeader_fairOrganizer" | "FairOrganizerLatestArticles_fairOrganizer">;
+  readonly " $fragmentType": "FairOrganizerApp_fairOrganizer";
 };
-export type FairOrganizerApp_fairOrganizer$data = FairOrganizerApp_fairOrganizer;
 export type FairOrganizerApp_fairOrganizer$key = {
-    readonly " $data"?: FairOrganizerApp_fairOrganizer$data;
-    readonly " $fragmentRefs": FragmentRefs<"FairOrganizerApp_fairOrganizer">;
+  readonly " $data"?: FairOrganizerApp_fairOrganizer$data;
+  readonly " $fragmentSpreads": FragmentRefs<"FairOrganizerApp_fairOrganizer">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -116,5 +119,7 @@ const node: ReaderFragment = {
   "type": "FairOrganizer",
   "abstractKey": null
 };
-(node as any).hash = '72c9c6980aa419127501dd39b6d34f3e';
+
+(node as any).hash = "72c9c6980aa419127501dd39b6d34f3e";
+
 export default node;

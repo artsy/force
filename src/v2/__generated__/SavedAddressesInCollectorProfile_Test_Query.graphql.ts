@@ -1,61 +1,25 @@
+/**
+ * @generated SignedSource<<8db551fad8408df2613ce35e75d677b0>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type SavedAddressesInCollectorProfile_Test_QueryVariables = {};
-export type SavedAddressesInCollectorProfile_Test_QueryResponse = {
-    readonly me: {
-        readonly " $fragmentRefs": FragmentRefs<"SavedAddresses_me">;
-    } | null;
+export type SavedAddressesInCollectorProfile_Test_Query$variables = {};
+export type SavedAddressesInCollectorProfile_Test_Query$data = {
+  readonly me: {
+    readonly " $fragmentSpreads": FragmentRefs<"SavedAddresses_me">;
+  } | null;
 };
 export type SavedAddressesInCollectorProfile_Test_Query = {
-    readonly response: SavedAddressesInCollectorProfile_Test_QueryResponse;
-    readonly variables: SavedAddressesInCollectorProfile_Test_QueryVariables;
+  variables: SavedAddressesInCollectorProfile_Test_Query$variables;
+  response: SavedAddressesInCollectorProfile_Test_Query$data;
 };
-
-
-
-/*
-query SavedAddressesInCollectorProfile_Test_Query {
-  me {
-    ...SavedAddresses_me
-    id
-  }
-}
-
-fragment SavedAddresses_me on Me {
-  id
-  addressConnection(first: 30) {
-    totalCount
-    edges {
-      node {
-        id
-        internalID
-        addressLine1
-        addressLine2
-        addressLine3
-        city
-        country
-        isDefault
-        name
-        phoneNumber
-        postalCode
-        region
-        __typename
-      }
-      cursor
-    }
-    pageInfo {
-      endCursor
-      hasNextPage
-      hasPreviousPage
-      startCursor
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = {
@@ -391,5 +355,7 @@ return {
   }
 };
 })();
-(node as any).hash = '55b8cdeb8634b8684b7ef62ccb804dfe';
+
+(node as any).hash = "55b8cdeb8634b8684b7ef62ccb804dfe";
+
 export default node;

@@ -1,80 +1,27 @@
+/**
+ * @generated SignedSource<<f20b96388db52b467c3174f50904088b>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type viewingRoomRoutes_ViewingRoomQueryVariables = {
-    slug: string;
+export type viewingRoomRoutes_ViewingRoomQuery$variables = {
+  slug: string;
 };
-export type viewingRoomRoutes_ViewingRoomQueryResponse = {
-    readonly viewingRoom: {
-        readonly " $fragmentRefs": FragmentRefs<"ViewingRoomApp_viewingRoom">;
-    } | null;
+export type viewingRoomRoutes_ViewingRoomQuery$data = {
+  readonly viewingRoom: {
+    readonly " $fragmentSpreads": FragmentRefs<"ViewingRoomApp_viewingRoom">;
+  } | null;
 };
 export type viewingRoomRoutes_ViewingRoomQuery = {
-    readonly response: viewingRoomRoutes_ViewingRoomQueryResponse;
-    readonly variables: viewingRoomRoutes_ViewingRoomQueryVariables;
+  variables: viewingRoomRoutes_ViewingRoomQuery$variables;
+  response: viewingRoomRoutes_ViewingRoomQuery$data;
 };
-
-
-
-/*
-query viewingRoomRoutes_ViewingRoomQuery(
-  $slug: ID!
-) {
-  viewingRoom(id: $slug) @principalField {
-    ...ViewingRoomApp_viewingRoom
-  }
-}
-
-fragment ViewingRoomApp_viewingRoom on ViewingRoom {
-  ...ViewingRoomMeta_viewingRoom
-  ...ViewingRoomHeader_viewingRoom
-  ...ViewingRoomContentNotAccessible_viewingRoom
-  partner {
-    internalID
-    id
-  }
-  status
-}
-
-fragment ViewingRoomContentNotAccessible_viewingRoom on ViewingRoom {
-  status
-  partner {
-    href
-    id
-  }
-}
-
-fragment ViewingRoomHeader_viewingRoom on ViewingRoom {
-  image {
-    imageURLs {
-      normalized
-    }
-  }
-  title
-  partner {
-    name
-    href
-    id
-  }
-  distanceToOpen
-  distanceToClose
-  status
-}
-
-fragment ViewingRoomMeta_viewingRoom on ViewingRoom {
-  title
-  href
-  pullQuote
-  image {
-    imageURLs {
-      normalized
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -252,5 +199,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'ef9bd45ea7fddd443ff22649736a823d';
+
+(node as any).hash = "ef9bd45ea7fddd443ff22649736a823d";
+
 export default node;

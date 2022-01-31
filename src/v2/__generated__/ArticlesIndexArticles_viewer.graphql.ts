@@ -1,27 +1,30 @@
+/**
+ * @generated SignedSource<<e879f8b015c98285ff440a50f98dd214>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArticlesIndexArticles_viewer = {
-    readonly articlesConnection: {
-        readonly edges: ReadonlyArray<{
-            readonly node: {
-                readonly internalID: string;
-                readonly " $fragmentRefs": FragmentRefs<"ArticlesIndexArticle_article">;
-            } | null;
-        } | null> | null;
-    } | null;
-    readonly " $refType": "ArticlesIndexArticles_viewer";
+export type ArticlesIndexArticles_viewer$data = {
+  readonly articlesConnection: {
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly internalID: string;
+        readonly " $fragmentSpreads": FragmentRefs<"ArticlesIndexArticle_article">;
+      } | null;
+    } | null> | null;
+  } | null;
+  readonly " $fragmentType": "ArticlesIndexArticles_viewer";
 };
-export type ArticlesIndexArticles_viewer$data = ArticlesIndexArticles_viewer;
 export type ArticlesIndexArticles_viewer$key = {
-    readonly " $data"?: ArticlesIndexArticles_viewer$data;
-    readonly " $fragmentRefs": FragmentRefs<"ArticlesIndexArticles_viewer">;
+  readonly " $data"?: ArticlesIndexArticles_viewer$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ArticlesIndexArticles_viewer">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [
@@ -89,16 +92,16 @@ const node: ReaderFragment = {
                   "storageKey": null
                 },
                 {
+                  "args": null,
+                  "kind": "FragmentSpread",
+                  "name": "ArticlesIndexArticle_article"
+                },
+                {
                   "alias": null,
                   "args": null,
                   "kind": "ScalarField",
                   "name": "__typename",
                   "storageKey": null
-                },
-                {
-                  "args": null,
-                  "kind": "FragmentSpread",
-                  "name": "ArticlesIndexArticle_article"
                 }
               ],
               "storageKey": null
@@ -145,5 +148,7 @@ const node: ReaderFragment = {
   "type": "Viewer",
   "abstractKey": null
 };
-(node as any).hash = 'fc09df8765785f4d0d08b5e79341262f';
+
+(node as any).hash = "fc09df8765785f4d0d08b5e79341262f";
+
 export default node;

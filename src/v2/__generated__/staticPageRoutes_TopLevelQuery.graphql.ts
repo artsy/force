@@ -1,39 +1,27 @@
+/**
+ * @generated SignedSource<<d51f27778298afee0777322b4c66c31a>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type staticPageRoutes_TopLevelQueryVariables = {
-    slug: string;
+export type staticPageRoutes_TopLevelQuery$variables = {
+  slug: string;
 };
-export type staticPageRoutes_TopLevelQueryResponse = {
-    readonly page: {
-        readonly " $fragmentRefs": FragmentRefs<"StaticPageApp_page">;
-    };
+export type staticPageRoutes_TopLevelQuery$data = {
+  readonly page: {
+    readonly " $fragmentSpreads": FragmentRefs<"StaticPageApp_page">;
+  };
 };
 export type staticPageRoutes_TopLevelQuery = {
-    readonly response: staticPageRoutes_TopLevelQueryResponse;
-    readonly variables: staticPageRoutes_TopLevelQueryVariables;
+  variables: staticPageRoutes_TopLevelQuery$variables;
+  response: staticPageRoutes_TopLevelQuery$data;
 };
-
-
-
-/*
-query staticPageRoutes_TopLevelQuery(
-  $slug: ID!
-) {
-  page(id: $slug) {
-    ...StaticPageApp_page
-    id
-  }
-}
-
-fragment StaticPageApp_page on Page {
-  name
-  content(format: HTML)
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -133,5 +121,7 @@ return {
   }
 };
 })();
-(node as any).hash = '73ca758dbf390fca7491db2031e169dc';
+
+(node as any).hash = "73ca758dbf390fca7491db2031e169dc";
+
 export default node;

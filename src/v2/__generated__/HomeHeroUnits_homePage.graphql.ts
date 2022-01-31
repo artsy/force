@@ -1,23 +1,26 @@
+/**
+ * @generated SignedSource<<e36b8e8b72b0d3e7fda6630b70ac7292>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type HomeHeroUnits_homePage = {
-    readonly heroUnits: ReadonlyArray<{
-        readonly internalID: string;
-        readonly " $fragmentRefs": FragmentRefs<"HomeHeroUnit_heroUnit">;
-    } | null> | null;
-    readonly " $refType": "HomeHeroUnits_homePage";
+export type HomeHeroUnits_homePage$data = {
+  readonly heroUnits: ReadonlyArray<{
+    readonly internalID: string;
+    readonly " $fragmentSpreads": FragmentRefs<"HomeHeroUnit_heroUnit">;
+  } | null> | null;
+  readonly " $fragmentType": "HomeHeroUnits_homePage";
 };
-export type HomeHeroUnits_homePage$data = HomeHeroUnits_homePage;
 export type HomeHeroUnits_homePage$key = {
-    readonly " $data"?: HomeHeroUnits_homePage$data;
-    readonly " $fragmentRefs": FragmentRefs<"HomeHeroUnits_homePage">;
+  readonly " $data"?: HomeHeroUnits_homePage$data;
+  readonly " $fragmentSpreads": FragmentRefs<"HomeHeroUnits_homePage">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -58,5 +61,7 @@ const node: ReaderFragment = {
   "type": "HomePage",
   "abstractKey": null
 };
-(node as any).hash = '639c22acaf91b70e81d884f640676335';
+
+(node as any).hash = "639c22acaf91b70e81d884f640676335";
+
 export default node;

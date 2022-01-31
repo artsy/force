@@ -1,46 +1,37 @@
+/**
+ * @generated SignedSource<<d28afb7f33aaecb1a3e153365b894282>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type IntendedState = "ACCEPTED" | "REJECTED" | "REVIEW" | "%future added value";
 export type CreateOfferResponseMutationInput = {
-    clientMutationId?: string | null;
-    comments?: string | null;
-    intendedState: IntendedState;
-    offerId: string;
-    phoneNumber?: string | null;
-    rejectionReason?: string | null;
+  clientMutationId?: string | null;
+  comments?: string | null;
+  intendedState: IntendedState;
+  offerId: string;
+  phoneNumber?: string | null;
+  rejectionReason?: string | null;
 };
-export type CreateOfferResponseMutationVariables = {
-    input: CreateOfferResponseMutationInput;
+export type CreateOfferResponseMutation$variables = {
+  input: CreateOfferResponseMutationInput;
 };
-export type CreateOfferResponseMutationResponse = {
-    readonly createConsignmentOfferResponse: {
-        readonly consignmentOfferResponse: {
-            readonly intendedState: IntendedState;
-        } | null;
+export type CreateOfferResponseMutation$data = {
+  readonly createConsignmentOfferResponse: {
+    readonly consignmentOfferResponse: {
+      readonly intendedState: IntendedState;
     } | null;
+  } | null;
 };
 export type CreateOfferResponseMutation = {
-    readonly response: CreateOfferResponseMutationResponse;
-    readonly variables: CreateOfferResponseMutationVariables;
+  variables: CreateOfferResponseMutation$variables;
+  response: CreateOfferResponseMutation$data;
 };
-
-
-
-/*
-mutation CreateOfferResponseMutation(
-  $input: CreateOfferResponseMutationInput!
-) {
-  createConsignmentOfferResponse(input: $input) {
-    consignmentOfferResponse {
-      intendedState
-      id
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -146,5 +137,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'c62173b99e9ba5703c2630c0b0478681';
+
+(node as any).hash = "c62173b99e9ba5703c2630c0b0478681";
+
 export default node;

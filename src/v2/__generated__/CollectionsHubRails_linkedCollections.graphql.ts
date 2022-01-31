@@ -1,22 +1,25 @@
+/**
+ * @generated SignedSource<<d0130b1439f283d7f3a64252c4959fe0>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
-import { FragmentRefs } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 export type MarketingGroupTypes = "ArtistSeries" | "FeaturedCollections" | "OtherCollections" | "%future added value";
-export type CollectionsHubRails_linkedCollections = ReadonlyArray<{
-    readonly groupType: MarketingGroupTypes;
-    readonly " $fragmentRefs": FragmentRefs<"FeaturedCollectionsRails_collectionGroup" | "OtherCollectionsRail_collectionGroup" | "ArtistSeriesRail_collectionGroup">;
-    readonly " $refType": "CollectionsHubRails_linkedCollections";
+import { FragmentRefs } from "relay-runtime";
+export type CollectionsHubRails_linkedCollections$data = ReadonlyArray<{
+  readonly groupType: MarketingGroupTypes;
+  readonly " $fragmentSpreads": FragmentRefs<"FeaturedCollectionsRails_collectionGroup" | "OtherCollectionsRail_collectionGroup" | "ArtistSeriesRail_collectionGroup">;
+  readonly " $fragmentType": "CollectionsHubRails_linkedCollections";
 }>;
-export type CollectionsHubRails_linkedCollections$data = CollectionsHubRails_linkedCollections;
 export type CollectionsHubRails_linkedCollections$key = ReadonlyArray<{
-    readonly " $data"?: CollectionsHubRails_linkedCollections$data;
-    readonly " $fragmentRefs": FragmentRefs<"CollectionsHubRails_linkedCollections">;
+  readonly " $data"?: CollectionsHubRails_linkedCollections$data;
+  readonly " $fragmentSpreads": FragmentRefs<"CollectionsHubRails_linkedCollections">;
 }>;
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -52,5 +55,7 @@ const node: ReaderFragment = {
   "type": "MarketingCollectionGroup",
   "abstractKey": null
 };
-(node as any).hash = 'a7285e8c4087e97b3282b8c929f612be';
+
+(node as any).hash = "a7285e8c4087e97b3282b8c929f612be";
+
 export default node;

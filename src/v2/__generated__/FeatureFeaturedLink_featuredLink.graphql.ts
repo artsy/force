@@ -1,49 +1,52 @@
+/**
+ * @generated SignedSource<<1ea440159706f2c05986b7c9aa227ec9>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type FeatureFeaturedLink_featuredLink = {
-    readonly href: string | null;
-    readonly title: string | null;
-    readonly subtitle: string | null;
-    readonly description: string | null;
-    readonly image: {
-        readonly small: {
-            readonly src: string;
-            readonly srcSet: string;
-            readonly width: number;
-            readonly height: number;
-        } | null;
-        readonly medium: {
-            readonly src: string;
-            readonly srcSet: string;
-            readonly width: number;
-            readonly height: number;
-        } | null;
-        readonly large: {
-            readonly src: string;
-            readonly srcSet: string;
-            readonly width: number;
-            readonly height: number;
-        } | null;
-        readonly full: {
-            readonly src: string;
-            readonly srcSet: string;
-            readonly width: number | null;
-            readonly height: number | null;
-        } | null;
+export type FeatureFeaturedLink_featuredLink$data = {
+  readonly href: string | null;
+  readonly title: string | null;
+  readonly subtitle: string | null;
+  readonly description: string | null;
+  readonly image: {
+    readonly small: {
+      readonly src: string;
+      readonly srcSet: string;
+      readonly width: number;
+      readonly height: number;
     } | null;
-    readonly " $refType": "FeatureFeaturedLink_featuredLink";
+    readonly medium: {
+      readonly src: string;
+      readonly srcSet: string;
+      readonly width: number;
+      readonly height: number;
+    } | null;
+    readonly large: {
+      readonly src: string;
+      readonly srcSet: string;
+      readonly width: number;
+      readonly height: number;
+    } | null;
+    readonly full: {
+      readonly src: string;
+      readonly srcSet: string;
+      readonly width: number | null;
+      readonly height: number | null;
+    } | null;
+  } | null;
+  readonly " $fragmentType": "FeatureFeaturedLink_featuredLink";
 };
-export type FeatureFeaturedLink_featuredLink$data = FeatureFeaturedLink_featuredLink;
 export type FeatureFeaturedLink_featuredLink$key = {
-    readonly " $data"?: FeatureFeaturedLink_featuredLink$data;
-    readonly " $fragmentRefs": FragmentRefs<"FeatureFeaturedLink_featuredLink">;
+  readonly " $data"?: FeatureFeaturedLink_featuredLink$data;
+  readonly " $fragmentSpreads": FragmentRefs<"FeatureFeaturedLink_featuredLink">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = {
@@ -234,5 +237,7 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '80c4cca0a36a443e6ac6394d2cfd9be9';
+
+(node as any).hash = "80c4cca0a36a443e6ac6394d2cfd9be9";
+
 export default node;

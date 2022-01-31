@@ -1,22 +1,25 @@
+/**
+ * @generated SignedSource<<e8e5e01a49b92b7029a80b9792a332bc>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type InquiryBasicInfo_artwork = {
-    readonly partner: {
-        readonly name: string | null;
-    } | null;
-    readonly " $refType": "InquiryBasicInfo_artwork";
+export type InquiryBasicInfo_artwork$data = {
+  readonly partner: {
+    readonly name: string | null;
+  } | null;
+  readonly " $fragmentType": "InquiryBasicInfo_artwork";
 };
-export type InquiryBasicInfo_artwork$data = InquiryBasicInfo_artwork;
 export type InquiryBasicInfo_artwork$key = {
-    readonly " $data"?: InquiryBasicInfo_artwork$data;
-    readonly " $fragmentRefs": FragmentRefs<"InquiryBasicInfo_artwork">;
+  readonly " $data"?: InquiryBasicInfo_artwork$data;
+  readonly " $fragmentSpreads": FragmentRefs<"InquiryBasicInfo_artwork">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -46,5 +49,7 @@ const node: ReaderFragment = {
   "type": "Artwork",
   "abstractKey": null
 };
-(node as any).hash = '1e1234eb5a6db8d4cef797d5ebdfc6e6';
+
+(node as any).hash = "1e1234eb5a6db8d4cef797d5ebdfc6e6";
+
 export default node;

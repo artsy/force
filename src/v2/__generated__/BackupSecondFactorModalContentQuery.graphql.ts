@@ -1,51 +1,37 @@
+/**
+ * @generated SignedSource<<f9f58336c78595e55b4f3d08ba0c8191>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type BackupSecondFactorModalContentQueryVariables = {};
-export type BackupSecondFactorModalContentQueryResponse = {
-    readonly me: {
-        readonly " $fragmentRefs": FragmentRefs<"BackupSecondFactorModalContent_me">;
-    } | null;
+export type BackupSecondFactorModalContentQuery$variables = {};
+export type BackupSecondFactorModalContentQuery$data = {
+  readonly me: {
+    readonly " $fragmentSpreads": FragmentRefs<"BackupSecondFactorModalContent_me">;
+  } | null;
 };
-export type BackupSecondFactorModalContentQueryRawResponse = {
-    readonly me: ({
-        readonly backupSecondFactors: ReadonlyArray<({
-            readonly __typename: "BackupSecondFactor";
-            readonly code: string;
-        } | {
-            readonly __typename: string;
-        }) | null> | null;
-        readonly id: string;
-    }) | null;
+export type BackupSecondFactorModalContentQuery$rawResponse = {
+  readonly me: {
+    readonly backupSecondFactors: ReadonlyArray<{
+      readonly __typename: "BackupSecondFactor";
+      readonly code: string;
+    } | {
+      readonly __typename: string;
+    } | null> | null;
+    readonly id: string;
+  } | null;
 };
 export type BackupSecondFactorModalContentQuery = {
-    readonly response: BackupSecondFactorModalContentQueryResponse;
-    readonly variables: BackupSecondFactorModalContentQueryVariables;
-    readonly rawResponse: BackupSecondFactorModalContentQueryRawResponse;
+  variables: BackupSecondFactorModalContentQuery$variables;
+  response: BackupSecondFactorModalContentQuery$data;
+  rawResponse: BackupSecondFactorModalContentQuery$rawResponse;
 };
-
-
-
-/*
-query BackupSecondFactorModalContentQuery {
-  me {
-    ...BackupSecondFactorModalContent_me
-    id
-  }
-}
-
-fragment BackupSecondFactorModalContent_me on Me {
-  backupSecondFactors: secondFactors(kinds: [backup]) {
-    __typename
-    ... on BackupSecondFactor {
-      code
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = {
   "fragment": {
@@ -149,5 +135,7 @@ const node: ConcreteRequest = {
     "text": "query BackupSecondFactorModalContentQuery {\n  me {\n    ...BackupSecondFactorModalContent_me\n    id\n  }\n}\n\nfragment BackupSecondFactorModalContent_me on Me {\n  backupSecondFactors: secondFactors(kinds: [backup]) {\n    __typename\n    ... on BackupSecondFactor {\n      code\n    }\n  }\n}\n"
   }
 };
-(node as any).hash = '6eb1007194d1ab59a7d88bf4892fd4b1';
+
+(node as any).hash = "6eb1007194d1ab59a7d88bf4892fd4b1";
+
 export default node;

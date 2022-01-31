@@ -1,30 +1,33 @@
+/**
+ * @generated SignedSource<<1b64b3e3ff659b8a7318ada01f8f09a7>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type PaymentPicker_me = {
-    readonly creditCards: {
-        readonly edges: ReadonlyArray<{
-            readonly node: {
-                readonly internalID: string;
-                readonly brand: string;
-                readonly lastDigits: string;
-                readonly expirationMonth: number;
-                readonly expirationYear: number;
-            } | null;
-        } | null> | null;
-    } | null;
-    readonly " $refType": "PaymentPicker_me";
+export type PaymentPicker_me$data = {
+  readonly creditCards: {
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly internalID: string;
+        readonly brand: string;
+        readonly lastDigits: string;
+        readonly expirationMonth: number;
+        readonly expirationYear: number;
+      } | null;
+    } | null> | null;
+  } | null;
+  readonly " $fragmentType": "PaymentPicker_me";
 };
-export type PaymentPicker_me$data = PaymentPicker_me;
 export type PaymentPicker_me$key = {
-    readonly " $data"?: PaymentPicker_me$data;
-    readonly " $fragmentRefs": FragmentRefs<"PaymentPicker_me">;
+  readonly " $data"?: PaymentPicker_me$data;
+  readonly " $fragmentSpreads": FragmentRefs<"PaymentPicker_me">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -110,5 +113,7 @@ const node: ReaderFragment = {
   "type": "Me",
   "abstractKey": null
 };
-(node as any).hash = '7c560989a1629a7d702ebca42324ab84';
+
+(node as any).hash = "7c560989a1629a7d702ebca42324ab84";
+
 export default node;

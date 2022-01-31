@@ -1,9 +1,6 @@
 import { Link, QuestionCircleIcon } from "@artsy/palette"
 import { BarChart } from "@artsy/palette-charts"
-import {
-  PricingContextTestQueryRawResponse,
-  PricingContextTestQueryResponse,
-} from "v2/__generated__/PricingContextTestQuery.graphql"
+import { PricingContextTestQuery$rawResponse } from "v2/__generated__/PricingContextTestQuery.graphql"
 import { mockTracking } from "v2/System/Analytics"
 import { renderRelayTree } from "v2/DevTools"
 import { mount } from "enzyme"
@@ -19,7 +16,7 @@ jest.unmock("react-tracking")
 jest.unmock("react-relay")
 
 // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-const mockPricingContext: PricingContextTestQueryRawResponse["artwork"]["pricingContext"] = {
+const mockPricingContext: PricingContextTestQuery$rawResponse["artwork"]["pricingContext"] = {
   appliedFiltersDisplay: "Price ranges of small mocks by David Sheldrick",
   appliedFilters: {
     category: "PAINTING",
@@ -57,7 +54,7 @@ const mockPricingContext: PricingContextTestQueryRawResponse["artwork"]["pricing
   ],
 }
 
-const mockArtwork: PricingContextTestQueryRawResponse["artwork"] = {
+const mockArtwork: PricingContextTestQuery$rawResponse["artwork"] = {
   artists: [{ id: "asfwef", slug: "andy-warhol" }],
   category: "Photography",
   id: "abc124",
@@ -70,7 +67,7 @@ const mockArtwork: PricingContextTestQueryRawResponse["artwork"] = {
 
 describe("PricingContext", () => {
   function getWrapper(
-    mockData: PricingContextTestQueryRawResponse = {
+    mockData: PricingContextTestQuery$rawResponse = {
       // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       artwork: {
         ...mockArtwork,
@@ -78,13 +75,12 @@ describe("PricingContext", () => {
     }
   ) {
     return renderRelayTree({
-      Component: (props: PricingContextTestQueryResponse) => (
+      Component: props => (
         <div>
-          {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
           <PricingContextFragmentContainer {...props} />
         </div>
       ),
-      mockData: mockData as PricingContextTestQueryRawResponse,
+      mockData: mockData as PricingContextTestQuery$rawResponse,
       query: graphql`
         query PricingContextTestQuery @raw_response_type @relay_test_operation {
           artwork(id: "unused") {

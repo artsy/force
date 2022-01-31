@@ -1,34 +1,37 @@
+/**
+ * @generated SignedSource<<cb7aac81833ddb394c9b810420d74adb>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ShowPartnerEntityHeader_partner = {
-    readonly type: string | null;
-    readonly slug: string;
-    readonly href: string | null;
-    readonly name: string | null;
-    readonly initials: string | null;
-    readonly locations: ReadonlyArray<{
-        readonly city: string | null;
-    } | null> | null;
-    readonly isDefaultProfilePublic: boolean | null;
-    readonly profile: {
-        readonly icon: {
-            readonly url: string | null;
-        } | null;
-        readonly " $fragmentRefs": FragmentRefs<"FollowProfileButton_profile">;
+export type ShowPartnerEntityHeader_partner$data = {
+  readonly type: string | null;
+  readonly slug: string;
+  readonly href: string | null;
+  readonly name: string | null;
+  readonly initials: string | null;
+  readonly locations: ReadonlyArray<{
+    readonly city: string | null;
+  } | null> | null;
+  readonly isDefaultProfilePublic: boolean | null;
+  readonly profile: {
+    readonly icon: {
+      readonly url: string | null;
     } | null;
-    readonly " $refType": "ShowPartnerEntityHeader_partner";
+    readonly " $fragmentSpreads": FragmentRefs<"FollowProfileButton_profile">;
+  } | null;
+  readonly " $fragmentType": "ShowPartnerEntityHeader_partner";
 };
-export type ShowPartnerEntityHeader_partner$data = ShowPartnerEntityHeader_partner;
 export type ShowPartnerEntityHeader_partner$key = {
-    readonly " $data"?: ShowPartnerEntityHeader_partner$data;
-    readonly " $fragmentRefs": FragmentRefs<"ShowPartnerEntityHeader_partner">;
+  readonly " $data"?: ShowPartnerEntityHeader_partner$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ShowPartnerEntityHeader_partner">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -105,6 +108,11 @@ const node: ReaderFragment = {
       "plural": false,
       "selections": [
         {
+          "args": null,
+          "kind": "FragmentSpread",
+          "name": "FollowProfileButton_profile"
+        },
+        {
           "alias": null,
           "args": null,
           "concreteType": "Image",
@@ -127,11 +135,6 @@ const node: ReaderFragment = {
             }
           ],
           "storageKey": null
-        },
-        {
-          "args": null,
-          "kind": "FragmentSpread",
-          "name": "FollowProfileButton_profile"
         }
       ],
       "storageKey": null
@@ -140,5 +143,7 @@ const node: ReaderFragment = {
   "type": "Partner",
   "abstractKey": null
 };
-(node as any).hash = '559fa2af9c8ba2f2a09c4ef0b839f940';
+
+(node as any).hash = "559fa2af9c8ba2f2a09c4ef0b839f940";
+
 export default node;

@@ -1,28 +1,31 @@
+/**
+ * @generated SignedSource<<7c8a5b5a89411064405926f0707ed6ab>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type FairBoothRail_show = {
-    readonly internalID: string;
-    readonly slug: string;
-    readonly href: string | null;
-    readonly partner: {
-        readonly name?: string | null;
-    } | null;
-    readonly counts: {
-        readonly artworks: number | null;
-    } | null;
-    readonly " $refType": "FairBoothRail_show";
+export type FairBoothRail_show$data = {
+  readonly internalID: string;
+  readonly slug: string;
+  readonly href: string | null;
+  readonly partner: {
+    readonly name?: string | null;
+  } | null;
+  readonly counts: {
+    readonly artworks: number | null;
+  } | null;
+  readonly " $fragmentType": "FairBoothRail_show";
 };
-export type FairBoothRail_show$data = FairBoothRail_show;
 export type FairBoothRail_show$key = {
-    readonly " $data"?: FairBoothRail_show$data;
-    readonly " $fragmentRefs": FragmentRefs<"FairBoothRail_show">;
+  readonly " $data"?: FairBoothRail_show$data;
+  readonly " $fragmentSpreads": FragmentRefs<"FairBoothRail_show">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = [
@@ -107,5 +110,7 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '39863519483da7edef303de7aa6c4a22';
+
+(node as any).hash = "39863519483da7edef303de7aa6c4a22";
+
 export default node;

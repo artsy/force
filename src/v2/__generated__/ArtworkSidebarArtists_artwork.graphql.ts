@@ -1,35 +1,38 @@
+/**
+ * @generated SignedSource<<dd40ea18396606ca8cea3e1e12dcc4aa>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtworkSidebarArtists_artwork = {
-    readonly cultural_maker: string | null;
-    readonly artists: ReadonlyArray<{
-        readonly id: string;
-        readonly internalID: string;
-        readonly slug: string;
-        readonly name: string | null;
-        readonly formattedNationalityAndBirthday: string | null;
-        readonly href: string | null;
-        readonly avatar: {
-            readonly cropped: {
-                readonly src: string;
-                readonly srcSet: string;
-            } | null;
-        } | null;
-        readonly " $fragmentRefs": FragmentRefs<"FollowArtistButton_artist">;
-    } | null> | null;
-    readonly " $refType": "ArtworkSidebarArtists_artwork";
+export type ArtworkSidebarArtists_artwork$data = {
+  readonly cultural_maker: string | null;
+  readonly artists: ReadonlyArray<{
+    readonly id: string;
+    readonly internalID: string;
+    readonly slug: string;
+    readonly name: string | null;
+    readonly formattedNationalityAndBirthday: string | null;
+    readonly href: string | null;
+    readonly avatar: {
+      readonly cropped: {
+        readonly src: string;
+        readonly srcSet: string;
+      } | null;
+    } | null;
+    readonly " $fragmentSpreads": FragmentRefs<"FollowArtistButton_artist">;
+  } | null> | null;
+  readonly " $fragmentType": "ArtworkSidebarArtists_artwork";
 };
-export type ArtworkSidebarArtists_artwork$data = ArtworkSidebarArtists_artwork;
 export type ArtworkSidebarArtists_artwork$key = {
-    readonly " $data"?: ArtworkSidebarArtists_artwork$data;
-    readonly " $fragmentRefs": FragmentRefs<"ArtworkSidebarArtists_artwork">;
+  readonly " $data"?: ArtworkSidebarArtists_artwork$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtworkSidebarArtists_artwork">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [
@@ -165,5 +168,7 @@ const node: ReaderFragment = {
   "type": "Artwork",
   "abstractKey": null
 };
-(node as any).hash = '3bd0d5dae070cc3a4cfb0892eacd488f';
+
+(node as any).hash = "3bd0d5dae070cc3a4cfb0892eacd488f";
+
 export default node;

@@ -1,89 +1,75 @@
+/**
+ * @generated SignedSource<<6de113082936a99377602ff625b03877>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Mutation } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type CurrencyPreference = "EUR" | "GBP" | "USD" | "%future added value";
 export type LengthUnitPreference = "CM" | "IN" | "%future added value";
 export type UpdateMyProfileInput = {
-    artworksPerYear?: string | null;
-    bio?: string | null;
-    clientMutationId?: string | null;
-    collectorLevel?: number | null;
-    completedOnboarding?: boolean | null;
-    currencyPreference?: CurrencyPreference | null;
-    email?: string | null;
-    emailFrequency?: string | null;
-    gender?: string | null;
-    iconUrl?: string | null;
-    industry?: string | null;
-    isCollector?: boolean | null;
-    lengthUnitPreference?: LengthUnitPreference | null;
-    location?: EditableLocation | null;
-    name?: string | null;
-    notes?: string | null;
-    otherRelevantPositions?: string | null;
-    password?: string | null;
-    phone?: string | null;
-    priceRangeMax?: number | null;
-    priceRangeMin?: number | null;
-    privacy?: string | null;
-    profession?: string | null;
-    receiveLotOpeningSoonNotification?: boolean | null;
-    receiveNewSalesNotification?: boolean | null;
-    receiveNewWorksNotification?: boolean | null;
-    receiveOutbidNotification?: boolean | null;
-    receivePromotionNotification?: boolean | null;
-    receivePurchaseNotification?: boolean | null;
-    receiveSaleOpeningClosingNotification?: boolean | null;
-    shareFollows?: boolean | null;
+  artworksPerYear?: string | null;
+  bio?: string | null;
+  clientMutationId?: string | null;
+  collectorLevel?: number | null;
+  completedOnboarding?: boolean | null;
+  currencyPreference?: CurrencyPreference | null;
+  email?: string | null;
+  emailFrequency?: string | null;
+  gender?: string | null;
+  iconUrl?: string | null;
+  industry?: string | null;
+  isCollector?: boolean | null;
+  lengthUnitPreference?: LengthUnitPreference | null;
+  location?: EditableLocation | null;
+  name?: string | null;
+  notes?: string | null;
+  otherRelevantPositions?: string | null;
+  password?: string | null;
+  phone?: string | null;
+  priceRangeMax?: number | null;
+  priceRangeMin?: number | null;
+  privacy?: string | null;
+  profession?: string | null;
+  receiveLotOpeningSoonNotification?: boolean | null;
+  receiveNewSalesNotification?: boolean | null;
+  receiveNewWorksNotification?: boolean | null;
+  receiveOutbidNotification?: boolean | null;
+  receivePromotionNotification?: boolean | null;
+  receivePurchaseNotification?: boolean | null;
+  receiveSaleOpeningClosingNotification?: boolean | null;
+  shareFollows?: boolean | null;
 };
 export type EditableLocation = {
-    address?: string | null;
-    address2?: string | null;
-    city?: string | null;
-    country?: string | null;
-    postalCode?: string | null;
-    state?: string | null;
-    stateCode?: string | null;
-    summary?: string | null;
+  address?: string | null;
+  address2?: string | null;
+  city?: string | null;
+  country?: string | null;
+  postalCode?: string | null;
+  state?: string | null;
+  stateCode?: string | null;
+  summary?: string | null;
 };
-export type useUpdateMyUserProfileMutationVariables = {
-    input: UpdateMyProfileInput;
+export type useUpdateMyUserProfileMutation$variables = {
+  input: UpdateMyProfileInput;
 };
-export type useUpdateMyUserProfileMutationResponse = {
-    readonly updateMyUserProfile: {
-        readonly clientMutationId: string | null;
-        readonly me: {
-            readonly " $fragmentRefs": FragmentRefs<"SettingsEditProfileYourGalleryIntro_me">;
-        } | null;
+export type useUpdateMyUserProfileMutation$data = {
+  readonly updateMyUserProfile: {
+    readonly clientMutationId: string | null;
+    readonly me: {
+      readonly " $fragmentSpreads": FragmentRefs<"SettingsEditProfileYourGalleryIntro_me">;
     } | null;
+  } | null;
 };
 export type useUpdateMyUserProfileMutation = {
-    readonly response: useUpdateMyUserProfileMutationResponse;
-    readonly variables: useUpdateMyUserProfileMutationVariables;
+  variables: useUpdateMyUserProfileMutation$variables;
+  response: useUpdateMyUserProfileMutation$data;
 };
-
-
-
-/*
-mutation useUpdateMyUserProfileMutation(
-  $input: UpdateMyProfileInput!
-) {
-  updateMyUserProfile(input: $input) {
-    clientMutationId
-    me {
-      ...SettingsEditProfileYourGalleryIntro_me
-      id
-    }
-  }
-}
-
-fragment SettingsEditProfileYourGalleryIntro_me on Me {
-  inquiryIntroduction
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -201,5 +187,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'edc3801caa91842ffe2a71d69e00c4ff';
+
+(node as any).hash = "edc3801caa91842ffe2a71d69e00c4ff";
+
 export default node;

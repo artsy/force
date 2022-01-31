@@ -1,43 +1,46 @@
+/**
+ * @generated SignedSource<<d92242789b2f93274f52d4a39afbc558>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type PartnerMeta_partner = {
-    readonly locationsConnection: {
-        readonly edges: ReadonlyArray<{
-            readonly node: {
-                readonly address: string | null;
-                readonly address2: string | null;
-                readonly city: string | null;
-                readonly coordinates: {
-                    readonly lat: number | null;
-                    readonly lng: number | null;
-                } | null;
-                readonly country: string | null;
-                readonly phone: string | null;
-                readonly postalCode: string | null;
-                readonly state: string | null;
-            } | null;
-        } | null> | null;
-    } | null;
-    readonly meta: {
-        readonly image: string | null;
-        readonly title: string | null;
-        readonly description: string | null;
-    } | null;
-    readonly name: string | null;
-    readonly slug: string;
-    readonly " $refType": "PartnerMeta_partner";
+export type PartnerMeta_partner$data = {
+  readonly locationsConnection: {
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly address: string | null;
+        readonly address2: string | null;
+        readonly city: string | null;
+        readonly coordinates: {
+          readonly lat: number | null;
+          readonly lng: number | null;
+        } | null;
+        readonly country: string | null;
+        readonly phone: string | null;
+        readonly postalCode: string | null;
+        readonly state: string | null;
+      } | null;
+    } | null> | null;
+  } | null;
+  readonly meta: {
+    readonly image: string | null;
+    readonly title: string | null;
+    readonly description: string | null;
+  } | null;
+  readonly name: string | null;
+  readonly slug: string;
+  readonly " $fragmentType": "PartnerMeta_partner";
 };
-export type PartnerMeta_partner$data = PartnerMeta_partner;
 export type PartnerMeta_partner$key = {
-    readonly " $data"?: PartnerMeta_partner$data;
-    readonly " $fragmentRefs": FragmentRefs<"PartnerMeta_partner">;
+  readonly " $data"?: PartnerMeta_partner$data;
+  readonly " $fragmentSpreads": FragmentRefs<"PartnerMeta_partner">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -208,5 +211,7 @@ const node: ReaderFragment = {
   "type": "Partner",
   "abstractKey": null
 };
-(node as any).hash = 'fa6bf65fcb4cf96ca003cd619d351ea1';
+
+(node as any).hash = "fa6bf65fcb4cf96ca003cd619d351ea1";
+
 export default node;

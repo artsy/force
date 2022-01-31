@@ -1,36 +1,28 @@
+/**
+ * @generated SignedSource<<6afb147578ab9ee6e39af7d7e5ef18c7>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
-export type getConvectionGeminiKeyQueryVariables = {};
-export type getConvectionGeminiKeyQueryResponse = {
-    readonly system: {
-        readonly services: {
-            readonly convection: {
-                readonly geminiTemplateKey: string;
-            };
-        } | null;
+import { ConcreteRequest, Query } from 'relay-runtime';
+export type getConvectionGeminiKeyQuery$variables = {};
+export type getConvectionGeminiKeyQuery$data = {
+  readonly system: {
+    readonly services: {
+      readonly convection: {
+        readonly geminiTemplateKey: string;
+      };
     } | null;
+  } | null;
 };
 export type getConvectionGeminiKeyQuery = {
-    readonly response: getConvectionGeminiKeyQueryResponse;
-    readonly variables: getConvectionGeminiKeyQueryVariables;
+  variables: getConvectionGeminiKeyQuery$variables;
+  response: getConvectionGeminiKeyQuery$data;
 };
-
-
-
-/*
-query getConvectionGeminiKeyQuery {
-  system {
-    services {
-      convection {
-        geminiTemplateKey
-      }
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -102,5 +94,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'a7ffae2e10d304400de8792a31ce20ff';
+
+(node as any).hash = "a7ffae2e10d304400de8792a31ce20ff";
+
 export default node;

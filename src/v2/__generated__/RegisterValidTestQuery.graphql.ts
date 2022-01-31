@@ -1,64 +1,43 @@
+/**
+ * @generated SignedSource<<4e1545d6f194b494a2f8696955e85835>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type RegisterValidTestQueryVariables = {};
-export type RegisterValidTestQueryResponse = {
-    readonly sale: {
-        readonly " $fragmentRefs": FragmentRefs<"Register_sale">;
-    } | null;
-    readonly me: {
-        readonly " $fragmentRefs": FragmentRefs<"Register_me">;
-    } | null;
+export type RegisterValidTestQuery$variables = {};
+export type RegisterValidTestQuery$data = {
+  readonly sale: {
+    readonly " $fragmentSpreads": FragmentRefs<"Register_sale">;
+  } | null;
+  readonly me: {
+    readonly " $fragmentSpreads": FragmentRefs<"Register_me">;
+  } | null;
 };
-export type RegisterValidTestQueryRawResponse = {
-    readonly sale: ({
-        readonly slug: string;
-        readonly internalID: string;
-        readonly status: string | null;
-        readonly requireIdentityVerification: boolean | null;
-        readonly id: string;
-    }) | null;
-    readonly me: ({
-        readonly internalID: string;
-        readonly identityVerified: boolean | null;
-        readonly id: string;
-    }) | null;
+export type RegisterValidTestQuery$rawResponse = {
+  readonly sale: {
+    readonly slug: string;
+    readonly internalID: string;
+    readonly status: string | null;
+    readonly requireIdentityVerification: boolean | null;
+    readonly id: string;
+  } | null;
+  readonly me: {
+    readonly internalID: string;
+    readonly identityVerified: boolean | null;
+    readonly id: string;
+  } | null;
 };
 export type RegisterValidTestQuery = {
-    readonly response: RegisterValidTestQueryResponse;
-    readonly variables: RegisterValidTestQueryVariables;
-    readonly rawResponse: RegisterValidTestQueryRawResponse;
+  variables: RegisterValidTestQuery$variables;
+  response: RegisterValidTestQuery$data;
+  rawResponse: RegisterValidTestQuery$rawResponse;
 };
-
-
-
-/*
-query RegisterValidTestQuery {
-  sale(id: "example-auction-id") {
-    ...Register_sale
-    id
-  }
-  me {
-    ...Register_me
-    id
-  }
-}
-
-fragment Register_me on Me {
-  internalID
-  identityVerified
-}
-
-fragment Register_sale on Sale {
-  slug
-  internalID
-  status
-  requireIdentityVerification
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -237,5 +216,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'e845527731162b24c2e711b3b4a4f4f3';
+
+(node as any).hash = "e845527731162b24c2e711b3b4a4f4f3";
+
 export default node;

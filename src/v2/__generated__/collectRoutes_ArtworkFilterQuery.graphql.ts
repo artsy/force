@@ -1,369 +1,100 @@
+/**
+ * @generated SignedSource<<baba503e93fe411952cba7a68cfdfdca>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkAggregation = "ARTIST" | "ARTIST_NATIONALITY" | "ATTRIBUTION_CLASS" | "COLOR" | "DIMENSION_RANGE" | "FOLLOWED_ARTISTS" | "GALLERY" | "INSTITUTION" | "LOCATION_CITY" | "MAJOR_PERIOD" | "MATERIALS_TERMS" | "MEDIUM" | "MERCHANDISABLE_ARTISTS" | "PARTNER" | "PARTNER_CITY" | "PERIOD" | "PRICE_RANGE" | "TOTAL" | "%future added value";
 export type ArtworkSizes = "LARGE" | "MEDIUM" | "SMALL" | "%future added value";
 export type FilterArtworksInput = {
-    acquireable?: boolean | null;
-    additionalGeneIDs?: Array<string | null> | null;
-    after?: string | null;
-    aggregationPartnerCities?: Array<string | null> | null;
-    aggregations?: Array<ArtworkAggregation | null> | null;
-    artistID?: string | null;
-    artistIDs?: Array<string | null> | null;
-    artistNationalities?: Array<string | null> | null;
-    artistSeriesID?: string | null;
-    atAuction?: boolean | null;
-    attributionClass?: Array<string | null> | null;
-    before?: string | null;
-    color?: string | null;
-    colors?: Array<string | null> | null;
-    dimensionRange?: string | null;
-    excludeArtworkIDs?: Array<string | null> | null;
-    extraAggregationGeneIDs?: Array<string | null> | null;
-    first?: number | null;
-    forSale?: boolean | null;
-    geneID?: string | null;
-    geneIDs?: Array<string | null> | null;
-    height?: string | null;
-    includeArtworksByFollowedArtists?: boolean | null;
-    includeMediumFilterInAggregation?: boolean | null;
-    inquireableOnly?: boolean | null;
-    keyword?: string | null;
-    keywordMatchExact?: boolean | null;
-    last?: number | null;
-    locationCities?: Array<string | null> | null;
-    majorPeriods?: Array<string | null> | null;
-    marketable?: boolean | null;
-    materialsTerms?: Array<string | null> | null;
-    medium?: string | null;
-    offerable?: boolean | null;
-    page?: number | null;
-    partnerCities?: Array<string | null> | null;
-    partnerID?: string | null;
-    partnerIDs?: Array<string | null> | null;
-    period?: string | null;
-    periods?: Array<string | null> | null;
-    priceRange?: string | null;
-    saleID?: string | null;
-    size?: number | null;
-    sizes?: Array<ArtworkSizes | null> | null;
-    sort?: string | null;
-    tagID?: string | null;
-    width?: string | null;
+  acquireable?: boolean | null;
+  additionalGeneIDs?: ReadonlyArray<string | null> | null;
+  after?: string | null;
+  aggregationPartnerCities?: ReadonlyArray<string | null> | null;
+  aggregations?: ReadonlyArray<ArtworkAggregation | null> | null;
+  artistID?: string | null;
+  artistIDs?: ReadonlyArray<string | null> | null;
+  artistNationalities?: ReadonlyArray<string | null> | null;
+  artistSeriesID?: string | null;
+  atAuction?: boolean | null;
+  attributionClass?: ReadonlyArray<string | null> | null;
+  before?: string | null;
+  color?: string | null;
+  colors?: ReadonlyArray<string | null> | null;
+  dimensionRange?: string | null;
+  excludeArtworkIDs?: ReadonlyArray<string | null> | null;
+  extraAggregationGeneIDs?: ReadonlyArray<string | null> | null;
+  first?: number | null;
+  forSale?: boolean | null;
+  geneID?: string | null;
+  geneIDs?: ReadonlyArray<string | null> | null;
+  height?: string | null;
+  includeArtworksByFollowedArtists?: boolean | null;
+  includeMediumFilterInAggregation?: boolean | null;
+  inquireableOnly?: boolean | null;
+  keyword?: string | null;
+  keywordMatchExact?: boolean | null;
+  last?: number | null;
+  locationCities?: ReadonlyArray<string | null> | null;
+  majorPeriods?: ReadonlyArray<string | null> | null;
+  marketable?: boolean | null;
+  materialsTerms?: ReadonlyArray<string | null> | null;
+  medium?: string | null;
+  offerable?: boolean | null;
+  page?: number | null;
+  partnerCities?: ReadonlyArray<string | null> | null;
+  partnerID?: string | null;
+  partnerIDs?: ReadonlyArray<string | null> | null;
+  period?: string | null;
+  periods?: ReadonlyArray<string | null> | null;
+  priceRange?: string | null;
+  saleID?: string | null;
+  size?: number | null;
+  sizes?: ReadonlyArray<ArtworkSizes | null> | null;
+  sort?: string | null;
+  tagID?: string | null;
+  width?: string | null;
 };
-export type collectRoutes_ArtworkFilterQueryVariables = {
-    sort?: string | null;
-    input?: FilterArtworksInput | null;
-    aggregations?: Array<ArtworkAggregation | null> | null;
-    shouldFetchCounts: boolean;
+export type collectRoutes_ArtworkFilterQuery$variables = {
+  sort?: string | null;
+  input?: FilterArtworksInput | null;
+  aggregations?: ReadonlyArray<ArtworkAggregation | null> | null;
+  shouldFetchCounts: boolean;
 };
-export type collectRoutes_ArtworkFilterQueryResponse = {
-    readonly marketingHubCollections: ReadonlyArray<{
-        readonly " $fragmentRefs": FragmentRefs<"Collect_marketingHubCollections">;
-    }>;
-    readonly filterArtworks: {
-        readonly " $fragmentRefs": FragmentRefs<"SeoProductsForArtworks_artworks">;
+export type collectRoutes_ArtworkFilterQuery$data = {
+  readonly marketingHubCollections: ReadonlyArray<{
+    readonly " $fragmentSpreads": FragmentRefs<"Collect_marketingHubCollections">;
+  }>;
+  readonly filterArtworks: {
+    readonly " $fragmentSpreads": FragmentRefs<"SeoProductsForArtworks_artworks">;
+  } | null;
+  readonly viewer: {
+    readonly artworksConnection: {
+      readonly counts?: {
+        readonly followedArtists: Int | null;
+      } | null;
+      readonly aggregations: ReadonlyArray<{
+        readonly slice: ArtworkAggregation | null;
+        readonly counts: ReadonlyArray<{
+          readonly value: string;
+          readonly name: string;
+          readonly count: number;
+        } | null> | null;
+      } | null> | null;
     } | null;
-    readonly viewer: {
-        readonly artworksConnection: {
-            readonly counts?: {
-                readonly followedArtists: number | null;
-            } | null;
-            readonly aggregations: ReadonlyArray<{
-                readonly slice: ArtworkAggregation | null;
-                readonly counts: ReadonlyArray<{
-                    readonly value: string;
-                    readonly name: string;
-                    readonly count: number;
-                } | null> | null;
-            } | null> | null;
-        } | null;
-        readonly " $fragmentRefs": FragmentRefs<"ArtworkFilter_viewer">;
-    } | null;
+    readonly " $fragmentSpreads": FragmentRefs<"ArtworkFilter_viewer">;
+  } | null;
 };
 export type collectRoutes_ArtworkFilterQuery = {
-    readonly response: collectRoutes_ArtworkFilterQueryResponse;
-    readonly variables: collectRoutes_ArtworkFilterQueryVariables;
+  variables: collectRoutes_ArtworkFilterQuery$variables;
+  response: collectRoutes_ArtworkFilterQuery$data;
 };
-
-
-
-/*
-query collectRoutes_ArtworkFilterQuery(
-  $sort: String
-  $input: FilterArtworksInput
-  $aggregations: [ArtworkAggregation]
-  $shouldFetchCounts: Boolean!
-) {
-  marketingHubCollections {
-    ...Collect_marketingHubCollections
-    id
-  }
-  filterArtworks: artworksConnection(sort: $sort, first: 30) {
-    ...SeoProductsForArtworks_artworks
-    id
-  }
-  viewer {
-    ...ArtworkFilter_viewer_2VV6jB
-    artworksConnection(aggregations: $aggregations, input: $input) {
-      counts @include(if: $shouldFetchCounts) {
-        followedArtists
-      }
-      aggregations {
-        slice
-        counts {
-          value
-          name
-          count
-        }
-      }
-      id
-    }
-  }
-}
-
-fragment ArtworkFilterArtworkGrid_filtered_artworks on FilterArtworksConnection {
-  id
-  pageInfo {
-    hasNextPage
-    endCursor
-  }
-  pageCursors {
-    ...Pagination_pageCursors
-  }
-  edges {
-    node {
-      id
-    }
-  }
-  ...ArtworkGrid_artworks
-}
-
-fragment ArtworkFilter_viewer_2VV6jB on Viewer {
-  filtered_artworks: artworksConnection(input: $input) {
-    id
-    ...ArtworkFilterArtworkGrid_filtered_artworks
-  }
-}
-
-fragment ArtworkGrid_artworks on ArtworkConnectionInterface {
-  __isArtworkConnectionInterface: __typename
-  edges {
-    __typename
-    node {
-      id
-      slug
-      href
-      internalID
-      image {
-        aspect_ratio: aspectRatio
-      }
-      ...GridItem_artwork
-    }
-    ... on Node {
-      __isNode: __typename
-      id
-    }
-  }
-}
-
-fragment Badge_artwork on Artwork {
-  is_biddable: isBiddable
-  href
-  sale {
-    is_preview: isPreview
-    display_timely_at: displayTimelyAt
-    id
-  }
-}
-
-fragment Collect_marketingHubCollections on MarketingCollection {
-  ...CollectionsHubsNav_marketingHubCollections
-}
-
-fragment CollectionsHubsNav_marketingHubCollections on MarketingCollection {
-  slug
-  title
-  thumbnail
-}
-
-fragment Contact_artwork on Artwork {
-  href
-  is_inquireable: isInquireable
-  sale {
-    is_auction: isAuction
-    is_live_open: isLiveOpen
-    is_open: isOpen
-    is_closed: isClosed
-    id
-  }
-  partner(shallow: true) {
-    type
-    id
-  }
-  sale_artwork: saleArtwork {
-    highest_bid: highestBid {
-      display
-    }
-    opening_bid: openingBid {
-      display
-    }
-    counts {
-      bidder_positions: bidderPositions
-    }
-    id
-  }
-}
-
-fragment Details_artwork on Artwork {
-  href
-  title
-  date
-  sale_message: saleMessage
-  cultural_maker: culturalMaker
-  artists(shallow: true) {
-    id
-    href
-    name
-  }
-  collecting_institution: collectingInstitution
-  partner(shallow: true) {
-    name
-    href
-    id
-  }
-  sale {
-    is_auction: isAuction
-    is_closed: isClosed
-    id
-  }
-  sale_artwork: saleArtwork {
-    counts {
-      bidder_positions: bidderPositions
-    }
-    highest_bid: highestBid {
-      display
-    }
-    opening_bid: openingBid {
-      display
-    }
-    id
-  }
-}
-
-fragment GridItem_artwork on Artwork {
-  internalID
-  title
-  image_title: imageTitle
-  image {
-    placeholder
-    url(version: "large")
-    aspect_ratio: aspectRatio
-  }
-  artistNames
-  href
-  is_saved: isSaved
-  ...Metadata_artwork
-  ...SaveButton_artwork
-  ...Badge_artwork
-}
-
-fragment Metadata_artwork on Artwork {
-  ...Details_artwork
-  ...Contact_artwork
-  href
-}
-
-fragment Pagination_pageCursors on PageCursors {
-  around {
-    cursor
-    page
-    isCurrent
-  }
-  first {
-    cursor
-    page
-    isCurrent
-  }
-  last {
-    cursor
-    page
-    isCurrent
-  }
-  previous {
-    cursor
-    page
-  }
-}
-
-fragment SaveButton_artwork on Artwork {
-  id
-  internalID
-  slug
-  is_saved: isSaved
-  title
-}
-
-fragment SeoProductsForArtworks_artworks on FilterArtworksConnection {
-  edges {
-    node {
-      id
-      availability
-      category
-      date
-      href
-      is_acquireable: isAcquireable
-      is_price_range: isPriceRange
-      listPrice {
-        __typename
-        ... on PriceRange {
-          display
-        }
-        ... on Money {
-          display
-        }
-      }
-      price_currency: priceCurrency
-      title
-      artists(shallow: true) {
-        name
-        id
-      }
-      image {
-        url(version: "larger")
-      }
-      meta {
-        description
-      }
-      partner(shallow: true) {
-        name
-        type
-        profile {
-          icon {
-            url(version: "larger")
-          }
-          id
-        }
-        locations(size: 1) {
-          address
-          address_2: address2
-          city
-          state
-          country
-          postal_code: postalCode
-          phone
-          id
-        }
-        id
-      }
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = {
@@ -404,6 +135,9 @@ v5 = {
   "variableName": "input"
 },
 v6 = [
+  (v5/*: any*/)
+],
+v7 = [
   {
     "kind": "Variable",
     "name": "aggregations",
@@ -411,14 +145,39 @@ v6 = [
   },
   (v5/*: any*/)
 ],
-v7 = {
+v8 = {
+  "condition": "shouldFetchCounts",
+  "kind": "Condition",
+  "passingValue": true,
+  "selections": [
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "FilterArtworksCounts",
+      "kind": "LinkedField",
+      "name": "counts",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "followedArtists",
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
+    }
+  ]
+},
+v9 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "name",
   "storageKey": null
 },
-v8 = {
+v10 = {
   "alias": null,
   "args": null,
   "concreteType": "ArtworksAggregationResults",
@@ -448,7 +207,7 @@ v8 = {
           "name": "value",
           "storageKey": null
         },
-        (v7/*: any*/),
+        (v9/*: any*/),
         {
           "alias": null,
           "args": null,
@@ -462,34 +221,6 @@ v8 = {
   ],
   "storageKey": null
 },
-v9 = {
-  "condition": "shouldFetchCounts",
-  "kind": "Condition",
-  "passingValue": true,
-  "selections": [
-    {
-      "alias": null,
-      "args": null,
-      "concreteType": "FilterArtworksCounts",
-      "kind": "LinkedField",
-      "name": "counts",
-      "plural": false,
-      "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "followedArtists",
-          "storageKey": null
-        }
-      ],
-      "storageKey": null
-    }
-  ]
-},
-v10 = [
-  (v5/*: any*/)
-],
 v11 = {
   "alias": null,
   "args": null,
@@ -651,22 +382,22 @@ return {
         "plural": false,
         "selections": [
           {
-            "alias": null,
             "args": (v6/*: any*/),
+            "kind": "FragmentSpread",
+            "name": "ArtworkFilter_viewer"
+          },
+          {
+            "alias": null,
+            "args": (v7/*: any*/),
             "concreteType": "FilterArtworksConnection",
             "kind": "LinkedField",
             "name": "artworksConnection",
             "plural": false,
             "selections": [
               (v8/*: any*/),
-              (v9/*: any*/)
+              (v10/*: any*/)
             ],
             "storageKey": null
-          },
-          {
-            "args": (v10/*: any*/),
-            "kind": "FragmentSpread",
-            "name": "ArtworkFilter_viewer"
           }
         ],
         "storageKey": null
@@ -802,7 +533,7 @@ return {
                     "name": "artists",
                     "plural": true,
                     "selections": [
-                      (v7/*: any*/),
+                      (v9/*: any*/),
                       (v13/*: any*/)
                     ],
                     "storageKey": "artists(shallow:true)"
@@ -843,7 +574,7 @@ return {
                     "name": "partner",
                     "plural": false,
                     "selections": [
-                      (v7/*: any*/),
+                      (v9/*: any*/),
                       (v20/*: any*/),
                       {
                         "alias": null,
@@ -958,7 +689,7 @@ return {
         "selections": [
           {
             "alias": "filtered_artworks",
-            "args": (v10/*: any*/),
+            "args": (v6/*: any*/),
             "concreteType": "FilterArtworksConnection",
             "kind": "LinkedField",
             "name": "artworksConnection",
@@ -1179,7 +910,7 @@ return {
                             "selections": [
                               (v13/*: any*/),
                               (v15/*: any*/),
-                              (v7/*: any*/)
+                              (v9/*: any*/)
                             ],
                             "storageKey": "artists(shallow:true)"
                           },
@@ -1198,7 +929,7 @@ return {
                             "name": "partner",
                             "plural": false,
                             "selections": [
-                              (v7/*: any*/),
+                              (v9/*: any*/),
                               (v15/*: any*/),
                               (v13/*: any*/),
                               (v20/*: any*/)
@@ -1344,15 +1075,15 @@ return {
           },
           {
             "alias": null,
-            "args": (v6/*: any*/),
+            "args": (v7/*: any*/),
             "concreteType": "FilterArtworksConnection",
             "kind": "LinkedField",
             "name": "artworksConnection",
             "plural": false,
             "selections": [
               (v8/*: any*/),
-              (v13/*: any*/),
-              (v9/*: any*/)
+              (v10/*: any*/),
+              (v13/*: any*/)
             ],
             "storageKey": null
           }
@@ -1371,5 +1102,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'f2e764256ee505b28d7fd8ff01bc3aa2';
+
+(node as any).hash = "f2e764256ee505b28d7fd8ff01bc3aa2";
+
 export default node;

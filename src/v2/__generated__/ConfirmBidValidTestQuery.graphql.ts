@@ -1,177 +1,97 @@
+/**
+ * @generated SignedSource<<0726ec9dfd495e02326d4715bf8b0df6>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ConfirmBidValidTestQueryVariables = {};
-export type ConfirmBidValidTestQueryResponse = {
-    readonly artwork: {
-        readonly internalID: string;
-        readonly slug: string;
-        readonly saleArtwork: {
-            readonly internalID: string;
-            readonly slug: string;
-            readonly sale: {
-                readonly registrationStatus: {
-                    readonly internalID: string;
-                    readonly qualifiedForBidding: boolean | null;
-                } | null;
-                readonly internalID: string;
-                readonly slug: string;
-                readonly name: string | null;
-                readonly isClosed: boolean | null;
-                readonly isRegistrationClosed: boolean | null;
-            } | null;
-            readonly " $fragmentRefs": FragmentRefs<"LotInfo_saleArtwork" | "BidForm_saleArtwork">;
+export type ConfirmBidValidTestQuery$variables = {};
+export type ConfirmBidValidTestQuery$data = {
+  readonly artwork: {
+    readonly internalID: string;
+    readonly slug: string;
+    readonly saleArtwork: {
+      readonly internalID: string;
+      readonly slug: string;
+      readonly sale: {
+        readonly registrationStatus: {
+          readonly internalID: string;
+          readonly qualifiedForBidding: boolean | null;
         } | null;
-        readonly " $fragmentRefs": FragmentRefs<"LotInfo_artwork">;
-    } | null;
-    readonly me: {
         readonly internalID: string;
-        readonly hasQualifiedCreditCards: boolean | null;
-        readonly " $fragmentRefs": FragmentRefs<"ConfirmBid_me">;
-    } | null;
-};
-export type ConfirmBidValidTestQueryRawResponse = {
-    readonly artwork: ({
-        readonly internalID: string;
-        readonly date: string | null;
-        readonly title: string | null;
-        readonly imageUrl: string | null;
-        readonly artistNames: string | null;
         readonly slug: string;
-        readonly saleArtwork: ({
-            readonly counts: ({
-                readonly bidderPositions: number | null;
-            }) | null;
-            readonly lotLabel: string | null;
-            readonly currentBid: ({
-                readonly display: string | null;
-            }) | null;
-            readonly minimumNextBid: ({
-                readonly cents: number | null;
-            }) | null;
-            readonly increments: ReadonlyArray<({
-                readonly cents: number | null;
-                readonly display: string | null;
-            }) | null> | null;
-            readonly sale: ({
-                readonly slug: string;
-                readonly registrationStatus: ({
-                    readonly qualifiedForBidding: boolean | null;
-                    readonly id: string;
-                    readonly internalID: string;
-                }) | null;
-                readonly id: string;
-                readonly internalID: string;
-                readonly name: string | null;
-                readonly isClosed: boolean | null;
-                readonly isRegistrationClosed: boolean | null;
-            }) | null;
-            readonly internalID: string;
-            readonly slug: string;
-            readonly id: string;
-        }) | null;
+        readonly name: string | null;
+        readonly isClosed: boolean | null;
+        readonly isRegistrationClosed: boolean | null;
+      } | null;
+      readonly " $fragmentSpreads": FragmentRefs<"LotInfo_saleArtwork" | "BidForm_saleArtwork">;
+    } | null;
+    readonly " $fragmentSpreads": FragmentRefs<"LotInfo_artwork">;
+  } | null;
+  readonly me: {
+    readonly internalID: string;
+    readonly hasQualifiedCreditCards: boolean | null;
+    readonly " $fragmentSpreads": FragmentRefs<"ConfirmBid_me">;
+  } | null;
+};
+export type ConfirmBidValidTestQuery$rawResponse = {
+  readonly artwork: {
+    readonly internalID: string;
+    readonly date: string | null;
+    readonly title: string | null;
+    readonly imageUrl: string | null;
+    readonly artistNames: string | null;
+    readonly slug: string;
+    readonly saleArtwork: {
+      readonly counts: {
+        readonly bidderPositions: Int | null;
+      } | null;
+      readonly lotLabel: string | null;
+      readonly currentBid: {
+        readonly display: string | null;
+      } | null;
+      readonly minimumNextBid: {
+        readonly cents: number | null;
+      } | null;
+      readonly increments: ReadonlyArray<{
+        readonly cents: number | null;
+        readonly display: string | null;
+      } | null> | null;
+      readonly sale: {
+        readonly slug: string;
+        readonly registrationStatus: {
+          readonly qualifiedForBidding: boolean | null;
+          readonly id: string;
+          readonly internalID: string;
+        } | null;
         readonly id: string;
-    }) | null;
-    readonly me: ({
         readonly internalID: string;
-        readonly hasQualifiedCreditCards: boolean | null;
-        readonly id: string;
-    }) | null;
+        readonly name: string | null;
+        readonly isClosed: boolean | null;
+        readonly isRegistrationClosed: boolean | null;
+      } | null;
+      readonly internalID: string;
+      readonly slug: string;
+      readonly id: string;
+    } | null;
+    readonly id: string;
+  } | null;
+  readonly me: {
+    readonly internalID: string;
+    readonly hasQualifiedCreditCards: boolean | null;
+    readonly id: string;
+  } | null;
 };
 export type ConfirmBidValidTestQuery = {
-    readonly response: ConfirmBidValidTestQueryResponse;
-    readonly variables: ConfirmBidValidTestQueryVariables;
-    readonly rawResponse: ConfirmBidValidTestQueryRawResponse;
+  variables: ConfirmBidValidTestQuery$variables;
+  response: ConfirmBidValidTestQuery$data;
+  rawResponse: ConfirmBidValidTestQuery$rawResponse;
 };
-
-
-
-/*
-query ConfirmBidValidTestQuery {
-  artwork(id: "artwork-id") {
-    ...LotInfo_artwork
-    internalID
-    slug
-    saleArtwork(saleID: "example-auction-id") {
-      ...LotInfo_saleArtwork
-      ...BidForm_saleArtwork
-      internalID
-      slug
-      sale {
-        registrationStatus {
-          internalID
-          qualifiedForBidding
-          id
-        }
-        internalID
-        slug
-        name
-        isClosed
-        isRegistrationClosed
-        id
-      }
-      id
-    }
-    id
-  }
-  me {
-    internalID
-    hasQualifiedCreditCards
-    ...ConfirmBid_me
-    id
-  }
-}
-
-fragment BidForm_me on Me {
-  hasQualifiedCreditCards
-}
-
-fragment BidForm_saleArtwork on SaleArtwork {
-  minimumNextBid {
-    cents
-  }
-  increments(useMyMaxBid: true) {
-    cents
-    display
-  }
-  sale {
-    slug
-    registrationStatus {
-      qualifiedForBidding
-      id
-    }
-    id
-  }
-}
-
-fragment ConfirmBid_me on Me {
-  internalID
-  hasQualifiedCreditCards
-  ...BidForm_me
-}
-
-fragment LotInfo_artwork on Artwork {
-  internalID
-  date
-  title
-  imageUrl
-  artistNames
-  slug
-}
-
-fragment LotInfo_saleArtwork on SaleArtwork {
-  counts {
-    bidderPositions
-  }
-  lotLabel
-  currentBid {
-    display
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -273,6 +193,11 @@ return {
         "name": "artwork",
         "plural": false,
         "selections": [
+          {
+            "args": null,
+            "kind": "FragmentSpread",
+            "name": "LotInfo_artwork"
+          },
           (v1/*: any*/),
           (v2/*: any*/),
           {
@@ -283,6 +208,16 @@ return {
             "name": "saleArtwork",
             "plural": false,
             "selections": [
+              {
+                "args": null,
+                "kind": "FragmentSpread",
+                "name": "LotInfo_saleArtwork"
+              },
+              {
+                "args": null,
+                "kind": "FragmentSpread",
+                "name": "BidForm_saleArtwork"
+              },
               (v1/*: any*/),
               (v2/*: any*/),
               {
@@ -313,24 +248,9 @@ return {
                   (v7/*: any*/)
                 ],
                 "storageKey": null
-              },
-              {
-                "args": null,
-                "kind": "FragmentSpread",
-                "name": "LotInfo_saleArtwork"
-              },
-              {
-                "args": null,
-                "kind": "FragmentSpread",
-                "name": "BidForm_saleArtwork"
               }
             ],
             "storageKey": "saleArtwork(saleID:\"example-auction-id\")"
-          },
-          {
-            "args": null,
-            "kind": "FragmentSpread",
-            "name": "LotInfo_artwork"
           }
         ],
         "storageKey": "artwork(id:\"artwork-id\")"
@@ -544,5 +464,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'd3d5f2a63505fcb755a39be2083b2f77';
+
+(node as any).hash = "d3d5f2a63505fcb755a39be2083b2f77";
+
 export default node;

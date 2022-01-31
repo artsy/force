@@ -1,35 +1,38 @@
+/**
+ * @generated SignedSource<<3e2c345b13b8805710751802098fe6c7>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type RelatedWorksArtworkGrid_artwork = {
-    readonly layers: ReadonlyArray<{
-        readonly name: string | null;
-        readonly internalID: string;
-    } | null> | null;
-    readonly slug: string;
-    readonly layer: {
-        readonly name: string | null;
-        readonly artworksConnection: {
-            readonly edges: ReadonlyArray<{
-                readonly node: {
-                    readonly slug: string;
-                } | null;
-            } | null> | null;
-            readonly " $fragmentRefs": FragmentRefs<"ArtworkGrid_artworks">;
+export type RelatedWorksArtworkGrid_artwork$data = {
+  readonly layers: ReadonlyArray<{
+    readonly name: string | null;
+    readonly internalID: string;
+  } | null> | null;
+  readonly slug: string;
+  readonly layer: {
+    readonly name: string | null;
+    readonly artworksConnection: {
+      readonly edges: ReadonlyArray<{
+        readonly node: {
+          readonly slug: string;
         } | null;
+      } | null> | null;
+      readonly " $fragmentSpreads": FragmentRefs<"ArtworkGrid_artworks">;
     } | null;
-    readonly " $refType": "RelatedWorksArtworkGrid_artwork";
+  } | null;
+  readonly " $fragmentType": "RelatedWorksArtworkGrid_artwork";
 };
-export type RelatedWorksArtworkGrid_artwork$data = RelatedWorksArtworkGrid_artwork;
 export type RelatedWorksArtworkGrid_artwork$key = {
-    readonly " $data"?: RelatedWorksArtworkGrid_artwork$data;
-    readonly " $fragmentRefs": FragmentRefs<"RelatedWorksArtworkGrid_artwork">;
+  readonly " $data"?: RelatedWorksArtworkGrid_artwork$data;
+  readonly " $fragmentSpreads": FragmentRefs<"RelatedWorksArtworkGrid_artwork">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = {
@@ -108,6 +111,11 @@ return {
           "plural": false,
           "selections": [
             {
+              "args": null,
+              "kind": "FragmentSpread",
+              "name": "ArtworkGrid_artworks"
+            },
+            {
               "alias": null,
               "args": null,
               "concreteType": "ArtworkEdge",
@@ -129,11 +137,6 @@ return {
                 }
               ],
               "storageKey": null
-            },
-            {
-              "args": null,
-              "kind": "FragmentSpread",
-              "name": "ArtworkGrid_artworks"
             }
           ],
           "storageKey": "artworksConnection(first:8)"
@@ -146,5 +149,7 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = 'c94051a248fa232b6664a79ce100df6d';
+
+(node as any).hash = "c94051a248fa232b6664a79ce100df6d";
+
 export default node;

@@ -1,20 +1,23 @@
+/**
+ * @generated SignedSource<<2f57fb8ffceef1b84083d124bc062278>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type Auction2ArtworksRoute_sale = {
-    readonly slug: string;
-    readonly " $refType": "Auction2ArtworksRoute_sale";
+export type Auction2ArtworksRoute_sale$data = {
+  readonly slug: string;
+  readonly " $fragmentType": "Auction2ArtworksRoute_sale";
 };
-export type Auction2ArtworksRoute_sale$data = Auction2ArtworksRoute_sale;
 export type Auction2ArtworksRoute_sale$key = {
-    readonly " $data"?: Auction2ArtworksRoute_sale$data;
-    readonly " $fragmentRefs": FragmentRefs<"Auction2ArtworksRoute_sale">;
+  readonly " $data"?: Auction2ArtworksRoute_sale$data;
+  readonly " $fragmentSpreads": FragmentRefs<"Auction2ArtworksRoute_sale">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -33,5 +36,7 @@ const node: ReaderFragment = {
   "type": "Sale",
   "abstractKey": null
 };
-(node as any).hash = '191329cffe6fc18643c4d3b8cb1f6285';
+
+(node as any).hash = "191329cffe6fc18643c4d3b8cb1f6285";
+
 export default node;

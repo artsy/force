@@ -1,59 +1,36 @@
+/**
+ * @generated SignedSource<<6327047ad6ac6c6e876e0d7dc6bfd162>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
-export type PriceDatabaseArtistAutosuggest_SearchConnection_QueryVariables = {
-    searchQuery: string;
+import { ConcreteRequest, Query } from 'relay-runtime';
+export type PriceDatabaseArtistAutosuggest_SearchConnection_Query$variables = {
+  searchQuery: string;
 };
-export type PriceDatabaseArtistAutosuggest_SearchConnection_QueryResponse = {
-    readonly searchConnection: {
-        readonly edges: ReadonlyArray<{
-            readonly node: {
-                readonly displayLabel: string | null;
-                readonly slug?: string;
-                readonly internalID?: string;
-                readonly imageUrl?: string | null;
-                readonly counts?: {
-                    readonly auctionResults: number | null;
-                } | null;
-            } | null;
-        } | null> | null;
-    } | null;
+export type PriceDatabaseArtistAutosuggest_SearchConnection_Query$data = {
+  readonly searchConnection: {
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly displayLabel: string | null;
+        readonly slug?: string;
+        readonly internalID?: string;
+        readonly imageUrl?: string | null;
+        readonly counts?: {
+          readonly auctionResults: number | null;
+        } | null;
+      } | null;
+    } | null> | null;
+  } | null;
 };
 export type PriceDatabaseArtistAutosuggest_SearchConnection_Query = {
-    readonly response: PriceDatabaseArtistAutosuggest_SearchConnection_QueryResponse;
-    readonly variables: PriceDatabaseArtistAutosuggest_SearchConnection_QueryVariables;
+  variables: PriceDatabaseArtistAutosuggest_SearchConnection_Query$variables;
+  response: PriceDatabaseArtistAutosuggest_SearchConnection_Query$data;
 };
-
-
-
-/*
-query PriceDatabaseArtistAutosuggest_SearchConnection_Query(
-  $searchQuery: String!
-) {
-  searchConnection(query: $searchQuery, entities: ARTIST, mode: AUTOSUGGEST, first: 20) {
-    edges {
-      node {
-        __typename
-        displayLabel
-        ... on Artist {
-          slug
-          internalID
-          imageUrl
-          counts {
-            auctionResults
-          }
-        }
-        ... on Node {
-          __isNode: __typename
-          id
-        }
-      }
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -258,5 +235,7 @@ return {
   }
 };
 })();
-(node as any).hash = '8a851530fab5a0af6e9a488810593843';
+
+(node as any).hash = "8a851530fab5a0af6e9a488810593843";
+
 export default node;

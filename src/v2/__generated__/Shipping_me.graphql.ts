@@ -1,41 +1,44 @@
+/**
+ * @generated SignedSource<<50d613f69571c0a5886909e8c9940eaf>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type Shipping_me = {
-    readonly name: string | null;
-    readonly email: string | null;
-    readonly id: string;
-    readonly addressConnection: {
-        readonly edges: ReadonlyArray<{
-            readonly node: {
-                readonly id: string;
-                readonly internalID: string;
-                readonly addressLine1: string;
-                readonly addressLine2: string | null;
-                readonly addressLine3: string | null;
-                readonly city: string;
-                readonly country: string;
-                readonly isDefault: boolean;
-                readonly name: string | null;
-                readonly phoneNumber: string | null;
-                readonly postalCode: string | null;
-                readonly region: string | null;
-            } | null;
-        } | null> | null;
-    } | null;
-    readonly " $fragmentRefs": FragmentRefs<"SavedAddresses_me">;
-    readonly " $refType": "Shipping_me";
+export type Shipping_me$data = {
+  readonly name: string | null;
+  readonly email: string | null;
+  readonly id: string;
+  readonly addressConnection: {
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly id: string;
+        readonly internalID: string;
+        readonly addressLine1: string;
+        readonly addressLine2: string | null;
+        readonly addressLine3: string | null;
+        readonly city: string;
+        readonly country: string;
+        readonly isDefault: boolean;
+        readonly name: string | null;
+        readonly phoneNumber: string | null;
+        readonly postalCode: string | null;
+        readonly region: string | null;
+      } | null;
+    } | null> | null;
+  } | null;
+  readonly " $fragmentSpreads": FragmentRefs<"SavedAddresses_me">;
+  readonly " $fragmentType": "Shipping_me";
 };
-export type Shipping_me$data = Shipping_me;
 export type Shipping_me$key = {
-    readonly " $data"?: Shipping_me$data;
-    readonly " $fragmentRefs": FragmentRefs<"Shipping_me">;
+  readonly " $data"?: Shipping_me$data;
+  readonly " $fragmentSpreads": FragmentRefs<"Shipping_me">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = {
@@ -88,6 +91,11 @@ return {
       "storageKey": null
     },
     (v1/*: any*/),
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "SavedAddresses_me"
+    },
     {
       "alias": null,
       "args": [
@@ -213,16 +221,13 @@ return {
         }
       ],
       "storageKey": null
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "SavedAddresses_me"
     }
   ],
   "type": "Me",
   "abstractKey": null
 };
 })();
-(node as any).hash = '96b6c7e43b19453cb277783ef53e311c';
+
+(node as any).hash = "96b6c7e43b19453cb277783ef53e311c";
+
 export default node;

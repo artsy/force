@@ -1,26 +1,29 @@
+/**
+ * @generated SignedSource<<e7f13ac849f5efb2d0becaa8fd4d0231>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ShippingQuotes_shippingQuotes = ReadonlyArray<{
-    readonly node: {
-        readonly id: string;
-        readonly displayName: string;
-        readonly isSelected: boolean;
-        readonly price: string | null;
-        readonly priceCents: number;
-    } | null;
-    readonly " $refType": "ShippingQuotes_shippingQuotes";
+export type ShippingQuotes_shippingQuotes$data = ReadonlyArray<{
+  readonly node: {
+    readonly id: string;
+    readonly displayName: string;
+    readonly isSelected: boolean;
+    readonly price: string | null;
+    readonly priceCents: number;
+  } | null;
+  readonly " $fragmentType": "ShippingQuotes_shippingQuotes";
 }>;
-export type ShippingQuotes_shippingQuotes$data = ShippingQuotes_shippingQuotes;
 export type ShippingQuotes_shippingQuotes$key = ReadonlyArray<{
-    readonly " $data"?: ShippingQuotes_shippingQuotes$data;
-    readonly " $fragmentRefs": FragmentRefs<"ShippingQuotes_shippingQuotes">;
+  readonly " $data"?: ShippingQuotes_shippingQuotes$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ShippingQuotes_shippingQuotes">;
 }>;
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -86,5 +89,7 @@ const node: ReaderFragment = {
   "type": "CommerceShippingQuoteEdge",
   "abstractKey": null
 };
-(node as any).hash = '1dabc2ba10cf7dd51b73926fb1d4c99f';
+
+(node as any).hash = "1dabc2ba10cf7dd51b73926fb1d4c99f";
+
 export default node;

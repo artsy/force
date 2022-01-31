@@ -1,55 +1,58 @@
+/**
+ * @generated SignedSource<<ecfddeaaa262d8bae93034c050e4cded>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type FairsIndex_viewer = {
-    readonly runningFairs: ReadonlyArray<{
-        readonly internalID: string;
-        readonly bannerSize: string | null;
-        readonly isPublished: boolean | null;
-        readonly profile: {
-            readonly isPublished: boolean | null;
-        } | null;
-        readonly " $fragmentRefs": FragmentRefs<"FairsFairBanner_fair" | "FairsFairRow_fair">;
-    } | null> | null;
-    readonly closedFairs: ReadonlyArray<{
-        readonly internalID: string;
-        readonly isPublished: boolean | null;
-        readonly profile: {
-            readonly isPublished: boolean | null;
-        } | null;
-        readonly " $fragmentRefs": FragmentRefs<"FairsFairRow_fair">;
-    } | null> | null;
-    readonly upcomingFairs: ReadonlyArray<{
-        readonly internalID: string;
-        readonly name: string | null;
-        readonly exhibitionPeriod: string | null;
-        readonly location: {
-            readonly city: string | null;
-        } | null;
-        readonly isPublished: boolean | null;
-        readonly profile: {
-            readonly isPublished: boolean | null;
-        } | null;
-        readonly organizer: {
-            readonly profile: {
-                readonly href: string | null;
-            } | null;
-        } | null;
-        readonly " $fragmentRefs": FragmentRefs<"FairsFairRow_fair">;
-    } | null> | null;
-    readonly " $fragmentRefs": FragmentRefs<"FairsPastFairs_viewer">;
-    readonly " $refType": "FairsIndex_viewer";
+export type FairsIndex_viewer$data = {
+  readonly runningFairs: ReadonlyArray<{
+    readonly internalID: string;
+    readonly bannerSize: string | null;
+    readonly isPublished: boolean | null;
+    readonly profile: {
+      readonly isPublished: boolean | null;
+    } | null;
+    readonly " $fragmentSpreads": FragmentRefs<"FairsFairBanner_fair" | "FairsFairRow_fair">;
+  } | null> | null;
+  readonly closedFairs: ReadonlyArray<{
+    readonly internalID: string;
+    readonly isPublished: boolean | null;
+    readonly profile: {
+      readonly isPublished: boolean | null;
+    } | null;
+    readonly " $fragmentSpreads": FragmentRefs<"FairsFairRow_fair">;
+  } | null> | null;
+  readonly upcomingFairs: ReadonlyArray<{
+    readonly internalID: string;
+    readonly name: string | null;
+    readonly exhibitionPeriod: string | null;
+    readonly location: {
+      readonly city: string | null;
+    } | null;
+    readonly isPublished: boolean | null;
+    readonly profile: {
+      readonly isPublished: boolean | null;
+    } | null;
+    readonly organizer: {
+      readonly profile: {
+        readonly href: string | null;
+      } | null;
+    } | null;
+    readonly " $fragmentSpreads": FragmentRefs<"FairsFairRow_fair">;
+  } | null> | null;
+  readonly " $fragmentSpreads": FragmentRefs<"FairsPastFairs_viewer">;
+  readonly " $fragmentType": "FairsIndex_viewer";
 };
-export type FairsIndex_viewer$data = FairsIndex_viewer;
 export type FairsIndex_viewer$key = {
-    readonly " $data"?: FairsIndex_viewer$data;
-    readonly " $fragmentRefs": FragmentRefs<"FairsIndex_viewer">;
+  readonly " $data"?: FairsIndex_viewer$data;
+  readonly " $fragmentSpreads": FragmentRefs<"FairsIndex_viewer">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = {
@@ -271,5 +274,7 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '863757b83cf4b9a2c9aab52c1fb95c00';
+
+(node as any).hash = "863757b83cf4b9a2c9aab52c1fb95c00";
+
 export default node;

@@ -3,7 +3,7 @@ import { MockBoot, renderRelayTree } from "v2/DevTools"
 import { graphql } from "relay-runtime"
 
 import { Breakpoint } from "@artsy/palette"
-import { FeatureAKGRoute_Test_QueryRawResponse } from "v2/__generated__/FeatureAKGRoute_Test_Query.graphql"
+import { FeatureAKGRoute_Test_Query$rawResponse } from "v2/__generated__/FeatureAKGRoute_Test_Query.graphql"
 import { FeatureAKGAppFragmentContainer } from "../FeatureAKGApp"
 
 jest.unmock("react-relay")
@@ -29,7 +29,7 @@ describe("FeatureAKG", () => {
   }
 
   const getWrapper = async (
-    response: FeatureAKGRoute_Test_QueryRawResponse = ArtKeepsGoingFixture,
+    response: FeatureAKGRoute_Test_Query$rawResponse = ArtKeepsGoingFixture,
     variables = defaultVariables,
     injectedData = defaultData,
     breakpoint: Breakpoint = "xl"
@@ -922,7 +922,7 @@ const defaultData = {
   },
 }
 
-const ArtKeepsGoingFixture: FeatureAKGRoute_Test_QueryRawResponse = {
+const ArtKeepsGoingFixture: FeatureAKGRoute_Test_Query$rawResponse = {
   viewer: {
     articles: [
       {

@@ -1,77 +1,27 @@
+/**
+ * @generated SignedSource<<2fee239f4d338b4373c5971ce19fa71a>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type FairExhibitors_Test_QueryVariables = {
-    id: string;
+export type FairExhibitors_Test_Query$variables = {
+  id: string;
 };
-export type FairExhibitors_Test_QueryResponse = {
-    readonly fair: {
-        readonly " $fragmentRefs": FragmentRefs<"FairExhibitors_fair">;
-    } | null;
+export type FairExhibitors_Test_Query$data = {
+  readonly fair: {
+    readonly " $fragmentSpreads": FragmentRefs<"FairExhibitors_fair">;
+  } | null;
 };
 export type FairExhibitors_Test_Query = {
-    readonly response: FairExhibitors_Test_QueryResponse;
-    readonly variables: FairExhibitors_Test_QueryVariables;
+  variables: FairExhibitors_Test_Query$variables;
+  response: FairExhibitors_Test_Query$data;
 };
-
-
-
-/*
-query FairExhibitors_Test_Query(
-  $id: String!
-) {
-  fair(id: $id) @principalField {
-    ...FairExhibitors_fair
-    id
-  }
-}
-
-fragment FairExhibitorCard_exhibitor on FairExhibitor {
-  profileID
-  partner {
-    name
-    internalID
-    slug
-    cities
-    profile {
-      ...FollowProfileButton_profile
-      id
-    }
-    id
-  }
-}
-
-fragment FairExhibitorsGroup_exhibitorsGroup on FairExhibitorsGroup {
-  exhibitors {
-    partner {
-      internalID
-      id
-    }
-    ...FairExhibitorCard_exhibitor
-  }
-}
-
-fragment FairExhibitors_fair on Fair {
-  exhibitorsGroupedByName {
-    letter
-    exhibitors {
-      partnerID
-    }
-    ...FairExhibitorsGroup_exhibitorsGroup
-  }
-}
-
-fragment FollowProfileButton_profile on Profile {
-  id
-  slug
-  name
-  internalID
-  is_followed: isFollowed
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -329,5 +279,7 @@ return {
   }
 };
 })();
-(node as any).hash = '6b38f9188e36328f5a3fe8bb93b56862';
+
+(node as any).hash = "6b38f9188e36328f5a3fe8bb93b56862";
+
 export default node;

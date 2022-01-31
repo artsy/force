@@ -7,7 +7,7 @@ import { getFarceResult } from "found/server"
 import { HeadProvider, Meta } from "react-head"
 import { OrderApp } from "../OrderApp"
 
-import { orderRoutes_OrderQueryRawResponse } from "v2/__generated__/orderRoutes_OrderQuery.graphql"
+import { orderRoutes_OrderQuery$rawResponse } from "v2/__generated__/orderRoutes_OrderQuery.graphql"
 import {
   BuyOrderPickup,
   BuyOrderWithShippingDetails,
@@ -48,7 +48,7 @@ describe("OrderApp routing redirects", () => {
   // FIXME: move to DevTools folder
   async function render(
     url: string,
-    mockData: orderRoutes_OrderQueryRawResponse
+    mockData: orderRoutes_OrderQuery$rawResponse
   ): Promise<FarceRedirectResult> {
     const network = createMockNetworkLayer2({ mockData })
     const source = new RecordSource()
@@ -65,7 +65,7 @@ describe("OrderApp routing redirects", () => {
     return result as FarceRedirectResult
   }
 
-  const mockResolver = (data: orderRoutes_OrderQueryRawResponse["order"]) => ({
+  const mockResolver = (data: orderRoutes_OrderQuery$rawResponse["order"]) => ({
     me: { id: "alice_jane", name: "Alice Jane" },
     order: data,
   })
@@ -363,7 +363,7 @@ describe("OrderApp routing redirects", () => {
   })
 
   describe("visiting the /review/counter page", () => {
-    const counterOfferOrder: orderRoutes_OrderQueryRawResponse["order"] = {
+    const counterOfferOrder: orderRoutes_OrderQuery$rawResponse["order"] = {
       ...OfferOrderWithShippingDetails,
       awaitingResponseFrom: "BUYER",
       id: "2939023",
@@ -438,7 +438,7 @@ describe("OrderApp routing redirects", () => {
   })
 
   describe("visiting the /payment/new page", () => {
-    const counterOfferOrder: orderRoutes_OrderQueryRawResponse["order"] = {
+    const counterOfferOrder: orderRoutes_OrderQuery$rawResponse["order"] = {
       ...OfferOrderWithShippingDetails,
 
       awaitingResponseFrom: "BUYER",

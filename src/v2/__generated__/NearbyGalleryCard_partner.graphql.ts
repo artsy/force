@@ -1,39 +1,42 @@
+/**
+ * @generated SignedSource<<a23edca0688da1d36c2de722ac211aff>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type NearbyGalleryCard_partner = {
-    readonly name: string | null;
-    readonly slug: string;
-    readonly type: string | null;
-    readonly profile: {
-        readonly image: {
-            readonly cropped: {
-                readonly src: string;
-                readonly srcSet: string;
-            } | null;
-        } | null;
-        readonly " $fragmentRefs": FragmentRefs<"FollowProfileButton_profile">;
+export type NearbyGalleryCard_partner$data = {
+  readonly name: string | null;
+  readonly slug: string;
+  readonly type: string | null;
+  readonly profile: {
+    readonly image: {
+      readonly cropped: {
+        readonly src: string;
+        readonly srcSet: string;
+      } | null;
     } | null;
-    readonly locationsConnection: {
-        readonly edges: ReadonlyArray<{
-            readonly node: {
-                readonly city: string | null;
-                readonly displayCountry: string | null;
-            } | null;
-        } | null> | null;
-    } | null;
-    readonly " $refType": "NearbyGalleryCard_partner";
+    readonly " $fragmentSpreads": FragmentRefs<"FollowProfileButton_profile">;
+  } | null;
+  readonly locationsConnection: {
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly city: string | null;
+        readonly displayCountry: string | null;
+      } | null;
+    } | null> | null;
+  } | null;
+  readonly " $fragmentType": "NearbyGalleryCard_partner";
 };
-export type NearbyGalleryCard_partner$data = NearbyGalleryCard_partner;
 export type NearbyGalleryCard_partner$key = {
-    readonly " $data"?: NearbyGalleryCard_partner$data;
-    readonly " $fragmentRefs": FragmentRefs<"NearbyGalleryCard_partner">;
+  readonly " $data"?: NearbyGalleryCard_partner$data;
+  readonly " $fragmentSpreads": FragmentRefs<"NearbyGalleryCard_partner">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -187,5 +190,7 @@ const node: ReaderFragment = {
   "type": "Partner",
   "abstractKey": null
 };
-(node as any).hash = 'f5648128df2ad5f8bbe40efe9de537da';
+
+(node as any).hash = "f5648128df2ad5f8bbe40efe9de537da";
+
 export default node;

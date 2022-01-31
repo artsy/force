@@ -1,123 +1,93 @@
+/**
+ * @generated SignedSource<<084564033d2990c14b5aada8e49a2331>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type CurrencyPreference = "EUR" | "GBP" | "USD" | "%future added value";
 export type LengthUnitPreference = "CM" | "IN" | "%future added value";
 export type CreditCardInput = {
-    clientMutationId?: string | null;
-    oneTimeUse?: boolean | null;
-    token: string;
+  clientMutationId?: string | null;
+  oneTimeUse?: boolean | null;
+  token: string;
 };
 export type UpdateMyProfileInput = {
-    artworksPerYear?: string | null;
-    bio?: string | null;
-    clientMutationId?: string | null;
-    collectorLevel?: number | null;
-    completedOnboarding?: boolean | null;
-    currencyPreference?: CurrencyPreference | null;
-    email?: string | null;
-    emailFrequency?: string | null;
-    gender?: string | null;
-    iconUrl?: string | null;
-    industry?: string | null;
-    isCollector?: boolean | null;
-    lengthUnitPreference?: LengthUnitPreference | null;
-    location?: EditableLocation | null;
-    name?: string | null;
-    notes?: string | null;
-    otherRelevantPositions?: string | null;
-    password?: string | null;
-    phone?: string | null;
-    priceRangeMax?: number | null;
-    priceRangeMin?: number | null;
-    privacy?: string | null;
-    profession?: string | null;
-    receiveLotOpeningSoonNotification?: boolean | null;
-    receiveNewSalesNotification?: boolean | null;
-    receiveNewWorksNotification?: boolean | null;
-    receiveOutbidNotification?: boolean | null;
-    receivePromotionNotification?: boolean | null;
-    receivePurchaseNotification?: boolean | null;
-    receiveSaleOpeningClosingNotification?: boolean | null;
-    shareFollows?: boolean | null;
+  artworksPerYear?: string | null;
+  bio?: string | null;
+  clientMutationId?: string | null;
+  collectorLevel?: number | null;
+  completedOnboarding?: boolean | null;
+  currencyPreference?: CurrencyPreference | null;
+  email?: string | null;
+  emailFrequency?: string | null;
+  gender?: string | null;
+  iconUrl?: string | null;
+  industry?: string | null;
+  isCollector?: boolean | null;
+  lengthUnitPreference?: LengthUnitPreference | null;
+  location?: EditableLocation | null;
+  name?: string | null;
+  notes?: string | null;
+  otherRelevantPositions?: string | null;
+  password?: string | null;
+  phone?: string | null;
+  priceRangeMax?: number | null;
+  priceRangeMin?: number | null;
+  privacy?: string | null;
+  profession?: string | null;
+  receiveLotOpeningSoonNotification?: boolean | null;
+  receiveNewSalesNotification?: boolean | null;
+  receiveNewWorksNotification?: boolean | null;
+  receiveOutbidNotification?: boolean | null;
+  receivePromotionNotification?: boolean | null;
+  receivePurchaseNotification?: boolean | null;
+  receiveSaleOpeningClosingNotification?: boolean | null;
+  shareFollows?: boolean | null;
 };
 export type EditableLocation = {
-    address?: string | null;
-    address2?: string | null;
-    city?: string | null;
-    country?: string | null;
-    postalCode?: string | null;
-    state?: string | null;
-    stateCode?: string | null;
-    summary?: string | null;
+  address?: string | null;
+  address2?: string | null;
+  city?: string | null;
+  country?: string | null;
+  postalCode?: string | null;
+  state?: string | null;
+  stateCode?: string | null;
+  summary?: string | null;
 };
-export type CreateCreditCardAndUpdatePhoneMutationVariables = {
-    creditCardInput: CreditCardInput;
-    profileInput: UpdateMyProfileInput;
+export type CreateCreditCardAndUpdatePhoneMutation$variables = {
+  creditCardInput: CreditCardInput;
+  profileInput: UpdateMyProfileInput;
 };
-export type CreateCreditCardAndUpdatePhoneMutationResponse = {
-    readonly updateMyUserProfile: {
-        readonly user: {
-            readonly internalID: string;
-        } | null;
+export type CreateCreditCardAndUpdatePhoneMutation$data = {
+  readonly updateMyUserProfile: {
+    readonly user: {
+      readonly internalID: string;
     } | null;
-    readonly createCreditCard: {
-        readonly creditCardOrError: {
-            readonly creditCardEdge?: {
-                readonly node: {
-                    readonly lastDigits: string;
-                } | null;
-            } | null;
-            readonly mutationError?: {
-                readonly type: string | null;
-                readonly message: string;
-                readonly detail: string | null;
-            } | null;
+  } | null;
+  readonly createCreditCard: {
+    readonly creditCardOrError: {
+      readonly creditCardEdge?: {
+        readonly node: {
+          readonly lastDigits: string;
         } | null;
+      } | null;
+      readonly mutationError?: {
+        readonly type: string | null;
+        readonly message: string;
+        readonly detail: string | null;
+      } | null;
     } | null;
+  } | null;
 };
 export type CreateCreditCardAndUpdatePhoneMutation = {
-    readonly response: CreateCreditCardAndUpdatePhoneMutationResponse;
-    readonly variables: CreateCreditCardAndUpdatePhoneMutationVariables;
+  variables: CreateCreditCardAndUpdatePhoneMutation$variables;
+  response: CreateCreditCardAndUpdatePhoneMutation$data;
 };
-
-
-
-/*
-mutation CreateCreditCardAndUpdatePhoneMutation(
-  $creditCardInput: CreditCardInput!
-  $profileInput: UpdateMyProfileInput!
-) {
-  updateMyUserProfile(input: $profileInput) {
-    user {
-      internalID
-      id
-    }
-  }
-  createCreditCard(input: $creditCardInput) {
-    creditCardOrError {
-      __typename
-      ... on CreditCardMutationSuccess {
-        creditCardEdge {
-          node {
-            lastDigits
-            id
-          }
-        }
-      }
-      ... on CreditCardMutationFailure {
-        mutationError {
-          type
-          message
-          detail
-        }
-      }
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -396,5 +366,7 @@ return {
   }
 };
 })();
-(node as any).hash = '0e9a10ba21b3de4a4cfdd5c03d3b733b';
+
+(node as any).hash = "0e9a10ba21b3de4a4cfdd5c03d3b733b";
+
 export default node;

@@ -1,43 +1,34 @@
+/**
+ * @generated SignedSource<<d9ea5b7c4a9d0b8c2da04d5480bf5579>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type FollowGeneInput = {
-    clientMutationId?: string | null;
-    geneID?: string | null;
-    unfollow?: boolean | null;
+  clientMutationId?: string | null;
+  geneID?: string | null;
+  unfollow?: boolean | null;
 };
-export type AuthIntentFollowGeneMutationVariables = {
-    input: FollowGeneInput;
+export type AuthIntentFollowGeneMutation$variables = {
+  input: FollowGeneInput;
 };
-export type AuthIntentFollowGeneMutationResponse = {
-    readonly followGene: {
-        readonly gene: {
-            readonly id: string;
-            readonly isFollowed: boolean | null;
-        } | null;
+export type AuthIntentFollowGeneMutation$data = {
+  readonly followGene: {
+    readonly gene: {
+      readonly id: string;
+      readonly isFollowed: boolean | null;
     } | null;
+  } | null;
 };
 export type AuthIntentFollowGeneMutation = {
-    readonly response: AuthIntentFollowGeneMutationResponse;
-    readonly variables: AuthIntentFollowGeneMutationVariables;
+  variables: AuthIntentFollowGeneMutation$variables;
+  response: AuthIntentFollowGeneMutation$data;
 };
-
-
-
-/*
-mutation AuthIntentFollowGeneMutation(
-  $input: FollowGeneInput!
-) {
-  followGene(input: $input) {
-    gene {
-      id
-      isFollowed
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -118,5 +109,7 @@ return {
   }
 };
 })();
-(node as any).hash = '067e148f5eedd5e8193dadfce447ebbf';
+
+(node as any).hash = "067e148f5eedd5e8193dadfce447ebbf";
+
 export default node;

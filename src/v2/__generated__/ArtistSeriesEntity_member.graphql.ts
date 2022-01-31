@@ -1,44 +1,47 @@
+/**
+ * @generated SignedSource<<fdd7ce21e41e68767eb37f6cdb70c897>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtistSeriesEntity_member = {
-    readonly id: string;
-    readonly slug: string;
-    readonly headerImage: string | null;
-    readonly thumbnail: string | null;
-    readonly title: string;
-    readonly priceGuidance: number | null;
-    readonly artworksConnection: {
-        readonly edges: ReadonlyArray<{
-            readonly node: {
-                readonly internalID: string;
-                readonly artist: {
-                    readonly name: string | null;
-                } | null;
-                readonly title: string | null;
-                readonly image: {
-                    readonly resized: {
-                        readonly width: number | null;
-                        readonly height: number | null;
-                        readonly src: string;
-                        readonly srcSet: string;
-                    } | null;
-                } | null;
-            } | null;
-        } | null> | null;
-    } | null;
-    readonly " $refType": "ArtistSeriesEntity_member";
+export type ArtistSeriesEntity_member$data = {
+  readonly id: string;
+  readonly slug: string;
+  readonly headerImage: string | null;
+  readonly thumbnail: string | null;
+  readonly title: string;
+  readonly priceGuidance: number | null;
+  readonly artworksConnection: {
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly internalID: string;
+        readonly artist: {
+          readonly name: string | null;
+        } | null;
+        readonly title: string | null;
+        readonly image: {
+          readonly resized: {
+            readonly width: number | null;
+            readonly height: number | null;
+            readonly src: string;
+            readonly srcSet: string;
+          } | null;
+        } | null;
+      } | null;
+    } | null> | null;
+  } | null;
+  readonly " $fragmentType": "ArtistSeriesEntity_member";
 };
-export type ArtistSeriesEntity_member$data = ArtistSeriesEntity_member;
 export type ArtistSeriesEntity_member$key = {
-    readonly " $data"?: ArtistSeriesEntity_member$data;
-    readonly " $fragmentRefs": FragmentRefs<"ArtistSeriesEntity_member">;
+  readonly " $data"?: ArtistSeriesEntity_member$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtistSeriesEntity_member">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = {
@@ -233,5 +236,7 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '91fea7ae7e932abb5c2a197ca8a00384';
+
+(node as any).hash = "91fea7ae7e932abb5c2a197ca8a00384";
+
 export default node;

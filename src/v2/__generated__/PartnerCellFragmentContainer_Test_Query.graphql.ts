@@ -1,70 +1,25 @@
+/**
+ * @generated SignedSource<<5aa6024a0c46696e57ee017f41311157>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type PartnerCellFragmentContainer_Test_QueryVariables = {};
-export type PartnerCellFragmentContainer_Test_QueryResponse = {
-    readonly partner: {
-        readonly " $fragmentRefs": FragmentRefs<"PartnerCell_partner">;
-    } | null;
+export type PartnerCellFragmentContainer_Test_Query$variables = {};
+export type PartnerCellFragmentContainer_Test_Query$data = {
+  readonly partner: {
+    readonly " $fragmentSpreads": FragmentRefs<"PartnerCell_partner">;
+  } | null;
 };
 export type PartnerCellFragmentContainer_Test_Query = {
-    readonly response: PartnerCellFragmentContainer_Test_QueryResponse;
-    readonly variables: PartnerCellFragmentContainer_Test_QueryVariables;
+  variables: PartnerCellFragmentContainer_Test_Query$variables;
+  response: PartnerCellFragmentContainer_Test_Query$data;
 };
-
-
-
-/*
-query PartnerCellFragmentContainer_Test_Query {
-  partner(id: "example") {
-    ...PartnerCell_partner
-    id
-  }
-}
-
-fragment FollowProfileButton_profile on Profile {
-  id
-  slug
-  name
-  internalID
-  is_followed: isFollowed
-}
-
-fragment PartnerCell_partner on Partner {
-  internalID
-  slug
-  name
-  href
-  initials
-  locationsConnection(first: 15) {
-    edges {
-      node {
-        city
-        id
-      }
-    }
-  }
-  categories {
-    name
-    slug
-    id
-  }
-  profile {
-    ...FollowProfileButton_profile
-    isFollowed
-    image {
-      cropped(width: 445, height: 334, version: ["wide", "large", "featured", "larger"]) {
-        src
-        srcSet
-      }
-    }
-    id
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -417,5 +372,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'b609bdc6b023c52eca89ffa453b5cd36';
+
+(node as any).hash = "b609bdc6b023c52eca89ffa453b5cd36";
+
 export default node;

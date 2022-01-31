@@ -1,27 +1,30 @@
+/**
+ * @generated SignedSource<<61402a5226c245d35bb9722dfd8929f1>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type FairOrganizerPastEventsRail_fairOrganizer = {
-    readonly pastFairs: {
-        readonly edges: ReadonlyArray<{
-            readonly node: {
-                readonly id: string;
-                readonly " $fragmentRefs": FragmentRefs<"FairOrganizerPastEventRailCell_fair">;
-            } | null;
-        } | null> | null;
-    } | null;
-    readonly " $refType": "FairOrganizerPastEventsRail_fairOrganizer";
+export type FairOrganizerPastEventsRail_fairOrganizer$data = {
+  readonly pastFairs: {
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly id: string;
+        readonly " $fragmentSpreads": FragmentRefs<"FairOrganizerPastEventRailCell_fair">;
+      } | null;
+    } | null> | null;
+  } | null;
+  readonly " $fragmentType": "FairOrganizerPastEventsRail_fairOrganizer";
 };
-export type FairOrganizerPastEventsRail_fairOrganizer$data = FairOrganizerPastEventsRail_fairOrganizer;
 export type FairOrganizerPastEventsRail_fairOrganizer$key = {
-    readonly " $data"?: FairOrganizerPastEventsRail_fairOrganizer$data;
-    readonly " $fragmentRefs": FragmentRefs<"FairOrganizerPastEventsRail_fairOrganizer">;
+  readonly " $data"?: FairOrganizerPastEventsRail_fairOrganizer$data;
+  readonly " $fragmentSpreads": FragmentRefs<"FairOrganizerPastEventsRail_fairOrganizer">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -99,5 +102,7 @@ const node: ReaderFragment = {
   "type": "FairOrganizer",
   "abstractKey": null
 };
-(node as any).hash = '6aeda34d2d36710cd10a7f1f3e4ac93e';
+
+(node as any).hash = "6aeda34d2d36710cd10a7f1f3e4ac93e";
+
 export default node;

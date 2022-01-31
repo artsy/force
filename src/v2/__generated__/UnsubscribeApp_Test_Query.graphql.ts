@@ -1,39 +1,25 @@
+/**
+ * @generated SignedSource<<43bd8ae87cedebd50724ce8e4eb42cbd>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type UnsubscribeApp_Test_QueryVariables = {};
-export type UnsubscribeApp_Test_QueryResponse = {
-    readonly me: {
-        readonly " $fragmentRefs": FragmentRefs<"UnsubscribeApp_me">;
-    } | null;
+export type UnsubscribeApp_Test_Query$variables = {};
+export type UnsubscribeApp_Test_Query$data = {
+  readonly me: {
+    readonly " $fragmentSpreads": FragmentRefs<"UnsubscribeApp_me">;
+  } | null;
 };
 export type UnsubscribeApp_Test_Query = {
-    readonly response: UnsubscribeApp_Test_QueryResponse;
-    readonly variables: UnsubscribeApp_Test_QueryVariables;
+  variables: UnsubscribeApp_Test_Query$variables;
+  response: UnsubscribeApp_Test_Query$data;
 };
-
-
-
-/*
-query UnsubscribeApp_Test_Query {
-  me {
-    ...UnsubscribeApp_me
-    id
-  }
-}
-
-fragment UnsubscribeApp_me on Me {
-  ...UnsubscribeLoggedIn_me
-}
-
-fragment UnsubscribeLoggedIn_me on Me {
-  id
-  emailFrequency
-}
-*/
 
 const node: ConcreteRequest = {
   "fragment": {
@@ -125,5 +111,7 @@ const node: ConcreteRequest = {
     "text": "query UnsubscribeApp_Test_Query {\n  me {\n    ...UnsubscribeApp_me\n    id\n  }\n}\n\nfragment UnsubscribeApp_me on Me {\n  ...UnsubscribeLoggedIn_me\n}\n\nfragment UnsubscribeLoggedIn_me on Me {\n  id\n  emailFrequency\n}\n"
   }
 };
-(node as any).hash = '8062596be132af33f33306cf29ffd748';
+
+(node as any).hash = "8062596be132af33f33306cf29ffd748";
+
 export default node;

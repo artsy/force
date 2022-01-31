@@ -1,36 +1,31 @@
+/**
+ * @generated SignedSource<<80304810548042d75121dda629fcf0fc>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
-export type FlashBannerTestQueryVariables = {};
-export type FlashBannerTestQueryResponse = {
-    readonly me: {
-        readonly canRequestEmailConfirmation: boolean;
-    } | null;
+import { ConcreteRequest, Query } from 'relay-runtime';
+export type FlashBannerTestQuery$variables = {};
+export type FlashBannerTestQuery$data = {
+  readonly me: {
+    readonly canRequestEmailConfirmation: boolean;
+  } | null;
 };
-export type FlashBannerTestQueryRawResponse = {
-    readonly me: ({
-        readonly canRequestEmailConfirmation: boolean;
-        readonly id: string;
-    }) | null;
+export type FlashBannerTestQuery$rawResponse = {
+  readonly me: {
+    readonly canRequestEmailConfirmation: boolean;
+    readonly id: string;
+  } | null;
 };
 export type FlashBannerTestQuery = {
-    readonly response: FlashBannerTestQueryResponse;
-    readonly variables: FlashBannerTestQueryVariables;
-    readonly rawResponse: FlashBannerTestQueryRawResponse;
+  variables: FlashBannerTestQuery$variables;
+  response: FlashBannerTestQuery$data;
+  rawResponse: FlashBannerTestQuery$rawResponse;
 };
-
-
-
-/*
-query FlashBannerTestQuery {
-  me {
-    canRequestEmailConfirmation
-    id
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = {
@@ -121,5 +116,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'f3601d608439e328bcfce96e31a134c0';
+
+(node as any).hash = "f3601d608439e328bcfce96e31a134c0";
+
 export default node;

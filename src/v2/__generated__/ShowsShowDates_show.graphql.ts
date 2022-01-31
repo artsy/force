@@ -1,26 +1,29 @@
+/**
+ * @generated SignedSource<<20f8702850a62af420c70e3918f7bf17>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ShowsShowDates_show = {
-    readonly startAt: string | null;
-    readonly endAt: string | null;
-    readonly formattedStartAt: string | null;
-    readonly formattedEndAt: string | null;
-    readonly location: {
-        readonly city: string | null;
-    } | null;
-    readonly " $refType": "ShowsShowDates_show";
+export type ShowsShowDates_show$data = {
+  readonly startAt: string | null;
+  readonly endAt: string | null;
+  readonly formattedStartAt: string | null;
+  readonly formattedEndAt: string | null;
+  readonly location: {
+    readonly city: string | null;
+  } | null;
+  readonly " $fragmentType": "ShowsShowDates_show";
 };
-export type ShowsShowDates_show$data = ShowsShowDates_show;
 export type ShowsShowDates_show$key = {
-    readonly " $data"?: ShowsShowDates_show$data;
-    readonly " $fragmentRefs": FragmentRefs<"ShowsShowDates_show">;
+  readonly " $data"?: ShowsShowDates_show$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ShowsShowDates_show">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = [
@@ -87,5 +90,7 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = 'a06ad08e02543909b1def26e50d86383';
+
+(node as any).hash = "a06ad08e02543909b1def26e50d86383";
+
 export default node;

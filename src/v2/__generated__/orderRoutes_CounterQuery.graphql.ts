@@ -1,297 +1,27 @@
+/**
+ * @generated SignedSource<<75f9ad28d8bbb9441f547f050eb75e4f>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type orderRoutes_CounterQueryVariables = {
-    orderID: string;
+export type orderRoutes_CounterQuery$variables = {
+  orderID: string;
 };
-export type orderRoutes_CounterQueryResponse = {
-    readonly order: {
-        readonly " $fragmentRefs": FragmentRefs<"Counter_order">;
-    } | null;
+export type orderRoutes_CounterQuery$data = {
+  readonly order: {
+    readonly " $fragmentSpreads": FragmentRefs<"Counter_order">;
+  } | null;
 };
 export type orderRoutes_CounterQuery = {
-    readonly response: orderRoutes_CounterQueryResponse;
-    readonly variables: orderRoutes_CounterQueryVariables;
+  variables: orderRoutes_CounterQuery$variables;
+  response: orderRoutes_CounterQuery$data;
 };
-
-
-
-/*
-query orderRoutes_CounterQuery(
-  $orderID: ID!
-) {
-  order: commerceOrder(id: $orderID) {
-    __typename
-    ...Counter_order
-    id
-  }
-}
-
-fragment ArtworkSummaryItem_order on CommerceOrder {
-  __isCommerceOrder: __typename
-  sellerDetails {
-    __typename
-    ... on Partner {
-      name
-    }
-    ... on Node {
-      __isNode: __typename
-      id
-    }
-    ... on User {
-      id
-    }
-  }
-  currencyCode
-  mode
-  lineItems {
-    edges {
-      node {
-        artworkOrEditionSet {
-          __typename
-          ... on Artwork {
-            price
-          }
-          ... on EditionSet {
-            price
-            id
-          }
-          ... on Node {
-            __isNode: __typename
-            id
-          }
-        }
-        artwork {
-          artistNames
-          title
-          date
-          shippingOrigin
-          image {
-            resized_ArtworkSummaryItem: resized(width: 55) {
-              url
-            }
-          }
-          id
-        }
-        id
-      }
-    }
-  }
-}
-
-fragment Counter_order on CommerceOrder {
-  __isCommerceOrder: __typename
-  internalID
-  mode
-  state
-  itemsTotal(precision: 2)
-  stateExpiresAt
-  ... on CommerceOfferOrder {
-    lastOffer {
-      createdAt
-      id
-    }
-    myLastOffer {
-      internalID
-      id
-    }
-  }
-  lineItems {
-    edges {
-      node {
-        artwork {
-          slug
-          id
-        }
-        id
-      }
-    }
-  }
-  ...TransactionDetailsSummaryItem_order
-  ...ArtworkSummaryItem_order
-  ...ShippingSummaryItem_order
-  ...CreditCardSummaryItem_order
-  ...OfferHistoryItem_order
-}
-
-fragment CreditCardSummaryItem_order on CommerceOrder {
-  __isCommerceOrder: __typename
-  creditCard {
-    brand
-    lastDigits
-    expirationYear
-    expirationMonth
-    id
-  }
-}
-
-fragment OfferHistoryItem_order on CommerceOrder {
-  __isCommerceOrder: __typename
-  lineItems {
-    edges {
-      node {
-        artworkOrEditionSet {
-          __typename
-          ... on Artwork {
-            price
-          }
-          ... on EditionSet {
-            price
-            id
-          }
-          ... on Node {
-            __isNode: __typename
-            id
-          }
-        }
-        id
-      }
-    }
-  }
-  ... on CommerceOfferOrder {
-    offers {
-      edges {
-        node {
-          internalID
-          amount(precision: 2)
-          createdAt(format: "MMM D")
-          fromParticipant
-          id
-        }
-      }
-    }
-    currencyCode
-    lastOffer {
-      internalID
-      fromParticipant
-      amount(precision: 2)
-      shippingTotal(precision: 2)
-      taxTotal(precision: 2)
-      note
-      id
-    }
-  }
-}
-
-fragment ShippingAddress_ship on CommerceRequestedFulfillmentUnion {
-  __isCommerceRequestedFulfillmentUnion: __typename
-  ... on CommerceShip {
-    name
-    addressLine1
-    addressLine2
-    city
-    postalCode
-    region
-    country
-    phoneNumber
-  }
-  ... on CommerceShipArta {
-    name
-    addressLine1
-    addressLine2
-    city
-    postalCode
-    region
-    country
-    phoneNumber
-  }
-}
-
-fragment ShippingSummaryItem_order on CommerceOrder {
-  __isCommerceOrder: __typename
-  state
-  requestedFulfillment {
-    __typename
-    ...ShippingAddress_ship
-  }
-  lineItems {
-    edges {
-      node {
-        artwork {
-          shippingOrigin
-          id
-        }
-        id
-      }
-    }
-  }
-}
-
-fragment TransactionDetailsSummaryItem_order on CommerceOrder {
-  __isCommerceOrder: __typename
-  __typename
-  requestedFulfillment {
-    __typename
-  }
-  code
-  lineItems {
-    edges {
-      node {
-        artworkOrEditionSet {
-          __typename
-          ... on Artwork {
-            price
-          }
-          ... on EditionSet {
-            price
-            id
-          }
-          ... on Node {
-            __isNode: __typename
-            id
-          }
-        }
-        selectedShippingQuote {
-          displayName
-          id
-        }
-        id
-      }
-    }
-  }
-  mode
-  shippingTotal(precision: 2)
-  shippingTotalCents
-  taxTotal(precision: 2)
-  taxTotalCents
-  itemsTotal(precision: 2)
-  buyerTotal(precision: 2)
-  currencyCode
-  ... on CommerceOfferOrder {
-    lastOffer {
-      internalID
-      amount(precision: 2)
-      amountCents
-      shippingTotal(precision: 2)
-      shippingTotalCents
-      taxTotal(precision: 2)
-      taxTotalCents
-      buyerTotal(precision: 2)
-      buyerTotalCents
-      fromParticipant
-      note
-      id
-    }
-    myLastOffer {
-      internalID
-      amount(precision: 2)
-      amountCents
-      shippingTotal(precision: 2)
-      shippingTotalCents
-      taxTotal(precision: 2)
-      taxTotalCents
-      buyerTotal(precision: 2)
-      buyerTotalCents
-      fromParticipant
-      note
-      id
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -961,5 +691,7 @@ return {
   }
 };
 })();
-(node as any).hash = '1802b67cddce0e66a6e1a1f76e64a426';
+
+(node as any).hash = "1802b67cddce0e66a6e1a1f76e64a426";
+
 export default node;

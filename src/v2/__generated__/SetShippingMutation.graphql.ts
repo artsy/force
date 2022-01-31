@@ -1,162 +1,93 @@
+/**
+ * @generated SignedSource<<86e6b02aae06e17717cad64f80c094ee>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Mutation } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type CommerceOrderFulfillmentTypeEnum = "PICKUP" | "SHIP" | "SHIP_ARTA" | "%future added value";
 export type CommerceOrderStateEnum = "ABANDONED" | "APPROVED" | "CANCELED" | "FULFILLED" | "PENDING" | "REFUNDED" | "SUBMITTED" | "%future added value";
 export type CommerceSetShippingInput = {
-    clientMutationId?: string | null;
-    fulfillmentType: CommerceOrderFulfillmentTypeEnum;
-    id: string;
-    phoneNumber?: string | null;
-    shipping?: CommerceShippingAttributes | null;
+  clientMutationId?: string | null;
+  fulfillmentType: CommerceOrderFulfillmentTypeEnum;
+  id: string;
+  phoneNumber?: string | null;
+  shipping?: CommerceShippingAttributes | null;
 };
 export type CommerceShippingAttributes = {
-    addressLine1?: string | null;
-    addressLine2?: string | null;
-    city?: string | null;
-    country?: string | null;
-    name?: string | null;
-    phoneNumber?: string | null;
-    postalCode?: string | null;
-    region?: string | null;
+  addressLine1?: string | null;
+  addressLine2?: string | null;
+  city?: string | null;
+  country?: string | null;
+  name?: string | null;
+  phoneNumber?: string | null;
+  postalCode?: string | null;
+  region?: string | null;
 };
-export type SetShippingMutationVariables = {
-    input: CommerceSetShippingInput;
+export type SetShippingMutation$variables = {
+  input: CommerceSetShippingInput;
 };
-export type SetShippingMutationResponse = {
-    readonly commerceSetShipping: {
-        readonly orderOrError: {
-            readonly __typename: "CommerceOrderWithMutationSuccess";
-            readonly order?: {
-                readonly internalID: string;
-                readonly state: CommerceOrderStateEnum;
-                readonly requestedFulfillment: ({
-                    readonly __typename: "CommerceShip";
-                    readonly name: string | null;
-                    readonly addressLine1: string | null;
-                    readonly addressLine2: string | null;
-                    readonly city: string | null;
-                    readonly region: string | null;
-                    readonly country: string | null;
-                    readonly postalCode: string | null;
-                    readonly phoneNumber: string | null;
-                } | {
-                    readonly __typename: "CommerceShipArta";
-                    readonly name: string | null;
-                    readonly addressLine1: string | null;
-                    readonly addressLine2: string | null;
-                    readonly city: string | null;
-                    readonly region: string | null;
-                    readonly country: string | null;
-                    readonly postalCode: string | null;
-                    readonly phoneNumber: string | null;
-                } | {
-                    /*This will never be '%other', but we need some
-                    value in case none of the concrete values match.*/
-                    readonly __typename: "%other";
-                }) | null;
-                readonly lineItems: {
-                    readonly edges: ReadonlyArray<{
-                        readonly node: {
-                            readonly shippingQuoteOptions: {
-                                readonly edges: ReadonlyArray<{
-                                    readonly " $fragmentRefs": FragmentRefs<"ShippingQuotes_shippingQuotes">;
-                                } | null> | null;
-                            } | null;
-                        } | null;
-                    } | null> | null;
-                } | null;
-            };
-            readonly error?: {
-                readonly type: string;
-                readonly code: string;
-                readonly data: string | null;
-            };
-        };
-    } | null;
+export type SetShippingMutation$data = {
+  readonly commerceSetShipping: {
+    readonly orderOrError: {
+      readonly __typename: "CommerceOrderWithMutationSuccess";
+      readonly order?: {
+        readonly internalID: string;
+        readonly state: CommerceOrderStateEnum;
+        readonly requestedFulfillment: {
+          readonly __typename: "CommerceShip";
+          readonly name: string | null;
+          readonly addressLine1: string | null;
+          readonly addressLine2: string | null;
+          readonly city: string | null;
+          readonly region: string | null;
+          readonly country: string | null;
+          readonly postalCode: string | null;
+          readonly phoneNumber: string | null;
+        } | {
+          readonly __typename: "CommerceShipArta";
+          readonly name: string | null;
+          readonly addressLine1: string | null;
+          readonly addressLine2: string | null;
+          readonly city: string | null;
+          readonly region: string | null;
+          readonly country: string | null;
+          readonly postalCode: string | null;
+          readonly phoneNumber: string | null;
+        } | {
+          // This will never be '%other', but we need some
+          // value in case none of the concrete values match.
+          readonly __typename: "%other";
+        } | null;
+        readonly lineItems: {
+          readonly edges: ReadonlyArray<{
+            readonly node: {
+              readonly shippingQuoteOptions: {
+                readonly edges: ReadonlyArray<{
+                  readonly " $fragmentSpreads": FragmentRefs<"ShippingQuotes_shippingQuotes">;
+                } | null> | null;
+              } | null;
+            } | null;
+          } | null> | null;
+        } | null;
+      };
+      readonly error?: {
+        readonly type: string;
+        readonly code: string;
+        readonly data: string | null;
+      };
+    };
+  } | null;
 };
 export type SetShippingMutation = {
-    readonly response: SetShippingMutationResponse;
-    readonly variables: SetShippingMutationVariables;
+  variables: SetShippingMutation$variables;
+  response: SetShippingMutation$data;
 };
-
-
-
-/*
-mutation SetShippingMutation(
-  $input: CommerceSetShippingInput!
-) {
-  commerceSetShipping(input: $input) {
-    orderOrError {
-      __typename
-      ... on CommerceOrderWithMutationSuccess {
-        __typename
-        order {
-          __typename
-          internalID
-          state
-          requestedFulfillment {
-            __typename
-            ... on CommerceShip {
-              name
-              addressLine1
-              addressLine2
-              city
-              region
-              country
-              postalCode
-              phoneNumber
-            }
-            ... on CommerceShipArta {
-              name
-              addressLine1
-              addressLine2
-              city
-              region
-              country
-              postalCode
-              phoneNumber
-            }
-          }
-          lineItems {
-            edges {
-              node {
-                shippingQuoteOptions {
-                  edges {
-                    ...ShippingQuotes_shippingQuotes
-                  }
-                }
-                id
-              }
-            }
-          }
-          id
-        }
-      }
-      ... on CommerceOrderWithMutationFailure {
-        error {
-          type
-          code
-          data
-        }
-      }
-    }
-  }
-}
-
-fragment ShippingQuotes_shippingQuotes on CommerceShippingQuoteEdge {
-  node {
-    id
-    displayName
-    isSelected
-    price(precision: 2)
-    priceCents
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -605,5 +536,7 @@ return {
   }
 };
 })();
-(node as any).hash = '7278954f3f024afafd026b74cb1fa65e';
+
+(node as any).hash = "7278954f3f024afafd026b74cb1fa65e";
+
 export default node;

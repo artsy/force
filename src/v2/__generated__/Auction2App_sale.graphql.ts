@@ -1,92 +1,95 @@
+/**
+ * @generated SignedSource<<19aad4f16b2dd5e5e1d07507cb8483f6>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type Auction2App_sale = {
-    readonly formattedStartDateTime: string | null;
-    readonly href: string | null;
+export type Auction2App_sale$data = {
+  readonly formattedStartDateTime: string | null;
+  readonly href: string | null;
+  readonly coverImage: {
+    readonly cropped: {
+      readonly src: string;
+      readonly url: string;
+    } | null;
+  } | null;
+  readonly internalID: string;
+  readonly slug: string;
+  readonly associatedSale: {
     readonly coverImage: {
-        readonly cropped: {
-            readonly src: string;
-            readonly url: string;
-        } | null;
+      readonly cropped: {
+        readonly url: string;
+      } | null;
     } | null;
-    readonly internalID: string;
-    readonly slug: string;
-    readonly associatedSale: {
-        readonly coverImage: {
-            readonly cropped: {
-                readonly url: string;
-            } | null;
-        } | null;
-        readonly endAt: string | null;
-        readonly href: string | null;
-        readonly slug: string;
-        readonly isClosed: boolean | null;
-        readonly isLiveOpen: boolean | null;
-        readonly isPreview: boolean | null;
-        readonly liveStartAt: string | null;
-        readonly name: string | null;
-        readonly startAt: string | null;
-    } | null;
-    readonly status: string | null;
-    readonly currency: string | null;
-    readonly eligibleSaleArtworksCount: number | null;
     readonly endAt: string | null;
-    readonly isAuction: boolean | null;
+    readonly href: string | null;
+    readonly slug: string;
     readonly isClosed: boolean | null;
     readonly isLiveOpen: boolean | null;
-    readonly isOpen: boolean | null;
+    readonly isPreview: boolean | null;
     readonly liveStartAt: string | null;
     readonly name: string | null;
-    readonly promotedSale: {
-        readonly slug: string;
-        readonly name: string | null;
-        readonly saleArtworksConnection: {
-            readonly edges: ReadonlyArray<{
-                readonly node: {
-                    readonly artwork: {
-                        readonly slug: string;
-                        readonly title: string | null;
-                        readonly date: string | null;
-                        readonly saleMessage: string | null;
-                        readonly isInAuction: boolean | null;
-                        readonly image: {
-                            readonly placeholder: string | null;
-                            readonly url: string | null;
-                            readonly aspectRatio: number;
-                        } | null;
-                        readonly artists: ReadonlyArray<{
-                            readonly slug: string;
-                            readonly href: string | null;
-                            readonly name: string | null;
-                        } | null> | null;
-                        readonly partner: {
-                            readonly name: string | null;
-                        } | null;
-                        readonly href: string | null;
-                        readonly isAcquireable: boolean | null;
-                    } | null;
-                } | null;
-            } | null> | null;
-        } | null;
-    } | null;
-    readonly registrationEndsAt: string | null;
-    readonly requireIdentityVerification: boolean | null;
     readonly startAt: string | null;
-    readonly symbol: string | null;
-    readonly " $fragmentRefs": FragmentRefs<"Auction2Meta_sale" | "AuctionDetails_sale">;
-    readonly " $refType": "Auction2App_sale";
+  } | null;
+  readonly status: string | null;
+  readonly currency: string | null;
+  readonly eligibleSaleArtworksCount: number | null;
+  readonly endAt: string | null;
+  readonly isAuction: boolean | null;
+  readonly isClosed: boolean | null;
+  readonly isLiveOpen: boolean | null;
+  readonly isOpen: boolean | null;
+  readonly liveStartAt: string | null;
+  readonly name: string | null;
+  readonly promotedSale: {
+    readonly slug: string;
+    readonly name: string | null;
+    readonly saleArtworksConnection: {
+      readonly edges: ReadonlyArray<{
+        readonly node: {
+          readonly artwork: {
+            readonly slug: string;
+            readonly title: string | null;
+            readonly date: string | null;
+            readonly saleMessage: string | null;
+            readonly isInAuction: boolean | null;
+            readonly image: {
+              readonly placeholder: string | null;
+              readonly url: string | null;
+              readonly aspectRatio: number;
+            } | null;
+            readonly artists: ReadonlyArray<{
+              readonly slug: string;
+              readonly href: string | null;
+              readonly name: string | null;
+            } | null> | null;
+            readonly partner: {
+              readonly name: string | null;
+            } | null;
+            readonly href: string | null;
+            readonly isAcquireable: boolean | null;
+          } | null;
+        } | null;
+      } | null> | null;
+    } | null;
+  } | null;
+  readonly registrationEndsAt: string | null;
+  readonly requireIdentityVerification: boolean | null;
+  readonly startAt: string | null;
+  readonly symbol: string | null;
+  readonly " $fragmentSpreads": FragmentRefs<"Auction2Meta_sale" | "AuctionDetails_sale">;
+  readonly " $fragmentType": "Auction2App_sale";
 };
-export type Auction2App_sale$data = Auction2App_sale;
 export type Auction2App_sale$key = {
-    readonly " $data"?: Auction2App_sale$data;
-    readonly " $fragmentRefs": FragmentRefs<"Auction2App_sale">;
+  readonly " $data"?: Auction2App_sale$data;
+  readonly " $fragmentSpreads": FragmentRefs<"Auction2App_sale">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = {
@@ -158,6 +161,16 @@ return {
   "metadata": null,
   "name": "Auction2App_sale",
   "selections": [
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "Auction2Meta_sale"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "AuctionDetails_sale"
+    },
     {
       "alias": null,
       "args": null,
@@ -493,21 +506,13 @@ return {
       "kind": "ScalarField",
       "name": "symbol",
       "storageKey": null
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "Auction2Meta_sale"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "AuctionDetails_sale"
     }
   ],
   "type": "Sale",
   "abstractKey": null
 };
 })();
-(node as any).hash = 'eb2f7eef69db5d826c2f9569a753c653';
+
+(node as any).hash = "eb2f7eef69db5d826c2f9569a753c653";
+
 export default node;

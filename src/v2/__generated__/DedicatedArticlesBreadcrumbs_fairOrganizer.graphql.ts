@@ -1,29 +1,32 @@
+/**
+ * @generated SignedSource<<f3b528e219f349a48bb7c844917b251c>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type DedicatedArticlesBreadcrumbs_fairOrganizer = {
-    readonly slug: string;
-    readonly name: string | null;
-    readonly profile: {
-        readonly image: {
-            readonly resized: {
-                readonly src: string;
-                readonly srcSet: string;
-            } | null;
-        } | null;
+export type DedicatedArticlesBreadcrumbs_fairOrganizer$data = {
+  readonly slug: string;
+  readonly name: string | null;
+  readonly profile: {
+    readonly image: {
+      readonly resized: {
+        readonly src: string;
+        readonly srcSet: string;
+      } | null;
     } | null;
-    readonly " $refType": "DedicatedArticlesBreadcrumbs_fairOrganizer";
+  } | null;
+  readonly " $fragmentType": "DedicatedArticlesBreadcrumbs_fairOrganizer";
 };
-export type DedicatedArticlesBreadcrumbs_fairOrganizer$data = DedicatedArticlesBreadcrumbs_fairOrganizer;
 export type DedicatedArticlesBreadcrumbs_fairOrganizer$key = {
-    readonly " $data"?: DedicatedArticlesBreadcrumbs_fairOrganizer$data;
-    readonly " $fragmentRefs": FragmentRefs<"DedicatedArticlesBreadcrumbs_fairOrganizer">;
+  readonly " $data"?: DedicatedArticlesBreadcrumbs_fairOrganizer$data;
+  readonly " $fragmentSpreads": FragmentRefs<"DedicatedArticlesBreadcrumbs_fairOrganizer">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -112,5 +115,7 @@ const node: ReaderFragment = {
   "type": "FairOrganizer",
   "abstractKey": null
 };
-(node as any).hash = '322d075ec0670293841ce10f1aa54c40';
+
+(node as any).hash = "322d075ec0670293841ce10f1aa54c40";
+
 export default node;

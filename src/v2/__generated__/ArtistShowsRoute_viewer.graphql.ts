@@ -1,26 +1,29 @@
+/**
+ * @generated SignedSource<<ef8dcee13e82bb6233ba11ee52cb9ad1>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtistShowsRoute_viewer = {
-    readonly currentShows: {
-        readonly name: string | null;
-        readonly " $fragmentRefs": FragmentRefs<"ArtistShowsGroup_artist">;
-    } | null;
-    readonly upcomingShows: {
-        readonly " $fragmentRefs": FragmentRefs<"ArtistShowsGroup_artist">;
-    } | null;
-    readonly " $refType": "ArtistShowsRoute_viewer";
+export type ArtistShowsRoute_viewer$data = {
+  readonly currentShows: {
+    readonly name: string | null;
+    readonly " $fragmentSpreads": FragmentRefs<"ArtistShowsGroup_artist">;
+  } | null;
+  readonly upcomingShows: {
+    readonly " $fragmentSpreads": FragmentRefs<"ArtistShowsGroup_artist">;
+  } | null;
+  readonly " $fragmentType": "ArtistShowsRoute_viewer";
 };
-export type ArtistShowsRoute_viewer$data = ArtistShowsRoute_viewer;
 export type ArtistShowsRoute_viewer$key = {
-    readonly " $data"?: ArtistShowsRoute_viewer$data;
-    readonly " $fragmentRefs": FragmentRefs<"ArtistShowsRoute_viewer">;
+  readonly " $data"?: ArtistShowsRoute_viewer$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtistShowsRoute_viewer">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = [
@@ -70,13 +73,6 @@ return {
       "plural": false,
       "selections": [
         {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "name",
-          "storageKey": null
-        },
-        {
           "args": [
             {
               "kind": "Variable",
@@ -91,6 +87,13 @@ return {
           ],
           "kind": "FragmentSpread",
           "name": "ArtistShowsGroup_artist"
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "name",
+          "storageKey": null
         }
       ],
       "storageKey": null
@@ -127,5 +130,7 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '1e6a77e86f2c4e6e2bb445bd5cdb34fe';
+
+(node as any).hash = "1e6a77e86f2c4e6e2bb445bd5cdb34fe";
+
 export default node;

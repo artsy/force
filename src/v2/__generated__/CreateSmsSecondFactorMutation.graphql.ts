@@ -1,84 +1,65 @@
+/**
+ * @generated SignedSource<<3557bd59776ed54737c9ec8cc293e27e>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type CreateSmsSecondFactorInput = {
-    attributes: SmsSecondFactorAttributes;
-    clientMutationId?: string | null;
-    password: string;
+  attributes: SmsSecondFactorAttributes;
+  clientMutationId?: string | null;
+  password: string;
 };
 export type SmsSecondFactorAttributes = {
-    countryCode?: string | null;
-    phoneNumber?: string | null;
+  countryCode?: string | null;
+  phoneNumber?: string | null;
 };
-export type CreateSmsSecondFactorMutationVariables = {
-    input: CreateSmsSecondFactorInput;
+export type CreateSmsSecondFactorMutation$variables = {
+  input: CreateSmsSecondFactorInput;
 };
-export type CreateSmsSecondFactorMutationResponse = {
-    readonly createSmsSecondFactor: {
-        readonly secondFactorOrErrors: {
-            readonly __typename: "SmsSecondFactor";
-            readonly internalID: string;
-        } | {
-            readonly __typename: "Errors";
-            readonly errors: ReadonlyArray<{
-                readonly message: string;
-                readonly code: string;
-            }>;
-        } | {
-            /*This will never be '%other', but we need some
-            value in case none of the concrete values match.*/
-            readonly __typename: "%other";
-        };
-    } | null;
+export type CreateSmsSecondFactorMutation$data = {
+  readonly createSmsSecondFactor: {
+    readonly secondFactorOrErrors: {
+      readonly __typename: "SmsSecondFactor";
+      readonly internalID: string;
+    } | {
+      readonly __typename: "Errors";
+      readonly errors: ReadonlyArray<{
+        readonly message: string;
+        readonly code: string;
+      }>;
+    } | {
+      // This will never be '%other', but we need some
+      // value in case none of the concrete values match.
+      readonly __typename: "%other";
+    };
+  } | null;
 };
-export type CreateSmsSecondFactorMutationRawResponse = {
-    readonly createSmsSecondFactor: ({
-        readonly secondFactorOrErrors: {
-            readonly __typename: "SmsSecondFactor";
-            readonly internalID: string;
-        } | {
-            readonly __typename: "Errors";
-            readonly errors: ReadonlyArray<{
-                readonly message: string;
-                readonly code: string;
-            }>;
-        } | {
-            readonly __typename: string;
-        };
-    }) | null;
+export type CreateSmsSecondFactorMutation$rawResponse = {
+  readonly createSmsSecondFactor: {
+    readonly secondFactorOrErrors: {
+      readonly __typename: "SmsSecondFactor";
+      readonly internalID: string;
+    } | {
+      readonly __typename: "Errors";
+      readonly errors: ReadonlyArray<{
+        readonly message: string;
+        readonly code: string;
+      }>;
+    } | {
+      readonly __typename: string;
+    };
+  } | null;
 };
 export type CreateSmsSecondFactorMutation = {
-    readonly response: CreateSmsSecondFactorMutationResponse;
-    readonly variables: CreateSmsSecondFactorMutationVariables;
-    readonly rawResponse: CreateSmsSecondFactorMutationRawResponse;
+  variables: CreateSmsSecondFactorMutation$variables;
+  response: CreateSmsSecondFactorMutation$data;
+  rawResponse: CreateSmsSecondFactorMutation$rawResponse;
 };
-
-
-
-/*
-mutation CreateSmsSecondFactorMutation(
-  $input: CreateSmsSecondFactorInput!
-) {
-  createSmsSecondFactor(input: $input) {
-    secondFactorOrErrors {
-      __typename
-      ... on SmsSecondFactor {
-        __typename
-        internalID
-      }
-      ... on Errors {
-        __typename
-        errors {
-          message
-          code
-        }
-      }
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -242,5 +223,7 @@ return {
   }
 };
 })();
-(node as any).hash = '2ecc9fd98f69d9f9197cdd78f399016f';
+
+(node as any).hash = "2ecc9fd98f69d9f9197cdd78f399016f";
+
 export default node;

@@ -1,68 +1,46 @@
+/**
+ * @generated SignedSource<<89fd7baf3b60e01179c735eac7ac7eef>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type SubmitInquiryRequestMutationInput = {
-    clientMutationId?: string | null;
-    contactGallery?: boolean | null;
-    inquireableID: string;
-    inquireableType: string;
-    message?: string | null;
-    questions?: Array<InquiryQuestionInput | null> | null;
+  clientMutationId?: string | null;
+  contactGallery?: boolean | null;
+  inquireableID: string;
+  inquireableType: string;
+  message?: string | null;
+  questions?: ReadonlyArray<InquiryQuestionInput | null> | null;
 };
 export type InquiryQuestionInput = {
-    details?: string | null;
-    questionID: string;
+  details?: string | null;
+  questionID: string;
 };
-export type useArtworkInquiryRequestMutationVariables = {
-    input: SubmitInquiryRequestMutationInput;
+export type useArtworkInquiryRequestMutation$variables = {
+  input: SubmitInquiryRequestMutationInput;
 };
-export type useArtworkInquiryRequestMutationResponse = {
-    readonly submitInquiryRequestMutation: {
-        readonly clientMutationId: string | null;
-        readonly inquiryRequest: {
-            readonly internalID: string;
-            readonly inquireable: {
-                readonly internalID?: string;
-                readonly slug?: string;
-                readonly price?: string | null;
-            } | null;
-        } | null;
+export type useArtworkInquiryRequestMutation$data = {
+  readonly submitInquiryRequestMutation: {
+    readonly clientMutationId: string | null;
+    readonly inquiryRequest: {
+      readonly internalID: string;
+      readonly inquireable: {
+        readonly internalID?: string;
+        readonly slug?: string;
+        readonly price?: string | null;
+      } | null;
     } | null;
+  } | null;
 };
 export type useArtworkInquiryRequestMutation = {
-    readonly response: useArtworkInquiryRequestMutationResponse;
-    readonly variables: useArtworkInquiryRequestMutationVariables;
+  variables: useArtworkInquiryRequestMutation$variables;
+  response: useArtworkInquiryRequestMutation$data;
 };
-
-
-
-/*
-mutation useArtworkInquiryRequestMutation(
-  $input: SubmitInquiryRequestMutationInput!
-) {
-  submitInquiryRequestMutation(input: $input) {
-    clientMutationId
-    inquiryRequest {
-      internalID
-      inquireable {
-        __typename
-        ... on Artwork {
-          internalID
-          slug
-          price
-        }
-        ... on Node {
-          __isNode: __typename
-          id
-        }
-      }
-      id
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -239,5 +217,7 @@ return {
   }
 };
 })();
-(node as any).hash = '0641e0c8acf0cfa0b812e4af801f7fda';
+
+(node as any).hash = "0641e0c8acf0cfa0b812e4af801f7fda";
+
 export default node;

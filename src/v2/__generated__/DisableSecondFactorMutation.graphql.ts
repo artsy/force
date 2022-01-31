@@ -1,80 +1,59 @@
+/**
+ * @generated SignedSource<<a81562f7c0889468c039a6c3e107c329>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type DisableSecondFactorInput = {
-    clientMutationId?: string | null;
-    password: string;
-    secondFactorID: string;
+  clientMutationId?: string | null;
+  password: string;
+  secondFactorID: string;
 };
-export type DisableSecondFactorMutationVariables = {
-    input: DisableSecondFactorInput;
+export type DisableSecondFactorMutation$variables = {
+  input: DisableSecondFactorInput;
 };
-export type DisableSecondFactorMutationResponse = {
-    readonly disableSecondFactor: {
-        readonly secondFactorOrErrors: {
-            readonly __typename: "AppSecondFactor";
-        } | {
-            readonly __typename: "SmsSecondFactor";
-        } | {
-            readonly __typename: "Errors";
-            readonly errors: ReadonlyArray<{
-                readonly message: string;
-                readonly code: string;
-            }>;
-        } | {
-            /*This will never be '%other', but we need some
-            value in case none of the concrete values match.*/
-            readonly __typename: "%other";
-        };
-    } | null;
+export type DisableSecondFactorMutation$data = {
+  readonly disableSecondFactor: {
+    readonly secondFactorOrErrors: {
+      readonly __typename: "AppSecondFactor";
+    } | {
+      readonly __typename: "SmsSecondFactor";
+    } | {
+      readonly __typename: "Errors";
+      readonly errors: ReadonlyArray<{
+        readonly message: string;
+        readonly code: string;
+      }>;
+    } | {
+      // This will never be '%other', but we need some
+      // value in case none of the concrete values match.
+      readonly __typename: "%other";
+    };
+  } | null;
 };
-export type DisableSecondFactorMutationRawResponse = {
-    readonly disableSecondFactor: ({
-        readonly secondFactorOrErrors: {
-            readonly __typename: "Errors";
-            readonly errors: ReadonlyArray<{
-                readonly message: string;
-                readonly code: string;
-            }>;
-        } | {
-            readonly __typename: string;
-        };
-    }) | null;
+export type DisableSecondFactorMutation$rawResponse = {
+  readonly disableSecondFactor: {
+    readonly secondFactorOrErrors: {
+      readonly __typename: "Errors";
+      readonly errors: ReadonlyArray<{
+        readonly message: string;
+        readonly code: string;
+      }>;
+    } | {
+      readonly __typename: string;
+    };
+  } | null;
 };
 export type DisableSecondFactorMutation = {
-    readonly response: DisableSecondFactorMutationResponse;
-    readonly variables: DisableSecondFactorMutationVariables;
-    readonly rawResponse: DisableSecondFactorMutationRawResponse;
+  variables: DisableSecondFactorMutation$variables;
+  response: DisableSecondFactorMutation$data;
+  rawResponse: DisableSecondFactorMutation$rawResponse;
 };
-
-
-
-/*
-mutation DisableSecondFactorMutation(
-  $input: DisableSecondFactorInput!
-) {
-  disableSecondFactor(input: $input) {
-    secondFactorOrErrors {
-      __typename
-      ... on AppSecondFactor {
-        __typename
-      }
-      ... on SmsSecondFactor {
-        __typename
-      }
-      ... on Errors {
-        __typename
-        errors {
-          message
-          code
-        }
-      }
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -229,5 +208,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'bdacff640561201d956f43229eaf2b1c';
+
+(node as any).hash = "bdacff640561201d956f43229eaf2b1c";
+
 export default node;

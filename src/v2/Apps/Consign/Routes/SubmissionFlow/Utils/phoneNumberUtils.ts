@@ -22,7 +22,7 @@ export const getPhoneNumberInformation = async (
       }
     `,
     { phoneNumber, regionCode }
-  )
+  ).toPromise()
 
-  return response.phoneNumber
+  return response!.phoneNumber
 }

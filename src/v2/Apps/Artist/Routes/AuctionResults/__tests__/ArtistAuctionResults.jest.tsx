@@ -1,4 +1,4 @@
-import { ArtistAuctionResults_Test_QueryRawResponse } from "v2/__generated__/ArtistAuctionResults_Test_Query.graphql"
+import { ArtistAuctionResults_Test_Query$rawResponse } from "v2/__generated__/ArtistAuctionResults_Test_Query.graphql"
 import { AuctionResultsRouteFragmentContainer as AuctionResultsRoute } from "v2/Apps/Artist/Routes/AuctionResults/ArtistAuctionResultsRoute"
 import { MockBoot } from "v2/DevTools"
 import { graphql } from "react-relay"
@@ -464,7 +464,7 @@ describe("AuctionResults", () => {
   })
 })
 
-const AuctionResultsFixture: ArtistAuctionResults_Test_QueryRawResponse = {
+const AuctionResultsFixture: ArtistAuctionResults_Test_Query$rawResponse = {
   artist: {
     internalID: "QXJ0aXN0OnBhYmxvLXBpY2Fzc28",
     id: "QXJ0aXN0OnBhYmxvLXBpY2Fzc28=",

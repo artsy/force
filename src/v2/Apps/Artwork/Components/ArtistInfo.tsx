@@ -89,7 +89,6 @@ export class ArtistInfo extends Component<ArtistInfoProps> {
         <SelectedExhibitions
           artistID={artist.internalID}
           border={false}
-          // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
           totalExhibitions={artist.counts?.partner_shows}
           // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
           exhibitions={artist.exhibition_highlights}

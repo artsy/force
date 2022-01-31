@@ -1,30 +1,33 @@
+/**
+ * @generated SignedSource<<33dc5a61157e30999ee88c124a3cb495>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type FairOrganizerHeader_fairOrganizer = {
-    readonly name: string | null;
-    readonly fairsConnection: {
-        readonly edges: ReadonlyArray<{
-            readonly node: {
-                readonly href: string | null;
-                readonly startAt: string | null;
-                readonly exhibitionPeriod: string | null;
-            } | null;
-        } | null> | null;
-    } | null;
-    readonly " $fragmentRefs": FragmentRefs<"FairOrganizerHeaderIcon_fairOrganizer" | "FairOrganizerFollowButton_fairOrganizer" | "FairOrganizerInfo_fairOrganizer">;
-    readonly " $refType": "FairOrganizerHeader_fairOrganizer";
+export type FairOrganizerHeader_fairOrganizer$data = {
+  readonly name: string | null;
+  readonly fairsConnection: {
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly href: string | null;
+        readonly startAt: string | null;
+        readonly exhibitionPeriod: string | null;
+      } | null;
+    } | null> | null;
+  } | null;
+  readonly " $fragmentSpreads": FragmentRefs<"FairOrganizerHeaderIcon_fairOrganizer" | "FairOrganizerFollowButton_fairOrganizer" | "FairOrganizerInfo_fairOrganizer">;
+  readonly " $fragmentType": "FairOrganizerHeader_fairOrganizer";
 };
-export type FairOrganizerHeader_fairOrganizer$data = FairOrganizerHeader_fairOrganizer;
 export type FairOrganizerHeader_fairOrganizer$key = {
-    readonly " $data"?: FairOrganizerHeader_fairOrganizer$data;
-    readonly " $fragmentRefs": FragmentRefs<"FairOrganizerHeader_fairOrganizer">;
+  readonly " $data"?: FairOrganizerHeader_fairOrganizer$data;
+  readonly " $fragmentSpreads": FragmentRefs<"FairOrganizerHeader_fairOrganizer">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -123,5 +126,7 @@ const node: ReaderFragment = {
   "type": "FairOrganizer",
   "abstractKey": null
 };
-(node as any).hash = '75d33688c6accfce21edc2a10fc1f6ec';
+
+(node as any).hash = "75d33688c6accfce21edc2a10fc1f6ec";
+
 export default node;

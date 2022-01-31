@@ -21,6 +21,7 @@ export function splitTestMiddleware(
   const queryParams = req.query?.split_test
 
   if (queryParams) {
+    // @ts-ignore UPGRADE RELAY 13
     const params = qs.parse(queryParams)
     for (const key in params) {
       const test = new SplitTest(req, res, runningTests[key])

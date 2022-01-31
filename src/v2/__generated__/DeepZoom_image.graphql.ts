@@ -1,32 +1,35 @@
+/**
+ * @generated SignedSource<<30702b1c4202bfc940e1fd54e03182f0>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type DeepZoom_image = {
-    readonly deepZoom: {
-        readonly Image: {
-            readonly xmlns: string | null;
-            readonly Url: string | null;
-            readonly Format: string | null;
-            readonly TileSize: number | null;
-            readonly Overlap: number | null;
-            readonly Size: {
-                readonly Width: number | null;
-                readonly Height: number | null;
-            } | null;
-        } | null;
+export type DeepZoom_image$data = {
+  readonly deepZoom: {
+    readonly Image: {
+      readonly xmlns: string | null;
+      readonly Url: string | null;
+      readonly Format: string | null;
+      readonly TileSize: number | null;
+      readonly Overlap: number | null;
+      readonly Size: {
+        readonly Width: number | null;
+        readonly Height: number | null;
+      } | null;
     } | null;
-    readonly " $refType": "DeepZoom_image";
+  } | null;
+  readonly " $fragmentType": "DeepZoom_image";
 };
-export type DeepZoom_image$data = DeepZoom_image;
 export type DeepZoom_image$key = {
-    readonly " $data"?: DeepZoom_image$data;
-    readonly " $fragmentRefs": FragmentRefs<"DeepZoom_image">;
+  readonly " $data"?: DeepZoom_image$data;
+  readonly " $fragmentSpreads": FragmentRefs<"DeepZoom_image">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -120,5 +123,7 @@ const node: ReaderFragment = {
   "type": "Image",
   "abstractKey": null
 };
-(node as any).hash = '0eccff0d675d92867a7036cec2ea2240';
+
+(node as any).hash = "0eccff0d675d92867a7036cec2ea2240";
+
 export default node;

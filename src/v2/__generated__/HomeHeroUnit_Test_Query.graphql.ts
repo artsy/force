@@ -1,44 +1,27 @@
+/**
+ * @generated SignedSource<<77fab22b73f84905d3d9e907c1819bdc>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type HomeHeroUnit_Test_QueryVariables = {};
-export type HomeHeroUnit_Test_QueryResponse = {
-    readonly homePage: {
-        readonly heroUnits: ReadonlyArray<{
-            readonly " $fragmentRefs": FragmentRefs<"HomeHeroUnit_heroUnit">;
-        } | null> | null;
-    } | null;
+export type HomeHeroUnit_Test_Query$variables = {};
+export type HomeHeroUnit_Test_Query$data = {
+  readonly homePage: {
+    readonly heroUnits: ReadonlyArray<{
+      readonly " $fragmentSpreads": FragmentRefs<"HomeHeroUnit_heroUnit">;
+    } | null> | null;
+  } | null;
 };
 export type HomeHeroUnit_Test_Query = {
-    readonly response: HomeHeroUnit_Test_QueryResponse;
-    readonly variables: HomeHeroUnit_Test_QueryVariables;
+  variables: HomeHeroUnit_Test_Query$variables;
+  response: HomeHeroUnit_Test_Query$data;
 };
-
-
-
-/*
-query HomeHeroUnit_Test_Query {
-  homePage {
-    heroUnits(platform: DESKTOP) {
-      ...HomeHeroUnit_heroUnit
-      id
-    }
-  }
-}
-
-fragment HomeHeroUnit_heroUnit on HomePageHeroUnit {
-  backgroundImageURL
-  heading
-  title
-  subtitle
-  linkText
-  href
-  creditLine
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -216,5 +199,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'ce2de92aeb13b3f33c94c8b628f88848';
+
+(node as any).hash = "ce2de92aeb13b3f33c94c8b628f88848";
+
 export default node;

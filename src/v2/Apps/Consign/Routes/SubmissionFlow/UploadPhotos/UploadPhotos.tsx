@@ -274,11 +274,13 @@ const refetchSubmissionAssets = async (
     `,
     { id: submissionId, sessionID: getENV("SESSION_ID") },
     {
-      force: true,
+      networkCacheConfig: {
+        force: true,
+      },
     }
-  )
+  ).toPromise()
 
-  return response.submission?.assets || []
+  return response?.submission?.assets || []
 }
 
 export const UploadPhotosFragmentContainer = createFragmentContainer(

@@ -10,7 +10,7 @@ import {
   Tabs,
   Text,
 } from "@artsy/palette"
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useSystemContext } from "v2/System"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
@@ -61,7 +61,7 @@ const AuctionFAQsDialog: React.FC<AuctionFAQsDialogProps> = ({
 
       <Tabs>
         {Object.keys(viewer).map(
-          (key: keyof Omit<typeof viewer, " $refType">) => {
+          (key: keyof Omit<typeof viewer, " $fragmentType">) => {
             const page = viewer[key]
 
             if (!page.content) return null

@@ -1,34 +1,37 @@
+/**
+ * @generated SignedSource<<661092ce56d09d6d09696057a1bb017a>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtworkSidebarExtraLinks_artwork = {
-    readonly internalID: string;
-    readonly is_in_auction: boolean | null;
-    readonly is_for_sale: boolean | null;
-    readonly is_acquireable: boolean | null;
-    readonly is_inquireable: boolean | null;
-    readonly artists: ReadonlyArray<{
-        readonly is_consignable: boolean | null;
-    } | null> | null;
-    readonly sale: {
-        readonly is_closed: boolean | null;
-        readonly isBenefit: boolean | null;
-        readonly partner: {
-            readonly name: string | null;
-        } | null;
+export type ArtworkSidebarExtraLinks_artwork$data = {
+  readonly internalID: string;
+  readonly is_in_auction: boolean | null;
+  readonly is_for_sale: boolean | null;
+  readonly is_acquireable: boolean | null;
+  readonly is_inquireable: boolean | null;
+  readonly artists: ReadonlyArray<{
+    readonly is_consignable: boolean | null;
+  } | null> | null;
+  readonly sale: {
+    readonly is_closed: boolean | null;
+    readonly isBenefit: boolean | null;
+    readonly partner: {
+      readonly name: string | null;
     } | null;
-    readonly " $refType": "ArtworkSidebarExtraLinks_artwork";
+  } | null;
+  readonly " $fragmentType": "ArtworkSidebarExtraLinks_artwork";
 };
-export type ArtworkSidebarExtraLinks_artwork$data = ArtworkSidebarExtraLinks_artwork;
 export type ArtworkSidebarExtraLinks_artwork$key = {
-    readonly " $data"?: ArtworkSidebarExtraLinks_artwork$data;
-    readonly " $fragmentRefs": FragmentRefs<"ArtworkSidebarExtraLinks_artwork">;
+  readonly " $data"?: ArtworkSidebarExtraLinks_artwork$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtworkSidebarExtraLinks_artwork">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -136,5 +139,7 @@ const node: ReaderFragment = {
   "type": "Artwork",
   "abstractKey": null
 };
-(node as any).hash = 'bec792d6e1dee8cecdc8ce83584d8d2e';
+
+(node as any).hash = "bec792d6e1dee8cecdc8ce83584d8d2e";
+
 export default node;

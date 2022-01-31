@@ -1,30 +1,33 @@
+/**
+ * @generated SignedSource<<bd4694d1cc038a9727fae4e3fad3530f>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtworkSidebarPartnerInfo_artwork = {
-    readonly partner: {
-        readonly name: string | null;
-        readonly href: string | null;
-        readonly locations: ReadonlyArray<{
-            readonly city: string | null;
-        } | null> | null;
-    } | null;
-    readonly sale: {
-        readonly name: string | null;
-        readonly href: string | null;
-    } | null;
-    readonly " $refType": "ArtworkSidebarPartnerInfo_artwork";
+export type ArtworkSidebarPartnerInfo_artwork$data = {
+  readonly partner: {
+    readonly name: string | null;
+    readonly href: string | null;
+    readonly locations: ReadonlyArray<{
+      readonly city: string | null;
+    } | null> | null;
+  } | null;
+  readonly sale: {
+    readonly name: string | null;
+    readonly href: string | null;
+  } | null;
+  readonly " $fragmentType": "ArtworkSidebarPartnerInfo_artwork";
 };
-export type ArtworkSidebarPartnerInfo_artwork$data = ArtworkSidebarPartnerInfo_artwork;
 export type ArtworkSidebarPartnerInfo_artwork$key = {
-    readonly " $data"?: ArtworkSidebarPartnerInfo_artwork$data;
-    readonly " $fragmentRefs": FragmentRefs<"ArtworkSidebarPartnerInfo_artwork">;
+  readonly " $data"?: ArtworkSidebarPartnerInfo_artwork$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtworkSidebarPartnerInfo_artwork">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = {
@@ -96,5 +99,7 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '806a61f16b48333cb19accd4017590d0';
+
+(node as any).hash = "806a61f16b48333cb19accd4017590d0";
+
 export default node;

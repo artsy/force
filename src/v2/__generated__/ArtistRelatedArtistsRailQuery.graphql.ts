@@ -1,90 +1,27 @@
+/**
+ * @generated SignedSource<<0e109986e95f42a6c982a05c558844a3>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtistRelatedArtistsRailQueryVariables = {
-    slug: string;
+export type ArtistRelatedArtistsRailQuery$variables = {
+  slug: string;
 };
-export type ArtistRelatedArtistsRailQueryResponse = {
-    readonly artist: {
-        readonly " $fragmentRefs": FragmentRefs<"ArtistRelatedArtistsRail_artist">;
-    } | null;
+export type ArtistRelatedArtistsRailQuery$data = {
+  readonly artist: {
+    readonly " $fragmentSpreads": FragmentRefs<"ArtistRelatedArtistsRail_artist">;
+  } | null;
 };
 export type ArtistRelatedArtistsRailQuery = {
-    readonly response: ArtistRelatedArtistsRailQueryResponse;
-    readonly variables: ArtistRelatedArtistsRailQueryVariables;
+  variables: ArtistRelatedArtistsRailQuery$variables;
+  response: ArtistRelatedArtistsRailQuery$data;
 };
-
-
-
-/*
-query ArtistRelatedArtistsRailQuery(
-  $slug: String!
-) {
-  artist(id: $slug) {
-    ...ArtistRelatedArtistsRail_artist
-    id
-  }
-}
-
-fragment ArtistRelatedArtistsRail_artist on Artist {
-  name
-  href
-  related {
-    artistsConnection(kind: MAIN, first: 20) {
-      edges {
-        node {
-          ...FollowArtistButton_artist
-          name
-          href
-          internalID
-          isFollowed
-          slug
-          nationality
-          birthday
-          filterArtworksConnection(sort: "-weighted_iconicity", first: 1) {
-            edges {
-              node {
-                internalID
-                slug
-                image {
-                  cropped(width: 325, height: 230) {
-                    width
-                    height
-                    src
-                    srcSet
-                  }
-                }
-                id
-              }
-            }
-            id
-          }
-          image {
-            cropped(width: 50, height: 50) {
-              url
-            }
-          }
-          id
-        }
-      }
-    }
-  }
-}
-
-fragment FollowArtistButton_artist on Artist {
-  id
-  internalID
-  name
-  slug
-  is_followed: isFollowed
-  counts {
-    follows
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -450,5 +387,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'b1c36c43ce75912bdf69405f7b37dd92';
+
+(node as any).hash = "b1c36c43ce75912bdf69405f7b37dd92";
+
 export default node;

@@ -1,38 +1,41 @@
+/**
+ * @generated SignedSource<<90b78320cda715afc6ea63e7ad938355>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type HomeFeaturedShow_show = {
-    readonly internalID: string;
-    readonly slug: string;
-    readonly name: string | null;
-    readonly href: string | null;
-    readonly startAt: string | null;
-    readonly endAt: string | null;
-    readonly formattedStartAt: string | null;
-    readonly formattedEndAt: string | null;
-    readonly partner: {
-        readonly name?: string | null;
+export type HomeFeaturedShow_show$data = {
+  readonly internalID: string;
+  readonly slug: string;
+  readonly name: string | null;
+  readonly href: string | null;
+  readonly startAt: string | null;
+  readonly endAt: string | null;
+  readonly formattedStartAt: string | null;
+  readonly formattedEndAt: string | null;
+  readonly partner: {
+    readonly name?: string | null;
+  } | null;
+  readonly coverImage: {
+    readonly cropped: {
+      readonly src: string;
+      readonly srcSet: string;
+      readonly width: number;
+      readonly height: number;
     } | null;
-    readonly coverImage: {
-        readonly cropped: {
-            readonly src: string;
-            readonly srcSet: string;
-            readonly width: number;
-            readonly height: number;
-        } | null;
-    } | null;
-    readonly " $refType": "HomeFeaturedShow_show";
+  } | null;
+  readonly " $fragmentType": "HomeFeaturedShow_show";
 };
-export type HomeFeaturedShow_show$data = HomeFeaturedShow_show;
 export type HomeFeaturedShow_show$key = {
-    readonly " $data"?: HomeFeaturedShow_show$data;
-    readonly " $fragmentRefs": FragmentRefs<"HomeFeaturedShow_show">;
+  readonly " $data"?: HomeFeaturedShow_show$data;
+  readonly " $fragmentSpreads": FragmentRefs<"HomeFeaturedShow_show">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = {
@@ -197,5 +200,7 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = 'a46613c876093cac1b3e515f0b516138';
+
+(node as any).hash = "a46613c876093cac1b3e515f0b516138";
+
 export default node;

@@ -1,25 +1,28 @@
+/**
+ * @generated SignedSource<<ba36b55d2361c5bcc11dd41595794dcb>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type OtherAuctions_salesConnection = {
-    readonly edges: ReadonlyArray<{
-        readonly node: {
-            readonly internalID: string;
-            readonly " $fragmentRefs": FragmentRefs<"AuctionCard_sale">;
-        } | null;
-    } | null> | null;
-    readonly " $refType": "OtherAuctions_salesConnection";
+export type OtherAuctions_salesConnection$data = {
+  readonly edges: ReadonlyArray<{
+    readonly node: {
+      readonly internalID: string;
+      readonly " $fragmentSpreads": FragmentRefs<"AuctionCard_sale">;
+    } | null;
+  } | null> | null;
+  readonly " $fragmentType": "OtherAuctions_salesConnection";
 };
-export type OtherAuctions_salesConnection$data = OtherAuctions_salesConnection;
 export type OtherAuctions_salesConnection$key = {
-    readonly " $data"?: OtherAuctions_salesConnection$data;
-    readonly " $fragmentRefs": FragmentRefs<"OtherAuctions_salesConnection">;
+  readonly " $data"?: OtherAuctions_salesConnection$data;
+  readonly " $fragmentSpreads": FragmentRefs<"OtherAuctions_salesConnection">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -65,5 +68,7 @@ const node: ReaderFragment = {
   "type": "SaleConnection",
   "abstractKey": null
 };
-(node as any).hash = 'f24649f2860a50e660f21de351eb7040';
+
+(node as any).hash = "f24649f2860a50e660f21de351eb7040";
+
 export default node;

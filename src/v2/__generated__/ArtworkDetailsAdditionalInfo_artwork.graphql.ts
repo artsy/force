@@ -1,46 +1,49 @@
+/**
+ * @generated SignedSource<<95ecd2fff0682054d46781a04356099c>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtworkDetailsAdditionalInfo_artwork = {
-    readonly category: string | null;
-    readonly series: string | null;
-    readonly publisher: string | null;
-    readonly manufacturer: string | null;
-    readonly image_rights: string | null;
-    readonly canRequestLotConditionsReport: boolean | null;
-    readonly internalID: string;
-    readonly framed: {
-        readonly label: string | null;
-        readonly details: string | null;
-    } | null;
-    readonly signatureInfo: {
-        readonly label: string | null;
-        readonly details: string | null;
-    } | null;
-    readonly conditionDescription: {
-        readonly label: string | null;
-        readonly details: string | null;
-    } | null;
-    readonly certificateOfAuthenticity: {
-        readonly label: string | null;
-        readonly details: string | null;
-    } | null;
-    readonly mediumType: {
-        readonly __typename: string;
-    } | null;
-    readonly " $fragmentRefs": FragmentRefs<"ArtworkDetailsMediumModal_artwork">;
-    readonly " $refType": "ArtworkDetailsAdditionalInfo_artwork";
+export type ArtworkDetailsAdditionalInfo_artwork$data = {
+  readonly category: string | null;
+  readonly series: string | null;
+  readonly publisher: string | null;
+  readonly manufacturer: string | null;
+  readonly image_rights: string | null;
+  readonly canRequestLotConditionsReport: boolean | null;
+  readonly internalID: string;
+  readonly framed: {
+    readonly label: string | null;
+    readonly details: string | null;
+  } | null;
+  readonly signatureInfo: {
+    readonly label: string | null;
+    readonly details: string | null;
+  } | null;
+  readonly conditionDescription: {
+    readonly label: string | null;
+    readonly details: string | null;
+  } | null;
+  readonly certificateOfAuthenticity: {
+    readonly label: string | null;
+    readonly details: string | null;
+  } | null;
+  readonly mediumType: {
+    readonly __typename: string;
+  } | null;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtworkDetailsMediumModal_artwork">;
+  readonly " $fragmentType": "ArtworkDetailsAdditionalInfo_artwork";
 };
-export type ArtworkDetailsAdditionalInfo_artwork$data = ArtworkDetailsAdditionalInfo_artwork;
 export type ArtworkDetailsAdditionalInfo_artwork$key = {
-    readonly " $data"?: ArtworkDetailsAdditionalInfo_artwork$data;
-    readonly " $fragmentRefs": FragmentRefs<"ArtworkDetailsAdditionalInfo_artwork">;
+  readonly " $data"?: ArtworkDetailsAdditionalInfo_artwork$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtworkDetailsAdditionalInfo_artwork">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = [
@@ -182,5 +185,7 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '161cae3ba06592435e444531a87c7248';
+
+(node as any).hash = "161cae3ba06592435e444531a87c7248";
+
 export default node;

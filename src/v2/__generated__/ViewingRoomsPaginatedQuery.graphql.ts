@@ -1,96 +1,29 @@
+/**
+ * @generated SignedSource<<f64ca2e7011e118feba7657a8d839b99>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ViewingRoomsPaginatedQueryVariables = {
-    partnerId: string;
-    first?: number | null;
-    after?: string | null;
+export type ViewingRoomsPaginatedQuery$variables = {
+  partnerId: string;
+  first?: number | null;
+  after?: string | null;
 };
-export type ViewingRoomsPaginatedQueryResponse = {
-    readonly partner: {
-        readonly " $fragmentRefs": FragmentRefs<"ViewingRoomsPaginated_partner">;
-    } | null;
+export type ViewingRoomsPaginatedQuery$data = {
+  readonly partner: {
+    readonly " $fragmentSpreads": FragmentRefs<"ViewingRoomsPaginated_partner">;
+  } | null;
 };
 export type ViewingRoomsPaginatedQuery = {
-    readonly response: ViewingRoomsPaginatedQueryResponse;
-    readonly variables: ViewingRoomsPaginatedQueryVariables;
+  variables: ViewingRoomsPaginatedQuery$variables;
+  response: ViewingRoomsPaginatedQuery$data;
 };
-
-
-
-/*
-query ViewingRoomsPaginatedQuery(
-  $partnerId: String!
-  $first: Int
-  $after: String
-) {
-  partner(id: $partnerId) @principalField {
-    ...ViewingRoomsPaginated_partner_2HEEH6
-    id
-  }
-}
-
-fragment Pagination_pageCursors on PageCursors {
-  around {
-    cursor
-    page
-    isCurrent
-  }
-  first {
-    cursor
-    page
-    isCurrent
-  }
-  last {
-    cursor
-    page
-    isCurrent
-  }
-  previous {
-    cursor
-    page
-  }
-}
-
-fragment ViewingRoomCard_viewingRoom on ViewingRoom {
-  href
-  title
-  exhibitionPeriod
-  coverImage: image {
-    imageURLs {
-      normalized
-    }
-    width
-    height
-  }
-}
-
-fragment ViewingRoomsPaginated_partner_2HEEH6 on Partner {
-  slug
-  viewingRoomsList: viewingRoomsConnection(first: $first, after: $after, statuses: [closed]) {
-    pageInfo {
-      hasNextPage
-      endCursor
-    }
-    pageCursors {
-      ...Pagination_pageCursors
-    }
-    edges {
-      ...ViewingRooms_edges
-    }
-  }
-}
-
-fragment ViewingRooms_edges on ViewingRoomsEdge {
-  node {
-    internalID
-    ...ViewingRoomCard_viewingRoom
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = {
@@ -424,5 +357,7 @@ return {
   }
 };
 })();
-(node as any).hash = '44f0a0b7293606faa1c016328edd9f28';
+
+(node as any).hash = "44f0a0b7293606faa1c016328edd9f28";
+
 export default node;

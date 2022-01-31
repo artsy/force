@@ -1,99 +1,31 @@
+/**
+ * @generated SignedSource<<47daf6679cefd4a07d66fe77872860c2>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtistArticlesRouteQueryVariables = {
-    first?: number | null;
-    last?: number | null;
-    after?: string | null;
-    before?: string | null;
-    artistID: string;
+export type ArtistArticlesRouteQuery$variables = {
+  first?: number | null;
+  last?: number | null;
+  after?: string | null;
+  before?: string | null;
+  artistID: string;
 };
-export type ArtistArticlesRouteQueryResponse = {
-    readonly artist: {
-        readonly " $fragmentRefs": FragmentRefs<"ArtistArticlesRoute_artist">;
-    } | null;
+export type ArtistArticlesRouteQuery$data = {
+  readonly artist: {
+    readonly " $fragmentSpreads": FragmentRefs<"ArtistArticlesRoute_artist">;
+  } | null;
 };
 export type ArtistArticlesRouteQuery = {
-    readonly response: ArtistArticlesRouteQueryResponse;
-    readonly variables: ArtistArticlesRouteQueryVariables;
+  variables: ArtistArticlesRouteQuery$variables;
+  response: ArtistArticlesRouteQuery$data;
 };
-
-
-
-/*
-query ArtistArticlesRouteQuery(
-  $first: Int
-  $last: Int
-  $after: String
-  $before: String
-  $artistID: String!
-) {
-  artist(id: $artistID) {
-    ...ArtistArticlesRoute_artist_pbnwq
-    id
-  }
-}
-
-fragment ArtistArticlesRoute_artist_pbnwq on Artist {
-  articlesConnection(first: $first, after: $after, before: $before, last: $last, sort: PUBLISHED_AT_DESC, inEditorialFeed: true) {
-    pageInfo {
-      hasNextPage
-      endCursor
-    }
-    pageCursors {
-      ...Pagination_pageCursors
-    }
-    edges {
-      node {
-        internalID
-        href
-        thumbnailTitle
-        author {
-          name
-          id
-        }
-        publishedAt(format: "MMM Do, YYYY")
-        thumbnailImage {
-          cropped(width: 210, height: 150) {
-            src
-            srcSet
-            width
-            height
-          }
-        }
-        id
-      }
-    }
-  }
-  name
-  slug
-}
-
-fragment Pagination_pageCursors on PageCursors {
-  around {
-    cursor
-    page
-    isCurrent
-  }
-  first {
-    cursor
-    page
-    isCurrent
-  }
-  last {
-    cursor
-    page
-    isCurrent
-  }
-  previous {
-    cursor
-    page
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = {
@@ -505,5 +437,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'eec4bd5713935eb05add0802879ad55b';
+
+(node as any).hash = "eec4bd5713935eb05add0802879ad55b";
+
 export default node;

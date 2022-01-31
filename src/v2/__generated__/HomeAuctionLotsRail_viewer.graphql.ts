@@ -1,32 +1,35 @@
+/**
+ * @generated SignedSource<<982b585589cc81fb2c5061e15b517247>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type HomeAuctionLotsRail_viewer = {
-    readonly saleArtworksConnection: {
-        readonly edges: ReadonlyArray<{
-            readonly node: {
-                readonly internalID: string;
-                readonly slug: string;
-                readonly href: string | null;
-                readonly sale: {
-                    readonly isClosed: boolean | null;
-                } | null;
-                readonly " $fragmentRefs": FragmentRefs<"ShelfArtwork_artwork">;
-            } | null;
-        } | null> | null;
-    } | null;
-    readonly " $refType": "HomeAuctionLotsRail_viewer";
+export type HomeAuctionLotsRail_viewer$data = {
+  readonly saleArtworksConnection: {
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly internalID: string;
+        readonly slug: string;
+        readonly href: string | null;
+        readonly sale: {
+          readonly isClosed: boolean | null;
+        } | null;
+        readonly " $fragmentSpreads": FragmentRefs<"ShelfArtwork_artwork">;
+      } | null;
+    } | null> | null;
+  } | null;
+  readonly " $fragmentType": "HomeAuctionLotsRail_viewer";
 };
-export type HomeAuctionLotsRail_viewer$data = HomeAuctionLotsRail_viewer;
 export type HomeAuctionLotsRail_viewer$key = {
-    readonly " $data"?: HomeAuctionLotsRail_viewer$data;
-    readonly " $fragmentRefs": FragmentRefs<"HomeAuctionLotsRail_viewer">;
+  readonly " $data"?: HomeAuctionLotsRail_viewer$data;
+  readonly " $fragmentSpreads": FragmentRefs<"HomeAuctionLotsRail_viewer">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -70,6 +73,17 @@ const node: ReaderFragment = {
               "plural": false,
               "selections": [
                 {
+                  "args": [
+                    {
+                      "kind": "Literal",
+                      "name": "width",
+                      "value": 210
+                    }
+                  ],
+                  "kind": "FragmentSpread",
+                  "name": "ShelfArtwork_artwork"
+                },
+                {
                   "alias": null,
                   "args": null,
                   "kind": "ScalarField",
@@ -107,17 +121,6 @@ const node: ReaderFragment = {
                     }
                   ],
                   "storageKey": null
-                },
-                {
-                  "args": [
-                    {
-                      "kind": "Literal",
-                      "name": "width",
-                      "value": 210
-                    }
-                  ],
-                  "kind": "FragmentSpread",
-                  "name": "ShelfArtwork_artwork"
                 }
               ],
               "storageKey": null
@@ -132,5 +135,7 @@ const node: ReaderFragment = {
   "type": "Viewer",
   "abstractKey": null
 };
-(node as any).hash = 'a430e2aaa5acc09f5768303f6c22c5c8';
+
+(node as any).hash = "a430e2aaa5acc09f5768303f6c22c5c8";
+
 export default node;

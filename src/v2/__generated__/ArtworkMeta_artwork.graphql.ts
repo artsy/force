@@ -1,69 +1,72 @@
+/**
+ * @generated SignedSource<<7c0cff9b4cd3c03be1ad0c6f1699d267>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtworkMeta_artwork = {
-    readonly href: string | null;
-    readonly internalID: string;
-    readonly date: string | null;
-    readonly artistNames: string | null;
-    readonly sale_message: string | null;
-    readonly listPrice: ({
-        readonly __typename: "Money";
-        readonly currencyCode: string;
-        readonly major: number;
-    } | {
-        readonly __typename: "PriceRange";
-        readonly maxPrice: {
-            readonly currencyCode: string;
-            readonly major: number;
-        } | null;
-    } | {
-        /*This will never be '%other', but we need some
-        value in case none of the concrete values match.*/
-        readonly __typename: "%other";
-    }) | null;
-    readonly partner: {
-        readonly name: string | null;
+export type ArtworkMeta_artwork$data = {
+  readonly href: string | null;
+  readonly internalID: string;
+  readonly date: string | null;
+  readonly artistNames: string | null;
+  readonly sale_message: string | null;
+  readonly listPrice: {
+    readonly __typename: "Money";
+    readonly currencyCode: string;
+    readonly major: number;
+  } | {
+    readonly __typename: "PriceRange";
+    readonly maxPrice: {
+      readonly currencyCode: string;
+      readonly major: number;
     } | null;
-    readonly isInAuction: boolean | null;
-    readonly isAcquireable: boolean | null;
-    readonly isInquireable: boolean | null;
-    readonly isOfferable: boolean | null;
-    readonly isShareable: boolean | null;
-    readonly metaImage: {
-        readonly resized: {
-            readonly width: number | null;
-            readonly height: number | null;
-            readonly url: string;
-        } | null;
+  } | {
+    // This will never be '%other', but we need some
+    // value in case none of the concrete values match.
+    readonly __typename: "%other";
+  } | null;
+  readonly partner: {
+    readonly name: string | null;
+  } | null;
+  readonly isInAuction: boolean | null;
+  readonly isAcquireable: boolean | null;
+  readonly isInquireable: boolean | null;
+  readonly isOfferable: boolean | null;
+  readonly isShareable: boolean | null;
+  readonly metaImage: {
+    readonly resized: {
+      readonly width: number | null;
+      readonly height: number | null;
+      readonly url: string;
     } | null;
-    readonly meta: {
-        readonly title: string | null;
-        readonly description: string | null;
-        readonly longDescription: string | null;
-    } | null;
-    readonly context: ({
-        readonly __typename: "Fair";
-        readonly slug: string;
-        readonly name: string | null;
-    } | {
-        /*This will never be '%other', but we need some
-        value in case none of the concrete values match.*/
-        readonly __typename: "%other";
-    }) | null;
-    readonly " $fragmentRefs": FragmentRefs<"SeoDataForArtwork_artwork">;
-    readonly " $refType": "ArtworkMeta_artwork";
+  } | null;
+  readonly meta: {
+    readonly title: string | null;
+    readonly description: string | null;
+    readonly longDescription: string | null;
+  } | null;
+  readonly context: {
+    readonly __typename: "Fair";
+    readonly slug: string;
+    readonly name: string | null;
+  } | {
+    // This will never be '%other', but we need some
+    // value in case none of the concrete values match.
+    readonly __typename: "%other";
+  } | null;
+  readonly " $fragmentSpreads": FragmentRefs<"SeoDataForArtwork_artwork">;
+  readonly " $fragmentType": "ArtworkMeta_artwork";
 };
-export type ArtworkMeta_artwork$data = ArtworkMeta_artwork;
 export type ArtworkMeta_artwork$key = {
-    readonly " $data"?: ArtworkMeta_artwork$data;
-    readonly " $fragmentRefs": FragmentRefs<"ArtworkMeta_artwork">;
+  readonly " $data"?: ArtworkMeta_artwork$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtworkMeta_artwork">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = {
@@ -363,5 +366,7 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '31f3bd396402fb7d7c0f370fe4b9bf2d';
+
+(node as any).hash = "31f3bd396402fb7d7c0f370fe4b9bf2d";
+
 export default node;

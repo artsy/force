@@ -1,43 +1,46 @@
+/**
+ * @generated SignedSource<<4bc8e4e8e6cc8a16d2451666cd525588>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ViewingRoomWorksRoute_viewingRoom = {
-    readonly artworksConnection: {
-        readonly edges: ReadonlyArray<{
-            readonly node: {
-                readonly internalID: string;
-                readonly title: string | null;
-                readonly images: ReadonlyArray<{
-                    readonly internalID: string | null;
-                    readonly solo: {
-                        readonly src: string;
-                        readonly srcSet: string;
-                        readonly width: number | null;
-                        readonly height: number | null;
-                    } | null;
-                    readonly resized: {
-                        readonly src: string;
-                        readonly srcSet: string;
-                        readonly width: number | null;
-                        readonly height: number | null;
-                    } | null;
-                } | null> | null;
-                readonly " $fragmentRefs": FragmentRefs<"ViewingRoomArtworkDetails_artwork">;
-            } | null;
+export type ViewingRoomWorksRoute_viewingRoom$data = {
+  readonly artworksConnection: {
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly internalID: string;
+        readonly title: string | null;
+        readonly images: ReadonlyArray<{
+          readonly internalID: string | null;
+          readonly solo: {
+            readonly src: string;
+            readonly srcSet: string;
+            readonly width: number | null;
+            readonly height: number | null;
+          } | null;
+          readonly resized: {
+            readonly src: string;
+            readonly srcSet: string;
+            readonly width: number | null;
+            readonly height: number | null;
+          } | null;
         } | null> | null;
-    } | null;
-    readonly " $refType": "ViewingRoomWorksRoute_viewingRoom";
+        readonly " $fragmentSpreads": FragmentRefs<"ViewingRoomArtworkDetails_artwork">;
+      } | null;
+    } | null> | null;
+  } | null;
+  readonly " $fragmentType": "ViewingRoomWorksRoute_viewingRoom";
 };
-export type ViewingRoomWorksRoute_viewingRoom$data = ViewingRoomWorksRoute_viewingRoom;
 export type ViewingRoomWorksRoute_viewingRoom$key = {
-    readonly " $data"?: ViewingRoomWorksRoute_viewingRoom$data;
-    readonly " $fragmentRefs": FragmentRefs<"ViewingRoomWorksRoute_viewingRoom">;
+  readonly " $data"?: ViewingRoomWorksRoute_viewingRoom$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ViewingRoomWorksRoute_viewingRoom">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = {
@@ -185,5 +188,7 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = 'ec3ae2365d5c3b73112c59e847447b20';
+
+(node as any).hash = "ec3ae2365d5c3b73112c59e847447b20";
+
 export default node;

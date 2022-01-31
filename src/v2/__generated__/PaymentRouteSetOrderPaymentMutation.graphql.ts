@@ -1,82 +1,50 @@
+/**
+ * @generated SignedSource<<c3974ededae83826384ef147daecda8e>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type CommerceSetPaymentInput = {
-    clientMutationId?: string | null;
-    creditCardId: string;
-    id: string;
+  clientMutationId?: string | null;
+  creditCardId: string;
+  id: string;
 };
-export type PaymentRouteSetOrderPaymentMutationVariables = {
-    input: CommerceSetPaymentInput;
+export type PaymentRouteSetOrderPaymentMutation$variables = {
+  input: CommerceSetPaymentInput;
 };
-export type PaymentRouteSetOrderPaymentMutationResponse = {
-    readonly commerceSetPayment: {
-        readonly orderOrError: {
-            readonly order?: {
-                readonly id: string;
-                readonly creditCard: {
-                    readonly internalID: string;
-                    readonly name: string | null;
-                    readonly street1: string | null;
-                    readonly street2: string | null;
-                    readonly city: string | null;
-                    readonly state: string | null;
-                    readonly country: string | null;
-                    readonly postal_code: string | null;
-                } | null;
-            };
-            readonly error?: {
-                readonly type: string;
-                readonly code: string;
-                readonly data: string | null;
-            };
-        };
-    } | null;
+export type PaymentRouteSetOrderPaymentMutation$data = {
+  readonly commerceSetPayment: {
+    readonly orderOrError: {
+      readonly order?: {
+        readonly id: string;
+        readonly creditCard: {
+          readonly internalID: string;
+          readonly name: string | null;
+          readonly street1: string | null;
+          readonly street2: string | null;
+          readonly city: string | null;
+          readonly state: string | null;
+          readonly country: string | null;
+          readonly postal_code: string | null;
+        } | null;
+      };
+      readonly error?: {
+        readonly type: string;
+        readonly code: string;
+        readonly data: string | null;
+      };
+    };
+  } | null;
 };
 export type PaymentRouteSetOrderPaymentMutation = {
-    readonly response: PaymentRouteSetOrderPaymentMutationResponse;
-    readonly variables: PaymentRouteSetOrderPaymentMutationVariables;
+  variables: PaymentRouteSetOrderPaymentMutation$variables;
+  response: PaymentRouteSetOrderPaymentMutation$data;
 };
-
-
-
-/*
-mutation PaymentRouteSetOrderPaymentMutation(
-  $input: CommerceSetPaymentInput!
-) {
-  commerceSetPayment(input: $input) {
-    orderOrError {
-      __typename
-      ... on CommerceOrderWithMutationSuccess {
-        order {
-          __typename
-          id
-          creditCard {
-            internalID
-            name
-            street1
-            street2
-            city
-            state
-            country
-            postal_code: postalCode
-            id
-          }
-        }
-      }
-      ... on CommerceOrderWithMutationFailure {
-        error {
-          type
-          code
-          data
-        }
-      }
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -356,5 +324,7 @@ return {
   }
 };
 })();
-(node as any).hash = '9f6f0e6355061eef5365c03092fd6237';
+
+(node as any).hash = "9f6f0e6355061eef5365c03092fd6237";
+
 export default node;

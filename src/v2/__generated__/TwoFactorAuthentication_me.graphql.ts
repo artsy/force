@@ -1,21 +1,24 @@
+/**
+ * @generated SignedSource<<d4990b6750e71242e3f114e138f65d65>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type TwoFactorAuthentication_me = {
-    readonly hasSecondFactorEnabled: boolean;
-    readonly " $fragmentRefs": FragmentRefs<"AppSecondFactor_me" | "SmsSecondFactor_me" | "BackupSecondFactor_me">;
-    readonly " $refType": "TwoFactorAuthentication_me";
+export type TwoFactorAuthentication_me$data = {
+  readonly hasSecondFactorEnabled: boolean;
+  readonly " $fragmentSpreads": FragmentRefs<"AppSecondFactor_me" | "SmsSecondFactor_me" | "BackupSecondFactor_me">;
+  readonly " $fragmentType": "TwoFactorAuthentication_me";
 };
-export type TwoFactorAuthentication_me$data = TwoFactorAuthentication_me;
 export type TwoFactorAuthentication_me$key = {
-    readonly " $data"?: TwoFactorAuthentication_me$data;
-    readonly " $fragmentRefs": FragmentRefs<"TwoFactorAuthentication_me">;
+  readonly " $data"?: TwoFactorAuthentication_me$data;
+  readonly " $fragmentSpreads": FragmentRefs<"TwoFactorAuthentication_me">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -49,5 +52,7 @@ const node: ReaderFragment = {
   "type": "Me",
   "abstractKey": null
 };
-(node as any).hash = 'eac31dfdac45d8d82d5c52be1fac4bf8';
+
+(node as any).hash = "eac31dfdac45d8d82d5c52be1fac4bf8";
+
 export default node;

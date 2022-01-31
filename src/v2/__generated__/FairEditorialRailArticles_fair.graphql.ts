@@ -1,27 +1,30 @@
+/**
+ * @generated SignedSource<<d9fc58ed1de44925dd0e979e73c92c2e>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type FairEditorialRailArticles_fair = {
-    readonly articlesConnection: {
-        readonly edges: ReadonlyArray<{
-            readonly node: {
-                readonly id: string;
-                readonly " $fragmentRefs": FragmentRefs<"FairEditorialItem_article">;
-            } | null;
-        } | null> | null;
-    } | null;
-    readonly " $refType": "FairEditorialRailArticles_fair";
+export type FairEditorialRailArticles_fair$data = {
+  readonly articlesConnection: {
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly id: string;
+        readonly " $fragmentSpreads": FragmentRefs<"FairEditorialItem_article">;
+      } | null;
+    } | null> | null;
+  } | null;
+  readonly " $fragmentType": "FairEditorialRailArticles_fair";
 };
-export type FairEditorialRailArticles_fair$data = FairEditorialRailArticles_fair;
 export type FairEditorialRailArticles_fair$key = {
-    readonly " $data"?: FairEditorialRailArticles_fair$data;
-    readonly " $fragmentRefs": FragmentRefs<"FairEditorialRailArticles_fair">;
+  readonly " $data"?: FairEditorialRailArticles_fair$data;
+  readonly " $fragmentSpreads": FragmentRefs<"FairEditorialRailArticles_fair">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -89,5 +92,7 @@ const node: ReaderFragment = {
   "type": "Fair",
   "abstractKey": null
 };
-(node as any).hash = '22a9194f3ccff534806853a8f70a5581';
+
+(node as any).hash = "22a9194f3ccff534806853a8f70a5581";
+
 export default node;

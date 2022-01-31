@@ -1,20 +1,23 @@
+/**
+ * @generated SignedSource<<8d7be5e2587e7268f812306e79f93b29>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type FeatureAKGApp_viewer = {
-    readonly " $fragmentRefs": FragmentRefs<"Feature_viewer">;
-    readonly " $refType": "FeatureAKGApp_viewer";
+export type FeatureAKGApp_viewer$data = {
+  readonly " $fragmentSpreads": FragmentRefs<"Feature_viewer">;
+  readonly " $fragmentType": "FeatureAKGApp_viewer";
 };
-export type FeatureAKGApp_viewer$data = FeatureAKGApp_viewer;
 export type FeatureAKGApp_viewer$key = {
-    readonly " $data"?: FeatureAKGApp_viewer$data;
-    readonly " $fragmentRefs": FragmentRefs<"FeatureAKGApp_viewer">;
+  readonly " $data"?: FeatureAKGApp_viewer$data;
+  readonly " $fragmentSpreads": FragmentRefs<"FeatureAKGApp_viewer">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [
@@ -113,5 +116,7 @@ const node: ReaderFragment = {
   "type": "Viewer",
   "abstractKey": null
 };
-(node as any).hash = '7e462965607113d556dfbd202e44b165';
+
+(node as any).hash = "7e462965607113d556dfbd202e44b165";
+
 export default node;

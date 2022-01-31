@@ -1,30 +1,33 @@
+/**
+ * @generated SignedSource<<bd98d8335f9f293e64be7562e066f30d>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtistNotableWorksRail_artist = {
-    readonly slug: string;
-    readonly internalID: string;
-    readonly filterArtworksConnection: {
-        readonly edges: ReadonlyArray<{
-            readonly node: {
-                readonly internalID: string;
-                readonly slug: string;
-                readonly " $fragmentRefs": FragmentRefs<"ShelfArtwork_artwork">;
-            } | null;
-        } | null> | null;
-    } | null;
-    readonly " $refType": "ArtistNotableWorksRail_artist";
+export type ArtistNotableWorksRail_artist$data = {
+  readonly slug: string;
+  readonly internalID: string;
+  readonly filterArtworksConnection: {
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly internalID: string;
+        readonly slug: string;
+        readonly " $fragmentSpreads": FragmentRefs<"ShelfArtwork_artwork">;
+      } | null;
+    } | null> | null;
+  } | null;
+  readonly " $fragmentType": "ArtistNotableWorksRail_artist";
 };
-export type ArtistNotableWorksRail_artist$data = ArtistNotableWorksRail_artist;
 export type ArtistNotableWorksRail_artist$key = {
-    readonly " $data"?: ArtistNotableWorksRail_artist$data;
-    readonly " $fragmentRefs": FragmentRefs<"ArtistNotableWorksRail_artist">;
+  readonly " $data"?: ArtistNotableWorksRail_artist$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtistNotableWorksRail_artist">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = {
@@ -111,5 +114,7 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '9424578a44deb286d040731faadd7dca';
+
+(node as any).hash = "9424578a44deb286d040731faadd7dca";
+
 export default node;

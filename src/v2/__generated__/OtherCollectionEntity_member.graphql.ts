@@ -1,23 +1,26 @@
+/**
+ * @generated SignedSource<<f7b02307ea35758f23e902ffbac3a50a>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type OtherCollectionEntity_member = {
-    readonly id: string;
-    readonly slug: string;
-    readonly thumbnail: string | null;
-    readonly title: string;
-    readonly " $refType": "OtherCollectionEntity_member";
+export type OtherCollectionEntity_member$data = {
+  readonly id: string;
+  readonly slug: string;
+  readonly thumbnail: string | null;
+  readonly title: string;
+  readonly " $fragmentType": "OtherCollectionEntity_member";
 };
-export type OtherCollectionEntity_member$data = OtherCollectionEntity_member;
 export type OtherCollectionEntity_member$key = {
-    readonly " $data"?: OtherCollectionEntity_member$data;
-    readonly " $fragmentRefs": FragmentRefs<"OtherCollectionEntity_member">;
+  readonly " $data"?: OtherCollectionEntity_member$data;
+  readonly " $fragmentSpreads": FragmentRefs<"OtherCollectionEntity_member">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -57,5 +60,7 @@ const node: ReaderFragment = {
   "type": "MarketingCollection",
   "abstractKey": null
 };
-(node as any).hash = 'ae069d7d2cf1284dbee48601931755b6';
+
+(node as any).hash = "ae069d7d2cf1284dbee48601931755b6";
+
 export default node;

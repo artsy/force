@@ -1,63 +1,31 @@
+/**
+ * @generated SignedSource<<40dd31c40285b53d9c20586e72c3eb48>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ShowBanner_Test_QueryVariables = {};
-export type ShowBanner_Test_QueryResponse = {
-    readonly partner: {
-        readonly showsConnection: {
-            readonly edges: ReadonlyArray<{
-                readonly node: {
-                    readonly " $fragmentRefs": FragmentRefs<"ShowBanner_show">;
-                } | null;
-            } | null> | null;
+export type ShowBanner_Test_Query$variables = {};
+export type ShowBanner_Test_Query$data = {
+  readonly partner: {
+    readonly showsConnection: {
+      readonly edges: ReadonlyArray<{
+        readonly node: {
+          readonly " $fragmentSpreads": FragmentRefs<"ShowBanner_show">;
         } | null;
+      } | null> | null;
     } | null;
+  } | null;
 };
 export type ShowBanner_Test_Query = {
-    readonly response: ShowBanner_Test_QueryResponse;
-    readonly variables: ShowBanner_Test_QueryVariables;
+  variables: ShowBanner_Test_Query$variables;
+  response: ShowBanner_Test_Query$data;
 };
-
-
-
-/*
-query ShowBanner_Test_Query {
-  partner(id: "white-cube") @principalField {
-    showsConnection(first: 1) {
-      edges {
-        node {
-          ...ShowBanner_show
-          id
-        }
-      }
-    }
-    id
-  }
-}
-
-fragment ShowBanner_show on Show {
-  slug
-  name
-  href
-  isFairBooth
-  exhibitionPeriod
-  status
-  description
-  location {
-    city
-    id
-  }
-  coverImage {
-    medium: cropped(width: 600, height: 480, version: ["normalized", "larger", "large"]) {
-      src
-      srcSet
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -410,5 +378,7 @@ return {
   }
 };
 })();
-(node as any).hash = '115546c798271ef60e1a328d523c1665';
+
+(node as any).hash = "115546c798271ef60e1a328d523c1665";
+
 export default node;

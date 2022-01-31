@@ -1,29 +1,32 @@
+/**
+ * @generated SignedSource<<2e56cdb603859f710519b1f23494a0eb>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtworkSidebarAuctionPartnerInfo_artwork = {
-    readonly partner: {
-        readonly name: string | null;
-    } | null;
-    readonly sale_artwork: {
-        readonly estimate: string | null;
-    } | null;
-    readonly sale: {
-        readonly internalID: string;
-        readonly is_closed: boolean | null;
-    } | null;
-    readonly " $refType": "ArtworkSidebarAuctionPartnerInfo_artwork";
+export type ArtworkSidebarAuctionPartnerInfo_artwork$data = {
+  readonly partner: {
+    readonly name: string | null;
+  } | null;
+  readonly sale_artwork: {
+    readonly estimate: string | null;
+  } | null;
+  readonly sale: {
+    readonly internalID: string;
+    readonly is_closed: boolean | null;
+  } | null;
+  readonly " $fragmentType": "ArtworkSidebarAuctionPartnerInfo_artwork";
 };
-export type ArtworkSidebarAuctionPartnerInfo_artwork$data = ArtworkSidebarAuctionPartnerInfo_artwork;
 export type ArtworkSidebarAuctionPartnerInfo_artwork$key = {
-    readonly " $data"?: ArtworkSidebarAuctionPartnerInfo_artwork$data;
-    readonly " $fragmentRefs": FragmentRefs<"ArtworkSidebarAuctionPartnerInfo_artwork">;
+  readonly " $data"?: ArtworkSidebarAuctionPartnerInfo_artwork$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtworkSidebarAuctionPartnerInfo_artwork">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -96,5 +99,7 @@ const node: ReaderFragment = {
   "type": "Artwork",
   "abstractKey": null
 };
-(node as any).hash = '9ae1e9a16b9b2924cf3ec43d91ed7ebf';
+
+(node as any).hash = "9ae1e9a16b9b2924cf3ec43d91ed7ebf";
+
 export default node;

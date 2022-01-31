@@ -1,30 +1,33 @@
+/**
+ * @generated SignedSource<<6b90104fe0d78ce25cbf80ff5af91738>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ConversationApp_me = {
-    readonly conversationsConnection: {
-        readonly edges: ReadonlyArray<{
-            readonly node: {
-                readonly internalID: string | null;
-                readonly to: {
-                    readonly name: string;
-                };
-            } | null;
-        } | null> | null;
-    } | null;
-    readonly " $fragmentRefs": FragmentRefs<"ConversationList_me">;
-    readonly " $refType": "ConversationApp_me";
+export type ConversationApp_me$data = {
+  readonly conversationsConnection: {
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly internalID: string | null;
+        readonly to: {
+          readonly name: string;
+        };
+      } | null;
+    } | null> | null;
+  } | null;
+  readonly " $fragmentSpreads": FragmentRefs<"ConversationList_me">;
+  readonly " $fragmentType": "ConversationApp_me";
 };
-export type ConversationApp_me$data = ConversationApp_me;
 export type ConversationApp_me$key = {
-    readonly " $data"?: ConversationApp_me$data;
-    readonly " $fragmentRefs": FragmentRefs<"ConversationApp_me">;
+  readonly " $data"?: ConversationApp_me$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ConversationApp_me">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [
@@ -141,5 +144,7 @@ const node: ReaderFragment = {
   "type": "Me",
   "abstractKey": null
 };
-(node as any).hash = '7b32208e71cb364f107200604f93ec26';
+
+(node as any).hash = "7b32208e71cb364f107200604f93ec26";
+
 export default node;

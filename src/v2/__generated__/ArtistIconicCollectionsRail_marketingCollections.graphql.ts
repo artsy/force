@@ -1,38 +1,41 @@
+/**
+ * @generated SignedSource<<9c92665f6b00a3e59b1166e8905a9a25>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtistIconicCollectionsRail_marketingCollections = ReadonlyArray<{
-    readonly headerImage: string | null;
-    readonly thumbnail: string | null;
-    readonly slug: string;
-    readonly title: string;
-    readonly priceGuidance: number | null;
-    readonly artworksConnection: {
-        readonly edges: ReadonlyArray<{
-            readonly node: {
-                readonly image: {
-                    readonly resized: {
-                        readonly width: number | null;
-                        readonly height: number | null;
-                        readonly src: string;
-                        readonly srcSet: string;
-                    } | null;
-                } | null;
-            } | null;
-        } | null> | null;
-    } | null;
-    readonly " $refType": "ArtistIconicCollectionsRail_marketingCollections";
+export type ArtistIconicCollectionsRail_marketingCollections$data = ReadonlyArray<{
+  readonly headerImage: string | null;
+  readonly thumbnail: string | null;
+  readonly slug: string;
+  readonly title: string;
+  readonly priceGuidance: number | null;
+  readonly artworksConnection: {
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly image: {
+          readonly resized: {
+            readonly width: number | null;
+            readonly height: number | null;
+            readonly src: string;
+            readonly srcSet: string;
+          } | null;
+        } | null;
+      } | null;
+    } | null> | null;
+  } | null;
+  readonly " $fragmentType": "ArtistIconicCollectionsRail_marketingCollections";
 }>;
-export type ArtistIconicCollectionsRail_marketingCollections$data = ArtistIconicCollectionsRail_marketingCollections;
 export type ArtistIconicCollectionsRail_marketingCollections$key = ReadonlyArray<{
-    readonly " $data"?: ArtistIconicCollectionsRail_marketingCollections$data;
-    readonly " $fragmentRefs": FragmentRefs<"ArtistIconicCollectionsRail_marketingCollections">;
+  readonly " $data"?: ArtistIconicCollectionsRail_marketingCollections$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtistIconicCollectionsRail_marketingCollections">;
 }>;
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -193,5 +196,7 @@ const node: ReaderFragment = {
   "type": "MarketingCollection",
   "abstractKey": null
 };
-(node as any).hash = 'f3b06a434748d30c42eed48e84c12d62';
+
+(node as any).hash = "f3b06a434748d30c42eed48e84c12d62";
+
 export default node;

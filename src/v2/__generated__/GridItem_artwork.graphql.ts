@@ -1,31 +1,34 @@
+/**
+ * @generated SignedSource<<03b8b0bfbd30c1cd7f7f13c066201642>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type GridItem_artwork = {
-    readonly internalID: string;
-    readonly title: string | null;
-    readonly image_title: string | null;
-    readonly image: {
-        readonly placeholder: string | null;
-        readonly url: string | null;
-        readonly aspect_ratio: number;
-    } | null;
-    readonly artistNames: string | null;
-    readonly href: string | null;
-    readonly is_saved: boolean | null;
-    readonly " $fragmentRefs": FragmentRefs<"Metadata_artwork" | "SaveButton_artwork" | "Badge_artwork">;
-    readonly " $refType": "GridItem_artwork";
+export type GridItem_artwork$data = {
+  readonly internalID: string;
+  readonly title: string | null;
+  readonly image_title: string | null;
+  readonly image: {
+    readonly placeholder: string | null;
+    readonly url: string | null;
+    readonly aspect_ratio: number;
+  } | null;
+  readonly artistNames: string | null;
+  readonly href: string | null;
+  readonly is_saved: boolean | null;
+  readonly " $fragmentSpreads": FragmentRefs<"Metadata_artwork" | "SaveButton_artwork" | "Badge_artwork">;
+  readonly " $fragmentType": "GridItem_artwork";
 };
-export type GridItem_artwork$data = GridItem_artwork;
 export type GridItem_artwork$key = {
-    readonly " $data"?: GridItem_artwork$data;
-    readonly " $fragmentRefs": FragmentRefs<"GridItem_artwork">;
+  readonly " $data"?: GridItem_artwork$data;
+  readonly " $fragmentSpreads": FragmentRefs<"GridItem_artwork">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -132,5 +135,7 @@ const node: ReaderFragment = {
   "type": "Artwork",
   "abstractKey": null
 };
-(node as any).hash = '6926380fdd2818f29e6823875fb75862';
+
+(node as any).hash = "6926380fdd2818f29e6823875fb75862";
+
 export default node;

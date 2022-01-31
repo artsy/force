@@ -1,75 +1,25 @@
+/**
+ * @generated SignedSource<<efdc8e1c5c712c6baa1a66fa12d250b6>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtworkImageBrowserLarge_Test_QueryVariables = {};
-export type ArtworkImageBrowserLarge_Test_QueryResponse = {
-    readonly artwork: {
-        readonly " $fragmentRefs": FragmentRefs<"ArtworkImageBrowserLarge_artwork">;
-    } | null;
+export type ArtworkImageBrowserLarge_Test_Query$variables = {};
+export type ArtworkImageBrowserLarge_Test_Query$data = {
+  readonly artwork: {
+    readonly " $fragmentSpreads": FragmentRefs<"ArtworkImageBrowserLarge_artwork">;
+  } | null;
 };
 export type ArtworkImageBrowserLarge_Test_Query = {
-    readonly response: ArtworkImageBrowserLarge_Test_QueryResponse;
-    readonly variables: ArtworkImageBrowserLarge_Test_QueryVariables;
+  variables: ArtworkImageBrowserLarge_Test_Query$variables;
+  response: ArtworkImageBrowserLarge_Test_Query$data;
 };
-
-
-
-/*
-query ArtworkImageBrowserLarge_Test_Query {
-  artwork(id: "example") {
-    ...ArtworkImageBrowserLarge_artwork
-    id
-  }
-}
-
-fragment ArtworkImageBrowserLarge_artwork on Artwork {
-  ...ArtworkLightbox_artwork
-  images {
-    internalID
-    isZoomable
-    ...DeepZoom_image
-  }
-}
-
-fragment ArtworkLightbox_artwork on Artwork {
-  formattedMetadata
-  images {
-    isDefault
-    placeholder: url(version: ["small", "medium"])
-    fallback: cropped(width: 800, height: 800, version: ["normalized", "larger", "large"]) {
-      width
-      height
-      src
-      srcSet
-    }
-    resized(width: 800, height: 800, version: ["normalized", "larger", "large"]) {
-      width
-      height
-      src
-      srcSet
-    }
-  }
-}
-
-fragment DeepZoom_image on Image {
-  deepZoom {
-    Image {
-      xmlns
-      Url
-      Format
-      TileSize
-      Overlap
-      Size {
-        Width
-        Height
-      }
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -456,5 +406,7 @@ return {
   }
 };
 })();
-(node as any).hash = '744ccbf0cf1b25d52279b17799938343';
+
+(node as any).hash = "744ccbf0cf1b25d52279b17799938343";
+
 export default node;

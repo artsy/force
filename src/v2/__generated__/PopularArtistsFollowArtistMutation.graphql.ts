@@ -1,99 +1,62 @@
+/**
+ * @generated SignedSource<<02dd2460ed2d34abf11eb7b4d7e40aab>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type FollowArtistInput = {
-    artistID: string;
-    clientMutationId?: string | null;
-    unfollow?: boolean | null;
+  artistID: string;
+  clientMutationId?: string | null;
+  unfollow?: boolean | null;
 };
-export type PopularArtistsFollowArtistMutationVariables = {
-    input: FollowArtistInput;
-    excludedArtistIds: Array<string | null>;
+export type PopularArtistsFollowArtistMutation$variables = {
+  input: FollowArtistInput;
+  excludedArtistIds: ReadonlyArray<string | null>;
 };
-export type PopularArtistsFollowArtistMutationResponse = {
-    readonly followArtist: {
-        readonly popular_artists: ReadonlyArray<{
-            readonly slug: string;
-            readonly internalID: string;
-            readonly id: string;
-            readonly name: string | null;
-            readonly image: {
-                readonly cropped: {
-                    readonly url: string;
-                } | null;
-            } | null;
-        } | null> | null;
-        readonly artist: {
-            readonly id: string;
-            readonly related: {
-                readonly suggestedConnection: {
-                    readonly edges: ReadonlyArray<{
-                        readonly node: {
-                            readonly slug: string;
-                            readonly internalID: string;
-                            readonly id: string;
-                            readonly name: string | null;
-                            readonly image: {
-                                readonly cropped: {
-                                    readonly url: string;
-                                } | null;
-                            } | null;
-                        } | null;
-                    } | null> | null;
-                } | null;
-            } | null;
+export type PopularArtistsFollowArtistMutation$data = {
+  readonly followArtist: {
+    readonly popular_artists: ReadonlyArray<{
+      readonly slug: string;
+      readonly internalID: string;
+      readonly id: string;
+      readonly name: string | null;
+      readonly image: {
+        readonly cropped: {
+          readonly url: string;
         } | null;
+      } | null;
+    } | null> | null;
+    readonly artist: {
+      readonly id: string;
+      readonly related: {
+        readonly suggestedConnection: {
+          readonly edges: ReadonlyArray<{
+            readonly node: {
+              readonly slug: string;
+              readonly internalID: string;
+              readonly id: string;
+              readonly name: string | null;
+              readonly image: {
+                readonly cropped: {
+                  readonly url: string;
+                } | null;
+              } | null;
+            } | null;
+          } | null> | null;
+        } | null;
+      } | null;
     } | null;
+  } | null;
 };
 export type PopularArtistsFollowArtistMutation = {
-    readonly response: PopularArtistsFollowArtistMutationResponse;
-    readonly variables: PopularArtistsFollowArtistMutationVariables;
+  variables: PopularArtistsFollowArtistMutation$variables;
+  response: PopularArtistsFollowArtistMutation$data;
 };
-
-
-
-/*
-mutation PopularArtistsFollowArtistMutation(
-  $input: FollowArtistInput!
-  $excludedArtistIds: [String]!
-) {
-  followArtist(input: $input) {
-    popular_artists: popularArtists(size: 1, excludeFollowedArtists: true, excludeArtistIDs: $excludedArtistIds) {
-      slug
-      internalID
-      id
-      name
-      image {
-        cropped(width: 100, height: 100) {
-          url
-        }
-      }
-    }
-    artist {
-      id
-      related {
-        suggestedConnection(first: 1, excludeFollowedArtists: true, excludeArtistIDs: $excludedArtistIds) {
-          edges {
-            node {
-              slug
-              internalID
-              id
-              name
-              image {
-                cropped(width: 100, height: 100) {
-                  url
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = {
@@ -320,5 +283,7 @@ return {
   }
 };
 })();
-(node as any).hash = '54f547a49eae7ac8dfae6f80dcb54e37';
+
+(node as any).hash = "54f547a49eae7ac8dfae6f80dcb54e37";
+
 export default node;

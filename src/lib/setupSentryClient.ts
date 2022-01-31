@@ -13,6 +13,7 @@ export function setupSentryClient(sd) {
     denyUrls: DENIED_URLS,
     dsn: sd.SENTRY_PUBLIC_DSN,
     ignoreErrors: IGNORED_ERRORS,
+    // @ts-ignore UPGRADE RELAY 13
     integrations: [new Integrations.BrowserTracing(), new Dedupe()],
   })
 }

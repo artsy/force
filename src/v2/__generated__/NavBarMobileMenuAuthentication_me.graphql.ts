@@ -1,21 +1,24 @@
+/**
+ * @generated SignedSource<<50ee788e1e165bb5712d65b16e2ae93d>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type NavBarMobileMenuAuthentication_me = {
-    readonly unreadNotificationsCount: number;
-    readonly unreadConversationCount: number;
-    readonly " $refType": "NavBarMobileMenuAuthentication_me";
+export type NavBarMobileMenuAuthentication_me$data = {
+  readonly unreadNotificationsCount: number;
+  readonly unreadConversationCount: number;
+  readonly " $fragmentType": "NavBarMobileMenuAuthentication_me";
 };
-export type NavBarMobileMenuAuthentication_me$data = NavBarMobileMenuAuthentication_me;
 export type NavBarMobileMenuAuthentication_me$key = {
-    readonly " $data"?: NavBarMobileMenuAuthentication_me$data;
-    readonly " $fragmentRefs": FragmentRefs<"NavBarMobileMenuAuthentication_me">;
+  readonly " $data"?: NavBarMobileMenuAuthentication_me$data;
+  readonly " $fragmentSpreads": FragmentRefs<"NavBarMobileMenuAuthentication_me">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -41,5 +44,7 @@ const node: ReaderFragment = {
   "type": "Me",
   "abstractKey": null
 };
-(node as any).hash = '55605d871ddab628fa4b2e82b5e91142';
+
+(node as any).hash = "55605d871ddab628fa4b2e82b5e91142";
+
 export default node;

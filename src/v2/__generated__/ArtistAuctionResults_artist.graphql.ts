@@ -1,51 +1,54 @@
+/**
+ * @generated SignedSource<<c866da96809c2c74075ca40046ebc5c9>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtistAuctionResults_artist = {
-    readonly slug: string;
-    readonly internalID: string;
-    readonly name: string | null;
-    readonly auctionResultsConnection: {
-        readonly createdYearRange: {
-            readonly startAt: number | null;
-            readonly endAt: number | null;
-        } | null;
-        readonly pageInfo: {
-            readonly hasNextPage: boolean;
-            readonly endCursor: string | null;
-        };
-        readonly pageCursors: {
-            readonly " $fragmentRefs": FragmentRefs<"Pagination_pageCursors">;
-        };
-        readonly totalCount: number | null;
-        readonly edges: ReadonlyArray<{
-            readonly node: {
-                readonly title: string | null;
-                readonly dimension_text: string | null;
-                readonly images: {
-                    readonly thumbnail: {
-                        readonly url: string | null;
-                    } | null;
-                } | null;
-                readonly description: string | null;
-                readonly date_text: string | null;
-                readonly " $fragmentRefs": FragmentRefs<"ArtistAuctionResultItem_auctionResult">;
-            } | null;
-        } | null> | null;
-        readonly " $fragmentRefs": FragmentRefs<"ArtistAuctionResultsCount_results">;
+export type ArtistAuctionResults_artist$data = {
+  readonly slug: string;
+  readonly internalID: string;
+  readonly name: string | null;
+  readonly auctionResultsConnection: {
+    readonly createdYearRange: {
+      readonly startAt: number | null;
+      readonly endAt: number | null;
     } | null;
-    readonly " $refType": "ArtistAuctionResults_artist";
+    readonly pageInfo: {
+      readonly hasNextPage: boolean;
+      readonly endCursor: string | null;
+    };
+    readonly pageCursors: {
+      readonly " $fragmentSpreads": FragmentRefs<"Pagination_pageCursors">;
+    };
+    readonly totalCount: number | null;
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly title: string | null;
+        readonly dimension_text: string | null;
+        readonly images: {
+          readonly thumbnail: {
+            readonly url: string | null;
+          } | null;
+        } | null;
+        readonly description: string | null;
+        readonly date_text: string | null;
+        readonly " $fragmentSpreads": FragmentRefs<"ArtistAuctionResultItem_auctionResult">;
+      } | null;
+    } | null> | null;
+    readonly " $fragmentSpreads": FragmentRefs<"ArtistAuctionResultsCount_results">;
+  } | null;
+  readonly " $fragmentType": "ArtistAuctionResults_artist";
 };
-export type ArtistAuctionResults_artist$data = ArtistAuctionResults_artist;
 export type ArtistAuctionResults_artist$key = {
-    readonly " $data"?: ArtistAuctionResults_artist$data;
-    readonly " $fragmentRefs": FragmentRefs<"ArtistAuctionResults_artist">;
+  readonly " $data"?: ArtistAuctionResults_artist$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtistAuctionResults_artist">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [
@@ -205,6 +208,11 @@ const node: ReaderFragment = {
       "plural": false,
       "selections": [
         {
+          "args": null,
+          "kind": "FragmentSpread",
+          "name": "ArtistAuctionResultsCount_results"
+        },
+        {
           "alias": null,
           "args": null,
           "concreteType": "YearRange",
@@ -360,11 +368,6 @@ const node: ReaderFragment = {
             }
           ],
           "storageKey": null
-        },
-        {
-          "args": null,
-          "kind": "FragmentSpread",
-          "name": "ArtistAuctionResultsCount_results"
         }
       ],
       "storageKey": null
@@ -373,5 +376,7 @@ const node: ReaderFragment = {
   "type": "Artist",
   "abstractKey": null
 };
-(node as any).hash = '6564a53d57824f81b3eeae63f0bfcc9c';
+
+(node as any).hash = "6564a53d57824f81b3eeae63f0bfcc9c";
+
 export default node;

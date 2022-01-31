@@ -1,27 +1,30 @@
+/**
+ * @generated SignedSource<<b64a0fac923ae798bd0892b5ed989b8d>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type SettingsEditProfileAboutYou_me = {
-    readonly location: {
-        readonly display: string | null;
-    } | null;
-    readonly profession: string | null;
-    readonly shareFollows: boolean;
-    readonly priceRange: string | null;
-    readonly priceRangeMin: number | null;
-    readonly priceRangeMax: number | null;
-    readonly " $refType": "SettingsEditProfileAboutYou_me";
+export type SettingsEditProfileAboutYou_me$data = {
+  readonly location: {
+    readonly display: string | null;
+  } | null;
+  readonly profession: string | null;
+  readonly shareFollows: boolean;
+  readonly priceRange: string | null;
+  readonly priceRangeMin: number | null;
+  readonly priceRangeMax: number | null;
+  readonly " $fragmentType": "SettingsEditProfileAboutYou_me";
 };
-export type SettingsEditProfileAboutYou_me$data = SettingsEditProfileAboutYou_me;
 export type SettingsEditProfileAboutYou_me$key = {
-    readonly " $data"?: SettingsEditProfileAboutYou_me$data;
-    readonly " $fragmentRefs": FragmentRefs<"SettingsEditProfileAboutYou_me">;
+  readonly " $data"?: SettingsEditProfileAboutYou_me$data;
+  readonly " $fragmentSpreads": FragmentRefs<"SettingsEditProfileAboutYou_me">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -86,5 +89,7 @@ const node: ReaderFragment = {
   "type": "Me",
   "abstractKey": null
 };
-(node as any).hash = 'a7b9e0dff7d2984dbd7e76f5cc39eb71';
+
+(node as any).hash = "a7b9e0dff7d2984dbd7e76f5cc39eb71";
+
 export default node;

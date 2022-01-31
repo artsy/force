@@ -1,47 +1,35 @@
+/**
+ * @generated SignedSource<<600c9ad69acc0cba7c080a1c2741a526>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtworkSidebarClassification_Test_QueryVariables = {};
-export type ArtworkSidebarClassification_Test_QueryResponse = {
-    readonly artwork: {
-        readonly " $fragmentRefs": FragmentRefs<"ArtworkSidebarClassification_artwork">;
-    } | null;
+export type ArtworkSidebarClassification_Test_Query$variables = {};
+export type ArtworkSidebarClassification_Test_Query$data = {
+  readonly artwork: {
+    readonly " $fragmentSpreads": FragmentRefs<"ArtworkSidebarClassification_artwork">;
+  } | null;
 };
-export type ArtworkSidebarClassification_Test_QueryRawResponse = {
-    readonly artwork: ({
-        readonly attributionClass: ({
-            readonly shortDescription: string | null;
-            readonly id: string;
-        }) | null;
-        readonly id: string;
-    }) | null;
+export type ArtworkSidebarClassification_Test_Query$rawResponse = {
+  readonly artwork: {
+    readonly attributionClass: {
+      readonly shortDescription: string | null;
+      readonly id: string;
+    } | null;
+    readonly id: string;
+  } | null;
 };
 export type ArtworkSidebarClassification_Test_Query = {
-    readonly response: ArtworkSidebarClassification_Test_QueryResponse;
-    readonly variables: ArtworkSidebarClassification_Test_QueryVariables;
-    readonly rawResponse: ArtworkSidebarClassification_Test_QueryRawResponse;
+  variables: ArtworkSidebarClassification_Test_Query$variables;
+  response: ArtworkSidebarClassification_Test_Query$data;
+  rawResponse: ArtworkSidebarClassification_Test_Query$rawResponse;
 };
-
-
-
-/*
-query ArtworkSidebarClassification_Test_Query {
-  artwork(id: "josef-albers-homage-to-the-square-85") {
-    ...ArtworkSidebarClassification_artwork
-    id
-  }
-}
-
-fragment ArtworkSidebarClassification_artwork on Artwork {
-  attributionClass {
-    shortDescription
-    id
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -163,5 +151,7 @@ return {
   }
 };
 })();
-(node as any).hash = '3c49cd2d50ccc877d666d64c164a95f1';
+
+(node as any).hash = "3c49cd2d50ccc877d666d64c164a95f1";
+
 export default node;

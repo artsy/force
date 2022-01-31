@@ -1,26 +1,29 @@
+/**
+ * @generated SignedSource<<c8740d1804268666d3c21558e9e9cc82>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type HomeWorksByArtistsYouFollowRail_homePage = {
-    readonly artworkModule: {
-        readonly results: ReadonlyArray<{
-            readonly internalID: string;
-            readonly slug: string;
-            readonly " $fragmentRefs": FragmentRefs<"ShelfArtwork_artwork">;
-        } | null> | null;
-    } | null;
-    readonly " $refType": "HomeWorksByArtistsYouFollowRail_homePage";
+export type HomeWorksByArtistsYouFollowRail_homePage$data = {
+  readonly artworkModule: {
+    readonly results: ReadonlyArray<{
+      readonly internalID: string;
+      readonly slug: string;
+      readonly " $fragmentSpreads": FragmentRefs<"ShelfArtwork_artwork">;
+    } | null> | null;
+  } | null;
+  readonly " $fragmentType": "HomeWorksByArtistsYouFollowRail_homePage";
 };
-export type HomeWorksByArtistsYouFollowRail_homePage$data = HomeWorksByArtistsYouFollowRail_homePage;
 export type HomeWorksByArtistsYouFollowRail_homePage$key = {
-    readonly " $data"?: HomeWorksByArtistsYouFollowRail_homePage$data;
-    readonly " $fragmentRefs": FragmentRefs<"HomeWorksByArtistsYouFollowRail_homePage">;
+  readonly " $data"?: HomeWorksByArtistsYouFollowRail_homePage$data;
+  readonly " $fragmentSpreads": FragmentRefs<"HomeWorksByArtistsYouFollowRail_homePage">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -85,5 +88,7 @@ const node: ReaderFragment = {
   "type": "HomePage",
   "abstractKey": null
 };
-(node as any).hash = '67ebfff4507a1f299a511c8f6493e370';
+
+(node as any).hash = "67ebfff4507a1f299a511c8f6493e370";
+
 export default node;

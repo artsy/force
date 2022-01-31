@@ -1,46 +1,27 @@
+/**
+ * @generated SignedSource<<7a2ac445bee7f86dbb9da4b65881665f>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type PopularArtistsQueryVariables = {};
-export type PopularArtistsQueryResponse = {
-    readonly highlights: {
-        readonly popular_artists: ReadonlyArray<{
-            readonly " $fragmentRefs": FragmentRefs<"PopularArtists_popular_artists">;
-        } | null> | null;
-    } | null;
+export type PopularArtistsQuery$variables = {};
+export type PopularArtistsQuery$data = {
+  readonly highlights: {
+    readonly popular_artists: ReadonlyArray<{
+      readonly " $fragmentSpreads": FragmentRefs<"PopularArtists_popular_artists">;
+    } | null> | null;
+  } | null;
 };
 export type PopularArtistsQuery = {
-    readonly response: PopularArtistsQueryResponse;
-    readonly variables: PopularArtistsQueryVariables;
+  variables: PopularArtistsQuery$variables;
+  response: PopularArtistsQuery$data;
 };
-
-
-
-/*
-query PopularArtistsQuery {
-  highlights {
-    popular_artists: popularArtists(excludeFollowedArtists: true) {
-      ...PopularArtists_popular_artists
-      id
-    }
-  }
-}
-
-fragment PopularArtists_popular_artists on Artist {
-  slug
-  internalID
-  id
-  name
-  image {
-    cropped(width: 100, height: 100) {
-      url
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -196,5 +177,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'cbe0b4e03381b6e2672e9f842bfbd0d2';
+
+(node as any).hash = "cbe0b4e03381b6e2672e9f842bfbd0d2";
+
 export default node;

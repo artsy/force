@@ -1,233 +1,30 @@
+/**
+ * @generated SignedSource<<f4cd0d35b111e229f06adad2afa7ab55>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type auction2Routes_TopLevelQueryVariables = {
-    slug: string;
+export type auction2Routes_TopLevelQuery$variables = {
+  slug: string;
 };
-export type auction2Routes_TopLevelQueryResponse = {
-    readonly sale: {
-        readonly " $fragmentRefs": FragmentRefs<"Auction2App_sale">;
-    } | null;
-    readonly me: {
-        readonly " $fragmentRefs": FragmentRefs<"Auction2App_me">;
-    } | null;
+export type auction2Routes_TopLevelQuery$data = {
+  readonly sale: {
+    readonly " $fragmentSpreads": FragmentRefs<"Auction2App_sale">;
+  } | null;
+  readonly me: {
+    readonly " $fragmentSpreads": FragmentRefs<"Auction2App_me">;
+  } | null;
 };
 export type auction2Routes_TopLevelQuery = {
-    readonly response: auction2Routes_TopLevelQueryResponse;
-    readonly variables: auction2Routes_TopLevelQueryVariables;
+  variables: auction2Routes_TopLevelQuery$variables;
+  response: auction2Routes_TopLevelQuery$data;
 };
-
-
-
-/*
-query auction2Routes_TopLevelQuery(
-  $slug: String!
-) {
-  sale(id: $slug) @principalField {
-    ...Auction2App_sale
-    id
-  }
-  me {
-    ...Auction2App_me
-    id
-  }
-}
-
-fragment Auction2App_me on Me {
-  ...AuctionDetails_me
-  internalID
-  hasCreditCards
-  identityVerified
-  pendingIdentityVerification {
-    internalID
-    id
-  }
-  bidders(saleID: $slug) {
-    qualifiedForBidding
-    id
-  }
-  lotStandings(saleID: $slug, live: true) {
-    activeBid {
-      internalID
-      id
-    }
-    isLeadingBidder
-    saleArtwork {
-      slug
-      lotLabel
-      reserveStatus
-      counts {
-        bidderPositions
-      }
-      saleID
-      highestBid {
-        display
-      }
-      sale {
-        liveStartAt
-        endAt
-        isLiveOpen
-        isClosed
-        id
-      }
-      artwork {
-        href
-        title
-        date
-        image {
-          url(version: "square")
-        }
-        artist {
-          name
-          id
-        }
-        id
-      }
-      id
-    }
-  }
-}
-
-fragment Auction2App_sale on Sale {
-  ...Auction2Meta_sale
-  ...AuctionDetails_sale
-  formattedStartDateTime
-  href
-  coverImage {
-    cropped(width: 1800, height: 600, version: "wide") {
-      src
-      url
-    }
-  }
-  internalID
-  slug
-  associatedSale {
-    coverImage {
-      cropped(width: 260, height: 110) {
-        url
-      }
-    }
-    endAt
-    href
-    slug
-    isClosed
-    isLiveOpen
-    isPreview
-    liveStartAt
-    name
-    startAt
-    id
-  }
-  status
-  currency
-  eligibleSaleArtworksCount
-  endAt
-  isAuction
-  isClosed
-  isLiveOpen
-  isOpen
-  liveStartAt
-  name
-  promotedSale {
-    slug
-    name
-    saleArtworksConnection(first: 25) {
-      edges {
-        node {
-          artwork {
-            slug
-            title
-            date
-            saleMessage
-            isInAuction
-            image {
-              placeholder
-              url
-              aspectRatio
-            }
-            artists {
-              slug
-              href
-              name
-              id
-            }
-            partner {
-              name
-              id
-            }
-            href
-            isAcquireable
-            id
-          }
-          id
-        }
-      }
-    }
-    id
-  }
-  registrationEndsAt
-  requireIdentityVerification
-  startAt
-  symbol
-}
-
-fragment Auction2Meta_sale on Sale {
-  name
-  description(format: HTML)
-  slug
-}
-
-fragment AuctionDetails_me on Me {
-  ...RegisterButton_me
-}
-
-fragment AuctionDetails_sale on Sale {
-  ...RegisterButton_sale
-  ...AuctionInfoSidebar_sale
-  name
-  slug
-  formattedStartDateTime
-  liveStartAt
-  startAt
-  endAt
-  description(format: HTML)
-  href
-}
-
-fragment AuctionInfoSidebar_sale on Sale {
-  liveStartAt
-}
-
-fragment RegisterButton_me on Me {
-  identityVerified
-  pendingIdentityVerification {
-    internalID
-    id
-  }
-}
-
-fragment RegisterButton_sale on Sale {
-  bidder {
-    qualifiedForBidding
-    id
-  }
-  isAuction
-  isClosed
-  isLiveOpen
-  isRegistrationClosed
-  liveURLIfOpen
-  requireIdentityVerification
-  registrationStatus {
-    internalID
-    id
-  }
-  slug
-  status
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -1018,5 +815,7 @@ return {
   }
 };
 })();
-(node as any).hash = '677f8d63e9e3f35b178b3ff7a098d455';
+
+(node as any).hash = "677f8d63e9e3f35b178b3ff7a098d455";
+
 export default node;

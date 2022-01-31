@@ -1,43 +1,34 @@
+/**
+ * @generated SignedSource<<c864e4620dce157edd464cd7c4b483a7>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type SaveArtworkInput = {
-    artworkID?: string | null;
-    clientMutationId?: string | null;
-    remove?: boolean | null;
+  artworkID?: string | null;
+  clientMutationId?: string | null;
+  remove?: boolean | null;
 };
-export type AuthIntentSaveArtworkMutationVariables = {
-    input: SaveArtworkInput;
+export type AuthIntentSaveArtworkMutation$variables = {
+  input: SaveArtworkInput;
 };
-export type AuthIntentSaveArtworkMutationResponse = {
-    readonly saveArtwork: {
-        readonly artwork: {
-            readonly id: string;
-            readonly isSaved: boolean | null;
-        } | null;
+export type AuthIntentSaveArtworkMutation$data = {
+  readonly saveArtwork: {
+    readonly artwork: {
+      readonly id: string;
+      readonly isSaved: boolean | null;
     } | null;
+  } | null;
 };
 export type AuthIntentSaveArtworkMutation = {
-    readonly response: AuthIntentSaveArtworkMutationResponse;
-    readonly variables: AuthIntentSaveArtworkMutationVariables;
+  variables: AuthIntentSaveArtworkMutation$variables;
+  response: AuthIntentSaveArtworkMutation$data;
 };
-
-
-
-/*
-mutation AuthIntentSaveArtworkMutation(
-  $input: SaveArtworkInput!
-) {
-  saveArtwork(input: $input) {
-    artwork {
-      id
-      isSaved
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -118,5 +109,7 @@ return {
   }
 };
 })();
-(node as any).hash = '2f0e4b1d5370a41280441f06178aa7aa';
+
+(node as any).hash = "2f0e4b1d5370a41280441f06178aa7aa";
+
 export default node;

@@ -1,106 +1,109 @@
+/**
+ * @generated SignedSource<<5fc9203a6ab684b8b152a69e3c62606d>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
-import { FragmentRefs } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 export type CommerceOrderDisplayStateEnum = "ABANDONED" | "APPROVED" | "CANCELED" | "FULFILLED" | "IN_TRANSIT" | "PENDING" | "PROCESSING" | "REFUNDED" | "SUBMITTED" | "%future added value";
 export type CommerceOrderModeEnum = "BUY" | "OFFER" | "%future added value";
 export type CommerceOrderStateEnum = "ABANDONED" | "APPROVED" | "CANCELED" | "FULFILLED" | "PENDING" | "REFUNDED" | "SUBMITTED" | "%future added value";
-export type DetailsSidebar_conversation = {
-    readonly to: {
-        readonly name: string;
-        readonly initials: string | null;
-    };
-    readonly sidebarOrderConnection: {
-        readonly edges: ReadonlyArray<{
+import { FragmentRefs } from "relay-runtime";
+export type DetailsSidebar_conversation$data = {
+  readonly to: {
+    readonly name: string;
+    readonly initials: string | null;
+  };
+  readonly sidebarOrderConnection: {
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly __typename: string;
+        readonly internalID: string;
+        readonly state: CommerceOrderStateEnum;
+        readonly displayState: CommerceOrderDisplayStateEnum;
+        readonly mode: CommerceOrderModeEnum | null;
+        readonly stateReason: string | null;
+        readonly code: string;
+        readonly stateExpiresAt: string | null;
+        readonly creditCard: {
+          readonly brand: string;
+          readonly lastDigits: string;
+          readonly expirationYear: number;
+          readonly expirationMonth: number;
+        } | null;
+        readonly lineItems: {
+          readonly edges: ReadonlyArray<{
             readonly node: {
-                readonly __typename: string;
-                readonly internalID: string;
-                readonly state: CommerceOrderStateEnum;
-                readonly displayState: CommerceOrderDisplayStateEnum;
-                readonly mode: CommerceOrderModeEnum | null;
-                readonly stateReason: string | null;
-                readonly code: string;
-                readonly stateExpiresAt: string | null;
-                readonly creditCard: {
-                    readonly brand: string;
-                    readonly lastDigits: string;
-                    readonly expirationYear: number;
-                    readonly expirationMonth: number;
-                } | null;
-                readonly lineItems: {
-                    readonly edges: ReadonlyArray<{
-                        readonly node: {
-                            readonly artwork: {
-                                readonly shippingOrigin: string | null;
-                            } | null;
-                            readonly shipment: {
-                                readonly trackingNumber: string | null;
-                                readonly trackingUrl: string | null;
-                                readonly carrierName: string | null;
-                                readonly estimatedDeliveryWindow: string | null;
-                            } | null;
-                            readonly selectedShippingQuote: {
-                                readonly displayName: string;
-                            } | null;
-                            readonly fulfillments: {
-                                readonly edges: ReadonlyArray<{
-                                    readonly node: {
-                                        readonly courier: string;
-                                        readonly trackingId: string | null;
-                                        readonly estimatedDelivery: string | null;
-                                    } | null;
-                                } | null> | null;
-                            } | null;
-                        } | null;
-                    } | null> | null;
-                } | null;
-                readonly " $fragmentRefs": FragmentRefs<"TransactionDetailsSummaryItem_order" | "ShippingSummaryItem_order" | "CreditCardSummaryItem_order">;
-            } | null;
-        } | null> | null;
-    } | null;
-    readonly attachmentsConnection: {
-        readonly edges: ReadonlyArray<{
-            readonly node: {
-                readonly attachments: ReadonlyArray<{
-                    readonly id: string;
-                    readonly contentType: string;
-                    readonly fileName: string;
-                    readonly downloadURL: string;
+              readonly artwork: {
+                readonly shippingOrigin: string | null;
+              } | null;
+              readonly shipment: {
+                readonly trackingNumber: string | null;
+                readonly trackingUrl: string | null;
+                readonly carrierName: string | null;
+                readonly estimatedDeliveryWindow: string | null;
+              } | null;
+              readonly selectedShippingQuote: {
+                readonly displayName: string;
+              } | null;
+              readonly fulfillments: {
+                readonly edges: ReadonlyArray<{
+                  readonly node: {
+                    readonly courier: string;
+                    readonly trackingId: string | null;
+                    readonly estimatedDelivery: string | null;
+                  } | null;
                 } | null> | null;
+              } | null;
             } | null;
-        } | null> | null;
-    } | null;
-    readonly items: ReadonlyArray<{
-        readonly item: ({
-            readonly __typename: "Artwork";
-            readonly href: string | null;
-            readonly image: {
-                readonly thumbnailUrl: string | null;
-            } | null;
-            readonly " $fragmentRefs": FragmentRefs<"Metadata_artwork">;
-        } | {
-            readonly __typename: "Show";
-            readonly href: string | null;
-            readonly image: {
-                readonly thumbnailUrl: string | null;
-            } | null;
-        } | {
-            /*This will never be '%other', but we need some
-            value in case none of the concrete values match.*/
-            readonly __typename: "%other";
-        }) | null;
+          } | null> | null;
+        } | null;
+        readonly " $fragmentSpreads": FragmentRefs<"TransactionDetailsSummaryItem_order" | "ShippingSummaryItem_order" | "CreditCardSummaryItem_order">;
+      } | null;
     } | null> | null;
-    readonly " $refType": "DetailsSidebar_conversation";
+  } | null;
+  readonly attachmentsConnection: {
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly attachments: ReadonlyArray<{
+          readonly id: string;
+          readonly contentType: string;
+          readonly fileName: string;
+          readonly downloadURL: string;
+        } | null> | null;
+      } | null;
+    } | null> | null;
+  } | null;
+  readonly items: ReadonlyArray<{
+    readonly item: {
+      readonly __typename: "Artwork";
+      readonly href: string | null;
+      readonly image: {
+        readonly thumbnailUrl: string | null;
+      } | null;
+      readonly " $fragmentSpreads": FragmentRefs<"Metadata_artwork">;
+    } | {
+      readonly __typename: "Show";
+      readonly href: string | null;
+      readonly image: {
+        readonly thumbnailUrl: string | null;
+      } | null;
+    } | {
+      // This will never be '%other', but we need some
+      // value in case none of the concrete values match.
+      readonly __typename: "%other";
+    } | null;
+  } | null> | null;
+  readonly " $fragmentType": "DetailsSidebar_conversation";
 };
-export type DetailsSidebar_conversation$data = DetailsSidebar_conversation;
 export type DetailsSidebar_conversation$key = {
-    readonly " $data"?: DetailsSidebar_conversation$data;
-    readonly " $fragmentRefs": FragmentRefs<"DetailsSidebar_conversation">;
+  readonly " $data"?: DetailsSidebar_conversation$data;
+  readonly " $fragmentSpreads": FragmentRefs<"DetailsSidebar_conversation">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = {
@@ -279,6 +282,21 @@ return {
                   "kind": "ScalarField",
                   "name": "stateExpiresAt",
                   "storageKey": "stateExpiresAt(format:\"MMM D\")"
+                },
+                {
+                  "args": null,
+                  "kind": "FragmentSpread",
+                  "name": "TransactionDetailsSummaryItem_order"
+                },
+                {
+                  "args": null,
+                  "kind": "FragmentSpread",
+                  "name": "ShippingSummaryItem_order"
+                },
+                {
+                  "args": null,
+                  "kind": "FragmentSpread",
+                  "name": "CreditCardSummaryItem_order"
                 },
                 {
                   "alias": null,
@@ -486,21 +504,6 @@ return {
                     }
                   ],
                   "storageKey": null
-                },
-                {
-                  "args": null,
-                  "kind": "FragmentSpread",
-                  "name": "TransactionDetailsSummaryItem_order"
-                },
-                {
-                  "args": null,
-                  "kind": "FragmentSpread",
-                  "name": "ShippingSummaryItem_order"
-                },
-                {
-                  "args": null,
-                  "kind": "FragmentSpread",
-                  "name": "CreditCardSummaryItem_order"
                 }
               ],
               "storageKey": null
@@ -638,6 +641,11 @@ return {
               "selections": [
                 (v1/*: any*/),
                 {
+                  "args": null,
+                  "kind": "FragmentSpread",
+                  "name": "Metadata_artwork"
+                },
+                {
                   "alias": null,
                   "args": null,
                   "concreteType": "Image",
@@ -646,11 +654,6 @@ return {
                   "plural": false,
                   "selections": (v2/*: any*/),
                   "storageKey": null
-                },
-                {
-                  "args": null,
-                  "kind": "FragmentSpread",
-                  "name": "Metadata_artwork"
                 }
               ],
               "type": "Artwork",
@@ -685,5 +688,7 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '3875ad3f21d379a8594e72bb6f8f4416';
+
+(node as any).hash = "3875ad3f21d379a8594e72bb6f8f4416";
+
 export default node;

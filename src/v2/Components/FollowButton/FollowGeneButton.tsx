@@ -42,6 +42,7 @@ const FollowGeneButton: React.FC<FollowGeneButtonProps> = ({
           }
         }
       `,
+      // @ts-ignore UPGRADE RELAY 13
       optimisticResponse: {
         followGene: {
           gene: {

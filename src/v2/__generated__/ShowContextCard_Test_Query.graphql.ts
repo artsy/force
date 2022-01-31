@@ -1,90 +1,25 @@
+/**
+ * @generated SignedSource<<607ccc656452254a7770ebadf3d7f9eb>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ShowContextCard_Test_QueryVariables = {};
-export type ShowContextCard_Test_QueryResponse = {
-    readonly show: {
-        readonly " $fragmentRefs": FragmentRefs<"ShowContextCard_show">;
-    } | null;
+export type ShowContextCard_Test_Query$variables = {};
+export type ShowContextCard_Test_Query$data = {
+  readonly show: {
+    readonly " $fragmentSpreads": FragmentRefs<"ShowContextCard_show">;
+  } | null;
 };
 export type ShowContextCard_Test_Query = {
-    readonly response: ShowContextCard_Test_QueryResponse;
-    readonly variables: ShowContextCard_Test_QueryVariables;
+  variables: ShowContextCard_Test_Query$variables;
+  response: ShowContextCard_Test_Query$data;
 };
-
-
-
-/*
-query ShowContextCard_Test_Query {
-  show(id: "xxx") {
-    ...ShowContextCard_show
-    id
-  }
-}
-
-fragment FairCard_fair on Fair {
-  name
-  image {
-    cropped(width: 768, height: 512, version: "wide") {
-      src
-      srcSet
-    }
-  }
-}
-
-fragment FairTiming_fair on Fair {
-  exhibitionPeriod
-  startAt
-  endAt
-}
-
-fragment ShowContextCard_show on Show {
-  isFairBooth
-  partner {
-    __typename
-    ... on Partner {
-      internalID
-      slug
-      href
-      name
-      locations {
-        city
-        id
-      }
-      artworksConnection(first: 3, sort: MERCHANDISABILITY_DESC) {
-        edges {
-          node {
-            image {
-              url(version: "larger")
-            }
-            id
-          }
-        }
-      }
-    }
-    ... on Node {
-      __isNode: __typename
-      id
-    }
-    ... on ExternalPartner {
-      id
-    }
-  }
-  fair {
-    internalID
-    isActive
-    slug
-    href
-    name
-    ...FairTiming_fair
-    ...FairCard_fair
-    id
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -528,5 +463,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'a076faf502dc6859a703cbcc91bddf4f';
+
+(node as any).hash = "a076faf502dc6859a703cbcc91bddf4f";
+
 export default node;

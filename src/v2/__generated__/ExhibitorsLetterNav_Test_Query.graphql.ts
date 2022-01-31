@@ -1,36 +1,25 @@
+/**
+ * @generated SignedSource<<b21d7fd65dcf39b5817db6ee6e4e2e26>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ExhibitorsLetterNav_Test_QueryVariables = {};
-export type ExhibitorsLetterNav_Test_QueryResponse = {
-    readonly fair: {
-        readonly " $fragmentRefs": FragmentRefs<"ExhibitorsLetterNav_fair">;
-    } | null;
+export type ExhibitorsLetterNav_Test_Query$variables = {};
+export type ExhibitorsLetterNav_Test_Query$data = {
+  readonly fair: {
+    readonly " $fragmentSpreads": FragmentRefs<"ExhibitorsLetterNav_fair">;
+  } | null;
 };
 export type ExhibitorsLetterNav_Test_Query = {
-    readonly response: ExhibitorsLetterNav_Test_QueryResponse;
-    readonly variables: ExhibitorsLetterNav_Test_QueryVariables;
+  variables: ExhibitorsLetterNav_Test_Query$variables;
+  response: ExhibitorsLetterNav_Test_Query$data;
 };
-
-
-
-/*
-query ExhibitorsLetterNav_Test_Query {
-  fair(id: "one-x-artsy") {
-    ...ExhibitorsLetterNav_fair
-    id
-  }
-}
-
-fragment ExhibitorsLetterNav_fair on Fair {
-  exhibitorsGroupedByName {
-    letter
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -148,5 +137,7 @@ return {
   }
 };
 })();
-(node as any).hash = '5e0b9b030a6a6f5eff7caf3985e38350';
+
+(node as any).hash = "5e0b9b030a6a6f5eff7caf3985e38350";
+
 export default node;

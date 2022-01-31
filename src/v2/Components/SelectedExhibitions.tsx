@@ -7,7 +7,7 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import { SelectedExhibitions_exhibitions } from "v2/__generated__/SelectedExhibitions_exhibitions.graphql"
+import { SelectedExhibitions_exhibitions$data } from "v2/__generated__/SelectedExhibitions_exhibitions.graphql"
 import { Link } from "found"
 import { groupBy, toPairs } from "lodash"
 import * as React from "react"
@@ -23,7 +23,7 @@ export type Year = string
 export interface SelectedExhibitionsProps {
   border?: boolean
   collapsible?: boolean
-  exhibitions: SelectedExhibitions_exhibitions
+  exhibitions: SelectedExhibitions_exhibitions$data
   artistID?: string
   totalExhibitions?: number
   ViewAllLink?: JSX.Element
@@ -75,7 +75,7 @@ export const ExhibitionsHeadline: React.FC<ExhibitionsHeadlineProps> = props => 
 
 export interface ExhibitionYearListProps {
   year: Year
-  exhibitions: SelectedExhibitions_exhibitions
+  exhibitions: SelectedExhibitions_exhibitions$data
 }
 
 export const ExhibitionYearList: React.FC<ExhibitionYearListProps> = ({
@@ -104,7 +104,7 @@ export const ExhibitionYearList: React.FC<ExhibitionYearListProps> = ({
 }
 
 interface FullExhibitionListProps {
-  exhibitions: SelectedExhibitions_exhibitions
+  exhibitions: SelectedExhibitions_exhibitions$data
   artistID: string
   totalExhibitions: number
   ViewAllLink?: JSX.Element

@@ -1,38 +1,41 @@
+/**
+ * @generated SignedSource<<f2f89417188dd44b4944ad2e5f4e74fd>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type CommercePagination_pageCursors = {
-    readonly around: ReadonlyArray<{
-        readonly cursor: string;
-        readonly page: number;
-        readonly isCurrent: boolean;
-    }>;
-    readonly first: {
-        readonly cursor: string;
-        readonly page: number;
-        readonly isCurrent: boolean;
-    } | null;
-    readonly last: {
-        readonly cursor: string;
-        readonly page: number;
-        readonly isCurrent: boolean;
-    } | null;
-    readonly previous: {
-        readonly cursor: string;
-        readonly page: number;
-    } | null;
-    readonly " $refType": "CommercePagination_pageCursors";
+export type CommercePagination_pageCursors$data = {
+  readonly around: ReadonlyArray<{
+    readonly cursor: string;
+    readonly page: number;
+    readonly isCurrent: boolean;
+  }>;
+  readonly first: {
+    readonly cursor: string;
+    readonly page: number;
+    readonly isCurrent: boolean;
+  } | null;
+  readonly last: {
+    readonly cursor: string;
+    readonly page: number;
+    readonly isCurrent: boolean;
+  } | null;
+  readonly previous: {
+    readonly cursor: string;
+    readonly page: number;
+  } | null;
+  readonly " $fragmentType": "CommercePagination_pageCursors";
 };
-export type CommercePagination_pageCursors$data = CommercePagination_pageCursors;
 export type CommercePagination_pageCursors$key = {
-    readonly " $data"?: CommercePagination_pageCursors$data;
-    readonly " $fragmentRefs": FragmentRefs<"CommercePagination_pageCursors">;
+  readonly " $data"?: CommercePagination_pageCursors$data;
+  readonly " $fragmentSpreads": FragmentRefs<"CommercePagination_pageCursors">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = {
@@ -114,5 +117,7 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '2181d03885b5b67b99f99b1de535f5cb';
+
+(node as any).hash = "2181d03885b5b67b99f99b1de535f5cb";
+
 export default node;

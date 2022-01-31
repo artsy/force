@@ -1,40 +1,32 @@
+/**
+ * @generated SignedSource<<ae8c5dd4f794d5fd53fb2c52fb7d313e>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type RequestConditionReportInput = {
-    clientMutationId?: string | null;
-    saleArtworkID: string;
+  clientMutationId?: string | null;
+  saleArtworkID: string;
 };
-export type RequestConditionReportMutationVariables = {
-    input: RequestConditionReportInput;
+export type RequestConditionReportMutation$variables = {
+  input: RequestConditionReportInput;
 };
-export type RequestConditionReportMutationResponse = {
-    readonly requestConditionReport: {
-        readonly conditionReportRequest: {
-            readonly internalID: string;
-        };
-    } | null;
+export type RequestConditionReportMutation$data = {
+  readonly requestConditionReport: {
+    readonly conditionReportRequest: {
+      readonly internalID: string;
+    };
+  } | null;
 };
 export type RequestConditionReportMutation = {
-    readonly response: RequestConditionReportMutationResponse;
-    readonly variables: RequestConditionReportMutationVariables;
+  variables: RequestConditionReportMutation$variables;
+  response: RequestConditionReportMutation$data;
 };
-
-
-
-/*
-mutation RequestConditionReportMutation(
-  $input: RequestConditionReportInput!
-) {
-  requestConditionReport(input: $input) {
-    conditionReportRequest {
-      internalID
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -108,5 +100,7 @@ return {
   }
 };
 })();
-(node as any).hash = '99b29530296311d1183354c3082e3055';
+
+(node as any).hash = "99b29530296311d1183354c3082e3055";
+
 export default node;

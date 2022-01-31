@@ -25,6 +25,7 @@ export const followGeneMutation: AuthIntentMutation = (
           }
         }
       `,
+      // @ts-ignore UPGRADE RELAY 13
       optimisticResponse: {
         followGene: {
           gene: {

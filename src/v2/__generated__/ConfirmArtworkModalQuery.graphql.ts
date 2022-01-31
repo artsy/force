@@ -1,109 +1,27 @@
+/**
+ * @generated SignedSource<<f48a6b6da5e27770e5b1edecbec740d0>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ConfirmArtworkModalQueryVariables = {
-    artworkID: string;
+export type ConfirmArtworkModalQuery$variables = {
+  artworkID: string;
 };
-export type ConfirmArtworkModalQueryResponse = {
-    readonly artwork: {
-        readonly " $fragmentRefs": FragmentRefs<"ConfirmArtworkModal_artwork">;
-    } | null;
+export type ConfirmArtworkModalQuery$data = {
+  readonly artwork: {
+    readonly " $fragmentSpreads": FragmentRefs<"ConfirmArtworkModal_artwork">;
+  } | null;
 };
 export type ConfirmArtworkModalQuery = {
-    readonly response: ConfirmArtworkModalQueryResponse;
-    readonly variables: ConfirmArtworkModalQueryVariables;
+  variables: ConfirmArtworkModalQuery$variables;
+  response: ConfirmArtworkModalQuery$data;
 };
-
-
-
-/*
-query ConfirmArtworkModalQuery(
-  $artworkID: String!
-) {
-  artwork(id: $artworkID) {
-    ...ConfirmArtworkModal_artwork
-    id
-  }
-}
-
-fragment CollapsibleArtworkDetails_artwork on Artwork {
-  image {
-    resized(width: 40, height: 40) {
-      src
-      srcSet
-      width
-      height
-    }
-  }
-  internalID
-  title
-  date
-  saleMessage
-  attributionClass {
-    name
-    id
-  }
-  category
-  manufacturer
-  publisher
-  medium
-  conditionDescription {
-    details
-  }
-  certificateOfAuthenticity {
-    details
-  }
-  framed {
-    details
-  }
-  dimensions {
-    in
-    cm
-  }
-  signatureInfo {
-    details
-  }
-  artistNames
-}
-
-fragment ConfirmArtworkButton_artwork on Artwork {
-  internalID
-}
-
-fragment ConfirmArtworkModal_artwork on Artwork {
-  ...CollapsibleArtworkDetails_artwork
-  ...ConfirmArtworkButton_artwork
-  internalID
-  isEdition
-  editionSets {
-    internalID
-    ...EditionSelectBox_edition
-    id
-  }
-}
-
-fragment EditionSelectBox_edition on EditionSet {
-  internalID
-  editionOf
-  isOfferableFromInquiry
-  listPrice {
-    __typename
-    ... on Money {
-      display
-    }
-    ... on PriceRange {
-      display
-    }
-  }
-  dimensions {
-    cm
-    in
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -490,5 +408,7 @@ return {
   }
 };
 })();
-(node as any).hash = '074f8ec32d2bd2ef17ea850e13925889';
+
+(node as any).hash = "074f8ec32d2bd2ef17ea850e13925889";
+
 export default node;

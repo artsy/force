@@ -1,35 +1,38 @@
+/**
+ * @generated SignedSource<<e2fbc6a229d5e0c2f9e72073ceb3d563>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type Articles_partner = {
-    readonly slug: string;
-    readonly articlesConnection: {
-        readonly pageInfo: {
-            readonly hasNextPage: boolean;
-            readonly endCursor: string | null;
-        };
-        readonly pageCursors: {
-            readonly " $fragmentRefs": FragmentRefs<"Pagination_pageCursors">;
-        };
-        readonly edges: ReadonlyArray<{
-            readonly node: {
-                readonly internalID: string;
-                readonly " $fragmentRefs": FragmentRefs<"ArticleCell_article">;
-            } | null;
-        } | null> | null;
-    } | null;
-    readonly " $refType": "Articles_partner";
+export type Articles_partner$data = {
+  readonly slug: string;
+  readonly articlesConnection: {
+    readonly pageInfo: {
+      readonly hasNextPage: boolean;
+      readonly endCursor: string | null;
+    };
+    readonly pageCursors: {
+      readonly " $fragmentSpreads": FragmentRefs<"Pagination_pageCursors">;
+    };
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly internalID: string;
+        readonly " $fragmentSpreads": FragmentRefs<"ArticleCell_article">;
+      } | null;
+    } | null> | null;
+  } | null;
+  readonly " $fragmentType": "Articles_partner";
 };
-export type Articles_partner$data = Articles_partner;
 export type Articles_partner$key = {
-    readonly " $data"?: Articles_partner$data;
-    readonly " $fragmentRefs": FragmentRefs<"Articles_partner">;
+  readonly " $data"?: Articles_partner$data;
+  readonly " $fragmentSpreads": FragmentRefs<"Articles_partner">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [
@@ -186,5 +189,7 @@ const node: ReaderFragment = {
   "type": "Partner",
   "abstractKey": null
 };
-(node as any).hash = '5192671e2194ce69a0c67b72ed5ed406';
+
+(node as any).hash = "5192671e2194ce69a0c67b72ed5ed406";
+
 export default node;

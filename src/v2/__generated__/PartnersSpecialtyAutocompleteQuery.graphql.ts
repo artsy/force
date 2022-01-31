@@ -1,58 +1,29 @@
+/**
+ * @generated SignedSource<<cb268b4db838aa0750bfbd7716ec6c5e>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type PartnerClassification = "AUCTION" | "BRAND" | "DEMO" | "GALLERY" | "INSTITUTION" | "INSTITUTIONAL_SELLER" | "PRIVATE_COLLECTOR" | "PRIVATE_DEALER" | "%future added value";
-export type PartnersSpecialtyAutocompleteQueryVariables = {
-    near?: string | null;
-    type?: Array<PartnerClassification | null> | null;
+export type PartnersSpecialtyAutocompleteQuery$variables = {
+  near?: string | null;
+  type?: ReadonlyArray<PartnerClassification | null> | null;
 };
-export type PartnersSpecialtyAutocompleteQueryResponse = {
-    readonly viewer: {
-        readonly " $fragmentRefs": FragmentRefs<"PartnersSpecialtyAutocomplete_viewer">;
-    } | null;
+export type PartnersSpecialtyAutocompleteQuery$data = {
+  readonly viewer: {
+    readonly " $fragmentSpreads": FragmentRefs<"PartnersSpecialtyAutocomplete_viewer">;
+  } | null;
 };
 export type PartnersSpecialtyAutocompleteQuery = {
-    readonly response: PartnersSpecialtyAutocompleteQueryResponse;
-    readonly variables: PartnersSpecialtyAutocompleteQueryVariables;
+  variables: PartnersSpecialtyAutocompleteQuery$variables;
+  response: PartnersSpecialtyAutocompleteQuery$data;
 };
-
-
-
-/*
-query PartnersSpecialtyAutocompleteQuery(
-  $near: String
-  $type: [PartnerClassification]
-) {
-  viewer {
-    ...PartnersSpecialtyAutocomplete_viewer_2yvayw
-  }
-}
-
-fragment PartnersSpecialtyAutocomplete_viewer_2yvayw on Viewer {
-  allOptions: filterPartners(aggregations: [CATEGORY], defaultProfilePublic: true, eligibleForListing: true, size: 0) {
-    aggregations {
-      counts {
-        text: name
-        value
-        count
-      }
-    }
-  }
-  filterPartners(aggregations: [CATEGORY, TOTAL], defaultProfilePublic: true, eligibleForListing: true, near: $near, size: 0, type: $type) {
-    total
-    aggregations {
-      counts {
-        text: name
-        value
-        count
-      }
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -250,5 +221,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'bc2d5370c1045a66641603a51525afc7';
+
+(node as any).hash = "bc2d5370c1045a66641603a51525afc7";
+
 export default node;

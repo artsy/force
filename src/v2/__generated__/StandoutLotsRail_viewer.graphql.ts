@@ -1,31 +1,34 @@
+/**
+ * @generated SignedSource<<1abb76615913dfee8da667dcd4628199>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type StandoutLotsRail_viewer = {
-    readonly StandoutLotsRailConnection: {
-        readonly edges: ReadonlyArray<{
-            readonly node: {
-                readonly internalID: string;
-                readonly slug: string;
-                readonly sale: {
-                    readonly isClosed: boolean | null;
-                } | null;
-                readonly " $fragmentRefs": FragmentRefs<"ShelfArtwork_artwork">;
-            } | null;
-        } | null> | null;
-    } | null;
-    readonly " $refType": "StandoutLotsRail_viewer";
+export type StandoutLotsRail_viewer$data = {
+  readonly StandoutLotsRailConnection: {
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly internalID: string;
+        readonly slug: string;
+        readonly sale: {
+          readonly isClosed: boolean | null;
+        } | null;
+        readonly " $fragmentSpreads": FragmentRefs<"ShelfArtwork_artwork">;
+      } | null;
+    } | null> | null;
+  } | null;
+  readonly " $fragmentType": "StandoutLotsRail_viewer";
 };
-export type StandoutLotsRail_viewer$data = StandoutLotsRail_viewer;
 export type StandoutLotsRail_viewer$key = {
-    readonly " $data"?: StandoutLotsRail_viewer$data;
-    readonly " $fragmentRefs": FragmentRefs<"StandoutLotsRail_viewer">;
+  readonly " $data"?: StandoutLotsRail_viewer$data;
+  readonly " $fragmentSpreads": FragmentRefs<"StandoutLotsRail_viewer">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -83,6 +86,17 @@ const node: ReaderFragment = {
                   "storageKey": null
                 },
                 {
+                  "args": [
+                    {
+                      "kind": "Literal",
+                      "name": "width",
+                      "value": 325
+                    }
+                  ],
+                  "kind": "FragmentSpread",
+                  "name": "ShelfArtwork_artwork"
+                },
+                {
                   "alias": null,
                   "args": null,
                   "concreteType": "Sale",
@@ -99,17 +113,6 @@ const node: ReaderFragment = {
                     }
                   ],
                   "storageKey": null
-                },
-                {
-                  "args": [
-                    {
-                      "kind": "Literal",
-                      "name": "width",
-                      "value": 325
-                    }
-                  ],
-                  "kind": "FragmentSpread",
-                  "name": "ShelfArtwork_artwork"
                 }
               ],
               "storageKey": null
@@ -124,5 +127,7 @@ const node: ReaderFragment = {
   "type": "Viewer",
   "abstractKey": null
 };
-(node as any).hash = '014a1939216e5b896476d7c80e82e971';
+
+(node as any).hash = "014a1939216e5b896476d7c80e82e971";
+
 export default node;

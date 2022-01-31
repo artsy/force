@@ -2,7 +2,7 @@ import { graphql } from "react-relay"
 import * as Schema from "v2/System/Analytics/Schema"
 import { createTestEnv } from "v2/DevTools/createTestEnv"
 
-import { auctionRoutes_RegisterQueryRawResponse } from "v2/__generated__/auctionRoutes_RegisterQuery.graphql"
+import { auctionRoutes_RegisterQuery$rawResponse } from "v2/__generated__/auctionRoutes_RegisterQuery.graphql"
 import {
   RegisterQueryResponseFixture,
   RegisterQueryResponseFixtureWithVerifiedUser,
@@ -52,7 +52,7 @@ jest.mock("sharify", () => ({
 }))
 
 const setupTestEnv = (
-  defaultData: auctionRoutes_RegisterQueryRawResponse = RegisterQueryResponseFixture
+  defaultData: auctionRoutes_RegisterQuery$rawResponse = RegisterQueryResponseFixture
 ) => {
   return createTestEnv({
     Component: RegisterRouteFragmentContainer,

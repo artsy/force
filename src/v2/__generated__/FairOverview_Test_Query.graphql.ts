@@ -1,248 +1,25 @@
+/**
+ * @generated SignedSource<<9e365dc0449487750a064a4e44a9b58e>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type FairOverview_Test_QueryVariables = {};
-export type FairOverview_Test_QueryResponse = {
-    readonly fair: {
-        readonly " $fragmentRefs": FragmentRefs<"FairOverview_fair">;
-    } | null;
+export type FairOverview_Test_Query$variables = {};
+export type FairOverview_Test_Query$data = {
+  readonly fair: {
+    readonly " $fragmentSpreads": FragmentRefs<"FairOverview_fair">;
+  } | null;
 };
 export type FairOverview_Test_Query = {
-    readonly response: FairOverview_Test_QueryResponse;
-    readonly variables: FairOverview_Test_QueryVariables;
+  variables: FairOverview_Test_Query$variables;
+  response: FairOverview_Test_Query$data;
 };
-
-
-
-/*
-query FairOverview_Test_Query {
-  fair(id: "example") {
-    ...FairOverview_fair
-    id
-  }
-}
-
-fragment Badge_artwork on Artwork {
-  is_biddable: isBiddable
-  href
-  sale {
-    is_preview: isPreview
-    display_timely_at: displayTimelyAt
-    id
-  }
-}
-
-fragment Contact_artwork on Artwork {
-  href
-  is_inquireable: isInquireable
-  sale {
-    is_auction: isAuction
-    is_live_open: isLiveOpen
-    is_open: isOpen
-    is_closed: isClosed
-    id
-  }
-  partner(shallow: true) {
-    type
-    id
-  }
-  sale_artwork: saleArtwork {
-    highest_bid: highestBid {
-      display
-    }
-    opening_bid: openingBid {
-      display
-    }
-    counts {
-      bidder_positions: bidderPositions
-    }
-    id
-  }
-}
-
-fragment Details_artwork on Artwork {
-  href
-  title
-  date
-  sale_message: saleMessage
-  cultural_maker: culturalMaker
-  artists(shallow: true) {
-    id
-    href
-    name
-  }
-  collecting_institution: collectingInstitution
-  partner(shallow: true) {
-    name
-    href
-    id
-  }
-  sale {
-    is_auction: isAuction
-    is_closed: isClosed
-    id
-  }
-  sale_artwork: saleArtwork {
-    counts {
-      bidder_positions: bidderPositions
-    }
-    highest_bid: highestBid {
-      display
-    }
-    opening_bid: openingBid {
-      display
-    }
-    id
-  }
-}
-
-fragment FairAbout_fair on Fair {
-  ...FairTimer_fair
-  about(format: HTML)
-}
-
-fragment FairCollection_collection on MarketingCollection {
-  id
-  slug
-  title
-  artworks: artworksConnection(first: 3) {
-    counts {
-      total
-    }
-    edges {
-      node {
-        image {
-          url(version: "larger")
-        }
-        id
-      }
-    }
-    id
-  }
-}
-
-fragment FairCollections_fair on Fair {
-  marketingCollections(size: 5) {
-    id
-    slug
-    ...FairCollection_collection
-  }
-}
-
-fragment FairEditorialItemLink_article on Article {
-  internalID
-  slug
-  title
-  href
-  publishedAt(format: "MMMM D, YYYY")
-}
-
-fragment FairEditorialItem_article on Article {
-  id
-  title
-  publishedAt(format: "MMMM D, YYYY")
-  thumbnailTitle
-  thumbnailImage {
-    large: cropped(width: 670, height: 720) {
-      width
-      height
-      src
-      srcSet
-    }
-    small: cropped(width: 325, height: 240) {
-      width
-      height
-      src
-      srcSet
-    }
-  }
-  ...FairEditorialItemLink_article
-}
-
-fragment FairEditorialRailArticles_fair on Fair {
-  articlesConnection(first: 6, sort: PUBLISHED_AT_DESC) {
-    edges {
-      node {
-        id
-        ...FairEditorialItem_article
-      }
-    }
-  }
-}
-
-fragment FairEditorial_fair on Fair {
-  ...FairEditorialRailArticles_fair
-}
-
-fragment FairFollowedArtists_fair on Fair {
-  internalID
-  slug
-  followedArtistArtworks: filterArtworksConnection(includeArtworksByFollowedArtists: true, first: 20) {
-    edges {
-      artwork: node {
-        internalID
-        slug
-        ...FillwidthItem_artwork
-        id
-      }
-    }
-    id
-  }
-}
-
-fragment FairOverview_fair on Fair {
-  ...FairEditorial_fair
-  ...FairCollections_fair
-  ...FairFollowedArtists_fair
-  ...FairAbout_fair
-  href
-  slug
-  articlesConnection(first: 6, sort: PUBLISHED_AT_DESC) {
-    totalCount
-    edges {
-      __typename
-    }
-  }
-  marketingCollections(size: 5) {
-    id
-  }
-}
-
-fragment FairTimer_fair on Fair {
-  endAt
-}
-
-fragment FillwidthItem_artwork on Artwork {
-  image {
-    url(version: "larger")
-    aspectRatio
-  }
-  imageTitle
-  title
-  href
-  is_saved: isSaved
-  ...Metadata_artwork
-  ...SaveButton_artwork
-  ...Badge_artwork
-}
-
-fragment Metadata_artwork on Artwork {
-  ...Details_artwork
-  ...Contact_artwork
-  href
-}
-
-fragment SaveButton_artwork on Artwork {
-  id
-  internalID
-  slug
-  is_saved: isSaved
-  title
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -1156,5 +933,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'a11835f350b7546e1a799b79ff87ad34';
+
+(node as any).hash = "a11835f350b7546e1a799b79ff87ad34";
+
 export default node;

@@ -1,32 +1,35 @@
+/**
+ * @generated SignedSource<<1a8377cbe6724e2aab4088fb166b182d>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type PartnerArtistsCarousel_partner = {
-    readonly slug: string;
-    readonly artistsConnection: {
-        readonly edges: ReadonlyArray<{
-            readonly counts: {
-                readonly artworks: number | null;
-            } | null;
-            readonly node: {
-                readonly id: string;
-                readonly slug: string;
-            } | null;
-            readonly " $fragmentRefs": FragmentRefs<"PartnerArtistsCarouselItem_artist">;
-        } | null> | null;
-    } | null;
-    readonly " $refType": "PartnerArtistsCarousel_partner";
+export type PartnerArtistsCarousel_partner$data = {
+  readonly slug: string;
+  readonly artistsConnection: {
+    readonly edges: ReadonlyArray<{
+      readonly counts: {
+        readonly artworks: Int | null;
+      } | null;
+      readonly node: {
+        readonly id: string;
+        readonly slug: string;
+      } | null;
+      readonly " $fragmentSpreads": FragmentRefs<"PartnerArtistsCarouselItem_artist">;
+    } | null> | null;
+  } | null;
+  readonly " $fragmentType": "PartnerArtistsCarousel_partner";
 };
-export type PartnerArtistsCarousel_partner$data = PartnerArtistsCarousel_partner;
 export type PartnerArtistsCarousel_partner$key = {
-    readonly " $data"?: PartnerArtistsCarousel_partner$data;
-    readonly " $fragmentRefs": FragmentRefs<"PartnerArtistsCarousel_partner">;
+  readonly " $data"?: PartnerArtistsCarousel_partner$data;
+  readonly " $fragmentSpreads": FragmentRefs<"PartnerArtistsCarousel_partner">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = {
@@ -128,5 +131,7 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = 'b4252ea48c05f4c22efdc890b6891d28';
+
+(node as any).hash = "b4252ea48c05f4c22efdc890b6891d28";
+
 export default node;

@@ -1,31 +1,34 @@
+/**
+ * @generated SignedSource<<3de852a4d210dc44114cbeba2f610601>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type FairsPastFairs_viewer = {
-    readonly pastFairs: {
-        readonly edges: ReadonlyArray<{
-            readonly node: {
-                readonly internalID: string;
-                readonly isPublished: boolean | null;
-                readonly profile: {
-                    readonly isPublished: boolean | null;
-                } | null;
-                readonly " $fragmentRefs": FragmentRefs<"FairsFairRow_fair">;
-            } | null;
-        } | null> | null;
-    } | null;
-    readonly " $refType": "FairsPastFairs_viewer";
+export type FairsPastFairs_viewer$data = {
+  readonly pastFairs: {
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly internalID: string;
+        readonly isPublished: boolean | null;
+        readonly profile: {
+          readonly isPublished: boolean | null;
+        } | null;
+        readonly " $fragmentSpreads": FragmentRefs<"FairsFairRow_fair">;
+      } | null;
+    } | null> | null;
+  } | null;
+  readonly " $fragmentType": "FairsPastFairs_viewer";
 };
-export type FairsPastFairs_viewer$data = FairsPastFairs_viewer;
 export type FairsPastFairs_viewer$key = {
-    readonly " $data"?: FairsPastFairs_viewer$data;
-    readonly " $fragmentRefs": FragmentRefs<"FairsPastFairs_viewer">;
+  readonly " $data"?: FairsPastFairs_viewer$data;
+  readonly " $fragmentSpreads": FragmentRefs<"FairsPastFairs_viewer">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = {
@@ -129,16 +132,16 @@ return {
                   "storageKey": null
                 },
                 {
+                  "args": null,
+                  "kind": "FragmentSpread",
+                  "name": "FairsFairRow_fair"
+                },
+                {
                   "alias": null,
                   "args": null,
                   "kind": "ScalarField",
                   "name": "__typename",
                   "storageKey": null
-                },
-                {
-                  "args": null,
-                  "kind": "FragmentSpread",
-                  "name": "FairsFairRow_fair"
                 }
               ],
               "storageKey": null
@@ -186,5 +189,7 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '64dc2aa4701a7a1bab02c02d7c29621e';
+
+(node as any).hash = "64dc2aa4701a7a1bab02c02d7c29621e";
+
 export default node;

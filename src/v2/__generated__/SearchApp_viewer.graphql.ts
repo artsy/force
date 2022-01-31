@@ -1,42 +1,45 @@
+/**
+ * @generated SignedSource<<23e580c3e251769de20729dd126f3d60>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
-import { FragmentRefs } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 export type SearchAggregation = "TYPE" | "%future added value";
-export type SearchApp_viewer = {
-    readonly searchConnection: {
-        readonly aggregations: ReadonlyArray<{
-            readonly slice: SearchAggregation | null;
-            readonly counts: ReadonlyArray<{
-                readonly count: number;
-                readonly name: string;
-            } | null> | null;
-        } | null> | null;
-        readonly edges: ReadonlyArray<{
-            readonly node: {
-                readonly slug?: string;
-                readonly displayLabel?: string | null;
-                readonly displayType?: string | null;
-            } | null;
-        } | null> | null;
-        readonly " $fragmentRefs": FragmentRefs<"NavigationTabs_searchableConnection">;
+import { FragmentRefs } from "relay-runtime";
+export type SearchApp_viewer$data = {
+  readonly searchConnection: {
+    readonly aggregations: ReadonlyArray<{
+      readonly slice: SearchAggregation | null;
+      readonly counts: ReadonlyArray<{
+        readonly count: number;
+        readonly name: string;
+      } | null> | null;
+    } | null> | null;
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly slug?: string;
+        readonly displayLabel?: string | null;
+        readonly displayType?: string | null;
+      } | null;
+    } | null> | null;
+    readonly " $fragmentSpreads": FragmentRefs<"NavigationTabs_searchableConnection">;
+  } | null;
+  readonly artworksConnection: {
+    readonly counts: {
+      readonly total: Int | null;
     } | null;
-    readonly artworksConnection: {
-        readonly counts: {
-            readonly total: number | null;
-        } | null;
-    } | null;
-    readonly " $refType": "SearchApp_viewer";
+  } | null;
+  readonly " $fragmentType": "SearchApp_viewer";
 };
-export type SearchApp_viewer$data = SearchApp_viewer;
 export type SearchApp_viewer$key = {
-    readonly " $data"?: SearchApp_viewer$data;
-    readonly " $fragmentRefs": FragmentRefs<"SearchApp_viewer">;
+  readonly " $data"?: SearchApp_viewer$data;
+  readonly " $fragmentSpreads": FragmentRefs<"SearchApp_viewer">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [
@@ -120,6 +123,11 @@ const node: ReaderFragment = {
           "storageKey": null
         },
         {
+          "args": null,
+          "kind": "FragmentSpread",
+          "name": "NavigationTabs_searchableConnection"
+        },
+        {
           "alias": null,
           "args": null,
           "concreteType": "SearchableEdge",
@@ -168,11 +176,6 @@ const node: ReaderFragment = {
             }
           ],
           "storageKey": null
-        },
-        {
-          "args": null,
-          "kind": "FragmentSpread",
-          "name": "NavigationTabs_searchableConnection"
         }
       ],
       "storageKey": null
@@ -228,5 +231,7 @@ const node: ReaderFragment = {
   "type": "Viewer",
   "abstractKey": null
 };
-(node as any).hash = '35e201abf8d672d14777050f0cca8a84';
+
+(node as any).hash = "35e201abf8d672d14777050f0cca8a84";
+
 export default node;

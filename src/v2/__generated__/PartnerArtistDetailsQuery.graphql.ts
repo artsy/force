@@ -1,191 +1,32 @@
+/**
+ * @generated SignedSource<<a7cba052faea050a436bb94e20322883>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type PartnerArtistDetailsQueryVariables = {
-    partnerId: string;
-    artistId: string;
+export type PartnerArtistDetailsQuery$variables = {
+  partnerId: string;
+  artistId: string;
 };
-export type PartnerArtistDetailsQueryResponse = {
-    readonly partner: {
-        readonly artistsConnection: {
-            readonly edges: ReadonlyArray<{
-                readonly " $fragmentRefs": FragmentRefs<"PartnerArtistDetails_partnerArtist">;
-            } | null> | null;
-        } | null;
+export type PartnerArtistDetailsQuery$data = {
+  readonly partner: {
+    readonly artistsConnection: {
+      readonly edges: ReadonlyArray<{
+        readonly " $fragmentSpreads": FragmentRefs<"PartnerArtistDetails_partnerArtist">;
+      } | null> | null;
     } | null;
+  } | null;
 };
 export type PartnerArtistDetailsQuery = {
-    readonly response: PartnerArtistDetailsQueryResponse;
-    readonly variables: PartnerArtistDetailsQueryVariables;
+  variables: PartnerArtistDetailsQuery$variables;
+  response: PartnerArtistDetailsQuery$data;
 };
-
-
-
-/*
-query PartnerArtistDetailsQuery(
-  $partnerId: String!
-  $artistId: String!
-) {
-  partner(id: $partnerId) {
-    artistsConnection(artistIDs: [$artistId], first: 1) {
-      edges {
-        ...PartnerArtistDetails_partnerArtist
-        id
-      }
-    }
-    id
-  }
-}
-
-fragment Badge_artwork on Artwork {
-  is_biddable: isBiddable
-  href
-  sale {
-    is_preview: isPreview
-    display_timely_at: displayTimelyAt
-    id
-  }
-}
-
-fragment Contact_artwork on Artwork {
-  href
-  is_inquireable: isInquireable
-  sale {
-    is_auction: isAuction
-    is_live_open: isLiveOpen
-    is_open: isOpen
-    is_closed: isClosed
-    id
-  }
-  partner(shallow: true) {
-    type
-    id
-  }
-  sale_artwork: saleArtwork {
-    highest_bid: highestBid {
-      display
-    }
-    opening_bid: openingBid {
-      display
-    }
-    counts {
-      bidder_positions: bidderPositions
-    }
-    id
-  }
-}
-
-fragment Details_artwork on Artwork {
-  href
-  title
-  date
-  sale_message: saleMessage
-  cultural_maker: culturalMaker
-  artists(shallow: true) {
-    id
-    href
-    name
-  }
-  collecting_institution: collectingInstitution
-  partner(shallow: true) {
-    name
-    href
-    id
-  }
-  sale {
-    is_auction: isAuction
-    is_closed: isClosed
-    id
-  }
-  sale_artwork: saleArtwork {
-    counts {
-      bidder_positions: bidderPositions
-    }
-    highest_bid: highestBid {
-      display
-    }
-    opening_bid: openingBid {
-      display
-    }
-    id
-  }
-}
-
-fragment FillwidthItem_artwork on Artwork {
-  image {
-    url(version: "larger")
-    aspectRatio
-  }
-  imageTitle
-  title
-  href
-  is_saved: isSaved
-  ...Metadata_artwork
-  ...SaveButton_artwork
-  ...Badge_artwork
-}
-
-fragment FollowArtistButton_artist on Artist {
-  id
-  internalID
-  name
-  slug
-  is_followed: isFollowed
-  counts {
-    follows
-  }
-}
-
-fragment Metadata_artwork on Artwork {
-  ...Details_artwork
-  ...Contact_artwork
-  href
-}
-
-fragment PartnerArtistArtworksRail_partnerArtist on ArtistPartnerEdge {
-  artworksConnection(first: 12) {
-    edges {
-      node {
-        id
-        ...FillwidthItem_artwork
-        __typename
-      }
-      cursor
-    }
-    pageInfo {
-      endCursor
-      hasNextPage
-    }
-  }
-}
-
-fragment PartnerArtistDetails_partnerArtist on ArtistPartnerEdge {
-  biographyBlurb(format: HTML) {
-    text
-    credit
-  }
-  ...PartnerArtistArtworksRail_partnerArtist
-  node {
-    slug
-    name
-    href
-    formattedNationalityAndBirthday
-    ...FollowArtistButton_artist
-    id
-  }
-}
-
-fragment SaveButton_artwork on Artwork {
-  id
-  internalID
-  slug
-  is_saved: isSaved
-  title
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = {
@@ -786,5 +627,7 @@ return {
   }
 };
 })();
-(node as any).hash = '5a80939f691834224eccaafe4b18f20b';
+
+(node as any).hash = "5a80939f691834224eccaafe4b18f20b";
+
 export default node;

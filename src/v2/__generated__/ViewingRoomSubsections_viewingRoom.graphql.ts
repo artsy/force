@@ -1,32 +1,35 @@
+/**
+ * @generated SignedSource<<997c8d167bdf9b72e0d945822bea499c>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ViewingRoomSubsections_viewingRoom = {
-    readonly subsections: ReadonlyArray<{
-        readonly internalID: string;
-        readonly title: string | null;
-        readonly body: string | null;
-        readonly image: {
-            readonly width: number | null;
-            readonly height: number | null;
-            readonly imageURLs: {
-                readonly normalized: string | null;
-            } | null;
-        } | null;
-        readonly caption: string | null;
-    }>;
-    readonly " $refType": "ViewingRoomSubsections_viewingRoom";
+export type ViewingRoomSubsections_viewingRoom$data = {
+  readonly subsections: ReadonlyArray<{
+    readonly internalID: string;
+    readonly title: string | null;
+    readonly body: string | null;
+    readonly image: {
+      readonly width: number | null;
+      readonly height: number | null;
+      readonly imageURLs: {
+        readonly normalized: string | null;
+      } | null;
+    } | null;
+    readonly caption: string | null;
+  }>;
+  readonly " $fragmentType": "ViewingRoomSubsections_viewingRoom";
 };
-export type ViewingRoomSubsections_viewingRoom$data = ViewingRoomSubsections_viewingRoom;
 export type ViewingRoomSubsections_viewingRoom$key = {
-    readonly " $data"?: ViewingRoomSubsections_viewingRoom$data;
-    readonly " $fragmentRefs": FragmentRefs<"ViewingRoomSubsections_viewingRoom">;
+  readonly " $data"?: ViewingRoomSubsections_viewingRoom$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ViewingRoomSubsections_viewingRoom">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -120,5 +123,7 @@ const node: ReaderFragment = {
   "type": "ViewingRoom",
   "abstractKey": null
 };
-(node as any).hash = 'e5981115f09332e8129f7bb001196d11';
+
+(node as any).hash = "e5981115f09332e8129f7bb001196d11";
+
 export default node;

@@ -1,366 +1,63 @@
+/**
+ * @generated SignedSource<<1e1f197dbb0a06a97e81d6b576e221a0>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type artistRoutes_TopLevelQueryVariables = {
-    artistID: string;
+export type artistRoutes_TopLevelQuery$variables = {
+  artistID: string;
 };
-export type artistRoutes_TopLevelQueryResponse = {
-    readonly artist: {
-        readonly slug: string;
-        readonly statuses: {
-            readonly shows: boolean | null;
-            readonly cv: boolean | null;
-            readonly articles: boolean | null;
-        } | null;
-        readonly counts: {
-            readonly forSaleArtworks: number | null;
-            readonly auctionResults: number | null;
-        } | null;
-        readonly related: {
-            readonly genes: {
-                readonly edges: ReadonlyArray<{
-                    readonly node: {
-                        readonly slug: string;
-                    } | null;
-                } | null> | null;
-            } | null;
-        } | null;
-        readonly highlights: {
-            readonly artistPartnersConnection: {
-                readonly edges: ReadonlyArray<{
-                    readonly node: {
-                        readonly categories: ReadonlyArray<{
-                            readonly slug: string;
-                        } | null> | null;
-                    } | null;
-                } | null> | null;
-            } | null;
-        } | null;
-        readonly insights: ReadonlyArray<{
-            readonly type: string | null;
-        } | null> | null;
-        readonly biographyBlurb: {
-            readonly text: string | null;
-        } | null;
-        readonly " $fragmentRefs": FragmentRefs<"ArtistApp_artist">;
+export type artistRoutes_TopLevelQuery$data = {
+  readonly artist: {
+    readonly slug: string;
+    readonly statuses: {
+      readonly shows: boolean | null;
+      readonly cv: boolean | null;
+      readonly articles: boolean | null;
     } | null;
+    readonly counts: {
+      readonly forSaleArtworks: Int | null;
+      readonly auctionResults: number | null;
+    } | null;
+    readonly related: {
+      readonly genes: {
+        readonly edges: ReadonlyArray<{
+          readonly node: {
+            readonly slug: string;
+          } | null;
+        } | null> | null;
+      } | null;
+    } | null;
+    readonly highlights: {
+      readonly artistPartnersConnection: {
+        readonly edges: ReadonlyArray<{
+          readonly node: {
+            readonly categories: ReadonlyArray<{
+              readonly slug: string;
+            } | null> | null;
+          } | null;
+        } | null> | null;
+      } | null;
+    } | null;
+    readonly insights: ReadonlyArray<{
+      readonly type: string | null;
+    } | null> | null;
+    readonly biographyBlurb: {
+      readonly text: string | null;
+    } | null;
+    readonly " $fragmentSpreads": FragmentRefs<"ArtistApp_artist">;
+  } | null;
 };
 export type artistRoutes_TopLevelQuery = {
-    readonly response: artistRoutes_TopLevelQueryResponse;
-    readonly variables: artistRoutes_TopLevelQueryVariables;
+  variables: artistRoutes_TopLevelQuery$variables;
+  response: artistRoutes_TopLevelQuery$data;
 };
-
-
-
-/*
-query artistRoutes_TopLevelQuery(
-  $artistID: String!
-) {
-  artist(id: $artistID) @principalField {
-    ...ArtistApp_artist
-    slug
-    statuses {
-      shows
-      cv(minShowCount: 0)
-      articles
-    }
-    counts {
-      forSaleArtworks
-      auctionResults
-    }
-    related {
-      genes {
-        edges {
-          node {
-            slug
-            id
-          }
-        }
-      }
-    }
-    highlights {
-      artistPartnersConnection: partnersConnection(first: 10, displayOnPartnerProfile: true, representedBy: true, partnerCategory: ["blue-chip", "top-established", "top-emerging"]) {
-        edges {
-          node {
-            categories {
-              slug
-              id
-            }
-            id
-          }
-          id
-        }
-      }
-    }
-    insights {
-      type
-    }
-    biographyBlurb(format: HTML, partnerBio: false) {
-      text
-    }
-    id
-  }
-}
-
-fragment ArtistApp_artist on Artist {
-  slug
-  statuses {
-    shows
-    cv(minShowCount: 0)
-    articles
-    artworks
-    auctionLots
-  }
-  counts {
-    forSaleArtworks
-    auctionResults
-  }
-  related {
-    genes {
-      edges {
-        node {
-          slug
-          id
-        }
-      }
-    }
-  }
-  highlights {
-    artistPartnersConnection: partnersConnection(first: 10, displayOnPartnerProfile: true, representedBy: true, partnerCategory: ["blue-chip", "top-established", "top-emerging"]) {
-      edges {
-        node {
-          categories {
-            slug
-            id
-          }
-          id
-        }
-        id
-      }
-    }
-  }
-  insights {
-    type
-  }
-  biographyBlurb(format: HTML, partnerBio: false) {
-    text
-  }
-  ...ArtistMeta_artist
-  ...ArtistHeader_artist
-  ...BackLink_artist
-  internalID
-  name
-}
-
-fragment ArtistHeader_artist on Artist {
-  ...FollowArtistButton_artist
-  ...SelectedCareerAchievements_artist
-  artistHighlights: highlights {
-    partnersConnection(first: 10, displayOnPartnerProfile: true, representedBy: true, partnerCategory: ["blue-chip", "top-established", "top-emerging"]) {
-      edges {
-        node {
-          categories {
-            slug
-            id
-          }
-          id
-        }
-        id
-      }
-    }
-  }
-  auctionResultsConnection(recordsTrusted: true, first: 1, sort: PRICE_AND_DATE_DESC) {
-    edges {
-      node {
-        price_realized: priceRealized {
-          display(format: "0.0a")
-        }
-        organization
-        sale_date: saleDate(format: "YYYY")
-        id
-      }
-    }
-  }
-  image {
-    cropped(width: 200, height: 200) {
-      src
-      srcSet
-    }
-  }
-  internalID
-  slug
-  name
-  formattedNationalityAndBirthday
-  counts {
-    follows
-    forSaleArtworks
-  }
-  biographyBlurb(format: HTML, partnerBio: false) {
-    credit
-    partnerID
-    text
-  }
-}
-
-fragment ArtistMetaCanonicalLink_artist on Artist {
-  slug
-  statuses {
-    shows
-    cv(minShowCount: 0)
-    articles
-    auctionLots
-    artworks
-  }
-  highlights {
-    partnersConnection(first: 10, displayOnPartnerProfile: true, representedBy: true, partnerCategory: ["blue-chip", "top-established", "top-emerging"]) {
-      edges {
-        __typename
-        id
-      }
-    }
-  }
-  biographyBlurb(format: HTML, partnerBio: false) {
-    text
-  }
-  related {
-    genes {
-      edges {
-        node {
-          __typename
-          id
-        }
-      }
-    }
-  }
-  insights {
-    __typename
-  }
-}
-
-fragment ArtistMeta_artist on Artist {
-  slug
-  name
-  nationality
-  birthday
-  deathday
-  gender
-  href
-  meta {
-    description
-  }
-  alternate_names: alternateNames
-  image {
-    versions
-    large: url(version: "large")
-    square: url(version: "square")
-  }
-  counts {
-    artworks
-  }
-  blurb
-  artworks_connection: artworksConnection(first: 10, filter: IS_FOR_SALE, published: true) {
-    edges {
-      node {
-        title
-        date
-        description
-        category
-        price_currency: priceCurrency
-        listPrice {
-          __typename
-          ... on PriceRange {
-            minPrice {
-              major
-              currencyCode
-            }
-            maxPrice {
-              major
-            }
-          }
-          ... on Money {
-            major
-            currencyCode
-          }
-        }
-        availability
-        href
-        image {
-          small: url(version: "small")
-          large: url(version: "large")
-        }
-        partner {
-          name
-          href
-          profile {
-            image {
-              small: url(version: "small")
-              large: url(version: "large")
-            }
-            id
-          }
-          id
-        }
-        id
-      }
-    }
-  }
-  ...ArtistMetaCanonicalLink_artist
-}
-
-fragment BackLink_artist on Artist {
-  name
-  slug
-}
-
-fragment FollowArtistButton_artist on Artist {
-  id
-  internalID
-  name
-  slug
-  is_followed: isFollowed
-  counts {
-    follows
-  }
-}
-
-fragment SelectedCareerAchievements_artist on Artist {
-  highlights {
-    partnersConnection(first: 10, displayOnPartnerProfile: true, representedBy: true, partnerCategory: ["blue-chip", "top-established", "top-emerging"]) {
-      edges {
-        node {
-          categories {
-            slug
-            id
-          }
-          id
-        }
-        id
-      }
-    }
-  }
-  insights {
-    type
-    label
-    entities
-  }
-  auctionResultsConnection(recordsTrusted: true, first: 1, sort: PRICE_AND_DATE_DESC) {
-    edges {
-      node {
-        price_realized: priceRealized {
-          display(format: "0.0a")
-        }
-        organization
-        sale_date: saleDate(format: "YYYY")
-        id
-      }
-    }
-  }
-  slug
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -633,6 +330,11 @@ return {
         "name": "artist",
         "plural": false,
         "selections": [
+          {
+            "args": null,
+            "kind": "FragmentSpread",
+            "name": "ArtistApp_artist"
+          },
           (v2/*: any*/),
           {
             "alias": null,
@@ -781,11 +483,6 @@ return {
               (v13/*: any*/)
             ],
             "storageKey": "biographyBlurb(format:\"HTML\",partnerBio:false)"
-          },
-          {
-            "args": null,
-            "kind": "FragmentSpread",
-            "name": "ArtistApp_artist"
           }
         ],
         "storageKey": null
@@ -1432,5 +1129,7 @@ return {
   }
 };
 })();
-(node as any).hash = '5c1ea791ec15928f323bab7f5226e88e';
+
+(node as any).hash = "5c1ea791ec15928f323bab7f5226e88e";
+
 export default node;

@@ -1,20 +1,23 @@
+/**
+ * @generated SignedSource<<4f8f0deacfb570f74589357ad459c48f>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type SettingsSavesRoute_me = {
-    readonly name: string | null;
-    readonly " $refType": "SettingsSavesRoute_me";
+export type SettingsSavesRoute_me$data = {
+  readonly name: string | null;
+  readonly " $fragmentType": "SettingsSavesRoute_me";
 };
-export type SettingsSavesRoute_me$data = SettingsSavesRoute_me;
 export type SettingsSavesRoute_me$key = {
-    readonly " $data"?: SettingsSavesRoute_me$data;
-    readonly " $fragmentRefs": FragmentRefs<"SettingsSavesRoute_me">;
+  readonly " $data"?: SettingsSavesRoute_me$data;
+  readonly " $fragmentSpreads": FragmentRefs<"SettingsSavesRoute_me">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -33,5 +36,7 @@ const node: ReaderFragment = {
   "type": "Me",
   "abstractKey": null
 };
-(node as any).hash = '1982b79a39acf2359161c14affbb6914';
+
+(node as any).hash = "1982b79a39acf2359161c14affbb6914";
+
 export default node;

@@ -1,62 +1,65 @@
+/**
+ * @generated SignedSource<<b08574e62060767ad3b92ca23a50249f>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type SeoProductsForArtworks_artworks = {
-    readonly edges: ReadonlyArray<{
-        readonly node: {
-            readonly id: string;
-            readonly availability: string | null;
-            readonly category: string | null;
-            readonly date: string | null;
-            readonly href: string | null;
-            readonly is_acquireable: boolean | null;
-            readonly is_price_range: boolean | null;
-            readonly listPrice: {
-                readonly display?: string | null;
-            } | null;
-            readonly price_currency: string | null;
-            readonly title: string | null;
-            readonly artists: ReadonlyArray<{
-                readonly name: string | null;
-            } | null> | null;
-            readonly image: {
-                readonly url: string | null;
-            } | null;
-            readonly meta: {
-                readonly description: string | null;
-            } | null;
-            readonly partner: {
-                readonly name: string | null;
-                readonly type: string | null;
-                readonly profile: {
-                    readonly icon: {
-                        readonly url: string | null;
-                    } | null;
-                } | null;
-                readonly locations: ReadonlyArray<{
-                    readonly address: string | null;
-                    readonly address_2: string | null;
-                    readonly city: string | null;
-                    readonly state: string | null;
-                    readonly country: string | null;
-                    readonly postal_code: string | null;
-                    readonly phone: string | null;
-                } | null> | null;
-            } | null;
+export type SeoProductsForArtworks_artworks$data = {
+  readonly edges: ReadonlyArray<{
+    readonly node: {
+      readonly id: string;
+      readonly availability: string | null;
+      readonly category: string | null;
+      readonly date: string | null;
+      readonly href: string | null;
+      readonly is_acquireable: boolean | null;
+      readonly is_price_range: boolean | null;
+      readonly listPrice: {
+        readonly display?: string | null;
+      } | null;
+      readonly price_currency: string | null;
+      readonly title: string | null;
+      readonly artists: ReadonlyArray<{
+        readonly name: string | null;
+      } | null> | null;
+      readonly image: {
+        readonly url: string | null;
+      } | null;
+      readonly meta: {
+        readonly description: string | null;
+      } | null;
+      readonly partner: {
+        readonly name: string | null;
+        readonly type: string | null;
+        readonly profile: {
+          readonly icon: {
+            readonly url: string | null;
+          } | null;
         } | null;
-    } | null> | null;
-    readonly " $refType": "SeoProductsForArtworks_artworks";
+        readonly locations: ReadonlyArray<{
+          readonly address: string | null;
+          readonly address_2: string | null;
+          readonly city: string | null;
+          readonly state: string | null;
+          readonly country: string | null;
+          readonly postal_code: string | null;
+          readonly phone: string | null;
+        } | null> | null;
+      } | null;
+    } | null;
+  } | null> | null;
+  readonly " $fragmentType": "SeoProductsForArtworks_artworks";
 };
-export type SeoProductsForArtworks_artworks$data = SeoProductsForArtworks_artworks;
 export type SeoProductsForArtworks_artworks$key = {
-    readonly " $data"?: SeoProductsForArtworks_artworks$data;
-    readonly " $fragmentRefs": FragmentRefs<"SeoProductsForArtworks_artworks">;
+  readonly " $data"?: SeoProductsForArtworks_artworks$data;
+  readonly " $fragmentSpreads": FragmentRefs<"SeoProductsForArtworks_artworks">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = [
@@ -362,5 +365,7 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = 'bf1928b2d602d6355d690f999cf23cac';
+
+(node as any).hash = "bf1928b2d602d6355d690f999cf23cac";
+
 export default node;

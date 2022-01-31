@@ -1,79 +1,29 @@
+/**
+ * @generated SignedSource<<f4efdedee9e89fc13999a39448aba29f>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtistsByLetterQueryVariables = {
-    letter: string;
-    size?: number | null;
-    page?: number | null;
+export type ArtistsByLetterQuery$variables = {
+  letter: string;
+  size?: number | null;
+  page?: number | null;
 };
-export type ArtistsByLetterQueryResponse = {
-    readonly viewer: {
-        readonly " $fragmentRefs": FragmentRefs<"ArtistsByLetter_viewer">;
-    } | null;
+export type ArtistsByLetterQuery$data = {
+  readonly viewer: {
+    readonly " $fragmentSpreads": FragmentRefs<"ArtistsByLetter_viewer">;
+  } | null;
 };
 export type ArtistsByLetterQuery = {
-    readonly response: ArtistsByLetterQueryResponse;
-    readonly variables: ArtistsByLetterQueryVariables;
+  variables: ArtistsByLetterQuery$variables;
+  response: ArtistsByLetterQuery$data;
 };
-
-
-
-/*
-query ArtistsByLetterQuery(
-  $letter: String!
-  $size: Int
-  $page: Int
-) {
-  viewer {
-    ...ArtistsByLetter_viewer_qU0ud
-  }
-}
-
-fragment ArtistsByLetter_viewer_qU0ud on Viewer {
-  artistsConnection(letter: $letter, page: $page, size: $size) {
-    pageInfo {
-      endCursor
-      hasNextPage
-    }
-    pageCursors {
-      ...Pagination_pageCursors
-    }
-    artists: edges {
-      artist: node {
-        internalID
-        name
-        href
-        id
-      }
-    }
-  }
-}
-
-fragment Pagination_pageCursors on PageCursors {
-  around {
-    cursor
-    page
-    isCurrent
-  }
-  first {
-    cursor
-    page
-    isCurrent
-  }
-  last {
-    cursor
-    page
-    isCurrent
-  }
-  previous {
-    cursor
-    page
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = {
@@ -337,5 +287,7 @@ return {
   }
 };
 })();
-(node as any).hash = '4c490d28f99cc996d0ed4d8d7dc978d0';
+
+(node as any).hash = "4c490d28f99cc996d0ed4d8d7dc978d0";
+
 export default node;

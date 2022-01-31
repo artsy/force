@@ -1,49 +1,36 @@
+/**
+ * @generated SignedSource<<c487fc4429000768d27f54f8c8a99355>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type createTestEnvQueryVariables = {};
-export type createTestEnvQueryResponse = {
-    readonly artwork: {
-        readonly " $fragmentRefs": FragmentRefs<"createTestEnv_artwork">;
-    } | null;
+export type createTestEnvQuery$variables = {};
+export type createTestEnvQuery$data = {
+  readonly artwork: {
+    readonly " $fragmentSpreads": FragmentRefs<"createTestEnv_artwork">;
+  } | null;
 };
-export type createTestEnvQueryRawResponse = {
-    readonly artwork: ({
-        readonly title: string | null;
-        readonly artist: ({
-            readonly name: string | null;
-            readonly id: string;
-        }) | null;
-        readonly id: string;
-    }) | null;
+export type createTestEnvQuery$rawResponse = {
+  readonly artwork: {
+    readonly title: string | null;
+    readonly artist: {
+      readonly name: string | null;
+      readonly id: string;
+    } | null;
+    readonly id: string;
+  } | null;
 };
 export type createTestEnvQuery = {
-    readonly response: createTestEnvQueryResponse;
-    readonly variables: createTestEnvQueryVariables;
-    readonly rawResponse: createTestEnvQueryRawResponse;
+  variables: createTestEnvQuery$variables;
+  response: createTestEnvQuery$data;
+  rawResponse: createTestEnvQuery$rawResponse;
 };
-
-
-
-/*
-query createTestEnvQuery {
-  artwork(id: "unused") {
-    ...createTestEnv_artwork
-    id
-  }
-}
-
-fragment createTestEnv_artwork on Artwork {
-  title
-  artist {
-    name
-    id
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -174,5 +161,7 @@ return {
   }
 };
 })();
-(node as any).hash = '269f6794cf21b26557a57a6b61cc5864';
+
+(node as any).hash = "269f6794cf21b26557a57a6b61cc5864";
+
 export default node;

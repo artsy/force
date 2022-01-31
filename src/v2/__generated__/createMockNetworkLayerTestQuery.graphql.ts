@@ -1,30 +1,25 @@
+/**
+ * @generated SignedSource<<d6c7611037e3ca803e6f4a7c50440d93>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
-export type createMockNetworkLayerTestQueryVariables = {};
-export type createMockNetworkLayerTestQueryResponse = {
-    readonly artwork: {
-        readonly id: string;
-        readonly title: string | null;
-    } | null;
+import { ConcreteRequest, Query } from 'relay-runtime';
+export type createMockNetworkLayerTestQuery$variables = {};
+export type createMockNetworkLayerTestQuery$data = {
+  readonly artwork: {
+    readonly id: string;
+    readonly title: string | null;
+  } | null;
 };
 export type createMockNetworkLayerTestQuery = {
-    readonly response: createMockNetworkLayerTestQueryResponse;
-    readonly variables: createMockNetworkLayerTestQueryVariables;
+  variables: createMockNetworkLayerTestQuery$variables;
+  response: createMockNetworkLayerTestQuery$data;
 };
-
-
-
-/*
-query createMockNetworkLayerTestQuery {
-  artwork(id: "untitled") {
-    id
-    title
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -87,5 +82,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'e735fd4b2d3daed26a8c2e227bc1cc5f';
+
+(node as any).hash = "e735fd4b2d3daed26a8c2e227bc1cc5f";
+
 export default node;

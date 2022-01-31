@@ -1,39 +1,42 @@
+/**
+ * @generated SignedSource<<2b24904ec971ad378d2091be060dcba7>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
-import { FragmentRefs } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 export type ArtworkAggregation = "ARTIST" | "ARTIST_NATIONALITY" | "ATTRIBUTION_CLASS" | "COLOR" | "DIMENSION_RANGE" | "FOLLOWED_ARTISTS" | "GALLERY" | "INSTITUTION" | "LOCATION_CITY" | "MAJOR_PERIOD" | "MATERIALS_TERMS" | "MEDIUM" | "MERCHANDISABLE_ARTISTS" | "PARTNER" | "PARTNER_CITY" | "PERIOD" | "PRICE_RANGE" | "TOTAL" | "%future added value";
-export type FairArtworks_fair = {
-    readonly slug: string;
-    readonly internalID: string;
-    readonly sidebarAggregations: {
-        readonly aggregations: ReadonlyArray<{
-            readonly slice: ArtworkAggregation | null;
-            readonly counts: ReadonlyArray<{
-                readonly name: string;
-                readonly value: string;
-                readonly count: number;
-            } | null> | null;
-        } | null> | null;
+import { FragmentRefs } from "relay-runtime";
+export type FairArtworks_fair$data = {
+  readonly slug: string;
+  readonly internalID: string;
+  readonly sidebarAggregations: {
+    readonly aggregations: ReadonlyArray<{
+      readonly slice: ArtworkAggregation | null;
+      readonly counts: ReadonlyArray<{
+        readonly name: string;
+        readonly value: string;
+        readonly count: number;
+      } | null> | null;
+    } | null> | null;
+  } | null;
+  readonly filtered_artworks: {
+    readonly id: string;
+    readonly counts?: {
+      readonly followedArtists: Int | null;
     } | null;
-    readonly filtered_artworks: {
-        readonly id: string;
-        readonly counts?: {
-            readonly followedArtists: number | null;
-        } | null;
-        readonly " $fragmentRefs": FragmentRefs<"ArtworkFilterArtworkGrid_filtered_artworks">;
-    } | null;
-    readonly " $refType": "FairArtworks_fair";
+    readonly " $fragmentSpreads": FragmentRefs<"ArtworkFilterArtworkGrid_filtered_artworks">;
+  } | null;
+  readonly " $fragmentType": "FairArtworks_fair";
 };
-export type FairArtworks_fair$data = FairArtworks_fair;
 export type FairArtworks_fair$key = {
-    readonly " $data"?: FairArtworks_fair$data;
-    readonly " $fragmentRefs": FragmentRefs<"FairArtworks_fair">;
+  readonly " $data"?: FairArtworks_fair$data;
+  readonly " $fragmentSpreads": FragmentRefs<"FairArtworks_fair">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [
@@ -206,5 +209,7 @@ const node: ReaderFragment = {
   "type": "Fair",
   "abstractKey": null
 };
-(node as any).hash = 'd68487016b3bf8847ebc7a31cb6f66af';
+
+(node as any).hash = "d68487016b3bf8847ebc7a31cb6f66af";
+
 export default node;

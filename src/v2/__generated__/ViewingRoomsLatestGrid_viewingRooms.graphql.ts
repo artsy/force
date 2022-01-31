@@ -1,38 +1,41 @@
+/**
+ * @generated SignedSource<<97e437f385425a0a735b7165327e7495>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ViewingRoomsLatestGrid_viewingRooms = {
-    readonly viewingRoomsConnection: {
-        readonly edges: ReadonlyArray<{
-            readonly node: {
-                readonly slug: string;
-                readonly status: string;
-                readonly title: string;
-                readonly image: {
-                    readonly imageURLs: {
-                        readonly normalized: string | null;
-                    } | null;
-                } | null;
-                readonly distanceToOpen: string | null;
-                readonly distanceToClose: string | null;
-                readonly partner: {
-                    readonly name: string | null;
-                } | null;
-            } | null;
-        } | null> | null;
-    } | null;
-    readonly " $refType": "ViewingRoomsLatestGrid_viewingRooms";
+export type ViewingRoomsLatestGrid_viewingRooms$data = {
+  readonly viewingRoomsConnection: {
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly slug: string;
+        readonly status: string;
+        readonly title: string;
+        readonly image: {
+          readonly imageURLs: {
+            readonly normalized: string | null;
+          } | null;
+        } | null;
+        readonly distanceToOpen: string | null;
+        readonly distanceToClose: string | null;
+        readonly partner: {
+          readonly name: string | null;
+        } | null;
+      } | null;
+    } | null> | null;
+  } | null;
+  readonly " $fragmentType": "ViewingRoomsLatestGrid_viewingRooms";
 };
-export type ViewingRoomsLatestGrid_viewingRooms$data = ViewingRoomsLatestGrid_viewingRooms;
 export type ViewingRoomsLatestGrid_viewingRooms$key = {
-    readonly " $data"?: ViewingRoomsLatestGrid_viewingRooms$data;
-    readonly " $fragmentRefs": FragmentRefs<"ViewingRoomsLatestGrid_viewingRooms">;
+  readonly " $data"?: ViewingRoomsLatestGrid_viewingRooms$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ViewingRoomsLatestGrid_viewingRooms">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = [
@@ -229,5 +232,7 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '8a3e6fe9095d678b418a8c2f34a18dae';
+
+(node as any).hash = "8a3e6fe9095d678b418a8c2f34a18dae";
+
 export default node;

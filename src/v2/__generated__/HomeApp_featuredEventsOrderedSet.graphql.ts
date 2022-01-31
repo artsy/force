@@ -1,20 +1,23 @@
+/**
+ * @generated SignedSource<<27183ccfb6813aad1bff5c360d099822>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type HomeApp_featuredEventsOrderedSet = {
-    readonly " $fragmentRefs": FragmentRefs<"HomeFeaturedEventsRail_orderedSet">;
-    readonly " $refType": "HomeApp_featuredEventsOrderedSet";
+export type HomeApp_featuredEventsOrderedSet$data = {
+  readonly " $fragmentSpreads": FragmentRefs<"HomeFeaturedEventsRail_orderedSet">;
+  readonly " $fragmentType": "HomeApp_featuredEventsOrderedSet";
 };
-export type HomeApp_featuredEventsOrderedSet$data = HomeApp_featuredEventsOrderedSet;
 export type HomeApp_featuredEventsOrderedSet$key = {
-    readonly " $data"?: HomeApp_featuredEventsOrderedSet$data;
-    readonly " $fragmentRefs": FragmentRefs<"HomeApp_featuredEventsOrderedSet">;
+  readonly " $data"?: HomeApp_featuredEventsOrderedSet$data;
+  readonly " $fragmentSpreads": FragmentRefs<"HomeApp_featuredEventsOrderedSet">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -31,5 +34,7 @@ const node: ReaderFragment = {
   "type": "OrderedSet",
   "abstractKey": null
 };
-(node as any).hash = 'e5316349296555e9aaf1e6896746cc3f';
+
+(node as any).hash = "e5316349296555e9aaf1e6896746cc3f";
+
 export default node;

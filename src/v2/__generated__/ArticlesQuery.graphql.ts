@@ -1,101 +1,31 @@
+/**
+ * @generated SignedSource<<bc8b4ae09f5d57c4143ffb090f894cb0>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArticlesQueryVariables = {
-    partnerId: string;
-    first?: number | null;
-    last?: number | null;
-    after?: string | null;
-    before?: string | null;
+export type ArticlesQuery$variables = {
+  partnerId: string;
+  first?: number | null;
+  last?: number | null;
+  after?: string | null;
+  before?: string | null;
 };
-export type ArticlesQueryResponse = {
-    readonly partner: {
-        readonly " $fragmentRefs": FragmentRefs<"Articles_partner">;
-    } | null;
+export type ArticlesQuery$data = {
+  readonly partner: {
+    readonly " $fragmentSpreads": FragmentRefs<"Articles_partner">;
+  } | null;
 };
 export type ArticlesQuery = {
-    readonly response: ArticlesQueryResponse;
-    readonly variables: ArticlesQueryVariables;
+  variables: ArticlesQuery$variables;
+  response: ArticlesQuery$data;
 };
-
-
-
-/*
-query ArticlesQuery(
-  $partnerId: String!
-  $first: Int
-  $last: Int
-  $after: String
-  $before: String
-) {
-  partner(id: $partnerId) {
-    ...Articles_partner_pbnwq
-    id
-  }
-}
-
-fragment ArticleCell_article on Article {
-  vertical
-  internalID
-  title
-  byline
-  href
-  publishedAt(format: "MMM D, YYYY")
-  thumbnailImage {
-    cropped(width: 445, height: 334) {
-      width
-      height
-      src
-      srcSet
-    }
-  }
-}
-
-fragment Articles_partner_pbnwq on Partner {
-  slug
-  articlesConnection(first: $first, last: $last, after: $after, before: $before) {
-    pageInfo {
-      hasNextPage
-      endCursor
-    }
-    pageCursors {
-      ...Pagination_pageCursors
-    }
-    edges {
-      node {
-        internalID
-        ...ArticleCell_article
-        id
-      }
-    }
-  }
-}
-
-fragment Pagination_pageCursors on PageCursors {
-  around {
-    cursor
-    page
-    isCurrent
-  }
-  first {
-    cursor
-    page
-    isCurrent
-  }
-  last {
-    cursor
-    page
-    isCurrent
-  }
-  previous {
-    cursor
-    page
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = {
@@ -482,5 +412,7 @@ return {
   }
 };
 })();
-(node as any).hash = '3e1b992087b75f5cf65a63a9247dea40';
+
+(node as any).hash = "3e1b992087b75f5cf65a63a9247dea40";
+
 export default node;

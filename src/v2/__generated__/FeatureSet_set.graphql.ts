@@ -1,35 +1,38 @@
+/**
+ * @generated SignedSource<<d638131c4aae65c2719f79f3efd4af66>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
-import { FragmentRefs } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 export type OrderedSetLayouts = "DEFAULT" | "FULL" | "%future added value";
-export type FeatureSet_set = {
-    readonly id: string;
-    readonly layout: OrderedSetLayouts;
-    readonly name: string | null;
-    readonly description: string | null;
-    readonly itemType: string | null;
-    readonly orderedItems: {
-        readonly edges: ReadonlyArray<{
-            readonly __typename: string;
-            readonly node: {
-                readonly id?: string;
-                readonly " $fragmentRefs": FragmentRefs<"FeatureSetItem_setItem">;
-            } | null;
-        } | null> | null;
-    };
-    readonly " $fragmentRefs": FragmentRefs<"FeatureSetMeta_set" | "FeatureSetContainer_set">;
-    readonly " $refType": "FeatureSet_set";
+import { FragmentRefs } from "relay-runtime";
+export type FeatureSet_set$data = {
+  readonly id: string;
+  readonly layout: OrderedSetLayouts;
+  readonly name: string | null;
+  readonly description: string | null;
+  readonly itemType: string | null;
+  readonly orderedItems: {
+    readonly edges: ReadonlyArray<{
+      readonly __typename: string;
+      readonly node: {
+        readonly id?: string;
+        readonly " $fragmentSpreads": FragmentRefs<"FeatureSetItem_setItem">;
+      } | null;
+    } | null> | null;
+  };
+  readonly " $fragmentSpreads": FragmentRefs<"FeatureSetMeta_set" | "FeatureSetContainer_set">;
+  readonly " $fragmentType": "FeatureSet_set";
 };
-export type FeatureSet_set$data = FeatureSet_set;
 export type FeatureSet_set$key = {
-    readonly " $data"?: FeatureSet_set$data;
-    readonly " $fragmentRefs": FragmentRefs<"FeatureSet_set">;
+  readonly " $data"?: FeatureSet_set$data;
+  readonly " $fragmentSpreads": FragmentRefs<"FeatureSet_set">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = {
@@ -161,5 +164,7 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '6477bebfd7bcb4bb613c4f780af6c886';
+
+(node as any).hash = "6477bebfd7bcb4bb613c4f780af6c886";
+
 export default node;

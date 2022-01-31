@@ -1,38 +1,41 @@
+/**
+ * @generated SignedSource<<9dc571b2186018105a4e043637ff5901>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtistSeriesArtworkRail_artwork = {
-    readonly internalID: string;
-    readonly slug: string;
-    readonly artistSeriesConnection: {
-        readonly edges: ReadonlyArray<{
+export type ArtistSeriesArtworkRail_artwork$data = {
+  readonly internalID: string;
+  readonly slug: string;
+  readonly artistSeriesConnection: {
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly slug: string;
+        readonly internalID: string;
+        readonly filterArtworksConnection: {
+          readonly edges: ReadonlyArray<{
             readonly node: {
-                readonly slug: string;
-                readonly internalID: string;
-                readonly filterArtworksConnection: {
-                    readonly edges: ReadonlyArray<{
-                        readonly node: {
-                            readonly slug: string;
-                            readonly internalID: string;
-                            readonly " $fragmentRefs": FragmentRefs<"ShelfArtwork_artwork">;
-                        } | null;
-                    } | null> | null;
-                } | null;
+              readonly slug: string;
+              readonly internalID: string;
+              readonly " $fragmentSpreads": FragmentRefs<"ShelfArtwork_artwork">;
             } | null;
-        } | null> | null;
-    } | null;
-    readonly " $refType": "ArtistSeriesArtworkRail_artwork";
+          } | null> | null;
+        } | null;
+      } | null;
+    } | null> | null;
+  } | null;
+  readonly " $fragmentType": "ArtistSeriesArtworkRail_artwork";
 };
-export type ArtistSeriesArtworkRail_artwork$data = ArtistSeriesArtworkRail_artwork;
 export type ArtistSeriesArtworkRail_artwork$key = {
-    readonly " $data"?: ArtistSeriesArtworkRail_artwork$data;
-    readonly " $fragmentRefs": FragmentRefs<"ArtistSeriesArtworkRail_artwork">;
+  readonly " $data"?: ArtistSeriesArtworkRail_artwork$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtistSeriesArtworkRail_artwork">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = {
@@ -154,5 +157,7 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = 'cfb241b354625af4e82f02523ff0b0a0';
+
+(node as any).hash = "cfb241b354625af4e82f02523ff0b0a0";
+
 export default node;

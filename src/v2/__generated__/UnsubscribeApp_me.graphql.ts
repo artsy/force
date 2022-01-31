@@ -1,20 +1,23 @@
+/**
+ * @generated SignedSource<<580a78746b9cfba91270b218afa63658>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type UnsubscribeApp_me = {
-    readonly " $fragmentRefs": FragmentRefs<"UnsubscribeLoggedIn_me">;
-    readonly " $refType": "UnsubscribeApp_me";
+export type UnsubscribeApp_me$data = {
+  readonly " $fragmentSpreads": FragmentRefs<"UnsubscribeLoggedIn_me">;
+  readonly " $fragmentType": "UnsubscribeApp_me";
 };
-export type UnsubscribeApp_me$data = UnsubscribeApp_me;
 export type UnsubscribeApp_me$key = {
-    readonly " $data"?: UnsubscribeApp_me$data;
-    readonly " $fragmentRefs": FragmentRefs<"UnsubscribeApp_me">;
+  readonly " $data"?: UnsubscribeApp_me$data;
+  readonly " $fragmentSpreads": FragmentRefs<"UnsubscribeApp_me">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -31,5 +34,7 @@ const node: ReaderFragment = {
   "type": "Me",
   "abstractKey": null
 };
-(node as any).hash = 'd629207be683825910dd735e47cb2e78';
+
+(node as any).hash = "d629207be683825910dd735e47cb2e78";
+
 export default node;

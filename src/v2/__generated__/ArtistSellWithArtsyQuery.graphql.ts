@@ -1,48 +1,27 @@
+/**
+ * @generated SignedSource<<cc6e9e308d0318f445b3820108ab2e3a>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtistSellWithArtsyQueryVariables = {
-    slug: string;
+export type ArtistSellWithArtsyQuery$variables = {
+  slug: string;
 };
-export type ArtistSellWithArtsyQueryResponse = {
-    readonly artist: {
-        readonly " $fragmentRefs": FragmentRefs<"ArtistSellWithArtsy_artist">;
-    } | null;
+export type ArtistSellWithArtsyQuery$data = {
+  readonly artist: {
+    readonly " $fragmentSpreads": FragmentRefs<"ArtistSellWithArtsy_artist">;
+  } | null;
 };
 export type ArtistSellWithArtsyQuery = {
-    readonly response: ArtistSellWithArtsyQueryResponse;
-    readonly variables: ArtistSellWithArtsyQueryVariables;
+  variables: ArtistSellWithArtsyQuery$variables;
+  response: ArtistSellWithArtsyQuery$data;
 };
-
-
-
-/*
-query ArtistSellWithArtsyQuery(
-  $slug: String!
-) {
-  artist(id: $slug) {
-    ...ArtistSellWithArtsy_artist
-    id
-  }
-}
-
-fragment ArtistSellWithArtsy_artist on Artist {
-  internalID
-  slug
-  href
-  targetSupply {
-    isInMicrofunnel
-  }
-  image {
-    resized(width: 640) {
-      src
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -196,5 +175,7 @@ return {
   }
 };
 })();
-(node as any).hash = '2236059f5d30a3e41c6b0c49e0f10185';
+
+(node as any).hash = "2236059f5d30a3e41c6b0c49e0f10185";
+
 export default node;

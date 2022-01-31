@@ -1,70 +1,25 @@
+/**
+ * @generated SignedSource<<c516a19deb4dd20725cc98fe9f97563b>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ViewingRooms_Test_QueryVariables = {};
-export type ViewingRooms_Test_QueryResponse = {
-    readonly partner: {
-        readonly " $fragmentRefs": FragmentRefs<"ViewingRooms_partner">;
-    } | null;
+export type ViewingRooms_Test_Query$variables = {};
+export type ViewingRooms_Test_Query$data = {
+  readonly partner: {
+    readonly " $fragmentSpreads": FragmentRefs<"ViewingRooms_partner">;
+  } | null;
 };
 export type ViewingRooms_Test_Query = {
-    readonly response: ViewingRooms_Test_QueryResponse;
-    readonly variables: ViewingRooms_Test_QueryVariables;
+  variables: ViewingRooms_Test_Query$variables;
+  response: ViewingRooms_Test_Query$data;
 };
-
-
-
-/*
-query ViewingRooms_Test_Query {
-  partner(id: "white-cube") @principalField {
-    ...ViewingRooms_partner
-    id
-  }
-}
-
-fragment ViewingRoomCard_viewingRoom on ViewingRoom {
-  href
-  title
-  exhibitionPeriod
-  coverImage: image {
-    imageURLs {
-      normalized
-    }
-    width
-    height
-  }
-}
-
-fragment ViewingRooms_edges on ViewingRoomsEdge {
-  node {
-    internalID
-    ...ViewingRoomCard_viewingRoom
-  }
-}
-
-fragment ViewingRooms_partner on Partner {
-  slug
-  currentViewingRooms: viewingRoomsConnection(first: 12, statuses: live) {
-    edges {
-      node {
-        internalID
-      }
-      ...ViewingRooms_edges
-    }
-  }
-  upcomingViewingRooms: viewingRoomsConnection(first: 12, statuses: scheduled) {
-    edges {
-      node {
-        internalID
-      }
-      ...ViewingRooms_edges
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -367,5 +322,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'ac1769d18e52b61b5cd0b4f32a6fb02c';
+
+(node as any).hash = "ac1769d18e52b61b5cd0b4f32a6fb02c";
+
 export default node;

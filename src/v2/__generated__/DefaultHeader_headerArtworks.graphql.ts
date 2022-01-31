@@ -1,24 +1,27 @@
+/**
+ * @generated SignedSource<<69ee348c8b7c49d08935ff5ceec5058c>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type DefaultHeader_headerArtworks = {
-    readonly edges: ReadonlyArray<{
-        readonly node: {
-            readonly " $fragmentRefs": FragmentRefs<"DefaultHeaderArtwork_artwork">;
-        } | null;
-    } | null> | null;
-    readonly " $refType": "DefaultHeader_headerArtworks";
+export type DefaultHeader_headerArtworks$data = {
+  readonly edges: ReadonlyArray<{
+    readonly node: {
+      readonly " $fragmentSpreads": FragmentRefs<"DefaultHeaderArtwork_artwork">;
+    } | null;
+  } | null> | null;
+  readonly " $fragmentType": "DefaultHeader_headerArtworks";
 };
-export type DefaultHeader_headerArtworks$data = DefaultHeader_headerArtworks;
 export type DefaultHeader_headerArtworks$key = {
-    readonly " $data"?: DefaultHeader_headerArtworks$data;
-    readonly " $fragmentRefs": FragmentRefs<"DefaultHeader_headerArtworks">;
+  readonly " $data"?: DefaultHeader_headerArtworks$data;
+  readonly " $fragmentSpreads": FragmentRefs<"DefaultHeader_headerArtworks">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -57,5 +60,7 @@ const node: ReaderFragment = {
   "type": "FilterArtworksConnection",
   "abstractKey": null
 };
-(node as any).hash = '0d8bb416e06dcc10ce68c99eba44bb99';
+
+(node as any).hash = "0d8bb416e06dcc10ce68c99eba44bb99";
+
 export default node;

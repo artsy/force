@@ -1,36 +1,39 @@
+/**
+ * @generated SignedSource<<6c259c5c576dc07f55ddff93a5174aa5>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type InquiryInquiry_artwork = {
-    readonly internalID: string;
-    readonly title: string | null;
-    readonly date: string | null;
-    readonly artist: {
-        readonly name: string | null;
+export type InquiryInquiry_artwork$data = {
+  readonly internalID: string;
+  readonly title: string | null;
+  readonly date: string | null;
+  readonly artist: {
+    readonly name: string | null;
+  } | null;
+  readonly partner: {
+    readonly name: string | null;
+  } | null;
+  readonly image: {
+    readonly resized: {
+      readonly height: number | null;
+      readonly width: number | null;
+      readonly src: string;
+      readonly srcSet: string;
     } | null;
-    readonly partner: {
-        readonly name: string | null;
-    } | null;
-    readonly image: {
-        readonly resized: {
-            readonly height: number | null;
-            readonly width: number | null;
-            readonly src: string;
-            readonly srcSet: string;
-        } | null;
-    } | null;
-    readonly " $refType": "InquiryInquiry_artwork";
+  } | null;
+  readonly " $fragmentType": "InquiryInquiry_artwork";
 };
-export type InquiryInquiry_artwork$data = InquiryInquiry_artwork;
 export type InquiryInquiry_artwork$key = {
-    readonly " $data"?: InquiryInquiry_artwork$data;
-    readonly " $fragmentRefs": FragmentRefs<"InquiryInquiry_artwork">;
+  readonly " $data"?: InquiryInquiry_artwork$data;
+  readonly " $fragmentSpreads": FragmentRefs<"InquiryInquiry_artwork">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = [
@@ -155,5 +158,7 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = 'f60b7bd6c3523066d5cb774b240122ef';
+
+(node as any).hash = "f60b7bd6c3523066d5cb774b240122ef";
+
 export default node;

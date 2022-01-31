@@ -1,34 +1,37 @@
+/**
+ * @generated SignedSource<<74642c2250892024dc1bf3a7f127b9da>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type GeneSearchResults_viewer = {
-    readonly match_gene: {
-        readonly edges: ReadonlyArray<{
-            readonly node: {
-                readonly name?: string | null;
-                readonly id?: string;
-                readonly slug?: string;
-                readonly internalID?: string;
-                readonly image?: {
-                    readonly cropped: {
-                        readonly url: string;
-                    } | null;
-                } | null;
-            } | null;
-        } | null> | null;
-    } | null;
-    readonly " $refType": "GeneSearchResults_viewer";
+export type GeneSearchResults_viewer$data = {
+  readonly match_gene: {
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly name?: string | null;
+        readonly id?: string;
+        readonly slug?: string;
+        readonly internalID?: string;
+        readonly image?: {
+          readonly cropped: {
+            readonly url: string;
+          } | null;
+        } | null;
+      } | null;
+    } | null> | null;
+  } | null;
+  readonly " $fragmentType": "GeneSearchResults_viewer";
 };
-export type GeneSearchResults_viewer$data = GeneSearchResults_viewer;
 export type GeneSearchResults_viewer$key = {
-    readonly " $data"?: GeneSearchResults_viewer$data;
-    readonly " $fragmentRefs": FragmentRefs<"GeneSearchResults_viewer">;
+  readonly " $data"?: GeneSearchResults_viewer$data;
+  readonly " $fragmentSpreads": FragmentRefs<"GeneSearchResults_viewer">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [
@@ -176,5 +179,7 @@ const node: ReaderFragment = {
   "type": "Viewer",
   "abstractKey": null
 };
-(node as any).hash = '9d2ceaedd49be58a9d88754a1547e4a7';
+
+(node as any).hash = "9d2ceaedd49be58a9d88754a1547e4a7";
+
 export default node;

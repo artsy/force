@@ -1,34 +1,37 @@
+/**
+ * @generated SignedSource<<6f659603ea8ab69afde1ab2c7414e9c4>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type FeaturedArticles_articles = ReadonlyArray<{
-    readonly thumbnailTitle: string | null;
-    readonly publishedAt: string | null;
-    readonly thumbnailImage: {
-        readonly cropped: {
-            readonly width: number;
-            readonly height: number;
-            readonly url: string;
-        } | null;
+export type FeaturedArticles_articles$data = ReadonlyArray<{
+  readonly thumbnailTitle: string | null;
+  readonly publishedAt: string | null;
+  readonly thumbnailImage: {
+    readonly cropped: {
+      readonly width: number;
+      readonly height: number;
+      readonly url: string;
     } | null;
-    readonly tinyImage: {
-        readonly cropped: {
-            readonly url: string;
-        } | null;
+  } | null;
+  readonly tinyImage: {
+    readonly cropped: {
+      readonly url: string;
     } | null;
-    readonly href: string | null;
-    readonly " $refType": "FeaturedArticles_articles";
+  } | null;
+  readonly href: string | null;
+  readonly " $fragmentType": "FeaturedArticles_articles";
 }>;
-export type FeaturedArticles_articles$data = FeaturedArticles_articles;
 export type FeaturedArticles_articles$key = ReadonlyArray<{
-    readonly " $data"?: FeaturedArticles_articles$data;
-    readonly " $fragmentRefs": FragmentRefs<"FeaturedArticles_articles">;
+  readonly " $data"?: FeaturedArticles_articles$data;
+  readonly " $fragmentSpreads": FragmentRefs<"FeaturedArticles_articles">;
 }>;
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = {
@@ -160,5 +163,7 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = 'c35619012178f50363dab1e735a3b8ad';
+
+(node as any).hash = "c35619012178f50363dab1e735a3b8ad";
+
 export default node;

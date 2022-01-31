@@ -1,7 +1,7 @@
-import * as React from "react";
+import * as React from "react"
 import { Box, Button, Column, GridColumns, Spacer, Text } from "@artsy/palette"
 import { RouterLink } from "v2/System/Router/RouterLink"
-import { createFragmentContainer, graphql, _FragmentRefs } from "react-relay"
+import { createFragmentContainer, graphql } from "react-relay"
 import { getArticlesColumns } from "../helpers/getArticlesColumns"
 import { FairOrganizerLatestArticles_fairOrganizer } from "v2/__generated__/FairOrganizerLatestArticles_fairOrganizer.graphql"
 import { extractNodes } from "v2/Utils/extractNodes"

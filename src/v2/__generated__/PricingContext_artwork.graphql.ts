@@ -1,55 +1,58 @@
+/**
+ * @generated SignedSource<<2bdb2a6a183dba0002cb88497f900b68>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
-import { FragmentRefs } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 export type AnalyticsPricingContextCategoryEnum = "ARCHITECTURE" | "BOOKS_AND_PORTFOLIOS" | "DESIGN_DECORATIVE_ART" | "DRAWING_COLLAGE_OTHER_WORK_ON_PAPER" | "FASHION" | "INSTALLATION" | "JEWELRY" | "MIXED_MEDIA" | "OTHER" | "PAINTING" | "PERFORMANCE" | "PHOTOGRAPHY" | "POSTERS" | "PRINT" | "SCULPTURE" | "SOUND" | "TEXTILE" | "VIDEO_FILM_ANIMATION" | "WORK_ON_PAPER" | "%future added value";
 export type AnalyticsPricingContextDimensionEnum = "LARGE" | "MEDIUM" | "SMALL" | "%future added value";
-export type PricingContext_artwork = {
-    readonly listPrice: ({
-        readonly __typename: "PriceRange";
-        readonly maxPrice: {
-            readonly minor: number;
-        } | null;
-        readonly minPrice: {
-            readonly minor: number;
-        } | null;
-    } | {
-        readonly __typename: "Money";
-        readonly minor: number;
-    } | {
-        /*This will never be '%other', but we need some
-        value in case none of the concrete values match.*/
-        readonly __typename: "%other";
-    }) | null;
-    readonly artists: ReadonlyArray<{
-        readonly slug: string;
-    } | null> | null;
-    readonly category: string | null;
-    readonly pricingContext: {
-        readonly appliedFiltersDisplay: string | null;
-        readonly appliedFilters: {
-            readonly dimension: AnalyticsPricingContextDimensionEnum | null;
-            readonly category: AnalyticsPricingContextCategoryEnum | null;
-        };
-        readonly bins: ReadonlyArray<{
-            readonly maxPrice: string | null;
-            readonly maxPriceCents: number;
-            readonly minPrice: string | null;
-            readonly minPriceCents: number;
-            readonly numArtworks: number;
-        }>;
+import { FragmentRefs } from "relay-runtime";
+export type PricingContext_artwork$data = {
+  readonly listPrice: {
+    readonly __typename: "PriceRange";
+    readonly maxPrice: {
+      readonly minor: number;
     } | null;
-    readonly " $refType": "PricingContext_artwork";
+    readonly minPrice: {
+      readonly minor: number;
+    } | null;
+  } | {
+    readonly __typename: "Money";
+    readonly minor: number;
+  } | {
+    // This will never be '%other', but we need some
+    // value in case none of the concrete values match.
+    readonly __typename: "%other";
+  } | null;
+  readonly artists: ReadonlyArray<{
+    readonly slug: string;
+  } | null> | null;
+  readonly category: string | null;
+  readonly pricingContext: {
+    readonly appliedFiltersDisplay: string | null;
+    readonly appliedFilters: {
+      readonly dimension: AnalyticsPricingContextDimensionEnum | null;
+      readonly category: AnalyticsPricingContextCategoryEnum | null;
+    };
+    readonly bins: ReadonlyArray<{
+      readonly maxPrice: string | null;
+      readonly maxPriceCents: number;
+      readonly minPrice: string | null;
+      readonly minPriceCents: number;
+      readonly numArtworks: number;
+    }>;
+  } | null;
+  readonly " $fragmentType": "PricingContext_artwork";
 };
-export type PricingContext_artwork$data = PricingContext_artwork;
 export type PricingContext_artwork$key = {
-    readonly " $data"?: PricingContext_artwork$data;
-    readonly " $fragmentRefs": FragmentRefs<"PricingContext_artwork">;
+  readonly " $data"?: PricingContext_artwork$data;
+  readonly " $fragmentSpreads": FragmentRefs<"PricingContext_artwork">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = [
@@ -232,5 +235,7 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '5bed9e56daed01d03014005a648b39f3';
+
+(node as any).hash = "5bed9e56daed01d03014005a648b39f3";
+
 export default node;

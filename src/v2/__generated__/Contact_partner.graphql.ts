@@ -1,24 +1,27 @@
+/**
+ * @generated SignedSource<<b08d6f3f7b05577acf1f877c02489b9b>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type Contact_partner = {
-    readonly locations: {
-        readonly edges: ReadonlyArray<{
-            readonly " $fragmentRefs": FragmentRefs<"PartnerContacts_edges">;
-        } | null> | null;
-    } | null;
-    readonly " $refType": "Contact_partner";
+export type Contact_partner$data = {
+  readonly locations: {
+    readonly edges: ReadonlyArray<{
+      readonly " $fragmentSpreads": FragmentRefs<"PartnerContacts_edges">;
+    } | null> | null;
+  } | null;
+  readonly " $fragmentType": "Contact_partner";
 };
-export type Contact_partner$data = Contact_partner;
 export type Contact_partner$key = {
-    readonly " $data"?: Contact_partner$data;
-    readonly " $fragmentRefs": FragmentRefs<"Contact_partner">;
+  readonly " $data"?: Contact_partner$data;
+  readonly " $fragmentSpreads": FragmentRefs<"Contact_partner">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -63,5 +66,7 @@ const node: ReaderFragment = {
   "type": "Partner",
   "abstractKey": null
 };
-(node as any).hash = '3c1eaac24eda64d818270f224e9043c1';
+
+(node as any).hash = "3c1eaac24eda64d818270f224e9043c1";
+
 export default node;

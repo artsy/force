@@ -1,30 +1,33 @@
+/**
+ * @generated SignedSource<<f1eaa34dd6d06aeb7e686daec648d6f6>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type WorksForYouApp_viewerMe = {
-    readonly me: {
-        readonly followsAndSaves: {
-            readonly bundledArtworksByArtistConnection: {
-                readonly edges: ReadonlyArray<{
-                    readonly node: {
-                        readonly id: string;
-                    } | null;
-                } | null> | null;
-            } | null;
-        } | null;
+export type WorksForYouApp_viewerMe$data = {
+  readonly me: {
+    readonly followsAndSaves: {
+      readonly bundledArtworksByArtistConnection: {
+        readonly edges: ReadonlyArray<{
+          readonly node: {
+            readonly id: string;
+          } | null;
+        } | null> | null;
+      } | null;
     } | null;
-    readonly " $refType": "WorksForYouApp_viewerMe";
+  } | null;
+  readonly " $fragmentType": "WorksForYouApp_viewerMe";
 };
-export type WorksForYouApp_viewerMe$data = WorksForYouApp_viewerMe;
 export type WorksForYouApp_viewerMe$key = {
-    readonly " $data"?: WorksForYouApp_viewerMe$data;
-    readonly " $fragmentRefs": FragmentRefs<"WorksForYouApp_viewerMe">;
+  readonly " $data"?: WorksForYouApp_viewerMe$data;
+  readonly " $fragmentSpreads": FragmentRefs<"WorksForYouApp_viewerMe">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -109,5 +112,7 @@ const node: ReaderFragment = {
   "type": "Viewer",
   "abstractKey": null
 };
-(node as any).hash = '5431c8b86b3a270ae920743cd1044a39';
+
+(node as any).hash = "5431c8b86b3a270ae920743cd1044a39";
+
 export default node;

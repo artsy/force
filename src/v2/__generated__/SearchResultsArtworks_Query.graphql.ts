@@ -1,219 +1,25 @@
+/**
+ * @generated SignedSource<<5d913e3425d78322f1e1e1e868e21d35>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type SearchResultsArtworks_QueryVariables = {};
-export type SearchResultsArtworks_QueryResponse = {
-    readonly viewer: {
-        readonly " $fragmentRefs": FragmentRefs<"SearchResultsArtworks_viewer">;
-    } | null;
+export type SearchResultsArtworks_Query$variables = {};
+export type SearchResultsArtworks_Query$data = {
+  readonly viewer: {
+    readonly " $fragmentSpreads": FragmentRefs<"SearchResultsArtworks_viewer">;
+  } | null;
 };
 export type SearchResultsArtworks_Query = {
-    readonly response: SearchResultsArtworks_QueryResponse;
-    readonly variables: SearchResultsArtworks_QueryVariables;
+  variables: SearchResultsArtworks_Query$variables;
+  response: SearchResultsArtworks_Query$data;
 };
-
-
-
-/*
-query SearchResultsArtworks_Query {
-  viewer {
-    ...SearchResultsArtworks_viewer_3Rrp9Z
-  }
-}
-
-fragment ArtworkFilterArtworkGrid_filtered_artworks on FilterArtworksConnection {
-  id
-  pageInfo {
-    hasNextPage
-    endCursor
-  }
-  pageCursors {
-    ...Pagination_pageCursors
-  }
-  edges {
-    node {
-      id
-    }
-  }
-  ...ArtworkGrid_artworks
-}
-
-fragment ArtworkFilter_viewer_4g78v5 on Viewer {
-  filtered_artworks: artworksConnection {
-    id
-    ...ArtworkFilterArtworkGrid_filtered_artworks
-  }
-}
-
-fragment ArtworkGrid_artworks on ArtworkConnectionInterface {
-  __isArtworkConnectionInterface: __typename
-  edges {
-    __typename
-    node {
-      id
-      slug
-      href
-      internalID
-      image {
-        aspect_ratio: aspectRatio
-      }
-      ...GridItem_artwork
-    }
-    ... on Node {
-      __isNode: __typename
-      id
-    }
-  }
-}
-
-fragment Badge_artwork on Artwork {
-  is_biddable: isBiddable
-  href
-  sale {
-    is_preview: isPreview
-    display_timely_at: displayTimelyAt
-    id
-  }
-}
-
-fragment Contact_artwork on Artwork {
-  href
-  is_inquireable: isInquireable
-  sale {
-    is_auction: isAuction
-    is_live_open: isLiveOpen
-    is_open: isOpen
-    is_closed: isClosed
-    id
-  }
-  partner(shallow: true) {
-    type
-    id
-  }
-  sale_artwork: saleArtwork {
-    highest_bid: highestBid {
-      display
-    }
-    opening_bid: openingBid {
-      display
-    }
-    counts {
-      bidder_positions: bidderPositions
-    }
-    id
-  }
-}
-
-fragment Details_artwork on Artwork {
-  href
-  title
-  date
-  sale_message: saleMessage
-  cultural_maker: culturalMaker
-  artists(shallow: true) {
-    id
-    href
-    name
-  }
-  collecting_institution: collectingInstitution
-  partner(shallow: true) {
-    name
-    href
-    id
-  }
-  sale {
-    is_auction: isAuction
-    is_closed: isClosed
-    id
-  }
-  sale_artwork: saleArtwork {
-    counts {
-      bidder_positions: bidderPositions
-    }
-    highest_bid: highestBid {
-      display
-    }
-    opening_bid: openingBid {
-      display
-    }
-    id
-  }
-}
-
-fragment GridItem_artwork on Artwork {
-  internalID
-  title
-  image_title: imageTitle
-  image {
-    placeholder
-    url(version: "large")
-    aspect_ratio: aspectRatio
-  }
-  artistNames
-  href
-  is_saved: isSaved
-  ...Metadata_artwork
-  ...SaveButton_artwork
-  ...Badge_artwork
-}
-
-fragment Metadata_artwork on Artwork {
-  ...Details_artwork
-  ...Contact_artwork
-  href
-}
-
-fragment Pagination_pageCursors on PageCursors {
-  around {
-    cursor
-    page
-    isCurrent
-  }
-  first {
-    cursor
-    page
-    isCurrent
-  }
-  last {
-    cursor
-    page
-    isCurrent
-  }
-  previous {
-    cursor
-    page
-  }
-}
-
-fragment SaveButton_artwork on Artwork {
-  id
-  internalID
-  slug
-  is_saved: isSaved
-  title
-}
-
-fragment SearchResultsArtworks_viewer_3Rrp9Z on Viewer {
-  sidebar: artworksConnection(first: 1) {
-    counts {
-      followedArtists
-    }
-    aggregations {
-      slice
-      counts {
-        name
-        value
-        count
-      }
-    }
-    id
-  }
-  ...ArtworkFilter_viewer_4g78v5
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = {
@@ -1091,5 +897,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'e4387db8254276344f37ec131ced6a52';
+
+(node as any).hash = "e4387db8254276344f37ec131ced6a52";
+
 export default node;

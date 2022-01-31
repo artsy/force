@@ -1,38 +1,41 @@
+/**
+ * @generated SignedSource<<55807ceaf148e2beb3d4052c235748a1>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
-import { FragmentRefs } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 export type ArticleFeatureSectionType = "BASIC" | "FULLSCREEN" | "SPLIT" | "TEXT" | "%future added value";
-export type ArticleHeader_article = {
-    readonly title: string | null;
-    readonly vertical: string | null;
-    readonly byline: string | null;
-    readonly hero: {
-        readonly layout?: ArticleFeatureSectionType;
-        readonly embed?: string | null;
-        readonly image?: {
-            readonly url: string | null;
-            readonly split: {
-                readonly src: string;
-                readonly srcSet: string;
-            } | null;
-            readonly text: {
-                readonly src: string;
-                readonly srcSet: string;
-            } | null;
-        } | null;
+import { FragmentRefs } from "relay-runtime";
+export type ArticleHeader_article$data = {
+  readonly title: string | null;
+  readonly vertical: string | null;
+  readonly byline: string | null;
+  readonly hero: {
+    readonly layout?: ArticleFeatureSectionType;
+    readonly embed?: string | null;
+    readonly image?: {
+      readonly url: string | null;
+      readonly split: {
+        readonly src: string;
+        readonly srcSet: string;
+      } | null;
+      readonly text: {
+        readonly src: string;
+        readonly srcSet: string;
+      } | null;
     } | null;
-    readonly " $refType": "ArticleHeader_article";
+  } | null;
+  readonly " $fragmentType": "ArticleHeader_article";
 };
-export type ArticleHeader_article$data = ArticleHeader_article;
 export type ArticleHeader_article$key = {
-    readonly " $data"?: ArticleHeader_article$data;
-    readonly " $fragmentRefs": FragmentRefs<"ArticleHeader_article">;
+  readonly " $data"?: ArticleHeader_article$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ArticleHeader_article">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = [
@@ -170,5 +173,7 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '70e55082ea529a8654b5c9cc0cce871a';
+
+(node as any).hash = "70e55082ea529a8654b5c9cc0cce871a";
+
 export default node;

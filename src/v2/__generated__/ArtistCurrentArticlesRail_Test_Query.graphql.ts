@@ -1,56 +1,25 @@
+/**
+ * @generated SignedSource<<e6388f8e8a6e5aac15f7e9c0a189f2c8>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtistCurrentArticlesRail_Test_QueryVariables = {};
-export type ArtistCurrentArticlesRail_Test_QueryResponse = {
-    readonly artist: {
-        readonly " $fragmentRefs": FragmentRefs<"ArtistCurrentArticlesRail_artist">;
-    } | null;
+export type ArtistCurrentArticlesRail_Test_Query$variables = {};
+export type ArtistCurrentArticlesRail_Test_Query$data = {
+  readonly artist: {
+    readonly " $fragmentSpreads": FragmentRefs<"ArtistCurrentArticlesRail_artist">;
+  } | null;
 };
 export type ArtistCurrentArticlesRail_Test_Query = {
-    readonly response: ArtistCurrentArticlesRail_Test_QueryResponse;
-    readonly variables: ArtistCurrentArticlesRail_Test_QueryVariables;
+  variables: ArtistCurrentArticlesRail_Test_Query$variables;
+  response: ArtistCurrentArticlesRail_Test_Query$data;
 };
-
-
-
-/*
-query ArtistCurrentArticlesRail_Test_Query {
-  artist(id: "test") {
-    ...ArtistCurrentArticlesRail_artist
-    id
-  }
-}
-
-fragment ArtistCurrentArticlesRail_artist on Artist {
-  articlesConnection(first: 10, sort: PUBLISHED_AT_DESC, inEditorialFeed: true) {
-    edges {
-      node {
-        internalID
-        slug
-        href
-        thumbnailTitle
-        publishedAt(format: "MMM Do, YYYY")
-        thumbnailImage {
-          cropped(width: 325, height: 230) {
-            width
-            height
-            src
-            srcSet
-          }
-        }
-        id
-      }
-    }
-  }
-  internalID
-  name
-  slug
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -364,5 +333,7 @@ return {
   }
 };
 })();
-(node as any).hash = '657c4df676abd28381caff8e95e67023';
+
+(node as any).hash = "657c4df676abd28381caff8e95e67023";
+
 export default node;

@@ -1,37 +1,40 @@
+/**
+ * @generated SignedSource<<173beff3b3597e10e17907f07df1508a>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ExampleArtworkRoute_artwork = {
-    readonly title: string | null;
-    readonly artistNames: string | null;
-    readonly medium: string | null;
-    readonly imageUrl: string | null;
-    readonly date: string | null;
-    readonly internalID: string;
-    readonly slug: string;
-    readonly artist: {
-        readonly related: {
-            readonly artistsConnection: {
-                readonly edges: ReadonlyArray<{
-                    readonly node: {
-                        readonly " $fragmentRefs": FragmentRefs<"ArtistCard_artist">;
-                    } | null;
-                } | null> | null;
-            } | null;
-        } | null;
+export type ExampleArtworkRoute_artwork$data = {
+  readonly title: string | null;
+  readonly artistNames: string | null;
+  readonly medium: string | null;
+  readonly imageUrl: string | null;
+  readonly date: string | null;
+  readonly internalID: string;
+  readonly slug: string;
+  readonly artist: {
+    readonly related: {
+      readonly artistsConnection: {
+        readonly edges: ReadonlyArray<{
+          readonly node: {
+            readonly " $fragmentSpreads": FragmentRefs<"ArtistCard_artist">;
+          } | null;
+        } | null> | null;
+      } | null;
     } | null;
-    readonly " $refType": "ExampleArtworkRoute_artwork";
+  } | null;
+  readonly " $fragmentType": "ExampleArtworkRoute_artwork";
 };
-export type ExampleArtworkRoute_artwork$data = ExampleArtworkRoute_artwork;
 export type ExampleArtworkRoute_artwork$key = {
-    readonly " $data"?: ExampleArtworkRoute_artwork$data;
-    readonly " $fragmentRefs": FragmentRefs<"ExampleArtworkRoute_artwork">;
+  readonly " $data"?: ExampleArtworkRoute_artwork$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ExampleArtworkRoute_artwork">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -148,16 +151,16 @@ const node: ReaderFragment = {
                       "plural": false,
                       "selections": [
                         {
+                          "args": null,
+                          "kind": "FragmentSpread",
+                          "name": "ArtistCard_artist"
+                        },
+                        {
                           "alias": null,
                           "args": null,
                           "kind": "ScalarField",
                           "name": "__typename",
                           "storageKey": null
-                        },
-                        {
-                          "args": null,
-                          "kind": "FragmentSpread",
-                          "name": "ArtistCard_artist"
                         }
                       ],
                       "storageKey": null
@@ -210,5 +213,7 @@ const node: ReaderFragment = {
   "type": "Artwork",
   "abstractKey": null
 };
-(node as any).hash = 'f1b4e3070df07103039646cd7f21bb77';
+
+(node as any).hash = "f1b4e3070df07103039646cd7f21bb77";
+
 export default node;

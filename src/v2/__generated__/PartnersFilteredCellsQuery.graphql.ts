@@ -1,99 +1,31 @@
+/**
+ * @generated SignedSource<<497e1768469e92462b38551a57612364>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type PartnerClassification = "AUCTION" | "BRAND" | "DEMO" | "GALLERY" | "INSTITUTION" | "INSTITUTIONAL_SELLER" | "PRIVATE_COLLECTOR" | "PRIVATE_DEALER" | "%future added value";
-export type PartnersFilteredCellsQueryVariables = {
-    after?: string | null;
-    near?: string | null;
-    category?: Array<string | null> | null;
-    type?: Array<PartnerClassification | null> | null;
+export type PartnersFilteredCellsQuery$variables = {
+  after?: string | null;
+  near?: string | null;
+  category?: ReadonlyArray<string | null> | null;
+  type?: ReadonlyArray<PartnerClassification | null> | null;
 };
-export type PartnersFilteredCellsQueryResponse = {
-    readonly viewer: {
-        readonly " $fragmentRefs": FragmentRefs<"PartnersFilteredCells_viewer">;
-    } | null;
+export type PartnersFilteredCellsQuery$data = {
+  readonly viewer: {
+    readonly " $fragmentSpreads": FragmentRefs<"PartnersFilteredCells_viewer">;
+  } | null;
 };
 export type PartnersFilteredCellsQuery = {
-    readonly response: PartnersFilteredCellsQueryResponse;
-    readonly variables: PartnersFilteredCellsQueryVariables;
+  variables: PartnersFilteredCellsQuery$variables;
+  response: PartnersFilteredCellsQuery$data;
 };
-
-
-
-/*
-query PartnersFilteredCellsQuery(
-  $after: String
-  $near: String
-  $category: [String]
-  $type: [PartnerClassification]
-) {
-  viewer {
-    ...PartnersFilteredCells_viewer_iDCAR
-  }
-}
-
-fragment FollowProfileButton_profile on Profile {
-  id
-  slug
-  name
-  internalID
-  is_followed: isFollowed
-}
-
-fragment PartnerCell_partner on Partner {
-  internalID
-  slug
-  name
-  href
-  initials
-  locationsConnection(first: 15) {
-    edges {
-      node {
-        city
-        id
-      }
-    }
-  }
-  categories {
-    name
-    slug
-    id
-  }
-  profile {
-    ...FollowProfileButton_profile
-    isFollowed
-    image {
-      cropped(width: 445, height: 334, version: ["wide", "large", "featured", "larger"]) {
-        src
-        srcSet
-      }
-    }
-    id
-  }
-}
-
-fragment PartnersFilteredCells_viewer_iDCAR on Viewer {
-  partnersConnection(after: $after, defaultProfilePublic: true, eligibleForListing: true, first: 12, near: $near, partnerCategories: $category, sort: RANDOM_SCORE_DESC, type: $type) {
-    totalCount
-    edges {
-      node {
-        internalID
-        ...PartnerCell_partner
-        id
-        __typename
-      }
-      cursor
-    }
-    pageInfo {
-      endCursor
-      hasNextPage
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = {
@@ -524,5 +456,7 @@ return {
   }
 };
 })();
-(node as any).hash = '40643de86cc477764755f3806a559c93';
+
+(node as any).hash = "40643de86cc477764755f3806a559c93";
+
 export default node;

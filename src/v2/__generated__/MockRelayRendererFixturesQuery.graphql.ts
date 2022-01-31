@@ -1,59 +1,39 @@
+/**
+ * @generated SignedSource<<7ffecac1f7843b461e9b4068cfc34bcc>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type MockRelayRendererFixturesQueryVariables = {};
-export type MockRelayRendererFixturesQueryResponse = {
-    readonly artwork: {
-        readonly " $fragmentRefs": FragmentRefs<"MockRelayRendererFixtures_artwork">;
-    } | null;
+export type MockRelayRendererFixturesQuery$variables = {};
+export type MockRelayRendererFixturesQuery$data = {
+  readonly artwork: {
+    readonly " $fragmentSpreads": FragmentRefs<"MockRelayRendererFixtures_artwork">;
+  } | null;
 };
-export type MockRelayRendererFixturesQueryRawResponse = {
-    readonly artwork: ({
-        readonly image: ({
-            readonly url: string | null;
-        }) | null;
-        readonly artist: ({
-            readonly slug: string;
-            readonly id: string;
-        }) | null;
-        readonly title: string | null;
-        readonly id: string;
-    }) | null;
+export type MockRelayRendererFixturesQuery$rawResponse = {
+  readonly artwork: {
+    readonly image: {
+      readonly url: string | null;
+    } | null;
+    readonly artist: {
+      readonly slug: string;
+      readonly id: string;
+    } | null;
+    readonly title: string | null;
+    readonly id: string;
+  } | null;
 };
 export type MockRelayRendererFixturesQuery = {
-    readonly response: MockRelayRendererFixturesQueryResponse;
-    readonly variables: MockRelayRendererFixturesQueryVariables;
-    readonly rawResponse: MockRelayRendererFixturesQueryRawResponse;
+  variables: MockRelayRendererFixturesQuery$variables;
+  response: MockRelayRendererFixturesQuery$data;
+  rawResponse: MockRelayRendererFixturesQuery$rawResponse;
 };
-
-
-
-/*
-query MockRelayRendererFixturesQuery {
-  artwork(id: "mona-lisa") {
-    ...MockRelayRendererFixtures_artwork
-    id
-  }
-}
-
-fragment MockRelayRendererFixtures_artwork on Artwork {
-  image {
-    url
-  }
-  artist {
-    slug
-    id
-  }
-  ...MockRelayRendererFixtures_artworkMetadata
-}
-
-fragment MockRelayRendererFixtures_artworkMetadata on Artwork {
-  title
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -69,6 +49,18 @@ v1 = {
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
+},
+v2 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "ID"
+},
+v3 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "String"
 };
 return {
   "fragment": {
@@ -164,12 +156,40 @@ return {
   "params": {
     "cacheID": "29f343a13f7d1f0892ec223863e1fc6e",
     "id": null,
-    "metadata": {},
+    "metadata": {
+      "relayTestingSelectionTypeInfo": {
+        "artwork": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Artwork"
+        },
+        "artwork.artist": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Artist"
+        },
+        "artwork.artist.id": (v2/*: any*/),
+        "artwork.artist.slug": (v2/*: any*/),
+        "artwork.id": (v2/*: any*/),
+        "artwork.image": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Image"
+        },
+        "artwork.image.url": (v3/*: any*/),
+        "artwork.title": (v3/*: any*/)
+      }
+    },
     "name": "MockRelayRendererFixturesQuery",
     "operationKind": "query",
     "text": "query MockRelayRendererFixturesQuery {\n  artwork(id: \"mona-lisa\") {\n    ...MockRelayRendererFixtures_artwork\n    id\n  }\n}\n\nfragment MockRelayRendererFixtures_artwork on Artwork {\n  image {\n    url\n  }\n  artist {\n    slug\n    id\n  }\n  ...MockRelayRendererFixtures_artworkMetadata\n}\n\nfragment MockRelayRendererFixtures_artworkMetadata on Artwork {\n  title\n}\n"
   }
 };
 })();
-(node as any).hash = '4a31d3b3d6964a65983bc5dfd54593de';
+
+(node as any).hash = "2d746b24d0389f0c3d2b3f6760577803";
+
 export default node;

@@ -1,366 +1,28 @@
+/**
+ * @generated SignedSource<<c74ca1f29fa1bf2e3724572c1ba2085b>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtworkSidebar_Test_QueryVariables = {};
-export type ArtworkSidebar_Test_QueryResponse = {
-    readonly artwork: {
-        readonly " $fragmentRefs": FragmentRefs<"ArtworkSidebar_artwork">;
-    } | null;
-    readonly me: {
-        readonly " $fragmentRefs": FragmentRefs<"ArtworkSidebar_me">;
-    } | null;
+export type ArtworkSidebar_Test_Query$variables = {};
+export type ArtworkSidebar_Test_Query$data = {
+  readonly artwork: {
+    readonly " $fragmentSpreads": FragmentRefs<"ArtworkSidebar_artwork">;
+  } | null;
+  readonly me: {
+    readonly " $fragmentSpreads": FragmentRefs<"ArtworkSidebar_me">;
+  } | null;
 };
 export type ArtworkSidebar_Test_Query = {
-    readonly response: ArtworkSidebar_Test_QueryResponse;
-    readonly variables: ArtworkSidebar_Test_QueryVariables;
+  variables: ArtworkSidebar_Test_Query$variables;
+  response: ArtworkSidebar_Test_Query$data;
 };
-
-
-
-/*
-query ArtworkSidebar_Test_Query {
-  artwork(id: "josef-albers-homage-to-the-square-85") {
-    ...ArtworkSidebar_artwork
-    id
-  }
-  me {
-    ...ArtworkSidebar_me
-    id
-  }
-}
-
-fragment ArtworkSidebarArtists_artwork on Artwork {
-  cultural_maker: culturalMaker
-  artists {
-    id
-    internalID
-    slug
-    name
-    formattedNationalityAndBirthday
-    href
-    avatar: image {
-      cropped(width: 45, height: 45) {
-        src
-        srcSet
-      }
-    }
-    ...FollowArtistButton_artist_2eN9lh
-  }
-}
-
-fragment ArtworkSidebarAuctionInfoPolling_artwork on Artwork {
-  internalID
-  sale {
-    isClosed
-    id
-  }
-  saleArtwork {
-    currentBid {
-      display
-    }
-    id
-  }
-  ...ArtworkSidebarCurrentBidInfo_artwork
-  ...ArtworkSidebarBidAction_artwork
-}
-
-fragment ArtworkSidebarAuctionInfoPolling_me on Me {
-  ...ArtworkSidebarBidAction_me
-}
-
-fragment ArtworkSidebarAuctionPartnerInfo_artwork on Artwork {
-  partner {
-    name
-    id
-  }
-  sale_artwork: saleArtwork {
-    estimate
-    id
-  }
-  sale {
-    internalID
-    is_closed: isClosed
-    id
-  }
-}
-
-fragment ArtworkSidebarBidAction_artwork on Artwork {
-  myLotStanding(live: true) {
-    most_recent_bid: mostRecentBid {
-      max_bid: maxBid {
-        cents
-      }
-      id
-    }
-  }
-  slug
-  internalID
-  sale {
-    slug
-    registrationStatus {
-      qualified_for_bidding: qualifiedForBidding
-      id
-    }
-    is_preview: isPreview
-    is_open: isOpen
-    is_live_open: isLiveOpen
-    is_closed: isClosed
-    is_registration_closed: isRegistrationClosed
-    requireIdentityVerification
-    id
-  }
-  sale_artwork: saleArtwork {
-    increments {
-      cents
-      display
-    }
-    id
-  }
-}
-
-fragment ArtworkSidebarBidAction_me on Me {
-  identityVerified
-  pendingIdentityVerification {
-    internalID
-    id
-  }
-}
-
-fragment ArtworkSidebarClassification_artwork on Artwork {
-  attributionClass {
-    shortDescription
-    id
-  }
-}
-
-fragment ArtworkSidebarCommercial_artwork on Artwork {
-  edition_sets: editionSets {
-    internalID
-    id
-    is_acquireable: isAcquireable
-    is_offerable: isOfferable
-    sale_message: saleMessage
-    ...ArtworkSidebarSizeInfo_piece
-  }
-  internalID
-  isOfferableFromInquiry
-  isPriceHidden
-  is_acquireable: isAcquireable
-  is_for_sale: isForSale
-  is_inquireable: isInquireable
-  is_offerable: isOfferable
-  is_sold: isSold
-  listPrice {
-    __typename
-    ... on PriceRange {
-      display
-    }
-    ... on Money {
-      display
-    }
-  }
-  priceIncludesTaxDisplay
-  sale_message: saleMessage
-  shippingInfo
-  shippingOrigin
-  slug
-}
-
-fragment ArtworkSidebarCurrentBidInfo_artwork on Artwork {
-  sale {
-    is_closed: isClosed
-    is_live_open: isLiveOpen
-    internalID
-    is_with_buyers_premium: isWithBuyersPremium
-    id
-  }
-  sale_artwork: saleArtwork {
-    is_with_reserve: isWithReserve
-    reserve_message: reserveMessage
-    reserve_status: reserveStatus
-    current_bid: currentBid {
-      display
-    }
-    counts {
-      bidder_positions: bidderPositions
-    }
-    id
-  }
-  myLotStanding(live: true) {
-    active_bid: activeBid {
-      is_winning: isWinning
-      id
-    }
-    most_recent_bid: mostRecentBid {
-      max_bid: maxBid {
-        display
-      }
-      id
-    }
-  }
-}
-
-fragment ArtworkSidebarExtraLinks_artwork on Artwork {
-  internalID
-  is_in_auction: isInAuction
-  is_for_sale: isForSale
-  is_acquireable: isAcquireable
-  is_inquireable: isInquireable
-  artists {
-    is_consignable: isConsignable
-    id
-  }
-  sale {
-    is_closed: isClosed
-    isBenefit
-    partner {
-      name
-      id
-    }
-    id
-  }
-}
-
-fragment ArtworkSidebarMetadata_artwork on Artwork {
-  is_biddable: isBiddable
-  edition_sets: editionSets {
-    __typename
-    id
-  }
-  sale_artwork: saleArtwork {
-    lot_label: lotLabel
-    id
-  }
-  ...ArtworkSidebarTitleInfo_artwork
-  ...ArtworkSidebarSizeInfo_piece
-  ...ArtworkSidebarClassification_artwork
-}
-
-fragment ArtworkSidebarPartnerInfo_artwork on Artwork {
-  partner {
-    name
-    href
-    locations {
-      city
-      id
-    }
-    id
-  }
-  sale {
-    name
-    href
-    id
-  }
-}
-
-fragment ArtworkSidebarSizeInfo_piece on Sellable {
-  __isSellable: __typename
-  dimensions {
-    in
-    cm
-  }
-  edition_of: editionOf
-}
-
-fragment ArtworkSidebarTitleInfo_artwork on Artwork {
-  title
-  date
-  medium
-}
-
-fragment ArtworkSidebar_artwork on Artwork {
-  is_in_auction: isInAuction
-  ...ArtworkSidebarArtists_artwork
-  ...ArtworkSidebarMetadata_artwork
-  ...ArtworkSidebarAuctionPartnerInfo_artwork
-  ...ArtworkSidebarAuctionInfoPolling_artwork
-  ...ArtworkSidebarCommercial_artwork
-  ...ArtworkSidebarPartnerInfo_artwork
-  ...ArtworkSidebarExtraLinks_artwork
-  ...SecurePayment_artwork
-  ...VerifiedSeller_artwork
-  ...AuthenticityCertificate_artwork
-  ...BuyerGuarantee_artwork
-  sale {
-    is_closed: isClosed
-    ...AuctionTimer_sale
-    id
-  }
-}
-
-fragment ArtworkSidebar_me on Me {
-  ...ArtworkSidebarAuctionInfoPolling_me
-}
-
-fragment AuctionTimer_sale on Sale {
-  liveStartAt
-  endAt
-}
-
-fragment AuthenticityCertificate_artwork on Artwork {
-  hasCertificateOfAuthenticity
-  is_biddable: isBiddable
-}
-
-fragment BuyerGuarantee_artwork on Artwork {
-  is_acquireable: isAcquireable
-  is_offerable: isOfferable
-}
-
-fragment FollowArtistButton_artist_2eN9lh on Artist {
-  id
-  internalID
-  name
-  slug
-  is_followed: isFollowed
-  counts {
-    follows
-  }
-  ...FollowArtistPopover_artist
-}
-
-fragment FollowArtistPopoverRow_artist on Artist {
-  internalID
-  name
-  formattedNationalityAndBirthday
-  image {
-    cropped(width: 45, height: 45) {
-      url
-    }
-  }
-}
-
-fragment FollowArtistPopover_artist on Artist {
-  related {
-    suggestedConnection(first: 3, excludeFollowedArtists: true) {
-      edges {
-        node {
-          id
-          internalID
-          ...FollowArtistPopoverRow_artist
-        }
-      }
-    }
-  }
-}
-
-fragment SecurePayment_artwork on Artwork {
-  is_acquireable: isAcquireable
-  is_offerable: isOfferable
-}
-
-fragment VerifiedSeller_artwork on Artwork {
-  is_biddable: isBiddable
-  partner {
-    isVerifiedSeller
-    name
-    id
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -964,6 +626,7 @@ return {
             "name": "medium",
             "storageKey": null
           },
+          (v12/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -1323,8 +986,7 @@ return {
             "name": "hasCertificateOfAuthenticity",
             "storageKey": null
           },
-          (v1/*: any*/),
-          (v12/*: any*/)
+          (v1/*: any*/)
         ],
         "storageKey": "artwork(id:\"josef-albers-homage-to-the-square-85\")"
       },
@@ -1605,5 +1267,7 @@ return {
   }
 };
 })();
-(node as any).hash = '87135352fd24172d7ca36ff211f2a3f1';
+
+(node as any).hash = "87135352fd24172d7ca36ff211f2a3f1";
+
 export default node;

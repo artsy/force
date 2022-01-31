@@ -1,27 +1,30 @@
+/**
+ * @generated SignedSource<<02a7419339dab80ccf1b79317286aeb9>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtworkSidebarMetadata_artwork = {
-    readonly is_biddable: boolean | null;
-    readonly edition_sets: ReadonlyArray<{
-        readonly __typename: string;
-    } | null> | null;
-    readonly sale_artwork: {
-        readonly lot_label: string | null;
-    } | null;
-    readonly " $fragmentRefs": FragmentRefs<"ArtworkSidebarTitleInfo_artwork" | "ArtworkSidebarSizeInfo_piece" | "ArtworkSidebarClassification_artwork">;
-    readonly " $refType": "ArtworkSidebarMetadata_artwork";
+export type ArtworkSidebarMetadata_artwork$data = {
+  readonly is_biddable: boolean | null;
+  readonly edition_sets: ReadonlyArray<{
+    readonly __typename: string;
+  } | null> | null;
+  readonly sale_artwork: {
+    readonly lot_label: string | null;
+  } | null;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtworkSidebarTitleInfo_artwork" | "ArtworkSidebarSizeInfo_piece" | "ArtworkSidebarClassification_artwork">;
+  readonly " $fragmentType": "ArtworkSidebarMetadata_artwork";
 };
-export type ArtworkSidebarMetadata_artwork$data = ArtworkSidebarMetadata_artwork;
 export type ArtworkSidebarMetadata_artwork$key = {
-    readonly " $data"?: ArtworkSidebarMetadata_artwork$data;
-    readonly " $fragmentRefs": FragmentRefs<"ArtworkSidebarMetadata_artwork">;
+  readonly " $data"?: ArtworkSidebarMetadata_artwork$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtworkSidebarMetadata_artwork">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -91,5 +94,7 @@ const node: ReaderFragment = {
   "type": "Artwork",
   "abstractKey": null
 };
-(node as any).hash = 'ee1d620cfeeb5424fe48e300e387ffa4';
+
+(node as any).hash = "ee1d620cfeeb5424fe48e300e387ffa4";
+
 export default node;

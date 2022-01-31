@@ -1,26 +1,29 @@
+/**
+ * @generated SignedSource<<78975eae047cc34fa407997f741ec9fd>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type BackupSecondFactor_me = {
-    readonly backupSecondFactors: ReadonlyArray<({
-        readonly __typename: "BackupSecondFactor";
-    } | {
-        /*This will never be '%other', but we need some
-        value in case none of the concrete values match.*/
-        readonly __typename: "%other";
-    }) | null> | null;
-    readonly " $refType": "BackupSecondFactor_me";
+export type BackupSecondFactor_me$data = {
+  readonly backupSecondFactors: ReadonlyArray<{
+    readonly __typename: "BackupSecondFactor";
+  } | {
+    // This will never be '%other', but we need some
+    // value in case none of the concrete values match.
+    readonly __typename: "%other";
+  } | null> | null;
+  readonly " $fragmentType": "BackupSecondFactor_me";
 };
-export type BackupSecondFactor_me$data = BackupSecondFactor_me;
 export type BackupSecondFactor_me$key = {
-    readonly " $data"?: BackupSecondFactor_me$data;
-    readonly " $fragmentRefs": FragmentRefs<"BackupSecondFactor_me">;
+  readonly " $data"?: BackupSecondFactor_me$data;
+  readonly " $fragmentSpreads": FragmentRefs<"BackupSecondFactor_me">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -65,5 +68,7 @@ const node: ReaderFragment = {
   "type": "Me",
   "abstractKey": null
 };
-(node as any).hash = 'b14b3aa1d58e9c12323972a66aa181db';
+
+(node as any).hash = "b14b3aa1d58e9c12323972a66aa181db";
+
 export default node;

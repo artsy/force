@@ -1,43 +1,46 @@
+/**
+ * @generated SignedSource<<bae4b19a5770880608233b94a7d8794a>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type PartnersFeaturedCarouselCell_profile = {
-    readonly owner: {
-        readonly internalID?: string;
-        readonly href?: string | null;
-        readonly name?: string | null;
-        readonly featuredShow?: {
-            readonly href: string | null;
-            readonly name: string | null;
-            readonly status: string | null;
-            readonly statusUpdate: string | null;
-            readonly startAt: string | null;
-            readonly endAt: string | null;
-            readonly isOnlineExclusive: boolean;
-            readonly location: {
-                readonly city: string | null;
-            } | null;
-            readonly coverImage: {
-                readonly resized: {
-                    readonly src: string;
-                    readonly srcSet: string;
-                } | null;
-            } | null;
+export type PartnersFeaturedCarouselCell_profile$data = {
+  readonly owner: {
+    readonly internalID?: string;
+    readonly href?: string | null;
+    readonly name?: string | null;
+    readonly featuredShow?: {
+      readonly href: string | null;
+      readonly name: string | null;
+      readonly status: string | null;
+      readonly statusUpdate: string | null;
+      readonly startAt: string | null;
+      readonly endAt: string | null;
+      readonly isOnlineExclusive: boolean;
+      readonly location: {
+        readonly city: string | null;
+      } | null;
+      readonly coverImage: {
+        readonly resized: {
+          readonly src: string;
+          readonly srcSet: string;
         } | null;
-    };
-    readonly " $fragmentRefs": FragmentRefs<"FollowProfileButton_profile">;
-    readonly " $refType": "PartnersFeaturedCarouselCell_profile";
+      } | null;
+    } | null;
+  };
+  readonly " $fragmentSpreads": FragmentRefs<"FollowProfileButton_profile">;
+  readonly " $fragmentType": "PartnersFeaturedCarouselCell_profile";
 };
-export type PartnersFeaturedCarouselCell_profile$data = PartnersFeaturedCarouselCell_profile;
 export type PartnersFeaturedCarouselCell_profile$key = {
-    readonly " $data"?: PartnersFeaturedCarouselCell_profile$data;
-    readonly " $fragmentRefs": FragmentRefs<"PartnersFeaturedCarouselCell_profile">;
+  readonly " $data"?: PartnersFeaturedCarouselCell_profile$data;
+  readonly " $fragmentSpreads": FragmentRefs<"PartnersFeaturedCarouselCell_profile">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = {
@@ -67,6 +70,11 @@ return {
   "metadata": null,
   "name": "PartnersFeaturedCarouselCell_profile",
   "selections": [
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "FollowProfileButton_profile"
+    },
     {
       "alias": null,
       "args": null,
@@ -210,16 +218,13 @@ return {
         }
       ],
       "storageKey": null
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "FollowProfileButton_profile"
     }
   ],
   "type": "Profile",
   "abstractKey": null
 };
 })();
-(node as any).hash = '96f2438a5e38ecb4f1902def2992ea57';
+
+(node as any).hash = "96f2438a5e38ecb4f1902def2992ea57";
+
 export default node;

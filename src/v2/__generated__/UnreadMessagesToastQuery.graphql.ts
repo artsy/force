@@ -1,57 +1,29 @@
+/**
+ * @generated SignedSource<<7386a9b331df4c8867a2371a21cb6d32>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type UnreadMessagesToastQueryVariables = {
-    conversationID: string;
+export type UnreadMessagesToastQuery$variables = {
+  conversationID: string;
 };
-export type UnreadMessagesToastQueryResponse = {
-    readonly me: {
-        readonly conversation: {
-            readonly " $fragmentRefs": FragmentRefs<"UnreadMessagesToast_conversation">;
-        } | null;
+export type UnreadMessagesToastQuery$data = {
+  readonly me: {
+    readonly conversation: {
+      readonly " $fragmentSpreads": FragmentRefs<"UnreadMessagesToast_conversation">;
     } | null;
+  } | null;
 };
 export type UnreadMessagesToastQuery = {
-    readonly response: UnreadMessagesToastQueryResponse;
-    readonly variables: UnreadMessagesToastQueryVariables;
+  variables: UnreadMessagesToastQuery$variables;
+  response: UnreadMessagesToastQuery$data;
 };
-
-
-
-/*
-query UnreadMessagesToastQuery(
-  $conversationID: String!
-) {
-  me {
-    conversation(id: $conversationID) {
-      ...UnreadMessagesToast_conversation
-      id
-    }
-    id
-  }
-}
-
-fragment UnreadMessagesToast_conversation on Conversation {
-  id
-  internalID
-  lastMessageID
-  fromLastViewedMessageID
-  isLastMessageToUser
-  activeOrders: orderConnection(last: 1, states: [APPROVED, FULFILLED, SUBMITTED, REFUNDED]) {
-    edges {
-      node {
-        __typename
-        internalID
-        updatedAt
-        id
-      }
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -249,5 +221,7 @@ return {
   }
 };
 })();
-(node as any).hash = '3eacbe47fa9afc7a06d55a3c506d753c';
+
+(node as any).hash = "3eacbe47fa9afc7a06d55a3c506d753c";
+
 export default node;

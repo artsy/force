@@ -1,40 +1,30 @@
+/**
+ * @generated SignedSource<<73514d90550c1b704e2a0e76a4520093>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
-export type phoneNumberUtils_PhoneNumber_QueryVariables = {
-    phoneNumber: string;
-    regionCode?: string | null;
+import { ConcreteRequest, Query } from 'relay-runtime';
+export type phoneNumberUtils_PhoneNumber_Query$variables = {
+  phoneNumber: string;
+  regionCode?: string | null;
 };
-export type phoneNumberUtils_PhoneNumber_QueryResponse = {
-    readonly phoneNumber: {
-        readonly isValid: boolean | null;
-        readonly international: string | null;
-        readonly national: string | null;
-        readonly originalNumber: string | null;
-    } | null;
+export type phoneNumberUtils_PhoneNumber_Query$data = {
+  readonly phoneNumber: {
+    readonly isValid: boolean | null;
+    readonly international: string | null;
+    readonly national: string | null;
+    readonly originalNumber: string | null;
+  } | null;
 };
 export type phoneNumberUtils_PhoneNumber_Query = {
-    readonly response: phoneNumberUtils_PhoneNumber_QueryResponse;
-    readonly variables: phoneNumberUtils_PhoneNumber_QueryVariables;
+  variables: phoneNumberUtils_PhoneNumber_Query$variables;
+  response: phoneNumberUtils_PhoneNumber_Query$data;
 };
-
-
-
-/*
-query phoneNumberUtils_PhoneNumber_Query(
-  $phoneNumber: String!
-  $regionCode: String
-) {
-  phoneNumber(phoneNumber: $phoneNumber, regionCode: $regionCode) {
-    isValid
-    international: display(format: INTERNATIONAL)
-    national: display(format: NATIONAL)
-    originalNumber
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -140,5 +130,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'd2b6e5100128043441b2d7a0b6090607';
+
+(node as any).hash = "d2b6e5100128043441b2d7a0b6090607";
+
 export default node;

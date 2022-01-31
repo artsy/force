@@ -1,61 +1,64 @@
+/**
+ * @generated SignedSource<<3e3662bf8e704abcb7fb085f86a8240a>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtistHeader_artist = {
-    readonly artistHighlights: {
-        readonly partnersConnection: {
-            readonly edges: ReadonlyArray<{
-                readonly node: {
-                    readonly categories: ReadonlyArray<{
-                        readonly slug: string;
-                    } | null> | null;
-                } | null;
-            } | null> | null;
+export type ArtistHeader_artist$data = {
+  readonly artistHighlights: {
+    readonly partnersConnection: {
+      readonly edges: ReadonlyArray<{
+        readonly node: {
+          readonly categories: ReadonlyArray<{
+            readonly slug: string;
+          } | null> | null;
         } | null;
+      } | null> | null;
     } | null;
-    readonly auctionResultsConnection: {
-        readonly edges: ReadonlyArray<{
-            readonly node: {
-                readonly price_realized: {
-                    readonly display: string | null;
-                } | null;
-                readonly organization: string | null;
-                readonly sale_date: string | null;
-            } | null;
-        } | null> | null;
-    } | null;
-    readonly image: {
-        readonly cropped: {
-            readonly src: string;
-            readonly srcSet: string;
+  } | null;
+  readonly auctionResultsConnection: {
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly price_realized: {
+          readonly display: string | null;
         } | null;
+        readonly organization: string | null;
+        readonly sale_date: string | null;
+      } | null;
+    } | null> | null;
+  } | null;
+  readonly image: {
+    readonly cropped: {
+      readonly src: string;
+      readonly srcSet: string;
     } | null;
-    readonly internalID: string;
-    readonly slug: string;
-    readonly name: string | null;
-    readonly formattedNationalityAndBirthday: string | null;
-    readonly counts: {
-        readonly follows: number | null;
-        readonly forSaleArtworks: number | null;
-    } | null;
-    readonly biographyBlurb: {
-        readonly credit: string | null;
-        readonly partnerID: string | null;
-        readonly text: string | null;
-    } | null;
-    readonly " $fragmentRefs": FragmentRefs<"FollowArtistButton_artist" | "SelectedCareerAchievements_artist">;
-    readonly " $refType": "ArtistHeader_artist";
+  } | null;
+  readonly internalID: string;
+  readonly slug: string;
+  readonly name: string | null;
+  readonly formattedNationalityAndBirthday: string | null;
+  readonly counts: {
+    readonly follows: Int | null;
+    readonly forSaleArtworks: Int | null;
+  } | null;
+  readonly biographyBlurb: {
+    readonly credit: string | null;
+    readonly partnerID: string | null;
+    readonly text: string | null;
+  } | null;
+  readonly " $fragmentSpreads": FragmentRefs<"FollowArtistButton_artist" | "SelectedCareerAchievements_artist">;
+  readonly " $fragmentType": "ArtistHeader_artist";
 };
-export type ArtistHeader_artist$data = ArtistHeader_artist;
 export type ArtistHeader_artist$key = {
-    readonly " $data"?: ArtistHeader_artist$data;
-    readonly " $fragmentRefs": FragmentRefs<"ArtistHeader_artist">;
+  readonly " $data"?: ArtistHeader_artist$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtistHeader_artist">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = {
@@ -81,6 +84,16 @@ return {
   "metadata": null,
   "name": "ArtistHeader_artist",
   "selections": [
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "FollowArtistButton_artist"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "SelectedCareerAchievements_artist"
+    },
     {
       "alias": "artistHighlights",
       "args": null,
@@ -387,21 +400,13 @@ return {
         }
       ],
       "storageKey": "biographyBlurb(format:\"HTML\",partnerBio:false)"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "FollowArtistButton_artist"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "SelectedCareerAchievements_artist"
     }
   ],
   "type": "Artist",
   "abstractKey": null
 };
 })();
-(node as any).hash = '9fcbe7fe511dbab0445f308d238aa566';
+
+(node as any).hash = "9fcbe7fe511dbab0445f308d238aa566";
+
 export default node;

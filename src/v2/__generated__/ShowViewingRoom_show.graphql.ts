@@ -1,40 +1,43 @@
+/**
+ * @generated SignedSource<<e0bbe6ac67efc6790e0db98e6bf207ab>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ShowViewingRoom_show = {
-    readonly partner: {
-        readonly name?: string | null;
-    } | null;
-    readonly viewingRoomsConnection: {
-        readonly edges: ReadonlyArray<{
-            readonly node: {
-                readonly internalID: string;
-                readonly slug: string;
-                readonly status: string;
-                readonly distanceToOpen: string | null;
-                readonly distanceToClose: string | null;
-                readonly title: string;
-                readonly href: string | null;
-                readonly image: {
-                    readonly imageURLs: {
-                        readonly normalized: string | null;
-                    } | null;
-                } | null;
-            } | null;
-        } | null> | null;
-    } | null;
-    readonly " $refType": "ShowViewingRoom_show";
+export type ShowViewingRoom_show$data = {
+  readonly partner: {
+    readonly name?: string | null;
+  } | null;
+  readonly viewingRoomsConnection: {
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly internalID: string;
+        readonly slug: string;
+        readonly status: string;
+        readonly distanceToOpen: string | null;
+        readonly distanceToClose: string | null;
+        readonly title: string;
+        readonly href: string | null;
+        readonly image: {
+          readonly imageURLs: {
+            readonly normalized: string | null;
+          } | null;
+        } | null;
+      } | null;
+    } | null> | null;
+  } | null;
+  readonly " $fragmentType": "ShowViewingRoom_show";
 };
-export type ShowViewingRoom_show$data = ShowViewingRoom_show;
 export type ShowViewingRoom_show$key = {
-    readonly " $data"?: ShowViewingRoom_show$data;
-    readonly " $fragmentRefs": FragmentRefs<"ShowViewingRoom_show">;
+  readonly " $data"?: ShowViewingRoom_show$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ShowViewingRoom_show">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = [
@@ -198,5 +201,7 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '278b82eedaec02337601445e11a81cd1';
+
+(node as any).hash = "278b82eedaec02337601445e11a81cd1";
+
 export default node;

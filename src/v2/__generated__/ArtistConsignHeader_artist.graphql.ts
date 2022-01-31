@@ -1,22 +1,25 @@
+/**
+ * @generated SignedSource<<604aaf29b559bab8cf7a7ca59313876b>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtistConsignHeader_artist = {
-    readonly name: string | null;
-    readonly href: string | null;
-    readonly " $fragmentRefs": FragmentRefs<"ArtistConsignHeaderImages_artist">;
-    readonly " $refType": "ArtistConsignHeader_artist";
+export type ArtistConsignHeader_artist$data = {
+  readonly name: string | null;
+  readonly href: string | null;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtistConsignHeaderImages_artist">;
+  readonly " $fragmentType": "ArtistConsignHeader_artist";
 };
-export type ArtistConsignHeader_artist$data = ArtistConsignHeader_artist;
 export type ArtistConsignHeader_artist$key = {
-    readonly " $data"?: ArtistConsignHeader_artist$data;
-    readonly " $fragmentRefs": FragmentRefs<"ArtistConsignHeader_artist">;
+  readonly " $data"?: ArtistConsignHeader_artist$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtistConsignHeader_artist">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -24,6 +27,11 @@ const node: ReaderFragment = {
   "metadata": null,
   "name": "ArtistConsignHeader_artist",
   "selections": [
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ArtistConsignHeaderImages_artist"
+    },
     {
       "alias": null,
       "args": null,
@@ -37,15 +45,12 @@ const node: ReaderFragment = {
       "kind": "ScalarField",
       "name": "href",
       "storageKey": null
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "ArtistConsignHeaderImages_artist"
     }
   ],
   "type": "Artist",
   "abstractKey": null
 };
-(node as any).hash = '7d3a03283b2d243183694c0120190387';
+
+(node as any).hash = "7d3a03283b2d243183694c0120190387";
+
 export default node;

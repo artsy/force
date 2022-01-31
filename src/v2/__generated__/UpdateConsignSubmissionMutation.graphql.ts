@@ -1,75 +1,66 @@
+/**
+ * @generated SignedSource<<e996bd94a513bd3b51c1dcf3d5cbfa69>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type ConsignmentAttributionClass = "LIMITED_EDITION" | "OPEN_EDITION" | "UNIQUE" | "UNKNOWN_EDITION" | "%future added value";
 export type ConsignmentSubmissionCategoryAggregation = "ARCHITECTURE" | "DESIGN_DECORATIVE_ART" | "DRAWING_COLLAGE_OR_OTHER_WORK_ON_PAPER" | "FASHION_DESIGN_AND_WEARABLE_ART" | "INSTALLATION" | "JEWELRY" | "MIXED_MEDIA" | "OTHER" | "PAINTING" | "PERFORMANCE_ART" | "PHOTOGRAPHY" | "PRINT" | "SCULPTURE" | "TEXTILE_ARTS" | "VIDEO_FILM_ANIMATION" | "%future added value";
 export type ConsignmentSubmissionStateAggregation = "APPROVED" | "DRAFT" | "REJECTED" | "SUBMITTED" | "%future added value";
 export type UpdateSubmissionMutationInput = {
-    additionalInfo?: string | null;
-    artistID?: string | null;
-    attributionClass?: ConsignmentAttributionClass | null;
-    authenticityCertificate?: boolean | null;
-    category?: ConsignmentSubmissionCategoryAggregation | null;
-    clientMutationId?: string | null;
-    currency?: string | null;
-    depth?: string | null;
-    dimensionsMetric?: string | null;
-    edition?: boolean | null;
-    editionNumber?: string | null;
-    editionSize?: number | null;
-    editionSizeFormatted?: string | null;
-    height?: string | null;
-    id: string;
-    locationCity?: string | null;
-    locationCountry?: string | null;
-    locationState?: string | null;
-    medium?: string | null;
-    minimumPriceDollars?: number | null;
-    provenance?: string | null;
-    sessionID?: string | null;
-    signature?: boolean | null;
-    state?: ConsignmentSubmissionStateAggregation | null;
-    title?: string | null;
-    userEmail?: string | null;
-    userName?: string | null;
-    userPhone?: string | null;
-    utmMedium?: string | null;
-    utmSource?: string | null;
-    utmTerm?: string | null;
-    width?: string | null;
-    year?: string | null;
+  additionalInfo?: string | null;
+  artistID?: string | null;
+  attributionClass?: ConsignmentAttributionClass | null;
+  authenticityCertificate?: boolean | null;
+  category?: ConsignmentSubmissionCategoryAggregation | null;
+  clientMutationId?: string | null;
+  currency?: string | null;
+  depth?: string | null;
+  dimensionsMetric?: string | null;
+  edition?: boolean | null;
+  editionNumber?: string | null;
+  editionSize?: number | null;
+  editionSizeFormatted?: string | null;
+  height?: string | null;
+  id: string;
+  locationCity?: string | null;
+  locationCountry?: string | null;
+  locationState?: string | null;
+  medium?: string | null;
+  minimumPriceDollars?: number | null;
+  provenance?: string | null;
+  sessionID?: string | null;
+  signature?: boolean | null;
+  state?: ConsignmentSubmissionStateAggregation | null;
+  title?: string | null;
+  userEmail?: string | null;
+  userName?: string | null;
+  userPhone?: string | null;
+  utmMedium?: string | null;
+  utmSource?: string | null;
+  utmTerm?: string | null;
+  width?: string | null;
+  year?: string | null;
 };
-export type UpdateConsignSubmissionMutationVariables = {
-    input: UpdateSubmissionMutationInput;
+export type UpdateConsignSubmissionMutation$variables = {
+  input: UpdateSubmissionMutationInput;
 };
-export type UpdateConsignSubmissionMutationResponse = {
-    readonly updateConsignmentSubmission: {
-        readonly consignmentSubmission: {
-            readonly internalID: string | null;
-        } | null;
+export type UpdateConsignSubmissionMutation$data = {
+  readonly updateConsignmentSubmission: {
+    readonly consignmentSubmission: {
+      readonly internalID: string | null;
     } | null;
+  } | null;
 };
 export type UpdateConsignSubmissionMutation = {
-    readonly response: UpdateConsignSubmissionMutationResponse;
-    readonly variables: UpdateConsignSubmissionMutationVariables;
+  variables: UpdateConsignSubmissionMutation$variables;
+  response: UpdateConsignSubmissionMutation$data;
 };
-
-
-
-/*
-mutation UpdateConsignSubmissionMutation(
-  $input: UpdateSubmissionMutationInput!
-) {
-  updateConsignmentSubmission(input: $input) {
-    consignmentSubmission {
-      internalID
-      id
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -175,5 +166,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'f2fc269ce4ba96e2cc0975475e403f60';
+
+(node as any).hash = "f2fc269ce4ba96e2cc0975475e403f60";
+
 export default node;

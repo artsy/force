@@ -1,49 +1,52 @@
+/**
+ * @generated SignedSource<<b67faafc8483432ed4e4a112e56304c9>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type FairArticles_fair = {
-    readonly slug: string;
-    readonly articlesConnection: {
-        readonly totalCount: number | null;
-        readonly edges: ReadonlyArray<{
-            readonly node: {
-                readonly internalID: string;
-                readonly title: string | null;
-                readonly href: string | null;
-                readonly author: {
-                    readonly name: string | null;
-                } | null;
-                readonly publishedAt: string | null;
-                readonly thumbnailTitle: string | null;
-                readonly thumbnailImage: {
-                    readonly large: {
-                        readonly width: number;
-                        readonly height: number;
-                        readonly src: string;
-                        readonly srcSet: string;
-                    } | null;
-                    readonly medium: {
-                        readonly width: number;
-                        readonly height: number;
-                        readonly src: string;
-                        readonly srcSet: string;
-                    } | null;
-                } | null;
-            } | null;
-        } | null> | null;
-    } | null;
-    readonly " $refType": "FairArticles_fair";
+export type FairArticles_fair$data = {
+  readonly slug: string;
+  readonly articlesConnection: {
+    readonly totalCount: number | null;
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly internalID: string;
+        readonly title: string | null;
+        readonly href: string | null;
+        readonly author: {
+          readonly name: string | null;
+        } | null;
+        readonly publishedAt: string | null;
+        readonly thumbnailTitle: string | null;
+        readonly thumbnailImage: {
+          readonly large: {
+            readonly width: number;
+            readonly height: number;
+            readonly src: string;
+            readonly srcSet: string;
+          } | null;
+          readonly medium: {
+            readonly width: number;
+            readonly height: number;
+            readonly src: string;
+            readonly srcSet: string;
+          } | null;
+        } | null;
+      } | null;
+    } | null> | null;
+  } | null;
+  readonly " $fragmentType": "FairArticles_fair";
 };
-export type FairArticles_fair$data = FairArticles_fair;
 export type FairArticles_fair$key = {
-    readonly " $data"?: FairArticles_fair$data;
-    readonly " $fragmentRefs": FragmentRefs<"FairArticles_fair">;
+  readonly " $data"?: FairArticles_fair$data;
+  readonly " $fragmentSpreads": FragmentRefs<"FairArticles_fair">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = [
@@ -307,5 +310,7 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '56e400dcf32450d2dfdd524b1a3c6394';
+
+(node as any).hash = "56e400dcf32450d2dfdd524b1a3c6394";
+
 export default node;

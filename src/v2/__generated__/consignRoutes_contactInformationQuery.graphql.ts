@@ -1,113 +1,58 @@
+/**
+ * @generated SignedSource<<4946be71cbd5cb31434cfb30fd6e9dbd>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ConsignmentAttributionClass = "LIMITED_EDITION" | "OPEN_EDITION" | "UNIQUE" | "UNKNOWN_EDITION" | "%future added value";
-export type consignRoutes_contactInformationQueryVariables = {
-    id: string;
-    sessionID?: string | null;
+export type consignRoutes_contactInformationQuery$variables = {
+  id: string;
+  sessionID?: string | null;
 };
-export type consignRoutes_contactInformationQueryResponse = {
-    readonly submission: {
-        readonly id: string;
-        readonly artist: {
-            readonly internalID: string;
-            readonly name: string | null;
-        } | null;
-        readonly locationCity: string | null;
-        readonly locationCountry: string | null;
-        readonly locationState: string | null;
-        readonly year: string | null;
-        readonly title: string | null;
-        readonly medium: string | null;
-        readonly attributionClass: ConsignmentAttributionClass | null;
-        readonly editionNumber: string | null;
-        readonly editionSize: string | null;
-        readonly height: string | null;
-        readonly width: string | null;
-        readonly depth: string | null;
-        readonly dimensionsMetric: string | null;
-        readonly provenance: string | null;
-        readonly assets: ReadonlyArray<{
-            readonly id: string;
-            readonly imageUrls: unknown | null;
-            readonly geminiToken: string | null;
-            readonly size: string | null;
-            readonly filename: string | null;
-        } | null> | null;
-        readonly " $fragmentRefs": FragmentRefs<"ContactInformation_submission">;
+export type consignRoutes_contactInformationQuery$data = {
+  readonly submission: {
+    readonly id: string;
+    readonly artist: {
+      readonly internalID: string;
+      readonly name: string | null;
     } | null;
-    readonly me: {
-        readonly " $fragmentRefs": FragmentRefs<"ContactInformation_me">;
-    } | null;
+    readonly locationCity: string | null;
+    readonly locationCountry: string | null;
+    readonly locationState: string | null;
+    readonly year: string | null;
+    readonly title: string | null;
+    readonly medium: string | null;
+    readonly attributionClass: ConsignmentAttributionClass | null;
+    readonly editionNumber: string | null;
+    readonly editionSize: string | null;
+    readonly height: string | null;
+    readonly width: string | null;
+    readonly depth: string | null;
+    readonly dimensionsMetric: string | null;
+    readonly provenance: string | null;
+    readonly assets: ReadonlyArray<{
+      readonly id: string;
+      readonly imageUrls: any | null;
+      readonly geminiToken: string | null;
+      readonly size: string | null;
+      readonly filename: string | null;
+    } | null> | null;
+    readonly " $fragmentSpreads": FragmentRefs<"ContactInformation_submission">;
+  } | null;
+  readonly me: {
+    readonly " $fragmentSpreads": FragmentRefs<"ContactInformation_me">;
+  } | null;
 };
 export type consignRoutes_contactInformationQuery = {
-    readonly response: consignRoutes_contactInformationQueryResponse;
-    readonly variables: consignRoutes_contactInformationQueryVariables;
+  variables: consignRoutes_contactInformationQuery$variables;
+  response: consignRoutes_contactInformationQuery$data;
 };
-
-
-
-/*
-query consignRoutes_contactInformationQuery(
-  $id: ID!
-  $sessionID: String
-) {
-  submission(id: $id, sessionID: $sessionID) {
-    ...ContactInformation_submission
-    id
-    artist {
-      internalID
-      name
-      id
-    }
-    locationCity
-    locationCountry
-    locationState
-    year
-    title
-    medium
-    attributionClass
-    editionNumber
-    editionSize
-    height
-    width
-    depth
-    dimensionsMetric
-    provenance
-    assets {
-      id
-      imageUrls
-      geminiToken
-      size
-      filename
-    }
-  }
-  me {
-    ...ContactInformation_me
-    id
-  }
-}
-
-fragment ContactInformation_me on Me {
-  internalID
-  name
-  email
-  phone
-  phoneNumber {
-    isValid
-    international: display(format: INTERNATIONAL)
-    national: display(format: NATIONAL)
-    regionCode
-  }
-}
-
-fragment ContactInformation_submission on ConsignmentSubmission {
-  id
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -308,6 +253,11 @@ return {
         "name": "submission",
         "plural": false,
         "selections": [
+          {
+            "args": null,
+            "kind": "FragmentSpread",
+            "name": "ContactInformation_submission"
+          },
           (v2/*: any*/),
           {
             "alias": null,
@@ -336,12 +286,7 @@ return {
           (v16/*: any*/),
           (v17/*: any*/),
           (v18/*: any*/),
-          (v19/*: any*/),
-          {
-            "args": null,
-            "kind": "FragmentSpread",
-            "name": "ContactInformation_submission"
-          }
+          (v19/*: any*/)
         ],
         "storageKey": null
       },
@@ -503,5 +448,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'c46e87344ab8c35ef869ea462cdc57d9';
+
+(node as any).hash = "c46e87344ab8c35ef869ea462cdc57d9";
+
 export default node;

@@ -1,41 +1,32 @@
+/**
+ * @generated SignedSource<<eeb726263ff36136ecd9f74018419290>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type CreateBidderInput = {
-    clientMutationId?: string | null;
-    saleID: string;
+  clientMutationId?: string | null;
+  saleID: string;
 };
-export type RegisterCreateBidderMutationVariables = {
-    input: CreateBidderInput;
+export type RegisterCreateBidderMutation$variables = {
+  input: CreateBidderInput;
 };
-export type RegisterCreateBidderMutationResponse = {
-    readonly createBidder: {
-        readonly bidder: {
-            readonly internalID: string;
-        } | null;
+export type RegisterCreateBidderMutation$data = {
+  readonly createBidder: {
+    readonly bidder: {
+      readonly internalID: string;
     } | null;
+  } | null;
 };
 export type RegisterCreateBidderMutation = {
-    readonly response: RegisterCreateBidderMutationResponse;
-    readonly variables: RegisterCreateBidderMutationVariables;
+  variables: RegisterCreateBidderMutation$variables;
+  response: RegisterCreateBidderMutation$data;
 };
-
-
-
-/*
-mutation RegisterCreateBidderMutation(
-  $input: CreateBidderInput!
-) {
-  createBidder(input: $input) {
-    bidder {
-      internalID
-      id
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -141,5 +132,7 @@ return {
   }
 };
 })();
-(node as any).hash = '5a40789346f5d1cb6e5bbf634e36eae6';
+
+(node as any).hash = "5a40789346f5d1cb6e5bbf634e36eae6";
+
 export default node;

@@ -1,49 +1,31 @@
+/**
+ * @generated SignedSource<<347337dbe23d22f65db386fb18adab37>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
-export type InquiryArtistsInCollectionQueryVariables = {
-    term: string;
+import { ConcreteRequest, Query } from 'relay-runtime';
+export type InquiryArtistsInCollectionQuery$variables = {
+  term: string;
 };
-export type InquiryArtistsInCollectionQueryResponse = {
-    readonly searchConnection: {
-        readonly edges: ReadonlyArray<{
-            readonly node: {
-                readonly text: string | null;
-                readonly value?: string;
-            } | null;
-        } | null> | null;
-    } | null;
+export type InquiryArtistsInCollectionQuery$data = {
+  readonly searchConnection: {
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly text: string | null;
+        readonly value?: string;
+      } | null;
+    } | null> | null;
+  } | null;
 };
 export type InquiryArtistsInCollectionQuery = {
-    readonly response: InquiryArtistsInCollectionQueryResponse;
-    readonly variables: InquiryArtistsInCollectionQueryVariables;
+  variables: InquiryArtistsInCollectionQuery$variables;
+  response: InquiryArtistsInCollectionQuery$data;
 };
-
-
-
-/*
-query InquiryArtistsInCollectionQuery(
-  $term: String!
-) {
-  searchConnection(query: $term, entities: ARTIST, first: 5) {
-    edges {
-      node {
-        __typename
-        text: displayLabel
-        ... on Artist {
-          value: internalID
-        }
-        ... on Node {
-          __isNode: __typename
-          id
-        }
-      }
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -211,5 +193,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'b836c39f1fefe145be04e985afbab81d';
+
+(node as any).hash = "b836c39f1fefe145be04e985afbab81d";
+
 export default node;

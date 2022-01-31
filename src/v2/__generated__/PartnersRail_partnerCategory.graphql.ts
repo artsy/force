@@ -1,28 +1,31 @@
+/**
+ * @generated SignedSource<<45efa213366092b0bcc66ec630755260>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type PartnersRail_partnerCategory = {
-    readonly name: string | null;
-    readonly primary: ReadonlyArray<{
-        readonly internalID: string;
-        readonly " $fragmentRefs": FragmentRefs<"PartnerCell_partner">;
-    } | null> | null;
-    readonly secondary: ReadonlyArray<{
-        readonly internalID: string;
-        readonly " $fragmentRefs": FragmentRefs<"PartnerCell_partner">;
-    } | null> | null;
-    readonly " $refType": "PartnersRail_partnerCategory";
+export type PartnersRail_partnerCategory$data = {
+  readonly name: string | null;
+  readonly primary: ReadonlyArray<{
+    readonly internalID: string;
+    readonly " $fragmentSpreads": FragmentRefs<"PartnerCell_partner">;
+  } | null> | null;
+  readonly secondary: ReadonlyArray<{
+    readonly internalID: string;
+    readonly " $fragmentSpreads": FragmentRefs<"PartnerCell_partner">;
+  } | null> | null;
+  readonly " $fragmentType": "PartnersRail_partnerCategory";
 };
-export type PartnersRail_partnerCategory$data = PartnersRail_partnerCategory;
 export type PartnersRail_partnerCategory$key = {
-    readonly " $data"?: PartnersRail_partnerCategory$data;
-    readonly " $fragmentRefs": FragmentRefs<"PartnersRail_partnerCategory">;
+  readonly " $data"?: PartnersRail_partnerCategory$data;
+  readonly " $fragmentSpreads": FragmentRefs<"PartnersRail_partnerCategory">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = {
@@ -135,5 +138,7 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = 'cc6b6a031766931890033cb1c816dc44';
+
+(node as any).hash = "cc6b6a031766931890033cb1c816dc44";
+
 export default node;

@@ -40,6 +40,7 @@ const InquiryBasicInfo: React.FC<InquiryBasicInfoProps> = ({ artwork, me }) => {
   const [mode, setMode] = useMode<Mode>("Pending")
 
   const { submitUpdateMyUserProfile } = useUpdateMyUserProfile({
+    // @ts-ignore UPGRADE RELAY 13
     relayEnvironment: relayEnvironment.current!,
   })
 

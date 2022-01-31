@@ -1,29 +1,32 @@
+/**
+ * @generated SignedSource<<0fede698bec49f52b3c29be9cbee447b>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type EditionSelectBox_edition = {
-    readonly internalID: string;
-    readonly editionOf: string | null;
-    readonly isOfferableFromInquiry: boolean | null;
-    readonly listPrice: {
-        readonly display?: string | null;
-    } | null;
-    readonly dimensions: {
-        readonly cm: string | null;
-        readonly in: string | null;
-    } | null;
-    readonly " $refType": "EditionSelectBox_edition";
+export type EditionSelectBox_edition$data = {
+  readonly internalID: string;
+  readonly editionOf: string | null;
+  readonly isOfferableFromInquiry: boolean | null;
+  readonly listPrice: {
+    readonly display?: string | null;
+  } | null;
+  readonly dimensions: {
+    readonly cm: string | null;
+    readonly in: string | null;
+  } | null;
+  readonly " $fragmentType": "EditionSelectBox_edition";
 };
-export type EditionSelectBox_edition$data = EditionSelectBox_edition;
 export type EditionSelectBox_edition$key = {
-    readonly " $data"?: EditionSelectBox_edition$data;
-    readonly " $fragmentRefs": FragmentRefs<"EditionSelectBox_edition">;
+  readonly " $data"?: EditionSelectBox_edition$data;
+  readonly " $fragmentSpreads": FragmentRefs<"EditionSelectBox_edition">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = [
@@ -115,5 +118,7 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = 'bed44602aa3d225b35cb8b5a9aa189a0';
+
+(node as any).hash = "bed44602aa3d225b35cb8b5a9aa189a0";
+
 export default node;

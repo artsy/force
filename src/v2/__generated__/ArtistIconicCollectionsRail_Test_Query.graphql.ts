@@ -1,62 +1,29 @@
+/**
+ * @generated SignedSource<<dcfa0960766623562650c5b6e6979465>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtistIconicCollectionsRail_Test_QueryVariables = {
-    isFeaturedArtistContent?: boolean | null;
-    size?: number | null;
-    artistID?: string | null;
+export type ArtistIconicCollectionsRail_Test_Query$variables = {
+  isFeaturedArtistContent?: boolean | null;
+  size?: number | null;
+  artistID?: string | null;
 };
-export type ArtistIconicCollectionsRail_Test_QueryResponse = {
-    readonly marketingCollections: ReadonlyArray<{
-        readonly " $fragmentRefs": FragmentRefs<"ArtistIconicCollectionsRail_marketingCollections">;
-    }>;
+export type ArtistIconicCollectionsRail_Test_Query$data = {
+  readonly marketingCollections: ReadonlyArray<{
+    readonly " $fragmentSpreads": FragmentRefs<"ArtistIconicCollectionsRail_marketingCollections">;
+  }>;
 };
 export type ArtistIconicCollectionsRail_Test_Query = {
-    readonly response: ArtistIconicCollectionsRail_Test_QueryResponse;
-    readonly variables: ArtistIconicCollectionsRail_Test_QueryVariables;
+  variables: ArtistIconicCollectionsRail_Test_Query$variables;
+  response: ArtistIconicCollectionsRail_Test_Query$data;
 };
-
-
-
-/*
-query ArtistIconicCollectionsRail_Test_Query(
-  $isFeaturedArtistContent: Boolean
-  $size: Int
-  $artistID: String
-) {
-  marketingCollections(isFeaturedArtistContent: $isFeaturedArtistContent, size: $size, artistID: $artistID) {
-    ...ArtistIconicCollectionsRail_marketingCollections
-    id
-  }
-}
-
-fragment ArtistIconicCollectionsRail_marketingCollections on MarketingCollection {
-  headerImage
-  thumbnail
-  slug
-  title
-  priceGuidance
-  artworksConnection(first: 1, aggregations: [TOTAL], sort: "-decayed_merch") {
-    edges {
-      node {
-        image {
-          resized(width: 325, height: 230) {
-            width
-            height
-            src
-            srcSet
-          }
-        }
-        id
-      }
-    }
-    id
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = {
@@ -392,5 +359,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'fc533b8a0e95a07203e96b8351ebf251';
+
+(node as any).hash = "fc533b8a0e95a07203e96b8351ebf251";
+
 export default node;

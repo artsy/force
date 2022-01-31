@@ -34,6 +34,7 @@ export const fairOrganizerFollowMutation: FollowFairOrganizerMutationProps = (
           }
         }
       `,
+      // @ts-ignore UPGRADE RELAY 13
       optimisticResponse: {
         followProfile: {
           profile: {

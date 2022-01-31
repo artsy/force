@@ -1,46 +1,49 @@
+/**
+ * @generated SignedSource<<27b4bb8aac41208934e2279f6e1bf6e2>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtworkSidebarBidAction_artwork = {
-    readonly myLotStanding: ReadonlyArray<{
-        readonly most_recent_bid: {
-            readonly max_bid: {
-                readonly cents: number | null;
-            } | null;
-        } | null;
-    }> | null;
+export type ArtworkSidebarBidAction_artwork$data = {
+  readonly myLotStanding: ReadonlyArray<{
+    readonly most_recent_bid: {
+      readonly max_bid: {
+        readonly cents: number | null;
+      } | null;
+    } | null;
+  }> | null;
+  readonly slug: string;
+  readonly internalID: string;
+  readonly sale: {
     readonly slug: string;
-    readonly internalID: string;
-    readonly sale: {
-        readonly slug: string;
-        readonly registrationStatus: {
-            readonly qualified_for_bidding: boolean | null;
-        } | null;
-        readonly is_preview: boolean | null;
-        readonly is_open: boolean | null;
-        readonly is_live_open: boolean | null;
-        readonly is_closed: boolean | null;
-        readonly is_registration_closed: boolean | null;
-        readonly requireIdentityVerification: boolean | null;
+    readonly registrationStatus: {
+      readonly qualified_for_bidding: boolean | null;
     } | null;
-    readonly sale_artwork: {
-        readonly increments: ReadonlyArray<{
-            readonly cents: number | null;
-            readonly display: string | null;
-        } | null> | null;
-    } | null;
-    readonly " $refType": "ArtworkSidebarBidAction_artwork";
+    readonly is_preview: boolean | null;
+    readonly is_open: boolean | null;
+    readonly is_live_open: boolean | null;
+    readonly is_closed: boolean | null;
+    readonly is_registration_closed: boolean | null;
+    readonly requireIdentityVerification: boolean | null;
+  } | null;
+  readonly sale_artwork: {
+    readonly increments: ReadonlyArray<{
+      readonly cents: number | null;
+      readonly display: string | null;
+    } | null> | null;
+  } | null;
+  readonly " $fragmentType": "ArtworkSidebarBidAction_artwork";
 };
-export type ArtworkSidebarBidAction_artwork$data = ArtworkSidebarBidAction_artwork;
 export type ArtworkSidebarBidAction_artwork$key = {
-    readonly " $data"?: ArtworkSidebarBidAction_artwork$data;
-    readonly " $fragmentRefs": FragmentRefs<"ArtworkSidebarBidAction_artwork">;
+  readonly " $data"?: ArtworkSidebarBidAction_artwork$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtworkSidebarBidAction_artwork">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = {
@@ -218,5 +221,7 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '5880223b32e8a4a3808623584d46c8bb';
+
+(node as any).hash = "5880223b32e8a4a3808623584d46c8bb";
+
 export default node;

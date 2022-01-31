@@ -1,105 +1,25 @@
+/**
+ * @generated SignedSource<<712d7be5c6f0cdf739271b7221810f9c>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type partnersRoutes_GalleriesRouteQueryVariables = {};
-export type partnersRoutes_GalleriesRouteQueryResponse = {
-    readonly viewer: {
-        readonly " $fragmentRefs": FragmentRefs<"GalleriesRoute_viewer">;
-    } | null;
+export type partnersRoutes_GalleriesRouteQuery$variables = {};
+export type partnersRoutes_GalleriesRouteQuery$data = {
+  readonly viewer: {
+    readonly " $fragmentSpreads": FragmentRefs<"GalleriesRoute_viewer">;
+  } | null;
 };
 export type partnersRoutes_GalleriesRouteQuery = {
-    readonly response: partnersRoutes_GalleriesRouteQueryResponse;
-    readonly variables: partnersRoutes_GalleriesRouteQueryVariables;
+  variables: partnersRoutes_GalleriesRouteQuery$variables;
+  response: partnersRoutes_GalleriesRouteQuery$data;
 };
-
-
-
-/*
-query partnersRoutes_GalleriesRouteQuery {
-  viewer {
-    ...GalleriesRoute_viewer
-  }
-}
-
-fragment FollowProfileButton_profile on Profile {
-  id
-  slug
-  name
-  internalID
-  is_followed: isFollowed
-}
-
-fragment GalleriesRoute_viewer on Viewer {
-  ...PartnersFeaturedCarousel_viewer_4uWBz4
-}
-
-fragment PartnersFeaturedCarouselCell_profile on Profile {
-  ...FollowProfileButton_profile
-  owner {
-    __typename
-    ... on Partner {
-      internalID
-      href
-      name
-      featuredShow {
-        href
-        name
-        status
-        statusUpdate
-        startAt(format: "MMM D")
-        endAt(format: "MMM D")
-        isOnlineExclusive
-        location {
-          city
-          id
-        }
-        coverImage {
-          resized(height: 500, version: ["normalized", "larger", "large"]) {
-            src
-            srcSet
-          }
-        }
-        id
-      }
-    }
-    ... on Node {
-      __isNode: __typename
-      id
-    }
-    ... on FairOrganizer {
-      id
-    }
-  }
-}
-
-fragment PartnersFeaturedCarousel_viewer_4uWBz4 on Viewer {
-  orderedSet(id: "5638fdfb7261690296000031") {
-    orderedItemsConnection(first: 50) {
-      edges {
-        node {
-          __typename
-          ... on Profile {
-            internalID
-            ...PartnersFeaturedCarouselCell_profile
-            id
-          }
-          ... on Node {
-            __isNode: __typename
-            id
-          }
-          ... on FeaturedLink {
-            id
-          }
-        }
-      }
-    }
-    id
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = {
@@ -446,5 +366,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'e7feb546a82ac4ed2adae49ca1c03d63';
+
+(node as any).hash = "e7feb546a82ac4ed2adae49ca1c03d63";
+
 export default node;

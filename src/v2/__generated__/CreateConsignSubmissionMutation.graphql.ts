@@ -1,78 +1,69 @@
+/**
+ * @generated SignedSource<<63d105eedb564145fa9fec098dedbd18>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type ConsignmentAttributionClass = "LIMITED_EDITION" | "OPEN_EDITION" | "UNIQUE" | "UNKNOWN_EDITION" | "%future added value";
 export type ConsignmentSubmissionCategoryAggregation = "ARCHITECTURE" | "DESIGN_DECORATIVE_ART" | "DRAWING_COLLAGE_OR_OTHER_WORK_ON_PAPER" | "FASHION_DESIGN_AND_WEARABLE_ART" | "INSTALLATION" | "JEWELRY" | "MIXED_MEDIA" | "OTHER" | "PAINTING" | "PERFORMANCE_ART" | "PHOTOGRAPHY" | "PRINT" | "SCULPTURE" | "TEXTILE_ARTS" | "VIDEO_FILM_ANIMATION" | "%future added value";
 export type ConsignmentSubmissionStateAggregation = "APPROVED" | "DRAFT" | "REJECTED" | "SUBMITTED" | "%future added value";
 export type CreateSubmissionMutationInput = {
-    additionalInfo?: string | null;
-    artistID: string;
-    attributionClass?: ConsignmentAttributionClass | null;
-    authenticityCertificate?: boolean | null;
-    category?: ConsignmentSubmissionCategoryAggregation | null;
-    clientMutationId?: string | null;
-    coaByAuthenticatingBody?: boolean | null;
-    coaByGallery?: boolean | null;
-    currency?: string | null;
-    depth?: string | null;
-    dimensionsMetric?: string | null;
-    edition?: boolean | null;
-    editionNumber?: string | null;
-    editionSize?: number | null;
-    editionSizeFormatted?: string | null;
-    height?: string | null;
-    locationCity?: string | null;
-    locationCountry?: string | null;
-    locationState?: string | null;
-    medium?: string | null;
-    minimumPriceDollars?: number | null;
-    provenance?: string | null;
-    sessionID?: string | null;
-    signature?: boolean | null;
-    sourceArtworkID?: string | null;
-    state?: ConsignmentSubmissionStateAggregation | null;
-    title?: string | null;
-    userAgent?: string | null;
-    userEmail?: string | null;
-    userName?: string | null;
-    userPhone?: string | null;
-    utmMedium?: string | null;
-    utmSource?: string | null;
-    utmTerm?: string | null;
-    width?: string | null;
-    year?: string | null;
+  additionalInfo?: string | null;
+  artistID: string;
+  attributionClass?: ConsignmentAttributionClass | null;
+  authenticityCertificate?: boolean | null;
+  category?: ConsignmentSubmissionCategoryAggregation | null;
+  clientMutationId?: string | null;
+  coaByAuthenticatingBody?: boolean | null;
+  coaByGallery?: boolean | null;
+  currency?: string | null;
+  depth?: string | null;
+  dimensionsMetric?: string | null;
+  edition?: boolean | null;
+  editionNumber?: string | null;
+  editionSize?: number | null;
+  editionSizeFormatted?: string | null;
+  height?: string | null;
+  locationCity?: string | null;
+  locationCountry?: string | null;
+  locationState?: string | null;
+  medium?: string | null;
+  minimumPriceDollars?: number | null;
+  provenance?: string | null;
+  sessionID?: string | null;
+  signature?: boolean | null;
+  sourceArtworkID?: string | null;
+  state?: ConsignmentSubmissionStateAggregation | null;
+  title?: string | null;
+  userAgent?: string | null;
+  userEmail?: string | null;
+  userName?: string | null;
+  userPhone?: string | null;
+  utmMedium?: string | null;
+  utmSource?: string | null;
+  utmTerm?: string | null;
+  width?: string | null;
+  year?: string | null;
 };
-export type CreateConsignSubmissionMutationVariables = {
-    input: CreateSubmissionMutationInput;
+export type CreateConsignSubmissionMutation$variables = {
+  input: CreateSubmissionMutationInput;
 };
-export type CreateConsignSubmissionMutationResponse = {
-    readonly createConsignmentSubmission: {
-        readonly consignmentSubmission: {
-            readonly internalID: string | null;
-        } | null;
+export type CreateConsignSubmissionMutation$data = {
+  readonly createConsignmentSubmission: {
+    readonly consignmentSubmission: {
+      readonly internalID: string | null;
     } | null;
+  } | null;
 };
 export type CreateConsignSubmissionMutation = {
-    readonly response: CreateConsignSubmissionMutationResponse;
-    readonly variables: CreateConsignSubmissionMutationVariables;
+  variables: CreateConsignSubmissionMutation$variables;
+  response: CreateConsignSubmissionMutation$data;
 };
-
-
-
-/*
-mutation CreateConsignSubmissionMutation(
-  $input: CreateSubmissionMutationInput!
-) {
-  createConsignmentSubmission(input: $input) {
-    consignmentSubmission {
-      internalID
-      id
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -178,5 +169,7 @@ return {
   }
 };
 })();
-(node as any).hash = '0d4e8537477a6dc0d3ad8342f4db98d1';
+
+(node as any).hash = "0d4e8537477a6dc0d3ad8342f4db98d1";
+
 export default node;

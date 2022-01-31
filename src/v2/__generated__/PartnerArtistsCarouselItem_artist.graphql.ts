@@ -1,44 +1,47 @@
+/**
+ * @generated SignedSource<<e865fed97b5467b05de55842a1da17c7>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type PartnerArtistsCarouselItem_artist = {
-    readonly artworksConnection: {
-        readonly edges: ReadonlyArray<{
-            readonly node: {
-                readonly image: {
-                    readonly cropped: {
-                        readonly src: string;
-                        readonly srcSet: string;
-                        readonly height: number;
-                        readonly width: number;
-                    } | null;
-                } | null;
-            } | null;
-        } | null> | null;
-    } | null;
-    readonly node: {
-        readonly id: string;
-        readonly name: string | null;
-        readonly formattedNationalityAndBirthday: string | null;
+export type PartnerArtistsCarouselItem_artist$data = {
+  readonly artworksConnection: {
+    readonly edges: ReadonlyArray<{
+      readonly node: {
         readonly image: {
-            readonly cropped: {
-                readonly url: string;
-            } | null;
+          readonly cropped: {
+            readonly src: string;
+            readonly srcSet: string;
+            readonly height: number;
+            readonly width: number;
+          } | null;
         } | null;
-        readonly " $fragmentRefs": FragmentRefs<"FollowArtistButton_artist">;
+      } | null;
+    } | null> | null;
+  } | null;
+  readonly node: {
+    readonly id: string;
+    readonly name: string | null;
+    readonly formattedNationalityAndBirthday: string | null;
+    readonly image: {
+      readonly cropped: {
+        readonly url: string;
+      } | null;
     } | null;
-    readonly " $refType": "PartnerArtistsCarouselItem_artist";
+    readonly " $fragmentSpreads": FragmentRefs<"FollowArtistButton_artist">;
+  } | null;
+  readonly " $fragmentType": "PartnerArtistsCarouselItem_artist";
 };
-export type PartnerArtistsCarouselItem_artist$data = PartnerArtistsCarouselItem_artist;
 export type PartnerArtistsCarouselItem_artist$key = {
-    readonly " $data"?: PartnerArtistsCarouselItem_artist$data;
-    readonly " $fragmentRefs": FragmentRefs<"PartnerArtistsCarouselItem_artist">;
+  readonly " $data"?: PartnerArtistsCarouselItem_artist$data;
+  readonly " $fragmentSpreads": FragmentRefs<"PartnerArtistsCarouselItem_artist">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -176,6 +179,11 @@ const node: ReaderFragment = {
           "storageKey": null
         },
         {
+          "args": null,
+          "kind": "FragmentSpread",
+          "name": "FollowArtistButton_artist"
+        },
+        {
           "alias": null,
           "args": null,
           "concreteType": "Image",
@@ -214,11 +222,6 @@ const node: ReaderFragment = {
             }
           ],
           "storageKey": null
-        },
-        {
-          "args": null,
-          "kind": "FragmentSpread",
-          "name": "FollowArtistButton_artist"
         }
       ],
       "storageKey": null
@@ -227,5 +230,7 @@ const node: ReaderFragment = {
   "type": "ArtistPartnerEdge",
   "abstractKey": null
 };
-(node as any).hash = '5c477a5d45c3bb4dcd4b18bc5ffe3af4';
+
+(node as any).hash = "5c477a5d45c3bb4dcd4b18bc5ffe3af4";
+
 export default node;

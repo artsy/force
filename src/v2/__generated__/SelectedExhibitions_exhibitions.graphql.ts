@@ -1,30 +1,33 @@
+/**
+ * @generated SignedSource<<b641db1134ce5e901cd8b4d4a0c14a73>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type SelectedExhibitions_exhibitions = ReadonlyArray<{
-    readonly partner: {
-        readonly name?: string | null;
+export type SelectedExhibitions_exhibitions$data = ReadonlyArray<{
+  readonly partner: {
+    readonly name?: string | null;
+  } | null;
+  readonly name: string | null;
+  readonly start_at: string | null;
+  readonly cover_image: {
+    readonly cropped: {
+      readonly url: string;
     } | null;
-    readonly name: string | null;
-    readonly start_at: string | null;
-    readonly cover_image: {
-        readonly cropped: {
-            readonly url: string;
-        } | null;
-    } | null;
-    readonly city: string | null;
-    readonly " $refType": "SelectedExhibitions_exhibitions";
+  } | null;
+  readonly city: string | null;
+  readonly " $fragmentType": "SelectedExhibitions_exhibitions";
 }>;
-export type SelectedExhibitions_exhibitions$data = SelectedExhibitions_exhibitions;
 export type SelectedExhibitions_exhibitions$key = ReadonlyArray<{
-    readonly " $data"?: SelectedExhibitions_exhibitions$data;
-    readonly " $fragmentRefs": FragmentRefs<"SelectedExhibitions_exhibitions">;
+  readonly " $data"?: SelectedExhibitions_exhibitions$data;
+  readonly " $fragmentSpreads": FragmentRefs<"SelectedExhibitions_exhibitions">;
 }>;
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = {
@@ -134,5 +137,7 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '909495fb57e2524b079c5d2304d2d162';
+
+(node as any).hash = "909495fb57e2524b079c5d2304d2d162";
+
 export default node;

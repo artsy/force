@@ -1,85 +1,35 @@
+/**
+ * @generated SignedSource<<f0375672b7ac789f964873a15f6ae416>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ShowSorts = "END_AT_ASC" | "END_AT_DESC" | "FEATURED_ASC" | "FEATURED_DESC" | "FEATURED_DESC_END_AT_DESC" | "NAME_ASC" | "NAME_DESC" | "PARTNER_ASC" | "SORTABLE_NAME_ASC" | "SORTABLE_NAME_DESC" | "START_AT_ASC" | "START_AT_DESC" | "UPDATED_AT_ASC" | "UPDATED_AT_DESC" | "%future added value";
-export type ArtistCVGroupQueryVariables = {
-    count?: number | null;
-    cursor?: string | null;
-    slug: string;
-    sort?: ShowSorts | null;
-    atAFair?: boolean | null;
-    soloShow?: boolean | null;
-    isReference?: boolean | null;
-    visibleToPublic?: boolean | null;
+export type ArtistCVGroupQuery$variables = {
+  count?: number | null;
+  cursor?: string | null;
+  slug: string;
+  sort?: ShowSorts | null;
+  atAFair?: boolean | null;
+  soloShow?: boolean | null;
+  isReference?: boolean | null;
+  visibleToPublic?: boolean | null;
 };
-export type ArtistCVGroupQueryResponse = {
-    readonly artist: {
-        readonly " $fragmentRefs": FragmentRefs<"ArtistCVGroup_artist">;
-    } | null;
+export type ArtistCVGroupQuery$data = {
+  readonly artist: {
+    readonly " $fragmentSpreads": FragmentRefs<"ArtistCVGroup_artist">;
+  } | null;
 };
 export type ArtistCVGroupQuery = {
-    readonly response: ArtistCVGroupQueryResponse;
-    readonly variables: ArtistCVGroupQueryVariables;
+  variables: ArtistCVGroupQuery$variables;
+  response: ArtistCVGroupQuery$data;
 };
-
-
-
-/*
-query ArtistCVGroupQuery(
-  $count: Int
-  $cursor: String
-  $slug: String!
-  $sort: ShowSorts
-  $atAFair: Boolean
-  $soloShow: Boolean
-  $isReference: Boolean
-  $visibleToPublic: Boolean
-) {
-  artist(id: $slug) {
-    ...ArtistCVGroup_artist_4A66pF
-    id
-  }
-}
-
-fragment ArtistCVGroup_artist_4A66pF on Artist {
-  slug
-  showsConnection(first: $count, after: $cursor, sort: $sort, atAFair: $atAFair, soloShow: $soloShow, isReference: $isReference, visibleToPublic: $visibleToPublic) {
-    pageInfo {
-      hasNextPage
-      endCursor
-    }
-    edges {
-      node {
-        id
-        partner {
-          __typename
-          ... on ExternalPartner {
-            name
-            id
-          }
-          ... on Partner {
-            name
-            href
-          }
-          ... on Node {
-            __isNode: __typename
-            id
-          }
-        }
-        name
-        startAt(format: "YYYY")
-        city
-        href
-        __typename
-      }
-      cursor
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = {
@@ -439,5 +389,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'b012177f363645de584b40b4e16627cf';
+
+(node as any).hash = "b012177f363645de584b40b4e16627cf";
+
 export default node;

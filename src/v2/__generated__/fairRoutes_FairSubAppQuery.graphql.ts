@@ -1,54 +1,27 @@
+/**
+ * @generated SignedSource<<00cac3b5d5a72e01be7af9277f67ef91>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type fairRoutes_FairSubAppQueryVariables = {
-    slug: string;
+export type fairRoutes_FairSubAppQuery$variables = {
+  slug: string;
 };
-export type fairRoutes_FairSubAppQueryResponse = {
-    readonly fair: {
-        readonly " $fragmentRefs": FragmentRefs<"FairSubApp_fair">;
-    } | null;
+export type fairRoutes_FairSubAppQuery$data = {
+  readonly fair: {
+    readonly " $fragmentSpreads": FragmentRefs<"FairSubApp_fair">;
+  } | null;
 };
 export type fairRoutes_FairSubAppQuery = {
-    readonly response: fairRoutes_FairSubAppQueryResponse;
-    readonly variables: fairRoutes_FairSubAppQueryVariables;
+  variables: fairRoutes_FairSubAppQuery$variables;
+  response: fairRoutes_FairSubAppQuery$data;
 };
-
-
-
-/*
-query fairRoutes_FairSubAppQuery(
-  $slug: String!
-) {
-  fair(id: $slug) @principalField {
-    ...FairSubApp_fair
-    id
-  }
-}
-
-fragment FairMeta_fair on Fair {
-  name
-  slug
-  metaDescription: summary
-  metaImage: image {
-    src: url(version: "large_rectangle")
-  }
-}
-
-fragment FairSubApp_fair on Fair {
-  ...FairMeta_fair
-  id
-  name
-  slug
-  profile {
-    __typename
-    id
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -193,5 +166,7 @@ return {
   }
 };
 })();
-(node as any).hash = '306d25f9ff50c67c37d0daced010a042';
+
+(node as any).hash = "306d25f9ff50c67c37d0daced010a042";
+
 export default node;

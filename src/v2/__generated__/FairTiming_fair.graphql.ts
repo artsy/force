@@ -1,22 +1,25 @@
+/**
+ * @generated SignedSource<<c09853424da5c087daffedd8a129f525>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type FairTiming_fair = {
-    readonly exhibitionPeriod: string | null;
-    readonly startAt: string | null;
-    readonly endAt: string | null;
-    readonly " $refType": "FairTiming_fair";
+export type FairTiming_fair$data = {
+  readonly exhibitionPeriod: string | null;
+  readonly startAt: string | null;
+  readonly endAt: string | null;
+  readonly " $fragmentType": "FairTiming_fair";
 };
-export type FairTiming_fair$data = FairTiming_fair;
 export type FairTiming_fair$key = {
-    readonly " $data"?: FairTiming_fair$data;
-    readonly " $fragmentRefs": FragmentRefs<"FairTiming_fair">;
+  readonly " $data"?: FairTiming_fair$data;
+  readonly " $fragmentSpreads": FragmentRefs<"FairTiming_fair">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -49,5 +52,7 @@ const node: ReaderFragment = {
   "type": "Fair",
   "abstractKey": null
 };
-(node as any).hash = '69ccf3ea7b14916f83f88714796d542f';
+
+(node as any).hash = "69ccf3ea7b14916f83f88714796d542f";
+
 export default node;

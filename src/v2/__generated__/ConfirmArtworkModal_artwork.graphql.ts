@@ -1,26 +1,29 @@
+/**
+ * @generated SignedSource<<7fed10042b51150ac4950e09b59f8b4d>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ConfirmArtworkModal_artwork = {
+export type ConfirmArtworkModal_artwork$data = {
+  readonly internalID: string;
+  readonly isEdition: boolean | null;
+  readonly editionSets: ReadonlyArray<{
     readonly internalID: string;
-    readonly isEdition: boolean | null;
-    readonly editionSets: ReadonlyArray<{
-        readonly internalID: string;
-        readonly " $fragmentRefs": FragmentRefs<"EditionSelectBox_edition">;
-    } | null> | null;
-    readonly " $fragmentRefs": FragmentRefs<"CollapsibleArtworkDetails_artwork" | "ConfirmArtworkButton_artwork">;
-    readonly " $refType": "ConfirmArtworkModal_artwork";
+    readonly " $fragmentSpreads": FragmentRefs<"EditionSelectBox_edition">;
+  } | null> | null;
+  readonly " $fragmentSpreads": FragmentRefs<"CollapsibleArtworkDetails_artwork" | "ConfirmArtworkButton_artwork">;
+  readonly " $fragmentType": "ConfirmArtworkModal_artwork";
 };
-export type ConfirmArtworkModal_artwork$data = ConfirmArtworkModal_artwork;
 export type ConfirmArtworkModal_artwork$key = {
-    readonly " $data"?: ConfirmArtworkModal_artwork$data;
-    readonly " $fragmentRefs": FragmentRefs<"ConfirmArtworkModal_artwork">;
+  readonly " $data"?: ConfirmArtworkModal_artwork$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ConfirmArtworkModal_artwork">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = {
@@ -36,6 +39,16 @@ return {
   "metadata": null,
   "name": "ConfirmArtworkModal_artwork",
   "selections": [
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "CollapsibleArtworkDetails_artwork"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ConfirmArtworkButton_artwork"
+    },
     (v0/*: any*/),
     {
       "alias": null,
@@ -60,21 +73,13 @@ return {
         }
       ],
       "storageKey": null
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "CollapsibleArtworkDetails_artwork"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "ConfirmArtworkButton_artwork"
     }
   ],
   "type": "Artwork",
   "abstractKey": null
 };
 })();
-(node as any).hash = 'c0d50a29df5a5234fd379374324d3f3b';
+
+(node as any).hash = "c0d50a29df5a5234fd379374324d3f3b";
+
 export default node;

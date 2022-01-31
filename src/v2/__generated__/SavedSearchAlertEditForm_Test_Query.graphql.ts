@@ -1,140 +1,82 @@
+/**
+ * @generated SignedSource<<8b95550da23d4379029ff3148ad70fce>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkAggregation = "ARTIST" | "ARTIST_NATIONALITY" | "ATTRIBUTION_CLASS" | "COLOR" | "DIMENSION_RANGE" | "FOLLOWED_ARTISTS" | "GALLERY" | "INSTITUTION" | "LOCATION_CITY" | "MAJOR_PERIOD" | "MATERIALS_TERMS" | "MEDIUM" | "MERCHANDISABLE_ARTISTS" | "PARTNER" | "PARTNER_CITY" | "PERIOD" | "PRICE_RANGE" | "TOTAL" | "%future added value";
-export type SavedSearchAlertEditForm_Test_QueryVariables = {};
-export type SavedSearchAlertEditForm_Test_QueryResponse = {
-    readonly me: {
-        readonly savedSearch: {
-            readonly " $fragmentRefs": FragmentRefs<"SavedSearchAlertEditForm_savedSearch">;
-        } | null;
+export type SavedSearchAlertEditForm_Test_Query$variables = {};
+export type SavedSearchAlertEditForm_Test_Query$data = {
+  readonly me: {
+    readonly savedSearch: {
+      readonly " $fragmentSpreads": FragmentRefs<"SavedSearchAlertEditForm_savedSearch">;
     } | null;
-    readonly artist: {
-        readonly " $fragmentRefs": FragmentRefs<"SavedSearchAlertEditForm_artist">;
-    } | null;
-    readonly artworksConnection: {
-        readonly " $fragmentRefs": FragmentRefs<"SavedSearchAlertEditForm_artworksConnection">;
-    } | null;
+  } | null;
+  readonly artist: {
+    readonly " $fragmentSpreads": FragmentRefs<"SavedSearchAlertEditForm_artist">;
+  } | null;
+  readonly artworksConnection: {
+    readonly " $fragmentSpreads": FragmentRefs<"SavedSearchAlertEditForm_artworksConnection">;
+  } | null;
 };
-export type SavedSearchAlertEditForm_Test_QueryRawResponse = {
-    readonly me: ({
-        readonly savedSearch: ({
-            readonly internalID: string;
-            readonly acquireable: boolean | null;
-            readonly additionalGeneIDs: ReadonlyArray<string>;
-            readonly artistIDs: ReadonlyArray<string> | null;
-            readonly atAuction: boolean | null;
-            readonly attributionClass: ReadonlyArray<string>;
-            readonly colors: ReadonlyArray<string>;
-            readonly dimensionRange: string | null;
-            readonly sizes: ReadonlyArray<string>;
-            readonly height: string | null;
-            readonly inquireableOnly: boolean | null;
-            readonly locationCities: ReadonlyArray<string>;
-            readonly majorPeriods: ReadonlyArray<string>;
-            readonly materialsTerms: ReadonlyArray<string>;
-            readonly offerable: boolean | null;
-            readonly partnerIDs: ReadonlyArray<string>;
-            readonly priceRange: string | null;
-            readonly userAlertSettings: {
-                readonly name: string | null;
-                readonly email: boolean;
-                readonly push: boolean;
-            };
-            readonly width: string | null;
-        }) | null;
-        readonly id: string;
-    }) | null;
-    readonly artist: ({
-        readonly internalID: string;
+export type SavedSearchAlertEditForm_Test_Query$rawResponse = {
+  readonly me: {
+    readonly savedSearch: {
+      readonly internalID: string;
+      readonly acquireable: boolean | null;
+      readonly additionalGeneIDs: ReadonlyArray<string>;
+      readonly artistIDs: ReadonlyArray<string> | null;
+      readonly atAuction: boolean | null;
+      readonly attributionClass: ReadonlyArray<string>;
+      readonly colors: ReadonlyArray<string>;
+      readonly dimensionRange: string | null;
+      readonly sizes: ReadonlyArray<string>;
+      readonly height: string | null;
+      readonly inquireableOnly: boolean | null;
+      readonly locationCities: ReadonlyArray<string>;
+      readonly majorPeriods: ReadonlyArray<string>;
+      readonly materialsTerms: ReadonlyArray<string>;
+      readonly offerable: boolean | null;
+      readonly partnerIDs: ReadonlyArray<string>;
+      readonly priceRange: string | null;
+      readonly userAlertSettings: {
         readonly name: string | null;
-        readonly slug: string;
-        readonly id: string;
-    }) | null;
-    readonly artworksConnection: ({
-        readonly aggregations: ReadonlyArray<({
-            readonly slice: ArtworkAggregation | null;
-            readonly counts: ReadonlyArray<({
-                readonly count: number;
-                readonly name: string;
-                readonly value: string;
-            }) | null> | null;
-        }) | null> | null;
-        readonly id: string;
-    }) | null;
+        readonly email: boolean;
+        readonly push: boolean;
+      };
+      readonly width: string | null;
+    } | null;
+    readonly id: string;
+  } | null;
+  readonly artist: {
+    readonly internalID: string;
+    readonly name: string | null;
+    readonly slug: string;
+    readonly id: string;
+  } | null;
+  readonly artworksConnection: {
+    readonly aggregations: ReadonlyArray<{
+      readonly slice: ArtworkAggregation | null;
+      readonly counts: ReadonlyArray<{
+        readonly count: number;
+        readonly name: string;
+        readonly value: string;
+      } | null> | null;
+    } | null> | null;
+    readonly id: string;
+  } | null;
 };
 export type SavedSearchAlertEditForm_Test_Query = {
-    readonly response: SavedSearchAlertEditForm_Test_QueryResponse;
-    readonly variables: SavedSearchAlertEditForm_Test_QueryVariables;
-    readonly rawResponse: SavedSearchAlertEditForm_Test_QueryRawResponse;
+  variables: SavedSearchAlertEditForm_Test_Query$variables;
+  response: SavedSearchAlertEditForm_Test_Query$data;
+  rawResponse: SavedSearchAlertEditForm_Test_Query$rawResponse;
 };
-
-
-
-/*
-query SavedSearchAlertEditForm_Test_Query {
-  me {
-    savedSearch(id: "id") {
-      ...SavedSearchAlertEditForm_savedSearch
-    }
-    id
-  }
-  artist(id: "artistId") {
-    ...SavedSearchAlertEditForm_artist
-    id
-  }
-  artworksConnection(first: 0, artistID: "artistId", aggregations: [ARTIST, LOCATION_CITY, MATERIALS_TERMS, MEDIUM, PARTNER, COLOR]) {
-    ...SavedSearchAlertEditForm_artworksConnection
-    id
-  }
-}
-
-fragment SavedSearchAlertEditForm_artist on Artist {
-  internalID
-  name
-  slug
-}
-
-fragment SavedSearchAlertEditForm_artworksConnection on FilterArtworksConnection {
-  aggregations {
-    slice
-    counts {
-      count
-      name
-      value
-    }
-  }
-}
-
-fragment SavedSearchAlertEditForm_savedSearch on SearchCriteria {
-  internalID
-  acquireable
-  additionalGeneIDs
-  artistIDs
-  atAuction
-  attributionClass
-  colors
-  dimensionRange
-  sizes
-  height
-  inquireableOnly
-  locationCities
-  majorPeriods
-  materialsTerms
-  offerable
-  partnerIDs
-  priceRange
-  userAlertSettings {
-    name
-    email
-    push
-  }
-  width
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -530,5 +472,7 @@ return {
   }
 };
 })();
-(node as any).hash = '39d6a26f602e57aaa7c679169ccdb819';
+
+(node as any).hash = "39d6a26f602e57aaa7c679169ccdb819";
+
 export default node;

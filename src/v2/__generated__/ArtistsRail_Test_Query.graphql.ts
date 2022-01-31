@@ -1,46 +1,27 @@
+/**
+ * @generated SignedSource<<850c02fb9a9a73c002f32ae8caebce61>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtistsRail_Test_QueryVariables = {
-    partnerId: string;
+export type ArtistsRail_Test_Query$variables = {
+  partnerId: string;
 };
-export type ArtistsRail_Test_QueryResponse = {
-    readonly partner: {
-        readonly " $fragmentRefs": FragmentRefs<"ArtistsRail_partner">;
-    } | null;
+export type ArtistsRail_Test_Query$data = {
+  readonly partner: {
+    readonly " $fragmentSpreads": FragmentRefs<"ArtistsRail_partner">;
+  } | null;
 };
 export type ArtistsRail_Test_Query = {
-    readonly response: ArtistsRail_Test_QueryResponse;
-    readonly variables: ArtistsRail_Test_QueryVariables;
+  variables: ArtistsRail_Test_Query$variables;
+  response: ArtistsRail_Test_Query$data;
 };
-
-
-
-/*
-query ArtistsRail_Test_Query(
-  $partnerId: String!
-) {
-  partner(id: $partnerId) @principalField {
-    ...ArtistsRail_partner
-    id
-  }
-}
-
-fragment ArtistsRail_partner on Partner {
-  slug
-  profileArtistsLayout
-  displayFullPartnerPage
-  artistsWithPublishedArtworks: artistsConnection(hasPublishedArtworks: true, displayOnPartnerProfile: true) {
-    totalCount
-  }
-  representedArtistsWithoutPublishedArtworks: artistsConnection(representedBy: true, hasPublishedArtworks: false, displayOnPartnerProfile: true) {
-    totalCount
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -239,5 +220,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'fe6a6fad0020c4c863a1e00cc34eba06';
+
+(node as any).hash = "fe6a6fad0020c4c863a1e00cc34eba06";
+
 export default node;

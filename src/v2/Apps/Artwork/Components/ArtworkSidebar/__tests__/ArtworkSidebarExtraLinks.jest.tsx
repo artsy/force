@@ -1,4 +1,4 @@
-import { ArtworkSidebarExtraLinks_Test_QueryRawResponse } from "v2/__generated__/ArtworkSidebarExtraLinks_Test_Query.graphql"
+import { ArtworkSidebarExtraLinks_Test_Query$rawResponse } from "v2/__generated__/ArtworkSidebarExtraLinks_Test_Query.graphql"
 import {
   AcquireableArtworkWithOneConsignableArtist,
   BenefitAuctionArtwork,
@@ -18,7 +18,7 @@ describe("ArtworkSidebarExtraLinks", () => {
   let wrapper = null
 
   const getWrapper = async (
-    response: ArtworkSidebarExtraLinks_Test_QueryRawResponse["artwork"]
+    response: ArtworkSidebarExtraLinks_Test_Query$rawResponse["artwork"]
   ) => {
     return await renderRelayTree({
       Component: ArtworkSidebarExtraLinksFragmentContainer,
@@ -33,7 +33,7 @@ describe("ArtworkSidebarExtraLinks", () => {
       `,
       mockData: {
         artwork: response,
-      } as ArtworkSidebarExtraLinks_Test_QueryRawResponse,
+      } as ArtworkSidebarExtraLinks_Test_Query$rawResponse,
     })
   }
 

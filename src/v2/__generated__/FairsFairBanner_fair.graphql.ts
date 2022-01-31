@@ -1,47 +1,50 @@
+/**
+ * @generated SignedSource<<a4605c9272b2f5dd4378878d5a78b863>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type FairsFairBanner_fair = {
-    readonly href: string | null;
-    readonly name: string | null;
-    readonly exhibitionPeriod: string | null;
-    readonly bannerSize: string | null;
-    readonly image: {
-        readonly large: {
-            readonly src: string;
-            readonly srcSet: string;
-            readonly width: number;
-            readonly height: number;
-        } | null;
-        readonly small: {
-            readonly src: string;
-            readonly srcSet: string;
-            readonly width: number;
-            readonly height: number;
-        } | null;
+export type FairsFairBanner_fair$data = {
+  readonly href: string | null;
+  readonly name: string | null;
+  readonly exhibitionPeriod: string | null;
+  readonly bannerSize: string | null;
+  readonly image: {
+    readonly large: {
+      readonly src: string;
+      readonly srcSet: string;
+      readonly width: number;
+      readonly height: number;
     } | null;
-    readonly profile: {
-        readonly icon: {
-            readonly resized: {
-                readonly width: number | null;
-                readonly height: number | null;
-                readonly src: string;
-                readonly srcSet: string;
-            } | null;
-        } | null;
+    readonly small: {
+      readonly src: string;
+      readonly srcSet: string;
+      readonly width: number;
+      readonly height: number;
     } | null;
-    readonly " $refType": "FairsFairBanner_fair";
+  } | null;
+  readonly profile: {
+    readonly icon: {
+      readonly resized: {
+        readonly width: number | null;
+        readonly height: number | null;
+        readonly src: string;
+        readonly srcSet: string;
+      } | null;
+    } | null;
+  } | null;
+  readonly " $fragmentType": "FairsFairBanner_fair";
 };
-export type FairsFairBanner_fair$data = FairsFairBanner_fair;
 export type FairsFairBanner_fair$key = {
-    readonly " $data"?: FairsFairBanner_fair$data;
-    readonly " $fragmentRefs": FragmentRefs<"FairsFairBanner_fair">;
+  readonly " $data"?: FairsFairBanner_fair$data;
+  readonly " $fragmentSpreads": FragmentRefs<"FairsFairBanner_fair">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = {
@@ -232,5 +235,7 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '8b6356d6ed39457f9f42fa416367490e';
+
+(node as any).hash = "8b6356d6ed39457f9f42fa416367490e";
+
 export default node;

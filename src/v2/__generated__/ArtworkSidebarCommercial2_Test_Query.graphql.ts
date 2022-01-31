@@ -1,72 +1,25 @@
+/**
+ * @generated SignedSource<<d9a5e4641d168ffc498e7de1d7792fdd>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtworkSidebarCommercial2_Test_QueryVariables = {};
-export type ArtworkSidebarCommercial2_Test_QueryResponse = {
-    readonly artwork: {
-        readonly " $fragmentRefs": FragmentRefs<"ArtworkSidebarCommercial_artwork">;
-    } | null;
+export type ArtworkSidebarCommercial2_Test_Query$variables = {};
+export type ArtworkSidebarCommercial2_Test_Query$data = {
+  readonly artwork: {
+    readonly " $fragmentSpreads": FragmentRefs<"ArtworkSidebarCommercial_artwork">;
+  } | null;
 };
 export type ArtworkSidebarCommercial2_Test_Query = {
-    readonly response: ArtworkSidebarCommercial2_Test_QueryResponse;
-    readonly variables: ArtworkSidebarCommercial2_Test_QueryVariables;
+  variables: ArtworkSidebarCommercial2_Test_Query$variables;
+  response: ArtworkSidebarCommercial2_Test_Query$data;
 };
-
-
-
-/*
-query ArtworkSidebarCommercial2_Test_Query {
-  artwork(id: "pretty-drawing-111") {
-    ...ArtworkSidebarCommercial_artwork
-    id
-  }
-}
-
-fragment ArtworkSidebarCommercial_artwork on Artwork {
-  edition_sets: editionSets {
-    internalID
-    id
-    is_acquireable: isAcquireable
-    is_offerable: isOfferable
-    sale_message: saleMessage
-    ...ArtworkSidebarSizeInfo_piece
-  }
-  internalID
-  isOfferableFromInquiry
-  isPriceHidden
-  is_acquireable: isAcquireable
-  is_for_sale: isForSale
-  is_inquireable: isInquireable
-  is_offerable: isOfferable
-  is_sold: isSold
-  listPrice {
-    __typename
-    ... on PriceRange {
-      display
-    }
-    ... on Money {
-      display
-    }
-  }
-  priceIncludesTaxDisplay
-  sale_message: saleMessage
-  shippingInfo
-  shippingOrigin
-  slug
-}
-
-fragment ArtworkSidebarSizeInfo_piece on Sellable {
-  __isSellable: __typename
-  dimensions {
-    in
-    cm
-  }
-  edition_of: editionOf
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -405,5 +358,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'fbc9dc27695ae4adce44a3e0ded3d53e';
+
+(node as any).hash = "fbc9dc27695ae4adce44a3e0ded3d53e";
+
 export default node;

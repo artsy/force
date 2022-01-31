@@ -1,52 +1,25 @@
+/**
+ * @generated SignedSource<<744b51d35833226b6b06cc3b89456eac>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type auctionRoutes_AuctionFAQQueryVariables = {};
-export type auctionRoutes_AuctionFAQQueryResponse = {
-    readonly viewer: {
-        readonly " $fragmentRefs": FragmentRefs<"AuctionFAQ_viewer">;
-    } | null;
+export type auctionRoutes_AuctionFAQQuery$variables = {};
+export type auctionRoutes_AuctionFAQQuery$data = {
+  readonly viewer: {
+    readonly " $fragmentSpreads": FragmentRefs<"AuctionFAQ_viewer">;
+  } | null;
 };
 export type auctionRoutes_AuctionFAQQuery = {
-    readonly response: auctionRoutes_AuctionFAQQueryResponse;
-    readonly variables: auctionRoutes_AuctionFAQQueryVariables;
+  variables: auctionRoutes_AuctionFAQQuery$variables;
+  response: auctionRoutes_AuctionFAQQuery$data;
 };
-
-
-
-/*
-query auctionRoutes_AuctionFAQQuery {
-  viewer {
-    ...AuctionFAQ_viewer
-  }
-}
-
-fragment AuctionFAQ_viewer on Viewer {
-  bidding: staticContent(id: "how-auctions-work-bidding") {
-    content
-    id
-  }
-  buyersPremiumTaxesAndFees: staticContent(id: "how-auctions-work-buyers-premium-taxes-and-fees") {
-    content
-    id
-  }
-  paymentsAndShipping: staticContent(id: "how-auctions-work-payments-and-shipping") {
-    content
-    id
-  }
-  emailsAndAlerts: staticContent(id: "how-auctions-work-emails-and-alerts") {
-    content
-    id
-  }
-  conditionsOfSale: staticContent(id: "how-auctions-work-conditions-of-sale") {
-    content
-    id
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -201,5 +174,7 @@ return {
   }
 };
 })();
-(node as any).hash = '4c2ef513a6493bcddf8f3943f386f4ad';
+
+(node as any).hash = "4c2ef513a6493bcddf8f3943f386f4ad";
+
 export default node;

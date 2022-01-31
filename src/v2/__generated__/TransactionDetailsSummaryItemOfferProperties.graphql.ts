@@ -1,31 +1,34 @@
+/**
+ * @generated SignedSource<<79bc037a9e8bfb77fda90e4eb180ada6>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
-import { FragmentRefs } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 export type CommerceOrderParticipantEnum = "BUYER" | "SELLER" | "%future added value";
-export type TransactionDetailsSummaryItemOfferProperties = {
-    readonly internalID: string;
-    readonly amount: string | null;
-    readonly amountCents: number;
-    readonly shippingTotal: string | null;
-    readonly shippingTotalCents: number | null;
-    readonly taxTotal: string | null;
-    readonly taxTotalCents: number | null;
-    readonly buyerTotal: string | null;
-    readonly buyerTotalCents: number | null;
-    readonly fromParticipant: CommerceOrderParticipantEnum | null;
-    readonly note: string | null;
-    readonly " $refType": "TransactionDetailsSummaryItemOfferProperties";
+import { FragmentRefs } from "relay-runtime";
+export type TransactionDetailsSummaryItemOfferProperties$data = {
+  readonly internalID: string;
+  readonly amount: string | null;
+  readonly amountCents: number;
+  readonly shippingTotal: string | null;
+  readonly shippingTotalCents: number | null;
+  readonly taxTotal: string | null;
+  readonly taxTotalCents: number | null;
+  readonly buyerTotal: string | null;
+  readonly buyerTotalCents: number | null;
+  readonly fromParticipant: CommerceOrderParticipantEnum | null;
+  readonly note: string | null;
+  readonly " $fragmentType": "TransactionDetailsSummaryItemOfferProperties";
 };
-export type TransactionDetailsSummaryItemOfferProperties$data = TransactionDetailsSummaryItemOfferProperties;
 export type TransactionDetailsSummaryItemOfferProperties$key = {
-    readonly " $data"?: TransactionDetailsSummaryItemOfferProperties$data;
-    readonly " $fragmentRefs": FragmentRefs<"TransactionDetailsSummaryItemOfferProperties">;
+  readonly " $data"?: TransactionDetailsSummaryItemOfferProperties$data;
+  readonly " $fragmentSpreads": FragmentRefs<"TransactionDetailsSummaryItemOfferProperties">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = [
@@ -123,5 +126,7 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '7bd6db26a9439bff847c104aa299279d';
+
+(node as any).hash = "7bd6db26a9439bff847c104aa299279d";
+
 export default node;

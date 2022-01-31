@@ -1,57 +1,32 @@
+/**
+ * @generated SignedSource<<49a21dd5c89649268b1c629c4f153627>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ViewingRoomCard_Test_QueryVariables = {};
-export type ViewingRoomCard_Test_QueryResponse = {
-    readonly partner: {
-        readonly viewingRoomsConnection: {
-            readonly edges: ReadonlyArray<{
-                readonly node: {
-                    readonly internalID: string;
-                    readonly " $fragmentRefs": FragmentRefs<"ViewingRoomCard_viewingRoom">;
-                } | null;
-            } | null> | null;
+export type ViewingRoomCard_Test_Query$variables = {};
+export type ViewingRoomCard_Test_Query$data = {
+  readonly partner: {
+    readonly viewingRoomsConnection: {
+      readonly edges: ReadonlyArray<{
+        readonly node: {
+          readonly internalID: string;
+          readonly " $fragmentSpreads": FragmentRefs<"ViewingRoomCard_viewingRoom">;
         } | null;
+      } | null> | null;
     } | null;
+  } | null;
 };
 export type ViewingRoomCard_Test_Query = {
-    readonly response: ViewingRoomCard_Test_QueryResponse;
-    readonly variables: ViewingRoomCard_Test_QueryVariables;
+  variables: ViewingRoomCard_Test_Query$variables;
+  response: ViewingRoomCard_Test_Query$data;
 };
-
-
-
-/*
-query ViewingRoomCard_Test_Query {
-  partner(id: "white-cube") @principalField {
-    viewingRoomsConnection(first: 12) {
-      edges {
-        node {
-          internalID
-          ...ViewingRoomCard_viewingRoom
-        }
-      }
-    }
-    id
-  }
-}
-
-fragment ViewingRoomCard_viewingRoom on ViewingRoom {
-  href
-  title
-  exhibitionPeriod
-  coverImage: image {
-    imageURLs {
-      normalized
-    }
-    width
-    height
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -340,5 +315,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'd125328b9c5643dc4e4b0b76b0f0f8ad';
+
+(node as any).hash = "d125328b9c5643dc4e4b0b76b0f0f8ad";
+
 export default node;

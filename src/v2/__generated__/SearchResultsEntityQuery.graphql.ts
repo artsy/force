@@ -1,97 +1,34 @@
+/**
+ * @generated SignedSource<<f2bd6e3ac29d7964bc63fe4547a2f884>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type SearchEntity = "ARTICLE" | "ARTIST" | "ARTIST_SERIES" | "ARTWORK" | "CITY" | "COLLECTION" | "FAIR" | "FEATURE" | "GALLERY" | "GENE" | "INSTITUTION" | "PAGE" | "PROFILE" | "SALE" | "SHOW" | "TAG" | "VIEWING_ROOM" | "%future added value";
-export type SearchResultsEntityQueryVariables = {
-    first?: number | null;
-    last?: number | null;
-    after?: string | null;
-    before?: string | null;
-    term: string;
-    page?: number | null;
-    entities?: Array<SearchEntity | null> | null;
+export type SearchResultsEntityQuery$variables = {
+  first?: number | null;
+  last?: number | null;
+  after?: string | null;
+  before?: string | null;
+  term: string;
+  page?: number | null;
+  entities?: ReadonlyArray<SearchEntity | null> | null;
 };
-export type SearchResultsEntityQueryResponse = {
-    readonly viewer: {
-        readonly " $fragmentRefs": FragmentRefs<"SearchResultsEntity_viewer">;
-    } | null;
+export type SearchResultsEntityQuery$data = {
+  readonly viewer: {
+    readonly " $fragmentSpreads": FragmentRefs<"SearchResultsEntity_viewer">;
+  } | null;
 };
 export type SearchResultsEntityQuery = {
-    readonly response: SearchResultsEntityQueryResponse;
-    readonly variables: SearchResultsEntityQueryVariables;
+  variables: SearchResultsEntityQuery$variables;
+  response: SearchResultsEntityQuery$data;
 };
-
-
-
-/*
-query SearchResultsEntityQuery(
-  $first: Int
-  $last: Int
-  $after: String
-  $before: String
-  $term: String!
-  $page: Int
-  $entities: [SearchEntity]
-) {
-  viewer {
-    ...SearchResultsEntity_viewer_4tOGvB
-  }
-}
-
-fragment Pagination_pageCursors on PageCursors {
-  around {
-    cursor
-    page
-    isCurrent
-  }
-  first {
-    cursor
-    page
-    isCurrent
-  }
-  last {
-    cursor
-    page
-    isCurrent
-  }
-  previous {
-    cursor
-    page
-  }
-}
-
-fragment SearchResultsEntity_viewer_4tOGvB on Viewer {
-  searchConnection(query: $term, first: $first, after: $after, before: $before, last: $last, page: $page, entities: $entities) @principalField {
-    pageInfo {
-      hasNextPage
-      endCursor
-    }
-    pageCursors {
-      ...Pagination_pageCursors
-    }
-    edges {
-      node {
-        __typename
-        ... on SearchableItem {
-          description
-          displayLabel
-          href
-          internalID
-          imageUrl
-          displayType
-        }
-        ... on Node {
-          __isNode: __typename
-          id
-        }
-      }
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = {
@@ -462,5 +399,7 @@ return {
   }
 };
 })();
-(node as any).hash = '6db171bc8aa2ccfdee6ad207f60ab6be';
+
+(node as any).hash = "6db171bc8aa2ccfdee6ad207f60ab6be";
+
 export default node;

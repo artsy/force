@@ -1,89 +1,28 @@
+/**
+ * @generated SignedSource<<7e1f2627fd5855504e25bd1c7843f5a8>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type exampleRoutes_ArtworkQueryVariables = {
-    slug: string;
+export type exampleRoutes_ArtworkQuery$variables = {
+  slug: string;
 };
-export type exampleRoutes_ArtworkQueryResponse = {
-    readonly artwork: {
-        readonly id: string;
-        readonly " $fragmentRefs": FragmentRefs<"ExampleArtworkRoute_artwork">;
-    } | null;
+export type exampleRoutes_ArtworkQuery$data = {
+  readonly artwork: {
+    readonly id: string;
+    readonly " $fragmentSpreads": FragmentRefs<"ExampleArtworkRoute_artwork">;
+  } | null;
 };
 export type exampleRoutes_ArtworkQuery = {
-    readonly response: exampleRoutes_ArtworkQueryResponse;
-    readonly variables: exampleRoutes_ArtworkQueryVariables;
+  variables: exampleRoutes_ArtworkQuery$variables;
+  response: exampleRoutes_ArtworkQuery$data;
 };
-
-
-
-/*
-query exampleRoutes_ArtworkQuery(
-  $slug: String!
-) {
-  artwork(id: $slug) @principalField {
-    id
-    ...ExampleArtworkRoute_artwork
-  }
-}
-
-fragment ArtistCard_artist on Artist {
-  name
-  slug
-  href
-  image {
-    cropped(width: 45, height: 45) {
-      src
-      srcSet
-    }
-  }
-  formatted_nationality_and_birthday: formattedNationalityAndBirthday
-  ...FollowArtistButton_artist
-}
-
-fragment ExampleArtworkRoute_artwork on Artwork {
-  title
-  artistNames
-  medium
-  imageUrl
-  date
-  internalID
-  slug
-  artist {
-    related {
-      artistsConnection(kind: MAIN, first: 4) {
-        edges {
-          node {
-            ...ArtistCard_artist
-            id
-            __typename
-          }
-          cursor
-        }
-        pageInfo {
-          endCursor
-          hasNextPage
-        }
-      }
-    }
-    id
-  }
-}
-
-fragment FollowArtistButton_artist on Artist {
-  id
-  internalID
-  name
-  slug
-  is_followed: isFollowed
-  counts {
-    follows
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -430,5 +369,7 @@ return {
   }
 };
 })();
-(node as any).hash = '204e9f0608b62f6cc8ac17c79a9dacba';
+
+(node as any).hash = "204e9f0608b62f6cc8ac17c79a9dacba";
+
 export default node;

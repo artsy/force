@@ -1,35 +1,38 @@
+/**
+ * @generated SignedSource<<2cdd1d82edfcb6443e01c80d119d996e>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type FeatureHeaderDefault_feature = {
-    readonly name: string;
-    readonly subheadline: string | null;
-    readonly defaultImage: {
-        readonly sm: {
-            readonly src: string;
-            readonly srcSet: string;
-        } | null;
-        readonly md: {
-            readonly src: string;
-            readonly srcSet: string;
-        } | null;
-        readonly lg: {
-            readonly src: string;
-            readonly srcSet: string;
-        } | null;
+export type FeatureHeaderDefault_feature$data = {
+  readonly name: string;
+  readonly subheadline: string | null;
+  readonly defaultImage: {
+    readonly sm: {
+      readonly src: string;
+      readonly srcSet: string;
     } | null;
-    readonly " $refType": "FeatureHeaderDefault_feature";
+    readonly md: {
+      readonly src: string;
+      readonly srcSet: string;
+    } | null;
+    readonly lg: {
+      readonly src: string;
+      readonly srcSet: string;
+    } | null;
+  } | null;
+  readonly " $fragmentType": "FeatureHeaderDefault_feature";
 };
-export type FeatureHeaderDefault_feature$data = FeatureHeaderDefault_feature;
 export type FeatureHeaderDefault_feature$key = {
-    readonly " $data"?: FeatureHeaderDefault_feature$data;
-    readonly " $fragmentRefs": FragmentRefs<"FeatureHeaderDefault_feature">;
+  readonly " $data"?: FeatureHeaderDefault_feature$data;
+  readonly " $fragmentSpreads": FragmentRefs<"FeatureHeaderDefault_feature">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = {
@@ -164,5 +167,7 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '588199148f1e426283021a9e9f40a168';
+
+(node as any).hash = "588199148f1e426283021a9e9f40a168";
+
 export default node;

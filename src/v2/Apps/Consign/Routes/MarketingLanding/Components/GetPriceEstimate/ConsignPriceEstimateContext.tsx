@@ -111,14 +111,12 @@ function getActions(dispatch: Dispatch<Action>, relayEnvironment: Environment) {
         {
           artistInternalID,
         }
-      )
+      ).toPromise()
 
       const artistInsights = response?.priceInsights?.edges || []
 
-      if (artistInsights.length) {
-        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
+      if (Array.isArray(artistInsights)) {
         const mediums = artistInsights.map(({ node }) => node.medium)
-        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         const medium = artistInsights[0].node.medium
 
         // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION

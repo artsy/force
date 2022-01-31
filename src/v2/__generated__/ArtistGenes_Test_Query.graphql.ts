@@ -1,44 +1,25 @@
+/**
+ * @generated SignedSource<<7885f7b2b30c560787d0d1a6eb0bbf96>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtistGenes_Test_QueryVariables = {};
-export type ArtistGenes_Test_QueryResponse = {
-    readonly artist: {
-        readonly " $fragmentRefs": FragmentRefs<"ArtistGenes_artist">;
-    } | null;
+export type ArtistGenes_Test_Query$variables = {};
+export type ArtistGenes_Test_Query$data = {
+  readonly artist: {
+    readonly " $fragmentSpreads": FragmentRefs<"ArtistGenes_artist">;
+  } | null;
 };
 export type ArtistGenes_Test_Query = {
-    readonly response: ArtistGenes_Test_QueryResponse;
-    readonly variables: ArtistGenes_Test_QueryVariables;
+  variables: ArtistGenes_Test_Query$variables;
+  response: ArtistGenes_Test_Query$data;
 };
-
-
-
-/*
-query ArtistGenes_Test_Query {
-  artist(id: "example") {
-    ...ArtistGenes_artist
-    id
-  }
-}
-
-fragment ArtistGenes_artist on Artist {
-  related {
-    genes {
-      edges {
-        node {
-          href
-          name
-          id
-        }
-      }
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -220,5 +201,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'efd1d0624e66e48949097221e0d1f5e5';
+
+(node as any).hash = "efd1d0624e66e48949097221e0d1f5e5";
+
 export default node;

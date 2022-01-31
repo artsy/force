@@ -1,35 +1,25 @@
+/**
+ * @generated SignedSource<<606760877c4579b3ed2ee364670eedf4>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type SecurePaymentTestQueryVariables = {};
-export type SecurePaymentTestQueryResponse = {
-    readonly artwork: {
-        readonly " $fragmentRefs": FragmentRefs<"SecurePayment_artwork">;
-    } | null;
+export type SecurePaymentTestQuery$variables = {};
+export type SecurePaymentTestQuery$data = {
+  readonly artwork: {
+    readonly " $fragmentSpreads": FragmentRefs<"SecurePayment_artwork">;
+  } | null;
 };
 export type SecurePaymentTestQuery = {
-    readonly response: SecurePaymentTestQueryResponse;
-    readonly variables: SecurePaymentTestQueryVariables;
+  variables: SecurePaymentTestQuery$variables;
+  response: SecurePaymentTestQuery$data;
 };
-
-
-
-/*
-query SecurePaymentTestQuery {
-  artwork(id: "whatevs") {
-    ...SecurePayment_artwork
-    id
-  }
-}
-
-fragment SecurePayment_artwork on Artwork {
-  is_acquireable: isAcquireable
-  is_offerable: isOfferable
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -139,5 +129,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'aea04d3bc45239212a2e4d66598b5aa3';
+
+(node as any).hash = "aea04d3bc45239212a2e4d66598b5aa3";
+
 export default node;

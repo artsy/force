@@ -1,105 +1,64 @@
+/**
+ * @generated SignedSource<<fa6f95081c7854794e05e460f6271085>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type Details_Test_QueryVariables = {};
-export type Details_Test_QueryResponse = {
-    readonly artwork: {
-        readonly " $fragmentRefs": FragmentRefs<"Details_artwork">;
-    } | null;
+export type Details_Test_Query$variables = {};
+export type Details_Test_Query$data = {
+  readonly artwork: {
+    readonly " $fragmentSpreads": FragmentRefs<"Details_artwork">;
+  } | null;
 };
-export type Details_Test_QueryRawResponse = {
-    readonly artwork: ({
-        readonly href: string | null;
-        readonly title: string | null;
-        readonly date: string | null;
-        readonly sale_message: string | null;
-        readonly cultural_maker: string | null;
-        readonly artists: ReadonlyArray<({
-            readonly id: string;
-            readonly href: string | null;
-            readonly name: string | null;
-        }) | null> | null;
-        readonly collecting_institution: string | null;
-        readonly partner: ({
-            readonly name: string | null;
-            readonly href: string | null;
-            readonly id: string;
-        }) | null;
-        readonly sale: ({
-            readonly is_auction: boolean | null;
-            readonly is_closed: boolean | null;
-            readonly id: string;
-        }) | null;
-        readonly sale_artwork: ({
-            readonly counts: ({
-                readonly bidder_positions: number | null;
-            }) | null;
-            readonly highest_bid: ({
-                readonly display: string | null;
-            }) | null;
-            readonly opening_bid: ({
-                readonly display: string | null;
-            }) | null;
-            readonly id: string;
-        }) | null;
-        readonly id: string;
-    }) | null;
+export type Details_Test_Query$rawResponse = {
+  readonly artwork: {
+    readonly href: string | null;
+    readonly title: string | null;
+    readonly date: string | null;
+    readonly sale_message: string | null;
+    readonly cultural_maker: string | null;
+    readonly artists: ReadonlyArray<{
+      readonly id: string;
+      readonly href: string | null;
+      readonly name: string | null;
+    } | null> | null;
+    readonly collecting_institution: string | null;
+    readonly partner: {
+      readonly name: string | null;
+      readonly href: string | null;
+      readonly id: string;
+    } | null;
+    readonly sale: {
+      readonly is_auction: boolean | null;
+      readonly is_closed: boolean | null;
+      readonly id: string;
+    } | null;
+    readonly sale_artwork: {
+      readonly counts: {
+        readonly bidder_positions: Int | null;
+      } | null;
+      readonly highest_bid: {
+        readonly display: string | null;
+      } | null;
+      readonly opening_bid: {
+        readonly display: string | null;
+      } | null;
+      readonly id: string;
+    } | null;
+    readonly id: string;
+  } | null;
 };
 export type Details_Test_Query = {
-    readonly response: Details_Test_QueryResponse;
-    readonly variables: Details_Test_QueryVariables;
-    readonly rawResponse: Details_Test_QueryRawResponse;
+  variables: Details_Test_Query$variables;
+  response: Details_Test_Query$data;
+  rawResponse: Details_Test_Query$rawResponse;
 };
-
-
-
-/*
-query Details_Test_Query {
-  artwork(id: "gerhard-richter-bagdad-ii-flow-p10-1") {
-    ...Details_artwork
-    id
-  }
-}
-
-fragment Details_artwork on Artwork {
-  href
-  title
-  date
-  sale_message: saleMessage
-  cultural_maker: culturalMaker
-  artists(shallow: true) {
-    id
-    href
-    name
-  }
-  collecting_institution: collectingInstitution
-  partner(shallow: true) {
-    name
-    href
-    id
-  }
-  sale {
-    is_auction: isAuction
-    is_closed: isClosed
-    id
-  }
-  sale_artwork: saleArtwork {
-    counts {
-      bidder_positions: bidderPositions
-    }
-    highest_bid: highestBid {
-      display
-    }
-    opening_bid: openingBid {
-      display
-    }
-    id
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -437,5 +396,7 @@ return {
   }
 };
 })();
-(node as any).hash = '01119da99c9b8742b1bd28e198996a2c';
+
+(node as any).hash = "01119da99c9b8742b1bd28e198996a2c";
+
 export default node;

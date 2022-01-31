@@ -1,94 +1,56 @@
+/**
+ * @generated SignedSource<<801cf75680c991ad44b70fadad5ddafd>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type PartnerHeader_Test_QueryVariables = {};
-export type PartnerHeader_Test_QueryResponse = {
-    readonly partner: {
-        readonly " $fragmentRefs": FragmentRefs<"PartnerHeader_partner">;
-    } | null;
+export type PartnerHeader_Test_Query$variables = {};
+export type PartnerHeader_Test_Query$data = {
+  readonly partner: {
+    readonly " $fragmentSpreads": FragmentRefs<"PartnerHeader_partner">;
+  } | null;
 };
-export type PartnerHeader_Test_QueryRawResponse = {
-    readonly partner: ({
-        readonly name: string | null;
-        readonly type: string | null;
-        readonly slug: string;
-        readonly profile: ({
-            readonly icon: ({
-                readonly resized: ({
-                    readonly src: string;
-                    readonly srcSet: string;
-                }) | null;
-            }) | null;
-            readonly id: string;
-            readonly slug: string;
-            readonly name: string | null;
-            readonly internalID: string;
-            readonly is_followed: boolean | null;
-        }) | null;
-        readonly locations: ({
-            readonly totalCount: number | null;
-            readonly edges: ReadonlyArray<({
-                readonly node: ({
-                    readonly city: string | null;
-                    readonly id: string;
-                }) | null;
-            }) | null> | null;
-        }) | null;
-        readonly id: string;
-    }) | null;
+export type PartnerHeader_Test_Query$rawResponse = {
+  readonly partner: {
+    readonly name: string | null;
+    readonly type: string | null;
+    readonly slug: string;
+    readonly profile: {
+      readonly icon: {
+        readonly resized: {
+          readonly src: string;
+          readonly srcSet: string;
+        } | null;
+      } | null;
+      readonly id: string;
+      readonly slug: string;
+      readonly name: string | null;
+      readonly internalID: string;
+      readonly is_followed: boolean | null;
+    } | null;
+    readonly locations: {
+      readonly totalCount: number | null;
+      readonly edges: ReadonlyArray<{
+        readonly node: {
+          readonly city: string | null;
+          readonly id: string;
+        } | null;
+      } | null> | null;
+    } | null;
+    readonly id: string;
+  } | null;
 };
 export type PartnerHeader_Test_Query = {
-    readonly response: PartnerHeader_Test_QueryResponse;
-    readonly variables: PartnerHeader_Test_QueryVariables;
-    readonly rawResponse: PartnerHeader_Test_QueryRawResponse;
+  variables: PartnerHeader_Test_Query$variables;
+  response: PartnerHeader_Test_Query$data;
+  rawResponse: PartnerHeader_Test_Query$rawResponse;
 };
-
-
-
-/*
-query PartnerHeader_Test_Query {
-  partner(id: "white-cube") {
-    ...PartnerHeader_partner
-    id
-  }
-}
-
-fragment FollowProfileButton_profile on Profile {
-  id
-  slug
-  name
-  internalID
-  is_followed: isFollowed
-}
-
-fragment PartnerHeader_partner on Partner {
-  name
-  type
-  slug
-  profile {
-    icon {
-      resized(width: 80, height: 80, version: "square140") {
-        src
-        srcSet
-      }
-    }
-    ...FollowProfileButton_profile
-    id
-  }
-  locations: locationsConnection(first: 20) {
-    totalCount
-    edges {
-      node {
-        city
-        id
-      }
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -406,5 +368,7 @@ return {
   }
 };
 })();
-(node as any).hash = '943e764421e6e26489f307efbdbdc041';
+
+(node as any).hash = "943e764421e6e26489f307efbdbdc041";
+
 export default node;

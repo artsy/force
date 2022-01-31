@@ -1,11 +1,10 @@
 import { ContextModule, OwnerType } from "@artsy/cohesion"
 import { Box, Column, GridColumns, Select, Text } from "@artsy/palette"
 import { rest } from "lodash"
-import { useEffect, useRef, useState } from "react";
-import * as React from "react";
-import { createFragmentContainer, graphql } from "react-relay"
+import { useEffect, useRef, useState } from "react"
+import * as React from "react"
+import { createFragmentContainer, graphql, Environment } from "react-relay"
 import { useTracking } from "react-tracking"
-import type RelayModernEnvironment from "relay-runtime/lib/store/RelayModernEnvironment"
 import { AnalyticsSchema, Type } from "v2/System"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import { extractNodes } from "v2/Utils/extractNodes"
@@ -232,7 +231,7 @@ export const MarketStatsFragmentContainer = createFragmentContainer(
 
 export const MarketStatsQueryRenderer: React.FC<{
   artistInternalID: string
-  environment: RelayModernEnvironment
+  environment: Environment
   onRendered?: (visible: boolean) => void
 }> = ({ artistInternalID, environment, onRendered }) => {
   const [hasRendered, setHasRendered] = useState(false)

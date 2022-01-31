@@ -1,35 +1,38 @@
+/**
+ * @generated SignedSource<<5c455eceab88101703c3a9b7e6bc2755>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type Reject_order = {
+export type Reject_order$data = {
+  readonly internalID: string;
+  readonly stateExpiresAt: string | null;
+  readonly lineItems: {
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly artwork: {
+          readonly slug: string;
+        } | null;
+      } | null;
+    } | null> | null;
+  } | null;
+  readonly lastOffer?: {
     readonly internalID: string;
-    readonly stateExpiresAt: string | null;
-    readonly lineItems: {
-        readonly edges: ReadonlyArray<{
-            readonly node: {
-                readonly artwork: {
-                    readonly slug: string;
-                } | null;
-            } | null;
-        } | null> | null;
-    } | null;
-    readonly lastOffer?: {
-        readonly internalID: string;
-        readonly createdAt: string;
-    } | null;
-    readonly " $fragmentRefs": FragmentRefs<"ArtworkSummaryItem_order">;
-    readonly " $refType": "Reject_order";
+    readonly createdAt: string;
+  } | null;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtworkSummaryItem_order">;
+  readonly " $fragmentType": "Reject_order";
 };
-export type Reject_order$data = Reject_order;
 export type Reject_order$key = {
-    readonly " $data"?: Reject_order$data;
-    readonly " $fragmentRefs": FragmentRefs<"Reject_order">;
+  readonly " $data"?: Reject_order$data;
+  readonly " $fragmentSpreads": FragmentRefs<"Reject_order">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = {
@@ -140,5 +143,7 @@ return {
   "abstractKey": "__isCommerceOrder"
 };
 })();
-(node as any).hash = 'def98f0fc0af3d3644b54bd8113de8c3';
+
+(node as any).hash = "def98f0fc0af3d3644b54bd8113de8c3";
+
 export default node;

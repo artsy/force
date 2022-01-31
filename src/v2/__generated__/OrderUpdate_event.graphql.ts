@@ -1,43 +1,46 @@
+/**
+ * @generated SignedSource<<fe0806801c7975967db03fd1bace1705>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
-import { FragmentRefs } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 export type CommerceOrderParticipantEnum = "BUYER" | "SELLER" | "%future added value";
 export type CommerceOrderStateEnum = "ABANDONED" | "APPROVED" | "CANCELED" | "FULFILLED" | "PENDING" | "REFUNDED" | "SUBMITTED" | "%future added value";
-export type OrderUpdate_event = {
-    readonly __typename: "CommerceOrderStateChangedEvent";
-    readonly createdAt: string;
-    readonly stateReason: string | null;
-    readonly state: CommerceOrderStateEnum;
-    readonly " $refType": "OrderUpdate_event";
+import { FragmentRefs } from "relay-runtime";
+export type OrderUpdate_event$data = {
+  readonly __typename: "CommerceOrderStateChangedEvent";
+  readonly createdAt: string;
+  readonly stateReason: string | null;
+  readonly state: CommerceOrderStateEnum;
+  readonly " $fragmentType": "OrderUpdate_event";
 } | {
-    readonly __typename: "CommerceOfferSubmittedEvent";
-    readonly createdAt: string;
-    readonly offer: {
-        readonly amount: string | null;
-        readonly fromParticipant: CommerceOrderParticipantEnum | null;
-        readonly definesTotal: boolean;
-        readonly offerAmountChanged: boolean;
-        readonly respondsTo: {
-            readonly fromParticipant: CommerceOrderParticipantEnum | null;
-        } | null;
-    };
-    readonly " $refType": "OrderUpdate_event";
+  readonly __typename: "CommerceOfferSubmittedEvent";
+  readonly createdAt: string;
+  readonly offer: {
+    readonly amount: string | null;
+    readonly fromParticipant: CommerceOrderParticipantEnum | null;
+    readonly definesTotal: boolean;
+    readonly offerAmountChanged: boolean;
+    readonly respondsTo: {
+      readonly fromParticipant: CommerceOrderParticipantEnum | null;
+    } | null;
+  };
+  readonly " $fragmentType": "OrderUpdate_event";
 } | {
-    /*This will never be '%other', but we need some
-    value in case none of the concrete values match.*/
-    readonly __typename: "%other";
-    readonly " $refType": "OrderUpdate_event";
+  // This will never be '%other', but we need some
+  // value in case none of the concrete values match.
+  readonly __typename: "%other";
+  readonly " $fragmentType": "OrderUpdate_event";
 };
-export type OrderUpdate_event$data = OrderUpdate_event;
 export type OrderUpdate_event$key = {
-    readonly " $data"?: OrderUpdate_event$data;
-    readonly " $fragmentRefs": FragmentRefs<"OrderUpdate_event">;
+  readonly " $data"?: OrderUpdate_event$data;
+  readonly " $fragmentSpreads": FragmentRefs<"OrderUpdate_event">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = {
@@ -147,5 +150,7 @@ return {
   "abstractKey": "__isCommerceOrderEventUnion"
 };
 })();
-(node as any).hash = 'e185cc700c70cfb7fb91f597d00c6cb5';
+
+(node as any).hash = "e185cc700c70cfb7fb91f597d00c6cb5";
+
 export default node;

@@ -1,31 +1,34 @@
+/**
+ * @generated SignedSource<<ccbbc05c56b4d08306f18b9709351e1d>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArticleByline_article = {
-    readonly byline: string | null;
-    readonly authors: ReadonlyArray<{
-        readonly name: string | null;
-        readonly initials: string | null;
-        readonly bio: string | null;
-        readonly image: {
-            readonly cropped: {
-                readonly src: string;
-                readonly srcSet: string;
-            } | null;
-        } | null;
-    }>;
-    readonly " $refType": "ArticleByline_article";
+export type ArticleByline_article$data = {
+  readonly byline: string | null;
+  readonly authors: ReadonlyArray<{
+    readonly name: string | null;
+    readonly initials: string | null;
+    readonly bio: string | null;
+    readonly image: {
+      readonly cropped: {
+        readonly src: string;
+        readonly srcSet: string;
+      } | null;
+    } | null;
+  }>;
+  readonly " $fragmentType": "ArticleByline_article";
 };
-export type ArticleByline_article$data = ArticleByline_article;
 export type ArticleByline_article$key = {
-    readonly " $data"?: ArticleByline_article$data;
-    readonly " $fragmentRefs": FragmentRefs<"ArticleByline_article">;
+  readonly " $data"?: ArticleByline_article$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ArticleByline_article">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -123,5 +126,7 @@ const node: ReaderFragment = {
   "type": "Article",
   "abstractKey": null
 };
-(node as any).hash = '94072028405d431c855f33c7ec458d0f';
+
+(node as any).hash = "94072028405d431c855f33c7ec458d0f";
+
 export default node;

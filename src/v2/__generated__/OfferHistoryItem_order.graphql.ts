@@ -1,56 +1,59 @@
+/**
+ * @generated SignedSource<<1242615d36262aaf96cc0e2cbb81649e>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
-import { FragmentRefs } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 export type CommerceOrderParticipantEnum = "BUYER" | "SELLER" | "%future added value";
-export type OfferHistoryItem_order = {
-    readonly lineItems: {
-        readonly edges: ReadonlyArray<{
-            readonly node: {
-                readonly artworkOrEditionSet: ({
-                    readonly __typename: "Artwork";
-                    readonly price: string | null;
-                } | {
-                    readonly __typename: "EditionSet";
-                    readonly price: string | null;
-                } | {
-                    /*This will never be '%other', but we need some
-                    value in case none of the concrete values match.*/
-                    readonly __typename: "%other";
-                }) | null;
-            } | null;
-        } | null> | null;
-    } | null;
-    readonly offers?: {
-        readonly edges: ReadonlyArray<{
-            readonly node: {
-                readonly internalID: string;
-                readonly amount: string | null;
-                readonly createdAt: string;
-                readonly fromParticipant: CommerceOrderParticipantEnum | null;
-            } | null;
-        } | null> | null;
-    } | null;
-    readonly currencyCode?: string;
-    readonly lastOffer?: {
+import { FragmentRefs } from "relay-runtime";
+export type OfferHistoryItem_order$data = {
+  readonly lineItems: {
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly artworkOrEditionSet: {
+          readonly __typename: "Artwork";
+          readonly price: string | null;
+        } | {
+          readonly __typename: "EditionSet";
+          readonly price: string | null;
+        } | {
+          // This will never be '%other', but we need some
+          // value in case none of the concrete values match.
+          readonly __typename: "%other";
+        } | null;
+      } | null;
+    } | null> | null;
+  } | null;
+  readonly offers?: {
+    readonly edges: ReadonlyArray<{
+      readonly node: {
         readonly internalID: string;
-        readonly fromParticipant: CommerceOrderParticipantEnum | null;
         readonly amount: string | null;
-        readonly shippingTotal: string | null;
-        readonly taxTotal: string | null;
-        readonly note: string | null;
-    } | null;
-    readonly " $refType": "OfferHistoryItem_order";
+        readonly createdAt: string;
+        readonly fromParticipant: CommerceOrderParticipantEnum | null;
+      } | null;
+    } | null> | null;
+  } | null;
+  readonly currencyCode?: string;
+  readonly lastOffer?: {
+    readonly internalID: string;
+    readonly fromParticipant: CommerceOrderParticipantEnum | null;
+    readonly amount: string | null;
+    readonly shippingTotal: string | null;
+    readonly taxTotal: string | null;
+    readonly note: string | null;
+  } | null;
+  readonly " $fragmentType": "OfferHistoryItem_order";
 };
-export type OfferHistoryItem_order$data = OfferHistoryItem_order;
 export type OfferHistoryItem_order$key = {
-    readonly " $data"?: OfferHistoryItem_order$data;
-    readonly " $fragmentRefs": FragmentRefs<"OfferHistoryItem_order">;
+  readonly " $data"?: OfferHistoryItem_order$data;
+  readonly " $fragmentSpreads": FragmentRefs<"OfferHistoryItem_order">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = [
@@ -262,5 +265,7 @@ return {
   "abstractKey": "__isCommerceOrder"
 };
 })();
-(node as any).hash = '71f585f504a995973d06e8545eb5d427';
+
+(node as any).hash = "71f585f504a995973d06e8545eb5d427";
+
 export default node;

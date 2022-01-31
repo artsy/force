@@ -1,254 +1,34 @@
+/**
+ * @generated SignedSource<<5d60ab515128d4eed1693eb690b39cd6>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type featureAKGRoutes_FeatureAKGQueryVariables = {
-    articleIDs: Array<string | null>;
-    selectedWorksSetID: string;
-    collectionRailItemIDs?: Array<string> | null;
-    auctionRailItemIDs?: Array<string> | null;
-    fairRailItemIDs?: Array<string> | null;
-    hasCollectionRailItems: boolean;
-    hasAuctionRailItems: boolean;
-    hasFairRailItems: boolean;
+export type featureAKGRoutes_FeatureAKGQuery$variables = {
+  articleIDs: ReadonlyArray<string | null>;
+  selectedWorksSetID: string;
+  collectionRailItemIDs?: ReadonlyArray<string> | null;
+  auctionRailItemIDs?: ReadonlyArray<string> | null;
+  fairRailItemIDs?: ReadonlyArray<string> | null;
+  hasCollectionRailItems: boolean;
+  hasAuctionRailItems: boolean;
+  hasFairRailItems: boolean;
 };
-export type featureAKGRoutes_FeatureAKGQueryResponse = {
-    readonly viewer: {
-        readonly " $fragmentRefs": FragmentRefs<"FeatureAKGApp_viewer">;
-    } | null;
+export type featureAKGRoutes_FeatureAKGQuery$data = {
+  readonly viewer: {
+    readonly " $fragmentSpreads": FragmentRefs<"FeatureAKGApp_viewer">;
+  } | null;
 };
 export type featureAKGRoutes_FeatureAKGQuery = {
-    readonly response: featureAKGRoutes_FeatureAKGQueryResponse;
-    readonly variables: featureAKGRoutes_FeatureAKGQueryVariables;
+  variables: featureAKGRoutes_FeatureAKGQuery$variables;
+  response: featureAKGRoutes_FeatureAKGQuery$data;
 };
-
-
-
-/*
-query featureAKGRoutes_FeatureAKGQuery(
-  $articleIDs: [String]!
-  $selectedWorksSetID: String!
-  $collectionRailItemIDs: [String!]
-  $auctionRailItemIDs: [String!]
-  $fairRailItemIDs: [String!]
-  $hasCollectionRailItems: Boolean!
-  $hasAuctionRailItems: Boolean!
-  $hasFairRailItems: Boolean!
-) {
-  viewer {
-    ...FeatureAKGApp_viewer_2x5Kr1
-  }
-}
-
-fragment ArtworkGrid_artworks on ArtworkConnectionInterface {
-  __isArtworkConnectionInterface: __typename
-  edges {
-    __typename
-    node {
-      id
-      slug
-      href
-      internalID
-      image {
-        aspect_ratio: aspectRatio
-      }
-      ...GridItem_artwork
-    }
-    ... on Node {
-      __isNode: __typename
-      id
-    }
-  }
-}
-
-fragment Badge_artwork on Artwork {
-  is_biddable: isBiddable
-  href
-  sale {
-    is_preview: isPreview
-    display_timely_at: displayTimelyAt
-    id
-  }
-}
-
-fragment Contact_artwork on Artwork {
-  href
-  is_inquireable: isInquireable
-  sale {
-    is_auction: isAuction
-    is_live_open: isLiveOpen
-    is_open: isOpen
-    is_closed: isClosed
-    id
-  }
-  partner(shallow: true) {
-    type
-    id
-  }
-  sale_artwork: saleArtwork {
-    highest_bid: highestBid {
-      display
-    }
-    opening_bid: openingBid {
-      display
-    }
-    counts {
-      bidder_positions: bidderPositions
-    }
-    id
-  }
-}
-
-fragment Details_artwork on Artwork {
-  href
-  title
-  date
-  sale_message: saleMessage
-  cultural_maker: culturalMaker
-  artists(shallow: true) {
-    id
-    href
-    name
-  }
-  collecting_institution: collectingInstitution
-  partner(shallow: true) {
-    name
-    href
-    id
-  }
-  sale {
-    is_auction: isAuction
-    is_closed: isClosed
-    id
-  }
-  sale_artwork: saleArtwork {
-    counts {
-      bidder_positions: bidderPositions
-    }
-    highest_bid: highestBid {
-      display
-    }
-    opening_bid: openingBid {
-      display
-    }
-    id
-  }
-}
-
-fragment FeatureAKGApp_viewer_2x5Kr1 on Viewer {
-  ...Feature_viewer_2x5Kr1
-}
-
-fragment Feature_viewer_2x5Kr1 on Viewer {
-  articles(ids: $articleIDs) {
-    ...FeaturedArticles_articles
-    id
-  }
-  selectedWorks: orderedSet(id: $selectedWorksSetID) {
-    ...SelectedWorks_selectedWorks
-    id
-  }
-  ...FeaturedRails_viewer_1Tm9K3
-}
-
-fragment FeaturedArticles_articles on Article {
-  thumbnailTitle
-  publishedAt(format: "MMM Do, YYYY")
-  thumbnailImage {
-    cropped(width: 1170, height: 780) {
-      width
-      height
-      url
-    }
-  }
-  tinyImage: thumbnailImage {
-    cropped(width: 120, height: 120) {
-      url
-    }
-  }
-  href
-}
-
-fragment FeaturedAuctions_auctions on SaleConnection {
-  edges {
-    node {
-      slug
-      name
-      href
-      id
-    }
-  }
-}
-
-fragment FeaturedCollections_collections on MarketingCollection {
-  slug
-  title
-}
-
-fragment FeaturedFairs_fairs on Fair {
-  internalID
-  name
-  href
-}
-
-fragment FeaturedRails_viewer_1Tm9K3 on Viewer {
-  collections: marketingCollections(slugs: $collectionRailItemIDs) @include(if: $hasCollectionRailItems) {
-    ...FeaturedCollections_collections
-    id
-  }
-  auctions: salesConnection(first: 50, ids: $auctionRailItemIDs) @include(if: $hasAuctionRailItems) {
-    ...FeaturedAuctions_auctions
-  }
-  fairs(ids: $fairRailItemIDs) @include(if: $hasFairRailItems) {
-    ...FeaturedFairs_fairs
-    id
-  }
-}
-
-fragment GridItem_artwork on Artwork {
-  internalID
-  title
-  image_title: imageTitle
-  image {
-    placeholder
-    url(version: "large")
-    aspect_ratio: aspectRatio
-  }
-  artistNames
-  href
-  is_saved: isSaved
-  ...Metadata_artwork
-  ...SaveButton_artwork
-  ...Badge_artwork
-}
-
-fragment Metadata_artwork on Artwork {
-  ...Details_artwork
-  ...Contact_artwork
-  href
-}
-
-fragment SaveButton_artwork on Artwork {
-  id
-  internalID
-  slug
-  is_saved: isSaved
-  title
-}
-
-fragment SelectedWorks_selectedWorks on OrderedSet {
-  itemsConnection(first: 6) {
-    ...ArtworkGrid_artworks
-    edges {
-      node {
-        id
-      }
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = {
@@ -1047,5 +827,7 @@ return {
   }
 };
 })();
-(node as any).hash = '3a2123505de358fa8a0a38ef89984a55';
+
+(node as any).hash = "3a2123505de358fa8a0a38ef89984a55";
+
 export default node;

@@ -1,57 +1,27 @@
+/**
+ * @generated SignedSource<<27a367197fb89faa32f023e55d2366ee>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtworkDetails_SubmissionFlowTest_QueryVariables = {
-    id: string;
+export type ArtworkDetails_SubmissionFlowTest_Query$variables = {
+  id: string;
 };
-export type ArtworkDetails_SubmissionFlowTest_QueryResponse = {
-    readonly submission: {
-        readonly " $fragmentRefs": FragmentRefs<"ArtworkDetails_submission">;
-    } | null;
+export type ArtworkDetails_SubmissionFlowTest_Query$data = {
+  readonly submission: {
+    readonly " $fragmentSpreads": FragmentRefs<"ArtworkDetails_submission">;
+  } | null;
 };
 export type ArtworkDetails_SubmissionFlowTest_Query = {
-    readonly response: ArtworkDetails_SubmissionFlowTest_QueryResponse;
-    readonly variables: ArtworkDetails_SubmissionFlowTest_QueryVariables;
+  variables: ArtworkDetails_SubmissionFlowTest_Query$variables;
+  response: ArtworkDetails_SubmissionFlowTest_Query$data;
 };
-
-
-
-/*
-query ArtworkDetails_SubmissionFlowTest_Query(
-  $id: ID!
-) {
-  submission(id: $id) {
-    ...ArtworkDetails_submission
-    id
-  }
-}
-
-fragment ArtworkDetails_submission on ConsignmentSubmission {
-  id
-  artist {
-    internalID
-    name
-    id
-  }
-  locationCity
-  locationCountry
-  locationState
-  year
-  title
-  medium
-  attributionClass
-  editionNumber
-  editionSize
-  height
-  width
-  depth
-  dimensionsMetric
-  provenance
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -311,5 +281,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'd8bbfe0bd79359f3c18de6c33f50d622';
+
+(node as any).hash = "d8bbfe0bd79359f3c18de6c33f50d622";
+
 export default node;

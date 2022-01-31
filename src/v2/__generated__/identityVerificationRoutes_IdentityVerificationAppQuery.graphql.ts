@@ -1,59 +1,41 @@
+/**
+ * @generated SignedSource<<3a300a6c7ff12df4c4bc6e49d83ed264>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type identityVerificationRoutes_IdentityVerificationAppQueryVariables = {
-    id: string;
+export type identityVerificationRoutes_IdentityVerificationAppQuery$variables = {
+  id: string;
 };
-export type identityVerificationRoutes_IdentityVerificationAppQueryResponse = {
-    readonly me: {
-        readonly " $fragmentRefs": FragmentRefs<"IdentityVerificationApp_me">;
+export type identityVerificationRoutes_IdentityVerificationAppQuery$data = {
+  readonly me: {
+    readonly " $fragmentSpreads": FragmentRefs<"IdentityVerificationApp_me">;
+  } | null;
+};
+export type identityVerificationRoutes_IdentityVerificationAppQuery$rawResponse = {
+  readonly me: {
+    readonly internalID: string;
+    readonly email: string | null;
+    readonly identityVerification: {
+      readonly internalID: string;
+      readonly userID: string;
+      readonly state: string;
+      readonly id: string;
     } | null;
-};
-export type identityVerificationRoutes_IdentityVerificationAppQueryRawResponse = {
-    readonly me: ({
-        readonly internalID: string;
-        readonly email: string | null;
-        readonly identityVerification: ({
-            readonly internalID: string;
-            readonly userID: string;
-            readonly state: string;
-            readonly id: string;
-        }) | null;
-        readonly id: string;
-    }) | null;
+    readonly id: string;
+  } | null;
 };
 export type identityVerificationRoutes_IdentityVerificationAppQuery = {
-    readonly response: identityVerificationRoutes_IdentityVerificationAppQueryResponse;
-    readonly variables: identityVerificationRoutes_IdentityVerificationAppQueryVariables;
-    readonly rawResponse: identityVerificationRoutes_IdentityVerificationAppQueryRawResponse;
+  variables: identityVerificationRoutes_IdentityVerificationAppQuery$variables;
+  response: identityVerificationRoutes_IdentityVerificationAppQuery$data;
+  rawResponse: identityVerificationRoutes_IdentityVerificationAppQuery$rawResponse;
 };
-
-
-
-/*
-query identityVerificationRoutes_IdentityVerificationAppQuery(
-  $id: String!
-) {
-  me {
-    ...IdentityVerificationApp_me_1Bmzm5
-    id
-  }
-}
-
-fragment IdentityVerificationApp_me_1Bmzm5 on Me {
-  internalID
-  email
-  identityVerification(id: $id) {
-    internalID
-    userID
-    state
-    id
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -176,5 +158,7 @@ return {
   }
 };
 })();
-(node as any).hash = '1afc54ff423d5857bb56616148671525';
+
+(node as any).hash = "1afc54ff423d5857bb56616148671525";
+
 export default node;

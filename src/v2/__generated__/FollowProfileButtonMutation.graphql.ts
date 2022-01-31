@@ -1,43 +1,34 @@
+/**
+ * @generated SignedSource<<87cfadd3edb491327795c895b7636c89>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type FollowProfileInput = {
-    clientMutationId?: string | null;
-    profileID?: string | null;
-    unfollow?: boolean | null;
+  clientMutationId?: string | null;
+  profileID?: string | null;
+  unfollow?: boolean | null;
 };
-export type FollowProfileButtonMutationVariables = {
-    input: FollowProfileInput;
+export type FollowProfileButtonMutation$variables = {
+  input: FollowProfileInput;
 };
-export type FollowProfileButtonMutationResponse = {
-    readonly followProfile: {
-        readonly profile: {
-            readonly id: string;
-            readonly is_followed: boolean | null;
-        } | null;
+export type FollowProfileButtonMutation$data = {
+  readonly followProfile: {
+    readonly profile: {
+      readonly id: string;
+      readonly is_followed: boolean | null;
     } | null;
+  } | null;
 };
 export type FollowProfileButtonMutation = {
-    readonly response: FollowProfileButtonMutationResponse;
-    readonly variables: FollowProfileButtonMutationVariables;
+  variables: FollowProfileButtonMutation$variables;
+  response: FollowProfileButtonMutation$data;
 };
-
-
-
-/*
-mutation FollowProfileButtonMutation(
-  $input: FollowProfileInput!
-) {
-  followProfile(input: $input) {
-    profile {
-      id
-      is_followed: isFollowed
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -118,5 +109,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'fa116a6824af830210198ab020a8d472';
+
+(node as any).hash = "fa116a6824af830210198ab020a8d472";
+
 export default node;

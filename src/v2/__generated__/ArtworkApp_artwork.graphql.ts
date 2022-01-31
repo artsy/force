@@ -1,41 +1,44 @@
+/**
+ * @generated SignedSource<<6d03d705d01c0104cb9a9887236390a4>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtworkApp_artwork = {
-    readonly slug: string;
+export type ArtworkApp_artwork$data = {
+  readonly slug: string;
+  readonly internalID: string;
+  readonly is_acquireable: boolean | null;
+  readonly is_offerable: boolean | null;
+  readonly availability: string | null;
+  readonly listPrice: {
+    readonly display?: string | null;
+  } | null;
+  readonly is_in_auction: boolean | null;
+  readonly sale: {
     readonly internalID: string;
-    readonly is_acquireable: boolean | null;
-    readonly is_offerable: boolean | null;
-    readonly availability: string | null;
-    readonly listPrice: {
-        readonly display?: string | null;
-    } | null;
-    readonly is_in_auction: boolean | null;
-    readonly sale: {
-        readonly internalID: string;
-        readonly slug: string;
-    } | null;
-    readonly artists: ReadonlyArray<{
-        readonly id: string;
-        readonly slug: string;
-        readonly " $fragmentRefs": FragmentRefs<"ArtistInfo_artist">;
-    } | null> | null;
-    readonly artist: {
-        readonly " $fragmentRefs": FragmentRefs<"ArtistInfo_artist">;
-    } | null;
-    readonly " $fragmentRefs": FragmentRefs<"ArtworkRelatedArtists_artwork" | "ArtworkMeta_artwork" | "ArtworkBanner_artwork" | "ArtworkSidebar_artwork" | "ArtworkImageBrowser_artwork">;
-    readonly " $refType": "ArtworkApp_artwork";
+    readonly slug: string;
+  } | null;
+  readonly artists: ReadonlyArray<{
+    readonly id: string;
+    readonly slug: string;
+    readonly " $fragmentSpreads": FragmentRefs<"ArtistInfo_artist">;
+  } | null> | null;
+  readonly artist: {
+    readonly " $fragmentSpreads": FragmentRefs<"ArtistInfo_artist">;
+  } | null;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtworkRelatedArtists_artwork" | "ArtworkMeta_artwork" | "ArtworkBanner_artwork" | "ArtworkSidebar_artwork" | "ArtworkImageBrowser_artwork">;
+  readonly " $fragmentType": "ArtworkApp_artwork";
 };
-export type ArtworkApp_artwork$data = ArtworkApp_artwork;
 export type ArtworkApp_artwork$key = {
-    readonly " $data"?: ArtworkApp_artwork$data;
-    readonly " $fragmentRefs": FragmentRefs<"ArtworkApp_artwork">;
+  readonly " $data"?: ArtworkApp_artwork$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtworkApp_artwork">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = {
@@ -200,5 +203,7 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = 'd697e55289bac1a567da6bcc74faad45';
+
+(node as any).hash = "d697e55289bac1a567da6bcc74faad45";
+
 export default node;

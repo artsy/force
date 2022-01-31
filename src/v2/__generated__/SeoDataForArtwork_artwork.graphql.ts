@@ -1,69 +1,72 @@
+/**
+ * @generated SignedSource<<8d4e4bb6716a2c73cb210b9414351be6>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type SeoDataForArtwork_artwork = {
-    readonly href: string | null;
-    readonly date: string | null;
-    readonly is_price_hidden: boolean | null;
-    readonly is_price_range: boolean | null;
-    readonly listPrice: ({
-        readonly __typename: "PriceRange";
-        readonly minPrice: {
-            readonly major: number;
-            readonly currencyCode: string;
-        } | null;
-        readonly maxPrice: {
-            readonly major: number;
-        } | null;
-    } | {
-        readonly __typename: "Money";
-        readonly major: number;
-        readonly currencyCode: string;
-    } | {
-        /*This will never be '%other', but we need some
-        value in case none of the concrete values match.*/
-        readonly __typename: "%other";
-    }) | null;
-    readonly meta_image: {
+export type SeoDataForArtwork_artwork$data = {
+  readonly href: string | null;
+  readonly date: string | null;
+  readonly is_price_hidden: boolean | null;
+  readonly is_price_range: boolean | null;
+  readonly listPrice: {
+    readonly __typename: "PriceRange";
+    readonly minPrice: {
+      readonly major: number;
+      readonly currencyCode: string;
+    } | null;
+    readonly maxPrice: {
+      readonly major: number;
+    } | null;
+  } | {
+    readonly __typename: "Money";
+    readonly major: number;
+    readonly currencyCode: string;
+  } | {
+    // This will never be '%other', but we need some
+    // value in case none of the concrete values match.
+    readonly __typename: "%other";
+  } | null;
+  readonly meta_image: {
+    readonly resized: {
+      readonly width: number | null;
+      readonly height: number | null;
+      readonly url: string;
+    } | null;
+  } | null;
+  readonly meta: {
+    readonly title: string | null;
+    readonly description: string | null;
+  } | null;
+  readonly partner: {
+    readonly name: string | null;
+    readonly type: string | null;
+    readonly profile: {
+      readonly image: {
         readonly resized: {
-            readonly width: number | null;
-            readonly height: number | null;
-            readonly url: string;
+          readonly url: string;
         } | null;
+      } | null;
     } | null;
-    readonly meta: {
-        readonly title: string | null;
-        readonly description: string | null;
-    } | null;
-    readonly partner: {
-        readonly name: string | null;
-        readonly type: string | null;
-        readonly profile: {
-            readonly image: {
-                readonly resized: {
-                    readonly url: string;
-                } | null;
-            } | null;
-        } | null;
-    } | null;
-    readonly artistNames: string | null;
-    readonly availability: string | null;
-    readonly category: string | null;
-    readonly dimensions: {
-        readonly in: string | null;
-    } | null;
-    readonly " $refType": "SeoDataForArtwork_artwork";
+  } | null;
+  readonly artistNames: string | null;
+  readonly availability: string | null;
+  readonly category: string | null;
+  readonly dimensions: {
+    readonly in: string | null;
+  } | null;
+  readonly " $fragmentType": "SeoDataForArtwork_artwork";
 };
-export type SeoDataForArtwork_artwork$data = SeoDataForArtwork_artwork;
 export type SeoDataForArtwork_artwork$key = {
-    readonly " $data"?: SeoDataForArtwork_artwork$data;
-    readonly " $fragmentRefs": FragmentRefs<"SeoDataForArtwork_artwork">;
+  readonly " $data"?: SeoDataForArtwork_artwork$data;
+  readonly " $fragmentSpreads": FragmentRefs<"SeoDataForArtwork_artwork">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = {
@@ -386,5 +389,7 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '1d1e3916a7301124ca124a3c1957a99b';
+
+(node as any).hash = "1d1e3916a7301124ca124a3c1957a99b";
+
 export default node;

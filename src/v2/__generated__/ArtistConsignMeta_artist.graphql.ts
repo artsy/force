@@ -1,34 +1,37 @@
+/**
+ * @generated SignedSource<<56f0b07ebe51335b1efe23207c52f3e6>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtistConsignMeta_artist = {
-    readonly name: string | null;
-    readonly href: string | null;
-    readonly targetSupply: {
-        readonly microfunnel: {
-            readonly artworksConnection: {
-                readonly edges: ReadonlyArray<{
-                    readonly node: {
-                        readonly image: {
-                            readonly imageURL: string | null;
-                        } | null;
-                    } | null;
-                } | null> | null;
+export type ArtistConsignMeta_artist$data = {
+  readonly name: string | null;
+  readonly href: string | null;
+  readonly targetSupply: {
+    readonly microfunnel: {
+      readonly artworksConnection: {
+        readonly edges: ReadonlyArray<{
+          readonly node: {
+            readonly image: {
+              readonly imageURL: string | null;
             } | null;
-        } | null;
+          } | null;
+        } | null> | null;
+      } | null;
     } | null;
-    readonly " $refType": "ArtistConsignMeta_artist";
+  } | null;
+  readonly " $fragmentType": "ArtistConsignMeta_artist";
 };
-export type ArtistConsignMeta_artist$data = ArtistConsignMeta_artist;
 export type ArtistConsignMeta_artist$key = {
-    readonly " $data"?: ArtistConsignMeta_artist$data;
-    readonly " $fragmentRefs": FragmentRefs<"ArtistConsignMeta_artist">;
+  readonly " $data"?: ArtistConsignMeta_artist$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtistConsignMeta_artist">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -133,5 +136,7 @@ const node: ReaderFragment = {
   "type": "Artist",
   "abstractKey": null
 };
-(node as any).hash = '70e6df5913a21146421466fe0a7e143d';
+
+(node as any).hash = "70e6df5913a21146421466fe0a7e143d";
+
 export default node;

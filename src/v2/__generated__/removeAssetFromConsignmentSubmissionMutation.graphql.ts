@@ -1,41 +1,33 @@
+/**
+ * @generated SignedSource<<d4c8cbf0eb3a84f9c8fc262d0b5a38e2>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type RemoveAssetFromConsignmentSubmissionInput = {
-    assetID?: string | null;
-    clientMutationId?: string | null;
-    sessionID?: string | null;
+  assetID?: string | null;
+  clientMutationId?: string | null;
+  sessionID?: string | null;
 };
-export type removeAssetFromConsignmentSubmissionMutationVariables = {
-    input: RemoveAssetFromConsignmentSubmissionInput;
+export type removeAssetFromConsignmentSubmissionMutation$variables = {
+  input: RemoveAssetFromConsignmentSubmissionInput;
 };
-export type removeAssetFromConsignmentSubmissionMutationResponse = {
-    readonly removeAssetFromConsignmentSubmission: {
-        readonly asset: {
-            readonly id: string;
-        } | null;
+export type removeAssetFromConsignmentSubmissionMutation$data = {
+  readonly removeAssetFromConsignmentSubmission: {
+    readonly asset: {
+      readonly id: string;
     } | null;
+  } | null;
 };
 export type removeAssetFromConsignmentSubmissionMutation = {
-    readonly response: removeAssetFromConsignmentSubmissionMutationResponse;
-    readonly variables: removeAssetFromConsignmentSubmissionMutationVariables;
+  variables: removeAssetFromConsignmentSubmissionMutation$variables;
+  response: removeAssetFromConsignmentSubmissionMutation$data;
 };
-
-
-
-/*
-mutation removeAssetFromConsignmentSubmissionMutation(
-  $input: RemoveAssetFromConsignmentSubmissionInput!
-) {
-  removeAssetFromConsignmentSubmission(input: $input) {
-    asset {
-      id
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -109,5 +101,7 @@ return {
   }
 };
 })();
-(node as any).hash = '1843ec8e41ecb33b9f6a47bb0c5fa547';
+
+(node as any).hash = "1843ec8e41ecb33b9f6a47bb0c5fa547";
+
 export default node;

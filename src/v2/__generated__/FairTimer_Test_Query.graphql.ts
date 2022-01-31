@@ -1,34 +1,25 @@
+/**
+ * @generated SignedSource<<3c95530729952671bdb460de5ce1469c>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type FairTimer_Test_QueryVariables = {};
-export type FairTimer_Test_QueryResponse = {
-    readonly fair: {
-        readonly " $fragmentRefs": FragmentRefs<"FairTimer_fair">;
-    } | null;
+export type FairTimer_Test_Query$variables = {};
+export type FairTimer_Test_Query$data = {
+  readonly fair: {
+    readonly " $fragmentSpreads": FragmentRefs<"FairTimer_fair">;
+  } | null;
 };
 export type FairTimer_Test_Query = {
-    readonly response: FairTimer_Test_QueryResponse;
-    readonly variables: FairTimer_Test_QueryVariables;
+  variables: FairTimer_Test_Query$variables;
+  response: FairTimer_Test_Query$data;
 };
-
-
-
-/*
-query FairTimer_Test_Query {
-  fair(id: "example") {
-    ...FairTimer_fair
-    id
-  }
-}
-
-fragment FairTimer_fair on Fair {
-  endAt
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -129,5 +120,7 @@ return {
   }
 };
 })();
-(node as any).hash = '64730289506a51ba11082469a99e4a0b';
+
+(node as any).hash = "64730289506a51ba11082469a99e4a0b";
+
 export default node;

@@ -1,46 +1,49 @@
+/**
+ * @generated SignedSource<<5a85e93faa3c2fc390ecff47ccb109ef>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ShowContextCard_show = {
-    readonly isFairBooth: boolean | null;
-    readonly partner: {
-        readonly internalID?: string;
-        readonly slug?: string;
-        readonly href?: string | null;
-        readonly name?: string | null;
-        readonly locations?: ReadonlyArray<{
-            readonly city: string | null;
-        } | null> | null;
-        readonly artworksConnection?: {
-            readonly edges: ReadonlyArray<{
-                readonly node: {
-                    readonly image: {
-                        readonly url: string | null;
-                    } | null;
-                } | null;
-            } | null> | null;
+export type ShowContextCard_show$data = {
+  readonly isFairBooth: boolean | null;
+  readonly partner: {
+    readonly internalID?: string;
+    readonly slug?: string;
+    readonly href?: string | null;
+    readonly name?: string | null;
+    readonly locations?: ReadonlyArray<{
+      readonly city: string | null;
+    } | null> | null;
+    readonly artworksConnection?: {
+      readonly edges: ReadonlyArray<{
+        readonly node: {
+          readonly image: {
+            readonly url: string | null;
+          } | null;
         } | null;
+      } | null> | null;
     } | null;
-    readonly fair: {
-        readonly internalID: string;
-        readonly isActive: boolean | null;
-        readonly slug: string;
-        readonly href: string | null;
-        readonly name: string | null;
-        readonly " $fragmentRefs": FragmentRefs<"FairTiming_fair" | "FairCard_fair">;
-    } | null;
-    readonly " $refType": "ShowContextCard_show";
+  } | null;
+  readonly fair: {
+    readonly internalID: string;
+    readonly isActive: boolean | null;
+    readonly slug: string;
+    readonly href: string | null;
+    readonly name: string | null;
+    readonly " $fragmentSpreads": FragmentRefs<"FairTiming_fair" | "FairCard_fair">;
+  } | null;
+  readonly " $fragmentType": "ShowContextCard_show";
 };
-export type ShowContextCard_show$data = ShowContextCard_show;
 export type ShowContextCard_show$key = {
-    readonly " $data"?: ShowContextCard_show$data;
-    readonly " $fragmentRefs": FragmentRefs<"ShowContextCard_show">;
+  readonly " $data"?: ShowContextCard_show$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ShowContextCard_show">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = {
@@ -229,5 +232,7 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '6ac05f1e4151a1c743f8bc935deedc7b';
+
+(node as any).hash = "6ac05f1e4151a1c743f8bc935deedc7b";
+
 export default node;

@@ -1,31 +1,34 @@
+/**
+ * @generated SignedSource<<62c87a157574458915f1ad5a64a1a8a7>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type WorksForYouApp_viewerSidebarAggregations = {
-    readonly sidebarAggregations: {
-        readonly counts: {
-            readonly followedArtists: number | null;
-        } | null;
-        readonly aggregations: ReadonlyArray<{
-            readonly counts: ReadonlyArray<{
-                readonly label: string;
-                readonly value: string;
-                readonly count: number;
-            } | null> | null;
-        } | null> | null;
+export type WorksForYouApp_viewerSidebarAggregations$data = {
+  readonly sidebarAggregations: {
+    readonly counts: {
+      readonly followedArtists: Int | null;
     } | null;
-    readonly " $refType": "WorksForYouApp_viewerSidebarAggregations";
+    readonly aggregations: ReadonlyArray<{
+      readonly counts: ReadonlyArray<{
+        readonly label: string;
+        readonly value: string;
+        readonly count: number;
+      } | null> | null;
+    } | null> | null;
+  } | null;
+  readonly " $fragmentType": "WorksForYouApp_viewerSidebarAggregations";
 };
-export type WorksForYouApp_viewerSidebarAggregations$data = WorksForYouApp_viewerSidebarAggregations;
 export type WorksForYouApp_viewerSidebarAggregations$key = {
-    readonly " $data"?: WorksForYouApp_viewerSidebarAggregations$data;
-    readonly " $fragmentRefs": FragmentRefs<"WorksForYouApp_viewerSidebarAggregations">;
+  readonly " $data"?: WorksForYouApp_viewerSidebarAggregations$data;
+  readonly " $fragmentSpreads": FragmentRefs<"WorksForYouApp_viewerSidebarAggregations">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -123,5 +126,7 @@ const node: ReaderFragment = {
   "type": "Viewer",
   "abstractKey": null
 };
-(node as any).hash = '7e36e409b95bf75382ba07f101eb702e';
+
+(node as any).hash = "7e36e409b95bf75382ba07f101eb702e";
+
 export default node;

@@ -1,47 +1,50 @@
+/**
+ * @generated SignedSource<<c9b2d7320a121d4bca0ba03634bada93>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type SelectedCareerAchievements_artist = {
-    readonly highlights: {
-        readonly partnersConnection: {
-            readonly edges: ReadonlyArray<{
-                readonly node: {
-                    readonly categories: ReadonlyArray<{
-                        readonly slug: string;
-                    } | null> | null;
-                } | null;
-            } | null> | null;
+export type SelectedCareerAchievements_artist$data = {
+  readonly highlights: {
+    readonly partnersConnection: {
+      readonly edges: ReadonlyArray<{
+        readonly node: {
+          readonly categories: ReadonlyArray<{
+            readonly slug: string;
+          } | null> | null;
         } | null;
+      } | null> | null;
     } | null;
-    readonly insights: ReadonlyArray<{
-        readonly type: string | null;
-        readonly label: string | null;
-        readonly entities: ReadonlyArray<string | null> | null;
+  } | null;
+  readonly insights: ReadonlyArray<{
+    readonly type: string | null;
+    readonly label: string | null;
+    readonly entities: ReadonlyArray<string | null> | null;
+  } | null> | null;
+  readonly auctionResultsConnection: {
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly price_realized: {
+          readonly display: string | null;
+        } | null;
+        readonly organization: string | null;
+        readonly sale_date: string | null;
+      } | null;
     } | null> | null;
-    readonly auctionResultsConnection: {
-        readonly edges: ReadonlyArray<{
-            readonly node: {
-                readonly price_realized: {
-                    readonly display: string | null;
-                } | null;
-                readonly organization: string | null;
-                readonly sale_date: string | null;
-            } | null;
-        } | null> | null;
-    } | null;
-    readonly slug: string;
-    readonly " $refType": "SelectedCareerAchievements_artist";
+  } | null;
+  readonly slug: string;
+  readonly " $fragmentType": "SelectedCareerAchievements_artist";
 };
-export type SelectedCareerAchievements_artist$data = SelectedCareerAchievements_artist;
 export type SelectedCareerAchievements_artist$key = {
-    readonly " $data"?: SelectedCareerAchievements_artist$data;
-    readonly " $fragmentRefs": FragmentRefs<"SelectedCareerAchievements_artist">;
+  readonly " $data"?: SelectedCareerAchievements_artist$data;
+  readonly " $fragmentSpreads": FragmentRefs<"SelectedCareerAchievements_artist">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = {
@@ -275,5 +278,7 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '8e829ce6cc9df224ffb965345017b4a0';
+
+(node as any).hash = "8e829ce6cc9df224ffb965345017b4a0";
+
 export default node;

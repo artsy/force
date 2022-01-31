@@ -1,82 +1,63 @@
+/**
+ * @generated SignedSource<<bb578433e57110a2395208b89996a1c2>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type UpdateSmsSecondFactorInput = {
-    attributes: SmsSecondFactorAttributes;
-    clientMutationId?: string | null;
-    secondFactorID: string;
+  attributes: SmsSecondFactorAttributes;
+  clientMutationId?: string | null;
+  secondFactorID: string;
 };
 export type SmsSecondFactorAttributes = {
-    countryCode?: string | null;
-    phoneNumber?: string | null;
+  countryCode?: string | null;
+  phoneNumber?: string | null;
 };
-export type UpdateSmsSecondFactorMutationVariables = {
-    input: UpdateSmsSecondFactorInput;
+export type UpdateSmsSecondFactorMutation$variables = {
+  input: UpdateSmsSecondFactorInput;
 };
-export type UpdateSmsSecondFactorMutationResponse = {
-    readonly updateSmsSecondFactor: {
-        readonly secondFactorOrErrors: {
-            readonly __typename: "SmsSecondFactor";
-        } | {
-            readonly __typename: "Errors";
-            readonly errors: ReadonlyArray<{
-                readonly message: string;
-                readonly code: string;
-                readonly data: unknown | null;
-            }>;
-        } | {
-            /*This will never be '%other', but we need some
-            value in case none of the concrete values match.*/
-            readonly __typename: "%other";
-        };
-    } | null;
+export type UpdateSmsSecondFactorMutation$data = {
+  readonly updateSmsSecondFactor: {
+    readonly secondFactorOrErrors: {
+      readonly __typename: "SmsSecondFactor";
+    } | {
+      readonly __typename: "Errors";
+      readonly errors: ReadonlyArray<{
+        readonly message: string;
+        readonly code: string;
+        readonly data: any | null;
+      }>;
+    } | {
+      // This will never be '%other', but we need some
+      // value in case none of the concrete values match.
+      readonly __typename: "%other";
+    };
+  } | null;
 };
-export type UpdateSmsSecondFactorMutationRawResponse = {
-    readonly updateSmsSecondFactor: ({
-        readonly secondFactorOrErrors: {
-            readonly __typename: "Errors";
-            readonly errors: ReadonlyArray<{
-                readonly message: string;
-                readonly code: string;
-                readonly data: unknown | null;
-            }>;
-        } | {
-            readonly __typename: string;
-        };
-    }) | null;
+export type UpdateSmsSecondFactorMutation$rawResponse = {
+  readonly updateSmsSecondFactor: {
+    readonly secondFactorOrErrors: {
+      readonly __typename: "Errors";
+      readonly errors: ReadonlyArray<{
+        readonly message: string;
+        readonly code: string;
+        readonly data: any | null;
+      }>;
+    } | {
+      readonly __typename: string;
+    };
+  } | null;
 };
 export type UpdateSmsSecondFactorMutation = {
-    readonly response: UpdateSmsSecondFactorMutationResponse;
-    readonly variables: UpdateSmsSecondFactorMutationVariables;
-    readonly rawResponse: UpdateSmsSecondFactorMutationRawResponse;
+  variables: UpdateSmsSecondFactorMutation$variables;
+  response: UpdateSmsSecondFactorMutation$data;
+  rawResponse: UpdateSmsSecondFactorMutation$rawResponse;
 };
-
-
-
-/*
-mutation UpdateSmsSecondFactorMutation(
-  $input: UpdateSmsSecondFactorInput!
-) {
-  updateSmsSecondFactor(input: $input) {
-    secondFactorOrErrors {
-      __typename
-      ... on SmsSecondFactor {
-        __typename
-      }
-      ... on Errors {
-        __typename
-        errors {
-          message
-          code
-          data
-        }
-      }
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -231,5 +212,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'b80fa9c087543c25564b1ede065855ca';
+
+(node as any).hash = "b80fa9c087543c25564b1ede065855ca";
+
 export default node;

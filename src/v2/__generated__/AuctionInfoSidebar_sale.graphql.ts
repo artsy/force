@@ -1,20 +1,23 @@
+/**
+ * @generated SignedSource<<61406f17374949f9eac85ecebeee2e12>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type AuctionInfoSidebar_sale = {
-    readonly liveStartAt: string | null;
-    readonly " $refType": "AuctionInfoSidebar_sale";
+export type AuctionInfoSidebar_sale$data = {
+  readonly liveStartAt: string | null;
+  readonly " $fragmentType": "AuctionInfoSidebar_sale";
 };
-export type AuctionInfoSidebar_sale$data = AuctionInfoSidebar_sale;
 export type AuctionInfoSidebar_sale$key = {
-    readonly " $data"?: AuctionInfoSidebar_sale$data;
-    readonly " $fragmentRefs": FragmentRefs<"AuctionInfoSidebar_sale">;
+  readonly " $data"?: AuctionInfoSidebar_sale$data;
+  readonly " $fragmentSpreads": FragmentRefs<"AuctionInfoSidebar_sale">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -33,5 +36,7 @@ const node: ReaderFragment = {
   "type": "Sale",
   "abstractKey": null
 };
-(node as any).hash = '9fc008c7640af944287dfaddc126d163';
+
+(node as any).hash = "9fc008c7640af944287dfaddc126d163";
+
 export default node;

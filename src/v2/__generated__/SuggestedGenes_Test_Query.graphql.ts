@@ -1,46 +1,27 @@
+/**
+ * @generated SignedSource<<2e145b63b017e0a9d0b7d10292379e52>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type SuggestedGenes_Test_QueryVariables = {};
-export type SuggestedGenes_Test_QueryResponse = {
-    readonly highlights: {
-        readonly suggested_genes: ReadonlyArray<{
-            readonly " $fragmentRefs": FragmentRefs<"SuggestedGenes_suggested_genes">;
-        } | null> | null;
-    } | null;
+export type SuggestedGenes_Test_Query$variables = {};
+export type SuggestedGenes_Test_Query$data = {
+  readonly highlights: {
+    readonly suggested_genes: ReadonlyArray<{
+      readonly " $fragmentSpreads": FragmentRefs<"SuggestedGenes_suggested_genes">;
+    } | null> | null;
+  } | null;
 };
 export type SuggestedGenes_Test_Query = {
-    readonly response: SuggestedGenes_Test_QueryResponse;
-    readonly variables: SuggestedGenes_Test_QueryVariables;
+  variables: SuggestedGenes_Test_Query$variables;
+  response: SuggestedGenes_Test_Query$data;
 };
-
-
-
-/*
-query SuggestedGenes_Test_Query {
-  highlights {
-    suggested_genes: broadCollectingGenes {
-      ...SuggestedGenes_suggested_genes
-      id
-    }
-  }
-}
-
-fragment SuggestedGenes_suggested_genes on Gene {
-  id
-  slug
-  internalID
-  name
-  image {
-    cropped(width: 100, height: 100) {
-      url
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = {
@@ -237,5 +218,7 @@ return {
   }
 };
 })();
-(node as any).hash = '797d99be27243fbf8206357eb2637166';
+
+(node as any).hash = "797d99be27243fbf8206357eb2637166";
+
 export default node;

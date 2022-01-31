@@ -1,34 +1,37 @@
+/**
+ * @generated SignedSource<<7eb76034358d6976597f4d73b745d3be>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type AuctionFAQ_viewer = {
-    readonly bidding: {
-        readonly content: string | null;
-    } | null;
-    readonly buyersPremiumTaxesAndFees: {
-        readonly content: string | null;
-    } | null;
-    readonly paymentsAndShipping: {
-        readonly content: string | null;
-    } | null;
-    readonly emailsAndAlerts: {
-        readonly content: string | null;
-    } | null;
-    readonly conditionsOfSale: {
-        readonly content: string | null;
-    } | null;
-    readonly " $refType": "AuctionFAQ_viewer";
+export type AuctionFAQ_viewer$data = {
+  readonly bidding: {
+    readonly content: string | null;
+  } | null;
+  readonly buyersPremiumTaxesAndFees: {
+    readonly content: string | null;
+  } | null;
+  readonly paymentsAndShipping: {
+    readonly content: string | null;
+  } | null;
+  readonly emailsAndAlerts: {
+    readonly content: string | null;
+  } | null;
+  readonly conditionsOfSale: {
+    readonly content: string | null;
+  } | null;
+  readonly " $fragmentType": "AuctionFAQ_viewer";
 };
-export type AuctionFAQ_viewer$data = AuctionFAQ_viewer;
 export type AuctionFAQ_viewer$key = {
-    readonly " $data"?: AuctionFAQ_viewer$data;
-    readonly " $fragmentRefs": FragmentRefs<"AuctionFAQ_viewer">;
+  readonly " $data"?: AuctionFAQ_viewer$data;
+  readonly " $fragmentSpreads": FragmentRefs<"AuctionFAQ_viewer">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = [
@@ -131,5 +134,7 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = 'e29df207450f132c887a37fde758a3ac';
+
+(node as any).hash = "e29df207450f132c887a37fde758a3ac";
+
 export default node;

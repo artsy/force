@@ -1,20 +1,23 @@
+/**
+ * @generated SignedSource<<1bec7113cf1d2a4d6bcb6eb93f295e8d>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type PartnerContactCard_location = {
-    readonly " $fragmentRefs": FragmentRefs<"PartnerContactAddress_location" | "PartnerContactMap_location">;
-    readonly " $refType": "PartnerContactCard_location";
+export type PartnerContactCard_location$data = {
+  readonly " $fragmentSpreads": FragmentRefs<"PartnerContactAddress_location" | "PartnerContactMap_location">;
+  readonly " $fragmentType": "PartnerContactCard_location";
 };
-export type PartnerContactCard_location$data = PartnerContactCard_location;
 export type PartnerContactCard_location$key = {
-    readonly " $data"?: PartnerContactCard_location$data;
-    readonly " $fragmentRefs": FragmentRefs<"PartnerContactCard_location">;
+  readonly " $data"?: PartnerContactCard_location$data;
+  readonly " $fragmentSpreads": FragmentRefs<"PartnerContactCard_location">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -36,5 +39,7 @@ const node: ReaderFragment = {
   "type": "Location",
   "abstractKey": null
 };
-(node as any).hash = '380b7adcdeaedee53a0dee4b2d67e526';
+
+(node as any).hash = "380b7adcdeaedee53a0dee4b2d67e526";
+
 export default node;

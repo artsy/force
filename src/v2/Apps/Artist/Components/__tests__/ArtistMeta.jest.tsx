@@ -16,7 +16,6 @@ describe("Meta", () => {
   const artist: ArtistMeta_artist = {
     // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     " $fragmentRefs": null,
-    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     " $refType": null,
     alternate_names: null,
     birthday: "1929",

@@ -1,7 +1,7 @@
 import { Button, Collapse } from "@artsy/palette"
 import {
-  OfferHistoryItemTestQueryRawResponse,
-  OfferHistoryItemTestQueryResponse,
+  OfferHistoryItemTestQuery$rawResponse,
+  OfferHistoryItemTestQuery$data,
 } from "v2/__generated__/OfferHistoryItemTestQuery.graphql"
 import {
   OfferWithTotals,
@@ -15,7 +15,7 @@ import { OfferHistoryItemFragmentContainer as OfferHistoryItem } from "../OfferH
 
 jest.unmock("react-relay")
 
-const order: OfferHistoryItemTestQueryRawResponse["order"] = {
+const order: OfferHistoryItemTestQuery$rawResponse["order"] = {
   ...UntouchedOfferOrder,
   lastOffer: OfferWithTotals,
 }
@@ -25,8 +25,7 @@ const render = (
   extraComponentProps?: Partial<ExtractProps<typeof OfferHistoryItem>>
 ) =>
   renderRelayTree({
-    Component: (props: OfferHistoryItemTestQueryResponse) => (
-      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
+    Component: (props: OfferHistoryItemTestQuery$data) => (
       <OfferHistoryItem {...extraComponentProps} {...props} />
     ),
     mockData: {

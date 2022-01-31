@@ -1,23 +1,26 @@
+/**
+ * @generated SignedSource<<c28c742d4f3220362f9c69d4ea08e518>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type PartnersRails_viewer = {
-    readonly partnerCategories: ReadonlyArray<{
-        readonly name: string | null;
-        readonly slug: string;
-    } | null> | null;
-    readonly " $refType": "PartnersRails_viewer";
+export type PartnersRails_viewer$data = {
+  readonly partnerCategories: ReadonlyArray<{
+    readonly name: string | null;
+    readonly slug: string;
+  } | null> | null;
+  readonly " $fragmentType": "PartnersRails_viewer";
 };
-export type PartnersRails_viewer$data = PartnersRails_viewer;
 export type PartnersRails_viewer$key = {
-    readonly " $data"?: PartnersRails_viewer$data;
-    readonly " $fragmentRefs": FragmentRefs<"PartnersRails_viewer">;
+  readonly " $data"?: PartnersRails_viewer$data;
+  readonly " $fragmentSpreads": FragmentRefs<"PartnersRails_viewer">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [
@@ -25,11 +28,6 @@ const node: ReaderFragment = {
       "defaultValue": null,
       "kind": "LocalArgument",
       "name": "categoryType"
-    },
-    {
-      "defaultValue": null,
-      "kind": "LocalArgument",
-      "name": "type"
     }
   ],
   "kind": "Fragment",
@@ -81,5 +79,7 @@ const node: ReaderFragment = {
   "type": "Viewer",
   "abstractKey": null
 };
-(node as any).hash = 'e757b78983e6d7447dc9735d7f18484f';
+
+(node as any).hash = "a3259e523fac60ce40f3e3986e92bcc3";
+
 export default node;

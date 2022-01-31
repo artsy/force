@@ -1,260 +1,25 @@
+/**
+ * @generated SignedSource<<247454994711c5ec32636581f8c3beee>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type auctionsRoutes_AuctionsQueryVariables = {};
-export type auctionsRoutes_AuctionsQueryResponse = {
-    readonly viewer: {
-        readonly " $fragmentRefs": FragmentRefs<"AuctionsApp_viewer">;
-    } | null;
+export type auctionsRoutes_AuctionsQuery$variables = {};
+export type auctionsRoutes_AuctionsQuery$data = {
+  readonly viewer: {
+    readonly " $fragmentSpreads": FragmentRefs<"AuctionsApp_viewer">;
+  } | null;
 };
 export type auctionsRoutes_AuctionsQuery = {
-    readonly response: auctionsRoutes_AuctionsQueryResponse;
-    readonly variables: auctionsRoutes_AuctionsQueryVariables;
+  variables: auctionsRoutes_AuctionsQuery$variables;
+  response: auctionsRoutes_AuctionsQuery$data;
 };
-
-
-
-/*
-query auctionsRoutes_AuctionsQuery {
-  viewer {
-    ...AuctionsApp_viewer
-  }
-}
-
-fragment AuctionsApp_viewer on Viewer {
-  ...CuritorialRailsTabBar_viewer
-}
-
-fragment Badge_artwork on Artwork {
-  is_biddable: isBiddable
-  href
-  sale {
-    is_preview: isPreview
-    display_timely_at: displayTimelyAt
-    id
-  }
-}
-
-fragment Contact_artwork on Artwork {
-  href
-  is_inquireable: isInquireable
-  sale {
-    is_auction: isAuction
-    is_live_open: isLiveOpen
-    is_open: isOpen
-    is_closed: isClosed
-    id
-  }
-  partner(shallow: true) {
-    type
-    id
-  }
-  sale_artwork: saleArtwork {
-    highest_bid: highestBid {
-      display
-    }
-    opening_bid: openingBid {
-      display
-    }
-    counts {
-      bidder_positions: bidderPositions
-    }
-    id
-  }
-}
-
-fragment CuritorialRailsTabBar_viewer on Viewer {
-  ...WorksByArtistsYouFollowRail_viewer
-  ...TrendingLotsRail_viewer
-  ...StandoutLotsRail_viewer
-  me {
-    ...MyBids_me
-    id
-  }
-}
-
-fragment Details_artwork on Artwork {
-  href
-  title
-  date
-  sale_message: saleMessage
-  cultural_maker: culturalMaker
-  artists(shallow: true) {
-    id
-    href
-    name
-  }
-  collecting_institution: collectingInstitution
-  partner(shallow: true) {
-    name
-    href
-    id
-  }
-  sale {
-    is_auction: isAuction
-    is_closed: isClosed
-    id
-  }
-  sale_artwork: saleArtwork {
-    counts {
-      bidder_positions: bidderPositions
-    }
-    highest_bid: highestBid {
-      display
-    }
-    opening_bid: openingBid {
-      display
-    }
-    id
-  }
-}
-
-fragment Metadata_artwork on Artwork {
-  ...Details_artwork
-  ...Contact_artwork
-  href
-}
-
-fragment MyBidsBidHeader_sale on Sale {
-  coverImage {
-    cropped(width: 330, height: 100) {
-      src
-      srcSet
-    }
-  }
-  formattedStartDateTime
-  name
-  partner {
-    name
-    id
-  }
-  slug
-}
-
-fragment MyBidsBidItem_saleArtwork on SaleArtwork {
-  artwork {
-    artistNames
-    image {
-      resized(width: 55, height: 55) {
-        src
-        srcSet
-      }
-    }
-    id
-  }
-  estimate
-  currentBid {
-    display
-  }
-  internalID
-  isHighestBidder
-  isWatching
-  lotState {
-    bidCount
-    sellingPrice {
-      display
-    }
-  }
-  lotLabel
-  slug
-}
-
-fragment MyBids_me on Me {
-  myBids {
-    active {
-      sale {
-        slug
-        ...MyBidsBidHeader_sale
-        id
-      }
-      saleArtworks {
-        ...MyBidsBidItem_saleArtwork
-        id
-      }
-    }
-  }
-}
-
-fragment SaveButton_artwork on Artwork {
-  id
-  internalID
-  slug
-  is_saved: isSaved
-  title
-}
-
-fragment ShelfArtwork_artwork_20bRBg on Artwork {
-  image {
-    resized(width: 325) {
-      src
-      srcSet
-      width
-      height
-    }
-    aspectRatio
-    height
-  }
-  imageTitle
-  title
-  href
-  is_saved: isSaved
-  ...Metadata_artwork
-  ...SaveButton_artwork
-  ...Badge_artwork
-}
-
-fragment StandoutLotsRail_viewer on Viewer {
-  StandoutLotsRailConnection: saleArtworksConnection(first: 50, geneIDs: "highlights-at-auction") {
-    edges {
-      node {
-        internalID
-        slug
-        ...ShelfArtwork_artwork_20bRBg
-        sale {
-          isClosed
-          id
-        }
-        id
-      }
-      id
-    }
-  }
-}
-
-fragment TrendingLotsRail_viewer on Viewer {
-  trendingLotsConnection: saleArtworksConnection(biddableSale: true, first: 10, sort: "-bidder_positions_count") {
-    edges {
-      counts {
-        bidderPositions
-      }
-      node {
-        internalID
-        slug
-        ...ShelfArtwork_artwork_20bRBg
-        id
-      }
-      id
-    }
-  }
-}
-
-fragment WorksByArtistsYouFollowRail_viewer on Viewer {
-  saleArtworksConnection(includeArtworksByFollowedArtists: true, isAuction: true, liveSale: true, first: 50) {
-    edges {
-      node {
-        internalID
-        slug
-        ...ShelfArtwork_artwork_20bRBg
-        id
-      }
-      id
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = {
@@ -1089,5 +854,7 @@ return {
   }
 };
 })();
-(node as any).hash = '5de5bf666628292aab30f7e0f2033198';
+
+(node as any).hash = "5de5bf666628292aab30f7e0f2033198";
+
 export default node;

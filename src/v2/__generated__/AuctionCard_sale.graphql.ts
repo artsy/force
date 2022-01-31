@@ -1,43 +1,46 @@
+/**
+ * @generated SignedSource<<fba2c182b143d444fc19dfc37acd4ef1>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type AuctionCard_sale = {
-    readonly coverImage: {
-        readonly cropped: {
-            readonly src: string;
-            readonly srcSet: string;
-        } | null;
+export type AuctionCard_sale$data = {
+  readonly coverImage: {
+    readonly cropped: {
+      readonly src: string;
+      readonly srcSet: string;
     } | null;
-    readonly isBenefit: boolean | null;
-    readonly isGalleryAuction: boolean | null;
-    readonly endAt: string | null;
-    readonly href: string | null;
-    readonly slug: string;
-    readonly isLiveOpen: boolean | null;
-    readonly isPreview: boolean | null;
-    readonly liveStartAt: string | null;
-    readonly registrationStatus: {
-        readonly internalID: string;
-    } | null;
-    readonly isRegistrationClosed: boolean | null;
+  } | null;
+  readonly isBenefit: boolean | null;
+  readonly isGalleryAuction: boolean | null;
+  readonly endAt: string | null;
+  readonly href: string | null;
+  readonly slug: string;
+  readonly isLiveOpen: boolean | null;
+  readonly isPreview: boolean | null;
+  readonly liveStartAt: string | null;
+  readonly registrationStatus: {
+    readonly internalID: string;
+  } | null;
+  readonly isRegistrationClosed: boolean | null;
+  readonly name: string | null;
+  readonly startAt: string | null;
+  readonly isClosed: boolean | null;
+  readonly partner: {
     readonly name: string | null;
-    readonly startAt: string | null;
-    readonly isClosed: boolean | null;
-    readonly partner: {
-        readonly name: string | null;
-    } | null;
-    readonly " $refType": "AuctionCard_sale";
+  } | null;
+  readonly " $fragmentType": "AuctionCard_sale";
 };
-export type AuctionCard_sale$data = AuctionCard_sale;
 export type AuctionCard_sale$key = {
-    readonly " $data"?: AuctionCard_sale$data;
-    readonly " $fragmentRefs": FragmentRefs<"AuctionCard_sale">;
+  readonly " $data"?: AuctionCard_sale$data;
+  readonly " $fragmentSpreads": FragmentRefs<"AuctionCard_sale">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = {
@@ -213,5 +216,7 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '3d9169e9254f7d481544277d0bb6dba3';
+
+(node as any).hash = "3d9169e9254f7d481544277d0bb6dba3";
+
 export default node;

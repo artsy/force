@@ -1,31 +1,34 @@
+/**
+ * @generated SignedSource<<ea67a577488ad45ae5e192c8370cab54>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ShowCard_show = {
-    readonly href: string | null;
-    readonly name: string | null;
-    readonly isFairBooth: boolean | null;
-    readonly exhibitionPeriod: string | null;
-    readonly coverImage: {
-        readonly medium: {
-            readonly width: number;
-            readonly height: number;
-            readonly src: string;
-            readonly srcSet: string;
-        } | null;
+export type ShowCard_show$data = {
+  readonly href: string | null;
+  readonly name: string | null;
+  readonly isFairBooth: boolean | null;
+  readonly exhibitionPeriod: string | null;
+  readonly coverImage: {
+    readonly medium: {
+      readonly width: number;
+      readonly height: number;
+      readonly src: string;
+      readonly srcSet: string;
     } | null;
-    readonly " $refType": "ShowCard_show";
+  } | null;
+  readonly " $fragmentType": "ShowCard_show";
 };
-export type ShowCard_show$data = ShowCard_show;
 export type ShowCard_show$key = {
-    readonly " $data"?: ShowCard_show$data;
-    readonly " $fragmentRefs": FragmentRefs<"ShowCard_show">;
+  readonly " $data"?: ShowCard_show$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ShowCard_show">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -126,5 +129,7 @@ const node: ReaderFragment = {
   "type": "Show",
   "abstractKey": null
 };
-(node as any).hash = '76ed317dec01eb8714a6602721d25131';
+
+(node as any).hash = "76ed317dec01eb8714a6602721d25131";
+
 export default node;

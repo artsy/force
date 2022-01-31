@@ -1,34 +1,37 @@
+/**
+ * @generated SignedSource<<2d807f01b6f915fe441e26e3e1062721>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type UpcomingAuctions_viewer = {
-    readonly salesConnection: {
-        readonly totalCount: number | null;
-        readonly edges: ReadonlyArray<{
-            readonly node: {
-                readonly slug: string;
-                readonly name: string | null;
-                readonly href: string | null;
-                readonly status: string | null;
-                readonly formattedStartDateTime: string | null;
-                readonly eventStartAt: string | null;
-                readonly isLiveOpen: boolean | null;
-                readonly " $fragmentRefs": FragmentRefs<"AuctionArtworksRail_sale">;
-            } | null;
-        } | null> | null;
-    } | null;
-    readonly " $refType": "UpcomingAuctions_viewer";
+export type UpcomingAuctions_viewer$data = {
+  readonly salesConnection: {
+    readonly totalCount: number | null;
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly slug: string;
+        readonly name: string | null;
+        readonly href: string | null;
+        readonly status: string | null;
+        readonly formattedStartDateTime: string | null;
+        readonly eventStartAt: string | null;
+        readonly isLiveOpen: boolean | null;
+        readonly " $fragmentSpreads": FragmentRefs<"AuctionArtworksRail_sale">;
+      } | null;
+    } | null> | null;
+  } | null;
+  readonly " $fragmentType": "UpcomingAuctions_viewer";
 };
-export type UpcomingAuctions_viewer$data = UpcomingAuctions_viewer;
 export type UpcomingAuctions_viewer$key = {
-    readonly " $data"?: UpcomingAuctions_viewer$data;
-    readonly " $fragmentRefs": FragmentRefs<"UpcomingAuctions_viewer">;
+  readonly " $data"?: UpcomingAuctions_viewer$data;
+  readonly " $fragmentSpreads": FragmentRefs<"UpcomingAuctions_viewer">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [
@@ -150,16 +153,16 @@ const node: ReaderFragment = {
                   "storageKey": null
                 },
                 {
+                  "args": null,
+                  "kind": "FragmentSpread",
+                  "name": "AuctionArtworksRail_sale"
+                },
+                {
                   "alias": null,
                   "args": null,
                   "kind": "ScalarField",
                   "name": "__typename",
                   "storageKey": null
-                },
-                {
-                  "args": null,
-                  "kind": "FragmentSpread",
-                  "name": "AuctionArtworksRail_sale"
                 }
               ],
               "storageKey": null
@@ -206,5 +209,7 @@ const node: ReaderFragment = {
   "type": "Viewer",
   "abstractKey": null
 };
-(node as any).hash = '2875ec4a03832fe0d075fa608daacfdc';
+
+(node as any).hash = "2875ec4a03832fe0d075fa608daacfdc";
+
 export default node;

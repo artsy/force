@@ -1,143 +1,25 @@
+/**
+ * @generated SignedSource<<9ad4513685751565c4c93f9a3a3aeff5>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type settingsRoutes_PurchasesRouteQueryVariables = {};
-export type settingsRoutes_PurchasesRouteQueryResponse = {
-    readonly me: {
-        readonly " $fragmentRefs": FragmentRefs<"SettingsPurchasesRoute_me">;
-    } | null;
+export type settingsRoutes_PurchasesRouteQuery$variables = {};
+export type settingsRoutes_PurchasesRouteQuery$data = {
+  readonly me: {
+    readonly " $fragmentSpreads": FragmentRefs<"SettingsPurchasesRoute_me">;
+  } | null;
 };
 export type settingsRoutes_PurchasesRouteQuery = {
-    readonly response: settingsRoutes_PurchasesRouteQueryResponse;
-    readonly variables: settingsRoutes_PurchasesRouteQueryVariables;
+  variables: settingsRoutes_PurchasesRouteQuery$variables;
+  response: settingsRoutes_PurchasesRouteQuery$data;
 };
-
-
-
-/*
-query settingsRoutes_PurchasesRouteQuery {
-  me {
-    ...SettingsPurchasesRoute_me
-    id
-  }
-}
-
-fragment CommercePagination_pageCursors on CommercePageCursors {
-  around {
-    cursor
-    page
-    isCurrent
-  }
-  first {
-    cursor
-    page
-    isCurrent
-  }
-  last {
-    cursor
-    page
-    isCurrent
-  }
-  previous {
-    cursor
-    page
-  }
-}
-
-fragment SettingsPurchasesRoute_me on Me {
-  ...SettingsPurchases_me
-}
-
-fragment SettingsPurchasesRow_order on CommerceOrder {
-  __isCommerceOrder: __typename
-  internalID
-  code
-  displayState
-  state
-  requestedFulfillment {
-    __typename
-  }
-  creditCard {
-    lastDigits
-    id
-  }
-  buyerTotal(precision: 2)
-  createdAt
-  currencyCode
-  lineItems {
-    edges {
-      node {
-        artwork {
-          href
-          image {
-            cropped(width: 45, height: 45) {
-              src
-              srcSet
-            }
-          }
-          partner {
-            href
-            initials
-            name
-            profile {
-              icon {
-                cropped(width: 45, height: 45) {
-                  src
-                  srcSet
-                }
-              }
-              id
-            }
-            id
-          }
-          shippingOrigin
-          title
-          artistNames
-          artists {
-            href
-            id
-          }
-          id
-        }
-        fulfillments(first: 1) {
-          edges {
-            node {
-              trackingId
-              id
-            }
-          }
-        }
-        id
-      }
-    }
-  }
-}
-
-fragment SettingsPurchases_me on Me {
-  name
-  orders(states: [APPROVED, CANCELED, FULFILLED, REFUNDED, SUBMITTED], first: 10) {
-    totalCount
-    pageInfo {
-      hasNextPage
-      endCursor
-    }
-    pageCursors {
-      ...CommercePagination_pageCursors
-    }
-    edges {
-      node {
-        __typename
-        code
-        ...SettingsPurchasesRow_order
-        id
-      }
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = {
@@ -698,5 +580,7 @@ return {
   }
 };
 })();
-(node as any).hash = '7beca60e070f3e2c391eeb2718a6e1ca';
+
+(node as any).hash = "7beca60e070f3e2c391eeb2718a6e1ca";
+
 export default node;

@@ -1,94 +1,49 @@
+/**
+ * @generated SignedSource<<646ca755c4230aab8f5a7ea2a60463cb>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type TwoFactorAuthenticationQueryVariables = {};
-export type TwoFactorAuthenticationQueryResponse = {
-    readonly me: {
-        readonly " $fragmentRefs": FragmentRefs<"TwoFactorAuthentication_me">;
-    } | null;
+export type TwoFactorAuthenticationQuery$variables = {};
+export type TwoFactorAuthenticationQuery$data = {
+  readonly me: {
+    readonly " $fragmentSpreads": FragmentRefs<"TwoFactorAuthentication_me">;
+  } | null;
 };
-export type TwoFactorAuthenticationQueryRawResponse = {
-    readonly me: ({
-        readonly hasSecondFactorEnabled: boolean;
-        readonly appSecondFactors: ReadonlyArray<({
-            readonly __typename: "AppSecondFactor";
-            readonly internalID: string;
-            readonly name: string | null;
-        } | {
-            readonly __typename: string;
-        }) | null> | null;
-        readonly smsSecondFactors: ReadonlyArray<({
-            readonly __typename: "SmsSecondFactor";
-            readonly internalID: string;
-            readonly formattedPhoneNumber: string | null;
-        } | {
-            readonly __typename: string;
-        }) | null> | null;
-        readonly backupSecondFactors: ReadonlyArray<({
-            readonly __typename: string;
-        }) | null> | null;
-        readonly id: string;
-    }) | null;
+export type TwoFactorAuthenticationQuery$rawResponse = {
+  readonly me: {
+    readonly hasSecondFactorEnabled: boolean;
+    readonly appSecondFactors: ReadonlyArray<{
+      readonly __typename: "AppSecondFactor";
+      readonly internalID: string;
+      readonly name: string | null;
+    } | {
+      readonly __typename: string;
+    } | null> | null;
+    readonly smsSecondFactors: ReadonlyArray<{
+      readonly __typename: "SmsSecondFactor";
+      readonly internalID: string;
+      readonly formattedPhoneNumber: string | null;
+    } | {
+      readonly __typename: string;
+    } | null> | null;
+    readonly backupSecondFactors: ReadonlyArray<{
+      readonly __typename: string;
+    } | null> | null;
+    readonly id: string;
+  } | null;
 };
 export type TwoFactorAuthenticationQuery = {
-    readonly response: TwoFactorAuthenticationQueryResponse;
-    readonly variables: TwoFactorAuthenticationQueryVariables;
-    readonly rawResponse: TwoFactorAuthenticationQueryRawResponse;
+  variables: TwoFactorAuthenticationQuery$variables;
+  response: TwoFactorAuthenticationQuery$data;
+  rawResponse: TwoFactorAuthenticationQuery$rawResponse;
 };
-
-
-
-/*
-query TwoFactorAuthenticationQuery {
-  me {
-    ...TwoFactorAuthentication_me
-    id
-  }
-}
-
-fragment AppSecondFactor_me on Me {
-  hasSecondFactorEnabled
-  appSecondFactors: secondFactors(kinds: [app]) {
-    __typename
-    ... on AppSecondFactor {
-      __typename
-      internalID
-      name
-    }
-  }
-}
-
-fragment BackupSecondFactor_me on Me {
-  backupSecondFactors: secondFactors(kinds: [backup]) {
-    __typename
-    ... on BackupSecondFactor {
-      __typename
-    }
-  }
-}
-
-fragment SmsSecondFactor_me on Me {
-  hasSecondFactorEnabled
-  smsSecondFactors: secondFactors(kinds: [sms]) {
-    __typename
-    ... on SmsSecondFactor {
-      __typename
-      internalID
-      formattedPhoneNumber
-    }
-  }
-}
-
-fragment TwoFactorAuthentication_me on Me {
-  hasSecondFactorEnabled
-  ...AppSecondFactor_me
-  ...SmsSecondFactor_me
-  ...BackupSecondFactor_me
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = {
@@ -265,5 +220,7 @@ return {
   }
 };
 })();
-(node as any).hash = '1acd25cfcdb3c29484db3d77290f0dad';
+
+(node as any).hash = "1acd25cfcdb3c29484db3d77290f0dad";
+
 export default node;

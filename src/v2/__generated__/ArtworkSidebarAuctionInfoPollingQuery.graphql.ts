@@ -1,124 +1,31 @@
+/**
+ * @generated SignedSource<<f444e224c12149b83ec073c43cf94df9>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtworkSidebarAuctionInfoPollingQueryVariables = {
-    artworkID: string;
+export type ArtworkSidebarAuctionInfoPollingQuery$variables = {
+  artworkID: string;
 };
-export type ArtworkSidebarAuctionInfoPollingQueryResponse = {
-    readonly artwork: {
-        readonly internalID: string;
-        readonly " $fragmentRefs": FragmentRefs<"ArtworkSidebarCurrentBidInfo_artwork" | "ArtworkSidebarBidAction_artwork">;
-    } | null;
-    readonly me: {
-        readonly " $fragmentRefs": FragmentRefs<"ArtworkSidebarAuctionInfoPolling_me">;
-    } | null;
+export type ArtworkSidebarAuctionInfoPollingQuery$data = {
+  readonly artwork: {
+    readonly internalID: string;
+    readonly " $fragmentSpreads": FragmentRefs<"ArtworkSidebarCurrentBidInfo_artwork" | "ArtworkSidebarBidAction_artwork">;
+  } | null;
+  readonly me: {
+    readonly " $fragmentSpreads": FragmentRefs<"ArtworkSidebarAuctionInfoPolling_me">;
+  } | null;
 };
 export type ArtworkSidebarAuctionInfoPollingQuery = {
-    readonly response: ArtworkSidebarAuctionInfoPollingQueryResponse;
-    readonly variables: ArtworkSidebarAuctionInfoPollingQueryVariables;
+  variables: ArtworkSidebarAuctionInfoPollingQuery$variables;
+  response: ArtworkSidebarAuctionInfoPollingQuery$data;
 };
-
-
-
-/*
-query ArtworkSidebarAuctionInfoPollingQuery(
-  $artworkID: String!
-) {
-  artwork(id: $artworkID) {
-    internalID
-    ...ArtworkSidebarCurrentBidInfo_artwork
-    ...ArtworkSidebarBidAction_artwork
-    id
-  }
-  me {
-    ...ArtworkSidebarAuctionInfoPolling_me
-    id
-  }
-}
-
-fragment ArtworkSidebarAuctionInfoPolling_me on Me {
-  ...ArtworkSidebarBidAction_me
-}
-
-fragment ArtworkSidebarBidAction_artwork on Artwork {
-  myLotStanding(live: true) {
-    most_recent_bid: mostRecentBid {
-      max_bid: maxBid {
-        cents
-      }
-      id
-    }
-  }
-  slug
-  internalID
-  sale {
-    slug
-    registrationStatus {
-      qualified_for_bidding: qualifiedForBidding
-      id
-    }
-    is_preview: isPreview
-    is_open: isOpen
-    is_live_open: isLiveOpen
-    is_closed: isClosed
-    is_registration_closed: isRegistrationClosed
-    requireIdentityVerification
-    id
-  }
-  sale_artwork: saleArtwork {
-    increments {
-      cents
-      display
-    }
-    id
-  }
-}
-
-fragment ArtworkSidebarBidAction_me on Me {
-  identityVerified
-  pendingIdentityVerification {
-    internalID
-    id
-  }
-}
-
-fragment ArtworkSidebarCurrentBidInfo_artwork on Artwork {
-  sale {
-    is_closed: isClosed
-    is_live_open: isLiveOpen
-    internalID
-    is_with_buyers_premium: isWithBuyersPremium
-    id
-  }
-  sale_artwork: saleArtwork {
-    is_with_reserve: isWithReserve
-    reserve_message: reserveMessage
-    reserve_status: reserveStatus
-    current_bid: currentBid {
-      display
-    }
-    counts {
-      bidder_positions: bidderPositions
-    }
-    id
-  }
-  myLotStanding(live: true) {
-    active_bid: activeBid {
-      is_winning: isWinning
-      id
-    }
-    most_recent_bid: mostRecentBid {
-      max_bid: maxBid {
-        display
-      }
-      id
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -502,5 +409,7 @@ return {
   }
 };
 })();
-(node as any).hash = '163c2eb761d692a0cb43257e4b4b3ff7';
+
+(node as any).hash = "163c2eb761d692a0cb43257e4b4b3ff7";
+
 export default node;

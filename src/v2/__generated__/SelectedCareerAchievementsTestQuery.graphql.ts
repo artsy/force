@@ -1,103 +1,63 @@
+/**
+ * @generated SignedSource<<12d917ac8b96d698361a166939207eef>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type SelectedCareerAchievementsTestQueryVariables = {};
-export type SelectedCareerAchievementsTestQueryResponse = {
-    readonly artist: {
-        readonly " $fragmentRefs": FragmentRefs<"SelectedCareerAchievements_artist">;
-    } | null;
+export type SelectedCareerAchievementsTestQuery$variables = {};
+export type SelectedCareerAchievementsTestQuery$data = {
+  readonly artist: {
+    readonly " $fragmentSpreads": FragmentRefs<"SelectedCareerAchievements_artist">;
+  } | null;
 };
-export type SelectedCareerAchievementsTestQueryRawResponse = {
-    readonly artist: ({
-        readonly highlights: ({
-            readonly partnersConnection: ({
-                readonly edges: ReadonlyArray<({
-                    readonly node: ({
-                        readonly categories: ReadonlyArray<({
-                            readonly slug: string;
-                            readonly id: string;
-                        }) | null> | null;
-                        readonly id: string;
-                    }) | null;
-                    readonly id: string;
-                }) | null> | null;
-            }) | null;
-        }) | null;
-        readonly insights: ReadonlyArray<({
-            readonly type: string | null;
-            readonly label: string | null;
-            readonly entities: ReadonlyArray<string | null> | null;
-        }) | null> | null;
-        readonly auctionResultsConnection: ({
-            readonly edges: ReadonlyArray<({
-                readonly node: ({
-                    readonly price_realized: ({
-                        readonly display: string | null;
-                    }) | null;
-                    readonly organization: string | null;
-                    readonly sale_date: string | null;
-                    readonly id: string;
-                }) | null;
-            }) | null> | null;
-        }) | null;
-        readonly slug: string;
-        readonly id: string;
-    }) | null;
+export type SelectedCareerAchievementsTestQuery$rawResponse = {
+  readonly artist: {
+    readonly highlights: {
+      readonly partnersConnection: {
+        readonly edges: ReadonlyArray<{
+          readonly node: {
+            readonly categories: ReadonlyArray<{
+              readonly slug: string;
+              readonly id: string;
+            } | null> | null;
+            readonly id: string;
+          } | null;
+          readonly id: string;
+        } | null> | null;
+      } | null;
+    } | null;
+    readonly insights: ReadonlyArray<{
+      readonly type: string | null;
+      readonly label: string | null;
+      readonly entities: ReadonlyArray<string | null> | null;
+    } | null> | null;
+    readonly auctionResultsConnection: {
+      readonly edges: ReadonlyArray<{
+        readonly node: {
+          readonly price_realized: {
+            readonly display: string | null;
+          } | null;
+          readonly organization: string | null;
+          readonly sale_date: string | null;
+          readonly id: string;
+        } | null;
+      } | null> | null;
+    } | null;
+    readonly slug: string;
+    readonly id: string;
+  } | null;
 };
 export type SelectedCareerAchievementsTestQuery = {
-    readonly response: SelectedCareerAchievementsTestQueryResponse;
-    readonly variables: SelectedCareerAchievementsTestQueryVariables;
-    readonly rawResponse: SelectedCareerAchievementsTestQueryRawResponse;
+  variables: SelectedCareerAchievementsTestQuery$variables;
+  response: SelectedCareerAchievementsTestQuery$data;
+  rawResponse: SelectedCareerAchievementsTestQuery$rawResponse;
 };
-
-
-
-/*
-query SelectedCareerAchievementsTestQuery {
-  artist(id: "pablo-picasso") {
-    ...SelectedCareerAchievements_artist
-    id
-  }
-}
-
-fragment SelectedCareerAchievements_artist on Artist {
-  highlights {
-    partnersConnection(first: 10, displayOnPartnerProfile: true, representedBy: true, partnerCategory: ["blue-chip", "top-established", "top-emerging"]) {
-      edges {
-        node {
-          categories {
-            slug
-            id
-          }
-          id
-        }
-        id
-      }
-    }
-  }
-  insights {
-    type
-    label
-    entities
-  }
-  auctionResultsConnection(recordsTrusted: true, first: 1, sort: PRICE_AND_DATE_DESC) {
-    edges {
-      node {
-        price_realized: priceRealized {
-          display(format: "0.0a")
-        }
-        organization
-        sale_date: saleDate(format: "YYYY")
-        id
-      }
-    }
-  }
-  slug
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -488,5 +448,7 @@ return {
   }
 };
 })();
-(node as any).hash = '0e91591c11c74eacd472b689b0f1ac5d';
+
+(node as any).hash = "0e91591c11c74eacd472b689b0f1ac5d";
+
 export default node;

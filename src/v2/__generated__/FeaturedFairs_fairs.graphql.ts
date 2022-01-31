@@ -1,22 +1,25 @@
+/**
+ * @generated SignedSource<<563c58ef15b9e2fbd3099e37b1e2e66f>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type FeaturedFairs_fairs = ReadonlyArray<{
-    readonly internalID: string;
-    readonly name: string | null;
-    readonly href: string | null;
-    readonly " $refType": "FeaturedFairs_fairs";
+export type FeaturedFairs_fairs$data = ReadonlyArray<{
+  readonly internalID: string;
+  readonly name: string | null;
+  readonly href: string | null;
+  readonly " $fragmentType": "FeaturedFairs_fairs";
 }>;
-export type FeaturedFairs_fairs$data = FeaturedFairs_fairs;
 export type FeaturedFairs_fairs$key = ReadonlyArray<{
-    readonly " $data"?: FeaturedFairs_fairs$data;
-    readonly " $fragmentRefs": FragmentRefs<"FeaturedFairs_fairs">;
+  readonly " $data"?: FeaturedFairs_fairs$data;
+  readonly " $fragmentSpreads": FragmentRefs<"FeaturedFairs_fairs">;
 }>;
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -51,5 +54,7 @@ const node: ReaderFragment = {
   "type": "Fair",
   "abstractKey": null
 };
-(node as any).hash = '52dfbf0cf61e285fd9a85c6015098cd0';
+
+(node as any).hash = "52dfbf0cf61e285fd9a85c6015098cd0";
+
 export default node;

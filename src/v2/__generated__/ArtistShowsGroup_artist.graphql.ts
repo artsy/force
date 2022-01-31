@@ -1,46 +1,49 @@
+/**
+ * @generated SignedSource<<da8b284a2c3cfdbea0045999eb6669ae>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtistShowsGroup_artist = {
-    readonly slug: string;
-    readonly showsConnection: {
-        readonly pageInfo: {
-            readonly hasNextPage: boolean;
-            readonly endCursor: string | null;
-        };
-        readonly pageCursors: {
-            readonly " $fragmentRefs": FragmentRefs<"Pagination_pageCursors">;
-        };
-        readonly edges: ReadonlyArray<{
-            readonly node: {
-                readonly partner: {
-                    readonly name?: string | null;
-                } | null;
-                readonly name: string | null;
-                readonly href: string | null;
-                readonly exhibitionPeriod: string | null;
-                readonly coverImage: {
-                    readonly cropped: {
-                        readonly src: string;
-                        readonly srcSet: string;
-                    } | null;
-                } | null;
-                readonly city: string | null;
-            } | null;
-        } | null> | null;
-    } | null;
-    readonly " $refType": "ArtistShowsGroup_artist";
+export type ArtistShowsGroup_artist$data = {
+  readonly slug: string;
+  readonly showsConnection: {
+    readonly pageInfo: {
+      readonly hasNextPage: boolean;
+      readonly endCursor: string | null;
+    };
+    readonly pageCursors: {
+      readonly " $fragmentSpreads": FragmentRefs<"Pagination_pageCursors">;
+    };
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly partner: {
+          readonly name?: string | null;
+        } | null;
+        readonly name: string | null;
+        readonly href: string | null;
+        readonly exhibitionPeriod: string | null;
+        readonly coverImage: {
+          readonly cropped: {
+            readonly src: string;
+            readonly srcSet: string;
+          } | null;
+        } | null;
+        readonly city: string | null;
+      } | null;
+    } | null> | null;
+  } | null;
+  readonly " $fragmentType": "ArtistShowsGroup_artist";
 };
-export type ArtistShowsGroup_artist$data = ArtistShowsGroup_artist;
 export type ArtistShowsGroup_artist$key = {
-    readonly " $data"?: ArtistShowsGroup_artist$data;
-    readonly " $fragmentRefs": FragmentRefs<"ArtistShowsGroup_artist">;
+  readonly " $data"?: ArtistShowsGroup_artist$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtistShowsGroup_artist">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = {
@@ -299,5 +302,7 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '3d1d8ee0545cad9313550d5b6031aa57';
+
+(node as any).hash = "3d1d8ee0545cad9313550d5b6031aa57";
+
 export default node;

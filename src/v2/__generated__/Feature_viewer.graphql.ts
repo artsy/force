@@ -1,26 +1,29 @@
+/**
+ * @generated SignedSource<<86e29b5f7f03484321cfc9492e5be0c9>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type Feature_viewer = {
-    readonly articles: ReadonlyArray<{
-        readonly " $fragmentRefs": FragmentRefs<"FeaturedArticles_articles">;
-    } | null> | null;
-    readonly selectedWorks: {
-        readonly " $fragmentRefs": FragmentRefs<"SelectedWorks_selectedWorks">;
-    } | null;
-    readonly " $fragmentRefs": FragmentRefs<"FeaturedRails_viewer">;
-    readonly " $refType": "Feature_viewer";
+export type Feature_viewer$data = {
+  readonly articles: ReadonlyArray<{
+    readonly " $fragmentSpreads": FragmentRefs<"FeaturedArticles_articles">;
+  } | null> | null;
+  readonly selectedWorks: {
+    readonly " $fragmentSpreads": FragmentRefs<"SelectedWorks_selectedWorks">;
+  } | null;
+  readonly " $fragmentSpreads": FragmentRefs<"FeaturedRails_viewer">;
+  readonly " $fragmentType": "Feature_viewer";
 };
-export type Feature_viewer$data = Feature_viewer;
 export type Feature_viewer$key = {
-    readonly " $data"?: Feature_viewer$data;
-    readonly " $fragmentRefs": FragmentRefs<"Feature_viewer">;
+  readonly " $data"?: Feature_viewer$data;
+  readonly " $fragmentSpreads": FragmentRefs<"Feature_viewer">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [
@@ -153,5 +156,7 @@ const node: ReaderFragment = {
   "type": "Viewer",
   "abstractKey": null
 };
-(node as any).hash = '308da696148367711e40c557c82521e0';
+
+(node as any).hash = "308da696148367711e40c557c82521e0";
+
 export default node;

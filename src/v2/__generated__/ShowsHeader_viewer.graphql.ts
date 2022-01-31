@@ -1,27 +1,30 @@
+/**
+ * @generated SignedSource<<561eeecaabba5b3c6d59c9060c6cdae1>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ShowsHeader_viewer = {
-    readonly allCities: ReadonlyArray<{
-        readonly text: string;
-        readonly value: string;
-    }>;
-    readonly featuredCities: ReadonlyArray<{
-        readonly text: string;
-        readonly value: string;
-    }>;
-    readonly " $refType": "ShowsHeader_viewer";
+export type ShowsHeader_viewer$data = {
+  readonly allCities: ReadonlyArray<{
+    readonly text: string;
+    readonly value: string;
+  }>;
+  readonly featuredCities: ReadonlyArray<{
+    readonly text: string;
+    readonly value: string;
+  }>;
+  readonly " $fragmentType": "ShowsHeader_viewer";
 };
-export type ShowsHeader_viewer$data = ShowsHeader_viewer;
 export type ShowsHeader_viewer$key = {
-    readonly " $data"?: ShowsHeader_viewer$data;
-    readonly " $fragmentRefs": FragmentRefs<"ShowsHeader_viewer">;
+  readonly " $data"?: ShowsHeader_viewer$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ShowsHeader_viewer">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = [
@@ -77,5 +80,7 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = 'cfb59087d237d793ca8064609f04e774';
+
+(node as any).hash = "cfb59087d237d793ca8064609f04e774";
+
 export default node;

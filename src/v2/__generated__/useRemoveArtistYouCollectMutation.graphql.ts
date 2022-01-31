@@ -1,74 +1,36 @@
+/**
+ * @generated SignedSource<<cbf8931093d17171245399eb58b1b11f>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Mutation } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type DeleteUserInterestMutationInput = {
-    anonymousSessionId?: string | null;
-    clientMutationId?: string | null;
-    id: string;
-    sessionID?: string | null;
+  anonymousSessionId?: string | null;
+  clientMutationId?: string | null;
+  id: string;
+  sessionID?: string | null;
 };
-export type useRemoveArtistYouCollectMutationVariables = {
-    input: DeleteUserInterestMutationInput;
+export type useRemoveArtistYouCollectMutation$variables = {
+  input: DeleteUserInterestMutationInput;
 };
-export type useRemoveArtistYouCollectMutationResponse = {
-    readonly deleteUserInterest: {
-        readonly clientMutationId: string | null;
-        readonly me: {
-            readonly " $fragmentRefs": FragmentRefs<"SettingsEditProfileArtistsYouCollect_me" | "SettingsEditProfileYourGalleryIntro_me">;
-        };
-    } | null;
+export type useRemoveArtistYouCollectMutation$data = {
+  readonly deleteUserInterest: {
+    readonly clientMutationId: string | null;
+    readonly me: {
+      readonly " $fragmentSpreads": FragmentRefs<"SettingsEditProfileArtistsYouCollect_me" | "SettingsEditProfileYourGalleryIntro_me">;
+    };
+  } | null;
 };
 export type useRemoveArtistYouCollectMutation = {
-    readonly response: useRemoveArtistYouCollectMutationResponse;
-    readonly variables: useRemoveArtistYouCollectMutationVariables;
+  variables: useRemoveArtistYouCollectMutation$variables;
+  response: useRemoveArtistYouCollectMutation$data;
 };
-
-
-
-/*
-mutation useRemoveArtistYouCollectMutation(
-  $input: DeleteUserInterestMutationInput!
-) {
-  deleteUserInterest(input: $input) {
-    clientMutationId
-    me {
-      ...SettingsEditProfileArtistsYouCollect_me
-      ...SettingsEditProfileYourGalleryIntro_me
-      id
-    }
-  }
-}
-
-fragment SettingsEditProfileArtistsYouCollect_me on Me {
-  collectorProfile {
-    userInterests {
-      internalID
-      category
-      interest {
-        __typename
-        ... on Artist {
-          internalID
-          name
-          slug
-        }
-        ... on Node {
-          __isNode: __typename
-          id
-        }
-      }
-      id
-    }
-    id
-  }
-}
-
-fragment SettingsEditProfileYourGalleryIntro_me on Me {
-  inquiryIntroduction
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -279,5 +241,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'b120d7d424d14d89557158a3342b8729';
+
+(node as any).hash = "b120d7d424d14d89557158a3342b8729";
+
 export default node;

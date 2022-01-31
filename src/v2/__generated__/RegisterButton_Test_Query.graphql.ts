@@ -1,64 +1,28 @@
+/**
+ * @generated SignedSource<<c97d050014737710c441d94cc58b3418>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type RegisterButton_Test_QueryVariables = {};
-export type RegisterButton_Test_QueryResponse = {
-    readonly sale: {
-        readonly " $fragmentRefs": FragmentRefs<"RegisterButton_sale">;
-    } | null;
-    readonly me: {
-        readonly " $fragmentRefs": FragmentRefs<"RegisterButton_me">;
-    } | null;
+export type RegisterButton_Test_Query$variables = {};
+export type RegisterButton_Test_Query$data = {
+  readonly sale: {
+    readonly " $fragmentSpreads": FragmentRefs<"RegisterButton_sale">;
+  } | null;
+  readonly me: {
+    readonly " $fragmentSpreads": FragmentRefs<"RegisterButton_me">;
+  } | null;
 };
 export type RegisterButton_Test_Query = {
-    readonly response: RegisterButton_Test_QueryResponse;
-    readonly variables: RegisterButton_Test_QueryVariables;
+  variables: RegisterButton_Test_Query$variables;
+  response: RegisterButton_Test_Query$data;
 };
-
-
-
-/*
-query RegisterButton_Test_Query {
-  sale(id: "foo") {
-    ...RegisterButton_sale
-    id
-  }
-  me {
-    ...RegisterButton_me
-    id
-  }
-}
-
-fragment RegisterButton_me on Me {
-  identityVerified
-  pendingIdentityVerification {
-    internalID
-    id
-  }
-}
-
-fragment RegisterButton_sale on Sale {
-  bidder {
-    qualifiedForBidding
-    id
-  }
-  isAuction
-  isClosed
-  isLiveOpen
-  isRegistrationClosed
-  liveURLIfOpen
-  requireIdentityVerification
-  registrationStatus {
-    internalID
-    id
-  }
-  slug
-  status
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -272,5 +236,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'a917f6128fb6b1c5f780c7ce6aea2808';
+
+(node as any).hash = "a917f6128fb6b1c5f780c7ce6aea2808";
+
 export default node;

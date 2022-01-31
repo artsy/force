@@ -1,22 +1,25 @@
+/**
+ * @generated SignedSource<<7e681670754b384bf5d6dc69a9ea2e72>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArticleSectionEmbed_section = {
-    readonly url: string | null;
-    readonly height: number | null;
-    readonly mobileHeight: number | null;
-    readonly " $refType": "ArticleSectionEmbed_section";
+export type ArticleSectionEmbed_section$data = {
+  readonly url: string | null;
+  readonly height: number | null;
+  readonly mobileHeight: number | null;
+  readonly " $fragmentType": "ArticleSectionEmbed_section";
 };
-export type ArticleSectionEmbed_section$data = ArticleSectionEmbed_section;
 export type ArticleSectionEmbed_section$key = {
-    readonly " $data"?: ArticleSectionEmbed_section$data;
-    readonly " $fragmentRefs": FragmentRefs<"ArticleSectionEmbed_section">;
+  readonly " $data"?: ArticleSectionEmbed_section$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ArticleSectionEmbed_section">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -49,5 +52,7 @@ const node: ReaderFragment = {
   "type": "ArticleSectionEmbed",
   "abstractKey": null
 };
-(node as any).hash = '86cfdfbb14bd51cba0fc15dc335edd65';
+
+(node as any).hash = "86cfdfbb14bd51cba0fc15dc335edd65";
+
 export default node;

@@ -1,24 +1,27 @@
+/**
+ * @generated SignedSource<<a884f98e428c4246ba6de4d10c3f7f39>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtworkSidebarSizeInfo_piece = {
-    readonly dimensions: {
-        readonly in: string | null;
-        readonly cm: string | null;
-    } | null;
-    readonly edition_of: string | null;
-    readonly " $refType": "ArtworkSidebarSizeInfo_piece";
+export type ArtworkSidebarSizeInfo_piece$data = {
+  readonly dimensions: {
+    readonly in: string | null;
+    readonly cm: string | null;
+  } | null;
+  readonly edition_of: string | null;
+  readonly " $fragmentType": "ArtworkSidebarSizeInfo_piece";
 };
-export type ArtworkSidebarSizeInfo_piece$data = ArtworkSidebarSizeInfo_piece;
 export type ArtworkSidebarSizeInfo_piece$key = {
-    readonly " $data"?: ArtworkSidebarSizeInfo_piece$data;
-    readonly " $fragmentRefs": FragmentRefs<"ArtworkSidebarSizeInfo_piece">;
+  readonly " $data"?: ArtworkSidebarSizeInfo_piece$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtworkSidebarSizeInfo_piece">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -62,5 +65,7 @@ const node: ReaderFragment = {
   "type": "Sellable",
   "abstractKey": "__isSellable"
 };
-(node as any).hash = '084d24d3f414c5839dbc469b7d8c1810';
+
+(node as any).hash = "084d24d3f414c5839dbc469b7d8c1810";
+
 export default node;

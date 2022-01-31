@@ -1,42 +1,45 @@
+/**
+ * @generated SignedSource<<be6eaaf1b58596064f01b3b42392eeea>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtistMarketInsights_artist = {
-    readonly collections: ReadonlyArray<string | null> | null;
-    readonly highlights: {
-        readonly partnersConnection: {
-            readonly edges: ReadonlyArray<{
-                readonly node: {
-                    readonly categories: ReadonlyArray<{
-                        readonly slug: string;
-                    } | null> | null;
-                } | null;
-            } | null> | null;
+export type ArtistMarketInsights_artist$data = {
+  readonly collections: ReadonlyArray<string | null> | null;
+  readonly highlights: {
+    readonly partnersConnection: {
+      readonly edges: ReadonlyArray<{
+        readonly node: {
+          readonly categories: ReadonlyArray<{
+            readonly slug: string;
+          } | null> | null;
         } | null;
+      } | null> | null;
     } | null;
-    readonly auctionResultsConnection: {
-        readonly edges: ReadonlyArray<{
-            readonly node: {
-                readonly price_realized: {
-                    readonly display: string | null;
-                } | null;
-                readonly organization: string | null;
-                readonly sale_date: string | null;
-            } | null;
-        } | null> | null;
-    } | null;
-    readonly " $refType": "ArtistMarketInsights_artist";
+  } | null;
+  readonly auctionResultsConnection: {
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly price_realized: {
+          readonly display: string | null;
+        } | null;
+        readonly organization: string | null;
+        readonly sale_date: string | null;
+      } | null;
+    } | null> | null;
+  } | null;
+  readonly " $fragmentType": "ArtistMarketInsights_artist";
 };
-export type ArtistMarketInsights_artist$data = ArtistMarketInsights_artist;
 export type ArtistMarketInsights_artist$key = {
-    readonly " $data"?: ArtistMarketInsights_artist$data;
-    readonly " $fragmentRefs": FragmentRefs<"ArtistMarketInsights_artist">;
+  readonly " $data"?: ArtistMarketInsights_artist$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtistMarketInsights_artist">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [
@@ -241,5 +244,7 @@ const node: ReaderFragment = {
   "type": "Artist",
   "abstractKey": null
 };
-(node as any).hash = 'de8439137b5b5c48594e4ade9203b026';
+
+(node as any).hash = "de8439137b5b5c48594e4ade9203b026";
+
 export default node;

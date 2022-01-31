@@ -1,67 +1,27 @@
+/**
+ * @generated SignedSource<<13016dce0d803c2bd97fdc5d68616a3b>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type NearbyGalleryCard_Test_QueryVariables = {
-    partnerId: string;
+export type NearbyGalleryCard_Test_Query$variables = {
+  partnerId: string;
 };
-export type NearbyGalleryCard_Test_QueryResponse = {
-    readonly partner: {
-        readonly " $fragmentRefs": FragmentRefs<"NearbyGalleryCard_partner">;
-    } | null;
+export type NearbyGalleryCard_Test_Query$data = {
+  readonly partner: {
+    readonly " $fragmentSpreads": FragmentRefs<"NearbyGalleryCard_partner">;
+  } | null;
 };
 export type NearbyGalleryCard_Test_Query = {
-    readonly response: NearbyGalleryCard_Test_QueryResponse;
-    readonly variables: NearbyGalleryCard_Test_QueryVariables;
+  variables: NearbyGalleryCard_Test_Query$variables;
+  response: NearbyGalleryCard_Test_Query$data;
 };
-
-
-
-/*
-query NearbyGalleryCard_Test_Query(
-  $partnerId: String!
-) {
-  partner(id: $partnerId) @principalField {
-    ...NearbyGalleryCard_partner
-    id
-  }
-}
-
-fragment FollowProfileButton_profile on Profile {
-  id
-  slug
-  name
-  internalID
-  is_followed: isFollowed
-}
-
-fragment NearbyGalleryCard_partner on Partner {
-  name
-  slug
-  type
-  profile {
-    image {
-      cropped(height: 300, width: 400, version: "wide") {
-        src
-        srcSet
-      }
-    }
-    ...FollowProfileButton_profile
-    id
-  }
-  locationsConnection(first: 20) {
-    edges {
-      node {
-        city
-        displayCountry
-        id
-      }
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -381,5 +341,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'd19ad1e16f7fd9053393fc42ce754703';
+
+(node as any).hash = "d19ad1e16f7fd9053393fc42ce754703";
+
 export default node;

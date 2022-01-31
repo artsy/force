@@ -1,40 +1,43 @@
+/**
+ * @generated SignedSource<<c7e10d032097680f3b8030c7940ca166>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type FairHeader_fair = {
-    readonly name: string | null;
-    readonly exhibitionPeriod: string | null;
-    readonly profile: {
-        readonly icon: {
-            readonly desktop: {
-                readonly src: string;
-                readonly srcSet: string;
-                readonly size: number;
-            } | null;
-            readonly mobile: {
-                readonly src: string;
-                readonly srcSet: string;
-                readonly size: number;
-            } | null;
-            readonly sticky: {
-                readonly src: string;
-                readonly srcSet: string;
-                readonly size: number;
-            } | null;
-        } | null;
+export type FairHeader_fair$data = {
+  readonly name: string | null;
+  readonly exhibitionPeriod: string | null;
+  readonly profile: {
+    readonly icon: {
+      readonly desktop: {
+        readonly src: string;
+        readonly srcSet: string;
+        readonly size: number;
+      } | null;
+      readonly mobile: {
+        readonly src: string;
+        readonly srcSet: string;
+        readonly size: number;
+      } | null;
+      readonly sticky: {
+        readonly src: string;
+        readonly srcSet: string;
+        readonly size: number;
+      } | null;
     } | null;
-    readonly " $refType": "FairHeader_fair";
+  } | null;
+  readonly " $fragmentType": "FairHeader_fair";
 };
-export type FairHeader_fair$data = FairHeader_fair;
 export type FairHeader_fair$key = {
-    readonly " $data"?: FairHeader_fair$data;
-    readonly " $fragmentRefs": FragmentRefs<"FairHeader_fair">;
+  readonly " $data"?: FairHeader_fair$data;
+  readonly " $fragmentSpreads": FragmentRefs<"FairHeader_fair">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = {
@@ -178,5 +181,7 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '099d89164e6ab5f5948b117e20784616';
+
+(node as any).hash = "099d89164e6ab5f5948b117e20784616";
+
 export default node;

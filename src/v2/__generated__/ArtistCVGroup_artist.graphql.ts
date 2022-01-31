@@ -1,38 +1,41 @@
+/**
+ * @generated SignedSource<<540ad701710f6d6171af59ea4476edf7>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtistCVGroup_artist = {
-    readonly slug: string;
-    readonly showsConnection: {
-        readonly pageInfo: {
-            readonly hasNextPage: boolean;
-        };
-        readonly edges: ReadonlyArray<{
-            readonly node: {
-                readonly id: string;
-                readonly partner: {
-                    readonly name?: string | null;
-                    readonly href?: string | null;
-                } | null;
-                readonly name: string | null;
-                readonly startAt: string | null;
-                readonly city: string | null;
-                readonly href: string | null;
-            } | null;
-        } | null> | null;
-    } | null;
-    readonly " $refType": "ArtistCVGroup_artist";
+export type ArtistCVGroup_artist$data = {
+  readonly slug: string;
+  readonly showsConnection: {
+    readonly pageInfo: {
+      readonly hasNextPage: boolean;
+    };
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly id: string;
+        readonly partner: {
+          readonly name?: string | null;
+          readonly href?: string | null;
+        } | null;
+        readonly name: string | null;
+        readonly startAt: string | null;
+        readonly city: string | null;
+        readonly href: string | null;
+      } | null;
+    } | null> | null;
+  } | null;
+  readonly " $fragmentType": "ArtistCVGroup_artist";
 };
-export type ArtistCVGroup_artist$data = ArtistCVGroup_artist;
 export type ArtistCVGroup_artist$key = {
-    readonly " $data"?: ArtistCVGroup_artist$data;
-    readonly " $fragmentRefs": FragmentRefs<"ArtistCVGroup_artist">;
+  readonly " $data"?: ArtistCVGroup_artist$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtistCVGroup_artist">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = {
@@ -269,5 +272,7 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '54b80d5c989039c4be5cd687b5399c1e';
+
+(node as any).hash = "54b80d5c989039c4be5cd687b5399c1e";
+
 export default node;

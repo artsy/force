@@ -1,68 +1,45 @@
+/**
+ * @generated SignedSource<<f3338d6d943b2346fc8c0f4356f7c7f1>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type RequestConditionReportTestQueryVariables = {};
-export type RequestConditionReportTestQueryResponse = {
-    readonly me: {
-        readonly " $fragmentRefs": FragmentRefs<"RequestConditionReport_me">;
-    } | null;
-    readonly artwork: {
-        readonly " $fragmentRefs": FragmentRefs<"RequestConditionReport_artwork">;
-    } | null;
+export type RequestConditionReportTestQuery$variables = {};
+export type RequestConditionReportTestQuery$data = {
+  readonly me: {
+    readonly " $fragmentSpreads": FragmentRefs<"RequestConditionReport_me">;
+  } | null;
+  readonly artwork: {
+    readonly " $fragmentSpreads": FragmentRefs<"RequestConditionReport_artwork">;
+  } | null;
 };
-export type RequestConditionReportTestQueryRawResponse = {
-    readonly me: ({
-        readonly email: string | null;
-        readonly internalID: string;
-        readonly id: string;
-    }) | null;
-    readonly artwork: ({
-        readonly internalID: string;
-        readonly slug: string;
-        readonly saleArtwork: ({
-            readonly internalID: string;
-            readonly id: string;
-        }) | null;
-        readonly id: string;
-    }) | null;
+export type RequestConditionReportTestQuery$rawResponse = {
+  readonly me: {
+    readonly email: string | null;
+    readonly internalID: string;
+    readonly id: string;
+  } | null;
+  readonly artwork: {
+    readonly internalID: string;
+    readonly slug: string;
+    readonly saleArtwork: {
+      readonly internalID: string;
+      readonly id: string;
+    } | null;
+    readonly id: string;
+  } | null;
 };
 export type RequestConditionReportTestQuery = {
-    readonly response: RequestConditionReportTestQueryResponse;
-    readonly variables: RequestConditionReportTestQueryVariables;
-    readonly rawResponse: RequestConditionReportTestQueryRawResponse;
+  variables: RequestConditionReportTestQuery$variables;
+  response: RequestConditionReportTestQuery$data;
+  rawResponse: RequestConditionReportTestQuery$rawResponse;
 };
-
-
-
-/*
-query RequestConditionReportTestQuery {
-  me {
-    ...RequestConditionReport_me
-    id
-  }
-  artwork(id: "artwork-id") {
-    ...RequestConditionReport_artwork
-    id
-  }
-}
-
-fragment RequestConditionReport_artwork on Artwork {
-  internalID
-  slug
-  saleArtwork {
-    internalID
-    id
-  }
-}
-
-fragment RequestConditionReport_me on Me {
-  email
-  internalID
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -240,5 +217,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'a6701f9936f2335fa977525c2765d155';
+
+(node as any).hash = "a6701f9936f2335fa977525c2765d155";
+
 export default node;

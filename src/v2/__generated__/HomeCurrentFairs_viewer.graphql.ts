@@ -1,41 +1,44 @@
+/**
+ * @generated SignedSource<<0dd4890e4f56c42a58a2df3892b436eb>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type HomeCurrentFairs_viewer = {
-    readonly fairs: ReadonlyArray<{
-        readonly internalID: string;
-        readonly slug: string;
-        readonly bannerSize: string | null;
-        readonly isPublished: boolean | null;
-        readonly profile: {
-            readonly isPublished: boolean | null;
-        } | null;
-        readonly href: string | null;
-        readonly name: string | null;
-        readonly startAt: string | null;
-        readonly endAt: string | null;
-        readonly exhibitionPeriod: string | null;
-        readonly image: {
-            readonly cropped: {
-                readonly src: string;
-                readonly srcSet: string;
-                readonly width: number;
-                readonly height: number;
-            } | null;
-        } | null;
-    } | null> | null;
-    readonly " $refType": "HomeCurrentFairs_viewer";
+export type HomeCurrentFairs_viewer$data = {
+  readonly fairs: ReadonlyArray<{
+    readonly internalID: string;
+    readonly slug: string;
+    readonly bannerSize: string | null;
+    readonly isPublished: boolean | null;
+    readonly profile: {
+      readonly isPublished: boolean | null;
+    } | null;
+    readonly href: string | null;
+    readonly name: string | null;
+    readonly startAt: string | null;
+    readonly endAt: string | null;
+    readonly exhibitionPeriod: string | null;
+    readonly image: {
+      readonly cropped: {
+        readonly src: string;
+        readonly srcSet: string;
+        readonly width: number;
+        readonly height: number;
+      } | null;
+    } | null;
+  } | null> | null;
+  readonly " $fragmentType": "HomeCurrentFairs_viewer";
 };
-export type HomeCurrentFairs_viewer$data = HomeCurrentFairs_viewer;
 export type HomeCurrentFairs_viewer$key = {
-    readonly " $data"?: HomeCurrentFairs_viewer$data;
-    readonly " $fragmentRefs": FragmentRefs<"HomeCurrentFairs_viewer">;
+  readonly " $data"?: HomeCurrentFairs_viewer$data;
+  readonly " $fragmentSpreads": FragmentRefs<"HomeCurrentFairs_viewer">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = {
@@ -235,5 +238,7 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '772c24fda5e4c96fef072e0a03e6f8f4';
+
+(node as any).hash = "772c24fda5e4c96fef072e0a03e6f8f4";
+
 export default node;

@@ -1,37 +1,27 @@
+/**
+ * @generated SignedSource<<3c8e7030a15ef99f383bf7e145f884bc>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type SignUpFormLocationQueryVariables = {
-    ip: string;
+export type SignUpFormLocationQuery$variables = {
+  ip: string;
 };
-export type SignUpFormLocationQueryResponse = {
-    readonly requestLocation: {
-        readonly " $fragmentRefs": FragmentRefs<"SignUpForm_requestLocation">;
-    } | null;
+export type SignUpFormLocationQuery$data = {
+  readonly requestLocation: {
+    readonly " $fragmentSpreads": FragmentRefs<"SignUpForm_requestLocation">;
+  } | null;
 };
 export type SignUpFormLocationQuery = {
-    readonly response: SignUpFormLocationQueryResponse;
-    readonly variables: SignUpFormLocationQueryVariables;
+  variables: SignUpFormLocationQuery$variables;
+  response: SignUpFormLocationQuery$data;
 };
-
-
-
-/*
-query SignUpFormLocationQuery(
-  $ip: String!
-) {
-  requestLocation(ip: $ip) {
-    ...SignUpForm_requestLocation
-  }
-}
-
-fragment SignUpForm_requestLocation on RequestLocation {
-  countryCode
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -111,5 +101,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'f9d14ff83281a0d051c035554d6ea348';
+
+(node as any).hash = "f9d14ff83281a0d051c035554d6ea348";
+
 export default node;

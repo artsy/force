@@ -1,52 +1,25 @@
+/**
+ * @generated SignedSource<<ba017a6039483d91c3f2f78ac3976da2>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type GeneFamilies_Test_QueryVariables = {};
-export type GeneFamilies_Test_QueryResponse = {
-    readonly geneFamiliesConnection: {
-        readonly " $fragmentRefs": FragmentRefs<"GeneFamilies_geneFamiliesConnection">;
-    } | null;
+export type GeneFamilies_Test_Query$variables = {};
+export type GeneFamilies_Test_Query$data = {
+  readonly geneFamiliesConnection: {
+    readonly " $fragmentSpreads": FragmentRefs<"GeneFamilies_geneFamiliesConnection">;
+  } | null;
 };
 export type GeneFamilies_Test_Query = {
-    readonly response: GeneFamilies_Test_QueryResponse;
-    readonly variables: GeneFamilies_Test_QueryVariables;
+  variables: GeneFamilies_Test_Query$variables;
+  response: GeneFamilies_Test_Query$data;
 };
-
-
-
-/*
-query GeneFamilies_Test_Query {
-  geneFamiliesConnection(first: 20) {
-    ...GeneFamilies_geneFamiliesConnection
-  }
-}
-
-fragment GeneFamilies_geneFamiliesConnection on GeneFamilyConnection {
-  edges {
-    node {
-      internalID
-      ...GeneFamily_geneFamily
-      id
-    }
-  }
-}
-
-fragment GeneFamily_geneFamily on GeneFamily {
-  id
-  slug
-  name
-  genes {
-    isPublished
-    id
-    displayName
-    name
-    slug
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -251,5 +224,7 @@ return {
   }
 };
 })();
-(node as any).hash = '16c50aafe32cc4666052ea8ccda8aacf';
+
+(node as any).hash = "16c50aafe32cc4666052ea8ccda8aacf";
+
 export default node;

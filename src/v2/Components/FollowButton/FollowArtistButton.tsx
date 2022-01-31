@@ -136,6 +136,7 @@ export class FollowArtistButton extends React.Component<Props> {
           }
         }
       `,
+      // @ts-ignore UPGRADE RELAY 13
       optimisticResponse: {
         followArtist: {
           artist: {

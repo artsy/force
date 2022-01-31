@@ -1,75 +1,29 @@
+/**
+ * @generated SignedSource<<6b40350f3eee207a1f0a2366a6820c4e>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type SaleSorts = "CREATED_AT_ASC" | "CREATED_AT_DESC" | "ELIGIBLE_SALE_ARTWORKS_COUNT_ASC" | "ELIGIBLE_SALE_ARTWORKS_COUNT_DESC" | "END_AT_ASC" | "END_AT_DESC" | "NAME_ASC" | "NAME_DESC" | "START_AT_ASC" | "START_AT_DESC" | "TIMELY_AT_NAME_ASC" | "TIMELY_AT_NAME_DESC" | "_ID_ASC" | "_ID_DESC" | "%future added value";
-export type OtherAuctionsQueryVariables = {
-    first?: number | null;
-    sort?: SaleSorts | null;
+export type SaleSorts = "_ID_ASC" | "_ID_DESC" | "CREATED_AT_ASC" | "CREATED_AT_DESC" | "ELIGIBLE_SALE_ARTWORKS_COUNT_ASC" | "ELIGIBLE_SALE_ARTWORKS_COUNT_DESC" | "END_AT_ASC" | "END_AT_DESC" | "NAME_ASC" | "NAME_DESC" | "START_AT_ASC" | "START_AT_DESC" | "TIMELY_AT_NAME_ASC" | "TIMELY_AT_NAME_DESC" | "%future added value";
+export type OtherAuctionsQuery$variables = {
+  first?: number | null;
+  sort?: SaleSorts | null;
 };
-export type OtherAuctionsQueryResponse = {
-    readonly salesConnection: {
-        readonly " $fragmentRefs": FragmentRefs<"OtherAuctions_salesConnection">;
-    } | null;
+export type OtherAuctionsQuery$data = {
+  readonly salesConnection: {
+    readonly " $fragmentSpreads": FragmentRefs<"OtherAuctions_salesConnection">;
+  } | null;
 };
 export type OtherAuctionsQuery = {
-    readonly response: OtherAuctionsQueryResponse;
-    readonly variables: OtherAuctionsQueryVariables;
+  variables: OtherAuctionsQuery$variables;
+  response: OtherAuctionsQuery$data;
 };
-
-
-
-/*
-query OtherAuctionsQuery(
-  $first: Int
-  $sort: SaleSorts
-) {
-  salesConnection(first: $first, sort: $sort) {
-    ...OtherAuctions_salesConnection
-  }
-}
-
-fragment AuctionCard_sale on Sale {
-  coverImage {
-    cropped(width: 445, height: 334) {
-      src
-      srcSet
-    }
-  }
-  isBenefit
-  isGalleryAuction
-  endAt
-  href
-  slug
-  isLiveOpen
-  isPreview
-  liveStartAt
-  registrationStatus {
-    internalID
-    id
-  }
-  isRegistrationClosed
-  name
-  startAt
-  isClosed
-  partner {
-    name
-    id
-  }
-}
-
-fragment OtherAuctions_salesConnection on SaleConnection {
-  edges {
-    node {
-      internalID
-      ...AuctionCard_sale
-      id
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -348,5 +302,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'e49b60e9fc1f386bd115695786f8b97d';
+
+(node as any).hash = "e49b60e9fc1f386bd115695786f8b97d";
+
 export default node;

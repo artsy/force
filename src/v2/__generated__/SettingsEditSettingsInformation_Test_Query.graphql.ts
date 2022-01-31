@@ -1,37 +1,25 @@
+/**
+ * @generated SignedSource<<4649e13d8310af35f05eed2b2dd107bd>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type SettingsEditSettingsInformation_Test_QueryVariables = {};
-export type SettingsEditSettingsInformation_Test_QueryResponse = {
-    readonly me: {
-        readonly " $fragmentRefs": FragmentRefs<"SettingsEditSettingsInformation_me">;
-    } | null;
+export type SettingsEditSettingsInformation_Test_Query$variables = {};
+export type SettingsEditSettingsInformation_Test_Query$data = {
+  readonly me: {
+    readonly " $fragmentSpreads": FragmentRefs<"SettingsEditSettingsInformation_me">;
+  } | null;
 };
 export type SettingsEditSettingsInformation_Test_Query = {
-    readonly response: SettingsEditSettingsInformation_Test_QueryResponse;
-    readonly variables: SettingsEditSettingsInformation_Test_QueryVariables;
+  variables: SettingsEditSettingsInformation_Test_Query$variables;
+  response: SettingsEditSettingsInformation_Test_Query$data;
 };
-
-
-
-/*
-query SettingsEditSettingsInformation_Test_Query {
-  me {
-    ...SettingsEditSettingsInformation_me
-    id
-  }
-}
-
-fragment SettingsEditSettingsInformation_me on Me {
-  email
-  name
-  paddleNumber
-  phone
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = {
@@ -150,5 +138,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'b34e4f94a15cfd0e169130136cbd6d62';
+
+(node as any).hash = "b34e4f94a15cfd0e169130136cbd6d62";
+
 export default node;

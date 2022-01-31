@@ -1,29 +1,32 @@
+/**
+ * @generated SignedSource<<65cc2de1d26331c7e4efdb27080e16c8>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ContactInformation_me = {
-    readonly internalID: string;
-    readonly name: string | null;
-    readonly email: string | null;
-    readonly phone: string | null;
-    readonly phoneNumber: {
-        readonly isValid: boolean | null;
-        readonly international: string | null;
-        readonly national: string | null;
-        readonly regionCode: string | null;
-    } | null;
-    readonly " $refType": "ContactInformation_me";
+export type ContactInformation_me$data = {
+  readonly internalID: string;
+  readonly name: string | null;
+  readonly email: string | null;
+  readonly phone: string | null;
+  readonly phoneNumber: {
+    readonly isValid: boolean | null;
+    readonly international: string | null;
+    readonly national: string | null;
+    readonly regionCode: string | null;
+  } | null;
+  readonly " $fragmentType": "ContactInformation_me";
 };
-export type ContactInformation_me$data = ContactInformation_me;
 export type ContactInformation_me$key = {
-    readonly " $data"?: ContactInformation_me$data;
-    readonly " $fragmentRefs": FragmentRefs<"ContactInformation_me">;
+  readonly " $data"?: ContactInformation_me$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ContactInformation_me">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -114,5 +117,7 @@ const node: ReaderFragment = {
   "type": "Me",
   "abstractKey": null
 };
-(node as any).hash = 'e3dfd41ee7d8032f781ffae215835e69';
+
+(node as any).hash = "e3dfd41ee7d8032f781ffae215835e69";
+
 export default node;

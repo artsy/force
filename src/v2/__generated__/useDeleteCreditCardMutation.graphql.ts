@@ -1,85 +1,41 @@
+/**
+ * @generated SignedSource<<b42493f52f9db47489f9cbc12db8a87f>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Mutation } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type DeleteCreditCardInput = {
-    clientMutationId?: string | null;
-    id: string;
+  clientMutationId?: string | null;
+  id: string;
 };
-export type useDeleteCreditCardMutationVariables = {
-    input: DeleteCreditCardInput;
+export type useDeleteCreditCardMutation$variables = {
+  input: DeleteCreditCardInput;
 };
-export type useDeleteCreditCardMutationResponse = {
-    readonly deleteCreditCard: {
-        readonly me: {
-            readonly " $fragmentRefs": FragmentRefs<"SettingsPaymentsMethods_me">;
-        } | null;
-        readonly creditCardOrError: {
-            readonly creditCard?: {
-                readonly " $fragmentRefs": FragmentRefs<"SettingsPaymentsMethod_method">;
-            } | null;
-            readonly mutationError?: {
-                readonly message: string;
-            } | null;
-        } | null;
+export type useDeleteCreditCardMutation$data = {
+  readonly deleteCreditCard: {
+    readonly me: {
+      readonly " $fragmentSpreads": FragmentRefs<"SettingsPaymentsMethods_me">;
     } | null;
+    readonly creditCardOrError: {
+      readonly creditCard?: {
+        readonly " $fragmentSpreads": FragmentRefs<"SettingsPaymentsMethod_method">;
+      } | null;
+      readonly mutationError?: {
+        readonly message: string;
+      } | null;
+    } | null;
+  } | null;
 };
 export type useDeleteCreditCardMutation = {
-    readonly response: useDeleteCreditCardMutationResponse;
-    readonly variables: useDeleteCreditCardMutationVariables;
+  variables: useDeleteCreditCardMutation$variables;
+  response: useDeleteCreditCardMutation$data;
 };
-
-
-
-/*
-mutation useDeleteCreditCardMutation(
-  $input: DeleteCreditCardInput!
-) {
-  deleteCreditCard(input: $input) {
-    me {
-      ...SettingsPaymentsMethods_me
-      id
-    }
-    creditCardOrError {
-      __typename
-      ... on CreditCardMutationSuccess {
-        creditCard {
-          ...SettingsPaymentsMethod_method
-          id
-        }
-      }
-      ... on CreditCardMutationFailure {
-        mutationError {
-          message
-        }
-      }
-    }
-  }
-}
-
-fragment SettingsPaymentsMethod_method on CreditCard {
-  internalID
-  name
-  brand
-  lastDigits
-  expirationYear
-  expirationMonth
-}
-
-fragment SettingsPaymentsMethods_me on Me {
-  creditCards(first: 50) {
-    edges {
-      node {
-        internalID
-        ...SettingsPaymentsMethod_method
-        id
-      }
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -361,5 +317,7 @@ return {
   }
 };
 })();
-(node as any).hash = '16f7357d04130c62f4e7a4a034ab4949';
+
+(node as any).hash = "16f7357d04130c62f4e7a4a034ab4949";
+
 export default node;

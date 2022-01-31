@@ -1,58 +1,30 @@
+/**
+ * @generated SignedSource<<ca6d8c335f6095b5ae0a4cf9c956447a>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ContactInformation_SubmissionFlowTest_QueryVariables = {
-    id: string;
+export type ContactInformation_SubmissionFlowTest_Query$variables = {
+  id: string;
 };
-export type ContactInformation_SubmissionFlowTest_QueryResponse = {
-    readonly me: {
-        readonly " $fragmentRefs": FragmentRefs<"ContactInformation_me">;
-    } | null;
-    readonly submission: {
-        readonly " $fragmentRefs": FragmentRefs<"ContactInformation_submission">;
-    } | null;
+export type ContactInformation_SubmissionFlowTest_Query$data = {
+  readonly me: {
+    readonly " $fragmentSpreads": FragmentRefs<"ContactInformation_me">;
+  } | null;
+  readonly submission: {
+    readonly " $fragmentSpreads": FragmentRefs<"ContactInformation_submission">;
+  } | null;
 };
 export type ContactInformation_SubmissionFlowTest_Query = {
-    readonly response: ContactInformation_SubmissionFlowTest_QueryResponse;
-    readonly variables: ContactInformation_SubmissionFlowTest_QueryVariables;
+  variables: ContactInformation_SubmissionFlowTest_Query$variables;
+  response: ContactInformation_SubmissionFlowTest_Query$data;
 };
-
-
-
-/*
-query ContactInformation_SubmissionFlowTest_Query(
-  $id: ID!
-) {
-  me {
-    ...ContactInformation_me
-    id
-  }
-  submission(id: $id) {
-    ...ContactInformation_submission
-    id
-  }
-}
-
-fragment ContactInformation_me on Me {
-  internalID
-  name
-  email
-  phone
-  phoneNumber {
-    isValid
-    international: display(format: INTERNATIONAL)
-    national: display(format: NATIONAL)
-    regionCode
-  }
-}
-
-fragment ContactInformation_submission on ConsignmentSubmission {
-  id
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -288,5 +260,7 @@ return {
   }
 };
 })();
-(node as any).hash = '86f083359efd9e6383c8c3dcc335e3c4';
+
+(node as any).hash = "86f083359efd9e6383c8c3dcc335e3c4";
+
 export default node;

@@ -1,27 +1,30 @@
+/**
+ * @generated SignedSource<<12df8b6913e6c8c98e8d397aa3f43283>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type SettingsShippingAddresses_me = {
-    readonly addresses: {
-        readonly edges: ReadonlyArray<{
-            readonly node: {
-                readonly internalID: string;
-                readonly " $fragmentRefs": FragmentRefs<"SettingsShippingAddress_address">;
-            } | null;
-        } | null> | null;
-    } | null;
-    readonly " $refType": "SettingsShippingAddresses_me";
+export type SettingsShippingAddresses_me$data = {
+  readonly addresses: {
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly internalID: string;
+        readonly " $fragmentSpreads": FragmentRefs<"SettingsShippingAddress_address">;
+      } | null;
+    } | null> | null;
+  } | null;
+  readonly " $fragmentType": "SettingsShippingAddresses_me";
 };
-export type SettingsShippingAddresses_me$data = SettingsShippingAddresses_me;
 export type SettingsShippingAddresses_me$key = {
-    readonly " $data"?: SettingsShippingAddresses_me$data;
-    readonly " $fragmentRefs": FragmentRefs<"SettingsShippingAddresses_me">;
+  readonly " $data"?: SettingsShippingAddresses_me$data;
+  readonly " $fragmentSpreads": FragmentRefs<"SettingsShippingAddresses_me">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -78,5 +81,7 @@ const node: ReaderFragment = {
   "type": "Me",
   "abstractKey": null
 };
-(node as any).hash = '010b9848f693b9ad360dabfdeb79f158';
+
+(node as any).hash = "010b9848f693b9ad360dabfdeb79f158";
+
 export default node;

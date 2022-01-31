@@ -1,286 +1,25 @@
+/**
+ * @generated SignedSource<<b3ad301e39804d6921b26407005de826>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtistApp_Test_QueryVariables = {};
-export type ArtistApp_Test_QueryResponse = {
-    readonly artist: {
-        readonly " $fragmentRefs": FragmentRefs<"ArtistApp_artist">;
-    } | null;
+export type ArtistApp_Test_Query$variables = {};
+export type ArtistApp_Test_Query$data = {
+  readonly artist: {
+    readonly " $fragmentSpreads": FragmentRefs<"ArtistApp_artist">;
+  } | null;
 };
 export type ArtistApp_Test_Query = {
-    readonly response: ArtistApp_Test_QueryResponse;
-    readonly variables: ArtistApp_Test_QueryVariables;
+  variables: ArtistApp_Test_Query$variables;
+  response: ArtistApp_Test_Query$data;
 };
-
-
-
-/*
-query ArtistApp_Test_Query {
-  artist(id: "example") {
-    ...ArtistApp_artist
-    id
-  }
-}
-
-fragment ArtistApp_artist on Artist {
-  slug
-  statuses {
-    shows
-    cv(minShowCount: 0)
-    articles
-    artworks
-    auctionLots
-  }
-  counts {
-    forSaleArtworks
-    auctionResults
-  }
-  related {
-    genes {
-      edges {
-        node {
-          slug
-          id
-        }
-      }
-    }
-  }
-  highlights {
-    artistPartnersConnection: partnersConnection(first: 10, displayOnPartnerProfile: true, representedBy: true, partnerCategory: ["blue-chip", "top-established", "top-emerging"]) {
-      edges {
-        node {
-          categories {
-            slug
-            id
-          }
-          id
-        }
-        id
-      }
-    }
-  }
-  insights {
-    type
-  }
-  biographyBlurb(format: HTML, partnerBio: false) {
-    text
-  }
-  ...ArtistMeta_artist
-  ...ArtistHeader_artist
-  ...BackLink_artist
-  internalID
-  name
-}
-
-fragment ArtistHeader_artist on Artist {
-  ...FollowArtistButton_artist
-  ...SelectedCareerAchievements_artist
-  artistHighlights: highlights {
-    partnersConnection(first: 10, displayOnPartnerProfile: true, representedBy: true, partnerCategory: ["blue-chip", "top-established", "top-emerging"]) {
-      edges {
-        node {
-          categories {
-            slug
-            id
-          }
-          id
-        }
-        id
-      }
-    }
-  }
-  auctionResultsConnection(recordsTrusted: true, first: 1, sort: PRICE_AND_DATE_DESC) {
-    edges {
-      node {
-        price_realized: priceRealized {
-          display(format: "0.0a")
-        }
-        organization
-        sale_date: saleDate(format: "YYYY")
-        id
-      }
-    }
-  }
-  image {
-    cropped(width: 200, height: 200) {
-      src
-      srcSet
-    }
-  }
-  internalID
-  slug
-  name
-  formattedNationalityAndBirthday
-  counts {
-    follows
-    forSaleArtworks
-  }
-  biographyBlurb(format: HTML, partnerBio: false) {
-    credit
-    partnerID
-    text
-  }
-}
-
-fragment ArtistMetaCanonicalLink_artist on Artist {
-  slug
-  statuses {
-    shows
-    cv(minShowCount: 0)
-    articles
-    auctionLots
-    artworks
-  }
-  highlights {
-    partnersConnection(first: 10, displayOnPartnerProfile: true, representedBy: true, partnerCategory: ["blue-chip", "top-established", "top-emerging"]) {
-      edges {
-        __typename
-        id
-      }
-    }
-  }
-  biographyBlurb(format: HTML, partnerBio: false) {
-    text
-  }
-  related {
-    genes {
-      edges {
-        node {
-          __typename
-          id
-        }
-      }
-    }
-  }
-  insights {
-    __typename
-  }
-}
-
-fragment ArtistMeta_artist on Artist {
-  slug
-  name
-  nationality
-  birthday
-  deathday
-  gender
-  href
-  meta {
-    description
-  }
-  alternate_names: alternateNames
-  image {
-    versions
-    large: url(version: "large")
-    square: url(version: "square")
-  }
-  counts {
-    artworks
-  }
-  blurb
-  artworks_connection: artworksConnection(first: 10, filter: IS_FOR_SALE, published: true) {
-    edges {
-      node {
-        title
-        date
-        description
-        category
-        price_currency: priceCurrency
-        listPrice {
-          __typename
-          ... on PriceRange {
-            minPrice {
-              major
-              currencyCode
-            }
-            maxPrice {
-              major
-            }
-          }
-          ... on Money {
-            major
-            currencyCode
-          }
-        }
-        availability
-        href
-        image {
-          small: url(version: "small")
-          large: url(version: "large")
-        }
-        partner {
-          name
-          href
-          profile {
-            image {
-              small: url(version: "small")
-              large: url(version: "large")
-            }
-            id
-          }
-          id
-        }
-        id
-      }
-    }
-  }
-  ...ArtistMetaCanonicalLink_artist
-}
-
-fragment BackLink_artist on Artist {
-  name
-  slug
-}
-
-fragment FollowArtistButton_artist on Artist {
-  id
-  internalID
-  name
-  slug
-  is_followed: isFollowed
-  counts {
-    follows
-  }
-}
-
-fragment SelectedCareerAchievements_artist on Artist {
-  highlights {
-    partnersConnection(first: 10, displayOnPartnerProfile: true, representedBy: true, partnerCategory: ["blue-chip", "top-established", "top-emerging"]) {
-      edges {
-        node {
-          categories {
-            slug
-            id
-          }
-          id
-        }
-        id
-      }
-    }
-  }
-  insights {
-    type
-    label
-    entities
-  }
-  auctionResultsConnection(recordsTrusted: true, first: 1, sort: PRICE_AND_DATE_DESC) {
-    edges {
-      node {
-        price_realized: priceRealized {
-          display(format: "0.0a")
-        }
-        organization
-        sale_date: saleDate(format: "YYYY")
-        id
-      }
-    }
-  }
-  slug
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -1494,5 +1233,7 @@ return {
   }
 };
 })();
-(node as any).hash = '599c2ad9b40231b3bbe3760a062d8963';
+
+(node as any).hash = "599c2ad9b40231b3bbe3760a062d8963";
+
 export default node;

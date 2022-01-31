@@ -1,44 +1,28 @@
+/**
+ * @generated SignedSource<<7db58397a96d5b4938c75ce56512266b>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type PartnerCategoryType = "GALLERY" | "INSTITUTION" | "%future added value";
-export type PartnerClassification = "AUCTION" | "BRAND" | "DEMO" | "GALLERY" | "INSTITUTION" | "INSTITUTIONAL_SELLER" | "PRIVATE_COLLECTOR" | "PRIVATE_DEALER" | "%future added value";
-export type PartnersRailsQueryVariables = {
-    categoryType?: PartnerCategoryType | null;
-    type?: Array<PartnerClassification | null> | null;
+export type PartnersRailsQuery$variables = {
+  categoryType?: PartnerCategoryType | null;
 };
-export type PartnersRailsQueryResponse = {
-    readonly viewer: {
-        readonly " $fragmentRefs": FragmentRefs<"PartnersRails_viewer">;
-    } | null;
+export type PartnersRailsQuery$data = {
+  readonly viewer: {
+    readonly " $fragmentSpreads": FragmentRefs<"PartnersRails_viewer">;
+  } | null;
 };
 export type PartnersRailsQuery = {
-    readonly response: PartnersRailsQueryResponse;
-    readonly variables: PartnersRailsQueryVariables;
+  variables: PartnersRailsQuery$variables;
+  response: PartnersRailsQuery$data;
 };
-
-
-
-/*
-query PartnersRailsQuery(
-  $categoryType: PartnerCategoryType
-) {
-  viewer {
-    ...PartnersRails_viewer_1Wcb23
-  }
-}
-
-fragment PartnersRails_viewer_1Wcb23 on Viewer {
-  partnerCategories(categoryType: $categoryType, size: 50, internal: false) {
-    name
-    slug
-    id
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -46,11 +30,6 @@ var v0 = [
     "defaultValue": null,
     "kind": "LocalArgument",
     "name": "categoryType"
-  },
-  {
-    "defaultValue": null,
-    "kind": "LocalArgument",
-    "name": "type"
   }
 ],
 v1 = {
@@ -75,12 +54,7 @@ return {
         "selections": [
           {
             "args": [
-              (v1/*: any*/),
-              {
-                "kind": "Variable",
-                "name": "type",
-                "variableName": "type"
-              }
+              (v1/*: any*/)
             ],
             "kind": "FragmentSpread",
             "name": "PartnersRails_viewer"
@@ -156,14 +130,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "824a432bc4eb9b356294979c5f584129",
+    "cacheID": "4d2797ae375b363622de696ec0ae85ed",
     "id": null,
     "metadata": {},
     "name": "PartnersRailsQuery",
     "operationKind": "query",
-    "text": "query PartnersRailsQuery(\n  $categoryType: PartnerCategoryType\n) {\n  viewer {\n    ...PartnersRails_viewer_1Wcb23\n  }\n}\n\nfragment PartnersRails_viewer_1Wcb23 on Viewer {\n  partnerCategories(categoryType: $categoryType, size: 50, internal: false) {\n    name\n    slug\n    id\n  }\n}\n"
+    "text": "query PartnersRailsQuery(\n  $categoryType: PartnerCategoryType\n) {\n  viewer {\n    ...PartnersRails_viewer_49b74Z\n  }\n}\n\nfragment PartnersRails_viewer_49b74Z on Viewer {\n  partnerCategories(categoryType: $categoryType, size: 50, internal: false) {\n    name\n    slug\n    id\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '52f4cc94a03d9e88e14d1600fee8a203';
+
+(node as any).hash = "7b013d601ea22772058d07e8c83b4fde";
+
 export default node;

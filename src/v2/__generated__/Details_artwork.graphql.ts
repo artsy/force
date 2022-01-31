@@ -1,49 +1,52 @@
+/**
+ * @generated SignedSource<<7f6a21101d2cd9cbad811b95072b9c7c>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type Details_artwork = {
+export type Details_artwork$data = {
+  readonly href: string | null;
+  readonly title: string | null;
+  readonly date: string | null;
+  readonly sale_message: string | null;
+  readonly cultural_maker: string | null;
+  readonly artists: ReadonlyArray<{
+    readonly id: string;
     readonly href: string | null;
-    readonly title: string | null;
-    readonly date: string | null;
-    readonly sale_message: string | null;
-    readonly cultural_maker: string | null;
-    readonly artists: ReadonlyArray<{
-        readonly id: string;
-        readonly href: string | null;
-        readonly name: string | null;
-    } | null> | null;
-    readonly collecting_institution: string | null;
-    readonly partner: {
-        readonly name: string | null;
-        readonly href: string | null;
+    readonly name: string | null;
+  } | null> | null;
+  readonly collecting_institution: string | null;
+  readonly partner: {
+    readonly name: string | null;
+    readonly href: string | null;
+  } | null;
+  readonly sale: {
+    readonly is_auction: boolean | null;
+    readonly is_closed: boolean | null;
+  } | null;
+  readonly sale_artwork: {
+    readonly counts: {
+      readonly bidder_positions: Int | null;
     } | null;
-    readonly sale: {
-        readonly is_auction: boolean | null;
-        readonly is_closed: boolean | null;
+    readonly highest_bid: {
+      readonly display: string | null;
     } | null;
-    readonly sale_artwork: {
-        readonly counts: {
-            readonly bidder_positions: number | null;
-        } | null;
-        readonly highest_bid: {
-            readonly display: string | null;
-        } | null;
-        readonly opening_bid: {
-            readonly display: string | null;
-        } | null;
+    readonly opening_bid: {
+      readonly display: string | null;
     } | null;
-    readonly " $refType": "Details_artwork";
+  } | null;
+  readonly " $fragmentType": "Details_artwork";
 };
-export type Details_artwork$data = Details_artwork;
 export type Details_artwork$key = {
-    readonly " $data"?: Details_artwork$data;
-    readonly " $fragmentRefs": FragmentRefs<"Details_artwork">;
+  readonly " $data"?: Details_artwork$data;
+  readonly " $fragmentSpreads": FragmentRefs<"Details_artwork">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = {
@@ -230,5 +233,7 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '3e0359262ece717c5498c7372cc8416b';
+
+(node as any).hash = "3e0359262ece717c5498c7372cc8416b";
+
 export default node;

@@ -1,4 +1,4 @@
-import { ArtistConsignRoute_Test_QueryRawResponse } from "v2/__generated__/ArtistConsignRoute_Test_Query.graphql"
+import { ArtistConsignRoute_Test_Query$rawResponse } from "v2/__generated__/ArtistConsignRoute_Test_Query.graphql"
 import { SystemContextProvider } from "v2/System"
 import { useTracking } from "v2/System/Analytics/useTracking"
 import { MockBoot, renderRelayTree } from "v2/DevTools"
@@ -13,7 +13,7 @@ describe("ConsignRoute", () => {
   const trackEvent = jest.fn()
 
   const getWrapper = async (
-    response: ArtistConsignRoute_Test_QueryRawResponse = ConsignRouteFixture
+    response: ArtistConsignRoute_Test_Query$rawResponse = ConsignRouteFixture
   ) => {
     return await renderRelayTree({
       Component: ({ artist, artworksByInternalID }) => {
@@ -247,7 +247,7 @@ describe("ConsignRoute", () => {
   })
 })
 
-const ConsignRouteFixture: ArtistConsignRoute_Test_QueryRawResponse = {
+const ConsignRouteFixture: ArtistConsignRoute_Test_Query$rawResponse = {
   artist: {
     href: "/artist/alex-katz",
     id: "QXJ0aXN0OjRkOGQxMjBjODc2YzY5N2FlMTAwMDA0Ng==",

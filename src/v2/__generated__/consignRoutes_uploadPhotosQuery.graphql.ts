@@ -1,100 +1,55 @@
+/**
+ * @generated SignedSource<<e32da42a24bb31e2dc65508d5de45f7f>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ConsignmentAttributionClass = "LIMITED_EDITION" | "OPEN_EDITION" | "UNIQUE" | "UNKNOWN_EDITION" | "%future added value";
-export type consignRoutes_uploadPhotosQueryVariables = {
-    id: string;
-    sessionID?: string | null;
+export type consignRoutes_uploadPhotosQuery$variables = {
+  id: string;
+  sessionID?: string | null;
 };
-export type consignRoutes_uploadPhotosQueryResponse = {
-    readonly submission: {
-        readonly id: string;
-        readonly artist: {
-            readonly internalID: string;
-            readonly name: string | null;
-        } | null;
-        readonly locationCity: string | null;
-        readonly locationCountry: string | null;
-        readonly locationState: string | null;
-        readonly year: string | null;
-        readonly title: string | null;
-        readonly medium: string | null;
-        readonly attributionClass: ConsignmentAttributionClass | null;
-        readonly editionNumber: string | null;
-        readonly editionSize: string | null;
-        readonly height: string | null;
-        readonly width: string | null;
-        readonly depth: string | null;
-        readonly dimensionsMetric: string | null;
-        readonly provenance: string | null;
-        readonly assets: ReadonlyArray<{
-            readonly id: string;
-            readonly imageUrls: unknown | null;
-            readonly geminiToken: string | null;
-            readonly size: string | null;
-            readonly filename: string | null;
-        } | null> | null;
-        readonly " $fragmentRefs": FragmentRefs<"UploadPhotos_submission">;
+export type consignRoutes_uploadPhotosQuery$data = {
+  readonly submission: {
+    readonly id: string;
+    readonly artist: {
+      readonly internalID: string;
+      readonly name: string | null;
     } | null;
+    readonly locationCity: string | null;
+    readonly locationCountry: string | null;
+    readonly locationState: string | null;
+    readonly year: string | null;
+    readonly title: string | null;
+    readonly medium: string | null;
+    readonly attributionClass: ConsignmentAttributionClass | null;
+    readonly editionNumber: string | null;
+    readonly editionSize: string | null;
+    readonly height: string | null;
+    readonly width: string | null;
+    readonly depth: string | null;
+    readonly dimensionsMetric: string | null;
+    readonly provenance: string | null;
+    readonly assets: ReadonlyArray<{
+      readonly id: string;
+      readonly imageUrls: any | null;
+      readonly geminiToken: string | null;
+      readonly size: string | null;
+      readonly filename: string | null;
+    } | null> | null;
+    readonly " $fragmentSpreads": FragmentRefs<"UploadPhotos_submission">;
+  } | null;
 };
 export type consignRoutes_uploadPhotosQuery = {
-    readonly response: consignRoutes_uploadPhotosQueryResponse;
-    readonly variables: consignRoutes_uploadPhotosQueryVariables;
+  variables: consignRoutes_uploadPhotosQuery$variables;
+  response: consignRoutes_uploadPhotosQuery$data;
 };
-
-
-
-/*
-query consignRoutes_uploadPhotosQuery(
-  $id: ID!
-  $sessionID: String
-) {
-  submission(id: $id, sessionID: $sessionID) {
-    ...UploadPhotos_submission
-    id
-    artist {
-      internalID
-      name
-      id
-    }
-    locationCity
-    locationCountry
-    locationState
-    year
-    title
-    medium
-    attributionClass
-    editionNumber
-    editionSize
-    height
-    width
-    depth
-    dimensionsMetric
-    provenance
-    assets {
-      id
-      imageUrls
-      geminiToken
-      size
-      filename
-    }
-  }
-}
-
-fragment UploadPhotos_submission on ConsignmentSubmission {
-  id
-  assets {
-    id
-    imageUrls
-    geminiToken
-    size
-    filename
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -295,6 +250,11 @@ return {
         "name": "submission",
         "plural": false,
         "selections": [
+          {
+            "args": null,
+            "kind": "FragmentSpread",
+            "name": "UploadPhotos_submission"
+          },
           (v2/*: any*/),
           {
             "alias": null,
@@ -323,12 +283,7 @@ return {
           (v16/*: any*/),
           (v17/*: any*/),
           (v18/*: any*/),
-          (v19/*: any*/),
-          {
-            "args": null,
-            "kind": "FragmentSpread",
-            "name": "UploadPhotos_submission"
-          }
+          (v19/*: any*/)
         ],
         "storageKey": null
       }
@@ -395,5 +350,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'd54f0d48e037030303f4d1ff1e873d2a';
+
+(node as any).hash = "d54f0d48e037030303f4d1ff1e873d2a";
+
 export default node;

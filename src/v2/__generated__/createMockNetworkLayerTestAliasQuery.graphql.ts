@@ -1,55 +1,37 @@
+/**
+ * @generated SignedSource<<44086faa48265ba6cfea136f257b57e3>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
-export type createMockNetworkLayerTestAliasQueryVariables = {};
-export type createMockNetworkLayerTestAliasQueryResponse = {
-    readonly artist: {
-        readonly forSaleArtworks: {
-            readonly edges: ReadonlyArray<{
-                readonly node: {
-                    readonly id: string;
-                } | null;
-            } | null> | null;
+import { ConcreteRequest, Query } from 'relay-runtime';
+export type createMockNetworkLayerTestAliasQuery$variables = {};
+export type createMockNetworkLayerTestAliasQuery$data = {
+  readonly artist: {
+    readonly forSaleArtworks: {
+      readonly edges: ReadonlyArray<{
+        readonly node: {
+          readonly id: string;
         } | null;
-        readonly notForSaleArtworks: {
-            readonly edges: ReadonlyArray<{
-                readonly node: {
-                    readonly id: string;
-                } | null;
-            } | null> | null;
-        } | null;
+      } | null> | null;
     } | null;
+    readonly notForSaleArtworks: {
+      readonly edges: ReadonlyArray<{
+        readonly node: {
+          readonly id: string;
+        } | null;
+      } | null> | null;
+    } | null;
+  } | null;
 };
 export type createMockNetworkLayerTestAliasQuery = {
-    readonly response: createMockNetworkLayerTestAliasQueryResponse;
-    readonly variables: createMockNetworkLayerTestAliasQueryVariables;
+  variables: createMockNetworkLayerTestAliasQuery$variables;
+  response: createMockNetworkLayerTestAliasQuery$data;
 };
-
-
-
-/*
-query createMockNetworkLayerTestAliasQuery {
-  artist(id: "banksy") {
-    forSaleArtworks: artworksConnection(filter: IS_FOR_SALE) {
-      edges {
-        node {
-          id
-        }
-      }
-    }
-    notForSaleArtworks: artworksConnection(filter: IS_NOT_FOR_SALE) {
-      edges {
-        node {
-          id
-        }
-      }
-    }
-    id
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -179,5 +161,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'fefd7ea56bd774b256cf177b43731c07';
+
+(node as any).hash = "fefd7ea56bd774b256cf177b43731c07";
+
 export default node;

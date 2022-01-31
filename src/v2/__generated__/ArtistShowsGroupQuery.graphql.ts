@@ -1,111 +1,34 @@
+/**
+ * @generated SignedSource<<725f853d05e9dc141363d05080bfde09>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ShowSorts = "END_AT_ASC" | "END_AT_DESC" | "FEATURED_ASC" | "FEATURED_DESC" | "FEATURED_DESC_END_AT_DESC" | "NAME_ASC" | "NAME_DESC" | "PARTNER_ASC" | "SORTABLE_NAME_ASC" | "SORTABLE_NAME_DESC" | "START_AT_ASC" | "START_AT_DESC" | "UPDATED_AT_ASC" | "UPDATED_AT_DESC" | "%future added value";
-export type ArtistShowsGroupQueryVariables = {
-    first?: number | null;
-    last?: number | null;
-    after?: string | null;
-    before?: string | null;
-    artistID: string;
-    sort?: ShowSorts | null;
-    status: string;
+export type ArtistShowsGroupQuery$variables = {
+  first?: number | null;
+  last?: number | null;
+  after?: string | null;
+  before?: string | null;
+  artistID: string;
+  sort?: ShowSorts | null;
+  status: string;
 };
-export type ArtistShowsGroupQueryResponse = {
-    readonly artist: {
-        readonly " $fragmentRefs": FragmentRefs<"ArtistShowsGroup_artist">;
-    } | null;
+export type ArtistShowsGroupQuery$data = {
+  readonly artist: {
+    readonly " $fragmentSpreads": FragmentRefs<"ArtistShowsGroup_artist">;
+  } | null;
 };
 export type ArtistShowsGroupQuery = {
-    readonly response: ArtistShowsGroupQueryResponse;
-    readonly variables: ArtistShowsGroupQueryVariables;
+  variables: ArtistShowsGroupQuery$variables;
+  response: ArtistShowsGroupQuery$data;
 };
-
-
-
-/*
-query ArtistShowsGroupQuery(
-  $first: Int
-  $last: Int
-  $after: String
-  $before: String
-  $artistID: String!
-  $sort: ShowSorts
-  $status: String!
-) {
-  artist(id: $artistID) {
-    ...ArtistShowsGroup_artist_1Q1mII
-    id
-  }
-}
-
-fragment ArtistShowsGroup_artist_1Q1mII on Artist {
-  slug
-  showsConnection(first: $first, after: $after, before: $before, last: $last, sort: $sort, status: $status) {
-    pageInfo {
-      hasNextPage
-      endCursor
-    }
-    pageCursors {
-      ...Pagination_pageCursors
-    }
-    edges {
-      node {
-        partner {
-          __typename
-          ... on ExternalPartner {
-            name
-            id
-          }
-          ... on Partner {
-            name
-          }
-          ... on Node {
-            __isNode: __typename
-            id
-          }
-        }
-        name
-        href
-        exhibitionPeriod
-        coverImage {
-          cropped(width: 440, height: 315) {
-            src
-            srcSet
-          }
-        }
-        city
-        id
-      }
-    }
-  }
-}
-
-fragment Pagination_pageCursors on PageCursors {
-  around {
-    cursor
-    page
-    isCurrent
-  }
-  first {
-    cursor
-    page
-    isCurrent
-  }
-  last {
-    cursor
-    page
-    isCurrent
-  }
-  previous {
-    cursor
-    page
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = {
@@ -526,5 +449,7 @@ return {
   }
 };
 })();
-(node as any).hash = '3df5f5d38be37ee36a0721f9f099c32d';
+
+(node as any).hash = "3df5f5d38be37ee36a0721f9f099c32d";
+
 export default node;

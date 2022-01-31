@@ -1,89 +1,30 @@
+/**
+ * @generated SignedSource<<3b16dcba23b050fc5f25c43c1f1ee3d7>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type SearchEntity = "ARTICLE" | "ARTIST" | "ARTIST_SERIES" | "ARTWORK" | "CITY" | "COLLECTION" | "FAIR" | "FEATURE" | "GALLERY" | "GENE" | "INSTITUTION" | "PAGE" | "PROFILE" | "SALE" | "SHOW" | "TAG" | "VIEWING_ROOM" | "%future added value";
-export type searchRoutes_SearchResultsEntityQueryVariables = {
-    keyword: string;
-    entities?: Array<SearchEntity | null> | null;
-    page?: number | null;
+export type searchRoutes_SearchResultsEntityQuery$variables = {
+  keyword: string;
+  entities?: ReadonlyArray<SearchEntity | null> | null;
+  page?: number | null;
 };
-export type searchRoutes_SearchResultsEntityQueryResponse = {
-    readonly viewer: {
-        readonly " $fragmentRefs": FragmentRefs<"SearchResultsEntity_viewer">;
-    } | null;
+export type searchRoutes_SearchResultsEntityQuery$data = {
+  readonly viewer: {
+    readonly " $fragmentSpreads": FragmentRefs<"SearchResultsEntity_viewer">;
+  } | null;
 };
 export type searchRoutes_SearchResultsEntityQuery = {
-    readonly response: searchRoutes_SearchResultsEntityQueryResponse;
-    readonly variables: searchRoutes_SearchResultsEntityQueryVariables;
+  variables: searchRoutes_SearchResultsEntityQuery$variables;
+  response: searchRoutes_SearchResultsEntityQuery$data;
 };
-
-
-
-/*
-query searchRoutes_SearchResultsEntityQuery(
-  $keyword: String!
-  $entities: [SearchEntity]
-  $page: Int
-) {
-  viewer {
-    ...SearchResultsEntity_viewer_gkVBu
-  }
-}
-
-fragment Pagination_pageCursors on PageCursors {
-  around {
-    cursor
-    page
-    isCurrent
-  }
-  first {
-    cursor
-    page
-    isCurrent
-  }
-  last {
-    cursor
-    page
-    isCurrent
-  }
-  previous {
-    cursor
-    page
-  }
-}
-
-fragment SearchResultsEntity_viewer_gkVBu on Viewer {
-  searchConnection(query: $keyword, first: 10, page: $page, entities: $entities) @principalField {
-    pageInfo {
-      hasNextPage
-      endCursor
-    }
-    pageCursors {
-      ...Pagination_pageCursors
-    }
-    edges {
-      node {
-        __typename
-        ... on SearchableItem {
-          description
-          displayLabel
-          href
-          internalID
-          imageUrl
-          displayType
-        }
-        ... on Node {
-          __isNode: __typename
-          id
-        }
-      }
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = {
@@ -403,5 +344,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'de1352fb85bb6d29fa0fd54ad3ae685b';
+
+(node as any).hash = "de1352fb85bb6d29fa0fd54ad3ae685b";
+
 export default node;

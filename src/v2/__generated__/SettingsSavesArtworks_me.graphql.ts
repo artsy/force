@@ -1,37 +1,40 @@
+/**
+ * @generated SignedSource<<d7a4efeb8d350791e1470d99c6043dd0>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type SettingsSavesArtworks_me = {
-    readonly followsAndSaves: {
-        readonly artworksConnection: {
-            readonly totalCount: number | null;
-            readonly pageInfo: {
-                readonly hasNextPage: boolean;
-                readonly endCursor: string | null;
-            };
-            readonly pageCursors: {
-                readonly " $fragmentRefs": FragmentRefs<"Pagination_pageCursors">;
-            };
-            readonly edges: ReadonlyArray<{
-                readonly node: {
-                    readonly internalID: string;
-                    readonly " $fragmentRefs": FragmentRefs<"GridItem_artwork">;
-                } | null;
-            } | null> | null;
+export type SettingsSavesArtworks_me$data = {
+  readonly followsAndSaves: {
+    readonly artworksConnection: {
+      readonly totalCount: number | null;
+      readonly pageInfo: {
+        readonly hasNextPage: boolean;
+        readonly endCursor: string | null;
+      };
+      readonly pageCursors: {
+        readonly " $fragmentSpreads": FragmentRefs<"Pagination_pageCursors">;
+      };
+      readonly edges: ReadonlyArray<{
+        readonly node: {
+          readonly internalID: string;
+          readonly " $fragmentSpreads": FragmentRefs<"GridItem_artwork">;
         } | null;
+      } | null> | null;
     } | null;
-    readonly " $refType": "SettingsSavesArtworks_me";
+  } | null;
+  readonly " $fragmentType": "SettingsSavesArtworks_me";
 };
-export type SettingsSavesArtworks_me$data = SettingsSavesArtworks_me;
 export type SettingsSavesArtworks_me$key = {
-    readonly " $data"?: SettingsSavesArtworks_me$data;
-    readonly " $fragmentRefs": FragmentRefs<"SettingsSavesArtworks_me">;
+  readonly " $data"?: SettingsSavesArtworks_me$data;
+  readonly " $fragmentSpreads": FragmentRefs<"SettingsSavesArtworks_me">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [
@@ -156,16 +159,16 @@ const node: ReaderFragment = {
                       "storageKey": null
                     },
                     {
+                      "args": null,
+                      "kind": "FragmentSpread",
+                      "name": "GridItem_artwork"
+                    },
+                    {
                       "alias": null,
                       "args": null,
                       "kind": "ScalarField",
                       "name": "__typename",
                       "storageKey": null
-                    },
-                    {
-                      "args": null,
-                      "kind": "FragmentSpread",
-                      "name": "GridItem_artwork"
                     }
                   ],
                   "storageKey": null
@@ -190,5 +193,7 @@ const node: ReaderFragment = {
   "type": "Me",
   "abstractKey": null
 };
-(node as any).hash = 'd28b43b24dd886e7ef21e1e599d3157e';
+
+(node as any).hash = "d28b43b24dd886e7ef21e1e599d3157e";
+
 export default node;

@@ -1,97 +1,56 @@
+/**
+ * @generated SignedSource<<50c9808bf412ebaae604d58b38da074e>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type CommerceOrderParticipantEnum = "BUYER" | "SELLER" | "%future added value";
 export type CommerceOrderStateEnum = "ABANDONED" | "APPROVED" | "CANCELED" | "FULFILLED" | "PENDING" | "REFUNDED" | "SUBMITTED" | "%future added value";
 export type CommerceFixFailedPaymentInput = {
-    clientMutationId?: string | null;
-    creditCardId: string;
-    offerId: string;
+  clientMutationId?: string | null;
+  creditCardId: string;
+  offerId: string;
 };
-export type AcceptRouteSetOrderPaymentMutationVariables = {
-    input: CommerceFixFailedPaymentInput;
+export type AcceptRouteSetOrderPaymentMutation$variables = {
+  input: CommerceFixFailedPaymentInput;
 };
-export type AcceptRouteSetOrderPaymentMutationResponse = {
-    readonly commerceFixFailedPayment: {
-        readonly orderOrError: {
-            readonly order?: {
-                readonly state: CommerceOrderStateEnum;
-                readonly creditCard: {
-                    readonly internalID: string;
-                    readonly name: string | null;
-                    readonly street1: string | null;
-                    readonly street2: string | null;
-                    readonly city: string | null;
-                    readonly state: string | null;
-                    readonly country: string | null;
-                    readonly postal_code: string | null;
-                } | null;
-                readonly awaitingResponseFrom?: CommerceOrderParticipantEnum | null;
-            };
-            readonly actionData?: {
-                readonly clientSecret: string;
-            };
-            readonly error?: {
-                readonly type: string;
-                readonly code: string;
-                readonly data: string | null;
-            };
-        };
-    } | null;
+export type AcceptRouteSetOrderPaymentMutation$data = {
+  readonly commerceFixFailedPayment: {
+    readonly orderOrError: {
+      readonly order?: {
+        readonly state: CommerceOrderStateEnum;
+        readonly creditCard: {
+          readonly internalID: string;
+          readonly name: string | null;
+          readonly street1: string | null;
+          readonly street2: string | null;
+          readonly city: string | null;
+          readonly state: string | null;
+          readonly country: string | null;
+          readonly postal_code: string | null;
+        } | null;
+        readonly awaitingResponseFrom?: CommerceOrderParticipantEnum | null;
+      };
+      readonly actionData?: {
+        readonly clientSecret: string;
+      };
+      readonly error?: {
+        readonly type: string;
+        readonly code: string;
+        readonly data: string | null;
+      };
+    };
+  } | null;
 };
 export type AcceptRouteSetOrderPaymentMutation = {
-    readonly response: AcceptRouteSetOrderPaymentMutationResponse;
-    readonly variables: AcceptRouteSetOrderPaymentMutationVariables;
+  variables: AcceptRouteSetOrderPaymentMutation$variables;
+  response: AcceptRouteSetOrderPaymentMutation$data;
 };
-
-
-
-/*
-mutation AcceptRouteSetOrderPaymentMutation(
-  $input: CommerceFixFailedPaymentInput!
-) {
-  commerceFixFailedPayment(input: $input) {
-    orderOrError {
-      __typename
-      ... on CommerceOrderWithMutationSuccess {
-        order {
-          __typename
-          state
-          creditCard {
-            internalID
-            name
-            street1
-            street2
-            city
-            state
-            country
-            postal_code: postalCode
-            id
-          }
-          ... on CommerceOfferOrder {
-            awaitingResponseFrom
-          }
-          id
-        }
-      }
-      ... on CommerceOrderRequiresAction {
-        actionData {
-          clientSecret
-        }
-      }
-      ... on CommerceOrderWithMutationFailure {
-        error {
-          type
-          code
-          data
-        }
-      }
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -386,8 +345,8 @@ return {
                         ],
                         "storageKey": null
                       },
-                      (v14/*: any*/),
-                      (v10/*: any*/)
+                      (v10/*: any*/),
+                      (v14/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -415,5 +374,7 @@ return {
   }
 };
 })();
-(node as any).hash = '71543d69722bdec8421a30e8d0601c29';
+
+(node as any).hash = "71543d69722bdec8421a30e8d0601c29";
+
 export default node;

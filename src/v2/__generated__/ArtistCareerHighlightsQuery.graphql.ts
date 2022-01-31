@@ -1,110 +1,27 @@
+/**
+ * @generated SignedSource<<7c1759aa56bc106c08e68964a802b82b>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtistCareerHighlightsQueryVariables = {
-    slug: string;
+export type ArtistCareerHighlightsQuery$variables = {
+  slug: string;
 };
-export type ArtistCareerHighlightsQueryResponse = {
-    readonly artist: {
-        readonly " $fragmentRefs": FragmentRefs<"ArtistCareerHighlights_artist">;
-    } | null;
+export type ArtistCareerHighlightsQuery$data = {
+  readonly artist: {
+    readonly " $fragmentSpreads": FragmentRefs<"ArtistCareerHighlights_artist">;
+  } | null;
 };
 export type ArtistCareerHighlightsQuery = {
-    readonly response: ArtistCareerHighlightsQueryResponse;
-    readonly variables: ArtistCareerHighlightsQueryVariables;
+  variables: ArtistCareerHighlightsQuery$variables;
+  response: ArtistCareerHighlightsQuery$data;
 };
-
-
-
-/*
-query ArtistCareerHighlightsQuery(
-  $slug: String!
-) {
-  artist(id: $slug) {
-    ...ArtistCareerHighlights_artist
-    id
-  }
-}
-
-fragment ArtistCareerHighlights_artist on Artist {
-  ...SelectedCareerAchievements_artist
-  ...ArtistGenes_artist
-  biographyBlurb(format: HTML, partnerBio: false) {
-    partner {
-      profile {
-        href
-        id
-      }
-      id
-    }
-    credit
-    text
-  }
-  name
-  related {
-    genes {
-      edges {
-        node {
-          id
-        }
-      }
-    }
-  }
-  slug
-}
-
-fragment ArtistGenes_artist on Artist {
-  related {
-    genes {
-      edges {
-        node {
-          href
-          name
-          id
-        }
-      }
-    }
-  }
-}
-
-fragment SelectedCareerAchievements_artist on Artist {
-  highlights {
-    partnersConnection(first: 10, displayOnPartnerProfile: true, representedBy: true, partnerCategory: ["blue-chip", "top-established", "top-emerging"]) {
-      edges {
-        node {
-          categories {
-            slug
-            id
-          }
-          id
-        }
-        id
-      }
-    }
-  }
-  insights {
-    type
-    label
-    entities
-  }
-  auctionResultsConnection(recordsTrusted: true, first: 1, sort: PRICE_AND_DATE_DESC) {
-    edges {
-      node {
-        price_realized: priceRealized {
-          display(format: "0.0a")
-        }
-        organization
-        sale_date: saleDate(format: "YYYY")
-        id
-      }
-    }
-  }
-  slug
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -526,5 +443,7 @@ return {
   }
 };
 })();
-(node as any).hash = '2319fa14933077a84e1968ae3e2cbec8';
+
+(node as any).hash = "2319fa14933077a84e1968ae3e2cbec8";
+
 export default node;

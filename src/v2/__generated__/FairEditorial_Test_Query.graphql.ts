@@ -1,75 +1,25 @@
+/**
+ * @generated SignedSource<<4db6a55066a3deaf5ebe404abb361fd0>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type FairEditorial_Test_QueryVariables = {};
-export type FairEditorial_Test_QueryResponse = {
-    readonly fair: {
-        readonly " $fragmentRefs": FragmentRefs<"FairEditorial_fair">;
-    } | null;
+export type FairEditorial_Test_Query$variables = {};
+export type FairEditorial_Test_Query$data = {
+  readonly fair: {
+    readonly " $fragmentSpreads": FragmentRefs<"FairEditorial_fair">;
+  } | null;
 };
 export type FairEditorial_Test_Query = {
-    readonly response: FairEditorial_Test_QueryResponse;
-    readonly variables: FairEditorial_Test_QueryVariables;
+  variables: FairEditorial_Test_Query$variables;
+  response: FairEditorial_Test_Query$data;
 };
-
-
-
-/*
-query FairEditorial_Test_Query {
-  fair(id: "test") {
-    ...FairEditorial_fair
-    id
-  }
-}
-
-fragment FairEditorialItemLink_article on Article {
-  internalID
-  slug
-  title
-  href
-  publishedAt(format: "MMMM D, YYYY")
-}
-
-fragment FairEditorialItem_article on Article {
-  id
-  title
-  publishedAt(format: "MMMM D, YYYY")
-  thumbnailTitle
-  thumbnailImage {
-    large: cropped(width: 670, height: 720) {
-      width
-      height
-      src
-      srcSet
-    }
-    small: cropped(width: 325, height: 240) {
-      width
-      height
-      src
-      srcSet
-    }
-  }
-  ...FairEditorialItemLink_article
-}
-
-fragment FairEditorialRailArticles_fair on Fair {
-  articlesConnection(first: 6, sort: PUBLISHED_AT_DESC) {
-    edges {
-      node {
-        id
-        ...FairEditorialItem_article
-      }
-    }
-  }
-}
-
-fragment FairEditorial_fair on Fair {
-  ...FairEditorialRailArticles_fair
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -400,5 +350,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'd98f3c96f4e8b360107eeda98c019c65';
+
+(node as any).hash = "d98f3c96f4e8b360107eeda98c019c65";
+
 export default node;

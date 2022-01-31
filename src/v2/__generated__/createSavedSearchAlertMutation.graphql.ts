@@ -1,69 +1,58 @@
+/**
+ * @generated SignedSource<<b3a0061e6ac642c771df8b2ab6e28a64>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type CreateSavedSearchInput = {
-    attributes: SearchCriteriaAttributes;
-    clientMutationId?: string | null;
-    userAlertSettings?: UserAlertSettingsInput | null;
+  attributes: SearchCriteriaAttributes;
+  clientMutationId?: string | null;
+  userAlertSettings?: UserAlertSettingsInput | null;
 };
 export type SearchCriteriaAttributes = {
-    acquireable?: boolean | null;
-    additionalGeneIDs?: Array<string> | null;
-    artistID?: string | null;
-    artistIDs?: Array<string> | null;
-    atAuction?: boolean | null;
-    attributionClass?: Array<string> | null;
-    colors?: Array<string> | null;
-    dimensionRange?: string | null;
-    height?: string | null;
-    inquireableOnly?: boolean | null;
-    locationCities?: Array<string> | null;
-    majorPeriods?: Array<string> | null;
-    materialsTerms?: Array<string> | null;
-    offerable?: boolean | null;
-    partnerIDs?: Array<string> | null;
-    priceRange?: string | null;
-    sizes?: Array<string> | null;
-    width?: string | null;
+  acquireable?: boolean | null;
+  additionalGeneIDs?: ReadonlyArray<string> | null;
+  artistID?: string | null;
+  artistIDs?: ReadonlyArray<string> | null;
+  atAuction?: boolean | null;
+  attributionClass?: ReadonlyArray<string> | null;
+  colors?: ReadonlyArray<string> | null;
+  dimensionRange?: string | null;
+  height?: string | null;
+  inquireableOnly?: boolean | null;
+  locationCities?: ReadonlyArray<string> | null;
+  majorPeriods?: ReadonlyArray<string> | null;
+  materialsTerms?: ReadonlyArray<string> | null;
+  offerable?: boolean | null;
+  partnerIDs?: ReadonlyArray<string> | null;
+  priceRange?: string | null;
+  sizes?: ReadonlyArray<string> | null;
+  width?: string | null;
 };
 export type UserAlertSettingsInput = {
-    email?: boolean | null;
-    name?: string | null;
-    push?: boolean | null;
+  email?: boolean | null;
+  name?: string | null;
+  push?: boolean | null;
 };
-export type createSavedSearchAlertMutationVariables = {
-    input: CreateSavedSearchInput;
+export type createSavedSearchAlertMutation$variables = {
+  input: CreateSavedSearchInput;
 };
-export type createSavedSearchAlertMutationResponse = {
-    readonly createSavedSearch: {
-        readonly savedSearchOrErrors: {
-            readonly internalID?: string;
-        };
-    } | null;
+export type createSavedSearchAlertMutation$data = {
+  readonly createSavedSearch: {
+    readonly savedSearchOrErrors: {
+      readonly internalID?: string;
+    };
+  } | null;
 };
 export type createSavedSearchAlertMutation = {
-    readonly response: createSavedSearchAlertMutationResponse;
-    readonly variables: createSavedSearchAlertMutationVariables;
+  variables: createSavedSearchAlertMutation$variables;
+  response: createSavedSearchAlertMutation$data;
 };
-
-
-
-/*
-mutation createSavedSearchAlertMutation(
-  $input: CreateSavedSearchInput!
-) {
-  createSavedSearch(input: $input) {
-    savedSearchOrErrors {
-      __typename
-      ... on SearchCriteria {
-        internalID
-      }
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -176,5 +165,7 @@ return {
   }
 };
 })();
-(node as any).hash = '5dc7cf49cf14f0328a9f6c5ef66e72c9';
+
+(node as any).hash = "5dc7cf49cf14f0328a9f6c5ef66e72c9";
+
 export default node;

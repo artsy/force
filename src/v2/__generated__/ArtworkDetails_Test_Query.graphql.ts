@@ -1,146 +1,25 @@
+/**
+ * @generated SignedSource<<7d7ad08a025800afdf3b7d8e4dfe8cd9>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtworkDetails_Test_QueryVariables = {};
-export type ArtworkDetails_Test_QueryResponse = {
-    readonly artwork: {
-        readonly " $fragmentRefs": FragmentRefs<"ArtworkDetails_artwork">;
-    } | null;
+export type ArtworkDetails_Test_Query$variables = {};
+export type ArtworkDetails_Test_Query$data = {
+  readonly artwork: {
+    readonly " $fragmentSpreads": FragmentRefs<"ArtworkDetails_artwork">;
+  } | null;
 };
 export type ArtworkDetails_Test_Query = {
-    readonly response: ArtworkDetails_Test_QueryResponse;
-    readonly variables: ArtworkDetails_Test_QueryVariables;
+  variables: ArtworkDetails_Test_Query$variables;
+  response: ArtworkDetails_Test_Query$data;
 };
-
-
-
-/*
-query ArtworkDetails_Test_Query {
-  artwork(id: "example") {
-    ...ArtworkDetails_artwork
-    id
-  }
-}
-
-fragment ArtworkDetailsAboutTheWorkFromArtsy_artwork on Artwork {
-  description(format: HTML)
-}
-
-fragment ArtworkDetailsAboutTheWorkFromPartner_artwork on Artwork {
-  additional_information: additionalInformation(format: HTML)
-  sale {
-    isBenefit
-    isGalleryAuction
-    id
-  }
-  partner {
-    internalID
-    slug
-    type
-    href
-    name
-    initials
-    locations {
-      city
-      id
-    }
-    is_default_profile_public: isDefaultProfilePublic
-    profile {
-      ...FollowProfileButton_profile
-      slug
-      icon {
-        cropped(width: 45, height: 45) {
-          src
-          srcSet
-        }
-      }
-      id
-    }
-    id
-  }
-}
-
-fragment ArtworkDetailsAdditionalInfo_artwork on Artwork {
-  category
-  series
-  publisher
-  manufacturer
-  image_rights: imageRights
-  canRequestLotConditionsReport
-  internalID
-  framed {
-    label
-    details
-  }
-  signatureInfo {
-    label
-    details
-  }
-  conditionDescription {
-    label
-    details
-  }
-  certificateOfAuthenticity {
-    label
-    details
-  }
-  mediumType {
-    __typename
-  }
-  ...ArtworkDetailsMediumModal_artwork
-}
-
-fragment ArtworkDetailsArticles_artwork on Artwork {
-  articles(size: 10) {
-    author {
-      name
-      id
-    }
-    href
-    publishedAt(format: "MMM Do, YYYY")
-    thumbnailImage {
-      cropped(width: 200, height: 150) {
-        src
-        srcSet
-      }
-    }
-    thumbnailTitle
-    id
-  }
-}
-
-fragment ArtworkDetailsMediumModal_artwork on Artwork {
-  mediumType {
-    name
-    longDescription
-  }
-}
-
-fragment ArtworkDetails_artwork on Artwork {
-  ...ArtworkDetailsAboutTheWorkFromArtsy_artwork
-  ...ArtworkDetailsAboutTheWorkFromPartner_artwork
-  ...ArtworkDetailsAdditionalInfo_artwork
-  ...ArtworkDetailsArticles_artwork
-  articles(size: 10) {
-    slug
-    id
-  }
-  literature(format: HTML)
-  exhibition_history: exhibitionHistory(format: HTML)
-  provenance(format: HTML)
-}
-
-fragment FollowProfileButton_profile on Profile {
-  id
-  slug
-  name
-  internalID
-  is_followed: isFollowed
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -800,5 +679,7 @@ return {
   }
 };
 })();
-(node as any).hash = '00e8341863f202ef05b6f34cbe7c8472';
+
+(node as any).hash = "00e8341863f202ef05b6f34cbe7c8472";
+
 export default node;

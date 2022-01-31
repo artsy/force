@@ -1,86 +1,29 @@
+/**
+ * @generated SignedSource<<a32b0d2bc62e485863e195bd1016e113>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type SearchResultsArtistsQueryVariables = {
-    first?: number | null;
-    term: string;
-    page?: number | null;
+export type SearchResultsArtistsQuery$variables = {
+  first?: number | null;
+  term: string;
+  page?: number | null;
 };
-export type SearchResultsArtistsQueryResponse = {
-    readonly viewer: {
-        readonly " $fragmentRefs": FragmentRefs<"SearchResultsArtists_viewer">;
-    } | null;
+export type SearchResultsArtistsQuery$data = {
+  readonly viewer: {
+    readonly " $fragmentSpreads": FragmentRefs<"SearchResultsArtists_viewer">;
+  } | null;
 };
 export type SearchResultsArtistsQuery = {
-    readonly response: SearchResultsArtistsQueryResponse;
-    readonly variables: SearchResultsArtistsQueryVariables;
+  variables: SearchResultsArtistsQuery$variables;
+  response: SearchResultsArtistsQuery$data;
 };
-
-
-
-/*
-query SearchResultsArtistsQuery(
-  $first: Int
-  $term: String!
-  $page: Int
-) {
-  viewer {
-    ...SearchResultsArtists_viewer_2aqsc5
-  }
-}
-
-fragment Pagination_pageCursors on PageCursors {
-  around {
-    cursor
-    page
-    isCurrent
-  }
-  first {
-    cursor
-    page
-    isCurrent
-  }
-  last {
-    cursor
-    page
-    isCurrent
-  }
-  previous {
-    cursor
-    page
-  }
-}
-
-fragment SearchResultsArtists_viewer_2aqsc5 on Viewer {
-  searchConnection(query: $term, first: $first, page: $page, entities: [ARTIST]) @principalField {
-    pageInfo {
-      hasNextPage
-    }
-    pageCursors {
-      ...Pagination_pageCursors
-    }
-    edges {
-      node {
-        __typename
-        ... on Artist {
-          name
-          internalID
-          href
-          imageUrl
-          bio
-        }
-        ... on Node {
-          __isNode: __typename
-          id
-        }
-      }
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = {
@@ -388,5 +331,7 @@ return {
   }
 };
 })();
-(node as any).hash = '1a305f085d21620ca6699008672efc1f';
+
+(node as any).hash = "1a305f085d21620ca6699008672efc1f";
+
 export default node;

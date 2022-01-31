@@ -1,85 +1,88 @@
+/**
+ * @generated SignedSource<<455be91cd26da934216e16f6b5a5aa8c>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtistMeta_artist = {
-    readonly slug: string;
-    readonly name: string | null;
-    readonly nationality: string | null;
-    readonly birthday: string | null;
-    readonly deathday: string | null;
-    readonly gender: string | null;
-    readonly href: string | null;
-    readonly meta: {
+export type ArtistMeta_artist$data = {
+  readonly slug: string;
+  readonly name: string | null;
+  readonly nationality: string | null;
+  readonly birthday: string | null;
+  readonly deathday: string | null;
+  readonly gender: string | null;
+  readonly href: string | null;
+  readonly meta: {
+    readonly description: string | null;
+  } | null;
+  readonly alternate_names: ReadonlyArray<string | null> | null;
+  readonly image: {
+    readonly versions: ReadonlyArray<string | null> | null;
+    readonly large: string | null;
+    readonly square: string | null;
+  } | null;
+  readonly counts: {
+    readonly artworks: Int | null;
+  } | null;
+  readonly blurb: string | null;
+  readonly artworks_connection: {
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly title: string | null;
+        readonly date: string | null;
         readonly description: string | null;
-    } | null;
-    readonly alternate_names: ReadonlyArray<string | null> | null;
-    readonly image: {
-        readonly versions: ReadonlyArray<string | null> | null;
-        readonly large: string | null;
-        readonly square: string | null;
-    } | null;
-    readonly counts: {
-        readonly artworks: number | null;
-    } | null;
-    readonly blurb: string | null;
-    readonly artworks_connection: {
-        readonly edges: ReadonlyArray<{
-            readonly node: {
-                readonly title: string | null;
-                readonly date: string | null;
-                readonly description: string | null;
-                readonly category: string | null;
-                readonly price_currency: string | null;
-                readonly listPrice: ({
-                    readonly __typename: "PriceRange";
-                    readonly minPrice: {
-                        readonly major: number;
-                        readonly currencyCode: string;
-                    } | null;
-                    readonly maxPrice: {
-                        readonly major: number;
-                    } | null;
-                } | {
-                    readonly __typename: "Money";
-                    readonly major: number;
-                    readonly currencyCode: string;
-                } | {
-                    /*This will never be '%other', but we need some
-                    value in case none of the concrete values match.*/
-                    readonly __typename: "%other";
-                }) | null;
-                readonly availability: string | null;
-                readonly href: string | null;
-                readonly image: {
-                    readonly small: string | null;
-                    readonly large: string | null;
-                } | null;
-                readonly partner: {
-                    readonly name: string | null;
-                    readonly href: string | null;
-                    readonly profile: {
-                        readonly image: {
-                            readonly small: string | null;
-                            readonly large: string | null;
-                        } | null;
-                    } | null;
-                } | null;
+        readonly category: string | null;
+        readonly price_currency: string | null;
+        readonly listPrice: {
+          readonly __typename: "PriceRange";
+          readonly minPrice: {
+            readonly major: number;
+            readonly currencyCode: string;
+          } | null;
+          readonly maxPrice: {
+            readonly major: number;
+          } | null;
+        } | {
+          readonly __typename: "Money";
+          readonly major: number;
+          readonly currencyCode: string;
+        } | {
+          // This will never be '%other', but we need some
+          // value in case none of the concrete values match.
+          readonly __typename: "%other";
+        } | null;
+        readonly availability: string | null;
+        readonly href: string | null;
+        readonly image: {
+          readonly small: string | null;
+          readonly large: string | null;
+        } | null;
+        readonly partner: {
+          readonly name: string | null;
+          readonly href: string | null;
+          readonly profile: {
+            readonly image: {
+              readonly small: string | null;
+              readonly large: string | null;
             } | null;
-        } | null> | null;
-    } | null;
-    readonly " $fragmentRefs": FragmentRefs<"ArtistMetaCanonicalLink_artist">;
-    readonly " $refType": "ArtistMeta_artist";
+          } | null;
+        } | null;
+      } | null;
+    } | null> | null;
+  } | null;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtistMetaCanonicalLink_artist">;
+  readonly " $fragmentType": "ArtistMeta_artist";
 };
-export type ArtistMeta_artist$data = ArtistMeta_artist;
 export type ArtistMeta_artist$key = {
-    readonly " $data"?: ArtistMeta_artist$data;
-    readonly " $fragmentRefs": FragmentRefs<"ArtistMeta_artist">;
+  readonly " $data"?: ArtistMeta_artist$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtistMeta_artist">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = {
@@ -452,5 +455,7 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = 'a16a38b3bce624e4b8e514d8fadd4416';
+
+(node as any).hash = "a16a38b3bce624e4b8e514d8fadd4416";
+
 export default node;

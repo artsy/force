@@ -1,40 +1,43 @@
+/**
+ * @generated SignedSource<<3d719ddb638f80b6659f342305674600>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ShowInstallShots_show = {
-    readonly name: string | null;
-    readonly images: ReadonlyArray<{
-        readonly internalID: string | null;
-        readonly caption: string | null;
-        readonly mobile: {
-            readonly width: number | null;
-            readonly height: number | null;
-        } | null;
-        readonly desktop: {
-            readonly src: string;
-            readonly srcSet: string;
-            readonly width: number | null;
-            readonly height: number | null;
-        } | null;
-        readonly zoom: {
-            readonly src: string;
-            readonly srcSet: string;
-            readonly width: number | null;
-            readonly height: number | null;
-        } | null;
-    } | null> | null;
-    readonly " $refType": "ShowInstallShots_show";
+export type ShowInstallShots_show$data = {
+  readonly name: string | null;
+  readonly images: ReadonlyArray<{
+    readonly internalID: string | null;
+    readonly caption: string | null;
+    readonly mobile: {
+      readonly width: number | null;
+      readonly height: number | null;
+    } | null;
+    readonly desktop: {
+      readonly src: string;
+      readonly srcSet: string;
+      readonly width: number | null;
+      readonly height: number | null;
+    } | null;
+    readonly zoom: {
+      readonly src: string;
+      readonly srcSet: string;
+      readonly width: number | null;
+      readonly height: number | null;
+    } | null;
+  } | null> | null;
+  readonly " $fragmentType": "ShowInstallShots_show";
 };
-export type ShowInstallShots_show$data = ShowInstallShots_show;
 export type ShowInstallShots_show$key = {
-    readonly " $data"?: ShowInstallShots_show$data;
-    readonly " $fragmentRefs": FragmentRefs<"ShowInstallShots_show">;
+  readonly " $data"?: ShowInstallShots_show$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ShowInstallShots_show">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = {
@@ -187,5 +190,7 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '9b1323b9572cd5274d25e926a137c39b';
+
+(node as any).hash = "9b1323b9572cd5274d25e926a137c39b";
+
 export default node;

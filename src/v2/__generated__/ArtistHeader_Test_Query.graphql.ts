@@ -1,126 +1,25 @@
+/**
+ * @generated SignedSource<<9868af5a0b9742da0ee9f1f7478edada>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtistHeader_Test_QueryVariables = {};
-export type ArtistHeader_Test_QueryResponse = {
-    readonly artist: {
-        readonly " $fragmentRefs": FragmentRefs<"ArtistHeader_artist">;
-    } | null;
+export type ArtistHeader_Test_Query$variables = {};
+export type ArtistHeader_Test_Query$data = {
+  readonly artist: {
+    readonly " $fragmentSpreads": FragmentRefs<"ArtistHeader_artist">;
+  } | null;
 };
 export type ArtistHeader_Test_Query = {
-    readonly response: ArtistHeader_Test_QueryResponse;
-    readonly variables: ArtistHeader_Test_QueryVariables;
+  variables: ArtistHeader_Test_Query$variables;
+  response: ArtistHeader_Test_Query$data;
 };
-
-
-
-/*
-query ArtistHeader_Test_Query {
-  artist(id: "example") {
-    ...ArtistHeader_artist
-    id
-  }
-}
-
-fragment ArtistHeader_artist on Artist {
-  ...FollowArtistButton_artist
-  ...SelectedCareerAchievements_artist
-  artistHighlights: highlights {
-    partnersConnection(first: 10, displayOnPartnerProfile: true, representedBy: true, partnerCategory: ["blue-chip", "top-established", "top-emerging"]) {
-      edges {
-        node {
-          categories {
-            slug
-            id
-          }
-          id
-        }
-        id
-      }
-    }
-  }
-  auctionResultsConnection(recordsTrusted: true, first: 1, sort: PRICE_AND_DATE_DESC) {
-    edges {
-      node {
-        price_realized: priceRealized {
-          display(format: "0.0a")
-        }
-        organization
-        sale_date: saleDate(format: "YYYY")
-        id
-      }
-    }
-  }
-  image {
-    cropped(width: 200, height: 200) {
-      src
-      srcSet
-    }
-  }
-  internalID
-  slug
-  name
-  formattedNationalityAndBirthday
-  counts {
-    follows
-    forSaleArtworks
-  }
-  biographyBlurb(format: HTML, partnerBio: false) {
-    credit
-    partnerID
-    text
-  }
-}
-
-fragment FollowArtistButton_artist on Artist {
-  id
-  internalID
-  name
-  slug
-  is_followed: isFollowed
-  counts {
-    follows
-  }
-}
-
-fragment SelectedCareerAchievements_artist on Artist {
-  highlights {
-    partnersConnection(first: 10, displayOnPartnerProfile: true, representedBy: true, partnerCategory: ["blue-chip", "top-established", "top-emerging"]) {
-      edges {
-        node {
-          categories {
-            slug
-            id
-          }
-          id
-        }
-        id
-      }
-    }
-  }
-  insights {
-    type
-    label
-    entities
-  }
-  auctionResultsConnection(recordsTrusted: true, first: 1, sort: PRICE_AND_DATE_DESC) {
-    edges {
-      node {
-        price_realized: priceRealized {
-          display(format: "0.0a")
-        }
-        organization
-        sale_date: saleDate(format: "YYYY")
-        id
-      }
-    }
-  }
-  slug
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -731,5 +630,7 @@ return {
   }
 };
 })();
-(node as any).hash = '488ad05ec853dc8831a05ff896bf0d3c';
+
+(node as any).hash = "488ad05ec853dc8831a05ff896bf0d3c";
+
 export default node;

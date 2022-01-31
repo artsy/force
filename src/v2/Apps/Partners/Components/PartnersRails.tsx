@@ -37,10 +37,7 @@ const PartnersRails: FC<PartnersRailsProps> = ({ viewer, type }) => {
 const PartnersRailsFragmentContainer = createFragmentContainer(PartnersRails, {
   viewer: graphql`
     fragment PartnersRails_viewer on Viewer
-      @argumentDefinitions(
-        categoryType: { type: "PartnerCategoryType" }
-        type: { type: "[PartnerClassification]" }
-      ) {
+      @argumentDefinitions(categoryType: { type: "PartnerCategoryType" }) {
       partnerCategories(
         categoryType: $categoryType
         size: 50
@@ -92,13 +89,9 @@ export const PartnersRailsQueryRenderer: FC<PartnersRailsQueryRendererProps> = (
       placeholder={<PartnersRailsPlaceholder />}
       variables={{ categoryType: type, type }}
       query={graphql`
-        query PartnersRailsQuery(
-          $categoryType: PartnerCategoryType
-          $type: [PartnerClassification]
-        ) {
+        query PartnersRailsQuery($categoryType: PartnerCategoryType) {
           viewer {
-            ...PartnersRails_viewer
-              @arguments(categoryType: $categoryType, type: $type)
+            ...PartnersRails_viewer @arguments(categoryType: $categoryType)
           }
         }
       `}

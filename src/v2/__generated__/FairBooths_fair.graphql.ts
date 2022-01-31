@@ -1,40 +1,43 @@
+/**
+ * @generated SignedSource<<8ddef980bf21c8701a62960ed95a8037>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type FairBooths_fair = {
-    readonly slug: string;
-    readonly exhibitors: {
-        readonly pageInfo: {
-            readonly hasNextPage: boolean;
-        };
-        readonly pageCursors: {
-            readonly " $fragmentRefs": FragmentRefs<"Pagination_pageCursors">;
-        };
-        readonly edges: ReadonlyArray<{
-            readonly node: {
-                readonly id: string;
-                readonly counts: {
-                    readonly artworks: number | null;
-                } | null;
-                readonly partner: {
-                    readonly id?: string;
-                } | null;
-                readonly " $fragmentRefs": FragmentRefs<"FairBoothRail_show">;
-            } | null;
-        } | null> | null;
-    } | null;
-    readonly " $refType": "FairBooths_fair";
+export type FairBooths_fair$data = {
+  readonly slug: string;
+  readonly exhibitors: {
+    readonly pageInfo: {
+      readonly hasNextPage: boolean;
+    };
+    readonly pageCursors: {
+      readonly " $fragmentSpreads": FragmentRefs<"Pagination_pageCursors">;
+    };
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly id: string;
+        readonly counts: {
+          readonly artworks: number | null;
+        } | null;
+        readonly partner: {
+          readonly id?: string;
+        } | null;
+        readonly " $fragmentSpreads": FragmentRefs<"FairBoothRail_show">;
+      } | null;
+    } | null> | null;
+  } | null;
+  readonly " $fragmentType": "FairBooths_fair";
 };
-export type FairBooths_fair$data = FairBooths_fair;
 export type FairBooths_fair$key = {
-    readonly " $data"?: FairBooths_fair$data;
-    readonly " $fragmentRefs": FragmentRefs<"FairBooths_fair">;
+  readonly " $data"?: FairBooths_fair$data;
+  readonly " $fragmentSpreads": FragmentRefs<"FairBooths_fair">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = {
@@ -216,5 +219,7 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '8e02da19b488f00af55b0d521d9901e9';
+
+(node as any).hash = "8e02da19b488f00af55b0d521d9901e9";
+
 export default node;

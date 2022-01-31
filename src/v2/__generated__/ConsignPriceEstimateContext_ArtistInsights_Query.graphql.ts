@@ -1,49 +1,34 @@
+/**
+ * @generated SignedSource<<f08f36665270278fd6402b8ead58dedc>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
-export type ConsignPriceEstimateContext_ArtistInsights_QueryVariables = {
-    artistInternalID: string;
+import { ConcreteRequest, Query } from 'relay-runtime';
+export type ConsignPriceEstimateContext_ArtistInsights_Query$variables = {
+  artistInternalID: string;
 };
-export type ConsignPriceEstimateContext_ArtistInsights_QueryResponse = {
-    readonly priceInsights: {
-        readonly edges: ReadonlyArray<{
-            readonly node: {
-                readonly artistName: string | null;
-                readonly medium: string | null;
-                readonly lowRangeCents: unknown | null;
-                readonly midRangeCents: unknown | null;
-                readonly highRangeCents: unknown | null;
-            } | null;
-        } | null> | null;
-    } | null;
+export type ConsignPriceEstimateContext_ArtistInsights_Query$data = {
+  readonly priceInsights: {
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly artistName: string | null;
+        readonly medium: string | null;
+        readonly lowRangeCents: any | null;
+        readonly midRangeCents: any | null;
+        readonly highRangeCents: any | null;
+      } | null;
+    } | null> | null;
+  } | null;
 };
 export type ConsignPriceEstimateContext_ArtistInsights_Query = {
-    readonly response: ConsignPriceEstimateContext_ArtistInsights_QueryResponse;
-    readonly variables: ConsignPriceEstimateContext_ArtistInsights_QueryVariables;
+  variables: ConsignPriceEstimateContext_ArtistInsights_Query$variables;
+  response: ConsignPriceEstimateContext_ArtistInsights_Query$data;
 };
-
-
-
-/*
-query ConsignPriceEstimateContext_ArtistInsights_Query(
-  $artistInternalID: ID!
-) {
-  priceInsights(artistId: $artistInternalID, sort: DEMAND_RANK_DESC, first: 20) {
-    edges {
-      node {
-        artistName
-        medium
-        lowRangeCents
-        midRangeCents
-        highRangeCents
-        id
-      }
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -217,5 +202,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'fd748455cd7168dcb4ec330cbe7a81bc';
+
+(node as any).hash = "fd748455cd7168dcb4ec330cbe7a81bc";
+
 export default node;

@@ -1,232 +1,149 @@
+/**
+ * @generated SignedSource<<67550992ff2f7dd867a3f7296b359bed>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type CommerceOrderModeEnum = "BUY" | "OFFER" | "%future added value";
-export type RejectTestQueryVariables = {};
-export type RejectTestQueryResponse = {
-    readonly order: {
-        readonly " $fragmentRefs": FragmentRefs<"Reject_order">;
-    } | null;
+export type RejectTestQuery$variables = {};
+export type RejectTestQuery$data = {
+  readonly order: {
+    readonly " $fragmentSpreads": FragmentRefs<"Reject_order">;
+  } | null;
 };
-export type RejectTestQueryRawResponse = {
-    readonly order: ({
-        readonly __typename: "CommerceOfferOrder";
-        readonly __isCommerceOrder: "CommerceOfferOrder";
-        readonly internalID: string;
-        readonly stateExpiresAt: string | null;
-        readonly lineItems: ({
-            readonly edges: ReadonlyArray<({
-                readonly node: ({
-                    readonly artwork: ({
-                        readonly slug: string;
-                        readonly id: string;
-                        readonly artistNames: string | null;
-                        readonly title: string | null;
-                        readonly date: string | null;
-                        readonly shippingOrigin: string | null;
-                        readonly image: ({
-                            readonly resized_ArtworkSummaryItem: ({
-                                readonly url: string;
-                            }) | null;
-                        }) | null;
-                    }) | null;
-                    readonly id: string;
-                    readonly artworkOrEditionSet: ({
-                        readonly __typename: "Artwork";
-                        readonly __isNode: "Artwork";
-                        readonly id: string;
-                        readonly price: string | null;
-                    } | {
-                        readonly __typename: "EditionSet";
-                        readonly __isNode: "EditionSet";
-                        readonly id: string;
-                        readonly price: string | null;
-                    } | {
-                        readonly __typename: string;
-                        readonly __isNode: string;
-                        readonly id: string;
-                    }) | null;
-                }) | null;
-            }) | null> | null;
-        }) | null;
-        readonly sellerDetails: ({
-            readonly __typename: "Partner";
-            readonly __isNode: "Partner";
+export type RejectTestQuery$rawResponse = {
+  readonly order: {
+    readonly __typename: "CommerceOfferOrder";
+    readonly __isCommerceOrder: "CommerceOfferOrder";
+    readonly internalID: string;
+    readonly stateExpiresAt: string | null;
+    readonly lineItems: {
+      readonly edges: ReadonlyArray<{
+        readonly node: {
+          readonly artwork: {
+            readonly slug: string;
             readonly id: string;
-            readonly name: string | null;
-        } | {
-            readonly __typename: "User";
-            readonly __isNode: "User";
+            readonly artistNames: string | null;
+            readonly title: string | null;
+            readonly date: string | null;
+            readonly shippingOrigin: string | null;
+            readonly image: {
+              readonly resized_ArtworkSummaryItem: {
+                readonly url: string;
+              } | null;
+            } | null;
+          } | null;
+          readonly id: string;
+          readonly artworkOrEditionSet: {
+            readonly __typename: "Artwork";
+            readonly __isNode: "Artwork";
             readonly id: string;
-        } | {
+            readonly price: string | null;
+          } | {
+            readonly __typename: "EditionSet";
+            readonly __isNode: "EditionSet";
+            readonly id: string;
+            readonly price: string | null;
+          } | {
             readonly __typename: string;
             readonly __isNode: string;
             readonly id: string;
-        }) | null;
-        readonly currencyCode: string;
-        readonly mode: CommerceOrderModeEnum | null;
-        readonly id: string;
-        readonly lastOffer: ({
-            readonly internalID: string;
-            readonly createdAt: string;
-            readonly id: string;
-        }) | null;
+          } | null;
+        } | null;
+      } | null> | null;
+    } | null;
+    readonly sellerDetails: {
+      readonly __typename: "Partner";
+      readonly __isNode: "Partner";
+      readonly id: string;
+      readonly name: string | null;
     } | {
-        readonly __typename: string;
-        readonly __isCommerceOrder: string;
-        readonly internalID: string;
-        readonly stateExpiresAt: string | null;
-        readonly lineItems: ({
-            readonly edges: ReadonlyArray<({
-                readonly node: ({
-                    readonly artwork: ({
-                        readonly slug: string;
-                        readonly id: string;
-                        readonly artistNames: string | null;
-                        readonly title: string | null;
-                        readonly date: string | null;
-                        readonly shippingOrigin: string | null;
-                        readonly image: ({
-                            readonly resized_ArtworkSummaryItem: ({
-                                readonly url: string;
-                            }) | null;
-                        }) | null;
-                    }) | null;
-                    readonly id: string;
-                    readonly artworkOrEditionSet: ({
-                        readonly __typename: "Artwork";
-                        readonly __isNode: "Artwork";
-                        readonly id: string;
-                        readonly price: string | null;
-                    } | {
-                        readonly __typename: "EditionSet";
-                        readonly __isNode: "EditionSet";
-                        readonly id: string;
-                        readonly price: string | null;
-                    } | {
-                        readonly __typename: string;
-                        readonly __isNode: string;
-                        readonly id: string;
-                    }) | null;
-                }) | null;
-            }) | null> | null;
-        }) | null;
-        readonly sellerDetails: ({
-            readonly __typename: "Partner";
-            readonly __isNode: "Partner";
+      readonly __typename: "User";
+      readonly __isNode: "User";
+      readonly id: string;
+    } | {
+      readonly __typename: string;
+      readonly __isNode: string;
+      readonly id: string;
+    } | null;
+    readonly currencyCode: string;
+    readonly mode: CommerceOrderModeEnum | null;
+    readonly id: string;
+    readonly lastOffer: {
+      readonly internalID: string;
+      readonly createdAt: string;
+      readonly id: string;
+    } | null;
+  } | {
+    readonly __typename: string;
+    readonly __isCommerceOrder: string;
+    readonly internalID: string;
+    readonly stateExpiresAt: string | null;
+    readonly lineItems: {
+      readonly edges: ReadonlyArray<{
+        readonly node: {
+          readonly artwork: {
+            readonly slug: string;
             readonly id: string;
-            readonly name: string | null;
-        } | {
-            readonly __typename: "User";
-            readonly __isNode: "User";
+            readonly artistNames: string | null;
+            readonly title: string | null;
+            readonly date: string | null;
+            readonly shippingOrigin: string | null;
+            readonly image: {
+              readonly resized_ArtworkSummaryItem: {
+                readonly url: string;
+              } | null;
+            } | null;
+          } | null;
+          readonly id: string;
+          readonly artworkOrEditionSet: {
+            readonly __typename: "Artwork";
+            readonly __isNode: "Artwork";
             readonly id: string;
-        } | {
+            readonly price: string | null;
+          } | {
+            readonly __typename: "EditionSet";
+            readonly __isNode: "EditionSet";
+            readonly id: string;
+            readonly price: string | null;
+          } | {
             readonly __typename: string;
             readonly __isNode: string;
             readonly id: string;
-        }) | null;
-        readonly currencyCode: string;
-        readonly mode: CommerceOrderModeEnum | null;
-        readonly id: string;
-    }) | null;
+          } | null;
+        } | null;
+      } | null> | null;
+    } | null;
+    readonly sellerDetails: {
+      readonly __typename: "Partner";
+      readonly __isNode: "Partner";
+      readonly id: string;
+      readonly name: string | null;
+    } | {
+      readonly __typename: "User";
+      readonly __isNode: "User";
+      readonly id: string;
+    } | {
+      readonly __typename: string;
+      readonly __isNode: string;
+      readonly id: string;
+    } | null;
+    readonly currencyCode: string;
+    readonly mode: CommerceOrderModeEnum | null;
+    readonly id: string;
+  } | null;
 };
 export type RejectTestQuery = {
-    readonly response: RejectTestQueryResponse;
-    readonly variables: RejectTestQueryVariables;
-    readonly rawResponse: RejectTestQueryRawResponse;
+  variables: RejectTestQuery$variables;
+  response: RejectTestQuery$data;
+  rawResponse: RejectTestQuery$rawResponse;
 };
-
-
-
-/*
-query RejectTestQuery {
-  order: commerceOrder(id: "unused") {
-    __typename
-    ...Reject_order
-    id
-  }
-}
-
-fragment ArtworkSummaryItem_order on CommerceOrder {
-  __isCommerceOrder: __typename
-  sellerDetails {
-    __typename
-    ... on Partner {
-      name
-    }
-    ... on Node {
-      __isNode: __typename
-      id
-    }
-    ... on User {
-      id
-    }
-  }
-  currencyCode
-  mode
-  lineItems {
-    edges {
-      node {
-        artworkOrEditionSet {
-          __typename
-          ... on Artwork {
-            price
-          }
-          ... on EditionSet {
-            price
-            id
-          }
-          ... on Node {
-            __isNode: __typename
-            id
-          }
-        }
-        artwork {
-          artistNames
-          title
-          date
-          shippingOrigin
-          image {
-            resized_ArtworkSummaryItem: resized(width: 55) {
-              url
-            }
-          }
-          id
-        }
-        id
-      }
-    }
-  }
-}
-
-fragment Reject_order on CommerceOrder {
-  __isCommerceOrder: __typename
-  internalID
-  stateExpiresAt
-  lineItems {
-    edges {
-      node {
-        artwork {
-          slug
-          id
-        }
-        id
-      }
-    }
-  }
-  ... on CommerceOfferOrder {
-    lastOffer {
-      internalID
-      createdAt
-      id
-    }
-  }
-  ...ArtworkSummaryItem_order
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -492,6 +409,33 @@ return {
             "storageKey": null
           },
           {
+            "kind": "InlineFragment",
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "CommerceOffer",
+                "kind": "LinkedField",
+                "name": "lastOffer",
+                "plural": false,
+                "selections": [
+                  (v2/*: any*/),
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "createdAt",
+                    "storageKey": null
+                  },
+                  (v3/*: any*/)
+                ],
+                "storageKey": null
+              }
+            ],
+            "type": "CommerceOfferOrder",
+            "abstractKey": null
+          },
+          {
             "alias": null,
             "args": null,
             "concreteType": null,
@@ -538,34 +482,7 @@ return {
             "name": "mode",
             "storageKey": null
           },
-          (v3/*: any*/),
-          {
-            "kind": "InlineFragment",
-            "selections": [
-              {
-                "alias": null,
-                "args": null,
-                "concreteType": "CommerceOffer",
-                "kind": "LinkedField",
-                "name": "lastOffer",
-                "plural": false,
-                "selections": [
-                  (v2/*: any*/),
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "createdAt",
-                    "storageKey": null
-                  },
-                  (v3/*: any*/)
-                ],
-                "storageKey": null
-              }
-            ],
-            "type": "CommerceOfferOrder",
-            "abstractKey": null
-          }
+          (v3/*: any*/)
         ],
         "storageKey": "commerceOrder(id:\"unused\")"
       }
@@ -678,5 +595,7 @@ return {
   }
 };
 })();
-(node as any).hash = '1fea81db691344a303923dda1923afb5';
+
+(node as any).hash = "1fea81db691344a303923dda1923afb5";
+
 export default node;

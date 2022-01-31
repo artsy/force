@@ -1,6 +1,6 @@
 import { ReactWrapper } from "enzyme"
 import { FairBoothsFragmentContainer } from "../FairBooths"
-import { FairBooths_QueryRawResponse } from "v2/__generated__/FairBooths_Query.graphql"
+import { FairBooths_Query$rawResponse } from "v2/__generated__/FairBooths_Query.graphql"
 import { FairBoothRail } from "../FairBoothRail"
 import { graphql } from "react-relay"
 import { FairBoothSortFilter } from "../FairBoothSortFilter"
@@ -31,7 +31,7 @@ describe("FairBooths", () => {
     response = FAIR_BOOTHS_FIXTURE,
     breakpoint = "lg",
   }: {
-    response?: FairBooths_QueryRawResponse
+    response?: FairBooths_Query$rawResponse
     breakpoint?: Breakpoint
   }) => {
     return renderRelayTree({
@@ -132,7 +132,7 @@ describe("FairBooths", () => {
   })
 })
 
-const FAIR_BOOTHS_FIXTURE: FairBooths_QueryRawResponse = {
+const FAIR_BOOTHS_FIXTURE: FairBooths_Query$rawResponse = {
   fair: {
     id: "xxx",
     slug: "xxx",

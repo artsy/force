@@ -1,68 +1,44 @@
+/**
+ * @generated SignedSource<<6c7b2555d0ca38f42a3bcbdddd4191c8>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type CommerceOrderModeEnum = "BUY" | "OFFER" | "%future added value";
 export type CommerceCreateOrderWithArtworkInput = {
-    artworkId: string;
-    clientMutationId?: string | null;
-    editionSetId?: string | null;
-    quantity?: number | null;
+  artworkId: string;
+  clientMutationId?: string | null;
+  editionSetId?: string | null;
+  quantity?: number | null;
 };
-export type ArtworkSidebarCommercialOrderMutationVariables = {
-    input: CommerceCreateOrderWithArtworkInput;
+export type ArtworkSidebarCommercialOrderMutation$variables = {
+  input: CommerceCreateOrderWithArtworkInput;
 };
-export type ArtworkSidebarCommercialOrderMutationResponse = {
-    readonly commerceCreateOrderWithArtwork: {
-        readonly orderOrError: {
-            readonly __typename: "CommerceOrderWithMutationSuccess";
-            readonly order?: {
-                readonly internalID: string;
-                readonly mode: CommerceOrderModeEnum | null;
-            };
-            readonly error?: {
-                readonly type: string;
-                readonly code: string;
-                readonly data: string | null;
-            };
-        };
-    } | null;
+export type ArtworkSidebarCommercialOrderMutation$data = {
+  readonly commerceCreateOrderWithArtwork: {
+    readonly orderOrError: {
+      readonly __typename: "CommerceOrderWithMutationSuccess";
+      readonly order?: {
+        readonly internalID: string;
+        readonly mode: CommerceOrderModeEnum | null;
+      };
+      readonly error?: {
+        readonly type: string;
+        readonly code: string;
+        readonly data: string | null;
+      };
+    };
+  } | null;
 };
 export type ArtworkSidebarCommercialOrderMutation = {
-    readonly response: ArtworkSidebarCommercialOrderMutationResponse;
-    readonly variables: ArtworkSidebarCommercialOrderMutationVariables;
+  variables: ArtworkSidebarCommercialOrderMutation$variables;
+  response: ArtworkSidebarCommercialOrderMutation$data;
 };
-
-
-
-/*
-mutation ArtworkSidebarCommercialOrderMutation(
-  $input: CommerceCreateOrderWithArtworkInput!
-) {
-  commerceCreateOrderWithArtwork(input: $input) {
-    orderOrError {
-      __typename
-      ... on CommerceOrderWithMutationSuccess {
-        __typename
-        order {
-          __typename
-          internalID
-          mode
-          id
-        }
-      }
-      ... on CommerceOrderWithMutationFailure {
-        error {
-          type
-          code
-          data
-        }
-      }
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -264,5 +240,7 @@ return {
   }
 };
 })();
-(node as any).hash = '6b2e5dd752fba19c297673f91af2ced6';
+
+(node as any).hash = "6b2e5dd752fba19c297673f91af2ced6";
+
 export default node;

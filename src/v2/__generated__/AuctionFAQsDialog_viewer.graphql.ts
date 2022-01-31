@@ -1,39 +1,42 @@
+/**
+ * @generated SignedSource<<7265595e3740c872ea43458a423bd316>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type AuctionFAQsDialog_viewer = {
-    readonly bidding: {
-        readonly name: string;
-        readonly content: string | null;
-    };
-    readonly buyersPremium: {
-        readonly name: string;
-        readonly content: string | null;
-    };
-    readonly paymentsAndShipping: {
-        readonly name: string;
-        readonly content: string | null;
-    };
-    readonly emailsAndAlerts: {
-        readonly name: string;
-        readonly content: string | null;
-    };
-    readonly conditionsOfSale: {
-        readonly name: string;
-        readonly content: string | null;
-    };
-    readonly " $refType": "AuctionFAQsDialog_viewer";
+export type AuctionFAQsDialog_viewer$data = {
+  readonly bidding: {
+    readonly name: string;
+    readonly content: string | null;
+  };
+  readonly buyersPremium: {
+    readonly name: string;
+    readonly content: string | null;
+  };
+  readonly paymentsAndShipping: {
+    readonly name: string;
+    readonly content: string | null;
+  };
+  readonly emailsAndAlerts: {
+    readonly name: string;
+    readonly content: string | null;
+  };
+  readonly conditionsOfSale: {
+    readonly name: string;
+    readonly content: string | null;
+  };
+  readonly " $fragmentType": "AuctionFAQsDialog_viewer";
 };
-export type AuctionFAQsDialog_viewer$data = AuctionFAQsDialog_viewer;
 export type AuctionFAQsDialog_viewer$key = {
-    readonly " $data"?: AuctionFAQsDialog_viewer$data;
-    readonly " $fragmentRefs": FragmentRefs<"AuctionFAQsDialog_viewer">;
+  readonly " $data"?: AuctionFAQsDialog_viewer$data;
+  readonly " $fragmentSpreads": FragmentRefs<"AuctionFAQsDialog_viewer">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = [
@@ -149,5 +152,7 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = 'd29500dad97e12c65fe6e682ccb10344';
+
+(node as any).hash = "d29500dad97e12c65fe6e682ccb10344";
+
 export default node;

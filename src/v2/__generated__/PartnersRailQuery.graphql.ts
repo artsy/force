@@ -1,93 +1,30 @@
+/**
+ * @generated SignedSource<<7f74cf6d341c72730d4e81759fcc458f>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type PartnerClassification = "AUCTION" | "BRAND" | "DEMO" | "GALLERY" | "INSTITUTION" | "INSTITUTIONAL_SELLER" | "PRIVATE_COLLECTOR" | "PRIVATE_DEALER" | "%future added value";
-export type PartnersRailQueryVariables = {
-    id: string;
-    category?: Array<string | null> | null;
-    type: Array<PartnerClassification>;
+export type PartnersRailQuery$variables = {
+  id: string;
+  category?: ReadonlyArray<string | null> | null;
+  type: ReadonlyArray<PartnerClassification>;
 };
-export type PartnersRailQueryResponse = {
-    readonly partnerCategory: {
-        readonly " $fragmentRefs": FragmentRefs<"PartnersRail_partnerCategory">;
-    } | null;
+export type PartnersRailQuery$data = {
+  readonly partnerCategory: {
+    readonly " $fragmentSpreads": FragmentRefs<"PartnersRail_partnerCategory">;
+  } | null;
 };
 export type PartnersRailQuery = {
-    readonly response: PartnersRailQueryResponse;
-    readonly variables: PartnersRailQueryVariables;
+  variables: PartnersRailQuery$variables;
+  response: PartnersRailQuery$data;
 };
-
-
-
-/*
-query PartnersRailQuery(
-  $id: String!
-  $category: [String]
-  $type: [PartnerClassification!]!
-) {
-  partnerCategory(id: $id) {
-    ...PartnersRail_partnerCategory_43V8rY
-    id
-  }
-}
-
-fragment FollowProfileButton_profile on Profile {
-  id
-  slug
-  name
-  internalID
-  is_followed: isFollowed
-}
-
-fragment PartnerCell_partner on Partner {
-  internalID
-  slug
-  name
-  href
-  initials
-  locationsConnection(first: 15) {
-    edges {
-      node {
-        city
-        id
-      }
-    }
-  }
-  categories {
-    name
-    slug
-    id
-  }
-  profile {
-    ...FollowProfileButton_profile
-    isFollowed
-    image {
-      cropped(width: 445, height: 334, version: ["wide", "large", "featured", "larger"]) {
-        src
-        srcSet
-      }
-    }
-    id
-  }
-}
-
-fragment PartnersRail_partnerCategory_43V8rY on PartnerCategory {
-  name
-  primary: partners(defaultProfilePublic: true, eligibleForListing: true, eligibleForPrimaryBucket: true, partnerCategories: $category, sort: RANDOM_SCORE_DESC, type: $type) {
-    internalID
-    ...PartnerCell_partner
-    id
-  }
-  secondary: partners(eligibleForListing: true, eligibleForSecondaryBucket: true, type: $type, partnerCategories: $category, sort: RANDOM_SCORE_DESC, defaultProfilePublic: true) {
-    internalID
-    ...PartnerCell_partner
-    id
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = {
@@ -447,5 +384,7 @@ return {
   }
 };
 })();
-(node as any).hash = '29ebfece35c2b5ce41a056edd206fff9';
+
+(node as any).hash = "29ebfece35c2b5ce41a056edd206fff9";
+
 export default node;

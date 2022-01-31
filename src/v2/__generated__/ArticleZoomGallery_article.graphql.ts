@@ -1,39 +1,42 @@
+/**
+ * @generated SignedSource<<293240d4acb4acc78a0a38f99e6a569a>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArticleZoomGallery_article = {
-    readonly sections: ReadonlyArray<{
-        readonly __typename: "ArticleSectionImageCollection";
-        readonly figures: ReadonlyArray<{
-            readonly __typename: string;
-            readonly id?: string;
-            readonly " $fragmentRefs": FragmentRefs<"ArticleZoomGalleryFigure_figure" | "ArticleZoomGalleryCaption_figure">;
-        }>;
-    } | {
-        readonly __typename: "ArticleSectionImageSet";
-        readonly title: string | null;
-        readonly figures: ReadonlyArray<{
-            readonly __typename: string;
-            readonly id?: string;
-            readonly " $fragmentRefs": FragmentRefs<"ArticleZoomGalleryFigure_figure" | "ArticleZoomGalleryCaption_figure">;
-        }>;
-    } | {
-        /*This will never be '%other', but we need some
-        value in case none of the concrete values match.*/
-        readonly __typename: "%other";
+export type ArticleZoomGallery_article$data = {
+  readonly sections: ReadonlyArray<{
+    readonly __typename: "ArticleSectionImageCollection";
+    readonly figures: ReadonlyArray<{
+      readonly __typename: string;
+      readonly id?: string;
+      readonly " $fragmentSpreads": FragmentRefs<"ArticleZoomGalleryFigure_figure" | "ArticleZoomGalleryCaption_figure">;
     }>;
-    readonly " $refType": "ArticleZoomGallery_article";
+  } | {
+    readonly __typename: "ArticleSectionImageSet";
+    readonly title: string | null;
+    readonly figures: ReadonlyArray<{
+      readonly __typename: string;
+      readonly id?: string;
+      readonly " $fragmentSpreads": FragmentRefs<"ArticleZoomGalleryFigure_figure" | "ArticleZoomGalleryCaption_figure">;
+    }>;
+  } | {
+    // This will never be '%other', but we need some
+    // value in case none of the concrete values match.
+    readonly __typename: "%other";
+  }>;
+  readonly " $fragmentType": "ArticleZoomGallery_article";
 };
-export type ArticleZoomGallery_article$data = ArticleZoomGallery_article;
 export type ArticleZoomGallery_article$key = {
-    readonly " $data"?: ArticleZoomGallery_article$data;
-    readonly " $fragmentRefs": FragmentRefs<"ArticleZoomGallery_article">;
+  readonly " $data"?: ArticleZoomGallery_article$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ArticleZoomGallery_article">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = {
@@ -60,7 +63,6 @@ v2 = {
   "name": "figures",
   "plural": true,
   "selections": [
-    (v0/*: any*/),
     {
       "args": null,
       "kind": "FragmentSpread",
@@ -71,6 +73,7 @@ v2 = {
       "kind": "FragmentSpread",
       "name": "ArticleZoomGalleryCaption_figure"
     },
+    (v0/*: any*/),
     {
       "kind": "InlineFragment",
       "selections": (v1/*: any*/),
@@ -132,5 +135,7 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '718ade481e06a3457816550a1f14c849';
+
+(node as any).hash = "718ade481e06a3457816550a1f14c849";
+
 export default node;

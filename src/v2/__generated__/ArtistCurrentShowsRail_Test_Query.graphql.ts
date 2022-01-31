@@ -1,56 +1,25 @@
+/**
+ * @generated SignedSource<<51339d3b4917f4682faa13afcae2b0d3>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtistCurrentShowsRail_Test_QueryVariables = {};
-export type ArtistCurrentShowsRail_Test_QueryResponse = {
-    readonly artist: {
-        readonly " $fragmentRefs": FragmentRefs<"ArtistCurrentShowsRail_artist">;
-    } | null;
+export type ArtistCurrentShowsRail_Test_Query$variables = {};
+export type ArtistCurrentShowsRail_Test_Query$data = {
+  readonly artist: {
+    readonly " $fragmentSpreads": FragmentRefs<"ArtistCurrentShowsRail_artist">;
+  } | null;
 };
 export type ArtistCurrentShowsRail_Test_Query = {
-    readonly response: ArtistCurrentShowsRail_Test_QueryResponse;
-    readonly variables: ArtistCurrentShowsRail_Test_QueryVariables;
+  variables: ArtistCurrentShowsRail_Test_Query$variables;
+  response: ArtistCurrentShowsRail_Test_Query$data;
 };
-
-
-
-/*
-query ArtistCurrentShowsRail_Test_Query {
-  artist(id: "test") {
-    ...ArtistCurrentShowsRail_artist
-    id
-  }
-}
-
-fragment ArtistCurrentShowsRail_artist on Artist {
-  internalID
-  name
-  slug
-  showsConnection(first: 5, sort: END_AT_ASC, status: "running") {
-    edges {
-      node {
-        coverImage {
-          cropped(width: 325, height: 230) {
-            width
-            height
-            srcSet
-            src
-          }
-        }
-        exhibitionPeriod
-        href
-        internalID
-        name
-        slug
-        id
-      }
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -353,5 +322,7 @@ return {
   }
 };
 })();
-(node as any).hash = '71aa6c6728c5b37aa5e6ddcf67e50900';
+
+(node as any).hash = "71aa6c6728c5b37aa5e6ddcf67e50900";
+
 export default node;

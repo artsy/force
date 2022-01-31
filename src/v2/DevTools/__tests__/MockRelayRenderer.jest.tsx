@@ -1,5 +1,5 @@
-import { MockRelayRendererFixturesBadQueryRawResponse } from "v2/__generated__/MockRelayRendererFixturesBadQuery.graphql"
-import { MockRelayRendererFixturesQueryRawResponse } from "v2/__generated__/MockRelayRendererFixturesQuery.graphql"
+import { MockRelayRendererFixturesBadQuery$rawResponse } from "v2/__generated__/MockRelayRendererFixturesBadQuery.graphql"
+import { MockRelayRendererFixturesQuery$rawResponse } from "v2/__generated__/MockRelayRendererFixturesQuery.graphql"
 import { renderUntil } from "v2/DevTools/renderUntil"
 import { mount } from "enzyme"
 import { MockRelayRenderer } from "../MockRelayRenderer"
@@ -34,7 +34,7 @@ describe("MockRelayRenderer", () => {
               },
               artist: null,
             },
-          } as MockRelayRendererFixturesQueryRawResponse
+          } as MockRelayRendererFixturesQuery$rawResponse
         }
       />
     )
@@ -63,7 +63,7 @@ describe("MockRelayRenderer", () => {
               },
               artist: null,
             },
-          } as MockRelayRendererFixturesBadQueryRawResponse
+          } as MockRelayRendererFixturesBadQuery$rawResponse
         }
       />
     )

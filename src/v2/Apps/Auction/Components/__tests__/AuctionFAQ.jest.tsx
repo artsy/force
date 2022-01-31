@@ -1,12 +1,12 @@
 import { Sans, Toggle } from "@artsy/palette"
-import { AuctionFAQ_QueryRawResponse } from "v2/__generated__/AuctionFAQ_Query.graphql"
+import { AuctionFAQ_Query$rawResponse } from "v2/__generated__/AuctionFAQ_Query.graphql"
 import { renderRelayTree } from "v2/DevTools"
 import { graphql } from "react-relay"
 import { AuctionFAQFragmentContainer } from "../AuctionFAQ"
 
 jest.unmock("react-relay")
 
-const viewerMockResponse: AuctionFAQ_QueryRawResponse["viewer"] = {
+const viewerMockResponse: AuctionFAQ_Query$rawResponse["viewer"] = {
   bidding: {
     id: "opaque-bidding-id",
     content:
@@ -34,7 +34,7 @@ const viewerMockResponse: AuctionFAQ_QueryRawResponse["viewer"] = {
   },
 }
 
-const viewerEmptyMockResponse: AuctionFAQ_QueryRawResponse["viewer"] = {
+const viewerEmptyMockResponse: AuctionFAQ_Query$rawResponse["viewer"] = {
   bidding: {
     id: "opaque-bidding-id",
     content: null,
@@ -59,7 +59,7 @@ const viewerEmptyMockResponse: AuctionFAQ_QueryRawResponse["viewer"] = {
 
 describe("AuctionFAQ", () => {
   const getWrapper = async (
-    mockResponse: AuctionFAQ_QueryRawResponse["viewer"]
+    mockResponse: AuctionFAQ_Query$rawResponse["viewer"]
   ) => {
     return await renderRelayTree({
       Component: AuctionFAQFragmentContainer,
@@ -72,7 +72,7 @@ describe("AuctionFAQ", () => {
       `,
       mockData: {
         viewer: mockResponse,
-      } as AuctionFAQ_QueryRawResponse,
+      } as AuctionFAQ_Query$rawResponse,
     })
   }
 

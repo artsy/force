@@ -115,9 +115,7 @@ describe("ConsignPriceEstimateContext", () => {
       mockFetchQuery.mockImplementation(() => {
         return suggestions
       })
-
-      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-      await actions.fetchSuggestions(searchQuery)
+      await actions.fetchSuggestions?.(searchQuery)
 
       expect(mockFetchQuery).toHaveBeenCalledWith(
         expect.anything(),

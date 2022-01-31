@@ -1,70 +1,25 @@
+/**
+ * @generated SignedSource<<88032358b00e40dda8fd0decc39d5ee9>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type TwoFactorAuthenticationTestQueryVariables = {};
-export type TwoFactorAuthenticationTestQueryResponse = {
-    readonly me: {
-        readonly " $fragmentRefs": FragmentRefs<"TwoFactorAuthentication_me">;
-    } | null;
+export type TwoFactorAuthenticationTestQuery$variables = {};
+export type TwoFactorAuthenticationTestQuery$data = {
+  readonly me: {
+    readonly " $fragmentSpreads": FragmentRefs<"TwoFactorAuthentication_me">;
+  } | null;
 };
 export type TwoFactorAuthenticationTestQuery = {
-    readonly response: TwoFactorAuthenticationTestQueryResponse;
-    readonly variables: TwoFactorAuthenticationTestQueryVariables;
+  variables: TwoFactorAuthenticationTestQuery$variables;
+  response: TwoFactorAuthenticationTestQuery$data;
 };
-
-
-
-/*
-query TwoFactorAuthenticationTestQuery {
-  me {
-    ...TwoFactorAuthentication_me
-    id
-  }
-}
-
-fragment AppSecondFactor_me on Me {
-  hasSecondFactorEnabled
-  appSecondFactors: secondFactors(kinds: [app]) {
-    __typename
-    ... on AppSecondFactor {
-      __typename
-      internalID
-      name
-    }
-  }
-}
-
-fragment BackupSecondFactor_me on Me {
-  backupSecondFactors: secondFactors(kinds: [backup]) {
-    __typename
-    ... on BackupSecondFactor {
-      __typename
-    }
-  }
-}
-
-fragment SmsSecondFactor_me on Me {
-  hasSecondFactorEnabled
-  smsSecondFactors: secondFactors(kinds: [sms]) {
-    __typename
-    ... on SmsSecondFactor {
-      __typename
-      internalID
-      formattedPhoneNumber
-    }
-  }
-}
-
-fragment TwoFactorAuthentication_me on Me {
-  hasSecondFactorEnabled
-  ...AppSecondFactor_me
-  ...SmsSecondFactor_me
-  ...BackupSecondFactor_me
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = {
@@ -291,5 +246,7 @@ return {
   }
 };
 })();
-(node as any).hash = '94c0802b01727fa79650dc40ad147a96';
+
+(node as any).hash = "94c0802b01727fa79650dc40ad147a96";
+
 export default node;

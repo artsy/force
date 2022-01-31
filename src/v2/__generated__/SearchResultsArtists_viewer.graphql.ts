@@ -1,36 +1,39 @@
+/**
+ * @generated SignedSource<<9b1072ab57a9750edf75d2feb17372d5>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type SearchResultsArtists_viewer = {
-    readonly searchConnection: {
-        readonly pageInfo: {
-            readonly hasNextPage: boolean;
-        };
-        readonly pageCursors: {
-            readonly " $fragmentRefs": FragmentRefs<"Pagination_pageCursors">;
-        };
-        readonly edges: ReadonlyArray<{
-            readonly node: {
-                readonly name?: string | null;
-                readonly internalID?: string;
-                readonly href?: string | null;
-                readonly imageUrl?: string | null;
-                readonly bio?: string | null;
-            } | null;
-        } | null> | null;
-    } | null;
-    readonly " $refType": "SearchResultsArtists_viewer";
+export type SearchResultsArtists_viewer$data = {
+  readonly searchConnection: {
+    readonly pageInfo: {
+      readonly hasNextPage: boolean;
+    };
+    readonly pageCursors: {
+      readonly " $fragmentSpreads": FragmentRefs<"Pagination_pageCursors">;
+    };
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly name?: string | null;
+        readonly internalID?: string;
+        readonly href?: string | null;
+        readonly imageUrl?: string | null;
+        readonly bio?: string | null;
+      } | null;
+    } | null> | null;
+  } | null;
+  readonly " $fragmentType": "SearchResultsArtists_viewer";
 };
-export type SearchResultsArtists_viewer$data = SearchResultsArtists_viewer;
 export type SearchResultsArtists_viewer$key = {
-    readonly " $data"?: SearchResultsArtists_viewer$data;
-    readonly " $fragmentRefs": FragmentRefs<"SearchResultsArtists_viewer">;
+  readonly " $data"?: SearchResultsArtists_viewer$data;
+  readonly " $fragmentSpreads": FragmentRefs<"SearchResultsArtists_viewer">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [
@@ -190,5 +193,7 @@ const node: ReaderFragment = {
   "type": "Viewer",
   "abstractKey": null
 };
-(node as any).hash = 'e56ba60404a845353821326cf3f1a678';
+
+(node as any).hash = "e56ba60404a845353821326cf3f1a678";
+
 export default node;

@@ -1,46 +1,25 @@
+/**
+ * @generated SignedSource<<7efc24dfe69c606ea1a88fa94f31da92>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type MyBidsBidHeader_Test_QueryVariables = {};
-export type MyBidsBidHeader_Test_QueryResponse = {
-    readonly sale: {
-        readonly " $fragmentRefs": FragmentRefs<"MyBidsBidHeader_sale">;
-    } | null;
+export type MyBidsBidHeader_Test_Query$variables = {};
+export type MyBidsBidHeader_Test_Query$data = {
+  readonly sale: {
+    readonly " $fragmentSpreads": FragmentRefs<"MyBidsBidHeader_sale">;
+  } | null;
 };
 export type MyBidsBidHeader_Test_Query = {
-    readonly response: MyBidsBidHeader_Test_QueryResponse;
-    readonly variables: MyBidsBidHeader_Test_QueryVariables;
+  variables: MyBidsBidHeader_Test_Query$variables;
+  response: MyBidsBidHeader_Test_Query$data;
 };
-
-
-
-/*
-query MyBidsBidHeader_Test_Query {
-  sale(id: "foo") {
-    ...MyBidsBidHeader_sale
-    id
-  }
-}
-
-fragment MyBidsBidHeader_sale on Sale {
-  coverImage {
-    cropped(width: 330, height: 100) {
-      src
-      srcSet
-    }
-  }
-  formattedStartDateTime
-  name
-  partner {
-    name
-    id
-  }
-  slug
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -249,5 +228,7 @@ return {
   }
 };
 })();
-(node as any).hash = '4389c2883e34a4aad235bf3d192a0b5f';
+
+(node as any).hash = "4389c2883e34a4aad235bf3d192a0b5f";
+
 export default node;

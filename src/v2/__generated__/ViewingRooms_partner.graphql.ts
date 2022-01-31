@@ -1,36 +1,39 @@
+/**
+ * @generated SignedSource<<2beaf3817d9bef36727977708c3c2690>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ViewingRooms_partner = {
-    readonly slug: string;
-    readonly currentViewingRooms: {
-        readonly edges: ReadonlyArray<{
-            readonly node: {
-                readonly internalID: string;
-            } | null;
-            readonly " $fragmentRefs": FragmentRefs<"ViewingRooms_edges">;
-        } | null> | null;
-    } | null;
-    readonly upcomingViewingRooms: {
-        readonly edges: ReadonlyArray<{
-            readonly node: {
-                readonly internalID: string;
-            } | null;
-            readonly " $fragmentRefs": FragmentRefs<"ViewingRooms_edges">;
-        } | null> | null;
-    } | null;
-    readonly " $refType": "ViewingRooms_partner";
+export type ViewingRooms_partner$data = {
+  readonly slug: string;
+  readonly currentViewingRooms: {
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly internalID: string;
+      } | null;
+      readonly " $fragmentSpreads": FragmentRefs<"ViewingRooms_edges">;
+    } | null> | null;
+  } | null;
+  readonly upcomingViewingRooms: {
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly internalID: string;
+      } | null;
+      readonly " $fragmentSpreads": FragmentRefs<"ViewingRooms_edges">;
+    } | null> | null;
+  } | null;
+  readonly " $fragmentType": "ViewingRooms_partner";
 };
-export type ViewingRooms_partner$data = ViewingRooms_partner;
 export type ViewingRooms_partner$key = {
-    readonly " $data"?: ViewingRooms_partner$data;
-    readonly " $fragmentRefs": FragmentRefs<"ViewingRooms_partner">;
+  readonly " $data"?: ViewingRooms_partner$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ViewingRooms_partner">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = {
@@ -126,5 +129,7 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = 'd01b2daf350626bf9e90d8e1a49f98b0';
+
+(node as any).hash = "d01b2daf350626bf9e90d8e1a49f98b0";
+
 export default node;

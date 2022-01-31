@@ -1,36 +1,39 @@
+/**
+ * @generated SignedSource<<a39d58b6f006014c03af2f48542d500b>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
-import { FragmentRefs } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 export type ArtworkAggregation = "ARTIST" | "ARTIST_NATIONALITY" | "ATTRIBUTION_CLASS" | "COLOR" | "DIMENSION_RANGE" | "FOLLOWED_ARTISTS" | "GALLERY" | "INSTITUTION" | "LOCATION_CITY" | "MAJOR_PERIOD" | "MATERIALS_TERMS" | "MEDIUM" | "MERCHANDISABLE_ARTISTS" | "PARTNER" | "PARTNER_CITY" | "PERIOD" | "PRICE_RANGE" | "TOTAL" | "%future added value";
-export type ArtistSeriesApp_artistSeries = {
-    readonly railArtist: ReadonlyArray<{
-        readonly " $fragmentRefs": FragmentRefs<"ArtistSeriesRail_artist">;
+import { FragmentRefs } from "relay-runtime";
+export type ArtistSeriesApp_artistSeries$data = {
+  readonly railArtist: ReadonlyArray<{
+    readonly " $fragmentSpreads": FragmentRefs<"ArtistSeriesRail_artist">;
+  } | null> | null;
+  readonly internalID: string;
+  readonly slug: string;
+  readonly sidebarAggregations: {
+    readonly aggregations: ReadonlyArray<{
+      readonly slice: ArtworkAggregation | null;
+      readonly counts: ReadonlyArray<{
+        readonly name: string;
+        readonly value: string;
+        readonly count: number;
+      } | null> | null;
     } | null> | null;
-    readonly internalID: string;
-    readonly slug: string;
-    readonly sidebarAggregations: {
-        readonly aggregations: ReadonlyArray<{
-            readonly slice: ArtworkAggregation | null;
-            readonly counts: ReadonlyArray<{
-                readonly name: string;
-                readonly value: string;
-                readonly count: number;
-            } | null> | null;
-        } | null> | null;
-    } | null;
-    readonly " $fragmentRefs": FragmentRefs<"ArtistSeriesMeta_artistSeries" | "ArtistSeriesHeader_artistSeries" | "ArtistSeriesArtworksFilter_artistSeries">;
-    readonly " $refType": "ArtistSeriesApp_artistSeries";
+  } | null;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtistSeriesMeta_artistSeries" | "ArtistSeriesHeader_artistSeries" | "ArtistSeriesArtworksFilter_artistSeries">;
+  readonly " $fragmentType": "ArtistSeriesApp_artistSeries";
 };
-export type ArtistSeriesApp_artistSeries$data = ArtistSeriesApp_artistSeries;
 export type ArtistSeriesApp_artistSeries$key = {
-    readonly " $data"?: ArtistSeriesApp_artistSeries$data;
-    readonly " $fragmentRefs": FragmentRefs<"ArtistSeriesApp_artistSeries">;
+  readonly " $data"?: ArtistSeriesApp_artistSeries$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtistSeriesApp_artistSeries">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [
@@ -49,6 +52,16 @@ const node: ReaderFragment = {
   "metadata": null,
   "name": "ArtistSeriesApp_artistSeries",
   "selections": [
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ArtistSeriesMeta_artistSeries"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ArtistSeriesHeader_artistSeries"
+    },
     {
       "alias": "railArtist",
       "args": [
@@ -84,6 +97,17 @@ const node: ReaderFragment = {
       "kind": "ScalarField",
       "name": "slug",
       "storageKey": null
+    },
+    {
+      "args": [
+        {
+          "kind": "Variable",
+          "name": "input",
+          "variableName": "input"
+        }
+      ],
+      "kind": "FragmentSpread",
+      "name": "ArtistSeriesArtworksFilter_artistSeries"
     },
     {
       "alias": "sidebarAggregations",
@@ -156,31 +180,12 @@ const node: ReaderFragment = {
         }
       ],
       "storageKey": null
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "ArtistSeriesMeta_artistSeries"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "ArtistSeriesHeader_artistSeries"
-    },
-    {
-      "args": [
-        {
-          "kind": "Variable",
-          "name": "input",
-          "variableName": "input"
-        }
-      ],
-      "kind": "FragmentSpread",
-      "name": "ArtistSeriesArtworksFilter_artistSeries"
     }
   ],
   "type": "ArtistSeries",
   "abstractKey": null
 };
-(node as any).hash = 'c6215cab1d3c95d2a542476325745470';
+
+(node as any).hash = "c6215cab1d3c95d2a542476325745470";
+
 export default node;

@@ -1,141 +1,25 @@
+/**
+ * @generated SignedSource<<05fbddf5851ba99d23e10ff4434c0171>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type PartnerApp_Test_QueryVariables = {};
-export type PartnerApp_Test_QueryResponse = {
-    readonly partner: {
-        readonly " $fragmentRefs": FragmentRefs<"PartnerApp_partner">;
-    } | null;
+export type PartnerApp_Test_Query$variables = {};
+export type PartnerApp_Test_Query$data = {
+  readonly partner: {
+    readonly " $fragmentSpreads": FragmentRefs<"PartnerApp_partner">;
+  } | null;
 };
 export type PartnerApp_Test_Query = {
-    readonly response: PartnerApp_Test_QueryResponse;
-    readonly variables: PartnerApp_Test_QueryVariables;
+  variables: PartnerApp_Test_Query$variables;
+  response: PartnerApp_Test_Query$data;
 };
-
-
-
-/*
-query PartnerApp_Test_Query {
-  partner(id: "example") {
-    ...PartnerApp_partner
-    id
-  }
-}
-
-fragment FollowProfileButton_profile on Profile {
-  id
-  slug
-  name
-  internalID
-  is_followed: isFollowed
-}
-
-fragment NavigationTabs_partner on Partner {
-  slug
-  partnerType
-  displayArtistsSection
-  displayWorksSection
-  counts {
-    eligibleArtworks
-    displayableShows
-  }
-  locations: locationsConnection(first: 20) {
-    totalCount
-  }
-  articles: articlesConnection {
-    totalCount
-  }
-  representedArtists: artistsConnection(representedBy: true, displayOnPartnerProfile: true) {
-    totalCount
-  }
-  notRepresentedArtists: artistsConnection(representedBy: false, hasPublishedArtworks: true, displayOnPartnerProfile: true) {
-    totalCount
-  }
-  viewingRooms: viewingRoomsConnection(statuses: [live, closed, scheduled]) {
-    totalCount
-  }
-}
-
-fragment PartnerApp_partner on Partner {
-  partnerType
-  displayFullPartnerPage
-  partnerPageEligible
-  isDefaultProfilePublic
-  categories {
-    id
-    name
-  }
-  profile {
-    ...PartnerHeaderImage_profile
-    id
-  }
-  ...PartnerMeta_partner
-  ...PartnerHeader_partner
-  ...NavigationTabs_partner
-}
-
-fragment PartnerHeaderImage_profile on Profile {
-  image {
-    url(version: "wide")
-  }
-}
-
-fragment PartnerHeader_partner on Partner {
-  name
-  type
-  slug
-  profile {
-    icon {
-      resized(width: 80, height: 80, version: "square140") {
-        src
-        srcSet
-      }
-    }
-    ...FollowProfileButton_profile
-    id
-  }
-  locations: locationsConnection(first: 20) {
-    totalCount
-    edges {
-      node {
-        city
-        id
-      }
-    }
-  }
-}
-
-fragment PartnerMeta_partner on Partner {
-  locationsConnection(first: 1) {
-    edges {
-      node {
-        address
-        address2
-        city
-        coordinates {
-          lat
-          lng
-        }
-        country
-        phone
-        postalCode
-        state
-        id
-      }
-    }
-  }
-  meta {
-    image
-    title
-    description
-  }
-  name
-  slug
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -870,5 +754,7 @@ return {
   }
 };
 })();
-(node as any).hash = '7805c99229b666a89e3663832d3976ee';
+
+(node as any).hash = "7805c99229b666a89e3663832d3976ee";
+
 export default node;

@@ -1,60 +1,63 @@
+/**
+ * @generated SignedSource<<ded0b4d66967409b616c1ed318aed153>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtistApp_artist = {
-    readonly slug: string;
-    readonly statuses: {
-        readonly shows: boolean | null;
-        readonly cv: boolean | null;
-        readonly articles: boolean | null;
-        readonly artworks: boolean | null;
-        readonly auctionLots: boolean | null;
-    } | null;
-    readonly counts: {
-        readonly forSaleArtworks: number | null;
-        readonly auctionResults: number | null;
-    } | null;
-    readonly related: {
-        readonly genes: {
-            readonly edges: ReadonlyArray<{
-                readonly node: {
-                    readonly slug: string;
-                } | null;
-            } | null> | null;
+export type ArtistApp_artist$data = {
+  readonly slug: string;
+  readonly statuses: {
+    readonly shows: boolean | null;
+    readonly cv: boolean | null;
+    readonly articles: boolean | null;
+    readonly artworks: boolean | null;
+    readonly auctionLots: boolean | null;
+  } | null;
+  readonly counts: {
+    readonly forSaleArtworks: Int | null;
+    readonly auctionResults: number | null;
+  } | null;
+  readonly related: {
+    readonly genes: {
+      readonly edges: ReadonlyArray<{
+        readonly node: {
+          readonly slug: string;
         } | null;
+      } | null> | null;
     } | null;
-    readonly highlights: {
-        readonly artistPartnersConnection: {
-            readonly edges: ReadonlyArray<{
-                readonly node: {
-                    readonly categories: ReadonlyArray<{
-                        readonly slug: string;
-                    } | null> | null;
-                } | null;
-            } | null> | null;
+  } | null;
+  readonly highlights: {
+    readonly artistPartnersConnection: {
+      readonly edges: ReadonlyArray<{
+        readonly node: {
+          readonly categories: ReadonlyArray<{
+            readonly slug: string;
+          } | null> | null;
         } | null;
+      } | null> | null;
     } | null;
-    readonly insights: ReadonlyArray<{
-        readonly type: string | null;
-    } | null> | null;
-    readonly biographyBlurb: {
-        readonly text: string | null;
-    } | null;
-    readonly internalID: string;
-    readonly name: string | null;
-    readonly " $fragmentRefs": FragmentRefs<"ArtistMeta_artist" | "ArtistHeader_artist" | "BackLink_artist">;
-    readonly " $refType": "ArtistApp_artist";
+  } | null;
+  readonly insights: ReadonlyArray<{
+    readonly type: string | null;
+  } | null> | null;
+  readonly biographyBlurb: {
+    readonly text: string | null;
+  } | null;
+  readonly internalID: string;
+  readonly name: string | null;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtistMeta_artist" | "ArtistHeader_artist" | "BackLink_artist">;
+  readonly " $fragmentType": "ArtistApp_artist";
 };
-export type ArtistApp_artist$data = ArtistApp_artist;
 export type ArtistApp_artist$key = {
-    readonly " $data"?: ArtistApp_artist$data;
-    readonly " $fragmentRefs": FragmentRefs<"ArtistApp_artist">;
+  readonly " $data"?: ArtistApp_artist$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtistApp_artist">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = {
@@ -321,20 +324,6 @@ return {
       "storageKey": "biographyBlurb(format:\"HTML\",partnerBio:false)"
     },
     {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "internalID",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "name",
-      "storageKey": null
-    },
-    {
       "args": null,
       "kind": "FragmentSpread",
       "name": "ArtistMeta_artist"
@@ -348,11 +337,27 @@ return {
       "args": null,
       "kind": "FragmentSpread",
       "name": "BackLink_artist"
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "internalID",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "name",
+      "storageKey": null
     }
   ],
   "type": "Artist",
   "abstractKey": null
 };
 })();
-(node as any).hash = 'a21c7efae92fa9bb9dffb510abc41558';
+
+(node as any).hash = "a21c7efae92fa9bb9dffb510abc41558";
+
 export default node;

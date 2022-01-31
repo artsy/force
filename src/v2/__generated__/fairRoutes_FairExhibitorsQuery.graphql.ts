@@ -1,77 +1,27 @@
+/**
+ * @generated SignedSource<<270e5d3e0e2dfe0649f075467d6161fa>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type fairRoutes_FairExhibitorsQueryVariables = {
-    slug: string;
+export type fairRoutes_FairExhibitorsQuery$variables = {
+  slug: string;
 };
-export type fairRoutes_FairExhibitorsQueryResponse = {
-    readonly fair: {
-        readonly " $fragmentRefs": FragmentRefs<"FairExhibitors_fair">;
-    } | null;
+export type fairRoutes_FairExhibitorsQuery$data = {
+  readonly fair: {
+    readonly " $fragmentSpreads": FragmentRefs<"FairExhibitors_fair">;
+  } | null;
 };
 export type fairRoutes_FairExhibitorsQuery = {
-    readonly response: fairRoutes_FairExhibitorsQueryResponse;
-    readonly variables: fairRoutes_FairExhibitorsQueryVariables;
+  variables: fairRoutes_FairExhibitorsQuery$variables;
+  response: fairRoutes_FairExhibitorsQuery$data;
 };
-
-
-
-/*
-query fairRoutes_FairExhibitorsQuery(
-  $slug: String!
-) {
-  fair(id: $slug) @principalField {
-    ...FairExhibitors_fair
-    id
-  }
-}
-
-fragment FairExhibitorCard_exhibitor on FairExhibitor {
-  profileID
-  partner {
-    name
-    internalID
-    slug
-    cities
-    profile {
-      ...FollowProfileButton_profile
-      id
-    }
-    id
-  }
-}
-
-fragment FairExhibitorsGroup_exhibitorsGroup on FairExhibitorsGroup {
-  exhibitors {
-    partner {
-      internalID
-      id
-    }
-    ...FairExhibitorCard_exhibitor
-  }
-}
-
-fragment FairExhibitors_fair on Fair {
-  exhibitorsGroupedByName {
-    letter
-    exhibitors {
-      partnerID
-    }
-    ...FairExhibitorsGroup_exhibitorsGroup
-  }
-}
-
-fragment FollowProfileButton_profile on Profile {
-  id
-  slug
-  name
-  internalID
-  is_followed: isFollowed
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -260,5 +210,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'b8df584a7350aafbf64963fc92954dec';
+
+(node as any).hash = "b8df584a7350aafbf64963fc92954dec";
+
 export default node;

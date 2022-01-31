@@ -26,6 +26,7 @@ export const followArtistMutation: AuthIntentMutation = (
           }
         }
       `,
+      // @ts-ignore UPGRADE RELAY 13
       optimisticResponse: {
         followArtist: {
           artist: {

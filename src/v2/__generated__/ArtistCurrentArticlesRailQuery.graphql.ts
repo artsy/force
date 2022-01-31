@@ -1,60 +1,27 @@
+/**
+ * @generated SignedSource<<c48613b2ac1fe874a2d361004cafc4e5>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtistCurrentArticlesRailQueryVariables = {
-    slug: string;
+export type ArtistCurrentArticlesRailQuery$variables = {
+  slug: string;
 };
-export type ArtistCurrentArticlesRailQueryResponse = {
-    readonly artist: {
-        readonly " $fragmentRefs": FragmentRefs<"ArtistCurrentArticlesRail_artist">;
-    } | null;
+export type ArtistCurrentArticlesRailQuery$data = {
+  readonly artist: {
+    readonly " $fragmentSpreads": FragmentRefs<"ArtistCurrentArticlesRail_artist">;
+  } | null;
 };
 export type ArtistCurrentArticlesRailQuery = {
-    readonly response: ArtistCurrentArticlesRailQueryResponse;
-    readonly variables: ArtistCurrentArticlesRailQueryVariables;
+  variables: ArtistCurrentArticlesRailQuery$variables;
+  response: ArtistCurrentArticlesRailQuery$data;
 };
-
-
-
-/*
-query ArtistCurrentArticlesRailQuery(
-  $slug: String!
-) {
-  artist(id: $slug) {
-    ...ArtistCurrentArticlesRail_artist
-    id
-  }
-}
-
-fragment ArtistCurrentArticlesRail_artist on Artist {
-  articlesConnection(first: 10, sort: PUBLISHED_AT_DESC, inEditorialFeed: true) {
-    edges {
-      node {
-        internalID
-        slug
-        href
-        thumbnailTitle
-        publishedAt(format: "MMM Do, YYYY")
-        thumbnailImage {
-          cropped(width: 325, height: 230) {
-            width
-            height
-            src
-            srcSet
-          }
-        }
-        id
-      }
-    }
-  }
-  internalID
-  name
-  slug
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -298,5 +265,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'be4434fca4312f2b84c9aa68f0eb0eb9';
+
+(node as any).hash = "be4434fca4312f2b84c9aa68f0eb0eb9";
+
 export default node;

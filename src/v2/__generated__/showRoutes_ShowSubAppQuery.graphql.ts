@@ -1,82 +1,27 @@
+/**
+ * @generated SignedSource<<c5b688aee06d8f1b1bb4f5a8b981cd9b>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type showRoutes_ShowSubAppQueryVariables = {
-    slug: string;
+export type showRoutes_ShowSubAppQuery$variables = {
+  slug: string;
 };
-export type showRoutes_ShowSubAppQueryResponse = {
-    readonly show: {
-        readonly " $fragmentRefs": FragmentRefs<"ShowSubApp_show">;
-    } | null;
+export type showRoutes_ShowSubAppQuery$data = {
+  readonly show: {
+    readonly " $fragmentSpreads": FragmentRefs<"ShowSubApp_show">;
+  } | null;
 };
 export type showRoutes_ShowSubAppQuery = {
-    readonly response: showRoutes_ShowSubAppQueryResponse;
-    readonly variables: showRoutes_ShowSubAppQueryVariables;
+  variables: showRoutes_ShowSubAppQuery$variables;
+  response: showRoutes_ShowSubAppQuery$data;
 };
-
-
-
-/*
-query showRoutes_ShowSubAppQuery(
-  $slug: String!
-) {
-  show(id: $slug) @principalField {
-    ...ShowSubApp_show
-    id
-  }
-}
-
-fragment ShowMeta_show on Show {
-  name
-  slug
-  metaDescription: description
-  metaImage {
-    src: url(version: "large")
-  }
-  partner {
-    __typename
-    ... on Partner {
-      name
-    }
-    ... on Node {
-      __isNode: __typename
-      id
-    }
-    ... on ExternalPartner {
-      id
-    }
-  }
-  formattedStartAt: startAt(format: "MMMM D")
-  formattedEndAt: endAt(format: "MMMM D, YYYY")
-}
-
-fragment ShowSubApp_show on Show {
-  id
-  internalID
-  slug
-  name
-  href
-  isFairBooth
-  partner {
-    __typename
-    ... on Partner {
-      name
-    }
-    ... on ExternalPartner {
-      name
-      id
-    }
-    ... on Node {
-      __isNode: __typename
-      id
-    }
-  }
-  ...ShowMeta_show
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -293,5 +238,7 @@ return {
   }
 };
 })();
-(node as any).hash = '4e79350804781d58abe13909be5e579b';
+
+(node as any).hash = "4e79350804781d58abe13909be5e579b";
+
 export default node;

@@ -1,46 +1,49 @@
+/**
+ * @generated SignedSource<<ba4ba8c174fde01239de0482cb2b1499>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtworkDetailsAboutTheWorkFromPartner_artwork = {
-    readonly additional_information: string | null;
-    readonly sale: {
-        readonly isBenefit: boolean | null;
-        readonly isGalleryAuction: boolean | null;
-    } | null;
-    readonly partner: {
-        readonly internalID: string;
-        readonly slug: string;
-        readonly type: string | null;
-        readonly href: string | null;
-        readonly name: string | null;
-        readonly initials: string | null;
-        readonly locations: ReadonlyArray<{
-            readonly city: string | null;
-        } | null> | null;
-        readonly is_default_profile_public: boolean | null;
-        readonly profile: {
-            readonly slug: string;
-            readonly icon: {
-                readonly cropped: {
-                    readonly src: string;
-                    readonly srcSet: string;
-                } | null;
-            } | null;
-            readonly " $fragmentRefs": FragmentRefs<"FollowProfileButton_profile">;
+export type ArtworkDetailsAboutTheWorkFromPartner_artwork$data = {
+  readonly additional_information: string | null;
+  readonly sale: {
+    readonly isBenefit: boolean | null;
+    readonly isGalleryAuction: boolean | null;
+  } | null;
+  readonly partner: {
+    readonly internalID: string;
+    readonly slug: string;
+    readonly type: string | null;
+    readonly href: string | null;
+    readonly name: string | null;
+    readonly initials: string | null;
+    readonly locations: ReadonlyArray<{
+      readonly city: string | null;
+    } | null> | null;
+    readonly is_default_profile_public: boolean | null;
+    readonly profile: {
+      readonly slug: string;
+      readonly icon: {
+        readonly cropped: {
+          readonly src: string;
+          readonly srcSet: string;
         } | null;
+      } | null;
+      readonly " $fragmentSpreads": FragmentRefs<"FollowProfileButton_profile">;
     } | null;
-    readonly " $refType": "ArtworkDetailsAboutTheWorkFromPartner_artwork";
+  } | null;
+  readonly " $fragmentType": "ArtworkDetailsAboutTheWorkFromPartner_artwork";
 };
-export type ArtworkDetailsAboutTheWorkFromPartner_artwork$data = ArtworkDetailsAboutTheWorkFromPartner_artwork;
 export type ArtworkDetailsAboutTheWorkFromPartner_artwork$key = {
-    readonly " $data"?: ArtworkDetailsAboutTheWorkFromPartner_artwork$data;
-    readonly " $fragmentRefs": FragmentRefs<"ArtworkDetailsAboutTheWorkFromPartner_artwork">;
+  readonly " $data"?: ArtworkDetailsAboutTheWorkFromPartner_artwork$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtworkDetailsAboutTheWorkFromPartner_artwork">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = {
@@ -171,6 +174,11 @@ return {
           "name": "profile",
           "plural": false,
           "selections": [
+            {
+              "args": null,
+              "kind": "FragmentSpread",
+              "name": "FollowProfileButton_profile"
+            },
             (v0/*: any*/),
             {
               "alias": null,
@@ -218,11 +226,6 @@ return {
                 }
               ],
               "storageKey": null
-            },
-            {
-              "args": null,
-              "kind": "FragmentSpread",
-              "name": "FollowProfileButton_profile"
             }
           ],
           "storageKey": null
@@ -235,5 +238,7 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '9ec2f5a9558b00c1e1818f617924a0a6';
+
+(node as any).hash = "9ec2f5a9558b00c1e1818f617924a0a6";
+
 export default node;

@@ -1,20 +1,23 @@
+/**
+ * @generated SignedSource<<aa939cf1bfb8bd8d361eb398c6cc439a>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type MockRelayRendererFixtures_artworkMetadata = {
-    readonly title: string | null;
-    readonly " $refType": "MockRelayRendererFixtures_artworkMetadata";
+export type MockRelayRendererFixtures_artworkMetadata$data = {
+  readonly title: string | null;
+  readonly " $fragmentType": "MockRelayRendererFixtures_artworkMetadata";
 };
-export type MockRelayRendererFixtures_artworkMetadata$data = MockRelayRendererFixtures_artworkMetadata;
 export type MockRelayRendererFixtures_artworkMetadata$key = {
-    readonly " $data"?: MockRelayRendererFixtures_artworkMetadata$data;
-    readonly " $fragmentRefs": FragmentRefs<"MockRelayRendererFixtures_artworkMetadata">;
+  readonly " $data"?: MockRelayRendererFixtures_artworkMetadata$data;
+  readonly " $fragmentSpreads": FragmentRefs<"MockRelayRendererFixtures_artworkMetadata">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -33,5 +36,7 @@ const node: ReaderFragment = {
   "type": "Artwork",
   "abstractKey": null
 };
-(node as any).hash = '36229b903e6398f793878a155df342a7';
+
+(node as any).hash = "36229b903e6398f793878a155df342a7";
+
 export default node;

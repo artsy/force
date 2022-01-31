@@ -1,26 +1,29 @@
+/**
+ * @generated SignedSource<<4ee13c35936cd1a403533f5d7cee4cd6>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ShowLocationHours_location = {
-    readonly openingHours: {
-        readonly schedules?: ReadonlyArray<{
-            readonly days: string | null;
-            readonly hours: string | null;
-        } | null> | null;
-        readonly text?: string | null;
-    } | null;
-    readonly " $refType": "ShowLocationHours_location";
+export type ShowLocationHours_location$data = {
+  readonly openingHours: {
+    readonly schedules?: ReadonlyArray<{
+      readonly days: string | null;
+      readonly hours: string | null;
+    } | null> | null;
+    readonly text?: string | null;
+  } | null;
+  readonly " $fragmentType": "ShowLocationHours_location";
 };
-export type ShowLocationHours_location$data = ShowLocationHours_location;
 export type ShowLocationHours_location$key = {
-    readonly " $data"?: ShowLocationHours_location$data;
-    readonly " $fragmentRefs": FragmentRefs<"ShowLocationHours_location">;
+  readonly " $data"?: ShowLocationHours_location$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ShowLocationHours_location">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -89,5 +92,7 @@ const node: ReaderFragment = {
   "type": "Location",
   "abstractKey": null
 };
-(node as any).hash = '9d72ce84b277694788a1013b451f42a7';
+
+(node as any).hash = "9d72ce84b277694788a1013b451f42a7";
+
 export default node;

@@ -1,23 +1,26 @@
+/**
+ * @generated SignedSource<<6c4eb38e801c082cdd65cae23b9e3160>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtistSeriesArtworksFilter_artistSeries = {
-    readonly filtered_artworks: {
-        readonly id: string;
-        readonly " $fragmentRefs": FragmentRefs<"ArtworkFilterArtworkGrid_filtered_artworks">;
-    } | null;
-    readonly " $refType": "ArtistSeriesArtworksFilter_artistSeries";
+export type ArtistSeriesArtworksFilter_artistSeries$data = {
+  readonly filtered_artworks: {
+    readonly id: string;
+    readonly " $fragmentSpreads": FragmentRefs<"ArtworkFilterArtworkGrid_filtered_artworks">;
+  } | null;
+  readonly " $fragmentType": "ArtistSeriesArtworksFilter_artistSeries";
 };
-export type ArtistSeriesArtworksFilter_artistSeries$data = ArtistSeriesArtworksFilter_artistSeries;
 export type ArtistSeriesArtworksFilter_artistSeries$key = {
-    readonly " $data"?: ArtistSeriesArtworksFilter_artistSeries$data;
-    readonly " $fragmentRefs": FragmentRefs<"ArtistSeriesArtworksFilter_artistSeries">;
+  readonly " $data"?: ArtistSeriesArtworksFilter_artistSeries$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtistSeriesArtworksFilter_artistSeries">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [
@@ -64,5 +67,7 @@ const node: ReaderFragment = {
   "type": "ArtistSeries",
   "abstractKey": null
 };
-(node as any).hash = '4a11fbffa1639a06de13dd34dbf81eeb';
+
+(node as any).hash = "4a11fbffa1639a06de13dd34dbf81eeb";
+
 export default node;

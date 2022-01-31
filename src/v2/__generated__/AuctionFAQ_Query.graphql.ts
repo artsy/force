@@ -1,77 +1,50 @@
+/**
+ * @generated SignedSource<<7f805b35cffbda81265545fbec1264e0>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type AuctionFAQ_QueryVariables = {};
-export type AuctionFAQ_QueryResponse = {
-    readonly viewer: {
-        readonly " $fragmentRefs": FragmentRefs<"AuctionFAQ_viewer">;
-    } | null;
+export type AuctionFAQ_Query$variables = {};
+export type AuctionFAQ_Query$data = {
+  readonly viewer: {
+    readonly " $fragmentSpreads": FragmentRefs<"AuctionFAQ_viewer">;
+  } | null;
 };
-export type AuctionFAQ_QueryRawResponse = {
-    readonly viewer: ({
-        readonly bidding: ({
-            readonly content: string | null;
-            readonly id: string;
-        }) | null;
-        readonly buyersPremiumTaxesAndFees: ({
-            readonly content: string | null;
-            readonly id: string;
-        }) | null;
-        readonly paymentsAndShipping: ({
-            readonly content: string | null;
-            readonly id: string;
-        }) | null;
-        readonly emailsAndAlerts: ({
-            readonly content: string | null;
-            readonly id: string;
-        }) | null;
-        readonly conditionsOfSale: ({
-            readonly content: string | null;
-            readonly id: string;
-        }) | null;
-    }) | null;
+export type AuctionFAQ_Query$rawResponse = {
+  readonly viewer: {
+    readonly bidding: {
+      readonly content: string | null;
+      readonly id: string;
+    } | null;
+    readonly buyersPremiumTaxesAndFees: {
+      readonly content: string | null;
+      readonly id: string;
+    } | null;
+    readonly paymentsAndShipping: {
+      readonly content: string | null;
+      readonly id: string;
+    } | null;
+    readonly emailsAndAlerts: {
+      readonly content: string | null;
+      readonly id: string;
+    } | null;
+    readonly conditionsOfSale: {
+      readonly content: string | null;
+      readonly id: string;
+    } | null;
+  } | null;
 };
 export type AuctionFAQ_Query = {
-    readonly response: AuctionFAQ_QueryResponse;
-    readonly variables: AuctionFAQ_QueryVariables;
-    readonly rawResponse: AuctionFAQ_QueryRawResponse;
+  variables: AuctionFAQ_Query$variables;
+  response: AuctionFAQ_Query$data;
+  rawResponse: AuctionFAQ_Query$rawResponse;
 };
-
-
-
-/*
-query AuctionFAQ_Query {
-  viewer {
-    ...AuctionFAQ_viewer
-  }
-}
-
-fragment AuctionFAQ_viewer on Viewer {
-  bidding: staticContent(id: "how-auctions-work-bidding") {
-    content
-    id
-  }
-  buyersPremiumTaxesAndFees: staticContent(id: "how-auctions-work-buyers-premium-taxes-and-fees") {
-    content
-    id
-  }
-  paymentsAndShipping: staticContent(id: "how-auctions-work-payments-and-shipping") {
-    content
-    id
-  }
-  emailsAndAlerts: staticContent(id: "how-auctions-work-emails-and-alerts") {
-    content
-    id
-  }
-  conditionsOfSale: staticContent(id: "how-auctions-work-conditions-of-sale") {
-    content
-    id
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -268,5 +241,7 @@ return {
   }
 };
 })();
-(node as any).hash = '23cdc2b3dd27c64d9a6a252234e51d2f';
+
+(node as any).hash = "23cdc2b3dd27c64d9a6a252234e51d2f";
+
 export default node;

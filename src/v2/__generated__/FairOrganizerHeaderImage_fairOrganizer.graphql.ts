@@ -1,24 +1,27 @@
+/**
+ * @generated SignedSource<<923602b147d21fbb1909cb4d06e0c1a6>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type FairOrganizerHeaderImage_fairOrganizer = {
-    readonly profile: {
-        readonly image: {
-            readonly url: string | null;
-        } | null;
+export type FairOrganizerHeaderImage_fairOrganizer$data = {
+  readonly profile: {
+    readonly image: {
+      readonly url: string | null;
     } | null;
-    readonly " $refType": "FairOrganizerHeaderImage_fairOrganizer";
+  } | null;
+  readonly " $fragmentType": "FairOrganizerHeaderImage_fairOrganizer";
 };
-export type FairOrganizerHeaderImage_fairOrganizer$data = FairOrganizerHeaderImage_fairOrganizer;
 export type FairOrganizerHeaderImage_fairOrganizer$key = {
-    readonly " $data"?: FairOrganizerHeaderImage_fairOrganizer$data;
-    readonly " $fragmentRefs": FragmentRefs<"FairOrganizerHeaderImage_fairOrganizer">;
+  readonly " $data"?: FairOrganizerHeaderImage_fairOrganizer$data;
+  readonly " $fragmentSpreads": FragmentRefs<"FairOrganizerHeaderImage_fairOrganizer">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -65,5 +68,7 @@ const node: ReaderFragment = {
   "type": "FairOrganizer",
   "abstractKey": null
 };
-(node as any).hash = '3fdef7d19c13faad6f174fc62c51b7a5';
+
+(node as any).hash = "3fdef7d19c13faad6f174fc62c51b7a5";
+
 export default node;

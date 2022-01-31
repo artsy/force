@@ -104,6 +104,7 @@ export class FollowProfileButton extends React.Component<Props> {
             unfollow: profile.is_followed,
           },
         },
+        // @ts-ignore UPGRADE RELAY 13
         optimisticResponse: {
           followProfile: {
             profile: {

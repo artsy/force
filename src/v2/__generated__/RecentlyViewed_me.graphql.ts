@@ -1,27 +1,30 @@
+/**
+ * @generated SignedSource<<c9556164a2ba75a0dda71d47be3d7ec5>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type RecentlyViewed_me = {
-    readonly recentlyViewedArtworksConnection: {
-        readonly edges: ReadonlyArray<{
-            readonly node: {
-                readonly id: string;
-                readonly " $fragmentRefs": FragmentRefs<"ShelfArtwork_artwork">;
-            } | null;
-        } | null> | null;
-    } | null;
-    readonly " $refType": "RecentlyViewed_me";
+export type RecentlyViewed_me$data = {
+  readonly recentlyViewedArtworksConnection: {
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly id: string;
+        readonly " $fragmentSpreads": FragmentRefs<"ShelfArtwork_artwork">;
+      } | null;
+    } | null> | null;
+  } | null;
+  readonly " $fragmentType": "RecentlyViewed_me";
 };
-export type RecentlyViewed_me$data = RecentlyViewed_me;
 export type RecentlyViewed_me$key = {
-    readonly " $data"?: RecentlyViewed_me$data;
-    readonly " $fragmentRefs": FragmentRefs<"RecentlyViewed_me">;
+  readonly " $data"?: RecentlyViewed_me$data;
+  readonly " $fragmentSpreads": FragmentRefs<"RecentlyViewed_me">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -84,5 +87,7 @@ const node: ReaderFragment = {
   "type": "Me",
   "abstractKey": null
 };
-(node as any).hash = '54d03de051db4de38baaf24ffaca7866';
+
+(node as any).hash = "54d03de051db4de38baaf24ffaca7866";
+
 export default node;

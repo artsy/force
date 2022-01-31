@@ -1,87 +1,60 @@
+/**
+ * @generated SignedSource<<5afec83db62d782e349e37ae15182da8>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ShippingQuotes_Test_QueryVariables = {};
-export type ShippingQuotes_Test_QueryResponse = {
-    readonly order: {
-        readonly lineItems: {
+export type ShippingQuotes_Test_Query$variables = {};
+export type ShippingQuotes_Test_Query$data = {
+  readonly order: {
+    readonly lineItems: {
+      readonly edges: ReadonlyArray<{
+        readonly node: {
+          readonly shippingQuoteOptions: {
             readonly edges: ReadonlyArray<{
-                readonly node: {
-                    readonly shippingQuoteOptions: {
-                        readonly edges: ReadonlyArray<{
-                            readonly " $fragmentRefs": FragmentRefs<"ShippingQuotes_shippingQuotes">;
-                        } | null> | null;
-                    } | null;
-                } | null;
+              readonly " $fragmentSpreads": FragmentRefs<"ShippingQuotes_shippingQuotes">;
             } | null> | null;
+          } | null;
         } | null;
+      } | null> | null;
     } | null;
+  } | null;
 };
-export type ShippingQuotes_Test_QueryRawResponse = {
-    readonly order: ({
-        readonly __typename: string;
-        readonly lineItems: ({
-            readonly edges: ReadonlyArray<({
-                readonly node: ({
-                    readonly shippingQuoteOptions: ({
-                        readonly edges: ReadonlyArray<({
-                            readonly node: ({
-                                readonly id: string;
-                                readonly displayName: string;
-                                readonly isSelected: boolean;
-                                readonly price: string | null;
-                                readonly priceCents: number;
-                            }) | null;
-                        }) | null> | null;
-                    }) | null;
-                    readonly id: string;
-                }) | null;
-            }) | null> | null;
-        }) | null;
-        readonly id: string;
-    }) | null;
+export type ShippingQuotes_Test_Query$rawResponse = {
+  readonly order: {
+    readonly __typename: string;
+    readonly lineItems: {
+      readonly edges: ReadonlyArray<{
+        readonly node: {
+          readonly shippingQuoteOptions: {
+            readonly edges: ReadonlyArray<{
+              readonly node: {
+                readonly id: string;
+                readonly displayName: string;
+                readonly isSelected: boolean;
+                readonly price: string | null;
+                readonly priceCents: number;
+              } | null;
+            } | null> | null;
+          } | null;
+          readonly id: string;
+        } | null;
+      } | null> | null;
+    } | null;
+    readonly id: string;
+  } | null;
 };
 export type ShippingQuotes_Test_Query = {
-    readonly response: ShippingQuotes_Test_QueryResponse;
-    readonly variables: ShippingQuotes_Test_QueryVariables;
-    readonly rawResponse: ShippingQuotes_Test_QueryRawResponse;
+  variables: ShippingQuotes_Test_Query$variables;
+  response: ShippingQuotes_Test_Query$data;
+  rawResponse: ShippingQuotes_Test_Query$rawResponse;
 };
-
-
-
-/*
-query ShippingQuotes_Test_Query {
-  order: commerceOrder {
-    __typename
-    lineItems {
-      edges {
-        node {
-          shippingQuoteOptions {
-            edges {
-              ...ShippingQuotes_shippingQuotes
-            }
-          }
-          id
-        }
-      }
-    }
-    id
-  }
-}
-
-fragment ShippingQuotes_shippingQuotes on CommerceShippingQuoteEdge {
-  node {
-    id
-    displayName
-    isSelected
-    price(precision: 2)
-    priceCents
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = {
@@ -392,5 +365,7 @@ return {
   }
 };
 })();
-(node as any).hash = '188340a940545057b5b1dcd13a548121';
+
+(node as any).hash = "188340a940545057b5b1dcd13a548121";
+
 export default node;

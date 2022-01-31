@@ -1,31 +1,34 @@
+/**
+ * @generated SignedSource<<cc668e2308115ed64aa61d46b842e342>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtistsCarouselCell_featuredLink = {
-    readonly internalID: string | null;
-    readonly title: string | null;
-    readonly subtitle: string | null;
-    readonly href: string | null;
-    readonly image: {
-        readonly thumb: {
-            readonly width: number;
-            readonly height: number;
-            readonly src: string;
-            readonly srcSet: string;
-        } | null;
+export type ArtistsCarouselCell_featuredLink$data = {
+  readonly internalID: string | null;
+  readonly title: string | null;
+  readonly subtitle: string | null;
+  readonly href: string | null;
+  readonly image: {
+    readonly thumb: {
+      readonly width: number;
+      readonly height: number;
+      readonly src: string;
+      readonly srcSet: string;
     } | null;
-    readonly " $refType": "ArtistsCarouselCell_featuredLink";
+  } | null;
+  readonly " $fragmentType": "ArtistsCarouselCell_featuredLink";
 };
-export type ArtistsCarouselCell_featuredLink$data = ArtistsCarouselCell_featuredLink;
 export type ArtistsCarouselCell_featuredLink$key = {
-    readonly " $data"?: ArtistsCarouselCell_featuredLink$data;
-    readonly " $fragmentRefs": FragmentRefs<"ArtistsCarouselCell_featuredLink">;
+  readonly " $data"?: ArtistsCarouselCell_featuredLink$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtistsCarouselCell_featuredLink">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -131,5 +134,7 @@ const node: ReaderFragment = {
   "type": "FeaturedLink",
   "abstractKey": null
 };
-(node as any).hash = '825be8e5dd765862c4699c299893006c';
+
+(node as any).hash = "825be8e5dd765862c4699c299893006c";
+
 export default node;

@@ -1,4 +1,4 @@
-import { IdentityVerificationAppTestQueryRawResponse } from "v2/__generated__/IdentityVerificationAppTestQuery.graphql"
+import { IdentityVerificationAppTestQuery$rawResponse } from "v2/__generated__/IdentityVerificationAppTestQuery.graphql"
 import { ErrorModal } from "v2/Components/Modal/ErrorModal"
 import deepMerge from "deepmerge"
 import { createTestEnv } from "v2/DevTools/createTestEnv"
@@ -30,7 +30,7 @@ const setupTestEnv = () => {
         }
       }
     `,
-    defaultData: IdentityVerificationAppQueryResponseFixture as IdentityVerificationAppTestQueryRawResponse,
+    defaultData: IdentityVerificationAppQueryResponseFixture as IdentityVerificationAppTestQuery$rawResponse,
     defaultMutationResults: {
       startIdentityVerification: {
         startIdentityVerificationResponseOrError: {

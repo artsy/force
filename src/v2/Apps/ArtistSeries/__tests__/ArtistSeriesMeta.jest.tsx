@@ -1,13 +1,13 @@
 import { MockBoot, renderRelayTree } from "v2/DevTools"
 import { ArtistSeriesMetaFragmentContainer } from "../Components/ArtistSeriesMeta"
 import { graphql } from "react-relay"
-import { ArtistSeriesMeta_TestQueryRawResponse } from "v2/__generated__/ArtistSeriesMeta_TestQuery.graphql"
+import { ArtistSeriesMeta_TestQuery$rawResponse } from "v2/__generated__/ArtistSeriesMeta_TestQuery.graphql"
 
 jest.unmock("react-relay")
 
 describe("ArtistSeriesMeta", () => {
   const getWrapper = async (
-    response: ArtistSeriesMeta_TestQueryRawResponse = ArtistSeriesMetaFixture
+    response: ArtistSeriesMeta_TestQuery$rawResponse = ArtistSeriesMetaFixture
   ) => {
     return renderRelayTree({
       Component: ({ artistSeries }) => {
@@ -78,7 +78,7 @@ describe("ArtistSeriesMeta", () => {
   })
 })
 
-const ArtistSeriesMetaFixture: ArtistSeriesMeta_TestQueryRawResponse = {
+const ArtistSeriesMetaFixture: ArtistSeriesMeta_TestQuery$rawResponse = {
   artistSeries: {
     title: "Pumpkins",
     description:
@@ -93,7 +93,7 @@ const ArtistSeriesMetaFixture: ArtistSeriesMeta_TestQueryRawResponse = {
   },
 }
 
-const ArtistSeriesMetaFixtureNoArtist: ArtistSeriesMeta_TestQueryRawResponse = {
+const ArtistSeriesMetaFixtureNoArtist: ArtistSeriesMeta_TestQuery$rawResponse = {
   artistSeries: {
     title: "Squashes",
     description:

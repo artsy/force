@@ -1,36 +1,39 @@
+/**
+ * @generated SignedSource<<6a94225c81eb43580a398e617da177c9>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type CategoryRail_category = {
-    readonly name: string | null;
-    readonly href: string | null;
-    readonly avatar: {
-        readonly cropped: {
-            readonly src: string;
-            readonly srcSet: string;
-        } | null;
+export type CategoryRail_category$data = {
+  readonly name: string | null;
+  readonly href: string | null;
+  readonly avatar: {
+    readonly cropped: {
+      readonly src: string;
+      readonly srcSet: string;
     } | null;
-    readonly filterArtworksConnection: {
-        readonly edges: ReadonlyArray<{
-            readonly node: {
-                readonly internalID: string;
-                readonly " $fragmentRefs": FragmentRefs<"ShelfArtwork_artwork">;
-            } | null;
-        } | null> | null;
-    } | null;
-    readonly " $fragmentRefs": FragmentRefs<"FollowGeneButton_gene">;
-    readonly " $refType": "CategoryRail_category";
+  } | null;
+  readonly filterArtworksConnection: {
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly internalID: string;
+        readonly " $fragmentSpreads": FragmentRefs<"ShelfArtwork_artwork">;
+      } | null;
+    } | null> | null;
+  } | null;
+  readonly " $fragmentSpreads": FragmentRefs<"FollowGeneButton_gene">;
+  readonly " $fragmentType": "CategoryRail_category";
 };
-export type CategoryRail_category$data = CategoryRail_category;
 export type CategoryRail_category$key = {
-    readonly " $data"?: CategoryRail_category$data;
-    readonly " $fragmentRefs": FragmentRefs<"CategoryRail_category">;
+  readonly " $data"?: CategoryRail_category$data;
+  readonly " $fragmentSpreads": FragmentRefs<"CategoryRail_category">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -100,6 +103,11 @@ const node: ReaderFragment = {
       "storageKey": null
     },
     {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "FollowGeneButton_gene"
+    },
+    {
       "alias": null,
       "args": [
         {
@@ -149,15 +157,12 @@ const node: ReaderFragment = {
         }
       ],
       "storageKey": "filterArtworksConnection(first:10)"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "FollowGeneButton_gene"
     }
   ],
   "type": "Gene",
   "abstractKey": null
 };
-(node as any).hash = '19ffdb49e1438c0acc42b49ded3ad035';
+
+(node as any).hash = "19ffdb49e1438c0acc42b49ded3ad035";
+
 export default node;

@@ -1,72 +1,48 @@
+/**
+ * @generated SignedSource<<bf00f5d2e6c84f2d031daea9bedb8521>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type FollowGeneInput = {
-    clientMutationId?: string | null;
-    geneID?: string | null;
-    unfollow?: boolean | null;
+  clientMutationId?: string | null;
+  geneID?: string | null;
+  unfollow?: boolean | null;
 };
-export type GeneSearchResultsFollowGeneMutationVariables = {
-    input: FollowGeneInput;
-    excludedGeneIds: Array<string | null>;
+export type GeneSearchResultsFollowGeneMutation$variables = {
+  input: FollowGeneInput;
+  excludedGeneIds: ReadonlyArray<string | null>;
 };
-export type GeneSearchResultsFollowGeneMutationResponse = {
-    readonly followGene: {
-        readonly gene: {
-            readonly similar: {
-                readonly edges: ReadonlyArray<{
-                    readonly node: {
-                        readonly slug: string;
-                        readonly internalID: string;
-                        readonly id: string;
-                        readonly name: string | null;
-                        readonly image: {
-                            readonly cropped: {
-                                readonly url: string;
-                            } | null;
-                        } | null;
-                    } | null;
-                } | null> | null;
+export type GeneSearchResultsFollowGeneMutation$data = {
+  readonly followGene: {
+    readonly gene: {
+      readonly similar: {
+        readonly edges: ReadonlyArray<{
+          readonly node: {
+            readonly slug: string;
+            readonly internalID: string;
+            readonly id: string;
+            readonly name: string | null;
+            readonly image: {
+              readonly cropped: {
+                readonly url: string;
+              } | null;
             } | null;
-        } | null;
+          } | null;
+        } | null> | null;
+      } | null;
     } | null;
+  } | null;
 };
 export type GeneSearchResultsFollowGeneMutation = {
-    readonly response: GeneSearchResultsFollowGeneMutationResponse;
-    readonly variables: GeneSearchResultsFollowGeneMutationVariables;
+  variables: GeneSearchResultsFollowGeneMutation$variables;
+  response: GeneSearchResultsFollowGeneMutation$data;
 };
-
-
-
-/*
-mutation GeneSearchResultsFollowGeneMutation(
-  $input: FollowGeneInput!
-  $excludedGeneIds: [String]!
-) {
-  followGene(input: $input) {
-    gene {
-      similar(first: 1, excludeGeneIDs: $excludedGeneIds) {
-        edges {
-          node {
-            slug
-            internalID
-            id
-            name
-            image {
-              cropped(width: 100, height: 100) {
-                url
-              }
-            }
-          }
-        }
-      }
-      id
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = {
@@ -281,5 +257,7 @@ return {
   }
 };
 })();
-(node as any).hash = '391d6f9a614b00601a42d5ca2179ed37';
+
+(node as any).hash = "391d6f9a614b00601a42d5ca2179ed37";
+
 export default node;

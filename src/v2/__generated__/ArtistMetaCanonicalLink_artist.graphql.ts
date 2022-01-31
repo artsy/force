@@ -1,49 +1,52 @@
+/**
+ * @generated SignedSource<<907b2b1120a09cc12567263b4331fdf3>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtistMetaCanonicalLink_artist = {
-    readonly slug: string;
-    readonly statuses: {
-        readonly shows: boolean | null;
-        readonly cv: boolean | null;
-        readonly articles: boolean | null;
-        readonly auctionLots: boolean | null;
-        readonly artworks: boolean | null;
-    } | null;
-    readonly highlights: {
-        readonly partnersConnection: {
-            readonly edges: ReadonlyArray<{
-                readonly __typename: string;
-            } | null> | null;
-        } | null;
-    } | null;
-    readonly biographyBlurb: {
-        readonly text: string | null;
-    } | null;
-    readonly related: {
-        readonly genes: {
-            readonly edges: ReadonlyArray<{
-                readonly node: {
-                    readonly __typename: string;
-                } | null;
-            } | null> | null;
-        } | null;
-    } | null;
-    readonly insights: ReadonlyArray<{
+export type ArtistMetaCanonicalLink_artist$data = {
+  readonly slug: string;
+  readonly statuses: {
+    readonly shows: boolean | null;
+    readonly cv: boolean | null;
+    readonly articles: boolean | null;
+    readonly auctionLots: boolean | null;
+    readonly artworks: boolean | null;
+  } | null;
+  readonly highlights: {
+    readonly partnersConnection: {
+      readonly edges: ReadonlyArray<{
         readonly __typename: string;
-    } | null> | null;
-    readonly " $refType": "ArtistMetaCanonicalLink_artist";
+      } | null> | null;
+    } | null;
+  } | null;
+  readonly biographyBlurb: {
+    readonly text: string | null;
+  } | null;
+  readonly related: {
+    readonly genes: {
+      readonly edges: ReadonlyArray<{
+        readonly node: {
+          readonly __typename: string;
+        } | null;
+      } | null> | null;
+    } | null;
+  } | null;
+  readonly insights: ReadonlyArray<{
+    readonly __typename: string;
+  } | null> | null;
+  readonly " $fragmentType": "ArtistMetaCanonicalLink_artist";
 };
-export type ArtistMetaCanonicalLink_artist$data = ArtistMetaCanonicalLink_artist;
 export type ArtistMetaCanonicalLink_artist$key = {
-    readonly " $data"?: ArtistMetaCanonicalLink_artist$data;
-    readonly " $fragmentRefs": FragmentRefs<"ArtistMetaCanonicalLink_artist">;
+  readonly " $data"?: ArtistMetaCanonicalLink_artist$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtistMetaCanonicalLink_artist">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = [
@@ -270,5 +273,7 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = 'ff3b180b4c038402a0c7b61507eea870';
+
+(node as any).hash = "ff3b180b4c038402a0c7b61507eea870";
+
 export default node;

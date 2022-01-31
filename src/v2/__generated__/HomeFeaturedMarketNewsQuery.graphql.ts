@@ -1,55 +1,25 @@
+/**
+ * @generated SignedSource<<0aaa77f874b54860abd2292bee72eaaa>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type HomeFeaturedMarketNewsQueryVariables = {};
-export type HomeFeaturedMarketNewsQueryResponse = {
-    readonly articles: ReadonlyArray<{
-        readonly " $fragmentRefs": FragmentRefs<"HomeFeaturedMarketNews_articles">;
-    } | null> | null;
+export type HomeFeaturedMarketNewsQuery$variables = {};
+export type HomeFeaturedMarketNewsQuery$data = {
+  readonly articles: ReadonlyArray<{
+    readonly " $fragmentSpreads": FragmentRefs<"HomeFeaturedMarketNews_articles">;
+  } | null> | null;
 };
 export type HomeFeaturedMarketNewsQuery = {
-    readonly response: HomeFeaturedMarketNewsQueryResponse;
-    readonly variables: HomeFeaturedMarketNewsQueryVariables;
+  variables: HomeFeaturedMarketNewsQuery$variables;
+  response: HomeFeaturedMarketNewsQuery$data;
 };
-
-
-
-/*
-query HomeFeaturedMarketNewsQuery {
-  articles(featured: true, published: true, sort: PUBLISHED_AT_DESC) {
-    ...HomeFeaturedMarketNews_articles
-    id
-  }
-}
-
-fragment HomeFeaturedMarketNews_articles on Article {
-  internalID
-  href
-  byline
-  slug
-  title
-  publishedAt(format: "MMM D YYYY")
-  vertical
-  thumbnailTitle
-  thumbnailImage {
-    large: cropped(width: 670, height: 720) {
-      width
-      height
-      src
-      srcSet
-    }
-    small: cropped(width: 325, height: 240) {
-      width
-      height
-      src
-      srcSet
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -277,5 +247,7 @@ return {
   }
 };
 })();
-(node as any).hash = '484565658b47f40dd52c68e8e8dabde1';
+
+(node as any).hash = "484565658b47f40dd52c68e8e8dabde1";
+
 export default node;

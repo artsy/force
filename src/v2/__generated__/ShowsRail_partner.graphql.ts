@@ -1,30 +1,33 @@
+/**
+ * @generated SignedSource<<596f30f2914db6e664027256cfe49f95>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ShowsRail_partner = {
-    readonly slug: string;
-    readonly displayFullPartnerPage: boolean | null;
-    readonly showsConnection: {
-        readonly totalCount: number | null;
-        readonly edges: ReadonlyArray<{
-            readonly node: {
-                readonly id: string;
-                readonly " $fragmentRefs": FragmentRefs<"ShowCard_show">;
-            } | null;
-        } | null> | null;
-    } | null;
-    readonly " $refType": "ShowsRail_partner";
+export type ShowsRail_partner$data = {
+  readonly slug: string;
+  readonly displayFullPartnerPage: boolean | null;
+  readonly showsConnection: {
+    readonly totalCount: number | null;
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly id: string;
+        readonly " $fragmentSpreads": FragmentRefs<"ShowCard_show">;
+      } | null;
+    } | null> | null;
+  } | null;
+  readonly " $fragmentType": "ShowsRail_partner";
 };
-export type ShowsRail_partner$data = ShowsRail_partner;
 export type ShowsRail_partner$key = {
-    readonly " $data"?: ShowsRail_partner$data;
-    readonly " $fragmentRefs": FragmentRefs<"ShowsRail_partner">;
+  readonly " $data"?: ShowsRail_partner$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ShowsRail_partner">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -118,5 +121,7 @@ const node: ReaderFragment = {
   "type": "Partner",
   "abstractKey": null
 };
-(node as any).hash = 'd6e77342a610708d73c1b06cb0b3bed2';
+
+(node as any).hash = "d6e77342a610708d73c1b06cb0b3bed2";
+
 export default node;

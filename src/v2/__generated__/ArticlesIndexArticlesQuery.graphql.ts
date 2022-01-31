@@ -1,66 +1,27 @@
+/**
+ * @generated SignedSource<<656be04bac4f46f1369baea4b4bbaf26>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArticlesIndexArticlesQueryVariables = {
-    after?: string | null;
+export type ArticlesIndexArticlesQuery$variables = {
+  after?: string | null;
 };
-export type ArticlesIndexArticlesQueryResponse = {
-    readonly viewer: {
-        readonly " $fragmentRefs": FragmentRefs<"ArticlesIndexArticles_viewer">;
-    } | null;
+export type ArticlesIndexArticlesQuery$data = {
+  readonly viewer: {
+    readonly " $fragmentSpreads": FragmentRefs<"ArticlesIndexArticles_viewer">;
+  } | null;
 };
 export type ArticlesIndexArticlesQuery = {
-    readonly response: ArticlesIndexArticlesQueryResponse;
-    readonly variables: ArticlesIndexArticlesQueryVariables;
+  variables: ArticlesIndexArticlesQuery$variables;
+  response: ArticlesIndexArticlesQuery$data;
 };
-
-
-
-/*
-query ArticlesIndexArticlesQuery(
-  $after: String
-) {
-  viewer {
-    ...ArticlesIndexArticles_viewer_WGPvJ
-  }
-}
-
-fragment ArticlesIndexArticle_article on Article {
-  href
-  thumbnailTitle
-  byline
-  publishedAt(format: "MMMM Do YYYY")
-  thumbnailImage {
-    cropped(width: 910, height: 607) {
-      src
-      srcSet
-      width
-      height
-    }
-  }
-}
-
-fragment ArticlesIndexArticles_viewer_WGPvJ on Viewer {
-  articlesConnection(first: 15, after: $after, sort: PUBLISHED_AT_DESC, featured: true) {
-    edges {
-      node {
-        internalID
-        ...ArticlesIndexArticle_article
-        id
-        __typename
-      }
-      cursor
-    }
-    pageInfo {
-      endCursor
-      hasNextPage
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -344,5 +305,7 @@ return {
   }
 };
 })();
-(node as any).hash = '22669ec45f06ff7ad273003a9c747912';
+
+(node as any).hash = "22669ec45f06ff7ad273003a9c747912";
+
 export default node;

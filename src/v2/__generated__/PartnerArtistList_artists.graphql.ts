@@ -1,27 +1,30 @@
+/**
+ * @generated SignedSource<<14975bca16f7a802623cb8e3efd781cf>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type PartnerArtistList_artists = ReadonlyArray<{
-    readonly representedBy: boolean | null;
-    readonly counts: {
-        readonly artworks: number | null;
-    } | null;
-    readonly node: {
-        readonly internalID: string;
-        readonly " $fragmentRefs": FragmentRefs<"PartnerArtistItem_artist">;
-    } | null;
-    readonly " $refType": "PartnerArtistList_artists";
+export type PartnerArtistList_artists$data = ReadonlyArray<{
+  readonly representedBy: boolean | null;
+  readonly counts: {
+    readonly artworks: Int | null;
+  } | null;
+  readonly node: {
+    readonly internalID: string;
+    readonly " $fragmentSpreads": FragmentRefs<"PartnerArtistItem_artist">;
+  } | null;
+  readonly " $fragmentType": "PartnerArtistList_artists";
 }>;
-export type PartnerArtistList_artists$data = PartnerArtistList_artists;
 export type PartnerArtistList_artists$key = ReadonlyArray<{
-    readonly " $data"?: PartnerArtistList_artists$data;
-    readonly " $fragmentRefs": FragmentRefs<"PartnerArtistList_artists">;
+  readonly " $data"?: PartnerArtistList_artists$data;
+  readonly " $fragmentSpreads": FragmentRefs<"PartnerArtistList_artists">;
 }>;
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -83,5 +86,7 @@ const node: ReaderFragment = {
   "type": "ArtistPartnerEdge",
   "abstractKey": null
 };
-(node as any).hash = '43f62dc2e715435fc8ebc6d90b287413';
+
+(node as any).hash = "43f62dc2e715435fc8ebc6d90b287413";
+
 export default node;

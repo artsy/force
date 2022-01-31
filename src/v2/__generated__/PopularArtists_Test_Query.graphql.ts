@@ -1,46 +1,27 @@
+/**
+ * @generated SignedSource<<31868bafa2969245127323570964ec4d>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type PopularArtists_Test_QueryVariables = {};
-export type PopularArtists_Test_QueryResponse = {
-    readonly highlights: {
-        readonly popular_artists: ReadonlyArray<{
-            readonly " $fragmentRefs": FragmentRefs<"PopularArtists_popular_artists">;
-        } | null> | null;
-    } | null;
+export type PopularArtists_Test_Query$variables = {};
+export type PopularArtists_Test_Query$data = {
+  readonly highlights: {
+    readonly popular_artists: ReadonlyArray<{
+      readonly " $fragmentSpreads": FragmentRefs<"PopularArtists_popular_artists">;
+    } | null> | null;
+  } | null;
 };
 export type PopularArtists_Test_Query = {
-    readonly response: PopularArtists_Test_QueryResponse;
-    readonly variables: PopularArtists_Test_QueryVariables;
+  variables: PopularArtists_Test_Query$variables;
+  response: PopularArtists_Test_Query$data;
 };
-
-
-
-/*
-query PopularArtists_Test_Query {
-  highlights {
-    popular_artists: popularArtists(excludeFollowedArtists: true) {
-      ...PopularArtists_popular_artists
-      id
-    }
-  }
-}
-
-fragment PopularArtists_popular_artists on Artist {
-  slug
-  internalID
-  id
-  name
-  image {
-    cropped(width: 100, height: 100) {
-      url
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -244,5 +225,7 @@ return {
   }
 };
 })();
-(node as any).hash = '0b9ed094ef8d045e39741250da915e19';
+
+(node as any).hash = "0b9ed094ef8d045e39741250da915e19";
+
 export default node;

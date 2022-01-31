@@ -1,39 +1,25 @@
+/**
+ * @generated SignedSource<<a7a5b65ac062c8280fa0f79714ddc749>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtistOverviewRoute_Test_QueryVariables = {};
-export type ArtistOverviewRoute_Test_QueryResponse = {
-    readonly artist: {
-        readonly " $fragmentRefs": FragmentRefs<"ArtistOverviewRoute_artist">;
-    } | null;
+export type ArtistOverviewRoute_Test_Query$variables = {};
+export type ArtistOverviewRoute_Test_Query$data = {
+  readonly artist: {
+    readonly " $fragmentSpreads": FragmentRefs<"ArtistOverviewRoute_artist">;
+  } | null;
 };
 export type ArtistOverviewRoute_Test_Query = {
-    readonly response: ArtistOverviewRoute_Test_QueryResponse;
-    readonly variables: ArtistOverviewRoute_Test_QueryVariables;
+  variables: ArtistOverviewRoute_Test_Query$variables;
+  response: ArtistOverviewRoute_Test_Query$data;
 };
-
-
-
-/*
-query ArtistOverviewRoute_Test_Query {
-  artist(id: "test") {
-    ...ArtistOverviewRoute_artist
-    id
-  }
-}
-
-fragment ArtistOverviewRoute_artist on Artist {
-  slug
-  name
-  counts {
-    artworks
-  }
-  internalID
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -181,5 +167,7 @@ return {
   }
 };
 })();
-(node as any).hash = '7946d8b3859ab901fa36998f89fe62bd';
+
+(node as any).hash = "7946d8b3859ab901fa36998f89fe62bd";
+
 export default node;

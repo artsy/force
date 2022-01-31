@@ -1,76 +1,31 @@
+/**
+ * @generated SignedSource<<595ca0fbc134077bffacc0f94ce816ef>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type partnerRoutes_ArtistsQueryVariables = {
-    partnerId: string;
+export type partnerRoutes_ArtistsQuery$variables = {
+  partnerId: string;
 };
-export type partnerRoutes_ArtistsQueryResponse = {
-    readonly partner: {
-        readonly displayArtistsSection: boolean | null;
-        readonly allArtistsConnection: {
-            readonly totalCount: number | null;
-        } | null;
-        readonly " $fragmentRefs": FragmentRefs<"ArtistsRoute_partner">;
+export type partnerRoutes_ArtistsQuery$data = {
+  readonly partner: {
+    readonly displayArtistsSection: boolean | null;
+    readonly allArtistsConnection: {
+      readonly totalCount: number | null;
     } | null;
+    readonly " $fragmentSpreads": FragmentRefs<"ArtistsRoute_partner">;
+  } | null;
 };
 export type partnerRoutes_ArtistsQuery = {
-    readonly response: partnerRoutes_ArtistsQueryResponse;
-    readonly variables: partnerRoutes_ArtistsQueryVariables;
+  variables: partnerRoutes_ArtistsQuery$variables;
+  response: partnerRoutes_ArtistsQuery$data;
 };
-
-
-
-/*
-query partnerRoutes_ArtistsQuery(
-  $partnerId: String!
-) {
-  partner(id: $partnerId) @principalField {
-    ...ArtistsRoute_partner
-    displayArtistsSection
-    allArtistsConnection(displayOnPartnerProfile: true, hasNotRepresentedArtistWithPublishedArtworks: true) {
-      totalCount
-    }
-    id
-  }
-}
-
-fragment ArtistsRoute_partner on Partner {
-  ...PartnerArtists_partner
-}
-
-fragment PartnerArtistItem_artist on Artist {
-  name
-  slug
-  href
-}
-
-fragment PartnerArtistList_artists on ArtistPartnerEdge {
-  representedBy
-  counts {
-    artworks
-  }
-  node {
-    internalID
-    ...PartnerArtistItem_artist
-    id
-  }
-}
-
-fragment PartnerArtists_partner on Partner {
-  slug
-  distinguishRepresentedArtists
-  displayFullPartnerPage
-  allArtistsConnection(displayOnPartnerProfile: true, hasNotRepresentedArtistWithPublishedArtworks: true) {
-    edges {
-      ...PartnerArtistList_artists
-      id
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -142,6 +97,11 @@ return {
         "name": "partner",
         "plural": false,
         "selections": [
+          {
+            "args": null,
+            "kind": "FragmentSpread",
+            "name": "ArtistsRoute_partner"
+          },
           (v2/*: any*/),
           {
             "alias": null,
@@ -154,11 +114,6 @@ return {
               (v4/*: any*/)
             ],
             "storageKey": "allArtistsConnection(displayOnPartnerProfile:true,hasNotRepresentedArtistWithPublishedArtworks:true)"
-          },
-          {
-            "args": null,
-            "kind": "FragmentSpread",
-            "name": "ArtistsRoute_partner"
           }
         ],
         "storageKey": null
@@ -296,5 +251,7 @@ return {
   }
 };
 })();
-(node as any).hash = '8eb5527874d6d1a52c849ccd5beab03b';
+
+(node as any).hash = "8eb5527874d6d1a52c849ccd5beab03b";
+
 export default node;

@@ -1,71 +1,74 @@
+/**
+ * @generated SignedSource<<45664d541a6781e0b27664839628cbb2>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtworkBanner_artwork = {
-    readonly partner: {
-        readonly name: string | null;
+export type ArtworkBanner_artwork$data = {
+  readonly partner: {
+    readonly name: string | null;
+  } | null;
+  readonly sale: {
+    readonly isAuction: boolean | null;
+    readonly isBenefit: boolean | null;
+    readonly isGalleryAuction: boolean | null;
+    readonly coverImage: {
+      readonly cropped: {
+        readonly src: string;
+        readonly srcSet: string;
+        readonly width: number;
+        readonly height: number;
+      } | null;
     } | null;
-    readonly sale: {
-        readonly isAuction: boolean | null;
-        readonly isBenefit: boolean | null;
-        readonly isGalleryAuction: boolean | null;
-        readonly coverImage: {
-            readonly cropped: {
-                readonly src: string;
-                readonly srcSet: string;
-                readonly width: number;
-                readonly height: number;
-            } | null;
+  } | null;
+  readonly context: {
+    readonly __typename: "Sale";
+    readonly name: string | null;
+    readonly href: string | null;
+  } | {
+    readonly __typename: "Fair";
+    readonly name: string | null;
+    readonly href: string | null;
+    readonly profile: {
+      readonly icon: {
+        readonly cropped: {
+          readonly src: string;
+          readonly srcSet: string;
+          readonly width: number;
+          readonly height: number;
         } | null;
+      } | null;
     } | null;
-    readonly context: ({
-        readonly __typename: "Sale";
-        readonly name: string | null;
-        readonly href: string | null;
-    } | {
-        readonly __typename: "Fair";
-        readonly name: string | null;
-        readonly href: string | null;
-        readonly profile: {
-            readonly icon: {
-                readonly cropped: {
-                    readonly src: string;
-                    readonly srcSet: string;
-                    readonly width: number;
-                    readonly height: number;
-                } | null;
-            } | null;
-        } | null;
-    } | {
-        readonly __typename: "Show";
-        readonly name: string | null;
-        readonly href: string | null;
-        readonly status: string | null;
-        readonly thumbnail: {
-            readonly cropped: {
-                readonly src: string;
-                readonly srcSet: string;
-                readonly width: number;
-                readonly height: number;
-            } | null;
-        } | null;
-    } | {
-        /*This will never be '%other', but we need some
-        value in case none of the concrete values match.*/
-        readonly __typename: "%other";
-    }) | null;
-    readonly " $refType": "ArtworkBanner_artwork";
+  } | {
+    readonly __typename: "Show";
+    readonly name: string | null;
+    readonly href: string | null;
+    readonly status: string | null;
+    readonly thumbnail: {
+      readonly cropped: {
+        readonly src: string;
+        readonly srcSet: string;
+        readonly width: number;
+        readonly height: number;
+      } | null;
+    } | null;
+  } | {
+    // This will never be '%other', but we need some
+    // value in case none of the concrete values match.
+    readonly __typename: "%other";
+  } | null;
+  readonly " $fragmentType": "ArtworkBanner_artwork";
 };
-export type ArtworkBanner_artwork$data = ArtworkBanner_artwork;
 export type ArtworkBanner_artwork$key = {
-    readonly " $data"?: ArtworkBanner_artwork$data;
-    readonly " $fragmentRefs": FragmentRefs<"ArtworkBanner_artwork">;
+  readonly " $data"?: ArtworkBanner_artwork$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtworkBanner_artwork">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = {
@@ -287,5 +290,7 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '4898236c45792710759a2ce16638f5e4';
+
+(node as any).hash = "4898236c45792710759a2ce16638f5e4";
+
 export default node;

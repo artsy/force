@@ -1,105 +1,61 @@
+/**
+ * @generated SignedSource<<404266f4a17b0f842932e6908f59c5ad>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ViewingRoomWorksRoute_Test_QueryVariables = {
-    slug: string;
+export type ViewingRoomWorksRoute_Test_Query$variables = {
+  slug: string;
 };
-export type ViewingRoomWorksRoute_Test_QueryResponse = {
-    readonly viewingRoom: {
-        readonly " $fragmentRefs": FragmentRefs<"ViewingRoomWorksRoute_viewingRoom">;
+export type ViewingRoomWorksRoute_Test_Query$data = {
+  readonly viewingRoom: {
+    readonly " $fragmentSpreads": FragmentRefs<"ViewingRoomWorksRoute_viewingRoom">;
+  } | null;
+};
+export type ViewingRoomWorksRoute_Test_Query$rawResponse = {
+  readonly viewingRoom: {
+    readonly artworksConnection: {
+      readonly edges: ReadonlyArray<{
+        readonly node: {
+          readonly internalID: string;
+          readonly title: string | null;
+          readonly images: ReadonlyArray<{
+            readonly internalID: string | null;
+            readonly solo: {
+              readonly src: string;
+              readonly srcSet: string;
+              readonly width: number | null;
+              readonly height: number | null;
+            } | null;
+            readonly resized: {
+              readonly src: string;
+              readonly srcSet: string;
+              readonly width: number | null;
+              readonly height: number | null;
+            } | null;
+          } | null> | null;
+          readonly id: string;
+          readonly additionalInformation: string | null;
+          readonly artistNames: string | null;
+          readonly date: string | null;
+          readonly href: string | null;
+          readonly saleMessage: string | null;
+        } | null;
+      } | null> | null;
     } | null;
-};
-export type ViewingRoomWorksRoute_Test_QueryRawResponse = {
-    readonly viewingRoom: ({
-        readonly artworksConnection: ({
-            readonly edges: ReadonlyArray<({
-                readonly node: ({
-                    readonly internalID: string;
-                    readonly title: string | null;
-                    readonly images: ReadonlyArray<({
-                        readonly internalID: string | null;
-                        readonly solo: ({
-                            readonly src: string;
-                            readonly srcSet: string;
-                            readonly width: number | null;
-                            readonly height: number | null;
-                        }) | null;
-                        readonly resized: ({
-                            readonly src: string;
-                            readonly srcSet: string;
-                            readonly width: number | null;
-                            readonly height: number | null;
-                        }) | null;
-                    }) | null> | null;
-                    readonly id: string;
-                    readonly additionalInformation: string | null;
-                    readonly artistNames: string | null;
-                    readonly date: string | null;
-                    readonly href: string | null;
-                    readonly saleMessage: string | null;
-                }) | null;
-            }) | null> | null;
-        }) | null;
-    }) | null;
+  } | null;
 };
 export type ViewingRoomWorksRoute_Test_Query = {
-    readonly response: ViewingRoomWorksRoute_Test_QueryResponse;
-    readonly variables: ViewingRoomWorksRoute_Test_QueryVariables;
-    readonly rawResponse: ViewingRoomWorksRoute_Test_QueryRawResponse;
+  variables: ViewingRoomWorksRoute_Test_Query$variables;
+  response: ViewingRoomWorksRoute_Test_Query$data;
+  rawResponse: ViewingRoomWorksRoute_Test_Query$rawResponse;
 };
-
-
-
-/*
-query ViewingRoomWorksRoute_Test_Query(
-  $slug: ID!
-) {
-  viewingRoom(id: $slug) {
-    ...ViewingRoomWorksRoute_viewingRoom
-  }
-}
-
-fragment ViewingRoomArtworkDetails_artwork on Artwork {
-  id
-  additionalInformation
-  artistNames
-  title
-  date
-  href
-  saleMessage
-}
-
-fragment ViewingRoomWorksRoute_viewingRoom on ViewingRoom {
-  artworksConnection {
-    edges {
-      node {
-        internalID
-        title
-        images {
-          internalID
-          solo: resized(width: 600, version: "normalized") {
-            src
-            srcSet
-            width
-            height
-          }
-          resized(height: 550, version: "normalized") {
-            src
-            srcSet
-            width
-            height
-          }
-        }
-        ...ViewingRoomArtworkDetails_artwork
-        id
-      }
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -430,5 +386,7 @@ return {
   }
 };
 })();
-(node as any).hash = '713d62cb90c663c2a684cc471dbe28da';
+
+(node as any).hash = "713d62cb90c663c2a684cc471dbe28da";
+
 export default node;

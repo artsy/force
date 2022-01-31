@@ -1,43 +1,34 @@
+/**
+ * @generated SignedSource<<385b30ef16fa844f13da6927704486bd>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type FollowProfileInput = {
-    clientMutationId?: string | null;
-    profileID?: string | null;
-    unfollow?: boolean | null;
+  clientMutationId?: string | null;
+  profileID?: string | null;
+  unfollow?: boolean | null;
 };
-export type AuthIntentFollowProfileMutationVariables = {
-    input: FollowProfileInput;
+export type AuthIntentFollowProfileMutation$variables = {
+  input: FollowProfileInput;
 };
-export type AuthIntentFollowProfileMutationResponse = {
-    readonly followProfile: {
-        readonly profile: {
-            readonly id: string;
-            readonly isFollowed: boolean | null;
-        } | null;
+export type AuthIntentFollowProfileMutation$data = {
+  readonly followProfile: {
+    readonly profile: {
+      readonly id: string;
+      readonly isFollowed: boolean | null;
     } | null;
+  } | null;
 };
 export type AuthIntentFollowProfileMutation = {
-    readonly response: AuthIntentFollowProfileMutationResponse;
-    readonly variables: AuthIntentFollowProfileMutationVariables;
+  variables: AuthIntentFollowProfileMutation$variables;
+  response: AuthIntentFollowProfileMutation$data;
 };
-
-
-
-/*
-mutation AuthIntentFollowProfileMutation(
-  $input: FollowProfileInput!
-) {
-  followProfile(input: $input) {
-    profile {
-      id
-      isFollowed
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -118,5 +109,7 @@ return {
   }
 };
 })();
-(node as any).hash = '567bc4b1dea32242bc6a8eb0d9b51f90';
+
+(node as any).hash = "567bc4b1dea32242bc6a8eb0d9b51f90";
+
 export default node;

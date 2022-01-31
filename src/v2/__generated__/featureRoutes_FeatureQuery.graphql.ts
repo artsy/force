@@ -1,301 +1,27 @@
+/**
+ * @generated SignedSource<<6861da27e25d32e659d64e2db4ea9a94>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type featureRoutes_FeatureQueryVariables = {
-    slug: string;
+export type featureRoutes_FeatureQuery$variables = {
+  slug: string;
 };
-export type featureRoutes_FeatureQueryResponse = {
-    readonly feature: {
-        readonly " $fragmentRefs": FragmentRefs<"FeatureApp_feature">;
-    } | null;
+export type featureRoutes_FeatureQuery$data = {
+  readonly feature: {
+    readonly " $fragmentSpreads": FragmentRefs<"FeatureApp_feature">;
+  } | null;
 };
 export type featureRoutes_FeatureQuery = {
-    readonly response: featureRoutes_FeatureQueryResponse;
-    readonly variables: featureRoutes_FeatureQueryVariables;
+  variables: featureRoutes_FeatureQuery$variables;
+  response: featureRoutes_FeatureQuery$data;
 };
-
-
-
-/*
-query featureRoutes_FeatureQuery(
-  $slug: ID!
-) {
-  feature(id: $slug) @principalField {
-    ...FeatureApp_feature
-    id
-  }
-}
-
-fragment Badge_artwork on Artwork {
-  is_biddable: isBiddable
-  href
-  sale {
-    is_preview: isPreview
-    display_timely_at: displayTimelyAt
-    id
-  }
-}
-
-fragment Contact_artwork on Artwork {
-  href
-  is_inquireable: isInquireable
-  sale {
-    is_auction: isAuction
-    is_live_open: isLiveOpen
-    is_open: isOpen
-    is_closed: isClosed
-    id
-  }
-  partner(shallow: true) {
-    type
-    id
-  }
-  sale_artwork: saleArtwork {
-    highest_bid: highestBid {
-      display
-    }
-    opening_bid: openingBid {
-      display
-    }
-    counts {
-      bidder_positions: bidderPositions
-    }
-    id
-  }
-}
-
-fragment Details_artwork on Artwork {
-  href
-  title
-  date
-  sale_message: saleMessage
-  cultural_maker: culturalMaker
-  artists(shallow: true) {
-    id
-    href
-    name
-  }
-  collecting_institution: collectingInstitution
-  partner(shallow: true) {
-    name
-    href
-    id
-  }
-  sale {
-    is_auction: isAuction
-    is_closed: isClosed
-    id
-  }
-  sale_artwork: saleArtwork {
-    counts {
-      bidder_positions: bidderPositions
-    }
-    highest_bid: highestBid {
-      display
-    }
-    opening_bid: openingBid {
-      display
-    }
-    id
-  }
-}
-
-fragment FeatureApp_feature on Feature {
-  ...FeatureMeta_feature
-  ...FeatureHeader_feature
-  description(format: HTML)
-  callout(format: HTML)
-  sets: setsConnection(first: 20) {
-    edges {
-      node {
-        id
-        ...FeatureSet_set
-      }
-    }
-  }
-}
-
-fragment FeatureFeaturedLink_featuredLink on FeaturedLink {
-  href
-  title
-  subtitle(format: PLAIN)
-  description(format: HTML)
-  image {
-    small: cropped(width: 335, height: 240, version: ["main", "wide"]) {
-      src
-      srcSet
-      width
-      height
-    }
-    medium: cropped(width: 452, height: 324, version: ["main", "wide"]) {
-      src
-      srcSet
-      width
-      height
-    }
-    large: cropped(width: 904, height: 648, version: ["main", "wide"]) {
-      src
-      srcSet
-      width
-      height
-    }
-    full: resized(width: 1085, height: 777, version: ["main", "wide"]) {
-      src
-      srcSet
-      width
-      height
-    }
-  }
-}
-
-fragment FeatureHeaderDefault_feature on Feature {
-  name
-  subheadline(format: HTML)
-  defaultImage: image {
-    sm: cropped(width: 400, height: 400, version: ["main", "wide"]) {
-      src
-      srcSet
-    }
-    md: cropped(width: 600, height: 600, version: ["main", "wide"]) {
-      src
-      srcSet
-    }
-    lg: cropped(width: 1000, height: 1000, version: ["main", "wide"]) {
-      src
-      srcSet
-    }
-  }
-}
-
-fragment FeatureHeaderFull_feature on Feature {
-  name
-  subheadline(format: HTML)
-  fullImage: image {
-    sm: cropped(width: 800, height: 400, version: ["main", "wide"]) {
-      src
-      srcSet
-    }
-    md: cropped(width: 1200, height: 600, version: ["main", "wide"]) {
-      src
-      srcSet
-    }
-    lg: cropped(width: 2000, height: 1000, version: ["main", "wide"]) {
-      src
-      srcSet
-    }
-  }
-}
-
-fragment FeatureHeader_feature on Feature {
-  ...FeatureHeaderDefault_feature
-  ...FeatureHeaderFull_feature
-  layout
-}
-
-fragment FeatureMeta_feature on Feature {
-  slug
-  meta {
-    name
-    description
-    image
-  }
-}
-
-fragment FeatureSetContainer_set on OrderedSet {
-  id
-  layout
-  itemType
-  orderedItems: orderedItemsConnection(first: 99) {
-    edges {
-      __typename
-    }
-  }
-}
-
-fragment FeatureSetItem_setItem on OrderedSetItem {
-  __isOrderedSetItem: __typename
-  __typename
-  ... on FeaturedLink {
-    id
-  }
-  ... on Artwork {
-    id
-  }
-  ...GridItem_artwork
-  ...FeatureFeaturedLink_featuredLink
-}
-
-fragment FeatureSetMeta_set on OrderedSet {
-  name
-  description(format: HTML)
-}
-
-fragment FeatureSet_set on OrderedSet {
-  id
-  layout
-  name
-  description(format: HTML)
-  itemType
-  orderedItems: orderedItemsConnection(first: 99) {
-    edges {
-      __typename
-      node {
-        __typename
-        ... on Artwork {
-          id
-        }
-        ... on FeaturedLink {
-          id
-        }
-        ...FeatureSetItem_setItem
-        ... on Node {
-          __isNode: __typename
-          id
-        }
-        ... on Profile {
-          id
-        }
-      }
-    }
-  }
-  ...FeatureSetMeta_set
-  ...FeatureSetContainer_set
-}
-
-fragment GridItem_artwork on Artwork {
-  internalID
-  title
-  image_title: imageTitle
-  image {
-    placeholder
-    url(version: "large")
-    aspect_ratio: aspectRatio
-  }
-  artistNames
-  href
-  is_saved: isSaved
-  ...Metadata_artwork
-  ...SaveButton_artwork
-  ...Badge_artwork
-}
-
-fragment Metadata_artwork on Artwork {
-  ...Details_artwork
-  ...Contact_artwork
-  href
-}
-
-fragment SaveButton_artwork on Artwork {
-  id
-  internalID
-  slug
-  is_saved: isSaved
-  title
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -742,10 +468,6 @@ return {
                                 "selections": [
                                   (v15/*: any*/),
                                   {
-                                    "kind": "TypeDiscriminator",
-                                    "abstractKey": "__isOrderedSetItem"
-                                  },
-                                  {
                                     "kind": "InlineFragment",
                                     "selections": [
                                       (v14/*: any*/),
@@ -1127,6 +849,10 @@ return {
                                     "abstractKey": null
                                   },
                                   {
+                                    "kind": "TypeDiscriminator",
+                                    "abstractKey": "__isOrderedSetItem"
+                                  },
+                                  {
                                     "kind": "InlineFragment",
                                     "selections": (v21/*: any*/),
                                     "type": "Node",
@@ -1172,5 +898,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'b0635ec06520dd5bfcda8360d0ced60d';
+
+(node as any).hash = "b0635ec06520dd5bfcda8360d0ced60d";
+
 export default node;

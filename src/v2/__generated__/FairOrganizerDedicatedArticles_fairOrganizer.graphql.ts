@@ -1,37 +1,40 @@
+/**
+ * @generated SignedSource<<8b5112e958e93778de024e88280bf00f>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type FairOrganizerDedicatedArticles_fairOrganizer = {
-    readonly slug: string;
-    readonly name: string | null;
-    readonly articlesConnection: {
-        readonly totalCount: number | null;
-        readonly pageInfo: {
-            readonly hasNextPage: boolean;
-        };
-        readonly pageCursors: {
-            readonly " $fragmentRefs": FragmentRefs<"Pagination_pageCursors">;
-        };
-        readonly edges: ReadonlyArray<{
-            readonly node: {
-                readonly id: string;
-                readonly " $fragmentRefs": FragmentRefs<"FairEditorialItem_article">;
-            } | null;
-        } | null> | null;
-    } | null;
-    readonly " $fragmentRefs": FragmentRefs<"DedicatedArticlesBreadcrumbs_fairOrganizer">;
-    readonly " $refType": "FairOrganizerDedicatedArticles_fairOrganizer";
+export type FairOrganizerDedicatedArticles_fairOrganizer$data = {
+  readonly slug: string;
+  readonly name: string | null;
+  readonly articlesConnection: {
+    readonly totalCount: number | null;
+    readonly pageInfo: {
+      readonly hasNextPage: boolean;
+    };
+    readonly pageCursors: {
+      readonly " $fragmentSpreads": FragmentRefs<"Pagination_pageCursors">;
+    };
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly id: string;
+        readonly " $fragmentSpreads": FragmentRefs<"FairEditorialItem_article">;
+      } | null;
+    } | null> | null;
+  } | null;
+  readonly " $fragmentSpreads": FragmentRefs<"DedicatedArticlesBreadcrumbs_fairOrganizer">;
+  readonly " $fragmentType": "FairOrganizerDedicatedArticles_fairOrganizer";
 };
-export type FairOrganizerDedicatedArticles_fairOrganizer$data = FairOrganizerDedicatedArticles_fairOrganizer;
 export type FairOrganizerDedicatedArticles_fairOrganizer$key = {
-    readonly " $data"?: FairOrganizerDedicatedArticles_fairOrganizer$data;
-    readonly " $fragmentRefs": FragmentRefs<"FairOrganizerDedicatedArticles_fairOrganizer">;
+  readonly " $data"?: FairOrganizerDedicatedArticles_fairOrganizer$data;
+  readonly " $fragmentSpreads": FragmentRefs<"FairOrganizerDedicatedArticles_fairOrganizer">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [
@@ -175,5 +178,7 @@ const node: ReaderFragment = {
   "type": "FairOrganizer",
   "abstractKey": null
 };
-(node as any).hash = 'f055e099c96bf554574dd68603857fa9';
+
+(node as any).hash = "f055e099c96bf554574dd68603857fa9";
+
 export default node;

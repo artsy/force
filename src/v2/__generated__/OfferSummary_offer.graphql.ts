@@ -1,22 +1,25 @@
+/**
+ * @generated SignedSource<<816117a38ae648b88e4ad75e98d0bbfb>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type OfferSummary_offer = {
-    readonly saleDate: string | null;
-    readonly saleLocation: string | null;
-    readonly saleName: string | null;
-    readonly " $refType": "OfferSummary_offer";
+export type OfferSummary_offer$data = {
+  readonly saleDate: string | null;
+  readonly saleLocation: string | null;
+  readonly saleName: string | null;
+  readonly " $fragmentType": "OfferSummary_offer";
 };
-export type OfferSummary_offer$data = OfferSummary_offer;
 export type OfferSummary_offer$key = {
-    readonly " $data"?: OfferSummary_offer$data;
-    readonly " $fragmentRefs": FragmentRefs<"OfferSummary_offer">;
+  readonly " $data"?: OfferSummary_offer$data;
+  readonly " $fragmentSpreads": FragmentRefs<"OfferSummary_offer">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -49,5 +52,7 @@ const node: ReaderFragment = {
   "type": "ConsignmentOffer",
   "abstractKey": null
 };
-(node as any).hash = '0172c6e132f964672fe23acc4f22fa2d';
+
+(node as any).hash = "0172c6e132f964672fe23acc4f22fa2d";
+
 export default node;

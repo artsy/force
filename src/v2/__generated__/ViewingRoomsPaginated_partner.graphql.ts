@@ -1,32 +1,35 @@
+/**
+ * @generated SignedSource<<5bec9030bd1654084c130e26a9ddeeac>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ViewingRoomsPaginated_partner = {
-    readonly slug: string;
-    readonly viewingRoomsList: {
-        readonly pageInfo: {
-            readonly hasNextPage: boolean;
-            readonly endCursor: string | null;
-        };
-        readonly pageCursors: {
-            readonly " $fragmentRefs": FragmentRefs<"Pagination_pageCursors">;
-        } | null;
-        readonly edges: ReadonlyArray<{
-            readonly " $fragmentRefs": FragmentRefs<"ViewingRooms_edges">;
-        } | null> | null;
+export type ViewingRoomsPaginated_partner$data = {
+  readonly slug: string;
+  readonly viewingRoomsList: {
+    readonly pageInfo: {
+      readonly hasNextPage: boolean;
+      readonly endCursor: string | null;
+    };
+    readonly pageCursors: {
+      readonly " $fragmentSpreads": FragmentRefs<"Pagination_pageCursors">;
     } | null;
-    readonly " $refType": "ViewingRoomsPaginated_partner";
+    readonly edges: ReadonlyArray<{
+      readonly " $fragmentSpreads": FragmentRefs<"ViewingRooms_edges">;
+    } | null> | null;
+  } | null;
+  readonly " $fragmentType": "ViewingRoomsPaginated_partner";
 };
-export type ViewingRoomsPaginated_partner$data = ViewingRoomsPaginated_partner;
 export type ViewingRoomsPaginated_partner$key = {
-    readonly " $data"?: ViewingRoomsPaginated_partner$data;
-    readonly " $fragmentRefs": FragmentRefs<"ViewingRoomsPaginated_partner">;
+  readonly " $data"?: ViewingRoomsPaginated_partner$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ViewingRoomsPaginated_partner">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [
@@ -142,5 +145,7 @@ const node: ReaderFragment = {
   "type": "Partner",
   "abstractKey": null
 };
-(node as any).hash = '1853437d87f9e7994405bd51195bb611';
+
+(node as any).hash = "1853437d87f9e7994405bd51195bb611";
+
 export default node;

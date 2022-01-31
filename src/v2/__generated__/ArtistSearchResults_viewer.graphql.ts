@@ -1,30 +1,33 @@
+/**
+ * @generated SignedSource<<44fdd18da228cfd8d42f62d869721fdd>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtistSearchResults_viewer = {
-    readonly searchConnection: {
-        readonly edges: ReadonlyArray<{
-            readonly node: {
-                readonly id?: string;
-                readonly slug?: string;
-                readonly internalID?: string;
-                readonly displayLabel?: string | null;
-                readonly imageUrl?: string | null;
-            } | null;
-        } | null> | null;
-    } | null;
-    readonly " $refType": "ArtistSearchResults_viewer";
+export type ArtistSearchResults_viewer$data = {
+  readonly searchConnection: {
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly id?: string;
+        readonly slug?: string;
+        readonly internalID?: string;
+        readonly displayLabel?: string | null;
+        readonly imageUrl?: string | null;
+      } | null;
+    } | null> | null;
+  } | null;
+  readonly " $fragmentType": "ArtistSearchResults_viewer";
 };
-export type ArtistSearchResults_viewer$data = ArtistSearchResults_viewer;
 export type ArtistSearchResults_viewer$key = {
-    readonly " $data"?: ArtistSearchResults_viewer$data;
-    readonly " $fragmentRefs": FragmentRefs<"ArtistSearchResults_viewer">;
+  readonly " $data"?: ArtistSearchResults_viewer$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtistSearchResults_viewer">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [
@@ -139,5 +142,7 @@ const node: ReaderFragment = {
   "type": "Viewer",
   "abstractKey": null
 };
-(node as any).hash = '5f174c02f7998df6fd09775b6226b837';
+
+(node as any).hash = "5f174c02f7998df6fd09775b6226b837";
+
 export default node;

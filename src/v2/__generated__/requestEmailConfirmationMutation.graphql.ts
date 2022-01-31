@@ -1,45 +1,30 @@
+/**
+ * @generated SignedSource<<22d4f92d961438120cf51092ab641cf9>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
-export type requestEmailConfirmationMutationVariables = {};
-export type requestEmailConfirmationMutationResponse = {
-    readonly sendConfirmationEmail: {
-        readonly confirmationOrError: {
-            readonly unconfirmedEmail?: string | null;
-            readonly mutationError?: {
-                readonly error: string | null;
-                readonly message: string;
-            } | null;
-        } | null;
+import { ConcreteRequest, Mutation } from 'relay-runtime';
+export type requestEmailConfirmationMutation$variables = {};
+export type requestEmailConfirmationMutation$data = {
+  readonly sendConfirmationEmail: {
+    readonly confirmationOrError: {
+      readonly unconfirmedEmail?: string | null;
+      readonly mutationError?: {
+        readonly error: string | null;
+        readonly message: string;
+      } | null;
     } | null;
+  } | null;
 };
 export type requestEmailConfirmationMutation = {
-    readonly response: requestEmailConfirmationMutationResponse;
-    readonly variables: requestEmailConfirmationMutationVariables;
+  variables: requestEmailConfirmationMutation$variables;
+  response: requestEmailConfirmationMutation$data;
 };
-
-
-
-/*
-mutation requestEmailConfirmationMutation {
-  sendConfirmationEmail(input: {}) {
-    confirmationOrError {
-      __typename
-      ... on SendConfirmationEmailMutationSuccess {
-        unconfirmedEmail
-      }
-      ... on SendConfirmationEmailMutationFailure {
-        mutationError {
-          error
-          message
-        }
-      }
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -179,5 +164,7 @@ return {
   }
 };
 })();
-(node as any).hash = '4b0a1029678628b4e7d8f1af73795e3e';
+
+(node as any).hash = "4b0a1029678628b4e7d8f1af73795e3e";
+
 export default node;

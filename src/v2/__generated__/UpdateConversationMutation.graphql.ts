@@ -1,43 +1,34 @@
+/**
+ * @generated SignedSource<<ba263628c3e367cfa0367ec8ca52e717>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type UpdateConversationMutationInput = {
-    clientMutationId?: string | null;
-    conversationId: string;
-    fromLastViewedMessageId: string;
+  clientMutationId?: string | null;
+  conversationId: string;
+  fromLastViewedMessageId: string;
 };
-export type UpdateConversationMutationVariables = {
-    input: UpdateConversationMutationInput;
+export type UpdateConversationMutation$variables = {
+  input: UpdateConversationMutationInput;
 };
-export type UpdateConversationMutationResponse = {
-    readonly updateConversation: {
-        readonly conversation: {
-            readonly id: string;
-            readonly unread: boolean | null;
-        } | null;
+export type UpdateConversationMutation$data = {
+  readonly updateConversation: {
+    readonly conversation: {
+      readonly id: string;
+      readonly unread: boolean | null;
     } | null;
+  } | null;
 };
 export type UpdateConversationMutation = {
-    readonly response: UpdateConversationMutationResponse;
-    readonly variables: UpdateConversationMutationVariables;
+  variables: UpdateConversationMutation$variables;
+  response: UpdateConversationMutation$data;
 };
-
-
-
-/*
-mutation UpdateConversationMutation(
-  $input: UpdateConversationMutationInput!
-) {
-  updateConversation(input: $input) {
-    conversation {
-      id
-      unread
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -118,5 +109,7 @@ return {
   }
 };
 })();
-(node as any).hash = '21516c941f71a6bc582dd682e48f3a5c';
+
+(node as any).hash = "21516c941f71a6bc582dd682e48f3a5c";
+
 export default node;

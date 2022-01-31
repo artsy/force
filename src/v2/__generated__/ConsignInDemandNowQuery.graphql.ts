@@ -1,145 +1,81 @@
+/**
+ * @generated SignedSource<<8f3ee0db6de7d04b8261314ec4d21c27>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
-export type ConsignInDemandNowQueryVariables = {
-    artistInternalId: string;
-    artistSlug: string;
-    medium: string;
+import { ConcreteRequest, Query } from 'relay-runtime';
+export type ConsignInDemandNowQuery$variables = {
+  artistInternalId: string;
+  artistSlug: string;
+  medium: string;
 };
-export type ConsignInDemandNowQueryResponse = {
-    readonly artist: {
-        readonly birthday: string | null;
-        readonly nationality: string | null;
-        readonly auctionResultsConnection: {
-            readonly edges: ReadonlyArray<{
-                readonly node: {
-                    readonly internalID: string;
-                    readonly title: string | null;
-                    readonly dimensionText: string | null;
-                    readonly images: {
-                        readonly larger: {
-                            readonly url: string | null;
-                            readonly resized: {
-                                readonly srcSet: string;
-                            } | null;
-                        } | null;
-                    } | null;
-                    readonly description: string | null;
-                    readonly dateText: string | null;
-                    readonly organization: string | null;
-                    readonly saleDate: string | null;
-                    readonly priceRealized: {
-                        readonly display: string | null;
-                        readonly centsUSD: number | null;
-                    } | null;
-                } | null;
-            } | null> | null;
+export type ConsignInDemandNowQuery$data = {
+  readonly artist: {
+    readonly birthday: string | null;
+    readonly nationality: string | null;
+    readonly auctionResultsConnection: {
+      readonly edges: ReadonlyArray<{
+        readonly node: {
+          readonly internalID: string;
+          readonly title: string | null;
+          readonly dimensionText: string | null;
+          readonly images: {
+            readonly larger: {
+              readonly url: string | null;
+              readonly resized: {
+                readonly srcSet: string;
+              } | null;
+            } | null;
+          } | null;
+          readonly description: string | null;
+          readonly dateText: string | null;
+          readonly organization: string | null;
+          readonly saleDate: string | null;
+          readonly priceRealized: {
+            readonly display: string | null;
+            readonly centsUSD: number | null;
+          } | null;
         } | null;
+      } | null> | null;
     } | null;
-    readonly marketPriceInsights: {
-        readonly annualLotsSold: number | null;
-        readonly annualValueSoldCents: unknown | null;
-        readonly artistId: string | null;
-        readonly artistName: string | null;
-        readonly artsyQInventory: number | null;
-        readonly createdAt: unknown | null;
-        readonly demandRank: number | null;
-        readonly demandTrend: number | null;
-        readonly highRangeCents: unknown | null;
-        readonly largeHighRangeCents: unknown | null;
-        readonly largeLowRangeCents: unknown | null;
-        readonly largeMidRangeCents: unknown | null;
-        readonly liquidityRank: number | null;
-        readonly lowRangeCents: unknown | null;
-        readonly medianSaleToEstimateRatio: number | null;
-        readonly medium: string | null;
-        readonly mediumHighRangeCents: unknown | null;
-        readonly mediumLowRangeCents: unknown | null;
-        readonly mediumMidRangeCents: unknown | null;
-        readonly midRangeCents: unknown | null;
-        readonly sellThroughRate: number | null;
-        readonly smallHighRangeCents: unknown | null;
-        readonly smallLowRangeCents: unknown | null;
-        readonly smallMidRangeCents: unknown | null;
-        readonly updatedAt: unknown | null;
-    } | null;
+  } | null;
+  readonly marketPriceInsights: {
+    readonly annualLotsSold: number | null;
+    readonly annualValueSoldCents: any | null;
+    readonly artistId: string | null;
+    readonly artistName: string | null;
+    readonly artsyQInventory: number | null;
+    readonly createdAt: any | null;
+    readonly demandRank: number | null;
+    readonly demandTrend: number | null;
+    readonly highRangeCents: any | null;
+    readonly largeHighRangeCents: any | null;
+    readonly largeLowRangeCents: any | null;
+    readonly largeMidRangeCents: any | null;
+    readonly liquidityRank: number | null;
+    readonly lowRangeCents: any | null;
+    readonly medianSaleToEstimateRatio: number | null;
+    readonly medium: string | null;
+    readonly mediumHighRangeCents: any | null;
+    readonly mediumLowRangeCents: any | null;
+    readonly mediumMidRangeCents: any | null;
+    readonly midRangeCents: any | null;
+    readonly sellThroughRate: number | null;
+    readonly smallHighRangeCents: any | null;
+    readonly smallLowRangeCents: any | null;
+    readonly smallMidRangeCents: any | null;
+    readonly updatedAt: any | null;
+  } | null;
 };
 export type ConsignInDemandNowQuery = {
-    readonly response: ConsignInDemandNowQueryResponse;
-    readonly variables: ConsignInDemandNowQueryVariables;
+  variables: ConsignInDemandNowQuery$variables;
+  response: ConsignInDemandNowQuery$data;
 };
-
-
-
-/*
-query ConsignInDemandNowQuery(
-  $artistInternalId: ID!
-  $artistSlug: String!
-  $medium: String!
-) {
-  artist(id: $artistSlug) {
-    birthday
-    nationality
-    auctionResultsConnection(first: 1, sort: DATE_DESC) {
-      edges {
-        node {
-          internalID
-          title
-          dimensionText
-          images {
-            larger {
-              url
-              resized {
-                srcSet
-              }
-            }
-          }
-          description
-          dateText
-          organization
-          saleDate
-          priceRealized {
-            display
-            centsUSD
-          }
-          id
-        }
-      }
-    }
-    id
-  }
-  marketPriceInsights(artistId: $artistInternalId, medium: $medium) {
-    annualLotsSold
-    annualValueSoldCents
-    artistId
-    artistName
-    artsyQInventory
-    createdAt
-    demandRank
-    demandTrend
-    highRangeCents
-    largeHighRangeCents
-    largeLowRangeCents
-    largeMidRangeCents
-    liquidityRank
-    lowRangeCents
-    medianSaleToEstimateRatio
-    medium
-    mediumHighRangeCents
-    mediumLowRangeCents
-    mediumMidRangeCents
-    midRangeCents
-    sellThroughRate
-    smallHighRangeCents
-    smallLowRangeCents
-    smallMidRangeCents
-    updatedAt
-    id
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -721,5 +657,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'f54709154acdcdc5085aa6cb22ccf421';
+
+(node as any).hash = "f54709154acdcdc5085aa6cb22ccf421";
+
 export default node;

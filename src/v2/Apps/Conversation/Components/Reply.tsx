@@ -1,6 +1,6 @@
 import { Environment, RelayRefetchProp } from "react-relay"
-import { useRef, useState } from "react";
-import * as React from "react";
+import { useRef, useState } from "react"
+import * as React from "react"
 import {
   Button,
   Dialog,
@@ -80,6 +80,7 @@ export const Reply: React.FC<ReplyProps> = props => {
     {
       setLoading(true)
       return SendConversationMessage(
+        // @ts-ignore UPGRADE RELAY 13
         environment,
         conversation,
         // @ts-ignore

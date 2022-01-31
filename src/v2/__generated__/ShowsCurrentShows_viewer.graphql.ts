@@ -1,31 +1,34 @@
+/**
+ * @generated SignedSource<<7feed4f56d10862e8e1b3b91ccc98eda>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ShowsCurrentShows_viewer = {
-    readonly showsConnection: {
-        readonly pageInfo: {
-            readonly hasNextPage: boolean;
-            readonly endCursor: string | null;
-        };
-        readonly edges: ReadonlyArray<{
-            readonly node: {
-                readonly internalID: string;
-                readonly " $fragmentRefs": FragmentRefs<"ShowsCurrentShow_show">;
-            } | null;
-        } | null> | null;
-    } | null;
-    readonly " $refType": "ShowsCurrentShows_viewer";
+export type ShowsCurrentShows_viewer$data = {
+  readonly showsConnection: {
+    readonly pageInfo: {
+      readonly hasNextPage: boolean;
+      readonly endCursor: string | null;
+    };
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly internalID: string;
+        readonly " $fragmentSpreads": FragmentRefs<"ShowsCurrentShow_show">;
+      } | null;
+    } | null> | null;
+  } | null;
+  readonly " $fragmentType": "ShowsCurrentShows_viewer";
 };
-export type ShowsCurrentShows_viewer$data = ShowsCurrentShows_viewer;
 export type ShowsCurrentShows_viewer$key = {
-    readonly " $data"?: ShowsCurrentShows_viewer$data;
-    readonly " $fragmentRefs": FragmentRefs<"ShowsCurrentShows_viewer">;
+  readonly " $data"?: ShowsCurrentShows_viewer$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ShowsCurrentShows_viewer">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [
@@ -133,16 +136,16 @@ const node: ReaderFragment = {
                   "storageKey": null
                 },
                 {
+                  "args": null,
+                  "kind": "FragmentSpread",
+                  "name": "ShowsCurrentShow_show"
+                },
+                {
                   "alias": null,
                   "args": null,
                   "kind": "ScalarField",
                   "name": "__typename",
                   "storageKey": null
-                },
-                {
-                  "args": null,
-                  "kind": "FragmentSpread",
-                  "name": "ShowsCurrentShow_show"
                 }
               ],
               "storageKey": null
@@ -164,5 +167,7 @@ const node: ReaderFragment = {
   "type": "Viewer",
   "abstractKey": null
 };
-(node as any).hash = '39a18e1e1b6680eb506b335810498416';
+
+(node as any).hash = "39a18e1e1b6680eb506b335810498416";
+
 export default node;

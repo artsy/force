@@ -1,336 +1,112 @@
+/**
+ * @generated SignedSource<<cd7f7355f85ce0b6cf45a0f8826df06b>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtistConsignRoute_Test_QueryVariables = {
-    artistID: string;
+export type ArtistConsignRoute_Test_Query$variables = {
+  artistID: string;
 };
-export type ArtistConsignRoute_Test_QueryResponse = {
-    readonly artist: {
-        readonly targetSupply: {
-            readonly isInMicrofunnel: boolean | null;
-        } | null;
-        readonly " $fragmentRefs": FragmentRefs<"ArtistConsignRoute_artist">;
+export type ArtistConsignRoute_Test_Query$data = {
+  readonly artist: {
+    readonly targetSupply: {
+      readonly isInMicrofunnel: boolean | null;
     } | null;
+    readonly " $fragmentSpreads": FragmentRefs<"ArtistConsignRoute_artist">;
+  } | null;
 };
-export type ArtistConsignRoute_Test_QueryRawResponse = {
-    readonly artist: ({
-        readonly name: string | null;
-        readonly href: string | null;
-        readonly targetSupply: ({
-            readonly microfunnel: ({
-                readonly artworksConnection: ({
-                    readonly edges: ReadonlyArray<({
-                        readonly node: ({
-                            readonly image: ({
-                                readonly imageURL: string | null;
-                                readonly resized: ({
-                                    readonly width: number | null;
-                                    readonly height: number | null;
-                                    readonly url: string;
-                                }) | null;
-                                readonly url: string | null;
-                                readonly aspectRatio: number;
-                            }) | null;
-                            readonly id: string;
-                            readonly imageTitle: string | null;
-                            readonly title: string | null;
-                            readonly href: string | null;
-                            readonly is_saved: boolean | null;
-                            readonly date: string | null;
-                            readonly sale_message: string | null;
-                            readonly cultural_maker: string | null;
-                            readonly artists: ReadonlyArray<({
-                                readonly id: string;
-                                readonly href: string | null;
-                                readonly name: string | null;
-                            }) | null> | null;
-                            readonly collecting_institution: string | null;
-                            readonly partner: ({
-                                readonly name: string | null;
-                                readonly href: string | null;
-                                readonly id: string;
-                                readonly type: string | null;
-                            }) | null;
-                            readonly sale: ({
-                                readonly is_auction: boolean | null;
-                                readonly is_closed: boolean | null;
-                                readonly id: string;
-                                readonly is_live_open: boolean | null;
-                                readonly is_open: boolean | null;
-                                readonly is_preview: boolean | null;
-                                readonly display_timely_at: string | null;
-                            }) | null;
-                            readonly sale_artwork: ({
-                                readonly counts: ({
-                                    readonly bidder_positions: number | null;
-                                }) | null;
-                                readonly highest_bid: ({
-                                    readonly display: string | null;
-                                }) | null;
-                                readonly opening_bid: ({
-                                    readonly display: string | null;
-                                }) | null;
-                                readonly id: string;
-                            }) | null;
-                            readonly is_inquireable: boolean | null;
-                            readonly internalID: string;
-                            readonly slug: string;
-                            readonly is_biddable: boolean | null;
-                            readonly realizedPrice: string | null;
-                        }) | null;
-                    }) | null> | null;
-                }) | null;
-                readonly metadata: ({
-                    readonly roundedViews: string | null;
-                    readonly roundedUniqueVisitors: string | null;
-                    readonly highestRealized: string | null;
-                    readonly str: string | null;
-                    readonly realized: string | null;
-                }) | null;
-            }) | null;
-            readonly isInMicrofunnel: boolean | null;
-        }) | null;
-        readonly id: string;
-    }) | null;
+export type ArtistConsignRoute_Test_Query$rawResponse = {
+  readonly artist: {
+    readonly name: string | null;
+    readonly href: string | null;
+    readonly targetSupply: {
+      readonly microfunnel: {
+        readonly artworksConnection: {
+          readonly edges: ReadonlyArray<{
+            readonly node: {
+              readonly image: {
+                readonly imageURL: string | null;
+                readonly resized: {
+                  readonly width: number | null;
+                  readonly height: number | null;
+                  readonly url: string;
+                } | null;
+                readonly url: string | null;
+                readonly aspectRatio: number;
+              } | null;
+              readonly id: string;
+              readonly imageTitle: string | null;
+              readonly title: string | null;
+              readonly href: string | null;
+              readonly is_saved: boolean | null;
+              readonly date: string | null;
+              readonly sale_message: string | null;
+              readonly cultural_maker: string | null;
+              readonly artists: ReadonlyArray<{
+                readonly id: string;
+                readonly href: string | null;
+                readonly name: string | null;
+              } | null> | null;
+              readonly collecting_institution: string | null;
+              readonly partner: {
+                readonly name: string | null;
+                readonly href: string | null;
+                readonly id: string;
+                readonly type: string | null;
+              } | null;
+              readonly sale: {
+                readonly is_auction: boolean | null;
+                readonly is_closed: boolean | null;
+                readonly id: string;
+                readonly is_live_open: boolean | null;
+                readonly is_open: boolean | null;
+                readonly is_preview: boolean | null;
+                readonly display_timely_at: string | null;
+              } | null;
+              readonly sale_artwork: {
+                readonly counts: {
+                  readonly bidder_positions: Int | null;
+                } | null;
+                readonly highest_bid: {
+                  readonly display: string | null;
+                } | null;
+                readonly opening_bid: {
+                  readonly display: string | null;
+                } | null;
+                readonly id: string;
+              } | null;
+              readonly is_inquireable: boolean | null;
+              readonly internalID: string;
+              readonly slug: string;
+              readonly is_biddable: boolean | null;
+              readonly realizedPrice: string | null;
+            } | null;
+          } | null> | null;
+        } | null;
+        readonly metadata: {
+          readonly roundedViews: string | null;
+          readonly roundedUniqueVisitors: string | null;
+          readonly highestRealized: string | null;
+          readonly str: string | null;
+          readonly realized: string | null;
+        } | null;
+      } | null;
+      readonly isInMicrofunnel: boolean | null;
+    } | null;
+    readonly id: string;
+  } | null;
 };
 export type ArtistConsignRoute_Test_Query = {
-    readonly response: ArtistConsignRoute_Test_QueryResponse;
-    readonly variables: ArtistConsignRoute_Test_QueryVariables;
-    readonly rawResponse: ArtistConsignRoute_Test_QueryRawResponse;
+  variables: ArtistConsignRoute_Test_Query$variables;
+  response: ArtistConsignRoute_Test_Query$data;
+  rawResponse: ArtistConsignRoute_Test_Query$rawResponse;
 };
-
-
-
-/*
-query ArtistConsignRoute_Test_Query(
-  $artistID: String!
-) {
-  artist(id: $artistID) {
-    ...ArtistConsignRoute_artist
-    targetSupply {
-      isInMicrofunnel
-    }
-    id
-  }
-}
-
-fragment ArtistConsignFAQ_artist on Artist {
-  href
-}
-
-fragment ArtistConsignHeaderImages_artist on Artist {
-  targetSupply {
-    microfunnel {
-      artworksConnection {
-        edges {
-          node {
-            image {
-              resized(height: 395) {
-                width
-                height
-                url
-              }
-            }
-            ...FillwidthItem_artwork
-            id
-          }
-        }
-      }
-    }
-  }
-}
-
-fragment ArtistConsignHeader_artist on Artist {
-  ...ArtistConsignHeaderImages_artist
-  name
-  href
-}
-
-fragment ArtistConsignHowToSell_artist on Artist {
-  href
-}
-
-fragment ArtistConsignMarketTrends_artist on Artist {
-  href
-  targetSupply {
-    microfunnel {
-      metadata {
-        highestRealized
-        str
-        realized
-      }
-    }
-  }
-}
-
-fragment ArtistConsignMeta_artist on Artist {
-  name
-  href
-  targetSupply {
-    microfunnel {
-      artworksConnection {
-        edges {
-          node {
-            image {
-              imageURL: url(version: "medium")
-            }
-            id
-          }
-        }
-      }
-    }
-  }
-}
-
-fragment ArtistConsignPageViews_artist on Artist {
-  name
-  targetSupply {
-    microfunnel {
-      metadata {
-        roundedViews
-        roundedUniqueVisitors
-      }
-    }
-  }
-}
-
-fragment ArtistConsignRecentlySold_artist on Artist {
-  targetSupply {
-    microfunnel {
-      artworksConnection {
-        edges {
-          node {
-            ...FillwidthItem_artwork
-            realizedPrice
-            id
-          }
-        }
-      }
-    }
-  }
-  name
-}
-
-fragment ArtistConsignRoute_artist on Artist {
-  ...ArtistConsignMeta_artist
-  ...ArtistConsignHeader_artist
-  ...ArtistConsignRecentlySold_artist
-  ...ArtistConsignPageViews_artist
-  ...ArtistConsignMarketTrends_artist
-  ...ArtistConsignHowToSell_artist
-  ...ArtistConsignFAQ_artist
-  ...ArtistConsignSellArt_artist
-}
-
-fragment ArtistConsignSellArt_artist on Artist {
-  href
-}
-
-fragment Badge_artwork on Artwork {
-  is_biddable: isBiddable
-  href
-  sale {
-    is_preview: isPreview
-    display_timely_at: displayTimelyAt
-    id
-  }
-}
-
-fragment Contact_artwork on Artwork {
-  href
-  is_inquireable: isInquireable
-  sale {
-    is_auction: isAuction
-    is_live_open: isLiveOpen
-    is_open: isOpen
-    is_closed: isClosed
-    id
-  }
-  partner(shallow: true) {
-    type
-    id
-  }
-  sale_artwork: saleArtwork {
-    highest_bid: highestBid {
-      display
-    }
-    opening_bid: openingBid {
-      display
-    }
-    counts {
-      bidder_positions: bidderPositions
-    }
-    id
-  }
-}
-
-fragment Details_artwork on Artwork {
-  href
-  title
-  date
-  sale_message: saleMessage
-  cultural_maker: culturalMaker
-  artists(shallow: true) {
-    id
-    href
-    name
-  }
-  collecting_institution: collectingInstitution
-  partner(shallow: true) {
-    name
-    href
-    id
-  }
-  sale {
-    is_auction: isAuction
-    is_closed: isClosed
-    id
-  }
-  sale_artwork: saleArtwork {
-    counts {
-      bidder_positions: bidderPositions
-    }
-    highest_bid: highestBid {
-      display
-    }
-    opening_bid: openingBid {
-      display
-    }
-    id
-  }
-}
-
-fragment FillwidthItem_artwork on Artwork {
-  image {
-    url(version: "larger")
-    aspectRatio
-  }
-  imageTitle
-  title
-  href
-  is_saved: isSaved
-  ...Metadata_artwork
-  ...SaveButton_artwork
-  ...Badge_artwork
-}
-
-fragment Metadata_artwork on Artwork {
-  ...Details_artwork
-  ...Contact_artwork
-  href
-}
-
-fragment SaveButton_artwork on Artwork {
-  id
-  internalID
-  slug
-  is_saved: isSaved
-  title
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -431,6 +207,11 @@ return {
         "plural": false,
         "selections": [
           {
+            "args": null,
+            "kind": "FragmentSpread",
+            "name": "ArtistConsignRoute_artist"
+          },
+          {
             "alias": null,
             "args": null,
             "concreteType": "ArtistTargetSupply",
@@ -441,11 +222,6 @@ return {
               (v2/*: any*/)
             ],
             "storageKey": null
-          },
-          {
-            "args": null,
-            "kind": "FragmentSpread",
-            "name": "ArtistConsignRoute_artist"
           }
         ],
         "storageKey": null
@@ -1056,5 +832,7 @@ return {
   }
 };
 })();
-(node as any).hash = '42cf0707f1cbe13c21f212715f0877c7';
+
+(node as any).hash = "42cf0707f1cbe13c21f212715f0877c7";
+
 export default node;

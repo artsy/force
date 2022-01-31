@@ -1,24 +1,27 @@
+/**
+ * @generated SignedSource<<1f1de08a04c89bb1ae29dd80556d966f>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ShowsIndex_featuredShows = {
-    readonly name: string | null;
-    readonly items: ReadonlyArray<{
-        readonly id?: string;
-        readonly " $fragmentRefs": FragmentRefs<"ShowsFeaturedShow_show">;
-    } | null> | null;
-    readonly " $refType": "ShowsIndex_featuredShows";
+export type ShowsIndex_featuredShows$data = {
+  readonly name: string | null;
+  readonly items: ReadonlyArray<{
+    readonly id?: string;
+    readonly " $fragmentSpreads": FragmentRefs<"ShowsFeaturedShow_show">;
+  } | null> | null;
+  readonly " $fragmentType": "ShowsIndex_featuredShows";
 };
-export type ShowsIndex_featuredShows$data = ShowsIndex_featuredShows;
 export type ShowsIndex_featuredShows$key = {
-    readonly " $data"?: ShowsIndex_featuredShows$data;
-    readonly " $fragmentRefs": FragmentRefs<"ShowsIndex_featuredShows">;
+  readonly " $data"?: ShowsIndex_featuredShows$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ShowsIndex_featuredShows">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -67,5 +70,7 @@ const node: ReaderFragment = {
   "type": "OrderedSet",
   "abstractKey": null
 };
-(node as any).hash = '732d89afb9904dae58a96930d2ce1672';
+
+(node as any).hash = "732d89afb9904dae58a96930d2ce1672";
+
 export default node;

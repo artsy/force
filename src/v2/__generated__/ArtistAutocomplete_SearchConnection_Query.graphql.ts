@@ -1,65 +1,39 @@
+/**
+ * @generated SignedSource<<278616fa69178eb4c537f774b0ef835c>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
-export type ArtistAutocomplete_SearchConnection_QueryVariables = {
-    searchQuery: string;
+import { ConcreteRequest, Query } from 'relay-runtime';
+export type ArtistAutocomplete_SearchConnection_Query$variables = {
+  searchQuery: string;
 };
-export type ArtistAutocomplete_SearchConnection_QueryResponse = {
-    readonly searchConnection: {
-        readonly edges: ReadonlyArray<{
-            readonly node: {
-                readonly displayLabel: string | null;
-                readonly internalID?: string;
-                readonly image?: {
-                    readonly cropped: {
-                        readonly height: number;
-                        readonly src: string;
-                        readonly srcSet: string;
-                        readonly width: number;
-                    } | null;
-                } | null;
-            } | null;
-        } | null> | null;
-    } | null;
+export type ArtistAutocomplete_SearchConnection_Query$data = {
+  readonly searchConnection: {
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly displayLabel: string | null;
+        readonly internalID?: string;
+        readonly image?: {
+          readonly cropped: {
+            readonly height: number;
+            readonly src: string;
+            readonly srcSet: string;
+            readonly width: number;
+          } | null;
+        } | null;
+      } | null;
+    } | null> | null;
+  } | null;
 };
 export type ArtistAutocomplete_SearchConnection_Query = {
-    readonly response: ArtistAutocomplete_SearchConnection_QueryResponse;
-    readonly variables: ArtistAutocomplete_SearchConnection_QueryVariables;
+  variables: ArtistAutocomplete_SearchConnection_Query$variables;
+  response: ArtistAutocomplete_SearchConnection_Query$data;
 };
-
-
-
-/*
-query ArtistAutocomplete_SearchConnection_Query(
-  $searchQuery: String!
-) {
-  searchConnection(query: $searchQuery, entities: ARTIST, mode: AUTOSUGGEST, first: 3) {
-    edges {
-      node {
-        __typename
-        displayLabel
-        ... on Artist {
-          internalID
-          image {
-            cropped(width: 44, height: 44) {
-              height
-              src
-              srcSet
-              width
-            }
-          }
-        }
-        ... on Node {
-          __isNode: __typename
-          id
-        }
-      }
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -293,5 +267,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'e216f1a1cc08d8e68679a16add120697';
+
+(node as any).hash = "e216f1a1cc08d8e68679a16add120697";
+
 export default node;

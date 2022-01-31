@@ -2,7 +2,7 @@ import _ from "underscore"
 import { fabricate } from "@artsy/antigravity"
 import sinon from "sinon"
 import Backbone from "backbone"
-import { Fair }  from "../../models/fair"
+import { Fair } from "../../models/fair"
 const moment = require("moment")
 
 describe("Fair", () => {
@@ -91,7 +91,6 @@ describe("Fair", () => {
   describe("#fetchOverviewData", () => {
     it("fetches a ton of data in parallel for the fair page", () => {
       testContext.fair.fetchOverviewData({})
-      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       _.last(Backbone.sync.args)[2].success(
         new Backbone.Model(fabricate("profile"))
       )

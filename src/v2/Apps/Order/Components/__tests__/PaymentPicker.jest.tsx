@@ -1,6 +1,6 @@
 import { BorderedRadio, Checkbox, Collapse, Link, Input } from "@artsy/palette"
-import { PaymentPicker_me } from "v2/__generated__/PaymentPicker_me.graphql"
-import { PaymentPickerTestQueryRawResponse } from "v2/__generated__/PaymentPickerTestQuery.graphql"
+import { PaymentPicker_me$data } from "v2/__generated__/PaymentPicker_me.graphql"
+import { PaymentPickerTestQuery$rawResponse } from "v2/__generated__/PaymentPickerTestQuery.graphql"
 import {
   BuyOrderPickup,
   BuyOrderWithShippingDetails,
@@ -134,7 +134,7 @@ class PaymentPickerTestPage extends RootTestPage {
   }
 }
 
-const defaultData: PaymentPickerTestQueryRawResponse = {
+const defaultData: PaymentPickerTestQuery$rawResponse = {
   me: {
     id: "my-id",
     creditCards: {
@@ -393,8 +393,13 @@ describe("PaymentPickerFragmentContainer", () => {
   })
 
   describe("when the user has existing credit cards", () => {
-    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-    const cards: Array<PaymentPicker_me["creditCards"]["edges"][0]["node"]> = [
+    const cards: Array<NonNullable<
+      NonNullable<
+        NonNullable<
+          NonNullable<PaymentPicker_me$data["creditCards"]>["edges"]
+        >[0]
+      >["node"]
+    >> = [
       {
         internalID: "card-id-1",
         brand: "MasterCard",

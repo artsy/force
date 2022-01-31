@@ -1,35 +1,25 @@
+/**
+ * @generated SignedSource<<5ab55ac5ea1ef93601296db802bfd81c>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type NavBarMobileMenuAuthenticationQueryVariables = {};
-export type NavBarMobileMenuAuthenticationQueryResponse = {
-    readonly me: {
-        readonly " $fragmentRefs": FragmentRefs<"NavBarMobileMenuAuthentication_me">;
-    } | null;
+export type NavBarMobileMenuAuthenticationQuery$variables = {};
+export type NavBarMobileMenuAuthenticationQuery$data = {
+  readonly me: {
+    readonly " $fragmentSpreads": FragmentRefs<"NavBarMobileMenuAuthentication_me">;
+  } | null;
 };
 export type NavBarMobileMenuAuthenticationQuery = {
-    readonly response: NavBarMobileMenuAuthenticationQueryResponse;
-    readonly variables: NavBarMobileMenuAuthenticationQueryVariables;
+  variables: NavBarMobileMenuAuthenticationQuery$variables;
+  response: NavBarMobileMenuAuthenticationQuery$data;
 };
-
-
-
-/*
-query NavBarMobileMenuAuthenticationQuery {
-  me {
-    ...NavBarMobileMenuAuthentication_me
-    id
-  }
-}
-
-fragment NavBarMobileMenuAuthentication_me on Me {
-  unreadNotificationsCount
-  unreadConversationCount
-}
-*/
 
 const node: ConcreteRequest = {
   "fragment": {
@@ -107,5 +97,7 @@ const node: ConcreteRequest = {
     "text": "query NavBarMobileMenuAuthenticationQuery {\n  me {\n    ...NavBarMobileMenuAuthentication_me\n    id\n  }\n}\n\nfragment NavBarMobileMenuAuthentication_me on Me {\n  unreadNotificationsCount\n  unreadConversationCount\n}\n"
   }
 };
-(node as any).hash = 'b0e54621e10a919fd2f43333607d0e20';
+
+(node as any).hash = "b0e54621e10a919fd2f43333607d0e20";
+
 export default node;

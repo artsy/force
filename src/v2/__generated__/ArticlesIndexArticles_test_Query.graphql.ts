@@ -1,66 +1,27 @@
+/**
+ * @generated SignedSource<<e0c9cf1238b557e6b437f849b20c2f47>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArticlesIndexArticles_test_QueryVariables = {
-    after?: string | null;
+export type ArticlesIndexArticles_test_Query$variables = {
+  after?: string | null;
 };
-export type ArticlesIndexArticles_test_QueryResponse = {
-    readonly viewer: {
-        readonly " $fragmentRefs": FragmentRefs<"ArticlesIndexArticles_viewer">;
-    } | null;
+export type ArticlesIndexArticles_test_Query$data = {
+  readonly viewer: {
+    readonly " $fragmentSpreads": FragmentRefs<"ArticlesIndexArticles_viewer">;
+  } | null;
 };
 export type ArticlesIndexArticles_test_Query = {
-    readonly response: ArticlesIndexArticles_test_QueryResponse;
-    readonly variables: ArticlesIndexArticles_test_QueryVariables;
+  variables: ArticlesIndexArticles_test_Query$variables;
+  response: ArticlesIndexArticles_test_Query$data;
 };
-
-
-
-/*
-query ArticlesIndexArticles_test_Query(
-  $after: String
-) {
-  viewer {
-    ...ArticlesIndexArticles_viewer_WGPvJ
-  }
-}
-
-fragment ArticlesIndexArticle_article on Article {
-  href
-  thumbnailTitle
-  byline
-  publishedAt(format: "MMMM Do YYYY")
-  thumbnailImage {
-    cropped(width: 910, height: 607) {
-      src
-      srcSet
-      width
-      height
-    }
-  }
-}
-
-fragment ArticlesIndexArticles_viewer_WGPvJ on Viewer {
-  articlesConnection(first: 15, after: $after, sort: PUBLISHED_AT_DESC, featured: true) {
-    edges {
-      node {
-        internalID
-        ...ArticlesIndexArticle_article
-        id
-        __typename
-      }
-      cursor
-    }
-    pageInfo {
-      endCursor
-      hasNextPage
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -432,5 +393,7 @@ return {
   }
 };
 })();
-(node as any).hash = '4bf0671f474db753a7ab8f2f863df565';
+
+(node as any).hash = "4bf0671f474db753a7ab8f2f863df565";
+
 export default node;

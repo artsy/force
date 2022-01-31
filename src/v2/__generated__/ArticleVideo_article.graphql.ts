@@ -1,39 +1,42 @@
+/**
+ * @generated SignedSource<<1daf696334b5e365c07a6ee976c69a94>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArticleVideo_article = {
-    readonly title: string | null;
-    readonly href: string | null;
+export type ArticleVideo_article$data = {
+  readonly title: string | null;
+  readonly href: string | null;
+  readonly description: string | null;
+  readonly media: {
+    readonly coverImage: {
+      readonly url: string | null;
+    } | null;
+    readonly credits: string | null;
     readonly description: string | null;
-    readonly media: {
-        readonly coverImage: {
-            readonly url: string | null;
-        } | null;
-        readonly credits: string | null;
-        readonly description: string | null;
-        readonly duration: string | null;
-        readonly releaseDate: string | null;
-        readonly url: string | null;
+    readonly duration: string | null;
+    readonly releaseDate: string | null;
+    readonly url: string | null;
+  } | null;
+  readonly seriesArticle: {
+    readonly title: string | null;
+    readonly description: string | null;
+    readonly sponsor: {
+      readonly " $fragmentSpreads": FragmentRefs<"ArticleSponsor_sponsor">;
     } | null;
-    readonly seriesArticle: {
-        readonly title: string | null;
-        readonly description: string | null;
-        readonly sponsor: {
-            readonly " $fragmentRefs": FragmentRefs<"ArticleSponsor_sponsor">;
-        } | null;
-    } | null;
-    readonly " $refType": "ArticleVideo_article";
+  } | null;
+  readonly " $fragmentType": "ArticleVideo_article";
 };
-export type ArticleVideo_article$data = ArticleVideo_article;
 export type ArticleVideo_article$key = {
-    readonly " $data"?: ArticleVideo_article$data;
-    readonly " $fragmentRefs": FragmentRefs<"ArticleVideo_article">;
+  readonly " $data"?: ArticleVideo_article$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ArticleVideo_article">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = {
@@ -158,5 +161,7 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '19bec5e7a262d2410e443300c222c643';
+
+(node as any).hash = "19bec5e7a262d2410e443300c222c643";
+
 export default node;

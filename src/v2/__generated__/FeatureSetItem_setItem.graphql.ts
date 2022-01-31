@@ -1,22 +1,25 @@
+/**
+ * @generated SignedSource<<d38ad24f6afafeecb01b868d187c2014>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type FeatureSetItem_setItem = {
-    readonly __typename: string;
-    readonly id?: string;
-    readonly " $fragmentRefs": FragmentRefs<"GridItem_artwork" | "FeatureFeaturedLink_featuredLink">;
-    readonly " $refType": "FeatureSetItem_setItem";
+export type FeatureSetItem_setItem$data = {
+  readonly __typename: string;
+  readonly id?: string;
+  readonly " $fragmentSpreads": FragmentRefs<"GridItem_artwork" | "FeatureFeaturedLink_featuredLink">;
+  readonly " $fragmentType": "FeatureSetItem_setItem";
 };
-export type FeatureSetItem_setItem$data = FeatureSetItem_setItem;
 export type FeatureSetItem_setItem$key = {
-    readonly " $data"?: FeatureSetItem_setItem$data;
-    readonly " $fragmentRefs": FragmentRefs<"FeatureSetItem_setItem">;
+  readonly " $data"?: FeatureSetItem_setItem$data;
+  readonly " $fragmentSpreads": FragmentRefs<"FeatureSetItem_setItem">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = [
@@ -68,5 +71,7 @@ return {
   "abstractKey": "__isOrderedSetItem"
 };
 })();
-(node as any).hash = '9181810fe57734f6a1198ccec3ae7114';
+
+(node as any).hash = "9181810fe57734f6a1198ccec3ae7114";
+
 export default node;

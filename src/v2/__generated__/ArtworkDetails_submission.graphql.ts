@@ -1,39 +1,42 @@
+/**
+ * @generated SignedSource<<483e57b9818ffd3dbcb2af0f9af46507>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
-import { FragmentRefs } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 export type ConsignmentAttributionClass = "LIMITED_EDITION" | "OPEN_EDITION" | "UNIQUE" | "UNKNOWN_EDITION" | "%future added value";
-export type ArtworkDetails_submission = {
-    readonly id: string;
-    readonly artist: {
-        readonly internalID: string;
-        readonly name: string | null;
-    } | null;
-    readonly locationCity: string | null;
-    readonly locationCountry: string | null;
-    readonly locationState: string | null;
-    readonly year: string | null;
-    readonly title: string | null;
-    readonly medium: string | null;
-    readonly attributionClass: ConsignmentAttributionClass | null;
-    readonly editionNumber: string | null;
-    readonly editionSize: string | null;
-    readonly height: string | null;
-    readonly width: string | null;
-    readonly depth: string | null;
-    readonly dimensionsMetric: string | null;
-    readonly provenance: string | null;
-    readonly " $refType": "ArtworkDetails_submission";
+import { FragmentRefs } from "relay-runtime";
+export type ArtworkDetails_submission$data = {
+  readonly id: string;
+  readonly artist: {
+    readonly internalID: string;
+    readonly name: string | null;
+  } | null;
+  readonly locationCity: string | null;
+  readonly locationCountry: string | null;
+  readonly locationState: string | null;
+  readonly year: string | null;
+  readonly title: string | null;
+  readonly medium: string | null;
+  readonly attributionClass: ConsignmentAttributionClass | null;
+  readonly editionNumber: string | null;
+  readonly editionSize: string | null;
+  readonly height: string | null;
+  readonly width: string | null;
+  readonly depth: string | null;
+  readonly dimensionsMetric: string | null;
+  readonly provenance: string | null;
+  readonly " $fragmentType": "ArtworkDetails_submission";
 };
-export type ArtworkDetails_submission$data = ArtworkDetails_submission;
 export type ArtworkDetails_submission$key = {
-    readonly " $data"?: ArtworkDetails_submission$data;
-    readonly " $fragmentRefs": FragmentRefs<"ArtworkDetails_submission">;
+  readonly " $data"?: ArtworkDetails_submission$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtworkDetails_submission">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -175,5 +178,7 @@ const node: ReaderFragment = {
   "type": "ConsignmentSubmission",
   "abstractKey": null
 };
-(node as any).hash = '6bac5054bb25e2f6d968ea96e93e81e9';
+
+(node as any).hash = "6bac5054bb25e2f6d968ea96e93e81e9";
+
 export default node;

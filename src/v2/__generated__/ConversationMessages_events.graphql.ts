@@ -1,31 +1,34 @@
+/**
+ * @generated SignedSource<<5967a794d74170762be207cfb7b199aa>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
-import { FragmentRefs } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 export type CommerceOrderStateEnum = "ABANDONED" | "APPROVED" | "CANCELED" | "FULFILLED" | "PENDING" | "REFUNDED" | "SUBMITTED" | "%future added value";
-export type ConversationMessages_events = {
-    readonly edges: ReadonlyArray<{
-        readonly node: {
-            readonly orderHistory: ReadonlyArray<{
-                readonly __typename: string;
-                readonly state?: CommerceOrderStateEnum;
-                readonly stateReason?: string | null;
-                readonly createdAt?: string;
-                readonly " $fragmentRefs": FragmentRefs<"OrderUpdate_event">;
-            }>;
-        } | null;
-    } | null> | null;
-    readonly " $refType": "ConversationMessages_events";
+import { FragmentRefs } from "relay-runtime";
+export type ConversationMessages_events$data = {
+  readonly edges: ReadonlyArray<{
+    readonly node: {
+      readonly orderHistory: ReadonlyArray<{
+        readonly __typename: string;
+        readonly state?: CommerceOrderStateEnum;
+        readonly stateReason?: string | null;
+        readonly createdAt?: string;
+        readonly " $fragmentSpreads": FragmentRefs<"OrderUpdate_event">;
+      }>;
+    } | null;
+  } | null> | null;
+  readonly " $fragmentType": "ConversationMessages_events";
 };
-export type ConversationMessages_events$data = ConversationMessages_events;
 export type ConversationMessages_events$key = {
-    readonly " $data"?: ConversationMessages_events$data;
-    readonly " $fragmentRefs": FragmentRefs<"ConversationMessages_events">;
+  readonly " $data"?: ConversationMessages_events$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ConversationMessages_events">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = {
@@ -66,16 +69,16 @@ return {
               "plural": true,
               "selections": [
                 {
+                  "args": null,
+                  "kind": "FragmentSpread",
+                  "name": "OrderUpdate_event"
+                },
+                {
                   "alias": null,
                   "args": null,
                   "kind": "ScalarField",
                   "name": "__typename",
                   "storageKey": null
-                },
-                {
-                  "args": null,
-                  "kind": "FragmentSpread",
-                  "name": "OrderUpdate_event"
                 },
                 {
                   "kind": "InlineFragment",
@@ -121,5 +124,7 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = 'f4d042dc020c7280f6945d95fdcccd7f';
+
+(node as any).hash = "f4d042dc020c7280f6945d95fdcccd7f";
+
 export default node;

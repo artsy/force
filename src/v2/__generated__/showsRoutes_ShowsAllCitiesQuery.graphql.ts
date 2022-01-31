@@ -1,36 +1,25 @@
+/**
+ * @generated SignedSource<<5ac429813dacc6f096e5c683cd3fc596>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type showsRoutes_ShowsAllCitiesQueryVariables = {};
-export type showsRoutes_ShowsAllCitiesQueryResponse = {
-    readonly viewer: {
-        readonly " $fragmentRefs": FragmentRefs<"ShowsAllCities_viewer">;
-    } | null;
+export type showsRoutes_ShowsAllCitiesQuery$variables = {};
+export type showsRoutes_ShowsAllCitiesQuery$data = {
+  readonly viewer: {
+    readonly " $fragmentSpreads": FragmentRefs<"ShowsAllCities_viewer">;
+  } | null;
 };
 export type showsRoutes_ShowsAllCitiesQuery = {
-    readonly response: showsRoutes_ShowsAllCitiesQueryResponse;
-    readonly variables: showsRoutes_ShowsAllCitiesQueryVariables;
+  variables: showsRoutes_ShowsAllCitiesQuery$variables;
+  response: showsRoutes_ShowsAllCitiesQuery$data;
 };
-
-
-
-/*
-query showsRoutes_ShowsAllCitiesQuery {
-  viewer {
-    ...ShowsAllCities_viewer
-  }
-}
-
-fragment ShowsAllCities_viewer on Viewer {
-  cities {
-    name
-    slug
-  }
-}
-*/
 
 const node: ConcreteRequest = {
   "fragment": {
@@ -112,5 +101,7 @@ const node: ConcreteRequest = {
     "text": "query showsRoutes_ShowsAllCitiesQuery {\n  viewer {\n    ...ShowsAllCities_viewer\n  }\n}\n\nfragment ShowsAllCities_viewer on Viewer {\n  cities {\n    name\n    slug\n  }\n}\n"
   }
 };
-(node as any).hash = '7afb036b1da4a784deabe0bd23acc9a4';
+
+(node as any).hash = "7afb036b1da4a784deabe0bd23acc9a4";
+
 export default node;

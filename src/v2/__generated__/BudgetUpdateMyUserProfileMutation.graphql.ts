@@ -1,82 +1,73 @@
+/**
+ * @generated SignedSource<<b3c89c23a64a2d1fffdc721beb003d47>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type CurrencyPreference = "EUR" | "GBP" | "USD" | "%future added value";
 export type LengthUnitPreference = "CM" | "IN" | "%future added value";
 export type UpdateMyProfileInput = {
-    artworksPerYear?: string | null;
-    bio?: string | null;
-    clientMutationId?: string | null;
-    collectorLevel?: number | null;
-    completedOnboarding?: boolean | null;
-    currencyPreference?: CurrencyPreference | null;
-    email?: string | null;
-    emailFrequency?: string | null;
-    gender?: string | null;
-    iconUrl?: string | null;
-    industry?: string | null;
-    isCollector?: boolean | null;
-    lengthUnitPreference?: LengthUnitPreference | null;
-    location?: EditableLocation | null;
-    name?: string | null;
-    notes?: string | null;
-    otherRelevantPositions?: string | null;
-    password?: string | null;
-    phone?: string | null;
-    priceRangeMax?: number | null;
-    priceRangeMin?: number | null;
-    privacy?: string | null;
-    profession?: string | null;
-    receiveLotOpeningSoonNotification?: boolean | null;
-    receiveNewSalesNotification?: boolean | null;
-    receiveNewWorksNotification?: boolean | null;
-    receiveOutbidNotification?: boolean | null;
-    receivePromotionNotification?: boolean | null;
-    receivePurchaseNotification?: boolean | null;
-    receiveSaleOpeningClosingNotification?: boolean | null;
-    shareFollows?: boolean | null;
+  artworksPerYear?: string | null;
+  bio?: string | null;
+  clientMutationId?: string | null;
+  collectorLevel?: number | null;
+  completedOnboarding?: boolean | null;
+  currencyPreference?: CurrencyPreference | null;
+  email?: string | null;
+  emailFrequency?: string | null;
+  gender?: string | null;
+  iconUrl?: string | null;
+  industry?: string | null;
+  isCollector?: boolean | null;
+  lengthUnitPreference?: LengthUnitPreference | null;
+  location?: EditableLocation | null;
+  name?: string | null;
+  notes?: string | null;
+  otherRelevantPositions?: string | null;
+  password?: string | null;
+  phone?: string | null;
+  priceRangeMax?: number | null;
+  priceRangeMin?: number | null;
+  privacy?: string | null;
+  profession?: string | null;
+  receiveLotOpeningSoonNotification?: boolean | null;
+  receiveNewSalesNotification?: boolean | null;
+  receiveNewWorksNotification?: boolean | null;
+  receiveOutbidNotification?: boolean | null;
+  receivePromotionNotification?: boolean | null;
+  receivePurchaseNotification?: boolean | null;
+  receiveSaleOpeningClosingNotification?: boolean | null;
+  shareFollows?: boolean | null;
 };
 export type EditableLocation = {
-    address?: string | null;
-    address2?: string | null;
-    city?: string | null;
-    country?: string | null;
-    postalCode?: string | null;
-    state?: string | null;
-    stateCode?: string | null;
-    summary?: string | null;
+  address?: string | null;
+  address2?: string | null;
+  city?: string | null;
+  country?: string | null;
+  postalCode?: string | null;
+  state?: string | null;
+  stateCode?: string | null;
+  summary?: string | null;
 };
-export type BudgetUpdateMyUserProfileMutationVariables = {
-    input: UpdateMyProfileInput;
+export type BudgetUpdateMyUserProfileMutation$variables = {
+  input: UpdateMyProfileInput;
 };
-export type BudgetUpdateMyUserProfileMutationResponse = {
-    readonly updateMyUserProfile: {
-        readonly user: {
-            readonly name: string;
-        } | null;
+export type BudgetUpdateMyUserProfileMutation$data = {
+  readonly updateMyUserProfile: {
+    readonly user: {
+      readonly name: string;
     } | null;
+  } | null;
 };
 export type BudgetUpdateMyUserProfileMutation = {
-    readonly response: BudgetUpdateMyUserProfileMutationResponse;
-    readonly variables: BudgetUpdateMyUserProfileMutationVariables;
+  variables: BudgetUpdateMyUserProfileMutation$variables;
+  response: BudgetUpdateMyUserProfileMutation$data;
 };
-
-
-
-/*
-mutation BudgetUpdateMyUserProfileMutation(
-  $input: UpdateMyProfileInput!
-) {
-  updateMyUserProfile(input: $input) {
-    user {
-      name
-      id
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -182,5 +173,7 @@ return {
   }
 };
 })();
-(node as any).hash = '3add187e4e8fcf9910294672b24f47e7';
+
+(node as any).hash = "3add187e4e8fcf9910294672b24f47e7";
+
 export default node;

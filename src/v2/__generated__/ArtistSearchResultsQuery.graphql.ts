@@ -1,54 +1,27 @@
+/**
+ * @generated SignedSource<<90904f3ee06d94b82ac4713df5dc85a9>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtistSearchResultsQueryVariables = {
-    term: string;
+export type ArtistSearchResultsQuery$variables = {
+  term: string;
 };
-export type ArtistSearchResultsQueryResponse = {
-    readonly viewer: {
-        readonly " $fragmentRefs": FragmentRefs<"ArtistSearchResults_viewer">;
-    } | null;
+export type ArtistSearchResultsQuery$data = {
+  readonly viewer: {
+    readonly " $fragmentSpreads": FragmentRefs<"ArtistSearchResults_viewer">;
+  } | null;
 };
 export type ArtistSearchResultsQuery = {
-    readonly response: ArtistSearchResultsQueryResponse;
-    readonly variables: ArtistSearchResultsQueryVariables;
+  variables: ArtistSearchResultsQuery$variables;
+  response: ArtistSearchResultsQuery$data;
 };
-
-
-
-/*
-query ArtistSearchResultsQuery(
-  $term: String!
-) {
-  viewer {
-    ...ArtistSearchResults_viewer
-  }
-}
-
-fragment ArtistSearchResults_viewer on Viewer {
-  searchConnection(query: $term, mode: AUTOSUGGEST, entities: [ARTIST], first: 10) {
-    edges {
-      node {
-        __typename
-        ... on SearchableItem {
-          id
-          slug
-          internalID
-          displayLabel
-          imageUrl
-        }
-        ... on Node {
-          __isNode: __typename
-          id
-        }
-      }
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -228,5 +201,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'f358ad4e9edc01efcf24dd5f0b52a026';
+
+(node as any).hash = "f358ad4e9edc01efcf24dd5f0b52a026";
+
 export default node;

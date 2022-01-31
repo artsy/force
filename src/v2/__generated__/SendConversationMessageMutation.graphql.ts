@@ -1,76 +1,43 @@
+/**
+ * @generated SignedSource<<4f52fcec88d1ca55b74c87d14b3cfd0d>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Mutation } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type SendConversationMessageMutationInput = {
-    bodyText: string;
-    clientMutationId?: string | null;
-    from: string;
-    id: string;
-    replyToMessageID: string;
+  bodyText: string;
+  clientMutationId?: string | null;
+  from: string;
+  id: string;
+  replyToMessageID: string;
 };
-export type SendConversationMessageMutationVariables = {
-    input: SendConversationMessageMutationInput;
+export type SendConversationMessageMutation$variables = {
+  input: SendConversationMessageMutationInput;
 };
-export type SendConversationMessageMutationResponse = {
-    readonly sendConversationMessage: {
-        readonly messageEdge: {
-            readonly node: {
-                readonly impulseID: string;
-                readonly isFromUser: boolean | null;
-                readonly body: string | null;
-                readonly id: string;
-                readonly internalID: string;
-                readonly " $fragmentRefs": FragmentRefs<"Message_message">;
-            } | null;
-        } | null;
+export type SendConversationMessageMutation$data = {
+  readonly sendConversationMessage: {
+    readonly messageEdge: {
+      readonly node: {
+        readonly impulseID: string;
+        readonly isFromUser: boolean | null;
+        readonly body: string | null;
+        readonly id: string;
+        readonly internalID: string;
+        readonly " $fragmentSpreads": FragmentRefs<"Message_message">;
+      } | null;
     } | null;
+  } | null;
 };
 export type SendConversationMessageMutation = {
-    readonly response: SendConversationMessageMutationResponse;
-    readonly variables: SendConversationMessageMutationVariables;
+  variables: SendConversationMessageMutation$variables;
+  response: SendConversationMessageMutation$data;
 };
-
-
-
-/*
-mutation SendConversationMessageMutation(
-  $input: SendConversationMessageMutationInput!
-) {
-  sendConversationMessage(input: $input) {
-    messageEdge {
-      node {
-        impulseID
-        isFromUser
-        body
-        id
-        internalID
-        ...Message_message
-      }
-    }
-  }
-}
-
-fragment Message_message on Message {
-  __typename
-  internalID
-  body
-  createdAt
-  isFromUser
-  from {
-    name
-    email
-  }
-  attachments {
-    id
-    contentType
-    fileName
-    downloadURL
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -304,5 +271,7 @@ return {
   }
 };
 })();
-(node as any).hash = '408efad0649006188afa16adb1c45401';
+
+(node as any).hash = "408efad0649006188afa16adb1c45401";
+
 export default node;

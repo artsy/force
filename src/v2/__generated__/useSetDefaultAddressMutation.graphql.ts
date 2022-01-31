@@ -1,85 +1,39 @@
+/**
+ * @generated SignedSource<<db12e931a092383c5b96d872110a62cc>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Mutation } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type UpdateUserDefaultAddressInput = {
-    clientMutationId?: string | null;
-    userAddressID: string;
+  clientMutationId?: string | null;
+  userAddressID: string;
 };
-export type useSetDefaultAddressMutationVariables = {
-    input: UpdateUserDefaultAddressInput;
+export type useSetDefaultAddressMutation$variables = {
+  input: UpdateUserDefaultAddressInput;
 };
-export type useSetDefaultAddressMutationResponse = {
-    readonly updateUserDefaultAddress: {
-        readonly me: {
-            readonly " $fragmentRefs": FragmentRefs<"SettingsShippingAddresses_me">;
-        } | null;
-        readonly userAddressOrErrors: {
-            readonly errors?: ReadonlyArray<{
-                readonly message: string;
-            }>;
-            readonly " $fragmentRefs": FragmentRefs<"SettingsShippingAddress_address">;
-        };
+export type useSetDefaultAddressMutation$data = {
+  readonly updateUserDefaultAddress: {
+    readonly me: {
+      readonly " $fragmentSpreads": FragmentRefs<"SettingsShippingAddresses_me">;
     } | null;
+    readonly userAddressOrErrors: {
+      readonly errors?: ReadonlyArray<{
+        readonly message: string;
+      }>;
+      readonly " $fragmentSpreads": FragmentRefs<"SettingsShippingAddress_address">;
+    };
+  } | null;
 };
 export type useSetDefaultAddressMutation = {
-    readonly response: useSetDefaultAddressMutationResponse;
-    readonly variables: useSetDefaultAddressMutationVariables;
+  variables: useSetDefaultAddressMutation$variables;
+  response: useSetDefaultAddressMutation$data;
 };
-
-
-
-/*
-mutation useSetDefaultAddressMutation(
-  $input: UpdateUserDefaultAddressInput!
-) {
-  updateUserDefaultAddress(input: $input) {
-    me {
-      ...SettingsShippingAddresses_me
-      id
-    }
-    userAddressOrErrors {
-      __typename
-      ... on UserAddress {
-        ...SettingsShippingAddress_address
-        id
-      }
-      ... on Errors {
-        errors {
-          message
-        }
-      }
-    }
-  }
-}
-
-fragment SettingsShippingAddress_address on UserAddress {
-  internalID
-  addressLine1
-  addressLine2
-  city
-  country
-  isDefault
-  name
-  phoneNumber
-  postalCode
-  region
-}
-
-fragment SettingsShippingAddresses_me on Me {
-  addresses: addressConnection {
-    edges {
-      node {
-        internalID
-        ...SettingsShippingAddress_address
-        id
-      }
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -361,5 +315,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'b78d72749b5efa860f8255d128f227f2';
+
+(node as any).hash = "b78d72749b5efa860f8255d128f227f2";
+
 export default node;

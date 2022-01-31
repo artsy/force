@@ -1,24 +1,27 @@
+/**
+ * @generated SignedSource<<2cdd8efdf6db00503865e760061b5fd0>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type RequestConditionReport_artwork = {
+export type RequestConditionReport_artwork$data = {
+  readonly internalID: string;
+  readonly slug: string;
+  readonly saleArtwork: {
     readonly internalID: string;
-    readonly slug: string;
-    readonly saleArtwork: {
-        readonly internalID: string;
-    } | null;
-    readonly " $refType": "RequestConditionReport_artwork";
+  } | null;
+  readonly " $fragmentType": "RequestConditionReport_artwork";
 };
-export type RequestConditionReport_artwork$data = RequestConditionReport_artwork;
 export type RequestConditionReport_artwork$key = {
-    readonly " $data"?: RequestConditionReport_artwork$data;
-    readonly " $fragmentRefs": FragmentRefs<"RequestConditionReport_artwork">;
+  readonly " $data"?: RequestConditionReport_artwork$data;
+  readonly " $fragmentSpreads": FragmentRefs<"RequestConditionReport_artwork">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = {
@@ -59,5 +62,7 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = 'e20d4fa964b57dd0a75664fa56741ed4';
+
+(node as any).hash = "e20d4fa964b57dd0a75664fa56741ed4";
+
 export default node;

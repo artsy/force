@@ -1,38 +1,25 @@
+/**
+ * @generated SignedSource<<97fd6602f0a23160a2e3c57529542f57>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type FollowGeneButton_Test_QueryVariables = {};
-export type FollowGeneButton_Test_QueryResponse = {
-    readonly gene: {
-        readonly " $fragmentRefs": FragmentRefs<"FollowGeneButton_gene">;
-    } | null;
+export type FollowGeneButton_Test_Query$variables = {};
+export type FollowGeneButton_Test_Query$data = {
+  readonly gene: {
+    readonly " $fragmentSpreads": FragmentRefs<"FollowGeneButton_gene">;
+  } | null;
 };
 export type FollowGeneButton_Test_Query = {
-    readonly response: FollowGeneButton_Test_QueryResponse;
-    readonly variables: FollowGeneButton_Test_QueryVariables;
+  variables: FollowGeneButton_Test_Query$variables;
+  response: FollowGeneButton_Test_Query$data;
 };
-
-
-
-/*
-query FollowGeneButton_Test_Query {
-  gene(id: "example") {
-    ...FollowGeneButton_gene
-    id
-  }
-}
-
-fragment FollowGeneButton_gene on Gene {
-  id
-  slug
-  name
-  internalID
-  isFollowed
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -163,5 +150,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'ad227555fabebd93865ebe16a7adf77c';
+
+(node as any).hash = "ad227555fabebd93865ebe16a7adf77c";
+
 export default node;

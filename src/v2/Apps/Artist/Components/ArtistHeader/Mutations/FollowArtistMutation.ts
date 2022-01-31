@@ -33,6 +33,7 @@ export const followArtistMutation: FollowArtistMutationProps = (
         }
       `,
       // FIXME: Why is optimistic response not working in UI?
+      // @ts-ignore UPGRADE RELAY 13
       optimisticResponse: {
         followArtist: {
           artist: {

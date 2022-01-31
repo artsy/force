@@ -1,57 +1,37 @@
+/**
+ * @generated SignedSource<<205b33d60db115e50511060f29610ef8>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
-export type fetchFollowedArtistsByFairIdQueryVariables = {
-    fairID?: string | null;
+import { ConcreteRequest, Query } from 'relay-runtime';
+export type fetchFollowedArtistsByFairIdQuery$variables = {
+  fairID?: string | null;
 };
-export type fetchFollowedArtistsByFairIdQueryResponse = {
-    readonly me: {
-        readonly followsAndSaves: {
-            readonly artistsConnection: {
-                readonly edges: ReadonlyArray<{
-                    readonly node: {
-                        readonly artist: {
-                            readonly slug: string;
-                            readonly internalID: string;
-                        } | null;
-                    } | null;
-                } | null> | null;
+export type fetchFollowedArtistsByFairIdQuery$data = {
+  readonly me: {
+    readonly followsAndSaves: {
+      readonly artistsConnection: {
+        readonly edges: ReadonlyArray<{
+          readonly node: {
+            readonly artist: {
+              readonly slug: string;
+              readonly internalID: string;
             } | null;
-        } | null;
+          } | null;
+        } | null> | null;
+      } | null;
     } | null;
+  } | null;
 };
 export type fetchFollowedArtistsByFairIdQuery = {
-    readonly response: fetchFollowedArtistsByFairIdQueryResponse;
-    readonly variables: fetchFollowedArtistsByFairIdQueryVariables;
+  variables: fetchFollowedArtistsByFairIdQuery$variables;
+  response: fetchFollowedArtistsByFairIdQuery$data;
 };
-
-
-
-/*
-query fetchFollowedArtistsByFairIdQuery(
-  $fairID: String
-) {
-  me {
-    followsAndSaves {
-      artistsConnection(first: 99, fairID: $fairID) {
-        edges {
-          node {
-            artist {
-              slug
-              internalID
-              id
-            }
-            id
-          }
-        }
-      }
-    }
-    id
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -262,5 +242,7 @@ return {
   }
 };
 })();
-(node as any).hash = '63bdf78c94b12552b8e8b40fd2e4efdd';
+
+(node as any).hash = "63bdf78c94b12552b8e8b40fd2e4efdd";
+
 export default node;

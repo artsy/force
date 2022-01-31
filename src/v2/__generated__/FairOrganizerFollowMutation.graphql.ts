@@ -1,43 +1,34 @@
+/**
+ * @generated SignedSource<<295a65531884076a5478c48578dd536d>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type FollowProfileInput = {
-    clientMutationId?: string | null;
-    profileID?: string | null;
-    unfollow?: boolean | null;
+  clientMutationId?: string | null;
+  profileID?: string | null;
+  unfollow?: boolean | null;
 };
-export type FairOrganizerFollowMutationVariables = {
-    input: FollowProfileInput;
+export type FairOrganizerFollowMutation$variables = {
+  input: FollowProfileInput;
 };
-export type FairOrganizerFollowMutationResponse = {
-    readonly followProfile: {
-        readonly profile: {
-            readonly id: string;
-            readonly isFollowed: boolean | null;
-        } | null;
+export type FairOrganizerFollowMutation$data = {
+  readonly followProfile: {
+    readonly profile: {
+      readonly id: string;
+      readonly isFollowed: boolean | null;
     } | null;
+  } | null;
 };
 export type FairOrganizerFollowMutation = {
-    readonly response: FairOrganizerFollowMutationResponse;
-    readonly variables: FairOrganizerFollowMutationVariables;
+  variables: FairOrganizerFollowMutation$variables;
+  response: FairOrganizerFollowMutation$data;
 };
-
-
-
-/*
-mutation FairOrganizerFollowMutation(
-  $input: FollowProfileInput!
-) {
-  followProfile(input: $input) {
-    profile {
-      id
-      isFollowed
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -118,5 +109,7 @@ return {
   }
 };
 })();
-(node as any).hash = '6f04f6fd3ba8d792295309cbe0c6b812';
+
+(node as any).hash = "6f04f6fd3ba8d792295309cbe0c6b812";
+
 export default node;

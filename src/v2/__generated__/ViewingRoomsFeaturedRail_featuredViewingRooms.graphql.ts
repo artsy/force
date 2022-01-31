@@ -1,36 +1,39 @@
+/**
+ * @generated SignedSource<<2f0dcc4da6bc238701be634e02f46687>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ViewingRoomsFeaturedRail_featuredViewingRooms = {
-    readonly edges: ReadonlyArray<{
-        readonly node: {
-            readonly status: string;
-            readonly slug: string;
-            readonly title: string;
-            readonly image: {
-                readonly imageURLs: {
-                    readonly normalized: string | null;
-                } | null;
-            } | null;
-            readonly distanceToOpen: string | null;
-            readonly distanceToClose: string | null;
-            readonly partner: {
-                readonly name: string | null;
-            } | null;
+export type ViewingRoomsFeaturedRail_featuredViewingRooms$data = {
+  readonly edges: ReadonlyArray<{
+    readonly node: {
+      readonly status: string;
+      readonly slug: string;
+      readonly title: string;
+      readonly image: {
+        readonly imageURLs: {
+          readonly normalized: string | null;
         } | null;
-    } | null> | null;
-    readonly " $refType": "ViewingRoomsFeaturedRail_featuredViewingRooms";
+      } | null;
+      readonly distanceToOpen: string | null;
+      readonly distanceToClose: string | null;
+      readonly partner: {
+        readonly name: string | null;
+      } | null;
+    } | null;
+  } | null> | null;
+  readonly " $fragmentType": "ViewingRoomsFeaturedRail_featuredViewingRooms";
 };
-export type ViewingRoomsFeaturedRail_featuredViewingRooms$data = ViewingRoomsFeaturedRail_featuredViewingRooms;
 export type ViewingRoomsFeaturedRail_featuredViewingRooms$key = {
-    readonly " $data"?: ViewingRoomsFeaturedRail_featuredViewingRooms$data;
-    readonly " $fragmentRefs": FragmentRefs<"ViewingRoomsFeaturedRail_featuredViewingRooms">;
+  readonly " $data"?: ViewingRoomsFeaturedRail_featuredViewingRooms$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ViewingRoomsFeaturedRail_featuredViewingRooms">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = [
@@ -155,5 +158,7 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '9dd834600e28760b97b9b24b16f60122';
+
+(node as any).hash = "9dd834600e28760b97b9b24b16f60122";
+
 export default node;

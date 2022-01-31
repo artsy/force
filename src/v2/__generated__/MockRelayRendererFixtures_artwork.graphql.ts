@@ -1,26 +1,29 @@
+/**
+ * @generated SignedSource<<dfa0904adbb890a3b733435ce242d8bc>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type MockRelayRendererFixtures_artwork = {
-    readonly image: {
-        readonly url: string | null;
-    } | null;
-    readonly artist: {
-        readonly slug: string;
-    } | null;
-    readonly " $fragmentRefs": FragmentRefs<"MockRelayRendererFixtures_artworkMetadata">;
-    readonly " $refType": "MockRelayRendererFixtures_artwork";
+export type MockRelayRendererFixtures_artwork$data = {
+  readonly image: {
+    readonly url: string | null;
+  } | null;
+  readonly artist: {
+    readonly slug: string;
+  } | null;
+  readonly " $fragmentSpreads": FragmentRefs<"MockRelayRendererFixtures_artworkMetadata">;
+  readonly " $fragmentType": "MockRelayRendererFixtures_artwork";
 };
-export type MockRelayRendererFixtures_artwork$data = MockRelayRendererFixtures_artwork;
 export type MockRelayRendererFixtures_artwork$key = {
-    readonly " $data"?: MockRelayRendererFixtures_artwork$data;
-    readonly " $fragmentRefs": FragmentRefs<"MockRelayRendererFixtures_artwork">;
+  readonly " $data"?: MockRelayRendererFixtures_artwork$data;
+  readonly " $fragmentSpreads": FragmentRefs<"MockRelayRendererFixtures_artwork">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -73,5 +76,7 @@ const node: ReaderFragment = {
   "type": "Artwork",
   "abstractKey": null
 };
-(node as any).hash = '35b0d2a11cf28fcc477de58eac475015';
+
+(node as any).hash = "35b0d2a11cf28fcc477de58eac475015";
+
 export default node;

@@ -1,22 +1,25 @@
+/**
+ * @generated SignedSource<<dc4f5bd95833360aad55ddc3aa16a9d8>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type UserActiveBids_me = {
-    readonly activeLotStandings: ReadonlyArray<{
-        readonly " $fragmentRefs": FragmentRefs<"SettingsAuctionsLotStanding_lotStanding">;
-    } | null> | null;
-    readonly " $refType": "UserActiveBids_me";
+export type UserActiveBids_me$data = {
+  readonly activeLotStandings: ReadonlyArray<{
+    readonly " $fragmentSpreads": FragmentRefs<"SettingsAuctionsLotStanding_lotStanding">;
+  } | null> | null;
+  readonly " $fragmentType": "UserActiveBids_me";
 };
-export type UserActiveBids_me$data = UserActiveBids_me;
 export type UserActiveBids_me$key = {
-    readonly " $data"?: UserActiveBids_me$data;
-    readonly " $fragmentRefs": FragmentRefs<"UserActiveBids_me">;
+  readonly " $data"?: UserActiveBids_me$data;
+  readonly " $fragmentSpreads": FragmentRefs<"UserActiveBids_me">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -50,5 +53,7 @@ const node: ReaderFragment = {
   "type": "Me",
   "abstractKey": null
 };
-(node as any).hash = 'f185c4dd69796cdef210dba0cd7993e9';
+
+(node as any).hash = "f185c4dd69796cdef210dba0cd7993e9";
+
 export default node;

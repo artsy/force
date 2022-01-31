@@ -1,29 +1,32 @@
+/**
+ * @generated SignedSource<<aa54d097a0b8a3664639eadee30b42cc>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type GeneFamily_geneFamily = {
+export type GeneFamily_geneFamily$data = {
+  readonly id: string;
+  readonly slug: string;
+  readonly name: string;
+  readonly genes: ReadonlyArray<{
+    readonly isPublished: boolean | null;
     readonly id: string;
+    readonly displayName: string | null;
+    readonly name: string | null;
     readonly slug: string;
-    readonly name: string;
-    readonly genes: ReadonlyArray<{
-        readonly isPublished: boolean | null;
-        readonly id: string;
-        readonly displayName: string | null;
-        readonly name: string | null;
-        readonly slug: string;
-    } | null> | null;
-    readonly " $refType": "GeneFamily_geneFamily";
+  } | null> | null;
+  readonly " $fragmentType": "GeneFamily_geneFamily";
 };
-export type GeneFamily_geneFamily$data = GeneFamily_geneFamily;
 export type GeneFamily_geneFamily$key = {
-    readonly " $data"?: GeneFamily_geneFamily$data;
-    readonly " $fragmentRefs": FragmentRefs<"GeneFamily_geneFamily">;
+  readonly " $data"?: GeneFamily_geneFamily$data;
+  readonly " $fragmentSpreads": FragmentRefs<"GeneFamily_geneFamily">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = {
@@ -89,5 +92,7 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '6f2458387d1c83552af32f8a341f82c5';
+
+(node as any).hash = "6f2458387d1c83552af32f8a341f82c5";
+
 export default node;

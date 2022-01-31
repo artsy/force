@@ -1,32 +1,35 @@
+/**
+ * @generated SignedSource<<4a314bbb92aba64745ddcd4318b4f87a>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtistSeriesItem_artistSeries = {
-    readonly title: string;
-    readonly slug: string;
-    readonly featured: boolean;
-    readonly internalID: string;
-    readonly artworksCountMessage: string | null;
-    readonly image: {
-        readonly cropped: {
-            readonly width: number;
-            readonly height: number;
-            readonly src: string;
-            readonly srcSet: string;
-        } | null;
+export type ArtistSeriesItem_artistSeries$data = {
+  readonly title: string;
+  readonly slug: string;
+  readonly featured: boolean;
+  readonly internalID: string;
+  readonly artworksCountMessage: string | null;
+  readonly image: {
+    readonly cropped: {
+      readonly width: number;
+      readonly height: number;
+      readonly src: string;
+      readonly srcSet: string;
     } | null;
-    readonly " $refType": "ArtistSeriesItem_artistSeries";
+  } | null;
+  readonly " $fragmentType": "ArtistSeriesItem_artistSeries";
 };
-export type ArtistSeriesItem_artistSeries$data = ArtistSeriesItem_artistSeries;
 export type ArtistSeriesItem_artistSeries$key = {
-    readonly " $data"?: ArtistSeriesItem_artistSeries$data;
-    readonly " $fragmentRefs": FragmentRefs<"ArtistSeriesItem_artistSeries">;
+  readonly " $data"?: ArtistSeriesItem_artistSeries$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtistSeriesItem_artistSeries">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -134,5 +137,7 @@ const node: ReaderFragment = {
   "type": "ArtistSeries",
   "abstractKey": null
 };
-(node as any).hash = 'bde51d361add8c28c10076a613811f96';
+
+(node as any).hash = "bde51d361add8c28c10076a613811f96";
+
 export default node;

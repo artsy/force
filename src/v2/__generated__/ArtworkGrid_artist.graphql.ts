@@ -1,22 +1,25 @@
+/**
+ * @generated SignedSource<<b0769b74f0adec2a0c33a1e939e4ef83>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtworkGrid_artist = {
-    readonly artworks_connection: {
-        readonly " $fragmentRefs": FragmentRefs<"ArtworkGrid_artworks">;
-    } | null;
-    readonly " $refType": "ArtworkGrid_artist";
+export type ArtworkGrid_artist$data = {
+  readonly artworks_connection: {
+    readonly " $fragmentSpreads": FragmentRefs<"ArtworkGrid_artworks">;
+  } | null;
+  readonly " $fragmentType": "ArtworkGrid_artist";
 };
-export type ArtworkGrid_artist$data = ArtworkGrid_artist;
 export type ArtworkGrid_artist$key = {
-    readonly " $data"?: ArtworkGrid_artist$data;
-    readonly " $fragmentRefs": FragmentRefs<"ArtworkGrid_artist">;
+  readonly " $data"?: ArtworkGrid_artist$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtworkGrid_artist">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -50,5 +53,7 @@ const node: ReaderFragment = {
   "type": "Artist",
   "abstractKey": null
 };
-(node as any).hash = '2993b1c9335bd41e7d807b765cc2d6fd';
+
+(node as any).hash = "2993b1c9335bd41e7d807b765cc2d6fd";
+
 export default node;

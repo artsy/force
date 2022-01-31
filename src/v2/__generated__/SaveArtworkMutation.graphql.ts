@@ -1,45 +1,35 @@
+/**
+ * @generated SignedSource<<8bb5116cd06d84eee6fca38335b7e539>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type SaveArtworkInput = {
-    artworkID?: string | null;
-    clientMutationId?: string | null;
-    remove?: boolean | null;
+  artworkID?: string | null;
+  clientMutationId?: string | null;
+  remove?: boolean | null;
 };
-export type SaveArtworkMutationVariables = {
-    input: SaveArtworkInput;
+export type SaveArtworkMutation$variables = {
+  input: SaveArtworkInput;
 };
-export type SaveArtworkMutationResponse = {
-    readonly saveArtwork: {
-        readonly artwork: {
-            readonly id: string;
-            readonly slug: string;
-            readonly is_saved: boolean | null;
-        } | null;
+export type SaveArtworkMutation$data = {
+  readonly saveArtwork: {
+    readonly artwork: {
+      readonly id: string;
+      readonly slug: string;
+      readonly is_saved: boolean | null;
     } | null;
+  } | null;
 };
 export type SaveArtworkMutation = {
-    readonly response: SaveArtworkMutationResponse;
-    readonly variables: SaveArtworkMutationVariables;
+  variables: SaveArtworkMutation$variables;
+  response: SaveArtworkMutation$data;
 };
-
-
-
-/*
-mutation SaveArtworkMutation(
-  $input: SaveArtworkInput!
-) {
-  saveArtwork(input: $input) {
-    artwork {
-      id
-      slug
-      is_saved: isSaved
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -127,5 +117,7 @@ return {
   }
 };
 })();
-(node as any).hash = '0883343afdb4d2132f5b10a72c04d981';
+
+(node as any).hash = "0883343afdb4d2132f5b10a72c04d981";
+
 export default node;

@@ -1,60 +1,25 @@
+/**
+ * @generated SignedSource<<98ccce124edffd1085ff472072724264>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArticleVideo_test_QueryVariables = {};
-export type ArticleVideo_test_QueryResponse = {
-    readonly article: {
-        readonly " $fragmentRefs": FragmentRefs<"ArticleVideo_article">;
-    } | null;
+export type ArticleVideo_test_Query$variables = {};
+export type ArticleVideo_test_Query$data = {
+  readonly article: {
+    readonly " $fragmentSpreads": FragmentRefs<"ArticleVideo_article">;
+  } | null;
 };
 export type ArticleVideo_test_Query = {
-    readonly response: ArticleVideo_test_QueryResponse;
-    readonly variables: ArticleVideo_test_QueryVariables;
+  variables: ArticleVideo_test_Query$variables;
+  response: ArticleVideo_test_Query$data;
 };
-
-
-
-/*
-query ArticleVideo_test_Query {
-  article(id: "example") {
-    ...ArticleVideo_article
-    id
-  }
-}
-
-fragment ArticleSponsor_sponsor on ArticleSponsor {
-  partnerLightLogo
-  partnerDarkLogo
-  partnerLogoLink
-}
-
-fragment ArticleVideo_article on Article {
-  title
-  href
-  description
-  media {
-    coverImage {
-      url
-    }
-    credits
-    description
-    duration
-    releaseDate(format: "MMM DD, YYYY h:mma")
-    url
-  }
-  seriesArticle {
-    title
-    description
-    sponsor {
-      ...ArticleSponsor_sponsor
-    }
-    id
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -313,5 +278,7 @@ return {
   }
 };
 })();
-(node as any).hash = '81bf77f6aa4641a59ad86cce1ffebb28';
+
+(node as any).hash = "81bf77f6aa4641a59ad86cce1ffebb28";
+
 export default node;

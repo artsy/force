@@ -1,26 +1,29 @@
+/**
+ * @generated SignedSource<<7f4ea5e9c8db0fe85115d61ed1b5772d>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type IdentityVerificationApp_me = {
+export type IdentityVerificationApp_me$data = {
+  readonly internalID: string;
+  readonly email: string | null;
+  readonly identityVerification: {
     readonly internalID: string;
-    readonly email: string | null;
-    readonly identityVerification: {
-        readonly internalID: string;
-        readonly userID: string;
-        readonly state: string;
-    } | null;
-    readonly " $refType": "IdentityVerificationApp_me";
+    readonly userID: string;
+    readonly state: string;
+  } | null;
+  readonly " $fragmentType": "IdentityVerificationApp_me";
 };
-export type IdentityVerificationApp_me$data = IdentityVerificationApp_me;
 export type IdentityVerificationApp_me$key = {
-    readonly " $data"?: IdentityVerificationApp_me$data;
-    readonly " $fragmentRefs": FragmentRefs<"IdentityVerificationApp_me">;
+  readonly " $data"?: IdentityVerificationApp_me$data;
+  readonly " $fragmentSpreads": FragmentRefs<"IdentityVerificationApp_me">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = {
@@ -87,5 +90,7 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = 'abd8adb7376ce8126f079b2ebdfbe456';
+
+(node as any).hash = "abd8adb7376ce8126f079b2ebdfbe456";
+
 export default node;

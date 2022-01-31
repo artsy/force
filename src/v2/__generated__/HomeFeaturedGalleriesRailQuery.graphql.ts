@@ -1,101 +1,25 @@
+/**
+ * @generated SignedSource<<58f7671b11f098a53985300b7a1e34d5>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type HomeFeaturedGalleriesRailQueryVariables = {};
-export type HomeFeaturedGalleriesRailQueryResponse = {
-    readonly orderedSet: {
-        readonly " $fragmentRefs": FragmentRefs<"HomeFeaturedGalleriesRail_orderedSet">;
-    } | null;
+export type HomeFeaturedGalleriesRailQuery$variables = {};
+export type HomeFeaturedGalleriesRailQuery$data = {
+  readonly orderedSet: {
+    readonly " $fragmentSpreads": FragmentRefs<"HomeFeaturedGalleriesRail_orderedSet">;
+  } | null;
 };
 export type HomeFeaturedGalleriesRailQuery = {
-    readonly response: HomeFeaturedGalleriesRailQueryResponse;
-    readonly variables: HomeFeaturedGalleriesRailQueryVariables;
+  variables: HomeFeaturedGalleriesRailQuery$variables;
+  response: HomeFeaturedGalleriesRailQuery$data;
 };
-
-
-
-/*
-query HomeFeaturedGalleriesRailQuery {
-  orderedSet(id: "6193c9ede70512000fbf3e8d") {
-    ...HomeFeaturedGalleriesRail_orderedSet
-    id
-  }
-}
-
-fragment FollowProfileButton_profile on Profile {
-  id
-  slug
-  name
-  internalID
-  is_followed: isFollowed
-}
-
-fragment HomeFeaturedGalleriesRail_orderedSet on OrderedSet {
-  orderedItemsConnection(first: 20) {
-    edges {
-      node {
-        __typename
-        ... on Profile {
-          owner {
-            __typename
-            ...PartnerCell_partner
-            ... on Node {
-              __isNode: __typename
-              id
-            }
-            ... on FairOrganizer {
-              id
-            }
-          }
-          id
-        }
-        ... on Node {
-          __isNode: __typename
-          id
-        }
-        ... on FeaturedLink {
-          id
-        }
-      }
-    }
-  }
-}
-
-fragment PartnerCell_partner on Partner {
-  internalID
-  slug
-  name
-  href
-  initials
-  locationsConnection(first: 15) {
-    edges {
-      node {
-        city
-        id
-      }
-    }
-  }
-  categories {
-    name
-    slug
-    id
-  }
-  profile {
-    ...FollowProfileButton_profile
-    isFollowed
-    image {
-      cropped(width: 445, height: 334, version: ["wide", "large", "featured", "larger"]) {
-        src
-        srcSet
-      }
-    }
-    id
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -451,5 +375,7 @@ return {
   }
 };
 })();
-(node as any).hash = '8093210d3ba1837d4fb975d4ae3d3001';
+
+(node as any).hash = "8093210d3ba1837d4fb975d4ae3d3001";
+
 export default node;

@@ -1,59 +1,25 @@
+/**
+ * @generated SignedSource<<f4e6cb8490a7fa21659ea9c81047eefe>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ShowHours_Test_QueryVariables = {};
-export type ShowHours_Test_QueryResponse = {
-    readonly show: {
-        readonly " $fragmentRefs": FragmentRefs<"ShowHours_show">;
-    } | null;
+export type ShowHours_Test_Query$variables = {};
+export type ShowHours_Test_Query$data = {
+  readonly show: {
+    readonly " $fragmentSpreads": FragmentRefs<"ShowHours_show">;
+  } | null;
 };
 export type ShowHours_Test_Query = {
-    readonly response: ShowHours_Test_QueryResponse;
-    readonly variables: ShowHours_Test_QueryVariables;
+  variables: ShowHours_Test_Query$variables;
+  response: ShowHours_Test_Query$data;
 };
-
-
-
-/*
-query ShowHours_Test_Query {
-  show(id: "example") {
-    ...ShowHours_show
-    id
-  }
-}
-
-fragment ShowHours_show on Show {
-  location {
-    ...ShowLocationHours_location
-    id
-  }
-  fair {
-    location {
-      ...ShowLocationHours_location
-      id
-    }
-    id
-  }
-}
-
-fragment ShowLocationHours_location on Location {
-  openingHours {
-    __typename
-    ... on OpeningHoursArray {
-      schedules {
-        days
-        hours
-      }
-    }
-    ... on OpeningHoursText {
-      text
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -286,5 +252,7 @@ return {
   }
 };
 })();
-(node as any).hash = '69600fa090a77b0fe9a14026c701abca';
+
+(node as any).hash = "69600fa090a77b0fe9a14026c701abca";
+
 export default node;

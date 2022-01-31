@@ -1,43 +1,34 @@
+/**
+ * @generated SignedSource<<f3080192abc95508ae288a1e31dbafb5>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type FollowArtistInput = {
-    artistID: string;
-    clientMutationId?: string | null;
-    unfollow?: boolean | null;
+  artistID: string;
+  clientMutationId?: string | null;
+  unfollow?: boolean | null;
 };
-export type AuthIntentFollowArtistMutationVariables = {
-    input: FollowArtistInput;
+export type AuthIntentFollowArtistMutation$variables = {
+  input: FollowArtistInput;
 };
-export type AuthIntentFollowArtistMutationResponse = {
-    readonly followArtist: {
-        readonly artist: {
-            readonly id: string;
-            readonly isFollowed: boolean | null;
-        } | null;
+export type AuthIntentFollowArtistMutation$data = {
+  readonly followArtist: {
+    readonly artist: {
+      readonly id: string;
+      readonly isFollowed: boolean | null;
     } | null;
+  } | null;
 };
 export type AuthIntentFollowArtistMutation = {
-    readonly response: AuthIntentFollowArtistMutationResponse;
-    readonly variables: AuthIntentFollowArtistMutationVariables;
+  variables: AuthIntentFollowArtistMutation$variables;
+  response: AuthIntentFollowArtistMutation$data;
 };
-
-
-
-/*
-mutation AuthIntentFollowArtistMutation(
-  $input: FollowArtistInput!
-) {
-  followArtist(input: $input) {
-    artist {
-      id
-      isFollowed
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -118,5 +109,7 @@ return {
   }
 };
 })();
-(node as any).hash = '7dbf0de1cae972b061dabe439ae5b14a';
+
+(node as any).hash = "7dbf0de1cae972b061dabe439ae5b14a";
+
 export default node;

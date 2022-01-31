@@ -1,79 +1,41 @@
+/**
+ * @generated SignedSource<<bb88d5456f5a60ebfb46874c7d12425f>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Mutation } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type UserInterestCategory = "COLLECTED_BEFORE" | "INTERESTED_IN_COLLECTING" | "%future added value";
 export type UserInterestInterestType = "ARTIST" | "GENE" | "%future added value";
 export type CreateUserInterestMutationInput = {
-    anonymousSessionId?: string | null;
-    body?: string | null;
-    category: UserInterestCategory;
-    clientMutationId?: string | null;
-    interestId: string;
-    interestType: UserInterestInterestType;
-    sessionID?: string | null;
+  anonymousSessionId?: string | null;
+  body?: string | null;
+  category: UserInterestCategory;
+  clientMutationId?: string | null;
+  interestId: string;
+  interestType: UserInterestInterestType;
+  sessionID?: string | null;
 };
-export type useAddArtistYouCollectMutationVariables = {
-    input: CreateUserInterestMutationInput;
+export type useAddArtistYouCollectMutation$variables = {
+  input: CreateUserInterestMutationInput;
 };
-export type useAddArtistYouCollectMutationResponse = {
-    readonly createUserInterest: {
-        readonly clientMutationId: string | null;
-        readonly me: {
-            readonly " $fragmentRefs": FragmentRefs<"SettingsEditProfileArtistsYouCollect_me" | "SettingsEditProfileYourGalleryIntro_me">;
-        };
-    } | null;
+export type useAddArtistYouCollectMutation$data = {
+  readonly createUserInterest: {
+    readonly clientMutationId: string | null;
+    readonly me: {
+      readonly " $fragmentSpreads": FragmentRefs<"SettingsEditProfileArtistsYouCollect_me" | "SettingsEditProfileYourGalleryIntro_me">;
+    };
+  } | null;
 };
 export type useAddArtistYouCollectMutation = {
-    readonly response: useAddArtistYouCollectMutationResponse;
-    readonly variables: useAddArtistYouCollectMutationVariables;
+  variables: useAddArtistYouCollectMutation$variables;
+  response: useAddArtistYouCollectMutation$data;
 };
-
-
-
-/*
-mutation useAddArtistYouCollectMutation(
-  $input: CreateUserInterestMutationInput!
-) {
-  createUserInterest(input: $input) {
-    clientMutationId
-    me {
-      ...SettingsEditProfileArtistsYouCollect_me
-      ...SettingsEditProfileYourGalleryIntro_me
-      id
-    }
-  }
-}
-
-fragment SettingsEditProfileArtistsYouCollect_me on Me {
-  collectorProfile {
-    userInterests {
-      internalID
-      category
-      interest {
-        __typename
-        ... on Artist {
-          internalID
-          name
-          slug
-        }
-        ... on Node {
-          __isNode: __typename
-          id
-        }
-      }
-      id
-    }
-    id
-  }
-}
-
-fragment SettingsEditProfileYourGalleryIntro_me on Me {
-  inquiryIntroduction
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -284,5 +246,7 @@ return {
   }
 };
 })();
-(node as any).hash = '5c737d75992b0cf44ff8b1e75247b05d';
+
+(node as any).hash = "5c737d75992b0cf44ff8b1e75247b05d";
+
 export default node;

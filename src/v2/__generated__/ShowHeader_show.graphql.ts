@@ -1,29 +1,32 @@
+/**
+ * @generated SignedSource<<f5018294d3246c5348a5e302ff9dffed>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ShowHeader_show = {
-    readonly name: string | null;
-    readonly startAt: string | null;
-    readonly endAt: string | null;
-    readonly status: string | null;
-    readonly formattedStartAt: string | null;
-    readonly formattedEndAt: string | null;
-    readonly partner: {
-        readonly name?: string | null;
-    } | null;
-    readonly " $fragmentRefs": FragmentRefs<"ShowContextualLink_show">;
-    readonly " $refType": "ShowHeader_show";
+export type ShowHeader_show$data = {
+  readonly name: string | null;
+  readonly startAt: string | null;
+  readonly endAt: string | null;
+  readonly status: string | null;
+  readonly formattedStartAt: string | null;
+  readonly formattedEndAt: string | null;
+  readonly partner: {
+    readonly name?: string | null;
+  } | null;
+  readonly " $fragmentSpreads": FragmentRefs<"ShowContextualLink_show">;
+  readonly " $fragmentType": "ShowHeader_show";
 };
-export type ShowHeader_show$data = ShowHeader_show;
 export type ShowHeader_show$key = {
-    readonly " $data"?: ShowHeader_show$data;
-    readonly " $fragmentRefs": FragmentRefs<"ShowHeader_show">;
+  readonly " $data"?: ShowHeader_show$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ShowHeader_show">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = {
@@ -123,5 +126,7 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = 'e43ae44402dd264c1c959bad52acbb7b';
+
+(node as any).hash = "e43ae44402dd264c1c959bad52acbb7b";
+
 export default node;

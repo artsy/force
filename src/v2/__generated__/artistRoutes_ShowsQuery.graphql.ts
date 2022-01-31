@@ -1,151 +1,27 @@
+/**
+ * @generated SignedSource<<e5666959a171bebd841816dec0317d2f>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type artistRoutes_ShowsQueryVariables = {
-    artistID: string;
+export type artistRoutes_ShowsQuery$variables = {
+  artistID: string;
 };
-export type artistRoutes_ShowsQueryResponse = {
-    readonly viewer: {
-        readonly " $fragmentRefs": FragmentRefs<"ArtistShowsRoute_viewer">;
-    } | null;
+export type artistRoutes_ShowsQuery$data = {
+  readonly viewer: {
+    readonly " $fragmentSpreads": FragmentRefs<"ArtistShowsRoute_viewer">;
+  } | null;
 };
 export type artistRoutes_ShowsQuery = {
-    readonly response: artistRoutes_ShowsQueryResponse;
-    readonly variables: artistRoutes_ShowsQueryVariables;
+  variables: artistRoutes_ShowsQuery$variables;
+  response: artistRoutes_ShowsQuery$data;
 };
-
-
-
-/*
-query artistRoutes_ShowsQuery(
-  $artistID: String!
-) {
-  viewer {
-    ...ArtistShowsRoute_viewer
-  }
-}
-
-fragment ArtistShowsGroup_artist_12Fjro on Artist {
-  slug
-  showsConnection(first: 10, sort: START_AT_ASC, status: "upcoming") {
-    pageInfo {
-      hasNextPage
-      endCursor
-    }
-    pageCursors {
-      ...Pagination_pageCursors
-    }
-    edges {
-      node {
-        partner {
-          __typename
-          ... on ExternalPartner {
-            name
-            id
-          }
-          ... on Partner {
-            name
-          }
-          ... on Node {
-            __isNode: __typename
-            id
-          }
-        }
-        name
-        href
-        exhibitionPeriod
-        coverImage {
-          cropped(width: 440, height: 315) {
-            src
-            srcSet
-          }
-        }
-        city
-        id
-      }
-    }
-  }
-}
-
-fragment ArtistShowsGroup_artist_43oec1 on Artist {
-  slug
-  showsConnection(first: 10, sort: END_AT_ASC, status: "running") {
-    pageInfo {
-      hasNextPage
-      endCursor
-    }
-    pageCursors {
-      ...Pagination_pageCursors
-    }
-    edges {
-      node {
-        partner {
-          __typename
-          ... on ExternalPartner {
-            name
-            id
-          }
-          ... on Partner {
-            name
-          }
-          ... on Node {
-            __isNode: __typename
-            id
-          }
-        }
-        name
-        href
-        exhibitionPeriod
-        coverImage {
-          cropped(width: 440, height: 315) {
-            src
-            srcSet
-          }
-        }
-        city
-        id
-      }
-    }
-  }
-}
-
-fragment ArtistShowsRoute_viewer on Viewer {
-  currentShows: artist(id: $artistID) {
-    ...ArtistShowsGroup_artist_43oec1
-    name
-    id
-  }
-  upcomingShows: artist(id: $artistID) {
-    ...ArtistShowsGroup_artist_12Fjro
-    id
-  }
-}
-
-fragment Pagination_pageCursors on PageCursors {
-  around {
-    cursor
-    page
-    isCurrent
-  }
-  first {
-    cursor
-    page
-    isCurrent
-  }
-  last {
-    cursor
-    page
-    isCurrent
-  }
-  previous {
-    cursor
-    page
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -556,5 +432,7 @@ return {
   }
 };
 })();
-(node as any).hash = '634807912343139c14caeabde6688a5b';
+
+(node as any).hash = "634807912343139c14caeabde6688a5b";
+
 export default node;

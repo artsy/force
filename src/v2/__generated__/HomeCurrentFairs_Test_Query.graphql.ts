@@ -1,56 +1,25 @@
+/**
+ * @generated SignedSource<<67178c4ebcd0f03a5938b9d51f9ba885>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type HomeCurrentFairs_Test_QueryVariables = {};
-export type HomeCurrentFairs_Test_QueryResponse = {
-    readonly viewer: {
-        readonly " $fragmentRefs": FragmentRefs<"HomeCurrentFairs_viewer">;
-    } | null;
+export type HomeCurrentFairs_Test_Query$variables = {};
+export type HomeCurrentFairs_Test_Query$data = {
+  readonly viewer: {
+    readonly " $fragmentSpreads": FragmentRefs<"HomeCurrentFairs_viewer">;
+  } | null;
 };
 export type HomeCurrentFairs_Test_Query = {
-    readonly response: HomeCurrentFairs_Test_QueryResponse;
-    readonly variables: HomeCurrentFairs_Test_QueryVariables;
+  variables: HomeCurrentFairs_Test_Query$variables;
+  response: HomeCurrentFairs_Test_Query$data;
 };
-
-
-
-/*
-query HomeCurrentFairs_Test_Query {
-  viewer {
-    ...HomeCurrentFairs_viewer
-  }
-}
-
-fragment HomeCurrentFairs_viewer on Viewer {
-  fairs(hasListing: true, hasFullFeature: true, sort: START_AT_DESC, size: 25, status: RUNNING) {
-    internalID
-    slug
-    bannerSize
-    isPublished
-    profile {
-      isPublished
-      id
-    }
-    href
-    name
-    startAt(format: "MMM Do")
-    endAt(format: "MMM Do YYYY")
-    exhibitionPeriod
-    image {
-      cropped(width: 600, height: 450) {
-        src
-        srcSet
-        width
-        height
-      }
-    }
-    id
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = {
@@ -383,5 +352,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'ee98e3e81b4b9855ba233a5ba124570d';
+
+(node as any).hash = "ee98e3e81b4b9855ba233a5ba124570d";
+
 export default node;

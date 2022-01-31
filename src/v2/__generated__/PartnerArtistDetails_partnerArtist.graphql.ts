@@ -1,31 +1,34 @@
+/**
+ * @generated SignedSource<<f664058cc4ff608c60e1a27e6123f953>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type PartnerArtistDetails_partnerArtist = {
-    readonly biographyBlurb: {
-        readonly text: string | null;
-        readonly credit: string | null;
-    } | null;
-    readonly node: {
-        readonly slug: string;
-        readonly name: string | null;
-        readonly href: string | null;
-        readonly formattedNationalityAndBirthday: string | null;
-        readonly " $fragmentRefs": FragmentRefs<"FollowArtistButton_artist">;
-    } | null;
-    readonly " $fragmentRefs": FragmentRefs<"PartnerArtistArtworksRail_partnerArtist">;
-    readonly " $refType": "PartnerArtistDetails_partnerArtist";
+export type PartnerArtistDetails_partnerArtist$data = {
+  readonly biographyBlurb: {
+    readonly text: string | null;
+    readonly credit: string | null;
+  } | null;
+  readonly node: {
+    readonly slug: string;
+    readonly name: string | null;
+    readonly href: string | null;
+    readonly formattedNationalityAndBirthday: string | null;
+    readonly " $fragmentSpreads": FragmentRefs<"FollowArtistButton_artist">;
+  } | null;
+  readonly " $fragmentSpreads": FragmentRefs<"PartnerArtistArtworksRail_partnerArtist">;
+  readonly " $fragmentType": "PartnerArtistDetails_partnerArtist";
 };
-export type PartnerArtistDetails_partnerArtist$data = PartnerArtistDetails_partnerArtist;
 export type PartnerArtistDetails_partnerArtist$key = {
-    readonly " $data"?: PartnerArtistDetails_partnerArtist$data;
-    readonly " $fragmentRefs": FragmentRefs<"PartnerArtistDetails_partnerArtist">;
+  readonly " $data"?: PartnerArtistDetails_partnerArtist$data;
+  readonly " $fragmentSpreads": FragmentRefs<"PartnerArtistDetails_partnerArtist">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -63,6 +66,11 @@ const node: ReaderFragment = {
         }
       ],
       "storageKey": "biographyBlurb(format:\"HTML\")"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "PartnerArtistArtworksRail_partnerArtist"
     },
     {
       "alias": null,
@@ -107,15 +115,12 @@ const node: ReaderFragment = {
         }
       ],
       "storageKey": null
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "PartnerArtistArtworksRail_partnerArtist"
     }
   ],
   "type": "ArtistPartnerEdge",
   "abstractKey": null
 };
-(node as any).hash = 'f070ad2ab63ddc54cae550761f2cde60';
+
+(node as any).hash = "f070ad2ab63ddc54cae550761f2cde60";
+
 export default node;

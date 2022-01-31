@@ -1,31 +1,34 @@
+/**
+ * @generated SignedSource<<6af796cedc8c7a512e875acba4c54886>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type AuctionsRoute_viewer = {
-    readonly salesConnection: {
-        readonly totalCount: number | null;
-        readonly edges: ReadonlyArray<{
-            readonly node: {
-                readonly slug: string;
-                readonly name: string | null;
-                readonly href: string | null;
-                readonly liveStartAt: string | null;
-                readonly isLiveOpen: boolean | null;
-            } | null;
-        } | null> | null;
-    } | null;
-    readonly " $refType": "AuctionsRoute_viewer";
+export type AuctionsRoute_viewer$data = {
+  readonly salesConnection: {
+    readonly totalCount: number | null;
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly slug: string;
+        readonly name: string | null;
+        readonly href: string | null;
+        readonly liveStartAt: string | null;
+        readonly isLiveOpen: boolean | null;
+      } | null;
+    } | null> | null;
+  } | null;
+  readonly " $fragmentType": "AuctionsRoute_viewer";
 };
-export type AuctionsRoute_viewer$data = AuctionsRoute_viewer;
 export type AuctionsRoute_viewer$key = {
-    readonly " $data"?: AuctionsRoute_viewer$data;
-    readonly " $fragmentRefs": FragmentRefs<"AuctionsRoute_viewer">;
+  readonly " $data"?: AuctionsRoute_viewer$data;
+  readonly " $fragmentSpreads": FragmentRefs<"AuctionsRoute_viewer">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -138,5 +141,7 @@ const node: ReaderFragment = {
   "type": "Viewer",
   "abstractKey": null
 };
-(node as any).hash = 'b1c15012245d4c78c24211ec33ef6d88';
+
+(node as any).hash = "b1c15012245d4c78c24211ec33ef6d88";
+
 export default node;

@@ -1,41 +1,25 @@
+/**
+ * @generated SignedSource<<ed4fefd5fb2a10b60a5e94d6e2c68ce4>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type useInquiryContextQueryVariables = {};
-export type useInquiryContextQueryResponse = {
-    readonly me: {
-        readonly " $fragmentRefs": FragmentRefs<"useInquiryContext_me">;
-    } | null;
+export type useInquiryContextQuery$variables = {};
+export type useInquiryContextQuery$data = {
+  readonly me: {
+    readonly " $fragmentSpreads": FragmentRefs<"useInquiryContext_me">;
+  } | null;
 };
 export type useInquiryContextQuery = {
-    readonly response: useInquiryContextQueryResponse;
-    readonly variables: useInquiryContextQueryVariables;
+  variables: useInquiryContextQuery$variables;
+  response: useInquiryContextQuery$data;
 };
-
-
-
-/*
-query useInquiryContextQuery {
-  me {
-    ...useInquiryContext_me
-    id
-  }
-}
-
-fragment useInquiryContext_me on Me {
-  collectorLevel
-  location {
-    city
-    id
-  }
-  phone
-  profession
-  shareFollows
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = {
@@ -149,5 +133,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'abdeb51f6987f798b5afaae059bfdd57';
+
+(node as any).hash = "abdeb51f6987f798b5afaae059bfdd57";
+
 export default node;

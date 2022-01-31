@@ -1,24 +1,27 @@
+/**
+ * @generated SignedSource<<8c8f928a8d2a9add1596ee59453be902>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type FairCollections_fair = {
-    readonly marketingCollections: ReadonlyArray<{
-        readonly id: string;
-        readonly slug: string;
-        readonly " $fragmentRefs": FragmentRefs<"FairCollection_collection">;
-    } | null>;
-    readonly " $refType": "FairCollections_fair";
+export type FairCollections_fair$data = {
+  readonly marketingCollections: ReadonlyArray<{
+    readonly id: string;
+    readonly slug: string;
+    readonly " $fragmentSpreads": FragmentRefs<"FairCollection_collection">;
+  } | null>;
+  readonly " $fragmentType": "FairCollections_fair";
 };
-export type FairCollections_fair$data = FairCollections_fair;
 export type FairCollections_fair$key = {
-    readonly " $data"?: FairCollections_fair$data;
-    readonly " $fragmentRefs": FragmentRefs<"FairCollections_fair">;
+  readonly " $data"?: FairCollections_fair$data;
+  readonly " $fragmentSpreads": FragmentRefs<"FairCollections_fair">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -66,5 +69,7 @@ const node: ReaderFragment = {
   "type": "Fair",
   "abstractKey": null
 };
-(node as any).hash = '8ecebb5e5de44baf510cad3eaceda047';
+
+(node as any).hash = "8ecebb5e5de44baf510cad3eaceda047";
+
 export default node;

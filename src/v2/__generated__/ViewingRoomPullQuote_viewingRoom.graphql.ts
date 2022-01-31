@@ -1,20 +1,23 @@
+/**
+ * @generated SignedSource<<655d88faf44a69266d287fefcda3aad3>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ViewingRoomPullQuote_viewingRoom = {
-    readonly pullQuote: string | null;
-    readonly " $refType": "ViewingRoomPullQuote_viewingRoom";
+export type ViewingRoomPullQuote_viewingRoom$data = {
+  readonly pullQuote: string | null;
+  readonly " $fragmentType": "ViewingRoomPullQuote_viewingRoom";
 };
-export type ViewingRoomPullQuote_viewingRoom$data = ViewingRoomPullQuote_viewingRoom;
 export type ViewingRoomPullQuote_viewingRoom$key = {
-    readonly " $data"?: ViewingRoomPullQuote_viewingRoom$data;
-    readonly " $fragmentRefs": FragmentRefs<"ViewingRoomPullQuote_viewingRoom">;
+  readonly " $data"?: ViewingRoomPullQuote_viewingRoom$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ViewingRoomPullQuote_viewingRoom">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -33,5 +36,7 @@ const node: ReaderFragment = {
   "type": "ViewingRoom",
   "abstractKey": null
 };
-(node as any).hash = '69ccb558158ea6f401e3263146f93fd2';
+
+(node as any).hash = "69ccb558158ea6f401e3263146f93fd2";
+
 export default node;

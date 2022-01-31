@@ -1,195 +1,28 @@
+/**
+ * @generated SignedSource<<eb1375c885ade34285a0b6e94517477e>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type WorksForYouFeedPaginationQueryVariables = {
-    count: number;
-    cursor?: string | null;
+export type WorksForYouFeedPaginationQuery$variables = {
+  count: number;
+  cursor?: string | null;
 };
-export type WorksForYouFeedPaginationQueryResponse = {
-    readonly viewer: {
-        readonly " $fragmentRefs": FragmentRefs<"WorksForYouFeed_viewer">;
-    } | null;
+export type WorksForYouFeedPaginationQuery$data = {
+  readonly viewer: {
+    readonly " $fragmentSpreads": FragmentRefs<"WorksForYouFeed_viewer">;
+  } | null;
 };
 export type WorksForYouFeedPaginationQuery = {
-    readonly response: WorksForYouFeedPaginationQueryResponse;
-    readonly variables: WorksForYouFeedPaginationQueryVariables;
+  variables: WorksForYouFeedPaginationQuery$variables;
+  response: WorksForYouFeedPaginationQuery$data;
 };
-
-
-
-/*
-query WorksForYouFeedPaginationQuery(
-  $count: Int!
-  $cursor: String
-) {
-  viewer {
-    ...WorksForYouFeed_viewer_1G22uz
-  }
-}
-
-fragment ArtworkGrid_artworks on ArtworkConnectionInterface {
-  __isArtworkConnectionInterface: __typename
-  edges {
-    __typename
-    node {
-      id
-      slug
-      href
-      internalID
-      image {
-        aspect_ratio: aspectRatio
-      }
-      ...GridItem_artwork
-    }
-    ... on Node {
-      __isNode: __typename
-      id
-    }
-  }
-}
-
-fragment Badge_artwork on Artwork {
-  is_biddable: isBiddable
-  href
-  sale {
-    is_preview: isPreview
-    display_timely_at: displayTimelyAt
-    id
-  }
-}
-
-fragment Contact_artwork on Artwork {
-  href
-  is_inquireable: isInquireable
-  sale {
-    is_auction: isAuction
-    is_live_open: isLiveOpen
-    is_open: isOpen
-    is_closed: isClosed
-    id
-  }
-  partner(shallow: true) {
-    type
-    id
-  }
-  sale_artwork: saleArtwork {
-    highest_bid: highestBid {
-      display
-    }
-    opening_bid: openingBid {
-      display
-    }
-    counts {
-      bidder_positions: bidderPositions
-    }
-    id
-  }
-}
-
-fragment Details_artwork on Artwork {
-  href
-  title
-  date
-  sale_message: saleMessage
-  cultural_maker: culturalMaker
-  artists(shallow: true) {
-    id
-    href
-    name
-  }
-  collecting_institution: collectingInstitution
-  partner(shallow: true) {
-    name
-    href
-    id
-  }
-  sale {
-    is_auction: isAuction
-    is_closed: isClosed
-    id
-  }
-  sale_artwork: saleArtwork {
-    counts {
-      bidder_positions: bidderPositions
-    }
-    highest_bid: highestBid {
-      display
-    }
-    opening_bid: openingBid {
-      display
-    }
-    id
-  }
-}
-
-fragment GridItem_artwork on Artwork {
-  internalID
-  title
-  image_title: imageTitle
-  image {
-    placeholder
-    url(version: "large")
-    aspect_ratio: aspectRatio
-  }
-  artistNames
-  href
-  is_saved: isSaved
-  ...Metadata_artwork
-  ...SaveButton_artwork
-  ...Badge_artwork
-}
-
-fragment Metadata_artwork on Artwork {
-  ...Details_artwork
-  ...Contact_artwork
-  href
-}
-
-fragment SaveButton_artwork on Artwork {
-  id
-  internalID
-  slug
-  is_saved: isSaved
-  title
-}
-
-fragment WorksForYouFeed_viewer_1G22uz on Viewer {
-  me {
-    followsAndSaves {
-      bundledArtworksByArtistConnection(sort: PUBLISHED_AT_DESC, first: $count, after: $cursor, forSale: true) {
-        pageInfo {
-          hasNextPage
-          endCursor
-        }
-        edges {
-          node {
-            id
-            href
-            summary
-            artists
-            publishedAt(format: "MMM DD")
-            artworksConnection {
-              ...ArtworkGrid_artworks
-            }
-            image {
-              resized(height: 80, width: 80) {
-                src
-                srcSet
-              }
-            }
-            __typename
-          }
-          cursor
-        }
-      }
-    }
-    id
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -826,5 +659,7 @@ return {
   }
 };
 })();
-(node as any).hash = '149b7694e3ce81d09a3b328ae2ae1b4d';
+
+(node as any).hash = "149b7694e3ce81d09a3b328ae2ae1b4d";
+
 export default node;

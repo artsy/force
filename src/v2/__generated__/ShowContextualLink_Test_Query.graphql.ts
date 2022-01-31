@@ -1,55 +1,25 @@
+/**
+ * @generated SignedSource<<5df83b67f8e0e120badc4546b4c15d86>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ShowContextualLink_Test_QueryVariables = {};
-export type ShowContextualLink_Test_QueryResponse = {
-    readonly show: {
-        readonly " $fragmentRefs": FragmentRefs<"ShowContextualLink_show">;
-    } | null;
+export type ShowContextualLink_Test_Query$variables = {};
+export type ShowContextualLink_Test_Query$data = {
+  readonly show: {
+    readonly " $fragmentSpreads": FragmentRefs<"ShowContextualLink_show">;
+  } | null;
 };
 export type ShowContextualLink_Test_Query = {
-    readonly response: ShowContextualLink_Test_QueryResponse;
-    readonly variables: ShowContextualLink_Test_QueryVariables;
+  variables: ShowContextualLink_Test_Query$variables;
+  response: ShowContextualLink_Test_Query$data;
 };
-
-
-
-/*
-query ShowContextualLink_Test_Query {
-  show(id: "catty-show") {
-    ...ShowContextualLink_show
-    id
-  }
-}
-
-fragment ShowContextualLink_show on Show {
-  isFairBooth
-  fair {
-    href
-    isActive
-    name
-    id
-  }
-  partner {
-    __typename
-    ... on Partner {
-      isLinkable
-      name
-      href
-    }
-    ... on Node {
-      __isNode: __typename
-      id
-    }
-    ... on ExternalPartner {
-      id
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -271,5 +241,7 @@ return {
   }
 };
 })();
-(node as any).hash = '99309c83e601be361e29c019231a8976';
+
+(node as any).hash = "99309c83e601be361e29c019231a8976";
+
 export default node;

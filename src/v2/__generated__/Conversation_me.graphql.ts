@@ -1,24 +1,27 @@
+/**
+ * @generated SignedSource<<ff455b45a20767ec5cbd7fbc355798c5>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type Conversation_me = {
-    readonly conversation: {
-        readonly internalID: string | null;
-        readonly " $fragmentRefs": FragmentRefs<"Conversation_conversation" | "ConversationCTA_conversation" | "DetailsSidebar_conversation">;
-    } | null;
-    readonly " $fragmentRefs": FragmentRefs<"ConversationList_me">;
-    readonly " $refType": "Conversation_me";
+export type Conversation_me$data = {
+  readonly conversation: {
+    readonly internalID: string | null;
+    readonly " $fragmentSpreads": FragmentRefs<"Conversation_conversation" | "ConversationCTA_conversation" | "DetailsSidebar_conversation">;
+  } | null;
+  readonly " $fragmentSpreads": FragmentRefs<"ConversationList_me">;
+  readonly " $fragmentType": "Conversation_me";
 };
-export type Conversation_me$data = Conversation_me;
 export type Conversation_me$key = {
-    readonly " $data"?: Conversation_me$data;
-    readonly " $fragmentRefs": FragmentRefs<"Conversation_me">;
+  readonly " $data"?: Conversation_me$data;
+  readonly " $fragmentSpreads": FragmentRefs<"Conversation_me">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [
@@ -32,6 +35,11 @@ const node: ReaderFragment = {
   "metadata": null,
   "name": "Conversation_me",
   "selections": [
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ConversationList_me"
+    },
     {
       "alias": null,
       "args": [
@@ -70,15 +78,12 @@ const node: ReaderFragment = {
         }
       ],
       "storageKey": null
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "ConversationList_me"
     }
   ],
   "type": "Me",
   "abstractKey": null
 };
-(node as any).hash = 'bc0d9d87bef35d4595f3ebcf50105543';
+
+(node as any).hash = "bc0d9d87bef35d4595f3ebcf50105543";
+
 export default node;

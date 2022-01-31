@@ -1,179 +1,90 @@
+/**
+ * @generated SignedSource<<831454af99676cf645dfcb3b007acfc6>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ShowSorts = "END_AT_ASC" | "END_AT_DESC" | "FEATURED_ASC" | "FEATURED_DESC" | "FEATURED_DESC_END_AT_DESC" | "NAME_ASC" | "NAME_DESC" | "PARTNER_ASC" | "SORTABLE_NAME_ASC" | "SORTABLE_NAME_DESC" | "START_AT_ASC" | "START_AT_DESC" | "UPDATED_AT_ASC" | "UPDATED_AT_DESC" | "%future added value";
-export type FairBooths_QueryVariables = {
-    id: string;
-    first?: number | null;
-    page?: number | null;
-    sort?: ShowSorts | null;
+export type FairBooths_Query$variables = {
+  id: string;
+  first?: number | null;
+  page?: number | null;
+  sort?: ShowSorts | null;
 };
-export type FairBooths_QueryResponse = {
-    readonly fair: {
-        readonly " $fragmentRefs": FragmentRefs<"FairBooths_fair">;
+export type FairBooths_Query$data = {
+  readonly fair: {
+    readonly " $fragmentSpreads": FragmentRefs<"FairBooths_fair">;
+  } | null;
+};
+export type FairBooths_Query$rawResponse = {
+  readonly fair: {
+    readonly slug: string;
+    readonly exhibitors: {
+      readonly pageInfo: {
+        readonly hasNextPage: boolean;
+      };
+      readonly pageCursors: {
+        readonly around: ReadonlyArray<{
+          readonly cursor: string;
+          readonly page: number;
+          readonly isCurrent: boolean;
+        }>;
+        readonly first: {
+          readonly cursor: string;
+          readonly page: number;
+          readonly isCurrent: boolean;
+        } | null;
+        readonly last: {
+          readonly cursor: string;
+          readonly page: number;
+          readonly isCurrent: boolean;
+        } | null;
+        readonly previous: {
+          readonly cursor: string;
+          readonly page: number;
+        } | null;
+      };
+      readonly edges: ReadonlyArray<{
+        readonly node: {
+          readonly id: string;
+          readonly counts: {
+            readonly artworks: number | null;
+          } | null;
+          readonly partner: {
+            readonly __typename: "Partner";
+            readonly __isNode: "Partner";
+            readonly id: string;
+            readonly name: string | null;
+          } | {
+            readonly __typename: "ExternalPartner";
+            readonly __isNode: "ExternalPartner";
+            readonly id: string;
+            readonly name: string | null;
+          } | {
+            readonly __typename: string;
+            readonly __isNode: string;
+            readonly id: string;
+          } | null;
+          readonly internalID: string;
+          readonly slug: string;
+          readonly href: string | null;
+        } | null;
+      } | null> | null;
     } | null;
-};
-export type FairBooths_QueryRawResponse = {
-    readonly fair: ({
-        readonly slug: string;
-        readonly exhibitors: ({
-            readonly pageInfo: {
-                readonly hasNextPage: boolean;
-            };
-            readonly pageCursors: {
-                readonly around: ReadonlyArray<{
-                    readonly cursor: string;
-                    readonly page: number;
-                    readonly isCurrent: boolean;
-                }>;
-                readonly first: ({
-                    readonly cursor: string;
-                    readonly page: number;
-                    readonly isCurrent: boolean;
-                }) | null;
-                readonly last: ({
-                    readonly cursor: string;
-                    readonly page: number;
-                    readonly isCurrent: boolean;
-                }) | null;
-                readonly previous: ({
-                    readonly cursor: string;
-                    readonly page: number;
-                }) | null;
-            };
-            readonly edges: ReadonlyArray<({
-                readonly node: ({
-                    readonly id: string;
-                    readonly counts: ({
-                        readonly artworks: number | null;
-                    }) | null;
-                    readonly partner: ({
-                        readonly __typename: "Partner";
-                        readonly __isNode: "Partner";
-                        readonly id: string;
-                        readonly name: string | null;
-                    } | {
-                        readonly __typename: "ExternalPartner";
-                        readonly __isNode: "ExternalPartner";
-                        readonly id: string;
-                        readonly name: string | null;
-                    } | {
-                        readonly __typename: string;
-                        readonly __isNode: string;
-                        readonly id: string;
-                    }) | null;
-                    readonly internalID: string;
-                    readonly slug: string;
-                    readonly href: string | null;
-                }) | null;
-            }) | null> | null;
-        }) | null;
-        readonly id: string;
-    }) | null;
+    readonly id: string;
+  } | null;
 };
 export type FairBooths_Query = {
-    readonly response: FairBooths_QueryResponse;
-    readonly variables: FairBooths_QueryVariables;
-    readonly rawResponse: FairBooths_QueryRawResponse;
+  variables: FairBooths_Query$variables;
+  response: FairBooths_Query$data;
+  rawResponse: FairBooths_Query$rawResponse;
 };
-
-
-
-/*
-query FairBooths_Query(
-  $id: String!
-  $first: Int
-  $page: Int
-  $sort: ShowSorts
-) {
-  fair(id: $id) {
-    ...FairBooths_fair_1HMhop
-    id
-  }
-}
-
-fragment FairBoothRail_show on Show {
-  internalID
-  slug
-  href
-  partner {
-    __typename
-    ... on Partner {
-      name
-    }
-    ... on ExternalPartner {
-      name
-      id
-    }
-    ... on Node {
-      __isNode: __typename
-      id
-    }
-  }
-  counts {
-    artworks
-  }
-}
-
-fragment FairBooths_fair_1HMhop on Fair {
-  slug
-  exhibitors: showsConnection(sort: $sort, first: $first, page: $page, totalCount: true) {
-    pageInfo {
-      hasNextPage
-    }
-    pageCursors {
-      ...Pagination_pageCursors
-    }
-    edges {
-      node {
-        id
-        counts {
-          artworks
-        }
-        partner {
-          __typename
-          ... on Partner {
-            id
-          }
-          ... on ExternalPartner {
-            id
-          }
-          ... on Node {
-            __isNode: __typename
-            id
-          }
-        }
-        ...FairBoothRail_show
-      }
-    }
-  }
-}
-
-fragment Pagination_pageCursors on PageCursors {
-  around {
-    cursor
-    page
-    isCurrent
-  }
-  first {
-    cursor
-    page
-    isCurrent
-  }
-  last {
-    cursor
-    page
-    isCurrent
-  }
-  previous {
-    cursor
-    page
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = {
@@ -649,5 +560,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'bbdf2c942ed469364437bad9140fe5eb';
+
+(node as any).hash = "bbdf2c942ed469364437bad9140fe5eb";
+
 export default node;

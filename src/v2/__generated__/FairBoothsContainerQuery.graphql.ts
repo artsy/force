@@ -1,118 +1,30 @@
+/**
+ * @generated SignedSource<<bc6afccd04a7916ecee8925e5b772d74>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ShowSorts = "END_AT_ASC" | "END_AT_DESC" | "FEATURED_ASC" | "FEATURED_DESC" | "FEATURED_DESC_END_AT_DESC" | "NAME_ASC" | "NAME_DESC" | "PARTNER_ASC" | "SORTABLE_NAME_ASC" | "SORTABLE_NAME_DESC" | "START_AT_ASC" | "START_AT_DESC" | "UPDATED_AT_ASC" | "UPDATED_AT_DESC" | "%future added value";
-export type FairBoothsContainerQueryVariables = {
-    slug: string;
-    page?: number | null;
-    sort?: ShowSorts | null;
+export type FairBoothsContainerQuery$variables = {
+  slug: string;
+  page?: number | null;
+  sort?: ShowSorts | null;
 };
-export type FairBoothsContainerQueryResponse = {
-    readonly fair: {
-        readonly " $fragmentRefs": FragmentRefs<"FairBooths_fair">;
-    } | null;
+export type FairBoothsContainerQuery$data = {
+  readonly fair: {
+    readonly " $fragmentSpreads": FragmentRefs<"FairBooths_fair">;
+  } | null;
 };
 export type FairBoothsContainerQuery = {
-    readonly response: FairBoothsContainerQueryResponse;
-    readonly variables: FairBoothsContainerQueryVariables;
+  variables: FairBoothsContainerQuery$variables;
+  response: FairBoothsContainerQuery$data;
 };
-
-
-
-/*
-query FairBoothsContainerQuery(
-  $slug: String!
-  $page: Int
-  $sort: ShowSorts
-) {
-  fair(id: $slug) @principalField {
-    ...FairBooths_fair_20XdsY
-    id
-  }
-}
-
-fragment FairBoothRail_show on Show {
-  internalID
-  slug
-  href
-  partner {
-    __typename
-    ... on Partner {
-      name
-    }
-    ... on ExternalPartner {
-      name
-      id
-    }
-    ... on Node {
-      __isNode: __typename
-      id
-    }
-  }
-  counts {
-    artworks
-  }
-}
-
-fragment FairBooths_fair_20XdsY on Fair {
-  slug
-  exhibitors: showsConnection(sort: $sort, first: 15, page: $page, totalCount: true) {
-    pageInfo {
-      hasNextPage
-    }
-    pageCursors {
-      ...Pagination_pageCursors
-    }
-    edges {
-      node {
-        id
-        counts {
-          artworks
-        }
-        partner {
-          __typename
-          ... on Partner {
-            id
-          }
-          ... on ExternalPartner {
-            id
-          }
-          ... on Node {
-            __isNode: __typename
-            id
-          }
-        }
-        ...FairBoothRail_show
-      }
-    }
-  }
-}
-
-fragment Pagination_pageCursors on PageCursors {
-  around {
-    cursor
-    page
-    isCurrent
-  }
-  first {
-    cursor
-    page
-    isCurrent
-  }
-  last {
-    cursor
-    page
-    isCurrent
-  }
-  previous {
-    cursor
-    page
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = {
@@ -455,5 +367,7 @@ return {
   }
 };
 })();
-(node as any).hash = '7ef1362d459fc9cc8e512cf447aa0101';
+
+(node as any).hash = "7ef1362d459fc9cc8e512cf447aa0101";
+
 export default node;

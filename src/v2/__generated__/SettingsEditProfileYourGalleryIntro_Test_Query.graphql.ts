@@ -1,34 +1,25 @@
+/**
+ * @generated SignedSource<<67973fe11d5aec7623263e8fbfcd5cd1>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type SettingsEditProfileYourGalleryIntro_Test_QueryVariables = {};
-export type SettingsEditProfileYourGalleryIntro_Test_QueryResponse = {
-    readonly me: {
-        readonly " $fragmentRefs": FragmentRefs<"SettingsEditProfileYourGalleryIntro_me">;
-    } | null;
+export type SettingsEditProfileYourGalleryIntro_Test_Query$variables = {};
+export type SettingsEditProfileYourGalleryIntro_Test_Query$data = {
+  readonly me: {
+    readonly " $fragmentSpreads": FragmentRefs<"SettingsEditProfileYourGalleryIntro_me">;
+  } | null;
 };
 export type SettingsEditProfileYourGalleryIntro_Test_Query = {
-    readonly response: SettingsEditProfileYourGalleryIntro_Test_QueryResponse;
-    readonly variables: SettingsEditProfileYourGalleryIntro_Test_QueryVariables;
+  variables: SettingsEditProfileYourGalleryIntro_Test_Query$variables;
+  response: SettingsEditProfileYourGalleryIntro_Test_Query$data;
 };
-
-
-
-/*
-query SettingsEditProfileYourGalleryIntro_Test_Query {
-  me {
-    ...SettingsEditProfileYourGalleryIntro_me
-    id
-  }
-}
-
-fragment SettingsEditProfileYourGalleryIntro_me on Me {
-  inquiryIntroduction
-}
-*/
 
 const node: ConcreteRequest = {
   "fragment": {
@@ -120,5 +111,7 @@ const node: ConcreteRequest = {
     "text": "query SettingsEditProfileYourGalleryIntro_Test_Query {\n  me {\n    ...SettingsEditProfileYourGalleryIntro_me\n    id\n  }\n}\n\nfragment SettingsEditProfileYourGalleryIntro_me on Me {\n  inquiryIntroduction\n}\n"
   }
 };
-(node as any).hash = '21219f0ea58d8e6ca51cb2a38dcd76dd';
+
+(node as any).hash = "21219f0ea58d8e6ca51cb2a38dcd76dd";
+
 export default node;

@@ -1,49 +1,25 @@
+/**
+ * @generated SignedSource<<b4ec7bd5d801397258f0957d997b072f>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type UserRegistrationAuctions_Test_QueryVariables = {};
-export type UserRegistrationAuctions_Test_QueryResponse = {
-    readonly me: {
-        readonly " $fragmentRefs": FragmentRefs<"UserRegistrationAuctions_me">;
-    } | null;
+export type UserRegistrationAuctions_Test_Query$variables = {};
+export type UserRegistrationAuctions_Test_Query$data = {
+  readonly me: {
+    readonly " $fragmentSpreads": FragmentRefs<"UserRegistrationAuctions_me">;
+  } | null;
 };
 export type UserRegistrationAuctions_Test_Query = {
-    readonly response: UserRegistrationAuctions_Test_QueryResponse;
-    readonly variables: UserRegistrationAuctions_Test_QueryVariables;
+  variables: UserRegistrationAuctions_Test_Query$variables;
+  response: UserRegistrationAuctions_Test_Query$data;
 };
-
-
-
-/*
-query UserRegistrationAuctions_Test_Query {
-  me {
-    ...UserRegistrationAuctions_me
-    id
-  }
-}
-
-fragment UserRegistrationAuctions_me on Me {
-  saleRegistrationsConnection(published: true, isAuction: true, sort: CREATED_AT_DESC, first: 10, registered: false) {
-    edges {
-      node {
-        isRegistered
-        sale {
-          id
-          name
-          href
-          startAt(format: "MMMM D, h:mmA")
-          isClosed
-          isRegistrationClosed
-        }
-        id
-      }
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = {
@@ -290,5 +266,7 @@ return {
   }
 };
 })();
-(node as any).hash = '73a75f1453c0aa9132600328932d6f7b';
+
+(node as any).hash = "73a75f1453c0aa9132600328932d6f7b";
+
 export default node;

@@ -1,71 +1,44 @@
+/**
+ * @generated SignedSource<<cd948e0dc8ba2137ec56db18b750ebee>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type CommerceOrderStateEnum = "ABANDONED" | "APPROVED" | "CANCELED" | "FULFILLED" | "PENDING" | "REFUNDED" | "SUBMITTED" | "%future added value";
 export type CommerceSubmitOrderWithOfferInput = {
-    clientMutationId?: string | null;
-    confirmedSetupIntentId?: string | null;
-    offerId: string;
+  clientMutationId?: string | null;
+  confirmedSetupIntentId?: string | null;
+  offerId: string;
 };
-export type ReviewSubmitOfferOrderMutationVariables = {
-    input: CommerceSubmitOrderWithOfferInput;
+export type ReviewSubmitOfferOrderMutation$variables = {
+  input: CommerceSubmitOrderWithOfferInput;
 };
-export type ReviewSubmitOfferOrderMutationResponse = {
-    readonly commerceSubmitOrderWithOffer: {
-        readonly orderOrError: {
-            readonly order?: {
-                readonly state: CommerceOrderStateEnum;
-            };
-            readonly actionData?: {
-                readonly clientSecret: string;
-            };
-            readonly error?: {
-                readonly type: string;
-                readonly code: string;
-                readonly data: string | null;
-            };
-        };
-    } | null;
+export type ReviewSubmitOfferOrderMutation$data = {
+  readonly commerceSubmitOrderWithOffer: {
+    readonly orderOrError: {
+      readonly order?: {
+        readonly state: CommerceOrderStateEnum;
+      };
+      readonly actionData?: {
+        readonly clientSecret: string;
+      };
+      readonly error?: {
+        readonly type: string;
+        readonly code: string;
+        readonly data: string | null;
+      };
+    };
+  } | null;
 };
 export type ReviewSubmitOfferOrderMutation = {
-    readonly response: ReviewSubmitOfferOrderMutationResponse;
-    readonly variables: ReviewSubmitOfferOrderMutationVariables;
+  variables: ReviewSubmitOfferOrderMutation$variables;
+  response: ReviewSubmitOfferOrderMutation$data;
 };
-
-
-
-/*
-mutation ReviewSubmitOfferOrderMutation(
-  $input: CommerceSubmitOrderWithOfferInput!
-) {
-  commerceSubmitOrderWithOffer(input: $input) {
-    orderOrError {
-      __typename
-      ... on CommerceOrderWithMutationSuccess {
-        order {
-          __typename
-          state
-          id
-        }
-      }
-      ... on CommerceOrderRequiresAction {
-        actionData {
-          clientSecret
-        }
-      }
-      ... on CommerceOrderWithMutationFailure {
-        error {
-          type
-          code
-          data
-        }
-      }
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -284,5 +257,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'cf5774c904680b91ec8f15d2bef60471';
+
+(node as any).hash = "cf5774c904680b91ec8f15d2bef60471";
+
 export default node;

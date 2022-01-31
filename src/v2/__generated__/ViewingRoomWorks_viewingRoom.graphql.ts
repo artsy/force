@@ -1,28 +1,31 @@
+/**
+ * @generated SignedSource<<6c584b6a76def86d6d26407a561fd68d>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ViewingRoomWorks_viewingRoom = {
-    readonly artworksConnection: {
-        readonly totalCount: number | null;
-        readonly edges: ReadonlyArray<{
-            readonly node: {
-                readonly internalID: string;
-                readonly " $fragmentRefs": FragmentRefs<"ViewingRoomWorksArtwork_artwork">;
-            } | null;
-        } | null> | null;
-    } | null;
-    readonly " $refType": "ViewingRoomWorks_viewingRoom";
+export type ViewingRoomWorks_viewingRoom$data = {
+  readonly artworksConnection: {
+    readonly totalCount: number | null;
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly internalID: string;
+        readonly " $fragmentSpreads": FragmentRefs<"ViewingRoomWorksArtwork_artwork">;
+      } | null;
+    } | null> | null;
+  } | null;
+  readonly " $fragmentType": "ViewingRoomWorks_viewingRoom";
 };
-export type ViewingRoomWorks_viewingRoom$data = ViewingRoomWorks_viewingRoom;
 export type ViewingRoomWorks_viewingRoom$key = {
-    readonly " $data"?: ViewingRoomWorks_viewingRoom$data;
-    readonly " $fragmentRefs": FragmentRefs<"ViewingRoomWorks_viewingRoom">;
+  readonly " $data"?: ViewingRoomWorks_viewingRoom$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ViewingRoomWorks_viewingRoom">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -92,5 +95,7 @@ const node: ReaderFragment = {
   "type": "ViewingRoom",
   "abstractKey": null
 };
-(node as any).hash = '8863d53589b86e1c1dc40e2feec77109';
+
+(node as any).hash = "8863d53589b86e1c1dc40e2feec77109";
+
 export default node;

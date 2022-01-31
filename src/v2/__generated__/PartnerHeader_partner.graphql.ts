@@ -1,39 +1,42 @@
+/**
+ * @generated SignedSource<<639a75c0c367e72ebdb0c36c58a776bb>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type PartnerHeader_partner = {
-    readonly name: string | null;
-    readonly type: string | null;
-    readonly slug: string;
-    readonly profile: {
-        readonly icon: {
-            readonly resized: {
-                readonly src: string;
-                readonly srcSet: string;
-            } | null;
-        } | null;
-        readonly " $fragmentRefs": FragmentRefs<"FollowProfileButton_profile">;
+export type PartnerHeader_partner$data = {
+  readonly name: string | null;
+  readonly type: string | null;
+  readonly slug: string;
+  readonly profile: {
+    readonly icon: {
+      readonly resized: {
+        readonly src: string;
+        readonly srcSet: string;
+      } | null;
     } | null;
-    readonly locations: {
-        readonly totalCount: number | null;
-        readonly edges: ReadonlyArray<{
-            readonly node: {
-                readonly city: string | null;
-            } | null;
-        } | null> | null;
-    } | null;
-    readonly " $refType": "PartnerHeader_partner";
+    readonly " $fragmentSpreads": FragmentRefs<"FollowProfileButton_profile">;
+  } | null;
+  readonly locations: {
+    readonly totalCount: number | null;
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly city: string | null;
+      } | null;
+    } | null> | null;
+  } | null;
+  readonly " $fragmentType": "PartnerHeader_partner";
 };
-export type PartnerHeader_partner$data = PartnerHeader_partner;
 export type PartnerHeader_partner$key = {
-    readonly " $data"?: PartnerHeader_partner$data;
-    readonly " $fragmentRefs": FragmentRefs<"PartnerHeader_partner">;
+  readonly " $data"?: PartnerHeader_partner$data;
+  readonly " $fragmentSpreads": FragmentRefs<"PartnerHeader_partner">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -187,5 +190,7 @@ const node: ReaderFragment = {
   "type": "Partner",
   "abstractKey": null
 };
-(node as any).hash = 'fe9cf6f429efc3e64d48822788699330';
+
+(node as any).hash = "fe9cf6f429efc3e64d48822788699330";
+
 export default node;

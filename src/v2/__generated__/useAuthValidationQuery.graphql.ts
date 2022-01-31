@@ -1,25 +1,23 @@
+/**
+ * @generated SignedSource<<f41b0d25d37677d87f605402abf74156>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 export type AuthenticationStatus = "INVALID" | "LOGGED_IN" | "LOGGED_OUT" | "%future added value";
-export type useAuthValidationQueryVariables = {};
-export type useAuthValidationQueryResponse = {
-    readonly authenticationStatus: AuthenticationStatus;
+export type useAuthValidationQuery$variables = {};
+export type useAuthValidationQuery$data = {
+  readonly authenticationStatus: AuthenticationStatus;
 };
 export type useAuthValidationQuery = {
-    readonly response: useAuthValidationQueryResponse;
-    readonly variables: useAuthValidationQueryVariables;
+  variables: useAuthValidationQuery$variables;
+  response: useAuthValidationQuery$data;
 };
-
-
-
-/*
-query useAuthValidationQuery {
-  authenticationStatus
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -58,5 +56,7 @@ return {
   }
 };
 })();
-(node as any).hash = '2f2ccc765f2b0623e0c21ddb7e46eb08';
+
+(node as any).hash = "2f2ccc765f2b0623e0c21ddb7e46eb08";
+
 export default node;

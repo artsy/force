@@ -1,40 +1,43 @@
+/**
+ * @generated SignedSource<<fa33f5e4f04b69a2aff0d83ea5f524aa>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtistCareerHighlights_artist = {
-    readonly biographyBlurb: {
-        readonly partner: {
-            readonly profile: {
-                readonly href: string | null;
-            } | null;
-        } | null;
-        readonly credit: string | null;
-        readonly text: string | null;
+export type ArtistCareerHighlights_artist$data = {
+  readonly biographyBlurb: {
+    readonly partner: {
+      readonly profile: {
+        readonly href: string | null;
+      } | null;
     } | null;
-    readonly name: string | null;
-    readonly related: {
-        readonly genes: {
-            readonly edges: ReadonlyArray<{
-                readonly node: {
-                    readonly id: string;
-                } | null;
-            } | null> | null;
+    readonly credit: string | null;
+    readonly text: string | null;
+  } | null;
+  readonly name: string | null;
+  readonly related: {
+    readonly genes: {
+      readonly edges: ReadonlyArray<{
+        readonly node: {
+          readonly id: string;
         } | null;
+      } | null> | null;
     } | null;
-    readonly slug: string;
-    readonly " $fragmentRefs": FragmentRefs<"SelectedCareerAchievements_artist" | "ArtistGenes_artist">;
-    readonly " $refType": "ArtistCareerHighlights_artist";
+  } | null;
+  readonly slug: string;
+  readonly " $fragmentSpreads": FragmentRefs<"SelectedCareerAchievements_artist" | "ArtistGenes_artist">;
+  readonly " $fragmentType": "ArtistCareerHighlights_artist";
 };
-export type ArtistCareerHighlights_artist$data = ArtistCareerHighlights_artist;
 export type ArtistCareerHighlights_artist$key = {
-    readonly " $data"?: ArtistCareerHighlights_artist$data;
-    readonly " $fragmentRefs": FragmentRefs<"ArtistCareerHighlights_artist">;
+  readonly " $data"?: ArtistCareerHighlights_artist$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtistCareerHighlights_artist">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -42,6 +45,16 @@ const node: ReaderFragment = {
   "metadata": null,
   "name": "ArtistCareerHighlights_artist",
   "selections": [
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "SelectedCareerAchievements_artist"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ArtistGenes_artist"
+    },
     {
       "alias": null,
       "args": [
@@ -171,20 +184,12 @@ const node: ReaderFragment = {
       "kind": "ScalarField",
       "name": "slug",
       "storageKey": null
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "SelectedCareerAchievements_artist"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "ArtistGenes_artist"
     }
   ],
   "type": "Artist",
   "abstractKey": null
 };
-(node as any).hash = '92970956080f67ee7d6e29aed6a75de3';
+
+(node as any).hash = "92970956080f67ee7d6e29aed6a75de3";
+
 export default node;

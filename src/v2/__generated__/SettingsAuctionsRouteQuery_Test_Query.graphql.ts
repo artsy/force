@@ -1,126 +1,25 @@
+/**
+ * @generated SignedSource<<417e43c281d2293cab372bb760c1a294>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type SettingsAuctionsRouteQuery_Test_QueryVariables = {};
-export type SettingsAuctionsRouteQuery_Test_QueryResponse = {
-    readonly me: {
-        readonly " $fragmentRefs": FragmentRefs<"SettingsAuctionsRoute_me">;
-    } | null;
+export type SettingsAuctionsRouteQuery_Test_Query$variables = {};
+export type SettingsAuctionsRouteQuery_Test_Query$data = {
+  readonly me: {
+    readonly " $fragmentSpreads": FragmentRefs<"SettingsAuctionsRoute_me">;
+  } | null;
 };
 export type SettingsAuctionsRouteQuery_Test_Query = {
-    readonly response: SettingsAuctionsRouteQuery_Test_QueryResponse;
-    readonly variables: SettingsAuctionsRouteQuery_Test_QueryVariables;
+  variables: SettingsAuctionsRouteQuery_Test_Query$variables;
+  response: SettingsAuctionsRouteQuery_Test_Query$data;
 };
-
-
-
-/*
-query SettingsAuctionsRouteQuery_Test_Query {
-  me {
-    ...SettingsAuctionsRoute_me
-    id
-  }
-}
-
-fragment Details_artwork on Artwork {
-  href
-  title
-  date
-  sale_message: saleMessage
-  cultural_maker: culturalMaker
-  artists(shallow: true) {
-    id
-    href
-    name
-  }
-  collecting_institution: collectingInstitution
-  partner(shallow: true) {
-    name
-    href
-    id
-  }
-  sale {
-    is_auction: isAuction
-    is_closed: isClosed
-    id
-  }
-  sale_artwork: saleArtwork {
-    counts {
-      bidder_positions: bidderPositions
-    }
-    highest_bid: highestBid {
-      display
-    }
-    opening_bid: openingBid {
-      display
-    }
-    id
-  }
-}
-
-fragment SettingsAuctionsLotStanding_lotStanding on LotStanding {
-  isLeadingBidder
-  saleArtwork {
-    lotLabel
-    sale {
-      isClosed
-      id
-    }
-    artwork {
-      ...Details_artwork
-      href
-      image {
-        cropped(height: 100, width: 100) {
-          src
-          srcSet
-        }
-      }
-      id
-    }
-    id
-  }
-}
-
-fragment SettingsAuctionsRoute_me on Me {
-  ...UserActiveBids_me
-  ...UserBidHistory_me
-  ...UserRegistrationAuctions_me
-}
-
-fragment UserActiveBids_me on Me {
-  activeLotStandings: lotStandings(live: true) {
-    ...SettingsAuctionsLotStanding_lotStanding
-  }
-}
-
-fragment UserBidHistory_me on Me {
-  inactiveLotStandings: lotStandings(live: false) {
-    ...SettingsAuctionsLotStanding_lotStanding
-  }
-}
-
-fragment UserRegistrationAuctions_me on Me {
-  saleRegistrationsConnection(published: true, isAuction: true, sort: CREATED_AT_DESC, first: 10, registered: false) {
-    edges {
-      node {
-        isRegistered
-        sale {
-          id
-          name
-          href
-          startAt(format: "MMMM D, h:mmA")
-          isClosed
-          isRegistrationClosed
-        }
-        id
-      }
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = {
@@ -811,5 +710,7 @@ return {
   }
 };
 })();
-(node as any).hash = '40a6dfae10813d606d91b054d59e896d';
+
+(node as any).hash = "40a6dfae10813d606d91b054d59e896d";
+
 export default node;

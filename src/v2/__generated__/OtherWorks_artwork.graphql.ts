@@ -1,45 +1,48 @@
+/**
+ * @generated SignedSource<<6fa171912c7fbcbdd4fe0844854478c5>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type OtherWorks_artwork = {
-    readonly contextGrids: ReadonlyArray<{
-        readonly __typename: string;
-        readonly title: string | null;
-        readonly ctaTitle: string | null;
-        readonly ctaHref: string | null;
-        readonly artworksConnection: {
-            readonly edges: ReadonlyArray<{
-                readonly node: {
-                    readonly slug: string;
-                } | null;
-            } | null> | null;
-            readonly " $fragmentRefs": FragmentRefs<"ArtworkGrid_artworks">;
+export type OtherWorks_artwork$data = {
+  readonly contextGrids: ReadonlyArray<{
+    readonly __typename: string;
+    readonly title: string | null;
+    readonly ctaTitle: string | null;
+    readonly ctaHref: string | null;
+    readonly artworksConnection: {
+      readonly edges: ReadonlyArray<{
+        readonly node: {
+          readonly slug: string;
         } | null;
-    } | null> | null;
-    readonly slug: string;
-    readonly internalID: string;
-    readonly sale: {
-        readonly is_closed: boolean | null;
+      } | null> | null;
+      readonly " $fragmentSpreads": FragmentRefs<"ArtworkGrid_artworks">;
     } | null;
-    readonly context: {
-        readonly __typename: string;
-    } | null;
-    readonly seriesArtist: {
-        readonly " $fragmentRefs": FragmentRefs<"ArtistSeriesRail_artist">;
-    } | null;
-    readonly " $fragmentRefs": FragmentRefs<"RelatedWorksArtworkGrid_artwork" | "ArtistSeriesArtworkRail_artwork">;
-    readonly " $refType": "OtherWorks_artwork";
+  } | null> | null;
+  readonly slug: string;
+  readonly internalID: string;
+  readonly sale: {
+    readonly is_closed: boolean | null;
+  } | null;
+  readonly context: {
+    readonly __typename: string;
+  } | null;
+  readonly seriesArtist: {
+    readonly " $fragmentSpreads": FragmentRefs<"ArtistSeriesRail_artist">;
+  } | null;
+  readonly " $fragmentSpreads": FragmentRefs<"RelatedWorksArtworkGrid_artwork" | "ArtistSeriesArtworkRail_artwork">;
+  readonly " $fragmentType": "OtherWorks_artwork";
 };
-export type OtherWorks_artwork$data = OtherWorks_artwork;
 export type OtherWorks_artwork$key = {
-    readonly " $data"?: OtherWorks_artwork$data;
-    readonly " $fragmentRefs": FragmentRefs<"OtherWorks_artwork">;
+  readonly " $data"?: OtherWorks_artwork$data;
+  readonly " $fragmentSpreads": FragmentRefs<"OtherWorks_artwork">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = {
@@ -107,6 +110,11 @@ return {
           "plural": false,
           "selections": [
             {
+              "args": null,
+              "kind": "FragmentSpread",
+              "name": "ArtworkGrid_artworks"
+            },
+            {
               "alias": null,
               "args": null,
               "concreteType": "ArtworkEdge",
@@ -128,17 +136,22 @@ return {
                 }
               ],
               "storageKey": null
-            },
-            {
-              "args": null,
-              "kind": "FragmentSpread",
-              "name": "ArtworkGrid_artworks"
             }
           ],
           "storageKey": "artworksConnection(first:8)"
         }
       ],
       "storageKey": null
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "RelatedWorksArtworkGrid_artwork"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ArtistSeriesArtworkRail_artwork"
     },
     (v1/*: any*/),
     {
@@ -199,21 +212,13 @@ return {
         }
       ],
       "storageKey": "artist(shallow:true)"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "RelatedWorksArtworkGrid_artwork"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "ArtistSeriesArtworkRail_artwork"
     }
   ],
   "type": "Artwork",
   "abstractKey": null
 };
 })();
-(node as any).hash = 'aaea80834413bdf2196a4490426d4adc';
+
+(node as any).hash = "aaea80834413bdf2196a4490426d4adc";
+
 export default node;

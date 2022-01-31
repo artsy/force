@@ -1,54 +1,36 @@
+/**
+ * @generated SignedSource<<a707251aea1f79f3b07b3316bb2f972c>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
-export type BidderPositionQueryVariables = {
-    bidderPositionID: string;
+import { ConcreteRequest, Query } from 'relay-runtime';
+export type BidderPositionQuery$variables = {
+  bidderPositionID: string;
 };
-export type BidderPositionQueryResponse = {
-    readonly me: {
-        readonly bidderPosition: {
-            readonly status: string;
-            readonly messageHeader: string | null;
-            readonly position: {
-                readonly internalID: string;
-                readonly suggestedNextBid: {
-                    readonly cents: number | null;
-                    readonly display: string | null;
-                } | null;
-            } | null;
+export type BidderPositionQuery$data = {
+  readonly me: {
+    readonly bidderPosition: {
+      readonly status: string;
+      readonly messageHeader: string | null;
+      readonly position: {
+        readonly internalID: string;
+        readonly suggestedNextBid: {
+          readonly cents: number | null;
+          readonly display: string | null;
         } | null;
+      } | null;
     } | null;
+  } | null;
 };
 export type BidderPositionQuery = {
-    readonly response: BidderPositionQueryResponse;
-    readonly variables: BidderPositionQueryVariables;
+  variables: BidderPositionQuery$variables;
+  response: BidderPositionQuery$data;
 };
-
-
-
-/*
-query BidderPositionQuery(
-  $bidderPositionID: String!
-) {
-  me {
-    bidderPosition(id: $bidderPositionID) {
-      status
-      messageHeader
-      position {
-        internalID
-        suggestedNextBid {
-          cents
-          display
-        }
-        id
-      }
-    }
-    id
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -223,5 +205,7 @@ return {
   }
 };
 })();
-(node as any).hash = '824ae5e154436e7ff5d954d947fd8ad6';
+
+(node as any).hash = "824ae5e154436e7ff5d954d947fd8ad6";
+
 export default node;

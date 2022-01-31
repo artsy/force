@@ -1,75 +1,78 @@
+/**
+ * @generated SignedSource<<06eba7c97a2bd40bd680757a8b9e89b9>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
-import { FragmentRefs } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 export type CommerceOrderDisplayStateEnum = "ABANDONED" | "APPROVED" | "CANCELED" | "FULFILLED" | "IN_TRANSIT" | "PENDING" | "PROCESSING" | "REFUNDED" | "SUBMITTED" | "%future added value";
 export type CommerceOrderStateEnum = "ABANDONED" | "APPROVED" | "CANCELED" | "FULFILLED" | "PENDING" | "REFUNDED" | "SUBMITTED" | "%future added value";
-export type SettingsPurchasesRow_order = {
-    readonly internalID: string;
-    readonly code: string;
-    readonly displayState: CommerceOrderDisplayStateEnum;
-    readonly state: CommerceOrderStateEnum;
-    readonly requestedFulfillment: {
-        readonly __typename: string;
-    } | null;
-    readonly creditCard: {
-        readonly lastDigits: string;
-    } | null;
-    readonly buyerTotal: string | null;
-    readonly createdAt: string;
-    readonly currencyCode: string;
-    readonly lineItems: {
-        readonly edges: ReadonlyArray<{
-            readonly node: {
-                readonly artwork: {
-                    readonly href: string | null;
-                    readonly image: {
-                        readonly cropped: {
-                            readonly src: string;
-                            readonly srcSet: string;
-                        } | null;
-                    } | null;
-                    readonly partner: {
-                        readonly href: string | null;
-                        readonly initials: string | null;
-                        readonly name: string | null;
-                        readonly profile: {
-                            readonly icon: {
-                                readonly cropped: {
-                                    readonly src: string;
-                                    readonly srcSet: string;
-                                } | null;
-                            } | null;
-                        } | null;
-                    } | null;
-                    readonly shippingOrigin: string | null;
-                    readonly title: string | null;
-                    readonly artistNames: string | null;
-                    readonly artists: ReadonlyArray<{
-                        readonly href: string | null;
-                    } | null> | null;
-                } | null;
-                readonly fulfillments: {
-                    readonly edges: ReadonlyArray<{
-                        readonly node: {
-                            readonly trackingId: string | null;
-                        } | null;
-                    } | null> | null;
-                } | null;
+import { FragmentRefs } from "relay-runtime";
+export type SettingsPurchasesRow_order$data = {
+  readonly internalID: string;
+  readonly code: string;
+  readonly displayState: CommerceOrderDisplayStateEnum;
+  readonly state: CommerceOrderStateEnum;
+  readonly requestedFulfillment: {
+    readonly __typename: string;
+  } | null;
+  readonly creditCard: {
+    readonly lastDigits: string;
+  } | null;
+  readonly buyerTotal: string | null;
+  readonly createdAt: string;
+  readonly currencyCode: string;
+  readonly lineItems: {
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly artwork: {
+          readonly href: string | null;
+          readonly image: {
+            readonly cropped: {
+              readonly src: string;
+              readonly srcSet: string;
             } | null;
-        } | null> | null;
-    } | null;
-    readonly " $refType": "SettingsPurchasesRow_order";
+          } | null;
+          readonly partner: {
+            readonly href: string | null;
+            readonly initials: string | null;
+            readonly name: string | null;
+            readonly profile: {
+              readonly icon: {
+                readonly cropped: {
+                  readonly src: string;
+                  readonly srcSet: string;
+                } | null;
+              } | null;
+            } | null;
+          } | null;
+          readonly shippingOrigin: string | null;
+          readonly title: string | null;
+          readonly artistNames: string | null;
+          readonly artists: ReadonlyArray<{
+            readonly href: string | null;
+          } | null> | null;
+        } | null;
+        readonly fulfillments: {
+          readonly edges: ReadonlyArray<{
+            readonly node: {
+              readonly trackingId: string | null;
+            } | null;
+          } | null> | null;
+        } | null;
+      } | null;
+    } | null> | null;
+  } | null;
+  readonly " $fragmentType": "SettingsPurchasesRow_order";
 };
-export type SettingsPurchasesRow_order$data = SettingsPurchasesRow_order;
 export type SettingsPurchasesRow_order$key = {
-    readonly " $data"?: SettingsPurchasesRow_order$data;
-    readonly " $fragmentRefs": FragmentRefs<"SettingsPurchasesRow_order">;
+  readonly " $data"?: SettingsPurchasesRow_order$data;
+  readonly " $fragmentSpreads": FragmentRefs<"SettingsPurchasesRow_order">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = {
@@ -400,5 +403,7 @@ return {
   "abstractKey": "__isCommerceOrder"
 };
 })();
-(node as any).hash = 'fb1cf0d90eacc276e85491cf86906f26';
+
+(node as any).hash = "fb1cf0d90eacc276e85491cf86906f26";
+
 export default node;
