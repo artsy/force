@@ -30,7 +30,6 @@ query ArtworkDetails_SubmissionFlowTest_Query(
 }
 
 fragment ArtworkDetails_submission on ConsignmentSubmission {
-  id
   externalId
   artist {
     internalID
@@ -131,7 +130,6 @@ return {
         "name": "submission",
         "plural": false,
         "selections": [
-          (v2/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -276,14 +274,15 @@ return {
             "kind": "ScalarField",
             "name": "provenance",
             "storageKey": null
-          }
+          },
+          (v2/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "95a1aacce8f826391904c7f7a7385dbb",
+    "cacheID": "a00243a1470440e8a827ffb35b35e11e",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -334,7 +333,7 @@ return {
     },
     "name": "ArtworkDetails_SubmissionFlowTest_Query",
     "operationKind": "query",
-    "text": "query ArtworkDetails_SubmissionFlowTest_Query(\n  $externalId: ID\n) {\n  submission(id: $externalId) {\n    ...ArtworkDetails_submission\n    id\n  }\n}\n\nfragment ArtworkDetails_submission on ConsignmentSubmission {\n  id\n  externalId\n  artist {\n    internalID\n    name\n    id\n  }\n  locationCity\n  locationCountry\n  locationState\n  locationPostalCode\n  locationCountryCode\n  year\n  title\n  medium\n  attributionClass\n  editionNumber\n  editionSize\n  height\n  width\n  depth\n  dimensionsMetric\n  provenance\n}\n"
+    "text": "query ArtworkDetails_SubmissionFlowTest_Query(\n  $externalId: ID\n) {\n  submission(id: $externalId) {\n    ...ArtworkDetails_submission\n    id\n  }\n}\n\nfragment ArtworkDetails_submission on ConsignmentSubmission {\n  externalId\n  artist {\n    internalID\n    name\n    id\n  }\n  locationCity\n  locationCountry\n  locationState\n  locationPostalCode\n  locationCountryCode\n  year\n  title\n  medium\n  attributionClass\n  editionNumber\n  editionSize\n  height\n  width\n  depth\n  dimensionsMetric\n  provenance\n}\n"
   }
 };
 })();
