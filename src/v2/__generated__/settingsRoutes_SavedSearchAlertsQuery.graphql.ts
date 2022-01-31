@@ -4,21 +4,21 @@
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type savedSearchAlertsRoutes_SavedSearchAlertsOverviewRouteQueryVariables = {};
-export type savedSearchAlertsRoutes_SavedSearchAlertsOverviewRouteQueryResponse = {
+export type settingsRoutes_SavedSearchAlertsQueryVariables = {};
+export type settingsRoutes_SavedSearchAlertsQueryResponse = {
     readonly me: {
         readonly " $fragmentRefs": FragmentRefs<"SavedSearchAlertsApp_me">;
     } | null;
 };
-export type savedSearchAlertsRoutes_SavedSearchAlertsOverviewRouteQuery = {
-    readonly response: savedSearchAlertsRoutes_SavedSearchAlertsOverviewRouteQueryResponse;
-    readonly variables: savedSearchAlertsRoutes_SavedSearchAlertsOverviewRouteQueryVariables;
+export type settingsRoutes_SavedSearchAlertsQuery = {
+    readonly response: settingsRoutes_SavedSearchAlertsQueryResponse;
+    readonly variables: settingsRoutes_SavedSearchAlertsQueryVariables;
 };
 
 
 
 /*
-query savedSearchAlertsRoutes_SavedSearchAlertsOverviewRouteQuery {
+query settingsRoutes_SavedSearchAlertsQuery {
   me {
     ...SavedSearchAlertsApp_me
     id
@@ -64,7 +64,7 @@ return {
     "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
-    "name": "savedSearchAlertsRoutes_SavedSearchAlertsOverviewRouteQuery",
+    "name": "settingsRoutes_SavedSearchAlertsQuery",
     "selections": [
       {
         "alias": null,
@@ -90,7 +90,7 @@ return {
   "operation": {
     "argumentDefinitions": [],
     "kind": "Operation",
-    "name": "savedSearchAlertsRoutes_SavedSearchAlertsOverviewRouteQuery",
+    "name": "settingsRoutes_SavedSearchAlertsQuery",
     "selections": [
       {
         "alias": null,
@@ -226,14 +226,14 @@ return {
     ]
   },
   "params": {
-    "cacheID": "a4bd2626d2b544f01f9caf9027bc0c3d",
+    "cacheID": "a4f8ac230ed58a7b4a09efe1ef9ec313",
     "id": null,
     "metadata": {},
-    "name": "savedSearchAlertsRoutes_SavedSearchAlertsOverviewRouteQuery",
+    "name": "settingsRoutes_SavedSearchAlertsQuery",
     "operationKind": "query",
-    "text": "query savedSearchAlertsRoutes_SavedSearchAlertsOverviewRouteQuery {\n  me {\n    ...SavedSearchAlertsApp_me\n    id\n  }\n}\n\nfragment SavedSearchAlertListItem_item on SearchCriteria {\n  internalID\n  artistID\n  userAlertSettings {\n    name\n  }\n}\n\nfragment SavedSearchAlertsApp_me on Me {\n  savedSearchesConnection(first: 50) {\n    edges {\n      node {\n        internalID\n        ...SavedSearchAlertListItem_item\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query settingsRoutes_SavedSearchAlertsQuery {\n  me {\n    ...SavedSearchAlertsApp_me\n    id\n  }\n}\n\nfragment SavedSearchAlertListItem_item on SearchCriteria {\n  internalID\n  artistID\n  userAlertSettings {\n    name\n  }\n}\n\nfragment SavedSearchAlertsApp_me on Me {\n  savedSearchesConnection(first: 50) {\n    edges {\n      node {\n        internalID\n        ...SavedSearchAlertListItem_item\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'a72e85917c5cc577fb85f454b69c2903';
+(node as any).hash = '1a1527fe89bb166c9f3f58b8618f9220';
 export default node;
