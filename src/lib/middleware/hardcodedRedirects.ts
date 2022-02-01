@@ -30,6 +30,8 @@ const redirects = {
   "/feature/art-fairs": "art-fairs",
   "/settings": "/user/edit",
   "/collector/edit": "/profile/edit",
+  "/how-auctions-work2":
+    "https://support.artsy.net/hc/en-us/articles/4419870291351-The-Complete-Guide-to-Auctions-on-Artsy",
   "/_=_": "/", // Facebook passport bug, see: https://github.com/jaredhanson/passport-facebook/issues/12#issuecomment-5913711
   "/press": "/press/in-the-media",
   "/about/press": "/press/press-releases",
