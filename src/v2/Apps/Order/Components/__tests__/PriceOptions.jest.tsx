@@ -124,15 +124,13 @@ describe("PriceOptions", () => {
         )
       )
       fireEvent.click(radios[3])
-      expect(trackEvent).toHaveBeenLastCalledWith(
+      expect(trackEvent).toHaveBeenCalledWith(
         expect.objectContaining(getTrackingObject("Different amount", 0, "USD"))
       )
     })
-    it("display and tracks the offer too low notice", async () => {
+    it("correctly displays and tracks the offer too low notice", async () => {
       fireEvent.click(radios[3])
       const input = await within(radios[3]).findByRole("textbox")
-      fireEvent.change(input, { target: { value: 50 } })
-      fireEvent.blur(input)
       const notice = await screen.findByText(
         "We recommend changing your offer to US$100.00."
       )
@@ -143,12 +141,11 @@ describe("PriceOptions", () => {
           flow: "Make offer",
         })
       )
+      fireEvent.change(input, { target: { value: 180 } })
+      expect(notice).not.toBeInTheDocument()
     })
     it("selects the first option when clicking on the low price notice", async () => {
       fireEvent.click(radios[3])
-      const input = await within(radios[3]).findByRole("textbox")
-      fireEvent.change(input, { target: { value: 50 } })
-      fireEvent.blur(input)
       const notice = await screen.findByText(
         "We recommend changing your offer to US$100.00."
       )
@@ -206,7 +203,7 @@ describe("PriceOptions", () => {
         )
       )
       fireEvent.click(radios[3])
-      expect(trackEvent).toHaveBeenLastCalledWith(
+      expect(trackEvent).toHaveBeenCalledWith(
         expect.objectContaining(getTrackingObject("Different amount", 0, "EUR"))
       )
     })
@@ -233,6 +230,7 @@ describe("PriceOptions", () => {
     })
     it("displays the error and automatically selects the custom value option when an error is passed", async () => {
       const selected = await screen.findByRole("radio", { checked: true })
+      expect(selected).toBeInTheDocument()
       expect(selected).toHaveTextContent("Different amount")
       expect(selected).toHaveTextContent("Offer amount missing or invalid.")
     })
