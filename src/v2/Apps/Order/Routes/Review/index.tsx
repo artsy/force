@@ -432,7 +432,7 @@ export class ReviewRoute extends Component<ReviewProps> {
                 <ArtworkSummaryItem order={order} />
                 <TransactionDetailsSummaryItem
                   order={order}
-                  placeholderOverride="To be confirmed*"
+                  transactionStep="review"
                 />
               </Flex>
               <BuyerGuarantee

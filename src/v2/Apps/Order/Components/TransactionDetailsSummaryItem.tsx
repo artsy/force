@@ -24,7 +24,7 @@ export interface TransactionDetailsSummaryItemProps
   useLastSubmittedOffer?: boolean
   offerContextPrice?: "LIST_PRICE" | "LAST_OFFER"
   showOfferNote?: boolean
-  placeholderOverride?: string | null
+  transactionStep?: string | null
   showCongratulationMessage?: boolean
   isEigen?: boolean
   showOrderNumberHeader?: boolean
@@ -40,28 +40,27 @@ export class TransactionDetailsSummaryItem extends React.Component<
 
   avalaraPhase2enabled = userHasLabFeature(this.props.user, "Avalara Phase 2")
 
-  amountPlaceholder =
-    this.props.placeholderOverride || this.avalaraPhase2enabled
-      ? "Calculated in the next steps"
-      : "—"
-
   render() {
     const {
       showOfferNote,
       offerOverride,
       order,
-      placeholderOverride,
+      transactionStep,
       isEigen,
       showCongratulationMessage = false,
       ...others
     } = this.props
+
+    const shippingAddressAdded =
+      transactionStep === "review" || transactionStep === "payment"
+    const offer = this.getOffer()
 
     return (
       <StepSummaryItem {...others}>
         {this.renderPriceEntry()}
         <Spacer mb={2} />
         <Entry
-          label={this.shippingDisplayLabel()}
+          label={this.shippingDisplayLabel(shippingAddressAdded, offer)}
           value={this.shippingDisplayAmount()}
           data-test="shippingDisplayAmount"
         />
@@ -84,6 +83,17 @@ export class TransactionDetailsSummaryItem extends React.Component<
             *Additional duties and taxes may apply at import
           </Text>
         )}
+        <Spacer mb={2} />
+        {this.avalaraPhase2enabled &&
+          shippingAddressAdded &&
+          !order.taxTotal &&
+          offer &&
+          !offer.taxTotal && (
+            <Text variant="sm" color="black60">
+              **Shipping cost to be confirmed by gallery. You will be able to
+              review total with shipping before payment.
+            </Text>
+          )}
         {showOfferNote && order.mode === "OFFER" && this.renderNoteEntry()}
         {showCongratulationMessage && (
           <Column
@@ -129,38 +139,64 @@ export class TransactionDetailsSummaryItem extends React.Component<
       : this.props.order.myLastOffer
   }
 
+  amountPlaceholder = () => {
+    const { transactionStep } = this.props
+
+    if (transactionStep === "review") {
+      return this.avalaraPhase2enabled
+        ? "Waiting for final costs"
+        : "To be confirmed*"
+    }
+
+    if (transactionStep === "payment") {
+      return this.avalaraPhase2enabled ? "Waiting for final costs" : "—"
+    }
+
+    return this.avalaraPhase2enabled ? "Calculated in the next steps" : "—"
+  }
+
   shippingDisplayAmount = () => {
     const { order } = this.props
     const currency = order.currencyCode
+
     switch (order.mode) {
       case "BUY":
         return (
           appendCurrencySymbol(order.shippingTotal, currency) ||
-          this.amountPlaceholder
+          this.amountPlaceholder()
         )
       case "OFFER":
         const offer = this.getOffer()
         return (
           (offer && appendCurrencySymbol(offer.shippingTotal, currency)) ||
-          this.amountPlaceholder
+          this.amountPlaceholder()
         )
     }
   }
 
-  shippingDisplayLabel = () => {
+  shippingDisplayLabel = (shippingAddressAdded, offer) => {
     const { order } = this.props
-    let label = "Shipping"
+
+    if (
+      this.avalaraPhase2enabled &&
+      shippingAddressAdded &&
+      !order.taxTotal &&
+      offer &&
+      !offer.taxTotal
+    ) {
+      return "Shipping**"
+    }
 
     if (order.requestedFulfillment?.__typename === "CommerceShipArta") {
       const selectedShippingQuote = extractNodes(order.lineItems)?.[0]
         .selectedShippingQuote
 
       if (selectedShippingQuote) {
-        label = `${selectedShippingQuote.displayName} delivery`
+        return `${selectedShippingQuote.displayName} delivery`
       }
     }
 
-    return label
+    return "Shipping"
   }
 
   taxDisplayAmount = () => {
@@ -170,13 +206,13 @@ export class TransactionDetailsSummaryItem extends React.Component<
       case "BUY":
         return (
           appendCurrencySymbol(order.taxTotal, currency) ||
-          this.amountPlaceholder
+          this.amountPlaceholder()
         )
       case "OFFER":
         const offer = this.getOffer()
         return (
           (offer && appendCurrencySymbol(offer.taxTotal, currency)) ||
-          this.amountPlaceholder
+          this.amountPlaceholder()
         )
     }
   }
@@ -218,7 +254,7 @@ export class TransactionDetailsSummaryItem extends React.Component<
           value={
             appendCurrencySymbol(offerOverride, currency) ||
             (offer && appendCurrencySymbol(offer.amount, currency)) ||
-            this.amountPlaceholder
+            this.amountPlaceholder()
           }
           data-test="offer"
         />

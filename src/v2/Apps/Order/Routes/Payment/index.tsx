@@ -11,7 +11,7 @@ import {
 import { TransactionDetailsSummaryItemFragmentContainer as TransactionDetailsSummaryItem } from "v2/Apps/Order/Components/TransactionDetailsSummaryItem"
 import { TwoColumnLayout } from "v2/Apps/Order/Components/TwoColumnLayout"
 import { Router } from "found"
-import { createRef, Component } from "react";
+import { createRef, Component } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import type { Stripe, StripeElements } from "@stripe/stripe-js"
 import createLogger from "v2/Utils/logger"
@@ -36,7 +36,6 @@ export const ContinueButton = props => (
     Continue
   </Button>
 )
-
 export interface StripeProps {
   stripe: Stripe
   elements: StripeElements
@@ -119,7 +118,6 @@ export class PaymentRoute extends Component<
   render() {
     const { order, isCommittingMutation } = this.props
     const { isGettingCreditCardId } = this.state
-
     const isLoading = isGettingCreditCardId || isCommittingMutation
 
     return (
@@ -151,7 +149,10 @@ export class PaymentRoute extends Component<
             <Flex flexDirection="column">
               <Flex flexDirection="column">
                 <ArtworkSummaryItem order={order} />
-                <TransactionDetailsSummaryItem order={order} />
+                <TransactionDetailsSummaryItem
+                  transactionStep="payment"
+                  order={order}
+                />
               </Flex>
               <BuyerGuarantee
                 contextModule={ContextModule.ordersPayment}
