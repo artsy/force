@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"
 import styled from "styled-components"
 import { Media } from "v2/Utils/Responsive"
 import {
@@ -133,6 +133,10 @@ export const Footer: React.FC<FooterProps> = props => {
             </Text>
 
             <Text variant={tokens.body}>
+              <FooterLink my={2} to="/meet-the-specialists">
+                Talk to a Specialist
+              </FooterLink>
+
               <FooterLink my={2} to="https://support.artsy.net">
                 Visit our Help Center
               </FooterLink>
@@ -271,6 +275,10 @@ const PolicyLinks = () => {
         to="/page/artsy-curated-auctions-listing-agreement"
       >
         ACA Seller’s Agreement
+      </FooterLink>
+
+      <FooterLink color="black60" mr={1} to="/buyer-guarantee">
+        Buyer Guarantee
       </FooterLink>
 
       <Flex mr={1}>

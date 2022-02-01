@@ -152,6 +152,11 @@ const SettingsEditProfileArtistsYouCollectAutocompleteInput: FC<SettingsEditProf
     setTerm(event.currentTarget.value)
   }
 
+  const handleSelect = (option: { text: string; value: string }) => {
+    onSelect(option)
+    setTerm("")
+  }
+
   return (
     <SystemQueryRenderer<SettingsEditProfileArtistsYouCollectAutocompleteQuery>
       environment={relayEnvironment}
@@ -201,9 +206,14 @@ const SettingsEditProfileArtistsYouCollectAutocompleteInput: FC<SettingsEditProf
 
         return (
           <AutocompleteInput
+            value={term}
             onChange={handleChange}
-            onSelect={onSelect}
-            options={options}
+            onSelect={handleSelect}
+            options={
+              options.length > 0 || term === ""
+                ? options
+                : [{ text: "No results", value: "" }]
+            }
             placeholder="Search artists"
             {...rest}
           />

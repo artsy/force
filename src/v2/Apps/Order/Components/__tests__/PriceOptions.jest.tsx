@@ -10,8 +10,13 @@ jest.unmock("react-relay")
 const onChange = jest.fn()
 const onFocus = jest.fn()
 const trackEvent = jest.fn()
+const showError = jest.fn().mockReturnValue(false)
 
 const mockUseTracking = useTracking as jest.Mock
+
+jest.mock("v2/Utils/Hooks/useMatchMedia", () => ({
+  __internal__useMatchMedia: () => ({}),
+}))
 
 const { renderWithRelay } = setupTestWrapperTL<PriceOptions_Test_Query>({
   Component: props => (
@@ -20,6 +25,7 @@ const { renderWithRelay } = setupTestWrapperTL<PriceOptions_Test_Query>({
       order={props.order!}
       onChange={onChange}
       onFocus={onFocus}
+      showError={showError()}
     />
   ),
   query: graphql`
@@ -118,19 +124,38 @@ describe("PriceOptions", () => {
         )
       )
       fireEvent.click(radios[3])
-      expect(trackEvent).toHaveBeenLastCalledWith(
+      expect(trackEvent).toHaveBeenCalledWith(
         expect.objectContaining(getTrackingObject("Different amount", 0, "USD"))
       )
     })
-    it("tracks the offer too low notice", async () => {
+    it("correctly displays and tracks the offer too low notice", async () => {
       fireEvent.click(radios[3])
       const input = await within(radios[3]).findByRole("textbox")
-      fireEvent.change(input, { target: { value: 50 } })
+      const notice = await screen.findByText(
+        "We recommend changing your offer to US$100.00."
+      )
+      expect(notice).toBeInTheDocument()
       expect(trackEvent).toHaveBeenLastCalledWith(
         expect.objectContaining({
           action_type: "Viewed offer too low",
           flow: "Make offer",
         })
+      )
+      fireEvent.change(input, { target: { value: 180 } })
+      expect(notice).not.toBeInTheDocument()
+    })
+    it("selects the first option when clicking on the low price notice", async () => {
+      fireEvent.click(radios[3])
+      const notice = await screen.findByText(
+        "We recommend changing your offer to US$100.00."
+      )
+      fireEvent.click(notice)
+      const selected = screen.getAllByRole("radio", { checked: true })
+      expect(selected[0]).toHaveTextContent("US$100.00")
+      expect(trackEvent).toHaveBeenLastCalledWith(
+        expect.objectContaining(
+          getTrackingObject("We recommend changing your offer", 100, "USD")
+        )
       )
     })
   })
@@ -178,9 +203,41 @@ describe("PriceOptions", () => {
         )
       )
       fireEvent.click(radios[3])
-      expect(trackEvent).toHaveBeenLastCalledWith(
+      expect(trackEvent).toHaveBeenCalledWith(
         expect.objectContaining(getTrackingObject("Different amount", 0, "EUR"))
       )
+    })
+  })
+  describe("Error Handling", () => {
+    beforeEach(() => {
+      showError.mockReturnValueOnce(false).mockReturnValueOnce(true)
+      renderWithRelay({
+        Artwork: () => ({
+          priceCurrency: "AUD",
+          isPriceRange: false,
+          listPrice: {
+            __typename: "Money",
+            major: 99,
+          },
+        }),
+      })
+      radios = screen.getAllByRole("radio")
+    })
+    it("doesn't display an error when none is passed", () => {
+      expect(
+        screen.queryByText("Offer amount missing or invalid.")
+      ).not.toBeInTheDocument()
+    })
+    it("displays the error and automatically selects the custom value option when an error is passed", async () => {
+      const selected = await screen.findByRole("radio", { checked: true })
+      expect(selected).toBeInTheDocument()
+      expect(selected).toHaveTextContent("Different amount")
+      expect(selected).toHaveTextContent("Offer amount missing or invalid.")
+    })
+    it("correctly rounds the values and displays the currency symbol", () => {
+      expect(radios[0]).toHaveTextContent("A$79.00") // %80 would be A$79.20
+      expect(radios[1]).toHaveTextContent("A$84.00") // %85 would be A$84.15
+      expect(radios[2]).toHaveTextContent("A$89.00") // %90 would be A$89.10
     })
   })
 })

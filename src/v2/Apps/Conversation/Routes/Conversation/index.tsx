@@ -1,17 +1,23 @@
-import { useState } from "react";
-import * as React from "react";
+import { useState } from "react"
 import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
-import { Box, Flex, FullBleed, Title, ThemeProviderV3 } from "@artsy/palette"
+import {
+  Box,
+  Flex,
+  FullBleed,
+  Title,
+  ThemeProviderV3,
+  breakpoints,
+} from "@artsy/palette"
 import { Match } from "found"
 import styled from "styled-components"
 import { themeGet } from "@styled-system/theme-get"
 
 import { ConversationPaginationContainer as Conversation } from "v2/Apps/Conversation/Components/Conversation"
 import { ConversationListPaginationContainer as ConversationList } from "v2/Apps/Conversation/Components/ConversationList"
-import { Media } from "v2/Utils/Responsive"
-import { DetailsFragmentContainer as Details } from "../../Components/Details"
-
 import { Conversation_me } from "v2/__generated__/Conversation_me.graphql"
+import { DetailsSidebarFragmentContainer } from "../../Components/DetailsSidebar"
+const LARGE_SCREEN_CONVERSATION_LIST_WIDTH = "375px"
+
 interface ConversationRouteProps {
   me: Conversation_me
   conversationID: string
@@ -37,10 +43,19 @@ const ConversationContainer = styled(Flex)`
   }
 `
 
+const ConversationListWrapper = styled(Box)`
+  height: 100%;
+  display: none;
+  @media (min-width: ${breakpoints.md}) {
+    display: initial;
+    flex: 0 0 ${LARGE_SCREEN_CONVERSATION_LIST_WIDTH};
+    border-right: 1px solid ${themeGet("colors.black10")};
+  }
+`
+
 export const ConversationRoute: React.FC<ConversationRouteProps> = props => {
   const { me } = props
-  const [showDetails, setShowDetails] = useState(false) // TODO based on screen size
-
+  const [showDetails, setShowDetails] = useState(false)
   return (
     <>
       <ThemeProviderV3>
@@ -48,19 +63,19 @@ export const ConversationRoute: React.FC<ConversationRouteProps> = props => {
           <Title>Inbox | Artsy</Title>
           <ConstrainedHeightContainer>
             <ConversationContainer>
-              <Media greaterThan="sm">
+              <ConversationListWrapper>
                 <ConversationList
                   me={me as any}
                   selectedConversationID={me?.conversation?.internalID ?? ""}
                 />
-              </Media>
+              </ConversationListWrapper>
               <Conversation
                 conversation={me.conversation!}
                 showDetails={showDetails}
                 setShowDetails={setShowDetails}
                 refetch={props.relay.refetch}
               />
-              <Details
+              <DetailsSidebarFragmentContainer
                 conversation={me.conversation!}
                 showDetails={showDetails}
                 setShowDetails={setShowDetails}
@@ -84,7 +99,7 @@ export const ConversationPaginationContainer = createRefetchContainer(
           internalID
           ...Conversation_conversation
           ...ConversationCTA_conversation
-          ...Details_conversation
+          ...DetailsSidebar_conversation
         }
       }
     `,

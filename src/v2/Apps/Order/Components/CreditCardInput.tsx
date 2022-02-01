@@ -55,6 +55,9 @@ interface CreditCardInputProps {
   onChange?: (response: StripeCardNumberElementChangeEvent) => void
 }
 
+/**
+ * @deprecated Use `v2/Components/CreditCardInput` instead
+ */
 export const CreditCardInput: React.FC<CreditCardInputProps> = props => {
   const [focused, setFocused] = useState(false)
   const { errors, setFieldError } = useFormikContext<BillingInfoWithTerms>()

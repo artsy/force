@@ -49,7 +49,7 @@ export const PartnerArtistList: React.FC<PartnerArtistListProps> = ({
           return (
             <Column key={i} span={[(group.columnSize * 2) as ColumnSpan]}>
               {group.columnName && (
-                <Text variant="mediumText" mb={2}>
+                <Text variant="md" mb={2}>
                   {group.columnName}
                 </Text>
               )}

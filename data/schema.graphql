@@ -16,6 +16,16 @@ type AcceptPartnerAgreementPayload {
   partnerAgreementOrErrors: PartnerAgreementOrErrorsUnion!
 }
 
+type AccountMutationFailure {
+  mutationError: GravityMutationError
+}
+
+type AccountMutationSuccess {
+  success: Boolean
+}
+
+union AccountMutationType = AccountMutationFailure | AccountMutationSuccess
+
 type AccountRequest {
   # A globally unique ID.
   id: ID!
@@ -675,9 +685,14 @@ input ARImageInput {
 
 type Article implements Node {
   author: Author
+
+  # The byline for the article. Defaults to "Artsy Editorial" if no authors are present.
+  byline: String
   cached: Int
   channelID: String
   contributingAuthors: [Author]
+  description: String
+  hero: ArticleHero
   href: String
 
   # A globally unique ID.
@@ -685,6 +700,9 @@ type Article implements Node {
 
   # A type-specific ID.
   internalID: ID!
+  keywords: [String!]!
+  layout: ArticleLayout!
+  postscript: String
   publishedAt(
     format: String
 
@@ -693,6 +711,14 @@ type Article implements Node {
     # https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
     timezone: String
   ): String
+  relatedArticles(
+    # Enables configuration for loading the type of articles that sit in between full-page articles
+    inVertical: Boolean = false
+
+    # Number of articles to return
+    size: Int = 3
+  ): [Article!]!
+  sections: [ArticleSections!]!
   slug: String
   thumbnailImage: Image
   thumbnailTeaser: String
@@ -728,6 +754,111 @@ type ArticleEdge {
 
   # The item at the end of the edge
   node: Article
+}
+
+type ArticleFeatureSection {
+  image: Image
+  layout: ArticleFeatureSectionType!
+  title: String
+}
+
+enum ArticleFeatureSectionType {
+  BASIC
+  FULLSCREEN
+  SPLIT
+  TEXT
+}
+
+union ArticleHero = ArticleFeatureSection
+
+type ArticleImageSection {
+  caption: String
+  id: ID!
+  image: Image
+  layout: String
+}
+
+enum ArticleLayout {
+  FEATURE
+  STANDARD
+}
+
+type ArticleSectionCallout {
+  article: String
+  hideImage: String
+  text: String
+  thumbnailUrl: String
+  topStories: String
+  type: String
+}
+
+type ArticleSectionEmbed {
+  height: String
+  layout: String
+  mobileHeight: String
+  type: String
+  url: String
+}
+
+type ArticleSectionImageCollection {
+  figures: [ArticleSectionImageCollectionFigure!]!
+  layout: ArticleSectionImageCollectionLayout!
+}
+
+union ArticleSectionImageCollectionFigure = ArticleImageSection | Artwork
+
+enum ArticleSectionImageCollectionLayout {
+  COLUMN_WIDTH
+  FILLWIDTH
+  OVERFLOW_FILLWIDTH
+}
+
+type ArticleSectionImageSet {
+  counts: ArticleSectionImageSetCounts!
+  cover: ArticleSectionImageSetFigure
+  figures: [ArticleSectionImageSetFigure!]!
+  layout: ArticleSectionImageSetLayout!
+  title: String
+}
+
+type ArticleSectionImageSetCounts {
+  figures: Int!
+}
+
+union ArticleSectionImageSetFigure = ArticleImageSection | Artwork
+
+enum ArticleSectionImageSetLayout {
+  FULL
+  MINI
+}
+
+union ArticleSections =
+    ArticleSectionCallout
+  | ArticleSectionEmbed
+  | ArticleSectionImageCollection
+  | ArticleSectionImageSet
+  | ArticleSectionSocialEmbed
+  | ArticleSectionText
+  | ArticleSectionVideo
+
+type ArticleSectionSocialEmbed {
+  layout: String
+  type: String
+  url: String
+}
+
+type ArticleSectionText {
+  body: String
+  layout: String
+}
+
+type ArticleSectionVideo {
+  backgroundColor: String
+  caption: String
+  coverImageUrl: String
+  layout: String
+  type: String
+  url: String
 }
 
 enum ArticleSorts {
@@ -822,10 +953,19 @@ type Artist implements EntityWithFilterArtworksConnectionInterface & Node & Sear
     size: Int
   ): [Artist]
   counts: ArtistCounts
+  createdAt(
+    format: String
+
+    # A tz database time zone, otherwise falls back to "X-TIMEZONE" header. See
+    # http://www.iana.org/time-zones,
+    # https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+    timezone: String
+  ): String
   currentEvent: CurrentEvent
   deathday: String
   disablePriceContext: Boolean
   displayLabel: String
+  duplicates: [Artist]
 
   # Custom-sorted list of shows for an artist, in order of significance.
   exhibitionHighlights(
@@ -1041,6 +1181,7 @@ type ArtistCounts {
     label: String
   ): FormattedNumber
   auctionResults: Int
+  duplicates: Int
   ecommerceArtworks(
     # Returns a `String` when format is specified. e.g.`'0,0.0000''`
     format: String
@@ -1289,6 +1430,8 @@ type ArtistSeriesEdge {
 }
 
 enum ArtistSorts {
+  CREATED_AT_ASC
+  CREATED_AT_DESC
   SORTABLE_ID_ASC
   SORTABLE_ID_DESC
   TRENDING_DESC
@@ -1573,6 +1716,9 @@ type Artwork implements Node & Searchable & Sellable {
 
   # Whether this artwork is unlisted or not
   unlisted: Boolean
+
+  # Based on artwork location and status, verify that partner needs VAT exemption approval from Artsy.
+  vatExemptApprovalRequired: Boolean
 
   # Based on artwork location verify that VAT info for the partner is complete.
   vatRequirementComplete: Boolean
@@ -2646,7 +2792,7 @@ type CollectorProfileType {
     timezone: String
   ): String
   name: String
-  privacy: Int
+  privacy: String
   professionalBuyerAppliedAt(
     format: String
 
@@ -2896,6 +3042,7 @@ type CommerceBuyOrder implements CommerceOrder {
     thousand: String = ","
   ): String
   shippingTotalCents: Int
+  source: CommerceOrderSourceEnum!
   state: CommerceOrderStateEnum!
   stateExpiresAt(
     format: String
@@ -3569,6 +3716,7 @@ type CommerceOfferOrder implements CommerceOrder {
     thousand: String = ","
   ): String
   shippingTotalCents: Int
+  source: CommerceOrderSourceEnum!
   state: CommerceOrderStateEnum!
   stateExpiresAt(
     format: String
@@ -3749,6 +3897,7 @@ interface CommerceOrder {
     thousand: String = ","
   ): String
   shippingTotalCents: Int
+  source: CommerceOrderSourceEnum!
   state: CommerceOrderStateEnum!
   stateExpiresAt(
     format: String
@@ -3931,6 +4080,14 @@ union CommerceOrderPartyUnion = CommercePartner | CommerceUser
 type CommerceOrderRequiresAction {
   # Data related to action needed
   actionData: CommerceOrderActionData!
+}
+
+enum CommerceOrderSourceEnum {
+  # The order was originated on the artwork page
+  artwork_page
+
+  # The order was originated on a conversation
+  inquiry
 }
 
 type CommerceOrderStateChangedEvent implements CommerceEventInterface {
@@ -5922,6 +6079,7 @@ input CreateUserAddressInput {
 type CreateUserAddressPayload {
   # A unique identifier for the client performing the mutation.
   clientMutationId: String
+  me: Me
   userAddressOrErrors: UserAddressOrErrorsUnion!
 }
 
@@ -6080,6 +6238,7 @@ union CreditCardMutationType =
 type CreditCardPayload {
   clientMutationId: String
   creditCardOrError: CreditCardMutationType
+  me: Me
 }
 
 type CroppedImageUrl {
@@ -6136,6 +6295,21 @@ type DeepZoomImageSize {
   Width: Int
 }
 
+input DeleteAccountInput {
+  clientMutationId: String
+
+  # Reason for deleting the account.
+  explanation: String
+
+  # Referrer location
+  url: String
+}
+
+type DeleteAccountPayload {
+  clientMutationId: String
+  userAccountOrError: AccountMutationType
+}
+
 input DeleteArtworkImageInput {
   artworkID: String!
   clientMutationId: String
@@ -6155,6 +6329,7 @@ input DeleteCreditCardInput {
 type DeleteCreditCardPayload {
   clientMutationId: String
   creditCardOrError: CreditCardMutationType
+  me: Me
 }
 
 # Autogenerated input type of DeleteUserAddress
@@ -6168,6 +6343,7 @@ input DeleteUserAddressInput {
 type DeleteUserAddressPayload {
   # A unique identifier for the client performing the mutation.
   clientMutationId: String
+  me: Me
   userAddressOrErrors: UserAddressOrErrorsUnion!
 }
 
@@ -8709,7 +8885,7 @@ type Me implements Node {
     before: String
 
     # Exclude artworks that have been purchased on Artsy and automatically added to the collection.
-    excludePurchasedArtworks: Boolean = true
+    excludePurchasedArtworks: Boolean = false
     first: Int
     last: Int
     sort: MyCollectionArtworkSorts
@@ -8737,7 +8913,17 @@ type Me implements Node {
     sort: CommerceOrderConnectionSortEnum
     states: [CommerceOrderStateEnum!]
   ): CommerceOrderConnectionWithTotalCount
+
+  # Collector's position with relevant institutions
+  otherRelevantPosition: String
+    @deprecated(reason: "Use `otherRelevantPositions` instead")
+
+  # Collector's position with relevant institutions
+  otherRelevantPositions: String
   paddleNumber: String
+
+  # A list of the current user’s managed partners
+  partners: [Partner]
 
   # The user's most current pending identity verification, if it exists
   pendingIdentityVerification: IdentityVerification
@@ -8746,7 +8932,7 @@ type Me implements Node {
   priceRange: String
   priceRangeMax: Float
   priceRangeMin: Float
-  privacy: Int
+  privacy: String
   profession: String
 
   # This user should receive lot opening notifications
@@ -9106,6 +9292,9 @@ type Mutation {
 
   # Remove a credit card
   deleteCreditCard(input: DeleteCreditCardInput!): DeleteCreditCardPayload
+
+  # Delete User Artsy Account
+  deleteMyAccountMutation(input: DeleteAccountInput!): DeleteAccountPayload
 
   # Remove the user icon
   deleteMyUserProfileIcon(input: DeleteUserIconInput!): DeleteUserIconPayload
@@ -10529,6 +10718,7 @@ type Query {
   articlesConnection(
     after: String
     before: String
+    featured: Boolean
     first: Int
 
     # Articles that are ready to be publicly viewed in the feed by everyone.
@@ -11579,6 +11769,16 @@ type Sale implements Node {
   userNeedsIdentityVerification: Boolean
 }
 
+type SaleAdministrationFields {
+  collectorVetting: String
+  id: ID!
+  marketingTier: String
+  marketingTierConfirmed: Boolean!
+  partnerTier: String
+  region: String
+  status: String
+}
+
 type SaleArtwork implements ArtworkEdgeInterface & Node {
   artwork: Artwork
   cached: Int
@@ -12000,7 +12200,8 @@ type SearchAggregationResults {
 type SearchCriteria {
   acquireable: Boolean
   additionalGeneIDs: [String!]!
-  artistID: String
+  artistID: String @deprecated(reason: "Deprecated in favor of artistIDs array")
+  artistIDs: [String!]
   atAuction: Boolean
   attributionClass: [String!]!
   colors: [String!]!
@@ -12023,7 +12224,10 @@ type SearchCriteria {
 input SearchCriteriaAttributes {
   acquireable: Boolean = null
   additionalGeneIDs: [String!] = []
+
+  # DEPRECATED Please use artistIDs instead
   artistID: String = null
+  artistIDs: [String!] = []
   atAuction: Boolean = null
   attributionClass: [String!] = []
   colors: [String!] = []
@@ -12921,7 +13125,7 @@ type UpdateCollectorProfilePayload {
     timezone: String
   ): String
   name: String
-  privacy: Int
+  privacy: String
   professionalBuyerAppliedAt(
     format: String
 
@@ -13010,6 +13214,9 @@ input UpdateMyProfileInput {
   # Additional personal notes.
   notes: String
 
+  # Collector's positions with relevant institutions
+  otherRelevantPositions: String
+
   # The user's password, required to change email address.
   password: String
 
@@ -13023,7 +13230,7 @@ input UpdateMyProfileInput {
   priceRangeMin: Int
 
   # Wheter or not the collector shares detailed profile information with galleries.
-  privacy: Int
+  privacy: String
 
   # Profession.
   profession: String
@@ -13074,8 +13281,9 @@ type UpdateMyProfilePayload {
 
 # Autogenerated input type of UpdateSavedSearch
 input UpdateSavedSearchInput {
-  # A unique identifier for the client performing the mutation.
   attributes: SearchCriteriaAttributes
+
+  # A unique identifier for the client performing the mutation.
   clientMutationId: String
   searchCriteriaID: String!
   userAlertSettings: UserAlertSettingsInput
@@ -13165,6 +13373,7 @@ input UpdateUserAddressInput {
 type UpdateUserAddressPayload {
   # A unique identifier for the client performing the mutation.
   clientMutationId: String
+  me: Me
   userAddressOrErrors: UserAddressOrErrorsUnion!
 }
 
@@ -13179,6 +13388,7 @@ input UpdateUserDefaultAddressInput {
 type UpdateUserDefaultAddressPayload {
   # A unique identifier for the client performing the mutation.
   clientMutationId: String
+  me: Me
   userAddressOrErrors: UserAddressOrErrorsUnion!
 }
 
@@ -13490,6 +13700,7 @@ type Viewer {
   articlesConnection(
     after: String
     before: String
+    featured: Boolean
     first: Int
 
     # Articles that are ready to be publicly viewed in the feed by everyone.

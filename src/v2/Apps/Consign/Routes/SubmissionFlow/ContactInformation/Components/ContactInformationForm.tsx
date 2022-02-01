@@ -1,9 +1,6 @@
 import { Box, BoxProps, Input } from "@artsy/palette"
 import { useFormikContext } from "formik"
-import { useEffect } from "react"
-import { useRouter } from "v2/System/Router/useRouter"
 import { ContactInformation_me } from "v2/__generated__/ContactInformation_me.graphql"
-import { useSubmission } from "../../Utils/useSubmission"
 import { getPhoneNumberInformation } from "../../Utils/phoneNumberUtils"
 import { useSystemContext } from "v2/System"
 import { PhoneNumber, PhoneNumberInput } from "./PhoneNumberInput"
@@ -28,27 +25,9 @@ export const ContactInformationForm: React.FC<ContactInformationFormProps> = ({
     handleBlur,
     touched,
     errors,
-    resetForm,
-    validateForm,
-    setFieldTouched,
     setFieldValue,
   } = useFormikContext<ContactInformationFormModel>()
   const { relayEnvironment } = useSystemContext()
-
-  const {
-    match: {
-      params: { id },
-    },
-  } = useRouter()
-  const { submission } = useSubmission(id)
-
-  useEffect(() => {
-    if (submission) {
-      resetForm({ values: submission.contactInformationForm })
-      setFieldTouched("phone", false)
-      validateForm(submission.contactInformationForm)
-    }
-  }, [submission])
 
   const handlePhoneNumberChange = async (region, number) => {
     if (region && number && relayEnvironment) {
@@ -57,9 +36,16 @@ export const ContactInformationForm: React.FC<ContactInformationFormProps> = ({
         relayEnvironment,
         region
       )
-
       setFieldValue("phone", phoneInformation)
+      return
     }
+
+    setFieldValue("phone", {
+      international: "",
+      isValid: false,
+      national: "",
+      originalNumber: "",
+    })
   }
 
   return (
@@ -82,8 +68,8 @@ export const ContactInformationForm: React.FC<ContactInformationFormProps> = ({
         value={values.email}
         onChange={handleChange}
         onBlur={handleBlur}
+        error={touched.email && errors.email}
       />
-
       <PhoneNumberInput
         mt={4}
         phoneNumber={values.phone}

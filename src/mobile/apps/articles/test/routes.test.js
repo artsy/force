@@ -109,39 +109,3 @@ describe("Article routes", function () {
     })
   })
 })
-
-describe("#articles", function () {
-  beforeEach(function () {
-    const end = sinon
-      .stub()
-      .yields(null, { body: { data: { articles: [fixtures.article] } } })
-    end.onCall(1).yields(null, {
-      body: {
-        data: { articles: [{ layout: "news", title: "News Article" }] },
-      },
-    })
-    sinon.stub(request, "post").returns({
-      send: sinon.stub().returns({
-        end,
-      }),
-    })
-    this.req = { params: {} }
-    this.res = {
-      render: sinon.stub(),
-      locals: { sd: {} },
-      redirect: sinon.stub(),
-    }
-    return (this.next = sinon.stub())
-  })
-
-  afterEach(() => request.post.restore())
-
-  it.skip("fetches a collection of articles and renders the list", function (done) {
-    routes.articles(this.req, this.res, this.next)
-    this.res.render.args[0][0].should.equal("articles")
-    this.res.render.args[0][1].articles[0].thumbnail_title.should.containEql(
-      "Top Ten Booths at miart 2014"
-    )
-    return done()
-  })
-})

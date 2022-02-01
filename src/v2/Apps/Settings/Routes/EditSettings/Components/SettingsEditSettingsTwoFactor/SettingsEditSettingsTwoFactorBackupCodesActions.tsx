@@ -1,30 +1,48 @@
-import { Button, BorderBoxProps, Flex } from "@artsy/palette"
-import React, { useEffect, useState } from "react"
+import { BoxProps, Button, Flex, Spacer } from "@artsy/palette"
+import React, { useEffect } from "react"
+import { useMode } from "v2/Utils/Hooks/useMode"
 
 interface SettingsEditSettingsTwoFactorBackupCodesActionsProps
-  extends BorderBoxProps {
+  extends BoxProps {
   backupSecondFactors: string[]
 }
 
-export const SettingsEditSettingsTwoFactorBackupCodesActions: React.FC<SettingsEditSettingsTwoFactorBackupCodesActionsProps> = props => {
-  const { backupSecondFactors } = props
-
-  const [supportsClipboard, setSupportsClipboard] = useState(false)
+export const SettingsEditSettingsTwoFactorBackupCodesActions: React.FC<SettingsEditSettingsTwoFactorBackupCodesActionsProps> = ({
+  backupSecondFactors,
+  ...rest
+}) => {
+  const [mode, setMode] = useMode<"Unsupported" | "Supported" | "Copied">(
+    "Unsupported"
+  )
 
   useEffect(() => {
     // Only render the copy button if browser supports the Clipboard API
     // https://developer.mozilla.org/en-US/docs/Web/API/Clipboard_API
-    if ("clipboard" in navigator) setSupportsClipboard(true)
-  }, [])
+    if ("clipboard" in navigator) setMode("Supported")
+  }, [setMode])
 
-  function copyCodesToClipboard() {
+  useEffect(() => {
+    let timeout: ReturnType<typeof setTimeout>
+
+    if (mode === "Copied") {
+      timeout = setTimeout(() => setMode("Supported"), 1000)
+    }
+
+    return () => {
+      clearTimeout(timeout)
+    }
+  }, [mode, setMode])
+
+  const copyCodesToClipboard = () => {
     navigator.clipboard.writeText(backupSecondFactors.join("\n"))
+    setMode("Copied")
   }
 
-  function downloadCodes() {
+  const downloadCodes = () => {
     const codes = backupSecondFactors.join("\n")
     const element = document.createElement("a")
     const file = new Blob([codes], { type: "text/plain" })
+
     element.href = URL.createObjectURL(file)
     element.download = "recovery_codes.txt"
     document.body.appendChild(element) // Required for this to work in FireFox
@@ -33,26 +51,29 @@ export const SettingsEditSettingsTwoFactorBackupCodesActions: React.FC<SettingsE
   }
 
   return (
-    <Flex justifyContent="center">
-      {supportsClipboard && (
-        <Button
-          onClick={copyCodesToClipboard}
-          variant="secondaryOutline"
-          size="small"
-          mt={4}
-          mx={2}
-          data-test="copyButton"
-        >
-          Copy
-        </Button>
+    <Flex justifyContent="center" {...rest}>
+      {mode !== "Unsupported" && (
+        <>
+          <Button
+            onClick={copyCodesToClipboard}
+            data-test="copyButton"
+            flex={1}
+            size="small"
+            variant="secondaryOutline"
+          >
+            {mode === "Copied" ? "Copied" : "Copy"}
+          </Button>
+
+          <Spacer ml={1} />
+        </>
       )}
+
       <Button
         onClick={downloadCodes}
-        variant="secondaryOutline"
-        size="small"
-        mt={4}
-        mx={2}
         data-test="downloadButton"
+        flex={1}
+        size="small"
+        variant="secondaryOutline"
       >
         Download
       </Button>

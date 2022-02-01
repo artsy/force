@@ -15,7 +15,7 @@ import { ArtsyMissionStatement } from "./Components/ArtsyMissionStatement"
 import { Join, Spacer } from "@artsy/palette"
 import { useRouter } from "v2/System/Router/useRouter"
 import { useEffect } from "react"
-import { UtmParams } from "../SubmissionFlow/Utils/useSubmission"
+import { UtmParams } from "../SubmissionFlow/Utils/types"
 
 export const MarketingLandingApp = () => {
   const {

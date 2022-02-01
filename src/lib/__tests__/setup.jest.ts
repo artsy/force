@@ -1,7 +1,7 @@
 jest.mock("../../desktop", () => jest.fn())
 
 const express = require("express")
-const artsyPassport = require("@artsy/passport")
+const artsyPassport = require("lib/passport")
 
 describe("setup", () => {
   describe("artsyPassport", () => {

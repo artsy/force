@@ -14,7 +14,7 @@ import {
   TextArea,
 } from "@artsy/palette"
 import { useSystemContext } from "v2/System"
-import * as React from "react";
+import * as React from "react"
 import { useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { InquiryInquiry_artwork } from "v2/__generated__/InquiryInquiry_artwork.graphql"
@@ -29,13 +29,7 @@ import {
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import { logger } from "../util"
 
-enum Mode {
-  Pending,
-  Confirm,
-  Sending,
-  Error,
-  Success,
-}
+type Mode = "Pending" | "Confirm" | "Sending" | "Error" | "Success"
 
 interface InquiryInquiryProps {
   artwork: InquiryInquiry_artwork
@@ -46,13 +40,13 @@ const InquiryInquiry: React.FC<InquiryInquiryProps> = ({ artwork }) => {
 
   const { next, setInquiry, inquiry, artworkID } = useInquiryContext()
 
-  const [mode, setMode] = useState<Mode>(Mode.Pending)
+  const [mode, setMode] = useState<Mode>("Pending")
 
   const { submitArtworkInquiryRequest } = useArtworkInquiryRequest()
 
   const handleTextAreaChange = ({ value }: { value: string }) => {
-    if (mode === Mode.Confirm && value !== DEFAULT_MESSAGE) {
-      setMode(Mode.Pending)
+    if (mode === "Confirm" && value !== DEFAULT_MESSAGE) {
+      setMode("Pending")
     }
 
     setInquiry(prevState => ({ ...prevState, message: value }))
@@ -67,8 +61,8 @@ const InquiryInquiry: React.FC<InquiryInquiryProps> = ({ artwork }) => {
   const handleSubmit = async (event: React.FormEvent<HTMLElement>) => {
     event.preventDefault()
 
-    if (inquiry.message === DEFAULT_MESSAGE && mode !== Mode.Confirm) {
-      setMode(Mode.Confirm)
+    if (inquiry.message === DEFAULT_MESSAGE && mode !== "Confirm") {
+      setMode("Confirm")
       return
     }
 
@@ -79,28 +73,28 @@ const InquiryInquiry: React.FC<InquiryInquiryProps> = ({ artwork }) => {
       return
     }
 
-    setMode(Mode.Sending)
+    setMode("Sending")
 
     try {
       await submitArtworkInquiryRequest({
         artworkID,
         message: inquiry.message,
       })
-      setMode(Mode.Success)
+      setMode("Success")
       await wait(500)
       next()
     } catch (err) {
       logger.error(err)
-      setMode(Mode.Error)
+      setMode("Error")
     }
   }
 
   const label = {
-    [Mode.Pending]: "Send",
-    [Mode.Confirm]: "Send Anyway?",
-    [Mode.Sending]: "Send",
-    [Mode.Success]: "Sent",
-    [Mode.Error]: "Error",
+    ["Pending"]: "Send",
+    ["Confirm"]: "Send Anyway?",
+    ["Sending"]: "Send",
+    ["Success"]: "Sent",
+    ["Error"]: "Error",
   }[mode]
 
   return (
@@ -195,7 +189,7 @@ const InquiryInquiry: React.FC<InquiryInquiryProps> = ({ artwork }) => {
 
       <Spacer mt={1} />
 
-      {mode === Mode.Confirm && (
+      {mode === "Confirm" && (
         <Banner variant="defaultLight">
           We recommend personalizing your message to get a faster answer from
           the gallery.
@@ -208,8 +202,8 @@ const InquiryInquiry: React.FC<InquiryInquiryProps> = ({ artwork }) => {
         type="submit"
         display="block"
         width="100%"
-        loading={mode === Mode.Sending}
-        disabled={mode === Mode.Success}
+        loading={mode === "Sending"}
+        disabled={mode === "Success"}
       >
         {label}
       </Button>

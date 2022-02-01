@@ -2,6 +2,7 @@ import { Environment } from "relay-runtime"
 import {
   getConvectionGeminiKey,
   getGeminiCredentialsForEnvironment,
+  createGeminiAssetWithS3Credentials,
 } from "../../Mutations"
 import { Photo, uploadPhoto } from "../fileUtils"
 import { uploadFileToS3 } from "../uploadFileToS3"
@@ -18,29 +19,51 @@ jest.mock("../../Mutations/Gemini/getGeminiCredentialsForEnvironment", () => ({
   getGeminiCredentialsForEnvironment: jest.fn(),
 }))
 
+jest.mock("../../Mutations/Gemini/createGeminiAssetWithS3Credentials", () => ({
+  ...jest.requireActual(
+    "../../Mutations/Gemini/createGeminiAssetWithS3Credentials"
+  ),
+  createGeminiAssetWithS3Credentials: jest
+    .fn()
+    .mockResolvedValue("geminiToken"),
+}))
+
+jest.mock("../../Mutations/addAssetToConsignment", () => ({
+  ...jest.requireActual("../../Mutations/addAssetToConsignment"),
+  addAssetToConsignment: jest.fn(),
+}))
+
 jest.mock("../uploadFileToS3", () => ({
   ...jest.requireActual("../uploadFileToS3"),
   uploadFileToS3: jest.fn().mockResolvedValue("key"),
 }))
 
 describe("fileUtils", () => {
+  let relayEnvironment = {} as Environment
+  let photo: Photo
+  let submission = {
+    id: "1",
+  }
+  let updateProgress = jest.fn()
+
+  beforeEach(() => {
+    ;(getGeminiCredentialsForEnvironment as jest.Mock).mockClear()
+    ;(createGeminiAssetWithS3Credentials as jest.Mock).mockClear()
+    ;(getConvectionGeminiKey as jest.Mock).mockClear()
+    ;(uploadFileToS3 as jest.Mock).mockClear()
+
+    photo = {
+      removed: false,
+      geminiToken: "123",
+      bucket: "bucket",
+      size: 20000,
+      name: "photo.png",
+    } as Photo
+  })
+
   describe("uploadPhoto", () => {
-    let relayEnvironment = {} as Environment
-    let photo: Photo
-    let updateProgress = jest.fn()
-
-    beforeEach(() => {
-      ;(getGeminiCredentialsForEnvironment as jest.Mock).mockClear()
-      ;(getConvectionGeminiKey as jest.Mock).mockClear()
-      ;(uploadFileToS3 as jest.Mock).mockClear()
-
-      photo = {
-        removed: false,
-      } as Photo
-    })
-
     it("use convectionKey to get gemini credentials", async () => {
-      await uploadPhoto(relayEnvironment, photo, updateProgress)
+      await uploadPhoto(submission.id, relayEnvironment, photo, updateProgress)
 
       expect(getConvectionGeminiKey).toHaveBeenCalled()
       expect(getGeminiCredentialsForEnvironment).toHaveBeenCalled()
@@ -59,7 +82,7 @@ describe("fileUtils", () => {
         assetCredentials
       )
 
-      await uploadPhoto(relayEnvironment, photo, updateProgress)
+      await uploadPhoto(submission.id, relayEnvironment, photo, updateProgress)
 
       expect(getGeminiCredentialsForEnvironment).toHaveBeenCalled()
       expect(uploadFileToS3).toHaveBeenCalled()
@@ -71,10 +94,28 @@ describe("fileUtils", () => {
       )
     })
 
+    it("creates gemini asset with correct credentials", async () => {
+      await uploadPhoto(submission.id, relayEnvironment, photo, updateProgress)
+
+      expect(createGeminiAssetWithS3Credentials).toHaveBeenCalled()
+      expect(createGeminiAssetWithS3Credentials).toHaveBeenCalledWith(
+        relayEnvironment,
+        {
+          sourceKey: "key",
+          sourceBucket: "bucket",
+          templateKey: "convectionKey",
+          metadata: {
+            id: "1",
+            _type: "Consignment",
+          },
+        }
+      )
+    })
+
     it("prevents uploading if the image was removed", async () => {
       photo.removed = true
 
-      await uploadPhoto(relayEnvironment, photo, updateProgress)
+      await uploadPhoto(submission.id, relayEnvironment, photo, updateProgress)
 
       expect(uploadFileToS3).not.toHaveBeenCalled()
     })
@@ -92,6 +133,7 @@ describe("fileUtils", () => {
       ;(uploadFileToS3 as jest.Mock).mockRejectedValueOnce("rejected")
 
       const uploadPhotoResult = await uploadPhoto(
+        submission.id,
         relayEnvironment,
         photo,
         updateProgress

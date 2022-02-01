@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"
 import { Media } from "v2/Utils/Responsive"
 import { DesktopCarousel } from "./DesktopCarousel"
 import { ResponsiveValue } from "styled-system"

@@ -1,6 +1,6 @@
 import PropTypes from "prop-types"
 import MasonryGrid from "desktop/components/react/masonry_grid/MasonryGrid"
-import { Fragment } from "react";
+import { Fragment } from "react"
 import { get } from "lodash"
 import { Artwork } from "v2/Components/Artwork"
 import { ArtworkRail } from "../artwork_rail/ArtworkRail"
@@ -76,7 +76,7 @@ const mapStateToProps = state => {
   const auctionData = auction.toJSON()
   const promotedSaleArtworks = get(
     auctionData,
-    "promoted_sale.sale_artworks",
+    "promoted_sale.saleArtworksConnection",
     []
   )
 

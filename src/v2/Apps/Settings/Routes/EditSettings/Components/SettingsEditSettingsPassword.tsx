@@ -1,4 +1,5 @@
-import { FC, useState } from "react"
+import * as Yup from "yup"
+import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import {
   Text,
@@ -14,29 +15,28 @@ import { Form, Formik } from "formik"
 import { useUpdateSettingsPassword } from "../useUpdateSettingsPassword"
 import { logout } from "v2/Utils/auth"
 import { SettingsEditSettingsPassword_me } from "v2/__generated__/SettingsEditSettingsPassword_me.graphql"
-
-enum Mode {
-  Pending,
-  Active,
-}
+import { useMode } from "v2/Utils/Hooks/useMode"
+import { password } from "v2/Components/Authentication/Validators"
 
 interface SettingsEditSettingsPasswordProps {
   me: SettingsEditSettingsPassword_me
 }
 
+type Mode = "Pending" | "Active"
+
 export const SettingsEditSettingsPassword: FC<SettingsEditSettingsPasswordProps> = ({
   me: { hasPassword },
 }) => {
-  const [mode, setMode] = useState(Mode.Pending)
+  const [mode, setMode] = useMode<Mode>("Pending")
   const { sendToast } = useToasts()
   const { submitUpdateSettingsPassword } = useUpdateSettingsPassword()
 
   const handleActivate = () => {
-    setMode(Mode.Active)
+    setMode("Active")
   }
 
   const handleCancel = () => {
-    setMode(Mode.Pending)
+    setMode("Pending")
   }
 
   return (
@@ -45,7 +45,7 @@ export const SettingsEditSettingsPassword: FC<SettingsEditSettingsPasswordProps>
         Password
       </Text>
 
-      {mode === Mode.Pending ? (
+      {mode === "Pending" ? (
         <>
           {hasPassword && (
             <Input
@@ -63,11 +63,24 @@ export const SettingsEditSettingsPassword: FC<SettingsEditSettingsPasswordProps>
         </>
       ) : (
         <Formik
+          validateOnMount
           initialValues={{
             currentPassword: "",
             newPassword: "",
             passwordConfirmation: "",
           }}
+          validationSchema={Yup.object().shape({
+            currentPassword: Yup.string()
+              .required("Current password required")
+              .when("email", {
+                is: () => hasPassword,
+                otherwise: field => field.notRequired(),
+              }),
+            newPassword: password,
+            passwordConfirmation: Yup.string()
+              .required("Password confirmation required")
+              .oneOf([Yup.ref("newPassword"), null], "Passwords must match"),
+          })}
           onSubmit={async ({
             currentPassword,
             newPassword,
@@ -103,7 +116,15 @@ export const SettingsEditSettingsPassword: FC<SettingsEditSettingsPasswordProps>
             }
           }}
         >
-          {({ errors, handleBlur, handleChange, isSubmitting, values }) => {
+          {({
+            errors,
+            handleBlur,
+            handleChange,
+            isSubmitting,
+            values,
+            isValid,
+            touched,
+          }) => {
             return (
               <Form>
                 <Join separator={<Spacer mt={2} />}>
@@ -111,8 +132,8 @@ export const SettingsEditSettingsPassword: FC<SettingsEditSettingsPasswordProps>
                     <PasswordInput
                       name="currentPassword"
                       title="Current Password"
-                      error={errors.currentPassword}
-                      placeholder="Enter your password"
+                      error={touched.currentPassword && errors.currentPassword}
+                      placeholder="Enter your current password"
                       value={values.currentPassword}
                       onChange={handleChange}
                       onBlur={handleBlur}
@@ -124,8 +145,8 @@ export const SettingsEditSettingsPassword: FC<SettingsEditSettingsPasswordProps>
                   <PasswordInput
                     name="newPassword"
                     title="New Password"
-                    error={errors.newPassword}
-                    placeholder="Enter your password"
+                    error={touched.newPassword && errors.newPassword}
+                    placeholder="Enter your new password"
                     value={values.newPassword}
                     onChange={handleChange}
                     onBlur={handleBlur}
@@ -136,8 +157,11 @@ export const SettingsEditSettingsPassword: FC<SettingsEditSettingsPasswordProps>
                   <PasswordInput
                     name="passwordConfirmation"
                     title="Repeat New Password"
-                    error={errors.passwordConfirmation}
-                    placeholder="Enter your password"
+                    error={
+                      touched.passwordConfirmation &&
+                      errors.passwordConfirmation
+                    }
+                    placeholder="Confirm your new password"
                     value={values.passwordConfirmation}
                     onChange={handleChange}
                     onBlur={handleBlur}
@@ -146,7 +170,11 @@ export const SettingsEditSettingsPassword: FC<SettingsEditSettingsPasswordProps>
                   />
 
                   <Flex mt={4}>
-                    <Button type="submit" loading={isSubmitting}>
+                    <Button
+                      type="submit"
+                      loading={isSubmitting}
+                      disabled={!isValid}
+                    >
                       Save Changes
                     </Button>
 

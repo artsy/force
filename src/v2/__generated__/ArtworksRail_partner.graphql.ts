@@ -43,7 +43,7 @@ const node: ReaderFragment = {
         {
           "kind": "Literal",
           "name": "first",
-          "value": 14
+          "value": 20
         },
         {
           "kind": "Literal",
@@ -96,11 +96,11 @@ const node: ReaderFragment = {
           "storageKey": null
         }
       ],
-      "storageKey": "filterArtworksConnection(first:14,forSale:true,sort:\"-partner_updated_at\")"
+      "storageKey": "filterArtworksConnection(first:20,forSale:true,sort:\"-partner_updated_at\")"
     }
   ],
   "type": "Partner",
   "abstractKey": null
 };
-(node as any).hash = 'e2d311845170acc5d9456dfdb701e0ac';
+(node as any).hash = '5efdca573596231f79106b38f3a770fa';
 export default node;

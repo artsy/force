@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import * as React from "react";
+import { useEffect, useState } from "react"
+import * as React from "react"
 import {
   Button,
   Flex,
@@ -25,7 +25,7 @@ import {
 import { openAuthModal } from "v2/Utils/openAuthModal"
 import { ContextModule, Intent } from "@artsy/cohesion"
 import { AnalyticsSchema } from "v2/System"
-import { track, useTracking } from "v2/System/Analytics"
+import { track } from "v2/System/Analytics"
 import Events from "v2/Utils/Events"
 import { __internal__useMatchMedia } from "v2/Utils/Hooks/useMatchMedia"
 import { NavBarPrimaryLogo } from "./NavBarPrimaryLogo"
@@ -41,6 +41,7 @@ import { AppContainer } from "v2/Apps/Components/AppContainer"
 import { HorizontalPadding } from "v2/Apps/Components/HorizontalPadding"
 import { useNavBarHeight } from "./useNavBarHeight"
 import { RouterLink } from "v2/System/Router/RouterLink"
+import { useTracking } from "react-tracking"
 
 /**
  * Old Force pages have the navbar height hardcoded in several places. If
@@ -377,19 +378,21 @@ export const NavBar: React.FC = track(
                   Shows
                 </NavBarItemLink>
 
+                <NavBarItemLink href="/institutions" onClick={handleClick}>
+                  Museums
+                </NavBarItemLink>
+
                 <NavBarItemLink
-                  // Hide link at smaller viewports — corresponding display inside of `MoreNavMenu`
-                  // If we need to do this again, consider a more abstract solution
-                  display={["none", "none", "flex", "flex"]}
-                  href="/institutions"
+                  href="https://nft.artsy.net"
                   onClick={handleClick}
                 >
-                  Museums
+                  NFTs
                 </NavBarItemLink>
               </Flex>
 
               <Flex alignItems="stretch" display={["none", "none", "flex"]}>
                 <NavBarItemButton
+                  display={["none", "none", "flex", "flex"]}
                   px={0}
                   pl={1}
                   onClick={() => {

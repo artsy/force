@@ -10,6 +10,9 @@ export type SettingsEditProfileAboutYou_me = {
     } | null;
     readonly profession: string | null;
     readonly shareFollows: boolean;
+    readonly priceRange: string | null;
+    readonly priceRangeMin: number | null;
+    readonly priceRangeMax: number | null;
     readonly " $refType": "SettingsEditProfileAboutYou_me";
 };
 export type SettingsEditProfileAboutYou_me$data = SettingsEditProfileAboutYou_me;
@@ -57,10 +60,31 @@ const node: ReaderFragment = {
       "kind": "ScalarField",
       "name": "shareFollows",
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "priceRange",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "priceRangeMin",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "priceRangeMax",
+      "storageKey": null
     }
   ],
   "type": "Me",
   "abstractKey": null
 };
-(node as any).hash = '02cda8cc6fe83b3f06f0cb3b6138d488';
+(node as any).hash = 'a7b9e0dff7d2984dbd7e76f5cc39eb71';
 export default node;

@@ -236,6 +236,7 @@ export class OfferRoute extends Component<OfferProps, OfferState> {
 
     const artwork = this.props.order.lineItems?.edges?.[0]?.node?.artwork
     const isInquiryCheckout = !artwork?.isPriceRange && !artwork?.price
+    const isEdition = artwork?.isEdition
 
     const newOfferSubmissionEnabled = userHasLabFeature(
       this.props.user,
@@ -252,7 +253,9 @@ export class OfferRoute extends Component<OfferProps, OfferState> {
               style={isCommittingMutation ? { pointerEvents: "none" } : {}}
               id="offer-page-left-column"
             >
-              {(!newOfferSubmissionEnabled || isInquiryCheckout) && (
+              {(!newOfferSubmissionEnabled ||
+                isInquiryCheckout ||
+                isEdition) && (
                 <>
                   <Flex flexDirection="column">
                     <OfferInput
@@ -267,9 +270,9 @@ export class OfferRoute extends Component<OfferProps, OfferState> {
                   {priceNote}
                 </>
               )}
-              {newOfferSubmissionEnabled && !isInquiryCheckout && (
+              {newOfferSubmissionEnabled && !isInquiryCheckout && !isEdition && (
                 <>
-                  <Text variant="lg" color="black80" marginTop={4}>
+                  <Text variant="lg" color="black80" mt={2}>
                     Select an Option
                   </Text>
                   {priceNote}
@@ -277,8 +280,8 @@ export class OfferRoute extends Component<OfferProps, OfferState> {
                     variant="md"
                     color="black80"
                     textTransform="uppercase"
-                    marginTop={4}
-                    marginBottom={2}
+                    mt={4}
+                    mb={2}
                   >
                     your offer
                   </Text>
@@ -296,7 +299,7 @@ export class OfferRoute extends Component<OfferProps, OfferState> {
 
               {!order.isInquiryOrder && (
                 <>
-                  <Spacer mb={2} />
+                  <Spacer mb={4} />
                   <OfferNote
                     onChange={offerNoteValue =>
                       this.setState({ offerNoteValue })
@@ -382,6 +385,7 @@ export const OfferFragmentContainer = createFragmentContainer(
                 slug
                 price
                 isPriceRange
+                isEdition
                 ...PriceOptions_artwork
               }
               artworkOrEditionSet {

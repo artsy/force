@@ -19,11 +19,12 @@ export type UpdateMyProfileInput = {
     location?: EditableLocation | null;
     name?: string | null;
     notes?: string | null;
+    otherRelevantPositions?: string | null;
     password?: string | null;
     phone?: string | null;
     priceRangeMax?: number | null;
     priceRangeMin?: number | null;
-    privacy?: number | null;
+    privacy?: string | null;
     profession?: string | null;
     receiveLotOpeningSoonNotification?: boolean | null;
     receiveNewSalesNotification?: boolean | null;

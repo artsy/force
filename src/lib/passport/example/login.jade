@@ -1,0 +1,61 @@
+mixin email-password
+  input( name='email', placeholder='Email...', type='email' )
+  input( name='password', placeholder='Password...', type='password' )
+
+doctype html
+html(lang="en")
+  head
+    title Login
+    style.
+      label, a {
+        display: block;
+      }
+  body
+    #login
+      h1 Login
+      pre!= error
+      a( href=ap.facebookPath ) Login via Facebook
+      a( href=ap.applePath ) Login via Apple
+      a( href=ap.googlePath ) Login via Google
+      form( action=ap.loginPagePath, method='POST' )
+        h3 Login via Email
+        label Email
+          input( name='email' )
+        label Password
+          input( name='password' type='password' )
+        input( type="hidden" name="_csrf" value=csrfToken )
+        button( type='submit' ) Login
+    hr
+    #signup
+      h1 Signup
+      pre!= error
+      a( href=ap.facebookPath ) Signup via Facebook
+      a( href=ap.applePath ) Signup via Apple
+      a( href=ap.googlePath ) Signup via Google
+      form( action=ap.signupPagePath, method='POST' )
+        h3 Signup via Email
+        label Name
+          input( name='name' )
+        label Email
+          input( name='email' )
+        label Password
+          input( name='password' type='password' )
+        input( type="hidden" name="_csrf" value=csrfToken )
+        button( type='submit' ) Signup
+    hr
+    #reset
+      h1 Reset Password
+      form( action='reset' method='post' )
+        label Email
+          input( name='email' )
+        button( type='submit' ) Send me Reset Instructions
+    hr
+    #trust
+      h1 Trust token login
+      label Access token&nbsp;
+        input
+        | &nbsp;
+      button.trust-login Login
+    != sharify.script()
+    script( src='//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js' )
+    script( src='/client.js' )

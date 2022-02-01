@@ -3,6 +3,7 @@
 // @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
+import { FragmentRefs } from "relay-runtime";
 export type UpdateMyProfileInput = {
     artworksPerYear?: string | null;
     bio?: string | null;
@@ -18,11 +19,12 @@ export type UpdateMyProfileInput = {
     location?: EditableLocation | null;
     name?: string | null;
     notes?: string | null;
+    otherRelevantPositions?: string | null;
     password?: string | null;
     phone?: string | null;
     priceRangeMax?: number | null;
     priceRangeMin?: number | null;
-    privacy?: number | null;
+    privacy?: string | null;
     profession?: string | null;
     receiveLotOpeningSoonNotification?: boolean | null;
     receiveNewSalesNotification?: boolean | null;
@@ -49,6 +51,9 @@ export type useUpdateMyUserProfileMutationVariables = {
 export type useUpdateMyUserProfileMutationResponse = {
     readonly updateMyUserProfile: {
         readonly clientMutationId: string | null;
+        readonly me: {
+            readonly " $fragmentRefs": FragmentRefs<"SettingsEditProfileYourGalleryIntro_me">;
+        } | null;
     } | null;
 };
 export type useUpdateMyUserProfileMutation = {
@@ -64,7 +69,15 @@ mutation useUpdateMyUserProfileMutation(
 ) {
   updateMyUserProfile(input: $input) {
     clientMutationId
+    me {
+      ...SettingsEditProfileYourGalleryIntro_me
+      id
+    }
   }
+}
+
+fragment SettingsEditProfileYourGalleryIntro_me on Me {
+  inquiryIntroduction
 }
 */
 
@@ -78,37 +91,54 @@ var v0 = [
 ],
 v1 = [
   {
-    "alias": null,
-    "args": [
-      {
-        "kind": "Variable",
-        "name": "input",
-        "variableName": "input"
-      }
-    ],
-    "concreteType": "UpdateMyProfilePayload",
-    "kind": "LinkedField",
-    "name": "updateMyUserProfile",
-    "plural": false,
-    "selections": [
-      {
-        "alias": null,
-        "args": null,
-        "kind": "ScalarField",
-        "name": "clientMutationId",
-        "storageKey": null
-      }
-    ],
-    "storageKey": null
+    "kind": "Variable",
+    "name": "input",
+    "variableName": "input"
   }
-];
+],
+v2 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "clientMutationId",
+  "storageKey": null
+};
 return {
   "fragment": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
     "name": "useUpdateMyUserProfileMutation",
-    "selections": (v1/*: any*/),
+    "selections": [
+      {
+        "alias": null,
+        "args": (v1/*: any*/),
+        "concreteType": "UpdateMyProfilePayload",
+        "kind": "LinkedField",
+        "name": "updateMyUserProfile",
+        "plural": false,
+        "selections": [
+          (v2/*: any*/),
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "Me",
+            "kind": "LinkedField",
+            "name": "me",
+            "plural": false,
+            "selections": [
+              {
+                "args": null,
+                "kind": "FragmentSpread",
+                "name": "SettingsEditProfileYourGalleryIntro_me"
+              }
+            ],
+            "storageKey": null
+          }
+        ],
+        "storageKey": null
+      }
+    ],
     "type": "Mutation",
     "abstractKey": null
   },
@@ -117,17 +147,55 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
     "name": "useUpdateMyUserProfileMutation",
-    "selections": (v1/*: any*/)
+    "selections": [
+      {
+        "alias": null,
+        "args": (v1/*: any*/),
+        "concreteType": "UpdateMyProfilePayload",
+        "kind": "LinkedField",
+        "name": "updateMyUserProfile",
+        "plural": false,
+        "selections": [
+          (v2/*: any*/),
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "Me",
+            "kind": "LinkedField",
+            "name": "me",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "inquiryIntroduction",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "id",
+                "storageKey": null
+              }
+            ],
+            "storageKey": null
+          }
+        ],
+        "storageKey": null
+      }
+    ]
   },
   "params": {
-    "cacheID": "a26a005d1ab78e7ddbeda4115be42bb2",
+    "cacheID": "b84f5b19e450bba97fe3c6f5e0f7f415",
     "id": null,
     "metadata": {},
     "name": "useUpdateMyUserProfileMutation",
     "operationKind": "mutation",
-    "text": "mutation useUpdateMyUserProfileMutation(\n  $input: UpdateMyProfileInput!\n) {\n  updateMyUserProfile(input: $input) {\n    clientMutationId\n  }\n}\n"
+    "text": "mutation useUpdateMyUserProfileMutation(\n  $input: UpdateMyProfileInput!\n) {\n  updateMyUserProfile(input: $input) {\n    clientMutationId\n    me {\n      ...SettingsEditProfileYourGalleryIntro_me\n      id\n    }\n  }\n}\n\nfragment SettingsEditProfileYourGalleryIntro_me on Me {\n  inquiryIntroduction\n}\n"
   }
 };
 })();
-(node as any).hash = '69ea3f3647ec583546e80aa54ebcdbe4';
+(node as any).hash = 'edc3801caa91842ffe2a71d69e00c4ff';
 export default node;

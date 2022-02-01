@@ -78,9 +78,9 @@ const SettingsEditProfileAboutYou: FC<SettingsEditProfileAboutYouProps> = ({
         initialValues={{
           displayLocation: me.location ?? { display: "" },
           location: null,
-          priceRange: "", // TODO: Expose `me#priceRange` in Metaphysics
-          priceRangeMax: null, // TODO: Expose `me#priceRangeMax` in Metaphysics
-          priceRangeMin: null, // TODO: Expose `me#priceRangeMin` in Metaphysics
+          priceRange: me.priceRange ?? "",
+          priceRangeMax: me.priceRangeMax,
+          priceRangeMin: me.priceRangeMin,
           profession: me.profession ?? "",
           shareFollows: !!me.shareFollows,
         }}
@@ -92,6 +92,8 @@ const SettingsEditProfileAboutYou: FC<SettingsEditProfileAboutYouProps> = ({
                 name="location"
                 title="Primary Location"
                 placeholder="Enter your city"
+                maxLength={256}
+                spellCheck={false}
                 defaultValue={formik.values.displayLocation?.display!}
                 onChange={place => {
                   formik.setFieldValue("location", normalizePlace(place))
@@ -155,6 +157,9 @@ export const SettingsEditProfileAboutYouFragmentContainer = createFragmentContai
         }
         profession
         shareFollows
+        priceRange
+        priceRangeMin
+        priceRangeMax
       }
     `,
   }

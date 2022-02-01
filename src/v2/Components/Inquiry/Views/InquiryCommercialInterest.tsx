@@ -5,18 +5,12 @@ import { useInquiryContext } from "../Hooks/useInquiryContext"
 import { useUpdateMyUserProfile } from "../Hooks/useUpdateMyUserProfile"
 import { logger } from "../util"
 
-enum Mode {
-  Pending,
-  Loading3,
-  Loading2,
-  Success,
-  Error,
-}
+type Mode = "Pending" | "Loading3" | "Loading2" | "Success" | "Error"
 
 export const InquiryCommercialInterest: React.FC = () => {
   const { next, setContext, relayEnvironment } = useInquiryContext()
 
-  const [mode, setMode] = useState(Mode.Pending)
+  const [mode, setMode] = useState<Mode>("Pending")
 
   const { submitUpdateMyUserProfile } = useUpdateMyUserProfile({
     relayEnvironment: relayEnvironment.current!,
@@ -25,15 +19,15 @@ export const InquiryCommercialInterest: React.FC = () => {
   const handleClick = (value: 2 | 3) => async () => {
     setContext({ collectorLevel: value })
 
-    setMode({ 2: Mode.Loading2, 3: Mode.Loading3 }[value])
+    setMode({ 2: "Loading2", 3: "Loading3" }[value] as Mode)
 
     try {
       await submitUpdateMyUserProfile({ collectorLevel: value })
-      setMode(Mode.Success)
+      setMode("Success")
       next()
     } catch (err) {
       logger.error(err)
-      setMode(Mode.Error)
+      setMode("Error")
     }
   }
 
@@ -43,7 +37,7 @@ export const InquiryCommercialInterest: React.FC = () => {
         Have you bought art from a gallery or auction house before?
       </Text>
 
-      {mode === Mode.Error && (
+      {mode === "Error" && (
         <Banner variant="error" dismissable my={2}>
           Something went wrong. Please try again.
         </Banner>
@@ -53,8 +47,8 @@ export const InquiryCommercialInterest: React.FC = () => {
         variant="secondaryOutline"
         width="100%"
         onClick={handleClick(3)}
-        loading={mode === Mode.Loading3}
-        disabled={mode === Mode.Success || mode === Mode.Loading2}
+        loading={mode === "Loading3"}
+        disabled={mode === "Success" || mode === "Loading2"}
         mb={1}
       >
         Yes
@@ -64,8 +58,8 @@ export const InquiryCommercialInterest: React.FC = () => {
         variant="secondaryOutline"
         width="100%"
         onClick={handleClick(2)}
-        loading={mode === Mode.Loading2}
-        disabled={mode === Mode.Success || mode === Mode.Loading3}
+        loading={mode === "Loading2"}
+        disabled={mode === "Success" || mode === "Loading3"}
       >
         Not yet
       </Button>

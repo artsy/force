@@ -83,6 +83,7 @@ describe("ArtistApp", () => {
           Artist: () => ({
             biographyBlurb: null,
             related: null,
+            insights: null,
             statuses: {
               articles: false,
               cv: false,

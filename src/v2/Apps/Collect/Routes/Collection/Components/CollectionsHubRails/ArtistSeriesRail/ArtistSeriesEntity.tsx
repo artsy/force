@@ -5,7 +5,11 @@ import { RouterLink } from "v2/System/Router/RouterLink"
 import currency from "currency.js"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ContextModule, clickedArtistSeriesGroup } from "@artsy/cohesion"
+import {
+  ContextModule,
+  ClickedArtistSeriesGroup,
+  ActionType,
+} from "@artsy/cohesion"
 import { useAnalyticsContext } from "v2/System/Analytics/AnalyticsContext"
 import { extractNodes } from "v2/Utils/extractNodes"
 import { cropped } from "v2/Utils/resized"
@@ -39,18 +43,16 @@ export const ArtistSeriesEntity: React.FC<ArtistSeriesEntityProps> = ({
   } = useAnalyticsContext()
 
   const handleLinkClick = () => {
-    trackEvent(
-      clickedArtistSeriesGroup({
-        contextModule: ContextModule.artistSeriesRail,
-        contextPageOwnerId,
-        contextPageOwnerSlug,
-        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-        contextPageOwnerType,
-        destinationPageOwnerId: id,
-        destinationPageOwnerSlug: slug,
-        horizontalSlidePosition: itemNumber,
-      })
-    )
+    const analyticsOptions: Partial<ClickedArtistSeriesGroup> = {
+      context_module: ContextModule.artistSeriesRail,
+      context_page_owner_id: contextPageOwnerId,
+      context_page_owner_slug: contextPageOwnerSlug,
+      context_page_owner_type: contextPageOwnerType!,
+      destination_page_owner_id: id,
+      destination_page_owner_slug: slug,
+      horizontal_slide_position: itemNumber,
+    }
+    trackEvent(tracks.clickedArtistSeriesGroup(analyticsOptions))
   }
 
   return (
@@ -157,3 +159,11 @@ export const ArtistSeriesRailContainer = createFragmentContainer(
     `,
   }
 )
+
+const tracks = {
+  clickedArtistSeriesGroup: (options): ClickedArtistSeriesGroup => ({
+    action: ActionType.clickedArtistSeriesGroup,
+    type: "thumbnail",
+    ...options,
+  }),
+}

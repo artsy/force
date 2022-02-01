@@ -39,15 +39,16 @@ export const CreateAlertButton: React.FC<CreateAlertButtonProps> = ({
 
   const handleOpenForm = () => {
     openModal()
+  }
+
+  const handleClick = () => {
     tracking.trackEvent({
       action: ActionType.clickedCreateAlert,
       context_page_owner_type: savedSearchAttributes.type as PageOwnerType,
       context_page_owner_id: savedSearchAttributes.id,
       context_page_owner_slug: savedSearchAttributes.slug,
     })
-  }
 
-  const handleClick = () => {
     if (isLoggedIn) {
       handleOpenForm()
     } else {
@@ -58,6 +59,7 @@ export const CreateAlertButton: React.FC<CreateAlertButtonProps> = ({
         },
         contextModule: ContextModule.artworkGrid,
         intent: Intent.createAlert,
+        redirectTo: location.href,
       })
     }
   }
@@ -82,7 +84,7 @@ export const CreateAlertButton: React.FC<CreateAlertButtonProps> = ({
         size="small"
         {...props}
       >
-        <BellIcon mr={0.5} color="currentColor" />
+        <BellIcon mr={0.5} fill="currentColor" />
         Create an Alert
       </Button>
       <SavedSearchAlertModal

@@ -17,10 +17,11 @@ export const ConfirmBidQueryResponseFixture: auctionRoutes_ConfirmBidQueryRawRes
       ],
       internalID: "saleArtworkid",
       lotLabel: "13",
-      minimumNextBid: {
-        amount: "50000",
-        cents: 5000000,
+      currentBid: {
         display: "$50,000USD",
+      },
+      minimumNextBid: {
+        cents: 5000000,
       },
       sale: {
         id: "opaque-saleid",

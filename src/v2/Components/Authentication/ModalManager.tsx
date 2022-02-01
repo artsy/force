@@ -30,6 +30,7 @@ export interface ModalManagerProps {
   submitUrls?: { [P in ModalType]: string } & {
     apple: string
     facebook: string
+    google: string
     twitter?: string
     forgot?: string
   }

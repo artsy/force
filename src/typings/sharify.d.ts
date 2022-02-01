@@ -17,6 +17,7 @@ declare module "sharify" {
      */
     export interface GlobalData {
       readonly ADMIN_URL: string
+      readonly ALLOWED_REDIRECT_HOSTS: string
       readonly APP_URL: string
       readonly ARTIST_COLLECTIONS_RAIL?: string // TODO: remove after CollectionsRail a/b test
       readonly CDN_URL: string
@@ -62,6 +63,7 @@ declare module "sharify" {
       AP: {
         applePath?: string
         facebookPath?: string
+        googlePath?: string
         twitterPath?: string
         signupPagePath?: string
         loginPagePath?: string

@@ -21,6 +21,7 @@ import { Media } from "v2/Utils/Responsive"
 import { FilterExpandable } from "./FilterExpandable"
 import { isCustomValue } from "./Utils/isCustomValue"
 import { useFilterLabelCountByKey } from "../Utils/useFilterLabelCountByKey"
+import { useMode } from "v2/Utils/Hooks/useMode"
 
 export const SIZES = [
   { displayName: "Small (under 40cm)", name: "SMALL" },
@@ -84,6 +85,8 @@ export interface SizeFilterProps {
   expanded?: boolean
 }
 
+type Mode = "resting" | "done"
+
 export const SizeFilter: React.FC<SizeFilterProps> = ({ expanded }) => {
   const { currentlySelectedFilters, setFilters } = useArtworkFilterContext()
   const {
@@ -109,7 +112,7 @@ export const SizeFilter: React.FC<SizeFilterProps> = ({ expanded }) => {
     isCustomValue(width) || isCustomValue(height)
   )
   const [customSize, setCustomSize] = useState<CustomSize>(initialCustomSize)
-  const [mode, setMode] = useState<"resting" | "done">("resting")
+  const [mode, setMode] = useMode<Mode>("resting")
 
   const handleInputChange = (dimension: "height" | "width", index: number) => ({
     currentTarget: { value },

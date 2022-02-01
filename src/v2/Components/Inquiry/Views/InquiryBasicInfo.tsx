@@ -9,7 +9,6 @@ import {
   SkeletonText,
   Text,
 } from "@artsy/palette"
-import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import { useInquiryContext } from "../Hooks/useInquiryContext"
@@ -24,24 +23,21 @@ import {
 } from "v2/Components/LocationAutocompleteInput"
 import { useState } from "react"
 import { useUpdateMyUserProfile } from "../Hooks/useUpdateMyUserProfile"
-import { compactObject, logger } from "../util"
-
-enum Mode {
-  Pending,
-  Loading,
-  Success,
-  Error,
-}
+import { logger } from "../util"
+import { compactObject } from "v2/Utils/compactObject"
+import { useMode } from "v2/Utils/Hooks/useMode"
 
 interface InquiryBasicInfoProps {
   artwork: InquiryBasicInfo_artwork
   me: InquiryBasicInfo_me | null
 }
 
+type Mode = "Pending" | "Loading" | "Success" | "Error"
+
 const InquiryBasicInfo: React.FC<InquiryBasicInfoProps> = ({ artwork, me }) => {
   const { next, setContext, relayEnvironment } = useInquiryContext()
 
-  const [mode, setMode] = useState(Mode.Pending)
+  const [mode, setMode] = useMode<Mode>("Pending")
 
   const { submitUpdateMyUserProfile } = useUpdateMyUserProfile({
     relayEnvironment: relayEnvironment.current!,
@@ -76,7 +72,7 @@ const InquiryBasicInfo: React.FC<InquiryBasicInfoProps> = ({ artwork, me }) => {
   const handleSubmit = async (event: React.FormEvent<HTMLElement>) => {
     event.preventDefault()
 
-    setMode(Mode.Loading)
+    setMode("Loading")
 
     const input = compactObject(state)
 
@@ -84,11 +80,11 @@ const InquiryBasicInfo: React.FC<InquiryBasicInfoProps> = ({ artwork, me }) => {
 
     try {
       await submitUpdateMyUserProfile(input)
-      setMode(Mode.Success)
+      setMode("Success")
       next()
     } catch (err) {
       logger.error(err)
-      setMode(Mode.Error)
+      setMode("Error")
     }
   }
 
@@ -98,7 +94,7 @@ const InquiryBasicInfo: React.FC<InquiryBasicInfoProps> = ({ artwork, me }) => {
         Tell {artwork.partner?.name ?? "us"} a little bit about yourself.
       </Text>
 
-      {mode === Mode.Error && (
+      {mode === "Error" && (
         <Banner variant="error" dismissable my={2}>
           Something went wrong. Please try again.
         </Banner>
@@ -139,8 +135,8 @@ const InquiryBasicInfo: React.FC<InquiryBasicInfoProps> = ({ artwork, me }) => {
       <Button
         type="submit"
         width="100%"
-        loading={mode === Mode.Loading}
-        disabled={mode === Mode.Success}
+        loading={mode === "Loading"}
+        disabled={mode === "Success"}
       >
         Next
       </Button>

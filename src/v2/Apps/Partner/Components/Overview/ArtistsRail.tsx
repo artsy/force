@@ -50,7 +50,7 @@ const ArtistsRail: React.FC<ArtistsRailProps> = ({ partner, ...rest }) => {
         alignItems="center"
         position="relative"
       >
-        <Text variant="title">
+        <Text variant="lg">
           {profileArtistsLayout === "Grid" ? "Featured Artists" : "Artists"}
         </Text>
 

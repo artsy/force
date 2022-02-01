@@ -1,6 +1,6 @@
 import { Button, Skeleton, SkeletonText, Spacer, Text } from "@artsy/palette"
-import { useState, useEffect } from "react";
-import * as React from "react";
+import { useState, useEffect } from "react"
+import * as React from "react"
 import { useInquiryContext } from "../Hooks/useInquiryContext"
 import { forgotPassword } from "v2/Utils/auth"
 import { useInquiryAccountContext, Screen } from "./InquiryAccount"
@@ -13,17 +13,13 @@ import {
   ResetYourPassword,
 } from "@artsy/cohesion"
 
-enum Mode {
-  Resetting,
-  Error,
-  Done,
-}
+type Mode = "Resetting" | "Error" | "Done"
 
 export const InquiryResetPassword: React.FC = () => {
   const { inquiry } = useInquiryContext()
   const { navigateTo } = useInquiryAccountContext()
 
-  const [mode, setMode] = useState<Mode>(Mode.Resetting)
+  const [mode, setMode] = useState<Mode>("Resetting")
 
   const { trackEvent } = useTracking()
 
@@ -31,7 +27,7 @@ export const InquiryResetPassword: React.FC = () => {
     const init = async () => {
       try {
         await forgotPassword({ email: inquiry.email! })
-        setMode(Mode.Done)
+        setMode("Done")
 
         const options: ResetYourPassword = {
           action: ActionType.resetYourPassword,
@@ -45,7 +41,7 @@ export const InquiryResetPassword: React.FC = () => {
 
         trackEvent(options)
       } catch (err) {
-        setMode(Mode.Error)
+        setMode("Error")
       }
     }
 
@@ -57,14 +53,14 @@ export const InquiryResetPassword: React.FC = () => {
   }
 
   const message = {
-    [Mode.Resetting]: `Please check your email (${inquiry.email}) for instructions on how to reset your password.`,
-    [Mode.Done]: `Please check your email (${inquiry.email}) for instructions on how to reset your password.`,
-    [Mode.Error]: "There was an error resetting your password.",
+    ["Resetting"]: `Please check your email (${inquiry.email}) for instructions on how to reset your password.`,
+    ["Done"]: `Please check your email (${inquiry.email}) for instructions on how to reset your password.`,
+    ["Error"]: "There was an error resetting your password.",
   }[mode]
 
   return (
     <>
-      {mode === Mode.Resetting ? (
+      {mode === "Resetting" ? (
         <Skeleton>
           <SkeletonText variant="lg" mr={4}>
             {message}

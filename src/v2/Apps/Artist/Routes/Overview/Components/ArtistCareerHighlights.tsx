@@ -9,17 +9,16 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { SelectedCareerAchievementsFragmentContainer } from "v2/Components/SelectedCareerAchievements"
 import { ArtistCareerHighlights_artist } from "v2/__generated__/ArtistCareerHighlights_artist.graphql"
 import { ArtistCareerHighlightsQuery } from "v2/__generated__/ArtistCareerHighlightsQuery.graphql"
-import { ArtistConsignButtonFragmentContainer } from "./ArtistConsignButton"
 import { ArtistGenesFragmentContainer } from "./ArtistGenes"
-import { data as sd } from "sharify"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import { useSystemContext } from "v2/System"
+import { getENV } from "v2/Utils/getENV"
 
 interface ArtistCareerHighlightsProps {
   artist: ArtistCareerHighlights_artist
@@ -30,7 +29,7 @@ const ArtistCareerHighlights: React.FC<ArtistCareerHighlightsProps> = ({
 }) => {
   const { credit, partner, text } = artist.biographyBlurb!
   const showCredit = Boolean(credit) && partner?.profile?.href
-  const partnerHref = `${sd.APP_URL}${partner?.profile?.href}`
+  const partnerHref = `${getENV("APP_URL")}${partner?.profile?.href}`
   const hasCategories = Boolean(artist.related?.genes?.edges?.length)
 
   return (
@@ -55,12 +54,6 @@ const ArtistCareerHighlights: React.FC<ArtistCareerHighlightsProps> = ({
               <HTML html={text} variant="sm" />
             </Box>
           )}
-
-          <GridColumns>
-            <Column span={9}>
-              <ArtistConsignButtonFragmentContainer artist={artist} />
-            </Column>
-          </GridColumns>
         </Join>
       </Column>
 
@@ -83,7 +76,6 @@ export const ArtistCareerHighlightsFragmentContainer = createFragmentContainer(
     artist: graphql`
       fragment ArtistCareerHighlights_artist on Artist {
         ...SelectedCareerAchievements_artist
-        ...ArtistConsignButton_artist
         ...ArtistGenes_artist
         biographyBlurb(format: HTML, partnerBio: false) {
           partner {

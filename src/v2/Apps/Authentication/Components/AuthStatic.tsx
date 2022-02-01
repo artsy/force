@@ -38,6 +38,7 @@ export const AuthStatic: React.FC<AuthStaticProps> = ({
           submitUrls={{
             apple: "/users/auth/apple",
             facebook: "/users/auth/facebook",
+            google: "/users/auth/google",
             forgot: "/forgot_password",
             login: "/log_in",
             signup: "/sign_up",

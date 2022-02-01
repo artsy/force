@@ -29,6 +29,7 @@ fragment UserRegistrationAuctions_me on Me {
   saleRegistrationsConnection(published: true, isAuction: true, sort: CREATED_AT_DESC, first: 10, registered: false) {
     edges {
       node {
+        isRegistered
         sale {
           id
           name
@@ -58,6 +59,12 @@ v1 = {
   "type": "ID"
 },
 v2 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "Boolean"
+},
+v3 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
@@ -157,6 +164,13 @@ return {
                       {
                         "alias": null,
                         "args": null,
+                        "kind": "ScalarField",
+                        "name": "isRegistered",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
                         "concreteType": "Sale",
                         "kind": "LinkedField",
                         "name": "sale",
@@ -217,7 +231,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "6ba99489b79965b19ef624b0ba88cc8c",
+    "cacheID": "dc62b2a07901e483be3bc7688a1a9adb",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -247,27 +261,23 @@ return {
           "type": "SaleRegistration"
         },
         "me.saleRegistrationsConnection.edges.node.id": (v1/*: any*/),
+        "me.saleRegistrationsConnection.edges.node.isRegistered": (v2/*: any*/),
         "me.saleRegistrationsConnection.edges.node.sale": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "Sale"
         },
-        "me.saleRegistrationsConnection.edges.node.sale.href": (v2/*: any*/),
+        "me.saleRegistrationsConnection.edges.node.sale.href": (v3/*: any*/),
         "me.saleRegistrationsConnection.edges.node.sale.id": (v1/*: any*/),
-        "me.saleRegistrationsConnection.edges.node.sale.isClosed": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "Boolean"
-        },
-        "me.saleRegistrationsConnection.edges.node.sale.name": (v2/*: any*/),
-        "me.saleRegistrationsConnection.edges.node.sale.startAt": (v2/*: any*/)
+        "me.saleRegistrationsConnection.edges.node.sale.isClosed": (v2/*: any*/),
+        "me.saleRegistrationsConnection.edges.node.sale.name": (v3/*: any*/),
+        "me.saleRegistrationsConnection.edges.node.sale.startAt": (v3/*: any*/)
       }
     },
     "name": "UserRegistrationAuctions_Test_Query",
     "operationKind": "query",
-    "text": "query UserRegistrationAuctions_Test_Query {\n  me {\n    ...UserRegistrationAuctions_me\n    id\n  }\n}\n\nfragment UserRegistrationAuctions_me on Me {\n  saleRegistrationsConnection(published: true, isAuction: true, sort: CREATED_AT_DESC, first: 10, registered: false) {\n    edges {\n      node {\n        sale {\n          id\n          name\n          href\n          startAt(format: \"MMMM D, h:mmA\")\n          isClosed\n        }\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query UserRegistrationAuctions_Test_Query {\n  me {\n    ...UserRegistrationAuctions_me\n    id\n  }\n}\n\nfragment UserRegistrationAuctions_me on Me {\n  saleRegistrationsConnection(published: true, isAuction: true, sort: CREATED_AT_DESC, first: 10, registered: false) {\n    edges {\n      node {\n        isRegistered\n        sale {\n          id\n          name\n          href\n          startAt(format: \"MMMM D, h:mmA\")\n          isClosed\n        }\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();

@@ -6,7 +6,7 @@ export const OfferNote: React.FC<{
   onChange(change: TextAreaChange): void
   artworkId: string
   counteroffer?: boolean
-}> = ({ onChange, artworkId, counteroffer }) => {
+}> = ({ onChange, artworkId }) => {
   const { inquiryComponent } = useInquiry({
     artworkID: artworkId,
   })

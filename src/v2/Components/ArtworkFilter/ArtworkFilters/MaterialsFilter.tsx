@@ -11,12 +11,12 @@ export const MaterialsFilter: React.FC<MaterialsFilterProps> = ({
 }) => {
   return (
     <ResultsFilter
+      expanded={expanded}
       facetName="materialsTerms"
-      slice="MATERIALS_TERMS"
+      filtersCountKey={SelectedFiltersCountsLabels.materialsTerms}
       label="Material"
       placeholder="Enter a material"
-      filtersCountKey={SelectedFiltersCountsLabels.materialsTerms}
-      expanded={expanded}
+      slice="MATERIALS_TERMS"
     />
   )
 }

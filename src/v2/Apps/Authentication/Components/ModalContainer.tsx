@@ -1,6 +1,6 @@
 import Cookies from "cookies-js"
 import { Component } from "react"
-import { data as sd } from "sharify"
+import { data as sd } from "sharify" // eslint-disable-line no-restricted-imports
 
 import { ActionType, AuthModalType, AuthService } from "@artsy/cohesion"
 import { handleSubmit, setCookies } from "v2/Apps/Authentication/Utils/helpers"
@@ -97,6 +97,7 @@ export class ModalContainer extends Component<any> {
           signup: sd.AP.signupPagePath,
           apple: sd.AP.applePath,
           facebook: sd.AP.facebookPath,
+          google: sd.AP.googlePath,
           twitter: sd.AP.twitterPath,
         }}
         csrf={Cookies && Cookies.get && Cookies.get("CSRF_TOKEN")}

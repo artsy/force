@@ -6,25 +6,20 @@ import {
   TextArea,
   TextAreaChange,
 } from "@artsy/palette"
-import * as React from "react";
+import * as React from "react"
 import { useState } from "react"
 import { useInquiryContext } from "../Hooks/useInquiryContext"
 import { useUpdateCollectorProfile } from "../Hooks/useUpdateCollectorProfile"
 import { logger } from "../util"
 
-enum Mode {
-  Pending,
-  Loading,
-  Success,
-  Error,
-}
+type Mode = "Pending" | "Loading" | "Success" | "Error"
 
 export const InquiryInstitutionalAffiliations: React.FC = () => {
   const { next } = useInquiryContext()
 
   const { submitUpdateCollectorProfile } = useUpdateCollectorProfile()
 
-  const [mode, setMode] = useState(Mode.Pending)
+  const [mode, setMode] = useState<Mode>("Pending")
 
   const [institutionalAffiliations, setInstitutionalAffiliations] = useState<
     string | null
@@ -35,7 +30,7 @@ export const InquiryInstitutionalAffiliations: React.FC = () => {
   }
 
   const handleClick = async () => {
-    setMode(Mode.Loading)
+    setMode("Loading")
 
     if (institutionalAffiliations === null) {
       next()
@@ -44,11 +39,11 @@ export const InquiryInstitutionalAffiliations: React.FC = () => {
 
     try {
       await submitUpdateCollectorProfile({ institutionalAffiliations })
-      setMode(Mode.Success)
+      setMode("Success")
       next()
     } catch (err) {
       logger.error(err)
-      setMode(Mode.Error)
+      setMode("Error")
     }
   }
 
@@ -65,7 +60,7 @@ export const InquiryInstitutionalAffiliations: React.FC = () => {
         Collector groups, memberships, etc.
       </Text>
 
-      {mode === Mode.Error && (
+      {mode === "Error" && (
         <Banner variant="error" dismissable my={2}>
           Something went wrong. Please try again.
         </Banner>
@@ -81,8 +76,8 @@ export const InquiryInstitutionalAffiliations: React.FC = () => {
       <Button
         width="100%"
         onClick={handleClick}
-        loading={mode === Mode.Loading}
-        disabled={mode === Mode.Success}
+        loading={mode === "Loading"}
+        disabled={mode === "Success"}
       >
         Next
       </Button>

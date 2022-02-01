@@ -8,26 +8,23 @@ import {
   Text,
   useToasts,
 } from "@artsy/palette"
-import { useState, FC } from "react"
+import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
+import { useMode } from "v2/Utils/Hooks/useMode"
 import { SettingsEditSettingsTwoFactorBackupCodes_me } from "v2/__generated__/SettingsEditSettingsTwoFactorBackupCodes_me.graphql"
 import { SettingsEditSettingsTwoFactorBackupCodesDialogQueryRenderer } from "./SettingsEditSettingsTwoFactorBackupCodesDialog"
 import { useCreateSettingsBackupSecondFactors } from "./useCreateSettingsBackupSecondFactorsMutation"
-
-enum Mode {
-  Pending,
-  Show,
-  Creating,
-}
 
 interface SettingsEditSettingsTwoFactorBackupCodesProps {
   me: SettingsEditSettingsTwoFactorBackupCodes_me
 }
 
+type Mode = "Pending" | "Show" | "Creating"
+
 export const SettingsEditSettingsTwoFactorBackupCodes: FC<SettingsEditSettingsTwoFactorBackupCodesProps> = ({
   me,
 }) => {
-  const [mode, setMode] = useState(Mode.Pending)
+  const [mode, setMode] = useMode<Mode>("Pending")
 
   const { sendToast } = useToasts()
 
@@ -36,27 +33,27 @@ export const SettingsEditSettingsTwoFactorBackupCodes: FC<SettingsEditSettingsTw
   } = useCreateSettingsBackupSecondFactors()
 
   const handleGenerate = async () => {
-    setMode(Mode.Creating)
+    setMode("Creating")
 
     try {
       await submitCreateSettingsBackupSecondFactors()
 
-      setMode(Mode.Show)
+      setMode("Show")
     } catch (err) {
       console.error(err)
 
       sendToast({ variant: "error", message: err.message })
 
-      setMode(Mode.Pending)
+      setMode("Pending")
     }
   }
 
   const handleShow = () => {
-    setMode(Mode.Show)
+    setMode("Show")
   }
 
   const handleClose = () => {
-    setMode(Mode.Pending)
+    setMode("Pending")
   }
 
   return (
@@ -69,8 +66,8 @@ export const SettingsEditSettingsTwoFactorBackupCodes: FC<SettingsEditSettingsTw
       >
         <Box flexBasis="50%">
           <Text variant="lg" mb={2}>
-            Backup codes
-            {me.backupSecondFactors?.length && (
+            Backup Codes
+            {me.backupSecondFactors && me.backupSecondFactors.length > 0 && (
               <>
                 &nbsp;
                 <Sup color="brand">{me.backupSecondFactors.length}</Sup>
@@ -101,26 +98,21 @@ export const SettingsEditSettingsTwoFactorBackupCodes: FC<SettingsEditSettingsTw
 
               <Button
                 onClick={handleGenerate}
-                loading={mode === Mode.Creating}
-                variant="secondaryGray"
+                loading={mode === "Creating"}
                 width={["100%", "auto"]}
               >
                 Regenerate
               </Button>
             </>
           ) : (
-            <Button
-              onClick={handleGenerate}
-              loading={mode === Mode.Creating}
-              variant="secondaryGray"
-            >
+            <Button onClick={handleGenerate} loading={mode === "Creating"}>
               Set up
             </Button>
           )}
         </Flex>
       </Flex>
 
-      {mode === Mode.Show && (
+      {mode === "Show" && (
         <ModalDialog
           title="Your backup codes"
           onClose={handleClose}

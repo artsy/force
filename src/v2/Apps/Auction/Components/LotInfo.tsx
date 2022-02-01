@@ -45,7 +45,7 @@ export const LotInfo: React.FC<Props> = ({ artwork, saleArtwork }) => {
         </RouterLink>
         <br />
         <Text variant="md" color="black100" fontWeight="bold">
-          Current Bid: {saleArtwork.minimumNextBid?.display}
+          Current Bid: {saleArtwork.currentBid?.display}
         </Text>
         {bidCount > 0 && (
           <Text variant="md" color="black60">
@@ -74,9 +74,7 @@ export const LotInfoFragmentContainer = createFragmentContainer(LotInfo, {
         bidderPositions
       }
       lotLabel
-      minimumNextBid {
-        amount
-        cents
+      currentBid {
         display
       }
     }

@@ -60,10 +60,11 @@ export type auctionRoutes_ConfirmBidQueryRawResponse = {
                 readonly bidderPositions: number | null;
             }) | null;
             readonly lotLabel: string | null;
-            readonly minimumNextBid: ({
-                readonly amount: string | null;
-                readonly cents: number | null;
+            readonly currentBid: ({
                 readonly display: string | null;
+            }) | null;
+            readonly minimumNextBid: ({
+                readonly cents: number | null;
             }) | null;
             readonly increments: ReadonlyArray<({
                 readonly cents: number | null;
@@ -172,9 +173,7 @@ fragment LotInfo_saleArtwork on SaleArtwork {
     bidderPositions
   }
   lotLabel
-  minimumNextBid {
-    amount
-    cents
+  currentBid {
     display
   }
 }
@@ -265,14 +264,14 @@ v12 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "cents",
+  "name": "display",
   "storageKey": null
 },
 v13 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "display",
+  "name": "cents",
   "storageKey": null
 };
 return {
@@ -465,19 +464,23 @@ return {
               {
                 "alias": null,
                 "args": null,
+                "concreteType": "SaleArtworkCurrentBid",
+                "kind": "LinkedField",
+                "name": "currentBid",
+                "plural": false,
+                "selections": [
+                  (v12/*: any*/)
+                ],
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
                 "concreteType": "SaleArtworkMinimumNextBid",
                 "kind": "LinkedField",
                 "name": "minimumNextBid",
                 "plural": false,
                 "selections": [
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "amount",
-                    "storageKey": null
-                  },
-                  (v12/*: any*/),
                   (v13/*: any*/)
                 ],
                 "storageKey": null
@@ -496,8 +499,8 @@ return {
                 "name": "increments",
                 "plural": true,
                 "selections": [
-                  (v12/*: any*/),
-                  (v13/*: any*/)
+                  (v13/*: any*/),
+                  (v12/*: any*/)
                 ],
                 "storageKey": "increments(useMyMaxBid:true)"
               },
@@ -554,12 +557,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "6ac72cc2e98496fca45f4bd89873a569",
+    "cacheID": "87e8edbd641fb3363318def935409de5",
     "id": null,
     "metadata": {},
     "name": "auctionRoutes_ConfirmBidQuery",
     "operationKind": "query",
-    "text": "query auctionRoutes_ConfirmBidQuery(\n  $saleID: String!\n  $artworkID: String!\n) {\n  artwork(id: $artworkID) {\n    internalID\n    slug\n    saleArtwork(saleID: $saleID) {\n      internalID\n      slug\n      sale {\n        internalID\n        slug\n        name\n        isClosed\n        isRegistrationClosed\n        registrationStatus {\n          internalID\n          qualifiedForBidding\n          id\n        }\n        id\n      }\n      ...LotInfo_saleArtwork\n      ...BidForm_saleArtwork\n      id\n    }\n    ...LotInfo_artwork\n    id\n  }\n  me {\n    internalID\n    hasQualifiedCreditCards\n    ...ConfirmBid_me\n    id\n  }\n}\n\nfragment BidForm_me on Me {\n  hasQualifiedCreditCards\n}\n\nfragment BidForm_saleArtwork on SaleArtwork {\n  minimumNextBid {\n    cents\n  }\n  increments(useMyMaxBid: true) {\n    cents\n    display\n  }\n  sale {\n    slug\n    registrationStatus {\n      qualifiedForBidding\n      id\n    }\n    id\n  }\n}\n\nfragment ConfirmBid_me on Me {\n  internalID\n  hasQualifiedCreditCards\n  ...BidForm_me\n}\n\nfragment LotInfo_artwork on Artwork {\n  internalID\n  date\n  title\n  imageUrl\n  artistNames\n  slug\n}\n\nfragment LotInfo_saleArtwork on SaleArtwork {\n  counts {\n    bidderPositions\n  }\n  lotLabel\n  minimumNextBid {\n    amount\n    cents\n    display\n  }\n}\n"
+    "text": "query auctionRoutes_ConfirmBidQuery(\n  $saleID: String!\n  $artworkID: String!\n) {\n  artwork(id: $artworkID) {\n    internalID\n    slug\n    saleArtwork(saleID: $saleID) {\n      internalID\n      slug\n      sale {\n        internalID\n        slug\n        name\n        isClosed\n        isRegistrationClosed\n        registrationStatus {\n          internalID\n          qualifiedForBidding\n          id\n        }\n        id\n      }\n      ...LotInfo_saleArtwork\n      ...BidForm_saleArtwork\n      id\n    }\n    ...LotInfo_artwork\n    id\n  }\n  me {\n    internalID\n    hasQualifiedCreditCards\n    ...ConfirmBid_me\n    id\n  }\n}\n\nfragment BidForm_me on Me {\n  hasQualifiedCreditCards\n}\n\nfragment BidForm_saleArtwork on SaleArtwork {\n  minimumNextBid {\n    cents\n  }\n  increments(useMyMaxBid: true) {\n    cents\n    display\n  }\n  sale {\n    slug\n    registrationStatus {\n      qualifiedForBidding\n      id\n    }\n    id\n  }\n}\n\nfragment ConfirmBid_me on Me {\n  internalID\n  hasQualifiedCreditCards\n  ...BidForm_me\n}\n\nfragment LotInfo_artwork on Artwork {\n  internalID\n  date\n  title\n  imageUrl\n  artistNames\n  slug\n}\n\nfragment LotInfo_saleArtwork on SaleArtwork {\n  counts {\n    bidderPositions\n  }\n  lotLabel\n  currentBid {\n    display\n  }\n}\n"
   }
 };
 })();

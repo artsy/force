@@ -1,4 +1,4 @@
-import { Join, Spacer } from "@artsy/palette"
+import { Join, Separator } from "@artsy/palette"
 import React from "react"
 import { SettingsAuctionsRoute_me } from "v2/__generated__/SettingsAuctionsRoute_me.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -14,13 +14,11 @@ const SettingsAuctionsRoute: React.FC<SettingsAuctionsRouteProps> = ({
   me,
 }) => {
   return (
-    <Join
-      separator={
-        <Spacer mt={4} borderBottom="1px solid" borderColor="black10" />
-      }
-    >
+    <Join separator={<Separator my={4} />}>
       <UserActiveBidsFragmentContainer me={me} />
+
       <UserBidHistoryFragmentContainer me={me} />
+
       <UserRegistrationAuctionsFragmentContainer me={me} />
     </Join>
   )

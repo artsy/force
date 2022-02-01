@@ -34,6 +34,7 @@ export interface FormProps {
   intent: AuthIntent
   onAppleLogin?: (e: Event) => void
   onFacebookLogin?: (e: Event) => void
+  onGoogleLogin?: (e: Event) => void
   onBackButtonClicked?: (e: Event) => void
   title?: string
   entityName?: string
@@ -66,7 +67,6 @@ export interface ModalOptions {
    * }
    */
   afterSignUpAction?: AfterSignUpAction
-
   /*
    * the location where the modal was triggered.
    */
@@ -101,6 +101,10 @@ export interface ModalOptions {
    * the type of modal to display.
    */
   mode?: ModalType
+  /*
+   * Whether or not the user is using the form via gravity's oauth flow.
+   */
+  oauthLogin?: boolean
   /**
    * MOBILE ONLY
    * Used to construct afterSignupAction from query params

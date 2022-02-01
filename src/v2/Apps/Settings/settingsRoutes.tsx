@@ -8,16 +8,6 @@ const SettingsApp = loadable(
     resolveComponent: component => component.SettingsAppFragmentContainer,
   }
 )
-const OverviewRoute = loadable(
-  () =>
-    import(
-      /* webpackChunkName: "settingsBundle" */ "./Routes/Overview/SettingsOverviewRoute"
-    ),
-  {
-    resolveComponent: component =>
-      component.SettingsOverviewRouteFragmentContainer,
-  }
-)
 const AuctionsRoute = loadable(
   () =>
     import(
@@ -80,11 +70,47 @@ const EditSettingsRoute = loadable(
 const ShippingRoute = loadable(
   () =>
     import(
-      /* webpackChunkName: "settingsBundle" */ "./Routes/Shipping/Components/SettingsShippingRoute"
+      /* webpackChunkName: "settingsBundle" */ "./Routes/Shipping/SettingsShippingRoute"
     ),
   {
     resolveComponent: component =>
       component.SettingsShippingRouteFragmentContainer,
+  }
+)
+const DeleteAccountRoute = loadable(
+  () =>
+    import(
+      /* webpackChunkName: "settingsBundle" */ "./Routes/DeleteAccount/DeleteAccountRoute"
+    ),
+  {
+    resolveComponent: component => component.DeleteAccountRoute,
+  }
+)
+
+// Redirect home if the user is not logged in
+const handleServerSideRender = ({ req, res }) => {
+  if (!req.user) {
+    res.redirect("/")
+  }
+}
+
+const SavedSearchAlertsApp = loadable(
+  () =>
+    import(
+      /* webpackChunkName: "settingsBundle" */ "./Routes/SavedSearchAlerts/SavedSearchAlertsApp"
+    ),
+  {
+    resolveComponent: component => component.SavedSearchAlertsApp,
+  }
+)
+const SavedSearchAlertsOverviewRoute = loadable(
+  () =>
+    import(
+      /* webpackChunkName: "settingsBundle" */ "./Routes/SavedSearchAlerts/SavedSearchAlertsOverviewRoute"
+    ),
+  {
+    resolveComponent: component =>
+      component.SavedSearchAlertsOverviewRouteFragmentContainer,
   }
 )
 
@@ -105,18 +131,12 @@ export const settingsRoutes: AppRouteConfig[] = [
     `,
     children: [
       {
-        path: "/",
-        getComponent: () => OverviewRoute,
-        onClientSideRender: () => {
-          OverviewRoute.preload()
-        },
-      },
-      {
         path: "auctions",
         getComponent: () => AuctionsRoute,
         onClientSideRender: () => {
           AuctionsRoute.preload()
         },
+        onServerSideRender: handleServerSideRender,
         query: graphql`
           query settingsRoutes_SettingsAuctionsRouteQuery {
             me {
@@ -131,6 +151,7 @@ export const settingsRoutes: AppRouteConfig[] = [
         onClientSideRender: () => {
           EditProfileRoute.preload()
         },
+        onServerSideRender: handleServerSideRender,
         query: graphql`
           query settingsRoutes_EditProfileRouteQuery {
             me {
@@ -145,6 +166,7 @@ export const settingsRoutes: AppRouteConfig[] = [
         onClientSideRender: () => {
           PaymentsRoute.preload()
         },
+        onServerSideRender: handleServerSideRender,
         query: graphql`
           query settingsRoutes_PaymentsRouteQuery {
             me {
@@ -159,6 +181,7 @@ export const settingsRoutes: AppRouteConfig[] = [
         onClientSideRender: () => {
           PurchasesRoute.preload()
         },
+        onServerSideRender: handleServerSideRender,
         query: graphql`
           query settingsRoutes_PurchasesRouteQuery {
             me {
@@ -173,6 +196,7 @@ export const settingsRoutes: AppRouteConfig[] = [
         onClientSideRender: () => {
           SavesRoute.preload()
         },
+        onServerSideRender: handleServerSideRender,
         query: graphql`
           query settingsRoutes_SavesRouteQuery {
             me {
@@ -187,6 +211,7 @@ export const settingsRoutes: AppRouteConfig[] = [
         onClientSideRender: () => {
           EditSettingsRoute.preload()
         },
+        onServerSideRender: handleServerSideRender,
         query: graphql`
           query settingsRoutes_SettingsEditSettingsRouteQuery {
             me {
@@ -196,15 +221,49 @@ export const settingsRoutes: AppRouteConfig[] = [
         `,
       },
       {
+        path: "delete",
+        getComponent: () => DeleteAccountRoute,
+        onClientSideRender: () => {
+          DeleteAccountRoute.preload()
+        },
+        onServerSideRender: handleServerSideRender,
+      },
+      {
         path: "shipping",
         getComponent: () => ShippingRoute,
         onClientSideRender: () => {
           ShippingRoute.preload()
         },
+        onServerSideRender: handleServerSideRender,
         query: graphql`
           query settingsRoutes_ShippingRouteQuery {
             me {
               ...SettingsShippingRoute_me
+            }
+          }
+        `,
+      },
+    ],
+  },
+
+  {
+    path: "/user/alerts",
+    theme: "v3",
+    getComponent: () => SavedSearchAlertsApp,
+    onClientSideRender: () => {
+      SavedSearchAlertsApp.preload()
+    },
+    children: [
+      {
+        path: "/",
+        getComponent: () => SavedSearchAlertsOverviewRoute,
+        onClientSideRender: () => {
+          SavedSearchAlertsOverviewRoute.preload()
+        },
+        query: graphql`
+          query settingsRoutes_SavedSearchAlertsOverviewRouteQuery {
+            me {
+              ...SavedSearchAlertsOverviewRoute_me
             }
           }
         `,

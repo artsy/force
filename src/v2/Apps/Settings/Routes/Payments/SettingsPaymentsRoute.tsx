@@ -1,20 +1,16 @@
 import React from "react"
-import { PaymentSection_me } from "v2/__generated__/PaymentSection_me.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
-import { PaymentSection } from "v2/Apps/Payment/Components/PaymentSection"
+import { SettingsPaymentsMethodsFragmentContainer } from "./Components/SettingsPaymentsMethods"
+import { SettingsPaymentsRoute_me } from "v2/__generated__/SettingsPaymentsRoute_me.graphql"
 
 interface SettingsPaymentsRouteProps {
-  me: PaymentSection_me
+  me: SettingsPaymentsRoute_me
 }
 
 const SettingsPaymentsRoute: React.FC<SettingsPaymentsRouteProps> = ({
   me,
 }) => {
-  return (
-    <>
-      <PaymentSection me={me} />
-    </>
-  )
+  return <SettingsPaymentsMethodsFragmentContainer me={me} />
 }
 
 export const SettingsPaymentsRouteFragmentContainer = createFragmentContainer(
@@ -22,7 +18,7 @@ export const SettingsPaymentsRouteFragmentContainer = createFragmentContainer(
   {
     me: graphql`
       fragment SettingsPaymentsRoute_me on Me {
-        ...PaymentSection_me
+        ...SettingsPaymentsMethods_me
       }
     `,
   }

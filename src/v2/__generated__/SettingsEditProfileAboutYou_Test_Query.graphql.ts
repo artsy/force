@@ -32,6 +32,9 @@ fragment SettingsEditProfileAboutYou_me on Me {
   }
   profession
   shareFollows
+  priceRange
+  priceRangeMin
+  priceRangeMax
 }
 */
 
@@ -54,6 +57,12 @@ v2 = {
   "nullable": true,
   "plural": false,
   "type": "String"
+},
+v3 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "Float"
 };
 return {
   "fragment": {
@@ -129,6 +138,27 @@ return {
             "name": "shareFollows",
             "storageKey": null
           },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "priceRange",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "priceRangeMin",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "priceRangeMax",
+            "storageKey": null
+          },
           (v0/*: any*/)
         ],
         "storageKey": null
@@ -136,7 +166,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "e4e439f1ccb87e8beaa8ba06e779956d",
+    "cacheID": "664773dee82fa8d8ec8433acec6db4c1",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -155,6 +185,9 @@ return {
         },
         "me.location.display": (v2/*: any*/),
         "me.location.id": (v1/*: any*/),
+        "me.priceRange": (v2/*: any*/),
+        "me.priceRangeMax": (v3/*: any*/),
+        "me.priceRangeMin": (v3/*: any*/),
         "me.profession": (v2/*: any*/),
         "me.shareFollows": {
           "enumValues": null,
@@ -166,7 +199,7 @@ return {
     },
     "name": "SettingsEditProfileAboutYou_Test_Query",
     "operationKind": "query",
-    "text": "query SettingsEditProfileAboutYou_Test_Query {\n  me {\n    ...SettingsEditProfileAboutYou_me\n    id\n  }\n}\n\nfragment SettingsEditProfileAboutYou_me on Me {\n  location {\n    display\n    id\n  }\n  profession\n  shareFollows\n}\n"
+    "text": "query SettingsEditProfileAboutYou_Test_Query {\n  me {\n    ...SettingsEditProfileAboutYou_me\n    id\n  }\n}\n\nfragment SettingsEditProfileAboutYou_me on Me {\n  location {\n    display\n    id\n  }\n  profession\n  shareFollows\n  priceRange\n  priceRangeMin\n  priceRangeMax\n}\n"
   }
 };
 })();

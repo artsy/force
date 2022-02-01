@@ -6,7 +6,7 @@ import "./lib/DOMParser"
 // TODO: Export a function instead of loading on import.
 import "./lib/setup_sharify"
 
-import artsyPassport from "@artsy/passport"
+import artsyPassport from "lib/passport"
 import addRequestId from "express-request-id"
 import compression from "compression"
 import cookieParser from "cookie-parser"
@@ -21,8 +21,8 @@ import siteAssociation from "@artsy/eigen-web-association"
 import timeout from "connect-timeout"
 import bodyParser from "body-parser"
 import {
-  API_URL,
   APP_TIMEOUT,
+  API_URL,
   APP_URL,
   APPLE_CLIENT_ID,
   APPLE_KEY_ID,
@@ -32,9 +32,11 @@ import {
   CLIENT_SECRET,
   FACEBOOK_ID,
   FACEBOOK_SECRET,
+  GOOGLE_CLIENT_ID,
+  GOOGLE_SECRET,
+  SEGMENT_WRITE_KEY_SERVER,
   IP_DENYLIST,
   NODE_ENV,
-  SEGMENT_WRITE_KEY_SERVER,
   SENTRY_PRIVATE_DSN,
 } from "./config"
 
@@ -191,7 +193,7 @@ function applySecurityMiddleware(app) {
   // because `local.asset` is required to render the error page.
   app.use(assetMiddleware())
 
-  // Passport middleware for authentication.
+  // // Passport middleware for authentication.
   app.use(
     artsyPassport({
       APP_URL,
@@ -205,6 +207,8 @@ function applySecurityMiddleware(app) {
       CurrentUser: CurrentUser,
       FACEBOOK_ID,
       FACEBOOK_SECRET,
+      GOOGLE_CLIENT_ID,
+      GOOGLE_SECRET,
       SEGMENT_WRITE_KEY: SEGMENT_WRITE_KEY_SERVER,
       userKeys: [
         "collector_level",

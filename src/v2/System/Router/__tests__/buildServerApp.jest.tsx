@@ -16,6 +16,7 @@ import { NextFunction, Request } from "express"
 import type { ArtsyResponse } from "lib/middleware/artsyExpress"
 import { createMockNetworkLayer } from "v2/DevTools/createMockNetworkLayer"
 import { findRoutesByPath } from "../Utils/findRoutesByPath"
+import { useTracking } from "react-tracking"
 
 jest.unmock("react-relay")
 
@@ -34,6 +35,8 @@ jest.mock("@loadable/server", () => ({
   },
 }))
 
+jest.mock("react-tracking")
+
 const defaultComponent = () => <div>hi!</div>
 
 describe("buildServerApp", () => {
@@ -48,6 +51,8 @@ describe("buildServerApp", () => {
     return []
   })
 
+  const mockTracking = useTracking as jest.Mock
+
   beforeEach(() => {
     res = {
       locals: { sd: {} },
@@ -57,11 +62,20 @@ describe("buildServerApp", () => {
       url: "/",
       header: jest.fn().mockReturnValue("A random user-agent"),
     } as unknown) as Request
+
     options = {
       res,
       req,
       next,
     }
+
+    mockTracking.mockImplementation(() => ({
+      trackEvent: jest.fn(),
+    }))
+  })
+
+  afterEach(() => {
+    jest.clearAllMocks()
   })
 
   const getWrapper = async (

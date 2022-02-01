@@ -2,7 +2,7 @@ describe("user/payments", () => {
   describe("unauthenticated", () => {
     it("redirects to the login page", () => {
       cy.visit("user/payments")
-      cy.contains("Login to Artsy")
+      cy.contains("Log in to Artsy")
     })
   })
 })
