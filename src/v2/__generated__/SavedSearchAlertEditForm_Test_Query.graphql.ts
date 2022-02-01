@@ -25,7 +25,7 @@ export type SavedSearchAlertEditForm_Test_QueryRawResponse = {
             readonly internalID: string;
             readonly acquireable: boolean | null;
             readonly additionalGeneIDs: ReadonlyArray<string>;
-            readonly artistID: string | null;
+            readonly artistIDs: ReadonlyArray<string> | null;
             readonly atAuction: boolean | null;
             readonly attributionClass: ReadonlyArray<string>;
             readonly colors: ReadonlyArray<string>;
@@ -113,7 +113,7 @@ fragment SavedSearchAlertEditForm_savedSearch on SearchCriteria {
   internalID
   acquireable
   additionalGeneIDs
-  artistID
+  artistIDs
   atAuction
   attributionClass
   colors
@@ -307,7 +307,7 @@ return {
                 "alias": null,
                 "args": null,
                 "kind": "ScalarField",
-                "name": "artistID",
+                "name": "artistIDs",
                 "storageKey": null
               },
               {
@@ -521,12 +521,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "ae608e15cc8f6433872ece07bb4b36a6",
+    "cacheID": "fad5104a9269bef777c8f9281dcd492d",
     "id": null,
     "metadata": {},
     "name": "SavedSearchAlertEditForm_Test_Query",
     "operationKind": "query",
-    "text": "query SavedSearchAlertEditForm_Test_Query {\n  me {\n    savedSearch(id: \"id\") {\n      ...SavedSearchAlertEditForm_savedSearch\n    }\n    id\n  }\n  artist(id: \"artistId\") {\n    ...SavedSearchAlertEditForm_artist\n    id\n  }\n  artworksConnection(first: 0, artistID: \"artistId\", aggregations: [ARTIST, LOCATION_CITY, MATERIALS_TERMS, MEDIUM, PARTNER, COLOR]) {\n    ...SavedSearchAlertEditForm_artworksConnection\n    id\n  }\n}\n\nfragment SavedSearchAlertEditForm_artist on Artist {\n  internalID\n  name\n  slug\n}\n\nfragment SavedSearchAlertEditForm_artworksConnection on FilterArtworksConnection {\n  aggregations {\n    slice\n    counts {\n      count\n      name\n      value\n    }\n  }\n}\n\nfragment SavedSearchAlertEditForm_savedSearch on SearchCriteria {\n  internalID\n  acquireable\n  additionalGeneIDs\n  artistID\n  atAuction\n  attributionClass\n  colors\n  dimensionRange\n  sizes\n  height\n  inquireableOnly\n  locationCities\n  majorPeriods\n  materialsTerms\n  offerable\n  partnerIDs\n  priceRange\n  userAlertSettings {\n    name\n    email\n    push\n  }\n  width\n}\n"
+    "text": "query SavedSearchAlertEditForm_Test_Query {\n  me {\n    savedSearch(id: \"id\") {\n      ...SavedSearchAlertEditForm_savedSearch\n    }\n    id\n  }\n  artist(id: \"artistId\") {\n    ...SavedSearchAlertEditForm_artist\n    id\n  }\n  artworksConnection(first: 0, artistID: \"artistId\", aggregations: [ARTIST, LOCATION_CITY, MATERIALS_TERMS, MEDIUM, PARTNER, COLOR]) {\n    ...SavedSearchAlertEditForm_artworksConnection\n    id\n  }\n}\n\nfragment SavedSearchAlertEditForm_artist on Artist {\n  internalID\n  name\n  slug\n}\n\nfragment SavedSearchAlertEditForm_artworksConnection on FilterArtworksConnection {\n  aggregations {\n    slice\n    counts {\n      count\n      name\n      value\n    }\n  }\n}\n\nfragment SavedSearchAlertEditForm_savedSearch on SearchCriteria {\n  internalID\n  acquireable\n  additionalGeneIDs\n  artistIDs\n  atAuction\n  attributionClass\n  colors\n  dimensionRange\n  sizes\n  height\n  inquireableOnly\n  locationCities\n  majorPeriods\n  materialsTerms\n  offerable\n  partnerIDs\n  priceRange\n  userAlertSettings {\n    name\n    email\n    push\n  }\n  width\n}\n"
   }
 };
 })();

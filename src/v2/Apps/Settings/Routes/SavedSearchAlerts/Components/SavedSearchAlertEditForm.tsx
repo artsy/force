@@ -251,7 +251,7 @@ export const SavedSearchAlertEditFormFragmentContainer = createFragmentContainer
         internalID
         acquireable
         additionalGeneIDs
-        artistID
+        artistIDs
         atAuction
         attributionClass
         colors

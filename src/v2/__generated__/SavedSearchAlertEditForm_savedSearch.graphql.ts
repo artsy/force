@@ -8,7 +8,7 @@ export type SavedSearchAlertEditForm_savedSearch = {
     readonly internalID: string;
     readonly acquireable: boolean | null;
     readonly additionalGeneIDs: ReadonlyArray<string>;
-    readonly artistID: string | null;
+    readonly artistIDs: ReadonlyArray<string> | null;
     readonly atAuction: boolean | null;
     readonly attributionClass: ReadonlyArray<string>;
     readonly colors: ReadonlyArray<string>;
@@ -69,7 +69,7 @@ const node: ReaderFragment = {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "artistID",
+      "name": "artistIDs",
       "storageKey": null
     },
     {
@@ -206,5 +206,5 @@ const node: ReaderFragment = {
   "type": "SearchCriteria",
   "abstractKey": null
 };
-(node as any).hash = 'f6c5751d54f3aa0df707345dd8abc620';
+(node as any).hash = 'b5404b5fc471717ab851eef6da68dc7a';
 export default node;

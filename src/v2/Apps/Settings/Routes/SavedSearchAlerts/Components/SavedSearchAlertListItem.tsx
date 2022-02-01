@@ -44,7 +44,7 @@ export const SavedSearchAlertListItem: React.FC<SavedSearchAlertListItemProps> =
               onEditAlertClick({
                 id: item.internalID,
                 name: item.userAlertSettings.name!,
-                artistId: item.artistID!,
+                artistId: item.artistIDs![0],
               })
             }}
           >
@@ -66,7 +66,7 @@ export const SavedSearchAlertListItemFragmentContainer = createFragmentContainer
     item: graphql`
       fragment SavedSearchAlertListItem_item on SearchCriteria {
         internalID
-        artistID
+        artistIDs
         userAlertSettings {
           name
         }

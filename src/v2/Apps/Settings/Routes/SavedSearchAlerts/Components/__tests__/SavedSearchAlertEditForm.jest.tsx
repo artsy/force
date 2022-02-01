@@ -218,7 +218,7 @@ const savedSearchAlertMocked = {
   internalID: "alert-id",
   acquireable: true,
   additionalGeneIDs: [],
-  artistID: "artistId",
+  artistIDs: ["artistId"],
   atAuction: true,
   attributionClass: [],
   colors: [],
