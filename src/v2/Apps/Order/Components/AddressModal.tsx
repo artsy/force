@@ -87,7 +87,6 @@ export const AddressModal: React.FC<Props> = ({
     modalDetails?.addressModalAction === "createUserAddress"
 
   const handleClearAddress = (): void => {
-    console.log("handleClearAddress")
     onClearAddress()
   }
   const handleModalClose = () => {
