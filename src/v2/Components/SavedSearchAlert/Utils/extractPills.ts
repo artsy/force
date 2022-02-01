@@ -22,6 +22,12 @@ import {
 } from "v2/Components/ArtworkFilter/SavedSearch/Utils"
 import { SavedSearchAttributes } from "v2/Components/ArtworkFilter/SavedSearch/types"
 
+export const FALLBACK_SIZE_OPTIONS = [
+  { oldValue: "*-16.0", newValue: "SMALL" },
+  { oldValue: "16.0-40.0", newValue: "MEDIUM" },
+  { oldValue: "40.0-*", newValue: "LARGE" },
+]
+
 export const extractPillFromAggregation = (
   filter: {
     paramName: string
@@ -45,7 +51,7 @@ export const extractPillFromAggregation = (
   return []
 }
 
-export const extractSizeLabel = (prefix: string, value: string) => {
+export const extractCustomSizeLabel = (prefix: string, value: string) => {
   const [min, max] = parseRange(value)!
 
   let label
@@ -58,6 +64,30 @@ export const extractSizeLabel = (prefix: string, value: string) => {
   }
 
   return `${prefix}: ${label} cm`
+}
+
+export const extractSizeLabel = (sizes: string[]) => {
+  return sizes.map(value => {
+    const sizeOption = find(SIZES, option => value === option.name)
+
+    return {
+      filterName: "sizes",
+      name: value,
+      displayName: sizeOption!.displayName,
+    }
+  })
+}
+
+export const extractSizeLabelForOldFormat = (value: string) => {
+  const newSizeValueByOld = FALLBACK_SIZE_OPTIONS.find(
+    fallbackOption => fallbackOption.oldValue === value
+  )
+
+  if (newSizeValueByOld) {
+    return extractSizeLabel([newSizeValueByOld.newValue])
+  }
+
+  return null
 }
 
 const extractPriceLabel = (range: string) => {
@@ -108,18 +138,17 @@ export const extractPillsFromFilters = (
           result = {
             filterName: paramName,
             name: paramValue,
-            displayName: extractSizeLabel(paramName[0], paramValue),
+            displayName: extractCustomSizeLabel(paramName[0], paramValue),
           }
         }
         break
       }
       case "sizes": {
-        result = paramValue.map(value => ({
-          filterName: paramName,
-          name: value,
-          displayName: find(SIZES, option => value === option.name)
-            ?.displayName,
-        }))
+        result = extractSizeLabel(paramValue)
+        break
+      }
+      case "dimensionRange": {
+        result = extractSizeLabelForOldFormat(paramValue)
         break
       }
       case "colors": {
