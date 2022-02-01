@@ -9,6 +9,7 @@ import { PartnerMetaFragmentContainer } from "./Components/PartnerMeta"
 import { StickyProvider } from "v2/Components/Sticky"
 import { PartnerArtistsLoadingContextProvider } from "./Utils/PartnerArtistsLoadingContext"
 import { HttpError } from "found"
+import { Ribbon } from "v2/Components/Ribbon"
 
 export interface PartnerAppProps {
   partner: PartnerApp_partner
@@ -24,11 +25,15 @@ export const PartnerApp: React.FC<PartnerAppProps> = ({
     displayFullPartnerPage,
     isDefaultProfilePublic,
     partnerPageEligible,
+    categories,
   } = partner
 
   if (!isDefaultProfilePublic || !partnerPageEligible) {
     throw new HttpError(404)
   }
+
+  const isBlackOwned =
+    categories!.filter(c => c && c.name === "Black Owned").length > 0
 
   return (
     <PartnerArtistsLoadingContextProvider>
@@ -42,7 +47,7 @@ export const PartnerApp: React.FC<PartnerAppProps> = ({
         <PartnerHeader partner={partner} />
 
         <FullBleed mb={[2, 4]}>
-          <Separator />
+          {isBlackOwned ? <Ribbon ribbonText="Black Owned" /> : <Separator />}
         </FullBleed>
 
         {(displayFullPartnerPage || partnerType === "Brand") && (
@@ -62,6 +67,10 @@ export const PartnerAppFragmentContainer = createFragmentContainer(PartnerApp, {
       displayFullPartnerPage
       partnerPageEligible
       isDefaultProfilePublic
+      categories {
+        id
+        name
+      }
       profile {
         ...PartnerHeaderImage_profile
       }
