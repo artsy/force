@@ -11,8 +11,6 @@ import { data as sd } from "sharify"
 
 const routes = {
   "^/contact": require("../apps/contact/client/index.coffee").init,
-  "^/how-auctions-work[/]?.*": require("../apps/how_auctions_work/client/index.coffee")
-    .init,
   "^/tag/.*": require("../apps/tag/client.coffee").init,
   "^/profile/.*": require("../apps/profile/client.coffee"),
   "^/collect$": require("../apps/browse/client.coffee").init,

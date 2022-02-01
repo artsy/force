@@ -16,7 +16,6 @@ app.use(
 
 app.use(require("./apps/page"))
 app.use(require("./apps/contact"))
-app.use(require("./apps/how_auctions_work"))
 app.use(require("./apps/profile"))
 app.use(require("./apps/user"))
 app.use(require("./apps/partners"))
