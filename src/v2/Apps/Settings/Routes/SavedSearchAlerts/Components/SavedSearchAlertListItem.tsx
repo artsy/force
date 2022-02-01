@@ -29,7 +29,7 @@ export const SavedSearchAlertListItem: React.FC<SavedSearchAlertListItemProps> =
         alignItems="center"
         justifyContent="space-between"
       >
-        <Flex flex={1} flexWrap="wrap">
+        <Flex flex={1} mr={2}>
           <Text
             variant="lg"
             color={variant === "active" ? "blue100" : "black100"}

@@ -23,12 +23,12 @@ export const SavedSearchAlertEditFormContainer: React.FC<SavedSearchAlertEditFor
       </Media>
 
       <Box flex={1} p={[2, 4]}>
-        <Flex justifyContent="space-between">
+        <Flex justifyContent="space-between" alignItems="center">
           <Text variant="lg" flex={1} mr={1}>
             Edit {editAlertEntity.name}
           </Text>
-          <Clickable onClick={onCloseClick} mt={0.5}>
-            <CloseIcon />
+          <Clickable onClick={onCloseClick}>
+            <CloseIcon display="flex" />
           </Clickable>
         </Flex>
 
