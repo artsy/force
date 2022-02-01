@@ -5,7 +5,7 @@ import { themeGet } from "@styled-system/theme-get"
 
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { DetailIcon, DetailsProps } from "./DetailsHeader"
-import { Media } from "@artsy/reaction/dist/Utils/Responsive"
+import { Media } from "v2/Utils/Responsive"
 
 export const LARGE_SCREEN_HEADER_HEIGHT = "85px"
 export const SMALL_SCREEN_HEADER_HEIGHT = "55px"
