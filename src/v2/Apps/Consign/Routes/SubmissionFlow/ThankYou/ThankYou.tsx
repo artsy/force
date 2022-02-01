@@ -2,6 +2,7 @@ import { Button, Flex, Text, Spacer, Box } from "@artsy/palette"
 import { FAQ } from "../../MarketingLanding/Components/FAQ"
 import { SoldRecentlyQueryRenderer } from "../../MarketingLanding/Components/SoldRecently"
 import { RouterLink } from "v2/System/Router/RouterLink"
+import { DownloadApps } from "./Components/DownloadApps"
 
 export const ThankYou: React.FC = () => {
   return (
@@ -50,6 +51,8 @@ export const ThankYou: React.FC = () => {
           </Button>
         </RouterLink>
       </Flex>
+
+      <DownloadApps mb={6} />
 
       <SoldRecentlyQueryRenderer />
       <Spacer mt={6} />

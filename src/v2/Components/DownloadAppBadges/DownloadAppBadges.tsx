@@ -1,5 +1,5 @@
 import { ContextModule } from "@artsy/cohesion"
-import { Flex } from "@artsy/palette"
+import { Flex, FlexProps } from "@artsy/palette"
 import React from "react"
 import {
   Device,
@@ -8,18 +8,19 @@ import {
 } from "v2/Utils/Hooks/useDeviceDetection"
 import { DownloadAppBadge } from "./DownloadAppBadge"
 
-interface DownloadAppBadgesProps {
+interface DownloadAppBadgesProps extends FlexProps {
   contextModule: ContextModule
 }
 
 export const DownloadAppBadges: React.FC<DownloadAppBadgesProps> = ({
   contextModule,
+  ...rest
 }) => {
   const { device, downloadAppUrl } = useDeviceDetection()
 
   if (device === Device.Unknown) {
     return (
-      <Flex flexWrap="wrap" justifyContent="center">
+      <Flex flexWrap="wrap" justifyContent="center" {...rest}>
         <DownloadAppBadge
           contextModule={contextModule}
           device={Device.iPhone}
