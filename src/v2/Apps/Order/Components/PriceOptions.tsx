@@ -35,13 +35,11 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
 
   const [customValue, setCustomValue] = useState<number>()
   const [toggle, setToggle] = useState(false)
-  const [displayWarning, setDisplayWarning] = useState(false)
   const [selectedRadio, setSelectedRadio] = useState<string>()
   const listPrice = artwork?.listPrice
 
   useEffect(() => {
     if (!!customValue) onChange(customValue)
-    setDisplayWarning(false)
   }, [customValue])
 
   useEffect(() => {
@@ -166,16 +164,13 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
                   id="OfferForm_offerValue"
                   showError={showError}
                   onChange={setCustomValue}
-                  onBlur={() => {
-                    setDisplayWarning(true)
-                  }}
                   onFocus={() => {
                     onFocus()
                     scrollTo()
                   }}
                   noTitle
                 />
-                {displayWarning && !!customValue && customValue < minPrice && (
+                {(!customValue || customValue < minPrice) && (
                   <MinPriceWarning
                     isPriceRange={!!artwork?.isPriceRange}
                     onClick={selectMinPrice}
