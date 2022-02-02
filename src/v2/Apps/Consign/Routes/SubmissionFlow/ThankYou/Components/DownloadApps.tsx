@@ -33,7 +33,6 @@ const BANNER_FRONT_PART = resized(
 )
 
 const BannerFrontPartStyledImage = styled(Image)`
-  object-fit: contain;
   position: absolute;
   width: 432px;
   height: 334px;
@@ -42,11 +41,14 @@ const BannerFrontPartStyledImage = styled(Image)`
   left: 50%;
   background-color: transparent;
 
+  ${media.md`
+    width: 300px;
+  `}
   ${media.xs`
     top: -55px;
     width: 184px;
     height: 195px;
-  `};
+  `}
 `
 
 export const DownloadApps: React.FC<BoxProps> = props => {
@@ -94,6 +96,7 @@ export const DownloadApps: React.FC<BoxProps> = props => {
               srcSet={BANNER_FRONT_PART.srcSet}
               lazyLoad
               alt=""
+              style={{ objectPosition: "top", objectFit: "cover" }}
             />
           </Box>
         </Media>
@@ -116,6 +119,7 @@ export const DownloadApps: React.FC<BoxProps> = props => {
               srcSet={BANNER_FRONT_PART.srcSet}
               lazyLoad
               alt=""
+              style={{ objectPosition: "top", objectFit: "cover" }}
             />
           </Box>
         </Media>
