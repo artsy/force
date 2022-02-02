@@ -116,7 +116,7 @@ const SavedSearchAlertsOverviewRoute = loadable(
 
 export const settingsRoutes: AppRouteConfig[] = [
   {
-    path: "/settings2",
+    path: "/settings",
     theme: "v3",
     getComponent: () => SettingsApp,
     onClientSideRender: () => {

@@ -72,7 +72,7 @@ const SettingsPaymentsMethod: FC<SettingsPaymentsMethodProps> = ({
           mr={2}
         />
 
-        <Text variant="md" mr={1}>
+        <Text variant="md" mr={1} display={["none", "block"]}>
           {method.name}
         </Text>
 

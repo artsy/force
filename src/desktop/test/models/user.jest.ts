@@ -12,33 +12,6 @@ describe("User", () => {
 
     afterEach(() => Backbone.sync.restore())
 
-    describe("#refresh", () => {
-      it("hits the refresh endpoint", () => {
-        user.refresh()
-        Backbone.sync.args[0][2].url.should.equal("/user/refresh")
-      })
-
-      it("accepts a success callback", done => {
-        Backbone.sync.restore()
-        sinon.stub(Backbone, "sync").yieldsTo("success")
-        user.refresh({
-          success() {
-            done()
-          },
-        })
-      })
-
-      it("accepts an error callback", done => {
-        Backbone.sync.restore()
-        sinon.stub(Backbone, "sync").yieldsTo("error")
-        user.refresh({
-          error() {
-            done()
-          },
-        })
-      })
-    })
-
     describe("#isCollector", () => {
       it("returns false if the collector level is blank", () => {
         user.unset("collector_level")

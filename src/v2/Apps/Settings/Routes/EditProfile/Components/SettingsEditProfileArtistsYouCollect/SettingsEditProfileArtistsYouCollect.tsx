@@ -76,7 +76,7 @@ export const SettingsEditProfileArtistsYouCollect: FC<SettingsEditProfileArtists
       />
 
       <Box style={{ opacity: loading ? 0.5 : 1, transition: "opacity 250ms" }}>
-        {userInterests.map((userInterest, i) => {
+        {userInterests.map(userInterest => {
           if (
             !(
               userInterest?.category === "COLLECTED_BEFORE" &&
@@ -101,6 +101,7 @@ export const SettingsEditProfileArtistsYouCollect: FC<SettingsEditProfileArtists
               {artist.name}
 
               <SettingsEditProfileArtistsYouCollectRemoveButton
+                data-test={userInterest.interest.name}
                 onClick={handleRemove(userInterest.internalID)}
                 p={2}
               />
@@ -179,6 +180,7 @@ const SettingsEditProfileArtistsYouCollectAutocompleteInput: FC<SettingsEditProf
       `}
       placeholder={
         <AutocompleteInput
+          name="artistsYouCollect"
           loading
           onChange={handleChange}
           options={[]}
@@ -190,6 +192,7 @@ const SettingsEditProfileArtistsYouCollectAutocompleteInput: FC<SettingsEditProf
         if (!props || error) {
           return (
             <AutocompleteInput
+              name="artistsYouCollect"
               loading
               onChange={handleChange}
               options={[]}
@@ -206,6 +209,7 @@ const SettingsEditProfileArtistsYouCollectAutocompleteInput: FC<SettingsEditProf
 
         return (
           <AutocompleteInput
+            name="artistsYouCollect"
             value={term}
             onChange={handleChange}
             onSelect={handleSelect}

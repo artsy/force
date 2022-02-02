@@ -70,8 +70,8 @@ describe("userRequiredMiddleware", () => {
     it("performs redirect on a /purchases route", () => {
       const spy = jest.fn()
       const req = {
-        originalUrl: "/user/purchases/",
-        path: "/user/purchases/",
+        originalUrl: "/settings/purchases/",
+        path: "/settings/purchases/",
         query: {
           "accepted-conditions": false,
         },
@@ -88,7 +88,7 @@ describe("userRequiredMiddleware", () => {
 
       userRequiredMiddleware(req, res, next)
       expect(res.redirect).toHaveBeenCalledWith(
-        "/login?redirectTo=%2Fuser%2Fpurchases%2F"
+        "/login?redirectTo=%2Fsettings%2Fpurchases%2F"
       )
       expect(next).not.toHaveBeenCalled()
     })

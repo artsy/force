@@ -4,9 +4,9 @@ const USER_REQUIRED_ROUTES = [
   "/identity-verification(.*)",
   "/orders(.*)",
   "/user/conversations(.*)",
-  "/user/purchases(.*)",
-  "/user/payments",
-  "/user/shipping",
+  "/settings/purchases(.*)",
+  "/settings/payments",
+  "/settings/shipping",
   "/user/alerts",
 ]
 
