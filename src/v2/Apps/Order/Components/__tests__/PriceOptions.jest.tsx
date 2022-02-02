@@ -135,7 +135,7 @@ describe("PriceOptions", () => {
         "We recommend changing your offer to US$100.00."
       )
       expect(notice).toBeInTheDocument()
-      expect(trackEvent).toHaveBeenLastCalledWith(
+      expect(trackEvent).toHaveBeenCalledWith(
         expect.objectContaining({
           action_type: "Viewed offer too low",
           flow: "Make offer",
