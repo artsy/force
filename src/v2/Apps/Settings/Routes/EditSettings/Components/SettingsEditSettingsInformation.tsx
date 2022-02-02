@@ -156,6 +156,7 @@ export const SettingsEditSettingsInformation: React.FC<SettingsEditSettingsInfor
               )}
 
               <Button
+                data-test="information-submit"
                 mt={2}
                 type="submit"
                 loading={isSubmitting}
