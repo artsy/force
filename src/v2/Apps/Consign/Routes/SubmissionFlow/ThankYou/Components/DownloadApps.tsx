@@ -24,25 +24,28 @@ const MOBILE_COVER_IMAGE = resized(
   { width: 725, quality: 50 }
 )
 
-const IPHONE_IMAGE = resized(
-  "https://cdn.24htech.asia/info/wp-content/uploads/2022/01/20075421/image-iphone-se-3-to-come-in-the-second-half-of-april-or-early-may-164261486196270.png",
+const BANNER_FRONT_PART = resized(
+  "https://files.artsy.net/images/artsy_app-swa-download-mobile.png",
   {
-    width: 439,
+    width: 432,
     quality: 50,
   }
 )
 
-const StyledImage = styled(Image)`
+const BannerFrontPartStyledImage = styled(Image)`
   object-fit: contain;
   position: absolute;
-  width: 300px;
-  top: -100px;
+  width: 432px;
+  height: 334px;
+  top: -94px;
   transform: translate(-50%, 0);
   left: 50%;
+  background-color: transparent;
 
   ${media.xs`
-    top: -50px;
-    height: 190px;
+    top: -55px;
+    width: 184px;
+    height: 195px;
   `};
 `
 
@@ -61,7 +64,7 @@ export const DownloadApps: React.FC<BoxProps> = props => {
       >
         <Box mt={[-1, 12]}>
           <Text variant="xl" mb={1}>
-            View My Collection on the Artsy App
+            View&nbsp;My&nbsp;Collection on the Artsy&nbsp;App
           </Text>
           <Spacer mt={2} />
           <DownloadAppBadges
@@ -86,9 +89,9 @@ export const DownloadApps: React.FC<BoxProps> = props => {
               style={{ objectFit: "cover", objectPosition: "center top" }}
             />
 
-            <StyledImage
-              src={IPHONE_IMAGE.src}
-              srcSet={IPHONE_IMAGE.srcSet}
+            <BannerFrontPartStyledImage
+              src={BANNER_FRONT_PART.src}
+              srcSet={BANNER_FRONT_PART.srcSet}
               lazyLoad
               alt=""
             />
@@ -108,9 +111,9 @@ export const DownloadApps: React.FC<BoxProps> = props => {
               style={{ objectFit: "cover", objectPosition: "center top" }}
             />
 
-            <StyledImage
-              src={IPHONE_IMAGE.src}
-              srcSet={IPHONE_IMAGE.srcSet}
+            <BannerFrontPartStyledImage
+              src={BANNER_FRONT_PART.src}
+              srcSet={BANNER_FRONT_PART.srcSet}
               lazyLoad
               alt=""
             />

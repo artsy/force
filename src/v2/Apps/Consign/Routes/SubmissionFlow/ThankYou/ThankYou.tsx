@@ -24,6 +24,7 @@ export const ThankYou: React.FC = () => {
       <Flex
         py={2}
         my={4}
+        mb={0}
         flexDirection={["column", "row"]}
         alignItems={["stretch", "center"]}
       >
@@ -38,21 +39,9 @@ export const ThankYou: React.FC = () => {
             Submit Another Work
           </Button>
         </RouterLink>
-
-        <RouterLink to="/">
-          <Button
-            mt={[4, 0]}
-            width={["100%", "auto"]}
-            data-test-id="go-to-artsy-homepage"
-            size="medium"
-            variant="noOutline"
-          >
-            Back to Artsy Homepage
-          </Button>
-        </RouterLink>
       </Flex>
 
-      <DownloadApps mb={6} />
+      <DownloadApps mb={[2, 6]} />
 
       <SoldRecentlyQueryRenderer />
       <Spacer mt={6} />
