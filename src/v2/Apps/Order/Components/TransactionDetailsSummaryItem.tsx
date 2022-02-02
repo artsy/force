@@ -86,9 +86,9 @@ export class TransactionDetailsSummaryItem extends React.Component<
         <Spacer mb={2} />
         {this.avalaraPhase2enabled &&
           shippingAddressAdded &&
-          !order.taxTotal &&
+          !order.shippingTotal &&
           offer &&
-          !offer.taxTotal && (
+          !offer.shippingTotal && (
             <Text variant="sm" color="black60">
               **Shipping cost to be confirmed by gallery. You will be able to
               review total with shipping before payment.
@@ -180,9 +180,9 @@ export class TransactionDetailsSummaryItem extends React.Component<
     if (
       this.avalaraPhase2enabled &&
       shippingAddressAdded &&
-      !order.taxTotal &&
+      !order.shippingTotal &&
       offer &&
-      !offer.taxTotal
+      !offer.shippingTotal
     ) {
       return "Shipping**"
     }
@@ -233,7 +233,7 @@ export class TransactionDetailsSummaryItem extends React.Component<
     const { order, offerOverride, offerContextPrice } = this.props
     const currency = order.currencyCode
 
-    if (order.mode === "BUY" && this.avalaraPhase2enabled) {
+    if (order.mode === "BUY") {
       return (
         <Entry
           label="Price"
@@ -254,7 +254,7 @@ export class TransactionDetailsSummaryItem extends React.Component<
           value={
             appendCurrencySymbol(offerOverride, currency) ||
             (offer && appendCurrencySymbol(offer.amount, currency)) ||
-            this.amountPlaceholder()
+            "-"
           }
           data-test="offer"
         />
