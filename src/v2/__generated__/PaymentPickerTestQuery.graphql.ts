@@ -62,6 +62,15 @@ export type PaymentPickerTestQueryRawResponse = {
             readonly country: string | null;
             readonly postalCode: string | null;
         } | {
+            readonly __typename: "CommerceShipArta";
+            readonly name: string | null;
+            readonly addressLine1: string | null;
+            readonly addressLine2: string | null;
+            readonly city: string | null;
+            readonly region: string | null;
+            readonly country: string | null;
+            readonly postalCode: string | null;
+        } | {
             readonly __typename: "CommercePickup";
             readonly fulfillmentType: string;
         } | {
@@ -140,6 +149,15 @@ fragment PaymentPicker_order on CommerceOrder {
   requestedFulfillment {
     __typename
     ... on CommerceShip {
+      name
+      addressLine1
+      addressLine2
+      city
+      region
+      country
+      postalCode
+    }
+    ... on CommerceShipArta {
       name
       addressLine1
       addressLine2
@@ -258,31 +276,58 @@ v12 = {
   "name": "postalCode",
   "storageKey": null
 },
-v13 = {
+v13 = [
+  (v9/*: any*/),
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "addressLine1",
+    "storageKey": null
+  },
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "addressLine2",
+    "storageKey": null
+  },
+  (v10/*: any*/),
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "region",
+    "storageKey": null
+  },
+  (v11/*: any*/),
+  (v12/*: any*/)
+],
+v14 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "CreditCard"
 },
-v14 = {
+v15 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "String"
 },
-v15 = {
+v16 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "Int"
 },
-v16 = {
+v17 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "ID"
 },
-v17 = {
+v18 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
@@ -463,34 +508,14 @@ return {
               (v7/*: any*/),
               {
                 "kind": "InlineFragment",
-                "selections": [
-                  (v9/*: any*/),
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "addressLine1",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "addressLine2",
-                    "storageKey": null
-                  },
-                  (v10/*: any*/),
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "region",
-                    "storageKey": null
-                  },
-                  (v11/*: any*/),
-                  (v12/*: any*/)
-                ],
+                "selections": (v13/*: any*/),
                 "type": "CommerceShip",
+                "abstractKey": null
+              },
+              {
+                "kind": "InlineFragment",
+                "selections": (v13/*: any*/),
+                "type": "CommerceShipArta",
                 "abstractKey": null
               },
               {
@@ -570,7 +595,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "d9f656749fa25291272352eb6b0e37bb",
+    "cacheID": "782650b0f4696352342eae45f534fe3c",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -592,38 +617,38 @@ return {
           "plural": true,
           "type": "CreditCardEdge"
         },
-        "me.creditCards.edges.node": (v13/*: any*/),
-        "me.creditCards.edges.node.brand": (v14/*: any*/),
-        "me.creditCards.edges.node.expirationMonth": (v15/*: any*/),
-        "me.creditCards.edges.node.expirationYear": (v15/*: any*/),
-        "me.creditCards.edges.node.id": (v16/*: any*/),
-        "me.creditCards.edges.node.internalID": (v16/*: any*/),
-        "me.creditCards.edges.node.lastDigits": (v14/*: any*/),
-        "me.id": (v16/*: any*/),
+        "me.creditCards.edges.node": (v14/*: any*/),
+        "me.creditCards.edges.node.brand": (v15/*: any*/),
+        "me.creditCards.edges.node.expirationMonth": (v16/*: any*/),
+        "me.creditCards.edges.node.expirationYear": (v16/*: any*/),
+        "me.creditCards.edges.node.id": (v17/*: any*/),
+        "me.creditCards.edges.node.internalID": (v17/*: any*/),
+        "me.creditCards.edges.node.lastDigits": (v15/*: any*/),
+        "me.id": (v17/*: any*/),
         "order": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "CommerceOrder"
         },
-        "order.__isCommerceOrder": (v14/*: any*/),
-        "order.__typename": (v14/*: any*/),
-        "order.creditCard": (v13/*: any*/),
-        "order.creditCard.brand": (v14/*: any*/),
-        "order.creditCard.city": (v17/*: any*/),
-        "order.creditCard.country": (v17/*: any*/),
-        "order.creditCard.expirationMonth": (v15/*: any*/),
-        "order.creditCard.expirationYear": (v15/*: any*/),
-        "order.creditCard.id": (v16/*: any*/),
-        "order.creditCard.internalID": (v16/*: any*/),
-        "order.creditCard.lastDigits": (v14/*: any*/),
-        "order.creditCard.name": (v17/*: any*/),
-        "order.creditCard.postalCode": (v17/*: any*/),
-        "order.creditCard.state": (v17/*: any*/),
-        "order.creditCard.street1": (v17/*: any*/),
-        "order.creditCard.street2": (v17/*: any*/),
-        "order.id": (v16/*: any*/),
-        "order.internalID": (v16/*: any*/),
+        "order.__isCommerceOrder": (v15/*: any*/),
+        "order.__typename": (v15/*: any*/),
+        "order.creditCard": (v14/*: any*/),
+        "order.creditCard.brand": (v15/*: any*/),
+        "order.creditCard.city": (v18/*: any*/),
+        "order.creditCard.country": (v18/*: any*/),
+        "order.creditCard.expirationMonth": (v16/*: any*/),
+        "order.creditCard.expirationYear": (v16/*: any*/),
+        "order.creditCard.id": (v17/*: any*/),
+        "order.creditCard.internalID": (v17/*: any*/),
+        "order.creditCard.lastDigits": (v15/*: any*/),
+        "order.creditCard.name": (v18/*: any*/),
+        "order.creditCard.postalCode": (v18/*: any*/),
+        "order.creditCard.state": (v18/*: any*/),
+        "order.creditCard.street1": (v18/*: any*/),
+        "order.creditCard.street2": (v18/*: any*/),
+        "order.id": (v17/*: any*/),
+        "order.internalID": (v17/*: any*/),
         "order.lineItems": {
           "enumValues": null,
           "nullable": true,
@@ -648,9 +673,9 @@ return {
           "plural": false,
           "type": "Artwork"
         },
-        "order.lineItems.edges.node.artwork.id": (v16/*: any*/),
-        "order.lineItems.edges.node.artwork.slug": (v16/*: any*/),
-        "order.lineItems.edges.node.id": (v16/*: any*/),
+        "order.lineItems.edges.node.artwork.id": (v17/*: any*/),
+        "order.lineItems.edges.node.artwork.slug": (v17/*: any*/),
+        "order.lineItems.edges.node.id": (v17/*: any*/),
         "order.mode": {
           "enumValues": [
             "BUY",
@@ -666,15 +691,15 @@ return {
           "plural": false,
           "type": "CommerceRequestedFulfillmentUnion"
         },
-        "order.requestedFulfillment.__typename": (v14/*: any*/),
-        "order.requestedFulfillment.addressLine1": (v17/*: any*/),
-        "order.requestedFulfillment.addressLine2": (v17/*: any*/),
-        "order.requestedFulfillment.city": (v17/*: any*/),
-        "order.requestedFulfillment.country": (v17/*: any*/),
-        "order.requestedFulfillment.fulfillmentType": (v14/*: any*/),
-        "order.requestedFulfillment.name": (v17/*: any*/),
-        "order.requestedFulfillment.postalCode": (v17/*: any*/),
-        "order.requestedFulfillment.region": (v17/*: any*/),
+        "order.requestedFulfillment.__typename": (v15/*: any*/),
+        "order.requestedFulfillment.addressLine1": (v18/*: any*/),
+        "order.requestedFulfillment.addressLine2": (v18/*: any*/),
+        "order.requestedFulfillment.city": (v18/*: any*/),
+        "order.requestedFulfillment.country": (v18/*: any*/),
+        "order.requestedFulfillment.fulfillmentType": (v15/*: any*/),
+        "order.requestedFulfillment.name": (v18/*: any*/),
+        "order.requestedFulfillment.postalCode": (v18/*: any*/),
+        "order.requestedFulfillment.region": (v18/*: any*/),
         "order.state": {
           "enumValues": [
             "ABANDONED",
@@ -693,7 +718,7 @@ return {
     },
     "name": "PaymentPickerTestQuery",
     "operationKind": "query",
-    "text": "query PaymentPickerTestQuery {\n  me {\n    ...PaymentPicker_me\n    id\n  }\n  order: commerceOrder(id: \"unused\") {\n    __typename\n    ...PaymentPicker_order\n    id\n  }\n}\n\nfragment PaymentPicker_me on Me {\n  creditCards(first: 100) {\n    edges {\n      node {\n        internalID\n        brand\n        lastDigits\n        expirationMonth\n        expirationYear\n        id\n      }\n    }\n  }\n}\n\nfragment PaymentPicker_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  internalID\n  mode\n  state\n  creditCard {\n    internalID\n    name\n    street1\n    street2\n    city\n    state\n    country\n    postalCode\n    expirationMonth\n    expirationYear\n    lastDigits\n    brand\n    id\n  }\n  requestedFulfillment {\n    __typename\n    ... on CommerceShip {\n      name\n      addressLine1\n      addressLine2\n      city\n      region\n      country\n      postalCode\n    }\n    ... on CommercePickup {\n      fulfillmentType\n    }\n  }\n  lineItems {\n    edges {\n      node {\n        artwork {\n          slug\n          id\n        }\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query PaymentPickerTestQuery {\n  me {\n    ...PaymentPicker_me\n    id\n  }\n  order: commerceOrder(id: \"unused\") {\n    __typename\n    ...PaymentPicker_order\n    id\n  }\n}\n\nfragment PaymentPicker_me on Me {\n  creditCards(first: 100) {\n    edges {\n      node {\n        internalID\n        brand\n        lastDigits\n        expirationMonth\n        expirationYear\n        id\n      }\n    }\n  }\n}\n\nfragment PaymentPicker_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  internalID\n  mode\n  state\n  creditCard {\n    internalID\n    name\n    street1\n    street2\n    city\n    state\n    country\n    postalCode\n    expirationMonth\n    expirationYear\n    lastDigits\n    brand\n    id\n  }\n  requestedFulfillment {\n    __typename\n    ... on CommerceShip {\n      name\n      addressLine1\n      addressLine2\n      city\n      region\n      country\n      postalCode\n    }\n    ... on CommerceShipArta {\n      name\n      addressLine1\n      addressLine2\n      city\n      region\n      country\n      postalCode\n    }\n    ... on CommercePickup {\n      fulfillmentType\n    }\n  }\n  lineItems {\n    edges {\n      node {\n        artwork {\n          slug\n          id\n        }\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();

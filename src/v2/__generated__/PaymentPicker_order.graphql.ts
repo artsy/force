@@ -34,6 +34,15 @@ export type PaymentPicker_order = {
         readonly country: string | null;
         readonly postalCode: string | null;
     } | {
+        readonly __typename: "CommerceShipArta";
+        readonly name: string | null;
+        readonly addressLine1: string | null;
+        readonly addressLine2: string | null;
+        readonly city: string | null;
+        readonly region: string | null;
+        readonly country: string | null;
+        readonly postalCode: string | null;
+    } | {
         readonly __typename: "CommercePickup";
         readonly fulfillmentType: string;
     } | {
@@ -102,7 +111,34 @@ v5 = {
   "kind": "ScalarField",
   "name": "postalCode",
   "storageKey": null
-};
+},
+v6 = [
+  (v2/*: any*/),
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "addressLine1",
+    "storageKey": null
+  },
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "addressLine2",
+    "storageKey": null
+  },
+  (v3/*: any*/),
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "region",
+    "storageKey": null
+  },
+  (v4/*: any*/),
+  (v5/*: any*/)
+];
 return {
   "argumentDefinitions": [],
   "kind": "Fragment",
@@ -194,34 +230,14 @@ return {
         },
         {
           "kind": "InlineFragment",
-          "selections": [
-            (v2/*: any*/),
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "addressLine1",
-              "storageKey": null
-            },
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "addressLine2",
-              "storageKey": null
-            },
-            (v3/*: any*/),
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "region",
-              "storageKey": null
-            },
-            (v4/*: any*/),
-            (v5/*: any*/)
-          ],
+          "selections": (v6/*: any*/),
           "type": "CommerceShip",
+          "abstractKey": null
+        },
+        {
+          "kind": "InlineFragment",
+          "selections": (v6/*: any*/),
+          "type": "CommerceShipArta",
           "abstractKey": null
         },
         {
@@ -297,5 +313,5 @@ return {
   "abstractKey": "__isCommerceOrder"
 };
 })();
-(node as any).hash = '2ed0c0b6e0b58ac0b9708f897f46ac51';
+(node as any).hash = 'ba6ffa2c3231c99cc01b79ce824ef58b';
 export default node;
