@@ -171,6 +171,7 @@ export const SettingsEditSettingsPassword: FC<SettingsEditSettingsPasswordProps>
 
                   <Flex mt={4}>
                     <Button
+                      data-test="password-submit"
                       type="submit"
                       loading={isSubmitting}
                       disabled={!isValid}
