@@ -254,7 +254,7 @@ export class TransactionDetailsSummaryItem extends React.Component<
           value={
             appendCurrencySymbol(offerOverride, currency) ||
             (offer && appendCurrencySymbol(offer.amount, currency)) ||
-            "-"
+            "—"
           }
           data-test="offer"
         />
