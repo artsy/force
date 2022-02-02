@@ -25,9 +25,7 @@ describe("ThankYou page", () => {
       wrapper.find("button[data-test-id='submit-another-work']").text()
     ).toContain("Submit Another Work")
 
-    expect(
-      wrapper.find("button[data-test-id='go-to-artsy-homepage']").text()
-    ).toContain("Back to Artsy Homepage")
+    expect(text).toContain("View My Collection on the Artsy App")
 
     expect(wrapper.find("SoldRecentlyQueryRenderer").length).toBe(1)
     expect(wrapper.find("FAQ").length).toBe(1)
