@@ -43,7 +43,7 @@ export const getSearchCriteriaFromFilters = (
   )
 
   const criteria: SearchCriteriaAttributes = {
-    artistID,
+    artistIDs: [artistID],
     ...input,
   }
 

@@ -18,12 +18,12 @@ const mockedFilters: ArtworkFilters = {
 }
 
 describe("getSearchCriteriaFromFilters", () => {
-  it("returns object only containing artist id and criteria that has been changed", () => {
+  it("returns object only containing artist ids and criteria that has been changed", () => {
     const result = getSearchCriteriaFromFilters(mockedArtistId, mockedFilters)
 
     expect(result).toEqual(
       expect.objectContaining({
-        artistID: "artist-id",
+        artistIDs: ["artist-id"],
         attributionClass: ["limited edition", "unique", "open edition"],
         colors: ["black"],
         inquireableOnly: true,
