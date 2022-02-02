@@ -51,16 +51,12 @@ export class TransactionDetailsSummaryItem extends React.Component<
       ...others
     } = this.props
 
-    const shippingAddressAdded =
-      transactionStep === "review" || transactionStep === "payment"
-    const offer = this.getOffer()
-
     return (
       <StepSummaryItem {...others}>
         {this.renderPriceEntry()}
         <Spacer mb={2} />
         <Entry
-          label={this.shippingDisplayLabel(shippingAddressAdded, offer)}
+          label={this.shippingDisplayLabel(this.shippingNotCalculated)}
           value={this.shippingDisplayAmount()}
           data-test="shippingDisplayAmount"
         />
@@ -84,16 +80,12 @@ export class TransactionDetailsSummaryItem extends React.Component<
           </Text>
         )}
         <Spacer mb={2} />
-        {this.avalaraPhase2enabled &&
-          shippingAddressAdded &&
-          !order.shippingTotal &&
-          offer &&
-          !offer.shippingTotal && (
-            <Text variant="sm" color="black60">
-              **Shipping cost to be confirmed by gallery. You will be able to
-              review total with shipping before payment.
-            </Text>
-          )}
+        {this.avalaraPhase2enabled && this.shippingNotCalculated() && (
+          <Text variant="sm" color="black60">
+            **Shipping cost to be confirmed by gallery. You will be able to
+            review total with shipping before payment.
+          </Text>
+        )}
         {showOfferNote && order.mode === "OFFER" && this.renderNoteEntry()}
         {showCongratulationMessage && (
           <Column
@@ -174,16 +166,24 @@ export class TransactionDetailsSummaryItem extends React.Component<
     }
   }
 
-  shippingDisplayLabel = (shippingAddressAdded, offer) => {
+  shippingNotCalculated = () => {
+    const { order, transactionStep } = this.props
+    const shippingAddressAdded =
+      transactionStep === "review" || transactionStep === "payment"
+
+    switch (order.mode) {
+      case "BUY":
+        return shippingAddressAdded && !order.shippingTotal
+      case "OFFER":
+        const offer = this.getOffer()
+        return shippingAddressAdded && offer && !offer.shippingTotal
+    }
+  }
+
+  shippingDisplayLabel = shippingNotCalculated => {
     const { order } = this.props
 
-    if (
-      this.avalaraPhase2enabled &&
-      shippingAddressAdded &&
-      !order.shippingTotal &&
-      offer &&
-      !offer.shippingTotal
-    ) {
+    if (this.avalaraPhase2enabled && shippingNotCalculated()) {
       return "Shipping**"
     }
 

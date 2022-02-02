@@ -46,9 +46,9 @@ const ArtworkSummaryItem: React.FC<ArtworkSummaryItemProps> = ({
     textOverflow: "ellipsis",
   } as any
 
-  const offerItem = getOfferItemFromOrder(lineItems)
+  const artworkPrice = getOfferItemFromOrder(lineItems)
 
-  const priceTitle = mode === "OFFER" ? "List price" : "Price"
+  const priceLabel = mode === "OFFER" ? "List price" : "Price"
 
   const { user } = useSystemContext()
 
@@ -80,9 +80,9 @@ const ArtworkSummaryItem: React.FC<ArtworkSummaryItemProps> = ({
         </Text>
         {user && userHasLabFeature(user, "Avalara Phase 2") && (
           <Text variant="sm">
-            {offerItem &&
-              `${priceTitle} ${appendCurrencySymbol(
-                offerItem.price,
+            {artworkPrice &&
+              `${priceLabel} ${appendCurrencySymbol(
+                artworkPrice.price,
                 currencyCode
               )}`}
           </Text>
