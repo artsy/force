@@ -103,7 +103,7 @@ export const SettingsShippingAddressForm: FC<SettingsShippingAddressFormProps> =
 
             sendToast({
               variant: "success",
-              message: `Address added sucessfully.`,
+              message: "Address added successfully.",
             })
           }
 
