@@ -51,7 +51,7 @@ export const SettingsEditSettingsInformation: React.FC<SettingsEditSettingsInfor
             "Phone number must be valid",
             value => {
               // https://github.com/artsy/gravity/blob/a8227694da735dc03c8ba50928325d84e4b2846b/app/models/util/phone_validation.rb#L2
-              if (!value) return false
+              if (!value) return true
               const digits = (value.match(/\d/g) ?? []).length
               const validChars = /^[+\/\-()\.\s0-9A-Za-z]+$/g.test(value)
               return digits >= 3 && validChars
