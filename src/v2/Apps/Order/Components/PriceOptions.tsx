@@ -49,6 +49,10 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
     }
   }, [showError])
 
+  useEffect(() => {
+    if (toggle) trackClick("Different amount", 0)
+  }, [toggle])
+
   const trackClick = (offer: string, amount: number) => {
     const trackingData: ClickedOfferOption = {
       action: ActionType.clickedOfferOption,
@@ -60,7 +64,6 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
       offer,
       amount,
     }
-
     tracking.trackEvent(trackingData)
   }
 
@@ -153,8 +156,7 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
             error={showError}
             onSelect={() => {
               customValue && onChange(customValue)
-              setToggle(true)
-              trackClick("Different amount", 0)
+              !toggle && setToggle(true)
             }}
             key="price-option-custom"
           >
