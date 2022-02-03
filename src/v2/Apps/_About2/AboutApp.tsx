@@ -1,6 +1,20 @@
-import { Box, Column, GridColumns, Image, Text } from "@artsy/palette"
+import {
+  Box,
+  Button,
+  Column,
+  FullBleed,
+  GridColumns,
+  Image,
+  Spacer,
+  Text,
+} from "@artsy/palette"
 import { MetaTags } from "v2/Components/MetaTags"
 import { Rail } from "v2/Components/Rail"
+import { AppContainer } from "v2/Apps/Components/AppContainer"
+import styled from "styled-components"
+import { HorizontalPadding } from "../Components/HorizontalPadding"
+import { RouterLink } from "v2/System/Router/RouterLink"
+import { resized } from "v2/Utils/resized"
 
 export const AboutApp: React.FC = () => {
   return (
@@ -62,7 +76,15 @@ export const AboutApp: React.FC = () => {
               width: 300,
               height: 300,
             },
-            // Add a 4th artist img to rail
+            {
+              imgUrl:
+                "https://d7hftxdivxxvm.cloudfront.net/?resize_to=fit&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2Fm4kmYLBKSkExMXlxjQ4i8A%2Flarge.jpg&width=890&height=1046&quality=80",
+              name: "Inka Essenhigh",
+              artworkTitle: "Old Trees in Fall, 2018",
+              gallery: "Miles McEnery Gallery",
+              width: 340,
+              height: 500,
+            },
           ]
 
           return items.map(item => {
@@ -70,6 +92,8 @@ export const AboutApp: React.FC = () => {
           })
         }}
       />
+
+      <SellWithArtsyComponent />
     </>
   )
 }
@@ -97,3 +121,94 @@ const RailComponent: React.FC<RailComponentProps> = props => {
     </Box>
   )
 }
+
+const SellWithArtsyComponent: React.FC = () => {
+  const image = resized(
+    "http://files.artsy.net/images/molly_green_img_for_about2.jpeg",
+    { width: 310, height: 1440 }
+  )
+
+  return (
+    <Container bg="black100" color="white100" mt={100}>
+      {image.src && (
+        <Box
+          position="fixed"
+          top={0}
+          left={0}
+          width="100%"
+          height="100%"
+          opacity={0.4}
+          style={{
+            transform: "scale(1.3)",
+            pointerEvents: "none",
+          }}
+        >
+          <Image
+            src={image.src}
+            lazyLoad
+            width="100%"
+            height="100%"
+            style={{
+              objectFit: "cover",
+            }}
+          />
+        </Box>
+      )}
+
+      <AppContainer
+        position="relative"
+        minHeight={360}
+        display="flex"
+        alignItems="start"
+        py={50}
+      >
+        <HorizontalPadding>
+          <GridColumns gridRowGap={[2, 4]}>
+            <Column span={6} start={1}>
+              <Text variant="xxl">Interested in Partnering with Artsy?</Text>
+            </Column>
+
+            <Column span={4} start={9}>
+              <Button
+                variant="primaryWhite"
+                width="100%"
+                // @ts-ignore
+                as={RouterLink}
+                to=""
+              >
+                Apply to Become a Partner
+              </Button>
+              <Spacer my={2} />
+              <Button
+                bg="transparent"
+                width="100%"
+                borderColor="white100"
+                // @ts-ignore
+                as={RouterLink}
+                to=""
+              >
+                Partnership Overview
+              </Button>
+              <Spacer my={4} />
+              <Button
+                bg="transparent"
+                width="100%"
+                border="none"
+                // @ts-ignore
+                as={RouterLink}
+                to=""
+              >
+                See Full List of Partners
+              </Button>
+            </Column>
+          </GridColumns>
+        </HorizontalPadding>
+      </AppContainer>
+    </Container>
+  )
+}
+
+const Container = styled(FullBleed)`
+  overflow: hidden;
+  clip-path: inset(0);
+`
