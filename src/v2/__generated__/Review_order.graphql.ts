@@ -10,6 +10,7 @@ export type Review_order = {
     readonly internalID: string;
     readonly mode: CommerceOrderModeEnum | null;
     readonly source: CommerceOrderSourceEnum;
+    readonly stateExpiresAt: string | null;
     readonly itemsTotal: string | null;
     readonly lineItems: {
         readonly edges: ReadonlyArray<{
@@ -78,6 +79,19 @@ return {
       "kind": "ScalarField",
       "name": "source",
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": [
+        {
+          "kind": "Literal",
+          "name": "format",
+          "value": "MMM D"
+        }
+      ],
+      "kind": "ScalarField",
+      "name": "stateExpiresAt",
+      "storageKey": "stateExpiresAt(format:\"MMM D\")"
     },
     {
       "alias": null,
@@ -228,5 +242,5 @@ return {
   "abstractKey": "__isCommerceOrder"
 };
 })();
-(node as any).hash = '9f2fb427afbc623a5ba625f4b320fb41';
+(node as any).hash = 'ef56561a6beadff42e77fd3dbb8379ab';
 export default node;

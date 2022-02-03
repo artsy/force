@@ -22,7 +22,8 @@ import { CreditCardSummaryItemFragmentContainer as CreditCardSummaryItem } from 
 import { ShippingSummaryItemFragmentContainer as ShippingSummaryItem } from "../../Components/ShippingSummaryItem"
 import { SystemContextConsumer } from "v2/System/SystemContext"
 import { Status_order } from "v2/__generated__/Status_order.graphql"
-import { getStatusCopy } from "../../Utils/getStatusCopy"
+import { getStatusCopy, continueToInboxText } from "../../Utils/getStatusCopy"
+import { userHasLabFeature } from "v2/Utils/user"
 
 const logger = createLogger("Order/Routes/Status/index.tsx")
 
@@ -68,11 +69,18 @@ export class StatusRoute extends Component<StatusProps> {
       order,
       logger
     )
-    const showOfferNote = order.mode === "OFFER" && order.state === "SUBMITTED"
+    const isSubmittedOffer =
+      order.mode === "OFFER" && order.state === "SUBMITTED"
 
     return (
       <SystemContextConsumer>
-        {({ isEigen }) => {
+        {({ isEigen, user }) => {
+          const shouldContinueToInbox =
+            isEigen &&
+            userHasLabFeature(user, "Make Offer On All Eligible Artworks") &&
+            isSubmittedOffer &&
+            order.source === "artwork_page"
+
           return (
             <>
               <Text variant="lg" fontWeight="regular" color="black100">
@@ -94,13 +102,15 @@ export class StatusRoute extends Component<StatusProps> {
                       {description && (
                         <Message p={[2, 4]}>{description}</Message>
                       )}
-                      {showTransactionSummary ? (
+                      {shouldContinueToInbox ? (
+                        <Text>{continueToInboxText()}</Text>
+                      ) : showTransactionSummary ? (
                         <Flex flexDirection="column">
                           <ArtworkSummaryItem order={order} />
                           <StyledTransactionDetailsSummaryItem
                             order={order}
                             useLastSubmittedOffer
-                            showOfferNote={showOfferNote}
+                            showOfferNote={isSubmittedOffer}
                             showCongratulationMessage={
                               order.state === "SUBMITTED"
                             }
@@ -113,7 +123,8 @@ export class StatusRoute extends Component<StatusProps> {
                   </>
                 }
                 Sidebar={
-                  showTransactionSummary && (
+                  showTransactionSummary &&
+                  !shouldContinueToInbox && (
                     <Flex flexDirection="column">
                       <Flex flexDirection="column">
                         <StyledShippingSummaryItem order={order} />
@@ -160,6 +171,7 @@ export const StatusFragmentContainer = createFragmentContainer(StatusRoute, {
       displayState
       state
       mode
+      source
       stateReason
       stateExpiresAt(format: "MMM D")
       requestedFulfillment {

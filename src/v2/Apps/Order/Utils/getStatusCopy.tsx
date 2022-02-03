@@ -276,6 +276,15 @@ export const covidNote = (): React.ReactNode => {
   )
 }
 
+export const continueToInboxText = (): React.ReactNode => {
+  return (
+    <>
+      <Spacer mb={2} />
+      Negotiation with the gallery will continue in the Inbox.
+    </>
+  )
+}
+
 export const approvedTitle = (isOfferFlow): string => {
   return isOfferFlow ? "Offer accepted" : "Your order is confirmed"
 }

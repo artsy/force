@@ -2,9 +2,10 @@ import { Column, GridColumns, Join, Spacer } from "@artsy/palette"
 import { useContext } from "react"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { data as sd } from "sharify"
+import { getENV } from "v2/Utils/getENV"
 import { ArtworkApp_artwork } from "v2/__generated__/ArtworkApp_artwork.graphql"
 import { ArtworkApp_me } from "v2/__generated__/ArtworkApp_me.graphql"
+import { SubmittedOrderModal_order } from "v2/__generated__/SubmittedOrderModal_order.graphql"
 import { ArtistInfoQueryRenderer } from "./Components/ArtistInfo"
 import { ArtworkBannerFragmentContainer } from "./Components/ArtworkBanner/ArtworkBanner"
 import { ArtworkDetailsQueryRenderer } from "./Components/ArtworkDetails"
@@ -15,6 +16,7 @@ import { ArtworkSidebarFragmentContainer } from "./Components/ArtworkSidebar"
 import { OtherWorksQueryRenderer } from "./Components/OtherWorks"
 import { ArtworkArtistSeriesQueryRenderer } from "./Components/ArtworkArtistSeries"
 import { PricingContextQueryRenderer } from "./Components/PricingContext"
+import { SubmittedOrderModalFragmentContainer } from "./Components/SubmittedOrderModal"
 import { withSystemContext } from "v2/System"
 import * as Schema from "v2/System/Analytics/Schema"
 import { RecentlyViewed } from "v2/Components/RecentlyViewed"
@@ -34,6 +36,7 @@ export interface Props {
   referrer: string
   routerPathname: string
   shouldTrackPageView: boolean
+  submittedOrder?: SubmittedOrderModal_order
   me: ArtworkApp_me
 }
 
@@ -79,7 +82,7 @@ export class ArtworkApp extends React.Component<Props> {
         offerable: is_offerable,
         path,
         price_listed: !!listPrice,
-        url: sd.APP_URL + path,
+        url: getENV("APP_URL") + path,
       }
 
       const clientSideRoutingReferrer =
@@ -141,7 +144,7 @@ export class ArtworkApp extends React.Component<Props> {
   }
 
   render() {
-    const { artwork, me } = this.props
+    const { artwork, me, submittedOrder } = this.props
 
     const BelowTheFoldArtworkDetails = (
       <>
@@ -204,6 +207,10 @@ export class ArtworkApp extends React.Component<Props> {
         <Spacer mt={6} />
 
         <RecentlyViewed />
+
+        {submittedOrder && (
+          <SubmittedOrderModalFragmentContainer order={submittedOrder} />
+        )}
       </>
     )
   }
@@ -223,6 +230,9 @@ const TrackingWrappedArtworkApp: React.FC<Props> = props => {
   // Check to see if referrer comes from link interception.
   // @see interceptLinks.ts
   const referrer = state && state.previousHref
+  const submittedOrder = state && state.submittedOrder
+  // Discard the submitted order from the state after passing it the first time
+  if (submittedOrder) state.submittedOrder = null
   const { isComplete } = useRouteComplete()
 
   return (
@@ -238,6 +248,7 @@ const TrackingWrappedArtworkApp: React.FC<Props> = props => {
         routerPathname={pathname}
         referrer={referrer}
         shouldTrackPageView={isComplete}
+        submittedOrder={submittedOrder}
       />
     </AnalyticsContext.Provider>
   )

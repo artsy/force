@@ -52,7 +52,6 @@ export interface ReviewProps extends SystemContextProps {
   dialog: Dialog
   commitMutation: CommitMutation
   isCommittingMutation: boolean
-  user?: User
   isEigen: boolean | undefined
 }
 
@@ -150,7 +149,7 @@ export class ReviewRoute extends Component<ReviewProps> {
         )
         return router.push({
           pathname: `/artwork/${artworkId}`,
-          state: { offerOrderHasBeenSubmitted: true },
+          state: { submittedOrder: order },
         })
       }
     } catch (error) {
@@ -479,6 +478,7 @@ export const ReviewFragmentContainer = createFragmentContainer(
         internalID
         mode
         source
+        stateExpiresAt(format: "MMM D")
         itemsTotal(precision: 2)
         lineItems {
           edges {
