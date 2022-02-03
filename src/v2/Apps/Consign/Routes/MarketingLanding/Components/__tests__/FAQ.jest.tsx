@@ -7,6 +7,12 @@ import { ContextModule, OwnerType } from "@artsy/cohesion"
 
 jest.mock("v2/System/Analytics/useTracking")
 
+jest.mock("v2/System/Router/useRouter", () => ({
+  useRouter: jest.fn(() => ({
+    match: { params: { id: "1" } },
+  })),
+}))
+
 const trackEvent = useTracking as jest.Mock
 
 describe("FAQ", () => {
@@ -38,7 +44,7 @@ describe("FAQ", () => {
     )
   })
 
-  it("tracks a FAQ click with correct params", () => {
+  it("tracks a FAQ click with correct params when submission id found", () => {
     const wrapper = getWrapper()
     wrapper.find("Clickable").first().simulate("focus")
 
