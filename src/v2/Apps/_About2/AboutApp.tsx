@@ -5,6 +5,7 @@ import {
   FullBleed,
   GridColumns,
   Image,
+  ResponsiveBox,
   Spacer,
   Text,
 } from "@artsy/palette"
@@ -94,6 +95,8 @@ export const AboutApp: React.FC = () => {
       />
 
       <SellWithArtsyComponent />
+      <Spacer mt={4} />
+      <AppDownloadSection />
     </>
   )
 }
@@ -124,8 +127,8 @@ const RailComponent: React.FC<RailComponentProps> = props => {
 
 const SellWithArtsyComponent: React.FC = () => {
   const image = resized(
-    "http://files.artsy.net/images/molly_green_img_for_about2.jpeg",
-    { width: 310, height: 1440 }
+    "http://files.artsy.net/images/molly_green_original.jpeg",
+    { width: 640 }
   )
 
   return (
@@ -141,6 +144,7 @@ const SellWithArtsyComponent: React.FC = () => {
           style={{
             transform: "scale(1.3)",
             pointerEvents: "none",
+            filter: "blur(5px)",
           }}
         >
           <Image
@@ -157,14 +161,13 @@ const SellWithArtsyComponent: React.FC = () => {
 
       <AppContainer
         position="relative"
-        minHeight={360}
         display="flex"
         alignItems="start"
-        py={50}
+        py={6}
       >
         <HorizontalPadding>
           <GridColumns gridRowGap={[2, 4]}>
-            <Column span={6} start={1}>
+            <Column span={6}>
               <Text variant="xxl">Interested in Partnering with Artsy?</Text>
             </Column>
 
@@ -174,29 +177,31 @@ const SellWithArtsyComponent: React.FC = () => {
                 width="100%"
                 // @ts-ignore
                 as={RouterLink}
-                to=""
+                to="/consign"
+                mb={2}
               >
                 Apply to Become a Partner
               </Button>
-              <Spacer my={2} />
+              {/* <Spacer my={2} /> */}
               <Button
                 bg="transparent"
                 width="100%"
                 borderColor="white100"
                 // @ts-ignore
                 as={RouterLink}
-                to=""
+                to="/consign"
+                mb={2}
               >
                 Partnership Overview
               </Button>
-              <Spacer my={4} />
+              {/* <Spacer my={2} /> */}
               <Button
                 bg="transparent"
                 width="100%"
                 border="none"
                 // @ts-ignore
                 as={RouterLink}
-                to=""
+                to="/consign"
               >
                 See Full List of Partners
               </Button>
@@ -205,6 +210,43 @@ const SellWithArtsyComponent: React.FC = () => {
         </HorizontalPadding>
       </AppContainer>
     </Container>
+  )
+}
+
+const AppDownloadSection: React.FC = () => {
+  const image = resized("http://files.artsy.net/download_artsy_apps_img.jpg", {
+    width: 910,
+    height: 652,
+  })
+
+  return (
+    <GridColumns>
+      <Column span={6}>
+        <Text variant="xs" textTransform="uppercase">
+          Artsy App
+        </Text>
+        <Text variant="xl" mt={1}>
+          The Art Market at Your Fingertips
+        </Text>
+        <Text variant="sm" mt={1}>
+          Discover artworks just for you, get market insights, and buy and sell
+          with confidence—all on the Artsy app.
+        </Text>
+      </Column>
+
+      <Column span={6}>
+        <ResponsiveBox aspectHeight={652} aspectWidth={910} maxWidth="100%">
+          <Image
+            src={image.src}
+            width="100%"
+            height="100%"
+            srcSet={image.srcSet}
+            lazyLoad
+            alt=""
+          />
+        </ResponsiveBox>
+      </Column>
+    </GridColumns>
   )
 }
 
