@@ -1,17 +1,21 @@
 import { Expandable, Join, Spacer, Text } from "@artsy/palette"
 import { AnalyticsSchema, useTracking } from "v2/System"
+import { useRouter } from "v2/System/Router/useRouter"
 import { ContextModule, OwnerType } from "@artsy/cohesion"
 
 export const FAQ: React.FC = () => {
   const { trackEvent } = useTracking()
+  const { match } = useRouter()
 
   const trackClickedFAQ = (label: string) => {
-    trackEvent({
-      action_type: AnalyticsSchema.ActionType.ClickedFAQ,
-      context_module: ContextModule.consignSubmissionFlow,
-      context_owner_type: OwnerType.consignmentSubmission,
-      subject: label,
-    })
+    if (match?.params?.id) {
+      trackEvent({
+        action_type: AnalyticsSchema.ActionType.ClickedFAQ,
+        context_module: ContextModule.consignSubmissionFlow,
+        context_owner_type: OwnerType.consignmentSubmission,
+        subject: label,
+      })
+    }
   }
 
   const FAQList = [
