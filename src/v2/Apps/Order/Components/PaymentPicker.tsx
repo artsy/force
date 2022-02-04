@@ -520,6 +520,15 @@ export const PaymentPickerFragmentContainer = createFragmentContainer(
             country
             postalCode
           }
+          ... on CommerceShipArta {
+            name
+            addressLine1
+            addressLine2
+            city
+            region
+            country
+            postalCode
+          }
           ... on CommercePickup {
             fulfillmentType
           }
