@@ -14,7 +14,7 @@ const ArticleApp: FC<ArticleAppProps> = ({ article }) => {
   return (
     <>
       <MetaTags
-        title={article.title}
+        title={`${article.title} | Artsy`}
         // TODO: Add description, remaining tags
       />
 

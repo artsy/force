@@ -68,6 +68,10 @@ fragment ArticleHeader_article on Article {
           src
           srcSet
         }
+        text: cropped(width: 1600, height: 900) {
+          src
+          srcSet
+        }
       }
     }
   }
@@ -460,15 +464,15 @@ v23 = {
 },
 v24 = {
   "enumValues": null,
-  "nullable": false,
-  "plural": false,
-  "type": "ID"
-},
-v25 = {
-  "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "CroppedImageUrl"
+},
+v25 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "ID"
 },
 v26 = {
   "enumValues": null,
@@ -581,6 +585,27 @@ return {
                         "plural": false,
                         "selections": (v7/*: any*/),
                         "storageKey": "resized(width:900)"
+                      },
+                      {
+                        "alias": "text",
+                        "args": [
+                          {
+                            "kind": "Literal",
+                            "name": "height",
+                            "value": 900
+                          },
+                          {
+                            "kind": "Literal",
+                            "name": "width",
+                            "value": 1600
+                          }
+                        ],
+                        "concreteType": "CroppedImageUrl",
+                        "kind": "LinkedField",
+                        "name": "cropped",
+                        "plural": false,
+                        "selections": (v7/*: any*/),
+                        "storageKey": "cropped(height:900,width:1600)"
                       }
                     ],
                     "storageKey": null
@@ -963,7 +988,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "5e1be4b4df375ccdf7d8e10335bcab7e",
+    "cacheID": "897f459194b112d963a0c001b8c0c848",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -985,6 +1010,9 @@ return {
         "article.hero.image.split": (v23/*: any*/),
         "article.hero.image.split.src": (v21/*: any*/),
         "article.hero.image.split.srcSet": (v21/*: any*/),
+        "article.hero.image.text": (v24/*: any*/),
+        "article.hero.image.text.src": (v21/*: any*/),
+        "article.hero.image.text.srcSet": (v21/*: any*/),
         "article.hero.image.url": (v20/*: any*/),
         "article.hero.layout": {
           "enumValues": [
@@ -998,7 +1026,7 @@ return {
           "type": "ArticleFeatureSectionType"
         },
         "article.href": (v20/*: any*/),
-        "article.id": (v24/*: any*/),
+        "article.id": (v25/*: any*/),
         "article.layout": {
           "enumValues": [
             "FEATURE",
@@ -1018,10 +1046,10 @@ return {
         },
         "article.relatedArticles.byline": (v20/*: any*/),
         "article.relatedArticles.href": (v20/*: any*/),
-        "article.relatedArticles.id": (v24/*: any*/),
-        "article.relatedArticles.internalID": (v24/*: any*/),
+        "article.relatedArticles.id": (v25/*: any*/),
+        "article.relatedArticles.internalID": (v25/*: any*/),
         "article.relatedArticles.thumbnailImage": (v22/*: any*/),
-        "article.relatedArticles.thumbnailImage.cropped": (v25/*: any*/),
+        "article.relatedArticles.thumbnailImage.cropped": (v24/*: any*/),
         "article.relatedArticles.thumbnailImage.cropped.src": (v21/*: any*/),
         "article.relatedArticles.thumbnailImage.cropped.srcSet": (v21/*: any*/),
         "article.relatedArticles.title": (v20/*: any*/),
@@ -1048,14 +1076,14 @@ return {
         },
         "article.sections.cover.__isNode": (v21/*: any*/),
         "article.sections.cover.__typename": (v21/*: any*/),
-        "article.sections.cover.id": (v24/*: any*/),
+        "article.sections.cover.id": (v25/*: any*/),
         "article.sections.cover.image": (v22/*: any*/),
         "article.sections.cover.image.large": (v23/*: any*/),
         "article.sections.cover.image.large.height": (v27/*: any*/),
         "article.sections.cover.image.large.src": (v21/*: any*/),
         "article.sections.cover.image.large.srcSet": (v21/*: any*/),
         "article.sections.cover.image.large.width": (v27/*: any*/),
-        "article.sections.cover.image.small": (v25/*: any*/),
+        "article.sections.cover.image.small": (v24/*: any*/),
         "article.sections.cover.image.small.height": (v26/*: any*/),
         "article.sections.cover.image.small.src": (v21/*: any*/),
         "article.sections.cover.image.small.srcSet": (v21/*: any*/),
@@ -1075,14 +1103,14 @@ return {
           "type": "Artist"
         },
         "article.sections.figures.artists.href": (v20/*: any*/),
-        "article.sections.figures.artists.id": (v24/*: any*/),
+        "article.sections.figures.artists.id": (v25/*: any*/),
         "article.sections.figures.artists.name": (v20/*: any*/),
         "article.sections.figures.caption": (v20/*: any*/),
         "article.sections.figures.collecting_institution": (v20/*: any*/),
         "article.sections.figures.cultural_maker": (v20/*: any*/),
         "article.sections.figures.date": (v20/*: any*/),
         "article.sections.figures.href": (v20/*: any*/),
-        "article.sections.figures.id": (v24/*: any*/),
+        "article.sections.figures.id": (v25/*: any*/),
         "article.sections.figures.image": (v22/*: any*/),
         "article.sections.figures.image.resized": (v23/*: any*/),
         "article.sections.figures.image.resized.height": (v27/*: any*/),
@@ -1097,7 +1125,7 @@ return {
           "type": "Partner"
         },
         "article.sections.figures.partner.href": (v20/*: any*/),
-        "article.sections.figures.partner.id": (v24/*: any*/),
+        "article.sections.figures.partner.id": (v25/*: any*/),
         "article.sections.figures.partner.name": (v20/*: any*/),
         "article.sections.figures.partner.type": (v20/*: any*/),
         "article.sections.figures.sale": {
@@ -1106,7 +1134,7 @@ return {
           "plural": false,
           "type": "Sale"
         },
-        "article.sections.figures.sale.id": (v24/*: any*/),
+        "article.sections.figures.sale.id": (v25/*: any*/),
         "article.sections.figures.sale.is_auction": (v28/*: any*/),
         "article.sections.figures.sale.is_closed": (v28/*: any*/),
         "article.sections.figures.sale.is_live_open": (v28/*: any*/),
@@ -1136,7 +1164,7 @@ return {
           "type": "SaleArtworkHighestBid"
         },
         "article.sections.figures.sale_artwork.highest_bid.display": (v20/*: any*/),
-        "article.sections.figures.sale_artwork.id": (v24/*: any*/),
+        "article.sections.figures.sale_artwork.id": (v25/*: any*/),
         "article.sections.figures.sale_artwork.opening_bid": {
           "enumValues": null,
           "nullable": true,
@@ -1172,7 +1200,7 @@ return {
     },
     "name": "ArticleBody_test_Query",
     "operationKind": "query",
-    "text": "query ArticleBody_test_Query {\n  article(id: \"example\") {\n    ...ArticleBody_article\n    id\n  }\n}\n\nfragment ArticleBody_article on Article {\n  ...ArticleHeader_article\n  layout\n  title\n  byline\n  href\n  publishedAt(format: \"MMM D, YYYY h:mma\")\n  sections {\n    __typename\n    ...ArticleSectionText_section\n    ...ArticleSectionImageCollection_section\n    ...ArticleSectionImageSet_section\n  }\n  postscript\n  relatedArticles {\n    internalID\n    title\n    href\n    byline\n    thumbnailImage {\n      cropped(width: 80, height: 60) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment ArticleHeader_article on Article {\n  title\n  vertical\n  byline\n  hero {\n    __typename\n    ... on ArticleFeatureSection {\n      layout\n      image {\n        url\n        split: resized(width: 900) {\n          src\n          srcSet\n        }\n      }\n    }\n  }\n}\n\nfragment ArticleSectionImageCollection_section on ArticleSectionImageCollection {\n  layout\n  figures {\n    __typename\n    ... on ArticleImageSection {\n      id\n      caption\n      image {\n        resized(width: 1220, version: [\"normalized\", \"larger\", \"large\"]) {\n          src\n          srcSet\n          height\n          width\n        }\n      }\n    }\n    ... on Artwork {\n      ...Metadata_artwork\n      id\n      image {\n        resized(width: 1220, version: [\"normalized\", \"larger\", \"large\"]) {\n          src\n          srcSet\n          height\n          width\n        }\n      }\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n}\n\nfragment ArticleSectionImageSet_section on ArticleSectionImageSet {\n  setLayout: layout\n  title\n  counts {\n    figures\n  }\n  cover {\n    __typename\n    ... on ArticleImageSection {\n      id\n      image {\n        small: cropped(width: 80, height: 80, version: [\"normalized\", \"larger\", \"large\"]) {\n          src\n          srcSet\n          height\n          width\n        }\n        large: resized(width: 1220, version: [\"normalized\", \"larger\", \"large\"]) {\n          src\n          srcSet\n          height\n          width\n        }\n      }\n    }\n    ... on Artwork {\n      id\n      image {\n        small: cropped(width: 80, height: 80, version: [\"normalized\", \"larger\", \"large\"]) {\n          src\n          srcSet\n          height\n          width\n        }\n        large: resized(width: 1220, version: [\"normalized\", \"larger\", \"large\"]) {\n          src\n          srcSet\n          height\n          width\n        }\n      }\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n}\n\nfragment ArticleSectionText_section on ArticleSectionText {\n  body\n}\n\nfragment Contact_artwork on Artwork {\n  href\n  is_inquireable: isInquireable\n  sale {\n    is_auction: isAuction\n    is_live_open: isLiveOpen\n    is_open: isOpen\n    is_closed: isClosed\n    id\n  }\n  partner(shallow: true) {\n    type\n    id\n  }\n  sale_artwork: saleArtwork {\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    counts {\n      bidder_positions: bidderPositions\n    }\n    id\n  }\n}\n\nfragment Details_artwork on Artwork {\n  href\n  title\n  date\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n}\n\nfragment Metadata_artwork on Artwork {\n  ...Details_artwork\n  ...Contact_artwork\n  href\n}\n"
+    "text": "query ArticleBody_test_Query {\n  article(id: \"example\") {\n    ...ArticleBody_article\n    id\n  }\n}\n\nfragment ArticleBody_article on Article {\n  ...ArticleHeader_article\n  layout\n  title\n  byline\n  href\n  publishedAt(format: \"MMM D, YYYY h:mma\")\n  sections {\n    __typename\n    ...ArticleSectionText_section\n    ...ArticleSectionImageCollection_section\n    ...ArticleSectionImageSet_section\n  }\n  postscript\n  relatedArticles {\n    internalID\n    title\n    href\n    byline\n    thumbnailImage {\n      cropped(width: 80, height: 60) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment ArticleHeader_article on Article {\n  title\n  vertical\n  byline\n  hero {\n    __typename\n    ... on ArticleFeatureSection {\n      layout\n      image {\n        url\n        split: resized(width: 900) {\n          src\n          srcSet\n        }\n        text: cropped(width: 1600, height: 900) {\n          src\n          srcSet\n        }\n      }\n    }\n  }\n}\n\nfragment ArticleSectionImageCollection_section on ArticleSectionImageCollection {\n  layout\n  figures {\n    __typename\n    ... on ArticleImageSection {\n      id\n      caption\n      image {\n        resized(width: 1220, version: [\"normalized\", \"larger\", \"large\"]) {\n          src\n          srcSet\n          height\n          width\n        }\n      }\n    }\n    ... on Artwork {\n      ...Metadata_artwork\n      id\n      image {\n        resized(width: 1220, version: [\"normalized\", \"larger\", \"large\"]) {\n          src\n          srcSet\n          height\n          width\n        }\n      }\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n}\n\nfragment ArticleSectionImageSet_section on ArticleSectionImageSet {\n  setLayout: layout\n  title\n  counts {\n    figures\n  }\n  cover {\n    __typename\n    ... on ArticleImageSection {\n      id\n      image {\n        small: cropped(width: 80, height: 80, version: [\"normalized\", \"larger\", \"large\"]) {\n          src\n          srcSet\n          height\n          width\n        }\n        large: resized(width: 1220, version: [\"normalized\", \"larger\", \"large\"]) {\n          src\n          srcSet\n          height\n          width\n        }\n      }\n    }\n    ... on Artwork {\n      id\n      image {\n        small: cropped(width: 80, height: 80, version: [\"normalized\", \"larger\", \"large\"]) {\n          src\n          srcSet\n          height\n          width\n        }\n        large: resized(width: 1220, version: [\"normalized\", \"larger\", \"large\"]) {\n          src\n          srcSet\n          height\n          width\n        }\n      }\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n}\n\nfragment ArticleSectionText_section on ArticleSectionText {\n  body\n}\n\nfragment Contact_artwork on Artwork {\n  href\n  is_inquireable: isInquireable\n  sale {\n    is_auction: isAuction\n    is_live_open: isLiveOpen\n    is_open: isOpen\n    is_closed: isClosed\n    id\n  }\n  partner(shallow: true) {\n    type\n    id\n  }\n  sale_artwork: saleArtwork {\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    counts {\n      bidder_positions: bidderPositions\n    }\n    id\n  }\n}\n\nfragment Details_artwork on Artwork {\n  href\n  title\n  date\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n}\n\nfragment Metadata_artwork on Artwork {\n  ...Details_artwork\n  ...Contact_artwork\n  href\n}\n"
   }
 };
 })();
