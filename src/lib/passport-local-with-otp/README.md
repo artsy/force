@@ -1,5 +1,9 @@
 # passport-local-with-otp
 
+> **Note**: This library was created as a standalone repo (https://github.com/artsy/passport-local-with-otp) in Q2 2020 as part of the Trust team's effort to enable 2FA on the platform.
+>
+> In Q1 2022 the repo was retired and the code moved here into Force (its only consumer), as part of an effort to consolidate auth code.
+
 [Passport] strategy for authenticating with a username,
 password and OTP.
 
