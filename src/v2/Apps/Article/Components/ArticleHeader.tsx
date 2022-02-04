@@ -5,7 +5,7 @@ import {
   FullBleedHeaderOverlay,
   MIN_HEIGHT,
 } from "v2/Components/FullBleedHeader"
-import { Box, FullBleed, Image, Text } from "@artsy/palette"
+import { Box, FullBleed, Image, ResponsiveBox, Text } from "@artsy/palette"
 import { ArticleHeader_article } from "v2/__generated__/ArticleHeader_article.graphql"
 import { useNavBarHeight } from "v2/Components/NavBar/useNavBarHeight"
 
@@ -33,7 +33,7 @@ const ArticleHeader: FC<ArticleHeaderProps> = ({ article }) => {
   }
 
   switch (article.hero.layout) {
-    case "FULLSCREEN":
+    case "FULLSCREEN": {
       return (
         <FullBleedHeader src={article.hero.image?.url!}>
           <FullBleedHeaderOverlay
@@ -54,13 +54,14 @@ const ArticleHeader: FC<ArticleHeaderProps> = ({ article }) => {
           </FullBleedHeaderOverlay>
         </FullBleedHeader>
       )
+    }
 
-    case "SPLIT":
+    case "SPLIT": {
       const image = article.hero.image?.split
 
       return (
         <FullBleed display="flex">
-          <Box flex={1} p={4}>
+          <Box flex={1} p={[2, 4]}>
             <Text variant="xs" textTransform="uppercase" mb={1}>
               {article.vertical}
             </Text>
@@ -69,7 +70,7 @@ const ArticleHeader: FC<ArticleHeaderProps> = ({ article }) => {
               {article.title}
             </Text>
 
-            <Text variant="xxl" color="black60" mb={2}>
+            <Text variant="xxl" color="black60">
               {article.byline}
             </Text>
           </Box>
@@ -92,14 +93,62 @@ const ArticleHeader: FC<ArticleHeaderProps> = ({ article }) => {
           </Box>
         </FullBleed>
       )
+    }
 
-    case "BASIC":
-      // TODO: Implement basic layout
-      return null
+    case "BASIC": {
+      return (
+        <Box textAlign="center" m={[2, 4]}>
+          <Text variant="xs" textTransform="uppercase" mb={1}>
+            {article.vertical}
+          </Text>
 
-    case "TEXT":
-      // TODO: Implement text layout
-      return null
+          <Text variant="xxl" flex={1}>
+            {article.title}
+          </Text>
+
+          <Text variant="xxl" color="black60" mb={2}>
+            {article.byline}
+          </Text>
+        </Box>
+      )
+    }
+
+    case "TEXT": {
+      const image = article.hero.image?.text
+
+      return (
+        <FullBleed>
+          <Box mb={12} p={[2, 4]}>
+            <Text variant="xs" textTransform="uppercase" mb={1}>
+              {article.vertical}
+            </Text>
+
+            <Text variant="xxl" flex={1}>
+              {article.title}
+            </Text>
+
+            <Text variant="xxl" color="black60">
+              {article.byline}
+            </Text>
+          </Box>
+
+          {image && (
+            <Box mx={[2, 4]}>
+              <ResponsiveBox aspectWidth={16} aspectHeight={9} maxWidth="100%">
+                <Image
+                  src={image.src}
+                  srcSet={image.srcSet}
+                  width="100%"
+                  height="100%"
+                  alt=""
+                  lazyLoad
+                />
+              </ResponsiveBox>
+            </Box>
+          )}
+        </FullBleed>
+      )
+    }
 
     default:
       return null
@@ -120,6 +169,10 @@ export const ArticleHeaderFragmentContainer = createFragmentContainer(
             image {
               url
               split: resized(width: 900) {
+                src
+                srcSet
+              }
+              text: cropped(width: 1600, height: 900) {
                 src
                 srcSet
               }

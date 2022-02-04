@@ -17,6 +17,10 @@ export type ArticleHeader_article = {
                 readonly src: string;
                 readonly srcSet: string;
             } | null;
+            readonly text: {
+                readonly src: string;
+                readonly srcSet: string;
+            } | null;
         } | null;
     } | null;
     readonly " $refType": "ArticleHeader_article";
@@ -29,7 +33,24 @@ export type ArticleHeader_article$key = {
 
 
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = [
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "src",
+    "storageKey": null
+  },
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "srcSet",
+    "storageKey": null
+  }
+];
+return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
@@ -102,23 +123,29 @@ const node: ReaderFragment = {
                   "kind": "LinkedField",
                   "name": "resized",
                   "plural": false,
-                  "selections": [
+                  "selections": (v0/*: any*/),
+                  "storageKey": "resized(width:900)"
+                },
+                {
+                  "alias": "text",
+                  "args": [
                     {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "src",
-                      "storageKey": null
+                      "kind": "Literal",
+                      "name": "height",
+                      "value": 900
                     },
                     {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "srcSet",
-                      "storageKey": null
+                      "kind": "Literal",
+                      "name": "width",
+                      "value": 1600
                     }
                   ],
-                  "storageKey": "resized(width:900)"
+                  "concreteType": "CroppedImageUrl",
+                  "kind": "LinkedField",
+                  "name": "cropped",
+                  "plural": false,
+                  "selections": (v0/*: any*/),
+                  "storageKey": "cropped(height:900,width:1600)"
                 }
               ],
               "storageKey": null
@@ -134,5 +161,6 @@ const node: ReaderFragment = {
   "type": "Article",
   "abstractKey": null
 };
-(node as any).hash = 'ae9b42f514e60f0bb06edbf09115f8f6';
+})();
+(node as any).hash = 'e4df2bea08b84e8b824460f0a7c84a6b';
 export default node;
