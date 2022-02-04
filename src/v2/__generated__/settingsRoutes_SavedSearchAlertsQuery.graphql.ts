@@ -4,35 +4,41 @@
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type SavedSearchAlertsListRefetchQueryVariables = {};
-export type SavedSearchAlertsListRefetchQueryResponse = {
+export type settingsRoutes_SavedSearchAlertsQueryVariables = {};
+export type settingsRoutes_SavedSearchAlertsQueryResponse = {
     readonly me: {
-        readonly " $fragmentRefs": FragmentRefs<"SavedSearchAlertsList_me">;
+        readonly " $fragmentRefs": FragmentRefs<"SavedSearchAlertsApp_me">;
     } | null;
 };
-export type SavedSearchAlertsListRefetchQuery = {
-    readonly response: SavedSearchAlertsListRefetchQueryResponse;
-    readonly variables: SavedSearchAlertsListRefetchQueryVariables;
+export type settingsRoutes_SavedSearchAlertsQuery = {
+    readonly response: settingsRoutes_SavedSearchAlertsQueryResponse;
+    readonly variables: settingsRoutes_SavedSearchAlertsQueryVariables;
 };
 
 
 
 /*
-query SavedSearchAlertsListRefetchQuery {
+query settingsRoutes_SavedSearchAlertsQuery {
   me {
-    ...SavedSearchAlertsList_me
+    ...SavedSearchAlertsApp_me
     id
   }
 }
 
-fragment SavedSearchAlertsList_me on Me {
+fragment SavedSearchAlertListItem_item on SearchCriteria {
+  internalID
+  artistIDs
+  userAlertSettings {
+    name
+  }
+}
+
+fragment SavedSearchAlertsApp_me on Me {
   savedSearchesConnection(first: 50) {
     edges {
       node {
         internalID
-        userAlertSettings {
-          name
-        }
+        ...SavedSearchAlertListItem_item
         __typename
       }
       cursor
@@ -58,7 +64,7 @@ return {
     "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
-    "name": "SavedSearchAlertsListRefetchQuery",
+    "name": "settingsRoutes_SavedSearchAlertsQuery",
     "selections": [
       {
         "alias": null,
@@ -71,7 +77,7 @@ return {
           {
             "args": null,
             "kind": "FragmentSpread",
-            "name": "SavedSearchAlertsList_me"
+            "name": "SavedSearchAlertsApp_me"
           }
         ],
         "storageKey": null
@@ -84,7 +90,7 @@ return {
   "operation": {
     "argumentDefinitions": [],
     "kind": "Operation",
-    "name": "SavedSearchAlertsListRefetchQuery",
+    "name": "settingsRoutes_SavedSearchAlertsQuery",
     "selections": [
       {
         "alias": null,
@@ -123,6 +129,13 @@ return {
                         "args": null,
                         "kind": "ScalarField",
                         "name": "internalID",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "artistIDs",
                         "storageKey": null
                       },
                       {
@@ -196,7 +209,7 @@ return {
             "args": (v0/*: any*/),
             "filters": null,
             "handle": "connection",
-            "key": "SavedSearchAlertsList_savedSearchesConnection",
+            "key": "SavedSearchAlertsApp_savedSearchesConnection",
             "kind": "LinkedHandle",
             "name": "savedSearchesConnection"
           },
@@ -213,14 +226,14 @@ return {
     ]
   },
   "params": {
-    "cacheID": "a0fd41fbc403142fe731feec56a0ed1b",
+    "cacheID": "e3b561583d5c067bd99b9931d310af12",
     "id": null,
     "metadata": {},
-    "name": "SavedSearchAlertsListRefetchQuery",
+    "name": "settingsRoutes_SavedSearchAlertsQuery",
     "operationKind": "query",
-    "text": "query SavedSearchAlertsListRefetchQuery {\n  me {\n    ...SavedSearchAlertsList_me\n    id\n  }\n}\n\nfragment SavedSearchAlertsList_me on Me {\n  savedSearchesConnection(first: 50) {\n    edges {\n      node {\n        internalID\n        userAlertSettings {\n          name\n        }\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query settingsRoutes_SavedSearchAlertsQuery {\n  me {\n    ...SavedSearchAlertsApp_me\n    id\n  }\n}\n\nfragment SavedSearchAlertListItem_item on SearchCriteria {\n  internalID\n  artistIDs\n  userAlertSettings {\n    name\n  }\n}\n\nfragment SavedSearchAlertsApp_me on Me {\n  savedSearchesConnection(first: 50) {\n    edges {\n      node {\n        internalID\n        ...SavedSearchAlertListItem_item\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'fc9879011b39b5b3508202d9acfcc417';
+(node as any).hash = '1a1527fe89bb166c9f3f58b8618f9220';
 export default node;

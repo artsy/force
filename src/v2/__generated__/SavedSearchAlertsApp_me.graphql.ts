@@ -4,23 +4,21 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type SavedSearchAlertsList_me = {
+export type SavedSearchAlertsApp_me = {
     readonly savedSearchesConnection: {
         readonly edges: ReadonlyArray<{
             readonly node: {
                 readonly internalID: string;
-                readonly userAlertSettings: {
-                    readonly name: string | null;
-                };
+                readonly " $fragmentRefs": FragmentRefs<"SavedSearchAlertListItem_item">;
             } | null;
         } | null> | null;
     } | null;
-    readonly " $refType": "SavedSearchAlertsList_me";
+    readonly " $refType": "SavedSearchAlertsApp_me";
 };
-export type SavedSearchAlertsList_me$data = SavedSearchAlertsList_me;
-export type SavedSearchAlertsList_me$key = {
-    readonly " $data"?: SavedSearchAlertsList_me$data;
-    readonly " $fragmentRefs": FragmentRefs<"SavedSearchAlertsList_me">;
+export type SavedSearchAlertsApp_me$data = SavedSearchAlertsApp_me;
+export type SavedSearchAlertsApp_me$key = {
+    readonly " $data"?: SavedSearchAlertsApp_me$data;
+    readonly " $fragmentRefs": FragmentRefs<"SavedSearchAlertsApp_me">;
 };
 
 
@@ -40,14 +38,14 @@ const node: ReaderFragment = {
       }
     ]
   },
-  "name": "SavedSearchAlertsList_me",
+  "name": "SavedSearchAlertsApp_me",
   "selections": [
     {
       "alias": "savedSearchesConnection",
       "args": null,
       "concreteType": "SearchCriteriaConnection",
       "kind": "LinkedField",
-      "name": "__SavedSearchAlertsList_savedSearchesConnection_connection",
+      "name": "__SavedSearchAlertsApp_savedSearchesConnection_connection",
       "plural": false,
       "selections": [
         {
@@ -76,27 +74,14 @@ const node: ReaderFragment = {
                 {
                   "alias": null,
                   "args": null,
-                  "concreteType": "SavedSearchUserAlertSettings",
-                  "kind": "LinkedField",
-                  "name": "userAlertSettings",
-                  "plural": false,
-                  "selections": [
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "name",
-                      "storageKey": null
-                    }
-                  ],
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
                   "kind": "ScalarField",
                   "name": "__typename",
                   "storageKey": null
+                },
+                {
+                  "args": null,
+                  "kind": "FragmentSpread",
+                  "name": "SavedSearchAlertListItem_item"
                 }
               ],
               "storageKey": null
@@ -143,5 +128,5 @@ const node: ReaderFragment = {
   "type": "Me",
   "abstractKey": null
 };
-(node as any).hash = 'c2bf6b2deca0b4259ca6e7982f1cb3bc';
+(node as any).hash = 'c61a0e940a08df8ffb2289eb7cd83cf7';
 export default node;

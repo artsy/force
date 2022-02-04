@@ -4,35 +4,64 @@
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type settingsRoutes_SavedSearchAlertsOverviewRouteQueryVariables = {};
-export type settingsRoutes_SavedSearchAlertsOverviewRouteQueryResponse = {
+export type SavedSearchAlertsApp_Test_QueryVariables = {};
+export type SavedSearchAlertsApp_Test_QueryResponse = {
     readonly me: {
-        readonly " $fragmentRefs": FragmentRefs<"SavedSearchAlertsOverviewRoute_me">;
+        readonly " $fragmentRefs": FragmentRefs<"SavedSearchAlertsApp_me">;
     } | null;
 };
-export type settingsRoutes_SavedSearchAlertsOverviewRouteQuery = {
-    readonly response: settingsRoutes_SavedSearchAlertsOverviewRouteQueryResponse;
-    readonly variables: settingsRoutes_SavedSearchAlertsOverviewRouteQueryVariables;
+export type SavedSearchAlertsApp_Test_QueryRawResponse = {
+    readonly me: ({
+        readonly savedSearchesConnection: ({
+            readonly edges: ReadonlyArray<({
+                readonly node: ({
+                    readonly internalID: string;
+                    readonly artistIDs: ReadonlyArray<string> | null;
+                    readonly userAlertSettings: {
+                        readonly name: string | null;
+                    };
+                    readonly __typename: "SearchCriteria";
+                }) | null;
+                readonly cursor: string;
+            }) | null> | null;
+            readonly pageInfo: {
+                readonly endCursor: string | null;
+                readonly hasNextPage: boolean;
+            };
+        }) | null;
+        readonly id: string;
+    }) | null;
+};
+export type SavedSearchAlertsApp_Test_Query = {
+    readonly response: SavedSearchAlertsApp_Test_QueryResponse;
+    readonly variables: SavedSearchAlertsApp_Test_QueryVariables;
+    readonly rawResponse: SavedSearchAlertsApp_Test_QueryRawResponse;
 };
 
 
 
 /*
-query settingsRoutes_SavedSearchAlertsOverviewRouteQuery {
+query SavedSearchAlertsApp_Test_Query {
   me {
-    ...SavedSearchAlertsOverviewRoute_me
+    ...SavedSearchAlertsApp_me
     id
   }
 }
 
-fragment SavedSearchAlertsList_me on Me {
+fragment SavedSearchAlertListItem_item on SearchCriteria {
+  internalID
+  artistIDs
+  userAlertSettings {
+    name
+  }
+}
+
+fragment SavedSearchAlertsApp_me on Me {
   savedSearchesConnection(first: 50) {
     edges {
       node {
         internalID
-        userAlertSettings {
-          name
-        }
+        ...SavedSearchAlertListItem_item
         __typename
       }
       cursor
@@ -42,10 +71,6 @@ fragment SavedSearchAlertsList_me on Me {
       hasNextPage
     }
   }
-}
-
-fragment SavedSearchAlertsOverviewRoute_me on Me {
-  ...SavedSearchAlertsList_me
 }
 */
 
@@ -62,7 +87,7 @@ return {
     "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
-    "name": "settingsRoutes_SavedSearchAlertsOverviewRouteQuery",
+    "name": "SavedSearchAlertsApp_Test_Query",
     "selections": [
       {
         "alias": null,
@@ -75,7 +100,7 @@ return {
           {
             "args": null,
             "kind": "FragmentSpread",
-            "name": "SavedSearchAlertsOverviewRoute_me"
+            "name": "SavedSearchAlertsApp_me"
           }
         ],
         "storageKey": null
@@ -88,7 +113,7 @@ return {
   "operation": {
     "argumentDefinitions": [],
     "kind": "Operation",
-    "name": "settingsRoutes_SavedSearchAlertsOverviewRouteQuery",
+    "name": "SavedSearchAlertsApp_Test_Query",
     "selections": [
       {
         "alias": null,
@@ -127,6 +152,13 @@ return {
                         "args": null,
                         "kind": "ScalarField",
                         "name": "internalID",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "artistIDs",
                         "storageKey": null
                       },
                       {
@@ -200,7 +232,7 @@ return {
             "args": (v0/*: any*/),
             "filters": null,
             "handle": "connection",
-            "key": "SavedSearchAlertsList_savedSearchesConnection",
+            "key": "SavedSearchAlertsApp_savedSearchesConnection",
             "kind": "LinkedHandle",
             "name": "savedSearchesConnection"
           },
@@ -217,14 +249,14 @@ return {
     ]
   },
   "params": {
-    "cacheID": "39de2662e1b4409952c8f8ccf024216c",
+    "cacheID": "bf5fcf799771f803f58ad8ff763c5969",
     "id": null,
     "metadata": {},
-    "name": "settingsRoutes_SavedSearchAlertsOverviewRouteQuery",
+    "name": "SavedSearchAlertsApp_Test_Query",
     "operationKind": "query",
-    "text": "query settingsRoutes_SavedSearchAlertsOverviewRouteQuery {\n  me {\n    ...SavedSearchAlertsOverviewRoute_me\n    id\n  }\n}\n\nfragment SavedSearchAlertsList_me on Me {\n  savedSearchesConnection(first: 50) {\n    edges {\n      node {\n        internalID\n        userAlertSettings {\n          name\n        }\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment SavedSearchAlertsOverviewRoute_me on Me {\n  ...SavedSearchAlertsList_me\n}\n"
+    "text": "query SavedSearchAlertsApp_Test_Query {\n  me {\n    ...SavedSearchAlertsApp_me\n    id\n  }\n}\n\nfragment SavedSearchAlertListItem_item on SearchCriteria {\n  internalID\n  artistIDs\n  userAlertSettings {\n    name\n  }\n}\n\nfragment SavedSearchAlertsApp_me on Me {\n  savedSearchesConnection(first: 50) {\n    edges {\n      node {\n        internalID\n        ...SavedSearchAlertListItem_item\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '2a45ad1ca59288c23a90412ffcc15299';
+(node as any).hash = 'f8933a25cbb3db33c342ca5274a84a2b';
 export default node;
