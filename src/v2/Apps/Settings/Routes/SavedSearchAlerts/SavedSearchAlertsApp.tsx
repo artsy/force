@@ -1,10 +1,17 @@
-import { GridColumns, Column, FullBleed, Separator, Box } from "@artsy/palette"
+import {
+  GridColumns,
+  Column,
+  FullBleed,
+  Separator,
+  Box,
+  Join,
+} from "@artsy/palette"
 import {
   createPaginationContainer,
   graphql,
   RelayPaginationProp,
 } from "react-relay"
-import { Fragment, useState } from "react"
+import { useState } from "react"
 import { SavedSearchAlertsApp_me } from "v2/__generated__/SavedSearchAlertsApp_me.graphql"
 import { Media } from "v2/Utils/Responsive"
 import { EditAlertEntity } from "./types"
@@ -59,30 +66,27 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
   }
 
   const list = (
-    <>
-      {alerts.map((edge, index) => {
-        const isLastEdge = alerts.length === index + 1
+    <Join separator={<Separator color="black15" />}>
+      {alerts.map(edge => {
         const isCurrentEdgeSelected = editAlertEntity?.id === edge.internalID
         let variant: SavedSearchAlertListItemVariant | undefined
 
-        if (editAlertEntity?.id === edge.internalID) {
+        if (isCurrentEdgeSelected) {
           variant = "active"
-        } else if (!!editAlertEntity && !isCurrentEdgeSelected) {
+        } else if (!!editAlertEntity) {
           variant = "inactive"
         }
 
         return (
-          <Fragment key={edge.internalID}>
-            <SavedSearchAlertListItemFragmentContainer
-              item={edge}
-              variant={variant}
-              onEditAlertClick={setEditAlertEntity}
-            />
-            {!isLastEdge && <Separator color="black15" />}
-          </Fragment>
+          <SavedSearchAlertListItemFragmentContainer
+            key={edge.internalID}
+            item={edge}
+            variant={variant}
+            onEditAlertClick={setEditAlertEntity}
+          />
         )
       })}
-    </>
+    </Join>
   )
 
   return (
