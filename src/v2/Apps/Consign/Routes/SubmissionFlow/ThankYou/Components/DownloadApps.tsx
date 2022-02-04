@@ -15,20 +15,19 @@ import { resized } from "v2/Utils/resized"
 import styled from "styled-components"
 
 const DESKTOP_COVER_IMAGE = resized(
-  "https://files.artsy.net/images/artsy_app-download-footer_2x_max.jpg",
+  "https://files.artsy.net/images/consign_thank_you_page_banner_background.png",
   { width: 1220, quality: 50 }
 )
 
 const MOBILE_COVER_IMAGE = resized(
-  "https://files.artsy.net/images/artsy_app-download-footer_2x_max.jpg",
+  "https://files.artsy.net/images/consign_thank_you_page_banner_background.png",
   { width: 725, quality: 50 }
 )
 
 const BANNER_FRONT_PART = resized(
-  "https://files.artsy.net/images/artsy_app-swa-download-mobile.png",
+  "https://files.artsy.net/images/consign_thank_you_page_banner_foreground.png",
   {
     width: 432,
-    quality: 50,
   }
 )
 
