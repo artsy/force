@@ -1,4 +1,10 @@
 {
+  "navbar.show": {
+    "defaultMessage": "Show"
+  },
+  "navbar.buy": {
+    "defaultMessage": "Buy"
+  },
   "navbar.artists": {
     "defaultMessage": "Artists"
   },
@@ -7,45 +13,5 @@
   },
   "navbar.auctions": {
     "defaultMessage": "Auctions"
-  },
-  "navbar.buy": {
-    "defaultMessage": "Buy"
-  },
-  "navbar.downloadapp": {
-    "defaultMessage": "Download App"
-  },
-  "navbar.editorial": {
-    "defaultMessage": "Editorial"
-  },
-  "navbar.fairs": {
-    "defaultMessage": "Fairs"
-  },
-  "navbar.galleries": {
-    "defaultMessage": "Galleries"
-  },
-  "navbar.login": {
-    "defaultMessage": "Log In"
-  },
-  "navbar.museuns": {
-    "defaultMessage": "Museuns"
-  },
-  "navbar.nfts": {
-    "defaultMessage": "NFTs"
-  },
-  "navbar.pricedatabase": {
-    "defaultMessage": "Price Database"
-  },
-  "navbar.sell": {
-    "defaultMessage": "Sell"
-  },
-  "navbar.shows": {
-    "defaultMessage": "Shows"
-  },
-  "navbar.signup": {
-    "defaultMessage": "Sign Up"
-  },
-  "navbar.viewingrooms": {
-    "defaultMessage": "Viewing Rooms"
   }
 }
-
