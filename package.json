@@ -29,6 +29,7 @@
     "docker:electron": "yarn docker --target electron-runner -t force:electron",
     "docker:force": "yarn docker -t force",
     "docker:clean": "docker rmi force force:builder force:electron",
+    "i18n:compile": "formatjs compile",
     "i18n:extract": "formatjs extract",
     "jest": "node_modules/.bin/jest --config jest.config.js",
     "jest:debug": "node --inspect node_modules/.bin/jest --runInBand",
