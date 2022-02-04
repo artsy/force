@@ -1,20 +1,20 @@
-/* global describe, it, expect, before */
 /* jshint expr: true */
 
-var chai = require("chai"),
-  Strategy = require("../lib/strategy")
+const chai = require("chai")
+const expect = require("chai").expect
+const Strategy = require("../lib/strategy")
 
 describe("Strategy", function () {
   describe("handling a request without a body, but no username and password, with message option to authenticate", function () {
-    var strategy = new Strategy(function (username, password, otp, done) {
+    const strategy = new Strategy(function (username, password, otp, done) {
       throw new Error("should not be called")
     })
 
-    var info, status
+    let info, status
 
     before(function (done) {
-      chai
-        .passport.use(strategy)
+      chai.passport
+        .use(strategy)
         .fail(function (i, s) {
           info = i
           status = s
@@ -29,7 +29,7 @@ describe("Strategy", function () {
     })
 
     it("should fail with info and status", function () {
-      expect(info).to.be.an('object')
+      expect(info).to.be.an("object")
       expect(info.message).to.equal("Something is wrong with this request")
       expect(status).to.equal(400)
     })

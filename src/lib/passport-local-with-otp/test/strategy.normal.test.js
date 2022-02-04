@@ -1,24 +1,24 @@
-/* global describe, it, expect, before */
 /* jshint expr: true */
 
-var chai = require("chai"),
-  Strategy = require("../lib/strategy")
+const chai = require("chai")
+const expect = require("chai").expect
+const Strategy = require("../lib/strategy")
 
 describe("Strategy", function () {
   describe("when otp needs to be verified", function () {
     describe("handling a request with valid credentials in body", function () {
-      var strategy = new Strategy(function (username, password, otp, done) {
+      const strategy = new Strategy(function (username, password, otp, done) {
         if (username == "johndoe" && password == "secret" && otp == "123456") {
           return done(null, { id: "1234" }, { scope: "read" })
         }
         return done(null, false)
       })
 
-      var user, info
+      let user, info
 
       before(function (done) {
-        chai
-          .passport.use(strategy)
+        chai.passport
+          .use(strategy)
           .success(function (u, i) {
             user = u
             info = i
@@ -34,29 +34,29 @@ describe("Strategy", function () {
       })
 
       it("should supply user", function () {
-        expect(user).to.be.an('object')
+        expect(user).to.be.an("object")
         expect(user.id).to.equal("1234")
       })
 
       it("should supply info", function () {
-        expect(info).to.be.an('object')
+        expect(info).to.be.an("object")
         expect(info.scope).to.equal("read")
       })
     })
 
     describe("handling a request with valid credentials in query", function () {
-      var strategy = new Strategy(function (username, password, otp, done) {
+      const strategy = new Strategy(function (username, password, otp, done) {
         if (username == "johndoe" && password == "secret" && otp == "123456") {
           return done(null, { id: "1234" }, { scope: "read" })
         }
         return done(null, false)
       })
 
-      var user, info
+      let user, info
 
       before(function (done) {
-        chai
-          .passport.use(strategy)
+        chai.passport
+          .use(strategy)
           .success(function (u, i) {
             user = u
             info = i
@@ -72,12 +72,12 @@ describe("Strategy", function () {
       })
 
       it("should supply user", function () {
-        expect(user).to.be.an('object')
+        expect(user).to.be.an("object")
         expect(user.id).to.equal("1234")
       })
 
       it("should supply info", function () {
-        expect(info).to.be.an('object')
+        expect(info).to.be.an("object")
         expect(info.scope).to.equal("read")
       })
     })
@@ -85,18 +85,18 @@ describe("Strategy", function () {
 
   describe("when otp does not need to be verified", function () {
     describe("handling a request with valid username and password (but no otp) in body", function () {
-      var strategy = new Strategy(function (username, password, otp, done) {
+      const strategy = new Strategy(function (username, password, otp, done) {
         if (username == "johndoe" && password == "secret") {
           return done(null, { id: "1234" }, { scope: "read" })
         }
         return done(null, false)
       })
 
-      var user, info
+      let user, info
 
       before(function (done) {
-        chai
-          .passport.use(strategy)
+        chai.passport
+          .use(strategy)
           .success(function (u, i) {
             user = u
             info = i
@@ -111,29 +111,29 @@ describe("Strategy", function () {
       })
 
       it("should supply user", function () {
-        expect(user).to.be.an('object')
+        expect(user).to.be.an("object")
         expect(user.id).to.equal("1234")
       })
 
       it("should supply info", function () {
-        expect(info).to.be.an('object')
+        expect(info).to.be.an("object")
         expect(info.scope).to.equal("read")
       })
     })
 
     describe("handling a request with valid username and password (but no otp) in query", function () {
-      var strategy = new Strategy(function (username, password, otp, done) {
+      const strategy = new Strategy(function (username, password, otp, done) {
         if (username == "johndoe" && password == "secret") {
           return done(null, { id: "1234" }, { scope: "read" })
         }
         return done(null, false)
       })
 
-      var user, info
+      let user, info
 
       before(function (done) {
-        chai
-          .passport.use(strategy)
+        chai.passport
+          .use(strategy)
           .success(function (u, i) {
             user = u
             info = i
@@ -148,27 +148,27 @@ describe("Strategy", function () {
       })
 
       it("should supply user", function () {
-        expect(user).to.be.an('object')
+        expect(user).to.be.an("object")
         expect(user.id).to.equal("1234")
       })
 
       it("should supply info", function () {
-        expect(info).to.be.an('object')
+        expect(info).to.be.an("object")
         expect(info.scope).to.equal("read")
       })
     })
   })
 
   describe("handling a request without a body", function () {
-    var strategy = new Strategy(function (username, password, otp, done) {
+    const strategy = new Strategy(function (username, password, otp, done) {
       throw new Error("should not be called")
     })
 
-    var info, status
+    let info, status
 
     before(function (done) {
-      chai
-        .passport.use(strategy)
+      chai.passport
+        .use(strategy)
         .fail(function (i, s) {
           info = i
           status = s
@@ -178,22 +178,22 @@ describe("Strategy", function () {
     })
 
     it("should fail with info and status", function () {
-      expect(info).to.be.an('object')
+      expect(info).to.be.an("object")
       expect(info.message).to.equal("Missing credentials")
       expect(status).to.equal(400)
     })
   })
 
   describe("handling a request with a body, but no username and password", function () {
-    var strategy = new Strategy(function (username, password, otp, done) {
+    const strategy = new Strategy(function (username, password, otp, done) {
       throw new Error("should not be called")
     })
 
-    var info, status
+    let info, status
 
     before(function (done) {
-      chai
-        .passport.use(strategy)
+      chai.passport
+        .use(strategy)
         .fail(function (i, s) {
           info = i
           status = s
@@ -206,22 +206,22 @@ describe("Strategy", function () {
     })
 
     it("should fail with info and status", function () {
-      expect(info).to.be.an('object')
+      expect(info).to.be.an("object")
       expect(info.message).to.equal("Missing credentials")
       expect(status).to.equal(400)
     })
   })
 
   describe("handling a request with a body, but no password", function () {
-    var strategy = new Strategy(function (username, password, otp, done) {
+    const strategy = new Strategy(function (username, password, otp, done) {
       throw new Error("should not be called")
     })
 
-    var info, status
+    let info, status
 
     before(function (done) {
-      chai
-        .passport.use(strategy)
+      chai.passport
+        .use(strategy)
         .fail(function (i, s) {
           info = i
           status = s
@@ -235,22 +235,22 @@ describe("Strategy", function () {
     })
 
     it("should fail with info and status", function () {
-      expect(info).to.be.an('object')
+      expect(info).to.be.an("object")
       expect(info.message).to.equal("Missing credentials")
       expect(status).to.equal(400)
     })
   })
 
   describe("handling a request with a body, but no username", function () {
-    var strategy = new Strategy(function (username, password, otp, done) {
+    const strategy = new Strategy(function (username, password, otp, done) {
       throw new Error("should not be called")
     })
 
-    var info, status
+    let info, status
 
     before(function (done) {
-      chai
-        .passport.use(strategy)
+      chai.passport
+        .use(strategy)
         .fail(function (i, s) {
           info = i
           status = s
@@ -264,7 +264,7 @@ describe("Strategy", function () {
     })
 
     it("should fail with info and status", function () {
-      expect(info).to.be.an('object')
+      expect(info).to.be.an("object")
       expect(info.message).to.equal("Missing credentials")
       expect(status).to.equal(400)
     })

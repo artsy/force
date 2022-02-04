@@ -1,12 +1,12 @@
-/* global describe, it, expect, before */
 /* jshint expr: true */
 
-var chai = require("chai"),
-  Strategy = require("../lib/strategy")
+const chai = require("chai")
+const expect = require("chai").expect
+const Strategy = require("../lib/strategy")
 
 describe("Strategy", function () {
   describe("handling a request with valid credentials in body using custom field names", function () {
-    var strategy = new Strategy(
+    const strategy = new Strategy(
       { usernameField: "userid", passwordField: "passwd", otpField: "otp" },
       function (username, password, otp, done) {
         if (username == "johndoe" && password == "secret" && otp == "123456") {
@@ -16,7 +16,7 @@ describe("Strategy", function () {
       }
     )
 
-    var user, info
+    let user, info
 
     before(function (done) {
       chai.passport
@@ -47,7 +47,7 @@ describe("Strategy", function () {
   })
 
   describe("handling a request with valid credentials in body using custom field names with object notation", function () {
-    var strategy = new Strategy(
+    const strategy = new Strategy(
       {
         usernameField: "user[username]", // pragma: allowlist secret
         passwordField: "user[password]", // pragma: allowlist secret
@@ -61,7 +61,7 @@ describe("Strategy", function () {
       }
     )
 
-    var user, info
+    let user, info
 
     before(function (done) {
       chai.passport

@@ -1,16 +1,14 @@
-/* global describe, it, expect, before */
-
-var expect = require("chai").expect
-var chai = require("chai"),
-  Strategy = require("../lib/strategy")
+const chai = require("chai")
+const expect = require("chai").expect
+const Strategy = require("../lib/strategy")
 
 describe("Strategy", function () {
   describe("encountering an error during verification", function () {
-    var strategy = new Strategy(function (username, password, otp, done) {
+    const strategy = new Strategy(function (username, password, otp, done) {
       done(new Error("something went wrong"))
     })
 
-    var err
+    let err
 
     before(function (done) {
       chai.passport
@@ -35,11 +33,11 @@ describe("Strategy", function () {
   })
 
   describe("encountering an exception during verification", function () {
-    var strategy = new Strategy(function (username, password, otp, done) {
+    const strategy = new Strategy(function (username, password, otp, done) {
       throw new Error("something went horribly wrong")
     })
 
-    var err
+    let err
 
     before(function (done) {
       chai.passport

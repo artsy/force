@@ -1,20 +1,20 @@
-/* global describe, it, expect, before */
 /* jshint expr: true */
 
-var chai = require("chai"),
-  Strategy = require("../lib/strategy")
+const chai = require("chai")
+const expect = require("chai").expect
+const Strategy = require("../lib/strategy")
 
 describe("Strategy", function () {
   describe("failing authentication", function () {
-    var strategy = new Strategy(function (username, password, otp, done) {
+    const strategy = new Strategy(function (username, password, otp, done) {
       return done(null, false)
     })
 
-    var info
+    let info
 
     before(function (done) {
-      chai
-        .passport.use(strategy)
+      chai.passport
+        .use(strategy)
         .fail(function (i) {
           info = i
           done()
@@ -34,15 +34,15 @@ describe("Strategy", function () {
   })
 
   describe("failing authentication with info", function () {
-    var strategy = new Strategy(function (username, password, otp, done) {
+    const strategy = new Strategy(function (username, password, otp, done) {
       return done(null, false, { message: "authentication failed" })
     })
 
-    var info
+    let info
 
     before(function (done) {
-      chai
-        .passport.use(strategy)
+      chai.passport
+        .use(strategy)
         .fail(function (i) {
           info = i
           done()
