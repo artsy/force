@@ -24,13 +24,24 @@ export type SavedSearchAlertsApp_me$key = {
 
 
 const node: ReaderFragment = {
-  "argumentDefinitions": [],
+  "argumentDefinitions": [
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "after"
+    },
+    {
+      "defaultValue": 15,
+      "kind": "LocalArgument",
+      "name": "count"
+    }
+  ],
   "kind": "Fragment",
   "metadata": {
     "connection": [
       {
-        "count": null,
-        "cursor": null,
+        "count": "count",
+        "cursor": "after",
         "direction": "forward",
         "path": [
           "savedSearchesConnection"
@@ -128,5 +139,5 @@ const node: ReaderFragment = {
   "type": "Me",
   "abstractKey": null
 };
-(node as any).hash = 'c61a0e940a08df8ffb2289eb7cd83cf7';
+(node as any).hash = 'e3eec8bd414659fa886fbe17e910d243';
 export default node;

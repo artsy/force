@@ -4,7 +4,10 @@
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type SavedSearchAlertsAppRefetchQueryVariables = {};
+export type SavedSearchAlertsAppRefetchQueryVariables = {
+    after?: string | null;
+    count: number;
+};
 export type SavedSearchAlertsAppRefetchQueryResponse = {
     readonly me: {
         readonly " $fragmentRefs": FragmentRefs<"SavedSearchAlertsApp_me">;
@@ -18,9 +21,12 @@ export type SavedSearchAlertsAppRefetchQuery = {
 
 
 /*
-query SavedSearchAlertsAppRefetchQuery {
+query SavedSearchAlertsAppRefetchQuery(
+  $after: String
+  $count: Int!
+) {
   me {
-    ...SavedSearchAlertsApp_me
+    ...SavedSearchAlertsApp_me_2QE1um
     id
   }
 }
@@ -34,8 +40,8 @@ fragment SavedSearchAlertListItem_item on SearchCriteria {
   }
 }
 
-fragment SavedSearchAlertsApp_me on Me {
-  savedSearchesConnection(first: 50) {
+fragment SavedSearchAlertsApp_me_2QE1um on Me {
+  savedSearchesConnection(first: $count, after: $after) {
     edges {
       node {
         internalID
@@ -55,14 +61,32 @@ fragment SavedSearchAlertsApp_me on Me {
 const node: ConcreteRequest = (function(){
 var v0 = [
   {
-    "kind": "Literal",
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "after"
+  },
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "count"
+  }
+],
+v1 = {
+  "kind": "Variable",
+  "name": "after",
+  "variableName": "after"
+},
+v2 = [
+  (v1/*: any*/),
+  {
+    "kind": "Variable",
     "name": "first",
-    "value": 50
+    "variableName": "count"
   }
 ];
 return {
   "fragment": {
-    "argumentDefinitions": [],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
     "name": "SavedSearchAlertsAppRefetchQuery",
@@ -76,7 +100,14 @@ return {
         "plural": false,
         "selections": [
           {
-            "args": null,
+            "args": [
+              (v1/*: any*/),
+              {
+                "kind": "Variable",
+                "name": "count",
+                "variableName": "count"
+              }
+            ],
             "kind": "FragmentSpread",
             "name": "SavedSearchAlertsApp_me"
           }
@@ -89,7 +120,7 @@ return {
   },
   "kind": "Request",
   "operation": {
-    "argumentDefinitions": [],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
     "name": "SavedSearchAlertsAppRefetchQuery",
     "selections": [
@@ -103,7 +134,7 @@ return {
         "selections": [
           {
             "alias": null,
-            "args": (v0/*: any*/),
+            "args": (v2/*: any*/),
             "concreteType": "SearchCriteriaConnection",
             "kind": "LinkedField",
             "name": "savedSearchesConnection",
@@ -210,11 +241,11 @@ return {
                 "storageKey": null
               }
             ],
-            "storageKey": "savedSearchesConnection(first:50)"
+            "storageKey": null
           },
           {
             "alias": null,
-            "args": (v0/*: any*/),
+            "args": (v2/*: any*/),
             "filters": null,
             "handle": "connection",
             "key": "SavedSearchAlertsApp_savedSearchesConnection",
@@ -234,14 +265,14 @@ return {
     ]
   },
   "params": {
-    "cacheID": "47f82e6e5a262c8b4adc97a862f98ae1",
+    "cacheID": "c5ec66b1d2e372cd85cb0c53a0f227c4",
     "id": null,
     "metadata": {},
     "name": "SavedSearchAlertsAppRefetchQuery",
     "operationKind": "query",
-    "text": "query SavedSearchAlertsAppRefetchQuery {\n  me {\n    ...SavedSearchAlertsApp_me\n    id\n  }\n}\n\nfragment SavedSearchAlertListItem_item on SearchCriteria {\n  internalID\n  artistIDs\n  href\n  userAlertSettings {\n    name\n  }\n}\n\nfragment SavedSearchAlertsApp_me on Me {\n  savedSearchesConnection(first: 50) {\n    edges {\n      node {\n        internalID\n        ...SavedSearchAlertListItem_item\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query SavedSearchAlertsAppRefetchQuery(\n  $after: String\n  $count: Int!\n) {\n  me {\n    ...SavedSearchAlertsApp_me_2QE1um\n    id\n  }\n}\n\nfragment SavedSearchAlertListItem_item on SearchCriteria {\n  internalID\n  artistIDs\n  href\n  userAlertSettings {\n    name\n  }\n}\n\nfragment SavedSearchAlertsApp_me_2QE1um on Me {\n  savedSearchesConnection(first: $count, after: $after) {\n    edges {\n      node {\n        internalID\n        ...SavedSearchAlertListItem_item\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '51e7ac341cad1c867b93ae596e934826';
+(node as any).hash = '67fb652d034bc04efb73c22b2566f3f2';
 export default node;

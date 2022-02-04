@@ -6,6 +6,7 @@ import {
   Box,
   Join,
   useToasts,
+  Button,
 } from "@artsy/palette"
 import {
   createPaginationContainer,
@@ -43,8 +44,9 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
     editAlertEntity,
     setEditAlertEntity,
   ] = useState<EditAlertEntity | null>(null)
-  const [showDeleteModal, setShowDeleteModal] = useState(false)
   const { sendToast } = useToasts()
+  const [showDeleteModal, setShowDeleteModal] = useState(false)
+  const [loading, setLoading] = useState(false)
   const alerts = extractNodes(me.savedSearchesConnection)
   const isEditMode = editAlertEntity !== null
 
@@ -54,7 +56,7 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
 
   const closeEditFormAndRefetch = () => {
     closeEditForm()
-    relay.refetchConnection(50)
+    relay.refetchConnection(15)
   }
 
   const closeDeleteModal = () => {
@@ -82,28 +84,54 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
     })
   }
 
+  const handleLoadMore = () => {
+    if (!relay.hasMore() || relay.isLoading()) {
+      return
+    }
+
+    setLoading(true)
+
+    relay.loadMore(10, err => {
+      if (err) {
+        console.error(err)
+      }
+
+      setLoading(false)
+    })
+  }
+
   const list = (
-    <Join separator={<Separator color="black15" />}>
-      {alerts.map(edge => {
-        const isCurrentEdgeSelected = editAlertEntity?.id === edge.internalID
-        let variant: SavedSearchAlertListItemVariant | undefined
+    <>
+      <Join separator={<Separator color="black15" />}>
+        {alerts.map((edge, index) => {
+          const isCurrentEdgeSelected = editAlertEntity?.id === edge.internalID
+          let variant: SavedSearchAlertListItemVariant | undefined
 
-        if (isCurrentEdgeSelected) {
-          variant = "active"
-        } else if (!!editAlertEntity) {
-          variant = "inactive"
-        }
+          if (isCurrentEdgeSelected) {
+            variant = "active"
+          } else if (!!editAlertEntity) {
+            variant = "inactive"
+          }
 
-        return (
-          <SavedSearchAlertListItemFragmentContainer
-            key={edge.internalID}
-            item={edge}
-            variant={variant}
-            onEditAlertClick={setEditAlertEntity}
-          />
-        )
-      })}
-    </Join>
+          return (
+            <SavedSearchAlertListItemFragmentContainer
+              key={edge.internalID}
+              item={edge}
+              variant={variant}
+              onEditAlertClick={setEditAlertEntity}
+            />
+          )
+        })}
+      </Join>
+
+      {relay.hasMore() && (
+        <Box textAlign="center" mt={4}>
+          <Button onClick={handleLoadMore} loading={loading}>
+            Show More
+          </Button>
+        </Box>
+      )}
+    </>
   )
 
   return (
@@ -184,8 +212,12 @@ export const SavedSearchAlertsAppPaginationContainer = createPaginationContainer
   SavedSearchAlertsApp,
   {
     me: graphql`
-      fragment SavedSearchAlertsApp_me on Me {
-        savedSearchesConnection(first: 50)
+      fragment SavedSearchAlertsApp_me on Me
+        @argumentDefinitions(
+          after: { type: "String" }
+          count: { type: "Int", defaultValue: 15 }
+        ) {
+        savedSearchesConnection(first: $count, after: $after)
           @connection(key: "SavedSearchAlertsApp_savedSearchesConnection") {
           edges {
             node {
@@ -210,9 +242,9 @@ export const SavedSearchAlertsAppPaginationContainer = createPaginationContainer
       }
     },
     query: graphql`
-      query SavedSearchAlertsAppRefetchQuery {
+      query SavedSearchAlertsAppRefetchQuery($after: String, $count: Int!) {
         me {
-          ...SavedSearchAlertsApp_me
+          ...SavedSearchAlertsApp_me @arguments(after: $after, count: $count)
         }
       }
     `,
