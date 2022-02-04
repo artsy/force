@@ -13,13 +13,34 @@ import {
 } from "@artsy/palette"
 import { useDialog } from "v2/Utils/Hooks/useDialog"
 import { AuctionBuyersPremiumDialogQueryRenderer } from "v2/Components/AuctionBuyersPremiumDialog"
+import styled, { keyframes } from "styled-components"
 
 export interface ArtworkSidebarCurrentBidInfoProps {
   artwork: ArtworkSidebarCurrentBidInfo_artwork
+  currentBidChanged: boolean
 }
+
+// This text pulse animation is used when the current bid changes.
+const pulse = keyframes`
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+`
+
+const TextWithPulse = styled(Text)`
+  animation: ${pulse} 1s infinite;
+  animation-iteration-count: 1;
+`
 
 export const ArtworkSidebarCurrentBidInfo: React.FC<ArtworkSidebarCurrentBidInfoProps> = ({
   artwork,
+  currentBidChanged,
 }) => {
   const { trackEvent } = useTracking()
 
@@ -103,6 +124,8 @@ export const ArtworkSidebarCurrentBidInfo: React.FC<ArtworkSidebarCurrentBidInfo
     : null
   const myMaxBid = myMostRecent?.max_bid?.display
 
+  const CurrentBid = currentBidChanged ? TextWithPulse : Text
+
   return (
     <>
       {dialogComponent}
@@ -129,9 +152,10 @@ export const ArtworkSidebarCurrentBidInfo: React.FC<ArtworkSidebarCurrentBidInfo
             </Box>
           )}
 
-          <Text variant="lg" pl={0.5}>
+          {/* force a different key on each re-render so animation triggers */}
+          <CurrentBid key={Math.random()} variant={"lg"} pl={0.5}>
             {artwork.sale_artwork?.current_bid?.display}
-          </Text>
+          </CurrentBid>
         </Flex>
       </Flex>
 
