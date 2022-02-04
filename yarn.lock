@@ -77,12 +77,12 @@
   dependencies:
     dotenv "^10.0.0"
 
-"@artsy/palette-charts@17.17.0":
-  version "17.17.0"
-  resolved "https://registry.yarnpkg.com/@artsy/palette-charts/-/palette-charts-17.17.0.tgz#3d0460f9853d08f4363977a206278849e72c0d39"
-  integrity sha512-n9CA/CmBmZnPmEM15mkIO/sIhmxgYgVtj21JCtqKsMxwq6Ju4syWh6xv4vzvOcNsw71CFCen/190CwTGo1cFOw==
+"@artsy/palette-charts@17.18.0":
+  version "17.18.0"
+  resolved "https://registry.yarnpkg.com/@artsy/palette-charts/-/palette-charts-17.18.0.tgz#8b164a68776c8cd53150c53178667999a89ce31b"
+  integrity sha512-QvYMh3inyJlqKoKV/dVYiWUKHberrpGH1VLXnENgcuCS+Duv8Sop+E1gaUwvxk5/egqyMj9qpQuCIIJckfvVgw==
   dependencies:
-    "@artsy/palette" "^18.17.0"
+    "@artsy/palette" "^18.18.0"
     "@seznam/compose-react-refs" "^1.0.6"
     "@styled-system/theme-get" "^5.1.2"
     d3-interpolate "^1.3.2"
@@ -116,10 +116,10 @@
     use-cursor "^1.2.3"
     use-keyboard-list-navigation "2.4.2"
 
-"@artsy/palette@^18.17.0":
-  version "18.17.0"
-  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-18.17.0.tgz#c28021c16c4ef639627da8de9eeee3e3715ad24a"
-  integrity sha512-Tov7V+fZbyWW8frG8EBqKeN+tFDmrIAFjMzmkJaGFJ1k7WoBhI/mhmq8stRBa3/EQ4xP92ISkoXJgAXzmOVjVw==
+"@artsy/palette@^18.18.0":
+  version "18.18.0"
+  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-18.18.0.tgz#2102e4c78466d167ae2cca23206f1aca3949ab8f"
+  integrity sha512-IMmEhaWrqSdFkdR0DyzwoS1fAUs0hdmZgTxqeSZRZKQD5wzXZWSglS9zWNxHsfSmq0rNsJ/bkHM/lGkNG447+w==
   dependencies:
     "@artsy/palette-tokens" "^2.6.0"
     "@seznam/compose-react-refs" "^1.0.6"

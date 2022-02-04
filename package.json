@@ -91,7 +91,7 @@
     "@artsy/gemup": "0.1.0",
     "@artsy/multienv": "^1.2.0",
     "@artsy/palette": "18.16.0",
-    "@artsy/palette-charts": "17.17.0",
+    "@artsy/palette-charts": "17.18.0",
     "@artsy/passport-local-with-otp": "0.3.1",
     "@artsy/reaction": "29.2.1",
     "@artsy/stitch": "6.4.2",
