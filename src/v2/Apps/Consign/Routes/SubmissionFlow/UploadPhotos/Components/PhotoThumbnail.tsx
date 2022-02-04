@@ -10,7 +10,9 @@ import {
   Clickable,
   ProgressBar,
   CloseCircleIcon,
+  Spinner,
 } from "@artsy/palette"
+import { Media } from "v2/Utils/Responsive"
 import styled from "styled-components"
 import { formatFileSize, Photo } from "../../Utils/fileUtils"
 
@@ -54,12 +56,14 @@ export const PhotoThumbnail: React.FC<PhotoThumbnailProps & BoxProps> = ({
       photoSrc,
     }
 
-    if (photo.url || photo.geminiToken) {
-      return <PhotoThumbnailSuccessState {...props} />
+    if (photo.loading) {
+      return <PhotoThumbnailLoadingState {...props} />
     } else if (photo.errorMessage) {
       return <PhotoThumbnailErrorState {...props} />
-    } else if (photo.loading) {
-      return <PhotoThumbnailLoadingState {...props} />
+    } else if (photo.url || photo.file) {
+      return <PhotoThumbnailSuccessState {...props} />
+    } else if (photo.geminiToken) {
+      return <PhotoThumbnailProcessingState {...props} />
     }
   }
 
@@ -188,6 +192,54 @@ const PhotoThumbnailSuccessState: React.FC<PhotoThumbnailStateProps> = ({
           height="100%"
           width="100%"
         />
+      </Box>
+      <TruncatedLine variant="xs">{photo.name}</TruncatedLine>
+    </Flex>
+    <Flex alignItems="center" justifyContent="space-between">
+      <Text variant="xs">{formatFileSize(photo.size)}</Text>
+      <RemoveButton handleDelete={onDelete} />
+    </Flex>
+  </>
+)
+
+const PhotoThumbnailProcessingState: React.FC<PhotoThumbnailStateProps> = ({
+  onDelete,
+  photoSrc,
+  photo,
+}) => (
+  <>
+    <Flex alignItems="center">
+      <Box
+        height={[48, 120]}
+        width={[48, 120]}
+        minWidth={[48, 120]}
+        mr={[15, 2]}
+        bg="black10"
+        position="relative"
+      >
+        <Media at="xs">
+          <Spinner size="small" />
+        </Media>
+
+        <Media greaterThan="xs">
+          <Image
+            src={photoSrc}
+            style={{ objectFit: "cover" }}
+            height="100%"
+            width="100%"
+          />
+          <Flex
+            position="absolute"
+            top={0}
+            left={0}
+            right={0}
+            bottom={0}
+            alignItems="center"
+            justifyContent="center"
+          >
+            Processing
+          </Flex>
+        </Media>
       </Box>
       <TruncatedLine variant="xs">{photo.name}</TruncatedLine>
     </Flex>
