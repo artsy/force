@@ -70,14 +70,6 @@ export const MeetTheSpecialistsIndex: React.FC = () => {
                     {specialist.location}
                   </Text>
                   <Spacer my={1} />
-                  {specialist.phone && (
-                    <RouterLink
-                      textDecoration="none"
-                      to={`tel:${specialist.phone}`}
-                    >
-                      {specialist.phone}
-                    </RouterLink>
-                  )}
                   <RouterLink to={`mailto:${specialist.email}`}>
                     {specialist.email}
                   </RouterLink>
@@ -113,22 +105,6 @@ export const MeetTheSpecialistsIndex: React.FC = () => {
                     {specialist.location}
                   </Text>
                   <Spacer my={10} />
-
-                  {
-                    //@ts-ignore
-                    specialist.phone && (
-                      <RouterLink
-                        textDecoration="none"
-                        //@ts-ignore
-                        to={`tel:${specialist.phone}`}
-                      >
-                        {
-                          //@ts-ignore
-                          specialist.phone
-                        }
-                      </RouterLink>
-                    )
-                  }
                   <RouterLink to={`mailto:${specialist.email}`}>
                     {specialist.email}
                   </RouterLink>
