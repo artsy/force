@@ -5,6 +5,7 @@ import {
   Separator,
   Box,
   Join,
+  useToasts,
 } from "@artsy/palette"
 import {
   createPaginationContainer,
@@ -40,29 +41,42 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
     setEditAlertEntity,
   ] = useState<EditAlertEntity | null>(null)
   const [showDeleteModal, setShowDeleteModal] = useState(false)
+  const { sendToast } = useToasts()
   const alerts = extractNodes(me.savedSearchesConnection)
   const isEditMode = editAlertEntity !== null
 
-  const handleCloseClick = () => {
+  const closeEditForm = () => {
     setEditAlertEntity(null)
   }
 
-  const handleCompleted = () => {
-    handleCloseClick()
+  const closeEditFormAndRefetch = () => {
+    closeEditForm()
     relay.refetchConnection(50)
+  }
+
+  const closeDeleteModal = () => {
+    setShowDeleteModal(false)
+  }
+
+  const handleCompleted = () => {
+    closeEditFormAndRefetch()
+
+    sendToast({
+      message: "Your Alert has been updated.",
+    })
   }
 
   const handleDeleteClick = () => {
     setShowDeleteModal(true)
   }
 
-  const handleCloseDeleteModal = () => {
-    setShowDeleteModal(false)
-  }
-
   const handleDeleted = () => {
-    handleCompleted()
-    handleCloseDeleteModal()
+    closeEditFormAndRefetch()
+    closeDeleteModal()
+
+    sendToast({
+      message: "Your Alert has been deleted.",
+    })
   }
 
   const list = (
@@ -118,7 +132,7 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
                   <Column span={6}>
                     <SavedSearchAlertEditFormContainer
                       editAlertEntity={editAlertEntity}
-                      onCloseClick={handleCloseClick}
+                      onCloseClick={closeEditForm}
                       onCompleted={handleCompleted}
                       onDeleteClick={handleDeleteClick}
                     />
@@ -131,7 +145,7 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
               {isEditMode && editAlertEntity ? (
                 <SavedSearchAlertEditFormContainer
                   editAlertEntity={editAlertEntity}
-                  onCloseClick={handleCloseClick}
+                  onCloseClick={closeEditForm}
                   onCompleted={handleCompleted}
                   onDeleteClick={handleDeleteClick}
                 />
@@ -143,7 +157,7 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
             {showDeleteModal && editAlertEntity && (
               <SavedSearchAlertDeleteModal
                 id={editAlertEntity!.id}
-                onCloseClick={handleCloseDeleteModal}
+                onCloseClick={closeDeleteModal}
                 onDeleted={handleDeleted}
               />
             )}

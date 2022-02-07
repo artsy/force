@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { BellIcon, Button, ButtonProps } from "@artsy/palette"
+import { BellIcon, Button, ButtonProps, useToasts } from "@artsy/palette"
 import { SavedSearchAttributes } from "../types"
 import { useSystemContext, useTracking } from "v2/System"
 import {
@@ -24,6 +24,7 @@ export const CreateAlertButton: React.FC<CreateAlertButtonProps> = ({
   const tracking = useTracking()
   const { isLoggedIn } = useSystemContext()
   const [visibleForm, setVisibleForm] = useState(false)
+  const { sendToast } = useToasts()
 
   const openModal = () => {
     setVisibleForm(true)
@@ -74,6 +75,10 @@ export const CreateAlertButton: React.FC<CreateAlertButtonProps> = ({
       saved_search_id: result.id,
     }
     tracking.trackEvent(trackInfo)
+
+    sendToast({
+      message: "Your Alert has been saved.",
+    })
   }
 
   return (
