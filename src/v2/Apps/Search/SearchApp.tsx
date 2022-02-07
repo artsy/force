@@ -70,6 +70,7 @@ export const SearchApp: React.FC<SearchAppProps> = ({ viewer, children }) => {
             {({ stuck }) => {
               return (
                 <FullBleed
+                  backgroundColor="white100"
                   style={stuck ? { boxShadow: DROP_SHADOW } : undefined}
                 >
                   <AppContainer>

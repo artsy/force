@@ -1,9 +1,12 @@
-import styled from "styled-components"
-import { Box } from "@artsy/palette"
-import { useEffect, useRef, useState } from "react";
-import * as React from "react";
+import ReactSticky, { Props as ReactStickyProps } from "react-stickynode"
+import { __internal__useMatchMedia } from "v2/Utils/Hooks/useMatchMedia"
+import { Box, themeProps } from "@artsy/palette"
+import { useEffect, useRef, useState } from "react"
+import * as React from "react"
 import { useSticky } from "./StickyProvider"
 import { useNavBarHeight } from "../NavBar/useNavBarHeight"
+
+interface StickyProps extends Pick<ReactStickyProps, "bottomBoundary"> {}
 
 /**
  * Wrap a component to have it stick below the main nav.
@@ -28,46 +31,15 @@ import { useNavBarHeight } from "../NavBar/useNavBarHeight"
  *      everything in an AppContainer + HorizontalPadding. (This is non-ideal)
  *
  * - Q: How do I unstick an element once it reaches the end of its parent container?
- * - A: This is also not currently supported.
+ * - A: Just pass bottomBoundary prop (see https://github.com/yahoo/react-stickynode#props for more detail).
  */
-export const Sticky: React.FC = ({ children }) => {
-  const sentinelRef = useRef<HTMLDivElement | null>(null)
-  const containerRef = useRef<HTMLDivElement | null>(null)
-
-  const [stuck, setStuck] = useState(false)
-
-  const { mobile, desktop } = useNavBarHeight()
-
-  useEffect(() => {
-    if (sentinelRef.current === null) return
-
-    if (!("IntersectionObserver" in window)) return
-
-    const observer = new IntersectionObserver(
-      entries => {
-        const [entry] = entries
-        if (
-          // Intersecting
-          entry.intersectionRatio === 0 &&
-          // Only stick when scrolling down
-          entry.boundingClientRect.y < 0
-        ) {
-          setStuck(true)
-        } else if (entry.intersectionRatio === 1) {
-          setStuck(false)
-        }
-      },
-      { threshold: [0, 1] }
-    )
-
-    observer.observe(sentinelRef.current)
-
-    return () => {
-      observer.disconnect()
-    }
-  }, [])
-
+export const Sticky: React.FC<StickyProps> = ({ children, bottomBoundary }) => {
   const { offsetTop, registerSticky, deregisterSticky } = useSticky()
+  const { desktop, mobile } = useNavBarHeight()
+  const isMobile = __internal__useMatchMedia(themeProps.mediaQueries.xs)
+  const [stuck, setStuck] = useState(false)
+  const containerRef = useRef<HTMLDivElement | null>(null)
+  const headerOffset = isMobile ? mobile : desktop
 
   useEffect(() => {
     registerSticky(containerRef.current?.clientHeight)
@@ -75,39 +47,19 @@ export const Sticky: React.FC = ({ children }) => {
   }, [registerSticky, deregisterSticky])
 
   return (
-    <>
-      <Sentinel
-        ref={sentinelRef as any}
-        top={[-(mobile + offsetTop), -(desktop + offsetTop)]}
-      />
-
-      <Container
-        ref={containerRef as any}
-        bg="white100"
-        position={stuck ? "fixed" : "static"}
-        top={[mobile + offsetTop, desktop + offsetTop]}
+    <Box>
+      <ReactSticky
+        top={headerOffset + offsetTop}
+        bottomBoundary={bottomBoundary}
+        onStateChange={state => {
+          setStuck(state.status === ReactSticky.STATUS_FIXED)
+        }}
+        innerZ={1}
       >
-        {typeof children === "function" ? children({ stuck }) : children}
-      </Container>
-
-      {stuck && (
-        // Insert placeholder the same height as the container to prevent scroll from changing
-        <div style={{ height: containerRef.current?.clientHeight }} />
-      )}
-    </>
+        <Box ref={containerRef as any}>
+          {typeof children === "function" ? children({ stuck }) : children}
+        </Box>
+      </ReactSticky>
+    </Box>
   )
 }
-
-export const Container = styled(Box)`
-  z-index: 1;
-  left: 0;
-  right: 0;
-`
-
-// This <div> is positioned such that when it leaves the top of
-// the browser the <Container> reaches it's `top` value and sticking.
-const Sentinel = styled(Box)`
-  position: relative;
-  width: 100%;
-  height: 0;
-`

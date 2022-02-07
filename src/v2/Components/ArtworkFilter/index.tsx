@@ -25,6 +25,7 @@ import {
   Column,
   FilterIcon,
   Flex,
+  FullBleed,
   GridColumns,
   Spacer,
   Text,
@@ -317,35 +318,37 @@ export const BaseArtworkFilter: React.FC<
           <Sticky>
             {({ stuck }) => {
               return (
-                <Flex
-                  justifyContent="space-between"
-                  alignItems="center"
-                  py={1}
-                  {...(stuck
-                    ? {
-                        px: 2,
-                        borderBottom: "1px solid",
-                        borderColor: "black10",
-                      }
-                    : {})}
-                >
-                  <Button
-                    size="small"
-                    onClick={() => toggleMobileActionSheet(true)}
-                    mr={2}
+                <FullBleed backgroundColor="white100">
+                  <Flex
+                    justifyContent="space-between"
+                    alignItems="center"
+                    py={1}
+                    px={2}
+                    {...(stuck
+                      ? {
+                          borderBottom: "1px solid",
+                          borderColor: "black10",
+                        }
+                      : {})}
                   >
-                    <Flex justifyContent="space-between" alignItems="center">
-                      <FilterIcon fill="white100" />
-                      <Spacer mr={0.5} />
-                      Filter
-                      {appliedFiltersTotalCount > 0
-                        ? ` • ${appliedFiltersTotalCount}`
-                        : ""}
-                    </Flex>
-                  </Button>
+                    <Button
+                      size="small"
+                      onClick={() => toggleMobileActionSheet(true)}
+                      mr={2}
+                    >
+                      <Flex justifyContent="space-between" alignItems="center">
+                        <FilterIcon fill="white100" />
+                        <Spacer mr={0.5} />
+                        Filter
+                        {appliedFiltersTotalCount > 0
+                          ? ` • ${appliedFiltersTotalCount}`
+                          : ""}
+                      </Flex>
+                    </Button>
 
-                  <ArtworkSortFilter />
-                </Flex>
+                    <ArtworkSortFilter />
+                  </Flex>
+                </FullBleed>
               )
             }}
           </Sticky>

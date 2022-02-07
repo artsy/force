@@ -81,6 +81,7 @@ const FairApp: React.FC<FairAppProps> = ({ children, fair }) => {
           return (
             <FullBleed
               mb={stuck ? 1 : 0}
+              backgroundColor="white100"
               style={stuck ? { boxShadow: DROP_SHADOW } : undefined}
             >
               <AppContainer>
