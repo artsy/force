@@ -82,7 +82,8 @@ export class SignUpForm extends Component<SignUpFormProps, SignUpFormState> {
     }
 
     const countryCode = this.props.requestLocation?.countryCode || ""
-    const collapseCheckboxes = !gdprCountries.includes(countryCode)
+    const collapseCheckboxes =
+      countryCode && !gdprCountries.includes(countryCode)
 
     return (
       <Formik
