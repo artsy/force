@@ -82,6 +82,7 @@ export function buildServerApp(
         loadableFile = "loadable-stats.json",
         loadablePath = "public/assets",
         assetsPath = "/assets",
+        featureFlags = [],
       } = config
 
       // Find and execute pre-render hooks
@@ -155,6 +156,7 @@ export function buildServerApp(
               onlyMatchMediaQueries={matchingMediaQueries}
               relayEnvironment={relayEnvironment}
               routes={routes}
+              featureFlags={featureFlags}
             >
               {farceResults.element}
             </Boot>

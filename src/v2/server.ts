@@ -28,6 +28,7 @@ app.get(
         req,
         res,
         routes,
+        featureFlags: res.locals.sd.featureFlags,
       })
 
       if (redirect) {

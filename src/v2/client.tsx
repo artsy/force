@@ -10,6 +10,7 @@ import { getClientParam } from "./Utils/getClientParam"
 import { buildClientApp } from "v2/System/Router/client"
 import { syncNonCacheableData } from "./System/Client/syncSharify"
 import { loadSegment } from "lib/analytics/segmentOneTrustIntegration/segmentOneTrustIntegration"
+import { getENV } from "./Utils/getENV"
 
 async function setupClient() {
   syncNonCacheableData()
@@ -49,6 +50,7 @@ async function setupClient() {
 
   const { ClientApp } = await buildClientApp({
     routes: getAppRoutes(),
+    featureFlags: getENV("featureFlags"),
   })
 
   // Rehydrate

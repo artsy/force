@@ -68,6 +68,12 @@ import { serverTimingHeaders } from "./lib/middleware/serverTimingHeaders"
 import { splitTestMiddleware } from "./desktop/components/split_test/splitTestMiddleware"
 import { IGNORED_ERRORS } from "./lib/analytics/sentryFilters"
 import { sharifyToCookie } from "./lib/middleware/sharifyToCookie"
+import { featureFlagMiddleware } from "lib/middleware/featureFlagMiddleware"
+import {
+  UnleashFeatureFlagProvider,
+  UnleashProvider,
+} from "lib/featureFlags/unleashProvider"
+import { registerFlagProvider } from "lib/featureFlags/featureFlags"
 
 // Find the v2 routes, we will not be testing memory caching for legacy pages.
 
@@ -146,6 +152,10 @@ export function initializeMiddleware(app) {
 
   // Static assets
   applyStaticAssetMiddlewares(app)
+
+  // Need sharify for unleash
+  registerFlagProvider(UnleashProvider, UnleashFeatureFlagProvider)
+  app.use(featureFlagMiddleware(UnleashProvider))
 }
 
 function applySecurityMiddleware(app) {
