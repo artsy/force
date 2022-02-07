@@ -2,6 +2,7 @@ import { Button, Flex, Text, Spacer, Box } from "@artsy/palette"
 import { FAQ } from "../../MarketingLanding/Components/FAQ"
 import { SoldRecentlyQueryRenderer } from "../../MarketingLanding/Components/SoldRecently"
 import { RouterLink } from "v2/System/Router/RouterLink"
+import { DownloadApps } from "./Components/DownloadApps"
 import { AnalyticsSchema, useSystemContext, useTracking } from "v2/System"
 import { ContextModule, OwnerType } from "@artsy/cohesion"
 import { useRouter } from "v2/System/Router/useRouter"
@@ -40,6 +41,7 @@ export const ThankYou: React.FC = () => {
       <Flex
         py={2}
         my={4}
+        mb={0}
         flexDirection={["column", "row"]}
         alignItems={["stretch", "center"]}
       >
@@ -68,6 +70,8 @@ export const ThankYou: React.FC = () => {
           </Button>
         </RouterLink>
       </Flex>
+
+      <DownloadApps mb={[2, 6]} />
 
       <SoldRecentlyQueryRenderer />
       <Spacer mt={6} />
