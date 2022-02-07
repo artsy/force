@@ -140,7 +140,7 @@ describe("TransactionDetailsSummaryItem", () => {
 
       expect(text).toMatch("Shipping**Waiting for final costs")
       expect(text).toMatch(
-        "**Shipping cost to be confirmed by gallery. You will be able to review total with shipping before payment."
+        "**Shipping costs to be confirmed by gallery. You will be able to review the total price before payment."
       )
     })
 
