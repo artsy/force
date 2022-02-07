@@ -7,6 +7,7 @@ import { FragmentRefs } from "relay-runtime";
 export type SavedSearchAlertListItem_item = {
     readonly internalID: string;
     readonly artistIDs: ReadonlyArray<string> | null;
+    readonly href: string;
     readonly userAlertSettings: {
         readonly name: string | null;
     };
@@ -43,6 +44,13 @@ const node: ReaderFragment = {
     {
       "alias": null,
       "args": null,
+      "kind": "ScalarField",
+      "name": "href",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
       "concreteType": "SavedSearchUserAlertSettings",
       "kind": "LinkedField",
       "name": "userAlertSettings",
@@ -62,5 +70,5 @@ const node: ReaderFragment = {
   "type": "SearchCriteria",
   "abstractKey": null
 };
-(node as any).hash = '3367af46783656daef6e8021990538f1';
+(node as any).hash = '94ac9c394d9515c367be113d028a6e94';
 export default node;
