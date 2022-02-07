@@ -35,14 +35,23 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
 
   const [customValue, setCustomValue] = useState<number>()
   const [toggle, setToggle] = useState(false)
-  const [displayWarning, setDisplayWarning] = useState(false)
   const [selectedRadio, setSelectedRadio] = useState<string>()
   const listPrice = artwork?.listPrice
 
   useEffect(() => {
     if (!!customValue) onChange(customValue)
-    setDisplayWarning(false)
   }, [customValue])
+
+  useEffect(() => {
+    if (showError) {
+      setSelectedRadio("price-option-custom")
+      setToggle(true)
+    }
+  }, [showError])
+
+  useEffect(() => {
+    if (toggle) trackClick("Different amount", 0)
+  }, [toggle])
 
   const trackClick = (offer: string, amount: number) => {
     const trackingData: ClickedOfferOption = {
@@ -55,7 +64,6 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
       offer,
       amount,
     }
-
     tracking.trackEvent(trackingData)
   }
 
@@ -72,7 +80,9 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
   const getRangeOptions = () => {
     const minPriceRange = listPrice?.minPrice?.major
     const maxPriceRange = listPrice?.maxPrice?.major
-    const midPriceRange = (Number(minPriceRange) + Number(maxPriceRange)) / 2
+    const midPriceRange = Math.round(
+      (Number(minPriceRange) + Number(maxPriceRange)) / 2
+    )
 
     const getRangeDetails = [
       { value: minPriceRange, description: "Low-end of range" },
@@ -91,7 +101,7 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
       if (listPrice?.major) {
         return {
           key: `price-option-${idx}`,
-          value: listPrice.major * (1 - pricePercentage),
+          value: Math.round(listPrice.major * (1 - pricePercentage)),
           description: `${pricePercentage * 100}% below the list price`,
         }
       }
@@ -141,12 +151,12 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
         .concat(
           <BorderedRadio
             id="scrollTo--price-option-custom"
-            value="custom"
+            value="price-option-custom"
             label="Different amount"
+            error={showError}
             onSelect={() => {
               customValue && onChange(customValue)
-              setToggle(true)
-              trackClick("Different amount", 0)
+              !toggle && setToggle(true)
             }}
             key="price-option-custom"
           >
@@ -156,16 +166,13 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
                   id="OfferForm_offerValue"
                   showError={showError}
                   onChange={setCustomValue}
-                  onBlur={() => {
-                    setDisplayWarning(true)
-                  }}
                   onFocus={() => {
                     onFocus()
                     scrollTo()
                   }}
                   noTitle
                 />
-                {displayWarning && !!customValue && customValue < minPrice && (
+                {(!customValue || customValue < minPrice) && (
                   <MinPriceWarning
                     isPriceRange={!!artwork?.isPriceRange}
                     onClick={selectMinPrice}

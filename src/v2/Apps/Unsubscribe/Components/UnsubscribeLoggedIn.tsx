@@ -2,10 +2,9 @@ import { Spacer, Button, Select, useToasts } from "@artsy/palette"
 import { useRef, useState } from "react"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { useSystemContext } from "v2/System"
-import { UpdateUserEmailPreferencesMutation } from "v2/Components/UserSettings/UserEmailPreferences/UserEmailPreferencesMutation"
 import { UnsubscribeLoggedIn_me } from "v2/__generated__/UnsubscribeLoggedIn_me.graphql"
 import { useMode } from "v2/Utils/Hooks/useMode"
+import { useUnsubscribeEmailPreferences } from "../useUnsubscribeEmailPreferences"
 
 interface UnsubscribeLoggedInProps {
   me: UnsubscribeLoggedIn_me
@@ -16,8 +15,6 @@ type Mode = "Pending" | "Loading" | "Success" | "Error"
 export const UnsubscribeLoggedIn: React.FC<UnsubscribeLoggedInProps> = ({
   me,
 }) => {
-  const { relayEnvironment } = useSystemContext()
-
   const [emailFrequency, setEmailFrequency] = useState(
     me.emailFrequency ?? "daily"
   )
@@ -25,6 +22,7 @@ export const UnsubscribeLoggedIn: React.FC<UnsubscribeLoggedInProps> = ({
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   const { sendToast } = useToasts()
+  const { submitMutation } = useUnsubscribeEmailPreferences()
 
   const handleClick = async () => {
     try {
@@ -32,11 +30,7 @@ export const UnsubscribeLoggedIn: React.FC<UnsubscribeLoggedInProps> = ({
 
       setMode("Loading")
 
-      await UpdateUserEmailPreferencesMutation(
-        relayEnvironment!,
-        { emailFrequency },
-        me.id
-      )
+      submitMutation({ input: { emailFrequency } })
 
       sendToast({
         variant: "success",

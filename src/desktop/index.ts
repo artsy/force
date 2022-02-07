@@ -47,7 +47,6 @@ app.use(require("./apps/auction_support"))
 app.use(require("./apps/about"))
 app.use(require("./apps/contact"))
 app.use(require("./apps/eoy_2016"))
-app.use(require("./apps/how_auctions_work"))
 app.use(require("./apps/inquiry"))
 app.use(require("./apps/partnerships"))
 app.use(require("./apps/geo"))
@@ -75,9 +74,6 @@ app.use(require("./apps/basel_week").app)
 app.use(require("./apps/articles").app)
 app.use(require("./apps/page"))
 app.use(require("./apps/shortcuts"))
-
-// User profiles
-app.use(require("./apps/user"))
 
 // Apps that need to fetch a profile.
 // Because profile routes are usually top-level and use wild-card matchers in their routers,

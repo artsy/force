@@ -47,6 +47,7 @@ export const SettingsEditSettingsEmailPreferences: FC<SettingEditSettingsEmailPr
       </Text>
 
       <Select
+        name="frequency"
         title="Frequency"
         onSelect={handleSelect}
         options={[

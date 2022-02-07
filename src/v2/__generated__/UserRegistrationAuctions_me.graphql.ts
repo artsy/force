@@ -15,6 +15,7 @@ export type UserRegistrationAuctions_me = {
                     readonly href: string | null;
                     readonly startAt: string | null;
                     readonly isClosed: boolean | null;
+                    readonly isRegistrationClosed: boolean | null;
                 } | null;
             } | null;
         } | null> | null;
@@ -140,6 +141,13 @@ const node: ReaderFragment = {
                       "kind": "ScalarField",
                       "name": "isClosed",
                       "storageKey": null
+                    },
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "isRegistrationClosed",
+                      "storageKey": null
                     }
                   ],
                   "storageKey": null
@@ -157,5 +165,5 @@ const node: ReaderFragment = {
   "type": "Me",
   "abstractKey": null
 };
-(node as any).hash = '1a20023edef68ff5df24b4207ff8afb4';
+(node as any).hash = '32afe03cbf742da4fd537cf62c91569f';
 export default node;

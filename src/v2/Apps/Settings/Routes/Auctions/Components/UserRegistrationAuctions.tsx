@@ -16,15 +16,13 @@ export const UserRegistrationAuctions: React.FC<UserRegistrationAuctionsProps> =
   const saleRegistrations = extractNodes(me?.saleRegistrationsConnection)
 
   if (!saleRegistrations) {
-    return (
-      <SectionContainer title="Registration for Upcoming Auctions"></SectionContainer>
-    )
+    return <SectionContainer title="Registration for Upcoming Auctions" />
   }
 
   return (
     <SectionContainer title="Registration for Upcoming Auctions">
       {saleRegistrations.map(({ isRegistered, sale }, i) => {
-        if (!sale) {
+        if (!sale || sale.isClosed || sale.isRegistrationClosed) {
           return null
         }
 
@@ -91,6 +89,7 @@ export const UserRegistrationAuctionsFragmentContainer = createFragmentContainer
                 href
                 startAt(format: "MMMM D, h:mmA")
                 isClosed
+                isRegistrationClosed
               }
             }
           }

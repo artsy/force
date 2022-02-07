@@ -25,10 +25,10 @@
   resolved "https://registry.yarnpkg.com/@artsy/cohesion/-/cohesion-1.60.0.tgz#854db37b9f8643ed650f3cc9d14234a1b762fcc8"
   integrity sha512-GBfa0/AoiLtG/Mw0VBR0vCiEj1s8+eBMTtKSLQS82iFo41Z84Li8M0YrlHAmXUrK3oBOO/YvhVNFE40avgK8xQ==
 
-"@artsy/cohesion@4.30.0":
-  version "4.30.0"
-  resolved "https://registry.yarnpkg.com/@artsy/cohesion/-/cohesion-4.30.0.tgz#3fe40ea4c17a4c64cd083ba689fb781fedcee6c7"
-  integrity sha512-K4CYY8QOe0KjoaWRjcMSvOYxyd6IkQJp/oopiBMim04C/nwSVKkF8+KlmChcIWcdFuzZSvSNPoa9QJp0Xscw9Q==
+"@artsy/cohesion@4.31.0":
+  version "4.31.0"
+  resolved "https://registry.yarnpkg.com/@artsy/cohesion/-/cohesion-4.31.0.tgz#91c86fc08ab1b27820c161cecc0e0e425d5698f4"
+  integrity sha512-fzuLCxeG7WjWxLfCi1o0XmbBaRq2SWxkFW0x0cxXQghxXFKqPZqq+nBg8jHJYxfDQuOzvOemsKZufkxY8XIddA==
   dependencies:
     core-js "3"
 
@@ -77,12 +77,12 @@
   dependencies:
     dotenv "^10.0.0"
 
-"@artsy/palette-charts@17.16.0":
-  version "17.16.0"
-  resolved "https://registry.yarnpkg.com/@artsy/palette-charts/-/palette-charts-17.16.0.tgz#65a3c820e1dc8d37224bdfe8a994e6cbd3bd0028"
-  integrity sha512-tlkQ5PDBNH30VQI/fkOY3RzGuQ0wFA+usuZxq3fgJjBYLdNgMC0NZ3q1zu4Rtos4/xpNfKidAepyufpgtc33mw==
+"@artsy/palette-charts@17.19.0":
+  version "17.19.0"
+  resolved "https://registry.yarnpkg.com/@artsy/palette-charts/-/palette-charts-17.19.0.tgz#1bd64b56c7f200b49ee8f9ffc5b2f915da4f55ac"
+  integrity sha512-EQlkWJb5Iamhjb95Lmg5NKevk64lcstKXy/6Mo4djafxGm4fWlntGM2vf7q27NFfhiG8+WGCNJkzyzmbt8FnWg==
   dependencies:
-    "@artsy/palette" "^18.16.0"
+    "@artsy/palette" "^18.19.0"
     "@seznam/compose-react-refs" "^1.0.6"
     "@styled-system/theme-get" "^5.1.2"
     d3-interpolate "^1.3.2"
@@ -94,7 +94,7 @@
   resolved "https://registry.yarnpkg.com/@artsy/palette-tokens/-/palette-tokens-2.6.0.tgz#3d780ff65994fef0daadef29d43d11f89470b728"
   integrity sha512-UQP6P+xv/5hm82ep0z5X3kCFFnk03H6y8kdW/wTU+xPq45ESUay7aNFYXeub47tmW2v6dXJ8Oa01Z0iwc6BVpA==
 
-"@artsy/palette@18.16.0", "@artsy/palette@^18.16.0":
+"@artsy/palette@18.16.0":
   version "18.16.0"
   resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-18.16.0.tgz#1eca67373f387a49382291807ec47d6cf8e1fd95"
   integrity sha512-aRwY/x5kZEqdvlo8INksfMLSth1KjcKkBJxX4rzfr6+c0Gt9YqaeupteLTOJEB+3NdzAFqj1YKhh+briVt/zjA==
@@ -106,6 +106,25 @@
     lodash.orderby "^4.6.0"
     lodash.reject "^4.6.0"
     lodash.uniqby "^4.7.0"
+    luxon "^1.15"
+    proportional-scale "^4.0.0"
+    react-lazy-load-image-component "1.5.0"
+    react-remove-scroll "^2.3.0"
+    styled-bootstrap-grid "3.1.0"
+    styled-system "^5.1.5"
+    trunc-html "^1.1.2"
+    use-cursor "^1.2.3"
+    use-keyboard-list-navigation "2.4.2"
+
+"@artsy/palette@^18.19.0":
+  version "18.19.0"
+  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-18.19.0.tgz#b6d24bc54c481b6e1d5d5510eb1fc2cfdea9a1a8"
+  integrity sha512-BCU2Iu8v5fSQ4wu0BthNoYKQtEKSJdLbEoZ2dB3K0gK/95GD0ioY+Y9KhLWoCLd/W8xgOpyyVJteEXfoAnxNbw==
+  dependencies:
+    "@artsy/palette-tokens" "^2.6.0"
+    "@seznam/compose-react-refs" "^1.0.6"
+    "@styled-system/theme-get" "^5.1.2"
+    lodash "^4.17.21"
     luxon "^1.15"
     proportional-scale "^4.0.0"
     react-lazy-load-image-component "1.5.0"

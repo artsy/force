@@ -7,7 +7,7 @@ orbs:
   hokusai: artsy/hokusai@0.10.0
   horizon: artsy/release@0.0.1
   node: artsy/node@2.0.0
-  slack: circleci/slack@4.6.2
+  slack: circleci/slack@4.7.1
   yarn: artsy/yarn@6.1.0
 
 jobs:
@@ -213,7 +213,7 @@ jobs:
 
   smoke-test-on-live-env:
     docker:
-      - image: cypress/base:16.13.0
+      - image: cypress/base:16.13.2
         environment:
           TERM: xterm
     working_directory: ~/app

@@ -35,7 +35,16 @@ export const AuthenticationFooter: React.FC<AuthenticationFooterProps> = ({
                   onClick={onAppleLogin}
                 >
                   Apple
-                </Clickable>{" "}
+                </Clickable>
+                {", "}
+                <Clickable
+                  color="black60"
+                  textDecoration="underline"
+                  onClick={onGoogleLogin}
+                >
+                  Google
+                </Clickable>
+                {", "}
                 {" or "}
                 <Clickable
                   color="black60"

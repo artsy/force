@@ -1,5 +1,3 @@
-// TODO: Delete this file once settings2 is launched
-
 import { BorderBoxProps, Box, Flex, Sans } from "@artsy/palette"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import * as React from "react"

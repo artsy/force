@@ -11,9 +11,9 @@ import {
 } from "@artsy/palette"
 import { AnalyticsSchema, SystemContext } from "v2/System"
 import { useTracking } from "v2/System/Analytics/useTracking"
-import { data as sd } from "sharify"
 import { userIsAdmin } from "v2/Utils/user"
 import { NavBarMenuItemButton, NavBarMenuItemLink } from "./NavBarMenuItem"
+import { getENV } from "v2/Utils/getENV"
 
 export const NavBarUserMenu: React.FC = () => {
   const { trackEvent } = useTracking()
@@ -42,14 +42,14 @@ export const NavBarUserMenu: React.FC = () => {
   return (
     <Text variant="sm" py={1} width={230}>
       {isAdmin && (
-        <NavBarMenuItemLink to={sd.ADMIN_URL} onClick={trackClick}>
+        <NavBarMenuItemLink to={getENV("ADMIN_URL")} onClick={trackClick}>
           Admin
         </NavBarMenuItemLink>
       )}
 
       {(isAdmin || hasPartnerAccess) && (
         <>
-          <NavBarMenuItemLink to={sd.CMS_URL} onClick={trackClick}>
+          <NavBarMenuItemLink to={getENV("CMS_URL")} onClick={trackClick}>
             CMS
           </NavBarMenuItemLink>
 
@@ -59,7 +59,7 @@ export const NavBarUserMenu: React.FC = () => {
 
       <NavBarMenuItemLink
         aria-label="View your purchases"
-        to="/user/purchases"
+        to="/settings/purchases"
         onClick={trackClick}
       >
         <ReceiptIcon mr={1} aria-hidden="true" /> Order History
@@ -67,7 +67,7 @@ export const NavBarUserMenu: React.FC = () => {
 
       <NavBarMenuItemLink
         aria-label="View your Saves &amp; Follows"
-        to="/user/saves"
+        to="/settings/saves"
         onClick={trackClick}
       >
         <HeartIcon mr={1} aria-hidden="true" /> Saves &amp; Follows
@@ -75,7 +75,7 @@ export const NavBarUserMenu: React.FC = () => {
 
       <NavBarMenuItemLink
         aria-label="View your Collector Profile"
-        to="/profile/edit"
+        to="/settings/edit-profile"
         onClick={trackClick}
       >
         <SoloIcon mr={1} aria-hidden="true" /> Collector Profile
@@ -83,7 +83,7 @@ export const NavBarUserMenu: React.FC = () => {
 
       <NavBarMenuItemLink
         aria-label="Edit your settings"
-        to="/user/edit"
+        to="/settings/edit-settings"
         onClick={trackClick}
       >
         <SettingsIcon mr={1} aria-hidden="true" /> Settings

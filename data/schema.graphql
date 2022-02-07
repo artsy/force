@@ -1668,6 +1668,7 @@ type Artwork implements Node & Searchable & Sellable {
   # The price paid for the artwork in a user's 'my collection'
   pricePaid: Money
   pricingContext: AnalyticsPricingContext
+  processWithArtaShipping: Boolean
   provenance(format: Format): String
 
   # Whether this artwork is published or not
@@ -8312,7 +8313,7 @@ type LatLng {
 
 input LinkAuthenticationMutationInput {
   # Unique Apple user id. **Required** for Apple authentication.
-  applieUid: String
+  appleUid: String
   clientMutationId: String
 
   # User email, only used for Apple authentication.
@@ -8791,6 +8792,9 @@ type Me implements Node {
     last: Int
   ): CreditCardConnection
   email: String
+
+  # User has confirmed their email address
+  emailConfirmed: Boolean!
 
   # Frequency of marketing emails.
   emailFrequency: String
@@ -9390,6 +9394,11 @@ type Mutation {
     input: SubmitInquiryRequestMutationInput!
   ): SubmitInquiryRequestMutationPayload
 
+  # Submits an OfferOrder and creates a conversation for it
+  submitOfferOrderWithConversation(
+    input: CommerceSubmitOrderWithOfferInput!
+  ): CommerceSubmitOrderWithOfferPayload
+
   # Unlinks a 3rd party account
   unlinkAuthentication(
     input: UnlinkAuthenticationMutationInput!
@@ -9511,7 +9520,9 @@ input MyCollectionCreateArtworkInput {
   pricePaidCents: Int
   pricePaidCurrency: String
   provenance: String
+  submissionId: String
   title: String!
+  userId: String
   width: String
 }
 
@@ -12207,6 +12218,7 @@ type SearchCriteria {
   colors: [String!]!
   dimensionRange: String
   height: String
+  href: String!
   inquireableOnly: Boolean
   internalID: ID!
   locationCities: [String!]!
@@ -12841,7 +12853,7 @@ type StartIdentityVerificationSuccess {
 }
 
 type StaticContent {
-  content: String
+  content(format: Format): String
 
   # A globally unique ID.
   id: ID!

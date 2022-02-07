@@ -25,19 +25,15 @@ import { fairsRoutes } from "v2/Apps/Fairs/fairsRoutes"
 import { featureRoutes } from "v2/Apps/Feature/featureRoutes"
 import { geneRoutes } from "v2/Apps/Gene/geneRoutes"
 import { homeRoutes } from "v2/Apps/Home/homeRoutes"
-import { howAuctionsWorkRoutes } from "./Apps/_HowAuctionsWork2/howAuctionsWorkRoutes"
 import { identityVerificationRoutes } from "v2/Apps/IdentityVerification/identityVerificationRoutes"
 import { meetTheSpecialistsRoutes } from "v2/Apps/MeetTheSpecialists/meetTheSpecialistsRoutes"
 import { orderRoutes } from "v2/Apps/Order/orderRoutes"
 import { partnerRoutes } from "v2/Apps/Partner/partnerRoutes"
 import { partnersRoutes } from "v2/Apps/Partners/partnersRoutes"
-import { paymentRoutes } from "v2/Apps/Payment/paymentRoutes"
 import { preferencesRoutes } from "./Apps/_Preferences2/preferencesRoutes"
 import { priceDatabaseRoutes } from "./Apps/PriceDatabase/priceDatabaseRoutes"
-import { purchaseRoutes } from "v2/Apps/Purchase/purchaseRoutes"
 import { searchRoutes } from "v2/Apps/Search/searchRoutes"
 import { settingsRoutes } from "v2/Apps/Settings/settingsRoutes"
-import { shippingRoutes } from "v2/Apps/Shipping/shippingRoutes"
 import { showRoutes } from "v2/Apps/Show/showRoutes"
 import { showsRoutes } from "v2/Apps/Shows/showsRoutes"
 import { staticPageRoutes } from "v2/Apps/StaticPage/staticPageRoutes"
@@ -72,20 +68,16 @@ export function getAppRoutes(): AppRouteConfig[] {
     { routes: featureRoutes },
     { routes: geneRoutes },
     { routes: homeRoutes },
-    { routes: howAuctionsWorkRoutes },
     { routes: identityVerificationRoutes },
     { routes: meetTheSpecialistsRoutes },
     { routes: orderRoutes },
     { routes: partnerRoutes },
     { routes: partnersRoutes },
-    { routes: paymentRoutes },
     { routes: preferencesRoutes },
     { routes: priceDatabaseRoutes },
-    { routes: purchaseRoutes },
     { routes: staticPageRoutes },
     { routes: searchRoutes },
     { routes: settingsRoutes },
-    { routes: shippingRoutes },
     { routes: showRoutes },
     { routes: showsRoutes },
     { routes: tagRoutes },

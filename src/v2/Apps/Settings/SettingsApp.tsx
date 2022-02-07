@@ -10,13 +10,13 @@ interface SettingsAppProps {
 }
 
 const TABS = [
-  { name: "Edit Settings", url: "/settings2/edit-settings" },
-  { name: "Collector Profile", url: "/settings2/edit-profile" },
-  { name: "Saves & Follows", url: "/settings2/saves" },
-  { name: "Order History", url: "/settings2/purchases" },
-  { name: "Bids", url: "/settings2/auctions" },
-  { name: "Payments", url: "/settings2/payments" },
-  { name: "Shipping", url: "/settings2/shipping" },
+  { name: "Edit Settings", url: "/settings/edit-settings" },
+  { name: "Collector Profile", url: "/settings/edit-profile" },
+  { name: "Saves & Follows", url: "/settings/saves" },
+  { name: "Order History", url: "/settings/purchases" },
+  { name: "Bids", url: "/settings/auctions" },
+  { name: "Payments", url: "/settings/payments" },
+  { name: "Shipping", url: "/settings/shipping" },
 ]
 
 const SettingsApp: React.FC<SettingsAppProps> = ({ me, children }) => {

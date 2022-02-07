@@ -104,7 +104,7 @@ export const extractPillsFromFilters = (
     switch (paramName) {
       case "width":
       case "height": {
-        if (isCustomValue(paramValue)) {
+        if (paramValue && isCustomValue(paramValue)) {
           result = {
             filterName: paramName,
             name: paramValue,
@@ -149,7 +149,7 @@ export const extractPillsFromFilters = (
         break
       }
       case "priceRange": {
-        if (isCustomValue(paramValue)) {
+        if (paramValue && isCustomValue(paramValue)) {
           result = {
             filterName: paramName,
             name: paramValue,

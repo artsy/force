@@ -172,6 +172,11 @@ export class LoginForm extends Component<FormProps, LoginFormState> {
                       this.props.onFacebookLogin?.(e)
                     })
                   }}
+                  onGoogleLogin={e => {
+                    this.setState({ isSocialSignUp: true }, () => {
+                      this.props.onGoogleLogin?.(e)
+                    })
+                  }}
                 />
               </Join>
             </Box>

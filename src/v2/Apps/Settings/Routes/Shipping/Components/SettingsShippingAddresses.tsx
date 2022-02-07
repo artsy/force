@@ -40,7 +40,7 @@ export const SettingsShippingAddresses: FC<SettingsShippingAddressesProps> = ({
 
       {addresses.length === 0 ? (
         <Message variant="info">
-          Please add an address for a faster checkout experience in future.
+          Please add an address for a faster checkout experience in the future.
         </Message>
       ) : (
         <GridColumns>

@@ -66,7 +66,7 @@ const OrderArtworkNodeWithoutShipping = {
   is_offerable: true as boolean,
   listPrice: {
     __typename: "Money",
-    major: 10000,
+    major: 16000,
   },
   medium: "Oil and pencil on panel",
   onlyShipsDomestically: false,
