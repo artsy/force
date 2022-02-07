@@ -12216,6 +12216,7 @@ type SearchCriteria {
   colors: [String!]!
   dimensionRange: String
   height: String
+  href: String!
   inquireableOnly: Boolean
   internalID: ID!
   locationCities: [String!]!
