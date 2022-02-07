@@ -64,6 +64,10 @@ fragment PartnerApp_partner on Partner {
   displayFullPartnerPage
   partnerPageEligible
   isDefaultProfilePublic
+  categories {
+    id
+    name
+  }
   profile {
     ...PartnerHeaderImage_profile
     id
@@ -152,14 +156,14 @@ v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "slug",
+  "name": "name",
   "storageKey": null
 },
 v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "name",
+  "name": "slug",
   "storageKey": null
 },
 v4 = {
@@ -192,45 +196,45 @@ v8 = {
 },
 v9 = {
   "enumValues": null,
-  "nullable": true,
+  "nullable": false,
   "plural": false,
-  "type": "FormattedNumber"
+  "type": "ID"
 },
 v10 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
-  "type": "Boolean"
+  "type": "String"
 },
 v11 = {
   "enumValues": null,
-  "nullable": false,
+  "nullable": true,
   "plural": false,
-  "type": "ID"
+  "type": "FormattedNumber"
 },
 v12 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
-  "type": "LocationConnection"
+  "type": "Boolean"
 },
 v13 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "LocationConnection"
+},
+v14 = {
   "enumValues": null,
   "nullable": true,
   "plural": true,
   "type": "LocationEdge"
 },
-v14 = {
-  "enumValues": null,
-  "nullable": true,
-  "plural": false,
-  "type": "Location"
-},
 v15 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
-  "type": "String"
+  "type": "Location"
 },
 v16 = {
   "enumValues": null,
@@ -328,6 +332,19 @@ return {
           {
             "alias": null,
             "args": null,
+            "concreteType": "PartnerCategory",
+            "kind": "LinkedField",
+            "name": "categories",
+            "plural": true,
+            "selections": [
+              (v1/*: any*/),
+              (v2/*: any*/)
+            ],
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
             "concreteType": "Profile",
             "kind": "LinkedField",
             "name": "profile",
@@ -410,8 +427,8 @@ return {
                 ],
                 "storageKey": null
               },
-              (v2/*: any*/),
               (v3/*: any*/),
+              (v2/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -569,8 +586,8 @@ return {
             ],
             "storageKey": null
           },
-          (v3/*: any*/),
           (v2/*: any*/),
+          (v3/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -735,7 +752,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "f82ab7af3e9899e3457a61703d46d1f6",
+    "cacheID": "a910efd4e5a88bea389a02c853637790",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -752,31 +769,39 @@ return {
           "type": "ArticleConnection"
         },
         "partner.articles.totalCount": (v8/*: any*/),
+        "partner.categories": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": true,
+          "type": "PartnerCategory"
+        },
+        "partner.categories.id": (v9/*: any*/),
+        "partner.categories.name": (v10/*: any*/),
         "partner.counts": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "PartnerCounts"
         },
-        "partner.counts.displayableShows": (v9/*: any*/),
-        "partner.counts.eligibleArtworks": (v9/*: any*/),
-        "partner.displayArtistsSection": (v10/*: any*/),
-        "partner.displayFullPartnerPage": (v10/*: any*/),
-        "partner.displayWorksSection": (v10/*: any*/),
-        "partner.id": (v11/*: any*/),
-        "partner.isDefaultProfilePublic": (v10/*: any*/),
-        "partner.locations": (v12/*: any*/),
-        "partner.locations.edges": (v13/*: any*/),
-        "partner.locations.edges.node": (v14/*: any*/),
-        "partner.locations.edges.node.city": (v15/*: any*/),
-        "partner.locations.edges.node.id": (v11/*: any*/),
+        "partner.counts.displayableShows": (v11/*: any*/),
+        "partner.counts.eligibleArtworks": (v11/*: any*/),
+        "partner.displayArtistsSection": (v12/*: any*/),
+        "partner.displayFullPartnerPage": (v12/*: any*/),
+        "partner.displayWorksSection": (v12/*: any*/),
+        "partner.id": (v9/*: any*/),
+        "partner.isDefaultProfilePublic": (v12/*: any*/),
+        "partner.locations": (v13/*: any*/),
+        "partner.locations.edges": (v14/*: any*/),
+        "partner.locations.edges.node": (v15/*: any*/),
+        "partner.locations.edges.node.city": (v10/*: any*/),
+        "partner.locations.edges.node.id": (v9/*: any*/),
         "partner.locations.totalCount": (v8/*: any*/),
-        "partner.locationsConnection": (v12/*: any*/),
-        "partner.locationsConnection.edges": (v13/*: any*/),
-        "partner.locationsConnection.edges.node": (v14/*: any*/),
-        "partner.locationsConnection.edges.node.address": (v15/*: any*/),
-        "partner.locationsConnection.edges.node.address2": (v15/*: any*/),
-        "partner.locationsConnection.edges.node.city": (v15/*: any*/),
+        "partner.locationsConnection": (v13/*: any*/),
+        "partner.locationsConnection.edges": (v14/*: any*/),
+        "partner.locationsConnection.edges.node": (v15/*: any*/),
+        "partner.locationsConnection.edges.node.address": (v10/*: any*/),
+        "partner.locationsConnection.edges.node.address2": (v10/*: any*/),
+        "partner.locationsConnection.edges.node.city": (v10/*: any*/),
         "partner.locationsConnection.edges.node.coordinates": {
           "enumValues": null,
           "nullable": true,
@@ -785,25 +810,25 @@ return {
         },
         "partner.locationsConnection.edges.node.coordinates.lat": (v16/*: any*/),
         "partner.locationsConnection.edges.node.coordinates.lng": (v16/*: any*/),
-        "partner.locationsConnection.edges.node.country": (v15/*: any*/),
-        "partner.locationsConnection.edges.node.id": (v11/*: any*/),
-        "partner.locationsConnection.edges.node.phone": (v15/*: any*/),
-        "partner.locationsConnection.edges.node.postalCode": (v15/*: any*/),
-        "partner.locationsConnection.edges.node.state": (v15/*: any*/),
+        "partner.locationsConnection.edges.node.country": (v10/*: any*/),
+        "partner.locationsConnection.edges.node.id": (v9/*: any*/),
+        "partner.locationsConnection.edges.node.phone": (v10/*: any*/),
+        "partner.locationsConnection.edges.node.postalCode": (v10/*: any*/),
+        "partner.locationsConnection.edges.node.state": (v10/*: any*/),
         "partner.meta": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "PartnerMeta"
         },
-        "partner.meta.description": (v15/*: any*/),
-        "partner.meta.image": (v15/*: any*/),
-        "partner.meta.title": (v15/*: any*/),
-        "partner.name": (v15/*: any*/),
+        "partner.meta.description": (v10/*: any*/),
+        "partner.meta.image": (v10/*: any*/),
+        "partner.meta.title": (v10/*: any*/),
+        "partner.name": (v10/*: any*/),
         "partner.notRepresentedArtists": (v17/*: any*/),
         "partner.notRepresentedArtists.totalCount": (v8/*: any*/),
-        "partner.partnerPageEligible": (v10/*: any*/),
-        "partner.partnerType": (v15/*: any*/),
+        "partner.partnerPageEligible": (v12/*: any*/),
+        "partner.partnerType": (v10/*: any*/),
         "partner.profile": {
           "enumValues": null,
           "nullable": true,
@@ -819,17 +844,17 @@ return {
         },
         "partner.profile.icon.resized.src": (v19/*: any*/),
         "partner.profile.icon.resized.srcSet": (v19/*: any*/),
-        "partner.profile.id": (v11/*: any*/),
+        "partner.profile.id": (v9/*: any*/),
         "partner.profile.image": (v18/*: any*/),
-        "partner.profile.image.url": (v15/*: any*/),
-        "partner.profile.internalID": (v11/*: any*/),
-        "partner.profile.is_followed": (v10/*: any*/),
-        "partner.profile.name": (v15/*: any*/),
-        "partner.profile.slug": (v11/*: any*/),
+        "partner.profile.image.url": (v10/*: any*/),
+        "partner.profile.internalID": (v9/*: any*/),
+        "partner.profile.is_followed": (v12/*: any*/),
+        "partner.profile.name": (v10/*: any*/),
+        "partner.profile.slug": (v9/*: any*/),
         "partner.representedArtists": (v17/*: any*/),
         "partner.representedArtists.totalCount": (v8/*: any*/),
-        "partner.slug": (v11/*: any*/),
-        "partner.type": (v15/*: any*/),
+        "partner.slug": (v9/*: any*/),
+        "partner.type": (v10/*: any*/),
         "partner.viewingRooms": {
           "enumValues": null,
           "nullable": true,
@@ -841,7 +866,7 @@ return {
     },
     "name": "PartnerApp_Test_Query",
     "operationKind": "query",
-    "text": "query PartnerApp_Test_Query {\n  partner(id: \"example\") {\n    ...PartnerApp_partner\n    id\n  }\n}\n\nfragment FollowProfileButton_profile on Profile {\n  id\n  slug\n  name\n  internalID\n  is_followed: isFollowed\n}\n\nfragment NavigationTabs_partner on Partner {\n  slug\n  partnerType\n  displayArtistsSection\n  displayWorksSection\n  counts {\n    eligibleArtworks\n    displayableShows\n  }\n  locations: locationsConnection(first: 20) {\n    totalCount\n  }\n  articles: articlesConnection {\n    totalCount\n  }\n  representedArtists: artistsConnection(representedBy: true, displayOnPartnerProfile: true) {\n    totalCount\n  }\n  notRepresentedArtists: artistsConnection(representedBy: false, hasPublishedArtworks: true, displayOnPartnerProfile: true) {\n    totalCount\n  }\n  viewingRooms: viewingRoomsConnection(statuses: [live, closed, scheduled]) {\n    totalCount\n  }\n}\n\nfragment PartnerApp_partner on Partner {\n  partnerType\n  displayFullPartnerPage\n  partnerPageEligible\n  isDefaultProfilePublic\n  profile {\n    ...PartnerHeaderImage_profile\n    id\n  }\n  ...PartnerMeta_partner\n  ...PartnerHeader_partner\n  ...NavigationTabs_partner\n}\n\nfragment PartnerHeaderImage_profile on Profile {\n  image {\n    url(version: \"wide\")\n  }\n}\n\nfragment PartnerHeader_partner on Partner {\n  name\n  type\n  slug\n  profile {\n    icon {\n      resized(width: 80, height: 80, version: \"square140\") {\n        src\n        srcSet\n      }\n    }\n    ...FollowProfileButton_profile\n    id\n  }\n  locations: locationsConnection(first: 20) {\n    totalCount\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n}\n\nfragment PartnerMeta_partner on Partner {\n  locationsConnection(first: 1) {\n    edges {\n      node {\n        address\n        address2\n        city\n        coordinates {\n          lat\n          lng\n        }\n        country\n        phone\n        postalCode\n        state\n        id\n      }\n    }\n  }\n  meta {\n    image\n    title\n    description\n  }\n  name\n  slug\n}\n"
+    "text": "query PartnerApp_Test_Query {\n  partner(id: \"example\") {\n    ...PartnerApp_partner\n    id\n  }\n}\n\nfragment FollowProfileButton_profile on Profile {\n  id\n  slug\n  name\n  internalID\n  is_followed: isFollowed\n}\n\nfragment NavigationTabs_partner on Partner {\n  slug\n  partnerType\n  displayArtistsSection\n  displayWorksSection\n  counts {\n    eligibleArtworks\n    displayableShows\n  }\n  locations: locationsConnection(first: 20) {\n    totalCount\n  }\n  articles: articlesConnection {\n    totalCount\n  }\n  representedArtists: artistsConnection(representedBy: true, displayOnPartnerProfile: true) {\n    totalCount\n  }\n  notRepresentedArtists: artistsConnection(representedBy: false, hasPublishedArtworks: true, displayOnPartnerProfile: true) {\n    totalCount\n  }\n  viewingRooms: viewingRoomsConnection(statuses: [live, closed, scheduled]) {\n    totalCount\n  }\n}\n\nfragment PartnerApp_partner on Partner {\n  partnerType\n  displayFullPartnerPage\n  partnerPageEligible\n  isDefaultProfilePublic\n  categories {\n    id\n    name\n  }\n  profile {\n    ...PartnerHeaderImage_profile\n    id\n  }\n  ...PartnerMeta_partner\n  ...PartnerHeader_partner\n  ...NavigationTabs_partner\n}\n\nfragment PartnerHeaderImage_profile on Profile {\n  image {\n    url(version: \"wide\")\n  }\n}\n\nfragment PartnerHeader_partner on Partner {\n  name\n  type\n  slug\n  profile {\n    icon {\n      resized(width: 80, height: 80, version: \"square140\") {\n        src\n        srcSet\n      }\n    }\n    ...FollowProfileButton_profile\n    id\n  }\n  locations: locationsConnection(first: 20) {\n    totalCount\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n}\n\nfragment PartnerMeta_partner on Partner {\n  locationsConnection(first: 1) {\n    edges {\n      node {\n        address\n        address2\n        city\n        coordinates {\n          lat\n          lng\n        }\n        country\n        phone\n        postalCode\n        state\n        id\n      }\n    }\n  }\n  meta {\n    image\n    title\n    description\n  }\n  name\n  slug\n}\n"
   }
 };
 })();
