@@ -68,10 +68,12 @@ export const ContactInformation: React.FC<ContactInformationProps> = ({
 
     if (relayEnvironment && submission) {
       try {
+        const submissionEmail = email.trim()
+
         await createOrUpdateConsignSubmission(relayEnvironment, {
           id: submission.id,
           userName: name.trim(),
-          userEmail: email.trim(),
+          userEmail: submissionEmail,
           userPhone: phone.international,
           state: "SUBMITTED",
           sessionID: !isLoggedIn ? getENV("SESSION_ID") : undefined,
@@ -81,7 +83,7 @@ export const ContactInformation: React.FC<ContactInformationProps> = ({
           action: ActionType.consignmentSubmitted,
           submission_id: submission.id,
           user_id: me?.internalID,
-          user_email: me?.email ?? undefined,
+          user_email: isLoggedIn && me?.email ? me.email : submissionEmail,
         })
 
         router.push(`/consign/submission/${submission?.id}/thank-you`)

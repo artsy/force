@@ -329,7 +329,7 @@ describe("Contact Information step", () => {
     })
   })
 
-  it("tracks consignment submitted event", async () => {
+  it("tracks consignment submitted event with user email when logged in", async () => {
     getWrapper().renderWithRelay({
       Me: () => mockMe,
       ConsignmentSubmission: () => mockSubmission,
@@ -344,6 +344,35 @@ describe("Contact Information step", () => {
         submission_id: "1",
         user_id: "123",
         user_email: "serge@test.test",
+      })
+    })
+  })
+
+  it("tracks consignment submitted event with submission email when not logged in", async () => {
+    getWrapper().renderWithRelay({
+      Me: () => mockEmptyMe,
+      ConsignmentSubmission: () => mockSubmission,
+    })
+
+    simulateTyping("name", "Banksy")
+
+    simulateTyping("email", "banksy@test.test")
+
+    simulateTyping("phone", "(415) 555-0132")
+
+    await waitFor(() => {
+      expect(getSubmitButton()).toBeEnabled()
+    })
+
+    fireEvent.click(getSubmitButton())
+
+    await waitFor(() => {
+      expect(mockTrackEvent).toHaveBeenCalled()
+      expect(mockTrackEvent).toHaveBeenCalledWith({
+        action: ActionType.consignmentSubmitted,
+        submission_id: "1",
+        user_id: null,
+        user_email: "banksy@test.test",
       })
     })
   })
