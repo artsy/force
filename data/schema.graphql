@@ -9520,7 +9520,9 @@ input MyCollectionCreateArtworkInput {
   pricePaidCents: Int
   pricePaidCurrency: String
   provenance: String
+  submissionId: String
   title: String!
+  userId: String
   width: String
 }
 
