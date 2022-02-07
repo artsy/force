@@ -4,6 +4,7 @@ import { FC, ImgHTMLAttributes, useEffect, useRef } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
 import { useMode } from "v2/Utils/Hooks/useMode"
+import { resized } from "v2/Utils/resized"
 import { ArticleZoomGalleryFigure_figure } from "v2/__generated__/ArticleZoomGalleryFigure_figure.graphql"
 
 interface ArticleZoomGalleryFigureProps {
@@ -20,18 +21,38 @@ const ArticleZoomGalleryFigure: FC<ArticleZoomGalleryFigureProps> = ({
     return null
   }
 
-  const img = figure.image?.resized
+  const src = figure.image?.url
 
-  if (!img) return null
+  if (!src) return null
+
+  const xs = resized(src, { width: 450, height: 450 })
+  const sm = resized(src, { width: 767, height: 767 })
+  const md = resized(src, { width: 1024, height: 1024 })
+  const lg = resized(src, { width: 1440, height: 1440 })
+  const xl = resized(src, { width: 2000, height: 2000 })
 
   return (
-    <Image
-      key={img.src}
-      src={img.src}
-      srcSet={img.srcSet}
-      alt=""
-      loading="lazy"
-    />
+    <picture key={src} style={{ width: "100%", height: "100%" }}>
+      <source srcSet={xl.srcSet} media="(min-width: 1720px)" />
+      <source srcSet={lg.srcSet} media="(min-width: 1232px)" />
+      <source srcSet={md.srcSet} media="(min-width: 896px)" />
+      <source srcSet={sm.srcSet} media="(min-width: 767px)" />
+      <source srcSet={xs.srcSet} media="(max-width: 766px)" />
+
+      <Image
+        width="100%"
+        height="100%"
+        src={sm.src}
+        alt=""
+        loading="lazy"
+        style={{
+          objectFit: "contain",
+          maxWidth: 2000,
+          maxHeight: 2000,
+          margin: "auto",
+        }}
+      />
+    </picture>
   )
 }
 
@@ -43,30 +64,12 @@ export const ArticleZoomGalleryFigureFragmentContainer = createFragmentContainer
         __typename
         ... on Artwork {
           image {
-            resized(
-              width: 900
-              height: 900
-              version: ["normalized", "larger", "large"]
-            ) {
-              src
-              srcSet
-              height
-              width
-            }
+            url(version: ["normalized", "larger", "large"])
           }
         }
         ... on ArticleImageSection {
           image {
-            resized(
-              width: 900
-              height: 900
-              version: ["normalized", "larger", "large"]
-            ) {
-              src
-              srcSet
-              height
-              width
-            }
+            url(version: ["normalized", "larger", "large"])
           }
         }
       }

@@ -14,6 +14,7 @@ export type ArticleZoomGallery_article = {
         }>;
     } | {
         readonly __typename: "ArticleSectionImageSet";
+        readonly title: string | null;
         readonly figures: ReadonlyArray<{
             readonly __typename: string;
             readonly id?: string;
@@ -51,42 +52,40 @@ v1 = [
     "storageKey": null
   }
 ],
-v2 = [
-  {
-    "alias": null,
-    "args": null,
-    "concreteType": null,
-    "kind": "LinkedField",
-    "name": "figures",
-    "plural": true,
-    "selections": [
-      (v0/*: any*/),
-      {
-        "args": null,
-        "kind": "FragmentSpread",
-        "name": "ArticleZoomGalleryFigure_figure"
-      },
-      {
-        "args": null,
-        "kind": "FragmentSpread",
-        "name": "ArticleZoomGalleryCaption_figure"
-      },
-      {
-        "kind": "InlineFragment",
-        "selections": (v1/*: any*/),
-        "type": "Artwork",
-        "abstractKey": null
-      },
-      {
-        "kind": "InlineFragment",
-        "selections": (v1/*: any*/),
-        "type": "ArticleImageSection",
-        "abstractKey": null
-      }
-    ],
-    "storageKey": null
-  }
-];
+v2 = {
+  "alias": null,
+  "args": null,
+  "concreteType": null,
+  "kind": "LinkedField",
+  "name": "figures",
+  "plural": true,
+  "selections": [
+    (v0/*: any*/),
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ArticleZoomGalleryFigure_figure"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ArticleZoomGalleryCaption_figure"
+    },
+    {
+      "kind": "InlineFragment",
+      "selections": (v1/*: any*/),
+      "type": "Artwork",
+      "abstractKey": null
+    },
+    {
+      "kind": "InlineFragment",
+      "selections": (v1/*: any*/),
+      "type": "ArticleImageSection",
+      "abstractKey": null
+    }
+  ],
+  "storageKey": null
+};
 return {
   "argumentDefinitions": [],
   "kind": "Fragment",
@@ -104,13 +103,24 @@ return {
         (v0/*: any*/),
         {
           "kind": "InlineFragment",
-          "selections": (v2/*: any*/),
+          "selections": [
+            (v2/*: any*/)
+          ],
           "type": "ArticleSectionImageCollection",
           "abstractKey": null
         },
         {
           "kind": "InlineFragment",
-          "selections": (v2/*: any*/),
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "title",
+              "storageKey": null
+            },
+            (v2/*: any*/)
+          ],
           "type": "ArticleSectionImageSet",
           "abstractKey": null
         }
@@ -122,5 +132,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = 'ddeb526da63c8fdbdc9d31f0fb8c878e';
+(node as any).hash = '718ade481e06a3457816550a1f14c849';
 export default node;
