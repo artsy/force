@@ -24,6 +24,10 @@ jest.mock("v2/Utils/Events", () => ({
   postEvent: jest.fn(),
 }))
 
+jest.mock("v2/Utils/Hooks/useMatchMedia", () => ({
+  __internal__useMatchMedia: () => ({}),
+}))
+
 const mockPostEvent = require("v2/Utils/Events").postEvent as jest.Mock
 
 const testOffer: OfferTestQueryRawResponse["order"] = {
@@ -60,23 +64,36 @@ describe("Offer InitialMutation", () => {
       page = await buildPage()
     })
 
-    it("has an offer input", () => {
-      expect(page.offerInput.text()).toContain("Your offer")
+    it("has 4 price options", () => {
+      expect(page.priceOptions).toHaveLength(1)
+      expect(page.priceOptions.find("BorderedRadio")).toHaveLength(4)
     })
 
-    it("shows the list price just below the input", () => {
+    it("shows the list price", () => {
       const container = page.find("div#offer-page-left-column")
       expect(container.text()).toContain("List price: US$16,000")
     })
 
-    it("can receive input, which updates the transaction summary", () => {
+    it("can receive input, which updates the transaction summary", async () => {
       expect(page.transactionSummary.text()).toContain("Your offer")
-
-      page.setOfferAmount(1)
+      await page.setOfferAmount(1)
       expect(page.transactionSummary.text()).toContain("Your offerUS$1.00")
 
-      page.setOfferAmount(1023)
+      await page.setOfferAmount(1023)
       expect(page.transactionSummary.text()).toContain("Your offerUS$1,023.00")
+    })
+
+    it("can select a price option which updates the transaction summary", async () => {
+      expect(page.transactionSummary.text()).toContain("Your offer")
+
+      await page.selectPriceOption(0)
+      expect(page.transactionSummary.text()).toContain("Your offerUS$12,800.00")
+
+      await page.selectPriceOption(1)
+      expect(page.transactionSummary.text()).toContain("Your offerUS$13,600.00")
+
+      await page.selectPriceOption(2)
+      expect(page.transactionSummary.text()).toContain("Your offerUS$14,400.00")
     })
 
     it("shows final offer binding notice", () => {
@@ -102,13 +119,12 @@ describe("Offer InitialMutation", () => {
       expect(container.text()).toContain("List price: £16,000")
     })
 
-    it("can receive input, which updates the transaction summary", () => {
+    it("can receive input, which updates the transaction summary", async () => {
       expect(page.transactionSummary.text()).toContain("Your offer")
-
-      page.setOfferAmount(1)
+      await page.setOfferAmount(1)
       expect(page.transactionSummary.text()).toContain("Your offer£1.00")
 
-      page.setOfferAmount(1023)
+      await page.setOfferAmount(1023)
       expect(page.transactionSummary.text()).toContain("Your offer£1,023.00")
     })
   })
@@ -183,7 +199,14 @@ describe("Offer InitialMutation", () => {
       page = await buildPage()
     })
 
+    it("doesn't let the user continue if they haven't clicked any option", async () => {
+      await page.clickSubmit()
+      expect(mutations.mockFetch).not.toHaveBeenCalled()
+      expect(page.offerInput.text()).toMatch("Offer amount missing or invalid.")
+    })
+
     it("doesn't let the user continue if they haven't typed anything in", async () => {
+      page.selectCustomAmount()
       expect(page.offerInput.text()).not.toMatch(
         "Offer amount missing or invalid."
       )
@@ -202,7 +225,14 @@ describe("Offer InitialMutation", () => {
       expect(page.offerInput.text()).toMatch("Offer amount missing or invalid.")
     })
 
-    it("routes to shipping screen after mutation completes", async () => {
+    it("routes to shipping screen after mutation completes - option", async () => {
+      await page.selectRandomPriceOption()
+      await page.clickSubmit()
+      expect(mutations.mockFetch).toHaveBeenCalled()
+      expect(routes.mockPushRoute).toHaveBeenCalledWith("/orders/1234/shipping")
+    })
+
+    it("routes to shipping screen after mutation completes - custom amount", async () => {
       await page.setOfferAmount(16000)
       await page.clickSubmit()
       expect(mutations.mockFetch).toHaveBeenCalled()
@@ -277,7 +307,7 @@ describe("Offer InitialMutation", () => {
     })
   })
 
-  describe("Analaytics", () => {
+  describe("Analytics", () => {
     let page: OrderAppTestPage
     beforeEach(async () => {
       page = await buildPage()
@@ -286,10 +316,9 @@ describe("Offer InitialMutation", () => {
 
     it("tracks the offer input focus", () => {
       expect(mockPostEvent).not.toHaveBeenCalled()
-
+      page.selectCustomAmount()
       page.find("input").simulate("focus")
 
-      expect(mockPostEvent).toHaveBeenCalledTimes(1)
       expect(mockPostEvent).toHaveBeenLastCalledWith({
         action_type: "Focused on offer input",
         flow: "Make offer",
@@ -298,31 +327,33 @@ describe("Offer InitialMutation", () => {
     })
 
     it("tracks viwing the low offer speedbump", async () => {
-      await page.setOfferAmount(1000)
-
-      expect(mockPostEvent).not.toHaveBeenCalled()
-
-      await page.clickSubmit()
-
-      expect(mockPostEvent).toHaveBeenLastCalledWith({
+      const trackData = {
         action_type: "Viewed offer too low",
         flow: "Make offer",
         order_id: "1234",
-      })
-    })
+      }
+      await page.setOfferAmount(1000)
 
-    it("tracks viwing the high offer speedbump", async () => {
-      await page.setOfferAmount(20000)
-
-      expect(mockPostEvent).not.toHaveBeenCalled()
+      expect(mockPostEvent).not.toHaveBeenLastCalledWith(trackData)
 
       await page.clickSubmit()
 
-      expect(mockPostEvent).toHaveBeenLastCalledWith({
+      expect(mockPostEvent).toHaveBeenLastCalledWith(trackData)
+    })
+
+    it("tracks viwing the high offer speedbump", async () => {
+      const trackData = {
         action_type: "Viewed offer higher than listed price",
         flow: "Make offer",
         order_id: "1234",
-      })
+      }
+      await page.setOfferAmount(20000)
+
+      expect(mockPostEvent).not.toHaveBeenLastCalledWith(trackData)
+
+      await page.clickSubmit()
+
+      expect(mockPostEvent).toHaveBeenLastCalledWith(trackData)
     })
   })
 })
