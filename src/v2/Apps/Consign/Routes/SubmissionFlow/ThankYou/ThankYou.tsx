@@ -17,8 +17,8 @@ export const ThankYou: React.FC = () => {
       context_module: ContextModule.consignSubmissionFlow,
       context_owner_type: OwnerType.consignmentSubmission,
       submission_id: match.params.id,
-      user_email: isLoggedIn ? user?.email : "",
-      user_id: isLoggedIn ? user?.id : "",
+      user_email: isLoggedIn ? user?.email : undefined,
+      user_id: isLoggedIn ? user?.id : undefined,
     })
 
   return (

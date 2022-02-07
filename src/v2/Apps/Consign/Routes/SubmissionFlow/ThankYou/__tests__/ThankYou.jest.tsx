@@ -119,8 +119,8 @@ describe("ThankYou page", () => {
         context_module: ContextModule.consignSubmissionFlow,
         context_owner_type: OwnerType.consignmentSubmission,
         submission_id: "12345",
-        user_email: "",
-        user_id: "",
+        user_email: undefined,
+        user_id: undefined,
       })
     })
   })
