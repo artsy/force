@@ -5,14 +5,8 @@ import { RouterLink } from "v2/System/Router/RouterLink"
 import { AnalyticsSchema, useSystemContext, useTracking } from "v2/System"
 import { ContextModule, OwnerType } from "@artsy/cohesion"
 import { useRouter } from "v2/System/Router/useRouter"
-import { createFragmentContainer, graphql } from "react-relay"
-import { ThankYou_submission } from "v2/__generated__/ThankYou_submission.graphql"
 
-export interface ThankYouProps {
-  submission: ThankYou_submission
-}
-
-export const ThankYou: React.FC<ThankYouProps> = ({ submission }) => {
+export const ThankYou: React.FC = () => {
   const { user, isLoggedIn } = useSystemContext()
   const { match } = useRouter()
   const { trackEvent } = useTracking()
@@ -23,7 +17,7 @@ export const ThankYou: React.FC<ThankYouProps> = ({ submission }) => {
       context_module: ContextModule.consignSubmissionFlow,
       context_owner_type: OwnerType.consignmentSubmission,
       submission_id: match.params.id,
-      user_email: submission?.userEmail || "",
+      user_email: isLoggedIn ? user?.email : "",
       user_id: isLoggedIn ? user?.id : "",
     })
 
@@ -81,11 +75,3 @@ export const ThankYou: React.FC<ThankYouProps> = ({ submission }) => {
     </>
   )
 }
-
-export const ThankYouFragmentContainer = createFragmentContainer(ThankYou, {
-  submission: graphql`
-    fragment ThankYou_submission on ConsignmentSubmission {
-      userEmail
-    }
-  `,
-})

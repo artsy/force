@@ -81,7 +81,7 @@ const ThankYou = loadable(
       /* webpackChunkName: "consignBundle" */ "./Routes/SubmissionFlow/ThankYou/ThankYou"
     ),
   {
-    resolveComponent: component => component.ThankYouFragmentContainer,
+    resolveComponent: component => component.ThankYou,
   }
 )
 
@@ -208,14 +208,6 @@ export const consignRoutes: AppRouteConfig[] = [
         onClientSideRender: () => {
           ThankYou.preload()
         },
-        query: graphql`
-          query consignRoutes_thankYouQuery($id: ID!) {
-            submission(id: $id) {
-              ...ThankYou_submission
-            }
-          }
-        `,
-        prepareVariables: prepareSubmissionFlowStepVariables,
       },
     ],
   },
