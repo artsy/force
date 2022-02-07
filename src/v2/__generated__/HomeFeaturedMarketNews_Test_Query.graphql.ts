@@ -28,6 +28,7 @@ query HomeFeaturedMarketNews_Test_Query {
 fragment HomeFeaturedMarketNews_articles on Article {
   internalID
   href
+  byline
   slug
   title
   publishedAt(format: "MMM D YYYY")
@@ -46,10 +47,6 @@ fragment HomeFeaturedMarketNews_articles on Article {
       src
       srcSet
     }
-  }
-  author {
-    name
-    id
   }
 }
 */
@@ -86,11 +83,10 @@ var v0 = [
   }
 ],
 v1 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "id",
-  "storageKey": null
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "String"
 },
 v2 = {
   "enumValues": null,
@@ -102,21 +98,15 @@ v3 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
-  "type": "String"
-},
-v4 = {
-  "enumValues": null,
-  "nullable": true,
-  "plural": false,
   "type": "CroppedImageUrl"
 },
-v5 = {
+v4 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "Int"
 },
-v6 = {
+v5 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
@@ -175,6 +165,13 @@ return {
             "args": null,
             "kind": "ScalarField",
             "name": "href",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "byline",
             "storageKey": null
           },
           {
@@ -274,30 +271,17 @@ return {
           {
             "alias": null,
             "args": null,
-            "concreteType": "Author",
-            "kind": "LinkedField",
-            "name": "author",
-            "plural": false,
-            "selections": [
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "name",
-                "storageKey": null
-              },
-              (v1/*: any*/)
-            ],
+            "kind": "ScalarField",
+            "name": "id",
             "storageKey": null
-          },
-          (v1/*: any*/)
+          }
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "29d59e1ac1d375c0a1d07685a43feb54",
+    "cacheID": "981cd1efae80e73412f85643c6844058",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -307,43 +291,36 @@ return {
           "plural": true,
           "type": "Article"
         },
-        "articles.author": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "Author"
-        },
-        "articles.author.id": (v2/*: any*/),
-        "articles.author.name": (v3/*: any*/),
-        "articles.href": (v3/*: any*/),
+        "articles.byline": (v1/*: any*/),
+        "articles.href": (v1/*: any*/),
         "articles.id": (v2/*: any*/),
         "articles.internalID": (v2/*: any*/),
-        "articles.publishedAt": (v3/*: any*/),
-        "articles.slug": (v3/*: any*/),
+        "articles.publishedAt": (v1/*: any*/),
+        "articles.slug": (v1/*: any*/),
         "articles.thumbnailImage": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "Image"
         },
-        "articles.thumbnailImage.large": (v4/*: any*/),
-        "articles.thumbnailImage.large.height": (v5/*: any*/),
-        "articles.thumbnailImage.large.src": (v6/*: any*/),
-        "articles.thumbnailImage.large.srcSet": (v6/*: any*/),
-        "articles.thumbnailImage.large.width": (v5/*: any*/),
-        "articles.thumbnailImage.small": (v4/*: any*/),
-        "articles.thumbnailImage.small.height": (v5/*: any*/),
-        "articles.thumbnailImage.small.src": (v6/*: any*/),
-        "articles.thumbnailImage.small.srcSet": (v6/*: any*/),
-        "articles.thumbnailImage.small.width": (v5/*: any*/),
-        "articles.thumbnailTitle": (v3/*: any*/),
-        "articles.title": (v3/*: any*/),
-        "articles.vertical": (v3/*: any*/)
+        "articles.thumbnailImage.large": (v3/*: any*/),
+        "articles.thumbnailImage.large.height": (v4/*: any*/),
+        "articles.thumbnailImage.large.src": (v5/*: any*/),
+        "articles.thumbnailImage.large.srcSet": (v5/*: any*/),
+        "articles.thumbnailImage.large.width": (v4/*: any*/),
+        "articles.thumbnailImage.small": (v3/*: any*/),
+        "articles.thumbnailImage.small.height": (v4/*: any*/),
+        "articles.thumbnailImage.small.src": (v5/*: any*/),
+        "articles.thumbnailImage.small.srcSet": (v5/*: any*/),
+        "articles.thumbnailImage.small.width": (v4/*: any*/),
+        "articles.thumbnailTitle": (v1/*: any*/),
+        "articles.title": (v1/*: any*/),
+        "articles.vertical": (v1/*: any*/)
       }
     },
     "name": "HomeFeaturedMarketNews_Test_Query",
     "operationKind": "query",
-    "text": "query HomeFeaturedMarketNews_Test_Query {\n  articles {\n    ...HomeFeaturedMarketNews_articles\n    id\n  }\n}\n\nfragment HomeFeaturedMarketNews_articles on Article {\n  internalID\n  href\n  slug\n  title\n  publishedAt(format: \"MMM D YYYY\")\n  vertical\n  thumbnailTitle\n  thumbnailImage {\n    large: cropped(width: 670, height: 720) {\n      width\n      height\n      src\n      srcSet\n    }\n    small: cropped(width: 325, height: 240) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n  author {\n    name\n    id\n  }\n}\n"
+    "text": "query HomeFeaturedMarketNews_Test_Query {\n  articles {\n    ...HomeFeaturedMarketNews_articles\n    id\n  }\n}\n\nfragment HomeFeaturedMarketNews_articles on Article {\n  internalID\n  href\n  byline\n  slug\n  title\n  publishedAt(format: \"MMM D YYYY\")\n  vertical\n  thumbnailTitle\n  thumbnailImage {\n    large: cropped(width: 670, height: 720) {\n      width\n      height\n      src\n      srcSet\n    }\n    small: cropped(width: 325, height: 240) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n"
   }
 };
 })();

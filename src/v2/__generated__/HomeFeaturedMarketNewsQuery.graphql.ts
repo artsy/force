@@ -28,6 +28,7 @@ query HomeFeaturedMarketNewsQuery {
 fragment HomeFeaturedMarketNews_articles on Article {
   internalID
   href
+  byline
   slug
   title
   publishedAt(format: "MMM D YYYY")
@@ -46,10 +47,6 @@ fragment HomeFeaturedMarketNews_articles on Article {
       src
       srcSet
     }
-  }
-  author {
-    name
-    id
   }
 }
 */
@@ -101,14 +98,7 @@ v1 = [
     "name": "srcSet",
     "storageKey": null
   }
-],
-v2 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "id",
-  "storageKey": null
-};
+];
 return {
   "fragment": {
     "argumentDefinitions": [],
@@ -162,6 +152,13 @@ return {
             "args": null,
             "kind": "ScalarField",
             "name": "href",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "byline",
             "storageKey": null
           },
           {
@@ -261,35 +258,22 @@ return {
           {
             "alias": null,
             "args": null,
-            "concreteType": "Author",
-            "kind": "LinkedField",
-            "name": "author",
-            "plural": false,
-            "selections": [
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "name",
-                "storageKey": null
-              },
-              (v2/*: any*/)
-            ],
+            "kind": "ScalarField",
+            "name": "id",
             "storageKey": null
-          },
-          (v2/*: any*/)
+          }
         ],
         "storageKey": "articles(featured:true,published:true,sort:\"PUBLISHED_AT_DESC\")"
       }
     ]
   },
   "params": {
-    "cacheID": "94e1010b40c49118279612c3055a32cd",
+    "cacheID": "f56c926a863f77974714f278a832b7ed",
     "id": null,
     "metadata": {},
     "name": "HomeFeaturedMarketNewsQuery",
     "operationKind": "query",
-    "text": "query HomeFeaturedMarketNewsQuery {\n  articles(featured: true, published: true, sort: PUBLISHED_AT_DESC) {\n    ...HomeFeaturedMarketNews_articles\n    id\n  }\n}\n\nfragment HomeFeaturedMarketNews_articles on Article {\n  internalID\n  href\n  slug\n  title\n  publishedAt(format: \"MMM D YYYY\")\n  vertical\n  thumbnailTitle\n  thumbnailImage {\n    large: cropped(width: 670, height: 720) {\n      width\n      height\n      src\n      srcSet\n    }\n    small: cropped(width: 325, height: 240) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n  author {\n    name\n    id\n  }\n}\n"
+    "text": "query HomeFeaturedMarketNewsQuery {\n  articles(featured: true, published: true, sort: PUBLISHED_AT_DESC) {\n    ...HomeFeaturedMarketNews_articles\n    id\n  }\n}\n\nfragment HomeFeaturedMarketNews_articles on Article {\n  internalID\n  href\n  byline\n  slug\n  title\n  publishedAt(format: \"MMM D YYYY\")\n  vertical\n  thumbnailTitle\n  thumbnailImage {\n    large: cropped(width: 670, height: 720) {\n      width\n      height\n      src\n      srcSet\n    }\n    small: cropped(width: 325, height: 240) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n"
   }
 };
 })();

@@ -95,7 +95,7 @@ const HomeFeaturedMarketNews: React.FC<HomeFeaturedMarketNewsProps> = ({
             <Text variant="xl">{firstArticle.title}</Text>
 
             <Text variant="lg" mt={1}>
-              By {firstArticle.author?.name}
+              By {firstArticle.byline}
             </Text>
           </StyledRouterLink>
         </Column>
@@ -149,7 +149,7 @@ const HomeFeaturedMarketNews: React.FC<HomeFeaturedMarketNewsProps> = ({
                       <Text variant="lg">{article.title}</Text>
                     
                     <Text variant="md" mt={1}>
-                      By {article.author?.name}
+                      By {article.byline}
                     </Text>
                   </Box>
                 </StyledRouterLink>
@@ -205,6 +205,7 @@ export const HomeFeaturedMarketNewsFragmentContainer = createFragmentContainer(
       fragment HomeFeaturedMarketNews_articles on Article @relay(plural: true) {
         internalID
         href
+        byline
         slug
         title
         publishedAt(format: "MMM D YYYY")
@@ -224,9 +225,6 @@ export const HomeFeaturedMarketNewsFragmentContainer = createFragmentContainer(
             src
             srcSet
           }
-        }
-        author {
-          name
         }
       }
     `,
