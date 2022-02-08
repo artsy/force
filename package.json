@@ -87,7 +87,7 @@
     "@artsy/cohesion": "4.31.0",
     "@artsy/eigen-web-association": "^1.2.1",
     "@artsy/express-reloadable": "1.6.0",
-    "@artsy/fresnel": "3.2.1",
+    "@artsy/fresnel": "3.2.2",
     "@artsy/gemup": "0.1.0",
     "@artsy/multienv": "^1.2.0",
     "@artsy/palette": "18.20.0",
