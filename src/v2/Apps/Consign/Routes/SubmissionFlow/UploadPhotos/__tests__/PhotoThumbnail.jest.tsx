@@ -169,4 +169,54 @@ describe("PhotoThumbnail", () => {
       expect(deleteFn).toHaveBeenCalledWith(defaultProps.photo)
     })
   })
+
+  describe("Processing state", () => {
+    const photo = {
+      id: "id",
+      name: "foo.png",
+      size: file.size,
+      removed: false,
+      loading: false,
+      geminiToken: "key",
+    }
+
+    beforeEach(() => {
+      //@ts-ignore
+      jest.spyOn(global, "FileReader").mockImplementation(function () {
+        this.readAsDataURL = jest.fn()
+      })
+
+      wrapper = getWrapper({
+        ...defaultProps,
+        photo: photo,
+      })
+    })
+
+    it("renders name", () => {
+      expect(wrapper.text()).toContain("foo.png")
+    })
+
+    it("renders size", () => {
+      expect(wrapper.text()).toContain("0.01 MB")
+    })
+
+    it("doesn't renders image", () => {
+      expect(wrapper.find(Image)).toHaveLength(0)
+    })
+
+    it("renders processing label", () => {
+      expect(wrapper.text()).toContain("Processing")
+    })
+
+    it("renders delete button", () => {
+      const deletePhotoThumbnail = wrapper.find("RemoveButton")
+
+      expect(deletePhotoThumbnail).toHaveLength(1)
+
+      deletePhotoThumbnail.simulate("click")
+
+      expect(deleteFn).toHaveBeenCalled()
+      expect(deleteFn).toHaveBeenCalledWith(photo)
+    })
+  })
 })
