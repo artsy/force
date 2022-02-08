@@ -102,7 +102,7 @@ export const NavigationTabs: React.FC<NavigationTabsProps> = ({ partner }) => {
       {({ stuck }) => {
         return (
           <FullBleed
-            pt={2}
+            py={2}
             backgroundColor="white100"
             style={stuck ? { boxShadow: DROP_SHADOW } : undefined}
           >
