@@ -32,8 +32,6 @@ describe("ArticleBody", () => {
   it("renders a video embed", () => {
     renderWithRelay({
       Article: () => ({
-        publishedAt: "March 20th, 2020",
-        byline: "Example Author",
         sections: [
           {
             __typename: "ArticleSectionVideo",
@@ -49,8 +47,21 @@ describe("ArticleBody", () => {
       }),
     })
 
-    expect(
-      screen.getByTestId("https://example.com/image.jpg")
-    ).toBeInTheDocument()
+    expect(screen.getByTestId("ArticleSectionVideo")).toBeInTheDocument()
+  })
+
+  it("renders a social embed", () => {
+    renderWithRelay({
+      Article: () => ({
+        sections: [
+          {
+            __typename: "ArticleSectionSocialEmbed",
+            embed: '<iframe src="https://example.com/embed" />',
+          },
+        ],
+      }),
+    })
+
+    expect(screen.getByTestId("ArticleSectionSocialEmbed")).toBeInTheDocument()
   })
 })
