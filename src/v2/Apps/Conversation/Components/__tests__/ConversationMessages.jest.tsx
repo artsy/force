@@ -11,7 +11,7 @@ const { renderWithRelay } = setupTestWrapperTL({
       <ConversationMessagesFragmentContainer
         messages={me.conversation.messagesConnection}
         events={me.conversation.orderConnection}
-        setShowDetails={() => {}}
+        setShowDetails={jest.fn()}
       />
     )
   },

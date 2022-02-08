@@ -7,13 +7,18 @@ import { DateTime } from "luxon"
 
 jest.unmock("react-relay")
 
+const setShowDetailsSpy = jest.fn()
+
 const { renderWithRelay } = setupTestWrapperTL<OrderUpdate_Test_Query>({
   Component: props => {
     const event = props!.me!.conversation!.orderConnection!.edges![0]!.node!
       .orderHistory[0]
 
     return (
-      <OrderUpdateFragmentContainer event={event} setShowDetails={() => {}} />
+      <OrderUpdateFragmentContainer
+        event={event}
+        setShowDetails={setShowDetailsSpy}
+      />
     )
   },
   query: graphql`
@@ -70,7 +75,12 @@ describe("testing different statuses", () => {
     expect(
       screen.getByText(/You sent an offer for \$39999./)
     ).toBeInTheDocument()
-    expect(screen.queryByText("See details.")).toBeInTheDocument()
+
+    const action = screen.queryByText("See details.")
+    expect(action).toBeInTheDocument()
+
+    action?.click()
+    expect(setShowDetailsSpy).toHaveBeenCalledWith(true)
   })
 
   it("render counteroffer", () => {
