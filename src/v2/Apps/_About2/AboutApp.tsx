@@ -1,7 +1,9 @@
 import {
+  Avatar,
   Box,
   Button,
   Column,
+  Flex,
   FullBleed,
   GridColumns,
   Image,
@@ -98,6 +100,7 @@ export const AboutApp: React.FC = () => {
       <Spacer mt={4} />
       <AppDownloadSection />
       <CollectorInfoSection />
+      <ArtsySpecialistsSection />
     </>
   )
 }
@@ -178,7 +181,7 @@ const SellWithArtsyComponent: React.FC = () => {
                 width="100%"
                 // @ts-ignore
                 as={RouterLink}
-                to="/consign"
+                to=""
                 mb={2}
               >
                 Apply to Become a Partner
@@ -189,7 +192,7 @@ const SellWithArtsyComponent: React.FC = () => {
                 borderColor="white100"
                 // @ts-ignore
                 as={RouterLink}
-                to="/consign"
+                to=""
                 mb={2}
               >
                 Partnership Overview
@@ -200,7 +203,7 @@ const SellWithArtsyComponent: React.FC = () => {
                 border="none"
                 // @ts-ignore
                 as={RouterLink}
-                to="/consign"
+                to=""
               >
                 See Full List of Partners
               </Button>
@@ -298,6 +301,104 @@ const CollectorInfoSection: React.FC = () => {
     </GridColumns>
   )
 }
+
+const ArtsySpecialistsSection: React.FC = () => {
+  return (
+    <GridColumns>
+      <Column span={6} mt={6}>
+        <Text variant="xs" textTransform="uppercase">
+          Artsy Specialists
+        </Text>
+        <Text variant="xl" mt={1}>
+          Here to Help You Find the Art You Love
+        </Text>
+        <Text variant="sm" mt={1}>
+          Artsy specialists are available to all Artsy members, wherever you are
+          in your collector’s journey. Our specialists join Artsy from leading
+          auction houses, galleries, and museums, and are ready to help you find
+          works that you love—with your price range, taste, and current
+          collection in mind.
+        </Text>
+        <Text variant="sm" mt={4}>
+          More questions about collecting?
+        </Text>
+        <Flex>
+          <Button
+            variant="primaryBlack"
+            width="40%"
+            // @ts-ignore
+            as={RouterLink}
+            to=""
+            mt={4}
+            mr={1}
+          >
+            Contact Specialist
+          </Button>
+          <Button
+            variant="primaryWhite"
+            width="40%"
+            // @ts-ignore
+            as={RouterLink}
+            to=""
+            mt={4}
+            borderColor="black60"
+          >
+            Collector Resources
+          </Button>
+        </Flex>
+      </Column>
+      <Column span={6} mt={6}>
+        {AdvisorySpecialists.map(specialist => (
+          <Box width="100%">
+            <Flex flexDirection="row">
+              <Avatar size="md" src={specialist.photo.url} mr={2} />
+              <Flex flexDirection="column">
+                <Text variant="lg">{specialist.name}</Text>
+                <Text variant="md">{specialist.title}</Text>
+                <Text variant="md" color="black60" mb={2}>
+                  {specialist.location}
+                </Text>
+                <RouterLink to={`mailto:${specialist.email}`}>
+                  {specialist.email}
+                </RouterLink>
+                <Spacer my={2} />
+                <Text borderBottom="1px solid" borderBottomColor="black60" />
+                <Spacer my={2} />
+              </Flex>
+            </Flex>
+          </Box>
+        ))}
+      </Column>
+    </GridColumns>
+  )
+}
+
+const AdvisorySpecialists = [
+  {
+    name: "Robin Roche",
+    title: "Senior Advisor",
+    location: "New York",
+    email: "robin.roche@artsy.net",
+    phone: "+1 646 707 9450",
+    photo: { url: "http://files.artsy.net/images/robin.jpeg" },
+  },
+  {
+    name: "Itziar Ramos Ricoy",
+    title: "Advisor",
+    location: "London",
+    email: "itziar.ramos@artsy.net",
+    phone: "+44 7429 093319",
+    photo: { url: "http://files.artsy.net/images/itziar.jpeg" },
+  },
+  {
+    name: "Caroline Perkins",
+    title: "Advisor",
+    location: "New York",
+    email: "caroline.perkins@artsy.net",
+    phone: "+1 540 588 1371",
+    photo: { url: "http://files.artsy.net/images/cperkins_headshot-copy.jpg" },
+  },
+]
 
 const Container = styled(FullBleed)`
   overflow: hidden;
