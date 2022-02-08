@@ -5,6 +5,7 @@ import { ReviewSubmitOrderMutation } from "v2/__generated__/ReviewSubmitOrderMut
 import { ArtworkSummaryItemFragmentContainer as ArtworkSummaryItem } from "v2/Apps/Order/Components/ArtworkSummaryItem"
 import { ConditionsOfSaleDisclaimer } from "v2/Apps/Order/Components/ConditionsOfSaleDisclaimer"
 import { ItemReviewFragmentContainer as ItemReview } from "v2/Apps/Order/Components/ItemReview"
+import { userHasLabFeature } from "v2/Utils/user"
 import {
   OrderStepper,
   buyNowFlowSteps,
@@ -31,7 +32,7 @@ import { TwoColumnLayout } from "../../Components/TwoColumnLayout"
 import { BuyerGuarantee } from "../../Components/BuyerGuarantee"
 import { createStripeWrapper } from "v2/Utils/createStripeWrapper"
 import type { Stripe, StripeElements } from "@stripe/stripe-js"
-import { withSystemContext } from "v2/System"
+import { SystemContextProps, withSystemContext } from "v2/System"
 import { ShippingArtaSummaryItemFragmentContainer } from "../../Components/ShippingArtaSummaryItem"
 import {
   ActionType,
@@ -41,7 +42,7 @@ import {
   ContextModule,
   OwnerType,
 } from "@artsy/cohesion"
-export interface ReviewProps {
+export interface ReviewProps extends SystemContextProps {
   stripe: Stripe
   elements: StripeElements
   order: Review_order
@@ -181,33 +182,12 @@ export class ReviewRoute extends Component<ReviewProps> {
         },
       },
       // TODO: Inputs to the mutation might have changed case of the keys!
-      mutation: graphql`
-        mutation ReviewSubmitOfferOrderMutation(
-          $input: CommerceSubmitOrderWithOfferInput!
-        ) {
-          commerceSubmitOrderWithOffer(input: $input) {
-            orderOrError {
-              ... on CommerceOrderWithMutationSuccess {
-                order {
-                  state
-                }
-              }
-              ... on CommerceOrderRequiresAction {
-                actionData {
-                  clientSecret
-                }
-              }
-              ... on CommerceOrderWithMutationFailure {
-                error {
-                  type
-                  code
-                  data
-                }
-              }
-            }
-          }
-        }
-      `,
+      mutation: userHasLabFeature(
+        this.props.user,
+        "Make Offer On All Eligible Artworks"
+      )
+        ? submitOfferOrderWithConversation
+        : commerceSubmitOrderWithOfferMutation,
     })
   }
 
@@ -506,3 +486,59 @@ export const ReviewFragmentContainer = createFragmentContainer(
     `,
   }
 )
+
+const commerceSubmitOrderWithOfferMutation = graphql`
+  mutation ReviewSubmitOfferOrderMutation(
+    $input: CommerceSubmitOrderWithOfferInput!
+  ) {
+    commerceSubmitOrderWithOffer(input: $input) {
+      orderOrError {
+        ... on CommerceOrderWithMutationSuccess {
+          order {
+            state
+          }
+        }
+        ... on CommerceOrderRequiresAction {
+          actionData {
+            clientSecret
+          }
+        }
+        ... on CommerceOrderWithMutationFailure {
+          error {
+            type
+            code
+            data
+          }
+        }
+      }
+    }
+  }
+`
+
+const submitOfferOrderWithConversation = graphql`
+  mutation ReviewSubmitOfferOrderWithConversationMutation(
+    $input: CommerceSubmitOrderWithOfferInput!
+  ) {
+    submitOfferOrderWithConversation(input: $input) {
+      orderOrError {
+        ... on CommerceOrderWithMutationSuccess {
+          order {
+            state
+          }
+        }
+        ... on CommerceOrderRequiresAction {
+          actionData {
+            clientSecret
+          }
+        }
+        ... on CommerceOrderWithMutationFailure {
+          error {
+            type
+            code
+            data
+          }
+        }
+      }
+    }
+  }
+`
