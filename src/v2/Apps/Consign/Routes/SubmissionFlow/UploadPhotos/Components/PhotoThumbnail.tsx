@@ -27,6 +27,16 @@ const TruncatedLine = styled(Text)`
   overflow: hidden;
 `
 
+const ImageContainer = styled(Box).attrs({
+  height: [48, 120],
+  width: [48, 120],
+  minWidth: [48, 120],
+  mr: [15, 2],
+  bg: "black10",
+})`
+  cursor: default;
+`
+
 export const PhotoThumbnail: React.FC<PhotoThumbnailProps & BoxProps> = ({
   photo,
   onDelete,
@@ -134,20 +144,14 @@ const PhotoThumbnailLoadingState: React.FC<PhotoThumbnailStateProps> = ({
   photo,
 }) => (
   <Column span={[2]} display="flex" alignItems="center" flexDirection="row">
-    <Box
-      height={[48, 120]}
-      width={[48, 120]}
-      minWidth={[48, 120]}
-      mr={[15, 2]}
-      bg="black10"
-    >
+    <ImageContainer>
       <Image
         src={photoSrc}
         style={{ objectFit: "cover" }}
         height="100%"
         width="100%"
       />
-    </Box>
+    </ImageContainer>
     <ProgressBar
       width="100%"
       highlight="brand"
@@ -179,20 +183,14 @@ const PhotoThumbnailSuccessState: React.FC<PhotoThumbnailStateProps> = ({
 }) => (
   <>
     <Flex alignItems="center">
-      <Box
-        height={[48, 120]}
-        width={[48, 120]}
-        minWidth={[48, 120]}
-        mr={[15, 2]}
-        bg="black10"
-      >
+      <ImageContainer>
         <Image
           src={photoSrc}
           style={{ objectFit: "cover" }}
           height="100%"
           width="100%"
         />
-      </Box>
+      </ImageContainer>
       <TruncatedLine variant="xs">{photo.name}</TruncatedLine>
     </Flex>
     <Flex alignItems="center" justifyContent="space-between">
@@ -204,43 +202,24 @@ const PhotoThumbnailSuccessState: React.FC<PhotoThumbnailStateProps> = ({
 
 const PhotoThumbnailProcessingState: React.FC<PhotoThumbnailStateProps> = ({
   onDelete,
-  photoSrc,
   photo,
 }) => (
   <>
     <Flex alignItems="center">
-      <Box
-        height={[48, 120]}
-        width={[48, 120]}
-        minWidth={[48, 120]}
-        mr={[15, 2]}
-        bg="black10"
+      <ImageContainer
         position="relative"
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
       >
         <Media at="xs">
           <Spinner size="small" />
         </Media>
 
         <Media greaterThan="xs">
-          <Image
-            src={photoSrc}
-            style={{ objectFit: "cover" }}
-            height="100%"
-            width="100%"
-          />
-          <Flex
-            position="absolute"
-            top={0}
-            left={0}
-            right={0}
-            bottom={0}
-            alignItems="center"
-            justifyContent="center"
-          >
-            Processing
-          </Flex>
+          <Text color="black60">Processing</Text>
         </Media>
-      </Box>
+      </ImageContainer>
       <TruncatedLine variant="xs">{photo.name}</TruncatedLine>
     </Flex>
     <Flex alignItems="center" justifyContent="space-between">
