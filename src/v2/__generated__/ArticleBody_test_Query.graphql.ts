@@ -1029,8 +1029,12 @@ return {
         "article.id": (v25/*: any*/),
         "article.layout": {
           "enumValues": [
+            "CLASSIC",
             "FEATURE",
-            "STANDARD"
+            "NEWS",
+            "SERIES",
+            "STANDARD",
+            "VIDEO"
           ],
           "nullable": false,
           "plural": false,

@@ -4,7 +4,7 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type ArticleLayout = "FEATURE" | "STANDARD" | "%future added value";
+export type ArticleLayout = "CLASSIC" | "FEATURE" | "NEWS" | "SERIES" | "STANDARD" | "VIDEO" | "%future added value";
 export type ArticleBody_article = {
     readonly layout: ArticleLayout;
     readonly title: string | null;
