@@ -66,7 +66,7 @@ const OrderArtworkNodeWithoutShipping = {
   is_offerable: true as boolean,
   listPrice: {
     __typename: "Money",
-    major: 10000,
+    major: 16000,
   },
   medium: "Oil and pencil on panel",
   onlyShipsDomestically: false,
@@ -95,7 +95,7 @@ const OrderArtworkNode = {
   artwork: {
     ...OrderArtworkNodeWithoutShipping,
     shippingOrigin: "New York, NY",
-    artaShippingEnabled: false,
+    processWithArtaShipping: false,
     domesticShippingFee: {
       minor: 10000,
       major: 100,
@@ -114,7 +114,7 @@ const ArtaEnabledOrderArtworkNode = {
   artwork: {
     ...OrderArtworkNodeWithoutShipping,
     shippingOrigin: "New York, NY",
-    artaShippingEnabled: true,
+    processWithArtaShipping: true,
     domesticShippingFee: {
       minor: 10000,
       major: 100,
@@ -898,7 +898,7 @@ const OrderArtworkNodePriceHidden = {
   artwork: {
     ...OrderArtworkNodeWithoutShipping,
     shippingOrigin: "New York, NY",
-    artaShippingEnabled: false,
+    processWithArtaShipping: false,
     domesticShippingFee: {
       minor: 10000,
       major: 100,

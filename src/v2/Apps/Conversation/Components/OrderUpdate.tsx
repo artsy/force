@@ -1,7 +1,8 @@
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import {
   AlertCircleFillIcon,
+  Clickable,
   Color,
   Flex,
   IconProps,
@@ -15,12 +16,17 @@ import { TimeSince } from "./TimeSince"
 import { OrderUpdate_event } from "../../../__generated__/OrderUpdate_event.graphql"
 export interface OrderUpdateProps {
   event: OrderUpdate_event
+  setShowDetails: (showDetails: boolean) => void
 }
 
-export const OrderUpdate: React.FC<OrderUpdateProps> = ({ event }) => {
+export const OrderUpdate: React.FC<OrderUpdateProps> = ({
+  event,
+  setShowDetails,
+}) => {
   let color: Color
   let message: string
   let Icon: React.FC<IconProps> = MoneyFillIcon
+  let action: { label?: string; onClick?: () => void } = {}
 
   if (event.__typename === "CommerceOfferSubmittedEvent") {
     const { offer } = event
@@ -30,6 +36,9 @@ export const OrderUpdate: React.FC<OrderUpdateProps> = ({ event }) => {
       message = `You sent ${isCounter ? "a counteroffer" : "an offer"} for ${
         event.offer.amount
       }`
+      if (!isCounter) {
+        action = { label: "See details", onClick: () => setShowDetails(true) }
+      }
     } else if (offer.fromParticipant === "SELLER") {
       color = "copper100"
       Icon = AlertCircleFillIcon
@@ -75,6 +84,17 @@ export const OrderUpdate: React.FC<OrderUpdateProps> = ({ event }) => {
           <Flex flexDirection="column" pl={1}>
             <Text color={color} variant="xs">
               {message}
+              {action.label && action.onClick && (
+                <>
+                  {". "}
+                  <Clickable
+                    onClick={action.onClick}
+                    textDecoration="underline"
+                  >
+                    {action.label}.
+                  </Clickable>
+                </>
+              )}
             </Text>
           </Flex>
         </Flex>

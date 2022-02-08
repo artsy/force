@@ -32,7 +32,6 @@ import { getOfferItemFromOrder } from "v2/Apps/Order/Utils/offerItemExtractor"
 import { ContextModule, OwnerType } from "@artsy/cohesion"
 import { isNil } from "lodash"
 import { appendCurrencySymbol } from "v2/Apps/Order/Utils/currencyUtils"
-import { userHasLabFeature } from "v2/Utils/user"
 import { SystemContextProps, withSystemContext } from "v2/System"
 
 export interface OfferProps extends SystemContextProps {
@@ -238,11 +237,6 @@ export class OfferRoute extends Component<OfferProps, OfferState> {
     const isInquiryCheckout = !artwork?.isPriceRange && !artwork?.price
     const isEdition = artwork?.isEdition
 
-    const newOfferSubmissionEnabled = userHasLabFeature(
-      this.props.user,
-      "New Offer Submissions"
-    )
-
     return (
       <>
         <OrderStepper currentStep="Offer" steps={offerFlowSteps} />
@@ -253,8 +247,7 @@ export class OfferRoute extends Component<OfferProps, OfferState> {
               style={isCommittingMutation ? { pointerEvents: "none" } : {}}
               id="offer-page-left-column"
             >
-              {(!newOfferSubmissionEnabled ||
-                isInquiryCheckout ||
+              {(isInquiryCheckout ||
                 isEdition) && (
                 <>
                   <Flex flexDirection="column">
@@ -270,7 +263,7 @@ export class OfferRoute extends Component<OfferProps, OfferState> {
                   {priceNote}
                 </>
               )}
-              {newOfferSubmissionEnabled && !isInquiryCheckout && !isEdition && (
+              {!isInquiryCheckout && !isEdition && (
                 <>
                   <Text variant="lg" color="black80" mt={2}>
                     Select an Option

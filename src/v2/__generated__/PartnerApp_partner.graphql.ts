@@ -9,6 +9,10 @@ export type PartnerApp_partner = {
     readonly displayFullPartnerPage: boolean | null;
     readonly partnerPageEligible: boolean | null;
     readonly isDefaultProfilePublic: boolean | null;
+    readonly categories: ReadonlyArray<{
+        readonly id: string;
+        readonly name: string | null;
+    } | null> | null;
     readonly profile: {
         readonly " $fragmentRefs": FragmentRefs<"PartnerHeaderImage_profile">;
     } | null;
@@ -60,6 +64,31 @@ const node: ReaderFragment = {
     {
       "alias": null,
       "args": null,
+      "concreteType": "PartnerCategory",
+      "kind": "LinkedField",
+      "name": "categories",
+      "plural": true,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "id",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "name",
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
       "concreteType": "Profile",
       "kind": "LinkedField",
       "name": "profile",
@@ -92,5 +121,5 @@ const node: ReaderFragment = {
   "type": "Partner",
   "abstractKey": null
 };
-(node as any).hash = '7ddbd3bf8397f8a6457dd30b85420462';
+(node as any).hash = '9ab19f514efb71031e2ccf955bc30515';
 export default node;

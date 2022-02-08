@@ -1,4 +1,4 @@
-import { Button } from "@artsy/palette"
+import { BorderedRadio, Button } from "@artsy/palette"
 import { Stepper } from "@artsy/palette"
 import { ArtworkSummaryItemFragmentContainer } from "v2/Apps/Order/Components/ArtworkSummaryItem"
 import { BuyerGuarantee } from "v2/Apps/Order/Components/BuyerGuarantee"
@@ -6,6 +6,7 @@ import { ConditionsOfSaleDisclaimer } from "v2/Apps/Order/Components/ConditionsO
 import { CreditCardSummaryItemFragmentContainer } from "v2/Apps/Order/Components/CreditCardSummaryItem"
 import { OfferInput } from "v2/Apps/Order/Components/OfferInput"
 import { OrderStepper } from "v2/Apps/Order/Components/OrderStepper"
+import { PriceOptions } from "v2/Apps/Order/Components/PriceOptions"
 import { ShippingArtaSummaryItemFragmentContainer } from "v2/Apps/Order/Components/ShippingArtaSummaryItem"
 import { ShippingSummaryItemFragmentContainer } from "v2/Apps/Order/Components/ShippingSummaryItem"
 import { TransactionDetailsSummaryItem } from "v2/Apps/Order/Components/TransactionDetailsSummaryItem"
@@ -69,11 +70,29 @@ export class OrderAppTestPage extends RootTestPage {
     return expectOne(this.find(OfferInput))
   }
 
+  get priceOptions() {
+    return expectOne(this.find(PriceOptions))
+  }
+
   /** PAGE ACTIONS **/
 
   async clickSubmit() {
     this.submitButton.simulate("click")
     await this.update()
+  }
+
+  async selectCustomAmount() {
+    this.priceOptions.find(BorderedRadio).last().simulate("click")
+    await this.update()
+  }
+
+  async selectPriceOption(option: number) {
+    this.priceOptions.find(BorderedRadio).at(option).simulate("click")
+    await this.update()
+  }
+
+  async selectRandomPriceOption() {
+    await this.selectPriceOption(Math.floor(Math.random() * 3))
   }
 
   async dismissModal() {
@@ -114,6 +133,7 @@ export class OrderAppTestPage extends RootTestPage {
   }
 
   async setOfferAmount(amount: number) {
+    if (this.find(PriceOptions).length) this.selectCustomAmount()
     this.offerInput.props().onChange(amount)
     await this.update()
   }

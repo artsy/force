@@ -67,7 +67,7 @@ export const DownloadAppBanner: React.FC<DownloadAppBannerProps> = ({
             onClick={() => handleClick("iOS")}
           >
             <img
-              src="https://files.artsy.net/images/download-ios-app-transparent.svg"
+              src="https://files.artsy.net/images/download-ios-app.svg"
               width={120}
               height={40}
               alt="Download on the App Store"
@@ -85,7 +85,7 @@ export const DownloadAppBanner: React.FC<DownloadAppBannerProps> = ({
             onClick={() => handleClick("Android")}
           >
             <img
-              src="https://files.artsy.net/images/download-android-app-transparent.svg"
+              src="https://files.artsy.net/images/download-android-app.svg"
               width={136}
               height={40}
               alt="Get it on Google Play"

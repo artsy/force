@@ -41,7 +41,7 @@ const ArticleZoomGallery: FC<ArticleZoomGalleryProps> = ({
           section.__typename === "ArticleSectionImageSet" ||
           section.__typename === "ArticleSectionImageCollection"
         ) {
-          return section.figures
+          return section.figures.map(figure => ({ ...figure, section }))
         }
       })
     )
@@ -85,12 +85,20 @@ const ArticleZoomGallery: FC<ArticleZoomGalleryProps> = ({
         </NextPrevious>
 
         <Flex flexDirection="column" height="100%">
+          {figure.section.__typename === "ArticleSectionImageSet" &&
+            figure.section.title && (
+              <Text variant="xl" mt={2} mx={2}>
+                {figure.section.title}
+              </Text>
+            )}
+
           <Flex
             position="relative"
             alignItems="center"
             justifyContent="center"
             flex={1}
             minHeight={0}
+            my={2}
           >
             <ArticleZoomGalleryFigureFragmentContainer figure={figure} />
           </Flex>
@@ -163,6 +171,7 @@ export const ArticleZoomGalleryFragmentContainer = createFragmentContainer(
             }
           }
           ... on ArticleSectionImageSet {
+            title
             figures {
               ...ArticleZoomGalleryFigure_figure
               ...ArticleZoomGalleryCaption_figure
