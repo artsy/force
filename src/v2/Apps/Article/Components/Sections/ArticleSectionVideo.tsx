@@ -27,6 +27,7 @@ const ArticleSectionVideo: FC<ArticleSectionVideoProps> = ({ section }) => {
       aspectHeight={9}
       maxWidth="100%"
       bg="black10"
+      data-testid="ArticleSectionVideo"
     >
       {mode === "Pending" ? (
         <Cover
@@ -38,7 +39,6 @@ const ArticleSectionVideo: FC<ArticleSectionVideoProps> = ({ section }) => {
         >
           {image && (
             <Image
-              data-testid={image.src}
               src={image.src}
               srcSet={image.srcSet}
               width="100%"
