@@ -10,6 +10,9 @@ require("coffeescript/register")
 require("should")
 require("./src/lib/jade_hook")
 
+const chai = require("chai")
+chai.use(require("chai-passport-strategy"))
+
 const path = require("path")
 const Adapter = require("@wojtekmaj/enzyme-adapter-react-17")
 const Enzyme = require("enzyme")
