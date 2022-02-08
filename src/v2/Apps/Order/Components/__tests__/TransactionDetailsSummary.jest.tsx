@@ -111,6 +111,27 @@ describe("TransactionDetailsSummaryItem", () => {
       expect(text).toMatch("Tax*Calculated in the next steps")
     })
 
+    it("shows the shipping and tax price as 'Waiting for final costs' when null after shipping address was added", async () => {
+      const transactionSummary = await render(
+        {
+          ...transactionSummaryBuyOrder,
+          taxTotal: null,
+          taxTotalCents: null,
+          shippingTotal: null,
+          shippingTotalCents: null,
+        },
+        {
+          user: { lab_features: ["Avalara Phase 2"] },
+          transactionStep: "review",
+        }
+      )
+
+      const text = transactionSummary.text()
+
+      expect(text).toMatch("Shipping**Waiting for final costs")
+      expect(text).toMatch("Tax*Waiting for final costs")
+    })
+
     it("shows tax import reminder", async () => {
       const transactionSummary = await render(
         { ...transactionSummaryBuyOrder },
@@ -138,7 +159,6 @@ describe("TransactionDetailsSummaryItem", () => {
 
       const text = transactionSummary.text()
 
-      expect(text).toMatch("Shipping**Waiting for final costs")
       expect(text).toMatch(
         "**Shipping costs to be confirmed by gallery. You will be able to review the total price before payment."
       )
