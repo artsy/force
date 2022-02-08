@@ -10,6 +10,9 @@ jest.mock("react-head", () => ({
   Meta: () => null,
   Link: () => null,
 }))
+jest.mock("v2/Utils/Hooks/useMatchMedia", () => ({
+  __internal__useMatchMedia: () => false,
+}))
 
 describe("SavedSearchAlertsApp", () => {
   const { renderWithRelay } = setupTestWrapperTL<
