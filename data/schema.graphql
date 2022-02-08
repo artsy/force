@@ -2765,6 +2765,10 @@ enum CollectionSorts {
   POSITION_DESC
 }
 
+type CollectorProfileArtists {
+  name: String
+}
+
 type CollectorProfileType {
   collectorLevel: Int
   confirmedBuyerAt(
@@ -8135,6 +8139,80 @@ type ImageURLs {
   normalized: String
 }
 
+type InquirerCollectorProfile {
+  artsyUserSince(
+    format: String
+
+    # A tz database time zone, otherwise falls back to "X-TIMEZONE" header. See
+    # http://www.iana.org/time-zones,
+    # https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+    timezone: String
+  ): String
+  bio: String
+  collectorLevel: Int
+
+  # List of artists the Collector is interested in.
+  collectorProfileArtists: [CollectorProfileArtists]
+  confirmedBuyerAt(
+    format: String
+
+    # A tz database time zone, otherwise falls back to "X-TIMEZONE" header. See
+    # http://www.iana.org/time-zones,
+    # https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+    timezone: String
+  ): String
+  email: String
+  emailConfirmed: Boolean
+  icon: Image
+
+  # A globally unique ID.
+  id: ID!
+  identityVerified: Boolean
+  institutionalAffiliations: String
+  intents: [String]
+
+  # A type-specific ID likely used as a database ID.
+  internalID: ID!
+  isActiveBidder: Boolean
+  isActiveInquirer: Boolean
+  location: MyLocation
+  loyaltyApplicantAt(
+    format: String
+
+    # A tz database time zone, otherwise falls back to "X-TIMEZONE" header. See
+    # http://www.iana.org/time-zones,
+    # https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+    timezone: String
+  ): String
+  name: String
+
+  # Collector's position with relevant institutions
+  otherRelevantPositions: String
+
+  # User ID of the collector profile's owner
+  ownerID: ID!
+  privacy: String
+  profession: String
+  professionalBuyerAppliedAt(
+    format: String
+
+    # A tz database time zone, otherwise falls back to "X-TIMEZONE" header. See
+    # http://www.iana.org/time-zones,
+    # https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+    timezone: String
+  ): String
+  professionalBuyerAt(
+    format: String
+
+    # A tz database time zone, otherwise falls back to "X-TIMEZONE" header. See
+    # http://www.iana.org/time-zones,
+    # https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+    timezone: String
+  ): String
+  selfReportedPurchases: String
+  userInterests: [UserInterest]!
+}
+
 union InquiryItemType = Artwork | Show
 
 type InquiryQuestion {
@@ -9958,6 +10036,12 @@ type Partner implements Node {
   id: ID!
   initials(length: Int = 3): String
 
+  # Inquiry Request details
+  inquiryRequest(
+    # The inquiry id
+    inquiryId: String!
+  ): PartnerInquiryRequest
+
   # A type-specific ID likely used as a database ID.
   internalID: ID!
   isDefaultProfilePublic: Boolean
@@ -10283,6 +10367,10 @@ type PartnerEdge {
 
   # The item at the end of the edge
   node: Partner
+}
+
+type PartnerInquiryRequest {
+  collectorProfile: InquirerCollectorProfile
 }
 
 # A location
