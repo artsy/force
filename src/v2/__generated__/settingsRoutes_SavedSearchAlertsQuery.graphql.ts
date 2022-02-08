@@ -28,6 +28,7 @@ query settingsRoutes_SavedSearchAlertsQuery {
 fragment SavedSearchAlertListItem_item on SearchCriteria {
   internalID
   artistIDs
+  href
   userAlertSettings {
     name
   }
@@ -141,6 +142,13 @@ return {
                       {
                         "alias": null,
                         "args": null,
+                        "kind": "ScalarField",
+                        "name": "href",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
                         "concreteType": "SavedSearchUserAlertSettings",
                         "kind": "LinkedField",
                         "name": "userAlertSettings",
@@ -226,12 +234,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "e3b561583d5c067bd99b9931d310af12",
+    "cacheID": "275bb26c8291a5b97d42dcbd0bff826b",
     "id": null,
     "metadata": {},
     "name": "settingsRoutes_SavedSearchAlertsQuery",
     "operationKind": "query",
-    "text": "query settingsRoutes_SavedSearchAlertsQuery {\n  me {\n    ...SavedSearchAlertsApp_me\n    id\n  }\n}\n\nfragment SavedSearchAlertListItem_item on SearchCriteria {\n  internalID\n  artistIDs\n  userAlertSettings {\n    name\n  }\n}\n\nfragment SavedSearchAlertsApp_me on Me {\n  savedSearchesConnection(first: 50) {\n    edges {\n      node {\n        internalID\n        ...SavedSearchAlertListItem_item\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query settingsRoutes_SavedSearchAlertsQuery {\n  me {\n    ...SavedSearchAlertsApp_me\n    id\n  }\n}\n\nfragment SavedSearchAlertListItem_item on SearchCriteria {\n  internalID\n  artistIDs\n  href\n  userAlertSettings {\n    name\n  }\n}\n\nfragment SavedSearchAlertsApp_me on Me {\n  savedSearchesConnection(first: 50) {\n    edges {\n      node {\n        internalID\n        ...SavedSearchAlertListItem_item\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();

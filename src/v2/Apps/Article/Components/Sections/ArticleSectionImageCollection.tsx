@@ -7,12 +7,12 @@ import {
   GridColumns,
   Column,
   ColumnSpan,
-  Clickable,
 } from "@artsy/palette"
 import { ArticleSectionImageCollection_section } from "v2/__generated__/ArticleSectionImageCollection_section.graphql"
 import Metadata from "v2/Components/Artwork/Metadata"
 import { useArticleZoomGallery } from "../ArticleZoomGallery"
 import { useRouter } from "v2/System/Router/useRouter"
+import { ArticleZoomButton } from "../ArticleZoomButton"
 
 interface ArticleSectionImageCollectionProps {
   section: ArticleSectionImageCollection_section
@@ -69,8 +69,13 @@ const ArticleSectionImageCollection: FC<ArticleSectionImageCollectionProps> = ({
                 aspectHeight={img.height ?? 1}
                 maxWidth="100%"
                 bg="black10"
+                position="relative"
               >
-                <Clickable width="100%" height="100%" onClick={handleClick}>
+                <ArticleZoomButton
+                  width="100%"
+                  height="100%"
+                  onClick={handleClick}
+                >
                   <Image
                     src={img.src}
                     srcSet={img.srcSet}
@@ -79,7 +84,7 @@ const ArticleSectionImageCollection: FC<ArticleSectionImageCollectionProps> = ({
                     alt=""
                     lazyLoad
                   />
-                </Clickable>
+                </ArticleZoomButton>
               </ResponsiveBox>
 
               {figure.__typename === "ArticleImageSection" &&

@@ -215,6 +215,7 @@ const Conversation: React.FC<ConversationProps> = props => {
                 messages={conversation.messagesConnection!}
                 events={conversation.orderConnection}
                 lastViewedMessageID={conversation?.fromLastViewedMessageID}
+                setShowDetails={setShowDetails}
               />
               <Box ref={bottomOfMessageContainer as any} />
             </Flex>

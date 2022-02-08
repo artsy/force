@@ -9,6 +9,8 @@ import {
   Sup,
   DROP_SHADOW,
   Clickable,
+  ImageSetIcon,
+  Flex,
 } from "@artsy/palette"
 import { useArticleZoomGallery } from "../ArticleZoomGallery"
 import { useRouter } from "v2/System/Router/useRouter"
@@ -63,40 +65,45 @@ const ArticleSectionImageSet: FC<ArticleSectionImageSetProps> = ({
               <Clickable
                 display="flex"
                 alignItems="center"
+                justifyContent="space-between"
                 width="100%"
                 border="1px solid"
                 borderColor="black10"
                 p={2}
                 onClick={handleClick}
               >
-                <Image
-                  src={image.small?.src}
-                  srcSet={image.small?.srcSet}
-                  width={image.small?.width}
-                  height={image.small?.height}
-                  lazyLoad
-                  alt=""
-                />
+                <Flex alignItems="center">
+                  <Image
+                    src={image.small?.src}
+                    srcSet={image.small?.srcSet}
+                    width={image.small?.width}
+                    height={image.small?.height}
+                    lazyLoad
+                    alt=""
+                  />
 
-                <Box ml={2}>
-                  <Text variant="lg">
-                    {section.title ? (
-                      <>
-                        {section.title}{" "}
-                        <Sup color="brand">{section.counts.figures}</Sup>
-                      </>
-                    ) : (
-                      <>
-                        {section.counts.figures} Image
-                        {section.counts.figures === 1 ? "" : "s"}
-                      </>
-                    )}
-                  </Text>
+                  <Box ml={2}>
+                    <Text variant="lg">
+                      {section.title ? (
+                        <>
+                          {section.title}{" "}
+                          <Sup color="brand">{section.counts.figures}</Sup>
+                        </>
+                      ) : (
+                        <>
+                          {section.counts.figures} Image
+                          {section.counts.figures === 1 ? "" : "s"}
+                        </>
+                      )}
+                    </Text>
 
-                  <Text variant="lg" color="black60">
-                    View Slideshow
-                  </Text>
-                </Box>
+                    <Text variant="lg" color="black60">
+                      View Slideshow
+                    </Text>
+                  </Box>
+                </Flex>
+
+                <ImageSetIcon width={40} height={40} ml={2} />
               </Clickable>
             )
 
@@ -119,6 +126,8 @@ const ArticleSectionImageSet: FC<ArticleSectionImageSetProps> = ({
                   />
 
                   <Box
+                    display="flex"
+                    alignItems="center"
                     position="absolute"
                     bottom={2}
                     left={2}
@@ -126,23 +135,27 @@ const ArticleSectionImageSet: FC<ArticleSectionImageSetProps> = ({
                     p={2}
                     style={{ boxShadow: DROP_SHADOW }}
                   >
-                    <Text variant="lg">
-                      {section.title ? (
-                        <>
-                          {section.title}{" "}
-                          <Sup color="brand">{section.counts.figures}</Sup>
-                        </>
-                      ) : (
-                        <>
-                          {section.counts.figures} Image
-                          {section.counts.figures === 1 ? "" : "s"}
-                        </>
-                      )}
-                    </Text>
+                    <Box>
+                      <Text variant="lg">
+                        {section.title ? (
+                          <>
+                            {section.title}{" "}
+                            <Sup color="brand">{section.counts.figures}</Sup>
+                          </>
+                        ) : (
+                          <>
+                            {section.counts.figures} Image
+                            {section.counts.figures === 1 ? "" : "s"}
+                          </>
+                        )}
+                      </Text>
 
-                    <Text variant="lg" color="black60">
-                      View Slideshow
-                    </Text>
+                      <Text variant="lg" color="black60">
+                        View Slideshow
+                      </Text>
+                    </Box>
+
+                    <ImageSetIcon width={40} height={40} ml={2} />
                   </Box>
                 </Clickable>
               </ResponsiveBox>

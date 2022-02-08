@@ -1,5 +1,6 @@
 import { Box, Text, Flex, Clickable, Spacer } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
+import { RouterLink } from "v2/System/Router/RouterLink"
 import { SavedSearchAlertListItem_item } from "v2/__generated__/SavedSearchAlertListItem_item.graphql"
 import { EditAlertEntity } from "../types"
 
@@ -16,6 +17,8 @@ export const SavedSearchAlertListItem: React.FC<SavedSearchAlertListItemProps> =
   variant,
   onEditAlertClick,
 }) => {
+  const viewAllHref = `${item.href}&search_criteria_id=${item.internalID}`
+
   return (
     <Box
       key={item.internalID}
@@ -51,9 +54,9 @@ export const SavedSearchAlertListItem: React.FC<SavedSearchAlertListItemProps> =
             <Text variant="sm">Edit</Text>
           </Clickable>
           <Spacer ml={2} />
-          <Clickable textDecoration="underline">
+          <RouterLink to={viewAllHref} textDecoration="underline">
             <Text variant="sm">View All</Text>
-          </Clickable>
+          </RouterLink>
         </Flex>
       </Flex>
     </Box>
@@ -67,6 +70,7 @@ export const SavedSearchAlertListItemFragmentContainer = createFragmentContainer
       fragment SavedSearchAlertListItem_item on SearchCriteria {
         internalID
         artistIDs
+        href
         userAlertSettings {
           name
         }

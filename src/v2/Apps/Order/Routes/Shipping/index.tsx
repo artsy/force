@@ -180,7 +180,8 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
 
   isArtaShipping = () => {
     const addresses = this.getAddressList()
-    const artaShippingEnabled = !!this.getOrderArtwork()?.artaShippingEnabled
+    const processWithArtaShipping = !!this.getOrderArtwork()
+      ?.processWithArtaShipping
 
     const shippingCountry = this.isCreateNewAddress()
       ? this.state.address.country
@@ -191,7 +192,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
 
     return (
       this.state.shippingOption === "SHIP" &&
-      artaShippingEnabled &&
+      processWithArtaShipping &&
       shippingCountry === "US"
     )
   }
@@ -833,7 +834,7 @@ export const ShippingFragmentContainer = createFragmentContainer(
             node {
               artwork {
                 slug
-                artaShippingEnabled
+                processWithArtaShipping
                 pickup_available: pickupAvailable
                 onlyShipsDomestically
                 euShippingOrigin

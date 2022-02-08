@@ -7,12 +7,19 @@ import { DateTime } from "luxon"
 
 jest.unmock("react-relay")
 
+const setShowDetailsSpy = jest.fn()
+
 const { renderWithRelay } = setupTestWrapperTL<OrderUpdate_Test_Query>({
   Component: props => {
     const event = props!.me!.conversation!.orderConnection!.edges![0]!.node!
       .orderHistory[0]
 
-    return <OrderUpdateFragmentContainer event={event} />
+    return (
+      <OrderUpdateFragmentContainer
+        event={event}
+        setShowDetails={setShowDetailsSpy}
+      />
+    )
   },
   query: graphql`
     query OrderUpdate_Test_Query($conversationID: String!)
@@ -36,6 +43,46 @@ const { renderWithRelay } = setupTestWrapperTL<OrderUpdate_Test_Query>({
 })
 
 describe("testing different statuses", () => {
+  it("render offer", () => {
+    const createdAt = "2021-07-04T12:16:40Z"
+    renderWithRelay({
+      Conversation: () => ({
+        orderConnection: {
+          edges: [
+            {
+              node: {
+                orderHistory: [
+                  {
+                    __typename: "CommerceOfferSubmittedEvent",
+                    createdAt,
+                    offer: {
+                      amount: "$39999",
+                      fromParticipant: "BUYER",
+                      offerAmountChanged: false,
+                      respondsTo: null,
+                    },
+                  },
+                ],
+              },
+            },
+          ],
+        },
+      }),
+    })
+
+    const date = DateTime.fromISO(createdAt)
+    expect(screen.getByText(date.toFormat("ccc, LLL d, t"))).toBeInTheDocument()
+    expect(
+      screen.getByText(/You sent an offer for \$39999./)
+    ).toBeInTheDocument()
+
+    const action = screen.queryByText("See details.")
+    expect(action).toBeInTheDocument()
+
+    action?.click()
+    expect(setShowDetailsSpy).toHaveBeenCalledWith(true)
+  })
+
   it("render counteroffer", () => {
     const createdAt = "2021-07-04T12:46:40Z"
     renderWithRelay({
@@ -71,6 +118,7 @@ describe("testing different statuses", () => {
     expect(
       screen.getByText("You sent a counteroffer for $40000")
     ).toBeInTheDocument()
+    expect(screen.queryByText("See details.")).not.toBeInTheDocument()
   })
 
   it("render received a counteroffer", () => {
@@ -102,6 +150,7 @@ describe("testing different statuses", () => {
     expect(
       screen.getByText("You received a counteroffer for $40000")
     ).toBeInTheDocument()
+    expect(screen.queryByText("See details.")).not.toBeInTheDocument()
   })
 
   it("render Offer Accepted - Pending Action", () => {
@@ -133,6 +182,7 @@ describe("testing different statuses", () => {
     expect(
       screen.getByText("Offer Accepted - Pending Action")
     ).toBeInTheDocument()
+    expect(screen.queryByText("See details.")).not.toBeInTheDocument()
   })
 
   it("render Offer Accepted", () => {
@@ -155,6 +205,7 @@ describe("testing different statuses", () => {
       }),
     })
     expect(screen.getByText("Offer Accepted")).toBeInTheDocument()
+    expect(screen.queryByText("See details.")).not.toBeInTheDocument()
   })
   it("render Offer Declined", () => {
     renderWithRelay({
@@ -177,6 +228,7 @@ describe("testing different statuses", () => {
       }),
     })
     expect(screen.getByText("Offer Declined")).toBeInTheDocument()
+    expect(screen.queryByText("See details.")).not.toBeInTheDocument()
   })
   it("render Offer Expired", () => {
     renderWithRelay({
@@ -199,5 +251,6 @@ describe("testing different statuses", () => {
       }),
     })
     expect(screen.getByText("Offer Expired")).toBeInTheDocument()
+    expect(screen.queryByText("See details.")).not.toBeInTheDocument()
   })
 })

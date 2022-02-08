@@ -53,10 +53,10 @@
     chokidar "^3.0.0"
     decache "^4.4.0"
 
-"@artsy/fresnel@3.2.1":
-  version "3.2.1"
-  resolved "https://registry.yarnpkg.com/@artsy/fresnel/-/fresnel-3.2.1.tgz#920f5fae518d1af622e790ee02235b52e62a045d"
-  integrity sha512-08mn27qkJzJu7O4CwjxH2KTix7jvbl0gRtgxjjUYTk7o2LAOHOgv3lnEV77tOc06khSV0GWTgGFUzG7cfDSwzQ==
+"@artsy/fresnel@3.2.2":
+  version "3.2.2"
+  resolved "https://registry.yarnpkg.com/@artsy/fresnel/-/fresnel-3.2.2.tgz#09958a62434dad1368829f8a4235f6c4f27d6686"
+  integrity sha512-UN3bFVaQD5FsvtiYDHbrU0/Vo82ynFKVg6SKCd00Xp5GGWsA3hTDN5S3ZIpPxMGsSF9s3exDs38CnAX0cLC09w==
 
 "@artsy/fresnel@^1.0.13":
   version "1.7.0"
@@ -77,12 +77,12 @@
   dependencies:
     dotenv "^10.0.0"
 
-"@artsy/palette-charts@17.19.0":
-  version "17.19.0"
-  resolved "https://registry.yarnpkg.com/@artsy/palette-charts/-/palette-charts-17.19.0.tgz#1bd64b56c7f200b49ee8f9ffc5b2f915da4f55ac"
-  integrity sha512-EQlkWJb5Iamhjb95Lmg5NKevk64lcstKXy/6Mo4djafxGm4fWlntGM2vf7q27NFfhiG8+WGCNJkzyzmbt8FnWg==
+"@artsy/palette-charts@17.20.0":
+  version "17.20.0"
+  resolved "https://registry.yarnpkg.com/@artsy/palette-charts/-/palette-charts-17.20.0.tgz#1f48e598707637c843d9f1b65f0dfe6aec602d07"
+  integrity sha512-STEqukRm6zakbWoDSdKACZ9LMpDjLmwuNdyx4WjLkKrZ39CJGCmBlbsRAA1Ew6WtBX9wSxmJxVrNg8ZWGL5omQ==
   dependencies:
-    "@artsy/palette" "^18.19.0"
+    "@artsy/palette" "^18.20.0"
     "@seznam/compose-react-refs" "^1.0.6"
     "@styled-system/theme-get" "^5.1.2"
     d3-interpolate "^1.3.2"
@@ -94,32 +94,10 @@
   resolved "https://registry.yarnpkg.com/@artsy/palette-tokens/-/palette-tokens-2.6.0.tgz#3d780ff65994fef0daadef29d43d11f89470b728"
   integrity sha512-UQP6P+xv/5hm82ep0z5X3kCFFnk03H6y8kdW/wTU+xPq45ESUay7aNFYXeub47tmW2v6dXJ8Oa01Z0iwc6BVpA==
 
-"@artsy/palette@18.16.0":
-  version "18.16.0"
-  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-18.16.0.tgz#1eca67373f387a49382291807ec47d6cf8e1fd95"
-  integrity sha512-aRwY/x5kZEqdvlo8INksfMLSth1KjcKkBJxX4rzfr6+c0Gt9YqaeupteLTOJEB+3NdzAFqj1YKhh+briVt/zjA==
-  dependencies:
-    "@artsy/palette-tokens" "^2.6.0"
-    "@seznam/compose-react-refs" "^1.0.6"
-    "@styled-system/theme-get" "^5.1.2"
-    lodash.intersection "^4.4.0"
-    lodash.orderby "^4.6.0"
-    lodash.reject "^4.6.0"
-    lodash.uniqby "^4.7.0"
-    luxon "^1.15"
-    proportional-scale "^4.0.0"
-    react-lazy-load-image-component "1.5.0"
-    react-remove-scroll "^2.3.0"
-    styled-bootstrap-grid "3.1.0"
-    styled-system "^5.1.5"
-    trunc-html "^1.1.2"
-    use-cursor "^1.2.3"
-    use-keyboard-list-navigation "2.4.2"
-
-"@artsy/palette@^18.19.0":
-  version "18.19.0"
-  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-18.19.0.tgz#b6d24bc54c481b6e1d5d5510eb1fc2cfdea9a1a8"
-  integrity sha512-BCU2Iu8v5fSQ4wu0BthNoYKQtEKSJdLbEoZ2dB3K0gK/95GD0ioY+Y9KhLWoCLd/W8xgOpyyVJteEXfoAnxNbw==
+"@artsy/palette@18.20.0", "@artsy/palette@^18.20.0":
+  version "18.20.0"
+  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-18.20.0.tgz#c8cc3aee5d45f009797557a726d4ec649216295b"
+  integrity sha512-MWmmbj1hrzqzYU3/jwAn1wkub9LGMqHrnN7N1YIq7csVOhVFS13A2uw8TQ6GOYom+ccWR0THyR6mMQIli2LKuw==
   dependencies:
     "@artsy/palette-tokens" "^2.6.0"
     "@seznam/compose-react-refs" "^1.0.6"
@@ -14263,11 +14241,6 @@ lodash.includes@^4.3.0:
   resolved "https://registry.yarnpkg.com/lodash.includes/-/lodash.includes-4.3.0.tgz#60bb98a87cb923c68ca1e51325483314849f553f"
   integrity sha1-YLuYqHy5I8aMoeUTJUgzFISfVT8=
 
-lodash.intersection@^4.4.0:
-  version "4.4.0"
-  resolved "https://registry.yarnpkg.com/lodash.intersection/-/lodash.intersection-4.4.0.tgz#0a11ba631d0e95c23c7f2f4cbb9a692ed178e705"
-  integrity sha1-ChG6Yx0OlcI8fy9Mu5ppLtF45wU=
-
 lodash.isboolean@^3.0.3:
   version "3.0.3"
   resolved "https://registry.yarnpkg.com/lodash.isboolean/-/lodash.isboolean-3.0.3.tgz#6c2e171db2a257cd96802fd43b01b20d5f5870f6"
@@ -14343,11 +14316,6 @@ lodash.once@^4.0.0, lodash.once@^4.1.1:
   resolved "https://registry.yarnpkg.com/lodash.once/-/lodash.once-4.1.1.tgz#0dd3971213c7c56df880977d504c88fb471a97ac"
   integrity sha1-DdOXEhPHxW34gJd9UEyI+0cal6w=
 
-lodash.orderby@^4.6.0:
-  version "4.6.0"
-  resolved "https://registry.yarnpkg.com/lodash.orderby/-/lodash.orderby-4.6.0.tgz#e697f04ce5d78522f54d9338b32b81a3393e4eb3"
-  integrity sha1-5pfwTOXXhSL1TZM4syuBozk+TrM=
-
 lodash.pick@^4.2.1, lodash.pick@^4.4.0:
   version "4.4.0"
   resolved "https://registry.yarnpkg.com/lodash.pick/-/lodash.pick-4.4.0.tgz#52f05610fff9ded422611441ed1fc123a03001b3"
@@ -14363,7 +14331,7 @@ lodash.reduce@^4.4.0:
   resolved "https://registry.yarnpkg.com/lodash.reduce/-/lodash.reduce-4.6.0.tgz#f1ab6b839299ad48f784abbf476596f03b914d3b"
   integrity sha1-8atrg5KZrUj3hKu/R2WW8DuRTTs=
 
-lodash.reject@^4.4.0, lodash.reject@^4.6.0:
+lodash.reject@^4.4.0:
   version "4.6.0"
   resolved "https://registry.yarnpkg.com/lodash.reject/-/lodash.reject-4.6.0.tgz#80d6492dc1470864bbf583533b651f42a9f52415"
   integrity sha1-gNZJLcFHCGS79YNTO2UfQqn1JBU=
@@ -14407,11 +14375,6 @@ lodash.uniq@4.5.0, lodash.uniq@^4.5.0:
   version "4.5.0"
   resolved "https://registry.yarnpkg.com/lodash.uniq/-/lodash.uniq-4.5.0.tgz#d0225373aeb652adc1bc82e4945339a842754773"
   integrity sha1-0CJTc662Uq3BvILklFM5qEJ1R3M=
-
-lodash.uniqby@^4.7.0:
-  version "4.7.0"
-  resolved "https://registry.yarnpkg.com/lodash.uniqby/-/lodash.uniqby-4.7.0.tgz#d99c07a669e9e6d24e1362dfe266c67616af1302"
-  integrity sha1-2ZwHpmnp5tJOE2Lf4mbGdhavEwI=
 
 lodash.upperfirst@^4.3.1:
   version "4.3.1"

@@ -7,23 +7,13 @@ import { FragmentRefs } from "relay-runtime";
 export type ArticleZoomGalleryFigure_figure = {
     readonly __typename: "Artwork";
     readonly image: {
-        readonly resized: {
-            readonly src: string;
-            readonly srcSet: string;
-            readonly height: number | null;
-            readonly width: number | null;
-        } | null;
+        readonly url: string | null;
     } | null;
     readonly " $refType": "ArticleZoomGalleryFigure_figure";
 } | {
     readonly __typename: "ArticleImageSection";
     readonly image: {
-        readonly resized: {
-            readonly src: string;
-            readonly srcSet: string;
-            readonly height: number | null;
-            readonly width: number | null;
-        } | null;
+        readonly url: string | null;
     } | null;
     readonly " $refType": "ArticleZoomGalleryFigure_figure";
 } | {
@@ -55,59 +45,17 @@ var v0 = [
         "args": [
           {
             "kind": "Literal",
-            "name": "height",
-            "value": 900
-          },
-          {
-            "kind": "Literal",
             "name": "version",
             "value": [
               "normalized",
               "larger",
               "large"
             ]
-          },
-          {
-            "kind": "Literal",
-            "name": "width",
-            "value": 900
           }
         ],
-        "concreteType": "ResizedImageUrl",
-        "kind": "LinkedField",
-        "name": "resized",
-        "plural": false,
-        "selections": [
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "src",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "srcSet",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "height",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "width",
-            "storageKey": null
-          }
-        ],
-        "storageKey": "resized(height:900,version:[\"normalized\",\"larger\",\"large\"],width:900)"
+        "kind": "ScalarField",
+        "name": "url",
+        "storageKey": "url(version:[\"normalized\",\"larger\",\"large\"])"
       }
     ],
     "storageKey": null
@@ -143,5 +91,5 @@ return {
   "abstractKey": "__isArticleSectionImageCollectionFigure"
 };
 })();
-(node as any).hash = '918fad2370f663aa5b7e1ed08160fd27';
+(node as any).hash = '968004f71e412c2ee561e68639669652';
 export default node;
