@@ -6,6 +6,14 @@ import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkSidebarAuctionInfoPolling_artwork = {
     readonly internalID: string;
+    readonly sale: {
+        readonly isClosed: boolean | null;
+    } | null;
+    readonly saleArtwork: {
+        readonly currentBid: {
+            readonly display: string | null;
+        } | null;
+    } | null;
     readonly " $fragmentRefs": FragmentRefs<"ArtworkSidebarCurrentBidInfo_artwork" | "ArtworkSidebarBidAction_artwork">;
     readonly " $refType": "ArtworkSidebarAuctionInfoPolling_artwork";
 };
@@ -31,6 +39,53 @@ const node: ReaderFragment = {
       "storageKey": null
     },
     {
+      "alias": null,
+      "args": null,
+      "concreteType": "Sale",
+      "kind": "LinkedField",
+      "name": "sale",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "isClosed",
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "SaleArtwork",
+      "kind": "LinkedField",
+      "name": "saleArtwork",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "SaleArtworkCurrentBid",
+          "kind": "LinkedField",
+          "name": "currentBid",
+          "plural": false,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "display",
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
+    },
+    {
       "args": null,
       "kind": "FragmentSpread",
       "name": "ArtworkSidebarCurrentBidInfo_artwork"
@@ -44,5 +99,5 @@ const node: ReaderFragment = {
   "type": "Artwork",
   "abstractKey": null
 };
-(node as any).hash = '4e65948742c36a5b5177c2f3c2814ecb';
+(node as any).hash = 'b0a2b446ed7619564d9f80ff278a2878';
 export default node;
