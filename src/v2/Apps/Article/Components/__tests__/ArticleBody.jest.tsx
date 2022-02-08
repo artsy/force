@@ -28,4 +28,29 @@ describe("ArticleBody", () => {
     expect(screen.getByText("March 20th, 2020")).toBeInTheDocument()
     expect(screen.getByText("—Example Author")).toBeInTheDocument()
   })
+
+  it("renders a video embed", () => {
+    renderWithRelay({
+      Article: () => ({
+        publishedAt: "March 20th, 2020",
+        byline: "Example Author",
+        sections: [
+          {
+            __typename: "ArticleSectionVideo",
+            embed: '<iframe src="https://example.com/embed" />',
+            image: {
+              cropped: {
+                src: "https://example.com/image.jpg",
+                srcSet: "https://example.com/image.jpg 1x",
+              },
+            },
+          },
+        ],
+      }),
+    })
+
+    expect(
+      screen.getByTestId("https://example.com/image.jpg")
+    ).toBeInTheDocument()
+  })
 })
