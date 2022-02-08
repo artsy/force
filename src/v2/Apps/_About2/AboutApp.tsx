@@ -97,6 +97,7 @@ export const AboutApp: React.FC = () => {
       <SellWithArtsyComponent />
       <Spacer mt={4} />
       <AppDownloadSection />
+      <CollectorInfoSection />
     </>
   )
 }
@@ -182,7 +183,6 @@ const SellWithArtsyComponent: React.FC = () => {
               >
                 Apply to Become a Partner
               </Button>
-              {/* <Spacer my={2} /> */}
               <Button
                 bg="transparent"
                 width="100%"
@@ -194,7 +194,6 @@ const SellWithArtsyComponent: React.FC = () => {
               >
                 Partnership Overview
               </Button>
-              {/* <Spacer my={2} /> */}
               <Button
                 bg="transparent"
                 width="100%"
@@ -245,6 +244,56 @@ const AppDownloadSection: React.FC = () => {
             alt=""
           />
         </ResponsiveBox>
+      </Column>
+    </GridColumns>
+  )
+}
+
+const CollectorInfoSection: React.FC = () => {
+  const image = resized(
+    "http://files.artsy.net/about2_page_collector_img.jpg",
+    {
+      width: 910,
+      height: 652,
+    }
+  )
+
+  return (
+    <GridColumns>
+      <Column span={12}>
+        <Text variant="xl" my={6}>
+          Collecting
+        </Text>
+      </Column>
+      <Column span={6}>
+        <ResponsiveBox aspectHeight={652} aspectWidth={910} maxWidth="100%">
+          <Image
+            src={image.src}
+            width="100%"
+            height="100%"
+            srcSet={image.srcSet}
+            lazyLoad
+            alt=""
+          />
+        </ResponsiveBox>
+      </Column>
+
+      <Column span={6}>
+        <Text variant="xs" textTransform="uppercase">
+          On Artsy
+        </Text>
+        <Text variant="xl" mt={1}>
+          Where Collectors Belong
+        </Text>
+        <Text variant="sm" mt={1}>
+          Artsy lets collectors find their favorite artists—and discover some
+          new ones—all in one place. We bring together over 1 million artworks
+          from our network of 4,000+ partners, including the world’s leading
+          galleries, auction houses, fairs, and institutions. To connect
+          collectors to the art they care about, we feature the largest
+          selection of international emerging, established, and blue-chip
+          artists.
+        </Text>
       </Column>
     </GridColumns>
   )
