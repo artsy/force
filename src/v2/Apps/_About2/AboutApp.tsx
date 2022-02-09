@@ -96,7 +96,7 @@ export const AboutApp: React.FC = () => {
         }}
       />
 
-      <SellWithArtsyComponent />
+      <SellWithArtsySection />
       <Spacer mt={4} />
       <AppDownloadSection />
       <CollectorInfoSection />
@@ -134,7 +134,7 @@ const RailComponent: React.FC<RailComponentProps> = props => {
   )
 }
 
-const SellWithArtsyComponent: React.FC = () => {
+const SellWithArtsySection: React.FC = () => {
   const image = resized(
     "http://files.artsy.net/images/molly_green_original.jpeg",
     { width: 640 }
@@ -236,10 +236,21 @@ const AppDownloadSection: React.FC = () => {
         <Text variant="xl" mt={1}>
           The Art Market at Your Fingertips
         </Text>
-        <Text variant="sm" mt={1}>
+        <Text variant="sm" mt={1} mb={4}>
           Discover artworks just for you, get market insights, and buy and sell
           with confidence—all on the Artsy app.
         </Text>
+        <Flex>
+          <RouterLink to="https://apps.apple.com/us/app/artsy-buy-sell-original-art/id703796080">
+            <Image
+              src="http://files.artsy.net/images/download-ios-app-transparent.svg"
+              mr={4}
+            />
+          </RouterLink>
+          <RouterLink to="https://play.google.com/store/apps/details?id=net.artsy.app">
+            <Image src="http://files.artsy.net/images/download-android-app-transparent.svg" />
+          </RouterLink>
+        </Flex>
       </Column>
 
       <Column span={6} mt={6}>
