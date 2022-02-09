@@ -15,6 +15,7 @@ describe("LoginForm", () => {
       handleSubmit: jest.fn(),
       onFacebookLogin: jest.fn(),
       onAppleLogin: jest.fn(),
+      onGoogleLogin: jest.fn(),
     }
     window.grecaptcha.execute.mockClear()
   })
@@ -56,7 +57,7 @@ describe("LoginForm", () => {
     wrapper.update()
 
     setTimeout(() => {
-      const submitButton = wrapper.find("Button")
+      const submitButton = wrapper.find("Button").at(0)
       expect((submitButton.props() as any).loading).toEqual(true)
       done()
     })
@@ -144,7 +145,10 @@ describe("LoginForm", () => {
 
     it("does not render email errors for social sign ups", done => {
       const wrapper = getWrapper()
-      const socialLink = wrapper.find("Clickable").at(0)
+      const socialLink = wrapper.find("IconButton").at(0)
+
+      expect(socialLink.text()).toContain("Continue with Apple")
+
       socialLink.simulate("click")
       wrapper.update()
 

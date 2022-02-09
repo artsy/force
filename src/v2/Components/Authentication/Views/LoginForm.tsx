@@ -157,6 +157,10 @@ export class LoginForm extends Component<FormProps, LoginFormState> {
                   Log in
                 </Button>
 
+                <Text variant="sm" textAlign="center" color="black60">
+                  or
+                </Text>
+
                 <AuthenticationFooter
                   mode={"login" as ModalType}
                   handleTypeChange={() =>

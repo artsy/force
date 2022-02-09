@@ -1,5 +1,5 @@
 import { ContextModule, Intent } from "@artsy/cohesion"
-import { Clickable } from "@artsy/palette"
+import { Clickable, IconButton } from "@artsy/palette"
 import { mount } from "enzyme"
 import { ForgotPasswordForm } from "../Views/ForgotPasswordForm"
 import { LoginForm } from "../Views/LoginForm"
@@ -114,8 +114,8 @@ describe("FormSwitcher", () => {
       })
 
       wrapper
-        .find(Clickable)
-        .findWhere(node => node.text() === "Apple")
+        .find(IconButton)
+        .findWhere(node => node.text().includes("Continue with Apple"))
         .first()
         .simulate("click")
 
