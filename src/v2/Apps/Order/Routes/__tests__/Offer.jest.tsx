@@ -27,6 +27,10 @@ jest.mock("v2/Utils/Events", () => ({
 jest.mock("v2/Utils/Hooks/useMatchMedia", () => ({
   __internal__useMatchMedia: () => ({}),
 }))
+jest.mock("v2/Utils/user", () => ({
+  getUser: jest.fn(),
+  userHasLabFeature: jest.fn().mockReturnValue(false),
+}))
 
 const mockPostEvent = require("v2/Utils/Events").postEvent as jest.Mock
 
@@ -230,6 +234,10 @@ describe("Offer InitialMutation", () => {
       await page.clickSubmit()
       expect(mutations.mockFetch).toHaveBeenCalled()
       expect(routes.mockPushRoute).toHaveBeenCalledWith("/orders/1234/shipping")
+    })
+
+    it("adds a custom note given no note present", async () => {
+      // TOFIX add the test when the feature flag is retired
     })
 
     it("routes to shipping screen after mutation completes - custom amount", async () => {

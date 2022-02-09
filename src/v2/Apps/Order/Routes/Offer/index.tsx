@@ -33,6 +33,7 @@ import { ContextModule, OwnerType } from "@artsy/cohesion"
 import { isNil } from "lodash"
 import { appendCurrencySymbol } from "v2/Apps/Order/Utils/currencyUtils"
 import { SystemContextProps, withSystemContext } from "v2/System"
+import { userHasLabFeature } from "v2/Utils/user"
 
 export interface OfferProps extends SystemContextProps {
   order: Offer_order
@@ -199,11 +200,33 @@ export class OfferRoute extends Component<OfferProps, OfferState> {
     }
 
     try {
+      const hasNote =
+        this.state.offerNoteValue &&
+        this.state.offerNoteValue.value.trim() !== ""
+
+      const offerOnAllEligibleArtworks = userHasLabFeature(
+        this.props.user,
+        "Make Offer On All Eligible Artworks"
+      )
+
+      let note = hasNote
+        ? this.state.offerNoteValue.value
+        : offerOnAllEligibleArtworks
+        ? `I sent an offer for ${appendCurrencySymbol(
+            this.state.offerValue.toLocaleString("en-US", {
+              currency: this.props.order.currencyCode,
+              minimumFractionDigits: 2,
+              style: "currency",
+            }),
+            this.props.order.currencyCode
+          )}`
+        : undefined
+
       const orderOrError = (
         await this.addInitialOfferToOrder({
           input: {
             amountCents: offerValue * 100,
-            note: this.state.offerNoteValue && this.state.offerNoteValue.value,
+            note,
             orderId: this.props.order.internalID,
           },
         })
@@ -247,8 +270,7 @@ export class OfferRoute extends Component<OfferProps, OfferState> {
               style={isCommittingMutation ? { pointerEvents: "none" } : {}}
               id="offer-page-left-column"
             >
-              {(isInquiryCheckout ||
-                isEdition) && (
+              {(isInquiryCheckout || isEdition) && (
                 <>
                   <Flex flexDirection="column">
                     <OfferInput

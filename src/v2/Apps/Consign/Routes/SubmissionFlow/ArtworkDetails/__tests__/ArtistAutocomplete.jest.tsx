@@ -202,7 +202,7 @@ describe("ArtistAutocomplete", () => {
       wrapper.update()
 
       expect(wrapper.find("div[color='red100']").text()).toBe(
-        "Unfortunately, we currently do not have enough demand for this artist’s work to be submitted."
+        "Please select an artist from the list. Other artists cannot be submitted due to limited demand."
       )
     })
   })
