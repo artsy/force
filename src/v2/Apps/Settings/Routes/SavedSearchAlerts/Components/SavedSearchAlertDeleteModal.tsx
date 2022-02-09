@@ -26,8 +26,10 @@ export const SavedSearchAlertDeleteModal: React.FC<SavedSearchAlertDeleteModalPr
     try {
       setIsDeleting(true)
       await submitDeleteAlert({
-        input: {
-          searchCriteriaID: id,
+        variables: {
+          input: {
+            searchCriteriaID: id,
+          },
         },
       })
     } catch (error) {

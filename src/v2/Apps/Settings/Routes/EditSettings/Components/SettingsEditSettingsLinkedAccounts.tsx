@@ -123,7 +123,7 @@ const SettingsEditSettingsLinkedAccountsButton: FC<SettingsEditSettingsLinkedAcc
     setMode("Disconnecting")
 
     try {
-      await submitMutation({ input: { provider } })
+      await submitMutation({ variables: { input: { provider } } })
 
       sendToast({
         variant: "success",

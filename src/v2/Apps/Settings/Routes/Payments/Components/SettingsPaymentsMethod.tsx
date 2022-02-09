@@ -29,14 +29,12 @@ const SettingsPaymentsMethod: FC<SettingsPaymentsMethodProps> = ({
     setMode("Deleting")
 
     try {
-      await submitMutation(
-        { input: { id: method.internalID } },
-        {
-          checkForErrors: res => {
-            return res.deleteCreditCard?.creditCardOrError?.mutationError
-          },
-        }
-      )
+      await submitMutation({
+        variables: { input: { id: method.internalID } },
+        rejectIf: res => {
+          return res.deleteCreditCard?.creditCardOrError?.mutationError
+        },
+      })
 
       sendToast({
         variant: "success",

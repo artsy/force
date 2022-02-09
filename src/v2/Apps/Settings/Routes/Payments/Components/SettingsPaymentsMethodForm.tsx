@@ -86,14 +86,12 @@ export const SettingsPaymentsMethodForm: FC<SettingsPaymentsMethodFormProps> = (
             })
           }
 
-          await submitMutation(
-            { input: { token: token.id } },
-            {
-              checkForErrors: res => {
-                return res.createCreditCard?.creditCardOrError?.mutationError
-              },
-            }
-          )
+          await submitMutation({
+            variables: { input: { token: token.id } },
+            rejectIf: res => {
+              return res.createCreditCard?.creditCardOrError?.mutationError
+            },
+          })
 
           sendToast({
             variant: "success",

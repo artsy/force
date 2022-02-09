@@ -30,7 +30,7 @@ export const UnsubscribeLoggedIn: React.FC<UnsubscribeLoggedInProps> = ({
 
       setMode("Loading")
 
-      submitMutation({ input: { emailFrequency } })
+      submitMutation({ variables: { input: { emailFrequency } } })
 
       sendToast({
         variant: "success",

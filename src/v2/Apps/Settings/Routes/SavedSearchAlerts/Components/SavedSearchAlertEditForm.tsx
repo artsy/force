@@ -113,12 +113,14 @@ const SavedSearchAlertEditForm: React.FC<SavedSearchAlertEditFormProps> = ({
         searchCriteriaAttributes as ArtworkFilters
       )
       await submitEditAlert({
-        input: {
-          searchCriteriaID: editAlertEntity!.id,
-          attributes: searchCriteria,
-          userAlertSettings: {
-            ...values,
-            name: values.name || namePlaceholder,
+        variables: {
+          input: {
+            searchCriteriaID: editAlertEntity!.id,
+            attributes: searchCriteria,
+            userAlertSettings: {
+              ...values,
+              name: values.name || namePlaceholder,
+            },
           },
         },
       })
