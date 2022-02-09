@@ -93,6 +93,23 @@ describe("SignUpForm", () => {
     })
   })
 
+  describe("with a missing country code", () => {
+    const countryCode = null
+
+    it("uses the GDPR label and shows the email checkbox", () => {
+      const wrapper = getWrapper({
+        RequestLocation: () => ({ countryCode }),
+      })
+
+      expect(wrapper.text()).toContain(
+        "By checking this box, you consent to our"
+      )
+      expect(wrapper.text()).toContain(
+        "Dive deeper into the art market with Artsy emails."
+      )
+    })
+  })
+
   describe("recaptcha", () => {
     it("displays recaptcha warning", () => {
       passedProps.showRecaptchaDisclaimer = true
