@@ -30,7 +30,7 @@ query ArticlesIndexArticlesQuery(
 
 fragment ArticlesIndexArticle_article on Article {
   href
-  title
+  thumbnailTitle
   byline
   publishedAt(format: "MMMM Do YYYY")
   thumbnailImage {
@@ -178,7 +178,7 @@ return {
                         "alias": null,
                         "args": null,
                         "kind": "ScalarField",
-                        "name": "title",
+                        "name": "thumbnailTitle",
                         "storageKey": null
                       },
                       {
@@ -335,12 +335,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "f740d276c71fad06253a47dca944f3a4",
+    "cacheID": "0b9e2e386fe0c0c53e760976d474bd14",
     "id": null,
     "metadata": {},
     "name": "ArticlesIndexArticlesQuery",
     "operationKind": "query",
-    "text": "query ArticlesIndexArticlesQuery(\n  $after: String\n) {\n  viewer {\n    ...ArticlesIndexArticles_viewer_WGPvJ\n  }\n}\n\nfragment ArticlesIndexArticle_article on Article {\n  href\n  title\n  byline\n  publishedAt(format: \"MMMM Do YYYY\")\n  thumbnailImage {\n    cropped(width: 910, height: 607) {\n      src\n      srcSet\n      width\n      height\n    }\n  }\n}\n\nfragment ArticlesIndexArticles_viewer_WGPvJ on Viewer {\n  articlesConnection(first: 15, after: $after, sort: PUBLISHED_AT_DESC, featured: true) {\n    edges {\n      node {\n        internalID\n        ...ArticlesIndexArticle_article\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query ArticlesIndexArticlesQuery(\n  $after: String\n) {\n  viewer {\n    ...ArticlesIndexArticles_viewer_WGPvJ\n  }\n}\n\nfragment ArticlesIndexArticle_article on Article {\n  href\n  thumbnailTitle\n  byline\n  publishedAt(format: \"MMMM Do YYYY\")\n  thumbnailImage {\n    cropped(width: 910, height: 607) {\n      src\n      srcSet\n      width\n      height\n    }\n  }\n}\n\nfragment ArticlesIndexArticles_viewer_WGPvJ on Viewer {\n  articlesConnection(first: 15, after: $after, sort: PUBLISHED_AT_DESC, featured: true) {\n    edges {\n      node {\n        internalID\n        ...ArticlesIndexArticle_article\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();

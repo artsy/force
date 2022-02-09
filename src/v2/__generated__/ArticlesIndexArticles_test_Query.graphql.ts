@@ -30,7 +30,7 @@ query ArticlesIndexArticles_test_Query(
 
 fragment ArticlesIndexArticle_article on Article {
   href
-  title
+  thumbnailTitle
   byline
   publishedAt(format: "MMMM Do YYYY")
   thumbnailImage {
@@ -202,7 +202,7 @@ return {
                         "alias": null,
                         "args": null,
                         "kind": "ScalarField",
-                        "name": "title",
+                        "name": "thumbnailTitle",
                         "storageKey": null
                       },
                       {
@@ -359,7 +359,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "40ab6045abf687986604f40b0acd2133",
+    "cacheID": "85c33bf66f0d0ae05ea0ff4c72c24979",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -410,7 +410,7 @@ return {
         "viewer.articlesConnection.edges.node.thumbnailImage.cropped.src": (v3/*: any*/),
         "viewer.articlesConnection.edges.node.thumbnailImage.cropped.srcSet": (v3/*: any*/),
         "viewer.articlesConnection.edges.node.thumbnailImage.cropped.width": (v6/*: any*/),
-        "viewer.articlesConnection.edges.node.title": (v4/*: any*/),
+        "viewer.articlesConnection.edges.node.thumbnailTitle": (v4/*: any*/),
         "viewer.articlesConnection.pageInfo": {
           "enumValues": null,
           "nullable": false,
@@ -428,7 +428,7 @@ return {
     },
     "name": "ArticlesIndexArticles_test_Query",
     "operationKind": "query",
-    "text": "query ArticlesIndexArticles_test_Query(\n  $after: String\n) {\n  viewer {\n    ...ArticlesIndexArticles_viewer_WGPvJ\n  }\n}\n\nfragment ArticlesIndexArticle_article on Article {\n  href\n  title\n  byline\n  publishedAt(format: \"MMMM Do YYYY\")\n  thumbnailImage {\n    cropped(width: 910, height: 607) {\n      src\n      srcSet\n      width\n      height\n    }\n  }\n}\n\nfragment ArticlesIndexArticles_viewer_WGPvJ on Viewer {\n  articlesConnection(first: 15, after: $after, sort: PUBLISHED_AT_DESC, featured: true) {\n    edges {\n      node {\n        internalID\n        ...ArticlesIndexArticle_article\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query ArticlesIndexArticles_test_Query(\n  $after: String\n) {\n  viewer {\n    ...ArticlesIndexArticles_viewer_WGPvJ\n  }\n}\n\nfragment ArticlesIndexArticle_article on Article {\n  href\n  thumbnailTitle\n  byline\n  publishedAt(format: \"MMMM Do YYYY\")\n  thumbnailImage {\n    cropped(width: 910, height: 607) {\n      src\n      srcSet\n      width\n      height\n    }\n  }\n}\n\nfragment ArticlesIndexArticles_viewer_WGPvJ on Viewer {\n  articlesConnection(first: 15, after: $after, sort: PUBLISHED_AT_DESC, featured: true) {\n    edges {\n      node {\n        internalID\n        ...ArticlesIndexArticle_article\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();

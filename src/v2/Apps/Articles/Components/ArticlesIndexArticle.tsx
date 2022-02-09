@@ -28,7 +28,7 @@ const ArticlesIndexArticle: FC<ArticlesIndexArticleProps> = ({ article }) => {
             {article.publishedAt}
           </Text>
 
-          <Text variant="xl">{article.title}</Text>
+          <Text variant="xl">{article.thumbnailTitle}</Text>
 
           <Text variant="xl" color="black60">
             {article.byline}
@@ -38,7 +38,7 @@ const ArticlesIndexArticle: FC<ArticlesIndexArticleProps> = ({ article }) => {
         <Spacer mt={2} />
 
         <ArticleShare
-          description={article.title ?? "Artsy Editorial"}
+          description={article.thumbnailTitle ?? "Artsy Editorial"}
           url={`${getENV("APP_URL")}${article.href}`}
         />
       </Column>
@@ -78,7 +78,7 @@ export const ArticlesIndexArticleFragmentContainer = createFragmentContainer(
     article: graphql`
       fragment ArticlesIndexArticle_article on Article {
         href
-        title
+        thumbnailTitle
         byline
         publishedAt(format: "MMMM Do YYYY")
         thumbnailImage {
