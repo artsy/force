@@ -33,7 +33,7 @@ const SettingsPaymentsMethod: FC<SettingsPaymentsMethodProps> = ({
         { input: { id: method.internalID } },
         {
           checkForErrors: res => {
-            res.deleteCreditCard?.creditCardOrError?.mutationError
+            return res.deleteCreditCard?.creditCardOrError?.mutationError
           },
         }
       )
