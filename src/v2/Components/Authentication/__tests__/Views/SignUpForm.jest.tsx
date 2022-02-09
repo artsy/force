@@ -127,11 +127,9 @@ describe("SignUpForm", () => {
       const wrapper = getWrapper()
 
       const appleLink = wrapper
-        .find("Clickable")
-        .findWhere(node => node.text() === "Apple")
+        .find("IconButton")
+        .findWhere(node => node.text().includes("Continue with Apple"))
         .first()
-
-      expect(appleLink.text()).toEqual("Apple")
 
       appleLink.simulate("click")
 
@@ -146,11 +144,9 @@ describe("SignUpForm", () => {
       const wrapper = getWrapper()
 
       const facebookLink = wrapper
-        .find("Clickable")
-        .findWhere(node => node.text() === "Facebook")
+        .find("IconButton")
+        .findWhere(node => node.text().includes("Continue with Facebook"))
         .first()
-
-      expect(facebookLink.text()).toEqual("Facebook")
 
       facebookLink.simulate("click")
 
@@ -165,11 +161,9 @@ describe("SignUpForm", () => {
       const wrapper = getWrapper()
 
       const googleLink = wrapper
-        .find("Clickable")
-        .findWhere(node => node.text() === "Google")
+        .find("IconButton")
+        .findWhere(node => node.text().includes("Continue with Google"))
         .first()
-
-      expect(googleLink.text()).toEqual("Google")
 
       googleLink.simulate("click")
 
@@ -184,11 +178,9 @@ describe("SignUpForm", () => {
       const wrapper = getWrapper()
 
       const appleLink = wrapper
-        .find("Clickable")
-        .findWhere(node => node.text() === "Apple")
+        .find("IconButton")
+        .findWhere(node => node.text().includes("Continue with Apple"))
         .first()
-
-      expect(appleLink.text()).toEqual("Apple")
 
       appleLink.simulate("click")
 
@@ -203,11 +195,9 @@ describe("SignUpForm", () => {
       const wrapper = getWrapper()
 
       const appleLink = wrapper
-        .find("Clickable")
-        .findWhere(node => node.text() === "Apple")
+        .find("IconButton")
+        .findWhere(node => node.text().includes("Continue with Apple"))
         .first()
-
-      expect(appleLink.text()).toEqual("Apple")
 
       appleLink.simulate("click")
 
