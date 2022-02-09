@@ -6,7 +6,7 @@ export const artworkDetailsValidationSchema = yup.object().shape({
   artistId: yup
     .string()
     .required(
-      "Unfortunately, we currently do not have enough demand for this artist’s work to be submitted."
+      "Please select an artist from the list. Other artists cannot be submitted due to limited demand."
     ),
   year: yup.string().required().trim(),
   title: yup.string().required().trim(),
