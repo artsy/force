@@ -27,13 +27,13 @@ export const AboutApp: React.FC = () => {
         description="Artsy’s mission is to make all of the world’s art accessible to anyone with an Internet connection."
         pathname="/about"
       />
-      <GridColumns mt={4}>
-        <Column span={6}>
+      <GridColumns>
+        <Column span={6} my={4}>
           <Text as="h1" variant="xl">
             For the Love of Art
           </Text>
         </Column>
-        <Column span={6}>
+        <Column span={6} my={4}>
           <Text variant="md">
             Artsy envisions a future where everyone is moved by art every day.
             To get there, we’re expanding the art market to support more artists
@@ -45,7 +45,7 @@ export const AboutApp: React.FC = () => {
           </Text>
         </Column>
       </GridColumns>
-
+      <Spacer mt={6} />
       <Rail
         title="Discover Artworks Just for You"
         subTitle="On Artsy"
@@ -117,7 +117,12 @@ interface RailComponentProps {
 const RailComponent: React.FC<RailComponentProps> = props => {
   return (
     <Box>
-      <Image width={props.width} height={props.height} src={props.imgUrl} />
+      <Image
+        width={props.width}
+        height={props.height}
+        src={props.imgUrl}
+        alt=""
+      />
       <Text variant="md">{props.name}</Text>
       <Text variant="md" color="black60">
         {props.artworkTitle}
@@ -148,7 +153,7 @@ const SellWithArtsyComponent: React.FC = () => {
           style={{
             transform: "scale(1.3)",
             pointerEvents: "none",
-            filter: "blur(5px)",
+            filter: "blur(3px)",
           }}
         >
           <Image
@@ -159,6 +164,7 @@ const SellWithArtsyComponent: React.FC = () => {
             style={{
               objectFit: "cover",
             }}
+            alt=""
           />
         </Box>
       )}
@@ -179,9 +185,9 @@ const SellWithArtsyComponent: React.FC = () => {
               <Button
                 variant="primaryWhite"
                 width="100%"
-                // @ts-ignore
+                //@ts-ignore
                 as={RouterLink}
-                to=""
+                to="https://partners.artsy.net/gallery-partnerships/"
                 mb={2}
               >
                 Apply to Become a Partner
@@ -192,7 +198,7 @@ const SellWithArtsyComponent: React.FC = () => {
                 borderColor="white100"
                 // @ts-ignore
                 as={RouterLink}
-                to=""
+                to="https://partners.artsy.net/"
                 mb={2}
               >
                 Partnership Overview
@@ -203,7 +209,7 @@ const SellWithArtsyComponent: React.FC = () => {
                 border="none"
                 // @ts-ignore
                 as={RouterLink}
-                to=""
+                to="/galleries"
               >
                 See Full List of Partners
               </Button>
@@ -223,7 +229,7 @@ const AppDownloadSection: React.FC = () => {
 
   return (
     <GridColumns>
-      <Column span={6}>
+      <Column span={6} mt={6}>
         <Text variant="xs" textTransform="uppercase">
           Artsy App
         </Text>
@@ -236,7 +242,7 @@ const AppDownloadSection: React.FC = () => {
         </Text>
       </Column>
 
-      <Column span={6}>
+      <Column span={6} mt={6}>
         <ResponsiveBox aspectHeight={652} aspectWidth={910} maxWidth="100%">
           <Image
             src={image.src}
@@ -279,6 +285,10 @@ const CollectorInfoSection: React.FC = () => {
             alt=""
           />
         </ResponsiveBox>
+        <Text variant="xs" textColor="black60">
+          The Collection fo Carole Server by Emily Johnston for Artsy 2015.
+          Courtesy of Carole Server.
+        </Text>
       </Column>
 
       <Column span={6}>
@@ -298,6 +308,11 @@ const CollectorInfoSection: React.FC = () => {
           artists.
         </Text>
       </Column>
+      <Column span={12}>
+        <Spacer my={6} />
+        <Text borderBottom="1px solid" borderBottomColor="black15" />
+        <Spacer my={6} />
+      </Column>
     </GridColumns>
   )
 }
@@ -305,7 +320,7 @@ const CollectorInfoSection: React.FC = () => {
 const ArtsySpecialistsSection: React.FC = () => {
   return (
     <GridColumns>
-      <Column span={6} mt={6}>
+      <Column span={6}>
         <Text variant="xs" textTransform="uppercase">
           Artsy Specialists
         </Text>
@@ -328,7 +343,7 @@ const ArtsySpecialistsSection: React.FC = () => {
             width="40%"
             // @ts-ignore
             as={RouterLink}
-            to=""
+            to="/meet-the-specialists"
             mt={4}
             mr={1}
           >
@@ -339,9 +354,9 @@ const ArtsySpecialistsSection: React.FC = () => {
             width="40%"
             // @ts-ignore
             as={RouterLink}
-            to=""
+            to="https://support.artsy.net/hc/en-us"
             mt={4}
-            borderColor="black60"
+            borderColor="black15"
           >
             Collector Resources
           </Button>
@@ -361,11 +376,11 @@ const ArtsySpecialistsSection: React.FC = () => {
                 <RouterLink to={`mailto:${specialist.email}`}>
                   {specialist.email}
                 </RouterLink>
-                <Spacer my={2} />
-                <Text borderBottom="1px solid" borderBottomColor="black60" />
-                <Spacer my={2} />
               </Flex>
             </Flex>
+            <Spacer my={2} />
+            <Text borderBottom="1px solid" borderBottomColor="black15" />
+            <Spacer my={2} />
           </Box>
         ))}
       </Column>
