@@ -55,7 +55,7 @@ export const DownloadAppBanner: React.FC<DownloadAppBannerProps> = ({
   return (
     <Box p={2} pb={1} backgroundColor="black5">
       <Text variant="md" mb={1} textAlign="center">
-        Get alerts direct to your phone when you download the Artsy app.
+        Get alerts direct to your mobile when you download the Artsy app.
       </Text>
       <Flex justifyContent="center" flexWrap="wrap">
         {(device === Device.iPhone || device === Device.Unknown) && (
