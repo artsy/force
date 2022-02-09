@@ -1,6 +1,7 @@
 import { useContext } from "react"
 import * as React from "react"
 import {
+  BellIcon,
   HeartIcon,
   PowerIcon,
   ReceiptIcon,
@@ -63,6 +64,14 @@ export const NavBarUserMenu: React.FC = () => {
         onClick={trackClick}
       >
         <ReceiptIcon mr={1} aria-hidden="true" /> Order History
+      </NavBarMenuItemLink>
+
+      <NavBarMenuItemLink
+        aria-label="View your alerts"
+        to="/user/alerts"
+        onClick={trackClick}
+      >
+        <BellIcon mr={1} aria-hidden="true" /> Alerts
       </NavBarMenuItemLink>
 
       <NavBarMenuItemLink
