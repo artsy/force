@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { MetaTags } from "v2/Components/MetaTags"
 import { CategoriesIntro } from "./Components/CategoriesIntro"
@@ -29,7 +29,10 @@ const CategoriesApp: React.FC<CategoriesAppProps> = props => {
         <Sticky>
           {({ stuck }) => {
             return (
-              <FullBleed style={stuck ? { boxShadow: DROP_SHADOW } : undefined}>
+              <FullBleed
+                backgroundColor="white100"
+                style={stuck ? { boxShadow: DROP_SHADOW } : undefined}
+              >
                 <AppContainer maxWidth="none">
                   <Spacer pb={1} />
                   <Media at="xs">

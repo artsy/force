@@ -52,7 +52,7 @@ describe("SavedSearchAlertModal", () => {
 
   it("is not rendered when visible=false", () => {
     render(<TestComponent visible={false} />)
-    expect(screen.queryByText("Name")).not.toBeInTheDocument()
+    expect(screen.queryByText("Alert Name")).not.toBeInTheDocument()
     expect(screen.queryByText("Filters")).not.toBeInTheDocument()
     expect(screen.queryByText("Test Artist")).not.toBeInTheDocument()
     expect(screen.queryByText("Open Edition")).not.toBeInTheDocument()
@@ -64,7 +64,7 @@ describe("SavedSearchAlertModal", () => {
 
   it("renders correctly", () => {
     render(<TestComponent />)
-    expect(screen.getByText("Name")).toBeInTheDocument()
+    expect(screen.getByText("Alert Name")).toBeInTheDocument()
     expect(screen.getByText("Filters")).toBeInTheDocument()
     expect(screen.getByText("Test Artist")).toBeInTheDocument()
     expect(screen.getByText("Open Edition")).toBeInTheDocument()
@@ -77,7 +77,7 @@ describe("SavedSearchAlertModal", () => {
     expect(screen.getAllByRole("checkbox")[1]).not.toBeChecked()
   })
 
-  it("name generated correctly", () => {
+  it("alert name generated correctly", () => {
     render(<TestComponent />)
     expect(screen.getByRole("textbox")).toHaveAttribute(
       "placeholder",

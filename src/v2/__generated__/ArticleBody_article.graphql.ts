@@ -4,7 +4,7 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type ArticleLayout = "FEATURE" | "STANDARD" | "%future added value";
+export type ArticleLayout = "CLASSIC" | "FEATURE" | "NEWS" | "SERIES" | "STANDARD" | "VIDEO" | "%future added value";
 export type ArticleBody_article = {
     readonly layout: ArticleLayout;
     readonly title: string | null;
@@ -13,7 +13,7 @@ export type ArticleBody_article = {
     readonly publishedAt: string | null;
     readonly sections: ReadonlyArray<{
         readonly __typename: string;
-        readonly " $fragmentRefs": FragmentRefs<"ArticleSectionText_section" | "ArticleSectionImageCollection_section" | "ArticleSectionImageSet_section">;
+        readonly " $fragmentRefs": FragmentRefs<"ArticleSectionText_section" | "ArticleSectionImageCollection_section" | "ArticleSectionImageSet_section" | "ArticleSectionVideo_section" | "ArticleSectionSocialEmbed_section">;
     }>;
     readonly postscript: string | null;
     readonly relatedArticles: ReadonlyArray<{
@@ -119,6 +119,16 @@ return {
           "args": null,
           "kind": "FragmentSpread",
           "name": "ArticleSectionImageSet_section"
+        },
+        {
+          "args": null,
+          "kind": "FragmentSpread",
+          "name": "ArticleSectionVideo_section"
+        },
+        {
+          "args": null,
+          "kind": "FragmentSpread",
+          "name": "ArticleSectionSocialEmbed_section"
         }
       ],
       "storageKey": null
@@ -208,5 +218,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '3542476ed06b78b661d3a9601a1fe890';
+(node as any).hash = '313a69485a51ec33db5c4d8e2e5ad44a';
 export default node;

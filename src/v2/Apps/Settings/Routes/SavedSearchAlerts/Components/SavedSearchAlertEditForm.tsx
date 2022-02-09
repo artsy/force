@@ -154,7 +154,7 @@ const SavedSearchAlertEditForm: React.FC<SavedSearchAlertEditFormProps> = ({
           <Box>
             <Join separator={<Spacer mt={[4, 6]} />}>
               <Input
-                title="Name"
+                title="Alert Name"
                 name="name"
                 placeholder={namePlaceholder}
                 value={values.name}

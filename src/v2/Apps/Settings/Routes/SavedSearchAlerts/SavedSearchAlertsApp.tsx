@@ -26,6 +26,8 @@ import { SavedSearchAlertHeader } from "./Components/SavedSearchAlertHeader"
 import { MetaTags } from "v2/Components/MetaTags"
 import { SavedSearchAlertsEmptyResults } from "./Components/SavedSearchAlertsEmptyResults"
 import { SavedSearchAlertEditFormContainer } from "./Components/SavedSearchAlertEditFormContainter"
+import { Sticky, StickyProvider } from "v2/Components/Sticky"
+import { useNavBarHeight } from "v2/Components/NavBar/useNavBarHeight"
 
 interface SavedSearchAlertsAppProps {
   me: SavedSearchAlertsApp_me
@@ -36,6 +38,7 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
   me,
   relay,
 }) => {
+  const { desktop } = useNavBarHeight()
   const [
     editAlertEntity,
     setEditAlertEntity,
@@ -104,7 +107,7 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
   )
 
   return (
-    <Box>
+    <StickyProvider>
       <MetaTags title="Your Alerts | Artsy" pathname="/user/alerts" />
 
       <Media greaterThanOrEqual="md">
@@ -129,16 +132,25 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
               <GridColumns gridColumnGap={0}>
                 <Column span={isEditMode ? 6 : 12}>{list}</Column>
                 {isEditMode && editAlertEntity && (
-                  <Column span={6}>
-                    <SavedSearchAlertEditFormContainer
-                      editAlertEntity={editAlertEntity}
-                      onCloseClick={closeEditForm}
-                      onCompleted={handleCompleted}
-                      onDeleteClick={handleDeleteClick}
-                    />
+                  <Column span={6} borderLeft="1px solid" borderColor="black15">
+                    <Sticky bottomBoundary="#content-end">
+                      <Box
+                        overflowY="scroll"
+                        maxHeight={`calc(100vh - ${desktop}px)`}
+                      >
+                        <SavedSearchAlertEditFormContainer
+                          editAlertEntity={editAlertEntity}
+                          onCloseClick={closeEditForm}
+                          onCompleted={handleCompleted}
+                          onDeleteClick={handleDeleteClick}
+                        />
+                      </Box>
+                    </Sticky>
                   </Column>
                 )}
               </GridColumns>
+
+              <Box id="content-end" />
             </Media>
 
             <Media lessThan="md">
@@ -164,7 +176,7 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
           </>
         )}
       </FullBleed>
-    </Box>
+    </StickyProvider>
   )
 }
 

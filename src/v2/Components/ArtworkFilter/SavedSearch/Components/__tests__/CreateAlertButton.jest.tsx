@@ -61,7 +61,7 @@ describe("CreateAlertButton", () => {
       }
     })
     renderButton()
-    expect(screen.getByText("Create an Alert")).toBeInTheDocument()
+    expect(screen.getByText("Create Alert")).toBeInTheDocument()
   })
 
   describe("when logged in", () => {
@@ -73,11 +73,11 @@ describe("CreateAlertButton", () => {
       })
     })
 
-    it("pops up the Create an Alert modal when clicked", () => {
+    it("pops up the Create Alert modal when clicked", () => {
       renderButton()
       expect(screen.queryByTestId("CreateAlertModal")).not.toBeInTheDocument()
 
-      const button = screen.getByText("Create an Alert")
+      const button = screen.getByText("Create Alert")
       fireEvent.click(button)
 
       expect(screen.getByTestId("CreateAlertModal")).toBeInTheDocument()
@@ -85,7 +85,7 @@ describe("CreateAlertButton", () => {
 
     it("tracks event", () => {
       renderButton()
-      const button = screen.getByText("Create an Alert")
+      const button = screen.getByText("Create Alert")
       fireEvent.click(button)
       expect(trackEvent).toHaveBeenCalledWith(
         expect.objectContaining({
@@ -109,7 +109,7 @@ describe("CreateAlertButton", () => {
 
     it("pops up the auth modal when clicked", () => {
       renderButton()
-      const button = screen.getByText("Create an Alert")
+      const button = screen.getByText("Create Alert")
       fireEvent.click(button)
       expect(openAuthToSatisfyIntent).toHaveBeenCalledWith(mediator, {
         entity: {
@@ -124,7 +124,7 @@ describe("CreateAlertButton", () => {
 
     it("tracks event", () => {
       renderButton()
-      const button = screen.getByText("Create an Alert")
+      const button = screen.getByText("Create Alert")
       fireEvent.click(button)
       expect(trackEvent).toHaveBeenCalledWith(
         expect.objectContaining({

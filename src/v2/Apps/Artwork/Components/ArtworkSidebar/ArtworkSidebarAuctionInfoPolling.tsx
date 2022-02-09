@@ -5,6 +5,7 @@ import { ArtworkSidebarCurrentBidInfoFragmentContainer } from "./ArtworkSidebarC
 import { ArtworkSidebarAuctionInfoPolling_artwork } from "v2/__generated__/ArtworkSidebarAuctionInfoPolling_artwork.graphql"
 import { ArtworkSidebarAuctionInfoPolling_me } from "v2/__generated__/ArtworkSidebarAuctionInfoPolling_me.graphql"
 import { usePoll } from "v2/Apps/Conversation/Utils/usePoll"
+import { useEffect, useRef, useState } from "react"
 
 type Props = {
   artwork: ArtworkSidebarAuctionInfoPolling_artwork
@@ -17,6 +18,22 @@ export const ArtworkSidebarAuctionPolling: React.FC<Props> = ({
   relay,
   me,
 }) => {
+  const { sale, saleArtwork } = artwork
+  const isClosed = !!sale?.isClosed
+  const currentBidDisplay = saleArtwork?.currentBid?.display
+
+  const [currentBidChanged, setCurrentBidChanged] = useState(false)
+
+  const isMounted = useRef(false)
+
+  useEffect(() => {
+    if (isMounted.current) {
+      setCurrentBidChanged(true)
+    } else {
+      isMounted.current = true
+    }
+  }, [currentBidDisplay])
+
   usePoll({
     callback: () => {
       relay.refetch(
@@ -28,11 +45,15 @@ export const ArtworkSidebarAuctionPolling: React.FC<Props> = ({
     },
     intervalTime: 10000,
     key: artwork.internalID,
+    clearWhen: isClosed,
   })
 
   return (
     <>
-      <ArtworkSidebarCurrentBidInfoFragmentContainer artwork={artwork} />
+      <ArtworkSidebarCurrentBidInfoFragmentContainer
+        currentBidChanged={currentBidChanged}
+        artwork={artwork}
+      />
       <ArtworkSidebarBidActionFragmentContainer artwork={artwork} me={me} />
     </>
   )
@@ -44,6 +65,14 @@ export const ArtworkSidebarAuctionPollingRefetchContainer = createRefetchContain
     artwork: graphql`
       fragment ArtworkSidebarAuctionInfoPolling_artwork on Artwork {
         internalID
+        sale {
+          isClosed
+        }
+        saleArtwork {
+          currentBid {
+            display
+          }
+        }
         ...ArtworkSidebarCurrentBidInfo_artwork
         ...ArtworkSidebarBidAction_artwork
       }

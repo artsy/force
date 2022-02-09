@@ -55,7 +55,7 @@ export const DownloadAppBanner: React.FC<DownloadAppBannerProps> = ({
   return (
     <Box p={2} pb={1} backgroundColor="black5">
       <Text variant="md" mb={1} textAlign="center">
-        Download the app to stay current as new artworks are available on Artsy.
+        Get alerts direct to your mobile when you download the Artsy app.
       </Text>
       <Flex justifyContent="center" flexWrap="wrap">
         {(device === Device.iPhone || device === Device.Unknown) && (
@@ -67,7 +67,7 @@ export const DownloadAppBanner: React.FC<DownloadAppBannerProps> = ({
             onClick={() => handleClick("iOS")}
           >
             <img
-              src="https://files.artsy.net/images/download-ios-app-transparent.svg"
+              src="https://files.artsy.net/images/download-ios-app.svg"
               width={120}
               height={40}
               alt="Download on the App Store"
@@ -85,7 +85,7 @@ export const DownloadAppBanner: React.FC<DownloadAppBannerProps> = ({
             onClick={() => handleClick("Android")}
           >
             <img
-              src="https://files.artsy.net/images/download-android-app-transparent.svg"
+              src="https://files.artsy.net/images/download-android-app.svg"
               width={136}
               height={40}
               alt="Get it on Google Play"

@@ -135,7 +135,7 @@ export const SavedSearchAlertModal: React.FC<SavedSearchAlertFormProps> = ({
           return (
             <ModalDialog
               onClose={onClose}
-              title="Create an Alert"
+              title="Create Alert"
               data-testid="CreateAlertModal"
               footer={
                 <Button
@@ -150,7 +150,7 @@ export const SavedSearchAlertModal: React.FC<SavedSearchAlertFormProps> = ({
             >
               <Join separator={<Spacer mt={4} />}>
                 <Input
-                  title="Name"
+                  title="Alert Name"
                   name="name"
                   placeholder={namePlaceholder}
                   value={values.name}

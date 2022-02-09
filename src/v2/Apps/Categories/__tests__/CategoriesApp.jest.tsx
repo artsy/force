@@ -6,6 +6,9 @@ import { CategoriesAppFragmentContainer } from "../CategoriesApp"
 import { CategoriesApp_Test_Query } from "v2/__generated__/CategoriesApp_Test_Query.graphql"
 
 jest.unmock("react-relay")
+jest.mock("v2/Utils/Hooks/useMatchMedia", () => ({
+  __internal__useMatchMedia: () => false,
+}))
 
 const { renderWithRelay } = setupTestWrapperTL<CategoriesApp_Test_Query>({
   Component: props => {
