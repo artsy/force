@@ -30,7 +30,7 @@ fragment ArticlesApp_viewer on Viewer {
 
 fragment ArticlesIndexArticle_article on Article {
   href
-  title
+  thumbnailTitle
   byline
   publishedAt(format: "MMMM Do YYYY")
   thumbnailImage {
@@ -163,7 +163,7 @@ return {
                         "alias": null,
                         "args": null,
                         "kind": "ScalarField",
-                        "name": "title",
+                        "name": "thumbnailTitle",
                         "storageKey": null
                       },
                       {
@@ -320,12 +320,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "6aa047934e36cc7b8b931432fa374a2d",
+    "cacheID": "0e6fb91de9319b2fce3e77264bb5222f",
     "id": null,
     "metadata": {},
     "name": "articlesRoutes_ArticlesQuery",
     "operationKind": "query",
-    "text": "query articlesRoutes_ArticlesQuery {\n  viewer {\n    ...ArticlesApp_viewer\n  }\n}\n\nfragment ArticlesApp_viewer on Viewer {\n  ...ArticlesIndexArticles_viewer\n}\n\nfragment ArticlesIndexArticle_article on Article {\n  href\n  title\n  byline\n  publishedAt(format: \"MMMM Do YYYY\")\n  thumbnailImage {\n    cropped(width: 910, height: 607) {\n      src\n      srcSet\n      width\n      height\n    }\n  }\n}\n\nfragment ArticlesIndexArticles_viewer on Viewer {\n  articlesConnection(first: 15, sort: PUBLISHED_AT_DESC, featured: true) {\n    edges {\n      node {\n        internalID\n        ...ArticlesIndexArticle_article\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query articlesRoutes_ArticlesQuery {\n  viewer {\n    ...ArticlesApp_viewer\n  }\n}\n\nfragment ArticlesApp_viewer on Viewer {\n  ...ArticlesIndexArticles_viewer\n}\n\nfragment ArticlesIndexArticle_article on Article {\n  href\n  thumbnailTitle\n  byline\n  publishedAt(format: \"MMMM Do YYYY\")\n  thumbnailImage {\n    cropped(width: 910, height: 607) {\n      src\n      srcSet\n      width\n      height\n    }\n  }\n}\n\nfragment ArticlesIndexArticles_viewer on Viewer {\n  articlesConnection(first: 15, sort: PUBLISHED_AT_DESC, featured: true) {\n    edges {\n      node {\n        internalID\n        ...ArticlesIndexArticle_article\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();

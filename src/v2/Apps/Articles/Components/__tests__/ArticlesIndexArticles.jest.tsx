@@ -22,7 +22,7 @@ describe("ArticlesIndexArticles", () => {
     renderWithRelay({
       PageInfo: () => ({ hasNextPage: false, endCursor: null }),
       Article: () => ({
-        title: "Example Article",
+        thumbnailTitle: "Example Article",
         publishedAt: "March 20th, 2020",
         byline: "Example Author",
       }),
