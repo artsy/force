@@ -78,12 +78,16 @@ export const SettingsShippingAddressForm: FC<SettingsShippingAddressFormProps> =
         try {
           if (isEditing) {
             await submitEditAddress({
-              input: { userAddressID: address!.internalID, attributes },
+              variables: {
+                input: { userAddressID: address!.internalID, attributes },
+              },
             })
 
             if (isDefault) {
               await submitSetDefaultAddress({
-                input: { userAddressID: address!.internalID },
+                variables: {
+                  input: { userAddressID: address!.internalID },
+                },
               })
             }
 
@@ -93,12 +97,16 @@ export const SettingsShippingAddressForm: FC<SettingsShippingAddressFormProps> =
             })
           } else {
             // Adding new address
-            const response = await submitAddAddress({ input: { attributes } })
+            const response = await submitAddAddress({
+              variables: { input: { attributes } },
+            })
             const id =
               response.createUserAddress?.userAddressOrErrors.internalID
 
             if (isDefault && id) {
-              await submitSetDefaultAddress({ input: { userAddressID: id } })
+              await submitSetDefaultAddress({
+                variables: { input: { userAddressID: id } },
+              })
             }
 
             sendToast({

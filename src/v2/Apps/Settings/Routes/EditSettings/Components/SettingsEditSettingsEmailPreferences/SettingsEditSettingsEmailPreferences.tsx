@@ -18,7 +18,7 @@ export const SettingsEditSettingsEmailPreferences: FC<SettingEditSettingsEmailPr
 
   const handleSelect = async (emailFrequency: string) => {
     try {
-      submitMutation({ input: { emailFrequency } })
+      submitMutation({ variables: { input: { emailFrequency } } })
 
       sendToast({
         variant: "success",

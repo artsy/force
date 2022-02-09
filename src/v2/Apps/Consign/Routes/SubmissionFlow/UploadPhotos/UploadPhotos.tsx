@@ -106,9 +106,11 @@ export const UploadPhotos: React.FC<UploadPhotosProps> = ({ submission }) => {
 
             if (photo.assetId) {
               removeAsset({
-                input: {
-                  assetID: photo.assetId,
-                  sessionID: !isLoggedIn ? getENV("SESSION_ID") : undefined,
+                variables: {
+                  input: {
+                    assetID: photo.assetId,
+                    sessionID: !isLoggedIn ? getENV("SESSION_ID") : undefined,
+                  },
                 },
               }).catch(error => {
                 logger.error("Remove asset error", error)
@@ -125,13 +127,15 @@ export const UploadPhotos: React.FC<UploadPhotosProps> = ({ submission }) => {
 
               try {
                 const response = await addAsset({
-                  input: {
-                    assetType: "image",
-                    geminiToken: photo.geminiToken!,
-                    submissionID: submission.id,
-                    sessionID: !isLoggedIn ? getENV("SESSION_ID") : undefined,
-                    filename: photo.name,
-                    size: photo.size.toString(),
+                  variables: {
+                    input: {
+                      assetType: "image",
+                      geminiToken: photo.geminiToken!,
+                      submissionID: submission.id,
+                      sessionID: !isLoggedIn ? getENV("SESSION_ID") : undefined,
+                      filename: photo.name,
+                      size: photo.size.toString(),
+                    },
                   },
                 })
 

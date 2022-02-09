@@ -47,15 +47,12 @@ const SettingsShippingAddress: FC<SettingsShippingAddressProps> = ({
   const handleDelete = async () => {
     setMode("Deleting")
     try {
-      await submitMutation(
-        { input: { userAddressID: address.internalID } },
-        {
-          checkForErrors: res => {
-            return res.deleteUserAddress?.userAddressOrErrors.errors?.[0]
-              .message
-          },
-        }
-      )
+      await submitMutation({
+        variables: { input: { userAddressID: address.internalID } },
+        rejectIf: res => {
+          return res.deleteUserAddress?.userAddressOrErrors.errors?.[0].message
+        },
+      })
 
       sendToast({
         variant: "success",

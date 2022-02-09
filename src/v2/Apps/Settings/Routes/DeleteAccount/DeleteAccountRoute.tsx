@@ -38,15 +38,15 @@ export const DeleteAccountRoute: FC = () => {
           })}
           onSubmit={async ({ explanation }) => {
             try {
-              await submitMutation(
-                { input: { explanation, url: window.location.href } },
-                {
-                  checkForErrors: res => {
-                    return res.deleteMyAccountMutation?.userAccountOrError
-                      ?.mutationError
-                  },
-                }
-              )
+              await submitMutation({
+                variables: {
+                  input: { explanation, url: window.location.href },
+                },
+                rejectIf: res => {
+                  return res.deleteMyAccountMutation?.userAccountOrError
+                    ?.mutationError
+                },
+              })
 
               sendToast({
                 variant: "success",
