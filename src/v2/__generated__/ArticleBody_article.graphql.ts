@@ -13,7 +13,7 @@ export type ArticleBody_article = {
     readonly publishedAt: string | null;
     readonly sections: ReadonlyArray<{
         readonly __typename: string;
-        readonly " $fragmentRefs": FragmentRefs<"ArticleSectionText_section" | "ArticleSectionImageCollection_section" | "ArticleSectionImageSet_section" | "ArticleSectionVideo_section" | "ArticleSectionSocialEmbed_section">;
+        readonly " $fragmentRefs": FragmentRefs<"ArticleSectionText_section" | "ArticleSectionImageCollection_section" | "ArticleSectionImageSet_section" | "ArticleSectionVideo_section" | "ArticleSectionSocialEmbed_section" | "ArticleSectionEmbed_section">;
     }>;
     readonly postscript: string | null;
     readonly relatedArticles: ReadonlyArray<{
@@ -129,6 +129,11 @@ return {
           "args": null,
           "kind": "FragmentSpread",
           "name": "ArticleSectionSocialEmbed_section"
+        },
+        {
+          "args": null,
+          "kind": "FragmentSpread",
+          "name": "ArticleSectionEmbed_section"
         }
       ],
       "storageKey": null
@@ -218,5 +223,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '313a69485a51ec33db5c4d8e2e5ad44a';
+(node as any).hash = 'a10e48f15562f392c8a60562decc698f';
 export default node;
