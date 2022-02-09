@@ -1,6 +1,6 @@
 import Autosuggest from "react-autosuggest"
-import { Ref, useEffect, useState } from "react";
-import * as React from "react";
+import { Ref, useEffect, useState } from "react"
+import * as React from "react"
 import {
   MagnifyingGlassIcon,
   usePosition,
@@ -8,6 +8,7 @@ import {
   Clickable,
   LabeledInput,
   DROP_SHADOW,
+  Box,
 } from "@artsy/palette"
 import { graphql } from "lib/graphql"
 import { fetchQuery } from "relay-runtime"
@@ -16,7 +17,6 @@ import {
   PriceDatabaseArtistAutosuggest_SearchConnection_QueryResponse,
 } from "v2/__generated__/PriceDatabaseArtistAutosuggest_SearchConnection_Query.graphql"
 import { useSystemContext } from "v2/System"
-import { Container } from "v2/Components/Sticky"
 
 const MAX_SUGGESTIONS = 10
 
@@ -104,13 +104,16 @@ export const PriceDatabaseArtistAutosuggest: React.FC<ArtistAutosuggestProps> = 
     { isHighlighted }
   ) => {
     return (
-      <Container
+      <Box
         height={50}
         background={"white"}
         display="flex"
         alignItems="center"
         ref={tooltipRef as any}
         color={isHighlighted ? "blue100" : "black100"}
+        z-index={1}
+        left={0}
+        right={0}
       >
         <Text width="100%" paddingLeft={1}>
           <Clickable
@@ -120,7 +123,7 @@ export const PriceDatabaseArtistAutosuggest: React.FC<ArtistAutosuggestProps> = 
             {node?.displayLabel}
           </Clickable>
         </Text>
-      </Container>
+      </Box>
     )
   }
 

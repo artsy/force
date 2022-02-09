@@ -5,6 +5,9 @@ import { NavigationTabsFragmentContainer as NavigationTabs } from "v2/Apps/Partn
 
 jest.unmock("react-relay")
 jest.mock("v2/Components/RouteTabs")
+jest.mock("v2/Utils/Hooks/useMatchMedia", () => ({
+  __internal__useMatchMedia: () => false,
+}))
 
 const { getWrapper } = setupTestWrapper<NavigationTabs_Test_PartnerQuery>({
   Component: ({ partner }: any) => {

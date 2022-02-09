@@ -17,6 +17,9 @@ jest.mock("v2/System/Router/useRouter", () => ({
   }),
   useIsRouteActive: () => false,
 }))
+jest.mock("v2/Utils/Hooks/useMatchMedia", () => ({
+  __internal__useMatchMedia: () => false,
+}))
 
 const { getWrapper } = setupTestWrapper<SearchApp_Test_Query>({
   Component: props => {

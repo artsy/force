@@ -2,7 +2,7 @@ import { useState } from "react"
 import * as React from "react"
 import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
 import useDeepCompareEffect from "use-deep-compare-effect"
-import { Box, Flex, Spacer } from "@artsy/palette"
+import { Box, Flex, FullBleed, Spacer } from "@artsy/palette"
 import { isEqual } from "lodash"
 import { usePrevious } from "v2/Utils/Hooks/usePrevious"
 import { FairBooths_fair } from "v2/__generated__/FairBooths_fair.graphql"
@@ -97,19 +97,21 @@ const FairBooths: React.FC<FairBoothsProps> = ({ fair, relay }) => {
         <Sticky>
           {({ stuck }) => {
             return (
-              <Flex
-                justifyContent="flex-end"
+              <FullBleed
+                backgroundColor="white100"
                 py={1}
+                px={2}
                 {...(stuck
                   ? {
-                      px: 2,
                       borderBottom: "1px solid",
                       borderColor: "black10",
                     }
                   : {})}
               >
-                <FairBoothSortFilter />
-              </Flex>
+                <Flex justifyContent="flex-end">
+                  <FairBoothSortFilter />
+                </Flex>
+              </FullBleed>
             )
           }}
         </Sticky>
