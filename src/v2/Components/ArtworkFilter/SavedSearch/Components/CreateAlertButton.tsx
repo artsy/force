@@ -90,7 +90,7 @@ export const CreateAlertButton: React.FC<CreateAlertButtonProps> = ({
         {...props}
       >
         <BellIcon mr={0.5} fill="currentColor" />
-        Create an Alert
+        Create Alert
       </Button>
       <SavedSearchAlertModal
         visible={visibleForm}

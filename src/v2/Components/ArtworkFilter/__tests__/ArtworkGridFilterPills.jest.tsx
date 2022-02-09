@@ -62,7 +62,7 @@ describe("ArtworkGridFilterPills", () => {
     expect(screen.getByText("Red")).toBeInTheDocument()
     expect(screen.getByText("Open Edition")).toBeInTheDocument()
     expect(screen.getAllByTitle("Close")).toHaveLength(2)
-    expect(screen.getByText("Create an Alert")).toBeInTheDocument()
+    expect(screen.getByText("Create Alert")).toBeInTheDocument()
   })
 
   it("renders default pills without CloseIcon", () => {
