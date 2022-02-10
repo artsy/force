@@ -26,10 +26,29 @@ export type Offer_order = {
                     readonly __typename: "Artwork";
                     readonly price: string | null;
                     readonly displayPriceRange: boolean | null;
+                    readonly listPrice: {
+                        readonly major?: number;
+                        readonly maxPrice?: {
+                            readonly major: number;
+                        } | null;
+                        readonly minPrice?: {
+                            readonly major: number;
+                        } | null;
+                    } | null;
                 } | {
                     readonly __typename: "EditionSet";
+                    readonly internalID: string;
                     readonly price: string | null;
                     readonly displayPriceRange: boolean | null;
+                    readonly listPrice: {
+                        readonly major?: number;
+                        readonly maxPrice?: {
+                            readonly major: number;
+                        } | null;
+                        readonly minPrice?: {
+                            readonly major: number;
+                        } | null;
+                    } | null;
                 } | {
                     /*This will never be '%other', but we need some
                     value in case none of the concrete values match.*/
@@ -55,32 +74,83 @@ var v0 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
+  "name": "internalID",
+  "storageKey": null
+},
+v1 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
   "name": "price",
   "storageKey": null
 },
-v1 = [
-  (v0/*: any*/),
+v2 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "displayPriceRange",
+  "storageKey": null
+},
+v3 = [
   {
     "alias": null,
     "args": null,
     "kind": "ScalarField",
-    "name": "displayPriceRange",
+    "name": "major",
     "storageKey": null
   }
-];
+],
+v4 = {
+  "alias": null,
+  "args": null,
+  "concreteType": null,
+  "kind": "LinkedField",
+  "name": "listPrice",
+  "plural": false,
+  "selections": [
+    {
+      "kind": "InlineFragment",
+      "selections": (v3/*: any*/),
+      "type": "Money",
+      "abstractKey": null
+    },
+    {
+      "kind": "InlineFragment",
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "Money",
+          "kind": "LinkedField",
+          "name": "maxPrice",
+          "plural": false,
+          "selections": (v3/*: any*/),
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "Money",
+          "kind": "LinkedField",
+          "name": "minPrice",
+          "plural": false,
+          "selections": (v3/*: any*/),
+          "storageKey": null
+        }
+      ],
+      "type": "PriceRange",
+      "abstractKey": null
+    }
+  ],
+  "storageKey": null
+};
 return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
   "name": "Offer_order",
   "selections": [
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "internalID",
-      "storageKey": null
-    },
+    (v0/*: any*/),
     {
       "alias": null,
       "args": null,
@@ -148,7 +218,7 @@ return {
                       "name": "slug",
                       "storageKey": null
                     },
-                    (v0/*: any*/),
+                    (v1/*: any*/),
                     {
                       "alias": null,
                       "args": null,
@@ -188,13 +258,22 @@ return {
                     },
                     {
                       "kind": "InlineFragment",
-                      "selections": (v1/*: any*/),
+                      "selections": [
+                        (v1/*: any*/),
+                        (v2/*: any*/),
+                        (v4/*: any*/)
+                      ],
                       "type": "Artwork",
                       "abstractKey": null
                     },
                     {
                       "kind": "InlineFragment",
-                      "selections": (v1/*: any*/),
+                      "selections": [
+                        (v0/*: any*/),
+                        (v1/*: any*/),
+                        (v2/*: any*/),
+                        (v4/*: any*/)
+                      ],
                       "type": "EditionSet",
                       "abstractKey": null
                     }
@@ -244,5 +323,5 @@ return {
   "abstractKey": "__isCommerceOrder"
 };
 })();
-(node as any).hash = 'ea62ca9d92afba9e622a857060399ea7';
+(node as any).hash = '6f804974083ce402f8b5efb075f04523';
 export default node;

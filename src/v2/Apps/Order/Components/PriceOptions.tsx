@@ -14,21 +14,26 @@ import { PriceOptions_artwork } from "v2/__generated__/PriceOptions_artwork.grap
 import { PriceOptions_order } from "v2/__generated__/PriceOptions_order.graphql"
 import { appendCurrencySymbol } from "../Utils/currencyUtils"
 import { useScrollTo } from "v2/Utils/Hooks/useScrollTo"
+import { OfferItem, PriceRange, Price } from "../Utils/offerItemExtractor"
 
 export interface PriceOptionsProps {
   onChange: (value: number) => void
   onFocus: () => void
   showError?: boolean
-  artwork: PriceOptions_artwork | null | undefined
   order: PriceOptions_order
+  listPrice: OfferItem["listPrice"]
+  isPriceRange: boolean | null
+  currency: PriceOptions_artwork["priceCurrency"]
 }
 
 export const PriceOptions: React.FC<PriceOptionsProps> = ({
   onChange,
   onFocus,
   showError,
-  artwork,
+  listPrice,
   order,
+  isPriceRange,
+  currency,
 }) => {
   const tracking = useTracking()
   const { contextPageOwnerId, contextPageOwnerType } = useAnalyticsContext()
@@ -36,7 +41,6 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
   const [customValue, setCustomValue] = useState<number>()
   const [toggle, setToggle] = useState(false)
   const [selectedRadio, setSelectedRadio] = useState<string>()
-  const listPrice = artwork?.listPrice
 
   useEffect(() => {
     if (!!customValue) onChange(customValue)
@@ -58,7 +62,7 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
       action: ActionType.clickedOfferOption,
       context_page_owner_id: contextPageOwnerId!,
       context_page_owner_type: contextPageOwnerType as PageOwnerType,
-      currency: artwork?.priceCurrency!,
+      currency: currency!,
       order_id: order.internalID,
       flow: AnalyticsSchema.Flow.MakeOffer,
       offer,
@@ -70,20 +74,19 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
   const asCurrency = (value: number) =>
     appendCurrencySymbol(
       value?.toLocaleString("en-US", {
-        currency: artwork?.priceCurrency!,
+        currency: currency!,
         minimumFractionDigits: 2,
         style: "currency",
       }),
-      artwork?.priceCurrency!
+      currency!
     )
 
   const getRangeOptions = () => {
-    const minPriceRange = listPrice?.minPrice?.major
-    const maxPriceRange = listPrice?.maxPrice?.major
-    const midPriceRange = Math.round(
-      (Number(minPriceRange) + Number(maxPriceRange)) / 2
-    )
-
+    const listPriceRange = listPrice as PriceRange
+    const minPriceRange = listPriceRange?.minPrice?.major
+    const maxPriceRange = listPriceRange?.maxPrice?.major
+    const midPriceRange = (Number(minPriceRange) + Number(maxPriceRange)) / 2
+    console.log("range", listPriceRange)
     const getRangeDetails = [
       { value: minPriceRange, description: "Low-end of range" },
       { value: midPriceRange, description: "Midpoint" },
@@ -97,8 +100,9 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
   }
 
   const getPercentageOptions = () => {
+    const listPricePercentage = listPrice as Price
     return [0.2, 0.15, 0.1].map((pricePercentage, idx) => {
-      if (listPrice?.major) {
+      if (listPricePercentage?.major) {
         return {
           key: `price-option-${idx}`,
           value: Math.round(listPrice.major * (1 - pricePercentage)),
@@ -109,10 +113,10 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
     })
   }
 
-  const priceOptions = artwork?.isPriceRange
-    ? getRangeOptions()
-    : getPercentageOptions()
+  const priceOptions = isPriceRange ? getRangeOptions() : getPercentageOptions()
+
   const minPrice = priceOptions[0]?.value!
+  console.log("check", isPriceRange)
 
   const selectMinPrice = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation()
@@ -134,7 +138,7 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
         .map(({ value, description, key }) => (
           <BorderedRadio
             value={key}
-            label={asCurrency(value!)}
+            label={asCurrency(value!) as string}
             onSelect={() => {
               onChange(value!)
               setToggle(false)
@@ -174,7 +178,7 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
                 />
                 {(!customValue || customValue < minPrice) && (
                   <MinPriceWarning
-                    isPriceRange={!!artwork?.isPriceRange}
+                    isPriceRange={!!isPriceRange}
                     onClick={selectMinPrice}
                     minPrice={asCurrency(minPrice) as string}
                     orderID={order.internalID}
@@ -195,19 +199,6 @@ export const PriceOptionsFragmentContainer = createFragmentContainer(
       fragment PriceOptions_artwork on Artwork {
         priceCurrency
         isPriceRange
-        listPrice {
-          ... on Money {
-            major
-          }
-          ... on PriceRange {
-            maxPrice {
-              major
-            }
-            minPrice {
-              major
-            }
-          }
-        }
       }
     `,
     order: graphql`

@@ -36,20 +36,6 @@ query PriceOptions_Test_Query {
 fragment PriceOptions_artwork on Artwork {
   priceCurrency
   isPriceRange
-  listPrice {
-    __typename
-    ... on Money {
-      major
-    }
-    ... on PriceRange {
-      maxPrice {
-        major
-      }
-      minPrice {
-        major
-      }
-    }
-  }
 }
 
 fragment PriceOptions_order on CommerceOrder {
@@ -74,22 +60,6 @@ v1 = [
   }
 ],
 v2 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "__typename",
-  "storageKey": null
-},
-v3 = [
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "major",
-    "storageKey": null
-  }
-],
-v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -167,52 +137,7 @@ return {
             "name": "isPriceRange",
             "storageKey": null
           },
-          {
-            "alias": null,
-            "args": null,
-            "concreteType": null,
-            "kind": "LinkedField",
-            "name": "listPrice",
-            "plural": false,
-            "selections": [
-              (v2/*: any*/),
-              {
-                "kind": "InlineFragment",
-                "selections": (v3/*: any*/),
-                "type": "Money",
-                "abstractKey": null
-              },
-              {
-                "kind": "InlineFragment",
-                "selections": [
-                  {
-                    "alias": null,
-                    "args": null,
-                    "concreteType": "Money",
-                    "kind": "LinkedField",
-                    "name": "maxPrice",
-                    "plural": false,
-                    "selections": (v3/*: any*/),
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "concreteType": "Money",
-                    "kind": "LinkedField",
-                    "name": "minPrice",
-                    "plural": false,
-                    "selections": (v3/*: any*/),
-                    "storageKey": null
-                  }
-                ],
-                "type": "PriceRange",
-                "abstractKey": null
-              }
-            ],
-            "storageKey": null
-          },
-          (v4/*: any*/)
+          (v2/*: any*/)
         ],
         "storageKey": "artwork(id:\"artwork-id\")"
       },
@@ -224,7 +149,13 @@ return {
         "name": "commerceOrder",
         "plural": false,
         "selections": [
-          (v2/*: any*/),
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "__typename",
+            "storageKey": null
+          },
           {
             "kind": "TypeDiscriminator",
             "abstractKey": "__isCommerceOrder"
@@ -236,19 +167,19 @@ return {
             "name": "internalID",
             "storageKey": null
           },
-          (v4/*: any*/)
+          (v2/*: any*/)
         ],
         "storageKey": "commerceOrder(id:\"order-id\")"
       }
     ]
   },
   "params": {
-    "cacheID": "e8abb97efc6f911ff65766d072a53609",
+    "cacheID": "69de5745c01500b591d25bfc88ce759a",
     "id": null,
     "metadata": {},
     "name": "PriceOptions_Test_Query",
     "operationKind": "query",
-    "text": "query PriceOptions_Test_Query {\n  artwork(id: \"artwork-id\") {\n    ...PriceOptions_artwork\n    id\n  }\n  order: commerceOrder(id: \"order-id\") {\n    __typename\n    ...PriceOptions_order\n    id\n  }\n}\n\nfragment PriceOptions_artwork on Artwork {\n  priceCurrency\n  isPriceRange\n  listPrice {\n    __typename\n    ... on Money {\n      major\n    }\n    ... on PriceRange {\n      maxPrice {\n        major\n      }\n      minPrice {\n        major\n      }\n    }\n  }\n}\n\nfragment PriceOptions_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  internalID\n}\n"
+    "text": "query PriceOptions_Test_Query {\n  artwork(id: \"artwork-id\") {\n    ...PriceOptions_artwork\n    id\n  }\n  order: commerceOrder(id: \"order-id\") {\n    __typename\n    ...PriceOptions_order\n    id\n  }\n}\n\nfragment PriceOptions_artwork on Artwork {\n  priceCurrency\n  isPriceRange\n}\n\nfragment PriceOptions_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  internalID\n}\n"
   }
 };
 })();

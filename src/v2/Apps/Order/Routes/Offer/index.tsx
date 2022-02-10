@@ -223,7 +223,16 @@ export class OfferRoute extends Component<OfferProps, OfferState> {
 
     const artwork = this.props.order.lineItems?.edges?.[0]?.node?.artwork
     const isInquiryCheckout = !artwork?.isPriceRange && !artwork?.price
-    const isEdition = artwork?.isEdition
+
+    const newOfferSubmissionEnabled = userHasLabFeature(
+      this.props.user,
+      "New Offer Submissions"
+    )
+
+    // TODO: fix typescript error for displayPriceRange
+    const displayRange =
+      this.props.order.lineItems?.edges?.[0]?.node?.artworkOrEditionSet
+        ?.displayPriceRange || false
 
     return (
       <>
@@ -266,14 +275,17 @@ export class OfferRoute extends Component<OfferProps, OfferState> {
                     your offer
                   </Text>
                   <PriceOptionsFragmentContainer
-                    artwork={artwork}
+                    isPriceRange={displayRange}
                     order={order}
                     onChange={offerValue => this.setState({ offerValue })}
                     onFocus={this.onOfferInputFocus.bind(this)}
                     showError={
                       this.state.formIsDirty && this.state.offerValue <= 0
                     }
+                    listPrice={offerItem?.listPrice!}
+                    currency={order.currencyCode}
                   />
+                  {console.log("order", this.props.order)}
                 </>
               )}
 
@@ -374,10 +386,37 @@ export const OfferFragmentContainer = createFragmentContainer(
                 ... on Artwork {
                   price
                   displayPriceRange
+                  listPrice {
+                    ... on Money {
+                      major
+                    }
+                    ... on PriceRange {
+                      maxPrice {
+                        major
+                      }
+                      minPrice {
+                        major
+                      }
+                    }
+                  }
                 }
                 ... on EditionSet {
+                  internalID
                   price
                   displayPriceRange
+                  listPrice {
+                    ... on Money {
+                      major
+                    }
+                    ... on PriceRange {
+                      maxPrice {
+                        major
+                      }
+                      minPrice {
+                        major
+                      }
+                    }
+                  }
                 }
               }
             }

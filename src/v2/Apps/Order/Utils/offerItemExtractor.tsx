@@ -1,6 +1,16 @@
+export type Price = {
+  major: number
+}
+
+export type PriceRange = {
+  maxPrice: Price
+  minPrice: Price
+}
+
 export interface OfferItem {
   price: string
   displayPriceRange?: boolean
+  listPrice: PriceRange | Price
 }
 
 export const getOfferItemFromOrder = (orderLineItemsNode): OfferItem | null => {
