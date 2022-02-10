@@ -3,7 +3,6 @@ import {
   Box,
   Button,
   Column,
-  EntityHeader,
   Flex,
   FullBleed,
   GridColumns,
