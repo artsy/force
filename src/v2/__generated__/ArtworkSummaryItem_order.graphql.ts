@@ -4,13 +4,27 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
+export type CommerceOrderModeEnum = "BUY" | "OFFER" | "%future added value";
 export type ArtworkSummaryItem_order = {
     readonly sellerDetails: {
         readonly name?: string | null;
     } | null;
+    readonly currencyCode: string;
+    readonly mode: CommerceOrderModeEnum | null;
     readonly lineItems: {
         readonly edges: ReadonlyArray<{
             readonly node: {
+                readonly artworkOrEditionSet: ({
+                    readonly __typename: "Artwork";
+                    readonly price: string | null;
+                } | {
+                    readonly __typename: "EditionSet";
+                    readonly price: string | null;
+                } | {
+                    /*This will never be '%other', but we need some
+                    value in case none of the concrete values match.*/
+                    readonly __typename: "%other";
+                }) | null;
                 readonly artwork: {
                     readonly artistNames: string | null;
                     readonly title: string | null;
@@ -35,7 +49,17 @@ export type ArtworkSummaryItem_order$key = {
 
 
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = [
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "price",
+    "storageKey": null
+  }
+];
+return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
@@ -69,6 +93,20 @@ const node: ReaderFragment = {
     {
       "alias": null,
       "args": null,
+      "kind": "ScalarField",
+      "name": "currencyCode",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "mode",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
       "concreteType": "CommerceLineItemConnection",
       "kind": "LinkedField",
       "name": "lineItems",
@@ -90,6 +128,36 @@ const node: ReaderFragment = {
               "name": "node",
               "plural": false,
               "selections": [
+                {
+                  "alias": null,
+                  "args": null,
+                  "concreteType": null,
+                  "kind": "LinkedField",
+                  "name": "artworkOrEditionSet",
+                  "plural": false,
+                  "selections": [
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "__typename",
+                      "storageKey": null
+                    },
+                    {
+                      "kind": "InlineFragment",
+                      "selections": (v0/*: any*/),
+                      "type": "Artwork",
+                      "abstractKey": null
+                    },
+                    {
+                      "kind": "InlineFragment",
+                      "selections": (v0/*: any*/),
+                      "type": "EditionSet",
+                      "abstractKey": null
+                    }
+                  ],
+                  "storageKey": null
+                },
                 {
                   "alias": null,
                   "args": null,
@@ -177,5 +245,6 @@ const node: ReaderFragment = {
   "type": "CommerceOrder",
   "abstractKey": "__isCommerceOrder"
 };
-(node as any).hash = '56cd6a501085da43b77b96d899f715e1';
+})();
+(node as any).hash = '3e60baa12477b0285f91a4e83e080cc5';
 export default node;

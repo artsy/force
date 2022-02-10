@@ -354,6 +354,8 @@ export class ReviewRoute extends Component<ReviewProps> {
     this.props.router.push(`/orders/${this.props.order.internalID}/shipping`)
   }
 
+  avalaraPhase2enabled = userHasLabFeature(this.props.user, "Avalara Phase 2")
+
   render() {
     const { order, isCommittingMutation, isEigen } = this.props
 
@@ -432,18 +434,20 @@ export class ReviewRoute extends Component<ReviewProps> {
                 <ArtworkSummaryItem order={order} />
                 <TransactionDetailsSummaryItem
                   order={order}
-                  placeholderOverride="To be confirmed*"
+                  transactionStep="review"
                 />
               </Flex>
               <BuyerGuarantee
                 contextModule={ContextModule.ordersReview}
                 contextPageOwnerType={OwnerType.ordersReview}
               />
-              {order.myLastOffer && !order.myLastOffer?.hasDefiniteTotal && (
-                <Text variant="xs" color="black60">
-                  *Shipping and taxes to be confirmed by gallery
-                </Text>
-              )}
+              {order.myLastOffer &&
+                !order.myLastOffer?.hasDefiniteTotal &&
+                !this.avalaraPhase2enabled && (
+                  <Text variant="xs" color="black60">
+                    *Shipping and taxes to be confirmed by gallery
+                  </Text>
+                )}
               <Spacer mb={[2, 4]} />
               <Media at="xs">
                 <Button
