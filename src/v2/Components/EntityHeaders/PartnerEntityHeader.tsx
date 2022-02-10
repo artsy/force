@@ -62,10 +62,6 @@ export const PartnerEntityHeaderFragmentContainer = createFragmentContainer(
             }
           }
         }
-        categories {
-          name
-          slug
-        }
         profile {
           ...FollowProfileButton_profile
           isFollowed
@@ -75,6 +71,10 @@ export const PartnerEntityHeaderFragmentContainer = createFragmentContainer(
               srcSet
             }
           }
+        }
+        categories {
+          name
+          slug
         }
       }
     `,

@@ -16,10 +16,6 @@ export type PartnerEntityHeader_partner = {
             } | null;
         } | null> | null;
     } | null;
-    readonly categories: ReadonlyArray<{
-        readonly name: string | null;
-        readonly slug: string;
-    } | null> | null;
     readonly profile: {
         readonly isFollowed: boolean | null;
         readonly avatar: {
@@ -30,6 +26,10 @@ export type PartnerEntityHeader_partner = {
         } | null;
         readonly " $fragmentRefs": FragmentRefs<"FollowProfileButton_profile">;
     } | null;
+    readonly categories: ReadonlyArray<{
+        readonly name: string | null;
+        readonly slug: string;
+    } | null> | null;
     readonly " $refType": "PartnerEntityHeader_partner";
 };
 export type PartnerEntityHeader_partner$data = PartnerEntityHeader_partner;
@@ -126,19 +126,6 @@ return {
     {
       "alias": null,
       "args": null,
-      "concreteType": "PartnerCategory",
-      "kind": "LinkedField",
-      "name": "categories",
-      "plural": true,
-      "selections": [
-        (v1/*: any*/),
-        (v0/*: any*/)
-      ],
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
       "concreteType": "Profile",
       "kind": "LinkedField",
       "name": "profile",
@@ -205,11 +192,24 @@ return {
         }
       ],
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "PartnerCategory",
+      "kind": "LinkedField",
+      "name": "categories",
+      "plural": true,
+      "selections": [
+        (v1/*: any*/),
+        (v0/*: any*/)
+      ],
+      "storageKey": null
     }
   ],
   "type": "Partner",
   "abstractKey": null
 };
 })();
-(node as any).hash = '2ba877efb4905391cd019702da04bbe3';
+(node as any).hash = 'd8a7c00ae8243cde4c6ee99502787e5a';
 export default node;
