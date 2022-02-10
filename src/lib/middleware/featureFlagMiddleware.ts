@@ -22,26 +22,31 @@ export function featureFlagMiddleware<T extends FeatureFlagConfig>(
       } catch {
         reject("An unknown error occurred while creating the flag provider.")
       }
-    }).then(provider => {
-      // Create feature flag context per request
-      const featureFlagContext = {
-        userId: res.locals.user ? res.locals.user.id : null,
-        sessionsId: res.locals.sd.SESSION_ID,
-      }
-
-      // Get features and move them to sharify
-      const flags = provider.getFeatures()
-      res.locals.sd.featureFlags = {}
-      if (flags) {
-        for (let flag of flags) {
-          res.locals.sd.featureFlags[flag] = provider.enabled(
-            flag,
-            featureFlagContext
-          )
-        }
-      }
-
-      next()
     })
+      .then(provider => {
+        // Create feature flag context per request
+        const featureFlagContext = {
+          userId: res.locals.user ? res.locals.user.id : null,
+          sessionsId: res.locals.sd.SESSION_ID,
+        }
+
+        // Get features and move them to sharify
+        const flags = provider.getFeatures()
+        res.locals.sd.featureFlags = {}
+        if (flags) {
+          for (let flag of flags) {
+            res.locals.sd.featureFlags[flag] = provider.enabled(
+              flag,
+              featureFlagContext
+            )
+          }
+        }
+
+        next()
+      })
+      .catch(error => {
+        console.error(error)
+        next()
+      })
   }
 }
