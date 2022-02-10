@@ -134,17 +134,13 @@ export class TransactionDetailsSummaryItem extends React.Component<
   amountPlaceholder = () => {
     const { transactionStep } = this.props
 
-    if (transactionStep === "review") {
-      return this.avalaraPhase2enabled
+    if (this.avalaraPhase2enabled) {
+      return ["review", "payment"].includes(transactionStep!)
         ? "Waiting for final costs"
-        : "To be confirmed*"
+        : "Calculated in the next steps"
     }
 
-    if (transactionStep === "payment") {
-      return this.avalaraPhase2enabled ? "Waiting for final costs" : "—"
-    }
-
-    return this.avalaraPhase2enabled ? "Calculated in the next steps" : "—"
+    return transactionStep === "review" ? "To be confirmed*" : "—"
   }
 
   shippingDisplayAmount = () => {
