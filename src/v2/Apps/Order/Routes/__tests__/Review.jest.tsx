@@ -33,13 +33,9 @@ import { mockStripe } from "v2/DevTools/mockStripe"
 import { TransactionDetailsSummaryItem } from "../../Components/TransactionDetailsSummaryItem"
 import { cloneDeep } from "lodash"
 import { useTracking } from "v2/System"
-import { useSystemContext } from "v2/System/useSystemContext"
-import { userHasLabFeature } from "v2/Utils/user"
 
 jest.unmock("react-relay")
 
-jest.mock("v2/System/useSystemContext")
-jest.mock("v2/Utils/user")
 jest.mock("v2/System/Analytics/useTracking")
 jest.mock("@stripe/stripe-js", () => {
   let mock = null
@@ -56,9 +52,6 @@ jest.mock("@stripe/stripe-js", () => {
     _mockReset: () => (mock = mockStripe()),
   }
 })
-
-const mockUseHasLabFeature = userHasLabFeature as jest.Mock
-const mockUseSystemContext = useSystemContext as jest.Mock
 
 const { _mockStripe } = require("@stripe/stripe-js")
 
@@ -79,15 +72,10 @@ describe("Review", () => {
     ;(useTracking as jest.Mock).mockImplementation(() => ({
       trackEvent: jest.fn(),
     }))
-    mockUseSystemContext.mockImplementation(() => ({
-      user: { lab_features: [] },
-      mediator: { on: jest.fn() },
-    }))
   })
 
   beforeEach(() => {
     mockLocation()
-    mockUseHasLabFeature.mockImplementation(() => false)
   })
 
   const { buildPage, mutations, routes, ...hooks } = createTestEnv({
@@ -120,18 +108,6 @@ describe("Review", () => {
     })
 
     it("enables the button and routes to the payoff page", async () => {
-      await page.clickSubmit()
-      expect(mutations.mockFetch).toHaveBeenCalledTimes(1)
-      expect(routes.mockPushRoute).toBeCalledWith("/orders/1234/status")
-    })
-
-    it("enables the button and routes to the artwork page (under feature flag)", async () => {
-      mockUseSystemContext.mockImplementation(() => ({
-        user: { lab_features: ["Make Offer On All Eligible Artworks"] },
-        mediator: { on: jest.fn() },
-      }))
-      mockUseHasLabFeature.mockImplementation(() => true)
-
       await page.clickSubmit()
       expect(mutations.mockFetch).toHaveBeenCalledTimes(1)
       expect(routes.mockPushRoute).toBeCalledWith("/orders/1234/status")
@@ -270,24 +246,20 @@ describe("Review", () => {
     })
 
     it("enables the button and routes to the conversation", async () => {
+      // TOFIX remove this test when the feature flag is retired
       await page.clickSubmit()
       expect(mutations.mockFetch).toHaveBeenCalledTimes(1)
       expect(routes.mockPushRoute).toBeCalledWith("/user/conversations/5665")
     })
 
-    it("enables the button and routes to the artwork page based on the order source", async () => {
-      mockUseSystemContext.mockImplementation(() => ({
-        user: { lab_features: ["Make Offer On All Eligible Artworks"] },
-        mediator: { on: jest.fn() },
-      }))
-      mockUseHasLabFeature.mockImplementation(() => true)
-
-      await page.clickSubmit()
-      expect(mutations.mockFetch).toHaveBeenCalledTimes(1)
-      expect(routes.mockPushRoute).toBeCalledWith({
-        pathname: "/artwork/artworkId",
-        state: { offerOrderHasBeenSubmitted: true },
-      })
+    it("enables the button and routes to the artwork page", async () => {
+      // TOFIX add this test when the feature flag is retired
+      // await page.clickSubmit()
+      // expect(mutations.mockFetch).toHaveBeenCalledTimes(1)
+      // expect(routes.mockPushRoute).toBeCalledWith({
+      //   pathname: "/artwork/artworkId",
+      //   state: { offerOrderHasBeenSubmitted: true },
+      // })
     })
 
     it("shows an error modal when there is an error in submitOrderPayload", async () => {
@@ -424,18 +396,6 @@ describe("Review", () => {
     })
 
     it("enables the button and routes to the conversation", async () => {
-      await page.clickSubmit()
-      expect(mutations.mockFetch).toHaveBeenCalledTimes(1)
-      expect(routes.mockPushRoute).toBeCalledWith("/user/conversations/5665")
-    })
-
-    it("enables the button and routes to the conversation based on the order source", async () => {
-      mockUseSystemContext.mockImplementation(() => ({
-        user: { lab_features: ["Make Offer On All Eligible Artworks"] },
-        mediator: { on: jest.fn() },
-      }))
-      mockUseHasLabFeature.mockImplementation(() => true)
-
       await page.clickSubmit()
       expect(mutations.mockFetch).toHaveBeenCalledTimes(1)
       expect(routes.mockPushRoute).toBeCalledWith("/user/conversations/5665")
