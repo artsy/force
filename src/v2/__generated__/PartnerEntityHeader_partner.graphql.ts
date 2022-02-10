@@ -16,6 +16,10 @@ export type PartnerEntityHeader_partner = {
             } | null;
         } | null> | null;
     } | null;
+    readonly categories: ReadonlyArray<{
+        readonly name: string | null;
+        readonly slug: string;
+    } | null> | null;
     readonly profile: {
         readonly isFollowed: boolean | null;
         readonly avatar: {
@@ -36,7 +40,22 @@ export type PartnerEntityHeader_partner$key = {
 
 
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "slug",
+  "storageKey": null
+},
+v1 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "name",
+  "storageKey": null
+};
+return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
@@ -49,20 +68,8 @@ const node: ReaderFragment = {
       "name": "internalID",
       "storageKey": null
     },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "slug",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "name",
-      "storageKey": null
-    },
+    (v0/*: any*/),
+    (v1/*: any*/),
     {
       "alias": null,
       "args": null,
@@ -115,6 +122,19 @@ const node: ReaderFragment = {
         }
       ],
       "storageKey": "locationsConnection(first:15)"
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "PartnerCategory",
+      "kind": "LinkedField",
+      "name": "categories",
+      "plural": true,
+      "selections": [
+        (v1/*: any*/),
+        (v0/*: any*/)
+      ],
+      "storageKey": null
     },
     {
       "alias": null,
@@ -190,5 +210,6 @@ const node: ReaderFragment = {
   "type": "Partner",
   "abstractKey": null
 };
-(node as any).hash = '100b4275a49bab33343d141bd7846498';
+})();
+(node as any).hash = '2ba877efb4905391cd019702da04bbe3';
 export default node;

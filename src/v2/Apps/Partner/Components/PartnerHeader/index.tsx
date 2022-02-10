@@ -81,7 +81,6 @@ export const PartnerHeader: React.FC<PartnerHeaderProps> = ({ partner }) => {
       <Column span={[12, 2]}>
         {canFollow && (
           <FollowProfileButton
-            // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
             profile={partner.profile}
             user={user}
             contextModule={ContextModule.partnerHeader}
