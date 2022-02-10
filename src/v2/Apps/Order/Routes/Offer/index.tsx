@@ -224,11 +224,6 @@ export class OfferRoute extends Component<OfferProps, OfferState> {
     const artwork = this.props.order.lineItems?.edges?.[0]?.node?.artwork
     const isInquiryCheckout = !artwork?.isPriceRange && !artwork?.price
 
-    const newOfferSubmissionEnabled = userHasLabFeature(
-      this.props.user,
-      "New Offer Submissions"
-    )
-
     // TODO: fix typescript error for displayPriceRange
     const displayRange =
       this.props.order.lineItems?.edges?.[0]?.node?.artworkOrEditionSet
@@ -244,7 +239,7 @@ export class OfferRoute extends Component<OfferProps, OfferState> {
               style={isCommittingMutation ? { pointerEvents: "none" } : {}}
               id="offer-page-left-column"
             >
-              {(isInquiryCheckout || isEdition) && (
+              {isInquiryCheckout && (
                 <>
                   <Flex flexDirection="column">
                     <OfferInput
@@ -259,7 +254,7 @@ export class OfferRoute extends Component<OfferProps, OfferState> {
                   {priceNote}
                 </>
               )}
-              {!isInquiryCheckout && !isEdition && (
+              {!isInquiryCheckout && (
                 <>
                   <Text variant="lg" color="black80" mt={2}>
                     Select an Option
@@ -285,7 +280,6 @@ export class OfferRoute extends Component<OfferProps, OfferState> {
                     listPrice={offerItem?.listPrice!}
                     currency={order.currencyCode}
                   />
-                  {console.log("order", this.props.order)}
                 </>
               )}
 

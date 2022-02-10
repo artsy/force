@@ -86,7 +86,6 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
     const minPriceRange = listPriceRange?.minPrice?.major
     const maxPriceRange = listPriceRange?.maxPrice?.major
     const midPriceRange = (Number(minPriceRange) + Number(maxPriceRange)) / 2
-    console.log("range", listPriceRange)
     const getRangeDetails = [
       { value: minPriceRange, description: "Low-end of range" },
       { value: midPriceRange, description: "Midpoint" },
@@ -105,7 +104,7 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
       if (listPricePercentage?.major) {
         return {
           key: `price-option-${idx}`,
-          value: Math.round(listPrice.major * (1 - pricePercentage)),
+          value: Math.round(listPricePercentage.major * (1 - pricePercentage)),
           description: `${pricePercentage * 100}% below the list price`,
         }
       }
@@ -116,7 +115,6 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
   const priceOptions = isPriceRange ? getRangeOptions() : getPercentageOptions()
 
   const minPrice = priceOptions[0]?.value!
-  console.log("check", isPriceRange)
 
   const selectMinPrice = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation()
