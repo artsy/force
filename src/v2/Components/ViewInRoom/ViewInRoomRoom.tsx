@@ -1,5 +1,5 @@
 import { Box, BoxProps } from "@artsy/palette"
-import * as React from "react";
+import * as React from "react"
 import { useEffect } from "react"
 import { useRef } from "react"
 import styled from "styled-components"
@@ -18,9 +18,8 @@ const Room = styled(Box)`
   left: 50%;
   margin-top: -${roomHeight / 2}px;
   margin-left: -${roomWidth / 2}px;
-  background: ${ROOM_WALL_HEX}
-    url("https://d1ycxz9plii3tb.cloudfront.net/misc/room.jpg") bottom center
-    no-repeat;
+  background: ${ROOM_WALL_HEX} url("http://files.artsy.net/images/room.jpeg")
+    bottom center no-repeat;
 `
 
 interface ViewInRoomRoomProps extends BoxProps {
