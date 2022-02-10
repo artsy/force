@@ -15,6 +15,7 @@ import { ContextModule } from "@artsy/cohesion"
 import { appendCurrencySymbol } from "v2/Apps/Order/Utils/currencyUtils"
 import { withSystemContext } from "v2/System"
 import { RouterLink } from "v2/System/Router/RouterLink"
+import { userHasLabFeature } from "v2/Utils/user"
 
 export interface TransactionDetailsSummaryItemProps
   extends Omit<StepSummaryItemProps, "order"> {
@@ -27,6 +28,7 @@ export interface TransactionDetailsSummaryItemProps
   showCongratulationMessage?: boolean
   isEigen?: boolean
   showOrderNumberHeader?: boolean
+  user: User
 }
 
 export class TransactionDetailsSummaryItem extends React.Component<
@@ -36,7 +38,12 @@ export class TransactionDetailsSummaryItem extends React.Component<
     offerContextPrice: "LIST_PRICE",
   }
 
-  amountPlaceholder = this.props.placeholderOverride || "—"
+  avalaraPhase2enabled = userHasLabFeature(this.props.user, "Avalara Phase 2")
+
+  amountPlaceholder =
+    this.props.placeholderOverride || this.avalaraPhase2enabled
+      ? "Calculated in the next steps"
+      : "—"
 
   render() {
     const {
@@ -60,7 +67,7 @@ export class TransactionDetailsSummaryItem extends React.Component<
         />
 
         <Entry
-          label="Tax"
+          label={this.avalaraPhase2enabled ? "Tax*" : "Tax"}
           value={this.taxDisplayAmount()}
           data-test="taxDisplayAmount"
         />
@@ -71,6 +78,12 @@ export class TransactionDetailsSummaryItem extends React.Component<
           final
           data-test="buyerTotalDisplayAmount"
         />
+        <Spacer mb={2} />
+        {this.avalaraPhase2enabled && (
+          <Text variant="sm" color="black60">
+            *Additional duties and taxes may apply at import
+          </Text>
+        )}
         {showOfferNote && order.mode === "OFFER" && this.renderNoteEntry()}
         {showCongratulationMessage && (
           <Column
@@ -184,7 +197,7 @@ export class TransactionDetailsSummaryItem extends React.Component<
     const { order, offerOverride, offerContextPrice } = this.props
     const currency = order.currencyCode
 
-    if (order.mode === "BUY") {
+    if (order.mode === "BUY" && this.avalaraPhase2enabled) {
       return (
         <Entry
           label="Price"
@@ -210,7 +223,8 @@ export class TransactionDetailsSummaryItem extends React.Component<
           data-test="offer"
         />
         {offerContextPrice === "LIST_PRICE" ? (
-          offerItem && (
+          offerItem &&
+          !this.avalaraPhase2enabled && (
             <SecondaryEntry
               label="List price"
               value={appendCurrencySymbol(offerItem.price, currency)}
