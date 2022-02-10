@@ -54,7 +54,6 @@ export interface ReviewProps extends SystemContextProps {
   isCommittingMutation: boolean
   user?: User
   isEigen: boolean | undefined
-  user: User
 }
 
 const logger = createLogger("Order/Routes/Review/index.tsx")
