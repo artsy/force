@@ -28,13 +28,13 @@ export const AboutApp: React.FC = () => {
         pathname="/about"
       />
       <GridColumns>
-        <Column span={6} my={4}>
-          <Text as="h1" variant="xl">
+        <Column span={6}>
+          <Text as="h1" variant="xl" my={4}>
             For the Love of Art
           </Text>
         </Column>
-        <Column span={6} my={4}>
-          <Text variant="md">
+        <Column span={6}>
+          <Text variant="md" my={4}>
             Artsy envisions a future where everyone is moved by art every day.
             To get there, we’re expanding the art market to support more artists
             and art around the world. As the leading marketplace to discover,
@@ -96,11 +96,15 @@ export const AboutApp: React.FC = () => {
         }}
       />
 
-      <SellWithArtsySection />
-      <Spacer mt={4} />
-      <AppDownloadSection />
-      <CollectorInfoSection />
-      <ArtsySpecialistsSection />
+      <Spacer my={12} />
+      <SellWithArtsyComponent />
+      <Spacer my={3} />
+      <AppDownloadComponent />
+      <Spacer my={6} />
+      <CollectorInfoComponent />
+      <Spacer my={6} />
+      <ArtsySpecialistsComponent />
+      <Spacer my={3} />
     </>
   )
 }
@@ -134,14 +138,14 @@ const RailComponent: React.FC<RailComponentProps> = props => {
   )
 }
 
-const SellWithArtsySection: React.FC = () => {
+const SellWithArtsyComponent: React.FC = () => {
   const image = resized(
     "http://files.artsy.net/images/molly_green_original.jpeg",
     { width: 640 }
   )
 
   return (
-    <Container bg="black100" color="white100" mt={100}>
+    <Container bg="black100" color="white100">
       {image.src && (
         <Box
           position="fixed"
@@ -221,7 +225,7 @@ const SellWithArtsySection: React.FC = () => {
   )
 }
 
-const AppDownloadSection: React.FC = () => {
+const AppDownloadComponent: React.FC = () => {
   const image = resized("http://files.artsy.net/download_artsy_apps_img.jpg", {
     width: 910,
     height: 652,
@@ -229,8 +233,8 @@ const AppDownloadSection: React.FC = () => {
 
   return (
     <GridColumns>
-      <Column span={6} mt={6}>
-        <Text variant="xs" textTransform="uppercase">
+      <Column span={6}>
+        <Text mt={6} variant="xs" textTransform="uppercase">
           Artsy App
         </Text>
         <Text variant="xl" mt={1}>
@@ -241,21 +245,30 @@ const AppDownloadSection: React.FC = () => {
           with confidence—all on the Artsy app.
         </Text>
         <Flex>
-          <RouterLink to="https://apps.apple.com/us/app/artsy-buy-sell-original-art/id703796080">
+          <a
+            href="https://apps.apple.com/us/app/artsy-buy-sell-original-art/id703796080"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <Image
               src="http://files.artsy.net/images/download-ios-app-transparent.svg"
               mr={4}
             />
-          </RouterLink>
-          <RouterLink to="https://play.google.com/store/apps/details?id=net.artsy.app">
+          </a>
+          <a
+            href="https://play.google.com/store/apps/details?id=net.artsy.app"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <Image src="http://files.artsy.net/images/download-android-app-transparent.svg" />
-          </RouterLink>
+          </a>
         </Flex>
       </Column>
 
-      <Column span={6} mt={6}>
+      <Column span={6}>
         <ResponsiveBox aspectHeight={652} aspectWidth={910} maxWidth="100%">
           <Image
+            mt={6}
             src={image.src}
             width="100%"
             height="100%"
@@ -269,7 +282,7 @@ const AppDownloadSection: React.FC = () => {
   )
 }
 
-const CollectorInfoSection: React.FC = () => {
+const CollectorInfoComponent: React.FC = () => {
   const image = resized(
     "http://files.artsy.net/about2_page_collector_img.jpg",
     {
@@ -320,15 +333,13 @@ const CollectorInfoSection: React.FC = () => {
         </Text>
       </Column>
       <Column span={12}>
-        <Spacer my={6} />
-        <Text borderBottom="1px solid" borderBottomColor="black15" />
-        <Spacer my={6} />
+        <Text mt={4} borderBottom="1px solid" borderBottomColor="black15" />
       </Column>
     </GridColumns>
   )
 }
 
-const ArtsySpecialistsSection: React.FC = () => {
+const ArtsySpecialistsComponent: React.FC = () => {
   return (
     <GridColumns>
       <Column span={6}>
@@ -351,18 +362,18 @@ const ArtsySpecialistsSection: React.FC = () => {
         <Flex>
           <Button
             variant="primaryBlack"
-            width="40%"
+            flex={1}
             // @ts-ignore
             as={RouterLink}
             to="/meet-the-specialists"
             mt={4}
-            mr={1}
           >
             Contact Specialist
           </Button>
+          <Spacer ml={2} />
           <Button
             variant="primaryWhite"
-            width="40%"
+            flex={1}
             // @ts-ignore
             as={RouterLink}
             to="https://support.artsy.net/hc/en-us"
@@ -373,8 +384,8 @@ const ArtsySpecialistsSection: React.FC = () => {
           </Button>
         </Flex>
       </Column>
-      <Column span={6} mt={6}>
-        {AdvisorySpecialists.map(specialist => (
+      <Column span={6}>
+        {ADVISORY_SPECIALISTS.map(specialist => (
           <Box width="100%">
             <Flex flexDirection="row">
               <Avatar size="md" src={specialist.photo.url} mr={2} />
@@ -389,9 +400,7 @@ const ArtsySpecialistsSection: React.FC = () => {
                 </RouterLink>
               </Flex>
             </Flex>
-            <Spacer my={2} />
-            <Text borderBottom="1px solid" borderBottomColor="black15" />
-            <Spacer my={2} />
+            <Text my={2} borderBottom="1px solid" borderBottomColor="black15" />
           </Box>
         ))}
       </Column>
@@ -399,7 +408,7 @@ const ArtsySpecialistsSection: React.FC = () => {
   )
 }
 
-const AdvisorySpecialists = [
+const ADVISORY_SPECIALISTS = [
   {
     name: "Robin Roche",
     title: "Senior Advisor",
