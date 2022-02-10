@@ -35,7 +35,7 @@ fragment SavedSearchAlertListItem_item on SearchCriteria {
 }
 
 fragment SavedSearchAlertsApp_me on Me {
-  savedSearchesConnection(first: 50) {
+  savedSearchesConnection(first: 15) {
     edges {
       node {
         internalID
@@ -57,7 +57,7 @@ var v0 = [
   {
     "kind": "Literal",
     "name": "first",
-    "value": 50
+    "value": 15
   }
 ];
 return {
@@ -210,7 +210,7 @@ return {
                 "storageKey": null
               }
             ],
-            "storageKey": "savedSearchesConnection(first:50)"
+            "storageKey": "savedSearchesConnection(first:15)"
           },
           {
             "alias": null,
@@ -234,12 +234,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "275bb26c8291a5b97d42dcbd0bff826b",
+    "cacheID": "429b4f379eafe1810f8ac386156b6270",
     "id": null,
     "metadata": {},
     "name": "settingsRoutes_SavedSearchAlertsQuery",
     "operationKind": "query",
-    "text": "query settingsRoutes_SavedSearchAlertsQuery {\n  me {\n    ...SavedSearchAlertsApp_me\n    id\n  }\n}\n\nfragment SavedSearchAlertListItem_item on SearchCriteria {\n  internalID\n  artistIDs\n  href\n  userAlertSettings {\n    name\n  }\n}\n\nfragment SavedSearchAlertsApp_me on Me {\n  savedSearchesConnection(first: 50) {\n    edges {\n      node {\n        internalID\n        ...SavedSearchAlertListItem_item\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query settingsRoutes_SavedSearchAlertsQuery {\n  me {\n    ...SavedSearchAlertsApp_me\n    id\n  }\n}\n\nfragment SavedSearchAlertListItem_item on SearchCriteria {\n  internalID\n  artistIDs\n  href\n  userAlertSettings {\n    name\n  }\n}\n\nfragment SavedSearchAlertsApp_me on Me {\n  savedSearchesConnection(first: 15) {\n    edges {\n      node {\n        internalID\n        ...SavedSearchAlertListItem_item\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();
