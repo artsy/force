@@ -47,7 +47,6 @@ export const EDITORIAL_PATHS: any =
 export const EF_GUCCI: any = "5a009372c88a280f5e9efa7e"
 export const EF_VENICE: any = "58f5eb75faef6a3a8e7fe1ad"
 export const EF_VIDEO_GUIDE: any = "5901d64b4682400017f0e3cb"
-export const EMBEDLY_KEY: any = "a1f82558d8134f6cbebceb9e67d04980"
 export const ENABLE_FAIR_PAGE_EXHIBITORS_TAB: any = false
 export const ENABLE_FAIR_ORGANIZER_REDIRECT: any = false
 export const ENABLE_INSTANT_PAGE: any = true
