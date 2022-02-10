@@ -3,11 +3,14 @@ import {
   Box,
   Button,
   Column,
+  EntityHeader,
   Flex,
   FullBleed,
   GridColumns,
   Image,
+  Join,
   ResponsiveBox,
+  Separator,
   Spacer,
   Text,
 } from "@artsy/palette"
@@ -17,7 +20,8 @@ import { AppContainer } from "v2/Apps/Components/AppContainer"
 import styled from "styled-components"
 import { HorizontalPadding } from "../Components/HorizontalPadding"
 import { RouterLink } from "v2/System/Router/RouterLink"
-import { resized } from "v2/Utils/resized"
+import { cropped, resized } from "v2/Utils/resized"
+import { Fragment } from "react"
 
 export const AboutApp: React.FC = () => {
   return (
@@ -27,14 +31,18 @@ export const AboutApp: React.FC = () => {
         description="Artsy’s mission is to make all of the world’s art accessible to anyone with an Internet connection."
         pathname="/about"
       />
+
+      <Spacer mt={4} />
+
       <GridColumns>
         <Column span={6}>
-          <Text as="h1" variant="xl" my={4}>
+          <Text as="h1" variant="xl">
             For the Love of Art
           </Text>
         </Column>
+
         <Column span={6}>
-          <Text variant="md" my={4}>
+          <Text variant="md">
             Artsy envisions a future where everyone is moved by art every day.
             To get there, we’re expanding the art market to support more artists
             and art around the world. As the leading marketplace to discover,
@@ -45,7 +53,9 @@ export const AboutApp: React.FC = () => {
           </Text>
         </Column>
       </GridColumns>
+
       <Spacer mt={6} />
+
       <Rail
         title="Discover Artworks Just for You"
         subTitle="On Artsy"
@@ -91,20 +101,20 @@ export const AboutApp: React.FC = () => {
           ]
 
           return items.map(item => {
-            return <RailComponent {...item} />
+            return <RailComponent key={item.name} {...item} />
           })
         }}
       />
 
       <Spacer my={12} />
-      <SellWithArtsyComponent />
-      <Spacer my={3} />
-      <AppDownloadComponent />
-      <Spacer my={6} />
-      <CollectorInfoComponent />
-      <Spacer my={6} />
-      <ArtsySpecialistsComponent />
-      <Spacer my={3} />
+
+      <Join separator={<Spacer mt={6} />}>
+        <SellWithArtsyComponent />
+        <AppDownloadComponent />
+        <CollectorInfoComponent />
+        <Separator />
+        <ArtsySpecialistsComponent />
+      </Join>
     </>
   )
 }
@@ -232,9 +242,9 @@ const AppDownloadComponent: React.FC = () => {
   })
 
   return (
-    <GridColumns>
+    <GridColumns gridRowGap={4}>
       <Column span={6}>
-        <Text mt={6} variant="xs" textTransform="uppercase">
+        <Text variant="xs" textTransform="uppercase">
           Artsy App
         </Text>
         <Text variant="xl" mt={1}>
@@ -268,7 +278,6 @@ const AppDownloadComponent: React.FC = () => {
       <Column span={6}>
         <ResponsiveBox aspectHeight={652} aspectWidth={910} maxWidth="100%">
           <Image
-            mt={6}
             src={image.src}
             width="100%"
             height="100%"
@@ -292,12 +301,11 @@ const CollectorInfoComponent: React.FC = () => {
   )
 
   return (
-    <GridColumns>
+    <GridColumns gridRowGap={[4, 6]}>
       <Column span={12}>
-        <Text variant="xl" my={6}>
-          Collecting
-        </Text>
+        <Text variant="xl">Collecting</Text>
       </Column>
+
       <Column span={6}>
         <ResponsiveBox aspectHeight={652} aspectWidth={910} maxWidth="100%">
           <Image
@@ -309,7 +317,7 @@ const CollectorInfoComponent: React.FC = () => {
             alt=""
           />
         </ResponsiveBox>
-        <Text variant="xs" textColor="black60">
+        <Text variant="xs" textColor="black60" mt={0.5}>
           The Collection fo Carole Server by Emily Johnston for Artsy 2015.
           Courtesy of Carole Server.
         </Text>
@@ -332,16 +340,13 @@ const CollectorInfoComponent: React.FC = () => {
           artists.
         </Text>
       </Column>
-      <Column span={12}>
-        <Text mt={4} borderBottom="1px solid" borderBottomColor="black15" />
-      </Column>
     </GridColumns>
   )
 }
 
 const ArtsySpecialistsComponent: React.FC = () => {
   return (
-    <GridColumns>
+    <GridColumns gridRowGap={4}>
       <Column span={6}>
         <Text variant="xs" textTransform="uppercase">
           Artsy Specialists
@@ -359,50 +364,59 @@ const ArtsySpecialistsComponent: React.FC = () => {
         <Text variant="sm" mt={4}>
           More questions about collecting?
         </Text>
-        <Flex>
+
+        <Flex flexDirection={["column", "column", "column", "row"]} mt={4}>
           <Button
             variant="primaryBlack"
-            flex={1}
             // @ts-ignore
             as={RouterLink}
             to="/meet-the-specialists"
-            mt={4}
           >
             Contact Specialist
           </Button>
-          <Spacer ml={2} />
+
+          <Spacer ml={[0, 0, 0, 2]} mt={[2, 2, 2, 0]} />
+
           <Button
-            variant="primaryWhite"
-            flex={1}
+            variant="secondaryOutline"
             // @ts-ignore
             as={RouterLink}
             to="https://support.artsy.net/hc/en-us"
-            mt={4}
-            borderColor="black15"
           >
             Collector Resources
           </Button>
         </Flex>
       </Column>
+
       <Column span={6}>
-        {ADVISORY_SPECIALISTS.map(specialist => (
-          <Box width="100%">
-            <Flex flexDirection="row">
-              <Avatar size="md" src={specialist.photo.url} mr={2} />
-              <Flex flexDirection="column">
-                <Text variant="lg">{specialist.name}</Text>
-                <Text variant="md">{specialist.title}</Text>
-                <Text variant="md" color="black60" mb={2}>
-                  {specialist.location}
-                </Text>
-                <RouterLink to={`mailto:${specialist.email}`}>
-                  {specialist.email}
-                </RouterLink>
-              </Flex>
-            </Flex>
-            <Text my={2} borderBottom="1px solid" borderBottomColor="black15" />
-          </Box>
-        ))}
+        <Join separator={<Separator my={2} />}>
+          {ADVISORY_SPECIALISTS.map(specialist => {
+            const image = cropped(specialist.photo, { width: 100, height: 100 })
+
+            return (
+              <Fragment key={specialist.name}>
+                <Flex flexDirection="row">
+                  <Avatar
+                    size="md"
+                    src={image.src}
+                    srcSet={image.srcSet}
+                    mr={2}
+                  />
+                  <Flex flexDirection="column">
+                    <Text variant="lg">{specialist.name}</Text>
+                    <Text variant="md">{specialist.title}</Text>
+                    <Text variant="md" color="black60" mb={2}>
+                      {specialist.location}
+                    </Text>
+                    <RouterLink to={`mailto:${specialist.email}`}>
+                      {specialist.email}
+                    </RouterLink>
+                  </Flex>
+                </Flex>
+              </Fragment>
+            )
+          })}
+        </Join>
       </Column>
     </GridColumns>
   )
@@ -415,7 +429,7 @@ const ADVISORY_SPECIALISTS = [
     location: "New York",
     email: "robin.roche@artsy.net",
     phone: "+1 646 707 9450",
-    photo: { url: "http://files.artsy.net/images/robin.jpeg" },
+    photo: "http://files.artsy.net/images/robin.jpeg",
   },
   {
     name: "Itziar Ramos Ricoy",
@@ -423,7 +437,7 @@ const ADVISORY_SPECIALISTS = [
     location: "London",
     email: "itziar.ramos@artsy.net",
     phone: "+44 7429 093319",
-    photo: { url: "http://files.artsy.net/images/itziar.jpeg" },
+    photo: "http://files.artsy.net/images/itziar.jpeg",
   },
   {
     name: "Caroline Perkins",
@@ -431,7 +445,7 @@ const ADVISORY_SPECIALISTS = [
     location: "New York",
     email: "caroline.perkins@artsy.net",
     phone: "+1 540 588 1371",
-    photo: { url: "http://files.artsy.net/images/cperkins_headshot-copy.jpg" },
+    photo: "http://files.artsy.net/images/cperkins_headshot-copy.jpg",
   },
 ]
 
