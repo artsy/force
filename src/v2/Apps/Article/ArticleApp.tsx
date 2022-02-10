@@ -4,6 +4,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { MetaTags } from "v2/Components/MetaTags"
 import { ArticleApp_article } from "v2/__generated__/ArticleApp_article.graphql"
 import { ArticleBodyFragmentContainer } from "./Components/ArticleBody"
+import { ArticleSeriesFragmentContainer } from "./Components/ArticleSeries"
 import { ArticleVerticalRelatedArticlesQueryRenderer } from "./Components/ArticleVerticalRelatedArticles"
 
 interface ArticleAppProps {
@@ -18,16 +19,34 @@ const ArticleApp: FC<ArticleAppProps> = ({ article }) => {
         // TODO: Add description, remaining tags
       />
 
-      {!article.hero && <Spacer mt={4} />}
+      {!article.hero && article.layout !== "SERIES" && <Spacer mt={4} />}
 
       <Join separator={<Spacer mt={4} />}>
-        <ArticleBodyFragmentContainer article={article} />
+        {(() => {
+          switch (article.layout) {
+            case "SERIES":
+              return <ArticleSeriesFragmentContainer article={article} />
 
-        <FullBleed>
-          <Separator />
-        </FullBleed>
+            case "VIDEO": // TODO
+            case "NEWS": // TODO
+            case "CLASSIC": // TODO
+            case "FEATURE":
+            case "STANDARD":
+              return (
+                <>
+                  <ArticleBodyFragmentContainer article={article} />
 
-        <ArticleVerticalRelatedArticlesQueryRenderer id={article.internalID} />
+                  <FullBleed>
+                    <Separator />
+                  </FullBleed>
+
+                  <ArticleVerticalRelatedArticlesQueryRenderer
+                    id={article.internalID}
+                  />
+                </>
+              )
+          }
+        })()}
       </Join>
     </>
   )
@@ -41,7 +60,9 @@ export const ArticleAppFragmentContainer = createFragmentContainer(ArticleApp, {
       hero {
         __typename
       }
+      layout
       ...ArticleBody_article
+      ...ArticleSeries_article
     }
   `,
 })
