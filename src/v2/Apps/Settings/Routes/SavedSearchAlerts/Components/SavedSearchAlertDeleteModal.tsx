@@ -55,7 +55,7 @@ export const SavedSearchAlertDeleteModal: React.FC<SavedSearchAlertDeleteModalPr
                 onClick={onCloseClick}
                 mr={1}
               >
-                Cancel
+                Keep Alert
               </Button>
               <Button
                 flex={1}
