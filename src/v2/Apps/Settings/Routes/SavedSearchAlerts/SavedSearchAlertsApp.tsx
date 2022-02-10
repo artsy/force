@@ -56,7 +56,7 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
 
   const closeEditFormAndRefetch = () => {
     closeEditForm()
-    relay.refetchConnection(15)
+    relay.refetchConnection(10)
   }
 
   const closeDeleteModal = () => {
@@ -215,7 +215,7 @@ export const SavedSearchAlertsAppPaginationContainer = createPaginationContainer
       fragment SavedSearchAlertsApp_me on Me
         @argumentDefinitions(
           after: { type: "String" }
-          count: { type: "Int", defaultValue: 15 }
+          count: { type: "Int", defaultValue: 10 }
         ) {
         savedSearchesConnection(first: $count, after: $after)
           @connection(key: "SavedSearchAlertsApp_savedSearchesConnection") {
