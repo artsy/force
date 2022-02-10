@@ -8,6 +8,7 @@ jest.mock("v2/Utils/getENV", () => ({
   getENV: jest.fn().mockReturnValue({
     applePath: "/users/auth/apple",
     facebookPath: "/users/auth/facebook",
+    googlePath: "/users/auth/google",
   }),
 }))
 
@@ -29,6 +30,7 @@ describe("SettingsEditSettingsLinkedAccounts", () => {
     expect(screen.getByText("Linked Accounts")).toBeInTheDocument()
     expect(screen.getByText("Connect Facebook Account")).toBeInTheDocument()
     expect(screen.getByText("Connect Apple Account")).toBeInTheDocument()
+    expect(screen.getByText("Connect Google Account")).toBeInTheDocument()
   })
 
   it("renders the link if the accounts are disconnected", () => {
@@ -40,16 +42,22 @@ describe("SettingsEditSettingsLinkedAccounts", () => {
 
     expect(links[0]).toHaveAttribute("href", "/users/auth/facebook")
     expect(links[1]).toHaveAttribute("href", "/users/auth/apple")
+    expect(links[2]).toHaveAttribute("href", "/users/auth/google")
   })
 
   it("renders the buttons if the accounts are connected", () => {
     renderWithRelay({
       Me: () => ({
-        authentications: [{ provider: "FACEBOOK" }, { provider: "APPLE" }],
+        authentications: [
+          { provider: "FACEBOOK" },
+          { provider: "APPLE" },
+          { provider: "GOOGLE" },
+        ],
       }),
     })
 
     expect(screen.getByText("Disconnect Facebook Account")).toBeInTheDocument()
     expect(screen.getByText("Disconnect Apple Account")).toBeInTheDocument()
+    expect(screen.getByText("Disconnect Google Account")).toBeInTheDocument()
   })
 })
