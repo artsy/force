@@ -82,8 +82,8 @@ export class TransactionDetailsSummaryItem extends React.Component<
         <Spacer mb={2} />
         {this.avalaraPhase2enabled && this.shippingNotCalculated() && (
           <Text variant="sm" color="black60">
-            **Shipping cost to be confirmed by gallery. You will be able to
-            review total with shipping before payment.
+            **Shipping costs to be confirmed by gallery. You will be able to
+            review the total price before payment.
           </Text>
         )}
         {showOfferNote && order.mode === "OFFER" && this.renderNoteEntry()}
@@ -202,6 +202,7 @@ export class TransactionDetailsSummaryItem extends React.Component<
   taxDisplayAmount = () => {
     const { order } = this.props
     const currency = order.currencyCode
+
     switch (order.mode) {
       case "BUY":
         return (
