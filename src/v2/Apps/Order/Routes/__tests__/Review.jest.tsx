@@ -28,7 +28,6 @@ import {
 } from "../__fixtures__/MutationResults"
 import { ReviewFragmentContainer } from "../Review"
 import { OrderAppTestPage } from "./Utils/OrderAppTestPage"
-import { GlobalData } from "sharify"
 import { mockLocation } from "v2/DevTools/mockLocation"
 import { mockStripe } from "v2/DevTools/mockStripe"
 import { TransactionDetailsSummaryItem } from "../../Components/TransactionDetailsSummaryItem"
@@ -69,7 +68,7 @@ class ReviewTestPage extends OrderAppTestPage {
 
 describe("Review", () => {
   beforeAll(() => {
-    window.sd = { STRIPE_PUBLISHABLE_KEY: "" } as GlobalData
+    window.sd = { STRIPE_PUBLISHABLE_KEY: "" }
     ;(useTracking as jest.Mock).mockImplementation(() => ({
       trackEvent: jest.fn(),
     }))
@@ -247,9 +246,20 @@ describe("Review", () => {
     })
 
     it("enables the button and routes to the conversation", async () => {
+      // TOFIX remove this test when the feature flag is retired
       await page.clickSubmit()
       expect(mutations.mockFetch).toHaveBeenCalledTimes(1)
       expect(routes.mockPushRoute).toBeCalledWith("/user/conversations/5665")
+    })
+
+    it("enables the button and routes to the artwork page", async () => {
+      // TOFIX add this test when the feature flag is retired
+      // await page.clickSubmit()
+      // expect(mutations.mockFetch).toHaveBeenCalledTimes(1)
+      // expect(routes.mockPushRoute).toBeCalledWith({
+      //   pathname: "/artwork/artworkId",
+      //   state: { offerOrderHasBeenSubmitted: true },
+      // })
     })
 
     it("shows an error modal when there is an error in submitOrderPayload", async () => {
@@ -354,29 +364,19 @@ describe("Review", () => {
 
   describe("Inquiry offer orders", () => {
     let page: ReviewTestPage
-
-    it("shows a placeholder override for inquiry offers with missing metadata", async () => {
+    beforeEach(async () => {
       page = await buildPage({
-        mockData: {
-          order: {
-            ...OfferOrderWithMissingMetadata,
-          },
-        },
+        mockData: { order: { ...OfferOrderWithMissingMetadata } },
       })
+    })
 
+    it("shows a placeholder override for inquiry offers with missing metadata", () => {
       expect(page.root.find(TransactionDetailsSummaryItem).text()).toMatch(
         "To be confirmed*"
       )
     })
 
-    it("shows message about shipping and tax confirmation for inquiry offers with missing metadata", async () => {
-      page = await buildPage({
-        mockData: {
-          order: {
-            ...OfferOrderWithMissingMetadata,
-          },
-        },
-      })
+    it("shows message about shipping and tax confirmation for inquiry offers with missing metadata", () => {
       expect(page.text()).toMatch(
         "*Shipping and taxes to be confirmed by gallery"
       )
@@ -393,6 +393,12 @@ describe("Review", () => {
       expect(page.text()).not.toMatch(
         "*Shipping and taxes to be confirmed by gallery"
       )
+    })
+
+    it("enables the button and routes to the conversation", async () => {
+      await page.clickSubmit()
+      expect(mutations.mockFetch).toHaveBeenCalledTimes(1)
+      expect(routes.mockPushRoute).toBeCalledWith("/user/conversations/5665")
     })
   })
 })
