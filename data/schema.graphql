@@ -8170,6 +8170,11 @@ type ImageURLs {
 }
 
 type InquirerCollectorProfile {
+  # List of affiliated auction house ids, referencing Galaxy.
+  affiliatedAuctionHouseIds: [String]
+
+  # List of affiliated gallery ids, referencing Galaxy.
+  affiliatedGalleryIds: [String]
   artsyUserSince(
     format: String
 
@@ -8241,6 +8246,9 @@ type InquirerCollectorProfile {
   ): String
   selfReportedPurchases: String
   userInterests: [UserInterest]!
+
+  # Collector's brief introduction
+  userIntroduction: String
 }
 
 union InquiryItemType = Artwork | Show
