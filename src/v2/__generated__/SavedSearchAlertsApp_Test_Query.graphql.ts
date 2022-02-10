@@ -59,7 +59,7 @@ fragment SavedSearchAlertListItem_item on SearchCriteria {
 }
 
 fragment SavedSearchAlertsApp_me on Me {
-  savedSearchesConnection(first: 15) {
+  savedSearchesConnection(first: 10) {
     edges {
       node {
         internalID
@@ -81,7 +81,7 @@ var v0 = [
   {
     "kind": "Literal",
     "name": "first",
-    "value": 15
+    "value": 10
   }
 ];
 return {
@@ -234,7 +234,7 @@ return {
                 "storageKey": null
               }
             ],
-            "storageKey": "savedSearchesConnection(first:15)"
+            "storageKey": "savedSearchesConnection(first:10)"
           },
           {
             "alias": null,
@@ -258,12 +258,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "beb440cf69fe4a85e1d417e568fe7a01",
+    "cacheID": "2a3a707aacbdf938baf2330c4b465717",
     "id": null,
     "metadata": {},
     "name": "SavedSearchAlertsApp_Test_Query",
     "operationKind": "query",
-    "text": "query SavedSearchAlertsApp_Test_Query {\n  me {\n    ...SavedSearchAlertsApp_me\n    id\n  }\n}\n\nfragment SavedSearchAlertListItem_item on SearchCriteria {\n  internalID\n  artistIDs\n  href\n  userAlertSettings {\n    name\n  }\n}\n\nfragment SavedSearchAlertsApp_me on Me {\n  savedSearchesConnection(first: 15) {\n    edges {\n      node {\n        internalID\n        ...SavedSearchAlertListItem_item\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query SavedSearchAlertsApp_Test_Query {\n  me {\n    ...SavedSearchAlertsApp_me\n    id\n  }\n}\n\nfragment SavedSearchAlertListItem_item on SearchCriteria {\n  internalID\n  artistIDs\n  href\n  userAlertSettings {\n    name\n  }\n}\n\nfragment SavedSearchAlertsApp_me on Me {\n  savedSearchesConnection(first: 10) {\n    edges {\n      node {\n        internalID\n        ...SavedSearchAlertListItem_item\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();
