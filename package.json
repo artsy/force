@@ -91,7 +91,7 @@
     "@artsy/gemup": "0.1.0",
     "@artsy/multienv": "^1.2.0",
     "@artsy/palette": "18.22.0",
-    "@artsy/palette-charts": "17.23.0",
+    "@artsy/palette-charts": "17.23.1",
     "@artsy/reaction": "29.2.1",
     "@artsy/stitch": "6.4.2",
     "@artsy/to-title-case": "1.1.0",
