@@ -52,46 +52,38 @@ module.exports.local = function (req, username, password, otp, done) {
   post.end(onAccessToken(req, done))
 }
 
-module.exports.facebook = function (req, token, refreshToken, profile, done) {
+module.exports.facebook = function (
+  req,
+  accessToken,
+  refreshToken,
+  profile,
+  done
+) {
   if (profile && profile.emails && profile.emails[0]) {
     req.socialProfileEmail = profile.emails[0].value
   } else {
     req.socialProfileEmail = undefined
   }
-  // Link Facebook account
+
+  const params = {
+    name: profile != null ? profile.displayName : undefined,
+    oauth_token: accessToken,
+  }
+
   if (req.user) {
-    return request
-      .post(`${opts.ARTSY_URL}/api/v1/me/authentications/facebook`)
-      .set({ "User-Agent": req.get("user-agent") })
-      .send({
-        oauth_token: token,
-        access_token: req.user.get("accessToken"),
-      })
-      .end(err => done(err, req.user))
-    // Login or signup with Facebook
-  } else {
-    const post = request
-      .post(`${opts.ARTSY_URL}/oauth2/access_token`)
-      .set({ "User-Agent": req.get("user-agent") })
-      .query({
-        client_id: opts.ARTSY_ID,
-        client_secret: opts.ARTSY_SECRET,
-        grant_type: "oauth_token",
-        oauth_token: token,
-        oauth_provider: "facebook",
-      })
-
-    if (req && req.connection && req.connection.remoteAddress) {
-      post.set("X-Forwarded-For", resolveProxies(req))
-    }
-
-    post.end(
-      onAccessToken(req, done, {
-        oauth_token: token,
-        provider: "facebook",
-        name: profile != null ? profile.displayName : undefined,
-      })
+    return linkAccount(
+      "facebook",
+      { ...params, access_token: req.user.get("accessToken") },
+      done
     )
+  } else {
+    const queryParams = {
+      client_id: opts.ARTSY_ID,
+      client_secret: opts.ARTSY_SECRET,
+      grant_type: "oauth_token",
+      oauth_provider: "facebook",
+    }
+    fetchAccessToken("facebook", req, { ...params, ...queryParams }, done)
   }
 }
 
@@ -102,40 +94,25 @@ module.exports.google = function (
   profile,
   done
 ) {
-  // Link Google account
+  const params = {
+    name: profile != null ? profile.displayName : undefined,
+    oauth_token: accessToken,
+  }
+
   if (req.user) {
-    return request
-      .post(`${opts.ARTSY_URL}/api/v1/me/authentications/google`)
-      .set({ "User-Agent": req.get("user-agent") })
-      .send({
-        oauth_token: accessToken,
-        access_token: req.user.get("accessToken"),
-      })
-      .end(err => done(err, req.user))
-    // Login or signup with Google
-  } else {
-    const post = request
-      .post(`${opts.ARTSY_URL}/oauth2/access_token`)
-      .set({ "User-Agent": req.get("user-agent") })
-      .query({
-        client_id: opts.ARTSY_ID,
-        client_secret: opts.ARTSY_SECRET,
-        grant_type: "oauth_token",
-        oauth_token: accessToken,
-        oauth_provider: "google",
-      })
-
-    if (req && req.connection && req.connection.remoteAddress) {
-      post.set("X-Forwarded-For", resolveProxies(req))
-    }
-
-    post.end(
-      onAccessToken(req, done, {
-        oauth_token: accessToken,
-        provider: "google",
-        name: profile != null ? profile.displayName : undefined,
-      })
+    return linkAccount(
+      "google",
+      { ...params, access_token: req.user.get("accessToken") },
+      done
     )
+  } else {
+    const queryParams = {
+      client_id: opts.ARTSY_ID,
+      client_secret: opts.ARTSY_SECRET,
+      grant_type: "oauth_token",
+      oauth_provider: "google",
+    }
+    fetchAccessToken("google", req, { ...params, ...queryParams }, done)
   }
 }
 
@@ -148,54 +125,63 @@ module.exports.apple = function (
   done
 ) {
   const user = req.appleProfile
-
   let displayName = null
+
   if (user && user.name && user.name.firstName && user.name.lastName) {
     displayName = user.name.firstName + " " + user.name.lastName
   }
 
-  // Link Apple account
+  const params = {
+    name: displayName,
+    email: decodedIdToken.email,
+    id_token: idToken,
+    apple_uid: decodedIdToken.sub,
+  }
+
   if (req.user) {
-    return request
-      .post(`${opts.ARTSY_URL}/api/v1/me/authentications/apple`)
-      .set({ "User-Agent": req.get("user-agent") })
-      .send({
-        name: displayName,
-        email: decodedIdToken.email,
-        apple_uid: decodedIdToken.sub,
-        id_token: idToken,
+    return linkAccount(
+      "apple",
+      {
+        ...params,
         oauth_token: accessToken,
         access_token: req.user.get("accessToken"),
-      })
-      .end(err => done(err, req.user))
-  } else {
-    const post = request
-      .post(`${opts.ARTSY_URL}/oauth2/access_token`)
-      .set({ "User-Agent": req.get("user-agent") })
-      .query({
-        client_id: opts.ARTSY_ID,
-        client_secret: opts.ARTSY_SECRET,
-        grant_type: "apple_uid",
-        name: displayName,
-        id_token: idToken,
-        email: decodedIdToken.email,
-        apple_uid: decodedIdToken.sub,
-      })
-
-    if (req && req.connection && req.connection.remoteAddress) {
-      post.set("X-Forwarded-For", resolveProxies(req))
-    }
-
-    post.end(
-      onAccessToken(req, done, {
-        provider: "apple",
-        apple_uid: decodedIdToken.sub,
-        name: displayName,
-        id_token: idToken,
-        email: decodedIdToken.email,
-      })
+      },
+      done
     )
+  } else {
+    const queryParams = {
+      client_id: opts.ARTSY_ID,
+      client_secret: opts.ARTSY_SECRET,
+      grant_type: "apple_uid",
+    }
+    fetchAccessToken("apple", req, { ...params, ...queryParams }, done)
   }
+}
+
+const linkAccount = (provider, params, done) => {
+  return request
+    .post(`${opts.ARTSY_URL}/api/v1/me/authentications/${provider}`)
+    .set({ "User-Agent": req.get("user-agent") })
+    .send(params)
+    .end(err => done(err, req.user))
+}
+
+const fetchAccessToken = (provider, req, params, done) => {
+  const post = request
+    .post(`${opts.ARTSY_URL}/oauth2/access_token`)
+    .set({ "User-Agent": req.get("user-agent") })
+    .query(params)
+
+  if (req && req.connection && req.connection.remoteAddress) {
+    post.set("X-Forwarded-For", resolveProxies(req))
+  }
+
+  post.end(
+    onAccessToken(req, done, {
+      ...params,
+      provider: provider,
+    })
+  )
 }
 
 const onAccessToken = (req, done, params) =>
