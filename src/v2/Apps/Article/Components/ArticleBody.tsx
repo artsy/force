@@ -12,7 +12,6 @@ import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArticleBody_article } from "v2/__generated__/ArticleBody_article.graphql"
 import { ArticleShare } from "v2/Components/ArticleShare"
-import { getENV } from "v2/Utils/getENV"
 import { ArticleSectionImageCollectionFragmentContainer } from "./Sections/ArticleSectionImageCollection"
 import { ArticleSectionTextFragmentContainer } from "./Sections/ArticleSectionText"
 import { ArticleSectionImageSetFragmentContainer } from "./Sections/ArticleSectionImageSet"
@@ -50,10 +49,7 @@ const ArticleBody: FC<ArticleBodyProps> = ({ article }) => {
 
             <Spacer ml={2} />
 
-            <ArticleShare
-              description={article.title ?? "Artsy Editorial"}
-              url={`${getENV("APP_URL")}${article.href}`}
-            />
+            <ArticleShare description={article.title} pathname={article.href} />
           </Text>
 
           <Spacer mt={4} />
