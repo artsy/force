@@ -82,7 +82,7 @@ export function buildServerApp(
         loadableFile = "loadable-stats.json",
         loadablePath = "public/assets",
         assetsPath = "/assets",
-        featureFlags = [],
+        featureFlags = {},
       } = config
 
       // Find and execute pre-render hooks

@@ -8,14 +8,14 @@ export const MockBoot: React.SFC<{
   headTags?: JSX.Element[]
   user?: User
   context?: object
-  featureFlags?: string[]
+  featureFlags?: Record<string, boolean>
 }> = ({
   breakpoint = "xl",
   headTags,
   children,
   user = null,
   context = {},
-  featureFlags = [],
+  featureFlags = { "feature-a": true },
 }) => {
   const mockContext = buildClientAppContext(context)
   return (

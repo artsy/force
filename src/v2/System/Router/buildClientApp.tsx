@@ -43,7 +43,7 @@ export function buildClientApp(config: RouterConfig): Promise<Resolve> {
         history = {},
         initialRoute = "/",
         routes = [],
-        featureFlags = [],
+        featureFlags = {},
       } = config
       const clientContext = buildClientAppContext(context)
 
