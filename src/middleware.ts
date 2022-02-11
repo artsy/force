@@ -73,7 +73,7 @@ import {
   UnleashFeatureFlagProvider,
   UnleashProvider,
 } from "lib/featureFlags/unleashProvider"
-import { registerFlagProvider } from "lib/featureFlags/featureFlags"
+import { registerFeatureFlagProvider } from "lib/featureFlags/featureFlags"
 
 // Find the v2 routes, we will not be testing memory caching for legacy pages.
 
@@ -154,7 +154,7 @@ export function initializeMiddleware(app) {
   applyStaticAssetMiddlewares(app)
 
   // Need sharify for unleash
-  registerFlagProvider(UnleashProvider, UnleashFeatureFlagProvider)
+  registerFeatureFlagProvider(UnleashProvider, UnleashFeatureFlagProvider)
   app.use(featureFlagMiddleware(UnleashProvider))
 }
 

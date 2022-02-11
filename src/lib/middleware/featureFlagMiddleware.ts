@@ -1,10 +1,10 @@
 import { NextFunction } from "express"
 import { ArtsyRequest, ArtsyResponse } from "./artsyExpress"
-import { createFlagProvider } from "lib/featureFlags/featureFlags"
+import { createFeatureFlagProvider } from "lib/featureFlags/featureFlags"
 import {
   FeatureFlagConfig,
   FeatureFlagProvider,
-} from "lib/featureFlags/featureFlagProvider"
+} from "lib/featureFlags/featureFlagProviderShared"
 
 export function featureFlagMiddleware<T extends FeatureFlagConfig>(
   providerType: symbol,
@@ -17,7 +17,7 @@ export function featureFlagMiddleware<T extends FeatureFlagConfig>(
         resolve(provider)
       }
       try {
-        provider = await createFlagProvider(providerType, config)
+        provider = await createFeatureFlagProvider(providerType, config)
         resolve(provider)
       } catch {
         reject("An unknown error occurred while creating the flag provider.")
@@ -27,7 +27,7 @@ export function featureFlagMiddleware<T extends FeatureFlagConfig>(
         // Create feature flag context per request
         const featureFlagContext = {
           userId: res.locals.user ? res.locals.user.id : null,
-          sessionsId: res.locals.sd.SESSION_ID,
+          sessionId: res.locals.sd.SESSION_ID,
         }
 
         // Get features and move them to sharify

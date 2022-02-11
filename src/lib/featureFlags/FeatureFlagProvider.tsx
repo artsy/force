@@ -1,15 +1,16 @@
-import { FeatureFlags } from "lib/featureFlags/featureFlagProvider"
 import * as React from "react"
 
-const FeatureFlagContext = React.createContext<FeatureFlagProviderInterface>({
-  featureFlags: [],
-})
+const FeatureFlagContext = React.createContext<EnabledFeatureFlags>({})
 
-interface FeatureFlagProviderInterface {
-  featureFlags: FeatureFlags
-}
+export type EnabledFeatureFlags = Record<string, boolean>
 
-function FeatureFlagProvider({ featureFlags, children }) {
+export function FeatureFlagProvider({
+  featureFlags,
+  children,
+}: {
+  featureFlags: EnabledFeatureFlags
+  children: any
+}) {
   return (
     <FeatureFlagContext.Provider value={featureFlags}>
       {children}
@@ -17,7 +18,7 @@ function FeatureFlagProvider({ featureFlags, children }) {
   )
 }
 
-function useFlag(flagName) {
+export function useFlag(flagName) {
   const context = React.useContext(FeatureFlagContext)
   if (context === undefined) {
     throw new Error("useFlag must be used within a FeatureFlagProvider")
@@ -29,5 +30,3 @@ function useFlag(flagName) {
 
   return Object.keys(context).indexOf(flagName) !== -1 && context[flagName]
 }
-
-export { FeatureFlagProvider, useFlag }

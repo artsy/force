@@ -1,20 +1,33 @@
-import { FeatureFlagConfig, FeatureFlagProvider } from "./featureFlagProvider"
+import {
+  FeatureFlagConfig,
+  FeatureFlagProvider,
+} from "./featureFlagProviderShared"
 
-const registeredProviders = new Map<symbol, any>()
+const registeredFeatureFlagProviders = new Map<symbol, any>()
 
-export async function createFlagProvider<T extends FeatureFlagConfig>(
+export async function createFeatureFlagProvider<T extends FeatureFlagConfig>(
   type: symbol,
   config?: T
 ): Promise<FeatureFlagProvider> {
-  if (!registeredProviders.has(type)) {
+  if (!registeredFeatureFlagProviders.has(type)) {
     throw new Error(`The type provider ${type.toString()} is not registered.`)
   }
 
-  const clz = registeredProviders.get(type)
-  if (typeof clz !== undefined) {
-    const flagProvider = config ? new clz!(...config) : new clz!()
-    await flagProvider.init()
-    return flagProvider
+  // Check if provider has been registered with registerFeatureFlagProvider()
+  const featureFlagClass = registeredFeatureFlagProviders.get(type)
+  if (typeof featureFlagClass !== undefined) {
+    /*
+     ** Instantiate a new feature flag provider instance. Uses a custom
+     ** configuration if provided, otherwise use default config from passed in
+     ** featureFlagProviderClass.
+     */
+    const featureFlagProvider = config
+      ? new featureFlagClass!(...config)
+      : new featureFlagClass!()
+
+    // initialize featureFlag client
+    await featureFlagProvider.init()
+    return featureFlagProvider
   } else {
     throw new Error("FeatureFlagProvider was defined as null")
   }
@@ -22,9 +35,9 @@ export async function createFlagProvider<T extends FeatureFlagConfig>(
 
 type ConstructorType<T> = Function & { prototype: T }
 
-export function registerFlagProvider<T extends FeatureFlagProvider>(
+export function registerFeatureFlagProvider<T extends FeatureFlagProvider>(
   type: symbol,
-  clz: ConstructorType<T>
+  featureFlagClass: ConstructorType<T>
 ) {
-  registeredProviders.set(type, clz)
+  registeredFeatureFlagProviders.set(type, featureFlagClass)
 }

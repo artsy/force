@@ -5,10 +5,15 @@ import {
   UNLEASH_INSTANCE_ID,
   UNLEASH_SERVER_KEY,
 } from "../../config"
-import { FeatureFlagConfig, FeatureFlagProvider } from "./featureFlagProvider"
+import {
+  FeatureFlagConfig,
+  FeatureFlagProvider,
+} from "./featureFlagProviderShared"
 
+// Pass in as argument to registerFeatureFlagProvideder() when using unleash as feature flag service
 export const UnleashProvider = Symbol("UnleashProvider")
 
+// Override the default config set in constructor of UnleashFeatureFlagProvider class
 export class UnleashProviderConfig implements FeatureFlagConfig {
   constructor(
     private _url: string,
@@ -41,6 +46,7 @@ export class UnleashProviderConfig implements FeatureFlagConfig {
   }
 }
 
+// Class to instantiate Unleash client and set useful helper methods.
 export class UnleashFeatureFlagProvider implements FeatureFlagProvider {
   private _unleash: Unleash | null = null
 

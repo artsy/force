@@ -134,9 +134,9 @@ export const VERBOSE_LOGGING: any = false
 export const VOLLEY_ENDPOINT: any = null
 export const WEBFONT_URL: any = "http://webfonts.artsy.net"
 export const ZENDESK_KEY: any = null
-export const UNLEASH_API: any = "localhost"
-export const UNLEASH_APP_NAME: any = "force-local"
-export const UNLEASH_INSTANCE_ID: any = "force-local"
+export const UNLEASH_API: any = null
+export const UNLEASH_APP_NAME: any = null
+export const UNLEASH_INSTANCE_ID: any = null
 export const UNLEASH_SERVER_KEY: any = null
 
 // Override any values with env variables if they exist.
