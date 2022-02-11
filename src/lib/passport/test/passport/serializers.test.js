@@ -4,6 +4,9 @@ const sinon = require("sinon")
 const serializers = rewire("../../lib/passport/serializers")
 const { serialize, deserialize } = serializers
 
+// TODO: Refactor tests with done callbacks to async/await
+/* eslint-disable jest/no-done-callback */
+
 describe("#serialize", function () {
   let request
 

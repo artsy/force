@@ -63,9 +63,6 @@ describe("sanitizeRedirect", function () {
 
   it("blocks other protocols; redirects to root", function () {
     sanitizeRedirect("ftp://google.com").should.equal("/")
-  })
-
-  it("blocks other protocols; redirects to root", function () {
     sanitizeRedirect("javascript:alert(1);").should.equal("/")
   })
 
