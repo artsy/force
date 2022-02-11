@@ -12,18 +12,39 @@ import { useRouter } from "v2/System/Router/useRouter"
 import { BackLink } from "v2/Components/Links/BackLink"
 import { getENV } from "v2/Utils/getENV"
 import { uploadPhotosValidationSchema, validate } from "../Utils/validation"
-import { createFragmentContainer, graphql } from "react-relay"
+import { isServer } from "lib/isServer"
+import {
+  createFragmentContainer,
+  graphql,
+  fetchQuery,
+  Environment,
+} from "react-relay"
 import { UploadPhotos_submission } from "v2/__generated__/UploadPhotos_submission.graphql"
+import { UploadPhotos_ImageRefetch_Query } from "v2/__generated__/UploadPhotos_ImageRefetch_Query.graphql"
+
 import {
   useRemoveAssetFromConsignmentSubmission,
   useAddAssetToConsignmentSubmission,
 } from "../Mutations"
 import createLogger from "v2/Utils/logger"
+import { useRef, useState } from "react"
 
 const logger = createLogger("SubmissionFlow/UploadPhotos.tsx")
 
 export interface UploadPhotosProps {
   submission?: UploadPhotos_submission
+}
+
+type SubmissionAsset = NonNullable<UploadPhotos_submission["assets"]>[0]
+
+const shouldRefetchPhotoUrls = (photos: Photo[]) => {
+  return photos.some(photo => !!photo.assetId && !photo.url && !photo.file)
+}
+
+const getPhotoUrlFromAsset = (asset: SubmissionAsset) => {
+  return (
+    (asset?.imageUrls as any)?.thumbnail || (asset?.imageUrls as any)?.square
+  )
 }
 
 export const getUploadPhotosFormInitialValues = (
@@ -39,9 +60,7 @@ export const getUploadPhotosFormInitialValues = (
           size: (asset?.size && parseInt(asset?.size, 10)) || 0,
           name: asset?.filename ?? "",
           geminiToken: asset?.geminiToken ?? undefined,
-          url:
-            (asset?.imageUrls as any)?.thumbnail ||
-            (asset?.imageUrls as any)?.square,
+          url: getPhotoUrlFromAsset(asset),
           removed: false,
           loading: false,
         })) || [],
@@ -50,7 +69,9 @@ export const getUploadPhotosFormInitialValues = (
 
 export const UploadPhotos: React.FC<UploadPhotosProps> = ({ submission }) => {
   const { router } = useRouter()
-  const { isLoggedIn } = useSystemContext()
+  const { isLoggedIn, relayEnvironment } = useSystemContext()
+  const [isPhotosRefetchStarted, setIsPhotosRefetchStarted] = useState(false)
+  const photosRefetchingCount = useRef(0)
   const {
     submitMutation: removeAsset,
   } = useRemoveAssetFromConsignmentSubmission()
@@ -146,6 +167,57 @@ export const UploadPhotos: React.FC<UploadPhotosProps> = ({ submission }) => {
             }
           }
 
+          const updatePhotoUrls = (assets: ReadonlyArray<SubmissionAsset>) => {
+            let isUpdated = false
+
+            assets?.forEach(asset => {
+              const url = getPhotoUrlFromAsset(asset)
+
+              if (url && asset?.id) {
+                const photo = values.photos.find(p => p.assetId === asset.id)
+                if (photo) {
+                  photo.url = url
+                  isUpdated = true
+                }
+              }
+            })
+
+            isUpdated && setFieldValue("photos", values.photos, true)
+          }
+
+          const refetchPhotos = () => {
+            if (
+              submission &&
+              relayEnvironment &&
+              photosRefetchingCount.current < 20
+            ) {
+              photosRefetchingCount.current += 1
+
+              refetchSubmissionAssets(submission.id, relayEnvironment)
+                .then(assets => {
+                  updatePhotoUrls(assets)
+
+                  if (shouldRefetchPhotoUrls(values.photos)) {
+                    setTimeout(() => {
+                      refetchPhotos()
+                    }, 2000)
+                  }
+                })
+                .catch(error => {
+                  console.error(error)
+                })
+            }
+          }
+
+          if (
+            !isPhotosRefetchStarted &&
+            !isServer &&
+            shouldRefetchPhotoUrls(values.photos)
+          ) {
+            setIsPhotosRefetchStarted(true)
+            refetchPhotos()
+          }
+
           return (
             <Form>
               <UploadPhotosForm
@@ -181,6 +253,28 @@ export const UploadPhotos: React.FC<UploadPhotosProps> = ({ submission }) => {
       </Formik>
     </>
   )
+}
+
+const refetchSubmissionAssets = async (
+  submissionId: string,
+  relayEnvironment: Environment
+) => {
+  const response = await fetchQuery<UploadPhotos_ImageRefetch_Query>(
+    relayEnvironment,
+    graphql`
+      query UploadPhotos_ImageRefetch_Query($id: ID!, $sessionID: String) {
+        submission(id: $id, sessionID: $sessionID) {
+          ...UploadPhotos_submission @relay(mask: false)
+        }
+      }
+    `,
+    { id: submissionId, sessionID: getENV("SESSION_ID") },
+    {
+      force: true,
+    }
+  )
+
+  return response.submission?.assets || []
 }
 
 export const UploadPhotosFragmentContainer = createFragmentContainer(

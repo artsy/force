@@ -57,6 +57,12 @@ export const PhotoThumbnail: React.FC<PhotoThumbnailProps & BoxProps> = ({
     }
   }, [photo])
 
+  useEffect(() => {
+    if (!photoSrc && photo.url) {
+      setPhotoSrc(photo.url)
+    }
+  }, [photo.url, photoSrc])
+
   const handleDelete = () => onDelete(photo)
 
   const renderThumbnail = photoSrc => {

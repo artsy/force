@@ -1,4 +1,4 @@
-import { mount } from "enzyme"
+import { mount, ReactWrapper } from "enzyme"
 import {
   PhotoThumbnail,
   PhotoThumbnailProps,
@@ -25,21 +25,49 @@ const getWrapper = (props: PhotoThumbnailProps = defaultProps) =>
   mount(<PhotoThumbnail {...props} />)
 
 describe("PhotoThumbnail", () => {
-  let wrapper
+  let wrapper: ReactWrapper
 
   beforeEach(() => {
     deleteFn.mockReset()
+    //@ts-ignore
+    jest.spyOn(global, "FileReader").mockImplementation(function () {
+      this.readAsDataURL = jest.fn()
+    })
+  })
+
+  it("changes state from processing to success", () => {
+    let photo = {
+      id: "id",
+      name: "foo.png",
+      size: file.size,
+      removed: false,
+      loading: false,
+      geminiToken: "key",
+      url: "",
+    }
+
+    wrapper = getWrapper({
+      ...defaultProps,
+      photo: photo,
+    })
+
+    expect(wrapper.find(Image)).toHaveLength(0)
+
+    photo.url = "foo.png"
+    wrapper.setProps({
+      ...defaultProps,
+      photo: photo,
+    })
+
+    wrapper.update()
+
+    expect(wrapper.find(Image)).toHaveLength(1)
   })
 
   describe("error state", () => {
     let props
 
     beforeEach(() => {
-      //@ts-ignore
-      jest.spyOn(global, "FileReader").mockImplementation(function () {
-        this.readAsDataURL = jest.fn()
-      })
-
       props = {
         ...defaultProps,
         photo: {
@@ -87,11 +115,6 @@ describe("PhotoThumbnail", () => {
     let props
 
     beforeEach(() => {
-      //@ts-ignore
-      jest.spyOn(global, "FileReader").mockImplementation(function () {
-        this.readAsDataURL = jest.fn()
-      })
-
       props = {
         ...defaultProps,
         photo: {
@@ -138,11 +161,6 @@ describe("PhotoThumbnail", () => {
 
   describe("success state", () => {
     beforeEach(() => {
-      //@ts-ignore
-      jest.spyOn(global, "FileReader").mockImplementation(function () {
-        this.readAsDataURL = jest.fn()
-      })
-
       wrapper = getWrapper()
     })
 
@@ -181,11 +199,6 @@ describe("PhotoThumbnail", () => {
     }
 
     beforeEach(() => {
-      //@ts-ignore
-      jest.spyOn(global, "FileReader").mockImplementation(function () {
-        this.readAsDataURL = jest.fn()
-      })
-
       wrapper = getWrapper({
         ...defaultProps,
         photo: photo,
