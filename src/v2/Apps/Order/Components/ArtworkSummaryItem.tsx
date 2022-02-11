@@ -3,7 +3,8 @@ import { Omit } from "lodash"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { get } from "v2/Utils/get"
-
+import { getOfferItemFromOrder } from "v2/Apps/Order/Utils/offerItemExtractor"
+import { appendCurrencySymbol } from "v2/Apps/Order/Utils/currencyUtils"
 import {
   Box,
   Flex,
@@ -12,6 +13,8 @@ import {
   Text,
   StackableBorderBox,
 } from "@artsy/palette"
+import { userHasLabFeature } from "v2/Utils/user"
+import { useSystemContext } from "v2/System/SystemContext"
 
 export interface ArtworkSummaryItemProps extends Omit<FlexProps, "order"> {
   order: ArtworkSummaryItem_order
@@ -21,6 +24,8 @@ export interface ArtworkSummaryItemProps extends Omit<FlexProps, "order"> {
 const ArtworkSummaryItem: React.FC<ArtworkSummaryItemProps> = ({
   order: {
     lineItems,
+    currencyCode,
+    mode,
     // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     sellerDetails: { name },
   },
@@ -40,6 +45,12 @@ const ArtworkSummaryItem: React.FC<ArtworkSummaryItemProps> = ({
     overflow: "hidden",
     textOverflow: "ellipsis",
   } as any
+
+  const artworkPrice = getOfferItemFromOrder(lineItems)
+
+  const priceLabel = mode === "OFFER" ? "List price" : "Price"
+
+  const { user } = useSystemContext()
 
   return (
     <StackableBorderBox flexDirection="row" {...others}>
@@ -67,6 +78,15 @@ const ArtworkSummaryItem: React.FC<ArtworkSummaryItemProps> = ({
         <Text variant="sm" color="black60">
           {shippingOrigin}
         </Text>
+        {user && userHasLabFeature(user, "Avalara Phase 2") && (
+          <Text variant="sm">
+            {artworkPrice &&
+              `${priceLabel} ${appendCurrencySymbol(
+                artworkPrice.price,
+                currencyCode
+              )}`}
+          </Text>
+        )}
       </Flex>
     </StackableBorderBox>
   )
@@ -82,9 +102,20 @@ export const ArtworkSummaryItemFragmentContainer = createFragmentContainer(
             name
           }
         }
+        currencyCode
+        mode
         lineItems {
           edges {
             node {
+              artworkOrEditionSet {
+                __typename
+                ... on Artwork {
+                  price
+                }
+                ... on EditionSet {
+                  price
+                }
+              }
               artwork {
                 artistNames
                 title

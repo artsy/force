@@ -3,6 +3,7 @@ import {
   Box,
   Button,
   FacebookIcon,
+  GoogleIcon,
   Spacer,
   Text,
   useToasts,
@@ -68,6 +69,15 @@ export const SettingsEditSettingsLinkedAccounts: FC<SettingsEditSettingsLinkedAc
           </Box>
         }
       />
+
+      <Spacer mt={2} />
+
+      <SettingsEditSettingsLinkedAccountsButton
+        me={me}
+        provider="GOOGLE"
+        href={authenticationPaths?.googlePath}
+        icon={<GoogleIcon mr={0.5} />}
+      />
     </>
   )
 }
@@ -123,7 +133,7 @@ const SettingsEditSettingsLinkedAccountsButton: FC<SettingsEditSettingsLinkedAcc
     setMode("Disconnecting")
 
     try {
-      await submitMutation({ input: { provider } })
+      await submitMutation({ variables: { input: { provider } } })
 
       sendToast({
         variant: "success",

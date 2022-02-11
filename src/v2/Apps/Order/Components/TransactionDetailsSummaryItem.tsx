@@ -15,6 +15,7 @@ import { ContextModule } from "@artsy/cohesion"
 import { appendCurrencySymbol } from "v2/Apps/Order/Utils/currencyUtils"
 import { withSystemContext } from "v2/System"
 import { RouterLink } from "v2/System/Router/RouterLink"
+import { userHasLabFeature } from "v2/Utils/user"
 
 export interface TransactionDetailsSummaryItemProps
   extends Omit<StepSummaryItemProps, "order"> {
@@ -23,10 +24,11 @@ export interface TransactionDetailsSummaryItemProps
   useLastSubmittedOffer?: boolean
   offerContextPrice?: "LIST_PRICE" | "LAST_OFFER"
   showOfferNote?: boolean
-  placeholderOverride?: string | null
+  transactionStep?: string | null
   showCongratulationMessage?: boolean
   isEigen?: boolean
   showOrderNumberHeader?: boolean
+  user: User
 }
 
 export class TransactionDetailsSummaryItem extends React.Component<
@@ -36,14 +38,14 @@ export class TransactionDetailsSummaryItem extends React.Component<
     offerContextPrice: "LIST_PRICE",
   }
 
-  amountPlaceholder = this.props.placeholderOverride || "—"
+  avalaraPhase2enabled = userHasLabFeature(this.props.user, "Avalara Phase 2")
 
   render() {
     const {
       showOfferNote,
       offerOverride,
       order,
-      placeholderOverride,
+      transactionStep,
       isEigen,
       showCongratulationMessage = false,
       ...others
@@ -54,13 +56,13 @@ export class TransactionDetailsSummaryItem extends React.Component<
         {this.renderPriceEntry()}
         <Spacer mb={2} />
         <Entry
-          label={this.shippingDisplayLabel()}
+          label={this.shippingDisplayLabel(this.shippingNotCalculated)}
           value={this.shippingDisplayAmount()}
           data-test="shippingDisplayAmount"
         />
 
         <Entry
-          label="Tax"
+          label={this.avalaraPhase2enabled ? "Tax*" : "Tax"}
           value={this.taxDisplayAmount()}
           data-test="taxDisplayAmount"
         />
@@ -71,6 +73,19 @@ export class TransactionDetailsSummaryItem extends React.Component<
           final
           data-test="buyerTotalDisplayAmount"
         />
+        <Spacer mb={2} />
+        {this.avalaraPhase2enabled && (
+          <Text variant="sm" color="black60">
+            *Additional duties and taxes may apply at import
+          </Text>
+        )}
+        <Spacer mb={2} />
+        {this.avalaraPhase2enabled && this.shippingNotCalculated() && (
+          <Text variant="sm" color="black60">
+            **Shipping costs to be confirmed by gallery. You will be able to
+            review the total price before payment.
+          </Text>
+        )}
         {showOfferNote && order.mode === "OFFER" && this.renderNoteEntry()}
         {showCongratulationMessage && (
           <Column
@@ -116,54 +131,85 @@ export class TransactionDetailsSummaryItem extends React.Component<
       : this.props.order.myLastOffer
   }
 
+  amountPlaceholder = () => {
+    const { transactionStep } = this.props
+
+    if (this.avalaraPhase2enabled) {
+      return ["review", "payment"].includes(transactionStep!)
+        ? "Waiting for final costs"
+        : "Calculated in the next steps"
+    }
+
+    return transactionStep === "review" ? "To be confirmed*" : "—"
+  }
+
   shippingDisplayAmount = () => {
     const { order } = this.props
     const currency = order.currencyCode
+
     switch (order.mode) {
       case "BUY":
         return (
           appendCurrencySymbol(order.shippingTotal, currency) ||
-          this.amountPlaceholder
+          this.amountPlaceholder()
         )
       case "OFFER":
         const offer = this.getOffer()
         return (
           (offer && appendCurrencySymbol(offer.shippingTotal, currency)) ||
-          this.amountPlaceholder
+          this.amountPlaceholder()
         )
     }
   }
 
-  shippingDisplayLabel = () => {
+  shippingNotCalculated = () => {
+    const { order, transactionStep } = this.props
+    const shippingAddressAdded =
+      transactionStep === "review" || transactionStep === "payment"
+
+    switch (order.mode) {
+      case "BUY":
+        return shippingAddressAdded && !order.shippingTotal
+      case "OFFER":
+        const offer = this.getOffer()
+        return shippingAddressAdded && offer && !offer.shippingTotal
+    }
+  }
+
+  shippingDisplayLabel = shippingNotCalculated => {
     const { order } = this.props
-    let label = "Shipping"
+
+    if (this.avalaraPhase2enabled && shippingNotCalculated()) {
+      return "Shipping**"
+    }
 
     if (order.requestedFulfillment?.__typename === "CommerceShipArta") {
       const selectedShippingQuote = extractNodes(order.lineItems)?.[0]
         .selectedShippingQuote
 
       if (selectedShippingQuote) {
-        label = `${selectedShippingQuote.displayName} delivery`
+        return `${selectedShippingQuote.displayName} delivery`
       }
     }
 
-    return label
+    return "Shipping"
   }
 
   taxDisplayAmount = () => {
     const { order } = this.props
     const currency = order.currencyCode
+
     switch (order.mode) {
       case "BUY":
         return (
           appendCurrencySymbol(order.taxTotal, currency) ||
-          this.amountPlaceholder
+          this.amountPlaceholder()
         )
       case "OFFER":
         const offer = this.getOffer()
         return (
           (offer && appendCurrencySymbol(offer.taxTotal, currency)) ||
-          this.amountPlaceholder
+          this.amountPlaceholder()
         )
     }
   }
@@ -205,12 +251,13 @@ export class TransactionDetailsSummaryItem extends React.Component<
           value={
             appendCurrencySymbol(offerOverride, currency) ||
             (offer && appendCurrencySymbol(offer.amount, currency)) ||
-            this.amountPlaceholder
+            "—"
           }
           data-test="offer"
         />
         {offerContextPrice === "LIST_PRICE" ? (
-          offerItem && (
+          offerItem &&
+          !this.avalaraPhase2enabled && (
             <SecondaryEntry
               label="List price"
               value={appendCurrencySymbol(offerItem.price, currency)}

@@ -41,16 +41,22 @@ const Container = styled(Box)`
     }
   }
 
+  h1,
+  h2,
+  h3 {
+    margin: ${themeGet("space.4")} auto;
+
+    a {
+      text-decoration: none;
+    }
+  }
+
   h1 {
     ${toStyle({ ...THEME.textVariants.xxl })}
   }
 
   h2 {
     ${toStyle({ ...THEME.textVariants.xl })}
-
-    a {
-      text-decoration: none;
-    }
   }
 
   h3 {

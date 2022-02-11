@@ -26,8 +26,10 @@ export const SavedSearchAlertDeleteModal: React.FC<SavedSearchAlertDeleteModalPr
     try {
       setIsDeleting(true)
       await submitDeleteAlert({
-        input: {
-          searchCriteriaID: id,
+        variables: {
+          input: {
+            searchCriteriaID: id,
+          },
         },
       })
     } catch (error) {
@@ -53,7 +55,7 @@ export const SavedSearchAlertDeleteModal: React.FC<SavedSearchAlertDeleteModalPr
                 onClick={onCloseClick}
                 mr={1}
               >
-                Cancel
+                Keep Alert
               </Button>
               <Button
                 flex={1}

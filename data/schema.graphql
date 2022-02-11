@@ -719,6 +719,7 @@ type Article implements Node {
     size: Int = 3
   ): [Article!]!
   sections: [ArticleSections!]!
+  series: ArticleSeries
   slug: String
   thumbnailImage: Image
   thumbnailTeaser: String
@@ -797,11 +798,17 @@ type ArticleSectionCallout {
 }
 
 type ArticleSectionEmbed {
-  height: String
-  layout: String
-  mobileHeight: String
-  type: String
+  height: Int
+  layout: ArticleSectionEmbedLayout
+  mobileHeight: Int
   url: String
+}
+
+enum ArticleSectionEmbedLayout {
+  COLUMN_WIDTH
+  FILLWIDTH
+  OVERFLOW
+  OVERFLOW_FILLWIDTH
 }
 
 type ArticleSectionImageCollection {
@@ -871,6 +878,11 @@ enum ArticleSectionVideoLayout {
   COLUMN_WIDTH
   FILLWIDTH
   OVERFLOW_FILLWIDTH
+}
+
+type ArticleSeries {
+  # HTML string describing the series
+  description: String
 }
 
 enum ArticleSorts {
@@ -1526,6 +1538,7 @@ type Artwork implements Node & Searchable & Sellable {
   certificateOfAuthenticity: ArtworkInfoRow
   collectingInstitution: String
   conditionDescription: ArtworkInfoRow
+  consignmentSubmission: ArtworkConsignmentSubmission
   contactLabel: String
 
   # Pre-filled inquiry text
@@ -1789,6 +1802,11 @@ interface ArtworkConnectionInterface {
   edges: [ArtworkEdgeInterface]
   pageCursors: PageCursors!
   pageInfo: PageInfo!
+}
+
+type ArtworkConsignmentSubmission {
+  displayText: String
+  inProgress: Boolean
 }
 
 union ArtworkContext = Fair | Sale | Show
@@ -8152,6 +8170,11 @@ type ImageURLs {
 }
 
 type InquirerCollectorProfile {
+  # List of affiliated auction house ids, referencing Galaxy.
+  affiliatedAuctionHouseIds: [String]
+
+  # List of affiliated gallery ids, referencing Galaxy.
+  affiliatedGalleryIds: [String]
   artsyUserSince(
     format: String
 
@@ -8223,6 +8246,9 @@ type InquirerCollectorProfile {
   ): String
   selfReportedPurchases: String
   userInterests: [UserInterest]!
+
+  # Collector's brief introduction
+  userIntroduction: String
 }
 
 union InquiryItemType = Artwork | Show

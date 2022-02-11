@@ -20,6 +20,7 @@ import { RouterLink } from "v2/System/Router/RouterLink"
 import { ArticleHeaderFragmentContainer } from "./ArticleHeader"
 import { ArticleSectionVideoFragmentContainer } from "./Sections/ArticleSectionVideo"
 import { ArticleSectionSocialEmbedFragmentContainer } from "./Sections/ArticleSectionSocialEmbed"
+import { ArticleSectionEmbedFragmentContainer } from "./Sections/ArticleSectionEmbed"
 
 interface ArticleBodyProps {
   article: ArticleBody_article
@@ -104,6 +105,15 @@ const ArticleBody: FC<ArticleBodyProps> = ({ article }) => {
                 case "ArticleSectionSocialEmbed": {
                   return (
                     <ArticleSectionSocialEmbedFragmentContainer
+                      key={i}
+                      section={section}
+                    />
+                  )
+                }
+
+                case "ArticleSectionEmbed": {
+                  return (
+                    <ArticleSectionEmbedFragmentContainer
                       key={i}
                       section={section}
                     />
@@ -212,6 +222,7 @@ export const ArticleBodyFragmentContainer = createFragmentContainer(
           ...ArticleSectionImageSet_section
           ...ArticleSectionVideo_section
           ...ArticleSectionSocialEmbed_section
+          ...ArticleSectionEmbed_section
         }
         postscript
         relatedArticles {

@@ -64,4 +64,19 @@ describe("ArticleBody", () => {
 
     expect(screen.getByTestId("ArticleSectionSocialEmbed")).toBeInTheDocument()
   })
+
+  it("renders a generic embed", () => {
+    renderWithRelay({
+      Article: () => ({
+        sections: [
+          {
+            __typename: "ArticleSectionEmbed",
+            url: "https://example.com/embed",
+          },
+        ],
+      }),
+    })
+
+    expect(screen.getByTestId("ArticleSectionEmbed")).toBeInTheDocument()
+  })
 })

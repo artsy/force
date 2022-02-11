@@ -290,6 +290,7 @@ export const UntouchedBuyOrder = {
   __typename: "CommerceBuyOrder",
   __isCommerceOrder: "CommerceBuyOrder",
   mode: "BUY",
+  source: "artwork_page",
 } as const
 
 export const UntouchedBuyOrderWithArtaEnabled = {
@@ -557,6 +558,7 @@ export const UntouchedOfferOrder = {
   },
   isInquiryOrder: false,
   mode: "OFFER",
+  source: "artwork_page",
   myLastOffer: null,
   conversation: null,
   offers: {
@@ -567,6 +569,7 @@ export const UntouchedOfferOrder = {
 
 export const UntouchedInquiryOfferOrder = {
   ...UntouchedOfferOrder,
+  source: "inquiry",
   lineItems: {
     offers: {
       edges: [
@@ -637,7 +640,7 @@ export const UntouchedOfferOrderWithRange = {
 export const OfferOrderWithOffers = {
   ...UntouchedOfferOrder,
   lastOffer: OfferWithTotals,
-
+  source: "artwork_page",
   conversation: {
     internalID: "5665",
   },
@@ -654,6 +657,7 @@ export const OfferOrderWithOffers = {
 export const OfferOrderWithOffersAndNote = {
   ...UntouchedOfferOrder,
   lastOffer: OfferWithTotals,
+  source: "inquiry",
   conversation: {
     internalID: "5665",
   },

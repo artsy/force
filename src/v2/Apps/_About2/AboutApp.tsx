@@ -1,14 +1,26 @@
 import {
-  Text,
+  Avatar,
   Box,
-  Image,
-  GridColumns,
-  Column,
   Button,
-  BorderBox,
+  Column,
+  Flex,
+  FullBleed,
+  GridColumns,
+  Image,
+  Join,
+  ResponsiveBox,
+  Separator,
+  Spacer,
+  Text,
 } from "@artsy/palette"
 import { MetaTags } from "v2/Components/MetaTags"
+import { Rail } from "v2/Components/Rail"
+import { AppContainer } from "v2/Apps/Components/AppContainer"
+import styled from "styled-components"
+import { HorizontalPadding } from "../Components/HorizontalPadding"
 import { RouterLink } from "v2/System/Router/RouterLink"
+import { cropped, resized } from "v2/Utils/resized"
+import { Fragment } from "react"
 
 export const AboutApp: React.FC = () => {
   return (
@@ -18,235 +30,425 @@ export const AboutApp: React.FC = () => {
         description="Artsy’s mission is to make all of the world’s art accessible to anyone with an Internet connection."
         pathname="/about"
       />
-      <Box id="the-art-world-online">
-        <Box mt={2} data-test="about1">
-          <Text variant="xl">THE ART WORLD ONLINE</Text>
-          <Text variant="md">
-            Artsy features the world’s leading galleries, museum collections,
-            foundations, artist estates, art fairs, and benefit auctions, all in
-            one place. Our growing database of 500,000 images of art,
-            architecture, and design by 50,000 artists spans historical, modern,
-            and contemporary works, and includes the largest online database of
-            contemporary art. Artsy is used by art lovers, museum-goers,
-            patrons, collectors, students, and educators to discover, learn
-            about, and collect art.
+
+      <Spacer mt={4} />
+
+      <GridColumns>
+        <Column span={6}>
+          <Text as="h1" variant="xl">
+            For the Love of Art
           </Text>
-        </Box>
+        </Column>
 
-        <Box py={20} mt={2} data-test="about2">
-          <GridColumns>
-            <Column span={6}>
-              <Text variant="xs">ART ON ARTSY</Text>
-              <Text variant="lg">
-                We partner with leading galleries and institutions
-              </Text>
-              <Box py={2}>
-                <Image
-                  width="320px"
-                  height="471px"
-                  src="https://artsy-media-uploads.s3.amazonaws.com/tn07FUCvCfAPTdHLYksOcw/aboutPage_galleriePerotin.jpg"
-                />
-                <Text>Galerie Perrotin - Paris/Hong Kong/NY</Text>
-              </Box>
-              <Box py={2}>
-                <Image
-                  width="520px"
-                  height="299px"
-                  src="https://artsy-media-uploads.s3.amazonaws.com/fGoN2VtmO4BSETrSR6us5w/about_BritishMuseum.jpg"
-                />
-                <Text>The British Museum - London</Text>
-              </Box>
-              <Box py={2}>
-                <Image
-                  width="320px"
-                  height="480px"
-                  src="https://artsy-media-uploads.s3.amazonaws.com/8uU7UcN_OJ8Go3LUjwQ3FQ/about_cheimAndRead.jpg"
-                />
-                <Text>Cheim &amp; Read - NEW YORK</Text>
-              </Box>
-
-              <Box mt={100}>
-                <Text variant="xs">Interested in partnering with Artsy?</Text>
-                <RouterLink to="/gallery-partnerships">
-                  <BorderBox mb={2} hover>
-                    <Text>Partnership Overviews</Text>
-                  </BorderBox>
-                </RouterLink>
-                <RouterLink to="/partner-application">
-                  <BorderBox mb={2} hover>
-                    <Text>Apply to become a partner</Text>
-                  </BorderBox>
-                </RouterLink>
-                <RouterLink to="/partners">
-                  <BorderBox mb={2} hover>
-                    <Text>See our full list of partners</Text>
-                  </BorderBox>
-                </RouterLink>
-              </Box>
-            </Column>
-
-            <Column span={6}>
-              <Box py={2}>
-                <Image
-                  width="520px"
-                  height="481px"
-                  src="https://artsy-media-uploads.s3.amazonaws.com/mhRydF6oufDX63mNtUgbaQ/aboutPage_gagosian.jpg"
-                />
-                <Text>Gagosian Gallery - New York</Text>
-              </Box>
-              <Box py={2}>
-                <Image
-                  width="320px"
-                  height="640px"
-                  src="https://artsy-media-uploads.s3.amazonaws.com/23d9YUEfkYVfdzbjR59vcg/about_PearlLamGolnaz2.jpg"
-                />
-                <Text>Pearl Lam - Hong Kong/Shanghai</Text>
-              </Box>
-              <Box py={2}>
-                <Image
-                  width="520px"
-                  height="383px"
-                  src="https://artsy-media-uploads.s3.amazonaws.com/oyRa2XKBr-Uw-LKrAe0MXQ/about_Guggenheim.jpg"
-                />
-                <Text>Guggenheim Museum - New York</Text>
-              </Box>
-              <Box py={2}>
-                <Image
-                  width="320px"
-                  height="213px"
-                  src="https://artsy-media-uploads.s3.amazonaws.com/H6E7TPF05zaIOKSE2DIRuQ/about_fondationBeyeler.jpg"
-                />
-                <Text>Fondation Beyeler - Riehen</Text>
-              </Box>
-            </Column>
-          </GridColumns>
-        </Box>
-
-        <Box py={20} mt={2} data-test="about3">
-          <GridColumns>
-            <Column span={4}>
-              <Text variant="xs">The Artsy iPhone App</Text>
-              <Text variant="lg">Access from anywhere</Text>
-              <Text variant="md">
-                Our iPhone app allows you to browse, save, learn about, and
-                collect from your phone. It also serves as a personalized,
-                on-the-ground guide to any art fair we feature on Artsy.
-              </Text>
-            </Column>
-            <Column span={8}>
-              <Box py={2}>
-                <Image
-                  width="720px"
-                  height="507px"
-                  src="https://artsy-media-uploads.s3.amazonaws.com/PiE_1gCyYvs3IKWiWjHo3g%2FFrame+14.png"
-                />
-              </Box>
-            </Column>
-          </GridColumns>
-        </Box>
-      </Box>
-
-      <Box id="collecting">
-        <Box py={20} data-test="collecting1">
-          <Text variant="xl">COLLECTING</Text>
+        <Column span={6}>
           <Text variant="md">
-            There are currently over 300,000 works available for sale on Artsy,
-            provided by galleries, museums, and institutions from around the
-            world. These works range in price from $100 to over $1,000,000, with
-            new ones added every day. Artsy takes no commission from the sale of
-            artworks from our subscribing gallery partners. We serve as a link
-            between our gallery partners and those interested in collecting.
+            Artsy envisions a future where everyone is moved by art every day.
+            To get there, we’re expanding the art market to support more artists
+            and art around the world. As the leading marketplace to discover,
+            buy, and sell fine art, Artsy believes that the process of buying
+            art should be as brilliant as art itself. That’s why we’re dedicated
+            to making a joyful, welcoming experience that connects collectors
+            with the artists and artworks they love.
           </Text>
-        </Box>
+        </Column>
+      </GridColumns>
 
-        <Box py={20} data-test="collecting2">
-          <GridColumns>
-            <Column span={4}>
-              <Text variant="xs">How it works</Text>
-              <Text variant="lg">Collecting art and design on Artsy</Text>
-              <Text variant="md">
-                If you’re interested in a for-sale work, simply visit the
-                artwork page to send a message directly to the gallery or
-                institution. You can ask about pricing, availability, shipping,
-                and further details. Often, the more information you give the
-                gallery about yourself, the quicker the response will be. You
-                can also click “Ask an Artsy Specialist,” who will be happy to
-                answer any questions you might have. There is no charge for
-                making an inquiry or consulting with one of our specialists.
-              </Text>
-            </Column>
-            <Column span={8}>
-              <Box py={2}>
-                <Image
-                  width="720px"
-                  height="720px"
-                  src="https://artsy-media-uploads.s3.amazonaws.com/CcQ2iGMaQZKVJPdfbOyixA/about_DeKooningCollector.jpg"
-                />
-              </Box>
-            </Column>
-          </GridColumns>
-        </Box>
+      <Spacer mt={6} />
 
-        <Box py={20} data-test="collecting3">
-          <GridColumns>
-            <Column span={6}>
-              <Box>
-                <Image
-                  width="320px"
-                  height="480px"
-                  src="https://artsy-media-uploads.s3.amazonaws.com/AwF7--lGYhhd9Ou-8jNU4A/about_stas.jpg"
-                />
-                <Text>STAS CHYZHYKOVA</Text>
-              </Box>
-              <Box>
-                <Image
-                  width="320px"
-                  height="480px"
-                  src="https://artsy-media-uploads.s3.amazonaws.com/I2llMOya73q5Oqe3_BOSSg/about_Elena1.jpg"
-                />
-                <Text>ELENA SOBOLEVA</Text>
-              </Box>
-            </Column>
-            <Column span={6}>
-              <Box>
-                <Text variant="xs">ARTSY SPECIALISTS</Text>
-                <Text variant="lg">We’re here to help you find art</Text>
-                <Text variant="md">
-                  Artsy specialists are available to all Artsy users, whether
-                  you are purchasing your first work or building upon an
-                  existing collection. Our specialists join Artsy from leading
-                  auction houses, galleries, and museums, and are available to
-                  help you find works that you love, with your price range,
-                  interests, and current collection in mind. Your specialist can
-                  also source works which aren't publicly listed on the site
-                  through our international network of gallery partners.
-                </Text>
-              </Box>
-              <Box>
-                <Image
-                  width="320px"
-                  height="480px"
-                  src="https://artsy-media-uploads.s3.amazonaws.com/KeKyoFW83QKNeST23YyQIg/about_Rebecca.jpg"
-                />
-                <Text>REBECCA BRONFEIN RAPHAEL</Text>
-              </Box>
-              <Box py={20}>
-                <Box py={20}>
-                  <Text>More questions about collecting?</Text>
-                </Box>
-                <GridColumns>
-                  <Column span={6}>
-                    <Button>Collector Resources</Button>
-                  </Column>
-                  <Column span={6}>
-                    <Button>Contact Specialist</Button>
-                  </Column>
-                </GridColumns>
-              </Box>
-            </Column>
-          </GridColumns>
-        </Box>
-      </Box>
+      <Rail
+        title="Discover Artworks Just for You"
+        subTitle="On Artsy"
+        getItems={() => {
+          const items: RailComponentProps[] = [
+            {
+              imgUrl:
+                "https://d7hftxdivxxvm.cloudfront.net/?resize_to=fit&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FoOhfzetWDyPIdRYLVRBy8A%2Flarge.jpg&width=890&height=1046&quality=80",
+              name: "Caleb Hahne",
+              artworkTitle: "Carry Me Home, 2019",
+              gallery: "1969 Gallery",
+              width: 340,
+              height: 500,
+            },
+            {
+              imgUrl:
+                "https://d7hftxdivxxvm.cloudfront.net/?resize_to=fit&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FSbbu7kX5gzxEUfL4Jwyk6Q%2Flarge.jpg&width=890&height=1112&quality=80",
+              name: "Amy Sherald",
+              artworkTitle: "The Make Believer (Monet's Garden), 2016",
+              gallery: "The Studio Museum in Harlem",
+              width: 300,
+              height: 375,
+            },
+            {
+              imgUrl:
+                "https://d7hftxdivxxvm.cloudfront.net/?resize_to=fill&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FE_tdYYu4XOeuVK8ZHFwJSw%2Flarge.jpg&width=890&height=890&quality=80",
+              name: "Frank Stella",
+              artworkTitle:
+                "Sinjerli Variations Squared with Colored Grounds VI, 1981",
+              gallery: "Heritage Auctions",
+              width: 300,
+              height: 300,
+            },
+            {
+              imgUrl:
+                "https://d7hftxdivxxvm.cloudfront.net/?resize_to=fit&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2Fm4kmYLBKSkExMXlxjQ4i8A%2Flarge.jpg&width=890&height=1046&quality=80",
+              name: "Inka Essenhigh",
+              artworkTitle: "Old Trees in Fall, 2018",
+              gallery: "Miles McEnery Gallery",
+              width: 340,
+              height: 500,
+            },
+          ]
+
+          return items.map(item => {
+            return <RailComponent key={item.name} {...item} />
+          })
+        }}
+      />
+
+      <Spacer my={12} />
+
+      <Join separator={<Spacer mt={6} />}>
+        <SellWithArtsyComponent />
+        <AppDownloadComponent />
+        <CollectorInfoComponent />
+        <Separator />
+        <ArtsySpecialistsComponent />
+      </Join>
     </>
   )
 }
+
+interface RailComponentProps {
+  imgUrl: string
+  name: string
+  artworkTitle: string
+  gallery: string
+  width: number
+  height: number
+}
+
+const RailComponent: React.FC<RailComponentProps> = props => {
+  return (
+    <Box>
+      <Image
+        width={props.width}
+        height={props.height}
+        src={props.imgUrl}
+        alt=""
+      />
+      <Text variant="md">{props.name}</Text>
+      <Text variant="md" color="black60">
+        {props.artworkTitle}
+      </Text>
+      <Text variant="xs" color="black60">
+        {props.gallery}
+      </Text>
+    </Box>
+  )
+}
+
+const SellWithArtsyComponent: React.FC = () => {
+  const image = resized(
+    "http://files.artsy.net/images/molly_green_original.jpeg",
+    { width: 640 }
+  )
+
+  return (
+    <Container bg="black100" color="white100">
+      {image.src && (
+        <Box
+          position="fixed"
+          top={0}
+          left={0}
+          width="100%"
+          height="100%"
+          opacity={0.4}
+          style={{
+            transform: "scale(1.3)",
+            pointerEvents: "none",
+            filter: "blur(3px)",
+          }}
+        >
+          <Image
+            src={image.src}
+            lazyLoad
+            width="100%"
+            height="100%"
+            style={{
+              objectFit: "cover",
+            }}
+            alt=""
+          />
+        </Box>
+      )}
+
+      <AppContainer
+        position="relative"
+        display="flex"
+        alignItems="start"
+        py={6}
+      >
+        <HorizontalPadding>
+          <GridColumns gridRowGap={[2, 4]}>
+            <Column span={6}>
+              <Text variant="xxl">Interested in Partnering with Artsy?</Text>
+            </Column>
+
+            <Column span={4} start={9}>
+              <Button
+                variant="primaryWhite"
+                width="100%"
+                //@ts-ignore
+                as={RouterLink}
+                to="https://partners.artsy.net/gallery-partnerships/"
+                mb={2}
+              >
+                Apply to Become a Partner
+              </Button>
+              <Button
+                bg="transparent"
+                width="100%"
+                borderColor="white100"
+                // @ts-ignore
+                as={RouterLink}
+                to="https://partners.artsy.net/"
+                mb={2}
+              >
+                Partnership Overview
+              </Button>
+              <Button
+                bg="transparent"
+                width="100%"
+                border="none"
+                // @ts-ignore
+                as={RouterLink}
+                to="/galleries"
+              >
+                See Full List of Partners
+              </Button>
+            </Column>
+          </GridColumns>
+        </HorizontalPadding>
+      </AppContainer>
+    </Container>
+  )
+}
+
+const AppDownloadComponent: React.FC = () => {
+  const image = resized("http://files.artsy.net/download_artsy_apps_img.jpg", {
+    width: 910,
+    height: 652,
+  })
+
+  return (
+    <GridColumns gridRowGap={4}>
+      <Column span={6}>
+        <Text variant="xs" textTransform="uppercase">
+          Artsy App
+        </Text>
+        <Text variant="xl" mt={1}>
+          The Art Market at Your Fingertips
+        </Text>
+        <Text variant="sm" mt={1} mb={4}>
+          Discover artworks just for you, get market insights, and buy and sell
+          with confidence—all on the Artsy app.
+        </Text>
+        <Flex>
+          <a
+            href="https://apps.apple.com/us/app/artsy-buy-sell-original-art/id703796080"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <Image
+              src="http://files.artsy.net/images/download-ios-app-transparent.svg"
+              mr={4}
+            />
+          </a>
+          <a
+            href="https://play.google.com/store/apps/details?id=net.artsy.app"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <Image src="http://files.artsy.net/images/download-android-app-transparent.svg" />
+          </a>
+        </Flex>
+      </Column>
+
+      <Column span={6}>
+        <ResponsiveBox aspectHeight={652} aspectWidth={910} maxWidth="100%">
+          <Image
+            src={image.src}
+            width="100%"
+            height="100%"
+            srcSet={image.srcSet}
+            lazyLoad
+            alt=""
+          />
+        </ResponsiveBox>
+      </Column>
+    </GridColumns>
+  )
+}
+
+const CollectorInfoComponent: React.FC = () => {
+  const image = resized(
+    "http://files.artsy.net/about2_page_collector_img.jpg",
+    {
+      width: 910,
+      height: 652,
+    }
+  )
+
+  return (
+    <GridColumns gridRowGap={[4, 6]}>
+      <Column span={12}>
+        <Text variant="xl">Collecting</Text>
+      </Column>
+
+      <Column span={6}>
+        <ResponsiveBox aspectHeight={652} aspectWidth={910} maxWidth="100%">
+          <Image
+            src={image.src}
+            width="100%"
+            height="100%"
+            srcSet={image.srcSet}
+            lazyLoad
+            alt=""
+          />
+        </ResponsiveBox>
+        <Text variant="xs" textColor="black60" mt={0.5}>
+          The Collection fo Carole Server by Emily Johnston for Artsy 2015.
+          Courtesy of Carole Server.
+        </Text>
+      </Column>
+
+      <Column span={6}>
+        <Text variant="xs" textTransform="uppercase">
+          On Artsy
+        </Text>
+        <Text variant="xl" mt={1}>
+          Where Collectors Belong
+        </Text>
+        <Text variant="sm" mt={1}>
+          Artsy lets collectors find their favorite artists—and discover some
+          new ones—all in one place. We bring together over 1 million artworks
+          from our network of 4,000+ partners, including the world’s leading
+          galleries, auction houses, fairs, and institutions. To connect
+          collectors to the art they care about, we feature the largest
+          selection of international emerging, established, and blue-chip
+          artists.
+        </Text>
+      </Column>
+    </GridColumns>
+  )
+}
+
+const ArtsySpecialistsComponent: React.FC = () => {
+  return (
+    <GridColumns gridRowGap={4}>
+      <Column span={6}>
+        <Text variant="xs" textTransform="uppercase">
+          Artsy Specialists
+        </Text>
+        <Text variant="xl" mt={1}>
+          Here to Help You Find the Art You Love
+        </Text>
+        <Text variant="sm" mt={1}>
+          Artsy specialists are available to all Artsy members, wherever you are
+          in your collector’s journey. Our specialists join Artsy from leading
+          auction houses, galleries, and museums, and are ready to help you find
+          works that you love—with your price range, taste, and current
+          collection in mind.
+        </Text>
+        <Text variant="sm" mt={4}>
+          More questions about collecting?
+        </Text>
+
+        <Flex flexDirection={["column", "column", "column", "row"]} mt={4}>
+          <Button
+            variant="primaryBlack"
+            // @ts-ignore
+            as={RouterLink}
+            to="/meet-the-specialists"
+          >
+            Contact Specialist
+          </Button>
+
+          <Spacer ml={[0, 0, 0, 2]} mt={[2, 2, 2, 0]} />
+
+          <Button
+            variant="secondaryOutline"
+            // @ts-ignore
+            as={RouterLink}
+            to="https://support.artsy.net/hc/en-us"
+          >
+            Collector Resources
+          </Button>
+        </Flex>
+      </Column>
+
+      <Column span={6}>
+        <Join separator={<Separator my={2} />}>
+          {ADVISORY_SPECIALISTS.map(specialist => {
+            const image = cropped(specialist.photo, { width: 100, height: 100 })
+
+            return (
+              <Fragment key={specialist.name}>
+                <Flex flexDirection="row">
+                  <Avatar
+                    size="md"
+                    src={image.src}
+                    srcSet={image.srcSet}
+                    mr={2}
+                  />
+                  <Flex flexDirection="column">
+                    <Text variant="lg">{specialist.name}</Text>
+                    <Text variant="md">{specialist.title}</Text>
+                    <Text variant="md" color="black60" mb={2}>
+                      {specialist.location}
+                    </Text>
+                    <RouterLink to={`mailto:${specialist.email}`}>
+                      {specialist.email}
+                    </RouterLink>
+                  </Flex>
+                </Flex>
+              </Fragment>
+            )
+          })}
+        </Join>
+      </Column>
+    </GridColumns>
+  )
+}
+
+const ADVISORY_SPECIALISTS = [
+  {
+    name: "Robin Roche",
+    title: "Senior Advisor",
+    location: "New York",
+    email: "robin.roche@artsy.net",
+    phone: "+1 646 707 9450",
+    photo: "http://files.artsy.net/images/robin.jpeg",
+  },
+  {
+    name: "Itziar Ramos Ricoy",
+    title: "Advisor",
+    location: "London",
+    email: "itziar.ramos@artsy.net",
+    phone: "+44 7429 093319",
+    photo: "http://files.artsy.net/images/itziar.jpeg",
+  },
+  {
+    name: "Caroline Perkins",
+    title: "Advisor",
+    location: "New York",
+    email: "caroline.perkins@artsy.net",
+    phone: "+1 540 588 1371",
+    photo: "http://files.artsy.net/images/cperkins_headshot-copy.jpg",
+  },
+]
+
+const Container = styled(FullBleed)`
+  overflow: hidden;
+  clip-path: inset(0);
+`

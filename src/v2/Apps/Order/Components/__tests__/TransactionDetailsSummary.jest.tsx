@@ -92,6 +92,90 @@ const render = (
   })
 
 describe("TransactionDetailsSummaryItem", () => {
+  describe("Avalara Phase 2 enabled", () => {
+    it("shows the shipping and tax price as 'Calculated in the next steps' when null", async () => {
+      const transactionSummary = await render(
+        {
+          ...transactionSummaryBuyOrder,
+          taxTotal: null,
+          taxTotalCents: null,
+          shippingTotal: null,
+          shippingTotalCents: null,
+        },
+        { user: { lab_features: ["Avalara Phase 2"] } }
+      )
+
+      const text = transactionSummary.text()
+
+      expect(text).toMatch("ShippingCalculated in the next steps")
+      expect(text).toMatch("Tax*Calculated in the next steps")
+    })
+
+    it("shows the shipping and tax price as 'Waiting for final costs' when null after shipping address was added", async () => {
+      const transactionSummary = await render(
+        {
+          ...transactionSummaryBuyOrder,
+          taxTotal: null,
+          taxTotalCents: null,
+          shippingTotal: null,
+          shippingTotalCents: null,
+        },
+        {
+          user: { lab_features: ["Avalara Phase 2"] },
+          transactionStep: "review",
+        }
+      )
+
+      const text = transactionSummary.text()
+
+      expect(text).toMatch("Shipping**Waiting for final costs")
+      expect(text).toMatch("Tax*Waiting for final costs")
+    })
+
+    it("shows tax import reminder", async () => {
+      const transactionSummary = await render(
+        { ...transactionSummaryBuyOrder },
+        { user: { lab_features: ["Avalara Phase 2"] } }
+      )
+
+      const text = transactionSummary.text()
+
+      expect(text).toMatch("Tax*")
+      expect(text).toMatch("*Additional duties and taxes may apply at import")
+    })
+
+    it("shows shipping confirmation note when shipping cannot be calculated after shipping address was added", async () => {
+      const transactionSummary = await render(
+        {
+          ...transactionSummaryBuyOrder,
+          shippingTotal: null,
+          shippingTotalCents: null,
+        },
+        {
+          user: { lab_features: ["Avalara Phase 2"] },
+          transactionStep: "review",
+        }
+      )
+
+      const text = transactionSummary.text()
+
+      expect(text).toMatch(
+        "**Shipping costs to be confirmed by gallery. You will be able to review the total price before payment."
+      )
+    })
+
+    it("does not show list price in the transaction summary", async () => {
+      const transactionSummary = await render(
+        { ...transactionSummaryOfferOrder },
+        { user: { lab_features: ["Avalara Phase 2"] } }
+      )
+
+      const text = transactionSummary.text()
+
+      expect(text).not.toMatch("List price")
+    })
+  })
+
   describe("CommerceBuyOrder", () => {
     it("shows a US prefix on the price when currency is USD", async () => {
       const transactionSummary = await render(transactionSummaryBuyOrder)

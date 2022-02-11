@@ -12,12 +12,12 @@ export const useMutation = <T extends MutationParameters>({
 }) => {
   const { relayEnvironment } = useSystemContext()
 
-  const submitMutation = (
-    variables: T["variables"] = {},
-    options: {
-      checkForErrors?: (res: T["response"]) => unknown
-    } = {}
-  ): Promise<T["response"]> => {
+  const submitMutation = (props: {
+    variables: T["variables"]
+    rejectIf?: (res: T["response"]) => unknown
+  }): Promise<T["response"]> => {
+    const { variables = {}, rejectIf } = props
+
     return new Promise((resolve, reject) => {
       commitMutation<T>(relayEnvironment!, {
         mutation,
@@ -29,8 +29,8 @@ export const useMutation = <T extends MutationParameters>({
             return
           }
 
-          if (options.checkForErrors?.(res)) {
-            reject(options.checkForErrors?.(res))
+          if (rejectIf?.(res)) {
+            reject(rejectIf?.(res))
             return
           }
 

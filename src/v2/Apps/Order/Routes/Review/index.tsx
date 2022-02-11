@@ -52,6 +52,7 @@ export interface ReviewProps extends SystemContextProps {
   dialog: Dialog
   commitMutation: CommitMutation
   isCommittingMutation: boolean
+  user?: User
   isEigen: boolean | undefined
 }
 
@@ -123,13 +124,34 @@ export class ReviewRoute extends Component<ReviewProps> {
             }
           })
       } else {
-        this.props.order.conversation && !this.props.isEigen
-          ? this.props.router.push(
-              `/user/conversations/${this.props.order.conversation.internalID}`
-            )
-          : this.props.router.push(
-              `/orders/${this.props.order.internalID}/status`
-            )
+        const { order, router, user, isEigen } = this.props
+
+        if (!userHasLabFeature(user, "Make Offer On All Eligible Artworks")) {
+          return order.conversation && !isEigen
+            ? router.push(
+                `/user/conversations/${order.conversation.internalID}`
+              )
+            : router.push(`/orders/${order.internalID}/status`)
+        }
+        // Buy-mode order redirects to the status page. Eigen must keep the user inside the webview.
+        if (order.mode !== "OFFER" || isEigen) {
+          return router.push(`/orders/${order.internalID}/status`)
+        }
+        // Make offer in inquiry redirects to the conversation page
+        if (order.source === "inquiry") {
+          return router.push(
+            `/user/conversations/${order.conversation?.internalID}`
+          )
+        }
+        // Make offer from artwork page redirects to the artwork page
+        const artworkId = get(
+          order,
+          o => o.lineItems?.edges?.[0]?.node?.artwork?.slug
+        )
+        return router.push({
+          pathname: `/artwork/${artworkId}`,
+          state: { offerOrderHasBeenSubmitted: true },
+        })
       }
     } catch (error) {
       logger.error(error)
@@ -332,6 +354,8 @@ export class ReviewRoute extends Component<ReviewProps> {
     this.props.router.push(`/orders/${this.props.order.internalID}/shipping`)
   }
 
+  avalaraPhase2enabled = userHasLabFeature(this.props.user, "Avalara Phase 2")
+
   render() {
     const { order, isCommittingMutation, isEigen } = this.props
 
@@ -410,18 +434,20 @@ export class ReviewRoute extends Component<ReviewProps> {
                 <ArtworkSummaryItem order={order} />
                 <TransactionDetailsSummaryItem
                   order={order}
-                  placeholderOverride="To be confirmed*"
+                  transactionStep="review"
                 />
               </Flex>
               <BuyerGuarantee
                 contextModule={ContextModule.ordersReview}
                 contextPageOwnerType={OwnerType.ordersReview}
               />
-              {order.myLastOffer && !order.myLastOffer?.hasDefiniteTotal && (
-                <Text variant="xs" color="black60">
-                  *Shipping and taxes to be confirmed by gallery
-                </Text>
-              )}
+              {order.myLastOffer &&
+                !order.myLastOffer?.hasDefiniteTotal &&
+                !this.avalaraPhase2enabled && (
+                  <Text variant="xs" color="black60">
+                    *Shipping and taxes to be confirmed by gallery
+                  </Text>
+                )}
               <Spacer mb={[2, 4]} />
               <Media at="xs">
                 <Button
@@ -452,6 +478,7 @@ export const ReviewFragmentContainer = createFragmentContainer(
       fragment Review_order on CommerceOrder {
         internalID
         mode
+        source
         itemsTotal(precision: 2)
         lineItems {
           edges {
