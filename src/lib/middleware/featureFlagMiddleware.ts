@@ -1,15 +1,11 @@
 import { NextFunction } from "express"
 import { ArtsyRequest, ArtsyResponse } from "./artsyExpress"
-import { createFeatureFlagProvider } from "lib/featureFlags/featureFlags"
 import {
-  FeatureFlagConfig,
+  createFeatureFlagService,
   FeatureFlagProvider,
-} from "lib/featureFlags/featureFlagProviderShared"
+} from "lib/featureFlags/featureFlagService"
 
-export function featureFlagMiddleware<T extends FeatureFlagConfig>(
-  providerType: symbol,
-  config?: T
-) {
+export function featureFlagMiddleware(providerType: symbol) {
   let provider
   return (req: ArtsyRequest, res: ArtsyResponse, next: NextFunction) => {
     new Promise<FeatureFlagProvider>(async (resolve, reject) => {
@@ -17,7 +13,7 @@ export function featureFlagMiddleware<T extends FeatureFlagConfig>(
         resolve(provider)
       }
       try {
-        provider = await createFeatureFlagProvider(providerType, config)
+        provider = await createFeatureFlagService(providerType)
         resolve(provider)
       } catch {
         reject("An unknown error occurred while creating the flag provider.")

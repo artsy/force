@@ -28,8 +28,10 @@ import { ClientContext } from "desktop/lib/buildClientAppContext"
 import { FlashMessage } from "v2/Components/Modal/FlashModal"
 import { SiftContainer } from "v2/Utils/SiftContainer"
 import { setupSentryClient } from "lib/setupSentryClient"
-import { FeatureFlagProvider } from "../../../lib/featureFlags/FeatureFlagProvider"
-import { EnabledFeatureFlags } from "lib/featureFlags/FeatureFlagProvider"
+import {
+  EnabledFeatureFlags,
+  FeatureFlagProvider,
+} from "lib/featureFlags/FeatureFlagProvider"
 
 export interface BootProps {
   children: React.ReactNode

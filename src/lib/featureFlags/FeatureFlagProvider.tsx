@@ -18,10 +18,10 @@ export function FeatureFlagProvider({
   )
 }
 
-export function useFlag(flagName) {
+export function useFeatureFlag(flagName) {
   const context = React.useContext(FeatureFlagContext)
   if (context === undefined) {
-    throw new Error("useFlag must be used within a FeatureFlagProvider")
+    throw new Error("useFeatureFlag must be used within a FeatureFlagProvider")
   }
 
   if (!flagName) {
