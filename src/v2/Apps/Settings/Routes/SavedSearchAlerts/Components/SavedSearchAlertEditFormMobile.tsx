@@ -11,9 +11,11 @@ export const SavedSearchAlertEditFormMobile: React.FC<EditAlertFormBase> = ({
   return (
     <ModalDialog
       title={`Edit ${editAlertEntity.name}`}
-      width="100vw"
-      height="100vh"
       m={0}
+      dialogProps={{
+        width: "100%",
+        height: "100%",
+      }}
       onClose={onCloseClick}
     >
       <Spacer mt={4} />
