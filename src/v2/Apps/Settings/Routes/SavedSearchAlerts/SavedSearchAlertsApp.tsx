@@ -26,9 +26,10 @@ import {
 import { SavedSearchAlertHeader } from "./Components/SavedSearchAlertHeader"
 import { MetaTags } from "v2/Components/MetaTags"
 import { SavedSearchAlertsEmptyResults } from "./Components/SavedSearchAlertsEmptyResults"
-import { SavedSearchAlertEditFormContainer } from "./Components/SavedSearchAlertEditFormContainter"
+import { SavedSearchAlertEditFormDesktop } from "./Components/SavedSearchAlertEditFormDesktop"
 import { Sticky, StickyProvider } from "v2/Components/Sticky"
 import { useNavBarHeight } from "v2/Components/NavBar/useNavBarHeight"
+import { SavedSearchAlertEditFormMobile } from "./Components/SavedSearchAlertEditFormMobile"
 
 interface SavedSearchAlertsAppProps {
   me: SavedSearchAlertsApp_me
@@ -166,7 +167,7 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
                         overflowY="scroll"
                         maxHeight={`calc(100vh - ${desktop}px)`}
                       >
-                        <SavedSearchAlertEditFormContainer
+                        <SavedSearchAlertEditFormDesktop
                           editAlertEntity={editAlertEntity}
                           onCloseClick={closeEditForm}
                           onCompleted={handleCompleted}
@@ -182,15 +183,14 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
             </Media>
 
             <Media lessThan="md">
-              {isEditMode && editAlertEntity ? (
-                <SavedSearchAlertEditFormContainer
+              {list}
+              {isEditMode && editAlertEntity && (
+                <SavedSearchAlertEditFormMobile
                   editAlertEntity={editAlertEntity}
                   onCloseClick={closeEditForm}
                   onCompleted={handleCompleted}
                   onDeleteClick={handleDeleteClick}
                 />
-              ) : (
-                list
               )}
             </Media>
 
