@@ -1,15 +1,8 @@
 import { Box, Clickable, CloseIcon, Flex, Spacer, Text } from "@artsy/palette"
-import { EditAlertEntity } from "../types"
+import { EditAlertFormBase } from "../types"
 import { SavedSearchAlertEditFormQueryRenderer } from "./SavedSearchAlertEditForm"
 
-interface SavedSearchAlertEditFormDesktopProps {
-  editAlertEntity: EditAlertEntity
-  onCloseClick: () => void
-  onDeleteClick: () => void
-  onCompleted: () => void
-}
-
-export const SavedSearchAlertEditFormDesktop: React.FC<SavedSearchAlertEditFormDesktopProps> = ({
+export const SavedSearchAlertEditFormDesktop: React.FC<EditAlertFormBase> = ({
   editAlertEntity,
   onCloseClick,
   onDeleteClick,

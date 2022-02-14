@@ -7,8 +7,6 @@ import {
   Join,
   useToasts,
   Button,
-  ModalDialog,
-  Spacer,
 } from "@artsy/palette"
 import {
   createPaginationContainer,
@@ -31,7 +29,7 @@ import { SavedSearchAlertsEmptyResults } from "./Components/SavedSearchAlertsEmp
 import { SavedSearchAlertEditFormDesktop } from "./Components/SavedSearchAlertEditFormDesktop"
 import { Sticky, StickyProvider } from "v2/Components/Sticky"
 import { useNavBarHeight } from "v2/Components/NavBar/useNavBarHeight"
-import { SavedSearchAlertEditFormQueryRenderer } from "./Components/SavedSearchAlertEditForm"
+import { SavedSearchAlertEditFormMobile } from "./Components/SavedSearchAlertEditFormMobile"
 
 interface SavedSearchAlertsAppProps {
   me: SavedSearchAlertsApp_me
@@ -187,20 +185,12 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
             <Media lessThan="md">
               {list}
               {isEditMode && editAlertEntity && (
-                <ModalDialog
-                  title={`Edit ${editAlertEntity.name}`}
-                  width="100vw"
-                  height="100vh"
-                  m={0}
-                  onClose={closeEditForm}
-                >
-                  <Spacer mt={4} />
-                  <SavedSearchAlertEditFormQueryRenderer
-                    editAlertEntity={editAlertEntity}
-                    onDeleteClick={handleDeleteClick}
-                    onCompleted={handleCompleted}
-                  />
-                </ModalDialog>
+                <SavedSearchAlertEditFormMobile
+                  editAlertEntity={editAlertEntity}
+                  onCloseClick={closeEditForm}
+                  onCompleted={handleCompleted}
+                  onDeleteClick={handleDeleteClick}
+                />
               )}
             </Media>
 
