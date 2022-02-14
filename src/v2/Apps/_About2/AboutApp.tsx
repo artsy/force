@@ -134,7 +134,7 @@ const RailComponent: React.FC<RailComponentProps> = props => {
         width={props.width}
         height={props.height}
         src={props.imgUrl}
-        alt=""
+        alt="carousel of artwork images with titles and gallery names"
       />
       <Text variant="md">{props.name}</Text>
       <Text variant="md" color="black60">
@@ -177,7 +177,7 @@ const SellWithArtsy: React.FC = () => {
             style={{
               objectFit: "cover",
             }}
-            alt=""
+            alt="a Molly Green art piece titled Cached"
           />
         </Box>
       )}
@@ -282,7 +282,7 @@ const AppDownload: React.FC = () => {
             height="100%"
             srcSet={image.srcSet}
             lazyLoad
-            alt=""
+            alt="painting of two iphones displaying the artsy mobile app"
           />
         </ResponsiveBox>
       </Column>
@@ -313,11 +313,11 @@ const CollectorInfo: React.FC = () => {
             height="100%"
             srcSet={image.srcSet}
             lazyLoad
-            alt=""
+            alt="picture of the Collection for Carole Server by Emily Johnston"
           />
         </ResponsiveBox>
         <Text variant="xs" textColor="black60" mt={0.5}>
-          The Collection fo Carole Server by Emily Johnston for Artsy 2015.
+          The Collection for Carole Server by Emily Johnston for Artsy 2015.
           Courtesy of Carole Server.
         </Text>
       </Column>
