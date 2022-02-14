@@ -3,8 +3,11 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import { ArticleVerticalRelatedArticles_article } from "v2/__generated__/ArticleVerticalRelatedArticles_article.graphql"
 import { ArticleVerticalRelatedArticlesQuery } from "v2/__generated__/ArticleVerticalRelatedArticlesQuery.graphql"
-import { Box, Image, Shelf, Skeleton, SkeletonText, Text } from "@artsy/palette"
-import { RouterLink } from "v2/System/Router/RouterLink"
+import { Shelf, Skeleton, SkeletonText, Text } from "@artsy/palette"
+import {
+  ArticleCellFragmentContainer,
+  ArticleCellPlaceholder,
+} from "v2/Components/Cells/ArticleCell"
 
 interface ArticleVerticalRelatedArticlesProps {
   article: ArticleVerticalRelatedArticles_article
@@ -21,45 +24,11 @@ const ArticleVerticalRelatedArticles: FC<ArticleVerticalRelatedArticlesProps> = 
 
       <Shelf alignItems="flex-start">
         {article.verticalRelatedArticles.map(article => {
-          const image = article.thumbnailImage?.cropped
-
           return (
-            <RouterLink
+            <ArticleCellFragmentContainer
               key={article.internalID}
-              to={article.href}
-              display="block"
-              width={300}
-              textDecoration="none"
-            >
-              {image ? (
-                <Image
-                  src={image.src}
-                  srcSet={image.srcSet}
-                  width={300}
-                  height={200}
-                  alt=""
-                  lazyLoad
-                />
-              ) : (
-                <Box width={300} height={200} bg="black10" />
-              )}
-
-              <Text variant="xs" textTransform="uppercase" mt={1}>
-                {article.vertical}
-              </Text>
-
-              <Text variant="lg" mt={0.5} lineClamp={3}>
-                {article.title}
-              </Text>
-
-              <Text variant="md" mt={0.5} lineClamp={1}>
-                By {article.byline}
-              </Text>
-
-              <Text variant="md" color="black60" mt={0.5}>
-                {article.publishedAt}
-              </Text>
-            </RouterLink>
+              article={article}
+            />
           )
         })}
       </Shelf>
@@ -74,20 +43,8 @@ export const ArticleVerticalRelatedArticlesFragmentContainer = createFragmentCon
       fragment ArticleVerticalRelatedArticles_article on Article {
         vertical
         verticalRelatedArticles: relatedArticles(inVertical: true, size: 8) {
-          vertical
           internalID
-          title
-          byline
-          href
-          publishedAt(format: "MMM D, YYYY")
-          thumbnailImage {
-            cropped(width: 300, height: 200) {
-              width
-              height
-              src
-              srcSet
-            }
-          }
+          ...ArticleCell_article
         }
       }
     `,
@@ -104,7 +61,7 @@ export const ArticleVerticalRelatedArticlesQueryRenderer: FC<ArticleVerticalRela
   return (
     <SystemQueryRenderer<ArticleVerticalRelatedArticlesQuery>
       lazyLoad
-      placeholder={<ArticleVericalRelatedArticlesPlaceholder />}
+      placeholder={<ArticleVerticalRelatedArticlesPlaceholder />}
       variables={{ id }}
       query={graphql`
         query ArticleVerticalRelatedArticlesQuery($id: String!) {
@@ -120,7 +77,7 @@ export const ArticleVerticalRelatedArticlesQueryRenderer: FC<ArticleVerticalRela
         }
 
         if (!props?.article) {
-          return <ArticleVericalRelatedArticlesPlaceholder />
+          return <ArticleVerticalRelatedArticlesPlaceholder />
         }
 
         return (
@@ -133,7 +90,7 @@ export const ArticleVerticalRelatedArticlesQueryRenderer: FC<ArticleVerticalRela
   )
 }
 
-const ArticleVericalRelatedArticlesPlaceholder: FC = () => {
+const ArticleVerticalRelatedArticlesPlaceholder: FC = () => {
   return (
     <Skeleton>
       <SkeletonText variant="lg" mb={4}>
@@ -142,27 +99,7 @@ const ArticleVericalRelatedArticlesPlaceholder: FC = () => {
 
       <Shelf alignItems="flex-start">
         {[...new Array(8)].map((_, index) => {
-          return (
-            <Box key={index} width={300}>
-              <Box width={300} height={200} bg="black10" />
-
-              <SkeletonText variant="xs" textTransform="uppercase" mt={1}>
-                Vertical
-              </SkeletonText>
-
-              <SkeletonText variant="lg" mt={0.5} lineClamp={3}>
-                The Example Article Title
-              </SkeletonText>
-
-              <SkeletonText variant="md" mt={0.5} lineClamp={1}>
-                By Example Name
-              </SkeletonText>
-
-              <SkeletonText variant="md" mt={0.5}>
-                Jan 1, 1970
-              </SkeletonText>
-            </Box>
-          )
+          return <ArticleCellPlaceholder key={index} />
         })}
       </Shelf>
     </Skeleton>

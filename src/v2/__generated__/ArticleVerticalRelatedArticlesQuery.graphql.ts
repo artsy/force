@@ -29,23 +29,28 @@ query ArticleVerticalRelatedArticlesQuery(
   }
 }
 
+fragment ArticleCell_article on Article {
+  vertical
+  internalID
+  title
+  byline
+  href
+  publishedAt(format: "MMM D, YYYY")
+  thumbnailImage {
+    cropped(width: 445, height: 334) {
+      width
+      height
+      src
+      srcSet
+    }
+  }
+}
+
 fragment ArticleVerticalRelatedArticles_article on Article {
   vertical
   verticalRelatedArticles: relatedArticles(inVertical: true, size: 8) {
-    vertical
     internalID
-    title
-    byline
-    href
-    publishedAt(format: "MMM D, YYYY")
-    thumbnailImage {
-      cropped(width: 300, height: 200) {
-        width
-        height
-        src
-        srcSet
-      }
-    }
+    ...ArticleCell_article
     id
   }
 }
@@ -141,7 +146,6 @@ return {
             "name": "relatedArticles",
             "plural": true,
             "selections": [
-              (v2/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -149,6 +153,7 @@ return {
                 "name": "internalID",
                 "storageKey": null
               },
+              (v2/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -197,12 +202,12 @@ return {
                       {
                         "kind": "Literal",
                         "name": "height",
-                        "value": 200
+                        "value": 334
                       },
                       {
                         "kind": "Literal",
                         "name": "width",
-                        "value": 300
+                        "value": 445
                       }
                     ],
                     "concreteType": "CroppedImageUrl",
@@ -239,7 +244,7 @@ return {
                         "storageKey": null
                       }
                     ],
-                    "storageKey": "cropped(height:200,width:300)"
+                    "storageKey": "cropped(height:334,width:445)"
                   }
                 ],
                 "storageKey": null
@@ -255,12 +260,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "6656af285d826c3bdc7ccaaa870fa591",
+    "cacheID": "3cc845756b217d3a689f210b9acc35c4",
     "id": null,
     "metadata": {},
     "name": "ArticleVerticalRelatedArticlesQuery",
     "operationKind": "query",
-    "text": "query ArticleVerticalRelatedArticlesQuery(\n  $id: String!\n) {\n  article(id: $id) {\n    ...ArticleVerticalRelatedArticles_article\n    id\n  }\n}\n\nfragment ArticleVerticalRelatedArticles_article on Article {\n  vertical\n  verticalRelatedArticles: relatedArticles(inVertical: true, size: 8) {\n    vertical\n    internalID\n    title\n    byline\n    href\n    publishedAt(format: \"MMM D, YYYY\")\n    thumbnailImage {\n      cropped(width: 300, height: 200) {\n        width\n        height\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n"
+    "text": "query ArticleVerticalRelatedArticlesQuery(\n  $id: String!\n) {\n  article(id: $id) {\n    ...ArticleVerticalRelatedArticles_article\n    id\n  }\n}\n\nfragment ArticleCell_article on Article {\n  vertical\n  internalID\n  title\n  byline\n  href\n  publishedAt(format: \"MMM D, YYYY\")\n  thumbnailImage {\n    cropped(width: 445, height: 334) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment ArticleVerticalRelatedArticles_article on Article {\n  vertical\n  verticalRelatedArticles: relatedArticles(inVertical: true, size: 8) {\n    internalID\n    ...ArticleCell_article\n    id\n  }\n}\n"
   }
 };
 })();
