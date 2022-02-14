@@ -103,4 +103,8 @@ const Container = styled(Box)`
     border: 0;
     background-color: ${themeGet("colors.black10")};
   }
+
+  blockquote {
+    ${toStyle({ ...THEME.textVariants.xl })}
+  }
 `
