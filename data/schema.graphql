@@ -10920,6 +10920,7 @@ type Query {
   articlesConnection(
     after: String
     before: String
+    channelId: String
     featured: Boolean
     first: Int
 
@@ -13923,6 +13924,7 @@ type Viewer {
   articlesConnection(
     after: String
     before: String
+    channelId: String
     featured: Boolean
     first: Int
 
