@@ -3,8 +3,8 @@ const rewire = require("rewire")
 const sinon = require("sinon")
 const cbs = rewire("../../lib/passport/callbacks")
 
-/* eslint-disable jest/expect-expect, jest/no-done-callback */
-// TODO: Refactor artsy-passport code and take care of these warnings!
+// TODO: Take care of this warning!
+/* eslint-disable jest/no-done-callback */
 
 describe("passport callbacks", function () {
   let req

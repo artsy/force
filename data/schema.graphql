@@ -702,6 +702,7 @@ type Article implements Node {
   internalID: ID!
   keywords: [String!]!
   layout: ArticleLayout!
+  media: ArticleMedia
   postscript: String
   publishedAt(
     format: String
@@ -720,7 +721,9 @@ type Article implements Node {
   ): [Article!]!
   sections: [ArticleSections!]!
   series: ArticleSeries
+  seriesArticle: Article
   slug: String
+  sponsor: ArticleSponsor
   thumbnailImage: Image
   thumbnailTeaser: String
   thumbnailTitle: String
@@ -786,6 +789,22 @@ enum ArticleLayout {
   SERIES
   STANDARD
   VIDEO
+}
+
+type ArticleMedia {
+  coverImage: Image
+  credits: String
+  description: String
+  duration: String
+  releaseDate(
+    format: String
+
+    # A tz database time zone, otherwise falls back to "X-TIMEZONE" header. See
+    # http://www.iana.org/time-zones,
+    # https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+    timezone: String
+  ): String
+  url: String
 }
 
 type ArticleSectionCallout {
@@ -888,6 +907,16 @@ type ArticleSeries {
 enum ArticleSorts {
   PUBLISHED_AT_ASC
   PUBLISHED_AT_DESC
+}
+
+type ArticleSponsor {
+  description: String
+  partnerCondensedLogo: String
+  partnerDarkLogo: String
+  partnerLightLogo: String
+  partnerLogoLink: String
+  pixelTrackingCode: String
+  subTitle: String
 }
 
 type Artist implements EntityWithFilterArtworksConnectionInterface & Node & Searchable {
@@ -6284,6 +6313,12 @@ type CroppedImageUrl {
   width: Int!
 }
 
+enum CurrencyPreference {
+  EUR
+  GBP
+  USD
+}
+
 type CurrentEvent {
   # Location and date of the event if available
   details: String
@@ -8427,6 +8462,11 @@ type LatLng {
   lng: Float
 }
 
+enum LengthUnitPreference {
+  CM
+  IN
+}
+
 input LinkAuthenticationMutationInput {
   # Unique Apple user id. **Required** for Apple authentication.
   appleUid: String
@@ -8907,6 +8947,9 @@ type Me implements Node {
     first: Int
     last: Int
   ): CreditCardConnection
+
+  # Currency preference of the user
+  currencyPreference: CurrencyPreference!
   email: String
 
   # User has confirmed their email address
@@ -8951,6 +8994,9 @@ type Me implements Node {
 
   # List of lab features for this user
   labFeatures: [String!]!
+
+  # Length unit preference of the user
+  lengthUnitPreference: LengthUnitPreference!
   location: MyLocation
 
   # Sale Artworks search results

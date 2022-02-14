@@ -1,9 +1,10 @@
 import { FC, useEffect } from "react"
 import {
-  Box,
-  Button,
+  AppleIcon,
   FacebookIcon,
   GoogleIcon,
+  IconButton,
+  Join,
   Spacer,
   Text,
   useToasts,
@@ -50,34 +51,28 @@ export const SettingsEditSettingsLinkedAccounts: FC<SettingsEditSettingsLinkedAc
         Linked Accounts
       </Text>
 
-      <SettingsEditSettingsLinkedAccountsButton
-        me={me}
-        provider="FACEBOOK"
-        href={authenticationPaths?.facebookPath}
-        icon={<FacebookIcon mr={0.5} fill="currentColor" />}
-      />
+      <Join separator={<Spacer mt={2} />}>
+        <SettingsEditSettingsLinkedAccountsButton
+          me={me}
+          provider="FACEBOOK"
+          href={authenticationPaths?.facebookPath}
+          icon={<FacebookIcon fill="currentColor" />}
+        />
 
-      <Spacer mt={2} />
+        <SettingsEditSettingsLinkedAccountsButton
+          me={me}
+          provider="APPLE"
+          href={authenticationPaths?.applePath}
+          icon={<AppleIcon fill="currentColor" />}
+        />
 
-      <SettingsEditSettingsLinkedAccountsButton
-        me={me}
-        provider="APPLE"
-        href={authenticationPaths?.applePath}
-        icon={
-          <Box display="inline-block" mr={0.5}>
-            
-          </Box>
-        }
-      />
-
-      <Spacer mt={2} />
-
-      <SettingsEditSettingsLinkedAccountsButton
-        me={me}
-        provider="GOOGLE"
-        href={authenticationPaths?.googlePath}
-        icon={<GoogleIcon mr={0.5} />}
-      />
+        <SettingsEditSettingsLinkedAccountsButton
+          me={me}
+          provider="GOOGLE"
+          href={authenticationPaths?.googlePath}
+          icon={<GoogleIcon />}
+        />
+      </Join>
     </>
   )
 }
@@ -162,7 +157,7 @@ const SettingsEditSettingsLinkedAccountsButton: FC<SettingsEditSettingsLinkedAcc
   }[mode]
 
   return (
-    <Button
+    <IconButton
       onClick={handleClick}
       loading={mode === "Connecting" || mode === "Disconnecting"}
       {...(mode === "Connected"
@@ -172,9 +167,9 @@ const SettingsEditSettingsLinkedAccountsButton: FC<SettingsEditSettingsLinkedAcc
             as: "a",
             href: href,
           })}
+      icon={icon}
     >
-      {icon} {action} {provider.charAt(0) + provider.slice(1).toLowerCase()}{" "}
-      Account
-    </Button>
+      {action} {provider.charAt(0) + provider.slice(1).toLowerCase()} Account
+    </IconButton>
   )
 }

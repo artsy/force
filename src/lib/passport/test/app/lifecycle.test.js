@@ -99,10 +99,6 @@ describe("lifecycle", function () {
   })
 
   describe("#onLocalSignup", function () {
-    it("creatse a user")
-
-    it("suggests an email if its invalid and redirects back to the signup page")
-
     it("sends 500s as json for xhr requests", function () {
       req.xhr = true
       this.err = {
@@ -180,25 +176,10 @@ describe("lifecycle", function () {
     })
 
     context("with an error", function () {
-      it(
-        "redirects back to the login page and explains the account " +
-          "was previously linked"
-      )
-
-      it(
-        "redirects to the settings page and explains if the account is linked " +
-          "to another account"
-      )
-
-      it("passes unknown errors")
+      // TODO: Reimplement these tests
     })
-
     context("when successful", function () {
-      it("redirects to settings if linking")
-
-      it("redirects to the personalize page if signing up")
-
-      it("redirects back if logging in")
+      // TODO: Reimplement these tests
     })
   })
 
