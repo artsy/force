@@ -13,7 +13,7 @@ const mockedResolver = {
 
 describe("SubmittedOrderModal", () => {
   const { renderWithRelay } = setupTestWrapperTL({
-    Component: ({ me }) => (
+    Component: ({ me }: any) => (
       <SubmittedOrderModalFragmentContainer
         order={me.conversation.orderConnection.edges[0].node}
       />
