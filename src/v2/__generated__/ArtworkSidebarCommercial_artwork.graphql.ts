@@ -20,6 +20,7 @@ export type ArtworkSidebarCommercial_artwork = {
     readonly is_for_sale: boolean | null;
     readonly is_inquireable: boolean | null;
     readonly is_offerable: boolean | null;
+    readonly is_sold: boolean | null;
     readonly listPrice: {
         readonly display?: string | null;
     } | null;
@@ -141,6 +142,13 @@ return {
     },
     (v2/*: any*/),
     {
+      "alias": "is_sold",
+      "args": null,
+      "kind": "ScalarField",
+      "name": "isSold",
+      "storageKey": null
+    },
+    {
       "alias": null,
       "args": null,
       "concreteType": null,
@@ -197,5 +205,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '8148293620c60ce8feafe199eb1560a0';
+(node as any).hash = 'ab0cb8b3634f45072454f9147423dc3a';
 export default node;

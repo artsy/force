@@ -93,7 +93,7 @@ const render = (
 
 describe("TransactionDetailsSummaryItem", () => {
   describe("Avalara Phase 2 enabled", () => {
-    it("shows the shipping and tax price as 'Calculated in the next steps' when null", async () => {
+    it("shows the shipping and tax price as 'Calculated in the next steps' when null before shipping address was added", async () => {
       const transactionSummary = await render(
         {
           ...transactionSummaryBuyOrder,
@@ -102,7 +102,10 @@ describe("TransactionDetailsSummaryItem", () => {
           shippingTotal: null,
           shippingTotalCents: null,
         },
-        { user: { lab_features: ["Avalara Phase 2"] } }
+        {
+          user: { lab_features: ["Avalara Phase 2"] },
+          transactionStep: "shipping",
+        }
       )
 
       const text = transactionSummary.text()
@@ -122,7 +125,6 @@ describe("TransactionDetailsSummaryItem", () => {
         },
         {
           user: { lab_features: ["Avalara Phase 2"] },
-          transactionStep: "review",
         }
       )
 
@@ -153,7 +155,6 @@ describe("TransactionDetailsSummaryItem", () => {
         },
         {
           user: { lab_features: ["Avalara Phase 2"] },
-          transactionStep: "review",
         }
       )
 

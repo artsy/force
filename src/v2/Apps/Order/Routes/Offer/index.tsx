@@ -347,6 +347,7 @@ export class OfferRoute extends Component<OfferProps, OfferState> {
               <Flex flexDirection="column">
                 <ArtworkSummaryItem order={order} />
                 <TransactionDetailsSummaryItem
+                  transactionStep="offer"
                   order={order}
                   offerOverride={
                     this.state.offerValue &&
