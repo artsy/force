@@ -108,11 +108,11 @@ export const AboutApp: React.FC = () => {
       <Spacer my={12} />
 
       <Join separator={<Spacer mt={6} />}>
-        <SellWithArtsyComponent />
-        <AppDownloadComponent />
-        <CollectorInfoComponent />
+        <SellWithArtsy />
+        <AppDownload />
+        <CollectorInfo />
         <Separator />
-        <ArtsySpecialistsComponent />
+        <ArtsySpecialists />
       </Join>
     </>
   )
@@ -147,7 +147,7 @@ const RailComponent: React.FC<RailComponentProps> = props => {
   )
 }
 
-const SellWithArtsyComponent: React.FC = () => {
+const SellWithArtsy: React.FC = () => {
   const image = resized(
     "http://files.artsy.net/images/molly_green_original.jpeg",
     { width: 640 }
@@ -234,7 +234,7 @@ const SellWithArtsyComponent: React.FC = () => {
   )
 }
 
-const AppDownloadComponent: React.FC = () => {
+const AppDownload: React.FC = () => {
   const image = resized("http://files.artsy.net/download_artsy_apps_img.jpg", {
     width: 910,
     height: 652,
@@ -290,7 +290,7 @@ const AppDownloadComponent: React.FC = () => {
   )
 }
 
-const CollectorInfoComponent: React.FC = () => {
+const CollectorInfo: React.FC = () => {
   const image = resized(
     "http://files.artsy.net/about2_page_collector_img.jpg",
     {
@@ -343,7 +343,7 @@ const CollectorInfoComponent: React.FC = () => {
   )
 }
 
-const ArtsySpecialistsComponent: React.FC = () => {
+const ArtsySpecialists: React.FC = () => {
   return (
     <GridColumns gridRowGap={4}>
       <Column span={6}>
