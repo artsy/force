@@ -1,13 +1,13 @@
 import {
   FeatureFlagContext,
-  FeatureFlagProvider,
+  FeatureFlagService,
   createFeatureFlagService,
   registerFeatureFlagService,
 } from "lib/featureFlags/featureFlagService"
 
-const TestProviderSymbol = Symbol("TestProviderSymbol")
+const TestServiceSymbol = Symbol("TestServiceSymbol")
 
-class TestFeatureFlagProvider implements FeatureFlagProvider {
+class TestFeatureFlagService implements FeatureFlagService {
   init() {}
 
   getFeatures() {
@@ -21,14 +21,14 @@ class TestFeatureFlagProvider implements FeatureFlagProvider {
 
 describe("featureFlag tests", () => {
   it("feature is enabled", async () => {
-    registerFeatureFlagService<TestFeatureFlagProvider>(
-      TestProviderSymbol,
-      TestFeatureFlagProvider
+    registerFeatureFlagService<TestFeatureFlagService>(
+      TestServiceSymbol,
+      TestFeatureFlagService
     )
 
-    const provider = await createFeatureFlagService(TestProviderSymbol)
+    const service = await createFeatureFlagService(TestServiceSymbol)
 
-    expect(provider.enabled("feature-a")).toBeTruthy()
-    expect(provider.enabled("feature-b")).toBeFalsy()
+    expect(service.enabled("feature-a")).toBeTruthy()
+    expect(service.enabled("feature-b")).toBeFalsy()
   })
 })

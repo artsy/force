@@ -70,9 +70,9 @@ import { IGNORED_ERRORS } from "./lib/analytics/sentryFilters"
 import { sharifyToCookie } from "./lib/middleware/sharifyToCookie"
 import { featureFlagMiddleware } from "lib/middleware/featureFlagMiddleware"
 import {
-  UnleashFeatureFlagProvider,
-  UnleashProvider,
-} from "lib/featureFlags/unleashProvider"
+  UnleashFeatureFlagService,
+  UnleashService,
+} from "lib/featureFlags/unleashService"
 import { registerFeatureFlagService } from "lib/featureFlags/featureFlagService"
 
 // Find the v2 routes, we will not be testing memory caching for legacy pages.
@@ -154,8 +154,8 @@ export function initializeMiddleware(app) {
   applyStaticAssetMiddlewares(app)
 
   // Need sharify for unleash
-  registerFeatureFlagService(UnleashProvider, UnleashFeatureFlagProvider)
-  app.use(featureFlagMiddleware(UnleashProvider))
+  registerFeatureFlagService(UnleashService, UnleashFeatureFlagService)
+  app.use(featureFlagMiddleware(UnleashService))
 }
 
 function applySecurityMiddleware(app) {

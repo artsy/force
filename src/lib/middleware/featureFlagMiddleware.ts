@@ -2,24 +2,24 @@ import { NextFunction } from "express"
 import { ArtsyRequest, ArtsyResponse } from "./artsyExpress"
 import {
   createFeatureFlagService,
-  FeatureFlagProvider,
+  FeatureFlagService,
 } from "lib/featureFlags/featureFlagService"
 
-export function featureFlagMiddleware(providerType: symbol) {
-  let provider
+export function featureFlagMiddleware(serviceType: symbol) {
+  let service
   return (req: ArtsyRequest, res: ArtsyResponse, next: NextFunction) => {
-    new Promise<FeatureFlagProvider>(async (resolve, reject) => {
-      if (provider) {
-        resolve(provider)
+    new Promise<FeatureFlagService>(async (resolve, reject) => {
+      if (service) {
+        resolve(service)
       }
       try {
-        provider = await createFeatureFlagService(providerType)
-        resolve(provider)
+        service = await createFeatureFlagService(serviceType)
+        resolve(service)
       } catch {
         reject("An unknown error occurred while creating the flag provider.")
       }
     })
-      .then(provider => {
+      .then(service => {
         // Create feature flag context per request
         const featureFlagContext = {
           userId: res.locals.user ? res.locals.user.id : null,
@@ -27,11 +27,11 @@ export function featureFlagMiddleware(providerType: symbol) {
         }
 
         // Get features and move them to sharify
-        const flags = provider.getFeatures()
+        const flags = service.getFeatures()
         res.locals.sd.featureFlags = {}
         if (flags) {
           for (let flag of flags) {
-            res.locals.sd.featureFlags[flag] = provider.enabled(
+            res.locals.sd.featureFlags[flag] = service.enabled(
               flag,
               featureFlagContext
             )

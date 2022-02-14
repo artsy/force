@@ -5,13 +5,13 @@ import {
   UNLEASH_INSTANCE_ID,
   UNLEASH_SERVER_KEY,
 } from "../../config"
-import { FeatureFlagProvider } from "./featureFlagService"
+import { FeatureFlagService } from "./featureFlagService"
 
 // Pass in as argument to registerFeatureFlagProvideder() when using unleash as feature flag service
-export const UnleashProvider = Symbol("UnleashProvider")
+export const UnleashService = Symbol("UnleashService")
 
 // Class to instantiate Unleash client and set useful helper methods.
-export class UnleashFeatureFlagProvider implements FeatureFlagProvider {
+export class UnleashFeatureFlagService implements FeatureFlagService {
   private _unleash: Unleash | null = null
 
   constructor(
@@ -23,7 +23,7 @@ export class UnleashFeatureFlagProvider implements FeatureFlagProvider {
 
   async init(): Promise<void> {
     if (this._unleash !== null) {
-      throw new Error("UnleashFlagProvider has already been initialized.")
+      throw new Error("UnleashFlagService has already been initialized.")
     }
 
     this._unleash = await startUnleash({
@@ -46,7 +46,7 @@ export class UnleashFeatureFlagProvider implements FeatureFlagProvider {
 
   private get unleash() {
     if (this._unleash === null) {
-      throw new Error("UnleashFlagProvider has not been initialized.")
+      throw new Error("UnleashFlagService has not been initialized.")
     }
     return this._unleash
   }
