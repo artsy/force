@@ -16,6 +16,8 @@ interface ArticleChannelRelatedArticlesProps {
 const ArticleChannelRelatedArticles: FC<ArticleChannelRelatedArticlesProps> = ({
   article,
 }) => {
+  if (article.channelArticles.length === 0) return null
+
   return (
     <>
       <Text variant="lg" mb={4}>

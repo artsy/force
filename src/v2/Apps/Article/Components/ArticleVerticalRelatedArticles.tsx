@@ -16,6 +16,8 @@ interface ArticleVerticalRelatedArticlesProps {
 const ArticleVerticalRelatedArticles: FC<ArticleVerticalRelatedArticlesProps> = ({
   article,
 }) => {
+  if (article.verticalRelatedArticles.length === 0) return null
+
   return (
     <>
       <Text variant="lg" mb={4}>
