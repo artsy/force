@@ -4,6 +4,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { MetaTags } from "v2/Components/MetaTags"
 import { ArticleApp_article } from "v2/__generated__/ArticleApp_article.graphql"
 import { ArticleBodyFragmentContainer } from "./Components/ArticleBody"
+import { ArticleChannelRelatedArticlesQueryRenderer } from "./Components/ArticleChannelRelatedArticles"
 import { ArticleSeriesFragmentContainer } from "./Components/ArticleSeries"
 import { ArticleVerticalRelatedArticlesQueryRenderer } from "./Components/ArticleVerticalRelatedArticles"
 import { ArticleVideoFragmentContainer } from "./Components/ArticleVideo"
@@ -34,7 +35,21 @@ const ArticleApp: FC<ArticleAppProps> = ({ article }) => {
               return <ArticleVideoFragmentContainer article={article} />
 
             case "NEWS": // TODO
-            case "CLASSIC": // TODO
+            case "CLASSIC":
+              return (
+                <>
+                  <ArticleBodyFragmentContainer article={article} />
+
+                  <FullBleed>
+                    <Separator />
+                  </FullBleed>
+
+                  <ArticleChannelRelatedArticlesQueryRenderer
+                    id={article.internalID}
+                  />
+                </>
+              )
+
             case "FEATURE":
             case "STANDARD":
               return (
@@ -66,6 +81,7 @@ export const ArticleAppFragmentContainer = createFragmentContainer(ArticleApp, {
         __typename
       }
       layout
+      channelID
       ...ArticleBody_article
       ...ArticleSeries_article
       ...ArticleVideo_article

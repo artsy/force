@@ -1,0 +1,107 @@
+import { FC } from "react"
+import { createFragmentContainer, graphql } from "react-relay"
+import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
+import { ArticleChannelRelatedArticles_article } from "v2/__generated__/ArticleChannelRelatedArticles_article.graphql"
+import { ArticleChannelRelatedArticlesQuery } from "v2/__generated__/ArticleChannelRelatedArticlesQuery.graphql"
+import { Shelf, Skeleton, SkeletonText, Text } from "@artsy/palette"
+import {
+  ArticleCellFragmentContainer,
+  ArticleCellPlaceholder,
+} from "v2/Components/Cells/ArticleCell"
+
+interface ArticleChannelRelatedArticlesProps {
+  article: ArticleChannelRelatedArticles_article
+}
+
+const ArticleChannelRelatedArticles: FC<ArticleChannelRelatedArticlesProps> = ({
+  article,
+}) => {
+  return (
+    <>
+      <Text variant="lg" mb={4}>
+        More From {article.byline}
+      </Text>
+
+      <Shelf alignItems="flex-start">
+        {article.channelArticles.map(article => {
+          return (
+            <ArticleCellFragmentContainer
+              key={article.internalID}
+              article={article}
+            />
+          )
+        })}
+      </Shelf>
+    </>
+  )
+}
+
+export const ArticleChannelRelatedArticlesFragmentContainer = createFragmentContainer(
+  ArticleChannelRelatedArticles,
+  {
+    article: graphql`
+      fragment ArticleChannelRelatedArticles_article on Article {
+        byline
+        channelArticles {
+          internalID
+          ...ArticleCell_article
+        }
+      }
+    `,
+  }
+)
+
+interface ArticleChannelRelatedArticlesQueryRendererProps {
+  id: string
+}
+
+export const ArticleChannelRelatedArticlesQueryRenderer: FC<ArticleChannelRelatedArticlesQueryRendererProps> = ({
+  id,
+}) => {
+  return (
+    <SystemQueryRenderer<ArticleChannelRelatedArticlesQuery>
+      lazyLoad
+      placeholder={<ArticleChannelRelatedArticlesPlaceholder />}
+      variables={{ id }}
+      query={graphql`
+        query ArticleChannelRelatedArticlesQuery($id: String!) {
+          article(id: $id) {
+            ...ArticleChannelRelatedArticles_article
+          }
+        }
+      `}
+      render={({ error, props }) => {
+        if (error) {
+          console.error(error)
+          return null
+        }
+
+        if (!props?.article) {
+          return <ArticleChannelRelatedArticlesPlaceholder />
+        }
+
+        return (
+          <ArticleChannelRelatedArticlesFragmentContainer
+            article={props.article}
+          />
+        )
+      }}
+    />
+  )
+}
+
+const ArticleChannelRelatedArticlesPlaceholder: FC = () => {
+  return (
+    <Skeleton>
+      <SkeletonText variant="lg" mb={4}>
+        More From This Author
+      </SkeletonText>
+
+      <Shelf alignItems="flex-start">
+        {[...new Array(8)].map((_, index) => {
+          return <ArticleCellPlaceholder key={index} />
+        })}
+      </Shelf>
+    </Skeleton>
+  )
+}
