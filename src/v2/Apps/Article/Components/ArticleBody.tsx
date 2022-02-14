@@ -46,6 +46,22 @@ const ArticleBody: FC<ArticleBodyProps> = ({ article }) => {
             lineHeight={1}
           >
             {article.publishedAt}
+            {article.newsSource && (
+              <>
+                , via&nbsp;
+                {article.newsSource.url ? (
+                  <a
+                    href={article.newsSource.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {article.newsSource.title}
+                  </a>
+                ) : (
+                  article.newsSource.title
+                )}
+              </>
+            )}
 
             <Spacer ml={2} />
 
@@ -209,6 +225,10 @@ export const ArticleBodyFragmentContainer = createFragmentContainer(
         layout
         title
         byline
+        newsSource {
+          title
+          url
+        }
         href
         publishedAt(format: "MMM D, YYYY h:mma")
         sections {

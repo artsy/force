@@ -34,7 +34,9 @@ const ArticleApp: FC<ArticleAppProps> = ({ article }) => {
             case "VIDEO":
               return <ArticleVideoFragmentContainer article={article} />
 
-            case "NEWS": // TODO
+            case "NEWS":
+              return <ArticleBodyFragmentContainer article={article} />
+
             case "CLASSIC":
               return (
                 <>
