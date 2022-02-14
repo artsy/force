@@ -1,6 +1,5 @@
 config = require './config.coffee'
 SERVICES =
-  EMBEDLY: require './services/embedly.coffee'
   GEMINI: require './services/gemini.coffee'
 
 service = ->
