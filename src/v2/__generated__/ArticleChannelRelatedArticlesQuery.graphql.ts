@@ -4,27 +4,27 @@
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type ArticleVerticalRelatedArticlesQueryVariables = {
+export type ArticleChannelRelatedArticlesQueryVariables = {
     id: string;
 };
-export type ArticleVerticalRelatedArticlesQueryResponse = {
+export type ArticleChannelRelatedArticlesQueryResponse = {
     readonly article: {
-        readonly " $fragmentRefs": FragmentRefs<"ArticleVerticalRelatedArticles_article">;
+        readonly " $fragmentRefs": FragmentRefs<"ArticleChannelRelatedArticles_article">;
     } | null;
 };
-export type ArticleVerticalRelatedArticlesQuery = {
-    readonly response: ArticleVerticalRelatedArticlesQueryResponse;
-    readonly variables: ArticleVerticalRelatedArticlesQueryVariables;
+export type ArticleChannelRelatedArticlesQuery = {
+    readonly response: ArticleChannelRelatedArticlesQueryResponse;
+    readonly variables: ArticleChannelRelatedArticlesQueryVariables;
 };
 
 
 
 /*
-query ArticleVerticalRelatedArticlesQuery(
+query ArticleChannelRelatedArticlesQuery(
   $id: String!
 ) {
   article(id: $id) {
-    ...ArticleVerticalRelatedArticles_article
+    ...ArticleChannelRelatedArticles_article
     id
   }
 }
@@ -46,9 +46,9 @@ fragment ArticleCell_article on Article {
   }
 }
 
-fragment ArticleVerticalRelatedArticles_article on Article {
-  vertical
-  verticalRelatedArticles: relatedArticles(inVertical: true, size: 8) {
+fragment ArticleChannelRelatedArticles_article on Article {
+  byline
+  channelArticles {
     internalID
     ...ArticleCell_article
     id
@@ -75,7 +75,7 @@ v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "vertical",
+  "name": "byline",
   "storageKey": null
 },
 v3 = {
@@ -90,7 +90,7 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "ArticleVerticalRelatedArticlesQuery",
+    "name": "ArticleChannelRelatedArticlesQuery",
     "selections": [
       {
         "alias": null,
@@ -103,7 +103,7 @@ return {
           {
             "args": null,
             "kind": "FragmentSpread",
-            "name": "ArticleVerticalRelatedArticles_article"
+            "name": "ArticleChannelRelatedArticles_article"
           }
         ],
         "storageKey": null
@@ -116,7 +116,7 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "ArticleVerticalRelatedArticlesQuery",
+    "name": "ArticleChannelRelatedArticlesQuery",
     "selections": [
       {
         "alias": null,
@@ -128,22 +128,11 @@ return {
         "selections": [
           (v2/*: any*/),
           {
-            "alias": "verticalRelatedArticles",
-            "args": [
-              {
-                "kind": "Literal",
-                "name": "inVertical",
-                "value": true
-              },
-              {
-                "kind": "Literal",
-                "name": "size",
-                "value": 8
-              }
-            ],
+            "alias": null,
+            "args": null,
             "concreteType": "Article",
             "kind": "LinkedField",
-            "name": "relatedArticles",
+            "name": "channelArticles",
             "plural": true,
             "selections": [
               {
@@ -153,7 +142,13 @@ return {
                 "name": "internalID",
                 "storageKey": null
               },
-              (v2/*: any*/),
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "vertical",
+                "storageKey": null
+              },
               {
                 "alias": null,
                 "args": null,
@@ -161,13 +156,7 @@ return {
                 "name": "title",
                 "storageKey": null
               },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "byline",
-                "storageKey": null
-              },
+              (v2/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -251,7 +240,7 @@ return {
               },
               (v3/*: any*/)
             ],
-            "storageKey": "relatedArticles(inVertical:true,size:8)"
+            "storageKey": null
           },
           (v3/*: any*/)
         ],
@@ -260,14 +249,14 @@ return {
     ]
   },
   "params": {
-    "cacheID": "3cc845756b217d3a689f210b9acc35c4",
+    "cacheID": "2478ffac1998af90f4a97fa272de8359",
     "id": null,
     "metadata": {},
-    "name": "ArticleVerticalRelatedArticlesQuery",
+    "name": "ArticleChannelRelatedArticlesQuery",
     "operationKind": "query",
-    "text": "query ArticleVerticalRelatedArticlesQuery(\n  $id: String!\n) {\n  article(id: $id) {\n    ...ArticleVerticalRelatedArticles_article\n    id\n  }\n}\n\nfragment ArticleCell_article on Article {\n  vertical\n  internalID\n  title\n  byline\n  href\n  publishedAt(format: \"MMM D, YYYY\")\n  thumbnailImage {\n    cropped(width: 445, height: 334) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment ArticleVerticalRelatedArticles_article on Article {\n  vertical\n  verticalRelatedArticles: relatedArticles(inVertical: true, size: 8) {\n    internalID\n    ...ArticleCell_article\n    id\n  }\n}\n"
+    "text": "query ArticleChannelRelatedArticlesQuery(\n  $id: String!\n) {\n  article(id: $id) {\n    ...ArticleChannelRelatedArticles_article\n    id\n  }\n}\n\nfragment ArticleCell_article on Article {\n  vertical\n  internalID\n  title\n  byline\n  href\n  publishedAt(format: \"MMM D, YYYY\")\n  thumbnailImage {\n    cropped(width: 445, height: 334) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment ArticleChannelRelatedArticles_article on Article {\n  byline\n  channelArticles {\n    internalID\n    ...ArticleCell_article\n    id\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'b8e65ed0888ede874380337d360d8c54';
+(node as any).hash = 'f30c64d90b669773afb245e0c654d1b7';
 export default node;

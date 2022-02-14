@@ -7,20 +7,8 @@ import { FragmentRefs } from "relay-runtime";
 export type ArticleVerticalRelatedArticles_article = {
     readonly vertical: string | null;
     readonly verticalRelatedArticles: ReadonlyArray<{
-        readonly vertical: string | null;
         readonly internalID: string;
-        readonly title: string | null;
-        readonly byline: string | null;
-        readonly href: string | null;
-        readonly publishedAt: string | null;
-        readonly thumbnailImage: {
-            readonly cropped: {
-                readonly width: number;
-                readonly height: number;
-                readonly src: string;
-                readonly srcSet: string;
-            } | null;
-        } | null;
+        readonly " $fragmentRefs": FragmentRefs<"ArticleCell_article">;
     }>;
     readonly " $refType": "ArticleVerticalRelatedArticles_article";
 };
@@ -32,21 +20,19 @@ export type ArticleVerticalRelatedArticles_article$key = {
 
 
 
-const node: ReaderFragment = (function(){
-var v0 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "vertical",
-  "storageKey": null
-};
-return {
+const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
   "name": "ArticleVerticalRelatedArticles_article",
   "selections": [
-    (v0/*: any*/),
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "vertical",
+      "storageKey": null
+    },
     {
       "alias": "verticalRelatedArticles",
       "args": [
@@ -66,7 +52,6 @@ return {
       "name": "relatedArticles",
       "plural": true,
       "selections": [
-        (v0/*: any*/),
         {
           "alias": null,
           "args": null,
@@ -75,99 +60,9 @@ return {
           "storageKey": null
         },
         {
-          "alias": null,
           "args": null,
-          "kind": "ScalarField",
-          "name": "title",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "byline",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "href",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": [
-            {
-              "kind": "Literal",
-              "name": "format",
-              "value": "MMM D, YYYY"
-            }
-          ],
-          "kind": "ScalarField",
-          "name": "publishedAt",
-          "storageKey": "publishedAt(format:\"MMM D, YYYY\")"
-        },
-        {
-          "alias": null,
-          "args": null,
-          "concreteType": "Image",
-          "kind": "LinkedField",
-          "name": "thumbnailImage",
-          "plural": false,
-          "selections": [
-            {
-              "alias": null,
-              "args": [
-                {
-                  "kind": "Literal",
-                  "name": "height",
-                  "value": 200
-                },
-                {
-                  "kind": "Literal",
-                  "name": "width",
-                  "value": 300
-                }
-              ],
-              "concreteType": "CroppedImageUrl",
-              "kind": "LinkedField",
-              "name": "cropped",
-              "plural": false,
-              "selections": [
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "width",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "height",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "src",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "srcSet",
-                  "storageKey": null
-                }
-              ],
-              "storageKey": "cropped(height:200,width:300)"
-            }
-          ],
-          "storageKey": null
+          "kind": "FragmentSpread",
+          "name": "ArticleCell_article"
         }
       ],
       "storageKey": "relatedArticles(inVertical:true,size:8)"
@@ -176,6 +71,5 @@ return {
   "type": "Article",
   "abstractKey": null
 };
-})();
-(node as any).hash = 'e4a8badf3c5a59f68d1adb84d02e6bcf';
+(node as any).hash = '31d2b928f4850224b758e6d24caf0541';
 export default node;
