@@ -12,7 +12,7 @@ export type ArticleApp_article = {
         readonly __typename: string;
     } | null;
     readonly layout: ArticleLayout;
-    readonly " $fragmentRefs": FragmentRefs<"ArticleBody_article" | "ArticleSeries_article">;
+    readonly " $fragmentRefs": FragmentRefs<"ArticleBody_article" | "ArticleSeries_article" | "ArticleVideo_article">;
     readonly " $refType": "ArticleApp_article";
 };
 export type ArticleApp_article$data = ArticleApp_article;
@@ -77,10 +77,15 @@ const node: ReaderFragment = {
       "args": null,
       "kind": "FragmentSpread",
       "name": "ArticleSeries_article"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ArticleVideo_article"
     }
   ],
   "type": "Article",
   "abstractKey": null
 };
-(node as any).hash = '0c90b412479a2185df8fdcf2d3b11072';
+(node as any).hash = 'f990264e517092c0d69be2006237ae67';
 export default node;
