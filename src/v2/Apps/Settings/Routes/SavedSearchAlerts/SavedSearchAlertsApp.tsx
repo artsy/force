@@ -7,6 +7,8 @@ import {
   Join,
   useToasts,
   Button,
+  ModalDialog,
+  Spacer,
 } from "@artsy/palette"
 import {
   createPaginationContainer,
@@ -26,9 +28,10 @@ import {
 import { SavedSearchAlertHeader } from "./Components/SavedSearchAlertHeader"
 import { MetaTags } from "v2/Components/MetaTags"
 import { SavedSearchAlertsEmptyResults } from "./Components/SavedSearchAlertsEmptyResults"
-import { SavedSearchAlertEditFormContainer } from "./Components/SavedSearchAlertEditFormContainter"
+import { SavedSearchAlertEditFormDesktop } from "./Components/SavedSearchAlertEditFormDesktop"
 import { Sticky, StickyProvider } from "v2/Components/Sticky"
 import { useNavBarHeight } from "v2/Components/NavBar/useNavBarHeight"
+import { SavedSearchAlertEditFormQueryRenderer } from "./Components/SavedSearchAlertEditForm"
 
 interface SavedSearchAlertsAppProps {
   me: SavedSearchAlertsApp_me
@@ -166,7 +169,7 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
                         overflowY="scroll"
                         maxHeight={`calc(100vh - ${desktop}px)`}
                       >
-                        <SavedSearchAlertEditFormContainer
+                        <SavedSearchAlertEditFormDesktop
                           editAlertEntity={editAlertEntity}
                           onCloseClick={closeEditForm}
                           onCompleted={handleCompleted}
@@ -182,15 +185,22 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
             </Media>
 
             <Media lessThan="md">
-              {isEditMode && editAlertEntity ? (
-                <SavedSearchAlertEditFormContainer
-                  editAlertEntity={editAlertEntity}
-                  onCloseClick={closeEditForm}
-                  onCompleted={handleCompleted}
-                  onDeleteClick={handleDeleteClick}
-                />
-              ) : (
-                list
+              {list}
+              {isEditMode && editAlertEntity && (
+                <ModalDialog
+                  title={`Edit ${editAlertEntity.name}`}
+                  width="100vw"
+                  height="100vh"
+                  m={0}
+                  onClose={closeEditForm}
+                >
+                  <Spacer mt={4} />
+                  <SavedSearchAlertEditFormQueryRenderer
+                    editAlertEntity={editAlertEntity}
+                    onDeleteClick={handleDeleteClick}
+                    onCompleted={handleCompleted}
+                  />
+                </ModalDialog>
               )}
             </Media>
 
