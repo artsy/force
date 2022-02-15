@@ -40,6 +40,7 @@ export const SIZES_IN_CENTIMETERS = [
 const ONE_IN_TO_CM = 2.54
 
 type CustomRange = (number | "*")[]
+type Metric = "in" | "cm"
 
 type CustomSize = {
   height: CustomRange
@@ -50,10 +51,16 @@ const convertToCentimeters = (element: number) => {
   return Math.round(element * ONE_IN_TO_CM)
 }
 
-export const parseRange = (range?: string) => {
-  return range?.split("-").map(s => {
+export const parseRange = (range: string = "", metric: Metric) => {
+  return range.split("-").map(s => {
     if (s === "*") return s
-    return convertToCentimeters(parseFloat(s))
+    const value = parseFloat(s)
+
+    if (metric === "cm") {
+      return convertToCentimeters(value)
+    }
+
+    return value
   })
 }
 
@@ -95,7 +102,6 @@ export interface SizeFilterProps {
 }
 
 type Mode = "resting" | "done"
-type Metric = "in" | "cm"
 
 export const SizeFilter: React.FC<SizeFilterProps> = ({ expanded }) => {
   const { currentlySelectedFilters, setFilters } = useArtworkFilterContext()
@@ -103,6 +109,7 @@ export const SizeFilter: React.FC<SizeFilterProps> = ({ expanded }) => {
     height,
     width,
     reset,
+    ...otherSelectedFilters
   } = currentlySelectedFilters?.() as ArtworkFiltersState
 
   const filtersCount = useFilterLabelCountByKey(
@@ -110,12 +117,13 @@ export const SizeFilter: React.FC<SizeFilterProps> = ({ expanded }) => {
   )
   const label = `Size${filtersCount}`
 
+  const [metric, setMetric] = useState<Metric>("cm")
   const initialCustomSize = React.useMemo(
     () => ({
-      height: parseRange(height) as CustomRange,
-      width: parseRange(width) as CustomRange,
+      height: parseRange(height, metric) as CustomRange,
+      width: parseRange(width, metric) as CustomRange,
     }),
-    [width, height]
+    [width, height, metric]
   )
 
   const [showCustom, setShowCustom] = useState(
@@ -123,7 +131,6 @@ export const SizeFilter: React.FC<SizeFilterProps> = ({ expanded }) => {
   )
   const [customSize, setCustomSize] = useState<CustomSize>(initialCustomSize)
   const [mode, setMode] = useMode<Mode>("resting")
-  const [metric, setMetric] = useState<Metric>("in")
 
   const SIZES = metric === "cm" ? SIZES_IN_CENTIMETERS : SIZES_IN_INCHES
   const MEASURE_LABEL = metric === "cm" ? "cm" : "in"
@@ -188,6 +195,27 @@ export const SizeFilter: React.FC<SizeFilterProps> = ({ expanded }) => {
     setMode("done")
   }
 
+  const handleSelectMetric = (nextMetric: Metric) => {
+    if (metric === nextMetric) {
+      return
+    }
+
+    if (width !== "*-*" || height !== "*-*") {
+      let formattedCustomSize = customSize
+
+      if (nextMetric === "cm") {
+        formattedCustomSize = convertSizeToInches(customSize)
+      }
+
+      setFilters!({
+        ...otherSelectedFilters,
+        ...mapSizeToRange(formattedCustomSize),
+      })
+    }
+
+    setMetric(nextMetric)
+  }
+
   const tokens = useThemeConfig({
     v2: { my: 0.5, secondaryVariant: "small" as TextVariant },
     v3: { my: 1, secondaryVariant: "xs" as TextVariant },
@@ -228,7 +256,7 @@ export const SizeFilter: React.FC<SizeFilterProps> = ({ expanded }) => {
 
         <RadioGroup
           defaultValue="cm"
-          onSelect={value => setMetric(value as Metric)}
+          onSelect={handleSelectMetric}
           flexDirection="row"
           my={2}
         >
