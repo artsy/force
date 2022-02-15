@@ -10,6 +10,8 @@ import {
   Message,
   TextVariant,
   useThemeConfig,
+  RadioGroup,
+  Radio,
 } from "@artsy/palette"
 import {
   ArtworkFiltersState,
@@ -23,11 +25,18 @@ import { isCustomValue } from "./Utils/isCustomValue"
 import { useFilterLabelCountByKey } from "../Utils/useFilterLabelCountByKey"
 import { useMode } from "v2/Utils/Hooks/useMode"
 
-export const SIZES = [
+export const SIZES_IN_INCHES = [
+  { displayName: "Small (under 16in)", name: "SMALL" },
+  { displayName: "Medium (16in – 40in)", name: "MEDIUM" },
+  { displayName: "Large (over 40in)", name: "LARGE" },
+]
+
+export const SIZES_IN_CENTIMETERS = [
   { displayName: "Small (under 40cm)", name: "SMALL" },
   { displayName: "Medium (40 – 100cm)", name: "MEDIUM" },
   { displayName: "Large (over 100cm)", name: "LARGE" },
 ]
+
 const ONE_IN_TO_CM = 2.54
 
 type CustomRange = (number | "*")[]
@@ -86,6 +95,7 @@ export interface SizeFilterProps {
 }
 
 type Mode = "resting" | "done"
+type Metric = "in" | "cm"
 
 export const SizeFilter: React.FC<SizeFilterProps> = ({ expanded }) => {
   const { currentlySelectedFilters, setFilters } = useArtworkFilterContext()
@@ -113,6 +123,10 @@ export const SizeFilter: React.FC<SizeFilterProps> = ({ expanded }) => {
   )
   const [customSize, setCustomSize] = useState<CustomSize>(initialCustomSize)
   const [mode, setMode] = useMode<Mode>("resting")
+  const [metric, setMetric] = useState<Metric>("in")
+
+  const SIZES = metric === "cm" ? SIZES_IN_CENTIMETERS : SIZES_IN_INCHES
+  const MEASURE_LABEL = metric === "cm" ? "cm" : "in"
 
   const handleInputChange = (dimension: "height" | "width", index: number) => ({
     currentTarget: { value },
@@ -212,6 +226,16 @@ export const SizeFilter: React.FC<SizeFilterProps> = ({ expanded }) => {
           This is based on the artwork’s average dimension.
         </Text>
 
+        <RadioGroup
+          defaultValue="cm"
+          onSelect={value => setMetric(value as Metric)}
+          flexDirection="row"
+          my={2}
+        >
+          <Radio value="cm" label="cm" flex={1} />
+          <Radio value="in" label="in" flex={1} />
+        </RadioGroup>
+
         <Flex flexDirection="column">
           {SIZES.map(({ name, displayName }, index) => {
             return (
@@ -242,7 +266,7 @@ export const SizeFilter: React.FC<SizeFilterProps> = ({ expanded }) => {
           <Text mt={1}>Width</Text>
           <Flex alignItems="flex-end">
             <NumericInput
-              label="cm"
+              label={MEASURE_LABEL}
               name="width_min"
               min="0"
               step="1"
@@ -251,7 +275,7 @@ export const SizeFilter: React.FC<SizeFilterProps> = ({ expanded }) => {
             />
             <Spacer mx={0.5} />
             <NumericInput
-              label="cm"
+              label={MEASURE_LABEL}
               name="width_max"
               min="0"
               step="1"
@@ -263,7 +287,7 @@ export const SizeFilter: React.FC<SizeFilterProps> = ({ expanded }) => {
           <Text mt={1}>Height</Text>
           <Flex alignItems="flex-end">
             <NumericInput
-              label="cm"
+              label={MEASURE_LABEL}
               name="height_min"
               min="0"
               step="1"
@@ -274,7 +298,7 @@ export const SizeFilter: React.FC<SizeFilterProps> = ({ expanded }) => {
             <Spacer mx={0.5} />
 
             <NumericInput
-              label="cm"
+              label={MEASURE_LABEL}
               name="height_max"
               min="0"
               step="1"
