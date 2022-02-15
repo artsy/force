@@ -22,6 +22,7 @@ import { RouterLink } from "v2/System/Router/RouterLink"
 import { extractNodes } from "v2/Utils/extractNodes"
 import { PartnerCell_partner } from "v2/__generated__/PartnerCell_partner.graphql"
 import { FollowProfileButtonFragmentContainer } from "v2/Components/FollowButton/FollowProfileButton"
+import { DEFAULT_CELL_WIDTH } from "./constants"
 
 interface PartnerCellProps {
   partner: PartnerCell_partner
@@ -36,7 +37,7 @@ const PartnerCell: React.FC<PartnerCellProps> = ({
   const { user } = useSystemContext()
   const { trackEvent } = useTracking()
 
-  const width = mode === "GRID" ? "100%" : 325
+  const width = mode === "GRID" ? "100%" : DEFAULT_CELL_WIDTH
   const locations = extractNodes(partner.locationsConnection)
   const meta = uniq(locations.map(location => location.city?.trim())).join(", ")
   const image = partner.profile?.image?.cropped
@@ -125,7 +126,7 @@ type PartnerCellPlaceholderProps = Pick<PartnerCellProps, "mode">
 export const PartnerCellPlaceholder: React.FC<PartnerCellPlaceholderProps> = ({
   mode = "RAIL",
 }) => {
-  const width = mode === "GRID" ? "100%" : 325
+  const width = mode === "GRID" ? "100%" : DEFAULT_CELL_WIDTH
 
   return (
     <Box width={width}>

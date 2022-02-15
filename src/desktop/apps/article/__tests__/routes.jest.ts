@@ -14,7 +14,7 @@ jest.mock("desktop/lib/buildServerAppContext", () => ({
   buildServerAppContext: jest.fn(),
 }))
 
-jest.mock("lib/metaphysics2", () => ({ metaphysics2: jest.fn()}))
+jest.mock("lib/metaphysics2", () => ({ metaphysics2: jest.fn() }))
 
 jest.mock("sharify", () => ({
   data: {
@@ -436,7 +436,7 @@ describe("Article Routes", () => {
       routes.amp(req, res, next)
       expect(res.render.mock.calls[0][0]).toBe("amp_article")
       expect(res.locals.jsonLD).toBe(
-        '{"@context":"http://schema.org","@type":"NewsArticle","headline":"New York\'s Next Art District","url":"https://artsy.net/article/foobar","thumbnailUrl":"https://artsy-media-uploads.s3.amazonaws.com/7lsxxsw0qPAuKl37jEYitw%2Farticle+asset+1-hig+res+copy.jpg","datePublished":"2017-05-19T13:09:18.567Z","dateCreated":"2017-05-19T13:09:18.567Z","articleSection":"Other","creator":["Casey Lesser"],"mainEntityOfPage":"https://artsy.net/article/foobar","author":{"name":"Artsy Editorial"},"publisher":{"name":"Artsy","logo":{"url":"https://artsy.net/images/full_logo.png","height":103,"width":300}},"image":{"url":"https://i.embed.ly/1/display/crop?url=https%3A%2F%2Fartsy-media-uploads.s3.amazonaws.com%2F7lsxxsw0qPAuKl37jEYitw%252Farticle%2Basset%2B1-hig%2Bres%2Bcopy.jpg&width=800&height=600&quality=80","width":800,"height":600}}'
+        '{"@context":"http://schema.org","@type":"NewsArticle","headline":"New York\'s Next Art District","url":"https://artsy.net/article/foobar","thumbnailUrl":"https://artsy-media-uploads.s3.amazonaws.com/7lsxxsw0qPAuKl37jEYitw%2Farticle+asset+1-hig+res+copy.jpg","datePublished":"2017-05-19T13:09:18.567Z","dateCreated":"2017-05-19T13:09:18.567Z","articleSection":"Other","creator":["Casey Lesser"],"mainEntityOfPage":"https://artsy.net/article/foobar","author":{"name":"Artsy Editorial"},"publisher":{"name":"Artsy","logo":{"url":"https://artsy.net/images/full_logo.png","height":103,"width":300}},"image":{"url":"?resize_to=fill&src=https%3A%2F%2Fartsy-media-uploads.s3.amazonaws.com%2F7lsxxsw0qPAuKl37jEYitw%252Farticle%2Basset%2B1-hig%2Bres%2Bcopy.jpg&width=800&height=600&quality=80","width":800,"height":600}}'
       )
     })
 

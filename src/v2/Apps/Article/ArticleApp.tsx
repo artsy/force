@@ -4,8 +4,10 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { MetaTags } from "v2/Components/MetaTags"
 import { ArticleApp_article } from "v2/__generated__/ArticleApp_article.graphql"
 import { ArticleBodyFragmentContainer } from "./Components/ArticleBody"
+import { ArticleChannelRelatedArticlesQueryRenderer } from "./Components/ArticleChannelRelatedArticles"
 import { ArticleSeriesFragmentContainer } from "./Components/ArticleSeries"
 import { ArticleVerticalRelatedArticlesQueryRenderer } from "./Components/ArticleVerticalRelatedArticles"
+import { ArticleVideoFragmentContainer } from "./Components/ArticleVideo"
 
 interface ArticleAppProps {
   article: ArticleApp_article
@@ -19,7 +21,9 @@ const ArticleApp: FC<ArticleAppProps> = ({ article }) => {
         // TODO: Add description, remaining tags
       />
 
-      {!article.hero && article.layout !== "SERIES" && <Spacer mt={4} />}
+      {!article.hero &&
+        article.layout !== "SERIES" &&
+        article.layout !== "VIDEO" && <Spacer mt={4} />}
 
       <Join separator={<Spacer mt={4} />}>
         {(() => {
@@ -27,9 +31,25 @@ const ArticleApp: FC<ArticleAppProps> = ({ article }) => {
             case "SERIES":
               return <ArticleSeriesFragmentContainer article={article} />
 
-            case "VIDEO": // TODO
+            case "VIDEO":
+              return <ArticleVideoFragmentContainer article={article} />
+
             case "NEWS": // TODO
-            case "CLASSIC": // TODO
+            case "CLASSIC":
+              return (
+                <>
+                  <ArticleBodyFragmentContainer article={article} />
+
+                  <FullBleed>
+                    <Separator />
+                  </FullBleed>
+
+                  <ArticleChannelRelatedArticlesQueryRenderer
+                    id={article.internalID}
+                  />
+                </>
+              )
+
             case "FEATURE":
             case "STANDARD":
               return (
@@ -61,8 +81,10 @@ export const ArticleAppFragmentContainer = createFragmentContainer(ArticleApp, {
         __typename
       }
       layout
+      channelID
       ...ArticleBody_article
       ...ArticleSeries_article
+      ...ArticleVideo_article
     }
   `,
 })

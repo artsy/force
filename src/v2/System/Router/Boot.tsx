@@ -28,6 +28,10 @@ import { ClientContext } from "desktop/lib/buildClientAppContext"
 import { FlashMessage } from "v2/Components/Modal/FlashModal"
 import { SiftContainer } from "v2/Utils/SiftContainer"
 import { setupSentryClient } from "lib/setupSentryClient"
+import {
+  EnabledFeatureFlags,
+  FeatureFlagProvider,
+} from "lib/featureFlags/FeatureFlagProvider"
 
 export interface BootProps {
   children: React.ReactNode
@@ -37,6 +41,7 @@ export interface BootProps {
   relayEnvironment: Environment
   routes: AppRouteConfig[]
   user: User | null
+  featureFlags: EnabledFeatureFlags
 }
 
 const { GlobalStyles } = injectGlobalStyles()
@@ -61,6 +66,7 @@ export const Boot = track(undefined, {
     context,
     headTags = [],
     onlyMatchMediaQueries,
+    featureFlags,
     ...rest
   } = props
 
@@ -70,34 +76,39 @@ export const Boot = track(undefined, {
   }
 
   return (
-    <Theme>
-      <GlobalStyles />
-
-      <HeadProvider headTags={headTags}>
-        <StateProvider>
-          <SystemContextProvider {...contextProps}>
-            <AnalyticsContext.Provider value={context?.analytics}>
-              <ErrorBoundary>
-                <MediaContextProvider onlyMatch={onlyMatchMediaQueries}>
-                  <ResponsiveProvider
-                    mediaQueries={themeProps.mediaQueries}
-                    initialMatchingMediaQueries={onlyMatchMediaQueries as any}
-                  >
-                    <ToastsProvider>
-                      <Grid fluid maxWidth="100%">
-                        <FlashMessage />
-                        <FocusVisible />
-                        <SiftContainer />
-                        {children}
-                      </Grid>
-                    </ToastsProvider>
-                  </ResponsiveProvider>
-                </MediaContextProvider>
-              </ErrorBoundary>
-            </AnalyticsContext.Provider>
-          </SystemContextProvider>
-        </StateProvider>
-      </HeadProvider>
-    </Theme>
+    <React.StrictMode>
+      <Theme>
+        <GlobalStyles />
+        <HeadProvider headTags={headTags}>
+          <StateProvider>
+            <SystemContextProvider {...contextProps}>
+              <AnalyticsContext.Provider value={context?.analytics}>
+                <ErrorBoundary>
+                  <FeatureFlagProvider featureFlags={featureFlags}>
+                    <MediaContextProvider onlyMatch={onlyMatchMediaQueries}>
+                      <ResponsiveProvider
+                        mediaQueries={themeProps.mediaQueries}
+                        initialMatchingMediaQueries={
+                          onlyMatchMediaQueries as any
+                        }
+                      >
+                        <ToastsProvider>
+                          <Grid fluid maxWidth="100%">
+                            <FlashMessage />
+                            <FocusVisible />
+                            <SiftContainer />
+                            {children}
+                          </Grid>
+                        </ToastsProvider>
+                      </ResponsiveProvider>
+                    </MediaContextProvider>
+                  </FeatureFlagProvider>
+                </ErrorBoundary>
+              </AnalyticsContext.Provider>
+            </SystemContextProvider>
+          </StateProvider>
+        </HeadProvider>
+      </Theme>
+    </React.StrictMode>
   )
 })

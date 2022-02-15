@@ -12,7 +12,8 @@ export type ArticleApp_article = {
         readonly __typename: string;
     } | null;
     readonly layout: ArticleLayout;
-    readonly " $fragmentRefs": FragmentRefs<"ArticleBody_article" | "ArticleSeries_article">;
+    readonly channelID: string | null;
+    readonly " $fragmentRefs": FragmentRefs<"ArticleBody_article" | "ArticleSeries_article" | "ArticleVideo_article">;
     readonly " $refType": "ArticleApp_article";
 };
 export type ArticleApp_article$data = ArticleApp_article;
@@ -69,6 +70,13 @@ const node: ReaderFragment = {
       "storageKey": null
     },
     {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "channelID",
+      "storageKey": null
+    },
+    {
       "args": null,
       "kind": "FragmentSpread",
       "name": "ArticleBody_article"
@@ -77,10 +85,15 @@ const node: ReaderFragment = {
       "args": null,
       "kind": "FragmentSpread",
       "name": "ArticleSeries_article"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ArticleVideo_article"
     }
   ],
   "type": "Article",
   "abstractKey": null
 };
-(node as any).hash = '0c90b412479a2185df8fdcf2d3b11072';
+(node as any).hash = '30b4abc9011f2bd5f4a690cac9951c63';
 export default node;

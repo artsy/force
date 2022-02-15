@@ -32,10 +32,14 @@ fragment ArticleSeries_article on Article {
   series {
     description
   }
+  sponsor {
+    ...ArticleSponsor_sponsor
+  }
   relatedArticles {
     internalID
     href
     title
+    thumbnailTitle
     byline
     description
     publishedAt(format: "MMM DD, YYYY")
@@ -47,6 +51,12 @@ fragment ArticleSeries_article on Article {
     }
     id
   }
+}
+
+fragment ArticleSponsor_sponsor on ArticleSponsor {
+  partnerLightLogo
+  partnerDarkLogo
+  partnerLogoLink
 }
 */
 
@@ -170,6 +180,38 @@ return {
           {
             "alias": null,
             "args": null,
+            "concreteType": "ArticleSponsor",
+            "kind": "LinkedField",
+            "name": "sponsor",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "partnerLightLogo",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "partnerDarkLogo",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "partnerLogoLink",
+                "storageKey": null
+              }
+            ],
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
             "concreteType": "Article",
             "kind": "LinkedField",
             "name": "relatedArticles",
@@ -184,6 +226,13 @@ return {
               },
               (v3/*: any*/),
               (v1/*: any*/),
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "thumbnailTitle",
+                "storageKey": null
+              },
               (v2/*: any*/),
               (v4/*: any*/),
               {
@@ -257,7 +306,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "d4517f7938340535662aca6d7b0ef288",
+    "cacheID": "6ddbb04c6dfea2afad41c29761448838",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -296,6 +345,7 @@ return {
         },
         "article.relatedArticles.thumbnailImage.display.src": (v8/*: any*/),
         "article.relatedArticles.thumbnailImage.display.srcSet": (v8/*: any*/),
+        "article.relatedArticles.thumbnailTitle": (v6/*: any*/),
         "article.relatedArticles.title": (v6/*: any*/),
         "article.series": {
           "enumValues": null,
@@ -304,12 +354,21 @@ return {
           "type": "ArticleSeries"
         },
         "article.series.description": (v6/*: any*/),
+        "article.sponsor": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "ArticleSponsor"
+        },
+        "article.sponsor.partnerDarkLogo": (v6/*: any*/),
+        "article.sponsor.partnerLightLogo": (v6/*: any*/),
+        "article.sponsor.partnerLogoLink": (v6/*: any*/),
         "article.title": (v6/*: any*/)
       }
     },
     "name": "ArticleSeries_test_Query",
     "operationKind": "query",
-    "text": "query ArticleSeries_test_Query {\n  article(id: \"example\") {\n    ...ArticleSeries_article\n    id\n  }\n}\n\nfragment ArticleSeries_article on Article {\n  title\n  byline\n  href\n  series {\n    description\n  }\n  relatedArticles {\n    internalID\n    href\n    title\n    byline\n    description\n    publishedAt(format: \"MMM DD, YYYY\")\n    thumbnailImage {\n      display: cropped(width: 869, height: 580) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n"
+    "text": "query ArticleSeries_test_Query {\n  article(id: \"example\") {\n    ...ArticleSeries_article\n    id\n  }\n}\n\nfragment ArticleSeries_article on Article {\n  title\n  byline\n  href\n  series {\n    description\n  }\n  sponsor {\n    ...ArticleSponsor_sponsor\n  }\n  relatedArticles {\n    internalID\n    href\n    title\n    thumbnailTitle\n    byline\n    description\n    publishedAt(format: \"MMM DD, YYYY\")\n    thumbnailImage {\n      display: cropped(width: 869, height: 580) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment ArticleSponsor_sponsor on ArticleSponsor {\n  partnerLightLogo\n  partnerDarkLogo\n  partnerLogoLink\n}\n"
   }
 };
 })();

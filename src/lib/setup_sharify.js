@@ -12,6 +12,7 @@
 //
 import _ from "lodash"
 import * as config from "../config"
+// eslint-disable-next-line
 import sharify from "sharify"
 
 /**
@@ -45,7 +46,6 @@ sharify.data = _.extend(
     "EF_GUCCI",
     "EF_VENICE",
     "EF_VIDEO_GUIDE",
-    "EMBEDLY_KEY",
     "ENABLE_FAIR_PAGE_EXHIBITORS_TAB",
     "ENABLE_INSTANT_PAGE",
     "ENABLE_NEW_AUCTIONS_FILTER",

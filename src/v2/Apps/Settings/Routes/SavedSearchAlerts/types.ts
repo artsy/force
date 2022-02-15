@@ -3,3 +3,10 @@ export interface EditAlertEntity {
   name: string
   artistId: string
 }
+
+export interface EditAlertFormBase {
+  editAlertEntity: EditAlertEntity
+  onCloseClick: () => void
+  onDeleteClick: () => void
+  onCompleted: () => void
+}

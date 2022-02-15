@@ -47,7 +47,6 @@ export const EDITORIAL_PATHS: any =
 export const EF_GUCCI: any = "5a009372c88a280f5e9efa7e"
 export const EF_VENICE: any = "58f5eb75faef6a3a8e7fe1ad"
 export const EF_VIDEO_GUIDE: any = "5901d64b4682400017f0e3cb"
-export const EMBEDLY_KEY: any = "a1f82558d8134f6cbebceb9e67d04980"
 export const ENABLE_FAIR_PAGE_EXHIBITORS_TAB: any = false
 export const ENABLE_FAIR_ORGANIZER_REDIRECT: any = false
 export const ENABLE_INSTANT_PAGE: any = true
@@ -135,6 +134,10 @@ export const VERBOSE_LOGGING: any = false
 export const VOLLEY_ENDPOINT: any = null
 export const WEBFONT_URL: any = "http://webfonts.artsy.net"
 export const ZENDESK_KEY: any = null
+export const UNLEASH_API: any = null
+export const UNLEASH_APP_NAME: any = null
+export const UNLEASH_INSTANCE_ID: any = null
+export const UNLEASH_SERVER_KEY: any = null
 
 // Override any values with env variables if they exist.
 // You can set JSON-y values for env variables as well such as "true" or
