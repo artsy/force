@@ -97,6 +97,18 @@ const getValue = (value: CustomRange[number]) => {
   return value === "*" || value === 0 ? "" : value
 }
 
+export const getSizesByMetric = (metric: Metric) => {
+  if (metric === "cm") {
+    return SIZES_IN_CENTIMETERS
+  }
+
+  return SIZES_IN_INCHES
+}
+
+export const getMeasureLabelByMetric = (metric: Metric) => {
+  return metric === "cm" ? "cm" : "in"
+}
+
 export interface SizeFilterProps {
   expanded?: boolean
 }
@@ -136,8 +148,8 @@ export const SizeFilter: React.FC<SizeFilterProps> = ({ expanded }) => {
   const [customSize, setCustomSize] = useState<CustomSize>(initialCustomSize)
   const [mode, setMode] = useMode<Mode>("resting")
 
-  const SIZES = metric === "cm" ? SIZES_IN_CENTIMETERS : SIZES_IN_INCHES
-  const MEASURE_LABEL = metric === "cm" ? "cm" : "in"
+  const SIZES = getSizesByMetric(metric)
+  const MEASURE_LABEL = getMeasureLabelByMetric(metric)
 
   const handleInputChange = (dimension: "height" | "width", index: number) => ({
     currentTarget: { value },

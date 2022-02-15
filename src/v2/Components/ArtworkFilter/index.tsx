@@ -143,14 +143,21 @@ export const BaseArtworkFilter: React.FC<
   const showCreateAlert = enableCreateAlert && !!pills.length
 
   useEffect(() => {
-    const pills = extractPills(
+    const pills = extractPills({
       filters,
-      filterContext.aggregations,
-      savedSearchProps
-    )
+      aggregations: filterContext.aggregations,
+      savedSearchAttributes: savedSearchProps,
+      metric: filterContext.metric,
+    })
 
     setPills?.(pills)
-  }, [savedSearchProps, filters, filterContext.aggregations, setPills])
+  }, [
+    savedSearchProps,
+    filters,
+    filterContext.aggregations,
+    filterContext.metric,
+    setPills,
+  ])
 
   /**
    * Check to see if the mobile action sheet is present and prevent scrolling

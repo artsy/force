@@ -54,11 +54,12 @@ export const SavedSearchAlertModal: React.FC<SavedSearchAlertFormProps> = ({
   const filterContext = useArtworkFilterContext()
   const filtersFromContext = filterContext.currentlySelectedFilters!()
   const [filters, setFilters] = useState(filtersFromContext)
-  const pills = extractPills(
+  const pills = extractPills({
     filters,
-    filterContext.aggregations,
-    savedSearchAttributes
-  )
+    aggregations: filterContext.aggregations,
+    savedSearchAttributes,
+    metric: filterContext.metric,
+  })
   const namePlaceholder = getNamePlaceholder(name, pills)
 
   useEffect(() => {
