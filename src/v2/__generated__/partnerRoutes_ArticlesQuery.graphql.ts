@@ -37,20 +37,15 @@ query partnerRoutes_ArticlesQuery(
   }
 }
 
-fragment ArticleCard_article on Article {
-  channelID
-  thumbnailTitle
+fragment ArticleCell_article on Article {
+  vertical
+  internalID
+  title
+  byline
   href
-  author {
-    name
-    id
-  }
-  contributingAuthors {
-    name
-    id
-  }
+  publishedAt(format: "MMM D, YYYY")
   thumbnailImage {
-    medium: cropped(width: 400, height: 300) {
+    cropped(width: 445, height: 334) {
       width
       height
       src
@@ -72,7 +67,7 @@ fragment Articles_partner_2Pg8Wv on Partner {
     edges {
       node {
         internalID
-        ...ArticleCard_article
+        ...ArticleCell_article
         id
       }
     }
@@ -180,17 +175,7 @@ v8 = {
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
-},
-v9 = [
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "name",
-    "storageKey": null
-  },
-  (v8/*: any*/)
-];
+};
 return {
   "fragment": {
     "argumentDefinitions": [
@@ -370,14 +355,21 @@ return {
                         "alias": null,
                         "args": null,
                         "kind": "ScalarField",
-                        "name": "channelID",
+                        "name": "vertical",
                         "storageKey": null
                       },
                       {
                         "alias": null,
                         "args": null,
                         "kind": "ScalarField",
-                        "name": "thumbnailTitle",
+                        "name": "title",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "byline",
                         "storageKey": null
                       },
                       {
@@ -389,23 +381,16 @@ return {
                       },
                       {
                         "alias": null,
-                        "args": null,
-                        "concreteType": "Author",
-                        "kind": "LinkedField",
-                        "name": "author",
-                        "plural": false,
-                        "selections": (v9/*: any*/),
-                        "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "concreteType": "Author",
-                        "kind": "LinkedField",
-                        "name": "contributingAuthors",
-                        "plural": true,
-                        "selections": (v9/*: any*/),
-                        "storageKey": null
+                        "args": [
+                          {
+                            "kind": "Literal",
+                            "name": "format",
+                            "value": "MMM D, YYYY"
+                          }
+                        ],
+                        "kind": "ScalarField",
+                        "name": "publishedAt",
+                        "storageKey": "publishedAt(format:\"MMM D, YYYY\")"
                       },
                       {
                         "alias": null,
@@ -416,17 +401,17 @@ return {
                         "plural": false,
                         "selections": [
                           {
-                            "alias": "medium",
+                            "alias": null,
                             "args": [
                               {
                                 "kind": "Literal",
                                 "name": "height",
-                                "value": 300
+                                "value": 334
                               },
                               {
                                 "kind": "Literal",
                                 "name": "width",
-                                "value": 400
+                                "value": 445
                               }
                             ],
                             "concreteType": "CroppedImageUrl",
@@ -463,7 +448,7 @@ return {
                                 "storageKey": null
                               }
                             ],
-                            "storageKey": "cropped(height:300,width:400)"
+                            "storageKey": "cropped(height:334,width:445)"
                           }
                         ],
                         "storageKey": null
@@ -485,12 +470,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "32f1a129744e85baea29c0230af97287",
+    "cacheID": "6071808a3b06a2664f3c5ab14947e75e",
     "id": null,
     "metadata": {},
     "name": "partnerRoutes_ArticlesQuery",
     "operationKind": "query",
-    "text": "query partnerRoutes_ArticlesQuery(\n  $partnerId: String!\n  $page: Int\n) {\n  partner(id: $partnerId) @principalField {\n    articles: articlesConnection(first: 0) {\n      totalCount\n    }\n    ...Articles_partner_2Pg8Wv\n    id\n  }\n}\n\nfragment ArticleCard_article on Article {\n  channelID\n  thumbnailTitle\n  href\n  author {\n    name\n    id\n  }\n  contributingAuthors {\n    name\n    id\n  }\n  thumbnailImage {\n    medium: cropped(width: 400, height: 300) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment Articles_partner_2Pg8Wv on Partner {\n  slug\n  articlesConnection(first: 18, page: $page) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    edges {\n      node {\n        internalID\n        ...ArticleCard_article\n        id\n      }\n    }\n  }\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n"
+    "text": "query partnerRoutes_ArticlesQuery(\n  $partnerId: String!\n  $page: Int\n) {\n  partner(id: $partnerId) @principalField {\n    articles: articlesConnection(first: 0) {\n      totalCount\n    }\n    ...Articles_partner_2Pg8Wv\n    id\n  }\n}\n\nfragment ArticleCell_article on Article {\n  vertical\n  internalID\n  title\n  byline\n  href\n  publishedAt(format: \"MMM D, YYYY\")\n  thumbnailImage {\n    cropped(width: 445, height: 334) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment Articles_partner_2Pg8Wv on Partner {\n  slug\n  articlesConnection(first: 18, page: $page) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    edges {\n      node {\n        internalID\n        ...ArticleCell_article\n        id\n      }\n    }\n  }\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n"
   }
 };
 })();
