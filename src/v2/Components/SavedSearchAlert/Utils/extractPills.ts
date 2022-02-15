@@ -7,8 +7,8 @@ import {
 import { checkboxValues } from "v2/Components/ArtworkFilter/ArtworkFilters/AttributionClassFilter"
 import { COLOR_OPTIONS } from "v2/Components/ArtworkFilter/ArtworkFilters/ColorFilter"
 import {
-  getMeasureLabelByMetric,
-  getSizesByMetric,
+  getUnitLabelByMetric,
+  getPredefinedSizesByMetric,
   parseRange,
 } from "v2/Components/ArtworkFilter/ArtworkFilters/SizeFilter"
 import { getTimePeriodToDisplay } from "v2/Components/ArtworkFilter/ArtworkFilters/TimePeriodFilter"
@@ -53,7 +53,7 @@ export const extractSizeLabel = (
   metric: Metric
 ) => {
   const [min, max] = parseRange(value, metric)!
-  const measureLabel = getMeasureLabelByMetric(metric)
+  const metricUnitLabel = getUnitLabelByMetric(metric)
 
   let label
   if (max === "*") {
@@ -64,7 +64,7 @@ export const extractSizeLabel = (
     label = `${min}-${max}`
   }
 
-  return `${prefix}: ${label} ${measureLabel}`
+  return `${prefix}: ${label} ${metricUnitLabel}`
 }
 
 const extractPriceLabel = (range: string) => {
@@ -123,11 +123,11 @@ export const extractPillsFromFilters = (options: {
         break
       }
       case "sizes": {
-        const SIZES = getSizesByMetric(metric)
+        const predefinedValues = getPredefinedSizesByMetric(metric)
         result = paramValue.map(value => ({
           filterName: paramName,
           name: value,
-          displayName: find(SIZES, option => value === option.name)
+          displayName: find(predefinedValues, option => value === option.name)
             ?.displayName,
         }))
         break

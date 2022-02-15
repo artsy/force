@@ -12,8 +12,8 @@ import {
   useArtworkFilterContext,
 } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
 import {
-  getMeasureLabelByMetric,
-  getSizesByMetric,
+  getUnitLabelByMetric,
+  getPredefinedSizesByMetric,
   parseRange,
   SizeFilter,
   SIZES_IN_CENTIMETERS,
@@ -213,23 +213,23 @@ describe("SizeFilter", () => {
   })
 })
 
-describe("getSizesByMetric", () => {
+describe("getPredefinedSizesByMetric", () => {
   it("should return predefined sizes in centimeters when `cm` metric is specified", () => {
-    expect(getSizesByMetric("cm")).toEqual(SIZES_IN_CENTIMETERS)
+    expect(getPredefinedSizesByMetric("cm")).toEqual(SIZES_IN_CENTIMETERS)
   })
 
   it("should return predefined sizes in inches when `in` metric is specified", () => {
-    expect(getSizesByMetric("in")).toEqual(SIZES_IN_INCHES)
+    expect(getPredefinedSizesByMetric("in")).toEqual(SIZES_IN_INCHES)
   })
 })
 
-describe("getMeasureLabelByMetric", () => {
+describe("getUnitLabelByMetric", () => {
   it("should return centimeters label when `cm` metric is specified", () => {
-    expect(getMeasureLabelByMetric("cm")).toBe("cm")
+    expect(getUnitLabelByMetric("cm")).toBe("cm")
   })
 
   it("should return inches label when `in` metric is specified", () => {
-    expect(getMeasureLabelByMetric("in")).toBe("in")
+    expect(getUnitLabelByMetric("in")).toBe("in")
   })
 })
 

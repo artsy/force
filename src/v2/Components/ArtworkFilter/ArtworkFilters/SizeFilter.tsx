@@ -97,7 +97,7 @@ const getValue = (value: CustomRange[number]) => {
   return value === "*" || value === 0 ? "" : value
 }
 
-export const getSizesByMetric = (metric: Metric) => {
+export const getPredefinedSizesByMetric = (metric: Metric) => {
   if (metric === "cm") {
     return SIZES_IN_CENTIMETERS
   }
@@ -105,7 +105,7 @@ export const getSizesByMetric = (metric: Metric) => {
   return SIZES_IN_INCHES
 }
 
-export const getMeasureLabelByMetric = (metric: Metric) => {
+export const getUnitLabelByMetric = (metric: Metric) => {
   return metric === "cm" ? "cm" : "in"
 }
 
@@ -148,8 +148,8 @@ export const SizeFilter: React.FC<SizeFilterProps> = ({ expanded }) => {
   const [customSize, setCustomSize] = useState<CustomSize>(initialCustomSize)
   const [mode, setMode] = useMode<Mode>("resting")
 
-  const SIZES = getSizesByMetric(metric)
-  const MEASURE_LABEL = getMeasureLabelByMetric(metric)
+  const predefinedSizes = getPredefinedSizesByMetric(metric)
+  const metricUnitLabel = getUnitLabelByMetric(metric)
 
   const handleInputChange = (dimension: "height" | "width", index: number) => ({
     currentTarget: { value },
@@ -281,7 +281,7 @@ export const SizeFilter: React.FC<SizeFilterProps> = ({ expanded }) => {
         </RadioGroup>
 
         <Flex flexDirection="column">
-          {SIZES.map(({ name, displayName }, index) => {
+          {predefinedSizes.map(({ name, displayName }, index) => {
             return (
               <Checkbox
                 key={index}
@@ -310,7 +310,7 @@ export const SizeFilter: React.FC<SizeFilterProps> = ({ expanded }) => {
           <Text mt={1}>Width</Text>
           <Flex alignItems="flex-end">
             <NumericInput
-              label={MEASURE_LABEL}
+              label={metricUnitLabel}
               name="width_min"
               min="0"
               step="1"
@@ -319,7 +319,7 @@ export const SizeFilter: React.FC<SizeFilterProps> = ({ expanded }) => {
             />
             <Spacer mx={0.5} />
             <NumericInput
-              label={MEASURE_LABEL}
+              label={metricUnitLabel}
               name="width_max"
               min="0"
               step="1"
@@ -331,7 +331,7 @@ export const SizeFilter: React.FC<SizeFilterProps> = ({ expanded }) => {
           <Text mt={1}>Height</Text>
           <Flex alignItems="flex-end">
             <NumericInput
-              label={MEASURE_LABEL}
+              label={metricUnitLabel}
               name="height_min"
               min="0"
               step="1"
@@ -342,7 +342,7 @@ export const SizeFilter: React.FC<SizeFilterProps> = ({ expanded }) => {
             <Spacer mx={0.5} />
 
             <NumericInput
-              label={MEASURE_LABEL}
+              label={metricUnitLabel}
               name="height_max"
               min="0"
               step="1"
