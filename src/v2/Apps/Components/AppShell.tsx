@@ -1,6 +1,6 @@
 import { Box, Flex, Theme } from "@artsy/palette"
 import { useNetworkOfflineMonitor } from "v2/Utils/Hooks/useNetworkOfflineMonitor"
-import { findCurrentRoute } from "v2/System/Router/Utils/findCurrentRoute"
+import { useCurrentRoute } from "v2/System/Router/useCurrentRoute"
 import { useMaybeReloadAfterInquirySignIn } from "v2/System/Router/Utils/useMaybeReloadAfterInquirySignIn"
 import { NavBar } from "v2/Components/NavBar"
 import { Match } from "found"
@@ -31,7 +31,7 @@ export const AppShell: React.FC<AppShellProps> = props => {
   useAuthValidation()
 
   const { children, match } = props
-  const routeConfig = match ? findCurrentRoute(match) : null
+  const routeConfig = useCurrentRoute(match!)
   const { isEigen } = useSystemContext()
   const showNav = !routeConfig?.hideNav
   const showFooter = !isEigen && !routeConfig?.hideFooter

@@ -6,7 +6,7 @@ import { findCurrentRoute } from "v2/System/Router/Utils/findCurrentRoute"
 import { ErrorPage } from "v2/Components/ErrorPage"
 import { MinimalNavBar } from "v2/Components/NavBar/MinimalNavBar"
 import { RouterState, withRouter } from "found"
-import { Component } from "react";
+import { Component } from "react"
 import { Meta, Title } from "react-head"
 import { graphql } from "react-relay"
 import { loadStripe } from "@stripe/stripe-js"
@@ -14,11 +14,11 @@ import { Elements } from "@stripe/react-stripe-js"
 import styled from "styled-components"
 import { get } from "v2/Utils/get"
 import { ConnectedModalDialog } from "./Dialogs"
-import { data as sd } from "sharify"
 import { ZendeskWrapper } from "v2/Components/ZendeskWrapper"
 import { HorizontalPadding } from "../Components/HorizontalPadding"
 import { AppContainer } from "../Components/AppContainer"
 import { isExceededZendeskThreshold } from "v2/Utils/isExceededZendeskThreshold"
+import { getENV } from "v2/Utils/getENV"
 
 export interface OrderAppProps extends RouterState {
   params: {
@@ -96,7 +96,7 @@ class OrderApp extends Component<OrderAppProps, {}> {
 
     if (typeof window !== "undefined" && window.zEmbed) return
 
-    return <ZendeskWrapper zdKey={sd.ZENDESK_KEY} />
+    return <ZendeskWrapper zdKey={getENV("ZENDESK_KEY")} />
   }
 
   render() {
