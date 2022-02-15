@@ -21,7 +21,7 @@ module.exports = {
         "\\.(gql|graphql)$": "jest-transform-graphql",
         "^.+\\.coffee$":
           "<rootDir>/node_modules/jest-coffee-preprocessor/index.js",
-        ".(ts|tsx|js|jsx)": "babel-jest",
+        "^.+\\.(ts|tsx|js|jsx)$": "babel-jest",
       },
     },
   ],
