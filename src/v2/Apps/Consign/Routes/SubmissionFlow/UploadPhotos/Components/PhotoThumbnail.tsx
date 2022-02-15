@@ -10,7 +10,9 @@ import {
   Clickable,
   ProgressBar,
   CloseCircleIcon,
+  Spinner,
 } from "@artsy/palette"
+import { Media } from "v2/Utils/Responsive"
 import styled from "styled-components"
 import { formatFileSize, Photo } from "../../Utils/fileUtils"
 
@@ -23,6 +25,16 @@ const TruncatedLine = styled(Text)`
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
+`
+
+const ImageContainer = styled(Box).attrs({
+  height: [48, 120],
+  width: [48, 120],
+  minWidth: [48, 120],
+  mr: [15, 2],
+  bg: "black10",
+})`
+  cursor: default;
 `
 
 export const PhotoThumbnail: React.FC<PhotoThumbnailProps & BoxProps> = ({
@@ -45,6 +57,12 @@ export const PhotoThumbnail: React.FC<PhotoThumbnailProps & BoxProps> = ({
     }
   }, [photo])
 
+  useEffect(() => {
+    if (!photoSrc && photo.url) {
+      setPhotoSrc(photo.url)
+    }
+  }, [photo.url, photoSrc])
+
   const handleDelete = () => onDelete(photo)
 
   const renderThumbnail = photoSrc => {
@@ -54,12 +72,14 @@ export const PhotoThumbnail: React.FC<PhotoThumbnailProps & BoxProps> = ({
       photoSrc,
     }
 
-    if (photo.url || photo.geminiToken) {
-      return <PhotoThumbnailSuccessState {...props} />
+    if (photo.loading) {
+      return <PhotoThumbnailLoadingState {...props} />
     } else if (photo.errorMessage) {
       return <PhotoThumbnailErrorState {...props} />
-    } else if (photo.loading) {
-      return <PhotoThumbnailLoadingState {...props} />
+    } else if (photo.url || photo.file) {
+      return <PhotoThumbnailSuccessState {...props} />
+    } else if (photo.geminiToken) {
+      return <PhotoThumbnailProcessingState {...props} />
     }
   }
 
@@ -130,20 +150,14 @@ const PhotoThumbnailLoadingState: React.FC<PhotoThumbnailStateProps> = ({
   photo,
 }) => (
   <Column span={[2]} display="flex" alignItems="center" flexDirection="row">
-    <Box
-      height={[48, 120]}
-      width={[48, 120]}
-      minWidth={[48, 120]}
-      mr={[15, 2]}
-      bg="black10"
-    >
+    <ImageContainer>
       <Image
         src={photoSrc}
         style={{ objectFit: "cover" }}
         height="100%"
         width="100%"
       />
-    </Box>
+    </ImageContainer>
     <ProgressBar
       width="100%"
       highlight="brand"
@@ -175,20 +189,43 @@ const PhotoThumbnailSuccessState: React.FC<PhotoThumbnailStateProps> = ({
 }) => (
   <>
     <Flex alignItems="center">
-      <Box
-        height={[48, 120]}
-        width={[48, 120]}
-        minWidth={[48, 120]}
-        mr={[15, 2]}
-        bg="black10"
-      >
+      <ImageContainer>
         <Image
           src={photoSrc}
           style={{ objectFit: "cover" }}
           height="100%"
           width="100%"
         />
-      </Box>
+      </ImageContainer>
+      <TruncatedLine variant="xs">{photo.name}</TruncatedLine>
+    </Flex>
+    <Flex alignItems="center" justifyContent="space-between">
+      <Text variant="xs">{formatFileSize(photo.size)}</Text>
+      <RemoveButton handleDelete={onDelete} />
+    </Flex>
+  </>
+)
+
+const PhotoThumbnailProcessingState: React.FC<PhotoThumbnailStateProps> = ({
+  onDelete,
+  photo,
+}) => (
+  <>
+    <Flex alignItems="center">
+      <ImageContainer
+        position="relative"
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
+      >
+        <Media at="xs">
+          <Spinner size="small" />
+        </Media>
+
+        <Media greaterThan="xs">
+          <Text color="black60">Processing</Text>
+        </Media>
+      </ImageContainer>
       <TruncatedLine variant="xs">{photo.name}</TruncatedLine>
     </Flex>
     <Flex alignItems="center" justifyContent="space-between">
