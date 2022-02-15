@@ -8,7 +8,7 @@ interface ArticleBylineProps {
 }
 
 const ArticleByline: FC<ArticleBylineProps> = ({ article }) => {
-  if (!article.authors) {
+  if (article.authors.length === 0) {
     return (
       <Text variant="md" fontWeight="bold">
         —{article.byline}
@@ -23,8 +23,8 @@ const ArticleByline: FC<ArticleBylineProps> = ({ article }) => {
 
         return (
           <EntityHeader
-            name={author.name ?? "Artsy Editorial"}
-            initials={author.initials!}
+            name={author.name || "Artsy Editorial"}
+            initials={author.initials || "A"}
             meta={author.bio!}
             image={image!}
           />
