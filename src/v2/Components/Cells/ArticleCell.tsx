@@ -14,9 +14,12 @@ import { DEFAULT_CELL_WIDTH } from "./constants"
 
 interface ArticleCellProps {
   article: ArticleCell_article
+  /** Defaults to `"RAIL"` */
+  mode?: "GRID" | "RAIL"
 }
 
-const ArticleCell: FC<ArticleCellProps> = ({ article }) => {
+const ArticleCell: FC<ArticleCellProps> = ({ article, mode }) => {
+  const width = mode === "GRID" ? "100%" : DEFAULT_CELL_WIDTH
   const image = article.thumbnailImage?.cropped
 
   return (
@@ -25,7 +28,7 @@ const ArticleCell: FC<ArticleCellProps> = ({ article }) => {
       to={article.href}
       display="block"
       textDecoration="none"
-      width={DEFAULT_CELL_WIDTH}
+      width={width}
     >
       <ResponsiveBox
         aspectWidth={4}
@@ -88,9 +91,15 @@ export const ArticleCellFragmentContainer = createFragmentContainer(
   }
 )
 
-export const ArticleCellPlaceholder: FC = () => {
+type ArticleCellPlaceholderProps = Pick<ArticleCellProps, "mode">
+
+export const ArticleCellPlaceholder: FC<ArticleCellPlaceholderProps> = ({
+  mode = "RAIL",
+}) => {
+  const width = mode === "GRID" ? "100%" : DEFAULT_CELL_WIDTH
+
   return (
-    <Box width={DEFAULT_CELL_WIDTH}>
+    <Box width={width}>
       <ResponsiveBox aspectWidth={4} aspectHeight={3} maxWidth="100%">
         <SkeletonBox width="100%" height="100%" />
       </ResponsiveBox>

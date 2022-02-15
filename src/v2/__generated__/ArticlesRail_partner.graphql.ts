@@ -11,7 +11,7 @@ export type ArticlesRail_partner = {
         readonly edges: ReadonlyArray<{
             readonly node: {
                 readonly internalID: string;
-                readonly " $fragmentRefs": FragmentRefs<"ArticleCard_article">;
+                readonly " $fragmentRefs": FragmentRefs<"ArticleCell_article">;
             } | null;
         } | null> | null;
     } | null;
@@ -85,7 +85,7 @@ const node: ReaderFragment = {
                 {
                   "args": null,
                   "kind": "FragmentSpread",
-                  "name": "ArticleCard_article"
+                  "name": "ArticleCell_article"
                 }
               ],
               "storageKey": null
@@ -100,5 +100,5 @@ const node: ReaderFragment = {
   "type": "Partner",
   "abstractKey": null
 };
-(node as any).hash = '50a2283e656ae27db2886ecdded198af';
+(node as any).hash = 'badf6901bdaed54a3dc3600cdd63d75a';
 export default node;
