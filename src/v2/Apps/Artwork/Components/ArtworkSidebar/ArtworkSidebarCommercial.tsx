@@ -445,9 +445,8 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
           )}
 
           {artworkEcommerceAvailable &&
-            (artwork.shippingOrigin || artwork.shippingInfo) && (
-              <Spacer mt={1} />
-            )}
+            (artwork.shippingOrigin || artwork.shippingInfo) &&
+            !isInquireable && <Spacer mt={1} />}
 
           {avalaraPhase2Enabled && (
             <Text variant="xs" color="black60">
@@ -462,13 +461,15 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
             </Text>
           )}
 
-          {artworkEcommerceAvailable && artwork.shippingOrigin && (
-            <Text variant="xs" color="black60">
-              Ships from {artwork.shippingOrigin}
-            </Text>
-          )}
+          {artworkEcommerceAvailable &&
+            artwork.shippingOrigin &&
+            !isInquireable && (
+              <Text variant="xs" color="black60">
+                Ships from {artwork.shippingOrigin}
+              </Text>
+            )}
 
-          {artworkEcommerceAvailable && artwork.shippingInfo && (
+          {artworkEcommerceAvailable && artwork.shippingInfo && !isInquireable && (
             <Text variant="xs" color="black60">
               {artwork.shippingInfo}
             </Text>

@@ -53,6 +53,14 @@ describe("ArtworkSidebarCommercial RTL", () => {
     expect(screen.getByText("Contact Gallery")).toBeInTheDocument()
   })
 
+  it("does not display ShippingInfo for inquireable artworks", () => {
+    renderWithRelay({
+      Artwork: () => ArtworkOfferableFromInquiryPriceExact,
+    })
+
+    expect(screen.queryByText("Ships from")).not.toBeInTheDocument()
+  })
+
   it("does not display Make Offer CTA and only the Contact Gallery CTA when offerable from inquiry and price hidden", () => {
     renderWithRelay({
       Artwork: () => ArtworkOfferableAndInquireablePriceHidden,
