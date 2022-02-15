@@ -26,10 +26,6 @@ export type PartnerEntityHeader_partner = {
         } | null;
         readonly " $fragmentRefs": FragmentRefs<"FollowProfileButton_profile">;
     } | null;
-    readonly categories: ReadonlyArray<{
-        readonly name: string | null;
-        readonly slug: string;
-    } | null> | null;
     readonly " $refType": "PartnerEntityHeader_partner";
 };
 export type PartnerEntityHeader_partner$data = PartnerEntityHeader_partner;
@@ -40,22 +36,7 @@ export type PartnerEntityHeader_partner$key = {
 
 
 
-const node: ReaderFragment = (function(){
-var v0 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "slug",
-  "storageKey": null
-},
-v1 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "name",
-  "storageKey": null
-};
-return {
+const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
@@ -68,8 +49,20 @@ return {
       "name": "internalID",
       "storageKey": null
     },
-    (v0/*: any*/),
-    (v1/*: any*/),
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "slug",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "name",
+      "storageKey": null
+    },
     {
       "alias": null,
       "args": null,
@@ -192,24 +185,10 @@ return {
         }
       ],
       "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "concreteType": "PartnerCategory",
-      "kind": "LinkedField",
-      "name": "categories",
-      "plural": true,
-      "selections": [
-        (v1/*: any*/),
-        (v0/*: any*/)
-      ],
-      "storageKey": null
     }
   ],
   "type": "Partner",
   "abstractKey": null
 };
-})();
-(node as any).hash = 'd8a7c00ae8243cde4c6ee99502787e5a';
+(node as any).hash = '100b4275a49bab33343d141bd7846498';
 export default node;

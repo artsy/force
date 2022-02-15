@@ -21,15 +21,11 @@ const PartnerEntityHeader: FC<PartnerEntityHeaderProps> = ({
   const locations = extractNodes(partner.locationsConnection)
   const meta = uniq(locations.map(location => location.city?.trim())).join(", ")
   const image = partner.profile?.avatar?.cropped
-  const badgedPartners = partner
-    .categories!.filter(category => ["black-owned"].includes(category!.slug))
-    .map(category => ({ children: category!.name }))
 
   return (
     <EntityHeader
       name={partner.name!}
       initials={partner.initials ?? partner.name?.[0]}
-      badges={badgedPartners}
       image={image!}
       meta={meta}
       href={`/partner/${partner.slug}`}
@@ -71,10 +67,6 @@ export const PartnerEntityHeaderFragmentContainer = createFragmentContainer(
               srcSet
             }
           }
-        }
-        categories {
-          name
-          slug
         }
       }
     `,

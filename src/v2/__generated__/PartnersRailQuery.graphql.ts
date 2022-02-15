@@ -56,6 +56,11 @@ fragment PartnerCell_partner on Partner {
       }
     }
   }
+  categories {
+    name
+    slug
+    id
+  }
   profile {
     ...FollowProfileButton_profile
     isFollowed
@@ -224,6 +229,20 @@ v13 = [
       }
     ],
     "storageKey": "locationsConnection(first:15)"
+  },
+  {
+    "alias": null,
+    "args": null,
+    "concreteType": "PartnerCategory",
+    "kind": "LinkedField",
+    "name": "categories",
+    "plural": true,
+    "selections": [
+      (v5/*: any*/),
+      (v11/*: any*/),
+      (v12/*: any*/)
+    ],
+    "storageKey": null
   },
   {
     "alias": null,
@@ -419,12 +438,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "09d00f84f9231e280aa8db97a10cf40a",
+    "cacheID": "4eb5b440866d764b3a6d2240aed86582",
     "id": null,
     "metadata": {},
     "name": "PartnersRailQuery",
     "operationKind": "query",
-    "text": "query PartnersRailQuery(\n  $id: String!\n  $category: [String]\n  $type: [PartnerClassification!]!\n) {\n  partnerCategory(id: $id) {\n    ...PartnersRail_partnerCategory_43V8rY\n    id\n  }\n}\n\nfragment FollowProfileButton_profile on Profile {\n  id\n  slug\n  name\n  internalID\n  is_followed: isFollowed\n}\n\nfragment PartnerCell_partner on Partner {\n  internalID\n  slug\n  name\n  href\n  initials\n  locationsConnection(first: 15) {\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n  profile {\n    ...FollowProfileButton_profile\n    isFollowed\n    image {\n      cropped(width: 445, height: 334, version: [\"wide\", \"large\", \"featured\", \"larger\"]) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment PartnersRail_partnerCategory_43V8rY on PartnerCategory {\n  name\n  primary: partners(defaultProfilePublic: true, eligibleForListing: true, eligibleForPrimaryBucket: true, partnerCategories: $category, sort: RANDOM_SCORE_DESC, type: $type) {\n    internalID\n    ...PartnerCell_partner\n    id\n  }\n  secondary: partners(eligibleForListing: true, eligibleForSecondaryBucket: true, type: $type, partnerCategories: $category, sort: RANDOM_SCORE_DESC, defaultProfilePublic: true) {\n    internalID\n    ...PartnerCell_partner\n    id\n  }\n}\n"
+    "text": "query PartnersRailQuery(\n  $id: String!\n  $category: [String]\n  $type: [PartnerClassification!]!\n) {\n  partnerCategory(id: $id) {\n    ...PartnersRail_partnerCategory_43V8rY\n    id\n  }\n}\n\nfragment FollowProfileButton_profile on Profile {\n  id\n  slug\n  name\n  internalID\n  is_followed: isFollowed\n}\n\nfragment PartnerCell_partner on Partner {\n  internalID\n  slug\n  name\n  href\n  initials\n  locationsConnection(first: 15) {\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n  categories {\n    name\n    slug\n    id\n  }\n  profile {\n    ...FollowProfileButton_profile\n    isFollowed\n    image {\n      cropped(width: 445, height: 334, version: [\"wide\", \"large\", \"featured\", \"larger\"]) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment PartnersRail_partnerCategory_43V8rY on PartnerCategory {\n  name\n  primary: partners(defaultProfilePublic: true, eligibleForListing: true, eligibleForPrimaryBucket: true, partnerCategories: $category, sort: RANDOM_SCORE_DESC, type: $type) {\n    internalID\n    ...PartnerCell_partner\n    id\n  }\n  secondary: partners(eligibleForListing: true, eligibleForSecondaryBucket: true, type: $type, partnerCategories: $category, sort: RANDOM_SCORE_DESC, defaultProfilePublic: true) {\n    internalID\n    ...PartnerCell_partner\n    id\n  }\n}\n"
   }
 };
 })();

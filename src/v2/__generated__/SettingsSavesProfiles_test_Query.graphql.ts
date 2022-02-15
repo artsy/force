@@ -102,11 +102,6 @@ fragment PartnerEntityHeader_partner on Partner {
     }
     id
   }
-  categories {
-    name
-    slug
-    id
-  }
 }
 
 fragment SettingsSavesProfiles_me_WGPvJ on Me {
@@ -505,20 +500,6 @@ return {
                                           (v6/*: any*/)
                                         ],
                                         "storageKey": null
-                                      },
-                                      {
-                                        "alias": null,
-                                        "args": null,
-                                        "concreteType": "PartnerCategory",
-                                        "kind": "LinkedField",
-                                        "name": "categories",
-                                        "plural": true,
-                                        "selections": [
-                                          (v5/*: any*/),
-                                          (v8/*: any*/),
-                                          (v10/*: any*/)
-                                        ],
-                                        "storageKey": null
                                       }
                                     ],
                                     "type": "Partner",
@@ -698,7 +679,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "3fa53dba0c151d18126dfe57b9426bcc",
+    "cacheID": "162d4b177b0206f6f14ceefbb2d128d7",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -761,15 +742,6 @@ return {
         "me.followsAndSaves.profilesConnection.edges.node.profile.owner.avatar.cropped": (v16/*: any*/),
         "me.followsAndSaves.profilesConnection.edges.node.profile.owner.avatar.cropped.src": (v13/*: any*/),
         "me.followsAndSaves.profilesConnection.edges.node.profile.owner.avatar.cropped.srcSet": (v13/*: any*/),
-        "me.followsAndSaves.profilesConnection.edges.node.profile.owner.categories": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": true,
-          "type": "PartnerCategory"
-        },
-        "me.followsAndSaves.profilesConnection.edges.node.profile.owner.categories.id": (v14/*: any*/),
-        "me.followsAndSaves.profilesConnection.edges.node.profile.owner.categories.name": (v17/*: any*/),
-        "me.followsAndSaves.profilesConnection.edges.node.profile.owner.categories.slug": (v14/*: any*/),
         "me.followsAndSaves.profilesConnection.edges.node.profile.owner.endAt": (v17/*: any*/),
         "me.followsAndSaves.profilesConnection.edges.node.profile.owner.fairsConnection": {
           "enumValues": null,
@@ -840,7 +812,7 @@ return {
     },
     "name": "SettingsSavesProfiles_test_Query",
     "operationKind": "query",
-    "text": "query SettingsSavesProfiles_test_Query(\n  $after: String\n) {\n  me {\n    ...SettingsSavesProfiles_me_WGPvJ\n    id\n  }\n}\n\nfragment FairEntityHeader_fair on Fair {\n  internalID\n  slug\n  name\n  startAt(format: \"MMM Do\")\n  endAt(format: \"MMM Do YYYY\")\n  avatar: image {\n    cropped(width: 45, height: 45) {\n      src\n      srcSet\n    }\n  }\n  profile {\n    ...FollowProfileButton_profile\n    isFollowed\n    initials\n    id\n  }\n}\n\nfragment FairOrganizerEntityHeader_fairOrganizer on FairOrganizer {\n  internalID\n  slug\n  name\n  fairsConnection {\n    totalCount\n  }\n  profile {\n    ...FollowProfileButton_profile\n    isFollowed\n    initials\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment FollowProfileButton_profile on Profile {\n  id\n  slug\n  name\n  internalID\n  is_followed: isFollowed\n}\n\nfragment PartnerEntityHeader_partner on Partner {\n  internalID\n  slug\n  name\n  initials\n  locationsConnection(first: 15) {\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n  profile {\n    ...FollowProfileButton_profile\n    isFollowed\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n  categories {\n    name\n    slug\n    id\n  }\n}\n\nfragment SettingsSavesProfiles_me_WGPvJ on Me {\n  followsAndSaves {\n    profilesConnection(first: 12, after: $after) {\n      totalCount\n      edges {\n        node {\n          internalID\n          profile {\n            name\n            href\n            avatar: image {\n              cropped(width: 45, height: 45) {\n                src\n                srcSet\n              }\n            }\n            owner {\n              __typename\n              ... on Partner {\n                ...PartnerEntityHeader_partner\n              }\n              ... on Fair {\n                ...FairEntityHeader_fair\n              }\n              ... on FairOrganizer {\n                ...FairOrganizerEntityHeader_fairOrganizer\n                id\n              }\n              ... on Node {\n                __isNode: __typename\n                id\n              }\n            }\n            id\n          }\n          id\n          __typename\n        }\n        cursor\n      }\n      pageInfo {\n        endCursor\n        hasNextPage\n      }\n    }\n  }\n}\n"
+    "text": "query SettingsSavesProfiles_test_Query(\n  $after: String\n) {\n  me {\n    ...SettingsSavesProfiles_me_WGPvJ\n    id\n  }\n}\n\nfragment FairEntityHeader_fair on Fair {\n  internalID\n  slug\n  name\n  startAt(format: \"MMM Do\")\n  endAt(format: \"MMM Do YYYY\")\n  avatar: image {\n    cropped(width: 45, height: 45) {\n      src\n      srcSet\n    }\n  }\n  profile {\n    ...FollowProfileButton_profile\n    isFollowed\n    initials\n    id\n  }\n}\n\nfragment FairOrganizerEntityHeader_fairOrganizer on FairOrganizer {\n  internalID\n  slug\n  name\n  fairsConnection {\n    totalCount\n  }\n  profile {\n    ...FollowProfileButton_profile\n    isFollowed\n    initials\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment FollowProfileButton_profile on Profile {\n  id\n  slug\n  name\n  internalID\n  is_followed: isFollowed\n}\n\nfragment PartnerEntityHeader_partner on Partner {\n  internalID\n  slug\n  name\n  initials\n  locationsConnection(first: 15) {\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n  profile {\n    ...FollowProfileButton_profile\n    isFollowed\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment SettingsSavesProfiles_me_WGPvJ on Me {\n  followsAndSaves {\n    profilesConnection(first: 12, after: $after) {\n      totalCount\n      edges {\n        node {\n          internalID\n          profile {\n            name\n            href\n            avatar: image {\n              cropped(width: 45, height: 45) {\n                src\n                srcSet\n              }\n            }\n            owner {\n              __typename\n              ... on Partner {\n                ...PartnerEntityHeader_partner\n              }\n              ... on Fair {\n                ...FairEntityHeader_fair\n              }\n              ... on FairOrganizer {\n                ...FairOrganizerEntityHeader_fairOrganizer\n                id\n              }\n              ... on Node {\n                __isNode: __typename\n                id\n              }\n            }\n            id\n          }\n          id\n          __typename\n        }\n        cursor\n      }\n      pageInfo {\n        endCursor\n        hasNextPage\n      }\n    }\n  }\n}\n"
   }
 };
 })();
