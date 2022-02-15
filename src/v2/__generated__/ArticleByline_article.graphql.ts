@@ -16,7 +16,7 @@ export type ArticleByline_article = {
                 readonly srcSet: string;
             } | null;
         } | null;
-    }> | null;
+    }>;
     readonly " $refType": "ArticleByline_article";
 };
 export type ArticleByline_article$data = ArticleByline_article;

@@ -1198,7 +1198,7 @@ return {
         },
         "article.authors": {
           "enumValues": null,
-          "nullable": true,
+          "nullable": false,
           "plural": true,
           "type": "Author"
         },
