@@ -143,7 +143,7 @@ export class TransactionDetailsSummaryItem extends React.Component<
 
     if (this.avalaraPhase2enabled) {
       return ["shipping", "offer"].includes(transactionStep!)
-        ? "Calculated in the next steps"
+        ? "Calculated in next steps"
         : "Waiting for final costs"
     }
 

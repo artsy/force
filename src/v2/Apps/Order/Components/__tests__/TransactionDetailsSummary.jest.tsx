@@ -93,7 +93,7 @@ const render = (
 
 describe("TransactionDetailsSummaryItem", () => {
   describe("Avalara Phase 2 enabled", () => {
-    it("shows the shipping and tax price as 'Calculated in the next steps' when null before shipping address was added", async () => {
+    it("shows the shipping and tax price as 'Calculated in next steps' when null before shipping address was added", async () => {
       const transactionSummary = await render(
         {
           ...transactionSummaryBuyOrder,
@@ -110,8 +110,8 @@ describe("TransactionDetailsSummaryItem", () => {
 
       const text = transactionSummary.text()
 
-      expect(text).toMatch("ShippingCalculated in the next steps")
-      expect(text).toMatch("Tax*Calculated in the next steps")
+      expect(text).toMatch("ShippingCalculated in next steps")
+      expect(text).toMatch("Tax*Calculated in next steps")
     })
 
     it("shows the shipping and tax price as 'Waiting for final costs' when null after shipping address was added", async () => {
