@@ -2,10 +2,10 @@ import { graphql } from "relay-runtime"
 import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
 import { ArtistAppFragmentContainer } from "../ArtistApp"
 import { ArtistApp_Test_Query } from "v2/__generated__/ArtistApp_Test_Query.graphql"
-import { useCurrentRoute } from "v2/System/Router/useCurrentRoute"
+import { findCurrentRoute } from "v2/System/Router/Utils/findCurrentRoute"
 
 jest.unmock("react-relay")
-jest.mock("v2/System/Router/useCurrentRoute")
+jest.mock("v2/System/Router/Utils/findCurrentRoute")
 
 jest.mock("../Components/ArtistMeta", () => ({
   ArtistMetaFragmentContainer: () => null,
@@ -18,7 +18,7 @@ jest.mock("../Components/BackLink.tsx", () => ({
 }))
 
 describe("ArtistApp", () => {
-  let mockuseCurrentRoute = useCurrentRoute as jest.Mock
+  let mockfindCurrentRoute = findCurrentRoute as jest.Mock
 
   afterEach(() => {
     jest.resetAllMocks()
@@ -37,7 +37,7 @@ describe("ArtistApp", () => {
 
   describe("for default routes", () => {
     it("renders correct components", () => {
-      mockuseCurrentRoute.mockImplementation(() => ({}))
+      mockfindCurrentRoute.mockImplementation(() => ({}))
       const wrapper = getWrapper({
         Artist: () => ({
           statuses: {
@@ -55,7 +55,7 @@ describe("ArtistApp", () => {
     })
 
     it("tabs navigate to the correct urls", () => {
-      mockuseCurrentRoute.mockImplementation(() => ({}))
+      mockfindCurrentRoute.mockImplementation(() => ({}))
       const wrapper = getWrapper({
         Artist: () => ({
           slug: "artist-slug",
@@ -78,7 +78,7 @@ describe("ArtistApp", () => {
 
     describe("hiding main tabs", () => {
       it("hides tabs overview tab when appropriate", () => {
-        mockuseCurrentRoute.mockImplementation(() => ({}))
+        mockfindCurrentRoute.mockImplementation(() => ({}))
         const wrapper = getWrapper({
           Artist: () => ({
             biographyBlurb: null,
@@ -98,7 +98,7 @@ describe("ArtistApp", () => {
       })
 
       it("hides works-for-sale tab when appropriate", () => {
-        mockuseCurrentRoute.mockImplementation(() => ({}))
+        mockfindCurrentRoute.mockImplementation(() => ({}))
         const wrapper = getWrapper({
           Artist: () => ({
             statuses: {
@@ -112,7 +112,7 @@ describe("ArtistApp", () => {
       })
 
       it("hides auction results tab when appropriate", () => {
-        mockuseCurrentRoute.mockImplementation(() => ({}))
+        mockfindCurrentRoute.mockImplementation(() => ({}))
         const wrapper = getWrapper({
           Artist: () => ({
             statuses: {
@@ -127,7 +127,7 @@ describe("ArtistApp", () => {
     })
 
     it("renders the correct for sale artwork tab count", () => {
-      mockuseCurrentRoute.mockImplementation(() => ({}))
+      mockfindCurrentRoute.mockImplementation(() => ({}))
       const wrapper = getWrapper({
         Artist: () => ({
           counts: {
@@ -142,7 +142,7 @@ describe("ArtistApp", () => {
     })
 
     it("does not render auction results tab when no auction results are available", () => {
-      mockuseCurrentRoute.mockImplementation(() => ({}))
+      mockfindCurrentRoute.mockImplementation(() => ({}))
       const wrapper = getWrapper({
         Artist: () => ({
           statuses: {
@@ -161,7 +161,7 @@ describe("ArtistApp", () => {
     })
 
     it("renders auction results tab when auction results are available", () => {
-      mockuseCurrentRoute.mockImplementation(() => ({}))
+      mockfindCurrentRoute.mockImplementation(() => ({}))
       const wrapper = getWrapper({
         Artist: () => ({
           statuses: {
@@ -182,7 +182,7 @@ describe("ArtistApp", () => {
 
   describe("for `displayFullPage` routes", () => {
     it("renders correct components", () => {
-      mockuseCurrentRoute.mockImplementation(() => ({
+      mockfindCurrentRoute.mockImplementation(() => ({
         displayFullPage: true,
       }))
       const wrapper = getWrapper()
@@ -194,7 +194,7 @@ describe("ArtistApp", () => {
 
   describe("for `hideNavigationTabs` routes", () => {
     it("renders correct components", () => {
-      mockuseCurrentRoute.mockImplementation(() => ({
+      mockfindCurrentRoute.mockImplementation(() => ({
         hideNavigationTabs: true,
       }))
       const wrapper = getWrapper()

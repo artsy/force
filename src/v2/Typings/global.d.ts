@@ -35,11 +35,5 @@ declare global {
   }
 }
 
-declare module "found" {
-  interface Match {
-    route: AppRouteConfig
-  }
-}
-
 // This is needed to conform to the module format, which requires to export something.
 export {}

@@ -4,12 +4,11 @@ import { Location, Match, Router } from "found"
 describe("findCurrentRoute", () => {
   const getMatch = (config: Partial<Match>): Match => ({
     routes: [],
-    router: {} as Router,
+    router: ({} as unknown) as Router,
     context: {},
     routeIndices: [0],
-    location: {} as Location,
+    location: ({} as unknown) as Location,
     params: {},
-    route: {},
     ...config,
   })
 
