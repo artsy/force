@@ -5,7 +5,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { getENV } from "v2/Utils/getENV"
 import { ArtworkApp_artwork } from "v2/__generated__/ArtworkApp_artwork.graphql"
 import { ArtworkApp_me } from "v2/__generated__/ArtworkApp_me.graphql"
-import { SubmittedOrderModal_order } from "v2/__generated__/SubmittedOrderModal_order.graphql"
+import { ArtworkApp_order } from "v2/__generated__/ArtworkApp_order.graphql"
 import { ArtistInfoQueryRenderer } from "./Components/ArtistInfo"
 import { ArtworkBannerFragmentContainer } from "./Components/ArtworkBanner/ArtworkBanner"
 import { ArtworkDetailsQueryRenderer } from "./Components/ArtworkDetails"
@@ -36,7 +36,7 @@ export interface Props {
   referrer: string
   routerPathname: string
   shouldTrackPageView: boolean
-  submittedOrder?: SubmittedOrderModal_order
+  submittedOrder?: ArtworkApp_order
   me: ArtworkApp_me
 }
 
@@ -297,6 +297,11 @@ export const ArtworkAppFragmentContainer = createFragmentContainer(
     me: graphql`
       fragment ArtworkApp_me on Me {
         ...ArtworkSidebar_me
+      }
+    `,
+    order: graphql`
+      fragment ArtworkApp_order on CommerceOrder {
+        ...SubmittedOrderModal_order
       }
     `,
   }

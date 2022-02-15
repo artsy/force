@@ -9,7 +9,7 @@ import { RouterLink } from "v2/System/Router/RouterLink"
 import { SubmittedOrderModal_order } from "v2/__generated__/SubmittedOrderModal_order.graphql"
 
 interface SubmittedOrderModalProps {
-  order: Pick<SubmittedOrderModal_order, "mode" | "stateExpiresAt">
+  order: SubmittedOrderModal_order
 }
 
 const SubmittedOrderModal: FC<SubmittedOrderModalProps> = ({ order }) => {
