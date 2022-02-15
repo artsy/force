@@ -1,4 +1,4 @@
-import { Component } from "react";
+import { Component } from "react"
 import { Article as PublishingArticle } from "@artsy/reaction/dist/Components/Publishing/Article"
 import { AppProps } from "../App"
 import { InfiniteScrollArticle } from "../InfiniteScrollArticle"

@@ -3,6 +3,7 @@ import { setupTestWrapperTL } from "v2/DevTools/setupTestWrapper"
 import { UploadPhotosFragmentContainer } from "../UploadPhotos"
 import { SystemContextProvider } from "v2/System"
 import { MBSize, uploadPhoto } from "../../Utils/fileUtils"
+import { fetchQuery } from "react-relay"
 import { fireEvent, screen, waitFor } from "@testing-library/react"
 
 jest.unmock("react-relay")
@@ -37,6 +38,25 @@ jest.mock("../../Mutations", () => ({
 }))
 
 const mockUploadPhoto = uploadPhoto as jest.Mock
+
+jest.mock("react-relay", () => ({
+  ...jest.requireActual("react-relay"),
+  fetchQuery: jest.fn().mockResolvedValue({
+    submission: {
+      assets: [
+        {
+          id: "id",
+          imageUrls: { thumbnail: "foo.png" },
+          geminiToken: "geminiToken",
+          size: "111084",
+          filename: "foo.png",
+        },
+      ],
+    },
+  }),
+}))
+
+const mockFetchQuery = fetchQuery as jest.Mock
 
 const { renderWithRelay } = setupTestWrapperTL({
   Component: props => {
@@ -243,6 +263,25 @@ describe("UploadPhotos", () => {
         pathname: "/consign/submission/1/contact-information",
       })
     })
+  })
+
+  it("runs refetching submission assets if image still processing by Gemini", async () => {
+    renderWithRelay({
+      ConsignmentSubmission: () => ({
+        ...submission,
+        assets: [
+          {
+            id: "id",
+            imageUrls: {},
+            geminiToken: "geminiToken",
+            size: "111084",
+            filename: "foo.png",
+          },
+        ],
+      }),
+    })
+
+    expect(mockFetchQuery).toHaveBeenCalled()
   })
 
   describe("show error message", () => {

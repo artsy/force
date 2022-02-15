@@ -7,13 +7,23 @@ import {
   TwitterIcon,
 } from "@artsy/palette"
 import { FC } from "react"
+import { getENV } from "v2/Utils/getENV"
 
 interface ArticleShareProps {
-  description: string
-  url: string
+  description: string | null
+  pathname: string | null
 }
 
-export const ArticleShare: FC<ArticleShareProps> = ({ description, url }) => {
+export const ArticleShare: FC<ArticleShareProps> = ({
+  description: _description,
+  pathname,
+}) => {
+  const description = _description ?? "Artsy Editorial"
+  const url = [
+    getENV("APP_URL"),
+    pathname && pathname.startsWith("/") ? pathname : `/${pathname || ""}`,
+  ].join("")
+
   return (
     <Flex>
       <Tooltip content="Share via email">

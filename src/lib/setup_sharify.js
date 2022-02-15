@@ -12,6 +12,7 @@
 //
 import _ from "lodash"
 import * as config from "../config"
+// eslint-disable-next-line
 import sharify from "sharify"
 
 /**
@@ -45,7 +46,6 @@ sharify.data = _.extend(
     "EF_GUCCI",
     "EF_VENICE",
     "EF_VIDEO_GUIDE",
-    "EMBEDLY_KEY",
     "ENABLE_FAIR_PAGE_EXHIBITORS_TAB",
     "ENABLE_INSTANT_PAGE",
     "ENABLE_NEW_AUCTIONS_FILTER",
@@ -53,6 +53,7 @@ sharify.data = _.extend(
     "ENABLE_SAVED_SEARCH",
     "ENABLE_SERVER_SIDE_CACHE",
     "ENABLE_WEB_CRAWLING",
+    "ENABLE_YOUR_ALERTS_PAGE",
     "EOY_2016_ARTICLE",
     "EOY_2016",
     "FACEBOOK_APP_NAMESPACE",

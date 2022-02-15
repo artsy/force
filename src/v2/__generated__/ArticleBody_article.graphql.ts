@@ -9,6 +9,10 @@ export type ArticleBody_article = {
     readonly layout: ArticleLayout;
     readonly title: string | null;
     readonly byline: string | null;
+    readonly newsSource: {
+        readonly title: string | null;
+        readonly url: string | null;
+    } | null;
     readonly href: string | null;
     readonly publishedAt: string | null;
     readonly sections: ReadonlyArray<{
@@ -76,6 +80,25 @@ return {
     },
     (v0/*: any*/),
     (v1/*: any*/),
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "ArticleNewsSource",
+      "kind": "LinkedField",
+      "name": "newsSource",
+      "plural": false,
+      "selections": [
+        (v0/*: any*/),
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "url",
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
+    },
     (v2/*: any*/),
     {
       "alias": null,
@@ -223,5 +246,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = 'a10e48f15562f392c8a60562decc698f';
+(node as any).hash = '7fa003406838d8eae564bb0c6fc528d7';
 export default node;

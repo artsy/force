@@ -30,6 +30,7 @@ declare module "sharify" {
       readonly ENABLE_NEW_AUCTIONS_FILTER: boolean
       readonly ENABLE_QUERY_BATCHING: boolean
       readonly ENABLE_SERVER_SIDE_CACHE: string
+      readonly ENABLE_YOUR_ALERTS_PAGE: boolean
       readonly FACEBOOK_APP_NAMESPACE: string
       readonly FACEBOOK_ID: string
       readonly GEMINI_CLOUDFRONT_URL: string
@@ -109,6 +110,7 @@ declare module "sharify" {
       TRACK_PAGELOAD_PATHS: string
       // FIXME: reaction migration
       stitch: any
+      unleash: any
     }
 
     export interface ResponseLocalData extends GlobalData {

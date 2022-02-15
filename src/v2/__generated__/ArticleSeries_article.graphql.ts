@@ -11,10 +11,14 @@ export type ArticleSeries_article = {
     readonly series: {
         readonly description: string | null;
     } | null;
+    readonly sponsor: {
+        readonly " $fragmentRefs": FragmentRefs<"ArticleSponsor_sponsor">;
+    } | null;
     readonly relatedArticles: ReadonlyArray<{
         readonly internalID: string;
         readonly href: string | null;
         readonly title: string | null;
+        readonly thumbnailTitle: string | null;
         readonly byline: string | null;
         readonly description: string | null;
         readonly publishedAt: string | null;
@@ -88,6 +92,22 @@ return {
     {
       "alias": null,
       "args": null,
+      "concreteType": "ArticleSponsor",
+      "kind": "LinkedField",
+      "name": "sponsor",
+      "plural": false,
+      "selections": [
+        {
+          "args": null,
+          "kind": "FragmentSpread",
+          "name": "ArticleSponsor_sponsor"
+        }
+      ],
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
       "concreteType": "Article",
       "kind": "LinkedField",
       "name": "relatedArticles",
@@ -102,6 +122,13 @@ return {
         },
         (v2/*: any*/),
         (v0/*: any*/),
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "thumbnailTitle",
+          "storageKey": null
+        },
         (v1/*: any*/),
         (v3/*: any*/),
         {
@@ -172,5 +199,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '6d09af96ecb8503a158beb660d043560';
+(node as any).hash = '54fd64505017c1fdb5a9dbff60a913b9';
 export default node;

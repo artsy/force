@@ -22,6 +22,7 @@ describe("ArticleBody", () => {
       Article: () => ({
         publishedAt: "March 20th, 2020",
         byline: "Example Author",
+        newsSource: null,
       }),
     })
 

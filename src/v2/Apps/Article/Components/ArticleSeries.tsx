@@ -16,8 +16,8 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { ArticleShare } from "v2/Components/ArticleShare"
 import { TopContextBar } from "v2/Components/TopContextBar"
 import { RouterLink } from "v2/System/Router/RouterLink"
-import { getENV } from "v2/Utils/getENV"
 import { ArticleSeries_article } from "v2/__generated__/ArticleSeries_article.graphql"
+import { ArticleSponsorFragmentContainer } from "./ArticleSponsor"
 
 interface ArticleSeriesProps {
   article: ArticleSeries_article
@@ -40,9 +40,22 @@ const ArticleSeries: FC<ArticleSeriesProps> = ({ article }) => {
       </TopContextBar>
 
       <Join separator={<Spacer mt={12} />}>
-        <Text variant="xxl" textAlign="center" mt={4}>
-          {article.title}
-        </Text>
+        <Box>
+          <Text variant="xxl" textAlign="center" mt={4}>
+            {article.title}
+          </Text>
+
+          {article.sponsor && (
+            <ArticleSponsorFragmentContainer
+              sponsor={article.sponsor}
+              mt={4}
+              display="flex"
+              flexDirection="column"
+              textAlign="center"
+              alignItems="center"
+            />
+          )}
+        </Box>
 
         <Join separator={<Spacer mt={4} />}>
           {article.relatedArticles.map(relatedArticle => {
@@ -73,7 +86,8 @@ const ArticleSeries: FC<ArticleSeriesProps> = ({ article }) => {
                         </Text>
 
                         <Text variant="xl" mb={2}>
-                          {relatedArticle.title}
+                          {relatedArticle.thumbnailTitle ??
+                            relatedArticle.title}
                         </Text>
 
                         <Text variant="lg">{relatedArticle.description}</Text>
@@ -117,19 +131,34 @@ const ArticleSeries: FC<ArticleSeriesProps> = ({ article }) => {
 
         {article.series?.description && (
           <GridColumns>
-            <Column span={4}>
-              <Text variant="xl" mb={2}>
-                About the Series
-              </Text>
+            <Column
+              span={3}
+              start={3}
+              display="flex"
+              flexDirection="column"
+              justifyContent="space-between"
+            >
+              <Box>
+                <Text variant="xl" mb={2}>
+                  About the Series
+                </Text>
 
-              <ArticleShare
-                description={article.title ?? "Artsy Editorial"}
-                url={`${getENV("APP_URL")}${article.href}`}
-              />
+                <ArticleShare
+                  description={article.title}
+                  pathname={article.href}
+                />
+              </Box>
+
+              {article.sponsor && (
+                <ArticleSponsorFragmentContainer
+                  mt={4}
+                  sponsor={article.sponsor}
+                />
+              )}
             </Column>
 
-            <Column span={8}>
-              <HTML variant="lg" html={article.series.description} />
+            <Column span={5}>
+              <HTML variant="sm" html={article.series.description} />
             </Column>
           </GridColumns>
         )}
@@ -149,10 +178,14 @@ export const ArticleSeriesFragmentContainer = createFragmentContainer(
         series {
           description
         }
+        sponsor {
+          ...ArticleSponsor_sponsor
+        }
         relatedArticles {
           internalID
           href
           title
+          thumbnailTitle
           byline
           description
           publishedAt(format: "MMM DD, YYYY")

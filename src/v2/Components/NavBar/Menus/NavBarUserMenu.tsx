@@ -1,6 +1,7 @@
 import { useContext } from "react"
 import * as React from "react"
 import {
+  BellIcon,
   HeartIcon,
   PowerIcon,
   ReceiptIcon,
@@ -64,6 +65,16 @@ export const NavBarUserMenu: React.FC = () => {
       >
         <ReceiptIcon mr={1} aria-hidden="true" /> Order History
       </NavBarMenuItemLink>
+
+      {getENV("ENABLE_YOUR_ALERTS_PAGE") && (
+        <NavBarMenuItemLink
+          aria-label="View your alerts"
+          to="/user/alerts"
+          onClick={trackClick}
+        >
+          <BellIcon mr={1} aria-hidden="true" /> Alerts
+        </NavBarMenuItemLink>
+      )}
 
       <NavBarMenuItemLink
         aria-label="View your Saves &amp; Follows"

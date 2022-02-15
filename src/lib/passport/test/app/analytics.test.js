@@ -7,6 +7,9 @@ const sinon = require("sinon")
 const rewire = require("rewire")
 const analytics = rewire("../../lib/app/analytics")
 
+// TODO: Take care of this warning!
+/* eslint-disable @typescript-eslint/no-this-alias */
+
 describe("analytics", function () {
   beforeEach(function () {
     let Analytics
