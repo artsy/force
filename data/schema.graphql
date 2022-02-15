@@ -684,7 +684,8 @@ input ARImageInput {
 }
 
 type Article implements Node {
-  author: Author
+  author: Author @deprecated(reason: "Use `byline` or `authors` instead")
+  authors: [Author!]
 
   # The byline for the article. Defaults to "Artsy Editorial" if no authors are present.
   byline: String
@@ -695,6 +696,7 @@ type Article implements Node {
   ): [Article!]!
   channelID: String
   contributingAuthors: [Author]
+    @deprecated(reason: "Use `byline` or `authors` instead")
   description: String
   hero: ArticleHero
   href: String
@@ -2562,13 +2564,17 @@ type AuthenticationType {
 }
 
 type Author {
+  bio(format: Format): String
+
   # A globally unique ID.
   id: ID!
+  image: Image
+  initials(length: Int = 3): String
 
   # A type-specific ID.
   internalID: ID!
   name: String
-  profileHandle: String
+  twitterHandle: String
 }
 
 # Backup Two-Factor Authentication factor
