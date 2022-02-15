@@ -20,6 +20,7 @@ import { ArticleHeaderFragmentContainer } from "./ArticleHeader"
 import { ArticleSectionVideoFragmentContainer } from "./Sections/ArticleSectionVideo"
 import { ArticleSectionSocialEmbedFragmentContainer } from "./Sections/ArticleSectionSocialEmbed"
 import { ArticleSectionEmbedFragmentContainer } from "./Sections/ArticleSectionEmbed"
+import { ArticleBylineFragmentContainer } from "./ArticleByline"
 
 interface ArticleBodyProps {
   article: ArticleBody_article
@@ -141,11 +142,9 @@ const ArticleBody: FC<ArticleBodyProps> = ({ article }) => {
                 }
               }
             })}
-          </Join>
 
-          <Text variant="md" fontWeight="bold" mt={4}>
-            —{article.byline}
-          </Text>
+            <ArticleBylineFragmentContainer article={article} />
+          </Join>
 
           {article.postscript && (
             <HTML
@@ -222,9 +221,9 @@ export const ArticleBodyFragmentContainer = createFragmentContainer(
     article: graphql`
       fragment ArticleBody_article on Article {
         ...ArticleHeader_article
+        ...ArticleByline_article
         layout
         title
-        byline
         newsSource {
           title
           url
