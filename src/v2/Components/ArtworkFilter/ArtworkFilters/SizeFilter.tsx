@@ -15,6 +15,7 @@ import {
 } from "@artsy/palette"
 import {
   ArtworkFiltersState,
+  Metric,
   SelectedFiltersCountsLabels,
   useArtworkFilterContext,
 } from "../ArtworkFilterContext"
@@ -40,7 +41,6 @@ export const SIZES_IN_CENTIMETERS = [
 const ONE_IN_TO_CM = 2.54
 
 type CustomRange = (number | "*")[]
-type Metric = "in" | "cm"
 
 type CustomSize = {
   height: CustomRange
@@ -104,7 +104,12 @@ export interface SizeFilterProps {
 type Mode = "resting" | "done"
 
 export const SizeFilter: React.FC<SizeFilterProps> = ({ expanded }) => {
-  const { currentlySelectedFilters, setFilters } = useArtworkFilterContext()
+  const {
+    currentlySelectedFilters,
+    setFilters,
+    metric,
+    setMetric,
+  } = useArtworkFilterContext()
   const {
     height,
     width,
@@ -117,7 +122,6 @@ export const SizeFilter: React.FC<SizeFilterProps> = ({ expanded }) => {
   )
   const label = `Size${filtersCount}`
 
-  const [metric, setMetric] = useState<Metric>("cm")
   const initialCustomSize = React.useMemo(
     () => ({
       height: parseRange(height, metric) as CustomRange,
@@ -255,7 +259,7 @@ export const SizeFilter: React.FC<SizeFilterProps> = ({ expanded }) => {
         </Text>
 
         <RadioGroup
-          defaultValue="cm"
+          defaultValue={metric}
           onSelect={handleSelectMetric}
           flexDirection="row"
           my={2}

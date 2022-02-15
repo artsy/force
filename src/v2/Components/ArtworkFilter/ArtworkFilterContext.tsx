@@ -173,6 +173,8 @@ export enum SelectedFiltersCountsLabels {
   waysToBuy = "waysToBuy",
 }
 
+export type Metric = "in" | "cm"
+
 // TODO: merge or make a generic base of `ArtworkFilterContextProps` and `AuctionResultsFilterContextProps`.
 // Possibly just extend `BaseFilterContext` and make the former ones into `BaseFilterContext<ArtworkFilters>`
 // and `BaseFilterContext<AuctionResultFilters>`.
@@ -197,6 +199,10 @@ export interface ArtworkFilterContextProps {
   aggregations?: Aggregations
   counts?: Counts
   setCounts?: (counts: Counts) => void
+
+  // Metric
+  metric: Metric
+  setMetric: (newMetric: Metric) => void
 
   // Handlers
   onFilterClick?: (
@@ -290,6 +296,7 @@ export const ArtworkFilterContextProvider: React.FC<
   const [shouldStageFilterChanges, setShouldStageFilterChanges] = useState(
     false
   )
+  const [metric, setMetric] = useState<Metric>("cm")
 
   useDeepCompareEffect(() => {
     if (onChange) {
@@ -331,6 +338,10 @@ export const ArtworkFilterContextProvider: React.FC<
     aggregations,
     counts: artworkCounts,
     setCounts,
+
+    // Metric
+    metric,
+    setMetric,
 
     // Components
     ZeroState,
