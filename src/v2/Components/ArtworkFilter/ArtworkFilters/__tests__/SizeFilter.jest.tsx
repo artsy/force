@@ -11,7 +11,14 @@ import {
   ArtworkFilterContextProvider,
   useArtworkFilterContext,
 } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
-import { SizeFilter } from "../SizeFilter"
+import {
+  getMeasureLabelByMetric,
+  getSizesByMetric,
+  parseRange,
+  SizeFilter,
+  SIZES_IN_CENTIMETERS,
+  SIZES_IN_INCHES,
+} from "../SizeFilter"
 
 jest.mock("v2/Utils/Hooks/useMatchMedia", () => ({
   __internal__useMatchMedia: () => ({}),
@@ -168,6 +175,26 @@ describe("SizeFilter", () => {
     expect(screen.queryByDisplayValue("4")).not.toBeInTheDocument()
   })
 
+  describe("Metric", () => {
+    it("should display predefined sizes in centimeters by default", () => {
+      render(<SizeFilter expanded />)
+
+      expect(screen.getByText("Small (under 40cm)")).toBeInTheDocument()
+      expect(screen.getByText("Medium (40 – 100cm)")).toBeInTheDocument()
+      expect(screen.getByText("Large (over 100cm)")).toBeInTheDocument()
+    })
+
+    it("should display predefined sizes in inches when `in` metric is selected", () => {
+      render(<SizeFilter expanded />)
+
+      userEvent.click(screen.getByText("in"))
+
+      expect(screen.getByText("Small (under 16in)")).toBeInTheDocument()
+      expect(screen.getByText("Medium (16in – 40in)")).toBeInTheDocument()
+      expect(screen.getByText("Large (over 40in)")).toBeInTheDocument()
+    })
+  })
+
   describe("the `expanded` prop", () => {
     it("hides the filter controls when not set", () => {
       render(<SizeFilter />)
@@ -183,5 +210,51 @@ describe("SizeFilter", () => {
       render(<SizeFilter expanded={true} />)
       expect(screen.getAllByRole("checkbox")).toHaveLength(3)
     })
+  })
+})
+
+describe("getSizesByMetric", () => {
+  it("should return predefined sizes in centimeters when `cm` metric is specified", () => {
+    expect(getSizesByMetric("cm")).toEqual(SIZES_IN_CENTIMETERS)
+  })
+
+  it("should return predefined sizes in inches when `in` metric is specified", () => {
+    expect(getSizesByMetric("in")).toEqual(SIZES_IN_INCHES)
+  })
+})
+
+describe("getMeasureLabelByMetric", () => {
+  it("should return centimeters label when `cm` metric is specified", () => {
+    expect(getMeasureLabelByMetric("cm")).toBe("cm")
+  })
+
+  it("should return inches label when `in` metric is specified", () => {
+    expect(getMeasureLabelByMetric("in")).toBe("in")
+  })
+})
+
+describe("parseRange", () => {
+  it("correctly parse range in inches", () => {
+    expect(parseRange("10-20", "in")).toEqual([10, 20])
+  })
+
+  it("correctly parse range in inches with default value", () => {
+    expect(parseRange("10-*", "in")).toEqual([10, "*"])
+  })
+
+  it("correctly parse range in inches when all values are default", () => {
+    expect(parseRange("*-*", "in")).toEqual(["*", "*"])
+  })
+
+  it("correctly parse range in centimeters", () => {
+    expect(parseRange("1-2", "cm")).toEqual([3, 5])
+  })
+
+  it("correctly parse range in centimeters with default value", () => {
+    expect(parseRange("1-*", "cm")).toEqual([3, "*"])
+  })
+
+  it("correctly parse range in centimeters when all values are default", () => {
+    expect(parseRange("*-*", "cm")).toEqual(["*", "*"])
   })
 })
