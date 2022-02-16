@@ -193,6 +193,19 @@ describe("SizeFilter", () => {
       expect(screen.getByText("Medium (16in – 40in)")).toBeInTheDocument()
       expect(screen.getByText("Large (over 40in)")).toBeInTheDocument()
     })
+
+    it("restore default metric when `Clear All` button is pressed", () => {
+      render(<SizeFilter expanded />)
+
+      userEvent.click(screen.getByText("in"))
+      userEvent.click(screen.getByText("Clear all"))
+
+      const element = screen.getByRole("radio", {
+        name: "cm",
+      })
+
+      expect(element).toBeChecked()
+    })
   })
 
   describe("the `expanded` prop", () => {

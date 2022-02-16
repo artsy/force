@@ -265,6 +265,8 @@ export type SharedArtworkFilterContextProps = Pick<
   onChange?: (filterState) => void
 }
 
+const DEFAULT_METRIC: Metric = "cm"
+
 export const ArtworkFilterContextProvider: React.FC<
   SharedArtworkFilterContextProps & {
     children: React.ReactNode
@@ -296,7 +298,7 @@ export const ArtworkFilterContextProvider: React.FC<
   const [shouldStageFilterChanges, setShouldStageFilterChanges] = useState(
     false
   )
-  const [metric, setMetric] = useState<Metric>("cm")
+  const [metric, setMetric] = useState<Metric>(DEFAULT_METRIC)
 
   useDeepCompareEffect(() => {
     if (onChange) {
@@ -386,6 +388,7 @@ export const ArtworkFilterContextProvider: React.FC<
         // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         payload: null,
       }
+      setMetric(DEFAULT_METRIC)
       dispatchOrStage(action)
     },
 
