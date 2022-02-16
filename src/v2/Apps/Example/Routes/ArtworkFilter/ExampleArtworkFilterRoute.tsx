@@ -1,39 +1,44 @@
-import { Column, GridColumns, Text } from "@artsy/palette"
-import * as React from "react";
+import { Text } from "@artsy/palette"
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ExampleArtworkFilterRoute_tag } from "v2/__generated__/ExampleArtworkFilterRoute_tag.graphql"
-import { ExampleArtworkFilterRefetchContainer } from "./Components/ExampleArtworkFilter"
+import { ArtworkFilter } from "v2/Components/ArtworkFilter"
+import { useRouter } from "v2/System/Router/useRouter"
+import { ExampleArtworkFilterRoute_viewer } from "v2/__generated__/ExampleArtworkFilterRoute_viewer.graphql"
 
 interface ExampleArtworkFilterProps {
-  tag: ExampleArtworkFilterRoute_tag
+  viewer: ExampleArtworkFilterRoute_viewer
 }
 
 const ExampleArtworkFilterRoute: React.FC<ExampleArtworkFilterProps> = ({
-  tag,
+  viewer,
 }) => {
-  return (
-    <>
-      <GridColumns my={4} gridRowGap={[2, 0]}>
-        <Column span={6}>
-          <Text as="h1" variant="xl" mb={2}>
-            {tag.name}
-          </Text>
-        </Column>
-      </GridColumns>
+  const { match } = useRouter()
 
-      <ExampleArtworkFilterRefetchContainer tag={tag} />
-    </>
+  return (
+    <ArtworkFilter
+      viewer={viewer}
+      filters={match.location.query}
+      sortOptions={[
+        { text: "Default", value: "-decayed_merch" },
+        { text: "Price (desc.)", value: "-has_price,-prices" },
+        { text: "Price (asc.)", value: "-has_price,prices" },
+        { text: "Recently updated", value: "-partner_updated_at" },
+        { text: "Recently added", value: "-published_at" },
+        { text: "Artwork year (desc.)", value: "-year" },
+        { text: "Artwork year (asc.)", value: "year" },
+      ]}
+      ZeroState={() => <Text variant="md">No Results.</Text>}
+    />
   )
 }
 
 export const ExampleArtworkFilterFragmentContainer = createFragmentContainer(
   ExampleArtworkFilterRoute,
   {
-    tag: graphql`
-      fragment ExampleArtworkFilterRoute_tag on Tag
+    viewer: graphql`
+      fragment ExampleArtworkFilterRoute_viewer on Viewer
         @argumentDefinitions(input: { type: "FilterArtworksInput" }) {
-        ...ExampleArtworkFilter_tag @arguments(input: $input)
-        name
+        ...ArtworkFilter_viewer @arguments(input: $input)
       }
     `,
   }
