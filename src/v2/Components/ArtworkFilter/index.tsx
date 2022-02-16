@@ -207,7 +207,10 @@ export const BaseArtworkFilter: React.FC<
                 contextOwnerId: contextPageOwnerId,
                 contextOwnerSlug: contextPageOwnerSlug,
                 contextOwnerType: contextPageOwnerType!,
-                current: JSON.stringify(onlyAllowedFilters),
+                current: JSON.stringify({
+                  ...onlyAllowedFilters,
+                  metric: filterContext?.filters?.metric,
+                }),
               })
             )
           }
