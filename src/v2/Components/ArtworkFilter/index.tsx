@@ -7,7 +7,6 @@ import { useTracking } from "v2/System/Analytics/useTracking"
 import { renderWithLoadProgress } from "v2/System/Relay/renderWithLoadProgress"
 import { usePrevious } from "v2/Utils/Hooks/usePrevious"
 import { Media } from "v2/Utils/Responsive"
-import { ArtworkFilter_viewer } from "v2/__generated__/ArtworkFilter_viewer.graphql"
 import { ArtworkQueryFilterQuery as ArtworkFilterQueryType } from "v2/__generated__/ArtworkQueryFilterQuery.graphql"
 import { ArtworkFilterArtworkGridRefetchContainer as ArtworkFilterArtworkGrid } from "./ArtworkFilterArtworkGrid"
 import {
@@ -31,12 +30,8 @@ import {
   Text,
   useThemeConfig,
 } from "@artsy/palette"
-import { ArtistArtworkFilter_artist } from "v2/__generated__/ArtistArtworkFilter_artist.graphql"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import { ArtworkQueryFilter } from "./ArtworkQueryFilter"
-import { ArtistSeriesArtworksFilter_artistSeries } from "v2/__generated__/ArtistSeriesArtworksFilter_artistSeries.graphql"
-import { FairArtworks_fair } from "v2/__generated__/FairArtworks_fair.graphql"
-import { ShowArtworks_show } from "v2/__generated__/ShowArtworks_show.graphql"
 import { useAnalyticsContext } from "v2/System/Analytics/AnalyticsContext"
 import {
   commercialFilterParamsChanged,
@@ -51,16 +46,22 @@ import {
 import { Sticky } from "v2/Components/Sticky"
 import { ScrollRefContext } from "./ArtworkFilters/useScrollContext"
 import { ArtworkSortFilter } from "./ArtworkFilters/ArtworkSortFilter"
-import { GeneArtworkFilter_gene } from "v2/__generated__/GeneArtworkFilter_gene.graphql"
 import type RelayModernEnvironment from "relay-runtime/lib/store/RelayModernEnvironment"
-import { TagArtworkFilter_tag } from "v2/__generated__/TagArtworkFilter_tag.graphql"
-import { Works_partner } from "v2/__generated__/Works_partner.graphql"
-import { CollectionArtworksFilter_collection } from "v2/__generated__/CollectionArtworksFilter_collection.graphql"
 import { ArtworkGridFilterPills } from "./SavedSearch/Components/ArtworkGridFilterPills"
 import { SavedSearchAttributes } from "./SavedSearch/types"
 import { extractPills } from "../SavedSearchAlert/Utils/extractPills"
 import { useFilterPillsContext } from "./SavedSearch/Utils/FilterPillsContext"
 import { getTotalSelectedFiltersCount } from "./Utils/getTotalSelectedFiltersCount"
+
+interface ArtworkFilterProps extends SharedArtworkFilterContextProps, BoxProps {
+  enableCreateAlert?: boolean
+  Filters?: JSX.Element
+  offset?: number
+  relayInputVariables?: object
+  relayVariables?: object
+  savedSearchProps?: SavedSearchAttributes
+  viewer
+}
 
 /**
  * Primary ArtworkFilter which is wrapped with a context and refetch container.
@@ -69,22 +70,16 @@ import { getTotalSelectedFiltersCount } from "./Utils/getTotalSelectedFiltersCou
  * doesn't `extend Viewer`, the BaseArtworkFilter can be imported below. See
  * `Apps/Collection` for an example, which queries Kaws for data.
  */
-export const ArtworkFilter: React.FC<
-  BoxProps &
-    SharedArtworkFilterContextProps & {
-      viewer: any // FIXME: We need to support multiple types implementing different viewer interfaces
-      savedSearchProps?: SavedSearchAttributes
-    }
-> = ({
-  viewer,
+export const ArtworkFilter: React.FC<ArtworkFilterProps> = ({
   aggregations,
   counts,
   filters,
-  sortOptions,
-  onFilterClick,
   onChange,
-  ZeroState,
+  onFilterClick,
   savedSearchProps,
+  sortOptions,
+  viewer,
+  ZeroState,
   ...rest
 }) => {
   return (
@@ -106,59 +101,20 @@ export const ArtworkFilter: React.FC<
   )
 }
 
-const FiltersWithScrollIntoView: React.FC<{
-  Filters?: JSX.Element
-  user?: User
-  relayEnvironment?: RelayModernEnvironment
-}> = ({ Filters, relayEnvironment, user }) => {
-  const scrollRef = useRef<HTMLDivElement | null>(null)
-
-  return (
-    <Box
-      ref={scrollRef as any}
-      overflowY="scroll"
-      height="100%"
-      data-testid="FiltersWithScrollIntoView"
-    >
-      <ScrollRefContext.Provider value={{ scrollRef }}>
-        {Filters ? (
-          Filters
-        ) : (
-          <ArtworkFilters relayEnvironment={relayEnvironment} user={user} />
-        )}
-      </ScrollRefContext.Provider>
-    </Box>
-  )
-}
-
 export const BaseArtworkFilter: React.FC<
-  BoxProps & {
+  Omit<ArtworkFilterProps, keyof SharedArtworkFilterContextProps> & {
     relay: RelayRefetchProp
-    relayVariables?: object
-    viewer:
-      | ArtworkFilter_viewer
-      | ArtistArtworkFilter_artist
-      | ArtistSeriesArtworksFilter_artistSeries
-      | FairArtworks_fair
-      | ShowArtworks_show
-      | GeneArtworkFilter_gene
-      | TagArtworkFilter_tag
-      | Works_partner
-      | CollectionArtworksFilter_collection
-    Filters?: JSX.Element
-    offset?: number
-    savedSearchProps?: SavedSearchAttributes
-    enableCreateAlert?: boolean
   }
 > = ({
-  relay,
-  viewer,
-  Filters,
-  relayVariables = {},
   children,
-  offset,
-  savedSearchProps,
   enableCreateAlert = false,
+  Filters,
+  offset,
+  relay,
+  relayInputVariables = {},
+  relayVariables = {},
+  savedSearchProps,
+  viewer,
   ...rest
 }) => {
   const tracking = useTracking()
@@ -177,8 +133,6 @@ export const BaseArtworkFilter: React.FC<
     filterContext.selectedFiltersCounts
   )
 
-  const { filtered_artworks } = viewer
-  const hasFilter = filtered_artworks && filtered_artworks.id
   const filters = useMemo(
     () => getAllowedFiltersForSavedSearchInput(filterContext.filters ?? {}),
     [filterContext.filters]
@@ -194,7 +148,7 @@ export const BaseArtworkFilter: React.FC<
     )
 
     setPills?.(pills)
-  }, [savedSearchProps, filters, filterContext.aggregations])
+  }, [savedSearchProps, filters, filterContext.aggregations, setPills])
 
   /**
    * Check to see if the mobile action sheet is present and prevent scrolling
@@ -269,10 +223,6 @@ export const BaseArtworkFilter: React.FC<
     },
   })
 
-  // If there was an error fetching the filter,
-  // we still want to render the rest of the page.
-  if (!hasFilter) return null
-
   function fetchResults() {
     toggleFetching(true)
 
@@ -280,6 +230,7 @@ export const BaseArtworkFilter: React.FC<
       first: 30,
       ...allowedFilters(filterContext.filters),
       keyword: filterContext.filters!.term,
+      ...relayInputVariables,
     }
 
     const refetchVariables = {
@@ -476,5 +427,30 @@ export const ArtworkFilterQueryRenderer = ({ keyword = "andy warhol" }) => {
         render={renderWithLoadProgress(ArtworkFilterRefetchContainer as any)} // FIXME: Find way to support union types here
       />
     </ArtworkFilterContextProvider>
+  )
+}
+
+const FiltersWithScrollIntoView: React.FC<{
+  Filters?: JSX.Element
+  user?: User
+  relayEnvironment?: RelayModernEnvironment
+}> = ({ Filters, relayEnvironment, user }) => {
+  const scrollRef = useRef<HTMLDivElement | null>(null)
+
+  return (
+    <Box
+      ref={scrollRef as any}
+      overflowY="scroll"
+      height="100%"
+      data-testid="FiltersWithScrollIntoView"
+    >
+      <ScrollRefContext.Provider value={{ scrollRef }}>
+        {Filters ? (
+          Filters
+        ) : (
+          <ArtworkFilters relayEnvironment={relayEnvironment} user={user} />
+        )}
+      </ScrollRefContext.Provider>
+    </Box>
   )
 }
