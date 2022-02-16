@@ -41,9 +41,17 @@ const PartnerCell: React.FC<PartnerCellProps> = ({
   const locations = extractNodes(partner.locationsConnection)
   const meta = uniq(locations.map(location => location.city?.trim())).join(", ")
   const image = partner.profile?.image?.cropped
-  const badgedPartners = partner.categories
-    ?.filter(category => category?.slug === "black-owned")
-    .map(category => ({ children: category?.name }))
+
+  // coerce away the case of nil by falling back to an empty array
+  const categories = partner.categories || []
+  // supporting a new category badge would mean updating this list of slugs:
+  const badgedCategorySlugs = ["black-owned"]
+  const matchingCategories = categories.filter(category =>
+    badgedCategorySlugs.includes(category!.slug)
+  )
+  const badges = matchingCategories.map(category => ({
+    children: category?.name,
+  }))
 
   if (!partner.profile) {
     return null
@@ -73,7 +81,7 @@ const PartnerCell: React.FC<PartnerCellProps> = ({
         name={partner.name!}
         meta={meta}
         smallVariant
-        badges={badgedPartners}
+        badges={badges}
         mb={1}
         FollowButton={
           <FollowProfileButtonFragmentContainer
