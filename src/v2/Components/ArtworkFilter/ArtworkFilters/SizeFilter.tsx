@@ -227,11 +227,12 @@ export const SizeFilter: React.FC<SizeFilterProps> = ({ expanded }) => {
         customSize,
         nextMetric
       )
-
-      setFilters!({
+      const updatedFilters = {
         ...otherSelectedFilters,
         ...customSizeRanges,
-      })
+      }
+
+      setFilters!(updatedFilters, { force: false })
     }
 
     setMetric(nextMetric)
