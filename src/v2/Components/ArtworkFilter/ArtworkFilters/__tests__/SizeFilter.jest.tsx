@@ -18,6 +18,8 @@ import {
   SizeFilter,
   SIZES_IN_CENTIMETERS,
   SIZES_IN_INCHES,
+  getCustomSizeRangesInInches,
+  CustomSize,
 } from "../SizeFilter"
 
 jest.mock("v2/Utils/Hooks/useMatchMedia", () => ({
@@ -269,5 +271,72 @@ describe("parseRange", () => {
 
   it("correctly parse range in centimeters when all values are default", () => {
     expect(parseRange("*-*", "cm")).toEqual(["*", "*"])
+  })
+})
+
+describe("getCustomSizeRangesInInches", () => {
+  it("should return correct custom size ranges in inches", () => {
+    const range: CustomSize = {
+      width: [5, 10],
+      height: [15, 20],
+    }
+    const result = {
+      width: "5-10",
+      height: "15-20",
+    }
+
+    expect(getCustomSizeRangesInInches(range, "in")).toEqual(result)
+  })
+
+  it("should return correct custom size ranges in inches when default values are passed", () => {
+    const range: CustomSize = {
+      width: [5, "*"],
+      height: ["*", 20],
+    }
+    const result = {
+      width: "5-*",
+      height: "*-20",
+    }
+
+    expect(getCustomSizeRangesInInches(range, "in")).toEqual(result)
+  })
+
+  it("should return custom size ranges with default values", () => {
+    const range: CustomSize = {
+      width: ["*", "*"],
+      height: ["*", "*"],
+    }
+    const result = {
+      width: "*-*",
+      height: "*-*",
+    }
+
+    expect(getCustomSizeRangesInInches(range, "in")).toEqual(result)
+  })
+
+  it("should return correct custom size ranges in centimeters", () => {
+    const range: CustomSize = {
+      width: [5, 10],
+      height: [15, 20],
+    }
+    const result = {
+      width: "1.968503937007874-3.937007874015748",
+      height: "5.905511811023622-7.874015748031496",
+    }
+
+    expect(getCustomSizeRangesInInches(range, "cm")).toEqual(result)
+  })
+
+  it("should return correct custom size ranges in centimeters when default values are passed", () => {
+    const range: CustomSize = {
+      width: ["*", 10],
+      height: [15, "*"],
+    }
+    const result = {
+      width: "*-3.937007874015748",
+      height: "5.905511811023622-*",
+    }
+
+    expect(getCustomSizeRangesInInches(range, "cm")).toEqual(result)
   })
 })

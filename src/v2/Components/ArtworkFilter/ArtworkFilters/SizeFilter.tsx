@@ -26,6 +26,21 @@ import { isCustomValue } from "./Utils/isCustomValue"
 import { useFilterLabelCountByKey } from "../Utils/useFilterLabelCountByKey"
 import { useMode } from "v2/Utils/Hooks/useMode"
 
+type Numeric = number | "*"
+type CustomRange = Numeric[]
+type Mode = "resting" | "done"
+
+export type CustomSize = {
+  height: CustomRange
+  width: CustomRange
+}
+
+export interface SizeFilterProps {
+  expanded?: boolean
+}
+
+const ONE_IN_TO_CM = 2.54
+
 export const SIZES_IN_INCHES = [
   { displayName: "Small (under 16in)", name: "SMALL" },
   { displayName: "Medium (16in – 40in)", name: "MEDIUM" },
@@ -37,15 +52,6 @@ export const SIZES_IN_CENTIMETERS = [
   { displayName: "Medium (40 – 100cm)", name: "MEDIUM" },
   { displayName: "Large (over 100cm)", name: "LARGE" },
 ]
-
-const ONE_IN_TO_CM = 2.54
-
-type CustomRange = (number | "*")[]
-
-type CustomSize = {
-  height: CustomRange
-  width: CustomRange
-}
 
 const convertToCentimeters = (element: number) => {
   return Math.round(element * ONE_IN_TO_CM)
@@ -64,7 +70,7 @@ export const parseRange = (range: string = "", metric: Metric) => {
   })
 }
 
-const convertRangeElementToInches = (element: number | "*") => {
+const convertRangeElementToInches = (element: Numeric) => {
   if (element === "*") {
     return element
   }
@@ -77,20 +83,6 @@ const convertRangeToInches = (range: CustomRange) => {
     convertRangeElementToInches(range[0]),
     convertRangeElementToInches(range[1]),
   ]
-}
-
-const convertSizeToInches = (size: CustomSize) => {
-  return {
-    height: convertRangeToInches(size.height),
-    width: convertRangeToInches(size.width),
-  }
-}
-
-const mapSizeToRange = (size: CustomSize) => {
-  return {
-    height: size.height?.join("-"),
-    width: size.width?.join("-"),
-  }
 }
 
 const getValue = (value: CustomRange[number]) => {
@@ -109,20 +101,23 @@ export const getUnitLabelByMetric = (metric: Metric) => {
   return metric === "cm" ? "cm" : "in"
 }
 
-export interface SizeFilterProps {
-  expanded?: boolean
-}
+export const getCustomSizeRangesInInches = (
+  customSize: CustomSize,
+  sourceMetric: Metric
+) => {
+  let sizes = customSize
 
-type Mode = "resting" | "done"
-
-const getConvertedCustomSizeRange = (customSize, metric: Metric) => {
-  let convertedCustomSize = customSize
-
-  if (metric === "cm") {
-    convertedCustomSize = convertSizeToInches(customSize)
+  if (sourceMetric === "cm") {
+    sizes = {
+      width: convertRangeToInches(customSize.width),
+      height: convertRangeToInches(customSize.height),
+    }
   }
 
-  return mapSizeToRange(convertedCustomSize)
+  return {
+    width: sizes.width.join("-"),
+    height: sizes.height.join("-"),
+  }
 }
 
 export const SizeFilter: React.FC<SizeFilterProps> = ({ expanded }) => {
@@ -207,11 +202,11 @@ export const SizeFilter: React.FC<SizeFilterProps> = ({ expanded }) => {
   }
 
   const handleClick = () => {
-    const customSizeRange = getConvertedCustomSizeRange(customSize, metric)
+    const customSizeRanges = getCustomSizeRangesInInches(customSize, metric)
     const newFilters = {
       ...currentlySelectedFilters?.(),
       sizes: [],
-      ...customSizeRange,
+      ...customSizeRanges,
     }
 
     if (reset) {
@@ -228,14 +223,14 @@ export const SizeFilter: React.FC<SizeFilterProps> = ({ expanded }) => {
     }
 
     if (width !== "*-*" || height !== "*-*") {
-      const customSizeRange = getConvertedCustomSizeRange(
+      const customSizeRanges = getCustomSizeRangesInInches(
         customSize,
         nextMetric
       )
 
       setFilters!({
         ...otherSelectedFilters,
-        ...customSizeRange,
+        ...customSizeRanges,
       })
     }
 
