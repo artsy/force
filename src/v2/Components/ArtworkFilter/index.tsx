@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import { isEqual } from "lodash"
 import useDeepCompareEffect from "use-deep-compare-effect"
 import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
@@ -134,28 +134,25 @@ export const BaseArtworkFilter: React.FC<
   const appliedFiltersTotalCount = getTotalSelectedFiltersCount(
     filterContext.selectedFiltersCounts
   )
-
-  const filters = useMemo(
-    () => getAllowedFiltersForSavedSearchInput(filterContext.filters ?? {}),
-    [filterContext.filters]
-  )
-
   const showCreateAlert = enableCreateAlert && !!pills.length
 
   useEffect(() => {
+    const allowedFilters = getAllowedFiltersForSavedSearchInput(
+      filterContext.filters ?? {}
+    )
+
     const pills = extractPills({
-      filters,
+      filters: allowedFilters,
       aggregations: filterContext.aggregations,
       savedSearchAttributes: savedSearchProps,
-      metric: filterContext.metric,
+      metric: filterContext.filters?.metric,
     })
 
     setPills?.(pills)
   }, [
     savedSearchProps,
-    filters,
+    filterContext.filters,
     filterContext.aggregations,
-    filterContext.metric,
     setPills,
   ])
 

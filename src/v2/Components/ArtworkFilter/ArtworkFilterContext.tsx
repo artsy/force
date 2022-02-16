@@ -9,6 +9,8 @@ import { rangeToTuple } from "./Utils/rangeToTuple"
 import { paramsToCamelCase } from "./Utils/urlBuilder"
 import { updateUrl } from "v2/Components/ArtworkFilter/Utils/urlBuilder"
 
+export const DEFAULT_METRIC: Metric = "cm"
+
 /**
  * Initial filter state
  */
@@ -28,6 +30,7 @@ export const initialArtworkFilterState: ArtworkFilters = {
   height: "*-*",
   width: "*-*",
   priceRange: "*-*",
+  metric: DEFAULT_METRIC,
 }
 
 /**
@@ -106,11 +109,11 @@ export interface ArtworkFilters extends MultiSelectArtworkFilters {
   sort?: string
   term?: string
   width?: string
+  metric?: Metric
 }
 
 export interface ArtworkFiltersState extends ArtworkFilters {
   reset?: boolean
-  metric?: Metric
 }
 
 export type Slice =
@@ -201,8 +204,6 @@ export interface ArtworkFilterContextProps {
   counts?: Counts
   setCounts?: (counts: Counts) => void
 
-  setMetric?: (nextMetric: Metric) => void
-
   // Handlers
   onFilterClick?: (
     key: keyof ArtworkFilters,
@@ -264,8 +265,6 @@ export type SharedArtworkFilterContextProps = Pick<
   onChange?: (filterState) => void
 }
 
-export const DEFAULT_METRIC: Metric = "cm"
-
 export const ArtworkFilterContextProvider: React.FC<
   SharedArtworkFilterContextProps & {
     children: React.ReactNode
@@ -283,7 +282,6 @@ export const ArtworkFilterContextProvider: React.FC<
   const initialFilterState = {
     ...initialArtworkFilterState,
     ...paramsToCamelCase(filters),
-    metric: DEFAULT_METRIC,
   }
 
   const [artworkFilterState, dispatch] = useReducer(
@@ -301,7 +299,7 @@ export const ArtworkFilterContextProvider: React.FC<
 
   useDeepCompareEffect(() => {
     if (onChange) {
-      onChange(omit(artworkFilterState, ["reset", "metric"]))
+      onChange(omit(artworkFilterState, ["reset"]))
     }
   }, [artworkFilterState])
 
@@ -560,7 +558,6 @@ const artworkFilterReducer = (
       return {
         ...initialArtworkFilterState,
         reset: true,
-        metric: DEFAULT_METRIC,
       }
     }
 
