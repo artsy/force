@@ -110,6 +110,7 @@ export interface ArtworkFilters extends MultiSelectArtworkFilters {
 
 export interface ArtworkFiltersState extends ArtworkFilters {
   reset?: boolean
+  metric?: Metric
 }
 
 export type Slice =
@@ -200,9 +201,7 @@ export interface ArtworkFilterContextProps {
   counts?: Counts
   setCounts?: (counts: Counts) => void
 
-  // Metric
-  metric: Metric
-  setMetric: (newMetric: Metric) => void
+  setMetric?: (nextMetric: Metric) => void
 
   // Handlers
   onFilterClick?: (
@@ -265,7 +264,7 @@ export type SharedArtworkFilterContextProps = Pick<
   onChange?: (filterState) => void
 }
 
-const DEFAULT_METRIC: Metric = "cm"
+export const DEFAULT_METRIC: Metric = "cm"
 
 export const ArtworkFilterContextProvider: React.FC<
   SharedArtworkFilterContextProps & {
@@ -284,6 +283,7 @@ export const ArtworkFilterContextProvider: React.FC<
   const initialFilterState = {
     ...initialArtworkFilterState,
     ...paramsToCamelCase(filters),
+    metric: DEFAULT_METRIC,
   }
 
   const [artworkFilterState, dispatch] = useReducer(
@@ -298,11 +298,10 @@ export const ArtworkFilterContextProvider: React.FC<
   const [shouldStageFilterChanges, setShouldStageFilterChanges] = useState(
     false
   )
-  const [metric, setMetric] = useState<Metric>(DEFAULT_METRIC)
 
   useDeepCompareEffect(() => {
     if (onChange) {
-      onChange(omit(artworkFilterState, ["reset"]))
+      onChange(omit(artworkFilterState, ["reset", "metric"]))
     }
   }, [artworkFilterState])
 
@@ -340,10 +339,6 @@ export const ArtworkFilterContextProvider: React.FC<
     aggregations,
     counts: artworkCounts,
     setCounts,
-
-    // Metric
-    metric,
-    setMetric,
 
     // Components
     ZeroState,
@@ -388,7 +383,6 @@ export const ArtworkFilterContextProvider: React.FC<
         // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         payload: null,
       }
-      setMetric(DEFAULT_METRIC)
       dispatchOrStage(action)
     },
 
@@ -566,6 +560,7 @@ const artworkFilterReducer = (
       return {
         ...initialArtworkFilterState,
         reset: true,
+        metric: DEFAULT_METRIC,
       }
     }
 

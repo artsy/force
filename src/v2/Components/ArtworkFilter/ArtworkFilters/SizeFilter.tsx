@@ -15,6 +15,7 @@ import {
 } from "@artsy/palette"
 import {
   ArtworkFiltersState,
+  DEFAULT_METRIC,
   Metric,
   SelectedFiltersCountsLabels,
   useArtworkFilterContext,
@@ -121,18 +122,15 @@ export const getCustomSizeRangesInInches = (
 }
 
 export const SizeFilter: React.FC<SizeFilterProps> = ({ expanded }) => {
-  const {
-    currentlySelectedFilters,
-    setFilters,
-    metric,
-    setMetric,
-  } = useArtworkFilterContext()
+  const { currentlySelectedFilters, setFilters } = useArtworkFilterContext()
   const {
     height,
     width,
     reset,
+    metric: selectedMetric,
     ...otherSelectedFilters
   } = currentlySelectedFilters?.() as ArtworkFiltersState
+  const metric = selectedMetric ?? DEFAULT_METRIC
 
   const filtersCount = useFilterLabelCountByKey(
     SelectedFiltersCountsLabels.sizes
@@ -222,20 +220,14 @@ export const SizeFilter: React.FC<SizeFilterProps> = ({ expanded }) => {
       return
     }
 
-    if (width !== "*-*" || height !== "*-*") {
-      const customSizeRanges = getCustomSizeRangesInInches(
-        customSize,
-        nextMetric
-      )
-      const updatedFilters = {
-        ...otherSelectedFilters,
-        ...customSizeRanges,
-      }
-
-      setFilters!(updatedFilters, { force: false })
+    const customSizeRanges = getCustomSizeRangesInInches(customSize, nextMetric)
+    const updatedFilters = {
+      ...otherSelectedFilters,
+      ...customSizeRanges,
+      metric: nextMetric,
     }
 
-    setMetric(nextMetric)
+    setFilters!(updatedFilters, { force: false })
   }
 
   const tokens = useThemeConfig({
