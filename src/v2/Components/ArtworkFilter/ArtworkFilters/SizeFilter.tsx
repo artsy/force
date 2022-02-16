@@ -115,6 +115,16 @@ export interface SizeFilterProps {
 
 type Mode = "resting" | "done"
 
+const getConvertedCustomSizeRange = (customSize, metric: Metric) => {
+  let convertedCustomSize = customSize
+
+  if (metric === "cm") {
+    convertedCustomSize = convertSizeToInches(customSize)
+  }
+
+  return mapSizeToRange(convertedCustomSize)
+}
+
 export const SizeFilter: React.FC<SizeFilterProps> = ({ expanded }) => {
   const {
     currentlySelectedFilters,
@@ -197,10 +207,11 @@ export const SizeFilter: React.FC<SizeFilterProps> = ({ expanded }) => {
   }
 
   const handleClick = () => {
+    const customSizeRange = getConvertedCustomSizeRange(customSize, metric)
     const newFilters = {
       ...currentlySelectedFilters?.(),
       sizes: [],
-      ...mapSizeToRange(convertSizeToInches(customSize) as CustomSize),
+      ...customSizeRange,
     }
 
     if (reset) {
@@ -217,15 +228,14 @@ export const SizeFilter: React.FC<SizeFilterProps> = ({ expanded }) => {
     }
 
     if (width !== "*-*" || height !== "*-*") {
-      let formattedCustomSize = customSize
-
-      if (nextMetric === "cm") {
-        formattedCustomSize = convertSizeToInches(customSize)
-      }
+      const customSizeRange = getConvertedCustomSizeRange(
+        customSize,
+        nextMetric
+      )
 
       setFilters!({
         ...otherSelectedFilters,
-        ...mapSizeToRange(formattedCustomSize),
+        ...customSizeRange,
       })
     }
 
