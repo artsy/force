@@ -65,7 +65,7 @@ describe("NavBarMobileMenu", () => {
         ["/fairs", "Fairs"],
         ["/shows", "Shows"],
         ["/institutions", "Museums"],
-        ["https://nft.artsy.net", "NFTs"],
+        ["/nft", "NFTs"],
         ["/consign", "Sell"],
         ["/price-database", "Price Database"],
         ["/articles", "Editorial"],

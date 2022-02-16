@@ -111,10 +111,7 @@ export const NavBarMobileMenu: React.FC<NavBarMobileMenuProps> = ({
               Museums
             </NavBarMobileMenuItemLink>
 
-            <NavBarMobileMenuItemLink
-              to="https://nft.artsy.net"
-              onClick={handleClick}
-            >
+            <NavBarMobileMenuItemLink to="/nft" onClick={handleClick}>
               NFTs
             </NavBarMobileMenuItemLink>
 
