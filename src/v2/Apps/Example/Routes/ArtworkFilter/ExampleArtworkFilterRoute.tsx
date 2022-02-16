@@ -18,6 +18,9 @@ const ExampleArtworkFilterRoute: React.FC<ExampleArtworkFilterProps> = ({
     <ArtworkFilter
       viewer={viewer}
       filters={match.location.query}
+      relayRefetchInputVariables={{
+        first: 5,
+      }}
       sortOptions={[
         { text: "Default", value: "-decayed_merch" },
         { text: "Price (desc.)", value: "-has_price,-prices" },

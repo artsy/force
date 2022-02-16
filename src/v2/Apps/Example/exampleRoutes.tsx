@@ -120,7 +120,7 @@ export const exampleRoutes: AppRouteConfig[] = [
         prepareVariables: () => {
           return {
             input: {
-              first: 50,
+              first: 10,
             },
           }
         },

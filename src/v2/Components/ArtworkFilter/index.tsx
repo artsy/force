@@ -57,7 +57,9 @@ interface ArtworkFilterProps extends SharedArtworkFilterContextProps, BoxProps {
   enableCreateAlert?: boolean
   Filters?: JSX.Element
   offset?: number
-  relayInputVariables?: object
+  // Input variables passed to FilterArtworkConnection `input` argument
+  relayRefetchInputVariables?: object
+  // Root-level variables passed to Relay query
   relayVariables?: object
   savedSearchProps?: SavedSearchAttributes
   viewer
@@ -111,7 +113,7 @@ export const BaseArtworkFilter: React.FC<
   Filters,
   offset,
   relay,
-  relayInputVariables = {},
+  relayRefetchInputVariables = {},
   relayVariables = {},
   savedSearchProps,
   viewer,
@@ -226,15 +228,13 @@ export const BaseArtworkFilter: React.FC<
   function fetchResults() {
     toggleFetching(true)
 
-    const relayRefetchVariables = {
-      first: 30,
-      ...allowedFilters(filterContext.filters),
-      keyword: filterContext.filters!.term,
-      ...relayInputVariables,
-    }
-
     const refetchVariables = {
-      input: relayRefetchVariables,
+      input: {
+        first: 30,
+        ...allowedFilters(filterContext.filters),
+        keyword: filterContext.filters!.term,
+        ...relayRefetchInputVariables,
+      },
       ...relayVariables,
     }
 
@@ -245,6 +245,10 @@ export const BaseArtworkFilter: React.FC<
 
       toggleFetching(false)
     })
+  }
+
+  if (!viewer?.filtered_artworks) {
+    return null
   }
 
   return (
