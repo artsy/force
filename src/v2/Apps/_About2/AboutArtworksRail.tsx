@@ -45,10 +45,10 @@ export const AboutArtworksRailFragmentContainer = createFragmentContainer(
       fragment AboutArtworksRail_viewer on Viewer {
         artworks(
           ids: [
-            "5f3b5f320a69fc000de1b7ea"
-            "59e61ee8a09a6749ab69e49d"
-            "5d9b926cce2ff90011a84978"
-            "5e5572e72dbb7d000e386988"
+            "5f3b5f320a69fc000de1b7ea" # pragma: allowlist secret
+            "59e61ee8a09a6749ab69e49d" # pragma: allowlist secret
+            "5d9b926cce2ff90011a84978" # pragma: allowlist secret
+            "5e5572e72dbb7d000e386988" # pragma: allowlist secret
           ]
         ) {
           edges {
