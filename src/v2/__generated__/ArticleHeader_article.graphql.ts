@@ -11,6 +11,7 @@ export type ArticleHeader_article = {
     readonly byline: string | null;
     readonly hero: {
         readonly layout?: ArticleFeatureSectionType;
+        readonly embed?: string | null;
         readonly image?: {
             readonly url: string | null;
             readonly split: {
@@ -98,6 +99,13 @@ return {
             {
               "alias": null,
               "args": null,
+              "kind": "ScalarField",
+              "name": "embed",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
               "concreteType": "Image",
               "kind": "LinkedField",
               "name": "image",
@@ -162,5 +170,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = 'e4df2bea08b84e8b824460f0a7c84a6b';
+(node as any).hash = '70e55082ea529a8654b5c9cc0cce871a';
 export default node;

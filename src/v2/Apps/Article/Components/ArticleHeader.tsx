@@ -5,9 +5,17 @@ import {
   FullBleedHeaderOverlay,
   MIN_HEIGHT,
 } from "v2/Components/FullBleedHeader"
-import { Box, FullBleed, Image, ResponsiveBox, Text } from "@artsy/palette"
+import {
+  Box,
+  FullBleed,
+  Image,
+  ResponsiveBox,
+  Spacer,
+  Text,
+} from "@artsy/palette"
 import { ArticleHeader_article } from "v2/__generated__/ArticleHeader_article.graphql"
 import { useNavBarHeight } from "v2/Components/NavBar/useNavBarHeight"
+import styled from "styled-components"
 
 interface ArticleHeaderProps {
   article: ArticleHeader_article
@@ -19,6 +27,8 @@ const ArticleHeader: FC<ArticleHeaderProps> = ({ article }) => {
   if (!article.hero) {
     return (
       <>
+        <Spacer mt={4} />
+
         <Text variant="xs" textTransform="uppercase" mb={1}>
           {article.vertical}
         </Text>
@@ -97,19 +107,39 @@ const ArticleHeader: FC<ArticleHeaderProps> = ({ article }) => {
 
     case "BASIC": {
       return (
-        <Box textAlign="center" m={[2, 4]}>
-          <Text variant="xs" textTransform="uppercase" mb={1}>
-            {article.vertical}
-          </Text>
+        <>
+          <Spacer mt={4} />
 
-          <Text variant="xxl" flex={1}>
-            {article.title}
-          </Text>
+          <Box textAlign="center">
+            {article.hero.embed && (
+              <ResponsiveBox
+                aspectWidth={16}
+                aspectHeight={9}
+                maxWidth="100%"
+                bg="black10"
+                mb={4}
+              >
+                <Video
+                  dangerouslySetInnerHTML={{ __html: article.hero.embed }}
+                />
+              </ResponsiveBox>
+            )}
 
-          <Text variant="xxl" color="black60" mb={2}>
-            {article.byline}
-          </Text>
-        </Box>
+            {article.vertical && (
+              <Text variant="xs" textTransform="uppercase" mb={1}>
+                {article.vertical}
+              </Text>
+            )}
+
+            <Text variant="xxl" flex={1}>
+              {article.title}
+            </Text>
+
+            <Text variant="xxl" color="black60" mb={2}>
+              {article.byline}
+            </Text>
+          </Box>
+        </>
       )
     }
 
@@ -166,6 +196,7 @@ export const ArticleHeaderFragmentContainer = createFragmentContainer(
         hero {
           ... on ArticleFeatureSection {
             layout
+            embed
             image {
               url
               split: resized(width: 900) {
@@ -183,3 +214,14 @@ export const ArticleHeaderFragmentContainer = createFragmentContainer(
     `,
   }
 )
+
+const Video = styled.div`
+  width: 100%;
+  height: 100%;
+
+  > iframe {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+`
