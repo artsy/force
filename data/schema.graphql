@@ -769,6 +769,8 @@ type ArticleEdge {
 }
 
 type ArticleFeatureSection {
+  # Only YouTube and Vimeo are supported
+  embed(autoPlay: Boolean = false): String
   image: Image
   layout: ArticleFeatureSectionType!
   title: String
