@@ -3,6 +3,8 @@
 // @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
+export type CurrencyPreference = "EUR" | "GBP" | "USD" | "%future added value";
+export type LengthUnitPreference = "CM" | "IN" | "%future added value";
 export type CreditCardInput = {
     clientMutationId?: string | null;
     oneTimeUse?: boolean | null;
@@ -14,12 +16,14 @@ export type UpdateMyProfileInput = {
     clientMutationId?: string | null;
     collectorLevel?: number | null;
     completedOnboarding?: boolean | null;
+    currencyPreference?: CurrencyPreference | null;
     email?: string | null;
     emailFrequency?: string | null;
     gender?: string | null;
     iconUrl?: string | null;
     industry?: string | null;
     isCollector?: boolean | null;
+    lengthUnitPreference?: LengthUnitPreference | null;
     location?: EditableLocation | null;
     name?: string | null;
     notes?: string | null;
