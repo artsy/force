@@ -5,7 +5,7 @@
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type AboutArtworksRail_viewer = {
-    readonly artworksConnection: {
+    readonly artworks: {
         readonly edges: ReadonlyArray<{
             readonly node: {
                 readonly internalID: string;
@@ -34,19 +34,24 @@ const node: ReaderFragment = {
       "args": [
         {
           "kind": "Literal",
-          "name": "first",
-          "value": 4
+          "name": "ids",
+          "value": [
+            "5f3b5f320a69fc000de1b7ea",
+            "59e61ee8a09a6749ab69e49d",
+            "5d9b926cce2ff90011a84978",
+            "5e5572e72dbb7d000e386988"
+          ]
         }
       ],
-      "concreteType": "FilterArtworksConnection",
+      "concreteType": "ArtworkConnection",
       "kind": "LinkedField",
-      "name": "artworksConnection",
+      "name": "artworks",
       "plural": false,
       "selections": [
         {
           "alias": null,
           "args": null,
-          "concreteType": "FilterArtworksEdge",
+          "concreteType": "ArtworkEdge",
           "kind": "LinkedField",
           "name": "edges",
           "plural": true,
@@ -78,11 +83,11 @@ const node: ReaderFragment = {
           "storageKey": null
         }
       ],
-      "storageKey": "artworksConnection(first:4)"
+      "storageKey": "artworks(ids:[\"5f3b5f320a69fc000de1b7ea\",\"59e61ee8a09a6749ab69e49d\",\"5d9b926cce2ff90011a84978\",\"5e5572e72dbb7d000e386988\"])"
     }
   ],
   "type": "Viewer",
   "abstractKey": null
 };
-(node as any).hash = '95adc8ba4ce7e9cb17ceb779091b000e';
+(node as any).hash = '6037a35d73fcfd5a37e0af6dacf88162';
 export default node;

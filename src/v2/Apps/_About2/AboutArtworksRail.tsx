@@ -19,7 +19,7 @@ interface AboutArtworksRailProps {
 }
 
 export const AboutArtworksRail: React.FC<AboutArtworksRailProps> = props => {
-  const artworks = extractNodes(props.viewer.artworksConnection)
+  const artworks = extractNodes(props.viewer.artworks)
   return (
     <Rail
       title="Discover Artworks Just for You"
@@ -43,7 +43,14 @@ export const AboutArtworksRailFragmentContainer = createFragmentContainer(
   {
     viewer: graphql`
       fragment AboutArtworksRail_viewer on Viewer {
-        artworksConnection(first: 4) {
+        artworks(
+          ids: [
+            "5f3b5f320a69fc000de1b7ea"
+            "59e61ee8a09a6749ab69e49d"
+            "5d9b926cce2ff90011a84978"
+            "5e5572e72dbb7d000e386988"
+          ]
+        ) {
           edges {
             node {
               internalID
@@ -105,9 +112,3 @@ const PLACEHOLDER = (
     />
   </Skeleton>
 )
-
-// TODO: waiting on metaphysics query param for artworkIds
-// const artworkIds = [
-//   "caleb-hahne-carry-me-home",
-//   "amy-sherald-the-make-believer-monets-garden-1",
-// ]
