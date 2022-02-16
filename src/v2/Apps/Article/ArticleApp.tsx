@@ -21,10 +21,6 @@ const ArticleApp: FC<ArticleAppProps> = ({ article }) => {
         // TODO: Add description, remaining tags
       />
 
-      {!article.hero &&
-        article.layout !== "SERIES" &&
-        article.layout !== "VIDEO" && <Spacer mt={4} />}
-
       <Join separator={<Spacer mt={4} />}>
         {(() => {
           switch (article.layout) {
@@ -79,9 +75,6 @@ export const ArticleAppFragmentContainer = createFragmentContainer(ArticleApp, {
     fragment ArticleApp_article on Article {
       internalID
       title
-      hero {
-        __typename
-      }
       layout
       channelID
       ...ArticleBody_article
