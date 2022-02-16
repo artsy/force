@@ -47,6 +47,11 @@ fragment PartnerCell_partner on Partner {
       }
     }
   }
+  categories {
+    name
+    slug
+    id
+  }
   profile {
     ...FollowProfileButton_profile
     isFollowed
@@ -99,15 +104,15 @@ v4 = {
 },
 v5 = {
   "enumValues": null,
-  "nullable": true,
-  "plural": false,
-  "type": "String"
-},
-v6 = {
-  "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "ID"
+},
+v6 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "String"
 },
 v7 = {
   "enumValues": null,
@@ -229,6 +234,20 @@ return {
           {
             "alias": null,
             "args": null,
+            "concreteType": "PartnerCategory",
+            "kind": "LinkedField",
+            "name": "categories",
+            "plural": true,
+            "selections": [
+              (v3/*: any*/),
+              (v2/*: any*/),
+              (v4/*: any*/)
+            ],
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
             "concreteType": "Profile",
             "kind": "LinkedField",
             "name": "profile",
@@ -319,7 +338,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "24d0675592562b182e9efa7ccb327f89",
+    "cacheID": "7cad91f8b4a3b9d5f2b04c361a4ea18b",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -329,10 +348,19 @@ return {
           "plural": false,
           "type": "Partner"
         },
-        "partner.href": (v5/*: any*/),
-        "partner.id": (v6/*: any*/),
-        "partner.initials": (v5/*: any*/),
-        "partner.internalID": (v6/*: any*/),
+        "partner.categories": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": true,
+          "type": "PartnerCategory"
+        },
+        "partner.categories.id": (v5/*: any*/),
+        "partner.categories.name": (v6/*: any*/),
+        "partner.categories.slug": (v5/*: any*/),
+        "partner.href": (v6/*: any*/),
+        "partner.id": (v5/*: any*/),
+        "partner.initials": (v6/*: any*/),
+        "partner.internalID": (v5/*: any*/),
         "partner.locationsConnection": {
           "enumValues": null,
           "nullable": true,
@@ -351,16 +379,16 @@ return {
           "plural": false,
           "type": "Location"
         },
-        "partner.locationsConnection.edges.node.city": (v5/*: any*/),
-        "partner.locationsConnection.edges.node.id": (v6/*: any*/),
-        "partner.name": (v5/*: any*/),
+        "partner.locationsConnection.edges.node.city": (v6/*: any*/),
+        "partner.locationsConnection.edges.node.id": (v5/*: any*/),
+        "partner.name": (v6/*: any*/),
         "partner.profile": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "Profile"
         },
-        "partner.profile.id": (v6/*: any*/),
+        "partner.profile.id": (v5/*: any*/),
         "partner.profile.image": {
           "enumValues": null,
           "nullable": true,
@@ -375,17 +403,17 @@ return {
         },
         "partner.profile.image.cropped.src": (v7/*: any*/),
         "partner.profile.image.cropped.srcSet": (v7/*: any*/),
-        "partner.profile.internalID": (v6/*: any*/),
+        "partner.profile.internalID": (v5/*: any*/),
         "partner.profile.isFollowed": (v8/*: any*/),
         "partner.profile.is_followed": (v8/*: any*/),
-        "partner.profile.name": (v5/*: any*/),
-        "partner.profile.slug": (v6/*: any*/),
-        "partner.slug": (v6/*: any*/)
+        "partner.profile.name": (v6/*: any*/),
+        "partner.profile.slug": (v5/*: any*/),
+        "partner.slug": (v5/*: any*/)
       }
     },
     "name": "PartnerCellFragmentContainer_Test_Query",
     "operationKind": "query",
-    "text": "query PartnerCellFragmentContainer_Test_Query {\n  partner(id: \"example\") {\n    ...PartnerCell_partner\n    id\n  }\n}\n\nfragment FollowProfileButton_profile on Profile {\n  id\n  slug\n  name\n  internalID\n  is_followed: isFollowed\n}\n\nfragment PartnerCell_partner on Partner {\n  internalID\n  slug\n  name\n  href\n  initials\n  locationsConnection(first: 15) {\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n  profile {\n    ...FollowProfileButton_profile\n    isFollowed\n    image {\n      cropped(width: 445, height: 334, version: [\"wide\", \"large\", \"featured\", \"larger\"]) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n"
+    "text": "query PartnerCellFragmentContainer_Test_Query {\n  partner(id: \"example\") {\n    ...PartnerCell_partner\n    id\n  }\n}\n\nfragment FollowProfileButton_profile on Profile {\n  id\n  slug\n  name\n  internalID\n  is_followed: isFollowed\n}\n\nfragment PartnerCell_partner on Partner {\n  internalID\n  slug\n  name\n  href\n  initials\n  locationsConnection(first: 15) {\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n  categories {\n    name\n    slug\n    id\n  }\n  profile {\n    ...FollowProfileButton_profile\n    isFollowed\n    image {\n      cropped(width: 445, height: 334, version: [\"wide\", \"large\", \"featured\", \"larger\"]) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n"
   }
 };
 })();
