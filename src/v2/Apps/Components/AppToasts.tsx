@@ -1,5 +1,5 @@
 import * as React from "react"
-import { Box, Column, GridColumns, Toasts } from "@artsy/palette"
+import { Box, Column, GridColumns, Toasts, useToasts } from "@artsy/palette"
 import { useNavBarHeight } from "v2/Components/NavBar/useNavBarHeight"
 import { AppContainer } from "./AppContainer"
 
@@ -9,6 +9,9 @@ interface AppToastsProps {
 
 export const AppToasts: React.FC<AppToastsProps> = ({ accomodateNav }) => {
   const { height } = useNavBarHeight()
+  const { toasts } = useToasts()
+
+  if (toasts.length === 0) return null
 
   return (
     <Box
