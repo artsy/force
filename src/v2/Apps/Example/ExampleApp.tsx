@@ -45,7 +45,7 @@ const ExampleApp: React.FC<ExampleAppProps> = ({ system, children }) => {
             <RouterLink to="/example/artist/andy-warhol">
               <Text>Artist page</Text>
             </RouterLink>
-            <RouterLink to="/example/artwork/andy-warhol-dollar-sign-144">
+            <RouterLink to="/example/artwork/andy-warhol-poinsettias-19">
               <Text>Artwork page</Text>
             </RouterLink>
             <RouterLink to="/example/artwork-filter">

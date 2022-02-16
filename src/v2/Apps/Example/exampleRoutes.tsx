@@ -96,7 +96,7 @@ export const exampleRoutes: AppRouteConfig[] = [
         },
         query: graphql`
           query exampleRoutes_ArtworkQuery($slug: String!) {
-            artwork(id: $slug) {
+            artwork(id: $slug) @principalField {
               id
               ...ExampleArtworkRoute_artwork
             }
