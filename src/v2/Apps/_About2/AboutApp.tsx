@@ -108,11 +108,11 @@ export const AboutApp: React.FC = () => {
       <Spacer my={12} />
 
       <Join separator={<Spacer mt={6} />}>
-        <SellWithArtsyComponent />
-        <AppDownloadComponent />
-        <CollectorInfoComponent />
+        <SellWithArtsy />
+        <AppDownload />
+        <CollectorInfo />
         <Separator />
-        <ArtsySpecialistsComponent />
+        <ArtsySpecialists />
       </Join>
     </>
   )
@@ -134,7 +134,7 @@ const RailComponent: React.FC<RailComponentProps> = props => {
         width={props.width}
         height={props.height}
         src={props.imgUrl}
-        alt=""
+        alt="carousel of artwork images with titles and gallery names"
       />
       <Text variant="md">{props.name}</Text>
       <Text variant="md" color="black60">
@@ -147,7 +147,7 @@ const RailComponent: React.FC<RailComponentProps> = props => {
   )
 }
 
-const SellWithArtsyComponent: React.FC = () => {
+const SellWithArtsy: React.FC = () => {
   const image = resized(
     "http://files.artsy.net/images/molly_green_original.jpeg",
     { width: 640 }
@@ -177,7 +177,7 @@ const SellWithArtsyComponent: React.FC = () => {
             style={{
               objectFit: "cover",
             }}
-            alt=""
+            alt="a Molly Green art piece titled Cached"
           />
         </Box>
       )}
@@ -234,7 +234,7 @@ const SellWithArtsyComponent: React.FC = () => {
   )
 }
 
-const AppDownloadComponent: React.FC = () => {
+const AppDownload: React.FC = () => {
   const image = resized("http://files.artsy.net/download_artsy_apps_img.jpg", {
     width: 910,
     height: 652,
@@ -282,7 +282,7 @@ const AppDownloadComponent: React.FC = () => {
             height="100%"
             srcSet={image.srcSet}
             lazyLoad
-            alt=""
+            alt="painting of two iphones displaying the artsy mobile app"
           />
         </ResponsiveBox>
       </Column>
@@ -290,7 +290,7 @@ const AppDownloadComponent: React.FC = () => {
   )
 }
 
-const CollectorInfoComponent: React.FC = () => {
+const CollectorInfo: React.FC = () => {
   const image = resized(
     "http://files.artsy.net/about2_page_collector_img.jpg",
     {
@@ -313,11 +313,11 @@ const CollectorInfoComponent: React.FC = () => {
             height="100%"
             srcSet={image.srcSet}
             lazyLoad
-            alt=""
+            alt="picture of the Collection for Carole Server by Emily Johnston"
           />
         </ResponsiveBox>
         <Text variant="xs" textColor="black60" mt={0.5}>
-          The Collection fo Carole Server by Emily Johnston for Artsy 2015.
+          The Collection for Carole Server by Emily Johnston for Artsy 2015.
           Courtesy of Carole Server.
         </Text>
       </Column>
@@ -343,7 +343,7 @@ const CollectorInfoComponent: React.FC = () => {
   )
 }
 
-const ArtsySpecialistsComponent: React.FC = () => {
+const ArtsySpecialists: React.FC = () => {
   return (
     <GridColumns gridRowGap={4}>
       <Column span={6}>
