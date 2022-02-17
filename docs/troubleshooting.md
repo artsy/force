@@ -27,3 +27,10 @@ undefined
 
 Ending your session could solve the issue: Log out and see if the artwork is now
 visible.
+
+### An unknown error occurred while creating the flag provider.
+
+This error most likely indicates that you're [missing some ENV variables](https://github.com/artsy/force/pull/9393/files).
+
+Running `./scripts/setup.sh` should copy a fresh version of `.env.shared`
+(or `.env.oss`) and the error message should go away.
