@@ -377,6 +377,7 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
       is_offerable: isOfferable,
       is_acquireable: isAcquireable,
       is_inquireable: isInquireable,
+      is_sold: isSold,
     } = artwork
     const isPriceListed = !isPriceHidden
     const makeOfferEnabled = userHasLabFeature(
@@ -449,7 +450,7 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
               <Spacer mt={1} />
             )}
 
-          {avalaraPhase2Enabled && (
+          {avalaraPhase2Enabled && artworkEcommerceAvailable && !isSold && (
             <Text variant="xs" color="black60">
               Taxes may apply at checkout.{" "}
               <a
@@ -587,6 +588,7 @@ export const ArtworkSidebarCommercialFragmentContainer = createFragmentContainer
         is_for_sale: isForSale
         is_inquireable: isInquireable
         is_offerable: isOfferable
+        is_sold: isSold
         listPrice {
           ... on PriceRange {
             display

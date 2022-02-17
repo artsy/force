@@ -4,23 +4,21 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type ArticlesRail_partner = {
-    readonly slug: string;
-    readonly articlesConnection: {
-        readonly totalCount: number | null;
+export type AboutArtworksRail_viewer = {
+    readonly artworks: {
         readonly edges: ReadonlyArray<{
             readonly node: {
                 readonly internalID: string;
-                readonly " $fragmentRefs": FragmentRefs<"ArticleCell_article">;
+                readonly " $fragmentRefs": FragmentRefs<"ShelfArtwork_artwork">;
             } | null;
         } | null> | null;
     } | null;
-    readonly " $refType": "ArticlesRail_partner";
+    readonly " $refType": "AboutArtworksRail_viewer";
 };
-export type ArticlesRail_partner$data = ArticlesRail_partner;
-export type ArticlesRail_partner$key = {
-    readonly " $data"?: ArticlesRail_partner$data;
-    readonly " $fragmentRefs": FragmentRefs<"ArticlesRail_partner">;
+export type AboutArtworksRail_viewer$data = AboutArtworksRail_viewer;
+export type AboutArtworksRail_viewer$key = {
+    readonly " $data"?: AboutArtworksRail_viewer$data;
+    readonly " $fragmentRefs": FragmentRefs<"AboutArtworksRail_viewer">;
 };
 
 
@@ -29,40 +27,31 @@ const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "ArticlesRail_partner",
+  "name": "AboutArtworksRail_viewer",
   "selections": [
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "slug",
-      "storageKey": null
-    },
     {
       "alias": null,
       "args": [
         {
           "kind": "Literal",
-          "name": "first",
-          "value": 8
+          "name": "ids",
+          "value": [
+            "5f3b5f320a69fc000de1b7ea",
+            "59e61ee8a09a6749ab69e49d",
+            "5d9b926cce2ff90011a84978",
+            "5e5572e72dbb7d000e386988"
+          ]
         }
       ],
-      "concreteType": "ArticleConnection",
+      "concreteType": "ArtworkConnection",
       "kind": "LinkedField",
-      "name": "articlesConnection",
+      "name": "artworks",
       "plural": false,
       "selections": [
         {
           "alias": null,
           "args": null,
-          "kind": "ScalarField",
-          "name": "totalCount",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "concreteType": "ArticleEdge",
+          "concreteType": "ArtworkEdge",
           "kind": "LinkedField",
           "name": "edges",
           "plural": true,
@@ -70,7 +59,7 @@ const node: ReaderFragment = {
             {
               "alias": null,
               "args": null,
-              "concreteType": "Article",
+              "concreteType": "Artwork",
               "kind": "LinkedField",
               "name": "node",
               "plural": false,
@@ -85,7 +74,7 @@ const node: ReaderFragment = {
                 {
                   "args": null,
                   "kind": "FragmentSpread",
-                  "name": "ArticleCell_article"
+                  "name": "ShelfArtwork_artwork"
                 }
               ],
               "storageKey": null
@@ -94,11 +83,11 @@ const node: ReaderFragment = {
           "storageKey": null
         }
       ],
-      "storageKey": "articlesConnection(first:8)"
+      "storageKey": "artworks(ids:[\"5f3b5f320a69fc000de1b7ea\",\"59e61ee8a09a6749ab69e49d\",\"5d9b926cce2ff90011a84978\",\"5e5572e72dbb7d000e386988\"])"
     }
   ],
-  "type": "Partner",
+  "type": "Viewer",
   "abstractKey": null
 };
-(node as any).hash = 'badf6901bdaed54a3dc3600cdd63d75a';
+(node as any).hash = '6037a35d73fcfd5a37e0af6dacf88162';
 export default node;

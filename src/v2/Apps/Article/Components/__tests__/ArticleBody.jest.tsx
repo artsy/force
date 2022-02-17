@@ -21,12 +21,15 @@ describe("ArticleBody", () => {
     renderWithRelay({
       Article: () => ({
         publishedAt: "March 20th, 2020",
-        byline: "Example Author",
+        newsSource: null,
+      }),
+      Author: () => ({
+        name: "Example Author",
       }),
     })
 
     expect(screen.getByText("March 20th, 2020")).toBeInTheDocument()
-    expect(screen.getByText("—Example Author")).toBeInTheDocument()
+    expect(screen.getByText("Example Author")).toBeInTheDocument()
   })
 
   it("renders a video embed", () => {

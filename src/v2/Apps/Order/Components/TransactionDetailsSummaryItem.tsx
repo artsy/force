@@ -75,13 +75,20 @@ export class TransactionDetailsSummaryItem extends React.Component<
         />
         <Spacer mb={2} />
         {this.avalaraPhase2enabled && (
-          <Text variant="sm" color="black60">
-            *Additional duties and taxes may apply at import
+          <Text variant={["xs", "sm"]} color="black60">
+            *Additional duties and taxes{" "}
+            <a
+              href="https://support.artsy.net/hc/en-us/articles/4413546314647-Will-my-order-be-subject-to-customs-fees-"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              may apply at import.
+            </a>
           </Text>
         )}
         <Spacer mb={2} />
         {this.avalaraPhase2enabled && this.shippingNotCalculated() && (
-          <Text variant="sm" color="black60">
+          <Text variant={["xs", "sm"]} color="black60">
             **Shipping costs to be confirmed by gallery. You will be able to
             review the total price before payment.
           </Text>
@@ -135,9 +142,9 @@ export class TransactionDetailsSummaryItem extends React.Component<
     const { transactionStep } = this.props
 
     if (this.avalaraPhase2enabled) {
-      return ["review", "payment"].includes(transactionStep!)
-        ? "Waiting for final costs"
-        : "Calculated in the next steps"
+      return ["shipping", "offer"].includes(transactionStep!)
+        ? "Calculated in next steps"
+        : "Waiting for final costs"
     }
 
     return transactionStep === "review" ? "To be confirmed*" : "—"
@@ -164,8 +171,9 @@ export class TransactionDetailsSummaryItem extends React.Component<
 
   shippingNotCalculated = () => {
     const { order, transactionStep } = this.props
-    const shippingAddressAdded =
-      transactionStep === "review" || transactionStep === "payment"
+    const shippingAddressAdded = !(
+      transactionStep === "shipping" || transactionStep === "offer"
+    )
 
     switch (order.mode) {
       case "BUY":

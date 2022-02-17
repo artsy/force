@@ -8,9 +8,6 @@ export type ArticleLayout = "CLASSIC" | "FEATURE" | "NEWS" | "SERIES" | "STANDAR
 export type ArticleApp_article = {
     readonly internalID: string;
     readonly title: string | null;
-    readonly hero: {
-        readonly __typename: string;
-    } | null;
     readonly layout: ArticleLayout;
     readonly channelID: string | null;
     readonly " $fragmentRefs": FragmentRefs<"ArticleBody_article" | "ArticleSeries_article" | "ArticleVideo_article">;
@@ -47,24 +44,6 @@ const node: ReaderFragment = {
     {
       "alias": null,
       "args": null,
-      "concreteType": null,
-      "kind": "LinkedField",
-      "name": "hero",
-      "plural": false,
-      "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "__typename",
-          "storageKey": null
-        }
-      ],
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
       "kind": "ScalarField",
       "name": "layout",
       "storageKey": null
@@ -95,5 +74,5 @@ const node: ReaderFragment = {
   "type": "Article",
   "abstractKey": null
 };
-(node as any).hash = '30b4abc9011f2bd5f4a690cac9951c63';
+(node as any).hash = 'b1e639d69f9c6c9168cd17dc250074ed';
 export default node;

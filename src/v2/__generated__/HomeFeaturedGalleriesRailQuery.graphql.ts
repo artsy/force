@@ -78,6 +78,11 @@ fragment PartnerCell_partner on Partner {
       }
     }
   }
+  categories {
+    name
+    slug
+    id
+  }
   profile {
     ...FollowProfileButton_profile
     isFollowed
@@ -298,6 +303,20 @@ return {
                                   {
                                     "alias": null,
                                     "args": null,
+                                    "concreteType": "PartnerCategory",
+                                    "kind": "LinkedField",
+                                    "name": "categories",
+                                    "plural": true,
+                                    "selections": [
+                                      (v4/*: any*/),
+                                      (v3/*: any*/),
+                                      (v5/*: any*/)
+                                    ],
+                                    "storageKey": null
+                                  },
+                                  {
+                                    "alias": null,
+                                    "args": null,
                                     "concreteType": "Profile",
                                     "kind": "LinkedField",
                                     "name": "profile",
@@ -423,12 +442,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "44c72d35f5502d241e058afd8b5c5b77",
+    "cacheID": "0af8a1daa8ee08ecc491c288ecfa6135",
     "id": null,
     "metadata": {},
     "name": "HomeFeaturedGalleriesRailQuery",
     "operationKind": "query",
-    "text": "query HomeFeaturedGalleriesRailQuery {\n  orderedSet(id: \"6193c9ede70512000fbf3e8d\") {\n    ...HomeFeaturedGalleriesRail_orderedSet\n    id\n  }\n}\n\nfragment FollowProfileButton_profile on Profile {\n  id\n  slug\n  name\n  internalID\n  is_followed: isFollowed\n}\n\nfragment HomeFeaturedGalleriesRail_orderedSet on OrderedSet {\n  orderedItemsConnection(first: 20) {\n    edges {\n      node {\n        __typename\n        ... on Profile {\n          owner {\n            __typename\n            ...PartnerCell_partner\n            ... on Node {\n              __isNode: __typename\n              id\n            }\n            ... on FairOrganizer {\n              id\n            }\n          }\n          id\n        }\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n        ... on FeaturedLink {\n          id\n        }\n      }\n    }\n  }\n}\n\nfragment PartnerCell_partner on Partner {\n  internalID\n  slug\n  name\n  href\n  initials\n  locationsConnection(first: 15) {\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n  profile {\n    ...FollowProfileButton_profile\n    isFollowed\n    image {\n      cropped(width: 445, height: 334, version: [\"wide\", \"large\", \"featured\", \"larger\"]) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n"
+    "text": "query HomeFeaturedGalleriesRailQuery {\n  orderedSet(id: \"6193c9ede70512000fbf3e8d\") {\n    ...HomeFeaturedGalleriesRail_orderedSet\n    id\n  }\n}\n\nfragment FollowProfileButton_profile on Profile {\n  id\n  slug\n  name\n  internalID\n  is_followed: isFollowed\n}\n\nfragment HomeFeaturedGalleriesRail_orderedSet on OrderedSet {\n  orderedItemsConnection(first: 20) {\n    edges {\n      node {\n        __typename\n        ... on Profile {\n          owner {\n            __typename\n            ...PartnerCell_partner\n            ... on Node {\n              __isNode: __typename\n              id\n            }\n            ... on FairOrganizer {\n              id\n            }\n          }\n          id\n        }\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n        ... on FeaturedLink {\n          id\n        }\n      }\n    }\n  }\n}\n\nfragment PartnerCell_partner on Partner {\n  internalID\n  slug\n  name\n  href\n  initials\n  locationsConnection(first: 15) {\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n  categories {\n    name\n    slug\n    id\n  }\n  profile {\n    ...FollowProfileButton_profile\n    isFollowed\n    image {\n      cropped(width: 445, height: 334, version: [\"wide\", \"large\", \"featured\", \"larger\"]) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n"
   }
 };
 })();

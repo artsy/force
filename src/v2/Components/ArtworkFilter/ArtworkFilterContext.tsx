@@ -7,6 +7,7 @@ import { hasFilters } from "./Utils/hasFilters"
 import { isDefaultFilter } from "./Utils/isDefaultFilter"
 import { rangeToTuple } from "./Utils/rangeToTuple"
 import { paramsToCamelCase } from "./Utils/urlBuilder"
+import { updateUrl } from "v2/Components/ArtworkFilter/Utils/urlBuilder"
 
 /**
  * Initial filter state
@@ -267,7 +268,7 @@ export const ArtworkFilterContextProvider: React.FC<
   children,
   counts = {},
   filters = {},
-  onChange,
+  onChange = updateUrl,
   onFilterClick,
   sortOptions,
   ZeroState,

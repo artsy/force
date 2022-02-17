@@ -769,7 +769,10 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
             <Flex flexDirection="column" mt={[0, 4]}>
               <Flex flexDirection="column">
                 <ArtworkSummaryItem order={order} />
-                <TransactionDetailsSummaryItem order={order} />
+                <TransactionDetailsSummaryItem
+                  order={order}
+                  transactionStep="shipping"
+                />
               </Flex>
               <BuyerGuarantee
                 contextModule={ContextModule.ordersShipping}

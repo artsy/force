@@ -14,13 +14,13 @@ import {
   Text,
 } from "@artsy/palette"
 import { MetaTags } from "v2/Components/MetaTags"
-import { Rail } from "v2/Components/Rail"
 import { AppContainer } from "v2/Apps/Components/AppContainer"
 import styled from "styled-components"
 import { HorizontalPadding } from "../Components/HorizontalPadding"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { cropped, resized } from "v2/Utils/resized"
 import { Fragment } from "react"
+import { AboutArtworksRailQueryRenderer } from "./AboutArtworksRail"
 
 export const AboutApp: React.FC = () => {
   return (
@@ -54,100 +54,21 @@ export const AboutApp: React.FC = () => {
       </GridColumns>
 
       <Spacer mt={6} />
-
-      <Rail
-        title="Discover Artworks Just for You"
-        subTitle="On Artsy"
-        getItems={() => {
-          const items: RailComponentProps[] = [
-            {
-              imgUrl:
-                "https://d7hftxdivxxvm.cloudfront.net/?resize_to=fit&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FoOhfzetWDyPIdRYLVRBy8A%2Flarge.jpg&width=890&height=1046&quality=80",
-              name: "Caleb Hahne",
-              artworkTitle: "Carry Me Home, 2019",
-              gallery: "1969 Gallery",
-              width: 340,
-              height: 500,
-            },
-            {
-              imgUrl:
-                "https://d7hftxdivxxvm.cloudfront.net/?resize_to=fit&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FSbbu7kX5gzxEUfL4Jwyk6Q%2Flarge.jpg&width=890&height=1112&quality=80",
-              name: "Amy Sherald",
-              artworkTitle: "The Make Believer (Monet's Garden), 2016",
-              gallery: "The Studio Museum in Harlem",
-              width: 300,
-              height: 375,
-            },
-            {
-              imgUrl:
-                "https://d7hftxdivxxvm.cloudfront.net/?resize_to=fill&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FE_tdYYu4XOeuVK8ZHFwJSw%2Flarge.jpg&width=890&height=890&quality=80",
-              name: "Frank Stella",
-              artworkTitle:
-                "Sinjerli Variations Squared with Colored Grounds VI, 1981",
-              gallery: "Heritage Auctions",
-              width: 300,
-              height: 300,
-            },
-            {
-              imgUrl:
-                "https://d7hftxdivxxvm.cloudfront.net/?resize_to=fit&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2Fm4kmYLBKSkExMXlxjQ4i8A%2Flarge.jpg&width=890&height=1046&quality=80",
-              name: "Inka Essenhigh",
-              artworkTitle: "Old Trees in Fall, 2018",
-              gallery: "Miles McEnery Gallery",
-              width: 340,
-              height: 500,
-            },
-          ]
-
-          return items.map(item => {
-            return <RailComponent key={item.name} {...item} />
-          })
-        }}
-      />
-
+      <AboutArtworksRailQueryRenderer />
       <Spacer my={12} />
 
       <Join separator={<Spacer mt={6} />}>
-        <SellWithArtsyComponent />
-        <AppDownloadComponent />
-        <CollectorInfoComponent />
+        <SellWithArtsy />
+        <AppDownload />
+        <CollectorInfo />
         <Separator />
-        <ArtsySpecialistsComponent />
+        <ArtsySpecialists />
       </Join>
     </>
   )
 }
 
-interface RailComponentProps {
-  imgUrl: string
-  name: string
-  artworkTitle: string
-  gallery: string
-  width: number
-  height: number
-}
-
-const RailComponent: React.FC<RailComponentProps> = props => {
-  return (
-    <Box>
-      <Image
-        width={props.width}
-        height={props.height}
-        src={props.imgUrl}
-        alt=""
-      />
-      <Text variant="md">{props.name}</Text>
-      <Text variant="md" color="black60">
-        {props.artworkTitle}
-      </Text>
-      <Text variant="xs" color="black60">
-        {props.gallery}
-      </Text>
-    </Box>
-  )
-}
-
-const SellWithArtsyComponent: React.FC = () => {
+const SellWithArtsy: React.FC = () => {
   const image = resized(
     "http://files.artsy.net/images/molly_green_original.jpeg",
     { width: 640 }
@@ -177,7 +98,7 @@ const SellWithArtsyComponent: React.FC = () => {
             style={{
               objectFit: "cover",
             }}
-            alt=""
+            alt="a Molly Green art piece titled Cached"
           />
         </Box>
       )}
@@ -234,7 +155,7 @@ const SellWithArtsyComponent: React.FC = () => {
   )
 }
 
-const AppDownloadComponent: React.FC = () => {
+const AppDownload: React.FC = () => {
   const image = resized("http://files.artsy.net/download_artsy_apps_img.jpg", {
     width: 910,
     height: 652,
@@ -282,7 +203,7 @@ const AppDownloadComponent: React.FC = () => {
             height="100%"
             srcSet={image.srcSet}
             lazyLoad
-            alt=""
+            alt="painting of two iphones displaying the artsy mobile app"
           />
         </ResponsiveBox>
       </Column>
@@ -290,7 +211,7 @@ const AppDownloadComponent: React.FC = () => {
   )
 }
 
-const CollectorInfoComponent: React.FC = () => {
+const CollectorInfo: React.FC = () => {
   const image = resized(
     "http://files.artsy.net/about2_page_collector_img.jpg",
     {
@@ -313,11 +234,11 @@ const CollectorInfoComponent: React.FC = () => {
             height="100%"
             srcSet={image.srcSet}
             lazyLoad
-            alt=""
+            alt="picture of the Collection for Carole Server by Emily Johnston"
           />
         </ResponsiveBox>
         <Text variant="xs" textColor="black60" mt={0.5}>
-          The Collection fo Carole Server by Emily Johnston for Artsy 2015.
+          The Collection for Carole Server by Emily Johnston for Artsy 2015.
           Courtesy of Carole Server.
         </Text>
       </Column>
@@ -343,7 +264,7 @@ const CollectorInfoComponent: React.FC = () => {
   )
 }
 
-const ArtsySpecialistsComponent: React.FC = () => {
+const ArtsySpecialists: React.FC = () => {
   return (
     <GridColumns gridRowGap={4}>
       <Column span={6}>

@@ -8,7 +8,10 @@ export type ArticleLayout = "CLASSIC" | "FEATURE" | "NEWS" | "SERIES" | "STANDAR
 export type ArticleBody_article = {
     readonly layout: ArticleLayout;
     readonly title: string | null;
-    readonly byline: string | null;
+    readonly newsSource: {
+        readonly title: string | null;
+        readonly url: string | null;
+    } | null;
     readonly href: string | null;
     readonly publishedAt: string | null;
     readonly sections: ReadonlyArray<{
@@ -28,7 +31,7 @@ export type ArticleBody_article = {
             } | null;
         } | null;
     }>;
-    readonly " $fragmentRefs": FragmentRefs<"ArticleHeader_article">;
+    readonly " $fragmentRefs": FragmentRefs<"ArticleHeader_article" | "ArticleByline_article">;
     readonly " $refType": "ArticleBody_article";
 };
 export type ArticleBody_article$data = ArticleBody_article;
@@ -51,13 +54,6 @@ v1 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "byline",
-  "storageKey": null
-},
-v2 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
   "name": "href",
   "storageKey": null
 };
@@ -75,8 +71,26 @@ return {
       "storageKey": null
     },
     (v0/*: any*/),
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "ArticleNewsSource",
+      "kind": "LinkedField",
+      "name": "newsSource",
+      "plural": false,
+      "selections": [
+        (v0/*: any*/),
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "url",
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
+    },
     (v1/*: any*/),
-    (v2/*: any*/),
     {
       "alias": null,
       "args": [
@@ -161,8 +175,14 @@ return {
           "storageKey": null
         },
         (v0/*: any*/),
-        (v2/*: any*/),
         (v1/*: any*/),
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "byline",
+          "storageKey": null
+        },
         {
           "alias": null,
           "args": null,
@@ -217,11 +237,16 @@ return {
       "args": null,
       "kind": "FragmentSpread",
       "name": "ArticleHeader_article"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ArticleByline_article"
     }
   ],
   "type": "Article",
   "abstractKey": null
 };
 })();
-(node as any).hash = 'a10e48f15562f392c8a60562decc698f';
+(node as any).hash = '2bed116448c476603b7eccbf3bdb2cda';
 export default node;
