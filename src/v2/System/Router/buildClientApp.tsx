@@ -1,4 +1,4 @@
-import { ComponentType } from "react"
+import { ComponentType } from "react";
 
 import { Resolver } from "found-relay"
 import { ScrollManager } from "found-scroll"
@@ -43,7 +43,6 @@ export function buildClientApp(config: RouterConfig): Promise<Resolve> {
         history = {},
         initialRoute = "/",
         routes = [],
-        featureFlags = {},
       } = config
       const clientContext = buildClientAppContext(context)
 
@@ -113,7 +112,6 @@ export function buildClientApp(config: RouterConfig): Promise<Resolve> {
             user={user}
             relayEnvironment={relayEnvironment}
             routes={routes}
-            featureFlags={featureFlags}
           >
             <Router resolver={resolver} />
           </Boot>

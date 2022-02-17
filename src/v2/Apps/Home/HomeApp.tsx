@@ -1,5 +1,5 @@
 import { Spacer, Join, FullBleed } from "@artsy/palette"
-import * as React from "react"
+import * as React from "react";
 import { createFragmentContainer, graphql } from "react-relay"
 import { HomeApp_homePage } from "v2/__generated__/HomeApp_homePage.graphql"
 import { HomeApp_featuredEventsOrderedSet } from "v2/__generated__/HomeApp_featuredEventsOrderedSet.graphql"
