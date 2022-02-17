@@ -12,13 +12,13 @@ import {
   useArtworkFilterContext,
 } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
 import {
-  getUnitLabelByMetric,
+  getMetricLabel,
   getPredefinedSizesByMetric,
   parseRange,
   SizeFilter,
   SIZES_IN_CENTIMETERS,
   SIZES_IN_INCHES,
-  getCustomSizeRangesInInches,
+  getCustomSizeRangeInInches,
   CustomSize,
 } from "../SizeFilter"
 
@@ -238,13 +238,13 @@ describe("getPredefinedSizesByMetric", () => {
   })
 })
 
-describe("getUnitLabelByMetric", () => {
+describe("getMetricLabel", () => {
   it("should return centimeters label when `cm` metric is specified", () => {
-    expect(getUnitLabelByMetric("cm")).toBe("cm")
+    expect(getMetricLabel("cm")).toBe("cm")
   })
 
   it("should return inches label when `in` metric is specified", () => {
-    expect(getUnitLabelByMetric("in")).toBe("in")
+    expect(getMetricLabel("in")).toBe("in")
   })
 })
 
@@ -274,7 +274,7 @@ describe("parseRange", () => {
   })
 })
 
-describe("getCustomSizeRangesInInches", () => {
+describe("getCustomSizeRangeInInches", () => {
   it("should return correct custom size ranges in inches", () => {
     const range: CustomSize = {
       width: [5, 10],
@@ -285,7 +285,7 @@ describe("getCustomSizeRangesInInches", () => {
       height: "15-20",
     }
 
-    expect(getCustomSizeRangesInInches(range, "in")).toEqual(result)
+    expect(getCustomSizeRangeInInches(range, "in")).toEqual(result)
   })
 
   it("should return correct custom size ranges in inches when default values are passed", () => {
@@ -298,7 +298,7 @@ describe("getCustomSizeRangesInInches", () => {
       height: "*-20",
     }
 
-    expect(getCustomSizeRangesInInches(range, "in")).toEqual(result)
+    expect(getCustomSizeRangeInInches(range, "in")).toEqual(result)
   })
 
   it("should return custom size ranges with default values", () => {
@@ -311,7 +311,7 @@ describe("getCustomSizeRangesInInches", () => {
       height: "*-*",
     }
 
-    expect(getCustomSizeRangesInInches(range, "in")).toEqual(result)
+    expect(getCustomSizeRangeInInches(range, "in")).toEqual(result)
   })
 
   it("should return correct custom size ranges in centimeters", () => {
@@ -324,7 +324,7 @@ describe("getCustomSizeRangesInInches", () => {
       height: "5.905511811023622-7.874015748031496",
     }
 
-    expect(getCustomSizeRangesInInches(range, "cm")).toEqual(result)
+    expect(getCustomSizeRangeInInches(range, "cm")).toEqual(result)
   })
 
   it("should return correct custom size ranges in centimeters when default values are passed", () => {
@@ -337,6 +337,6 @@ describe("getCustomSizeRangesInInches", () => {
       height: "5.905511811023622-*",
     }
 
-    expect(getCustomSizeRangesInInches(range, "cm")).toEqual(result)
+    expect(getCustomSizeRangeInInches(range, "cm")).toEqual(result)
   })
 })

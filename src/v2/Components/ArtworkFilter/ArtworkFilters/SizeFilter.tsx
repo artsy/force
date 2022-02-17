@@ -57,8 +57,11 @@ export const SIZES_IN_CENTIMETERS = [
 const convertToCentimeters = (element: number) => {
   return Math.round(element * ONE_IN_TO_CM)
 }
+const convertToInches = (value: number) => {
+  return value / ONE_IN_TO_CM
+}
 
-export const parseRange = (range: string = "", metric: Metric) => {
+export const parseRange = (range: string = "", metric: Metric): Numeric[] => {
   return range.split("-").map(s => {
     if (s === "*") return s
     const value = parseFloat(s)
@@ -71,19 +74,14 @@ export const parseRange = (range: string = "", metric: Metric) => {
   })
 }
 
-const convertRangeElementToInches = (element: Numeric) => {
-  if (element === "*") {
-    return element
-  }
-
-  return element / ONE_IN_TO_CM
-}
-
 const convertRangeToInches = (range: CustomRange) => {
-  return [
-    convertRangeElementToInches(range[0]),
-    convertRangeElementToInches(range[1]),
-  ]
+  return range.map(value => {
+    if (value === "*") {
+      return value
+    }
+
+    return convertToInches(value)
+  })
 }
 
 const getValue = (value: CustomRange[number]) => {
@@ -98,11 +96,11 @@ export const getPredefinedSizesByMetric = (metric: Metric) => {
   return SIZES_IN_INCHES
 }
 
-export const getUnitLabelByMetric = (metric: Metric) => {
+export const getMetricLabel = (metric: Metric) => {
   return metric === "cm" ? "cm" : "in"
 }
 
-export const getCustomSizeRangesInInches = (
+export const getCustomSizeRangeInInches = (
   customSize: CustomSize,
   sourceMetric: Metric
 ) => {
@@ -139,8 +137,8 @@ export const SizeFilter: React.FC<SizeFilterProps> = ({ expanded }) => {
 
   const initialCustomSize = React.useMemo(
     () => ({
-      height: parseRange(height, metric) as CustomRange,
-      width: parseRange(width, metric) as CustomRange,
+      height: parseRange(height, metric),
+      width: parseRange(width, metric),
     }),
     [width, height, metric]
   )
@@ -152,7 +150,7 @@ export const SizeFilter: React.FC<SizeFilterProps> = ({ expanded }) => {
   const [mode, setMode] = useMode<Mode>("resting")
 
   const predefinedSizes = getPredefinedSizesByMetric(metric)
-  const metricUnitLabel = getUnitLabelByMetric(metric)
+  const metricLabel = getMetricLabel(metric)
 
   const handleInputChange = (dimension: "height" | "width", index: number) => ({
     currentTarget: { value },
@@ -200,7 +198,7 @@ export const SizeFilter: React.FC<SizeFilterProps> = ({ expanded }) => {
   }
 
   const handleClick = () => {
-    const customSizeRanges = getCustomSizeRangesInInches(customSize, metric)
+    const customSizeRanges = getCustomSizeRangeInInches(customSize, metric)
     const newFilters = {
       ...currentlySelectedFilters?.(),
       sizes: [],
@@ -220,7 +218,7 @@ export const SizeFilter: React.FC<SizeFilterProps> = ({ expanded }) => {
       return
     }
 
-    const customSizeRanges = getCustomSizeRangesInInches(customSize, nextMetric)
+    const customSizeRanges = getCustomSizeRangeInInches(customSize, nextMetric)
     const updatedFilters = {
       ...otherSelectedFilters,
       ...customSizeRanges,
@@ -308,7 +306,7 @@ export const SizeFilter: React.FC<SizeFilterProps> = ({ expanded }) => {
           <Text mt={1}>Width</Text>
           <Flex alignItems="flex-end">
             <NumericInput
-              label={metricUnitLabel}
+              label={metricLabel}
               name="width_min"
               min="0"
               step="1"
@@ -317,7 +315,7 @@ export const SizeFilter: React.FC<SizeFilterProps> = ({ expanded }) => {
             />
             <Spacer mx={0.5} />
             <NumericInput
-              label={metricUnitLabel}
+              label={metricLabel}
               name="width_max"
               min="0"
               step="1"
@@ -329,7 +327,7 @@ export const SizeFilter: React.FC<SizeFilterProps> = ({ expanded }) => {
           <Text mt={1}>Height</Text>
           <Flex alignItems="flex-end">
             <NumericInput
-              label={metricUnitLabel}
+              label={metricLabel}
               name="height_min"
               min="0"
               step="1"
@@ -340,7 +338,7 @@ export const SizeFilter: React.FC<SizeFilterProps> = ({ expanded }) => {
             <Spacer mx={0.5} />
 
             <NumericInput
-              label={metricUnitLabel}
+              label={metricLabel}
               name="height_max"
               min="0"
               step="1"

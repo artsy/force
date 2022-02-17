@@ -2,12 +2,13 @@ import { compact, find, flatten, keyBy } from "lodash"
 import {
   Aggregations,
   ArtworkFilters,
+  DEFAULT_METRIC,
   Metric,
 } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
 import { checkboxValues } from "v2/Components/ArtworkFilter/ArtworkFilters/AttributionClassFilter"
 import { COLOR_OPTIONS } from "v2/Components/ArtworkFilter/ArtworkFilters/ColorFilter"
 import {
-  getUnitLabelByMetric,
+  getMetricLabel,
   getPredefinedSizesByMetric,
   parseRange,
 } from "v2/Components/ArtworkFilter/ArtworkFilters/SizeFilter"
@@ -53,7 +54,7 @@ export const extractSizeLabel = (
   metric: Metric
 ) => {
   const [min, max] = parseRange(value, metric)!
-  const metricUnitLabel = getUnitLabelByMetric(metric)
+  const metricLabel = getMetricLabel(metric)
 
   let label
   if (max === "*") {
@@ -64,7 +65,7 @@ export const extractSizeLabel = (
     label = `${min}-${max}`
   }
 
-  return `${prefix}: ${label} ${metricUnitLabel}`
+  return `${prefix}: ${label} ${metricLabel}`
 }
 
 const extractPriceLabel = (range: string) => {
@@ -90,7 +91,7 @@ export const extractPillsFromFilters = (options: {
   aggregations: Aggregations
   metric?: Metric
 }) => {
-  const { filters, aggregations = [], metric = "cm" } = options
+  const { filters, aggregations = [], metric = DEFAULT_METRIC } = options
   const pills: NonDefaultFilterPill[] = Object.entries(filters).map(filter => {
     const [paramName, paramValue] = filter
 
