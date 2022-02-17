@@ -450,7 +450,7 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
               <Spacer mt={1} />
             )}
 
-          {avalaraPhase2Enabled && !isSold && (
+          {avalaraPhase2Enabled && artworkEcommerceAvailable && !isSold && (
             <Text variant="xs" color="black60">
               Taxes may apply at checkout.{" "}
               <a
