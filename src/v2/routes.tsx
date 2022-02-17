@@ -1,4 +1,4 @@
-import { aboutRoutes } from "./Apps/About/aboutRoutes"
+import { aboutRoutes } from "v2/Apps/About/aboutRoutes"
 import { AppRouteConfig } from "v2/System/Router/Route"
 import { articleRoutes } from "v2/Apps/Article/articleRoutes"
 import { articlesRoutes } from "v2/Apps/Articles/articlesRoutes"
