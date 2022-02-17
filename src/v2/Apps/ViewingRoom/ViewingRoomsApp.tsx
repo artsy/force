@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"
 import { Join, Spacer, Text } from "@artsy/palette"
 import { ViewingRoomsLatestGridFragmentContainer } from "./Components/ViewingRoomsLatestGrid"
 import { ViewingRoomsMeta } from "./Components/ViewingRoomsMeta"
@@ -6,6 +6,7 @@ import { ViewingRoomsApp_allViewingRooms } from "v2/__generated__/ViewingRoomsAp
 import { ViewingRoomsApp_featuredViewingRooms } from "v2/__generated__/ViewingRoomsApp_featuredViewingRooms.graphql"
 import { ViewingRoomsFeaturedRailFragmentContainer } from "./Components/ViewingRoomsFeaturedRail"
 import { createFragmentContainer, graphql } from "react-relay"
+import { useFeatureFlag } from "lib/featureFlags/FeatureFlagProvider"
 
 interface ViewingRoomsAppProps {
   allViewingRooms: ViewingRoomsApp_allViewingRooms
@@ -31,11 +32,15 @@ const ViewingRoomsApp: React.FC<ViewingRoomsAppProps> = props => {
           featuredViewingRooms={featuredViewingRooms}
         />
 
-        <Text variant="lg">Latest</Text>
+        {useFeatureFlag("just-a-test") && (
+          <>
+            <Text variant="lg">Latest</Text>
 
-        <ViewingRoomsLatestGridFragmentContainer
-          viewingRooms={allViewingRooms}
-        />
+            <ViewingRoomsLatestGridFragmentContainer
+              viewingRooms={allViewingRooms}
+            />
+          </>
+        )}
       </Join>
     </>
   )
