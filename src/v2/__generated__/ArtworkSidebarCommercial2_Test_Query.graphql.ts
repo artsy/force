@@ -41,6 +41,7 @@ fragment ArtworkSidebarCommercial_artwork on Artwork {
   is_for_sale: isForSale
   is_inquireable: isInquireable
   is_offerable: isOfferable
+  is_sold: isSold
   listPrice {
     __typename
     ... on PriceRange {
@@ -271,6 +272,13 @@ return {
           },
           (v4/*: any*/),
           {
+            "alias": "is_sold",
+            "args": null,
+            "kind": "ScalarField",
+            "name": "isSold",
+            "storageKey": null
+          },
+          {
             "alias": null,
             "args": null,
             "concreteType": null,
@@ -336,7 +344,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "2ba97500f3b1f182c0819f34a490f5e2",
+    "cacheID": "ce4e91a97072681ec2fe2e7cedcc11cb",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -375,6 +383,7 @@ return {
         "artwork.is_for_sale": (v10/*: any*/),
         "artwork.is_inquireable": (v10/*: any*/),
         "artwork.is_offerable": (v10/*: any*/),
+        "artwork.is_sold": (v10/*: any*/),
         "artwork.listPrice": {
           "enumValues": null,
           "nullable": true,
@@ -392,7 +401,7 @@ return {
     },
     "name": "ArtworkSidebarCommercial2_Test_Query",
     "operationKind": "query",
-    "text": "query ArtworkSidebarCommercial2_Test_Query {\n  artwork(id: \"pretty-drawing-111\") {\n    ...ArtworkSidebarCommercial_artwork\n    id\n  }\n}\n\nfragment ArtworkSidebarCommercial_artwork on Artwork {\n  edition_sets: editionSets {\n    internalID\n    id\n    is_acquireable: isAcquireable\n    is_offerable: isOfferable\n    sale_message: saleMessage\n    ...ArtworkSidebarSizeInfo_piece\n  }\n  internalID\n  isOfferableFromInquiry\n  isPriceHidden\n  is_acquireable: isAcquireable\n  is_for_sale: isForSale\n  is_inquireable: isInquireable\n  is_offerable: isOfferable\n  listPrice {\n    __typename\n    ... on PriceRange {\n      display\n    }\n    ... on Money {\n      display\n    }\n  }\n  priceIncludesTaxDisplay\n  sale_message: saleMessage\n  shippingInfo\n  shippingOrigin\n  slug\n}\n\nfragment ArtworkSidebarSizeInfo_piece on Sellable {\n  __isSellable: __typename\n  dimensions {\n    in\n    cm\n  }\n  edition_of: editionOf\n}\n"
+    "text": "query ArtworkSidebarCommercial2_Test_Query {\n  artwork(id: \"pretty-drawing-111\") {\n    ...ArtworkSidebarCommercial_artwork\n    id\n  }\n}\n\nfragment ArtworkSidebarCommercial_artwork on Artwork {\n  edition_sets: editionSets {\n    internalID\n    id\n    is_acquireable: isAcquireable\n    is_offerable: isOfferable\n    sale_message: saleMessage\n    ...ArtworkSidebarSizeInfo_piece\n  }\n  internalID\n  isOfferableFromInquiry\n  isPriceHidden\n  is_acquireable: isAcquireable\n  is_for_sale: isForSale\n  is_inquireable: isInquireable\n  is_offerable: isOfferable\n  is_sold: isSold\n  listPrice {\n    __typename\n    ... on PriceRange {\n      display\n    }\n    ... on Money {\n      display\n    }\n  }\n  priceIncludesTaxDisplay\n  sale_message: saleMessage\n  shippingInfo\n  shippingOrigin\n  slug\n}\n\nfragment ArtworkSidebarSizeInfo_piece on Sellable {\n  __isSellable: __typename\n  dimensions {\n    in\n    cm\n  }\n  edition_of: editionOf\n}\n"
   }
 };
 })();
