@@ -21,12 +21,10 @@ describe("SubmittedOrderModal", () => {
     query: graphql`
       query SubmittedOrderModal_Test_Query {
         me {
-          conversation(id: "test-id") {
-            orderConnection(first: 10) {
-              edges {
-                node {
-                  ...SubmittedOrderModal_order
-                }
+          orders(first: 10) {
+            edges {
+              node {
+                ...SubmittedOrderModal_order
               }
             }
           }
