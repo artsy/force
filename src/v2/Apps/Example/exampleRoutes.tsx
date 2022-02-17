@@ -96,7 +96,7 @@ export const exampleRoutes: AppRouteConfig[] = [
         },
         query: graphql`
           query exampleRoutes_ArtworkQuery($slug: String!) {
-            artwork(id: $slug) {
+            artwork(id: $slug) @principalField {
               id
               ...ExampleArtworkRoute_artwork
             }
@@ -104,22 +104,26 @@ export const exampleRoutes: AppRouteConfig[] = [
         `,
       },
       {
-        path: "artwork-filter/:slug",
+        path: "artwork-filter",
         theme: "v2",
         getComponent: () => ArtworkFilterRoute,
         onClientSideRender: () => {
           ArtworkRoute.preload()
         },
         query: graphql`
-          query exampleRoutes_TagQuery(
-            $slug: String!
-            $input: FilterArtworksInput
-          ) {
-            tag(id: $slug) @principalField {
-              ...ExampleArtworkFilterRoute_tag @arguments(input: $input)
+          query exampleRoutes_ArtworkFilterQuery($input: FilterArtworksInput) {
+            viewer {
+              ...ExampleArtworkFilterRoute_viewer @arguments(input: $input)
             }
           }
         `,
+        prepareVariables: () => {
+          return {
+            input: {
+              first: 10,
+            },
+          }
+        },
       },
     ],
   },
