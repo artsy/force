@@ -360,7 +360,7 @@ describe("CurrentUser", () => {
 
     beforeEach(() => {
       authentications = [
-        { id: "1", provider: "twitter", uid: "123456789" },
+        { id: "1", provider: "google", uid: "123456789" },
         { id: "2", provider: "facebook", uid: "987654321" },
       ]
     })
@@ -368,18 +368,18 @@ describe("CurrentUser", () => {
     describe("relation", () => {
       it("should inject initial authentications", () => {
         const user = new CurrentUser({ authentications: authentications })
-        user.isLinkedTo("twitter").should.be.true()
+        user.isLinkedTo("google").should.be.true()
         user.isLinkedTo("facebook").should.be.true()
       })
     })
 
     describe("#isLinkedTo", () => {
       it("determines if an account is linked to an app provider", () => {
-        user.isLinkedTo("twitter").should.be.false()
+        user.isLinkedTo("google").should.be.false()
 
         user.related().authentications.reset(authentications)
 
-        user.isLinkedTo("twitter").should.be.true()
+        user.isLinkedTo("google").should.be.true()
         user.isLinkedTo("facebook").should.be.true()
       })
     })

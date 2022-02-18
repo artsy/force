@@ -85,8 +85,6 @@ export const GOOGLE_SECRET: any = null
 export const GOOGLE_MAPS_API_KEY: any = null
 export const IMAGE_PROXY: any = "GEMINI"
 export const IP_DENYLIST: any = ""
-export const LINKEDIN_KEY: any = null
-export const LINKEDIN_SECRET: any = null
 export const METAPHYSICS_ENDPOINT: any =
   "https://metaphysics-production.artsy.net"
 export const NODE_ENV: any = "development"
