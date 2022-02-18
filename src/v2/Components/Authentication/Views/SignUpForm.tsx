@@ -176,46 +176,6 @@ export class SignUpForm extends Component<SignUpFormProps, SignUpFormState> {
                   <Banner variant="error">{status.error}</Banner>
                 )}
 
-                <Button type="submit" loading={isSubmitting} width="100%">
-                  Sign up
-                </Button>
-
-                <Text variant="sm" textAlign="center" color="black60">
-                  or
-                </Text>
-
-                <AuthenticationFooter
-                  mode={"signup" as ModalType}
-                  handleTypeChange={() =>
-                    this.props.handleTypeChange?.(ModalType.login)
-                  }
-                  onAppleLogin={async e => {
-                    if (!values.accepted_terms_of_service) {
-                      setTouched({ accepted_terms_of_service: true })
-                      await validateForm()
-                    } else {
-                      this.props.onAppleLogin?.(e)
-                    }
-                  }}
-                  onFacebookLogin={async e => {
-                    if (!values.accepted_terms_of_service) {
-                      setTouched({ accepted_terms_of_service: true })
-                      await validateForm()
-                    } else {
-                      this.props.onFacebookLogin?.(e)
-                    }
-                  }}
-                  onGoogleLogin={async e => {
-                    if (!values.accepted_terms_of_service) {
-                      setTouched({ accepted_terms_of_service: true })
-                      await validateForm()
-                    } else {
-                      this.props.onGoogleLogin?.(e)
-                    }
-                  }}
-                  showRecaptchaDisclaimer={this.props.showRecaptchaDisclaimer}
-                />
-
                 {collapseCheckboxes ? (
                   <AuthenticationCheckbox
                     error={!!termsErrorMessage}
@@ -283,6 +243,46 @@ export class SignUpForm extends Component<SignUpFormProps, SignUpFormState> {
                     promotional content. Unsubscribe at any time.
                   </AuthenticationCheckbox>
                 )}
+
+                <Button type="submit" loading={isSubmitting} width="100%">
+                  Sign up
+                </Button>
+
+                <Text variant="sm" textAlign="center" color="black60">
+                  or
+                </Text>
+
+                <AuthenticationFooter
+                  mode={"signup" as ModalType}
+                  handleTypeChange={() =>
+                    this.props.handleTypeChange?.(ModalType.login)
+                  }
+                  onAppleLogin={async e => {
+                    if (!values.accepted_terms_of_service) {
+                      setTouched({ accepted_terms_of_service: true })
+                      await validateForm()
+                    } else {
+                      this.props.onAppleLogin?.(e)
+                    }
+                  }}
+                  onFacebookLogin={async e => {
+                    if (!values.accepted_terms_of_service) {
+                      setTouched({ accepted_terms_of_service: true })
+                      await validateForm()
+                    } else {
+                      this.props.onFacebookLogin?.(e)
+                    }
+                  }}
+                  onGoogleLogin={async e => {
+                    if (!values.accepted_terms_of_service) {
+                      setTouched({ accepted_terms_of_service: true })
+                      await validateForm()
+                    } else {
+                      this.props.onGoogleLogin?.(e)
+                    }
+                  }}
+                  showRecaptchaDisclaimer={this.props.showRecaptchaDisclaimer}
+                />
               </Join>
             </Box>
           )
