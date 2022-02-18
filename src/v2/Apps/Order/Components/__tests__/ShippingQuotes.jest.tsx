@@ -65,6 +65,17 @@ describe("ShippingQuotes", () => {
     expect(shippingQuotes).toHaveLength(5)
   })
 
+  it("auto selects the first shipping quote", async () => {
+    const shippingQuotes = page
+      .find(`[data-test="shipping-quotes"]`)
+      .find(BorderedRadio)
+
+    // The id of the lowest cost shipping option in BuyOrderWithArtaShippingDetails mocked data
+    expect(shippingQuotes.first().props().value).toEqual(
+      "4a8f8080-23d3-4c0e-9811-7a41a9df6933"
+    )
+  })
+
   it("have selected quote", async () => {
     const selectedShippingQuote = page
       .find(`[data-test="shipping-quotes"]`)
