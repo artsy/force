@@ -13,7 +13,7 @@ import {
   useSavedSearchContext,
 } from "../Utils/SavedSearchContext"
 import { FilterPill, SavedSearchEntity } from "../types"
-import { getAllowedFiltersForSavedSearchInput } from "../../Utils/allowedFilters"
+import { getAllowedSearchCriteria } from "../Utils"
 
 const PILL_HORIZONTAL_MARGIN_SIZE = 0.5
 
@@ -53,7 +53,7 @@ export const ArtworkGridFilterPills = () => {
 export const ArtworkGridFilterPillsContainer: React.FC<ArtworkGridFilterPillsContainerProps> = props => {
   const { savedSearchEntity } = props
   const { filters, aggregations } = useArtworkFilterContext()
-  const allowedFilters = getAllowedFiltersForSavedSearchInput(filters ?? {})
+  const allowedFilters = getAllowedSearchCriteria(filters ?? {})
 
   return (
     <SavedSearchContextProvider

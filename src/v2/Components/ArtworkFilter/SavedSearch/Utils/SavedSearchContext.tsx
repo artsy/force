@@ -1,9 +1,13 @@
 import { useContext } from "react"
 import { createContext } from "react"
 import { extractPills } from "v2/Components/SavedSearchAlert/Utils/extractPills"
-import { Aggregations, ArtworkFiltersState } from "../../ArtworkFilterContext"
-import { getAllowedFiltersForSavedSearchInput } from "../../Utils/allowedFilters"
-import { FilterPill, SavedSearchEntity } from "../types"
+import { getAllowedSearchCriteria } from "."
+import { Aggregations } from "../../ArtworkFilterContext"
+import {
+  FilterPill,
+  SavedSearchEntity,
+  SearchCriteriaAttributes,
+} from "../types"
 
 export interface SavedSearchContextProps {
   pills: FilterPill[]
@@ -13,7 +17,7 @@ export interface SavedSearchContextProps {
 interface SavedSearchContextProviderProps {
   entity: SavedSearchEntity
   aggregations: Aggregations
-  filters: ArtworkFiltersState
+  filters: SearchCriteriaAttributes
 }
 
 export const SavedSearchContext = createContext<SavedSearchContextProps>({
@@ -27,7 +31,7 @@ export const SavedSearchContextProvider: React.FC<SavedSearchContextProviderProp
   filters,
   children,
 }) => {
-  const allowedFilters = getAllowedFiltersForSavedSearchInput(filters ?? {})
+  const allowedFilters = getAllowedSearchCriteria(filters)
   const pills = extractPills(allowedFilters, aggregations, entity)
   const contextValue: SavedSearchContextProps = {
     pills,

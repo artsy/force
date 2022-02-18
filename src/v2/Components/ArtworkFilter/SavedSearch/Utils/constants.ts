@@ -28,7 +28,6 @@ export const allowedSearchCriteriaKeys = [
   "offerable",
   "materialsTerms",
   "priceRange",
-  "dimensionRange",
   "sizes",
   "height",
   "width",

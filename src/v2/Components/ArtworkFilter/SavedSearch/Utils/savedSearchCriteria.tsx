@@ -1,22 +1,22 @@
 import { SearchCriteriaAttributes } from "v2/__generated__/createSavedSearchAlertMutation.graphql"
 import {
-  ArtworkFilters,
+  ArtworkFiltersState,
   initialArtworkFilterState,
 } from "../../ArtworkFilterContext"
 import { allowedSearchCriteriaKeys } from "./constants"
 
-export const getAllowedFiltersForSavedSearchInput = (
-  filters: ArtworkFilters
+export const getAllowedSearchCriteria = (
+  criteria: SearchCriteriaAttributes
 ) => {
-  const allowedFilters: SearchCriteriaAttributes = {}
+  const allowedCriteria: SearchCriteriaAttributes = {}
 
-  Object.keys(filters).forEach(filterKey => {
+  Object.keys(criteria).forEach(filterKey => {
     if (allowedSearchCriteriaKeys.includes(filterKey)) {
-      allowedFilters[filterKey] = filters[filterKey]
+      allowedCriteria[filterKey] = criteria[filterKey]
     }
   })
 
-  return allowedFilters
+  return allowedCriteria
 }
 
 const isDefaultValue = (paramName, paramValue) => {
@@ -28,9 +28,9 @@ const isDefaultValue = (paramName, paramValue) => {
 
 export const getSearchCriteriaFromFilters = (
   artistID: string,
-  filters: ArtworkFilters
+  filters: ArtworkFiltersState
 ) => {
-  const allowedFilters = getAllowedFiltersForSavedSearchInput(filters)
+  const allowedFilters = getAllowedSearchCriteria(filters)
 
   const input = Object.entries(allowedFilters).reduce(
     (acc, [paramName, paramValue]) => {

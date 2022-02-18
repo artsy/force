@@ -1,8 +1,5 @@
 import { compact, find, flatten, keyBy } from "lodash"
-import {
-  Aggregations,
-  ArtworkFilters,
-} from "v2/Components/ArtworkFilter/ArtworkFilterContext"
+import { Aggregations } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
 import { checkboxValues } from "v2/Components/ArtworkFilter/ArtworkFilters/AttributionClassFilter"
 import { COLOR_OPTIONS } from "v2/Components/ArtworkFilter/ArtworkFilters/ColorFilter"
 import {
@@ -20,6 +17,7 @@ import {
   DefaultFilterPill,
   NonDefaultFilterPill,
   SavedSearchEntity,
+  SearchCriteriaAttributes,
 } from "v2/Components/ArtworkFilter/SavedSearch/types"
 
 export const extractPillFromAggregation = (
@@ -78,11 +76,11 @@ const extractPriceLabel = (range: string) => {
   return label
 }
 
-export const extractPillsFromFilters = (
-  filters: ArtworkFilters,
+export const extractPillsFromCriteria = (
+  criteria: SearchCriteriaAttributes,
   aggregations: Aggregations = []
 ) => {
-  const pills: NonDefaultFilterPill[] = Object.entries(filters).map(filter => {
+  const pills: NonDefaultFilterPill[] = Object.entries(criteria).map(filter => {
     const [paramName, paramValue] = filter
 
     let result: NonDefaultFilterPill | NonDefaultFilterPill[] | null = null
@@ -189,12 +187,12 @@ export const extractArtistPill = (
 }
 
 export const extractPills = (
-  filters: ArtworkFilters,
+  criteria: SearchCriteriaAttributes,
   aggregations: Aggregations = [],
   savedSearchEntity?: SavedSearchEntity
 ) => {
   const artistPill = extractArtistPill(savedSearchEntity)
-  const pillsFromFilters = extractPillsFromFilters(filters, aggregations)
+  const pillsFromCriteria = extractPillsFromCriteria(criteria, aggregations)
 
-  return compact([artistPill, ...pillsFromFilters])
+  return compact([artistPill, ...pillsFromCriteria])
 }
