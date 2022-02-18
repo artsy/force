@@ -11,7 +11,7 @@ import * as React from "react"
 import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
 import { ZeroState } from "./ZeroState"
 import { useRouter } from "v2/System/Router/useRouter"
-import { SavedSearchAttributes } from "v2/Components/ArtworkFilter/SavedSearch/types"
+import { SavedSearchEntity } from "v2/Components/ArtworkFilter/SavedSearch/types"
 
 interface ArtistArtworkFilterProps {
   aggregations: SharedArtworkFilterContextProps["aggregations"]
@@ -30,7 +30,7 @@ const ArtistArtworkFilter: React.FC<ArtistArtworkFilterProps> = props => {
     return null
   }
 
-  const savedSearchEntity: SavedSearchAttributes = {
+  const savedSearchEntity: SavedSearchEntity = {
     type: "artist",
     id: artist.internalID,
     name: artist.name ?? "",
@@ -60,7 +60,7 @@ const ArtistArtworkFilter: React.FC<ArtistArtworkFilterProps> = props => {
           aggregations: ["TOTAL"],
         }}
         enableCreateAlert
-        savedSearchProps={savedSearchEntity}
+        savedSearchEntity={savedSearchEntity}
       >
         {artist.counts!.artworks === 0 && (
           <ZeroState artist={artist} isFollowed={artist.isFollowed} />

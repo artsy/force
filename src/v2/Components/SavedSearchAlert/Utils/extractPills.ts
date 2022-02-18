@@ -19,7 +19,7 @@ import {
 import {
   DefaultFilterPill,
   NonDefaultFilterPill,
-  SavedSearchAttributes,
+  SavedSearchEntity,
 } from "v2/Components/ArtworkFilter/SavedSearch/types"
 
 export const extractPillFromAggregation = (
@@ -175,13 +175,13 @@ export const extractPillsFromFilters = (
 }
 
 export const extractArtistPill = (
-  savedSearchAttributes?: SavedSearchAttributes
+  savedSearchEntity?: SavedSearchEntity
 ): DefaultFilterPill | null => {
-  if (savedSearchAttributes?.name && savedSearchAttributes.slug) {
+  if (savedSearchEntity?.name && savedSearchEntity.slug) {
     return {
       isDefault: true,
-      name: savedSearchAttributes.slug,
-      displayName: savedSearchAttributes.name,
+      name: savedSearchEntity.slug,
+      displayName: savedSearchEntity.name,
     }
   }
 
@@ -191,9 +191,9 @@ export const extractArtistPill = (
 export const extractPills = (
   filters: ArtworkFilters,
   aggregations: Aggregations = [],
-  savedSearchAttributes?: SavedSearchAttributes
+  savedSearchEntity?: SavedSearchEntity
 ) => {
-  const artistPill = extractArtistPill(savedSearchAttributes)
+  const artistPill = extractArtistPill(savedSearchEntity)
   const pillsFromFilters = extractPillsFromFilters(filters, aggregations)
 
   return compact([artistPill, ...pillsFromFilters])

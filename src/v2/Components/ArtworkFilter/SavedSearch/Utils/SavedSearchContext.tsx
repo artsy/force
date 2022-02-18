@@ -3,22 +3,22 @@ import { createContext } from "react"
 import { extractPills } from "v2/Components/SavedSearchAlert/Utils/extractPills"
 import { Aggregations, ArtworkFiltersState } from "../../ArtworkFilterContext"
 import { getAllowedFiltersForSavedSearchInput } from "../../Utils/allowedFilters"
-import { FilterPill, SavedSearchAttributes } from "../types"
+import { FilterPill, SavedSearchEntity } from "../types"
 
 export interface SavedSearchContextProps {
   pills: FilterPill[]
-  entity: SavedSearchAttributes
+  entity: SavedSearchEntity
 }
 
 interface SavedSearchContextProviderProps {
-  entity: SavedSearchAttributes
+  entity: SavedSearchEntity
   aggregations: Aggregations
   filters: ArtworkFiltersState
 }
 
 export const SavedSearchContext = createContext<SavedSearchContextProps>({
   pills: [],
-  entity: {} as SavedSearchAttributes,
+  entity: {} as SavedSearchEntity,
 })
 
 export const SavedSearchContextProvider: React.FC<SavedSearchContextProviderProps> = ({

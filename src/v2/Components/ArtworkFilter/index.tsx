@@ -46,7 +46,7 @@ import { ArtworkSortFilter } from "./ArtworkFilters/ArtworkSortFilter"
 import type RelayModernEnvironment from "relay-runtime/lib/store/RelayModernEnvironment"
 import { ArtworkGridFilterPillsContainer } from "./SavedSearch/Components/ArtworkGridFilterPills"
 import { getTotalSelectedFiltersCount } from "./Utils/getTotalSelectedFiltersCount"
-import { SavedSearchAttributes } from "./SavedSearch/types"
+import { SavedSearchEntity } from "./SavedSearch/types"
 
 interface ArtworkFilterProps extends SharedArtworkFilterContextProps, BoxProps {
   enableCreateAlert?: boolean
@@ -56,7 +56,7 @@ interface ArtworkFilterProps extends SharedArtworkFilterContextProps, BoxProps {
   relayRefetchInputVariables?: object
   // Root-level variables passed to Relay query
   relayVariables?: object
-  savedSearchProps?: SavedSearchAttributes
+  savedSearchEntity?: SavedSearchEntity
   viewer
 }
 
@@ -106,7 +106,7 @@ export const BaseArtworkFilter: React.FC<
   relayRefetchInputVariables = {},
   relayVariables = {},
   viewer,
-  savedSearchProps,
+  savedSearchEntity,
   ...rest
 }) => {
   const tracking = useTracking()
@@ -285,10 +285,10 @@ export const BaseArtworkFilter: React.FC<
 
           <Spacer mb={2} />
 
-          {enableCreateAlert && savedSearchProps && (
+          {enableCreateAlert && savedSearchEntity && (
             <>
               <ArtworkGridFilterPillsContainer
-                savedSearchAttributes={savedSearchProps}
+                savedSearchEntity={savedSearchEntity}
               />
               <Spacer mt={4} />
             </>
@@ -341,10 +341,10 @@ export const BaseArtworkFilter: React.FC<
               </Box>
             )}
 
-            {enableCreateAlert && savedSearchProps && (
+            {enableCreateAlert && savedSearchEntity && (
               <>
                 <ArtworkGridFilterPillsContainer
-                  savedSearchAttributes={savedSearchProps}
+                  savedSearchEntity={savedSearchEntity}
                 />
                 <Spacer mt={4} />
               </>

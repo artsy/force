@@ -7,7 +7,7 @@ import { ArtworkQueryFilter } from "../ArtworkQueryFilter"
 import { ArtworkFilterFixture } from "./fixtures/ArtworkFilter.fixture"
 import { initialArtworkFilterState } from "../ArtworkFilterContext"
 import { setupTestWrapperTL } from "v2/DevTools/setupTestWrapper"
-import { SavedSearchAttributes } from "../SavedSearch/types"
+import { SavedSearchEntity } from "../SavedSearch/types"
 
 jest.unmock("react-relay")
 jest.mock("v2/System/Analytics/useTracking")
@@ -16,7 +16,7 @@ jest.mock("v2/Utils/Hooks/useMatchMedia", () => ({
   __internal__useMatchMedia: () => ({}),
 }))
 
-const savedSearchProps: SavedSearchAttributes = {
+const savedSearchEntity: SavedSearchEntity = {
   type: "artist",
   id: "test-artist-id",
   name: "Test Artist",
@@ -37,7 +37,7 @@ describe("ArtworkFilter", () => {
         <ArtworkFilter
           {...(props as any)}
           enableCreateAlert={enableCreateAlert}
-          savedSearchProps={savedSearchProps}
+          savedSearchEntity={savedSearchEntity}
           onFilterClick={onFilterClick}
           onChange={onChange}
           sortOptions={sortOptionsMock}
@@ -68,7 +68,7 @@ describe("ArtworkFilter", () => {
     ]
   })
 
-  it("renders filters pills when enableCreateAlert is true, savedSearchProps are passed and there are selected filters", async () => {
+  it("renders filters pills when enableCreateAlert is true, savedSearchEntity are passed and there are selected filters", async () => {
     enableCreateAlert = true
     renderWithRelay()
 

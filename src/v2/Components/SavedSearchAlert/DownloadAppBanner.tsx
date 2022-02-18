@@ -13,10 +13,10 @@ import {
   ContextModule,
   OwnerType,
 } from "@artsy/cohesion"
-import { SavedSearchAttributes } from "../ArtworkFilter/SavedSearch/types"
+import { SavedSearchEntity } from "../ArtworkFilter/SavedSearch/types"
 
 interface DownloadAppBannerProps {
-  entity: SavedSearchAttributes
+  entity: SavedSearchEntity
 }
 
 export const DownloadAppBanner: React.FC<DownloadAppBannerProps> = ({

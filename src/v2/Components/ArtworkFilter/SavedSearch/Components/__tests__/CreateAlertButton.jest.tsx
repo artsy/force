@@ -2,7 +2,7 @@ import { render, screen, fireEvent } from "@testing-library/react"
 import { useSystemContext } from "v2/System/useSystemContext"
 import { useTracking } from "v2/System/Analytics/useTracking"
 import * as openAuthModal from "v2/Utils/openAuthModal"
-import { SavedSearchAttributes } from "v2/Components/ArtworkFilter/SavedSearch/types"
+import { SavedSearchEntity } from "v2/Components/ArtworkFilter/SavedSearch/types"
 import { ExtractProps } from "v2/Utils/ExtractProps"
 import { CreateAlertButton } from "../CreateAlertButton"
 import { mediator } from "lib/mediator"
@@ -11,7 +11,7 @@ import { ArtworkFilterContextProvider } from "v2/Components/ArtworkFilter/Artwor
 jest.mock("v2/System/useSystemContext")
 jest.mock("v2/System/Analytics/useTracking")
 
-const savedSearchEntity: SavedSearchAttributes = {
+const savedSearchEntity: SavedSearchEntity = {
   type: "artist",
   id: "test-artist-id",
   name: "test-artist-name",

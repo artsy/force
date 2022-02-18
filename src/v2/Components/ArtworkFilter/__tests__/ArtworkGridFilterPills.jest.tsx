@@ -1,5 +1,5 @@
 import { render, screen, within, fireEvent } from "@testing-library/react"
-import { SavedSearchAttributes } from "v2/Components/ArtworkFilter/SavedSearch/types"
+import { SavedSearchEntity } from "v2/Components/ArtworkFilter/SavedSearch/types"
 import {
   ArtworkFilterContextProvider,
   ArtworkFiltersState,
@@ -7,7 +7,7 @@ import {
 } from "../ArtworkFilterContext"
 import { ArtworkGridFilterPillsContainer } from "../SavedSearch/Components/ArtworkGridFilterPills"
 
-const savedSearchEntity: SavedSearchAttributes = {
+const savedSearchEntity: SavedSearchEntity = {
   type: "artist",
   id: "test-artist-id",
   name: "Banksy",
@@ -24,7 +24,7 @@ describe("ArtworkGridFilterPills", () => {
     render(
       <ArtworkFilterContextProvider {...props}>
         <ArtworkGridFilterPillsContainer
-          savedSearchAttributes={savedSearchEntity}
+          savedSearchEntity={savedSearchEntity}
         />
       </ArtworkFilterContextProvider>
     )

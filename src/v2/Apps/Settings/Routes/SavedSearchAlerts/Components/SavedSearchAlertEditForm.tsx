@@ -19,7 +19,7 @@ import {
 import { Pills } from "v2/Components/ArtworkFilter/SavedSearch/Components/Pills"
 import {
   FilterPill,
-  SavedSearchAttributes,
+  SavedSearchEntity,
 } from "v2/Components/ArtworkFilter/SavedSearch/types"
 import { SavedSearchAleftFormValues } from "v2/Components/SavedSearchAlert/SavedSearchAlertModel"
 import { getNamePlaceholder } from "v2/Components/SavedSearchAlert/Utils/getNamePlaceholder"
@@ -76,7 +76,7 @@ const SavedSearchAlertEditForm: React.FC<SavedSearchAlertEditFormProps> = ({
     push: userAlertSettings.push,
     email: userAlertSettings.email,
   }
-  const entity: SavedSearchAttributes = {
+  const entity: SavedSearchEntity = {
     type: "artist",
     id: artist.internalID,
     name: artist.name ?? "",

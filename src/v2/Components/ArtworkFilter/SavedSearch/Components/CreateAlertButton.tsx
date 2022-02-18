@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { BellIcon, Button, ButtonProps, useToasts } from "@artsy/palette"
-import { SavedSearchAttributes } from "../types"
+import { SavedSearchEntity } from "../types"
 import { useSystemContext, useTracking } from "v2/System"
 import {
   ActionType,
@@ -14,7 +14,7 @@ import { openAuthToSatisfyIntent } from "v2/Utils/openAuthModal"
 import { mediator } from "lib/mediator"
 
 interface CreateAlertButtonProps extends ButtonProps {
-  entity: SavedSearchAttributes
+  entity: SavedSearchEntity
 }
 
 export const CreateAlertButton: React.FC<CreateAlertButtonProps> = ({

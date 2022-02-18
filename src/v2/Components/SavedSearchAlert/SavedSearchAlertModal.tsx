@@ -26,14 +26,14 @@ import {
 import createLogger from "v2/Utils/logger"
 import {
   FilterPill,
-  SavedSearchAttributes,
+  SavedSearchEntity,
 } from "../ArtworkFilter/SavedSearch/types"
 import { extractPills } from "./Utils/extractPills"
 import { Pills } from "../ArtworkFilter/SavedSearch/Components/Pills"
 import { DownloadAppBanner } from "./DownloadAppBanner"
 
 interface SavedSearchAlertFormProps {
-  entity: SavedSearchAttributes
+  entity: SavedSearchEntity
   initialValues: SavedSearchAleftFormValues
   visible?: boolean
   onClose: () => void

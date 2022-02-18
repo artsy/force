@@ -12,13 +12,13 @@ import {
   SavedSearchContextProvider,
   useSavedSearchContext,
 } from "../Utils/SavedSearchContext"
-import { FilterPill, SavedSearchAttributes } from "../types"
+import { FilterPill, SavedSearchEntity } from "../types"
 import { getAllowedFiltersForSavedSearchInput } from "../../Utils/allowedFilters"
 
 const PILL_HORIZONTAL_MARGIN_SIZE = 0.5
 
 interface ArtworkGridFilterPillsContainerProps {
-  savedSearchAttributes: SavedSearchAttributes
+  savedSearchEntity: SavedSearchEntity
 }
 
 export const ArtworkGridFilterPills = () => {
@@ -51,13 +51,13 @@ export const ArtworkGridFilterPills = () => {
 }
 
 export const ArtworkGridFilterPillsContainer: React.FC<ArtworkGridFilterPillsContainerProps> = props => {
-  const { savedSearchAttributes } = props
+  const { savedSearchEntity } = props
   const { filters, aggregations } = useArtworkFilterContext()
   const allowedFilters = getAllowedFiltersForSavedSearchInput(filters ?? {})
 
   return (
     <SavedSearchContextProvider
-      entity={savedSearchAttributes}
+      entity={savedSearchEntity}
       filters={allowedFilters}
       aggregations={aggregations ?? []}
     >
