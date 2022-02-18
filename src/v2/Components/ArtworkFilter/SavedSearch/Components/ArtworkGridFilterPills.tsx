@@ -8,8 +8,10 @@ import {
   useArtworkFilterContext,
 } from "../../ArtworkFilterContext"
 import { isArray } from "lodash"
-import { FilterPill, useFilterPillsContext } from "../Utils/FilterPillsContext"
+import { FilterPill } from "../Utils/FilterPillsContext"
 import { Pills } from "./Pills"
+import { extractPills } from "v2/Components/SavedSearchAlert/Utils/extractPills"
+import { getAllowedFiltersForSavedSearchInput } from "../../Utils/allowedFilters"
 
 const PILL_HORIZONTAL_MARGIN_SIZE = 0.5
 
@@ -20,25 +22,34 @@ export interface ArtworkGridFilterPillsProps {
 export const ArtworkGridFilterPills: FC<ArtworkGridFilterPillsProps> = ({
   savedSearchAttributes,
 }) => {
-  const filterContext = useArtworkFilterContext()
-  const { pills = [] } = useFilterPillsContext()
+  const {
+    filters,
+    aggregations,
+    setFilter,
+    currentlySelectedFilters,
+  } = useArtworkFilterContext()
+  const allowedFilters = getAllowedFiltersForSavedSearchInput(filters ?? {})
+  const pills = extractPills(
+    allowedFilters,
+    aggregations,
+    savedSearchAttributes
+  )
 
   const removePill = (pill: FilterPill) => {
     if (pill.isDefault) {
       return
     }
 
-    let filter = filterContext?.currentlySelectedFilters?.()[pill.filterName]
+    const filters = currentlySelectedFilters!()
+    let filterValue = filters[pill.filterName]
 
-    if (isArray(filter)) {
-      filter = filter.filter(value => value !== pill.name)
-      filterContext.setFilter(pill.filterName as keyof ArtworkFilters, filter)
+    if (isArray(filterValue)) {
+      filterValue = filterValue.filter(value => value !== pill.name)
     } else {
-      filterContext.setFilter(
-        pill.filterName as keyof ArtworkFilters,
-        initialArtworkFilterState[pill.filterName]
-      )
+      filterValue = initialArtworkFilterState[pill.filterName]
     }
+
+    setFilter(pill.filterName as keyof ArtworkFilters, filterValue)
   }
 
   return (

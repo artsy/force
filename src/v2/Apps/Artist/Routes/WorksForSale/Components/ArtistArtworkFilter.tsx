@@ -9,7 +9,6 @@ import { updateUrl } from "v2/Components/ArtworkFilter/Utils/urlBuilder"
 import { Match } from "found"
 import * as React from "react"
 import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
-import { data as sd } from "sharify"
 import { ZeroState } from "./ZeroState"
 import { useRouter } from "v2/System/Router/useRouter"
 import { SavedSearchAttributes } from "v2/Components/ArtworkFilter/SavedSearch/types"
@@ -63,7 +62,7 @@ const ArtistArtworkFilter: React.FC<ArtistArtworkFilterProps> = props => {
             aggregations: ["TOTAL"],
           }}
           savedSearchProps={savedSearchAttributes}
-          enableCreateAlert={sd.ENABLE_SAVED_SEARCH}
+          enableCreateAlert
         >
           {artist.counts!.artworks === 0 && (
             <ZeroState artist={artist} isFollowed={artist.isFollowed} />

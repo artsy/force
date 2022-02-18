@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import { isEqual } from "lodash"
 import useDeepCompareEffect from "use-deep-compare-effect"
 import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
@@ -39,18 +39,13 @@ import {
   ContextModule,
   ClickedChangePage,
 } from "@artsy/cohesion"
-import {
-  allowedFilters,
-  getAllowedFiltersForSavedSearchInput,
-} from "./Utils/allowedFilters"
+import { allowedFilters } from "./Utils/allowedFilters"
 import { Sticky } from "v2/Components/Sticky"
 import { ScrollRefContext } from "./ArtworkFilters/useScrollContext"
 import { ArtworkSortFilter } from "./ArtworkFilters/ArtworkSortFilter"
 import type RelayModernEnvironment from "relay-runtime/lib/store/RelayModernEnvironment"
 import { ArtworkGridFilterPills } from "./SavedSearch/Components/ArtworkGridFilterPills"
 import { SavedSearchAttributes } from "./SavedSearch/types"
-import { extractPills } from "../SavedSearchAlert/Utils/extractPills"
-import { useFilterPillsContext } from "./SavedSearch/Utils/FilterPillsContext"
 import { getTotalSelectedFiltersCount } from "./Utils/getTotalSelectedFiltersCount"
 
 interface ArtworkFilterProps extends SharedArtworkFilterContextProps, BoxProps {
@@ -130,27 +125,9 @@ export const BaseArtworkFilter: React.FC<
   const filterContext = useArtworkFilterContext()
   const previousFilters = usePrevious(filterContext.filters)
   const { user } = useSystemContext()
-  const { pills = [], setPills } = useFilterPillsContext()
   const appliedFiltersTotalCount = getTotalSelectedFiltersCount(
     filterContext.selectedFiltersCounts
   )
-
-  const filters = useMemo(
-    () => getAllowedFiltersForSavedSearchInput(filterContext.filters ?? {}),
-    [filterContext.filters]
-  )
-
-  const showCreateAlert = enableCreateAlert && !!pills.length
-
-  useEffect(() => {
-    const pills = extractPills(
-      filters,
-      filterContext.aggregations,
-      savedSearchProps
-    )
-
-    setPills?.(pills)
-  }, [savedSearchProps, filters, filterContext.aggregations, setPills])
 
   /**
    * Check to see if the mobile action sheet is present and prevent scrolling
@@ -313,7 +290,7 @@ export const BaseArtworkFilter: React.FC<
 
           <Spacer mb={2} />
 
-          {showCreateAlert && (
+          {enableCreateAlert && (
             <>
               <ArtworkGridFilterPills
                 savedSearchAttributes={savedSearchProps}
@@ -369,7 +346,7 @@ export const BaseArtworkFilter: React.FC<
               </Box>
             )}
 
-            {showCreateAlert && (
+            {enableCreateAlert && (
               <>
                 <ArtworkGridFilterPills
                   savedSearchAttributes={savedSearchProps}
