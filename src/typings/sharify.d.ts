@@ -65,7 +65,6 @@ declare module "sharify" {
         applePath?: string
         facebookPath?: string
         googlePath?: string
-        twitterPath?: string
         signupPagePath?: string
         loginPagePath?: string
         logoutPath?: string

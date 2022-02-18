@@ -31,7 +31,6 @@ sd.AP = {
   signupPagePath: "/signup",
   facebookPath: "/facebook",
   googlePath: "/google",
-  twitterPath: "/twitter",
 }
 sd.APP_URL = "http://artsy.net"
 sd.RECAPTCHA_KEY = "RECAPTCHA_KEY"
