@@ -11,6 +11,7 @@ import {
   SearchCriteriaAttributes,
 } from "./types"
 import { extractPills } from "./Utils/extractPills"
+import { getAllowedSearchCriteria } from "./Utils/savedSearchCriteria"
 
 interface SavedSearchAlertContextProps {
   pills: FilterPill[]
@@ -61,11 +62,13 @@ export const SavedSearchAlertContextProvider: React.FC<SavedSearchAlertContextPr
       criteriaValue = initialArtworkFilterState[key]
     }
 
-    setIsCriteriaChanged(true)
-    setCriteria({
+    const updatedCriteria = getAllowedSearchCriteria({
       ...criteria,
       [key]: criteriaValue,
     })
+
+    setIsCriteriaChanged(true)
+    setCriteria(updatedCriteria)
   }
 
   const contextValue: SavedSearchAlertContextProps = {
