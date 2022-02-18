@@ -156,10 +156,13 @@ const SellWithArtsy: React.FC = () => {
 }
 
 const AppDownload: React.FC = () => {
-  const image = resized("http://files.artsy.net/download_artsy_apps_img.jpg", {
-    width: 910,
-    height: 652,
-  })
+  const image = resized(
+    "http://files.artsy.net/images/about2/appstore_image.png",
+    {
+      width: 910,
+      height: 652,
+    }
+  )
 
   return (
     <GridColumns gridRowGap={4}>
@@ -181,7 +184,7 @@ const AppDownload: React.FC = () => {
             rel="noopener noreferrer"
           >
             <Image
-              src="http://files.artsy.net/images/download-ios-app-transparent.svg"
+              src="http://files.artsy.net/images/download-ios-app.svg"
               mr={4}
             />
           </a>
@@ -190,7 +193,7 @@ const AppDownload: React.FC = () => {
             target="_blank"
             rel="noopener noreferrer"
           >
-            <Image src="http://files.artsy.net/images/download-android-app-transparent.svg" />
+            <Image src="http://files.artsy.net/images/download-android-app.svg" />
           </a>
         </Flex>
       </Column>
