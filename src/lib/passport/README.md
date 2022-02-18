@@ -1,5 +1,10 @@
 # Artsy Passport
 
+_The `artsy-passport` package is deprecated, but [the code was moved into Force](https://github.com/artsy/force/pull/9263)._
+
+_Most of the documentation in this README is legacy, but we should actively
+update it as we make changes._
+
 Wires up the common auth handlers, and related security concerns, for Artsy's [Ezel](https://github.com/artsy/ezel)-based apps using [passport](http://passportjs.org/). Used internally at Artsy to DRY up authentication code.
 
 ## Setup
@@ -184,15 +189,4 @@ module.exports = {
   FACEBOOK_EMAIL: "craigspaeth@gmail.com",
   FACEBOOK_PASSWORD: "",
 }
-```
-
-Then you can check the example by running `yarn example` and opening [localhost:4000](http://localhost:4000).
-
-The tests are a combination of integration and middleware unit tests. To run the whole suite use `yarn test`.
-
-## Publishing to npm
-
-```
-yarn compile
-yarn publish
 ```
