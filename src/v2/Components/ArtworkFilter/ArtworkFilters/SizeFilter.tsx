@@ -126,7 +126,6 @@ export const SizeFilter: React.FC<SizeFilterProps> = ({ expanded }) => {
     width,
     reset,
     metric: selectedMetric,
-    ...otherSelectedFilters
   } = currentlySelectedFilters?.() as ArtworkFiltersState
   const metric = selectedMetric ?? DEFAULT_METRIC
 
@@ -214,13 +213,14 @@ export const SizeFilter: React.FC<SizeFilterProps> = ({ expanded }) => {
     }
 
     const updatedFilters: ArtworkFiltersState = {
-      ...otherSelectedFilters,
-      width,
-      height,
+      ...currentlySelectedFilters?.(),
       metric: nextMetric,
     }
 
-    if (isCustomValue(width) || isCustomValue(height)) {
+    if (
+      isCustomValue(updatedFilters.width) ||
+      isCustomValue(updatedFilters.height)
+    ) {
       const customSizeRanges = getCustomSizeRangeInInches(
         customSize,
         nextMetric
