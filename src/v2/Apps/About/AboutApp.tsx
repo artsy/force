@@ -98,7 +98,7 @@ const SellWithArtsy: React.FC = () => {
             style={{
               objectFit: "cover",
             }}
-            alt="a Molly Green art piece titled Cached"
+            alt=""
           />
         </Box>
       )}
@@ -156,10 +156,13 @@ const SellWithArtsy: React.FC = () => {
 }
 
 const AppDownload: React.FC = () => {
-  const image = resized("http://files.artsy.net/download_artsy_apps_img.jpg", {
-    width: 910,
-    height: 652,
-  })
+  const image = resized(
+    "http://files.artsy.net/images/about2/appstore_image_highres.png",
+    {
+      width: 910,
+      height: 652,
+    }
+  )
 
   return (
     <GridColumns gridRowGap={4}>
@@ -181,7 +184,7 @@ const AppDownload: React.FC = () => {
             rel="noopener noreferrer"
           >
             <Image
-              src="http://files.artsy.net/images/download-ios-app-transparent.svg"
+              src="http://files.artsy.net/images/download-ios-app.svg"
               mr={4}
             />
           </a>
@@ -190,7 +193,7 @@ const AppDownload: React.FC = () => {
             target="_blank"
             rel="noopener noreferrer"
           >
-            <Image src="http://files.artsy.net/images/download-android-app-transparent.svg" />
+            <Image src="http://files.artsy.net/images/download-android-app.svg" />
           </a>
         </Flex>
       </Column>
@@ -203,7 +206,7 @@ const AppDownload: React.FC = () => {
             height="100%"
             srcSet={image.srcSet}
             lazyLoad
-            alt="painting of two iphones displaying the artsy mobile app"
+            alt=""
           />
         </ResponsiveBox>
       </Column>
@@ -234,7 +237,7 @@ const CollectorInfo: React.FC = () => {
             height="100%"
             srcSet={image.srcSet}
             lazyLoad
-            alt="picture of the Collection for Carole Server by Emily Johnston"
+            alt=""
           />
         </ResponsiveBox>
         <Text variant="xs" textColor="black60" mt={0.5}>
