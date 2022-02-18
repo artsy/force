@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react"
 import { BellIcon, Button, ButtonProps, useToasts } from "@artsy/palette"
-import { SavedSearchEntity } from "../types"
 import { useSystemContext, useTracking } from "v2/System"
 import {
   ActionType,
@@ -8,16 +7,16 @@ import {
   ContextModule,
   PageOwnerType,
 } from "@artsy/cohesion"
-import { SavedSearchAlertModalContainer } from "v2/Components/SavedSearchAlert/SavedSearchAlertModal"
-import { SavedSearchAlertMutationResult } from "v2/Components/SavedSearchAlert/SavedSearchAlertModel"
 import { openAuthToSatisfyIntent } from "v2/Utils/openAuthModal"
 import { mediator } from "lib/mediator"
+import { SavedSearchAlertModalContainer } from "../SavedSearchAlertModal"
+import { SavedSearchAlertMutationResult, SavedSearchEntity } from "../types"
 
-interface CreateAlertButtonProps extends ButtonProps {
+export interface SavedSearchCreateAlertButtonProps extends ButtonProps {
   entity: SavedSearchEntity
 }
 
-export const CreateAlertButton: React.FC<CreateAlertButtonProps> = ({
+export const SavedSearchCreateAlertButton: React.FC<SavedSearchCreateAlertButtonProps> = ({
   entity,
   ...props
 }) => {

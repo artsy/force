@@ -1,5 +1,6 @@
 export interface SearchCriteriaAttributes {
   artistID?: string | null
+  artistIDs?: string[] | null
   locationCities?: string[] | null
   colors?: string[] | null
   partnerIDs?: string[] | null
@@ -41,3 +42,13 @@ export interface NonDefaultFilterPill {
 }
 
 export type FilterPill = DefaultFilterPill | NonDefaultFilterPill
+
+export interface SavedSearchAleftFormValues {
+  name: string
+  email: boolean
+  push: boolean
+}
+
+export interface SavedSearchAlertMutationResult {
+  id: string
+}

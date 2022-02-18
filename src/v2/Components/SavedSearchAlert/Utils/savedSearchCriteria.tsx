@@ -1,9 +1,9 @@
-import { SearchCriteriaAttributes } from "v2/__generated__/createSavedSearchAlertMutation.graphql"
 import {
   ArtworkFiltersState,
   initialArtworkFilterState,
-} from "../../ArtworkFilterContext"
-import { allowedSearchCriteriaKeys } from "./constants"
+} from "v2/Components/ArtworkFilter/ArtworkFilterContext"
+import { allowedSearchCriteriaKeys } from "../constants"
+import { SearchCriteriaAttributes } from "../types"
 
 export const isDefaultValue = (
   paramName: string,

@@ -1,18 +1,18 @@
 import { useContext, useState } from "react"
 import { createContext } from "react"
-import { extractPills } from "v2/Components/SavedSearchAlert/Utils/extractPills"
 import {
   Aggregations,
   initialArtworkFilterState,
-} from "../../ArtworkFilterContext"
+} from "../ArtworkFilter/ArtworkFilterContext"
 import {
   FilterPill,
   SavedSearchEntity,
   SearchCriteriaAttributeKeys,
   SearchCriteriaAttributes,
-} from "../types"
+} from "./types"
+import { extractPills } from "./Utils/extractPills"
 
-export interface SavedSearchContextProps {
+interface SavedSearchAlertContextProps {
   pills: FilterPill[]
   entity: SavedSearchEntity
   criteria: SearchCriteriaAttributes
@@ -23,13 +23,13 @@ export interface SavedSearchContextProps {
   ) => void
 }
 
-interface SavedSearchContextProviderProps {
+interface SavedSearchAlertContextProviderProps {
   entity: SavedSearchEntity
   aggregations?: Aggregations
   criteria: SearchCriteriaAttributes
 }
 
-export const SavedSearchContext = createContext<SavedSearchContextProps>({
+const SavedSearchAlertContext = createContext<SavedSearchAlertContextProps>({
   pills: [],
   entity: {} as SavedSearchEntity,
   criteria: {} as SearchCriteriaAttributes,
@@ -37,7 +37,7 @@ export const SavedSearchContext = createContext<SavedSearchContextProps>({
   removeCriteriaValue: () => {},
 })
 
-export const SavedSearchContextProvider: React.FC<SavedSearchContextProviderProps> = ({
+export const SavedSearchAlertContextProvider: React.FC<SavedSearchAlertContextProviderProps> = ({
   entity,
   aggregations,
   criteria: criteriaFromArgument,
@@ -68,7 +68,7 @@ export const SavedSearchContextProvider: React.FC<SavedSearchContextProviderProp
     })
   }
 
-  const contextValue: SavedSearchContextProps = {
+  const contextValue: SavedSearchAlertContextProps = {
     pills,
     entity,
     criteria,
@@ -77,12 +77,12 @@ export const SavedSearchContextProvider: React.FC<SavedSearchContextProviderProp
   }
 
   return (
-    <SavedSearchContext.Provider value={contextValue}>
+    <SavedSearchAlertContext.Provider value={contextValue}>
       {children}
-    </SavedSearchContext.Provider>
+    </SavedSearchAlertContext.Provider>
   )
 }
 
-export const useSavedSearchContext = () => {
-  return useContext(SavedSearchContext)
+export const useSavedSearchAlertContext = () => {
+  return useContext(SavedSearchAlertContext)
 }

@@ -1,10 +1,6 @@
 import React from "react"
 import { Formik } from "formik"
 import {
-  SavedSearchAleftFormValues,
-  SavedSearchAlertMutationResult,
-} from "./SavedSearchAlertModel"
-import {
   Box,
   Button,
   Checkbox,
@@ -16,22 +12,24 @@ import {
   Text,
 } from "@artsy/palette"
 import { getNamePlaceholder } from "./Utils/getNamePlaceholder"
-import { getSearchCriteriaFromFilters } from "../ArtworkFilter/SavedSearch/Utils"
 import { createSavedSearchAlert } from "./Mutations/createSavedSearchAlert"
 import { useSystemContext } from "v2/System"
 import { useArtworkFilterContext } from "../ArtworkFilter/ArtworkFilterContext"
 import createLogger from "v2/Utils/logger"
-import {
-  FilterPill,
-  SavedSearchEntity,
-  SearchCriteriaAttributeKeys,
-} from "../ArtworkFilter/SavedSearch/types"
-import { Pills } from "../ArtworkFilter/SavedSearch/Components/Pills"
 import { DownloadAppBanner } from "./DownloadAppBanner"
 import {
-  SavedSearchContextProvider,
-  useSavedSearchContext,
-} from "../ArtworkFilter/SavedSearch/Utils/SavedSearchContext"
+  SavedSearchAlertContextProvider,
+  useSavedSearchAlertContext,
+} from "./SavedSearchAlertContext"
+import {
+  FilterPill,
+  SavedSearchAleftFormValues,
+  SavedSearchAlertMutationResult,
+  SavedSearchEntity,
+  SearchCriteriaAttributeKeys,
+} from "./types"
+import { getSearchCriteriaFromFilters } from "./Utils/savedSearchCriteria"
+import { SavedSearchAlertPills } from "./Components/SavedSearchAlertPills"
 
 interface SavedSearchAlertFormProps {
   entity: SavedSearchEntity
@@ -56,7 +54,7 @@ export const SavedSearchAlertModal: React.FC<SavedSearchAlertFormProps> = ({
   onComplete,
 }) => {
   const { relayEnvironment } = useSystemContext()
-  const { pills, criteria, removeCriteriaValue } = useSavedSearchContext()
+  const { pills, criteria, removeCriteriaValue } = useSavedSearchAlertContext()
   const namePlaceholder = getNamePlaceholder(entity.name, pills)
 
   const handleRemovePillPress = (pill: FilterPill) => {
@@ -149,7 +147,10 @@ export const SavedSearchAlertModal: React.FC<SavedSearchAlertFormProps> = ({
                 </Text>
                 <Spacer mt={2} />
                 <Flex flexWrap="wrap" mx={-0.5}>
-                  <Pills items={pills} onDeletePress={handleRemovePillPress} />
+                  <SavedSearchAlertPills
+                    items={pills}
+                    onDeletePress={handleRemovePillPress}
+                  />
                 </Flex>
               </Box>
 
@@ -188,13 +189,13 @@ export const SavedSearchAlertModalContainer: React.FC<SavedSearchAlertFormContai
     const criteria = getSearchCriteriaFromFilters(entity.id, filters ?? {})
 
     return (
-      <SavedSearchContextProvider
+      <SavedSearchAlertContextProvider
         criteria={criteria}
         aggregations={aggregations}
         entity={entity}
       >
         <SavedSearchAlertModal {...props} />
-      </SavedSearchContextProvider>
+      </SavedSearchAlertContextProvider>
     )
   }
 

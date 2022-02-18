@@ -11,13 +11,6 @@ import {
 import { Formik } from "formik"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Aggregations } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
-import { Pills } from "v2/Components/ArtworkFilter/SavedSearch/Components/Pills"
-import {
-  FilterPill,
-  SavedSearchEntity,
-  SearchCriteriaAttributeKeys,
-} from "v2/Components/ArtworkFilter/SavedSearch/types"
-import { SavedSearchAleftFormValues } from "v2/Components/SavedSearchAlert/SavedSearchAlertModel"
 import { getNamePlaceholder } from "v2/Components/SavedSearchAlert/Utils/getNamePlaceholder"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import { SavedSearchAlertEditFormQuery } from "v2/__generated__/SavedSearchAlertEditFormQuery.graphql"
@@ -25,16 +18,23 @@ import { SavedSearchAlertEditForm_savedSearch } from "v2/__generated__/SavedSear
 import { SavedSearchAlertEditForm_artist } from "v2/__generated__/SavedSearchAlertEditForm_artist.graphql"
 import { SavedSearchAlertEditForm_artworksConnection } from "v2/__generated__/SavedSearchAlertEditForm_artworksConnection.graphql"
 import { EditAlertEntity } from "../types"
-import { getAllowedSearchCriteria } from "v2/Components/ArtworkFilter/SavedSearch/Utils"
 import { useEditSavedSearchAlert } from "../useEditSavedSearchAlert"
 import createLogger from "v2/Utils/logger"
 import { Media } from "v2/Utils/Responsive"
 import { SavedSearchAlertEditFormPlaceholder } from "./SavedSearchAlertEditFormPlaceholder"
 import { isEqual } from "lodash"
 import {
-  SavedSearchContextProvider,
-  useSavedSearchContext,
-} from "v2/Components/ArtworkFilter/SavedSearch/Utils/SavedSearchContext"
+  SavedSearchAlertContextProvider,
+  useSavedSearchAlertContext,
+} from "v2/Components/SavedSearchAlert/SavedSearchAlertContext"
+import {
+  FilterPill,
+  SavedSearchAleftFormValues,
+  SavedSearchEntity,
+  SearchCriteriaAttributeKeys,
+} from "v2/Components/SavedSearchAlert/types"
+import { getAllowedSearchCriteria } from "v2/Components/SavedSearchAlert/Utils/savedSearchCriteria"
+import { SavedSearchAlertPills } from "v2/Components/SavedSearchAlert/Components/SavedSearchAlertPills"
 
 const logger = createLogger(
   "v2/Apps/SavedSearchAlerts/Components/SavedSearchAlertEditForm"
@@ -69,7 +69,7 @@ const SavedSearchAlertEditForm: React.FC<SavedSearchAlertEditFormProps> = ({
     criteria,
     isCriteriaChanged,
     removeCriteriaValue,
-  } = useSavedSearchContext()
+  } = useSavedSearchAlertContext()
 
   const initialValues: SavedSearchAleftFormValues = {
     name: userAlertSettings.name ?? "",
@@ -155,7 +155,10 @@ const SavedSearchAlertEditForm: React.FC<SavedSearchAlertEditFormProps> = ({
                 </Text>
                 <Spacer mt={2} />
                 <Flex flexWrap="wrap" mx={-0.5}>
-                  <Pills items={pills} onDeletePress={removePill} />
+                  <SavedSearchAlertPills
+                    items={pills}
+                    onDeletePress={removePill}
+                  />
                 </Flex>
               </Box>
 
@@ -240,13 +243,13 @@ const SavedSearchAlertEditFormContainer: React.FC<SavedSearchAlertEditFormProps>
   }
 
   return (
-    <SavedSearchContextProvider
+    <SavedSearchAlertContextProvider
       entity={entity}
       criteria={criteria}
       aggregations={aggregations}
     >
       <SavedSearchAlertEditForm {...props} />
-    </SavedSearchContextProvider>
+    </SavedSearchAlertContextProvider>
   )
 }
 

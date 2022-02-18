@@ -7,7 +7,7 @@ import { ArtworkQueryFilter } from "../ArtworkQueryFilter"
 import { ArtworkFilterFixture } from "./fixtures/ArtworkFilter.fixture"
 import { initialArtworkFilterState } from "../ArtworkFilterContext"
 import { setupTestWrapperTL } from "v2/DevTools/setupTestWrapper"
-import { SavedSearchEntity } from "../SavedSearch/types"
+import { SavedSearchEntity } from "v2/Components/SavedSearchAlert/types"
 
 jest.unmock("react-relay")
 jest.mock("v2/System/Analytics/useTracking")

@@ -3,11 +3,11 @@ import {
   ArtworkFilterContextProvider,
   ArtworkFiltersState,
 } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
-import { SavedSearchEntity } from "v2/Components/ArtworkFilter/SavedSearch/types"
 import {
   SavedSearchAlertModalContainer,
   SavedSearchAlertFormContainerProps,
 } from "../SavedSearchAlertModal"
+import { SavedSearchEntity } from "../types"
 
 const formInitialValues = {
   name: "",

@@ -1,5 +1,8 @@
 import { ArtworkFilters } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
-import { getSearchCriteriaFromFilters, isDefaultValue } from ".."
+import {
+  getSearchCriteriaFromFilters,
+  isDefaultValue,
+} from "../savedSearchCriteria"
 
 const mockedArtistId = "artist-id"
 

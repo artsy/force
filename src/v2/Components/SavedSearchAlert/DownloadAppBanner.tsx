@@ -13,7 +13,7 @@ import {
   ContextModule,
   OwnerType,
 } from "@artsy/cohesion"
-import { SavedSearchEntity } from "../ArtworkFilter/SavedSearch/types"
+import { SavedSearchEntity } from "./types"
 
 interface DownloadAppBannerProps {
   entity: SavedSearchEntity

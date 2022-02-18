@@ -1,4 +1,4 @@
-import { SavedSearchEntity } from "v2/Components/ArtworkFilter/SavedSearch/types"
+import { SavedSearchEntity } from "../types"
 import { extractArtistPill } from "../Utils/extractPills"
 
 describe("getArtistPillFromAttributes", () => {

@@ -9,16 +9,14 @@ import {
 import { getTimePeriodToDisplay } from "v2/Components/ArtworkFilter/ArtworkFilters/TimePeriodFilter"
 import { isCustomValue } from "v2/Components/ArtworkFilter/ArtworkFilters/Utils/isCustomValue"
 import { WAYS_TO_BUY_OPTIONS } from "v2/Components/ArtworkFilter/ArtworkFilters/WaysToBuyFilter"
-import {
-  aggregationForFilter,
-  shouldExtractValueNamesFromAggregation,
-} from "v2/Components/ArtworkFilter/SavedSearch/Utils"
+import { shouldExtractValueNamesFromAggregation } from "../constants"
 import {
   DefaultFilterPill,
   NonDefaultFilterPill,
   SavedSearchEntity,
   SearchCriteriaAttributes,
-} from "v2/Components/ArtworkFilter/SavedSearch/types"
+} from "../types"
+import { aggregationForFilter } from "./aggregationForFilter"
 
 export const extractPillFromAggregation = (
   filter: {

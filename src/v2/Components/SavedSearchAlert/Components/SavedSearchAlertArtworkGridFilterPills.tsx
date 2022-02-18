@@ -1,24 +1,24 @@
 import React from "react"
 import { Flex } from "@artsy/palette"
-import { CreateAlertButton } from "./CreateAlertButton"
+import { isArray } from "lodash"
 import {
   ArtworkFilters,
   initialArtworkFilterState,
   useArtworkFilterContext,
-} from "../../ArtworkFilterContext"
-import { isArray } from "lodash"
-import { Pills } from "./Pills"
+} from "v2/Components/ArtworkFilter/ArtworkFilterContext"
+import { extractPills } from "../Utils/extractPills"
+import { getSearchCriteriaFromFilters } from "../Utils/savedSearchCriteria"
+import { SavedSearchAlertPills } from "./SavedSearchAlertPills"
 import { FilterPill, SavedSearchEntity } from "../types"
-import { extractPills } from "v2/Components/SavedSearchAlert/Utils/extractPills"
-import { getSearchCriteriaFromFilters } from "../Utils"
+import { SavedSearchCreateAlertButton } from "./SavedSearchCreateAlertButton"
 
 const PILL_HORIZONTAL_MARGIN_SIZE = 0.5
 
-interface ArtworkGridFilterPillsProps {
+interface SavedSearchAlertArtworkGridFilterPillsProps {
   savedSearchEntity: SavedSearchEntity
 }
 
-export const ArtworkGridFilterPills: React.FC<ArtworkGridFilterPillsProps> = props => {
+export const SavedSearchAlertArtworkGridFilterPills: React.FC<SavedSearchAlertArtworkGridFilterPillsProps> = props => {
   const { savedSearchEntity } = props
   const {
     filters,
@@ -51,8 +51,8 @@ export const ArtworkGridFilterPills: React.FC<ArtworkGridFilterPillsProps> = pro
 
   return (
     <Flex flexWrap="wrap" mx={-PILL_HORIZONTAL_MARGIN_SIZE}>
-      <Pills items={pills} onDeletePress={removePill} />
-      <CreateAlertButton
+      <SavedSearchAlertPills items={pills} onDeletePress={removePill} />
+      <SavedSearchCreateAlertButton
         entity={savedSearchEntity}
         ml={PILL_HORIZONTAL_MARGIN_SIZE}
       />

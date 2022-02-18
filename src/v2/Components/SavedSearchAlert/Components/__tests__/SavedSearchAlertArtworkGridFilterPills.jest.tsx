@@ -1,11 +1,11 @@
 import { render, screen, within, fireEvent } from "@testing-library/react"
-import { SavedSearchEntity } from "v2/Components/ArtworkFilter/SavedSearch/types"
 import {
   ArtworkFilterContextProvider,
   ArtworkFiltersState,
   SharedArtworkFilterContextProps,
-} from "../ArtworkFilterContext"
-import { ArtworkGridFilterPills } from "../SavedSearch/Components/ArtworkGridFilterPills"
+} from "v2/Components/ArtworkFilter/ArtworkFilterContext"
+import { SavedSearchEntity } from "../../types"
+import { SavedSearchAlertArtworkGridFilterPills } from "../SavedSearchAlertArtworkGridFilterPills"
 
 const savedSearchEntity: SavedSearchEntity = {
   type: "artist",
@@ -19,11 +19,13 @@ const mockedFilters: ArtworkFiltersState = {
   colors: ["red"],
 }
 
-describe("ArtworkGridFilterPills", () => {
+describe("SavedSearchAlertArtworkGridFilterPills", () => {
   const renderPills = (props: SharedArtworkFilterContextProps = {}) => {
     render(
       <ArtworkFilterContextProvider {...props}>
-        <ArtworkGridFilterPills savedSearchEntity={savedSearchEntity} />
+        <SavedSearchAlertArtworkGridFilterPills
+          savedSearchEntity={savedSearchEntity}
+        />
       </ArtworkFilterContextProvider>
     )
   }
