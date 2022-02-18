@@ -1,4 +1,4 @@
-import { ArtworkFilters } from "../ArtworkFilterContext"
+import { ArtworkFilters, DEFAULT_METRIC } from "../ArtworkFilterContext"
 
 export const isDefaultFilter: (
   name: keyof ArtworkFilters,
@@ -33,6 +33,8 @@ export const isDefaultFilter: (
       return value === "*-*"
     case name === "page":
       return value === 1
+    case name === "metric":
+      return value === DEFAULT_METRIC
     default:
       return !value
   }

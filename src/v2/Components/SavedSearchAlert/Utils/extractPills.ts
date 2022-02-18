@@ -7,7 +7,7 @@ import { checkboxValues } from "v2/Components/ArtworkFilter/ArtworkFilters/Attri
 import { COLOR_OPTIONS } from "v2/Components/ArtworkFilter/ArtworkFilters/ColorFilter"
 import {
   parseRange,
-  SIZES,
+  SIZES_IN_CENTIMETERS,
 } from "v2/Components/ArtworkFilter/ArtworkFilters/SizeFilter"
 import { getTimePeriodToDisplay } from "v2/Components/ArtworkFilter/ArtworkFilters/TimePeriodFilter"
 import { isCustomValue } from "v2/Components/ArtworkFilter/ArtworkFilters/Utils/isCustomValue"
@@ -46,7 +46,7 @@ export const extractPillFromAggregation = (
 }
 
 export const extractSizeLabel = (prefix: string, value: string) => {
-  const [min, max] = parseRange(value)!
+  const [min, max] = parseRange(value, "cm")!
 
   let label
   if (max === "*") {
@@ -114,12 +114,18 @@ export const extractPillsFromFilters = (
         break
       }
       case "sizes": {
-        result = paramValue.map(value => ({
-          filterName: paramName,
-          name: value,
-          displayName: find(SIZES, option => value === option.name)
-            ?.displayName,
-        }))
+        result = paramValue.map(value => {
+          const sizeItem = find(
+            SIZES_IN_CENTIMETERS,
+            option => value === option.name
+          )
+
+          return {
+            filterName: paramName,
+            name: value,
+            displayName: sizeItem?.displayName,
+          }
+        })
         break
       }
       case "colors": {
