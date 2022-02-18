@@ -24,8 +24,10 @@ import {
   initialArtworkFilterState,
 } from "../ArtworkFilter/ArtworkFilterContext"
 import createLogger from "v2/Utils/logger"
-import { SavedSearchAttributes } from "../ArtworkFilter/SavedSearch/types"
-import { FilterPill } from "../ArtworkFilter/SavedSearch/Utils/SavedSearchContext"
+import {
+  FilterPill,
+  SavedSearchAttributes,
+} from "../ArtworkFilter/SavedSearch/types"
 import { extractPills } from "./Utils/extractPills"
 import { Pills } from "../ArtworkFilter/SavedSearch/Components/Pills"
 import { DownloadAppBanner } from "./DownloadAppBanner"

@@ -13,14 +13,14 @@ import { getTimePeriodToDisplay } from "v2/Components/ArtworkFilter/ArtworkFilte
 import { isCustomValue } from "v2/Components/ArtworkFilter/ArtworkFilters/Utils/isCustomValue"
 import { WAYS_TO_BUY_OPTIONS } from "v2/Components/ArtworkFilter/ArtworkFilters/WaysToBuyFilter"
 import {
-  DefaultFilterPill,
-  NonDefaultFilterPill,
-} from "v2/Components/ArtworkFilter/SavedSearch/Utils/SavedSearchContext"
-import {
   aggregationForFilter,
   shouldExtractValueNamesFromAggregation,
 } from "v2/Components/ArtworkFilter/SavedSearch/Utils"
-import { SavedSearchAttributes } from "v2/Components/ArtworkFilter/SavedSearch/types"
+import {
+  DefaultFilterPill,
+  NonDefaultFilterPill,
+  SavedSearchAttributes,
+} from "v2/Components/ArtworkFilter/SavedSearch/types"
 
 export const extractPillFromAggregation = (
   filter: {

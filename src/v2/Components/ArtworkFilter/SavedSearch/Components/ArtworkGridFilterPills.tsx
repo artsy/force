@@ -9,11 +9,10 @@ import {
 import { isArray } from "lodash"
 import { Pills } from "./Pills"
 import {
-  FilterPill,
   SavedSearchContextProvider,
   useSavedSearchContext,
 } from "../Utils/SavedSearchContext"
-import { SavedSearchAttributes } from "../types"
+import { FilterPill, SavedSearchAttributes } from "../types"
 import { getAllowedFiltersForSavedSearchInput } from "../../Utils/allowedFilters"
 
 const PILL_HORIZONTAL_MARGIN_SIZE = 0.5

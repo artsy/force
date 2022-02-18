@@ -17,7 +17,10 @@ import {
   initialArtworkFilterState,
 } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
 import { Pills } from "v2/Components/ArtworkFilter/SavedSearch/Components/Pills"
-import { SavedSearchAttributes } from "v2/Components/ArtworkFilter/SavedSearch/types"
+import {
+  FilterPill,
+  SavedSearchAttributes,
+} from "v2/Components/ArtworkFilter/SavedSearch/types"
 import { SavedSearchAleftFormValues } from "v2/Components/SavedSearchAlert/SavedSearchAlertModel"
 import { getNamePlaceholder } from "v2/Components/SavedSearchAlert/Utils/getNamePlaceholder"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
@@ -26,7 +29,6 @@ import { SavedSearchAlertEditForm_savedSearch } from "v2/__generated__/SavedSear
 import { SavedSearchAlertEditForm_artist } from "v2/__generated__/SavedSearchAlertEditForm_artist.graphql"
 import { SavedSearchAlertEditForm_artworksConnection } from "v2/__generated__/SavedSearchAlertEditForm_artworksConnection.graphql"
 import { extractPills } from "v2/Components/SavedSearchAlert/Utils/extractPills"
-import { FilterPill } from "v2/Components/ArtworkFilter/SavedSearch/Utils/SavedSearchContext"
 import { EditAlertEntity } from "../types"
 import { getSearchCriteriaFromFilters } from "v2/Components/ArtworkFilter/SavedSearch/Utils"
 import { useEditSavedSearchAlert } from "../useEditSavedSearchAlert"

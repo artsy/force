@@ -3,22 +3,7 @@ import { createContext } from "react"
 import { extractPills } from "v2/Components/SavedSearchAlert/Utils/extractPills"
 import { Aggregations, ArtworkFiltersState } from "../../ArtworkFilterContext"
 import { getAllowedFiltersForSavedSearchInput } from "../../Utils/allowedFilters"
-import { SavedSearchAttributes } from "../types"
-
-export interface DefaultFilterPill {
-  isDefault: true
-  name: string
-  displayName: string
-}
-
-export interface NonDefaultFilterPill {
-  isDefault?: false
-  name: string
-  displayName: string
-  filterName: string
-}
-
-export type FilterPill = DefaultFilterPill | NonDefaultFilterPill
+import { FilterPill, SavedSearchAttributes } from "../types"
 
 export interface SavedSearchContextProps {
   pills: FilterPill[]

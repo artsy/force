@@ -1,7 +1,7 @@
 import React from "react"
 import { CloseIcon, Pill } from "@artsy/palette"
-import { FilterPill } from "../Utils/SavedSearchContext"
 import styled from "styled-components"
+import { FilterPill } from "../types"
 
 const CLOSE_ICON_SIZE = 15
 
