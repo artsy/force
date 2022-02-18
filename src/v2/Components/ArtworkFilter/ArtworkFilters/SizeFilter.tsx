@@ -10,9 +10,13 @@ import {
   Message,
   TextVariant,
   useThemeConfig,
+  RadioGroup,
+  Radio,
 } from "@artsy/palette"
 import {
   ArtworkFiltersState,
+  DEFAULT_METRIC,
+  Metric,
   SelectedFiltersCountsLabels,
   useArtworkFilterContext,
 } from "../ArtworkFilterContext"
@@ -23,69 +27,97 @@ import { isCustomValue } from "./Utils/isCustomValue"
 import { useFilterLabelCountByKey } from "../Utils/useFilterLabelCountByKey"
 import { useMode } from "v2/Utils/Hooks/useMode"
 
-export const SIZES = [
-  { displayName: "Small (under 40cm)", name: "SMALL" },
-  { displayName: "Medium (40 – 100cm)", name: "MEDIUM" },
-  { displayName: "Large (over 100cm)", name: "LARGE" },
-]
-const ONE_IN_TO_CM = 2.54
+type Numeric = number | "*"
+type CustomRange = Numeric[]
+type Mode = "resting" | "done"
 
-type CustomRange = (number | "*")[]
-
-type CustomSize = {
+export type CustomSize = {
   height: CustomRange
   width: CustomRange
-}
-
-const convertToCentimeters = (element: number) => {
-  return Math.round(element * ONE_IN_TO_CM)
-}
-
-export const parseRange = (range?: string) => {
-  return range?.split("-").map(s => {
-    if (s === "*") return s
-    return convertToCentimeters(parseFloat(s))
-  })
-}
-
-const convertRangeElementToInches = (element: number | "*") => {
-  if (element === "*") {
-    return element
-  }
-
-  return element / ONE_IN_TO_CM
-}
-
-const convertRangeToInches = (range: CustomRange) => {
-  return [
-    convertRangeElementToInches(range[0]),
-    convertRangeElementToInches(range[1]),
-  ]
-}
-
-const convertSizeToInches = (size: CustomSize) => {
-  return {
-    height: convertRangeToInches(size.height),
-    width: convertRangeToInches(size.width),
-  }
-}
-
-const mapSizeToRange = (size: CustomSize) => {
-  return {
-    height: size.height?.join("-"),
-    width: size.width?.join("-"),
-  }
-}
-
-const getValue = (value: CustomRange[number]) => {
-  return value === "*" || value === 0 ? "" : value
 }
 
 export interface SizeFilterProps {
   expanded?: boolean
 }
 
-type Mode = "resting" | "done"
+const ONE_IN_TO_CM = 2.54
+
+export const SIZES_IN_INCHES = [
+  { displayName: "Small (under 16in)", name: "SMALL" },
+  { displayName: "Medium (16in – 40in)", name: "MEDIUM" },
+  { displayName: "Large (over 40in)", name: "LARGE" },
+]
+
+export const SIZES_IN_CENTIMETERS = [
+  { displayName: "Small (under 40cm)", name: "SMALL" },
+  { displayName: "Medium (40 – 100cm)", name: "MEDIUM" },
+  { displayName: "Large (over 100cm)", name: "LARGE" },
+]
+
+const convertToCentimeters = (element: number) => {
+  return Math.round(element * ONE_IN_TO_CM)
+}
+const convertToInches = (value: number) => {
+  return value / ONE_IN_TO_CM
+}
+
+export const parseRange = (range: string = "", metric: Metric): Numeric[] => {
+  return range.split("-").map(s => {
+    if (s === "*") return s
+    const value = parseFloat(s)
+
+    if (metric === "cm") {
+      return convertToCentimeters(value)
+    }
+
+    return value
+  })
+}
+
+const convertRangeToInches = (range: CustomRange) => {
+  return range.map(value => {
+    if (value === "*") {
+      return value
+    }
+
+    return convertToInches(value)
+  })
+}
+
+const getValue = (value: CustomRange[number]) => {
+  return value === "*" || value === 0 ? "" : value
+}
+
+export const getPredefinedSizesByMetric = (metric: Metric) => {
+  if (metric === "cm") {
+    return SIZES_IN_CENTIMETERS
+  }
+
+  return SIZES_IN_INCHES
+}
+
+export const getMetricLabel = (metric: Metric) => {
+  return metric === "cm" ? "cm" : "in"
+}
+
+export const getCustomSizeRangeInInches = (
+  customSize: CustomSize,
+  sourceMetric: Metric
+) => {
+  let sizes = customSize
+
+  if (sourceMetric === "cm") {
+    sizes = {
+      width: convertRangeToInches(customSize.width),
+      height: convertRangeToInches(customSize.height),
+    }
+  }
+
+  return {
+    width: sizes.width.join("-"),
+    height: sizes.height.join("-"),
+  }
+}
 
 export const SizeFilter: React.FC<SizeFilterProps> = ({ expanded }) => {
   const { currentlySelectedFilters, setFilters } = useArtworkFilterContext()
@@ -93,26 +125,26 @@ export const SizeFilter: React.FC<SizeFilterProps> = ({ expanded }) => {
     height,
     width,
     reset,
+    metric: selectedMetric,
   } = currentlySelectedFilters?.() as ArtworkFiltersState
+  const metric = selectedMetric ?? DEFAULT_METRIC
 
   const filtersCount = useFilterLabelCountByKey(
     SelectedFiltersCountsLabels.sizes
   )
   const label = `Size${filtersCount}`
 
-  const initialCustomSize = React.useMemo(
-    () => ({
-      height: parseRange(height) as CustomRange,
-      width: parseRange(width) as CustomRange,
-    }),
-    [width, height]
-  )
-
   const [showCustom, setShowCustom] = useState(
     isCustomValue(width) || isCustomValue(height)
   )
-  const [customSize, setCustomSize] = useState<CustomSize>(initialCustomSize)
+  const [customSize, setCustomSize] = useState<CustomSize>({
+    height: parseRange(height, metric),
+    width: parseRange(width, metric),
+  })
   const [mode, setMode] = useMode<Mode>("resting")
+
+  const predefinedSizes = getPredefinedSizesByMetric(metric)
+  const metricLabel = getMetricLabel(metric)
 
   const handleInputChange = (dimension: "height" | "width", index: number) => ({
     currentTarget: { value },
@@ -160,10 +192,11 @@ export const SizeFilter: React.FC<SizeFilterProps> = ({ expanded }) => {
   }
 
   const handleClick = () => {
+    const customSizeRanges = getCustomSizeRangeInInches(customSize, metric)
     const newFilters = {
       ...currentlySelectedFilters?.(),
       sizes: [],
-      ...mapSizeToRange(convertSizeToInches(customSize) as CustomSize),
+      ...customSizeRanges,
     }
 
     if (reset) {
@@ -174,10 +207,47 @@ export const SizeFilter: React.FC<SizeFilterProps> = ({ expanded }) => {
     setMode("done")
   }
 
+  const handleSelectMetric = (nextMetric: Metric) => {
+    if (metric === nextMetric) {
+      return
+    }
+
+    const updatedFilters: ArtworkFiltersState = {
+      ...currentlySelectedFilters?.(),
+      metric: nextMetric,
+    }
+
+    if (
+      isCustomValue(updatedFilters.width) ||
+      isCustomValue(updatedFilters.height)
+    ) {
+      const customSizeRanges = getCustomSizeRangeInInches(
+        customSize,
+        nextMetric
+      )
+
+      updatedFilters.width = customSizeRanges.width
+      updatedFilters.height = customSizeRanges.height
+    }
+
+    setFilters!(updatedFilters, { force: false })
+  }
+
   const tokens = useThemeConfig({
     v2: { my: 0.5, secondaryVariant: "small" as TextVariant },
     v3: { my: 1, secondaryVariant: "xs" as TextVariant },
   })
+
+  useEffect(() => {
+    if (width == "*-*" || height === "*-*") {
+      setCustomSize({
+        width: parseRange(width, metric),
+        height: parseRange(height, metric),
+      })
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [width, height])
 
   useEffect(() => {
     // if filter state is being reset, then also clear local input state
@@ -185,10 +255,6 @@ export const SizeFilter: React.FC<SizeFilterProps> = ({ expanded }) => {
       setCustomSize({ height: ["*", "*"], width: ["*", "*"] })
     }
   }, [reset])
-
-  useEffect(() => {
-    setCustomSize(initialCustomSize)
-  }, [initialCustomSize])
 
   const selection = currentlySelectedFilters?.().sizes
   const customHeight = currentlySelectedFilters?.().height
@@ -212,8 +278,18 @@ export const SizeFilter: React.FC<SizeFilterProps> = ({ expanded }) => {
           This is based on the artwork’s average dimension.
         </Text>
 
+        <RadioGroup
+          defaultValue={metric}
+          onSelect={handleSelectMetric}
+          flexDirection="row"
+          my={2}
+        >
+          <Radio value="cm" label="cm" flex={1} />
+          <Radio value="in" label="in" flex={1} />
+        </RadioGroup>
+
         <Flex flexDirection="column">
-          {SIZES.map(({ name, displayName }, index) => {
+          {predefinedSizes.map(({ name, displayName }, index) => {
             return (
               <Checkbox
                 key={index}
@@ -242,7 +318,7 @@ export const SizeFilter: React.FC<SizeFilterProps> = ({ expanded }) => {
           <Text mt={1}>Width</Text>
           <Flex alignItems="flex-end">
             <NumericInput
-              label="cm"
+              label={metricLabel}
               name="width_min"
               min="0"
               step="1"
@@ -251,7 +327,7 @@ export const SizeFilter: React.FC<SizeFilterProps> = ({ expanded }) => {
             />
             <Spacer mx={0.5} />
             <NumericInput
-              label="cm"
+              label={metricLabel}
               name="width_max"
               min="0"
               step="1"
@@ -263,7 +339,7 @@ export const SizeFilter: React.FC<SizeFilterProps> = ({ expanded }) => {
           <Text mt={1}>Height</Text>
           <Flex alignItems="flex-end">
             <NumericInput
-              label="cm"
+              label={metricLabel}
               name="height_min"
               min="0"
               step="1"
@@ -274,7 +350,7 @@ export const SizeFilter: React.FC<SizeFilterProps> = ({ expanded }) => {
             <Spacer mx={0.5} />
 
             <NumericInput
-              label="cm"
+              label={metricLabel}
               name="height_max"
               min="0"
               step="1"

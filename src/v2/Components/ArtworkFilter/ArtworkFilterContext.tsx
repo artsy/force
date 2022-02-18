@@ -9,6 +9,8 @@ import { rangeToTuple } from "./Utils/rangeToTuple"
 import { paramsToCamelCase } from "./Utils/urlBuilder"
 import { updateUrl } from "v2/Components/ArtworkFilter/Utils/urlBuilder"
 
+export const DEFAULT_METRIC: Metric = "cm"
+
 /**
  * Initial filter state
  */
@@ -28,6 +30,7 @@ export const initialArtworkFilterState: ArtworkFilters = {
   height: "*-*",
   width: "*-*",
   priceRange: "*-*",
+  metric: DEFAULT_METRIC,
 }
 
 /**
@@ -106,6 +109,7 @@ export interface ArtworkFilters extends MultiSelectArtworkFilters {
   sort?: string
   term?: string
   width?: string
+  metric?: Metric
 }
 
 export interface ArtworkFiltersState extends ArtworkFilters {
@@ -172,6 +176,8 @@ export enum SelectedFiltersCountsLabels {
   timePeriod = "majorPeriods",
   waysToBuy = "waysToBuy",
 }
+
+export type Metric = "in" | "cm"
 
 // TODO: merge or make a generic base of `ArtworkFilterContextProps` and `AuctionResultsFilterContextProps`.
 // Possibly just extend `BaseFilterContext` and make the former ones into `BaseFilterContext<ArtworkFilters>`
