@@ -31,7 +31,6 @@ export interface ModalManagerProps {
     apple: string
     facebook: string
     google: string
-    twitter?: string
     forgot?: string
   }
   tracking?: TrackingProp

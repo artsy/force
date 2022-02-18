@@ -24,7 +24,6 @@ export interface FormSwitcherProps {
   onAppleLogin?: (e: Event) => void
   onFacebookLogin?: (e: Event) => void
   onGoogleLogin?: (e: Event) => void
-  onTwitterLogin?: (e: Event) => void
   options: ModalOptions
   title?: string
   showRecaptchaDisclaimer?: boolean
@@ -32,7 +31,6 @@ export interface FormSwitcherProps {
     apple: string
     facebook: string
     google: string
-    twitter?: string
   }
   tracking?: TrackingProp
   type: ModalType
