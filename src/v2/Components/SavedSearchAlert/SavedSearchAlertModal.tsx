@@ -29,7 +29,6 @@ import { FilterPill } from "../ArtworkFilter/SavedSearch/Utils/FilterPillsContex
 import { extractPills } from "./Utils/extractPills"
 import { Pills } from "../ArtworkFilter/SavedSearch/Components/Pills"
 import { DownloadAppBanner } from "./DownloadAppBanner"
-import { getAllowedFiltersForSavedSearchInput } from "../ArtworkFilter/Utils/allowedFilters"
 
 interface SavedSearchAlertFormProps {
   savedSearchAttributes: SavedSearchAttributes
@@ -55,20 +54,16 @@ export const SavedSearchAlertModal: React.FC<SavedSearchAlertFormProps> = ({
   const filterContext = useArtworkFilterContext()
   const filtersFromContext = filterContext.currentlySelectedFilters!()
   const [filters, setFilters] = useState(filtersFromContext)
-  const pills = extractPills({
+  const pills = extractPills(
     filters,
-    aggregations: filterContext.aggregations,
-    savedSearchAttributes,
-    metric: filterContext.filters?.metric,
-  })
+    filterContext.aggregations,
+    savedSearchAttributes
+  )
   const namePlaceholder = getNamePlaceholder(name, pills)
 
   useEffect(() => {
     if (visible) {
-      const allowedFilters = getAllowedFiltersForSavedSearchInput(
-        filtersFromContext
-      )
-      setFilters(allowedFilters)
+      setFilters(filtersFromContext)
     }
   }, [visible])
 

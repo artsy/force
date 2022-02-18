@@ -2,15 +2,12 @@ import { compact, find, flatten, keyBy } from "lodash"
 import {
   Aggregations,
   ArtworkFilters,
-  DEFAULT_METRIC,
-  Metric,
 } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
 import { checkboxValues } from "v2/Components/ArtworkFilter/ArtworkFilters/AttributionClassFilter"
 import { COLOR_OPTIONS } from "v2/Components/ArtworkFilter/ArtworkFilters/ColorFilter"
 import {
-  getMetricLabel,
-  getPredefinedSizesByMetric,
   parseRange,
+  SIZES_IN_CENTIMETERS,
 } from "v2/Components/ArtworkFilter/ArtworkFilters/SizeFilter"
 import { getTimePeriodToDisplay } from "v2/Components/ArtworkFilter/ArtworkFilters/TimePeriodFilter"
 import { isCustomValue } from "v2/Components/ArtworkFilter/ArtworkFilters/Utils/isCustomValue"
@@ -48,13 +45,8 @@ export const extractPillFromAggregation = (
   return []
 }
 
-export const extractSizeLabel = (
-  prefix: string,
-  value: string,
-  metric: Metric
-) => {
-  const [min, max] = parseRange(value, metric)!
-  const metricLabel = getMetricLabel(metric)
+export const extractSizeLabel = (prefix: string, value: string) => {
+  const [min, max] = parseRange(value, "cm")!
 
   let label
   if (max === "*") {
@@ -65,7 +57,7 @@ export const extractSizeLabel = (
     label = `${min}-${max}`
   }
 
-  return `${prefix}: ${label} ${metricLabel}`
+  return `${prefix}: ${label} cm`
 }
 
 const extractPriceLabel = (range: string) => {
@@ -86,12 +78,10 @@ const extractPriceLabel = (range: string) => {
   return label
 }
 
-export const extractPillsFromFilters = (options: {
-  filters: ArtworkFilters
-  aggregations: Aggregations
-  metric?: Metric
-}) => {
-  const { filters, aggregations = [], metric = DEFAULT_METRIC } = options
+export const extractPillsFromFilters = (
+  filters: ArtworkFilters,
+  aggregations: Aggregations = []
+) => {
   const pills: NonDefaultFilterPill[] = Object.entries(filters).map(filter => {
     const [paramName, paramValue] = filter
 
@@ -118,19 +108,24 @@ export const extractPillsFromFilters = (options: {
           result = {
             filterName: paramName,
             name: paramValue,
-            displayName: extractSizeLabel(paramName[0], paramValue, metric),
+            displayName: extractSizeLabel(paramName[0], paramValue),
           }
         }
         break
       }
       case "sizes": {
-        const predefinedValues = getPredefinedSizesByMetric(metric)
-        result = paramValue.map(value => ({
-          filterName: paramName,
-          name: value,
-          displayName: find(predefinedValues, option => value === option.name)
-            ?.displayName,
-        }))
+        result = paramValue.map(value => {
+          const sizeItem = find(
+            SIZES_IN_CENTIMETERS,
+            option => value === option.name
+          )
+
+          return {
+            filterName: paramName,
+            name: value,
+            displayName: sizeItem?.displayName,
+          }
+        })
         break
       }
       case "colors": {
@@ -193,19 +188,13 @@ export const extractArtistPill = (
   return null
 }
 
-export const extractPills = (options: {
-  filters: ArtworkFilters
-  aggregations?: Aggregations
+export const extractPills = (
+  filters: ArtworkFilters,
+  aggregations: Aggregations = [],
   savedSearchAttributes?: SavedSearchAttributes
-  metric?: Metric
-}) => {
-  const { filters, aggregations = [], savedSearchAttributes, metric } = options
+) => {
   const artistPill = extractArtistPill(savedSearchAttributes)
-  const pillsFromFilters = extractPillsFromFilters({
-    filters,
-    aggregations,
-    metric,
-  })
+  const pillsFromFilters = extractPillsFromFilters(filters, aggregations)
 
   return compact([artistPill, ...pillsFromFilters])
 }

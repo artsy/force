@@ -82,11 +82,7 @@ const SavedSearchAlertEditForm: React.FC<SavedSearchAlertEditFormProps> = ({
   }
 
   const aggregations = artworksConnection.aggregations as Aggregations
-  const pills = extractPills({
-    filters: searchCriteriaAttributes,
-    aggregations,
-    savedSearchAttributes: entity,
-  })
+  const pills = extractPills(searchCriteriaAttributes, aggregations, entity)
   const namePlaceholder = getNamePlaceholder(entity?.name ?? "", pills)
 
   const removePill = (pill: FilterPill) => {
