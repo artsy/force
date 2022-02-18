@@ -258,6 +258,7 @@ export class SignUpForm extends Component<SignUpFormProps, SignUpFormState> {
                     this.props.handleTypeChange?.(ModalType.login)
                   }
                   onAppleLogin={async e => {
+                    e.preventDefault()
                     if (!values.accepted_terms_of_service) {
                       setTouched({ accepted_terms_of_service: true })
                       await validateForm()
@@ -266,6 +267,7 @@ export class SignUpForm extends Component<SignUpFormProps, SignUpFormState> {
                     }
                   }}
                   onFacebookLogin={async e => {
+                    e.preventDefault()
                     if (!values.accepted_terms_of_service) {
                       setTouched({ accepted_terms_of_service: true })
                       await validateForm()
@@ -274,6 +276,7 @@ export class SignUpForm extends Component<SignUpFormProps, SignUpFormState> {
                     }
                   }}
                   onGoogleLogin={async e => {
+                    e.preventDefault()
                     if (!values.accepted_terms_of_service) {
                       setTouched({ accepted_terms_of_service: true })
                       await validateForm()
