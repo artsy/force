@@ -8,7 +8,7 @@ describe("DownloadAppBanner", () => {
   const renderDownloadAppBanner = () => {
     render(
       <DownloadAppBanner
-        savedSearchAttributes={{
+        entity={{
           id: "artistId",
           name: "artistName",
           slug: "artistSlug",

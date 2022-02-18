@@ -11,7 +11,7 @@ import { ArtworkFilterContextProvider } from "v2/Components/ArtworkFilter/Artwor
 jest.mock("v2/System/useSystemContext")
 jest.mock("v2/System/Analytics/useTracking")
 
-const savedSearchAttributes: SavedSearchAttributes = {
+const savedSearchEntity: SavedSearchAttributes = {
   type: "artist",
   id: "test-artist-id",
   name: "test-artist-name",
@@ -20,9 +20,7 @@ const savedSearchAttributes: SavedSearchAttributes = {
 
 describe("CreateAlertButton", () => {
   const renderButton = () => {
-    render(
-      <CreateAlertButtonTest savedSearchAttributes={savedSearchAttributes} />
-    )
+    render(<CreateAlertButtonTest entity={savedSearchEntity} />)
   }
 
   const CreateAlertButtonTest = (

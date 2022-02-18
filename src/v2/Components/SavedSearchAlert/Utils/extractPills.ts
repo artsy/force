@@ -15,7 +15,7 @@ import { WAYS_TO_BUY_OPTIONS } from "v2/Components/ArtworkFilter/ArtworkFilters/
 import {
   DefaultFilterPill,
   NonDefaultFilterPill,
-} from "v2/Components/ArtworkFilter/SavedSearch/Utils/FilterPillsContext"
+} from "v2/Components/ArtworkFilter/SavedSearch/Utils/SavedSearchContext"
 import {
   aggregationForFilter,
   shouldExtractValueNamesFromAggregation,

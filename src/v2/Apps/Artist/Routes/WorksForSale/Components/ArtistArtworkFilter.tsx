@@ -12,7 +12,6 @@ import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
 import { ZeroState } from "./ZeroState"
 import { useRouter } from "v2/System/Router/useRouter"
 import { SavedSearchAttributes } from "v2/Components/ArtworkFilter/SavedSearch/types"
-import { FilterPillsContextProvider } from "v2/Components/ArtworkFilter/SavedSearch/Utils/FilterPillsContext"
 
 interface ArtistArtworkFilterProps {
   aggregations: SharedArtworkFilterContextProps["aggregations"]
@@ -31,7 +30,7 @@ const ArtistArtworkFilter: React.FC<ArtistArtworkFilterProps> = props => {
     return null
   }
 
-  const savedSearchAttributes: SavedSearchAttributes = {
+  const savedSearchEntity: SavedSearchAttributes = {
     type: "artist",
     id: artist.internalID,
     name: artist.name ?? "",
@@ -54,21 +53,19 @@ const ArtistArtworkFilter: React.FC<ArtistArtworkFilterProps> = props => {
         { value: "year", text: "Artwork year (asc.)" },
       ]}
     >
-      <FilterPillsContextProvider>
-        <BaseArtworkFilter
-          relay={relay}
-          viewer={artist}
-          relayVariables={{
-            aggregations: ["TOTAL"],
-          }}
-          savedSearchProps={savedSearchAttributes}
-          enableCreateAlert
-        >
-          {artist.counts!.artworks === 0 && (
-            <ZeroState artist={artist} isFollowed={artist.isFollowed} />
-          )}
-        </BaseArtworkFilter>
-      </FilterPillsContextProvider>
+      <BaseArtworkFilter
+        relay={relay}
+        viewer={artist}
+        relayVariables={{
+          aggregations: ["TOTAL"],
+        }}
+        enableCreateAlert
+        savedSearchProps={savedSearchEntity}
+      >
+        {artist.counts!.artworks === 0 && (
+          <ZeroState artist={artist} isFollowed={artist.isFollowed} />
+        )}
+      </BaseArtworkFilter>
     </ArtworkFilterContextProvider>
   )
 }

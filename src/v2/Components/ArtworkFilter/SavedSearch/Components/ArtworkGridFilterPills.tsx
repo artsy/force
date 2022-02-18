@@ -1,39 +1,30 @@
-import React, { FC } from "react"
+import React from "react"
 import { Flex } from "@artsy/palette"
 import { CreateAlertButton } from "./CreateAlertButton"
-import { SavedSearchAttributes } from "../types"
 import {
   ArtworkFilters,
   initialArtworkFilterState,
   useArtworkFilterContext,
 } from "../../ArtworkFilterContext"
 import { isArray } from "lodash"
-import { FilterPill } from "../Utils/FilterPillsContext"
 import { Pills } from "./Pills"
-import { extractPills } from "v2/Components/SavedSearchAlert/Utils/extractPills"
+import {
+  FilterPill,
+  SavedSearchContextProvider,
+  useSavedSearchContext,
+} from "../Utils/SavedSearchContext"
+import { SavedSearchAttributes } from "../types"
 import { getAllowedFiltersForSavedSearchInput } from "../../Utils/allowedFilters"
 
 const PILL_HORIZONTAL_MARGIN_SIZE = 0.5
 
-export interface ArtworkGridFilterPillsProps {
-  savedSearchAttributes?: SavedSearchAttributes
+interface ArtworkGridFilterPillsContainerProps {
+  savedSearchAttributes: SavedSearchAttributes
 }
 
-export const ArtworkGridFilterPills: FC<ArtworkGridFilterPillsProps> = ({
-  savedSearchAttributes,
-}) => {
-  const {
-    filters,
-    aggregations,
-    setFilter,
-    currentlySelectedFilters,
-  } = useArtworkFilterContext()
-  const allowedFilters = getAllowedFiltersForSavedSearchInput(filters ?? {})
-  const pills = extractPills(
-    allowedFilters,
-    aggregations,
-    savedSearchAttributes
-  )
+export const ArtworkGridFilterPills = () => {
+  const { setFilter, currentlySelectedFilters } = useArtworkFilterContext()
+  const { pills, entity } = useSavedSearchContext()
 
   const removePill = (pill: FilterPill) => {
     if (pill.isDefault) {
@@ -55,12 +46,23 @@ export const ArtworkGridFilterPills: FC<ArtworkGridFilterPillsProps> = ({
   return (
     <Flex flexWrap="wrap" mx={-PILL_HORIZONTAL_MARGIN_SIZE}>
       <Pills items={pills} onDeletePress={removePill} />
-      {savedSearchAttributes && (
-        <CreateAlertButton
-          savedSearchAttributes={savedSearchAttributes}
-          ml={PILL_HORIZONTAL_MARGIN_SIZE}
-        />
-      )}
+      <CreateAlertButton entity={entity} ml={PILL_HORIZONTAL_MARGIN_SIZE} />
     </Flex>
+  )
+}
+
+export const ArtworkGridFilterPillsContainer: React.FC<ArtworkGridFilterPillsContainerProps> = props => {
+  const { savedSearchAttributes } = props
+  const { filters, aggregations } = useArtworkFilterContext()
+  const allowedFilters = getAllowedFiltersForSavedSearchInput(filters ?? {})
+
+  return (
+    <SavedSearchContextProvider
+      entity={savedSearchAttributes}
+      filters={allowedFilters}
+      aggregations={aggregations ?? []}
+    >
+      <ArtworkGridFilterPills />
+    </SavedSearchContextProvider>
   )
 }

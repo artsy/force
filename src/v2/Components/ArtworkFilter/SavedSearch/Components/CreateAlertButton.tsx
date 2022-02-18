@@ -14,11 +14,11 @@ import { openAuthToSatisfyIntent } from "v2/Utils/openAuthModal"
 import { mediator } from "lib/mediator"
 
 interface CreateAlertButtonProps extends ButtonProps {
-  savedSearchAttributes: SavedSearchAttributes
+  entity: SavedSearchAttributes
 }
 
 export const CreateAlertButton: React.FC<CreateAlertButtonProps> = ({
-  savedSearchAttributes,
+  entity,
   ...props
 }) => {
   const tracking = useTracking()
@@ -45,9 +45,9 @@ export const CreateAlertButton: React.FC<CreateAlertButtonProps> = ({
   const handleClick = () => {
     tracking.trackEvent({
       action: ActionType.clickedCreateAlert,
-      context_page_owner_type: savedSearchAttributes.type as PageOwnerType,
-      context_page_owner_id: savedSearchAttributes.id,
-      context_page_owner_slug: savedSearchAttributes.slug,
+      context_page_owner_type: entity.type as PageOwnerType,
+      context_page_owner_id: entity.id,
+      context_page_owner_slug: entity.slug,
     })
 
     if (isLoggedIn) {
@@ -55,8 +55,8 @@ export const CreateAlertButton: React.FC<CreateAlertButtonProps> = ({
     } else {
       openAuthToSatisfyIntent(mediator, {
         entity: {
-          name: savedSearchAttributes.name,
-          slug: savedSearchAttributes.slug,
+          name: entity.name,
+          slug: entity.slug,
         },
         contextModule: ContextModule.artworkGrid,
         intent: Intent.createAlert,
@@ -69,9 +69,9 @@ export const CreateAlertButton: React.FC<CreateAlertButtonProps> = ({
     setVisibleForm(false)
     const trackInfo = {
       action_type: ActionType.toggledSavedSearch,
-      context_page_owner_type: savedSearchAttributes.type as PageOwnerType,
-      context_page_owner_id: savedSearchAttributes.id,
-      context_page_owner_slug: savedSearchAttributes.slug,
+      context_page_owner_type: entity.type as PageOwnerType,
+      context_page_owner_id: entity.id,
+      context_page_owner_slug: entity.slug,
       saved_search_id: result.id,
     }
     tracking.trackEvent(trackInfo)
@@ -95,7 +95,7 @@ export const CreateAlertButton: React.FC<CreateAlertButtonProps> = ({
       <SavedSearchAlertModal
         visible={visibleForm}
         initialValues={{ name: "", email: true, push: false }}
-        savedSearchAttributes={savedSearchAttributes}
+        entity={entity}
         onClose={() => setVisibleForm(false)}
         onComplete={handleComplete}
       />

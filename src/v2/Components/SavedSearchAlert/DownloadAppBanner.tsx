@@ -16,11 +16,11 @@ import {
 import { SavedSearchAttributes } from "../ArtworkFilter/SavedSearch/types"
 
 interface DownloadAppBannerProps {
-  savedSearchAttributes: SavedSearchAttributes
+  entity: SavedSearchAttributes
 }
 
 export const DownloadAppBanner: React.FC<DownloadAppBannerProps> = ({
-  savedSearchAttributes,
+  entity,
 }) => {
   const tracking = useTracking()
   const { device } = useDeviceDetection()
@@ -43,8 +43,8 @@ export const DownloadAppBanner: React.FC<DownloadAppBannerProps> = ({
       action: ActionType.clickedAppDownload,
       context_module: ContextModule.createAlert,
       context_page_owner_type: OwnerType.artist,
-      context_page_owner_slug: savedSearchAttributes.slug,
-      context_page_owner_id: savedSearchAttributes.id,
+      context_page_owner_slug: entity.slug,
+      context_page_owner_id: entity.id,
       destination_path: destinationPath,
       subject,
     }

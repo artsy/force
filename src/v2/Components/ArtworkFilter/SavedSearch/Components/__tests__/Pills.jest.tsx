@@ -1,5 +1,5 @@
 import { fireEvent, render, screen } from "@testing-library/react"
-import { FilterPill } from "../../Utils/FilterPillsContext"
+import { FilterPill } from "../../Utils/SavedSearchContext"
 import { Pills, PillsProps } from "../Pills"
 
 const items: FilterPill[] = [

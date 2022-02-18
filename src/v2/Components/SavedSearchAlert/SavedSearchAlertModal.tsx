@@ -25,13 +25,13 @@ import {
 } from "../ArtworkFilter/ArtworkFilterContext"
 import createLogger from "v2/Utils/logger"
 import { SavedSearchAttributes } from "../ArtworkFilter/SavedSearch/types"
-import { FilterPill } from "../ArtworkFilter/SavedSearch/Utils/FilterPillsContext"
+import { FilterPill } from "../ArtworkFilter/SavedSearch/Utils/SavedSearchContext"
 import { extractPills } from "./Utils/extractPills"
 import { Pills } from "../ArtworkFilter/SavedSearch/Components/Pills"
 import { DownloadAppBanner } from "./DownloadAppBanner"
 
 interface SavedSearchAlertFormProps {
-  savedSearchAttributes: SavedSearchAttributes
+  entity: SavedSearchAttributes
   initialValues: SavedSearchAleftFormValues
   visible?: boolean
   onClose: () => void
@@ -43,22 +43,18 @@ const logger = createLogger(
 )
 
 export const SavedSearchAlertModal: React.FC<SavedSearchAlertFormProps> = ({
-  savedSearchAttributes,
+  entity,
   initialValues,
   visible,
   onClose,
   onComplete,
 }) => {
-  const { id, name } = savedSearchAttributes
+  const { id, name } = entity
   const { relayEnvironment } = useSystemContext()
   const filterContext = useArtworkFilterContext()
   const filtersFromContext = filterContext.currentlySelectedFilters!()
   const [filters, setFilters] = useState(filtersFromContext)
-  const pills = extractPills(
-    filters,
-    filterContext.aggregations,
-    savedSearchAttributes
-  )
+  const pills = extractPills(filters, filterContext.aggregations, entity)
   const namePlaceholder = getNamePlaceholder(name, pills)
 
   useEffect(() => {
@@ -191,9 +187,7 @@ export const SavedSearchAlertModal: React.FC<SavedSearchAlertFormProps> = ({
                   </Box>
                 </Box>
 
-                <DownloadAppBanner
-                  savedSearchAttributes={savedSearchAttributes}
-                />
+                <DownloadAppBanner entity={entity} />
               </Join>
             </ModalDialog>
           )

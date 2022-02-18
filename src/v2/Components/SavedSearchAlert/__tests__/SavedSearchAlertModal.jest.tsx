@@ -13,7 +13,7 @@ const formInitialValues = {
   push: false,
 }
 
-const savedSearchProps: SavedSearchAttributes = {
+const savedSearchEntity: SavedSearchAttributes = {
   type: "artist",
   id: "test-artist-id",
   name: "Test Artist",
@@ -41,7 +41,7 @@ describe("SavedSearchAlertModal", () => {
         <SavedSearchAlertModal
           visible
           initialValues={formInitialValues}
-          savedSearchAttributes={savedSearchProps}
+          entity={savedSearchEntity}
           onClose={onCloseMock}
           onComplete={onCompleteMock}
           {...rest}

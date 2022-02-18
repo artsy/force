@@ -1,64 +1,39 @@
 import { render, screen, within, fireEvent } from "@testing-library/react"
 import { SavedSearchAttributes } from "v2/Components/ArtworkFilter/SavedSearch/types"
 import {
-  ArtworkFilterContextProps,
   ArtworkFilterContextProvider,
-  useArtworkFilterContext,
+  ArtworkFiltersState,
+  SharedArtworkFilterContextProps,
 } from "../ArtworkFilterContext"
-import {
-  ArtworkGridFilterPills,
-  ArtworkGridFilterPillsProps,
-} from "../SavedSearch/Components/ArtworkGridFilterPills"
-import {
-  DefaultFilterPill,
-  FilterPill,
-  FilterPillsContextProvider,
-} from "../SavedSearch/Utils/FilterPillsContext"
+import { ArtworkGridFilterPillsContainer } from "../SavedSearch/Components/ArtworkGridFilterPills"
 
-const savedSearchAttributes: SavedSearchAttributes = {
+const savedSearchEntity: SavedSearchAttributes = {
   type: "artist",
   id: "test-artist-id",
-  name: "test-artist-name",
+  name: "Banksy",
   slug: "example-slug",
 }
 
-const mockedPills: FilterPill[] = [
-  { filterName: "colors", name: "red", displayName: "Red" },
-  {
-    filterName: "attributionClass",
-    name: "open-edition",
-    displayName: "Open Edition",
-  },
-]
-
-const defaultPill: DefaultFilterPill = {
-  isDefault: true,
-  name: "banksy",
-  displayName: "Banksy",
+const mockedFilters: ArtworkFiltersState = {
+  attributionClass: ["open edition"],
+  colors: ["red"],
 }
 
 describe("ArtworkGridFilterPills", () => {
-  let context: ArtworkFilterContextProps
-
-  const renderPills = (pills: FilterPill[] = mockedPills) => {
+  const renderPills = (props: SharedArtworkFilterContextProps = {}) => {
     render(
-      <ArtworkFilterContextProvider>
-        <FilterPillsContextProvider pills={pills}>
-          <ArtworkGridFilterPillsTest
-            savedSearchAttributes={savedSearchAttributes}
-          />
-        </FilterPillsContextProvider>
+      <ArtworkFilterContextProvider {...props}>
+        <ArtworkGridFilterPillsContainer
+          savedSearchAttributes={savedSearchEntity}
+        />
       </ArtworkFilterContextProvider>
     )
   }
 
-  const ArtworkGridFilterPillsTest = (props: ArtworkGridFilterPillsProps) => {
-    context = useArtworkFilterContext()
-    return <ArtworkGridFilterPills {...props} />
-  }
-
   it("renders correctly", () => {
-    renderPills()
+    renderPills({
+      filters: mockedFilters,
+    })
     expect(screen.getByText("Red")).toBeInTheDocument()
     expect(screen.getByText("Open Edition")).toBeInTheDocument()
     expect(screen.getAllByTitle("Close")).toHaveLength(2)
@@ -66,7 +41,9 @@ describe("ArtworkGridFilterPills", () => {
   })
 
   it("renders default pills without CloseIcon", () => {
-    renderPills([defaultPill, ...mockedPills])
+    renderPills({
+      filters: mockedFilters,
+    })
     expect(
       within(screen.getByText("Banksy")).queryByTitle("Close")
     ).not.toBeInTheDocument()
@@ -80,16 +57,22 @@ describe("ArtworkGridFilterPills", () => {
   })
 
   it("updates filters on pill click", () => {
-    renderPills()
-    const setFilterSpy = jest.spyOn(context, "setFilter")
+    renderPills({
+      filters: mockedFilters,
+    })
+
     fireEvent.click(screen.getByText("Red"))
-    expect(setFilterSpy).toHaveBeenCalled()
+
+    expect(screen.queryByText("Red")).not.toBeInTheDocument()
   })
 
   it("does not update filters on default pill click", () => {
-    renderPills([defaultPill, ...mockedPills])
-    const setFilterSpy = jest.spyOn(context, "setFilter")
+    renderPills({
+      filters: mockedFilters,
+    })
+
     fireEvent.click(screen.getByText("Banksy"))
-    expect(setFilterSpy).not.toHaveBeenCalled()
+
+    expect(screen.getByText("Banksy")).toBeInTheDocument()
   })
 })

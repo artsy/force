@@ -1,4 +1,4 @@
-import { FilterPill } from "v2/Components/ArtworkFilter/SavedSearch/Utils/FilterPillsContext"
+import { FilterPill } from "v2/Components/ArtworkFilter/SavedSearch/Utils/SavedSearchContext"
 import { getNamePlaceholder } from "../getNamePlaceholder"
 
 describe("getNamePlaceholder", () => {
