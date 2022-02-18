@@ -27,7 +27,7 @@ function GridArtwork(props) {
     <a
       className={b()}
       key={saleArtwork._id}
-      href={`/artwork/${saleArtwork.id}`}
+      href={`/artwork/${saleArtwork.slug}`}
     >
       <div className={b("image-container")}>
         <div className="vam-outer">
