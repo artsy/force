@@ -2,6 +2,7 @@ import * as React from "react"
 import { Box, Column, GridColumns, Toasts, useToasts } from "@artsy/palette"
 import { useNavBarHeight } from "v2/Components/NavBar/useNavBarHeight"
 import { AppContainer } from "./AppContainer"
+import { Z } from "./constants"
 
 interface AppToastsProps {
   accomodateNav: boolean
@@ -16,7 +17,7 @@ export const AppToasts: React.FC<AppToastsProps> = ({ accomodateNav }) => {
   return (
     <Box
       position="fixed"
-      zIndex={2}
+      zIndex={Z.toasts}
       top={accomodateNav ? height : 0}
       left={0}
       width="100%"

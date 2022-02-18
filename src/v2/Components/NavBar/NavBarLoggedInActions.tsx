@@ -1,5 +1,5 @@
-import { useContext } from "react";
-import * as React from "react";
+import { useContext } from "react"
+import * as React from "react"
 import { NavBarNotificationsQueryRenderer, NavBarUserMenu } from "./Menus"
 import { AnalyticsSchema, SystemContext, useTracking } from "v2/System"
 import {
@@ -29,6 +29,7 @@ import {
   NavBarItemLink,
   NavBarItemUnfocusableAnchor,
 } from "./NavBarItem"
+import { Z } from "v2/Apps/Components/constants"
 
 /** Displays action icons for logged in users such as inbox, profile, and notifications */
 export const NavBarLoggedInActions: React.FC<Partial<
@@ -47,6 +48,7 @@ export const NavBarLoggedInActions: React.FC<Partial<
   return (
     <>
       <Dropdown
+        zIndex={Z.dropdown}
         dropdown={<NavBarNotificationsQueryRenderer />}
         placement="bottom-end"
         offset={0}
@@ -94,7 +96,12 @@ export const NavBarLoggedInActions: React.FC<Partial<
         )}
       </NavBarItemLink>
 
-      <Dropdown dropdown={<NavBarUserMenu />} placement="bottom-end" offset={0}>
+      <Dropdown
+        zIndex={Z.dropdown}
+        dropdown={<NavBarUserMenu />}
+        placement="bottom-end"
+        offset={0}
+      >
         {({ anchorRef, anchorProps, visible }) => (
           <NavBarItemButton
             ref={anchorRef as any}

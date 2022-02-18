@@ -42,6 +42,7 @@ import { HorizontalPadding } from "v2/Apps/Components/HorizontalPadding"
 import { useNavBarHeight } from "./useNavBarHeight"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { useTracking } from "react-tracking"
+import { Z } from "v2/Apps/Components/constants"
 
 /**
  * Old Force pages have the navbar height hardcoded in several places. If
@@ -297,6 +298,7 @@ export const NavBar: React.FC = track(
             >
               <Flex alignItems="stretch">
                 <Dropdown
+                  zIndex={Z.dropdown}
                   keepInDOM
                   placement="bottom"
                   offset={0}
@@ -329,6 +331,7 @@ export const NavBar: React.FC = track(
                 </Dropdown>
 
                 <Dropdown
+                  zIndex={Z.dropdown}
                   keepInDOM
                   placement="bottom"
                   offset={0}
