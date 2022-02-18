@@ -93,7 +93,6 @@ const SavedSearchAlertEditForm: React.FC<SavedSearchAlertEditFormProps> = ({
   const handleSubmit = async (values: SavedSearchAleftFormValues) => {
     try {
       const namePlaceholder = getNamePlaceholder(entity.name, pills)
-      console.log("[debug] criteria", criteria)
 
       await submitEditAlert({
         variables: {
