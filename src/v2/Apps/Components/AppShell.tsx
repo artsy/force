@@ -18,6 +18,7 @@ import { AppToasts } from "./AppToasts"
 import { useNavBarHeight } from "v2/Components/NavBar/useNavBarHeight"
 import { useProductionEnvironmentWarning } from "v2/Utils/Hooks/useProductionEnvironmentWarning"
 import { useAuthValidation } from "v2/Utils/Hooks/useAuthValidation"
+import { Z } from "./constants"
 
 const logger = createLogger("Apps/Components/AppShell")
 
@@ -87,7 +88,7 @@ export const AppShell: React.FC<AppShellProps> = props => {
     >
       {showNav && (
         <Box height={navBarHeight}>
-          <Box left={0} position="fixed" width="100%" zIndex={100}>
+          <Box left={0} position="fixed" width="100%" zIndex={Z.globalNav}>
             <NavBar />
           </Box>
         </Box>

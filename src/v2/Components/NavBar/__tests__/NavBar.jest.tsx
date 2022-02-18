@@ -25,6 +25,10 @@ jest.mock("v2/Components/NavBar/NavBarMobileMenu/NavBarMobileSubMenu", () => ({
   NavBarMobileSubMenu: () => <></>,
 }))
 
+jest.mock("react-dom", () => ({
+  createPortal: children => children,
+}))
+
 describe("NavBar", () => {
   const trackEvent = jest.fn()
 
