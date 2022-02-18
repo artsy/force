@@ -5,7 +5,7 @@ import {
   ArtworkFiltersState,
   SharedArtworkFilterContextProps,
 } from "../ArtworkFilterContext"
-import { ArtworkGridFilterPillsContainer } from "../SavedSearch/Components/ArtworkGridFilterPills"
+import { ArtworkGridFilterPills } from "../SavedSearch/Components/ArtworkGridFilterPills"
 
 const savedSearchEntity: SavedSearchEntity = {
   type: "artist",
@@ -23,9 +23,7 @@ describe("ArtworkGridFilterPills", () => {
   const renderPills = (props: SharedArtworkFilterContextProps = {}) => {
     render(
       <ArtworkFilterContextProvider {...props}>
-        <ArtworkGridFilterPillsContainer
-          savedSearchEntity={savedSearchEntity}
-        />
+        <ArtworkGridFilterPills savedSearchEntity={savedSearchEntity} />
       </ArtworkFilterContextProvider>
     )
   }

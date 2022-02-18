@@ -5,47 +5,46 @@ import {
 } from "../../ArtworkFilterContext"
 import { allowedSearchCriteriaKeys } from "./constants"
 
+export const isDefaultValue = (
+  paramName: string,
+  paramValue: string | boolean | string[] | null
+) => {
+  if (Array.isArray(paramValue)) {
+    return paramValue.length === 0
+  }
+
+  if (paramValue === null) {
+    return true
+  }
+
+  return initialArtworkFilterState[paramName] === paramValue
+}
+
 export const getAllowedSearchCriteria = (
   criteria: SearchCriteriaAttributes
 ) => {
   const allowedCriteria: SearchCriteriaAttributes = {}
 
-  Object.keys(criteria).forEach(filterKey => {
-    if (allowedSearchCriteriaKeys.includes(filterKey)) {
-      allowedCriteria[filterKey] = criteria[filterKey]
+  Object.entries(criteria).forEach(entry => {
+    const [key, value] = entry
+    const isAllowedKey = allowedSearchCriteriaKeys.includes(key)
+
+    if (isAllowedKey && !isDefaultValue(key, value)) {
+      allowedCriteria[key] = criteria[key]
     }
   })
 
   return allowedCriteria
 }
 
-const isDefaultValue = (paramName, paramValue) => {
-  if (Array.isArray(paramValue)) {
-    return !paramValue.length
-  }
-  return initialArtworkFilterState[paramName] === paramValue
-}
-
 export const getSearchCriteriaFromFilters = (
   artistID: string,
   filters: ArtworkFiltersState
-) => {
+): SearchCriteriaAttributes => {
   const allowedFilters = getAllowedSearchCriteria(filters)
 
-  const input = Object.entries(allowedFilters).reduce(
-    (acc, [paramName, paramValue]) => {
-      if (!isDefaultValue(paramName, paramValue)) {
-        acc[paramName] = paramValue
-      }
-      return acc
-    },
-    {}
-  )
-
-  const criteria: SearchCriteriaAttributes = {
+  return {
     artistIDs: [artistID],
-    ...input,
+    ...allowedFilters,
   }
-
-  return criteria
 }

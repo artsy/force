@@ -8,22 +8,29 @@ import {
 } from "../../ArtworkFilterContext"
 import { isArray } from "lodash"
 import { Pills } from "./Pills"
-import {
-  SavedSearchContextProvider,
-  useSavedSearchContext,
-} from "../Utils/SavedSearchContext"
 import { FilterPill, SavedSearchEntity } from "../types"
-import { getAllowedSearchCriteria } from "../Utils"
+import { extractPills } from "v2/Components/SavedSearchAlert/Utils/extractPills"
+import { getSearchCriteriaFromFilters } from "../Utils"
 
 const PILL_HORIZONTAL_MARGIN_SIZE = 0.5
 
-interface ArtworkGridFilterPillsContainerProps {
+interface ArtworkGridFilterPillsProps {
   savedSearchEntity: SavedSearchEntity
 }
 
-export const ArtworkGridFilterPills = () => {
-  const { setFilter, currentlySelectedFilters } = useArtworkFilterContext()
-  const { pills, entity } = useSavedSearchContext()
+export const ArtworkGridFilterPills: React.FC<ArtworkGridFilterPillsProps> = props => {
+  const { savedSearchEntity } = props
+  const {
+    filters,
+    aggregations,
+    setFilter,
+    currentlySelectedFilters,
+  } = useArtworkFilterContext()
+  const criteria = getSearchCriteriaFromFilters(
+    savedSearchEntity.id,
+    filters ?? {}
+  )
+  const pills = extractPills(criteria, aggregations, savedSearchEntity)
 
   const removePill = (pill: FilterPill) => {
     if (pill.isDefault) {
@@ -45,23 +52,10 @@ export const ArtworkGridFilterPills = () => {
   return (
     <Flex flexWrap="wrap" mx={-PILL_HORIZONTAL_MARGIN_SIZE}>
       <Pills items={pills} onDeletePress={removePill} />
-      <CreateAlertButton entity={entity} ml={PILL_HORIZONTAL_MARGIN_SIZE} />
+      <CreateAlertButton
+        entity={savedSearchEntity}
+        ml={PILL_HORIZONTAL_MARGIN_SIZE}
+      />
     </Flex>
-  )
-}
-
-export const ArtworkGridFilterPillsContainer: React.FC<ArtworkGridFilterPillsContainerProps> = props => {
-  const { savedSearchEntity } = props
-  const { filters, aggregations } = useArtworkFilterContext()
-  const allowedFilters = getAllowedSearchCriteria(filters ?? {})
-
-  return (
-    <SavedSearchContextProvider
-      entity={savedSearchEntity}
-      filters={allowedFilters}
-      aggregations={aggregations ?? []}
-    >
-      <ArtworkGridFilterPills />
-    </SavedSearchContextProvider>
   )
 }

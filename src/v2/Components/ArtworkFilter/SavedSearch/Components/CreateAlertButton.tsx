@@ -8,7 +8,7 @@ import {
   ContextModule,
   PageOwnerType,
 } from "@artsy/cohesion"
-import { SavedSearchAlertModal } from "v2/Components/SavedSearchAlert/SavedSearchAlertModal"
+import { SavedSearchAlertModalContainer } from "v2/Components/SavedSearchAlert/SavedSearchAlertModal"
 import { SavedSearchAlertMutationResult } from "v2/Components/SavedSearchAlert/SavedSearchAlertModel"
 import { openAuthToSatisfyIntent } from "v2/Utils/openAuthModal"
 import { mediator } from "lib/mediator"
@@ -92,7 +92,7 @@ export const CreateAlertButton: React.FC<CreateAlertButtonProps> = ({
         <BellIcon mr={0.5} fill="currentColor" />
         Create Alert
       </Button>
-      <SavedSearchAlertModal
+      <SavedSearchAlertModalContainer
         visible={visibleForm}
         initialValues={{ name: "", email: true, push: false }}
         entity={entity}

@@ -44,7 +44,7 @@ import { Sticky } from "v2/Components/Sticky"
 import { ScrollRefContext } from "./ArtworkFilters/useScrollContext"
 import { ArtworkSortFilter } from "./ArtworkFilters/ArtworkSortFilter"
 import type RelayModernEnvironment from "relay-runtime/lib/store/RelayModernEnvironment"
-import { ArtworkGridFilterPillsContainer } from "./SavedSearch/Components/ArtworkGridFilterPills"
+import { ArtworkGridFilterPills } from "./SavedSearch/Components/ArtworkGridFilterPills"
 import { getTotalSelectedFiltersCount } from "./Utils/getTotalSelectedFiltersCount"
 import { SavedSearchEntity } from "./SavedSearch/types"
 
@@ -287,9 +287,7 @@ export const BaseArtworkFilter: React.FC<
 
           {enableCreateAlert && savedSearchEntity && (
             <>
-              <ArtworkGridFilterPillsContainer
-                savedSearchEntity={savedSearchEntity}
-              />
+              <ArtworkGridFilterPills savedSearchEntity={savedSearchEntity} />
               <Spacer mt={4} />
             </>
           )}
@@ -343,9 +341,7 @@ export const BaseArtworkFilter: React.FC<
 
             {enableCreateAlert && savedSearchEntity && (
               <>
-                <ArtworkGridFilterPillsContainer
-                  savedSearchEntity={savedSearchEntity}
-                />
+                <ArtworkGridFilterPills savedSearchEntity={savedSearchEntity} />
                 <Spacer mt={4} />
               </>
             )}

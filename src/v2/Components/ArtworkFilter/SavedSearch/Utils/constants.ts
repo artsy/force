@@ -16,6 +16,7 @@ export const aggregationNameFromFilter: Record<string, Slice | undefined> = {
 
 export const allowedSearchCriteriaKeys = [
   "artistID",
+  "artistIDs",
   "locationCities",
   "colors",
   "partnerIDs",

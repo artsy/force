@@ -1,41 +1,79 @@
-import { useContext } from "react"
+import { useContext, useState } from "react"
 import { createContext } from "react"
 import { extractPills } from "v2/Components/SavedSearchAlert/Utils/extractPills"
-import { getAllowedSearchCriteria } from "."
-import { Aggregations } from "../../ArtworkFilterContext"
+import {
+  Aggregations,
+  initialArtworkFilterState,
+} from "../../ArtworkFilterContext"
 import {
   FilterPill,
   SavedSearchEntity,
+  SearchCriteriaAttributeKeys,
   SearchCriteriaAttributes,
 } from "../types"
 
 export interface SavedSearchContextProps {
   pills: FilterPill[]
   entity: SavedSearchEntity
+  criteria: SearchCriteriaAttributes
+  isCriteriaChanged: boolean
+  removeCriteriaValue: (
+    key: SearchCriteriaAttributeKeys,
+    value: string | number | boolean
+  ) => void
 }
 
 interface SavedSearchContextProviderProps {
   entity: SavedSearchEntity
-  aggregations: Aggregations
-  filters: SearchCriteriaAttributes
+  aggregations?: Aggregations
+  criteria: SearchCriteriaAttributes
 }
 
 export const SavedSearchContext = createContext<SavedSearchContextProps>({
   pills: [],
   entity: {} as SavedSearchEntity,
+  criteria: {} as SearchCriteriaAttributes,
+  isCriteriaChanged: false,
+  removeCriteriaValue: () => {},
 })
 
 export const SavedSearchContextProvider: React.FC<SavedSearchContextProviderProps> = ({
   entity,
   aggregations,
-  filters,
+  criteria: criteriaFromArgument,
   children,
 }) => {
-  const allowedFilters = getAllowedSearchCriteria(filters)
-  const pills = extractPills(allowedFilters, aggregations, entity)
+  const [criteria, setCriteria] = useState(criteriaFromArgument)
+  const [isCriteriaChanged, setIsCriteriaChanged] = useState(false)
+  const pills = extractPills(criteria, aggregations, entity)
+
+  const removeCriteriaValue = (
+    key: SearchCriteriaAttributeKeys,
+    value: string | number | boolean
+  ) => {
+    let criteriaValue = criteria[key]
+
+    if (Array.isArray(criteriaValue)) {
+      criteriaValue = criteriaValue.filter(
+        currentValue => currentValue !== value
+      )
+    } else {
+      criteriaValue = initialArtworkFilterState[key]
+    }
+
+    setIsCriteriaChanged(true)
+    setCriteria({
+      ...criteria,
+      [key]: criteriaValue,
+    })
+  }
+
   const contextValue: SavedSearchContextProps = {
     pills,
     entity,
+    criteria,
+    isCriteriaChanged,
+    removeCriteriaValue,
   }
 
   return (
