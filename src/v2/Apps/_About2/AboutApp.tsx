@@ -157,7 +157,7 @@ const SellWithArtsy: React.FC = () => {
 
 const AppDownload: React.FC = () => {
   const image = resized(
-    "http://files.artsy.net/images/about2/appstore_image.png",
+    "http://files.artsy.net/images/about2/appstore_image_highres.png",
     {
       width: 910,
       height: 652,
