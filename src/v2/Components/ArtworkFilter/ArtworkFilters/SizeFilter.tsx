@@ -135,18 +135,13 @@ export const SizeFilter: React.FC<SizeFilterProps> = ({ expanded }) => {
   )
   const label = `Size${filtersCount}`
 
-  const initialCustomSize = React.useMemo(
-    () => ({
-      height: parseRange(height, metric),
-      width: parseRange(width, metric),
-    }),
-    [width, height, metric]
-  )
-
   const [showCustom, setShowCustom] = useState(
     isCustomValue(width) || isCustomValue(height)
   )
-  const [customSize, setCustomSize] = useState<CustomSize>(initialCustomSize)
+  const [customSize, setCustomSize] = useState<CustomSize>({
+    height: parseRange(height, metric),
+    width: parseRange(width, metric),
+  })
   const [mode, setMode] = useMode<Mode>("resting")
 
   const predefinedSizes = getPredefinedSizesByMetric(metric)
@@ -218,11 +213,21 @@ export const SizeFilter: React.FC<SizeFilterProps> = ({ expanded }) => {
       return
     }
 
-    const customSizeRanges = getCustomSizeRangeInInches(customSize, nextMetric)
-    const updatedFilters = {
+    const updatedFilters: ArtworkFiltersState = {
       ...otherSelectedFilters,
-      ...customSizeRanges,
+      width,
+      height,
       metric: nextMetric,
+    }
+
+    if (isCustomValue(width) || isCustomValue(height)) {
+      const customSizeRanges = getCustomSizeRangeInInches(
+        customSize,
+        nextMetric
+      )
+
+      updatedFilters.width = customSizeRanges.width
+      updatedFilters.height = customSizeRanges.height
     }
 
     setFilters!(updatedFilters, { force: false })
@@ -234,15 +239,22 @@ export const SizeFilter: React.FC<SizeFilterProps> = ({ expanded }) => {
   })
 
   useEffect(() => {
+    if (width == "*-*" || height === "*-*") {
+      setCustomSize({
+        width: parseRange(width, metric),
+        height: parseRange(height, metric),
+      })
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [width, height])
+
+  useEffect(() => {
     // if filter state is being reset, then also clear local input state
     if (reset) {
       setCustomSize({ height: ["*", "*"], width: ["*", "*"] })
     }
   }, [reset])
-
-  useEffect(() => {
-    setCustomSize(initialCustomSize)
-  }, [initialCustomSize])
 
   const selection = currentlySelectedFilters?.().sizes
   const customHeight = currentlySelectedFilters?.().height
