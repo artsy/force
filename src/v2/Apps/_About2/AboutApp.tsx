@@ -98,7 +98,7 @@ const SellWithArtsy: React.FC = () => {
             style={{
               objectFit: "cover",
             }}
-            alt="a Molly Green art piece titled Cached"
+            alt=""
           />
         </Box>
       )}
@@ -206,7 +206,7 @@ const AppDownload: React.FC = () => {
             height="100%"
             srcSet={image.srcSet}
             lazyLoad
-            alt="painting of two iphones displaying the artsy mobile app"
+            alt=""
           />
         </ResponsiveBox>
       </Column>
@@ -237,7 +237,7 @@ const CollectorInfo: React.FC = () => {
             height="100%"
             srcSet={image.srcSet}
             lazyLoad
-            alt="picture of the Collection for Carole Server by Emily Johnston"
+            alt=""
           />
         </ResponsiveBox>
         <Text variant="xs" textColor="black60" mt={0.5}>
