@@ -1,9 +1,6 @@
 import { useContext, useState } from "react"
 import { createContext } from "react"
-import {
-  Aggregations,
-  initialArtworkFilterState,
-} from "../ArtworkFilter/ArtworkFilterContext"
+import { Aggregations } from "../ArtworkFilter/ArtworkFilterContext"
 import {
   FilterPill,
   SavedSearchEntity,
@@ -59,7 +56,7 @@ export const SavedSearchAlertContextProvider: React.FC<SavedSearchAlertContextPr
         currentValue => currentValue !== value
       )
     } else {
-      criteriaValue = initialArtworkFilterState[key]
+      criteriaValue = null
     }
 
     const updatedCriteria = getAllowedSearchCriteria({
