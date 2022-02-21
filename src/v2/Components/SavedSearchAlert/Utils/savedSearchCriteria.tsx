@@ -13,11 +13,7 @@ export const isDefaultValue = (
     return paramValue.length === 0
   }
 
-  if (paramValue === null) {
-    return true
-  }
-
-  return initialArtworkFilterState[paramName] === paramValue
+  return initialArtworkFilterState[paramName] === paramValue || !paramValue
 }
 
 export const getAllowedSearchCriteria = (
