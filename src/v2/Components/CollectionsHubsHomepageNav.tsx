@@ -1,5 +1,5 @@
 import { CSSGrid, Text } from "@artsy/palette"
-import { CollectionsHubsHomepageNav_marketingHubCollections } from "v2/__generated__/CollectionsHubsHomepageNav_marketingHubCollections.graphql"
+import { CollectionsHubsHomepageNav_marketingHubCollections$data } from "v2/__generated__/CollectionsHubsHomepageNav_marketingHubCollections.graphql"
 import { AnalyticsSchema } from "v2/System/Analytics"
 import { createFragmentContainer, graphql } from "react-relay"
 import track, { useTracking } from "react-tracking"
@@ -8,7 +8,7 @@ import { resize } from "v2/Utils/resizer"
 import { ImageLink } from "./ImageLink"
 
 interface CollectionsHubsHomepageNavProps {
-  marketingHubCollections: CollectionsHubsHomepageNav_marketingHubCollections
+  marketingHubCollections: CollectionsHubsHomepageNav_marketingHubCollections$data
 }
 
 export const CollectionsHubsHomepageNav = track(

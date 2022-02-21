@@ -1,10 +1,10 @@
-import * as React from "react";
+import * as React from "react"
 import { Box, BoxProps, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ShowInfoLocation_show } from "v2/__generated__/ShowInfoLocation_show.graphql"
+import { ShowInfoLocation_show$data } from "v2/__generated__/ShowInfoLocation_show.graphql"
 
 interface ShowInfoLocationProps extends BoxProps {
-  show: ShowInfoLocation_show
+  show: ShowInfoLocation_show$data
 }
 
 export const ShowInfoLocation: React.FC<ShowInfoLocationProps> = ({

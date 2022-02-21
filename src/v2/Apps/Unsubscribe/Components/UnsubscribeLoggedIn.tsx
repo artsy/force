@@ -2,12 +2,12 @@ import { Spacer, Button, Select, useToasts } from "@artsy/palette"
 import { useRef, useState } from "react"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { UnsubscribeLoggedIn_me } from "v2/__generated__/UnsubscribeLoggedIn_me.graphql"
+import { UnsubscribeLoggedIn_me$data } from "v2/__generated__/UnsubscribeLoggedIn_me.graphql"
 import { useMode } from "v2/Utils/Hooks/useMode"
 import { useUnsubscribeEmailPreferences } from "../useUnsubscribeEmailPreferences"
 
 interface UnsubscribeLoggedInProps {
-  me: UnsubscribeLoggedIn_me
+  me: UnsubscribeLoggedIn_me$data
 }
 
 type Mode = "Pending" | "Loading" | "Success" | "Error"

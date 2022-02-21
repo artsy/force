@@ -10,12 +10,12 @@ import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import { extractNodes } from "v2/Utils/extractNodes"
 import { formatLargeNumber } from "v2/Utils/formatLargeNumber"
 import { MarketStatsQuery } from "v2/__generated__/MarketStatsQuery.graphql"
-import { MarketStats_priceInsightsConnection } from "v2/__generated__/MarketStats_priceInsightsConnection.graphql"
+import { MarketStats_priceInsightsConnection$data } from "v2/__generated__/MarketStats_priceInsightsConnection.graphql"
 import { MarketStatsInfoButton } from "./MarketStatsInfoButton"
 import { MarketStatsPlaceholder } from "./MarketStatsPlaceholder"
 
 interface MarketStatsProps {
-  priceInsightsConnection: MarketStats_priceInsightsConnection
+  priceInsightsConnection: MarketStats_priceInsightsConnection$data
   onRendered?: (visible: boolean) => void
 }
 

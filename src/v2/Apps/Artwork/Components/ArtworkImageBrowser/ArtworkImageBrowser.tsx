@@ -1,5 +1,5 @@
-import { ArtworkImageBrowser_artwork } from "v2/__generated__/ArtworkImageBrowser_artwork.graphql"
-import * as React from "react";
+import { ArtworkImageBrowser_artwork$data } from "v2/__generated__/ArtworkImageBrowser_artwork.graphql"
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtworkActionsFragmentContainer as ArtworkActions } from "./ArtworkActions"
 import { Box, Spacer } from "@artsy/palette"
@@ -10,7 +10,7 @@ import { Media } from "v2/Utils/Responsive"
 import { useCursor } from "use-cursor"
 
 export interface ArtworkImageBrowserProps {
-  artwork: ArtworkImageBrowser_artwork
+  artwork: ArtworkImageBrowser_artwork$data
 }
 
 export const ArtworkImageBrowser: React.FC<ArtworkImageBrowserProps> = ({
@@ -64,19 +64,20 @@ export const ArtworkImageBrowser: React.FC<ArtworkImageBrowserProps> = ({
   )
 }
 
-export const ArtworkImageBrowserFragmentContainer = createFragmentContainer<
-  ArtworkImageBrowserProps
->(ArtworkImageBrowser, {
-  artwork: graphql`
-    fragment ArtworkImageBrowser_artwork on Artwork {
-      ...ArtworkActions_artwork
-      ...ArtworkImageBrowserSmall_artwork
-      ...ArtworkImageBrowserLarge_artwork
-      internalID
-      images {
+export const ArtworkImageBrowserFragmentContainer = createFragmentContainer(
+  ArtworkImageBrowser,
+  {
+    artwork: graphql`
+      fragment ArtworkImageBrowser_artwork on Artwork {
+        ...ArtworkActions_artwork
+        ...ArtworkImageBrowserSmall_artwork
+        ...ArtworkImageBrowserLarge_artwork
         internalID
-        isDefault
+        images {
+          internalID
+          isDefault
+        }
       }
-    }
-  `,
-})
+    `,
+  }
+)

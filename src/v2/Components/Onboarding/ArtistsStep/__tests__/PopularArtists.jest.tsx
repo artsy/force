@@ -16,6 +16,7 @@ describe("PopularArtists", () => {
     Component: (props: any) => {
       return (
         <PopularArtistContentContainer
+          // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
           popular_artists={props.highlights.popular_artists}
           onArtistFollow={mockedOnArtistFollow}
         />

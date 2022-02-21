@@ -21,11 +21,11 @@ import { HorizontalPadding } from "v2/Apps/Components/HorizontalPadding"
 import { ArticleShare } from "v2/Components/ArticleShare"
 import { useNavBarHeight } from "v2/Components/NavBar/useNavBarHeight"
 import { useMode } from "v2/Utils/Hooks/useMode"
-import { ArticleVideo_article } from "v2/__generated__/ArticleVideo_article.graphql"
+import { ArticleVideo_article$data } from "v2/__generated__/ArticleVideo_article.graphql"
 import { ArticleSponsorFragmentContainer } from "./ArticleSponsor"
 
 interface ArticleVideoProps {
-  article: ArticleVideo_article
+  article: ArticleVideo_article$data
 }
 
 const ArticleVideo: FC<ArticleVideoProps> = ({ article }) => {

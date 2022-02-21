@@ -4,12 +4,12 @@ import { Form, Formik } from "formik"
 import { BorderedRadio, Button, RadioGroup, Text } from "@artsy/palette"
 import { useSystemContext } from "v2/System"
 import { CreateOfferResponse } from "../Operations/CreateOfferResponse"
-import { ResponseForm_offer } from "v2/__generated__/ResponseForm_offer.graphql"
+import { ResponseForm_offer$data } from "v2/__generated__/ResponseForm_offer.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
 import { CreateOfferResponseMutationInput } from "v2/__generated__/CreateOfferResponseMutation.graphql"
 
 interface ResponseFormProps {
-  offer: ResponseForm_offer
+  offer: ResponseForm_offer$data
 }
 
 type ResponseFormValues = Pick<

@@ -1,11 +1,11 @@
-import { ArtistSeriesRail_collectionGroup } from "v2/__generated__/ArtistSeriesRail_collectionGroup.graphql"
-import * as React from "react";
+import { ArtistSeriesRail_collectionGroup$data } from "v2/__generated__/ArtistSeriesRail_collectionGroup.graphql"
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtistSeriesRailContainer as ArtistSeriesEntity } from "./ArtistSeriesEntity"
 import { Rail } from "v2/Components/Rail"
 
 export interface ArtistSeriesRailProps {
-  collectionGroup: ArtistSeriesRail_collectionGroup
+  collectionGroup: ArtistSeriesRail_collectionGroup$data
 }
 export const ArtistSeriesRail: React.FC<ArtistSeriesRailProps> = ({
   collectionGroup: { members, name },

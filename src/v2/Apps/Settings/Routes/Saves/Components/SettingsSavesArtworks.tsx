@@ -1,7 +1,7 @@
 import { FC, Fragment, useState } from "react"
 import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
-import { SettingsSavesArtworks_me } from "v2/__generated__/SettingsSavesArtworks_me.graphql"
+import { SettingsSavesArtworks_me$data } from "v2/__generated__/SettingsSavesArtworks_me.graphql"
 import { SettingsSavesArtworksQuery } from "v2/__generated__/SettingsSavesArtworksQuery.graphql"
 import {
   ResponsiveBox,
@@ -19,7 +19,7 @@ import { PaginationFragmentContainer } from "v2/Components/Pagination"
 import { useScrollTo } from "v2/Utils/Hooks/useScrollTo"
 
 interface SettingsSavesArtworksProps {
-  me: SettingsSavesArtworks_me
+  me: SettingsSavesArtworks_me$data
   relay: RelayRefetchProp
 }
 

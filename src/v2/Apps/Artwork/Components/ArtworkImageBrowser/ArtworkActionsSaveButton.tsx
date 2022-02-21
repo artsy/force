@@ -5,14 +5,14 @@ import {
   HeartFillIcon,
   HeartIcon,
 } from "@artsy/palette"
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useSaveArtwork } from "v2/Components/Artwork/SaveButton/useSaveArtwork"
-import { ArtworkActionsSaveButton_artwork } from "v2/__generated__/ArtworkActionsSaveButton_artwork.graphql"
+import { ArtworkActionsSaveButton_artwork$data } from "v2/__generated__/ArtworkActionsSaveButton_artwork.graphql"
 import { UtilButton } from "./ArtworkActions"
 
 interface ArtworkActionsSaveButtonProps {
-  artwork: ArtworkActionsSaveButton_artwork
+  artwork: ArtworkActionsSaveButton_artwork$data
 }
 const ArtworkActionsSaveButton: React.FC<ArtworkActionsSaveButtonProps> = ({
   artwork,

@@ -1,7 +1,7 @@
-import { BidderPositionQueryResponse } from "v2/__generated__/BidderPositionQuery.graphql"
-import { ConfirmBidCreateBidderPositionMutationResponse } from "v2/__generated__/ConfirmBidCreateBidderPositionMutation.graphql"
+import { BidderPositionQuery$data } from "v2/__generated__/BidderPositionQuery.graphql"
+import { ConfirmBidCreateBidderPositionMutation$data } from "v2/__generated__/ConfirmBidCreateBidderPositionMutation.graphql"
 
-export const createBidderPositionSuccessful: ConfirmBidCreateBidderPositionMutationResponse = {
+export const createBidderPositionSuccessful: ConfirmBidCreateBidderPositionMutation$data = {
   createBidderPosition: {
     result: {
       position: {
@@ -21,7 +21,7 @@ export const createBidderPositionSuccessful: ConfirmBidCreateBidderPositionMutat
   },
 }
 
-export const createBidderPositionSuccessfulAndBidder: ConfirmBidCreateBidderPositionMutationResponse = {
+export const createBidderPositionSuccessfulAndBidder: ConfirmBidCreateBidderPositionMutation$data = {
   createBidderPosition: {
     result: {
       position: {
@@ -41,7 +41,7 @@ export const createBidderPositionSuccessfulAndBidder: ConfirmBidCreateBidderPosi
   },
 }
 
-export const createBidderPositionFailed: ConfirmBidCreateBidderPositionMutationResponse = {
+export const createBidderPositionFailed: ConfirmBidCreateBidderPositionMutation$data = {
   createBidderPosition: {
     result: {
       position: null,
@@ -51,7 +51,7 @@ export const createBidderPositionFailed: ConfirmBidCreateBidderPositionMutationR
   },
 }
 
-export const createBidderPositionWithLiveBiddingStarted: ConfirmBidCreateBidderPositionMutationResponse = {
+export const createBidderPositionWithLiveBiddingStarted: ConfirmBidCreateBidderPositionMutation$data = {
   createBidderPosition: {
     result: {
       position: null,
@@ -61,7 +61,7 @@ export const createBidderPositionWithLiveBiddingStarted: ConfirmBidCreateBidderP
   },
 }
 
-export const createBidderPositionWithErrorBidNotPlaced: ConfirmBidCreateBidderPositionMutationResponse = {
+export const createBidderPositionWithErrorBidNotPlaced: ConfirmBidCreateBidderPositionMutation$data = {
   createBidderPosition: {
     result: {
       position: null,
@@ -71,7 +71,7 @@ export const createBidderPositionWithErrorBidNotPlaced: ConfirmBidCreateBidderPo
   },
 }
 
-export const createBidderPositionWithBidderNotQualified: ConfirmBidCreateBidderPositionMutationResponse = {
+export const createBidderPositionWithBidderNotQualified: ConfirmBidCreateBidderPositionMutation$data = {
   createBidderPosition: {
     result: {
       position: null,
@@ -81,7 +81,7 @@ export const createBidderPositionWithBidderNotQualified: ConfirmBidCreateBidderP
   },
 }
 
-export const confirmBidBidderPositionQueryWithWinning: BidderPositionQueryResponse = {
+export const confirmBidBidderPositionQueryWithWinning: BidderPositionQuery$data = {
   me: {
     bidderPosition: {
       status: "WINNING",
@@ -94,7 +94,7 @@ export const confirmBidBidderPositionQueryWithWinning: BidderPositionQueryRespon
   },
 }
 
-export const confirmBidBidderPositionQueryWithPending: BidderPositionQueryResponse = {
+export const confirmBidBidderPositionQueryWithPending: BidderPositionQuery$data = {
   me: {
     bidderPosition: {
       status: "PENDING",
@@ -107,7 +107,7 @@ export const confirmBidBidderPositionQueryWithPending: BidderPositionQueryRespon
   },
 }
 
-export const confirmBidBidderPositionQueryWithOutbid: BidderPositionQueryResponse = {
+export const confirmBidBidderPositionQueryWithOutbid: BidderPositionQuery$data = {
   me: {
     bidderPosition: {
       status: "OUTBID",

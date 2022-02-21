@@ -5,12 +5,12 @@ import {
   useThemeConfig,
   TextVariant,
 } from "@artsy/palette"
-import { Details_artwork } from "v2/__generated__/Details_artwork.graphql"
+import { Details_artwork$data } from "v2/__generated__/Details_artwork.graphql"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 
 interface DetailsProps {
-  artwork: Details_artwork
+  artwork: Details_artwork$data
   includeLinks: boolean
   hideSaleInfo?: boolean
   hideArtistName?: boolean

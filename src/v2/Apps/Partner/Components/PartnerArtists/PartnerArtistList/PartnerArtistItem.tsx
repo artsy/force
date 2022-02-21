@@ -1,8 +1,8 @@
-import * as React from "react";
+import * as React from "react"
 import styled from "styled-components"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "v2/System/Router/RouterLink"
-import { PartnerArtistItem_artist } from "v2/__generated__/PartnerArtistItem_artist.graphql"
+import { PartnerArtistItem_artist$data } from "v2/__generated__/PartnerArtistItem_artist.graphql"
 import { Text } from "@artsy/palette"
 import { ScrollIntoViewProps } from "v2/Utils/scrollHelpers"
 import { ScrollIntoView } from "v2/Utils"
@@ -14,7 +14,7 @@ const Name = styled(Text).attrs({ py: 0.5 })`
 `
 
 export interface PartnerArtistItemProps {
-  artist: PartnerArtistItem_artist
+  artist: PartnerArtistItem_artist$data
   hasPublishedArtworks: boolean
   partnerSlug: string
   scrollTo: ScrollIntoViewProps

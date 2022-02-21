@@ -8,11 +8,11 @@ import {
 import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useMode } from "v2/Utils/Hooks/useMode"
-import { SettingsPaymentsMethod_method } from "v2/__generated__/SettingsPaymentsMethod_method.graphql"
+import { SettingsPaymentsMethod_method$data } from "v2/__generated__/SettingsPaymentsMethod_method.graphql"
 import { useDeleteCreditCard } from "../useDeleteCreditCard"
 
 interface SettingsPaymentsMethodProps {
-  method: SettingsPaymentsMethod_method
+  method: SettingsPaymentsMethod_method$data
 }
 
 type Mode = "Pending" | "Deleting"

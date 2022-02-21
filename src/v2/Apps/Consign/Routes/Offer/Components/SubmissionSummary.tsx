@@ -3,10 +3,10 @@ import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
 
-import { SubmissionSummary_offer } from "v2/__generated__/SubmissionSummary_offer.graphql"
+import { SubmissionSummary_offer$data } from "v2/__generated__/SubmissionSummary_offer.graphql"
 
 interface SubmissionSummaryProps {
-  offer: SubmissionSummary_offer
+  offer: SubmissionSummary_offer$data
 }
 
 const SubmissionSummary: React.FC<SubmissionSummaryProps> = ({ offer }) => {
@@ -50,7 +50,7 @@ export const SubmissionSummaryFragmentContainer = createFragmentContainer(
   }
 )
 
-function renderImage(submission: SubmissionSummary_offer["submission"]) {
+function renderImage(submission: SubmissionSummary_offer$data["submission"]) {
   const imageURL =
     (submission.primaryImage?.imageUrls as any)?.thumbnail ||
     (submission.assets?.[0]?.imageUrls as any)?.thumbnail
@@ -63,7 +63,9 @@ function renderImage(submission: SubmissionSummary_offer["submission"]) {
   return <Image src={imageURL} alt={submission.title} width={55} mr={1} />
 }
 
-function renderTitleLine(submission: SubmissionSummary_offer["submission"]) {
+function renderTitleLine(
+  submission: SubmissionSummary_offer$data["submission"]
+) {
   return (
     <TruncatedLine>
       <Text variant="text" color="black60">

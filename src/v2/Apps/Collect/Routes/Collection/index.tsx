@@ -1,5 +1,5 @@
 import { Spacer } from "@artsy/palette"
-import { Collection_collection } from "v2/__generated__/Collection_collection.graphql"
+import { Collection_collection$data } from "v2/__generated__/Collection_collection.graphql"
 import { SeoProductsForArtworks } from "v2/Apps/Collect/Components/SeoProductsForArtworks"
 import { SeoProductsForCollections } from "v2/Apps/Collect/Components/SeoProductsForCollections"
 import { CollectionFilterFragmentContainer as CollectionHeader } from "v2/Apps/Collect/Routes/Collection/Components/Header"
@@ -29,7 +29,7 @@ import {
 import { MetaTags } from "v2/Components/MetaTags"
 
 interface CollectionAppProps extends SystemContextProps, AnalyticsContextProps {
-  collection: Collection_collection
+  collection: Collection_collection$data
   relay: RelayRefetchProp
   tracking: TrackingProp
 }

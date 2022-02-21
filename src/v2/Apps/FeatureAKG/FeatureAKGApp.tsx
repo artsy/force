@@ -1,13 +1,13 @@
 import { Col, Row } from "@artsy/palette"
-import { FeatureAKGApp_viewer } from "v2/__generated__/FeatureAKGApp_viewer.graphql"
+import { FeatureAKGApp_viewer$data } from "v2/__generated__/FeatureAKGApp_viewer.graphql"
 import { Footer } from "v2/Components/Footer"
-import * as React from "react";
+import * as React from "react"
 import { Title } from "react-head"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FeatureFragmentContainer as Feature } from "./Components/Feature"
 
 interface FeatureAKGAppProps {
-  viewer: FeatureAKGApp_viewer
+  viewer: FeatureAKGApp_viewer$data
 }
 
 export const FeatureAKGApp: React.FC<FeatureAKGAppProps> = props => {

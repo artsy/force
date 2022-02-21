@@ -14,12 +14,12 @@ import { themeGet } from "@styled-system/theme-get"
 
 import { ConversationPaginationContainer as Conversation } from "v2/Apps/Conversation/Components/Conversation"
 import { ConversationListPaginationContainer as ConversationList } from "v2/Apps/Conversation/Components/ConversationList"
-import { Conversation_me } from "v2/__generated__/Conversation_me.graphql"
+import { Conversation_me$data } from "v2/__generated__/Conversation_me.graphql"
 import { DetailsSidebarFragmentContainer } from "../../Components/DetailsSidebar"
 const LARGE_SCREEN_CONVERSATION_LIST_WIDTH = "375px"
 
 interface ConversationRouteProps {
-  me: Conversation_me
+  me: Conversation_me$data
   conversationID: string
   match: Match
   relay: RelayRefetchProp

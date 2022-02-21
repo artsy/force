@@ -5,10 +5,10 @@ import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
 import { useMode } from "v2/Utils/Hooks/useMode"
 import { resized } from "v2/Utils/resized"
-import { ArticleZoomGalleryFigure_figure } from "v2/__generated__/ArticleZoomGalleryFigure_figure.graphql"
+import { ArticleZoomGalleryFigure_figure$data } from "v2/__generated__/ArticleZoomGalleryFigure_figure.graphql"
 
 interface ArticleZoomGalleryFigureProps {
-  figure: ArticleZoomGalleryFigure_figure
+  figure: ArticleZoomGalleryFigure_figure$data
 }
 
 const ArticleZoomGalleryFigure: FC<ArticleZoomGalleryFigureProps> = ({

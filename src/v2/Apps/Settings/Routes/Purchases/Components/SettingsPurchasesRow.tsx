@@ -19,7 +19,7 @@ import { DateTime } from "luxon"
 import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "v2/System/Router/RouterLink"
-import { SettingsPurchasesRow_order } from "v2/__generated__/SettingsPurchasesRow_order.graphql"
+import { SettingsPurchasesRow_order$data } from "v2/__generated__/SettingsPurchasesRow_order.graphql"
 import { LocaleOptions } from "luxon"
 import { extractNodes } from "v2/Utils/extractNodes"
 import { appendCurrencySymbol } from "v2/Apps/Order/Utils/currencyUtils"
@@ -56,7 +56,7 @@ const ORDER_COLORS = {
 } as const
 
 interface SettingsPurchasesRowProps {
-  order: SettingsPurchasesRow_order
+  order: SettingsPurchasesRow_order$data
 }
 
 const SettingsPurchasesRow: FC<SettingsPurchasesRowProps> = ({ order }) => {

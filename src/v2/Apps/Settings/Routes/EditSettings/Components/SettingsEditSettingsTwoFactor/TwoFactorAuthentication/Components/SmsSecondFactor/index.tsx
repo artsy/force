@@ -9,14 +9,14 @@ import { ApiError } from "../../ApiError"
 import { SmsSecondFactorModal, OnCompleteRedirectModal } from "./Modal"
 import { CreateSmsSecondFactor } from "./Mutation/CreateSmsSecondFactor"
 import { CreateSmsSecondFactorInput } from "v2/__generated__/CreateSmsSecondFactorMutation.graphql"
-import { SmsSecondFactor_me } from "v2/__generated__/SmsSecondFactor_me.graphql"
+import { SmsSecondFactor_me$data } from "v2/__generated__/SmsSecondFactor_me.graphql"
 import { ApiErrorModal } from "../ApiErrorModal"
 import { DisableFactorConfirmation } from "../DisableFactorConfirmation"
 import { ConfirmPasswordModal } from "v2/Components/ConfirmPasswordModal"
 import { afterUpdateRedirect } from "v2/Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsTwoFactor/TwoFactorAuthentication/helpers"
 
 interface SmsSecondFactorProps {
-  me: SmsSecondFactor_me
+  me: SmsSecondFactor_me$data
   relay: RelayRefetchProp
 }
 

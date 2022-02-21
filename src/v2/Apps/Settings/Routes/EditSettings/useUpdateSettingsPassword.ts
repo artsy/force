@@ -3,7 +3,7 @@ import { useSystemContext } from "v2/System"
 import {
   useUpdateSettingsPasswordMutation,
   UpdateMyPasswordMutationInput,
-  useUpdateSettingsPasswordMutationResponse,
+  useUpdateSettingsPasswordMutation$data,
 } from "v2/__generated__/useUpdateSettingsPasswordMutation.graphql"
 
 export const useUpdateSettingsPassword = () => {
@@ -11,7 +11,7 @@ export const useUpdateSettingsPassword = () => {
 
   const submitUpdateSettingsPassword = (
     input: UpdateMyPasswordMutationInput
-  ): Promise<useUpdateSettingsPasswordMutationResponse> => {
+  ): Promise<useUpdateSettingsPasswordMutation$data> => {
     return new Promise((resolve, reject) => {
       commitMutation<useUpdateSettingsPasswordMutation>(relayEnvironment!, {
         onError: reject,

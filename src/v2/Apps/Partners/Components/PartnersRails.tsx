@@ -1,7 +1,7 @@
 import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { PartnersRailQueryRenderer } from "./PartnersRail"
-import { PartnersRails_viewer } from "v2/__generated__/PartnersRails_viewer.graphql"
+import { PartnersRails_viewer$data } from "v2/__generated__/PartnersRails_viewer.graphql"
 import { PartnersRailsQuery } from "v2/__generated__/PartnersRailsQuery.graphql"
 import { compact, shuffle } from "lodash"
 import { useSystemContext } from "v2/System"
@@ -11,7 +11,7 @@ import { Rail } from "v2/Components/Rail"
 import { PartnerCellPlaceholder } from "v2/Components/Cells/PartnerCell"
 
 interface PartnersRailsProps {
-  viewer: PartnersRails_viewer
+  viewer: PartnersRails_viewer$data
   type: "INSTITUTION" | "GALLERY"
 }
 

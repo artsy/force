@@ -14,12 +14,12 @@ import {
 import { Form, Formik } from "formik"
 import { useUpdateSettingsPassword } from "../useUpdateSettingsPassword"
 import { logout } from "v2/Utils/auth"
-import { SettingsEditSettingsPassword_me } from "v2/__generated__/SettingsEditSettingsPassword_me.graphql"
+import { SettingsEditSettingsPassword_me$data } from "v2/__generated__/SettingsEditSettingsPassword_me.graphql"
 import { useMode } from "v2/Utils/Hooks/useMode"
 import { password } from "v2/Components/Authentication/Validators"
 
 interface SettingsEditSettingsPasswordProps {
-  me: SettingsEditSettingsPassword_me
+  me: SettingsEditSettingsPassword_me$data
 }
 
 type Mode = "Pending" | "Active"

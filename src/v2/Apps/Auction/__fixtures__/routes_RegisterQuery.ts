@@ -1,6 +1,6 @@
-import { auctionRoutes_RegisterQueryRawResponse } from "v2/__generated__/auctionRoutes_RegisterQuery.graphql"
+import { auctionRoutes_RegisterQuery$rawResponse } from "v2/__generated__/auctionRoutes_RegisterQuery.graphql"
 
-export const RegisterQueryResponseFixture: auctionRoutes_RegisterQueryRawResponse = {
+export const RegisterQueryResponseFixture: auctionRoutes_RegisterQuery$rawResponse = {
   me: {
     hasQualifiedCreditCards: false,
     id: "opaque-me-id",
@@ -21,7 +21,7 @@ export const RegisterQueryResponseFixture: auctionRoutes_RegisterQueryRawRespons
   },
 }
 
-export const RegisterQueryResponseFixtureWithVerifiedUser: auctionRoutes_RegisterQueryRawResponse = {
+export const RegisterQueryResponseFixtureWithVerifiedUser: auctionRoutes_RegisterQuery$rawResponse = {
   me: {
     hasQualifiedCreditCards: false,
     id: "opaque-me-id",
@@ -42,7 +42,7 @@ export const RegisterQueryResponseFixtureWithVerifiedUser: auctionRoutes_Registe
   },
 }
 
-export const RegisterQueryResponseFixtureWithoutVerificationNeeded: auctionRoutes_RegisterQueryRawResponse = {
+export const RegisterQueryResponseFixtureWithoutVerificationNeeded: auctionRoutes_RegisterQuery$rawResponse = {
   me: {
     hasQualifiedCreditCards: false,
     id: "opaque-me-id",

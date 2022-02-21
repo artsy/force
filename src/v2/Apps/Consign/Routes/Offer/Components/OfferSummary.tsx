@@ -1,11 +1,11 @@
 import { Flex, StackableBorderBox, Text } from "@artsy/palette"
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 
-import { OfferSummary_offer } from "v2/__generated__/OfferSummary_offer.graphql"
+import { OfferSummary_offer$data } from "v2/__generated__/OfferSummary_offer.graphql"
 
 interface OfferSummaryProps {
-  offer: OfferSummary_offer
+  offer: OfferSummary_offer$data
 }
 
 const OfferSummary: React.FC<OfferSummaryProps> = ({ offer }) => {

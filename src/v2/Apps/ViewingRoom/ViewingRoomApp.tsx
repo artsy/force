@@ -1,5 +1,5 @@
-import { useContext } from "react";
-import * as React from "react";
+import { useContext } from "react"
+import * as React from "react"
 import {
   Banner,
   ClosedEyeIcon,
@@ -12,14 +12,14 @@ import { ViewingRoomHeaderFragmentContainer as ViewingRoomHeader } from "./Compo
 import { ViewingRoomContentNotAccessibleFragmentContainer as ViewingRoomContentNotAccessible } from "./Components/ViewingRoomContentNotAccessible"
 import { ViewingRoomTabBar } from "./Components/ViewingRoomTabBar"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ViewingRoomApp_viewingRoom } from "v2/__generated__/ViewingRoomApp_viewingRoom.graphql"
+import { ViewingRoomApp_viewingRoom$data } from "v2/__generated__/ViewingRoomApp_viewingRoom.graphql"
 import { ViewingRoomMetaFragmentContainer as ViewingRoomMeta } from "./Components/ViewingRoomMeta"
 import { SystemContext } from "v2/System"
 import { userHasAccessToPartner } from "v2/Utils/user"
 
 interface ViewingRoomAppProps {
   children: React.ReactNode
-  viewingRoom: ViewingRoomApp_viewingRoom
+  viewingRoom: ViewingRoomApp_viewingRoom$data
 }
 
 const ViewingRoomApp: React.FC<ViewingRoomAppProps> = ({

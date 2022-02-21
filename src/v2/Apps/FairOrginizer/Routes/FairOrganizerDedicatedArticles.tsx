@@ -7,14 +7,14 @@ import {
   Text,
   Title,
 } from "@artsy/palette"
-import { useEffect, useState } from "react";
-import * as React from "react";
+import { useEffect, useState } from "react"
+import * as React from "react"
 import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
 import { PaginationFragmentContainer as Pagination } from "v2/Components/Pagination"
 import { extractNodes } from "v2/Utils/extractNodes"
 import { DedicatedArticlesBreadcrumbsFragmentContainer as DedicatedArticlesBreadcrumbs } from "../Components/DedicatedArticlesBreadcrumbs"
 import { FairOrganizerDedicatedArticlesQuery } from "./FairOrganizerDedicatedArticlesQuery"
-import { FairOrganizerDedicatedArticles_fairOrganizer } from "v2/__generated__/FairOrganizerDedicatedArticles_fairOrganizer.graphql"
+import { FairOrganizerDedicatedArticles_fairOrganizer$data } from "v2/__generated__/FairOrganizerDedicatedArticles_fairOrganizer.graphql"
 import createLogger from "v2/Utils/logger"
 import { updateUrl } from "v2/Components/ArtworkFilter/Utils/urlBuilder"
 import { LoadingArea } from "v2/Components/LoadingArea"
@@ -23,7 +23,7 @@ import { FairOrganizerArticle } from "../Components/FairOrganizerArticle"
 const PAGE_SIZE = 16
 
 interface FairOrganizerDedicatedArticlesProps {
-  fairOrganizer: FairOrganizerDedicatedArticles_fairOrganizer
+  fairOrganizer: FairOrganizerDedicatedArticles_fairOrganizer$data
   relay: RelayRefetchProp
 }
 

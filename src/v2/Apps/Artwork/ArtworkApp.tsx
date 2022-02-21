@@ -3,8 +3,8 @@ import { useContext } from "react"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { data as sd } from "sharify"
-import { ArtworkApp_artwork } from "v2/__generated__/ArtworkApp_artwork.graphql"
-import { ArtworkApp_me } from "v2/__generated__/ArtworkApp_me.graphql"
+import { ArtworkApp_artwork$data } from "v2/__generated__/ArtworkApp_artwork.graphql"
+import { ArtworkApp_me$data } from "v2/__generated__/ArtworkApp_me.graphql"
 import { ArtistInfoQueryRenderer } from "./Components/ArtistInfo"
 import { ArtworkBannerFragmentContainer } from "./Components/ArtworkBanner/ArtworkBanner"
 import { ArtworkDetailsQueryRenderer } from "./Components/ArtworkDetails"
@@ -29,12 +29,12 @@ import { Media } from "v2/Utils/Responsive"
 import { UseRecordArtworkView } from "./useRecordArtworkView"
 
 export interface Props {
-  artwork: ArtworkApp_artwork
+  artwork: ArtworkApp_artwork$data
   tracking?: TrackingProp
   referrer: string
   routerPathname: string
   shouldTrackPageView: boolean
-  me: ArtworkApp_me
+  me: ArtworkApp_me$data
 }
 
 declare const window: any

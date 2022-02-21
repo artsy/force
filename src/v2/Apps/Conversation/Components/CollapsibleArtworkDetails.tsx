@@ -1,11 +1,13 @@
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Expandable, Flex, Image, Text } from "@artsy/palette"
 import styled from "styled-components"
 
-import { CollapsibleArtworkDetails_artwork } from "v2/__generated__/CollapsibleArtworkDetails_artwork.graphql"
+import { CollapsibleArtworkDetails_artwork$data } from "v2/__generated__/CollapsibleArtworkDetails_artwork.graphql"
 
-const artworkDetailItems = (artwork: CollapsibleArtworkDetails_artwork) => {
+const artworkDetailItems = (
+  artwork: CollapsibleArtworkDetails_artwork$data
+) => {
   const items = [
     { title: "Price", value: artwork.saleMessage },
     { title: "Medium", value: artwork.category },
@@ -44,7 +46,7 @@ const Field: React.FC<{ title: string }> = ({ title, children }) => (
 )
 
 export interface CollapsibleArtworkDetailsProps {
-  artwork: CollapsibleArtworkDetails_artwork
+  artwork: CollapsibleArtworkDetails_artwork$data
 }
 
 export const CollapsibleArtworkDetails: React.FC<CollapsibleArtworkDetailsProps> = ({

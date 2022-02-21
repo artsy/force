@@ -1,5 +1,5 @@
 import { Box, Button, Link, Sans, Serif } from "@artsy/palette"
-import { IdentityVerificationApp_me } from "v2/__generated__/IdentityVerificationApp_me.graphql"
+import { IdentityVerificationApp_me$data } from "v2/__generated__/IdentityVerificationApp_me.graphql"
 import { IdentityVerificationAppStartMutation } from "v2/__generated__/IdentityVerificationAppStartMutation.graphql"
 import * as Schema from "v2/System/Analytics/Schema"
 import { ErrorModal } from "v2/Components/Modal/ErrorModal"
@@ -21,7 +21,7 @@ import { WrongOwner } from "./WrongOwner"
 const logger = createLogger("IdentityVerificationApp.tsx")
 
 interface Props {
-  me: IdentityVerificationApp_me
+  me: IdentityVerificationApp_me$data
   relay: RelayProp
 }
 

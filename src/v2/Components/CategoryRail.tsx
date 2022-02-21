@@ -13,12 +13,12 @@ import { graphql, createFragmentContainer } from "react-relay"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import { extractNodes } from "v2/Utils/extractNodes"
 import { CategoryRailQuery } from "v2/__generated__/CategoryRailQuery.graphql"
-import { CategoryRail_category } from "v2/__generated__/CategoryRail_category.graphql"
+import { CategoryRail_category$data } from "v2/__generated__/CategoryRail_category.graphql"
 import { ShelfArtworkFragmentContainer } from "./Artwork/ShelfArtwork"
 import { FollowGeneButtonFragmentContainer } from "./FollowButton/FollowGeneButton"
 
 interface CategoryRailProps {
-  category: CategoryRail_category
+  category: CategoryRail_category$data
 }
 
 const CategoryRail: FC<CategoryRailProps> = ({ category }) => {

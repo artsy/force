@@ -1,12 +1,12 @@
 import { Text } from "@artsy/palette"
 import React from "react"
-import { SettingsApp_me } from "v2/__generated__/SettingsApp_me.graphql"
+import { SettingsApp_me$data } from "v2/__generated__/SettingsApp_me.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouteTab, RouteTabs } from "v2/Components/RouteTabs"
 import { MetaTags } from "v2/Components/MetaTags"
 
 interface SettingsAppProps {
-  me: SettingsApp_me
+  me: SettingsApp_me$data
 }
 
 const TABS = [

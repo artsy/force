@@ -1,11 +1,11 @@
 import { FC, useEffect, useRef } from "react"
-import { ArticleSectionSocialEmbed_section } from "v2/__generated__/ArticleSectionSocialEmbed_section.graphql"
+import { ArticleSectionSocialEmbed_section$data } from "v2/__generated__/ArticleSectionSocialEmbed_section.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Box } from "@artsy/palette"
 import styled from "styled-components"
 
 interface ArticleSectionSocialEmbedProps {
-  section: ArticleSectionSocialEmbed_section
+  section: ArticleSectionSocialEmbed_section$data
 }
 
 const ArticleSectionSocialEmbed: FC<ArticleSectionSocialEmbedProps> = ({

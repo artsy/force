@@ -14,9 +14,8 @@ import { identityVerificationRoutes_IdentityVerificationAppQuery$rawResponse } f
 import { createRender } from "found"
 
 describe("IdentityVerification/routes", () => {
-  const idvID =
-    IdentityVerificationAppQueryResponseFixture.me.identityVerification
-      .internalID
+  const idvID = IdentityVerificationAppQueryResponseFixture.me!
+    .identityVerification!.internalID
   async function render(
     url,
     mockData: identityVerificationRoutes_IdentityVerificationAppQuery$rawResponse

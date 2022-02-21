@@ -1,6 +1,6 @@
-import { ArtistInfo_Test_QueryRawResponse } from "v2/__generated__/ArtistInfo_Test_Query.graphql"
+import { ArtistInfo_Test_Query$rawResponse } from "v2/__generated__/ArtistInfo_Test_Query.graphql"
 
-export const ArtistInfoFixture: ArtistInfo_Test_QueryRawResponse["artist"] = {
+export const ArtistInfoFixture: ArtistInfo_Test_Query$rawResponse["artist"] = {
   internalID: "pablo-picasso",
   slug: "pablo-picasso",
   name: "Pablo Picasso",

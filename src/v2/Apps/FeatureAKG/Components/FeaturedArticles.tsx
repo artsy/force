@@ -1,5 +1,5 @@
 import { Box, Col, Flex, Grid, Image, Row, Sans } from "@artsy/palette"
-import { FeaturedArticles_articles } from "v2/__generated__/FeaturedArticles_articles.graphql"
+import { FeaturedArticles_articles$data } from "v2/__generated__/FeaturedArticles_articles.graphql"
 import { StyledLink } from "./StyledLink"
 import { AnalyticsSchema } from "v2/System"
 import { useTracking } from "v2/System/Analytics/useTracking"
@@ -16,7 +16,7 @@ interface FeaturedArticlesProps {
   article_2_id: string
   article_3_id: string
   view_more_url: string
-  articles: FeaturedArticles_articles
+  articles: FeaturedArticles_articles$data
 }
 
 const FeaturedArticles: React.FC<FeaturedArticlesProps> = props => {

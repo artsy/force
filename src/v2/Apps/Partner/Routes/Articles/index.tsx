@@ -3,13 +3,13 @@ import * as React from "react"
 import { Column, GridColumns, Box } from "@artsy/palette"
 import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
 import { useRouter } from "v2/System/Router/useRouter"
-import { Articles_partner } from "v2/__generated__/Articles_partner.graphql"
+import { Articles_partner$data } from "v2/__generated__/Articles_partner.graphql"
 import { PaginationFragmentContainer } from "v2/Components/Pagination"
 import { LoadingArea } from "v2/Components/LoadingArea"
 import { ArticleCellFragmentContainer } from "v2/Components/Cells/ArticleCell"
 
 interface ArticlesProps {
-  partner: Articles_partner
+  partner: Articles_partner$data
   relay: RelayRefetchProp
 }
 

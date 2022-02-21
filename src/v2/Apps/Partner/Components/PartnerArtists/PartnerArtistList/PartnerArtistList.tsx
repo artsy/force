@@ -1,5 +1,5 @@
 import * as React from "react"
-import { PartnerArtistList_artists } from "v2/__generated__/PartnerArtistList_artists.graphql"
+import { PartnerArtistList_artists$data } from "v2/__generated__/PartnerArtistList_artists.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Box, Column, GridColumns, Text } from "@artsy/palette"
 import { groupArtists } from "../partnerArtistsUtils"
@@ -10,7 +10,7 @@ import { Carousel } from "v2/Components/Carousel"
 import { ScrollIntoViewProps } from "v2/Utils/scrollHelpers"
 
 export interface PartnerArtistListProps {
-  artists: PartnerArtistList_artists
+  artists: PartnerArtistList_artists$data
   distinguishRepresentedArtists: boolean
   partnerSlug: string
   scrollTo: ScrollIntoViewProps

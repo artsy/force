@@ -1,10 +1,10 @@
 import { Box, Text, Image, BoxProps } from "@artsy/palette"
 import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ArticleSponsor_sponsor } from "v2/__generated__/ArticleSponsor_sponsor.graphql"
+import { ArticleSponsor_sponsor$data } from "v2/__generated__/ArticleSponsor_sponsor.graphql"
 
 interface ArticleSponsorProps extends BoxProps {
-  sponsor: ArticleSponsor_sponsor
+  sponsor: ArticleSponsor_sponsor$data
 }
 
 const ArticleSponsor: FC<ArticleSponsorProps> = ({ sponsor, ...rest }) => {

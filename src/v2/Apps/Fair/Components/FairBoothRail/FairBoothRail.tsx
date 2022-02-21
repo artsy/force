@@ -1,8 +1,8 @@
-import { useRef } from "react";
-import * as React from "react";
+import { useRef } from "react"
+import * as React from "react"
 import { Box, BoxProps, Flex, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
-import { FairBoothRail_show } from "v2/__generated__/FairBoothRail_show.graphql"
+import { FairBoothRail_show$data } from "v2/__generated__/FairBoothRail_show.graphql"
 import { FairBoothRailArtworksQueryRenderer as FairBoothRailArtworks } from "./FairBoothRailArtworks"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { useTracking } from "react-tracking"
@@ -16,7 +16,7 @@ import {
 import { useAnalyticsContext } from "v2/System/Analytics/AnalyticsContext"
 
 interface FairBoothRailProps extends BoxProps {
-  show: FairBoothRail_show
+  show: FairBoothRail_show$data
 }
 
 export const FairBoothRail: React.FC<FairBoothRailProps> = ({

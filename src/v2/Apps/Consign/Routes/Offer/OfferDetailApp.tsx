@@ -1,11 +1,11 @@
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Meta, Title } from "react-head"
 
 import { MinimalNavBar } from "v2/Components/NavBar/MinimalNavBar"
 import { ErrorPage } from "v2/Components/ErrorPage"
 
-import { OfferDetailApp_offer } from "v2/__generated__/OfferDetailApp_offer.graphql"
+import { OfferDetailApp_offer$data } from "v2/__generated__/OfferDetailApp_offer.graphql"
 import { HorizontalPadding } from "v2/Apps/Components/HorizontalPadding"
 import { TwoColumnLayout } from "v2/Apps/Order/Components/TwoColumnLayout"
 import { ResponseFormFragmentContainer as ResponseForm } from "./Components/ResponseForm"
@@ -13,7 +13,7 @@ import { SummaryFragmentContainer as Summary } from "./Components/Summary"
 import { StickyFooter } from "./Components/StickyFooter"
 
 export interface OfferDetailAppProps {
-  offer: OfferDetailApp_offer
+  offer: OfferDetailApp_offer$data
 }
 
 const OfferDetailApp: React.FC<OfferDetailAppProps> = ({ offer }) => {

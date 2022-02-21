@@ -1,7 +1,7 @@
 import { Button, Flex, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
-import { RegisterButton_sale } from "v2/__generated__/RegisterButton_sale.graphql"
-import { RegisterButton_me } from "v2/__generated__/RegisterButton_me.graphql"
+import { RegisterButton_sale$data } from "v2/__generated__/RegisterButton_sale.graphql"
+import { RegisterButton_me$data } from "v2/__generated__/RegisterButton_me.graphql"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import createLogger from "v2/Utils/logger"
 import { useTracking } from "v2/System/Analytics/useTracking"
@@ -9,8 +9,8 @@ import { useTracking } from "v2/System/Analytics/useTracking"
 const logger = createLogger("Auctions/RegisterButton.tsx")
 
 interface RegisterButtonProps {
-  me: RegisterButton_me
-  sale: RegisterButton_sale
+  me: RegisterButton_me$data
+  sale: RegisterButton_sale$data
 }
 
 export const RegisterButton: React.FC<RegisterButtonProps> = ({ me, sale }) => {
@@ -118,8 +118,8 @@ export const computeConditions = ({
   me,
   sale,
 }: {
-  me: RegisterButton_me
-  sale: RegisterButton_sale
+  me: RegisterButton_me$data
+  sale: RegisterButton_sale$data
 }) => {
   const registrationAttempted = Boolean(sale.bidder)
   const qualifiedForBidding =

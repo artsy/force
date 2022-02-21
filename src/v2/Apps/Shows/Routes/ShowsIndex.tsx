@@ -6,18 +6,18 @@ import {
   Text,
   Separator,
 } from "@artsy/palette"
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ShowsIndex_featuredShows } from "v2/__generated__/ShowsIndex_featuredShows.graphql"
-import { ShowsIndex_viewer } from "v2/__generated__/ShowsIndex_viewer.graphql"
+import { ShowsIndex_featuredShows$data } from "v2/__generated__/ShowsIndex_featuredShows.graphql"
+import { ShowsIndex_viewer$data } from "v2/__generated__/ShowsIndex_viewer.graphql"
 import { ShowsFeaturedShowFragmentContainer } from "../Components/ShowsFeaturedShow"
 import { ShowsHeaderFragmentContainer } from "../Components/ShowsHeader"
 import { ShowsMeta } from "../Components/ShowsMeta"
 import { ShowsCurrentShowsQueryRenderer } from "../Components/ShowsCurrentShows"
 
 interface ShowsIndexProps {
-  featuredShows: ShowsIndex_featuredShows
-  viewer: ShowsIndex_viewer
+  featuredShows: ShowsIndex_featuredShows$data
+  viewer: ShowsIndex_viewer$data
 }
 
 export const ShowsIndex: React.FC<ShowsIndexProps> = ({

@@ -1,5 +1,5 @@
 import { Box, Flex, Sans, Spacer, space } from "@artsy/palette"
-import { CollectionsRail_collections } from "v2/__generated__/CollectionsRail_collections.graphql"
+import { CollectionsRail_collections$data } from "v2/__generated__/CollectionsRail_collections.graphql"
 import { track } from "v2/System/Analytics"
 import * as Schema from "v2/System/Analytics/Schema"
 import { pMedia } from "v2/Components/Helpers"
@@ -12,7 +12,7 @@ import Events from "v2/Utils/Events"
 import { CollectionEntityFragmentContainer as CollectionEntity } from "./CollectionEntity"
 
 interface CollectionRailsProps {
-  collections: CollectionsRail_collections
+  collections: CollectionsRail_collections$data
 }
 
 /**

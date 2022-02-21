@@ -1,7 +1,7 @@
 import {
   UpdateAppSecondFactorInput,
   UpdateAppSecondFactorMutation,
-  UpdateAppSecondFactorMutationResponse,
+  UpdateAppSecondFactorMutation$data,
 } from "v2/__generated__/UpdateAppSecondFactorMutation.graphql"
 import { Environment, commitMutation, graphql } from "react-relay"
 
@@ -9,7 +9,7 @@ export const UpdateAppSecondFactor = (
   environment: Environment,
   input: UpdateAppSecondFactorInput
 ) => {
-  return new Promise<UpdateAppSecondFactorMutationResponse>(
+  return new Promise<UpdateAppSecondFactorMutation$data>(
     async (resolve, reject) => {
       commitMutation<UpdateAppSecondFactorMutation>(environment, {
         onCompleted: data => {

@@ -6,11 +6,11 @@ import {
   SettingsPurchasesRowFragmentContainer,
   SettingsPurchasesRowPlaceholder,
 } from "./SettingsPurchasesRow"
-import { SettingsPurchases_me } from "v2/__generated__/SettingsPurchases_me.graphql"
+import { SettingsPurchases_me$data } from "v2/__generated__/SettingsPurchases_me.graphql"
 import { CommercePaginationFragmentContainer } from "v2/Components/Pagination/CommercePagination"
 
 export interface SettingsPurchasesProps {
-  me: SettingsPurchases_me
+  me: SettingsPurchases_me$data
   relay: RelayRefetchProp
 }
 

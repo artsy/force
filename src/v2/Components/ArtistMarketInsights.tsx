@@ -1,12 +1,12 @@
 import { BorderBox, Box, Join, Spacer } from "@artsy/palette"
-import { ArtistMarketInsights_artist } from "v2/__generated__/ArtistMarketInsights_artist.graphql"
+import { ArtistMarketInsights_artist$data } from "v2/__generated__/ArtistMarketInsights_artist.graphql"
 import { Component } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtworkDefinitionList } from "v2/Apps/Artwork/Components/ArtworkDefinitionList"
 import { groupBy } from "lodash"
 
 export interface MarketInsightsProps {
-  artist: ArtistMarketInsights_artist
+  artist: ArtistMarketInsights_artist$data
   border?: boolean
   Container?: (props: { children: JSX.Element }) => JSX.Element
 }

@@ -1,5 +1,5 @@
-import * as React from "react";
-import { AuctionsApp_viewer } from "v2/__generated__/AuctionsApp_viewer.graphql"
+import * as React from "react"
+import { AuctionsApp_viewer$data } from "v2/__generated__/AuctionsApp_viewer.graphql"
 import { AuctionsMeta } from "./Components/AuctionsMeta"
 import { Column, GridColumns, Spacer, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -11,7 +11,7 @@ import { getENV } from "v2/Utils/getENV"
 import { CuritorialRailsTabBarFragmentContainer } from "./Components/CuritorialRailsTabBar"
 
 export interface AuctionsAppProps {
-  viewer: AuctionsApp_viewer
+  viewer: AuctionsApp_viewer$data
 }
 
 const AuctionsApp: React.FC<AuctionsAppProps> = props => {

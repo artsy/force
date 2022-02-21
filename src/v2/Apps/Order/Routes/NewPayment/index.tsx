@@ -1,5 +1,5 @@
-import { NewPayment_me } from "v2/__generated__/NewPayment_me.graphql"
-import { NewPayment_order } from "v2/__generated__/NewPayment_order.graphql"
+import { NewPayment_me$data } from "v2/__generated__/NewPayment_me.graphql"
+import { NewPayment_order$data } from "v2/__generated__/NewPayment_order.graphql"
 import { NewPaymentRouteSetOrderPaymentMutation } from "v2/__generated__/NewPaymentRouteSetOrderPaymentMutation.graphql"
 import { ArtworkSummaryItemFragmentContainer as ArtworkSummaryItem } from "v2/Apps/Order/Components/ArtworkSummaryItem"
 import { OrderStepper } from "v2/Apps/Order/Components/OrderStepper"
@@ -8,7 +8,7 @@ import { TwoColumnLayout } from "v2/Apps/Order/Components/TwoColumnLayout"
 import { track } from "v2/System/Analytics"
 import { CountdownTimer } from "v2/Components/CountdownTimer"
 import { RouteConfig, Router } from "found"
-import { createRef, Component } from "react";
+import { createRef, Component } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import type { Stripe, StripeElements } from "@stripe/stripe-js"
 import createLogger from "v2/Utils/logger"
@@ -41,8 +41,8 @@ export interface StripeProps {
 }
 
 export interface NewPaymentProps {
-  order: NewPayment_order
-  me: NewPayment_me
+  order: NewPayment_order$data
+  me: NewPayment_me$data
   router: Router
   route: RouteConfig
   dialog: Dialog

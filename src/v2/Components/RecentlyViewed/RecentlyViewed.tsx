@@ -1,5 +1,5 @@
 import { ContextModule } from "@artsy/cohesion"
-import { RecentlyViewed_me } from "v2/__generated__/RecentlyViewed_me.graphql"
+import { RecentlyViewed_me$data } from "v2/__generated__/RecentlyViewed_me.graphql"
 import { RecentlyViewedQuery } from "v2/__generated__/RecentlyViewedQuery.graphql"
 import { SystemContext } from "v2/System"
 import { useTracking } from "v2/System/Analytics"
@@ -14,7 +14,7 @@ import { RecentlyViewedPlaceholder } from "./RecentlyViewedPlaceholder"
 import { Rail } from "../Rail"
 
 export interface RecentlyViewedProps {
-  me: RecentlyViewed_me
+  me: RecentlyViewed_me$data
 }
 
 export const RecentlyViewed: React.FC<RecentlyViewedProps> = ({ me }) => {

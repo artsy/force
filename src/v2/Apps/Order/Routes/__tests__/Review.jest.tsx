@@ -1,4 +1,4 @@
-import { ReviewTestQueryRawResponse } from "v2/__generated__/ReviewTestQuery.graphql"
+import { ReviewTestQuery$rawResponse } from "v2/__generated__/ReviewTestQuery.graphql"
 import {
   BuyOrderWithArtaShippingDetails,
   BuyOrderWithShippingDetails,
@@ -55,7 +55,7 @@ jest.mock("@stripe/stripe-js", () => {
 
 const { _mockStripe } = require("@stripe/stripe-js")
 
-const testOrder: ReviewTestQueryRawResponse["order"] = {
+const testOrder: ReviewTestQuery$rawResponse["order"] = {
   ...BuyOrderWithShippingDetails,
   internalID: "1234",
 }

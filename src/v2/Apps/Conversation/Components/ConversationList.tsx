@@ -12,7 +12,7 @@ import { Box, Spinner } from "@artsy/palette"
 import { ConversationSnippetFragmentContainer as ConversationSnippet } from "./ConversationSnippet"
 import { ConversationListHeader } from "./ConversationListHeader"
 
-import { ConversationList_me } from "v2/__generated__/ConversationList_me.graphql"
+import { ConversationList_me$data } from "v2/__generated__/ConversationList_me.graphql"
 
 const ScrollContainer = styled(Box)`
   overflow-y: auto;
@@ -29,7 +29,7 @@ const SpinnerContainer = styled.div`
 export const PAGE_SIZE: number = 15
 
 interface ConversationsProps {
-  me: ConversationList_me
+  me: ConversationList_me$data
   relay: RelayPaginationProp
   selectedConversationID: string
 }

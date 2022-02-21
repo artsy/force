@@ -14,11 +14,11 @@ import createLogger from "v2/Utils/logger"
 import { openAuthModal } from "v2/Utils/openAuthModal"
 
 import { ContextModule, Intent } from "@artsy/cohesion"
-import { RequestConditionReport_artwork } from "v2/__generated__/RequestConditionReport_artwork.graphql"
-import { RequestConditionReport_me } from "v2/__generated__/RequestConditionReport_me.graphql"
+import { RequestConditionReport_artwork$data } from "v2/__generated__/RequestConditionReport_artwork.graphql"
+import { RequestConditionReport_me$data } from "v2/__generated__/RequestConditionReport_me.graphql"
 import {
   RequestConditionReportMutation,
-  RequestConditionReportMutationResponse,
+  RequestConditionReportMutation$data,
 } from "v2/__generated__/RequestConditionReportMutation.graphql"
 import { RequestConditionReportQuery } from "v2/__generated__/RequestConditionReportQuery.graphql"
 import { ModalType } from "v2/Components/Authentication/Types"
@@ -28,8 +28,8 @@ const logger = createLogger(
 )
 
 interface RequestConditionReportProps {
-  artwork: RequestConditionReport_artwork
-  me: RequestConditionReport_me | null
+  artwork: RequestConditionReport_artwork$data
+  me: RequestConditionReport_me$data | null
 }
 
 export const RequestConditionReport: React.FC<RequestConditionReportProps> = props => {
@@ -44,7 +44,7 @@ export const RequestConditionReport: React.FC<RequestConditionReportProps> = pro
   const isLoggedIn = Boolean(me)
 
   const requestConditionReport = () => {
-    return new Promise<RequestConditionReportMutationResponse>(
+    return new Promise<RequestConditionReportMutation$data>(
       async (resolve, reject) => {
         // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         commitMutation<RequestConditionReportMutation>(relayEnvironment, {

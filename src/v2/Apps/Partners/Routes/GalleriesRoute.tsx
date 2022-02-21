@@ -11,7 +11,7 @@ import {
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { MetaTags } from "v2/Components/MetaTags"
-import { GalleriesRoute_viewer } from "v2/__generated__/GalleriesRoute_viewer.graphql"
+import { GalleriesRoute_viewer$data } from "v2/__generated__/GalleriesRoute_viewer.graphql"
 import { PartnersFilters } from "../Components/PartnersFilters"
 import { PartnersFeaturedCarouselFragmentContainer } from "../Components/PartnersFeaturedCarousel"
 import { PartnersFilteredCellsQueryRenderer } from "../Components/PartnersFilteredCells"
@@ -19,7 +19,7 @@ import { PartnersRailsQueryRenderer } from "../Components/PartnersRails"
 import { useRouter } from "v2/System/Router/useRouter"
 
 interface GalleriesRouteProps {
-  viewer: GalleriesRoute_viewer
+  viewer: GalleriesRoute_viewer$data
 }
 
 const GalleriesRoute: React.FC<GalleriesRouteProps> = ({ viewer }) => {

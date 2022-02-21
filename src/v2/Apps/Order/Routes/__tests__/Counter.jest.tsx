@@ -1,4 +1,4 @@
-import { CounterTestQueryRawResponse } from "v2/__generated__/CounterTestQuery.graphql"
+import { CounterTestQuery$rawResponse } from "v2/__generated__/CounterTestQuery.graphql"
 import {
   OfferOrderWithShippingDetails,
   OfferWithTotals,
@@ -24,7 +24,7 @@ jest.mock("v2/System/Analytics/useTracking")
 
 const realSetInterval = global.setInterval
 
-const testOrder: CounterTestQueryRawResponse["order"] = {
+const testOrder: CounterTestQuery$rawResponse["order"] = {
   ...OfferOrderWithShippingDetails,
   stateExpiresAt: DateTime.fromISO(NOW).plus({ days: 1 }).toString(),
   lastOffer: {
@@ -70,7 +70,7 @@ describe("Submit Pending Counter Offer", () => {
           unix: 222,
         },
       },
-    } as CounterTestQueryRawResponse,
+    } as CounterTestQuery$rawResponse,
     TestPage: OrderAppTestPage,
   })
 

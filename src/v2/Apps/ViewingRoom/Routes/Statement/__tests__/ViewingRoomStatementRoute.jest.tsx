@@ -1,7 +1,7 @@
 import { useTracking } from "v2/System/Analytics/useTracking"
 import { MockBoot, renderRelayTree } from "v2/DevTools"
 import { graphql } from "react-relay"
-import { ViewingRoomStatementRoute_Test_QueryRawResponse } from "v2/__generated__/ViewingRoomStatementRoute_Test_Query.graphql"
+import { ViewingRoomStatementRoute_Test_Query$rawResponse } from "v2/__generated__/ViewingRoomStatementRoute_Test_Query.graphql"
 import { Breakpoint } from "@artsy/palette"
 import { ViewingRoomStatementRouteFragmentContainer } from "../ViewingRoomStatementRoute"
 
@@ -23,7 +23,7 @@ describe("ViewingRoomStatementRoute", () => {
 
   const getWrapper = async (
     breakpoint: Breakpoint = "lg",
-    response: ViewingRoomStatementRoute_Test_QueryRawResponse = ViewingRoomStatmentRouteFixture
+    response: ViewingRoomStatementRoute_Test_Query$rawResponse = ViewingRoomStatmentRouteFixture
   ) => {
     return await renderRelayTree({
       Component: ({ viewingRoom }) => {
@@ -171,7 +171,7 @@ describe("ViewingRoomStatementRoute", () => {
   })
 })
 
-const ViewingRoomStatmentRouteFixture: ViewingRoomStatementRoute_Test_QueryRawResponse = {
+const ViewingRoomStatmentRouteFixture: ViewingRoomStatementRoute_Test_Query$rawResponse = {
   viewingRoom: {
     introStatement:
       "Checked into a Club Med in the French Alps, and quickly discovered it was not what he expected. The hotel was an outdated ski lodge without any snow. “It was this horrible vacation,” the fortysomething artist said of his family trip there, a few years back. Still, he wanted to paint the drab resort—maybe so he could get a do-over of his vacation, this time in colorful and glorious surroundings.",

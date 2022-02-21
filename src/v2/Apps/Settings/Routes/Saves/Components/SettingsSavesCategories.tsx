@@ -5,7 +5,7 @@ import {
   RelayPaginationProp,
 } from "react-relay"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
-import { SettingsSavesCategories_me } from "v2/__generated__/SettingsSavesCategories_me.graphql"
+import { SettingsSavesCategories_me$data } from "v2/__generated__/SettingsSavesCategories_me.graphql"
 import { SettingsSavesCategoriesQuery } from "v2/__generated__/SettingsSavesCategoriesQuery.graphql"
 import {
   Box,
@@ -24,7 +24,7 @@ import {
 } from "v2/Components/CategoryRail"
 
 interface SettingsSavesCategoriesProps {
-  me: SettingsSavesCategories_me
+  me: SettingsSavesCategories_me$data
   relay: RelayPaginationProp
 }
 

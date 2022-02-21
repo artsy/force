@@ -1,10 +1,10 @@
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { SettingsShippingAddressesFragmentContainer } from "./Components/SettingsShippingAddresses"
-import { SettingsShippingRoute_me } from "v2/__generated__/SettingsShippingRoute_me.graphql"
+import { SettingsShippingRoute_me$data } from "v2/__generated__/SettingsShippingRoute_me.graphql"
 
 interface SettingsShippingRouteProps {
-  me: SettingsShippingRoute_me
+  me: SettingsShippingRoute_me$data
 }
 
 const SettingsShippingRoute: React.FC<SettingsShippingRouteProps> = ({

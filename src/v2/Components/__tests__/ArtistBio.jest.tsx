@@ -1,7 +1,4 @@
-import {
-  ArtistBioTestQueryRawResponse,
-  ArtistBioTestQueryResponse,
-} from "v2/__generated__/ArtistBioTestQuery.graphql"
+import { ArtistBioTestQuery$rawResponse } from "v2/__generated__/ArtistBioTestQuery.graphql"
 
 import { MockBoot, renderRelayTree } from "v2/DevTools"
 import { graphql } from "react-relay"
@@ -18,9 +15,8 @@ describe("ArtistBio", () => {
 
   const getWrapper = () => {
     return renderRelayTree({
-      Component: ({ bio }: ArtistBioTestQueryResponse) => (
+      Component: ({ bio }) => (
         <MockBoot breakpoint="xl">
-          {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
           <ArtistBio bio={bio} />
         </MockBoot>
       ),
@@ -36,7 +32,7 @@ describe("ArtistBio", () => {
           id: "unused",
           biographyBlurb,
         },
-      } as ArtistBioTestQueryRawResponse,
+      } as ArtistBioTestQuery$rawResponse,
     })
   }
 

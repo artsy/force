@@ -1,4 +1,4 @@
-import { FeaturedFairs_fairs } from "v2/__generated__/FeaturedFairs_fairs.graphql"
+import { FeaturedFairs_fairs$data } from "v2/__generated__/FeaturedFairs_fairs.graphql"
 import {
   FeaturedRail,
   FeaturedRailCarousel,
@@ -11,7 +11,7 @@ import { createFragmentContainer } from "react-relay"
 import { graphql } from "relay-runtime"
 
 interface FeaturedFairsRailProps {
-  fairs: FeaturedFairs_fairs
+  fairs: FeaturedFairs_fairs$data
   railMetadata: RailMetadata
 }
 

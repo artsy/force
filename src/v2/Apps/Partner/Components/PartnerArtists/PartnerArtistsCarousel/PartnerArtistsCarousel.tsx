@@ -4,7 +4,7 @@ import { compact } from "lodash"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useSystemContext } from "v2/System"
 import { PartnerArtistsCarouselRendererQuery } from "v2/__generated__/PartnerArtistsCarouselRendererQuery.graphql"
-import { PartnerArtistsCarousel_partner } from "v2/__generated__/PartnerArtistsCarousel_partner.graphql"
+import { PartnerArtistsCarousel_partner$data } from "v2/__generated__/PartnerArtistsCarousel_partner.graphql"
 import { PartnerArtistsCarouselItemFragmentContainer } from "./PartnerArtistsCarouselItem"
 import { PartnerArtistsCarouselPlaceholder } from "./PartnerArtistsCarouselPlaceholder"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
@@ -12,7 +12,7 @@ import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 const PAGE_SIZE = 20
 
 export interface PartnerArtistsCarouselProps {
-  partner: PartnerArtistsCarousel_partner
+  partner: PartnerArtistsCarousel_partner$data
 }
 
 export const PartnerArtistsCarousel: React.FC<PartnerArtistsCarouselProps> = ({

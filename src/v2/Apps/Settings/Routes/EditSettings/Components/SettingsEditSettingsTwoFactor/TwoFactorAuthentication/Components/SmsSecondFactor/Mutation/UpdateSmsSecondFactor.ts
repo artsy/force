@@ -1,7 +1,7 @@
 import {
   UpdateSmsSecondFactorInput,
   UpdateSmsSecondFactorMutation,
-  UpdateSmsSecondFactorMutationResponse,
+  UpdateSmsSecondFactorMutation$data,
 } from "v2/__generated__/UpdateSmsSecondFactorMutation.graphql"
 import { Environment, commitMutation, graphql } from "react-relay"
 
@@ -9,7 +9,7 @@ export const UpdateSmsSecondFactor = (
   environment: Environment,
   input: UpdateSmsSecondFactorInput
 ) => {
-  return new Promise<UpdateSmsSecondFactorMutationResponse>(
+  return new Promise<UpdateSmsSecondFactorMutation$data>(
     async (resolve, reject) => {
       commitMutation<UpdateSmsSecondFactorMutation>(environment, {
         onCompleted: data => {

@@ -19,7 +19,7 @@ import { checkboxValues } from "v2/Components/ArtworkFilter/ArtworkFilters/Attri
 import { ArtistAutoComplete } from "./ArtistAutocomplete"
 import { ArtworkSidebarClassificationsModalQueryRenderer } from "v2/Apps/Artwork/Components/ArtworkSidebarClassificationsModal"
 import { useErrorModal } from "../../Utils/useErrorModal"
-import { ArtworkDetails_submission } from "v2/__generated__/ArtworkDetails_submission.graphql"
+import { ArtworkDetails_submission$data } from "v2/__generated__/ArtworkDetails_submission.graphql"
 import {
   Location,
   LocationAutocompleteInput,
@@ -29,7 +29,7 @@ import {
 import { compact } from "lodash"
 
 export const getArtworkDetailsFormInitialValues = (
-  submission?: ArtworkDetails_submission
+  submission?: ArtworkDetails_submission$data
 ): ArtworkDetailsFormModel => ({
   artistId: submission?.artist?.internalID ?? "",
   artistName: submission?.artist?.name ?? "",

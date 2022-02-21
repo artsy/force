@@ -1,11 +1,11 @@
 import { Button, Flex, Text, Spacer } from "@artsy/palette"
-import { Reject_order } from "v2/__generated__/Reject_order.graphql"
+import { Reject_order$data } from "v2/__generated__/Reject_order.graphql"
 import { RejectOfferMutation } from "v2/__generated__/RejectOfferMutation.graphql"
 import { ArtworkSummaryItemFragmentContainer as ArtworkSummaryItem } from "v2/Apps/Order/Components/ArtworkSummaryItem"
 import { ConditionsOfSaleDisclaimer } from "v2/Apps/Order/Components/ConditionsOfSaleDisclaimer"
 import { TwoColumnLayout } from "v2/Apps/Order/Components/TwoColumnLayout"
 import { Router } from "found"
-import { Component } from "react";
+import { Component } from "react"
 
 import { CountdownTimer } from "v2/Components/CountdownTimer"
 import { StepSummaryItem } from "v2/Components/StepSummaryItem"
@@ -25,7 +25,7 @@ import {
 import { RelayProp, createFragmentContainer, graphql } from "react-relay"
 
 interface RejectProps {
-  order: Reject_order
+  order: Reject_order$data
   relay?: RelayProp
   router: Router
   dialog: Dialog

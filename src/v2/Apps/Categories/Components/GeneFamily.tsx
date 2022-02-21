@@ -1,15 +1,15 @@
 import { Box, Spacer, Text } from "@artsy/palette"
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { GeneFamily_geneFamily } from "v2/__generated__/GeneFamily_geneFamily.graphql"
+import { GeneFamily_geneFamily$data } from "v2/__generated__/GeneFamily_geneFamily.graphql"
 import { sortBy } from "lodash"
 import { Masonry } from "v2/Components/Masonry"
 import { RouterLink } from "v2/System/Router/RouterLink"
 interface GeneFamilyProps {
-  geneFamily: GeneFamily_geneFamily
+  geneFamily: GeneFamily_geneFamily$data
 }
 
-type Genes = GeneFamily_geneFamily["genes"]
+type Genes = GeneFamily_geneFamily$data["genes"]
 
 const alphabetizeGenes = (genes: Genes): Genes =>
   sortBy(genes, gene => gene?.displayName || gene?.name)

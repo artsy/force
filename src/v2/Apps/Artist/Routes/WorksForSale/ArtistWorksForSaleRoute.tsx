@@ -1,7 +1,7 @@
 import React, { useEffect } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtistArtworkFilterRefetchContainer } from "./Components/ArtistArtworkFilter"
-import { ArtistWorksForSaleRoute_artist } from "v2/__generated__/ArtistWorksForSaleRoute_artist.graphql"
+import { ArtistWorksForSaleRoute_artist$data } from "v2/__generated__/ArtistWorksForSaleRoute_artist.graphql"
 import { SharedArtworkFilterContextProps } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
 import { ArtistSeriesRailFragmentContainer } from "v2/Components/ArtistSeriesRail/ArtistSeriesRail"
 import { ContextModule } from "@artsy/cohesion"
@@ -11,7 +11,7 @@ import { useScrollTo } from "v2/Utils/Hooks/useScrollTo"
 import { useRouter } from "v2/System/Router/useRouter"
 
 interface ArtistWorksForSaleRouteProps {
-  artist: ArtistWorksForSaleRoute_artist
+  artist: ArtistWorksForSaleRoute_artist$data
 }
 
 const ArtistWorksForSaleRoute: React.FC<ArtistWorksForSaleRouteProps> = ({

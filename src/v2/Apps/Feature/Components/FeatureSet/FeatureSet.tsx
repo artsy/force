@@ -1,13 +1,13 @@
 import * as React from "react"
 import { Box, BoxProps, Spacer } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
-import { FeatureSet_set } from "v2/__generated__/FeatureSet_set.graphql"
+import { FeatureSet_set$data } from "v2/__generated__/FeatureSet_set.graphql"
 import { FeatureSetMetaFragmentContainer as FeatureSetMeta } from "./FeatureSetMeta"
 import { FeatureSetContainerFragmentContainer as FeatureSetContainer } from "./FeatureSetContainer"
 import { FeatureSetItemFragmentContainer as FeatureSetItem } from "./FeatureSetItem"
 
 export interface FeatureSetProps extends Omit<BoxProps, "color"> {
-  set: FeatureSet_set
+  set: FeatureSet_set$data
 }
 
 const SUPPORTED_ITEM_TYPES = ["FeaturedLink", "Artwork"]

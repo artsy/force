@@ -8,7 +8,7 @@ import {
 } from "@artsy/palette"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ShowContextCard_show } from "v2/__generated__/ShowContextCard_show.graphql"
+import { ShowContextCard_show$data } from "v2/__generated__/ShowContextCard_show.graphql"
 import { FairTimingFragmentContainer as FairTiming } from "v2/Apps/Fair/Components/FairHeader/FairTiming"
 import { FairCardFragmentContainer as FairCard } from "v2/Components/FairCard"
 import { StyledLink } from "v2/Components/Links/StyledLink"
@@ -27,7 +27,7 @@ import {
 } from "@artsy/cohesion"
 
 interface Props {
-  show: ShowContextCard_show
+  show: ShowContextCard_show$data
 }
 
 const CARD_FULL_MAX_WIDTH = 768
@@ -143,7 +143,6 @@ export const ShowContextCard: React.FC<Props> = ({ show }) => {
           <Text variant="lg">Presented by {partnerName}</Text>
         </Column>
         <Column span={6}>
-          {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
           <StyledLink to={partnerHref} noUnderline onClick={handleClick}>
             <TriptychCard
               title={partnerName}

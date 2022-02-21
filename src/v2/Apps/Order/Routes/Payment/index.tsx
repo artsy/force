@@ -1,5 +1,5 @@
-import { Payment_me } from "v2/__generated__/Payment_me.graphql"
-import { Payment_order } from "v2/__generated__/Payment_order.graphql"
+import { Payment_me$data } from "v2/__generated__/Payment_me.graphql"
+import { Payment_order$data } from "v2/__generated__/Payment_order.graphql"
 import { PaymentRouteSetOrderPaymentMutation } from "v2/__generated__/PaymentRouteSetOrderPaymentMutation.graphql"
 
 import { ArtworkSummaryItemFragmentContainer as ArtworkSummaryItem } from "v2/Apps/Order/Components/ArtworkSummaryItem"
@@ -42,8 +42,8 @@ export interface StripeProps {
 }
 
 export interface PaymentProps {
-  order: Payment_order
-  me: Payment_me
+  order: Payment_order$data
+  me: Payment_me$data
   router: Router
   dialog: Dialog
   commitMutation: CommitMutation

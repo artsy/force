@@ -1,4 +1,4 @@
-import { PartnerContactMap_location } from "v2/__generated__/PartnerContactMap_location.graphql"
+import { PartnerContactMap_location$data } from "v2/__generated__/PartnerContactMap_location.graphql"
 import {
   getContactAddressLines,
   getGoogleMapUrl,
@@ -81,7 +81,7 @@ describe("PartnerContactUtils", () => {
     "getContactAddressLines returns correct value %s",
     (_, location, addressLines) => {
       expect(
-        getContactAddressLines(location as PartnerContactMap_location)
+        getContactAddressLines(location as PartnerContactMap_location$data)
       ).toEqual(addressLines)
     }
   )
@@ -98,7 +98,7 @@ describe("PartnerContactUtils", () => {
         displayCountry: "United States",
         address: "address",
         postalCode: "postalCode",
-      } as PartnerContactMap_location)
+      } as PartnerContactMap_location$data)
     ).toEqual("https://maps.google.com/maps?q=1%2C2")
   })
 
@@ -108,7 +108,7 @@ describe("PartnerContactUtils", () => {
         displayCountry: "United States",
         address: "address",
         postalCode: "postalCode",
-      } as PartnerContactMap_location)
+      } as PartnerContactMap_location$data)
     ).toEqual(
       "https://maps.google.com/maps?q=address%2C%20postalCode%2C%20United%20States&hnear=address%2C%20postalCode%2C%20United%20States"
     )
@@ -125,7 +125,7 @@ describe("PartnerContactUtils", () => {
       displayCountry: "United States",
       address: "address",
       postalCode: "postalCode",
-    } as PartnerContactMap_location)
+    } as PartnerContactMap_location$data)
 
     expect(result).toContain("https://maps.googleapis.com/maps/api/staticmap")
     expect(result).toContain("center=1%2C2")
@@ -137,7 +137,7 @@ describe("PartnerContactUtils", () => {
       displayCountry: "United States",
       address: "address",
       postalCode: "postalCode",
-    } as PartnerContactMap_location)
+    } as PartnerContactMap_location$data)
 
     expect(result).toContain(
       "center=address%2C%20postalCode%2C%20United%20States"

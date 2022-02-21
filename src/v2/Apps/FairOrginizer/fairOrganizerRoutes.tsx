@@ -4,11 +4,11 @@ import { ErrorPage } from "v2/Components/ErrorPage"
 import { AppRouteConfig } from "v2/System/Router/Route"
 import { RedirectException, RenderProps } from "found"
 import { extractNodes } from "v2/Utils/extractNodes"
-import { fairOrganizerRoutes_FairOrganizerQueryResponse } from "v2/__generated__/fairOrganizerRoutes_FairOrganizerQuery.graphql"
+import { fairOrganizerRoutes_FairOrganizerQuery$data } from "v2/__generated__/fairOrganizerRoutes_FairOrganizerQuery.graphql"
 
 export interface Props
   extends RenderProps,
-    fairOrganizerRoutes_FairOrganizerQueryResponse {}
+    fairOrganizerRoutes_FairOrganizerQuery$data {}
 
 const FairOrganizerApp = loadable(
   () =>

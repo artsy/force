@@ -1,13 +1,13 @@
 import * as React from "react"
 import { Flex, Text, Shelf } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ArticlesRail_partner } from "v2/__generated__/ArticlesRail_partner.graphql"
+import { ArticlesRail_partner$data } from "v2/__generated__/ArticlesRail_partner.graphql"
 import { ViewAllButton } from "./ViewAllButton"
 import { extractNodes } from "v2/Utils/extractNodes"
 import { ArticleCellFragmentContainer } from "v2/Components/Cells/ArticleCell"
 
 interface ArticlesRailProps {
-  partner: ArticlesRail_partner
+  partner: ArticlesRail_partner$data
 }
 
 const ArticlesRail: React.FC<ArticlesRailProps> = ({ partner }) => {

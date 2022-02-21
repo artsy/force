@@ -1,10 +1,10 @@
 import { Button, Modal, Text } from "@artsy/palette"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ArtworkDetailsMediumModal_artwork } from "v2/__generated__/ArtworkDetailsMediumModal_artwork.graphql"
+import { ArtworkDetailsMediumModal_artwork$data } from "v2/__generated__/ArtworkDetailsMediumModal_artwork.graphql"
 
 interface ArtworkDetailsMediumModalProps {
-  artwork: ArtworkDetailsMediumModal_artwork
+  artwork: ArtworkDetailsMediumModal_artwork$data
   show: boolean
   onClose(): void
 }

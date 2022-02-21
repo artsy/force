@@ -9,7 +9,7 @@ import {
   Text,
 } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ShippingQuotes_shippingQuotes } from "v2/__generated__/ShippingQuotes_shippingQuotes.graphql"
+import { ShippingQuotes_shippingQuotes$data } from "v2/__generated__/ShippingQuotes_shippingQuotes.graphql"
 import { compact } from "lodash"
 
 export const shippingQuoteDescriptions = {
@@ -27,7 +27,7 @@ export const shippingQuoteDescriptions = {
 
 export interface ShippingQuotesProps extends BoxProps {
   onSelect: (shippingQuoteId: string) => void
-  shippingQuotes: ShippingQuotes_shippingQuotes
+  shippingQuotes: ShippingQuotes_shippingQuotes$data
   selectedShippingQuoteId?: string
 }
 

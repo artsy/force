@@ -15,7 +15,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { useSystemContext, useTracking } from "v2/System"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import { RouterLink } from "v2/System/Router/RouterLink"
-import { HomeCurrentFairs_viewer } from "v2/__generated__/HomeCurrentFairs_viewer.graphql"
+import { HomeCurrentFairs_viewer$data } from "v2/__generated__/HomeCurrentFairs_viewer.graphql"
 import { HomeCurrentFairsQuery } from "v2/__generated__/HomeCurrentFairsQuery.graphql"
 import {
   ActionType,
@@ -25,7 +25,7 @@ import {
 } from "@artsy/cohesion"
 
 interface HomeCurrentFairsProps {
-  viewer: HomeCurrentFairs_viewer
+  viewer: HomeCurrentFairs_viewer$data
 }
 
 const HomeCurrentFairs: React.FC<HomeCurrentFairsProps> = ({ viewer }) => {

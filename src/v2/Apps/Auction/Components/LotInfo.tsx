@@ -1,13 +1,13 @@
 import { Box, Flex, Text } from "@artsy/palette"
-import { LotInfo_artwork } from "v2/__generated__/LotInfo_artwork.graphql"
-import { LotInfo_saleArtwork } from "v2/__generated__/LotInfo_saleArtwork.graphql"
+import { LotInfo_artwork$data } from "v2/__generated__/LotInfo_artwork.graphql"
+import { LotInfo_saleArtwork$data } from "v2/__generated__/LotInfo_saleArtwork.graphql"
 import * as React from "react"
 import { RelayProp, createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "v2/System/Router/RouterLink"
 
 interface Props {
-  artwork: LotInfo_artwork
-  saleArtwork: LotInfo_saleArtwork
+  artwork: LotInfo_artwork$data
+  saleArtwork: LotInfo_saleArtwork$data
   relay: RelayProp
 }
 

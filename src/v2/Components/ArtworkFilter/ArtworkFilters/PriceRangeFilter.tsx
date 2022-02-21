@@ -14,7 +14,7 @@ import {
   SelectedFiltersCountsLabels,
   useArtworkFilterContext,
 } from "../ArtworkFilterContext"
-import styled from "styled-components"
+import styled, { StyledComponentClass } from "styled-components"
 import { Media } from "v2/Utils/Responsive"
 import { themeGet } from "@styled-system/theme-get"
 import { FilterExpandable } from "./FilterExpandable"
@@ -43,7 +43,7 @@ export const NumericInput = styled(LabeledInput).attrs({ type: "number" })`
       font-size: 16px;
     }
   }
-`
+` as StyledComponentClass<any, any>
 
 const PRICE_RANGES = [
   { name: "$50K+", value: "50000-*" },

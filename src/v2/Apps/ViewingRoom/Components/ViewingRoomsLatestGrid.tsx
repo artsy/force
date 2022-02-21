@@ -1,12 +1,12 @@
-import { useState } from "react";
-import * as React from "react";
+import { useState } from "react"
+import * as React from "react"
 import { Button, Card, GridColumns, Column, Box } from "@artsy/palette"
 import {
   RelayPaginationProp,
   createPaginationContainer,
   graphql,
 } from "react-relay"
-import { ViewingRoomsLatestGrid_viewingRooms } from "v2/__generated__/ViewingRoomsLatestGrid_viewingRooms.graphql"
+import { ViewingRoomsLatestGrid_viewingRooms$data } from "v2/__generated__/ViewingRoomsLatestGrid_viewingRooms.graphql"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { cropped } from "v2/Utils/resized"
 import { extractNodes } from "v2/Utils/extractNodes"
@@ -14,7 +14,7 @@ import { getStatus } from "../Utils/getStatus"
 
 export interface ViewingRoomsLatestGridProps {
   relay: RelayPaginationProp
-  viewingRooms: ViewingRoomsLatestGrid_viewingRooms
+  viewingRooms: ViewingRoomsLatestGrid_viewingRooms$data
 }
 
 export const PAGE_SIZE = 12

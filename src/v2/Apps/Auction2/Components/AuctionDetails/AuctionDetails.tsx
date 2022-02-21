@@ -6,16 +6,16 @@ import { getLiveAuctionUrl } from "desktop/apps/auction/utils/urls"
 import { useSystemContext } from "v2/System"
 import { formatIsoDateNoZoneOffset } from "v2/Components/AddToCalendar/helpers"
 import { ContextModule } from "@artsy/cohesion"
-import { AuctionDetails_sale } from "v2/__generated__/AuctionDetails_sale.graphql"
-import { AuctionDetails_me } from "v2/__generated__/AuctionDetails_me.graphql"
+import { AuctionDetails_sale$data } from "v2/__generated__/AuctionDetails_sale.graphql"
+import { AuctionDetails_me$data } from "v2/__generated__/AuctionDetails_me.graphql"
 import { useCurrentTime } from "v2/Utils/Hooks/useCurrentTime"
 import { useEventTiming } from "v2/Utils/Hooks/useEventTiming"
 import { AuctionInfoSidebarFragmentContainer } from "./AuctionInfoSidebar"
 import { RegisterButtonFragmentContainer } from "./RegisterButton"
 
 interface AuctionDetailsProps {
-  sale: AuctionDetails_sale
-  me: AuctionDetails_me
+  sale: AuctionDetails_sale$data
+  me: AuctionDetails_me$data
 }
 
 const AuctionDetails: React.FC<AuctionDetailsProps> = ({ sale, me }) => {

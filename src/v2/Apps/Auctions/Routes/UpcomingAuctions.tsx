@@ -6,13 +6,13 @@ import {
   graphql,
   RelayPaginationProp,
 } from "react-relay"
-import { UpcomingAuctions_viewer } from "v2/__generated__/UpcomingAuctions_viewer.graphql"
+import { UpcomingAuctions_viewer$data } from "v2/__generated__/UpcomingAuctions_viewer.graphql"
 import { AuctionArtworksRailFragmentContainer } from "../Components/AuctionArtworksRail"
 import { extractNodes } from "v2/Utils/extractNodes"
 import { AuctionsZeroState } from "../Components/AuctionsZeroState"
 
 export interface UpcomingAuctionsProps {
-  viewer: UpcomingAuctions_viewer
+  viewer: UpcomingAuctions_viewer$data
   relay: RelayPaginationProp
 }
 

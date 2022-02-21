@@ -1,5 +1,5 @@
 import * as React from "react"
-import { SearchResultsArtworks_viewer } from "v2/__generated__/SearchResultsArtworks_viewer.graphql"
+import { SearchResultsArtworks_viewer$data } from "v2/__generated__/SearchResultsArtworks_viewer.graphql"
 import { ZeroState } from "v2/Apps/Search/Components/ZeroState"
 import { ArtworkFilter } from "v2/Components/ArtworkFilter"
 import { updateUrl } from "v2/Components/ArtworkFilter/Utils/urlBuilder"
@@ -11,7 +11,7 @@ import {
 } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
 
 interface SearchResultsRouteProps {
-  viewer: SearchResultsArtworks_viewer
+  viewer: SearchResultsArtworks_viewer$data
 }
 
 export const SearchResultsArtworksRoute: React.FC<SearchResultsRouteProps> = props => {

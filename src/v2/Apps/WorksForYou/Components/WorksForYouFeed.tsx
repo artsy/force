@@ -8,10 +8,10 @@ import {
 import ArtworkGrid from "v2/Components/ArtworkGrid"
 import { useSystemContext } from "v2/System"
 import { extractNodes } from "v2/Utils/extractNodes"
-import { WorksForYouFeed_viewer } from "v2/__generated__/WorksForYouFeed_viewer.graphql"
+import { WorksForYouFeed_viewer$data } from "v2/__generated__/WorksForYouFeed_viewer.graphql"
 
 interface WorksForYouFeedProps {
-  viewer: WorksForYouFeed_viewer
+  viewer: WorksForYouFeed_viewer$data
   relay: RelayPaginationProp
 }
 

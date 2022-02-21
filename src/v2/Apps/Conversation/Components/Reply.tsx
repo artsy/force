@@ -21,7 +21,7 @@ import { useTracking } from "v2/System/Analytics"
 import { ConversationCTAFragmentContainer } from "./ConversationCTA"
 import { SendConversationMessage } from "../Mutation/SendConversationMessage"
 
-import { Conversation_conversation } from "v2/__generated__/Conversation_conversation.graphql"
+import { Conversation_conversation$data } from "v2/__generated__/Conversation_conversation.graphql"
 
 const StyledFlex = styled(Flex)<FlexProps & RightProps>`
   border-top: 1px solid ${themeGet("colors.black10")};
@@ -54,7 +54,7 @@ const StyledTextArea = styled.textarea<{ height?: string }>`
 `
 
 interface ReplyProps {
-  conversation: Conversation_conversation
+  conversation: Conversation_conversation$data
   environment: Environment
   onScroll: () => void
   refetch: RelayRefetchProp["refetch"]

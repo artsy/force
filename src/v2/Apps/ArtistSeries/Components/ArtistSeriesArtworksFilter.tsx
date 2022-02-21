@@ -1,4 +1,4 @@
-import { ArtistSeriesArtworksFilter_artistSeries } from "v2/__generated__/ArtistSeriesArtworksFilter_artistSeries.graphql"
+import { ArtistSeriesArtworksFilter_artistSeries$data } from "v2/__generated__/ArtistSeriesArtworksFilter_artistSeries.graphql"
 import { BaseArtworkFilter } from "v2/Components/ArtworkFilter"
 import {
   ArtworkFilterContextProvider,
@@ -10,7 +10,7 @@ import * as React from "react"
 import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
 
 interface ArtistSeriesArtworksFilterProps {
-  artistSeries: ArtistSeriesArtworksFilter_artistSeries
+  artistSeries: ArtistSeriesArtworksFilter_artistSeries$data
   relay: RelayRefetchProp
   match?: Match
   aggregations: SharedArtworkFilterContextProps["aggregations"]

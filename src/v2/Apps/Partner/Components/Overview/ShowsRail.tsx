@@ -1,12 +1,12 @@
 import { Box, BoxProps, Flex, Shelf, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ShowsRail_partner } from "v2/__generated__/ShowsRail_partner.graphql"
+import { ShowsRail_partner$data } from "v2/__generated__/ShowsRail_partner.graphql"
 import { ShowCardFragmentContainer } from "../PartnerShows/ShowCard"
 import { ViewAllButton } from "./ViewAllButton"
 import { extractNodes } from "v2/Utils/extractNodes"
 
 interface ShowsRailProps extends BoxProps {
-  partner: ShowsRail_partner
+  partner: ShowsRail_partner$data
 }
 
 const ShowsRail: React.FC<ShowsRailProps> = ({ partner, ...rest }) => {

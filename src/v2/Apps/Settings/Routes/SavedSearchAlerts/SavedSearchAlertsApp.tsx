@@ -14,7 +14,7 @@ import {
   RelayPaginationProp,
 } from "react-relay"
 import { useState } from "react"
-import { SavedSearchAlertsApp_me } from "v2/__generated__/SavedSearchAlertsApp_me.graphql"
+import { SavedSearchAlertsApp_me$data } from "v2/__generated__/SavedSearchAlertsApp_me.graphql"
 import { Media } from "v2/Utils/Responsive"
 import { EditAlertEntity } from "./types"
 import { extractNodes } from "v2/Utils/extractNodes"
@@ -32,7 +32,7 @@ import { useNavBarHeight } from "v2/Components/NavBar/useNavBarHeight"
 import { SavedSearchAlertEditFormMobile } from "./Components/SavedSearchAlertEditFormMobile"
 
 interface SavedSearchAlertsAppProps {
-  me: SavedSearchAlertsApp_me
+  me: SavedSearchAlertsApp_me$data
   relay: RelayPaginationProp
 }
 

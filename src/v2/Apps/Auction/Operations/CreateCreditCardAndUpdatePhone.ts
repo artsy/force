@@ -1,11 +1,11 @@
 import { commitMutation, graphql } from "react-relay"
 import {
   CreateCreditCardAndUpdatePhoneMutation,
-  CreateCreditCardAndUpdatePhoneMutationResponse,
+  CreateCreditCardAndUpdatePhoneMutation$data,
 } from "v2/__generated__/CreateCreditCardAndUpdatePhoneMutation.graphql"
 
 export function createCreditCardAndUpdatePhone(relayEnvironment, phone, token) {
-  return new Promise<CreateCreditCardAndUpdatePhoneMutationResponse>(
+  return new Promise<CreateCreditCardAndUpdatePhoneMutation$data>(
     (resolve, reject) => {
       commitMutation<CreateCreditCardAndUpdatePhoneMutation>(relayEnvironment, {
         onCompleted: (data, errors) =>

@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import * as React from "react";
+import { useState, useEffect } from "react"
+import * as React from "react"
 import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
 import { ArrowDownIcon, Flex, Text } from "@artsy/palette"
 import styled from "styled-components"
@@ -14,9 +14,9 @@ import { usePoll } from "../Utils/usePoll"
 
 import {
   UnreadMessagesToastQuery,
-  UnreadMessagesToastQueryResponse,
+  UnreadMessagesToastQuery$data,
 } from "v2/__generated__/UnreadMessagesToastQuery.graphql"
-import { UnreadMessagesToast_conversation } from "v2/__generated__/UnreadMessagesToast_conversation.graphql"
+import { UnreadMessagesToast_conversation$data } from "v2/__generated__/UnreadMessagesToast_conversation.graphql"
 
 // TODO: refactor into one of the newer components when ready
 const Container = styled(Flex)<{ bottom?: number }>`
@@ -40,7 +40,7 @@ interface UnreadMessagesToastProps {
   refreshCallback: () => void
   hasScrolled: boolean
   relay: RelayRefetchProp
-  conversation?: UnreadMessagesToast_conversation | null
+  conversation?: UnreadMessagesToast_conversation$data | null
   lastOrderUpdate?: string | null
 }
 
@@ -165,7 +165,7 @@ export const UnreadMessagesToastQueryRenderer: React.FC<{
       variables={{
         conversationID,
       }}
-      render={renderWithLoadProgress<UnreadMessagesToastQueryResponse>(
+      render={renderWithLoadProgress<UnreadMessagesToastQuery$data>(
         ({ me }) => (
           <UnreadMessagesToastRefetchContainer
             conversation={me?.conversation}

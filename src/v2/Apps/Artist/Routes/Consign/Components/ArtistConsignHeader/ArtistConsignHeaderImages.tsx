@@ -1,15 +1,15 @@
 import { Box, Flex } from "@artsy/palette"
-import { ArtistConsignHeaderImages_artist } from "v2/__generated__/ArtistConsignHeaderImages_artist.graphql"
+import { ArtistConsignHeaderImages_artist$data } from "v2/__generated__/ArtistConsignHeaderImages_artist.graphql"
 import { last } from "lodash"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
 
 // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-type Artworks = ArtistConsignHeaderImages_artist["targetSupply"]["microfunnel"]["artworksConnection"]["edges"]
+type Artworks = ArtistConsignHeaderImages_artist$data["targetSupply"]["microfunnel"]["artworksConnection"]["edges"]
 
 interface HeaderImageProps {
-  artist: ArtistConsignHeaderImages_artist
+  artist: ArtistConsignHeaderImages_artist$data
 }
 
 export const ArtistConsignHeaderImages: React.FC<HeaderImageProps> = props => {

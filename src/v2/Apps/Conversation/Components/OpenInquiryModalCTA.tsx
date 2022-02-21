@@ -12,7 +12,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import { tappedMakeOffer } from "@artsy/cohesion"
 import styled from "styled-components"
-import { OpenInquiryModalCTA_conversation } from "v2/__generated__/OpenInquiryModalCTA_conversation.graphql"
+import { OpenInquiryModalCTA_conversation$data } from "v2/__generated__/OpenInquiryModalCTA_conversation.graphql"
 
 export const ShadowSeparator = styled(Separator)`
   box-shadow: ${FLAT_SHADOW};
@@ -22,7 +22,7 @@ export const ShadowSeparator = styled(Separator)`
 
 export interface OpenInquiryModalCTAProps {
   openInquiryModal: () => void
-  conversation: OpenInquiryModalCTA_conversation
+  conversation: OpenInquiryModalCTA_conversation$data
 }
 
 export const OpenInquiryModalCTA: React.FC<OpenInquiryModalCTAProps> = ({

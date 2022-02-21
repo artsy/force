@@ -1,7 +1,7 @@
 import * as React from "react"
 import { Box, BoxProps, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
-import { FairHeader_fair } from "v2/__generated__/FairHeader_fair.graphql"
+import { FairHeader_fair$data } from "v2/__generated__/FairHeader_fair.graphql"
 import { ProfileIcon } from "v2/Components/ProfileIcon"
 import styled from "styled-components"
 import { growAndFadeIn, shrinkAndFadeOut } from "v2/Assets/Animations"
@@ -11,7 +11,7 @@ const SUBTITLE_HEIGHT = "38px"
 
 interface FairHeaderProps extends BoxProps {
   stuck?: boolean
-  fair: FairHeader_fair
+  fair: FairHeader_fair$data
 }
 
 const FadingText = styled(Text)<{ show: boolean }>`

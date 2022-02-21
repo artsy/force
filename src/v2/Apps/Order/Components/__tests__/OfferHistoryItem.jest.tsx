@@ -1,8 +1,5 @@
 import { Button, Collapse } from "@artsy/palette"
-import {
-  OfferHistoryItemTestQuery$rawResponse,
-  OfferHistoryItemTestQuery$data,
-} from "v2/__generated__/OfferHistoryItemTestQuery.graphql"
+import { OfferHistoryItemTestQuery$rawResponse } from "v2/__generated__/OfferHistoryItemTestQuery.graphql"
 import {
   OfferWithTotals,
   Offers,
@@ -25,7 +22,7 @@ const render = (
   extraComponentProps?: Partial<ExtractProps<typeof OfferHistoryItem>>
 ) =>
   renderRelayTree({
-    Component: (props: OfferHistoryItemTestQuery$data) => (
+    Component: props => (
       <OfferHistoryItem {...extraComponentProps} {...props} />
     ),
     mockData: {

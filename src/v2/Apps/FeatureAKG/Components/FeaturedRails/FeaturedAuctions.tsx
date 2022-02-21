@@ -1,4 +1,4 @@
-import { FeaturedAuctions_auctions } from "v2/__generated__/FeaturedAuctions_auctions.graphql"
+import { FeaturedAuctions_auctions$data } from "v2/__generated__/FeaturedAuctions_auctions.graphql"
 import {
   FeaturedRail,
   FeaturedRailCarousel,
@@ -11,7 +11,7 @@ import { createFragmentContainer } from "react-relay"
 import { graphql } from "relay-runtime"
 
 interface FeaturedAuctionsRailProps {
-  auctions: FeaturedAuctions_auctions
+  auctions: FeaturedAuctions_auctions$data
   railMetadata: RailMetadata
 }
 

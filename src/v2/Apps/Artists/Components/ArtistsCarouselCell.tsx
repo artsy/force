@@ -4,7 +4,7 @@ import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { FollowArtistButtonQueryRenderer } from "v2/Components/FollowButton/FollowArtistButton"
-import { ArtistsCarouselCell_featuredLink } from "v2/__generated__/ArtistsCarouselCell_featuredLink.graphql"
+import { ArtistsCarouselCell_featuredLink$data } from "v2/__generated__/ArtistsCarouselCell_featuredLink.graphql"
 
 const getSlug = (href: string) => {
   const components = href.split("/")
@@ -12,7 +12,7 @@ const getSlug = (href: string) => {
 }
 
 interface ArtistsCarouselCellProps {
-  featuredLink: ArtistsCarouselCell_featuredLink
+  featuredLink: ArtistsCarouselCell_featuredLink$data
   index: number
 }
 

@@ -1,7 +1,7 @@
 import { Clickable, Text } from "@artsy/palette"
-import { Component } from "react";
+import { Component } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ArtworkSidebarClassification_artwork } from "v2/__generated__/ArtworkSidebarClassification_artwork.graphql"
+import { ArtworkSidebarClassification_artwork$data } from "v2/__generated__/ArtworkSidebarClassification_artwork.graphql"
 import * as Schema from "v2/System/Analytics/Schema"
 import track from "react-tracking"
 import { ArtworkSidebarClassificationsModalQueryRenderer } from "v2/Apps/Artwork/Components/ArtworkSidebarClassificationsModal"
@@ -10,7 +10,7 @@ import { ArtworkSidebarClassificationsModalQueryRenderer } from "v2/Apps/Artwork
 // - Check classification modal
 
 export interface ArtworkSidebarClassificationProps {
-  artwork: ArtworkSidebarClassification_artwork
+  artwork: ArtworkSidebarClassification_artwork$data
 }
 
 interface State {

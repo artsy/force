@@ -1,7 +1,7 @@
 import { useTracking } from "v2/System/Analytics/useTracking"
 import { MockBoot, renderRelayTree } from "v2/DevTools"
 import { graphql } from "react-relay"
-import { ViewingRoomWorksRoute_Test_QueryRawResponse } from "v2/__generated__/ViewingRoomWorksRoute_Test_Query.graphql"
+import { ViewingRoomWorksRoute_Test_Query$rawResponse } from "v2/__generated__/ViewingRoomWorksRoute_Test_Query.graphql"
 import { Breakpoint } from "@artsy/palette"
 import { ViewingRoomWorksRouteFragmentContainer } from "../../Works/ViewingRoomWorksRoute"
 
@@ -22,7 +22,7 @@ describe("ViewingRoomWorksRoute", () => {
 
   const getWrapper = async (
     breakpoint: Breakpoint = "lg",
-    response: ViewingRoomWorksRoute_Test_QueryRawResponse = ViewingRoomWorksRouteFixture
+    response: ViewingRoomWorksRoute_Test_Query$rawResponse = ViewingRoomWorksRouteFixture
   ) => {
     return await renderRelayTree({
       Component: ({ viewingRoom }) => {
@@ -94,7 +94,7 @@ describe("ViewingRoomWorksRoute", () => {
   })
 })
 
-const ViewingRoomWorksRouteFixture: ViewingRoomWorksRoute_Test_QueryRawResponse = {
+const ViewingRoomWorksRouteFixture: ViewingRoomWorksRoute_Test_Query$rawResponse = {
   viewingRoom: {
     artworksConnection: {
       edges: [

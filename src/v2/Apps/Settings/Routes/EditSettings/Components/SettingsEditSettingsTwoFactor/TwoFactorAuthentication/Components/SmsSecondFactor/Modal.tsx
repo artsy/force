@@ -20,7 +20,7 @@ import { EnableSecondFactor } from "../Mutation/EnableSecondFactor"
 import { DeliverSecondFactor } from "./Mutation/DeliverSecondFactor"
 import { UpdateSmsSecondFactor } from "./Mutation/UpdateSmsSecondFactor"
 import { BackupSecondFactorReminder } from "../BackupSecondFactorReminder"
-import { CreateSmsSecondFactorMutationResponse } from "v2/__generated__/CreateSmsSecondFactorMutation.graphql"
+import { CreateSmsSecondFactorMutation$data } from "v2/__generated__/CreateSmsSecondFactorMutation.graphql"
 import { redirectMessage } from "v2/Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsTwoFactor/TwoFactorAuthentication/helpers"
 
 interface SmsSecondFactorModalProps {
@@ -28,7 +28,7 @@ interface SmsSecondFactorModalProps {
   show?: boolean
   onComplete: () => void
   // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-  secondFactor: CreateSmsSecondFactorMutationResponse["createSmsSecondFactor"]["secondFactorOrErrors"]
+  secondFactor: CreateSmsSecondFactorMutation$data["createSmsSecondFactor"]["secondFactorOrErrors"]
 }
 
 export const SmsSecondFactorModal: React.FC<SmsSecondFactorModalProps> = props => {

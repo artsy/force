@@ -1,11 +1,11 @@
 import * as React from "react"
-import { PartnerContacts_edges } from "v2/__generated__/PartnerContacts_edges.graphql"
+import { PartnerContacts_edges$data } from "v2/__generated__/PartnerContacts_edges.graphql"
 import { Column, GridColumns } from "@artsy/palette"
 import { PartnerContactCardFragmentContainer as PartnerContactCard } from "./PartnerContactCard"
 import { createFragmentContainer, graphql } from "react-relay"
 
 export interface ContactRouteProps {
-  edges: PartnerContacts_edges
+  edges: PartnerContacts_edges$data
 }
 
 export const PartnerContacts: React.FC<ContactRouteProps> = ({ edges }) => {

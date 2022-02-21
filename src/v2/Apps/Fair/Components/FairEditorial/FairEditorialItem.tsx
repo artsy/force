@@ -1,6 +1,6 @@
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { FairEditorialItem_article } from "v2/__generated__/FairEditorialItem_article.graphql"
+import { FairEditorialItem_article$data } from "v2/__generated__/FairEditorialItem_article.graphql"
 import {
   Box,
   Text,
@@ -13,7 +13,7 @@ import {
 import { FairEditorialItemLinkFragmentContainer as FairEditorialItemLink } from "./FairEditorialItemLink"
 
 export interface FairEditorialItemProps extends BoxProps {
-  article: FairEditorialItem_article
+  article: FairEditorialItem_article$data
   size?: "large" | "small"
   isResponsive?: boolean
 }

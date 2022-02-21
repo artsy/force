@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"
 import { Column, GridColumns, Join, Separator, Spacer } from "@artsy/palette"
 import { ViewingRoomWorksFragmentContainer as ViewingRoomWorks } from "./Components/ViewingRoomWorks"
 import { ViewingRoomIntroFragmentContainer as ViewingRoomIntro } from "./Components/ViewingRoomIntro"
@@ -6,11 +6,11 @@ import { ViewingRoomPullQuoteFragmentContainer as ViewingRoomPullQuote } from ".
 import { ViewingRoomBodyFragmentContainer as ViewingRoomBody } from "./Components/ViewingRoomBody"
 import { ViewingRoomSubsectionsFragmentContainer as ViewingRoomSubsections } from "./Components/ViewingRoomSubsections"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ViewingRoomStatementRoute_viewingRoom } from "v2/__generated__/ViewingRoomStatementRoute_viewingRoom.graphql"
+import { ViewingRoomStatementRoute_viewingRoom$data } from "v2/__generated__/ViewingRoomStatementRoute_viewingRoom.graphql"
 import { ViewWorksButton } from "./Components/ViewWorksButton"
 
 interface ViewingRoomStatementRouteProps {
-  viewingRoom: ViewingRoomStatementRoute_viewingRoom
+  viewingRoom: ViewingRoomStatementRoute_viewingRoom$data
 }
 
 const StatementRoute: React.FC<ViewingRoomStatementRouteProps> = ({

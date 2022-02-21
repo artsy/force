@@ -1,6 +1,6 @@
 import { Box, BoxProps, Flex, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
-import { NearbyGalleriesRail_partners } from "v2/__generated__/NearbyGalleriesRail_partners.graphql"
+import { NearbyGalleriesRail_partners$data } from "v2/__generated__/NearbyGalleriesRail_partners.graphql"
 import { NearbyGalleriesRailRendererQuery } from "v2/__generated__/NearbyGalleriesRailRendererQuery.graphql"
 import { Carousel } from "../Carousel"
 import { useSystemContext } from "v2/System"
@@ -10,7 +10,7 @@ import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import { compact } from "lodash"
 
 interface NearbyGalleriesRailProps extends BoxProps {
-  partners: NearbyGalleriesRail_partners
+  partners: NearbyGalleriesRail_partners$data
   city: string | null
 }
 

@@ -1,7 +1,7 @@
 import { Match, Router } from "found"
 import { graphql } from "lib/graphql"
 import { isFunction } from "lodash"
-import { redirects_submission } from "v2/__generated__/redirects_submission.graphql"
+import { redirects_submission$data } from "v2/__generated__/redirects_submission.graphql"
 import { getArtworkDetailsFormInitialValues } from "../ArtworkDetails/Components/ArtworkDetailsForm"
 import { getUploadPhotosFormInitialValues } from "../UploadPhotos/UploadPhotos"
 import {
@@ -11,8 +11,8 @@ import {
 
 const redirectToIf = (
   to: ((id?: string) => string) | string,
-  predicate: (args: redirects_submission) => boolean
-) => (args: redirects_submission) => {
+  predicate: (args: redirects_submission$data) => boolean
+) => (args: redirects_submission$data) => {
   if (predicate(args)) {
     return isFunction(to) ? to(args?.id) : to
   }
@@ -69,7 +69,7 @@ export const redirects = {
 export function getRedirect(
   router: Router,
   match: Match,
-  submission: redirects_submission
+  submission: redirects_submission$data
 ) {
   for (let [path, route] of getPaths(redirects, "")) {
     if (isActiveRoute(router, match, path)) {

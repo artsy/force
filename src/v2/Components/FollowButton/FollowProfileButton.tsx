@@ -2,7 +2,7 @@ import { FollowProfileButtonMutation } from "v2/__generated__/FollowProfileButto
 import * as Artsy from "v2/System"
 import * as React from "react"
 import track, { TrackingProp } from "react-tracking"
-import { FollowProfileButton_profile } from "../../__generated__/FollowProfileButton_profile.graphql"
+import { FollowProfileButton_profile$data } from "../../__generated__/FollowProfileButton_profile.graphql"
 import { FollowButton } from "./Button"
 import { openAuthToSatisfyIntent } from "v2/Utils/openAuthModal"
 import {
@@ -29,7 +29,7 @@ interface Props
     Artsy.SystemContextProps,
     AnalyticsContextProps {
   relay?: RelayProp
-  profile?: FollowProfileButton_profile
+  profile?: FollowProfileButton_profile$data
   tracking?: TrackingProp
   contextModule: AuthContextModule
   /**
@@ -39,7 +39,7 @@ interface Props
   /**
    * Custom renderer if palette button is not desired
    */
-  render?: (profile: FollowProfileButton_profile) => JSX.Element
+  render?: (profile: FollowProfileButton_profile$data) => JSX.Element
 }
 
 export class FollowProfileButton extends React.Component<Props> {

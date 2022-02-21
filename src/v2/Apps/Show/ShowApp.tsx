@@ -1,5 +1,5 @@
-import { useMemo } from "react";
-import * as React from "react";
+import { useMemo } from "react"
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import {
   Box,
@@ -14,7 +14,7 @@ import { ShowHeaderFragmentContainer as ShowHeader } from "./Components/ShowHead
 import { ShowAboutFragmentContainer as ShowAbout } from "./Components/ShowAbout"
 import { ShowInstallShotsFragmentContainer as ShowInstallShots } from "./Components/ShowInstallShots"
 import { ShowViewingRoomFragmentContainer as ShowViewingRoom } from "./Components/ShowViewingRoom"
-import { ShowApp_show } from "v2/__generated__/ShowApp_show.graphql"
+import { ShowApp_show$data } from "v2/__generated__/ShowApp_show.graphql"
 import { ShowArtworksRefetchContainer as ShowArtworksFilter } from "./Components/ShowArtworks"
 import { ShowContextCardFragmentContainer as ShowContextCard } from "./Components/ShowContextCard"
 import {
@@ -31,7 +31,7 @@ import { ShowNavigationBannerFragmentContainer as ShowNavigationBanner } from ".
 import { useRouter } from "v2/System/Router/useRouter"
 
 interface ShowAppProps {
-  show: ShowApp_show
+  show: ShowApp_show$data
 }
 
 export const ShowApp: React.FC<ShowAppProps> = ({ show }) => {

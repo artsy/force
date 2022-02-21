@@ -13,12 +13,12 @@ import { graphql, createFragmentContainer } from "react-relay"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import { extractNodes } from "v2/Utils/extractNodes"
 import { ArtistRailQuery } from "v2/__generated__/ArtistRailQuery.graphql"
-import { ArtistRail_artist } from "v2/__generated__/ArtistRail_artist.graphql"
+import { ArtistRail_artist$data } from "v2/__generated__/ArtistRail_artist.graphql"
 import { ShelfArtworkFragmentContainer } from "./Artwork/ShelfArtwork"
 import { FollowArtistButtonFragmentContainer } from "./FollowButton/FollowArtistButton"
 
 interface ArtistRailProps {
-  artist: ArtistRail_artist
+  artist: ArtistRail_artist$data
 }
 
 const ArtistRail: FC<ArtistRailProps> = ({ artist }) => {

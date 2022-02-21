@@ -12,7 +12,7 @@ import {
 import { FC, useMemo, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
-import { ArticleZoomGallery_article } from "v2/__generated__/ArticleZoomGallery_article.graphql"
+import { ArticleZoomGallery_article$data } from "v2/__generated__/ArticleZoomGallery_article.graphql"
 import { ArticleZoomGalleryQuery } from "v2/__generated__/ArticleZoomGalleryQuery.graphql"
 import { useCursor } from "use-cursor"
 import { compact } from "lodash"
@@ -23,7 +23,7 @@ import { ArticleZoomGalleryCaptionFragmentContainer } from "./ArticleZoomGallery
 import { useNextPrevious } from "v2/Utils/Hooks/useNextPrevious"
 
 interface ArticleZoomGalleryProps {
-  article: ArticleZoomGallery_article
+  article: ArticleZoomGallery_article$data
   figureId?: string
   onClose: () => void
 }

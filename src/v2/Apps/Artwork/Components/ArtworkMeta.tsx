@@ -1,5 +1,5 @@
-import { ArtworkMeta_artwork } from "v2/__generated__/ArtworkMeta_artwork.graphql"
-import { Component } from "react";
+import { ArtworkMeta_artwork$data } from "v2/__generated__/ArtworkMeta_artwork.graphql"
+import { Component } from "react"
 import { Link, Meta, Title } from "react-head"
 import { createFragmentContainer, graphql } from "react-relay"
 import { data as sd } from "sharify"
@@ -11,7 +11,7 @@ import { ZendeskWrapper } from "v2/Components/ZendeskWrapper"
 import { isExceededZendeskThreshold } from "v2/Utils/isExceededZendeskThreshold"
 
 interface ArtworkMetaProps {
-  artwork: ArtworkMeta_artwork
+  artwork: ArtworkMeta_artwork$data
   googleAdId?: string
 }
 

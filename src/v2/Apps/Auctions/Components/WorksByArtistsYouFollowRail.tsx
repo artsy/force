@@ -1,7 +1,7 @@
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useAnalyticsContext } from "v2/System"
-import { WorksByArtistsYouFollowRail_viewer } from "v2/__generated__/WorksByArtistsYouFollowRail_viewer.graphql"
+import { WorksByArtistsYouFollowRail_viewer$data } from "v2/__generated__/WorksByArtistsYouFollowRail_viewer.graphql"
 import { useTracking } from "react-tracking"
 import { AuthContextModule } from "@artsy/cohesion"
 import { tabTypeToContextModuleMap } from "../Utils/tabTypeToContextModuleMap"
@@ -12,7 +12,7 @@ import { CuratorialRailsZeroState } from "./CuritorialRailsTabBar"
 import { Rail } from "v2/Components/Rail"
 
 export interface WorksByArtistsYouFollowRailProps {
-  viewer: WorksByArtistsYouFollowRail_viewer
+  viewer: WorksByArtistsYouFollowRail_viewer$data
 }
 
 const WorksByArtistsYouFollowRail: React.FC<WorksByArtistsYouFollowRailProps> = ({

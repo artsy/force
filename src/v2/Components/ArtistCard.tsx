@@ -1,12 +1,12 @@
-import { ArtistCard_artist } from "v2/__generated__/ArtistCard_artist.graphql"
+import { ArtistCard_artist$data } from "v2/__generated__/ArtistCard_artist.graphql"
 import { FollowArtistButtonFragmentContainer } from "v2/Components/FollowButton/FollowArtistButton"
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { EntityHeader } from "@artsy/palette"
 import { AuthContextModule } from "@artsy/cohesion"
 
 export interface ArtistCardProps {
-  artist: ArtistCard_artist
+  artist: ArtistCard_artist$data
   contextModule: AuthContextModule
   onClick?: () => void
 }

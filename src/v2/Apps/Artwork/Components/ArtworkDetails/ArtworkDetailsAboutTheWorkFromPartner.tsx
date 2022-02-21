@@ -7,7 +7,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { get } from "v2/Utils/get"
 import { Media } from "v2/Utils/Responsive"
 import { READ_MORE_MAX_CHARS } from "./ArtworkDetailsAboutTheWorkFromArtsy"
-import { ArtworkDetailsAboutTheWorkFromPartner_artwork } from "v2/__generated__/ArtworkDetailsAboutTheWorkFromPartner_artwork.graphql"
+import { ArtworkDetailsAboutTheWorkFromPartner_artwork$data } from "v2/__generated__/ArtworkDetailsAboutTheWorkFromPartner_artwork.graphql"
 import { data as sd } from "sharify"
 import { track } from "v2/System/Analytics"
 import * as Schema from "v2/System/Analytics/Schema"
@@ -24,7 +24,7 @@ import {
 import { openAuthToSatisfyIntent } from "v2/Utils/openAuthModal"
 
 export interface ArtworkDetailsAboutTheWorkFromPartnerProps {
-  artwork: ArtworkDetailsAboutTheWorkFromPartner_artwork
+  artwork: ArtworkDetailsAboutTheWorkFromPartner_artwork$data
 }
 
 @track(

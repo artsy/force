@@ -6,15 +6,15 @@ import {
   Text,
   TextVariant,
 } from "@artsy/palette"
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
 import { RouterLink } from "v2/System/Router/RouterLink"
-import { ShowsFeaturedShow_show } from "v2/__generated__/ShowsFeaturedShow_show.graphql"
+import { ShowsFeaturedShow_show$data } from "v2/__generated__/ShowsFeaturedShow_show.graphql"
 import { ShowsShowDatesFragmentContainer } from "./ShowsShowDates"
 
 interface ShowsFeaturedShowProps {
-  show: ShowsFeaturedShow_show
+  show: ShowsFeaturedShow_show$data
   size: "large" | "small"
 }
 

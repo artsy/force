@@ -5,12 +5,12 @@ import {
   getGoogleMapUrl,
   getGoogleStaticMapImageUrl,
 } from "./partnerContactUtils"
-import { PartnerContactMap_location } from "v2/__generated__/PartnerContactMap_location.graphql"
+import { PartnerContactMap_location$data } from "v2/__generated__/PartnerContactMap_location.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "v2/System/Router/RouterLink"
 
 export interface PartnerContactMapProps {
-  location: PartnerContactMap_location
+  location: PartnerContactMap_location$data
 }
 
 const StaticMapImage = styled(Image)`

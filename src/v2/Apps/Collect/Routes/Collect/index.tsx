@@ -1,6 +1,6 @@
 import { Box, Separator, Spacer, Text, Flex } from "@artsy/palette"
 import { Match, Router } from "found"
-import * as React from "react";
+import * as React from "react"
 import { Link, Meta, Title } from "react-head"
 import { createFragmentContainer, graphql } from "react-relay"
 import { data as sd } from "sharify"
@@ -13,8 +13,8 @@ import { BreadCrumbList } from "v2/Components/Seo"
 
 import { getMetadata, Medium, Color } from "./Utils/getMetadata"
 
-import { Collect_marketingHubCollections } from "v2/__generated__/Collect_marketingHubCollections.graphql"
-import { collectRoutes_ArtworkFilterQueryResponse } from "v2/__generated__/collectRoutes_ArtworkFilterQuery.graphql"
+import { Collect_marketingHubCollections$data } from "v2/__generated__/Collect_marketingHubCollections.graphql"
+import { collectRoutes_ArtworkFilterQuery$data } from "v2/__generated__/collectRoutes_ArtworkFilterQuery.graphql"
 import { CollectionsHubsNavFragmentContainer as CollectionsHubsNav } from "v2/Components/CollectionsHubsNav"
 import { ArtworkFilter } from "v2/Components/ArtworkFilter"
 import { RouterLink } from "v2/System/Router/RouterLink"
@@ -26,9 +26,9 @@ import {
 export interface CollectAppProps {
   match: Match
   router: Router
-  marketingHubCollections: Collect_marketingHubCollections
-  viewer: collectRoutes_ArtworkFilterQueryResponse["viewer"]
-  filterArtworks: collectRoutes_ArtworkFilterQueryResponse["filterArtworks"]
+  marketingHubCollections: Collect_marketingHubCollections$data
+  viewer: collectRoutes_ArtworkFilterQuery$data["viewer"]
+  filterArtworks: collectRoutes_ArtworkFilterQuery$data["filterArtworks"]
 }
 
 export const CollectApp: React.FC<CollectAppProps> = ({

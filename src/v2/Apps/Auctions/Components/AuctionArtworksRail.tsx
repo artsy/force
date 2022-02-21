@@ -1,7 +1,7 @@
-import * as React from "react";
+import * as React from "react"
 import { BoxProps, Skeleton, SkeletonBox, SkeletonText } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
-import { AuctionArtworksRail_sale } from "v2/__generated__/AuctionArtworksRail_sale.graphql"
+import { AuctionArtworksRail_sale$data } from "v2/__generated__/AuctionArtworksRail_sale.graphql"
 import { tabTypeToContextModuleMap } from "../Utils/tabTypeToContextModuleMap"
 import { useTracking } from "react-tracking"
 import {
@@ -31,7 +31,7 @@ export type TabType =
   | "worksByArtistsYouFollow"
 
 interface AuctionArtworksRailProps extends BoxProps {
-  sale: AuctionArtworksRail_sale
+  sale: AuctionArtworksRail_sale$data
   tabType: TabType
 }
 

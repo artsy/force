@@ -14,7 +14,7 @@ import { useSystemContext } from "v2/System"
 import { createOrUpdateConsignSubmission } from "../Utils/createOrUpdateConsignSubmission"
 import { createFragmentContainer, graphql } from "react-relay"
 import {
-  ArtworkDetails_submission,
+  ArtworkDetails_submission$data,
   ConsignmentAttributionClass,
 } from "v2/__generated__/ArtworkDetails_submission.graphql"
 import { UtmParams } from "../Utils/types"
@@ -24,7 +24,7 @@ import createLogger from "v2/Utils/logger"
 const logger = createLogger("SubmissionFlow/ArtworkDetails.tsx")
 
 export interface ArtworkDetailsProps {
-  submission?: ArtworkDetails_submission
+  submission?: ArtworkDetails_submission$data
 }
 
 export const ArtworkDetails: React.FC<ArtworkDetailsProps> = ({

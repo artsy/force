@@ -1,8 +1,8 @@
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useSystemContext } from "v2/System"
 import { FairBoothRailArtworksQuery } from "v2/__generated__/FairBoothRailArtworksQuery.graphql"
-import { FairBoothRailArtworks_show } from "v2/__generated__/FairBoothRailArtworks_show.graphql"
+import { FairBoothRailArtworks_show$data } from "v2/__generated__/FairBoothRailArtworks_show.graphql"
 import {
   ActionType,
   ClickedArtworkGroup,
@@ -19,7 +19,7 @@ import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import { IMG_HEIGHT } from "v2/Components/Artwork/ShelfArtwork"
 
 export interface FairBoothRailArtworksProps {
-  show: FairBoothRailArtworks_show
+  show: FairBoothRailArtworks_show$data
 }
 
 const FairBoothRailArtworks: React.FC<FairBoothRailArtworksProps> = ({

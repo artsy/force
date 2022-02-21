@@ -7,11 +7,11 @@ import {
   RelayPaginationProp,
 } from "react-relay"
 import { extractNodes } from "v2/Utils/extractNodes"
-import { FairsPastFairs_viewer } from "v2/__generated__/FairsPastFairs_viewer.graphql"
+import { FairsPastFairs_viewer$data } from "v2/__generated__/FairsPastFairs_viewer.graphql"
 import { FairsFairRowFragmentContainer } from "./FairsFairRow"
 
 interface FairsPastFairsProps {
-  viewer: FairsPastFairs_viewer
+  viewer: FairsPastFairs_viewer$data
   relay: RelayPaginationProp
 }
 

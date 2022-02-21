@@ -2,7 +2,7 @@ import { useEffect } from "react"
 import * as React from "react"
 import { Box } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
-import { PartnerArtists_partner } from "v2/__generated__/PartnerArtists_partner.graphql"
+import { PartnerArtists_partner$data } from "v2/__generated__/PartnerArtists_partner.graphql"
 import { PartnerArtistsQuery } from "v2/__generated__/PartnerArtistsQuery.graphql"
 import { ScrollIntoViewProps } from "v2/Utils/scrollHelpers"
 import { useSystemContext } from "v2/System"
@@ -12,7 +12,7 @@ import { PartnerArtistListFragmentContainer } from "./PartnerArtistList"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 
 export interface PartnerArtistsProps {
-  partner: PartnerArtists_partner
+  partner: PartnerArtists_partner$data
   scrollTo?: ScrollIntoViewProps
 }
 
@@ -40,8 +40,7 @@ export const PartnerArtists: React.FC<PartnerArtistsProps> = ({
     <Box mt={4}>
       <PartnerArtistListFragmentContainer
         partnerSlug={slug}
-        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-        scrollTo={scrollTo}
+        scrollTo={scrollTo!}
         // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         artists={artists}
         distinguishRepresentedArtists={!!distinguishRepresentedArtists}

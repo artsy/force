@@ -4,7 +4,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import styled, { css } from "styled-components"
 import { DateTime } from "luxon"
 import { RouterLink } from "v2/System/Router/RouterLink"
-import { FairsFairRow_fair } from "v2/__generated__/FairsFairRow_fair.graphql"
+import { FairsFairRow_fair$data } from "v2/__generated__/FairsFairRow_fair.graphql"
 import { themeGet } from "@styled-system/theme-get"
 
 const Container = styled(Flex)<{ href?: string }>`
@@ -20,7 +20,7 @@ const Container = styled(Flex)<{ href?: string }>`
 `
 
 interface FairsFairRowProps extends BoxProps {
-  fair: FairsFairRow_fair
+  fair: FairsFairRow_fair$data
 }
 
 const FairsFairRow: React.FC<FairsFairRowProps> = ({ fair, ...rest }) => {

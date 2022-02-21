@@ -9,8 +9,8 @@ import {
   ContactInformationFormModel,
 } from "./Components/ContactInformationForm"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ContactInformation_me } from "v2/__generated__/ContactInformation_me.graphql"
-import { ContactInformation_submission } from "v2/__generated__/ContactInformation_submission.graphql"
+import { ContactInformation_me$data } from "v2/__generated__/ContactInformation_me.graphql"
+import { ContactInformation_submission$data } from "v2/__generated__/ContactInformation_submission.graphql"
 import {
   contactInformationValidationSchema,
   validate,
@@ -25,7 +25,7 @@ import createLogger from "v2/Utils/logger"
 const logger = createLogger("SubmissionFlow/ContactInformation.tsx")
 
 const getContactInformationFormInitialValues = (
-  me: ContactInformation_me
+  me: ContactInformation_me$data
 ): ContactInformationFormModel => ({
   name: me?.name || "",
   email: me?.email || "",
@@ -38,8 +38,8 @@ const getContactInformationFormInitialValues = (
 })
 
 export interface ContactInformationProps {
-  me: ContactInformation_me
-  submission: ContactInformation_submission
+  me: ContactInformation_me$data
+  submission: ContactInformation_submission$data
 }
 
 export const ContactInformation: React.FC<ContactInformationProps> = ({

@@ -8,7 +8,7 @@ import {
   Spacer,
   TextAreaChange,
 } from "@artsy/palette"
-import { Respond_order } from "v2/__generated__/Respond_order.graphql"
+import { Respond_order$data } from "v2/__generated__/Respond_order.graphql"
 import { RespondCounterOfferMutation } from "v2/__generated__/RespondCounterOfferMutation.graphql"
 import { OfferInput } from "v2/Apps/Order/Components/OfferInput"
 import { OfferNote } from "v2/Apps/Order/Components/OfferNote"
@@ -41,7 +41,7 @@ import { ContextModule, OwnerType } from "@artsy/cohesion"
 import { isNil } from "lodash"
 
 export interface RespondProps extends RouterState {
-  order: Respond_order
+  order: Respond_order$data
   relay?: RelayProp
   dialog: Dialog
   commitMutation: CommitMutation

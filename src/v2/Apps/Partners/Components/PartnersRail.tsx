@@ -7,13 +7,13 @@ import {
   PartnerCellPlaceholder,
 } from "v2/Components/Cells/PartnerCell"
 import { Rail } from "v2/Components/Rail"
-import { PartnersRail_partnerCategory } from "v2/__generated__/PartnersRail_partnerCategory.graphql"
+import { PartnersRail_partnerCategory$data } from "v2/__generated__/PartnersRail_partnerCategory.graphql"
 import { PartnersRailQuery } from "v2/__generated__/PartnersRailQuery.graphql"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import { Skeleton } from "@artsy/palette"
 
 interface PartnersRailProps {
-  partnerCategory: PartnersRail_partnerCategory
+  partnerCategory: PartnersRail_partnerCategory$data
 }
 
 const PartnersRail: React.FC<PartnersRailProps> = ({ partnerCategory }) => {

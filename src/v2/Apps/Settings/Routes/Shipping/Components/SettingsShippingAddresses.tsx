@@ -2,13 +2,13 @@ import { Button, Column, GridColumns, Message, Text } from "@artsy/palette"
 import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { extractNodes } from "v2/Utils/extractNodes"
-import { SettingsShippingAddresses_me } from "v2/__generated__/SettingsShippingAddresses_me.graphql"
+import { SettingsShippingAddresses_me$data } from "v2/__generated__/SettingsShippingAddresses_me.graphql"
 import { SettingsShippingAddressForm } from "./SettingsShippingAddressForm"
 import { SettingsShippingAddressFragmentContainer } from "./SettingsShippingAddress"
 import { useMode } from "v2/Utils/Hooks/useMode"
 
 interface SettingsShippingAddressesProps {
-  me: SettingsShippingAddresses_me
+  me: SettingsShippingAddresses_me$data
 }
 
 type Mode = "Pending" | "Adding"

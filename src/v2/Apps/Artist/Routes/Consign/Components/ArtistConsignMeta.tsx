@@ -3,11 +3,11 @@ import { Meta, Title } from "react-head"
 import { createFragmentContainer, graphql } from "react-relay"
 import { getENV } from "v2/Utils/getENV"
 
-import { ArtistConsignMeta_artist } from "v2/__generated__/ArtistConsignMeta_artist.graphql"
+import { ArtistConsignMeta_artist$data } from "v2/__generated__/ArtistConsignMeta_artist.graphql"
 import { get } from "v2/Utils/get"
 
 interface ArtistConsignMetaProps {
-  artist: ArtistConsignMeta_artist
+  artist: ArtistConsignMeta_artist$data
 }
 
 export const ArtistConsignMeta: React.FC<ArtistConsignMetaProps> = props => {

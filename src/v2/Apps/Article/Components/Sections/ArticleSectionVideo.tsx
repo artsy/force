@@ -1,5 +1,5 @@
 import { FC } from "react"
-import { ArticleSectionVideo_section } from "v2/__generated__/ArticleSectionVideo_section.graphql"
+import { ArticleSectionVideo_section$data } from "v2/__generated__/ArticleSectionVideo_section.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Clickable, Image, ResponsiveBox } from "@artsy/palette"
 import styled from "styled-components"
@@ -7,7 +7,7 @@ import { useMode } from "v2/Utils/Hooks/useMode"
 import { themeGet } from "@styled-system/theme-get"
 
 interface ArticleSectionVideoProps {
-  section: ArticleSectionVideo_section
+  section: ArticleSectionVideo_section$data
 }
 
 const ArticleSectionVideo: FC<ArticleSectionVideoProps> = ({ section }) => {

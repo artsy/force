@@ -2,7 +2,7 @@ import { FullBleed, Join, Separator, Spacer } from "@artsy/palette"
 import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { MetaTags } from "v2/Components/MetaTags"
-import { ArticleApp_article } from "v2/__generated__/ArticleApp_article.graphql"
+import { ArticleApp_article$data } from "v2/__generated__/ArticleApp_article.graphql"
 import { ArticleBodyFragmentContainer } from "./Components/ArticleBody"
 import { ArticleChannelRelatedArticlesQueryRenderer } from "./Components/ArticleChannelRelatedArticles"
 import { ArticleSeriesFragmentContainer } from "./Components/ArticleSeries"
@@ -10,7 +10,7 @@ import { ArticleVerticalRelatedArticlesQueryRenderer } from "./Components/Articl
 import { ArticleVideoFragmentContainer } from "./Components/ArticleVideo"
 
 interface ArticleAppProps {
-  article: ArticleApp_article
+  article: ArticleApp_article$data
 }
 
 const ArticleApp: FC<ArticleAppProps> = ({ article }) => {

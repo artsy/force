@@ -17,8 +17,8 @@ import { dropWhile } from "lodash"
 import * as React from "react"
 import { RelayProp, createFragmentContainer, graphql } from "react-relay"
 
-import { BidForm_me } from "v2/__generated__/BidForm_me.graphql"
-import { BidForm_saleArtwork } from "v2/__generated__/BidForm_saleArtwork.graphql"
+import { BidForm_me$data } from "v2/__generated__/BidForm_me.graphql"
+import { BidForm_saleArtwork$data } from "v2/__generated__/BidForm_saleArtwork.graphql"
 import { CreditCardInstructions } from "v2/Apps/Auction/Components/CreditCardInstructions"
 import { PricingTransparencyQueryRenderer } from "v2/Apps/Auction/Components/PricingTransparency"
 import { CreditCardInput } from "v2/Apps/Order/Components/CreditCardInput"
@@ -51,11 +51,11 @@ const {
 interface Props {
   artworkSlug: string
   initialSelectedBid?: string
-  me: BidForm_me
+  me: BidForm_me$data
   onSubmit: (values: FormikValues, actions: FormikActions<object>) => void
   onMaxBidSelect?: (values: string) => void
   relay: RelayProp
-  saleArtwork: BidForm_saleArtwork
+  saleArtwork: BidForm_saleArtwork$data
   trackSubmissionErrors: TrackErrors
 }
 

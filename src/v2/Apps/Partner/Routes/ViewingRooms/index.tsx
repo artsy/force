@@ -1,12 +1,12 @@
-import * as React from "react";
+import * as React from "react"
 import compact from "lodash/compact"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ViewingRooms_partner } from "v2/__generated__/ViewingRooms_partner.graphql"
+import { ViewingRooms_partner$data } from "v2/__generated__/ViewingRooms_partner.graphql"
 import { ViewingRoomsFragmentContainer } from "../../Components/PartnerViewingRooms/ViewingRooms"
 import { ViewingRoomsPaginatedRenderer } from "../../Components/PartnerViewingRooms/ViewingRoomsPaginated"
 
 interface PartnerShowsProps {
-  partner: ViewingRooms_partner
+  partner: ViewingRooms_partner$data
 }
 
 export const ViewingRooms: React.FC<PartnerShowsProps> = ({ partner }) => {

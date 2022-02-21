@@ -1,5 +1,5 @@
 import { Box, Image, Text } from "@artsy/palette"
-import { ArtistSeriesItem_artistSeries } from "v2/__generated__/ArtistSeriesItem_artistSeries.graphql"
+import { ArtistSeriesItem_artistSeries$data } from "v2/__generated__/ArtistSeriesItem_artistSeries.graphql"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import {
@@ -16,7 +16,7 @@ import {
 import { RouterLink } from "v2/System/Router/RouterLink"
 
 interface ArtistSeriesItemProps extends AnalyticsContextProps {
-  artistSeries: ArtistSeriesItem_artistSeries
+  artistSeries: ArtistSeriesItem_artistSeries$data
   contextModule: ContextModule
   index: number
 }

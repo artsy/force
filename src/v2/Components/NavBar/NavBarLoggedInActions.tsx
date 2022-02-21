@@ -13,7 +13,7 @@ import { graphql } from "relay-runtime"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import {
   NavBarLoggedInActionsQuery,
-  NavBarLoggedInActionsQueryResponse,
+  NavBarLoggedInActionsQuery$data,
 } from "v2/__generated__/NavBarLoggedInActionsQuery.graphql"
 import { isServer } from "lib/isServer"
 import {
@@ -33,7 +33,7 @@ import { Z } from "v2/Apps/Components/constants"
 
 /** Displays action icons for logged in users such as inbox, profile, and notifications */
 export const NavBarLoggedInActions: React.FC<Partial<
-  NavBarLoggedInActionsQueryResponse
+  NavBarLoggedInActionsQuery$data
 >> = ({ me }) => {
   const { trackEvent } = useTracking()
 

@@ -1,4 +1,4 @@
-import { ShippingTestQueryRawResponse } from "v2/__generated__/ShippingTestQuery.graphql"
+import { ShippingTestQuery$rawResponse } from "v2/__generated__/ShippingTestQuery.graphql"
 import { cloneDeep } from "lodash"
 
 import {
@@ -40,13 +40,13 @@ jest.mock("v2/Utils/Hooks/useMatchMedia", () => ({
   __internal__useMatchMedia: () => ({}),
 }))
 
-const testOrder: ShippingTestQueryRawResponse["order"] = {
+const testOrder: ShippingTestQuery$rawResponse["order"] = {
   ...UntouchedBuyOrder,
   internalID: "1234",
   id: "1234",
 }
 
-const ArtaEnabledTestOrder: ShippingTestQueryRawResponse["order"] = {
+const ArtaEnabledTestOrder: ShippingTestQuery$rawResponse["order"] = {
   ...UntouchedBuyOrderWithArtaEnabled,
   __typename: "CommerceBuyOrder",
   mode: "BUY",
@@ -61,7 +61,7 @@ const pageInfo = {
   hasPreviousPage: false,
 }
 
-const emptyTestMe: ShippingTestQueryRawResponse["me"] = {
+const emptyTestMe: ShippingTestQuery$rawResponse["me"] = {
   name: "Test Name",
   email: "test@gmail.com",
   id: "4321",
@@ -72,7 +72,7 @@ const emptyTestMe: ShippingTestQueryRawResponse["me"] = {
   },
 }
 
-const testMe: ShippingTestQueryRawResponse["me"] = {
+const testMe: ShippingTestQuery$rawResponse["me"] = {
   name: "Test Name",
   email: "test@gmail.com",
   id: "4321",

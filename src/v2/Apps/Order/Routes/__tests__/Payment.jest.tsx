@@ -1,5 +1,5 @@
 import { Checkbox } from "@artsy/palette"
-import { PaymentTestQueryRawResponse } from "v2/__generated__/PaymentTestQuery.graphql"
+import { PaymentTestQuery$rawResponse } from "v2/__generated__/PaymentTestQuery.graphql"
 
 import {
   BuyOrderWithShippingDetails,
@@ -31,7 +31,7 @@ jest.mock(
   }
 )
 
-const testOrder: PaymentTestQueryRawResponse["order"] = {
+const testOrder: PaymentTestQuery$rawResponse["order"] = {
   ...BuyOrderWithShippingDetails,
   internalID: "1234",
 }

@@ -2,11 +2,11 @@ import { EntityHeader, Join, Spacer } from "@artsy/palette"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ContextModule } from "@artsy/cohesion"
-import { ArtworkSidebarArtists_artwork } from "v2/__generated__/ArtworkSidebarArtists_artwork.graphql"
+import { ArtworkSidebarArtists_artwork$data } from "v2/__generated__/ArtworkSidebarArtists_artwork.graphql"
 import { FollowArtistButtonFragmentContainer } from "v2/Components/FollowButton/FollowArtistButton"
 
 export interface ArtistsProps {
-  artwork: ArtworkSidebarArtists_artwork
+  artwork: ArtworkSidebarArtists_artwork$data
 }
 
 export const ArtworkSidebarArtists: React.FC<ArtistsProps> = ({

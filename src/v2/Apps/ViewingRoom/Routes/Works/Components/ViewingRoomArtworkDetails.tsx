@@ -1,12 +1,12 @@
-import * as React from "react";
+import * as React from "react"
 import { Button, GridColumns, Column, Text } from "@artsy/palette"
-import { ViewingRoomArtworkDetails_artwork } from "v2/__generated__/ViewingRoomArtworkDetails_artwork.graphql"
+import { ViewingRoomArtworkDetails_artwork$data } from "v2/__generated__/ViewingRoomArtworkDetails_artwork.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { AnalyticsSchema, useTracking } from "v2/System"
 
 interface ViewingRoomArtworkDetailsProps {
-  artwork: ViewingRoomArtworkDetails_artwork
+  artwork: ViewingRoomArtworkDetails_artwork$data
 }
 
 export const ViewingRoomArtworkDetails: React.FC<ViewingRoomArtworkDetailsProps> = ({

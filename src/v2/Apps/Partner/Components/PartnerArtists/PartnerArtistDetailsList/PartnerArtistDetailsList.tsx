@@ -7,14 +7,14 @@ import {
   graphql,
   RelayPaginationProp,
 } from "react-relay"
-import { PartnerArtistDetailsList_partner } from "v2/__generated__/PartnerArtistDetailsList_partner.graphql"
+import { PartnerArtistDetailsList_partner$data } from "v2/__generated__/PartnerArtistDetailsList_partner.graphql"
 import { PartnerArtistDetailsListQuery } from "v2/__generated__/PartnerArtistDetailsListQuery.graphql"
 import { PartnerArtistDetailsListPlaceholder } from "./PartnerArtistDetailsListPlaceholder"
 import { PartnerArtistDetailsFragmentContainer } from "../PartnerArtistDetails"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 
 export interface PartnerArtistDetailsListProps {
-  partner: PartnerArtistDetailsList_partner
+  partner: PartnerArtistDetailsList_partner$data
   relay: RelayPaginationProp
 }
 

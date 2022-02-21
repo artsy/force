@@ -1,13 +1,13 @@
 import { FC } from "react"
 import { Select, Text, useToasts } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
-import { SettingsEditSettingsEmailPreferences_me } from "v2/__generated__/SettingsEditSettingsEmailPreferences_me.graphql"
+import { SettingsEditSettingsEmailPreferences_me$data } from "v2/__generated__/SettingsEditSettingsEmailPreferences_me.graphql"
 import { useUpdateSettingsEmailPreferences } from "./useUpdateSettingsEmailPreferences"
 
 const DEFAULT_FREQUENCY = "weekly"
 
 interface SettingEditSettingsEmailPreferencesProps {
-  me: SettingsEditSettingsEmailPreferences_me
+  me: SettingsEditSettingsEmailPreferences_me$data
 }
 
 export const SettingsEditSettingsEmailPreferences: FC<SettingEditSettingsEmailPreferencesProps> = ({

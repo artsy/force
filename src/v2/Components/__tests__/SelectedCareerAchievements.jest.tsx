@@ -1,5 +1,5 @@
 import { Sans } from "@artsy/palette"
-import { SelectedCareerAchievementsTestQueryRawResponse } from "v2/__generated__/SelectedCareerAchievementsTestQuery.graphql"
+import { SelectedCareerAchievementsTestQuery$rawResponse } from "v2/__generated__/SelectedCareerAchievementsTestQuery.graphql"
 import { renderRelayTree } from "v2/DevTools"
 import { ReactWrapper } from "enzyme"
 import { graphql } from "react-relay"
@@ -12,7 +12,7 @@ describe("SelectedCareerAchievements", () => {
   let wrapper: ReactWrapper
 
   const getWrapper = async (
-    artistData: SelectedCareerAchievementsTestQueryRawResponse["artist"],
+    artistData: SelectedCareerAchievementsTestQuery$rawResponse["artist"],
     breakpoint: Breakpoint = "xl"
   ) => {
     return await renderRelayTree({
@@ -28,7 +28,7 @@ describe("SelectedCareerAchievements", () => {
       `,
       mockData: {
         artist: artistData,
-      } as SelectedCareerAchievementsTestQueryRawResponse,
+      } as SelectedCareerAchievementsTestQuery$rawResponse,
     })
   }
 
@@ -125,7 +125,7 @@ describe("SelectedCareerAchievements", () => {
   })
 })
 
-const artistResponse: SelectedCareerAchievementsTestQueryRawResponse["artist"] = {
+const artistResponse: SelectedCareerAchievementsTestQuery$rawResponse["artist"] = {
   id: "opaque-artist-id",
   slug: "foo",
   insights: [

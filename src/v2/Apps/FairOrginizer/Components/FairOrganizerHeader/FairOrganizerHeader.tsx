@@ -1,18 +1,18 @@
-import * as React from "react";
+import * as React from "react"
 import { DateTime } from "luxon"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Box, Column, Flex, GridColumns, Spacer, Text } from "@artsy/palette"
 import { FairOrganizerHeaderIconFragmentContainer as FairOrganizerHeaderIcon } from "./FairOrganizerHeaderIcon"
 import { FairOrganizerFollowButtonFragmentContainer as FairOrganizerFollowButton } from "../../Components/FairOrganizerFollowButton"
 import { FairOrganizerInfoFragmentContainer as FairOrganizerInfo } from "./FairOrganizerInfo"
-import { FairOrganizerHeader_fairOrganizer } from "v2/__generated__/FairOrganizerHeader_fairOrganizer.graphql"
+import { FairOrganizerHeader_fairOrganizer$data } from "v2/__generated__/FairOrganizerHeader_fairOrganizer.graphql"
 import { extractNodes } from "v2/Utils/extractNodes"
 import { Timer } from "v2/Components/Timer"
 import { useCurrentTime } from "v2/Utils/Hooks/useCurrentTime"
 import { RouterLink } from "v2/System/Router/RouterLink"
 
 interface FairOrganizerHeaderProps {
-  fairOrganizer: FairOrganizerHeader_fairOrganizer
+  fairOrganizer: FairOrganizerHeader_fairOrganizer$data
 }
 
 export const FairOrganizerHeader: React.FC<FairOrganizerHeaderProps> = ({

@@ -2,11 +2,11 @@ import { Column, Separator } from "@artsy/palette"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { SectionContainer } from "./SectionContainer"
-import { UserBidHistory_me } from "v2/__generated__/UserBidHistory_me.graphql"
+import { UserBidHistory_me$data } from "v2/__generated__/UserBidHistory_me.graphql"
 import { SettingsAuctionsLotStandingFragmentContainer } from "./SettingsAuctionsLotStanding"
 
 interface UserBidHistoryProps {
-  me: UserBidHistory_me
+  me: UserBidHistory_me$data
 }
 
 export const UserBidHistory: React.FC<UserBidHistoryProps> = ({

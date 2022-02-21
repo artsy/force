@@ -5,10 +5,10 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { FollowProfileButtonFragmentContainer } from "v2/Components/FollowButton/FollowProfileButton"
 import { useSystemContext } from "v2/System"
 import { RouterLink } from "v2/System/Router/RouterLink"
-import { PartnersFeaturedCarouselCell_profile } from "v2/__generated__/PartnersFeaturedCarouselCell_profile.graphql"
+import { PartnersFeaturedCarouselCell_profile$data } from "v2/__generated__/PartnersFeaturedCarouselCell_profile.graphql"
 
 interface PartnersFeaturedCarouselCellProps {
-  profile: PartnersFeaturedCarouselCell_profile
+  profile: PartnersFeaturedCarouselCell_profile$data
 }
 
 const PartnersFeaturedCarouselCell: FC<PartnersFeaturedCarouselCellProps> = ({

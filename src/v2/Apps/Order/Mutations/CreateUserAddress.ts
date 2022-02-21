@@ -1,7 +1,7 @@
 import { graphql } from "react-relay"
 import {
   CreateUserAddressMutation,
-  CreateUserAddressMutationResponse,
+  CreateUserAddressMutation$data,
   UserAddressAttributes,
 } from "v2/__generated__/CreateUserAddressMutation.graphql"
 import {
@@ -9,14 +9,14 @@ import {
   ConnectionHandler,
   Environment,
 } from "relay-runtime"
-import { SavedAddresses_me } from "v2/__generated__/SavedAddresses_me.graphql"
-import { Shipping_me } from "v2/__generated__/Shipping_me.graphql"
+import { SavedAddresses_me$data } from "v2/__generated__/SavedAddresses_me.graphql"
+import { Shipping_me$data } from "v2/__generated__/Shipping_me.graphql"
 import { commitMutation } from "relay-runtime"
 
 const onAddressAdded = (
-  me: SavedAddresses_me | Shipping_me,
+  me: SavedAddresses_me$data | Shipping_me$data,
   store: RecordSourceSelectorProxy<any>,
-  data: CreateUserAddressMutationResponse
+  data: CreateUserAddressMutation$data
 ): void => {
   const response = data?.createUserAddress?.userAddressOrErrors
 
@@ -38,9 +38,9 @@ const onAddressAdded = (
 export const createUserAddress = async (
   environment: Environment,
   address: UserAddressAttributes,
-  onSuccess: (address: CreateUserAddressMutationResponse | null) => void,
+  onSuccess: (address: CreateUserAddressMutation$data | null) => void,
   onError: (message: string | null) => void,
-  me: SavedAddresses_me | Shipping_me,
+  me: SavedAddresses_me$data | Shipping_me$data,
   closeModal: () => void
 ) => {
   commitMutation<CreateUserAddressMutation>(environment, {
@@ -76,7 +76,7 @@ export const createUserAddress = async (
         }
       }
     `,
-    updater: (store, data: CreateUserAddressMutationResponse) => {
+    updater: (store, data: CreateUserAddressMutation$data) => {
       onAddressAdded(me, store, data)
     },
     onCompleted: (data, e) => {

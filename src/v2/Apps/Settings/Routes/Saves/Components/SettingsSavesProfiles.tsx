@@ -5,7 +5,7 @@ import {
   RelayPaginationProp,
 } from "react-relay"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
-import { SettingsSavesProfiles_me } from "v2/__generated__/SettingsSavesProfiles_me.graphql"
+import { SettingsSavesProfiles_me$data } from "v2/__generated__/SettingsSavesProfiles_me.graphql"
 import { SettingsSavesProfilesQuery } from "v2/__generated__/SettingsSavesProfilesQuery.graphql"
 import {
   Box,
@@ -24,7 +24,7 @@ import { FairEntityHeaderFragmentContainer } from "v2/Components/EntityHeaders/F
 import { PlaceholderEntityHeader } from "v2/Components/EntityHeaders/PlaceholderEntityHeader"
 
 interface SettingsSavesProfilesProps {
-  me: SettingsSavesProfiles_me
+  me: SettingsSavesProfiles_me$data
   relay: RelayPaginationProp
 }
 

@@ -1,12 +1,12 @@
 import { Column, GridColumns, Text } from "@artsy/palette"
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { TagApp_tag } from "v2/__generated__/TagApp_tag.graphql"
+import { TagApp_tag$data } from "v2/__generated__/TagApp_tag.graphql"
 import { TagMetaFragmentContainer } from "./Components/TagMeta"
 import { TagArtworkFilterRefetchContainer } from "./Components/TagArtworkFilter"
 
 interface TagAppProps {
-  tag: TagApp_tag
+  tag: TagApp_tag$data
 }
 
 const TagApp: React.FC<TagAppProps> = ({ tag }) => {

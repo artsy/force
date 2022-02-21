@@ -1,7 +1,7 @@
 import * as React from "react"
 import { createRefetchContainer, RelayRefetchProp } from "react-relay"
 import { graphql } from "relay-runtime"
-import { Works_partner } from "v2/__generated__/Works_partner.graphql"
+import { Works_partner$data } from "v2/__generated__/Works_partner.graphql"
 import {
   ArtworkFilterContextProvider,
   Counts,
@@ -12,7 +12,7 @@ import { updateUrl } from "v2/Components/ArtworkFilter/Utils/urlBuilder"
 import { Match, RouterState, withRouter } from "found"
 
 interface PartnerArtworkFilterProps {
-  partner: Works_partner
+  partner: Works_partner$data
   relay: RelayRefetchProp
   match?: Match
 }

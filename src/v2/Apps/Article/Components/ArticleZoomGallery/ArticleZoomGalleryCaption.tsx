@@ -2,10 +2,10 @@ import { HTML } from "@artsy/palette"
 import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import Metadata from "v2/Components/Artwork/Metadata"
-import { ArticleZoomGalleryCaption_figure } from "v2/__generated__/ArticleZoomGalleryCaption_figure.graphql"
+import { ArticleZoomGalleryCaption_figure$data } from "v2/__generated__/ArticleZoomGalleryCaption_figure.graphql"
 
 interface ArticleZoomGalleryCaptionProps {
-  figure: ArticleZoomGalleryCaption_figure
+  figure: ArticleZoomGalleryCaption_figure$data
 }
 
 const ArticleZoomGalleryCaption: FC<ArticleZoomGalleryCaptionProps> = ({

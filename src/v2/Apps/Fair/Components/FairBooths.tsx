@@ -5,7 +5,7 @@ import useDeepCompareEffect from "use-deep-compare-effect"
 import { Box, Flex, FullBleed, Spacer } from "@artsy/palette"
 import { isEqual } from "lodash"
 import { usePrevious } from "v2/Utils/Hooks/usePrevious"
-import { FairBooths_fair } from "v2/__generated__/FairBooths_fair.graphql"
+import { FairBooths_fair$data } from "v2/__generated__/FairBooths_fair.graphql"
 import { Media } from "v2/Utils/Responsive"
 import { Sticky } from "v2/Components/Sticky"
 import { LoadingArea } from "v2/Components/LoadingArea"
@@ -30,7 +30,7 @@ const logger = createLogger("FairBooths.tsx")
 const PAGE_SIZE = 15
 
 interface FairBoothsProps {
-  fair: FairBooths_fair
+  fair: FairBooths_fair$data
   relay: RelayRefetchProp
 }
 

@@ -1,8 +1,8 @@
 import { Box } from "@artsy/palette"
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 
-import { ArtistConsignRoute_artist } from "v2/__generated__/ArtistConsignRoute_artist.graphql"
+import { ArtistConsignRoute_artist$data } from "v2/__generated__/ArtistConsignRoute_artist.graphql"
 
 import { ArtistConsignFAQFragmentContainer as ArtistConsignFAQ } from "./Components/ArtistConsignFAQ"
 import { ArtistConsignHeaderFragmentContainer as ArtistConsignHeader } from "./Components/ArtistConsignHeader"
@@ -16,7 +16,7 @@ import { ArtistConsignSellArtFragmentContainer as ArtistConsignSellArt } from ".
 import { track } from "v2/System"
 
 export interface ConsignRouteProps {
-  artist: ArtistConsignRoute_artist
+  artist: ArtistConsignRoute_artist$data
 }
 
 const ArtistConsignRoute: React.FC<ConsignRouteProps> = ({ artist }) => {

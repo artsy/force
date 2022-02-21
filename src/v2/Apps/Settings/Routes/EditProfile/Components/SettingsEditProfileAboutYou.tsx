@@ -16,10 +16,10 @@ import {
   normalizePlace,
 } from "v2/Components/LocationAutocompleteInput"
 import { useUpdateMyUserProfile } from "v2/Utils/Hooks/Mutations/useUpdateMyUserProfile"
-import { SettingsEditProfileAboutYou_me } from "v2/__generated__/SettingsEditProfileAboutYou_me.graphql"
+import { SettingsEditProfileAboutYou_me$data } from "v2/__generated__/SettingsEditProfileAboutYou_me.graphql"
 
 interface SettingsEditProfileAboutYouProps {
-  me: SettingsEditProfileAboutYou_me
+  me: SettingsEditProfileAboutYou_me$data
 }
 
 const SettingsEditProfileAboutYou: FC<SettingsEditProfileAboutYouProps> = ({

@@ -1,4 +1,4 @@
-import { ArtistMeta_artist } from "v2/__generated__/ArtistMeta_artist.graphql"
+import { ArtistMeta_artist$data } from "v2/__generated__/ArtistMeta_artist.graphql"
 import {
   offersAttributes,
   productAttributes,
@@ -13,7 +13,7 @@ jest.mock("sharify", () => ({
 }))
 
 describe("Meta", () => {
-  const artist: ArtistMeta_artist = {
+  const artist: ArtistMeta_artist$data = {
     // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     " $fragmentRefs": null,
     " $refType": null,
@@ -85,7 +85,7 @@ describe("Meta", () => {
 
   const artistWithArtworkOverrides = (
     artwork: Partial<ArtworkMeta>
-  ): ArtistMeta_artist => {
+  ): ArtistMeta_artist$data => {
     return {
       ...artist,
       artworks_connection: {

@@ -1,4 +1,4 @@
-import { NewPaymentTestQueryRawResponse } from "v2/__generated__/NewPaymentTestQuery.graphql"
+import { NewPaymentTestQuery$rawResponse } from "v2/__generated__/NewPaymentTestQuery.graphql"
 import {
   OfferOrderWithShippingDetails,
   OfferWithTotals,
@@ -59,7 +59,7 @@ jest.mock("v2/Utils/getCurrentTimeAsIsoString")
 const NOW = "2018-12-05T13:47:16.446Z"
 require("v2/Utils/getCurrentTimeAsIsoString").__setCurrentTime(NOW)
 
-const testOrder: NewPaymentTestQueryRawResponse["order"] = {
+const testOrder: NewPaymentTestQuery$rawResponse["order"] = {
   ...OfferOrderWithShippingDetails,
   internalID: "1234",
   state: "SUBMITTED",

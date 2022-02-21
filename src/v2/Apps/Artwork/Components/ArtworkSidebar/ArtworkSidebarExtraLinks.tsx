@@ -3,13 +3,13 @@ import { track } from "v2/System/Analytics"
 import * as Schema from "v2/System/Analytics/Schema"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ArtworkSidebarExtraLinks_artwork } from "v2/__generated__/ArtworkSidebarExtraLinks_artwork.graphql"
+import { ArtworkSidebarExtraLinks_artwork$data } from "v2/__generated__/ArtworkSidebarExtraLinks_artwork.graphql"
 import { useInquiry, WithInquiryProps } from "v2/Components/Inquiry/useInquiry"
 import { useDialog } from "v2/Utils/Hooks/useDialog"
 import { AuctionFAQsDialogQueryRenderer } from "v2/Components/AuctionFAQsDialog"
 
 export interface ArtworkSidebarExtraLinksProps {
-  artwork: ArtworkSidebarExtraLinks_artwork
+  artwork: ArtworkSidebarExtraLinks_artwork$data
 }
 
 export interface ArtworkSidebarExtraLinksContainerProps

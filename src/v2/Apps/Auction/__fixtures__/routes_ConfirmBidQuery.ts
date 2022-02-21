@@ -1,6 +1,6 @@
-import { auctionRoutes_ConfirmBidQueryRawResponse } from "v2/__generated__/auctionRoutes_ConfirmBidQuery.graphql"
+import { auctionRoutes_ConfirmBidQuery$rawResponse } from "v2/__generated__/auctionRoutes_ConfirmBidQuery.graphql"
 
-export const ConfirmBidQueryResponseFixture: auctionRoutes_ConfirmBidQueryRawResponse = {
+export const ConfirmBidQueryResponseFixture: auctionRoutes_ConfirmBidQuery$rawResponse = {
   artwork: {
     artistNames: "artworkid",
     date: "may 4",

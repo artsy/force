@@ -1,5 +1,5 @@
 import { Spacer, Text } from "@artsy/palette"
-import { OfferSummaryItem_order } from "v2/__generated__/OfferSummaryItem_order.graphql"
+import { OfferSummaryItem_order$data } from "v2/__generated__/OfferSummaryItem_order.graphql"
 import {
   StepSummaryItem,
   StepSummaryItemProps,
@@ -12,7 +12,7 @@ const OfferSummaryItem = ({
   order,
   ...others
 }: {
-  order: OfferSummaryItem_order
+  order: OfferSummaryItem_order$data
 } & StepSummaryItemProps) => {
   const offerItem = getOfferItemFromOrder(order.lineItems)
   const offerNote = order.myLastOffer?.note

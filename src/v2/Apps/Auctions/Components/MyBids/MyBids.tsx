@@ -1,6 +1,6 @@
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { MyBids_me } from "v2/__generated__/MyBids_me.graphql"
+import { MyBids_me$data } from "v2/__generated__/MyBids_me.graphql"
 import { MyBidsBidHeaderFragmentContainer } from "./MyBidsBidHeader"
 import { MyBidsBidItemFragmentContainer } from "./MyBidsBidItem"
 import {
@@ -25,7 +25,7 @@ import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import { MyBidsQuery } from "v2/__generated__/MyBidsQuery.graphql"
 
 interface MyBidsProps {
-  me: MyBids_me
+  me: MyBids_me$data
 }
 
 const MyBids: React.FC<MyBidsProps> = props => {

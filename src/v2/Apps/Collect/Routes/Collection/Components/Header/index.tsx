@@ -9,20 +9,20 @@ import {
   Spacer,
   ReadMore,
 } from "@artsy/palette"
-import { Header_artworks } from "v2/__generated__/Header_artworks.graphql"
-import { Header_collection } from "v2/__generated__/Header_collection.graphql"
+import { Header_artworks$data } from "v2/__generated__/Header_artworks.graphql"
+import { Header_collection$data } from "v2/__generated__/Header_collection.graphql"
 import { CollectionDefaultHeaderFragmentContainer } from "v2/Apps/Collect/Routes/Collection/Components/Header/DefaultHeader"
 import { FollowArtistButtonFragmentContainer } from "v2/Components/FollowButton/FollowArtistButton"
 import { Link } from "found"
 import { compact, filter, take } from "lodash"
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FullBleedHeader } from "v2/Components/FullBleedHeader"
 import { slugify } from "underscore.string"
 
 export interface CollectionHeaderProps {
-  collection: Header_collection
-  artworks: Header_artworks
+  collection: Header_collection$data
+  artworks: Header_artworks$data
 }
 
 export const CollectionHeader: React.FC<CollectionHeaderProps> = ({
@@ -178,8 +178,8 @@ export const CollectionFilterFragmentContainer = createFragmentContainer(
 
 export const getFeaturedArtists = (
   artistsCount: number,
-  collection: Header_collection,
-  merchandisableArtists: Header_artworks["merchandisableArtists"]
+  collection: Header_collection$data,
+  merchandisableArtists: Header_artworks$data["merchandisableArtists"]
 ) => {
   if ((collection?.query?.artistIDs?.length ?? 0) > 0) {
     return compact(

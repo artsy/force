@@ -1,5 +1,5 @@
 import { Text } from "@artsy/palette"
-import { ShippingSummaryItem_order } from "v2/__generated__/ShippingSummaryItem_order.graphql"
+import { ShippingSummaryItem_order$data } from "v2/__generated__/ShippingSummaryItem_order.graphql"
 import {
   StepSummaryItem,
   StepSummaryItemProps,
@@ -19,7 +19,7 @@ const ShippingSummaryItem = ({
   textColor = "black100",
   ...others
 }: {
-  order: ShippingSummaryItem_order
+  order: ShippingSummaryItem_order$data
   textColor?: string
 } & StepSummaryItemProps) => {
   if (!requestedFulfillment) return null

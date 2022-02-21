@@ -18,8 +18,8 @@ import { RouterLink } from "v2/System/Router/RouterLink"
 import { ModalType } from "v2/Components/Authentication/Types"
 import { openAuthModal } from "v2/Utils/openAuthModal"
 import { Media } from "v2/Utils/Responsive"
-import { FairsIndex_featuredFairs } from "v2/__generated__/FairsIndex_featuredFairs.graphql"
-import { FairsIndex_viewer } from "v2/__generated__/FairsIndex_viewer.graphql"
+import { FairsIndex_featuredFairs$data } from "v2/__generated__/FairsIndex_featuredFairs.graphql"
+import { FairsIndex_viewer$data } from "v2/__generated__/FairsIndex_viewer.graphql"
 import { FairsFairBannerFragmentContainer } from "../Components/FairsFairBanner"
 import { FairsFairRowFragmentContainer } from "../Components/FairsFairRow"
 import { FairsPhonePromo } from "../Components/FairsPhonePromo"
@@ -32,8 +32,8 @@ import { compact } from "lodash"
 import { cropped } from "v2/Utils/resized"
 
 interface FairsIndexProps {
-  featuredFairs: FairsIndex_featuredFairs
-  viewer: FairsIndex_viewer
+  featuredFairs: FairsIndex_featuredFairs$data
+  viewer: FairsIndex_viewer$data
 }
 
 export const FairsIndex: React.FC<FairsIndexProps> = ({

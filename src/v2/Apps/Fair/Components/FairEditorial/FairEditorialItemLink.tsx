@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import {
@@ -9,10 +9,10 @@ import {
 } from "@artsy/cohesion"
 import { useAnalyticsContext } from "v2/System/Analytics/AnalyticsContext"
 import { RouterLink } from "v2/System/Router/RouterLink"
-import { FairEditorialItemLink_article } from "v2/__generated__/FairEditorialItemLink_article.graphql"
+import { FairEditorialItemLink_article$data } from "v2/__generated__/FairEditorialItemLink_article.graphql"
 
 export interface FairEditorialItemLinkProps {
-  article: FairEditorialItemLink_article
+  article: FairEditorialItemLink_article$data
 }
 
 const FairEditorialItemLink: React.FC<FairEditorialItemLinkProps> = ({

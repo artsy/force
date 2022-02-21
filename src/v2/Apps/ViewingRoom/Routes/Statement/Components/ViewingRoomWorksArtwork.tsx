@@ -1,16 +1,16 @@
 import { Image, ResponsiveBox, Text } from "@artsy/palette"
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer } from "react-relay"
 import { useTracking } from "v2/System/Analytics/useTracking"
 import { graphql } from "relay-runtime"
 import { AnalyticsSchema } from "v2/System"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { useScrollTo } from "v2/Utils/Hooks/useScrollTo"
-import { ViewingRoomWorksArtwork_artwork } from "v2/__generated__/ViewingRoomWorksArtwork_artwork.graphql"
+import { ViewingRoomWorksArtwork_artwork$data } from "v2/__generated__/ViewingRoomWorksArtwork_artwork.graphql"
 
 interface ViewingRoomWorksArtworkProps {
   to: string
-  artwork: ViewingRoomWorksArtwork_artwork
+  artwork: ViewingRoomWorksArtwork_artwork$data
 }
 
 const ViewingRoomWorksArtwork: React.FC<ViewingRoomWorksArtworkProps> = ({

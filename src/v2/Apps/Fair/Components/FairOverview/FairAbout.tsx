@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"
 import {
   Column,
   GridColumns,
@@ -9,10 +9,10 @@ import {
 } from "@artsy/palette"
 import { FairTimerFragmentContainer as FairTimer } from "./FairTimer"
 import { createFragmentContainer, graphql } from "react-relay"
-import { FairAbout_fair } from "v2/__generated__/FairAbout_fair.graphql"
+import { FairAbout_fair$data } from "v2/__generated__/FairAbout_fair.graphql"
 
 interface FairAboutProps {
-  fair: FairAbout_fair
+  fair: FairAbout_fair$data
 }
 
 const FairAbout: React.FC<FairAboutProps> = ({ fair }) => {

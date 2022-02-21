@@ -1,4 +1,4 @@
-import { FeaturedCollections_collections } from "v2/__generated__/FeaturedCollections_collections.graphql"
+import { FeaturedCollections_collections$data } from "v2/__generated__/FeaturedCollections_collections.graphql"
 import {
   FeaturedRail,
   FeaturedRailCarousel,
@@ -6,12 +6,12 @@ import {
 } from "v2/Apps/FeatureAKG/Components/FeaturedRails"
 import { AnalyticsSchema } from "v2/System"
 import { compact } from "lodash"
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer } from "react-relay"
 import { graphql } from "relay-runtime"
 
 interface FeaturedCollectionsRailProps {
-  collections: FeaturedCollections_collections
+  collections: FeaturedCollections_collections$data
   railMetadata: RailMetadata
 }
 

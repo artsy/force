@@ -1,6 +1,6 @@
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { FairCollection_collection } from "v2/__generated__/FairCollection_collection.graphql"
+import { FairCollection_collection$data } from "v2/__generated__/FairCollection_collection.graphql"
 import { TriptychCard } from "@artsy/palette"
 import { crop } from "v2/Utils/resizer"
 import { RouterLink } from "v2/System/Router/RouterLink"
@@ -25,7 +25,7 @@ const CARD_IMAGE_SIZES = [
 ]
 
 interface FairCollectionProps {
-  collection: FairCollection_collection
+  collection: FairCollection_collection$data
   carouselIndex: number // needed for analytics
 }
 

@@ -7,11 +7,11 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { AnalyticsSchema, Type, useSystemContext } from "v2/System"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
-import { ArtistIconicCollectionsRail_marketingCollections } from "v2/__generated__/ArtistIconicCollectionsRail_marketingCollections.graphql"
+import { ArtistIconicCollectionsRail_marketingCollections$data } from "v2/__generated__/ArtistIconicCollectionsRail_marketingCollections.graphql"
 import currency from "currency.js"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { ContextModule, OwnerType } from "@artsy/cohesion"
@@ -21,7 +21,7 @@ import { ArtistIconicCollectionsRailQuery } from "v2/__generated__/ArtistIconicC
 import { Rail } from "v2/Components/Rail"
 
 interface ArtistIconicCollectionsRailProps {
-  marketingCollections: ArtistIconicCollectionsRail_marketingCollections
+  marketingCollections: ArtistIconicCollectionsRail_marketingCollections$data
 }
 
 const ArtistIconicCollectionsRail: React.FC<ArtistIconicCollectionsRailProps> = ({

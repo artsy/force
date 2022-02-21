@@ -1,12 +1,12 @@
 import { Join, Spacer } from "@artsy/palette"
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtistCVGroupRefetchContainer } from "./Components/ArtistCVGroup"
-import { ArtistCVRoute_viewer } from "v2/__generated__/ArtistCVRoute_viewer.graphql"
+import { ArtistCVRoute_viewer$data } from "v2/__generated__/ArtistCVRoute_viewer.graphql"
 import { Title } from "react-head"
 
 interface ArtistCVRouteProps {
-  viewer: ArtistCVRoute_viewer
+  viewer: ArtistCVRoute_viewer$data
 }
 
 const ArtistCVRoute: React.FC<ArtistCVRouteProps> = ({ viewer }) => {

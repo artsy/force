@@ -1,6 +1,6 @@
 import { createFragmentContainer, graphql } from "react-relay"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
-import { PartnerArtistDetails_partnerArtist } from "v2/__generated__/PartnerArtistDetails_partnerArtist.graphql"
+import { PartnerArtistDetails_partnerArtist$data } from "v2/__generated__/PartnerArtistDetails_partnerArtist.graphql"
 import { PartnerArtistDetailsQuery } from "v2/__generated__/PartnerArtistDetailsQuery.graphql"
 import {
   Box,
@@ -18,7 +18,7 @@ import { PartnerArtistDetailsPlaceholder } from "./PartnerArtistDetailsPlacehold
 import { PartnerArtistArtworksRailPaginationContainer } from "./PartnerArtistArtworksRail"
 
 export interface PartnerArtistDetailsProps {
-  partnerArtist: PartnerArtistDetails_partnerArtist
+  partnerArtist: PartnerArtistDetails_partnerArtist$data
   partnerId: string
 }
 

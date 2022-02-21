@@ -1,10 +1,10 @@
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { FairOrganizerHeaderImage_fairOrganizer } from "v2/__generated__/FairOrganizerHeaderImage_fairOrganizer.graphql"
+import { FairOrganizerHeaderImage_fairOrganizer$data } from "v2/__generated__/FairOrganizerHeaderImage_fairOrganizer.graphql"
 import { FullBleedHeader } from "v2/Components/FullBleedHeader"
 
 interface FairOrganizerHeaderImageProps {
-  fairOrganizer: FairOrganizerHeaderImage_fairOrganizer
+  fairOrganizer: FairOrganizerHeaderImage_fairOrganizer$data
 }
 
 export const FairOrganizerHeaderImage: React.FC<FairOrganizerHeaderImageProps> = ({

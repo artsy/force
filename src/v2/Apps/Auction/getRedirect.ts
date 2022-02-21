@@ -1,5 +1,5 @@
-import { auctionRoutes_ConfirmBidQueryResponse } from "v2/__generated__/auctionRoutes_ConfirmBidQuery.graphql"
-import { auctionRoutes_RegisterQueryResponse } from "v2/__generated__/auctionRoutes_RegisterQuery.graphql"
+import { auctionRoutes_ConfirmBidQuery$data } from "v2/__generated__/auctionRoutes_ConfirmBidQuery.graphql"
+import { auctionRoutes_RegisterQuery$data } from "v2/__generated__/auctionRoutes_RegisterQuery.graphql"
 
 export interface Redirect {
   path: string
@@ -9,7 +9,7 @@ export interface Redirect {
 export function registerRedirect({
   me,
   sale,
-}: auctionRoutes_RegisterQueryResponse): Redirect | null {
+}: auctionRoutes_RegisterQuery$data): Redirect | null {
   // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
   if (me.hasQualifiedCreditCards) {
     return {
@@ -44,7 +44,7 @@ export function registerRedirect({
 }
 
 export function confirmBidRedirect(
-  data: auctionRoutes_ConfirmBidQueryResponse,
+  data: auctionRoutes_ConfirmBidQuery$data,
   location: Location
 ): Redirect | null {
   const { artwork, me } = data

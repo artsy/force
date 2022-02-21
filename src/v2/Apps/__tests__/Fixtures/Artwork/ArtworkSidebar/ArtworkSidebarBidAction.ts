@@ -1,6 +1,6 @@
-import { ArtworkSidebarBidAction_Test_QueryRawResponse } from "v2/__generated__/ArtworkSidebarBidAction_Test_Query.graphql"
+import { ArtworkSidebarBidAction_Test_Query$rawResponse } from "v2/__generated__/ArtworkSidebarBidAction_Test_Query.graphql"
 
-export const ArtworkFromAuctionPreview: ArtworkSidebarBidAction_Test_QueryRawResponse["artwork"] = {
+export const ArtworkFromAuctionPreview: ArtworkSidebarBidAction_Test_Query$rawResponse["artwork"] = {
   slug: "artwork_from_preview_auction",
   id: "sdfsdfsdf2",
   internalID: "sdf12345",
@@ -27,7 +27,7 @@ export const ArtworkFromAuctionPreview: ArtworkSidebarBidAction_Test_QueryRawRes
   myLotStanding: null,
 }
 
-export const ArtworkFromTimedAuctionRegistrationOpen: ArtworkSidebarBidAction_Test_QueryRawResponse["artwork"] = {
+export const ArtworkFromTimedAuctionRegistrationOpen: ArtworkSidebarBidAction_Test_Query$rawResponse["artwork"] = {
   slug: "artwork_from_open_non_live_auction",
   id: "sdfsdfsdf2",
   internalID: "sdf12345",
@@ -54,7 +54,7 @@ export const ArtworkFromTimedAuctionRegistrationOpen: ArtworkSidebarBidAction_Te
   myLotStanding: null,
 }
 
-export const ArtworkFromTimedAuctionRegistrationClosed: ArtworkSidebarBidAction_Test_QueryRawResponse["artwork"] = {
+export const ArtworkFromTimedAuctionRegistrationClosed: ArtworkSidebarBidAction_Test_Query$rawResponse["artwork"] = {
   slug: "artwork_from_registration_closed_timed_auction",
   id: "sdfsdfsdf2",
   internalID: "sdf12345",
@@ -83,34 +83,34 @@ export const ArtworkFromTimedAuctionRegistrationClosed: ArtworkSidebarBidAction_
 
 export const SaleRequiringIDV: Partial<
   // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-  ArtworkSidebarBidAction_Test_QueryRawResponse["artwork"]["sale"]
+  ArtworkSidebarBidAction_Test_Query$rawResponse["artwork"]["sale"]
 > = {
   requireIdentityVerification: true,
 }
 
-export const NotIDVedUser: ArtworkSidebarBidAction_Test_QueryRawResponse["me"] = {
+export const NotIDVedUser: ArtworkSidebarBidAction_Test_Query$rawResponse["me"] = {
   id: "user-id",
   identityVerified: false,
   // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
   pendingIdentityVerification: undefined,
 }
 
-export const UserPendingIDV: ArtworkSidebarBidAction_Test_QueryRawResponse["me"] = {
+export const UserPendingIDV: ArtworkSidebarBidAction_Test_Query$rawResponse["me"] = {
   id: "user-id",
   identityVerified: false,
   pendingIdentityVerification: { internalID: "idv-id", id: "idv-id" },
 }
 
-export const IDVedUser: ArtworkSidebarBidAction_Test_QueryRawResponse["me"] = {
+export const IDVedUser: ArtworkSidebarBidAction_Test_Query$rawResponse["me"] = {
   id: "user-id",
   identityVerified: true,
   // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
   pendingIdentityVerification: undefined,
 }
 
-export const NoUser: ArtworkSidebarBidAction_Test_QueryRawResponse["me"] = null
+export const NoUser: ArtworkSidebarBidAction_Test_Query$rawResponse["me"] = null
 
-export const ArtworkFromLiveAuctionRegistrationOpen: ArtworkSidebarBidAction_Test_QueryRawResponse["artwork"] = {
+export const ArtworkFromLiveAuctionRegistrationOpen: ArtworkSidebarBidAction_Test_Query$rawResponse["artwork"] = {
   slug: "artwork_from_open_live_auction_open_registration",
   id: "sdfsdfsdf2",
   internalID: "sdf12345",
@@ -137,7 +137,7 @@ export const ArtworkFromLiveAuctionRegistrationOpen: ArtworkSidebarBidAction_Tes
   myLotStanding: null,
 }
 
-export const ArtworkFromLiveAuctionRegistrationClosed: ArtworkSidebarBidAction_Test_QueryRawResponse["artwork"] = {
+export const ArtworkFromLiveAuctionRegistrationClosed: ArtworkSidebarBidAction_Test_Query$rawResponse["artwork"] = {
   slug: "artwork_from_open_live_auction_closed_registration",
   id: "sdfsdfsdf2",
   internalID: "sdf12345",
@@ -164,7 +164,7 @@ export const ArtworkFromLiveAuctionRegistrationClosed: ArtworkSidebarBidAction_T
   myLotStanding: null,
 }
 
-export const ArtworkFromClosedAuction: ArtworkSidebarBidAction_Test_QueryRawResponse["artwork"] = {
+export const ArtworkFromClosedAuction: ArtworkSidebarBidAction_Test_Query$rawResponse["artwork"] = {
   slug: "artwork_from_closed_auction",
   id: "sdfsdfsdf2",
   internalID: "sdf12345",

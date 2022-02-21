@@ -6,16 +6,16 @@ import {
   Link,
   Spacer,
 } from "@artsy/palette"
-import { AuthenticityCertificate_artwork } from "v2/__generated__/AuthenticityCertificate_artwork.graphql"
-import { useState } from "react";
-import * as React from "react";
+import { AuthenticityCertificate_artwork$data } from "v2/__generated__/AuthenticityCertificate_artwork.graphql"
+import { useState } from "react"
+import * as React from "react"
 import { createFragmentContainer } from "react-relay"
 import { graphql } from "react-relay"
 import { TrustSignal, TrustSignalProps } from "./TrustSignal"
 
 interface AuthenticityCertificateProps
   extends Omit<TrustSignalProps, "Icon" | "label" | "description"> {
-  artwork: AuthenticityCertificate_artwork
+  artwork: AuthenticityCertificate_artwork$data
 }
 
 export const AuthenticityCertificate: React.FC<AuthenticityCertificateProps> = ({

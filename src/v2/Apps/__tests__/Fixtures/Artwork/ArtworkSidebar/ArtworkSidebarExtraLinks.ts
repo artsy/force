@@ -1,6 +1,6 @@
-import { ArtworkSidebarExtraLinks_Test_QueryRawResponse } from "v2/__generated__/ArtworkSidebarExtraLinks_Test_Query.graphql"
+import { ArtworkSidebarExtraLinks_Test_Query$rawResponse } from "v2/__generated__/ArtworkSidebarExtraLinks_Test_Query.graphql"
 
-export const LiveAuctionArtwork: ArtworkSidebarExtraLinks_Test_QueryRawResponse["artwork"] = {
+export const LiveAuctionArtwork: ArtworkSidebarExtraLinks_Test_Query$rawResponse["artwork"] = {
   id: "QXJ0d29yazpqb3NlcC1tYXN0dXNldC1zZWxmLXBvcnRyYWl0",
   internalID: "abc12356",
   is_in_auction: true,
@@ -16,7 +16,7 @@ export const LiveAuctionArtwork: ArtworkSidebarExtraLinks_Test_QueryRawResponse[
   },
 }
 
-export const LiveAuctionArtworkWithoutPartner: ArtworkSidebarExtraLinks_Test_QueryRawResponse["artwork"] = {
+export const LiveAuctionArtworkWithoutPartner: ArtworkSidebarExtraLinks_Test_Query$rawResponse["artwork"] = {
   id: "QXJ0d29yazpqb3NlcC1tYXN0dXNldC1zZWxmLXBvcnRyYWl0",
   internalID: "abc12356",
   is_in_auction: true,
@@ -32,7 +32,7 @@ export const LiveAuctionArtworkWithoutPartner: ArtworkSidebarExtraLinks_Test_Que
   },
 }
 
-export const VanHamLiveAuctionArtwork: ArtworkSidebarExtraLinks_Test_QueryRawResponse["artwork"] = {
+export const VanHamLiveAuctionArtwork: ArtworkSidebarExtraLinks_Test_Query$rawResponse["artwork"] = {
   id: "QXJ0d29yazpqb3NlcC1tYXN0dXNldC1zZWxmLXBvcnRyYWl0",
   internalID: "abc12356",
   is_in_auction: true,
@@ -47,7 +47,7 @@ export const VanHamLiveAuctionArtwork: ArtworkSidebarExtraLinks_Test_QueryRawRes
     isBenefit: false,
   },
 }
-export const BenefitAuctionArtwork: ArtworkSidebarExtraLinks_Test_QueryRawResponse["artwork"] = {
+export const BenefitAuctionArtwork: ArtworkSidebarExtraLinks_Test_Query$rawResponse["artwork"] = {
   id: "QXJ0d29yazpqb3NlcC1tYXN0dXNldC1zZWxmLXBvcnRyYWl0",
   internalID: "abc12356",
   is_in_auction: true,
@@ -63,7 +63,7 @@ export const BenefitAuctionArtwork: ArtworkSidebarExtraLinks_Test_QueryRawRespon
   },
 }
 
-export const AcquireableArtworkWithOneConsignableArtist: ArtworkSidebarExtraLinks_Test_QueryRawResponse["artwork"] = {
+export const AcquireableArtworkWithOneConsignableArtist: ArtworkSidebarExtraLinks_Test_Query$rawResponse["artwork"] = {
   id: "QXJ0d29yazpwYWJsby1waWNhc3NvLW5hdHVyZS1tb3J0ZS1hdS1waWNoZXQtcm9zZQ==",
   internalID: "abc12356",
   is_in_auction: false,
@@ -74,7 +74,7 @@ export const AcquireableArtworkWithOneConsignableArtist: ArtworkSidebarExtraLink
   sale: null,
 }
 
-export const InquireableArtworkWithNoConsignableArtists: ArtworkSidebarExtraLinks_Test_QueryRawResponse["artwork"] = {
+export const InquireableArtworkWithNoConsignableArtists: ArtworkSidebarExtraLinks_Test_Query$rawResponse["artwork"] = {
   id:
     "QXJ0d29yazpuYWFtYS10c2FiYXItc3R1ZHktZm9yLWEtbWljcm9waG9uZS12YXJpYXRpb24tNQ==",
   internalID: "abc12356",
@@ -86,7 +86,7 @@ export const InquireableArtworkWithNoConsignableArtists: ArtworkSidebarExtraLink
   sale: null,
 }
 
-export const InquireableArtworkWithOneConsignableArtist: ArtworkSidebarExtraLinks_Test_QueryRawResponse["artwork"] = {
+export const InquireableArtworkWithOneConsignableArtist: ArtworkSidebarExtraLinks_Test_Query$rawResponse["artwork"] = {
   id:
     "QXJ0d29yazpyb2JlcnQtaW5kaWFuYS10aWx0LWZyb20tdGhlLW9yaWdpbmFsLTE5NzEtYW1lcmljYW4tZHJlYW0tcG9ydGZvbGlvLXNoZWVoYW4tNjM=",
   internalID: "abc12356",
@@ -98,7 +98,7 @@ export const InquireableArtworkWithOneConsignableArtist: ArtworkSidebarExtraLink
   sale: null,
 }
 
-export const InquireableArtworkWithMultipleConsignableArtists: ArtworkSidebarExtraLinks_Test_QueryRawResponse["artwork"] = {
+export const InquireableArtworkWithMultipleConsignableArtists: ArtworkSidebarExtraLinks_Test_Query$rawResponse["artwork"] = {
   id:
     "QXJ0d29yazplZC1ydXNjaGEtZnVuLXZhY2F0aW9uLXNpZ25lZC1ieS1ib3RoLXJ1c2NoYS1hbmQtc2NoYXJm",
   internalID: "abc12356",
@@ -113,7 +113,7 @@ export const InquireableArtworkWithMultipleConsignableArtists: ArtworkSidebarExt
   sale: null,
 }
 
-export const NotForSaleArtworkWithOneConsignableArtist: ArtworkSidebarExtraLinks_Test_QueryRawResponse["artwork"] = {
+export const NotForSaleArtworkWithOneConsignableArtist: ArtworkSidebarExtraLinks_Test_Query$rawResponse["artwork"] = {
   id: "QXJ0d29yazpzYXJhaC1sdWNhcy1idW5ueS1nZXRzLXNub29rZXJlZC1udW1iZXItOA==",
   internalID: "abc12356",
   is_in_auction: false,
@@ -129,7 +129,7 @@ export const NotForSaleArtworkWithOneConsignableArtist: ArtworkSidebarExtraLinks
   sale: null,
 }
 
-export const NotForSaleArtworkWithMultipleConsignableArtist: ArtworkSidebarExtraLinks_Test_QueryRawResponse["artwork"] = {
+export const NotForSaleArtworkWithMultipleConsignableArtist: ArtworkSidebarExtraLinks_Test_Query$rawResponse["artwork"] = {
   id:
     "QXJ0d29yazphbnRob255LWdyYXZlcy1sYS1kaXN0YW5jaWEtZW50cmUtcG9udHJlc2luYS15LXplcm1hdHQtZXMtbGEtbWlzbWEtcXVlLWxhLWRlLXplcm1hdHQtYS1wb250cmVzaW5hLXRoZS1kaXN0YW5jZS1mcm9tLXBvbnRyZXNpbmEtdG8temVybWF0dC1pcy10aGUtc2FtZS1hcy1mcm9tLXplcm1hdHQtdG8tcG9udHJlc2luYQ==",
   internalID: "abc12356",
@@ -150,7 +150,7 @@ export const NotForSaleArtworkWithMultipleConsignableArtist: ArtworkSidebarExtra
   sale: null,
 }
 
-export const NotForSaleArtworkWithNoConsignableArtists: ArtworkSidebarExtraLinks_Test_QueryRawResponse["artwork"] = {
+export const NotForSaleArtworkWithNoConsignableArtists: ArtworkSidebarExtraLinks_Test_Query$rawResponse["artwork"] = {
   id: "QXJ0d29yazpjaGVuZy1yYW4tZGlhcnktb2YtYS1tYWRtYW4tZGVhZC1ob3JzZS1iYXk=",
   internalID: "abc12356",
   is_in_auction: false,

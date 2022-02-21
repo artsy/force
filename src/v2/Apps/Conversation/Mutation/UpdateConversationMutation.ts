@@ -1,10 +1,10 @@
-import { Conversation_conversation } from "v2/__generated__/Conversation_conversation.graphql"
+import { Conversation_conversation$data } from "v2/__generated__/Conversation_conversation.graphql"
 import { UpdateConversationMutation } from "v2/__generated__/UpdateConversationMutation.graphql"
 import { Environment, commitMutation, graphql } from "relay-runtime"
 
 export const UpdateConversation = (
   environment: Environment,
-  conversation: Conversation_conversation
+  conversation: Conversation_conversation$data
 ) => {
   return commitMutation<UpdateConversationMutation>(environment, {
     variables: {

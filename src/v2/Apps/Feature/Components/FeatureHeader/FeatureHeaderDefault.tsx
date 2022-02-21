@@ -1,8 +1,8 @@
-import * as React from "react";
+import * as React from "react"
 import styled from "styled-components"
 import { Flex, HTML, Text, FullBleed } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
-import { FeatureHeaderDefault_feature } from "v2/__generated__/FeatureHeaderDefault_feature.graphql"
+import { FeatureHeaderDefault_feature$data } from "v2/__generated__/FeatureHeaderDefault_feature.graphql"
 import { useNavBarHeight } from "v2/Components/NavBar/useNavBarHeight"
 
 const Container = styled(Flex)`
@@ -36,7 +36,7 @@ const Image = styled.img`
 `
 
 export interface FeatureHeaderDefaultProps {
-  feature: FeatureHeaderDefault_feature
+  feature: FeatureHeaderDefault_feature$data
 }
 
 export const FeatureHeaderDefault: React.FC<FeatureHeaderDefaultProps> = ({

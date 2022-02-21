@@ -1,5 +1,5 @@
-import { useContext } from "react";
-import * as React from "react";
+import { useContext } from "react"
+import * as React from "react"
 import { graphql } from "relay-runtime"
 import { isServer } from "lib/isServer"
 import styled from "styled-components"
@@ -9,10 +9,10 @@ import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import { getConversationCount, updateConversationCache } from "../helpers"
 import { Text } from "@artsy/palette"
 import { createFragmentContainer } from "react-relay"
-import { NavBarMobileMenuInboxNotificationCount_me } from "v2/__generated__/NavBarMobileMenuInboxNotificationCount_me.graphql"
+import { NavBarMobileMenuInboxNotificationCount_me$data } from "v2/__generated__/NavBarMobileMenuInboxNotificationCount_me.graphql"
 
 interface NavBarMobileMenuInboxNotificationCountProps {
-  me?: NavBarMobileMenuInboxNotificationCount_me | null
+  me?: NavBarMobileMenuInboxNotificationCount_me$data | null
 }
 
 export const NavBarMobileMenuInboxNotificationCount: React.FC<NavBarMobileMenuInboxNotificationCountProps> = ({

@@ -1,11 +1,11 @@
-import { Contact_artwork } from "v2/__generated__/Contact_artwork.graphql"
+import { Contact_artwork$data } from "v2/__generated__/Contact_artwork.graphql"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { get } from "v2/Utils/get"
 import TextLink from "../TextLink"
 
 export interface ContactProps extends React.HTMLProps<Contact> {
-  artwork: Contact_artwork
+  artwork: Contact_artwork$data
 }
 
 export class Contact extends React.Component<ContactProps, null> {

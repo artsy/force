@@ -2,7 +2,6 @@ import { graphql } from "react-relay"
 
 import { createTestEnv } from "v2/DevTools/createTestEnv"
 
-import { RequestConditionReportQueryResponse } from "v2/__generated__/RequestConditionReportQuery.graphql"
 import { AnalyticsSchema as Schema } from "v2/System"
 import { RequestConditionReportFragmentContainer } from "../RequestConditionReport"
 import { RequestConditionReportTestPage } from "./Utils/RequestConditionReportTestPage"
@@ -18,10 +17,7 @@ const mockPostEvent = require("v2/Utils/Events").postEvent as jest.Mock
 const setupTestEnv = () => {
   return createTestEnv({
     TestPage: RequestConditionReportTestPage,
-    Component: (props: RequestConditionReportQueryResponse) => (
-      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-      <RequestConditionReportFragmentContainer {...props} />
-    ),
+    Component: props => <RequestConditionReportFragmentContainer {...props} />,
     query: graphql`
       query RequestConditionReportTestQuery
         @raw_response_type

@@ -10,11 +10,11 @@ import { AppSecondFactorRefetchContainer as AppSecondFactor } from "./Components
 import { BackupSecondFactorFragmentContainer as BackupSecondFactor } from "./Components/BackupSecondFactor"
 import { SmsSecondFactorRefetchContainer as SmsSecondFactor } from "./Components/SmsSecondFactor"
 
-import { TwoFactorAuthentication_me } from "v2/__generated__/TwoFactorAuthentication_me.graphql"
+import { TwoFactorAuthentication_me$data } from "v2/__generated__/TwoFactorAuthentication_me.graphql"
 import { TwoFactorAuthenticationQuery } from "v2/__generated__/TwoFactorAuthenticationQuery.graphql"
 
 export interface TwoFactorAuthenticationProps extends SystemContextProps {
-  me: TwoFactorAuthentication_me
+  me: TwoFactorAuthentication_me$data
   relay: RelayRefetchProp
 }
 

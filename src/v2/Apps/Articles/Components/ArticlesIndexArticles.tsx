@@ -6,11 +6,11 @@ import {
   RelayPaginationProp,
 } from "react-relay"
 import { extractNodes } from "v2/Utils/extractNodes"
-import { ArticlesIndexArticles_viewer } from "v2/__generated__/ArticlesIndexArticles_viewer.graphql"
+import { ArticlesIndexArticles_viewer$data } from "v2/__generated__/ArticlesIndexArticles_viewer.graphql"
 import { ArticlesIndexArticleFragmentContainer } from "./ArticlesIndexArticle"
 
 interface ArticlesIndexArticlesProps {
-  viewer: ArticlesIndexArticles_viewer
+  viewer: ArticlesIndexArticles_viewer$data
   relay: RelayPaginationProp
 }
 

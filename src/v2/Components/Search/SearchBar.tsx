@@ -1,7 +1,7 @@
 import { Component, useContext } from "react"
 import * as React from "react"
 import { Box, BoxProps } from "@artsy/palette"
-import { SearchBar_viewer } from "v2/__generated__/SearchBar_viewer.graphql"
+import { SearchBar_viewer$data } from "v2/__generated__/SearchBar_viewer.graphql"
 import { SearchBarSuggestQuery } from "v2/__generated__/SearchBarSuggestQuery.graphql"
 import { SystemContext, SystemContextProps, withSystemContext } from "v2/System"
 import { track } from "v2/System/Analytics"
@@ -34,7 +34,7 @@ const logger = createLogger("Components/Search/SearchBar")
 export interface Props extends SystemContextProps {
   relay: RelayRefetchProp
   router?: Router
-  viewer: SearchBar_viewer
+  viewer: SearchBar_viewer$data
 }
 
 interface State {

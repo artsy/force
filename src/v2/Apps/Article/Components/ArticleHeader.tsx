@@ -13,12 +13,12 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import { ArticleHeader_article } from "v2/__generated__/ArticleHeader_article.graphql"
+import { ArticleHeader_article$data } from "v2/__generated__/ArticleHeader_article.graphql"
 import { useNavBarHeight } from "v2/Components/NavBar/useNavBarHeight"
 import styled from "styled-components"
 
 interface ArticleHeaderProps {
-  article: ArticleHeader_article
+  article: ArticleHeader_article$data
 }
 
 const ArticleHeader: FC<ArticleHeaderProps> = ({ article }) => {

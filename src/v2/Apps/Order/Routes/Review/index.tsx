@@ -1,5 +1,5 @@
 import { Box, Button, Flex, Join, Message, Spacer, Text } from "@artsy/palette"
-import { Review_order } from "v2/__generated__/Review_order.graphql"
+import { Review_order$data } from "v2/__generated__/Review_order.graphql"
 import { ReviewSubmitOfferOrderMutation } from "v2/__generated__/ReviewSubmitOfferOrderMutation.graphql"
 import { ReviewSubmitOrderMutation } from "v2/__generated__/ReviewSubmitOrderMutation.graphql"
 import { ArtworkSummaryItemFragmentContainer as ArtworkSummaryItem } from "v2/Apps/Order/Components/ArtworkSummaryItem"
@@ -45,7 +45,7 @@ import {
 export interface ReviewProps extends SystemContextProps {
   stripe: Stripe
   elements: StripeElements
-  order: Review_order
+  order: Review_order$data
   relay?: RelayProp
   router: Router
   route: RouteConfig

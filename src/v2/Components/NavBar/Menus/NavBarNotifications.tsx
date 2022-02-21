@@ -1,7 +1,7 @@
 import { AnalyticsSchema } from "v2/System/Analytics"
 import { useTracking } from "v2/System/Analytics/useTracking"
-import { useContext } from "react";
-import * as React from "react";
+import { useContext } from "react"
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { SystemContext } from "v2/System"
 import { NavBarNotificationsQuery } from "v2/__generated__/NavBarNotificationsQuery.graphql"
@@ -18,7 +18,7 @@ import {
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import { NavBarMenuItemLink } from "./NavBarMenuItem"
 import { extractNodes } from "v2/Utils/extractNodes"
-import { NavBarNotifications_me } from "v2/__generated__/NavBarNotifications_me.graphql"
+import { NavBarNotifications_me$data } from "v2/__generated__/NavBarNotifications_me.graphql"
 
 interface NavBarNotificationsItemContentProps {
   image: JSX.Element
@@ -58,7 +58,7 @@ const NavBarNotificationsItemPlaceholder = () => {
 }
 
 interface NavBarNotificationsProps {
-  me: NavBarNotifications_me
+  me: NavBarNotifications_me$data
 }
 
 export const NavBarNotifications: React.FC<NavBarNotificationsProps> = ({

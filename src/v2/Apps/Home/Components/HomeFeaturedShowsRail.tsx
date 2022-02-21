@@ -12,19 +12,19 @@ import {
   SkeletonText,
 } from "@artsy/palette"
 import { compact, take } from "lodash"
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Rail } from "v2/Components/Rail"
 import { useSystemContext, useTracking } from "v2/System"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import { HomeFeaturedShowsRailQuery } from "v2/__generated__/HomeFeaturedShowsRailQuery.graphql"
-import { HomeFeaturedShowsRail_orderedSet } from "v2/__generated__/HomeFeaturedShowsRail_orderedSet.graphql"
+import { HomeFeaturedShowsRail_orderedSet$data } from "v2/__generated__/HomeFeaturedShowsRail_orderedSet.graphql"
 import { HomeFeaturedShowFragmentContainer } from "./HomeFeaturedShow"
 
 const SHOWS_LIMIT = 6
 
 interface HomeFeaturedShowsRailProps {
-  orderedSet: HomeFeaturedShowsRail_orderedSet
+  orderedSet: HomeFeaturedShowsRail_orderedSet$data
 }
 
 const HomeFeaturedShowsRail: React.FC<HomeFeaturedShowsRailProps> = ({

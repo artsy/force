@@ -1,4 +1,4 @@
-import { ShowArtworks_show } from "v2/__generated__/ShowArtworks_show.graphql"
+import { ShowArtworks_show$data } from "v2/__generated__/ShowArtworks_show.graphql"
 import { BaseArtworkFilter } from "v2/Components/ArtworkFilter"
 import {
   ArtworkFilterContextProvider,
@@ -6,14 +6,14 @@ import {
   SharedArtworkFilterContextProps,
 } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
 import { updateUrl } from "v2/Components/ArtworkFilter/Utils/urlBuilder"
-import * as React from "react";
+import * as React from "react"
 import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
 import { BoxProps } from "@artsy/palette"
 import { useRouter } from "v2/System/Router/useRouter"
 import { omit } from "lodash"
 
 interface ShowArtworksFilterProps extends BoxProps {
-  show: ShowArtworks_show
+  show: ShowArtworks_show$data
   relay: RelayRefetchProp
   aggregations: SharedArtworkFilterContextProps["aggregations"]
   counts?: Counts

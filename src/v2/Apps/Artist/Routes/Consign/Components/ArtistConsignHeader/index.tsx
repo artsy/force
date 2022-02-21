@@ -1,5 +1,5 @@
 import { Box, Button, Flex, Sans, Serif } from "@artsy/palette"
-import { ArtistConsignHeader_artist } from "v2/__generated__/ArtistConsignHeader_artist.graphql"
+import { ArtistConsignHeader_artist$data } from "v2/__generated__/ArtistConsignHeader_artist.graphql"
 import {
   LightPurpleColor,
   SectionContainer,
@@ -13,7 +13,7 @@ import { getConsignSubmissionUrl } from "../Utils/getConsignSubmissionUrl"
 import { ArtistConsignHeaderImagesFragmentContainer as ArtistConsignHeaderImages } from "./ArtistConsignHeaderImages"
 
 interface ArtistConsignHeaderProps {
-  artist: ArtistConsignHeader_artist
+  artist: ArtistConsignHeader_artist$data
 }
 
 export const ArtistConsignHeader: React.FC<ArtistConsignHeaderProps> = ({

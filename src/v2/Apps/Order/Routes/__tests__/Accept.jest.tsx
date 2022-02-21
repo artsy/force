@@ -1,4 +1,4 @@
-import { AcceptTestQueryRawResponse } from "v2/__generated__/AcceptTestQuery.graphql"
+import { AcceptTestQuery$rawResponse } from "v2/__generated__/AcceptTestQuery.graphql"
 import {
   Buyer,
   OfferOrderWithShippingDetails,
@@ -89,7 +89,7 @@ describe("Accept seller offer", () => {
           unix: 222,
         },
       },
-    } as AcceptTestQueryRawResponse,
+    } as AcceptTestQuery$rawResponse,
     defaultMutationResults: {
       ...acceptOfferSuccess,
       ...fixFailedPaymentSuccess,

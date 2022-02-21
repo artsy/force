@@ -1,10 +1,10 @@
 import { Text } from "@artsy/palette"
 import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { SettingsEditProfileYourGalleryIntro_me } from "v2/__generated__/SettingsEditProfileYourGalleryIntro_me.graphql"
+import { SettingsEditProfileYourGalleryIntro_me$data } from "v2/__generated__/SettingsEditProfileYourGalleryIntro_me.graphql"
 
 interface SettingsEditProfileYourGalleryIntroProps {
-  me: SettingsEditProfileYourGalleryIntro_me
+  me: SettingsEditProfileYourGalleryIntro_me$data
 }
 
 const SettingsEditProfileYourGalleryIntro: FC<SettingsEditProfileYourGalleryIntroProps> = ({

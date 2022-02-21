@@ -1,6 +1,6 @@
 import { Box, BoxProps, Input } from "@artsy/palette"
 import { useFormikContext } from "formik"
-import { ContactInformation_me } from "v2/__generated__/ContactInformation_me.graphql"
+import { ContactInformation_me$data } from "v2/__generated__/ContactInformation_me.graphql"
 import { getPhoneNumberInformation } from "../../Utils/phoneNumberUtils"
 import { useSystemContext } from "v2/System"
 import { PhoneNumber, PhoneNumberInput } from "./PhoneNumberInput"
@@ -12,7 +12,7 @@ export interface ContactInformationFormModel {
 }
 
 export interface ContactInformationFormProps extends BoxProps {
-  me: ContactInformation_me
+  me: ContactInformation_me$data
 }
 
 export const ContactInformationForm: React.FC<ContactInformationFormProps> = ({

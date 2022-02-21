@@ -157,6 +157,7 @@ describe("ArtworkSidebarMetadata", () => {
         is_biddable: false,
       }
 
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       wrapper = await getWrapper(closedAuctionArtwork)
       expect(wrapper?.html()).not.toContain("Lot 210")
     })

@@ -1,7 +1,7 @@
 import { MockBoot, renderRelayTree } from "v2/DevTools"
 import { ViewingRoomsAppFragmentContainer } from "../ViewingRoomsApp"
 import { graphql } from "react-relay"
-import { ViewingRoomsApp_Test_QueryRawResponse } from "v2/__generated__/ViewingRoomsApp_Test_Query.graphql"
+import { ViewingRoomsApp_Test_Query$rawResponse } from "v2/__generated__/ViewingRoomsApp_Test_Query.graphql"
 import { Breakpoint } from "@artsy/palette"
 
 jest.unmock("react-relay")
@@ -16,7 +16,7 @@ describe("ViewingRoomsApp", () => {
   describe("with viewing rooms", () => {
     const getWrapper = async (
       breakpoint: Breakpoint = "lg",
-      response: ViewingRoomsApp_Test_QueryRawResponse = ViewingRoomsAppFixture
+      response: ViewingRoomsApp_Test_Query$rawResponse = ViewingRoomsAppFixture
     ) => {
       return renderRelayTree({
         Component: ({ allViewingRooms, featuredViewingRooms }) => {
@@ -117,7 +117,7 @@ describe("ViewingRoomsApp", () => {
   })
 })
 
-const ViewingRoomsAppFixture: ViewingRoomsApp_Test_QueryRawResponse = {
+const ViewingRoomsAppFixture: ViewingRoomsApp_Test_Query$rawResponse = {
   allViewingRooms: {
     viewingRoomsConnection: {
       edges: [

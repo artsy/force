@@ -6,7 +6,7 @@ import {
   Text,
   TextAreaChange,
 } from "@artsy/palette"
-import { Offer_order } from "v2/__generated__/Offer_order.graphql"
+import { Offer_order$data } from "v2/__generated__/Offer_order.graphql"
 import { OfferMutation } from "v2/__generated__/OfferMutation.graphql"
 import { ArtworkSummaryItemFragmentContainer as ArtworkSummaryItem } from "v2/Apps/Order/Components/ArtworkSummaryItem"
 import { OfferInput } from "v2/Apps/Order/Components/OfferInput"
@@ -36,7 +36,7 @@ import { SystemContextProps, withSystemContext } from "v2/System"
 import { userHasLabFeature } from "v2/Utils/user"
 
 export interface OfferProps extends SystemContextProps {
-  order: Offer_order
+  order: Offer_order$data
   relay?: RelayProp
   router: Router
   dialog: Dialog

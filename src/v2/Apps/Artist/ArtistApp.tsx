@@ -2,7 +2,7 @@ import { Box, BoxProps, Spacer } from "@artsy/palette"
 import { Match } from "found"
 import { createFragmentContainer, graphql } from "react-relay"
 import { findCurrentRoute } from "v2/System/Router/Utils/findCurrentRoute"
-import { ArtistApp_artist } from "v2/__generated__/ArtistApp_artist.graphql"
+import { ArtistApp_artist$data } from "v2/__generated__/ArtistApp_artist.graphql"
 import {
   AnalyticsContext,
   useAnalyticsContext,
@@ -21,7 +21,7 @@ import { hasOverviewContent } from "./Routes/Overview/Utils/hasOverviewContent"
  */
 
 interface ArtistAppProps {
-  artist: ArtistApp_artist
+  artist: ArtistApp_artist$data
   match: Match
 }
 

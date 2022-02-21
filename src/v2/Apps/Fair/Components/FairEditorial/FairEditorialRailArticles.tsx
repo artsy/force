@@ -1,12 +1,12 @@
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { FairEditorialRailArticles_fair } from "v2/__generated__/FairEditorialRailArticles_fair.graphql"
+import { FairEditorialRailArticles_fair$data } from "v2/__generated__/FairEditorialRailArticles_fair.graphql"
 import { FairEditorialItemFragmentContainer as FairEditorialItem } from "./FairEditorialItem"
 import { Shelf } from "@artsy/palette"
 import { extractNodes } from "v2/Utils/extractNodes"
 
 export interface FairBoothRailArtworksProps {
-  fair: FairEditorialRailArticles_fair
+  fair: FairEditorialRailArticles_fair$data
 }
 
 const FairEditorialRailArticles: React.FC<FairBoothRailArtworksProps> = ({

@@ -1,5 +1,5 @@
 import { BorderedRadio } from "@artsy/palette"
-import { ShippingQuotes_Test_QueryResponse } from "v2/__generated__/ShippingQuotes_Test_Query.graphql"
+import { ShippingQuotes_Test_Query$data } from "v2/__generated__/ShippingQuotes_Test_Query.graphql"
 import { BuyOrderWithArtaShippingDetails } from "v2/Apps/__tests__/Fixtures/Order"
 import { renderRelayTree } from "v2/DevTools"
 import { graphql } from "react-relay"
@@ -14,9 +14,9 @@ jest.unmock("react-relay")
 
 const onSelect = jest.fn()
 
-const render = (extraOrderProps?: ShippingQuotes_Test_QueryResponse["order"]) =>
+const render = (extraOrderProps?: ShippingQuotes_Test_Query$data["order"]) =>
   renderRelayTree({
-    Component: (props: ShippingQuotes_Test_QueryResponse) => (
+    Component: (props: ShippingQuotes_Test_Query$data) => (
       <ShippingQuotesFragmentContainer
         shippingQuotes={compact(
           props.order?.lineItems?.edges?.[0]?.node?.shippingQuoteOptions?.edges

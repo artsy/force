@@ -1,7 +1,7 @@
 import * as React from "react"
 import { Box, BoxProps, Flex, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ArtistsRail_partner } from "v2/__generated__/ArtistsRail_partner.graphql"
+import { ArtistsRail_partner$data } from "v2/__generated__/ArtistsRail_partner.graphql"
 import {
   PartnerArtistsCarouselRenderer,
   PartnerArtistsRenderer,
@@ -9,7 +9,7 @@ import {
 import { ViewAllButton } from "./ViewAllButton"
 
 interface ArtistsRailProps extends BoxProps {
-  partner: ArtistsRail_partner
+  partner: ArtistsRail_partner$data
 }
 
 const ArtistsRail: React.FC<ArtistsRailProps> = ({ partner, ...rest }) => {

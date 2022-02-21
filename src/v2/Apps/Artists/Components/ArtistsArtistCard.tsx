@@ -3,11 +3,11 @@ import { Box, Flex, Image, ResponsiveBox, Text } from "@artsy/palette"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { ContextModule } from "@artsy/cohesion"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ArtistsArtistCard_artist } from "v2/__generated__/ArtistsArtistCard_artist.graphql"
+import { ArtistsArtistCard_artist$data } from "v2/__generated__/ArtistsArtistCard_artist.graphql"
 import { FollowArtistButtonFragmentContainer } from "v2/Components/FollowButton/FollowArtistButton"
 
 interface ArtistsArtistCardProps {
-  artist: ArtistsArtistCard_artist
+  artist: ArtistsArtistCard_artist$data
 }
 
 export const ArtistsArtistCard: React.FC<ArtistsArtistCardProps> = ({

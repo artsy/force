@@ -1,9 +1,9 @@
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { AuctionsRoute_viewer } from "v2/__generated__/AuctionsRoute_viewer.graphql"
+import { AuctionsRoute_viewer$data } from "v2/__generated__/AuctionsRoute_viewer.graphql"
 
 interface AuctionsRouteProps {
-  viewer: AuctionsRoute_viewer
+  viewer: AuctionsRoute_viewer$data
 }
 
 const AuctionsRoute: React.FC<AuctionsRouteProps> = () => {

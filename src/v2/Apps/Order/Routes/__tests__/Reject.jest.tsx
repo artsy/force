@@ -1,4 +1,4 @@
-import { RejectTestQueryRawResponse } from "v2/__generated__/RejectTestQuery.graphql"
+import { RejectTestQuery$rawResponse } from "v2/__generated__/RejectTestQuery.graphql"
 import { OfferOrderWithShippingDetails } from "v2/Apps/__tests__/Fixtures/Order"
 import { StepSummaryItem } from "v2/Components/StepSummaryItem"
 import { createTestEnv } from "v2/DevTools/createTestEnv"
@@ -18,7 +18,7 @@ require("v2/Utils/getCurrentTimeAsIsoString").__setCurrentTime(NOW)
 jest.unmock("react-relay")
 const realSetInterval = global.setInterval
 
-const testOrder: RejectTestQueryRawResponse["order"] = {
+const testOrder: RejectTestQuery$rawResponse["order"] = {
   ...OfferOrderWithShippingDetails,
   __isCommerceOrder: "CommerceOfferOrder",
   __typename: "CommerceOfferOrder",

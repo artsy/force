@@ -1,11 +1,11 @@
 import * as React from "react"
 
 import { BorderBox, Flex, Text, Image } from "@artsy/palette"
-import { ItemReview_lineItem } from "v2/__generated__/ItemReview_lineItem.graphql"
+import { ItemReview_lineItem$data } from "v2/__generated__/ItemReview_lineItem.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
 
 interface ItemReviewProps {
-  lineItem: ItemReview_lineItem
+  lineItem: ItemReview_lineItem$data
 }
 
 const dimensionsDisplay = dimensions => (

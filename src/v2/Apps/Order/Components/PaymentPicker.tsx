@@ -1,5 +1,5 @@
-import { PaymentPicker_me } from "v2/__generated__/PaymentPicker_me.graphql"
-import { PaymentPicker_order } from "v2/__generated__/PaymentPicker_order.graphql"
+import { PaymentPicker_me$data } from "v2/__generated__/PaymentPicker_me.graphql"
+import { PaymentPicker_order$data } from "v2/__generated__/PaymentPicker_order.graphql"
 import { PaymentPickerCreateCreditCardMutation } from "v2/__generated__/PaymentPickerCreateCreditCardMutation.graphql"
 import {
   Address,
@@ -49,8 +49,8 @@ export interface StripeProps {
 }
 
 export interface PaymentPickerProps {
-  order: PaymentPicker_order
-  me: PaymentPicker_me
+  order: PaymentPicker_order$data
+  me: PaymentPicker_me$data
   commitMutation: CommitMutation
   innerRef: React.RefObject<PaymentPicker>
 }

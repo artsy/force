@@ -14,12 +14,12 @@ import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useSystemContext } from "v2/System"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
-import { AuctionFAQsDialog_viewer } from "v2/__generated__/AuctionFAQsDialog_viewer.graphql"
+import { AuctionFAQsDialog_viewer$data } from "v2/__generated__/AuctionFAQsDialog_viewer.graphql"
 import { AuctionFAQsDialogQuery } from "v2/__generated__/AuctionFAQsDialogQuery.graphql"
 
 interface AuctionFAQsDialogProps {
   onClose(): void
-  viewer: AuctionFAQsDialog_viewer
+  viewer: AuctionFAQsDialog_viewer$data
 }
 
 const AuctionFAQsDialog: React.FC<AuctionFAQsDialogProps> = ({

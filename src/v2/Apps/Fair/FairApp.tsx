@@ -1,7 +1,7 @@
 import { useRef } from "react"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { FairApp_fair } from "v2/__generated__/FairApp_fair.graphql"
+import { FairApp_fair$data } from "v2/__generated__/FairApp_fair.graphql"
 import { DROP_SHADOW, FullBleed, Spacer, Text } from "@artsy/palette"
 import { RouteTab, RouteTabs } from "v2/Components/RouteTabs"
 import { FairMetaFragmentContainer } from "./Components/FairMeta"
@@ -30,7 +30,7 @@ import styled from "styled-components"
 import { ExhibitorsLetterNavFragmentContainer as ExhibitorsLetterNav } from "./Components/ExhibitorsLetterNav"
 
 interface FairAppProps {
-  fair: FairApp_fair
+  fair: FairApp_fair$data
 }
 
 const FairApp: React.FC<FairAppProps> = ({ children, fair }) => {

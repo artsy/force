@@ -1,4 +1,4 @@
-import { AuctionTimer_sale } from "v2/__generated__/AuctionTimer_sale.graphql"
+import { AuctionTimer_sale$data } from "v2/__generated__/AuctionTimer_sale.graphql"
 import { AuctionTimerQuery } from "v2/__generated__/AuctionTimerQuery.graphql"
 import { SystemContext } from "v2/System"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
@@ -8,7 +8,7 @@ import { Component, useContext } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 
 export interface Props {
-  sale: AuctionTimer_sale
+  sale: AuctionTimer_sale$data
 }
 
 export class AuctionTimer extends Component<Props> {

@@ -9,15 +9,15 @@ import {
   Tab,
   Tabs,
 } from "@artsy/palette"
-import { Component } from "react";
-import * as React from "react";
+import { Component } from "react"
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
 import { ArtworkDetailsAboutTheWorkFromArtsyFragmentContainer } from "./ArtworkDetailsAboutTheWorkFromArtsy"
 import { ArtworkDetailsAboutTheWorkFromPartnerFragmentContainer } from "./ArtworkDetailsAboutTheWorkFromPartner"
 import { ArtworkDetailsAdditionalInfoFragmentContainer } from "./ArtworkDetailsAdditionalInfo"
 import { ArtworkDetailsArticlesFragmentContainer } from "./ArtworkDetailsArticles"
-import { ArtworkDetails_artwork } from "v2/__generated__/ArtworkDetails_artwork.graphql"
+import { ArtworkDetails_artwork$data } from "v2/__generated__/ArtworkDetails_artwork.graphql"
 import { track } from "v2/System/Analytics"
 import * as Schema from "v2/System/Analytics/Schema"
 import Events from "v2/Utils/Events"
@@ -26,7 +26,7 @@ import { ArtworkDetailsQuery } from "v2/__generated__/ArtworkDetailsQuery.graphq
 import { useSystemContext } from "v2/System"
 
 export interface ArtworkDetailsProps {
-  artwork: ArtworkDetails_artwork
+  artwork: ArtworkDetails_artwork$data
 }
 
 @track(

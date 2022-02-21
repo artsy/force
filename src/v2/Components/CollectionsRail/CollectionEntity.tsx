@@ -1,5 +1,5 @@
 import { Box, Link, Sans, Serif, color } from "@artsy/palette"
-import { CollectionEntity_collection } from "v2/__generated__/CollectionEntity_collection.graphql"
+import { CollectionEntity_collection$data } from "v2/__generated__/CollectionEntity_collection.graphql"
 import { track } from "v2/System/Analytics"
 import * as Schema from "v2/System/Analytics/Schema"
 import currency from "currency.js"
@@ -10,7 +10,7 @@ import styled from "styled-components"
 import { resize } from "v2/Utils/resizer"
 
 export interface CollectionProps {
-  collection: CollectionEntity_collection
+  collection: CollectionEntity_collection$data
 }
 
 export const Background = styled(Box)<{ collectionImage: string }>`

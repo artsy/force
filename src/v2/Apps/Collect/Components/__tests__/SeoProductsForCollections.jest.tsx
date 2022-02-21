@@ -1,5 +1,5 @@
-import { SeoProductsForCollections_ascending_artworks } from "v2/__generated__/SeoProductsForCollections_ascending_artworks.graphql"
-import { SeoProductsForCollections_descending_artworks } from "v2/__generated__/SeoProductsForCollections_descending_artworks.graphql"
+import { SeoProductsForCollections_ascending_artworks$data } from "v2/__generated__/SeoProductsForCollections_ascending_artworks.graphql"
+import { SeoProductsForCollections_descending_artworks$data } from "v2/__generated__/SeoProductsForCollections_descending_artworks.graphql"
 import { mount } from "enzyme"
 import { HeadProvider } from "react-head"
 import { SeoProductsForCollections } from "../SeoProductsForCollections"
@@ -45,7 +45,7 @@ describe("Seo Products for Collection Page", () => {
 
   function buildDescendingArtworks(
     listPrice
-  ): SeoProductsForCollections_descending_artworks {
+  ): SeoProductsForCollections_descending_artworks$data {
     return {
       // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       " $refType": null,
@@ -63,7 +63,7 @@ describe("Seo Products for Collection Page", () => {
 
   function buildAscendingArtworks(
     listPrice
-  ): SeoProductsForCollections_ascending_artworks {
+  ): SeoProductsForCollections_ascending_artworks$data {
     return {
       // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       " $refType": null,

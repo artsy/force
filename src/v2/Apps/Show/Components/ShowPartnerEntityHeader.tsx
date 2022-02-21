@@ -6,10 +6,10 @@ import { useSystemContext } from "v2/System"
 import { filterLocations } from "v2/Apps/Artwork/Utils/filterLocations"
 import { limitWithCount } from "v2/Apps/Artwork/Utils/limitWithCount"
 import { FollowProfileButtonFragmentContainer as FollowProfileButton } from "v2/Components/FollowButton/FollowProfileButton"
-import { ShowPartnerEntityHeader_partner } from "v2/__generated__/ShowPartnerEntityHeader_partner.graphql"
+import { ShowPartnerEntityHeader_partner$data } from "v2/__generated__/ShowPartnerEntityHeader_partner.graphql"
 
 interface ShowPartnerEntityHeaderProps {
-  partner: ShowPartnerEntityHeader_partner
+  partner: ShowPartnerEntityHeader_partner$data
 }
 
 const ShowPartnerEntityHeader: React.FC<ShowPartnerEntityHeaderProps> = ({

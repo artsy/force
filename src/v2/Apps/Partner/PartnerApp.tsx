@@ -3,7 +3,7 @@ import { Separator, FullBleed, Marquee } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { NavigationTabsFragmentContainer as NavigationTabs } from "v2/Apps/Partner/Components/NavigationTabs"
 import { PartnerHeaderFragmentContainer as PartnerHeader } from "./Components/PartnerHeader"
-import { PartnerApp_partner } from "v2/__generated__/PartnerApp_partner.graphql"
+import { PartnerApp_partner$data } from "v2/__generated__/PartnerApp_partner.graphql"
 import { PartnerHeaderImageFragmentContainer as PartnerHeaderImage } from "./Components/PartnerHeader/PartnerHeaderImage"
 import { PartnerMetaFragmentContainer } from "./Components/PartnerMeta"
 import { StickyProvider } from "v2/Components/Sticky"
@@ -11,7 +11,7 @@ import { PartnerArtistsLoadingContextProvider } from "./Utils/PartnerArtistsLoad
 import { HttpError } from "found"
 
 export interface PartnerAppProps {
-  partner: PartnerApp_partner
+  partner: PartnerApp_partner$data
 }
 
 export const PartnerApp: React.FC<PartnerAppProps> = ({

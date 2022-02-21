@@ -1,8 +1,8 @@
-import { UpdateUserAddressMutationResponse } from "v2/__generated__/UpdateUserAddressMutation.graphql"
-import { CreateUserAddressMutationResponse } from "v2/__generated__/CreateUserAddressMutation.graphql"
-import { DeleteUserAddressMutationResponse } from "v2/__generated__/DeleteUserAddressMutation.graphql"
+import { UpdateUserAddressMutation$data } from "v2/__generated__/UpdateUserAddressMutation.graphql"
+import { CreateUserAddressMutation$data } from "v2/__generated__/CreateUserAddressMutation.graphql"
+import { DeleteUserAddressMutation$data } from "v2/__generated__/DeleteUserAddressMutation.graphql"
 
-export const saveAddressSuccess: CreateUserAddressMutationResponse = {
+export const saveAddressSuccess: CreateUserAddressMutation$data = {
   createUserAddress: {
     userAddressOrErrors: {
       internalID: "address-id",
@@ -21,7 +21,7 @@ export const saveAddressSuccess: CreateUserAddressMutationResponse = {
   },
 }
 
-export const updateAddressSuccess: UpdateUserAddressMutationResponse = {
+export const updateAddressSuccess: UpdateUserAddressMutation$data = {
   updateUserAddress: {
     userAddressOrErrors: {
       internalID: "address-id",
@@ -39,7 +39,7 @@ export const updateAddressSuccess: UpdateUserAddressMutationResponse = {
   },
 }
 
-export const deleteAddressSuccess: DeleteUserAddressMutationResponse = {
+export const deleteAddressSuccess: DeleteUserAddressMutation$data = {
   deleteUserAddress: {
     userAddressOrErrors: {
       internalID: "1",
@@ -57,7 +57,7 @@ export const deleteAddressSuccess: DeleteUserAddressMutationResponse = {
   },
 }
 
-export const updateAddressFailure: UpdateUserAddressMutationResponse = {
+export const updateAddressFailure: UpdateUserAddressMutation$data = {
   updateUserAddress: {
     userAddressOrErrors: {
       errors: [

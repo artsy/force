@@ -16,11 +16,11 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { ArticleShare } from "v2/Components/ArticleShare"
 import { TopContextBar } from "v2/Components/TopContextBar"
 import { RouterLink } from "v2/System/Router/RouterLink"
-import { ArticleSeries_article } from "v2/__generated__/ArticleSeries_article.graphql"
+import { ArticleSeries_article$data } from "v2/__generated__/ArticleSeries_article.graphql"
 import { ArticleSponsorFragmentContainer } from "./ArticleSponsor"
 
 interface ArticleSeriesProps {
-  article: ArticleSeries_article
+  article: ArticleSeries_article$data
 }
 
 const ArticleSeries: FC<ArticleSeriesProps> = ({ article }) => {

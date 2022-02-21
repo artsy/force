@@ -1,5 +1,5 @@
 import { Button, Flex, Spacer } from "@artsy/palette"
-import { Accept_order } from "v2/__generated__/Accept_order.graphql"
+import { Accept_order$data } from "v2/__generated__/Accept_order.graphql"
 import { TwoColumnLayout } from "v2/Apps/Order/Components/TwoColumnLayout"
 import { track } from "v2/System/Analytics"
 import { RouteConfig, Router } from "found"
@@ -33,7 +33,7 @@ import { createStripeWrapper } from "v2/Utils/createStripeWrapper"
 import { Stripe, StripeElements } from "@stripe/stripe-js"
 
 interface AcceptProps {
-  order: Accept_order
+  order: Accept_order$data
   relay?: RelayProp
   router: Router
   route: RouteConfig

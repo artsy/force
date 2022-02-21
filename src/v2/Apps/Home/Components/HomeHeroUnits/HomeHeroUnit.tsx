@@ -12,7 +12,7 @@ import {
 } from "@artsy/palette"
 import { Link } from "react-head"
 import { createFragmentContainer, graphql } from "react-relay"
-import { HomeHeroUnit_heroUnit } from "v2/__generated__/HomeHeroUnit_heroUnit.graphql"
+import { HomeHeroUnit_heroUnit$data } from "v2/__generated__/HomeHeroUnit_heroUnit.graphql"
 import { cropped } from "v2/Utils/resized"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { Media } from "v2/Utils/Responsive"
@@ -36,7 +36,7 @@ export interface StaticHeroUnit {
 }
 
 export interface HomeHeroUnitProps {
-  heroUnit: HomeHeroUnit_heroUnit | StaticHeroUnit
+  heroUnit: HomeHeroUnit_heroUnit$data | StaticHeroUnit
   layout: "a" | "b"
   index: number
 }

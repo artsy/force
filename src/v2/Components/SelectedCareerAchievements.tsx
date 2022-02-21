@@ -6,7 +6,7 @@ import {
   useThemeConfig,
   Text,
 } from "@artsy/palette"
-import { SelectedCareerAchievements_artist } from "v2/__generated__/SelectedCareerAchievements_artist.graphql"
+import { SelectedCareerAchievements_artist$data } from "v2/__generated__/SelectedCareerAchievements_artist.graphql"
 
 import { ArtistInsight } from "v2/Components/ArtistInsight"
 import { ArtistInsightsModal } from "v2/Components/ArtistInsightsModal"
@@ -18,7 +18,7 @@ import { ChevronButton } from "./ChevronButton"
 import { highestCategory, hasSections } from "./ArtistMarketInsights"
 
 export interface SelectedCareerAchievementsProps extends SpaceProps {
-  artist: SelectedCareerAchievements_artist
+  artist: SelectedCareerAchievements_artist$data
   themeVersion?: string
   onlyCareerHighlights?: boolean
 }

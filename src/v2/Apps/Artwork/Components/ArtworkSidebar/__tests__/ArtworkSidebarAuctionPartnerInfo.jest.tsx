@@ -55,7 +55,9 @@ describe("ArtworkSidebarAuctionPartnerInfo", () => {
     it("displays artwork without estimate", async () => {
       const wrapper = await getWrapper({
         ...ArtworkWithEstimateAndPremium,
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         sale_artwork: {
+          // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
           ...ArtworkWithEstimateAndPremium.sale_artwork,
           estimate: null,
         },
@@ -67,7 +69,9 @@ describe("ArtworkSidebarAuctionPartnerInfo", () => {
     it("does not display anything for closed auctions", async () => {
       const wrapper = await getWrapper({
         ...ArtworkWithEstimateAndPremium,
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         sale: {
+          // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
           ...ArtworkWithEstimateAndPremium.sale,
           is_closed: true,
         },

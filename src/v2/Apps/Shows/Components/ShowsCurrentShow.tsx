@@ -9,16 +9,16 @@ import {
   ResponsiveBox,
   Box,
 } from "@artsy/palette"
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import GridItem from "v2/Components/Artwork/GridItem"
 import { extractNodes } from "v2/Utils/extractNodes"
-import { ShowsCurrentShow_show } from "v2/__generated__/ShowsCurrentShow_show.graphql"
+import { ShowsCurrentShow_show$data } from "v2/__generated__/ShowsCurrentShow_show.graphql"
 import { Masonry } from "v2/Components/Masonry"
 import { RouterLink } from "v2/System/Router/RouterLink"
 
 interface ShowsCurrentShowProps {
-  show: ShowsCurrentShow_show
+  show: ShowsCurrentShow_show$data
 }
 
 const ShowsCurrentShow: React.FC<ShowsCurrentShowProps> = ({ show }) => {

@@ -1,11 +1,11 @@
 import { FC } from "react"
 import { ArticleHTML } from "../ArticleHTML"
-import { ArticleSectionText_section } from "v2/__generated__/ArticleSectionText_section.graphql"
+import { ArticleSectionText_section$data } from "v2/__generated__/ArticleSectionText_section.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
 
 interface ArticleSectionTextProps {
-  section: ArticleSectionText_section
+  section: ArticleSectionText_section$data
   isFirst: boolean
   isLast: boolean
 }

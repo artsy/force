@@ -1,6 +1,6 @@
 import { Clickable } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
-import styled, { css } from "styled-components"
+import styled, { css, StyledComponentClass } from "styled-components"
 import { RouterLink } from "v2/System/Router/RouterLink"
 
 const navBarMenuItemMixin = css`
@@ -16,7 +16,7 @@ const navBarMenuItemMixin = css`
 
 export const NavBarMenuItemLink = styled(RouterLink)`
   ${navBarMenuItemMixin}
-`
+` as StyledComponentClass<any, any>
 
 NavBarMenuItemLink.defaultProps = {
   py: 1,

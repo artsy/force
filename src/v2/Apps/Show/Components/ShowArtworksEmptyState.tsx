@@ -1,10 +1,10 @@
-import * as React from "react";
+import * as React from "react"
 import { Message } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ShowArtworksEmptyState_show } from "v2/__generated__/ShowArtworksEmptyState_show.graphql"
+import { ShowArtworksEmptyState_show$data } from "v2/__generated__/ShowArtworksEmptyState_show.graphql"
 
 interface ShowArtworksEmptyStateProps {
-  show: ShowArtworksEmptyState_show
+  show: ShowArtworksEmptyState_show$data
 }
 
 export const ShowArtworksEmptyState: React.FC<ShowArtworksEmptyStateProps> = ({

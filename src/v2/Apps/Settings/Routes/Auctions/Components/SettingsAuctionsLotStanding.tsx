@@ -13,10 +13,10 @@ import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { DetailsFragmentContainer } from "v2/Components/Artwork/Details"
-import { SettingsAuctionsLotStanding_lotStanding } from "v2/__generated__/SettingsAuctionsLotStanding_lotStanding.graphql"
+import { SettingsAuctionsLotStanding_lotStanding$data } from "v2/__generated__/SettingsAuctionsLotStanding_lotStanding.graphql"
 
 interface SettingsAuctionsLotStandingProps {
-  lotStanding: SettingsAuctionsLotStanding_lotStanding
+  lotStanding: SettingsAuctionsLotStanding_lotStanding$data
 }
 
 const SettingsAuctionsLotStanding: FC<SettingsAuctionsLotStandingProps> = ({

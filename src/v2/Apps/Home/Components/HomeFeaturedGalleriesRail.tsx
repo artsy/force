@@ -3,7 +3,7 @@ import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useSystemContext, useTracking } from "v2/System"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
-import { HomeFeaturedGalleriesRail_orderedSet } from "v2/__generated__/HomeFeaturedGalleriesRail_orderedSet.graphql"
+import { HomeFeaturedGalleriesRail_orderedSet$data } from "v2/__generated__/HomeFeaturedGalleriesRail_orderedSet.graphql"
 import { HomeFeaturedGalleriesRailQuery } from "v2/__generated__/HomeFeaturedGalleriesRailQuery.graphql"
 import { extractNodes } from "v2/Utils/extractNodes"
 import {
@@ -19,7 +19,7 @@ import {
 } from "v2/Components/Cells/PartnerCell"
 
 interface HomeFeaturedGalleriesRailProps {
-  orderedSet: HomeFeaturedGalleriesRail_orderedSet
+  orderedSet: HomeFeaturedGalleriesRail_orderedSet$data
 }
 
 const HomeFeaturedGalleriesRail: React.FC<HomeFeaturedGalleriesRailProps> = ({

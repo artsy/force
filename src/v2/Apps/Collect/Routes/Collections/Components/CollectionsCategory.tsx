@@ -10,12 +10,12 @@ import {
 } from "@artsy/palette"
 import { crop } from "v2/Utils/resizer"
 import { createFragmentContainer, graphql } from "react-relay"
-import { CollectionsCategory_category } from "v2/__generated__/CollectionsCategory_category.graphql"
+import { CollectionsCategory_category$data } from "v2/__generated__/CollectionsCategory_category.graphql"
 import { MOBILE_NAV_HEIGHT, DESKTOP_NAV_BAR_HEIGHT } from "v2/Components/NavBar"
 import { slugify } from "underscore.string"
 
 interface CollectionsCategoryProps {
-  category: CollectionsCategory_category
+  category: CollectionsCategory_category$data
 }
 
 export const CollectionsCategory: React.FC<CollectionsCategoryProps> = ({

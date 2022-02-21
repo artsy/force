@@ -7,9 +7,9 @@ import {
   StackableBorderBox,
   Text,
 } from "@artsy/palette"
-import { ArtworkDetailsAdditionalInfo_artwork } from "v2/__generated__/ArtworkDetailsAdditionalInfo_artwork.graphql"
-import { useState } from "react";
-import * as React from "react";
+import { ArtworkDetailsAdditionalInfo_artwork$data } from "v2/__generated__/ArtworkDetailsAdditionalInfo_artwork.graphql"
+import { useState } from "react"
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RequestConditionReportQueryRenderer } from "./RequestConditionReport"
 import { ArtworkDetailsMediumModalFragmentContainer } from "../ArtworkDetailsMediumModal"
@@ -22,7 +22,7 @@ import { ContextModule } from "@artsy/cohesion"
 import { ArtworkDefinitionList } from "../ArtworkDefinitionList"
 
 export interface ArtworkDetailsAdditionalInfoProps {
-  artwork: ArtworkDetailsAdditionalInfo_artwork
+  artwork: ArtworkDetailsAdditionalInfo_artwork$data
 }
 
 export const ArtworkDetailsAdditionalInfo: React.FC<ArtworkDetailsAdditionalInfoProps> = ({

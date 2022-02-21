@@ -1,7 +1,7 @@
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "v2/System/Router/RouterLink"
-import { ShelfArtwork_artwork } from "v2/__generated__/ShelfArtwork_artwork.graphql"
+import { ShelfArtwork_artwork$data } from "v2/__generated__/ShelfArtwork_artwork.graphql"
 import { SaveButtonFragmentContainer, useSaveButton } from "./SaveButton"
 import Metadata from "./Metadata"
 import { AuthContextModule } from "@artsy/cohesion"
@@ -18,7 +18,7 @@ export const IMG_HEIGHT = {
 }
 
 interface ShelfArtworkProps {
-  artwork: ShelfArtwork_artwork
+  artwork: ShelfArtwork_artwork$data
   contextModule: AuthContextModule
   hideArtistName?: boolean
   hidePartnerName?: boolean
@@ -90,7 +90,7 @@ const ShelfArtwork: React.FC<ShelfArtworkProps> = ({
 }
 
 const getHeight = (
-  artwork: ShelfArtwork_artwork,
+  artwork: ShelfArtwork_artwork$data,
   size: keyof typeof IMG_HEIGHT
 ) => {
   return (artwork.image?.resized?.height ?? 0) > IMG_HEIGHT[size]
@@ -98,7 +98,7 @@ const getHeight = (
     : artwork?.image?.resized?.height
 }
 
-const ResponsiveContainer: React.FC<{ artwork: ShelfArtwork_artwork }> = ({
+const ResponsiveContainer: React.FC<{ artwork: ShelfArtwork_artwork$data }> = ({
   artwork,
   children,
 }) => {

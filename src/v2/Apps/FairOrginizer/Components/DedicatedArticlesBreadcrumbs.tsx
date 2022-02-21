@@ -1,11 +1,11 @@
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Breadcrumbs, Text, Image, Flex, ArrowLeftIcon } from "@artsy/palette"
 import { RouterLink } from "v2/System/Router/RouterLink"
-import { DedicatedArticlesBreadcrumbs_fairOrganizer } from "v2/__generated__/DedicatedArticlesBreadcrumbs_fairOrganizer.graphql"
+import { DedicatedArticlesBreadcrumbs_fairOrganizer$data } from "v2/__generated__/DedicatedArticlesBreadcrumbs_fairOrganizer.graphql"
 
 interface DedicatedArticlesBreadcrumbsProps {
-  fairOrganizer: DedicatedArticlesBreadcrumbs_fairOrganizer
+  fairOrganizer: DedicatedArticlesBreadcrumbs_fairOrganizer$data
 }
 
 export const DedicatedArticlesBreadcrumbs: React.FC<DedicatedArticlesBreadcrumbsProps> = ({

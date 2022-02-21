@@ -3,17 +3,17 @@ import { graphql } from "react-relay"
 import { get } from "v2/Utils/get"
 import { RedirectPredicate, RedirectRecord } from "./getRedirect"
 
-import { redirects_order } from "v2/__generated__/redirects_order.graphql"
+import { redirects_order$data } from "v2/__generated__/redirects_order.graphql"
 import { extractNodes } from "v2/Utils/extractNodes"
 
 interface OrderQuery {
-  order: redirects_order
+  order: redirects_order$data
 }
 
 type OrderPredicate = RedirectPredicate<OrderQuery>
 
 const goToStatusIf = (
-  pred: (order: redirects_order) => boolean,
+  pred: (order: redirects_order$data) => boolean,
   reason
 ): OrderPredicate => ({ order }) => {
   if (pred(order)) {

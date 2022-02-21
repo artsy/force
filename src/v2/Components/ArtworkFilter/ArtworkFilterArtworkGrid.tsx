@@ -1,7 +1,7 @@
 import { Spacer, useThemeConfig } from "@artsy/palette"
 import * as React from "react"
 import { RelayProp, createFragmentContainer, graphql } from "react-relay"
-import { ArtworkFilterArtworkGrid_filtered_artworks } from "v2/__generated__/ArtworkFilterArtworkGrid_filtered_artworks.graphql"
+import { ArtworkFilterArtworkGrid_filtered_artworks$data } from "v2/__generated__/ArtworkFilterArtworkGrid_filtered_artworks.graphql"
 import { useSystemContext, useTracking } from "v2/System"
 import ArtworkGrid from "v2/Components/ArtworkGrid"
 import { PaginationFragmentContainer as Pagination } from "v2/Components/Pagination"
@@ -12,7 +12,7 @@ import { useAnalyticsContext } from "v2/System/Analytics/AnalyticsContext"
 
 interface ArtworkFilterArtworkGridProps {
   columnCount: number[]
-  filtered_artworks: ArtworkFilterArtworkGrid_filtered_artworks
+  filtered_artworks: ArtworkFilterArtworkGrid_filtered_artworks$data
   isLoading?: boolean
   offset?: number
   relay: RelayProp

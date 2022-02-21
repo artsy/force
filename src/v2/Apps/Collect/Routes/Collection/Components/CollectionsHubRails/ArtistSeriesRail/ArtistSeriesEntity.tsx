@@ -1,5 +1,5 @@
 import { Box, Flex, Text, Image } from "@artsy/palette"
-import { ArtistSeriesEntity_member } from "v2/__generated__/ArtistSeriesEntity_member.graphql"
+import { ArtistSeriesEntity_member$data } from "v2/__generated__/ArtistSeriesEntity_member.graphql"
 import { useTracking } from "v2/System/Analytics/useTracking"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import currency from "currency.js"
@@ -15,7 +15,7 @@ import { extractNodes } from "v2/Utils/extractNodes"
 import { cropped } from "v2/Utils/resized"
 
 export interface ArtistSeriesEntityProps {
-  member: ArtistSeriesEntity_member
+  member: ArtistSeriesEntity_member$data
   itemNumber: number
 }
 

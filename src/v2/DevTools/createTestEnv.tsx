@@ -37,9 +37,9 @@ class Mutations<MutationNames extends string> {
   }
 
   mockNetworkFailureOnce = () => {
-    this.mockFetch.mockImplementationOnce(() =>
-      Promise.reject(new Error("failed to fetch"))
-    )
+    this.mockFetch.mockImplementationOnce(() => ({
+      toPromise: () => Promise.reject(new Error("failed to fetch")),
+    }))
   }
 
   get lastFetchVariables() {

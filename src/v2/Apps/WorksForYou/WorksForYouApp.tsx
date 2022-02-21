@@ -1,9 +1,9 @@
 import { createFragmentContainer, graphql } from "react-relay"
 import { MetaTags } from "v2/Components/MetaTags"
-import { WorksForYouApp_viewerArtist } from "v2/__generated__/WorksForYouApp_viewerArtist.graphql"
-import { WorksForYouApp_viewerFeed } from "v2/__generated__/WorksForYouApp_viewerFeed.graphql"
-import { WorksForYouApp_viewerMe } from "v2/__generated__/WorksForYouApp_viewerMe.graphql"
-import { WorksForYouApp_viewerSidebarAggregations } from "v2/__generated__/WorksForYouApp_viewerSidebarAggregations.graphql"
+import { WorksForYouApp_viewerArtist$data } from "v2/__generated__/WorksForYouApp_viewerArtist.graphql"
+import { WorksForYouApp_viewerFeed$data } from "v2/__generated__/WorksForYouApp_viewerFeed.graphql"
+import { WorksForYouApp_viewerMe$data } from "v2/__generated__/WorksForYouApp_viewerMe.graphql"
+import { WorksForYouApp_viewerSidebarAggregations$data } from "v2/__generated__/WorksForYouApp_viewerSidebarAggregations.graphql"
 import { WorksForYouFeedPaginationContainer } from "./Components/WorksForYouFeed"
 import {
   Button,
@@ -21,10 +21,10 @@ import { extractNodes } from "v2/Utils/extractNodes"
 import { RouterLink } from "v2/System/Router/RouterLink"
 
 interface WorksForYouProps {
-  viewerArtist: WorksForYouApp_viewerArtist
-  viewerFeed: WorksForYouApp_viewerFeed
-  viewerMe: WorksForYouApp_viewerMe
-  viewerSidebarAggregations: WorksForYouApp_viewerSidebarAggregations
+  viewerArtist: WorksForYouApp_viewerArtist$data
+  viewerFeed: WorksForYouApp_viewerFeed$data
+  viewerMe: WorksForYouApp_viewerMe$data
+  viewerSidebarAggregations: WorksForYouApp_viewerSidebarAggregations$data
 }
 
 const WorksForYouApp: React.FC<WorksForYouProps> = ({

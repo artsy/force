@@ -17,7 +17,7 @@ import { themeGet } from "@styled-system/theme-get"
 
 import ArtworkDetails from "v2/Components/Artwork/Metadata"
 import { DetailsHeader } from "./DetailsHeader"
-import { DetailsSidebar_conversation } from "v2/__generated__/DetailsSidebar_conversation.graphql"
+import { DetailsSidebar_conversation$data } from "v2/__generated__/DetailsSidebar_conversation.graphql"
 import { extractNodes } from "v2/Utils/extractNodes"
 import { TransactionDetailsSummaryItemFragmentContainer } from "v2/Apps/Order/Components/TransactionDetailsSummaryItem"
 import { RouterLink } from "v2/System/Router/RouterLink"
@@ -74,7 +74,7 @@ const TruncatedLine = styled(Text)`
 `
 
 interface DetailsProps extends FlexProps {
-  conversation: DetailsSidebar_conversation
+  conversation: DetailsSidebar_conversation$data
   showDetails: boolean
   setShowDetails: (showDetails: boolean) => void
 }

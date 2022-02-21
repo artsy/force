@@ -5,11 +5,11 @@ import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useSystemContext } from "v2/System"
 import { extractNodes } from "v2/Utils/extractNodes"
-import { PartnerEntityHeader_partner } from "v2/__generated__/PartnerEntityHeader_partner.graphql"
+import { PartnerEntityHeader_partner$data } from "v2/__generated__/PartnerEntityHeader_partner.graphql"
 import { FollowProfileButtonFragmentContainer } from "../FollowButton/FollowProfileButton"
 
 interface PartnerEntityHeaderProps extends BoxProps {
-  partner: PartnerEntityHeader_partner
+  partner: PartnerEntityHeader_partner$data
 }
 
 const PartnerEntityHeader: FC<PartnerEntityHeaderProps> = ({

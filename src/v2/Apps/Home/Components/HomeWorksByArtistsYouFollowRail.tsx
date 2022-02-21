@@ -6,11 +6,11 @@ import {
   SkeletonBox,
   Spacer,
 } from "@artsy/palette"
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useSystemContext, useTracking } from "v2/System"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
-import { HomeWorksByArtistsYouFollowRail_homePage } from "v2/__generated__/HomeWorksByArtistsYouFollowRail_homePage.graphql"
+import { HomeWorksByArtistsYouFollowRail_homePage$data } from "v2/__generated__/HomeWorksByArtistsYouFollowRail_homePage.graphql"
 import { HomeWorksByArtistsYouFollowRailQuery } from "v2/__generated__/HomeWorksByArtistsYouFollowRailQuery.graphql"
 import { ShelfArtworkFragmentContainer } from "v2/Components/Artwork/ShelfArtwork"
 import {
@@ -21,7 +21,7 @@ import {
 } from "@artsy/cohesion"
 
 interface HomeWorksByArtistsYouFollowRailProps {
-  homePage: HomeWorksByArtistsYouFollowRail_homePage
+  homePage: HomeWorksByArtistsYouFollowRail_homePage$data
 }
 
 const HomeWorksByArtistsYouFollowRail: React.FC<HomeWorksByArtistsYouFollowRailProps> = ({

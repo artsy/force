@@ -10,8 +10,8 @@ import {
   Join,
   Spacer,
 } from "@artsy/palette"
-import { ArtistsIndex_featuredArtists } from "v2/__generated__/ArtistsIndex_featuredArtists.graphql"
-import { ArtistsIndex_featuredGenes } from "v2/__generated__/ArtistsIndex_featuredGenes.graphql"
+import { ArtistsIndex_featuredArtists$data } from "v2/__generated__/ArtistsIndex_featuredArtists.graphql"
+import { ArtistsIndex_featuredGenes$data } from "v2/__generated__/ArtistsIndex_featuredGenes.graphql"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { ArtistsIndexMeta } from "../Components/ArtistsIndexMeta"
 import { ArtistsArtistCardFragmentContainer } from "../Components/ArtistsArtistCard"
@@ -20,8 +20,8 @@ import { ArtistsLetterNav } from "../Components/ArtistsLetterNav"
 import { Media } from "v2/Utils/Responsive"
 
 interface ArtistsIndexProps {
-  featuredArtists: ArtistsIndex_featuredArtists
-  featuredGenes: ArtistsIndex_featuredGenes
+  featuredArtists: ArtistsIndex_featuredArtists$data
+  featuredGenes: ArtistsIndex_featuredGenes$data
 }
 
 export const ArtistsIndex: React.FC<ArtistsIndexProps> = ({

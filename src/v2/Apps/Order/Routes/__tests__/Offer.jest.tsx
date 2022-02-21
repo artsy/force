@@ -1,4 +1,4 @@
-import { OfferTestQueryRawResponse } from "v2/__generated__/OfferTestQuery.graphql"
+import { OfferTestQuery$rawResponse } from "v2/__generated__/OfferTestQuery.graphql"
 import { createTestEnv } from "v2/DevTools/createTestEnv"
 import { graphql } from "react-relay"
 import {
@@ -34,7 +34,7 @@ jest.mock("v2/Utils/user", () => ({
 
 const mockPostEvent = require("v2/Utils/Events").postEvent as jest.Mock
 
-const testOffer: OfferTestQueryRawResponse["order"] = {
+const testOffer: OfferTestQuery$rawResponse["order"] = {
   ...UntouchedOfferOrder,
   internalID: "1234",
 }

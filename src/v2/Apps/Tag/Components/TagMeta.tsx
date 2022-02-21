@@ -1,11 +1,11 @@
-import * as React from "react";
+import * as React from "react"
 import { Link, Meta, Title } from "react-head"
 import { createFragmentContainer, graphql } from "react-relay"
-import { TagMeta_tag } from "v2/__generated__/TagMeta_tag.graphql"
+import { TagMeta_tag$data } from "v2/__generated__/TagMeta_tag.graphql"
 import { getENV } from "v2/Utils/getENV"
 
 interface GeneMetaProps {
-  tag: TagMeta_tag
+  tag: TagMeta_tag$data
 }
 
 const TagMeta: React.FC<GeneMetaProps> = ({ tag }) => {

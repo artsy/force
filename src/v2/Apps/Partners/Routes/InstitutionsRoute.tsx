@@ -13,14 +13,14 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { MetaTags } from "v2/Components/MetaTags"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { useRouter } from "v2/System/Router/useRouter"
-import { InstitutionsRoute_viewer } from "v2/__generated__/InstitutionsRoute_viewer.graphql"
+import { InstitutionsRoute_viewer$data } from "v2/__generated__/InstitutionsRoute_viewer.graphql"
 import { PartnersFeaturedCarouselFragmentContainer } from "../Components/PartnersFeaturedCarousel"
 import { PartnersFilteredCellsQueryRenderer } from "../Components/PartnersFilteredCells"
 import { PartnersFilters } from "../Components/PartnersFilters"
 import { PartnersRailsQueryRenderer } from "../Components/PartnersRails"
 
 interface InstitutionsRouteProps {
-  viewer: InstitutionsRoute_viewer
+  viewer: InstitutionsRoute_viewer$data
 }
 
 const InstitutionsRoute: React.FC<InstitutionsRouteProps> = ({ viewer }) => {

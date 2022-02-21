@@ -8,7 +8,7 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import { Rail } from "v2/Components/Rail"
@@ -19,12 +19,12 @@ import {
 } from "v2/System"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { extractNodes } from "v2/Utils/extractNodes"
-import { ArtistCurrentShowsRail_artist } from "v2/__generated__/ArtistCurrentShowsRail_artist.graphql"
+import { ArtistCurrentShowsRail_artist$data } from "v2/__generated__/ArtistCurrentShowsRail_artist.graphql"
 import { ArtistCurrentShowsRailQuery } from "v2/__generated__/ArtistCurrentShowsRailQuery.graphql"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 
 interface ArtistCurrentShowsRailProps {
-  artist: ArtistCurrentShowsRail_artist
+  artist: ArtistCurrentShowsRail_artist$data
 }
 
 const ArtistCurrentShowsRail: React.FC<ArtistCurrentShowsRailProps> = ({

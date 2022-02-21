@@ -1,10 +1,10 @@
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { PartnerHeaderImage_profile } from "v2/__generated__/PartnerHeaderImage_profile.graphql"
+import { PartnerHeaderImage_profile$data } from "v2/__generated__/PartnerHeaderImage_profile.graphql"
 import { FullBleedHeader } from "v2/Components/FullBleedHeader"
 
 interface PartnerHeaderImageProps {
-  profile: PartnerHeaderImage_profile
+  profile: PartnerHeaderImage_profile$data
 }
 
 export const PartnerHeaderImage: React.FC<PartnerHeaderImageProps> = ({

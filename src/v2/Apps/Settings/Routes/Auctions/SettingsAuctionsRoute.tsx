@@ -1,13 +1,13 @@
 import { Join, Separator } from "@artsy/palette"
 import React from "react"
-import { SettingsAuctionsRoute_me } from "v2/__generated__/SettingsAuctionsRoute_me.graphql"
+import { SettingsAuctionsRoute_me$data } from "v2/__generated__/SettingsAuctionsRoute_me.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
 import { UserActiveBidsFragmentContainer } from "./Components/UserActiveBids"
 import { UserBidHistoryFragmentContainer } from "./Components/UserBidHistory"
 import { UserRegistrationAuctionsFragmentContainer } from "./Components/UserRegistrationAuctions"
 
 interface SettingsAuctionsRouteProps {
-  me: SettingsAuctionsRoute_me
+  me: SettingsAuctionsRoute_me$data
 }
 
 const SettingsAuctionsRoute: React.FC<SettingsAuctionsRouteProps> = ({

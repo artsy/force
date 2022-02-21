@@ -1,7 +1,7 @@
 import { Join, Text, Image, Box, Flex, Spacer } from "@artsy/palette"
-import * as React from "react";
+import * as React from "react"
 import { extractNodes } from "v2/Utils/extractNodes"
-import { ArtistArticlesRoute_artist } from "v2/__generated__/ArtistArticlesRoute_artist.graphql"
+import { ArtistArticlesRoute_artist$data } from "v2/__generated__/ArtistArticlesRoute_artist.graphql"
 import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
 import { PaginationFragmentContainer } from "v2/Components/Pagination"
 import { Title } from "react-head"
@@ -10,7 +10,7 @@ import { RouterLink } from "v2/System/Router/RouterLink"
 const REFETCH_PAGE_SIZE = 10
 
 interface ArtistArticlesRouteProps {
-  artist: ArtistArticlesRoute_artist
+  artist: ArtistArticlesRoute_artist$data
   relay: RelayRefetchProp
 }
 

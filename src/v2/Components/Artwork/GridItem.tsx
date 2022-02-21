@@ -1,6 +1,6 @@
 import { AuthContextModule, ContextModule } from "@artsy/cohesion"
 import { Image as BaseImage, Box } from "@artsy/palette"
-import { GridItem_artwork } from "v2/__generated__/GridItem_artwork.graphql"
+import { GridItem_artwork$data } from "v2/__generated__/GridItem_artwork.graphql"
 import { useSystemContext } from "v2/System"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -13,7 +13,7 @@ import { RouterLink } from "v2/System/Router/RouterLink"
 import { cropped, resized } from "v2/Utils/resized"
 
 interface ArtworkGridItemProps extends React.HTMLAttributes<HTMLDivElement> {
-  artwork: GridItem_artwork
+  artwork: GridItem_artwork$data
   contextModule?: AuthContextModule
   lazyLoad?: boolean
   onClick?: () => void

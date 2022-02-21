@@ -13,13 +13,13 @@ import createLogger from "v2/Utils/logger"
 import { ViewingRoomsPaginatedPlaceholder } from "./ViewingRoomsPaginatedPlaceholder"
 import { ViewingRoomsFragmentContainer } from "./ViewingRooms"
 import { ViewingRoomsPaginatedRendererQuery } from "v2/__generated__/ViewingRoomsPaginatedRendererQuery.graphql"
-import { ViewingRoomsPaginated_partner } from "v2/__generated__/ViewingRoomsPaginated_partner.graphql"
+import { ViewingRoomsPaginated_partner$data } from "v2/__generated__/ViewingRoomsPaginated_partner.graphql"
 
 const logger = createLogger("ViewingRoomsPaginated.tsx")
 
 interface ViewingRoomsProps {
   relay: RelayRefetchProp
-  partner: ViewingRoomsPaginated_partner
+  partner: ViewingRoomsPaginated_partner$data
   scrollTo: string
   eventTitle: string
   offset: number

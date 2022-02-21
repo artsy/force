@@ -1,11 +1,11 @@
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { Contact_partner } from "v2/__generated__/Contact_partner.graphql"
+import { Contact_partner$data } from "v2/__generated__/Contact_partner.graphql"
 import { Box, Text } from "@artsy/palette"
 import { PartnerContactsFragmentContainer as PartnerContacts } from "../../Components/PartnerContacts"
 
 export interface ContactRouteProps {
-  partner: Contact_partner
+  partner: Contact_partner$data
 }
 
 export const ContactRoute: React.FC<ContactRouteProps> = ({ partner }) => {

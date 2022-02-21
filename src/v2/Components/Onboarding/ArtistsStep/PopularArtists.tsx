@@ -1,7 +1,7 @@
-import { PopularArtists_popular_artists } from "v2/__generated__/PopularArtists_popular_artists.graphql"
+import { PopularArtists_popular_artists$data } from "v2/__generated__/PopularArtists_popular_artists.graphql"
 import {
   PopularArtistsFollowArtistMutation,
-  PopularArtistsFollowArtistMutationResponse,
+  PopularArtistsFollowArtistMutation$data,
 } from "v2/__generated__/PopularArtistsFollowArtistMutation.graphql"
 import { PopularArtistsQuery } from "v2/__generated__/PopularArtistsQuery.graphql"
 import { SystemContextProps, withSystemContext } from "v2/System"
@@ -18,7 +18,7 @@ import { get } from "v2/Utils/get"
 import ReplaceTransition from "../../Animation/ReplaceTransition"
 import ItemLink, { LinkContainer } from "../ItemLink"
 
-type Artist = PopularArtists_popular_artists[number]
+type Artist = PopularArtists_popular_artists$data[number]
 
 interface ContainerProps {
   onArtistFollow
@@ -26,7 +26,7 @@ interface ContainerProps {
 
 interface Props extends React.HTMLProps<HTMLAnchorElement>, ContainerProps {
   relay?: RelayProp
-  popular_artists: PopularArtists_popular_artists
+  popular_artists: PopularArtists_popular_artists$data
 }
 
 class PopularArtistsContent extends React.Component<Props, null> {
@@ -42,7 +42,7 @@ class PopularArtistsContent extends React.Component<Props, null> {
   onArtistFollowed(
     artist: Artist,
     store: RecordSourceSelectorProxy,
-    data: PopularArtistsFollowArtistMutationResponse,
+    data: PopularArtistsFollowArtistMutation$data,
     follow: boolean
   ): void {
     this.props.onArtistFollow(follow, artist)
@@ -218,6 +218,7 @@ const PopularArtistsComponent: React.SFC<
         if (props) {
           return (
             <PopularArtistContentContainer
+              // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
               onArtistFollow={onArtistFollow}
               // @ts-ignore FIXME: The types in this component are pretty far gone
               popular_artists={props.highlights?.popular_artists!}

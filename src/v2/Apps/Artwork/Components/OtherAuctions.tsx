@@ -1,19 +1,19 @@
 import { Column, GridColumns, Spacer } from "@artsy/palette"
-import { OtherAuctions_salesConnection } from "v2/__generated__/OtherAuctions_salesConnection.graphql"
+import { OtherAuctions_salesConnection$data } from "v2/__generated__/OtherAuctions_salesConnection.graphql"
 import { OtherAuctionsQuery } from "v2/__generated__/OtherAuctionsQuery.graphql"
 import { SystemContext } from "v2/System"
 import { renderWithLoadProgress } from "v2/System/Relay/renderWithLoadProgress"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import { AuctionCardFragmentContainer } from "v2/Components/AuctionCard"
-import { useContext } from "react";
-import * as React from "react";
+import { useContext } from "react"
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { data as sd } from "sharify"
 import { Header } from "./OtherWorks/Header"
 import { extractNodes } from "v2/Utils/extractNodes"
 
 interface OtherAuctionsProps {
-  salesConnection: OtherAuctions_salesConnection
+  salesConnection: OtherAuctions_salesConnection$data
 }
 export const OtherAuctions: React.FC<OtherAuctionsProps> = ({
   salesConnection,

@@ -1,4 +1,4 @@
-import { CreditCardSummaryItem_order } from "v2/__generated__/CreditCardSummaryItem_order.graphql"
+import { CreditCardSummaryItem_order$data } from "v2/__generated__/CreditCardSummaryItem_order.graphql"
 import {
   StepSummaryItem,
   StepSummaryItemProps,
@@ -11,7 +11,7 @@ const CreditCardSummaryItem = ({
   textColor = "black100",
   ...others
 }: {
-  order: CreditCardSummaryItem_order
+  order: CreditCardSummaryItem_order$data
   textColor?: string
 } & StepSummaryItemProps) => {
   const cardInfoWithTextColor = {

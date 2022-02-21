@@ -24,10 +24,10 @@ import { UnreadMessagesToastQueryRenderer } from "./UnreadMessagesToast"
 import useOnScreen from "../Utils/useOnScreen"
 import { UpdateConversation } from "../Mutation/UpdateConversationMutation"
 
-import { Conversation_conversation } from "v2/__generated__/Conversation_conversation.graphql"
+import { Conversation_conversation$data } from "v2/__generated__/Conversation_conversation.graphql"
 import { useRouter } from "v2/System/Router/useRouter"
 export interface ConversationProps {
-  conversation: Conversation_conversation
+  conversation: Conversation_conversation$data
   showDetails: boolean
   setShowDetails: (showDetails: boolean) => void
   relay: RelayPaginationProp

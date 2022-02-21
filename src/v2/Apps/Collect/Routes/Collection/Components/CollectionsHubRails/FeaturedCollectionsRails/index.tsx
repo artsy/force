@@ -1,5 +1,5 @@
 import { ReadMore, Text, Image, Box } from "@artsy/palette"
-import { FeaturedCollectionsRails_collectionGroup } from "v2/__generated__/FeaturedCollectionsRails_collectionGroup.graphql"
+import { FeaturedCollectionsRails_collectionGroup$data } from "v2/__generated__/FeaturedCollectionsRails_collectionGroup.graphql"
 import { useTracking } from "v2/System/Analytics/useTracking"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import currency from "currency.js"
@@ -11,7 +11,7 @@ import { cropped } from "v2/Utils/resized"
 import { Rail } from "v2/Components/Rail"
 
 interface Props {
-  collectionGroup: FeaturedCollectionsRails_collectionGroup
+  collectionGroup: FeaturedCollectionsRails_collectionGroup$data
 }
 
 export const FeaturedCollectionsRails: React.FC<Props> = ({

@@ -1,5 +1,5 @@
 import { Box, Image, Sans, Spacer } from "@artsy/palette"
-import { FeaturedRails_viewer } from "v2/__generated__/FeaturedRails_viewer.graphql"
+import { FeaturedRails_viewer$data } from "v2/__generated__/FeaturedRails_viewer.graphql"
 import { StyledLink } from "../StyledLink"
 import { FeaturedAuctionsRailFragmentContainer as FeaturedAuctions } from "v2/Apps/FeatureAKG/Components/FeaturedRails/FeaturedAuctions"
 import { FeaturedCollectionsRailFragmentContainer as FeaturedCollections } from "v2/Apps/FeatureAKG/Components/FeaturedRails/FeaturedCollections"
@@ -12,7 +12,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { crop } from "v2/Utils/resizer"
 
 interface FeaturedRailsProps {
-  viewer: FeaturedRails_viewer
+  viewer: FeaturedRails_viewer$data
   collections_rail: RailMetadata
   auctions_rail: RailMetadata
   fairs_rail: RailMetadata

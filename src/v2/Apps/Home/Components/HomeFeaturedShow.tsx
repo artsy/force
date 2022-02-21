@@ -5,16 +5,16 @@ import {
   OwnerType,
 } from "@artsy/cohesion"
 import { Box, Image, Spacer, Text } from "@artsy/palette"
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "v2/System"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { useCurrentTime } from "v2/Utils/Hooks/useCurrentTime"
 import { useEventTiming } from "v2/Utils/Hooks/useEventTiming"
-import { HomeFeaturedShow_show } from "v2/__generated__/HomeFeaturedShow_show.graphql"
+import { HomeFeaturedShow_show$data } from "v2/__generated__/HomeFeaturedShow_show.graphql"
 
 interface HomeFeaturedShowProps {
-  show: HomeFeaturedShow_show
+  show: HomeFeaturedShow_show$data
 }
 
 const HomeFeaturedShow: React.FC<HomeFeaturedShowProps> = ({ show }) => {

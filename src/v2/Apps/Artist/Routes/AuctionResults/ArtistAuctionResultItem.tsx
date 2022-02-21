@@ -11,7 +11,7 @@ import {
   Text,
 } from "@artsy/palette"
 import { Box, Button, Flex, Separator, Spacer } from "@artsy/palette"
-import { ArtistAuctionResultItem_auctionResult } from "v2/__generated__/ArtistAuctionResultItem_auctionResult.graphql"
+import { ArtistAuctionResultItem_auctionResult$data } from "v2/__generated__/ArtistAuctionResultItem_auctionResult.graphql"
 import { AnalyticsSchema, SystemContextProps } from "v2/System"
 import { SystemContext } from "v2/System"
 import { ModalType } from "v2/Components/Authentication/Types"
@@ -32,7 +32,7 @@ import { AuctionResultPerformance } from "v2/Components/AuctionResultPerformance
 
 export interface Props extends SystemContextProps {
   expanded?: boolean
-  auctionResult: ArtistAuctionResultItem_auctionResult
+  auctionResult: ArtistAuctionResultItem_auctionResult$data
   index: number
   mediator?: Mediator
   lastChild: boolean

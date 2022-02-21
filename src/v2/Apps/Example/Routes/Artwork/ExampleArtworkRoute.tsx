@@ -2,12 +2,12 @@ import { Box, Flex, Image, Text, Title } from "@artsy/palette"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { AnalyticsContext, useAnalyticsContext } from "v2/System"
-import { ExampleArtworkRoute_artwork } from "v2/__generated__/ExampleArtworkRoute_artwork.graphql"
+import { ExampleArtworkRoute_artwork$data } from "v2/__generated__/ExampleArtworkRoute_artwork.graphql"
 import { ArtistCardFragmentContainer as ArtistCard } from "v2/Components/ArtistCard"
 import { ContextModule } from "@artsy/cohesion"
 
 export interface ExampleArtworkRouteProps {
-  artwork: ExampleArtworkRoute_artwork
+  artwork: ExampleArtworkRoute_artwork$data
 }
 
 const ExampleArtworkRoute: React.FC<ExampleArtworkRouteProps> = ({

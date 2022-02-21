@@ -1,10 +1,10 @@
 import * as React from "react"
 import { Image, ResponsiveBox } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
-import { FairCard_fair } from "v2/__generated__/FairCard_fair.graphql"
+import { FairCard_fair$data } from "v2/__generated__/FairCard_fair.graphql"
 
 interface FairHeaderImageProps {
-  fair: FairCard_fair
+  fair: FairCard_fair$data
 }
 
 export const FairCard: React.FC<FairHeaderImageProps> = ({

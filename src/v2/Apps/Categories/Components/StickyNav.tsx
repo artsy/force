@@ -1,12 +1,12 @@
 import { Pill, Spacer, Flex, HorizontalOverflow } from "@artsy/palette"
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { AppContainer } from "v2/Apps/Components/AppContainer"
 import { extractNodes } from "v2/Utils/extractNodes"
 import { scrollIntoView } from "v2/Utils/scrollHelpers"
-import { StickyNav_geneFamiliesConnection } from "v2/__generated__/StickyNav_geneFamiliesConnection.graphql"
+import { StickyNav_geneFamiliesConnection$data } from "v2/__generated__/StickyNav_geneFamiliesConnection.graphql"
 interface StickyNavProps {
-  geneFamiliesConnection: StickyNav_geneFamiliesConnection
+  geneFamiliesConnection: StickyNav_geneFamiliesConnection$data
   navBarHeight: number
 }
 

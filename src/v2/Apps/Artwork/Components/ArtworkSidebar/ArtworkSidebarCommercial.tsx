@@ -11,7 +11,7 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import { ArtworkSidebarCommercial_artwork } from "v2/__generated__/ArtworkSidebarCommercial_artwork.graphql"
+import { ArtworkSidebarCommercial_artwork$data } from "v2/__generated__/ArtworkSidebarCommercial_artwork.graphql"
 import { ArtworkSidebarCommercialOfferOrderMutation } from "v2/__generated__/ArtworkSidebarCommercialOfferOrderMutation.graphql"
 import { ArtworkSidebarCommercialOrderMutation } from "v2/__generated__/ArtworkSidebarCommercialOrderMutation.graphql"
 import { SystemContext } from "v2/System"
@@ -38,7 +38,7 @@ import { Mediator } from "lib/mediator"
 import { useInquiry, WithInquiryProps } from "v2/Components/Inquiry/useInquiry"
 
 type EditionSet = NonNullable<
-  ArtworkSidebarCommercial_artwork["edition_sets"]
+  ArtworkSidebarCommercial_artwork$data["edition_sets"]
 >[0]
 
 export interface ArtworkSidebarCommercialContainerProps
@@ -543,7 +543,7 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
 }
 
 interface ArtworkSidebarCommercialProps {
-  artwork: ArtworkSidebarCommercial_artwork
+  artwork: ArtworkSidebarCommercial_artwork$data
   relay?: RelayProp
 }
 

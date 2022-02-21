@@ -12,19 +12,19 @@ import { NewMessageMarker } from "./NewMessageMarker"
 import { OrderUpdateFragmentContainer } from "./OrderUpdate"
 import { extractNodes } from "v2/Utils/extractNodes"
 
-import { ConversationMessages_events } from "v2/__generated__/ConversationMessages_events.graphql"
-import { Message_message } from "v2/__generated__/Message_message.graphql"
-import { ConversationMessages_messages } from "v2/__generated__/ConversationMessages_messages.graphql"
+import { ConversationMessages_events$data } from "v2/__generated__/ConversationMessages_events.graphql"
+import { Message_message$data } from "v2/__generated__/Message_message.graphql"
+import { ConversationMessages_messages$data } from "v2/__generated__/ConversationMessages_messages.graphql"
 
 interface ConversationMessageProps {
-  messages: ConversationMessages_messages
-  events: ConversationMessages_events | null
+  messages: ConversationMessages_messages$data
+  events: ConversationMessages_events$data | null
   lastViewedMessageID?: string | null
   setShowDetails: (showDetails: boolean) => void
 }
 type Order = NonNullable<
   NonNullable<
-    NonNullable<NonNullable<ConversationMessages_events>["edges"]>[number]
+    NonNullable<NonNullable<ConversationMessages_events$data>["edges"]>[number]
   >["node"]
 >
 type OrderEvent = Order["orderHistory"][number]
@@ -69,7 +69,9 @@ export const ConversationMessages = ({
     "CommerceOfferSubmittedEvent",
     "CommerceOrderStateChangedEvent",
   ]
-  const isRelevantEvent = (item: Message_message): item is Message_message => {
+  const isRelevantEvent = (
+    item: Message_message$data
+  ): item is Message_message$data => {
     return (
       item?.__typename !== "Message" && relevantEvents.includes(item.__typename)
     )

@@ -2,7 +2,7 @@ import * as React from "react"
 import { Link } from "react-head"
 import { data as sd } from "sharify"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ArtistMetaCanonicalLink_artist } from "v2/__generated__/ArtistMetaCanonicalLink_artist.graphql"
+import { ArtistMetaCanonicalLink_artist$data } from "v2/__generated__/ArtistMetaCanonicalLink_artist.graphql"
 import { useRouter } from "v2/System/Router/useRouter"
 import { hasOverviewContent } from "../Routes/Overview/Utils/hasOverviewContent"
 import { hasSections } from "v2/Components/ArtistMarketInsights"
@@ -31,7 +31,7 @@ export const computeCanonicalPath = (
 }
 
 export type ArtistMetaCanonicalLinkProps = {
-  artist: ArtistMetaCanonicalLink_artist
+  artist: ArtistMetaCanonicalLink_artist$data
 }
 
 export const ArtistMetaCanonicalLink: React.FC<ArtistMetaCanonicalLinkProps> = ({

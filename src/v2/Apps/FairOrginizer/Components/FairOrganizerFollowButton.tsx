@@ -1,14 +1,14 @@
 import * as React from "react"
 import { Button } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
-import { FairOrganizerFollowButton_fairOrganizer } from "v2/__generated__/FairOrganizerFollowButton_fairOrganizer.graphql"
+import { FairOrganizerFollowButton_fairOrganizer$data } from "v2/__generated__/FairOrganizerFollowButton_fairOrganizer.graphql"
 import { useSystemContext } from "v2/System"
 import { fairOrganizerFollowMutation } from "../Mutations/FairOrganizerFollowMutation"
 import { openAuthToSatisfyIntent } from "v2/Utils/openAuthModal"
 import { ContextModule, Intent } from "@artsy/cohesion"
 
 interface FairOrganizerFollowButtonProps {
-  fairOrganizer: FairOrganizerFollowButton_fairOrganizer
+  fairOrganizer: FairOrganizerFollowButton_fairOrganizer$data
 }
 
 export const FairOrganizerFollowButton: React.FC<FairOrganizerFollowButtonProps> = props => {

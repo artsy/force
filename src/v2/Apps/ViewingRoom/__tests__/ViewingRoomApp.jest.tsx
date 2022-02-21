@@ -2,11 +2,11 @@ import { MockBoot, renderRelayTree } from "v2/DevTools"
 import { SystemContextProvider } from "v2/System"
 import { ViewingRoomAppFragmentContainer } from "../ViewingRoomApp"
 import { graphql } from "react-relay"
-import { ViewingRoomApp_DraftTest_QueryRawResponse } from "v2/__generated__/ViewingRoomApp_DraftTest_Query.graphql"
-import { ViewingRoomApp_ScheduledTest_QueryRawResponse } from "v2/__generated__/ViewingRoomApp_ScheduledTest_Query.graphql"
-import { ViewingRoomApp_OpenTest_QueryRawResponse } from "v2/__generated__/ViewingRoomApp_OpenTest_Query.graphql"
-import { ViewingRoomApp_ClosedTest_QueryRawResponse } from "v2/__generated__/ViewingRoomApp_ClosedTest_Query.graphql"
-import { ViewingRoomApp_LoggedOutTest_QueryRawResponse } from "v2/__generated__/ViewingRoomApp_LoggedOutTest_Query.graphql"
+import { ViewingRoomApp_DraftTest_Query$rawResponse } from "v2/__generated__/ViewingRoomApp_DraftTest_Query.graphql"
+import { ViewingRoomApp_ScheduledTest_Query$rawResponse } from "v2/__generated__/ViewingRoomApp_ScheduledTest_Query.graphql"
+import { ViewingRoomApp_OpenTest_Query$rawResponse } from "v2/__generated__/ViewingRoomApp_OpenTest_Query.graphql"
+import { ViewingRoomApp_ClosedTest_Query$rawResponse } from "v2/__generated__/ViewingRoomApp_ClosedTest_Query.graphql"
+import { ViewingRoomApp_LoggedOutTest_Query$rawResponse } from "v2/__generated__/ViewingRoomApp_LoggedOutTest_Query.graphql"
 import { Breakpoint } from "@artsy/palette"
 import { mockLocation } from "v2/DevTools/mockLocation"
 
@@ -43,7 +43,7 @@ describe("ViewingRoomApp", () => {
 
     const getWrapper = async (
       breakpoint: Breakpoint = "lg",
-      response: ViewingRoomApp_DraftTest_QueryRawResponse = DraftViewingRoomAppFixture
+      response: ViewingRoomApp_DraftTest_Query$rawResponse = DraftViewingRoomAppFixture
     ) => {
       return renderRelayTree({
         Component: ({ viewingRoom }) => {
@@ -88,7 +88,7 @@ describe("ViewingRoomApp", () => {
   describe("with scheduled viewing room", () => {
     const getWrapper = async (
       breakpoint: Breakpoint = "lg",
-      response: ViewingRoomApp_ScheduledTest_QueryRawResponse = ScheduledViewingRoomAppFixture
+      response: ViewingRoomApp_ScheduledTest_Query$rawResponse = ScheduledViewingRoomAppFixture
     ) => {
       return renderRelayTree({
         Component: ({ viewingRoom }) => {
@@ -156,7 +156,7 @@ describe("ViewingRoomApp", () => {
   describe("with open viewing room", () => {
     const getWrapper = async (
       breakpoint: Breakpoint = "lg",
-      response: ViewingRoomApp_OpenTest_QueryRawResponse = OpenViewingRoomAppFixture
+      response: ViewingRoomApp_OpenTest_Query$rawResponse = OpenViewingRoomAppFixture
     ) => {
       return renderRelayTree({
         Component: ({ viewingRoom }) => {
@@ -235,7 +235,7 @@ describe("ViewingRoomApp", () => {
   describe("with closed viewing room", () => {
     const getWrapper = async (
       breakpoint: Breakpoint = "lg",
-      response: ViewingRoomApp_ClosedTest_QueryRawResponse = ClosedViewingRoomAppFixture
+      response: ViewingRoomApp_ClosedTest_Query$rawResponse = ClosedViewingRoomAppFixture
     ) => {
       return renderRelayTree({
         Component: ({ viewingRoom }) => {
@@ -302,7 +302,7 @@ describe("ViewingRoomApp", () => {
   describe("with logged out user", () => {
     const getWrapper = async (
       breakpoint: Breakpoint = "lg",
-      response: ViewingRoomApp_LoggedOutTest_QueryRawResponse = LoggedOutViewingRoomAppFixture
+      response: ViewingRoomApp_LoggedOutTest_Query$rawResponse = LoggedOutViewingRoomAppFixture
     ) => {
       return renderRelayTree({
         Component: ({ viewingRoom }) => {
@@ -342,7 +342,7 @@ describe("ViewingRoomApp", () => {
   })
 })
 
-const DraftViewingRoomAppFixture: ViewingRoomApp_DraftTest_QueryRawResponse = {
+const DraftViewingRoomAppFixture: ViewingRoomApp_DraftTest_Query$rawResponse = {
   viewingRoom: {
     href: "/viewing-room/example",
     pullQuote: "Example pull quote",
@@ -365,7 +365,7 @@ const DraftViewingRoomAppFixture: ViewingRoomApp_DraftTest_QueryRawResponse = {
   },
 }
 
-const ScheduledViewingRoomAppFixture: ViewingRoomApp_ScheduledTest_QueryRawResponse = {
+const ScheduledViewingRoomAppFixture: ViewingRoomApp_ScheduledTest_Query$rawResponse = {
   viewingRoom: {
     href: "/viewing-room/example",
     pullQuote: "Example pull quote",
@@ -388,7 +388,7 @@ const ScheduledViewingRoomAppFixture: ViewingRoomApp_ScheduledTest_QueryRawRespo
   },
 }
 
-const OpenViewingRoomAppFixture: ViewingRoomApp_OpenTest_QueryRawResponse = {
+const OpenViewingRoomAppFixture: ViewingRoomApp_OpenTest_Query$rawResponse = {
   viewingRoom: {
     href: "/viewing-room/example",
     pullQuote: "Example pull quote",
@@ -411,7 +411,7 @@ const OpenViewingRoomAppFixture: ViewingRoomApp_OpenTest_QueryRawResponse = {
   },
 }
 
-const ClosedViewingRoomAppFixture: ViewingRoomApp_ClosedTest_QueryRawResponse = {
+const ClosedViewingRoomAppFixture: ViewingRoomApp_ClosedTest_Query$rawResponse = {
   viewingRoom: {
     href: "/viewing-room/example",
     pullQuote: "Example pull quote",
@@ -434,7 +434,7 @@ const ClosedViewingRoomAppFixture: ViewingRoomApp_ClosedTest_QueryRawResponse = 
   },
 }
 
-const LoggedOutViewingRoomAppFixture: ViewingRoomApp_LoggedOutTest_QueryRawResponse = {
+const LoggedOutViewingRoomAppFixture: ViewingRoomApp_LoggedOutTest_Query$rawResponse = {
   viewingRoom: {
     href: "/viewing-room/example",
     pullQuote: "Example pull quote",

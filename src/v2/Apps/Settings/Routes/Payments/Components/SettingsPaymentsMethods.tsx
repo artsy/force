@@ -4,12 +4,12 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { CreditCardInputProvider } from "v2/Components/CreditCardInput"
 import { extractNodes } from "v2/Utils/extractNodes"
 import { useMode } from "v2/Utils/Hooks/useMode"
-import { SettingsPaymentsMethods_me } from "v2/__generated__/SettingsPaymentsMethods_me.graphql"
+import { SettingsPaymentsMethods_me$data } from "v2/__generated__/SettingsPaymentsMethods_me.graphql"
 import { SettingsPaymentsMethodFragmentContainer } from "./SettingsPaymentsMethod"
 import { SettingsPaymentsMethodForm } from "./SettingsPaymentsMethodForm"
 
 interface SettingsPaymentsMethodsProps {
-  me: SettingsPaymentsMethods_me
+  me: SettingsPaymentsMethods_me$data
 }
 
 type Mode = "Pending" | "Adding"

@@ -1,4 +1,4 @@
-import { FairArtworks_fair } from "v2/__generated__/FairArtworks_fair.graphql"
+import { FairArtworks_fair$data } from "v2/__generated__/FairArtworks_fair.graphql"
 import { BaseArtworkFilter } from "v2/Components/ArtworkFilter"
 import {
   ArtworkFilterContextProvider,
@@ -23,7 +23,7 @@ import { ArtworkLocationFilter } from "v2/Components/ArtworkFilter/ArtworkFilter
 import { SizeFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/SizeFilter"
 
 interface FairArtworksFilterProps {
-  fair: FairArtworks_fair
+  fair: FairArtworks_fair$data
   relay: RelayRefetchProp
 }
 
@@ -70,7 +70,7 @@ const FairArtworksFilter: React.FC<FairArtworksFilterProps> = props => {
   return (
     <ArtworkFilterContextProvider
       filters={match && match.location.query}
-      counts={counts}
+      counts={counts!}
       sortOptions={[
         { text: "Default", value: "-decayed_merch" },
         { text: "Price (desc.)", value: "-has_price,-prices" },

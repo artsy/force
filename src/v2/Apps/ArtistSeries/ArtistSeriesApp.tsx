@@ -1,6 +1,6 @@
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ArtistSeriesApp_artistSeries } from "v2/__generated__/ArtistSeriesApp_artistSeries.graphql"
+import { ArtistSeriesApp_artistSeries$data } from "v2/__generated__/ArtistSeriesApp_artistSeries.graphql"
 import { ArtistSeriesHeaderFragmentContainer as ArtistSeriesHeader } from "./Components/ArtistSeriesHeader"
 import { ArtistSeriesArtworksFilterRefetchContainer as ArtistSeriesArtworksFilter } from "./Components/ArtistSeriesArtworksFilter"
 import { ArtistSeriesRailFragmentContainer as OtherArtistSeriesRail } from "v2/Components/ArtistSeriesRail/ArtistSeriesRail"
@@ -14,7 +14,7 @@ import { SharedArtworkFilterContextProps } from "v2/Components/ArtworkFilter/Art
 import { Spacer } from "@artsy/palette"
 
 interface ArtistSeriesAppProps {
-  artistSeries: ArtistSeriesApp_artistSeries
+  artistSeries: ArtistSeriesApp_artistSeries$data
 }
 
 const ArtistSeriesApp: React.FC<ArtistSeriesAppProps> = ({ artistSeries }) => {

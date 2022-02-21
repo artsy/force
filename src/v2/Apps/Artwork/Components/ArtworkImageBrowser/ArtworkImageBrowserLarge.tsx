@@ -7,16 +7,16 @@ import {
 } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
 import { compact } from "lodash"
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
 import { ArtworkLightboxFragmentContainer } from "../ArtworkLightbox"
-import { ArtworkImageBrowserLarge_artwork } from "v2/__generated__/ArtworkImageBrowserLarge_artwork.graphql"
+import { ArtworkImageBrowserLarge_artwork$data } from "v2/__generated__/ArtworkImageBrowserLarge_artwork.graphql"
 import { useNextPrevious } from "v2/Utils/Hooks/useNextPrevious"
 import { DeepZoomFragmentContainer, useDeepZoom } from "v2/Components/DeepZoom"
 
 interface ArtworkImageBrowserLargeProps {
-  artwork: ArtworkImageBrowserLarge_artwork
+  artwork: ArtworkImageBrowserLarge_artwork$data
   index: number
   onNext(): void
   onPrev(): void

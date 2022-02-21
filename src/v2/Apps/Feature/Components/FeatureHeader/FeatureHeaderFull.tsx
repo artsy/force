@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"
 import styled from "styled-components"
 import {
   Box,
@@ -10,7 +10,7 @@ import {
   FullBleed,
 } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
-import { FeatureHeaderFull_feature } from "v2/__generated__/FeatureHeaderFull_feature.graphql"
+import { FeatureHeaderFull_feature$data } from "v2/__generated__/FeatureHeaderFull_feature.graphql"
 import { useNavBarHeight } from "v2/Components/NavBar/useNavBarHeight"
 
 const Figure = styled(Box)`
@@ -29,7 +29,7 @@ const Image = styled.img`
 `
 
 export interface FeatureHeaderFullProps extends BoxProps {
-  feature: FeatureHeaderFull_feature
+  feature: FeatureHeaderFull_feature$data
 }
 
 export const FeatureHeaderFull: React.FC<FeatureHeaderFullProps> = ({

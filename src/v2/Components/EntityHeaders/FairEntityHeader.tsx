@@ -3,11 +3,11 @@ import { BoxProps, EntityHeader } from "@artsy/palette"
 import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useSystemContext } from "v2/System"
-import { FairEntityHeader_fair } from "v2/__generated__/FairEntityHeader_fair.graphql"
+import { FairEntityHeader_fair$data } from "v2/__generated__/FairEntityHeader_fair.graphql"
 import { FollowProfileButtonFragmentContainer } from "../FollowButton/FollowProfileButton"
 
 interface FairEntityHeaderProps extends BoxProps {
-  fair: FairEntityHeader_fair
+  fair: FairEntityHeader_fair$data
 }
 
 const FairEntityHeader: FC<FairEntityHeaderProps> = ({ fair, ...rest }) => {

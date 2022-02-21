@@ -3,7 +3,7 @@ import { Box, Flex, Spacer, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useSystemContext } from "v2/System"
 import { SoldRecentlyQuery } from "v2/__generated__/SoldRecentlyQuery.graphql"
-import { SoldRecently_targetSupply } from "v2/__generated__/SoldRecently_targetSupply.graphql"
+import { SoldRecently_targetSupply$data } from "v2/__generated__/SoldRecently_targetSupply.graphql"
 import { extractNodes } from "v2/Utils/extractNodes"
 import FillwidthItem from "v2/Components/Artwork/FillwidthItem"
 import { useTracking } from "react-tracking"
@@ -16,7 +16,7 @@ import { Rail } from "v2/Components/Rail"
 const HEIGHT = 300
 
 interface SoldRecentlyProps {
-  targetSupply: SoldRecently_targetSupply
+  targetSupply: SoldRecently_targetSupply$data
 }
 
 const SoldRecently: React.FC<SoldRecentlyProps> = ({ targetSupply }) => {

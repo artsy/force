@@ -3,7 +3,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { MetaTags } from "v2/Components/MetaTags"
 import { CategoriesIntro } from "./Components/CategoriesIntro"
 import { GeneFamiliesFragmentContainer } from "./Components/GeneFamilies"
-import { CategoriesApp_geneFamiliesConnection } from "v2/__generated__/CategoriesApp_geneFamiliesConnection.graphql"
+import { CategoriesApp_geneFamiliesConnection$data } from "v2/__generated__/CategoriesApp_geneFamiliesConnection.graphql"
 import { StickyNavFragmentContainer } from "./Components/StickyNav"
 import { DROP_SHADOW, FullBleed, Spacer } from "@artsy/palette"
 import { StickyProvider, Sticky } from "v2/Components/Sticky"
@@ -12,7 +12,7 @@ import { useNavBarHeight } from "v2/Components/NavBar/useNavBarHeight"
 import { Media } from "v2/Utils/Responsive"
 
 interface CategoriesAppProps {
-  geneFamiliesConnection: CategoriesApp_geneFamiliesConnection
+  geneFamiliesConnection: CategoriesApp_geneFamiliesConnection$data
 }
 
 const CategoriesApp: React.FC<CategoriesAppProps> = props => {

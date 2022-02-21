@@ -19,7 +19,7 @@ import {
   fetchQuery,
   Environment,
 } from "react-relay"
-import { UploadPhotos_submission } from "v2/__generated__/UploadPhotos_submission.graphql"
+import { UploadPhotos_submission$data } from "v2/__generated__/UploadPhotos_submission.graphql"
 import { UploadPhotos_ImageRefetch_Query } from "v2/__generated__/UploadPhotos_ImageRefetch_Query.graphql"
 
 import {
@@ -32,10 +32,10 @@ import { useRef, useState } from "react"
 const logger = createLogger("SubmissionFlow/UploadPhotos.tsx")
 
 export interface UploadPhotosProps {
-  submission?: UploadPhotos_submission
+  submission?: UploadPhotos_submission$data
 }
 
-type SubmissionAsset = NonNullable<UploadPhotos_submission["assets"]>[0]
+type SubmissionAsset = NonNullable<UploadPhotos_submission$data["assets"]>[0]
 
 const shouldRefetchPhotoUrls = (photos: Photo[]) => {
   return photos.some(photo => !!photo.assetId && !photo.url && !photo.file)
@@ -48,7 +48,7 @@ const getPhotoUrlFromAsset = (asset: SubmissionAsset) => {
 }
 
 export const getUploadPhotosFormInitialValues = (
-  submission?: UploadPhotos_submission
+  submission?: UploadPhotos_submission$data
 ): UploadPhotosFormModel => {
   return {
     photos:

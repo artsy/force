@@ -1,14 +1,14 @@
 import { Text, Flex, Box, Image } from "@artsy/palette"
-import * as React from "react";
+import * as React from "react"
 import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
 import { extractNodes } from "v2/Utils/extractNodes"
-import { ArtistShowsGroup_artist } from "v2/__generated__/ArtistShowsGroup_artist.graphql"
+import { ArtistShowsGroup_artist$data } from "v2/__generated__/ArtistShowsGroup_artist.graphql"
 import { PaginationFragmentContainer } from "v2/Components/Pagination"
 
 const REFETCH_PAGE_SIZE = 10
 
 interface ArtistShowsGroupProps {
-  artist: ArtistShowsGroup_artist
+  artist: ArtistShowsGroup_artist$data
   relay: RelayRefetchProp
   title: string
   sort: string

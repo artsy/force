@@ -1,7 +1,7 @@
 import {
   DeliverSecondFactorInput,
   DeliverSecondFactorMutation,
-  DeliverSecondFactorMutationResponse,
+  DeliverSecondFactorMutation$data,
 } from "v2/__generated__/DeliverSecondFactorMutation.graphql"
 import { Environment, commitMutation, graphql } from "react-relay"
 
@@ -9,7 +9,7 @@ export const DeliverSecondFactor = (
   environment: Environment,
   input: DeliverSecondFactorInput
 ) => {
-  return new Promise<DeliverSecondFactorMutationResponse>(
+  return new Promise<DeliverSecondFactorMutation$data>(
     async (resolve, reject) => {
       commitMutation<DeliverSecondFactorMutation>(environment, {
         onCompleted: data => {

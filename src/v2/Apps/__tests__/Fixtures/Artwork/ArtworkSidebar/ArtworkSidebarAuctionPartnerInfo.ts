@@ -1,6 +1,6 @@
-import { ArtworkSidebarAuctionPartnerInfo_Test_QueryRawResponse } from "v2/__generated__/ArtworkSidebarAuctionPartnerInfo_Test_Query.graphql"
+import { ArtworkSidebarAuctionPartnerInfo_Test_Query$rawResponse } from "v2/__generated__/ArtworkSidebarAuctionPartnerInfo_Test_Query.graphql"
 
-export const ArtworkClosedAuction: ArtworkSidebarAuctionPartnerInfo_Test_QueryRawResponse["artwork"] = {
+export const ArtworkClosedAuction: ArtworkSidebarAuctionPartnerInfo_Test_Query$rawResponse["artwork"] = {
   id: "artwork_auction_closed",
   partner: {
     id: "5acd52b11a1e866b17e16045",
@@ -17,7 +17,7 @@ export const ArtworkClosedAuction: ArtworkSidebarAuctionPartnerInfo_Test_QueryRa
   },
 }
 
-export const ArtworkAuctionPreview: ArtworkSidebarAuctionPartnerInfo_Test_QueryRawResponse["artwork"] = {
+export const ArtworkAuctionPreview: ArtworkSidebarAuctionPartnerInfo_Test_Query$rawResponse["artwork"] = {
   id: "artwork_auction_preview",
   partner: {
     id: "553e693d7261695a85350100",
@@ -34,7 +34,7 @@ export const ArtworkAuctionPreview: ArtworkSidebarAuctionPartnerInfo_Test_QueryR
   },
 }
 
-export const ArtworkNoEstimateNoPremium: ArtworkSidebarAuctionPartnerInfo_Test_QueryRawResponse["artwork"] = {
+export const ArtworkNoEstimateNoPremium: ArtworkSidebarAuctionPartnerInfo_Test_Query$rawResponse["artwork"] = {
   id: "auction_artwork",
   partner: {
     id: "5bd72842658111197ca3e697",
@@ -51,7 +51,7 @@ export const ArtworkNoEstimateNoPremium: ArtworkSidebarAuctionPartnerInfo_Test_Q
   },
 }
 
-export const ArtworkWithEstimateNoPremium: ArtworkSidebarAuctionPartnerInfo_Test_QueryRawResponse["artwork"] = {
+export const ArtworkWithEstimateNoPremium: ArtworkSidebarAuctionPartnerInfo_Test_Query$rawResponse["artwork"] = {
   id: "auction_artwork_estimate",
   partner: {
     id: "5a3842668b0c1457e619554e",
@@ -68,7 +68,7 @@ export const ArtworkWithEstimateNoPremium: ArtworkSidebarAuctionPartnerInfo_Test
   },
 }
 
-export const ArtworkWithEstimateAndPremium: ArtworkSidebarAuctionPartnerInfo_Test_QueryRawResponse["artwork"] = {
+export const ArtworkWithEstimateAndPremium: ArtworkSidebarAuctionPartnerInfo_Test_Query$rawResponse["artwork"] = {
   id: "auction_artwork_estimate_premium",
   partner: {
     id: "5a84a434275b247345983eac",

@@ -1,11 +1,11 @@
 import { Column, GridColumns, Text } from "@artsy/palette"
 import { Media } from "v2/Utils/Responsive"
 import { createFragmentContainer, graphql } from "react-relay"
-import { AboutPartner_partner } from "v2/__generated__/AboutPartner_partner.graphql"
+import { AboutPartner_partner$data } from "v2/__generated__/AboutPartner_partner.graphql"
 import { RouterLink } from "v2/System/Router/RouterLink"
 
 export interface AboutPartnerProps {
-  partner: AboutPartner_partner
+  partner: AboutPartner_partner$data
 }
 
 export const AboutPartner: React.FC<AboutPartnerProps> = ({

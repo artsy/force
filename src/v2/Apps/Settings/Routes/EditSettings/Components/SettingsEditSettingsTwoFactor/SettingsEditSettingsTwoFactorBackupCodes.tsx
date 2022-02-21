@@ -11,12 +11,12 @@ import {
 import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useMode } from "v2/Utils/Hooks/useMode"
-import { SettingsEditSettingsTwoFactorBackupCodes_me } from "v2/__generated__/SettingsEditSettingsTwoFactorBackupCodes_me.graphql"
+import { SettingsEditSettingsTwoFactorBackupCodes_me$data } from "v2/__generated__/SettingsEditSettingsTwoFactorBackupCodes_me.graphql"
 import { SettingsEditSettingsTwoFactorBackupCodesDialogQueryRenderer } from "./SettingsEditSettingsTwoFactorBackupCodesDialog"
 import { useCreateSettingsBackupSecondFactors } from "./useCreateSettingsBackupSecondFactorsMutation"
 
 interface SettingsEditSettingsTwoFactorBackupCodesProps {
-  me: SettingsEditSettingsTwoFactorBackupCodes_me
+  me: SettingsEditSettingsTwoFactorBackupCodes_me$data
 }
 
 type Mode = "Pending" | "Show" | "Creating"

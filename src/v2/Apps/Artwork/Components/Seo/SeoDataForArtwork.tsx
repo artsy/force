@@ -1,7 +1,7 @@
 import { trim } from "lodash"
 import * as React from "react"
 
-import { SeoDataForArtwork_artwork } from "v2/__generated__/SeoDataForArtwork_artwork.graphql"
+import { SeoDataForArtwork_artwork$data } from "v2/__generated__/SeoDataForArtwork_artwork.graphql"
 import { CreativeWork } from "v2/Components/Seo/CreativeWork"
 import { Product } from "v2/Components/Seo/Product"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -11,7 +11,7 @@ import { get } from "v2/Utils/get"
 const { APP_URL } = sd
 
 interface SeoDataForArtworkProps {
-  artwork: SeoDataForArtwork_artwork
+  artwork: SeoDataForArtwork_artwork$data
 }
 
 export const AVAILABILITY = {
@@ -128,7 +128,7 @@ export const SeoDataForArtworkFragmentContainer = createFragmentContainer(
   }
 )
 
-export const offerAttributes = (artwork: SeoDataForArtwork_artwork) => {
+export const offerAttributes = (artwork: SeoDataForArtwork_artwork$data) => {
   if (!artwork.listPrice || artwork.is_price_hidden) return null
   const galleryProfileImage = get(
     artwork,

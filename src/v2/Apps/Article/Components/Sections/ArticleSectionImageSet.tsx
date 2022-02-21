@@ -1,5 +1,5 @@
 import { FC } from "react"
-import { ArticleSectionImageSet_section } from "v2/__generated__/ArticleSectionImageSet_section.graphql"
+import { ArticleSectionImageSet_section$data } from "v2/__generated__/ArticleSectionImageSet_section.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
 import {
   ResponsiveBox,
@@ -16,7 +16,7 @@ import { useArticleZoomGallery } from "../ArticleZoomGallery"
 import { useRouter } from "v2/System/Router/useRouter"
 
 interface ArticleSectionImageSetProps {
-  section: ArticleSectionImageSet_section
+  section: ArticleSectionImageSet_section$data
 }
 
 const ArticleSectionImageSet: FC<ArticleSectionImageSetProps> = ({

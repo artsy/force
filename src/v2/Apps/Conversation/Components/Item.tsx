@@ -1,10 +1,10 @@
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Flex, Image, Link, Text } from "@artsy/palette"
-import { Item_item } from "v2/__generated__/Item_item.graphql"
+import { Item_item$data } from "v2/__generated__/Item_item.graphql"
 
 interface ItemProps {
-  item: Item_item
+  item: Item_item$data
 }
 
 export type ItemType = "Artwork" | "Show"

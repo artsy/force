@@ -1,6 +1,6 @@
 import { useTracking } from "v2/System/Analytics/useTracking"
 import { MockedConversation } from "v2/Apps/__tests__/Fixtures/Conversation"
-import { Conversation_conversation } from "v2/__generated__/Conversation_conversation.graphql"
+import { Conversation_conversation$data } from "v2/__generated__/Conversation_conversation.graphql"
 import { Reply } from "../Components/Reply"
 import { mount } from "enzyme"
 import { Environment } from "react-relay"
@@ -28,7 +28,7 @@ describe("Reply", () => {
       const wrapper = mount(
         <Reply
           conversation={
-            (MockedConversation as unknown) as Conversation_conversation
+            (MockedConversation as unknown) as Conversation_conversation$data
           }
           openInquiryModal={() => {
             jest.fn

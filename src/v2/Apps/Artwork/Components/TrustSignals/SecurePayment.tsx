@@ -1,5 +1,5 @@
 import { Link, LockIcon } from "@artsy/palette"
-import { SecurePayment_artwork } from "v2/__generated__/SecurePayment_artwork.graphql"
+import { SecurePayment_artwork$data } from "v2/__generated__/SecurePayment_artwork.graphql"
 import * as React from "react"
 import { createFragmentContainer } from "react-relay"
 import { graphql } from "react-relay"
@@ -7,7 +7,7 @@ import { TrustSignal, TrustSignalProps } from "./TrustSignal"
 
 interface SecurePaymentProps
   extends Omit<TrustSignalProps, "Icon" | "label" | "description"> {
-  artwork: SecurePayment_artwork
+  artwork: SecurePayment_artwork$data
 }
 
 // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION

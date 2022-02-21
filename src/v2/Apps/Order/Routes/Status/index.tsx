@@ -21,13 +21,13 @@ import { ArtworkSummaryItemFragmentContainer as ArtworkSummaryItem } from "../..
 import { CreditCardSummaryItemFragmentContainer as CreditCardSummaryItem } from "../../Components/CreditCardSummaryItem"
 import { ShippingSummaryItemFragmentContainer as ShippingSummaryItem } from "../../Components/ShippingSummaryItem"
 import { SystemContextConsumer } from "v2/System/SystemContext"
-import { Status_order } from "v2/__generated__/Status_order.graphql"
+import { Status_order$data } from "v2/__generated__/Status_order.graphql"
 import { getStatusCopy } from "../../Utils/getStatusCopy"
 
 const logger = createLogger("Order/Routes/Status/index.tsx")
 
 export interface StatusProps {
-  order: Status_order
+  order: Status_order$data
   router: Router
   match: Match
 }

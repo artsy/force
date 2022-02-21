@@ -1,15 +1,15 @@
-import * as React from "react";
+import * as React from "react"
 import { Join, Spacer, Text } from "@artsy/palette"
 import { ViewingRoomsLatestGridFragmentContainer } from "./Components/ViewingRoomsLatestGrid"
 import { ViewingRoomsMeta } from "./Components/ViewingRoomsMeta"
-import { ViewingRoomsApp_allViewingRooms } from "v2/__generated__/ViewingRoomsApp_allViewingRooms.graphql"
-import { ViewingRoomsApp_featuredViewingRooms } from "v2/__generated__/ViewingRoomsApp_featuredViewingRooms.graphql"
+import { ViewingRoomsApp_allViewingRooms$data } from "v2/__generated__/ViewingRoomsApp_allViewingRooms.graphql"
+import { ViewingRoomsApp_featuredViewingRooms$data } from "v2/__generated__/ViewingRoomsApp_featuredViewingRooms.graphql"
 import { ViewingRoomsFeaturedRailFragmentContainer } from "./Components/ViewingRoomsFeaturedRail"
 import { createFragmentContainer, graphql } from "react-relay"
 
 interface ViewingRoomsAppProps {
-  allViewingRooms: ViewingRoomsApp_allViewingRooms
-  featuredViewingRooms: ViewingRoomsApp_featuredViewingRooms
+  allViewingRooms: ViewingRoomsApp_allViewingRooms$data
+  featuredViewingRooms: ViewingRoomsApp_featuredViewingRooms$data
 }
 
 const ViewingRoomsApp: React.FC<ViewingRoomsAppProps> = props => {

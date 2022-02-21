@@ -5,10 +5,10 @@ import { extractNodes } from "v2/Utils/extractNodes"
 import { ReviewOfferCTA } from "./ReviewOfferCTA"
 import { OpenInquiryModalCTAFragmentContainer } from "./OpenInquiryModalCTA"
 
-import { ConversationCTA_conversation } from "v2/__generated__/ConversationCTA_conversation.graphql"
+import { ConversationCTA_conversation$data } from "v2/__generated__/ConversationCTA_conversation.graphql"
 
 interface ConversationCTAProps {
-  conversation: ConversationCTA_conversation
+  conversation: ConversationCTA_conversation$data
   openInquiryModal: () => void
   openOrderModal: () => void
 }

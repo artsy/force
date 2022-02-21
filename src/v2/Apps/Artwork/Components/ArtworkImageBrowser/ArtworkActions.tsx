@@ -1,4 +1,4 @@
-import { ArtworkActions_artwork } from "v2/__generated__/ArtworkActions_artwork.graphql"
+import { ArtworkActions_artwork$data } from "v2/__generated__/ArtworkActions_artwork.graphql"
 import { useSystemContext } from "v2/System"
 import { AnalyticsSchema, useTracking } from "v2/System/Analytics"
 import { compact } from "lodash"
@@ -35,7 +35,7 @@ import {
 import { getENV } from "v2/Utils/getENV"
 
 interface ArtworkActionsProps {
-  artwork: ArtworkActions_artwork
+  artwork: ArtworkActions_artwork$data
   selectDefaultSlide(): void
 }
 

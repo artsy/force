@@ -8,13 +8,13 @@ import { FC, useMemo, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useSystemContext } from "v2/System"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
-import { PartnersSpecialtyAutocomplete_viewer } from "v2/__generated__/PartnersSpecialtyAutocomplete_viewer.graphql"
+import { PartnersSpecialtyAutocomplete_viewer$data } from "v2/__generated__/PartnersSpecialtyAutocomplete_viewer.graphql"
 import { PartnersSpecialtyAutocompleteQuery } from "v2/__generated__/PartnersSpecialtyAutocompleteQuery.graphql"
 import { useRouter } from "v2/System/Router/useRouter"
 import { compact, omit } from "lodash"
 
 interface PartnersSpecialtyAutocompleteProps {
-  viewer: PartnersSpecialtyAutocomplete_viewer
+  viewer: PartnersSpecialtyAutocomplete_viewer$data
 }
 
 const PartnersSpecialtyAutocomplete: FC<PartnersSpecialtyAutocompleteProps> = ({

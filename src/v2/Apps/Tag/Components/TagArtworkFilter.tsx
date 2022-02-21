@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"
 import { createRefetchContainer, RelayRefetchProp, graphql } from "react-relay"
 import { useRouter } from "v2/System/Router/useRouter"
 import { BaseArtworkFilter } from "v2/Components/ArtworkFilter"
@@ -8,10 +8,10 @@ import {
   SharedArtworkFilterContextProps,
 } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
 import { updateUrl } from "v2/Components/ArtworkFilter/Utils/urlBuilder"
-import { TagArtworkFilter_tag } from "v2/__generated__/TagArtworkFilter_tag.graphql"
+import { TagArtworkFilter_tag$data } from "v2/__generated__/TagArtworkFilter_tag.graphql"
 
 interface TagArtworkFilterProps {
-  tag: TagArtworkFilter_tag
+  tag: TagArtworkFilter_tag$data
   relay: RelayRefetchProp
 }
 

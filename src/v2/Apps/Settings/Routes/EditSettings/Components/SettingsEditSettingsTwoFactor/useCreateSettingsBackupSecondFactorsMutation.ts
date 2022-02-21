@@ -2,7 +2,7 @@ import { commitMutation, graphql } from "relay-runtime"
 import { useSystemContext } from "v2/System"
 import {
   useCreateSettingsBackupSecondFactorsMutation,
-  useCreateSettingsBackupSecondFactorsMutationResponse,
+  useCreateSettingsBackupSecondFactorsMutation$data,
   CreateBackupSecondFactorsInput,
 } from "v2/__generated__/useCreateSettingsBackupSecondFactorsMutation.graphql"
 
@@ -11,7 +11,7 @@ export const useCreateSettingsBackupSecondFactors = () => {
 
   const submitCreateSettingsBackupSecondFactors = (
     input: CreateBackupSecondFactorsInput = {}
-  ): Promise<useCreateSettingsBackupSecondFactorsMutationResponse> => {
+  ): Promise<useCreateSettingsBackupSecondFactorsMutation$data> => {
     return new Promise((resolve, reject) => {
       commitMutation<useCreateSettingsBackupSecondFactorsMutation>(
         relayEnvironment!,

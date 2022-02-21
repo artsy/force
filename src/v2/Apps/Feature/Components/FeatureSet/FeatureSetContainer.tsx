@@ -2,10 +2,10 @@ import * as React from "react"
 import { Box, CSSGrid, Join, Spacer } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Masonry } from "v2/Components/Masonry"
-import { FeatureSetContainer_set } from "v2/__generated__/FeatureSetContainer_set.graphql"
+import { FeatureSetContainer_set$data } from "v2/__generated__/FeatureSetContainer_set.graphql"
 
 export interface FeatureSetContainerProps {
-  set: FeatureSetContainer_set
+  set: FeatureSetContainer_set$data
 }
 
 export const FeatureSetContainer: React.FC<FeatureSetContainerProps> = ({

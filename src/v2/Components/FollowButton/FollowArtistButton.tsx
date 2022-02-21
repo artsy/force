@@ -12,7 +12,7 @@ import { FollowArtistPopoverQueryRenderer } from "v2/Components/FollowArtistPopo
 import * as React from "react"
 import track, { TrackingProp } from "react-tracking"
 import styled from "styled-components"
-import { FollowArtistButton_artist } from "../../__generated__/FollowArtistButton_artist.graphql"
+import { FollowArtistButton_artist$data } from "../../__generated__/FollowArtistButton_artist.graphql"
 import { FollowArtistButtonQuery } from "../../__generated__/FollowArtistButtonQuery.graphql"
 import { FollowButton } from "./Button"
 import {
@@ -36,7 +36,7 @@ interface Props
     AnalyticsContextProps {
   relay?: RelayProp
   mediator?: Mediator
-  artist?: FollowArtistButton_artist
+  artist?: FollowArtistButton_artist$data
   tracking?: TrackingProp
   contextModule: AuthContextModule
   /**
@@ -46,7 +46,7 @@ interface Props
   /**
    * Custom renderer if palette button is not desired
    */
-  render?: (artist: FollowArtistButton_artist) => JSX.Element
+  render?: (artist: FollowArtistButton_artist$data) => JSX.Element
   triggerSuggestions?: boolean
 }
 

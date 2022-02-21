@@ -15,16 +15,16 @@ import { FollowProfileButtonFragmentContainer as FollowProfileButton } from "v2/
 import { useSystemContext } from "v2/System"
 import { ContextModule } from "@artsy/cohesion"
 import { RouterLink } from "v2/System/Router/RouterLink"
-import { PartnerHeader_partner } from "v2/__generated__/PartnerHeader_partner.graphql"
+import { PartnerHeader_partner$data } from "v2/__generated__/PartnerHeader_partner.graphql"
 
 export interface PartnerHeaderProps {
-  partner: PartnerHeader_partner
+  partner: PartnerHeader_partner$data
 }
 
 export const HeaderImage = styled(Image)`
   border: 1px solid ${color("black10")};
   object-fit: contain;
-`
+` as any
 
 export const PartnerHeader: React.FC<PartnerHeaderProps> = ({ partner }) => {
   const { user } = useSystemContext()
@@ -50,7 +50,6 @@ export const PartnerHeader: React.FC<PartnerHeaderProps> = ({ partner }) => {
                   src={partner.profile.icon.resized.src}
                   // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
                   srcSet={partner.profile.icon.resized.srcSet}
-                  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
                   alt={partner.name}
                   width={[60, 80]}
                   height={[60, 80]}

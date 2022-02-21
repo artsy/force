@@ -3,14 +3,14 @@ import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 
-import { BackupSecondFactorModalContent_me } from "v2/__generated__/BackupSecondFactorModalContent_me.graphql"
+import { BackupSecondFactorModalContent_me$data } from "v2/__generated__/BackupSecondFactorModalContent_me.graphql"
 import { BackupSecondFactorModalContentQuery } from "v2/__generated__/BackupSecondFactorModalContentQuery.graphql"
 
 import { useSystemContext } from "v2/System"
 import { renderWithLoadProgress } from "v2/System/Relay/renderWithLoadProgress"
 
 interface BackupSecondFactorModalContentProps extends BorderBoxProps {
-  me: BackupSecondFactorModalContent_me
+  me: BackupSecondFactorModalContent_me$data
 }
 
 export const BackupSecondFactorModalContent: React.FC<BackupSecondFactorModalContentProps> = props => {

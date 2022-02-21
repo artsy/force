@@ -1,5 +1,5 @@
 import { Box, Sans, Serif } from "@artsy/palette"
-import { Feature_viewer } from "v2/__generated__/Feature_viewer.graphql"
+import { Feature_viewer$data } from "v2/__generated__/Feature_viewer.graphql"
 import { FeaturedArticlesFragmentContainer as FeaturedArticles } from "v2/Apps/FeatureAKG/Components/FeaturedArticles"
 import { FeaturedArtists } from "v2/Apps/FeatureAKG/Components/FeaturedArtists"
 import { FeaturedRailsFragmentContainer as FeaturedRails } from "v2/Apps/FeatureAKG/Components/FeaturedRails"
@@ -16,7 +16,7 @@ import { crop, resize } from "v2/Utils/resizer"
 import { Media } from "v2/Utils/Responsive"
 
 interface FeatureProps {
-  viewer: Feature_viewer
+  viewer: Feature_viewer$data
 }
 
 const Feature: React.FC<FeatureProps> = props => {

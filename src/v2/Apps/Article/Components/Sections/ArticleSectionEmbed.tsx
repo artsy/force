@@ -1,10 +1,10 @@
 import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Box, ResponsiveBox } from "@artsy/palette"
-import { ArticleSectionEmbed_section } from "v2/__generated__/ArticleSectionEmbed_section.graphql"
+import { ArticleSectionEmbed_section$data } from "v2/__generated__/ArticleSectionEmbed_section.graphql"
 
 interface ArticleSectionEmbedProps {
-  section: ArticleSectionEmbed_section
+  section: ArticleSectionEmbed_section$data
 }
 
 const ArticleSectionEmbed: FC<ArticleSectionEmbedProps> = ({ section }) => {

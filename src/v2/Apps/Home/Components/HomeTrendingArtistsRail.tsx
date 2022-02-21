@@ -12,7 +12,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { useSystemContext, useTracking } from "v2/System"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import { RouterLink } from "v2/System/Router/RouterLink"
-import { HomeTrendingArtistsRail_viewer } from "v2/__generated__/HomeTrendingArtistsRail_viewer.graphql"
+import { HomeTrendingArtistsRail_viewer$data } from "v2/__generated__/HomeTrendingArtistsRail_viewer.graphql"
 import { HomeTrendingArtistsRailQuery } from "v2/__generated__/HomeTrendingArtistsRailQuery.graphql"
 import { extractNodes } from "v2/Utils/extractNodes"
 import {
@@ -25,7 +25,7 @@ import { FollowArtistButtonFragmentContainer } from "v2/Components/FollowButton/
 import { Rail } from "v2/Components/Rail"
 
 interface HomeTrendingArtistsRailProps {
-  viewer: HomeTrendingArtistsRail_viewer
+  viewer: HomeTrendingArtistsRail_viewer$data
 }
 
 const HomeTrendingArtistsRail: React.FC<HomeTrendingArtistsRailProps> = ({

@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer } from "react-relay"
 import { graphql } from "relay-runtime"
 import styled from "styled-components"
@@ -13,7 +13,7 @@ import {
 import { TimeSince } from "./TimeSince"
 import { Truncator } from "v2/Components/Truncator"
 
-import { ConversationSnippet_conversation } from "v2/__generated__/ConversationSnippet_conversation.graphql"
+import { ConversationSnippet_conversation$data } from "v2/__generated__/ConversationSnippet_conversation.graphql"
 
 const StyledImage = styled(ImageWithFallback)`
   object-fit: cover;
@@ -54,7 +54,7 @@ const PurpleCircle = styled.div`
 `
 
 interface ConversationSnippetProps {
-  conversation: ConversationSnippet_conversation
+  conversation: ConversationSnippet_conversation$data
   hasDivider: boolean
   isSelected: boolean
 }

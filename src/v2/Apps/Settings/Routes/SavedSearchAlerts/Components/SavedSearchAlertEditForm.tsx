@@ -22,9 +22,9 @@ import { SavedSearchAleftFormValues } from "v2/Components/SavedSearchAlert/Saved
 import { getNamePlaceholder } from "v2/Components/SavedSearchAlert/Utils/getNamePlaceholder"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import { SavedSearchAlertEditFormQuery } from "v2/__generated__/SavedSearchAlertEditFormQuery.graphql"
-import { SavedSearchAlertEditForm_savedSearch } from "v2/__generated__/SavedSearchAlertEditForm_savedSearch.graphql"
-import { SavedSearchAlertEditForm_artist } from "v2/__generated__/SavedSearchAlertEditForm_artist.graphql"
-import { SavedSearchAlertEditForm_artworksConnection } from "v2/__generated__/SavedSearchAlertEditForm_artworksConnection.graphql"
+import { SavedSearchAlertEditForm_savedSearch$data } from "v2/__generated__/SavedSearchAlertEditForm_savedSearch.graphql"
+import { SavedSearchAlertEditForm_artist$data } from "v2/__generated__/SavedSearchAlertEditForm_artist.graphql"
+import { SavedSearchAlertEditForm_artworksConnection$data } from "v2/__generated__/SavedSearchAlertEditForm_artworksConnection.graphql"
 import { extractPills } from "v2/Components/SavedSearchAlert/Utils/extractPills"
 import { FilterPill } from "v2/Components/ArtworkFilter/SavedSearch/Utils/FilterPillsContext"
 import { EditAlertEntity } from "../types"
@@ -46,9 +46,9 @@ interface SavedSearchAlertEditFormQueryRendererProps {
 }
 
 interface SavedSearchAlertEditFormProps {
-  savedSearch: SavedSearchAlertEditForm_savedSearch
-  artist: SavedSearchAlertEditForm_artist
-  artworksConnection: SavedSearchAlertEditForm_artworksConnection
+  savedSearch: SavedSearchAlertEditForm_savedSearch$data
+  artist: SavedSearchAlertEditForm_artist$data
+  artworksConnection: SavedSearchAlertEditForm_artworksConnection$data
   editAlertEntity: EditAlertEntity
   onDeleteClick: () => void
   onCompleted: () => void

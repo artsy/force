@@ -1,5 +1,5 @@
 import { Box, Sans, Serif, Spacer } from "@artsy/palette"
-import { ArtistConsignFAQ_artist } from "v2/__generated__/ArtistConsignFAQ_artist.graphql"
+import { ArtistConsignFAQ_artist$data } from "v2/__generated__/ArtistConsignFAQ_artist.graphql"
 import { AnalyticsSchema, useTracking } from "v2/System"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -9,7 +9,7 @@ import { getConsignSubmissionUrl } from "./Utils/getConsignSubmissionUrl"
 import { Masonry } from "v2/Components/Masonry"
 
 interface ArtistConsignFAQProps {
-  artist: ArtistConsignFAQ_artist
+  artist: ArtistConsignFAQ_artist$data
 }
 
 const ArtistConsignFAQ: React.FC<ArtistConsignFAQProps> = props => {

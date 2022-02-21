@@ -12,8 +12,8 @@ import {
 } from "@artsy/palette"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ArtworkSidebarBidAction_artwork } from "v2/__generated__/ArtworkSidebarBidAction_artwork.graphql"
-import { ArtworkSidebarBidAction_me } from "v2/__generated__/ArtworkSidebarBidAction_me.graphql"
+import { ArtworkSidebarBidAction_artwork$data } from "v2/__generated__/ArtworkSidebarBidAction_artwork.graphql"
+import { ArtworkSidebarBidAction_me$data } from "v2/__generated__/ArtworkSidebarBidAction_me.graphql"
 import * as Schema from "v2/System/Analytics/Schema"
 import track from "react-tracking"
 import { getENV } from "v2/Utils/getENV"
@@ -21,8 +21,8 @@ import { bidderQualifications } from "v2/Utils/identityVerificationRequirements"
 import { compact } from "lodash"
 
 export interface ArtworkSidebarBidActionProps {
-  artwork: ArtworkSidebarBidAction_artwork
-  me: ArtworkSidebarBidAction_me
+  artwork: ArtworkSidebarBidAction_artwork$data
+  me: ArtworkSidebarBidAction_me$data
 }
 
 export interface ArtworkSidebarBidActionState {
@@ -107,7 +107,7 @@ export class ArtworkSidebarBidAction extends React.Component<
     context_module: Schema.ContextModule.Sidebar,
     action_type: Schema.ActionType.Click,
   })
-  redirectToLiveBidding(me: ArtworkSidebarBidAction_me | null) {
+  redirectToLiveBidding(me: ArtworkSidebarBidAction_me$data | null) {
     const slug = this.props.artwork.sale?.slug
     const liveUrl = `${getENV("PREDICTION_URL")}/${slug}`
     if (me) {

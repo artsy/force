@@ -1,8 +1,8 @@
 import { groupBy } from "lodash"
-import * as React from "react";
+import * as React from "react"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { extractNodes } from "v2/Utils/extractNodes"
-import { ArtistCVGroup_artist } from "v2/__generated__/ArtistCVGroup_artist.graphql"
+import { ArtistCVGroup_artist$data } from "v2/__generated__/ArtistCVGroup_artist.graphql"
 import {
   Text,
   Box,
@@ -22,7 +22,7 @@ import { useState } from "react"
 const REFETCH_PAGE_SIZE = 10
 
 interface ArtistCVGroupProps {
-  artist: ArtistCVGroup_artist
+  artist: ArtistCVGroup_artist$data
   relay: RelayPaginationProp
   title: string
 }

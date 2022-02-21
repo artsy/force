@@ -2,7 +2,7 @@ import { Environment, commitMutation, graphql } from "react-relay"
 import {
   CreateOfferResponseMutation,
   CreateOfferResponseMutationInput,
-  CreateOfferResponseMutationResponse,
+  CreateOfferResponseMutation$data,
 } from "v2/__generated__/CreateOfferResponseMutation.graphql"
 
 type CreateOfferResponseValues = Pick<
@@ -15,7 +15,7 @@ export const CreateOfferResponse = (
   offerID: string,
   values: CreateOfferResponseValues
 ) => {
-  return new Promise<CreateOfferResponseMutationResponse>((resolve, reject) => {
+  return new Promise<CreateOfferResponseMutation$data>((resolve, reject) => {
     commitMutation<CreateOfferResponseMutation>(relayEnvironment, {
       mutation: graphql`
         mutation CreateOfferResponseMutation(

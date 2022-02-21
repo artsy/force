@@ -1,6 +1,6 @@
 import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ArtistSellWithArtsy_artist } from "v2/__generated__/ArtistSellWithArtsy_artist.graphql"
+import { ArtistSellWithArtsy_artist$data } from "v2/__generated__/ArtistSellWithArtsy_artist.graphql"
 import { ArtistSellWithArtsyQuery } from "v2/__generated__/ArtistSellWithArtsyQuery.graphql"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import {
@@ -20,7 +20,7 @@ import { AnalyticsSchema } from "v2/System"
 import styled from "styled-components"
 
 interface ArtistSellWithArtsyProps {
-  artist?: ArtistSellWithArtsy_artist
+  artist?: ArtistSellWithArtsy_artist$data
 }
 
 const ArtistSellWithArtsy: FC<ArtistSellWithArtsyProps> = ({ artist }) => {

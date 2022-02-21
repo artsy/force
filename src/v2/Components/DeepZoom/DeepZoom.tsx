@@ -1,12 +1,12 @@
 import { Box, Flex, ModalBase } from "@artsy/palette"
 import { AnalyticsSchema, useTracking } from "v2/System/Analytics"
 import { once, throttle } from "lodash"
-import * as React from "react";
+import * as React from "react"
 import { DeepZoomCloseButton } from "./DeepZoomCloseButton"
 import { DeepZoomSlider } from "./DeepZoomSlider"
 import { useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { DeepZoom_image } from "v2/__generated__/DeepZoom_image.graphql"
+import { DeepZoom_image$data } from "v2/__generated__/DeepZoom_image.graphql"
 import { useRef } from "react"
 import { useEffect } from "react"
 import { useDidMount } from "v2/Utils/Hooks/useDidMount"
@@ -14,7 +14,7 @@ import { useDidMount } from "v2/Utils/Hooks/useDidMount"
 const ZOOM_PER_CLICK = 1.4
 
 interface DeepZoomProps {
-  image: DeepZoom_image
+  image: DeepZoom_image$data
   onClose(): void
 }
 

@@ -5,10 +5,10 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { useSystemContext } from "v2/System"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { FollowProfileButtonFragmentContainer } from "v2/Components/FollowButton/FollowProfileButton"
-import { NearbyGalleryCard_partner } from "v2/__generated__/NearbyGalleryCard_partner.graphql"
+import { NearbyGalleryCard_partner$data } from "v2/__generated__/NearbyGalleryCard_partner.graphql"
 
 interface NearbyGalleryCardProps extends BoxProps {
-  partner: NearbyGalleryCard_partner
+  partner: NearbyGalleryCard_partner$data
   city?: string | null
 }
 

@@ -1,5 +1,5 @@
-import { ArtworkBanner_artwork } from "v2/__generated__/ArtworkBanner_artwork.graphql"
-import * as React from "react";
+import { ArtworkBanner_artwork$data } from "v2/__generated__/ArtworkBanner_artwork.graphql"
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import {
   Box,
@@ -14,7 +14,7 @@ import { TopContextBar } from "v2/Components/TopContextBar"
 import { RouterLink } from "v2/System/Router/RouterLink"
 
 export interface ArtworkBannerProps {
-  artwork: ArtworkBanner_artwork
+  artwork: ArtworkBanner_artwork$data
 }
 
 export const ArtworkBanner: React.FC<ArtworkBannerProps> = props => {

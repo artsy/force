@@ -1,13 +1,13 @@
 import { Box, Text, Flex, Clickable, Spacer } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "v2/System/Router/RouterLink"
-import { SavedSearchAlertListItem_item } from "v2/__generated__/SavedSearchAlertListItem_item.graphql"
+import { SavedSearchAlertListItem_item$data } from "v2/__generated__/SavedSearchAlertListItem_item.graphql"
 import { EditAlertEntity } from "../types"
 
 export type SavedSearchAlertListItemVariant = "active" | "inactive"
 
 interface SavedSearchAlertListItemProps {
-  item: SavedSearchAlertListItem_item
+  item: SavedSearchAlertListItem_item$data
   variant?: SavedSearchAlertListItemVariant
   onEditAlertClick: (entity: EditAlertEntity) => void
 }

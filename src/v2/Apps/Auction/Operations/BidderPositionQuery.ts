@@ -1,13 +1,13 @@
 import {
   BidderPositionQuery,
-  BidderPositionQueryVariables,
+  BidderPositionQuery$variables,
 } from "v2/__generated__/BidderPositionQuery.graphql"
 import { graphql } from "react-relay"
 import { Environment, fetchQuery } from "relay-runtime"
 
 export const bidderPositionQuery = (
   environment: Environment,
-  variables: BidderPositionQueryVariables
+  variables: BidderPositionQuery$variables
 ) => {
   return fetchQuery<BidderPositionQuery>(
     environment,

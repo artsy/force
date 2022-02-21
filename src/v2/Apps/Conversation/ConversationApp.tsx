@@ -9,16 +9,16 @@ import { Flex, Spinner, breakpoints } from "@artsy/palette"
 import { NoMessages } from "./Components/NoMessages"
 
 import { ConversationListPaginationContainer as ConversationList } from "v2/Apps/Conversation/Components/ConversationList"
-import { ConversationApp_me } from "v2/__generated__/ConversationApp_me.graphql"
+import { ConversationApp_me$data } from "v2/__generated__/ConversationApp_me.graphql"
 import { useWindowSize } from "v2/Utils/Hooks/useWindowSize"
 interface ConversationAppProps {
-  me: ConversationApp_me
+  me: ConversationApp_me$data
   match: Match
   router: Router
 }
 
 interface InboxProps {
-  me: ConversationApp_me
+  me: ConversationApp_me$data
   // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
   selectedConversation: ConversationApp_me["conversationsConnection"]["edges"][0]["node"]
 }

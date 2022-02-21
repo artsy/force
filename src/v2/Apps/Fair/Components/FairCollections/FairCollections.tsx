@@ -1,12 +1,12 @@
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { FairCollections_fair } from "v2/__generated__/FairCollections_fair.graphql"
+import { FairCollections_fair$data } from "v2/__generated__/FairCollections_fair.graphql"
 import { Box, BoxProps } from "@artsy/palette"
 import { Carousel } from "v2/Components/Carousel"
 import { FairCollectionFragmentContainer as FairCollection } from "./FairCollection"
 
 interface FairCollectionsProps extends BoxProps {
-  fair: FairCollections_fair
+  fair: FairCollections_fair$data
 }
 
 export const FairCollections: React.FC<FairCollectionsProps> = ({

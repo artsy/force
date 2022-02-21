@@ -1,6 +1,6 @@
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { MyBidsBidItem_saleArtwork } from "v2/__generated__/MyBidsBidItem_saleArtwork.graphql"
+import { MyBidsBidItem_saleArtwork$data } from "v2/__generated__/MyBidsBidItem_saleArtwork.graphql"
 import {
   ArrowDownCircleIcon,
   ArrowUpCircleIcon,
@@ -19,7 +19,7 @@ import { tabTypeToContextModuleMap } from "../../Utils/tabTypeToContextModuleMap
 
 interface MyBidsBidItemProps {
   horizontalSlidePosition: number
-  saleArtwork: MyBidsBidItem_saleArtwork
+  saleArtwork: MyBidsBidItem_saleArtwork$data
 }
 
 export const MyBidsBidItem: React.FC<MyBidsBidItemProps> = ({

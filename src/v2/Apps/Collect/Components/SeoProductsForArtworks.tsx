@@ -3,7 +3,7 @@ import { Component } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { toSentence } from "underscore.string"
 
-import { SeoProductsForArtworks_artworks } from "v2/__generated__/SeoProductsForArtworks_artworks.graphql"
+import { SeoProductsForArtworks_artworks$data } from "v2/__generated__/SeoProductsForArtworks_artworks.graphql"
 import { Product } from "v2/Components/Seo/Product"
 import { get } from "v2/Utils/get"
 
@@ -17,7 +17,7 @@ const AVAILABILITY = {
 const formatCurrency = value => currency(value, { separator: "" }).format()
 
 interface SeoProductsProps {
-  artworks: SeoProductsForArtworks_artworks
+  artworks: SeoProductsForArtworks_artworks$data
 }
 
 export class SeoProducts extends Component<SeoProductsProps> {

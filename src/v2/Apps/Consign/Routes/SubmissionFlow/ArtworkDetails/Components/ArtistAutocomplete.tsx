@@ -11,7 +11,7 @@ import {
 } from "@artsy/palette"
 import {
   ArtistAutocomplete_SearchConnection_Query,
-  ArtistAutocomplete_SearchConnection_QueryResponse,
+  ArtistAutocomplete_SearchConnection_Query$data,
 } from "v2/__generated__/ArtistAutocomplete_SearchConnection_Query.graphql"
 import { extractNodes } from "v2/Utils/extractNodes"
 import { ArtworkDetailsFormModel } from "./ArtworkDetailsForm"
@@ -24,7 +24,7 @@ type SearchConnectionNode = NonNullable<
   NonNullable<
     NonNullable<
       NonNullable<
-        ArtistAutocomplete_SearchConnection_QueryResponse["searchConnection"]
+        ArtistAutocomplete_SearchConnection_Query$data["searchConnection"]
       >["edges"]
     >[number]
   >["node"]
@@ -35,7 +35,7 @@ type SubmissionImage =
       NonNullable<
         NonNullable<
           NonNullable<
-            ArtistAutocomplete_SearchConnection_QueryResponse["searchConnection"]
+            ArtistAutocomplete_SearchConnection_Query$data["searchConnection"]
           >["edges"]
         >[number]
       >["node"]

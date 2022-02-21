@@ -15,10 +15,10 @@ import { useSystemContext } from "v2/System"
 import { BackupSecondFactorModalContentQueryRenderer as ModalContent } from "./BackupSecondFactorModalContent"
 import { CreateBackupSecondFactors } from "./Mutation/CreateBackupSecondFactors"
 
-import { BackupSecondFactor_me } from "v2/__generated__/BackupSecondFactor_me.graphql"
+import { BackupSecondFactor_me$data } from "v2/__generated__/BackupSecondFactor_me.graphql"
 
 interface BackupSecondFactorProps extends BorderBoxProps {
-  me: BackupSecondFactor_me
+  me: BackupSecondFactor_me$data
 }
 
 export const BackupSecondFactor: React.FC<BackupSecondFactorProps> = props => {

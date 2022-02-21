@@ -1,5 +1,5 @@
 import * as React from "react"
-import styled from "styled-components"
+import styled, { StyledComponentClass } from "styled-components"
 import { Media } from "v2/Utils/Responsive"
 import {
   ArtsyMarkIcon,
@@ -293,6 +293,6 @@ export const FooterLink = styled(RouterLink)<RouterLinkProps & BoxProps>`
   text-decoration: none;
   white-space: nowrap;
   ${boxMixin}
-`
+` as StyledComponentClass<any, any>
 
 FooterLink.displayName = "FooterLink"

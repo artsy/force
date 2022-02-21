@@ -1,7 +1,7 @@
-import { ArtistSearchResults_viewer } from "v2/__generated__/ArtistSearchResults_viewer.graphql"
+import { ArtistSearchResults_viewer$data } from "v2/__generated__/ArtistSearchResults_viewer.graphql"
 import {
   ArtistSearchResultsArtistMutation,
-  ArtistSearchResultsArtistMutationResponse,
+  ArtistSearchResultsArtistMutation$data,
 } from "v2/__generated__/ArtistSearchResultsArtistMutation.graphql"
 import { ArtistSearchResultsQuery } from "v2/__generated__/ArtistSearchResultsQuery.graphql"
 import { SystemContextProps, withSystemContext } from "v2/System"
@@ -18,7 +18,7 @@ import ReplaceTransition from "../../Animation/ReplaceTransition"
 import ItemLink, { LinkContainer } from "../ItemLink"
 
 // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-type Artist = ArtistSearchResults_viewer["searchConnection"]["edges"][number]["node"]
+type Artist = ArtistSearchResults_viewer$data["searchConnection"]["edges"][number]["node"]
 
 export interface ContainerProps {
   onArtistFollow
@@ -28,7 +28,7 @@ export interface ContainerProps {
 
 interface Props extends React.HTMLProps<HTMLAnchorElement>, ContainerProps {
   relay?: RelayProp
-  viewer: ArtistSearchResults_viewer
+  viewer: ArtistSearchResults_viewer$data
 }
 
 class ArtistSearchResultsContent extends React.Component<Props, null> {
@@ -48,7 +48,7 @@ class ArtistSearchResultsContent extends React.Component<Props, null> {
   onArtistFollowed(
     artist: Artist,
     store: RecordSourceSelectorProxy,
-    data: ArtistSearchResultsArtistMutationResponse,
+    data: ArtistSearchResultsArtistMutation$data,
     follow: boolean
   ): void {
     this.props.onArtistFollow(follow, artist)
@@ -230,6 +230,7 @@ const ArtistSearchResultsComponent: React.SFC<
         if (props) {
           return (
             <ArtistSearchResultsContentContainer
+              // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
               onArtistFollow={onArtistFollow}
               onNoResults={onNoResults}
               term={term}

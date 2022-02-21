@@ -1,5 +1,5 @@
-import { useState } from "react";
-import * as React from "react";
+import { useState } from "react"
+import * as React from "react"
 import { createFragmentContainer, graphql, RelayProp } from "react-relay"
 import { useTracking } from "react-tracking"
 import { Button } from "@artsy/palette"
@@ -8,12 +8,12 @@ import { tappedConfirmArtwork } from "@artsy/cohesion"
 import createLogger from "v2/Utils/logger"
 import { MakeInquiryOffer } from "../Mutation/MakeInquiryOfferMutation"
 
-import { ConfirmArtworkButton_artwork } from "v2/__generated__/ConfirmArtworkButton_artwork.graphql"
+import { ConfirmArtworkButton_artwork$data } from "v2/__generated__/ConfirmArtworkButton_artwork.graphql"
 
 const logger = createLogger("Conversation/Components/ConfirmArtworkButton.tsx")
 
 export interface ConfirmArtworkButtonProps {
-  artwork: ConfirmArtworkButton_artwork
+  artwork: ConfirmArtworkButton_artwork$data
   relay: RelayProp
   editionSetID: string | null
   disabled?: boolean

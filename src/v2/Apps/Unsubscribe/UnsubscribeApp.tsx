@@ -1,14 +1,14 @@
 import { Column, GridColumns, Spacer, Text, Message } from "@artsy/palette"
-import * as React from "react";
+import * as React from "react"
 import { Title } from "react-head"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useRouter } from "v2/System/Router/useRouter"
-import { UnsubscribeApp_me } from "v2/__generated__/UnsubscribeApp_me.graphql"
+import { UnsubscribeApp_me$data } from "v2/__generated__/UnsubscribeApp_me.graphql"
 import { UnsubscribeLoggedInFragmentContainer } from "./Components/UnsubscribeLoggedIn"
 import { UnsubscribeLoggedOut } from "./Components/UnsubscribeLoggedOut"
 
 interface UnsubscribeAppProps {
-  me: UnsubscribeApp_me | null
+  me: UnsubscribeApp_me$data | null
 }
 
 export const parseTokenFromQuery = (query): string => {

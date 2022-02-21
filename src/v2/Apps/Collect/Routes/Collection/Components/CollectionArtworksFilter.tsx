@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"
 import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
 import { BaseArtworkFilter } from "v2/Components/ArtworkFilter"
 import {
@@ -9,7 +9,7 @@ import {
 import { updateUrl } from "v2/Components/ArtworkFilter/Utils/urlBuilder"
 import { usePathnameComplete } from "v2/Utils/Hooks/usePathnameComplete"
 import { useRouter } from "v2/System/Router/useRouter"
-import { CollectionArtworksFilter_collection } from "v2/__generated__/CollectionArtworksFilter_collection.graphql"
+import { CollectionArtworksFilter_collection$data } from "v2/__generated__/CollectionArtworksFilter_collection.graphql"
 import { ColorFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/ColorFilter"
 import { MediumFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/MediumFilter"
 import { PriceRangeFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/PriceRangeFilter"
@@ -26,7 +26,7 @@ import { useSystemContext } from "v2/System"
 
 interface CollectionArtworksFilterProps {
   relay: RelayRefetchProp
-  collection: CollectionArtworksFilter_collection
+  collection: CollectionArtworksFilter_collection$data
   aggregations?: SharedArtworkFilterContextProps["aggregations"]
   counts?: Counts
 }

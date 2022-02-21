@@ -5,7 +5,7 @@ import { useTracking } from "react-tracking"
 import { useAnalyticsContext, useSystemContext } from "v2/System"
 import { ShelfArtworkFragmentContainer } from "v2/Components/Artwork/ShelfArtwork"
 import { extractNodes } from "v2/Utils/extractNodes"
-import { ArtistWorksForSaleRail_artist } from "v2/__generated__/ArtistWorksForSaleRail_artist.graphql"
+import { ArtistWorksForSaleRail_artist$data } from "v2/__generated__/ArtistWorksForSaleRail_artist.graphql"
 import { ArtistWorksForSaleRailQuery } from "v2/__generated__/ArtistWorksForSaleRailQuery.graphql"
 import { scrollToTop } from "../Utils/scrollToTop"
 import { Rail } from "v2/Components/Rail"
@@ -13,7 +13,7 @@ import { Box, Skeleton, SkeletonBox, SkeletonText } from "@artsy/palette"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 
 interface ArtistWorksForSaleRailProps {
-  artist: ArtistWorksForSaleRail_artist
+  artist: ArtistWorksForSaleRail_artist$data
 }
 
 const ArtistWorksForSaleRail: React.FC<ArtistWorksForSaleRailProps> = ({

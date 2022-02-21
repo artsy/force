@@ -1,10 +1,10 @@
 import { render, screen } from "@testing-library/react"
-import { Message_message } from "v2/__generated__/Message_message.graphql"
+import { Message_message$data } from "v2/__generated__/Message_message.graphql"
 import { Message as messageFixture } from "v2/Apps/__tests__/Fixtures/Conversation"
 import { Message } from "../Message"
 
 // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-const message: Message_message = { " $refType": null, ...messageFixture }
+const message: Message_message$data = { " $refType": null, ...messageFixture }
 
 describe("Message", () => {
   describe("linkify text", () => {

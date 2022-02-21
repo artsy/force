@@ -1,7 +1,7 @@
 import { Box, Flex, Sans, Spacer } from "@artsy/palette"
 import * as React from "react"
 
-import { ArtistConsignRecentlySold_artist } from "v2/__generated__/ArtistConsignRecentlySold_artist.graphql"
+import { ArtistConsignRecentlySold_artist$data } from "v2/__generated__/ArtistConsignRecentlySold_artist.graphql"
 
 import { ContextModule } from "@artsy/cohesion"
 import FillwidthItem from "v2/Components/Artwork/FillwidthItem"
@@ -10,7 +10,7 @@ import { SectionContainer } from "./SectionContainer"
 import { Subheader } from "./Subheader"
 
 interface ArtistConsignRecentlySoldProps {
-  artist: ArtistConsignRecentlySold_artist
+  artist: ArtistConsignRecentlySold_artist$data
 }
 
 export const ArtistConsignRecentlySold: React.FC<ArtistConsignRecentlySoldProps> = ({

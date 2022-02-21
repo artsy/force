@@ -2,7 +2,7 @@ import { graphql } from "react-relay"
 
 import { createTestEnv } from "v2/DevTools/createTestEnv"
 
-import { TwoFactorAuthenticationQueryResponse } from "v2/__generated__/TwoFactorAuthenticationQuery.graphql"
+import { TwoFactorAuthenticationQuery$data } from "v2/__generated__/TwoFactorAuthenticationQuery.graphql"
 import { createMockFetchQuery } from "v2/DevTools"
 import { TwoFactorAuthenticationRefetchContainer } from ".."
 import {
@@ -26,7 +26,7 @@ HTMLCanvasElement.prototype.getContext = jest.fn()
 const setupTestEnv = () => {
   return createTestEnv({
     TestPage: TwoFactorAuthenticationTestPage,
-    Component: (props: TwoFactorAuthenticationQueryResponse) => (
+    Component: (props: TwoFactorAuthenticationQuery$data) => (
       // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       <TwoFactorAuthenticationRefetchContainer {...props} />
     ),

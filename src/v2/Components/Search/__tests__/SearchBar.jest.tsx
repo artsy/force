@@ -1,4 +1,4 @@
-import { SearchBarTestQueryRawResponse } from "v2/__generated__/SearchBarTestQuery.graphql"
+import { SearchBarTestQuery$rawResponse } from "v2/__generated__/SearchBarTestQuery.graphql"
 import { Input } from "@artsy/palette"
 import {
   SearchBarRefetchContainer as SearchBar,
@@ -12,7 +12,7 @@ import { flushPromiseQueue } from "v2/DevTools"
 
 jest.unmock("react-relay")
 
-const searchResults: SearchBarTestQueryRawResponse["viewer"] = {
+const searchResults: SearchBarTestQuery$rawResponse["viewer"] = {
   searchConnection: {
     edges: [
       {
@@ -65,7 +65,7 @@ const simulateTyping = (wrapper: ReactWrapper, text: string) => {
 }
 
 const getWrapper = (
-  viewer: SearchBarTestQueryRawResponse["viewer"],
+  viewer: SearchBarTestQuery$rawResponse["viewer"],
   breakpoint = "xl"
 ) => {
   return renderRelayTree({
@@ -81,7 +81,7 @@ const getWrapper = (
     `,
     mockData: {
       viewer,
-    } as SearchBarTestQueryRawResponse,
+    } as SearchBarTestQuery$rawResponse,
     variables: {
       term: "perc",
       hasTerm: true,

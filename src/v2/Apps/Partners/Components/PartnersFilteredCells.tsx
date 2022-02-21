@@ -8,7 +8,7 @@ import {
   PartnerCellFragmentContainer,
   PartnerCellPlaceholder,
 } from "v2/Components/Cells/PartnerCell"
-import { PartnersFilteredCells_viewer } from "v2/__generated__/PartnersFilteredCells_viewer.graphql"
+import { PartnersFilteredCells_viewer$data } from "v2/__generated__/PartnersFilteredCells_viewer.graphql"
 import { PartnersFilteredCellsQuery } from "v2/__generated__/PartnersFilteredCellsQuery.graphql"
 import { useSystemContext } from "v2/System"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
@@ -24,7 +24,7 @@ import {
 import { extractNodes } from "v2/Utils/extractNodes"
 
 interface PartnersFilteredCellsProps {
-  viewer: PartnersFilteredCells_viewer
+  viewer: PartnersFilteredCells_viewer$data
   relay: RelayPaginationProp
 }
 

@@ -1,6 +1,6 @@
-import { SeoDataForArtwork_Test_QueryRawResponse } from "v2/__generated__/SeoDataForArtwork_Test_Query.graphql"
+import { SeoDataForArtwork_Test_Query$rawResponse } from "v2/__generated__/SeoDataForArtwork_Test_Query.graphql"
 
-export const SeoDataForArtworkFixture: SeoDataForArtwork_Test_QueryRawResponse["artwork"] = {
+export const SeoDataForArtworkFixture: SeoDataForArtwork_Test_Query$rawResponse["artwork"] = {
   id: "opaque-artwork-id",
   href: "/artwork/an-artwork",
   date: "1950",

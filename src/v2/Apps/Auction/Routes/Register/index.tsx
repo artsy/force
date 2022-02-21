@@ -1,9 +1,9 @@
 import { Box, Separator, Serif } from "@artsy/palette"
-import { Register_me } from "v2/__generated__/Register_me.graphql"
-import { Register_sale } from "v2/__generated__/Register_sale.graphql"
+import { Register_me$data } from "v2/__generated__/Register_me.graphql"
+import { Register_sale$data } from "v2/__generated__/Register_sale.graphql"
 import {
   RegisterCreateBidderMutation,
-  RegisterCreateBidderMutationResponse,
+  RegisterCreateBidderMutation$data,
 } from "v2/__generated__/RegisterCreateBidderMutation.graphql"
 import { createCreditCardAndUpdatePhone } from "v2/Apps/Auction/Operations/CreateCreditCardAndUpdatePhone"
 import { RegistrationForm } from "v2/Apps/Auction/Components/RegistrationForm"
@@ -38,29 +38,27 @@ function createBidder(
   relayEnvironment: RelayProp["environment"],
   saleID: string
 ) {
-  return new Promise<RegisterCreateBidderMutationResponse>(
-    (resolve, reject) => {
-      commitMutation<RegisterCreateBidderMutation>(relayEnvironment, {
-        // TODO: Inputs to the mutation might have changed case of the keys!
-        mutation: graphql`
-          mutation RegisterCreateBidderMutation($input: CreateBidderInput!) {
-            createBidder(input: $input) {
-              bidder {
-                internalID
-              }
+  return new Promise<RegisterCreateBidderMutation$data>((resolve, reject) => {
+    commitMutation<RegisterCreateBidderMutation>(relayEnvironment, {
+      // TODO: Inputs to the mutation might have changed case of the keys!
+      mutation: graphql`
+        mutation RegisterCreateBidderMutation($input: CreateBidderInput!) {
+          createBidder(input: $input) {
+            bidder {
+              internalID
             }
           }
-        `,
+        }
+      `,
 
-        onCompleted: resolve,
+      onCompleted: resolve,
 
-        onError: reject,
-        variables: {
-          input: { saleID },
-        },
-      })
-    }
-  )
+      onError: reject,
+      variables: {
+        input: { saleID },
+      },
+    })
+  })
 }
 
 type OnSubmitType = ComponentProps<typeof RegistrationForm>["onSubmit"]
@@ -69,8 +67,8 @@ type FormikHelpers = Parameters<OnSubmitType>[1]
 interface RegisterProps {
   stripe: Stripe
   elements: StripeElements
-  sale: Register_sale
-  me: Register_me
+  sale: Register_sale$data
+  me: Register_me$data
   relay: RelayProp
   tracking: TrackingProp
 }

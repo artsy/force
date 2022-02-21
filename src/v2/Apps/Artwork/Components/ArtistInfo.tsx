@@ -6,7 +6,7 @@ import {
   Spacer,
   StackableBorderBox,
 } from "@artsy/palette"
-import { ArtistInfo_artist } from "v2/__generated__/ArtistInfo_artist.graphql"
+import { ArtistInfo_artist$data } from "v2/__generated__/ArtistInfo_artist.graphql"
 import { track } from "v2/System/Analytics"
 import * as Schema from "v2/System/Analytics/Schema"
 import { FollowArtistButtonFragmentContainer as FollowArtistButton } from "v2/Components/FollowButton/FollowArtistButton"
@@ -21,7 +21,7 @@ import { data as sd } from "sharify"
 import Events from "v2/Utils/Events"
 
 interface ArtistInfoProps {
-  artist: ArtistInfo_artist
+  artist: ArtistInfo_artist$data
 }
 
 const Container = ({ children }) => (

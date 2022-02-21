@@ -1,7 +1,7 @@
 import { createFragmentContainer, graphql } from "react-relay"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import { AboutArtworksRailQuery } from "v2/__generated__/AboutArtworksRailQuery.graphql"
-import { AboutArtworksRail_viewer } from "v2/__generated__/AboutArtworksRail_viewer.graphql"
+import { AboutArtworksRail_viewer$data } from "v2/__generated__/AboutArtworksRail_viewer.graphql"
 import { Rail } from "v2/Components/Rail"
 import { extractNodes } from "v2/Utils/extractNodes"
 import { ShelfArtworkFragmentContainer } from "v2/Components/Artwork/ShelfArtwork"
@@ -15,7 +15,7 @@ import {
 } from "@artsy/palette"
 
 interface AboutArtworksRailProps {
-  viewer: AboutArtworksRail_viewer
+  viewer: AboutArtworksRail_viewer$data
 }
 
 export const AboutArtworksRail: React.FC<AboutArtworksRailProps> = props => {

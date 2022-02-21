@@ -1,11 +1,11 @@
-import * as React from "react";
+import * as React from "react"
 import { Link, Meta, Title } from "react-head"
 import { createFragmentContainer, graphql } from "react-relay"
-import { FairMeta_fair } from "v2/__generated__/FairMeta_fair.graphql"
+import { FairMeta_fair$data } from "v2/__generated__/FairMeta_fair.graphql"
 import { getENV } from "v2/Utils/getENV"
 
 interface FairMetaProps {
-  fair: FairMeta_fair
+  fair: FairMeta_fair$data
 }
 
 const FairMeta: React.FC<FairMetaProps> = ({

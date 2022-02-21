@@ -5,7 +5,7 @@ import {
   RelayPaginationProp,
 } from "react-relay"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
-import { SettingsSavesArtists_me } from "v2/__generated__/SettingsSavesArtists_me.graphql"
+import { SettingsSavesArtists_me$data } from "v2/__generated__/SettingsSavesArtists_me.graphql"
 import { SettingsSavesArtistsQuery } from "v2/__generated__/SettingsSavesArtistsQuery.graphql"
 import {
   Box,
@@ -24,7 +24,7 @@ import {
 } from "v2/Components/ArtistRail"
 
 interface SettingsSavesArtistsProps {
-  me: SettingsSavesArtists_me
+  me: SettingsSavesArtists_me$data
   relay: RelayPaginationProp
 }
 

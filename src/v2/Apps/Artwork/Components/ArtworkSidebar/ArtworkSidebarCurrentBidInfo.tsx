@@ -1,5 +1,5 @@
 import { Clickable, Spacer } from "@artsy/palette"
-import { ArtworkSidebarCurrentBidInfo_artwork } from "v2/__generated__/ArtworkSidebarCurrentBidInfo_artwork.graphql"
+import { ArtworkSidebarCurrentBidInfo_artwork$data } from "v2/__generated__/ArtworkSidebarCurrentBidInfo_artwork.graphql"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { AnalyticsSchema, useTracking } from "v2/System"
@@ -16,7 +16,7 @@ import { AuctionBuyersPremiumDialogQueryRenderer } from "v2/Components/AuctionBu
 import styled, { keyframes } from "styled-components"
 
 export interface ArtworkSidebarCurrentBidInfoProps {
-  artwork: ArtworkSidebarCurrentBidInfo_artwork
+  artwork: ArtworkSidebarCurrentBidInfo_artwork$data
   currentBidChanged: boolean
 }
 

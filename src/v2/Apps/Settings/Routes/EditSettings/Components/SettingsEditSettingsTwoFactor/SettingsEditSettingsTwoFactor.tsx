@@ -1,13 +1,13 @@
 import { Join, Spacer, Sup, Text } from "@artsy/palette"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { SettingsEditSettingsTwoFactor_me } from "v2/__generated__/SettingsEditSettingsTwoFactor_me.graphql"
+import { SettingsEditSettingsTwoFactor_me$data } from "v2/__generated__/SettingsEditSettingsTwoFactor_me.graphql"
 import { SmsSecondFactorRefetchContainer } from "v2/Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsTwoFactor/TwoFactorAuthentication/Components/SmsSecondFactor"
 import { AppSecondFactorRefetchContainer } from "v2/Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsTwoFactor/TwoFactorAuthentication/Components/AppSecondFactor"
 import { SettingsEditSettingsTwoFactorBackupCodesFragmentContainer } from "./SettingsEditSettingsTwoFactorBackupCodes"
 
 export interface SettingsEditSettingsTwoFactorProps {
-  me: SettingsEditSettingsTwoFactor_me
+  me: SettingsEditSettingsTwoFactor_me$data
 }
 
 export const SettingsEditSettingsTwoFactor: React.FC<SettingsEditSettingsTwoFactorProps> = ({

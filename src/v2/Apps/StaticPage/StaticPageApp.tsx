@@ -1,5 +1,5 @@
 import { createFragmentContainer, graphql } from "react-relay"
-import { StaticPageApp_page } from "v2/__generated__/StaticPageApp_page.graphql"
+import { StaticPageApp_page$data } from "v2/__generated__/StaticPageApp_page.graphql"
 import {
   Box,
   BoxProps,
@@ -13,7 +13,7 @@ import styled from "styled-components"
 import { MetaTags } from "v2/Components/MetaTags"
 
 interface StaticPageProps {
-  page: StaticPageApp_page
+  page: StaticPageApp_page$data
 }
 
 const StaticPageApp: React.FC<StaticPageProps> = ({ page }) => {

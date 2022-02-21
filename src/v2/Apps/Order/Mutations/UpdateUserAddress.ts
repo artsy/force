@@ -1,7 +1,7 @@
 import { commitMutation, Environment, graphql } from "react-relay"
 import {
   UpdateUserAddressMutation,
-  UpdateUserAddressMutationResponse,
+  UpdateUserAddressMutation$data,
   UserAddressAttributes,
 } from "v2/__generated__/UpdateUserAddressMutation.graphql"
 
@@ -10,7 +10,7 @@ export const updateUserAddress = async (
   userAddressID: string,
   values: UserAddressAttributes,
   closeModal: () => void,
-  onSuccess: (address: UpdateUserAddressMutationResponse) => void,
+  onSuccess: (address: UpdateUserAddressMutation$data) => void,
   onError: (message: string) => void
 ) => {
   commitMutation<UpdateUserAddressMutation>(environment, {

@@ -9,15 +9,15 @@ import {
   ResponsiveBox,
   Text,
 } from "@artsy/palette"
-import * as React from "react";
+import * as React from "react"
 import { ContextModule } from "@artsy/cohesion"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FollowArtistButtonFragmentContainer } from "v2/Components/FollowButton/FollowArtistButton"
 import { SelectedCareerAchievementsFragmentContainer } from "v2/Components/SelectedCareerAchievements"
-import { ArtistHeader_artist } from "v2/__generated__/ArtistHeader_artist.graphql"
+import { ArtistHeader_artist$data } from "v2/__generated__/ArtistHeader_artist.graphql"
 
 interface ArtistHeaderProps {
-  artist: ArtistHeader_artist
+  artist: ArtistHeader_artist$data
 }
 
 const ArtistHeader: React.FC<ArtistHeaderProps> = ({ artist }) => {

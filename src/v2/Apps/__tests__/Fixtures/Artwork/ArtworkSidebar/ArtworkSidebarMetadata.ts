@@ -1,7 +1,7 @@
-import { ArtworkSidebarMetadata_Test_QueryRawResponse } from "v2/__generated__/ArtworkSidebarMetadata_Test_Query.graphql"
+import { ArtworkSidebarMetadata_Test_Query$rawResponse } from "v2/__generated__/ArtworkSidebarMetadata_Test_Query.graphql"
 import { FullArtworkFixture } from "v2/Apps/__tests__/Fixtures/Artwork/FullArtwork.fixture"
 
-export const FilledOutMetadataNoEditions: ArtworkSidebarMetadata_Test_QueryRawResponse["artwork"] = {
+export const FilledOutMetadataNoEditions: ArtworkSidebarMetadata_Test_Query$rawResponse["artwork"] = {
   ...FullArtworkFixture,
   __isSellable: "Artwork",
   attributionClass: {
@@ -22,7 +22,7 @@ export const FilledOutMetadataNoEditions: ArtworkSidebarMetadata_Test_QueryRawRe
   title: "Easel (Vydock)",
 }
 
-export const FilledOutMetadataNoSizeInfo: ArtworkSidebarMetadata_Test_QueryRawResponse["artwork"] = {
+export const FilledOutMetadataNoSizeInfo: ArtworkSidebarMetadata_Test_Query$rawResponse["artwork"] = {
   ...FullArtworkFixture,
   __isSellable: "Artwork",
   attributionClass: {
@@ -43,7 +43,7 @@ export const FilledOutMetadataNoSizeInfo: ArtworkSidebarMetadata_Test_QueryRawRe
   title: "Easel (Vydock)",
 }
 
-export const FilledOutMetadataOneEditionSet: ArtworkSidebarMetadata_Test_QueryRawResponse["artwork"] = {
+export const FilledOutMetadataOneEditionSet: ArtworkSidebarMetadata_Test_Query$rawResponse["artwork"] = {
   ...FullArtworkFixture,
   __isSellable: "Artwork",
   attributionClass: {
@@ -70,7 +70,7 @@ export const FilledOutMetadataOneEditionSet: ArtworkSidebarMetadata_Test_QueryRa
   title: "Sun Keyed",
 }
 
-export const FilledOutMetadataMultipleEditionSets: ArtworkSidebarMetadata_Test_QueryRawResponse["artwork"] = {
+export const FilledOutMetadataMultipleEditionSets: ArtworkSidebarMetadata_Test_Query$rawResponse["artwork"] = {
   ...FullArtworkFixture,
   __isSellable: "Artwork",
   attributionClass: {
@@ -105,7 +105,7 @@ export const FilledOutMetadataMultipleEditionSets: ArtworkSidebarMetadata_Test_Q
   title: "Abstract 36742",
 }
 
-export const EmptyMetadataNoEditions: ArtworkSidebarMetadata_Test_QueryRawResponse["artwork"] = {
+export const EmptyMetadataNoEditions: ArtworkSidebarMetadata_Test_Query$rawResponse["artwork"] = {
   ...FullArtworkFixture,
   __isSellable: "Artwork",
   attributionClass: null,
@@ -120,7 +120,7 @@ export const EmptyMetadataNoEditions: ArtworkSidebarMetadata_Test_QueryRawRespon
   title: "Empty metadata / No editions",
 }
 
-export const EmptyMetadataOneEditionSet: ArtworkSidebarMetadata_Test_QueryRawResponse["artwork"] = {
+export const EmptyMetadataOneEditionSet: ArtworkSidebarMetadata_Test_Query$rawResponse["artwork"] = {
   ...FullArtworkFixture,
   __isSellable: "Artwork",
   attributionClass: null,
@@ -142,7 +142,7 @@ export const EmptyMetadataOneEditionSet: ArtworkSidebarMetadata_Test_QueryRawRes
   title: "Empty metadata / One edition set",
 }
 
-export const EmptyMetadataMultipleEditionSets: ArtworkSidebarMetadata_Test_QueryRawResponse["artwork"] = {
+export const EmptyMetadataMultipleEditionSets: ArtworkSidebarMetadata_Test_Query$rawResponse["artwork"] = {
   ...FullArtworkFixture,
   __isSellable: "Artwork",
   attributionClass: null,
@@ -170,7 +170,7 @@ export const EmptyMetadataMultipleEditionSets: ArtworkSidebarMetadata_Test_Query
   title: "Empty metadata / Multiple edition Sets",
 }
 
-export const MetadataForAuctionWork: ArtworkSidebarMetadata_Test_QueryRawResponse["artwork"] = {
+export const MetadataForAuctionWork: ArtworkSidebarMetadata_Test_Query$rawResponse["artwork"] = {
   ...FullArtworkFixture,
   __isSellable: "Artwork",
   attributionClass: {

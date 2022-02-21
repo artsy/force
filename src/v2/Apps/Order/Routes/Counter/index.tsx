@@ -1,5 +1,5 @@
 import { Button, Flex, Spacer } from "@artsy/palette"
-import { Counter_order } from "v2/__generated__/Counter_order.graphql"
+import { Counter_order$data } from "v2/__generated__/Counter_order.graphql"
 import { CounterSubmitMutation } from "v2/__generated__/CounterSubmitMutation.graphql"
 import { ArtworkSummaryItemFragmentContainer as ArtworkSummaryItem } from "v2/Apps/Order/Components/ArtworkSummaryItem"
 import { ConditionsOfSaleDisclaimer } from "v2/Apps/Order/Components/ConditionsOfSaleDisclaimer"
@@ -28,7 +28,7 @@ import { BuyerGuarantee } from "../../Components/BuyerGuarantee"
 import { ContextModule, OwnerType } from "@artsy/cohesion"
 
 export interface CounterProps {
-  order: Counter_order
+  order: Counter_order$data
   relay?: RelayProp
   router: Router
   dialog: Dialog

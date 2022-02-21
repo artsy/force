@@ -8,14 +8,14 @@ import {
   Column,
   ColumnSpan,
 } from "@artsy/palette"
-import { ArticleSectionImageCollection_section } from "v2/__generated__/ArticleSectionImageCollection_section.graphql"
+import { ArticleSectionImageCollection_section$data } from "v2/__generated__/ArticleSectionImageCollection_section.graphql"
 import Metadata from "v2/Components/Artwork/Metadata"
 import { useArticleZoomGallery } from "../ArticleZoomGallery"
 import { useRouter } from "v2/System/Router/useRouter"
 import { ArticleZoomButton } from "../ArticleZoomButton"
 
 interface ArticleSectionImageCollectionProps {
-  section: ArticleSectionImageCollection_section
+  section: ArticleSectionImageCollection_section$data
 }
 
 const ArticleSectionImageCollection: FC<ArticleSectionImageCollectionProps> = ({

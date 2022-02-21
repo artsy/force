@@ -17,6 +17,7 @@ describe("ArtistSearchResults", () => {
     Component: (props: any) => {
       return (
         <ArtistSearchResultsContentContainer
+          // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
           onArtistFollow={mockedOnArtistFollow}
           onNoResults={mockedOnNoResults}
           term={""}

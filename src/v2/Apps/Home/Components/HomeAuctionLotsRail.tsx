@@ -5,11 +5,11 @@ import {
   SkeletonText,
   SkeletonBox,
 } from "@artsy/palette"
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useSystemContext } from "v2/System"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
-import { HomeAuctionLotsRail_viewer } from "v2/__generated__/HomeAuctionLotsRail_viewer.graphql"
+import { HomeAuctionLotsRail_viewer$data } from "v2/__generated__/HomeAuctionLotsRail_viewer.graphql"
 import { HomeAuctionLotsRailQuery } from "v2/__generated__/HomeAuctionLotsRailQuery.graphql"
 import { extractNodes } from "v2/Utils/extractNodes"
 import { ShelfArtworkFragmentContainer } from "v2/Components/Artwork/ShelfArtwork"
@@ -23,7 +23,7 @@ import { useTracking } from "v2/System"
 import { Rail } from "v2/Components/Rail"
 
 interface HomeAuctionLotsRailProps {
-  viewer: HomeAuctionLotsRail_viewer
+  viewer: HomeAuctionLotsRail_viewer$data
 }
 
 const HomeAuctionLotsRail: React.FC<HomeAuctionLotsRailProps> = ({

@@ -1,8 +1,8 @@
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Media } from "v2/Utils/Responsive"
-import { Pagination_pageCursors } from "v2/__generated__/Pagination_pageCursors.graphql"
-import { CommercePagination_pageCursors } from "v2/__generated__/CommercePagination_pageCursors.graphql"
+import { Pagination_pageCursors$data } from "v2/__generated__/Pagination_pageCursors.graphql"
+import { CommercePagination_pageCursors$data } from "v2/__generated__/CommercePagination_pageCursors.graphql"
 import {
   Pagination as PaginationBase,
   Separator,
@@ -17,7 +17,7 @@ import { scrollIntoView } from "v2/Utils/scrollHelpers"
 export interface PaginationProps {
   hasNextPage: boolean
   // TODO: Hacks around stitching. See if we can transform the schema to make this unnecessary.
-  pageCursors: Pagination_pageCursors | CommercePagination_pageCursors
+  pageCursors: Pagination_pageCursors$data | CommercePagination_pageCursors$data
   scrollTo?: string
   offset?: number
   getHref?: BasePaginationProps["getHref"]

@@ -2,14 +2,14 @@ import * as React from "react"
 import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
 import { ArtworkSidebarBidActionFragmentContainer } from "./ArtworkSidebarBidAction"
 import { ArtworkSidebarCurrentBidInfoFragmentContainer } from "./ArtworkSidebarCurrentBidInfo"
-import { ArtworkSidebarAuctionInfoPolling_artwork } from "v2/__generated__/ArtworkSidebarAuctionInfoPolling_artwork.graphql"
-import { ArtworkSidebarAuctionInfoPolling_me } from "v2/__generated__/ArtworkSidebarAuctionInfoPolling_me.graphql"
+import { ArtworkSidebarAuctionInfoPolling_artwork$data } from "v2/__generated__/ArtworkSidebarAuctionInfoPolling_artwork.graphql"
+import { ArtworkSidebarAuctionInfoPolling_me$data } from "v2/__generated__/ArtworkSidebarAuctionInfoPolling_me.graphql"
 import { usePoll } from "v2/Apps/Conversation/Utils/usePoll"
 import { useEffect, useRef, useState } from "react"
 
 type Props = {
-  artwork: ArtworkSidebarAuctionInfoPolling_artwork
-  me: ArtworkSidebarAuctionInfoPolling_me
+  artwork: ArtworkSidebarAuctionInfoPolling_artwork$data
+  me: ArtworkSidebarAuctionInfoPolling_me$data
   relay: RelayRefetchProp
 }
 

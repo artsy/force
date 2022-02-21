@@ -4,8 +4,8 @@ import { graphql } from "react-relay"
 
 import {
   PricingTransparencyQuery,
-  PricingTransparencyQueryResponse,
-  PricingTransparencyQueryVariables,
+  PricingTransparencyQuery$data,
+  PricingTransparencyQuery$variables,
 } from "v2/__generated__/PricingTransparencyQuery.graphql"
 import { SystemContextProps, withSystemContext } from "v2/System"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
@@ -14,7 +14,7 @@ const Row = props => (
   <Flex flexDirection="row" justifyContent="space-between" pb={1} {...props} />
 )
 
-export const PricingTransparency: React.FC<PricingTransparencyQueryResponse> = props => {
+export const PricingTransparency: React.FC<PricingTransparencyQuery$data> = props => {
   // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
   const { calculatedCost } = props.artwork.saleArtwork
 
@@ -49,7 +49,7 @@ export const PricingTransparencyQueryRenderer = withSystemContext(
     artworkId,
     bidAmountMinor,
     relayEnvironment,
-  }: SystemContextProps & PricingTransparencyQueryVariables) => {
+  }: SystemContextProps & PricingTransparencyQuery$variables) => {
     return (
       <SystemQueryRenderer<PricingTransparencyQuery>
         environment={relayEnvironment}

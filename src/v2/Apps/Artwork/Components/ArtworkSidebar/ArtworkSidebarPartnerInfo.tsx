@@ -2,11 +2,11 @@ import { Flex, LocationIcon, Spacer, Text } from "@artsy/palette"
 import { filterLocations } from "v2/Apps/Artwork/Utils/filterLocations"
 import { Component } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ArtworkSidebarPartnerInfo_artwork } from "v2/__generated__/ArtworkSidebarPartnerInfo_artwork.graphql"
+import { ArtworkSidebarPartnerInfo_artwork$data } from "v2/__generated__/ArtworkSidebarPartnerInfo_artwork.graphql"
 import { RouterLink } from "v2/System/Router/RouterLink"
 
 export interface ArtworkSidebarPartnerInfoProps {
-  artwork: ArtworkSidebarPartnerInfo_artwork
+  artwork: ArtworkSidebarPartnerInfo_artwork$data
 }
 
 export class ArtworkSidebarPartnerInfo extends Component<

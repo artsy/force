@@ -2,11 +2,11 @@ import { Environment, commitMutation, graphql } from "relay-runtime"
 
 import {
   CreateBackupSecondFactorsMutation,
-  CreateBackupSecondFactorsMutationResponse,
+  CreateBackupSecondFactorsMutation$data,
 } from "v2/__generated__/CreateBackupSecondFactorsMutation.graphql"
 
 export const CreateBackupSecondFactors = (environment: Environment) => {
-  return new Promise<CreateBackupSecondFactorsMutationResponse>(
+  return new Promise<CreateBackupSecondFactorsMutation$data>(
     async (resolve, reject) => {
       commitMutation<CreateBackupSecondFactorsMutation>(environment, {
         onCompleted: data => {

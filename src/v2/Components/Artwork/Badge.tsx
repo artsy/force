@@ -1,5 +1,5 @@
 import { Flex, Text } from "@artsy/palette"
-import { Badge_artwork } from "v2/__generated__/Badge_artwork.graphql"
+import { Badge_artwork$data } from "v2/__generated__/Badge_artwork.graphql"
 import { Component } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
@@ -7,7 +7,7 @@ import { get } from "v2/Utils/get"
 import { themeGet } from "@styled-system/theme-get"
 
 interface BadgeProps {
-  artwork: Badge_artwork
+  artwork: Badge_artwork$data
   width?: number // for smaller images, we have a tweaked layout
 }
 

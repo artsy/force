@@ -12,7 +12,7 @@ import {
   Spacer,
 } from "@artsy/palette"
 
-import { ArtistConsignHowToSell_artist } from "v2/__generated__/ArtistConsignHowToSell_artist.graphql"
+import { ArtistConsignHowToSell_artist$data } from "v2/__generated__/ArtistConsignHowToSell_artist.graphql"
 
 import { AnalyticsSchema, useTracking } from "v2/System"
 import { RouterLink } from "v2/System/Router/RouterLink"
@@ -22,7 +22,7 @@ import { Subheader } from "./Subheader"
 import { getConsignSubmissionUrl } from "./Utils/getConsignSubmissionUrl"
 
 interface ArtistConsignHowtoSellProps {
-  artist: ArtistConsignHowToSell_artist
+  artist: ArtistConsignHowToSell_artist$data
 }
 
 const ArtistConsignHowtoSell: React.FC<ArtistConsignHowtoSellProps> = ({

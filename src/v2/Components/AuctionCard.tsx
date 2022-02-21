@@ -1,7 +1,7 @@
 import { Image, ResponsiveBox, Spacer, Text } from "@artsy/palette"
-import { AuctionCard_sale } from "v2/__generated__/AuctionCard_sale.graphql"
+import { AuctionCard_sale$data } from "v2/__generated__/AuctionCard_sale.graphql"
 import { DateTime } from "luxon"
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "v2/System/Router/RouterLink"
 
@@ -20,7 +20,7 @@ export const relativeTime = (timeIn, now) => {
 
 // now defaults to DateTime.local() but can be overriden for unit testing
 export const upcomingLabel = (
-  sale: AuctionCard_sale,
+  sale: AuctionCard_sale$data,
   now = DateTime.local()
 ) => {
   const {
@@ -57,7 +57,7 @@ export const upcomingLabel = (
 }
 
 export interface AuctionCardProps {
-  sale: AuctionCard_sale
+  sale: AuctionCard_sale$data
 }
 
 export const AuctionCard: React.FC<AuctionCardProps> = ({ sale }) => {

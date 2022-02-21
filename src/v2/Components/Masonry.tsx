@@ -1,5 +1,5 @@
 import { Box } from "@artsy/palette"
-import styled from "styled-components"
+import styled, { StyledComponentClass } from "styled-components"
 import {
   GridColumnGapProps,
   gridColumnGap,
@@ -20,7 +20,7 @@ export const Masonry = styled(Box)<
   * {
     break-inside: avoid;
   }
-`
+` as StyledComponentClass<any, any>
 
 Masonry.defaultProps = {
   gridColumnGap: 2,

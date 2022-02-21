@@ -1,8 +1,8 @@
 import { AuthContextModule } from "@artsy/cohesion"
 import { Box, BoxProps, Image } from "@artsy/palette"
-import { FillwidthItem_artwork } from "v2/__generated__/FillwidthItem_artwork.graphql"
+import { FillwidthItem_artwork$data } from "v2/__generated__/FillwidthItem_artwork.graphql"
 import { useSystemContext } from "v2/System"
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import createLogger from "v2/Utils/logger"
 import { userIsTeam } from "v2/Utils/user"
@@ -16,7 +16,7 @@ import { cropped, resized } from "v2/Utils/resized"
 const logger = createLogger("FillwidthItem.tsx")
 
 export interface FillwidthItemProps extends BoxProps {
-  artwork: FillwidthItem_artwork
+  artwork: FillwidthItem_artwork$data
   contextModule: AuthContextModule
   hideArtistName?: boolean
   hidePartnerName?: boolean

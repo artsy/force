@@ -2,11 +2,11 @@ import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { HeroCarousel } from "v2/Components/HeroCarousel/HeroCarousel"
 import { extractNodes } from "v2/Utils/extractNodes"
-import { PartnersFeaturedCarousel_viewer } from "v2/__generated__/PartnersFeaturedCarousel_viewer.graphql"
+import { PartnersFeaturedCarousel_viewer$data } from "v2/__generated__/PartnersFeaturedCarousel_viewer.graphql"
 import { PartnersFeaturedCarouselCellFragmentContainer } from "./PartnersFeaturedCarouselCell"
 
 interface PartnersFeaturedCarouselProps {
-  viewer: PartnersFeaturedCarousel_viewer
+  viewer: PartnersFeaturedCarousel_viewer$data
 }
 
 const PartnersFeaturedCarousel: FC<PartnersFeaturedCarouselProps> = ({

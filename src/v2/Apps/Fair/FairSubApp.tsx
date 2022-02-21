@@ -1,6 +1,6 @@
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { FairSubApp_fair } from "v2/__generated__/FairSubApp_fair.graphql"
+import { FairSubApp_fair$data } from "v2/__generated__/FairSubApp_fair.graphql"
 import { BackLink } from "v2/Components/Links/BackLink"
 import { FairMetaFragmentContainer as FairMeta } from "./Components/FairMeta"
 import { useSystemContext } from "v2/System"
@@ -8,7 +8,7 @@ import { userIsAdmin } from "v2/Utils/user"
 import { HttpError } from "found"
 
 interface FairAppProps {
-  fair: FairSubApp_fair
+  fair: FairSubApp_fair$data
 }
 
 const FairApp: React.FC<FairAppProps> = ({ children, fair }) => {

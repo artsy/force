@@ -1,6 +1,6 @@
 import React, { useMemo } from "react"
 import { Box, DROP_SHADOW, FullBleed, Spacer, Text } from "@artsy/palette"
-import { SearchApp_viewer } from "v2/__generated__/SearchApp_viewer.graphql"
+import { SearchApp_viewer$data } from "v2/__generated__/SearchApp_viewer.graphql"
 import { NavigationTabsFragmentContainer as NavigationTabs } from "v2/Apps/Search/Components/NavigationTabs"
 import { SearchMeta } from "v2/Apps/Search/Components/SearchMeta"
 import { RecentlyViewed } from "v2/Components/RecentlyViewed"
@@ -11,7 +11,7 @@ import { Sticky, StickyProvider } from "v2/Components/Sticky"
 import { AppContainer } from "../Components/AppContainer"
 
 export interface SearchAppProps {
-  viewer: SearchApp_viewer
+  viewer: SearchApp_viewer$data
 }
 
 const TotalResults: React.FC<{ count: number; term: string }> = ({

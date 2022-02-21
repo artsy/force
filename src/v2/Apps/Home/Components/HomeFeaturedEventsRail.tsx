@@ -19,10 +19,10 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "v2/System"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { Media } from "v2/Utils/Responsive"
-import { HomeFeaturedEventsRail_orderedSet } from "v2/__generated__/HomeFeaturedEventsRail_orderedSet.graphql"
+import { HomeFeaturedEventsRail_orderedSet$data } from "v2/__generated__/HomeFeaturedEventsRail_orderedSet.graphql"
 
 interface HomeFeaturedEventsRailProps {
-  orderedSet: HomeFeaturedEventsRail_orderedSet
+  orderedSet: HomeFeaturedEventsRail_orderedSet$data
 }
 
 const HomeFeaturedEventsRail: React.FC<HomeFeaturedEventsRailProps> = ({

@@ -14,7 +14,7 @@ import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
 import { RouterLink } from "v2/System/Router/RouterLink"
-import { ShowBanner_show } from "v2/__generated__/ShowBanner_show.graphql"
+import { ShowBanner_show$data } from "v2/__generated__/ShowBanner_show.graphql"
 
 const statusLabelsMap = {
   running: "current",
@@ -41,7 +41,7 @@ const SlideBox = styled(Box)`
 `
 
 interface ShowBannerProps extends BoxProps {
-  show: ShowBanner_show
+  show: ShowBanner_show$data
   selected?: boolean
   withAnimation?: boolean
 }

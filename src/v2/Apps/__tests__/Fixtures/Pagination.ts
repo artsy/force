@@ -1,4 +1,4 @@
-import { Pagination_pageCursors } from "v2/__generated__/Pagination_pageCursors.graphql"
+import { Pagination_pageCursors$data } from "v2/__generated__/Pagination_pageCursors.graphql"
 
 export const paginationProps = {
   // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
@@ -13,7 +13,7 @@ export const paginationProps = {
     ],
     previous: { page: 5, cursor: "Y3Vyc29yMw==", isCurrent: false },
     " $refType": null,
-  } as Pagination_pageCursors,
+  } as Pagination_pageCursors$data,
   callbacks: {
     onClick: () => {
       /* */

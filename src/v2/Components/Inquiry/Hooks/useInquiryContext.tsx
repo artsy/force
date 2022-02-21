@@ -10,7 +10,7 @@ import * as React from "react"
 import { Engine } from "../Engine"
 import { useEngine } from "../config"
 import { createFragmentContainer, graphql, Environment } from "react-relay"
-import { useInquiryContext_me } from "v2/__generated__/useInquiryContext_me.graphql"
+import { useInquiryContext_me$data } from "v2/__generated__/useInquiryContext_me.graphql"
 import { useInquiryContextQuery } from "v2/__generated__/useInquiryContextQuery.graphql"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import { useSystemContext } from "v2/System"
@@ -179,7 +179,7 @@ export const InquiryProvider: React.FC<InquiryProviderProps> = ({
 }
 
 interface InquiryContextContextProps {
-  me: useInquiryContext_me | null
+  me: useInquiryContext_me$data | null
 }
 
 const InquiryContextContext: React.FC<InquiryContextContextProps> = ({

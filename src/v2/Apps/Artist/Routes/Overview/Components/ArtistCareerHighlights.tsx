@@ -13,7 +13,7 @@ import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { SelectedCareerAchievementsFragmentContainer } from "v2/Components/SelectedCareerAchievements"
-import { ArtistCareerHighlights_artist } from "v2/__generated__/ArtistCareerHighlights_artist.graphql"
+import { ArtistCareerHighlights_artist$data } from "v2/__generated__/ArtistCareerHighlights_artist.graphql"
 import { ArtistCareerHighlightsQuery } from "v2/__generated__/ArtistCareerHighlightsQuery.graphql"
 import { ArtistGenesFragmentContainer } from "./ArtistGenes"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
@@ -21,7 +21,7 @@ import { useSystemContext } from "v2/System"
 import { getENV } from "v2/Utils/getENV"
 
 interface ArtistCareerHighlightsProps {
-  artist: ArtistCareerHighlights_artist
+  artist: ArtistCareerHighlights_artist$data
 }
 
 const ArtistCareerHighlights: React.FC<ArtistCareerHighlightsProps> = ({

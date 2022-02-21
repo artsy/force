@@ -8,8 +8,8 @@ import { ArtworkSidebarCommercialFragmentContainer } from "./ArtworkSidebarComme
 import { ArtworkSidebarMetadataFragmentContainer } from "./ArtworkSidebarMetadata"
 import { ArtworkSidebarPartnerInfoFragmentContainer } from "./ArtworkSidebarPartnerInfo"
 import { ContextModule } from "@artsy/cohesion"
-import { ArtworkSidebar_artwork } from "v2/__generated__/ArtworkSidebar_artwork.graphql"
-import { ArtworkSidebar_me } from "v2/__generated__/ArtworkSidebar_me.graphql"
+import { ArtworkSidebar_artwork$data } from "v2/__generated__/ArtworkSidebar_artwork.graphql"
+import { ArtworkSidebar_me$data } from "v2/__generated__/ArtworkSidebar_me.graphql"
 import { AuthenticityCertificateFragmentContainer } from "../TrustSignals/AuthenticityCertificate"
 import { SecurePaymentFragmentContainer } from "../TrustSignals/SecurePayment"
 import { VerifiedSellerFragmentContainer } from "../TrustSignals/VerifiedSeller"
@@ -18,8 +18,8 @@ import { ArtworkSidebarExtraLinksFragmentContainer } from "./ArtworkSidebarExtra
 import { ArtworkSidebarAuctionPollingRefetchContainer } from "./ArtworkSidebarAuctionInfoPolling"
 
 export interface ArtworkSidebarProps {
-  artwork: ArtworkSidebar_artwork
-  me: ArtworkSidebar_me
+  artwork: ArtworkSidebar_artwork$data
+  me: ArtworkSidebar_me$data
 }
 
 const ArtworkSidebarContainer = Box

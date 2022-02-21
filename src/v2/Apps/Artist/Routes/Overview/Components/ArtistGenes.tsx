@@ -1,13 +1,13 @@
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { extractNodes } from "v2/Utils/extractNodes"
 import { data as sd } from "sharify"
-import { ArtistGenes_artist } from "v2/__generated__/ArtistGenes_artist.graphql"
+import { ArtistGenes_artist$data } from "v2/__generated__/ArtistGenes_artist.graphql"
 import { Flex, Pill } from "@artsy/palette"
 import { RouterLink } from "v2/System/Router/RouterLink"
 
 interface ArtistGenesProps {
-  artist: ArtistGenes_artist
+  artist: ArtistGenes_artist$data
 }
 
 const ArtistGenes: React.FC<ArtistGenesProps> = ({ artist }) => {

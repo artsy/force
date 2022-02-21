@@ -3,12 +3,12 @@ import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { FollowGeneButtonFragmentContainer } from "v2/Components/FollowButton/FollowGeneButton"
-import { GeneShow_gene } from "v2/__generated__/GeneShow_gene.graphql"
+import { GeneShow_gene$data } from "v2/__generated__/GeneShow_gene.graphql"
 import { GeneArtworkFilterRefetchContainer } from "../Components/GeneArtworkFilter"
 import { GeneMetaFragmentContainer } from "../Components/GeneMeta"
 
 interface GeneShowProps {
-  gene: GeneShow_gene
+  gene: GeneShow_gene$data
 }
 
 export const GeneShow: React.FC<GeneShowProps> = ({ gene }) => {

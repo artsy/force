@@ -2,10 +2,12 @@ import { Column, GridColumns, Text } from "@artsy/palette"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ShowCardFragmentContainer } from "./ShowCard"
-import { ShowEvents_edges } from "v2/__generated__/ShowEvents_edges.graphql"
+import { ShowEvents_edges$data } from "v2/__generated__/ShowEvents_edges.graphql"
+
+type Edges = NonNullable<ShowEvents_edges$data>
 
 interface ShowEventsProps {
-  edges: ShowEvents_edges
+  edges: Edges
   eventTitle: string
 }
 

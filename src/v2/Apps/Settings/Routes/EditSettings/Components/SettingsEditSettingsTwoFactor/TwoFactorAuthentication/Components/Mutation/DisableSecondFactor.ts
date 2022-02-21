@@ -1,7 +1,7 @@
 import {
   DisableSecondFactorInput,
   DisableSecondFactorMutation,
-  DisableSecondFactorMutationResponse,
+  DisableSecondFactorMutation$data,
 } from "v2/__generated__/DisableSecondFactorMutation.graphql"
 import { Environment, commitMutation, graphql } from "react-relay"
 
@@ -9,7 +9,7 @@ export const DisableSecondFactor = (
   environment: Environment,
   input: DisableSecondFactorInput
 ) => {
-  return new Promise<DisableSecondFactorMutationResponse>(
+  return new Promise<DisableSecondFactorMutation$data>(
     async (resolve, reject) => {
       commitMutation<DisableSecondFactorMutation>(environment, {
         mutation: graphql`

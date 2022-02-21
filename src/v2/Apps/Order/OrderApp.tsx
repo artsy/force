@@ -1,12 +1,12 @@
 import { Box } from "@artsy/palette"
-import { OrderApp_order } from "v2/__generated__/OrderApp_order.graphql"
+import { OrderApp_order$data } from "v2/__generated__/OrderApp_order.graphql"
 import { StickyFooterWithInquiry } from "v2/Apps/Order/Components/StickyFooter"
 import { SystemContextConsumer, withSystemContext } from "v2/System"
 import { findCurrentRoute } from "v2/System/Router/Utils/findCurrentRoute"
 import { ErrorPage } from "v2/Components/ErrorPage"
 import { MinimalNavBar } from "v2/Components/NavBar/MinimalNavBar"
 import { RouterState, withRouter } from "found"
-import { Component } from "react";
+import { Component } from "react"
 import { Meta, Title } from "react-head"
 import { graphql } from "react-relay"
 import { loadStripe } from "@stripe/stripe-js"
@@ -24,7 +24,7 @@ export interface OrderAppProps extends RouterState {
   params: {
     orderID: string
   }
-  order: OrderApp_order
+  order: OrderApp_order$data
 }
 
 class OrderApp extends Component<OrderAppProps, {}> {

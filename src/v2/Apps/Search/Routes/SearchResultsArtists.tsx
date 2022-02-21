@@ -1,6 +1,6 @@
 import * as React from "react"
 import { Box, Separator } from "@artsy/palette"
-import { SearchResultsArtists_viewer } from "v2/__generated__/SearchResultsArtists_viewer.graphql"
+import { SearchResultsArtists_viewer$data } from "v2/__generated__/SearchResultsArtists_viewer.graphql"
 import { GenericSearchResultItem } from "v2/Apps/Search/Components/GenericSearchResultItem"
 import { ZeroState } from "v2/Apps/Search/Components/ZeroState"
 import { LoadingArea, LoadingAreaState } from "v2/Components/LoadingArea"
@@ -10,7 +10,7 @@ import qs from "qs"
 import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
 
 export interface Props extends RouterState {
-  viewer: SearchResultsArtists_viewer
+  viewer: SearchResultsArtists_viewer$data
   relay: RelayRefetchProp
 }
 

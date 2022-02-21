@@ -10,8 +10,8 @@ import {
   useTracking,
 } from "v2/System/Analytics"
 import { ActionType, ClickedOfferOption, PageOwnerType } from "@artsy/cohesion"
-import { PriceOptions_artwork } from "v2/__generated__/PriceOptions_artwork.graphql"
-import { PriceOptions_order } from "v2/__generated__/PriceOptions_order.graphql"
+import { PriceOptions_artwork$data } from "v2/__generated__/PriceOptions_artwork.graphql"
+import { PriceOptions_order$data } from "v2/__generated__/PriceOptions_order.graphql"
 import { appendCurrencySymbol } from "../Utils/currencyUtils"
 import { useScrollTo } from "v2/Utils/Hooks/useScrollTo"
 
@@ -19,8 +19,8 @@ export interface PriceOptionsProps {
   onChange: (value: number) => void
   onFocus: () => void
   showError?: boolean
-  artwork: PriceOptions_artwork | null | undefined
-  order: PriceOptions_order
+  artwork: PriceOptions_artwork$data | null | undefined
+  order: PriceOptions_order$data
 }
 
 export const PriceOptions: React.FC<PriceOptionsProps> = ({

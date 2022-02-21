@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"
 import { Box, BoxProps, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import {
@@ -9,13 +9,13 @@ import { FairCollectionsFragmentContainer } from "../Components/FairCollections"
 import { FairFollowedArtistsFragmentContainer } from "../Components/FairOverview/FairFollowedArtists"
 import { useSystemContext } from "v2/System"
 import { RouterLink } from "v2/System/Router/RouterLink"
-import { FairOverview_fair } from "v2/__generated__/FairOverview_fair.graphql"
+import { FairOverview_fair$data } from "v2/__generated__/FairOverview_fair.graphql"
 import { FairAboutFragmentContainer as FairAbout } from "../Components/FairOverview/FairAbout"
 import { data as sd } from "sharify"
 import { FairBoothsQueryRenderer as FairBooths } from "../Components/FairBooths"
 
 interface FairOverviewProps extends BoxProps {
-  fair: FairOverview_fair
+  fair: FairOverview_fair$data
 }
 
 const FairOverview: React.FC<FairOverviewProps> = ({ fair }) => {

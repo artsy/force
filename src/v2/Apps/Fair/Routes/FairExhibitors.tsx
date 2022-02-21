@@ -1,7 +1,7 @@
 import React, { useEffect } from "react"
 import { Box, Spacer, Text } from "@artsy/palette"
 import { graphql, createFragmentContainer } from "react-relay"
-import { FairExhibitors_fair } from "v2/__generated__/FairExhibitors_fair.graphql"
+import { FairExhibitors_fair$data } from "v2/__generated__/FairExhibitors_fair.graphql"
 import { FairExhibitorsGroupFragmentContainer as FairExhibitorsGroup } from "../Components/FairExhibitors"
 import { getExhibitorSectionId } from "../Utils/getExhibitorSectionId"
 import { useRouter } from "v2/System/Router/useRouter"
@@ -9,7 +9,7 @@ import { useExhibitorsTabOffset } from "../Utils/useExhibitorsTabOffset"
 import { scrollIntoView } from "v2/Utils/scrollHelpers"
 
 interface FairExhibitorsProps {
-  fair: FairExhibitors_fair
+  fair: FairExhibitors_fair$data
 }
 
 const FairExhibitors: React.FC<FairExhibitorsProps> = ({ fair }) => {

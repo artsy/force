@@ -1,13 +1,13 @@
-import { ComponentProps } from "react";
-import * as React from "react";
+import { ComponentProps } from "react"
+import * as React from "react"
 import { Box } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FeatureFeaturedLinkFragmentContainer as FeatureFeaturedLink } from "../FeatureFeaturedLink"
 import GridItem from "v2/Components/Artwork/GridItem"
-import { FeatureSetItem_setItem } from "v2/__generated__/FeatureSetItem_setItem.graphql"
+import { FeatureSetItem_setItem$data } from "v2/__generated__/FeatureSetItem_setItem.graphql"
 
 export interface FeatureSetItemProps {
-  setItem: FeatureSetItem_setItem
+  setItem: FeatureSetItem_setItem$data
   size: ComponentProps<typeof FeatureFeaturedLink>["size"]
 }
 

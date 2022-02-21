@@ -1,7 +1,7 @@
 import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
-import { ArticleChannelRelatedArticles_article } from "v2/__generated__/ArticleChannelRelatedArticles_article.graphql"
+import { ArticleChannelRelatedArticles_article$data } from "v2/__generated__/ArticleChannelRelatedArticles_article.graphql"
 import { ArticleChannelRelatedArticlesQuery } from "v2/__generated__/ArticleChannelRelatedArticlesQuery.graphql"
 import { Shelf, Skeleton, SkeletonText, Text } from "@artsy/palette"
 import {
@@ -10,7 +10,7 @@ import {
 } from "v2/Components/Cells/ArticleCell"
 
 interface ArticleChannelRelatedArticlesProps {
-  article: ArticleChannelRelatedArticles_article
+  article: ArticleChannelRelatedArticles_article$data
 }
 
 const ArticleChannelRelatedArticles: FC<ArticleChannelRelatedArticlesProps> = ({

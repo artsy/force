@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"
 import {
   Box,
   Column,
@@ -11,13 +11,13 @@ import {
 } from "@artsy/palette"
 import { ViewingRoomArtworkDetailsFragmentContainer as ViewingRoomArtworkDetails } from "./Components/ViewingRoomArtworkDetails"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ViewingRoomWorksRoute_viewingRoom } from "v2/__generated__/ViewingRoomWorksRoute_viewingRoom.graphql"
+import { ViewingRoomWorksRoute_viewingRoom$data } from "v2/__generated__/ViewingRoomWorksRoute_viewingRoom.graphql"
 import { extractNodes } from "v2/Utils/extractNodes"
 import { compact } from "lodash"
 import { Media } from "v2/Utils/Responsive"
 
 interface WorksRouteProps {
-  viewingRoom: ViewingRoomWorksRoute_viewingRoom
+  viewingRoom: ViewingRoomWorksRoute_viewingRoom$data
 }
 
 const ViewingRoomWorksRoute: React.FC<WorksRouteProps> = ({ viewingRoom }) => {

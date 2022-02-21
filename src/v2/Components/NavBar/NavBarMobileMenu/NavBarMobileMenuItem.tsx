@@ -1,6 +1,6 @@
 import { Clickable } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
-import styled, { css } from "styled-components"
+import styled, { css, StyledComponentClass } from "styled-components"
 import { RouterLink } from "v2/System/Router/RouterLink"
 
 const navBarMobileMenuItemMixin = css`
@@ -29,7 +29,7 @@ NavBarMobileMenuItemButton.defaultProps = {
 
 export const NavBarMobileMenuItemLink = styled(RouterLink)`
   ${navBarMobileMenuItemMixin}
-`
+` as StyledComponentClass<any, any>
 
 NavBarMobileMenuItemLink.defaultProps = {
   display: "flex",

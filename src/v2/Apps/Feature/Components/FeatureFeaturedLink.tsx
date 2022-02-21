@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"
 import styled from "styled-components"
 import {
   Col,
@@ -14,7 +14,7 @@ import {
 } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink, RouterLinkProps } from "v2/System/Router/RouterLink"
-import { FeatureFeaturedLink_featuredLink } from "v2/__generated__/FeatureFeaturedLink_featuredLink.graphql"
+import { FeatureFeaturedLink_featuredLink$data } from "v2/__generated__/FeatureFeaturedLink_featuredLink.graphql"
 import { themeGet } from "@styled-system/theme-get"
 
 const Figure = styled(RouterLink)<RouterLinkProps>`
@@ -38,7 +38,7 @@ const FullHTML = styled(HTML)<HTMLProps>`
 
 export interface FeatureFeaturedLinkProps extends FlexProps {
   size: "small" | "medium" | "large" | "full"
-  featuredLink: FeatureFeaturedLink_featuredLink
+  featuredLink: FeatureFeaturedLink_featuredLink$data
 }
 
 export const FeatureFeaturedLink: React.FC<FeatureFeaturedLinkProps> = ({

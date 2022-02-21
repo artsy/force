@@ -8,13 +8,13 @@ import { ShowEventsFragmentContainer } from "v2/Apps/Partner/Components/PartnerS
 import { useSystemContext } from "v2/System"
 import { useRouter } from "v2/System/Router/useRouter"
 import { ShowPaginatedEventsRendererQuery } from "v2/__generated__/ShowPaginatedEventsRendererQuery.graphql"
-import { ShowPaginatedEvents_partner } from "v2/__generated__/ShowPaginatedEvents_partner.graphql"
+import { ShowPaginatedEvents_partner$data } from "v2/__generated__/ShowPaginatedEvents_partner.graphql"
 import { EventStatus } from "v2/__generated__/ShowPaginatedEventsRendererQuery.graphql"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 
 interface ShowEventsProps {
   relay: RelayRefetchProp
-  partner: ShowPaginatedEvents_partner
+  partner: ShowPaginatedEvents_partner$data
   scrollTo: string
   eventTitle: string
   offset: number

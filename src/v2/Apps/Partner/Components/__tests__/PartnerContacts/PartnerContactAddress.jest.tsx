@@ -1,5 +1,5 @@
 import { mount } from "enzyme"
-import { PartnerContactAddress_location } from "v2/__generated__/PartnerContactAddress_location.graphql"
+import { PartnerContactAddress_location$data } from "v2/__generated__/PartnerContactAddress_location.graphql"
 import { PartnerContactAddress } from "../../PartnerContacts"
 
 describe("PartnerContactAddress", () => {
@@ -10,7 +10,7 @@ describe("PartnerContactAddress", () => {
           {
             address: "address",
             phone: "123",
-          } as PartnerContactAddress_location
+          } as PartnerContactAddress_location$data
         }
       />
     )
@@ -27,7 +27,7 @@ describe("PartnerContactAddress", () => {
         location={
           {
             address: "address",
-          } as PartnerContactAddress_location
+          } as PartnerContactAddress_location$data
         }
       />
     )

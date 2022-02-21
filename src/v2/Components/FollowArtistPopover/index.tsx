@@ -1,10 +1,10 @@
 import { Join, Separator, Spacer, Text } from "@artsy/palette"
-import { FollowArtistPopover_artist } from "v2/__generated__/FollowArtistPopover_artist.graphql"
+import { FollowArtistPopover_artist$data } from "v2/__generated__/FollowArtistPopover_artist.graphql"
 import { FollowArtistPopoverQuery } from "v2/__generated__/FollowArtistPopoverQuery.graphql"
 import { SystemContext, SystemContextProps } from "v2/System"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
-import { useContext } from "react";
-import * as React from "react";
+import { useContext } from "react"
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Provider } from "unstated"
 import {
@@ -15,7 +15,7 @@ import { FollowArtistPopoverState } from "./state"
 import { extractNodes } from "v2/Utils/extractNodes"
 
 interface FollowArtistPopoverProps extends SystemContextProps {
-  artist: FollowArtistPopover_artist
+  artist: FollowArtistPopover_artist$data
 }
 
 const FollowArtistPopover: React.FC<FollowArtistPopoverProps> = ({

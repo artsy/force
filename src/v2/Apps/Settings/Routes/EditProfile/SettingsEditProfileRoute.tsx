@@ -1,5 +1,5 @@
 import React from "react"
-import { SettingsEditProfileRoute_me } from "v2/__generated__/SettingsEditProfileRoute_me.graphql"
+import { SettingsEditProfileRoute_me$data } from "v2/__generated__/SettingsEditProfileRoute_me.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Column, GridColumns, Join, Separator } from "@artsy/palette"
 import { SettingsEditProfileAboutYouFragmentContainer } from "./Components/SettingsEditProfileAboutYou"
@@ -7,7 +7,7 @@ import { SettingsEditProfileArtistsYouCollectFragmentContainer } from "./Compone
 import { SettingsEditProfileYourGalleryIntroFragmentContainer } from "./Components/SettingsEditProfileYourGalleryIntro"
 
 interface SettingsEditProfileRouteProps {
-  me: SettingsEditProfileRoute_me
+  me: SettingsEditProfileRoute_me$data
 }
 
 const SettingsEditProfileRoute: React.FC<SettingsEditProfileRouteProps> = ({

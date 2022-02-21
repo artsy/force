@@ -11,15 +11,15 @@ import {
 import { themeGet } from "@styled-system/theme-get"
 import { graphql } from "lib/graphql"
 import { uniqBy } from "lodash"
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer } from "react-relay"
 import styled from "styled-components"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { useRouter } from "v2/System/Router/useRouter"
-import { ShowsHeader_viewer } from "v2/__generated__/ShowsHeader_viewer.graphql"
+import { ShowsHeader_viewer$data } from "v2/__generated__/ShowsHeader_viewer.graphql"
 
 interface ShowsHeaderProps {
-  viewer: ShowsHeader_viewer
+  viewer: ShowsHeader_viewer$data
 }
 
 const DEFAULT_CITIES = [

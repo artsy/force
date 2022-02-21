@@ -1,6 +1,6 @@
-import * as React from "react";
+import * as React from "react"
 import { Card, Shelf } from "@artsy/palette"
-import { ViewingRoomsFeaturedRail_featuredViewingRooms } from "v2/__generated__/ViewingRoomsFeaturedRail_featuredViewingRooms.graphql"
+import { ViewingRoomsFeaturedRail_featuredViewingRooms$data } from "v2/__generated__/ViewingRoomsFeaturedRail_featuredViewingRooms.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
 import { cropped } from "v2/Utils/resized"
 import { extractNodes } from "../../../Utils/extractNodes"
@@ -8,7 +8,7 @@ import { RouterLink } from "v2/System/Router/RouterLink"
 import { getStatus } from "../Utils/getStatus"
 
 interface ViewingRoomsFeaturedRailProps {
-  featuredViewingRooms: ViewingRoomsFeaturedRail_featuredViewingRooms
+  featuredViewingRooms: ViewingRoomsFeaturedRail_featuredViewingRooms$data
 }
 
 export const ViewingRoomsFeaturedRail: React.FC<ViewingRoomsFeaturedRailProps> = ({

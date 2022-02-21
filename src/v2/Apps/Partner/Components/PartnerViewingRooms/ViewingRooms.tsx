@@ -1,10 +1,10 @@
 import { Column, GridColumns, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ViewingRoomCardFragmentContainer } from "./ViewingRoomCard"
-import { ViewingRooms_edges } from "v2/__generated__/ViewingRooms_edges.graphql"
+import { ViewingRooms_edges$data } from "v2/__generated__/ViewingRooms_edges.graphql"
 
 interface ViewingRoomsProps {
-  edges: ViewingRooms_edges
+  edges: ViewingRooms_edges$data
   eventTitle: string
 }
 

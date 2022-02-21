@@ -12,8 +12,8 @@ import {
 import { createFragmentContainer, graphql } from "react-relay"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import { useInquiryContext } from "../Hooks/useInquiryContext"
-import { InquiryBasicInfo_artwork } from "v2/__generated__/InquiryBasicInfo_artwork.graphql"
-import { InquiryBasicInfo_me } from "v2/__generated__/InquiryBasicInfo_me.graphql"
+import { InquiryBasicInfo_artwork$data } from "v2/__generated__/InquiryBasicInfo_artwork.graphql"
+import { InquiryBasicInfo_me$data } from "v2/__generated__/InquiryBasicInfo_me.graphql"
 import { InquiryBasicInfoQuery } from "v2/__generated__/InquiryBasicInfoQuery.graphql"
 import {
   Location,
@@ -28,8 +28,8 @@ import { compactObject } from "v2/Utils/compactObject"
 import { useMode } from "v2/Utils/Hooks/useMode"
 
 interface InquiryBasicInfoProps {
-  artwork: InquiryBasicInfo_artwork
-  me: InquiryBasicInfo_me | null
+  artwork: InquiryBasicInfo_artwork$data
+  me: InquiryBasicInfo_me$data | null
 }
 
 type Mode = "Pending" | "Loading" | "Success" | "Error"

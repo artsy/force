@@ -1,5 +1,5 @@
 import { Image } from "@artsy/palette"
-import { DefaultHeaderArtwork_artwork } from "v2/__generated__/DefaultHeaderArtwork_artwork.graphql"
+import { DefaultHeaderArtwork_artwork$data } from "v2/__generated__/DefaultHeaderArtwork_artwork.graphql"
 import { AnalyticsSchema } from "v2/System/Analytics"
 import { useTracking } from "v2/System/Analytics/useTracking"
 import { RouterLink } from "v2/System/Router/RouterLink"
@@ -7,7 +7,7 @@ import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 
 export interface DefaultHeaderArtworkProps {
-  artwork: DefaultHeaderArtwork_artwork
+  artwork: DefaultHeaderArtwork_artwork$data
   collectionId: string
   collectionSlug: string
 }

@@ -17,6 +17,7 @@ describe("GeneSearchResults", () => {
     Component: (props: any) => {
       return (
         <GeneSearchResultsContentContainer
+          // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
           onGeneFollow={mockedOnGeneFollow}
           onNoResults={mockedOnNoResults}
           term={"some term"}

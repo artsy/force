@@ -5,14 +5,14 @@ import {
   useThemeConfig,
   TextVariant,
 } from "@artsy/palette"
-import * as React from "react";
+import * as React from "react"
 import styled from "styled-components"
-import { SavedAddresses_me } from "v2/__generated__/SavedAddresses_me.graphql"
+import { SavedAddresses_me$data } from "v2/__generated__/SavedAddresses_me.graphql"
 
 type AddressNode = NonNullable<
   NonNullable<
     NonNullable<
-      NonNullable<SavedAddresses_me["addressConnection"]>["edges"]
+      NonNullable<SavedAddresses_me$data["addressConnection"]>["edges"]
     >[number]
   >["node"]
 >

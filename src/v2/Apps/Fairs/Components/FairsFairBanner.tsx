@@ -3,7 +3,7 @@ import { Box, BoxProps, Image, ResponsiveBox, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
 import { RouterLink } from "v2/System/Router/RouterLink"
-import { FairsFairBanner_fair } from "v2/__generated__/FairsFairBanner_fair.graphql"
+import { FairsFairBanner_fair$data } from "v2/__generated__/FairsFairBanner_fair.graphql"
 
 const Overlay = styled(Box)`
   position: absolute;
@@ -32,7 +32,7 @@ const Overlay = styled(Box)`
 `
 
 interface FairsFairBannerProps extends BoxProps {
-  fair: FairsFairBanner_fair
+  fair: FairsFairBanner_fair$data
 }
 
 const FairsFairBanner: React.FC<FairsFairBannerProps> = ({ fair, ...rest }) => {

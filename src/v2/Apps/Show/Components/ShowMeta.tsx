@@ -1,11 +1,11 @@
 import * as React from "react"
 import { Link, Meta, Title } from "react-head"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ShowMeta_show } from "v2/__generated__/ShowMeta_show.graphql"
+import { ShowMeta_show$data } from "v2/__generated__/ShowMeta_show.graphql"
 import { getENV } from "v2/Utils/getENV"
 
 interface ShowMetaProps {
-  show: ShowMeta_show
+  show: ShowMeta_show$data
 }
 
 const ShowMeta: React.FC<ShowMetaProps> = ({

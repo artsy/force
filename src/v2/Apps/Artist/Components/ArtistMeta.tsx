@@ -1,4 +1,4 @@
-import { ArtistMeta_artist } from "v2/__generated__/ArtistMeta_artist.graphql"
+import { ArtistMeta_artist$data } from "v2/__generated__/ArtistMeta_artist.graphql"
 import { Person as SeoDataForArtist } from "v2/Components/Seo/Person"
 import { identity, pickBy } from "lodash"
 import { Component } from "react"
@@ -9,11 +9,11 @@ import { get } from "v2/Utils/get"
 import { ArtistMetaCanonicalLinkFragmentContainer as ArtistMetaCanonicalLink } from "./ArtistMetaCanonicalLink"
 
 interface Props {
-  artist: ArtistMeta_artist
+  artist: ArtistMeta_artist$data
 }
 
 // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-type ArtworkNode = ArtistMeta_artist["artworks_connection"]["edges"][0]["node"]
+type ArtworkNode = ArtistMeta_artist$data["artworks_connection"]["edges"][0]["node"]
 
 export const sellerFromPartner = (partner: ArtworkNode["partner"]) => {
   if (partner) {
@@ -54,7 +54,7 @@ export const imageObjectAttributes = (item: ItemWithImage) => {
   )
 }
 
-export const offersAttributes = (artist: ArtistMeta_artist) => {
+export const offersAttributes = (artist: ArtistMeta_artist$data) => {
   // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
   const { edges } = artist.artworks_connection
 
@@ -82,7 +82,7 @@ export const offersAttributes = (artist: ArtistMeta_artist) => {
 }
 
 export const productAttributes = (
-  artist: ArtistMeta_artist,
+  artist: ArtistMeta_artist$data,
   artwork: ArtworkNode
 ) => {
   const image = imageObjectAttributes(artwork)
@@ -132,7 +132,7 @@ export const offerAttributes = (artwork: ArtworkNode) => {
   }
 }
 
-export const structuredDataAttributes = (artist: ArtistMeta_artist) => {
+export const structuredDataAttributes = (artist: ArtistMeta_artist$data) => {
   let makesOffer = offersAttributes(artist)
   if (makesOffer && makesOffer.length === 0) {
     makesOffer = undefined

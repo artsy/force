@@ -7,7 +7,7 @@ import {
   Text,
   Spacer,
 } from "@artsy/palette"
-import { CreateAppSecondFactorMutationResponse } from "v2/__generated__/CreateAppSecondFactorMutation.graphql"
+import { CreateAppSecondFactorMutation$data } from "v2/__generated__/CreateAppSecondFactorMutation.graphql"
 import { useSystemContext } from "v2/System"
 import { Formik, FormikHelpers as FormikActions, FormikProps } from "formik"
 import QRCode from "qrcode.react"
@@ -40,8 +40,11 @@ interface AppSecondFactorModalProps {
   onClose: () => void
   show?: boolean
   onComplete: () => void
-  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-  secondFactor: CreateAppSecondFactorMutationResponse["createAppSecondFactor"]["secondFactorOrErrors"]
+  secondFactor: NonNullable<
+    NonNullable<
+      CreateAppSecondFactorMutation$data["createAppSecondFactor"]
+    >["secondFactorOrErrors"]
+  >
 }
 
 export const AppSecondFactorModal: React.FC<AppSecondFactorModalProps> = props => {
@@ -155,7 +158,7 @@ export const AppSecondFactorModal: React.FC<AppSecondFactorModalProps> = props =
 
 interface InnerFormProps extends FormikProps<FormValues> {
   // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-  secondFactor: CreateAppSecondFactorMutationResponse["createAppSecondFactor"]["secondFactorOrErrors"]
+  secondFactor: CreateAppSecondFactorMutation$data["createAppSecondFactor"]["secondFactorOrErrors"]
 }
 
 const InnerForm: React.FC<InnerFormProps> = ({

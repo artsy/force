@@ -1,18 +1,18 @@
-import { useEffect, useState } from "react";
-import * as React from "react";
+import { useEffect, useState } from "react"
+import * as React from "react"
 import { Carousel } from "v2/Components/Carousel"
 import {
   createPaginationContainer,
   graphql,
   RelayPaginationProp,
 } from "react-relay"
-import { PartnerArtistArtworksRail_partnerArtist } from "v2/__generated__/PartnerArtistArtworksRail_partnerArtist.graphql"
+import { PartnerArtistArtworksRail_partnerArtist$data } from "v2/__generated__/PartnerArtistArtworksRail_partnerArtist.graphql"
 import { extractNodes } from "v2/Utils/extractNodes"
 import FillwidthItem from "v2/Components/Artwork/FillwidthItem"
 import { PartnerArtistArtworkCarouselItemPlaceholder } from "./PartnerArtistDetailsPlaceholder"
 
 export interface PartnerArtistArtworksRailProps {
-  partnerArtist: PartnerArtistArtworksRail_partnerArtist
+  partnerArtist: PartnerArtistArtworksRail_partnerArtist$data
   partnerId: string
   artistId: string
   relay: RelayPaginationProp

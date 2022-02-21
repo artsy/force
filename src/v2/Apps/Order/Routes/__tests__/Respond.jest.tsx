@@ -1,5 +1,5 @@
 import { BorderedRadio, Button } from "@artsy/palette"
-import { RespondTestQueryRawResponse } from "v2/__generated__/RespondTestQuery.graphql"
+import { RespondTestQuery$rawResponse } from "v2/__generated__/RespondTestQuery.graphql"
 import {
   Buyer,
   OfferOrderWithShippingDetails,
@@ -99,7 +99,7 @@ describe("The respond page", () => {
           unix: 222,
         },
       },
-    } as unknown) as RespondTestQueryRawResponse,
+    } as unknown) as RespondTestQuery$rawResponse,
     defaultMutationResults: {
       ...buyerCounterOfferSuccess,
     },

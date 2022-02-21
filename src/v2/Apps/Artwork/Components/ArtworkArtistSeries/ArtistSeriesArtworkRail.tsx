@@ -1,6 +1,6 @@
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ArtistSeriesArtworkRail_artwork } from "v2/__generated__/ArtistSeriesArtworkRail_artwork.graphql"
+import { ArtistSeriesArtworkRail_artwork$data } from "v2/__generated__/ArtistSeriesArtworkRail_artwork.graphql"
 import { ShelfArtworkFragmentContainer } from "v2/Components/Artwork/ShelfArtwork"
 import { useTracking } from "react-tracking"
 import {
@@ -13,7 +13,7 @@ import { extractNodes } from "v2/Utils/extractNodes"
 import { Rail } from "v2/Components/Rail"
 
 interface Props {
-  artwork: ArtistSeriesArtworkRail_artwork
+  artwork: ArtistSeriesArtworkRail_artwork$data
 }
 
 export const ArtistSeriesArtworkRail: React.FC<Props> = ({ artwork }) => {

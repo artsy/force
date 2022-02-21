@@ -1,14 +1,14 @@
-import * as React from "react";
+import * as React from "react"
 import { Link, Meta, Title } from "react-head"
 import { createFragmentContainer, graphql } from "react-relay"
-import { PartnerMeta_partner } from "v2/__generated__/PartnerMeta_partner.graphql"
+import { PartnerMeta_partner$data } from "v2/__generated__/PartnerMeta_partner.graphql"
 import { getENV } from "v2/Utils/getENV"
 import { useRouter } from "v2/System/Router/useRouter"
 import { LocalBusiness } from "v2/Components/Seo/LocalBusiness"
 import { extractNodes } from "v2/Utils/extractNodes"
 
 interface PartnerMetaProps {
-  partner: PartnerMeta_partner
+  partner: PartnerMeta_partner$data
 }
 
 const PartnerMeta: React.FC<PartnerMetaProps> = ({

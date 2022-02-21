@@ -5,12 +5,12 @@ import { SettingsEditSettingsInformationFragmentContainer } from "./Components/S
 import { SettingsEditSettingsTwoFactorFragmentContainer } from "./Components/SettingsEditSettingsTwoFactor"
 import { SettingsEditSettingsEmailPreferencesFragmentContainer } from "./Components/SettingsEditSettingsEmailPreferences/SettingsEditSettingsEmailPreferences"
 import { SettingsEditSettingsPasswordFragmentContainer } from "./Components/SettingsEditSettingsPassword"
-import { SettingsEditSettingsRoute_me } from "v2/__generated__/SettingsEditSettingsRoute_me.graphql"
+import { SettingsEditSettingsRoute_me$data } from "v2/__generated__/SettingsEditSettingsRoute_me.graphql"
 import { SettingsEditSettingsDeleteAccount } from "./Components/SettingsEditSettingsDeleteAccount/SettingsEditSettingsDeleteAccount"
 import { SettingsEditSettingsLinkedAccountsFragmentContainer } from "./Components/SettingsEditSettingsLinkedAccounts"
 
 interface SettingsEditRouteProps {
-  me: SettingsEditSettingsRoute_me
+  me: SettingsEditSettingsRoute_me$data
 }
 
 const SettingsEditRoute: React.FC<SettingsEditRouteProps> = ({ me }) => {

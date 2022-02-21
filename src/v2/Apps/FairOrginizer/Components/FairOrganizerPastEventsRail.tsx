@@ -1,12 +1,12 @@
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FairOrganizerPastEventRailCellFragmentContainer as FairOrganizerPastEventRailCell } from "./FairOrganizerPastEventRailCell"
-import { FairOrganizerPastEventsRail_fairOrganizer } from "v2/__generated__/FairOrganizerPastEventsRail_fairOrganizer.graphql"
+import { FairOrganizerPastEventsRail_fairOrganizer$data } from "v2/__generated__/FairOrganizerPastEventsRail_fairOrganizer.graphql"
 import { extractNodes } from "v2/Utils/extractNodes"
 import { Rail } from "v2/Components/Rail"
 
 interface FairOrganizerPastEventsRailProps {
-  fairOrganizer: FairOrganizerPastEventsRail_fairOrganizer
+  fairOrganizer: FairOrganizerPastEventsRail_fairOrganizer$data
 }
 
 export const FairOrganizerPastEventsRail: React.FC<FairOrganizerPastEventsRailProps> = props => {

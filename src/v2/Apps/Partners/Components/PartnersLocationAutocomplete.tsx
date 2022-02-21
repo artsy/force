@@ -3,13 +3,13 @@ import { FC, useMemo, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useSystemContext } from "v2/System"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
-import { PartnersLocationAutocomplete_viewer } from "v2/__generated__/PartnersLocationAutocomplete_viewer.graphql"
+import { PartnersLocationAutocomplete_viewer$data } from "v2/__generated__/PartnersLocationAutocomplete_viewer.graphql"
 import { PartnersLocationAutocompleteQuery } from "v2/__generated__/PartnersLocationAutocompleteQuery.graphql"
 import { useRouter } from "v2/System/Router/useRouter"
 import { omit } from "lodash"
 
 interface PartnersLocationAutocompleteProps {
-  viewer: PartnersLocationAutocomplete_viewer
+  viewer: PartnersLocationAutocomplete_viewer$data
 }
 
 const PartnersLocationAutocomplete: FC<PartnersLocationAutocompleteProps> = ({

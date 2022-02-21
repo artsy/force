@@ -1,17 +1,17 @@
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
 import { Text, Flex, Swiper } from "@artsy/palette"
 import { Media } from "v2/Utils/Responsive"
 import { scrollIntoView } from "v2/Utils/scrollHelpers"
-import { ExhibitorsLetterNav_fair } from "v2/__generated__/ExhibitorsLetterNav_fair.graphql"
+import { ExhibitorsLetterNav_fair$data } from "v2/__generated__/ExhibitorsLetterNav_fair.graphql"
 import { getExhibitorSectionId } from "../Utils/getExhibitorSectionId"
 import { useExhibitorsTabOffset } from "../Utils/useExhibitorsTabOffset"
 
 const LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ#".split("")
 
 interface ExhibitorsLetterNavProps {
-  fair: ExhibitorsLetterNav_fair
+  fair: ExhibitorsLetterNav_fair$data
 }
 
 export const ExhibitorsLetterNav: React.FC<ExhibitorsLetterNavProps> = ({

@@ -15,7 +15,7 @@ import {
 import styled from "styled-components"
 import { AlignSelfProps, BackgroundProps, alignSelf } from "styled-system"
 import { TimeSince } from "./TimeSince"
-import { Message_message } from "v2/__generated__/Message_message.graphql"
+import { Message_message$data } from "v2/__generated__/Message_message.graphql"
 
 const AttachmentLink = styled.a<{ isImage: boolean } & AlignSelfProps>`
   ${alignSelf};
@@ -45,7 +45,7 @@ const MessageText = styled(Text)`
 
 interface AttachmentProps {
   // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-  attachment: Message_message["attachments"][0]
+  attachment: Message_message$data["attachments"][0]
   alignSelf: string
   bgColor: Color
   textColor: Color
@@ -96,7 +96,7 @@ export const Attachment: React.FC<AttachmentProps> = props => {
   )
 }
 interface MessageProps extends Omit<BoxProps, "color"> {
-  message: Message_message
+  message: Message_message$data
   showTimeSince?: boolean
 }
 export const Message: React.FC<MessageProps> = props => {

@@ -31,7 +31,7 @@ import createLogger from "v2/Utils/logger"
 import { openAuthModal } from "v2/Utils/openAuthModal"
 import { Media } from "v2/Utils/Responsive"
 import { scrollIntoView } from "v2/Utils/scrollHelpers"
-import { ArtistAuctionResults_artist } from "v2/__generated__/ArtistAuctionResults_artist.graphql"
+import { ArtistAuctionResults_artist$data } from "v2/__generated__/ArtistAuctionResults_artist.graphql"
 import { allowedAuctionResultFilters } from "../../Utils/allowedAuctionResultFilters"
 import { ArtistAuctionResultItemFragmentContainer as AuctionResultItem } from "./ArtistAuctionResultItem"
 import {
@@ -53,7 +53,7 @@ const PAGE_SIZE = 10
 
 interface AuctionResultsProps {
   relay: RelayRefetchProp
-  artist: ArtistAuctionResults_artist
+  artist: ArtistAuctionResults_artist$data
 }
 
 const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({

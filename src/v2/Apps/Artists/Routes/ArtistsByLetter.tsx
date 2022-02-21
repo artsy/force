@@ -15,7 +15,7 @@ import styled, { css } from "styled-components"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { useRouter } from "v2/System/Router/useRouter"
 import { PaginationFragmentContainer } from "v2/Components/Pagination"
-import { ArtistsByLetter_viewer } from "v2/__generated__/ArtistsByLetter_viewer.graphql"
+import { ArtistsByLetter_viewer$data } from "v2/__generated__/ArtistsByLetter_viewer.graphql"
 import { ArtistsByLetterMeta } from "../Components/ArtistsByLetterMeta"
 import { ArtistsLetterNav } from "../Components/ArtistsLetterNav"
 
@@ -39,7 +39,7 @@ const Name = styled(RouterLink)`
 `
 
 interface ArtistsByLetterProps {
-  viewer: ArtistsByLetter_viewer
+  viewer: ArtistsByLetter_viewer$data
   relay: RelayRefetchProp
 }
 

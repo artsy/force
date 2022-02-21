@@ -2,10 +2,10 @@ import { Box, Join, Spacer, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { LiveAuctionToolTip } from "./LiveAuctionToolTip"
-import { AuctionInfoSidebar_sale } from "v2/__generated__/AuctionInfoSidebar_sale.graphql"
+import { AuctionInfoSidebar_sale$data } from "v2/__generated__/AuctionInfoSidebar_sale.graphql"
 
 interface AuctionInfoSidebarProps {
-  sale: AuctionInfoSidebar_sale
+  sale: AuctionInfoSidebar_sale$data
 }
 
 const AuctionInfoSidebar: React.FC<AuctionInfoSidebarProps> = ({ sale }) => {

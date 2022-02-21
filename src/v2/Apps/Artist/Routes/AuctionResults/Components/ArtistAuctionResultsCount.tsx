@@ -1,9 +1,9 @@
 import { createFragmentContainer, graphql } from "react-relay"
 import { Sans } from "@artsy/palette"
-import { ArtistAuctionResultsCount_results } from "v2/__generated__/ArtistAuctionResultsCount_results.graphql"
+import { ArtistAuctionResultsCount_results$data } from "v2/__generated__/ArtistAuctionResultsCount_results.graphql"
 
 interface ArtistAuctionResultsCountProps {
-  results: ArtistAuctionResultsCount_results
+  results: ArtistAuctionResultsCount_results$data
 }
 
 export const ArtistAuctionResultsCount = ({

@@ -1,10 +1,10 @@
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { GeneMeta_gene } from "v2/__generated__/GeneMeta_gene.graphql"
+import { GeneMeta_gene$data } from "v2/__generated__/GeneMeta_gene.graphql"
 import { MetaTags } from "v2/Components/MetaTags"
 
 interface GeneMetaProps {
-  gene: GeneMeta_gene
+  gene: GeneMeta_gene$data
 }
 
 const GeneMeta: React.FC<GeneMetaProps> = ({ gene }) => {

@@ -1,5 +1,5 @@
 import { VerifiedIcon } from "@artsy/palette"
-import { VerifiedSeller_artwork } from "v2/__generated__/VerifiedSeller_artwork.graphql"
+import { VerifiedSeller_artwork$data } from "v2/__generated__/VerifiedSeller_artwork.graphql"
 import * as React from "react"
 import { createFragmentContainer } from "react-relay"
 import { graphql } from "react-relay"
@@ -7,7 +7,7 @@ import { TrustSignal, TrustSignalProps } from "./TrustSignal"
 
 interface VerifiedSellerProps
   extends Omit<TrustSignalProps, "Icon" | "label" | "description"> {
-  artwork: VerifiedSeller_artwork
+  artwork: VerifiedSeller_artwork$data
 }
 
 // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION

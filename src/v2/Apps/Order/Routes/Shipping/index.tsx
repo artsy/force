@@ -10,7 +10,7 @@ import {
   Text,
 } from "@artsy/palette"
 import { RouterLink } from "v2/System/Router/RouterLink"
-import { Shipping_order } from "v2/__generated__/Shipping_order.graphql"
+import { Shipping_order$data } from "v2/__generated__/Shipping_order.graphql"
 import { CommerceOrderFulfillmentTypeEnum } from "v2/__generated__/SetShippingMutation.graphql"
 import { ArtworkSummaryItemFragmentContainer as ArtworkSummaryItem } from "v2/Apps/Order/Components/ArtworkSummaryItem"
 import {
@@ -51,7 +51,7 @@ import { RelayProp, createFragmentContainer, graphql } from "react-relay"
 import createLogger from "v2/Utils/logger"
 import { Media } from "v2/Utils/Responsive"
 import { BuyerGuarantee } from "v2/Apps/Order/Components/BuyerGuarantee"
-import { Shipping_me } from "v2/__generated__/Shipping_me.graphql"
+import { Shipping_me$data } from "v2/__generated__/Shipping_me.graphql"
 import {
   startingPhoneNumber,
   startingAddress,
@@ -74,8 +74,8 @@ import { compact } from "lodash"
 import { selectShippingOption } from "v2/Apps/Order/Mutations/SelectShippingOption"
 import { updateUserAddress } from "v2/Apps/Order/Mutations/UpdateUserAddress"
 import { deleteUserAddress } from "v2/Apps/Order/Mutations/DeleteUserAddress"
-import { CreateUserAddressMutationResponse } from "v2/__generated__/CreateUserAddressMutation.graphql"
-import { UpdateUserAddressMutationResponse } from "v2/__generated__/UpdateUserAddressMutation.graphql"
+import { CreateUserAddressMutation$data } from "v2/__generated__/CreateUserAddressMutation.graphql"
+import { UpdateUserAddressMutation$data } from "v2/__generated__/UpdateUserAddressMutation.graphql"
 import {
   ActionType,
   ClickedSelectShippingOption,
@@ -85,8 +85,8 @@ import {
 } from "@artsy/cohesion"
 
 export interface ShippingProps extends SystemContextProps {
-  order: Shipping_order
-  me: Shipping_me
+  order: Shipping_order$data
+  me: Shipping_me$data
   relay?: RelayProp
   router: Router
   dialog: Dialog
@@ -532,7 +532,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
   }
 
   handleAddressEdit = (
-    address: UpdateUserAddressMutationResponse["updateUserAddress"]
+    address: UpdateUserAddressMutation$data["updateUserAddress"]
   ) => {
     // reload shipping quotes if selected address edited
     if (
@@ -553,7 +553,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
   }
 
   handleAddressCreate = (
-    address: CreateUserAddressMutationResponse["createUserAddress"]
+    address: CreateUserAddressMutation$data["createUserAddress"]
   ) => {
     if (address?.userAddressOrErrors?.internalID) {
       this.selectSavedAddress(address.userAddressOrErrors.internalID)

@@ -1,12 +1,12 @@
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { HTML, Text } from "@artsy/palette"
-import { ArtistBio_bio } from "v2/__generated__/ArtistBio_bio.graphql"
-import * as React from "react";
+import { ArtistBio_bio$data } from "v2/__generated__/ArtistBio_bio.graphql"
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { data as sd } from "sharify"
 
 export interface ArtistBioProps {
-  bio: ArtistBio_bio
+  bio: ArtistBio_bio$data
   maxChars?: number
   onReadMoreClicked?: () => void
 }

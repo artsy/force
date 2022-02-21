@@ -6,13 +6,13 @@ import { RouteTab, RouteTabs } from "v2/Components/RouteTabs"
 import { Sticky } from "v2/Components/Sticky"
 import { ScrollIntoView } from "v2/Utils"
 import { Media } from "v2/Utils/Responsive"
-import { NavigationTabs_partner } from "v2/__generated__/NavigationTabs_partner.graphql"
+import { NavigationTabs_partner$data } from "v2/__generated__/NavigationTabs_partner.graphql"
 
 // TODO: Update value in component height changed
 export const PARTNER_NAV_BAR_HEIGHT = 78
 
 interface NavigationTabsProps {
-  partner: NavigationTabs_partner
+  partner: NavigationTabs_partner$data
 }
 
 export const NavigationTabs: React.FC<NavigationTabsProps> = ({ partner }) => {

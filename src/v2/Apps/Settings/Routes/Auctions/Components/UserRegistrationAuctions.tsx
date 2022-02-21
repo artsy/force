@@ -4,10 +4,10 @@ import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { SectionContainer } from "./SectionContainer"
 import { extractNodes } from "v2/Utils/extractNodes"
-import { UserRegistrationAuctions_me } from "v2/__generated__/UserRegistrationAuctions_me.graphql"
+import { UserRegistrationAuctions_me$data } from "v2/__generated__/UserRegistrationAuctions_me.graphql"
 
 interface UserRegistrationAuctionsProps {
-  me: UserRegistrationAuctions_me
+  me: UserRegistrationAuctions_me$data
 }
 
 export const UserRegistrationAuctions: React.FC<UserRegistrationAuctionsProps> = ({

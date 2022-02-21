@@ -1,13 +1,13 @@
 import { Join, Spacer } from "@artsy/palette"
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { CollectionsHubRails_linkedCollections } from "v2/__generated__/CollectionsHubRails_linkedCollections.graphql"
+import { CollectionsHubRails_linkedCollections$data } from "v2/__generated__/CollectionsHubRails_linkedCollections.graphql"
 import { ArtistSeriesRailContainer as ArtistSeriesRail } from "./ArtistSeriesRail"
 import { FeaturedCollectionsRailsContainer as FeaturedCollectionsRails } from "./FeaturedCollectionsRails"
 import { OtherCollectionsRailsContainer as OtherCollectionsRail } from "./OtherCollectionsRail"
 
 interface CollectionsHubRailsProps {
-  linkedCollections: CollectionsHubRails_linkedCollections
+  linkedCollections: CollectionsHubRails_linkedCollections$data
 }
 
 export const CollectionsHubRails: React.FC<CollectionsHubRailsProps> = ({

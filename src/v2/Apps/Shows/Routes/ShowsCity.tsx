@@ -7,12 +7,12 @@ import {
   Sup,
   Message,
 } from "@artsy/palette"
-import { useMemo, useRef, useState } from "react";
-import * as React from "react";
+import { useMemo, useRef, useState } from "react"
+import * as React from "react"
 import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
 import { ShowsHeaderFragmentContainer } from "../Components/ShowsHeader"
-import { ShowsCity_viewer } from "v2/__generated__/ShowsCity_viewer.graphql"
-import { ShowsCity_city } from "v2/__generated__/ShowsCity_city.graphql"
+import { ShowsCity_viewer$data } from "v2/__generated__/ShowsCity_viewer.graphql"
+import { ShowsCity_city$data } from "v2/__generated__/ShowsCity_city.graphql"
 import { ShowsMeta } from "../Components/ShowsMeta"
 import { ShowsFeaturedShowFragmentContainer } from "../Components/ShowsFeaturedShow"
 import { DateTime } from "luxon"
@@ -22,8 +22,8 @@ import { PaginationFragmentContainer } from "v2/Components/Pagination"
 import { useScrollTo } from "v2/Utils/Hooks/useScrollTo"
 
 interface ShowsCityProps {
-  viewer: ShowsCity_viewer
-  city: ShowsCity_city
+  viewer: ShowsCity_viewer$data
+  city: ShowsCity_city$data
   relay: RelayRefetchProp
 }
 

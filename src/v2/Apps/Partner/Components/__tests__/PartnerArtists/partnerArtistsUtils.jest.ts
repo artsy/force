@@ -1,5 +1,5 @@
 import { flatten } from "lodash"
-import { PartnerArtistList_artists } from "v2/__generated__/PartnerArtistList_artists.graphql"
+import { PartnerArtistList_artists$data } from "v2/__generated__/PartnerArtistList_artists.graphql"
 import {
   ArtistListColumnSizes,
   ArtistsGroup,
@@ -76,7 +76,7 @@ describe("partnerArtistsUtils", () => {
     "groupArtists returns correct value. %s",
     (
       name: string,
-      artists: PartnerArtistList_artists,
+      artists: PartnerArtistList_artists$data,
       distinguishRepresentedArtists: boolean,
       result: Array<ArtistsGroup>
     ) => {
@@ -96,7 +96,7 @@ describe("partnerArtistsUtils", () => {
 function generateArtistList(
   representedByCount = 10,
   worksAvailableArtistCount = 10
-): PartnerArtistList_artists {
+): PartnerArtistList_artists$data {
   return flatten([
     [...Array(representedByCount)].map(() => generateArtistItem()),
     [...Array(worksAvailableArtistCount)].map(() => generateArtistItem(false)),
@@ -105,7 +105,7 @@ function generateArtistList(
 
 function generateArtistItem(
   representedBy = true
-): PartnerArtistList_artists[0] {
+): PartnerArtistList_artists$data[0] {
   return {
     counts: {
       artworks: 3,

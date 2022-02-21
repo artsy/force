@@ -9,7 +9,7 @@ import {
 } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { SettingsEditProfileArtistsYouCollectRemoveButton } from "./SettingsEditProfileArtistsYouCollectRemoveButton"
-import { SettingsEditProfileArtistsYouCollect_me } from "v2/__generated__/SettingsEditProfileArtistsYouCollect_me.graphql"
+import { SettingsEditProfileArtistsYouCollect_me$data } from "v2/__generated__/SettingsEditProfileArtistsYouCollect_me.graphql"
 import { SettingsEditProfileArtistsYouCollectAutocompleteQuery } from "v2/__generated__/SettingsEditProfileArtistsYouCollectAutocompleteQuery.graphql"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import { useSystemContext } from "v2/System"
@@ -18,7 +18,7 @@ import { useAddArtistYouCollect } from "./useAddArtistYouCollect"
 import { useRemoveArtistYouCollect } from "./useRemoveArtistYouCollect"
 
 interface SettingsEditProfileArtistsYouCollectProps {
-  me: SettingsEditProfileArtistsYouCollect_me
+  me: SettingsEditProfileArtistsYouCollect_me$data
 }
 
 export const SettingsEditProfileArtistsYouCollect: FC<SettingsEditProfileArtistsYouCollectProps> = ({

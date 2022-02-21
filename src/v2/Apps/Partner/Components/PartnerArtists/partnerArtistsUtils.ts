@@ -1,4 +1,4 @@
-import { PartnerArtistList_artists } from "v2/__generated__/PartnerArtistList_artists.graphql"
+import { PartnerArtistList_artists$data } from "v2/__generated__/PartnerArtistList_artists.graphql"
 
 export interface ArtistListColumnSizes {
   representedArtist: number
@@ -41,13 +41,13 @@ export function getColumnsCountForEachArtistType(
 }
 
 export interface ArtistsGroup {
-  artists: PartnerArtistList_artists
+  artists: PartnerArtistList_artists$data
   columnSize: number
   columnName?: string
 }
 
 export function groupArtists(
-  artists: PartnerArtistList_artists,
+  artists: PartnerArtistList_artists$data,
   distinguishRepresentedArtists: boolean,
   columnSize: number = 6
 ): Array<ArtistsGroup> {

@@ -1,10 +1,10 @@
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { SettingsPaymentsMethodsFragmentContainer } from "./Components/SettingsPaymentsMethods"
-import { SettingsPaymentsRoute_me } from "v2/__generated__/SettingsPaymentsRoute_me.graphql"
+import { SettingsPaymentsRoute_me$data } from "v2/__generated__/SettingsPaymentsRoute_me.graphql"
 
 interface SettingsPaymentsRouteProps {
-  me: SettingsPaymentsRoute_me
+  me: SettingsPaymentsRoute_me$data
 }
 
 const SettingsPaymentsRoute: React.FC<SettingsPaymentsRouteProps> = ({

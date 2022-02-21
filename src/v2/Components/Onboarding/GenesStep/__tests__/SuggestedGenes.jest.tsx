@@ -16,6 +16,7 @@ describe("SuggestedGenes", () => {
     Component: (props: any) => {
       return (
         <SuggestedGenesContainer
+          // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
           onGeneFollow={mockedOnGeneFollow}
           suggested_genes={props.highlights.suggested_genes}
         />

@@ -20,12 +20,12 @@ import { EditionSelectBoxFragmentContainer } from "./EditionSelectBox"
 
 import {
   ConfirmArtworkModalQuery,
-  ConfirmArtworkModalQueryResponse,
+  ConfirmArtworkModalQuery$data,
 } from "v2/__generated__/ConfirmArtworkModalQuery.graphql"
-import { ConfirmArtworkModal_artwork } from "v2/__generated__/ConfirmArtworkModal_artwork.graphql"
+import { ConfirmArtworkModal_artwork$data } from "v2/__generated__/ConfirmArtworkModal_artwork.graphql"
 
 export interface ConfirmArtworkModalProps {
-  artwork: ConfirmArtworkModal_artwork
+  artwork: ConfirmArtworkModal_artwork$data
   conversationID: string
   show: boolean
   closeModal: () => void
@@ -140,7 +140,7 @@ export const ConfirmArtworkModalQueryRenderer: React.FC<{
       variables={{
         artworkID,
       }}
-      render={renderWithLoadProgress<ConfirmArtworkModalQueryResponse>(
+      render={renderWithLoadProgress<ConfirmArtworkModalQuery$data>(
         ({ artwork }) => (
           <ConfirmArtworkModalFragmentContainer artwork={artwork!} {...rest} />
         )

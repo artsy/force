@@ -1,4 +1,4 @@
-import { Metadata_artwork } from "v2/__generated__/Metadata_artwork.graphql"
+import { Metadata_artwork$data } from "v2/__generated__/Metadata_artwork.graphql"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { DetailsFragmentContainer as Details } from "./Details"
@@ -8,7 +8,7 @@ import { RouterLink } from "v2/System/Router/RouterLink"
 export interface MetadataProps
   extends BoxProps,
     React.AnchorHTMLAttributes<HTMLAnchorElement> {
-  artwork: Metadata_artwork
+  artwork: Metadata_artwork$data
   extended?: boolean
   hidePartnerName?: boolean
   hideArtistName?: boolean

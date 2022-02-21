@@ -1,14 +1,14 @@
-import * as React from "react";
+import * as React from "react"
 import { Column, GridColumns } from "@artsy/palette"
 import { useRouter } from "v2/System/Router/useRouter"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ViewingRoomWorks_viewingRoom } from "v2/__generated__/ViewingRoomWorks_viewingRoom.graphql"
+import { ViewingRoomWorks_viewingRoom$data } from "v2/__generated__/ViewingRoomWorks_viewingRoom.graphql"
 import { ViewWorksButton } from "./ViewWorksButton"
 import { extractNodes } from "v2/Utils/extractNodes"
 import { ViewingRoomWorksArtworkFragmentContainer } from "./ViewingRoomWorksArtwork"
 
 interface ViewingRoomWorksProps {
-  viewingRoom: ViewingRoomWorks_viewingRoom
+  viewingRoom: ViewingRoomWorks_viewingRoom$data
 }
 
 const ViewingRoomWorks: React.FC<ViewingRoomWorksProps> = ({ viewingRoom }) => {

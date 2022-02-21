@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"
 import { createRefetchContainer, RelayRefetchProp, graphql } from "react-relay"
 import { useRouter } from "v2/System/Router/useRouter"
 import { BaseArtworkFilter } from "v2/Components/ArtworkFilter"
@@ -8,10 +8,10 @@ import {
   Counts,
   SharedArtworkFilterContextProps,
 } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
-import { GeneArtworkFilter_gene } from "v2/__generated__/GeneArtworkFilter_gene.graphql"
+import { GeneArtworkFilter_gene$data } from "v2/__generated__/GeneArtworkFilter_gene.graphql"
 
 interface GeneArtworkFilterProps {
-  gene: GeneArtworkFilter_gene
+  gene: GeneArtworkFilter_gene$data
   relay: RelayRefetchProp
 }
 

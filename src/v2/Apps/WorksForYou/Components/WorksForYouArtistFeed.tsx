@@ -7,11 +7,11 @@ import {
 } from "react-relay"
 import ArtworkGrid from "v2/Components/ArtworkGrid"
 import { useSystemContext } from "v2/System"
-import { WorksForYouArtistFeed_viewer } from "v2/__generated__/WorksForYouArtistFeed_viewer.graphql"
+import { WorksForYouArtistFeed_viewer$data } from "v2/__generated__/WorksForYouArtistFeed_viewer.graphql"
 
 interface WorksForYouArtistFeedProps {
   relay: RelayPaginationProp
-  viewer: WorksForYouArtistFeed_viewer
+  viewer: WorksForYouArtistFeed_viewer$data
 }
 
 const WorksForYouArtistFeed: React.FC<WorksForYouArtistFeedProps> = ({

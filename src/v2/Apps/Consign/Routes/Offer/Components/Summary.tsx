@@ -1,14 +1,14 @@
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Box, StackableBorderBox, Text } from "@artsy/palette"
 
-import { Summary_offer } from "v2/__generated__/Summary_offer.graphql"
+import { Summary_offer$data } from "v2/__generated__/Summary_offer.graphql"
 
 import { SubmissionSummaryFragmentContainer as SubmissionSummary } from "./SubmissionSummary"
 import { OfferSummaryFragmentContainer as OfferSummary } from "./OfferSummary"
 
 interface SummaryProps {
-  offer: Summary_offer
+  offer: Summary_offer$data
 }
 
 const Summary: React.FC<SummaryProps> = ({ offer }) => {

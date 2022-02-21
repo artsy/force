@@ -1,4 +1,4 @@
-import styled from "styled-components"
+import styled, { StyledComponentClass } from "styled-components"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { themeGet } from "@styled-system/theme-get"
 
@@ -10,4 +10,4 @@ export const StyledLink = styled(RouterLink)`
   &:hover {
     color: ${themeGet("colors.brand")};
   }
-`
+` as StyledComponentClass<any, any>

@@ -1,4 +1,4 @@
-import { AuctionCard_sale } from "v2/__generated__/AuctionCard_sale.graphql"
+import { AuctionCard_sale$data } from "v2/__generated__/AuctionCard_sale.graphql"
 import { DateTime } from "luxon"
 import { relativeTime, upcomingLabel } from "../AuctionCard"
 
@@ -31,7 +31,7 @@ describe("relativeTime", () => {
 })
 
 describe("upcomingLabel", () => {
-  const sale: AuctionCard_sale = {
+  const sale: AuctionCard_sale$data = {
     // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     " $refType": null,
     cover_image: {

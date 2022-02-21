@@ -213,6 +213,7 @@ export const ConfirmBidRoute: React.FC<
         // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         const { id } = token
         const {
+          // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
           createCreditCard: { creditCardOrError },
         } = await createCreditCardAndUpdatePhone(environment, phoneNumber, id)
 

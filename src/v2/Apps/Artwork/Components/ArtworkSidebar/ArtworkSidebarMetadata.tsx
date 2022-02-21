@@ -1,13 +1,13 @@
 import { Text } from "@artsy/palette"
-import { Component } from "react";
+import { Component } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtworkSidebarClassificationFragmentContainer } from "./ArtworkSidebarClassification"
 import { ArtworkSidebarSizeInfoFragmentContainer } from "./ArtworkSidebarSizeInfo"
 import { ArtworkSidebarTitleInfoFragmentContainer } from "./ArtworkSidebarTitleInfo"
-import { ArtworkSidebarMetadata_artwork } from "v2/__generated__/ArtworkSidebarMetadata_artwork.graphql"
+import { ArtworkSidebarMetadata_artwork$data } from "v2/__generated__/ArtworkSidebarMetadata_artwork.graphql"
 
 export interface ArtworkSidebarMetadataProps {
-  artwork: ArtworkSidebarMetadata_artwork
+  artwork: ArtworkSidebarMetadata_artwork$data
 }
 
 export class ArtworkSidebarMetadata extends Component<

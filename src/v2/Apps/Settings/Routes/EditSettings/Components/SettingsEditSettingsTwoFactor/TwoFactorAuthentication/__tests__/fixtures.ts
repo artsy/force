@@ -1,13 +1,13 @@
-import { BackupSecondFactorModalContentQueryRawResponse } from "v2/__generated__/BackupSecondFactorModalContentQuery.graphql"
-import { CreateAppSecondFactorMutationResponse } from "v2/__generated__/CreateAppSecondFactorMutation.graphql"
-import { CreateBackupSecondFactorsMutationResponse } from "v2/__generated__/CreateBackupSecondFactorsMutation.graphql"
-import { CreateSmsSecondFactorMutationResponse } from "v2/__generated__/CreateSmsSecondFactorMutation.graphql"
-import { DeliverSecondFactorMutationResponse } from "v2/__generated__/DeliverSecondFactorMutation.graphql"
-import { DisableSecondFactorMutationResponse } from "v2/__generated__/DisableSecondFactorMutation.graphql"
-import { EnableSecondFactorMutationResponse } from "v2/__generated__/EnableSecondFactorMutation.graphql"
-import { TwoFactorAuthenticationQueryRawResponse } from "v2/__generated__/TwoFactorAuthenticationQuery.graphql"
-import { UpdateAppSecondFactorMutationResponse } from "v2/__generated__/UpdateAppSecondFactorMutation.graphql"
-import { UpdateSmsSecondFactorMutationResponse } from "v2/__generated__/UpdateSmsSecondFactorMutation.graphql"
+import { BackupSecondFactorModalContentQuery$rawResponse } from "v2/__generated__/BackupSecondFactorModalContentQuery.graphql"
+import { CreateAppSecondFactorMutation$rawResponse } from "v2/__generated__/CreateAppSecondFactorMutation.graphql"
+import { CreateBackupSecondFactorsMutation$data } from "v2/__generated__/CreateBackupSecondFactorsMutation.graphql"
+import { CreateSmsSecondFactorMutation$rawResponse } from "v2/__generated__/CreateSmsSecondFactorMutation.graphql"
+import { DeliverSecondFactorMutation$rawResponse } from "v2/__generated__/DeliverSecondFactorMutation.graphql"
+import { DisableSecondFactorMutation$rawResponse } from "v2/__generated__/DisableSecondFactorMutation.graphql"
+import { EnableSecondFactorMutation$rawResponse } from "v2/__generated__/EnableSecondFactorMutation.graphql"
+import { TwoFactorAuthenticationQuery$rawResponse } from "v2/__generated__/TwoFactorAuthenticationQuery.graphql"
+import { UpdateAppSecondFactorMutation$rawResponse } from "v2/__generated__/UpdateAppSecondFactorMutation.graphql"
+import { UpdateSmsSecondFactorMutation$rawResponse } from "v2/__generated__/UpdateSmsSecondFactorMutation.graphql"
 
 export const BackupSecondFactors = [
   { code: "d038183sj8", __typename: "BackupSecondFactor" },
@@ -36,7 +36,7 @@ export const RecoveryCodes = [
   "a9zmemiejs",
 ]
 
-export const CreateBackupSecondFactorsMutationSuccessResponse: CreateBackupSecondFactorsMutationResponse = {
+export const CreateBackupSecondFactorsMutationSuccessResponse: CreateBackupSecondFactorsMutation$data = {
   createBackupSecondFactors: {
     secondFactorsOrErrors: {
       __typename: "BackupSecondFactors",
@@ -45,7 +45,7 @@ export const CreateBackupSecondFactorsMutationSuccessResponse: CreateBackupSecon
   },
 }
 
-export const DisabledQueryResponse: TwoFactorAuthenticationQueryRawResponse = {
+export const DisabledQueryResponse: TwoFactorAuthenticationQuery$rawResponse = {
   me: {
     id: "id",
     hasSecondFactorEnabled: false,
@@ -55,7 +55,7 @@ export const DisabledQueryResponse: TwoFactorAuthenticationQueryRawResponse = {
   },
 }
 
-export const AppEnabledWithBackupCodesQueryResponse: TwoFactorAuthenticationQueryRawResponse = {
+export const AppEnabledWithBackupCodesQueryResponse: TwoFactorAuthenticationQuery$rawResponse = {
   me: {
     id: "id",
     hasSecondFactorEnabled: true,
@@ -67,7 +67,7 @@ export const AppEnabledWithBackupCodesQueryResponse: TwoFactorAuthenticationQuer
   },
 }
 
-export const AppEnabledWithoutBackupCodesQueryResponse: TwoFactorAuthenticationQueryRawResponse = {
+export const AppEnabledWithoutBackupCodesQueryResponse: TwoFactorAuthenticationQuery$rawResponse = {
   me: {
     id: "id",
     hasSecondFactorEnabled: true,
@@ -79,14 +79,14 @@ export const AppEnabledWithoutBackupCodesQueryResponse: TwoFactorAuthenticationQ
   },
 }
 
-export const BackupSecondFactorModalContentQueryResponse: BackupSecondFactorModalContentQueryRawResponse = {
+export const BackupSecondFactorModalContentQueryResponse: BackupSecondFactorModalContentQuery$rawResponse = {
   me: {
     id: "id",
     backupSecondFactors: BackupSecondFactors,
   },
 }
 
-export const CreateSmsSecondFactorMutationSuccessResponse: CreateSmsSecondFactorMutationResponse = {
+export const CreateSmsSecondFactorMutationSuccessResponse: CreateSmsSecondFactorMutation$rawResponse = {
   createSmsSecondFactor: {
     secondFactorOrErrors: {
       __typename: "SmsSecondFactor",
@@ -95,7 +95,7 @@ export const CreateSmsSecondFactorMutationSuccessResponse: CreateSmsSecondFactor
   },
 }
 
-export const CreateAppSecondFactorMutationSuccessResponse: CreateAppSecondFactorMutationResponse = {
+export const CreateAppSecondFactorMutationSuccessResponse: CreateAppSecondFactorMutation$rawResponse = {
   createAppSecondFactor: {
     secondFactorOrErrors: {
       __typename: "AppSecondFactor",
@@ -108,7 +108,7 @@ export const CreateAppSecondFactorMutationSuccessResponse: CreateAppSecondFactor
   },
 }
 
-export const DeliverSmsSecondFactorMutationSuccessResponse: DeliverSecondFactorMutationResponse = {
+export const DeliverSmsSecondFactorMutationSuccessResponse: DeliverSecondFactorMutation$rawResponse = {
   deliverSecondFactor: {
     secondFactorOrErrors: {
       __typename: "SmsSecondFactor",
@@ -117,7 +117,7 @@ export const DeliverSmsSecondFactorMutationSuccessResponse: DeliverSecondFactorM
   },
 }
 
-export const UpdateSmsSecondFactorMutationSuccessResponse: UpdateSmsSecondFactorMutationResponse = {
+export const UpdateSmsSecondFactorMutationSuccessResponse: UpdateSmsSecondFactorMutation$rawResponse = {
   updateSmsSecondFactor: {
     secondFactorOrErrors: {
       __typename: "SmsSecondFactor",
@@ -125,7 +125,7 @@ export const UpdateSmsSecondFactorMutationSuccessResponse: UpdateSmsSecondFactor
   },
 }
 
-export const DeliverSmsSecondFactorMutationErrorResponse: DeliverSecondFactorMutationResponse = {
+export const DeliverSmsSecondFactorMutationErrorResponse: DeliverSecondFactorMutation$rawResponse = {
   deliverSecondFactor: {
     secondFactorOrErrors: {
       __typename: "Errors",
@@ -139,7 +139,7 @@ export const DeliverSmsSecondFactorMutationErrorResponse: DeliverSecondFactorMut
   },
 }
 
-export const UpdateSmsSecondFactorMutationErrorResponse: UpdateSmsSecondFactorMutationResponse = {
+export const UpdateSmsSecondFactorMutationErrorResponse: UpdateSmsSecondFactorMutation$rawResponse = {
   updateSmsSecondFactor: {
     secondFactorOrErrors: {
       __typename: "Errors",
@@ -154,7 +154,7 @@ export const UpdateSmsSecondFactorMutationErrorResponse: UpdateSmsSecondFactorMu
   },
 }
 
-export const UpdateAppSecondFactorMutationSuccessResponse: UpdateAppSecondFactorMutationResponse = {
+export const UpdateAppSecondFactorMutationSuccessResponse: UpdateAppSecondFactorMutation$rawResponse = {
   updateAppSecondFactor: {
     secondFactorOrErrors: {
       __typename: "AppSecondFactor",
@@ -162,7 +162,7 @@ export const UpdateAppSecondFactorMutationSuccessResponse: UpdateAppSecondFactor
   },
 }
 
-export const EnableAppSecondFactorMutationSuccessResponse: EnableSecondFactorMutationResponse = {
+export const EnableAppSecondFactorMutationSuccessResponse: EnableSecondFactorMutation$rawResponse = {
   enableSecondFactor: {
     secondFactorOrErrors: {
       __typename: "AppSecondFactor",
@@ -171,7 +171,7 @@ export const EnableAppSecondFactorMutationSuccessResponse: EnableSecondFactorMut
   },
 }
 
-export const EnableSmsSecondFactorMutationSuccessResponse: EnableSecondFactorMutationResponse = {
+export const EnableSmsSecondFactorMutationSuccessResponse: EnableSecondFactorMutation$rawResponse = {
   enableSecondFactor: {
     secondFactorOrErrors: {
       __typename: "SmsSecondFactor",
@@ -180,7 +180,7 @@ export const EnableSmsSecondFactorMutationSuccessResponse: EnableSecondFactorMut
   },
 }
 
-export const EnableSmsSecondFactorMutationErrorResponse: EnableSecondFactorMutationResponse = {
+export const EnableSmsSecondFactorMutationErrorResponse: EnableSecondFactorMutation$rawResponse = {
   enableSecondFactor: {
     secondFactorOrErrors: {
       __typename: "Errors",
@@ -196,7 +196,7 @@ export const EnableSmsSecondFactorMutationErrorResponse: EnableSecondFactorMutat
   },
 }
 
-export const DisableSecondFactorMutationSuccessResponse: DisableSecondFactorMutationResponse = {
+export const DisableSecondFactorMutationSuccessResponse: DisableSecondFactorMutation$rawResponse = {
   disableSecondFactor: {
     secondFactorOrErrors: {
       __typename: "AppSecondFactor",

@@ -1,8 +1,8 @@
 import { Box, Spacer } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { AnalyticsContext, useAnalyticsContext } from "v2/System"
-import { Auction2App_sale } from "v2/__generated__/Auction2App_sale.graphql"
-import { Auction2App_me } from "v2/__generated__/Auction2App_me.graphql"
+import { Auction2App_sale$data } from "v2/__generated__/Auction2App_sale.graphql"
+import { Auction2App_me$data } from "v2/__generated__/Auction2App_me.graphql"
 import { Auction2MetaFragmentContainer } from "./Components/Auction2Meta"
 import { FullBleedHeader } from "v2/Components/FullBleedHeader"
 import { AuctionDetailsFragmentContainer } from "./Components/AuctionDetails/AuctionDetails"
@@ -13,8 +13,8 @@ import { AuctionDetailsFragmentContainer } from "./Components/AuctionDetails/Auc
  */
 
 interface Auction2AppProps {
-  sale: Auction2App_sale
-  me: Auction2App_me
+  sale: Auction2App_sale$data
+  me: Auction2App_me$data
 }
 
 const Auction2App: React.FC<Auction2AppProps> = ({ children, sale, me }) => {

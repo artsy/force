@@ -1,7 +1,8 @@
-import { SuggestedGenes_suggested_genes } from "v2/__generated__/SuggestedGenes_suggested_genes.graphql"
+import { SuggestedGenes_suggested_genes$data } from "v2/__generated__/SuggestedGenes_suggested_genes.graphql"
 import {
   SuggestedGenesFollowGeneMutation,
-  SuggestedGenesFollowGeneMutationResponse,
+  SuggestedGenesFollowGeneMutation$data,
+  // SuggestedGenesFollowGeneMutation$data,
 } from "v2/__generated__/SuggestedGenesFollowGeneMutation.graphql"
 import { SuggestedGenesQuery } from "v2/__generated__/SuggestedGenesQuery.graphql"
 import { SystemContextProps, withSystemContext } from "v2/System"
@@ -18,7 +19,7 @@ import { get } from "v2/Utils/get"
 import ReplaceTransition from "../../Animation/ReplaceTransition"
 import ItemLink, { LinkContainer } from "../ItemLink"
 
-type Gene = SuggestedGenes_suggested_genes[0]
+type Gene = SuggestedGenes_suggested_genes$data[0]
 
 interface ContainerProps {
   onGeneFollow
@@ -26,7 +27,7 @@ interface ContainerProps {
 
 interface Props extends React.HTMLProps<HTMLAnchorElement>, ContainerProps {
   relay?: RelayProp
-  suggested_genes: SuggestedGenes_suggested_genes
+  suggested_genes: SuggestedGenes_suggested_genes$data
 }
 
 class SuggestedGenesContent extends React.Component<Props> {
@@ -42,7 +43,7 @@ class SuggestedGenesContent extends React.Component<Props> {
   onGeneFollowed(
     gene: Gene,
     store: RecordSourceSelectorProxy,
-    data: SuggestedGenesFollowGeneMutationResponse,
+    data: SuggestedGenesFollowGeneMutation$data,
     follow: boolean
   ): void {
     this.props.onGeneFollow(follow, gene)
@@ -186,6 +187,7 @@ const SuggestedGenesComponent: React.SFC<
         if (props) {
           return (
             <SuggestedGenesContainer
+              // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
               onGeneFollow={onGeneFollow}
               // @ts-ignore // FIXME: The types in this file are pretty far gone
               suggested_genes={props.highlights?.suggested_genes!}

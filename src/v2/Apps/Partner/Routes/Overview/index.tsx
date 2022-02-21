@@ -1,6 +1,6 @@
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArticlesRailFragmentContainer } from "../../Components/Overview/ArticlesRail"
-import { Overview_partner } from "v2/__generated__/Overview_partner.graphql"
+import { Overview_partner$data } from "v2/__generated__/Overview_partner.graphql"
 import { ArtistsRailFragmentContainer } from "../../Components/Overview/ArtistsRail"
 import { ShowsRailFragmentContainer } from "../../Components/Overview/ShowsRail"
 import { AboutPartnerFragmentContainer } from "../../Components/Overview/AboutPartner"
@@ -10,7 +10,7 @@ import { ShowBannersRailRenderer } from "../../Components/Overview/ShowBannersRa
 import { NearbyGalleriesRailRenderer } from "../../Components/Overview/NearbyGalleriesRail"
 
 interface OverviewProps {
-  partner: Overview_partner
+  partner: Overview_partner$data
 }
 
 const Overview: React.FC<OverviewProps> = ({ partner }) => {

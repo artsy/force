@@ -1,11 +1,11 @@
 import { clickedEntityGroup, ContextModule, OwnerType } from "@artsy/cohesion"
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import { useAnalyticsContext, useSystemContext } from "v2/System"
 import { ShelfArtworkFragmentContainer } from "v2/Components/Artwork/ShelfArtwork"
 import { extractNodes } from "v2/Utils/extractNodes"
-import { ArtistNotableWorksRail_artist } from "v2/__generated__/ArtistNotableWorksRail_artist.graphql"
+import { ArtistNotableWorksRail_artist$data } from "v2/__generated__/ArtistNotableWorksRail_artist.graphql"
 import { ArtistNotableWorksRailQuery } from "v2/__generated__/ArtistNotableWorksRailQuery.graphql"
 import { scrollToTop } from "../Utils/scrollToTop"
 import { Rail } from "v2/Components/Rail"
@@ -19,7 +19,7 @@ import {
 } from "@artsy/palette"
 
 interface ArtistNotableWorksRailProps {
-  artist: ArtistNotableWorksRail_artist
+  artist: ArtistNotableWorksRail_artist$data
 }
 
 const ArtistNotableWorksRail: React.FC<ArtistNotableWorksRailProps> = ({

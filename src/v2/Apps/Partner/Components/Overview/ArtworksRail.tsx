@@ -1,7 +1,7 @@
 import * as React from "react"
 import { Box, BoxProps, Flex, Shelf, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ArtworksRail_partner } from "v2/__generated__/ArtworksRail_partner.graphql"
+import { ArtworksRail_partner$data } from "v2/__generated__/ArtworksRail_partner.graphql"
 import { useSystemContext } from "v2/System"
 import { ArtworksRailRendererQuery } from "v2/__generated__/ArtworksRailRendererQuery.graphql"
 import FillwidthItem from "v2/Components/Artwork/FillwidthItem"
@@ -11,7 +11,7 @@ import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import { extractNodes } from "v2/Utils/extractNodes"
 
 interface ArtworksRailProps extends BoxProps {
-  partner: ArtworksRail_partner
+  partner: ArtworksRail_partner$data
 }
 
 export const ARTWORK_CAROUSEL_ITEM_HEIGHT = 300

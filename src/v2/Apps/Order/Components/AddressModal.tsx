@@ -1,5 +1,5 @@
-import { useState } from "react";
-import * as React from "react";
+import { useState } from "react"
+import * as React from "react"
 import {
   Button,
   Clickable,
@@ -27,12 +27,12 @@ import {
 } from "../Utils/formValidators"
 import { updateUserAddress } from "../Mutations/UpdateUserAddress"
 import { createUserAddress } from "v2/Apps/Order/Mutations/CreateUserAddress"
-import { SavedAddresses_me } from "v2/__generated__/SavedAddresses_me.graphql"
+import { SavedAddresses_me$data } from "v2/__generated__/SavedAddresses_me.graphql"
 import { AddressModalFields } from "v2/Components/Address/AddressModalFields"
 import { useSystemContext } from "v2/System/SystemContext"
 import { updateUserDefaultAddress } from "../Mutations/UpdateUserDefaultAddress"
-import { UpdateUserAddressMutationResponse } from "v2/__generated__/UpdateUserAddressMutation.graphql"
-import { CreateUserAddressMutationResponse } from "v2/__generated__/CreateUserAddressMutation.graphql"
+import { UpdateUserAddressMutation$data } from "v2/__generated__/UpdateUserAddressMutation.graphql"
+import { CreateUserAddressMutation$data } from "v2/__generated__/CreateUserAddressMutation.graphql"
 import { countries } from "v2/Utils/countries"
 import { userHasLabFeature } from "v2/Utils/user"
 
@@ -46,13 +46,12 @@ export interface Props {
   closeModal: () => void
   address?: SavedAddressType
   onSuccess: (
-    address?: UpdateUserAddressMutationResponse &
-      CreateUserAddressMutationResponse
+    address?: UpdateUserAddressMutation$data & CreateUserAddressMutation$data
   ) => void
   onDeleteAddress: (addressID: string) => void
   onError: (message: string) => void
   modalDetails?: ModalDetails
-  me: SavedAddresses_me
+  me: SavedAddresses_me$data
 }
 
 const SERVER_ERROR_MAP: Record<string, Record<string, string>> = {

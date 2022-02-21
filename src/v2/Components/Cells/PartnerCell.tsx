@@ -20,12 +20,12 @@ import { useTracking } from "v2/System/Analytics/useTracking"
 import { useSystemContext } from "v2/System"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { extractNodes } from "v2/Utils/extractNodes"
-import { PartnerCell_partner } from "v2/__generated__/PartnerCell_partner.graphql"
+import { PartnerCell_partner$data } from "v2/__generated__/PartnerCell_partner.graphql"
 import { FollowProfileButtonFragmentContainer } from "v2/Components/FollowButton/FollowProfileButton"
 import { DEFAULT_CELL_WIDTH } from "./constants"
 
 interface PartnerCellProps {
-  partner: PartnerCell_partner
+  partner: PartnerCell_partner$data
   /** Defaults to `"RAIL"` */
   mode?: "GRID" | "RAIL"
 }

@@ -1,6 +1,6 @@
 import { mount } from "enzyme"
 import { HeadProvider } from "react-head"
-import { ArtistMetaCanonicalLink_artist } from "v2/__generated__/ArtistMetaCanonicalLink_artist.graphql"
+import { ArtistMetaCanonicalLink_artist$data } from "v2/__generated__/ArtistMetaCanonicalLink_artist.graphql"
 import {
   ArtistMetaCanonicalLink,
   computeCanonicalPath,
@@ -17,7 +17,7 @@ jest.mock("v2/System/Router/useRouter", () => ({
   useIsRouteActive: () => false,
 }))
 
-const MISSING_OVERVIEW_ARTIST_FIXTURE: ArtistMetaCanonicalLink_artist = {
+const MISSING_OVERVIEW_ARTIST_FIXTURE: ArtistMetaCanonicalLink_artist$data = {
   " $fragmentType": "ArtistMetaCanonicalLink_artist",
   slug: "gina-lombardi-bratter",
   statuses: {
@@ -43,7 +43,7 @@ const MISSING_OVERVIEW_ARTIST_FIXTURE: ArtistMetaCanonicalLink_artist = {
   insights: [],
 }
 
-const OVERVIEW_ARTIST_FIXTURE: ArtistMetaCanonicalLink_artist = {
+const OVERVIEW_ARTIST_FIXTURE: ArtistMetaCanonicalLink_artist$data = {
   " $fragmentType": "ArtistMetaCanonicalLink_artist",
   slug: "damon-zucconi",
   statuses: {

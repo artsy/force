@@ -1,13 +1,13 @@
 import { CheckCircleIcon, Link } from "@artsy/palette"
 import * as React from "react"
-import { BuyerGuarantee_artwork } from "v2/__generated__/BuyerGuarantee_artwork.graphql"
+import { BuyerGuarantee_artwork$data } from "v2/__generated__/BuyerGuarantee_artwork.graphql"
 
 import { createFragmentContainer, graphql } from "react-relay"
 import { TrustSignal } from "./TrustSignal"
 import { BUYER_GUARANTEE_URL } from "v2/Apps/Order/Components/BuyerGuarantee"
 
 interface Props {
-  artwork: BuyerGuarantee_artwork
+  artwork: BuyerGuarantee_artwork$data
 }
 
 // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION

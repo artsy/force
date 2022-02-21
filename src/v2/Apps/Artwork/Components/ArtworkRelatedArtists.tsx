@@ -10,7 +10,7 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import { ArtworkRelatedArtists_artwork } from "v2/__generated__/ArtworkRelatedArtists_artwork.graphql"
+import { ArtworkRelatedArtists_artwork$data } from "v2/__generated__/ArtworkRelatedArtists_artwork.graphql"
 import { hideGrid } from "v2/Apps/Artwork/Components/OtherWorks"
 import { track, useTracking } from "v2/System/Analytics"
 import * as Schema from "v2/System/Analytics/Schema"
@@ -31,7 +31,7 @@ import { useSystemContext } from "v2/System"
 const logger = createLogger("ArtworkRelatedArtists.tsx")
 
 export interface ArtworkRelatedArtistsProps {
-  artwork: ArtworkRelatedArtists_artwork
+  artwork: ArtworkRelatedArtists_artwork$data
   relay: RelayPaginationProp
 }
 

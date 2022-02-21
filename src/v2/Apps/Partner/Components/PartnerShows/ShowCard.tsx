@@ -2,10 +2,10 @@ import { RouterLink } from "v2/System/Router/RouterLink"
 import { Image, ResponsiveBox, Text } from "@artsy/palette"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ShowCard_show } from "v2/__generated__/ShowCard_show.graphql"
+import { ShowCard_show$data } from "v2/__generated__/ShowCard_show.graphql"
 
 interface ShowCardProps {
-  show: ShowCard_show
+  show: ShowCard_show$data
   isResponsive?: boolean
 }
 

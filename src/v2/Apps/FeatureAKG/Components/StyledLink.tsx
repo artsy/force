@@ -1,6 +1,5 @@
 import { RouterLink } from "v2/System/Router/RouterLink"
-
-import styled from "styled-components"
+import styled, { StyledComponentClass } from "styled-components"
 
 export const StyledLink = styled(RouterLink)`
   text-decoration: none;
@@ -9,4 +8,4 @@ export const StyledLink = styled(RouterLink)`
   &:hover {
     text-decoration: none;
   }
-`
+` as StyledComponentClass<any, any>

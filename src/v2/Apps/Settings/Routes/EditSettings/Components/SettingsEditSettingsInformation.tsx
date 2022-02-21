@@ -2,7 +2,7 @@ import * as React from "react"
 import * as Yup from "yup"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Form, Formik } from "formik"
-import { SettingsEditSettingsInformation_me } from "v2/__generated__/SettingsEditSettingsInformation_me.graphql"
+import { SettingsEditSettingsInformation_me$data } from "v2/__generated__/SettingsEditSettingsInformation_me.graphql"
 import {
   Button,
   Text,
@@ -16,7 +16,7 @@ import { email, password, name } from "v2/Components/Authentication/Validators"
 import { useUpdateSettingsInformation } from "./useUpdateSettingsInformation"
 
 interface SettingsEditSettingsInformationProps {
-  me: SettingsEditSettingsInformation_me
+  me: SettingsEditSettingsInformation_me$data
 }
 
 export const SettingsEditSettingsInformation: React.FC<SettingsEditSettingsInformationProps> = ({

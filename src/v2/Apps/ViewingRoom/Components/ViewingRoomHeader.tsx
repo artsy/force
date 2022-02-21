@@ -1,15 +1,15 @@
-import * as React from "react";
+import * as React from "react"
 import { Box, Flex, FullBleed, Image, Text, TEXT_SHADOW } from "@artsy/palette"
 import { Media } from "v2/Utils/Responsive"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ViewingRoomHeader_viewingRoom } from "v2/__generated__/ViewingRoomHeader_viewingRoom.graphql"
+import { ViewingRoomHeader_viewingRoom$data } from "v2/__generated__/ViewingRoomHeader_viewingRoom.graphql"
 import { useNavBarHeight } from "v2/Components/NavBar/useNavBarHeight"
 import { resized } from "v2/Utils/resized"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { getStatus } from "../Utils/getStatus"
 
 interface ViewingRoomHeaderProps {
-  viewingRoom: ViewingRoomHeader_viewingRoom
+  viewingRoom: ViewingRoomHeader_viewingRoom$data
 }
 
 const ViewingRoomHeader: React.FC<ViewingRoomHeaderProps> = props => {

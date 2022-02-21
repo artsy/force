@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"
 import {
   Box,
   Column,
@@ -10,14 +10,14 @@ import {
   Text,
 } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ShowInfo_show } from "v2/__generated__/ShowInfo_show.graphql"
+import { ShowInfo_show$data } from "v2/__generated__/ShowInfo_show.graphql"
 import { ShowPartnerEntityHeaderFragmentContainer as ShowPartnerEntityHeader } from "../Components/ShowPartnerEntityHeader"
 import { ShowInfoLocationFragmentContainer as ShowInfoLocation } from "../Components/ShowInfoLocation"
 import { Media } from "v2/Utils/Responsive"
 import { ShowHoursFragmentContainer } from "../Components/ShowHours"
 
 interface ShowInfoProps {
-  show: ShowInfo_show
+  show: ShowInfo_show$data
 }
 
 export const ShowInfo: React.FC<ShowInfoProps> = ({

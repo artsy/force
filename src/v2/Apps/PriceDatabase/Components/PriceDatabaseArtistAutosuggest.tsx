@@ -14,7 +14,7 @@ import { graphql } from "lib/graphql"
 import { fetchQuery } from "relay-runtime"
 import {
   PriceDatabaseArtistAutosuggest_SearchConnection_Query,
-  PriceDatabaseArtistAutosuggest_SearchConnection_QueryResponse,
+  PriceDatabaseArtistAutosuggest_SearchConnection_Query$data,
 } from "v2/__generated__/PriceDatabaseArtistAutosuggest_SearchConnection_Query.graphql"
 import { useSystemContext } from "v2/System"
 
@@ -24,7 +24,7 @@ type Suggestion =
   | NonNullable<
       NonNullable<
         NonNullable<
-          PriceDatabaseArtistAutosuggest_SearchConnection_QueryResponse["searchConnection"]
+          PriceDatabaseArtistAutosuggest_SearchConnection_Query$data["searchConnection"]
         >["edges"]
       >[number]
     >

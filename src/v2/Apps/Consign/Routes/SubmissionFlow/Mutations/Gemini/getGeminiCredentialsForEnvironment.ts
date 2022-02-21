@@ -1,13 +1,13 @@
 import { commitMutation, Environment, graphql } from "relay-runtime"
 import {
   RequestCredentialsForAssetUploadInput,
-  getGeminiCredentialsForEnvironmentMutationResponse,
+  getGeminiCredentialsForEnvironmentMutation$data,
   getGeminiCredentialsForEnvironmentMutation,
 } from "v2/__generated__/getGeminiCredentialsForEnvironmentMutation.graphql"
 
 export type AssetCredentials =
   | NonNullable<
-      getGeminiCredentialsForEnvironmentMutationResponse["requestCredentialsForAssetUpload"]
+      getGeminiCredentialsForEnvironmentMutation$data["requestCredentialsForAssetUpload"]
     >["asset"]
   | undefined
 

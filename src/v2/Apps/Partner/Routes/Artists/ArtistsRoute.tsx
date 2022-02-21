@@ -6,7 +6,7 @@ import {
   PartnerArtistDetailsRenderer,
   PartnerArtistsFragmentContainer,
 } from "../../Components/PartnerArtists"
-import { ArtistsRoute_partner } from "v2/__generated__/ArtistsRoute_partner.graphql"
+import { ArtistsRoute_partner$data } from "v2/__generated__/ArtistsRoute_partner.graphql"
 import { PARTNER_NAV_BAR_HEIGHT } from "../../Components/NavigationTabs"
 import { graphql } from "lib/graphql"
 import { createFragmentContainer } from "react-relay"
@@ -17,7 +17,7 @@ import { __internal__useMatchMedia } from "v2/Utils/Hooks/useMatchMedia"
 import { useNavBarHeight } from "v2/Components/NavBar/useNavBarHeight"
 
 export interface ArtistsRouteProps {
-  partner: ArtistsRoute_partner
+  partner: ArtistsRoute_partner$data
   match: Match
 }
 

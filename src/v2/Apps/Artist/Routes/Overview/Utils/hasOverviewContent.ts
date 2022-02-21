@@ -1,4 +1,4 @@
-import { ArtistApp_sharedMetadata } from "v2/__generated__/ArtistApp_sharedMetadata.graphql"
+import { ArtistApp_sharedMetadata$data } from "v2/__generated__/ArtistApp_sharedMetadata.graphql"
 
 export const hasOverviewContent = ({
   statuses,
@@ -6,7 +6,7 @@ export const hasOverviewContent = ({
   biographyBlurb,
   insights,
 }: Pick<
-  ArtistApp_sharedMetadata,
+  ArtistApp_sharedMetadata$data,
   "biographyBlurb" | "insights" | "related" | "statuses"
 >): boolean => {
   const showArtistBio = biographyBlurb && Boolean(biographyBlurb.text)

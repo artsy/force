@@ -1,10 +1,10 @@
 import React from "react"
-import { SettingsPurchasesRoute_me } from "v2/__generated__/SettingsPurchasesRoute_me.graphql"
+import { SettingsPurchasesRoute_me$data } from "v2/__generated__/SettingsPurchasesRoute_me.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
 import { SettingsPurchasesFragmentContainer } from "./Components/SettingsPurchases"
 
 interface SettingsPurchasesRouteProps {
-  me: SettingsPurchasesRoute_me
+  me: SettingsPurchasesRoute_me$data
 }
 
 const SettingsPurchasesRoute: React.FC<SettingsPurchasesRouteProps> = ({

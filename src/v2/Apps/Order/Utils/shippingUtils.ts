@@ -1,20 +1,22 @@
 import { Address, emptyAddress } from "v2/Components/AddressForm"
-import { Shipping_me } from "v2/__generated__/Shipping_me.graphql"
-import { Shipping_order } from "v2/__generated__/Shipping_order.graphql"
+import { Shipping_me$data } from "v2/__generated__/Shipping_me.graphql"
+import { Shipping_order$data } from "v2/__generated__/Shipping_order.graphql"
 import { pick, omit, compact } from "lodash"
 import {
-  UpdateUserAddressMutationResponse,
+  UpdateUserAddressMutation$data,
   UserAddressAttributes,
 } from "v2/__generated__/UpdateUserAddressMutation.graphql"
 import { NEW_ADDRESS } from "../Components/SavedAddresses"
 import {
   CommerceOrderFulfillmentTypeEnum,
-  SetShippingMutationResponse,
+  SetShippingMutation$data,
 } from "v2/__generated__/SetShippingMutation.graphql"
 
 export type SavedAddressType = NonNullable<
   NonNullable<
-    NonNullable<NonNullable<Shipping_me["addressConnection"]>["edges"]>[number]
+    NonNullable<
+      NonNullable<Shipping_me$data["addressConnection"]>["edges"]
+    >[number]
   >["node"]
 >
 
@@ -25,7 +27,7 @@ export type ShippingQuotesType = NonNullable<
         NonNullable<
           NonNullable<
             NonNullable<
-              SetShippingMutationResponse["commerceSetShipping"]
+              SetShippingMutation$data["commerceSetShipping"]
             >["orderOrError"]["order"]
           >["lineItems"]
         >["edges"]
@@ -35,8 +37,8 @@ export type ShippingQuotesType = NonNullable<
 >["edges"]
 
 export const defaultShippingAddressIndex = (
-  me: Shipping_me,
-  order: Shipping_order
+  me: Shipping_me$data,
+  order: Shipping_order$data
 ): string => {
   const addressList = me.addressConnection?.edges
 
@@ -82,7 +84,10 @@ export const defaultShippingAddressIndex = (
   }
 }
 
-export const startingPhoneNumber = (me: Shipping_me, order: Shipping_order) => {
+export const startingPhoneNumber = (
+  me: Shipping_me$data,
+  order: Shipping_order$data
+) => {
   return order.requestedFulfillment &&
     (order.requestedFulfillment.__typename === "CommerceShip" ||
       order.requestedFulfillment.__typename === "CommerceShipArta" ||
@@ -91,7 +96,10 @@ export const startingPhoneNumber = (me: Shipping_me, order: Shipping_order) => {
     : ""
 }
 
-export const startingAddress = (me: Shipping_me, order: Shipping_order) => {
+export const startingAddress = (
+  me: Shipping_me$data,
+  order: Shipping_order$data
+) => {
   const initialAddress = {
     ...emptyAddress,
     country: order.lineItems?.edges?.[0]?.node?.artwork?.shippingCountry!,
@@ -105,7 +113,7 @@ export const startingAddress = (me: Shipping_me, order: Shipping_order) => {
 }
 
 type MutationAddressResponse = NonNullable<
-  UpdateUserAddressMutationResponse["updateUserAddress"]
+  UpdateUserAddressMutation$data["updateUserAddress"]
 >["userAddressOrErrors"]
 
 // Gravity address has isDefault and addressLine3 but exchange does not
@@ -147,7 +155,7 @@ export const getShippingOption = (requestedFulfillmentType?: string) => {
   return result
 }
 
-export const getSelectedShippingQuoteId = (order: Shipping_order) => {
+export const getSelectedShippingQuoteId = (order: Shipping_order$data) => {
   const shippingQuotes =
     order.lineItems?.edges &&
     order.lineItems?.edges[0]?.node?.shippingQuoteOptions
@@ -158,9 +166,9 @@ export const getSelectedShippingQuoteId = (order: Shipping_order) => {
 
 export const getShippingQuotes = (
   order:
-    | Shipping_order
+    | Shipping_order$data
     | NonNullable<
-        SetShippingMutationResponse["commerceSetShipping"]
+        SetShippingMutation$data["commerceSetShipping"]
       >["orderOrError"]["order"]
 ) => {
   const shippingQuotes =

@@ -5,13 +5,13 @@ import { AuthContextModule } from "@artsy/cohesion"
 import { extractNodes } from "v2/Utils/extractNodes"
 import { ShelfArtworkFragmentContainer } from "v2/Components/Artwork/ShelfArtwork"
 import { tabTypeToContextModuleMap } from "../Utils/tabTypeToContextModuleMap"
-import { TrendingLotsRail_viewer } from "v2/__generated__/TrendingLotsRail_viewer.graphql"
+import { TrendingLotsRail_viewer$data } from "v2/__generated__/TrendingLotsRail_viewer.graphql"
 import { useAnalyticsContext } from "v2/System"
 import { trackHelpers } from "v2/Utils/cohesionHelpers"
 import { CuratorialRailsZeroState } from "./CuritorialRailsTabBar"
 import { Rail } from "v2/Components/Rail"
 export interface TrendingLotsRailProps {
-  viewer: TrendingLotsRail_viewer
+  viewer: TrendingLotsRail_viewer$data
 }
 
 const TrendingLotsRail: React.FC<TrendingLotsRailProps> = ({ viewer }) => {

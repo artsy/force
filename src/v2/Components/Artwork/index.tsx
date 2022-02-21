@@ -1,4 +1,4 @@
-import { Artwork_artwork } from "v2/__generated__/Artwork_artwork.graphql"
+import { Artwork_artwork$data } from "v2/__generated__/Artwork_artwork.graphql"
 import * as React from "react"
 // @ts-ignore
 import { ComponentRef, createFragmentContainer, graphql } from "react-relay"
@@ -65,7 +65,7 @@ export interface OverlayProps {
 export interface ArtworkProps {
   extended?: boolean
   Overlay?: React.SFC<OverlayProps>
-  artwork: Artwork_artwork
+  artwork: Artwork_artwork$data
   onSelect?: (selected: boolean) => void
   showOverlayOnHover?: boolean
 }

@@ -1,5 +1,5 @@
 import { Box, Spacer, Spinner, Tab, Tabs } from "@artsy/palette"
-import { RelatedWorksArtworkGrid_artwork } from "v2/__generated__/RelatedWorksArtworkGrid_artwork.graphql"
+import { RelatedWorksArtworkGrid_artwork$data } from "v2/__generated__/RelatedWorksArtworkGrid_artwork.graphql"
 import { hideGrid } from "v2/Apps/Artwork/Components/OtherWorks"
 import { Header } from "v2/Apps/Artwork/Components/OtherWorks/Header"
 import { withSystemContext } from "v2/System"
@@ -21,7 +21,7 @@ const MAX_TAB_ITEMS = 3
 
 interface RelatedWorksArtworkGridProps {
   relay: RelayRefetchProp
-  artwork: RelatedWorksArtworkGrid_artwork
+  artwork: RelatedWorksArtworkGrid_artwork$data
   mediator?: Mediator
 }
 
@@ -129,9 +129,7 @@ class RelatedWorksArtworkGrid extends Component<
   }
 }
 
-export const RelatedWorksArtworkGridRefetchContainer = createRefetchContainer<
-  RelatedWorksArtworkGridProps
->(
+export const RelatedWorksArtworkGridRefetchContainer = createRefetchContainer(
   withSystemContext(RelatedWorksArtworkGrid),
   {
     artwork: graphql`

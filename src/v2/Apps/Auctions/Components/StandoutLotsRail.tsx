@@ -1,6 +1,6 @@
 import { AuthContextModule } from "@artsy/cohesion"
 import { graphql } from "lib/graphql"
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer } from "react-relay"
 import { useTracking } from "react-tracking"
 import { ShelfArtworkFragmentContainer } from "v2/Components/Artwork/ShelfArtwork"
@@ -8,12 +8,12 @@ import { Rail } from "v2/Components/Rail"
 import { useAnalyticsContext } from "v2/System"
 import { trackHelpers } from "v2/Utils/cohesionHelpers"
 import { extractNodes } from "v2/Utils/extractNodes"
-import { StandoutLotsRail_viewer } from "v2/__generated__/StandoutLotsRail_viewer.graphql"
+import { StandoutLotsRail_viewer$data } from "v2/__generated__/StandoutLotsRail_viewer.graphql"
 import { tabTypeToContextModuleMap } from "../Utils/tabTypeToContextModuleMap"
 import { CuratorialRailsZeroState } from "./CuritorialRailsTabBar"
 
 export interface StandoutLotsRailProps {
-  viewer: StandoutLotsRail_viewer
+  viewer: StandoutLotsRail_viewer$data
 }
 
 const StandoutLotsRail: React.FC<StandoutLotsRailProps> = ({ viewer }) => {

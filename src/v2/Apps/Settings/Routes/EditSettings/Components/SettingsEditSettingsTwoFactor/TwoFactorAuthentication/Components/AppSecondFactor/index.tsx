@@ -10,14 +10,14 @@ import { ApiError } from "../../ApiError"
 import { ApiErrorModal } from "../ApiErrorModal"
 import { CreateAppSecondFactor } from "./Mutation/CreateAppSecondFactor"
 import { DisableFactorConfirmation } from "../DisableFactorConfirmation"
-import { AppSecondFactor_me } from "v2/__generated__/AppSecondFactor_me.graphql"
+import { AppSecondFactor_me$data } from "v2/__generated__/AppSecondFactor_me.graphql"
 import { ConfirmPasswordModal } from "v2/Components/ConfirmPasswordModal"
 import { CreateAppSecondFactorInput } from "v2/__generated__/CreateAppSecondFactorMutation.graphql"
 
 import { afterUpdateRedirect } from "v2/Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsTwoFactor/TwoFactorAuthentication/helpers"
 
 interface AppSecondFactorProps {
-  me: AppSecondFactor_me
+  me: AppSecondFactor_me$data
   relay: RelayRefetchProp
 }
 
@@ -218,6 +218,7 @@ export const AppSecondFactor: React.FC<AppSecondFactorProps> = ({
 
       <AppSecondFactorModal
         show={showSetupModal}
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         secondFactor={stagedSecondFactor}
         onComplete={onComplete}
         onClose={() => setShowSetupModal(false)}

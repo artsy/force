@@ -1,15 +1,15 @@
-import { ShippingArtaSummaryItem_order } from "v2/__generated__/ShippingArtaSummaryItem_order.graphql"
+import { ShippingArtaSummaryItem_order$data } from "v2/__generated__/ShippingArtaSummaryItem_order.graphql"
 import {
   StepSummaryItem,
   StepSummaryItemProps,
 } from "v2/Components/StepSummaryItem"
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Text } from "@artsy/palette"
 import { startCase } from "lodash"
 
 interface ShippingArtaSummaryItemProps {
-  order: ShippingArtaSummaryItem_order
+  order: ShippingArtaSummaryItem_order$data
 }
 
 const ShippingArtaSummaryItem: React.FC<

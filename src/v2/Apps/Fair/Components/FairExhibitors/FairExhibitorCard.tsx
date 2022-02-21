@@ -9,13 +9,13 @@ import {
   OwnerType,
   PageOwnerType,
 } from "@artsy/cohesion"
-import { FairExhibitorCard_exhibitor } from "v2/__generated__/FairExhibitorCard_exhibitor.graphql"
+import { FairExhibitorCard_exhibitor$data } from "v2/__generated__/FairExhibitorCard_exhibitor.graphql"
 import { FollowProfileButtonFragmentContainer as FollowProfileButton } from "v2/Components/FollowButton/FollowProfileButton"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { useRouter } from "v2/System/Router/useRouter"
 
 interface FairExhibitorCardProps {
-  exhibitor: FairExhibitorCard_exhibitor
+  exhibitor: FairExhibitorCard_exhibitor$data
 }
 
 const VISIBLE_CITIES_NUM = 2

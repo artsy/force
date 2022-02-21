@@ -8,12 +8,12 @@ import {
 } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
-import { SettingsEditSettingsTwoFactorBackupCodesDialog_me } from "v2/__generated__/SettingsEditSettingsTwoFactorBackupCodesDialog_me.graphql"
+import { SettingsEditSettingsTwoFactorBackupCodesDialog_me$data } from "v2/__generated__/SettingsEditSettingsTwoFactorBackupCodesDialog_me.graphql"
 import { SettingsEditSettingsTwoFactorBackupCodesDialogQuery } from "v2/__generated__/SettingsEditSettingsTwoFactorBackupCodesDialogQuery.graphql"
 import { SettingsEditSettingsTwoFactorBackupCodesActions } from "./SettingsEditSettingsTwoFactorBackupCodesActions"
 
 interface SettingsEditSettingsTwoFactorBackupCodesDialogProps {
-  me?: SettingsEditSettingsTwoFactorBackupCodesDialog_me | null
+  me?: SettingsEditSettingsTwoFactorBackupCodesDialog_me$data | null
 }
 
 const SettingsEditSettingsTwoFactorBackupCodesDialog: FC<SettingsEditSettingsTwoFactorBackupCodesDialogProps> = ({

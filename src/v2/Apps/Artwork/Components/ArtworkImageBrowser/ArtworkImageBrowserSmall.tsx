@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"
 import {
   ProgressDots,
   Swiper,
@@ -9,12 +9,12 @@ import {
 } from "@artsy/palette"
 import { compact } from "lodash"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ArtworkImageBrowserSmall_artwork } from "v2/__generated__/ArtworkImageBrowserSmall_artwork.graphql"
+import { ArtworkImageBrowserSmall_artwork$data } from "v2/__generated__/ArtworkImageBrowserSmall_artwork.graphql"
 import { DeepZoomFragmentContainer, useDeepZoom } from "v2/Components/DeepZoom"
 import { ArtworkLightboxFragmentContainer } from "../ArtworkLightbox"
 
 interface ArtworkImageBrowserSmallProps {
-  artwork: ArtworkImageBrowserSmall_artwork
+  artwork: ArtworkImageBrowserSmall_artwork$data
   index: number
   setIndex(index: number): void
 }

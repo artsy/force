@@ -8,11 +8,12 @@ describe("Authentication Helpers", () => {
   describe("checkEmail", () => {
     // eslint-disable-next-line jest/no-done-callback
     it("return true if it should exist and it does exist", done => {
-      mockFetchQuery.mockImplementationOnce(() =>
-        Promise.resolve({
-          user: { userAlreadyExists: true },
-        })
-      )
+      mockFetchQuery.mockImplementationOnce(() => ({
+        toPromise: () =>
+          Promise.resolve({
+            user: { userAlreadyExists: true },
+          }),
+      }))
       checkEmail({
         values: {
           email: "kana@lalamail.com",
@@ -31,11 +32,12 @@ describe("Authentication Helpers", () => {
 
     // eslint-disable-next-line jest/no-done-callback
     it("return false if it should exist and it doesnt exist", done => {
-      mockFetchQuery.mockImplementationOnce(() =>
-        Promise.resolve({
-          user: { userAlreadyExists: false },
-        })
-      )
+      mockFetchQuery.mockImplementationOnce(() => ({
+        toPromise: () =>
+          Promise.resolve({
+            user: { userAlreadyExists: false },
+          }),
+      }))
       checkEmail({
         values: {
           email: "kana@lalamail.com",
@@ -54,11 +56,12 @@ describe("Authentication Helpers", () => {
 
     // eslint-disable-next-line jest/no-done-callback
     it("return true if it shouldnt exist and it doesnt exist", done => {
-      mockFetchQuery.mockImplementationOnce(() =>
-        Promise.resolve({
-          user: { userAlreadyExists: false },
-        })
-      )
+      mockFetchQuery.mockImplementationOnce(() => ({
+        toPromise: () =>
+          Promise.resolve({
+            user: { userAlreadyExists: false },
+          }),
+      }))
       checkEmail({
         values: {
           email: "kana@lalamail.com",
@@ -77,11 +80,12 @@ describe("Authentication Helpers", () => {
 
     // eslint-disable-next-line jest/no-done-callback
     it("return false if it shouldnt exist and it does exist", done => {
-      mockFetchQuery.mockImplementationOnce(() =>
-        Promise.resolve({
-          user: { userAlreadyExists: true },
-        })
-      )
+      mockFetchQuery.mockImplementationOnce(() => ({
+        toPromise: () =>
+          Promise.resolve({
+            user: { userAlreadyExists: true },
+          }),
+      }))
       checkEmail({
         values: {
           email: "kana@lalamail.com",
@@ -100,7 +104,9 @@ describe("Authentication Helpers", () => {
 
     // eslint-disable-next-line jest/no-done-callback
     it("should gracefully handle a missing user object as if it were a missing user", done => {
-      mockFetchQuery.mockImplementationOnce(() => Promise.resolve({}))
+      mockFetchQuery.mockImplementationOnce(() => ({
+        toPromise: () => Promise.resolve({}),
+      }))
       checkEmail({
         values: {
           email: "kana@lalamail.com",

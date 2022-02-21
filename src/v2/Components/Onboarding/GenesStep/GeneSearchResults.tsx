@@ -1,7 +1,7 @@
-import { GeneSearchResults_viewer } from "v2/__generated__/GeneSearchResults_viewer.graphql"
+import { GeneSearchResults_viewer$data } from "v2/__generated__/GeneSearchResults_viewer.graphql"
 import {
   GeneSearchResultsFollowGeneMutation,
-  GeneSearchResultsFollowGeneMutationResponse,
+  GeneSearchResultsFollowGeneMutation$data,
 } from "v2/__generated__/GeneSearchResultsFollowGeneMutation.graphql"
 import { GeneSearchResultsQuery } from "v2/__generated__/GeneSearchResultsQuery.graphql"
 import { SystemContextProps, withSystemContext } from "v2/System"
@@ -31,7 +31,7 @@ interface ContainerProps {
 
 interface Props extends React.HTMLProps<HTMLAnchorElement>, ContainerProps {
   relay?: RelayProp
-  viewer: GeneSearchResults_viewer
+  viewer: GeneSearchResults_viewer$data
 }
 
 const NoResultsContainer = styled.div`
@@ -56,7 +56,7 @@ class GeneSearchResultsContent extends React.Component<Props, null> {
   onGeneFollowed(
     gene: Gene,
     store: RecordSourceSelectorProxy,
-    data: GeneSearchResultsFollowGeneMutationResponse,
+    data: GeneSearchResultsFollowGeneMutation$data,
     follow: boolean
   ): void {
     this.props.onGeneFollow(follow, gene)
@@ -221,6 +221,7 @@ const GeneSearchResultsComponent: React.SFC<
         if (props) {
           return (
             <GeneSearchResultsContentContainer
+              // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
               onGeneFollow={onGeneFollow}
               onNoResults={onNoResults}
               term={term}

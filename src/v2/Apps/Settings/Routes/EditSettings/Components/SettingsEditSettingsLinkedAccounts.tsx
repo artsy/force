@@ -11,7 +11,7 @@ import {
 } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import {
-  SettingsEditSettingsLinkedAccounts_me,
+  SettingsEditSettingsLinkedAccounts_me$data,
   AuthenticationProvider,
 } from "v2/__generated__/SettingsEditSettingsLinkedAccounts_me.graphql"
 import { useRouter } from "v2/System/Router/useRouter"
@@ -20,7 +20,7 @@ import { getENV } from "v2/Utils/getENV"
 import { useMode } from "v2/Utils/Hooks/useMode"
 
 interface SettingsEditSettingsLinkedAccountsProps {
-  me: SettingsEditSettingsLinkedAccounts_me
+  me: SettingsEditSettingsLinkedAccounts_me$data
 }
 
 export const SettingsEditSettingsLinkedAccounts: FC<SettingsEditSettingsLinkedAccountsProps> = ({
@@ -92,7 +92,7 @@ export const SettingsEditSettingsLinkedAccountsFragmentContainer = createFragmen
 
 interface SettingsEditSettingsLinkedAccountsButtonProps {
   icon: JSX.Element
-  me: SettingsEditSettingsLinkedAccounts_me
+  me: SettingsEditSettingsLinkedAccounts_me$data
   href?: string
   provider: AuthenticationProvider
 }

@@ -2,7 +2,7 @@ import { Box, SkeletonText, Modal, Button, Join, Spacer } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useSystemContext } from "v2/System"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
-import { ArtworkSidebarClassificationsModal_viewer } from "v2/__generated__/ArtworkSidebarClassificationsModal_viewer.graphql"
+import { ArtworkSidebarClassificationsModal_viewer$data } from "v2/__generated__/ArtworkSidebarClassificationsModal_viewer.graphql"
 import { ArtworkSidebarClassificationsModalQuery } from "v2/__generated__/ArtworkSidebarClassificationsModalQuery.graphql"
 import { Text } from "@artsy/palette"
 
@@ -22,7 +22,7 @@ const ARTWORK_CLASSIFICATIONS_PLACEHOLDER = [...new Array(6)].map((_, i) => {
 })
 
 interface ArtworkSidebarClassificationsModalProps {
-  viewer: ArtworkSidebarClassificationsModal_viewer
+  viewer: ArtworkSidebarClassificationsModal_viewer$data
   show: boolean
   onClose(): void
   showDisclaimer?: boolean

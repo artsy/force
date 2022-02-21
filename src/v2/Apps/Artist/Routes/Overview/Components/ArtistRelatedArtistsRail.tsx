@@ -7,7 +7,7 @@ import {
   SkeletonBox,
   SkeletonText,
 } from "@artsy/palette"
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import { FollowArtistButtonFragmentContainer } from "v2/Components/FollowButton/FollowArtistButton"
@@ -20,11 +20,11 @@ import {
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { extractNodes } from "v2/Utils/extractNodes"
-import { ArtistRelatedArtistsRail_artist } from "v2/__generated__/ArtistRelatedArtistsRail_artist.graphql"
+import { ArtistRelatedArtistsRail_artist$data } from "v2/__generated__/ArtistRelatedArtistsRail_artist.graphql"
 import { ArtistRelatedArtistsRailQuery } from "v2/__generated__/ArtistRelatedArtistsRailQuery.graphql"
 
 interface ArtistRelatedArtistsRailProps {
-  artist: ArtistRelatedArtistsRail_artist
+  artist: ArtistRelatedArtistsRail_artist$data
 }
 
 const ArtistRelatedArtistsRail: React.FC<ArtistRelatedArtistsRailProps> = ({
