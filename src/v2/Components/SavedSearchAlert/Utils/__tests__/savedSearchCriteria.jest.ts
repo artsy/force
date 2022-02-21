@@ -45,6 +45,14 @@ describe("isDefaultValue", () => {
     expect(isDefaultValue("acquireable", null)).toBeTruthy()
   })
 
+  it("should return true if value is false", () => {
+    expect(isDefaultValue("acquireable", false)).toBeTruthy()
+  })
+
+  it("should return true if value is empty string", () => {
+    expect(isDefaultValue("acquireable", "")).toBeTruthy()
+  })
+
   it("should return true if it is default value", () => {
     expect(isDefaultValue("width", "*-*")).toBeTruthy()
   })
