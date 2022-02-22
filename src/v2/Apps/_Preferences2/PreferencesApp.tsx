@@ -6,29 +6,56 @@ import {
   Separator,
   Text,
 } from "@artsy/palette"
-import { Formik } from "formik"
+import { FC } from "react"
+import { Form, Formik } from "formik"
+import { createFragmentContainer, graphql } from "react-relay"
+import { PreferencesApp_viewer } from "v2/__generated__/PreferencesApp_viewer.graphql"
 
-export const PreferencesApp: React.FC = () => {
+interface FormValuesForNotificationPreferences {
+  recommended_by_artsy: boolean
+  art_world_insights: boolean
+  product_updates: boolean
+  guidance_on_collecting: boolean
+  custom_alerts: boolean
+}
+
+interface PreferencesAppProps {
+  viewer?: PreferencesApp_viewer
+}
+
+const NOTIFICATION_FIELDS = {
+  recommended_by_artsy: false,
+  art_world_insights: false,
+  product_updates: false,
+  guidance_on_collecting: false,
+  custom_alerts: false,
+}
+
+export const PreferencesApp: FC<PreferencesAppProps> = ({ viewer }) => {
+  let initialValues = viewer?.notificationPreferences
+    .filter(preference =>
+      Object.keys(NOTIFICATION_FIELDS).includes(preference.name)
+    )
+    .map(preference => {
+      return {
+        [preference.name]: preference.status === "SUBSCRIBED" ? true : false,
+      }
+    })
+
   return (
     <>
       <Text variant="xl" mt={6} mb={6}>
         Preferences Center
       </Text>
-
-      <Formik
-        initialValues={{
-          first: false,
-          second: false,
-          third: false,
-          fourth: false,
-          fifth: false,
-        }}
-        onSubmit={values => {
-          console.log(values)
+      <Formik<FormValuesForNotificationPreferences>
+        // @ts-ignore
+        initialValues={{ ...NOTIFICATION_FIELDS, ...initialValues }}
+        onSubmit={async values => {
+          // TODO: Write new values
         }}
       >
-        {({ values, setFieldValue }) => {
-          return (
+        {({ values, setFieldValue }) => (
+          <Form>
             <GridColumns gridRowGap={4}>
               <Column span={10}>
                 <Text variant="md">Subscribe to all</Text>
@@ -38,9 +65,11 @@ export const PreferencesApp: React.FC = () => {
                 <Checkbox
                   selected={Object.values(values).every(Boolean)}
                   onSelect={value => {
-                    Object.keys(values).forEach(field => {
-                      setFieldValue(field, value)
-                    })
+                    if (value) {
+                      Object.keys(values).forEach(field => {
+                        setFieldValue(field, true)
+                      })
+                    }
                   }}
                 >
                   Email
@@ -61,9 +90,9 @@ export const PreferencesApp: React.FC = () => {
 
               <Column span={2}>
                 <Checkbox
-                  selected={values.first}
+                  selected={values.recommended_by_artsy}
                   onSelect={value => {
-                    setFieldValue("first", value)
+                    setFieldValue("recommended_by_artsy", value)
                   }}
                 >
                   Email
@@ -80,9 +109,9 @@ export const PreferencesApp: React.FC = () => {
 
               <Column span={2}>
                 <Checkbox
-                  selected={values.second}
+                  selected={values.art_world_insights}
                   onSelect={value => {
-                    setFieldValue("second", value)
+                    setFieldValue("art_world_insights", value)
                   }}
                 >
                   Email
@@ -98,9 +127,9 @@ export const PreferencesApp: React.FC = () => {
 
               <Column span={2}>
                 <Checkbox
-                  selected={values.third}
+                  selected={values.product_updates}
                   onSelect={value => {
-                    setFieldValue("third", value)
+                    setFieldValue("product_updates", value)
                   }}
                 >
                   Email
@@ -117,9 +146,9 @@ export const PreferencesApp: React.FC = () => {
 
               <Column span={2}>
                 <Checkbox
-                  selected={values.fourth}
+                  selected={values.guidance_on_collecting}
                   onSelect={value => {
-                    setFieldValue("fourth", value)
+                    setFieldValue("guidance_on_collecting", value)
                   }}
                 >
                   Email
@@ -135,9 +164,9 @@ export const PreferencesApp: React.FC = () => {
 
               <Column span={2}>
                 <Checkbox
-                  selected={values.fifth}
+                  selected={values.custom_alerts}
                   onSelect={value => {
-                    setFieldValue("fifth", value)
+                    setFieldValue("custom_alerts", value)
                   }}
                 >
                   Email
@@ -154,11 +183,13 @@ export const PreferencesApp: React.FC = () => {
 
               <Column span={2}>
                 <Checkbox
-                  selected={Object.values(values).every(v => !v)}
+                  selected={!Object.values(values).some(Boolean)}
                   onSelect={value => {
-                    Object.keys(values).forEach(field => {
-                      setFieldValue(field, !value)
-                    })
+                    if (value) {
+                      Object.keys(values).forEach(field => {
+                        setFieldValue(field, false)
+                      })
+                    }
                   }}
                 >
                   Email
@@ -172,12 +203,30 @@ export const PreferencesApp: React.FC = () => {
               </Column>
 
               <Column span={2} mt={2}>
-                <Button width="100%">Save</Button>
+                <Button width="100%" type="submit">
+                  Save
+                </Button>
               </Column>
             </GridColumns>
-          )
-        }}
+          </Form>
+        )}
       </Formik>
     </>
   )
 }
+
+export const PreferencesAppFragmentContainer = createFragmentContainer(
+  PreferencesApp,
+  {
+    viewer: graphql`
+      fragment PreferencesApp_viewer on Viewer {
+        notificationPreferences {
+          id
+          name
+          channel
+          status
+        }
+      }
+    `,
+  }
+)
