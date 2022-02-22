@@ -31,6 +31,7 @@ export const MeetTheSpecialistsIndex: React.FC = () => {
   return (
     <>
       <Box mt={4}>
+        <Text variant={"xs"}>Private Sales</Text>
         <Text as="h1" variant={["xl", "xxl"]}>
           Meet the Specialists
         </Text>
@@ -41,6 +42,25 @@ export const MeetTheSpecialistsIndex: React.FC = () => {
           advise, and research on your behalf.
         </Text>
       </Box>
+
+      <Box mt={2}>
+        <Text variant="xs">
+          Have a question about Artsy? Check out our{" "}
+          <RouterLink to={"https://support.artsy.net"}>help center</RouterLink>{" "}
+          or email <a href="mailto:support@artsy.net">support@artsy.net</a>.
+        </Text>
+
+        <Text variant={"xs"}>
+          Have a question about bidding on Artsy? Email{" "}
+          <a href="mailto:specialist@artsy.net">specialist@artsy.net</a>.
+        </Text>
+
+        <Text variant={"xs"}>
+          Have a question about an existing order or offer? Email{" "}
+          <a href="mailto:specialist@artsy.net">orders@artsy.net</a>.
+        </Text>
+      </Box>
+
       <Spacer mb={120} />
 
       <GridColumns>
