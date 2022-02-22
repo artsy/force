@@ -23,31 +23,23 @@ const ArtistsCarouselCell: React.FC<ArtistsCarouselCellProps> = ({
 
   if (!image) return null
 
-  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-  const slug = getSlug(featuredLink.href)
+  const slug = getSlug(featuredLink.href ?? "")
 
   return (
     <>
-      <RouterLink
-        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-        key={featuredLink.internalID}
-        to={featuredLink.href}
-        display="block"
-        textDecoration="none"
-      >
-        <Image
-          // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-          src={image.thumb.src}
-          // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-          srcSet={image.thumb.srcSet}
-          // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-          width={image.thumb.width}
-          // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-          height={image.thumb.height}
-          // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-          alt={featuredLink.title}
-          lazyLoad
-        />
+      <RouterLink to={featuredLink.href} display="block" textDecoration="none">
+        {image.thumb ? (
+          <Image
+            src={image.thumb.src}
+            srcSet={image.thumb.srcSet}
+            width={image.thumb.width}
+            height={image.thumb.height}
+            alt=""
+            lazyLoad
+          />
+        ) : (
+          <Box width={600} height={450} bg="black10" />
+        )}
       </RouterLink>
 
       <Box
@@ -60,13 +52,10 @@ const ArtistsCarouselCell: React.FC<ArtistsCarouselCellProps> = ({
         height={50}
       >
         <RouterLink
-          // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-          key={featuredLink.internalID}
-          to={featuredLink.href}
-          dispaly="block"
+          to={featuredLink.href!}
+          display="block"
           textDecoration="none"
-          // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-          aria-label={featuredLink.title}
+          aria-label={featuredLink.title ?? "Unknown Artist"}
         >
           <Text variant="lg">{featuredLink.title}</Text>
 
