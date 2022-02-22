@@ -5,7 +5,7 @@
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type ArtistsCarouselCell_featuredLink = {
-    readonly internalID: string | null;
+    readonly internalID: string;
     readonly title: string | null;
     readonly subtitle: string | null;
     readonly href: string | null;
