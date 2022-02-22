@@ -1,13 +1,43 @@
-import { Box, BoxProps, THEME_V3 as THEME } from "@artsy/palette"
+import { Box, BoxProps, THEME_V3 as THEME, useDidMount } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
 import { FC } from "react"
 import styled from "styled-components"
+import reactHtmlParser from "@artsy/react-html-parser"
+import { ArticleTooltip, isSupportedArticleTooltip } from "./ArticleTooltip"
 
 interface ArticleHTMLProps extends BoxProps {
   children: string
 }
 
 export const ArticleHTML: FC<ArticleHTMLProps> = ({ children, ...rest }) => {
+  const isMounted = useDidMount()
+
+  // Looks for links and if they are internal and a supported entity type,
+  // inserts the relevant tooltip.
+  const transform = (node: Element) => {
+    if (node.tagName !== "A") return
+
+    const { href } = node as HTMLAnchorElement
+
+    const uri = new URL(href)
+
+    if (!uri.hostname.includes("artsy.net")) return
+
+    const [_, entity, id] = uri.pathname.split("/")
+
+    if (!isSupportedArticleTooltip(entity)) return
+
+    return (
+      <ArticleTooltip entity={entity} id={id} href={href}>
+        {node.textContent}
+      </ArticleTooltip>
+    )
+  }
+
+  if (isMounted) {
+    return <Container>{reactHtmlParser(children, { transform })}</Container>
+  }
+
   return <Container dangerouslySetInnerHTML={{ __html: children }} {...rest} />
 }
 
