@@ -18,6 +18,7 @@ import { ArtistsArtistCardFragmentContainer } from "../Components/ArtistsArtistC
 import { ArtistsCarouselCellFragmentContainer } from "../Components/ArtistsCarouselCell"
 import { ArtistsLetterNav } from "../Components/ArtistsLetterNav"
 import { Media } from "v2/Utils/Responsive"
+import { compact } from "lodash"
 
 interface ArtistsIndexProps {
   featuredArtists: ArtistsIndex_featuredArtists
@@ -56,21 +57,19 @@ export const ArtistsIndex: React.FC<ArtistsIndexProps> = ({
 
         {artists && (
           <Shelf my={2}>
-            {/*  @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
-            {artists.map((featuredLink, index) => {
-              // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-              if (!featuredLink.internalID) return null
+            {compact(
+              artists.map((featuredLink, index) => {
+                if (!featuredLink?.internalID) return null
 
-              return (
-                <ArtistsCarouselCellFragmentContainer
-                  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-                  key={featuredLink.internalID}
-                  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-                  featuredLink={featuredLink}
-                  index={index}
-                />
-              )
-            })}
+                return (
+                  <ArtistsCarouselCellFragmentContainer
+                    key={featuredLink.internalID}
+                    featuredLink={featuredLink}
+                    index={index}
+                  />
+                )
+              })
+            )}
           </Shelf>
         )}
       </Media>
@@ -79,23 +78,24 @@ export const ArtistsIndex: React.FC<ArtistsIndexProps> = ({
 
       {genes && (
         <Join separator={<Spacer mt={6} />}>
-          {genes?.map(gene => {
-            // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-            if (gene.trendingArtists?.length === 0) return null
+          {genes?.map((gene, i) => {
+            if (
+              !gene ||
+              !gene.trendingArtists ||
+              gene.trendingArtists.length === 0
+            )
+              return null
 
             return (
-              // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-              <React.Fragment key={gene.name}>
+              <React.Fragment key={gene.name ?? i}>
                 <Box display="flex" justifyContent="space-between" mb={2}>
-                  {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
-                  <RouterLink to={gene.href} noUnderline>
+                  <RouterLink to={gene.href!} noUnderline>
                     <Text variant="lg" as="h2">
-                      {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
                       {gene.name}
                     </Text>
                   </RouterLink>
-                  {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
-                  <RouterLink to={gene.href} noUnderline>
+
+                  <RouterLink to={gene.href!} noUnderline>
                     <Text variant="md" color="black60">
                       View
                     </Text>
@@ -103,12 +103,11 @@ export const ArtistsIndex: React.FC<ArtistsIndexProps> = ({
                 </Box>
 
                 <GridColumns gridRowGap={[2, 0]}>
-                  {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
                   {gene.trendingArtists.map(artist => {
+                    if (!artist) return null
+
                     return (
-                      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
                       <Column key={artist.internalID} span={[12, 6, 3, 3]}>
-                        {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
                         <ArtistsArtistCardFragmentContainer artist={artist} />
                       </Column>
                     )
