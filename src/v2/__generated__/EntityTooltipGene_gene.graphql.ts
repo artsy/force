@@ -4,25 +4,25 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type ArtistsCarouselCell_featuredLink = {
-    readonly internalID: string;
-    readonly title: string | null;
-    readonly subtitle: string | null;
+export type EntityTooltipGene_gene = {
+    readonly name: string | null;
     readonly href: string | null;
+    readonly description: string | null;
     readonly image: {
-        readonly thumb: {
-            readonly width: number;
-            readonly height: number;
+        readonly cropped: {
             readonly src: string;
             readonly srcSet: string;
+            readonly height: number;
+            readonly width: number;
         } | null;
     } | null;
-    readonly " $refType": "ArtistsCarouselCell_featuredLink";
+    readonly " $fragmentRefs": FragmentRefs<"FollowGeneButton_gene">;
+    readonly " $refType": "EntityTooltipGene_gene";
 };
-export type ArtistsCarouselCell_featuredLink$data = ArtistsCarouselCell_featuredLink;
-export type ArtistsCarouselCell_featuredLink$key = {
-    readonly " $data"?: ArtistsCarouselCell_featuredLink$data;
-    readonly " $fragmentRefs": FragmentRefs<"ArtistsCarouselCell_featuredLink">;
+export type EntityTooltipGene_gene$data = EntityTooltipGene_gene;
+export type EntityTooltipGene_gene$key = {
+    readonly " $data"?: EntityTooltipGene_gene$data;
+    readonly " $fragmentRefs": FragmentRefs<"EntityTooltipGene_gene">;
 };
 
 
@@ -31,27 +31,13 @@ const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "ArtistsCarouselCell_featuredLink",
+  "name": "EntityTooltipGene_gene",
   "selections": [
     {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "internalID",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "title",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "subtitle",
+      "name": "name",
       "storageKey": null
     },
     {
@@ -63,6 +49,19 @@ const node: ReaderFragment = {
     },
     {
       "alias": null,
+      "args": [
+        {
+          "kind": "Literal",
+          "name": "format",
+          "value": "PLAIN"
+        }
+      ],
+      "kind": "ScalarField",
+      "name": "description",
+      "storageKey": "description(format:\"PLAIN\")"
+    },
+    {
+      "alias": null,
       "args": null,
       "concreteType": "Image",
       "kind": "LinkedField",
@@ -70,22 +69,25 @@ const node: ReaderFragment = {
       "plural": false,
       "selections": [
         {
-          "alias": "thumb",
+          "alias": null,
           "args": [
             {
               "kind": "Literal",
               "name": "height",
-              "value": 450
+              "value": 146
             },
             {
               "kind": "Literal",
               "name": "version",
-              "value": "wide"
+              "value": [
+                "big_and_tall",
+                "tall"
+              ]
             },
             {
               "kind": "Literal",
               "name": "width",
-              "value": 600
+              "value": 260
             }
           ],
           "concreteType": "CroppedImageUrl",
@@ -93,20 +95,6 @@ const node: ReaderFragment = {
           "name": "cropped",
           "plural": false,
           "selections": [
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "width",
-              "storageKey": null
-            },
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "height",
-              "storageKey": null
-            },
             {
               "alias": null,
               "args": null,
@@ -120,16 +108,35 @@ const node: ReaderFragment = {
               "kind": "ScalarField",
               "name": "srcSet",
               "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "height",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "width",
+              "storageKey": null
             }
           ],
-          "storageKey": "cropped(height:450,version:\"wide\",width:600)"
+          "storageKey": "cropped(height:146,version:[\"big_and_tall\",\"tall\"],width:260)"
         }
       ],
       "storageKey": null
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "FollowGeneButton_gene"
     }
   ],
-  "type": "FeaturedLink",
+  "type": "Gene",
   "abstractKey": null
 };
-(node as any).hash = '825be8e5dd765862c4699c299893006c';
+(node as any).hash = 'efd29bee70b8d6162fa75b28267c69e2';
 export default node;

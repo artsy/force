@@ -466,7 +466,7 @@ return {
         "featuredEventsOrderedSet.items.image.small.src": (v11/*: any*/),
         "featuredEventsOrderedSet.items.image.small.srcSet": (v11/*: any*/),
         "featuredEventsOrderedSet.items.image.small.width": (v14/*: any*/),
-        "featuredEventsOrderedSet.items.internalID": (v12/*: any*/),
+        "featuredEventsOrderedSet.items.internalID": (v10/*: any*/),
         "featuredEventsOrderedSet.items.subtitle": (v12/*: any*/),
         "featuredEventsOrderedSet.items.title": (v12/*: any*/),
         "homePage": {

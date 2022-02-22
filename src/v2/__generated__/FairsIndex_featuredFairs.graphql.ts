@@ -6,7 +6,7 @@ import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type FairsIndex_featuredFairs = ReadonlyArray<{
     readonly items: ReadonlyArray<{
-        readonly internalID?: string | null;
+        readonly internalID?: string;
         readonly title?: string | null;
         readonly image?: {
             readonly cropped: {

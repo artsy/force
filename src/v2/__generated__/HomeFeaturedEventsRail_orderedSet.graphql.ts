@@ -7,7 +7,7 @@ import { FragmentRefs } from "relay-runtime";
 export type HomeFeaturedEventsRail_orderedSet = {
     readonly items: ReadonlyArray<({
         readonly __typename: "FeaturedLink";
-        readonly internalID: string | null;
+        readonly internalID: string;
         readonly title: string | null;
         readonly subtitle: string | null;
         readonly href: string | null;
