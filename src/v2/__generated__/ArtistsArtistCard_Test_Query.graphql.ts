@@ -36,8 +36,6 @@ fragment ArtistsArtistCard_artist on Artist {
   }
   image {
     thumb: cropped(width: 445, height: 334) {
-      width
-      height
       src
       srcSet
     }
@@ -83,12 +81,6 @@ v3 = {
   "type": "ID"
 },
 v4 = {
-  "enumValues": null,
-  "nullable": false,
-  "plural": false,
-  "type": "Int"
-},
-v5 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
@@ -247,20 +239,6 @@ return {
                     "alias": null,
                     "args": null,
                     "kind": "ScalarField",
-                    "name": "width",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "height",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
                     "name": "src",
                     "storageKey": null
                   },
@@ -283,7 +261,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "090694b9685df87def776ece5aa228db",
+    "cacheID": "aafccfabf77197367fadae2ff351731e",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -317,10 +295,8 @@ return {
           "plural": false,
           "type": "CroppedImageUrl"
         },
-        "artist.image.thumb.height": (v4/*: any*/),
-        "artist.image.thumb.src": (v5/*: any*/),
-        "artist.image.thumb.srcSet": (v5/*: any*/),
-        "artist.image.thumb.width": (v4/*: any*/),
+        "artist.image.thumb.src": (v4/*: any*/),
+        "artist.image.thumb.srcSet": (v4/*: any*/),
         "artist.internalID": (v3/*: any*/),
         "artist.is_followed": {
           "enumValues": null,
@@ -334,7 +310,7 @@ return {
     },
     "name": "ArtistsArtistCard_Test_Query",
     "operationKind": "query",
-    "text": "query ArtistsArtistCard_Test_Query {\n  artist(id: \"example\") {\n    ...ArtistsArtistCard_artist\n    id\n  }\n}\n\nfragment ArtistsArtistCard_artist on Artist {\n  ...FollowArtistButton_artist\n  name\n  href\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  image {\n    thumb: cropped(width: 445, height: 334) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment FollowArtistButton_artist on Artist {\n  id\n  internalID\n  name\n  slug\n  is_followed: isFollowed\n  counts {\n    follows\n  }\n}\n"
+    "text": "query ArtistsArtistCard_Test_Query {\n  artist(id: \"example\") {\n    ...ArtistsArtistCard_artist\n    id\n  }\n}\n\nfragment ArtistsArtistCard_artist on Artist {\n  ...FollowArtistButton_artist\n  name\n  href\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  image {\n    thumb: cropped(width: 445, height: 334) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment FollowArtistButton_artist on Artist {\n  id\n  internalID\n  name\n  slug\n  is_followed: isFollowed\n  counts {\n    follows\n  }\n}\n"
   }
 };
 })();

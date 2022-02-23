@@ -257,6 +257,7 @@ export const FollowArtistButtonQueryRenderer: React.FC<
 
   return (
     <SystemQueryRenderer<FollowArtistButtonQuery>
+      lazyLoad
       environment={relayEnvironment}
       query={graphql`
         query FollowArtistButtonQuery($id: String!) {
@@ -265,10 +266,14 @@ export const FollowArtistButtonQueryRenderer: React.FC<
           }
         }
       `}
+      placeholder={
+        // @ts-ignore
+        <FollowArtistButtonFragmentContainer {...rest} artist={null} />
+      }
       variables={{ id }}
       render={({ error, props }) => {
         if (error || !props) {
-          // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
+          // @ts-ignore
           return <FollowArtistButtonFragmentContainer {...rest} artist={null} />
         }
 
