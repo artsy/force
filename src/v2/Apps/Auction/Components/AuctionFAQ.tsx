@@ -1,6 +1,6 @@
 import { Box, Serif, Spacer, Theme, Toggle, media, space } from "@artsy/palette"
 import { AuctionFAQ_viewer } from "v2/__generated__/AuctionFAQ_viewer.graphql"
-import * as React from "react";
+import * as React from "react"
 import Markdown from "react-markdown"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"

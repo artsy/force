@@ -1,12 +1,16 @@
 import { useContext } from "react"
 import { Match, Router, RouterContext } from "found"
+import { AppRouteConfig } from "./Route"
+import { findCurrentRoute } from "./Utils/findCurrentRoute"
 
 export function useRouter(): {
   match: Match
   router: Router
+  route: AppRouteConfig
 } {
   const { match, router } = useContext(RouterContext) ?? {}
-  return { match, router }
+  const route = findCurrentRoute(match)
+  return { match, router, route }
 }
 
 export function useIsRouteActive(

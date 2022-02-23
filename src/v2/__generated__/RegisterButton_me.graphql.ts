@@ -6,6 +6,7 @@ import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type RegisterButton_me = {
     readonly identityVerified: boolean | null;
+    readonly hasCreditCards: boolean | null;
     readonly pendingIdentityVerification: {
         readonly internalID: string;
     } | null;
@@ -35,6 +36,13 @@ const node: ReaderFragment = {
     {
       "alias": null,
       "args": null,
+      "kind": "ScalarField",
+      "name": "hasCreditCards",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
       "concreteType": "IdentityVerification",
       "kind": "LinkedField",
       "name": "pendingIdentityVerification",
@@ -54,5 +62,5 @@ const node: ReaderFragment = {
   "type": "Me",
   "abstractKey": null
 };
-(node as any).hash = 'e6b306b558eb5b4ffaf3eba4412c795f';
+(node as any).hash = '8eb0a9ffa35188db66166b910243baae';
 export default node;

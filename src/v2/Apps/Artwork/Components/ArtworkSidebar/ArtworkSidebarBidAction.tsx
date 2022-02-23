@@ -19,10 +19,13 @@ import track from "react-tracking"
 import { getENV } from "v2/Utils/getENV"
 import { bidderQualifications } from "v2/Utils/identityVerificationRequirements"
 import { compact } from "lodash"
+import { Router } from "found"
+import { useRouter } from "v2/System/Router/useRouter"
 
 export interface ArtworkSidebarBidActionProps {
   artwork: ArtworkSidebarBidAction_artwork
   me: ArtworkSidebarBidAction_me
+  router?: Router
 }
 
 export interface ArtworkSidebarBidActionState {
@@ -96,8 +99,15 @@ export class ArtworkSidebarBidAction extends React.Component<
   redirectToBid(firstIncrement: number) {
     const { slug, sale } = this.props.artwork
     const bid = this.state.selectedMaxBidCents || firstIncrement
+
     const href = `/auction/${sale?.slug}/bid/${slug}?bid=${bid}`
-    window.location.href = href
+
+    // FIXME: Remove this after Auction2 launches
+    if (getENV("ENABLE_AUCTION_V2")) {
+      this.props.router?.push(href.replace("/auction/", "/auction2/"))
+    } else {
+      window.location.href = href
+    }
   }
 
   @track({
@@ -340,7 +350,8 @@ export class ArtworkSidebarBidAction extends React.Component<
 
 export const ArtworkSidebarBidActionFragmentContainer = createFragmentContainer(
   (props: ArtworkSidebarBidActionProps) => {
-    return <ArtworkSidebarBidAction {...props} />
+    const { router } = useRouter()
+    return <ArtworkSidebarBidAction {...props} router={router} />
   },
   {
     artwork: graphql`
