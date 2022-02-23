@@ -8,33 +8,8 @@ export type ArticleSectionImageCollectionLayout = "COLUMN_WIDTH" | "FILLWIDTH" |
 export type ArticleSectionImageCollection_section = {
     readonly layout: ArticleSectionImageCollectionLayout;
     readonly figures: ReadonlyArray<{
-        readonly __typename: "ArticleImageSection";
-        readonly id: string;
-        readonly caption: string | null;
-        readonly image: {
-            readonly resized: {
-                readonly src: string;
-                readonly srcSet: string;
-                readonly height: number | null;
-                readonly width: number | null;
-            } | null;
-        } | null;
-    } | {
-        readonly __typename: "Artwork";
-        readonly id: string;
-        readonly image: {
-            readonly resized: {
-                readonly src: string;
-                readonly srcSet: string;
-                readonly height: number | null;
-                readonly width: number | null;
-            } | null;
-        } | null;
-        readonly " $fragmentRefs": FragmentRefs<"Metadata_artwork">;
-    } | {
-        /*This will never be '%other', but we need some
-        value in case none of the concrete values match.*/
-        readonly __typename: "%other";
+        readonly __typename: string;
+        readonly " $fragmentRefs": FragmentRefs<"ArticleSectionImageCollectionImage_figure" | "ArticleSectionImageCollectionCaption_figure">;
     }>;
     readonly " $refType": "ArticleSectionImageCollection_section";
 };
@@ -46,80 +21,7 @@ export type ArticleSectionImageCollection_section$key = {
 
 
 
-const node: ReaderFragment = (function(){
-var v0 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "id",
-  "storageKey": null
-},
-v1 = {
-  "alias": null,
-  "args": null,
-  "concreteType": "Image",
-  "kind": "LinkedField",
-  "name": "image",
-  "plural": false,
-  "selections": [
-    {
-      "alias": null,
-      "args": [
-        {
-          "kind": "Literal",
-          "name": "version",
-          "value": [
-            "normalized",
-            "larger",
-            "large"
-          ]
-        },
-        {
-          "kind": "Literal",
-          "name": "width",
-          "value": 1220
-        }
-      ],
-      "concreteType": "ResizedImageUrl",
-      "kind": "LinkedField",
-      "name": "resized",
-      "plural": false,
-      "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "src",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "srcSet",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "height",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "width",
-          "storageKey": null
-        }
-      ],
-      "storageKey": "resized(version:[\"normalized\",\"larger\",\"large\"],width:1220)"
-    }
-  ],
-  "storageKey": null
-};
-return {
+const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
@@ -148,34 +50,14 @@ return {
           "storageKey": null
         },
         {
-          "kind": "InlineFragment",
-          "selections": [
-            (v0/*: any*/),
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "caption",
-              "storageKey": null
-            },
-            (v1/*: any*/)
-          ],
-          "type": "ArticleImageSection",
-          "abstractKey": null
+          "args": null,
+          "kind": "FragmentSpread",
+          "name": "ArticleSectionImageCollectionImage_figure"
         },
         {
-          "kind": "InlineFragment",
-          "selections": [
-            (v0/*: any*/),
-            (v1/*: any*/),
-            {
-              "args": null,
-              "kind": "FragmentSpread",
-              "name": "Metadata_artwork"
-            }
-          ],
-          "type": "Artwork",
-          "abstractKey": null
+          "args": null,
+          "kind": "FragmentSpread",
+          "name": "ArticleSectionImageCollectionCaption_figure"
         }
       ],
       "storageKey": null
@@ -184,6 +66,5 @@ return {
   "type": "ArticleSectionImageCollection",
   "abstractKey": null
 };
-})();
-(node as any).hash = '8b0a0cf164dd48f2cf3d1ec9e0bbce17';
+(node as any).hash = '4a4e89774caeaecfcc5d9993cf6121a4';
 export default node;

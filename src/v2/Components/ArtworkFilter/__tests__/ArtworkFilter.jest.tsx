@@ -7,8 +7,7 @@ import { ArtworkQueryFilter } from "../ArtworkQueryFilter"
 import { ArtworkFilterFixture } from "./fixtures/ArtworkFilter.fixture"
 import { initialArtworkFilterState } from "../ArtworkFilterContext"
 import { setupTestWrapperTL } from "v2/DevTools/setupTestWrapper"
-import { SavedSearchAttributes } from "../SavedSearch/types"
-import { FilterPillsContextProvider } from "../SavedSearch/Utils/FilterPillsContext"
+import { SavedSearchEntity } from "v2/Components/SavedSearchAlert/types"
 
 jest.unmock("react-relay")
 jest.mock("v2/System/Analytics/useTracking")
@@ -17,7 +16,7 @@ jest.mock("v2/Utils/Hooks/useMatchMedia", () => ({
   __internal__useMatchMedia: () => ({}),
 }))
 
-const savedSearchProps: SavedSearchAttributes = {
+const savedSearchEntity: SavedSearchEntity = {
   type: "artist",
   id: "test-artist-id",
   name: "Test Artist",
@@ -35,17 +34,15 @@ describe("ArtworkFilter", () => {
   const { renderWithRelay } = setupTestWrapperTL({
     Component: (props: any) => (
       <MockBoot breakpoint={breakpoint}>
-        <FilterPillsContextProvider>
-          <ArtworkFilter
-            {...(props as any)}
-            enableCreateAlert={enableCreateAlert}
-            savedSearchProps={savedSearchProps}
-            onFilterClick={onFilterClick}
-            onChange={onChange}
-            sortOptions={sortOptionsMock}
-            filters={{ ...initialArtworkFilterState, ...filters }}
-          />
-        </FilterPillsContextProvider>
+        <ArtworkFilter
+          {...(props as any)}
+          enableCreateAlert={enableCreateAlert}
+          savedSearchEntity={savedSearchEntity}
+          onFilterClick={onFilterClick}
+          onChange={onChange}
+          sortOptions={sortOptionsMock}
+          filters={{ ...initialArtworkFilterState, ...filters }}
+        />
       </MockBoot>
     ),
     query: ArtworkQueryFilter,
@@ -71,7 +68,7 @@ describe("ArtworkFilter", () => {
     ]
   })
 
-  it("renders filters pills when enableCreateAlert is true, savedSearchProps are passed and there are selected filters", async () => {
+  it("renders filters pills when enableCreateAlert is true, savedSearchEntity are passed and there are selected filters", async () => {
     enableCreateAlert = true
     renderWithRelay()
 

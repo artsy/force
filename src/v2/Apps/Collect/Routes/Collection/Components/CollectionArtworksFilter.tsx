@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"
 import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
 import { BaseArtworkFilter } from "v2/Components/ArtworkFilter"
 import {
@@ -22,7 +22,6 @@ import { ArtistNationalityFilter } from "v2/Components/ArtworkFilter/ArtworkFilt
 import { MaterialsFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/MaterialsFilter"
 import { PartnersFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/PartnersFilter"
 import { ArtistsFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/ArtistsFilter"
-import { useSystemContext } from "v2/System"
 
 interface CollectionArtworksFilterProps {
   relay: RelayRefetchProp
@@ -38,17 +37,10 @@ export const CollectionArtworksFilter: React.FC<CollectionArtworksFilterProps> =
 
   const { match } = useRouter()
   const { pathname } = usePathnameComplete()
-  const { user } = useSystemContext()
 
   const Filters = (
     <>
-      {!isArtistCollection && (
-        <ArtistsFilter
-          relayEnvironment={relay.environment}
-          user={user}
-          expanded
-        />
-      )}
+      {!isArtistCollection && <ArtistsFilter expanded />}
       <AttributionClassFilter expanded />
       <MediumFilter expanded />
       <PriceRangeFilter expanded />

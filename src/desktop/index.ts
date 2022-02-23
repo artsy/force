@@ -44,7 +44,6 @@ app.use(require("./apps/art_keeps_going/server").app)
 
 app.use(require("./apps/auction").app)
 app.use(require("./apps/auction_support"))
-app.use(require("./apps/about"))
 app.use(require("./apps/contact"))
 app.use(require("./apps/eoy_2016"))
 app.use(require("./apps/inquiry"))

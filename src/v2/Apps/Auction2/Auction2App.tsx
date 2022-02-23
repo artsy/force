@@ -1,23 +1,32 @@
-import { Box, Spacer } from "@artsy/palette"
+import { Box, Join, Spacer } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
-import { AnalyticsContext, useAnalyticsContext } from "v2/System"
-import { Auction2App_sale } from "v2/__generated__/Auction2App_sale.graphql"
-import { Auction2App_me } from "v2/__generated__/Auction2App_me.graphql"
-import { Auction2MetaFragmentContainer } from "./Components/Auction2Meta"
 import { FullBleedHeader } from "v2/Components/FullBleedHeader"
+import { AnalyticsContext, useAnalyticsContext } from "v2/System"
+import { Auction2App_me } from "v2/__generated__/Auction2App_me.graphql"
+import { Auction2App_sale } from "v2/__generated__/Auction2App_sale.graphql"
+import { Auction2App_viewer } from "v2/__generated__/Auction2App_viewer.graphql"
+import { Auction2MetaFragmentContainer } from "./Components/Auction2Meta"
+import { AuctionActiveBidsRefetchContainer } from "./Components/AuctionActiveBids"
+import { AuctionArtworkFilterRefetchContainer } from "./Components/AuctionArtworkFilter"
 import { AuctionDetailsFragmentContainer } from "./Components/AuctionDetails/AuctionDetails"
 
 /**
  * TODO:
- * - Add ZenDesk
+ * - Re-add ZenDesk
  */
 
-interface Auction2AppProps {
-  sale: Auction2App_sale
+export interface Auction2AppProps {
   me: Auction2App_me
+  sale: Auction2App_sale
+  viewer: Auction2App_viewer
 }
 
-const Auction2App: React.FC<Auction2AppProps> = ({ children, sale, me }) => {
+export const Auction2App: React.FC<Auction2AppProps> = ({
+  children,
+  me,
+  sale,
+  viewer,
+}) => {
   const { contextPageOwnerType, contextPageOwnerSlug } = useAnalyticsContext()
 
   return (
@@ -30,17 +39,19 @@ const Auction2App: React.FC<Auction2AppProps> = ({ children, sale, me }) => {
     >
       <Auction2MetaFragmentContainer sale={sale} />
 
-      <>
+      <Join separator={<Spacer my={4} />}>
         {sale.coverImage?.cropped && (
           <FullBleedHeader src={sale.coverImage.cropped.src} />
         )}
 
-        <Spacer my={2} />
-
         <AuctionDetailsFragmentContainer sale={sale} me={me} />
 
+        <AuctionActiveBidsRefetchContainer me={me} />
+
+        <AuctionArtworkFilterRefetchContainer viewer={viewer} />
+
         <Box>{children}</Box>
-      </>
+      </Join>
     </AnalyticsContext.Provider>
   )
 }
@@ -48,142 +59,30 @@ const Auction2App: React.FC<Auction2AppProps> = ({ children, sale, me }) => {
 export const Auction2AppFragmentContainer = createFragmentContainer(
   Auction2App,
   {
+    me: graphql`
+      fragment Auction2App_me on Me
+        @argumentDefinitions(saleID: { type: "String!" }) {
+        ...AuctionDetails_me
+        ...AuctionActiveBids_me @arguments(saleID: $saleID)
+      }
+    `,
     sale: graphql`
       fragment Auction2App_sale on Sale {
         ...Auction2Meta_sale
         ...AuctionDetails_sale
 
-        # New
-        formattedStartDateTime
-        href
+        internalID
         coverImage {
           cropped(width: 1800, height: 600, version: "wide") {
             src
           }
         }
-
-        # Old
-        internalID
-        slug
-        associatedSale {
-          coverImage {
-            cropped(width: 260, height: 110) {
-              url
-            }
-          }
-          endAt
-          href
-          slug
-          isClosed
-          isLiveOpen
-          isPreview
-          liveStartAt
-          name
-          startAt
-        }
-        status
-        coverImage {
-          cropped(width: 1800, height: 600, version: "wide") {
-            url
-          }
-        }
-        currency
-        eligibleSaleArtworksCount
-        endAt
-        isAuction
-        isClosed
-        isLiveOpen
-        isOpen
-        liveStartAt
-        name
-        promotedSale {
-          slug
-          name
-          saleArtworksConnection(first: 25) {
-            edges {
-              node {
-                artwork {
-                  slug
-                  title
-                  date
-                  saleMessage
-                  isInAuction
-                  image {
-                    placeholder
-                    url
-                    aspectRatio
-                  }
-                  artists {
-                    slug
-                    href
-                    name
-                  }
-                  partner {
-                    name
-                  }
-                  href
-                  isAcquireable
-                }
-              }
-            }
-          }
-        }
-        registrationEndsAt
-        requireIdentityVerification
-        startAt
-        status
-        symbol
       }
     `,
-    me: graphql`
-      fragment Auction2App_me on Me {
-        ...AuctionDetails_me
-
-        internalID
-        hasCreditCards
-        identityVerified
-        pendingIdentityVerification {
-          internalID
-        }
-        bidders(saleID: $slug) {
-          qualifiedForBidding
-        }
-
-        lotStandings(saleID: $slug, live: true) {
-          activeBid {
-            internalID
-          }
-          isLeadingBidder
-          saleArtwork {
-            slug
-            lotLabel
-            reserveStatus
-            counts {
-              bidderPositions
-            }
-            saleID
-            highestBid {
-              display
-            }
-            sale {
-              liveStartAt
-              endAt
-              isLiveOpen
-              isClosed
-            }
-            artwork {
-              href
-              title
-              date
-              image {
-                url(version: "square")
-              }
-              artist {
-                name
-              }
-            }
-          }
-        }
+    viewer: graphql`
+      fragment Auction2App_viewer on Viewer
+        @argumentDefinitions(input: { type: "FilterArtworksInput" }) {
+        ...AuctionArtworkFilter_viewer @arguments(input: $input)
       }
     `,
   }

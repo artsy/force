@@ -385,10 +385,7 @@ export const NavBar: React.FC = track(
                   Museums
                 </NavBarItemLink>
 
-                <NavBarItemLink
-                  href="https://nft.artsy.net"
-                  onClick={handleClick}
-                >
+                <NavBarItemLink href="/nft" onClick={handleClick}>
                   NFTs
                 </NavBarItemLink>
               </Flex>

@@ -1,5 +1,12 @@
-import { Column, Flex, GridColumns, HTML, Spacer, Text } from "@artsy/palette"
-import { data as sd } from "sharify"
+import {
+  Box,
+  Column,
+  Flex,
+  GridColumns,
+  HTML,
+  Spacer,
+  Text,
+} from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { AddToCalendar } from "./AddToCalendar"
 import { getLiveAuctionUrl } from "desktop/apps/auction/utils/urls"
@@ -12,6 +19,7 @@ import { useCurrentTime } from "v2/Utils/Hooks/useCurrentTime"
 import { useEventTiming } from "v2/Utils/Hooks/useEventTiming"
 import { AuctionInfoSidebarFragmentContainer } from "./AuctionInfoSidebar"
 import { RegisterButtonFragmentContainer } from "./RegisterButton"
+import { getENV } from "v2/Utils/getENV"
 
 interface AuctionDetailsProps {
   sale: AuctionDetails_sale
@@ -56,15 +64,17 @@ const AuctionDetails: React.FC<AuctionDetailsProps> = ({ sale, me }) => {
           </Text>
 
           {!hasEnded && (
-            <AddToCalendar
-              startDate={sale.liveStartAt || sale.startAt!}
-              endDate={endDate!}
-              title={sale.name!}
-              description={sale.description!}
-              href={`${sd.APP_URL}${sale.href!}`}
-              liveAuctionUrl={liveAuctionUrl}
-              contextModule={ContextModule.auctionHome}
-            />
+            <Box mt={0.5}>
+              <AddToCalendar
+                startDate={sale.liveStartAt || sale.startAt!}
+                endDate={endDate!}
+                title={sale.name!}
+                description={sale.description!}
+                href={`${getENV("APP_URL")}${sale.href!}`}
+                liveAuctionUrl={liveAuctionUrl}
+                contextModule={ContextModule.auctionHome}
+              />
+            </Box>
           )}
         </Flex>
       </Flex>
