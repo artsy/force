@@ -3,6 +3,7 @@ import { Flex } from "@artsy/palette"
 import { isArray } from "lodash"
 import {
   ArtworkFilters,
+  DEFAULT_METRIC,
   initialArtworkFilterState,
   useArtworkFilterContext,
 } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
@@ -34,6 +35,7 @@ export const SavedSearchAlertArtworkGridFilterPills: React.FC<SavedSearchAlertAr
     criteria,
     aggregations,
     entity: savedSearchEntity,
+    metric: filters?.metric ?? DEFAULT_METRIC,
   })
 
   const removePill = (pill: FilterPill) => {
