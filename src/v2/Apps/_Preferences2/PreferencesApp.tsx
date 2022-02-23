@@ -7,18 +7,18 @@ import {
   Text,
   useToasts,
 } from "@artsy/palette"
-import { isEmpty } from "lodash"
+import { isEmpty, camelCase } from "lodash"
 import { FC } from "react"
 import { Form, Formik } from "formik"
 import { createFragmentContainer, graphql } from "react-relay"
 import { PreferencesApp_viewer } from "v2/__generated__/PreferencesApp_viewer.graphql"
 
 interface FormValuesForNotificationPreferences {
-  recommended_by_artsy: boolean
-  art_world_insights: boolean
-  product_updates: boolean
-  guidance_on_collecting: boolean
-  custom_alerts: boolean
+  recommendedByArtsy: boolean
+  artWorldInsights: boolean
+  productUpdates: boolean
+  guidanceOnCollecting: boolean
+  customAlerts: boolean
 }
 
 interface PreferencesAppProps {
@@ -26,22 +26,23 @@ interface PreferencesAppProps {
 }
 
 const NOTIFICATION_FIELDS = {
-  recommended_by_artsy: false,
-  art_world_insights: false,
-  product_updates: false,
-  guidance_on_collecting: false,
-  custom_alerts: false,
+  recommendedByArtsy: false,
+  artWorldInsights: false,
+  productUpdates: false,
+  guidanceOnCollecting: false,
+  customAlerts: false,
 }
 
 export const PreferencesApp: FC<PreferencesAppProps> = ({ viewer }) => {
   const { sendToast } = useToasts()
   let initialValues = viewer?.notificationPreferences
     .filter(preference =>
-      Object.keys(NOTIFICATION_FIELDS).includes(preference.name)
+      Object.keys(NOTIFICATION_FIELDS).includes(camelCase(preference.name))
     )
     .map(preference => {
       return {
-        [preference.name]: preference.status === "SUBSCRIBED" ? true : false,
+        [camelCase(preference.name)]:
+          preference.status === "SUBSCRIBED" ? true : false,
       }
     })
 
@@ -102,10 +103,10 @@ export const PreferencesApp: FC<PreferencesAppProps> = ({ viewer }) => {
 
               <Column span={2}>
                 <Checkbox
-                  selected={values.recommended_by_artsy}
+                  selected={values.recommendedByArtsy}
                   onSelect={value => {
-                    setFieldValue("recommended_by_artsy", value)
-                    setFieldTouched("recommended_by_artsy", true)
+                    setFieldValue("recommendedByArtsy", value)
+                    setFieldTouched("recommendedByArtsy", true)
                   }}
                 >
                   Email
@@ -122,10 +123,10 @@ export const PreferencesApp: FC<PreferencesAppProps> = ({ viewer }) => {
 
               <Column span={2}>
                 <Checkbox
-                  selected={values.art_world_insights}
+                  selected={values.artWorldInsights}
                   onSelect={value => {
-                    setFieldValue("art_world_insights", value)
-                    setFieldTouched("art_world_insights", true)
+                    setFieldValue("artWorldInsights", value)
+                    setFieldTouched("artWorldInsights", true)
                   }}
                 >
                   Email
@@ -141,10 +142,10 @@ export const PreferencesApp: FC<PreferencesAppProps> = ({ viewer }) => {
 
               <Column span={2}>
                 <Checkbox
-                  selected={values.product_updates}
+                  selected={values.productUpdates}
                   onSelect={value => {
-                    setFieldValue("product_updates", value)
-                    setFieldTouched("product_updates", true)
+                    setFieldValue("productUpdates", value)
+                    setFieldTouched("productUpdates", true)
                   }}
                 >
                   Email
@@ -161,10 +162,10 @@ export const PreferencesApp: FC<PreferencesAppProps> = ({ viewer }) => {
 
               <Column span={2}>
                 <Checkbox
-                  selected={values.guidance_on_collecting}
+                  selected={values.guidanceOnCollecting}
                   onSelect={value => {
-                    setFieldValue("guidance_on_collecting", value)
-                    setFieldTouched("guidance_on_collecting", true)
+                    setFieldValue("guidanceOnCollecting", value)
+                    setFieldTouched("guidanceOnCollecting", true)
                   }}
                 >
                   Email
@@ -180,10 +181,10 @@ export const PreferencesApp: FC<PreferencesAppProps> = ({ viewer }) => {
 
               <Column span={2}>
                 <Checkbox
-                  selected={values.custom_alerts}
+                  selected={values.customAlerts}
                   onSelect={value => {
-                    setFieldValue("custom_alerts", value)
-                    setFieldTouched("custom_alerts", true)
+                    setFieldValue("customAlerts", value)
+                    setFieldTouched("customAlerts", true)
                   }}
                 >
                   Email
