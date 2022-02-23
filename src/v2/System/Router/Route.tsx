@@ -1,10 +1,12 @@
 import { RouteSpinner } from "v2/System/Relay/renderWithLoadProgress"
 import { RouteConfig, HttpError, Match } from "found"
 import BaseRoute from "found/Route"
-import * as React from "react"
-import { CacheConfig, GraphQLTaggedNode } from "relay-runtime"
-import { ArtsyRequest, ArtsyResponse } from "lib/middleware/artsyExpress"
-import { NextFunction } from "express"
+import * as React from "react";
+import { CacheConfig, GraphQLTaggedNode } from "relay-runtime";
+import { ArtsyRequest, ArtsyResponse } from "lib/middleware/artsyExpress";
+import { NextFunction } from "express";
+
+
 
 interface RouteConfigProps extends RouteConfig {
   cacheConfig?: CacheConfig
@@ -17,26 +19,21 @@ interface RouteConfigProps extends RouteConfig {
   ignoreScrollBehavior?: boolean
   ignoreScrollBehaviorBetweenChildren?: boolean
   onClientSideRender?: (props: { match: Match }) => void
-  onServerSideRender?: (props: {
-    req: ArtsyRequest
-    res: ArtsyResponse
-    next: NextFunction
-    route: AppRouteConfig
-  }) => void
+  onServerSideRender?: (props: { req: ArtsyRequest, res: ArtsyResponse, next: NextFunction, route: AppRouteConfig }) => void
   prepareVariables?: (params: any, props: any) => object
   query?: GraphQLTaggedNode
   scrollToTop?: boolean
   shouldWarnBeforeLeaving?: boolean
-  theme?: "v2" | "v3"
+  theme?: 'v2' | 'v3'
 }
 
 // Strip the index prop from `found`'s RouteConfig so that we can lock the
 // config to the above definition
-// type RemoveIndex<T> = {
-//   [P in keyof T as string extends P ? never : number extends P ? never : P]: T[P]
-// };
+type RemoveIndex<T> = {
+  [P in keyof T as string extends P ? never : number extends P ? never : P]: T[P]
+};
 
-export type AppRouteConfig = RouteConfigProps
+export type AppRouteConfig = RemoveIndex<RouteConfigProps>
 
 type FetchIndicator = "spinner" | "overlay"
 
