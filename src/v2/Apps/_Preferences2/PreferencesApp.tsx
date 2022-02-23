@@ -11,7 +11,7 @@ import { Formik } from "formik"
 export const PreferencesApp: React.FC = () => {
   return (
     <>
-      <Text variant="xl" mt={6} mb={12}>
+      <Text variant="xl" mt={6} mb={6}>
         Preferences Center
       </Text>
 
@@ -32,10 +32,6 @@ export const PreferencesApp: React.FC = () => {
             <GridColumns gridRowGap={4}>
               <Column span={10}>
                 <Text variant="md">Subscribe to all</Text>
-                <Text variant="sm" color="black60">
-                  If you subscribe to all, you can expect to receive around two
-                  Artsy emails per day from these categories.
-                </Text>
               </Column>
 
               <Column span={2}>
@@ -165,7 +161,7 @@ export const PreferencesApp: React.FC = () => {
                     })
                   }}
                 >
-                  Unselect all
+                  Email
                 </Checkbox>
               </Column>
 
