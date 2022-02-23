@@ -16,6 +16,7 @@ import {
 import { ArticleHeader_article } from "v2/__generated__/ArticleHeader_article.graphql"
 import { useNavBarHeight } from "v2/Components/NavBar/useNavBarHeight"
 import styled from "styled-components"
+import { RouterLink } from "v2/System/Router/RouterLink"
 
 interface ArticleHeaderProps {
   article: ArticleHeader_article
@@ -33,11 +34,13 @@ const ArticleHeader: FC<ArticleHeaderProps> = ({ article }) => {
           {article.vertical}
         </Text>
 
-        <Text variant="xxl">{article.title}</Text>
+        <RouterLink to={article.href} display="block" textDecoration="none">
+          <Text variant="xxl">{article.title}</Text>
 
-        <Text variant="xxl" color="black60">
-          {article.byline}
-        </Text>
+          <Text variant="xxl" color="black60">
+            {article.byline}
+          </Text>
+        </RouterLink>
       </>
     )
   }
@@ -191,6 +194,7 @@ export const ArticleHeaderFragmentContainer = createFragmentContainer(
     article: graphql`
       fragment ArticleHeader_article on Article {
         title
+        href
         vertical
         byline
         hero {
