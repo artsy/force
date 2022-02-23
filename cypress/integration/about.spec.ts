@@ -1,10 +1,9 @@
 import { visitWithStatusRetries } from "../helpers/visitWithStatusRetries"
 
-// TODO: Currently throwing error. Likely needs additional ENV var.
 describe("About", () => {
-  it("/about", () => {
+  it("renders page content", () => {
     visitWithStatusRetries("about")
-    cy.get("h1").should("contain.text", "The Art WorldOnline")
+    cy.get("h1").should("contain", "For the Love of Art")
     cy.title().should("eq", "About | Artsy")
   })
 })
