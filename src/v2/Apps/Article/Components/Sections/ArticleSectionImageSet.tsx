@@ -13,7 +13,6 @@ import {
   Flex,
 } from "@artsy/palette"
 import { useArticleZoomGallery } from "../ArticleZoomGallery"
-import { useRouter } from "v2/System/Router/useRouter"
 
 interface ArticleSectionImageSetProps {
   section: ArticleSectionImageSet_section
@@ -22,12 +21,10 @@ interface ArticleSectionImageSetProps {
 const ArticleSectionImageSet: FC<ArticleSectionImageSetProps> = ({
   section,
 }) => {
-  const { match } = useRouter()
-
   const {
     showArticleZoomGallery,
     articleZoomGalleryComponent,
-  } = useArticleZoomGallery({ id: match.params.id })
+  } = useArticleZoomGallery()
 
   const handleClick = () => {
     if (
