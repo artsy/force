@@ -103,6 +103,7 @@ export class ArtworkSidebarBidAction extends React.Component<
     const href = `/auction/${sale?.slug}/bid/${slug}?bid=${bid}`
 
     // FIXME: Remove this after Auction2 launches
+    console.log("*********", getENV("ENABLE_AUCTION_V2"))
     if (getENV("ENABLE_AUCTION_V2")) {
       this.props.router?.push(href.replace("/auction/", "/auction2/"))
     } else {

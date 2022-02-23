@@ -43,6 +43,7 @@ const Auction2RegistrationRoute: React.FC<Auction2RegistrationRouteProps> = ({
     router.push(`/auction2/${sale.slug}`)
   }
 
+  // Track page view
   useEffect(() => {
     tracking.registrationPageView()
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -53,8 +54,6 @@ const Auction2RegistrationRoute: React.FC<Auction2RegistrationRouteProps> = ({
       title="Register to Bid on Artsy"
       onClose={handleModalClose}
       width="50%"
-      // TODO: PR fix for this to palette ModalBase component
-      margin="auto"
     >
       <Formik<AuctionFormValues>
         initialValues={initialValuesForRegistration}
