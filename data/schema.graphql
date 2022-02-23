@@ -775,6 +775,7 @@ type ArticleFeatureSection {
   embed(autoPlay: Boolean = false): String
   image: Image
   layout: ArticleFeatureSectionType!
+  media: String
   title: String
 }
 
