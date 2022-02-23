@@ -14,6 +14,7 @@ export function featureFlagMiddleware(serviceType: symbol) {
       } else {
         try {
           service = await createFeatureFlagService(serviceType)
+          console.log("resolved Unleash")
           resolve(service)
         } catch {
           reject("An unknown error occurred while creating the flag service.")

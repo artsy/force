@@ -39,6 +39,11 @@ export interface RouterConfig {
   routes: AppRouteConfig[]
 
   /**
+   * Feature flags
+   */
+  featureFlags?: FeatureFlags
+
+  /**
    * URL passed from server
    */
   url?: string

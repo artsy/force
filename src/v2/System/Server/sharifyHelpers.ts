@@ -47,6 +47,7 @@ const V2_SHARIFY_ALLOWLIST = [
   "VOLLEY_ENDPOINT",
   "WEBFONT_URL",
   "ZENDESK_KEY",
+  "featureFlags",
 ] as const
 
 export type SharifyKey = typeof V2_SHARIFY_ALLOWLIST[number]

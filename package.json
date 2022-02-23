@@ -250,6 +250,7 @@
     "typeahead.js": "0.10.5",
     "underscore": "1.12.1",
     "underscore.string": "3.3.5",
+    "unleash-client": "^3.12.0",
     "updeep": "1.0.0",
     "use-cursor": "^1.2.3",
     "useragent": "2.3.0",

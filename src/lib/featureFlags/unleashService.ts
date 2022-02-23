@@ -2,7 +2,7 @@ import { startUnleash, Unleash } from "unleash-client"
 import {
   UNLEASH_API,
   UNLEASH_APP_NAME,
-  UNLEASH_INSTANCE_ID,
+  // UNLEASH_INSTANCE_ID,
   UNLEASH_SERVER_KEY,
 } from "../../config"
 import { FeatureFlagService } from "./featureFlagService"
@@ -17,7 +17,7 @@ export class UnleashFeatureFlagService implements FeatureFlagService {
   constructor(
     private url = UNLEASH_API,
     private appName = UNLEASH_APP_NAME,
-    private instanceId = UNLEASH_INSTANCE_ID,
+    // private instanceId = UNLEASH_INSTANCE_ID,
     private serverKey = UNLEASH_SERVER_KEY
   ) {}
 
