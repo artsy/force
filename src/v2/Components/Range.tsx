@@ -3,6 +3,7 @@ import { Range as RCRange, RangeProps } from "rc-slider"
 import styled from "styled-components"
 
 const BORDER_RADIUS_BASE = 6
+const DOT_HEIGHT = 16
 
 // TODO: Add styles for vertical mode, tooltip
 export const Range: React.FC<RangeProps> = props => {
@@ -11,38 +12,42 @@ export const Range: React.FC<RangeProps> = props => {
 
 const StyledRange = styled(RCRange)`
   position: relative;
-  height: 14px;
-  padding: 5px 0;
+  height: ${DOT_HEIGHT}px;
   width: 100%;
   touch-action: none;
 
   .rc-slider-rail {
-    position: absolute;
     width: 100%;
-    background-color: red;
-    height: 4px;
+    background-color: ${themeGet("colors.black30")};
     border-radius: ${BORDER_RADIUS_BASE}px;
   }
 
   .rc-slider-track {
-    position: absolute;
     left: 0;
-    height: 4px;
     border-radius: ${BORDER_RADIUS_BASE}px;
-    background-color: green;
+    background-color: ${themeGet("colors.blue100")};
+  }
+
+  .rc-slider-rail,
+  .rc-slider-track {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 2px;
   }
 
   .rc-slider-handle {
     position: absolute;
-    width: 14px;
-    height: 14px;
+    width: ${DOT_HEIGHT}px;
+    height: ${DOT_HEIGHT}px;
     cursor: pointer;
     cursor: -webkit-grab;
-    margin-top: -5px;
     cursor: grab;
     border-radius: 50%;
-    background-color: blue;
+    background-color: ${themeGet("colors.white100")};
     touch-action: pan-x;
+    box-shadow: 0px 2px 12px rgba(0, 0, 0, 0.1);
+    border: solid 1px ${themeGet("colors.black10")};
 
     &:focus {
       outline: none;
@@ -73,7 +78,7 @@ const StyledRange = styled(RCRange)`
   .rc-slider-step {
     position: absolute;
     width: 100%;
-    height: 4px;
+    height: 1px;
     background: transparent;
   }
 
