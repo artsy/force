@@ -12,6 +12,7 @@ import { __internal__useMatchMedia } from "v2/Utils/Hooks/useMatchMedia"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { Media } from "v2/Utils/Responsive"
 import { crop } from "v2/Utils/resizer"
+import { Meta, Title } from "react-head"
 
 export const MeetTheSpecialistsIndex: React.FC = () => {
   const resizeImage = (
@@ -30,7 +31,13 @@ export const MeetTheSpecialistsIndex: React.FC = () => {
 
   return (
     <>
+      <Title>Art Advisory, Specialists, and Collector Services | Artsy</Title>
+      <Meta
+        name="description"
+        content="Whether you’re seeking a specific work for your collection or wish to sell, Artsy’s globe-spanning team is ready to source, sell, advise, and research on your behalf. Contact a specialist today."
+      />
       <Box mt={4}>
+        <Text variant={"xs"}>Private Sales</Text>
         <Text as="h1" variant={["xl", "xxl"]}>
           Meet the Specialists
         </Text>
@@ -41,7 +48,26 @@ export const MeetTheSpecialistsIndex: React.FC = () => {
           advise, and research on your behalf.
         </Text>
       </Box>
-      <Spacer mb={120} />
+
+      <Box mt={2}>
+        <Text variant="xs">
+          Have a question about Artsy? Check out our{" "}
+          <RouterLink to={"https://support.artsy.net"}>help center</RouterLink>{" "}
+          or email <a href="mailto:support@artsy.net">support@artsy.net</a>.
+        </Text>
+
+        <Text variant={"xs"}>
+          Have a question about bidding on Artsy? Email{" "}
+          <a href="mailto:specialist@artsy.net">specialist@artsy.net</a>.
+        </Text>
+
+        <Text variant={"xs"}>
+          Have a question about an existing order or offer? Email{" "}
+          <a href="mailto:specialist@artsy.net">orders@artsy.net</a>.
+        </Text>
+      </Box>
+
+      <Spacer mb={12} />
 
       <GridColumns>
         <Column span={4} start={1}>
