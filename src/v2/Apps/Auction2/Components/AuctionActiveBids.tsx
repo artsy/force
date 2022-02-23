@@ -107,7 +107,7 @@ export const AuctionActiveBidsRefetchContainer = createRefetchContainer(
   {
     me: graphql`
       fragment AuctionActiveBids_me on Me
-        @argumentDefinitions(saleID: { type: "String!" }) {
+        @argumentDefinitions(saleID: { type: "String" }) {
         lotStandings(saleID: $saleID, live: true) {
           isHighestBidder
 

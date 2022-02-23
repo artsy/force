@@ -4,21 +4,20 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type Auction2App_viewer = {
-    readonly showFollowedArtistsTab: {
+export type AuctionWorksByFollowedArtistsRail_viewer = {
+    readonly saleArtworksConnection: {
         readonly edges: ReadonlyArray<{
             readonly node: {
-                readonly internalID: string;
+                readonly " $fragmentRefs": FragmentRefs<"ShelfArtwork_artwork">;
             } | null;
         } | null> | null;
     } | null;
-    readonly " $fragmentRefs": FragmentRefs<"AuctionArtworkFilter_viewer" | "AuctionWorksByFollowedArtistsRail_viewer">;
-    readonly " $refType": "Auction2App_viewer";
+    readonly " $refType": "AuctionWorksByFollowedArtistsRail_viewer";
 };
-export type Auction2App_viewer$data = Auction2App_viewer;
-export type Auction2App_viewer$key = {
-    readonly " $data"?: Auction2App_viewer$data;
-    readonly " $fragmentRefs": FragmentRefs<"Auction2App_viewer">;
+export type AuctionWorksByFollowedArtistsRail_viewer$data = AuctionWorksByFollowedArtistsRail_viewer;
+export type AuctionWorksByFollowedArtistsRail_viewer$key = {
+    readonly " $data"?: AuctionWorksByFollowedArtistsRail_viewer$data;
+    readonly " $fragmentRefs": FragmentRefs<"AuctionWorksByFollowedArtistsRail_viewer">;
 };
 
 
@@ -28,20 +27,15 @@ const node: ReaderFragment = {
     {
       "defaultValue": null,
       "kind": "LocalArgument",
-      "name": "input"
-    },
-    {
-      "defaultValue": null,
-      "kind": "LocalArgument",
       "name": "saleID"
     }
   ],
   "kind": "Fragment",
   "metadata": null,
-  "name": "Auction2App_viewer",
+  "name": "AuctionWorksByFollowedArtistsRail_viewer",
   "selections": [
     {
-      "alias": "showFollowedArtistsTab",
+      "alias": null,
       "args": [
         {
           "kind": "Literal",
@@ -53,7 +47,7 @@ const node: ReaderFragment = {
         {
           "kind": "Literal",
           "name": "first",
-          "value": 1
+          "value": 99
         },
         {
           "kind": "Literal",
@@ -88,11 +82,9 @@ const node: ReaderFragment = {
               "plural": false,
               "selections": [
                 {
-                  "alias": null,
                   "args": null,
-                  "kind": "ScalarField",
-                  "name": "internalID",
-                  "storageKey": null
+                  "kind": "FragmentSpread",
+                  "name": "ShelfArtwork_artwork"
                 }
               ],
               "storageKey": null
@@ -102,32 +94,10 @@ const node: ReaderFragment = {
         }
       ],
       "storageKey": null
-    },
-    {
-      "args": [
-        {
-          "kind": "Variable",
-          "name": "input",
-          "variableName": "input"
-        }
-      ],
-      "kind": "FragmentSpread",
-      "name": "AuctionArtworkFilter_viewer"
-    },
-    {
-      "args": [
-        {
-          "kind": "Variable",
-          "name": "saleID",
-          "variableName": "saleID"
-        }
-      ],
-      "kind": "FragmentSpread",
-      "name": "AuctionWorksByFollowedArtistsRail_viewer"
     }
   ],
   "type": "Viewer",
   "abstractKey": null
 };
-(node as any).hash = 'bf55be485087e5b1f1ed2e991bd22e65';
+(node as any).hash = 'eaeaf0a9b395815a4f26bff8640cdbcd';
 export default node;
