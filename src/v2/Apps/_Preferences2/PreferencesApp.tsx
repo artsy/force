@@ -7,6 +7,7 @@ import {
   Text,
   useToasts,
 } from "@artsy/palette"
+import { isEmpty } from "lodash"
 import { FC } from "react"
 import { Form, Formik } from "formik"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -64,7 +65,7 @@ export const PreferencesApp: FC<PreferencesAppProps> = ({ viewer }) => {
           }
         }}
       >
-        {({ values, setFieldValue }) => (
+        {({ values, setFieldValue, setFieldTouched, touched }) => (
           <Form>
             <GridColumns gridRowGap={4}>
               <Column span={10}>
@@ -78,6 +79,7 @@ export const PreferencesApp: FC<PreferencesAppProps> = ({ viewer }) => {
                     if (value) {
                       Object.keys(values).forEach(field => {
                         setFieldValue(field, true)
+                        setFieldTouched(field, true)
                       })
                     }
                   }}
@@ -103,6 +105,7 @@ export const PreferencesApp: FC<PreferencesAppProps> = ({ viewer }) => {
                   selected={values.recommended_by_artsy}
                   onSelect={value => {
                     setFieldValue("recommended_by_artsy", value)
+                    setFieldTouched("recommended_by_artsy", true)
                   }}
                 >
                   Email
@@ -122,6 +125,7 @@ export const PreferencesApp: FC<PreferencesAppProps> = ({ viewer }) => {
                   selected={values.art_world_insights}
                   onSelect={value => {
                     setFieldValue("art_world_insights", value)
+                    setFieldTouched("art_world_insights", true)
                   }}
                 >
                   Email
@@ -140,6 +144,7 @@ export const PreferencesApp: FC<PreferencesAppProps> = ({ viewer }) => {
                   selected={values.product_updates}
                   onSelect={value => {
                     setFieldValue("product_updates", value)
+                    setFieldTouched("product_updates", true)
                   }}
                 >
                   Email
@@ -159,6 +164,7 @@ export const PreferencesApp: FC<PreferencesAppProps> = ({ viewer }) => {
                   selected={values.guidance_on_collecting}
                   onSelect={value => {
                     setFieldValue("guidance_on_collecting", value)
+                    setFieldTouched("guidance_on_collecting", true)
                   }}
                 >
                   Email
@@ -177,6 +183,7 @@ export const PreferencesApp: FC<PreferencesAppProps> = ({ viewer }) => {
                   selected={values.custom_alerts}
                   onSelect={value => {
                     setFieldValue("custom_alerts", value)
+                    setFieldTouched("custom_alerts", true)
                   }}
                 >
                   Email
@@ -198,6 +205,7 @@ export const PreferencesApp: FC<PreferencesAppProps> = ({ viewer }) => {
                     if (value) {
                       Object.keys(values).forEach(field => {
                         setFieldValue(field, false)
+                        setFieldTouched(field, true)
                       })
                     }
                   }}
@@ -207,13 +215,17 @@ export const PreferencesApp: FC<PreferencesAppProps> = ({ viewer }) => {
               </Column>
 
               <Column span={2} start={9} mt={2}>
-                <Button width="100%" variant="secondaryOutline">
+                <Button
+                  width="100%"
+                  variant="secondaryOutline"
+                  disabled={isEmpty(touched)}
+                >
                   Cancel
                 </Button>
               </Column>
 
               <Column span={2} mt={2}>
-                <Button width="100%" type="submit">
+                <Button width="100%" type="submit" disabled={isEmpty(touched)}>
                   Save
                 </Button>
               </Column>
