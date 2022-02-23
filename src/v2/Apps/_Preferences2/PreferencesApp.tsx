@@ -5,6 +5,7 @@ import {
   GridColumns,
   Separator,
   Text,
+  useToasts,
 } from "@artsy/palette"
 import { FC } from "react"
 import { Form, Formik } from "formik"
@@ -32,6 +33,7 @@ const NOTIFICATION_FIELDS = {
 }
 
 export const PreferencesApp: FC<PreferencesAppProps> = ({ viewer }) => {
+  const { sendToast } = useToasts()
   let initialValues = viewer?.notificationPreferences
     .filter(preference =>
       Object.keys(NOTIFICATION_FIELDS).includes(preference.name)
@@ -50,8 +52,16 @@ export const PreferencesApp: FC<PreferencesAppProps> = ({ viewer }) => {
       <Formik<FormValuesForNotificationPreferences>
         // @ts-ignore
         initialValues={{ ...NOTIFICATION_FIELDS, ...initialValues }}
-        onSubmit={async values => {
-          // TODO: Write new values
+        onSubmit={async () => {
+          try {
+            // Do mutation stuff
+            sendToast({
+              variant: "success",
+              message: "Preferences updated sucessfully.",
+            })
+          } catch (err) {
+            console.error(err)
+          }
         }}
       >
         {({ values, setFieldValue }) => (
