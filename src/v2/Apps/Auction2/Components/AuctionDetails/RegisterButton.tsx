@@ -8,7 +8,7 @@ import { openAuthModal } from "v2/Utils/openAuthModal"
 import { ContextModule, Intent } from "@artsy/cohesion"
 import { mediator } from "lib/mediator"
 import { useRouter } from "v2/System/Router/useRouter"
-import { useAuctionTracking } from "../../Hooks/useAuctionTracking"
+// import { useAuctionTracking } from "../../Hooks/useAuctionTracking"
 
 const logger = createLogger("RegisterButton")
 

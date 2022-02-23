@@ -28,6 +28,7 @@ export const ConditionsOfSaleCheckbox: React.FC = () => {
               color="black100"
               to="/conditions-of-sale"
               target="_blank"
+              textDecoration="none"
             >
               Conditions of Sale
             </RouterLink>

@@ -336,7 +336,7 @@ export const BaseArtworkFilter: React.FC<
       {/* Desktop Artwork Filter */}
       <Media greaterThan="xs">
         {tokens.version === "v3" && (
-          <Flex justifyContent="space-between" alignItems="flex-start" pb={4}>
+          <Flex justifyContent="space-between" alignItems="center" mb={4}>
             <Text variant="xs" textTransform="uppercase">
               Filter by
             </Text>

@@ -39,7 +39,18 @@ export type AuctionLotInfo_saleArtwork$key = {
 
 
 const node: ReaderFragment = {
-  "argumentDefinitions": [],
+  "argumentDefinitions": [
+    {
+      "defaultValue": 150,
+      "kind": "LocalArgument",
+      "name": "imageHeight"
+    },
+    {
+      "defaultValue": 150,
+      "kind": "LocalArgument",
+      "name": "imageWidth"
+    }
+  ],
   "kind": "Fragment",
   "metadata": null,
   "name": "AuctionLotInfo_saleArtwork",
@@ -128,9 +139,9 @@ const node: ReaderFragment = {
               "alias": null,
               "args": [
                 {
-                  "kind": "Literal",
+                  "kind": "Variable",
                   "name": "height",
-                  "value": 150
+                  "variableName": "imageHeight"
                 },
                 {
                   "kind": "Literal",
@@ -138,9 +149,9 @@ const node: ReaderFragment = {
                   "value": "square"
                 },
                 {
-                  "kind": "Literal",
+                  "kind": "Variable",
                   "name": "width",
-                  "value": 150
+                  "variableName": "imageWidth"
                 }
               ],
               "concreteType": "ResizedImageUrl",
@@ -177,7 +188,7 @@ const node: ReaderFragment = {
                   "storageKey": null
                 }
               ],
-              "storageKey": "resized(height:150,version:\"square\",width:150)"
+              "storageKey": null
             }
           ],
           "storageKey": null
@@ -210,5 +221,5 @@ const node: ReaderFragment = {
   "type": "SaleArtwork",
   "abstractKey": null
 };
-(node as any).hash = '0688cfe6393a904d5e01b1f4545f6cce';
+(node as any).hash = '35c703cf0cb327ccdeb98be65ce51c48';
 export default node;

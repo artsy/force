@@ -51,13 +51,16 @@ export const auction2Routes: AppRouteConfig[] = [
     path: "/auction2/:slug?",
     theme: "v3",
     getComponent: () => Auction2App,
+    onClientSideRender: () => {
+      Auction2App.preload()
+    },
     query: graphql`
       query auction2Routes_TopLevelQuery(
         $input: FilterArtworksInput
         $slug: String!
       ) {
         me {
-          ...Auction2App_me
+          ...Auction2App_me @arguments(saleID: $slug)
         }
         sale(id: $slug) @principalField {
           ...Auction2App_sale
@@ -107,7 +110,7 @@ export const auction2Routes: AppRouteConfig[] = [
         `,
       },
       {
-        path: "bid/:artworkSlug",
+        path: "bid/:artworkSlug?",
         getComponent: () => ConfirmBidRoute,
         ignoreScrollBehavior: true,
         query: graphql`
