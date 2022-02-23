@@ -4,7 +4,7 @@ import { ArtworkSidebarBidActionFragmentContainer } from "./ArtworkSidebarBidAct
 import { ArtworkSidebarCurrentBidInfoFragmentContainer } from "./ArtworkSidebarCurrentBidInfo"
 import { ArtworkSidebarAuctionInfoPolling_artwork } from "v2/__generated__/ArtworkSidebarAuctionInfoPolling_artwork.graphql"
 import { ArtworkSidebarAuctionInfoPolling_me } from "v2/__generated__/ArtworkSidebarAuctionInfoPolling_me.graphql"
-import { usePoll } from "v2/Apps/Conversation/Utils/usePoll"
+import { usePoll } from "v2/Utils/Hooks/usePoll"
 import { useEffect, useRef, useState } from "react"
 
 type Props = {

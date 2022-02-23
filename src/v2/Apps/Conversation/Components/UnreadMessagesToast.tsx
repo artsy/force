@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import * as React from "react";
+import { useState, useEffect } from "react"
+import * as React from "react"
 import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
 import { ArrowDownIcon, Flex, Text } from "@artsy/palette"
 import styled from "styled-components"
@@ -10,7 +10,7 @@ import { extractNodes } from "v2/Utils/extractNodes"
 import { useSystemContext } from "v2/System"
 import { renderWithLoadProgress } from "v2/System/Relay/renderWithLoadProgress"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
-import { usePoll } from "../Utils/usePoll"
+import { usePoll } from "v2/Utils/Hooks/usePoll"
 
 import {
   UnreadMessagesToastQuery,
