@@ -52,7 +52,13 @@ const ArtistArtworkFilter: React.FC<ArtistArtworkFilterProps> = props => {
       aggregations={aggregations}
       counts={artist.counts as Counts}
       filters={filters}
-      onChange={updateUrl}
+      onChange={filterState => {
+        updateUrl(filterState, {
+          defaultValues: {
+            metric,
+          },
+        })
+      }}
       sortOptions={[
         { value: "-decayed_merch", text: "Default" },
         { value: "-has_price,-prices", text: "Price (desc.)" },
