@@ -8,7 +8,7 @@ import { openAuthModal } from "v2/Utils/openAuthModal"
 import { ContextModule, Intent } from "@artsy/cohesion"
 import { mediator } from "lib/mediator"
 import { useRouter } from "v2/System/Router/useRouter"
-import { useAuctionTracking } from "../../Hooks/useAuctionTracking"
+// import { useAuctionTracking } from "../../Hooks/useAuctionTracking"
 
 const logger = createLogger("RegisterButton")
 
@@ -19,7 +19,8 @@ export interface RegisterButtonProps {
 
 export const RegisterButton: React.FC<RegisterButtonProps> = ({ me, sale }) => {
   const { router } = useRouter()
-  const { tracking } = useAuctionTracking()
+  // TODO: Wire up tracking clicks
+  // const { tracking } = useAuctionTracking()
 
   const { conditions, userLacksIdentityVerification } = computeConditions({
     sale,
@@ -47,12 +48,6 @@ export const RegisterButton: React.FC<RegisterButtonProps> = ({ me, sale }) => {
     }
   }
 
-  const handleClick = () => {
-    checkRegistrationStatus()
-
-    tracking.registerButtonClick()
-  }
-
   switch (true) {
     case conditions.IS_ECOMMERCE_SALE: {
       return null
@@ -70,7 +65,10 @@ export const RegisterButton: React.FC<RegisterButtonProps> = ({ me, sale }) => {
         <ButtonAction
           title="Enter Live Auction"
           to={href}
-          onClick={handleClick}
+          onClick={() => {
+            // TODO
+            // tracking.registerButtonEnterLiveAuction()
+          }}
         />
       )
     }
@@ -87,7 +85,10 @@ export const RegisterButton: React.FC<RegisterButtonProps> = ({ me, sale }) => {
           title="Verify Identity"
           description={<IdentityVerificationMessage />}
           to={href}
-          onClick={handleClick}
+          onClick={() => {
+            // TODO
+            // tracking.registerButtonVerifyIdentity()
+          }}
         />
       )
     }

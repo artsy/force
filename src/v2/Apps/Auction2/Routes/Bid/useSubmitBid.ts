@@ -26,11 +26,12 @@ export const useSubmitBid = ({
 }) => {
   // FIXME
   const registrationTracked = useRef(false)
-  const { router } = useRouter()
+  const { match, router } = useRouter()
   const { tracking } = useAuctionTracking()
   const { submitMutation: createBidderPosition } = useCreateBidderPosition()
   const { fetchBidderPosition } = useBidderPosition()
   const { createToken } = useCreateTokenAndSubmit({ me, sale })
+  const { redirectTo } = match.location.query
 
   /**
    * The submitBid flow is as follows:
@@ -49,6 +50,7 @@ export const useSubmitBid = ({
       tracking,
       fetchBidderPosition,
       bidderID,
+      redirectTo,
       router,
       sale,
       artwork,
@@ -107,6 +109,7 @@ const setupCheckBidStatus = (props: {
     typeof useBidderPosition
   >["fetchBidderPosition"]
   helpers: AuctionFormHelpers
+  redirectTo: string
   router: Router
   sale: Auction2BidRoute_sale
   tracking: ReturnType<typeof useAuctionTracking>["tracking"]
@@ -116,6 +119,7 @@ const setupCheckBidStatus = (props: {
     bidderID,
     fetchBidderPosition,
     helpers,
+    redirectTo,
     router,
     sale,
     tracking,
@@ -163,7 +167,7 @@ const setupCheckBidStatus = (props: {
 
       case "WINNING": {
         tracking.confirmBidSuccess(bidderID, bidderPositionID)
-        router.push(`/artwork/${artwork.slug}`)
+        router.push(redirectTo ?? `/artwork/${artwork.slug}`)
         break
       }
 

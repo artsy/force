@@ -6,6 +6,7 @@ import { Auction2App_me } from "v2/__generated__/Auction2App_me.graphql"
 import { Auction2App_sale } from "v2/__generated__/Auction2App_sale.graphql"
 import { Auction2App_viewer } from "v2/__generated__/Auction2App_viewer.graphql"
 import { Auction2MetaFragmentContainer } from "./Components/Auction2Meta"
+import { AuctionActiveBidsRefetchContainer } from "./Components/AuctionActiveBids"
 import { AuctionArtworkFilterRefetchContainer } from "./Components/AuctionArtworkFilter"
 import { AuctionDetailsFragmentContainer } from "./Components/AuctionDetails/AuctionDetails"
 
@@ -38,12 +39,14 @@ export const Auction2App: React.FC<Auction2AppProps> = ({
     >
       <Auction2MetaFragmentContainer sale={sale} />
 
-      <Join separator={<Spacer my={2} />}>
+      <Join separator={<Spacer my={4} />}>
         {sale.coverImage?.cropped && (
           <FullBleedHeader src={sale.coverImage.cropped.src} />
         )}
 
         <AuctionDetailsFragmentContainer sale={sale} me={me} />
+
+        <AuctionActiveBidsRefetchContainer me={me} />
 
         <AuctionArtworkFilterRefetchContainer viewer={viewer} />
 
@@ -56,10 +59,11 @@ export const Auction2App: React.FC<Auction2AppProps> = ({
 export const Auction2AppFragmentContainer = createFragmentContainer(
   Auction2App,
   {
-    viewer: graphql`
-      fragment Auction2App_viewer on Viewer
-        @argumentDefinitions(input: { type: "FilterArtworksInput" }) {
-        ...AuctionArtworkFilter_viewer @arguments(input: $input)
+    me: graphql`
+      fragment Auction2App_me on Me
+        @argumentDefinitions(saleID: { type: "String!" }) {
+        ...AuctionDetails_me
+        ...AuctionActiveBids_me @arguments(saleID: $saleID)
       }
     `,
     sale: graphql`
@@ -75,9 +79,10 @@ export const Auction2AppFragmentContainer = createFragmentContainer(
         }
       }
     `,
-    me: graphql`
-      fragment Auction2App_me on Me {
-        ...AuctionDetails_me
+    viewer: graphql`
+      fragment Auction2App_viewer on Viewer
+        @argumentDefinitions(input: { type: "FilterArtworksInput" }) {
+        ...AuctionArtworkFilter_viewer @arguments(input: $input)
       }
     `,
   }

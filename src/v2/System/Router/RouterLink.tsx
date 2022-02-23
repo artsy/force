@@ -1,6 +1,6 @@
 import { Link, LinkPropsSimple, RouterContext } from "found"
-import { useContext } from "react";
-import * as React from "react";
+import { useContext } from "react"
+import * as React from "react"
 import { BoxProps, boxMixin } from "@artsy/palette"
 import styled from "styled-components"
 import { compose, ResponsiveValue, system } from "styled-system"
@@ -25,28 +25,26 @@ export type RouterLinkProps = Omit<
     noUnderline?: boolean
   }
 
-export const RouterLink: React.FC<RouterLinkProps> = ({
-  to,
-  noUnderline,
-  ...rest
-}) => {
-  const context = useContext(RouterContext)
-  const routes = context?.router?.matcher?.routeConfig ?? []
-  const matcher = context?.router?.matcher
-  const isSupportedInRouter = useMemo(
-    () => !!matcher?.matchRoutes(routes, to),
-    [matcher, routes, to]
-  )
+export const RouterLink: React.FC<RouterLinkProps> = React.forwardRef(
+  ({ to, noUnderline, ...rest }, ref) => {
+    const context = useContext(RouterContext)
+    const routes = context?.router?.matcher?.routeConfig ?? []
+    const matcher = context?.router?.matcher
+    const isSupportedInRouter = useMemo(
+      () => !!matcher?.matchRoutes(routes, to),
+      [matcher, routes, to]
+    )
 
-  // TODO: Bulk replace
-  const deprecated = noUnderline ? { textDecoration: "none" } : {}
+    // TODO: Bulk replace
+    const deprecated = noUnderline ? { textDecoration: "none" } : {}
 
-  if (isSupportedInRouter) {
-    return <RouterAwareLink to={to ?? ""} {...deprecated} {...rest} />
+    if (isSupportedInRouter) {
+      return <RouterAwareLink to={to ?? ""} {...deprecated} {...rest} />
+    }
+
+    return <RouterUnawareLink href={to ?? ""} {...deprecated} {...rest} />
   }
-
-  return <RouterUnawareLink href={to ?? ""} {...deprecated} {...rest} />
-}
+)
 
 RouterLink.displayName = "RouterLink"
 
