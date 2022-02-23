@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { ShelfArtwork_artwork } from "v2/__generated__/ShelfArtwork_artwork.graphql"
@@ -19,7 +19,7 @@ export const IMG_HEIGHT = {
 
 interface ShelfArtworkProps {
   artwork: ShelfArtwork_artwork
-  contextModule: AuthContextModule
+  contextModule?: AuthContextModule
   hideArtistName?: boolean
   hidePartnerName?: boolean
   hideSaleInfo?: boolean
@@ -67,7 +67,7 @@ const ShelfArtwork: React.FC<ShelfArtworkProps> = ({
           <Media greaterThan="sm">
             {isSaveButtonVisible && (
               <SaveButtonFragmentContainer
-                contextModule={contextModule}
+                contextModule={contextModule!}
                 artwork={artwork}
               />
             )}

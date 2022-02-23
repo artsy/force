@@ -11,7 +11,7 @@ export type Auction2App_sale = {
             readonly src: string;
         } | null;
     } | null;
-    readonly " $fragmentRefs": FragmentRefs<"Auction2Meta_sale" | "AuctionDetails_sale">;
+    readonly " $fragmentRefs": FragmentRefs<"Auction2Meta_sale" | "AuctionPromotedSaleRail_sale" | "AuctionDetails_sale">;
     readonly " $refType": "Auction2App_sale";
 };
 export type Auction2App_sale$data = Auction2App_sale;
@@ -88,11 +88,16 @@ const node: ReaderFragment = {
     {
       "args": null,
       "kind": "FragmentSpread",
+      "name": "AuctionPromotedSaleRail_sale"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
       "name": "AuctionDetails_sale"
     }
   ],
   "type": "Sale",
   "abstractKey": null
 };
-(node as any).hash = '2daf7a55a50748037a3e54c23897122e';
+(node as any).hash = 'ccb0e4a93b40c16edbf0b9121bc6648d';
 export default node;
