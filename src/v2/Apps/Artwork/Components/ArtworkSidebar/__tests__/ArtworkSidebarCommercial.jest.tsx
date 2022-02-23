@@ -134,7 +134,7 @@ describe("ArtworkSidebarCommercial", () => {
 
     const wrapper = getWrapper(artwork)
 
-    expect(wrapper.text()).toContain("Buy now")
+    expect(wrapper.text()).toContain("Purchase")
   })
 
   it("displays sold acquireable artwork", async () => {
@@ -150,7 +150,7 @@ describe("ArtworkSidebarCommercial", () => {
 
     const wrapper = getWrapper(artwork)
 
-    expect(wrapper.text()).toContain("Make offer")
+    expect(wrapper.text()).toContain("Make an Offer")
   })
 
   it("displays artwork enrolled in Make Offer/Contact Gallery when enabled for both", async () => {
@@ -158,7 +158,7 @@ describe("ArtworkSidebarCommercial", () => {
 
     const wrapper = getWrapper(artwork)
 
-    expect(wrapper.text()).toContain("Make offer")
+    expect(wrapper.text()).toContain("Make an Offer")
     expect(wrapper.text()).toContain("Contact Gallery")
   })
 
@@ -167,8 +167,8 @@ describe("ArtworkSidebarCommercial", () => {
 
     const wrapper = getWrapper(artwork)
 
-    expect(wrapper.text()).toContain("Buy now")
-    expect(wrapper.text()).toContain("Make offer")
+    expect(wrapper.text()).toContain("Purchase")
+    expect(wrapper.text()).toContain("Make an Offer")
   })
 
   it("displays artwork enrolled in contact for price", async () => {
@@ -176,7 +176,7 @@ describe("ArtworkSidebarCommercial", () => {
 
     const wrapper = getWrapper(artwork)
 
-    expect(wrapper.text()).toContain("Contact for Price")
+    expect(wrapper.text()).toContain("Price on Request")
   })
 
   it("creates a Buy Now order and redirects to the order page", () => {

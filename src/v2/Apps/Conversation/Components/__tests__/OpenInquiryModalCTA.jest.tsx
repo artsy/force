@@ -52,7 +52,7 @@ describe("OpenInquiryModalCTA", () => {
     const link = screen.getByRole("link")
     expect(link).toHaveTextContent("The Artsy Guarantee")
     expect(link).toHaveAttribute("href", "/buyer-guarantee")
-    expect(screen.getByRole("button")).toHaveTextContent("Make Offer")
+    expect(screen.getByRole("button")).toHaveTextContent("Make an Offer")
   })
 
   it("triggers openInquiryModal when clicking in the button", () => {

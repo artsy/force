@@ -35,30 +35,30 @@ describe("ArtworkSidebarCommercial RTL", () => {
     `,
   })
 
-  it("displays both Make Offer and Contact Gallery CTAs when offerable from inquiry and exact price listed", () => {
+  it("displays both Make an Offer and Contact Gallery CTAs when offerable from inquiry and exact price listed", () => {
     renderWithRelay({
       Artwork: () => ArtworkOfferableFromInquiryPriceExact,
     })
 
-    expect(screen.getByText("Make offer")).toBeInTheDocument()
+    expect(screen.getByText("Make an Offer")).toBeInTheDocument()
     expect(screen.getByText("Contact Gallery")).toBeInTheDocument()
   })
 
-  it("displays both Make Offer and Contact Gallery CTAs when offerable from inquiry and price range", () => {
+  it("displays both Make an Offer and Contact Galleryt CTAs when offerable from inquiry and price range", () => {
     renderWithRelay({
       Artwork: () => ArtworkOfferableFromInquiryPriceRange,
     })
 
-    expect(screen.getByText("Make offer")).toBeInTheDocument()
+    expect(screen.getByText("Make an Offer")).toBeInTheDocument()
     expect(screen.getByText("Contact Gallery")).toBeInTheDocument()
   })
 
-  it("does not display Make Offer CTA and only the Contact Gallery CTA when offerable from inquiry and price hidden", () => {
+  it("does not display Make an Offer CTA and only the Contact Gallery CTA when offerable from inquiry and price hidden", () => {
     renderWithRelay({
       Artwork: () => ArtworkOfferableAndInquireablePriceHidden,
     })
 
-    expect(screen.queryByText("Make offer")).not.toBeInTheDocument()
+    expect(screen.queryByText("Make an Offer")).not.toBeInTheDocument()
     expect(screen.getByText("Contact Gallery")).toBeInTheDocument()
   })
 
