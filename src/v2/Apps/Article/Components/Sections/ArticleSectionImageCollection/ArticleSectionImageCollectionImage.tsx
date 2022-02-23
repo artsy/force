@@ -5,13 +5,16 @@ import { useRouter } from "v2/System/Router/useRouter"
 import { ArticleZoomButton } from "../../ArticleZoomButton"
 import { useArticleZoomGallery } from "../../ArticleZoomGallery"
 import { ArticleSectionImageCollectionImage_figure } from "v2/__generated__/ArticleSectionImageCollectionImage_figure.graphql"
+import { resized } from "v2/Utils/resized"
 
 interface ArticleSectionImageCollectionImageProps {
   figure: ArticleSectionImageCollectionImage_figure
+  targetWidth: number
 }
 
 const ArticleSectionImageCollectionImage: FC<ArticleSectionImageCollectionImageProps> = ({
   figure,
+  targetWidth,
 }) => {
   const { match } = useRouter()
 
@@ -25,17 +28,17 @@ const ArticleSectionImageCollectionImage: FC<ArticleSectionImageCollectionImageP
     showArticleZoomGallery(figure.id)
   }
 
-  const img = figure.image?.resized
+  if (!figure.image?.url) return null
 
-  if (!img) return null
+  const img = resized(figure.image.url, { width: targetWidth })
 
   return (
     <>
       {articleZoomGalleryComponent}
 
       <ResponsiveBox
-        aspectWidth={img.width ?? 1}
-        aspectHeight={img.height ?? 1}
+        aspectWidth={figure.image.width ?? 1}
+        aspectHeight={figure.image.height ?? 1}
         maxWidth="100%"
         bg="black10"
         position="relative"
@@ -63,23 +66,17 @@ export const ArticleSectionImageCollectionImageFragmentContainer = createFragmen
         ... on ArticleImageSection {
           id
           image {
-            resized(width: 1220, version: ["normalized", "larger", "large"]) {
-              src
-              srcSet
-              height
-              width
-            }
+            url(version: ["normalized", "larger", "large"])
+            width
+            height
           }
         }
         ... on Artwork {
           id
           image {
-            resized(width: 1220, version: ["normalized", "larger", "large"]) {
-              src
-              srcSet
-              height
-              width
-            }
+            url(version: ["normalized", "larger", "large"])
+            width
+            height
           }
         }
       }

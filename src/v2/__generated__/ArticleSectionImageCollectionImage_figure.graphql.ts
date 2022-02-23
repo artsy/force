@@ -7,12 +7,9 @@ import { FragmentRefs } from "relay-runtime";
 export type ArticleSectionImageCollectionImage_figure = {
     readonly id?: string;
     readonly image?: {
-        readonly resized: {
-            readonly src: string;
-            readonly srcSet: string;
-            readonly height: number | null;
-            readonly width: number | null;
-        } | null;
+        readonly url: string | null;
+        readonly width: number | null;
+        readonly height: number | null;
     } | null;
     readonly " $refType": "ArticleSectionImageCollectionImage_figure";
 };
@@ -52,48 +49,25 @@ var v0 = [
               "larger",
               "large"
             ]
-          },
-          {
-            "kind": "Literal",
-            "name": "width",
-            "value": 1220
           }
         ],
-        "concreteType": "ResizedImageUrl",
-        "kind": "LinkedField",
-        "name": "resized",
-        "plural": false,
-        "selections": [
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "src",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "srcSet",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "height",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "width",
-            "storageKey": null
-          }
-        ],
-        "storageKey": "resized(version:[\"normalized\",\"larger\",\"large\"],width:1220)"
+        "kind": "ScalarField",
+        "name": "url",
+        "storageKey": "url(version:[\"normalized\",\"larger\",\"large\"])"
+      },
+      {
+        "alias": null,
+        "args": null,
+        "kind": "ScalarField",
+        "name": "width",
+        "storageKey": null
+      },
+      {
+        "alias": null,
+        "args": null,
+        "kind": "ScalarField",
+        "name": "height",
+        "storageKey": null
       }
     ],
     "storageKey": null
@@ -122,5 +96,5 @@ return {
   "abstractKey": "__isArticleSectionImageCollectionFigure"
 };
 })();
-(node as any).hash = 'fa41e538045f0f0d3f5fa71861e45a7d';
+(node as any).hash = 'ef16ef43b057a46f4cc81474730a3b79';
 export default node;

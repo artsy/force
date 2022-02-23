@@ -5,6 +5,9 @@ import { ArticleSectionImageCollection_section } from "v2/__generated__/ArticleS
 import { ArticleSectionImageCollectionImageFragmentContainer } from "./ArticleSectionImageCollectionImage"
 import { ArticleSectionImageCollectionCaptionFragmentContainer } from "./ArticleSectionImageCollectionCaption"
 
+const MAX_IMAGE_WIDTH = 910
+const FIGURE_GUTTER_WIDTH = 10
+
 interface ArticleSectionImageCollectionProps {
   section: ArticleSectionImageCollection_section
 }
@@ -12,15 +15,20 @@ interface ArticleSectionImageCollectionProps {
 const ArticleSectionImageCollection: FC<ArticleSectionImageCollectionProps> = ({
   section,
 }) => {
+  const targetWidth =
+    (MAX_IMAGE_WIDTH - FIGURE_GUTTER_WIDTH * (section.figures.length - 1)) /
+    section.figures.length
+
   return (
     <>
       <Flex alignItems="flex-end">
-        <Join separator={<Spacer ml={1} />}>
+        <Join separator={<Spacer ml={FIGURE_GUTTER_WIDTH} />}>
           {section.figures.map((figure, i) => {
             return (
               <ArticleSectionImageCollectionImageFragmentContainer
                 key={i}
                 figure={figure}
+                targetWidth={targetWidth}
               />
             )
           })}
@@ -30,7 +38,7 @@ const ArticleSectionImageCollection: FC<ArticleSectionImageCollectionProps> = ({
       <Spacer mt={1} />
 
       <Flex alignItems="flex-start">
-        <Join separator={<Spacer ml={1} />}>
+        <Join separator={<Spacer ml={FIGURE_GUTTER_WIDTH} />}>
           {section.figures.map((figure, i) => {
             return (
               <Box key={i} flex={1} overflow="hidden">
