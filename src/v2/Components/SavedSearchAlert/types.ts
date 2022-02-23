@@ -1,5 +1,6 @@
 export interface SearchCriteriaAttributes {
   artistID?: string | null
+  artistIDs?: string[] | null
   locationCities?: string[] | null
   colors?: string[] | null
   partnerIDs?: string[] | null
@@ -17,7 +18,7 @@ export interface SearchCriteriaAttributes {
   priceRange?: string | null
 }
 
-export interface SavedSearchAttributes {
+export interface SavedSearchEntity {
   // possible entity types for creating alert
   type: "artist"
   id: string
@@ -26,3 +27,28 @@ export interface SavedSearchAttributes {
 }
 
 export type SearchCriteriaAttributeKeys = keyof SearchCriteriaAttributes
+
+export interface DefaultFilterPill {
+  isDefault: true
+  name: string
+  displayName: string
+}
+
+export interface NonDefaultFilterPill {
+  isDefault?: false
+  name: string
+  displayName: string
+  filterName: string
+}
+
+export type FilterPill = DefaultFilterPill | NonDefaultFilterPill
+
+export interface SavedSearchAleftFormValues {
+  name: string
+  email: boolean
+  push: boolean
+}
+
+export interface SavedSearchAlertMutationResult {
+  id: string
+}

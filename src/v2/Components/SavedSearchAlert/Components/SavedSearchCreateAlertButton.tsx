@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react"
 import { BellIcon, Button, ButtonProps, useToasts } from "@artsy/palette"
-import { SavedSearchAttributes } from "../types"
 import { useSystemContext, useTracking } from "v2/System"
 import {
   ActionType,
@@ -8,17 +7,17 @@ import {
   ContextModule,
   PageOwnerType,
 } from "@artsy/cohesion"
-import { SavedSearchAlertModal } from "v2/Components/SavedSearchAlert/SavedSearchAlertModal"
-import { SavedSearchAlertMutationResult } from "v2/Components/SavedSearchAlert/SavedSearchAlertModel"
 import { openAuthToSatisfyIntent } from "v2/Utils/openAuthModal"
 import { mediator } from "lib/mediator"
+import { SavedSearchAlertModalContainer } from "../SavedSearchAlertModal"
+import { SavedSearchAlertMutationResult, SavedSearchEntity } from "../types"
 
-interface CreateAlertButtonProps extends ButtonProps {
-  savedSearchAttributes: SavedSearchAttributes
+export interface SavedSearchCreateAlertButtonProps extends ButtonProps {
+  entity: SavedSearchEntity
 }
 
-export const CreateAlertButton: React.FC<CreateAlertButtonProps> = ({
-  savedSearchAttributes,
+export const SavedSearchCreateAlertButton: React.FC<SavedSearchCreateAlertButtonProps> = ({
+  entity,
   ...props
 }) => {
   const tracking = useTracking()
@@ -45,9 +44,9 @@ export const CreateAlertButton: React.FC<CreateAlertButtonProps> = ({
   const handleClick = () => {
     tracking.trackEvent({
       action: ActionType.clickedCreateAlert,
-      context_page_owner_type: savedSearchAttributes.type as PageOwnerType,
-      context_page_owner_id: savedSearchAttributes.id,
-      context_page_owner_slug: savedSearchAttributes.slug,
+      context_page_owner_type: entity.type as PageOwnerType,
+      context_page_owner_id: entity.id,
+      context_page_owner_slug: entity.slug,
     })
 
     if (isLoggedIn) {
@@ -55,8 +54,8 @@ export const CreateAlertButton: React.FC<CreateAlertButtonProps> = ({
     } else {
       openAuthToSatisfyIntent(mediator, {
         entity: {
-          name: savedSearchAttributes.name,
-          slug: savedSearchAttributes.slug,
+          name: entity.name,
+          slug: entity.slug,
         },
         contextModule: ContextModule.artworkGrid,
         intent: Intent.createAlert,
@@ -69,9 +68,9 @@ export const CreateAlertButton: React.FC<CreateAlertButtonProps> = ({
     setVisibleForm(false)
     const trackInfo = {
       action_type: ActionType.toggledSavedSearch,
-      context_page_owner_type: savedSearchAttributes.type as PageOwnerType,
-      context_page_owner_id: savedSearchAttributes.id,
-      context_page_owner_slug: savedSearchAttributes.slug,
+      context_page_owner_type: entity.type as PageOwnerType,
+      context_page_owner_id: entity.id,
+      context_page_owner_slug: entity.slug,
       saved_search_id: result.id,
     }
     tracking.trackEvent(trackInfo)
@@ -92,10 +91,10 @@ export const CreateAlertButton: React.FC<CreateAlertButtonProps> = ({
         <BellIcon mr={0.5} fill="currentColor" />
         Create Alert
       </Button>
-      <SavedSearchAlertModal
+      <SavedSearchAlertModalContainer
         visible={visibleForm}
         initialValues={{ name: "", email: true, push: false }}
-        savedSearchAttributes={savedSearchAttributes}
+        entity={entity}
         onClose={() => setVisibleForm(false)}
         onComplete={handleComplete}
       />

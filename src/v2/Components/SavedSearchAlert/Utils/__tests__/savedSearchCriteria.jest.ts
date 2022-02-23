@@ -1,5 +1,8 @@
 import { ArtworkFilters } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
-import { getSearchCriteriaFromFilters } from ".."
+import {
+  getSearchCriteriaFromFilters,
+  isDefaultValue,
+} from "../savedSearchCriteria"
 
 const mockedArtistId = "artist-id"
 
@@ -30,5 +33,27 @@ describe("getSearchCriteriaFromFilters", () => {
         priceRange: "1000-5000",
       })
     )
+  })
+})
+
+describe("isDefaultValue", () => {
+  it("should return true if value is empty array", () => {
+    expect(isDefaultValue("colors", [])).toBeTruthy()
+  })
+
+  it("should return true if value is null", () => {
+    expect(isDefaultValue("acquireable", null)).toBeTruthy()
+  })
+
+  it("should return true if value is false", () => {
+    expect(isDefaultValue("acquireable", false)).toBeTruthy()
+  })
+
+  it("should return true if value is empty string", () => {
+    expect(isDefaultValue("acquireable", "")).toBeTruthy()
+  })
+
+  it("should return true if it is default value", () => {
+    expect(isDefaultValue("width", "*-*")).toBeTruthy()
   })
 })

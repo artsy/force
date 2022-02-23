@@ -3,8 +3,7 @@ import {
   createSavedSearchAlertMutationResponse,
 } from "v2/__generated__/createSavedSearchAlertMutation.graphql"
 import { commitMutation, Environment, graphql } from "relay-runtime"
-import { SearchCriteriaAttributes } from "v2/Components/ArtworkFilter/SavedSearch/types"
-import { SavedSearchAleftFormValues } from "../SavedSearchAlertModel"
+import { SavedSearchAleftFormValues, SearchCriteriaAttributes } from "../types"
 
 export const createSavedSearchAlert = (
   environment: Environment,

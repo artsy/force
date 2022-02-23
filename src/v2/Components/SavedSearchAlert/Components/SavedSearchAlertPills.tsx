@@ -1,16 +1,16 @@
 import React from "react"
 import { CloseIcon, Pill } from "@artsy/palette"
-import { FilterPill } from "../Utils/FilterPillsContext"
 import styled from "styled-components"
+import { FilterPill } from "../types"
 
 const CLOSE_ICON_SIZE = 15
 
-export interface PillsProps {
+export interface SavedSearchAlertPillsProps {
   items: FilterPill[]
   onDeletePress: (pill: FilterPill) => void
 }
 
-export const Pills: React.FC<PillsProps> = props => {
+export const SavedSearchAlertPills: React.FC<SavedSearchAlertPillsProps> = props => {
   const { items, onDeletePress } = props
 
   return (

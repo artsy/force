@@ -1,6 +1,3 @@
-import { entries } from "lodash"
-import { ArtworkFiltersState } from "../ArtworkFilterContext"
-
 export const allowedFilters = (
   filterParams: Record<string, any> = {}
 ): Record<string, any> => {
@@ -25,17 +22,6 @@ export const allowedFilters = (
 
     obj[key] = filterParams[key]
     return obj
-  }, {})
-}
-
-export const getAllowedFiltersForSavedSearchInput = (
-  filters: ArtworkFiltersState
-) => {
-  return entries(filters).reduce((acc, [paramName, paramValue]) => {
-    if (ALLOWED_SEARCH_CRITERIA_KEYS.includes(paramName)) {
-      acc[paramName] = paramValue
-    }
-    return acc
   }, {})
 }
 
@@ -104,24 +90,5 @@ const SUPPORTED_INPUT_ARGS = [
   "sizes",
   "sort",
   "tagID",
-  "width",
-]
-
-export const ALLOWED_SEARCH_CRITERIA_KEYS = [
-  "artistID",
-  "locationCities",
-  "colors",
-  "partnerIDs",
-  "additionalGeneIDs",
-  "attributionClass",
-  "majorPeriods",
-  "acquireable",
-  "atAuction",
-  "inquireableOnly",
-  "offerable",
-  "materialsTerms",
-  "priceRange",
-  "sizes",
-  "height",
   "width",
 ]

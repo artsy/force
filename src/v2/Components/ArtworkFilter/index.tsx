@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import { isEqual } from "lodash"
 import useDeepCompareEffect from "use-deep-compare-effect"
 import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
@@ -39,19 +39,14 @@ import {
   ContextModule,
   ClickedChangePage,
 } from "@artsy/cohesion"
-import {
-  allowedFilters,
-  getAllowedFiltersForSavedSearchInput,
-} from "./Utils/allowedFilters"
+import { allowedFilters } from "./Utils/allowedFilters"
 import { Sticky } from "v2/Components/Sticky"
 import { ScrollRefContext } from "./ArtworkFilters/useScrollContext"
 import { ArtworkSortFilter } from "./ArtworkFilters/ArtworkSortFilter"
 import type RelayModernEnvironment from "relay-runtime/lib/store/RelayModernEnvironment"
-import { ArtworkGridFilterPills } from "./SavedSearch/Components/ArtworkGridFilterPills"
-import { SavedSearchAttributes } from "./SavedSearch/types"
-import { extractPills } from "../SavedSearchAlert/Utils/extractPills"
-import { useFilterPillsContext } from "./SavedSearch/Utils/FilterPillsContext"
 import { getTotalSelectedFiltersCount } from "./Utils/getTotalSelectedFiltersCount"
+import { SavedSearchEntity } from "../SavedSearchAlert/types"
+import { SavedSearchAlertArtworkGridFilterPills } from "../SavedSearchAlert/Components/SavedSearchAlertArtworkGridFilterPills"
 
 interface ArtworkFilterProps extends SharedArtworkFilterContextProps, BoxProps {
   enableCreateAlert?: boolean
@@ -61,7 +56,7 @@ interface ArtworkFilterProps extends SharedArtworkFilterContextProps, BoxProps {
   relayRefetchInputVariables?: object
   // Root-level variables passed to Relay query
   relayVariables?: object
-  savedSearchProps?: SavedSearchAttributes
+  savedSearchEntity?: SavedSearchEntity
   viewer
 }
 
@@ -78,7 +73,6 @@ export const ArtworkFilter: React.FC<ArtworkFilterProps> = ({
   filters,
   onChange,
   onFilterClick,
-  savedSearchProps,
   sortOptions,
   viewer,
   ZeroState,
@@ -94,11 +88,7 @@ export const ArtworkFilter: React.FC<ArtworkFilterProps> = ({
       onChange={onChange}
       ZeroState={ZeroState}
     >
-      <ArtworkFilterRefetchContainer
-        viewer={viewer}
-        savedSearchProps={savedSearchProps}
-        {...rest}
-      />
+      <ArtworkFilterRefetchContainer viewer={viewer} {...rest} />
     </ArtworkFilterContextProvider>
   )
 }
@@ -115,8 +105,8 @@ export const BaseArtworkFilter: React.FC<
   relay,
   relayRefetchInputVariables = {},
   relayVariables = {},
-  savedSearchProps,
   viewer,
+  savedSearchEntity,
   ...rest
 }) => {
   const tracking = useTracking()
@@ -130,27 +120,9 @@ export const BaseArtworkFilter: React.FC<
   const filterContext = useArtworkFilterContext()
   const previousFilters = usePrevious(filterContext.filters)
   const { user } = useSystemContext()
-  const { pills = [], setPills } = useFilterPillsContext()
   const appliedFiltersTotalCount = getTotalSelectedFiltersCount(
     filterContext.selectedFiltersCounts
   )
-
-  const filters = useMemo(
-    () => getAllowedFiltersForSavedSearchInput(filterContext.filters ?? {}),
-    [filterContext.filters]
-  )
-
-  const showCreateAlert = enableCreateAlert && !!pills.length
-
-  useEffect(() => {
-    const pills = extractPills(
-      filters,
-      filterContext.aggregations,
-      savedSearchProps
-    )
-
-    setPills?.(pills)
-  }, [savedSearchProps, filters, filterContext.aggregations, setPills])
 
   /**
    * Check to see if the mobile action sheet is present and prevent scrolling
@@ -313,10 +285,10 @@ export const BaseArtworkFilter: React.FC<
 
           <Spacer mb={2} />
 
-          {showCreateAlert && (
+          {enableCreateAlert && savedSearchEntity && (
             <>
-              <ArtworkGridFilterPills
-                savedSearchAttributes={savedSearchProps}
+              <SavedSearchAlertArtworkGridFilterPills
+                savedSearchEntity={savedSearchEntity}
               />
               <Spacer mt={4} />
             </>
@@ -369,10 +341,10 @@ export const BaseArtworkFilter: React.FC<
               </Box>
             )}
 
-            {showCreateAlert && (
+            {enableCreateAlert && savedSearchEntity && (
               <>
-                <ArtworkGridFilterPills
-                  savedSearchAttributes={savedSearchProps}
+                <SavedSearchAlertArtworkGridFilterPills
+                  savedSearchEntity={savedSearchEntity}
                 />
                 <Spacer mt={4} />
               </>

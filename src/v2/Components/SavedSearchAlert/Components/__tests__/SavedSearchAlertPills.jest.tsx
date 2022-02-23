@@ -1,6 +1,9 @@
 import { fireEvent, render, screen } from "@testing-library/react"
-import { FilterPill } from "../../Utils/FilterPillsContext"
-import { Pills, PillsProps } from "../Pills"
+import { FilterPill } from "../../types"
+import {
+  SavedSearchAlertPills,
+  SavedSearchAlertPillsProps,
+} from "../SavedSearchAlertPills"
 
 const items: FilterPill[] = [
   {
@@ -15,14 +18,14 @@ const items: FilterPill[] = [
   },
 ]
 
-const defaultProps: PillsProps = {
+const defaultProps: SavedSearchAlertPillsProps = {
   items,
   onDeletePress: jest.fn,
 }
 
-describe("Pills", () => {
+describe("SavedSearchAlertPills", () => {
   it("renders pills", () => {
-    render(<Pills {...defaultProps} />)
+    render(<SavedSearchAlertPills {...defaultProps} />)
 
     expect(screen.getByText("Red")).toBeInTheDocument()
     expect(screen.getByText("Open Edition")).toBeInTheDocument()
@@ -30,7 +33,12 @@ describe("Pills", () => {
 
   it('should call "onDeletePress" handler when pill is pressed', () => {
     const onDeletePressMock = jest.fn()
-    render(<Pills {...defaultProps} onDeletePress={onDeletePressMock} />)
+    render(
+      <SavedSearchAlertPills
+        {...defaultProps}
+        onDeletePress={onDeletePressMock}
+      />
+    )
 
     fireEvent.click(screen.getByText("Red"))
 

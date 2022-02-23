@@ -3,9 +3,11 @@ import {
   ArtworkFilterContextProvider,
   ArtworkFiltersState,
 } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
-import { SavedSearchAttributes } from "v2/Components/ArtworkFilter/SavedSearch/types"
-import { ExtractProps } from "v2/Utils/ExtractProps"
-import { SavedSearchAlertModal } from "../SavedSearchAlertModal"
+import {
+  SavedSearchAlertModalContainer,
+  SavedSearchAlertFormContainerProps,
+} from "../SavedSearchAlertModal"
+import { SavedSearchEntity } from "../types"
 
 const formInitialValues = {
   name: "",
@@ -13,7 +15,7 @@ const formInitialValues = {
   push: false,
 }
 
-const savedSearchProps: SavedSearchAttributes = {
+const savedSearchEntity: SavedSearchEntity = {
   type: "artist",
   id: "test-artist-id",
   name: "Test Artist",
@@ -28,7 +30,7 @@ const defaultFilters: ArtworkFiltersState = {
 const onCloseMock = jest.fn()
 const onCompleteMock = jest.fn()
 
-interface Props extends Partial<ExtractProps<typeof SavedSearchAlertModal>> {
+interface Props extends Partial<SavedSearchAlertFormContainerProps> {
   filters?: ArtworkFiltersState
 }
 
@@ -38,10 +40,10 @@ describe("SavedSearchAlertModal", () => {
 
     return (
       <ArtworkFilterContextProvider filters={filters}>
-        <SavedSearchAlertModal
+        <SavedSearchAlertModalContainer
           visible
           initialValues={formInitialValues}
-          savedSearchAttributes={savedSearchProps}
+          entity={savedSearchEntity}
           onClose={onCloseMock}
           onComplete={onCompleteMock}
           {...rest}

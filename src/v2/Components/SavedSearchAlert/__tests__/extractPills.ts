@@ -1,9 +1,9 @@
-import { SavedSearchAttributes } from "v2/Components/ArtworkFilter/SavedSearch/types"
+import { SavedSearchEntity } from "../types"
 import { extractArtistPill } from "../Utils/extractPills"
 
 describe("getArtistPillFromAttributes", () => {
   it("returns artist pill", () => {
-    const attributes: SavedSearchAttributes = {
+    const attributes: SavedSearchEntity = {
       slug: "slug",
       name: "name",
       type: "artist",
@@ -26,7 +26,7 @@ describe("getArtistPillFromAttributes", () => {
       slug: "slug",
       type: "artist",
       id: "id",
-    } as SavedSearchAttributes
+    } as SavedSearchEntity
 
     expect(extractArtistPill(attributes)).toBeNull()
   })

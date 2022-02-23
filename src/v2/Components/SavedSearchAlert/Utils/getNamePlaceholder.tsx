@@ -1,4 +1,4 @@
-import { FilterPill } from "v2/Components/ArtworkFilter/SavedSearch/Utils/FilterPillsContext"
+import { FilterPill } from "../types"
 
 export const getNamePlaceholder = (artistName: string, pills: FilterPill[]) => {
   const filteredPills = pills.filter(pill => !pill.isDefault)
