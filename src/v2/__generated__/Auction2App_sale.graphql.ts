@@ -11,6 +11,9 @@ export type Auction2App_sale = {
             readonly src: string;
         } | null;
     } | null;
+    readonly showBuyNowTab: {
+        readonly internalID: string;
+    } | null;
     readonly " $fragmentRefs": FragmentRefs<"Auction2Meta_sale" | "AuctionPromotedSaleRail_sale" | "AuctionDetails_sale">;
     readonly " $refType": "Auction2App_sale";
 };
@@ -22,19 +25,21 @@ export type Auction2App_sale$key = {
 
 
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "internalID",
+  "storageKey": null
+};
+return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
   "name": "Auction2App_sale",
   "selections": [
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "internalID",
-      "storageKey": null
-    },
+    (v0/*: any*/),
     {
       "alias": null,
       "args": null,
@@ -81,6 +86,18 @@ const node: ReaderFragment = {
       "storageKey": null
     },
     {
+      "alias": "showBuyNowTab",
+      "args": null,
+      "concreteType": "Sale",
+      "kind": "LinkedField",
+      "name": "promotedSale",
+      "plural": false,
+      "selections": [
+        (v0/*: any*/)
+      ],
+      "storageKey": null
+    },
+    {
       "args": null,
       "kind": "FragmentSpread",
       "name": "Auction2Meta_sale"
@@ -99,5 +116,6 @@ const node: ReaderFragment = {
   "type": "Sale",
   "abstractKey": null
 };
-(node as any).hash = 'ccb0e4a93b40c16edbf0b9121bc6648d';
+})();
+(node as any).hash = '5fb5833df5f4e4c10236a5a640a28f3d';
 export default node;
