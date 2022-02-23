@@ -9,6 +9,7 @@ import { Auction2MetaFragmentContainer } from "./Components/Auction2Meta"
 import { AuctionActiveBidsRefetchContainer } from "./Components/AuctionActiveBids"
 import { AuctionArtworkFilterRefetchContainer } from "./Components/AuctionArtworkFilter"
 import { AuctionDetailsFragmentContainer } from "./Components/AuctionDetails/AuctionDetails"
+import { AuctionPromotedSaleRailFragmentContainer } from "./Components/AuctionPromotedSaleRail"
 
 /**
  * TODO:
@@ -48,6 +49,8 @@ export const Auction2App: React.FC<Auction2AppProps> = ({
 
         <AuctionActiveBidsRefetchContainer me={me} />
 
+        <AuctionPromotedSaleRailFragmentContainer sale={sale} />
+
         <AuctionArtworkFilterRefetchContainer viewer={viewer} />
 
         <Box>{children}</Box>
@@ -69,6 +72,7 @@ export const Auction2AppFragmentContainer = createFragmentContainer(
     sale: graphql`
       fragment Auction2App_sale on Sale {
         ...Auction2Meta_sale
+        ...AuctionPromotedSaleRail_sale
         ...AuctionDetails_sale
 
         internalID

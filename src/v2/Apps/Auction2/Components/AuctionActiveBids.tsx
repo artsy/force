@@ -40,12 +40,11 @@ const AuctionActiveBids: React.FC<AuctionActiveBidsProps> = ({ me }) => {
         const bidCount = lotStanding?.saleArtwork?.counts?.bidderPositions ?? 0
 
         return (
-          <GridColumns my={2}>
+          <GridColumns my={2} key={index}>
             <Column>
               <AuctionLotInfoFragmentContainer
                 saleArtwork={lotStanding.saleArtwork!}
                 hideLotInfo
-                key={index}
               />
             </Column>
             <Column justifyContent="center">
