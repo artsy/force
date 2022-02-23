@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
-import * as React from "react"
+import { useMemo, FormEvent } from "react"
 import {
+  Box,
   Button,
   Flex,
   LabeledInput,
@@ -21,6 +22,8 @@ import { FilterExpandable } from "./FilterExpandable"
 import { isCustomValue } from "./Utils/isCustomValue"
 import { useFilterLabelCountByKey } from "../Utils/useFilterLabelCountByKey"
 import { useMode } from "v2/Utils/Hooks/useMode"
+import { Range } from "v2/Components/Range"
+import { debounce } from "lodash"
 
 // Disables arrows in numeric inputs
 export const NumericInput = styled(LabeledInput).attrs({ type: "number" })`
@@ -56,14 +59,39 @@ const PRICE_RANGES = [
 
 type CustomRange = (number | "*")[]
 
+// Constants
+const DEBOUNCE_DELAY = 300
 const DEFAULT_CUSTOM_RANGE: CustomRange = ["*", "*"]
 const DEFAULT_PRICE_RANGE = "*-*"
+const DEFAULT_RANGE = [0, 1000000]
 
 const parseRange = (range: string = DEFAULT_PRICE_RANGE) => {
   return range.split("-").map(s => {
     if (s === "*") return s
     return parseInt(s, 10)
   })
+}
+
+const parseInitialRange = (range: string = DEFAULT_PRICE_RANGE) => {
+  return range.split("-").map((value, index) => {
+    if (value === "*") {
+      return DEFAULT_RANGE[index]
+    }
+
+    return parseInt(value, 10)
+  })
+}
+
+const convertToArtworkFilterFormatRange = (range: number[]) => {
+  const convertedRange = range.map((value, index) => {
+    if (value === DEFAULT_RANGE[index]) {
+      return "*"
+    }
+
+    return value
+  })
+
+  return convertedRange.join("-")
 }
 
 const getValue = (value: CustomRange[number]) => {
@@ -76,7 +104,7 @@ export interface PriceRangeFilterProps {
 
 type Mode = "resting" | "done"
 
-export const PriceRangeFilter: React.FC<PriceRangeFilterProps> = ({
+export const PriceRangeFilterOld: React.FC<PriceRangeFilterProps> = ({
   expanded,
 }) => {
   const [mode, setMode] = useMode<Mode>("resting")
@@ -109,7 +137,7 @@ export const PriceRangeFilter: React.FC<PriceRangeFilterProps> = ({
 
   const handleChange = (index: number) => ({
     currentTarget: { value },
-  }: React.FormEvent<HTMLInputElement>) => {
+  }: FormEvent<HTMLInputElement>) => {
     const isOpenEnded = value === "" || value === "0"
     setCustomRange(prevCustomRange => {
       const nextCustomRange = [...prevCustomRange]
@@ -158,6 +186,34 @@ export const PriceRangeFilter: React.FC<PriceRangeFilterProps> = ({
 
   return (
     <FilterExpandable label={label} expanded={hasSelection || expanded}>
+      <Flex mt={1} alignItems="flex-end">
+        <NumericInput
+          label="$USD"
+          name="price_min"
+          placeholder="Min"
+          min="0"
+          step="1"
+          value={getValue(customRange[0])}
+          onChange={handleChange(0)}
+        />
+
+        <Spacer mx={0.5} />
+
+        <NumericInput
+          label="$USD"
+          name="price_max"
+          placeholder="Max"
+          min="0"
+          step="1"
+          value={getValue(customRange[1])}
+          onChange={handleChange(1)}
+        />
+      </Flex>
+
+      <Box my={2}>
+        <Range min={0} max={100} allowCross={false} defaultValue={[0, 100]} />
+      </Box>
+
       {mode === "done" && (
         <Media lessThan="sm">
           <Message variant="info" my={2}>
@@ -230,4 +286,92 @@ export const PriceRangeFilter: React.FC<PriceRangeFilterProps> = ({
       )}
     </FilterExpandable>
   )
+}
+
+export const PriceRangeFilterNew: React.FC<PriceRangeFilterProps> = ({
+  expanded,
+}) => {
+  const { currentlySelectedFilters, setFilter } = useArtworkFilterContext()
+  const { priceRange } = currentlySelectedFilters?.() ?? {}
+  const [range, setRange] = useState(parseInitialRange(priceRange))
+  const [minValue, maxValue] = range
+
+  const filtersCount = useFilterLabelCountByKey(
+    SelectedFiltersCountsLabels.priceRange
+  )
+  const label = `Price${filtersCount}`
+  const selection = currentlySelectedFilters?.().priceRange
+  const hasSelection = selection && isCustomValue(selection)
+
+  const setFilterDobounced = useMemo(
+    () => debounce(setFilter, DEBOUNCE_DELAY),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
+  )
+
+  const handleUpdateRange = (range: number[]) => {
+    const convertedRange = convertToArtworkFilterFormatRange(range)
+
+    setRange(range)
+    setFilterDobounced("priceRange", convertedRange)
+  }
+
+  const handleChange = (changedIndex: number) => (
+    event: FormEvent<HTMLInputElement>
+  ) => {
+    const updatedValue = parseInt(event.currentTarget.value, 10)
+    const updatedRange = range.map((value, index) => {
+      if (index === changedIndex && !isNaN(updatedValue)) {
+        return updatedValue
+      }
+
+      return value
+    })
+
+    handleUpdateRange(updatedRange)
+  }
+
+  return (
+    <FilterExpandable label={label} expanded={hasSelection || expanded}>
+      <Flex alignItems="flex-end">
+        <NumericInput
+          label="$USD"
+          name="price_min"
+          min="0"
+          step="100"
+          value={minValue}
+          onChange={handleChange(0)}
+        />
+
+        <Spacer mx={0.5} />
+
+        <NumericInput
+          label="$USD"
+          name="price_max"
+          min="0"
+          step="100"
+          value={maxValue}
+          onChange={handleChange(1)}
+        />
+      </Flex>
+
+      <Box my={2}>
+        <Range
+          min={DEFAULT_RANGE[0]}
+          max={DEFAULT_RANGE[1]}
+          value={range}
+          allowCross={false}
+          onChange={handleUpdateRange}
+        />
+      </Box>
+    </FilterExpandable>
+  )
+}
+
+export const PriceRangeFilter: React.FC<PriceRangeFilterProps> = props => {
+  if (true) {
+    return <PriceRangeFilterNew {...props} />
+  }
+
+  return <PriceRangeFilterOld {...props} />
 }
