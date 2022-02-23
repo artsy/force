@@ -1,4 +1,5 @@
 import { ArtistArtworkFilter_artist } from "v2/__generated__/ArtistArtworkFilter_artist.graphql"
+import { ArtistArtworkFilter_me } from "v2/__generated__/ArtistArtworkFilter_me.graphql"
 import { BaseArtworkFilter } from "v2/Components/ArtworkFilter"
 import {
   ArtworkFilterContextProvider,
@@ -16,13 +17,14 @@ import { SavedSearchEntity } from "v2/Components/SavedSearchAlert/types"
 interface ArtistArtworkFilterProps {
   aggregations: SharedArtworkFilterContextProps["aggregations"]
   artist: ArtistArtworkFilter_artist
+  me: ArtistArtworkFilter_me
   relay: RelayRefetchProp
   match?: Match
 }
 
 const ArtistArtworkFilter: React.FC<ArtistArtworkFilterProps> = props => {
   const { match } = useRouter()
-  const { relay, aggregations, artist } = props
+  const { relay, aggregations, artist, me } = props
   const { filtered_artworks } = artist
   const hasFilter = filtered_artworks && filtered_artworks.id
 
@@ -94,6 +96,11 @@ export const ArtistArtworkFilterRefetchContainer = createRefetchContainer(
         name
         isFollowed
         slug
+      }
+    `,
+    me: graphql`
+      fragment ArtistArtworkFilter_me on Me {
+        lengthUnitPreference
       }
     `,
   },
