@@ -19,19 +19,24 @@ export const ArticleHTML: FC<ArticleHTMLProps> = ({ children, ...rest }) => {
 
     const { href } = node as HTMLAnchorElement
 
-    const uri = new URL(href)
+    try {
+      const uri = new URL(href)
 
-    if (!uri.hostname.includes("artsy.net")) return
+      if (!uri.hostname.includes("artsy.net")) return
 
-    const [_, entity, id] = uri.pathname.split("/")
+      const [_, entity, id] = uri.pathname.split("/")
 
-    if (!isSupportedArticleTooltip(entity)) return
+      if (!isSupportedArticleTooltip(entity)) return
 
-    return (
-      <ArticleTooltip entity={entity} id={id} href={href}>
-        {node.textContent}
-      </ArticleTooltip>
-    )
+      return (
+        <ArticleTooltip entity={entity} id={id} href={href}>
+          {node.textContent}
+        </ArticleTooltip>
+      )
+    } catch {
+      // If we can't parse the URL, just return the node un-transformed.
+      return
+    }
   }
 
   if (isMounted) {
