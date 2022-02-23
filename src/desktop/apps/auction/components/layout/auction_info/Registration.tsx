@@ -4,6 +4,7 @@ import { connect } from "react-redux"
 import { Button, Sans } from "@artsy/palette"
 import { bidderQualifications } from "v2/Utils/identityVerificationRequirements"
 import { ZendeskWrapper } from "v2/Components/ZendeskWrapper"
+// eslint-disable-next-line no-restricted-imports
 import { data as sd } from "sharify"
 
 const RegistrationMessage: React.FC<{ color?: string }> = ({
@@ -190,7 +191,7 @@ const Registration: React.FC<RegistrationProps> = props => {
             <br />
             <a href="mailto:specialist@artsy.net">specialist@artsy.net</a>
             <br />
-            +1-646-381-3901
+            +1-845-582-3967
           </div>
         </div>
       )}

@@ -27,7 +27,7 @@ const AuctionInfoSidebar: React.FC<AuctionInfoSidebarProps> = ({ sale }) => {
         <a href="mailto:specialist@artsy.net">
           <Text variant="sm">specialist@artsy.net</Text>
         </a>
-        <Text variant="sm">+1-646-381-3901</Text>
+        <Text variant="sm">+1-845-582-3967</Text>
       </Box>
     </Join>
   )
