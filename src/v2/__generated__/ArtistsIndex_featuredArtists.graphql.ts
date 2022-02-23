@@ -7,7 +7,7 @@ import { FragmentRefs } from "relay-runtime";
 export type ArtistsIndex_featuredArtists = ReadonlyArray<{
     readonly name: string | null;
     readonly artists: ReadonlyArray<{
-        readonly internalID?: string | null;
+        readonly internalID?: string;
         readonly " $fragmentRefs": FragmentRefs<"ArtistsCarouselCell_featuredLink">;
     } | null> | null;
     readonly " $refType": "ArtistsIndex_featuredArtists";

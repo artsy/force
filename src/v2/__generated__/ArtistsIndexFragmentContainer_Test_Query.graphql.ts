@@ -578,7 +578,7 @@ return {
         "featuredArtists.artists.image.thumb.src": (v13/*: any*/),
         "featuredArtists.artists.image.thumb.srcSet": (v13/*: any*/),
         "featuredArtists.artists.image.thumb.width": (v18/*: any*/),
-        "featuredArtists.artists.internalID": (v14/*: any*/),
+        "featuredArtists.artists.internalID": (v15/*: any*/),
         "featuredArtists.artists.subtitle": (v14/*: any*/),
         "featuredArtists.artists.title": (v14/*: any*/),
         "featuredArtists.id": (v15/*: any*/),

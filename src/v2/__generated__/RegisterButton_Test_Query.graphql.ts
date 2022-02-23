@@ -34,6 +34,7 @@ query RegisterButton_Test_Query {
 
 fragment RegisterButton_me on Me {
   identityVerified
+  hasCreditCards
   pendingIdentityVerification {
     internalID
     id
@@ -249,6 +250,13 @@ return {
           {
             "alias": null,
             "args": null,
+            "kind": "ScalarField",
+            "name": "hasCreditCards",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
             "concreteType": "IdentityVerification",
             "kind": "LinkedField",
             "name": "pendingIdentityVerification",
@@ -263,12 +271,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "be115f0927abd8f4f434211344726664",
+    "cacheID": "e31c8cddf96c9e16f0bb574d47ee6198",
     "id": null,
     "metadata": {},
     "name": "RegisterButton_Test_Query",
     "operationKind": "query",
-    "text": "query RegisterButton_Test_Query {\n  sale(id: \"foo\") {\n    ...RegisterButton_sale\n    id\n  }\n  me {\n    ...RegisterButton_me\n    id\n  }\n}\n\nfragment RegisterButton_me on Me {\n  identityVerified\n  pendingIdentityVerification {\n    internalID\n    id\n  }\n}\n\nfragment RegisterButton_sale on Sale {\n  bidder {\n    qualifiedForBidding\n    id\n  }\n  isAuction\n  isClosed\n  isLiveOpen\n  isRegistrationClosed\n  liveURLIfOpen\n  requireIdentityVerification\n  registrationStatus {\n    internalID\n    id\n  }\n  slug\n  status\n}\n"
+    "text": "query RegisterButton_Test_Query {\n  sale(id: \"foo\") {\n    ...RegisterButton_sale\n    id\n  }\n  me {\n    ...RegisterButton_me\n    id\n  }\n}\n\nfragment RegisterButton_me on Me {\n  identityVerified\n  hasCreditCards\n  pendingIdentityVerification {\n    internalID\n    id\n  }\n}\n\nfragment RegisterButton_sale on Sale {\n  bidder {\n    qualifiedForBidding\n    id\n  }\n  isAuction\n  isClosed\n  isLiveOpen\n  isRegistrationClosed\n  liveURLIfOpen\n  requireIdentityVerification\n  registrationStatus {\n    internalID\n    id\n  }\n  slug\n  status\n}\n"
   }
 };
 })();

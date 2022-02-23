@@ -1,8 +1,12 @@
 import { AppRouteConfig } from "../Route"
 
-export const findCurrentRoute = (
-  { route: baseRoute, routes, routeIndices }: any /* FIXME: Add type */
-): AppRouteConfig => {
+export const findCurrentRoute = (match): AppRouteConfig => {
+  if (!match) {
+    return {}
+  }
+
+  const { route: baseRoute, routes, routeIndices } = match
+
   if (!routeIndices || routeIndices.length === 0) {
     return baseRoute
   }

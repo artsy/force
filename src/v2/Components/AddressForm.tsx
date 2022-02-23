@@ -11,6 +11,7 @@ import {
 import { CountrySelect } from "v2/Components/CountrySelect"
 import * as React from "react"
 import { TwoColumnSplit } from "../Apps/Order/Components/TwoColumnLayout"
+import { CreateTokenCardData } from "@stripe/stripe-js"
 
 export interface Address {
   name: string
@@ -30,7 +31,7 @@ export type AddressChangeHandler = (
   key: keyof Address
 ) => void
 
-export const emptyAddress: Address = Object.freeze({
+export const emptyAddress: Address = {
   name: "",
   country: "",
   postalCode: "",
@@ -39,7 +40,19 @@ export const emptyAddress: Address = Object.freeze({
   city: "",
   region: "",
   phoneNumber: "",
-})
+}
+
+export const toStripeAddress = (address: Address): CreateTokenCardData => {
+  return {
+    name: address.name,
+    address_line1: address.addressLine1,
+    address_line2: address.addressLine2,
+    address_country: address.country,
+    address_city: address.city,
+    address_state: address.region,
+    address_zip: address.postalCode,
+  }
+}
 export interface AddressFormProps {
   onChange: AddressChangeHandler
   value?: Partial<Address>

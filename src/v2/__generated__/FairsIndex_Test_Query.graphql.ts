@@ -917,7 +917,7 @@ return {
         "featuredFairs.items.image.cropped.src": (v26/*: any*/),
         "featuredFairs.items.image.cropped.srcSet": (v26/*: any*/),
         "featuredFairs.items.image.cropped.width": (v29/*: any*/),
-        "featuredFairs.items.internalID": (v30/*: any*/),
+        "featuredFairs.items.internalID": (v25/*: any*/),
         "featuredFairs.items.title": (v30/*: any*/),
         "viewer": {
           "enumValues": null,

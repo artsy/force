@@ -9,31 +9,32 @@ import {
   Text,
 } from "@artsy/palette"
 import { Formik } from "formik"
-import { useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import {
-  Aggregations,
-  ArtworkFilters,
-  initialArtworkFilterState,
-} from "v2/Components/ArtworkFilter/ArtworkFilterContext"
-import { Pills } from "v2/Components/ArtworkFilter/SavedSearch/Components/Pills"
-import { SavedSearchAttributes } from "v2/Components/ArtworkFilter/SavedSearch/types"
-import { SavedSearchAleftFormValues } from "v2/Components/SavedSearchAlert/SavedSearchAlertModel"
+import { Aggregations } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
 import { getNamePlaceholder } from "v2/Components/SavedSearchAlert/Utils/getNamePlaceholder"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import { SavedSearchAlertEditFormQuery } from "v2/__generated__/SavedSearchAlertEditFormQuery.graphql"
 import { SavedSearchAlertEditForm_savedSearch } from "v2/__generated__/SavedSearchAlertEditForm_savedSearch.graphql"
 import { SavedSearchAlertEditForm_artist } from "v2/__generated__/SavedSearchAlertEditForm_artist.graphql"
 import { SavedSearchAlertEditForm_artworksConnection } from "v2/__generated__/SavedSearchAlertEditForm_artworksConnection.graphql"
-import { extractPills } from "v2/Components/SavedSearchAlert/Utils/extractPills"
-import { FilterPill } from "v2/Components/ArtworkFilter/SavedSearch/Utils/FilterPillsContext"
 import { EditAlertEntity } from "../types"
-import { getSearchCriteriaFromFilters } from "v2/Components/ArtworkFilter/SavedSearch/Utils"
 import { useEditSavedSearchAlert } from "../useEditSavedSearchAlert"
 import createLogger from "v2/Utils/logger"
 import { Media } from "v2/Utils/Responsive"
 import { SavedSearchAlertEditFormPlaceholder } from "./SavedSearchAlertEditFormPlaceholder"
 import { isEqual } from "lodash"
+import {
+  SavedSearchAlertContextProvider,
+  useSavedSearchAlertContext,
+} from "v2/Components/SavedSearchAlert/SavedSearchAlertContext"
+import {
+  FilterPill,
+  SavedSearchAleftFormValues,
+  SavedSearchEntity,
+  SearchCriteriaAttributeKeys,
+} from "v2/Components/SavedSearchAlert/types"
+import { getAllowedSearchCriteria } from "v2/Components/SavedSearchAlert/Utils/savedSearchCriteria"
+import { SavedSearchAlertPills } from "v2/Components/SavedSearchAlert/Components/SavedSearchAlertPills"
 
 const logger = createLogger(
   "v2/Apps/SavedSearchAlerts/Components/SavedSearchAlertEditForm"
@@ -56,67 +57,48 @@ interface SavedSearchAlertEditFormProps {
 
 const SavedSearchAlertEditForm: React.FC<SavedSearchAlertEditFormProps> = ({
   savedSearch,
-  artist,
-  artworksConnection,
   editAlertEntity,
   onDeleteClick,
   onCompleted,
 }) => {
-  const { userAlertSettings, internalID, ...other } = savedSearch
+  const { userAlertSettings } = savedSearch
   const { submitMutation: submitEditAlert } = useEditSavedSearchAlert()
-  const [hasChangedFilters, setHasChangedFilters] = useState(false)
-  const [searchCriteriaAttributes, setSearchCriteriaAttributes] = useState(
-    (other as unknown) as ArtworkFilters
-  )
+  const {
+    pills,
+    entity,
+    criteria,
+    isCriteriaChanged,
+    removeCriteriaValue,
+  } = useSavedSearchAlertContext()
 
   const initialValues: SavedSearchAleftFormValues = {
     name: userAlertSettings.name ?? "",
     push: userAlertSettings.push,
     email: userAlertSettings.email,
   }
-  const entity: SavedSearchAttributes = {
-    type: "artist",
-    id: artist.internalID,
-    name: artist.name ?? "",
-    slug: artist.slug ?? "",
-  }
 
-  const aggregations = artworksConnection.aggregations as Aggregations
-  const pills = extractPills(searchCriteriaAttributes, aggregations, entity)
-  const namePlaceholder = getNamePlaceholder(entity?.name ?? "", pills)
+  const namePlaceholder = getNamePlaceholder(entity.name, pills)
 
   const removePill = (pill: FilterPill) => {
     if (pill.isDefault) {
       return
     }
 
-    let filterValue = searchCriteriaAttributes![pill.filterName]
-
-    if (Array.isArray(filterValue)) {
-      filterValue = filterValue.filter(value => value !== pill.name)
-    } else {
-      filterValue = initialArtworkFilterState[pill.filterName]
-    }
-
-    setHasChangedFilters(true)
-    setSearchCriteriaAttributes({
-      ...searchCriteriaAttributes,
-      [pill.filterName]: filterValue,
-    })
+    removeCriteriaValue(
+      pill.filterName as SearchCriteriaAttributeKeys,
+      pill.name
+    )
   }
 
   const handleSubmit = async (values: SavedSearchAleftFormValues) => {
     try {
-      const namePlaceholder = getNamePlaceholder(entity!.name, pills)
-      const searchCriteria = getSearchCriteriaFromFilters(
-        entity!.id,
-        searchCriteriaAttributes as ArtworkFilters
-      )
+      const namePlaceholder = getNamePlaceholder(entity.name, pills)
+
       await submitEditAlert({
         variables: {
           input: {
             searchCriteriaID: editAlertEntity!.id,
-            attributes: searchCriteria,
+            attributes: criteria,
             userAlertSettings: {
               ...values,
               name: values.name || namePlaceholder,
@@ -144,7 +126,7 @@ const SavedSearchAlertEditForm: React.FC<SavedSearchAlertEditFormProps> = ({
       }) => {
         let isSaveAlertButtonDisabled = true
 
-        if (hasChangedFilters || !isEqual(initialValues, values)) {
+        if (isCriteriaChanged || !isEqual(initialValues, values)) {
           isSaveAlertButtonDisabled = false
         }
 
@@ -172,7 +154,10 @@ const SavedSearchAlertEditForm: React.FC<SavedSearchAlertEditFormProps> = ({
                 </Text>
                 <Spacer mt={2} />
                 <Flex flexWrap="wrap" mx={-0.5}>
-                  <Pills items={pills} onDeletePress={removePill} />
+                  <SavedSearchAlertPills
+                    items={pills}
+                    onDeletePress={removePill}
+                  />
                 </Flex>
               </Box>
 
@@ -245,8 +230,30 @@ const SavedSearchAlertEditForm: React.FC<SavedSearchAlertEditFormProps> = ({
   )
 }
 
+const SavedSearchAlertEditFormContainer: React.FC<SavedSearchAlertEditFormProps> = props => {
+  const { artworksConnection, artist, savedSearch } = props
+  const aggregations = artworksConnection.aggregations as Aggregations
+  const criteria = getAllowedSearchCriteria(savedSearch as any)
+  const entity: SavedSearchEntity = {
+    type: "artist",
+    id: artist.internalID,
+    name: artist.name ?? "",
+    slug: artist.slug ?? "",
+  }
+
+  return (
+    <SavedSearchAlertContextProvider
+      entity={entity}
+      criteria={criteria}
+      aggregations={aggregations}
+    >
+      <SavedSearchAlertEditForm {...props} />
+    </SavedSearchAlertContextProvider>
+  )
+}
+
 export const SavedSearchAlertEditFormFragmentContainer = createFragmentContainer(
-  SavedSearchAlertEditForm,
+  SavedSearchAlertEditFormContainer,
   {
     savedSearch: graphql`
       fragment SavedSearchAlertEditForm_savedSearch on SearchCriteria {
