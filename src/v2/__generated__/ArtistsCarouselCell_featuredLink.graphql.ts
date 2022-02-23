@@ -9,6 +9,11 @@ export type ArtistsCarouselCell_featuredLink = {
     readonly title: string | null;
     readonly subtitle: string | null;
     readonly href: string | null;
+    readonly entity: {
+        readonly internalID?: string;
+        readonly name?: string | null;
+        readonly formattedNationalityAndBirthday?: string | null;
+    } | null;
     readonly image: {
         readonly thumb: {
             readonly width: number;
@@ -27,19 +32,21 @@ export type ArtistsCarouselCell_featuredLink$key = {
 
 
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "internalID",
+  "storageKey": null
+};
+return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
   "name": "ArtistsCarouselCell_featuredLink",
   "selections": [
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "internalID",
-      "storageKey": null
-    },
+    (v0/*: any*/),
     {
       "alias": null,
       "args": null,
@@ -59,6 +66,39 @@ const node: ReaderFragment = {
       "args": null,
       "kind": "ScalarField",
       "name": "href",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": null,
+      "kind": "LinkedField",
+      "name": "entity",
+      "plural": false,
+      "selections": [
+        {
+          "kind": "InlineFragment",
+          "selections": [
+            (v0/*: any*/),
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "name",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "formattedNationalityAndBirthday",
+              "storageKey": null
+            }
+          ],
+          "type": "Artist",
+          "abstractKey": null
+        }
+      ],
       "storageKey": null
     },
     {
@@ -131,5 +171,6 @@ const node: ReaderFragment = {
   "type": "FeaturedLink",
   "abstractKey": null
 };
-(node as any).hash = '825be8e5dd765862c4699c299893006c';
+})();
+(node as any).hash = '838b882412b896847687e52367d5950f';
 export default node;
