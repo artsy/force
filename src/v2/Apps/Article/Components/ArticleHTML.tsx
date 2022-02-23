@@ -121,7 +121,8 @@ const Container = styled(Box)`
     margin-left: ${themeGet("space.2")};
   }
 
-  p {
+  p,
+  li {
     ${toStyle({ ...THEME.textVariants.sm })}
   }
 
