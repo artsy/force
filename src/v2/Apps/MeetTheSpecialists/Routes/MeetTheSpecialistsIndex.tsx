@@ -67,7 +67,7 @@ export const MeetTheSpecialistsIndex: React.FC = () => {
         </Text>
       </Box>
 
-      <Spacer mb={120} />
+      <Spacer mb={12} />
 
       <GridColumns>
         <Column span={4} start={1}>
