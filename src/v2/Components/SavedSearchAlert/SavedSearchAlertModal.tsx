@@ -193,6 +193,7 @@ export const SavedSearchAlertModalContainer: React.FC<SavedSearchAlertFormContai
         criteria={criteria}
         aggregations={aggregations}
         entity={entity}
+        metric={filters?.metric!}
       >
         <SavedSearchAlertModal {...props} />
       </SavedSearchAlertContextProvider>
