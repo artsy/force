@@ -14,7 +14,7 @@ import { Aggregations } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
 import { getNamePlaceholder } from "v2/Components/SavedSearchAlert/Utils/getNamePlaceholder"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import { SavedSearchAlertEditFormQuery } from "v2/__generated__/SavedSearchAlertEditFormQuery.graphql"
-import { SavedSearchAlertEditForm_savedSearch } from "v2/__generated__/SavedSearchAlertEditForm_savedSearch.graphql"
+import { SavedSearchAlertEditForm_me } from "v2/__generated__/SavedSearchAlertEditForm_me.graphql"
 import { SavedSearchAlertEditForm_artist } from "v2/__generated__/SavedSearchAlertEditForm_artist.graphql"
 import { SavedSearchAlertEditForm_artworksConnection } from "v2/__generated__/SavedSearchAlertEditForm_artworksConnection.graphql"
 import { EditAlertEntity } from "../types"
@@ -37,6 +37,7 @@ import { getAllowedSearchCriteria } from "v2/Components/SavedSearchAlert/Utils/s
 import { SavedSearchAlertPills } from "v2/Components/SavedSearchAlert/Components/SavedSearchAlertPills"
 import { useTracking } from "react-tracking"
 import { ActionType } from "@artsy/cohesion"
+import { getSupportedMetric } from "v2/Components/ArtworkFilter/Utils/metrics"
 
 const logger = createLogger(
   "v2/Apps/SavedSearchAlerts/Components/SavedSearchAlertEditForm"
@@ -49,7 +50,7 @@ interface SavedSearchAlertEditFormQueryRendererProps {
 }
 
 interface SavedSearchAlertEditFormProps {
-  savedSearch: SavedSearchAlertEditForm_savedSearch
+  me: SavedSearchAlertEditForm_me
   artist: SavedSearchAlertEditForm_artist
   artworksConnection: SavedSearchAlertEditForm_artworksConnection
   editAlertEntity: EditAlertEntity
@@ -58,12 +59,13 @@ interface SavedSearchAlertEditFormProps {
 }
 
 const SavedSearchAlertEditForm: React.FC<SavedSearchAlertEditFormProps> = ({
-  savedSearch,
+  me,
   editAlertEntity,
   onDeleteClick,
   onCompleted,
 }) => {
-  const { userAlertSettings } = savedSearch
+  const { savedSearch } = me
+  const { userAlertSettings } = savedSearch!
   const { submitMutation: submitEditAlert } = useEditSavedSearchAlert()
   const { trackEvent } = useTracking()
   const {
@@ -242,9 +244,11 @@ const SavedSearchAlertEditForm: React.FC<SavedSearchAlertEditFormProps> = ({
 }
 
 const SavedSearchAlertEditFormContainer: React.FC<SavedSearchAlertEditFormProps> = props => {
-  const { artworksConnection, artist, savedSearch } = props
+  const { artworksConnection, artist, me } = props
+  const { savedSearch } = me
   const aggregations = artworksConnection.aggregations as Aggregations
   const criteria = getAllowedSearchCriteria(savedSearch as any)
+  const metric = getSupportedMetric(me.lengthUnitPreference)
   const entity: SavedSearchEntity = {
     type: "artist",
     id: artist.internalID,
@@ -257,6 +261,7 @@ const SavedSearchAlertEditFormContainer: React.FC<SavedSearchAlertEditFormProps>
       entity={entity}
       criteria={criteria}
       aggregations={aggregations}
+      metric={metric}
     >
       <SavedSearchAlertEditForm {...props} />
     </SavedSearchAlertContextProvider>
@@ -266,32 +271,36 @@ const SavedSearchAlertEditFormContainer: React.FC<SavedSearchAlertEditFormProps>
 export const SavedSearchAlertEditFormFragmentContainer = createFragmentContainer(
   SavedSearchAlertEditFormContainer,
   {
-    savedSearch: graphql`
-      fragment SavedSearchAlertEditForm_savedSearch on SearchCriteria {
-        internalID
-        acquireable
-        additionalGeneIDs
-        artistIDs
-        atAuction
-        attributionClass
-        colors
-        dimensionRange
-        sizes
-        height
-        inquireableOnly
-        internalID
-        locationCities
-        majorPeriods
-        materialsTerms
-        offerable
-        partnerIDs
-        priceRange
-        userAlertSettings {
-          name
-          email
-          push
+    me: graphql`
+      fragment SavedSearchAlertEditForm_me on Me
+        @argumentDefinitions(savedSearchId: { type: "ID" }) {
+        lengthUnitPreference
+        savedSearch(id: $savedSearchId) {
+          internalID
+          acquireable
+          additionalGeneIDs
+          artistIDs
+          atAuction
+          attributionClass
+          colors
+          dimensionRange
+          sizes
+          height
+          inquireableOnly
+          internalID
+          locationCities
+          majorPeriods
+          materialsTerms
+          offerable
+          partnerIDs
+          priceRange
+          userAlertSettings {
+            name
+            email
+            push
+          }
+          width
         }
-        width
       }
     `,
     artist: graphql`
@@ -319,9 +328,7 @@ export const SavedSearchAlertEditFormFragmentContainer = createFragmentContainer
 const SAVED_SEARCH_ALERT_EDIT_FORM_QUERY = graphql`
   query SavedSearchAlertEditFormQuery($id: ID!, $artistId: String!) {
     me {
-      savedSearch(id: $id) {
-        ...SavedSearchAlertEditForm_savedSearch
-      }
+      ...SavedSearchAlertEditForm_me @arguments(savedSearchId: $id)
     }
     artist(id: $artistId) {
       ...SavedSearchAlertEditForm_artist
@@ -363,7 +370,7 @@ export const SavedSearchAlertEditFormQueryRenderer: React.FC<SavedSearchAlertEdi
         if (props?.artist && props.artworksConnection && props.me) {
           return (
             <SavedSearchAlertEditFormFragmentContainer
-              savedSearch={props.me?.savedSearch!}
+              me={props.me}
               artist={props.artist!}
               artworksConnection={props.artworksConnection!}
               editAlertEntity={editAlertEntity}
