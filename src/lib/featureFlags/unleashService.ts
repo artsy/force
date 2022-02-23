@@ -1,4 +1,4 @@
-import { startUnleash, Unleash, destroy } from "unleash-client"
+import { startUnleash, Unleash } from "unleash-client"
 import {
   UNLEASH_API,
   UNLEASH_APP_NAME,
