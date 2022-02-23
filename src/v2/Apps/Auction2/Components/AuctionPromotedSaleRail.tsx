@@ -37,6 +37,7 @@ const AuctionPromotedSaleRail: React.FC<AuctionPromotedSaleRailProps> = ({
               <ShelfArtworkFragmentContainer
                 artwork={node.artwork!}
                 key={index}
+                lazyLoad
               />
             )
           })

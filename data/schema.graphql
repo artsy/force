@@ -775,6 +775,7 @@ type ArticleFeatureSection {
   embed(autoPlay: Boolean = false): String
   image: Image
   layout: ArticleFeatureSectionType!
+  media: String
   title: String
 }
 
@@ -9141,6 +9142,9 @@ type Me implements Node {
     liveSale: Boolean
     page: Int
     saleID: ID
+
+    # Same as saleID argument, but matches the argument type of `sale(id: 'foo')` root field
+    saleSlug: String
     size: Int
     sort: String
   ): SaleArtworksConnection
@@ -11043,6 +11047,7 @@ type Query {
     #         Accepts list of ids.
     #
     ids: [String]
+    layout: ArticleLayout
     published: Boolean = true
     showID: String
     sort: ArticleSorts
@@ -11059,6 +11064,7 @@ type Query {
     # Get only articles with 'standard', 'feature', 'series' or 'video' layouts.
     inEditorialFeed: Boolean
     last: Int
+    layout: ArticleLayout
     page: Int
     sort: ArticleSorts
   ): ArticleConnection
@@ -11677,6 +11683,9 @@ type Query {
     liveSale: Boolean
     page: Int
     saleID: ID
+
+    # Same as saleID argument, but matches the argument type of `sale(id: 'foo')` root field
+    saleSlug: String
     size: Int
     sort: String
   ): SaleArtworksConnection
@@ -14086,6 +14095,7 @@ type Viewer {
     #         Accepts list of ids.
     #
     ids: [String]
+    layout: ArticleLayout
     published: Boolean = true
     showID: String
     sort: ArticleSorts
@@ -14102,6 +14112,7 @@ type Viewer {
     # Get only articles with 'standard', 'feature', 'series' or 'video' layouts.
     inEditorialFeed: Boolean
     last: Int
+    layout: ArticleLayout
     page: Int
     sort: ArticleSorts
   ): ArticleConnection
@@ -14524,6 +14535,9 @@ type Viewer {
     liveSale: Boolean
     page: Int
     saleID: ID
+
+    # Same as saleID argument, but matches the argument type of `sale(id: 'foo')` root field
+    saleSlug: String
     size: Int
     sort: String
   ): SaleArtworksConnection

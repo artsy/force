@@ -66,7 +66,7 @@ export const auction2Routes: AppRouteConfig[] = [
           ...Auction2App_sale
         }
         viewer {
-          ...Auction2App_viewer @arguments(input: $input)
+          ...Auction2App_viewer @arguments(input: $input, saleID: $slug)
         }
       }
     `,
