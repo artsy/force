@@ -8,7 +8,8 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import { createRefetchContainer, graphql } from "react-relay"
+import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
+import { usePoll } from "v2/Utils/Hooks/usePoll"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { useRouter } from "v2/System/Router/useRouter"
 import { AuctionActiveBids_me } from "v2/__generated__/AuctionActiveBids_me.graphql"
@@ -16,10 +17,19 @@ import { AuctionLotInfoFragmentContainer } from "../Routes/Bid/Components/Auctio
 
 interface AuctionActiveBidsProps {
   me: AuctionActiveBids_me
+  relay: RelayRefetchProp
 }
 
-const AuctionActiveBids: React.FC<AuctionActiveBidsProps> = ({ me }) => {
-  const { router } = useRouter()
+const AuctionActiveBids: React.FC<AuctionActiveBidsProps> = ({ me, relay }) => {
+  const { match, router } = useRouter()
+
+  usePoll({
+    callback: () => {
+      relay.refetch({ saleID: match.params.slug }, null, {}, { force: true })
+    },
+    intervalTime: 10000,
+    key: match.params.slug,
+  })
 
   if (me?.lotStandings?.length === 0) {
     return null
