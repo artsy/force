@@ -19,7 +19,7 @@ import { getSupportedMetric } from "v2/Components/ArtworkFilter/Utils/metrics"
 interface ArtistArtworkFilterProps {
   aggregations: SharedArtworkFilterContextProps["aggregations"]
   artist: ArtistArtworkFilter_artist
-  me: ArtistArtworkFilter_me
+  me: ArtistArtworkFilter_me | null
   relay: RelayRefetchProp
   match?: Match
 }
@@ -41,7 +41,7 @@ const ArtistArtworkFilter: React.FC<ArtistArtworkFilterProps> = props => {
     slug: artist.slug,
   }
 
-  const metric = getSupportedMetric(me.lengthUnitPreference)
+  const metric = getSupportedMetric(me?.lengthUnitPreference)
   const filters: ArtworkFiltersState = {
     metric,
     ...match.location.query,

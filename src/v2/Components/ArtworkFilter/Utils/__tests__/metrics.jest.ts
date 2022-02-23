@@ -9,4 +9,8 @@ describe("getSupportedMetric", () => {
   it("should return fallback metric", () => {
     expect(getSupportedMetric("UNKNOWN")).toBe("CM")
   })
+
+  it("should return fallback metric if nothing is passed", () => {
+    expect(getSupportedMetric()).toBe("CM")
+  })
 })
