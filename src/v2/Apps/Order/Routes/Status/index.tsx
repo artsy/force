@@ -103,7 +103,10 @@ export class StatusRoute extends Component<StatusProps> {
                         <Message p={[2, 4]}>{description}</Message>
                       )}
                       {shouldContinueToInbox ? (
-                        <Text>{continueToInboxText()}</Text>
+                        <>
+                          <Spacer mb={2} />
+                          <Text>{continueToInboxText}</Text>
+                        </>
                       ) : showTransactionSummary ? (
                         <Flex flexDirection="column">
                           <ArtworkSummaryItem order={order} />

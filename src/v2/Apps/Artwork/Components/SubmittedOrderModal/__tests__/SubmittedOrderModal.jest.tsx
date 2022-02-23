@@ -6,28 +6,29 @@ import { SubmittedOrderModalFragmentContainer } from ".."
 jest.unmock("react-relay")
 
 const mockedResolver = {
-  CommerceOrderConnectionWithTotalCount: () => ({
-    edges: [{ node: { mode: "OFFER", stateExpiresAt: "Feb 28" } }],
+  Me: () => ({
+    orders: {
+      edges: [
+        {
+          node: {
+            stateExpiresAt: "Feb 28",
+            lineItems: { edges: [{ node: { artwork: { slug: "424242" } } }] },
+          },
+        },
+      ],
+    },
   }),
 }
 
 describe("SubmittedOrderModal", () => {
   const { renderWithRelay } = setupTestWrapperTL({
     Component: ({ me }: any) => (
-      <SubmittedOrderModalFragmentContainer
-        order={me.conversation.orderConnection.edges[0].node}
-      />
+      <SubmittedOrderModalFragmentContainer slug="424242" me={me} />
     ),
     query: graphql`
       query SubmittedOrderModal_Test_Query {
         me {
-          orders(first: 10) {
-            edges {
-              node {
-                ...SubmittedOrderModal_order
-              }
-            }
-          }
+          ...SubmittedOrderModal_me
         }
       }
     `,

@@ -147,10 +147,7 @@ export class ReviewRoute extends Component<ReviewProps> {
           order,
           o => o.lineItems?.edges?.[0]?.node?.artwork?.slug
         )
-        return router.push({
-          pathname: `/artwork/${artworkId}`,
-          state: { submittedOrder: order },
-        })
+        return router.push(`/artwork/${artworkId}?order-submitted=true`)
       }
     } catch (error) {
       logger.error(error)
@@ -478,7 +475,6 @@ export const ReviewFragmentContainer = createFragmentContainer(
         internalID
         mode
         source
-        stateExpiresAt(format: "MMM D")
         itemsTotal(precision: 2)
         lineItems {
           edges {

@@ -7,15 +7,7 @@ import { FragmentRefs } from "relay-runtime";
 export type SubmittedOrderModal_Test_QueryVariables = {};
 export type SubmittedOrderModal_Test_QueryResponse = {
     readonly me: {
-        readonly conversation: {
-            readonly orderConnection: {
-                readonly edges: ReadonlyArray<{
-                    readonly node: {
-                        readonly " $fragmentRefs": FragmentRefs<"SubmittedOrderModal_order">;
-                    } | null;
-                } | null> | null;
-            } | null;
-        } | null;
+        readonly " $fragmentRefs": FragmentRefs<"SubmittedOrderModal_me">;
     } | null;
 };
 export type SubmittedOrderModal_Test_Query = {
@@ -28,45 +20,37 @@ export type SubmittedOrderModal_Test_Query = {
 /*
 query SubmittedOrderModal_Test_Query {
   me {
-    conversation(id: "test-id") {
-      orderConnection(first: 10) {
-        edges {
-          node {
-            __typename
-            ...SubmittedOrderModal_order
-            id
-          }
-        }
-      }
-      id
-    }
+    ...SubmittedOrderModal_me
     id
   }
 }
 
-fragment SubmittedOrderModal_order on CommerceOrder {
-  __isCommerceOrder: __typename
-  mode
-  stateExpiresAt(format: "MMM D")
+fragment SubmittedOrderModal_me on Me {
+  orders(states: [SUBMITTED], mode: OFFER, first: 1, sort: UPDATED_AT_DESC) {
+    edges {
+      node {
+        __typename
+        stateExpiresAt(format: "MMM D")
+        lineItems {
+          edges {
+            node {
+              artwork {
+                slug
+                id
+              }
+              id
+            }
+          }
+        }
+        id
+      }
+    }
+  }
 }
 */
 
 const node: ConcreteRequest = (function(){
-var v0 = [
-  {
-    "kind": "Literal",
-    "name": "id",
-    "value": "test-id"
-  }
-],
-v1 = [
-  {
-    "kind": "Literal",
-    "name": "first",
-    "value": 10
-  }
-],
-v2 = {
+var v0 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -89,53 +73,9 @@ return {
         "plural": false,
         "selections": [
           {
-            "alias": null,
-            "args": (v0/*: any*/),
-            "concreteType": "Conversation",
-            "kind": "LinkedField",
-            "name": "conversation",
-            "plural": false,
-            "selections": [
-              {
-                "alias": null,
-                "args": (v1/*: any*/),
-                "concreteType": "CommerceOrderConnectionWithTotalCount",
-                "kind": "LinkedField",
-                "name": "orderConnection",
-                "plural": false,
-                "selections": [
-                  {
-                    "alias": null,
-                    "args": null,
-                    "concreteType": "CommerceOrderEdge",
-                    "kind": "LinkedField",
-                    "name": "edges",
-                    "plural": true,
-                    "selections": [
-                      {
-                        "alias": null,
-                        "args": null,
-                        "concreteType": null,
-                        "kind": "LinkedField",
-                        "name": "node",
-                        "plural": false,
-                        "selections": [
-                          {
-                            "args": null,
-                            "kind": "FragmentSpread",
-                            "name": "SubmittedOrderModal_order"
-                          }
-                        ],
-                        "storageKey": null
-                      }
-                    ],
-                    "storageKey": null
-                  }
-                ],
-                "storageKey": "orderConnection(first:10)"
-              }
-            ],
-            "storageKey": "conversation(id:\"test-id\")"
+            "args": null,
+            "kind": "FragmentSpread",
+            "name": "SubmittedOrderModal_me"
           }
         ],
         "storageKey": null
@@ -160,96 +100,149 @@ return {
         "selections": [
           {
             "alias": null,
-            "args": (v0/*: any*/),
-            "concreteType": "Conversation",
+            "args": [
+              {
+                "kind": "Literal",
+                "name": "first",
+                "value": 1
+              },
+              {
+                "kind": "Literal",
+                "name": "mode",
+                "value": "OFFER"
+              },
+              {
+                "kind": "Literal",
+                "name": "sort",
+                "value": "UPDATED_AT_DESC"
+              },
+              {
+                "kind": "Literal",
+                "name": "states",
+                "value": [
+                  "SUBMITTED"
+                ]
+              }
+            ],
+            "concreteType": "CommerceOrderConnectionWithTotalCount",
             "kind": "LinkedField",
-            "name": "conversation",
+            "name": "orders",
             "plural": false,
             "selections": [
               {
                 "alias": null,
-                "args": (v1/*: any*/),
-                "concreteType": "CommerceOrderConnectionWithTotalCount",
+                "args": null,
+                "concreteType": "CommerceOrderEdge",
                 "kind": "LinkedField",
-                "name": "orderConnection",
-                "plural": false,
+                "name": "edges",
+                "plural": true,
                 "selections": [
                   {
                     "alias": null,
                     "args": null,
-                    "concreteType": "CommerceOrderEdge",
+                    "concreteType": null,
                     "kind": "LinkedField",
-                    "name": "edges",
-                    "plural": true,
+                    "name": "node",
+                    "plural": false,
                     "selections": [
                       {
                         "alias": null,
                         "args": null,
-                        "concreteType": null,
+                        "kind": "ScalarField",
+                        "name": "__typename",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": [
+                          {
+                            "kind": "Literal",
+                            "name": "format",
+                            "value": "MMM D"
+                          }
+                        ],
+                        "kind": "ScalarField",
+                        "name": "stateExpiresAt",
+                        "storageKey": "stateExpiresAt(format:\"MMM D\")"
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "concreteType": "CommerceLineItemConnection",
                         "kind": "LinkedField",
-                        "name": "node",
+                        "name": "lineItems",
                         "plural": false,
                         "selections": [
                           {
                             "alias": null,
                             "args": null,
-                            "kind": "ScalarField",
-                            "name": "__typename",
-                            "storageKey": null
-                          },
-                          {
-                            "kind": "TypeDiscriminator",
-                            "abstractKey": "__isCommerceOrder"
-                          },
-                          {
-                            "alias": null,
-                            "args": null,
-                            "kind": "ScalarField",
-                            "name": "mode",
-                            "storageKey": null
-                          },
-                          {
-                            "alias": null,
-                            "args": [
+                            "concreteType": "CommerceLineItemEdge",
+                            "kind": "LinkedField",
+                            "name": "edges",
+                            "plural": true,
+                            "selections": [
                               {
-                                "kind": "Literal",
-                                "name": "format",
-                                "value": "MMM D"
+                                "alias": null,
+                                "args": null,
+                                "concreteType": "CommerceLineItem",
+                                "kind": "LinkedField",
+                                "name": "node",
+                                "plural": false,
+                                "selections": [
+                                  {
+                                    "alias": null,
+                                    "args": null,
+                                    "concreteType": "Artwork",
+                                    "kind": "LinkedField",
+                                    "name": "artwork",
+                                    "plural": false,
+                                    "selections": [
+                                      {
+                                        "alias": null,
+                                        "args": null,
+                                        "kind": "ScalarField",
+                                        "name": "slug",
+                                        "storageKey": null
+                                      },
+                                      (v0/*: any*/)
+                                    ],
+                                    "storageKey": null
+                                  },
+                                  (v0/*: any*/)
+                                ],
+                                "storageKey": null
                               }
                             ],
-                            "kind": "ScalarField",
-                            "name": "stateExpiresAt",
-                            "storageKey": "stateExpiresAt(format:\"MMM D\")"
-                          },
-                          (v2/*: any*/)
+                            "storageKey": null
+                          }
                         ],
                         "storageKey": null
-                      }
+                      },
+                      (v0/*: any*/)
                     ],
                     "storageKey": null
                   }
                 ],
-                "storageKey": "orderConnection(first:10)"
-              },
-              (v2/*: any*/)
+                "storageKey": null
+              }
             ],
-            "storageKey": "conversation(id:\"test-id\")"
+            "storageKey": "orders(first:1,mode:\"OFFER\",sort:\"UPDATED_AT_DESC\",states:[\"SUBMITTED\"])"
           },
-          (v2/*: any*/)
+          (v0/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "8c09166829e2bf5c86b90c386fec7ab9",
+    "cacheID": "81d3b590206adef98199c9443c1eb666",
     "id": null,
     "metadata": {},
     "name": "SubmittedOrderModal_Test_Query",
     "operationKind": "query",
-    "text": "query SubmittedOrderModal_Test_Query {\n  me {\n    conversation(id: \"test-id\") {\n      orderConnection(first: 10) {\n        edges {\n          node {\n            __typename\n            ...SubmittedOrderModal_order\n            id\n          }\n        }\n      }\n      id\n    }\n    id\n  }\n}\n\nfragment SubmittedOrderModal_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  mode\n  stateExpiresAt(format: \"MMM D\")\n}\n"
+    "text": "query SubmittedOrderModal_Test_Query {\n  me {\n    ...SubmittedOrderModal_me\n    id\n  }\n}\n\nfragment SubmittedOrderModal_me on Me {\n  orders(states: [SUBMITTED], mode: OFFER, first: 1, sort: UPDATED_AT_DESC) {\n    edges {\n      node {\n        __typename\n        stateExpiresAt(format: \"MMM D\")\n        lineItems {\n          edges {\n            node {\n              artwork {\n                slug\n                id\n              }\n              id\n            }\n          }\n        }\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '6ad0337dc2a55675782a9520ef120597';
+(node as any).hash = '5123f11edbc981c9aa0d45575fb866ab';
 export default node;
