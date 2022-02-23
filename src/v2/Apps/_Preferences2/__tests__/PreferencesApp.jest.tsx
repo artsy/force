@@ -8,6 +8,24 @@ describe("PreferencesApp", () => {
     expect(screen.getByText("Preferences Center")).toBeInTheDocument()
   })
 
+  it("has disabled buttons until a change is made", () => {
+    render(<PreferencesApp></PreferencesApp>)
+
+    // eslint-disable-next-line testing-library/no-node-access
+    let saveButton = screen.getByText("Save").closest("button")
+    // eslint-disable-next-line testing-library/no-node-access
+    let cancelButton = screen.getByText("Cancel").closest("button")
+    let checkboxes = screen.getAllByRole("checkbox")
+
+    expect(saveButton).toBeDisabled()
+    expect(cancelButton).toBeDisabled()
+
+    fireEvent.click(checkboxes[0])
+
+    expect(saveButton).toBeEnabled()
+    expect(cancelButton).toBeEnabled()
+  })
+
   it("allows user to uncheck all boxes with unsubscribe from all", () => {
     render(<PreferencesApp></PreferencesApp>)
 
