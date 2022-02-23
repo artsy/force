@@ -4,26 +4,53 @@ import { RegisterButton_sale } from "v2/__generated__/RegisterButton_sale.graphq
 import { RegisterButton_me } from "v2/__generated__/RegisterButton_me.graphql"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import createLogger from "v2/Utils/logger"
-import { useTracking } from "v2/System/Analytics/useTracking"
+import { openAuthModal } from "v2/Utils/openAuthModal"
+import { ContextModule, Intent } from "@artsy/cohesion"
+import { mediator } from "lib/mediator"
+import { useRouter } from "v2/System/Router/useRouter"
+import { useAuctionTracking } from "../../Hooks/useAuctionTracking"
 
-const logger = createLogger("Auctions/RegisterButton.tsx")
+const logger = createLogger("RegisterButton")
 
-interface RegisterButtonProps {
+export interface RegisterButtonProps {
   me: RegisterButton_me
   sale: RegisterButton_sale
 }
 
 export const RegisterButton: React.FC<RegisterButtonProps> = ({ me, sale }) => {
-  const { trackEvent } = useTracking()
+  const { router } = useRouter()
+  const { tracking } = useAuctionTracking()
+
   const { conditions, userLacksIdentityVerification } = computeConditions({
     sale,
     me,
   })
 
+  const checkRegistrationStatus = () => {
+    const saleURL = `/auction2/${sale.slug}`
+
+    if (!me) {
+      openAuthModal(mediator, {
+        redirectTo: `${saleURL}/register`,
+        intent: Intent.registerToBid,
+        copy: "Sign up to bid on artworks",
+        contextModule: ContextModule.auctionSidebar,
+      })
+
+      // Register
+    } else if (!me.hasCreditCards) {
+      router.push(`${saleURL}/register`)
+
+      // Confirm Registration
+    } else {
+      router.push(`${saleURL}/confirm-registration`)
+    }
+  }
+
   const handleClick = () => {
-    trackEvent({
-      // TODO
-    })
+    checkRegistrationStatus()
+
+    tracking.registerButtonClick()
   }
 
   switch (true) {
@@ -97,6 +124,7 @@ export const RegisterButton: React.FC<RegisterButtonProps> = ({ me, sale }) => {
             )
           }
           onClick={() => {
+            checkRegistrationStatus()
             // TODO: wire up registration clicks
             // https://github.com/artsy/force/blob/f0b90ff8272bd3bd7a4508069e841730c0a04dd0/src/desktop/apps/auction/components/DOM.js#L81
           }}
@@ -169,13 +197,14 @@ const ButtonAction: React.FC<{
   onClick?: () => void
   title: string
   to?: string
-}> = ({ description = false, disabled, title, to }) => {
+}> = ({ description = false, disabled, title, to, onClick }) => {
   return (
     <Flex flexDirection="column" data-testid="RegisterButton">
       <Button
         // @ts-ignore
         as={RouterLink}
         to={to}
+        onClick={onClick}
         disabled={disabled}
       >
         {title}
@@ -194,6 +223,7 @@ export const RegisterButtonFragmentContainer = createFragmentContainer(
     me: graphql`
       fragment RegisterButton_me on Me {
         identityVerified
+        hasCreditCards
         pendingIdentityVerification {
           internalID
         }

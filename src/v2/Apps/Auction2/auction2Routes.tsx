@@ -1,6 +1,7 @@
 import loadable from "@loadable/component"
 import { graphql } from "relay-runtime"
 import { AppRouteConfig } from "v2/System/Router/Route"
+import { ARTWORK_FILTER_INPUT_ARGS } from "./Components/AuctionArtworkFilter"
 
 const Auction2App = loadable(
   () => import(/* webpackChunkName: "auction2Bundle" */ "./Auction2App"),
@@ -8,109 +9,141 @@ const Auction2App = loadable(
     resolveComponent: component => component.Auction2AppFragmentContainer,
   }
 )
-const ArtworksRoute = loadable(
+const RegistrationRoute = loadable(
   () =>
     import(
-      /* webpackChunkName: "auction2Bundle" */ "./Routes/Artworks/Auction2ArtworksRoute"
+      /* webpackChunkName: "auction2Bundle" */ "./Routes/Auction2RegistrationRoute"
     ),
   {
     resolveComponent: component =>
-      component.Auction2ArtworksRouteFragmentContainer,
+      component.Auction2RegistrationRouteFragmentContainer,
   }
 )
 const ConfirmBidRoute = loadable(
   () =>
     import(
-      /* webpackChunkName: "auction2Bundle" */ "./Routes/ConfirmBid/Auction2ConfirmBidRoute"
+      /* webpackChunkName: "auction2Bundle" */ "./Routes/Bid/Auction2BidRoute"
     ),
   {
-    resolveComponent: component => component.Auction2ConfirmBidRoute,
+    resolveComponent: component => component.Auction2BidRouteFragmentContainer,
   }
 )
 const ConfirmRegistrationRoute = loadable(
   () =>
     import(
-      /* webpackChunkName: "auction2Bundle" */ "./Routes/ConfirmRegistration/Auction2ConfirmRegistrationRoute"
+      /* webpackChunkName: "auction2Bundle" */ "./Routes/Auction2ConfirmRegistrationRoute"
     ),
   {
-    resolveComponent: component => component.Auction2ConfirmRegistrationRoute,
-  }
-)
-const RegistrationRoute = loadable(
-  () =>
-    import(
-      /* webpackChunkName: "auction2Bundle" */ "./Routes/Registration/Auction2RegistrationRoute"
-    ),
-  {
-    resolveComponent: component => component.Auction2RegistrationRoute,
-  }
-)
-const RegistrationFlowRoute = loadable(
-  () =>
-    import(
-      /* webpackChunkName: "auction2Bundle" */ "./Routes/RegistrationFlow/Auction2RegistrationFlowRoute"
-    ),
-  {
-    resolveComponent: component => component.Auction2RegistrationFlowRoute,
+    resolveComponent: component =>
+      component.Auction2ConfirmRegistrationRouteFragmentContainer,
   }
 )
 const AuctionFAQRoute = loadable(
   () =>
-    import(
-      /* webpackChunkName: "auction2Bundle" */ "./Routes/FAQ/Auction2FAQRoute"
-    ),
+    import(/* webpackChunkName: "auction2Bundle" */ "./Routes/AuctionFAQRoute"),
   {
-    resolveComponent: component => component.Auction2FAQRoute,
+    resolveComponent: component => component.AuctionFAQRouteFragmentContainer,
   }
 )
 
 export const auction2Routes: AppRouteConfig[] = [
   {
-    path: "/auction2/:slug",
+    path: "/auction2/:slug?",
     theme: "v3",
     getComponent: () => Auction2App,
     query: graphql`
-      query auction2Routes_TopLevelQuery($slug: String!) {
-        sale(id: $slug) @principalField {
-          ...Auction2App_sale
-        }
+      query auction2Routes_TopLevelQuery(
+        $input: FilterArtworksInput
+        $slug: String!
+      ) {
         me {
           ...Auction2App_me
         }
+        sale(id: $slug) @principalField {
+          ...Auction2App_sale
+        }
+        viewer {
+          ...Auction2App_viewer @arguments(input: $input)
+        }
       }
     `,
+    prepareVariables: (params, _props) => {
+      return {
+        slug: params.slug,
+        input: {
+          ...ARTWORK_FILTER_INPUT_ARGS,
+          saleID: params.slug,
+        },
+      }
+    },
     children: [
+      { path: "" },
       {
-        path: "/",
-        getComponent: () => ArtworksRoute,
+        path: "register",
+        getComponent: () => RegistrationRoute,
         query: graphql`
-          query auction2Routes_ArtworksRouteQuery($slug: String!) {
+          query auction2Routes_RegisterRouteQuery($slug: String!) {
+            me {
+              ...Auction2RegistrationRoute_me
+            }
             sale(id: $slug) @principalField {
-              ...Auction2ArtworksRoute_sale
+              ...Auction2RegistrationRoute_sale
             }
           }
         `,
       },
       {
-        path: "bid/:artworkID",
-        getComponent: () => ConfirmBidRoute,
-      },
-      {
-        path: "auction-registration",
-        getComponent: () => RegistrationRoute,
-      },
-      {
         path: "confirm-registration",
         getComponent: () => ConfirmRegistrationRoute,
+        query: graphql`
+          query auction2Routes_ConfirmRegistrationRouteQuery($slug: String!) {
+            me {
+              ...Auction2ConfirmRegistrationRoute_me
+            }
+            sale(id: $slug) @principalField {
+              ...Auction2ConfirmRegistrationRoute_sale
+            }
+          }
+        `,
       },
       {
-        path: "registration-flow",
-        getComponent: () => RegistrationFlowRoute,
+        path: "bid/:artworkSlug",
+        getComponent: () => ConfirmBidRoute,
+        ignoreScrollBehavior: true,
+        query: graphql`
+          query auction2Routes_BidRouteQuery(
+            $slug: String!
+            $artworkSlug: String!
+          ) {
+            sale(id: $slug) @principalField {
+              ...Auction2BidRoute_sale
+            }
+            artwork(id: $artworkSlug) {
+              ...Auction2BidRoute_artwork
+            }
+            me {
+              ...Auction2BidRoute_me
+            }
+          }
+        `,
+        prepareVariables: ({ slug, artworkSlug }) => {
+          return {
+            slug,
+            artworkSlug,
+          }
+        },
       },
     ],
   },
   {
     path: "/auction-faq2",
     getComponent: () => AuctionFAQRoute,
+    query: graphql`
+      query auction2Routes_AuctionFAQRouteQuery {
+        viewer {
+          ...AuctionFAQRoute_viewer
+        }
+      }
+    `,
   },
 ]

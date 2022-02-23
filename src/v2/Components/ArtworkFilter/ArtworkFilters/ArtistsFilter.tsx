@@ -13,6 +13,7 @@ import {
 import { FilterExpandable } from "./FilterExpandable"
 import { ShowMore } from "./ShowMore"
 import { useFilterLabelCountByKey } from "../Utils/useFilterLabelCountByKey"
+import { useSystemContext } from "v2/System"
 
 export interface ArtistsFilterProps {
   expanded?: boolean
@@ -78,12 +79,8 @@ const ArtistItem: React.FC<
   )
 }
 
-export const ArtistsFilter: FC<ArtistsFilterProps> = ({
-  expanded,
-  fairID,
-  relayEnvironment,
-  user,
-}) => {
+export const ArtistsFilter: FC<ArtistsFilterProps> = ({ expanded, fairID }) => {
+  const { relayEnvironment, user } = useSystemContext()
   const { aggregations, ...filterContext } = useArtworkFilterContext()
   const artists = aggregations?.find(agg => agg.slice === "ARTIST")
 

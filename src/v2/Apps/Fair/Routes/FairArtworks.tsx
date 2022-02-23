@@ -2,6 +2,7 @@ import { FairArtworks_fair } from "v2/__generated__/FairArtworks_fair.graphql"
 import { BaseArtworkFilter } from "v2/Components/ArtworkFilter"
 import {
   ArtworkFilterContextProvider,
+  Counts,
   SharedArtworkFilterContextProps,
 } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
 import { updateUrl } from "v2/Components/ArtworkFilter/Utils/urlBuilder"
@@ -13,7 +14,6 @@ import { WaysToBuyFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/Ways
 import { TimePeriodFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/TimePeriodFilter"
 import { ColorFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/ColorFilter"
 import { ArtistsFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/ArtistsFilter"
-import { useSystemContext } from "v2/System"
 import { useRouter } from "v2/System/Router/useRouter"
 import { AttributionClassFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/AttributionClassFilter"
 import { PartnersFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/PartnersFilter"
@@ -31,7 +31,6 @@ const FairArtworksFilter: React.FC<FairArtworksFilterProps> = props => {
   const { relay, fair } = props
   const { match } = useRouter()
   const { filtered_artworks, sidebarAggregations } = fair
-  const { relayEnvironment, user } = useSystemContext()
 
   const hasFilter = filtered_artworks && filtered_artworks.id
 
@@ -39,7 +38,7 @@ const FairArtworksFilter: React.FC<FairArtworksFilterProps> = props => {
   // we still want to render the rest of the page.
   if (!hasFilter) return null
 
-  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
+  // @ts-ignore
   const { counts } = filtered_artworks
 
   // TODO: You shouldn't have to pass `relayEnvironment` and `user` through below.
@@ -48,12 +47,7 @@ const FairArtworksFilter: React.FC<FairArtworksFilterProps> = props => {
   const Filters = (
     <>
       <PartnersFilter label="Exhibitors" expanded />
-      <ArtistsFilter
-        fairID={fair.internalID}
-        relayEnvironment={relayEnvironment}
-        user={user}
-        expanded
-      />
+      <ArtistsFilter fairID={fair.internalID} expanded />
       <AttributionClassFilter expanded />
       <MediumFilter expanded />
       <PriceRangeFilter expanded />
@@ -70,7 +64,7 @@ const FairArtworksFilter: React.FC<FairArtworksFilterProps> = props => {
   return (
     <ArtworkFilterContextProvider
       filters={match && match.location.query}
-      counts={counts}
+      counts={counts as Counts}
       sortOptions={[
         { text: "Default", value: "-decayed_merch" },
         { text: "Price (desc.)", value: "-has_price,-prices" },
