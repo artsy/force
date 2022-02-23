@@ -3,6 +3,7 @@ import { ArtistArtworkFilter_me } from "v2/__generated__/ArtistArtworkFilter_me.
 import { BaseArtworkFilter } from "v2/Components/ArtworkFilter"
 import {
   ArtworkFilterContextProvider,
+  ArtworkFiltersState,
   Counts,
   SharedArtworkFilterContextProps,
 } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
@@ -13,6 +14,7 @@ import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
 import { ZeroState } from "./ZeroState"
 import { useRouter } from "v2/System/Router/useRouter"
 import { SavedSearchEntity } from "v2/Components/SavedSearchAlert/types"
+import { getSupportedMetric } from "v2/Components/ArtworkFilter/Utils/metrics"
 
 interface ArtistArtworkFilterProps {
   aggregations: SharedArtworkFilterContextProps["aggregations"]
@@ -39,11 +41,17 @@ const ArtistArtworkFilter: React.FC<ArtistArtworkFilterProps> = props => {
     slug: artist.slug,
   }
 
+  const metric = getSupportedMetric(me.lengthUnitPreference)
+  const filters: ArtworkFiltersState = {
+    metric,
+    ...match.location.query,
+  }
+
   return (
     <ArtworkFilterContextProvider
       aggregations={aggregations}
       counts={artist.counts as Counts}
-      filters={match.location.query}
+      filters={filters}
       onChange={updateUrl}
       sortOptions={[
         { value: "-decayed_merch", text: "Default" },

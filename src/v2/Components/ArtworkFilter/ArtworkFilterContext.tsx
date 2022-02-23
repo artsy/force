@@ -8,8 +8,7 @@ import { isDefaultFilter } from "./Utils/isDefaultFilter"
 import { rangeToTuple } from "./Utils/rangeToTuple"
 import { paramsToCamelCase } from "./Utils/urlBuilder"
 import { updateUrl } from "v2/Components/ArtworkFilter/Utils/urlBuilder"
-
-export const DEFAULT_METRIC: Metric = "cm"
+import { DEFAULT_METRIC, Metric } from "./Utils/metrics"
 
 /**
  * Initial filter state
@@ -176,8 +175,6 @@ export enum SelectedFiltersCountsLabels {
   timePeriod = "majorPeriods",
   waysToBuy = "waysToBuy",
 }
-
-export type Metric = "in" | "cm"
 
 // TODO: merge or make a generic base of `ArtworkFilterContextProps` and `AuctionResultsFilterContextProps`.
 // Possibly just extend `BaseFilterContext` and make the former ones into `BaseFilterContext<ArtworkFilters>`

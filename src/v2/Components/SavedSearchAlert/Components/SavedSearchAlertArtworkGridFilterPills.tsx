@@ -3,7 +3,6 @@ import { Flex } from "@artsy/palette"
 import { isArray } from "lodash"
 import {
   ArtworkFilters,
-  DEFAULT_METRIC,
   initialArtworkFilterState,
   useArtworkFilterContext,
 } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
@@ -12,6 +11,7 @@ import { getSearchCriteriaFromFilters } from "../Utils/savedSearchCriteria"
 import { SavedSearchAlertPills } from "./SavedSearchAlertPills"
 import { FilterPill, SavedSearchEntity } from "../types"
 import { SavedSearchCreateAlertButton } from "./SavedSearchCreateAlertButton"
+import { DEFAULT_METRIC } from "v2/Components/ArtworkFilter/Utils/metrics"
 
 const PILL_HORIZONTAL_MARGIN_SIZE = 0.5
 

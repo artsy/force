@@ -1,19 +1,18 @@
 import { compact, find, flatten, keyBy } from "lodash"
-import {
-  Aggregations,
-  DEFAULT_METRIC,
-  Metric,
-} from "v2/Components/ArtworkFilter/ArtworkFilterContext"
+import { Aggregations } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
 import { checkboxValues } from "v2/Components/ArtworkFilter/ArtworkFilters/AttributionClassFilter"
 import { COLOR_OPTIONS } from "v2/Components/ArtworkFilter/ArtworkFilters/ColorFilter"
 import {
-  getMetricLabel,
   getPredefinedSizesByMetric,
   parseRange,
 } from "v2/Components/ArtworkFilter/ArtworkFilters/SizeFilter"
 import { getTimePeriodToDisplay } from "v2/Components/ArtworkFilter/ArtworkFilters/TimePeriodFilter"
 import { isCustomValue } from "v2/Components/ArtworkFilter/ArtworkFilters/Utils/isCustomValue"
 import { WAYS_TO_BUY_OPTIONS } from "v2/Components/ArtworkFilter/ArtworkFilters/WaysToBuyFilter"
+import {
+  DEFAULT_METRIC,
+  Metric,
+} from "v2/Components/ArtworkFilter/Utils/metrics"
 import { shouldExtractValueNamesFromAggregation } from "../constants"
 import {
   DefaultFilterPill,
@@ -56,7 +55,6 @@ export const extractSizeLabel = ({
   metric: Metric
 }) => {
   const [min, max] = parseRange(value, metric)!
-  const metricLabel = getMetricLabel(metric)
 
   let label
   if (max === "*") {
@@ -67,7 +65,7 @@ export const extractSizeLabel = ({
     label = `${min}-${max}`
   }
 
-  return `${prefix}: ${label} ${metricLabel}`
+  return `${prefix}: ${label} ${metric.toLowerCase()}`
 }
 
 const extractPriceLabel = (range: string) => {

@@ -15,8 +15,6 @@ import {
 } from "@artsy/palette"
 import {
   ArtworkFiltersState,
-  DEFAULT_METRIC,
-  Metric,
   SelectedFiltersCountsLabels,
   useArtworkFilterContext,
 } from "../ArtworkFilterContext"
@@ -26,6 +24,7 @@ import { FilterExpandable } from "./FilterExpandable"
 import { isCustomValue } from "./Utils/isCustomValue"
 import { useFilterLabelCountByKey } from "../Utils/useFilterLabelCountByKey"
 import { useMode } from "v2/Utils/Hooks/useMode"
+import { DEFAULT_METRIC, Metric } from "../Utils/metrics"
 
 type Numeric = number | "*"
 type CustomRange = Numeric[]
@@ -66,7 +65,7 @@ export const parseRange = (range: string = "", metric: Metric): Numeric[] => {
     if (s === "*") return s
     const value = parseFloat(s)
 
-    if (metric === "cm") {
+    if (metric === "CM") {
       return convertToCentimeters(value)
     }
 
@@ -89,15 +88,11 @@ const getValue = (value: CustomRange[number]) => {
 }
 
 export const getPredefinedSizesByMetric = (metric: Metric) => {
-  if (metric === "cm") {
+  if (metric === "CM") {
     return SIZES_IN_CENTIMETERS
   }
 
   return SIZES_IN_INCHES
-}
-
-export const getMetricLabel = (metric: Metric) => {
-  return metric === "cm" ? "cm" : "in"
 }
 
 export const getCustomSizeRangeInInches = (
@@ -106,7 +101,7 @@ export const getCustomSizeRangeInInches = (
 ) => {
   let sizes = customSize
 
-  if (sourceMetric === "cm") {
+  if (sourceMetric === "CM") {
     sizes = {
       width: convertRangeToInches(customSize.width),
       height: convertRangeToInches(customSize.height),
@@ -144,7 +139,7 @@ export const SizeFilter: React.FC<SizeFilterProps> = ({ expanded }) => {
   const [mode, setMode] = useMode<Mode>("resting")
 
   const predefinedSizes = getPredefinedSizesByMetric(metric)
-  const metricLabel = getMetricLabel(metric)
+  const metricLabel = metric.toLowerCase()
 
   const handleInputChange = (dimension: "height" | "width", index: number) => ({
     currentTarget: { value },
@@ -284,8 +279,8 @@ export const SizeFilter: React.FC<SizeFilterProps> = ({ expanded }) => {
           flexDirection="row"
           my={2}
         >
-          <Radio value="cm" label="cm" flex={1} />
-          <Radio value="in" label="in" flex={1} />
+          <Radio value="CM" label="cm" flex={1} />
+          <Radio value="IN" label="in" flex={1} />
         </RadioGroup>
 
         <Flex flexDirection="column">
