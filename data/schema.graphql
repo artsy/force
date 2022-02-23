@@ -9142,6 +9142,9 @@ type Me implements Node {
     liveSale: Boolean
     page: Int
     saleID: ID
+
+    # Same as saleID argument, but matches the argument type of `sale(id: 'foo')` root field
+    saleSlug: String
     size: Int
     sort: String
   ): SaleArtworksConnection
@@ -11680,6 +11683,9 @@ type Query {
     liveSale: Boolean
     page: Int
     saleID: ID
+
+    # Same as saleID argument, but matches the argument type of `sale(id: 'foo')` root field
+    saleSlug: String
     size: Int
     sort: String
   ): SaleArtworksConnection
@@ -14529,6 +14535,9 @@ type Viewer {
     liveSale: Boolean
     page: Int
     saleID: ID
+
+    # Same as saleID argument, but matches the argument type of `sale(id: 'foo')` root field
+    saleSlug: String
     size: Int
     sort: String
   ): SaleArtworksConnection
