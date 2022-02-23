@@ -30,7 +30,11 @@ export const SavedSearchAlertArtworkGridFilterPills: React.FC<SavedSearchAlertAr
     savedSearchEntity.id,
     filters ?? {}
   )
-  const pills = extractPills(criteria, aggregations, savedSearchEntity)
+  const pills = extractPills({
+    criteria,
+    aggregations,
+    entity: savedSearchEntity,
+  })
 
   const removePill = (pill: FilterPill) => {
     if (pill.isDefault) {

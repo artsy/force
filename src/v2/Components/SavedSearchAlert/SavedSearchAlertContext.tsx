@@ -43,7 +43,11 @@ export const SavedSearchAlertContextProvider: React.FC<SavedSearchAlertContextPr
 }) => {
   const [criteria, setCriteria] = useState(criteriaFromArgument)
   const [isCriteriaChanged, setIsCriteriaChanged] = useState(false)
-  const pills = extractPills(criteria, aggregations, entity)
+  const pills = extractPills({
+    criteria,
+    aggregations,
+    entity,
+  })
 
   const removeCriteriaValue = (
     key: SearchCriteriaAttributeKeys,
