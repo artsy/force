@@ -1,5 +1,4 @@
-import { useEffect, useState } from "react"
-import { useMemo, FormEvent } from "react"
+import { FC, useEffect, useState, useMemo, FormEvent } from "react"
 import {
   Box,
   Button,
@@ -73,7 +72,7 @@ const parseRange = (range: string = DEFAULT_PRICE_RANGE) => {
   })
 }
 
-const parseSliderRange = (range: (string | number)[]) => {
+const parseSliderRange = (range: CustomRange) => {
   return range.map((value, index) => {
     if (value === "*") {
       return DEFAULT_RANGE[index]
@@ -103,7 +102,7 @@ export interface PriceRangeFilterProps {
 
 type Mode = "resting" | "done"
 
-export const PriceRangeFilterOld: React.FC<PriceRangeFilterProps> = ({
+export const PriceRangeFilterOld: FC<PriceRangeFilterProps> = ({
   expanded,
 }) => {
   const [mode, setMode] = useMode<Mode>("resting")
@@ -287,14 +286,19 @@ export const PriceRangeFilterOld: React.FC<PriceRangeFilterProps> = ({
   )
 }
 
-export const PriceRangeFilterNew: React.FC<PriceRangeFilterProps> = ({
+export const PriceRangeFilterNew: FC<PriceRangeFilterProps> = ({
   expanded,
 }) => {
-  const { currentlySelectedFilters, setFilter } = useArtworkFilterContext()
-  const { priceRange } = currentlySelectedFilters?.() ?? {}
+  const {
+    shouldStageFilterChanges,
+    currentlySelectedFilters,
+    setFilter,
+  } = useArtworkFilterContext()
+  const { priceRange, reset } = currentlySelectedFilters?.() ?? {}
   const [range, setRange] = useState(parseRange(priceRange))
   const sliderRange = parseSliderRange(range)
   const [minValue, maxValue] = range
+  const [defaultMinValue, defaultMaxValue] = DEFAULT_RANGE
 
   const filtersCount = useFilterLabelCountByKey(
     SelectedFiltersCountsLabels.priceRange
@@ -306,8 +310,15 @@ export const PriceRangeFilterNew: React.FC<PriceRangeFilterProps> = ({
   const setFilterDobounced = useMemo(
     () => debounce(setFilter, DEBOUNCE_DELAY),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    []
+    [shouldStageFilterChanges]
   )
+
+  useEffect(() => {
+    // if price filter or filters state is being reset, then also clear local input state
+    if (reset || priceRange === DEFAULT_PRICE_RANGE) {
+      setRange(DEFAULT_CUSTOM_RANGE)
+    }
+  }, [reset, priceRange])
 
   const updateRange = (updatedRange: (number | "*")[]) => {
     setRange(updatedRange)
@@ -376,8 +387,8 @@ export const PriceRangeFilterNew: React.FC<PriceRangeFilterProps> = ({
       <Box mt={4}>
         <Box mx={RANGE_DOT_SIZE / 2}>
           <Range
-            min={DEFAULT_RANGE[0]}
-            max={DEFAULT_RANGE[1]}
+            min={defaultMinValue}
+            max={defaultMaxValue}
             value={sliderRange}
             allowCross={false}
             onChange={handleSliderValueChange}
@@ -390,10 +401,10 @@ export const PriceRangeFilterNew: React.FC<PriceRangeFilterProps> = ({
 
         <Flex justifyContent="space-between" mt={2}>
           <Text variant="xs" color="black60">
-            ${DEFAULT_RANGE[0]}
+            ${defaultMinValue}
           </Text>
           <Text variant="xs" color="black60">
-            ${DEFAULT_RANGE[1]}+
+            ${defaultMaxValue}+
           </Text>
         </Flex>
       </Box>
@@ -401,7 +412,7 @@ export const PriceRangeFilterNew: React.FC<PriceRangeFilterProps> = ({
   )
 }
 
-export const PriceRangeFilter: React.FC<PriceRangeFilterProps> = props => {
+export const PriceRangeFilter: FC<PriceRangeFilterProps> = props => {
   if (true) {
     return <PriceRangeFilterNew {...props} />
   }
