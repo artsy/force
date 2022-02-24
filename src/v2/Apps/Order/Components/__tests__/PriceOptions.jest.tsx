@@ -223,28 +223,28 @@ describe("PriceOptions", () => {
       expect(radios).toHaveLength(4)
     })
     it("correctly formats values", () => {
-      expect(radios[0]).toHaveTextContent("€80")
-      expect(radios[1]).toHaveTextContent("€85")
-      expect(radios[2]).toHaveTextContent("€90")
+      expect(radios[0]).toHaveTextContent("€80.00")
+      expect(radios[1]).toHaveTextContent("€85.00")
+      expect(radios[2]).toHaveTextContent("€90.00")
       expect(radios[3]).toHaveTextContent("Different amount")
     })
     it("correctly tracks the clicking of an option", () => {
       fireEvent.click(radios[0])
       expect(trackEvent).toHaveBeenLastCalledWith(
         expect.objectContaining(
-          getTrackingObject("20% below the list price", 80, "€")
+          getTrackingObject("20% below the list price", 80, "EUR")
         )
       )
       fireEvent.click(radios[1])
       expect(trackEvent).toHaveBeenLastCalledWith(
         expect.objectContaining(
-          getTrackingObject("15% below the list price", 85, "€")
+          getTrackingObject("15% below the list price", 85, "EUR")
         )
       )
       fireEvent.click(radios[2])
       expect(trackEvent).toHaveBeenLastCalledWith(
         expect.objectContaining(
-          getTrackingObject("10% below the list price", 90, "€")
+          getTrackingObject("10% below the list price", 90, "EUR")
         )
       )
       fireEvent.click(radios[3])
