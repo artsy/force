@@ -9,6 +9,7 @@ import {
   Radio,
   RadioGroup,
   Spacer,
+  Text,
   useThemeConfig,
 } from "@artsy/palette"
 import {
@@ -340,26 +341,36 @@ export const PriceRangeFilterNew: React.FC<PriceRangeFilterProps> = ({
 
   return (
     <FilterExpandable label={label} expanded={hasSelection || expanded}>
-      <Flex alignItems="flex-end">
-        <NumericInput
-          label="$USD"
-          name="price_min"
-          min="0"
-          step="100"
-          value={getValue(minValue)}
-          onChange={handleInputValueChange(0)}
-        />
+      <Flex alignItems="flex-end" mt={2}>
+        <Box flex={1}>
+          <Text variant="xs" mb={0.5}>
+            Min
+          </Text>
+          <NumericInput
+            label="$USD"
+            name="price_min"
+            min="0"
+            step="100"
+            value={getValue(minValue)}
+            onChange={handleInputValueChange(0)}
+          />
+        </Box>
 
-        <Spacer mx={0.5} />
+        <Spacer mx={2} />
 
-        <NumericInput
-          label="$USD"
-          name="price_max"
-          min="0"
-          step="100"
-          value={getValue(maxValue)}
-          onChange={handleInputValueChange(1)}
-        />
+        <Box flex={1}>
+          <Text variant="xs" mb={0.5}>
+            Max
+          </Text>
+          <NumericInput
+            label="$USD"
+            name="price_max"
+            min="0"
+            step="100"
+            value={getValue(maxValue)}
+            onChange={handleInputValueChange(1)}
+          />
+        </Box>
       </Flex>
 
       <Box my={2}>
