@@ -373,18 +373,29 @@ export const PriceRangeFilterNew: React.FC<PriceRangeFilterProps> = ({
         </Box>
       </Flex>
 
-      <Box my={2} mx={RANGE_DOT_SIZE / 2}>
-        <Range
-          min={DEFAULT_RANGE[0]}
-          max={DEFAULT_RANGE[1]}
-          value={sliderRange}
-          allowCross={false}
-          onChange={handleSliderValueChange}
-          railStyle={{
-            left: `-${RANGE_DOT_SIZE / 2}px`,
-            width: `calc(100% + ${RANGE_DOT_SIZE}px)`,
-          }}
-        />
+      <Box mt={4}>
+        <Box mx={RANGE_DOT_SIZE / 2}>
+          <Range
+            min={DEFAULT_RANGE[0]}
+            max={DEFAULT_RANGE[1]}
+            value={sliderRange}
+            allowCross={false}
+            onChange={handleSliderValueChange}
+            railStyle={{
+              left: `-${RANGE_DOT_SIZE / 2}px`,
+              width: `calc(100% + ${RANGE_DOT_SIZE}px)`,
+            }}
+          />
+        </Box>
+
+        <Flex justifyContent="space-between" mt={2}>
+          <Text variant="xs" color="black60">
+            ${DEFAULT_RANGE[0]}
+          </Text>
+          <Text variant="xs" color="black60">
+            ${DEFAULT_RANGE[1]}+
+          </Text>
+        </Flex>
       </Box>
     </FilterExpandable>
   )
