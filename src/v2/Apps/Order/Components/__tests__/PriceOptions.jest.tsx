@@ -249,16 +249,36 @@ describe("PriceOptions", () => {
       )
     })
   })
+}),
   describe("Error Handling", () => {
     beforeEach(() => {
       showError.mockReturnValueOnce(false).mockReturnValueOnce(true)
       renderWithRelay({
-        Artwork: () => ({
-          currency: "AUD",
-          isPriceRange: false,
-          listPrice: {
-            major: 99,
-          },
+        CommerceOrderConnectionWithTotalCount: () => ({
+          edges: [
+            {
+              node: {
+                internalID: "ID",
+                currencyCode: "AUD",
+                lineItems: {
+                  edges: [
+                    {
+                      node: {
+                        artworkOrEditionSet: {
+                          __typename: "Artwork",
+                          displayPriceRange: false,
+                          listPrice: {
+                            __typename: "Money",
+                            major: 99,
+                          },
+                        },
+                      },
+                    },
+                  ],
+                },
+              },
+            },
+          ],
         }),
       })
       radios = screen.getAllByRole("radio")
@@ -280,4 +300,3 @@ describe("PriceOptions", () => {
       expect(radios[2]).toHaveTextContent("A$89.00") // %90 would be A$89.10
     })
   })
-})
