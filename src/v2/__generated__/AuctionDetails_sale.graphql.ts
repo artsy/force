@@ -13,6 +13,7 @@ export type AuctionDetails_sale = {
     readonly endAt: string | null;
     readonly description: string | null;
     readonly href: string | null;
+    readonly isClosed: boolean | null;
     readonly " $fragmentRefs": FragmentRefs<"RegisterButton_sale" | "AuctionInfoSidebar_sale">;
     readonly " $refType": "AuctionDetails_sale";
 };
@@ -93,6 +94,13 @@ const node: ReaderFragment = {
       "storageKey": null
     },
     {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "isClosed",
+      "storageKey": null
+    },
+    {
       "args": null,
       "kind": "FragmentSpread",
       "name": "RegisterButton_sale"
@@ -106,5 +114,5 @@ const node: ReaderFragment = {
   "type": "Sale",
   "abstractKey": null
 };
-(node as any).hash = '07006232da1fc4595fbcff9aaf697ceb';
+(node as any).hash = '2ff3e2f5eb66bfbd97e2a18d571a1f2d';
 export default node;
