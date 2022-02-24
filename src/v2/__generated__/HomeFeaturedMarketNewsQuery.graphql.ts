@@ -8,7 +8,7 @@ export type HomeFeaturedMarketNewsQueryVariables = {};
 export type HomeFeaturedMarketNewsQueryResponse = {
     readonly articles: ReadonlyArray<{
         readonly " $fragmentRefs": FragmentRefs<"HomeFeaturedMarketNews_articles">;
-    } | null> | null;
+    }>;
 };
 export type HomeFeaturedMarketNewsQuery = {
     readonly response: HomeFeaturedMarketNewsQueryResponse;
