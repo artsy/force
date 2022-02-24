@@ -12,6 +12,10 @@ const onFocus = jest.fn()
 const trackEvent = jest.fn()
 const showError = jest.fn().mockReturnValue(false)
 
+// let listPrice
+// let priceRange
+// let currency
+
 const mockUseTracking = useTracking as jest.Mock
 
 jest.mock("v2/Utils/Hooks/useMatchMedia", () => ({
@@ -19,22 +23,26 @@ jest.mock("v2/Utils/Hooks/useMatchMedia", () => ({
 }))
 
 const { renderWithRelay } = setupTestWrapperTL<PriceOptions_Test_Query>({
-  Component: props => (
-    <PriceOptionsFragmentContainer
-      artwork={props.artwork}
-      order={props.order!}
-      onChange={onChange}
-      onFocus={onFocus}
-      showError={showError()}
-    />
-  ),
+  Component: props => {
+    return (
+      <PriceOptionsFragmentContainer
+        order={props.me!.orders!.edges![0]!.node!}
+        onChange={onChange}
+        onFocus={onFocus}
+        showError={showError()}
+      />
+    )
+  },
   query: graphql`
     query PriceOptions_Test_Query {
-      artwork(id: "artwork-id") {
-        ...PriceOptions_artwork
-      }
-      order: commerceOrder(id: "order-id") {
-        ...PriceOptions_order
+      me {
+        orders(first: 10) {
+          edges {
+            node {
+              ...PriceOptions_order
+            }
+          }
+        }
       }
     }
   `,
@@ -64,18 +72,36 @@ describe("PriceOptions", () => {
   describe("Range", () => {
     beforeEach(() => {
       renderWithRelay({
-        Artwork: () => ({
-          priceCurrency: "USD",
-          isPriceRange: true,
-          listPrice: {
-            __typename: "PriceRange",
-            maxPrice: {
-              major: 200,
+        CommerceOrderConnectionWithTotalCount: () => ({
+          edges: [
+            {
+              node: {
+                internalID: "ID",
+                currencyCode: "USD",
+                lineItems: {
+                  edges: [
+                    {
+                      node: {
+                        artworkOrEditionSet: {
+                          __typename: "Artwork",
+                          displayPriceRange: true,
+                          listPrice: {
+                            __typename: "PriceRange",
+                            maxPrice: {
+                              major: 200,
+                            },
+                            minPrice: {
+                              major: 100,
+                            },
+                          },
+                        },
+                      },
+                    },
+                  ],
+                },
+              },
             },
-            minPrice: {
-              major: 100,
-            },
-          },
+          ],
         }),
       })
       radios = screen.getAllByRole("radio")
@@ -163,48 +189,67 @@ describe("PriceOptions", () => {
   describe("Exact", () => {
     beforeEach(() => {
       renderWithRelay({
-        Artwork: () => ({
-          priceCurrency: "EUR",
-          isPriceRange: false,
-          listPrice: {
-            __typename: "Money",
-            major: 100,
-          },
+        CommerceOrderConnectionWithTotalCount: () => ({
+          edges: [
+            {
+              node: {
+                internalID: "ID",
+                currencyCode: "€",
+                lineItems: {
+                  edges: [
+                    {
+                      node: {
+                        artworkOrEditionSet: {
+                          __typename: "Artwork",
+                          displayPriceRange: false,
+                          listPrice: {
+                            __typename: "Money",
+                            major: 100,
+                          },
+                        },
+                      },
+                    },
+                  ],
+                },
+              },
+            },
+          ],
         }),
       })
       radios = screen.getAllByRole("radio")
     })
     it("renders all radio options", () => {
+      const radios = screen.findByRole("radio")
       expect(radios).toHaveLength(4)
     })
     it("correctly formats values", () => {
-      expect(radios[0]).toHaveTextContent("€80.00")
-      expect(radios[1]).toHaveTextContent("€85.00")
-      expect(radios[2]).toHaveTextContent("€90.00")
+      expect(radios[0]).toHaveTextContent("€80")
+      expect(radios[1]).toHaveTextContent("€85")
+      expect(radios[2]).toHaveTextContent("€90")
       expect(radios[3]).toHaveTextContent("Different amount")
     })
     it("correctly tracks the clicking of an option", () => {
       fireEvent.click(radios[0])
       expect(trackEvent).toHaveBeenLastCalledWith(
         expect.objectContaining(
-          getTrackingObject("20% below the list price", 80, "EUR")
+          getTrackingObject("20% below the list price", 80, "€")
         )
       )
       fireEvent.click(radios[1])
       expect(trackEvent).toHaveBeenLastCalledWith(
         expect.objectContaining(
-          getTrackingObject("15% below the list price", 85, "EUR")
+          getTrackingObject("15% below the list price", 85, "€")
         )
       )
       fireEvent.click(radios[2])
       expect(trackEvent).toHaveBeenLastCalledWith(
         expect.objectContaining(
-          getTrackingObject("10% below the list price", 90, "EUR")
+          getTrackingObject("10% below the list price", 90, "€")
         )
       )
       fireEvent.click(radios[3])
       expect(trackEvent).toHaveBeenCalledWith(
-        expect.objectContaining(getTrackingObject("Different amount", 0, "EUR"))
+        expect.objectContaining(getTrackingObject("Different amount", 0, "€"))
       )
     })
   })
@@ -213,10 +258,9 @@ describe("PriceOptions", () => {
       showError.mockReturnValueOnce(false).mockReturnValueOnce(true)
       renderWithRelay({
         Artwork: () => ({
-          priceCurrency: "AUD",
+          currency: "AUD",
           isPriceRange: false,
           listPrice: {
-            __typename: "Money",
             major: 99,
           },
         }),

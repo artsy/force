@@ -10,30 +10,24 @@ import {
   useTracking,
 } from "v2/System/Analytics"
 import { ActionType, ClickedOfferOption, PageOwnerType } from "@artsy/cohesion"
-import { PriceOptions_artwork } from "v2/__generated__/PriceOptions_artwork.graphql"
 import { PriceOptions_order } from "v2/__generated__/PriceOptions_order.graphql"
 import { appendCurrencySymbol } from "../Utils/currencyUtils"
 import { useScrollTo } from "v2/Utils/Hooks/useScrollTo"
-import { OfferItem, PriceRange, Price } from "../Utils/offerItemExtractor"
+import { PriceRange, Price } from "../Utils/offerItemExtractor"
+import { getOfferItemFromOrder } from "v2/Apps/Order/Utils/offerItemExtractor"
 
 export interface PriceOptionsProps {
   onChange: (value: number) => void
   onFocus: () => void
   showError?: boolean
   order: PriceOptions_order
-  listPrice: OfferItem["listPrice"]
-  isPriceRange: boolean | null
-  currency: PriceOptions_artwork["priceCurrency"]
 }
 
 export const PriceOptions: React.FC<PriceOptionsProps> = ({
   onChange,
   onFocus,
   showError,
-  listPrice,
   order,
-  isPriceRange,
-  currency,
 }) => {
   const tracking = useTracking()
   const { contextPageOwnerId, contextPageOwnerType } = useAnalyticsContext()
@@ -62,7 +56,7 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
       action: ActionType.clickedOfferOption,
       context_page_owner_id: contextPageOwnerId!,
       context_page_owner_type: contextPageOwnerType as PageOwnerType,
-      currency: currency!,
+      currency: order.currencyCode,
       order_id: order.internalID,
       flow: AnalyticsSchema.Flow.MakeOffer,
       offer,
@@ -74,12 +68,15 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
   const asCurrency = (value: number) =>
     appendCurrencySymbol(
       value?.toLocaleString("en-US", {
-        currency: currency!,
+        currency: order.currencyCode,
         minimumFractionDigits: 2,
         style: "currency",
       }),
-      currency!
+      order.currencyCode!
     )
+  const offerItem = getOfferItemFromOrder(order.lineItems)
+  const isPriceRange = offerItem?.displayPriceRange
+  const listPrice = offerItem?.listPrice
 
   const getRangeOptions = () => {
     const listPriceRange = listPrice as PriceRange
@@ -193,15 +190,53 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
 export const PriceOptionsFragmentContainer = createFragmentContainer(
   PriceOptions,
   {
-    artwork: graphql`
-      fragment PriceOptions_artwork on Artwork {
-        priceCurrency
-        isPriceRange
-      }
-    `,
     order: graphql`
       fragment PriceOptions_order on CommerceOrder {
         internalID
+        currencyCode
+        lineItems {
+          edges {
+            node {
+              artworkOrEditionSet {
+                __typename
+                ... on Artwork {
+                  displayPriceRange
+                  listPrice {
+                    ... on Money {
+                      major
+                    }
+                    ... on PriceRange {
+                      maxPrice {
+                        major
+                      }
+                      minPrice {
+                        major
+                      }
+                    }
+                  }
+                }
+                ... on EditionSet {
+                  internalID
+                  price
+                  displayPriceRange
+                  listPrice {
+                    ... on Money {
+                      major
+                    }
+                    ... on PriceRange {
+                      maxPrice {
+                        major
+                      }
+                      minPrice {
+                        major
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     `,
   }

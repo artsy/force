@@ -6,11 +6,14 @@ import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type PriceOptions_Test_QueryVariables = {};
 export type PriceOptions_Test_QueryResponse = {
-    readonly artwork: {
-        readonly " $fragmentRefs": FragmentRefs<"PriceOptions_artwork">;
-    } | null;
-    readonly order: {
-        readonly " $fragmentRefs": FragmentRefs<"PriceOptions_order">;
+    readonly me: {
+        readonly orders: {
+            readonly edges: ReadonlyArray<{
+                readonly node: {
+                    readonly " $fragmentRefs": FragmentRefs<"PriceOptions_order">;
+                } | null;
+            } | null> | null;
+        } | null;
     } | null;
 };
 export type PriceOptions_Test_Query = {
@@ -22,25 +25,75 @@ export type PriceOptions_Test_Query = {
 
 /*
 query PriceOptions_Test_Query {
-  artwork(id: "artwork-id") {
-    ...PriceOptions_artwork
+  me {
+    orders(first: 10) {
+      edges {
+        node {
+          __typename
+          ...PriceOptions_order
+          id
+        }
+      }
+    }
     id
   }
-  order: commerceOrder(id: "order-id") {
-    __typename
-    ...PriceOptions_order
-    id
-  }
-}
-
-fragment PriceOptions_artwork on Artwork {
-  priceCurrency
-  isPriceRange
 }
 
 fragment PriceOptions_order on CommerceOrder {
   __isCommerceOrder: __typename
   internalID
+  currencyCode
+  lineItems {
+    edges {
+      node {
+        artworkOrEditionSet {
+          __typename
+          ... on Artwork {
+            displayPriceRange
+            listPrice {
+              __typename
+              ... on Money {
+                major
+              }
+              ... on PriceRange {
+                maxPrice {
+                  major
+                }
+                minPrice {
+                  major
+                }
+              }
+            }
+          }
+          ... on EditionSet {
+            internalID
+            price
+            displayPriceRange
+            listPrice {
+              __typename
+              ... on Money {
+                major
+              }
+              ... on PriceRange {
+                maxPrice {
+                  major
+                }
+                minPrice {
+                  major
+                }
+              }
+            }
+            id
+          }
+          ... on Node {
+            __isNode: __typename
+            id
+          }
+        }
+        id
+      }
+    }
+  }
 }
 */
 
@@ -48,18 +101,86 @@ const node: ConcreteRequest = (function(){
 var v0 = [
   {
     "kind": "Literal",
-    "name": "id",
-    "value": "artwork-id"
+    "name": "first",
+    "value": 10
   }
 ],
-v1 = [
-  {
-    "kind": "Literal",
-    "name": "id",
-    "value": "order-id"
-  }
-],
+v1 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "__typename",
+  "storageKey": null
+},
 v2 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "internalID",
+  "storageKey": null
+},
+v3 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "displayPriceRange",
+  "storageKey": null
+},
+v4 = [
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "major",
+    "storageKey": null
+  }
+],
+v5 = {
+  "alias": null,
+  "args": null,
+  "concreteType": null,
+  "kind": "LinkedField",
+  "name": "listPrice",
+  "plural": false,
+  "selections": [
+    (v1/*: any*/),
+    {
+      "kind": "InlineFragment",
+      "selections": (v4/*: any*/),
+      "type": "Money",
+      "abstractKey": null
+    },
+    {
+      "kind": "InlineFragment",
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "Money",
+          "kind": "LinkedField",
+          "name": "maxPrice",
+          "plural": false,
+          "selections": (v4/*: any*/),
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "Money",
+          "kind": "LinkedField",
+          "name": "minPrice",
+          "plural": false,
+          "selections": (v4/*: any*/),
+          "storageKey": null
+        }
+      ],
+      "type": "PriceRange",
+      "abstractKey": null
+    }
+  ],
+  "storageKey": null
+},
+v6 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -75,35 +196,52 @@ return {
     "selections": [
       {
         "alias": null,
-        "args": (v0/*: any*/),
-        "concreteType": "Artwork",
+        "args": null,
+        "concreteType": "Me",
         "kind": "LinkedField",
-        "name": "artwork",
+        "name": "me",
         "plural": false,
         "selections": [
           {
-            "args": null,
-            "kind": "FragmentSpread",
-            "name": "PriceOptions_artwork"
+            "alias": null,
+            "args": (v0/*: any*/),
+            "concreteType": "CommerceOrderConnectionWithTotalCount",
+            "kind": "LinkedField",
+            "name": "orders",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "CommerceOrderEdge",
+                "kind": "LinkedField",
+                "name": "edges",
+                "plural": true,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": null,
+                    "kind": "LinkedField",
+                    "name": "node",
+                    "plural": false,
+                    "selections": [
+                      {
+                        "args": null,
+                        "kind": "FragmentSpread",
+                        "name": "PriceOptions_order"
+                      }
+                    ],
+                    "storageKey": null
+                  }
+                ],
+                "storageKey": null
+              }
+            ],
+            "storageKey": "orders(first:10)"
           }
         ],
-        "storageKey": "artwork(id:\"artwork-id\")"
-      },
-      {
-        "alias": "order",
-        "args": (v1/*: any*/),
-        "concreteType": null,
-        "kind": "LinkedField",
-        "name": "commerceOrder",
-        "plural": false,
-        "selections": [
-          {
-            "args": null,
-            "kind": "FragmentSpread",
-            "name": "PriceOptions_order"
-          }
-        ],
-        "storageKey": "commerceOrder(id:\"order-id\")"
+        "storageKey": null
       }
     ],
     "type": "Query",
@@ -117,71 +255,155 @@ return {
     "selections": [
       {
         "alias": null,
-        "args": (v0/*: any*/),
-        "concreteType": "Artwork",
+        "args": null,
+        "concreteType": "Me",
         "kind": "LinkedField",
-        "name": "artwork",
+        "name": "me",
         "plural": false,
         "selections": [
           {
             "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "priceCurrency",
-            "storageKey": null
+            "args": (v0/*: any*/),
+            "concreteType": "CommerceOrderConnectionWithTotalCount",
+            "kind": "LinkedField",
+            "name": "orders",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "CommerceOrderEdge",
+                "kind": "LinkedField",
+                "name": "edges",
+                "plural": true,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": null,
+                    "kind": "LinkedField",
+                    "name": "node",
+                    "plural": false,
+                    "selections": [
+                      (v1/*: any*/),
+                      {
+                        "kind": "TypeDiscriminator",
+                        "abstractKey": "__isCommerceOrder"
+                      },
+                      (v2/*: any*/),
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "currencyCode",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "concreteType": "CommerceLineItemConnection",
+                        "kind": "LinkedField",
+                        "name": "lineItems",
+                        "plural": false,
+                        "selections": [
+                          {
+                            "alias": null,
+                            "args": null,
+                            "concreteType": "CommerceLineItemEdge",
+                            "kind": "LinkedField",
+                            "name": "edges",
+                            "plural": true,
+                            "selections": [
+                              {
+                                "alias": null,
+                                "args": null,
+                                "concreteType": "CommerceLineItem",
+                                "kind": "LinkedField",
+                                "name": "node",
+                                "plural": false,
+                                "selections": [
+                                  {
+                                    "alias": null,
+                                    "args": null,
+                                    "concreteType": null,
+                                    "kind": "LinkedField",
+                                    "name": "artworkOrEditionSet",
+                                    "plural": false,
+                                    "selections": [
+                                      (v1/*: any*/),
+                                      {
+                                        "kind": "InlineFragment",
+                                        "selections": [
+                                          (v3/*: any*/),
+                                          (v5/*: any*/)
+                                        ],
+                                        "type": "Artwork",
+                                        "abstractKey": null
+                                      },
+                                      {
+                                        "kind": "InlineFragment",
+                                        "selections": [
+                                          (v2/*: any*/),
+                                          {
+                                            "alias": null,
+                                            "args": null,
+                                            "kind": "ScalarField",
+                                            "name": "price",
+                                            "storageKey": null
+                                          },
+                                          (v3/*: any*/),
+                                          (v5/*: any*/),
+                                          (v6/*: any*/)
+                                        ],
+                                        "type": "EditionSet",
+                                        "abstractKey": null
+                                      },
+                                      {
+                                        "kind": "InlineFragment",
+                                        "selections": [
+                                          (v6/*: any*/)
+                                        ],
+                                        "type": "Node",
+                                        "abstractKey": "__isNode"
+                                      }
+                                    ],
+                                    "storageKey": null
+                                  },
+                                  (v6/*: any*/)
+                                ],
+                                "storageKey": null
+                              }
+                            ],
+                            "storageKey": null
+                          }
+                        ],
+                        "storageKey": null
+                      },
+                      (v6/*: any*/)
+                    ],
+                    "storageKey": null
+                  }
+                ],
+                "storageKey": null
+              }
+            ],
+            "storageKey": "orders(first:10)"
           },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "isPriceRange",
-            "storageKey": null
-          },
-          (v2/*: any*/)
+          (v6/*: any*/)
         ],
-        "storageKey": "artwork(id:\"artwork-id\")"
-      },
-      {
-        "alias": "order",
-        "args": (v1/*: any*/),
-        "concreteType": null,
-        "kind": "LinkedField",
-        "name": "commerceOrder",
-        "plural": false,
-        "selections": [
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "__typename",
-            "storageKey": null
-          },
-          {
-            "kind": "TypeDiscriminator",
-            "abstractKey": "__isCommerceOrder"
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "internalID",
-            "storageKey": null
-          },
-          (v2/*: any*/)
-        ],
-        "storageKey": "commerceOrder(id:\"order-id\")"
+        "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "69de5745c01500b591d25bfc88ce759a",
+    "cacheID": "6bc1f658deaf9767241632c100a69e30",
     "id": null,
     "metadata": {},
     "name": "PriceOptions_Test_Query",
     "operationKind": "query",
-    "text": "query PriceOptions_Test_Query {\n  artwork(id: \"artwork-id\") {\n    ...PriceOptions_artwork\n    id\n  }\n  order: commerceOrder(id: \"order-id\") {\n    __typename\n    ...PriceOptions_order\n    id\n  }\n}\n\nfragment PriceOptions_artwork on Artwork {\n  priceCurrency\n  isPriceRange\n}\n\nfragment PriceOptions_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  internalID\n}\n"
+    "text": "query PriceOptions_Test_Query {\n  me {\n    orders(first: 10) {\n      edges {\n        node {\n          __typename\n          ...PriceOptions_order\n          id\n        }\n      }\n    }\n    id\n  }\n}\n\nfragment PriceOptions_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  internalID\n  currencyCode\n  lineItems {\n    edges {\n      node {\n        artworkOrEditionSet {\n          __typename\n          ... on Artwork {\n            displayPriceRange\n            listPrice {\n              __typename\n              ... on Money {\n                major\n              }\n              ... on PriceRange {\n                maxPrice {\n                  major\n                }\n                minPrice {\n                  major\n                }\n              }\n            }\n          }\n          ... on EditionSet {\n            internalID\n            price\n            displayPriceRange\n            listPrice {\n              __typename\n              ... on Money {\n                major\n              }\n              ... on PriceRange {\n                maxPrice {\n                  major\n                }\n                minPrice {\n                  major\n                }\n              }\n            }\n            id\n          }\n          ... on Node {\n            __isNode: __typename\n            id\n          }\n        }\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '70868563e3cda3defa5a5124665c755a';
+(node as any).hash = '2d8cd1b4b540fd0b89ac825ef1f2a6fd';
 export default node;

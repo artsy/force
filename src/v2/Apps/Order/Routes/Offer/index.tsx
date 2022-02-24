@@ -224,11 +224,6 @@ export class OfferRoute extends Component<OfferProps, OfferState> {
     const artwork = this.props.order.lineItems?.edges?.[0]?.node?.artwork
     const isInquiryCheckout = !artwork?.isPriceRange && !artwork?.price
 
-    // TODO: fix typescript error for displayPriceRange
-    const displayRange =
-      this.props.order.lineItems?.edges?.[0]?.node?.artworkOrEditionSet
-        ?.displayPriceRange || false
-
     return (
       <>
         <OrderStepper currentStep="Offer" steps={offerFlowSteps} />
@@ -270,15 +265,12 @@ export class OfferRoute extends Component<OfferProps, OfferState> {
                     your offer
                   </Text>
                   <PriceOptionsFragmentContainer
-                    isPriceRange={displayRange}
                     order={order}
                     onChange={offerValue => this.setState({ offerValue })}
                     onFocus={this.onOfferInputFocus.bind(this)}
                     showError={
                       this.state.formIsDirty && this.state.offerValue <= 0
                     }
-                    listPrice={offerItem?.listPrice!}
-                    currency={order.currencyCode}
                   />
                 </>
               )}
@@ -373,7 +365,6 @@ export const OfferFragmentContainer = createFragmentContainer(
                 price
                 isPriceRange
                 isEdition
-                ...PriceOptions_artwork
               }
               artworkOrEditionSet {
                 __typename

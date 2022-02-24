@@ -30,7 +30,6 @@ export type OfferTestQueryRawResponse = {
                         readonly price: string | null;
                         readonly isPriceRange: boolean | null;
                         readonly isEdition: boolean | null;
-                        readonly priceCurrency: string | null;
                         readonly id: string;
                         readonly date: string | null;
                         readonly shippingOrigin: string | null;
@@ -169,7 +168,6 @@ export type OfferTestQueryRawResponse = {
                         readonly price: string | null;
                         readonly isPriceRange: boolean | null;
                         readonly isEdition: boolean | null;
-                        readonly priceCurrency: string | null;
                         readonly id: string;
                         readonly date: string | null;
                         readonly shippingOrigin: string | null;
@@ -352,7 +350,6 @@ fragment Offer_order on CommerceOrder {
           price
           isPriceRange
           isEdition
-          ...PriceOptions_artwork
           id
         }
         artworkOrEditionSet {
@@ -412,14 +409,61 @@ fragment Offer_order on CommerceOrder {
   ...PriceOptions_order
 }
 
-fragment PriceOptions_artwork on Artwork {
-  priceCurrency
-  isPriceRange
-}
-
 fragment PriceOptions_order on CommerceOrder {
   __isCommerceOrder: __typename
   internalID
+  currencyCode
+  lineItems {
+    edges {
+      node {
+        artworkOrEditionSet {
+          __typename
+          ... on Artwork {
+            displayPriceRange
+            listPrice {
+              __typename
+              ... on Money {
+                major
+              }
+              ... on PriceRange {
+                maxPrice {
+                  major
+                }
+                minPrice {
+                  major
+                }
+              }
+            }
+          }
+          ... on EditionSet {
+            internalID
+            price
+            displayPriceRange
+            listPrice {
+              __typename
+              ... on Money {
+                major
+              }
+              ... on PriceRange {
+                maxPrice {
+                  major
+                }
+                minPrice {
+                  major
+                }
+              }
+            }
+            id
+          }
+          ... on Node {
+            __isNode: __typename
+            id
+          }
+        }
+        id
+      }
+    }
+  }
 }
 
 fragment TransactionDetailsSummaryItem_order on CommerceOrder {
@@ -879,13 +923,6 @@ return {
                             "name": "isEdition",
                             "storageKey": null
                           },
-                          {
-                            "alias": null,
-                            "args": null,
-                            "kind": "ScalarField",
-                            "name": "priceCurrency",
-                            "storageKey": null
-                          },
                           (v4/*: any*/),
                           {
                             "alias": null,
@@ -1134,7 +1171,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "401fce8c73c9fe9d75c0e955ca2460ce",
+    "cacheID": "1656ca73ce0b65cf4e77412a6dd01a26",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -1200,7 +1237,6 @@ return {
         "order.lineItems.edges.node.artwork.isEdition": (v24/*: any*/),
         "order.lineItems.edges.node.artwork.isPriceRange": (v24/*: any*/),
         "order.lineItems.edges.node.artwork.price": (v18/*: any*/),
-        "order.lineItems.edges.node.artwork.priceCurrency": (v18/*: any*/),
         "order.lineItems.edges.node.artwork.shippingOrigin": (v18/*: any*/),
         "order.lineItems.edges.node.artwork.slug": (v19/*: any*/),
         "order.lineItems.edges.node.artworkOrEditionSet": {
@@ -1320,7 +1356,7 @@ return {
     },
     "name": "OfferTestQuery",
     "operationKind": "query",
-    "text": "query OfferTestQuery {\n  order: commerceOrder(id: \"unused\") {\n    __typename\n    ...Offer_order\n    id\n  }\n}\n\nfragment ArtworkSummaryItem_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  sellerDetails {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on User {\n      id\n    }\n  }\n  currencyCode\n  mode\n  lineItems {\n    edges {\n      node {\n        artworkOrEditionSet {\n          __typename\n          ... on Artwork {\n            price\n          }\n          ... on EditionSet {\n            price\n            id\n          }\n          ... on Node {\n            __isNode: __typename\n            id\n          }\n        }\n        artwork {\n          date\n          shippingOrigin\n          id\n        }\n        artworkVersion {\n          artistNames\n          title\n          image {\n            resized_ArtworkSummaryItem: resized(width: 55) {\n              url\n            }\n          }\n          id\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment Offer_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  internalID\n  mode\n  state\n  totalListPriceCents\n  currencyCode\n  lineItems {\n    edges {\n      node {\n        artwork {\n          slug\n          price\n          isPriceRange\n          isEdition\n          ...PriceOptions_artwork\n          id\n        }\n        artworkOrEditionSet {\n          __typename\n          ... on Artwork {\n            price\n            displayPriceRange\n            listPrice {\n              __typename\n              ... on Money {\n                major\n              }\n              ... on PriceRange {\n                maxPrice {\n                  major\n                }\n                minPrice {\n                  major\n                }\n              }\n            }\n          }\n          ... on EditionSet {\n            internalID\n            price\n            displayPriceRange\n            listPrice {\n              __typename\n              ... on Money {\n                major\n              }\n              ... on PriceRange {\n                maxPrice {\n                  major\n                }\n                minPrice {\n                  major\n                }\n              }\n            }\n            id\n          }\n          ... on Node {\n            __isNode: __typename\n            id\n          }\n        }\n        id\n      }\n    }\n  }\n  ... on CommerceOfferOrder {\n    isInquiryOrder\n  }\n  ...ArtworkSummaryItem_order\n  ...TransactionDetailsSummaryItem_order\n  ...PriceOptions_order\n}\n\nfragment PriceOptions_artwork on Artwork {\n  priceCurrency\n  isPriceRange\n}\n\nfragment PriceOptions_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  internalID\n}\n\nfragment TransactionDetailsSummaryItem_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  __typename\n  requestedFulfillment {\n    __typename\n  }\n  code\n  lineItems {\n    edges {\n      node {\n        artworkOrEditionSet {\n          __typename\n          ... on Artwork {\n            price\n          }\n          ... on EditionSet {\n            price\n            id\n          }\n          ... on Node {\n            __isNode: __typename\n            id\n          }\n        }\n        selectedShippingQuote {\n          displayName\n          id\n        }\n        id\n      }\n    }\n  }\n  mode\n  shippingTotal(precision: 2)\n  shippingTotalCents\n  taxTotal(precision: 2)\n  taxTotalCents\n  itemsTotal(precision: 2)\n  buyerTotal(precision: 2)\n  currencyCode\n  ... on CommerceOfferOrder {\n    lastOffer {\n      internalID\n      amount(precision: 2)\n      amountCents\n      shippingTotal(precision: 2)\n      shippingTotalCents\n      taxTotal(precision: 2)\n      taxTotalCents\n      buyerTotal(precision: 2)\n      buyerTotalCents\n      fromParticipant\n      note\n      id\n    }\n    myLastOffer {\n      internalID\n      amount(precision: 2)\n      amountCents\n      shippingTotal(precision: 2)\n      shippingTotalCents\n      taxTotal(precision: 2)\n      taxTotalCents\n      buyerTotal(precision: 2)\n      buyerTotalCents\n      fromParticipant\n      note\n      id\n    }\n  }\n}\n"
+    "text": "query OfferTestQuery {\n  order: commerceOrder(id: \"unused\") {\n    __typename\n    ...Offer_order\n    id\n  }\n}\n\nfragment ArtworkSummaryItem_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  sellerDetails {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on User {\n      id\n    }\n  }\n  currencyCode\n  mode\n  lineItems {\n    edges {\n      node {\n        artworkOrEditionSet {\n          __typename\n          ... on Artwork {\n            price\n          }\n          ... on EditionSet {\n            price\n            id\n          }\n          ... on Node {\n            __isNode: __typename\n            id\n          }\n        }\n        artwork {\n          date\n          shippingOrigin\n          id\n        }\n        artworkVersion {\n          artistNames\n          title\n          image {\n            resized_ArtworkSummaryItem: resized(width: 55) {\n              url\n            }\n          }\n          id\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment Offer_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  internalID\n  mode\n  state\n  totalListPriceCents\n  currencyCode\n  lineItems {\n    edges {\n      node {\n        artwork {\n          slug\n          price\n          isPriceRange\n          isEdition\n          id\n        }\n        artworkOrEditionSet {\n          __typename\n          ... on Artwork {\n            price\n            displayPriceRange\n            listPrice {\n              __typename\n              ... on Money {\n                major\n              }\n              ... on PriceRange {\n                maxPrice {\n                  major\n                }\n                minPrice {\n                  major\n                }\n              }\n            }\n          }\n          ... on EditionSet {\n            internalID\n            price\n            displayPriceRange\n            listPrice {\n              __typename\n              ... on Money {\n                major\n              }\n              ... on PriceRange {\n                maxPrice {\n                  major\n                }\n                minPrice {\n                  major\n                }\n              }\n            }\n            id\n          }\n          ... on Node {\n            __isNode: __typename\n            id\n          }\n        }\n        id\n      }\n    }\n  }\n  ... on CommerceOfferOrder {\n    isInquiryOrder\n  }\n  ...ArtworkSummaryItem_order\n  ...TransactionDetailsSummaryItem_order\n  ...PriceOptions_order\n}\n\nfragment PriceOptions_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  internalID\n  currencyCode\n  lineItems {\n    edges {\n      node {\n        artworkOrEditionSet {\n          __typename\n          ... on Artwork {\n            displayPriceRange\n            listPrice {\n              __typename\n              ... on Money {\n                major\n              }\n              ... on PriceRange {\n                maxPrice {\n                  major\n                }\n                minPrice {\n                  major\n                }\n              }\n            }\n          }\n          ... on EditionSet {\n            internalID\n            price\n            displayPriceRange\n            listPrice {\n              __typename\n              ... on Money {\n                major\n              }\n              ... on PriceRange {\n                maxPrice {\n                  major\n                }\n                minPrice {\n                  major\n                }\n              }\n            }\n            id\n          }\n          ... on Node {\n            __isNode: __typename\n            id\n          }\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment TransactionDetailsSummaryItem_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  __typename\n  requestedFulfillment {\n    __typename\n  }\n  code\n  lineItems {\n    edges {\n      node {\n        artworkOrEditionSet {\n          __typename\n          ... on Artwork {\n            price\n          }\n          ... on EditionSet {\n            price\n            id\n          }\n          ... on Node {\n            __isNode: __typename\n            id\n          }\n        }\n        selectedShippingQuote {\n          displayName\n          id\n        }\n        id\n      }\n    }\n  }\n  mode\n  shippingTotal(precision: 2)\n  shippingTotalCents\n  taxTotal(precision: 2)\n  taxTotalCents\n  itemsTotal(precision: 2)\n  buyerTotal(precision: 2)\n  currencyCode\n  ... on CommerceOfferOrder {\n    lastOffer {\n      internalID\n      amount(precision: 2)\n      amountCents\n      shippingTotal(precision: 2)\n      shippingTotalCents\n      taxTotal(precision: 2)\n      taxTotalCents\n      buyerTotal(precision: 2)\n      buyerTotalCents\n      fromParticipant\n      note\n      id\n    }\n    myLastOffer {\n      internalID\n      amount(precision: 2)\n      amountCents\n      shippingTotal(precision: 2)\n      shippingTotalCents\n      taxTotal(precision: 2)\n      taxTotalCents\n      buyerTotal(precision: 2)\n      buyerTotalCents\n      fromParticipant\n      note\n      id\n    }\n  }\n}\n"
   }
 };
 })();
