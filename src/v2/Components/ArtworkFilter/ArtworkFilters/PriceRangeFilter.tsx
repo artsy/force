@@ -72,26 +72,24 @@ const parseRange = (range: string = DEFAULT_PRICE_RANGE) => {
   })
 }
 
-const parseInitialRange = (range: string = DEFAULT_PRICE_RANGE) => {
-  return range.split("-").map((value, index) => {
+const parseSliderRange = (range: (string | number)[]) => {
+  return range.map((value, index) => {
     if (value === "*") {
       return DEFAULT_RANGE[index]
     }
 
-    return parseInt(value, 10)
+    return value as number
   })
 }
 
 const convertToArtworkFilterFormatRange = (range: number[]) => {
-  const convertedRange = range.map((value, index) => {
+  return range.map((value, index) => {
     if (value === DEFAULT_RANGE[index]) {
       return "*"
     }
 
     return value
   })
-
-  return convertedRange.join("-")
 }
 
 const getValue = (value: CustomRange[number]) => {
@@ -293,7 +291,8 @@ export const PriceRangeFilterNew: React.FC<PriceRangeFilterProps> = ({
 }) => {
   const { currentlySelectedFilters, setFilter } = useArtworkFilterContext()
   const { priceRange } = currentlySelectedFilters?.() ?? {}
-  const [range, setRange] = useState(parseInitialRange(priceRange))
+  const [range, setRange] = useState(parseRange(priceRange))
+  const sliderRange = parseSliderRange(range)
   const [minValue, maxValue] = range
 
   const filtersCount = useFilterLabelCountByKey(
@@ -309,26 +308,34 @@ export const PriceRangeFilterNew: React.FC<PriceRangeFilterProps> = ({
     []
   )
 
-  const handleUpdateRange = (range: number[]) => {
-    const convertedRange = convertToArtworkFilterFormatRange(range)
-
-    setRange(range)
-    setFilterDobounced("priceRange", convertedRange)
+  const updateRange = (updatedRange: (number | "*")[]) => {
+    setRange(updatedRange)
+    setFilterDobounced("priceRange", updatedRange.join("-"))
   }
 
-  const handleChange = (changedIndex: number) => (
+  const handleSliderValueChange = (range: number[]) => {
+    const convertedRange = convertToArtworkFilterFormatRange(range)
+
+    updateRange(convertedRange)
+  }
+
+  const handleInputValueChange = (changedIndex: number) => (
     event: FormEvent<HTMLInputElement>
   ) => {
-    const updatedValue = parseInt(event.currentTarget.value, 10)
-    const updatedRange = range.map((value, index) => {
-      if (index === changedIndex && !isNaN(updatedValue)) {
-        return updatedValue
+    const { value } = event.currentTarget
+    const updatedRange = range.map((rangeValue, index) => {
+      if (index === changedIndex) {
+        if (value === "" || value === "0") {
+          return "*"
+        }
+
+        return parseInt(value, 10)
       }
 
-      return value
+      return rangeValue
     })
 
-    handleUpdateRange(updatedRange)
+    updateRange(updatedRange)
   }
 
   return (
@@ -339,8 +346,8 @@ export const PriceRangeFilterNew: React.FC<PriceRangeFilterProps> = ({
           name="price_min"
           min="0"
           step="100"
-          value={minValue}
-          onChange={handleChange(0)}
+          value={getValue(minValue)}
+          onChange={handleInputValueChange(0)}
         />
 
         <Spacer mx={0.5} />
@@ -350,8 +357,8 @@ export const PriceRangeFilterNew: React.FC<PriceRangeFilterProps> = ({
           name="price_max"
           min="0"
           step="100"
-          value={maxValue}
-          onChange={handleChange(1)}
+          value={getValue(maxValue)}
+          onChange={handleInputValueChange(1)}
         />
       </Flex>
 
@@ -359,9 +366,9 @@ export const PriceRangeFilterNew: React.FC<PriceRangeFilterProps> = ({
         <Range
           min={DEFAULT_RANGE[0]}
           max={DEFAULT_RANGE[1]}
-          value={range}
+          value={sliderRange}
           allowCross={false}
-          onChange={handleUpdateRange}
+          onChange={handleSliderValueChange}
         />
       </Box>
     </FilterExpandable>
