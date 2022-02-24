@@ -63,7 +63,7 @@ type CustomRange = (number | "*")[]
 const DEBOUNCE_DELAY = 300
 const DEFAULT_CUSTOM_RANGE: CustomRange = ["*", "*"]
 const DEFAULT_PRICE_RANGE = "*-*"
-const DEFAULT_RANGE = [0, 1000000]
+const DEFAULT_RANGE = [0, 50000]
 
 const parseRange = (range: string = DEFAULT_PRICE_RANGE) => {
   return range.split("-").map(s => {
