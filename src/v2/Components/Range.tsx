@@ -29,7 +29,8 @@ const StyledRange = styled(RCRange)`
   }
 
   .rc-slider-rail,
-  .rc-slider-track {
+  .rc-slider-track,
+  .rc-slider-step {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
@@ -78,7 +79,7 @@ const StyledRange = styled(RCRange)`
   .rc-slider-step {
     position: absolute;
     width: 100%;
-    height: 1px;
+    height: 2px;
     background: transparent;
   }
 
