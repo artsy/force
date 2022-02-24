@@ -94,8 +94,8 @@ export const Auction2AppFragmentContainer = createFragmentContainer(
     me: graphql`
       fragment Auction2App_me on Me
         @argumentDefinitions(saleID: { type: "String" }) {
-        ...AuctionDetails_me
         ...AuctionActiveBids_me @arguments(saleID: $saleID)
+        ...AuctionDetails_me
 
         showLotStandingsTab: lotStandings(saleID: $saleID, live: true) {
           activeBid {
@@ -116,7 +116,6 @@ export const Auction2AppFragmentContainer = createFragmentContainer(
             src
           }
         }
-
         showBuyNowTab: promotedSale {
           internalID
         }
