@@ -10,7 +10,7 @@ export type Auction2App_me = {
             readonly internalID: string;
         } | null;
     } | null> | null;
-    readonly " $fragmentRefs": FragmentRefs<"AuctionDetails_me" | "AuctionActiveBids_me">;
+    readonly " $fragmentRefs": FragmentRefs<"AuctionActiveBids_me" | "AuctionDetails_me">;
     readonly " $refType": "Auction2App_me";
 };
 export type Auction2App_me$data = Auction2App_me;
@@ -76,21 +76,21 @@ return {
       "storageKey": null
     },
     {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "AuctionDetails_me"
-    },
-    {
       "args": [
         (v0/*: any*/)
       ],
       "kind": "FragmentSpread",
       "name": "AuctionActiveBids_me"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "AuctionDetails_me"
     }
   ],
   "type": "Me",
   "abstractKey": null
 };
 })();
-(node as any).hash = 'd87447a1508330b359b5e4c53d8cdbf1';
+(node as any).hash = 'f12c6ec9b753734479fd0cdad7174ced';
 export default node;

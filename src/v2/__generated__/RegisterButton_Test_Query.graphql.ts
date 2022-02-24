@@ -49,6 +49,7 @@ fragment RegisterButton_sale on Sale {
   isAuction
   isClosed
   isLiveOpen
+  isPreview
   isRegistrationClosed
   liveURLIfOpen
   requireIdentityVerification
@@ -187,6 +188,13 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
+            "name": "isPreview",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
             "name": "isRegistrationClosed",
             "storageKey": null
           },
@@ -271,12 +279,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "e31c8cddf96c9e16f0bb574d47ee6198",
+    "cacheID": "efd046cadc1b90cd6d5393929ad1f7e7",
     "id": null,
     "metadata": {},
     "name": "RegisterButton_Test_Query",
     "operationKind": "query",
-    "text": "query RegisterButton_Test_Query {\n  sale(id: \"foo\") {\n    ...RegisterButton_sale\n    id\n  }\n  me {\n    ...RegisterButton_me\n    id\n  }\n}\n\nfragment RegisterButton_me on Me {\n  identityVerified\n  hasCreditCards\n  pendingIdentityVerification {\n    internalID\n    id\n  }\n}\n\nfragment RegisterButton_sale on Sale {\n  bidder {\n    qualifiedForBidding\n    id\n  }\n  isAuction\n  isClosed\n  isLiveOpen\n  isRegistrationClosed\n  liveURLIfOpen\n  requireIdentityVerification\n  registrationStatus {\n    internalID\n    id\n  }\n  slug\n  status\n}\n"
+    "text": "query RegisterButton_Test_Query {\n  sale(id: \"foo\") {\n    ...RegisterButton_sale\n    id\n  }\n  me {\n    ...RegisterButton_me\n    id\n  }\n}\n\nfragment RegisterButton_me on Me {\n  identityVerified\n  hasCreditCards\n  pendingIdentityVerification {\n    internalID\n    id\n  }\n}\n\nfragment RegisterButton_sale on Sale {\n  bidder {\n    qualifiedForBidding\n    id\n  }\n  isAuction\n  isClosed\n  isLiveOpen\n  isPreview\n  isRegistrationClosed\n  liveURLIfOpen\n  requireIdentityVerification\n  registrationStatus {\n    internalID\n    id\n  }\n  slug\n  status\n}\n"
   }
 };
 })();

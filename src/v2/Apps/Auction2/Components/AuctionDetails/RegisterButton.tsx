@@ -73,6 +73,10 @@ export const RegisterButton: React.FC<RegisterButtonProps> = ({ me, sale }) => {
       )
     }
 
+    case conditions.REGISTRATION_COMPLETE: {
+      return <ButtonAction title="Registration Complete" disabled />
+    }
+
     case conditions.QUALIFIED_FOR_BIDDING: {
       return <ButtonAction title="Approved to Bid" disabled />
     }
@@ -167,6 +171,8 @@ export const computeConditions = ({
     LIVE_OPEN: sale.isLiveOpen,
     QUALIFIED_FOR_BIDDING: registrationAttempted && qualifiedForBidding,
     VERIFY_IDENTITY: verifyIdentity,
+    REGISTRATION_COMPLETE:
+      sale.isPreview && registrationAttempted && qualifiedForBidding,
     REGISTRATION_PENDING: registrationAttempted && !qualifiedForBidding,
     REGISTRATION_CLOSED: sale.isRegistrationClosed,
     REGISTRATION_OPEN:
@@ -238,6 +244,7 @@ export const RegisterButtonFragmentContainer = createFragmentContainer(
         isAuction
         isClosed
         isLiveOpen
+        isPreview
         isRegistrationClosed
         liveURLIfOpen
         requireIdentityVerification

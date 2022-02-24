@@ -11,6 +11,7 @@ export type RegisterButton_sale = {
     readonly isAuction: boolean | null;
     readonly isClosed: boolean | null;
     readonly isLiveOpen: boolean | null;
+    readonly isPreview: boolean | null;
     readonly isRegistrationClosed: boolean | null;
     readonly liveURLIfOpen: string | null;
     readonly requireIdentityVerification: boolean | null;
@@ -78,6 +79,13 @@ const node: ReaderFragment = {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
+      "name": "isPreview",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
       "name": "isRegistrationClosed",
       "storageKey": null
     },
@@ -131,5 +139,5 @@ const node: ReaderFragment = {
   "type": "Sale",
   "abstractKey": null
 };
-(node as any).hash = '70eb9020abfc06c5aa8350243fd5f520';
+(node as any).hash = 'e18690c44438367e8901d36af57723fa';
 export default node;

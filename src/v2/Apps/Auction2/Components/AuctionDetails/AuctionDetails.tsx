@@ -15,8 +15,6 @@ import { formatIsoDateNoZoneOffset } from "v2/Components/AddToCalendar/helpers"
 import { ContextModule } from "@artsy/cohesion"
 import { AuctionDetails_sale } from "v2/__generated__/AuctionDetails_sale.graphql"
 import { AuctionDetails_me } from "v2/__generated__/AuctionDetails_me.graphql"
-import { useCurrentTime } from "v2/Utils/Hooks/useCurrentTime"
-import { useEventTiming } from "v2/Utils/Hooks/useEventTiming"
 import { AuctionInfoSidebarFragmentContainer } from "./AuctionInfoSidebar"
 import { RegisterButtonFragmentContainer } from "./RegisterButton"
 import { getENV } from "v2/Utils/getENV"
@@ -32,17 +30,19 @@ const AuctionDetails: React.FC<AuctionDetailsProps> = ({ sale, me }) => {
   const liveAuctionUrl = getLiveAuctionUrl(sale.slug, {
     isLoggedIn: Boolean(user),
   })
+
   const endDate = sale.liveStartAt
     ? formatIsoDateNoZoneOffset(sale.liveStartAt, 4)
     : sale.endAt
 
-  const currentTime = useCurrentTime({ syncWithServer: true })
-  const { formattedTime, hasEnded } = useEventTiming({
-    currentTime,
-    startAt: sale.startAt!,
-    endAt: endDate!,
-    isLiveSale: true,
-  })
+  // TODO: Do we really need the countdown
+  // const currentTime = useCurrentTime({ syncWithServer: true })
+  // const { formattedTime, hasEnded } = useEventTiming({
+  //   currentTime,
+  //   startAt: sale.liveStartAt ?? sale.startAt!,
+  //   endAt: endDate!,
+  //   // isLiveSale: !!sale.liveStartAt,
+  // })
 
   return (
     <>
@@ -60,10 +60,10 @@ const AuctionDetails: React.FC<AuctionDetailsProps> = ({ sale, me }) => {
       <Flex alignItems="center" justifyContent="space-between">
         <Flex alignItems="center">
           <Text variant="xl" pr={2}>
-            {formattedTime}
+            {sale.formattedStartDateTime}
           </Text>
 
-          {!hasEnded && (
+          {!sale.isClosed && (
             <Box mt={0.5}>
               <AddToCalendar
                 startDate={sale.liveStartAt || sale.startAt!}
@@ -109,6 +109,7 @@ export const AuctionDetailsFragmentContainer = createFragmentContainer(
         endAt
         description(format: HTML)
         href
+        isClosed
       }
     `,
     me: graphql`
