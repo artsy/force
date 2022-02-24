@@ -21,7 +21,7 @@ export type FeatureAKGRoute_Test_QueryResponse = {
 };
 export type FeatureAKGRoute_Test_QueryRawResponse = {
     readonly viewer: ({
-        readonly articles: ReadonlyArray<({
+        readonly articles: ReadonlyArray<{
             readonly thumbnailTitle: string | null;
             readonly publishedAt: string | null;
             readonly thumbnailImage: ({
@@ -38,7 +38,7 @@ export type FeatureAKGRoute_Test_QueryRawResponse = {
             }) | null;
             readonly href: string | null;
             readonly id: string;
-        }) | null> | null;
+        }>;
         readonly selectedWorks: ({
             readonly itemsConnection: ({
                 readonly edges: ReadonlyArray<({
@@ -1206,7 +1206,7 @@ return {
         },
         "viewer.articles": {
           "enumValues": null,
-          "nullable": true,
+          "nullable": false,
           "plural": true,
           "type": "Article"
         },
