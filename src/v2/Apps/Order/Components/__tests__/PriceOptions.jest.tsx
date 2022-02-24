@@ -12,10 +12,6 @@ const onFocus = jest.fn()
 const trackEvent = jest.fn()
 const showError = jest.fn().mockReturnValue(false)
 
-// let listPrice
-// let priceRange
-// let currency
-
 const mockUseTracking = useTracking as jest.Mock
 
 jest.mock("v2/Utils/Hooks/useMatchMedia", () => ({
@@ -232,24 +228,24 @@ describe("PriceOptions", () => {
       fireEvent.click(radios[0])
       expect(trackEvent).toHaveBeenLastCalledWith(
         expect.objectContaining(
-          getTrackingObject("20% below the list price", 80, "EUR")
+          getTrackingObject("20% below the list price", 80, "€")
         )
       )
       fireEvent.click(radios[1])
       expect(trackEvent).toHaveBeenLastCalledWith(
         expect.objectContaining(
-          getTrackingObject("15% below the list price", 85, "EUR")
+          getTrackingObject("15% below the list price", 85, "€")
         )
       )
       fireEvent.click(radios[2])
       expect(trackEvent).toHaveBeenLastCalledWith(
         expect.objectContaining(
-          getTrackingObject("10% below the list price", 90, "EUR")
+          getTrackingObject("10% below the list price", 90, "€")
         )
       )
       fireEvent.click(radios[3])
       expect(trackEvent).toHaveBeenCalledWith(
-        expect.objectContaining(getTrackingObject("Different amount", 0, "€"))
+        expect.objectContaining(getTrackingObject("Different amount", 0, "EUR"))
       )
     })
   })
