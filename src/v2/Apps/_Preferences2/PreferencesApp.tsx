@@ -7,23 +7,15 @@ import {
   Text,
   useToasts,
 } from "@artsy/palette"
-import { isEmpty, camelCase } from "lodash"
+import { isEmpty, camelCase, snakeCase } from "lodash"
 import { FC } from "react"
 import { Form, Formik } from "formik"
 import { createFragmentContainer, graphql } from "react-relay"
-import { PreferencesApp_viewer } from "v2/__generated__/PreferencesApp_viewer.graphql"
-
-interface FormValuesForNotificationPreferences {
-  recommendedByArtsy: boolean
-  artWorldInsights: boolean
-  productUpdates: boolean
-  guidanceOnCollecting: boolean
-  customAlerts: boolean
-}
-
-interface PreferencesAppProps {
-  viewer?: PreferencesApp_viewer
-}
+import {
+  PreferencesApp_viewer,
+  SubGroupStatus,
+} from "v2/__generated__/PreferencesApp_viewer.graphql"
+import { useEditNotificationPreferences } from "./useEditNotificationPreferences"
 
 const NOTIFICATION_FIELDS = {
   recommendedByArtsy: false,
@@ -33,18 +25,22 @@ const NOTIFICATION_FIELDS = {
   customAlerts: false,
 }
 
+interface PreferencesAppProps {
+  viewer?: PreferencesApp_viewer
+}
+
+interface FormValuesForNotificationPreferences {
+  recommendedByArtsy: boolean
+  artWorldInsights: boolean
+  productUpdates: boolean
+  guidanceOnCollecting: boolean
+  customAlerts: boolean
+}
+
 export const PreferencesApp: FC<PreferencesAppProps> = ({ viewer }) => {
   const { sendToast } = useToasts()
-  let initialValues = viewer?.notificationPreferences
-    .filter(preference =>
-      Object.keys(NOTIFICATION_FIELDS).includes(camelCase(preference.name))
-    )
-    .map(preference => {
-      return {
-        [camelCase(preference.name)]:
-          preference.status === "SUBSCRIBED" ? true : false,
-      }
-    })
+  const { submitMutation } = useEditNotificationPreferences()
+  let initialValues = getInitialValues(viewer) // Shape the response from Metaphysics for Formik
 
   return (
     <>
@@ -54,15 +50,39 @@ export const PreferencesApp: FC<PreferencesAppProps> = ({ viewer }) => {
       <Formik<FormValuesForNotificationPreferences>
         // @ts-ignore
         initialValues={{ ...NOTIFICATION_FIELDS, ...initialValues }}
-        onSubmit={async () => {
+        onSubmit={async values => {
           try {
-            // Do mutation stuff
+            // TODO: Refactor mutation in Metaphysics so that we don't have to send
+            // id, channel, or status (Gravity doesn't care about them)
+            const subscriptionGroups = Object.entries(values).map(
+              ([key, value]) => {
+                return {
+                  id: "",
+                  name: snakeCase(key),
+                  channel: "email",
+                  status: (value
+                    ? "SUBSCRIBED"
+                    : "UNSUBSCRIBED") as SubGroupStatus,
+                }
+              }
+            )
+
+            await submitMutation({
+              variables: { input: { subscriptionGroups } },
+            })
+
             sendToast({
               variant: "success",
               message: "Preferences updated sucessfully.",
             })
-          } catch (err) {
-            console.error(err)
+          } catch (error) {
+            console.error(error)
+
+            sendToast({
+              variant: "error",
+              message: "Something went wrong.",
+              description: (Array.isArray(error) ? error[0] : error).message,
+            })
           }
         }}
       >
@@ -236,6 +256,18 @@ export const PreferencesApp: FC<PreferencesAppProps> = ({ viewer }) => {
       </Formik>
     </>
   )
+}
+
+const getInitialValues = viewer => {
+  return viewer?.notificationPreferences
+    .filter(preference =>
+      Object.keys(NOTIFICATION_FIELDS).includes(camelCase(preference.name))
+    )
+    .reduce((object, preference) => {
+      object[camelCase(preference.name)] =
+        preference.status === "SUBSCRIBED" ? true : false
+      return object
+    }, {})
 }
 
 export const PreferencesAppFragmentContainer = createFragmentContainer(
