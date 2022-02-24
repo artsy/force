@@ -23,7 +23,7 @@ import { FilterExpandable } from "./FilterExpandable"
 import { isCustomValue } from "./Utils/isCustomValue"
 import { useFilterLabelCountByKey } from "../Utils/useFilterLabelCountByKey"
 import { useMode } from "v2/Utils/Hooks/useMode"
-import { Range } from "v2/Components/Range"
+import { Range, RANGE_DOT_SIZE } from "v2/Components/Range"
 import { debounce } from "lodash"
 
 // Disables arrows in numeric inputs
@@ -373,13 +373,17 @@ export const PriceRangeFilterNew: React.FC<PriceRangeFilterProps> = ({
         </Box>
       </Flex>
 
-      <Box my={2}>
+      <Box my={2} mx={RANGE_DOT_SIZE / 2}>
         <Range
           min={DEFAULT_RANGE[0]}
           max={DEFAULT_RANGE[1]}
           value={sliderRange}
           allowCross={false}
           onChange={handleSliderValueChange}
+          railStyle={{
+            left: `-${RANGE_DOT_SIZE / 2}px`,
+            width: `calc(100% + ${RANGE_DOT_SIZE}px)`,
+          }}
         />
       </Box>
     </FilterExpandable>
