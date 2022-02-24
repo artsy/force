@@ -37,7 +37,6 @@ export const MeetTheSpecialistsIndex: React.FC = () => {
         content="Whether you’re seeking a specific work for your collection or wish to sell, Artsy’s globe-spanning team is ready to source, sell, advise, and research on your behalf. Contact a specialist today."
       />
       <Box mt={4}>
-        <Text variant={"xs"}>Private Sales</Text>
         <Text as="h1" variant={["xl", "xxl"]}>
           Meet the Specialists
         </Text>
@@ -286,7 +285,7 @@ const auctionSpecialists = [
     name: "Alan Zeng",
     title: "Senior Specialist, Street Art",
     location: "New York",
-    email: "alan.zeng@artsy.net",
+    email: "alan@artsy.net",
     photo: { url: "http://files.artsy.net/images/alan.png" },
   },
 ]
