@@ -47,7 +47,7 @@ describe("an offer on the work with price hidden", () => {
   })
 
   it("shows no modal warning when an offer made on work with hidden price", async () => {
-    await page.setOfferAmount(2000000)
+    await page.setOfferAmount(2)
     await page.clickSubmit()
     await page.expectButtonSpinnerWhenSubmitting()
     await page.expectNoModal()
