@@ -69,11 +69,7 @@ const StyledRange = styled(RCRange)`
     vertical-align: middle;
     text-align: center;
     cursor: pointer;
-    color: #999;
-
-    .rc-slider-active {
-      color: #666;
-    }
+    color: ${themeGet("colors.black60")};
   }
 
   .rc-slider-step {
@@ -85,18 +81,19 @@ const StyledRange = styled(RCRange)`
 
   .rc-slider-dot {
     position: absolute;
-    bottom: -2px;
+    top: 50%;
+    transform: translateY(-50%);
     margin-left: -4px;
     width: 8px;
     height: 8px;
-    background-color: brown;
+    background-color: ${themeGet("colors.black30")};
     cursor: pointer;
     border-radius: 50%;
     vertical-align: middle;
   }
 
   .rc-slider-dot-active {
-    background-color: yellow;
+    background-color: ${themeGet("colors.blue100")};
   }
 
   .rc-slider-dot-reverse {
