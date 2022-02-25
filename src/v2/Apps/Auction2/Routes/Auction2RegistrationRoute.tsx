@@ -52,7 +52,7 @@ const Auction2RegistrationRoute: React.FC<Auction2RegistrationRouteProps> = ({
     <ModalDialog
       title="Register to Bid on Artsy"
       onClose={handleModalClose}
-      width="50%"
+      width={["100%", 600]}
     >
       <Formik<AuctionFormValues>
         initialValues={initialValuesForRegistration}
