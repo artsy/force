@@ -7,7 +7,7 @@ import { FragmentRefs } from "relay-runtime";
 export type Feature_viewer = {
     readonly articles: ReadonlyArray<{
         readonly " $fragmentRefs": FragmentRefs<"FeaturedArticles_articles">;
-    } | null> | null;
+    }>;
     readonly selectedWorks: {
         readonly " $fragmentRefs": FragmentRefs<"SelectedWorks_selectedWorks">;
     } | null;

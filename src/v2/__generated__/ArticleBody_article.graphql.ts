@@ -6,6 +6,7 @@ import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type ArticleLayout = "CLASSIC" | "FEATURE" | "NEWS" | "SERIES" | "STANDARD" | "VIDEO" | "%future added value";
 export type ArticleBody_article = {
+    readonly internalID: string;
     readonly layout: ArticleLayout;
     readonly title: string | null;
     readonly newsSource: {
@@ -47,10 +48,17 @@ var v0 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "title",
+  "name": "internalID",
   "storageKey": null
 },
 v1 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "title",
+  "storageKey": null
+},
+v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -63,6 +71,7 @@ return {
   "metadata": null,
   "name": "ArticleBody_article",
   "selections": [
+    (v0/*: any*/),
     {
       "alias": null,
       "args": null,
@@ -70,7 +79,7 @@ return {
       "name": "layout",
       "storageKey": null
     },
-    (v0/*: any*/),
+    (v1/*: any*/),
     {
       "alias": null,
       "args": null,
@@ -79,7 +88,7 @@ return {
       "name": "newsSource",
       "plural": false,
       "selections": [
-        (v0/*: any*/),
+        (v1/*: any*/),
         {
           "alias": null,
           "args": null,
@@ -90,7 +99,7 @@ return {
       ],
       "storageKey": null
     },
-    (v1/*: any*/),
+    (v2/*: any*/),
     {
       "alias": null,
       "args": [
@@ -167,15 +176,9 @@ return {
       "name": "relatedArticles",
       "plural": true,
       "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "internalID",
-          "storageKey": null
-        },
         (v0/*: any*/),
         (v1/*: any*/),
+        (v2/*: any*/),
         {
           "alias": null,
           "args": null,
@@ -248,5 +251,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '2bed116448c476603b7eccbf3bdb2cda';
+(node as any).hash = 'be0675f5366de442cb5df0bcb8b44f78';
 export default node;

@@ -6,11 +6,6 @@ import { RouterLink } from "v2/System/Router/RouterLink"
 import { FollowArtistButtonQueryRenderer } from "v2/Components/FollowButton/FollowArtistButton"
 import { ArtistsCarouselCell_featuredLink } from "v2/__generated__/ArtistsCarouselCell_featuredLink.graphql"
 
-const getSlug = (href: string) => {
-  const components = href.split("/")
-  return components[components.indexOf("artist") + 1]
-}
-
 interface ArtistsCarouselCellProps {
   featuredLink: ArtistsCarouselCell_featuredLink
   index: number
@@ -19,11 +14,9 @@ interface ArtistsCarouselCellProps {
 const ArtistsCarouselCell: React.FC<ArtistsCarouselCellProps> = ({
   featuredLink,
 }) => {
-  const { image } = featuredLink
+  const { image, entity } = featuredLink
 
-  if (!image) return null
-
-  const slug = getSlug(featuredLink.href ?? "")
+  if (!image || !entity) return null
 
   return (
     <>
@@ -46,28 +39,23 @@ const ArtistsCarouselCell: React.FC<ArtistsCarouselCellProps> = ({
         my={1}
         display="flex"
         justifyContent="space-between"
-        alignItems="center"
-        // TODO: Figure out why the button isn't displaying partially during loading.
-        // Set height to height of button for now to prevent layout-shift.
-        height={50}
+        alignItems="flex-start"
       >
         <RouterLink
           to={featuredLink.href!}
           display="block"
           textDecoration="none"
-          aria-label={featuredLink.title ?? "Unknown Artist"}
+          aria-label={featuredLink.title ?? entity.name ?? "Unknown Artist"}
         >
-          <Text variant="lg">{featuredLink.title}</Text>
+          <Text variant="lg">{featuredLink.title ?? entity.name}</Text>
 
-          {featuredLink.subtitle && (
-            <Text variant="md" color="black60">
-              {featuredLink.subtitle}
-            </Text>
-          )}
+          <Text variant="md" color="black60">
+            {featuredLink.subtitle || entity.formattedNationalityAndBirthday}
+          </Text>
         </RouterLink>
 
         <FollowArtistButtonQueryRenderer
-          id={slug}
+          id={entity.internalID!}
           contextModule={ContextModule.featuredArtistsRail}
           buttonProps={{ variant: "secondaryOutline" }}
         />
@@ -85,6 +73,13 @@ export const ArtistsCarouselCellFragmentContainer = createFragmentContainer(
         title
         subtitle
         href
+        entity {
+          ... on Artist {
+            internalID
+            name
+            formattedNationalityAndBirthday
+          }
+        }
         image {
           thumb: cropped(width: 600, height: 450, version: "wide") {
             width

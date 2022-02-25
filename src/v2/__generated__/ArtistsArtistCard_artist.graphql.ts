@@ -14,8 +14,6 @@ export type ArtistsArtistCard_artist = {
     } | null;
     readonly image: {
         readonly thumb: {
-            readonly width: number;
-            readonly height: number;
             readonly src: string;
             readonly srcSet: string;
         } | null;
@@ -114,20 +112,6 @@ const node: ReaderFragment = {
               "alias": null,
               "args": null,
               "kind": "ScalarField",
-              "name": "width",
-              "storageKey": null
-            },
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "height",
-              "storageKey": null
-            },
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
               "name": "src",
               "storageKey": null
             },
@@ -153,5 +137,5 @@ const node: ReaderFragment = {
   "type": "Artist",
   "abstractKey": null
 };
-(node as any).hash = '5b42b8de56eb19c4a5b9637279bc14dd';
+(node as any).hash = '5db5127fb9d1599c8dc00c7692a24b9b';
 export default node;

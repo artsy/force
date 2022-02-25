@@ -21,6 +21,7 @@ import { ArticleSectionVideoFragmentContainer } from "./Sections/ArticleSectionV
 import { ArticleSectionSocialEmbedFragmentContainer } from "./Sections/ArticleSectionSocialEmbed"
 import { ArticleSectionEmbedFragmentContainer } from "./Sections/ArticleSectionEmbed"
 import { ArticleBylineFragmentContainer } from "./ArticleByline"
+import { ArticleContextProvider } from "./ArticleContext"
 
 interface ArticleBodyProps {
   article: ArticleBody_article
@@ -28,7 +29,7 @@ interface ArticleBodyProps {
 
 const ArticleBody: FC<ArticleBodyProps> = ({ article }) => {
   return (
-    <>
+    <ArticleContextProvider articleId={article.internalID}>
       <ArticleHeaderFragmentContainer article={article} />
 
       <Spacer mt={4} />
@@ -36,8 +37,10 @@ const ArticleBody: FC<ArticleBodyProps> = ({ article }) => {
       <GridColumns gridRowGap={4}>
         <Column
           span={[12, 8, 8, 6]}
-          // Centers layout for features
-          {...(article.layout === "FEATURE" ? { start: [1, 3, 3, 4] } : {})}
+          // Centers layout for features & news
+          {...(article.layout === "FEATURE" || article.layout === "NEWS"
+            ? { start: [1, 3, 3, 4] }
+            : {})}
         >
           <Text
             variant="xs"
@@ -211,7 +214,7 @@ const ArticleBody: FC<ArticleBodyProps> = ({ article }) => {
           </Column>
         )}
       </GridColumns>
-    </>
+    </ArticleContextProvider>
   )
 }
 
@@ -222,6 +225,7 @@ export const ArticleBodyFragmentContainer = createFragmentContainer(
       fragment ArticleBody_article on Article {
         ...ArticleHeader_article
         ...ArticleByline_article
+        internalID
         layout
         title
         newsSource {

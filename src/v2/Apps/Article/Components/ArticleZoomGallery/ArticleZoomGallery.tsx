@@ -21,6 +21,7 @@ import { themeGet } from "@styled-system/theme-get"
 import { ArticleZoomGalleryFigureFragmentContainer } from "./ArticleZoomGalleryFigure"
 import { ArticleZoomGalleryCaptionFragmentContainer } from "./ArticleZoomGalleryCaption"
 import { useNextPrevious } from "v2/Utils/Hooks/useNextPrevious"
+import { useArticleContext } from "../ArticleContext"
 
 interface ArticleZoomGalleryProps {
   article: ArticleZoomGallery_article
@@ -76,13 +77,17 @@ const ArticleZoomGallery: FC<ArticleZoomGalleryProps> = ({
           <CloseIcon width={30} height={30} fill="currentColor" />
         </Close>
 
-        <NextPrevious onClick={handlePrev} left={0}>
-          <ArrowLeftIcon fill="currentColor" width={30} height={30} />
-        </NextPrevious>
+        {figures.length > 1 && (
+          <>
+            <NextPrevious onClick={handlePrev} left={0}>
+              <ArrowLeftIcon fill="currentColor" width={30} height={30} />
+            </NextPrevious>
 
-        <NextPrevious onClick={handleNext} right={0}>
-          <ArrowRightIcon fill="currentColor" width={30} height={30} />
-        </NextPrevious>
+            <NextPrevious onClick={handleNext} right={0}>
+              <ArrowRightIcon fill="currentColor" width={30} height={30} />
+            </NextPrevious>
+          </>
+        )}
 
         <Flex flexDirection="column" height="100%">
           {figure.section.__typename === "ArticleSectionImageSet" &&
@@ -244,11 +249,9 @@ export const ArticleZoomGalleryRefetchContainer: FC<ArticleZoomGalleryRefetchCon
   )
 }
 
-interface UseArticleZoomGalleryProps {
-  id: string
-}
+export const useArticleZoomGallery = () => {
+  const { articleId } = useArticleContext()
 
-export const useArticleZoomGallery = ({ id }: UseArticleZoomGalleryProps) => {
   const [
     isArticleZoomGalleryVisible,
     setIsArticleZoomGalleryVisible,
@@ -269,7 +272,7 @@ export const useArticleZoomGallery = ({ id }: UseArticleZoomGalleryProps) => {
     <>
       {isArticleZoomGalleryVisible && (
         <ArticleZoomGalleryRefetchContainer
-          id={id}
+          id={articleId}
           figureId={figureId}
           onClose={hideArticleZoomGallery}
         />

@@ -19,6 +19,8 @@ export const useBidderPosition = () => {
       graphql`
         query useBidderPositionQuery($bidderPositionID: String!) {
           me {
+            ...AuctionActiveBids_me
+
             bidderPosition(id: $bidderPositionID) {
               status
               messageHeader

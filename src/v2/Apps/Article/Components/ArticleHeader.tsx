@@ -16,6 +16,7 @@ import {
 import { ArticleHeader_article } from "v2/__generated__/ArticleHeader_article.graphql"
 import { useNavBarHeight } from "v2/Components/NavBar/useNavBarHeight"
 import styled from "styled-components"
+import { RouterLink } from "v2/System/Router/RouterLink"
 
 interface ArticleHeaderProps {
   article: ArticleHeader_article
@@ -33,11 +34,13 @@ const ArticleHeader: FC<ArticleHeaderProps> = ({ article }) => {
           {article.vertical}
         </Text>
 
-        <Text variant="xxl">{article.title}</Text>
+        <RouterLink to={article.href} display="block" textDecoration="none">
+          <Text variant="xxl">{article.title}</Text>
 
-        <Text variant="xxl" color="black60">
-          {article.byline}
-        </Text>
+          <Text variant="xxl" color="black60">
+            {article.byline}
+          </Text>
+        </RouterLink>
       </>
     )
   }
@@ -86,6 +89,25 @@ const ArticleHeader: FC<ArticleHeaderProps> = ({ article }) => {
           </Box>
 
           <Box flex={1} bg="black10">
+            {article.hero.media && (
+              <Box
+                display="block"
+                width="100%"
+                height={[
+                  `max(calc(90vh - ${mobile}px), ${MIN_HEIGHT}px)`,
+                  `max(calc(90vh - ${desktop}px), ${MIN_HEIGHT}px)`,
+                ]}
+                style={{ objectFit: "cover" }}
+                as="video"
+                // @ts-ignore
+                src={article.hero.media}
+                autoPlay
+                loop
+                playsInline
+                muted
+              />
+            )}
+
             {image && (
               <Image
                 src={image.src}
@@ -119,7 +141,7 @@ const ArticleHeader: FC<ArticleHeaderProps> = ({ article }) => {
                 bg="black10"
                 mb={4}
               >
-                <Video
+                <Embed
                   dangerouslySetInnerHTML={{ __html: article.hero.embed }}
                 />
               </ResponsiveBox>
@@ -191,12 +213,14 @@ export const ArticleHeaderFragmentContainer = createFragmentContainer(
     article: graphql`
       fragment ArticleHeader_article on Article {
         title
+        href
         vertical
         byline
         hero {
           ... on ArticleFeatureSection {
             layout
             embed
+            media
             image {
               url
               split: resized(width: 900) {
@@ -215,7 +239,7 @@ export const ArticleHeaderFragmentContainer = createFragmentContainer(
   }
 )
 
-const Video = styled.div`
+const Embed = styled.div`
   width: 100%;
   height: 100%;
 

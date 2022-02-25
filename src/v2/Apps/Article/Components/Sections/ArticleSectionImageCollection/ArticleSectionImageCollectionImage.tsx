@@ -1,7 +1,6 @@
 import { ResponsiveBox, Image } from "@artsy/palette"
 import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { useRouter } from "v2/System/Router/useRouter"
 import { ArticleZoomButton } from "../../ArticleZoomButton"
 import { useArticleZoomGallery } from "../../ArticleZoomGallery"
 import { ArticleSectionImageCollectionImage_figure } from "v2/__generated__/ArticleSectionImageCollectionImage_figure.graphql"
@@ -16,12 +15,10 @@ const ArticleSectionImageCollectionImage: FC<ArticleSectionImageCollectionImageP
   figure,
   targetWidth,
 }) => {
-  const { match } = useRouter()
-
   const {
     articleZoomGalleryComponent,
     showArticleZoomGallery,
-  } = useArticleZoomGallery({ id: match.params.id })
+  } = useArticleZoomGallery()
 
   const handleClick = () => {
     if (!figure.id) return

@@ -5,7 +5,12 @@
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type Auction2App_me = {
-    readonly " $fragmentRefs": FragmentRefs<"AuctionDetails_me" | "AuctionActiveBids_me">;
+    readonly showLotStandingsTab: ReadonlyArray<{
+        readonly activeBid: {
+            readonly internalID: string;
+        } | null;
+    } | null> | null;
+    readonly " $fragmentRefs": FragmentRefs<"AuctionActiveBids_me" | "AuctionDetails_me">;
     readonly " $refType": "Auction2App_me";
 };
 export type Auction2App_me$data = Auction2App_me;
@@ -16,7 +21,13 @@ export type Auction2App_me$key = {
 
 
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = {
+  "kind": "Variable",
+  "name": "saleID",
+  "variableName": "saleID"
+};
+return {
   "argumentDefinitions": [
     {
       "defaultValue": null,
@@ -29,24 +40,57 @@ const node: ReaderFragment = {
   "name": "Auction2App_me",
   "selections": [
     {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "AuctionDetails_me"
+      "alias": "showLotStandingsTab",
+      "args": [
+        {
+          "kind": "Literal",
+          "name": "live",
+          "value": true
+        },
+        (v0/*: any*/)
+      ],
+      "concreteType": "LotStanding",
+      "kind": "LinkedField",
+      "name": "lotStandings",
+      "plural": true,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "BidderPosition",
+          "kind": "LinkedField",
+          "name": "activeBid",
+          "plural": false,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "internalID",
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
     },
     {
       "args": [
-        {
-          "kind": "Variable",
-          "name": "saleID",
-          "variableName": "saleID"
-        }
+        (v0/*: any*/)
       ],
       "kind": "FragmentSpread",
       "name": "AuctionActiveBids_me"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "AuctionDetails_me"
     }
   ],
   "type": "Me",
   "abstractKey": null
 };
-(node as any).hash = 'f2d9dfc5d379da5b57da940144ee5681';
+})();
+(node as any).hash = 'f12c6ec9b753734479fd0cdad7174ced';
 export default node;

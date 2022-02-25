@@ -1,4 +1,4 @@
-import { Box, Join, Spacer } from "@artsy/palette"
+import { Box, Join, Spacer, Tab, Tabs } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FullBleedHeader } from "v2/Components/FullBleedHeader"
 import { AnalyticsContext, useAnalyticsContext } from "v2/System"
@@ -9,6 +9,8 @@ import { Auction2MetaFragmentContainer } from "./Components/Auction2Meta"
 import { AuctionActiveBidsRefetchContainer } from "./Components/AuctionActiveBids"
 import { AuctionArtworkFilterRefetchContainer } from "./Components/AuctionArtworkFilter"
 import { AuctionDetailsFragmentContainer } from "./Components/AuctionDetails/AuctionDetails"
+import { AuctionPromotedSaleRailFragmentContainer } from "./Components/AuctionPromotedSaleRail"
+import { AuctionWorksByFollowedArtistsRailFragmentContainer } from "./Components/AuctionWorksByFollowedArtistsRail"
 
 /**
  * TODO:
@@ -29,6 +31,16 @@ export const Auction2App: React.FC<Auction2AppProps> = ({
 }) => {
   const { contextPageOwnerType, contextPageOwnerSlug } = useAnalyticsContext()
 
+  const tabBar = {
+    isVisible:
+      me?.showLotStandingsTab?.length ||
+      viewer.showFollowedArtistsTab?.edges?.length ||
+      sale.showBuyNowTab,
+    showActiveBids: me?.showLotStandingsTab?.length,
+    showFollowedArtistsTab: viewer.showFollowedArtistsTab?.edges?.length,
+    showBuyNowTab: sale.showBuyNowTab,
+  }
+
   return (
     <AnalyticsContext.Provider
       value={{
@@ -46,7 +58,27 @@ export const Auction2App: React.FC<Auction2AppProps> = ({
 
         <AuctionDetailsFragmentContainer sale={sale} me={me} />
 
-        <AuctionActiveBidsRefetchContainer me={me} />
+        {tabBar.isVisible && (
+          <Tabs mb={4}>
+            {tabBar.showActiveBids && (
+              <Tab name="Your Active Bids">
+                <AuctionActiveBidsRefetchContainer me={me} />
+              </Tab>
+            )}
+            {tabBar.showFollowedArtistsTab && (
+              <Tab name="Works By Artists You Follow">
+                <AuctionWorksByFollowedArtistsRailFragmentContainer
+                  viewer={viewer}
+                />
+              </Tab>
+            )}
+            {tabBar.showBuyNowTab && (
+              <Tab name="Buy Now">
+                <AuctionPromotedSaleRailFragmentContainer sale={sale} />
+              </Tab>
+            )}
+          </Tabs>
+        )}
 
         <AuctionArtworkFilterRefetchContainer viewer={viewer} />
 
@@ -61,14 +93,21 @@ export const Auction2AppFragmentContainer = createFragmentContainer(
   {
     me: graphql`
       fragment Auction2App_me on Me
-        @argumentDefinitions(saleID: { type: "String!" }) {
-        ...AuctionDetails_me
+        @argumentDefinitions(saleID: { type: "String" }) {
         ...AuctionActiveBids_me @arguments(saleID: $saleID)
+        ...AuctionDetails_me
+
+        showLotStandingsTab: lotStandings(saleID: $saleID, live: true) {
+          activeBid {
+            internalID
+          }
+        }
       }
     `,
     sale: graphql`
       fragment Auction2App_sale on Sale {
         ...Auction2Meta_sale
+        ...AuctionPromotedSaleRail_sale
         ...AuctionDetails_sale
 
         internalID
@@ -77,12 +116,32 @@ export const Auction2AppFragmentContainer = createFragmentContainer(
             src
           }
         }
+        showBuyNowTab: promotedSale {
+          internalID
+        }
       }
     `,
     viewer: graphql`
       fragment Auction2App_viewer on Viewer
-        @argumentDefinitions(input: { type: "FilterArtworksInput" }) {
+        @argumentDefinitions(
+          input: { type: "FilterArtworksInput" }
+          saleID: { type: "String" }
+        ) {
         ...AuctionArtworkFilter_viewer @arguments(input: $input)
+        ...AuctionWorksByFollowedArtistsRail_viewer @arguments(saleID: $saleID)
+
+        showFollowedArtistsTab: saleArtworksConnection(
+          first: 1
+          aggregations: [TOTAL]
+          saleSlug: $saleID
+          includeArtworksByFollowedArtists: true
+        ) {
+          edges {
+            node {
+              internalID
+            }
+          }
+        }
       }
     `,
   }
