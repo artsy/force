@@ -2700,6 +2700,7 @@ type BidderPositionResult {
   messageDescriptionMD: String
   messageHeader: String
   position: BidderPosition
+  rawError: String
   status: String!
 }
 
