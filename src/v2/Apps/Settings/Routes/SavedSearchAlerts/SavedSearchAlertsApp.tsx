@@ -29,6 +29,8 @@ import { SavedSearchAlertEditFormDesktop } from "./Components/SavedSearchAlertEd
 import { Sticky, StickyProvider } from "v2/Components/Sticky"
 import { useNavBarHeight } from "v2/Components/NavBar/useNavBarHeight"
 import { SavedSearchAlertEditFormMobile } from "./Components/SavedSearchAlertEditFormMobile"
+import { useTracking } from "react-tracking"
+import { ActionType } from "@artsy/cohesion"
 
 interface SavedSearchAlertsAppProps {
   me: SavedSearchAlertsApp_me
@@ -45,6 +47,7 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
     setEditAlertEntity,
   ] = useState<EditAlertEntity | null>(null)
   const { sendToast } = useToasts()
+  const { trackEvent } = useTracking()
   const [showDeleteModal, setShowDeleteModal] = useState(false)
   const [loading, setLoading] = useState(false)
   const alerts = extractNodes(me.savedSearchesConnection)
@@ -76,6 +79,11 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
   }
 
   const handleDeleted = () => {
+    trackEvent({
+      action: ActionType.deletedSavedSearch,
+      saved_search_id: editAlertEntity!.id,
+    })
+
     closeEditFormAndRefetch()
     closeDeleteModal()
 

@@ -3,8 +3,10 @@ import { graphql } from "react-relay"
 import { setupTestWrapperTL } from "v2/DevTools/setupTestWrapper"
 import { SavedSearchAlertsAppPaginationContainer } from "../SavedSearchAlertsApp"
 import { SavedSearchAlertsApp_Test_Query } from "v2/__generated__/SavedSearchAlertsApp_Test_Query.graphql"
+import { useTracking } from "react-tracking"
 
 jest.unmock("react-relay")
+jest.mock("react-tracking")
 jest.mock("react-head", () => ({
   Title: () => null,
   Meta: () => null,
@@ -15,6 +17,8 @@ jest.mock("v2/Utils/Hooks/useMatchMedia", () => ({
 }))
 
 describe("SavedSearchAlertsApp", () => {
+  const trackEvent = jest.fn()
+
   const { renderWithRelay } = setupTestWrapperTL<
     SavedSearchAlertsApp_Test_Query
   >({
@@ -26,6 +30,16 @@ describe("SavedSearchAlertsApp", () => {
         }
       }
     `,
+  })
+
+  beforeEach(() => {
+    const mockTracking = useTracking as jest.Mock
+
+    mockTracking.mockImplementation(() => {
+      return {
+        trackEvent,
+      }
+    })
   })
 
   it("renders all alerts", () => {
