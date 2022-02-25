@@ -24,6 +24,7 @@ import { useFilterLabelCountByKey } from "../Utils/useFilterLabelCountByKey"
 import { useMode } from "v2/Utils/Hooks/useMode"
 import { Range, RANGE_DOT_SIZE } from "v2/Components/Range"
 import { debounce } from "lodash"
+import { getENV } from "v2/Utils/getENV"
 
 // Disables arrows in numeric inputs
 export const NumericInput = styled(LabeledInput).attrs({ type: "number" })`
@@ -413,7 +414,7 @@ export const PriceRangeFilterNew: FC<PriceRangeFilterProps> = ({
 }
 
 export const PriceRangeFilter: FC<PriceRangeFilterProps> = props => {
-  if (true) {
+  if (getENV("ENABLE_NEW_PRICE_FILTER")) {
     return <PriceRangeFilterNew {...props} />
   }
 
