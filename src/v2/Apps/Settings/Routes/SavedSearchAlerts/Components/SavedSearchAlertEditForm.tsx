@@ -35,6 +35,8 @@ import {
 } from "v2/Components/SavedSearchAlert/types"
 import { getAllowedSearchCriteria } from "v2/Components/SavedSearchAlert/Utils/savedSearchCriteria"
 import { SavedSearchAlertPills } from "v2/Components/SavedSearchAlert/Components/SavedSearchAlertPills"
+import { useTracking } from "react-tracking"
+import { ActionType, EditedSavedSearch, OwnerType } from "@artsy/cohesion"
 
 const logger = createLogger(
   "v2/Apps/SavedSearchAlerts/Components/SavedSearchAlertEditForm"
@@ -63,6 +65,7 @@ const SavedSearchAlertEditForm: React.FC<SavedSearchAlertEditFormProps> = ({
 }) => {
   const { userAlertSettings } = savedSearch
   const { submitMutation: submitEditAlert } = useEditSavedSearchAlert()
+  const { trackEvent } = useTracking()
   const {
     pills,
     entity,
@@ -93,19 +96,30 @@ const SavedSearchAlertEditForm: React.FC<SavedSearchAlertEditFormProps> = ({
   const handleSubmit = async (values: SavedSearchAleftFormValues) => {
     try {
       const namePlaceholder = getNamePlaceholder(entity.name, pills)
+      const updatedAlertSettings = {
+        ...values,
+        name: values.name || namePlaceholder,
+      }
 
       await submitEditAlert({
         variables: {
           input: {
             searchCriteriaID: editAlertEntity!.id,
             attributes: criteria,
-            userAlertSettings: {
-              ...values,
-              name: values.name || namePlaceholder,
-            },
+            userAlertSettings: updatedAlertSettings,
           },
         },
       })
+
+      const action: EditedSavedSearch = {
+        action: ActionType.editedSavedSearch,
+        context_screen_owner_type: OwnerType.savedSearch,
+        context_screen_owner_id: editAlertEntity.id,
+        current: JSON.stringify(userAlertSettings),
+        changed: JSON.stringify(updatedAlertSettings),
+      }
+
+      trackEvent(action)
 
       onCompleted()
     } catch (error) {

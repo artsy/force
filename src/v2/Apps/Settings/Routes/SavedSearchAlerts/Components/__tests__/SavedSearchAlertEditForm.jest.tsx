@@ -5,6 +5,7 @@ import { setupTestWrapperTL } from "v2/DevTools/setupTestWrapper"
 import { SavedSearchAlertEditForm_Test_Query } from "v2/__generated__/SavedSearchAlertEditForm_Test_Query.graphql"
 import { EditAlertEntity } from "../../types"
 import { SavedSearchAlertEditFormFragmentContainer } from "../SavedSearchAlertEditForm"
+import { useTracking } from "react-tracking"
 
 const mockEditSavedSearchAlert = jest.fn()
 
@@ -24,9 +25,17 @@ const defaultEditAlertEntity: EditAlertEntity = {
 describe("SavedSearchAlertEditForm", () => {
   const mockOnCompleted = jest.fn()
   const mockOnDeleteClick = jest.fn()
+  const trackEvent = jest.fn()
 
   beforeEach(() => {
     jest.clearAllMocks()
+
+    const mockTracking = useTracking as jest.Mock
+    mockTracking.mockImplementation(() => {
+      return {
+        trackEvent,
+      }
+    })
   })
 
   const { renderWithRelay } = setupTestWrapperTL<
@@ -118,6 +127,42 @@ describe("SavedSearchAlertEditForm", () => {
     fireEvent.click(saveAlertButton)
 
     await waitFor(() => expect(mockOnCompleted).toBeCalled())
+  })
+
+  it("should track editedSavedSearch event when alert info is successfully updated", async () => {
+    renderWithRelay({
+      Artist: () => artistMocked,
+      FilterArtworksConnection: () => filterArtworksConnectionMocked,
+      SearchCriteria: () => savedSearchAlertMocked,
+    })
+
+    fireEvent.change(screen.getByDisplayValue("Alert #1"), {
+      target: { value: "Updated Name" },
+    })
+
+    const saveAlertButton = screen.getByRole("button", {
+      name: "Save Alert",
+    })
+
+    fireEvent.click(saveAlertButton)
+
+    await waitFor(() => expect(mockOnCompleted).toBeCalled())
+
+    expect(trackEvent).toBeCalledWith({
+      action: "editedSavedSearch",
+      context_screen_owner_type: "savedSearch",
+      context_screen_owner_id: "alert-id",
+      current: JSON.stringify({
+        name: "Alert #1",
+        email: true,
+        push: false,
+      }),
+      changed: JSON.stringify({
+        name: "Updated Name",
+        push: false,
+        email: true,
+      }),
+    })
   })
 
   describe("Save Alert button", () => {
