@@ -36,7 +36,7 @@ import {
 import { getAllowedSearchCriteria } from "v2/Components/SavedSearchAlert/Utils/savedSearchCriteria"
 import { SavedSearchAlertPills } from "v2/Components/SavedSearchAlert/Components/SavedSearchAlertPills"
 import { useTracking } from "react-tracking"
-import { ActionType, EditedSavedSearch, OwnerType } from "@artsy/cohesion"
+import { ActionType } from "@artsy/cohesion"
 
 const logger = createLogger(
   "v2/Apps/SavedSearchAlerts/Components/SavedSearchAlertEditForm"
@@ -111,15 +111,12 @@ const SavedSearchAlertEditForm: React.FC<SavedSearchAlertEditFormProps> = ({
         },
       })
 
-      const action: EditedSavedSearch = {
+      trackEvent({
         action: ActionType.editedSavedSearch,
-        context_screen_owner_type: OwnerType.savedSearch,
-        context_screen_owner_id: editAlertEntity.id,
+        saved_search_id: editAlertEntity.id,
         current: JSON.stringify(userAlertSettings),
         changed: JSON.stringify(updatedAlertSettings),
-      }
-
-      trackEvent(action)
+      })
 
       onCompleted()
     } catch (error) {

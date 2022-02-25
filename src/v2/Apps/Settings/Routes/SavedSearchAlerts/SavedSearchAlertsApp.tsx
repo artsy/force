@@ -31,7 +31,7 @@ import { Sticky, StickyProvider } from "v2/Components/Sticky"
 import { useNavBarHeight } from "v2/Components/NavBar/useNavBarHeight"
 import { SavedSearchAlertEditFormMobile } from "./Components/SavedSearchAlertEditFormMobile"
 import { useTracking } from "react-tracking"
-import { ActionType, DeletedSavedSearch, OwnerType } from "@artsy/cohesion"
+import { ActionType } from "@artsy/cohesion"
 
 interface SavedSearchAlertsAppProps {
   me: SavedSearchAlertsApp_me
@@ -80,11 +80,10 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
   }
 
   const handleDeleted = () => {
-    const action: DeletedSavedSearch = {
+    trackEvent({
       action: ActionType.deletedSavedSearch,
-      context_screen_owner_type: OwnerType.savedSearch,
-      context_screen_owner_id: editAlertEntity!.id,
-    }
+      saved_search_id: editAlertEntity!.id,
+    })
 
     closeEditFormAndRefetch()
     closeDeleteModal()
@@ -92,7 +91,6 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
     sendToast({
       message: "Your Alert has been deleted.",
     })
-    trackEvent(action)
   }
 
   const handleLoadMore = () => {

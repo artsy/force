@@ -148,21 +148,16 @@ describe("SavedSearchAlertEditForm", () => {
 
     await waitFor(() => expect(mockOnCompleted).toBeCalled())
 
-    expect(trackEvent).toBeCalledWith({
-      action: "editedSavedSearch",
-      context_screen_owner_type: "savedSearch",
-      context_screen_owner_id: "alert-id",
-      current: JSON.stringify({
-        name: "Alert #1",
-        email: true,
-        push: false,
-      }),
-      changed: JSON.stringify({
-        name: "Updated Name",
-        push: false,
-        email: true,
-      }),
-    })
+    expect(trackEvent.mock.calls[0]).toMatchInlineSnapshot(`
+      Array [
+        Object {
+          "action": "editedSavedSearch",
+          "changed": "{\\"name\\":\\"Updated Name\\",\\"push\\":false,\\"email\\":true}",
+          "current": "{\\"name\\":\\"Alert #1\\",\\"email\\":true,\\"push\\":false}",
+          "saved_search_id": "alert-id",
+        },
+      ]
+    `)
   })
 
   describe("Save Alert button", () => {
