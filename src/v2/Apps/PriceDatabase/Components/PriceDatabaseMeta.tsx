@@ -5,7 +5,7 @@ export const PriceDatabaseMeta: React.FC = () => {
   return (
     <MetaTags
       title="Search Auction Results for Free | Artsy Price Database"
-      description="Unlimited access to auction results and art market data—for free. Browse millions of auction records from top auction houses, from 1986 to today."
+      description="Unlimited access to millions of auction results and art market data—for free."
       pathname="/price-database"
       imageURL="" // TODO: replace with image
     />

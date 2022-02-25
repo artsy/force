@@ -7,8 +7,8 @@ import {
   Text,
 } from "@artsy/palette"
 import qs from "qs"
-import { useState } from "react";
-import * as React from "react";
+import { useState } from "react"
+import * as React from "react"
 import { useTracking } from "react-tracking"
 import { useAuctionResultsFilterContext } from "v2/Apps/Artist/Routes/AuctionResults/AuctionResultsFilterContext"
 import { categoryMap } from "v2/Apps/Artist/Routes/AuctionResults/Components/AuctionFilters/MediumFilter"
@@ -95,10 +95,8 @@ export const PriceDatabaseSearch: React.FC = () => {
             <Media greaterThanOrEqual="sm">Artsy Price Database</Media>
           </Text>
           <Text variant={["sm", "lg"]} mb={[0, 2]}>
-            Unlimited access to auction results and art market data—for free.
-            <br />
-            Browse millions of auction records from over 900 top auction houses,
-            from 1986 to today.
+            Unlimited access to millions of auction results and art market
+            data—for free.
           </Text>
         </Column>
       </GridColumns>
