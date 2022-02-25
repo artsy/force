@@ -138,19 +138,10 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
     <StickyProvider>
       <MetaTags title="Your Alerts | Artsy" pathname="/user/alerts" />
 
-      <Media greaterThanOrEqual="md">
-        <SavedSearchAlertHeader />
-      </Media>
-      <Media lessThan="md">{!isEditMode && <SavedSearchAlertHeader />}</Media>
-
-      <Media greaterThanOrEqual="md">
-        <Separator color="black15" />
-      </Media>
+      <SavedSearchAlertHeader />
 
       <Box mx={[-2, -4]}>
-        <Media lessThan="md">
-          {!isEditMode && <Separator color="black15" />}
-        </Media>
+        <Separator color="black15" />
 
         {alerts.length === 0 ? (
           <SavedSearchAlertsEmptyResults />
