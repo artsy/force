@@ -5,7 +5,7 @@
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkApp_me = {
-    readonly " $fragmentRefs": FragmentRefs<"ArtworkSidebar_me">;
+    readonly " $fragmentRefs": FragmentRefs<"ArtworkSidebar_me" | "SubmittedOrderModal_me">;
     readonly " $refType": "ArtworkApp_me";
 };
 export type ArtworkApp_me$data = ArtworkApp_me;
@@ -26,10 +26,15 @@ const node: ReaderFragment = {
       "args": null,
       "kind": "FragmentSpread",
       "name": "ArtworkSidebar_me"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "SubmittedOrderModal_me"
     }
   ],
   "type": "Me",
   "abstractKey": null
 };
-(node as any).hash = 'aae03275c844ec61c6893b5eee528e86';
+(node as any).hash = '6c6dcef9461649e857fcb002fc7f937a';
 export default node;

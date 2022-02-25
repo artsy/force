@@ -37,21 +37,23 @@ const testOrder: StatusQueryRawResponse["order"] = {
   displayState: "SUBMITTED",
 }
 
-describe("Status", () => {
-  const env = createTestEnv({
-    Component: StatusFragmentContainer,
-    query: graphql`
-      query StatusQuery @raw_response_type @relay_test_operation {
-        order: commerceOrder(id: "42") {
-          ...Status_order
-        }
+const testEnvProps = {
+  Component: StatusFragmentContainer,
+  query: graphql`
+    query StatusQuery @raw_response_type @relay_test_operation {
+      order: commerceOrder(id: "42") {
+        ...Status_order
       }
-    `,
-    defaultData: {
-      order: testOrder,
-    },
-    TestPage: StatusTestPage,
-  })
+    }
+  `,
+  defaultData: {
+    order: testOrder,
+  },
+  TestPage: StatusTestPage,
+}
+
+describe("Status", () => {
+  const env = createTestEnv(testEnvProps)
 
   function buildPageWithOrder<Order>(order: Order) {
     return env.buildPage({
@@ -80,7 +82,33 @@ describe("Status", () => {
         expect(page.text()).toContain(
           "The seller will respond to your offer by Jan 15"
         )
+        expect(page.text()).not.toContain(
+          "Negotiation with the gallery will continue in the Inbox."
+        )
         expect(page.getMessage()).toBe(1)
+        expect(page.text()).toContain("Kathryn Markel Fine Arts")
+        expect(page.text()).toContain("List price")
+      })
+
+      it("should say order submitted and have message to continue to inbox on Eigen", async () => {
+        const env = createTestEnv({
+          ...testEnvProps,
+          systemContextProps: {
+            isEigen: true,
+            user: { lab_features: ["Make Offer On All Eligible Artworks"] },
+          },
+        })
+        const page = await env.buildPage()
+        expect(page.text()).toContain("Your offer has been submitted")
+        expect(page.text()).toContain(
+          "The seller will respond to your offer by Jan 15"
+        )
+        expect(page.text()).toContain(
+          "Negotiation with the gallery will continue in the Inbox."
+        )
+        expect(page.getMessage()).toBe(1)
+        expect(page.text()).not.toContain("Kathryn Markel Fine Arts")
+        expect(page.text()).not.toContain("List price")
       })
 
       it("should show a note section", async () => {
