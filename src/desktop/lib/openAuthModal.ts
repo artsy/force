@@ -1,6 +1,6 @@
 import { ModalOptions, ModalType } from "v2/Components/Authentication/Types"
-import { data as sd } from "sharify"
 import { mediator } from "lib/mediator"
+import { getENV } from "v2/Utils/getENV"
 
 /**
  * Open authentication modal via 'click' trigger
@@ -17,7 +17,7 @@ export const openAuthModal = (mode: ModalType, options: ModalOptions) => {
  * Opens 2 seconds after first scroll by default
  */
 export const handleScrollingAuthModal = (options: ModalOptions) => {
-  if (sd.CURRENT_USER || sd.IS_MOBILE) {
+  if (getENV("CURRENT_USER") || getENV("IS_MOBILE")) {
     return
   }
   const modalOptions = Object.assign(

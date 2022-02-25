@@ -50,7 +50,7 @@ export const useAuctionTracking = () => {
       // FIXME: registrationTracked.current is never set to true
       if (trackNewBidderRegistration) {
         const newBidderID =
-          result.position?.saleArtwork?.sale?.registrationStatus?.internalID
+          result?.position?.saleArtwork?.sale?.registrationStatus?.internalID
 
         tracking.registrationSubmitted({
           bidderID: newBidderID,

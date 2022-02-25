@@ -1,7 +1,7 @@
 import loadable from "@loadable/component"
 import { graphql } from "relay-runtime"
 import { AppRouteConfig } from "v2/System/Router/Route"
-import { ARTWORK_FILTER_INPUT_ARGS } from "./Components/AuctionArtworkFilter"
+import { getArtworkFilterInputArgs } from "./Components/AuctionArtworkFilter"
 
 const Auction2App = loadable(
   () => import(/* webpackChunkName: "auction2Bundle" */ "./Auction2App"),
@@ -70,11 +70,11 @@ export const auction2Routes: AppRouteConfig[] = [
         }
       }
     `,
-    prepareVariables: (params, _props) => {
+    prepareVariables: (params, props) => {
       return {
         slug: params.slug,
         input: {
-          ...ARTWORK_FILTER_INPUT_ARGS,
+          ...getArtworkFilterInputArgs(props.context.user),
           saleID: params.slug,
         },
       }
