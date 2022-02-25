@@ -185,34 +185,6 @@ export const PriceRangeFilterOld: FC<PriceRangeFilterProps> = ({
 
   return (
     <FilterExpandable label={label} expanded={hasSelection || expanded}>
-      <Flex mt={1} alignItems="flex-end">
-        <NumericInput
-          label="$USD"
-          name="price_min"
-          placeholder="Min"
-          min="0"
-          step="1"
-          value={getValue(customRange[0])}
-          onChange={handleChange(0)}
-        />
-
-        <Spacer mx={0.5} />
-
-        <NumericInput
-          label="$USD"
-          name="price_max"
-          placeholder="Max"
-          min="0"
-          step="1"
-          value={getValue(customRange[1])}
-          onChange={handleChange(1)}
-        />
-      </Flex>
-
-      <Box my={2}>
-        <Range min={0} max={100} allowCross={false} defaultValue={[0, 100]} />
-      </Box>
-
       {mode === "done" && (
         <Media lessThan="sm">
           <Message variant="info" my={2}>
