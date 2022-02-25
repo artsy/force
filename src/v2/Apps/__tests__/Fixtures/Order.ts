@@ -657,7 +657,7 @@ export const OfferOrderWithOffers = {
 export const OfferOrderWithOffersAndNote = {
   ...UntouchedOfferOrder,
   lastOffer: OfferWithTotals,
-  source: "inquiry",
+  source: "artwork_page",
   conversation: {
     internalID: "5665",
   },
