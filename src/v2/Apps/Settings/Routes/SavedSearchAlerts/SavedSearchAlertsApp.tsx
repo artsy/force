@@ -1,7 +1,6 @@
 import {
   GridColumns,
   Column,
-  FullBleed,
   Separator,
   Box,
   Join,
@@ -104,7 +103,7 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
   const list = (
     <>
       <Join separator={<Separator color="black15" />}>
-        {alerts.map((edge, index) => {
+        {alerts.map(edge => {
           const isCurrentEdgeSelected = editAlertEntity?.id === edge.internalID
           let variant: SavedSearchAlertListItemVariant | undefined
 
@@ -144,11 +143,11 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
       </Media>
       <Media lessThan="md">{!isEditMode && <SavedSearchAlertHeader />}</Media>
 
-      <FullBleed>
-        <Media greaterThanOrEqual="md">
-          <Separator color="black15" />
-        </Media>
+      <Media greaterThanOrEqual="md">
+        <Separator color="black15" />
+      </Media>
 
+      <Box mx={[-2, -4]}>
         <Media lessThan="md">
           {!isEditMode && <Separator color="black15" />}
         </Media>
@@ -203,7 +202,7 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
             )}
           </>
         )}
-      </FullBleed>
+      </Box>
     </StickyProvider>
   )
 }
