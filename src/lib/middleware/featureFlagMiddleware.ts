@@ -15,7 +15,7 @@ export function featureFlagMiddleware(serviceType: symbol) {
         try {
           service = await createFeatureFlagService(serviceType)
           resolve(service)
-        } catch {
+        } catch (error) {
           reject("An unknown error occurred while creating the flag service.")
         }
       }
@@ -41,7 +41,7 @@ export function featureFlagMiddleware(serviceType: symbol) {
         next()
       })
       .catch(error => {
-        console.error(error)
+        console.error("[Force] Error creating feature flag service:", error)
         next()
       })
   }
