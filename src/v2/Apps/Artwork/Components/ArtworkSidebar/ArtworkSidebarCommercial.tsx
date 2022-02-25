@@ -91,9 +91,7 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
   renderSaleMessage(saleMessage: string) {
     return (
       <Text variant="lg" data-test="SaleMessage">
-        {saleMessage === "Contact For Price"
-          ? "Contact for Price"
-          : saleMessage}
+        {saleMessage === "Contact For Price" ? "Price on Request" : saleMessage}
       </Text>
     )
   }
@@ -496,7 +494,7 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
               loading={isCommittingCreateOrderMutation}
               onClick={this.handleCreateOrder.bind(this)}
             >
-              Buy now
+              Purchase
             </Button>
           )}
           {shouldDisplayMakeOfferButton && (
@@ -509,7 +507,7 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
                 loading={isCommittingCreateOfferOrderMutation}
                 onClick={this.handleCreateOfferOrder.bind(this)}
               >
-                Make offer
+                Make an Offer
               </Button>
             </>
           )}
