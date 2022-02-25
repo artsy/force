@@ -16,7 +16,7 @@ import { ContextModule } from "@artsy/cohesion"
 import { AuctionDetails_sale } from "v2/__generated__/AuctionDetails_sale.graphql"
 import { AuctionDetails_me } from "v2/__generated__/AuctionDetails_me.graphql"
 import { AuctionInfoSidebarFragmentContainer } from "./AuctionInfoSidebar"
-import { RegisterButtonFragmentContainer } from "./RegisterButton"
+import { RegisterButtonFragmentContainer } from "../RegisterButton"
 import { getENV } from "v2/Utils/getENV"
 
 interface AuctionDetailsProps {

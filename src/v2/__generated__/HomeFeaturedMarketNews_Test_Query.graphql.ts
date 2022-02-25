@@ -8,7 +8,7 @@ export type HomeFeaturedMarketNews_Test_QueryVariables = {};
 export type HomeFeaturedMarketNews_Test_QueryResponse = {
     readonly articles: ReadonlyArray<{
         readonly " $fragmentRefs": FragmentRefs<"HomeFeaturedMarketNews_articles">;
-    } | null> | null;
+    }>;
 };
 export type HomeFeaturedMarketNews_Test_Query = {
     readonly response: HomeFeaturedMarketNews_Test_QueryResponse;
@@ -287,7 +287,7 @@ return {
       "relayTestingSelectionTypeInfo": {
         "articles": {
           "enumValues": null,
-          "nullable": true,
+          "nullable": false,
           "plural": true,
           "type": "Article"
         },

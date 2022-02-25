@@ -7,10 +7,9 @@ import { Auction2BidRoute_me } from "v2/__generated__/Auction2BidRoute_me.graphq
 import { AuctionLotInfoFragmentContainer } from "./Components/AuctionLotInfo"
 import { dropWhile } from "lodash"
 import { Form, Formik } from "formik"
-import { OnSubmitValidationError } from "v2/Apps/Auction2/Components/Form/OnSubmitValidationError"
 import { PricingTransparency2QueryRenderer } from "./Components/PricingTransparency2"
 import { Match } from "found"
-import { useEffect } from "react"
+import { useEffect, useRef } from "react"
 import { useSubmitBid } from "./useSubmitBid"
 import { AddressFormWithCreditCard } from "v2/Apps/Auction2/Components/Form/AddressFormWithCreditCard"
 import { ConditionsOfSaleCheckbox } from "v2/Apps/Auction2/Components/Form/ConditionsOfSaleCheckbox"
@@ -37,6 +36,10 @@ const Auction2BidRoute: React.FC<Auction2BidRouteProps> = ({
   const { match, router } = useRouter()
   const { tracking } = useAuctionTracking()
 
+  // When we're waiting for the bid POLLING status to complete, we also want
+  // to be able to still clear the interval when closing the modal.
+  const checkBidStatusPollingInterval = useRef<NodeJS.Timeout | null>(null)
+
   const {
     artworkSlug,
     bidderID,
@@ -50,6 +53,7 @@ const Auction2BidRoute: React.FC<Auction2BidRouteProps> = ({
   const { submitBid } = useSubmitBid({
     artwork,
     bidderID,
+    checkBidStatusPollingInterval,
     me,
     requiresPaymentInformation,
     sale,
@@ -65,6 +69,11 @@ const Auction2BidRoute: React.FC<Auction2BidRouteProps> = ({
   }
 
   const handleModalClose = () => {
+    if (checkBidStatusPollingInterval.current) {
+      clearTimeout(checkBidStatusPollingInterval.current)
+      checkBidStatusPollingInterval.current = null
+    }
+
     router.push(`/auction2/${sale.slug}`)
   }
 
@@ -118,17 +127,19 @@ const Auction2BidRoute: React.FC<Auction2BidRouteProps> = ({
                 {requiresPaymentInformation && <AddressFormWithCreditCard />}
                 {requiresCheckbox && <ConditionsOfSaleCheckbox />}
 
-                <Button width="100%" loading={isSubmitting} type="submit">
+                <Button
+                  width="100%"
+                  loading={
+                    // Either the form is submitting, or we're polling for the
+                    // result of the bid.
+                    isSubmitting || !!checkBidStatusPollingInterval.current
+                  }
+                  type="submit"
+                >
                   Confirm bid
                 </Button>
 
                 <ErrorStatus />
-
-                <OnSubmitValidationError
-                  onError={errors => {
-                    tracking.confirmBidFailed(errors, bidderID!)
-                  }}
-                />
               </Join>
             </Form>
           )
@@ -247,7 +258,7 @@ const computeProps = ({
 
   return {
     artworkSlug,
-    bidderID,
+    bidderID: bidderID!,
     displayIncrements,
     requiresCheckbox,
     requiresPaymentInformation,
