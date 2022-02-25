@@ -57,7 +57,7 @@ export const OpenInquiryModalCTA: React.FC<OpenInquiryModalCTAProps> = ({
           variant="primaryBlack"
           onClick={() => handleOpenModal()}
         >
-          Make Offer
+          Make an Offer
         </Button>
       </Flex>
     </>
