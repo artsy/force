@@ -4,10 +4,10 @@ import { RegisterButton_sale } from "v2/__generated__/RegisterButton_sale.graphq
 import { RegisterButton_me } from "v2/__generated__/RegisterButton_me.graphql"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import createLogger from "v2/Utils/logger"
-import { openAuthModal } from "v2/Utils/openAuthModal"
 import { ContextModule, Intent } from "@artsy/cohesion"
-import { mediator } from "lib/mediator"
 import { useRouter } from "v2/System/Router/useRouter"
+import { openAuthModal } from "desktop/lib/openAuthModal"
+import { ModalType } from "v2/Components/Authentication/Types"
 // import { useAuctionTracking } from "../../Hooks/useAuctionTracking"
 
 const logger = createLogger("RegisterButton")
@@ -31,10 +31,10 @@ export const RegisterButton: React.FC<RegisterButtonProps> = ({ me, sale }) => {
     const saleURL = `/auction2/${sale.slug}`
 
     if (!me) {
-      openAuthModal(mediator, {
+      openAuthModal(ModalType.login, {
         redirectTo: `${saleURL}/register`,
         intent: Intent.registerToBid,
-        copy: "Sign up to bid on artworks",
+        copy: "Log in to bid on artworks",
         contextModule: ContextModule.auctionSidebar,
       })
 

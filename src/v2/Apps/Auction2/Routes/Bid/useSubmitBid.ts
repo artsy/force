@@ -1,5 +1,5 @@
 import { Router } from "found"
-import { useRef } from "react"
+import { MutableRefObject, useRef } from "react"
 import { useRouter } from "v2/System/Router/useRouter"
 import createLogger from "v2/Utils/logger"
 import { useBidderPosition } from "v2/Apps/Auction2/Queries/useBidderPosition"
@@ -14,16 +14,27 @@ import { useCreateTokenAndSubmit } from "v2/Apps/Auction2/Hooks/useCreateTokenAn
 import { useAuctionTracking } from "v2/Apps/Auction2/Hooks/useAuctionTracking"
 import { Auction2BidRoute_sale } from "v2/__generated__/Auction2BidRoute_sale.graphql"
 import { Auction2BidRoute_artwork } from "v2/__generated__/Auction2BidRoute_artwork.graphql"
+import { Auction2BidRoute_me } from "v2/__generated__/Auction2BidRoute_me.graphql"
 
 const logger = createLogger("useSubmitBid")
+
+interface UseSubmitBidProps {
+  artwork: Auction2BidRoute_artwork
+  bidderID: string
+  checkBidStatusPollingInterval: MutableRefObject<NodeJS.Timeout | null>
+  me: Auction2BidRoute_me
+  requiresPaymentInformation: boolean
+  sale: Auction2BidRoute_sale
+}
 
 export const useSubmitBid = ({
   artwork,
   bidderID,
+  checkBidStatusPollingInterval,
   me,
   requiresPaymentInformation,
   sale,
-}) => {
+}: UseSubmitBidProps) => {
   // FIXME
   const registrationTracked = useRef(false)
   const { match, router } = useRouter()
@@ -45,15 +56,18 @@ export const useSubmitBid = ({
     values: AuctionFormValues,
     helpers: AuctionFormHelpers
   ) => {
+    helpers.setStatus(null)
+
     const { checkBidStatus } = setupCheckBidStatus({
-      helpers,
-      tracking,
-      fetchBidderPosition,
+      artwork,
       bidderID,
+      checkBidStatusPollingInterval,
+      fetchBidderPosition,
+      helpers,
       redirectTo,
       router,
       sale,
-      artwork,
+      tracking,
     })
 
     if (requiresPaymentInformation) {
@@ -105,6 +119,7 @@ export const useSubmitBid = ({
 const setupCheckBidStatus = (props: {
   artwork: Auction2BidRoute_artwork
   bidderID: string
+  checkBidStatusPollingInterval: MutableRefObject<NodeJS.Timeout | null>
   fetchBidderPosition: ReturnType<
     typeof useBidderPosition
   >["fetchBidderPosition"]
@@ -117,6 +132,7 @@ const setupCheckBidStatus = (props: {
   const {
     artwork,
     bidderID,
+    checkBidStatusPollingInterval,
     fetchBidderPosition,
     helpers,
     redirectTo,
@@ -125,7 +141,7 @@ const setupCheckBidStatus = (props: {
     tracking,
   } = props
 
-  const MAX_PENDING_POLL_ATTEMPTS = 20
+  const MAX_PENDING_POLL_ATTEMPTS = 10
   let pendingPollCount = 0
 
   const checkBidStatus = async result => {
@@ -133,6 +149,8 @@ const setupCheckBidStatus = (props: {
 
     const getBidderPosition = async () => {
       try {
+        helpers.setSubmitting(true)
+
         const response = await fetchBidderPosition({
           variables: {
             bidderPositionID,
@@ -142,6 +160,8 @@ const setupCheckBidStatus = (props: {
         // Loop
         return checkBidStatus(response?.me?.bidderPosition)
       } catch (error) {
+        helpers.setSubmitting(false)
+
         logger.error("Error fetching bidder position", error)
       }
     }
@@ -156,11 +176,18 @@ const setupCheckBidStatus = (props: {
 
       case "PENDING": {
         if (pendingPollCount < MAX_PENDING_POLL_ATTEMPTS) {
-          setTimeout(async () => {
+          checkBidStatusPollingInterval.current = setTimeout(async () => {
             await getBidderPosition()
           }, 1000)
 
           pendingPollCount++
+        } else {
+          checkBidStatusPollingInterval.current = null
+
+          helpers.setStatus(
+            "Error fetching bid status. PENDING status timeout."
+          )
+          helpers.setSubmitting(false)
         }
         break
       }

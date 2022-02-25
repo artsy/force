@@ -2,7 +2,6 @@ import { Button, Join, ModalDialog, Spacer } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Auction2RegistrationRoute_me } from "v2/__generated__/Auction2RegistrationRoute_me.graphql"
 import { Auction2RegistrationRoute_sale } from "v2/__generated__/Auction2RegistrationRoute_sale.graphql"
-import { OnSubmitValidationError } from "v2/Apps/Auction2/Components/Form/OnSubmitValidationError"
 import { Form, Formik } from "formik"
 import { CreditCardInputProvider } from "v2/Components/CreditCardInput"
 import { useRouter } from "v2/System/Router/useRouter"
@@ -79,12 +78,6 @@ const Auction2RegistrationRoute: React.FC<Auction2RegistrationRouteProps> = ({
               </Button>
 
               <ErrorStatus />
-
-              <OnSubmitValidationError
-                onError={error => {
-                  tracking.registrationSubmitFailed({ error, sale, me })
-                }}
-              />
             </Join>
           </Form>
         )}

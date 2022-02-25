@@ -1,4 +1,4 @@
-import { Text } from "@artsy/palette"
+import { Banner, Flex, Text } from "@artsy/palette"
 import { errorMessageForBidding } from "v2/Apps/Auction2/Components/Form/Utils"
 import { useFormContext } from "v2/Apps/Auction2/Hooks/useFormContext"
 
@@ -55,6 +55,8 @@ export const ErrorStatus = () => {
       case "ERROR":
       case "SUBMISSION_FAILED":
       default: {
+        console.error("[auction/ErrorStatus]", status)
+
         return {
           title: "Submission Failed",
           message: (
@@ -72,11 +74,13 @@ export const ErrorStatus = () => {
 
   return (
     <>
-      {title && <Text variant="md">{title}</Text>}
+      <Banner variant="error" textAlign="left">
+        <Flex flexDirection="column" textAlign="left">
+          {title && <Text variant="md">{title}</Text>}
 
-      <Text variant="xs" color="red100">
-        {message}
-      </Text>
+          <Text variant="xs">{message}</Text>
+        </Flex>
+      </Banner>
     </>
   )
 }
