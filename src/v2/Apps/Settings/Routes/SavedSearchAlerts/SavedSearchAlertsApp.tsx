@@ -151,10 +151,14 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
               <GridColumns gridColumnGap={0}>
                 <Column span={isEditMode ? 6 : 12}>{list}</Column>
                 {isEditMode && editAlertEntity && (
-                  <Column span={6} borderLeft="1px solid" borderColor="black15">
+                  <Column
+                    span={6}
+                    borderLeft="1px solid"
+                    borderLeftColor="black15"
+                  >
                     <Sticky bottomBoundary="#content-end">
                       <Box
-                        overflowY="scroll"
+                        overflowY="auto"
                         maxHeight={`calc(100vh - ${desktop}px)`}
                       >
                         <SavedSearchAlertEditFormDesktop
