@@ -17,8 +17,6 @@ class TestFeatureFlagService implements FeatureFlagService {
   enabled(name: string, context?: FeatureFlagContext) {
     return name === "feature-a"
   }
-
-  getVariant: (name: string, context?: FeatureFlagContext | undefined) => any
 }
 
 describe("featureFlag tests", () => {

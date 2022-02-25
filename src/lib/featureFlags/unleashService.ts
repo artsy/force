@@ -38,10 +38,6 @@ export class UnleashFeatureFlagService implements FeatureFlagService {
     return this.unleash.isEnabled(name, context)
   }
 
-  getVariant(name: string, context?: any) {
-    return this.unleash.getVariant(name, context)
-  }
-
   private get unleash() {
     if (this._unleash === null) {
       throw new Error("UnleashFlagService has not been initialized.")

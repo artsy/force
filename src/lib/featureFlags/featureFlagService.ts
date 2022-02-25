@@ -3,11 +3,9 @@ export type FeatureFlags = Array<string>
 
 export type FeatureFlagContext = Record<string, any>
 
-/// MAAAAAATTTTT DONT FORGET TO FIX THESE ANYYYYS
 export interface FeatureFlagService {
   init: () => void
   getFeatures: () => FeatureFlags
-  getVariant: (name: string, context?: FeatureFlagContext) => any
   enabled: (name: string, context?: FeatureFlagContext) => boolean
 }
 
