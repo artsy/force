@@ -49,7 +49,6 @@ export interface OfferState {
   offerNoteValue: TextAreaChange
   formIsDirty: boolean
   lowSpeedBumpEncountered: boolean
-  highSpeedBumpEncountered: boolean
   isToggleRadio: boolean
 }
 
@@ -59,7 +58,6 @@ const logger = createLogger("Order/Routes/Offer/index.tsx")
 export class OfferRoute extends Component<OfferProps, OfferState> {
   state: OfferState = {
     formIsDirty: false,
-    highSpeedBumpEncountered: false,
     lowSpeedBumpEncountered: false,
     offerNoteValue: { exceedsCharacterLimit: false, value: "" },
     offerValue: 0,
@@ -87,20 +85,6 @@ export class OfferRoute extends Component<OfferProps, OfferState> {
       message:
         "Offers within 25% of the list price are most likely to receive a response.",
       title: "Offer may be too low",
-    })
-  }
-
-  @track<OfferProps>(props => ({
-    action_type: Schema.ActionType.ViewedOfferHigherThanListPrice,
-    flow: Schema.Flow.MakeOffer,
-    order_id: props.order.internalID,
-  }))
-  showHighSpeedbump() {
-    this.setState({ highSpeedBumpEncountered: true })
-    this.props.dialog.showErrorDialog({
-      continueButtonText: "OK",
-      message: "You’re making an offer higher than the list price.",
-      title: "Offer higher than list price",
     })
   }
 
@@ -161,12 +145,7 @@ export class OfferRoute extends Component<OfferProps, OfferState> {
   }
 
   onContinueButtonPressed = async () => {
-    const {
-      offerValue,
-      offerNoteValue,
-      lowSpeedBumpEncountered,
-      highSpeedBumpEncountered,
-    } = this.state
+    const { offerValue, offerNoteValue, lowSpeedBumpEncountered } = this.state
 
     if (offerValue <= 0 || offerNoteValue.exceedsCharacterLimit) {
       this.setState({ formIsDirty: true })
@@ -181,21 +160,12 @@ export class OfferRoute extends Component<OfferProps, OfferState> {
       ?.displayPriceRange
 
     if (
+      !isPriceHidden &&
       !lowSpeedBumpEncountered &&
       offerValue * 100 < listPriceCents * 0.75 &&
       !isRangeOffer
     ) {
       this.showLowSpeedbump()
-      return
-    }
-
-    if (
-      !highSpeedBumpEncountered &&
-      this.state.offerValue * 100 > listPriceCents &&
-      !isRangeOffer &&
-      !isPriceHidden
-    ) {
-      this.showHighSpeedbump()
       return
     }
 

@@ -292,27 +292,6 @@ describe("Offer InitialMutation", () => {
         expect(mutations.mockFetch).toHaveBeenCalledTimes(1)
       })
     })
-
-    describe("The 'amount too high' speed bump", () => {
-      it("shows if the offer amount is too high", async () => {
-        await page.setOfferAmount(17000)
-        await page.clickSubmit()
-
-        expect(mutations.mockFetch).not.toHaveBeenCalled()
-
-        await page.expectAndDismissErrorDialogMatching(
-          "Offer higher than list price",
-          "You’re making an offer higher than the list price",
-          "OK"
-        )
-
-        expect(mutations.mockFetch).not.toHaveBeenCalled()
-
-        await page.clickSubmit()
-
-        expect(mutations.mockFetch).toHaveBeenCalledTimes(1)
-      })
-    })
   })
 
   describe("Analytics", () => {
@@ -341,21 +320,6 @@ describe("Offer InitialMutation", () => {
         order_id: "1234",
       }
       await page.setOfferAmount(1000)
-
-      expect(mockPostEvent).not.toHaveBeenLastCalledWith(trackData)
-
-      await page.clickSubmit()
-
-      expect(mockPostEvent).toHaveBeenLastCalledWith(trackData)
-    })
-
-    it("tracks viwing the high offer speedbump", async () => {
-      const trackData = {
-        action_type: "Viewed offer higher than listed price",
-        flow: "Make offer",
-        order_id: "1234",
-      }
-      await page.setOfferAmount(20000)
 
       expect(mockPostEvent).not.toHaveBeenLastCalledWith(trackData)
 
