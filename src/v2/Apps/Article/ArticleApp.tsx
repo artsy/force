@@ -5,9 +5,11 @@ import { MetaTags } from "v2/Components/MetaTags"
 import { ArticleApp_article } from "v2/__generated__/ArticleApp_article.graphql"
 import { ArticleBodyFragmentContainer } from "./Components/ArticleBody"
 import { ArticleChannelRelatedArticlesQueryRenderer } from "./Components/ArticleChannelRelatedArticles"
+import { ArticleInfiniteScrollQueryRenderer } from "./Components/ArticleInfiniteScroll"
 import { ArticleSeriesFragmentContainer } from "./Components/ArticleSeries"
 import { ArticleVerticalRelatedArticlesQueryRenderer } from "./Components/ArticleVerticalRelatedArticles"
 import { ArticleVideoFragmentContainer } from "./Components/ArticleVideo"
+import { ArticleVisibilityMetadataFragmentContainer } from "./Components/ArticleVisibilityMetadata"
 
 interface ArticleAppProps {
   article: ArticleApp_article
@@ -52,7 +54,9 @@ const ArticleApp: FC<ArticleAppProps> = ({ article }) => {
             case "STANDARD":
               return (
                 <>
-                  <ArticleBodyFragmentContainer article={article} />
+                  <ArticleVisibilityMetadataFragmentContainer article={article}>
+                    <ArticleBodyFragmentContainer article={article} />
+                  </ArticleVisibilityMetadataFragmentContainer>
 
                   <FullBleed>
                     <Separator />
@@ -61,6 +65,13 @@ const ArticleApp: FC<ArticleAppProps> = ({ article }) => {
                   <ArticleVerticalRelatedArticlesQueryRenderer
                     id={article.internalID}
                   />
+
+                  {article.channelID && (
+                    <ArticleInfiniteScrollQueryRenderer
+                      articleID={article.internalID}
+                      channelID={article.channelID}
+                    />
+                  )}
                 </>
               )
           }
@@ -73,13 +84,14 @@ const ArticleApp: FC<ArticleAppProps> = ({ article }) => {
 export const ArticleAppFragmentContainer = createFragmentContainer(ArticleApp, {
   article: graphql`
     fragment ArticleApp_article on Article {
+      ...ArticleBody_article
+      ...ArticleSeries_article
+      ...ArticleVideo_article
+      ...ArticleVisibilityMetadata_article
       internalID
       title
       layout
       channelID
-      ...ArticleBody_article
-      ...ArticleSeries_article
-      ...ArticleVideo_article
     }
   `,
 })
