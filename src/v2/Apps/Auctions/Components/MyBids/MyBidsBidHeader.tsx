@@ -6,6 +6,7 @@ import { RouterLink } from "v2/System/Router/RouterLink"
 import { useTracking } from "react-tracking"
 import { ContextModule, clickedEntityGroup, OwnerType } from "@artsy/cohesion"
 import { useAnalyticsContext } from "v2/System"
+import { getENV } from "v2/Utils/getENV"
 
 interface MyBidsBidHeaderProps {
   sale: MyBidsBidHeader_sale
@@ -17,9 +18,13 @@ export const MyBidsBidHeader: React.FC<MyBidsBidHeaderProps> = ({ sale }) => {
 
   const image = sale.coverImage?.cropped
 
+  const auctionURL = getENV("ENABLE_AUCTION_V2")
+    ? `/auction2/${sale.slug}`
+    : `/auction/${sale.slug}`
+
   return (
     <RouterLink
-      to={`/auction/${sale.slug}`}
+      to={auctionURL}
       noUnderline
       onClick={() => {
         trackEvent(
