@@ -30,7 +30,6 @@ import { SiftContainer } from "v2/Utils/SiftContainer"
 import { setupSentryClient } from "lib/setupSentryClient"
 import {
   EnabledFeatureFlags,
-  FeatureFlagProvider,
 } from "lib/featureFlags/FeatureFlagProvider"
 
 export interface BootProps {
@@ -71,6 +70,7 @@ export const Boot = track(undefined, {
   } = props
 
   const contextProps = {
+    featureFlags,
     ...rest,
     ...context,
   }
@@ -84,7 +84,6 @@ export const Boot = track(undefined, {
           <SystemContextProvider {...contextProps}>
             <AnalyticsContext.Provider value={context?.analytics}>
               <ErrorBoundary>
-                <FeatureFlagProvider featureFlags={featureFlags}>
                   <MediaContextProvider onlyMatch={onlyMatchMediaQueries}>
                     <ResponsiveProvider
                       mediaQueries={themeProps.mediaQueries}
@@ -100,7 +99,6 @@ export const Boot = track(undefined, {
                       </ToastsProvider>
                     </ResponsiveProvider>
                   </MediaContextProvider>
-                </FeatureFlagProvider>
               </ErrorBoundary>
             </AnalyticsContext.Provider>
           </SystemContextProvider>

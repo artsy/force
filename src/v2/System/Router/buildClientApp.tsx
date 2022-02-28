@@ -28,6 +28,7 @@ import { trackingMiddleware } from "v2/System/Analytics/trackingMiddleware"
 import { RenderError, RenderPending, RenderReady } from "./RenderStatus"
 import { shouldUpdateScroll } from "./Utils/shouldUpdateScroll"
 import { buildClientAppContext } from "desktop/lib/buildClientAppContext"
+import { getENV } from "v2/Utils/getENV"
 
 interface Resolve {
   ClientApp: ComponentType<any>
@@ -43,7 +44,6 @@ export function buildClientApp(config: RouterConfig): Promise<Resolve> {
         history = {},
         initialRoute = "/",
         routes = [],
-        featureFlags = {},
       } = config
       const clientContext = buildClientAppContext(context)
 
@@ -113,7 +113,7 @@ export function buildClientApp(config: RouterConfig): Promise<Resolve> {
             user={user}
             relayEnvironment={relayEnvironment}
             routes={routes}
-            featureFlags={featureFlags}
+            featureFlags={getENV('featureFlags')}
           >
             <Router resolver={resolver} />
           </Boot>
