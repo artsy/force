@@ -43,7 +43,7 @@ const DEFAULT_CUSTOM_RANGE: CustomRange = ["*", "*"]
 const DEFAULT_PRICE_RANGE = "*-*"
 const DEFAULT_RANGE = [0, 50000]
 
-const parseRange = (range: string = DEFAULT_PRICE_RANGE) => {
+export const parseRange = (range: string = DEFAULT_PRICE_RANGE) => {
   return range.split("-").map(s => {
     if (s === "*") return s
     return parseInt(s, 10)
@@ -60,7 +60,7 @@ const parseSliderRange = (range: CustomRange) => {
   })
 }
 
-const convertToFilterFormatRange = (range: number[]) => {
+export const convertToFilterFormatRange = (range: number[]) => {
   return range.map((value, index) => {
     if (value === DEFAULT_RANGE[index]) {
       return "*"
@@ -70,7 +70,7 @@ const convertToFilterFormatRange = (range: number[]) => {
   })
 }
 
-const getValue = (value: CustomRange[number]) => {
+export const getValue = (value: CustomRange[number]) => {
   return value === "*" || value === 0 ? "" : value
 }
 

@@ -6,6 +6,9 @@ import {
 } from "../../ArtworkFilterContext"
 import { getENV } from "v2/Utils/getENV"
 import {
+  convertToFilterFormatRange,
+  getValue,
+  parseRange,
   PriceRangeFilterNew,
   PriceRangeFilterNewProps,
 } from "../PriceRangeFilterNew"
@@ -151,5 +154,57 @@ describe("PriceRangeFilterNew", () => {
       expect(minSliderHandle).toBeInTheDocument()
       expect(maxSliderHandle).toBeInTheDocument()
     })
+  })
+})
+
+describe("convertToFilterFormatRange", () => {
+  it("should return passed values", () => {
+    expect(convertToFilterFormatRange([10, 20])).toEqual([10, 20])
+    expect(convertToFilterFormatRange([1000, 2000])).toEqual([1000, 2000])
+    expect(convertToFilterFormatRange([35000, 60000])).toEqual([35000, 60000])
+  })
+
+  it("should return default range value for min if min slider value is passed", () => {
+    expect(convertToFilterFormatRange([0, 20])).toEqual(["*", 20])
+  })
+
+  it("should return default range value for max if max slider value is passed", () => {
+    expect(convertToFilterFormatRange([10, 50000])).toEqual([10, "*"])
+  })
+
+  it("should return default range value if min and max slider values are passed", () => {
+    expect(convertToFilterFormatRange([0, 50000])).toEqual(["*", "*"])
+  })
+})
+
+describe("getValue", () => {
+  it("should return passed values", () => {
+    expect(getValue(10)).toBe(10)
+    expect(getValue(15000)).toBe(15000)
+    expect(getValue(60000)).toBe(60000)
+  })
+
+  it("should return empty string when default range value is passed", () => {
+    expect(getValue("*")).toBe("")
+  })
+
+  it("should return empty string when 0 is passed", () => {
+    expect(getValue(0)).toBe("")
+  })
+})
+
+describe("parseRange", () => {
+  it("should correctly parse range when valid range is passed", () => {
+    expect(parseRange("5-10")).toEqual([5, 10])
+  })
+
+  it("should return numeric values", () => {
+    expect(parseRange("5.5-10.789")).toEqual([5, 10])
+  })
+
+  it("should correctly parse range when default range values are passed", () => {
+    expect(parseRange("*-5")).toEqual(["*", 5])
+    expect(parseRange("5-*")).toEqual([5, "*"])
+    expect(parseRange("*-*")).toEqual(["*", "*"])
   })
 })
