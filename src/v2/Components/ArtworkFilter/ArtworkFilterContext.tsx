@@ -375,8 +375,9 @@ export const ArtworkFilterContextProvider: React.FC<
     resetFilters: () => {
       const action: ArtworkFiltersAction = {
         type: "RESET",
-        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-        payload: null,
+        payload: {
+          metric: initialFilterState.metric,
+        },
       }
       dispatchOrStage(action)
     },
@@ -410,10 +411,15 @@ export const ArtworkFilterContextProvider: React.FC<
   )
 }
 
-interface ArtworkFiltersAction {
-  type: "SET" | "UNSET" | "RESET" | "SET_FILTERS" | "SET_STAGED_FILTERS"
-  payload: { name: keyof ArtworkFilters; value?: any }
-}
+type ArtworkFiltersAction =
+  | {
+      type: "SET" | "UNSET" | "SET_FILTERS" | "SET_STAGED_FILTERS"
+      payload: { name: keyof ArtworkFilters; value?: any }
+    }
+  | {
+      type: "RESET"
+      payload: ArtworkFilters
+    }
 
 export type ArrayArtworkFilter =
   | "artistIDs"
@@ -554,6 +560,7 @@ const artworkFilterReducer = (
     case "RESET": {
       return {
         ...initialArtworkFilterState,
+        ...action.payload,
         reset: true,
       }
     }
