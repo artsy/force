@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"
 import { Join, Spacer, Text } from "@artsy/palette"
 import { ViewingRoomsLatestGridFragmentContainer } from "./Components/ViewingRoomsLatestGrid"
 import { ViewingRoomsMeta } from "./Components/ViewingRoomsMeta"

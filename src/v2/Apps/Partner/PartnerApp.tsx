@@ -46,7 +46,11 @@ export const PartnerApp: React.FC<PartnerAppProps> = ({
         <PartnerHeader partner={partner} />
 
         <FullBleed mb={[2, 4]}>
-          {isBlackOwned ? <Marquee marqueeText="Black Owned" /> : <Separator />}
+          {isBlackOwned ? (
+            <Marquee speed="static" marqueeText="Black Owned" />
+          ) : (
+            <Separator />
+          )}
         </FullBleed>
 
         {(displayFullPartnerPage || partnerType === "Brand") && (
