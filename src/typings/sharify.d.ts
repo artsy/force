@@ -110,6 +110,7 @@ declare module "sharify" {
       TRACK_PAGELOAD_PATHS: string
       // FIXME: reaction migration
       stitch: any
+      unleash: any
     }
 
     export interface ResponseLocalData extends GlobalData {
