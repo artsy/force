@@ -60,7 +60,7 @@ const parseSliderRange = (range: CustomRange) => {
   })
 }
 
-const convertToArtworkFilterFormatRange = (range: number[]) => {
+const convertToFilterFormatRange = (range: number[]) => {
   return range.map((value, index) => {
     if (value === DEFAULT_RANGE[index]) {
       return "*"
@@ -118,7 +118,7 @@ export const PriceRangeFilterNew: FC<PriceRangeFilterNewProps> = ({
   }
 
   const handleSliderValueChange = (range: number[]) => {
-    const convertedRange = convertToArtworkFilterFormatRange(range)
+    const convertedRange = convertToFilterFormatRange(range)
 
     updateRange(convertedRange)
   }
