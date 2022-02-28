@@ -101,6 +101,7 @@ describe("buildClientApp", () => {
           {context => {
             expect(Object.keys(context).sort()).toEqual([
               "analytics",
+              "featureFlags",
               "isEigen",
               "isFetching",
               "isLoggedIn",
