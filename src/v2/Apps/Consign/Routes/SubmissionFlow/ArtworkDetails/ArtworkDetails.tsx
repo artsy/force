@@ -1,6 +1,7 @@
 import { Button, Text } from "@artsy/palette"
 import { SubmissionStepper } from "v2/Apps/Consign/Components/SubmissionStepper"
 import { Form, Formik } from "formik"
+import { RouterLink } from "v2/System/Router/RouterLink"
 import {
   ArtworkDetailsForm,
   ArtworkDetailsFormModel,
@@ -119,11 +120,13 @@ export const ArtworkDetails: React.FC<ArtworkDetailsProps> = ({
       </Text>
 
       <Text mt={1} variant="sm" color="black60">
-        &#8226; All fields are required to submit a work.
+        &#8226; Currently, artists can not sell their own work on Artsy.{" "}
+        <RouterLink to={null} textDecoration="underline">
+          Learn more.
+        </RouterLink>
       </Text>
       <Text mb={[4, 6]} variant="sm" color="black60">
-        &#8226; We currently do not allow artists to sell their own work on
-        Artsy.
+        &#8226; All fields are required to submit a work.
       </Text>
 
       <Formik<ArtworkDetailsFormModel>

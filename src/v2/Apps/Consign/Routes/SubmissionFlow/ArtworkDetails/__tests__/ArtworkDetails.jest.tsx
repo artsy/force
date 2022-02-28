@@ -93,12 +93,13 @@ describe("ArtworkDetails", () => {
       expect(screen.getByText("Artwork Details")).toBeInTheDocument()
       expect(screen.getByText("Tell us about your artwork")).toBeInTheDocument()
       expect(
-        screen.getByText("• All fields are required to submit a work.")
-      ).toBeInTheDocument()
-      expect(
         screen.getByText(
-          "• We currently do not allow artists to sell their own work on Artsy."
+          "• Currently, artists can not sell their own work on Artsy."
         )
+      ).toBeInTheDocument()
+      expect(screen.getByText("Learn more.")).toBeInTheDocument()
+      expect(
+        screen.getByText("• All fields are required to submit a work.")
       ).toBeInTheDocument()
 
       expect(screen.getByTestId("save-button")).toBeInTheDocument()
