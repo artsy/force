@@ -170,7 +170,7 @@ const SaleMessage: React.FC<DetailsProps> = ({
   }
 
   if (sale_message === "Contact For Price") {
-    return <>Contact for Price</>
+    return <>Price on Request</>
   }
 
   return <>{sale_message}</>

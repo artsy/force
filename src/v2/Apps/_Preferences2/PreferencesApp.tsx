@@ -5,30 +5,89 @@ import {
   GridColumns,
   Separator,
   Text,
+  useToasts,
 } from "@artsy/palette"
-import { Formik } from "formik"
+import { isEmpty, camelCase, snakeCase } from "lodash"
+import { FC } from "react"
+import { Form, Formik } from "formik"
+import { createFragmentContainer, graphql } from "react-relay"
+import {
+  PreferencesApp_viewer,
+  SubGroupStatus,
+} from "v2/__generated__/PreferencesApp_viewer.graphql"
+import { useEditNotificationPreferences } from "./useEditNotificationPreferences"
 
-export const PreferencesApp: React.FC = () => {
+const NOTIFICATION_FIELDS = {
+  recommendedByArtsy: false,
+  artWorldInsights: false,
+  productUpdates: false,
+  guidanceOnCollecting: false,
+  customAlerts: false,
+}
+
+interface PreferencesAppProps {
+  viewer?: PreferencesApp_viewer
+}
+
+interface FormValuesForNotificationPreferences {
+  recommendedByArtsy: boolean
+  artWorldInsights: boolean
+  productUpdates: boolean
+  guidanceOnCollecting: boolean
+  customAlerts: boolean
+}
+
+export const PreferencesApp: FC<PreferencesAppProps> = ({ viewer }) => {
+  const { sendToast } = useToasts()
+  const { submitMutation } = useEditNotificationPreferences()
+  let initialValues = getInitialValues(viewer) // Shape the response from Metaphysics for Formik
+
   return (
     <>
       <Text variant="xl" mt={6} mb={6}>
         Preferences Center
       </Text>
+      <Formik<FormValuesForNotificationPreferences>
+        // @ts-ignore
+        initialValues={{ ...NOTIFICATION_FIELDS, ...initialValues }}
+        onSubmit={async values => {
+          try {
+            // TODO: Refactor mutation in Metaphysics so that we don't have to send
+            // id, channel, or status (Gravity doesn't care about them)
+            const subscriptionGroups = Object.entries(values).map(
+              ([key, value]) => {
+                return {
+                  id: "",
+                  name: snakeCase(key),
+                  channel: "email",
+                  status: (value
+                    ? "SUBSCRIBED"
+                    : "UNSUBSCRIBED") as SubGroupStatus,
+                }
+              }
+            )
 
-      <Formik
-        initialValues={{
-          first: false,
-          second: false,
-          third: false,
-          fourth: false,
-          fifth: false,
-        }}
-        onSubmit={values => {
-          console.log(values)
+            await submitMutation({
+              variables: { input: { subscriptionGroups } },
+            })
+
+            sendToast({
+              variant: "success",
+              message: "Preferences updated sucessfully.",
+            })
+          } catch (error) {
+            console.error(error)
+
+            sendToast({
+              variant: "error",
+              message: "Something went wrong.",
+              description: (Array.isArray(error) ? error[0] : error).message,
+            })
+          }
         }}
       >
-        {({ values, setFieldValue }) => {
-          return (
+        {({ values, setFieldValue, setFieldTouched, touched }) => (
+          <Form>
             <GridColumns gridRowGap={4}>
               <Column span={10}>
                 <Text variant="md">Subscribe to all</Text>
@@ -38,9 +97,12 @@ export const PreferencesApp: React.FC = () => {
                 <Checkbox
                   selected={Object.values(values).every(Boolean)}
                   onSelect={value => {
-                    Object.keys(values).forEach(field => {
-                      setFieldValue(field, value)
-                    })
+                    if (value) {
+                      Object.keys(values).forEach(field => {
+                        setFieldValue(field, true)
+                        setFieldTouched(field, true)
+                      })
+                    }
                   }}
                 >
                   Email
@@ -61,9 +123,10 @@ export const PreferencesApp: React.FC = () => {
 
               <Column span={2}>
                 <Checkbox
-                  selected={values.first}
+                  selected={values.recommendedByArtsy}
                   onSelect={value => {
-                    setFieldValue("first", value)
+                    setFieldValue("recommendedByArtsy", value)
+                    setFieldTouched("recommendedByArtsy", true)
                   }}
                 >
                   Email
@@ -80,9 +143,10 @@ export const PreferencesApp: React.FC = () => {
 
               <Column span={2}>
                 <Checkbox
-                  selected={values.second}
+                  selected={values.artWorldInsights}
                   onSelect={value => {
-                    setFieldValue("second", value)
+                    setFieldValue("artWorldInsights", value)
+                    setFieldTouched("artWorldInsights", true)
                   }}
                 >
                   Email
@@ -98,9 +162,10 @@ export const PreferencesApp: React.FC = () => {
 
               <Column span={2}>
                 <Checkbox
-                  selected={values.third}
+                  selected={values.productUpdates}
                   onSelect={value => {
-                    setFieldValue("third", value)
+                    setFieldValue("productUpdates", value)
+                    setFieldTouched("productUpdates", true)
                   }}
                 >
                   Email
@@ -117,9 +182,10 @@ export const PreferencesApp: React.FC = () => {
 
               <Column span={2}>
                 <Checkbox
-                  selected={values.fourth}
+                  selected={values.guidanceOnCollecting}
                   onSelect={value => {
-                    setFieldValue("fourth", value)
+                    setFieldValue("guidanceOnCollecting", value)
+                    setFieldTouched("guidanceOnCollecting", true)
                   }}
                 >
                   Email
@@ -135,9 +201,10 @@ export const PreferencesApp: React.FC = () => {
 
               <Column span={2}>
                 <Checkbox
-                  selected={values.fifth}
+                  selected={values.customAlerts}
                   onSelect={value => {
-                    setFieldValue("fifth", value)
+                    setFieldValue("customAlerts", value)
+                    setFieldTouched("customAlerts", true)
                   }}
                 >
                   Email
@@ -154,11 +221,14 @@ export const PreferencesApp: React.FC = () => {
 
               <Column span={2}>
                 <Checkbox
-                  selected={Object.values(values).every(v => !v)}
+                  selected={!Object.values(values).some(Boolean)}
                   onSelect={value => {
-                    Object.keys(values).forEach(field => {
-                      setFieldValue(field, !value)
-                    })
+                    if (value) {
+                      Object.keys(values).forEach(field => {
+                        setFieldValue(field, false)
+                        setFieldTouched(field, true)
+                      })
+                    }
                   }}
                 >
                   Email
@@ -166,18 +236,52 @@ export const PreferencesApp: React.FC = () => {
               </Column>
 
               <Column span={2} start={9} mt={2}>
-                <Button width="100%" variant="secondaryOutline">
+                <Button
+                  width="100%"
+                  variant="secondaryOutline"
+                  disabled={isEmpty(touched)}
+                >
                   Cancel
                 </Button>
               </Column>
 
               <Column span={2} mt={2}>
-                <Button width="100%">Save</Button>
+                <Button width="100%" type="submit" disabled={isEmpty(touched)}>
+                  Save
+                </Button>
               </Column>
             </GridColumns>
-          )
-        }}
+          </Form>
+        )}
       </Formik>
     </>
   )
 }
+
+const getInitialValues = viewer => {
+  return viewer?.notificationPreferences
+    .filter(preference =>
+      Object.keys(NOTIFICATION_FIELDS).includes(camelCase(preference.name))
+    )
+    .reduce((object, preference) => {
+      object[camelCase(preference.name)] =
+        preference.status === "SUBSCRIBED" ? true : false
+      return object
+    }, {})
+}
+
+export const PreferencesAppFragmentContainer = createFragmentContainer(
+  PreferencesApp,
+  {
+    viewer: graphql`
+      fragment PreferencesApp_viewer on Viewer {
+        notificationPreferences {
+          id
+          name
+          channel
+          status
+        }
+      }
+    `,
+  }
+)

@@ -1,7 +1,6 @@
 import {
   GridColumns,
   Column,
-  FullBleed,
   Separator,
   Box,
   Join,
@@ -30,6 +29,8 @@ import { SavedSearchAlertEditFormDesktop } from "./Components/SavedSearchAlertEd
 import { Sticky, StickyProvider } from "v2/Components/Sticky"
 import { useNavBarHeight } from "v2/Components/NavBar/useNavBarHeight"
 import { SavedSearchAlertEditFormMobile } from "./Components/SavedSearchAlertEditFormMobile"
+import { useTracking } from "react-tracking"
+import { ActionType } from "@artsy/cohesion"
 
 interface SavedSearchAlertsAppProps {
   me: SavedSearchAlertsApp_me
@@ -46,6 +47,7 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
     setEditAlertEntity,
   ] = useState<EditAlertEntity | null>(null)
   const { sendToast } = useToasts()
+  const { trackEvent } = useTracking()
   const [showDeleteModal, setShowDeleteModal] = useState(false)
   const [loading, setLoading] = useState(false)
   const alerts = extractNodes(me.savedSearchesConnection)
@@ -77,6 +79,11 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
   }
 
   const handleDeleted = () => {
+    trackEvent({
+      action: ActionType.deletedSavedSearch,
+      saved_search_id: editAlertEntity!.id,
+    })
+
     closeEditFormAndRefetch()
     closeDeleteModal()
 
@@ -104,7 +111,7 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
   const list = (
     <>
       <Join separator={<Separator color="black15" />}>
-        {alerts.map((edge, index) => {
+        {alerts.map(edge => {
           const isCurrentEdgeSelected = editAlertEntity?.id === edge.internalID
           let variant: SavedSearchAlertListItemVariant | undefined
 
@@ -139,19 +146,10 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
     <StickyProvider>
       <MetaTags title="Your Alerts | Artsy" pathname="/user/alerts" />
 
-      <Media greaterThanOrEqual="md">
-        <SavedSearchAlertHeader />
-      </Media>
-      <Media lessThan="md">{!isEditMode && <SavedSearchAlertHeader />}</Media>
+      <SavedSearchAlertHeader />
 
-      <FullBleed>
-        <Media greaterThanOrEqual="md">
-          <Separator color="black15" />
-        </Media>
-
-        <Media lessThan="md">
-          {!isEditMode && <Separator color="black15" />}
-        </Media>
+      <Box mx={[-2, -4]}>
+        <Separator color="black15" />
 
         {alerts.length === 0 ? (
           <SavedSearchAlertsEmptyResults />
@@ -161,10 +159,14 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
               <GridColumns gridColumnGap={0}>
                 <Column span={isEditMode ? 6 : 12}>{list}</Column>
                 {isEditMode && editAlertEntity && (
-                  <Column span={6} borderLeft="1px solid" borderColor="black15">
+                  <Column
+                    span={6}
+                    borderLeft="1px solid"
+                    borderLeftColor="black15"
+                  >
                     <Sticky bottomBoundary="#content-end">
                       <Box
-                        overflowY="scroll"
+                        overflowY="auto"
                         maxHeight={`calc(100vh - ${desktop}px)`}
                       >
                         <SavedSearchAlertEditFormDesktop
@@ -203,7 +205,7 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
             )}
           </>
         )}
-      </FullBleed>
+      </Box>
     </StickyProvider>
   )
 }

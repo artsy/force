@@ -2,7 +2,7 @@ import { Column, GridColumns, Join, Spacer } from "@artsy/palette"
 import { useContext } from "react"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { data as sd } from "sharify"
+import { getENV } from "v2/Utils/getENV"
 import { ArtworkApp_artwork } from "v2/__generated__/ArtworkApp_artwork.graphql"
 import { ArtworkApp_me } from "v2/__generated__/ArtworkApp_me.graphql"
 import { ArtistInfoQueryRenderer } from "./Components/ArtistInfo"
@@ -15,6 +15,7 @@ import { ArtworkSidebarFragmentContainer } from "./Components/ArtworkSidebar"
 import { OtherWorksQueryRenderer } from "./Components/OtherWorks"
 import { ArtworkArtistSeriesQueryRenderer } from "./Components/ArtworkArtistSeries"
 import { PricingContextQueryRenderer } from "./Components/PricingContext"
+import { SubmittedOrderModalFragmentContainer } from "./Components/SubmittedOrderModal"
 import { withSystemContext } from "v2/System"
 import * as Schema from "v2/System/Analytics/Schema"
 import { RecentlyViewed } from "v2/Components/RecentlyViewed"
@@ -27,6 +28,7 @@ import {
 import { useRouteComplete } from "v2/Utils/Hooks/useRouteComplete"
 import { Media } from "v2/Utils/Responsive"
 import { UseRecordArtworkView } from "./useRecordArtworkView"
+import { Router, Match } from "found"
 
 export interface Props {
   artwork: ArtworkApp_artwork
@@ -35,6 +37,8 @@ export interface Props {
   routerPathname: string
   shouldTrackPageView: boolean
   me: ArtworkApp_me
+  router: Router
+  match: Match
 }
 
 declare const window: any
@@ -49,6 +53,11 @@ export class ArtworkApp extends React.Component<Props> {
    * data that remains consistent with the rest of the app.
    */
   componentDidMount() {
+    if (this.shouldRenderSubmittedOrderModal()) {
+      // TODO: Look into using router push
+      // this.props.router.replace(this.props.match.location.pathname)
+      window.history.pushState({}, null, this.props.match.location.pathname)
+    }
     this.track()
   }
 
@@ -56,6 +65,10 @@ export class ArtworkApp extends React.Component<Props> {
     if (this.props.shouldTrackPageView) {
       this.track()
     }
+  }
+
+  shouldRenderSubmittedOrderModal() {
+    return !!this.props.match.location.query["order-submitted"]
   }
 
   track() {
@@ -79,7 +92,7 @@ export class ArtworkApp extends React.Component<Props> {
         offerable: is_offerable,
         path,
         price_listed: !!listPrice,
-        url: sd.APP_URL + path,
+        url: getENV("APP_URL") + path,
       }
 
       const clientSideRoutingReferrer =
@@ -204,6 +217,10 @@ export class ArtworkApp extends React.Component<Props> {
         <Spacer mt={6} />
 
         <RecentlyViewed />
+
+        {this.shouldRenderSubmittedOrderModal() && (
+          <SubmittedOrderModalFragmentContainer slug={artwork.slug} me={me} />
+        )}
       </>
     )
   }
@@ -286,6 +303,7 @@ export const ArtworkAppFragmentContainer = createFragmentContainer(
     me: graphql`
       fragment ArtworkApp_me on Me {
         ...ArtworkSidebar_me
+        ...SubmittedOrderModal_me
       }
     `,
   }

@@ -6,6 +6,7 @@ import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type CommerceOrderDisplayStateEnum = "ABANDONED" | "APPROVED" | "CANCELED" | "FULFILLED" | "IN_TRANSIT" | "PENDING" | "PROCESSING" | "REFUNDED" | "SUBMITTED" | "%future added value";
 export type CommerceOrderModeEnum = "BUY" | "OFFER" | "%future added value";
+export type CommerceOrderSourceEnum = "artwork_page" | "inquiry" | "%future added value";
 export type CommerceOrderStateEnum = "ABANDONED" | "APPROVED" | "CANCELED" | "FULFILLED" | "PENDING" | "REFUNDED" | "SUBMITTED" | "%future added value";
 export type Status_order = {
     readonly __typename: string;
@@ -14,6 +15,7 @@ export type Status_order = {
     readonly displayState: CommerceOrderDisplayStateEnum;
     readonly state: CommerceOrderStateEnum;
     readonly mode: CommerceOrderModeEnum | null;
+    readonly source: CommerceOrderSourceEnum;
     readonly stateReason: string | null;
     readonly stateExpiresAt: string | null;
     readonly requestedFulfillment: ({
@@ -130,6 +132,13 @@ return {
       "args": null,
       "kind": "ScalarField",
       "name": "mode",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "source",
       "storageKey": null
     },
     {
@@ -417,5 +426,5 @@ return {
   "abstractKey": "__isCommerceOrder"
 };
 })();
-(node as any).hash = '84404fce0ea7ba44b921fed4e02566c9';
+(node as any).hash = 'b34e7bef0303aa5e740f47c2352dd80e';
 export default node;

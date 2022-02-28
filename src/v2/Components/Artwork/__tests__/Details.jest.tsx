@@ -113,7 +113,7 @@ describe("Details", () => {
       // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       const wrapper = await getWrapper(data)
       const html = wrapper.html()
-      expect(html).toContain("Contact for Price")
+      expect(html).toContain("Price on Request")
     })
 
     it("shows sale message if sale open and no bids", async () => {

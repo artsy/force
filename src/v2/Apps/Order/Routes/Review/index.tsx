@@ -52,7 +52,6 @@ export interface ReviewProps extends SystemContextProps {
   dialog: Dialog
   commitMutation: CommitMutation
   isCommittingMutation: boolean
-  user?: User
   isEigen: boolean | undefined
 }
 
@@ -148,10 +147,7 @@ export class ReviewRoute extends Component<ReviewProps> {
           order,
           o => o.lineItems?.edges?.[0]?.node?.artwork?.slug
         )
-        return router.push({
-          pathname: `/artwork/${artworkId}`,
-          state: { offerOrderHasBeenSubmitted: true },
-        })
+        return router.push(`/artwork/${artworkId}?order-submitted=true`)
       }
     } catch (error) {
       logger.error(error)

@@ -276,6 +276,9 @@ export const covidNote = (): React.ReactNode => {
   )
 }
 
+export const continueToInboxText =
+  "Negotiation with the gallery will continue in the Inbox."
+
 export const approvedTitle = (isOfferFlow): string => {
   return isOfferFlow ? "Offer accepted" : "Your order is confirmed"
 }

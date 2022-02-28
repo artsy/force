@@ -8,12 +8,21 @@ import {
 import { ArtistsFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/ArtistsFilter"
 import { MediumFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/MediumFilter"
 import { PriceRangeFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/PriceRangeFilter"
+import { useSystemContext } from "v2/System"
 import { AuctionArtworkFilter_viewer } from "v2/__generated__/AuctionArtworkFilter_viewer.graphql"
 
-export const ARTWORK_FILTER_INPUT_ARGS = {
-  aggregations: ["ARTIST", "MEDIUM", "FOLLOWED_ARTISTS", "TOTAL"],
-  atAuction: true,
-  first: 10,
+export const getArtworkFilterInputArgs = (user?: User) => {
+  const aggregations = ["ARTIST", "MEDIUM", "TOTAL"]
+
+  if (user) {
+    aggregations.push("FOLLOWED_ARTISTS")
+  }
+
+  return {
+    aggregations,
+    atAuction: true,
+    first: 10,
+  }
 }
 
 interface AuctionArtworkFilterProps {
@@ -24,6 +33,7 @@ interface AuctionArtworkFilterProps {
 const AuctionArtworkFilter: React.FC<AuctionArtworkFilterProps> = ({
   viewer,
 }) => {
+  const { user } = useSystemContext()
   const { match } = useRouter()
 
   const { aggregations, counts } = viewer.sidebarAggregations!
@@ -34,7 +44,7 @@ const AuctionArtworkFilter: React.FC<AuctionArtworkFilterProps> = ({
       filters={match && match.location.query}
       counts={counts as Counts}
       relayRefetchInputVariables={{
-        ...ARTWORK_FILTER_INPUT_ARGS,
+        ...getArtworkFilterInputArgs(user),
         saleID: match.params.slug,
       }}
       sortOptions={[
