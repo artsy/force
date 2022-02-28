@@ -4,8 +4,11 @@ import {
   ArtworkFilterContextProvider,
   useArtworkFilterContext,
 } from "../../ArtworkFilterContext"
-import { PriceRangeFilter, PriceRangeFilterProps } from "../PriceRangeFilter"
 import { getENV } from "v2/Utils/getENV"
+import {
+  PriceRangeFilterNew,
+  PriceRangeFilterNewProps,
+} from "../PriceRangeFilterNew"
 
 jest.mock("v2/Utils/Hooks/useMatchMedia", () => ({
   __internal__useMatchMedia: () => ({}),
@@ -17,7 +20,7 @@ describe("PriceRangeFilterNew", () => {
   let context: ArtworkFilterContextProps
 
   const renderPriceRangeFilter = (
-    props: PriceRangeFilterProps = { expanded: true }
+    props: PriceRangeFilterNewProps = { expanded: true }
   ) => {
     return render(
       <ArtworkFilterContextProvider>
@@ -26,9 +29,9 @@ describe("PriceRangeFilterNew", () => {
     )
   }
 
-  const PriceRangeFilterTest = (props: PriceRangeFilterProps) => {
+  const PriceRangeFilterTest = (props: PriceRangeFilterNewProps) => {
     context = useArtworkFilterContext()
-    return <PriceRangeFilter {...props} />
+    return <PriceRangeFilterNew {...props} />
   }
 
   const mockGetENV = getENV as jest.Mock

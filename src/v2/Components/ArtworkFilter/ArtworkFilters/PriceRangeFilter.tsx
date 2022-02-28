@@ -1,6 +1,5 @@
-import { FC, useEffect, useState, useMemo, FormEvent } from "react"
+import { FC, useEffect, useState } from "react"
 import {
-  Box,
   Button,
   Flex,
   LabeledInput,
@@ -8,7 +7,6 @@ import {
   Radio,
   RadioGroup,
   Spacer,
-  Text,
   useThemeConfig,
 } from "@artsy/palette"
 import {
@@ -22,9 +20,8 @@ import { FilterExpandable } from "./FilterExpandable"
 import { isCustomValue } from "./Utils/isCustomValue"
 import { useFilterLabelCountByKey } from "../Utils/useFilterLabelCountByKey"
 import { useMode } from "v2/Utils/Hooks/useMode"
-import { Range, RANGE_DOT_SIZE } from "v2/Components/Range"
-import { debounce } from "lodash"
 import { getENV } from "v2/Utils/getENV"
+import { PriceRangeFilterNew } from "./PriceRangeFilterNew"
 
 // Disables arrows in numeric inputs
 export const NumericInput = styled(LabeledInput).attrs({ type: "number" })`
@@ -60,36 +57,13 @@ const PRICE_RANGES = [
 
 type CustomRange = (number | "*")[]
 
-// Constants
-const DEBOUNCE_DELAY = 300
 const DEFAULT_CUSTOM_RANGE: CustomRange = ["*", "*"]
 const DEFAULT_PRICE_RANGE = "*-*"
-const DEFAULT_RANGE = [0, 50000]
 
 const parseRange = (range: string = DEFAULT_PRICE_RANGE) => {
   return range.split("-").map(s => {
     if (s === "*") return s
     return parseInt(s, 10)
-  })
-}
-
-const parseSliderRange = (range: CustomRange) => {
-  return range.map((value, index) => {
-    if (value === "*") {
-      return DEFAULT_RANGE[index]
-    }
-
-    return value as number
-  })
-}
-
-const convertToArtworkFilterFormatRange = (range: number[]) => {
-  return range.map((value, index) => {
-    if (value === DEFAULT_RANGE[index]) {
-      return "*"
-    }
-
-    return value
   })
 }
 
@@ -136,7 +110,7 @@ export const PriceRangeFilterOld: FC<PriceRangeFilterProps> = ({
 
   const handleChange = (index: number) => ({
     currentTarget: { value },
-  }: FormEvent<HTMLInputElement>) => {
+  }: React.FormEvent<HTMLInputElement>) => {
     const isOpenEnded = value === "" || value === "0"
     setCustomRange(prevCustomRange => {
       const nextCustomRange = [...prevCustomRange]
@@ -255,138 +229,6 @@ export const PriceRangeFilterOld: FC<PriceRangeFilterProps> = ({
           </Button>
         </>
       )}
-    </FilterExpandable>
-  )
-}
-
-export const PriceRangeFilterNew: FC<PriceRangeFilterProps> = ({
-  expanded,
-}) => {
-  const {
-    shouldStageFilterChanges,
-    currentlySelectedFilters,
-    setFilter,
-  } = useArtworkFilterContext()
-  const { priceRange, reset } = currentlySelectedFilters?.() ?? {}
-  const [range, setRange] = useState(parseRange(priceRange))
-  const sliderRange = parseSliderRange(range)
-  const [minValue, maxValue] = range
-  const [defaultMinValue, defaultMaxValue] = DEFAULT_RANGE
-
-  const filtersCount = useFilterLabelCountByKey(
-    SelectedFiltersCountsLabels.priceRange
-  )
-  const label = `Price${filtersCount}`
-  const selection = currentlySelectedFilters?.().priceRange
-  const hasSelection = selection && isCustomValue(selection)
-
-  const setFilterDobounced = useMemo(
-    () => debounce(setFilter, DEBOUNCE_DELAY),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [shouldStageFilterChanges]
-  )
-
-  useEffect(() => {
-    // if price filter or filters state is being reset, then also clear local input state
-    if (reset || priceRange === DEFAULT_PRICE_RANGE) {
-      setRange(DEFAULT_CUSTOM_RANGE)
-    }
-  }, [reset, priceRange])
-
-  const updateRange = (updatedRange: (number | "*")[]) => {
-    setRange(updatedRange)
-    setFilterDobounced("priceRange", updatedRange.join("-"))
-  }
-
-  const handleSliderValueChange = (range: number[]) => {
-    const convertedRange = convertToArtworkFilterFormatRange(range)
-
-    updateRange(convertedRange)
-  }
-
-  const handleInputValueChange = (changedIndex: number) => (
-    event: FormEvent<HTMLInputElement>
-  ) => {
-    const { value } = event.currentTarget
-    const updatedRange = range.map((rangeValue, index) => {
-      if (index === changedIndex) {
-        if (value === "" || value === "0") {
-          return "*"
-        }
-
-        return parseInt(value, 10)
-      }
-
-      return rangeValue
-    })
-
-    updateRange(updatedRange)
-  }
-
-  return (
-    <FilterExpandable label={label} expanded={hasSelection || expanded}>
-      <Flex alignItems="flex-end" mt={2}>
-        <Box flex={1}>
-          <Text variant="xs" mb={0.5}>
-            Min
-          </Text>
-          <NumericInput
-            label="$USD"
-            name="price_min"
-            min="0"
-            step="100"
-            aria-label="Min price"
-            value={getValue(minValue)}
-            onChange={handleInputValueChange(0)}
-          />
-        </Box>
-
-        <Spacer mx={2} />
-
-        <Box flex={1}>
-          <Text variant="xs" mb={0.5}>
-            Max
-          </Text>
-          <NumericInput
-            label="$USD"
-            name="price_max"
-            min="0"
-            step="100"
-            aria-label="Max price"
-            value={getValue(maxValue)}
-            onChange={handleInputValueChange(1)}
-          />
-        </Box>
-      </Flex>
-
-      <Box mt={4}>
-        <Box mx={RANGE_DOT_SIZE / 2}>
-          <Range
-            min={defaultMinValue}
-            max={defaultMaxValue}
-            value={sliderRange}
-            allowCross={false}
-            onChange={handleSliderValueChange}
-            ariaLabelGroupForHandles={[
-              "Min price slider handle",
-              "Max price slider handle",
-            ]}
-            railStyle={{
-              left: `-${RANGE_DOT_SIZE / 2}px`,
-              width: `calc(100% + ${RANGE_DOT_SIZE}px)`,
-            }}
-          />
-        </Box>
-
-        <Flex justifyContent="space-between" mt={2}>
-          <Text variant="xs" color="black60">
-            ${defaultMinValue}
-          </Text>
-          <Text variant="xs" color="black60">
-            ${defaultMaxValue}+
-          </Text>
-        </Flex>
-      </Box>
     </FilterExpandable>
   )
 }
