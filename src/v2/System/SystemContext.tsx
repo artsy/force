@@ -78,7 +78,7 @@ export interface SystemContextProps extends SystemContextState {
   /** Is there a logged in user? */
   isLoggedIn?: boolean
 
-  /** FetureFlags */
+  /** FeatureFlags */
   featureFlags?: Record<string, boolean>
 }
 
