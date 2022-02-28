@@ -335,6 +335,7 @@ export const PriceRangeFilterNew: FC<PriceRangeFilterProps> = ({
             name="price_min"
             min="0"
             step="100"
+            aria-label="Min price"
             value={getValue(minValue)}
             onChange={handleInputValueChange(0)}
           />
@@ -351,6 +352,7 @@ export const PriceRangeFilterNew: FC<PriceRangeFilterProps> = ({
             name="price_max"
             min="0"
             step="100"
+            aria-label="Max price"
             value={getValue(maxValue)}
             onChange={handleInputValueChange(1)}
           />
@@ -365,6 +367,10 @@ export const PriceRangeFilterNew: FC<PriceRangeFilterProps> = ({
             value={sliderRange}
             allowCross={false}
             onChange={handleSliderValueChange}
+            ariaLabelGroupForHandles={[
+              "Min price slider handle",
+              "Max price slider handle",
+            ]}
             railStyle={{
               left: `-${RANGE_DOT_SIZE / 2}px`,
               width: `calc(100% + ${RANGE_DOT_SIZE}px)`,
