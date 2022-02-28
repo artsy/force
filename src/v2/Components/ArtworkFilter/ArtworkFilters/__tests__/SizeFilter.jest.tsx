@@ -229,37 +229,37 @@ describe("SizeFilter", () => {
 
 describe("getPredefinedSizesByMetric", () => {
   it("should return predefined sizes in centimeters when `cm` metric is specified", () => {
-    expect(getPredefinedSizesByMetric("CM")).toEqual(SIZES_IN_CENTIMETERS)
+    expect(getPredefinedSizesByMetric("cm")).toEqual(SIZES_IN_CENTIMETERS)
   })
 
   it("should return predefined sizes in inches when `in` metric is specified", () => {
-    expect(getPredefinedSizesByMetric("IN")).toEqual(SIZES_IN_INCHES)
+    expect(getPredefinedSizesByMetric("in")).toEqual(SIZES_IN_INCHES)
   })
 })
 
 describe("parseRange", () => {
   it("correctly parse range in inches", () => {
-    expect(parseRange("10-20", "IN")).toEqual([10, 20])
+    expect(parseRange("10-20", "in")).toEqual([10, 20])
   })
 
   it("correctly parse range in inches with default value", () => {
-    expect(parseRange("10-*", "IN")).toEqual([10, "*"])
+    expect(parseRange("10-*", "in")).toEqual([10, "*"])
   })
 
   it("correctly parse range in inches when all values are default", () => {
-    expect(parseRange("*-*", "IN")).toEqual(["*", "*"])
+    expect(parseRange("*-*", "in")).toEqual(["*", "*"])
   })
 
   it("correctly parse range in centimeters", () => {
-    expect(parseRange("1-2", "CM")).toEqual([3, 5])
+    expect(parseRange("1-2", "cm")).toEqual([3, 5])
   })
 
   it("correctly parse range in centimeters with default value", () => {
-    expect(parseRange("1-*", "CM")).toEqual([3, "*"])
+    expect(parseRange("1-*", "cm")).toEqual([3, "*"])
   })
 
   it("correctly parse range in centimeters when all values are default", () => {
-    expect(parseRange("*-*", "CM")).toEqual(["*", "*"])
+    expect(parseRange("*-*", "cm")).toEqual(["*", "*"])
   })
 })
 
@@ -274,7 +274,7 @@ describe("getCustomSizeRangeInInches", () => {
       height: "15-20",
     }
 
-    expect(getCustomSizeRangeInInches(range, "IN")).toEqual(result)
+    expect(getCustomSizeRangeInInches(range, "in")).toEqual(result)
   })
 
   it("should return correct custom size ranges in inches when default values are passed", () => {
@@ -287,7 +287,7 @@ describe("getCustomSizeRangeInInches", () => {
       height: "*-20",
     }
 
-    expect(getCustomSizeRangeInInches(range, "IN")).toEqual(result)
+    expect(getCustomSizeRangeInInches(range, "in")).toEqual(result)
   })
 
   it("should return custom size ranges with default values", () => {
@@ -300,7 +300,7 @@ describe("getCustomSizeRangeInInches", () => {
       height: "*-*",
     }
 
-    expect(getCustomSizeRangeInInches(range, "IN")).toEqual(result)
+    expect(getCustomSizeRangeInInches(range, "in")).toEqual(result)
   })
 
   it("should return correct custom size ranges in centimeters", () => {
@@ -313,7 +313,7 @@ describe("getCustomSizeRangeInInches", () => {
       height: "5.905511811023622-7.874015748031496",
     }
 
-    expect(getCustomSizeRangeInInches(range, "CM")).toEqual(result)
+    expect(getCustomSizeRangeInInches(range, "cm")).toEqual(result)
   })
 
   it("should return correct custom size ranges in centimeters when default values are passed", () => {
@@ -326,6 +326,6 @@ describe("getCustomSizeRangeInInches", () => {
       height: "5.905511811023622-*",
     }
 
-    expect(getCustomSizeRangeInInches(range, "CM")).toEqual(result)
+    expect(getCustomSizeRangeInInches(range, "cm")).toEqual(result)
   })
 })

@@ -1,11 +1,13 @@
-export type Metric = "IN" | "CM"
+export type Metric = "in" | "cm"
 
-export const DEFAULT_METRIC: Metric = "CM"
-export const SUPPORTED_METRICS: Metric[] = ["CM", "IN"]
+export const DEFAULT_METRIC: Metric = "cm"
+export const SUPPORTED_METRICS: Metric[] = ["cm", "in"]
 
 export const getSupportedMetric = (metric: string = ""): Metric => {
-  if (metric && SUPPORTED_METRICS.includes(metric as Metric)) {
-    return metric as Metric
+  const metricFromParam = metric.toLowerCase() as Metric
+
+  if (SUPPORTED_METRICS.includes(metricFromParam)) {
+    return metricFromParam
   }
 
   return DEFAULT_METRIC

@@ -7,7 +7,6 @@ import {
   Counts,
   SharedArtworkFilterContextProps,
 } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
-import { updateUrl } from "v2/Components/ArtworkFilter/Utils/urlBuilder"
 import { Match } from "found"
 import * as React from "react"
 import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
@@ -52,13 +51,6 @@ const ArtistArtworkFilter: React.FC<ArtistArtworkFilterProps> = props => {
       aggregations={aggregations}
       counts={artist.counts as Counts}
       filters={filters}
-      onChange={filterState => {
-        updateUrl(filterState, {
-          defaultValues: {
-            metric,
-          },
-        })
-      }}
       sortOptions={[
         { value: "-decayed_merch", text: "Default" },
         { value: "-has_price,-prices", text: "Price (desc.)" },

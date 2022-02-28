@@ -65,7 +65,7 @@ export const parseRange = (range: string = "", metric: Metric): Numeric[] => {
     if (s === "*") return s
     const value = parseFloat(s)
 
-    if (metric === "CM") {
+    if (metric === "cm") {
       return convertToCentimeters(value)
     }
 
@@ -88,7 +88,7 @@ const getValue = (value: CustomRange[number]) => {
 }
 
 export const getPredefinedSizesByMetric = (metric: Metric) => {
-  if (metric === "CM") {
+  if (metric === "cm") {
     return SIZES_IN_CENTIMETERS
   }
 
@@ -101,7 +101,7 @@ export const getCustomSizeRangeInInches = (
 ) => {
   let sizes = customSize
 
-  if (sourceMetric === "CM") {
+  if (sourceMetric === "cm") {
     sizes = {
       width: convertRangeToInches(customSize.width),
       height: convertRangeToInches(customSize.height),
@@ -279,8 +279,8 @@ export const SizeFilter: React.FC<SizeFilterProps> = ({ expanded }) => {
           flexDirection="row"
           my={2}
         >
-          <Radio value="CM" label="cm" flex={1} />
-          <Radio value="IN" label="in" flex={1} />
+          <Radio value="cm" label="cm" flex={1} />
+          <Radio value="in" label="in" flex={1} />
         </RadioGroup>
 
         <Flex flexDirection="column">
