@@ -113,7 +113,7 @@ export function buildClientApp(config: RouterConfig): Promise<Resolve> {
             user={user}
             relayEnvironment={relayEnvironment}
             routes={routes}
-            featureFlags={getENV('featureFlags')}
+            featureFlags={getENV("FEATURE_FLAGS")}
           >
             <Router resolver={resolver} />
           </Boot>

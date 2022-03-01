@@ -28,9 +28,7 @@ import { ClientContext } from "desktop/lib/buildClientAppContext"
 import { FlashMessage } from "v2/Components/Modal/FlashModal"
 import { SiftContainer } from "v2/Utils/SiftContainer"
 import { setupSentryClient } from "lib/setupSentryClient"
-import {
-  EnabledFeatureFlags,
-} from "lib/featureFlags/FeatureFlagProvider"
+import { EnabledFeatureFlags } from "v2/System/useFeatureFlag"
 
 export interface BootProps {
   children: React.ReactNode
@@ -84,21 +82,21 @@ export const Boot = track(undefined, {
           <SystemContextProvider {...contextProps}>
             <AnalyticsContext.Provider value={context?.analytics}>
               <ErrorBoundary>
-                  <MediaContextProvider onlyMatch={onlyMatchMediaQueries}>
-                    <ResponsiveProvider
-                      mediaQueries={themeProps.mediaQueries}
-                      initialMatchingMediaQueries={onlyMatchMediaQueries as any}
-                    >
-                      <ToastsProvider>
-                        <Grid fluid maxWidth="100%">
-                          <FlashMessage />
-                          <FocusVisible />
-                          <SiftContainer />
-                          {children}
-                        </Grid>
-                      </ToastsProvider>
-                    </ResponsiveProvider>
-                  </MediaContextProvider>
+                <MediaContextProvider onlyMatch={onlyMatchMediaQueries}>
+                  <ResponsiveProvider
+                    mediaQueries={themeProps.mediaQueries}
+                    initialMatchingMediaQueries={onlyMatchMediaQueries as any}
+                  >
+                    <ToastsProvider>
+                      <Grid fluid maxWidth="100%">
+                        <FlashMessage />
+                        <FocusVisible />
+                        <SiftContainer />
+                        {children}
+                      </Grid>
+                    </ToastsProvider>
+                  </ResponsiveProvider>
+                </MediaContextProvider>
               </ErrorBoundary>
             </AnalyticsContext.Provider>
           </SystemContextProvider>
