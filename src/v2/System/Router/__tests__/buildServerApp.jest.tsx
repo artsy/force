@@ -172,6 +172,7 @@ describe("buildServerApp", () => {
           {context => {
             expect(Object.keys(context).sort()).toEqual([
               "analytics",
+              "featureFlags",
               "initialMatchingMediaQueries",
               "isEigen",
               "isFetching",
