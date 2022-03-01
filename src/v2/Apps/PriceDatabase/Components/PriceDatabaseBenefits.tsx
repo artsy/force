@@ -19,7 +19,7 @@ export const PriceDatabaseBenefits: React.FC = () => {
       <GridColumns mt={4} gridRowGap={[2, 0]}>
         <Column span={12}>
           <Text as="h1" variant={["xl", "xxl"]}>
-            Auction records from 340,000
+            Auction records from 300,000
             <br />
             artists—and counting
           </Text>
@@ -27,16 +27,16 @@ export const PriceDatabaseBenefits: React.FC = () => {
       </GridColumns>
 
       <Section
-        title="The largest publicly available art market database"
-        text="With millions of auction records, our growing database encompasses over 900 auction houses with pricing that dates back to 1986. Get real-time records from history-making auction houses like Christie's, Sotheby's, Phillips, Bonhams, and more."
+        title="Get in-depth art market data"
+        text="Browse millions of current and historical results from leading auction houses across the globe."
         jsx={<PopularArtistsList />}
       />
 
       <Separator />
 
       <Section
-        title="Visibility into the art market"
-        text="Whether researching, buying, or selling, our dynamic market intelligence allows you to determine value, make strategic decisions, and validate pricing against historical market data."
+        title="Research and validate prices"
+        text="Access the data you need to make the right decisions for your collection, whether you’re researching, buying, or selling."
         jsx={
           <SectionImage
             src="https://files.artsy.net/images/kehinde_wiley_portrait_of_nelly_moudime_ii.png"
@@ -52,8 +52,8 @@ export const PriceDatabaseBenefits: React.FC = () => {
       <Separator />
 
       <Section
-        title="It's free and always will be"
-        text="No search limits, no subscriptions, and no obligations. Collect smarter with unparalleled access to art market data."
+        title="Search for free"
+        text="The Artsy Price Database is for every collector—with no search limits, no subscriptions, and no obligations. A more open art world starts here."
         jsx={
           <SectionImage
             src="https://files.artsy.net/images/damien_hirst_kindness.png"
