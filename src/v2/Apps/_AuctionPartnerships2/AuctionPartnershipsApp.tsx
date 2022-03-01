@@ -29,6 +29,9 @@ export const AuctionPartnershipsApp: React.FC = () => {
         <PartnerWithArtsyForm />
         <GlobalAudienceReach />
         <BiddingTools />
+        <ConsignmentsInfo />
+        <VisibilityInfoTop />
+        <VisibilityInfoBottom />
       </Join>
     </>
   )
@@ -66,7 +69,7 @@ const MarketplaceExperience: React.FC = () => {
           border="1px solid"
           borderColor="black100"
           width="100%"
-          height="100%"
+          height="480px"
         ></Box>
       </Column>
       <Column span={6}>
@@ -112,7 +115,7 @@ const GlobalAudienceReach: React.FC = () => {
           border="1px solid"
           borderColor="black100"
           width="100%"
-          height="100%"
+          height="480px"
         ></Box>
       </Column>
       <Column span={6}>
@@ -156,7 +159,7 @@ export const BiddingTools: React.FC = () => {
             border="1px solid"
             borderColor="black100"
             width="100%"
-            height="100%"
+            height="480px"
           ></Box>
         </Column>
       </GridColumns>
@@ -174,5 +177,114 @@ export const BiddingTools: React.FC = () => {
         </Column>
       </GridColumns>
     </Box>
+  )
+}
+
+const ConsignmentsInfo: React.FC = () => {
+  return (
+    <GridColumns>
+      <Column span={6}>
+        <Box
+          border="1px solid"
+          borderColor="black100"
+          width="100%"
+          height="480px"
+        ></Box>
+      </Column>
+      <Column span={6}>
+        <Text textTransform="uppercase">Consignments</Text>
+        <Text variant="lg">Access to a Comprehensive Artwork Database</Text>
+        <Text>
+          Artsy can be your additional source of consignments. Log in and
+          seamlessly browse hundreds of vetted artworks from Modern to Post-War
+          and Contemporary art. Artsy’s consignment experts have international
+          auction house experience and liaise with our consignors directly to
+          explain the auction process and walk them through market
+          pricing—ensuring a seamless experience for all stakeholders. Grow your
+          footprint and build relationships with this international database of
+          consignors quickly and easily. Available across desktop and mobile
+          devices—submit consignment proposals wherever and whenever. See here
+          for more details.
+        </Text>
+      </Column>
+    </GridColumns>
+  )
+}
+
+export const VisibilityInfoTop: React.FC = () => {
+  return (
+    <GridColumns>
+      <Column span={6}>
+        <Text textTransform="uppercase">Visibility</Text>
+        <Text variant="lg">
+          Exceptional Services to Reach New Collectors, Drive Bid Activity, and
+          Promote Your Brand
+        </Text>
+        <Text>
+          Promotion on Artsy’s website, iPhone and iPad app, newsletter emails,
+          personalized “Follow” emails, push notifications, and more. Rich
+          contextual information, including artist biographies, lot
+          descriptions, and metadata. Collector targeting via The Art Genome
+          Project.
+        </Text>
+      </Column>
+      <Column span={6}>
+        <Flex flexDirection="column">
+          <Box
+            border="1px solid"
+            borderColor="black100"
+            width="100%"
+            height="480px"
+          ></Box>
+          <Spacer mt={4} />
+          <Box
+            border="1px solid"
+            borderColor="black100"
+            width="100%"
+            height="400px"
+          ></Box>
+          <Text>
+            Social Media Coverage <br /> 1,700,000+ combined following across
+            platforms
+          </Text>
+        </Flex>
+      </Column>
+    </GridColumns>
+  )
+}
+
+const VisibilityInfoBottom: React.FC = () => {
+  return (
+    <GridColumns>
+      <Column span={6}>
+        <Box
+          border="1px solid"
+          borderColor="black100"
+          width="100%"
+          height="480px"
+        ></Box>
+        <Spacer mt={4} />
+        <Box
+          border="1px solid"
+          borderColor="black100"
+          width="100%"
+          height="400px"
+        ></Box>
+      </Column>
+      <Column span={6}>
+        <Text textTransform="uppercase">Visibility</Text>
+        <Text variant="lg">
+          Exceptional Services to Reach New Collectors, Drive Bid Activity, and
+          Promote Your Brand
+        </Text>
+        <Text>
+          Promotion on Artsy’s website, iPhone and iPad app, newsletter emails,
+          personalized “Follow” emails, push notifications, and more. Rich
+          contextual information, including artist biographies, lot
+          descriptions, and metadata. Collector targeting via The Art Genome
+          Project.
+        </Text>
+      </Column>
+    </GridColumns>
   )
 }
