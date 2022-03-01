@@ -92,10 +92,10 @@ export const PreferencesApp: FC<PreferencesAppProps> = ({ viewer }) => {
       >
         {({
           values,
-          setTouched,
           setFieldValue,
           setFieldTouched,
           resetForm,
+          isSubmitting,
           touched,
         }) => (
           <Form>
@@ -250,7 +250,8 @@ export const PreferencesApp: FC<PreferencesAppProps> = ({ viewer }) => {
                 <Button
                   width="100%"
                   variant="secondaryOutline"
-                  disabled={isEmpty(touched)}
+                  disabled={isEmpty(touched) || isSubmitting}
+                  type="button"
                   onClick={event => {
                     event.preventDefault()
                     resetForm({
@@ -267,7 +268,11 @@ export const PreferencesApp: FC<PreferencesAppProps> = ({ viewer }) => {
               </Column>
 
               <Column span={2} mt={2}>
-                <Button width="100%" type="submit" disabled={isEmpty(touched)}>
+                <Button
+                  width="100%"
+                  type="submit"
+                  disabled={isEmpty(touched) || isSubmitting}
+                >
                   Save
                 </Button>
               </Column>
