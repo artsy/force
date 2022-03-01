@@ -23,7 +23,7 @@ import { ArticleSectionSocialEmbedFragmentContainer } from "./Sections/ArticleSe
 import { ArticleSectionEmbedFragmentContainer } from "./Sections/ArticleSectionEmbed"
 import { ArticleBylineFragmentContainer } from "./ArticleByline"
 import { ArticleContextProvider } from "./ArticleContext"
-import { Ad } from "v2/Components/Ad"
+import { ArticleAd } from "./ArticleAd"
 
 interface ArticleBodyProps {
   article: ArticleBody_article
@@ -34,7 +34,7 @@ const ArticleBody: FC<ArticleBodyProps> = ({ article }) => {
     <ArticleContextProvider articleId={article.internalID}>
       {article.layout !== "FEATURE" && (
         <FullBleed bg="black5" p={1}>
-          <Ad unit="Desktop_TopLeaderboard" size="970x250" />
+          <ArticleAd unit="Desktop_TopLeaderboard" size="970x250" />
         </FullBleed>
       )}
 
@@ -212,7 +212,12 @@ const ArticleBody: FC<ArticleBodyProps> = ({ article }) => {
 
             <Spacer mt={4} />
 
-            <Ad bg="black5" p={1} unit="Desktop_RightRail1" size="300x250" />
+            <ArticleAd
+              bg="black5"
+              p={1}
+              unit="Desktop_RightRail1"
+              size="300x250"
+            />
           </Column>
         )}
       </GridColumns>

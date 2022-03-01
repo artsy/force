@@ -4,12 +4,12 @@ import { Box, BoxProps, ResponsiveBox, Text } from "@artsy/palette"
 import { AdUnit, AdSize } from "./types"
 import { useSizeAndPosition } from "v2/Utils/Hooks/useSizeAndPosition"
 
-export interface AdProps extends BoxProps {
+export interface ArticleAdProps extends BoxProps {
   unit: AdUnit
   size: AdSize
 }
 
-export const Ad: FC<AdProps> = memo(({ unit, size, ...rest }) => {
+export const ArticleAd: FC<ArticleAdProps> = memo(({ unit, size, ...rest }) => {
   const [width, height] = size.split("x").map(n => parseInt(n, 10))
 
   // Since ads are iframed we have to calculate a value to use to scale them via transform.
@@ -47,9 +47,9 @@ export const Ad: FC<AdProps> = memo(({ unit, size, ...rest }) => {
   )
 })
 
-Ad.displayName = "Ad"
+ArticleAd.displayName = "ArticleAd"
 
-export const AdProvider: FC = ({ children }) => {
+export const ArticleAdProvider: FC = ({ children }) => {
   return (
     <DFPSlotsProvider dfpNetworkId="21805539690">{children}</DFPSlotsProvider>
   )
