@@ -323,28 +323,34 @@ const AuctionsSupportTeam: React.FC = () => {
         </Text>
       </Column>
       <Column span={6}>
-        {AUCTIONS_PARTNERSHIPS_SPECIALISTS.map((specialist, index) => {
-          return (
-            <Fragment key={specialist.name}>
-              <Flex flexDirection="row">
-                <Avatar
-                  size="md"
-                  src=""
-                  srcSet=""
-                  mr={2}
-                  backgroundColor="black100"
-                ></Avatar>
-                <Flex flexDirection="column">
-                  <Text variant="lg">{specialist.name}</Text>
-                  <Text variant="md">{specialist.title}</Text>
-                  <Text variant="md" color="black60" mb={2}>
-                    {specialist.location}
-                  </Text>
+        <Join
+          separator={
+            <Spacer mt={2} mb={2} border="1px solid" borderColor="black15" />
+          }
+        >
+          {AUCTIONS_PARTNERSHIPS_SPECIALISTS.map((specialist, index) => {
+            return (
+              <Fragment key={specialist.name}>
+                <Flex flexDirection="row">
+                  <Avatar
+                    size="md"
+                    src=""
+                    srcSet=""
+                    mr={2}
+                    backgroundColor="black100"
+                  ></Avatar>
+                  <Flex flexDirection="column">
+                    <Text variant="lg">{specialist.name}</Text>
+                    <Text variant="md">{specialist.title}</Text>
+                    <Text variant="md" color="black60" mb={2}>
+                      {specialist.location}
+                    </Text>
+                  </Flex>
                 </Flex>
-              </Flex>
-            </Fragment>
-          )
-        })}
+              </Fragment>
+            )
+          })}
+        </Join>
       </Column>
     </GridColumns>
   )
