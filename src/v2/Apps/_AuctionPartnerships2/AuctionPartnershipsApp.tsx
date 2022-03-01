@@ -139,7 +139,7 @@ const GlobalAudienceReach: React.FC = () => {
   )
 }
 
-export const BiddingTools: React.FC = () => {
+const BiddingTools: React.FC = () => {
   return (
     <Box>
       <GridColumns>
@@ -215,7 +215,7 @@ const ConsignmentsInfo: React.FC = () => {
   )
 }
 
-export const VisibilityInfoTop: React.FC = () => {
+const VisibilityInfoTop: React.FC = () => {
   return (
     <GridColumns>
       <Column span={6}>
