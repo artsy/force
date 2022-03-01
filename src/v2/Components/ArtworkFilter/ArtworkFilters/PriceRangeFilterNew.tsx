@@ -12,29 +12,6 @@ import { useFilterLabelCountByKey } from "../Utils/useFilterLabelCountByKey"
 import { Range, RANGE_DOT_SIZE } from "v2/Components/Range"
 import { debounce } from "lodash"
 
-// Disables arrows in numeric inputs
-export const NumericInput = styled(LabeledInput).attrs({ type: "number" })`
-  /* Chrome, Safari, Edge, Opera */
-  input::-webkit-outer-spin-button,
-  input::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-  }
-
-  /* Firefox */
-  input[type="number"] {
-    -moz-appearance: textfield;
-  }
-
-  /* HACK: Setting the font-size to a minimum 16px prevents iOS from zooming on focus */
-  /* This won't be necessary when upgraded to Palette v3 */
-  @media ${themeGet("mediaQueries.xs")} {
-    input {
-      font-size: 16px;
-    }
-  }
-`
-
 type CustomRange = (number | "*")[]
 
 // Constants
@@ -42,37 +19,6 @@ const DEBOUNCE_DELAY = 300
 const DEFAULT_CUSTOM_RANGE: CustomRange = ["*", "*"]
 const DEFAULT_PRICE_RANGE = "*-*"
 const DEFAULT_RANGE = [0, 50000]
-
-export const parseRange = (range: string = DEFAULT_PRICE_RANGE) => {
-  return range.split("-").map(s => {
-    if (s === "*") return s
-    return parseInt(s, 10)
-  })
-}
-
-const parseSliderRange = (range: CustomRange) => {
-  return range.map((value, index) => {
-    if (value === "*") {
-      return DEFAULT_RANGE[index]
-    }
-
-    return value as number
-  })
-}
-
-export const convertToFilterFormatRange = (range: number[]) => {
-  return range.map((value, index) => {
-    if (value === DEFAULT_RANGE[index]) {
-      return "*"
-    }
-
-    return value
-  })
-}
-
-export const getValue = (value: CustomRange[number]) => {
-  return value === "*" || value === 0 ? "" : value
-}
 
 export interface PriceRangeFilterNewProps {
   expanded?: boolean
@@ -96,8 +42,7 @@ export const PriceRangeFilterNew: FC<PriceRangeFilterNewProps> = ({
     SelectedFiltersCountsLabels.priceRange
   )
   const label = `Price${filtersCount}`
-  const selection = currentlySelectedFilters?.().priceRange
-  const hasSelection = selection && isCustomValue(selection)
+  const hasSelection = priceRange && isCustomValue(priceRange)
 
   const setFilterDobounced = useMemo(
     () => debounce(setFilter, DEBOUNCE_DELAY),
@@ -208,4 +153,58 @@ export const PriceRangeFilterNew: FC<PriceRangeFilterNewProps> = ({
       </Box>
     </FilterExpandable>
   )
+}
+
+// Disables arrows in numeric inputs
+export const NumericInput = styled(LabeledInput).attrs({ type: "number" })`
+  /* Chrome, Safari, Edge, Opera */
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  /* Firefox */
+  input[type="number"] {
+    -moz-appearance: textfield;
+  }
+
+  /* HACK: Setting the font-size to a minimum 16px prevents iOS from zooming on focus */
+  /* This won't be necessary when upgraded to Palette v3 */
+  @media ${themeGet("mediaQueries.xs")} {
+    input {
+      font-size: 16px;
+    }
+  }
+`
+
+export const parseRange = (range: string = DEFAULT_PRICE_RANGE) => {
+  return range.split("-").map(s => {
+    if (s === "*") return s
+    return parseInt(s, 10)
+  })
+}
+
+const parseSliderRange = (range: CustomRange) => {
+  return range.map((value, index) => {
+    if (value === "*") {
+      return DEFAULT_RANGE[index]
+    }
+
+    return value as number
+  })
+}
+
+export const convertToFilterFormatRange = (range: number[]) => {
+  return range.map((value, index) => {
+    if (value === DEFAULT_RANGE[index]) {
+      return "*"
+    }
+
+    return value
+  })
+}
+
+export const getValue = (value: CustomRange[number]) => {
+  return value === "*" || value === 0 ? "" : value
 }
