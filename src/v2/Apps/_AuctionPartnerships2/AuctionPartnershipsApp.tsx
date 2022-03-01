@@ -7,7 +7,9 @@ import {
   Join,
   Spacer,
   Flex,
+  Avatar,
 } from "@artsy/palette"
+import { Fragment } from "react"
 import { MetaTags } from "v2/Components/MetaTags"
 
 export const AuctionPartnershipsApp: React.FC = () => {
@@ -32,13 +34,15 @@ export const AuctionPartnershipsApp: React.FC = () => {
         <ConsignmentsInfo />
         <VisibilityInfoTop />
         <VisibilityInfoBottom />
+        <AuctionsSupportTeam />
       </Join>
     </>
   )
 }
 
+// TODO: replace all placeholder images with high res img assets
+
 const ArtsyForAuctions: React.FC = () => {
-  // TODO: replace placeholder image with high res img asset
   const headerImage =
     "http://files.artsy.net/images/auctionpartnerships-lowres-header-temp.png"
 
@@ -288,3 +292,65 @@ const VisibilityInfoBottom: React.FC = () => {
     </GridColumns>
   )
 }
+
+const AuctionsSupportTeam: React.FC = () => {
+  return (
+    <GridColumns>
+      <Column span={6}>
+        <Text textTransform="uppercase">Support</Text>
+        <Text variant="lg">We’re With You Every Step of the Way</Text>
+        <Text>
+          Our auctions team is dedicated to delivering a world-class auction
+          experience for collectors and our partners. We’ll lead you through
+          every step of the process and assist with getting the most out of your
+          partnership with us.
+        </Text>
+      </Column>
+      <Column span={6}>
+        {AUCTIONS_PARTNERSHIPS_SPECIALISTS.map((specialist, index) => {
+          return (
+            <Fragment key={specialist.name}>
+              <Flex flexDirection="row">
+                <Avatar
+                  size="md"
+                  src=""
+                  srcSet=""
+                  mr={2}
+                  backgroundColor="black100"
+                ></Avatar>
+                <Flex flexDirection="column">
+                  <Text variant="lg">{specialist.name}</Text>
+                  <Text variant="md">{specialist.title}</Text>
+                  <Text variant="md" color="black60" mb={2}>
+                    {specialist.location}
+                  </Text>
+                </Flex>
+              </Flex>
+            </Fragment>
+          )
+        })}
+      </Column>
+    </GridColumns>
+  )
+}
+
+// TODO: replace with hardcocded Auction Partnership team data
+
+const AUCTIONS_PARTNERSHIPS_SPECIALISTS = [
+  {
+    name: "name1",
+    title: "title1",
+    location: "location1",
+    email: "email1",
+    phone: "phone1",
+    photo: "photo1",
+  },
+  {
+    name: "name2",
+    title: "title2",
+    location: "location2",
+    email: "email2",
+    phone: "phone2",
+    photo: "photo2",
+  },
+]
