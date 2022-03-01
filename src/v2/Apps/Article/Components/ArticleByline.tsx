@@ -23,6 +23,7 @@ const ArticleByline: FC<ArticleBylineProps> = ({ article }) => {
 
         return (
           <EntityHeader
+            key={author.internalID}
             name={author.name || "Artsy Editorial"}
             initials={author.initials || "A"}
             meta={author.bio!}
@@ -41,6 +42,7 @@ export const ArticleBylineFragmentContainer = createFragmentContainer(
       fragment ArticleByline_article on Article {
         byline
         authors {
+          internalID
           name
           initials
           bio
