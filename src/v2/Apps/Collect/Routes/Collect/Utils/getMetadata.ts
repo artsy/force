@@ -16,7 +16,6 @@ export type Medium =
 export type Color =
   | "black-and-white"
   | "blue"
-  | "gold"
   | "gray"
   | "green"
   | "orange"
@@ -108,9 +107,6 @@ export function getMetadata({ medium, color }: Props) {
         break
       case "green":
         title = "Green Art"
-        break
-      case "gold":
-        title = "Gold Art"
         break
       case "gray":
         title = "Gray Art"
