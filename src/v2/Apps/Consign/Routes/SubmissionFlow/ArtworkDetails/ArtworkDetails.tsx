@@ -119,11 +119,17 @@ export const ArtworkDetails: React.FC<ArtworkDetailsProps> = ({
       </Text>
 
       <Text mt={1} variant="sm" color="black60">
-        &#8226; All fields are required to submit a work.
+        &#8226; Currently, artists can not sell their own work on Artsy.{" "}
+        <a
+          href="https://support.artsy.net/hc/en-us/articles/360046646374-I-m-an-artist-Can-I-submit-my-own-work-to-sell-"
+          target="_blank"
+          data-testid="learn-more-anchor"
+        >
+          Learn More.
+        </a>
       </Text>
       <Text mb={[4, 6]} variant="sm" color="black60">
-        &#8226; We currently do not allow artists to sell their own work on
-        Artsy.
+        &#8226; All fields are required to submit a work.
       </Text>
 
       <Formik<ArtworkDetailsFormModel>
