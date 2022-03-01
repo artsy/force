@@ -77,21 +77,19 @@ const MarketplaceExperience: React.FC = () => {
         ></Box>
       </Column>
       <Column span={6}>
-        <Flex flexDirection="column">
-          <Text variant="sm" textTransform="uppercase">
-            Experience
-          </Text>
-          <Text variant="lg">
-            Trusted Marketplace for Both Commercial and Benefit Auctions
-          </Text>
-          <Text variant="sm">
-            Our roster of global auction house partners is rapidly expanding,
-            including, Bonhams, Phillips, Heritage, Rago/Wright, and Hindman
-            Auctions. To date, Artsy benefit auctions have helped to raise more
-            than $25 million for museums, nonprofit organizations, and other
-            charitable causes.
-          </Text>
-        </Flex>
+        <Text variant="sm" textTransform="uppercase" mb={1}>
+          Experience
+        </Text>
+        <Text variant="lg" mb={1}>
+          Trusted Marketplace for Both Commercial and Benefit Auctions
+        </Text>
+        <Text variant="sm">
+          Our roster of global auction house partners is rapidly expanding,
+          including, Bonhams, Phillips, Heritage, Rago/Wright, and Hindman
+          Auctions. To date, Artsy benefit auctions have helped to raise more
+          than $25 million for museums, nonprofit organizations, and other
+          charitable causes.
+        </Text>
       </Column>
     </GridColumns>
   )
@@ -101,7 +99,9 @@ const PartnerWithArtsyForm: React.FC = () => {
   return (
     <GridColumns>
       <Column span={6}>
-        <Text variant="lg">Interested in Partnering with Artsy?</Text>
+        <Text variant="lg" mb={1}>
+          Interested in Partnering with Artsy?
+        </Text>
         <Text variant="sm">Apply to host your auctions on Artsy</Text>
       </Column>
       <Column span={6}>
@@ -123,8 +123,10 @@ const GlobalAudienceReach: React.FC = () => {
         ></Box>
       </Column>
       <Column span={6}>
-        <Text textTransform="uppercase">Audience</Text>
-        <Text variant="lg">
+        <Text textTransform="uppercase" mb={1}>
+          Audience
+        </Text>
+        <Text variant="lg" mb={1}>
           Reach a Global Audience of 24+ Million Collectors and Art Lovers
         </Text>
         <Text>
@@ -144,8 +146,10 @@ const BiddingTools: React.FC = () => {
     <Box>
       <GridColumns>
         <Column span={6}>
-          <Text textTransform="uppercase">Access</Text>
-          <Text variant="lg">
+          <Text textTransform="uppercase" mb={1}>
+            Access
+          </Text>
+          <Text variant="lg" mb={1}>
             Maximize Bids With Our User-Friendly Bidding Tools
           </Text>
           <Text>
@@ -196,19 +200,23 @@ const ConsignmentsInfo: React.FC = () => {
         ></Box>
       </Column>
       <Column span={6}>
-        <Text textTransform="uppercase">Consignments</Text>
-        <Text variant="lg">Access to a Comprehensive Artwork Database</Text>
+        <Text textTransform="uppercase" mb={1}>
+          Consignments
+        </Text>
+        <Text variant="lg" mb={1}>
+          Access to a Comprehensive Artwork Database
+        </Text>
         <Text>
           Artsy can be your additional source of consignments. Log in and
           seamlessly browse hundreds of vetted artworks from Modern to Post-War
           and Contemporary art. Artsy’s consignment experts have international
           auction house experience and liaise with our consignors directly to
           explain the auction process and walk them through market
-          pricing—ensuring a seamless experience for all stakeholders. Grow your
-          footprint and build relationships with this international database of
-          consignors quickly and easily. Available across desktop and mobile
-          devices—submit consignment proposals wherever and whenever. See here
-          for more details.
+          pricing—ensuring a seamless experience for all stakeholders. <br />
+          Grow your footprint and build relationships with this international
+          database of consignors quickly and easily. Available across desktop
+          and mobile devices—submit consignment proposals wherever and whenever.
+          See here for more details.
         </Text>
       </Column>
     </GridColumns>
@@ -219,8 +227,10 @@ const VisibilityInfoTop: React.FC = () => {
   return (
     <GridColumns>
       <Column span={6}>
-        <Text textTransform="uppercase">Visibility</Text>
-        <Text variant="lg">
+        <Text textTransform="uppercase" mb={1}>
+          Visibility
+        </Text>
+        <Text variant="lg" mb={1}>
           Exceptional Services to Reach New Collectors, Drive Bid Activity, and
           Promote Your Brand
         </Text>
@@ -276,8 +286,10 @@ const VisibilityInfoBottom: React.FC = () => {
         ></Box>
       </Column>
       <Column span={6}>
-        <Text textTransform="uppercase">Visibility</Text>
-        <Text variant="lg">
+        <Text textTransform="uppercase" mb={1}>
+          Visibility
+        </Text>
+        <Text variant="lg" mb={1}>
           Exceptional Services to Reach New Collectors, Drive Bid Activity, and
           Promote Your Brand
         </Text>
@@ -297,8 +309,12 @@ const AuctionsSupportTeam: React.FC = () => {
   return (
     <GridColumns>
       <Column span={6}>
-        <Text textTransform="uppercase">Support</Text>
-        <Text variant="lg">We’re With You Every Step of the Way</Text>
+        <Text textTransform="uppercase" mb={1}>
+          Support
+        </Text>
+        <Text variant="lg" mb={1}>
+          We’re With You Every Step of the Way
+        </Text>
         <Text>
           Our auctions team is dedicated to delivering a world-class auction
           experience for collectors and our partners. We’ll lead you through
