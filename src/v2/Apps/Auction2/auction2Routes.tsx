@@ -112,6 +112,19 @@ export const auction2Routes: AppRouteConfig[] = [
       {
         path: "bid/:artworkSlug?",
         getComponent: () => ConfirmBidRoute,
+        onClientSideRender: ({ match }) => {
+          if (!match.context.user) {
+            const redirectTo = match.location.pathname + match.location.search
+            match.router.push(
+              `/login?redirect-to=${redirectTo}&afterSignUpAction=${redirectTo}`
+            )
+          }
+        },
+        onServerSideRender: ({ req, res }) => {
+          if (!req.user) {
+            res.redirect(`/login?redirect=${req.originalUrl}`)
+          }
+        },
         ignoreScrollBehavior: true,
         query: graphql`
           query auction2Routes_BidRouteQuery(
