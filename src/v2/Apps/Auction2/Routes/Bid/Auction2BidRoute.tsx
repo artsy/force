@@ -83,6 +83,8 @@ const Auction2BidRoute: React.FC<Auction2BidRouteProps> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
+  console.log(requiresPaymentInformation)
+
   return (
     <ModalDialog title="Confirm your bid" onClose={handleModalClose}>
       <Formik
@@ -234,9 +236,8 @@ const computeProps = ({
   })
 
   const requiresCheckbox = !bidder
-  const requiresPaymentInformation = !(
-    requiresCheckbox || me.hasQualifiedCreditCards
-  )
+  const requiresPaymentInformation =
+    requiresCheckbox || !me.hasQualifiedCreditCards
 
   const {
     validationSchemaForRegisteredUsers,
