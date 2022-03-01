@@ -5587,6 +5587,13 @@ babel-plugin-transform-es2015-modules-commonjs@^6.26.2:
     babel-template "^6.26.0"
     babel-types "^6.26.0"
 
+babel-plugin-transform-object-assign@^6.22.0:
+  version "6.22.0"
+  resolved "https://registry.yarnpkg.com/babel-plugin-transform-object-assign/-/babel-plugin-transform-object-assign-6.22.0.tgz#f99d2f66f1a0b0d498e346c5359684740caa20ba"
+  integrity sha1-+Z0vZvGgsNSY40bFNZaEdAyqILo=
+  dependencies:
+    babel-runtime "^6.22.0"
+
 babel-plugin-transform-strict-mode@^6.24.1:
   version "6.24.1"
   resolved "https://registry.yarnpkg.com/babel-plugin-transform-strict-mode/-/babel-plugin-transform-strict-mode-6.24.1.tgz#d5faf7aa578a65bbe591cf5edae04a0c67020758"
@@ -17548,6 +17555,14 @@ react-dev-utils@^11.0.3:
     shell-quote "1.7.2"
     strip-ansi "6.0.0"
     text-table "0.2.0"
+
+react-dfp@^0.21.0:
+  version "0.21.0"
+  resolved "https://registry.yarnpkg.com/react-dfp/-/react-dfp-0.21.0.tgz#7711e9165854f62a9cbfcdba5f853d2bcc610e8a"
+  integrity sha512-gL9iyl9zPWJIzrgevpcVWAEFhqJLPaKlkdGxEBATm6pQXVLJGQNin5/dxwCFzZb+JjBtn7w/Q29E35qSX/xzqg==
+  dependencies:
+    babel-plugin-transform-object-assign "^6.22.0"
+    prop-types "^15.6.1"
 
 react-docgen-typescript@^2.0.0:
   version "2.1.0"

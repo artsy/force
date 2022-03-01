@@ -14,7 +14,7 @@ export const ArticleHTML: FC<ArticleHTMLProps> = ({ children, ...rest }) => {
 
   // Looks for links and if they are internal and a supported entity type,
   // inserts the relevant tooltip.
-  const transform = (node: Element) => {
+  const transform = (node: Element, i: number) => {
     if (node.tagName !== "A") return
 
     const { href } = node as HTMLAnchorElement
@@ -29,7 +29,12 @@ export const ArticleHTML: FC<ArticleHTMLProps> = ({ children, ...rest }) => {
       if (!isSupportedArticleTooltip(entity)) return
 
       return (
-        <ArticleTooltip entity={entity} id={id} href={href}>
+        <ArticleTooltip
+          key={[i, id].join("-")}
+          entity={entity}
+          id={id}
+          href={href}
+        >
           {node.textContent}
         </ArticleTooltip>
       )

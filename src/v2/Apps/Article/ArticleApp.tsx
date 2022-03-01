@@ -9,6 +9,7 @@ import { ArticleInfiniteScrollQueryRenderer } from "./Components/ArticleInfinite
 import { ArticleSeriesFragmentContainer } from "./Components/ArticleSeries"
 import { ArticleVerticalRelatedArticlesQueryRenderer } from "./Components/ArticleVerticalRelatedArticles"
 import { ArticleVideoFragmentContainer } from "./Components/ArticleVideo"
+import { ArticleAdProvider } from "./Components/ArticleAd"
 import { ArticleVisibilityMetadataFragmentContainer } from "./Components/ArticleVisibilityMetadata"
 
 interface ArticleAppProps {
@@ -17,7 +18,7 @@ interface ArticleAppProps {
 
 const ArticleApp: FC<ArticleAppProps> = ({ article }) => {
   return (
-    <>
+    <ArticleAdProvider>
       <MetaTags
         title={`${article.title} | Artsy`}
         // TODO: Add description, remaining tags
@@ -77,7 +78,7 @@ const ArticleApp: FC<ArticleAppProps> = ({ article }) => {
           }
         })()}
       </Join>
-    </>
+    </ArticleAdProvider>
   )
 }
 
