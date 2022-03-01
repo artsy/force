@@ -29,7 +29,6 @@ export const COLOR_OPTIONS = [
   { hex: "#ffffff", value: "black-and-white", name: "Black and White" },
   { hex: "#C2C2C2", value: "gray", name: "Gray" },
   { hex: "#E1ADCD", value: "pink", name: "Pink" },
-  { hex: "#A78036", value: "gold", name: "Gold" },
 ]
 
 type ColorOption = typeof COLOR_OPTIONS[number]
