@@ -72,7 +72,6 @@ export const PreferencesApp: FC<PreferencesAppProps> = ({ viewer }) => {
             })
 
             actions.resetForm({
-              values: { ...NOTIFICATION_FIELDS, ...getInitialValues(viewer) },
               touched: {},
             })
 
