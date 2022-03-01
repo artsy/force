@@ -26,8 +26,8 @@ export type Color =
   | "yellow"
 
 interface Props {
-  medium: Medium | null
-  color: Color | null
+  medium: Medium | undefined
+  color: Color | undefined
 }
 
 export function getMetadata({ medium, color }: Props) {

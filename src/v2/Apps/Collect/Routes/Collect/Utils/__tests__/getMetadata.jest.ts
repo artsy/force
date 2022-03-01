@@ -5,7 +5,7 @@ describe("getMetadata", () => {
     it("formats medium types", () => {
       const { title, breadcrumbTitle, description } = getMetadata({
         medium: "painting",
-        color: null,
+        color: undefined,
       })
       expect(title).toBe("Paintings - For Sale on Artsy")
       expect(breadcrumbTitle).toBe("Paintings")
@@ -17,7 +17,7 @@ describe("getMetadata", () => {
     it("falls back to fallback meta if medium is invalid", () => {
       const { title, breadcrumbTitle, description } = getMetadata({
         medium: "foo" as any,
-        color: null,
+        color: undefined,
       })
       expect(title).toBe("Collect | Artsy")
       expect(breadcrumbTitle).toBe("Collect")
@@ -30,7 +30,7 @@ describe("getMetadata", () => {
   describe("color", () => {
     it("formats color types", () => {
       const { title, breadcrumbTitle, description } = getMetadata({
-        medium: null,
+        medium: undefined,
         color: "red",
       })
 
@@ -43,7 +43,7 @@ describe("getMetadata", () => {
 
     it("falls back to fallback meta if medium is invalid", () => {
       const { title, breadcrumbTitle, description } = getMetadata({
-        medium: null,
+        medium: undefined,
         color: "foo" as any,
       })
       expect(title).toBe("Collect | Artsy")
@@ -56,8 +56,8 @@ describe("getMetadata", () => {
 
   it("formats default types", () => {
     const { title, breadcrumbTitle, description } = getMetadata({
-      medium: null,
-      color: null,
+      medium: undefined,
+      color: undefined,
     })
 
     expect(title).toBe("Collect | Artsy")
