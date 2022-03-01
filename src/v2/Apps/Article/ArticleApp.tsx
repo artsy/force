@@ -1,6 +1,7 @@
 import { FullBleed, Join, Separator, Spacer } from "@artsy/palette"
 import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
+import { AdProvider } from "v2/Components/Ad"
 import { MetaTags } from "v2/Components/MetaTags"
 import { ArticleApp_article } from "v2/__generated__/ArticleApp_article.graphql"
 import { ArticleBodyFragmentContainer } from "./Components/ArticleBody"
@@ -17,7 +18,7 @@ interface ArticleAppProps {
 
 const ArticleApp: FC<ArticleAppProps> = ({ article }) => {
   return (
-    <>
+    <AdProvider>
       <MetaTags
         title={`${article.title} | Artsy`}
         // TODO: Add description, remaining tags
@@ -77,7 +78,7 @@ const ArticleApp: FC<ArticleAppProps> = ({ article }) => {
           }
         })()}
       </Join>
-    </>
+    </AdProvider>
   )
 }
 
