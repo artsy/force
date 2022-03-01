@@ -26,6 +26,9 @@ export const AuctionPartnershipsApp: React.FC = () => {
       >
         <ArtsyForAuctions />
         <MarketplaceExperience />
+        <PartnerWithArtsyForm />
+        <GlobalAudienceReach />
+        <BiddingTools />
       </Join>
     </>
   )
@@ -71,7 +74,7 @@ const MarketplaceExperience: React.FC = () => {
           <Text variant="sm" textTransform="uppercase">
             Experience
           </Text>
-          <Text variant="xl">
+          <Text variant="lg">
             Trusted Marketplace for Both Commercial and Benefit Auctions
           </Text>
           <Text variant="sm">
@@ -84,5 +87,92 @@ const MarketplaceExperience: React.FC = () => {
         </Flex>
       </Column>
     </GridColumns>
+  )
+}
+
+const PartnerWithArtsyForm: React.FC = () => {
+  return (
+    <GridColumns>
+      <Column span={6}>
+        <Text variant="lg">Interested in Partnering with Artsy?</Text>
+        <Text variant="sm">Apply to host your auctions on Artsy</Text>
+      </Column>
+      <Column span={6}>
+        <Text>Form goes here</Text>
+      </Column>
+    </GridColumns>
+  )
+}
+
+const GlobalAudienceReach: React.FC = () => {
+  return (
+    <GridColumns>
+      <Column span={6}>
+        <Box
+          border="1px solid"
+          borderColor="black100"
+          width="100%"
+          height="100%"
+        ></Box>
+      </Column>
+      <Column span={6}>
+        <Text textTransform="uppercase">Audience</Text>
+        <Text variant="lg">
+          Reach a Global Audience of 24+ Million Collectors and Art Lovers
+        </Text>
+        <Text>
+          Since launching in October 2012, Artsy has had over 24 million unique
+          site visitors from 150+ countries across web and mobile, driven by
+          organic search traffic, as well as growing engagement with the world's
+          most comprehensive art resource, and other sources of collector
+          traffic.
+        </Text>
+      </Column>
+    </GridColumns>
+  )
+}
+
+export const BiddingTools: React.FC = () => {
+  return (
+    <Box>
+      <GridColumns>
+        <Column span={6}>
+          <Text textTransform="uppercase">Access</Text>
+          <Text variant="lg">
+            Maximize Bids With Our User-Friendly Bidding Tools
+          </Text>
+          <Text>
+            Artsy delivers a beautifully designed online bidding
+            experience—collectors can place bids from web, mobile, and tablet,
+            while receiving notifications about the status of their bids. In
+            addition to our timed online-only auctions, Artsy’s Live Auction
+            Integration software allows collectors to browse lots from upcoming
+            live sales, leave max bids, and continue bidding in the live sale
+            from anywhere in the world.
+          </Text>
+        </Column>
+        <Column span={6}>
+          <Box
+            border="1px solid"
+            borderColor="black100"
+            width="100%"
+            height="100%"
+          ></Box>
+        </Column>
+      </GridColumns>
+      <Spacer mt={6} />
+      <GridColumns>
+        <Column span={12}>
+          <Text variant="lg" textColor="blue100">
+            “Artsy's technology created a unique user experience which was
+            essential to generating our most successful auction in years.”
+          </Text>
+          <Text variant="sm" color="blue100">
+            — Renaud Proch, Executive Director, Independent Curators
+            International
+          </Text>
+        </Column>
+      </GridColumns>
+    </Box>
   )
 }
