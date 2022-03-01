@@ -28,7 +28,12 @@ export const PriceDatabaseBenefits: React.FC = () => {
 
       <Section
         title="Get in-depth art market data"
-        text="Browse millions of current and historical results from leading auction houses across the globe."
+        description={
+          <Text variant="sm">
+            Browse millions of current and historical results from leading
+            auction houses across the globe.
+          </Text>
+        }
         jsx={<PopularArtistsList />}
       />
 
@@ -36,24 +41,12 @@ export const PriceDatabaseBenefits: React.FC = () => {
 
       <Section
         title="Research and validate prices"
-        text="Access the data you need to make the right decisions for your collection, whether you’re researching, buying, or selling."
-        // TODO : Change Image prop
-        jsx={
-          <SectionImage
-            src="https://files.artsy.net/images/kehinde_wiley_portrait_of_nelly_moudime_ii.png"
-            srcSet=""
-            alt=""
-            artistName="Kehinde Wiley"
-            artworkName="Portrait of Nelly Moudime II (2020)"
-          />
+        description={
+          <Text variant="sm">
+            Access the data you need to make the right decisions for your
+            collection, whether you’re researching, buying, or selling.
+          </Text>
         }
-      />
-
-      <Separator />
-
-      <Section
-        title="Track artists and their markets"
-        text="Get insight into artists you follow with a personalized feed, powered by the Artsy Price Database.${} Available now on iOS and Android. Android | iOS logos here (see attached image) Reach out to Jon or Dascha for UI"
         jsx={
           <SectionImage
             src="https://files.artsy.net/images/kehinde_wiley_portrait_of_nelly_moudime_ii.png"
@@ -70,7 +63,13 @@ export const PriceDatabaseBenefits: React.FC = () => {
 
       <Section
         title="Search for free"
-        text="The Artsy Price Database is for every collector—with no search limits, no subscriptions, and no obligations. A more open art world starts here."
+        description={
+          <Text variant="sm">
+            The Artsy Price Database is for every collector—with no search
+            limits, no subscriptions, and no obligations. A more open art world
+            starts here.
+          </Text>
+        }
         jsx={
           <SectionImage
             src="https://files.artsy.net/images/damien_hirst_kindness.png"
@@ -87,10 +86,10 @@ export const PriceDatabaseBenefits: React.FC = () => {
 
 const Section: React.FC<{
   title: string
-  text: string
+  description: ReactElement
   jsx: ReactElement
   jsxPosition?: "left" | "right"
-}> = ({ title, text, jsx, jsxPosition = "left" }) => {
+}> = ({ title, description, jsx, jsxPosition = "left" }) => {
   return (
     <>
       <Media lessThan="md">
@@ -105,7 +104,7 @@ const Section: React.FC<{
           {title}
         </Text>
         <Flex mb={1} />
-        <Text variant="sm">{text}</Text>
+        {description}
         {jsxPosition === "right" && (
           <>
             <Spacer height={20} />
@@ -122,7 +121,7 @@ const Section: React.FC<{
               {title}
             </Text>
             <Text variant="sm" mt={1}>
-              {text}
+              {description}
             </Text>
           </Column>
           {jsxPosition === "right" && <Column span={6}>{jsx}</Column>}
