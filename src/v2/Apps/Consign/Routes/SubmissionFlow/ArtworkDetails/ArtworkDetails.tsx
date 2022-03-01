@@ -1,7 +1,6 @@
 import { Button, Text } from "@artsy/palette"
 import { SubmissionStepper } from "v2/Apps/Consign/Components/SubmissionStepper"
 import { Form, Formik } from "formik"
-import { RouterLink } from "v2/System/Router/RouterLink"
 import {
   ArtworkDetailsForm,
   ArtworkDetailsFormModel,
@@ -121,9 +120,13 @@ export const ArtworkDetails: React.FC<ArtworkDetailsProps> = ({
 
       <Text mt={1} variant="sm" color="black60">
         &#8226; Currently, artists can not sell their own work on Artsy.{" "}
-        <RouterLink to={null} textDecoration="underline">
-          Learn more.
-        </RouterLink>
+        <a
+          href="https://support.artsy.net/hc/en-us/articles/360046646374-I-m-an-artist-Can-I-submit-my-own-work-to-sell-"
+          target="_blank"
+          data-testid="learn-more-anchor"
+        >
+          Learn More.
+        </a>
       </Text>
       <Text mb={[4, 6]} variant="sm" color="black60">
         &#8226; All fields are required to submit a work.

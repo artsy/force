@@ -97,7 +97,6 @@ describe("ArtworkDetails", () => {
           "• Currently, artists can not sell their own work on Artsy."
         )
       ).toBeInTheDocument()
-      expect(screen.getByText("Learn more.")).toBeInTheDocument()
       expect(
         screen.getByText("• All fields are required to submit a work.")
       ).toBeInTheDocument()
@@ -108,6 +107,18 @@ describe("ArtworkDetails", () => {
       expect(
         screen.getAllByRole("link").find(c => c.textContent?.includes("Back"))
       ).toHaveAttribute("href", "/consign")
+    })
+
+    it("renders learn more link with correct href", () => {
+      getWrapper().renderWithRelay()
+
+      const learnMoreLink = screen.getByTestId("learn-more-anchor")
+
+      expect(learnMoreLink).toBeInTheDocument()
+      expect(learnMoreLink).toHaveAttribute(
+        "href",
+        "https://support.artsy.net/hc/en-us/articles/360046646374-I-m-an-artist-Can-I-submit-my-own-work-to-sell-"
+      )
     })
 
     it("fields are pre-populating from server", async () => {
