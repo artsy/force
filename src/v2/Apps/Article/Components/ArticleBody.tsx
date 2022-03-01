@@ -7,6 +7,7 @@ import {
   Spacer,
   Text,
   Image,
+  FullBleed,
 } from "@artsy/palette"
 import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -22,6 +23,7 @@ import { ArticleSectionSocialEmbedFragmentContainer } from "./Sections/ArticleSe
 import { ArticleSectionEmbedFragmentContainer } from "./Sections/ArticleSectionEmbed"
 import { ArticleBylineFragmentContainer } from "./ArticleByline"
 import { ArticleContextProvider } from "./ArticleContext"
+import { Ad } from "v2/Components/Ad"
 
 interface ArticleBodyProps {
   article: ArticleBody_article
@@ -30,6 +32,12 @@ interface ArticleBodyProps {
 const ArticleBody: FC<ArticleBodyProps> = ({ article }) => {
   return (
     <ArticleContextProvider articleId={article.internalID}>
+      {article.layout !== "FEATURE" && (
+        <FullBleed bg="black5" p={1}>
+          <Ad unit="Desktop_TopLeaderboard" size="970x250" />
+        </FullBleed>
+      )}
+
       <ArticleHeaderFragmentContainer article={article} />
 
       <Spacer mt={4} />
@@ -135,14 +143,6 @@ const ArticleBody: FC<ArticleBodyProps> = ({ article }) => {
                     />
                   )
                 }
-
-                default: {
-                  return (
-                    <Text key={i} variant="sm">
-                      {section.__typename}
-                    </Text>
-                  )
-                }
               }
             })}
 
@@ -210,7 +210,9 @@ const ArticleBody: FC<ArticleBodyProps> = ({ article }) => {
               </>
             )}
 
-            {/* TODO: Ad placement */}
+            <Spacer mt={4} />
+
+            <Ad bg="black5" p={1} unit="Desktop_RightRail1" size="300x250" />
           </Column>
         )}
       </GridColumns>

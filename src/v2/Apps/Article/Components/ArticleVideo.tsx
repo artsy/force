@@ -9,6 +9,7 @@ import {
   GridColumns,
   HTML,
   Image,
+  Separator,
   Text,
 } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
@@ -18,6 +19,7 @@ import styled from "styled-components"
 import { ResponsiveValue, variant } from "styled-system"
 import { AppContainer } from "v2/Apps/Components/AppContainer"
 import { HorizontalPadding } from "v2/Apps/Components/HorizontalPadding"
+import { Ad } from "v2/Components/Ad"
 import { ArticleShare } from "v2/Components/ArticleShare"
 import { useNavBarHeight } from "v2/Components/NavBar/useNavBarHeight"
 import { useMode } from "v2/Utils/Hooks/useMode"
@@ -191,6 +193,12 @@ const ArticleVideo: FC<ArticleVideoProps> = ({ article }) => {
             </Column>
           </>
         )}
+
+        <Column span={12}>
+          <Separator mb={4} />
+
+          <Ad unit="Desktop_InContentLB2" size="970x250" />
+        </Column>
       </GridColumns>
     </>
   )
