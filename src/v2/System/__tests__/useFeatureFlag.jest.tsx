@@ -25,6 +25,7 @@ describe("useFeatureFlag", () => {
   })
 
   it("returns null when we don't pass in an argument", () => {
+    // @ts-ignore
     const result = useFeatureFlag()
     expect(result).toBe(null)
     expect(console.error).toHaveBeenLastCalledWith(
