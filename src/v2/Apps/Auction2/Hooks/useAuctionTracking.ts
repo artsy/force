@@ -29,6 +29,11 @@ export const useAuctionTracking = () => {
         error_messages: errors,
       })
     },
+    confirmRegistrationPageView: () => {
+      trackEvent({
+        context_page: AnalyticsSchema.PageName.AuctionRegistrationPage,
+      })
+    },
     maxBidSelected: (bidderID: string, maxBid: string) => {
       trackEvent({
         action_type: AnalyticsSchema.ActionType.SelectedMaxBid,

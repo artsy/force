@@ -18,7 +18,7 @@ import { IdentityVerificationWarning } from "v2/Apps/Auction2/Components/Form/Id
 import { useAuctionTracking } from "v2/Apps/Auction2/Hooks/useAuctionTracking"
 import { ErrorStatus } from "../Components/Form/ErrorStatus"
 
-interface Auction2RegistrationRouteProps {
+export interface Auction2RegistrationRouteProps {
   me: Auction2RegistrationRoute_me
   sale: Auction2RegistrationRoute_sale
 }
@@ -44,7 +44,13 @@ const Auction2RegistrationRoute: React.FC<Auction2RegistrationRouteProps> = ({
 
   // Track page view
   useEffect(() => {
-    tracking.registrationPageView()
+    const isRegistered = sale?.bidder?.qualifiedForBidding
+
+    if (isRegistered) {
+      router.replace(`/auction2/${sale.slug}`)
+    } else {
+      tracking.registrationPageView()
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 

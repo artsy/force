@@ -13,6 +13,7 @@ import {
   formatError,
   AuctionFormValues,
 } from "v2/Apps/Auction2/Components/Form/Utils"
+import { useEffect } from "react"
 
 interface Auction2ConfirmRegistrationRouteProps {
   me: Auction2ConfirmRegistrationRoute_me
@@ -57,6 +58,18 @@ const Auction2ConfirmRegistrationRoute: React.FC<Auction2ConfirmRegistrationRout
   const closeModal = () => {
     router.push(auctionURL)
   }
+
+  // Track page view
+  useEffect(() => {
+    const isRegistered = sale?.bidder?.qualifiedForBidding
+
+    if (isRegistered) {
+      router.replace(`/auction2/${sale.slug}`)
+    } else {
+      tracking.confirmRegistrationPageView()
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return (
     <ModalDialog title={`Register for ${sale.name}`} onClose={closeModal}>

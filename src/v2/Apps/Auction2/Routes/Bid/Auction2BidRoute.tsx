@@ -44,6 +44,7 @@ const Auction2BidRoute: React.FC<Auction2BidRouteProps> = ({
     artworkSlug,
     bidderID,
     displayIncrements,
+    modalWidth,
     requiresCheckbox,
     requiresPaymentInformation,
     selectedBid,
@@ -83,10 +84,12 @@ const Auction2BidRoute: React.FC<Auction2BidRouteProps> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  console.log(requiresPaymentInformation)
-
   return (
-    <ModalDialog title="Confirm your bid" onClose={handleModalClose}>
+    <ModalDialog
+      title="Confirm your bid"
+      onClose={handleModalClose}
+      width={modalWidth}
+    >
       <Formik
         initialValues={{ ...initialValuesForBidding, selectedBid }}
         validationSchema={validationSchema}
@@ -257,10 +260,13 @@ const computeProps = ({
     }
   })()
 
+  const modalWidth = requiresPaymentInformation ? ["100%", 600] : null
+
   return {
     artworkSlug,
     bidderID: bidderID!,
     displayIncrements,
+    modalWidth,
     requiresCheckbox,
     requiresPaymentInformation,
     selectedBid,
