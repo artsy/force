@@ -1,9 +1,14 @@
 import { render, screen, fireEvent } from "@testing-library/react"
+import { HeadProvider } from "react-head"
 import { parseTokenFromRouter, PreferencesApp } from "../PreferencesApp"
 
 describe("PreferencesApp", () => {
   it.skip("renders the preference center", () => {
-    render(<PreferencesApp></PreferencesApp>)
+    render(
+      <HeadProvider>
+        <PreferencesApp></PreferencesApp>
+      </HeadProvider>
+    )
 
     expect(screen.getByText("Email Preference Center")).toBeInTheDocument()
     expect(
@@ -12,7 +17,11 @@ describe("PreferencesApp", () => {
   })
 
   it("prompts users to sign in when no token and signed out", () => {
-    render(<PreferencesApp></PreferencesApp>)
+    render(
+      <HeadProvider>
+        <PreferencesApp></PreferencesApp>
+      </HeadProvider>
+    )
 
     expect(
       screen.getByText("Please sign in to update your email preferences")
@@ -20,7 +29,11 @@ describe("PreferencesApp", () => {
   })
 
   it.skip("has disabled buttons until a change is made", () => {
-    render(<PreferencesApp></PreferencesApp>)
+    render(
+      <HeadProvider>
+        <PreferencesApp></PreferencesApp>
+      </HeadProvider>
+    )
 
     // eslint-disable-next-line testing-library/no-node-access
     let saveButton = screen.getByText("Save").closest("button")
@@ -34,7 +47,11 @@ describe("PreferencesApp", () => {
   })
 
   it.skip("allows user to uncheck all boxes with unsubscribe from all", () => {
-    render(<PreferencesApp></PreferencesApp>)
+    render(
+      <HeadProvider>
+        <PreferencesApp></PreferencesApp>
+      </HeadProvider>
+    )
 
     expect(screen.getByText("Subscribe to all")).toBeInTheDocument()
 
@@ -54,7 +71,11 @@ describe("PreferencesApp", () => {
   })
 
   it.skip("unchecks unsubscribe/subscribe all when other checkboxes are checked", () => {
-    render(<PreferencesApp></PreferencesApp>)
+    render(
+      <HeadProvider>
+        <PreferencesApp></PreferencesApp>
+      </HeadProvider>
+    )
 
     expect(screen.getByText("Unsubscribe from all")).toBeInTheDocument()
 
@@ -69,7 +90,11 @@ describe("PreferencesApp", () => {
   })
 
   it.skip("allows user to check all boxes with subscribe to all", () => {
-    render(<PreferencesApp></PreferencesApp>)
+    render(
+      <HeadProvider>
+        <PreferencesApp></PreferencesApp>
+      </HeadProvider>
+    )
 
     expect(screen.getByText("Unsubscribe from all")).toBeInTheDocument()
 
