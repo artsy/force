@@ -2,11 +2,13 @@ import {
   Aggregation,
   SelectedFiltersCountsLabels,
   useArtworkFilterContext,
+  useCurrentlySelectedFilters,
 } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
 import { useFilterSelectResults } from "../useFilterSelectResults"
 
 jest.mock("v2/Components/ArtworkFilter/ArtworkFilterContext", () => ({
   useArtworkFilterContext: jest.fn(),
+  useCurrentlySelectedFilters: jest.fn(),
   SelectedFiltersCountsLabels: { artistIDs: "artistIDs" },
 }))
 jest.mock("v2/Components/ArtworkFilter/Utils/useFilterLabelCountByKey", () => ({
@@ -15,6 +17,8 @@ jest.mock("v2/Components/ArtworkFilter/Utils/useFilterLabelCountByKey", () => ({
 
 describe("useFilterSelectResults", () => {
   const mockUseArtworkFilterContext = useArtworkFilterContext as jest.Mock
+  const mockUseCurrentlySelectedFilters = useCurrentlySelectedFilters as jest.Mock
+
   const spy = jest.fn()
   const aggregations: Aggregation[] = [
     {
@@ -28,25 +32,19 @@ describe("useFilterSelectResults", () => {
       ],
     },
   ]
-  const currentlySelectedFilters = aggregations.map(agg => {
-    const filterItem = agg.counts[0] as any
-    filterItem.label = filterItem.name
-
-    return {
-      ...agg,
-      counts: [filterItem],
-    }
-  })
 
   mockUseArtworkFilterContext.mockImplementation(() => {
     return {
       aggregations,
       setFilter: spy,
-      currentlySelectedFilters: () => [currentlySelectedFilters],
     }
   })
 
   it("returns correct data and handles interactions", () => {
+    mockUseCurrentlySelectedFilters.mockImplementation(() => ({
+      artistIDs: [],
+    }))
+
     const {
       handleFilterSelectChange,
       items,
@@ -64,5 +62,27 @@ describe("useFilterSelectResults", () => {
     expect(labelWithCount).toBe("Artists10")
     handleFilterSelectChange({ selectedItems: items } as any)
     expect(spy).toHaveBeenCalled()
+  })
+
+  it("return correct selected items", () => {
+    mockUseCurrentlySelectedFilters.mockImplementation(() => ({
+      artistIDs: ["value"],
+    }))
+
+    const { selectedItems } = useFilterSelectResults({
+      facetName: "artistIDs",
+      filtersCountKey: SelectedFiltersCountsLabels.artistIDs,
+      label: "Artists",
+      slice: "ARTIST",
+    })
+
+    expect(selectedItems).toEqual([
+      {
+        count: 10,
+        value: "value",
+        name: "Name",
+        label: "Name",
+      },
+    ])
   })
 })
