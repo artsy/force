@@ -28,7 +28,7 @@ export const CuritorialRailsTabBar: React.FC<CuritorialRailsTabBarProps> = ({
           </Join>
         </Tab>
       )}
-      <Tab name="Standout Lots">
+      <Tab name="Current Highlights">
         <StandoutLotsRailFragmentContainer viewer={viewer} />
       </Tab>
       <Tab name="Trending Lots">
