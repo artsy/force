@@ -92,11 +92,10 @@ export const PreferencesApp: FC<PreferencesAppProps> = ({ viewer }) => {
       >
         {({
           values,
-          setFieldValue,
-          setFieldTouched,
-          resetForm,
           isSubmitting,
           touched,
+          setFieldValue,
+          setFieldTouched,
         }) => (
           <Form>
             <GridColumns gridRowGap={4}>
@@ -246,28 +245,7 @@ export const PreferencesApp: FC<PreferencesAppProps> = ({ viewer }) => {
                 </Checkbox>
               </Column>
 
-              <Column span={2} start={9} mt={2}>
-                <Button
-                  width="100%"
-                  variant="secondaryOutline"
-                  disabled={isEmpty(touched) || isSubmitting}
-                  type="button"
-                  onClick={event => {
-                    event.preventDefault()
-                    resetForm({
-                      values: {
-                        ...NOTIFICATION_FIELDS,
-                        ...initialValues,
-                      },
-                      touched: {},
-                    })
-                  }}
-                >
-                  Cancel
-                </Button>
-              </Column>
-
-              <Column span={2} mt={2}>
+              <Column span={2} start={10} mt={2}>
                 <Button
                   width="100%"
                   type="submit"
