@@ -68,7 +68,7 @@ export const errorHandlerMiddleware = async (
   const detail = err.stack
 
   if (enableLogging && err.status !== 404) {
-    console.log(detail)
+    logger.log(detail)
   } else if (code >= 500) {
     // Log server errors (code, stack trace) when in production mode
     logger.error(code, detail)
@@ -111,7 +111,7 @@ export const errorHandlerMiddleware = async (
       mount: false, // Does not mount the client-side
     })
   } catch (err) {
-    console.error(err)
+    logger.error(err)
     res.status(code).send(enableLogging ? message : "")
   }
 }
