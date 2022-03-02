@@ -14,6 +14,7 @@ import {
 } from "@artsy/palette"
 import { Fragment } from "react"
 import { MetaTags } from "v2/Components/MetaTags"
+import { useLoadScript } from "v2/Utils/Hooks/useLoadScript"
 
 export const AuctionPartnershipsApp: React.FC = () => {
   return (
@@ -97,6 +98,18 @@ const MarketplaceExperience: React.FC = () => {
 }
 
 const PartnerWithArtsyForm: React.FC = () => {
+  // TODO: create a formik form and onSubmit send  data to marketo:
+  // https://nation.marketo.com/t5/marketo-whisperer-blogs/make-a-marketo-form-submission-in-the-background/ba-p/246490
+
+  useLoadScript({
+    id: "marketo-form",
+    src: "https://app-ab14.marketo.com/js/forms2/js/forms2.min.js",
+    // onReady: () => {
+    //   // @ts-ignore
+    //   window.MktoForms2.loadForm("//app-ab14.marketo.com", "609-FDY-207", 1240)
+    // },
+  })
+
   return (
     <GridColumns>
       <Column span={6}>
@@ -106,76 +119,87 @@ const PartnerWithArtsyForm: React.FC = () => {
         <Text variant="sm">Apply to host your auctions on Artsy</Text>
       </Column>
       <Column span={6}>
-        <Join separator={<Spacer mb={2} />}>
-          <Input title="Auction House or Organization Name" />
-          <Flex flexDirection="row">
-            <Input title="First name" />
-            <Spacer mr={2} />
-            <Input title="Last Name" />
-          </Flex>
-          <Input title="Title at Organization" />
-          <Input title="Website" />
-          <Input title="Email Address" />
-          <Select
-            options={[
-              { text: "Gallery", value: "Gallery" },
-              { text: "Design Gallery", value: "Design Gallery" },
-              { text: "Artist", value: "Artist" },
-              { text: "Art Fair", value: "Art Fair" },
-              { text: "Auction House", value: "Auction House" },
-              { text: "Antique", value: "Antique" },
-              { text: "Performance Venue", value: "Performance Venue" },
-              { text: "Artist Estate", value: "Artist Estate" },
-              { text: "Institution", value: "Institution" },
-              { text: "Museum", value: "Museum" },
-              { text: "Framing Gallery", value: "Framing Gallery" },
-              { text: "Biennial / Triennial", value: "Biennial / Triennial" },
-              { text: "Interior Designer", value: "Interior Designer" },
-              { text: "Non-Profit", value: "Non-Profit" },
-              { text: "Art Advisor", value: "Art Advisor" },
-              { text: "Private Dealer", value: "Private Dealer" },
-              { text: "Press/Publication", value: "Press/Publication" },
-              { text: "Broker - Real Estate", value: "Broker - Real Estate" },
-              {
-                text: "Independent Art World Professional",
-                value: "Independent Art World Professional",
-              },
-              { text: "Online Platform", value: "Online Platform" },
-              { text: "Curator", value: "Curator" },
-              {
-                text: "Publications / Publishers / Archives",
-                value: "Publications / Publishers / Archives",
-              },
-              {
-                text: "Government Organization",
-                value: "Government Organization",
-              },
-              { text: "Artist Studios", value: "Artist Studios" },
-              { text: "Non-Arts Organization", value: "Non-Arts Organization" },
-              { text: "Other", value: "Other" },
-              { text: "Non Profit Gallery", value: "Non Profit Gallery" },
-              {
-                text: "Prospect Indicated Gallery",
-                value: "Prospect Indicated Gallery",
-              },
-              { text: "Art Dealer", value: "Art Dealer" },
-            ]}
-            title="Company Type"
-          />
-          <Checkbox>
-            <Text variant="md" lineHeight={1}>
-              I agree to Artsy{" "}
-              <a href="/terms" target="_blank">
-                Terms of Use
-              </a>{" "}
-              and{" "}
-              <a href="/privacy" target="_blank">
-                Privacy Policy
-              </a>
-              , and to receive emails from Artsy.
-            </Text>
-          </Checkbox>
-        </Join>
+        <form id="#mktoForm_1240">
+          <Join separator={<Spacer mb={2} />}>
+            <Input title="Auction House or Organization Name" />
+            <Flex flexDirection="row">
+              <Input title="First name" />
+              <Spacer mr={2} />
+              <Input title="Last Name" />
+            </Flex>
+            <Input title="Title at Organization" />
+            <Input title="Website" />
+            <Input title="Email Address" />
+            <Select
+              options={[
+                { text: "Gallery", value: "Gallery" },
+                { text: "Design Gallery", value: "Design Gallery" },
+                { text: "Artist", value: "Artist" },
+                { text: "Art Fair", value: "Art Fair" },
+                { text: "Auction House", value: "Auction House" },
+                { text: "Antique", value: "Antique" },
+                { text: "Performance Venue", value: "Performance Venue" },
+                { text: "Artist Estate", value: "Artist Estate" },
+                { text: "Institution", value: "Institution" },
+                { text: "Museum", value: "Museum" },
+                { text: "Framing Gallery", value: "Framing Gallery" },
+                {
+                  text: "Biennial / Triennial",
+                  value: "Biennial / Triennial",
+                },
+                { text: "Interior Designer", value: "Interior Designer" },
+                { text: "Non-Profit", value: "Non-Profit" },
+                { text: "Art Advisor", value: "Art Advisor" },
+                { text: "Private Dealer", value: "Private Dealer" },
+                { text: "Press/Publication", value: "Press/Publication" },
+                {
+                  text: "Broker - Real Estate",
+                  value: "Broker - Real Estate",
+                },
+                {
+                  text: "Independent Art World Professional",
+                  value: "Independent Art World Professional",
+                },
+                { text: "Online Platform", value: "Online Platform" },
+                { text: "Curator", value: "Curator" },
+                {
+                  text: "Publications / Publishers / Archives",
+                  value: "Publications / Publishers / Archives",
+                },
+                {
+                  text: "Government Organization",
+                  value: "Government Organization",
+                },
+                { text: "Artist Studios", value: "Artist Studios" },
+                {
+                  text: "Non-Arts Organization",
+                  value: "Non-Arts Organization",
+                },
+                { text: "Other", value: "Other" },
+                { text: "Non Profit Gallery", value: "Non Profit Gallery" },
+                {
+                  text: "Prospect Indicated Gallery",
+                  value: "Prospect Indicated Gallery",
+                },
+                { text: "Art Dealer", value: "Art Dealer" },
+              ]}
+              title="Company Type"
+            />
+            <Checkbox>
+              <Text variant="md" lineHeight={1}>
+                I agree to Artsy{" "}
+                <a href="/terms" target="_blank">
+                  Terms of Use
+                </a>{" "}
+                and{" "}
+                <a href="/privacy" target="_blank">
+                  Privacy Policy
+                </a>
+                , and to receive emails from Artsy.
+              </Text>
+            </Checkbox>
+          </Join>
+        </form>
       </Column>
     </GridColumns>
   )
