@@ -75,5 +75,11 @@ describe("PreferencesApp", () => {
     checkboxes.forEach(checkbox => {
       expect(checkbox).toBeChecked()
     })
+
+    fireEvent.click(subscribeToAllCheckbox)
+
+    checkboxes.forEach(checkbox => {
+      expect(checkbox).not.toBeChecked()
+    })
   })
 })

@@ -107,12 +107,10 @@ export const PreferencesApp: FC<PreferencesAppProps> = ({ viewer }) => {
                 <Checkbox
                   selected={Object.values(values).every(Boolean)}
                   onSelect={value => {
-                    if (value) {
-                      Object.keys(values).forEach(field => {
-                        setFieldValue(field, true)
-                        setFieldTouched(field, true)
-                      })
-                    }
+                    Object.keys(values).forEach(field => {
+                      setFieldValue(field, value)
+                      setFieldTouched(field, value)
+                    })
                   }}
                 >
                   Email
@@ -233,12 +231,10 @@ export const PreferencesApp: FC<PreferencesAppProps> = ({ viewer }) => {
                 <Checkbox
                   selected={!Object.values(values).some(Boolean)}
                   onSelect={value => {
-                    if (value) {
-                      Object.keys(values).forEach(field => {
-                        setFieldValue(field, false)
-                        setFieldTouched(field, true)
-                      })
-                    }
+                    Object.keys(values).forEach(field => {
+                      setFieldValue(field, !value)
+                      setFieldTouched(field, !value)
+                    })
                   }}
                 >
                   Email
