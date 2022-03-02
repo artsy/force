@@ -8,6 +8,9 @@ import {
   Spacer,
   Flex,
   Avatar,
+  Input,
+  Select,
+  Checkbox,
 } from "@artsy/palette"
 import { Fragment } from "react"
 import { MetaTags } from "v2/Components/MetaTags"
@@ -22,9 +25,7 @@ export const AuctionPartnershipsApp: React.FC = () => {
       />
 
       <Join
-        separator={
-          <Spacer mt={6} mb={6} border="1px solid" borderColor="black15" />
-        }
+        separator={<Spacer my={6} border="1px solid" borderColor="black15" />}
       >
         <ArtsyForAuctions />
         <MarketplaceExperience />
@@ -105,7 +106,76 @@ const PartnerWithArtsyForm: React.FC = () => {
         <Text variant="sm">Apply to host your auctions on Artsy</Text>
       </Column>
       <Column span={6}>
-        <Text>Form goes here</Text>
+        <Join separator={<Spacer mb={2} />}>
+          <Input title="Auction House or Organization Name" />
+          <Flex flexDirection="row">
+            <Input title="First name" />
+            <Spacer mr={2} />
+            <Input title="Last Name" />
+          </Flex>
+          <Input title="Title at Organization" />
+          <Input title="Website" />
+          <Input title="Email Address" />
+          <Select
+            options={[
+              { text: "Gallery", value: "Gallery" },
+              { text: "Design Gallery", value: "Design Gallery" },
+              { text: "Artist", value: "Artist" },
+              { text: "Art Fair", value: "Art Fair" },
+              { text: "Auction House", value: "Auction House" },
+              { text: "Antique", value: "Antique" },
+              { text: "Performance Venue", value: "Performance Venue" },
+              { text: "Artist Estate", value: "Artist Estate" },
+              { text: "Institution", value: "Institution" },
+              { text: "Museum", value: "Museum" },
+              { text: "Framing Gallery", value: "Framing Gallery" },
+              { text: "Biennial / Triennial", value: "Biennial / Triennial" },
+              { text: "Interior Designer", value: "Interior Designer" },
+              { text: "Non-Profit", value: "Non-Profit" },
+              { text: "Art Advisor", value: "Art Advisor" },
+              { text: "Private Dealer", value: "Private Dealer" },
+              { text: "Press/Publication", value: "Press/Publication" },
+              { text: "Broker - Real Estate", value: "Broker - Real Estate" },
+              {
+                text: "Independent Art World Professional",
+                value: "Independent Art World Professional",
+              },
+              { text: "Online Platform", value: "Online Platform" },
+              { text: "Curator", value: "Curator" },
+              {
+                text: "Publications / Publishers / Archives",
+                value: "Publications / Publishers / Archives",
+              },
+              {
+                text: "Government Organization",
+                value: "Government Organization",
+              },
+              { text: "Artist Studios", value: "Artist Studios" },
+              { text: "Non-Arts Organization", value: "Non-Arts Organization" },
+              { text: "Other", value: "Other" },
+              { text: "Non Profit Gallery", value: "Non Profit Gallery" },
+              {
+                text: "Prospect Indicated Gallery",
+                value: "Prospect Indicated Gallery",
+              },
+              { text: "Art Dealer", value: "Art Dealer" },
+            ]}
+            title="Company Type"
+          />
+          <Checkbox>
+            <Text variant="md" lineHeight={1}>
+              I agree to Artsy{" "}
+              <a href="/terms" target="_blank">
+                Terms of Use
+              </a>{" "}
+              and{" "}
+              <a href="/privacy" target="_blank">
+                Privacy Policy
+              </a>
+              , and to receive emails from Artsy.
+            </Text>
+          </Checkbox>
+        </Join>
       </Column>
     </GridColumns>
   )
@@ -324,9 +394,7 @@ const AuctionsSupportTeam: React.FC = () => {
       </Column>
       <Column span={6}>
         <Join
-          separator={
-            <Spacer mt={2} mb={2} border="1px solid" borderColor="black15" />
-          }
+          separator={<Spacer my={2} border="1px solid" borderColor="black15" />}
         >
           {AUCTIONS_PARTNERSHIPS_SPECIALISTS.map((specialist, index) => {
             return (
