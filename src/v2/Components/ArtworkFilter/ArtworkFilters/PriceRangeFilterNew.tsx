@@ -3,6 +3,7 @@ import { Box, Flex, LabeledInput, Spacer, Text } from "@artsy/palette"
 import {
   SelectedFiltersCountsLabels,
   useArtworkFilterContext,
+  useCurrentlySelectedFilters,
 } from "../ArtworkFilterContext"
 import styled from "styled-components"
 import { themeGet } from "@styled-system/theme-get"
@@ -27,12 +28,8 @@ export interface PriceRangeFilterNewProps {
 export const PriceRangeFilterNew: FC<PriceRangeFilterNewProps> = ({
   expanded,
 }) => {
-  const {
-    shouldStageFilterChanges,
-    currentlySelectedFilters,
-    setFilter,
-  } = useArtworkFilterContext()
-  const { priceRange, reset } = currentlySelectedFilters?.() ?? {}
+  const { shouldStageFilterChanges, setFilter } = useArtworkFilterContext()
+  const { priceRange, reset } = useCurrentlySelectedFilters()
   const [range, setRange] = useState(parseRange(priceRange))
   const sliderRange = parseSliderRange(range)
   const [minValue, maxValue] = range

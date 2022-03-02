@@ -4,6 +4,7 @@ import {
   SelectedFiltersCountsLabels,
   Slice,
   useArtworkFilterContext,
+  useCurrentlySelectedFilters,
 } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
 import { useFilterLabelCountByKey } from "../../Utils/useFilterLabelCountByKey"
 
@@ -20,25 +21,19 @@ export const useFilterSelectResults = ({
   label,
   slice,
 }: UseFilterSelectResultsProps) => {
-  const {
-    aggregations,
-    setFilter,
-    currentlySelectedFilters,
-  } = useArtworkFilterContext()
-
+  const { aggregations, setFilter } = useArtworkFilterContext()
+  const selectedFilters = useCurrentlySelectedFilters()
   const filtersCount = useFilterLabelCountByKey(filtersCountKey)
   const labelWithCount = `${label}${filtersCount}`
+  const filtersByFaceName = selectedFilters[facetName] ?? []
 
   const items = aggregations
     ?.find(aggregation => aggregation.slice === slice)
     ?.counts.map(item => ({ label: item.name, ...item })) as FilterSelectItems
 
-  const selectedItems = (currentlySelectedFilters?.()[facetName] ?? []).map(
-    selectedFacetName => {
-      const selectedItem = items.find(item => item.value === selectedFacetName)
-      return selectedItem
-    }
-  ) as FilterSelectItems
+  const selectedItems = filtersByFaceName.map(selectedFacetName => {
+    return items.find(item => item.value === selectedFacetName)
+  }) as FilterSelectItems
 
   const handleFilterSelectChange = (state: FilterSelectChangeState) => {
     const selectedNationalities = state.selectedItems.map(item => item.value)

@@ -3,6 +3,7 @@ import { FC } from "react"
 import {
   SelectedFiltersCountsLabels,
   useArtworkFilterContext,
+  useCurrentlySelectedFilters,
 } from "../ArtworkFilterContext"
 import { ShowMore, INITIAL_ITEMS_TO_SHOW } from "./ShowMore"
 import { intersection } from "lodash"
@@ -15,7 +16,8 @@ export interface MediumFilterProps {
 }
 
 export const MediumFilter: FC<MediumFilterProps> = ({ expanded }) => {
-  const { aggregations, counts, ...filterContext } = useArtworkFilterContext()
+  const { aggregations, counts, setFilter } = useArtworkFilterContext()
+  const { additionalGeneIDs = [], medium } = useCurrentlySelectedFilters()
 
   const filtersCount = useFilterLabelCountByKey(
     SelectedFiltersCountsLabels.additionalGeneIDs
@@ -31,32 +33,28 @@ export const MediumFilter: FC<MediumFilterProps> = ({ expanded }) => {
     mediums && mediums.counts.length ? mediums.counts : hardcodedMediums
 
   const toggleMediumSelection = (selected, slug) => {
-    let geneIDs =
-      filterContext.currentlySelectedFilters?.()?.additionalGeneIDs?.slice() ??
-      []
+    let updatedValues = additionalGeneIDs
+
     if (selected) {
-      geneIDs.push(slug)
+      updatedValues = [...updatedValues, slug]
     } else {
-      geneIDs = geneIDs.filter(item => item !== slug)
+      updatedValues = updatedValues.filter(item => item !== slug)
     }
-    filterContext.setFilter("additionalGeneIDs", geneIDs)
+
+    setFilter("additionalGeneIDs", updatedValues)
   }
 
-  const currentFilters = filterContext.currentlySelectedFilters?.() ?? {}
-  const hasBelowTheFoldMediumFilter =
-    intersection(
-      currentFilters.additionalGeneIDs ?? [],
-      allowedMediums.slice(INITIAL_ITEMS_TO_SHOW).map(({ value }) => value)
-    ).length > 0
+  const intersected = intersection(
+    additionalGeneIDs,
+    allowedMediums.slice(INITIAL_ITEMS_TO_SHOW).map(({ value }) => value)
+  )
+  const hasBelowTheFoldMediumFilter = intersected.length > 0
 
   const tokens = useThemeConfig({
     v2: { my: 0.5 },
     v3: { my: 1 },
   })
-  const resultsSorted = sortResults(
-    currentFilters.additionalGeneIDs ?? [],
-    allowedMediums
-  )
+  const resultsSorted = sortResults(additionalGeneIDs, allowedMediums)
 
   return (
     <FilterExpandable
@@ -68,10 +66,7 @@ export const MediumFilter: FC<MediumFilterProps> = ({ expanded }) => {
           {resultsSorted.map(({ value: slug, name }, index) => {
             return (
               <Checkbox
-                selected={
-                  currentFilters.additionalGeneIDs?.includes(slug) ||
-                  currentFilters.medium === slug
-                }
+                selected={additionalGeneIDs.includes(slug) || medium === slug}
                 key={index}
                 onSelect={selected => toggleMediumSelection(selected, slug)}
                 my={tokens.my}

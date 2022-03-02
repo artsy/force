@@ -1,7 +1,10 @@
 import { Checkbox, Flex } from "@artsy/palette"
-import * as React from "react";
+import * as React from "react"
 import { ShowMore } from "v2/Components/ArtworkFilter/ArtworkFilters/ShowMore"
-import { useAuctionResultsFilterContext } from "../../AuctionResultsFilterContext"
+import {
+  useAuctionResultsFilterContext,
+  useCurrentlySelectedFiltersForAuctionResults,
+} from "../../AuctionResultsFilterContext"
 import { FilterExpandable } from "v2/Components/ArtworkFilter/ArtworkFilters/FilterExpandable"
 
 export const categoryMap = [
@@ -14,20 +17,19 @@ export const categoryMap = [
 ]
 
 export const MediumFilter: React.FC = () => {
-  const {
-    currentlySelectedFilters,
-    setFilter,
-  } = useAuctionResultsFilterContext()
-  const { categories } = currentlySelectedFilters?.() || {}
+  const { setFilter } = useAuctionResultsFilterContext()
+  const { categories = [] } = useCurrentlySelectedFiltersForAuctionResults()
 
   const toggleSelection = (selected: boolean, name: string) => {
-    let selectedCategories = categories?.slice()
+    let updatedValues = categories
+
     if (selected) {
-      selectedCategories?.push(name)
+      updatedValues = [...updatedValues, name]
     } else {
-      selectedCategories = selectedCategories?.filter(item => item !== name)
+      updatedValues = updatedValues.filter(item => item !== name)
     }
-    setFilter?.("categories", selectedCategories)
+
+    setFilter?.("categories", updatedValues)
   }
 
   return (

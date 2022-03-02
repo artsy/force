@@ -5,6 +5,7 @@ import { Checkbox, CheckboxProps, Flex, useThemeConfig } from "@artsy/palette"
 import {
   SelectedFiltersCountsLabels,
   useArtworkFilterContext,
+  useCurrentlySelectedFilters,
 } from "../ArtworkFilterContext"
 import {
   FollowedArtistList,
@@ -36,23 +37,26 @@ const ArtistItem: React.FC<
   isFollowedArtistCheckboxSelected,
   ...checkboxProps
 }) => {
-  const { currentlySelectedFilters, setFilter } = useArtworkFilterContext()
+  const { setFilter } = useArtworkFilterContext()
+  const { artistIDs = [] } = useCurrentlySelectedFilters()
+
   const toggleArtistSelection = (selected, slug) => {
-    let artistIDs = currentlySelectedFilters?.()?.artistIDs?.slice() ?? []
+    let updatedValues = artistIDs
+
     if (selected) {
-      artistIDs.push(slug)
+      updatedValues = [...updatedValues, slug]
     } else {
       // When an artist is de-selected, if it is a followed artist _and_ that filter
       // is also checked, we want to de-select it as well, and move remaining followed
       // artists to the explicit `artistIDs` list.
-      artistIDs = artistIDs.filter(item => item !== slug)
       if (followedArtistSlugs.includes(slug)) {
         setFilter("includeArtworksByFollowedArtists", false)
-        artistIDs = artistIDs.concat(followedArtistSlugs)
-        artistIDs = artistIDs.filter(item => item !== slug)
+        updatedValues = [...updatedValues, ...followedArtistSlugs]
       }
+
+      updatedValues = updatedValues.filter(item => item !== slug)
     }
-    setFilter("artistIDs", artistIDs)
+    setFilter("artistIDs", updatedValues)
   }
 
   const tokens = useThemeConfig({
@@ -66,7 +70,7 @@ const ArtistItem: React.FC<
     <Checkbox
       {...checkboxProps}
       selected={
-        currentlySelectedFilters?.().artistIDs?.includes(slug) ||
+        artistIDs.includes(slug) ||
         (isFollowedArtistCheckboxSelected && isFollowedArtist)
       }
       onSelect={selected => {
@@ -83,6 +87,10 @@ export const ArtistsFilter: FC<ArtistsFilterProps> = ({ expanded, fairID }) => {
   const { relayEnvironment, user } = useSystemContext()
   const { aggregations, ...filterContext } = useArtworkFilterContext()
   const artists = aggregations?.find(agg => agg.slice === "ARTIST")
+  const {
+    artistIDs = [],
+    includeArtworksByFollowedArtists,
+  } = useCurrentlySelectedFilters()
 
   const [followedArtists, setFollowedArtists] = useState<FollowedArtistList>([])
   const followedArtistSlugs = followedArtists.map(({ slug }) => slug)
@@ -114,15 +122,9 @@ export const ArtistsFilter: FC<ArtistsFilterProps> = ({ expanded, fairID }) => {
   const artistsSorted = sortBy(artists.counts, ["name"])
 
   const isFollowedArtistCheckboxSelected =
-    !!user &&
-    filterContext.currentlySelectedFilters?.()[
-      "includeArtworksByFollowedArtists"
-    ]
+    !!user && includeArtworksByFollowedArtists
   const followedArtistArtworkCount = filterContext?.counts?.followedArtists ?? 0
-
-  const selection = filterContext.currentlySelectedFilters?.().artistIDs
-  const hasSelection =
-    (selection && selection.length > 0) || isFollowedArtistCheckboxSelected
+  const hasSelection = artistIDs.length > 0 || isFollowedArtistCheckboxSelected
 
   return (
     <FilterExpandable label={label} expanded={hasSelection || expanded}>

@@ -17,6 +17,7 @@ import {
   ArtworkFiltersState,
   SelectedFiltersCountsLabels,
   useArtworkFilterContext,
+  useCurrentlySelectedFilters,
 } from "../ArtworkFilterContext"
 import { NumericInput } from "./PriceRangeFilter"
 import { Media } from "v2/Utils/Responsive"
@@ -115,14 +116,15 @@ export const getCustomSizeRangeInInches = (
 }
 
 export const SizeFilter: React.FC<SizeFilterProps> = ({ expanded }) => {
-  const { currentlySelectedFilters, setFilters } = useArtworkFilterContext()
+  const { setFilters } = useArtworkFilterContext()
+  const selectedFilters = useCurrentlySelectedFilters()
   const {
     height,
     width,
     reset,
-    metric: selectedMetric,
-  } = currentlySelectedFilters?.() as ArtworkFiltersState
-  const metric = selectedMetric ?? DEFAULT_METRIC
+    sizes = [],
+    metric = DEFAULT_METRIC,
+  } = selectedFilters
 
   const filtersCount = useFilterLabelCountByKey(
     SelectedFiltersCountsLabels.sizes
@@ -166,18 +168,17 @@ export const SizeFilter: React.FC<SizeFilterProps> = ({ expanded }) => {
   }
 
   const toggleSizeSelection = (selected: boolean, name: string) => {
-    let sizes = currentlySelectedFilters?.().sizes?.slice()
-    if (sizes) {
-      if (selected) {
-        sizes.push(name)
-      } else {
-        sizes = sizes.filter(item => item !== name)
-      }
+    let updatedValues = sizes
+
+    if (selected) {
+      updatedValues = [...updatedValues, name]
+    } else {
+      updatedValues = updatedValues.filter(item => item !== name)
     }
 
     const newFilters = {
-      ...currentlySelectedFilters?.(),
-      sizes,
+      ...selectedFilters,
+      sizes: updatedValues,
       height: "*-*",
       width: "*-*",
     }
@@ -189,9 +190,9 @@ export const SizeFilter: React.FC<SizeFilterProps> = ({ expanded }) => {
   const handleClick = () => {
     const customSizeRanges = getCustomSizeRangeInInches(customSize, metric)
     const newFilters = {
-      ...currentlySelectedFilters?.(),
-      sizes: [],
+      ...selectedFilters,
       ...customSizeRanges,
+      sizes: [],
     }
 
     if (reset) {
@@ -208,14 +209,11 @@ export const SizeFilter: React.FC<SizeFilterProps> = ({ expanded }) => {
     }
 
     const updatedFilters: ArtworkFiltersState = {
-      ...currentlySelectedFilters?.(),
+      ...selectedFilters,
       metric: nextMetric,
     }
 
-    if (
-      isCustomValue(updatedFilters.width) ||
-      isCustomValue(updatedFilters.height)
-    ) {
+    if (isCustomValue(width) || isCustomValue(height)) {
       const customSizeRanges = getCustomSizeRangeInInches(
         customSize,
         nextMetric
@@ -251,13 +249,8 @@ export const SizeFilter: React.FC<SizeFilterProps> = ({ expanded }) => {
     }
   }, [reset])
 
-  const selection = currentlySelectedFilters?.().sizes
-  const customHeight = currentlySelectedFilters?.().height
-  const customWidth = currentlySelectedFilters?.().width
   const hasSelection =
-    (selection && selection.length > 0) ||
-    isCustomValue(customHeight) ||
-    isCustomValue(customWidth)
+    sizes.length > 0 || isCustomValue(width) || isCustomValue(height)
 
   return (
     <FilterExpandable label={label} expanded={hasSelection || expanded}>
@@ -289,7 +282,7 @@ export const SizeFilter: React.FC<SizeFilterProps> = ({ expanded }) => {
               <Checkbox
                 key={index}
                 onSelect={selected => toggleSizeSelection(selected, name)}
-                selected={currentlySelectedFilters?.().sizes?.includes(name)}
+                selected={sizes.includes(name)}
                 my={tokens.my}
               >
                 {displayName}

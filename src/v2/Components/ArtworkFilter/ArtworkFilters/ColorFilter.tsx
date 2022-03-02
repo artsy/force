@@ -13,6 +13,7 @@ import styled from "styled-components"
 import {
   SelectedFiltersCountsLabels,
   useArtworkFilterContext,
+  useCurrentlySelectedFilters,
 } from "../ArtworkFilterContext"
 import { FilterExpandable } from "./FilterExpandable"
 import { INITIAL_ITEMS_TO_SHOW, ShowMore } from "./ShowMore"
@@ -63,18 +64,21 @@ const ColorFilterOption: React.FC<{ colorOption: ColorOption }> = ({
 }) => {
   const { name, value, hex } = colorOption
 
-  const { currentlySelectedFilters, setFilter } = useArtworkFilterContext()
-  const selectedColorOptions = currentlySelectedFilters?.().colors ?? []
+  const { setFilter } = useArtworkFilterContext()
+  const { colors = [] } = useCurrentlySelectedFilters()
 
-  const toggleColor = (color: string) => {
-    if (selectedColorOptions.includes(color)) {
-      setFilter(
-        "colors",
-        selectedColorOptions.filter(selectedColor => color !== selectedColor)
-      )
+  const toggleColor = (selected: boolean, color: string) => {
+    let updatedValues = colors
+
+    if (selected) {
+      updatedValues = [...updatedValues, color]
     } else {
-      setFilter("colors", [...selectedColorOptions, color])
+      updatedValues = updatedValues.filter(
+        selectedColor => color !== selectedColor
+      )
     }
+
+    setFilter("colors", updatedValues)
   }
 
   const tokens = useThemeConfig({
@@ -85,8 +89,8 @@ const ColorFilterOption: React.FC<{ colorOption: ColorOption }> = ({
   return (
     <Checkbox
       key={name}
-      onSelect={() => toggleColor(value)}
-      selected={selectedColorOptions.includes(value)}
+      onSelect={selected => toggleColor(selected, value)}
+      selected={colors.includes(value)}
       my={tokens.my}
     >
       <Box
@@ -113,23 +117,21 @@ export interface ColorFilterProps {
 }
 
 export const ColorFilter: React.FC<ColorFilterProps> = ({ expanded }) => {
-  const { currentlySelectedFilters } = useArtworkFilterContext()
+  const { colors = [] } = useCurrentlySelectedFilters()
 
   const filtersCount = useFilterLabelCountByKey(
     SelectedFiltersCountsLabels.colors
   )
   const label = `Color${filtersCount}`
 
-  const hasBelowTheFoldColorFilter =
-    intersection(
-      currentlySelectedFilters?.().colors ?? [],
-      COLOR_OPTIONS.slice(INITIAL_ITEMS_TO_SHOW).map(({ value }) => value)
-    ).length > 0
-  const hasColorFilter = (currentlySelectedFilters?.().colors?.length ?? 0) > 0
-  const resultsSorted = sortResults(
-    currentlySelectedFilters?.().colors ?? [],
-    COLOR_OPTIONS
+  const intersected = intersection(
+    colors,
+    COLOR_OPTIONS.slice(INITIAL_ITEMS_TO_SHOW).map(({ value }) => value)
   )
+  const hasBelowTheFoldColorFilter = intersected.length > 0
+  const hasColorFilter = colors.length > 0
+  const resultsSorted = sortResults(colors, COLOR_OPTIONS)
+
   return (
     <FilterExpandable label={label} expanded={hasColorFilter || expanded}>
       <Flex flexDirection="column">

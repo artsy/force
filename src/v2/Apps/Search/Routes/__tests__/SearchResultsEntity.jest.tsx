@@ -14,15 +14,6 @@ jest.mock("v2/System/Router/useRouter", () => ({
   }),
 }))
 
-jest.mock("v2/Components/ArtworkFilter/ArtworkFilterContext", () => ({
-  useArtworkFilterContext: () => ({
-    currentlySelectedFilters: () => ({}),
-    filters: {
-      term: "andy",
-    },
-  }),
-}))
-
 describe("SearchResultsEntity", () => {
   const getWrapper = searchProps => {
     return mount(
