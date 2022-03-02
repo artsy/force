@@ -83,7 +83,7 @@ export class OfferRoute extends Component<OfferProps, OfferState> {
     this.props.dialog.showErrorDialog({
       continueButtonText: "OK",
       message:
-        "Offers within 25% of the list price are most likely to receive a response.",
+        "Offers within 20% of the list price are most likely to receive a response.",
       title: "Offer may be too low",
     })
   }
@@ -162,7 +162,7 @@ export class OfferRoute extends Component<OfferProps, OfferState> {
     if (
       !isPriceHidden &&
       !lowSpeedBumpEncountered &&
-      offerValue * 100 < listPriceCents * 0.75 &&
+      offerValue * 100 < listPriceCents * 0.8 &&
       !isRangeOffer
     ) {
       this.showLowSpeedbump()
