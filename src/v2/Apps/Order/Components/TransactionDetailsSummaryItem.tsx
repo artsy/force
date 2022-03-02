@@ -69,11 +69,7 @@ export class TransactionDetailsSummaryItem extends React.Component<
         <Spacer mb={2} />
         <Entry
           label="Total"
-          value={
-            this.buyerTotalDisplayAmount()
-              ? this.buyerTotalDisplayAmount()
-              : "Waiting for final costs"
-          }
+          value={this.buyerTotalDisplayAmount()}
           final
           data-test="buyerTotalDisplayAmount"
         />
@@ -229,13 +225,21 @@ export class TransactionDetailsSummaryItem extends React.Component<
   buyerTotalDisplayAmount = () => {
     const { order } = this.props
     const currency = order.currencyCode
+    const totalPlaceholder = this.avalaraPhase2enabled
+      ? "Waiting for final costs"
+      : null
 
     switch (order.mode) {
       case "BUY":
-        return appendCurrencySymbol(order.buyerTotal, currency)
+        return (
+          appendCurrencySymbol(order.buyerTotal, currency) || totalPlaceholder
+        )
       case "OFFER":
         const offer = this.getOffer()
-        return offer && appendCurrencySymbol(offer.buyerTotal, currency)
+        return (
+          (offer && appendCurrencySymbol(offer.buyerTotal, currency)) ||
+          totalPlaceholder
+        )
     }
   }
 
