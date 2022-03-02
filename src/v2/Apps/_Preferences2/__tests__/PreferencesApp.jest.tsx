@@ -13,17 +13,13 @@ describe("PreferencesApp", () => {
 
     // eslint-disable-next-line testing-library/no-node-access
     let saveButton = screen.getByText("Save").closest("button")
-    // eslint-disable-next-line testing-library/no-node-access
-    let cancelButton = screen.getByText("Cancel").closest("button")
     let checkboxes = screen.getAllByRole("checkbox")
 
     expect(saveButton).toBeDisabled()
-    expect(cancelButton).toBeDisabled()
 
     fireEvent.click(checkboxes[0])
 
     expect(saveButton).toBeEnabled()
-    expect(cancelButton).toBeEnabled()
   })
 
   it("allows user to uncheck all boxes with unsubscribe from all", () => {
@@ -79,25 +75,5 @@ describe("PreferencesApp", () => {
     checkboxes.forEach(checkbox => {
       expect(checkbox).toBeChecked()
     })
-  })
-
-  it("when a user clicks cancel the form is reset", () => {
-    render(<PreferencesApp></PreferencesApp>)
-
-    let checkboxes = screen.getAllByRole("checkbox")
-    let subscribeToAllCheckbox = checkboxes[0]
-
-    // eslint-disable-next-line testing-library/no-node-access
-    let cancelButton = screen.getByText("Cancel").closest("button")
-
-    fireEvent.click(subscribeToAllCheckbox)
-
-    expect(subscribeToAllCheckbox).toBeChecked()
-    expect(checkboxes[1]).toBeChecked()
-
-    fireEvent.click(cancelButton!)
-
-    expect(subscribeToAllCheckbox).not.toBeChecked()
-    expect(checkboxes[1]).not.toBeChecked()
   })
 })
