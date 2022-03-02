@@ -17,6 +17,7 @@ import {
   ArtworkFiltersState,
   SelectedFiltersCountsLabels,
   useArtworkFilterContext,
+  useCurrentlySelectedFilters,
 } from "../ArtworkFilterContext"
 import { NumericInput } from "./PriceRangeFilter"
 import { Media } from "v2/Utils/Responsive"
@@ -25,7 +26,6 @@ import { isCustomValue } from "./Utils/isCustomValue"
 import { useFilterLabelCountByKey } from "../Utils/useFilterLabelCountByKey"
 import { useMode } from "v2/Utils/Hooks/useMode"
 import { DEFAULT_METRIC, Metric } from "../Utils/metrics"
-import { useCurrentlySelectedFilters } from "../useCurrentlySelectedFilters"
 
 type Numeric = number | "*"
 type CustomRange = Numeric[]

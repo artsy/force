@@ -12,6 +12,7 @@ import {
 import {
   SelectedFiltersCountsLabels,
   useArtworkFilterContext,
+  useCurrentlySelectedFilters,
 } from "../ArtworkFilterContext"
 import styled from "styled-components"
 import { Media } from "v2/Utils/Responsive"
@@ -22,7 +23,6 @@ import { useFilterLabelCountByKey } from "../Utils/useFilterLabelCountByKey"
 import { useMode } from "v2/Utils/Hooks/useMode"
 import { getENV } from "v2/Utils/getENV"
 import { PriceRangeFilterNew } from "./PriceRangeFilterNew"
-import { useCurrentlySelectedFilters } from "../useCurrentlySelectedFilters"
 
 // Disables arrows in numeric inputs
 export const NumericInput = styled(LabeledInput).attrs({ type: "number" })`

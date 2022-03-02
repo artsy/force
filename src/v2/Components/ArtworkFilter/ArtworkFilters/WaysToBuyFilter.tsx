@@ -5,8 +5,8 @@ import {
   ArtworkFilters,
   SelectedFiltersCountsLabels,
   useArtworkFilterContext,
+  useCurrentlySelectedFilters,
 } from "../ArtworkFilterContext"
-import { useCurrentlySelectedFilters } from "../useCurrentlySelectedFilters"
 import { useFilterLabelCountByKey } from "../Utils/useFilterLabelCountByKey"
 import { FilterExpandable } from "./FilterExpandable"
 

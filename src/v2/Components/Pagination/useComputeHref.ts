@@ -1,8 +1,10 @@
 import { buildUrl } from "v2/Components/ArtworkFilter/Utils/urlBuilder"
-import { useArtworkFilterContext } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
+import {
+  useArtworkFilterContext,
+  useCurrentlySelectedFilters,
+} from "v2/Components/ArtworkFilter/ArtworkFilterContext"
 import { useRouter } from "v2/System/Router/useRouter"
 import { stringify } from "qs"
-import { useCurrentlySelectedFilters } from "../ArtworkFilter/useCurrentlySelectedFilters"
 
 export function useComputeHref() {
   const {

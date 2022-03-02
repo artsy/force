@@ -4,12 +4,12 @@ import { intersection } from "lodash"
 import {
   SelectedFiltersCountsLabels,
   useArtworkFilterContext,
+  useCurrentlySelectedFilters,
 } from "../ArtworkFilterContext"
 import { FilterExpandable } from "./FilterExpandable"
 import { INITIAL_ITEMS_TO_SHOW, ShowMore } from "./ShowMore"
 import { useFilterLabelCountByKey } from "../Utils/useFilterLabelCountByKey"
 import { sortResults } from "./Utils/sortResults"
-import { useCurrentlySelectedFilters } from "../useCurrentlySelectedFilters"
 
 export interface TimePeriodFilterProps {
   expanded?: boolean // set to true to force expansion

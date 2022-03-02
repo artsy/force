@@ -4,8 +4,8 @@ import {
   SelectedFiltersCountsLabels,
   Slice,
   useArtworkFilterContext,
+  useCurrentlySelectedFilters,
 } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
-import { useCurrentlySelectedFilters } from "../../useCurrentlySelectedFilters"
 import { useFilterLabelCountByKey } from "../../Utils/useFilterLabelCountByKey"
 
 export interface UseFilterSelectResultsProps {
