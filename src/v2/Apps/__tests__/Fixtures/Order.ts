@@ -91,6 +91,10 @@ const OrderArtworkNodeWithoutShipping = {
   isEdition: false,
 }
 
+const OrderArtworkVersionNode = {
+  artworkVersion: { ...OrderArtworkNodeWithoutShipping },
+}
+
 const OrderArtworkNode = {
   artwork: {
     ...OrderArtworkNodeWithoutShipping,
@@ -254,6 +258,7 @@ export const UntouchedOrder = {
           selectedShippingQuote: null,
           shippingQuoteOptions: null,
           ...OrderArtworkNode,
+          ...OrderArtworkVersionNode,
           ...OrderArtworkOrEditionSetkNode_Artwork,
           ...OrderArtworkFulfillmentsNode,
           ...EmptyShipmentNode,
@@ -305,6 +310,7 @@ export const UntouchedBuyOrderWithArtaEnabled = {
           selectedShippingQuote: null,
           shippingQuoteOptions: null,
           ...ArtaEnabledOrderArtworkNode,
+          ...OrderArtworkVersionNode,
           ...OrderArtworkOrEditionSetkNode_Artwork,
           ...EmptyFulfillmentsNode,
           ...ArtaShipmentNode,
@@ -388,6 +394,7 @@ export const UntouchedBuyOrderWithShippingQuotes = {
             ],
           },
           ...ArtaEnabledOrderArtworkNode,
+          ...OrderArtworkVersionNode,
           ...OrderArtworkOrEditionSetkNode_Artwork,
           ...EmptyFulfillmentsNode,
           ...ArtaShipmentNode,
@@ -549,6 +556,7 @@ export const UntouchedOfferOrder = {
           shippingQuoteOptions: null,
           __isCommerceOrder: "CommerceOfferOrder",
           ...OrderArtworkNode,
+          ...OrderArtworkVersionNode,
           ...OfferArtworkOrEditionSetNode_Artwork,
           ...OrderArtworkFulfillmentsNode,
           ...ArtaShipmentNode,
@@ -587,6 +595,7 @@ export const UntouchedInquiryOfferOrder = {
           shippingQuoteOptions: null,
           ...InquiryOrderArtworkNode,
           ...OfferArtworkOrEditionSetNode_Artwork,
+          ...OrderArtworkVersionNode,
           ...OrderArtworkFulfillmentsNode,
           ...ArtaShipmentNode,
         },
@@ -608,6 +617,7 @@ export const UntouchedOfferOrderInPounds = {
           selectedShippingQuote: null,
           shippingQuoteOptions: null,
           ...OrderArtworkNode,
+          ...OrderArtworkVersionNode,
           ...OfferArtworkOrEditionSetNode_ArtworkInPounds,
           ...OrderArtworkFulfillmentsNode,
           ...ArtaShipmentNode,
@@ -628,6 +638,8 @@ export const UntouchedOfferOrderWithRange = {
           selectedShippingQuote: null,
           shippingQuoteOptions: null,
           ...OrderArtworkNode,
+          ...OrderArtworkVersionNode,
+
           ...OfferArtworkOrEditionSetNode_Range,
           ...OrderArtworkFulfillmentsNode,
           ...ArtaShipmentNode,
@@ -753,6 +765,7 @@ export const ArtaShippedWithTrackingIdNoTrackingUrl = {
           selectedShippingQuote: null,
           shippingQuoteOptions: null,
           ...OrderArtworkNode,
+          ...OrderArtworkVersionNode,
           ...OfferArtworkOrEditionSetNode_Artwork,
           ...EmptyFulfillmentsNode,
           ...ArtaShipmentNodeNoUrl,
@@ -775,6 +788,7 @@ export const ArtaShippedWithNoTrackingIdNoTrackingUrl = {
           selectedShippingQuote: null,
           shippingQuoteOptions: null,
           ...OrderArtworkNode,
+          ...OrderArtworkVersionNode,
           ...OfferArtworkOrEditionSetNode_Artwork,
           ...EmptyFulfillmentsNode,
           ...ArtaShipmentNodeWithNoTrackingInfo,
@@ -930,6 +944,7 @@ export const UntouchedOfferOrderPriceHidden = {
       {
         node: {
           ...OrderArtworkNodePriceHidden,
+          ...OrderArtworkVersionNode,
           editionSetId: null,
           id: "line-item-node-id",
           selectedShippingQuote: null,

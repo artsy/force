@@ -31,9 +31,14 @@ const ArtworkSummaryItem: React.FC<ArtworkSummaryItemProps> = ({
   },
   ...others
 }) => {
-  const artwork = get({}, () => lineItems?.edges?.[0]?.node?.artwork)
+  const firstLineItem = get({}, () => lineItems?.edges?.[0]?.node!)
+  const { artwork, artworkVersion } = firstLineItem!
 
-  const { artistNames, title, date, shippingOrigin, image } = artwork!
+  if (!artwork) console.warn("artwork missing")
+  if (!artworkVersion) console.warn("artwork version missing")
+
+  const { artistNames, title, image } = artworkVersion || {}
+  const { date, shippingOrigin } = artwork || {}
 
   const imageURL =
     image &&
@@ -117,10 +122,12 @@ export const ArtworkSummaryItemFragmentContainer = createFragmentContainer(
                 }
               }
               artwork {
-                artistNames
-                title
                 date
                 shippingOrigin
+              }
+              artworkVersion {
+                artistNames
+                title
                 image {
                   resized_ArtworkSummaryItem: resized(width: 55) {
                     url
