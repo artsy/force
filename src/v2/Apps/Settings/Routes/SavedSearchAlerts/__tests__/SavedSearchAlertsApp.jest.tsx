@@ -42,16 +42,20 @@ describe("SavedSearchAlertsApp", () => {
     })
   })
 
-  it("renders all alerts", () => {
+  it("renders all alert titles and the pills for filters applied", () => {
     renderWithRelay({
       Me: () => ({
         savedSearchesConnection: mockedSavedSearchesConnection,
       }),
     })
 
-    expect(screen.getAllByText("Alert #1")[0]).toBeInTheDocument()
-    expect(screen.getAllByText("Alert #2")[0]).toBeInTheDocument()
-    expect(screen.getAllByText("Alert #3")[0]).toBeInTheDocument()
+    expect(screen.getByText("Alert #1")).toBeInTheDocument()
+    expect(screen.getByText("Limited Edition")).toBeInTheDocument()
+    expect(screen.getByText("Andy Warhol")).toBeInTheDocument()
+    expect(screen.getByText("Alert #2")).toBeInTheDocument()
+    expect(screen.getByText("Alert #3")).toBeInTheDocument()
+    expect(screen.getByText("Omar Ba")).toBeInTheDocument()
+    expect(screen.getByText("$0–$34,240")).toBeInTheDocument()
   })
 
   it("renders a empty results message if there are no alerts", () => {
@@ -87,6 +91,7 @@ const mockedSavedSearchesConnection = {
   edges: [
     {
       node: {
+        labels: [{ value: "Limited Edition" }, { value: "Andy Warhol" }],
         userAlertSettings: {
           name: "Alert #1",
         },
@@ -101,6 +106,7 @@ const mockedSavedSearchesConnection = {
     },
     {
       node: {
+        labels: [{ value: "$0–$34,240" }, { value: "Omar Ba" }],
         userAlertSettings: {
           name: "Alert #3",
         },
