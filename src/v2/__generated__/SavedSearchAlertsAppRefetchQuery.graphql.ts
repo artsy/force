@@ -35,6 +35,9 @@ fragment SavedSearchAlertListItem_item on SearchCriteria {
   internalID
   artistIDs
   href
+  labels {
+    value
+  }
   userAlertSettings {
     name
   }
@@ -180,6 +183,24 @@ return {
                       {
                         "alias": null,
                         "args": null,
+                        "concreteType": "SearchCriteriaLabel",
+                        "kind": "LinkedField",
+                        "name": "labels",
+                        "plural": true,
+                        "selections": [
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "value",
+                            "storageKey": null
+                          }
+                        ],
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
                         "concreteType": "SavedSearchUserAlertSettings",
                         "kind": "LinkedField",
                         "name": "userAlertSettings",
@@ -265,12 +286,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "c5ec66b1d2e372cd85cb0c53a0f227c4",
+    "cacheID": "2f56f2a299083435d3f7a086bd404cc4",
     "id": null,
     "metadata": {},
     "name": "SavedSearchAlertsAppRefetchQuery",
     "operationKind": "query",
-    "text": "query SavedSearchAlertsAppRefetchQuery(\n  $after: String\n  $count: Int!\n) {\n  me {\n    ...SavedSearchAlertsApp_me_2QE1um\n    id\n  }\n}\n\nfragment SavedSearchAlertListItem_item on SearchCriteria {\n  internalID\n  artistIDs\n  href\n  userAlertSettings {\n    name\n  }\n}\n\nfragment SavedSearchAlertsApp_me_2QE1um on Me {\n  savedSearchesConnection(first: $count, after: $after) {\n    edges {\n      node {\n        internalID\n        ...SavedSearchAlertListItem_item\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query SavedSearchAlertsAppRefetchQuery(\n  $after: String\n  $count: Int!\n) {\n  me {\n    ...SavedSearchAlertsApp_me_2QE1um\n    id\n  }\n}\n\nfragment SavedSearchAlertListItem_item on SearchCriteria {\n  internalID\n  artistIDs\n  href\n  labels {\n    value\n  }\n  userAlertSettings {\n    name\n  }\n}\n\nfragment SavedSearchAlertsApp_me_2QE1um on Me {\n  savedSearchesConnection(first: $count, after: $after) {\n    edges {\n      node {\n        internalID\n        ...SavedSearchAlertListItem_item\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();
