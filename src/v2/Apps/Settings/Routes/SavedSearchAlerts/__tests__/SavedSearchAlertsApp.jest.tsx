@@ -49,11 +49,11 @@ describe("SavedSearchAlertsApp", () => {
       }),
     })
 
-    expect(screen.getByText("Alert #1")).toBeInTheDocument()
+    expect(screen.getAllByText("Alert #1")[0]).toBeInTheDocument()
     expect(screen.getByText("Limited Edition")).toBeInTheDocument()
     expect(screen.getByText("Andy Warhol")).toBeInTheDocument()
-    expect(screen.getByText("Alert #2")).toBeInTheDocument()
-    expect(screen.getByText("Alert #3")).toBeInTheDocument()
+    expect(screen.getAllByText("Alert #2")[0]).toBeInTheDocument()
+    expect(screen.getAllByText("Alert #3")[0]).toBeInTheDocument()
     expect(screen.getByText("Omar Ba")).toBeInTheDocument()
     expect(screen.getByText("$0–$34,240")).toBeInTheDocument()
   })
