@@ -7,7 +7,7 @@ import {
 } from "react-relay"
 import styled from "styled-components"
 import compact from "lodash/compact"
-import { Box, Spinner } from "@artsy/palette"
+import { Box, Flex, Spinner } from "@artsy/palette"
 
 import { ConversationSnippetFragmentContainer as ConversationSnippet } from "./ConversationSnippet"
 import { ConversationListHeader } from "./ConversationListHeader"
@@ -45,7 +45,7 @@ const ConversationList: React.FC<ConversationsProps> = props => {
     .indexOf(selectedConversationID)
 
   const loadMore = () => {
-    if (!relay.hasMore()) return
+    if (fetchingMore || !relay.hasMore()) return
     setFetchingMore(true)
     relay.loadMore(PAGE_SIZE, error => {
       if (error) console.error(error)
@@ -55,13 +55,13 @@ const ConversationList: React.FC<ConversationsProps> = props => {
 
   const handleScroll = (event: React.UIEvent<HTMLElement>): void => {
     const { scrollTop, clientHeight, scrollHeight } = event.currentTarget
-    if (scrollHeight - scrollTop === clientHeight) {
+    if (scrollHeight - scrollTop <= clientHeight) {
       loadMore()
     }
   }
 
   return (
-    <Box height="100%" width="100" overflow="hidden">
+    <Flex height="100%" width="100" overflow="hidden" flexDirection="column">
       <>
         <ConversationListHeader />
         <ScrollContainer onScroll={handleScroll}>
@@ -84,7 +84,7 @@ const ConversationList: React.FC<ConversationsProps> = props => {
           ) : null}
         </ScrollContainer>
       </>
-    </Box>
+    </Flex>
   )
 }
 
