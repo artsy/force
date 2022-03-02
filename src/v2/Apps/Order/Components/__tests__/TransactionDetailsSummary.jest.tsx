@@ -123,9 +123,7 @@ describe("TransactionDetailsSummaryItem", () => {
           shippingTotal: null,
           shippingTotalCents: null,
         },
-        {
-          user: { lab_features: ["Avalara Phase 2"] },
-        }
+        { user: { lab_features: ["Avalara Phase 2"] } }
       )
 
       const text = transactionSummary.text()
@@ -153,9 +151,7 @@ describe("TransactionDetailsSummaryItem", () => {
           shippingTotal: null,
           shippingTotalCents: null,
         },
-        {
-          user: { lab_features: ["Avalara Phase 2"] },
-        }
+        { user: { lab_features: ["Avalara Phase 2"] } }
       )
 
       const text = transactionSummary.text()
@@ -174,6 +170,20 @@ describe("TransactionDetailsSummaryItem", () => {
       const text = transactionSummary.text()
 
       expect(text).not.toMatch("List price")
+    })
+
+    it("shows 'Waiting for final costs' when buyer total has not been calucuated yet", async () => {
+      const transactionSummary = await render(
+        {
+          ...transactionSummaryBuyOrder,
+          buyerTotal: null,
+        },
+        { user: { lab_features: ["Avalara Phase 2"] } }
+      )
+
+      const text = transactionSummary.text()
+
+      expect(text).toMatch("TotalWaiting for final costs")
     })
   })
 

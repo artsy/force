@@ -69,7 +69,11 @@ export class TransactionDetailsSummaryItem extends React.Component<
         <Spacer mb={2} />
         <Entry
           label="Total"
-          value={this.buyerTotalDisplayAmount()}
+          value={
+            this.buyerTotalDisplayAmount()
+              ? this.buyerTotalDisplayAmount()
+              : "Waiting for final costs"
+          }
           final
           data-test="buyerTotalDisplayAmount"
         />
@@ -225,6 +229,7 @@ export class TransactionDetailsSummaryItem extends React.Component<
   buyerTotalDisplayAmount = () => {
     const { order } = this.props
     const currency = order.currencyCode
+
     switch (order.mode) {
       case "BUY":
         return appendCurrencySymbol(order.buyerTotal, currency)
