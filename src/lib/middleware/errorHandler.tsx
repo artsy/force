@@ -39,6 +39,7 @@ import {
 import createLogger from "v2/Utils/logger"
 
 const { GlobalStyles } = injectGlobalStyles()
+const logger = createLogger("lib/middleware/errorHandlerMiddleware")
 
 export const errorHandlerMiddleware = async (
   err: any,
@@ -68,11 +69,8 @@ export const errorHandlerMiddleware = async (
 
   if (enableLogging && err.status !== 404) {
     console.log(detail)
-  }
-
-  // Log server errors (code, stack trace) when in production mode
-  if (NODE_ENV === "production" && code >= 500) {
-    const logger = createLogger("lib/middleware/errorHandlerMiddleware")
+  } else if (code >= 500) {
+    // Log server errors (code, stack trace) when in production mode
     logger.error(code, detail)
   }
 
