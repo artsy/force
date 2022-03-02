@@ -1,6 +1,7 @@
 import { useContext, useState } from "react"
 import { createContext } from "react"
 import { Aggregations } from "../ArtworkFilter/ArtworkFilterContext"
+import { Metric } from "../ArtworkFilter/Utils/metrics"
 import {
   FilterPill,
   SavedSearchEntity,
@@ -25,6 +26,7 @@ interface SavedSearchAlertContextProviderProps {
   entity: SavedSearchEntity
   aggregations?: Aggregations
   criteria: SearchCriteriaAttributes
+  metric: Metric
 }
 
 const SavedSearchAlertContext = createContext<SavedSearchAlertContextProps>({
@@ -39,11 +41,17 @@ export const SavedSearchAlertContextProvider: React.FC<SavedSearchAlertContextPr
   entity,
   aggregations,
   criteria: criteriaFromArgument,
+  metric,
   children,
 }) => {
   const [criteria, setCriteria] = useState(criteriaFromArgument)
   const [isCriteriaChanged, setIsCriteriaChanged] = useState(false)
-  const pills = extractPills(criteria, aggregations, entity)
+  const pills = extractPills({
+    criteria,
+    aggregations,
+    entity,
+    metric,
+  })
 
   const removeCriteriaValue = (
     key: SearchCriteriaAttributeKeys,

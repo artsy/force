@@ -3,12 +3,16 @@ import { Aggregations } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
 import { checkboxValues } from "v2/Components/ArtworkFilter/ArtworkFilters/AttributionClassFilter"
 import { COLOR_OPTIONS } from "v2/Components/ArtworkFilter/ArtworkFilters/ColorFilter"
 import {
+  getPredefinedSizesByMetric,
   parseRange,
-  SIZES_IN_CENTIMETERS,
 } from "v2/Components/ArtworkFilter/ArtworkFilters/SizeFilter"
 import { getTimePeriodToDisplay } from "v2/Components/ArtworkFilter/ArtworkFilters/TimePeriodFilter"
 import { isCustomValue } from "v2/Components/ArtworkFilter/ArtworkFilters/Utils/isCustomValue"
 import { WAYS_TO_BUY_OPTIONS } from "v2/Components/ArtworkFilter/ArtworkFilters/WaysToBuyFilter"
+import {
+  DEFAULT_METRIC,
+  Metric,
+} from "v2/Components/ArtworkFilter/Utils/metrics"
 import { shouldExtractValueNamesFromAggregation } from "../constants"
 import {
   DefaultFilterPill,
@@ -41,8 +45,16 @@ export const extractPillFromAggregation = (
   return []
 }
 
-export const extractSizeLabel = (prefix: string, value: string) => {
-  const [min, max] = parseRange(value, "cm")!
+export const extractSizeLabel = ({
+  prefix,
+  value,
+  metric,
+}: {
+  prefix: string
+  value: string
+  metric: Metric
+}) => {
+  const [min, max] = parseRange(value, metric)!
 
   let label
   if (max === "*") {
@@ -53,7 +65,7 @@ export const extractSizeLabel = (prefix: string, value: string) => {
     label = `${min}-${max}`
   }
 
-  return `${prefix}: ${label} cm`
+  return `${prefix}: ${label} ${metric.toLowerCase()}`
 }
 
 const extractPriceLabel = (range: string) => {
@@ -74,10 +86,15 @@ const extractPriceLabel = (range: string) => {
   return label
 }
 
-export const extractPillsFromCriteria = (
-  criteria: SearchCriteriaAttributes,
-  aggregations: Aggregations = []
-) => {
+export const extractPillsFromCriteria = ({
+  criteria,
+  aggregations = [],
+  metric,
+}: {
+  criteria: SearchCriteriaAttributes
+  aggregations: Aggregations
+  metric: Metric
+}) => {
   const pills: NonDefaultFilterPill[] = Object.entries(criteria).map(filter => {
     const [paramName, paramValue] = filter
 
@@ -104,17 +121,19 @@ export const extractPillsFromCriteria = (
           result = {
             filterName: paramName,
             name: paramValue,
-            displayName: extractSizeLabel(paramName[0], paramValue),
+            displayName: extractSizeLabel({
+              prefix: paramName[0],
+              value: paramValue,
+              metric,
+            }),
           }
         }
         break
       }
       case "sizes": {
         result = paramValue.map(value => {
-          const sizeItem = find(
-            SIZES_IN_CENTIMETERS,
-            option => value === option.name
-          )
+          const SIZES = getPredefinedSizesByMetric(metric)
+          const sizeItem = find(SIZES, option => value === option.name)
 
           return {
             filterName: paramName,
@@ -184,13 +203,23 @@ export const extractArtistPill = (
   return null
 }
 
-export const extractPills = (
-  criteria: SearchCriteriaAttributes,
-  aggregations: Aggregations = [],
-  savedSearchEntity?: SavedSearchEntity
-) => {
-  const artistPill = extractArtistPill(savedSearchEntity)
-  const pillsFromCriteria = extractPillsFromCriteria(criteria, aggregations)
+export const extractPills = ({
+  criteria,
+  aggregations = [],
+  entity,
+  metric = DEFAULT_METRIC,
+}: {
+  criteria: SearchCriteriaAttributes
+  aggregations?: Aggregations
+  entity?: SavedSearchEntity
+  metric?: Metric
+}) => {
+  const artistPill = extractArtistPill(entity)
+  const pillsFromCriteria = extractPillsFromCriteria({
+    criteria,
+    aggregations,
+    metric,
+  })
 
   return compact([artistPill, ...pillsFromCriteria])
 }

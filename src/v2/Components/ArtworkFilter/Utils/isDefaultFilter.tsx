@@ -1,4 +1,5 @@
-import { ArtworkFilters, DEFAULT_METRIC } from "../ArtworkFilterContext"
+import { ArtworkFilters } from "../ArtworkFilterContext"
+import { DEFAULT_METRIC } from "./metrics"
 
 export const isDefaultFilter: (
   name: keyof ArtworkFilters,

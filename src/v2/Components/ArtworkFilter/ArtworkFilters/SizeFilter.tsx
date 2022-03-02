@@ -15,8 +15,6 @@ import {
 } from "@artsy/palette"
 import {
   ArtworkFiltersState,
-  DEFAULT_METRIC,
-  Metric,
   SelectedFiltersCountsLabels,
   useArtworkFilterContext,
 } from "../ArtworkFilterContext"
@@ -26,6 +24,7 @@ import { FilterExpandable } from "./FilterExpandable"
 import { isCustomValue } from "./Utils/isCustomValue"
 import { useFilterLabelCountByKey } from "../Utils/useFilterLabelCountByKey"
 import { useMode } from "v2/Utils/Hooks/useMode"
+import { DEFAULT_METRIC, Metric } from "../Utils/metrics"
 
 type Numeric = number | "*"
 type CustomRange = Numeric[]
@@ -96,10 +95,6 @@ export const getPredefinedSizesByMetric = (metric: Metric) => {
   return SIZES_IN_INCHES
 }
 
-export const getMetricLabel = (metric: Metric) => {
-  return metric === "cm" ? "cm" : "in"
-}
-
 export const getCustomSizeRangeInInches = (
   customSize: CustomSize,
   sourceMetric: Metric
@@ -144,7 +139,7 @@ export const SizeFilter: React.FC<SizeFilterProps> = ({ expanded }) => {
   const [mode, setMode] = useMode<Mode>("resting")
 
   const predefinedSizes = getPredefinedSizesByMetric(metric)
-  const metricLabel = getMetricLabel(metric)
+  const metricLabel = metric.toLowerCase()
 
   const handleInputChange = (dimension: "height" | "width", index: number) => ({
     currentTarget: { value },

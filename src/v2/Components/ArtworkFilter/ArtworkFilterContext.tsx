@@ -8,8 +8,7 @@ import { isDefaultFilter } from "./Utils/isDefaultFilter"
 import { rangeToTuple } from "./Utils/rangeToTuple"
 import { paramsToCamelCase } from "./Utils/urlBuilder"
 import { updateUrl } from "v2/Components/ArtworkFilter/Utils/urlBuilder"
-
-export const DEFAULT_METRIC: Metric = "cm"
+import { DEFAULT_METRIC, Metric } from "./Utils/metrics"
 
 /**
  * Initial filter state
@@ -176,8 +175,6 @@ export enum SelectedFiltersCountsLabels {
   timePeriod = "majorPeriods",
   waysToBuy = "waysToBuy",
 }
-
-export type Metric = "in" | "cm"
 
 // TODO: merge or make a generic base of `ArtworkFilterContextProps` and `AuctionResultsFilterContextProps`.
 // Possibly just extend `BaseFilterContext` and make the former ones into `BaseFilterContext<ArtworkFilters>`
@@ -378,8 +375,9 @@ export const ArtworkFilterContextProvider: React.FC<
     resetFilters: () => {
       const action: ArtworkFiltersAction = {
         type: "RESET",
-        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-        payload: null,
+        payload: {
+          metric: initialFilterState.metric,
+        },
       }
       dispatchOrStage(action)
     },
@@ -413,10 +411,15 @@ export const ArtworkFilterContextProvider: React.FC<
   )
 }
 
-interface ArtworkFiltersAction {
-  type: "SET" | "UNSET" | "RESET" | "SET_FILTERS" | "SET_STAGED_FILTERS"
-  payload: { name: keyof ArtworkFilters; value?: any }
-}
+type ArtworkFiltersAction =
+  | {
+      type: "SET" | "UNSET" | "SET_FILTERS" | "SET_STAGED_FILTERS"
+      payload: { name: keyof ArtworkFilters; value?: any }
+    }
+  | {
+      type: "RESET"
+      payload: ArtworkFilters
+    }
 
 export type ArrayArtworkFilter =
   | "artistIDs"
@@ -557,6 +560,7 @@ const artworkFilterReducer = (
     case "RESET": {
       return {
         ...initialArtworkFilterState,
+        ...action.payload,
         reset: true,
       }
     }

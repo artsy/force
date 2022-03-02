@@ -12,7 +12,6 @@ import {
   useArtworkFilterContext,
 } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
 import {
-  getMetricLabel,
   getPredefinedSizesByMetric,
   parseRange,
   SizeFilter,
@@ -235,16 +234,6 @@ describe("getPredefinedSizesByMetric", () => {
 
   it("should return predefined sizes in inches when `in` metric is specified", () => {
     expect(getPredefinedSizesByMetric("in")).toEqual(SIZES_IN_INCHES)
-  })
-})
-
-describe("getMetricLabel", () => {
-  it("should return centimeters label when `cm` metric is specified", () => {
-    expect(getMetricLabel("cm")).toBe("cm")
-  })
-
-  it("should return inches label when `in` metric is specified", () => {
-    expect(getMetricLabel("in")).toBe("in")
   })
 })
 
