@@ -3,6 +3,7 @@ import { Box, Flex, LabeledInput, Spacer, Text } from "@artsy/palette"
 import {
   SelectedFiltersCountsLabels,
   useArtworkFilterContext,
+  useCurrentlySelectedFilters,
 } from "../ArtworkFilterContext"
 import styled from "styled-components"
 import { themeGet } from "@styled-system/theme-get"
@@ -11,7 +12,6 @@ import { isCustomValue } from "./Utils/isCustomValue"
 import { useFilterLabelCountByKey } from "../Utils/useFilterLabelCountByKey"
 import { Range, RANGE_DOT_SIZE } from "v2/Components/Range"
 import { debounce } from "lodash"
-import { useCurrentlySelectedFilters } from "../useCurrentlySelectedFilters"
 
 type CustomRange = (number | "*")[]
 

@@ -3,13 +3,13 @@ import { FC } from "react"
 import {
   SelectedFiltersCountsLabels,
   useArtworkFilterContext,
+  useCurrentlySelectedFilters,
 } from "../ArtworkFilterContext"
 import { ShowMore, INITIAL_ITEMS_TO_SHOW } from "./ShowMore"
 import { intersection } from "lodash"
 import { FilterExpandable } from "./FilterExpandable"
 import { useFilterLabelCountByKey } from "../Utils/useFilterLabelCountByKey"
 import { sortResults } from "./Utils/sortResults"
-import { useCurrentlySelectedFilters } from "../useCurrentlySelectedFilters"
 
 export interface MediumFilterProps {
   expanded?: boolean

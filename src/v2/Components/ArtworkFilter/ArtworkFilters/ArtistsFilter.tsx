@@ -5,6 +5,7 @@ import { Checkbox, CheckboxProps, Flex, useThemeConfig } from "@artsy/palette"
 import {
   SelectedFiltersCountsLabels,
   useArtworkFilterContext,
+  useCurrentlySelectedFilters,
 } from "../ArtworkFilterContext"
 import {
   FollowedArtistList,
@@ -14,7 +15,6 @@ import { FilterExpandable } from "./FilterExpandable"
 import { ShowMore } from "./ShowMore"
 import { useFilterLabelCountByKey } from "../Utils/useFilterLabelCountByKey"
 import { useSystemContext } from "v2/System"
-import { useCurrentlySelectedFilters } from "../useCurrentlySelectedFilters"
 
 export interface ArtistsFilterProps {
   expanded?: boolean
@@ -49,7 +49,6 @@ const ArtistItem: React.FC<
       // When an artist is de-selected, if it is a followed artist _and_ that filter
       // is also checked, we want to de-select it as well, and move remaining followed
       // artists to the explicit `artistIDs` list.
-      // TODO: Fix bug here
       if (followedArtistSlugs.includes(slug)) {
         setFilter("includeArtworksByFollowedArtists", false)
         updatedValues = [...updatedValues, ...followedArtistSlugs]

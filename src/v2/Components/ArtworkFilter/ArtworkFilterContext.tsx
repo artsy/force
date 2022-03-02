@@ -656,3 +656,9 @@ export const useArtworkFilterContext = () => {
   const artworkFilterContext = useContext(ArtworkFilterContext)
   return artworkFilterContext
 }
+
+export const useCurrentlySelectedFilters = () => {
+  const { currentlySelectedFilters } = useArtworkFilterContext()
+
+  return currentlySelectedFilters?.() ?? {}
+}

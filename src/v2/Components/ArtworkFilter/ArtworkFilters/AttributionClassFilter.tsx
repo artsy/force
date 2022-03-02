@@ -3,10 +3,10 @@ import { Checkbox, Flex, useThemeConfig } from "@artsy/palette"
 import {
   SelectedFiltersCountsLabels,
   useArtworkFilterContext,
+  useCurrentlySelectedFilters,
 } from "../ArtworkFilterContext"
 import { FilterExpandable } from "./FilterExpandable"
 import { useFilterLabelCountByKey } from "../Utils/useFilterLabelCountByKey"
-import { useCurrentlySelectedFilters } from "../useCurrentlySelectedFilters"
 
 export const checkboxValues = [
   {
