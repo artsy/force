@@ -77,6 +77,9 @@ export interface SystemContextProps extends SystemContextState {
 
   /** Is there a logged in user? */
   isLoggedIn?: boolean
+
+  /** FeatureFlags */
+  featureFlags?: Record<string, boolean>
 }
 
 export const SystemContext = createContext<SystemContextProps>({})

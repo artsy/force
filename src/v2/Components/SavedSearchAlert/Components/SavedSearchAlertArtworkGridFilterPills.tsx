@@ -11,6 +11,7 @@ import { getSearchCriteriaFromFilters } from "../Utils/savedSearchCriteria"
 import { SavedSearchAlertPills } from "./SavedSearchAlertPills"
 import { FilterPill, SavedSearchEntity } from "../types"
 import { SavedSearchCreateAlertButton } from "./SavedSearchCreateAlertButton"
+import { DEFAULT_METRIC } from "v2/Components/ArtworkFilter/Utils/metrics"
 
 const PILL_HORIZONTAL_MARGIN_SIZE = 0.5
 
@@ -30,7 +31,12 @@ export const SavedSearchAlertArtworkGridFilterPills: React.FC<SavedSearchAlertAr
     savedSearchEntity.id,
     filters ?? {}
   )
-  const pills = extractPills(criteria, aggregations, savedSearchEntity)
+  const pills = extractPills({
+    criteria,
+    aggregations,
+    entity: savedSearchEntity,
+    metric: filters?.metric ?? DEFAULT_METRIC,
+  })
 
   const removePill = (pill: FilterPill) => {
     if (pill.isDefault) {

@@ -1,28 +1,31 @@
 import { ArtistArtworkFilter_artist } from "v2/__generated__/ArtistArtworkFilter_artist.graphql"
+import { ArtistArtworkFilter_me } from "v2/__generated__/ArtistArtworkFilter_me.graphql"
 import { BaseArtworkFilter } from "v2/Components/ArtworkFilter"
 import {
   ArtworkFilterContextProvider,
+  ArtworkFiltersState,
   Counts,
   SharedArtworkFilterContextProps,
 } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
-import { updateUrl } from "v2/Components/ArtworkFilter/Utils/urlBuilder"
 import { Match } from "found"
 import * as React from "react"
 import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
 import { ZeroState } from "./ZeroState"
 import { useRouter } from "v2/System/Router/useRouter"
 import { SavedSearchEntity } from "v2/Components/SavedSearchAlert/types"
+import { getSupportedMetric } from "v2/Components/ArtworkFilter/Utils/metrics"
 
 interface ArtistArtworkFilterProps {
   aggregations: SharedArtworkFilterContextProps["aggregations"]
   artist: ArtistArtworkFilter_artist
+  me: ArtistArtworkFilter_me | null
   relay: RelayRefetchProp
   match?: Match
 }
 
 const ArtistArtworkFilter: React.FC<ArtistArtworkFilterProps> = props => {
   const { match } = useRouter()
-  const { relay, aggregations, artist } = props
+  const { relay, aggregations, artist, me } = props
   const { filtered_artworks } = artist
   const hasFilter = filtered_artworks && filtered_artworks.id
 
@@ -37,12 +40,17 @@ const ArtistArtworkFilter: React.FC<ArtistArtworkFilterProps> = props => {
     slug: artist.slug,
   }
 
+  const metric = getSupportedMetric(me?.lengthUnitPreference)
+  const filters: ArtworkFiltersState = {
+    metric,
+    ...match.location.query,
+  }
+
   return (
     <ArtworkFilterContextProvider
       aggregations={aggregations}
       counts={artist.counts as Counts}
-      filters={match.location.query}
-      onChange={updateUrl}
+      filters={filters}
       sortOptions={[
         { value: "-decayed_merch", text: "Default" },
         { value: "-has_price,-prices", text: "Price (desc.)" },
@@ -94,6 +102,11 @@ export const ArtistArtworkFilterRefetchContainer = createRefetchContainer(
         name
         isFollowed
         slug
+      }
+    `,
+    me: graphql`
+      fragment ArtistArtworkFilter_me on Me {
+        lengthUnitPreference
       }
     `,
   },

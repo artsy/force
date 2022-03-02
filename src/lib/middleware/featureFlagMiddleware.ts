@@ -29,10 +29,10 @@ export function featureFlagMiddleware(serviceType: symbol) {
 
         // Get features and move them to sharify
         const flags = service.getFeatures()
-        res.locals.sd.featureFlags = {}
+        res.locals.sd.FEATURE_FLAGS = {}
         if (flags) {
           for (let flag of flags) {
-            res.locals.sd.featureFlags[flag] = service.enabled(
+            res.locals.sd.FEATURE_FLAGS[flag] = service.enabled(
               flag,
               featureFlagContext
             )

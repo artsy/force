@@ -136,6 +136,9 @@ export const artistRoutes: AppRouteConfig[] = [
               ...ArtistWorksForSaleRoute_artist
                 @arguments(input: $input, aggregations: $aggregations)
             }
+            me {
+              ...ArtistWorksForSaleRoute_me
+            }
           }
         `,
       },

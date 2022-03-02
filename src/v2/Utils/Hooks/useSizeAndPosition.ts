@@ -1,4 +1,5 @@
 import { useIsomorphicLayoutEffect } from "@artsy/palette"
+import { debounce } from "lodash"
 import { useRef, useState } from "react"
 
 interface Geometry {
@@ -15,8 +16,14 @@ const DEFAULT_GEOMETRY: Geometry = {
   height: 0,
 }
 
+interface UseSizeAndPosition {
+  debounce?: number
+}
+
 /** Hook that returns the offset geometry of the ref. Updates on resize. */
-export const useSizeAndPosition = () => {
+export const useSizeAndPosition = (
+  { debounce: debounceMs }: UseSizeAndPosition = { debounce: 0 }
+) => {
   const ref = useRef<HTMLElement | null>(null)
 
   const [geometry, setGeometry] = useState<Geometry>(DEFAULT_GEOMETRY)
@@ -37,10 +44,14 @@ export const useSizeAndPosition = () => {
 
     handleResize()
 
-    window.addEventListener("resize", handleResize)
+    const handler = debounceMs
+      ? debounce(handleResize, debounceMs)
+      : handleResize
+
+    window.addEventListener("resize", handler)
 
     return () => {
-      window.removeEventListener("resize", handleResize)
+      window.removeEventListener("resize", handler)
     }
   }, [ref])
 

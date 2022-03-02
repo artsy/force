@@ -280,7 +280,7 @@ describe("Offer InitialMutation", () => {
 
         await page.expectAndDismissErrorDialogMatching(
           "Offer may be too low",
-          "Offers within 25% of the list price are most likely to receive a response",
+          "Offers within 20% of the list price are most likely to receive a response",
           "OK"
         )
 

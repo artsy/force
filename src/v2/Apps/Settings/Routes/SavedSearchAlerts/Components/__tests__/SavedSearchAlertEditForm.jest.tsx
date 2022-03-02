@@ -45,7 +45,7 @@ describe("SavedSearchAlertEditForm", () => {
       return (
         <MockBoot breakpoint="lg">
           <SavedSearchAlertEditFormFragmentContainer
-            savedSearch={props.me?.savedSearch!}
+            me={props.me!}
             artist={props.artist!}
             artworksConnection={props.artworksConnection!}
             editAlertEntity={defaultEditAlertEntity}
@@ -58,9 +58,7 @@ describe("SavedSearchAlertEditForm", () => {
     query: graphql`
       query SavedSearchAlertEditForm_Test_Query @raw_response_type {
         me {
-          savedSearch(id: "id") {
-            ...SavedSearchAlertEditForm_savedSearch
-          }
+          ...SavedSearchAlertEditForm_me @arguments(savedSearchId: "id")
         }
         artist(id: "artistId") {
           ...SavedSearchAlertEditForm_artist
@@ -87,7 +85,7 @@ describe("SavedSearchAlertEditForm", () => {
     renderWithRelay({
       Artist: () => artistMocked,
       FilterArtworksConnection: () => filterArtworksConnectionMocked,
-      SearchCriteria: () => savedSearchAlertMocked,
+      Me: () => meMocked,
     })
 
     expect(screen.getByText("Buy Now")).toBeInTheDocument()
@@ -101,7 +99,7 @@ describe("SavedSearchAlertEditForm", () => {
     renderWithRelay({
       Artist: () => artistMocked,
       FilterArtworksConnection: () => filterArtworksConnectionMocked,
-      SearchCriteria: () => savedSearchAlertMocked,
+      Me: () => meMocked,
     })
 
     fireEvent.click(screen.getByText("Delete Alert"))
@@ -113,7 +111,7 @@ describe("SavedSearchAlertEditForm", () => {
     renderWithRelay({
       Artist: () => artistMocked,
       FilterArtworksConnection: () => filterArtworksConnectionMocked,
-      SearchCriteria: () => savedSearchAlertMocked,
+      Me: () => meMocked,
     })
 
     fireEvent.change(screen.getByDisplayValue("Alert #1"), {
@@ -165,7 +163,7 @@ describe("SavedSearchAlertEditForm", () => {
       renderWithRelay({
         Artist: () => artistMocked,
         FilterArtworksConnection: () => filterArtworksConnectionMocked,
-        SearchCriteria: () => savedSearchAlertMocked,
+        Me: () => meMocked,
       })
       const saveAlertButton = screen.getByRole("button", {
         name: "Save Alert",
@@ -178,7 +176,7 @@ describe("SavedSearchAlertEditForm", () => {
       renderWithRelay({
         Artist: () => artistMocked,
         FilterArtworksConnection: () => filterArtworksConnectionMocked,
-        SearchCriteria: () => savedSearchAlertMocked,
+        Me: () => meMocked,
       })
 
       fireEvent.change(screen.getByDisplayValue("Alert #1"), {
@@ -196,7 +194,7 @@ describe("SavedSearchAlertEditForm", () => {
       renderWithRelay({
         Artist: () => artistMocked,
         FilterArtworksConnection: () => filterArtworksConnectionMocked,
-        SearchCriteria: () => savedSearchAlertMocked,
+        Me: () => meMocked,
       })
       const checkbox = screen.getByRole("checkbox", {
         name: "Email Alerts",
@@ -215,7 +213,7 @@ describe("SavedSearchAlertEditForm", () => {
       renderWithRelay({
         Artist: () => artistMocked,
         FilterArtworksConnection: () => filterArtworksConnectionMocked,
-        SearchCriteria: () => savedSearchAlertMocked,
+        Me: () => meMocked,
       })
 
       fireEvent.click(screen.getByText("Buy Now"))
@@ -231,7 +229,7 @@ describe("SavedSearchAlertEditForm", () => {
       renderWithRelay({
         Artist: () => artistMocked,
         FilterArtworksConnection: () => filterArtworksConnectionMocked,
-        SearchCriteria: () => savedSearchAlertMocked,
+        Me: () => meMocked,
       })
       const checkbox = screen.getByRole("checkbox", {
         name: "Mobile Alerts",
@@ -282,4 +280,9 @@ const savedSearchAlertMocked = {
 
 const filterArtworksConnectionMocked = {
   aggregations: [],
+}
+
+const meMocked = {
+  lengthUnitPreference: "CM",
+  savedSearch: savedSearchAlertMocked,
 }

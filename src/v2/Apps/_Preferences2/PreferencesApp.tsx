@@ -50,7 +50,7 @@ export const PreferencesApp: FC<PreferencesAppProps> = ({ viewer }) => {
       <Formik<FormValuesForNotificationPreferences>
         // @ts-ignore
         initialValues={{ ...NOTIFICATION_FIELDS, ...initialValues }}
-        onSubmit={async values => {
+        onSubmit={async (values, actions) => {
           try {
             // TODO: Refactor mutation in Metaphysics so that we don't have to send
             // id, channel, or status (Gravity doesn't care about them)
@@ -71,6 +71,11 @@ export const PreferencesApp: FC<PreferencesAppProps> = ({ viewer }) => {
               variables: { input: { subscriptionGroups } },
             })
 
+            actions.resetForm({
+              values: { ...NOTIFICATION_FIELDS, ...getInitialValues(viewer) },
+              touched: {},
+            })
+
             sendToast({
               variant: "success",
               message: "Preferences updated sucessfully.",
@@ -86,7 +91,14 @@ export const PreferencesApp: FC<PreferencesAppProps> = ({ viewer }) => {
           }
         }}
       >
-        {({ values, setFieldValue, setFieldTouched, touched }) => (
+        {({
+          values,
+          setTouched,
+          setFieldValue,
+          setFieldTouched,
+          resetForm,
+          touched,
+        }) => (
           <Form>
             <GridColumns gridRowGap={4}>
               <Column span={10}>
@@ -240,6 +252,16 @@ export const PreferencesApp: FC<PreferencesAppProps> = ({ viewer }) => {
                   width="100%"
                   variant="secondaryOutline"
                   disabled={isEmpty(touched)}
+                  onClick={event => {
+                    event.preventDefault()
+                    resetForm({
+                      values: {
+                        ...NOTIFICATION_FIELDS,
+                        ...initialValues,
+                      },
+                      touched: {},
+                    })
+                  }}
                 >
                   Cancel
                 </Button>
