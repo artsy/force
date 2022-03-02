@@ -1,4 +1,5 @@
 import { Box, Text, Flex, Clickable, Spacer, Pill } from "@artsy/palette"
+import { themeGet } from "@styled-system/theme-get"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
 import { RouterLink } from "v2/System/Router/RouterLink"
@@ -9,7 +10,7 @@ export type SavedSearchAlertListItemVariant = "active" | "inactive"
 
 const AlertPill = styled(Pill)`
   pointer-events: none;
-  border-color: #707070; /* black60 */
+  border-color: ${themeGet("colors.black60")};
 `
 
 interface SavedSearchAlertListItemProps {
