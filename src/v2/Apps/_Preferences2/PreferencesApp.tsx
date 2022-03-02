@@ -18,6 +18,7 @@ import {
 } from "v2/__generated__/PreferencesApp_viewer.graphql"
 import { useEditNotificationPreferences } from "./useEditNotificationPreferences"
 import { useRouter } from "v2/System/Router/useRouter"
+import { MetaTags } from "v2/Components/MetaTags"
 
 export const parseTokenFromRouter = (router): string => {
   const tokenFromQuery =
@@ -69,6 +70,7 @@ export const PreferencesApp: FC<PreferencesAppProps> = ({ viewer }) => {
 
   return (
     <>
+      <MetaTags title="Preferences | Artsy" pathname="/preferences2" />
       <Text variant={["lg", "xl"]} mt={6} mb={6}>
         Email Preference Center
       </Text>
