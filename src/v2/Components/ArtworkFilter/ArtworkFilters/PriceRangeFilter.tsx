@@ -1,5 +1,4 @@
-import { useEffect, useState } from "react"
-import * as React from "react"
+import { FC, useEffect, useState } from "react"
 import {
   Button,
   Flex,
@@ -21,6 +20,8 @@ import { FilterExpandable } from "./FilterExpandable"
 import { isCustomValue } from "./Utils/isCustomValue"
 import { useFilterLabelCountByKey } from "../Utils/useFilterLabelCountByKey"
 import { useMode } from "v2/Utils/Hooks/useMode"
+import { getENV } from "v2/Utils/getENV"
+import { PriceRangeFilterNew } from "./PriceRangeFilterNew"
 
 // Disables arrows in numeric inputs
 export const NumericInput = styled(LabeledInput).attrs({ type: "number" })`
@@ -76,7 +77,7 @@ export interface PriceRangeFilterProps {
 
 type Mode = "resting" | "done"
 
-export const PriceRangeFilter: React.FC<PriceRangeFilterProps> = ({
+export const PriceRangeFilterOld: FC<PriceRangeFilterProps> = ({
   expanded,
 }) => {
   const [mode, setMode] = useMode<Mode>("resting")
@@ -230,4 +231,12 @@ export const PriceRangeFilter: React.FC<PriceRangeFilterProps> = ({
       )}
     </FilterExpandable>
   )
+}
+
+export const PriceRangeFilter: FC<PriceRangeFilterProps> = props => {
+  if (getENV("ENABLE_NEW_PRICE_FILTER")) {
+    return <PriceRangeFilterNew {...props} />
+  }
+
+  return <PriceRangeFilterOld {...props} />
 }
