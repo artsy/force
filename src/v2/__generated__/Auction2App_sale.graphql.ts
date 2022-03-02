@@ -59,7 +59,7 @@ return {
             {
               "kind": "Literal",
               "name": "version",
-              "value": "wide"
+              "value": "normalized"
             },
             {
               "kind": "Literal",
@@ -80,7 +80,7 @@ return {
               "storageKey": null
             }
           ],
-          "storageKey": "cropped(height:600,version:\"wide\",width:1800)"
+          "storageKey": "cropped(height:600,version:\"normalized\",width:1800)"
         }
       ],
       "storageKey": null
@@ -117,5 +117,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '5fb5833df5f4e4c10236a5a640a28f3d';
+(node as any).hash = '82a7c741834ff2eb665076067dbfa862';
 export default node;

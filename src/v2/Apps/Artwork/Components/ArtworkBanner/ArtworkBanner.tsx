@@ -1,5 +1,5 @@
 import { ArtworkBanner_artwork } from "v2/__generated__/ArtworkBanner_artwork.graphql"
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import {
   Box,
@@ -12,6 +12,7 @@ import {
 } from "@artsy/palette"
 import { TopContextBar } from "v2/Components/TopContextBar"
 import { RouterLink } from "v2/System/Router/RouterLink"
+import { getENV } from "v2/Utils/getENV"
 
 export interface ArtworkBannerProps {
   artwork: ArtworkBanner_artwork
@@ -82,7 +83,9 @@ const computeBannerProps = (props: ArtworkBannerProps) => {
         name: context.name,
         subHeadline:
           sale.isBenefit || sale.isGalleryAuction ? null : partner?.name,
-        href: context.href,
+        href: getENV("ENABLE_AUCTION_V2")
+          ? context.href!.replace("/auction/", "/auction2/")
+          : context.href,
       }
     }
     case "Fair": {

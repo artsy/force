@@ -112,7 +112,7 @@ export const Auction2AppFragmentContainer = createFragmentContainer(
 
         internalID
         coverImage {
-          cropped(width: 1800, height: 600, version: "wide") {
+          cropped(width: 1800, height: 600, version: "normalized") {
             src
           }
         }

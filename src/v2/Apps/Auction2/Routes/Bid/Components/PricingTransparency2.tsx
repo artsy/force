@@ -17,6 +17,8 @@ import {
   Join,
   Flex,
 } from "@artsy/palette"
+import { usePrevious } from "v2/Utils/Hooks/usePrevious"
+import { useMemo } from "react"
 
 const PricingTransparency2: React.FC<PricingTransparency2QueryResponse> = props => {
   const calculatedCost = props.artwork?.saleArtwork?.calculatedCost
@@ -86,6 +88,19 @@ export const PricingTransparency2QueryRenderer = ({
   const { values } = useFormContext()
   const bidAmountMinor = parseInt(values.selectedBid!)
 
+  // Hack to prevent invalid refetch / preloader state during route transition
+  // when the url changes after user places a successful bid and we redirect
+  // back to artwork/id. If / when we remove the transition to the auction page
+  // from artwork/id we can remove this hack.
+  const variables = useMemo(() => {
+    return {
+      saleId,
+      artworkId,
+      bidAmountMinor,
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   return (
     <SystemQueryRenderer<PricingTransparency2Query>
       placeholder={PLACEHOLDER}
@@ -113,11 +128,7 @@ export const PricingTransparency2QueryRenderer = ({
           }
         }
       `}
-      variables={{
-        saleId,
-        artworkId,
-        bidAmountMinor,
-      }}
+      variables={variables}
       render={({ props, error }) => {
         if (error) {
           console.error(error)
