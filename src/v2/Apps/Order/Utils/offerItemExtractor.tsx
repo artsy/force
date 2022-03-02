@@ -6,10 +6,7 @@ export interface OfferItem {
 export const getOfferItemFromOrder = (orderLineItemsNode): OfferItem | null => {
   const offerItem = orderLineItemsNode.edges[0].node.artworkOrEditionSet
 
-  if (
-    offerItem.__typename == "Artwork" ||
-    offerItem.__typename == "EditionSet"
-  ) {
+  if (["Artwork", "EditionSet"].includes(offerItem?.__typename)) {
     return offerItem
   }
   return null

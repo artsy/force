@@ -65,10 +65,13 @@ fragment ArtworkSummaryItem_order on CommerceOrder {
           }
         }
         artwork {
-          artistNames
-          title
           date
           shippingOrigin
+          id
+        }
+        artworkVersion {
+          artistNames
+          title
           image {
             resized_ArtworkSummaryItem: resized(width: 55) {
               url
@@ -258,20 +261,6 @@ return {
                             "alias": null,
                             "args": null,
                             "kind": "ScalarField",
-                            "name": "artistNames",
-                            "storageKey": null
-                          },
-                          {
-                            "alias": null,
-                            "args": null,
-                            "kind": "ScalarField",
-                            "name": "title",
-                            "storageKey": null
-                          },
-                          {
-                            "alias": null,
-                            "args": null,
-                            "kind": "ScalarField",
                             "name": "date",
                             "storageKey": null
                           },
@@ -280,6 +269,62 @@ return {
                             "args": null,
                             "kind": "ScalarField",
                             "name": "shippingOrigin",
+                            "storageKey": null
+                          }
+                        ],
+                        "storageKey": null
+                      },
+                      (v4/*: any*/),
+                      {
+                        "alias": null,
+                        "args": null,
+                        "concreteType": null,
+                        "kind": "LinkedField",
+                        "name": "artworkOrEditionSet",
+                        "plural": false,
+                        "selections": [
+                          (v2/*: any*/),
+                          {
+                            "kind": "InlineFragment",
+                            "selections": [
+                              (v5/*: any*/)
+                            ],
+                            "type": "Artwork",
+                            "abstractKey": null
+                          },
+                          {
+                            "kind": "InlineFragment",
+                            "selections": [
+                              (v5/*: any*/),
+                              (v4/*: any*/)
+                            ],
+                            "type": "EditionSet",
+                            "abstractKey": null
+                          },
+                          (v7/*: any*/)
+                        ],
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "concreteType": "ArtworkVersion",
+                        "kind": "LinkedField",
+                        "name": "artworkVersion",
+                        "plural": false,
+                        "selections": [
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "artistNames",
+                            "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "title",
                             "storageKey": null
                           },
                           {
@@ -316,38 +361,8 @@ return {
                               }
                             ],
                             "storageKey": null
-                          }
-                        ],
-                        "storageKey": null
-                      },
-                      (v4/*: any*/),
-                      {
-                        "alias": null,
-                        "args": null,
-                        "concreteType": null,
-                        "kind": "LinkedField",
-                        "name": "artworkOrEditionSet",
-                        "plural": false,
-                        "selections": [
-                          (v2/*: any*/),
-                          {
-                            "kind": "InlineFragment",
-                            "selections": [
-                              (v5/*: any*/)
-                            ],
-                            "type": "Artwork",
-                            "abstractKey": null
                           },
-                          {
-                            "kind": "InlineFragment",
-                            "selections": [
-                              (v5/*: any*/),
-                              (v4/*: any*/)
-                            ],
-                            "type": "EditionSet",
-                            "abstractKey": null
-                          },
-                          (v7/*: any*/)
+                          (v4/*: any*/)
                         ],
                         "storageKey": null
                       }
@@ -441,12 +456,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "311935841f127811b49c2c8c67f24e79",
+    "cacheID": "c68a7de430e4bcd60a7b0b70f0a83fcd",
     "id": null,
     "metadata": {},
     "name": "orderRoutes_RejectQuery",
     "operationKind": "query",
-    "text": "query orderRoutes_RejectQuery(\n  $orderID: ID!\n) {\n  order: commerceOrder(id: $orderID) {\n    __typename\n    ...Reject_order\n    id\n  }\n}\n\nfragment ArtworkSummaryItem_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  sellerDetails {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on User {\n      id\n    }\n  }\n  currencyCode\n  mode\n  lineItems {\n    edges {\n      node {\n        artworkOrEditionSet {\n          __typename\n          ... on Artwork {\n            price\n          }\n          ... on EditionSet {\n            price\n            id\n          }\n          ... on Node {\n            __isNode: __typename\n            id\n          }\n        }\n        artwork {\n          artistNames\n          title\n          date\n          shippingOrigin\n          image {\n            resized_ArtworkSummaryItem: resized(width: 55) {\n              url\n            }\n          }\n          id\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment Reject_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  internalID\n  stateExpiresAt\n  lineItems {\n    edges {\n      node {\n        artwork {\n          slug\n          id\n        }\n        id\n      }\n    }\n  }\n  ... on CommerceOfferOrder {\n    lastOffer {\n      internalID\n      createdAt\n      id\n    }\n  }\n  ...ArtworkSummaryItem_order\n}\n"
+    "text": "query orderRoutes_RejectQuery(\n  $orderID: ID!\n) {\n  order: commerceOrder(id: $orderID) {\n    __typename\n    ...Reject_order\n    id\n  }\n}\n\nfragment ArtworkSummaryItem_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  sellerDetails {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on User {\n      id\n    }\n  }\n  currencyCode\n  mode\n  lineItems {\n    edges {\n      node {\n        artworkOrEditionSet {\n          __typename\n          ... on Artwork {\n            price\n          }\n          ... on EditionSet {\n            price\n            id\n          }\n          ... on Node {\n            __isNode: __typename\n            id\n          }\n        }\n        artwork {\n          date\n          shippingOrigin\n          id\n        }\n        artworkVersion {\n          artistNames\n          title\n          image {\n            resized_ArtworkSummaryItem: resized(width: 55) {\n              url\n            }\n          }\n          id\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment Reject_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  internalID\n  stateExpiresAt\n  lineItems {\n    edges {\n      node {\n        artwork {\n          slug\n          id\n        }\n        id\n      }\n    }\n  }\n  ... on CommerceOfferOrder {\n    lastOffer {\n      internalID\n      createdAt\n      id\n    }\n  }\n  ...ArtworkSummaryItem_order\n}\n"
   }
 };
 })();

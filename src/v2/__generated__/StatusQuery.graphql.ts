@@ -87,10 +87,13 @@ export type StatusQueryRawResponse = {
                         readonly id: string;
                     }) | null;
                     readonly artwork: ({
-                        readonly artistNames: string | null;
-                        readonly title: string | null;
                         readonly date: string | null;
                         readonly shippingOrigin: string | null;
+                        readonly id: string;
+                    }) | null;
+                    readonly artworkVersion: ({
+                        readonly artistNames: string | null;
+                        readonly title: string | null;
                         readonly image: ({
                             readonly resized_ArtworkSummaryItem: ({
                                 readonly url: string;
@@ -236,10 +239,13 @@ export type StatusQueryRawResponse = {
                         readonly id: string;
                     }) | null;
                     readonly artwork: ({
-                        readonly artistNames: string | null;
-                        readonly title: string | null;
                         readonly date: string | null;
                         readonly shippingOrigin: string | null;
+                        readonly id: string;
+                    }) | null;
+                    readonly artworkVersion: ({
+                        readonly artistNames: string | null;
+                        readonly title: string | null;
                         readonly image: ({
                             readonly resized_ArtworkSummaryItem: ({
                                 readonly url: string;
@@ -340,10 +346,13 @@ fragment ArtworkSummaryItem_order on CommerceOrder {
           }
         }
         artwork {
-          artistNames
-          title
           date
           shippingOrigin
+          id
+        }
+        artworkVersion {
+          artistNames
+          title
           image {
             resized_ArtworkSummaryItem: resized(width: 55) {
               url
@@ -1019,20 +1028,6 @@ return {
                             "alias": null,
                             "args": null,
                             "kind": "ScalarField",
-                            "name": "artistNames",
-                            "storageKey": null
-                          },
-                          {
-                            "alias": null,
-                            "args": null,
-                            "kind": "ScalarField",
-                            "name": "title",
-                            "storageKey": null
-                          },
-                          {
-                            "alias": null,
-                            "args": null,
-                            "kind": "ScalarField",
                             "name": "date",
                             "storageKey": null
                           },
@@ -1041,6 +1036,32 @@ return {
                             "args": null,
                             "kind": "ScalarField",
                             "name": "shippingOrigin",
+                            "storageKey": null
+                          },
+                          (v5/*: any*/)
+                        ],
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "concreteType": "ArtworkVersion",
+                        "kind": "LinkedField",
+                        "name": "artworkVersion",
+                        "plural": false,
+                        "selections": [
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "artistNames",
+                            "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "title",
                             "storageKey": null
                           },
                           {
@@ -1298,7 +1319,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "d5f9ede59f6a18980ecf6e0501896754",
+    "cacheID": "7478a34c73f88efe46aa3b32f35aab36",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -1380,24 +1401,9 @@ return {
           "plural": false,
           "type": "Artwork"
         },
-        "order.lineItems.edges.node.artwork.artistNames": (v17/*: any*/),
         "order.lineItems.edges.node.artwork.date": (v17/*: any*/),
         "order.lineItems.edges.node.artwork.id": (v19/*: any*/),
-        "order.lineItems.edges.node.artwork.image": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "Image"
-        },
-        "order.lineItems.edges.node.artwork.image.resized_ArtworkSummaryItem": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "ResizedImageUrl"
-        },
-        "order.lineItems.edges.node.artwork.image.resized_ArtworkSummaryItem.url": (v16/*: any*/),
         "order.lineItems.edges.node.artwork.shippingOrigin": (v17/*: any*/),
-        "order.lineItems.edges.node.artwork.title": (v17/*: any*/),
         "order.lineItems.edges.node.artworkOrEditionSet": {
           "enumValues": null,
           "nullable": true,
@@ -1408,6 +1414,28 @@ return {
         "order.lineItems.edges.node.artworkOrEditionSet.__typename": (v16/*: any*/),
         "order.lineItems.edges.node.artworkOrEditionSet.id": (v19/*: any*/),
         "order.lineItems.edges.node.artworkOrEditionSet.price": (v17/*: any*/),
+        "order.lineItems.edges.node.artworkVersion": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "ArtworkVersion"
+        },
+        "order.lineItems.edges.node.artworkVersion.artistNames": (v17/*: any*/),
+        "order.lineItems.edges.node.artworkVersion.id": (v19/*: any*/),
+        "order.lineItems.edges.node.artworkVersion.image": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Image"
+        },
+        "order.lineItems.edges.node.artworkVersion.image.resized_ArtworkSummaryItem": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "ResizedImageUrl"
+        },
+        "order.lineItems.edges.node.artworkVersion.image.resized_ArtworkSummaryItem.url": (v16/*: any*/),
+        "order.lineItems.edges.node.artworkVersion.title": (v17/*: any*/),
         "order.lineItems.edges.node.fulfillments": {
           "enumValues": null,
           "nullable": true,
@@ -1531,7 +1559,7 @@ return {
     },
     "name": "StatusQuery",
     "operationKind": "query",
-    "text": "query StatusQuery {\n  order: commerceOrder(id: \"42\") {\n    __typename\n    ...Status_order\n    id\n  }\n}\n\nfragment ArtworkSummaryItem_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  sellerDetails {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on User {\n      id\n    }\n  }\n  currencyCode\n  mode\n  lineItems {\n    edges {\n      node {\n        artworkOrEditionSet {\n          __typename\n          ... on Artwork {\n            price\n          }\n          ... on EditionSet {\n            price\n            id\n          }\n          ... on Node {\n            __isNode: __typename\n            id\n          }\n        }\n        artwork {\n          artistNames\n          title\n          date\n          shippingOrigin\n          image {\n            resized_ArtworkSummaryItem: resized(width: 55) {\n              url\n            }\n          }\n          id\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment CreditCardSummaryItem_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  creditCard {\n    brand\n    lastDigits\n    expirationYear\n    expirationMonth\n    id\n  }\n}\n\nfragment ShippingAddress_ship on CommerceRequestedFulfillmentUnion {\n  __isCommerceRequestedFulfillmentUnion: __typename\n  ... on CommerceShip {\n    name\n    addressLine1\n    addressLine2\n    city\n    postalCode\n    region\n    country\n    phoneNumber\n  }\n  ... on CommerceShipArta {\n    name\n    addressLine1\n    addressLine2\n    city\n    postalCode\n    region\n    country\n    phoneNumber\n  }\n}\n\nfragment ShippingSummaryItem_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  state\n  requestedFulfillment {\n    __typename\n    ...ShippingAddress_ship\n  }\n  lineItems {\n    edges {\n      node {\n        artwork {\n          shippingOrigin\n          id\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment Status_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  __typename\n  internalID\n  code\n  displayState\n  state\n  mode\n  source\n  stateReason\n  stateExpiresAt(format: \"MMM D\")\n  requestedFulfillment {\n    __typename\n    ... on CommerceShip {\n      __typename\n    }\n    ... on CommercePickup {\n      __typename\n    }\n    ... on CommerceShipArta {\n      __typename\n    }\n  }\n  ...ArtworkSummaryItem_order\n  ...TransactionDetailsSummaryItem_order\n  ...ShippingSummaryItem_order\n  ...CreditCardSummaryItem_order\n  lineItems {\n    edges {\n      node {\n        shipment {\n          trackingNumber\n          trackingUrl\n          carrierName\n          estimatedDeliveryWindow\n          id\n        }\n        selectedShippingQuote {\n          displayName\n          id\n        }\n        fulfillments {\n          edges {\n            node {\n              courier\n              trackingId\n              estimatedDelivery(format: \"MMM Do, YYYY\")\n              id\n            }\n          }\n        }\n        id\n      }\n    }\n  }\n  ... on CommerceOfferOrder {\n    myLastOffer {\n      internalID\n      amount(precision: 2)\n      amountCents\n      shippingTotal(precision: 2)\n      shippingTotalCents\n      taxTotal(precision: 2)\n      taxTotalCents\n      id\n    }\n  }\n}\n\nfragment TransactionDetailsSummaryItem_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  __typename\n  requestedFulfillment {\n    __typename\n  }\n  code\n  lineItems {\n    edges {\n      node {\n        artworkOrEditionSet {\n          __typename\n          ... on Artwork {\n            price\n          }\n          ... on EditionSet {\n            price\n            id\n          }\n          ... on Node {\n            __isNode: __typename\n            id\n          }\n        }\n        selectedShippingQuote {\n          displayName\n          id\n        }\n        id\n      }\n    }\n  }\n  mode\n  shippingTotal(precision: 2)\n  shippingTotalCents\n  taxTotal(precision: 2)\n  taxTotalCents\n  itemsTotal(precision: 2)\n  buyerTotal(precision: 2)\n  currencyCode\n  ... on CommerceOfferOrder {\n    lastOffer {\n      internalID\n      amount(precision: 2)\n      amountCents\n      shippingTotal(precision: 2)\n      shippingTotalCents\n      taxTotal(precision: 2)\n      taxTotalCents\n      buyerTotal(precision: 2)\n      buyerTotalCents\n      fromParticipant\n      note\n      id\n    }\n    myLastOffer {\n      internalID\n      amount(precision: 2)\n      amountCents\n      shippingTotal(precision: 2)\n      shippingTotalCents\n      taxTotal(precision: 2)\n      taxTotalCents\n      buyerTotal(precision: 2)\n      buyerTotalCents\n      fromParticipant\n      note\n      id\n    }\n  }\n}\n"
+    "text": "query StatusQuery {\n  order: commerceOrder(id: \"42\") {\n    __typename\n    ...Status_order\n    id\n  }\n}\n\nfragment ArtworkSummaryItem_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  sellerDetails {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on User {\n      id\n    }\n  }\n  currencyCode\n  mode\n  lineItems {\n    edges {\n      node {\n        artworkOrEditionSet {\n          __typename\n          ... on Artwork {\n            price\n          }\n          ... on EditionSet {\n            price\n            id\n          }\n          ... on Node {\n            __isNode: __typename\n            id\n          }\n        }\n        artwork {\n          date\n          shippingOrigin\n          id\n        }\n        artworkVersion {\n          artistNames\n          title\n          image {\n            resized_ArtworkSummaryItem: resized(width: 55) {\n              url\n            }\n          }\n          id\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment CreditCardSummaryItem_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  creditCard {\n    brand\n    lastDigits\n    expirationYear\n    expirationMonth\n    id\n  }\n}\n\nfragment ShippingAddress_ship on CommerceRequestedFulfillmentUnion {\n  __isCommerceRequestedFulfillmentUnion: __typename\n  ... on CommerceShip {\n    name\n    addressLine1\n    addressLine2\n    city\n    postalCode\n    region\n    country\n    phoneNumber\n  }\n  ... on CommerceShipArta {\n    name\n    addressLine1\n    addressLine2\n    city\n    postalCode\n    region\n    country\n    phoneNumber\n  }\n}\n\nfragment ShippingSummaryItem_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  state\n  requestedFulfillment {\n    __typename\n    ...ShippingAddress_ship\n  }\n  lineItems {\n    edges {\n      node {\n        artwork {\n          shippingOrigin\n          id\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment Status_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  __typename\n  internalID\n  code\n  displayState\n  state\n  mode\n  source\n  stateReason\n  stateExpiresAt(format: \"MMM D\")\n  requestedFulfillment {\n    __typename\n    ... on CommerceShip {\n      __typename\n    }\n    ... on CommercePickup {\n      __typename\n    }\n    ... on CommerceShipArta {\n      __typename\n    }\n  }\n  ...ArtworkSummaryItem_order\n  ...TransactionDetailsSummaryItem_order\n  ...ShippingSummaryItem_order\n  ...CreditCardSummaryItem_order\n  lineItems {\n    edges {\n      node {\n        shipment {\n          trackingNumber\n          trackingUrl\n          carrierName\n          estimatedDeliveryWindow\n          id\n        }\n        selectedShippingQuote {\n          displayName\n          id\n        }\n        fulfillments {\n          edges {\n            node {\n              courier\n              trackingId\n              estimatedDelivery(format: \"MMM Do, YYYY\")\n              id\n            }\n          }\n        }\n        id\n      }\n    }\n  }\n  ... on CommerceOfferOrder {\n    myLastOffer {\n      internalID\n      amount(precision: 2)\n      amountCents\n      shippingTotal(precision: 2)\n      shippingTotalCents\n      taxTotal(precision: 2)\n      taxTotalCents\n      id\n    }\n  }\n}\n\nfragment TransactionDetailsSummaryItem_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  __typename\n  requestedFulfillment {\n    __typename\n  }\n  code\n  lineItems {\n    edges {\n      node {\n        artworkOrEditionSet {\n          __typename\n          ... on Artwork {\n            price\n          }\n          ... on EditionSet {\n            price\n            id\n          }\n          ... on Node {\n            __isNode: __typename\n            id\n          }\n        }\n        selectedShippingQuote {\n          displayName\n          id\n        }\n        id\n      }\n    }\n  }\n  mode\n  shippingTotal(precision: 2)\n  shippingTotalCents\n  taxTotal(precision: 2)\n  taxTotalCents\n  itemsTotal(precision: 2)\n  buyerTotal(precision: 2)\n  currencyCode\n  ... on CommerceOfferOrder {\n    lastOffer {\n      internalID\n      amount(precision: 2)\n      amountCents\n      shippingTotal(precision: 2)\n      shippingTotalCents\n      taxTotal(precision: 2)\n      taxTotalCents\n      buyerTotal(precision: 2)\n      buyerTotalCents\n      fromParticipant\n      note\n      id\n    }\n    myLastOffer {\n      internalID\n      amount(precision: 2)\n      amountCents\n      shippingTotal(precision: 2)\n      shippingTotalCents\n      taxTotal(precision: 2)\n      taxTotalCents\n      buyerTotal(precision: 2)\n      buyerTotalCents\n      fromParticipant\n      note\n      id\n    }\n  }\n}\n"
   }
 };
 })();

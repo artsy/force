@@ -23,15 +23,8 @@ export type RejectTestQueryRawResponse = {
                     readonly artwork: ({
                         readonly slug: string;
                         readonly id: string;
-                        readonly artistNames: string | null;
-                        readonly title: string | null;
                         readonly date: string | null;
                         readonly shippingOrigin: string | null;
-                        readonly image: ({
-                            readonly resized_ArtworkSummaryItem: ({
-                                readonly url: string;
-                            }) | null;
-                        }) | null;
                     }) | null;
                     readonly id: string;
                     readonly artworkOrEditionSet: ({
@@ -47,6 +40,16 @@ export type RejectTestQueryRawResponse = {
                     } | {
                         readonly __typename: string;
                         readonly __isNode: string;
+                        readonly id: string;
+                    }) | null;
+                    readonly artworkVersion: ({
+                        readonly artistNames: string | null;
+                        readonly title: string | null;
+                        readonly image: ({
+                            readonly resized_ArtworkSummaryItem: ({
+                                readonly url: string;
+                            }) | null;
+                        }) | null;
                         readonly id: string;
                     }) | null;
                 }) | null;
@@ -85,15 +88,8 @@ export type RejectTestQueryRawResponse = {
                     readonly artwork: ({
                         readonly slug: string;
                         readonly id: string;
-                        readonly artistNames: string | null;
-                        readonly title: string | null;
                         readonly date: string | null;
                         readonly shippingOrigin: string | null;
-                        readonly image: ({
-                            readonly resized_ArtworkSummaryItem: ({
-                                readonly url: string;
-                            }) | null;
-                        }) | null;
                     }) | null;
                     readonly id: string;
                     readonly artworkOrEditionSet: ({
@@ -109,6 +105,16 @@ export type RejectTestQueryRawResponse = {
                     } | {
                         readonly __typename: string;
                         readonly __isNode: string;
+                        readonly id: string;
+                    }) | null;
+                    readonly artworkVersion: ({
+                        readonly artistNames: string | null;
+                        readonly title: string | null;
+                        readonly image: ({
+                            readonly resized_ArtworkSummaryItem: ({
+                                readonly url: string;
+                            }) | null;
+                        }) | null;
                         readonly id: string;
                     }) | null;
                 }) | null;
@@ -185,10 +191,13 @@ fragment ArtworkSummaryItem_order on CommerceOrder {
           }
         }
         artwork {
-          artistNames
-          title
           date
           shippingOrigin
+          id
+        }
+        artworkVersion {
+          artistNames
+          title
           image {
             resized_ArtworkSummaryItem: resized(width: 55) {
               url
@@ -389,20 +398,6 @@ return {
                             "alias": null,
                             "args": null,
                             "kind": "ScalarField",
-                            "name": "artistNames",
-                            "storageKey": null
-                          },
-                          {
-                            "alias": null,
-                            "args": null,
-                            "kind": "ScalarField",
-                            "name": "title",
-                            "storageKey": null
-                          },
-                          {
-                            "alias": null,
-                            "args": null,
-                            "kind": "ScalarField",
                             "name": "date",
                             "storageKey": null
                           },
@@ -411,6 +406,62 @@ return {
                             "args": null,
                             "kind": "ScalarField",
                             "name": "shippingOrigin",
+                            "storageKey": null
+                          }
+                        ],
+                        "storageKey": null
+                      },
+                      (v3/*: any*/),
+                      {
+                        "alias": null,
+                        "args": null,
+                        "concreteType": null,
+                        "kind": "LinkedField",
+                        "name": "artworkOrEditionSet",
+                        "plural": false,
+                        "selections": [
+                          (v1/*: any*/),
+                          {
+                            "kind": "InlineFragment",
+                            "selections": [
+                              (v4/*: any*/)
+                            ],
+                            "type": "Artwork",
+                            "abstractKey": null
+                          },
+                          {
+                            "kind": "InlineFragment",
+                            "selections": [
+                              (v4/*: any*/),
+                              (v3/*: any*/)
+                            ],
+                            "type": "EditionSet",
+                            "abstractKey": null
+                          },
+                          (v6/*: any*/)
+                        ],
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "concreteType": "ArtworkVersion",
+                        "kind": "LinkedField",
+                        "name": "artworkVersion",
+                        "plural": false,
+                        "selections": [
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "artistNames",
+                            "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "title",
                             "storageKey": null
                           },
                           {
@@ -447,38 +498,8 @@ return {
                               }
                             ],
                             "storageKey": null
-                          }
-                        ],
-                        "storageKey": null
-                      },
-                      (v3/*: any*/),
-                      {
-                        "alias": null,
-                        "args": null,
-                        "concreteType": null,
-                        "kind": "LinkedField",
-                        "name": "artworkOrEditionSet",
-                        "plural": false,
-                        "selections": [
-                          (v1/*: any*/),
-                          {
-                            "kind": "InlineFragment",
-                            "selections": [
-                              (v4/*: any*/)
-                            ],
-                            "type": "Artwork",
-                            "abstractKey": null
                           },
-                          {
-                            "kind": "InlineFragment",
-                            "selections": [
-                              (v4/*: any*/),
-                              (v3/*: any*/)
-                            ],
-                            "type": "EditionSet",
-                            "abstractKey": null
-                          },
-                          (v6/*: any*/)
+                          (v3/*: any*/)
                         ],
                         "storageKey": null
                       }
@@ -572,7 +593,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "7cdfd9c3711d2cbabd04dba960cfe96e",
+    "cacheID": "be059634c2deeb3dc7335b16b62742cb",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -620,25 +641,10 @@ return {
           "plural": false,
           "type": "Artwork"
         },
-        "order.lineItems.edges.node.artwork.artistNames": (v9/*: any*/),
         "order.lineItems.edges.node.artwork.date": (v9/*: any*/),
         "order.lineItems.edges.node.artwork.id": (v8/*: any*/),
-        "order.lineItems.edges.node.artwork.image": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "Image"
-        },
-        "order.lineItems.edges.node.artwork.image.resized_ArtworkSummaryItem": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "ResizedImageUrl"
-        },
-        "order.lineItems.edges.node.artwork.image.resized_ArtworkSummaryItem.url": (v7/*: any*/),
         "order.lineItems.edges.node.artwork.shippingOrigin": (v9/*: any*/),
         "order.lineItems.edges.node.artwork.slug": (v8/*: any*/),
-        "order.lineItems.edges.node.artwork.title": (v9/*: any*/),
         "order.lineItems.edges.node.artworkOrEditionSet": {
           "enumValues": null,
           "nullable": true,
@@ -649,6 +655,28 @@ return {
         "order.lineItems.edges.node.artworkOrEditionSet.__typename": (v7/*: any*/),
         "order.lineItems.edges.node.artworkOrEditionSet.id": (v8/*: any*/),
         "order.lineItems.edges.node.artworkOrEditionSet.price": (v9/*: any*/),
+        "order.lineItems.edges.node.artworkVersion": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "ArtworkVersion"
+        },
+        "order.lineItems.edges.node.artworkVersion.artistNames": (v9/*: any*/),
+        "order.lineItems.edges.node.artworkVersion.id": (v8/*: any*/),
+        "order.lineItems.edges.node.artworkVersion.image": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Image"
+        },
+        "order.lineItems.edges.node.artworkVersion.image.resized_ArtworkSummaryItem": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "ResizedImageUrl"
+        },
+        "order.lineItems.edges.node.artworkVersion.image.resized_ArtworkSummaryItem.url": (v7/*: any*/),
+        "order.lineItems.edges.node.artworkVersion.title": (v9/*: any*/),
         "order.lineItems.edges.node.id": (v8/*: any*/),
         "order.mode": {
           "enumValues": [
@@ -674,7 +702,7 @@ return {
     },
     "name": "RejectTestQuery",
     "operationKind": "query",
-    "text": "query RejectTestQuery {\n  order: commerceOrder(id: \"unused\") {\n    __typename\n    ...Reject_order\n    id\n  }\n}\n\nfragment ArtworkSummaryItem_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  sellerDetails {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on User {\n      id\n    }\n  }\n  currencyCode\n  mode\n  lineItems {\n    edges {\n      node {\n        artworkOrEditionSet {\n          __typename\n          ... on Artwork {\n            price\n          }\n          ... on EditionSet {\n            price\n            id\n          }\n          ... on Node {\n            __isNode: __typename\n            id\n          }\n        }\n        artwork {\n          artistNames\n          title\n          date\n          shippingOrigin\n          image {\n            resized_ArtworkSummaryItem: resized(width: 55) {\n              url\n            }\n          }\n          id\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment Reject_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  internalID\n  stateExpiresAt\n  lineItems {\n    edges {\n      node {\n        artwork {\n          slug\n          id\n        }\n        id\n      }\n    }\n  }\n  ... on CommerceOfferOrder {\n    lastOffer {\n      internalID\n      createdAt\n      id\n    }\n  }\n  ...ArtworkSummaryItem_order\n}\n"
+    "text": "query RejectTestQuery {\n  order: commerceOrder(id: \"unused\") {\n    __typename\n    ...Reject_order\n    id\n  }\n}\n\nfragment ArtworkSummaryItem_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  sellerDetails {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on User {\n      id\n    }\n  }\n  currencyCode\n  mode\n  lineItems {\n    edges {\n      node {\n        artworkOrEditionSet {\n          __typename\n          ... on Artwork {\n            price\n          }\n          ... on EditionSet {\n            price\n            id\n          }\n          ... on Node {\n            __isNode: __typename\n            id\n          }\n        }\n        artwork {\n          date\n          shippingOrigin\n          id\n        }\n        artworkVersion {\n          artistNames\n          title\n          image {\n            resized_ArtworkSummaryItem: resized(width: 55) {\n              url\n            }\n          }\n          id\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment Reject_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  internalID\n  stateExpiresAt\n  lineItems {\n    edges {\n      node {\n        artwork {\n          slug\n          id\n        }\n        id\n      }\n    }\n  }\n  ... on CommerceOfferOrder {\n    lastOffer {\n      internalID\n      createdAt\n      id\n    }\n  }\n  ...ArtworkSummaryItem_order\n}\n"
   }
 };
 })();

@@ -26,10 +26,12 @@ export type ArtworkSummaryItem_order = {
                     readonly __typename: "%other";
                 }) | null;
                 readonly artwork: {
-                    readonly artistNames: string | null;
-                    readonly title: string | null;
                     readonly date: string | null;
                     readonly shippingOrigin: string | null;
+                } | null;
+                readonly artworkVersion: {
+                    readonly artistNames: string | null;
+                    readonly title: string | null;
                     readonly image: {
                         readonly resized_ArtworkSummaryItem: {
                             readonly url: string;
@@ -170,20 +172,6 @@ return {
                       "alias": null,
                       "args": null,
                       "kind": "ScalarField",
-                      "name": "artistNames",
-                      "storageKey": null
-                    },
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "title",
-                      "storageKey": null
-                    },
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
                       "name": "date",
                       "storageKey": null
                     },
@@ -192,6 +180,31 @@ return {
                       "args": null,
                       "kind": "ScalarField",
                       "name": "shippingOrigin",
+                      "storageKey": null
+                    }
+                  ],
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "concreteType": "ArtworkVersion",
+                  "kind": "LinkedField",
+                  "name": "artworkVersion",
+                  "plural": false,
+                  "selections": [
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "artistNames",
+                      "storageKey": null
+                    },
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "title",
                       "storageKey": null
                     },
                     {
@@ -246,5 +259,5 @@ return {
   "abstractKey": "__isCommerceOrder"
 };
 })();
-(node as any).hash = '3e60baa12477b0285f91a4e83e080cc5';
+(node as any).hash = '1344acb52e619945e9d689ffe204f265';
 export default node;
