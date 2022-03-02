@@ -38,6 +38,7 @@ import {
   AuctionResultsFilterContextProvider,
   initialAuctionResultsFilterState,
   useAuctionResultsFilterContext,
+  useCurrentlySelectedFiltersForAuctionResults,
 } from "./AuctionResultsFilterContext"
 import { AuctionFilterMobileActionSheet } from "./Components/AuctionFilterMobileActionSheet"
 import { AuctionFilters } from "./Components/AuctionFilters"
@@ -62,11 +63,8 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
 }) => {
   const isMobile = __internal__useMatchMedia(themeProps.mediaQueries.xs)
   const { user, mediator } = useContext(SystemContext)
-  const {
-    filters,
-    setFilter,
-    currentlySelectedFilters,
-  } = useAuctionResultsFilterContext()
+  const { filters, setFilter } = useAuctionResultsFilterContext()
+  const selectedFilters = useCurrentlySelectedFiltersForAuctionResults()
   const { pageInfo } = artist.auctionResultsConnection ?? {}
   const { hasNextPage, endCursor } = pageInfo ?? {}
   const artistName = artist.name
@@ -129,7 +127,7 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
 
   // Is current filter state different from the default (reset) state?
   const filtersAtDefault = isEqual(
-    currentlySelectedFilters?.(),
+    selectedFilters,
     auctionResultsFilterResetState
   )
 

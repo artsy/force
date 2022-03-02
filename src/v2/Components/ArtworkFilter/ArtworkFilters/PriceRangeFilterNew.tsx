@@ -11,6 +11,7 @@ import { isCustomValue } from "./Utils/isCustomValue"
 import { useFilterLabelCountByKey } from "../Utils/useFilterLabelCountByKey"
 import { Range, RANGE_DOT_SIZE } from "v2/Components/Range"
 import { debounce } from "lodash"
+import { useCurrentlySelectedFilters } from "../useCurrentlySelectedFilters"
 
 type CustomRange = (number | "*")[]
 
@@ -27,12 +28,8 @@ export interface PriceRangeFilterNewProps {
 export const PriceRangeFilterNew: FC<PriceRangeFilterNewProps> = ({
   expanded,
 }) => {
-  const {
-    shouldStageFilterChanges,
-    currentlySelectedFilters,
-    setFilter,
-  } = useArtworkFilterContext()
-  const { priceRange, reset } = currentlySelectedFilters?.() ?? {}
+  const { shouldStageFilterChanges, setFilter } = useArtworkFilterContext()
+  const { priceRange, reset } = useCurrentlySelectedFilters()
   const [range, setRange] = useState(parseRange(priceRange))
   const sliderRange = parseSliderRange(range)
   const [minValue, maxValue] = range

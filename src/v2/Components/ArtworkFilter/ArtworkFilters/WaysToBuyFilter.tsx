@@ -6,13 +6,15 @@ import {
   SelectedFiltersCountsLabels,
   useArtworkFilterContext,
 } from "../ArtworkFilterContext"
+import { useCurrentlySelectedFilters } from "../useCurrentlySelectedFilters"
 import { useFilterLabelCountByKey } from "../Utils/useFilterLabelCountByKey"
 import { FilterExpandable } from "./FilterExpandable"
 
 interface WayToBuy {
-  disabled: any
+  selected: boolean
+  disabled: boolean
   name: string
-  state: keyof ArtworkFilters
+  key: keyof ArtworkFilters
 }
 
 export interface WaysToBuyFilterProps {
@@ -40,6 +42,7 @@ export const WAYS_TO_BUY_OPTIONS = {
 
 export const WaysToBuyFilter: FC<WaysToBuyFilterProps> = ({ expanded }) => {
   const filterContext = useArtworkFilterContext()
+  const currentSelectedFilters = useCurrentlySelectedFilters()
 
   const filtersCount = useFilterLabelCountByKey(
     SelectedFiltersCountsLabels.waysToBuy
@@ -58,11 +61,12 @@ export const WaysToBuyFilter: FC<WaysToBuyFilterProps> = ({ expanded }) => {
   }
 
   const checkboxes: WayToBuy[] = entries(WAYS_TO_BUY_OPTIONS).reduce(
-    (acc, [state, value]) => {
+    (acc, [key, value]) => {
       acc.push({
-        state: state as keyof ArtworkFilters,
+        key: key as keyof ArtworkFilters,
         name: value.name,
         disabled: isDisabled(filterContext.counts?.[value.countName]),
+        selected: !!currentSelectedFilters[key],
       })
       return acc
     },
@@ -74,12 +78,7 @@ export const WaysToBuyFilter: FC<WaysToBuyFilterProps> = ({ expanded }) => {
     v3: { my: 1 },
   })
 
-  const selection = filterContext.currentlySelectedFilters?.()
-  const hasSelection =
-    !!selection?.acquireable ||
-    !!selection?.offerable ||
-    !!selection?.atAuction ||
-    !!selection?.inquireableOnly
+  const hasSelection = checkboxes.some(checkbox => checkbox.selected)
 
   return (
     <FilterExpandable label={label} expanded={hasSelection || expanded}>
@@ -89,10 +88,8 @@ export const WaysToBuyFilter: FC<WaysToBuyFilterProps> = ({ expanded }) => {
             <Checkbox
               key={index}
               disabled={checkbox.disabled}
-              onSelect={value => filterContext.setFilter(checkbox.state, value)}
-              selected={Boolean(
-                filterContext.currentlySelectedFilters?.()[checkbox.state]
-              )}
+              onSelect={value => filterContext.setFilter(checkbox.key, value)}
+              selected={checkbox.selected}
               my={tokens.my}
             >
               {checkbox.name}

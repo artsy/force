@@ -1,9 +1,12 @@
-import { useMemo } from "react";
-import * as React from "react";
+import { useMemo } from "react"
+import * as React from "react"
 import { Box, Checkbox, Flex, Select, Spacer } from "@artsy/palette"
 import { FilterResetLink } from "v2/Components/FilterResetLink"
 import createLogger from "v2/Utils/logger"
-import { useAuctionResultsFilterContext } from "../../AuctionResultsFilterContext"
+import {
+  useAuctionResultsFilterContext,
+  useCurrentlySelectedFiltersForAuctionResults,
+} from "../../AuctionResultsFilterContext"
 import { FilterExpandable } from "v2/Components/ArtworkFilter/ArtworkFilters/FilterExpandable"
 import { ShowMore } from "v2/Components/ArtworkFilter/ArtworkFilters/ShowMore"
 
@@ -22,14 +25,15 @@ const buildDateRange = (startYear: number, endYear: number) =>
 
 export const YearCreated: React.FC = () => {
   const {
-    currentlySelectedFilters,
     setFilter,
     earliestCreatedYear,
     latestCreatedYear,
   } = useAuctionResultsFilterContext()
-
-  const { createdAfterYear, createdBeforeYear, allowEmptyCreatedDates } =
-    currentlySelectedFilters?.() || {}
+  const {
+    createdAfterYear,
+    createdBeforeYear,
+    allowEmptyCreatedDates,
+  } = useCurrentlySelectedFiltersForAuctionResults()
 
   const hasChanges =
     earliestCreatedYear !== createdAfterYear ||

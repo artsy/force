@@ -9,6 +9,7 @@ import { FilterExpandable } from "./FilterExpandable"
 import { INITIAL_ITEMS_TO_SHOW, ShowMore } from "./ShowMore"
 import { useFilterLabelCountByKey } from "../Utils/useFilterLabelCountByKey"
 import { sortResults } from "./Utils/sortResults"
+import { useCurrentlySelectedFilters } from "../useCurrentlySelectedFilters"
 
 export interface TimePeriodFilterProps {
   expanded?: boolean // set to true to force expansion
@@ -23,6 +24,7 @@ export const TimePeriodFilter: FC<TimePeriodFilterProps> = ({ expanded }) => {
     selectedFiltersCounts,
     ...filterContext
   } = useArtworkFilterContext()
+  const { majorPeriods = [] } = useCurrentlySelectedFilters()
   const timePeriods = aggregations?.find(agg => agg.slice === "MAJOR_PERIOD")
 
   const filtersCount = useFilterLabelCountByKey(
@@ -47,25 +49,24 @@ export const TimePeriodFilter: FC<TimePeriodFilterProps> = ({ expanded }) => {
   if (!periods.length) return null
 
   const togglePeriodSelection = (selected, period) => {
-    let majorPeriods =
-      filterContext.currentlySelectedFilters?.()?.majorPeriods?.slice() ?? []
+    let updatedValues = majorPeriods
+
     if (selected) {
-      majorPeriods.push(period)
+      updatedValues = [...updatedValues, period]
     } else {
-      majorPeriods = majorPeriods.filter(item => item !== period)
+      updatedValues = updatedValues.filter(item => item !== period)
     }
-    filterContext.setFilter("majorPeriods", majorPeriods)
+
+    filterContext.setFilter("majorPeriods", updatedValues)
   }
 
-  const currentFilters = filterContext.currentlySelectedFilters?.()
-  const hasBelowTheFoldMajorPeriodFilter =
-    intersection(
-      currentFilters?.majorPeriods ?? [],
-      periods.slice(INITIAL_ITEMS_TO_SHOW).map(({ name }) => name)
-    ).length > 0
-  const hasMajorPeriodFilter = (currentFilters?.majorPeriods?.length ?? 0) > 0
-
-  const resultsSorted = sortResults(currentFilters?.majorPeriods ?? [], periods)
+  const periodNames = periods.slice(INITIAL_ITEMS_TO_SHOW).map(({ name }) => {
+    return name
+  })
+  const intersectedPeriods = intersection(majorPeriods, periodNames)
+  const hasBelowTheFoldMajorPeriodFilter = intersectedPeriods.length > 0
+  const hasMajorPeriodFilter = majorPeriods.length > 0
+  const resultsSorted = sortResults(majorPeriods, periods)
 
   return (
     <FilterExpandable label={label} expanded={hasMajorPeriodFilter || expanded}>
@@ -74,7 +75,7 @@ export const TimePeriodFilter: FC<TimePeriodFilterProps> = ({ expanded }) => {
           {resultsSorted.map(({ name }, index) => {
             return (
               <Checkbox
-                selected={currentFilters?.majorPeriods?.includes(name)}
+                selected={majorPeriods.includes(name)}
                 key={index}
                 onSelect={selected => togglePeriodSelection(selected, name)}
                 my={tokens.my}

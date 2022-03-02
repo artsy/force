@@ -22,6 +22,7 @@ import { useFilterLabelCountByKey } from "../Utils/useFilterLabelCountByKey"
 import { useMode } from "v2/Utils/Hooks/useMode"
 import { getENV } from "v2/Utils/getENV"
 import { PriceRangeFilterNew } from "./PriceRangeFilterNew"
+import { useCurrentlySelectedFilters } from "../useCurrentlySelectedFilters"
 
 // Disables arrows in numeric inputs
 export const NumericInput = styled(LabeledInput).attrs({ type: "number" })`
@@ -82,10 +83,10 @@ export const PriceRangeFilterOld: FC<PriceRangeFilterProps> = ({
 }) => {
   const [mode, setMode] = useMode<Mode>("resting")
 
-  const { currentlySelectedFilters, setFilter } = useArtworkFilterContext()
-  const { priceRange: initialRange, reset } = currentlySelectedFilters?.() ?? {}
+  const { setFilter } = useArtworkFilterContext()
+  const { priceRange, reset } = useCurrentlySelectedFilters()
 
-  const numericInitialRange = parseRange(initialRange)
+  const numericRange = parseRange(priceRange)
 
   const filtersCount = useFilterLabelCountByKey(
     SelectedFiltersCountsLabels.priceRange
@@ -94,13 +95,13 @@ export const PriceRangeFilterOld: FC<PriceRangeFilterProps> = ({
 
   const isCustomRange =
     // Has some kind of price range set (isn't default)
-    isCustomValue(initialRange) &&
+    isCustomValue(priceRange) &&
     // And isn't a pre-defined price range option
-    PRICE_RANGES.find(range => range.value === initialRange) === undefined
+    PRICE_RANGES.find(range => range.value === priceRange) === undefined
 
   const [showCustom, setShowCustom] = useState(isCustomRange)
   const [customRange, setCustomRange] = useState<CustomRange>(
-    numericInitialRange ?? DEFAULT_CUSTOM_RANGE
+    numericRange ?? DEFAULT_CUSTOM_RANGE
   )
 
   const handleClick = () => {
@@ -147,15 +148,14 @@ export const PriceRangeFilterOld: FC<PriceRangeFilterProps> = ({
     v3: { my: 1 },
   })
 
-  const selection = currentlySelectedFilters?.().priceRange
-  const hasSelection = selection && isCustomValue(selection)
+  const hasSelection = priceRange && isCustomValue(priceRange)
 
   useEffect(() => {
     // if price filter or filters state is being reset, then also clear local input state
-    if (reset || !isCustomValue(initialRange)) {
+    if (reset || !isCustomValue(priceRange)) {
       setCustomRange(["*", "*"])
     }
-  }, [reset, initialRange])
+  }, [reset, priceRange])
 
   return (
     <FilterExpandable label={label} expanded={hasSelection || expanded}>
@@ -170,7 +170,7 @@ export const PriceRangeFilterOld: FC<PriceRangeFilterProps> = ({
       <Flex flexDirection="column" alignItems="left">
         <RadioGroup
           deselectable
-          defaultValue={isCustomRange ? "custom" : initialRange}
+          defaultValue={isCustomRange ? "custom" : priceRange}
           onSelect={handleSelect}
         >
           {[

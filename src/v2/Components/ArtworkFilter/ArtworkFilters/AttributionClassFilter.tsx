@@ -6,6 +6,7 @@ import {
 } from "../ArtworkFilterContext"
 import { FilterExpandable } from "./FilterExpandable"
 import { useFilterLabelCountByKey } from "../Utils/useFilterLabelCountByKey"
+import { useCurrentlySelectedFilters } from "../useCurrentlySelectedFilters"
 
 export const checkboxValues = [
   {
@@ -33,7 +34,8 @@ export interface AttributionClassFilterProps {
 export const AttributionClassFilter: React.FC<AttributionClassFilterProps> = ({
   expanded,
 }) => {
-  const filterContext = useArtworkFilterContext()
+  const { setFilter } = useArtworkFilterContext()
+  const { attributionClass = [] } = useCurrentlySelectedFilters()
 
   const filtersCount = useFilterLabelCountByKey(
     SelectedFiltersCountsLabels.attributionClass
@@ -41,15 +43,15 @@ export const AttributionClassFilter: React.FC<AttributionClassFilterProps> = ({
   const label = `Rarity${filtersCount}`
 
   const toggleSelection = (selected, name) => {
-    let attributions =
-      filterContext.currentlySelectedFilters?.()?.attributionClass?.slice() ??
-      []
+    let updatedValues = attributionClass
 
-    selected
-      ? attributions.push(name)
-      : (attributions = attributions.filter(item => item !== name))
+    if (selected) {
+      updatedValues = [...updatedValues, name]
+    } else {
+      updatedValues = updatedValues.filter(item => item !== name)
+    }
 
-    filterContext.setFilter("attributionClass", attributions)
+    setFilter("attributionClass", updatedValues)
   }
 
   const tokens = useThemeConfig({
@@ -66,9 +68,7 @@ export const AttributionClassFilter: React.FC<AttributionClassFilterProps> = ({
               key={index}
               my={tokens.my}
               onSelect={selected => toggleSelection(selected, value)}
-              selected={filterContext
-                .currentlySelectedFilters?.()
-                .attributionClass?.includes(value)}
+              selected={attributionClass.includes(value)}
             >
               {name}
             </Checkbox>
