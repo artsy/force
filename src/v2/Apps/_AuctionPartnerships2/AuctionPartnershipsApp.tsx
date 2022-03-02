@@ -11,10 +11,13 @@ import {
   Input,
   Select,
   Checkbox,
+  ResponsiveBox,
 } from "@artsy/palette"
 import { Fragment } from "react"
+import { FullBleedHeader } from "v2/Components/FullBleedHeader"
 import { MetaTags } from "v2/Components/MetaTags"
 import { useLoadScript } from "v2/Utils/Hooks/useLoadScript"
+import { resized } from "v2/Utils/resized"
 
 export const AuctionPartnershipsApp: React.FC = () => {
   return (
@@ -42,15 +45,14 @@ export const AuctionPartnershipsApp: React.FC = () => {
   )
 }
 
-// TODO: replace all placeholder images with high res img assets
-
 const ArtsyForAuctions: React.FC = () => {
+  //TODO: replace with high res image asset
   const headerImage =
     "http://files.artsy.net/images/auctionpartnerships-lowres-header-temp.png"
 
   return (
     <Box>
-      <Image src={headerImage} width="100%" />
+      <FullBleedHeader src={headerImage} />
       <GridColumns gridRowGap={4}>
         <Column span={6}>
           <Text variant="xl">Artsy for Auctions</Text>
@@ -68,15 +70,30 @@ const ArtsyForAuctions: React.FC = () => {
 }
 
 const MarketplaceExperience: React.FC = () => {
+  // TODO: replace height/width in resized function with correct 1x values when image asset is loaded in browser tab
+  const image = resized("", {
+    // width: 910,
+    // height: 652,
+  })
+
   return (
     <GridColumns>
       <Column span={6}>
-        <Box
-          border="1px solid"
-          borderColor="black100"
-          width="100%"
-          height="480px"
-        ></Box>
+        <ResponsiveBox
+          aspectWidth={4}
+          aspectHeight={3}
+          maxWidth="100%"
+          bg="black10"
+        >
+          <Image
+            src={image.src}
+            width="100%"
+            height="100%"
+            srcSet={image.srcSet}
+            lazyLoad
+            alt=""
+          />
+        </ResponsiveBox>
       </Column>
       <Column span={6}>
         <Text variant="sm" textTransform="uppercase" mb={1}>
@@ -98,7 +115,7 @@ const MarketplaceExperience: React.FC = () => {
 }
 
 const PartnerWithArtsyForm: React.FC = () => {
-  // TODO: create a formik form and onSubmit send  data to marketo:
+  // TODO: create a formik form and onSubmit send data to marketo:
   // https://nation.marketo.com/t5/marketo-whisperer-blogs/make-a-marketo-form-submission-in-the-background/ba-p/246490
 
   useLoadScript({
@@ -206,15 +223,30 @@ const PartnerWithArtsyForm: React.FC = () => {
 }
 
 const GlobalAudienceReach: React.FC = () => {
+  // TODO: replace height/width in resized function with correct 1x values when image asset is loaded in browser tab
+  const image = resized("", {
+    // width: 910,
+    // height: 652,
+  })
+
   return (
     <GridColumns>
       <Column span={6}>
-        <Box
-          border="1px solid"
-          borderColor="black100"
-          width="100%"
-          height="480px"
-        ></Box>
+        <ResponsiveBox
+          aspectWidth={4}
+          aspectHeight={3}
+          maxWidth="100%"
+          bg="black10"
+        >
+          <Image
+            src={image.src}
+            width="100%"
+            height="100%"
+            srcSet={image.srcSet}
+            lazyLoad
+            alt=""
+          />
+        </ResponsiveBox>
       </Column>
       <Column span={6}>
         <Text textTransform="uppercase" mb={1}>
@@ -236,6 +268,12 @@ const GlobalAudienceReach: React.FC = () => {
 }
 
 const BiddingTools: React.FC = () => {
+  // TODO: replace height/width in resized function with correct 1x values when image asset is loaded in browser tab
+  const image = resized("", {
+    // width: 910,
+    // height: 652,
+  })
+
   return (
     <Box>
       <GridColumns>
@@ -257,12 +295,21 @@ const BiddingTools: React.FC = () => {
           </Text>
         </Column>
         <Column span={6}>
-          <Box
-            border="1px solid"
-            borderColor="black100"
-            width="100%"
-            height="480px"
-          ></Box>
+          <ResponsiveBox
+            aspectWidth={4}
+            aspectHeight={3}
+            maxWidth="100%"
+            bg="black10"
+          >
+            <Image
+              src={image.src}
+              width="100%"
+              height="100%"
+              srcSet={image.srcSet}
+              lazyLoad
+              alt=""
+            />
+          </ResponsiveBox>
         </Column>
       </GridColumns>
       <Spacer mt={6} />
@@ -283,15 +330,30 @@ const BiddingTools: React.FC = () => {
 }
 
 const ConsignmentsInfo: React.FC = () => {
+  // TODO: replace height/width in resized function with correct 1x values when image asset is loaded in browser tab
+  const image = resized("", {
+    // width: 910,
+    // height: 652,
+  })
+
   return (
     <GridColumns>
       <Column span={6}>
-        <Box
-          border="1px solid"
-          borderColor="black100"
-          width="100%"
-          height="480px"
-        ></Box>
+        <ResponsiveBox
+          aspectWidth={4}
+          aspectHeight={3}
+          maxWidth="100%"
+          bg="black10"
+        >
+          <Image
+            src={image.src}
+            width="100%"
+            height="100%"
+            srcSet={image.srcSet}
+            lazyLoad
+            alt=""
+          />
+        </ResponsiveBox>
       </Column>
       <Column span={6}>
         <Text textTransform="uppercase" mb={1}>
@@ -318,6 +380,12 @@ const ConsignmentsInfo: React.FC = () => {
 }
 
 const VisibilityInfoTop: React.FC = () => {
+  // TODO: replace height/width in resized function with correct 1x values when image asset is loaded in browser tab
+  const image = resized("", {
+    // width: 910,
+    // height: 652,
+  })
+
   return (
     <GridColumns>
       <Column span={6}>
@@ -338,19 +406,37 @@ const VisibilityInfoTop: React.FC = () => {
       </Column>
       <Column span={6}>
         <Flex flexDirection="column">
-          <Box
-            border="1px solid"
-            borderColor="black100"
-            width="100%"
-            height="480px"
-          ></Box>
+          <ResponsiveBox
+            aspectWidth={4}
+            aspectHeight={3}
+            maxWidth="100%"
+            bg="black10"
+          >
+            <Image
+              src={image.src}
+              width="100%"
+              height="100%"
+              srcSet={image.srcSet}
+              lazyLoad
+              alt=""
+            />
+          </ResponsiveBox>
           <Spacer mt={4} />
-          <Box
-            border="1px solid"
-            borderColor="black100"
-            width="100%"
-            height="400px"
-          ></Box>
+          <ResponsiveBox
+            aspectWidth={4}
+            aspectHeight={3}
+            maxWidth="100%"
+            bg="black10"
+          >
+            <Image
+              src={image.src}
+              width="100%"
+              height="100%"
+              srcSet={image.srcSet}
+              lazyLoad
+              alt=""
+            />
+          </ResponsiveBox>
           <Text>
             Social Media Coverage <br /> 1,700,000+ combined following across
             platforms
@@ -362,22 +448,46 @@ const VisibilityInfoTop: React.FC = () => {
 }
 
 const VisibilityInfoBottom: React.FC = () => {
+  // TODO: replace height/width in resized function with correct 1x values when image asset is loaded in browser tab
+  const image = resized("", {
+    // width: 910,
+    // height: 652,
+  })
+
   return (
     <GridColumns>
       <Column span={6}>
-        <Box
-          border="1px solid"
-          borderColor="black100"
-          width="100%"
-          height="480px"
-        ></Box>
+        <ResponsiveBox
+          aspectWidth={4}
+          aspectHeight={3}
+          maxWidth="100%"
+          bg="black10"
+        >
+          <Image
+            src={image.src}
+            width="100%"
+            height="100%"
+            srcSet={image.srcSet}
+            lazyLoad
+            alt=""
+          />
+        </ResponsiveBox>
         <Spacer mt={4} />
-        <Box
-          border="1px solid"
-          borderColor="black100"
-          width="100%"
-          height="400px"
-        ></Box>
+        <ResponsiveBox
+          aspectWidth={4}
+          aspectHeight={3}
+          maxWidth="100%"
+          bg="black10"
+        >
+          <Image
+            src={image.src}
+            width="100%"
+            height="100%"
+            srcSet={image.srcSet}
+            lazyLoad
+            alt=""
+          />
+        </ResponsiveBox>
       </Column>
       <Column span={6}>
         <Text textTransform="uppercase" mb={1}>
