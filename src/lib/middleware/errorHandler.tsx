@@ -36,6 +36,7 @@ import {
   injectGlobalStyles,
   ThemeProviderV3,
 } from "@artsy/palette"
+import createLogger from "v2/Utils/logger"
 
 const { GlobalStyles } = injectGlobalStyles()
 
@@ -67,6 +68,12 @@ export const errorHandlerMiddleware = async (
 
   if (enableLogging && err.status !== 404) {
     console.log(detail)
+  }
+
+  // Log server errors (code, stack trace) when in production mode
+  if (NODE_ENV === "production" && code >= 500) {
+    const logger = createLogger("lib/middleware/errorHandlerMiddleware")
+    logger.error(code, detail)
   }
 
   try {
