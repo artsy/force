@@ -1,10 +1,8 @@
 import loadable from "@loadable/component"
 import { AppRouteConfig } from "v2/System/Router/Route"
 import { graphql } from "react-relay"
-import { allowedFilters } from "v2/Components/ArtworkFilter/Utils/allowedFilters"
-
-import { paramsToCamelCase } from "v2/Components/ArtworkFilter/Utils/urlBuilder"
 import { redirectCollectionToArtistSeries } from "./Server/redirectCollectionToArtistSeries"
+import { getInitialFilterState } from "v2/Components/ArtworkFilter/Utils/getInitialFilterState"
 
 const CollectApp = loadable(
   () => import(/* webpackChunkName: "collectBundle" */ "./Routes/Collect"),
@@ -87,7 +85,7 @@ export const collectRoutes: AppRouteConfig[] = [
 ]
 
 function initializeVariablesWithFilterState(params, props) {
-  const initialFilterState = props.location ? props.location.query : {}
+  const initialFilterState = getInitialFilterState(props.location?.query ?? {})
 
   if (params.medium) {
     initialFilterState.medium = params.medium
@@ -127,7 +125,7 @@ function initializeVariablesWithFilterState(params, props) {
 
   const input = {
     sort: "-decayed_merch",
-    ...allowedFilters(paramsToCamelCase(initialFilterState)),
+    ...initialFilterState,
     first: 30,
   }
 
