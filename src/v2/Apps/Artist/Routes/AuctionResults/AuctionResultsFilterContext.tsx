@@ -1,5 +1,5 @@
-import { useContext, useReducer, useState } from "react";
-import * as React from "react";
+import { useContext, useReducer, useState } from "react"
+import * as React from "react"
 import { omit } from "lodash"
 import useDeepCompareEffect from "use-deep-compare-effect"
 
@@ -378,4 +378,10 @@ const AuctionResultsFilterReducer = (
 export const useAuctionResultsFilterContext = () => {
   const artworkFilterContext = useContext(AuctionResultsFilterContext)
   return artworkFilterContext
+}
+
+export const useCurrentlySelectedFiltersForAuctionResults = () => {
+  const { currentlySelectedFilters } = useAuctionResultsFilterContext()
+
+  return currentlySelectedFilters?.() ?? {}
 }

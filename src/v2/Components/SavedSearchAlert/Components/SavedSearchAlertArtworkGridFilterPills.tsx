@@ -21,12 +21,7 @@ interface SavedSearchAlertArtworkGridFilterPillsProps {
 
 export const SavedSearchAlertArtworkGridFilterPills: React.FC<SavedSearchAlertArtworkGridFilterPillsProps> = props => {
   const { savedSearchEntity } = props
-  const {
-    filters,
-    aggregations,
-    setFilter,
-    currentlySelectedFilters,
-  } = useArtworkFilterContext()
+  const { filters, aggregations, setFilter } = useArtworkFilterContext()
   const criteria = getSearchCriteriaFromFilters(
     savedSearchEntity.id,
     filters ?? {}
@@ -43,8 +38,7 @@ export const SavedSearchAlertArtworkGridFilterPills: React.FC<SavedSearchAlertAr
       return
     }
 
-    const filters = currentlySelectedFilters!()
-    let filterValue = filters[pill.filterName]
+    let filterValue = filters![pill.filterName]
 
     if (isArray(filterValue)) {
       filterValue = filterValue.filter(value => value !== pill.name)

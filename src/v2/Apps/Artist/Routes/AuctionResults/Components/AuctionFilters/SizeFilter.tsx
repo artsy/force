@@ -1,8 +1,11 @@
-import * as React from "react";
+import * as React from "react"
 import { Checkbox, Flex, Text } from "@artsy/palette"
 import { FilterExpandable } from "v2/Components/ArtworkFilter/ArtworkFilters/FilterExpandable"
 import { ShowMore } from "v2/Components/ArtworkFilter/ArtworkFilters/ShowMore"
-import { useAuctionResultsFilterContext } from "../../AuctionResultsFilterContext"
+import {
+  useAuctionResultsFilterContext,
+  useCurrentlySelectedFiltersForAuctionResults,
+} from "../../AuctionResultsFilterContext"
 
 export const sizeMap = [
   { displayName: "Small (under 40cm)", name: "SMALL" },
@@ -15,20 +18,19 @@ export const sizeMap = [
  * src/v2/Components/ArtworkFilter/ArtworkFilters/SizeFilter.tsx
  */
 export const SizeFilter: React.FC = () => {
-  const {
-    currentlySelectedFilters,
-    setFilter,
-  } = useAuctionResultsFilterContext()
-  const filters = currentlySelectedFilters?.()
+  const { setFilter } = useAuctionResultsFilterContext()
+  const { sizes = [] } = useCurrentlySelectedFiltersForAuctionResults()
 
   const toggleSelection = (selected: boolean, name: string) => {
-    let sizes = filters?.sizes?.slice() ?? []
+    let updatedValues = sizes
+
     if (selected) {
-      sizes.push(name)
+      updatedValues = [...updatedValues, name]
     } else {
-      sizes = sizes.filter(item => item !== name)
+      updatedValues = updatedValues.filter(item => item !== name)
     }
-    setFilter?.("sizes", sizes)
+
+    setFilter?.("sizes", updatedValues)
   }
 
   return (
@@ -46,7 +48,7 @@ export const SizeFilter: React.FC = () => {
                 toggleSelection(selected, name)
               },
               my: 1,
-              selected: filters?.sizes?.includes(name),
+              selected: sizes.includes(name),
               testID: `size-filter-${name}`,
             }
             return <Checkbox {...props}>{displayName}</Checkbox>
