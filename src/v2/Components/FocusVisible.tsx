@@ -1,6 +1,6 @@
 import "focus-visible"
-import { color } from "@artsy/palette"
 import { createGlobalStyle } from "styled-components"
+import { themeGet } from "@styled-system/theme-get"
 
 export const FocusVisible = createGlobalStyle`
   /**
@@ -13,6 +13,6 @@ export const FocusVisible = createGlobalStyle`
 
   /* Custom outlines on :focus-visible */
   .focus-visible {
-    outline: 1px solid ${color("purple100")};
+    outline: 1px solid ${themeGet("colors.blue100")};
   }
 `
