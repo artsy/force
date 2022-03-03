@@ -98,11 +98,7 @@ export const SavedSearchAlertListItem: React.FC<SavedSearchAlertListItemProps> =
         </AlertPill>
       ))}
       {item.labels.length > DISPLAYED_PILLS_COUNT && (
-        <Clickable
-          aria-label="yolo"
-          textDecoration="underline"
-          onClick={toggleExpandFilters}
-        >
+        <Clickable textDecoration="underline" onClick={toggleExpandFilters}>
           <Flex flexDirection="row" alignItems="center">
             <Text variant="sm">{toggleExpandFiltersText}</Text>
             <Icon height={18} width={18} ml={0.5} />
