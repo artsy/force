@@ -30,6 +30,10 @@ app.get(
         routes,
       })
 
+      if (res.locals.hasRedirected) {
+        return
+      }
+
       if (redirect) {
         res.redirect(status ?? 302, redirect.url)
         return

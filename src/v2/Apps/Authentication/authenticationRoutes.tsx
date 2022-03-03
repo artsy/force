@@ -152,6 +152,7 @@ export const authenticationRoutes: AppRouteConfig[] = [
     path: "/auth-redirect",
     onServerSideRender: props => {
       redirectPostAuth(props)
+      props.res.locals.hasRedirected = true
     },
   },
 ]
