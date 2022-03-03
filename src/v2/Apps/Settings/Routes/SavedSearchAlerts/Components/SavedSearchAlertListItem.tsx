@@ -1,5 +1,5 @@
 import { Box, Text, Flex, Clickable, Spacer, Pill } from "@artsy/palette"
-import { themeGet } from "@styled-system/theme-get"
+import { useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
 import { RouterLink } from "v2/System/Router/RouterLink"
@@ -8,10 +8,11 @@ import { EditAlertEntity } from "../types"
 
 export type SavedSearchAlertListItemVariant = "active" | "inactive"
 
-const AlertPill = styled(Pill)`
+const AlertPill = styled(Pill)<{ active: boolean }>`
   pointer-events: none;
-  border-color: ${themeGet("colors.black60")};
 `
+
+const DISPLAYED_PILLS_COUNT = 8
 
 interface SavedSearchAlertListItemProps {
   item: SavedSearchAlertListItem_item
@@ -25,6 +26,18 @@ export const SavedSearchAlertListItem: React.FC<SavedSearchAlertListItemProps> =
   onEditAlertClick,
 }) => {
   const viewAllHref = `${item.href}&search_criteria_id=${item.internalID}`
+  const [isExpanded, setIsExpanded] = useState(false)
+  const shouldDisplayAllFilters =
+    isExpanded && item.labels.length > DISPLAYED_PILLS_COUNT
+  const labels = shouldDisplayAllFilters
+    ? item.labels
+    : item.labels.slice(0, DISPLAYED_PILLS_COUNT)
+
+  const toggleExpandFilters = () => setIsExpanded(isExpanded => !isExpanded)
+
+  const toggleExpandFiltersText = isExpanded
+    ? "Close all filters"
+    : "Show all filters"
 
   return (
     <Box
@@ -68,11 +81,20 @@ export const SavedSearchAlertListItem: React.FC<SavedSearchAlertListItemProps> =
         </Flex>
       </Flex>
       <Spacer my={2} />
-      {item.labels.map(label => (
-        <AlertPill key={label.value} variant="textSquare" mr={1} mb={1}>
+      {labels.map(label => (
+        <AlertPill key={label.value} variant="textSquare" active mr={1} mb={1}>
           {label.value}
         </AlertPill>
       ))}
+      {item.labels.length > DISPLAYED_PILLS_COUNT && (
+        <Clickable
+          aria-label="yolo"
+          textDecoration="underline"
+          onClick={toggleExpandFilters}
+        >
+          <Text variant="sm">{toggleExpandFiltersText}</Text>
+        </Clickable>
+      )}
     </Box>
   )
 }
