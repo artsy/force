@@ -11,7 +11,6 @@ import {
 import { Formik } from "formik"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Aggregations } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
-import { getNamePlaceholder } from "v2/Components/SavedSearchAlert/Utils/getNamePlaceholder"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import { SavedSearchAlertEditFormQuery } from "v2/__generated__/SavedSearchAlertEditFormQuery.graphql"
 import { SavedSearchAlertEditForm_me } from "v2/__generated__/SavedSearchAlertEditForm_me.graphql"
@@ -82,7 +81,7 @@ const SavedSearchAlertEditForm: React.FC<SavedSearchAlertEditFormProps> = ({
     email: userAlertSettings.email,
   }
 
-  const namePlaceholder = getNamePlaceholder(entity.name, pills)
+  const namePlaceholder = entity.name
 
   const removePill = (pill: FilterPill) => {
     if (pill.isDefault) {
@@ -97,7 +96,6 @@ const SavedSearchAlertEditForm: React.FC<SavedSearchAlertEditFormProps> = ({
 
   const handleSubmit = async (values: SavedSearchAleftFormValues) => {
     try {
-      const namePlaceholder = getNamePlaceholder(entity.name, pills)
       const updatedAlertSettings = {
         ...values,
         name: values.name || namePlaceholder,
