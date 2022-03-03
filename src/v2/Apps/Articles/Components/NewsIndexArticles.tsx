@@ -1,10 +1,11 @@
 import { Box, Button, Join, Separator, Text } from "@artsy/palette"
-import { FC, useState } from "react"
+import { FC, Fragment, useState } from "react"
 import {
   createPaginationContainer,
   graphql,
   RelayPaginationProp,
 } from "react-relay"
+import { ArticleAd } from "v2/Apps/Article/Components/ArticleAd"
 import { ArticleBodyFragmentContainer } from "v2/Apps/Article/Components/ArticleBody"
 import { extractNodes } from "v2/Utils/extractNodes"
 import { NewsIndexArticles_viewer } from "v2/__generated__/NewsIndexArticles_viewer.graphql"
@@ -42,10 +43,21 @@ export const NewsIndexArticles: FC<NewsIndexArticlesProps> = ({
       <Join separator={<Separator my={4} />}>
         {articles.map((article, i) => {
           return (
-            <ArticleBodyFragmentContainer
-              key={article.internalID}
-              article={article}
-            />
+            <Fragment key={article.internalID}>
+              <ArticleBodyFragmentContainer article={article} />
+
+              {/* Insert an ad after every 6th, article; beginning with 3rd */}
+              {(i - 2) % 6 === 0 && (
+                <ArticleAd
+                  size="970x250"
+                  unit={(() => {
+                    if (i === 2) return "Desktop_Leaderboard1"
+                    if (i === 8) return "Desktop_Leaderboard2"
+                    return "Desktop_LeaderboardRepeat"
+                  })()}
+                />
+              )}
+            </Fragment>
           )
         })}
       </Join>

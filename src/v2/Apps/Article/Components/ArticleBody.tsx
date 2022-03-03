@@ -9,21 +9,17 @@ import {
   Image,
   FullBleed,
 } from "@artsy/palette"
-import { FC } from "react"
+import { FC, Fragment } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArticleBody_article } from "v2/__generated__/ArticleBody_article.graphql"
 import { ArticleShare } from "v2/Components/ArticleShare"
-import { ArticleSectionImageCollectionFragmentContainer } from "./Sections/ArticleSectionImageCollection"
-import { ArticleSectionTextFragmentContainer } from "./Sections/ArticleSectionText"
-import { ArticleSectionImageSetFragmentContainer } from "./Sections/ArticleSectionImageSet"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { ArticleHeaderFragmentContainer } from "./ArticleHeader"
-import { ArticleSectionVideoFragmentContainer } from "./Sections/ArticleSectionVideo"
-import { ArticleSectionSocialEmbedFragmentContainer } from "./Sections/ArticleSectionSocialEmbed"
-import { ArticleSectionEmbedFragmentContainer } from "./Sections/ArticleSectionEmbed"
 import { ArticleBylineFragmentContainer } from "./ArticleByline"
 import { ArticleContextProvider } from "./ArticleContext"
 import { ArticleAd } from "./ArticleAd"
+import { ArticleSectionFragmentContainer } from "./ArticleSection"
+import { ArticleSectionAdFragmentContainer } from "./ArticleSectionAd"
 
 interface ArticleBodyProps {
   article: ArticleBody_article
@@ -32,7 +28,7 @@ interface ArticleBodyProps {
 const ArticleBody: FC<ArticleBodyProps> = ({ article }) => {
   return (
     <ArticleContextProvider articleId={article.internalID}>
-      {article.layout !== "FEATURE" && (
+      {article.layout === "STANDARD" && (
         <FullBleed bg="black5" p={1}>
           <ArticleAd unit="Desktop_TopLeaderboard" size="970x250" />
         </FullBleed>
@@ -84,66 +80,20 @@ const ArticleBody: FC<ArticleBodyProps> = ({ article }) => {
 
           <Join separator={<Spacer mt={4} />}>
             {article.sections.map((section, i) => {
-              const isFirst = i === 0
+              const isFirst = article.layout === "FEATURE" && i === 0
               const isLast = i === article.sections.length - 1
 
-              switch (section.__typename) {
-                case "ArticleSectionText": {
-                  return (
-                    <ArticleSectionTextFragmentContainer
-                      key={i}
-                      section={section}
-                      isFirst={article.layout === "FEATURE" && isFirst}
-                      isLast={isLast}
-                    />
-                  )
-                }
+              return (
+                <Fragment key={i}>
+                  <ArticleSectionFragmentContainer
+                    isFirst={isFirst}
+                    isLast={isLast}
+                    section={section}
+                  />
 
-                case "ArticleSectionImageCollection": {
-                  return (
-                    <ArticleSectionImageCollectionFragmentContainer
-                      key={i}
-                      section={section}
-                    />
-                  )
-                }
-
-                case "ArticleSectionImageSet": {
-                  return (
-                    <ArticleSectionImageSetFragmentContainer
-                      key={i}
-                      section={section}
-                    />
-                  )
-                }
-
-                case "ArticleSectionVideo": {
-                  return (
-                    <ArticleSectionVideoFragmentContainer
-                      key={i}
-                      section={section}
-                    />
-                  )
-                }
-
-                case "ArticleSectionSocialEmbed": {
-                  return (
-                    <ArticleSectionSocialEmbedFragmentContainer
-                      key={i}
-                      section={section}
-                    />
-                  )
-                }
-
-                case "ArticleSectionEmbed": {
-                  return (
-                    <ArticleSectionEmbedFragmentContainer
-                      key={i}
-                      section={section}
-                    />
-                  )
-                }
-              }
+                  <ArticleSectionAdFragmentContainer article={article} i={i} />
+                </Fragment>
+              )
             })}
 
             <ArticleBylineFragmentContainer article={article} />
@@ -232,6 +182,7 @@ export const ArticleBodyFragmentContainer = createFragmentContainer(
       fragment ArticleBody_article on Article {
         ...ArticleHeader_article
         ...ArticleByline_article
+        ...ArticleSectionAd_article
         internalID
         layout
         title
@@ -242,13 +193,7 @@ export const ArticleBodyFragmentContainer = createFragmentContainer(
         href
         publishedAt(format: "MMM D, YYYY h:mma")
         sections {
-          __typename
-          ...ArticleSectionText_section
-          ...ArticleSectionImageCollection_section
-          ...ArticleSectionImageSet_section
-          ...ArticleSectionVideo_section
-          ...ArticleSectionSocialEmbed_section
-          ...ArticleSectionEmbed_section
+          ...ArticleSection_section
         }
         postscript
         relatedArticles {
