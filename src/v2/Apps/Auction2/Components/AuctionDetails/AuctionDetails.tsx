@@ -9,8 +9,6 @@ import {
 } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { AddToCalendar } from "./AddToCalendar"
-import { getLiveAuctionUrl } from "desktop/apps/auction/utils/urls"
-import { useSystemContext } from "v2/System"
 import { formatIsoDateNoZoneOffset } from "v2/Components/AddToCalendar/helpers"
 import { ContextModule } from "@artsy/cohesion"
 import { AuctionDetails_sale } from "v2/__generated__/AuctionDetails_sale.graphql"
@@ -25,11 +23,7 @@ interface AuctionDetailsProps {
 }
 
 const AuctionDetails: React.FC<AuctionDetailsProps> = ({ sale, me }) => {
-  const { user } = useSystemContext()
-
-  const liveAuctionUrl = getLiveAuctionUrl(sale.slug, {
-    isLoggedIn: Boolean(user),
-  })
+  const liveAuctionUrl = `${getENV("PREDICTION_URL")}/${sale.slug}`
 
   const endDate = sale.liveStartAt
     ? formatIsoDateNoZoneOffset(sale.liveStartAt, 4)

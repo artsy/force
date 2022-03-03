@@ -26,7 +26,7 @@ const AuctionArtworkFilter: React.FC<AuctionArtworkFilterProps> = ({
   const { aggregations, counts } = viewer.sidebarAggregations!
 
   return (
-    <ArtworkGridContextProvider isAuctionArtwork hideAuctionBadge>
+    <ArtworkGridContextProvider isAuctionArtwork>
       <ArtworkFilter
         aggregations={aggregations as Aggregations}
         filters={match && match.location.query}
@@ -99,7 +99,6 @@ export const getArtworkFilterInputArgs = (user?: User) => {
   // Shared with auctionRoutes
   return {
     aggregations,
-    atAuction: true,
     first: 10,
     sort: "sale_position",
   }
