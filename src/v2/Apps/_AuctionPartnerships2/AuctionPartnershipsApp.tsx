@@ -49,13 +49,13 @@ export const AuctionPartnershipsApp: React.FC = () => {
 }
 
 const ArtsyForAuctions: React.FC = () => {
-  //TODO: replace with high res image asset
   const headerImage =
     "http://files.artsy.net/images/auctionpartnerships-lowres-header-temp.png"
 
   return (
     <Box>
       <FullBleedHeader src={headerImage} />
+      <Spacer mb={4} />
       <GridColumns gridRowGap={4}>
         <Column span={6}>
           <Text variant="xl">Artsy for Auctions</Text>
@@ -73,21 +73,18 @@ const ArtsyForAuctions: React.FC = () => {
 }
 
 const MarketplaceExperience: React.FC = () => {
-  // TODO: replace height/width in resized function with correct 1x values when image asset is loaded in browser tab
-  const image = resized("", {
-    // width: 910,
-    // height: 652,
-  })
+  const image = resized(
+    "http://files.artsy.net/images/gallery-names/temp.jpeg",
+    {
+      width: 910,
+      height: 345,
+    }
+  )
 
   return (
     <GridColumns>
       <Column span={6}>
-        <ResponsiveBox
-          aspectWidth={4}
-          aspectHeight={3}
-          maxWidth="100%"
-          bg="black10"
-        >
+        <ResponsiveBox aspectWidth={4300} aspectHeight={1632} maxWidth="100%">
           <Image
             src={image.src}
             width="100%"
@@ -118,7 +115,7 @@ const MarketplaceExperience: React.FC = () => {
 }
 
 const PartnerWithArtsyForm: React.FC = () => {
-  // TODO: create a formik form and onSubmit send data to marketo:
+  // TODO: onSubmit send data to marketo:
   // https://nation.marketo.com/t5/marketo-whisperer-blogs/make-a-marketo-form-submission-in-the-background/ba-p/246490
 
   useLoadScript({
@@ -301,21 +298,18 @@ const PartnerWithArtsyForm: React.FC = () => {
 }
 
 const GlobalAudienceReach: React.FC = () => {
-  // TODO: replace height/width in resized function with correct 1x values when image asset is loaded in browser tab
-  const image = resized("", {
-    // width: 910,
-    // height: 652,
-  })
+  const image = resized(
+    "http://files.artsy.net/images/audience_map/temp.jpeg",
+    {
+      width: 910,
+      height: 387,
+    }
+  )
 
   return (
     <GridColumns>
       <Column span={6}>
-        <ResponsiveBox
-          aspectWidth={4}
-          aspectHeight={3}
-          maxWidth="100%"
-          bg="black10"
-        >
+        <ResponsiveBox aspectWidth={2208} aspectHeight={938} maxWidth="100%">
           <Image
             src={image.src}
             width="100%"
@@ -327,13 +321,13 @@ const GlobalAudienceReach: React.FC = () => {
         </ResponsiveBox>
       </Column>
       <Column span={6}>
-        <Text textTransform="uppercase" mb={1}>
+        <Text textTransform="uppercase" mb={1} variant="sm">
           Audience
         </Text>
         <Text variant="lg" mb={1}>
           Reach a Global Audience of 24+ Million Collectors and Art Lovers
         </Text>
-        <Text>
+        <Text variant="sm">
           Since launching in October 2012, Artsy has had over 24 million unique
           site visitors from 150+ countries across web and mobile, driven by
           organic search traffic, as well as growing engagement with the world's
@@ -346,23 +340,25 @@ const GlobalAudienceReach: React.FC = () => {
 }
 
 const BiddingTools: React.FC = () => {
-  // TODO: replace height/width in resized function with correct 1x values when image asset is loaded in browser tab
-  const image = resized("", {
-    // width: 910,
-    // height: 652,
-  })
+  const image = resized(
+    "http://files.artsy.net/images/auction-devices/temp.png",
+    {
+      width: 910,
+      height: 403,
+    }
+  )
 
   return (
     <Box>
       <GridColumns>
         <Column span={6}>
-          <Text textTransform="uppercase" mb={1}>
+          <Text textTransform="uppercase" mb={1} variant="sm">
             Access
           </Text>
           <Text variant="lg" mb={1}>
             Maximize Bids With Our User-Friendly Bidding Tools
           </Text>
-          <Text>
+          <Text variant="sm">
             Artsy delivers a beautifully designed online bidding
             experience—collectors can place bids from web, mobile, and tablet,
             while receiving notifications about the status of their bids. In
@@ -373,12 +369,7 @@ const BiddingTools: React.FC = () => {
           </Text>
         </Column>
         <Column span={6}>
-          <ResponsiveBox
-            aspectWidth={4}
-            aspectHeight={3}
-            maxWidth="100%"
-            bg="black10"
-          >
+          <ResponsiveBox aspectWidth={2256} aspectHeight={998} maxWidth="100%">
             <Image
               src={image.src}
               width="100%"
@@ -392,12 +383,13 @@ const BiddingTools: React.FC = () => {
       </GridColumns>
       <Spacer mt={6} />
       <GridColumns>
-        <Column span={12}>
+        <Column span={6} start={4}>
           <Text variant="lg" textColor="blue100">
             “Artsy's technology created a unique user experience which was
             essential to generating our most successful auction in years.”
           </Text>
-          <Text variant="sm" color="blue100">
+          <Spacer mb={4} />
+          <Text variant="sm" color="blue100" textAlign="right">
             — Renaud Proch, Executive Director, Independent Curators
             International
           </Text>
@@ -408,7 +400,6 @@ const BiddingTools: React.FC = () => {
 }
 
 const ConsignmentsInfo: React.FC = () => {
-  // TODO: replace height/width in resized function with correct 1x values when image asset is loaded in browser tab
   const image = resized("", {
     // width: 910,
     // height: 652,
@@ -417,12 +408,7 @@ const ConsignmentsInfo: React.FC = () => {
   return (
     <GridColumns>
       <Column span={6}>
-        <ResponsiveBox
-          aspectWidth={4}
-          aspectHeight={3}
-          maxWidth="100%"
-          bg="black10"
-        >
+        <ResponsiveBox aspectWidth={4} aspectHeight={3} maxWidth="100%">
           <Image
             src={image.src}
             width="100%"
@@ -434,13 +420,13 @@ const ConsignmentsInfo: React.FC = () => {
         </ResponsiveBox>
       </Column>
       <Column span={6}>
-        <Text textTransform="uppercase" mb={1}>
+        <Text textTransform="uppercase" mb={1} variant="sm">
           Consignments
         </Text>
         <Text variant="lg" mb={1}>
           Access to a Comprehensive Artwork Database
         </Text>
-        <Text>
+        <Text variant="sm">
           Artsy can be your additional source of consignments. Log in and
           seamlessly browse hundreds of vetted artworks from Modern to Post-War
           and Contemporary art. Artsy’s consignment experts have international
@@ -458,23 +444,30 @@ const ConsignmentsInfo: React.FC = () => {
 }
 
 const VisibilityInfoTop: React.FC = () => {
-  // TODO: replace height/width in resized function with correct 1x values when image asset is loaded in browser tab
-  const image = resized("", {
-    // width: 910,
-    // height: 652,
+  const image1 = resized("http://files.artsy.net/images/desktopbanner.png", {
+    width: 910,
+    height: 539,
   })
+
+  const image2 = resized(
+    "http://files.artsy.net/images/mobilebanner/temp.gif",
+    {
+      width: 240,
+      height: 350,
+    }
+  )
 
   return (
     <GridColumns>
       <Column span={6}>
-        <Text textTransform="uppercase" mb={1}>
+        <Text textTransform="uppercase" mb={1} variant="sm">
           Visibility
         </Text>
         <Text variant="lg" mb={1}>
           Exceptional Services to Reach New Collectors, Drive Bid Activity, and
           Promote Your Brand
         </Text>
-        <Text>
+        <Text variant="sm">
           Promotion on Artsy’s website, iPhone and iPad app, newsletter emails,
           personalized “Follow” emails, push notifications, and more. Rich
           contextual information, including artist biographies, lot
@@ -484,38 +477,34 @@ const VisibilityInfoTop: React.FC = () => {
       </Column>
       <Column span={6}>
         <Flex flexDirection="column">
-          <ResponsiveBox
-            aspectWidth={4}
-            aspectHeight={3}
-            maxWidth="100%"
-            bg="black10"
-          >
+          <ResponsiveBox aspectWidth={1668} aspectHeight={988} maxWidth="100%">
             <Image
-              src={image.src}
+              src={image1.src}
               width="100%"
               height="100%"
-              srcSet={image.srcSet}
+              srcSet={image1.srcSet}
               lazyLoad
               alt=""
             />
           </ResponsiveBox>
           <Spacer mt={4} />
           <ResponsiveBox
-            aspectWidth={4}
-            aspectHeight={3}
-            maxWidth="100%"
-            bg="black10"
+            aspectWidth={1144}
+            aspectHeight={1664}
+            maxWidth={240}
+            maxHeight={400}
+            mx="auto"
           >
             <Image
-              src={image.src}
+              src={image2.src}
               width="100%"
               height="100%"
-              srcSet={image.srcSet}
+              srcSet={image2.srcSet}
               lazyLoad
               alt=""
             />
           </ResponsiveBox>
-          <Text>
+          <Text variant="sm" textAlign="center" fontWeight="bold">
             Social Media Coverage <br /> 1,700,000+ combined following across
             platforms
           </Text>
@@ -526,56 +515,56 @@ const VisibilityInfoTop: React.FC = () => {
 }
 
 const VisibilityInfoBottom: React.FC = () => {
-  // TODO: replace height/width in resized function with correct 1x values when image asset is loaded in browser tab
-  const image = resized("", {
-    // width: 910,
-    // height: 652,
-  })
+  const image1 = resized(
+    "http://files.artsy.net/images/auction-kiosk/temp.png",
+    {
+      width: 910,
+      height: 585,
+    }
+  )
+
+  const image2 = resized(
+    "http://files.artsy.net/images/auction-projection/temp.png",
+    {
+      width: 910,
+      height: 586,
+    }
+  )
 
   return (
     <GridColumns>
       <Column span={6}>
-        <ResponsiveBox
-          aspectWidth={4}
-          aspectHeight={3}
-          maxWidth="100%"
-          bg="black10"
-        >
+        <ResponsiveBox aspectWidth={1096} aspectHeight={704} maxWidth="100%">
           <Image
-            src={image.src}
+            src={image1.src}
             width="100%"
             height="100%"
-            srcSet={image.srcSet}
+            srcSet={image1.srcSet}
             lazyLoad
             alt=""
           />
         </ResponsiveBox>
         <Spacer mt={4} />
-        <ResponsiveBox
-          aspectWidth={4}
-          aspectHeight={3}
-          maxWidth="100%"
-          bg="black10"
-        >
+        <ResponsiveBox aspectWidth={1094} aspectHeight={704} maxWidth="100%">
           <Image
-            src={image.src}
+            src={image2.src}
             width="100%"
             height="100%"
-            srcSet={image.srcSet}
+            srcSet={image2.srcSet}
             lazyLoad
             alt=""
           />
         </ResponsiveBox>
       </Column>
       <Column span={6}>
-        <Text textTransform="uppercase" mb={1}>
+        <Text textTransform="uppercase" mb={1} variant="sm">
           Visibility
         </Text>
         <Text variant="lg" mb={1}>
           Exceptional Services to Reach New Collectors, Drive Bid Activity, and
           Promote Your Brand
         </Text>
-        <Text>
+        <Text variant="sm">
           Promotion on Artsy’s website, iPhone and iPad app, newsletter emails,
           personalized “Follow” emails, push notifications, and more. Rich
           contextual information, including artist biographies, lot
@@ -591,13 +580,13 @@ const AuctionsSupportTeam: React.FC = () => {
   return (
     <GridColumns>
       <Column span={6}>
-        <Text textTransform="uppercase" mb={1}>
+        <Text textTransform="uppercase" mb={1} variant="sm">
           Support
         </Text>
         <Text variant="lg" mb={1}>
           We’re With You Every Step of the Way
         </Text>
-        <Text>
+        <Text variant="sm">
           Our auctions team is dedicated to delivering a world-class auction
           experience for collectors and our partners. We’ll lead you through
           every step of the process and assist with getting the most out of your
@@ -621,8 +610,8 @@ const AuctionsSupportTeam: React.FC = () => {
                   ></Avatar>
                   <Flex flexDirection="column">
                     <Text variant="lg">{specialist.name}</Text>
-                    <Text variant="md">{specialist.title}</Text>
-                    <Text variant="md" color="black60" mb={2}>
+                    <Text variant="sm">{specialist.title}</Text>
+                    <Text variant="sm" color="black60" mb={2}>
                       {specialist.location}
                     </Text>
                   </Flex>
@@ -636,23 +625,37 @@ const AuctionsSupportTeam: React.FC = () => {
   )
 }
 
-// TODO: replace with hardcocded Auction Partnership team data
-
 const AUCTIONS_PARTNERSHIPS_SPECIALISTS = [
   {
-    name: "name1",
-    title: "title1",
-    location: "location1",
-    email: "email1",
-    phone: "phone1",
-    photo: "photo1",
+    name: "Erica Lyon",
+    title: "Associate Director, Auction & Institutional Partnerships",
+    location: "",
+    email: "",
+    phone: "",
+    photo: "",
   },
   {
-    name: "name2",
-    title: "title2",
-    location: "location2",
-    email: "email2",
-    phone: "phone2",
-    photo: "photo2",
+    name: "Sophie Salamon",
+    title: "Senior Auction Manager, Partnerships",
+    location: "",
+    email: "",
+    phone: "",
+    photo: "",
+  },
+  {
+    name: "Chloé Bigio",
+    title: "Senior Auction Manager, Partnerships",
+    location: "",
+    email: "",
+    phone: "",
+    photo: "",
+  },
+  {
+    name: "Perry Weber",
+    title: "Manager, Auction Partnerships",
+    location: "",
+    email: "",
+    phone: "",
+    photo: "",
   },
 ]
