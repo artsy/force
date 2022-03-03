@@ -11,13 +11,15 @@ To use feature flagging, simply import the useFeatureFlagging method and pass in
 ```tsx
 import { useFeatureFlag } from 'v2/System/useFeatureFlag'
 
+
 function MyComponent({ props }) {
+  const showMyFeature = useFeatureFlag('extra-greeting')
+
   return (
     <div>
       <h1>Hello</h1>
 
-        {useFeatureFlag('extra-greeting') &&
-          // Our feature
+        {showMyFeature &&
           <ExtraGreeting>
         }
 
