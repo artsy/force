@@ -1,4 +1,14 @@
-import { Box, Text, Flex, Clickable, Spacer, Pill } from "@artsy/palette"
+import {
+  Box,
+  Text,
+  Flex,
+  Clickable,
+  Spacer,
+  Pill,
+  IconProps,
+  ArrowDownIcon,
+  ArrowUpIcon,
+} from "@artsy/palette"
 import { useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
@@ -27,6 +37,7 @@ export const SavedSearchAlertListItem: React.FC<SavedSearchAlertListItemProps> =
 }) => {
   const viewAllHref = `${item.href}&search_criteria_id=${item.internalID}`
   const [isExpanded, setIsExpanded] = useState(false)
+  const Icon: React.FC<IconProps> = isExpanded ? ArrowUpIcon : ArrowDownIcon
   const shouldDisplayAllFilters =
     isExpanded && item.labels.length > DISPLAYED_PILLS_COUNT
   const labels = shouldDisplayAllFilters
@@ -92,7 +103,10 @@ export const SavedSearchAlertListItem: React.FC<SavedSearchAlertListItemProps> =
           textDecoration="underline"
           onClick={toggleExpandFilters}
         >
-          <Text variant="sm">{toggleExpandFiltersText}</Text>
+          <Flex flexDirection="row" alignItems="center">
+            <Text variant="sm">{toggleExpandFiltersText}</Text>
+            <Icon height={18} width={18} ml={0.5} />
+          </Flex>
         </Clickable>
       )}
     </Box>
