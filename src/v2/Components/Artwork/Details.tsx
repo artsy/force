@@ -8,6 +8,7 @@ import {
 import { Details_artwork } from "v2/__generated__/Details_artwork.graphql"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
+import { useArtworkGridContext } from "../ArtworkGrid/ArtworkGridContext"
 
 interface DetailsProps {
   artwork: Details_artwork
@@ -26,7 +27,7 @@ const ConditionalLink: React.FC<
 }
 
 const ArtistLine: React.FC<DetailsProps> = ({
-  artwork: { cultural_maker, artists },
+  artwork: { culturalMaker, artists },
   includeLinks,
 }) => {
   const tokens = useThemeConfig({
@@ -38,36 +39,36 @@ const ArtistLine: React.FC<DetailsProps> = ({
     },
   })
 
-  if (cultural_maker) {
+  if (culturalMaker) {
     return (
       <Text variant={tokens.variant} overflowEllipsis>
-        {cultural_maker}
+        {culturalMaker}
       </Text>
     )
   }
 
-  if (artists && artists.length) {
-    return (
-      <Text variant={tokens.variant} overflowEllipsis>
-        {artists.map((artist, i) => {
-          if (!artist || !artist.href || !artist.name) return null
-
-          return (
-            <ConditionalLink
-              includeLinks={includeLinks}
-              href={artist.href}
-              key={i}
-            >
-              {artist.name}
-              {i !== artists.length - 1 && ", "}
-            </ConditionalLink>
-          )
-        })}
-      </Text>
-    )
+  if (!artists?.length) {
+    return null
   }
 
-  return null
+  return (
+    <Text variant={tokens.variant} overflowEllipsis>
+      {artists.map((artist, i) => {
+        if (!artist || !artist.href || !artist.name) return null
+
+        return (
+          <ConditionalLink
+            includeLinks={includeLinks}
+            href={artist.href}
+            key={i}
+          >
+            {artist.name}
+            {i !== artists.length - 1 && ", "}
+          </ConditionalLink>
+        )
+      })}
+    </Text>
+  )
 }
 
 const TitleLine: React.FC<DetailsProps> = ({
@@ -84,8 +85,7 @@ const TitleLine: React.FC<DetailsProps> = ({
   })
 
   return (
-    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-    <ConditionalLink includeLinks={includeLinks} href={href}>
+    <ConditionalLink includeLinks={includeLinks} href={href!}>
       <Text variant={tokens.variant} color="black60" overflowEllipsis>
         <i>{title}</i>
         {date && `, ${date}`}
@@ -96,7 +96,7 @@ const TitleLine: React.FC<DetailsProps> = ({
 
 const PartnerLine: React.FC<DetailsProps> = ({
   includeLinks,
-  artwork: { collecting_institution, partner },
+  artwork: { collectingInstitution, partner },
 }) => {
   const tokens = useThemeConfig({
     v2: {
@@ -107,18 +107,17 @@ const PartnerLine: React.FC<DetailsProps> = ({
     },
   })
 
-  if (collecting_institution) {
+  if (collectingInstitution) {
     return (
       <Text variant={tokens.variant} color="black60" overflowEllipsis>
-        {collecting_institution}
+        {collectingInstitution}
       </Text>
     )
   }
 
   if (partner) {
     return (
-      //  @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-      <ConditionalLink includeLinks={includeLinks} href={partner.href}>
+      <ConditionalLink includeLinks={includeLinks} href={partner?.href!}>
         <Text variant={tokens.variant} color="black60" overflowEllipsis>
           {partner.name}
         </Text>
@@ -156,37 +155,36 @@ const SaleInfoLine: React.FC<DetailsProps> = props => {
 }
 
 const SaleMessage: React.FC<DetailsProps> = ({
-  artwork: { sale, sale_message, sale_artwork },
+  artwork: { sale, saleMessage, saleArtwork },
 }) => {
-  if (sale?.is_auction && sale?.is_closed) {
+  if (sale?.isAuction && sale?.isClosed) {
     return <>Bidding closed</>
   }
 
-  if (sale?.is_auction) {
-    const highest_bid_display = sale_artwork?.highest_bid?.display
-    const opening_bid_display = sale_artwork?.opening_bid?.display
+  if (sale?.isAuction) {
+    const highestBid_display = saleArtwork?.highestBid?.display
+    const openingBid_display = saleArtwork?.openingBid?.display
 
-    return <>{highest_bid_display || opening_bid_display || ""}</>
+    return <>{highestBid_display || openingBid_display || ""}</>
   }
 
-  if (sale_message === "Contact For Price") {
+  if (saleMessage === "Contact For Price") {
     return <>Price on Request</>
   }
 
-  return <>{sale_message}</>
+  return <>{saleMessage}</>
 }
 
 const BidInfo: React.FC<DetailsProps> = ({
-  artwork: { sale, sale_artwork },
+  artwork: { sale, saleArtwork },
 }) => {
-  const inRunningAuction = sale?.is_auction && !sale?.is_closed
+  const inRunningAuction = sale?.isAuction && !sale?.isClosed
 
   if (!inRunningAuction) {
     return null
   }
 
-  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-  const bidderPositionCounts = sale_artwork?.counts.bidder_positions ?? 0
+  const bidderPositionCounts = saleArtwork?.counts?.bidderPositions ?? 0
 
   if (bidderPositionCounts === 0) {
     return null
@@ -205,8 +203,13 @@ export const Details: React.FC<DetailsProps> = ({
   hideSaleInfo,
   ...rest
 }) => {
+  const { artworkGridContext } = useArtworkGridContext()
+
   return (
     <>
+      {artworkGridContext?.isAuctionArtwork && (
+        <Text variant="xs">Lot {rest.artwork?.saleArtwork?.lotLabel}</Text>
+      )}
       {!hideArtistName && <ArtistLine {...rest} />}
       <TitleLine {...rest} />
       {!hidePartnerName && <PartnerLine {...rest} />}
@@ -221,30 +224,31 @@ export const DetailsFragmentContainer = createFragmentContainer(Details, {
       href
       title
       date
-      sale_message: saleMessage
-      cultural_maker: culturalMaker
+      saleMessage
+      culturalMaker
       artists(shallow: true) {
         id
         href
         name
       }
-      collecting_institution: collectingInstitution
+      collectingInstitution
       partner(shallow: true) {
         name
         href
       }
       sale {
-        is_auction: isAuction
-        is_closed: isClosed
+        isAuction
+        isClosed
       }
-      sale_artwork: saleArtwork {
+      saleArtwork {
+        lotLabel
         counts {
-          bidder_positions: bidderPositions
+          bidderPositions
         }
-        highest_bid: highestBid {
+        highestBid {
           display
         }
-        opening_bid: openingBid {
+        openingBid {
           display
         }
       }

@@ -79,6 +79,7 @@ export const auction2Routes: AppRouteConfig[] = [
       return {
         slug: params.slug,
         input: {
+          sort: "sale_position",
           ...initialFilterState,
           ...getArtworkFilterInputArgs(props.context.user),
           saleID: params.slug,

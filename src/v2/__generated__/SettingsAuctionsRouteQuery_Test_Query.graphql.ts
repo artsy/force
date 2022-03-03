@@ -29,32 +29,33 @@ fragment Details_artwork on Artwork {
   href
   title
   date
-  sale_message: saleMessage
-  cultural_maker: culturalMaker
+  saleMessage
+  culturalMaker
   artists(shallow: true) {
     id
     href
     name
   }
-  collecting_institution: collectingInstitution
+  collectingInstitution
   partner(shallow: true) {
     name
     href
     id
   }
   sale {
-    is_auction: isAuction
-    is_closed: isClosed
+    isAuction
+    isClosed
     id
   }
-  sale_artwork: saleArtwork {
+  saleArtwork {
+    lotLabel
     counts {
-      bidder_positions: bidderPositions
+      bidderPositions
     }
-    highest_bid: highestBid {
+    highestBid {
       display
     }
-    opening_bid: openingBid {
+    openingBid {
       display
     }
     id
@@ -127,38 +128,45 @@ var v0 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "isClosed",
+  "name": "lotLabel",
   "storageKey": null
 },
 v1 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "id",
+  "name": "isClosed",
   "storageKey": null
 },
 v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+},
+v3 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
   "name": "href",
   "storageKey": null
 },
-v3 = [
+v4 = [
   {
     "kind": "Literal",
     "name": "shallow",
     "value": true
   }
 ],
-v4 = {
+v5 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "name",
   "storageKey": null
 },
-v5 = [
+v6 = [
   {
     "alias": null,
     "args": null,
@@ -167,7 +175,7 @@ v5 = [
     "storageKey": null
   }
 ],
-v6 = [
+v7 = [
   {
     "alias": null,
     "args": null,
@@ -183,13 +191,7 @@ v6 = [
     "name": "saleArtwork",
     "plural": false,
     "selections": [
-      {
-        "alias": null,
-        "args": null,
-        "kind": "ScalarField",
-        "name": "lotLabel",
-        "storageKey": null
-      },
+      (v0/*: any*/),
       {
         "alias": null,
         "args": null,
@@ -198,8 +200,8 @@ v6 = [
         "name": "sale",
         "plural": false,
         "selections": [
-          (v0/*: any*/),
-          (v1/*: any*/)
+          (v1/*: any*/),
+          (v2/*: any*/)
         ],
         "storageKey": null
       },
@@ -211,7 +213,7 @@ v6 = [
         "name": "artwork",
         "plural": false,
         "selections": [
-          (v2/*: any*/),
+          (v3/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -227,14 +229,14 @@ v6 = [
             "storageKey": null
           },
           {
-            "alias": "sale_message",
+            "alias": null,
             "args": null,
             "kind": "ScalarField",
             "name": "saleMessage",
             "storageKey": null
           },
           {
-            "alias": "cultural_maker",
+            "alias": null,
             "args": null,
             "kind": "ScalarField",
             "name": "culturalMaker",
@@ -242,20 +244,20 @@ v6 = [
           },
           {
             "alias": null,
-            "args": (v3/*: any*/),
+            "args": (v4/*: any*/),
             "concreteType": "Artist",
             "kind": "LinkedField",
             "name": "artists",
             "plural": true,
             "selections": [
-              (v1/*: any*/),
               (v2/*: any*/),
-              (v4/*: any*/)
+              (v3/*: any*/),
+              (v5/*: any*/)
             ],
             "storageKey": "artists(shallow:true)"
           },
           {
-            "alias": "collecting_institution",
+            "alias": null,
             "args": null,
             "kind": "ScalarField",
             "name": "collectingInstitution",
@@ -263,15 +265,15 @@ v6 = [
           },
           {
             "alias": null,
-            "args": (v3/*: any*/),
+            "args": (v4/*: any*/),
             "concreteType": "Partner",
             "kind": "LinkedField",
             "name": "partner",
             "plural": false,
             "selections": [
-              (v4/*: any*/),
-              (v2/*: any*/),
-              (v1/*: any*/)
+              (v5/*: any*/),
+              (v3/*: any*/),
+              (v2/*: any*/)
             ],
             "storageKey": "partner(shallow:true)"
           },
@@ -284,31 +286,26 @@ v6 = [
             "plural": false,
             "selections": [
               {
-                "alias": "is_auction",
+                "alias": null,
                 "args": null,
                 "kind": "ScalarField",
                 "name": "isAuction",
                 "storageKey": null
               },
-              {
-                "alias": "is_closed",
-                "args": null,
-                "kind": "ScalarField",
-                "name": "isClosed",
-                "storageKey": null
-              },
-              (v1/*: any*/)
+              (v1/*: any*/),
+              (v2/*: any*/)
             ],
             "storageKey": null
           },
           {
-            "alias": "sale_artwork",
+            "alias": null,
             "args": null,
             "concreteType": "SaleArtwork",
             "kind": "LinkedField",
             "name": "saleArtwork",
             "plural": false,
             "selections": [
+              (v0/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -318,7 +315,7 @@ v6 = [
                 "plural": false,
                 "selections": [
                   {
-                    "alias": "bidder_positions",
+                    "alias": null,
                     "args": null,
                     "kind": "ScalarField",
                     "name": "bidderPositions",
@@ -328,26 +325,26 @@ v6 = [
                 "storageKey": null
               },
               {
-                "alias": "highest_bid",
+                "alias": null,
                 "args": null,
                 "concreteType": "SaleArtworkHighestBid",
                 "kind": "LinkedField",
                 "name": "highestBid",
                 "plural": false,
-                "selections": (v5/*: any*/),
+                "selections": (v6/*: any*/),
                 "storageKey": null
               },
               {
-                "alias": "opening_bid",
+                "alias": null,
                 "args": null,
                 "concreteType": "SaleArtworkOpeningBid",
                 "kind": "LinkedField",
                 "name": "openingBid",
                 "plural": false,
-                "selections": (v5/*: any*/),
+                "selections": (v6/*: any*/),
                 "storageKey": null
               },
-              (v1/*: any*/)
+              (v2/*: any*/)
             ],
             "storageKey": null
           },
@@ -398,106 +395,106 @@ v6 = [
             ],
             "storageKey": null
           },
-          (v1/*: any*/)
+          (v2/*: any*/)
         ],
         "storageKey": null
       },
-      (v1/*: any*/)
+      (v2/*: any*/)
     ],
     "storageKey": null
   }
 ],
-v7 = {
+v8 = {
   "enumValues": null,
   "nullable": true,
   "plural": true,
   "type": "LotStanding"
 },
-v8 = {
+v9 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "Boolean"
 },
-v9 = {
+v10 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "SaleArtwork"
 },
-v10 = {
+v11 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "Artwork"
 },
-v11 = {
+v12 = {
   "enumValues": null,
   "nullable": true,
   "plural": true,
   "type": "Artist"
 },
-v12 = {
+v13 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "String"
 },
-v13 = {
+v14 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "ID"
 },
-v14 = {
+v15 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "Image"
 },
-v15 = {
+v16 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "CroppedImageUrl"
 },
-v16 = {
+v17 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "String"
 },
-v17 = {
+v18 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "Partner"
 },
-v18 = {
+v19 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "Sale"
 },
-v19 = {
+v20 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "SaleArtworkCounts"
 },
-v20 = {
+v21 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "FormattedNumber"
 },
-v21 = {
+v22 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "SaleArtworkHighestBid"
 },
-v22 = {
+v23 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
@@ -557,7 +554,7 @@ return {
             "kind": "LinkedField",
             "name": "lotStandings",
             "plural": true,
-            "selections": (v6/*: any*/),
+            "selections": (v7/*: any*/),
             "storageKey": "lotStandings(live:true)"
           },
           {
@@ -573,7 +570,7 @@ return {
             "kind": "LinkedField",
             "name": "lotStandings",
             "plural": true,
-            "selections": (v6/*: any*/),
+            "selections": (v7/*: any*/),
             "storageKey": "lotStandings(live:false)"
           },
           {
@@ -641,9 +638,9 @@ return {
                         "name": "sale",
                         "plural": false,
                         "selections": [
-                          (v1/*: any*/),
-                          (v4/*: any*/),
                           (v2/*: any*/),
+                          (v5/*: any*/),
+                          (v3/*: any*/),
                           {
                             "alias": null,
                             "args": [
@@ -657,7 +654,7 @@ return {
                             "name": "startAt",
                             "storageKey": "startAt(format:\"MMMM D, h:mmA\")"
                           },
-                          (v0/*: any*/),
+                          (v1/*: any*/),
                           {
                             "alias": null,
                             "args": null,
@@ -668,7 +665,7 @@ return {
                         ],
                         "storageKey": null
                       },
-                      (v1/*: any*/)
+                      (v2/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -678,14 +675,14 @@ return {
             ],
             "storageKey": "saleRegistrationsConnection(first:10,isAuction:true,published:true,registered:false,sort:\"CREATED_AT_DESC\")"
           },
-          (v1/*: any*/)
+          (v2/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "eda3f047f51900eeb4a2bd640f261306",
+    "cacheID": "da994c8230cbee3e2e4f12c15a3726b8",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -695,87 +692,89 @@ return {
           "plural": false,
           "type": "Me"
         },
-        "me.activeLotStandings": (v7/*: any*/),
-        "me.activeLotStandings.isLeadingBidder": (v8/*: any*/),
-        "me.activeLotStandings.saleArtwork": (v9/*: any*/),
-        "me.activeLotStandings.saleArtwork.artwork": (v10/*: any*/),
-        "me.activeLotStandings.saleArtwork.artwork.artists": (v11/*: any*/),
-        "me.activeLotStandings.saleArtwork.artwork.artists.href": (v12/*: any*/),
-        "me.activeLotStandings.saleArtwork.artwork.artists.id": (v13/*: any*/),
-        "me.activeLotStandings.saleArtwork.artwork.artists.name": (v12/*: any*/),
-        "me.activeLotStandings.saleArtwork.artwork.collecting_institution": (v12/*: any*/),
-        "me.activeLotStandings.saleArtwork.artwork.cultural_maker": (v12/*: any*/),
-        "me.activeLotStandings.saleArtwork.artwork.date": (v12/*: any*/),
-        "me.activeLotStandings.saleArtwork.artwork.href": (v12/*: any*/),
-        "me.activeLotStandings.saleArtwork.artwork.id": (v13/*: any*/),
-        "me.activeLotStandings.saleArtwork.artwork.image": (v14/*: any*/),
-        "me.activeLotStandings.saleArtwork.artwork.image.cropped": (v15/*: any*/),
-        "me.activeLotStandings.saleArtwork.artwork.image.cropped.src": (v16/*: any*/),
-        "me.activeLotStandings.saleArtwork.artwork.image.cropped.srcSet": (v16/*: any*/),
-        "me.activeLotStandings.saleArtwork.artwork.partner": (v17/*: any*/),
-        "me.activeLotStandings.saleArtwork.artwork.partner.href": (v12/*: any*/),
-        "me.activeLotStandings.saleArtwork.artwork.partner.id": (v13/*: any*/),
-        "me.activeLotStandings.saleArtwork.artwork.partner.name": (v12/*: any*/),
-        "me.activeLotStandings.saleArtwork.artwork.sale": (v18/*: any*/),
-        "me.activeLotStandings.saleArtwork.artwork.sale.id": (v13/*: any*/),
-        "me.activeLotStandings.saleArtwork.artwork.sale.is_auction": (v8/*: any*/),
-        "me.activeLotStandings.saleArtwork.artwork.sale.is_closed": (v8/*: any*/),
-        "me.activeLotStandings.saleArtwork.artwork.sale_artwork": (v9/*: any*/),
-        "me.activeLotStandings.saleArtwork.artwork.sale_artwork.counts": (v19/*: any*/),
-        "me.activeLotStandings.saleArtwork.artwork.sale_artwork.counts.bidder_positions": (v20/*: any*/),
-        "me.activeLotStandings.saleArtwork.artwork.sale_artwork.highest_bid": (v21/*: any*/),
-        "me.activeLotStandings.saleArtwork.artwork.sale_artwork.highest_bid.display": (v12/*: any*/),
-        "me.activeLotStandings.saleArtwork.artwork.sale_artwork.id": (v13/*: any*/),
-        "me.activeLotStandings.saleArtwork.artwork.sale_artwork.opening_bid": (v22/*: any*/),
-        "me.activeLotStandings.saleArtwork.artwork.sale_artwork.opening_bid.display": (v12/*: any*/),
-        "me.activeLotStandings.saleArtwork.artwork.sale_message": (v12/*: any*/),
-        "me.activeLotStandings.saleArtwork.artwork.title": (v12/*: any*/),
-        "me.activeLotStandings.saleArtwork.id": (v13/*: any*/),
-        "me.activeLotStandings.saleArtwork.lotLabel": (v12/*: any*/),
-        "me.activeLotStandings.saleArtwork.sale": (v18/*: any*/),
-        "me.activeLotStandings.saleArtwork.sale.id": (v13/*: any*/),
-        "me.activeLotStandings.saleArtwork.sale.isClosed": (v8/*: any*/),
-        "me.id": (v13/*: any*/),
-        "me.inactiveLotStandings": (v7/*: any*/),
-        "me.inactiveLotStandings.isLeadingBidder": (v8/*: any*/),
-        "me.inactiveLotStandings.saleArtwork": (v9/*: any*/),
-        "me.inactiveLotStandings.saleArtwork.artwork": (v10/*: any*/),
-        "me.inactiveLotStandings.saleArtwork.artwork.artists": (v11/*: any*/),
-        "me.inactiveLotStandings.saleArtwork.artwork.artists.href": (v12/*: any*/),
-        "me.inactiveLotStandings.saleArtwork.artwork.artists.id": (v13/*: any*/),
-        "me.inactiveLotStandings.saleArtwork.artwork.artists.name": (v12/*: any*/),
-        "me.inactiveLotStandings.saleArtwork.artwork.collecting_institution": (v12/*: any*/),
-        "me.inactiveLotStandings.saleArtwork.artwork.cultural_maker": (v12/*: any*/),
-        "me.inactiveLotStandings.saleArtwork.artwork.date": (v12/*: any*/),
-        "me.inactiveLotStandings.saleArtwork.artwork.href": (v12/*: any*/),
-        "me.inactiveLotStandings.saleArtwork.artwork.id": (v13/*: any*/),
-        "me.inactiveLotStandings.saleArtwork.artwork.image": (v14/*: any*/),
-        "me.inactiveLotStandings.saleArtwork.artwork.image.cropped": (v15/*: any*/),
-        "me.inactiveLotStandings.saleArtwork.artwork.image.cropped.src": (v16/*: any*/),
-        "me.inactiveLotStandings.saleArtwork.artwork.image.cropped.srcSet": (v16/*: any*/),
-        "me.inactiveLotStandings.saleArtwork.artwork.partner": (v17/*: any*/),
-        "me.inactiveLotStandings.saleArtwork.artwork.partner.href": (v12/*: any*/),
-        "me.inactiveLotStandings.saleArtwork.artwork.partner.id": (v13/*: any*/),
-        "me.inactiveLotStandings.saleArtwork.artwork.partner.name": (v12/*: any*/),
-        "me.inactiveLotStandings.saleArtwork.artwork.sale": (v18/*: any*/),
-        "me.inactiveLotStandings.saleArtwork.artwork.sale.id": (v13/*: any*/),
-        "me.inactiveLotStandings.saleArtwork.artwork.sale.is_auction": (v8/*: any*/),
-        "me.inactiveLotStandings.saleArtwork.artwork.sale.is_closed": (v8/*: any*/),
-        "me.inactiveLotStandings.saleArtwork.artwork.sale_artwork": (v9/*: any*/),
-        "me.inactiveLotStandings.saleArtwork.artwork.sale_artwork.counts": (v19/*: any*/),
-        "me.inactiveLotStandings.saleArtwork.artwork.sale_artwork.counts.bidder_positions": (v20/*: any*/),
-        "me.inactiveLotStandings.saleArtwork.artwork.sale_artwork.highest_bid": (v21/*: any*/),
-        "me.inactiveLotStandings.saleArtwork.artwork.sale_artwork.highest_bid.display": (v12/*: any*/),
-        "me.inactiveLotStandings.saleArtwork.artwork.sale_artwork.id": (v13/*: any*/),
-        "me.inactiveLotStandings.saleArtwork.artwork.sale_artwork.opening_bid": (v22/*: any*/),
-        "me.inactiveLotStandings.saleArtwork.artwork.sale_artwork.opening_bid.display": (v12/*: any*/),
-        "me.inactiveLotStandings.saleArtwork.artwork.sale_message": (v12/*: any*/),
-        "me.inactiveLotStandings.saleArtwork.artwork.title": (v12/*: any*/),
-        "me.inactiveLotStandings.saleArtwork.id": (v13/*: any*/),
-        "me.inactiveLotStandings.saleArtwork.lotLabel": (v12/*: any*/),
-        "me.inactiveLotStandings.saleArtwork.sale": (v18/*: any*/),
-        "me.inactiveLotStandings.saleArtwork.sale.id": (v13/*: any*/),
-        "me.inactiveLotStandings.saleArtwork.sale.isClosed": (v8/*: any*/),
+        "me.activeLotStandings": (v8/*: any*/),
+        "me.activeLotStandings.isLeadingBidder": (v9/*: any*/),
+        "me.activeLotStandings.saleArtwork": (v10/*: any*/),
+        "me.activeLotStandings.saleArtwork.artwork": (v11/*: any*/),
+        "me.activeLotStandings.saleArtwork.artwork.artists": (v12/*: any*/),
+        "me.activeLotStandings.saleArtwork.artwork.artists.href": (v13/*: any*/),
+        "me.activeLotStandings.saleArtwork.artwork.artists.id": (v14/*: any*/),
+        "me.activeLotStandings.saleArtwork.artwork.artists.name": (v13/*: any*/),
+        "me.activeLotStandings.saleArtwork.artwork.collectingInstitution": (v13/*: any*/),
+        "me.activeLotStandings.saleArtwork.artwork.culturalMaker": (v13/*: any*/),
+        "me.activeLotStandings.saleArtwork.artwork.date": (v13/*: any*/),
+        "me.activeLotStandings.saleArtwork.artwork.href": (v13/*: any*/),
+        "me.activeLotStandings.saleArtwork.artwork.id": (v14/*: any*/),
+        "me.activeLotStandings.saleArtwork.artwork.image": (v15/*: any*/),
+        "me.activeLotStandings.saleArtwork.artwork.image.cropped": (v16/*: any*/),
+        "me.activeLotStandings.saleArtwork.artwork.image.cropped.src": (v17/*: any*/),
+        "me.activeLotStandings.saleArtwork.artwork.image.cropped.srcSet": (v17/*: any*/),
+        "me.activeLotStandings.saleArtwork.artwork.partner": (v18/*: any*/),
+        "me.activeLotStandings.saleArtwork.artwork.partner.href": (v13/*: any*/),
+        "me.activeLotStandings.saleArtwork.artwork.partner.id": (v14/*: any*/),
+        "me.activeLotStandings.saleArtwork.artwork.partner.name": (v13/*: any*/),
+        "me.activeLotStandings.saleArtwork.artwork.sale": (v19/*: any*/),
+        "me.activeLotStandings.saleArtwork.artwork.sale.id": (v14/*: any*/),
+        "me.activeLotStandings.saleArtwork.artwork.sale.isAuction": (v9/*: any*/),
+        "me.activeLotStandings.saleArtwork.artwork.sale.isClosed": (v9/*: any*/),
+        "me.activeLotStandings.saleArtwork.artwork.saleArtwork": (v10/*: any*/),
+        "me.activeLotStandings.saleArtwork.artwork.saleArtwork.counts": (v20/*: any*/),
+        "me.activeLotStandings.saleArtwork.artwork.saleArtwork.counts.bidderPositions": (v21/*: any*/),
+        "me.activeLotStandings.saleArtwork.artwork.saleArtwork.highestBid": (v22/*: any*/),
+        "me.activeLotStandings.saleArtwork.artwork.saleArtwork.highestBid.display": (v13/*: any*/),
+        "me.activeLotStandings.saleArtwork.artwork.saleArtwork.id": (v14/*: any*/),
+        "me.activeLotStandings.saleArtwork.artwork.saleArtwork.lotLabel": (v13/*: any*/),
+        "me.activeLotStandings.saleArtwork.artwork.saleArtwork.openingBid": (v23/*: any*/),
+        "me.activeLotStandings.saleArtwork.artwork.saleArtwork.openingBid.display": (v13/*: any*/),
+        "me.activeLotStandings.saleArtwork.artwork.saleMessage": (v13/*: any*/),
+        "me.activeLotStandings.saleArtwork.artwork.title": (v13/*: any*/),
+        "me.activeLotStandings.saleArtwork.id": (v14/*: any*/),
+        "me.activeLotStandings.saleArtwork.lotLabel": (v13/*: any*/),
+        "me.activeLotStandings.saleArtwork.sale": (v19/*: any*/),
+        "me.activeLotStandings.saleArtwork.sale.id": (v14/*: any*/),
+        "me.activeLotStandings.saleArtwork.sale.isClosed": (v9/*: any*/),
+        "me.id": (v14/*: any*/),
+        "me.inactiveLotStandings": (v8/*: any*/),
+        "me.inactiveLotStandings.isLeadingBidder": (v9/*: any*/),
+        "me.inactiveLotStandings.saleArtwork": (v10/*: any*/),
+        "me.inactiveLotStandings.saleArtwork.artwork": (v11/*: any*/),
+        "me.inactiveLotStandings.saleArtwork.artwork.artists": (v12/*: any*/),
+        "me.inactiveLotStandings.saleArtwork.artwork.artists.href": (v13/*: any*/),
+        "me.inactiveLotStandings.saleArtwork.artwork.artists.id": (v14/*: any*/),
+        "me.inactiveLotStandings.saleArtwork.artwork.artists.name": (v13/*: any*/),
+        "me.inactiveLotStandings.saleArtwork.artwork.collectingInstitution": (v13/*: any*/),
+        "me.inactiveLotStandings.saleArtwork.artwork.culturalMaker": (v13/*: any*/),
+        "me.inactiveLotStandings.saleArtwork.artwork.date": (v13/*: any*/),
+        "me.inactiveLotStandings.saleArtwork.artwork.href": (v13/*: any*/),
+        "me.inactiveLotStandings.saleArtwork.artwork.id": (v14/*: any*/),
+        "me.inactiveLotStandings.saleArtwork.artwork.image": (v15/*: any*/),
+        "me.inactiveLotStandings.saleArtwork.artwork.image.cropped": (v16/*: any*/),
+        "me.inactiveLotStandings.saleArtwork.artwork.image.cropped.src": (v17/*: any*/),
+        "me.inactiveLotStandings.saleArtwork.artwork.image.cropped.srcSet": (v17/*: any*/),
+        "me.inactiveLotStandings.saleArtwork.artwork.partner": (v18/*: any*/),
+        "me.inactiveLotStandings.saleArtwork.artwork.partner.href": (v13/*: any*/),
+        "me.inactiveLotStandings.saleArtwork.artwork.partner.id": (v14/*: any*/),
+        "me.inactiveLotStandings.saleArtwork.artwork.partner.name": (v13/*: any*/),
+        "me.inactiveLotStandings.saleArtwork.artwork.sale": (v19/*: any*/),
+        "me.inactiveLotStandings.saleArtwork.artwork.sale.id": (v14/*: any*/),
+        "me.inactiveLotStandings.saleArtwork.artwork.sale.isAuction": (v9/*: any*/),
+        "me.inactiveLotStandings.saleArtwork.artwork.sale.isClosed": (v9/*: any*/),
+        "me.inactiveLotStandings.saleArtwork.artwork.saleArtwork": (v10/*: any*/),
+        "me.inactiveLotStandings.saleArtwork.artwork.saleArtwork.counts": (v20/*: any*/),
+        "me.inactiveLotStandings.saleArtwork.artwork.saleArtwork.counts.bidderPositions": (v21/*: any*/),
+        "me.inactiveLotStandings.saleArtwork.artwork.saleArtwork.highestBid": (v22/*: any*/),
+        "me.inactiveLotStandings.saleArtwork.artwork.saleArtwork.highestBid.display": (v13/*: any*/),
+        "me.inactiveLotStandings.saleArtwork.artwork.saleArtwork.id": (v14/*: any*/),
+        "me.inactiveLotStandings.saleArtwork.artwork.saleArtwork.lotLabel": (v13/*: any*/),
+        "me.inactiveLotStandings.saleArtwork.artwork.saleArtwork.openingBid": (v23/*: any*/),
+        "me.inactiveLotStandings.saleArtwork.artwork.saleArtwork.openingBid.display": (v13/*: any*/),
+        "me.inactiveLotStandings.saleArtwork.artwork.saleMessage": (v13/*: any*/),
+        "me.inactiveLotStandings.saleArtwork.artwork.title": (v13/*: any*/),
+        "me.inactiveLotStandings.saleArtwork.id": (v14/*: any*/),
+        "me.inactiveLotStandings.saleArtwork.lotLabel": (v13/*: any*/),
+        "me.inactiveLotStandings.saleArtwork.sale": (v19/*: any*/),
+        "me.inactiveLotStandings.saleArtwork.sale.id": (v14/*: any*/),
+        "me.inactiveLotStandings.saleArtwork.sale.isClosed": (v9/*: any*/),
         "me.saleRegistrationsConnection": {
           "enumValues": null,
           "nullable": true,
@@ -794,20 +793,20 @@ return {
           "plural": false,
           "type": "SaleRegistration"
         },
-        "me.saleRegistrationsConnection.edges.node.id": (v13/*: any*/),
-        "me.saleRegistrationsConnection.edges.node.isRegistered": (v8/*: any*/),
-        "me.saleRegistrationsConnection.edges.node.sale": (v18/*: any*/),
-        "me.saleRegistrationsConnection.edges.node.sale.href": (v12/*: any*/),
-        "me.saleRegistrationsConnection.edges.node.sale.id": (v13/*: any*/),
-        "me.saleRegistrationsConnection.edges.node.sale.isClosed": (v8/*: any*/),
-        "me.saleRegistrationsConnection.edges.node.sale.isRegistrationClosed": (v8/*: any*/),
-        "me.saleRegistrationsConnection.edges.node.sale.name": (v12/*: any*/),
-        "me.saleRegistrationsConnection.edges.node.sale.startAt": (v12/*: any*/)
+        "me.saleRegistrationsConnection.edges.node.id": (v14/*: any*/),
+        "me.saleRegistrationsConnection.edges.node.isRegistered": (v9/*: any*/),
+        "me.saleRegistrationsConnection.edges.node.sale": (v19/*: any*/),
+        "me.saleRegistrationsConnection.edges.node.sale.href": (v13/*: any*/),
+        "me.saleRegistrationsConnection.edges.node.sale.id": (v14/*: any*/),
+        "me.saleRegistrationsConnection.edges.node.sale.isClosed": (v9/*: any*/),
+        "me.saleRegistrationsConnection.edges.node.sale.isRegistrationClosed": (v9/*: any*/),
+        "me.saleRegistrationsConnection.edges.node.sale.name": (v13/*: any*/),
+        "me.saleRegistrationsConnection.edges.node.sale.startAt": (v13/*: any*/)
       }
     },
     "name": "SettingsAuctionsRouteQuery_Test_Query",
     "operationKind": "query",
-    "text": "query SettingsAuctionsRouteQuery_Test_Query {\n  me {\n    ...SettingsAuctionsRoute_me\n    id\n  }\n}\n\nfragment Details_artwork on Artwork {\n  href\n  title\n  date\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n}\n\nfragment SettingsAuctionsLotStanding_lotStanding on LotStanding {\n  isLeadingBidder\n  saleArtwork {\n    lotLabel\n    sale {\n      isClosed\n      id\n    }\n    artwork {\n      ...Details_artwork\n      href\n      image {\n        cropped(height: 100, width: 100) {\n          src\n          srcSet\n        }\n      }\n      id\n    }\n    id\n  }\n}\n\nfragment SettingsAuctionsRoute_me on Me {\n  ...UserActiveBids_me\n  ...UserBidHistory_me\n  ...UserRegistrationAuctions_me\n}\n\nfragment UserActiveBids_me on Me {\n  activeLotStandings: lotStandings(live: true) {\n    ...SettingsAuctionsLotStanding_lotStanding\n  }\n}\n\nfragment UserBidHistory_me on Me {\n  inactiveLotStandings: lotStandings(live: false) {\n    ...SettingsAuctionsLotStanding_lotStanding\n  }\n}\n\nfragment UserRegistrationAuctions_me on Me {\n  saleRegistrationsConnection(published: true, isAuction: true, sort: CREATED_AT_DESC, first: 10, registered: false) {\n    edges {\n      node {\n        isRegistered\n        sale {\n          id\n          name\n          href\n          startAt(format: \"MMMM D, h:mmA\")\n          isClosed\n          isRegistrationClosed\n        }\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query SettingsAuctionsRouteQuery_Test_Query {\n  me {\n    ...SettingsAuctionsRoute_me\n    id\n  }\n}\n\nfragment Details_artwork on Artwork {\n  href\n  title\n  date\n  saleMessage\n  culturalMaker\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    isAuction\n    isClosed\n    id\n  }\n  saleArtwork {\n    lotLabel\n    counts {\n      bidderPositions\n    }\n    highestBid {\n      display\n    }\n    openingBid {\n      display\n    }\n    id\n  }\n}\n\nfragment SettingsAuctionsLotStanding_lotStanding on LotStanding {\n  isLeadingBidder\n  saleArtwork {\n    lotLabel\n    sale {\n      isClosed\n      id\n    }\n    artwork {\n      ...Details_artwork\n      href\n      image {\n        cropped(height: 100, width: 100) {\n          src\n          srcSet\n        }\n      }\n      id\n    }\n    id\n  }\n}\n\nfragment SettingsAuctionsRoute_me on Me {\n  ...UserActiveBids_me\n  ...UserBidHistory_me\n  ...UserRegistrationAuctions_me\n}\n\nfragment UserActiveBids_me on Me {\n  activeLotStandings: lotStandings(live: true) {\n    ...SettingsAuctionsLotStanding_lotStanding\n  }\n}\n\nfragment UserBidHistory_me on Me {\n  inactiveLotStandings: lotStandings(live: false) {\n    ...SettingsAuctionsLotStanding_lotStanding\n  }\n}\n\nfragment UserRegistrationAuctions_me on Me {\n  saleRegistrationsConnection(published: true, isAuction: true, sort: CREATED_AT_DESC, first: 10, registered: false) {\n    edges {\n      node {\n        isRegistered\n        sale {\n          id\n          name\n          href\n          startAt(format: \"MMMM D, h:mmA\")\n          isClosed\n          isRegistrationClosed\n        }\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();

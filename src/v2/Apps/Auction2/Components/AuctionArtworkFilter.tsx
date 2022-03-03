@@ -8,6 +8,7 @@ import {
 import { ArtistsFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/ArtistsFilter"
 import { MediumFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/MediumFilter"
 import { PriceRangeFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/PriceRangeFilter"
+import { ArtworkGridContextProvider } from "v2/Components/ArtworkGrid/ArtworkGridContext"
 import { useSystemContext } from "v2/System"
 import { AuctionArtworkFilter_viewer } from "v2/__generated__/AuctionArtworkFilter_viewer.graphql"
 
@@ -25,31 +26,33 @@ const AuctionArtworkFilter: React.FC<AuctionArtworkFilterProps> = ({
   const { aggregations, counts } = viewer.sidebarAggregations!
 
   return (
-    <ArtworkFilter
-      aggregations={aggregations as Aggregations}
-      filters={match && match.location.query}
-      counts={counts as Counts}
-      relayRefetchInputVariables={{
-        ...getArtworkFilterInputArgs(user),
-        saleID: match.params.slug,
-      }}
-      sortOptions={[
-        { text: "Lot Number (asc.)", value: "sale_position" },
-        { text: "Lot Number (desc.)", value: "-sale_position" },
-        { text: "Most Bids", value: "-bidder_positions_count" },
-        { text: "Least Bids", value: "bidder_positions_count" },
-        { text: "Price (asc.)", value: "prices" },
-        { text: "Price (desc.)", value: "-prices" },
-      ]}
-      viewer={viewer}
-      Filters={
-        <>
-          <ArtistsFilter expanded />
-          <PriceRangeFilter expanded />
-          <MediumFilter expanded />
-        </>
-      }
-    />
+    <ArtworkGridContextProvider isAuctionArtwork hideAuctionBadge>
+      <ArtworkFilter
+        aggregations={aggregations as Aggregations}
+        filters={match && match.location.query}
+        counts={counts as Counts}
+        relayRefetchInputVariables={{
+          ...getArtworkFilterInputArgs(user),
+          saleID: match.params.slug,
+        }}
+        sortOptions={[
+          { text: "Lot Number (asc.)", value: "sale_position" },
+          { text: "Lot Number (desc.)", value: "-sale_position" },
+          { text: "Most Bids", value: "-bidder_positions_count" },
+          { text: "Least Bids", value: "bidder_positions_count" },
+          { text: "Price (asc.)", value: "prices" },
+          { text: "Price (desc.)", value: "-prices" },
+        ]}
+        viewer={viewer}
+        Filters={
+          <>
+            <ArtistsFilter expanded />
+            <PriceRangeFilter expanded />
+            <MediumFilter expanded />
+          </>
+        }
+      />
+    </ArtworkGridContextProvider>
   )
 }
 
@@ -98,5 +101,6 @@ export const getArtworkFilterInputArgs = (user?: User) => {
     aggregations,
     atAuction: true,
     first: 10,
+    sort: "sale_position",
   }
 }
