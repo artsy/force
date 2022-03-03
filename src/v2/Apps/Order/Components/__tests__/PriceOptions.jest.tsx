@@ -1,6 +1,7 @@
 import { PriceOptionsFragmentContainer } from "../PriceOptions"
 import { setupTestWrapperTL } from "v2/DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
+import { MockBoot } from "v2/DevTools"
 import { fireEvent, screen, within } from "@testing-library/react"
 import { useTracking } from "react-tracking"
 import { PriceOptions_Test_Query } from "v2/__generated__/PriceOptions_Test_Query.graphql"
@@ -21,12 +22,14 @@ jest.mock("v2/Utils/Hooks/useMatchMedia", () => ({
 const { renderWithRelay } = setupTestWrapperTL<PriceOptions_Test_Query>({
   Component: props => {
     return (
-      <PriceOptionsFragmentContainer
-        order={props.me!.orders!.edges![0]!.node!}
-        onChange={onChange}
-        onFocus={onFocus}
-        showError={showError()}
-      />
+      <MockBoot>
+        <PriceOptionsFragmentContainer
+          order={props.me!.orders!.edges![0]!.node!}
+          onChange={onChange}
+          onFocus={onFocus}
+          showError={showError()}
+        />
+      </MockBoot>
     )
   },
   query: graphql`
@@ -53,14 +56,17 @@ const getTrackingObject = (
 ) => ({
   action: "clickedOfferOption",
   flow: "Make offer",
-  order_id: '<mock-value-for-field-"internalID">',
+  order_id: "ID",
   currency,
   offer,
   amount,
+  context_page_owner_id: undefined,
+  context_page_owner_type: "home",
 })
 
 describe("PriceOptions", () => {
   beforeEach(() => {
+    trackEvent.mockClear()
     mockUseTracking.mockImplementation(() => ({
       trackEvent,
     }))
@@ -190,7 +196,7 @@ describe("PriceOptions", () => {
             {
               node: {
                 internalID: "ID",
-                currencyCode: "€",
+                currencyCode: "EUR",
                 lineItems: {
                   edges: [
                     {
@@ -215,7 +221,6 @@ describe("PriceOptions", () => {
       radios = screen.getAllByRole("radio")
     })
     it("renders all radio options", () => {
-      const radios = screen.findByRole("radio")
       expect(radios).toHaveLength(4)
     })
     it("correctly formats values", () => {
@@ -228,19 +233,19 @@ describe("PriceOptions", () => {
       fireEvent.click(radios[0])
       expect(trackEvent).toHaveBeenLastCalledWith(
         expect.objectContaining(
-          getTrackingObject("20% below the list price", 80, "€")
+          getTrackingObject("20% below the list price", 80, "EUR")
         )
       )
       fireEvent.click(radios[1])
       expect(trackEvent).toHaveBeenLastCalledWith(
         expect.objectContaining(
-          getTrackingObject("15% below the list price", 85, "€")
+          getTrackingObject("15% below the list price", 85, "EUR")
         )
       )
       fireEvent.click(radios[2])
       expect(trackEvent).toHaveBeenLastCalledWith(
         expect.objectContaining(
-          getTrackingObject("10% below the list price", 90, "€")
+          getTrackingObject("10% below the list price", 90, "EUR")
         )
       )
       fireEvent.click(radios[3])
