@@ -2,6 +2,12 @@ import { useTracking } from "react-tracking"
 import { AnalyticsSchema } from "v2/System"
 import { formatError } from "v2/Apps/Auction2/Components/Form/Utils"
 
+/**
+ * Tracking TODO:
+ * - contextModule name for buy now rail artwork
+ *
+ */
+
 export const useAuctionTracking = () => {
   const { trackEvent } = useTracking()
 

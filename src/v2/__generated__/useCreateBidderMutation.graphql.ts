@@ -46,7 +46,7 @@ mutation useCreateBidderMutation(
 
 fragment Auction2App_sale on Sale {
   ...Auction2Meta_sale
-  ...AuctionPromotedSaleRail_sale
+  ...AuctionBuyNowRail_sale
   ...AuctionDetails_sale
   internalID
   coverImage {
@@ -66,25 +66,7 @@ fragment Auction2Meta_sale on Sale {
   slug
 }
 
-fragment AuctionDetails_sale on Sale {
-  ...RegisterButton_sale
-  ...AuctionInfoSidebar_sale
-  name
-  slug
-  formattedStartDateTime
-  liveStartAt
-  startAt
-  endAt
-  description(format: HTML)
-  href
-  isClosed
-}
-
-fragment AuctionInfoSidebar_sale on Sale {
-  liveStartAt
-}
-
-fragment AuctionPromotedSaleRail_sale on Sale {
+fragment AuctionBuyNowRail_sale on Sale {
   promotedSale {
     href
     internalID
@@ -102,6 +84,24 @@ fragment AuctionPromotedSaleRail_sale on Sale {
     }
     id
   }
+}
+
+fragment AuctionDetails_sale on Sale {
+  ...RegisterButton_sale
+  ...AuctionInfoSidebar_sale
+  name
+  slug
+  formattedStartDateTime
+  liveStartAt
+  startAt
+  endAt
+  description(format: HTML)
+  href
+  isClosed
+}
+
+fragment AuctionInfoSidebar_sale on Sale {
+  liveStartAt
 }
 
 fragment Badge_artwork on Artwork {
@@ -915,12 +915,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "78d6dc4330118880d78e48cf77438db3",
+    "cacheID": "79bd5fe517a83e34313d61b178bade43",
     "id": null,
     "metadata": {},
     "name": "useCreateBidderMutation",
     "operationKind": "mutation",
-    "text": "mutation useCreateBidderMutation(\n  $input: CreateBidderInput!\n) {\n  createBidder(input: $input) {\n    bidder {\n      internalID\n      sale {\n        ...Auction2App_sale\n        id\n      }\n      id\n    }\n  }\n}\n\nfragment Auction2App_sale on Sale {\n  ...Auction2Meta_sale\n  ...AuctionPromotedSaleRail_sale\n  ...AuctionDetails_sale\n  internalID\n  coverImage {\n    cropped(width: 1800, height: 600, version: \"normalized\") {\n      src\n    }\n  }\n  showBuyNowTab: promotedSale {\n    internalID\n    id\n  }\n}\n\nfragment Auction2Meta_sale on Sale {\n  name\n  description(format: HTML)\n  slug\n}\n\nfragment AuctionDetails_sale on Sale {\n  ...RegisterButton_sale\n  ...AuctionInfoSidebar_sale\n  name\n  slug\n  formattedStartDateTime\n  liveStartAt\n  startAt\n  endAt\n  description(format: HTML)\n  href\n  isClosed\n}\n\nfragment AuctionInfoSidebar_sale on Sale {\n  liveStartAt\n}\n\nfragment AuctionPromotedSaleRail_sale on Sale {\n  promotedSale {\n    href\n    internalID\n    name\n    saleArtworksConnection(first: 99) {\n      edges {\n        node {\n          artwork {\n            ...ShelfArtwork_artwork\n            id\n          }\n          id\n        }\n      }\n    }\n    id\n  }\n}\n\nfragment Badge_artwork on Artwork {\n  is_biddable: isBiddable\n  href\n  sale {\n    is_preview: isPreview\n    display_timely_at: displayTimelyAt\n    id\n  }\n}\n\nfragment Contact_artwork on Artwork {\n  href\n  is_inquireable: isInquireable\n  sale {\n    is_auction: isAuction\n    is_live_open: isLiveOpen\n    is_open: isOpen\n    is_closed: isClosed\n    id\n  }\n  partner(shallow: true) {\n    type\n    id\n  }\n  sale_artwork: saleArtwork {\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    counts {\n      bidder_positions: bidderPositions\n    }\n    id\n  }\n}\n\nfragment Details_artwork on Artwork {\n  href\n  title\n  date\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n}\n\nfragment Metadata_artwork on Artwork {\n  ...Details_artwork\n  ...Contact_artwork\n  href\n}\n\nfragment RegisterButton_sale on Sale {\n  bidder {\n    qualifiedForBidding\n    id\n  }\n  isAuction\n  isClosed\n  isLiveOpen\n  isPreview\n  isRegistrationClosed\n  liveURLIfOpen\n  requireIdentityVerification\n  registrationStatus {\n    internalID\n    id\n  }\n  slug\n  status\n}\n\nfragment SaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  is_saved: isSaved\n  title\n}\n\nfragment ShelfArtwork_artwork on Artwork {\n  image {\n    resized(width: 200) {\n      src\n      srcSet\n      width\n      height\n    }\n    aspectRatio\n    height\n  }\n  imageTitle\n  title\n  href\n  is_saved: isSaved\n  ...Metadata_artwork\n  ...SaveButton_artwork\n  ...Badge_artwork\n}\n"
+    "text": "mutation useCreateBidderMutation(\n  $input: CreateBidderInput!\n) {\n  createBidder(input: $input) {\n    bidder {\n      internalID\n      sale {\n        ...Auction2App_sale\n        id\n      }\n      id\n    }\n  }\n}\n\nfragment Auction2App_sale on Sale {\n  ...Auction2Meta_sale\n  ...AuctionBuyNowRail_sale\n  ...AuctionDetails_sale\n  internalID\n  coverImage {\n    cropped(width: 1800, height: 600, version: \"normalized\") {\n      src\n    }\n  }\n  showBuyNowTab: promotedSale {\n    internalID\n    id\n  }\n}\n\nfragment Auction2Meta_sale on Sale {\n  name\n  description(format: HTML)\n  slug\n}\n\nfragment AuctionBuyNowRail_sale on Sale {\n  promotedSale {\n    href\n    internalID\n    name\n    saleArtworksConnection(first: 99) {\n      edges {\n        node {\n          artwork {\n            ...ShelfArtwork_artwork\n            id\n          }\n          id\n        }\n      }\n    }\n    id\n  }\n}\n\nfragment AuctionDetails_sale on Sale {\n  ...RegisterButton_sale\n  ...AuctionInfoSidebar_sale\n  name\n  slug\n  formattedStartDateTime\n  liveStartAt\n  startAt\n  endAt\n  description(format: HTML)\n  href\n  isClosed\n}\n\nfragment AuctionInfoSidebar_sale on Sale {\n  liveStartAt\n}\n\nfragment Badge_artwork on Artwork {\n  is_biddable: isBiddable\n  href\n  sale {\n    is_preview: isPreview\n    display_timely_at: displayTimelyAt\n    id\n  }\n}\n\nfragment Contact_artwork on Artwork {\n  href\n  is_inquireable: isInquireable\n  sale {\n    is_auction: isAuction\n    is_live_open: isLiveOpen\n    is_open: isOpen\n    is_closed: isClosed\n    id\n  }\n  partner(shallow: true) {\n    type\n    id\n  }\n  sale_artwork: saleArtwork {\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    counts {\n      bidder_positions: bidderPositions\n    }\n    id\n  }\n}\n\nfragment Details_artwork on Artwork {\n  href\n  title\n  date\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n}\n\nfragment Metadata_artwork on Artwork {\n  ...Details_artwork\n  ...Contact_artwork\n  href\n}\n\nfragment RegisterButton_sale on Sale {\n  bidder {\n    qualifiedForBidding\n    id\n  }\n  isAuction\n  isClosed\n  isLiveOpen\n  isPreview\n  isRegistrationClosed\n  liveURLIfOpen\n  requireIdentityVerification\n  registrationStatus {\n    internalID\n    id\n  }\n  slug\n  status\n}\n\nfragment SaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  is_saved: isSaved\n  title\n}\n\nfragment ShelfArtwork_artwork on Artwork {\n  image {\n    resized(width: 200) {\n      src\n      srcSet\n      width\n      height\n    }\n    aspectRatio\n    height\n  }\n  imageTitle\n  title\n  href\n  is_saved: isSaved\n  ...Metadata_artwork\n  ...SaveButton_artwork\n  ...Badge_artwork\n}\n"
   }
 };
 })();

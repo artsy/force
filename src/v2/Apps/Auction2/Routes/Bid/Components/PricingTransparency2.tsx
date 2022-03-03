@@ -17,7 +17,6 @@ import {
   Join,
   Flex,
 } from "@artsy/palette"
-import { usePrevious } from "v2/Utils/Hooks/usePrevious"
 import { useMemo } from "react"
 
 const PricingTransparency2: React.FC<PricingTransparency2QueryResponse> = props => {

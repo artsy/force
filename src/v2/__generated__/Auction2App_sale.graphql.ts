@@ -14,7 +14,7 @@ export type Auction2App_sale = {
     readonly showBuyNowTab: {
         readonly internalID: string;
     } | null;
-    readonly " $fragmentRefs": FragmentRefs<"Auction2Meta_sale" | "AuctionPromotedSaleRail_sale" | "AuctionDetails_sale">;
+    readonly " $fragmentRefs": FragmentRefs<"Auction2Meta_sale" | "AuctionBuyNowRail_sale" | "AuctionDetails_sale">;
     readonly " $refType": "Auction2App_sale";
 };
 export type Auction2App_sale$data = Auction2App_sale;
@@ -105,7 +105,7 @@ return {
     {
       "args": null,
       "kind": "FragmentSpread",
-      "name": "AuctionPromotedSaleRail_sale"
+      "name": "AuctionBuyNowRail_sale"
     },
     {
       "args": null,
@@ -117,5 +117,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '82a7c741834ff2eb665076067dbfa862';
+(node as any).hash = '64cba202aeff3362dae75284c9112929';
 export default node;

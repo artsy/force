@@ -14,6 +14,8 @@ import {
   AuctionFormValues,
 } from "v2/Apps/Auction2/Components/Form/Utils"
 import { useEffect } from "react"
+import { RouterLink } from "v2/System/Router/RouterLink"
+import { redirectToSaleHome } from "./Auction2RegistrationRoute"
 
 interface Auction2ConfirmRegistrationRouteProps {
   me: Auction2ConfirmRegistrationRoute_me
@@ -59,12 +61,11 @@ const Auction2ConfirmRegistrationRoute: React.FC<Auction2ConfirmRegistrationRout
     router.push(auctionURL)
   }
 
-  // Track page view
   useEffect(() => {
-    const isRegistered = sale?.bidder?.qualifiedForBidding
-
-    if (isRegistered) {
+    if (redirectToSaleHome(sale)) {
       router.replace(`/auction2/${sale.slug}`)
+
+      // Track page view
     } else {
       tracking.confirmRegistrationPageView()
     }
@@ -89,7 +90,17 @@ const Auction2ConfirmRegistrationRoute: React.FC<Auction2ConfirmRegistrationRout
                 ) : (
                   <Text variant="md">
                     Welcome back. To complete your registration, please confirm
-                    that you agree to the Conditions of Sale.
+                    that you agree to the{" "}
+                    <Text variant="md" display="inline">
+                      <RouterLink
+                        color="black100"
+                        to="/conditions-of-sale"
+                        target="_blank"
+                      >
+                        Conditions of Sale
+                      </RouterLink>
+                      .
+                    </Text>
                   </Text>
                 )}
 
@@ -122,6 +133,8 @@ export const Auction2ConfirmRegistrationRouteFragmentContainer = createFragmentC
         name
         internalID
         status
+        isClosed
+        isLiveOpen
         requireIdentityVerification
         bidder {
           qualifiedForBidding
