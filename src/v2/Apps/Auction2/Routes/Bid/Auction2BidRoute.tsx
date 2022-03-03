@@ -5,7 +5,7 @@ import { Auction2BidRoute_sale } from "v2/__generated__/Auction2BidRoute_sale.gr
 import { Auction2BidRoute_artwork } from "v2/__generated__/Auction2BidRoute_artwork.graphql"
 import { Auction2BidRoute_me } from "v2/__generated__/Auction2BidRoute_me.graphql"
 import { AuctionLotInfoFragmentContainer } from "./Components/AuctionLotInfo"
-import { dropWhile, isEmpty } from "lodash"
+import { dropWhile } from "lodash"
 import { Form, Formik } from "formik"
 import { PricingTransparency2QueryRenderer } from "./Components/PricingTransparency2"
 import { Match } from "found"

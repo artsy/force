@@ -175,8 +175,8 @@ const ArtworkArtistSeriesFixture: ArtworkArtistSeries_QueryRawResponse = {
                     imageTitle: "Pumpkin",
                     title: "Pumpkin",
                     date: "2020",
-                    sale_message: "Contact For Price",
-                    cultural_maker: null,
+                    saleMessage: "Contact For Price",
+                    culturalMaker: null,
                     artists: [
                       {
                         id: "artistabc123",
@@ -184,7 +184,7 @@ const ArtworkArtistSeriesFixture: ArtworkArtistSeries_QueryRawResponse = {
                         name: "Yayoi Kusama",
                       },
                     ],
-                    collecting_institution: null,
+                    collectingInstitution: null,
                     partner: {
                       name: "Important Auction House",
                       href: "/auction/important-auction-house",
@@ -192,6 +192,8 @@ const ArtworkArtistSeriesFixture: ArtworkArtistSeries_QueryRawResponse = {
                       type: "Auction House",
                     },
                     sale: {
+                      isAuction: true,
+                      isClosed: true,
                       is_auction: true,
                       is_closed: false,
                       id: "saleabc123",
@@ -200,14 +202,16 @@ const ArtworkArtistSeriesFixture: ArtworkArtistSeries_QueryRawResponse = {
                       is_preview: false,
                       display_timely_at: "live in 3d",
                     },
-                    sale_artwork: {
+                    sale_artwork: null,
+                    saleArtwork: {
+                      lotLabel: "2",
                       counts: {
-                        bidder_positions: 0,
+                        bidderPositions: 0,
                       },
-                      highest_bid: {
+                      highestBid: {
                         display: null,
                       },
-                      opening_bid: {
+                      openingBid: {
                         display: "USD $2222",
                       },
                       id: "idabc123",

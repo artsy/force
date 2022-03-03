@@ -141,7 +141,8 @@ const setupCheckBidStatus = (props: {
     fetchBidderPosition,
     helpers,
     redirectTo,
-    relay,
+    // TODO: Enable when we refresh bids
+    // relay,
     router,
     sale,
     tracking,

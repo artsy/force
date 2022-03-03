@@ -1028,8 +1028,8 @@ const ArtKeepsGoingFixture: FeatureAKGRoute_Test_QueryRawResponse = {
               internalID: "5811004d8b0c141dd4000b61",
               title: "Cow, II.12",
               date: "1971",
-              sale_message: "$32,500",
-              cultural_maker: null,
+              saleMessage: "$32,500",
+              culturalMaker: null,
               artists: [
                 {
                   id: "QXJ0aXN0OjRkOGI5MmIzNGViNjhhMWIyYzAwMDNmNA==",
@@ -1038,7 +1038,7 @@ const ArtKeepsGoingFixture: FeatureAKGRoute_Test_QueryRawResponse = {
                 },
               ],
               artistNames: "Andy Warhol",
-              collecting_institution: null,
+              collectingInstitution: null,
               partner: {
                 name: "Hamilton-Selway Fine Art",
                 href: "/hamilton-selway-fine-art",
@@ -1069,8 +1069,8 @@ const ArtKeepsGoingFixture: FeatureAKGRoute_Test_QueryRawResponse = {
               title: "Cow, II.12",
               image_title: "title",
               date: "1971",
-              sale_message: "$32,500",
-              cultural_maker: null,
+              saleMessage: "$32,500",
+              culturalMaker: null,
               artists: [
                 {
                   id: "QXJ0aXN0OjRkOGI5MmIzNGViNjhhMWIyYzAwMDNmNA==",
@@ -1079,7 +1079,7 @@ const ArtKeepsGoingFixture: FeatureAKGRoute_Test_QueryRawResponse = {
                 },
               ],
               artistNames: "Andy Warhol",
-              collecting_institution: null,
+              collectingInstitution: null,
               partner: {
                 name: "Hamilton-Selway Fine Art",
                 href: "/hamilton-selway-fine-art",
