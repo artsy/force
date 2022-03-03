@@ -12,12 +12,15 @@ import {
   Select,
   Checkbox,
   ResponsiveBox,
+  Button,
 } from "@artsy/palette"
+import { Form, Formik } from "formik"
 import { Fragment } from "react"
 import { FullBleedHeader } from "v2/Components/FullBleedHeader"
 import { MetaTags } from "v2/Components/MetaTags"
 import { useLoadScript } from "v2/Utils/Hooks/useLoadScript"
 import { resized } from "v2/Utils/resized"
+import * as Yup from "yup"
 
 export const AuctionPartnershipsApp: React.FC = () => {
   return (
@@ -136,87 +139,162 @@ const PartnerWithArtsyForm: React.FC = () => {
         <Text variant="sm">Apply to host your auctions on Artsy</Text>
       </Column>
       <Column span={6}>
-        <form id="#mktoForm_1240">
-          <Join separator={<Spacer mb={2} />}>
-            <Input title="Auction House or Organization Name" />
-            <Flex flexDirection="row">
-              <Input title="First name" />
-              <Spacer mr={2} />
-              <Input title="Last Name" />
-            </Flex>
-            <Input title="Title at Organization" />
-            <Input title="Website" />
-            <Input title="Email Address" />
-            <Select
-              options={[
-                { text: "Gallery", value: "Gallery" },
-                { text: "Design Gallery", value: "Design Gallery" },
-                { text: "Artist", value: "Artist" },
-                { text: "Art Fair", value: "Art Fair" },
-                { text: "Auction House", value: "Auction House" },
-                { text: "Antique", value: "Antique" },
-                { text: "Performance Venue", value: "Performance Venue" },
-                { text: "Artist Estate", value: "Artist Estate" },
-                { text: "Institution", value: "Institution" },
-                { text: "Museum", value: "Museum" },
-                { text: "Framing Gallery", value: "Framing Gallery" },
-                {
-                  text: "Biennial / Triennial",
-                  value: "Biennial / Triennial",
-                },
-                { text: "Interior Designer", value: "Interior Designer" },
-                { text: "Non-Profit", value: "Non-Profit" },
-                { text: "Art Advisor", value: "Art Advisor" },
-                { text: "Private Dealer", value: "Private Dealer" },
-                { text: "Press/Publication", value: "Press/Publication" },
-                {
-                  text: "Broker - Real Estate",
-                  value: "Broker - Real Estate",
-                },
-                {
-                  text: "Independent Art World Professional",
-                  value: "Independent Art World Professional",
-                },
-                { text: "Online Platform", value: "Online Platform" },
-                { text: "Curator", value: "Curator" },
-                {
-                  text: "Publications / Publishers / Archives",
-                  value: "Publications / Publishers / Archives",
-                },
-                {
-                  text: "Government Organization",
-                  value: "Government Organization",
-                },
-                { text: "Artist Studios", value: "Artist Studios" },
-                {
-                  text: "Non-Arts Organization",
-                  value: "Non-Arts Organization",
-                },
-                { text: "Other", value: "Other" },
-                { text: "Non Profit Gallery", value: "Non Profit Gallery" },
-                {
-                  text: "Prospect Indicated Gallery",
-                  value: "Prospect Indicated Gallery",
-                },
-                { text: "Art Dealer", value: "Art Dealer" },
-              ]}
-              title="Company Type"
-            />
-            <Checkbox>
-              <Text variant="md" lineHeight={1}>
-                I agree to Artsy{" "}
-                <a href="/terms" target="_blank">
-                  Terms of Use
-                </a>{" "}
-                and{" "}
-                <a href="/privacy" target="_blank">
-                  Privacy Policy
-                </a>
-                , and to receive emails from Artsy.
-              </Text>
-            </Checkbox>
-          </Join>
-        </form>
+        <Formik
+          initialValues={{
+            auctionHouse: "",
+            firstName: "",
+            lastName: "",
+            titleAtOrg: "",
+            website: "",
+            email: "",
+            agreeToTerms: false,
+            companyType: "",
+          }}
+          onSubmit={values => {
+            // TODO: send data to marketo instead of console.log
+            console.log(values)
+          }}
+          validationSchema={Yup.object().shape({
+            auctionHouse: Yup.string(),
+            firstName: Yup.string().required("Required"),
+            lastName: Yup.string().required("Required"),
+            titleAtOrg: Yup.string(),
+            website: Yup.string().url("Invalid website url"),
+            email: Yup.string()
+              .email("Invalid email address")
+              .required("Required"),
+            agreeToTerms: Yup.boolean().oneOf([true], "Required"),
+            companyType: Yup.string(),
+          })}
+        >
+          {({ values, handleChange, setFieldValue, errors }) => (
+            <Form id="#mktoForm_1240">
+              <Join separator={<Spacer mb={2} />}>
+                <Input
+                  title="Auction House or Organization Name"
+                  name="auctionHouse"
+                  value={values.auctionHouse}
+                  onChange={handleChange}
+                  error={errors.auctionHouse}
+                />
+                <Flex flexDirection="row">
+                  <Input
+                    title="First name"
+                    name="firstName"
+                    value={values.firstName}
+                    onChange={handleChange}
+                    error={errors.firstName}
+                  />
+                  <Spacer mr={2} />
+                  <Input
+                    title="Last Name"
+                    name="lastName"
+                    value={values.lastName}
+                    onChange={handleChange}
+                    error={errors.lastName}
+                  />
+                </Flex>
+                <Input
+                  title="Title at Organization"
+                  name="titleAtOrg"
+                  value={values.titleAtOrg}
+                  onChange={handleChange}
+                  error={errors.titleAtOrg}
+                />
+                <Input
+                  title="Website"
+                  name="website"
+                  value={values.website}
+                  onChange={handleChange}
+                  error={errors.website}
+                />
+                <Input
+                  title="Email Address"
+                  name="email"
+                  value={values.email}
+                  onChange={handleChange}
+                  error={errors.email}
+                />
+                <Select
+                  options={[
+                    { text: "Gallery", value: "Gallery" },
+                    { text: "Design Gallery", value: "Design Gallery" },
+                    { text: "Artist", value: "Artist" },
+                    { text: "Art Fair", value: "Art Fair" },
+                    { text: "Auction House", value: "Auction House" },
+                    { text: "Antique", value: "Antique" },
+                    { text: "Performance Venue", value: "Performance Venue" },
+                    { text: "Artist Estate", value: "Artist Estate" },
+                    { text: "Institution", value: "Institution" },
+                    { text: "Museum", value: "Museum" },
+                    { text: "Framing Gallery", value: "Framing Gallery" },
+                    {
+                      text: "Biennial / Triennial",
+                      value: "Biennial / Triennial",
+                    },
+                    { text: "Interior Designer", value: "Interior Designer" },
+                    { text: "Non-Profit", value: "Non-Profit" },
+                    { text: "Art Advisor", value: "Art Advisor" },
+                    { text: "Private Dealer", value: "Private Dealer" },
+                    { text: "Press/Publication", value: "Press/Publication" },
+                    {
+                      text: "Broker - Real Estate",
+                      value: "Broker - Real Estate",
+                    },
+                    {
+                      text: "Independent Art World Professional",
+                      value: "Independent Art World Professional",
+                    },
+                    { text: "Online Platform", value: "Online Platform" },
+                    { text: "Curator", value: "Curator" },
+                    {
+                      text: "Publications / Publishers / Archives",
+                      value: "Publications / Publishers / Archives",
+                    },
+                    {
+                      text: "Government Organization",
+                      value: "Government Organization",
+                    },
+                    { text: "Artist Studios", value: "Artist Studios" },
+                    {
+                      text: "Non-Arts Organization",
+                      value: "Non-Arts Organization",
+                    },
+                    { text: "Other", value: "Other" },
+                    { text: "Non Profit Gallery", value: "Non Profit Gallery" },
+                    {
+                      text: "Prospect Indicated Gallery",
+                      value: "Prospect Indicated Gallery",
+                    },
+                    { text: "Art Dealer", value: "Art Dealer" },
+                  ]}
+                  title="Company Type"
+                  onSelect={selected => setFieldValue("companyType", selected)}
+                  selected={values.companyType}
+                  error={errors.companyType}
+                />
+                <Checkbox
+                  onSelect={selected => setFieldValue("agreeToTerms", selected)}
+                  selected={values.agreeToTerms}
+                  error={!!errors.agreeToTerms}
+                >
+                  <Text variant="md" lineHeight={1}>
+                    I agree to Artsy{" "}
+                    <a href="/terms" target="_blank">
+                      Terms of Use
+                    </a>{" "}
+                    and{" "}
+                    <a href="/privacy" target="_blank">
+                      Privacy Policy
+                    </a>
+                    , and to receive emails from Artsy.
+                  </Text>
+                </Checkbox>
+                <Button type="submit">Apply</Button>
+              </Join>
+            </Form>
+          )}
+        </Formik>
       </Column>
     </GridColumns>
   )
