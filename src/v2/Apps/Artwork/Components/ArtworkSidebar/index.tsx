@@ -18,6 +18,7 @@ import { ArtworkSidebarExtraLinksFragmentContainer } from "./ArtworkSidebarExtra
 import { ArtworkSidebarAuctionPollingRefetchContainer } from "./ArtworkSidebarAuctionInfoPolling"
 import { useFeatureFlag } from "v2/System/useFeatureFlag"
 import { CreateArtworkAlertSection } from "./CreateArtworkAlertSection"
+import { LotTimerFragmentContainer } from "v2/Components/LotTimer"
 
 export interface ArtworkSidebarProps {
   artwork: ArtworkSidebar_artwork
@@ -53,12 +54,20 @@ export const ArtworkSidebar: React.FC<ArtworkSidebarProps> = ({
             />
           </Join>
 
-          {artwork.sale && !artwork.sale?.is_closed && (
-            <>
-              <Spacer mt={2} />
-              <AuctionTimerFragmentContainer sale={artwork.sale} />
-            </>
-          )}
+          {artwork.sale &&
+            (artwork.sale.cascadingEndTimeInterval ? (
+              <>
+                <Spacer mt={2} />
+                <LotTimerFragmentContainer saleArtwork={artwork.saleArtwork} />
+              </>
+            ) : (
+              !artwork.sale?.is_closed && (
+                <>
+                  <Spacer mt={2} />
+                  <AuctionTimerFragmentContainer sale={artwork.sale} />
+                </>
+              )
+            ))}
         </>
       ) : (
         <>
@@ -97,8 +106,12 @@ export const ArtworkSidebarFragmentContainer = createFragmentContainer(
         ...AuthenticityCertificate_artwork
         ...BuyerGuarantee_artwork
         sale {
+          cascadingEndTimeInterval
           is_closed: isClosed
           ...AuctionTimer_sale
+        }
+        saleArtwork {
+          ...LotTimer_saleArtwork
         }
       }
     `,
