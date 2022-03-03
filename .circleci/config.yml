@@ -41,7 +41,7 @@ jobs:
                   "fields": [
                     {
                       "type": "plain_text",
-                      "text": "Local MP schema is not compatible with MP production. Force was deployed to staging but will not be deployable to production."
+                      "text": "A Force production deploy was attempted and failed due to the local Metaphysics GraphQL schema not being compatible with Metaphysics production. To fix, start a deploy here: https://github.com/artsy/metaphysics/compare/release...staging?expand=1"
                     }
                   ]
                 }
