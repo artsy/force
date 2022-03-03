@@ -7,6 +7,7 @@ import { getENV } from "v2/Utils/getENV"
 import { NewsApp_viewer } from "v2/__generated__/NewsApp_viewer.graphql"
 import { useScrollingAuthModal } from "./Utils/useScrollingAuthModal"
 import { NewsIndexArticlesPaginationContainer } from "./Components/NewsIndexArticles"
+import { ArticleAdProvider } from "../Article/Components/ArticleAd"
 
 interface NewsAppProps {
   viewer: NewsApp_viewer
@@ -16,7 +17,7 @@ const NewsApp: FC<NewsAppProps> = ({ viewer }) => {
   useScrollingAuthModal()
 
   return (
-    <>
+    <ArticleAdProvider>
       <MetaTags
         title="News | Artsy"
         description="Never miss the biggest art world stories. Artsy Editorial delivers art world news and updates, each and every day."
@@ -36,7 +37,7 @@ const NewsApp: FC<NewsAppProps> = ({ viewer }) => {
       <Spacer mt={6} />
 
       <NewsIndexArticlesPaginationContainer viewer={viewer} />
-    </>
+    </ArticleAdProvider>
   )
 }
 

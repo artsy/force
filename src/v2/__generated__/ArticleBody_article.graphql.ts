@@ -16,8 +16,7 @@ export type ArticleBody_article = {
     readonly href: string | null;
     readonly publishedAt: string | null;
     readonly sections: ReadonlyArray<{
-        readonly __typename: string;
-        readonly " $fragmentRefs": FragmentRefs<"ArticleSectionText_section" | "ArticleSectionImageCollection_section" | "ArticleSectionImageSet_section" | "ArticleSectionVideo_section" | "ArticleSectionSocialEmbed_section" | "ArticleSectionEmbed_section">;
+        readonly " $fragmentRefs": FragmentRefs<"ArticleSection_section">;
     }>;
     readonly postscript: string | null;
     readonly relatedArticles: ReadonlyArray<{
@@ -32,7 +31,7 @@ export type ArticleBody_article = {
             } | null;
         } | null;
     }>;
-    readonly " $fragmentRefs": FragmentRefs<"ArticleHeader_article" | "ArticleByline_article">;
+    readonly " $fragmentRefs": FragmentRefs<"ArticleHeader_article" | "ArticleByline_article" | "ArticleSectionAd_article">;
     readonly " $refType": "ArticleBody_article";
 };
 export type ArticleBody_article$data = ArticleBody_article;
@@ -122,41 +121,9 @@ return {
       "plural": true,
       "selections": [
         {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "__typename",
-          "storageKey": null
-        },
-        {
           "args": null,
           "kind": "FragmentSpread",
-          "name": "ArticleSectionText_section"
-        },
-        {
-          "args": null,
-          "kind": "FragmentSpread",
-          "name": "ArticleSectionImageCollection_section"
-        },
-        {
-          "args": null,
-          "kind": "FragmentSpread",
-          "name": "ArticleSectionImageSet_section"
-        },
-        {
-          "args": null,
-          "kind": "FragmentSpread",
-          "name": "ArticleSectionVideo_section"
-        },
-        {
-          "args": null,
-          "kind": "FragmentSpread",
-          "name": "ArticleSectionSocialEmbed_section"
-        },
-        {
-          "args": null,
-          "kind": "FragmentSpread",
-          "name": "ArticleSectionEmbed_section"
+          "name": "ArticleSection_section"
         }
       ],
       "storageKey": null
@@ -245,11 +212,16 @@ return {
       "args": null,
       "kind": "FragmentSpread",
       "name": "ArticleByline_article"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ArticleSectionAd_article"
     }
   ],
   "type": "Article",
   "abstractKey": null
 };
 })();
-(node as any).hash = 'be0675f5366de442cb5df0bcb8b44f78';
+(node as any).hash = 'f6f648e1965eeb48c2d3d46d77cd07d3';
 export default node;
