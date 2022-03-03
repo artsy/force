@@ -26,7 +26,7 @@ export function useFeatureVariant(featureName: string): Variant | null {
     name: "false",
   }
 
-  if (!featureVariants) {
+  if (featureVariants === undefined) {
     console.error("[Force] Error: no argument passed into useFeatureVariant")
     return errorObject
   }

@@ -80,10 +80,10 @@ describe("useVariant", () => {
     expect(variant!.enabled).toBe(false)
   })
 
-  it("returns null when the variant is not passed in as an argument", () => {
+  it("returns false for the enabled property when the variant is not passed in as an argument", () => {
     // @ts-ignore
     const variant = useFeatureVariant()
-    expect(variant).toBe(null)
+    expect(variant!.enabled).toBe(false)
     expect(console.error).toHaveBeenCalledWith(
       "[Force] Error: no argument passed into useFeatureVariant"
     )
@@ -97,32 +97,3 @@ describe("useVariant", () => {
     )
   })
 })
-
-describe("maybeTrackFeatureVariant", () => {
-  beforeEach(() => {
-    //mock localStorage
-  })
-
-  it.skip("tracks experiments viewed", () => {
-    // mock JSON
-
-  })
-
-  it.skip("sets", () => {
-    // mock JSON
-
-  })
-
-  it.skip("send segment an event with the correct payload", () => {})
-})
-
-// export interface Variant {
-//   name: string;
-//   enabled: boolean;
-//   payload?: Payload;
-// }
-
-// export interface Payload {
-//   type: PayloadType;
-//   value: string;
-// }
