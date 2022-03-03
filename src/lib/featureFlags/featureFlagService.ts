@@ -1,3 +1,5 @@
+import { Variant } from 'unleash-client'
+
 export type FeatureFlag = string
 export type FeatureFlags = Array<string>
 
@@ -7,6 +9,7 @@ export interface FeatureFlagService {
   init: () => void
   getFeatures: () => FeatureFlags
   enabled: (name: string, context?: FeatureFlagContext) => boolean
+  getVariant: (name: string, context?: FeatureFlagContext) => Variant
 }
 
 const registeredFeatureFlagService = new Map<symbol, any>()
