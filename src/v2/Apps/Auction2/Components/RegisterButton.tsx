@@ -39,7 +39,7 @@ export const RegisterButton: React.FC<RegisterButtonProps> = ({ me, sale }) => {
       })
 
       // Register
-    } else if (!me.hasCreditCards) {
+    } else if (!me?.hasCreditCards) {
       router.push(`${saleURL}/register`)
 
       // Confirm Registration
@@ -158,7 +158,7 @@ export const computeConditions = ({
   const qualifiedForBidding =
     sale.registrationStatus?.internalID && sale.bidder?.qualifiedForBidding
   const userLacksIdentityVerification =
-    sale.requireIdentityVerification && !me.identityVerified
+    sale.requireIdentityVerification && !me?.identityVerified
   const verifyIdentity =
     sale.requireIdentityVerification &&
     !qualifiedForBidding &&

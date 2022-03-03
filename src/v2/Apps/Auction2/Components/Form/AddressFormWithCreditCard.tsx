@@ -38,7 +38,9 @@ export const AddressFormWithCreditCard: React.FC = () => {
 
       <AddressForm
         value={values.address}
-        onChange={address => setFieldValue("address", address)}
+        onChange={address => {
+          setFieldValue("address", address)
+        }}
         errors={errors.address as AddressErrors}
         touched={touched.address as AddressTouched}
         billing

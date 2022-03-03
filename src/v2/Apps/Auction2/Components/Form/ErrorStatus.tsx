@@ -71,10 +71,11 @@ export const ErrorStatus = () => {
   }
 
   const { title, message } = getErrorStatus()
+  const variant = status === "RESERVE_NOT_MET" ? "success" : "error"
 
   return (
     <>
-      <Banner variant="error" textAlign="left">
+      <Banner variant={variant} textAlign="left">
         <Flex flexDirection="column" textAlign="left">
           {title && <Text variant="md">{title}</Text>}
 

@@ -15,6 +15,7 @@ import { useAuctionTracking } from "v2/Apps/Auction2/Hooks/useAuctionTracking"
 import { Auction2BidRoute_sale } from "v2/__generated__/Auction2BidRoute_sale.graphql"
 import { Auction2BidRoute_artwork } from "v2/__generated__/Auction2BidRoute_artwork.graphql"
 import { Auction2BidRoute_me } from "v2/__generated__/Auction2BidRoute_me.graphql"
+import { RelayRefetchProp } from "react-relay"
 
 const logger = createLogger("useSubmitBid")
 
@@ -23,6 +24,7 @@ interface UseSubmitBidProps {
   bidderID: string
   checkBidStatusPollingInterval: MutableRefObject<NodeJS.Timeout | null>
   me: Auction2BidRoute_me
+  relay: RelayRefetchProp
   requiresPaymentInformation: boolean
   sale: Auction2BidRoute_sale
 }
@@ -32,6 +34,7 @@ export const useSubmitBid = ({
   bidderID,
   checkBidStatusPollingInterval,
   me,
+  relay,
   requiresPaymentInformation,
   sale,
 }: UseSubmitBidProps) => {
@@ -65,6 +68,7 @@ export const useSubmitBid = ({
       fetchBidderPosition,
       helpers,
       redirectTo,
+      relay,
       router,
       sale,
       tracking,
@@ -125,6 +129,7 @@ const setupCheckBidStatus = (props: {
   >["fetchBidderPosition"]
   helpers: AuctionFormHelpers
   redirectTo: string
+  relay: RelayRefetchProp
   router: Router
   sale: Auction2BidRoute_sale
   tracking: ReturnType<typeof useAuctionTracking>["tracking"]
@@ -136,6 +141,7 @@ const setupCheckBidStatus = (props: {
     fetchBidderPosition,
     helpers,
     redirectTo,
+    relay,
     router,
     sale,
     tracking,
@@ -168,6 +174,8 @@ const setupCheckBidStatus = (props: {
 
     const status: BiddingStatus = result.status
 
+    console.log(status)
+
     switch (status) {
       case "SUCCESS": {
         await getBidderPosition()
@@ -198,12 +206,48 @@ const setupCheckBidStatus = (props: {
         break
       }
 
-      case "OUTBID" || "RESERVE_NOT_MET": {
+      case "OUTBID": {
         helpers.setFieldError(
           "selectedBid",
           errorMessageForBidding(result.status)
         )
         helpers.setSubmitting(false)
+
+        break
+      }
+
+      case "RESERVE_NOT_MET": {
+        helpers.setFieldError(
+          "selectedBid",
+          errorMessageForBidding(result.status)
+        )
+        helpers.setSubmitting(false)
+
+        /**
+         * TODO: In the future, we can fire this function to refresh the bid
+         * increments automatically so the user doesn't have to reclick the
+         * dropdown again.
+         *
+         * Even though this works, commented out because we will need to refine
+         * the language with design, as its not entirely clear that the UI has
+         * updated with the latest increments at a glance, and it could confuse
+         * the user. We might need to update the message in `ErrorStatus.tsx`.
+         */
+        /*
+        relay.refetch(
+          {
+            artworkID: artwork.slug,
+            saleID: sale.slug,
+          },
+          {},
+          // On complete, display a status notitifying the user that they didn't
+          // meet the reserve
+          _error => {
+            helpers.setFieldTouched("selectedBid", true)
+            helpers.setStatus("RESERVE_NOT_MET")
+          }
+        )
+        */
         break
       }
 

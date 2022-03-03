@@ -1,11 +1,11 @@
 import { Button, Join, ModalDialog, Select, Spacer, Text } from "@artsy/palette"
-import { createFragmentContainer, graphql } from "react-relay"
+import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
 import { useRouter } from "v2/System/Router/useRouter"
 import { Auction2BidRoute_sale } from "v2/__generated__/Auction2BidRoute_sale.graphql"
 import { Auction2BidRoute_artwork } from "v2/__generated__/Auction2BidRoute_artwork.graphql"
 import { Auction2BidRoute_me } from "v2/__generated__/Auction2BidRoute_me.graphql"
 import { AuctionLotInfoFragmentContainer } from "./Components/AuctionLotInfo"
-import { dropWhile } from "lodash"
+import { dropWhile, isEmpty } from "lodash"
 import { Form, Formik } from "formik"
 import { PricingTransparency2QueryRenderer } from "./Components/PricingTransparency2"
 import { Match } from "found"
@@ -23,15 +23,17 @@ import { CreditCardInputProvider } from "v2/Components/CreditCardInput"
 import { ErrorStatus } from "../../Components/Form/ErrorStatus"
 
 interface Auction2BidRouteProps {
-  sale: Auction2BidRoute_sale
   artwork: Auction2BidRoute_artwork
   me: Auction2BidRoute_me
+  relay: RelayRefetchProp
+  sale: Auction2BidRoute_sale
 }
 
 const Auction2BidRoute: React.FC<Auction2BidRouteProps> = ({
-  sale,
   artwork,
   me,
+  relay,
+  sale,
 }) => {
   const { match, router } = useRouter()
   const { tracking } = useAuctionTracking()
@@ -56,6 +58,7 @@ const Auction2BidRoute: React.FC<Auction2BidRouteProps> = ({
     bidderID,
     checkBidStatusPollingInterval,
     me,
+    relay,
     requiresPaymentInformation,
     sale,
   })
@@ -100,9 +103,12 @@ const Auction2BidRoute: React.FC<Auction2BidRouteProps> = ({
           touched,
           errors,
           isSubmitting,
+          isValid,
           setFieldValue,
           setFieldTouched,
         }) => {
+          console.log(isValid, touched)
+
           return (
             <Form>
               <Join separator={<Spacer my={2} />}>
@@ -139,6 +145,7 @@ const Auction2BidRoute: React.FC<Auction2BidRouteProps> = ({
                     // result of the bid.
                     isSubmitting || !!checkBidStatusPollingInterval.current
                   }
+                  disabled={!isValid}
                   type="submit"
                 >
                   Confirm bid
@@ -154,7 +161,7 @@ const Auction2BidRoute: React.FC<Auction2BidRouteProps> = ({
   )
 }
 
-export const Auction2BidRouteFragmentContainer = createFragmentContainer(
+export const Auction2BidRouteFragmentContainer = createRefetchContainer(
   (props: Auction2BidRouteProps) => {
     return (
       // Wrap the provider down here as we need it for our hooks
@@ -202,7 +209,20 @@ export const Auction2BidRouteFragmentContainer = createFragmentContainer(
         hasQualifiedCreditCards
       }
     `,
-  }
+  },
+  graphql`
+    query Auction2BidRouteQuery($saleID: String!, $artworkID: String!) {
+      sale(id: $saleID) {
+        ...Auction2BidRoute_sale
+      }
+      artwork(id: $artworkID) {
+        ...Auction2BidRoute_artwork
+      }
+      me {
+        ...Auction2BidRoute_me
+      }
+    }
+  `
 )
 
 const computeProps = ({

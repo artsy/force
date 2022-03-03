@@ -16,6 +16,7 @@ import {
 import { useEffect } from "react"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { redirectToSaleHome } from "./Auction2RegistrationRoute"
+import { isEmpty } from "lodash"
 
 interface Auction2ConfirmRegistrationRouteProps {
   me: Auction2ConfirmRegistrationRoute_me
@@ -61,16 +62,22 @@ const Auction2ConfirmRegistrationRoute: React.FC<Auction2ConfirmRegistrationRout
     router.push(auctionURL)
   }
 
+  // Track page view or redirect
   useEffect(() => {
     if (redirectToSaleHome(sale)) {
       router.replace(`/auction2/${sale.slug}`)
-
-      // Track page view
+    } else if (!me.hasQualifiedCreditCards) {
+      router.replace(`/auction2/${sale.slug}/register`)
     } else {
       tracking.confirmRegistrationPageView()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
+  // Will redirect to /register above on page mount
+  if (!me.hasQualifiedCreditCards) {
+    return null
+  }
 
   return (
     <ModalDialog title={`Register for ${sale.name}`} onClose={closeModal}>
@@ -81,7 +88,7 @@ const Auction2ConfirmRegistrationRoute: React.FC<Auction2ConfirmRegistrationRout
         onSubmit={handleSubmit}
         validationSchema={confirmRegistrationValidationSchema}
       >
-        {({ isSubmitting }) => {
+        {({ isSubmitting, isValid, touched }) => {
           return (
             <Form>
               <Join separator={<Spacer my={2} />}>
@@ -106,7 +113,11 @@ const Auction2ConfirmRegistrationRoute: React.FC<Auction2ConfirmRegistrationRout
 
                 <ConditionsOfSaleCheckbox />
 
-                <Button loading={isSubmitting} type="submit">
+                <Button
+                  loading={isSubmitting}
+                  disabled={!isValid || isSubmitting || isEmpty(touched)}
+                  type="submit"
+                >
                   Register
                 </Button>
               </Join>
@@ -125,6 +136,7 @@ export const Auction2ConfirmRegistrationRouteFragmentContainer = createFragmentC
       fragment Auction2ConfirmRegistrationRoute_me on Me {
         internalID
         identityVerified
+        hasQualifiedCreditCards
       }
     `,
     sale: graphql`

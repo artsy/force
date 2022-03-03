@@ -11,20 +11,6 @@ import { PriceRangeFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/Pri
 import { useSystemContext } from "v2/System"
 import { AuctionArtworkFilter_viewer } from "v2/__generated__/AuctionArtworkFilter_viewer.graphql"
 
-export const getArtworkFilterInputArgs = (user?: User) => {
-  const aggregations = ["ARTIST", "MEDIUM", "TOTAL"]
-
-  if (user) {
-    aggregations.push("FOLLOWED_ARTISTS")
-  }
-
-  return {
-    aggregations,
-    atAuction: true,
-    first: 10,
-  }
-}
-
 interface AuctionArtworkFilterProps {
   relay: RelayRefetchProp
   viewer: AuctionArtworkFilter_viewer
@@ -48,12 +34,12 @@ const AuctionArtworkFilter: React.FC<AuctionArtworkFilterProps> = ({
         saleID: match.params.slug,
       }}
       sortOptions={[
-        { text: "Lot Number (desc.)", value: "-sale_position" },
         { text: "Lot Number (asc.)", value: "sale_position" },
+        { text: "Lot Number (desc.)", value: "-sale_position" },
         { text: "Most Bids", value: "-bidder_positions_count" },
         { text: "Least Bids", value: "bidder_positions_count" },
-        { text: "Price (desc.)", value: "-prices" },
         { text: "Price (asc.)", value: "prices" },
+        { text: "Price (desc.)", value: "-prices" },
       ]}
       viewer={viewer}
       Filters={
@@ -99,3 +85,18 @@ export const AuctionArtworkFilterRefetchContainer = createRefetchContainer(
     }
   `
 )
+
+export const getArtworkFilterInputArgs = (user?: User) => {
+  const aggregations = ["ARTIST", "MEDIUM", "TOTAL"]
+
+  if (user) {
+    aggregations.push("FOLLOWED_ARTISTS")
+  }
+
+  // Shared with auctionRoutes
+  return {
+    aggregations,
+    atAuction: true,
+    first: 10,
+  }
+}

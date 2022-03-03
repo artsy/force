@@ -39,6 +39,7 @@ query auction2Routes_ConfirmRegistrationRouteQuery(
 fragment Auction2ConfirmRegistrationRoute_me on Me {
   internalID
   identityVerified
+  hasQualifiedCreditCards
 }
 
 fragment Auction2ConfirmRegistrationRoute_sale on Sale {
@@ -150,6 +151,13 @@ return {
             "name": "identityVerified",
             "storageKey": null
           },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "hasQualifiedCreditCards",
+            "storageKey": null
+          },
           (v3/*: any*/)
         ],
         "storageKey": null
@@ -231,12 +239,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "563796959d89a99584600f1184cda30c",
+    "cacheID": "a18e19f0d9146cecab2da039a0c98db1",
     "id": null,
     "metadata": {},
     "name": "auction2Routes_ConfirmRegistrationRouteQuery",
     "operationKind": "query",
-    "text": "query auction2Routes_ConfirmRegistrationRouteQuery(\n  $slug: String!\n) {\n  me {\n    ...Auction2ConfirmRegistrationRoute_me\n    id\n  }\n  sale(id: $slug) @principalField {\n    ...Auction2ConfirmRegistrationRoute_sale\n    id\n  }\n}\n\nfragment Auction2ConfirmRegistrationRoute_me on Me {\n  internalID\n  identityVerified\n}\n\nfragment Auction2ConfirmRegistrationRoute_sale on Sale {\n  slug\n  name\n  internalID\n  status\n  isClosed\n  isLiveOpen\n  requireIdentityVerification\n  bidder {\n    qualifiedForBidding\n    id\n  }\n}\n"
+    "text": "query auction2Routes_ConfirmRegistrationRouteQuery(\n  $slug: String!\n) {\n  me {\n    ...Auction2ConfirmRegistrationRoute_me\n    id\n  }\n  sale(id: $slug) @principalField {\n    ...Auction2ConfirmRegistrationRoute_sale\n    id\n  }\n}\n\nfragment Auction2ConfirmRegistrationRoute_me on Me {\n  internalID\n  identityVerified\n  hasQualifiedCreditCards\n}\n\nfragment Auction2ConfirmRegistrationRoute_sale on Sale {\n  slug\n  name\n  internalID\n  status\n  isClosed\n  isLiveOpen\n  requireIdentityVerification\n  bidder {\n    qualifiedForBidding\n    id\n  }\n}\n"
   }
 };
 })();
