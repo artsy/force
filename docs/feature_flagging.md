@@ -1,0 +1,27 @@
+### Feature Flagging
+
+#### Step 1
+
+Create you feature toggle at https://unleash.artsy.net and enable it the desired environments.
+
+#### Step 2
+
+To use feature flagging, simply import the useFeatureFlagging method and pass in the name of the feature toggle you created in step 1. This will enabled you to conditionally render your new feature.
+
+```tsx
+import { useFeatureFlag } from 'v2/System/useFeatureFlag'
+
+function MyComponent({ props }) {
+  return (
+    <div>
+      <h1>Hello</h1>
+
+        {useFeatureFlag('extra-greeting') &&
+          // Our feature
+          <ExtraGreeting>
+        }
+
+    </div>
+  )
+}
+```
