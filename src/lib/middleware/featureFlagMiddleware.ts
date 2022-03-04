@@ -27,20 +27,16 @@ export function featureFlagMiddleware(serviceType: symbol) {
           sessionId: res.locals.sd.SESSION_ID,
         }
 
-        // Get features and move them to sharify
+        // Get features and variants and move them to sharify
         const flags = service.getFeatures()
         res.locals.sd.FEATURE_FLAGS = {}
         res.locals.sd.FEATURE_VARIANTS = {}
         if (flags) {
           for (let flag of flags) {
-            res.locals.sd.FEATURE_FLAGS[flag] = service.enabled(
-              flag,
-              featureFlagContext
-            )
-            res.locals.sd.FEATURE_VARIANTS[flag] = service.getVariant(
-              flag,
-              featureFlagContext
-            )
+            res.locals.sd.FEATURE_FLAGS[flag] = {
+              flagEnabled: service.enabled(flag, featureFlagContext),
+              variant: service.getVariant(flag, featureFlagContext),
+            }
           }
         }
         next()
