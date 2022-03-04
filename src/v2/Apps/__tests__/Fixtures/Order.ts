@@ -92,7 +92,17 @@ const OrderArtworkNodeWithoutShipping = {
 }
 
 const OrderArtworkVersionNode = {
-  artworkVersion: { ...OrderArtworkNodeWithoutShipping },
+  artworkVersion: {
+    id: "02393",
+    artistNames: "Lisa Breslow",
+    title: "Gramercy Park South",
+    image: {
+      resized_ArtworkSummaryItem: {
+        url:
+          "https://d7hftxdivxxvm.cloudfront.net?resize_to=fit&width=185&height=184&quality=80&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FtOfWds4sIX_9WpRf3RqaQQ%2Flarge.jpg",
+      },
+    },
+  },
 }
 
 const OrderArtworkNode = {
