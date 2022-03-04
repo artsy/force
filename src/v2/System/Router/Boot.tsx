@@ -28,7 +28,6 @@ import { ClientContext } from "desktop/lib/buildClientAppContext"
 import { FlashMessage } from "v2/Components/Modal/FlashModal"
 import { SiftContainer } from "v2/Utils/SiftContainer"
 import { setupSentryClient } from "lib/setupSentryClient"
-import { EnabledFeatureFlags } from "v2/System/useFeatureFlag"
 
 export interface BootProps {
   children: React.ReactNode
@@ -38,7 +37,6 @@ export interface BootProps {
   relayEnvironment: Environment
   routes: AppRouteConfig[]
   user: User | null
-  featureFlags: EnabledFeatureFlags
 }
 
 const { GlobalStyles } = injectGlobalStyles()
@@ -63,12 +61,10 @@ export const Boot = track(undefined, {
     context,
     headTags = [],
     onlyMatchMediaQueries,
-    featureFlags,
     ...rest
   } = props
 
   const contextProps = {
-    featureFlags,
     ...rest,
     ...context,
   }

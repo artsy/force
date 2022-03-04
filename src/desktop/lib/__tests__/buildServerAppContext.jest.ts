@@ -14,7 +14,7 @@ describe("buildServerAppContext", () => {
     }
     res = {
       locals: {
-        sd: { EIGEN: false, IS_MOBILE: false },
+        sd: { EIGEN: false, IS_MOBILE: false, FEATURE_FLAGS: {} },
       },
     }
   })
@@ -32,6 +32,11 @@ describe("buildServerAppContext", () => {
   it("includes a user", () => {
     const subject = buildServerAppContext(req, res)
     expect(subject.mediator).toBeDefined()
+  })
+
+  it("includes featureFlags", () => {
+    const subject = buildServerAppContext(req, res)
+    expect(subject.featureFlags).toBeDefined()
   })
 
   it("works without a user", () => {

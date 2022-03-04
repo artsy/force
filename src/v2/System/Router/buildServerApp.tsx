@@ -155,7 +155,6 @@ export function buildServerApp(
               onlyMatchMediaQueries={matchingMediaQueries}
               relayEnvironment={relayEnvironment}
               routes={routes}
-              featureFlags={res.locals.sd.FEATURE_FLAGS}
             >
               {farceResults.element}
             </Boot>

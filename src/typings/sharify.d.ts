@@ -35,6 +35,7 @@ declare module "sharify" {
       readonly ENABLE_YOUR_ALERTS_PAGE: boolean
       readonly FACEBOOK_APP_NAMESPACE: string
       readonly FACEBOOK_ID: string
+      readonly FEATURE_FLAGS: Record<string, boolean>
       readonly GEMINI_CLOUDFRONT_URL: string
       readonly GENOME_URL: string
       readonly GOOGLE_ADWORDS_ID: string

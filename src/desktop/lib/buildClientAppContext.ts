@@ -7,6 +7,7 @@ export interface ClientContext {
   user: User
   mediator: Mediator
   analytics: AnalyticsContextProps
+  featureFlags: Record<string, boolean>
 }
 
 export const buildClientAppContext = (
@@ -21,6 +22,7 @@ export const buildClientAppContext = (
     },
     mediator,
     user: sd.CURRENT_USER,
+    featureFlags: sd.FEATURE_FLAGS,
     ...context,
   }
 }
