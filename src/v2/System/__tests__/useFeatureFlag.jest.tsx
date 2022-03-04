@@ -80,7 +80,7 @@ describe("useFeatureVariant", () => {
       "[Force] Error: no argument passed into useFeatureVariant"
     )
   })
-  // TODO: rethink how we're doing this
+
   it("returns false when the variant isn't present", () => {
     const variant = useFeatureVariant("feature-x")
     expect(variant!.enabled).toBe(false)
