@@ -60,6 +60,7 @@ sharify.data = _.extend(
     "EOY_2016",
     "FACEBOOK_APP_NAMESPACE",
     "FACEBOOK_ID",
+    "FEATURE_FLAGS",
     "GALAXY_PUBLISHABLE_TOKEN",
     "GALAXY_URL",
     "GALLERY_INSIGHTS_CHANNEL",
