@@ -2,7 +2,7 @@
 
 #### Step 1
 
-Create you feature toggle at https://unleash.artsy.net and enable it in the desired environment(s).
+Create your feature toggle at https://unleash.artsy.net and enable it in the desired environment(s).
 
 #### Step 2
 
