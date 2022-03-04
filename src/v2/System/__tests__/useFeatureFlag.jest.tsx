@@ -9,13 +9,34 @@ describe("useFeatureFlag", () => {
   beforeEach(() => {
     mockUseSystemContext.mockImplementation(() => ({
       featureFlags: {
-        feature: true,
+        'feature-a': {
+          flagEnabled: true,
+          variant: {
+              enabled: true,
+              name: "variant-a",
+              payload: {
+                type: "string",
+                value: "my payload",
+              },
+          }
+        },
+        'feature-b': {
+          flagEnabled: false,
+          variant: {
+            enabled: false,
+            name: "variant-b",
+            payload: {
+              type: "string",
+              value: "my payload",
+            },
+          },
+        }
       },
     }))
   })
 
   it("returns true when the feature flag is present", () => {
-    const result = useFeatureFlag("feature")
+    const result = useFeatureFlag("feature-a")
     expect(result).toBe(true)
   })
 
@@ -42,33 +63,6 @@ describe("useFeatureFlag", () => {
       "[Force] Error: featureFlags is undefined in SystemContext"
     )
   })
-})
-
-describe("useVariant", () => {
-  const mockUseSystemContext = useSystemContext as jest.Mock
-
-  beforeEach(() => {
-    mockUseSystemContext.mockImplementation(() => ({
-      featureVariants: {
-        "feature-a": {
-          enabled: true,
-          name: "variant-a",
-          payload: {
-            type: "string",
-            value: "my payload",
-          },
-        },
-        "feature-b": {
-          enabled: false,
-          name: "variant-b",
-          payload: {
-            type: "string",
-            value: "my payload",
-          },
-        },
-      },
-    }))
-  })
 
   it("returns true when the variant is enabled", () => {
     const variant = useFeatureVariant("feature-a")
@@ -93,7 +87,7 @@ describe("useVariant", () => {
     const variant = useFeatureVariant("feature-x")
     expect(variant!.enabled).toBe(false)
     expect(console.error).toHaveBeenLastCalledWith(
-      "[Force] Error: the variant can't be found on featureVariants"
+      "[Force] Error: the variant can't be found on featureFlags"
     )
   })
 })

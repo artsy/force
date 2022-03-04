@@ -1,6 +1,14 @@
 import { useSystemContext } from "v2/System"
 import { Variant } from "unleash-client"
 
+
+export type FeatureFlags = Record<string, FeatureFlagDetails>
+
+interface FeatureFlagDetails {
+  flagEnabled: boolean,
+  variant: Variant,
+}
+
 export function useFeatureFlag(flagName: string): boolean | null {
   const { featureFlags } = useSystemContext()
 
@@ -15,19 +23,22 @@ export function useFeatureFlag(flagName: string): boolean | null {
   }
 
   return (
-    Object.keys(featureFlags).indexOf(flagName) !== -1 && featureFlags[flagName]
+    Object.keys(featureFlags).indexOf(flagName) !== -1 &&
+    featureFlags[flagName].flagEnabled
   )
 }
 
-export function useFeatureVariant(featureName: string): Variant | null {
-  const { featureVariants } = useSystemContext()
+export function useFeatureVariant(featureName: string): Variant {
+  const { featureFlags } = useSystemContext()
   const errorObject = {
     enabled: false,
     name: "false",
   }
 
-  if (featureVariants === undefined) {
-    console.error("[Force] Error: no argument passed into useFeatureVariant")
+  if (featureFlags === undefined) {
+    console.error(
+      "[Force] Error: featureFlags is undefined in SystemContext in UseFeatureVariant"
+    )
     return errorObject
   }
 
@@ -36,12 +47,12 @@ export function useFeatureVariant(featureName: string): Variant | null {
     return errorObject
   }
 
-  if (!featureVariants[featureName]) {
+  if (!featureFlags[featureName]) {
     console.error(
-      "[Force] Error: the variant can't be found on featureVariants"
+      "[Force] Error: the variant can't be found on featureFlags"
     )
     return errorObject
   }
 
-  return featureVariants[featureName]
+  return featureFlags[featureName].variant
 }
