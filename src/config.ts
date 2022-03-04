@@ -66,6 +66,7 @@ export const FACEBOOK_DOMAIN_VERIFICATION: any =
   "yeg3dqrlq548zc77ggvfipouil1l1e"
 export const FACEBOOK_ID: any = null
 export const FACEBOOK_SECRET: any = null
+export const FEATURE_FLAGS: any = null
 export const FAIR_CHANNEL_ID: any = "5759e4f3b5989e6f98f77998"
 export const GALAXY_PUBLISHABLE_TOKEN: any = null
 export const GALAXY_TOKEN: any = null

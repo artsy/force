@@ -1,7 +1,5 @@
 import { useSystemContext } from "v2/System"
 
-export type EnabledFeatureFlags = Record<string, boolean>
-
 export function useFeatureFlag(flagName: string): boolean | null {
   const { featureFlags } = useSystemContext()
   if (featureFlags === undefined) {
