@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"
 import {
   Flex,
   FlexProps,
@@ -28,6 +28,7 @@ export const Timer: React.FC<
   ...rest
 }) => {
   const { hasEnded, time } = useTimer(endDate)
+  console.log("time", time)
   const { days, hours, minutes, seconds } = time
 
   const tokens = useThemeConfig({
