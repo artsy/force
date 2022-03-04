@@ -11,7 +11,7 @@ import {
 import { themeGet } from "@styled-system/theme-get"
 import { graphql } from "lib/graphql"
 import { uniqBy } from "lodash"
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer } from "react-relay"
 import styled from "styled-components"
 import { RouterLink } from "v2/System/Router/RouterLink"
@@ -42,7 +42,7 @@ export const ShowsHeader: React.FC<ShowsHeaderProps> = ({
     <BorderBox p={0}>
       <GridColumns width="100%">
         <Column span={10} display={["none", "block"]}>
-          <HorizontalOverflow height="100%" p={2}>
+          <HorizontalOverflow height="100%" p={2} data-test="cities-rail">
             <Join separator={<Box mx={1} />}>
               {[
                 ...DEFAULT_CITIES,
