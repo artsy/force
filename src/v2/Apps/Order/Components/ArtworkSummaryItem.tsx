@@ -34,9 +34,6 @@ const ArtworkSummaryItem: React.FC<ArtworkSummaryItemProps> = ({
   const firstLineItem = get({}, () => lineItems?.edges?.[0]?.node!)
   const { artwork, artworkVersion } = firstLineItem!
 
-  if (!artwork) console.warn("artwork missing")
-  if (!artworkVersion) console.warn("artwork version missing")
-
   const { artistNames, title, image } = artworkVersion || {}
   const { date, shippingOrigin } = artwork || {}
 
