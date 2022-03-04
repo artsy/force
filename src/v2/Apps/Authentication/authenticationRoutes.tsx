@@ -8,6 +8,7 @@ import { redirectIfLoggedIn } from "./Server/redirectIfLoggedIn"
 import { setCookies } from "./Utils/helpers"
 import { redirectPostAuth } from "./Server/redirectPostAuth"
 import { stringify } from "qs"
+import { redirect } from "v2/System/Server/redirectHelper"
 
 const ForgotPasswordRoute = loadable(
   () =>
@@ -96,12 +97,13 @@ export const authenticationRoutes: AppRouteConfig[] = [
       if (req.query.reset_password_token) {
         const { reset_password_token, ...rest } = req.query
         req.session.RESET_PASSWORD_TOKEN = reset_password_token
-        res.redirect(
-          `/reset_password${
+        redirect({
+          url: `/reset_password${
             // Pass along any other query params
             Object.keys(rest).length > 0 ? `?${stringify(rest)}` : ""
-          }`
-        )
+          }`,
+          ...{ req, res },
+        })
         return
       }
 
@@ -151,8 +153,10 @@ export const authenticationRoutes: AppRouteConfig[] = [
   {
     path: "/auth-redirect",
     onServerSideRender: props => {
-      redirectPostAuth(props)
-      props.res.locals.hasRedirected = true
+      redirect({
+        onRedirect: () => redirectPostAuth(props),
+        ...props,
+      })
     },
   },
 ]

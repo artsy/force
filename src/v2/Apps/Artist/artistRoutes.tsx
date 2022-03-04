@@ -8,6 +8,7 @@ import { paramsToCamelCase } from "v2/Components/ArtworkFilter/Utils/urlBuilder"
 import { initialAuctionResultsFilterState } from "./Routes/AuctionResults/AuctionResultsFilterContext"
 import { allowedAuctionResultFilters } from "./Utils/allowedAuctionResultFilters"
 import { enableArtistPageCTA } from "./Server/enableArtistPageCTA"
+import { redirect } from "v2/System/Server/redirectHelper"
 
 const ArtistApp = loadable(
   () => import(/* webpackChunkName: "artistBundle" */ "./ArtistApp"),
@@ -87,7 +88,12 @@ export const artistRoutes: AppRouteConfig[] = [
     path: "/artist/:artistID",
     ignoreScrollBehaviorBetweenChildren: true,
     getComponent: () => ArtistApp,
-    onServerSideRender: enableArtistPageCTA,
+    onServerSideRender: props => {
+      redirect({
+        onRedirect: () => enableArtistPageCTA(props),
+        ...props,
+      })
+    },
     onClientSideRender: () => {
       ArtistApp.preload()
       OverviewRoute.preload()
@@ -107,7 +113,12 @@ export const artistRoutes: AppRouteConfig[] = [
       {
         path: "/",
         getComponent: () => OverviewRoute,
-        onServerSideRender: enableArtistPageCTA,
+        onServerSideRender: props => {
+          redirect({
+            onRedirect: () => enableArtistPageCTA(props),
+            ...props,
+          })
+        },
         onClientSideRender: () => {
           OverviewRoute.preload()
         },

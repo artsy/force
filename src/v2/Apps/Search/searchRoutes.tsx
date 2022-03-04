@@ -5,6 +5,7 @@ import loadable from "@loadable/component"
 import { allowedFilters } from "v2/Components/ArtworkFilter/Utils/allowedFilters"
 import { paramsToCamelCase } from "v2/Components/ArtworkFilter/Utils/urlBuilder"
 import { redirectQueryToTerm } from "./Server/redirectQueryToTerm"
+import { redirect } from "v2/System/Server/redirectHelper"
 
 const SearchResultsArtists = loadable(
   () =>
@@ -104,7 +105,12 @@ export const searchRoutes: AppRouteConfig[] = [
   {
     path: "/search",
     getComponent: () => SearchApp,
-    onServerSideRender: redirectQueryToTerm,
+    onServerSideRender: props => {
+      redirect({
+        onRedirect: () => redirectQueryToTerm(props),
+        ...props,
+      })
+    },
     onClientSideRender: () => {
       SearchApp.preload()
     },

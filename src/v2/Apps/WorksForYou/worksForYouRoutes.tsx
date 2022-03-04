@@ -1,6 +1,7 @@
 import loadable from "@loadable/component"
 import { graphql } from "relay-runtime"
 import { AppRouteConfig } from "v2/System/Router/Route"
+import { redirect } from "v2/System/Server/redirectHelper"
 
 const WorksForYouApp = loadable(
   () => import(/* webpackChunkName: "worksForYouBundle" */ "./WorksForYouApp"),
@@ -15,7 +16,7 @@ export const worksForYouRoutes: AppRouteConfig[] = [
     getComponent: () => WorksForYouApp,
     onServerSideRender: ({ req, res }) => {
       if (!req.user) {
-        res.redirect("/")
+        redirect({ url: "/", ...{ req, res } })
       }
     },
     onClientSideRender: () => {

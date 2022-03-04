@@ -5,6 +5,7 @@ import { allowedFilters } from "v2/Components/ArtworkFilter/Utils/allowedFilters
 
 import { paramsToCamelCase } from "v2/Components/ArtworkFilter/Utils/urlBuilder"
 import { redirectCollectionToArtistSeries } from "./Server/redirectCollectionToArtistSeries"
+import { redirect } from "v2/System/Server/redirectHelper"
 
 const CollectApp = loadable(
   () => import(/* webpackChunkName: "collectBundle" */ "./Routes/Collect"),
@@ -61,7 +62,12 @@ export const collectRoutes: AppRouteConfig[] = [
   {
     path: "/collection/:slug",
     getComponent: () => CollectionApp,
-    onServerSideRender: redirectCollectionToArtistSeries,
+    onServerSideRender: props => {
+      redirect({
+        onRedirect: () => redirectCollectionToArtistSeries(props),
+        ...props,
+      })
+    },
     onClientSideRender: () => {
       CollectionApp.preload()
     },
