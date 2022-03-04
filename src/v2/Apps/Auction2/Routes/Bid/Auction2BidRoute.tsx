@@ -95,7 +95,11 @@ const Auction2BidRoute: React.FC<Auction2BidRouteProps> = ({
     >
       <Formik
         validateOnMount
-        initialValues={{ ...initialValuesForBidding, selectedBid }}
+        initialValues={{
+          ...initialValuesForBidding,
+          creditCard: requiresPaymentInformation ? false : true,
+          selectedBid,
+        }}
         validationSchema={validationSchema}
         onSubmit={handleBidSubmit}
       >
@@ -105,9 +109,11 @@ const Auction2BidRoute: React.FC<Auction2BidRouteProps> = ({
           errors,
           isSubmitting,
           isValid,
+          setFieldError,
           setFieldValue,
           setFieldTouched,
         }) => {
+          console.log(errors, isValid, values)
           return (
             <Form>
               <Join separator={<Spacer my={2} />}>
@@ -122,6 +128,7 @@ const Auction2BidRoute: React.FC<Auction2BidRouteProps> = ({
                   onSelect={value => {
                     tracking.maxBidSelected(bidderID!, value)
 
+                    setFieldError("selectedBid", undefined)
                     setFieldValue("selectedBid", value)
                     setFieldTouched("selectedBid")
                   }}

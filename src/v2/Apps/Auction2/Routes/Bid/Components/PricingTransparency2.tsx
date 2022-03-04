@@ -98,7 +98,7 @@ export const PricingTransparency2QueryRenderer = ({
       bidAmountMinor,
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [bidAmountMinor])
 
   return (
     <SystemQueryRenderer<PricingTransparency2Query>
