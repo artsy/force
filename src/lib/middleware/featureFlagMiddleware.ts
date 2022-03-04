@@ -30,7 +30,6 @@ export function featureFlagMiddleware(serviceType: symbol) {
         // Get features and variants and move them to sharify
         const flags = service.getFeatures()
         res.locals.sd.FEATURE_FLAGS = {}
-        res.locals.sd.FEATURE_VARIANTS = {}
         if (flags) {
           for (let flag of flags) {
             res.locals.sd.FEATURE_FLAGS[flag] = {
