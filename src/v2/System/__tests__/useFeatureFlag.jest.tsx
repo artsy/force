@@ -3,38 +3,34 @@ import { useSystemContext } from "v2/System/useSystemContext"
 
 jest.mock("v2/System/useSystemContext")
 
-describe("useFeatureFlag", () => {
-  const mockUseSystemContext = useSystemContext as jest.Mock
+const mockUseSystemContext = useSystemContext as jest.Mock
 
-  beforeEach(() => {
-    mockUseSystemContext.mockImplementation(() => ({
-      featureFlags: {
-        'feature-a': {
-          flagEnabled: true,
-          variant: {
-              enabled: true,
-              name: "variant-a",
-              payload: {
-                type: "string",
-                value: "my payload",
-              },
-          }
-        },
-        'feature-b': {
-          flagEnabled: false,
-          variant: {
-            enabled: false,
-            name: "variant-b",
-            payload: {
-              type: "string",
-              value: "my payload",
-            },
+beforeEach(() => {
+  mockUseSystemContext.mockImplementation(() => ({
+    featureFlags: {
+      "feature-a": {
+        flagEnabled: true,
+        variant: {
+          enabled: true,
+          name: "variant-a",
+          payload: {
+            type: "string",
+            value: "my payload",
           },
-        }
+        },
       },
-    }))
-  })
+      "feature-b": {
+        flagEnabled: false,
+        variant: {
+          enabled: false,
+          name: "disabled",
+        },
+      },
+    },
+  }))
+})
 
+describe("useFeatureFlag", () => {
   it("returns true when the feature flag is present", () => {
     const result = useFeatureFlag("feature-a")
     expect(result).toBe(true)
@@ -63,7 +59,9 @@ describe("useFeatureFlag", () => {
       "[Force] Error: featureFlags is undefined in SystemContext"
     )
   })
+})
 
+describe("useFeatureVariant", () => {
   it("returns true when the variant is enabled", () => {
     const variant = useFeatureVariant("feature-a")
     expect(variant!.enabled).toBe(true)

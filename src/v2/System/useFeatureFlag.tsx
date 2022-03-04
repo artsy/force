@@ -1,12 +1,11 @@
 import { useSystemContext } from "v2/System"
 import { Variant } from "unleash-client"
 
-
 export type FeatureFlags = Record<string, FeatureFlagDetails>
 
 interface FeatureFlagDetails {
-  flagEnabled: boolean,
-  variant: Variant,
+  flagEnabled: boolean
+  variant: Variant
 }
 
 export function useFeatureFlag(flagName: string): boolean | null {
@@ -48,9 +47,7 @@ export function useFeatureVariant(featureName: string): Variant {
   }
 
   if (!featureFlags[featureName]) {
-    console.error(
-      "[Force] Error: the variant can't be found on featureFlags"
-    )
+    console.error("[Force] Error: the variant can't be found on featureFlags")
     return errorObject
   }
 
