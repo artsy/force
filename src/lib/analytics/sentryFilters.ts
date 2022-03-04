@@ -15,7 +15,7 @@ export const IGNORED_ERRORS = [
   "pktAnnotationHighlighter", // Pocket ios app errors on opening articles
   "Request has been terminated Possible causes: the network is offline, Origin is not allowed by Access-Control-Allow-Origin",
   "Request has been terminated Possible causes: the network is offline",
-  "Response timeout",
+  "Cannot set headers after they are sent to the client",
   "SecurityError: Blocked a frame with origin", // Facebook scripts error on opening articles
   "TypeError Qg.m(gpt/pubads_impl_2021052601)",
 ]
