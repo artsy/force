@@ -113,7 +113,6 @@ const Auction2BidRoute: React.FC<Auction2BidRouteProps> = ({
           setFieldValue,
           setFieldTouched,
         }) => {
-          console.log(errors, isValid, values)
           return (
             <Form>
               <Join separator={<Spacer my={2} />}>

@@ -5,6 +5,7 @@ import {
   Column as BaseColumn,
   ColumnProps,
   GridColumns,
+  MessageIcon,
   Spacer,
   Text,
 } from "@artsy/palette"
@@ -69,22 +70,54 @@ const AuctionActiveBids: React.FC<AuctionActiveBidsProps> = ({ me, relay }) => {
               )}
             </Column>
             <Column justifyContent="center">
-              {lotStanding.isHighestBidder ? (
-                <Text variant="xs" color="green100" display="flex">
-                  <ArrowUpCircleIcon height={15} width={15} fill="green100" />
-                  &nbsp; Highest bid
-                </Text>
-              ) : (
-                <Text
-                  variant="xs"
-                  color="red100"
-                  display="flex"
-                  alignItems="center"
-                >
-                  <ArrowDownCircleIcon height={15} width={15} fill="red100" />
-                  &nbsp; Outbid
-                </Text>
-              )}
+              {(() => {
+                switch (true) {
+                  case lotStanding.isHighestBidder: {
+                    return (
+                      <Text variant="xs" color="green100" display="flex">
+                        <ArrowUpCircleIcon
+                          height={15}
+                          width={15}
+                          fill="green100"
+                        />
+                        &nbsp; Highest bid
+                      </Text>
+                    )
+                  }
+                  case lotStanding.saleArtwork?.reserveStatus ===
+                    "reserve_not_met": {
+                    return (
+                      <Text
+                        variant="xs"
+                        color="red100"
+                        display="flex"
+                        alignItems="center"
+                      >
+                        <MessageIcon height={15} width={15} fill="red100" />
+                        &nbsp; Reserve Not Met
+                      </Text>
+                    )
+                  }
+                  // Outbid
+                  default: {
+                    return (
+                      <Text
+                        variant="xs"
+                        color="red100"
+                        display="flex"
+                        alignItems="center"
+                      >
+                        <ArrowDownCircleIcon
+                          height={15}
+                          width={15}
+                          fill="red100"
+                        />
+                        &nbsp; Outbid
+                      </Text>
+                    )
+                  }
+                }
+              })()}
             </Column>
             <Column justifyContent="flex-end">
               <Button
