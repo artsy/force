@@ -27,7 +27,7 @@ export function useFeatureVariant(featureName: string): Variant | null {
   const { featureFlags } = useSystemContext()
   const variant = featureFlags?.[featureName]?.variant
 
-  if (variant === undefined) {
+  if (!variant) {
     console.error(
       "[Force] Error: cannot find variant on featureFlags: ",
       featureFlags
