@@ -81,7 +81,7 @@ export const useAuctionTracking = () => {
       // TODO
     },
     registrationSubmitted: ({ bidderID, me, sale }) => {
-      console.log(sale, me)
+      // console.log(sale, me)
 
       trackEvent({
         action_type: AnalyticsSchema.ActionType.RegistrationSubmitted,

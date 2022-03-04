@@ -33,7 +33,7 @@ export const useCreateTokenAndSubmit = ({
   const { tracking } = useAuctionTracking()
 
   const {
-    submitMutation: submitAddCreditCardMutation,
+    submitMutation: submitAddCreditCardAndUpdateProfileMutation,
   } = useAddCreditCardAndUpdateProfile()
   const { submitMutation: createBidder } = useCreateBidder()
 
@@ -77,7 +77,7 @@ export const useCreateTokenAndSubmit = ({
         return
       }
 
-      await submitAddCreditCardMutation({
+      await submitAddCreditCardAndUpdateProfileMutation({
         variables: {
           creditCardInput: {
             token: token?.id!,

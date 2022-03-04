@@ -94,6 +94,7 @@ const Auction2BidRoute: React.FC<Auction2BidRouteProps> = ({
       width={modalWidth}
     >
       <Formik
+        validateOnMount
         initialValues={{ ...initialValuesForBidding, selectedBid }}
         validationSchema={validationSchema}
         onSubmit={handleBidSubmit}
@@ -107,8 +108,6 @@ const Auction2BidRoute: React.FC<Auction2BidRouteProps> = ({
           setFieldValue,
           setFieldTouched,
         }) => {
-          console.log(isValid, touched)
-
           return (
             <Form>
               <Join separator={<Spacer my={2} />}>
@@ -269,14 +268,14 @@ const computeProps = ({
   } = biddingValidationSchemas
 
   const validationSchema = (() => {
-    if (requiresCheckbox) {
+    if (requiresCheckbox || requiresPaymentInformation) {
       if (requiresPaymentInformation) {
         return validationSchemaForUnregisteredUsersWithoutCreditCard
       } else {
         return validationSchemaForUnregisteredUsersWithCreditCard
       }
     } else {
-      validationSchemaForRegisteredUsers
+      return validationSchemaForRegisteredUsers
     }
   })()
 

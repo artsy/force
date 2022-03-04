@@ -61,6 +61,7 @@ const Auction2RegistrationRoute: React.FC<Auction2RegistrationRouteProps> = ({
       width={["100%", 600]}
     >
       <Formik<AuctionFormValues>
+        validateOnMount
         initialValues={initialValuesForRegistration}
         onSubmit={handleSubmit}
         validationSchema={registrationValidationSchema}

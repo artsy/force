@@ -1,18 +1,14 @@
 import { Join, Spacer, Text } from "@artsy/palette"
-import {
-  AddressErrors,
-  AddressForm,
-  AddressTouched,
-} from "v2/Components/AddressForm"
 import { CreditCardInput } from "v2/Components/CreditCardInput"
 import { useFormContext } from "v2/Apps/Auction2/Hooks/useFormContext"
+import { AddressForm } from "./AddressForm"
 
 export const AddressFormWithCreditCard: React.FC = () => {
   const {
     setFieldValue,
+    setFieldTouched,
     setFieldError,
     errors,
-    values,
     touched,
   } = useFormContext()
 
@@ -32,20 +28,28 @@ export const AddressFormWithCreditCard: React.FC = () => {
       <Text variant="md">Credit Card</Text>
 
       <CreditCardInput
-        error={errors.creditCard as string}
-        onChange={({ error }) => setFieldError("creditCard", error?.message)}
+        error={touched.creditCard && errors.creditCard}
+        onChange={event => {
+          setFieldTouched("creditCard", true)
+
+          if (event.error?.message) {
+            setFieldValue("creditCard", false)
+            setFieldError("creditCard", event.error?.message)
+            return
+          }
+          if (!event.complete) {
+            setFieldValue("creditCard", false)
+            return
+          }
+          if (event.complete) {
+            setFieldValue("creditCard", true)
+            return
+          }
+        }}
+        required
       />
 
-      <AddressForm
-        value={values.address}
-        onChange={address => {
-          setFieldValue("address", address)
-        }}
-        errors={errors.address as AddressErrors}
-        touched={touched.address as AddressTouched}
-        billing
-        showPhoneNumberInput
-      />
+      <AddressForm />
     </Join>
   )
 }

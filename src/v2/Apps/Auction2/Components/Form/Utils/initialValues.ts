@@ -2,9 +2,9 @@ import { FormikHelpers } from "formik"
 import { Address, emptyAddress } from "v2/Components/AddressForm"
 
 export interface AuctionFormValues {
-  address?: Address
+  address: Address
   agreeToTerms: boolean
-  creditCard?: string
+  creditCard?: boolean
   selectedBid?: string
 }
 
@@ -14,12 +14,13 @@ export const initialValuesForRegistration: Omit<
 > = {
   address: emptyAddress,
   agreeToTerms: false,
-  creditCard: (undefined as unknown) as string,
+  creditCard: false,
 }
 
 export const initialValuesForBidding: AuctionFormValues = {
   ...initialValuesForRegistration,
-  selectedBid: (undefined as unknown) as string,
+  agreeToTerms: true, // user will have agreed during registration
+  selectedBid: (null as unknown) as string,
 }
 
 export type AuctionFormHelpers = FormikHelpers<AuctionFormValues>
