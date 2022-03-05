@@ -4,7 +4,6 @@ import {
   Box,
   Button,
   ButtonSize,
-  Carousel,
   Column as BaseColumn,
   ColumnProps,
   GridColumns,
@@ -21,7 +20,6 @@ import { useRouter } from "v2/System/Router/useRouter"
 import { AuctionActiveBids_me } from "v2/__generated__/AuctionActiveBids_me.graphql"
 import { AuctionLotInfoFragmentContainer } from "../Routes/Bid/Components/AuctionLotInfo"
 import { Media } from "v2/Utils/Responsive"
-import { themeGet } from "@styled-system/theme-get"
 
 interface AuctionActiveBidsProps {
   me: AuctionActiveBids_me

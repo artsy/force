@@ -15,33 +15,33 @@ export type Details_Test_QueryRawResponse = {
         readonly href: string | null;
         readonly title: string | null;
         readonly date: string | null;
-        readonly saleMessage: string | null;
-        readonly culturalMaker: string | null;
+        readonly sale_message: string | null;
+        readonly cultural_maker: string | null;
         readonly artists: ReadonlyArray<({
             readonly id: string;
             readonly href: string | null;
             readonly name: string | null;
         }) | null> | null;
-        readonly collectingInstitution: string | null;
+        readonly collecting_institution: string | null;
         readonly partner: ({
             readonly name: string | null;
             readonly href: string | null;
             readonly id: string;
         }) | null;
         readonly sale: ({
-            readonly isAuction: boolean | null;
-            readonly isClosed: boolean | null;
+            readonly is_auction: boolean | null;
+            readonly is_closed: boolean | null;
             readonly id: string;
         }) | null;
-        readonly saleArtwork: ({
+        readonly sale_artwork: ({
             readonly lotLabel: string | null;
             readonly counts: ({
-                readonly bidderPositions: number | null;
+                readonly bidder_positions: number | null;
             }) | null;
-            readonly highestBid: ({
+            readonly highest_bid: ({
                 readonly display: string | null;
             }) | null;
-            readonly openingBid: ({
+            readonly opening_bid: ({
                 readonly display: string | null;
             }) | null;
             readonly id: string;
@@ -69,33 +69,33 @@ fragment Details_artwork on Artwork {
   href
   title
   date
-  saleMessage
-  culturalMaker
+  sale_message: saleMessage
+  cultural_maker: culturalMaker
   artists(shallow: true) {
     id
     href
     name
   }
-  collectingInstitution
+  collecting_institution: collectingInstitution
   partner(shallow: true) {
     name
     href
     id
   }
   sale {
-    isAuction
-    isClosed
+    is_auction: isAuction
+    is_closed: isClosed
     id
   }
-  saleArtwork {
+  sale_artwork: saleArtwork {
     lotLabel
     counts {
-      bidderPositions
+      bidder_positions: bidderPositions
     }
-    highestBid {
+    highest_bid: highestBid {
       display
     }
-    openingBid {
+    opening_bid: openingBid {
       display
     }
     id
@@ -223,14 +223,14 @@ return {
             "storageKey": null
           },
           {
-            "alias": null,
+            "alias": "sale_message",
             "args": null,
             "kind": "ScalarField",
             "name": "saleMessage",
             "storageKey": null
           },
           {
-            "alias": null,
+            "alias": "cultural_maker",
             "args": null,
             "kind": "ScalarField",
             "name": "culturalMaker",
@@ -251,7 +251,7 @@ return {
             "storageKey": "artists(shallow:true)"
           },
           {
-            "alias": null,
+            "alias": "collecting_institution",
             "args": null,
             "kind": "ScalarField",
             "name": "collectingInstitution",
@@ -280,14 +280,14 @@ return {
             "plural": false,
             "selections": [
               {
-                "alias": null,
+                "alias": "is_auction",
                 "args": null,
                 "kind": "ScalarField",
                 "name": "isAuction",
                 "storageKey": null
               },
               {
-                "alias": null,
+                "alias": "is_closed",
                 "args": null,
                 "kind": "ScalarField",
                 "name": "isClosed",
@@ -298,7 +298,7 @@ return {
             "storageKey": null
           },
           {
-            "alias": null,
+            "alias": "sale_artwork",
             "args": null,
             "concreteType": "SaleArtwork",
             "kind": "LinkedField",
@@ -321,7 +321,7 @@ return {
                 "plural": false,
                 "selections": [
                   {
-                    "alias": null,
+                    "alias": "bidder_positions",
                     "args": null,
                     "kind": "ScalarField",
                     "name": "bidderPositions",
@@ -331,7 +331,7 @@ return {
                 "storageKey": null
               },
               {
-                "alias": null,
+                "alias": "highest_bid",
                 "args": null,
                 "concreteType": "SaleArtworkHighestBid",
                 "kind": "LinkedField",
@@ -341,7 +341,7 @@ return {
                 "storageKey": null
               },
               {
-                "alias": null,
+                "alias": "opening_bid",
                 "args": null,
                 "concreteType": "SaleArtworkOpeningBid",
                 "kind": "LinkedField",
@@ -361,7 +361,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "56ab0aacd15535c2aa5fb573cf77aad4",
+    "cacheID": "55e26879e05bfa34e0aed8b23287dc5b",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -380,8 +380,8 @@ return {
         "artwork.artists.href": (v6/*: any*/),
         "artwork.artists.id": (v7/*: any*/),
         "artwork.artists.name": (v6/*: any*/),
-        "artwork.collectingInstitution": (v6/*: any*/),
-        "artwork.culturalMaker": (v6/*: any*/),
+        "artwork.collecting_institution": (v6/*: any*/),
+        "artwork.cultural_maker": (v6/*: any*/),
         "artwork.date": (v6/*: any*/),
         "artwork.href": (v6/*: any*/),
         "artwork.id": (v7/*: any*/),
@@ -401,49 +401,49 @@ return {
           "type": "Sale"
         },
         "artwork.sale.id": (v7/*: any*/),
-        "artwork.sale.isAuction": (v8/*: any*/),
-        "artwork.sale.isClosed": (v8/*: any*/),
-        "artwork.saleArtwork": {
+        "artwork.sale.is_auction": (v8/*: any*/),
+        "artwork.sale.is_closed": (v8/*: any*/),
+        "artwork.sale_artwork": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "SaleArtwork"
         },
-        "artwork.saleArtwork.counts": {
+        "artwork.sale_artwork.counts": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "SaleArtworkCounts"
         },
-        "artwork.saleArtwork.counts.bidderPositions": {
+        "artwork.sale_artwork.counts.bidder_positions": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "FormattedNumber"
         },
-        "artwork.saleArtwork.highestBid": {
+        "artwork.sale_artwork.highest_bid": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "SaleArtworkHighestBid"
         },
-        "artwork.saleArtwork.highestBid.display": (v6/*: any*/),
-        "artwork.saleArtwork.id": (v7/*: any*/),
-        "artwork.saleArtwork.lotLabel": (v6/*: any*/),
-        "artwork.saleArtwork.openingBid": {
+        "artwork.sale_artwork.highest_bid.display": (v6/*: any*/),
+        "artwork.sale_artwork.id": (v7/*: any*/),
+        "artwork.sale_artwork.lotLabel": (v6/*: any*/),
+        "artwork.sale_artwork.opening_bid": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "SaleArtworkOpeningBid"
         },
-        "artwork.saleArtwork.openingBid.display": (v6/*: any*/),
-        "artwork.saleMessage": (v6/*: any*/),
+        "artwork.sale_artwork.opening_bid.display": (v6/*: any*/),
+        "artwork.sale_message": (v6/*: any*/),
         "artwork.title": (v6/*: any*/)
       }
     },
     "name": "Details_Test_Query",
     "operationKind": "query",
-    "text": "query Details_Test_Query {\n  artwork(id: \"gerhard-richter-bagdad-ii-flow-p10-1\") {\n    ...Details_artwork\n    id\n  }\n}\n\nfragment Details_artwork on Artwork {\n  href\n  title\n  date\n  saleMessage\n  culturalMaker\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    isAuction\n    isClosed\n    id\n  }\n  saleArtwork {\n    lotLabel\n    counts {\n      bidderPositions\n    }\n    highestBid {\n      display\n    }\n    openingBid {\n      display\n    }\n    id\n  }\n}\n"
+    "text": "query Details_Test_Query {\n  artwork(id: \"gerhard-richter-bagdad-ii-flow-p10-1\") {\n    ...Details_artwork\n    id\n  }\n}\n\nfragment Details_artwork on Artwork {\n  href\n  title\n  date\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    lotLabel\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n}\n"
   }
 };
 })();

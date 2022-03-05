@@ -27,7 +27,7 @@ const ConditionalLink: React.FC<
 }
 
 const ArtistLine: React.FC<DetailsProps> = ({
-  artwork: { culturalMaker, artists },
+  artwork: { cultural_maker, artists },
   includeLinks,
 }) => {
   const tokens = useThemeConfig({
@@ -39,10 +39,10 @@ const ArtistLine: React.FC<DetailsProps> = ({
     },
   })
 
-  if (culturalMaker) {
+  if (cultural_maker) {
     return (
       <Text variant={tokens.variant} overflowEllipsis>
-        {culturalMaker}
+        {cultural_maker}
       </Text>
     )
   }
@@ -96,7 +96,7 @@ const TitleLine: React.FC<DetailsProps> = ({
 
 const PartnerLine: React.FC<DetailsProps> = ({
   includeLinks,
-  artwork: { collectingInstitution, partner },
+  artwork: { collecting_institution, partner },
 }) => {
   const tokens = useThemeConfig({
     v2: {
@@ -107,10 +107,10 @@ const PartnerLine: React.FC<DetailsProps> = ({
     },
   })
 
-  if (collectingInstitution) {
+  if (collecting_institution) {
     return (
       <Text variant={tokens.variant} color="black60" overflowEllipsis>
-        {collectingInstitution}
+        {collecting_institution}
       </Text>
     )
   }
@@ -155,36 +155,36 @@ const SaleInfoLine: React.FC<DetailsProps> = props => {
 }
 
 const SaleMessage: React.FC<DetailsProps> = ({
-  artwork: { sale, saleMessage, saleArtwork },
+  artwork: { sale, sale_message, sale_artwork },
 }) => {
-  if (sale?.isAuction && sale?.isClosed) {
+  if (sale?.is_auction && sale?.is_closed) {
     return <>Bidding closed</>
   }
 
-  if (sale?.isAuction) {
-    const highestBid_display = saleArtwork?.highestBid?.display
-    const openingBid_display = saleArtwork?.openingBid?.display
+  if (sale?.is_auction) {
+    const highestBid_display = sale_artwork?.highest_bid?.display
+    const openingBid_display = sale_artwork?.opening_bid?.display
 
     return <>{highestBid_display || openingBid_display || ""}</>
   }
 
-  if (saleMessage === "Contact For Price") {
+  if (sale_message === "Contact For Price") {
     return <>Price on Request</>
   }
 
-  return <>{saleMessage}</>
+  return <>{sale_message}</>
 }
 
 const BidInfo: React.FC<DetailsProps> = ({
-  artwork: { sale, saleArtwork },
+  artwork: { sale, sale_artwork },
 }) => {
-  const inRunningAuction = sale?.isAuction && !sale?.isClosed
+  const inRunningAuction = sale?.is_auction && !sale?.is_closed
 
   if (!inRunningAuction) {
     return null
   }
 
-  const bidderPositionCounts = saleArtwork?.counts?.bidderPositions ?? 0
+  const bidderPositionCounts = sale_artwork?.counts?.bidder_positions ?? 0
 
   if (bidderPositionCounts === 0) {
     return null
@@ -208,7 +208,7 @@ export const Details: React.FC<DetailsProps> = ({
   return (
     <>
       {artworkGridContext?.isAuctionArtwork && (
-        <Text variant="xs">Lot {rest.artwork?.saleArtwork?.lotLabel}</Text>
+        <Text variant="xs">Lot {rest.artwork?.sale_artwork?.lotLabel}</Text>
       )}
       {!hideArtistName && <ArtistLine {...rest} />}
       <TitleLine {...rest} />
@@ -224,31 +224,31 @@ export const DetailsFragmentContainer = createFragmentContainer(Details, {
       href
       title
       date
-      saleMessage
-      culturalMaker
+      sale_message: saleMessage
+      cultural_maker: culturalMaker
       artists(shallow: true) {
         id
         href
         name
       }
-      collectingInstitution
+      collecting_institution: collectingInstitution
       partner(shallow: true) {
         name
         href
       }
       sale {
-        isAuction
-        isClosed
+        is_auction: isAuction
+        is_closed: isClosed
       }
-      saleArtwork {
+      sale_artwork: saleArtwork {
         lotLabel
         counts {
-          bidderPositions
+          bidder_positions: bidderPositions
         }
-        highestBid {
+        highest_bid: highestBid {
           display
         }
-        openingBid {
+        opening_bid: openingBid {
           display
         }
       }

@@ -265,13 +265,13 @@ const setupCheckBidStatus = (props: {
       case "ERROR": {
         console.error("Error placing bid:", result)
 
-        sendToast({
-          variant: "error",
-          message: `Error placing bid. Please try again.`,
-        })
-
         if (result.messageHeader === "Bid not placed") {
           router.push(`/auction2/${sale.slug}/confirm-registration`)
+        } else {
+          sendToast({
+            variant: "error",
+            message: `Error placing bid. Please try again.`,
+          })
         }
         break
       }

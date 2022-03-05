@@ -117,8 +117,8 @@ const FAIR_ARTWORKS_FIXTURE: FairArtworks_QueryRawResponse = {
             title: "Pumpkin",
             image_title: "Yayoi Kusama, ‘Pumpkin’, 2222",
             date: "2020",
-            saleMessage: "Contact For Price",
-            culturalMaker: null,
+            sale_message: "Contact For Price",
+            cultural_maker: null,
             artists: [
               {
                 id: "artistabc123",
@@ -127,7 +127,7 @@ const FAIR_ARTWORKS_FIXTURE: FairArtworks_QueryRawResponse = {
               },
             ],
             artistNames: "Yayoi Kusama",
-            collectingInstitution: null,
+            collecting_institution: null,
             partner: {
               name: "Important Auction House",
               href: "/auction/important-auction-house",
@@ -135,8 +135,6 @@ const FAIR_ARTWORKS_FIXTURE: FairArtworks_QueryRawResponse = {
               type: "Auction House",
             },
             sale: {
-              isAuction: true,
-              isClosed: true,
               is_auction: true,
               is_closed: false,
               id: "saleabc123",
@@ -146,6 +144,7 @@ const FAIR_ARTWORKS_FIXTURE: FairArtworks_QueryRawResponse = {
               display_timely_at: "live in 3d",
             },
             sale_artwork: {
+              lotLabel: "0",
               counts: {
                 bidder_positions: 0,
               },
@@ -177,8 +176,8 @@ const FAIR_ARTWORKS_FIXTURE: FairArtworks_QueryRawResponse = {
             title: "Pumpkin",
             image_title: "Yayoi Kusama, ‘Pumpkin’, 3333",
             date: "2020",
-            saleMessage: "Contact For Price",
-            culturalMaker: null,
+            sale_message: "Contact For Price",
+            cultural_maker: null,
             artists: [
               {
                 id: "artistabc123",
@@ -187,7 +186,7 @@ const FAIR_ARTWORKS_FIXTURE: FairArtworks_QueryRawResponse = {
               },
             ],
             artistNames: "Yayoi Kusama",
-            collectingInstitution: null,
+            collecting_institution: null,
             partner: {
               name: "Important Gallery",
               href: "/important-gallery",

@@ -266,8 +266,8 @@ const ConsignRouteFixture: ArtistConsignRoute_Test_QueryRawResponse = {
                     name: "Alex Katz",
                   },
                 ],
-                collectingInstitution: null,
-                culturalMaker: null,
+                collecting_institution: null,
+                cultural_maker: null,
                 date: "1973",
                 href: "/artwork/alex-katz-luna-park-2-maravell-67-schroder-68",
                 id: "QXJ0d29yazo1ZDljYTZmZThmMWFlZTAwMTE0NzVjZjc=",
@@ -297,8 +297,6 @@ const ConsignRouteFixture: ArtistConsignRoute_Test_QueryRawResponse = {
                 },
                 realizedPrice: "$1,300",
                 sale: {
-                  isAuction: true,
-                  isClosed: true,
                   display_timely_at: "live 6M ago",
                   id: "U2FsZTo1ZDliNjY2YjI4ZWVkYTAwMTJmZGQzMTc=",
                   is_auction: true,
@@ -307,21 +305,20 @@ const ConsignRouteFixture: ArtistConsignRoute_Test_QueryRawResponse = {
                   is_open: false,
                   is_preview: false,
                 },
-                sale_artwork: null,
-                saleArtwork: {
-                  lotLabel: "1",
+                sale_artwork: {
+                  lotLabel: "0",
                   counts: {
-                    bidderPositions: 13,
+                    bidder_positions: 13,
                   },
-                  highestBid: {
+                  highest_bid: {
                     display: "$5,000",
                   },
                   id: "U2FsZUFydHdvcms6NWQ5Y2E3MDNiNjk1MmQwMDEyNzk5YmI2",
-                  openingBid: {
+                  opening_bid: {
                     display: "$1,000",
                   },
                 },
-                saleMessage: null,
+                sale_message: null,
                 slug: "alex-katz-luna-park-2-maravell-67-schroder-68",
                 title: "Luna Park 2 (Maravell 67; Schröder 68)",
               },
@@ -335,8 +332,8 @@ const ConsignRouteFixture: ArtistConsignRoute_Test_QueryRawResponse = {
                     name: "Alex Katz",
                   },
                 ],
-                collectingInstitution: null,
-                culturalMaker: null,
+                collecting_institution: null,
+                cultural_maker: null,
                 date: "2019",
                 href: "/artwork/alex-katz-rose-bud-30",
                 id: "QXJ0d29yazo1ZDEyNmY5YmJhNDZiYTAwMTJjMzEzNGY=",
@@ -367,10 +364,9 @@ const ConsignRouteFixture: ArtistConsignRoute_Test_QueryRawResponse = {
                 realizedPrice: "$5,000",
                 sale: null,
                 sale_artwork: null,
-                saleMessage: "$11,000",
+                sale_message: "$11,000",
                 slug: "alex-katz-rose-bud-30",
                 title: "Rose Bud",
-                saleArtwork: null,
               },
             },
             {
@@ -382,8 +378,8 @@ const ConsignRouteFixture: ArtistConsignRoute_Test_QueryRawResponse = {
                     name: "Alex Katz",
                   },
                 ],
-                collectingInstitution: null,
-                culturalMaker: null,
+                collecting_institution: null,
+                cultural_maker: null,
                 date: "1994",
                 href:
                   "/artwork/alex-katz-fog-and-night-from-the-northern-landscapes-series",
@@ -414,8 +410,6 @@ const ConsignRouteFixture: ArtistConsignRoute_Test_QueryRawResponse = {
                 },
                 realizedPrice: "$8,500",
                 sale: {
-                  isAuction: true,
-                  isClosed: true,
                   display_timely_at: "ends in 10M",
                   id: "U2FsZTo1Y2ZlOTk5ZDcwODY1ZTAwMGU5ODgxNzM=",
                   is_auction: true,
@@ -424,21 +418,20 @@ const ConsignRouteFixture: ArtistConsignRoute_Test_QueryRawResponse = {
                   is_open: false,
                   is_preview: false,
                 },
-                sale_artwork: null,
-                saleArtwork: {
-                  lotLabel: "1",
+                sale_artwork: {
+                  lotLabel: "0",
                   counts: {
-                    bidderPositions: 3,
+                    bidder_positions: 3,
                   },
-                  highestBid: {
+                  highest_bid: {
                     display: "$1,300",
                   },
                   id: "U2FsZUFydHdvcms6NWNmZmRlMDE0MDQ5MTgwMDBlYzg5YmYy",
-                  openingBid: {
+                  opening_bid: {
                     display: "$800",
                   },
                 },
-                saleMessage: null,
+                sale_message: null,
                 slug:
                   "alex-katz-fog-and-night-from-the-northern-landscapes-series",
                 title: "Fog and Night from the Northern Landscapes series",
@@ -453,8 +446,8 @@ const ConsignRouteFixture: ArtistConsignRoute_Test_QueryRawResponse = {
                     name: "Alex Katz",
                   },
                 ],
-                collectingInstitution: null,
-                culturalMaker: null,
+                collecting_institution: null,
+                cultural_maker: null,
                 date: "2017",
                 href: "/artwork/alex-katz-laura-1-49",
                 id: "QXJ0d29yazo1YWEyZTkwZDc2MjJkZDQ5ZGM4YjM1NmM=",
@@ -485,10 +478,9 @@ const ConsignRouteFixture: ArtistConsignRoute_Test_QueryRawResponse = {
                 realizedPrice: "$1,300",
                 sale: null,
                 sale_artwork: null,
-                saleMessage: "$7,500",
+                sale_message: "$7,500",
                 slug: "alex-katz-laura-1-49",
                 title: "Laura 1",
-                saleArtwork: null,
               },
             },
           ],

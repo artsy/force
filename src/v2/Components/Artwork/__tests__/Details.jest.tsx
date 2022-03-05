@@ -221,10 +221,10 @@ const artworkInAuction: Details_Test_QueryRawResponse["artwork"] = {
   ],
   href: "/artwork/gerhard-richter-tulips-p17-14",
   date: "2017",
-  saleMessage: "$450",
-  culturalMaker: null,
+  sale_message: "$450",
+  cultural_maker: null,
   title: "Tulips (P17)",
-  collectingInstitution: "This Really Great Gallery",
+  collecting_institution: "This Really Great Gallery",
   partner: {
     id: "opaque-partner-id",
     name: "Forum Auctions",
@@ -232,14 +232,14 @@ const artworkInAuction: Details_Test_QueryRawResponse["artwork"] = {
   },
   sale: {
     id: "opaque-sale-id",
-    isAuction: true,
-    isClosed: false,
+    is_auction: true,
+    is_closed: false,
   },
-  saleArtwork: {
-    lotLabel: "17",
+  sale_artwork: {
+    lotLabel: "0",
     id: "opaque-sale-artwork-id",
-    highestBid: { display: "$2,600" },
-    openingBid: { display: "$2,400" },
-    counts: { bidderPositions: 0 },
+    highest_bid: { display: "$2,600" },
+    opening_bid: { display: "$2,400" },
+    counts: { bidder_positions: 0 },
   },
 }

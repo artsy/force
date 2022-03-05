@@ -39,8 +39,8 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
             title: "Kenny Burrell",
             image_title: "Andy Warhol, ‘Kenny Burrell’, 1956",
             date: "1956",
-            saleMessage: "$125,000",
-            culturalMaker: null,
+            sale_message: "$125,000",
+            cultural_maker: null,
             artists: [
               {
                 id: "QXJ0aXN0OmFuZHktd2FyaG9s",
@@ -49,7 +49,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
               },
             ],
             artistNames: "Andy Warhol",
-            collectingInstitution: null,
+            collecting_institution: null,
             partner: {
               name: "Ambleside Gallery",
               href: "/ambleside-gallery",
@@ -79,8 +79,8 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
             title: "$(1) FS II.274",
             image_title: "Andy Warhol, ‘$(1) FS II.274’, 1982",
             date: "1982",
-            saleMessage: "$85,000",
-            culturalMaker: null,
+            sale_message: "$85,000",
+            cultural_maker: null,
             artists: [
               {
                 id: "QXJ0aXN0OmFuZHktd2FyaG9s",
@@ -89,7 +89,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
               },
             ],
             artistNames: "Andy Warhol",
-            collectingInstitution: null,
+            collecting_institution: null,
             partner: {
               name: "Gallery Art",
               href: "/gallery-art",
@@ -119,8 +119,8 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
             title: "Peaches",
             image_title: "Andy Warhol, ‘Peaches’, 1978",
             date: "1978",
-            saleMessage: "$15,000",
-            culturalMaker: null,
+            sale_message: "$15,000",
+            cultural_maker: null,
             artists: [
               {
                 id: "QXJ0aXN0OmFuZHktd2FyaG9s",
@@ -129,7 +129,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
               },
             ],
             artistNames: "Andy Warhol",
-            collectingInstitution: null,
+            collecting_institution: null,
             partner: {
               name: "DTR Modern Galleries",
               href: "/dtr-modern-galleries",
@@ -163,8 +163,8 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
             image_title:
               'Andy Warhol, ‘"ACTRESS SHOTS ANDY WARHOL" NY Daily News, 1968’, 1968',
             date: "1968",
-            saleMessage: "$1,250",
-            culturalMaker: null,
+            sale_message: "$1,250",
+            cultural_maker: null,
             artists: [
               {
                 id: "QXJ0aXN0OmFuZHktd2FyaG9s",
@@ -173,7 +173,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
               },
             ],
             artistNames: "Andy Warhol",
-            collectingInstitution: null,
+            collecting_institution: null,
             partner: {
               name: "VINCE fine arts/ephemera",
               href: "/vince-fine-arts-slash-ephemera",
@@ -203,8 +203,8 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
             title: "COSMOS",
             image_title: "Andy Warhol, ‘COSMOS’, ca. 1984",
             date: "ca. 1984",
-            saleMessage: "$99,500",
-            culturalMaker: null,
+            sale_message: "$99,500",
+            cultural_maker: null,
             artists: [
               {
                 id: "QXJ0aXN0OmFuZHktd2FyaG9s",
@@ -213,7 +213,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
               },
             ],
             artistNames: "Andy Warhol",
-            collectingInstitution: null,
+            collecting_institution: null,
             partner: {
               name: "Gallery Art",
               href: "/gallery-art",
@@ -243,8 +243,8 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
             title: "Lee Iacocca",
             image_title: "Andy Warhol, ‘Lee Iacocca’, 1985",
             date: "1985",
-            saleMessage: "$18,500",
-            culturalMaker: null,
+            sale_message: "$18,500",
+            cultural_maker: null,
             artists: [
               {
                 id: "QXJ0aXN0OmFuZHktd2FyaG9s",
@@ -253,7 +253,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
               },
             ],
             artistNames: "Andy Warhol",
-            collectingInstitution: null,
+            collecting_institution: null,
             partner: {
               name: "Robert Fontaine Gallery",
               href: "/robert-fontaine-gallery",
@@ -283,8 +283,8 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
             title: "Shoe",
             image_title: "Andy Warhol, ‘Shoe’, 1958",
             date: "1958",
-            saleMessage: "$18,000",
-            culturalMaker: null,
+            sale_message: "$18,000",
+            cultural_maker: null,
             artists: [
               {
                 id: "QXJ0aXN0OmFuZHktd2FyaG9s",
@@ -293,7 +293,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
               },
             ],
             artistNames: "Andy Warhol",
-            collectingInstitution: null,
+            collecting_institution: null,
             partner: {
               name: "McClain Gallery",
               href: "/mcclain-gallery",
@@ -323,8 +323,8 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
             title: "Sewing Machine",
             image_title: "Andy Warhol, ‘Sewing Machine’, 1952",
             date: "1952",
-            saleMessage: "$17,500",
-            culturalMaker: null,
+            sale_message: "$17,500",
+            cultural_maker: null,
             artists: [
               {
                 id: "QXJ0aXN0OmFuZHktd2FyaG9s",
@@ -333,7 +333,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
               },
             ],
             artistNames: "Andy Warhol",
-            collectingInstitution: null,
+            collecting_institution: null,
             partner: {
               name: "Joseph K. Levene Fine Art, Ltd.",
               href: "/joseph-k-levene-fine-art-ltd",
@@ -363,8 +363,8 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
             title: "Superman (F. & S. II. 260)",
             image_title: "Andy Warhol, ‘Superman (F. & S. II. 260)’, 1981",
             date: "1981",
-            saleMessage: "$240,000",
-            culturalMaker: null,
+            sale_message: "$240,000",
+            cultural_maker: null,
             artists: [
               {
                 id: "QXJ0aXN0OmFuZHktd2FyaG9s",
@@ -373,7 +373,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
               },
             ],
             artistNames: "Andy Warhol",
-            collectingInstitution: null,
+            collecting_institution: null,
             partner: {
               name: "David Benrimon Fine Art",
               href: "/david-benrimon-fine-art",
@@ -403,8 +403,8 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
             title: "Birmingham Race Riot",
             image_title: "Andy Warhol, ‘Birmingham Race Riot’, 1964",
             date: "1964",
-            saleMessage: "$13,000",
-            culturalMaker: null,
+            sale_message: "$13,000",
+            cultural_maker: null,
             artists: [
               {
                 id: "QXJ0aXN0OmFuZHktd2FyaG9s",
@@ -413,7 +413,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
               },
             ],
             artistNames: "Andy Warhol",
-            collectingInstitution: null,
+            collecting_institution: null,
             partner: {
               name: "Graves International Art",
               href: "/graves-international-art",
@@ -445,8 +445,8 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
             title: "NORTHWEST COAST MASK FS II.380",
             image_title: "Andy Warhol, ‘NORTHWEST COAST MASK FS II.380’, 1986",
             date: "1986",
-            saleMessage: "$72,500",
-            culturalMaker: null,
+            sale_message: "$72,500",
+            cultural_maker: null,
             artists: [
               {
                 id: "QXJ0aXN0OmFuZHktd2FyaG9s",
@@ -455,7 +455,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
               },
             ],
             artistNames: "Andy Warhol",
-            collectingInstitution: null,
+            collecting_institution: null,
             partner: {
               name: "Gallery Art",
               href: "/gallery-art",
@@ -488,8 +488,8 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
             image_title:
               "Andy Warhol, ‘Rare original Andy Warhol record art’, 1964",
             date: "1964",
-            saleMessage: "$750",
-            culturalMaker: null,
+            sale_message: "$750",
+            cultural_maker: null,
             artists: [
               {
                 id: "QXJ0aXN0OmFuZHktd2FyaG9s",
@@ -498,7 +498,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
               },
             ],
             artistNames: "Andy Warhol",
-            collectingInstitution: null,
+            collecting_institution: null,
             partner: {
               name: "Lot 180",
               href: "/lot-180",
@@ -532,8 +532,8 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
             image_title:
               "Andy Warhol, ‘Andy Warhol, Philip Fagan & Gerard Malanga’, 1964",
             date: "1964",
-            saleMessage: "Contact For Price",
-            culturalMaker: null,
+            sale_message: "Contact For Price",
+            cultural_maker: null,
             artists: [
               {
                 id: "QXJ0aXN0OmFuZHktd2FyaG9s",
@@ -542,7 +542,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
               },
             ],
             artistNames: "Andy Warhol",
-            collectingInstitution: null,
+            collecting_institution: null,
             partner: {
               name: "Joseph K. Levene Fine Art, Ltd.",
               href: "/joseph-k-levene-fine-art-ltd",
@@ -576,8 +576,8 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
             image_title:
               "Andy Warhol, ‘Andy Warhol, Photograph of Cornelia Guest, 1985’, 1985",
             date: "1985",
-            saleMessage: "$12,500",
-            culturalMaker: null,
+            sale_message: "$12,500",
+            cultural_maker: null,
             artists: [
               {
                 id: "QXJ0aXN0OmFuZHktd2FyaG9s",
@@ -586,7 +586,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
               },
             ],
             artistNames: "Andy Warhol",
-            collectingInstitution: null,
+            collecting_institution: null,
             partner: {
               name: "Hedges Projects",
               href: "/hedges-projects",
@@ -620,8 +620,8 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
             image_title:
               "Andy Warhol, ‘Andy Warhol, Photograph of Timothy Hutton, 1980’, 1980",
             date: "1980",
-            saleMessage: "$6,000",
-            culturalMaker: null,
+            sale_message: "$6,000",
+            cultural_maker: null,
             artists: [
               {
                 id: "QXJ0aXN0OmFuZHktd2FyaG9s",
@@ -630,7 +630,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
               },
             ],
             artistNames: "Andy Warhol",
-            collectingInstitution: null,
+            collecting_institution: null,
             partner: {
               name: "Hedges Projects",
               href: "/hedges-projects",
@@ -660,8 +660,8 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
             title: "Muhammed Ali",
             image_title: "Andy Warhol, ‘Muhammed Ali’, 1978",
             date: "1978",
-            saleMessage: "$110,000",
-            culturalMaker: null,
+            sale_message: "$110,000",
+            cultural_maker: null,
             artists: [
               {
                 id: "QXJ0aXN0OmFuZHktd2FyaG9s",
@@ -670,7 +670,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
               },
             ],
             artistNames: "Andy Warhol",
-            collectingInstitution: null,
+            collecting_institution: null,
             partner: {
               name: "Samuel Owen Gallery",
               href: "/samuel-owen-gallery",
@@ -700,8 +700,8 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
             title: "UNTITLED ( JON GOULD)",
             image_title: "Andy Warhol, ‘UNTITLED ( JON GOULD)’, 1982",
             date: "1982",
-            saleMessage: "$75,000",
-            culturalMaker: null,
+            sale_message: "$75,000",
+            cultural_maker: null,
             artists: [
               {
                 id: "QXJ0aXN0OmFuZHktd2FyaG9s",
@@ -710,7 +710,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
               },
             ],
             artistNames: "Andy Warhol",
-            collectingInstitution: null,
+            collecting_institution: null,
             partner: {
               name: "Gallery Art",
               href: "/gallery-art",
@@ -740,8 +740,8 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
             title: "GERONIMO FS II.384",
             image_title: "Andy Warhol, ‘GERONIMO FS II.384’, 1986",
             date: "1986",
-            saleMessage: "$59,500",
-            culturalMaker: null,
+            sale_message: "$59,500",
+            cultural_maker: null,
             artists: [
               {
                 id: "QXJ0aXN0OmFuZHktd2FyaG9s",
@@ -750,7 +750,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
               },
             ],
             artistNames: "Andy Warhol",
-            collectingInstitution: null,
+            collecting_institution: null,
             partner: {
               name: "Gallery Art",
               href: "/gallery-art",
@@ -780,8 +780,8 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
             title: "Jason McCoy",
             image_title: "Andy Warhol, ‘Jason McCoy’, ca. 1975",
             date: "ca. 1975",
-            saleMessage: "$7,500",
-            culturalMaker: null,
+            sale_message: "$7,500",
+            cultural_maker: null,
             artists: [
               {
                 id: "QXJ0aXN0OmFuZHktd2FyaG9s",
@@ -790,7 +790,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
               },
             ],
             artistNames: "Andy Warhol",
-            collectingInstitution: null,
+            collecting_institution: null,
             partner: {
               name: "Alpha 137 Gallery",
               href: "/alpha-137-gallery",
@@ -822,8 +822,8 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
             title: "$ (QUADRANT) FS II.284",
             image_title: "Andy Warhol, ‘$ (QUADRANT) FS II.284’, 1982",
             date: "1982",
-            saleMessage: "$215,000",
-            culturalMaker: null,
+            sale_message: "$215,000",
+            cultural_maker: null,
             artists: [
               {
                 id: "QXJ0aXN0OmFuZHktd2FyaG9s",
@@ -832,7 +832,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
               },
             ],
             artistNames: "Andy Warhol",
-            collectingInstitution: null,
+            collecting_institution: null,
             partner: {
               name: "Gallery Art",
               href: "/gallery-art",
@@ -864,8 +864,8 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
             title: "LADIES & GENTLEMEN FS II.130",
             image_title: "Andy Warhol, ‘LADIES & GENTLEMEN FS II.130’, 1975",
             date: "1975",
-            saleMessage: "$18,000",
-            culturalMaker: null,
+            sale_message: "$18,000",
+            cultural_maker: null,
             artists: [
               {
                 id: "QXJ0aXN0OmFuZHktd2FyaG9s",
@@ -874,7 +874,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
               },
             ],
             artistNames: "Andy Warhol",
-            collectingInstitution: null,
+            collecting_institution: null,
             partner: {
               name: "Gallery Art",
               href: "/gallery-art",
@@ -904,8 +904,8 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
             title: "Mao F.S.II.95",
             image_title: "Andy Warhol, ‘Mao F.S.II.95’, 1972",
             date: "1972",
-            saleMessage: "$70,000",
-            culturalMaker: null,
+            sale_message: "$70,000",
+            cultural_maker: null,
             artists: [
               {
                 id: "QXJ0aXN0OmFuZHktd2FyaG9s",
@@ -914,7 +914,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
               },
             ],
             artistNames: "Andy Warhol",
-            collectingInstitution: null,
+            collecting_institution: null,
             partner: {
               name: "DTR Modern Galleries",
               href: "/dtr-modern-galleries",
@@ -946,8 +946,8 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
             title: "LADIES & GENTLEMEN FS II.127",
             image_title: "Andy Warhol, ‘LADIES & GENTLEMEN FS II.127’, 1975",
             date: "1975",
-            saleMessage: "$15,000",
-            culturalMaker: null,
+            sale_message: "$15,000",
+            cultural_maker: null,
             artists: [
               {
                 id: "QXJ0aXN0OmFuZHktd2FyaG9s",
@@ -956,7 +956,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
               },
             ],
             artistNames: "Andy Warhol",
-            collectingInstitution: null,
+            collecting_institution: null,
             partner: {
               name: "Gallery Art",
               href: "/gallery-art",
@@ -986,8 +986,8 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
             title: "Truck",
             image_title: "Andy Warhol, ‘Truck’, 1985",
             date: "1985",
-            saleMessage: "$40,000 - 50,000",
-            culturalMaker: null,
+            sale_message: "$40,000 - 50,000",
+            cultural_maker: null,
             artists: [
               {
                 id: "QXJ0aXN0OmFuZHktd2FyaG9s",
@@ -996,7 +996,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
               },
             ],
             artistNames: "Andy Warhol",
-            collectingInstitution: null,
+            collecting_institution: null,
             partner: {
               name: "HG Contemporary",
               href: "/hg-contemporary",
@@ -1026,8 +1026,8 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
             title: "Brillo ",
             image_title: "Andy Warhol, ‘Brillo ’, 1970",
             date: "1970",
-            saleMessage: "$2,500",
-            culturalMaker: null,
+            sale_message: "$2,500",
+            cultural_maker: null,
             artists: [
               {
                 id: "QXJ0aXN0OmFuZHktd2FyaG9s",
@@ -1036,7 +1036,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
               },
             ],
             artistNames: "Andy Warhol",
-            collectingInstitution: null,
+            collecting_institution: null,
             partner: {
               name: "Alpha 137 Gallery",
               href: "/alpha-137-gallery",
@@ -1068,8 +1068,8 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
             title: "PLAINS INDIAN SHIELD FS II.382",
             image_title: "Andy Warhol, ‘PLAINS INDIAN SHIELD FS II.382’, 1986",
             date: "1986",
-            saleMessage: "$29,500",
-            culturalMaker: null,
+            sale_message: "$29,500",
+            cultural_maker: null,
             artists: [
               {
                 id: "QXJ0aXN0OmFuZHktd2FyaG9s",
@@ -1078,7 +1078,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
               },
             ],
             artistNames: "Andy Warhol",
-            collectingInstitution: null,
+            collecting_institution: null,
             partner: {
               name: "Gallery Art",
               href: "/gallery-art",
@@ -1108,8 +1108,8 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
             title: "Martha Graham",
             image_title: "Andy Warhol, ‘Martha Graham’, ca. 1980",
             date: "ca. 1980",
-            saleMessage: "$35,000",
-            culturalMaker: null,
+            sale_message: "$35,000",
+            cultural_maker: null,
             artists: [
               {
                 id: "QXJ0aXN0OmFuZHktd2FyaG9s",
@@ -1118,7 +1118,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
               },
             ],
             artistNames: "Andy Warhol",
-            collectingInstitution: null,
+            collecting_institution: null,
             partner: {
               name: "Long-Sharp Gallery",
               href: "/long-sharp-gallery",
@@ -1148,8 +1148,8 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
             title: "FISH FS IIIA.39",
             image_title: "Andy Warhol, ‘FISH FS IIIA.39’, 1983",
             date: "1983",
-            saleMessage: "$27,500",
-            culturalMaker: null,
+            sale_message: "$27,500",
+            cultural_maker: null,
             artists: [
               {
                 id: "QXJ0aXN0OmFuZHktd2FyaG9s",
@@ -1158,7 +1158,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
               },
             ],
             artistNames: "Andy Warhol",
-            collectingInstitution: null,
+            collecting_institution: null,
             partner: {
               name: "Gallery Art",
               href: "/gallery-art",
@@ -1188,8 +1188,8 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
             title: "Untitled (Female Figure)",
             image_title: "Andy Warhol, ‘Untitled (Female Figure)’, ca. 1956",
             date: "ca. 1956",
-            saleMessage: "$14,000",
-            culturalMaker: null,
+            sale_message: "$14,000",
+            cultural_maker: null,
             artists: [
               {
                 id: "QXJ0aXN0OmFuZHktd2FyaG9s",
@@ -1198,7 +1198,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
               },
             ],
             artistNames: "Andy Warhol",
-            collectingInstitution: null,
+            collecting_institution: null,
             partner: {
               name: "Long-Sharp Gallery",
               href: "/long-sharp-gallery",
@@ -1230,8 +1230,8 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
             title: "LADIES & GENTLEMEN FS II.128",
             image_title: "Andy Warhol, ‘LADIES & GENTLEMEN FS II.128’, 1975",
             date: "1975",
-            saleMessage: "$23,000",
-            culturalMaker: null,
+            sale_message: "$23,000",
+            cultural_maker: null,
             artists: [
               {
                 id: "QXJ0aXN0OmFuZHktd2FyaG9s",
@@ -1240,7 +1240,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
               },
             ],
             artistNames: "Andy Warhol",
-            collectingInstitution: null,
+            collecting_institution: null,
             partner: {
               name: "Gallery Art",
               href: "/gallery-art",
@@ -1313,15 +1313,15 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
 //               title: "Kenny Burrell",
 //               image_title: "Andy Warhol, ‘Kenny Burrell’, 1956",
 //               date: "1956",
-//               saleMessage: "$95,000",
-//               culturalMaker: null,
+//               sale_message: "$95,000",
+//               cultural_maker: null,
 //               artists: [
 //                 {
 //                   href: "/artist/andy-warhol",
 //                   name: "Andy Warhol",
 //                 },
 //               ],
-//               collectingInstitution: null,
+//               collecting_institution: null,
 //               partner: {
 //                 name: "Ambleside Gallery",
 //                 href: "/ambleside-gallery",
@@ -1349,15 +1349,15 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
 //               title: "Truck",
 //               image_title: "Andy Warhol, ‘Truck’, ca. 1980",
 //               date: "ca. 1980",
-//               saleMessage: "$215,000",
-//               culturalMaker: null,
+//               sale_message: "$215,000",
+//               cultural_maker: null,
 //               artists: [
 //                 {
 //                   href: "/artist/andy-warhol",
 //                   name: "Andy Warhol",
 //                 },
 //               ],
-//               collectingInstitution: null,
+//               collecting_institution: null,
 //               partner: {
 //                 name: "Westwood Gallery NYC",
 //                 href: "/westwood-gallery-nyc",
@@ -1385,15 +1385,15 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
 //               title: "DOLLAR SIGNS",
 //               image_title: "Andy Warhol, ‘DOLLAR SIGNS’, 1981",
 //               date: "1981",
-//               saleMessage: "$315,000",
-//               culturalMaker: null,
+//               sale_message: "$315,000",
+//               cultural_maker: null,
 //               artists: [
 //                 {
 //                   href: "/artist/andy-warhol",
 //                   name: "Andy Warhol",
 //                 },
 //               ],
-//               collectingInstitution: null,
+//               collecting_institution: null,
 //               partner: {
 //                 name: "Gallery Art",
 //                 href: "/gallery-art",
@@ -1421,15 +1421,15 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
 //               title: "$(1) FS II.274",
 //               image_title: "Andy Warhol, ‘$(1) FS II.274’, 1982",
 //               date: "1982",
-//               saleMessage: "$85,000",
-//               culturalMaker: null,
+//               sale_message: "$85,000",
+//               cultural_maker: null,
 //               artists: [
 //                 {
 //                   href: "/artist/andy-warhol",
 //                   name: "Andy Warhol",
 //                 },
 //               ],
-//               collectingInstitution: null,
+//               collecting_institution: null,
 //               partner: {
 //                 name: "Gallery Art",
 //                 href: "/gallery-art",
@@ -1457,15 +1457,15 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
 //               title: "Truck",
 //               image_title: "Andy Warhol, ‘Truck’, 1985",
 //               date: "1985",
-//               saleMessage: "Contact For Price",
-//               culturalMaker: null,
+//               sale_message: "Contact For Price",
+//               cultural_maker: null,
 //               artists: [
 //                 {
 //                   href: "/artist/andy-warhol",
 //                   name: "Andy Warhol",
 //                 },
 //               ],
-//               collectingInstitution: null,
+//               collecting_institution: null,
 //               partner: {
 //                 name: "HG Contemporary",
 //                 href: "/hg-contemporary",
@@ -1493,15 +1493,15 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
 //               title: "MAO ",
 //               image_title: "Andy Warhol, ‘MAO ’, 1972",
 //               date: "1972",
-//               saleMessage: "Contact For Price",
-//               culturalMaker: null,
+//               sale_message: "Contact For Price",
+//               cultural_maker: null,
 //               artists: [
 //                 {
 //                   href: "/artist/andy-warhol",
 //                   name: "Andy Warhol",
 //                 },
 //               ],
-//               collectingInstitution: null,
+//               collecting_institution: null,
 //               partner: {
 //                 name: "HG Contemporary",
 //                 href: "/hg-contemporary",
@@ -1531,15 +1531,15 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
 //               image_title:
 //                 'Andy Warhol, ‘"ACTRESS SHOTS ANDY WARHOL" NY Daily News, 1968’, 1968',
 //               date: "1968",
-//               saleMessage: "$1,250",
-//               culturalMaker: null,
+//               sale_message: "$1,250",
+//               cultural_maker: null,
 //               artists: [
 //                 {
 //                   href: "/artist/andy-warhol",
 //                   name: "Andy Warhol",
 //                 },
 //               ],
-//               collectingInstitution: null,
+//               collecting_institution: null,
 //               partner: {
 //                 name: "VINCE fine arts/ephemera",
 //                 href: "/vince-fine-arts-slash-ephemera",
@@ -1570,15 +1570,15 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
 //               title: "Shoe",
 //               image_title: "Andy Warhol, ‘Shoe’, 1958",
 //               date: "1958",
-//               saleMessage: "$18,000",
-//               culturalMaker: null,
+//               sale_message: "$18,000",
+//               cultural_maker: null,
 //               artists: [
 //                 {
 //                   href: "/artist/andy-warhol",
 //                   name: "Andy Warhol",
 //                 },
 //               ],
-//               collectingInstitution: null,
+//               collecting_institution: null,
 //               partner: {
 //                 name: "McClain Gallery",
 //                 href: "/mcclain-gallery",
@@ -1608,15 +1608,15 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
 //               title: "COSMOS",
 //               image_title: "Andy Warhol, ‘COSMOS’, ca. 1984",
 //               date: "ca. 1984",
-//               saleMessage: "$99,500",
-//               culturalMaker: null,
+//               sale_message: "$99,500",
+//               cultural_maker: null,
 //               artists: [
 //                 {
 //                   href: "/artist/andy-warhol",
 //                   name: "Andy Warhol",
 //                 },
 //               ],
-//               collectingInstitution: null,
+//               collecting_institution: null,
 //               partner: {
 //                 name: "Gallery Art",
 //                 href: "/gallery-art",
@@ -1647,15 +1647,15 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
 //               image_title:
 //                 "Andy Warhol, ‘Unknown Female (Iranian Princess)’, 1977",
 //               date: "1977",
-//               saleMessage: "$45,000",
-//               culturalMaker: null,
+//               sale_message: "$45,000",
+//               cultural_maker: null,
 //               artists: [
 //                 {
 //                   href: "/artist/andy-warhol",
 //                   name: "Andy Warhol",
 //                 },
 //               ],
-//               collectingInstitution: null,
+//               collecting_institution: null,
 //               partner: {
 //                 name: "Cerbera Gallery",
 //                 href: "/cerbera-gallery",
@@ -1685,15 +1685,15 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
 //               title: "Peaches",
 //               image_title: "Andy Warhol, ‘Peaches’, 1978",
 //               date: "1978",
-//               saleMessage: "$15,000",
-//               culturalMaker: null,
+//               sale_message: "$15,000",
+//               cultural_maker: null,
 //               artists: [
 //                 {
 //                   href: "/artist/andy-warhol",
 //                   name: "Andy Warhol",
 //                 },
 //               ],
-//               collectingInstitution: null,
+//               collecting_institution: null,
 //               partner: {
 //                 name: "DTR Modern Galleries",
 //                 href: "/dtr-modern-galleries",
@@ -1723,15 +1723,15 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
 //               title: "Lee Iacocca",
 //               image_title: "Andy Warhol, ‘Lee Iacocca’, 1985",
 //               date: "1985",
-//               saleMessage: "$18,500",
-//               culturalMaker: null,
+//               sale_message: "$18,500",
+//               cultural_maker: null,
 //               artists: [
 //                 {
 //                   href: "/artist/andy-warhol",
 //                   name: "Andy Warhol",
 //                 },
 //               ],
-//               collectingInstitution: null,
+//               collecting_institution: null,
 //               partner: {
 //                 name: "Robert Fontaine Gallery",
 //                 href: "/robert-fontaine-gallery",
@@ -1760,15 +1760,15 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
 //               title: "Birmingham Race Riot",
 //               image_title: "Andy Warhol, ‘Birmingham Race Riot’, 1964",
 //               date: "1964",
-//               saleMessage: "$13,000",
-//               culturalMaker: null,
+//               sale_message: "$13,000",
+//               cultural_maker: null,
 //               artists: [
 //                 {
 //                   href: "/artist/andy-warhol",
 //                   name: "Andy Warhol",
 //                 },
 //               ],
-//               collectingInstitution: null,
+//               collecting_institution: null,
 //               partner: {
 //                 name: "Graves International Art",
 //                 href: "/graves-international-art",
@@ -1798,15 +1798,15 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
 //               title: "The Beatles (Unique)",
 //               image_title: "Andy Warhol, ‘The Beatles (Unique)’, 1980",
 //               date: "1980",
-//               saleMessage: "$115,000",
-//               culturalMaker: null,
+//               sale_message: "$115,000",
+//               cultural_maker: null,
 //               artists: [
 //                 {
 //                   href: "/artist/andy-warhol",
 //                   name: "Andy Warhol",
 //                 },
 //               ],
-//               collectingInstitution: null,
+//               collecting_institution: null,
 //               partner: {
 //                 name: "DANE FINE ART",
 //                 href: "/great-dane-auctions",
@@ -1836,15 +1836,15 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
 //               title: "Sewing Machine",
 //               image_title: "Andy Warhol, ‘Sewing Machine’, 1952",
 //               date: "1952",
-//               saleMessage: "$17,500",
-//               culturalMaker: null,
+//               sale_message: "$17,500",
+//               cultural_maker: null,
 //               artists: [
 //                 {
 //                   href: "/artist/andy-warhol",
 //                   name: "Andy Warhol",
 //                 },
 //               ],
-//               collectingInstitution: null,
+//               collecting_institution: null,
 //               partner: {
 //                 name: "Joseph K. Levene Fine Art, Ltd.",
 //                 href: "/joseph-k-levene-fine-art-ltd",
@@ -1874,15 +1874,15 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
 //               image_title:
 //                 "Andy Warhol, ‘Rare original Andy Warhol record art’, 1964",
 //               date: "1964",
-//               saleMessage: "$750",
-//               culturalMaker: null,
+//               sale_message: "$750",
+//               cultural_maker: null,
 //               artists: [
 //                 {
 //                   href: "/artist/andy-warhol",
 //                   name: "Andy Warhol",
 //                 },
 //               ],
-//               collectingInstitution: null,
+//               collecting_institution: null,
 //               partner: {
 //                 name: "Lot 180",
 //                 href: "/lot-180",
@@ -1916,15 +1916,15 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
 //               image_title:
 //                 "Andy Warhol, ‘Andy Warhol, Photograph of Victor Hugo in Sequin Dress and a Man, 1970s’, 1970s",
 //               date: "1970s",
-//               saleMessage: "$8,500",
-//               culturalMaker: null,
+//               sale_message: "$8,500",
+//               cultural_maker: null,
 //               artists: [
 //                 {
 //                   href: "/artist/andy-warhol",
 //                   name: "Andy Warhol",
 //                 },
 //               ],
-//               collectingInstitution: null,
+//               collecting_institution: null,
 //               partner: {
 //                 name: "Hedges Projects",
 //                 href: "/hedges-projects",
@@ -1955,15 +1955,15 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
 //               image_title:
 //                 "Andy Warhol, ‘NORTHWEST COAST MASK FS II.380’, 1986",
 //               date: "1986",
-//               saleMessage: "$72,500",
-//               culturalMaker: null,
+//               sale_message: "$72,500",
+//               cultural_maker: null,
 //               artists: [
 //                 {
 //                   href: "/artist/andy-warhol",
 //                   name: "Andy Warhol",
 //                 },
 //               ],
-//               collectingInstitution: null,
+//               collecting_institution: null,
 //               partner: {
 //                 name: "Gallery Art",
 //                 href: "/gallery-art",
@@ -1994,15 +1994,15 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
 //               image_title:
 //                 "Andy Warhol, ‘Untitled (Angel with Scarf)’, ca. 1954",
 //               date: "ca. 1954",
-//               saleMessage: "$15,000",
-//               culturalMaker: null,
+//               sale_message: "$15,000",
+//               cultural_maker: null,
 //               artists: [
 //                 {
 //                   href: "/artist/andy-warhol",
 //                   name: "Andy Warhol",
 //                 },
 //               ],
-//               collectingInstitution: null,
+//               collecting_institution: null,
 //               partner: {
 //                 name: "Long-Sharp Gallery",
 //                 href: "/long-sharp-gallery",
@@ -2034,15 +2034,15 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
 //               image_title:
 //                 "Andy Warhol, ‘Andy Warhol, Philip Fagan & Gerard Malanga’, 1964",
 //               date: "1964",
-//               saleMessage: "Contact For Price",
-//               culturalMaker: null,
+//               sale_message: "Contact For Price",
+//               cultural_maker: null,
 //               artists: [
 //                 {
 //                   href: "/artist/andy-warhol",
 //                   name: "Andy Warhol",
 //                 },
 //               ],
-//               collectingInstitution: null,
+//               collecting_institution: null,
 //               partner: {
 //                 name: "Joseph K. Levene Fine Art, Ltd.",
 //                 href: "/joseph-k-levene-fine-art-ltd",
@@ -2072,15 +2072,15 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
 //               title: "Edward Kennedy ",
 //               image_title: "Andy Warhol, ‘Edward Kennedy ’, 1980",
 //               date: "1980",
-//               saleMessage: "$19,000",
-//               culturalMaker: null,
+//               sale_message: "$19,000",
+//               cultural_maker: null,
 //               artists: [
 //                 {
 //                   href: "/artist/andy-warhol",
 //                   name: "Andy Warhol",
 //                 },
 //               ],
-//               collectingInstitution: null,
+//               collecting_institution: null,
 //               partner: {
 //                 name: "DTR Modern Galleries",
 //                 href: "/dtr-modern-galleries",
@@ -2110,15 +2110,15 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
 //               title: "GERONIMO FS II.384",
 //               image_title: "Andy Warhol, ‘GERONIMO FS II.384’, 1986",
 //               date: "1986",
-//               saleMessage: "$59,500",
-//               culturalMaker: null,
+//               sale_message: "$59,500",
+//               cultural_maker: null,
 //               artists: [
 //                 {
 //                   href: "/artist/andy-warhol",
 //                   name: "Andy Warhol",
 //                 },
 //               ],
-//               collectingInstitution: null,
+//               collecting_institution: null,
 //               partner: {
 //                 name: "Gallery Art",
 //                 href: "/gallery-art",
@@ -2148,15 +2148,15 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
 //               title: "Muhammed Ali",
 //               image_title: "Andy Warhol, ‘Muhammed Ali’, 1978",
 //               date: "1978",
-//               saleMessage: "$110,000",
-//               culturalMaker: null,
+//               sale_message: "$110,000",
+//               cultural_maker: null,
 //               artists: [
 //                 {
 //                   href: "/artist/andy-warhol",
 //                   name: "Andy Warhol",
 //                 },
 //               ],
-//               collectingInstitution: null,
+//               collecting_institution: null,
 //               partner: {
 //                 name: "Samuel Owen Gallery",
 //                 href: "/samuel-owen-gallery",
@@ -2188,15 +2188,15 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
 //               image_title:
 //                 "Andy Warhol, ‘Andy Warhol, Photograph of Cornelia Guest, 1985’, 1985",
 //               date: "1985",
-//               saleMessage: "$12,500",
-//               culturalMaker: null,
+//               sale_message: "$12,500",
+//               cultural_maker: null,
 //               artists: [
 //                 {
 //                   href: "/artist/andy-warhol",
 //                   name: "Andy Warhol",
 //                 },
 //               ],
-//               collectingInstitution: null,
+//               collecting_institution: null,
 //               partner: {
 //                 name: "Hedges Projects",
 //                 href: "/hedges-projects",
@@ -2226,15 +2226,15 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
 //               title: "Jason McCoy",
 //               image_title: "Andy Warhol, ‘Jason McCoy’, ca. 1975",
 //               date: "ca. 1975",
-//               saleMessage: "$7,500",
-//               culturalMaker: null,
+//               sale_message: "$7,500",
+//               cultural_maker: null,
 //               artists: [
 //                 {
 //                   href: "/artist/andy-warhol",
 //                   name: "Andy Warhol",
 //                 },
 //               ],
-//               collectingInstitution: null,
+//               collecting_institution: null,
 //               partner: {
 //                 name: "Alpha 137 Gallery",
 //                 href: "/alpha-137-gallery",
@@ -2264,15 +2264,15 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
 //               title: "Christmas Tree",
 //               image_title: "Andy Warhol, ‘Christmas Tree’, ca. 1957",
 //               date: "ca. 1957",
-//               saleMessage: "$12,000",
-//               culturalMaker: null,
+//               sale_message: "$12,000",
+//               cultural_maker: null,
 //               artists: [
 //                 {
 //                   href: "/artist/andy-warhol",
 //                   name: "Andy Warhol",
 //                 },
 //               ],
-//               collectingInstitution: null,
+//               collecting_institution: null,
 //               partner: {
 //                 name: "Long-Sharp Gallery",
 //                 href: "/long-sharp-gallery",
@@ -2302,15 +2302,15 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
 //               title: "UNTITLED ( JON GOULD)",
 //               image_title: "Andy Warhol, ‘UNTITLED ( JON GOULD)’, 1982",
 //               date: "1982",
-//               saleMessage: "$75,000",
-//               culturalMaker: null,
+//               sale_message: "$75,000",
+//               cultural_maker: null,
 //               artists: [
 //                 {
 //                   href: "/artist/andy-warhol",
 //                   name: "Andy Warhol",
 //                 },
 //               ],
-//               collectingInstitution: null,
+//               collecting_institution: null,
 //               partner: {
 //                 name: "Gallery Art",
 //                 href: "/gallery-art",
@@ -2342,15 +2342,15 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
 //               image_title:
 //                 "Andy Warhol, ‘Andy Warhol, Photograph of Timothy Hutton, 1980’, 1980",
 //               date: "1980",
-//               saleMessage: "$6,000",
-//               culturalMaker: null,
+//               sale_message: "$6,000",
+//               cultural_maker: null,
 //               artists: [
 //                 {
 //                   href: "/artist/andy-warhol",
 //                   name: "Andy Warhol",
 //                 },
 //               ],
-//               collectingInstitution: null,
+//               collecting_institution: null,
 //               partner: {
 //                 name: "Hedges Projects",
 //                 href: "/hedges-projects",
@@ -2380,15 +2380,15 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
 //               title: "Superman (F. & S. II. 260)",
 //               image_title: "Andy Warhol, ‘Superman (F. & S. II. 260)’, 1981",
 //               date: "1981",
-//               saleMessage: "$240,000",
-//               culturalMaker: null,
+//               sale_message: "$240,000",
+//               cultural_maker: null,
 //               artists: [
 //                 {
 //                   href: "/artist/andy-warhol",
 //                   name: "Andy Warhol",
 //                 },
 //               ],
-//               collectingInstitution: null,
+//               collecting_institution: null,
 //               partner: {
 //                 name: "David Benrimon Fine Art",
 //                 href: "/david-benrimon-fine-art",
@@ -2418,15 +2418,15 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
 //               title: "Mao F.S.II.95",
 //               image_title: "Andy Warhol, ‘Mao F.S.II.95’, 1972",
 //               date: "1972",
-//               saleMessage: "$70,000",
-//               culturalMaker: null,
+//               sale_message: "$70,000",
+//               cultural_maker: null,
 //               artists: [
 //                 {
 //                   href: "/artist/andy-warhol",
 //                   name: "Andy Warhol",
 //                 },
 //               ],
-//               collectingInstitution: null,
+//               collecting_institution: null,
 //               partner: {
 //                 name: "DTR Modern Galleries",
 //                 href: "/dtr-modern-galleries",

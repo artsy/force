@@ -8,31 +8,31 @@ export type Details_artwork = {
     readonly href: string | null;
     readonly title: string | null;
     readonly date: string | null;
-    readonly saleMessage: string | null;
-    readonly culturalMaker: string | null;
+    readonly sale_message: string | null;
+    readonly cultural_maker: string | null;
     readonly artists: ReadonlyArray<{
         readonly id: string;
         readonly href: string | null;
         readonly name: string | null;
     } | null> | null;
-    readonly collectingInstitution: string | null;
+    readonly collecting_institution: string | null;
     readonly partner: {
         readonly name: string | null;
         readonly href: string | null;
     } | null;
     readonly sale: {
-        readonly isAuction: boolean | null;
-        readonly isClosed: boolean | null;
+        readonly is_auction: boolean | null;
+        readonly is_closed: boolean | null;
     } | null;
-    readonly saleArtwork: {
+    readonly sale_artwork: {
         readonly lotLabel: string | null;
         readonly counts: {
-            readonly bidderPositions: number | null;
+            readonly bidder_positions: number | null;
         } | null;
-        readonly highestBid: {
+        readonly highest_bid: {
             readonly display: string | null;
         } | null;
-        readonly openingBid: {
+        readonly opening_bid: {
             readonly display: string | null;
         } | null;
     } | null;
@@ -99,14 +99,14 @@ return {
       "storageKey": null
     },
     {
-      "alias": null,
+      "alias": "sale_message",
       "args": null,
       "kind": "ScalarField",
       "name": "saleMessage",
       "storageKey": null
     },
     {
-      "alias": null,
+      "alias": "cultural_maker",
       "args": null,
       "kind": "ScalarField",
       "name": "culturalMaker",
@@ -133,7 +133,7 @@ return {
       "storageKey": "artists(shallow:true)"
     },
     {
-      "alias": null,
+      "alias": "collecting_institution",
       "args": null,
       "kind": "ScalarField",
       "name": "collectingInstitution",
@@ -161,14 +161,14 @@ return {
       "plural": false,
       "selections": [
         {
-          "alias": null,
+          "alias": "is_auction",
           "args": null,
           "kind": "ScalarField",
           "name": "isAuction",
           "storageKey": null
         },
         {
-          "alias": null,
+          "alias": "is_closed",
           "args": null,
           "kind": "ScalarField",
           "name": "isClosed",
@@ -178,7 +178,7 @@ return {
       "storageKey": null
     },
     {
-      "alias": null,
+      "alias": "sale_artwork",
       "args": null,
       "concreteType": "SaleArtwork",
       "kind": "LinkedField",
@@ -201,7 +201,7 @@ return {
           "plural": false,
           "selections": [
             {
-              "alias": null,
+              "alias": "bidder_positions",
               "args": null,
               "kind": "ScalarField",
               "name": "bidderPositions",
@@ -211,7 +211,7 @@ return {
           "storageKey": null
         },
         {
-          "alias": null,
+          "alias": "highest_bid",
           "args": null,
           "concreteType": "SaleArtworkHighestBid",
           "kind": "LinkedField",
@@ -221,7 +221,7 @@ return {
           "storageKey": null
         },
         {
-          "alias": null,
+          "alias": "opening_bid",
           "args": null,
           "concreteType": "SaleArtworkOpeningBid",
           "kind": "LinkedField",
@@ -238,5 +238,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '44e9faefb60edc4ec22ba95aef6f5417';
+(node as any).hash = '4f6751c877326d96681e742e6f74c761';
 export default node;

@@ -223,7 +223,6 @@ export const BaseArtworkFilter: React.FC<
   }
 
   if (!viewer?.filtered_artworks) {
-    console.log("*********** NO VIEWER.FILTERED_ARTWORKS ***********")
     return null
   }
 
