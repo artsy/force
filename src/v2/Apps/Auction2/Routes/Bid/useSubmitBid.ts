@@ -47,7 +47,7 @@ export const useSubmitBid = ({
   const { sendToast } = useToasts()
 
   // Look for /sale/id/bid/artwork-id?redirectTo=... and redirect to that URL
-  // on successful submission.
+  // on a successful submission.
   const { redirectTo } = match.location.query
 
   /**
