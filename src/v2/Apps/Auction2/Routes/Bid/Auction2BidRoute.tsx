@@ -9,7 +9,7 @@ import { dropWhile } from "lodash"
 import { Form, Formik } from "formik"
 import { PricingTransparency2QueryRenderer } from "./Components/PricingTransparency2"
 import { Match } from "found"
-import { useEffect, useRef } from "react"
+import { useEffect } from "react"
 import { useSubmitBid } from "./useSubmitBid"
 import { AddressFormWithCreditCard } from "v2/Apps/Auction2/Components/Form/AddressFormWithCreditCard"
 import { ConditionsOfSaleCheckbox } from "v2/Apps/Auction2/Components/Form/ConditionsOfSaleCheckbox"
@@ -38,10 +38,6 @@ const Auction2BidRoute: React.FC<Auction2BidRouteProps> = ({
   const { match, router } = useRouter()
   const { tracking } = useAuctionTracking()
 
-  // When we're waiting for the bid POLLING status to complete, we also want
-  // to be able to still clear the interval when closing the modal.
-  const checkBidStatusPollingInterval = useRef<NodeJS.Timeout | null>(null)
-
   const {
     artworkSlug,
     bidderID,
@@ -56,7 +52,6 @@ const Auction2BidRoute: React.FC<Auction2BidRouteProps> = ({
   const { submitBid } = useSubmitBid({
     artwork,
     bidderID,
-    checkBidStatusPollingInterval,
     me,
     relay,
     requiresPaymentInformation,
@@ -73,11 +68,6 @@ const Auction2BidRoute: React.FC<Auction2BidRouteProps> = ({
   }
 
   const handleModalClose = () => {
-    if (checkBidStatusPollingInterval.current) {
-      clearTimeout(checkBidStatusPollingInterval.current)
-      checkBidStatusPollingInterval.current = null
-    }
-
     router.push(`/auction2/${sale.slug}`)
   }
 
@@ -89,7 +79,7 @@ const Auction2BidRoute: React.FC<Auction2BidRouteProps> = ({
 
   return (
     <ModalDialog
-      title="Confirm your bid"
+      title="Confirm Your Bid"
       onClose={handleModalClose}
       width={modalWidth}
     >
@@ -145,11 +135,7 @@ const Auction2BidRoute: React.FC<Auction2BidRouteProps> = ({
 
                 <Button
                   width="100%"
-                  loading={
-                    // Either the form is submitting, or we're polling for the
-                    // result of the bid.
-                    isSubmitting || !!checkBidStatusPollingInterval.current
-                  }
+                  loading={isSubmitting}
                   disabled={!isValid}
                   type="submit"
                 >

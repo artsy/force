@@ -29,7 +29,7 @@ const PricingTransparency2: React.FC<PricingTransparency2QueryResponse> = props 
       </Text>
 
       <Row>
-        <Text variant="md">Your max bid</Text>
+        <Text variant="md">Your Max Bid</Text>
         <Text variant="md">{calculatedCost?.bidAmount?.display}</Text>
       </Row>
       <Row>
