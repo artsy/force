@@ -46,6 +46,15 @@ To access the review app, you must create a DNS name for it. The name must match
 1. Hit `Save`
 1. DNS will propagate and after a few minutes the review app will be available via `awesome-feature.artsy.net`
 
+### Setting ENV variables on the review app
+
+To set an ENV variable, run: 
+
+```sh
+hokusai review_app env set <my-review-app-name> SOME_ENV_VAR=true
+hokusai review_app refresh <my-review-app-name> 
+```
+
 ### Updating the review app
 
 If the review app was created via Circle as mentioned above, simply push up your changes on the `review-app-awesome-feature` branch.
