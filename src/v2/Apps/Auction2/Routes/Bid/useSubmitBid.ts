@@ -47,7 +47,7 @@ export const useSubmitBid = ({
   const { sendToast } = useToasts()
 
   // Look for /sale/id/bid/artwork-id?redirectTo=... and redirect to that URL
-  // on successful submission.
+  // on a successful submission.
   const { redirectTo } = match.location.query
 
   /**
@@ -81,6 +81,7 @@ export const useSubmitBid = ({
       try {
         await createToken(values, helpers)
       } catch (error) {
+        // TODO better error handling here
         logger.error("Error creating token", error)
       }
     }
@@ -203,10 +204,14 @@ const setupCheckBidStatus = (props: {
       case "WINNING": {
         tracking.confirmBidSuccess(bidderID, bidderPositionID)
 
-        sendToast({
-          variant: "success",
-          message: `Bid sucessfully placed.`,
-        })
+        setTimeout(() => {
+          sendToast({
+            variant: "success",
+            message: `Bid sucessfully placed.`,
+          })
+          // Time is arbitrary, but we need to wait for the page to finish
+          // transitioning to artwork/id
+        }, 1000)
 
         router.push(redirectTo ?? `/artwork/${artwork.slug}`)
         break
@@ -263,15 +268,11 @@ const setupCheckBidStatus = (props: {
       }
 
       case "ERROR": {
+        // TODO: set a field error
         console.error("Error placing bid:", result)
 
         if (result.messageHeader === "Bid not placed") {
           router.push(`/auction2/${sale.slug}/confirm-registration`)
-        } else {
-          sendToast({
-            variant: "error",
-            message: `Error placing bid. Please try again.`,
-          })
         }
         break
       }

@@ -123,17 +123,6 @@ export const AddressForm = () => {
           required
         />
       </Column>
-
-      {/* <Column span={12}>
-        <Checkbox
-          selected={values.isDefault}
-          onSelect={value => {
-            setFieldValue("isDefault", value)
-          }}
-        >
-          Set as Default
-        </Checkbox>
-      </Column> */}
     </GridColumns>
   )
 }
