@@ -1,5 +1,4 @@
 import { Checkbox, Spacer, Text } from "@artsy/palette"
-import { RouterLink } from "v2/System/Router/RouterLink"
 import { useFormContext } from "v2/Apps/Auction2/Hooks/useFormContext"
 
 export const ConditionsOfSaleCheckbox: React.FC = () => {
@@ -22,17 +21,7 @@ export const ConditionsOfSaleCheckbox: React.FC = () => {
     <>
       <Checkbox selected={values.agreeToTerms} onSelect={handleCheckboxSelect}>
         <Text variant="md" ml={0.5}>
-          {"Agree to "}
-          <Text variant="md" display="inline">
-            <RouterLink
-              color="black100"
-              to="/conditions-of-sale"
-              target="_blank"
-              textDecoration="none"
-            >
-              Conditions of Sale
-            </RouterLink>
-          </Text>
+          Agree to Conditions of Sale
         </Text>
       </Checkbox>
 

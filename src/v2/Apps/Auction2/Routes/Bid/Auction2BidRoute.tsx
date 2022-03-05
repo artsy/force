@@ -1,5 +1,5 @@
 import { Button, Join, ModalDialog, Select, Spacer, Text } from "@artsy/palette"
-import { createFragmentContainer, graphql } from "react-relay"
+import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
 import { useRouter } from "v2/System/Router/useRouter"
 import { Auction2BidRoute_sale } from "v2/__generated__/Auction2BidRoute_sale.graphql"
 import { Auction2BidRoute_artwork } from "v2/__generated__/Auction2BidRoute_artwork.graphql"
@@ -9,7 +9,7 @@ import { dropWhile } from "lodash"
 import { Form, Formik } from "formik"
 import { PricingTransparency2QueryRenderer } from "./Components/PricingTransparency2"
 import { Match } from "found"
-import { useEffect, useRef } from "react"
+import { useEffect } from "react"
 import { useSubmitBid } from "./useSubmitBid"
 import { AddressFormWithCreditCard } from "v2/Apps/Auction2/Components/Form/AddressFormWithCreditCard"
 import { ConditionsOfSaleCheckbox } from "v2/Apps/Auction2/Components/Form/ConditionsOfSaleCheckbox"
@@ -23,27 +23,26 @@ import { CreditCardInputProvider } from "v2/Components/CreditCardInput"
 import { ErrorStatus } from "../../Components/Form/ErrorStatus"
 
 interface Auction2BidRouteProps {
-  sale: Auction2BidRoute_sale
   artwork: Auction2BidRoute_artwork
   me: Auction2BidRoute_me
+  relay: RelayRefetchProp
+  sale: Auction2BidRoute_sale
 }
 
 const Auction2BidRoute: React.FC<Auction2BidRouteProps> = ({
-  sale,
   artwork,
   me,
+  relay,
+  sale,
 }) => {
   const { match, router } = useRouter()
   const { tracking } = useAuctionTracking()
-
-  // When we're waiting for the bid POLLING status to complete, we also want
-  // to be able to still clear the interval when closing the modal.
-  const checkBidStatusPollingInterval = useRef<NodeJS.Timeout | null>(null)
 
   const {
     artworkSlug,
     bidderID,
     displayIncrements,
+    modalWidth,
     requiresCheckbox,
     requiresPaymentInformation,
     selectedBid,
@@ -53,8 +52,8 @@ const Auction2BidRoute: React.FC<Auction2BidRouteProps> = ({
   const { submitBid } = useSubmitBid({
     artwork,
     bidderID,
-    checkBidStatusPollingInterval,
     me,
+    relay,
     requiresPaymentInformation,
     sale,
   })
@@ -69,11 +68,6 @@ const Auction2BidRoute: React.FC<Auction2BidRouteProps> = ({
   }
 
   const handleModalClose = () => {
-    if (checkBidStatusPollingInterval.current) {
-      clearTimeout(checkBidStatusPollingInterval.current)
-      checkBidStatusPollingInterval.current = null
-    }
-
     router.push(`/auction2/${sale.slug}`)
   }
 
@@ -84,9 +78,18 @@ const Auction2BidRoute: React.FC<Auction2BidRouteProps> = ({
   }, [])
 
   return (
-    <ModalDialog title="Confirm your bid" onClose={handleModalClose}>
+    <ModalDialog
+      title="Confirm Your Bid"
+      onClose={handleModalClose}
+      width={modalWidth}
+    >
       <Formik
-        initialValues={{ ...initialValuesForBidding, selectedBid }}
+        validateOnMount
+        initialValues={{
+          ...initialValuesForBidding,
+          creditCard: requiresPaymentInformation ? false : true,
+          selectedBid,
+        }}
         validationSchema={validationSchema}
         onSubmit={handleBidSubmit}
       >
@@ -95,6 +98,8 @@ const Auction2BidRoute: React.FC<Auction2BidRouteProps> = ({
           touched,
           errors,
           isSubmitting,
+          isValid,
+          setFieldError,
           setFieldValue,
           setFieldTouched,
         }) => {
@@ -112,6 +117,7 @@ const Auction2BidRoute: React.FC<Auction2BidRouteProps> = ({
                   onSelect={value => {
                     tracking.maxBidSelected(bidderID!, value)
 
+                    setFieldError("selectedBid", undefined)
                     setFieldValue("selectedBid", value)
                     setFieldTouched("selectedBid")
                   }}
@@ -129,11 +135,8 @@ const Auction2BidRoute: React.FC<Auction2BidRouteProps> = ({
 
                 <Button
                   width="100%"
-                  loading={
-                    // Either the form is submitting, or we're polling for the
-                    // result of the bid.
-                    isSubmitting || !!checkBidStatusPollingInterval.current
-                  }
+                  loading={isSubmitting}
+                  disabled={!isValid}
                   type="submit"
                 >
                   Confirm bid
@@ -149,7 +152,7 @@ const Auction2BidRoute: React.FC<Auction2BidRouteProps> = ({
   )
 }
 
-export const Auction2BidRouteFragmentContainer = createFragmentContainer(
+export const Auction2BidRouteFragmentContainer = createRefetchContainer(
   (props: Auction2BidRouteProps) => {
     return (
       // Wrap the provider down here as we need it for our hooks
@@ -197,7 +200,20 @@ export const Auction2BidRouteFragmentContainer = createFragmentContainer(
         hasQualifiedCreditCards
       }
     `,
-  }
+  },
+  graphql`
+    query Auction2BidRouteQuery($saleID: String!, $artworkID: String!) {
+      sale(id: $saleID) {
+        ...Auction2BidRoute_sale
+      }
+      artwork(id: $artworkID) {
+        ...Auction2BidRoute_artwork
+      }
+      me {
+        ...Auction2BidRoute_me
+      }
+    }
+  `
 )
 
 const computeProps = ({
@@ -234,9 +250,8 @@ const computeProps = ({
   })
 
   const requiresCheckbox = !bidder
-  const requiresPaymentInformation = !(
-    requiresCheckbox || me.hasQualifiedCreditCards
-  )
+  const requiresPaymentInformation =
+    requiresCheckbox || !me.hasQualifiedCreditCards
 
   const {
     validationSchemaForRegisteredUsers,
@@ -245,21 +260,24 @@ const computeProps = ({
   } = biddingValidationSchemas
 
   const validationSchema = (() => {
-    if (requiresCheckbox) {
+    if (requiresCheckbox || requiresPaymentInformation) {
       if (requiresPaymentInformation) {
         return validationSchemaForUnregisteredUsersWithoutCreditCard
       } else {
         return validationSchemaForUnregisteredUsersWithCreditCard
       }
     } else {
-      validationSchemaForRegisteredUsers
+      return validationSchemaForRegisteredUsers
     }
   })()
+
+  const modalWidth = requiresPaymentInformation ? ["100%", 600] : null
 
   return {
     artworkSlug,
     bidderID: bidderID!,
     displayIncrements,
+    modalWidth,
     requiresCheckbox,
     requiresPaymentInformation,
     selectedBid,

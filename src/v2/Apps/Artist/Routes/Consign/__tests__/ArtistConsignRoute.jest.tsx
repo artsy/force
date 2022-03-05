@@ -306,6 +306,7 @@ const ConsignRouteFixture: ArtistConsignRoute_Test_QueryRawResponse = {
                   is_preview: false,
                 },
                 sale_artwork: {
+                  lotLabel: "0",
                   counts: {
                     bidder_positions: 13,
                   },
@@ -418,6 +419,7 @@ const ConsignRouteFixture: ArtistConsignRoute_Test_QueryRawResponse = {
                   is_preview: false,
                 },
                 sale_artwork: {
+                  lotLabel: "0",
                   counts: {
                     bidder_positions: 3,
                   },

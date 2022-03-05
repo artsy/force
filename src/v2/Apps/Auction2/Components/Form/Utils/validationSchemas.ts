@@ -1,32 +1,20 @@
 import * as Yup from "yup"
 
-declare module "yup" {
-  interface StringSchema {
-    present: (message: string) => Yup.BooleanSchema
-  }
-}
-
-Yup.addMethod(Yup.string, "present", function (message) {
-  return this.test("test-present", message, value => {
-    return this.trim().required(message).isValid(value)
-  })
-})
-
 const address = Yup.object({
-  addressLine1: Yup.string().present("Address is required"),
-  city: Yup.string().present("City is required"),
-  country: Yup.string().present("Country is required"),
-  name: Yup.string().present("Name is required"),
-  phoneNumber: Yup.string().present("Telephone is required"),
-  postalCode: Yup.string().present("Postal code is required"),
-  region: Yup.string().present("State is required"),
+  name: Yup.string().required("Name is required"),
+  country: Yup.string().required("Country is required"),
+  addressLine1: Yup.string().required("Address is required"),
+  city: Yup.string().required("City is required"),
+  region: Yup.string().required("Region is required"),
+  postalCode: Yup.string().required("Postal Code is required"),
+  phoneNumber: Yup.string().required("Phone Number is required"),
 })
 
 const agreeToTerms = Yup.bool().oneOf(
   [true],
   "You must agree to the Conditions of Sale"
 )
-
+const creditCard = Yup.bool().oneOf([true], "")
 const selectedBid = Yup.string().required()
 
 export const confirmRegistrationValidationSchema = Yup.object().shape({
@@ -36,6 +24,7 @@ export const confirmRegistrationValidationSchema = Yup.object().shape({
 export const registrationValidationSchema = Yup.object().shape({
   address,
   agreeToTerms,
+  creditCard,
 })
 
 export const biddingValidationSchemas = {
@@ -48,7 +37,7 @@ export const biddingValidationSchemas = {
   }),
   validationSchemaForUnregisteredUsersWithoutCreditCard: Yup.object().shape({
     address,
-    agreeToTerms,
+    creditCard,
     selectedBid,
   }),
 }

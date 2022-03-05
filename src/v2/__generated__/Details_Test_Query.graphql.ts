@@ -34,6 +34,7 @@ export type Details_Test_QueryRawResponse = {
             readonly id: string;
         }) | null;
         readonly sale_artwork: ({
+            readonly lotLabel: string | null;
             readonly counts: ({
                 readonly bidder_positions: number | null;
             }) | null;
@@ -87,6 +88,7 @@ fragment Details_artwork on Artwork {
     id
   }
   sale_artwork: saleArtwork {
+    lotLabel
     counts {
       bidder_positions: bidderPositions
     }
@@ -306,6 +308,13 @@ return {
               {
                 "alias": null,
                 "args": null,
+                "kind": "ScalarField",
+                "name": "lotLabel",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
                 "concreteType": "SaleArtworkCounts",
                 "kind": "LinkedField",
                 "name": "counts",
@@ -352,7 +361,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "b6bb23c02bec205fddd1feafcc11adbc",
+    "cacheID": "55e26879e05bfa34e0aed8b23287dc5b",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -420,6 +429,7 @@ return {
         },
         "artwork.sale_artwork.highest_bid.display": (v6/*: any*/),
         "artwork.sale_artwork.id": (v7/*: any*/),
+        "artwork.sale_artwork.lotLabel": (v6/*: any*/),
         "artwork.sale_artwork.opening_bid": {
           "enumValues": null,
           "nullable": true,
@@ -433,7 +443,7 @@ return {
     },
     "name": "Details_Test_Query",
     "operationKind": "query",
-    "text": "query Details_Test_Query {\n  artwork(id: \"gerhard-richter-bagdad-ii-flow-p10-1\") {\n    ...Details_artwork\n    id\n  }\n}\n\nfragment Details_artwork on Artwork {\n  href\n  title\n  date\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n}\n"
+    "text": "query Details_Test_Query {\n  artwork(id: \"gerhard-richter-bagdad-ii-flow-p10-1\") {\n    ...Details_artwork\n    id\n  }\n}\n\nfragment Details_artwork on Artwork {\n  href\n  title\n  date\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    lotLabel\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n}\n"
   }
 };
 })();

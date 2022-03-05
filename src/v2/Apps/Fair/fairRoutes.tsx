@@ -2,13 +2,10 @@ import loadable from "@loadable/component"
 import { graphql } from "react-relay"
 import { RedirectException } from "found"
 import { AppRouteConfig } from "v2/System/Router/Route"
-import {
-  buildUrl,
-  paramsToCamelCase,
-} from "v2/Components/ArtworkFilter/Utils/urlBuilder"
+import { buildUrl } from "v2/Components/ArtworkFilter/Utils/urlBuilder"
 import { defaultSort, isValidSort } from "./Utils/IsValidSort"
-import { allowedFilters } from "v2/Components/ArtworkFilter/Utils/allowedFilters"
-import { data as sd } from "sharify"
+import { getInitialFilterState } from "v2/Components/ArtworkFilter/Utils/getInitialFilterState"
+import { getENV } from "v2/Utils/getENV"
 
 const FairApp = loadable(
   () => import(/* webpackChunkName: "fairBundle" */ "./FairApp"),
@@ -126,7 +123,7 @@ export const fairRoutes: AppRouteConfig[] = [
             return undefined
           }
 
-          if (sd.ENABLE_FAIR_PAGE_EXHIBITORS_TAB) {
+          if (getENV("ENABLE_FAIR_PAGE_EXHIBITORS_TAB")) {
             const slug = match.params.slug
             throw new RedirectException(`/fair/${slug}`, 301)
           }
@@ -208,10 +205,7 @@ export const fairRoutes: AppRouteConfig[] = [
 ]
 
 function initializeVariablesWithFilterState({ slug }, props) {
-  const initialFilterStateFromUrl = props.location ? props.location.query : {}
-  const camelCasedFilterStateFromUrl = paramsToCamelCase(
-    initialFilterStateFromUrl
-  )
+  const initialFilterState = getInitialFilterState(props.location?.query ?? {})
 
   let aggregations: string[] = [
     "TOTAL",
@@ -225,10 +219,10 @@ function initializeVariablesWithFilterState({ slug }, props) {
 
   const input = {
     sort: "-decayed_merch",
-    ...allowedFilters(camelCasedFilterStateFromUrl),
+    ...initialFilterState,
     includeArtworksByFollowedArtists:
       !!props.context.user &&
-      camelCasedFilterStateFromUrl["includeArtworksByFollowedArtists"],
+      initialFilterState["includeArtworksByFollowedArtists"],
     aggregations: !!props.context.user ? ["FOLLOWED_ARTISTS"] : undefined,
   }
 

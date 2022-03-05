@@ -8,6 +8,7 @@ import {
 import { Details_artwork } from "v2/__generated__/Details_artwork.graphql"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
+import { useArtworkGridContext } from "../ArtworkGrid/ArtworkGridContext"
 
 interface DetailsProps {
   artwork: Details_artwork
@@ -46,28 +47,28 @@ const ArtistLine: React.FC<DetailsProps> = ({
     )
   }
 
-  if (artists && artists.length) {
-    return (
-      <Text variant={tokens.variant} overflowEllipsis>
-        {artists.map((artist, i) => {
-          if (!artist || !artist.href || !artist.name) return null
-
-          return (
-            <ConditionalLink
-              includeLinks={includeLinks}
-              href={artist.href}
-              key={i}
-            >
-              {artist.name}
-              {i !== artists.length - 1 && ", "}
-            </ConditionalLink>
-          )
-        })}
-      </Text>
-    )
+  if (!artists?.length) {
+    return null
   }
 
-  return null
+  return (
+    <Text variant={tokens.variant} overflowEllipsis>
+      {artists.map((artist, i) => {
+        if (!artist || !artist.href || !artist.name) return null
+
+        return (
+          <ConditionalLink
+            includeLinks={includeLinks}
+            href={artist.href}
+            key={i}
+          >
+            {artist.name}
+            {i !== artists.length - 1 && ", "}
+          </ConditionalLink>
+        )
+      })}
+    </Text>
+  )
 }
 
 const TitleLine: React.FC<DetailsProps> = ({
@@ -84,8 +85,7 @@ const TitleLine: React.FC<DetailsProps> = ({
   })
 
   return (
-    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-    <ConditionalLink includeLinks={includeLinks} href={href}>
+    <ConditionalLink includeLinks={includeLinks} href={href!}>
       <Text variant={tokens.variant} color="black60" overflowEllipsis>
         <i>{title}</i>
         {date && `, ${date}`}
@@ -117,8 +117,7 @@ const PartnerLine: React.FC<DetailsProps> = ({
 
   if (partner) {
     return (
-      //  @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-      <ConditionalLink includeLinks={includeLinks} href={partner.href}>
+      <ConditionalLink includeLinks={includeLinks} href={partner?.href!}>
         <Text variant={tokens.variant} color="black60" overflowEllipsis>
           {partner.name}
         </Text>
@@ -163,10 +162,10 @@ const SaleMessage: React.FC<DetailsProps> = ({
   }
 
   if (sale?.is_auction) {
-    const highest_bid_display = sale_artwork?.highest_bid?.display
-    const opening_bid_display = sale_artwork?.opening_bid?.display
+    const highestBid_display = sale_artwork?.highest_bid?.display
+    const openingBid_display = sale_artwork?.opening_bid?.display
 
-    return <>{highest_bid_display || opening_bid_display || ""}</>
+    return <>{highestBid_display || openingBid_display || ""}</>
   }
 
   if (sale_message === "Contact For Price") {
@@ -185,8 +184,7 @@ const BidInfo: React.FC<DetailsProps> = ({
     return null
   }
 
-  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-  const bidderPositionCounts = sale_artwork?.counts.bidder_positions ?? 0
+  const bidderPositionCounts = sale_artwork?.counts?.bidder_positions ?? 0
 
   if (bidderPositionCounts === 0) {
     return null
@@ -205,8 +203,13 @@ export const Details: React.FC<DetailsProps> = ({
   hideSaleInfo,
   ...rest
 }) => {
+  const { artworkGridContext } = useArtworkGridContext()
+
   return (
     <>
+      {artworkGridContext?.isAuctionArtwork && (
+        <Text variant="xs">Lot {rest.artwork?.sale_artwork?.lotLabel}</Text>
+      )}
       {!hideArtistName && <ArtistLine {...rest} />}
       <TitleLine {...rest} />
       {!hidePartnerName && <PartnerLine {...rest} />}
@@ -238,6 +241,7 @@ export const DetailsFragmentContainer = createFragmentContainer(Details, {
         is_closed: isClosed
       }
       sale_artwork: saleArtwork {
+        lotLabel
         counts {
           bidder_positions: bidderPositions
         }

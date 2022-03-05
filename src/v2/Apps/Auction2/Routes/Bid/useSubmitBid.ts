@@ -1,5 +1,5 @@
 import { Router } from "found"
-import { MutableRefObject, useRef } from "react"
+import { useRef } from "react"
 import { useRouter } from "v2/System/Router/useRouter"
 import createLogger from "v2/Utils/logger"
 import { useBidderPosition } from "v2/Apps/Auction2/Queries/useBidderPosition"
@@ -15,14 +15,16 @@ import { useAuctionTracking } from "v2/Apps/Auction2/Hooks/useAuctionTracking"
 import { Auction2BidRoute_sale } from "v2/__generated__/Auction2BidRoute_sale.graphql"
 import { Auction2BidRoute_artwork } from "v2/__generated__/Auction2BidRoute_artwork.graphql"
 import { Auction2BidRoute_me } from "v2/__generated__/Auction2BidRoute_me.graphql"
+import { RelayRefetchProp } from "react-relay"
+import { useToasts } from "@artsy/palette"
 
 const logger = createLogger("useSubmitBid")
 
 interface UseSubmitBidProps {
   artwork: Auction2BidRoute_artwork
   bidderID: string
-  checkBidStatusPollingInterval: MutableRefObject<NodeJS.Timeout | null>
   me: Auction2BidRoute_me
+  relay: RelayRefetchProp
   requiresPaymentInformation: boolean
   sale: Auction2BidRoute_sale
 }
@@ -30,8 +32,8 @@ interface UseSubmitBidProps {
 export const useSubmitBid = ({
   artwork,
   bidderID,
-  checkBidStatusPollingInterval,
   me,
+  relay,
   requiresPaymentInformation,
   sale,
 }: UseSubmitBidProps) => {
@@ -42,6 +44,10 @@ export const useSubmitBid = ({
   const { submitMutation: createBidderPosition } = useCreateBidderPosition()
   const { fetchBidderPosition } = useBidderPosition()
   const { createToken } = useCreateTokenAndSubmit({ me, sale })
+  const { sendToast } = useToasts()
+
+  // Look for /sale/id/bid/artwork-id?redirectTo=... and redirect to that URL
+  // on successful submission.
   const { redirectTo } = match.location.query
 
   /**
@@ -61,12 +67,13 @@ export const useSubmitBid = ({
     const { checkBidStatus } = setupCheckBidStatus({
       artwork,
       bidderID,
-      checkBidStatusPollingInterval,
       fetchBidderPosition,
       helpers,
       redirectTo,
+      relay,
       router,
       sale,
+      sendToast,
       tracking,
     })
 
@@ -119,25 +126,28 @@ export const useSubmitBid = ({
 const setupCheckBidStatus = (props: {
   artwork: Auction2BidRoute_artwork
   bidderID: string
-  checkBidStatusPollingInterval: MutableRefObject<NodeJS.Timeout | null>
   fetchBidderPosition: ReturnType<
     typeof useBidderPosition
   >["fetchBidderPosition"]
   helpers: AuctionFormHelpers
   redirectTo: string
+  relay: RelayRefetchProp
   router: Router
   sale: Auction2BidRoute_sale
+  sendToast: ReturnType<typeof useToasts>["sendToast"]
   tracking: ReturnType<typeof useAuctionTracking>["tracking"]
 }) => {
   const {
     artwork,
     bidderID,
-    checkBidStatusPollingInterval,
     fetchBidderPosition,
     helpers,
     redirectTo,
+    // TODO: Enable when we refresh bids
+    // relay,
     router,
     sale,
+    sendToast,
     tracking,
   } = props
 
@@ -147,6 +157,7 @@ const setupCheckBidStatus = (props: {
   const checkBidStatus = async result => {
     const bidderPositionID = result.position?.internalID
 
+    // Get the bidder position and then check bid status. Loop if PENDING=true
     const getBidderPosition = async () => {
       try {
         helpers.setSubmitting(true)
@@ -161,7 +172,6 @@ const setupCheckBidStatus = (props: {
         return checkBidStatus(response?.me?.bidderPosition)
       } catch (error) {
         helpers.setSubmitting(false)
-
         logger.error("Error fetching bidder position", error)
       }
     }
@@ -176,14 +186,12 @@ const setupCheckBidStatus = (props: {
 
       case "PENDING": {
         if (pendingPollCount < MAX_PENDING_POLL_ATTEMPTS) {
-          checkBidStatusPollingInterval.current = setTimeout(async () => {
+          setTimeout(async () => {
             await getBidderPosition()
           }, 1000)
 
           pendingPollCount++
         } else {
-          checkBidStatusPollingInterval.current = null
-
           helpers.setStatus(
             "Error fetching bid status. PENDING status timeout."
           )
@@ -194,16 +202,58 @@ const setupCheckBidStatus = (props: {
 
       case "WINNING": {
         tracking.confirmBidSuccess(bidderID, bidderPositionID)
+
+        sendToast({
+          variant: "success",
+          message: `Bid sucessfully placed.`,
+        })
+
         router.push(redirectTo ?? `/artwork/${artwork.slug}`)
         break
       }
 
-      case "OUTBID" || "RESERVE_NOT_MET": {
+      case "OUTBID": {
         helpers.setFieldError(
           "selectedBid",
           errorMessageForBidding(result.status)
         )
         helpers.setSubmitting(false)
+
+        break
+      }
+
+      case "RESERVE_NOT_MET": {
+        helpers.setFieldError(
+          "selectedBid",
+          errorMessageForBidding(result.status)
+        )
+        helpers.setSubmitting(false)
+
+        /**
+         * TODO: In the future, we can fire this function to refresh the bid
+         * increments automatically so the user doesn't have to reclick the
+         * dropdown again.
+         *
+         * Even though this works, commented out because we will need to refine
+         * the language with design, as its not entirely clear that the UI has
+         * updated with the latest increments at a glance, and it could confuse
+         * the user. We might need to update the message in `ErrorStatus.tsx`.
+         */
+        /*
+        relay.refetch(
+          {
+            artworkID: artwork.slug,
+            saleID: sale.slug,
+          },
+          {},
+          // On complete, display a status notitifying the user that they didn't
+          // meet the reserve
+          _error => {
+            helpers.setFieldTouched("selectedBid", true)
+            helpers.setStatus("RESERVE_NOT_MET")
+          }
+        )
+        */
         break
       }
 
@@ -212,12 +262,16 @@ const setupCheckBidStatus = (props: {
         break
       }
 
-      // TODO: Look at this
       case "ERROR": {
-        console.error("[useSubmitBid]", result)
+        console.error("Error placing bid:", result)
 
         if (result.messageHeader === "Bid not placed") {
           router.push(`/auction2/${sale.slug}/confirm-registration`)
+        } else {
+          sendToast({
+            variant: "error",
+            message: `Error placing bid. Please try again.`,
+          })
         }
         break
       }

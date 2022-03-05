@@ -1,4 +1,4 @@
-import { Banner, Flex, Text } from "@artsy/palette"
+import { Banner, BannerProps, Flex, Text } from "@artsy/palette"
 import { errorMessageForBidding } from "v2/Apps/Auction2/Components/Form/Utils"
 import { useFormContext } from "v2/Apps/Auction2/Hooks/useFormContext"
 
@@ -12,6 +12,7 @@ export const ErrorStatus = () => {
   const getErrorStatus = (): {
     title: string
     message: string | JSX.Element
+    statusVariant?: BannerProps["variant"]
   } => {
     const message = errorMessageForBidding(status)
 
@@ -44,6 +45,7 @@ export const ErrorStatus = () => {
         return {
           title: "Reserve Not Met",
           message,
+          statusVariant: "success",
         }
       }
       case "SALE_CLOSED": {
@@ -70,11 +72,11 @@ export const ErrorStatus = () => {
     }
   }
 
-  const { title, message } = getErrorStatus()
+  const { title, message, statusVariant = "error" } = getErrorStatus()
 
   return (
     <>
-      <Banner variant="error" textAlign="left">
+      <Banner variant={statusVariant} textAlign="left">
         <Flex flexDirection="column" textAlign="left">
           {title && <Text variant="md">{title}</Text>}
 

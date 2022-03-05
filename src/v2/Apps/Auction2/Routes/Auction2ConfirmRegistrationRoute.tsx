@@ -13,6 +13,10 @@ import {
   formatError,
   AuctionFormValues,
 } from "v2/Apps/Auction2/Components/Form/Utils"
+import { useEffect } from "react"
+import { RouterLink } from "v2/System/Router/RouterLink"
+import { redirectToSaleHome } from "./Auction2RegistrationRoute"
+import { isEmpty } from "lodash"
 
 interface Auction2ConfirmRegistrationRouteProps {
   me: Auction2ConfirmRegistrationRoute_me
@@ -58,6 +62,23 @@ const Auction2ConfirmRegistrationRoute: React.FC<Auction2ConfirmRegistrationRout
     router.push(auctionURL)
   }
 
+  // Track page view or redirect
+  useEffect(() => {
+    if (redirectToSaleHome(sale)) {
+      router.replace(`/auction2/${sale.slug}`)
+    } else if (!me.hasQualifiedCreditCards) {
+      router.replace(`/auction2/${sale.slug}/register`)
+    } else {
+      tracking.confirmRegistrationPageView()
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  // Will redirect to /register above on page mount
+  if (!me.hasQualifiedCreditCards) {
+    return null
+  }
+
   return (
     <ModalDialog title={`Register for ${sale.name}`} onClose={closeModal}>
       <Formik<Pick<AuctionFormValues, "agreeToTerms">>
@@ -67,7 +88,7 @@ const Auction2ConfirmRegistrationRoute: React.FC<Auction2ConfirmRegistrationRout
         onSubmit={handleSubmit}
         validationSchema={confirmRegistrationValidationSchema}
       >
-        {({ isSubmitting }) => {
+        {({ isSubmitting, isValid, touched }) => {
           return (
             <Form>
               <Join separator={<Spacer my={2} />}>
@@ -76,13 +97,27 @@ const Auction2ConfirmRegistrationRoute: React.FC<Auction2ConfirmRegistrationRout
                 ) : (
                   <Text variant="md">
                     Welcome back. To complete your registration, please confirm
-                    that you agree to the Conditions of Sale.
+                    that you agree to the{" "}
+                    <Text variant="md" display="inline">
+                      <RouterLink
+                        color="black100"
+                        to="/conditions-of-sale"
+                        target="_blank"
+                      >
+                        Conditions of Sale
+                      </RouterLink>
+                      .
+                    </Text>
                   </Text>
                 )}
 
                 <ConditionsOfSaleCheckbox />
 
-                <Button loading={isSubmitting} type="submit">
+                <Button
+                  loading={isSubmitting}
+                  disabled={!isValid || isSubmitting || isEmpty(touched)}
+                  type="submit"
+                >
                   Register
                 </Button>
               </Join>
@@ -101,6 +136,7 @@ export const Auction2ConfirmRegistrationRouteFragmentContainer = createFragmentC
       fragment Auction2ConfirmRegistrationRoute_me on Me {
         internalID
         identityVerified
+        hasQualifiedCreditCards
       }
     `,
     sale: graphql`
@@ -109,6 +145,8 @@ export const Auction2ConfirmRegistrationRouteFragmentContainer = createFragmentC
         name
         internalID
         status
+        isClosed
+        isLiveOpen
         requireIdentityVerification
         bidder {
           qualifiedForBidding

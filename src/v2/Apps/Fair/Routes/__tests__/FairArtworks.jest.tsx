@@ -144,6 +144,7 @@ const FAIR_ARTWORKS_FIXTURE: FairArtworks_QueryRawResponse = {
               display_timely_at: "live in 3d",
             },
             sale_artwork: {
+              lotLabel: "0",
               counts: {
                 bidder_positions: 0,
               },

@@ -2,6 +2,12 @@ import { useTracking } from "react-tracking"
 import { AnalyticsSchema } from "v2/System"
 import { formatError } from "v2/Apps/Auction2/Components/Form/Utils"
 
+/**
+ * Tracking TODO:
+ * - contextModule name for buy now rail artwork
+ *
+ */
+
 export const useAuctionTracking = () => {
   const { trackEvent } = useTracking()
 
@@ -27,6 +33,11 @@ export const useAuctionTracking = () => {
         action_type: AnalyticsSchema.ActionType.ConfirmBidFailed,
         bidder_id: bidderID,
         error_messages: errors,
+      })
+    },
+    confirmRegistrationPageView: () => {
+      trackEvent({
+        context_page: AnalyticsSchema.PageName.AuctionRegistrationPage,
       })
     },
     maxBidSelected: (bidderID: string, maxBid: string) => {
@@ -70,7 +81,7 @@ export const useAuctionTracking = () => {
       // TODO
     },
     registrationSubmitted: ({ bidderID, me, sale }) => {
-      console.log(sale, me)
+      // console.log(sale, me)
 
       trackEvent({
         action_type: AnalyticsSchema.ActionType.RegistrationSubmitted,

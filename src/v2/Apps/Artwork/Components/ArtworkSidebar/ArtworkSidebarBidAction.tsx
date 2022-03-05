@@ -21,6 +21,9 @@ import { bidderQualifications } from "v2/Utils/identityVerificationRequirements"
 import { compact } from "lodash"
 import { Router } from "found"
 import { useRouter } from "v2/System/Router/useRouter"
+import { openAuthModal } from "desktop/lib/openAuthModal"
+import { ModalType } from "v2/Components/Authentication/Types"
+import { ContextModule, Intent } from "@artsy/cohesion"
 
 export interface ArtworkSidebarBidActionProps {
   artwork: ArtworkSidebarBidAction_artwork
@@ -104,7 +107,18 @@ export class ArtworkSidebarBidAction extends React.Component<
 
     // FIXME: Remove this after Auction2 launches
     if (getENV("ENABLE_AUCTION_V2")) {
-      this.props.router?.push(href.replace("/auction/", "/auction2/"))
+      const redirectTo = href.replace("/auction/", "/auction2/")
+
+      if (!this.props.me) {
+        openAuthModal(ModalType.login, {
+          redirectTo,
+          intent: Intent.bid,
+          copy: "Log in to bid on artworks",
+          contextModule: ContextModule.artworkSidebar,
+        })
+      } else {
+        this.props.router?.push(redirectTo)
+      }
     } else {
       window.location.href = href
     }

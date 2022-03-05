@@ -25,6 +25,7 @@ export type Details_artwork = {
         readonly is_closed: boolean | null;
     } | null;
     readonly sale_artwork: {
+        readonly lotLabel: string | null;
         readonly counts: {
             readonly bidder_positions: number | null;
         } | null;
@@ -187,6 +188,13 @@ return {
         {
           "alias": null,
           "args": null,
+          "kind": "ScalarField",
+          "name": "lotLabel",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
           "concreteType": "SaleArtworkCounts",
           "kind": "LinkedField",
           "name": "counts",
@@ -230,5 +238,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '3e0359262ece717c5498c7372cc8416b';
+(node as any).hash = '4f6751c877326d96681e742e6f74c761';
 export default node;
