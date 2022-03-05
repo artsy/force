@@ -119,7 +119,7 @@ export const setupTestWrapperTL = <T extends OperationType>({
 }
 
 /**
- * @deprecated Use `setupTestWrapperTL`, which uses `@testing-library/react`
+ * @note See `setupTestWrapperTL`, which uses `@testing-library/react`
  */
 export const setupTestWrapper = <T extends OperationType>({
   Component,
