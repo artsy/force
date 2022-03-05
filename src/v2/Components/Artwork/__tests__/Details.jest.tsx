@@ -236,6 +236,7 @@ const artworkInAuction: Details_Test_QueryRawResponse["artwork"] = {
     is_closed: false,
   },
   sale_artwork: {
+    lotLabel: "0",
     id: "opaque-sale-artwork-id",
     highest_bid: { display: "$2,600" },
     opening_bid: { display: "$2,400" },

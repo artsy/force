@@ -10,6 +10,8 @@ export type Auction2RegistrationRoute_sale = {
     readonly internalID: string;
     readonly status: string | null;
     readonly requireIdentityVerification: boolean | null;
+    readonly isClosed: boolean | null;
+    readonly isLiveOpen: boolean | null;
     readonly bidder: {
         readonly qualifiedForBidding: boolean | null;
     } | null;
@@ -67,6 +69,20 @@ const node: ReaderFragment = {
     {
       "alias": null,
       "args": null,
+      "kind": "ScalarField",
+      "name": "isClosed",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "isLiveOpen",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
       "concreteType": "Bidder",
       "kind": "LinkedField",
       "name": "bidder",
@@ -86,5 +102,5 @@ const node: ReaderFragment = {
   "type": "Sale",
   "abstractKey": null
 };
-(node as any).hash = 'dc513ed01546c27f5cd71a415a604124';
+(node as any).hash = '20dab149473ec8d770ad1debc49c762d';
 export default node;

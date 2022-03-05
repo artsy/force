@@ -1,10 +1,9 @@
 import { Flex, Text } from "@artsy/palette"
 import { Badge_artwork } from "v2/__generated__/Badge_artwork.graphql"
-import { Component } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
-import { get } from "v2/Utils/get"
 import { themeGet } from "@styled-system/theme-get"
+import { useArtworkGridContext } from "../ArtworkGrid/ArtworkGridContext"
 
 interface BadgeProps {
   artwork: Badge_artwork
@@ -13,39 +12,41 @@ interface BadgeProps {
 
 const MIN_IMAGE_SIZE = 150
 
-class Badge extends Component<BadgeProps> {
-  get stackedLayout() {
+const Badge: React.FC<BadgeProps> = ({ artwork, width }) => {
+  const { artworkGridContext } = useArtworkGridContext()
+
+  if (artworkGridContext?.isAuctionArtwork) {
+    return null
+  }
+
+  const { is_biddable, sale } = artwork
+  const includeBidBadge = is_biddable || (sale && sale.is_preview)
+  // E.g.(ENDS IN 59M)
+  const saleTimingHint =
+    sale && sale.display_timely_at ? ` (${sale.display_timely_at})` : ""
+
+  const isStackedLayout = (() => {
     // During the SSR render pass we don't have access to window pixel data so
     // default to high density screen.
     const devicePixelRatio =
       typeof window === "undefined" ? 2 : window.devicePixelRatio
 
-    return get(
-      this.props,
-      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-      p => p.width / devicePixelRatio < MIN_IMAGE_SIZE,
-      false
-    )
-  }
+    if (width) {
+      return width / devicePixelRatio < MIN_IMAGE_SIZE
+    } else {
+      return false
+    }
+  })()
 
-  render() {
-    const { artwork } = this.props
-    const { is_biddable, sale } = artwork
-    const includeBidBadge = is_biddable || (sale && sale.is_preview)
-    // E.g.(ENDS IN 59M)
-    const saleTimingHint =
-      sale && sale.display_timely_at ? ` (${sale.display_timely_at})` : ""
-
-    return (
-      <Badges flexDirection={this.stackedLayout ? "column" : "row"}>
-        {includeBidBadge && (
-          <Label ml={1} mb={1}>
-            Bid{saleTimingHint}
-          </Label>
-        )}
-      </Badges>
-    )
-  }
+  return (
+    <Badges flexDirection={isStackedLayout ? "column" : "row"}>
+      {includeBidBadge && (
+        <Label ml={1} mb={1}>
+          Bid{saleTimingHint}
+        </Label>
+      )}
+    </Badges>
+  )
 }
 
 export default createFragmentContainer(Badge, {

@@ -23,6 +23,7 @@ import { useAnalyticsContext, useSystemContext } from "v2/System"
 import { clickedEntityGroup, ContextModule, OwnerType } from "@artsy/cohesion"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import { MyBidsQuery } from "v2/__generated__/MyBidsQuery.graphql"
+import { getENV } from "v2/Utils/getENV"
 
 interface MyBidsProps {
   me: MyBids_me
@@ -53,6 +54,10 @@ const MyBids: React.FC<MyBidsProps> = props => {
 
           if (!sale || !saleArtworks) return <></>
 
+          const auctionURL = getENV("ENABLE_AUCTION_V2")
+            ? `/auction2/${sale.slug}`
+            : `/auction/${sale.slug}`
+
           return (
             // TODO: Re-assess width
             <Box width={330} key={index}>
@@ -82,7 +87,7 @@ const MyBids: React.FC<MyBidsProps> = props => {
                     // followed or bid on any works, show the Bid Now button.
                     <Box py={1} px={2}>
                       <RouterLink
-                        to={`/auction/${sale.slug}`}
+                        to={auctionURL}
                         noUnderline
                         data-test="registeredOnlyButton"
                         onClick={() => {

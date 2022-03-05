@@ -39,6 +39,7 @@ query auction2Routes_ConfirmRegistrationRouteQuery(
 fragment Auction2ConfirmRegistrationRoute_me on Me {
   internalID
   identityVerified
+  hasQualifiedCreditCards
 }
 
 fragment Auction2ConfirmRegistrationRoute_sale on Sale {
@@ -46,6 +47,8 @@ fragment Auction2ConfirmRegistrationRoute_sale on Sale {
   name
   internalID
   status
+  isClosed
+  isLiveOpen
   requireIdentityVerification
   bidder {
     qualifiedForBidding
@@ -148,6 +151,13 @@ return {
             "name": "identityVerified",
             "storageKey": null
           },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "hasQualifiedCreditCards",
+            "storageKey": null
+          },
           (v3/*: any*/)
         ],
         "storageKey": null
@@ -186,6 +196,20 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
+            "name": "isClosed",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "isLiveOpen",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
             "name": "requireIdentityVerification",
             "storageKey": null
           },
@@ -215,12 +239,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "96a19bd6306dce0f0e6ed8f2849b33b3",
+    "cacheID": "a18e19f0d9146cecab2da039a0c98db1",
     "id": null,
     "metadata": {},
     "name": "auction2Routes_ConfirmRegistrationRouteQuery",
     "operationKind": "query",
-    "text": "query auction2Routes_ConfirmRegistrationRouteQuery(\n  $slug: String!\n) {\n  me {\n    ...Auction2ConfirmRegistrationRoute_me\n    id\n  }\n  sale(id: $slug) @principalField {\n    ...Auction2ConfirmRegistrationRoute_sale\n    id\n  }\n}\n\nfragment Auction2ConfirmRegistrationRoute_me on Me {\n  internalID\n  identityVerified\n}\n\nfragment Auction2ConfirmRegistrationRoute_sale on Sale {\n  slug\n  name\n  internalID\n  status\n  requireIdentityVerification\n  bidder {\n    qualifiedForBidding\n    id\n  }\n}\n"
+    "text": "query auction2Routes_ConfirmRegistrationRouteQuery(\n  $slug: String!\n) {\n  me {\n    ...Auction2ConfirmRegistrationRoute_me\n    id\n  }\n  sale(id: $slug) @principalField {\n    ...Auction2ConfirmRegistrationRoute_sale\n    id\n  }\n}\n\nfragment Auction2ConfirmRegistrationRoute_me on Me {\n  internalID\n  identityVerified\n  hasQualifiedCreditCards\n}\n\nfragment Auction2ConfirmRegistrationRoute_sale on Sale {\n  slug\n  name\n  internalID\n  status\n  isClosed\n  isLiveOpen\n  requireIdentityVerification\n  bidder {\n    qualifiedForBidding\n    id\n  }\n}\n"
   }
 };
 })();

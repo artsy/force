@@ -1,5 +1,6 @@
 import loadable from "@loadable/component"
 import { graphql } from "relay-runtime"
+import { getInitialFilterState } from "v2/Components/ArtworkFilter/Utils/getInitialFilterState"
 import { AppRouteConfig } from "v2/System/Router/Route"
 import { getArtworkFilterInputArgs } from "./Components/AuctionArtworkFilter"
 
@@ -71,9 +72,14 @@ export const auction2Routes: AppRouteConfig[] = [
       }
     `,
     prepareVariables: (params, props) => {
+      const initialFilterState = getInitialFilterState(
+        props.location?.query ?? {}
+      )
+
       return {
         slug: params.slug,
         input: {
+          ...initialFilterState,
           ...getArtworkFilterInputArgs(props.context.user),
           saleID: params.slug,
         },
@@ -112,6 +118,19 @@ export const auction2Routes: AppRouteConfig[] = [
       {
         path: "bid/:artworkSlug?",
         getComponent: () => ConfirmBidRoute,
+        onClientSideRender: ({ match }) => {
+          if (!match.context.user) {
+            const redirectTo = match.location.pathname + match.location.search
+            match.router.push(
+              `/login?redirect-to=${redirectTo}&afterSignUpAction=${redirectTo}`
+            )
+          }
+        },
+        onServerSideRender: ({ req, res }) => {
+          if (!req.user) {
+            res.redirect(`/login?redirect=${req.originalUrl}`)
+          }
+        },
         ignoreScrollBehavior: true,
         query: graphql`
           query auction2Routes_BidRouteQuery(

@@ -39,6 +39,7 @@ export const OnSubmitValidationError: React.FC<{
 
       const formErrors = Object.assign({}, clonedErrors, addressErrors)
 
+      // @ts-ignore // yolo
       onError(Object.values(formErrors))
       setSubmitting!(false)
     }

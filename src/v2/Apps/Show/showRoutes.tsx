@@ -1,9 +1,8 @@
 import loadable from "@loadable/component"
 import { graphql } from "react-relay"
 import { RedirectException } from "found"
-import { paramsToCamelCase } from "v2/Components/ArtworkFilter/Utils/urlBuilder"
-import { allowedFilters } from "v2/Components/ArtworkFilter/Utils/allowedFilters"
 import { AppRouteConfig } from "v2/System/Router/Route"
+import { getInitialFilterState } from "v2/Components/ArtworkFilter/Utils/getInitialFilterState"
 
 const ShowApp = loadable(
   () => import(/* webpackChunkName: "showBundle" */ "./ShowApp"),
@@ -91,7 +90,7 @@ export const showRoutes: AppRouteConfig[] = [
 ]
 
 function initializeVariablesWithFilterState({ slug }, props) {
-  const initialFilterState = props.location ? props.location.query : {}
+  const initialFilterState = getInitialFilterState(props.location?.query ?? {})
 
   const aggregations = [
     "MEDIUM",
@@ -108,7 +107,7 @@ function initializeVariablesWithFilterState({ slug }, props) {
 
   const input = {
     sort: "partner_show_position",
-    ...allowedFilters(paramsToCamelCase(initialFilterState)),
+    ...initialFilterState,
   }
 
   return { slug, input, aggregations, shouldFetchCounts: !!props.context.user }

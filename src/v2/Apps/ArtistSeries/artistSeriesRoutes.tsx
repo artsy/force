@@ -1,8 +1,7 @@
 import loadable from "@loadable/component"
 import { graphql } from "react-relay"
 import { AppRouteConfig } from "v2/System/Router/Route"
-import { paramsToCamelCase } from "v2/Components/ArtworkFilter/Utils/urlBuilder"
-import { allowedFilters } from "v2/Components/ArtworkFilter/Utils/allowedFilters"
+import { getInitialFilterState } from "v2/Components/ArtworkFilter/Utils/getInitialFilterState"
 
 const ArtistSeriesApp = loadable(
   () => import(/* webpackChunkName: "artistBundle" */ "./ArtistSeriesApp"),
@@ -35,7 +34,7 @@ export const artistSeriesRoutes: AppRouteConfig[] = [
 ]
 
 function initializeVariablesWithFilterState({ slug }, props) {
-  const initialFilterState = props.location ? props.location.query : {}
+  const initialFilterState = getInitialFilterState(props.location?.query ?? {})
 
   const aggregations = [
     "MEDIUM",
@@ -48,7 +47,7 @@ function initializeVariablesWithFilterState({ slug }, props) {
 
   const input = {
     sort: "-decayed_merch",
-    ...allowedFilters(paramsToCamelCase(initialFilterState)),
+    ...initialFilterState,
     first: 30,
   }
 

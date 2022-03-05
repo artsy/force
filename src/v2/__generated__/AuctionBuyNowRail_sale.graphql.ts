@@ -4,7 +4,7 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type AuctionPromotedSaleRail_sale = {
+export type AuctionBuyNowRail_sale = {
     readonly promotedSale: {
         readonly href: string | null;
         readonly internalID: string;
@@ -19,12 +19,12 @@ export type AuctionPromotedSaleRail_sale = {
             } | null> | null;
         } | null;
     } | null;
-    readonly " $refType": "AuctionPromotedSaleRail_sale";
+    readonly " $refType": "AuctionBuyNowRail_sale";
 };
-export type AuctionPromotedSaleRail_sale$data = AuctionPromotedSaleRail_sale;
-export type AuctionPromotedSaleRail_sale$key = {
-    readonly " $data"?: AuctionPromotedSaleRail_sale$data;
-    readonly " $fragmentRefs": FragmentRefs<"AuctionPromotedSaleRail_sale">;
+export type AuctionBuyNowRail_sale$data = AuctionBuyNowRail_sale;
+export type AuctionBuyNowRail_sale$key = {
+    readonly " $data"?: AuctionBuyNowRail_sale$data;
+    readonly " $fragmentRefs": FragmentRefs<"AuctionBuyNowRail_sale">;
 };
 
 
@@ -33,7 +33,7 @@ const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "AuctionPromotedSaleRail_sale",
+  "name": "AuctionBuyNowRail_sale",
   "selections": [
     {
       "alias": null,
@@ -126,5 +126,5 @@ const node: ReaderFragment = {
   "type": "Sale",
   "abstractKey": null
 };
-(node as any).hash = '0b86aecff19346453a1e00f54bdf3dde';
+(node as any).hash = '71a4747d9c93969a248b348f9154dd35';
 export default node;

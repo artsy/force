@@ -2,15 +2,13 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { ShelfArtworkFragmentContainer } from "v2/Components/Artwork/ShelfArtwork"
 import { Rail } from "v2/Components/Rail"
 import { extractNodes } from "v2/Utils/extractNodes"
-import { AuctionPromotedSaleRail_sale } from "v2/__generated__/AuctionPromotedSaleRail_sale.graphql"
+import { AuctionBuyNowRail_sale } from "v2/__generated__/AuctionBuyNowRail_sale.graphql"
 
-interface AuctionPromotedSaleRailProps {
-  sale: AuctionPromotedSaleRail_sale
+interface AuctionBuyNowRailProps {
+  sale: AuctionBuyNowRail_sale
 }
 
-const AuctionPromotedSaleRail: React.FC<AuctionPromotedSaleRailProps> = ({
-  sale,
-}) => {
+const AuctionBuyNowRail: React.FC<AuctionBuyNowRailProps> = ({ sale }) => {
   if (!sale.promotedSale) {
     return null
   }
@@ -25,12 +23,6 @@ const AuctionPromotedSaleRail: React.FC<AuctionPromotedSaleRailProps> = ({
     <>
       <Rail
         title="Buy Now"
-        viewAllLabel="View All"
-        viewAllHref={sale.promotedSale.href!}
-        viewAllOnClick={() => {
-          // TODO
-          // Track promoted sale view all click
-        }}
         getItems={() => {
           return nodes.map((node, index) => {
             return (
@@ -38,6 +30,8 @@ const AuctionPromotedSaleRail: React.FC<AuctionPromotedSaleRailProps> = ({
                 artwork={node.artwork!}
                 key={index}
                 lazyLoad
+                // TODO
+                // contextModule=""
               />
             )
           })
@@ -47,11 +41,11 @@ const AuctionPromotedSaleRail: React.FC<AuctionPromotedSaleRailProps> = ({
   )
 }
 
-export const AuctionPromotedSaleRailFragmentContainer = createFragmentContainer(
-  AuctionPromotedSaleRail,
+export const AuctionBuyNowRailFragmentContainer = createFragmentContainer(
+  AuctionBuyNowRail,
   {
     sale: graphql`
-      fragment AuctionPromotedSaleRail_sale on Sale {
+      fragment AuctionBuyNowRail_sale on Sale {
         promotedSale {
           href
           internalID
