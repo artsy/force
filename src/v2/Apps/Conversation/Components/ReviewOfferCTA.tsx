@@ -1,6 +1,6 @@
-import * as React from "react";
+import * as React from "react"
 import { useTracking } from "react-tracking"
-import { tappedViewOffer } from "@artsy/cohesion"
+import { TappedViewOffer, ActionType, OwnerType } from "@artsy/cohesion"
 import { DateTime } from "luxon"
 import {
   AlertCircleFillIcon,
@@ -123,12 +123,7 @@ export const ReviewOfferCTA: React.FC<ReviewOfferCTAProps> = ({
   const { message, subMessage, backgroundColor, Icon } = ctaAttributes
 
   const openModal = () => {
-    trackEvent(
-      tappedViewOffer({
-        impulse_conversation_id: conversationID,
-        cta: message,
-      })
-    )
+    trackEvent(tracks.tappedViewOffer(conversationID, message))
     openOrderModal()
   }
 
@@ -163,4 +158,16 @@ export const ReviewOfferCTA: React.FC<ReviewOfferCTAProps> = ({
       </ClickableFlex>
     </>
   )
+}
+
+const tracks = {
+  tappedViewOffer: (
+    conversationID: string,
+    message: string
+  ): TappedViewOffer => ({
+    action: ActionType.tappedViewOffer,
+    context_owner_type: OwnerType.conversation,
+    impulse_conversation_id: conversationID,
+    subject: message,
+  }),
 }
