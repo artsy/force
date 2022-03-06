@@ -1,5 +1,3 @@
-import { FeatureFlags } from 'v2/System/useFeatureFlag'
-
 declare module "sharify" {
   function sharify(): void
   export = sharify
@@ -37,7 +35,7 @@ declare module "sharify" {
       readonly ENABLE_YOUR_ALERTS_PAGE: boolean
       readonly FACEBOOK_APP_NAMESPACE: string
       readonly FACEBOOK_ID: string
-      readonly FEATURE_FLAGS: FeatureFlags
+      readonly FEATURE_FLAGS: any
       readonly GEMINI_CLOUDFRONT_URL: string
       readonly GENOME_URL: string
       readonly GOOGLE_ADWORDS_ID: string
