@@ -47,7 +47,7 @@ describe("getTimerLabelCopy", () => {
     it("formats the label to show 'Closes x date/time'", () => {
       expect(
         getTimerLabelCopy(endDate, startDate, hasStarted, hasEnded)
-      ).toEqual("Closes Mar 6, 12:37pm")
+      ).toEqual("Closes Mar 6, 5:37pm")
 
       // expect(getTimerLabelCopy(endDate)).toEqual("Closes March 6, 12:37pm EST")
     })
@@ -61,7 +61,7 @@ describe("getTimerLabelCopy", () => {
     it("formats the label to show 'x date/time'", () => {
       expect(
         getTimerLabelCopy(endDate, startDate, hasStarted, hasEnded)
-      ).toEqual("Mar 8, 12:37pm")
+      ).toEqual("Mar 8, 5:37pm")
 
       // expect(getTimerLabelCopy(endDate)).toEqual("March 6, 12:37pm EST")
     })
