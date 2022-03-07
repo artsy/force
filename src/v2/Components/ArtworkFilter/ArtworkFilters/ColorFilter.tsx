@@ -21,15 +21,19 @@ import { useFilterLabelCountByKey } from "../Utils/useFilterLabelCountByKey"
 import { sortResults } from "./Utils/sortResults"
 
 export const COLOR_OPTIONS = [
-  { hex: "#BB392D", value: "red", name: "Red" },
-  { hex: "#EA6B1F", value: "orange", name: "Orange" },
-  { hex: "#E2B929", value: "yellow", name: "Yellow" },
-  { hex: "#00674A", value: "green", name: "Green" },
-  { hex: "#0A1AB4", value: "blue", name: "Blue" },
-  { hex: "#7B3D91", value: "purple", name: "Purple" },
   { hex: "#ffffff", value: "black-and-white", name: "Black and White" },
-  { hex: "#C2C2C2", value: "gray", name: "Gray" },
-  { hex: "#E1ADCD", value: "pink", name: "Pink" },
+  { hex: "#ff0000", value: "red", name: "Red" },
+  { hex: "#fbe854", value: "yellow", name: "Yellow" },
+  { hex: "#f7923a", value: "orange", name: "Orange" },
+  { hex: "#fb81cd", value: "pink", name: "Pink" },
+  { hex: "#b82c83", value: "violet", name: "Violet" },
+  { hex: "#daa520", value: "gold", name: "Gold" },
+  { hex: "#f1572c", value: "darkorange", name: "Dark Orange" },
+  { hex: "#217c44", value: "darkgreen", name: "Dark Green" },
+  { hex: "#0a1ab4", value: "darkblue", name: "Dark Blue" },
+  { hex: "#642b7f", value: "darkviolet", name: "Dark Violet" },
+  { hex: "#bccc46", value: "lightgreen", name: "Light Green" },
+  { hex: "#c2d5f1", value: "lightblue", name: "Light Blue" },
 ]
 
 type ColorOption = typeof COLOR_OPTIONS[number]
