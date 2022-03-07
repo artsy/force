@@ -16,22 +16,20 @@ export interface LotTimerProps {
 export const LotTimer: React.FC<LotTimerProps> = ({ saleArtwork }) => {
   const { endAt } = saleArtwork
 
-  const { sale } = saleArtwork
-  const { startAt } = sale
+  const {
+    sale: { startAt },
+  } = saleArtwork
 
   const { hasEnded, time, hasStarted } = useTimer(endAt, startAt)
 
-  console.log("hasStarted", hasStarted)
-  const timerCopy = getTimerCopy(time)
+  const timerCopy = getTimerCopy(time, hasStarted)
 
   const labelCopy = getTimerLabelCopy(endAt, startAt, hasStarted, hasEnded)
 
   return (
     <Flex alignItems="center" flexDirection="column">
       <Text variant="md" color={"blue100"}>
-        {hasStarted && !hasEnded && (
-          <Text color={timerCopy.color}>{timerCopy.copy}</Text>
-        )}
+        {!hasEnded && <Text color={timerCopy.color}>{timerCopy.copy}</Text>}
       </Text>
 
       <Text variant="md" color={"black60"}>
@@ -80,7 +78,8 @@ export const LotTimerQueryRenderer = ({
   )
 }
 
-export const getTimerCopy = time => {
+export const getTimerCopy = (time, hasStarted) => {
+  console.log("time", time)
   const { days, hours, minutes, seconds } = time
 
   const pDays = parseInt(days, 10)
@@ -91,24 +90,28 @@ export const getTimerCopy = time => {
   let copy = ""
   let color = "blue100"
 
-  if (pDays < 1 && pHours < 1 && pMinutes <= 2) {
-    copy = `${pMinutes}m ${pSeconds}s`
-    color = "red100"
-  }
+  if (!hasStarted) {
+    copy = `${pDays + 1} Day${pDays > 1 ? "s" : ""} Until Bidding Starts`
+  } else {
+    if (pDays < 1 && pHours < 1 && pMinutes <= 2) {
+      copy = `${pMinutes}m ${pSeconds}s`
+      color = "red100"
+    }
 
-  // More than 24 hours until close
-  else if (pDays >= 1) {
-    copy = `${pDays}d ${pHours}h`
-  }
+    // More than 24 hours until close
+    else if (pDays >= 1) {
+      copy = `${pDays}d ${pHours}h`
+    }
 
-  // 1-24 hours until close
-  else if (pDays < 1 && pHours >= 1) {
-    copy = `${pHours}h ${pMinutes}m`
-  }
+    // 1-24 hours until close
+    else if (pDays < 1 && pHours >= 1) {
+      copy = `${pHours}h ${pMinutes}m`
+    }
 
-  // 2-60 mins until close
-  else if (pDays < 1 && pHours < 1 && pMinutes > 2) {
-    copy = `${pMinutes}m ${pSeconds}s`
+    // 2-60 mins until close
+    else if (pDays < 1 && pHours < 1 && pMinutes > 2) {
+      copy = `${pMinutes}m ${pSeconds}s`
+    }
   }
 
   return { copy, color }
