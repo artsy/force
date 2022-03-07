@@ -91,7 +91,7 @@ export const getTimerCopy = (time, hasStarted) => {
   let color = "blue100"
 
   if (!hasStarted) {
-    copy = `${pDays + 1} Day${pDays > 1 ? "s" : ""} Until Bidding Starts`
+    copy = `${pDays + 1} Day${pDays >= 1 ? "s" : ""} Until Bidding Starts`
   } else {
     if (pDays < 1 && pHours < 1 && pMinutes <= 2) {
       copy = `${pMinutes}m ${pSeconds}s`

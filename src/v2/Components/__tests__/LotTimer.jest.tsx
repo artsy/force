@@ -50,6 +50,15 @@ describe("getTimerCopy", () => {
       })
     })
 
+    describe("when the open time is between 1 and 2 days away", () => {
+      const time = { days: "01", hours: "23", minutes: "01", seconds: "59" }
+      it("shows '2 Days Until Bidding Starts'", () => {
+        expect(getTimerCopy(time, hasStarted).copy).toEqual(
+          "2 Days Until Bidding Starts"
+        )
+      })
+    })
+
     describe("when the open time is more than one day way", () => {
       const time = { days: "02", hours: "23", minutes: "01", seconds: "59" }
       it("shows '2 Days Until Bidding Starts'", () => {
