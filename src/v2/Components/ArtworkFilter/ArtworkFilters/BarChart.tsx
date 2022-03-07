@@ -5,9 +5,14 @@ const BAR_ROUNDNESS = 10
 
 type Range = [number, number]
 
+export interface BarEntity {
+  counts: number
+  value: number
+}
+
 interface BarChartProps {
   selectedRange: Range
-  bars: number[]
+  bars: BarEntity[]
 }
 
 const isSelected = (value: number, min: number, max: number) => {
@@ -15,17 +20,18 @@ const isSelected = (value: number, min: number, max: number) => {
 }
 
 export const BarChart: React.FC<BarChartProps> = ({ bars, selectedRange }) => {
-  const maxBarValue = Math.max(...bars)
+  const maxValue = Math.max(...bars.map(bar => bar.counts))
   const [min, max] = selectedRange
 
   return (
     <Flex height={110} justifyContent="space-between" alignItems="flex-end">
-      {bars.map(barValue => {
-        const percent = (100 / maxBarValue) * barValue
-        const selected = isSelected(barValue, min, max)
+      {bars.map((entity, index) => {
+        const percent = (100 / maxValue) * entity.counts
+        const selected = isSelected(entity.value, min, max)
 
         return (
           <Box
+            key={`bar-${index}`}
             height={`${percent}%`}
             bg={selected ? "blue100" : "black15"}
             width={BAR_WIDTH}

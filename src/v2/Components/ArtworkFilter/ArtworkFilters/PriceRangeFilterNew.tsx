@@ -12,6 +12,7 @@ import { isCustomValue } from "./Utils/isCustomValue"
 import { useFilterLabelCountByKey } from "../Utils/useFilterLabelCountByKey"
 import { Range, RANGE_DOT_SIZE } from "v2/Components/Range"
 import { debounce } from "lodash"
+import { BarEntity, BarChart } from "./BarChart"
 
 type CustomRange = (number | "*")[]
 
@@ -20,6 +21,112 @@ const DEBOUNCE_DELAY = 300
 const DEFAULT_CUSTOM_RANGE: CustomRange = ["*", "*"]
 const DEFAULT_PRICE_RANGE = "*-*"
 const DEFAULT_RANGE = [0, 50000]
+const BARS: BarEntity[] = [
+  {
+    counts: 34548,
+    value: 0,
+  },
+  {
+    counts: 35234,
+    value: 2000,
+  },
+  {
+    counts: 6153,
+    value: 4000,
+  },
+  {
+    counts: 32119,
+    value: 6000,
+  },
+  {
+    counts: 37462,
+    value: 8000,
+  },
+  {
+    counts: 1655,
+    value: 10000,
+  },
+  {
+    counts: 39325,
+    value: 12000,
+  },
+  {
+    counts: 2926,
+    value: 14000,
+  },
+  {
+    counts: 9501,
+    value: 16000,
+  },
+  {
+    counts: 48407,
+    value: 18000,
+  },
+  {
+    counts: 28957,
+    value: 20000,
+  },
+  {
+    counts: 24314,
+    value: 22000,
+  },
+  {
+    counts: 16478,
+    value: 24000,
+  },
+  {
+    counts: 28169,
+    value: 26000,
+  },
+  {
+    counts: 7767,
+    value: 28000,
+  },
+  {
+    counts: 23397,
+    value: 30000,
+  },
+  {
+    counts: 6444,
+    value: 32000,
+  },
+  {
+    counts: 18366,
+    value: 34000,
+  },
+  {
+    counts: 457,
+    value: 36000,
+  },
+  {
+    counts: 28344,
+    value: 38000,
+  },
+  {
+    counts: 35116,
+    value: 40000,
+  },
+  {
+    counts: 13476,
+    value: 42000,
+  },
+  {
+    counts: 39976,
+    value: 44000,
+  },
+  {
+    counts: 16281,
+    value: 46000,
+  },
+  {
+    counts: 38268,
+    value: 48000,
+  },
+  {
+    counts: 20844,
+    value: 50000,
+  },
+]
 
 export interface PriceRangeFilterNewProps {
   expanded?: boolean
@@ -120,24 +227,27 @@ export const PriceRangeFilterNew: FC<PriceRangeFilterNewProps> = ({
         </Box>
       </Flex>
 
-      <Box mt={4}>
-        <Box mx={RANGE_DOT_SIZE / 2}>
-          <Range
-            min={defaultMinValue}
-            max={defaultMaxValue}
-            value={sliderRange}
-            allowCross={false}
-            onChange={handleSliderValueChange}
-            ariaLabelGroupForHandles={[
-              "Min price slider handle",
-              "Max price slider handle",
-            ]}
-            railStyle={{
-              left: `-${RANGE_DOT_SIZE / 2}px`,
-              width: `calc(100% + ${RANGE_DOT_SIZE}px)`,
-            }}
-          />
-        </Box>
+      <Spacer mb={4} />
+
+      <Box mx={[RANGE_DOT_SIZE / 2, 0]}>
+        <BarChart
+          bars={BARS}
+          selectedRange={[sliderRange[0], sliderRange[1]]}
+        />
+
+        <Spacer mb={4} />
+
+        <Range
+          min={defaultMinValue}
+          max={defaultMaxValue}
+          value={sliderRange}
+          allowCross={false}
+          onChange={handleSliderValueChange}
+          ariaLabelGroupForHandles={[
+            "Min price slider handle",
+            "Max price slider handle",
+          ]}
+        />
 
         <Flex justifyContent="space-between" mt={2}>
           <Text variant="xs" color="black60">
