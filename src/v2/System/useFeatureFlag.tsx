@@ -56,7 +56,10 @@ export function useFeatureVariant(featureName: string): Variant | null {
   return variant
 }
 
-function maybeTrackFeatureView(featureName, variantName) {
+function maybeTrackFeatureView(
+  featureName: string,
+  variantName: string
+): boolean {
   const experimentName = `${featureName}+${variantName}`
   let viewedExperiments = getExperimentsViewed()
 
@@ -70,13 +73,13 @@ function maybeTrackFeatureView(featureName, variantName) {
   return true
 }
 
-function getExperimentsViewed() {
+function getExperimentsViewed(): string[] {
   let experimentsViewed = window.localStorage.getItem("experimentsViewed")
 
   return experimentsViewed === null ? [] : JSON.parse(experimentsViewed)
 }
 
-function setExperimentsViewed(_viewedExperiments) {
+function setExperimentsViewed(_viewedExperiments: string[]) {
   window.localStorage.setItem(
     "experimentsViewed",
     JSON.stringify(_viewedExperiments)
