@@ -3,40 +3,42 @@ import { LotTimerQuery } from "v2/__generated__/LotTimerQuery.graphql"
 import { SystemContext } from "v2/System"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import { DateTime } from "luxon"
-import { Component, useContext } from "react"
+import { useContext } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
+import * as React from "react"
+import { Flex, Text } from "@artsy/palette"
+import { useTimer } from "v2/Utils/Hooks/useTimer"
 
-export interface Props {
+export interface LotTimerProps {
   saleArtwork: LotTimer_saleArtwork
 }
 
-export class LotTimer extends Component<Props> {
-  get endAt() {
-    const { saleArtwork } = this.props
-    const { endAt } = saleArtwork
+export const LotTimer: React.FC<LotTimerProps> = ({ saleArtwork }) => {
+  const { endAt } = saleArtwork
 
-    return endAt
-  }
+  const { sale } = saleArtwork
+  const { startAt } = sale
 
-  get startAt() {
-    const { saleArtwork } = this.props
-    const { sale } = saleArtwork
+  const { hasEnded, time, hasStarted } = useTimer(endAt, startAt)
 
-    return sale?.startAt
-  }
+  console.log("hasStarted", hasStarted)
+  const timerCopy = getTimerCopy(time)
 
-  render() {
-    return (
-      <>
-        Hi
-        <Timer
-          endAt={this.endAt!}
-          startAt={this.startAt!}
-          alignItems="center"
-        />
-      </>
-    )
-  }
+  const labelCopy = getTimerLabelCopy(endAt, startAt, hasStarted, hasEnded)
+
+  return (
+    <Flex alignItems="center" flexDirection="column">
+      <Text variant="md" color={"blue100"}>
+        {hasStarted && !hasEnded && (
+          <Text color={timerCopy.color}>{timerCopy.copy}</Text>
+        )}
+      </Text>
+
+      <Text variant="md" color={"black60"}>
+        {labelCopy}
+      </Text>
+    </Flex>
+  )
 }
 
 export const LotTimerFragmentContainer = createFragmentContainer(LotTimer, {
@@ -75,67 +77,6 @@ export const LotTimerQueryRenderer = ({
         )
       }}
     />
-  )
-}
-
-import * as React from "react"
-import {
-  Flex,
-  FlexProps,
-  Text,
-  TextProps,
-  TextVariant,
-  useThemeConfig,
-} from "@artsy/palette"
-import { useTimer } from "v2/Utils/Hooks/useTimer"
-import { useCurrentTime } from "v2/Utils/Hooks/useCurrentTime"
-
-const SEPARATOR = <>&nbsp;&nbsp;</>
-
-export const Timer: React.FC<
-  {
-    endAt: string
-    startAt: string
-    label?: string
-  } & FlexProps &
-    TextProps
-> = ({ endAt, startAt, label = "", variant = "md", ...rest }) => {
-  const { hasEnded, time, hasStarted } = useTimer(endAt)
-
-  const tokens = useThemeConfig({
-    v2: {
-      variant: "mediumText" as TextVariant,
-      firstLineColor: "black100",
-      secondLineColor: "black100",
-    },
-    v3: {
-      variant,
-      firstLineColor: "blue100",
-      secondLineColor: "black60",
-    },
-  })
-
-  const timerCopy = getTimerCopy(time)
-
-  const labelCopy = getTimerLabelCopy(endAt, startAt, hasStarted, hasEnded)
-
-  return (
-    <Flex flexDirection="column" {...rest}>
-      <Text variant={tokens.variant} color={tokens.firstLineColor}>
-        {label && (
-          <Text variant={tokens.variant} color="black100">
-            {label}
-          </Text>
-        )}
-        {hasStarted && !hasEnded && (
-          <Text color={timerCopy.color}>{timerCopy.copy}</Text>
-        )}
-      </Text>
-
-      <Text variant={tokens.variant} color={tokens.secondLineColor}>
-        {labelCopy}
-      </Text>
-    </Flex>
   )
 }
 
