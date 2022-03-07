@@ -38,7 +38,7 @@ describe("ColorFilter", () => {
 
     wrapper.find("Checkbox").first().simulate("click")
 
-    expect(context.filters.colors).toEqual(["red"])
+    expect(context.filters.colors).toEqual(["black-and-white"])
   })
 
   it("selects multiple colors when clicked", () => {
@@ -49,7 +49,7 @@ describe("ColorFilter", () => {
     wrapper.find("Checkbox").first().simulate("click")
     wrapper.find("Checkbox").last().simulate("click")
 
-    expect(context.filters.colors).toEqual(["red", "purple"])
+    expect(context.filters.colors).toEqual(["black-and-white", "violet"])
   })
 
   it("unselects a selected a color when clicked", () => {
@@ -60,11 +60,11 @@ describe("ColorFilter", () => {
     wrapper.find("Checkbox").first().simulate("click")
     wrapper.find("Checkbox").last().simulate("click")
 
-    expect(context.filters.colors).toEqual(["red", "purple"])
+    expect(context.filters.colors).toEqual(["black-and-white", "violet"])
 
     wrapper.find("Checkbox").first().simulate("click")
 
-    expect(context.filters.colors).toEqual(["purple"])
+    expect(context.filters.colors).toEqual(["violet"])
   })
 
   describe("the `expanded` prop", () => {
