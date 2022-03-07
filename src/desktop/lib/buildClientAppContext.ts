@@ -2,12 +2,13 @@ import { getContextPageFromClient } from "lib/getContextPage"
 import { data as sd } from "sharify"
 import { AnalyticsContextProps } from "v2/System/Analytics/AnalyticsContext"
 import { Mediator, mediator } from "lib/mediator"
+import { FeatureFlags } from "v2/System/useFeatureFlag"
 
 export interface ClientContext {
   user: User
   mediator: Mediator
   analytics: AnalyticsContextProps
-  featureFlags: Record<string, boolean>
+  featureFlags: FeatureFlags
 }
 
 export const buildClientAppContext = (
