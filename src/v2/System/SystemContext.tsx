@@ -6,6 +6,7 @@ import { Environment } from "relay-runtime"
 import { createRelaySSREnvironment } from "v2/System/Relay/createRelaySSREnvironment"
 import { getUser } from "v2/Utils/user"
 import { Mediator, mediator } from "lib/mediator"
+import { FeatureFlags } from "./useFeatureFlag"
 
 export * from "./useSystemContext"
 
@@ -79,7 +80,7 @@ export interface SystemContextProps extends SystemContextState {
   isLoggedIn?: boolean
 
   /** FeatureFlags */
-  featureFlags?: Record<string, boolean>
+  featureFlags?: FeatureFlags
 }
 
 export const SystemContext = createContext<SystemContextProps>({})
