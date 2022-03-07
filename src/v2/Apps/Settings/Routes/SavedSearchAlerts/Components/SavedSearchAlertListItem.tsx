@@ -54,8 +54,7 @@ export const SavedSearchAlertListItem: React.FC<SavedSearchAlertListItemProps> =
     <Box
       key={item.internalID}
       px={[2, 4]}
-      pb={30}
-      pt={4}
+      py={4}
       opacity={variant === "inactive" ? 0.24 : 1}
       bg={variant === "active" ? "black5" : "transparent"}
     >
