@@ -28,7 +28,7 @@ export const HomeTroveArtworksRail: React.FC<HomeTroveArtworksRailProps> = ({
   return (
     <Rail
       title="Trove"
-      subTitle="Trove Artwork"
+      subTitle="A weekly curated selection of the best works on Artsy by emerging and sought after Artists."
       getItems={() => {
         return artworks.map(artwork => (
           <ShelfArtworkFragmentContainer
@@ -98,7 +98,7 @@ const PLACEHOLDER = (
   <Skeleton>
     <Rail
       title="Trove"
-      subTitle="Trove Artwork"
+      subTitle="A weekly curated selection of the best works on Artsy by emerging and sought after Artists."
       getItems={() => {
         return [...new Array(8)].map((_, i) => {
           return (
