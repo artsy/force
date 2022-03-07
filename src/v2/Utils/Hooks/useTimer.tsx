@@ -28,14 +28,12 @@ export const useTimer = (endDate: string, startAt: string = ""): Timer => {
   const duration = Duration.fromISO(
     DateTime.fromISO(endDate).diff(DateTime.fromISO(currentTime)).toString()
   )
-
   const hasEnded = Math.floor(duration.seconds) <= 0
 
   const timeBeforeStart = Duration.fromISO(
     DateTime.fromISO(startAt).diff(DateTime.fromISO(currentTime)).toString()
   )
-
-  const hasStarted = Math.floor(timeBeforeStart.seconds) >= 0
+  const hasStarted = Math.floor(timeBeforeStart.seconds) <= 0
 
   const days = extractTime(duration.as("days"))
   const hours = extractTime(duration.as("hours") % 24)
