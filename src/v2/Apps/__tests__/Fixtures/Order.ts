@@ -91,6 +91,20 @@ const OrderArtworkNodeWithoutShipping = {
   isEdition: false,
 }
 
+const OrderArtworkVersionNode = {
+  artworkVersion: {
+    id: "02393",
+    artistNames: "Lisa Breslow",
+    title: "Gramercy Park South",
+    image: {
+      resized_ArtworkSummaryItem: {
+        url:
+          "https://d7hftxdivxxvm.cloudfront.net?resize_to=fit&width=185&height=184&quality=80&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FtOfWds4sIX_9WpRf3RqaQQ%2Flarge.jpg",
+      },
+    },
+  },
+}
+
 const OrderArtworkNode = {
   artwork: {
     ...OrderArtworkNodeWithoutShipping,
@@ -254,6 +268,7 @@ export const UntouchedOrder = {
           selectedShippingQuote: null,
           shippingQuoteOptions: null,
           ...OrderArtworkNode,
+          ...OrderArtworkVersionNode,
           ...OrderArtworkOrEditionSetkNode_Artwork,
           ...OrderArtworkFulfillmentsNode,
           ...EmptyShipmentNode,
@@ -305,6 +320,7 @@ export const UntouchedBuyOrderWithArtaEnabled = {
           selectedShippingQuote: null,
           shippingQuoteOptions: null,
           ...ArtaEnabledOrderArtworkNode,
+          ...OrderArtworkVersionNode,
           ...OrderArtworkOrEditionSetkNode_Artwork,
           ...EmptyFulfillmentsNode,
           ...ArtaShipmentNode,
@@ -388,6 +404,7 @@ export const UntouchedBuyOrderWithShippingQuotes = {
             ],
           },
           ...ArtaEnabledOrderArtworkNode,
+          ...OrderArtworkVersionNode,
           ...OrderArtworkOrEditionSetkNode_Artwork,
           ...EmptyFulfillmentsNode,
           ...ArtaShipmentNode,
@@ -549,6 +566,7 @@ export const UntouchedOfferOrder = {
           shippingQuoteOptions: null,
           __isCommerceOrder: "CommerceOfferOrder",
           ...OrderArtworkNode,
+          ...OrderArtworkVersionNode,
           ...OfferArtworkOrEditionSetNode_Artwork,
           ...OrderArtworkFulfillmentsNode,
           ...ArtaShipmentNode,
@@ -587,6 +605,7 @@ export const UntouchedInquiryOfferOrder = {
           shippingQuoteOptions: null,
           ...InquiryOrderArtworkNode,
           ...OfferArtworkOrEditionSetNode_Artwork,
+          ...OrderArtworkVersionNode,
           ...OrderArtworkFulfillmentsNode,
           ...ArtaShipmentNode,
         },
@@ -608,6 +627,7 @@ export const UntouchedOfferOrderInPounds = {
           selectedShippingQuote: null,
           shippingQuoteOptions: null,
           ...OrderArtworkNode,
+          ...OrderArtworkVersionNode,
           ...OfferArtworkOrEditionSetNode_ArtworkInPounds,
           ...OrderArtworkFulfillmentsNode,
           ...ArtaShipmentNode,
@@ -628,6 +648,8 @@ export const UntouchedOfferOrderWithRange = {
           selectedShippingQuote: null,
           shippingQuoteOptions: null,
           ...OrderArtworkNode,
+          ...OrderArtworkVersionNode,
+
           ...OfferArtworkOrEditionSetNode_Range,
           ...OrderArtworkFulfillmentsNode,
           ...ArtaShipmentNode,
@@ -753,6 +775,7 @@ export const ArtaShippedWithTrackingIdNoTrackingUrl = {
           selectedShippingQuote: null,
           shippingQuoteOptions: null,
           ...OrderArtworkNode,
+          ...OrderArtworkVersionNode,
           ...OfferArtworkOrEditionSetNode_Artwork,
           ...EmptyFulfillmentsNode,
           ...ArtaShipmentNodeNoUrl,
@@ -775,6 +798,7 @@ export const ArtaShippedWithNoTrackingIdNoTrackingUrl = {
           selectedShippingQuote: null,
           shippingQuoteOptions: null,
           ...OrderArtworkNode,
+          ...OrderArtworkVersionNode,
           ...OfferArtworkOrEditionSetNode_Artwork,
           ...EmptyFulfillmentsNode,
           ...ArtaShipmentNodeWithNoTrackingInfo,
@@ -930,6 +954,7 @@ export const UntouchedOfferOrderPriceHidden = {
       {
         node: {
           ...OrderArtworkNodePriceHidden,
+          ...OrderArtworkVersionNode,
           editionSetId: null,
           id: "line-item-node-id",
           selectedShippingQuote: null,
