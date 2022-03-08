@@ -19,6 +19,7 @@ import { useNavBarHeight } from "v2/Components/NavBar/useNavBarHeight"
 import { useProductionEnvironmentWarning } from "v2/Utils/Hooks/useProductionEnvironmentWarning"
 import { useAuthValidation } from "v2/Utils/Hooks/useAuthValidation"
 import { Z } from "./constants"
+import { conversionPixelScript } from "../../System/Analytics/MNTN"
 
 const logger = createLogger("Apps/Components/AppShell")
 
@@ -56,6 +57,25 @@ export const AppShell: React.FC<AppShellProps> = props => {
   useEffect(() => {
     document.body.setAttribute("data-test", "AppReady")
   }, [])
+
+  useEffect(() => {
+    let script: HTMLScriptElement
+    if (match?.location.pathname === "order/success") {
+      script = document.createElement("script")
+
+      script.id = "mntn_conversion"
+      script.src = conversionPixelScript
+      script.async = true
+      script.type = "javascript/text"
+
+      document.body.appendChild(script)
+    }
+    return () => {
+      if (document.getElementById("mntn_conversion")) {
+        document.body.removeChild(script)
+      }
+    }
+  }, [match])
 
   /**
    * Wait for route to finish rendering before (possibly) switching out the theme.
