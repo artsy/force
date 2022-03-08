@@ -45,7 +45,11 @@ export const ArticleHTML: FC<ArticleHTMLProps> = ({ children, ...rest }) => {
   }
 
   if (isMounted) {
-    return <Container>{reactHtmlParser(children, { transform })}</Container>
+    return (
+      <Container {...rest}>
+        {reactHtmlParser(children, { transform })}
+      </Container>
+    )
   }
 
   return <Container dangerouslySetInnerHTML={{ __html: children }} {...rest} />
