@@ -8,6 +8,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import * as React from "react"
 import { Flex, Text } from "@artsy/palette"
 import { useTimer } from "v2/Utils/Hooks/useTimer"
+import { get } from "v2/Utils/get"
 
 export interface LotTimerProps {
   saleArtwork: LotTimer_saleArtwork
@@ -16,11 +17,13 @@ export interface LotTimerProps {
 export const LotTimer: React.FC<LotTimerProps> = ({ saleArtwork }) => {
   const { endAt } = saleArtwork
 
-  const {
-    sale: { startAt },
-  } = saleArtwork
+  const startAt = get(saleArtwork, sa => sa.sale?.startAt)
 
-  const { hasEnded, time, hasStarted } = useTimer(endAt, startAt)
+  const { hasEnded, time, hasStarted } = useTimer(endAt || "", startAt || "")
+
+  if (!endAt) {
+    return null
+  }
 
   const timerCopy = getTimerCopy(time, hasStarted)
 
@@ -131,6 +134,7 @@ export const getTimerLabelCopy = (endDate, startAt, hasStarted, hasEnded) => {
   return `Closes ${endAtDisplay}`
 }
 
+// This should go in metaphysics (formattedStartEndTime)
 const getDateTimeDisplay = (date): string => {
   const dateTime = DateTime.fromISO(date)
   const amPm = dateTime.hour >= 12 ? "pm" : "am"
