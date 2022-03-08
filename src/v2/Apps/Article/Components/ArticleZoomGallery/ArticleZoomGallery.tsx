@@ -16,7 +16,7 @@ import { ArticleZoomGallery_article } from "v2/__generated__/ArticleZoomGallery_
 import { ArticleZoomGalleryQuery } from "v2/__generated__/ArticleZoomGalleryQuery.graphql"
 import { useCursor } from "use-cursor"
 import { compact } from "lodash"
-import styled from "styled-components"
+import styled, { css } from "styled-components"
 import { themeGet } from "@styled-system/theme-get"
 import { ArticleZoomGalleryFigureFragmentContainer } from "./ArticleZoomGalleryFigure"
 import { ArticleZoomGalleryCaptionFragmentContainer } from "./ArticleZoomGalleryCaption"
@@ -73,20 +73,20 @@ const ArticleZoomGallery: FC<ArticleZoomGalleryProps> = ({
   return (
     <ModalBase onClose={onClose}>
       <Box bg="white100" width="100vw" height="100vh" ref={containerRef as any}>
+        {figures.length > 1 && (
+          <NextPrevious onClick={handleNext} right={0}>
+            <ArrowRightIcon fill="currentColor" width={30} height={30} />
+          </NextPrevious>
+        )}
+
         <Close onClick={onClose}>
           <CloseIcon width={30} height={30} fill="currentColor" />
         </Close>
 
         {figures.length > 1 && (
-          <>
-            <NextPrevious onClick={handlePrev} left={0}>
-              <ArrowLeftIcon fill="currentColor" width={30} height={30} />
-            </NextPrevious>
-
-            <NextPrevious onClick={handleNext} right={0}>
-              <ArrowRightIcon fill="currentColor" width={30} height={30} />
-            </NextPrevious>
-          </>
+          <NextPrevious onClick={handlePrev} left={0}>
+            <ArrowLeftIcon fill="currentColor" width={30} height={30} />
+          </NextPrevious>
         )}
 
         <Flex flexDirection="column" height="100%">
@@ -126,33 +126,33 @@ const ArticleZoomGallery: FC<ArticleZoomGalleryProps> = ({
   )
 }
 
-const Close = styled(Clickable).attrs({ p: 2 })`
+const buttonMixin = css`
   position: absolute;
+  z-index: 1;
+  transition: color 250ms;
+  mix-blend-mode: difference;
+  color: ${themeGet("colors.black60")};
+
+  &:hover,
+  &:focus,
+  &.focus-visible {
+    outline: none;
+    color: ${themeGet("colors.white100")};
+  }
+`
+
+const Close = styled(Clickable).attrs({ p: 2 })`
+  ${buttonMixin}
   top: 0;
   right: 0;
-  color: ${themeGet("colors.black60")};
-  transition: color 250ms;
-  z-index: 1;
-
-  &:hover {
-    color: ${themeGet("colors.black100")};
-  }
 `
 
 const NextPrevious = styled(Clickable).attrs({
   p: 2,
 })`
-  position: absolute;
+  ${buttonMixin}
   top: 50%;
   transform: translateY(-50%);
-  color: ${themeGet("colors.white100")};
-  transition: color 250ms;
-  z-index: 1;
-  mix-blend-mode: difference;
-
-  &:hover {
-    color: ${themeGet("colors.black60")};
-  }
 `
 
 export const ArticleZoomGalleryFragmentContainer = createFragmentContainer(
