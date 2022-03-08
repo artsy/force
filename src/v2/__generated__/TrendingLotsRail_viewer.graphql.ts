@@ -43,6 +43,11 @@ const node: ReaderFragment = {
         },
         {
           "kind": "Literal",
+          "name": "estimateRange",
+          "value": "5_000_00-*"
+        },
+        {
+          "kind": "Literal",
           "name": "first",
           "value": 10
         },
@@ -123,11 +128,11 @@ const node: ReaderFragment = {
           "storageKey": null
         }
       ],
-      "storageKey": "saleArtworksConnection(biddableSale:true,first:10,sort:\"-bidder_positions_count\")"
+      "storageKey": "saleArtworksConnection(biddableSale:true,estimateRange:\"5_000_00-*\",first:10,sort:\"-bidder_positions_count\")"
     }
   ],
   "type": "Viewer",
   "abstractKey": null
 };
-(node as any).hash = '2005b66ba10525ca3634d80108f148ef';
+(node as any).hash = 'aeb71f09c15b32fed7f80c7cc8362be3';
 export default node;
