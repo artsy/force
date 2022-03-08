@@ -13,3 +13,5 @@ export const ZendeskWrapper: React.FC<{ zdKey: string }> = ({ zdKey }) => {
 
   return <Zendesk defer zendeskKey={zdKey} />
 }
+
+ZendeskWrapper.displayName = "ZendeskWrapper"

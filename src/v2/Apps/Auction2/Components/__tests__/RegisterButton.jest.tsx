@@ -1,5 +1,4 @@
-import { screen } from "@testing-library/react"
-import { setupTestWrapperTL } from "v2/DevTools/setupTestWrapper"
+import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
 import { RegisterButtonFragmentContainer } from "../RegisterButton"
 import { RegisterButton_Test_Query } from "v2/__generated__/RegisterButton_Test_Query.graphql"
 import { graphql } from "react-relay"
@@ -8,22 +7,21 @@ import { useTracking } from "v2/System/Analytics/useTracking"
 jest.unmock("react-relay")
 jest.mock("v2/System/Analytics/useTracking")
 
-const { renderWithRelay } = setupTestWrapperTL<RegisterButton_Test_Query>({
-  Component: RegisterButtonFragmentContainer,
-  query: graphql`
-    query RegisterButton_Test_Query {
-      sale(id: "foo") {
-        ...RegisterButton_sale
+describe("RegisterButton", () => {
+  const { getWrapper } = setupTestWrapper<RegisterButton_Test_Query>({
+    Component: RegisterButtonFragmentContainer,
+    query: graphql`
+      query RegisterButton_Test_Query {
+        sale(id: "foo") {
+          ...RegisterButton_sale
+        }
+        me {
+          ...RegisterButton_me
+        }
       }
-      me {
-        ...RegisterButton_me
-      }
-    }
-  `,
-})
+    `,
+  })
 
-// FIXME: Reenable
-describe.skip("RegisterButton", () => {
   const mockUseTracking = useTracking as jest.Mock
 
   beforeEach(() => {
@@ -33,54 +31,58 @@ describe.skip("RegisterButton", () => {
   })
 
   it("returns null if ecommerce sale", () => {
-    renderWithRelay({
+    const wrapper = getWrapper({
       Sale: () => ({
         isAuction: false,
       }),
     })
 
-    expect(screen.queryByTestId("RegisterButton")).not.toBeInTheDocument()
+    expect(wrapper.html()).toBeFalsy()
   })
 
   it("returns null if sale is closed", () => {
-    renderWithRelay({
+    const wrapper = getWrapper({
       Sale: () => ({
         isClosed: true,
       }),
     })
 
-    expect(screen.queryByTestId("RegisterButton")).not.toBeInTheDocument()
+    expect(wrapper.html()).toBeFalsy()
   })
 
   describe("live open", () => {
     it("renders correctly", () => {
-      renderWithRelay({
+      const wrapper = getWrapper({
         Sale: () => ({
           isLiveOpen: true,
         }),
       })
 
-      expect(screen.queryByText("Enter Live Auction")).toBeInTheDocument()
+      expect(wrapper.text()).toContain("Enter Live Auction")
     })
   })
 
   describe("qualified for bidding", () => {
     it("renders correctly", () => {
-      renderWithRelay({
+      const wrapper = getWrapper({
         Sale: () => ({
+          isPreview: false,
           bidder: {
             qualifiedForBidding: true,
+          },
+          registrationStatus: {
+            internalID: "foo",
           },
         }),
       })
 
-      expect(screen.queryByText("Approved to Bid")).toBeInTheDocument()
+      expect(wrapper.text()).toContain("Approved to Bid")
     })
   })
 
   describe("should prompt ID verification", () => {
     it("renders correctly", () => {
-      renderWithRelay({
+      const wrapper = getWrapper({
         Sale: () => ({
           requireIdentityVerification: true,
           bidder: {
@@ -95,19 +97,15 @@ describe.skip("RegisterButton", () => {
         }),
       })
 
-      expect(screen.queryByText("Verify Identity")).toBeInTheDocument()
-      expect(
-        screen.queryByText("Identity verification required to bid.")
-      ).toBeInTheDocument()
-      expect((screen.queryByText("FAQ") as HTMLLinkElement).href).toContain(
-        "/identity-verification-faq"
-      )
+      expect(wrapper.text()).toContain("Verify Identity")
+      expect(wrapper.text()).toContain("Identity verification required to bid.")
+      expect(wrapper.html()).toContain("/identity-verification-faq")
     })
   })
 
   describe("registration pending", () => {
     it("renders correctly without identity verification", () => {
-      renderWithRelay({
+      const wrapper = getWrapper({
         Sale: () => ({
           requireIdentityVerification: true,
           bidder: {
@@ -122,14 +120,12 @@ describe.skip("RegisterButton", () => {
         }),
       })
 
-      expect(screen.queryByText("Registration Pending")).toBeInTheDocument()
-      expect(
-        screen.queryByText("Identity verification required to bid.")
-      ).toBeInTheDocument()
+      expect(wrapper.text()).toContain("Registration Pending")
+      expect(wrapper.text()).toContain("Identity verification required to bid.")
     })
 
     it("renders correctly with identity verification", () => {
-      renderWithRelay({
+      const wrapper = getWrapper({
         Sale: () => ({
           requireIdentityVerification: false,
           bidder: {
@@ -138,28 +134,26 @@ describe.skip("RegisterButton", () => {
         }),
       })
 
-      expect(screen.queryByText("Registration Pending")).toBeInTheDocument()
-      expect(
-        screen.queryByText("Reviewing submitted information")
-      ).toBeInTheDocument()
+      expect(wrapper.text()).toContain("Registration Pending")
+      expect(wrapper.text()).toContain("Reviewing submitted information")
     })
   })
 
   describe("registration closed", () => {
     it("renders correctly", () => {
-      renderWithRelay({
+      const wrapper = getWrapper({
         Sale: () => ({
           isRegistrationClosed: true,
         }),
       })
 
-      expect(screen.queryByText("Registration Closed")).toBeInTheDocument()
+      expect(wrapper.text()).toContain("Registration Closed")
     })
   })
 
   describe("registration open", () => {
     it("renders correctly with identity verification", () => {
-      renderWithRelay({
+      const wrapper = getWrapper({
         Sale: () => ({
           isClosed: false,
           isLiveOpen: false,
@@ -171,14 +165,12 @@ describe.skip("RegisterButton", () => {
         }),
       })
 
-      expect(screen.queryByText("Register to Bid")).toBeInTheDocument()
-      expect(
-        screen.queryByText("Identity verification required to bid.")
-      ).toBeInTheDocument()
+      expect(wrapper.text()).toContain("Register to Bid")
+      expect(wrapper.text()).toContain("Identity verification required to bid.")
     })
 
     it("renders correctly without identity verification", () => {
-      renderWithRelay({
+      const wrapper = getWrapper({
         Sale: () => ({
           isClosed: false,
           isLiveOpen: false,
@@ -187,10 +179,8 @@ describe.skip("RegisterButton", () => {
         }),
       })
 
-      expect(screen.queryByText("Register to Bid")).toBeInTheDocument()
-      expect(
-        screen.queryByText("Registration required to bid")
-      ).toBeInTheDocument()
+      expect(wrapper.text()).toContain("Register to Bid")
+      expect(wrapper.text()).toContain("Registration required to bid")
     })
   })
 })

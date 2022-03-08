@@ -1,6 +1,6 @@
 import { errorMessageForCard } from "../errorMessages"
 
-describe("#errorMessageForCard", () => {
+describe("errorMessageForCard", () => {
   it("appends a message for a declined card", () => {
     expect(errorMessageForCard("Your card was declined.")).toEqual(
       "Your card was declined. Please contact your bank or use a different card."
