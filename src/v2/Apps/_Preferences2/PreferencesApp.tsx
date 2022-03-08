@@ -16,6 +16,7 @@ import {
   SubGroupStatus,
 } from "v2/__generated__/PreferencesApp_viewer.graphql"
 import { useEditNotificationPreferences } from "./useEditNotificationPreferences"
+import { useRouter } from "v2/System/Router/useRouter"
 
 const NOTIFICATION_FIELDS = {
   recommendedByArtsy: false,
@@ -38,6 +39,8 @@ interface FormValuesForNotificationPreferences {
 }
 
 export const PreferencesApp: FC<PreferencesAppProps> = ({ viewer }) => {
+  const { match } = useRouter()
+  const authenticationToken = match?.location?.query?.authentication_token
   const { sendToast } = useToasts()
   const { submitMutation } = useEditNotificationPreferences()
   let initialValues = getInitialValues(viewer) // Shape the response from Metaphysics for Formik
@@ -68,7 +71,7 @@ export const PreferencesApp: FC<PreferencesAppProps> = ({ viewer }) => {
             )
 
             await submitMutation({
-              variables: { input: { subscriptionGroups } },
+              variables: { input: { authenticationToken, subscriptionGroups } },
             })
 
             actions.resetForm({
@@ -274,8 +277,9 @@ export const PreferencesAppFragmentContainer = createFragmentContainer(
   PreferencesApp,
   {
     viewer: graphql`
-      fragment PreferencesApp_viewer on Viewer {
-        notificationPreferences {
+      fragment PreferencesApp_viewer on Viewer
+        @argumentDefinitions(authenticationToken: { type: "String" }) {
+        notificationPreferences(authenticationToken: $authenticationToken) {
           id
           name
           channel

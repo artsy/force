@@ -23,14 +23,26 @@ export type PreferencesApp_viewer$key = {
 
 
 const node: ReaderFragment = {
-  "argumentDefinitions": [],
+  "argumentDefinitions": [
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "authenticationToken"
+    }
+  ],
   "kind": "Fragment",
   "metadata": null,
   "name": "PreferencesApp_viewer",
   "selections": [
     {
       "alias": null,
-      "args": null,
+      "args": [
+        {
+          "kind": "Variable",
+          "name": "authenticationToken",
+          "variableName": "authenticationToken"
+        }
+      ],
       "concreteType": "NotificationPreference",
       "kind": "LinkedField",
       "name": "notificationPreferences",
@@ -71,5 +83,5 @@ const node: ReaderFragment = {
   "type": "Viewer",
   "abstractKey": null
 };
-(node as any).hash = '01bda47ed61d24ee44a4fc13d32eba93';
+(node as any).hash = '407ddcff82ae4483ee244e3633b65cc9';
 export default node;
