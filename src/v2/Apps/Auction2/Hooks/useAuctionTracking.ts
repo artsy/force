@@ -1,6 +1,7 @@
 import { useTracking } from "react-tracking"
-import { AnalyticsSchema } from "v2/System"
+import { AnalyticsSchema, useAnalyticsContext } from "v2/System"
 import { formatError } from "v2/Apps/Auction2/Components/Form/Utils"
+import { AddToCalendar, addToCalendar, ContextModule } from "@artsy/cohesion"
 
 /**
  * Tracking TODO:
@@ -10,8 +11,24 @@ import { formatError } from "v2/Apps/Auction2/Components/Form/Utils"
 
 export const useAuctionTracking = () => {
   const { trackEvent } = useTracking()
+  const {
+    contextPageOwnerId,
+    contextPageOwnerSlug,
+    contextPageOwnerType,
+  } = useAnalyticsContext()
 
   const tracking = {
+    addToCalendar: (subject: AddToCalendar["subject"]) => {
+      trackEvent(
+        addToCalendar({
+          context_module: ContextModule.auctionHome,
+          context_owner_id: contextPageOwnerId,
+          context_owner_slug: contextPageOwnerSlug,
+          context_owner_type: contextPageOwnerType!,
+          subject,
+        })
+      )
+    },
     bidPageView: ({ artwork, me }) => {
       trackEvent({
         context_page: AnalyticsSchema.PageName.AuctionConfirmBidPage,

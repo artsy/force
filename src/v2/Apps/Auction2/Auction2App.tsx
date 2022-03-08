@@ -11,11 +11,8 @@ import { AuctionArtworkFilterRefetchContainer } from "./Components/AuctionArtwor
 import { AuctionDetailsFragmentContainer } from "./Components/AuctionDetails/AuctionDetails"
 import { AuctionBuyNowRailFragmentContainer } from "./Components/AuctionBuyNowRail"
 import { AuctionWorksByFollowedArtistsRailFragmentContainer } from "./Components/AuctionWorksByFollowedArtistsRail"
-
-/**
- * TODO:
- * - Re-add ZenDesk
- */
+import { ZendeskWrapper } from "v2/Components/ZendeskWrapper"
+import { getENV } from "v2/Utils/getENV"
 
 export interface Auction2AppProps {
   me: Auction2App_me
@@ -42,49 +39,53 @@ export const Auction2App: React.FC<Auction2AppProps> = ({
   }
 
   return (
-    <AnalyticsContext.Provider
-      value={{
-        contextPageOwnerId: sale.internalID,
-        contextPageOwnerSlug,
-        contextPageOwnerType,
-      }}
-    >
-      <Auction2MetaFragmentContainer sale={sale} />
+    <>
+      <AnalyticsContext.Provider
+        value={{
+          contextPageOwnerId: sale.internalID,
+          contextPageOwnerSlug,
+          contextPageOwnerType,
+        }}
+      >
+        <Auction2MetaFragmentContainer sale={sale} />
 
-      <Join separator={<Spacer my={4} />}>
-        {sale.coverImage?.cropped && (
-          <FullBleedHeader src={sale.coverImage.cropped.src} />
-        )}
+        <Join separator={<Spacer my={4} />}>
+          {sale.coverImage?.cropped && (
+            <FullBleedHeader src={sale.coverImage.cropped.src} />
+          )}
 
-        <AuctionDetailsFragmentContainer sale={sale} me={me} />
+          <AuctionDetailsFragmentContainer sale={sale} me={me} />
 
-        {tabBar.isVisible && (
-          <Tabs mb={4}>
-            {tabBar.showActiveBids && (
-              <Tab name="Your Active Bids">
-                <AuctionActiveBidsRefetchContainer me={me} />
-              </Tab>
-            )}
-            {tabBar.showFollowedArtistsTab && (
-              <Tab name="Works By Artists You Follow">
-                <AuctionWorksByFollowedArtistsRailFragmentContainer
-                  viewer={viewer}
-                />
-              </Tab>
-            )}
-            {tabBar.showBuyNowTab && (
-              <Tab name="Buy Now">
-                <AuctionBuyNowRailFragmentContainer sale={sale} />
-              </Tab>
-            )}
-          </Tabs>
-        )}
+          {tabBar.isVisible && (
+            <Tabs mb={4}>
+              {tabBar.showActiveBids && (
+                <Tab name="Your Active Bids">
+                  <AuctionActiveBidsRefetchContainer me={me} />
+                </Tab>
+              )}
+              {tabBar.showFollowedArtistsTab && (
+                <Tab name="Works By Artists You Follow">
+                  <AuctionWorksByFollowedArtistsRailFragmentContainer
+                    viewer={viewer}
+                  />
+                </Tab>
+              )}
+              {tabBar.showBuyNowTab && (
+                <Tab name="Buy Now">
+                  <AuctionBuyNowRailFragmentContainer sale={sale} />
+                </Tab>
+              )}
+            </Tabs>
+          )}
 
-        <AuctionArtworkFilterRefetchContainer viewer={viewer} />
+          <AuctionArtworkFilterRefetchContainer viewer={viewer} />
 
-        <Box>{children}</Box>
-      </Join>
-    </AnalyticsContext.Provider>
+          <Box>{children}</Box>
+        </Join>
+      </AnalyticsContext.Provider>
+
+      <ZendeskWrapper zdKey={getENV("AUCTION_ZENDESK_KEY")} />
+    </>
   )
 }
 
