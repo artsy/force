@@ -20,12 +20,7 @@ export type useEditNotificationPreferencesMutationVariables = {
 };
 export type useEditNotificationPreferencesMutationResponse = {
     readonly updateNotificationPreferences: {
-        readonly notificationPreferences: ReadonlyArray<{
-            readonly id: string;
-            readonly name: string;
-            readonly channel: string;
-            readonly status: SubGroupStatus;
-        }>;
+        readonly clientMutationId: string | null;
     } | null;
 };
 export type useEditNotificationPreferencesMutation = {
@@ -40,12 +35,7 @@ mutation useEditNotificationPreferencesMutation(
   $input: updateNotificationPreferencesMutationInput!
 ) {
   updateNotificationPreferences(input: $input) {
-    notificationPreferences {
-      id
-      name
-      channel
-      status
-    }
+    clientMutationId
   }
 }
 */
@@ -76,40 +66,8 @@ v1 = [
       {
         "alias": null,
         "args": null,
-        "concreteType": "NotificationPreference",
-        "kind": "LinkedField",
-        "name": "notificationPreferences",
-        "plural": true,
-        "selections": [
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "id",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "name",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "channel",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "status",
-            "storageKey": null
-          }
-        ],
+        "kind": "ScalarField",
+        "name": "clientMutationId",
         "storageKey": null
       }
     ],
@@ -134,14 +92,14 @@ return {
     "selections": (v1/*: any*/)
   },
   "params": {
-    "cacheID": "05796965738e62feb0ef874b03da06fa",
+    "cacheID": "8e045f8ecea20e507b87e6c0e9456a6a",
     "id": null,
     "metadata": {},
     "name": "useEditNotificationPreferencesMutation",
     "operationKind": "mutation",
-    "text": "mutation useEditNotificationPreferencesMutation(\n  $input: updateNotificationPreferencesMutationInput!\n) {\n  updateNotificationPreferences(input: $input) {\n    notificationPreferences {\n      id\n      name\n      channel\n      status\n    }\n  }\n}\n"
+    "text": "mutation useEditNotificationPreferencesMutation(\n  $input: updateNotificationPreferencesMutationInput!\n) {\n  updateNotificationPreferences(input: $input) {\n    clientMutationId\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '8c71aa73bdbe0de2fb1536c56e536690';
+(node as any).hash = '4796a39f28e7655ed5eeaabfa43b012c';
 export default node;
