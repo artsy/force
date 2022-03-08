@@ -40,7 +40,7 @@ export function useFeatureVariant(featureName: string): Variant | null {
 
   // detremine if we should track the experimentView
   if (typeof window !== "undefined") {
-    let trackFeatureView = maybeTrackFeatureView(featureName, variant.name)
+    const trackFeatureView = shouldTrack(featureName, variant.name)
 
     if (trackFeatureView) {
       trackEvent({
@@ -56,12 +56,9 @@ export function useFeatureVariant(featureName: string): Variant | null {
   return variant
 }
 
-function maybeTrackFeatureView(
-  featureName: string,
-  variantName: string
-): boolean {
+function shouldTrack(featureName: string, variantName: string): boolean {
   const experimentName = `${featureName}+${variantName}`
-  let viewedExperiments = getExperimentsViewed()
+  const viewedExperiments = getExperimentsViewed()
 
   if (viewedExperiments.includes(experimentName)) {
     return false
@@ -79,9 +76,6 @@ function getExperimentsViewed(): string[] {
   return experimentsViewed === null ? [] : JSON.parse(experimentsViewed)
 }
 
-function setExperimentsViewed(_viewedExperiments: string[]) {
-  window.localStorage.setItem(
-    "experimentsViewed",
-    JSON.stringify(_viewedExperiments)
-  )
+function setExperimentsViewed(experiments: string[]) {
+  window.localStorage.setItem("experimentsViewed", JSON.stringify(experiments))
 }
