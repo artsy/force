@@ -19,7 +19,6 @@ import { useNavBarHeight } from "v2/Components/NavBar/useNavBarHeight"
 import { useProductionEnvironmentWarning } from "v2/Utils/Hooks/useProductionEnvironmentWarning"
 import { useAuthValidation } from "v2/Utils/Hooks/useAuthValidation"
 import { Z } from "./constants"
-import { conversionPixelScript } from "../../System/Analytics/MNTN"
 
 const logger = createLogger("Apps/Components/AppShell")
 
@@ -64,7 +63,7 @@ export const AppShell: React.FC<AppShellProps> = props => {
       script = document.createElement("script")
 
       script.id = "mntn_conversion"
-      script.src = conversionPixelScript
+      script.src = "../../System/Analytics/MNTN"
       script.async = true
       script.type = "javascript/text"
 
