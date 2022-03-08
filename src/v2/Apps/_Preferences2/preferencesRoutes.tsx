@@ -16,10 +16,15 @@ export const preferencesRoutes: AppRouteConfig[] = [
     onClientSideRender: () => {
       PreferencesApp.preload()
     },
+    prepareVariables: (_params, props) => {
+      const authenticationToken = props.location?.query?.authentication_token
+      return { authenticationToken }
+    },
     query: graphql`
-      query preferencesRoutes_PreferencesQuery {
+      query preferencesRoutes_PreferencesQuery($authenticationToken: String) {
         viewer @principalField {
           ...PreferencesApp_viewer
+            @arguments(authenticationToken: $authenticationToken)
         }
       }
     `,

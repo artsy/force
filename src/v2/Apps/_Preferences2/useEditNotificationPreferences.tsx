@@ -9,12 +9,7 @@ export const useEditNotificationPreferences = () => {
         $input: updateNotificationPreferencesMutationInput!
       ) {
         updateNotificationPreferences(input: $input) {
-          notificationPreferences {
-            id
-            name
-            channel
-            status
-          }
+          clientMutationId
         }
       }
     `,
