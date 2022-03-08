@@ -203,6 +203,7 @@
     "places": "artsy/places",
     "popover": "2.4.1",
     "prop-types": "15.7.2",
+    "proportional-scale": "^4.0.0",
     "pug": "3.0.1",
     "qrcode.react": "1.0.0",
     "qs": "6.5.2",

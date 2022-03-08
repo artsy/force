@@ -97,16 +97,9 @@ const ArticleZoomGallery: FC<ArticleZoomGalleryProps> = ({
               </Text>
             )}
 
-          <Flex
-            position="relative"
-            alignItems="center"
-            justifyContent="center"
-            flex={1}
-            minHeight={0}
-            my={2}
-          >
+          <Box position="relative" flex={1} minHeight={0} p={2}>
             <ArticleZoomGalleryFigureFragmentContainer figure={figure} />
-          </Flex>
+          </Box>
 
           <Flex
             p={4}
