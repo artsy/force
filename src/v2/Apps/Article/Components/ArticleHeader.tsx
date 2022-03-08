@@ -73,7 +73,7 @@ const ArticleHeader: FC<ArticleHeaderProps> = ({ article }) => {
       const image = article.hero.image?.split
 
       return (
-        <FullBleed display="flex">
+        <FullBleed display="flex" flexDirection={["column-reverse", "row"]}>
           <Box flex={1} p={[2, 4]}>
             <Text variant="xs" textTransform="uppercase" mb={1}>
               {article.vertical}
@@ -94,7 +94,7 @@ const ArticleHeader: FC<ArticleHeaderProps> = ({ article }) => {
                 display="block"
                 width="100%"
                 height={[
-                  `max(calc(90vh - ${mobile}px), ${MIN_HEIGHT}px)`,
+                  `max(calc(50vh - ${mobile}px), ${MIN_HEIGHT}px)`,
                   `max(calc(90vh - ${desktop}px), ${MIN_HEIGHT}px)`,
                 ]}
                 style={{ objectFit: "cover" }}
@@ -114,7 +114,7 @@ const ArticleHeader: FC<ArticleHeaderProps> = ({ article }) => {
                 srcSet={image.srcSet}
                 width="100%"
                 height={[
-                  `max(calc(90vh - ${mobile}px), ${MIN_HEIGHT}px)`,
+                  `max(calc(50vh - ${mobile}px), ${MIN_HEIGHT}px)`,
                   `max(calc(90vh - ${desktop}px), ${MIN_HEIGHT}px)`,
                 ]}
                 style={{ objectFit: "cover" }}
