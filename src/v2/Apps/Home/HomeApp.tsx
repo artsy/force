@@ -53,6 +53,8 @@ export const HomeApp: React.FC<HomeAppProps> = ({
 
         <HomeWorksForYouTabBar />
 
+        <HomeTroveArtworksRailQueryRenderer />
+
         <HomeFeaturedMarketNewsQueryRenderer />
 
         <HomeAuctionLotsRailQueryRenderer />
@@ -64,8 +66,6 @@ export const HomeApp: React.FC<HomeAppProps> = ({
         <HomeFeaturedGalleriesRailQueryRenderer />
 
         <HomeTrendingArtistsRailQueryRenderer />
-
-        <HomeTroveArtworksRailQueryRenderer />
       </Join>
     </>
   )

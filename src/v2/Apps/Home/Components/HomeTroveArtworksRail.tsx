@@ -22,13 +22,15 @@ export const HomeTroveArtworksRail: React.FC<HomeTroveArtworksRailProps> = ({
   viewer,
 }) => {
   const artworks = extractNodes(viewer.saleArtworksConnection)
+
   if (artworks.length === 0) {
     return null
   }
+
   return (
     <Rail
       title="Trove"
-      subTitle="A weekly curated selection of the best works on Artsy by emerging and sought after Artists."
+      subTitle="A weekly curated selection of the best works on Artsy by emerging and sought after artists."
       getItems={() => {
         return artworks.map(artwork => (
           <ShelfArtworkFragmentContainer
@@ -98,7 +100,7 @@ const PLACEHOLDER = (
   <Skeleton>
     <Rail
       title="Trove"
-      subTitle="A weekly curated selection of the best works on Artsy by emerging and sought after Artists."
+      subTitle="A weekly curated selection of the best works on Artsy by emerging and sought after artists."
       getItems={() => {
         return [...new Array(8)].map((_, i) => {
           return (
