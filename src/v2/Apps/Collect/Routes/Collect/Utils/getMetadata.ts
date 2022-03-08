@@ -15,18 +15,21 @@ export type Medium =
 
 export type Color =
   | "black-and-white"
-  | "blue"
-  | "gray"
-  | "green"
+  | "darkblue"
+  | "darkgreen"
+  | "darkviolet"
+  | "gold"
+  | "lightblue"
+  | "lightgreen"
   | "orange"
   | "pink"
-  | "purple"
   | "red"
+  | "violet"
   | "yellow"
 
 interface Props {
-  medium: Medium | undefined
-  color: Color | undefined
+  medium: Medium
+  color: Color
 }
 
 export function getMetadata({ medium, color }: Props) {
@@ -105,14 +108,23 @@ export function getMetadata({ medium, color }: Props) {
       case "black-and-white":
         title = "Black and White Art"
         break
-      case "green":
-        title = "Green Art"
-        break
-      case "gray":
-        title = "Gray Art"
-        break
-      case "blue":
+      case "darkblue":
         title = "Blue Art"
+        break
+      case "darkgreen":
+        title = "Dark Green Art"
+        break
+      case "darkviolet":
+        title = "Dark Violet Art"
+        break
+      case "gold":
+        title = "Gold Art"
+        break
+      case "lightblue":
+        title = "Light Blue Art"
+        break
+      case "lightgreen":
+        title = "Green Art"
         break
       case "orange":
         title = "Orange Art"
@@ -123,8 +135,8 @@ export function getMetadata({ medium, color }: Props) {
       case "red":
         title = "Red Art"
         break
-      case "purple":
-        title = "Purple Art"
+      case "violet":
+        title = "Violet Art"
         break
       case "yellow":
         title = "Yellow Art"
