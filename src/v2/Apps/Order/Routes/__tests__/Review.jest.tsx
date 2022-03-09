@@ -245,21 +245,12 @@ describe("Review", () => {
       expect(page.offerSummary.text()).toMatch("Your noteThis is a note!")
     })
 
-    it("enables the button and routes to the conversation", async () => {
-      // TOFIX remove this test when the feature flag is retired
+    it("enables the button and routes to the artwork page", async () => {
       await page.clickSubmit()
       expect(mutations.mockFetch).toHaveBeenCalledTimes(1)
-      expect(routes.mockPushRoute).toBeCalledWith("/user/conversations/5665")
-    })
-
-    it("enables the button and routes to the artwork page", async () => {
-      // TOFIX add this test when the feature flag is retired
-      // await page.clickSubmit()
-      // expect(mutations.mockFetch).toHaveBeenCalledTimes(1)
-      // expect(routes.mockPushRoute).toBeCalledWith({
-      //   pathname: "/artwork/artworkId",
-      //   state: { offerOrderHasBeenSubmitted: true },
-      // })
+      expect(routes.mockPushRoute).toBeCalledWith(
+        "/artwork/artworkId?order-submitted=true"
+      )
     })
 
     it("shows an error modal when there is an error in submitOrderPayload", async () => {

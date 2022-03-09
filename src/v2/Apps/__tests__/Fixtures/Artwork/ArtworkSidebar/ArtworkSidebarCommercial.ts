@@ -264,12 +264,10 @@ export const ArtworkOfferableAndInquireablePriceHidden = {
 export const ArtworkOfferableFromInquiryPriceRange = {
   ...FullArtworkFixture,
   is_price_range: true,
-  isPriceHidden: false,
-  isOfferableFromInquiry: true,
+  is_offerable: true,
 }
 
 export const ArtworkOfferableFromInquiryPriceExact = {
   ...ContactForPriceWork,
-  isOfferableFromInquiry: true,
-  isPriceHidden: false,
+  is_offerable: true,
 }

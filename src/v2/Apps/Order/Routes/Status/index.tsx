@@ -23,7 +23,6 @@ import { ShippingSummaryItemFragmentContainer as ShippingSummaryItem } from "../
 import { SystemContextConsumer } from "v2/System/SystemContext"
 import { Status_order } from "v2/__generated__/Status_order.graphql"
 import { getStatusCopy, continueToInboxText } from "../../Utils/getStatusCopy"
-import { userHasLabFeature } from "v2/Utils/user"
 
 const logger = createLogger("Order/Routes/Status/index.tsx")
 
@@ -76,10 +75,7 @@ export class StatusRoute extends Component<StatusProps> {
       <SystemContextConsumer>
         {({ isEigen, user }) => {
           const shouldContinueToInbox =
-            isEigen &&
-            userHasLabFeature(user, "Make Offer On All Eligible Artworks") &&
-            isSubmittedOffer &&
-            order.source === "artwork_page"
+            isEigen && isSubmittedOffer && order.source === "artwork_page"
 
           return (
             <>
