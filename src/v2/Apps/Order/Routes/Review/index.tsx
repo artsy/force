@@ -5,7 +5,6 @@ import { ReviewSubmitOrderMutation } from "v2/__generated__/ReviewSubmitOrderMut
 import { ArtworkSummaryItemFragmentContainer as ArtworkSummaryItem } from "v2/Apps/Order/Components/ArtworkSummaryItem"
 import { ConditionsOfSaleDisclaimer } from "v2/Apps/Order/Components/ConditionsOfSaleDisclaimer"
 import { ItemReviewFragmentContainer as ItemReview } from "v2/Apps/Order/Components/ItemReview"
-import { userHasLabFeature } from "v2/Utils/user"
 import {
   OrderStepper,
   buyNowFlowSteps,
