@@ -2,6 +2,7 @@ import * as Schema from "v2/System/Analytics"
 import { useSystemContext } from "v2/System"
 import { Variant } from "unleash-client"
 import { useTracking } from "react-tracking"
+import { useEffect } from "react"
 
 export type FeatureFlags = Record<string, FeatureFlagDetails>
 
@@ -50,22 +51,24 @@ export function useTrackVariantView({
 }) {
   const { trackEvent } = useTracking()
 
-  if (typeof window !== "undefined") {
-    const trackFeatureView = shouldTrack(experiment_name, variant_name)
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const trackFeatureView = shouldTrack(experiment_name, variant_name)
 
-    if (trackFeatureView) {
-      trackEvent({
-        action: Schema.ActionType.ExperimentViewed,
-        service: "unleash",
-        experiment_name,
-        variant_name,
-        payload,
-        context_owner_type,
-        context_owner_id,
-        context_owner_slug,
-      })
+      if (trackFeatureView) {
+        trackEvent({
+          action: Schema.ActionType.ExperimentViewed,
+          service: "unleash",
+          experiment_name,
+          variant_name,
+          payload,
+          context_owner_type,
+          context_owner_id,
+          context_owner_slug,
+        })
+      }
     }
-  }
+  }, [])
 }
 
 function shouldTrack(featureName: string, variantName: string): boolean {
