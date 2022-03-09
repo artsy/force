@@ -16,6 +16,8 @@ import { VerifiedSellerFragmentContainer } from "../TrustSignals/VerifiedSeller"
 import { BuyerGuaranteeFragmentContainer } from "../TrustSignals/BuyerGuarantee"
 import { ArtworkSidebarExtraLinksFragmentContainer } from "./ArtworkSidebarExtraLinks"
 import { ArtworkSidebarAuctionPollingRefetchContainer } from "./ArtworkSidebarAuctionInfoPolling"
+import { useFeatureFlag } from "v2/System/useFeatureFlag"
+import { CreateArtworkAlertSection } from "./CreateArtworkAlertSection"
 
 export interface ArtworkSidebarProps {
   artwork: ArtworkSidebar_artwork
@@ -28,6 +30,10 @@ export const ArtworkSidebar: React.FC<ArtworkSidebarProps> = ({
   artwork,
   me,
 }) => {
+  const shouldShowCreateAlertSection = useFeatureFlag(
+    "artwork-page-create-alert"
+  )
+
   return (
     <ArtworkSidebarContainer data-test={ContextModule.artworkSidebar}>
       <ArtworkSidebarArtistsFragmentContainer artwork={artwork} />
@@ -67,6 +73,7 @@ export const ArtworkSidebar: React.FC<ArtworkSidebarProps> = ({
         <VerifiedSellerFragmentContainer artwork={artwork} />
         <BuyerGuaranteeFragmentContainer artwork={artwork} />
       </Join>
+      {!!shouldShowCreateAlertSection && <CreateArtworkAlertSection />}
       <ArtworkSidebarExtraLinksFragmentContainer artwork={artwork} />
     </ArtworkSidebarContainer>
   )
