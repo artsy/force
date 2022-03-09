@@ -48,7 +48,7 @@ export const PreferencesApp: FC<PreferencesAppProps> = ({ viewer }) => {
   return (
     <>
       <Text variant={["lg", "xl"]} mt={6} mb={6}>
-        Email Preferences Center
+        Email Preference Center
       </Text>
       <Formik<FormValuesForNotificationPreferences>
         // @ts-ignore
