@@ -89,10 +89,6 @@ const Container = styled(Box)`
   h2,
   h3 {
     margin: ${themeGet("space.4")} auto;
-
-    a {
-      text-decoration: none;
-    }
   }
 
   h1 {
@@ -137,6 +133,7 @@ const Container = styled(Box)`
 
   a {
     transition: color 250ms;
+    text-decoration: underline;
 
     &:hover {
       color: ${themeGet("colors.brand")};
