@@ -370,18 +370,11 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
   render() {
     const { artwork, inquiryComponent } = this.props
     const {
-      isPriceHidden,
-      isOfferableFromInquiry,
       is_offerable: isOfferable,
       is_acquireable: isAcquireable,
       is_inquireable: isInquireable,
       is_sold: isSold,
     } = artwork
-    const isPriceListed = !isPriceHidden
-    const makeOfferEnabled = userHasLabFeature(
-      this.props.user,
-      "Make Offer On All Eligible Artworks"
-    )
     const avalaraPhase2Enabled = userHasLabFeature(
       this.props.user,
       "Avalara Phase 2"
@@ -393,9 +386,7 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
       selectedEditionSet,
     } = this.state
 
-    const editionSelectableOnInquireable = !!(
-      artwork.is_inquireable && makeOfferEnabled
-    )
+    const editionSelectableOnInquireable = !!artwork.is_inquireable
     const artworkEcommerceAvailable = !!(
       artwork.is_acquireable ||
       artwork.is_offerable ||
@@ -406,9 +397,7 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
       return <Separator />
     }
 
-    const shouldDisplayMakeOfferButton: boolean | null =
-      isOfferable ||
-      (isPriceListed && isOfferableFromInquiry && makeOfferEnabled)
+    const shouldDisplayMakeOfferButton: boolean | null = isOfferable
 
     const shouldDisplayMakeOfferAsPrimary: boolean | null =
       shouldDisplayMakeOfferButton && isInquireable
