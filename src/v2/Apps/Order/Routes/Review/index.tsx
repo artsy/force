@@ -1,4 +1,4 @@
-import { Box, Button, Flex, Join, Message, Spacer, Text } from "@artsy/palette"
+import { Box, Button, Flex, Join, Message, Spacer } from "@artsy/palette"
 import { Review_order } from "v2/__generated__/Review_order.graphql"
 import { ReviewSubmitOfferOrderMutation } from "v2/__generated__/ReviewSubmitOfferOrderMutation.graphql"
 import { ReviewSubmitOrderMutation } from "v2/__generated__/ReviewSubmitOrderMutation.graphql"
@@ -350,8 +350,6 @@ export class ReviewRoute extends Component<ReviewProps> {
     this.props.router.push(`/orders/${this.props.order.internalID}/shipping`)
   }
 
-  avalaraPhase2enabled = userHasLabFeature(this.props.user, "Avalara Phase 2")
-
   render() {
     const { order, isCommittingMutation, isEigen } = this.props
 
@@ -437,13 +435,6 @@ export class ReviewRoute extends Component<ReviewProps> {
                 contextModule={ContextModule.ordersReview}
                 contextPageOwnerType={OwnerType.ordersReview}
               />
-              {order.myLastOffer &&
-                !order.myLastOffer?.hasDefiniteTotal &&
-                !this.avalaraPhase2enabled && (
-                  <Text variant="xs" color="black60">
-                    *Shipping and taxes to be confirmed by gallery
-                  </Text>
-                )}
               <Spacer mb={[2, 4]} />
               <Media at="xs">
                 <Button

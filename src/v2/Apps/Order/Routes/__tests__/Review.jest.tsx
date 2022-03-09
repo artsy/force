@@ -372,13 +372,13 @@ describe("Review", () => {
 
     it("shows a placeholder override for inquiry offers with missing metadata", () => {
       expect(page.root.find(TransactionDetailsSummaryItem).text()).toMatch(
-        "To be confirmed*"
+        "Waiting for final costs"
       )
     })
 
     it("shows message about shipping and tax confirmation for inquiry offers with missing metadata", () => {
       expect(page.text()).toMatch(
-        "*Shipping and taxes to be confirmed by gallery"
+        "*Shipping costs to be confirmed by gallery. You will be able to review the total price before payment."
       )
     })
 

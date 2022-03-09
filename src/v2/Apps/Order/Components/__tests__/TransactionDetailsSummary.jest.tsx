@@ -92,7 +92,7 @@ const render = (
   })
 
 describe("TransactionDetailsSummaryItem", () => {
-  describe("Avalara Phase 2 enabled", () => {
+  describe("Order breakdown messaging", () => {
     it("shows the shipping and tax price as 'Calculated in next steps' when null before shipping address was added", async () => {
       const transactionSummary = await render(
         {
@@ -102,10 +102,7 @@ describe("TransactionDetailsSummaryItem", () => {
           shippingTotal: null,
           shippingTotalCents: null,
         },
-        {
-          user: { lab_features: ["Avalara Phase 2"] },
-          transactionStep: "shipping",
-        }
+        { transactionStep: "shipping" }
       )
 
       const text = transactionSummary.text()
@@ -115,16 +112,13 @@ describe("TransactionDetailsSummaryItem", () => {
     })
 
     it("shows the shipping and tax price as 'Waiting for final costs' when null after shipping address was added", async () => {
-      const transactionSummary = await render(
-        {
-          ...transactionSummaryBuyOrder,
-          taxTotal: null,
-          taxTotalCents: null,
-          shippingTotal: null,
-          shippingTotalCents: null,
-        },
-        { user: { lab_features: ["Avalara Phase 2"] } }
-      )
+      const transactionSummary = await render({
+        ...transactionSummaryBuyOrder,
+        taxTotal: null,
+        taxTotalCents: null,
+        shippingTotal: null,
+        shippingTotalCents: null,
+      })
 
       const text = transactionSummary.text()
 
@@ -133,10 +127,7 @@ describe("TransactionDetailsSummaryItem", () => {
     })
 
     it("shows tax import reminder", async () => {
-      const transactionSummary = await render(
-        { ...transactionSummaryBuyOrder },
-        { user: { lab_features: ["Avalara Phase 2"] } }
-      )
+      const transactionSummary = await render({ ...transactionSummaryBuyOrder })
 
       const text = transactionSummary.text()
 
@@ -145,14 +136,11 @@ describe("TransactionDetailsSummaryItem", () => {
     })
 
     it("shows shipping confirmation note when shipping cannot be calculated after shipping address was added", async () => {
-      const transactionSummary = await render(
-        {
-          ...transactionSummaryBuyOrder,
-          shippingTotal: null,
-          shippingTotalCents: null,
-        },
-        { user: { lab_features: ["Avalara Phase 2"] } }
-      )
+      const transactionSummary = await render({
+        ...transactionSummaryBuyOrder,
+        shippingTotal: null,
+        shippingTotalCents: null,
+      })
 
       const text = transactionSummary.text()
 
@@ -162,10 +150,9 @@ describe("TransactionDetailsSummaryItem", () => {
     })
 
     it("does not show list price in the transaction summary", async () => {
-      const transactionSummary = await render(
-        { ...transactionSummaryOfferOrder },
-        { user: { lab_features: ["Avalara Phase 2"] } }
-      )
+      const transactionSummary = await render({
+        ...transactionSummaryOfferOrder,
+      })
 
       const text = transactionSummary.text()
 
@@ -173,13 +160,10 @@ describe("TransactionDetailsSummaryItem", () => {
     })
 
     it("shows 'Waiting for final costs' when buyer total has not been calucuated yet", async () => {
-      const transactionSummary = await render(
-        {
-          ...transactionSummaryBuyOrder,
-          buyerTotal: null,
-        },
-        { user: { lab_features: ["Avalara Phase 2"] } }
-      )
+      const transactionSummary = await render({
+        ...transactionSummaryBuyOrder,
+        buyerTotal: null,
+      })
 
       const text = transactionSummary.text()
 
@@ -195,7 +179,7 @@ describe("TransactionDetailsSummaryItem", () => {
 
       expect(entry.at(0).text()).toMatch("PriceUS$200.00")
       expect(entry.at(1).text()).toMatch("ShippingUS$12.00")
-      expect(entry.at(2).text()).toMatch("TaxUS$3.25")
+      expect(entry.at(2).text()).toMatch("Tax*US$3.25")
       expect(entry.at(3).text()).toMatch("TotalUS$215.25")
     })
 
@@ -206,24 +190,7 @@ describe("TransactionDetailsSummaryItem", () => {
 
       expect(text).toMatch("PriceUS$200.00")
       expect(text).toMatch("ShippingUS$12.00")
-      expect(text).toMatch("TaxUS$3.25")
-      expect(text).toMatch("TotalUS$215.25")
-    })
-
-    it("shows the shipping and tax price as dashes if null", async () => {
-      const transactionSummary = await render({
-        ...transactionSummaryBuyOrder,
-        taxTotal: null,
-        taxTotalCents: null,
-        shippingTotal: null,
-        shippingTotalCents: null,
-      })
-
-      const text = transactionSummary.text()
-
-      expect(text).toMatch("PriceUS$200.00")
-      expect(text).toMatch("Shipping—")
-      expect(text).toMatch("Tax—")
+      expect(text).toMatch("Tax*US$3.25")
       expect(text).toMatch("TotalUS$215.25")
     })
 
@@ -266,61 +233,8 @@ describe("TransactionDetailsSummaryItem", () => {
 
       expect(text).toMatch("Your offerUS$14,000")
       expect(text).toMatch("ShippingUS$200")
-      expect(text).toMatch("TaxUS$120")
+      expect(text).toMatch("Tax*US$120")
       expect(text).toMatch("TotalUS$14,320")
-    })
-
-    it("shows the shipping and tax price as dashes if null", async () => {
-      const transactionSummary = await render({
-        ...transactionSummaryOfferOrder,
-        __typename: "CommerceOfferOrder",
-        myLastOffer: {
-          ...OfferWithTotals,
-          taxTotal: null,
-          taxTotalCents: null,
-          shippingTotal: null,
-          shippingTotalCents: null,
-          buyerTotal: null,
-          buyerTotalCents: null,
-          fromParticipant: "BUYER",
-        },
-      })
-
-      const text = transactionSummary.text()
-
-      expect(text).toMatch("Your offerUS$14,000")
-      expect(text).toMatch("Shipping—")
-      expect(text).toMatch("Tax—")
-      expect(text).toMatch("Total")
-    })
-
-    it("shows empty fields when there are no myLastOffer yet", async () => {
-      const transactionSummary = await render({
-        ...transactionSummaryOfferOrder,
-        myLastOffer: null,
-      } as any)
-
-      expect(
-        transactionSummary.find("Entry").find("[data-test='offer']").text()
-      ).toMatch("Your offer—")
-      expect(
-        transactionSummary
-          .find("Entry")
-          .find("[data-test='shippingDisplayAmount']")
-          .text()
-      ).toMatch("Shipping—")
-      expect(
-        transactionSummary
-          .find("Entry")
-          .find("[data-test='taxDisplayAmount']")
-          .text()
-      ).toMatch("Tax—")
-      expect(
-        transactionSummary
-          .find("Entry")
-          .find("[data-test='buyerTotalDisplayAmount']")
-          .text()
-      ).toMatch("Total")
     })
 
     it("shows the last submitted offer if requested", async () => {
