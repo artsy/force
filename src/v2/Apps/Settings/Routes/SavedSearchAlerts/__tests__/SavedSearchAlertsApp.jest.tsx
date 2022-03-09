@@ -42,7 +42,7 @@ describe("SavedSearchAlertsApp", () => {
     })
   })
 
-  it("renders all alert titles and the pills for filters applied", () => {
+  it("renders all alert titles", () => {
     renderWithRelay({
       Me: () => ({
         savedSearchesConnection: mockedSavedSearchesConnection,
@@ -50,80 +50,50 @@ describe("SavedSearchAlertsApp", () => {
     })
 
     expect(screen.getAllByText("Alert #1")[0]).toBeInTheDocument()
-    expect(screen.getAllByText("Limited Edition")[0]).toBeInTheDocument()
-    expect(screen.getAllByText("Andy Warhol")[0]).toBeInTheDocument()
     expect(screen.getAllByText("Alert #2")[0]).toBeInTheDocument()
     expect(screen.getAllByText("Alert #3")[0]).toBeInTheDocument()
-    expect(screen.getAllByText("Omar Ba")[0]).toBeInTheDocument()
-    expect(screen.getAllByText("$0–$34,240")[0]).toBeInTheDocument()
   })
 
-  it("renders all the filter labels if there are up to 8 filters", () => {
+  it("should expand/collapse filter pills when user toggles show all/close all filters button", async () => {
     renderWithRelay({
       Me: () => ({
-        savedSearchesConnection: mockedSavedSearchesConnectionWith8Filters,
-      }),
-    })
-
-    expect(screen.getAllByText("Alert With 8 Filters")[0]).toBeInTheDocument()
-    expect(screen.getAllByText("Limited Edition")[0]).toBeInTheDocument()
-    expect(screen.getAllByText("Andy Warhol")[0]).toBeInTheDocument()
-    expect(screen.getAllByText("$0–$34,240")[0]).toBeInTheDocument()
-    expect(screen.getAllByText("Painting")[0]).toBeInTheDocument()
-    expect(screen.getAllByText("Open Edition")[0]).toBeInTheDocument()
-    expect(screen.getAllByText("Sculpture")[0]).toBeInTheDocument()
-    expect(screen.getAllByText("Prints")[0]).toBeInTheDocument()
-    expect(screen.getAllByText("Photography")[0]).toBeInTheDocument()
-
-    expect(screen.queryByText("Show all filters")).not.toBeInTheDocument()
-    expect(screen.queryByText("Close all filters")).not.toBeInTheDocument()
-  })
-
-  it("renders up to 8 filters when there are more and display show all button", async () => {
-    renderWithRelay({
-      Me: () => ({
-        savedSearchesConnection: mockedSavedSearchesConnectionWithMoreThan8Filters,
+        savedSearchesConnection: mockedSavedSearchesConnectionWithFilters,
       }),
     })
 
     expect(
-      screen.getAllByText("Alert With More Than 8 Filters")[0]
+      screen.getAllByText("Alert With Some Filters")[0]
     ).toBeInTheDocument()
-    expect(screen.getAllByText("Limited Edition")[0]).toBeInTheDocument()
-    expect(screen.getAllByText("Andy Warhol")[0]).toBeInTheDocument()
-    expect(screen.getAllByText("$0–$34,240")[0]).toBeInTheDocument()
-    expect(screen.getAllByText("Painting")[0]).toBeInTheDocument()
-    expect(screen.getAllByText("Open Edition")[0]).toBeInTheDocument()
-    expect(screen.getAllByText("Sculpture")[0]).toBeInTheDocument()
-    expect(screen.getAllByText("Prints")[0]).toBeInTheDocument()
-    expect(screen.getAllByText("Photography")[0]).toBeInTheDocument()
 
-    // the rest of the filters are not displayed
-    expect(screen.queryAllByText("Ephemera or Merchandise")).toStrictEqual([])
-    expect(screen.queryAllByText("Make Offer")).toStrictEqual([])
+    // the rest of the filters are hidden by default
+    expect(screen.queryAllByText("Limited Edition")).toStrictEqual([])
+    expect(screen.queryAllByText("Andy Warhol")).toStrictEqual([])
+    expect(screen.queryAllByText("$0–$34,240")).toStrictEqual([])
+    expect(screen.queryAllByText("Painting")).toStrictEqual([])
+
     // the show all filters button is displayed
     expect(screen.getAllByText("Show all filters")[0]).toBeInTheDocument()
     expect(screen.queryAllByText("Close all filters")).toStrictEqual([])
     fireEvent.click(screen.getAllByText("Show all filters")[0])
 
-    await waitFor(() =>
-      expect(screen.queryAllByText("Show all filters").length).toBe(1)
-    )
     // after pressing show all filters the hidden filters appear
     expect(screen.getAllByText("Close all filters")[0]).toBeInTheDocument()
-    expect(
-      screen.getAllByText("Ephemera or Merchandise")[0]
-    ).toBeInTheDocument()
-    expect(screen.getAllByText("Make Offer")[0]).toBeInTheDocument()
+    expect(screen.getAllByText("Limited Edition")[0]).toBeInTheDocument()
+    expect(screen.getAllByText("Andy Warhol")[0]).toBeInTheDocument()
+    expect(screen.getAllByText("$0–$34,240")[0]).toBeInTheDocument()
+    expect(screen.getAllByText("Painting")[0]).toBeInTheDocument()
+
     // collapses the filters
     fireEvent.click(screen.getByText("Close all filters"))
 
     await waitFor(() =>
       expect(screen.queryByText("Close all filters")).not.toBeInTheDocument()
     )
-    // after pressing close all filters the filters are collapsed
-    expect(screen.queryAllByText("Ephemera or Merchandise")).toStrictEqual([])
-    expect(screen.queryAllByText("Make Offer")).toStrictEqual([])
+    // after pressing close all filters, all the filters are collapsed
+    expect(screen.queryAllByText("Limited Edition")).toStrictEqual([])
+    expect(screen.queryAllByText("Andy Warhol")).toStrictEqual([])
+    expect(screen.queryAllByText("$0–$34,240")).toStrictEqual([])
+    expect(screen.queryAllByText("Painting")).toStrictEqual([])
   })
 
   it("renders a empty results message if there are no alerts", () => {
@@ -183,46 +153,18 @@ const mockedSavedSearchesConnection = {
   ],
 }
 
-const mockedSavedSearchesConnectionWith8Filters = {
+const mockedSavedSearchesConnectionWithFilters = {
   edges: [
     {
       node: {
         userAlertSettings: {
-          name: "Alert With 8 Filters",
+          name: "Alert With Some Filters",
         },
         labels: [
           { value: "Limited Edition" },
           { value: "Andy Warhol" },
           { value: "$0–$34,240" },
           { value: "Painting" },
-          { value: "Open Edition" },
-          { value: "Sculpture" },
-          { value: "Prints" },
-          { value: "Photography" },
-        ],
-      },
-    },
-  ],
-}
-
-const mockedSavedSearchesConnectionWithMoreThan8Filters = {
-  edges: [
-    {
-      node: {
-        userAlertSettings: {
-          name: "Alert With More Than 8 Filters",
-        },
-        labels: [
-          { value: "Limited Edition" },
-          { value: "Andy Warhol" },
-          { value: "$0–$34,240" },
-          { value: "Painting" },
-          { value: "Open Edition" },
-          { value: "Sculpture" },
-          { value: "Prints" },
-          { value: "Photography" },
-          { value: "Ephemera or Merchandise" },
-          { value: "Make Offer" },
         ],
       },
     },

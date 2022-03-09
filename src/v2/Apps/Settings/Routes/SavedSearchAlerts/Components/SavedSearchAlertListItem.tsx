@@ -8,6 +8,8 @@ import {
   IconProps,
   ArrowDownIcon,
   ArrowUpIcon,
+  GridColumns,
+  Column,
 } from "@artsy/palette"
 import { useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -21,8 +23,6 @@ export type SavedSearchAlertListItemVariant = "active" | "inactive"
 const AlertPill = styled(Pill)<{ active: boolean }>`
   pointer-events: none;
 `
-
-const DISPLAYED_PILLS_COUNT = 8
 
 interface SavedSearchAlertListItemProps {
   item: SavedSearchAlertListItem_item
@@ -38,11 +38,6 @@ export const SavedSearchAlertListItem: React.FC<SavedSearchAlertListItemProps> =
   const viewAllHref = `${item.href}&search_criteria_id=${item.internalID}`
   const [isExpanded, setIsExpanded] = useState(false)
   const Icon: React.FC<IconProps> = isExpanded ? ArrowUpIcon : ArrowDownIcon
-  const shouldDisplayAllFilters =
-    isExpanded && item.labels.length > DISPLAYED_PILLS_COUNT
-  const labels = shouldDisplayAllFilters
-    ? item.labels
-    : item.labels.slice(0, DISPLAYED_PILLS_COUNT)
 
   const toggleExpandFilters = () => setIsExpanded(isExpanded => !isExpanded)
 
@@ -60,18 +55,29 @@ export const SavedSearchAlertListItem: React.FC<SavedSearchAlertListItemProps> =
     >
       <Flex
         flexDirection="row"
-        alignItems="center"
+        alignItems={["stretch", "center"]}
         justifyContent="space-between"
       >
-        <Flex flex={1} mr={2}>
+        <Flex
+          mr={2}
+          flexDirection={["column", "row"]}
+          alignItems={["stretch", "center"]}
+        >
           <Text
             variant="lg"
             color={variant === "active" ? "blue100" : "black100"}
           >
             {item.userAlertSettings.name}
           </Text>
+          <Spacer m={2} />
+          <Clickable textDecoration="underline" onClick={toggleExpandFilters}>
+            <Flex flexDirection="row" alignItems="center">
+              <Text variant="sm">{toggleExpandFiltersText}</Text>
+              <Icon height={18} width={18} ml={0.5} />
+            </Flex>
+          </Clickable>
         </Flex>
-        <Flex flexDirection="row" alignItems="center">
+        <Flex flexDirection="row" alignItems={["flex-start", "center"]}>
           <Clickable
             textDecoration="underline"
             onClick={() => {
@@ -91,19 +97,22 @@ export const SavedSearchAlertListItem: React.FC<SavedSearchAlertListItemProps> =
         </Flex>
       </Flex>
       <Spacer my={2} />
-      {labels.map(label => (
-        <AlertPill key={label.value} variant="textSquare" active mr={1} mb={1}>
-          {label.value}
-        </AlertPill>
-      ))}
-      {item.labels.length > DISPLAYED_PILLS_COUNT && (
-        <Clickable textDecoration="underline" onClick={toggleExpandFilters}>
-          <Flex flexDirection="row" alignItems="center">
-            <Text variant="sm">{toggleExpandFiltersText}</Text>
-            <Icon height={18} width={18} ml={0.5} />
-          </Flex>
-        </Clickable>
-      )}
+      <GridColumns>
+        <Column span={[12, 8]}>
+          {isExpanded &&
+            item.labels.map(label => (
+              <AlertPill
+                key={label.value}
+                variant="textSquare"
+                active
+                mr={1}
+                mb={1}
+              >
+                {label.value}
+              </AlertPill>
+            ))}
+        </Column>
+      </GridColumns>
     </Box>
   )
 }
