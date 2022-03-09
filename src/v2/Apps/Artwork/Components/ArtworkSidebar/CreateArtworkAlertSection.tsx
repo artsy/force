@@ -13,12 +13,12 @@ export const CreateArtworkAlertSection: React.FC = () => {
         justifyContent="space-between"
       >
         <Flex flex={1} justifyContent="flex-start">
-          <Text variant="xs" color="blue100">
+          <Text variant="xs">
             Be notified when a similar piece is available
           </Text>
         </Flex>
         <Flex flex={1} justifyContent="flex-end">
-          <Button focus variant="secondaryOutline" size="small">
+          <Button variant="secondaryOutline" size="small">
             <BellIcon mr={0.5} fill="currentColor" />
             <Text variant="xs">Create Alert</Text>
           </Button>
