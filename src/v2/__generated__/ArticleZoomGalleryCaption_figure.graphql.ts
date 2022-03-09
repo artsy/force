@@ -6,6 +6,7 @@ import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type ArticleZoomGalleryCaption_figure = {
     readonly __typename: "Artwork";
+    readonly href: string | null;
     readonly " $fragmentRefs": FragmentRefs<"Metadata_artwork">;
     readonly " $refType": "ArticleZoomGalleryCaption_figure";
 } | {
@@ -43,6 +44,13 @@ const node: ReaderFragment = {
       "kind": "InlineFragment",
       "selections": [
         {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "href",
+          "storageKey": null
+        },
+        {
           "args": null,
           "kind": "FragmentSpread",
           "name": "Metadata_artwork"
@@ -69,5 +77,5 @@ const node: ReaderFragment = {
   "type": "ArticleSectionImageCollectionFigure",
   "abstractKey": "__isArticleSectionImageCollectionFigure"
 };
-(node as any).hash = '734caddd8419f697d1dba27338567173';
+(node as any).hash = '9542cbe3378e46fa0ff671166b18b18d';
 export default node;
