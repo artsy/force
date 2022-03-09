@@ -5,15 +5,12 @@
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type HomeTroveArtworksRail_viewer = {
-    readonly saleArtworksConnection: {
+    readonly artworksConnection: {
         readonly edges: ReadonlyArray<{
             readonly node: {
                 readonly internalID: string;
                 readonly slug: string;
                 readonly href: string | null;
-                readonly sale: {
-                    readonly isClosed: boolean | null;
-                } | null;
                 readonly " $fragmentRefs": FragmentRefs<"ShelfArtwork_artwork">;
             } | null;
         } | null> | null;
@@ -48,15 +45,15 @@ const node: ReaderFragment = {
           "value": "trove"
         }
       ],
-      "concreteType": "SaleArtworksConnection",
+      "concreteType": "FilterArtworksConnection",
       "kind": "LinkedField",
-      "name": "saleArtworksConnection",
+      "name": "artworksConnection",
       "plural": false,
       "selections": [
         {
           "alias": null,
           "args": null,
-          "concreteType": "SaleArtwork",
+          "concreteType": "FilterArtworksEdge",
           "kind": "LinkedField",
           "name": "edges",
           "plural": true,
@@ -91,24 +88,6 @@ const node: ReaderFragment = {
                   "storageKey": null
                 },
                 {
-                  "alias": null,
-                  "args": null,
-                  "concreteType": "Sale",
-                  "kind": "LinkedField",
-                  "name": "sale",
-                  "plural": false,
-                  "selections": [
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "isClosed",
-                      "storageKey": null
-                    }
-                  ],
-                  "storageKey": null
-                },
-                {
                   "args": [
                     {
                       "kind": "Literal",
@@ -126,11 +105,11 @@ const node: ReaderFragment = {
           "storageKey": null
         }
       ],
-      "storageKey": "saleArtworksConnection(first:12,geneIDs:\"trove\")"
+      "storageKey": "artworksConnection(first:12,geneIDs:\"trove\")"
     }
   ],
   "type": "Viewer",
   "abstractKey": null
 };
-(node as any).hash = '0d22f283a8a454b40356c18b49d08c6b';
+(node as any).hash = 'a324d42177d1e5ab73ac279f98ed5235';
 export default node;
