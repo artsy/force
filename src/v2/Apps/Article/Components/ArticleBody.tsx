@@ -104,6 +104,7 @@ const ArticleBody: FC<ArticleBodyProps> = ({ article }) => {
               variant="sm"
               mt={4}
               fontStyle="italic"
+              color="black60"
               html={article.postscript}
             />
           )}
