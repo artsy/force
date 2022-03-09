@@ -12,7 +12,7 @@ import { isCustomValue } from "./Utils/isCustomValue"
 import { useFilterLabelCountByKey } from "../Utils/useFilterLabelCountByKey"
 import { Range, RANGE_DOT_SIZE } from "v2/Components/Range"
 import { debounce } from "lodash"
-import { BarEntity, BarChart } from "./BarChart"
+import { HistogramBarEntity, Histogram } from "./Histogram"
 
 type CustomRange = (number | "*")[]
 
@@ -21,7 +21,7 @@ const DEBOUNCE_DELAY = 300
 const DEFAULT_CUSTOM_RANGE: CustomRange = ["*", "*"]
 const DEFAULT_PRICE_RANGE = "*-*"
 const DEFAULT_RANGE = [0, 50000]
-const BARS: BarEntity[] = [
+const BARS: HistogramBarEntity[] = [
   {
     counts: 34548,
     value: 0,
@@ -230,7 +230,7 @@ export const PriceRangeFilterNew: FC<PriceRangeFilterNewProps> = ({
       <Spacer mb={4} />
 
       <Box mx={[RANGE_DOT_SIZE / 2, 0]}>
-        <BarChart
+        <Histogram
           bars={BARS}
           selectedRange={[sliderRange[0], sliderRange[1]]}
         />

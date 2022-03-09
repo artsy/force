@@ -5,21 +5,24 @@ const BAR_ROUNDNESS = 10
 
 type Range = [number, number]
 
-export interface BarEntity {
+export interface HistogramBarEntity {
   counts: number
   value: number
 }
 
-interface BarChartProps {
+interface HistogramProps {
   selectedRange: Range
-  bars: BarEntity[]
+  bars: HistogramBarEntity[]
 }
 
 const isSelected = (value: number, min: number, max: number) => {
   return value >= min && value <= max
 }
 
-export const BarChart: React.FC<BarChartProps> = ({ bars, selectedRange }) => {
+export const Histogram: React.FC<HistogramProps> = ({
+  bars,
+  selectedRange,
+}) => {
   const maxValue = Math.max(...bars.map(bar => bar.counts))
   const [min, max] = selectedRange
 
