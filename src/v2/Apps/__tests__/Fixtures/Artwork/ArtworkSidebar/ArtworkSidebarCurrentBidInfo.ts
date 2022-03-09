@@ -14,6 +14,32 @@ export const ClosedAuctionArtwork: ArtworkSidebarCurrentBidInfo_Test_QueryRawRes
     is_with_reserve: true,
     reserve_message: "This work has a reserve",
     reserve_status: "reserve_not_met",
+    endedAt: null,
+    current_bid: {
+      display: "$3,000",
+    },
+    counts: {
+      bidder_positions: 0,
+    },
+  },
+  myLotStanding: null,
+}
+
+export const ClosedLotArtwork: ArtworkSidebarCurrentBidInfo_Test_QueryRawResponse["artwork"] = {
+  id: "artwork_from_closed_auction",
+  sale: {
+    id: "salessale",
+    internalID: "asdf1234",
+    is_with_buyers_premium: false,
+    is_closed: false,
+    is_live_open: false,
+  },
+  sale_artwork: {
+    id: "salearwtork124",
+    is_with_reserve: true,
+    reserve_message: "This work has a reserve",
+    reserve_status: "reserve_not_met",
+    endedAt: "2022-03-09 16:16:33 UTC",
     current_bid: {
       display: "$3,000",
     },
@@ -37,6 +63,7 @@ export const AuctionPreview: ArtworkSidebarCurrentBidInfo_Test_QueryRawResponse[
     id: "salearwtork124",
     is_with_reserve: false,
     reserve_message: null,
+    endedAt: null,
     reserve_status: "no_reserve",
     current_bid: {
       display: "CHF 4,000",
@@ -60,6 +87,7 @@ export const AuctionPreviewNoStartingBid: ArtworkSidebarCurrentBidInfo_Test_Quer
   sale_artwork: {
     id: "salearwtork124",
     is_with_reserve: false,
+    endedAt: null,
     reserve_message: null,
     reserve_status: "no_reserve",
     current_bid: null,
@@ -82,6 +110,7 @@ export const OpenAuctionNoReserveNoBids: ArtworkSidebarCurrentBidInfo_Test_Query
   sale_artwork: {
     id: "salearwtork124",
     is_with_reserve: false,
+    endedAt: null,
     reserve_message: null,
     reserve_status: "no_reserve",
     current_bid: {
@@ -106,6 +135,7 @@ export const OpenAuctionNoReserveWithBids: ArtworkSidebarCurrentBidInfo_Test_Que
   sale_artwork: {
     id: "salearwtork124",
     is_with_reserve: false,
+    endedAt: null,
     reserve_message: null,
     reserve_status: "no_reserve",
     current_bid: {
@@ -130,6 +160,7 @@ export const OpenAuctionReserveNoBids: ArtworkSidebarCurrentBidInfo_Test_QueryRa
   sale_artwork: {
     id: "salearwtork124",
     is_with_reserve: true,
+    endedAt: null,
     reserve_message: "This work has a reserve",
     reserve_status: "reserve_not_met",
     current_bid: {
@@ -154,6 +185,7 @@ export const OpenAuctionReserveNotMetWithBids: ArtworkSidebarCurrentBidInfo_Test
   sale_artwork: {
     id: "salearwtork124",
     is_with_reserve: true,
+    endedAt: null,
     reserve_message: "Reserve not met",
     reserve_status: "reserve_not_met",
     current_bid: {
@@ -178,6 +210,7 @@ export const OpenAuctionReserveMetWithBids: ArtworkSidebarCurrentBidInfo_Test_Qu
   sale_artwork: {
     id: "salearwtork124",
     is_with_reserve: true,
+    endedAt: null,
     reserve_message: "Reserve met",
     reserve_status: "reserve_met",
     current_bid: {
@@ -245,6 +278,7 @@ export const LiveAuctionInProgress: ArtworkSidebarCurrentBidInfo_Test_QueryRawRe
     id: "salearwtork124",
     is_with_reserve: false,
     reserve_message: null,
+    endedAt: null,
     reserve_status: "no_reserve",
     current_bid: { display: "€3,200" },
     counts: { bidder_positions: 0 },

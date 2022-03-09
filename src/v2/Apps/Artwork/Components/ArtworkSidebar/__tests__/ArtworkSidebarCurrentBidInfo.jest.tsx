@@ -75,6 +75,14 @@ describe("ArtworkSidebarCurrentBidInfo", () => {
     })
   })
 
+  describe("for closed auction with cascading end time turned on", () => {
+    it("displays Auction Closed", async () => {
+      const wrapper = await getWrapper(ClosedAuctionArtwork)
+
+      expect(wrapper.text()).toContain("Bidding closed")
+    })
+  })
+
   describe("for live sale in progress", () => {
     it("does not display anything", async () => {
       const wrapper = await getWrapper(LiveAuctionInProgress)

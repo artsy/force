@@ -70,7 +70,8 @@ export const ArtworkSidebarCurrentBidInfo: React.FC<ArtworkSidebarCurrentBidInfo
     return null
   }
 
-  if (artwork.sale?.is_closed) {
+  // TODO: Add a condition to check if the sale artwork is closed based on endedAt (coming from MP on SaleArtwork)
+  if (artwork.sale?.is_closed || artwork.sale_artwork?.endedAt) {
     return (
       <>
         <Separator my={2} />
@@ -208,6 +209,7 @@ export const ArtworkSidebarCurrentBidInfoFragmentContainer = createFragmentConta
           is_with_reserve: isWithReserve
           reserve_message: reserveMessage
           reserve_status: reserveStatus
+          endedAt
           current_bid: currentBid {
             display
           }
