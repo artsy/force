@@ -11,6 +11,8 @@ function runJest() {
     ./node_modules/.bin/jest \
       --logHeapUsage \
       --maxWorkers 3 \
+      --reporters=default
+      --reporters=jest-junit
       --config "${1}"
 }
 
