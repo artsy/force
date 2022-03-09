@@ -105,9 +105,9 @@ export const PreferencesApp: FC<PreferencesAppProps> = ({ viewer }) => {
               <Column span={10}>
                 <Text variant="md">Subscribe to all</Text>
                 <Text variant="sm" color="black60">
-                  Benefit from Artsy by receiving all our emails, with
-                  recommendations for you, Artsy Editorial, guidance on
-                  collecting, and updates on your favorite artists.
+                  Get all of Artsy’s emails, including recommendations for you,
+                  Artsy Editorial, guidance on collecting, and updates on your
+                  favorite artists.
                 </Text>
               </Column>
 
