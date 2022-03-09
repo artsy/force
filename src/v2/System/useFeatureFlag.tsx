@@ -27,7 +27,6 @@ export function useFeatureFlag(featureName: string): boolean | null {
 
 export function useFeatureVariant(featureName: string): Variant | null {
   const { featureFlags } = useSystemContext()
-  const { trackEvent } = useTracking()
   const variant = featureFlags?.[featureName]?.variant
 
   if (!variant) {
@@ -38,22 +37,35 @@ export function useFeatureVariant(featureName: string): Variant | null {
     return null
   }
 
-  // detremine if we should track the experimentView
+  return variant
+}
+
+export function useTrackVariantView({
+  experiment_name,
+  variant_name,
+  payload,
+  context_owner_type,
+  context_owner_id,
+  context_owner_slug,
+}) {
+  const { trackEvent } = useTracking()
+
   if (typeof window !== "undefined") {
-    const trackFeatureView = shouldTrack(featureName, variant.name)
+    const trackFeatureView = shouldTrack(experiment_name, variant_name)
 
     if (trackFeatureView) {
       trackEvent({
         action: Schema.ActionType.ExperimentViewed,
         service: "unleash",
-        experiment_name: featureName,
-        variant_name: variant.name,
-        payload: variant.payload,
+        experiment_name,
+        variant_name,
+        payload,
+        context_owner_type,
+        context_owner_id,
+        context_owner_slug,
       })
     }
   }
-
-  return variant
 }
 
 function shouldTrack(featureName: string, variantName: string): boolean {
