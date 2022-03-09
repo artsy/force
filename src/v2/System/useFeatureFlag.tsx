@@ -57,6 +57,7 @@ export function useFeatureVariant(featureName: string): Variant | null {
 }
 
 function shouldTrack(featureName: string, variantName: string): boolean {
+  // Value to set and read from the experimentsViewed key in localStorage.
   const experimentName = `${featureName}+${variantName}`
   const viewedExperiments = getExperimentsViewed()
 
