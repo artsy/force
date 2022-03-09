@@ -69,8 +69,7 @@ describe("Conversation", () => {
       })
 
       expect(screen.getByText("Seller's offer")).toBeInTheDocument()
-      expect(screen.getByText("List price")).toBeInTheDocument()
-      expect(screen.getByText("Tax")).toBeInTheDocument()
+      expect(screen.getByText("Tax*")).toBeInTheDocument()
     })
 
     it("shows the payment method", async () => {
