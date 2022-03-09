@@ -95,7 +95,6 @@ describe("Status", () => {
           ...testEnvProps,
           systemContextProps: {
             isEigen: true,
-            user: { lab_features: ["Make Offer On All Eligible Artworks"] },
           },
         })
         const page = await env.buildPage()
