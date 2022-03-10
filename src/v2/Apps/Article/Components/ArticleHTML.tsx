@@ -88,7 +88,7 @@ const Container = styled(Box)`
   h1,
   h2,
   h3 {
-    margin: ${themeGet("space.4")} auto;
+    margin: ${themeGet("space.2")} auto;
   }
 
   h1 {

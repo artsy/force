@@ -37,7 +37,7 @@ const ArticleHeader: FC<ArticleHeaderProps> = ({ article }) => {
         <RouterLink to={article.href} display="block" textDecoration="none">
           <Text variant="xxl">{article.title}</Text>
 
-          <Text variant="xxl" color="black60">
+          <Text variant="lg" color="black60">
             {article.byline}
           </Text>
         </RouterLink>

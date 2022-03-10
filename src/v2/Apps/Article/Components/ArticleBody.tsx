@@ -20,6 +20,7 @@ import { ArticleContextProvider } from "./ArticleContext"
 import { ArticleAd } from "./ArticleAd"
 import { ArticleSectionFragmentContainer } from "./ArticleSection"
 import { ArticleSectionAdFragmentContainer } from "./ArticleSectionAd"
+import { OPTIMAL_READING_WIDTH } from "./Sections/ArticleSectionText"
 
 interface ArticleBodyProps {
   article: ArticleBody_article
@@ -102,6 +103,8 @@ const ArticleBody: FC<ArticleBodyProps> = ({ article }) => {
           {article.postscript && (
             <HTML
               variant="sm"
+              maxWidth={OPTIMAL_READING_WIDTH}
+              mx="auto"
               mt={4}
               fontStyle="italic"
               color="black60"

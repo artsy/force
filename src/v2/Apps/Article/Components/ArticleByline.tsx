@@ -10,6 +10,7 @@ import {
 import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArticleByline_article } from "v2/__generated__/ArticleByline_article.graphql"
+import { OPTIMAL_READING_WIDTH } from "./Sections/ArticleSectionText"
 
 interface ArticleBylineProps {
   article: ArticleByline_article
@@ -18,48 +19,51 @@ interface ArticleBylineProps {
 const ArticleByline: FC<ArticleBylineProps> = ({ article }) => {
   if (article.authors.length === 0) {
     return (
-      <Text variant="md" fontWeight="bold">
+      <Text
+        variant="md"
+        fontWeight="bold"
+        maxWidth={OPTIMAL_READING_WIDTH}
+        mx="auto"
+      >
         {article.byline}
       </Text>
     )
   }
 
   return (
-    <GridColumns>
-      <Column span={9}>
-        <Join separator={<Spacer mt={2} />}>
-          {article.authors.map(author => {
-            const image = author.image?.cropped
+    <Box maxWidth={OPTIMAL_READING_WIDTH} mx="auto">
+      <Join separator={<Spacer mt={2} />}>
+        {article.authors.map(author => {
+          const image = author.image?.cropped
 
-            if (image) {
-              return (
-                <EntityHeader
-                  key={author.internalID}
-                  name={author.name || "Artsy Editorial"}
-                  initials={author.initials || "A"}
-                  meta={author.bio!}
-                  image={image!}
-                />
-              )
-            }
-
+          if (image) {
             return (
-              <Box>
-                <Text variant="md" fontWeight="bold">
-                  {author.name || "Artsy Editorial"}
-                </Text>
-
-                {author.bio && (
-                  <Text variant="xs" color="black60">
-                    {author.bio}
-                  </Text>
-                )}
-              </Box>
+              <EntityHeader
+                key={author.internalID}
+                name={author.name || "Artsy Editorial"}
+                initials={author.initials || "A"}
+                meta={author.bio!}
+                image={image!}
+              />
             )
-          })}
-        </Join>
-      </Column>
-    </GridColumns>
+          }
+
+          return (
+            <Box>
+              <Text variant="md" fontWeight="bold">
+                {author.name || "Artsy Editorial"}
+              </Text>
+
+              {author.bio && (
+                <Text variant="xs" color="black60">
+                  {author.bio}
+                </Text>
+              )}
+            </Box>
+          )
+        })}
+      </Join>
+    </Box>
   )
 }
 
