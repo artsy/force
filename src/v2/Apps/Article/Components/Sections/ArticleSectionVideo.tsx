@@ -17,7 +17,7 @@ const ArticleSectionVideo: FC<ArticleSectionVideoProps> = ({ section }) => {
     setMode("Playing")
   }
 
-  if (!section.embed) return null
+  if (!section.embed || !section.fallbackEmbed) return null
 
   const image = section.image?.cropped
 
@@ -29,7 +29,7 @@ const ArticleSectionVideo: FC<ArticleSectionVideoProps> = ({ section }) => {
       bg="black10"
       data-testid="ArticleSectionVideo"
     >
-      {mode === "Pending" ? (
+      {mode === "Pending" && image ? (
         <Cover
           onClick={handleClick}
           width="100%"
@@ -37,20 +37,22 @@ const ArticleSectionVideo: FC<ArticleSectionVideoProps> = ({ section }) => {
           position="relative"
           bg="black10"
         >
-          {image && (
-            <Image
-              src={image.src}
-              srcSet={image.srcSet}
-              width="100%"
-              height="100%"
-              lazyLoad
-            />
-          )}
+          <Image
+            src={image.src}
+            srcSet={image.srcSet}
+            width="100%"
+            height="100%"
+            lazyLoad
+          />
 
           <Play />
         </Cover>
       ) : (
-        <Video dangerouslySetInnerHTML={{ __html: section.embed }} />
+        <Video
+          dangerouslySetInnerHTML={{
+            __html: image ? section.embed : section.fallbackEmbed,
+          }}
+        />
       )}
     </ResponsiveBox>
   )
@@ -62,6 +64,7 @@ export const ArticleSectionVideoFragmentContainer = createFragmentContainer(
     section: graphql`
       fragment ArticleSectionVideo_section on ArticleSectionVideo {
         embed(autoPlay: true)
+        fallbackEmbed: embed(autoPlay: false)
         image {
           cropped(width: 910, height: 512) {
             src
