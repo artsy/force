@@ -24,6 +24,7 @@ export class UnleashFeatureFlagService implements FeatureFlagService {
       url: this.url,
       appName: this.appName,
       refreshInterval: 60000,
+      environment: process.env.NODE_ENV,
       customHeaders: {
         Authorization: this.serverKey,
       },
