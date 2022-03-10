@@ -227,9 +227,7 @@ export const PriceRangeFilterNew: FC<PriceRangeFilterNewProps> = ({
         </Box>
       </Flex>
 
-      <Spacer mb={4} />
-
-      <Box mx={[RANGE_DOT_SIZE / 2, 0]}>
+      <Box mt={4} mx={[RANGE_DOT_SIZE / 2, 0]}>
         <Histogram
           bars={BARS}
           selectedRange={[sliderRange[0], sliderRange[1]]}
