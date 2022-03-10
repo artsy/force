@@ -16,6 +16,7 @@ import {
 } from "@artsy/palette"
 import { Form, Formik } from "formik"
 import { Fragment } from "react"
+import ts from "typescript"
 import { FullBleedHeader } from "v2/Components/FullBleedHeader"
 import { MetaTags } from "v2/Components/MetaTags"
 import { useLoadScript } from "v2/Utils/Hooks/useLoadScript"
@@ -115,16 +116,16 @@ const MarketplaceExperience: React.FC = () => {
 }
 
 const PartnerWithArtsyForm: React.FC = () => {
-  // TODO: onSubmit send data to marketo:
+  // onSubmit send data to marketo:
   // https://nation.marketo.com/t5/marketo-whisperer-blogs/make-a-marketo-form-submission-in-the-background/ba-p/246490
 
   useLoadScript({
     id: "marketo-form",
     src: "https://app-ab14.marketo.com/js/forms2/js/forms2.min.js",
-    // onReady: () => {
-    //   // @ts-ignore
-    //   window.MktoForms2.loadForm("//app-ab14.marketo.com", "609-FDY-207", 1240)
-    // },
+    onReady: () => {
+      // @ts-ignore
+      window.MktoForms2.loadForm("//app-ab14.marketo.com", "609-FDY-207", 4419)
+    },
   })
 
   return (
@@ -136,32 +137,37 @@ const PartnerWithArtsyForm: React.FC = () => {
         <Text variant="sm">Apply to host your auctions on Artsy</Text>
       </Column>
       <Column span={6}>
+        <form id="mktoForm_4419"></form>
         <Formik
           initialValues={{
-            auctionHouse: "",
-            firstName: "",
-            lastName: "",
-            titleAtOrg: "",
-            website: "",
-            email: "",
-            agreeToTerms: false,
-            companyType: "",
+            Company: "",
+            FirstName: "",
+            LastName: "",
+            Title: "",
+            Website: "",
+            Email: "",
+            B2B_TOU_Active_Consent__c: false,
+            Type__c: "Gallery",
           }}
           onSubmit={values => {
-            // TODO: send data to marketo instead of console.log
-            console.log(values)
+            // @ts-ignore
+            const form = window.MktoForms2.allForms()[0]
+            form.addHiddenFields(values)
+            form.submit()
           }}
           validationSchema={Yup.object().shape({
-            auctionHouse: Yup.string(),
-            firstName: Yup.string().required("Required"),
-            lastName: Yup.string().required("Required"),
-            titleAtOrg: Yup.string(),
-            website: Yup.string().url("Invalid website url"),
-            email: Yup.string()
+            Company: Yup.string().required("Required"),
+            FirstName: Yup.string().required("Required"),
+            LastName: Yup.string().required("Required"),
+            Title: Yup.string(),
+            Website: Yup.string()
+              .url("Invalid website url")
+              .required("Required"),
+            Email: Yup.string()
               .email("Invalid email address")
               .required("Required"),
-            agreeToTerms: Yup.boolean().oneOf([true], "Required"),
-            companyType: Yup.string(),
+            B2B_TOU_Active_Consent__c: Yup.boolean().oneOf([true], "Required"),
+            Type__c: Yup.string(),
           })}
         >
           {({ values, handleChange, setFieldValue, errors }) => (
@@ -169,48 +175,53 @@ const PartnerWithArtsyForm: React.FC = () => {
               <Join separator={<Spacer mb={2} />}>
                 <Input
                   title="Auction House or Organization Name"
-                  name="auctionHouse"
-                  value={values.auctionHouse}
+                  name="Company"
+                  value={values.Company}
                   onChange={handleChange}
-                  error={errors.auctionHouse}
+                  error={errors.Company}
+                  required
                 />
                 <Flex flexDirection="row">
                   <Input
                     title="First name"
-                    name="firstName"
-                    value={values.firstName}
+                    name="FirstName"
+                    value={values.FirstName}
                     onChange={handleChange}
-                    error={errors.firstName}
+                    error={errors.FirstName}
+                    required
                   />
                   <Spacer mr={2} />
                   <Input
                     title="Last Name"
-                    name="lastName"
-                    value={values.lastName}
+                    name="LastName"
+                    value={values.LastName}
                     onChange={handleChange}
-                    error={errors.lastName}
+                    error={errors.LastName}
+                    required
                   />
                 </Flex>
                 <Input
                   title="Title at Organization"
-                  name="titleAtOrg"
-                  value={values.titleAtOrg}
+                  name="Title"
+                  value={values.Title}
                   onChange={handleChange}
-                  error={errors.titleAtOrg}
+                  error={errors.Title}
                 />
                 <Input
                   title="Website"
-                  name="website"
-                  value={values.website}
+                  name="Website"
+                  value={values.Website}
                   onChange={handleChange}
-                  error={errors.website}
+                  error={errors.Website}
+                  required
                 />
                 <Input
                   title="Email Address"
-                  name="email"
-                  value={values.email}
+                  name="Email"
+                  value={values.Email}
                   onChange={handleChange}
-                  error={errors.email}
+                  error={errors.Email}
+                  required
                 />
                 <Select
                   options={[
@@ -266,14 +277,16 @@ const PartnerWithArtsyForm: React.FC = () => {
                     { text: "Art Dealer", value: "Art Dealer" },
                   ]}
                   title="Company Type"
-                  onSelect={selected => setFieldValue("companyType", selected)}
-                  selected={values.companyType}
-                  error={errors.companyType}
+                  onSelect={selected => setFieldValue("Type__c", selected)}
+                  selected={values.Type__c}
+                  error={errors.Type__c}
                 />
                 <Checkbox
-                  onSelect={selected => setFieldValue("agreeToTerms", selected)}
-                  selected={values.agreeToTerms}
-                  error={!!errors.agreeToTerms}
+                  onSelect={selected =>
+                    setFieldValue("B2B_TOU_Active_Consent__c", selected)
+                  }
+                  selected={values.B2B_TOU_Active_Consent__c}
+                  error={!!errors.B2B_TOU_Active_Consent__c}
                 >
                   <Text variant="md" lineHeight={1}>
                     I agree to Artsy{" "}
