@@ -28,6 +28,9 @@ export type ArticleSeries_article = {
                 readonly srcSet: string;
             } | null;
         } | null;
+        readonly media: {
+            readonly duration: string | null;
+        } | null;
     }>;
     readonly " $refType": "ArticleSeries_article";
 };
@@ -190,6 +193,24 @@ return {
             }
           ],
           "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "ArticleMedia",
+          "kind": "LinkedField",
+          "name": "media",
+          "plural": false,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "duration",
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
         }
       ],
       "storageKey": null
@@ -199,5 +220,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '54fd64505017c1fdb5a9dbff60a913b9';
+(node as any).hash = '12ed01cbea423655edd1471c85ad8798';
 export default node;

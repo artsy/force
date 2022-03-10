@@ -20,6 +20,8 @@ import { RouterLink } from "v2/System/Router/RouterLink"
 import { ArticleSeries_article } from "v2/__generated__/ArticleSeries_article.graphql"
 import { ArticleAd } from "./ArticleAd"
 import { ArticleSponsorFragmentContainer } from "./ArticleSponsor"
+import styled from "styled-components"
+import { themeGet } from "@styled-system/theme-get"
 
 interface ArticleSeriesProps {
   article: ArticleSeries_article
@@ -109,6 +111,7 @@ const ArticleSeries: FC<ArticleSeriesProps> = ({ article }) => {
 
                 <Column span={6}>
                   <ResponsiveBox
+                    position="relative"
                     aspectWidth={869}
                     aspectHeight={580}
                     maxWidth="100%"
@@ -122,6 +125,27 @@ const ArticleSeries: FC<ArticleSeriesProps> = ({ article }) => {
                         height="100%"
                         lazyLoad
                       />
+                    )}
+
+                    {relatedArticle.media && (
+                      <>
+                        <Play
+                          position="absolute"
+                          bottom={2}
+                          left={2}
+                          color="white100"
+                        />
+
+                        <Text
+                          variant="xs"
+                          color="white100"
+                          position="absolute"
+                          bottom={1}
+                          right={2}
+                        >
+                          {relatedArticle.media.duration}
+                        </Text>
+                      </>
                     )}
                   </ResponsiveBox>
                 </Column>
@@ -205,8 +229,22 @@ export const ArticleSeriesFragmentContainer = createFragmentContainer(
               srcSet
             }
           }
+          media {
+            duration
+          }
         }
       }
     `,
   }
 )
+
+const Play = styled(Box)`
+  &:after {
+    content: "";
+    display: block;
+    color: currentColor;
+    border-top: 15px solid transparent;
+    border-bottom: 15px solid transparent;
+    border-left: 30px solid;
+  }
+`
