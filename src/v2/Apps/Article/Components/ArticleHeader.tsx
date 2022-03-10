@@ -65,7 +65,7 @@ const ArticleHeader: FC<ArticleHeaderProps> = ({ article }) => {
 
             <Text variant="xxl">{article.title}</Text>
 
-            <Text variant="xxl" color="rgba(255, 255, 255, 0.8)">
+            <Text variant="lg" color="rgba(255, 255, 255, 0.8)">
               {article.byline}
             </Text>
           </FullBleedHeaderOverlay>
@@ -87,7 +87,7 @@ const ArticleHeader: FC<ArticleHeaderProps> = ({ article }) => {
               {article.title}
             </Text>
 
-            <Text variant="xxl" color="black60">
+            <Text variant="lg" color="black60">
               {article.byline}
             </Text>
           </Box>
@@ -161,7 +161,7 @@ const ArticleHeader: FC<ArticleHeaderProps> = ({ article }) => {
               {article.title}
             </Text>
 
-            <Text variant="xxl" color="black60" mb={2}>
+            <Text variant="lg" color="black60" mb={2}>
               {article.byline}
             </Text>
           </Box>
@@ -183,7 +183,7 @@ const ArticleHeader: FC<ArticleHeaderProps> = ({ article }) => {
               {article.title}
             </Text>
 
-            <Text variant="xxl" color="black60">
+            <Text variant="lg" color="black60">
               {article.byline}
             </Text>
           </Box>
