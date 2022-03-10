@@ -16,7 +16,6 @@ import {
 } from "@artsy/palette"
 import { Form, Formik } from "formik"
 import { Fragment } from "react"
-import ts from "typescript"
 import { FullBleedHeader } from "v2/Components/FullBleedHeader"
 import { MetaTags } from "v2/Components/MetaTags"
 import { useLoadScript } from "v2/Utils/Hooks/useLoadScript"
