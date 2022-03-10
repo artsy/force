@@ -12,6 +12,7 @@ export type ArtworkSidebar_artwork = {
         readonly " $fragmentRefs": FragmentRefs<"AuctionTimer_sale">;
     } | null;
     readonly saleArtwork: {
+        readonly endedAt: string | null;
         readonly " $fragmentRefs": FragmentRefs<"LotTimer_saleArtwork">;
     } | null;
     readonly " $fragmentRefs": FragmentRefs<"ArtworkSidebarArtists_artwork" | "ArtworkSidebarMetadata_artwork" | "ArtworkSidebarAuctionPartnerInfo_artwork" | "ArtworkSidebarAuctionInfoPolling_artwork" | "ArtworkSidebarCommercial_artwork" | "ArtworkSidebarPartnerInfo_artwork" | "ArtworkSidebarExtraLinks_artwork" | "SecurePayment_artwork" | "VerifiedSeller_artwork" | "AuthenticityCertificate_artwork" | "BuyerGuarantee_artwork">;
@@ -76,6 +77,13 @@ const node: ReaderFragment = {
       "name": "saleArtwork",
       "plural": false,
       "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "endedAt",
+          "storageKey": null
+        },
         {
           "args": null,
           "kind": "FragmentSpread",
@@ -143,5 +151,5 @@ const node: ReaderFragment = {
   "type": "Artwork",
   "abstractKey": null
 };
-(node as any).hash = '86d548abb1647724a594879a9d030f47';
+(node as any).hash = '006aa4c1097978fb87d0c111148a7369';
 export default node;

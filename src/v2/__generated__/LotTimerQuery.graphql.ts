@@ -31,7 +31,6 @@ query LotTimerQuery(
 
 fragment LotTimer_saleArtwork on SaleArtwork {
   endAt
-  endedAt
   formattedStartDateTime
   sale {
     startAt
@@ -114,13 +113,6 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "endedAt",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
             "name": "formattedStartDateTime",
             "storageKey": null
           },
@@ -150,12 +142,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "4833188ccffe49ba99f6f650743749d0",
+    "cacheID": "af5daa46d23ec80828f66e75d0d8aee4",
     "id": null,
     "metadata": {},
     "name": "LotTimerQuery",
     "operationKind": "query",
-    "text": "query LotTimerQuery(\n  $saleArtworkID: String!\n) {\n  saleArtwork(id: $saleArtworkID) {\n    ...LotTimer_saleArtwork\n    id\n  }\n}\n\nfragment LotTimer_saleArtwork on SaleArtwork {\n  endAt\n  endedAt\n  formattedStartDateTime\n  sale {\n    startAt\n    id\n  }\n}\n"
+    "text": "query LotTimerQuery(\n  $saleArtworkID: String!\n) {\n  saleArtwork(id: $saleArtworkID) {\n    ...LotTimer_saleArtwork\n    id\n  }\n}\n\nfragment LotTimer_saleArtwork on SaleArtwork {\n  endAt\n  formattedStartDateTime\n  sale {\n    startAt\n    id\n  }\n}\n"
   }
 };
 })();

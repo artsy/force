@@ -55,7 +55,8 @@ export const ArtworkSidebar: React.FC<ArtworkSidebarProps> = ({
           </Join>
 
           {artwork.sale?.cascadingEndTimeInterval &&
-          !artwork.saleArtwork?.endedAt ? (
+          artwork.saleArtwork &&
+          !artwork.saleArtwork.endedAt ? (
             <>
               <Spacer mt={2} />
               <LotTimerFragmentContainer saleArtwork={artwork.saleArtwork} />
@@ -112,6 +113,7 @@ export const ArtworkSidebarFragmentContainer = createFragmentContainer(
           ...AuctionTimer_sale
         }
         saleArtwork {
+          endedAt
           ...LotTimer_saleArtwork
         }
       }
