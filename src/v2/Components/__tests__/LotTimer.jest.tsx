@@ -1,4 +1,4 @@
-import { getTimerCopy, getTimerLabelCopy } from "../LotTimer"
+import { getTimerCopy } from "../LotTimer"
 
 describe("getTimerCopy", () => {
   describe("when the sale is open", () => {
@@ -66,49 +66,6 @@ describe("getTimerCopy", () => {
           "3 Days Until Bidding Starts"
         )
       })
-    })
-  })
-})
-
-describe("getTimerLabelCopy", () => {
-  describe("when the sale is open", () => {
-    const endDate = "2022-03-06T12:37:35-05:00"
-    const startDate = "2022-03-00T12:37:35-05:00"
-    const hasStarted = true
-    const hasEnded = false
-
-    it("formats the label to show 'Closes x date/time'", () => {
-      expect(
-        getTimerLabelCopy(endDate, startDate, hasStarted, hasEnded)
-      ).toEqual("Closes Mar 6, 5:37pm")
-
-      // expect(getTimerLabelCopy(endDate)).toEqual("Closes March 6, 12:37pm EST")
-    })
-  })
-
-  describe("when the sale is not yet open", () => {
-    const endDate = "2022-03-10T12:37:35-05:00"
-    const startDate = "2022-03-08T12:37:35-05:00"
-    const hasEnded = false
-    const hasStarted = false
-    it("formats the label to show 'x date/time'", () => {
-      expect(
-        getTimerLabelCopy(endDate, startDate, hasStarted, hasEnded)
-      ).toEqual("Mar 8, 5:37pm")
-
-      // expect(getTimerLabelCopy(endDate)).toEqual("March 6, 12:37pm EST")
-    })
-  })
-
-  describe("when the sale is closed", () => {
-    const endDate = "2022-03-03T12:37:35-05:00"
-    const startDate = "2022-03-02T12:37:35-05:00"
-    const hasEnded = true
-    const hasStarted = true
-    it("formats the label to show 'Closed'", () => {
-      expect(
-        getTimerLabelCopy(endDate, startDate, hasStarted, hasEnded)
-      ).toEqual("Closed")
     })
   })
 })

@@ -27,8 +27,6 @@ export const LotTimer: React.FC<LotTimerProps> = ({ saleArtwork }) => {
 
   const timerCopy = getTimerCopy(time, hasStarted)
 
-  const labelCopy = getTimerLabelCopy(endAt, startAt, hasStarted, hasEnded)
-
   return (
     <Flex alignItems="center" flexDirection="column">
       <Text variant="md" color={"blue100"}>
@@ -36,7 +34,7 @@ export const LotTimer: React.FC<LotTimerProps> = ({ saleArtwork }) => {
       </Text>
 
       <Text variant="md" color={"black60"}>
-        {labelCopy}
+        {saleArtwork.formattedStartDateTime}
       </Text>
     </Flex>
   )
@@ -83,7 +81,6 @@ export const LotTimerQueryRenderer = ({
 }
 
 export const getTimerCopy = (time, hasStarted) => {
-  console.log("time", time)
   const { days, hours, minutes, seconds } = time
 
   const pDays = parseInt(days, 10)
@@ -119,35 +116,4 @@ export const getTimerCopy = (time, hasStarted) => {
   }
 
   return { copy, color }
-}
-
-export const getTimerLabelCopy = (endDate, startAt, hasStarted, hasEnded) => {
-  const startAtDisplay = getDateTimeDisplay(startAt)
-  if (!hasStarted) {
-    return startAtDisplay
-  }
-
-  if (hasEnded) {
-    return "Closed"
-  }
-
-  const endAtDisplay = getDateTimeDisplay(endDate)
-  return `Closes ${endAtDisplay}`
-}
-
-// This should go in metaphysics (formattedStartEndTime)
-const getDateTimeDisplay = (date): string => {
-  const dateTime = DateTime.fromISO(date)
-  const amPm = dateTime.hour >= 12 ? "pm" : "am"
-  const minutes = dateTime.minute < 10 ? "0" + dateTime.minute : dateTime.minute
-  let hour
-  if (dateTime.hour > 12) {
-    hour = dateTime.hour - 12
-  } else if (dateTime.hour === 0) {
-    hour = 12
-  } else {
-    hour = dateTime.hour
-  }
-  // How do we get timezone here?
-  return `${dateTime.monthShort} ${dateTime.day}, ${hour}:${minutes}${amPm}`
 }
