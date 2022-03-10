@@ -22,7 +22,7 @@ describe("HomeTroveArtworksRail", () => {
   it("renders correctly", () => {
     const wrapper = getWrapper({
       Viewer: () => ({
-        saleArtworksConnection: {
+        artworksConnection: {
           edges: [
             {
               node: {

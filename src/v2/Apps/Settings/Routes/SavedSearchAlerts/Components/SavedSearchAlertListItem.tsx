@@ -1,10 +1,28 @@
-import { Box, Text, Flex, Clickable, Spacer } from "@artsy/palette"
+import {
+  Box,
+  Text,
+  Flex,
+  Clickable,
+  Spacer,
+  Pill,
+  IconProps,
+  ArrowDownIcon,
+  ArrowUpIcon,
+  GridColumns,
+  Column,
+} from "@artsy/palette"
+import { useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
+import styled from "styled-components"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { SavedSearchAlertListItem_item } from "v2/__generated__/SavedSearchAlertListItem_item.graphql"
 import { EditAlertEntity } from "../types"
 
 export type SavedSearchAlertListItemVariant = "active" | "inactive"
+
+const AlertPill = styled(Pill)<{ active: boolean }>`
+  pointer-events: none;
+`
 
 interface SavedSearchAlertListItemProps {
   item: SavedSearchAlertListItem_item
@@ -18,6 +36,14 @@ export const SavedSearchAlertListItem: React.FC<SavedSearchAlertListItemProps> =
   onEditAlertClick,
 }) => {
   const viewAllHref = `${item.href}&search_criteria_id=${item.internalID}`
+  const [isExpanded, setIsExpanded] = useState(false)
+  const Icon: React.FC<IconProps> = isExpanded ? ArrowUpIcon : ArrowDownIcon
+
+  const toggleExpandFilters = () => setIsExpanded(isExpanded => !isExpanded)
+
+  const toggleExpandFiltersText = isExpanded
+    ? "Close all filters"
+    : "Show all filters"
 
   return (
     <Box
@@ -29,18 +55,29 @@ export const SavedSearchAlertListItem: React.FC<SavedSearchAlertListItemProps> =
     >
       <Flex
         flexDirection="row"
-        alignItems="center"
+        alignItems={["stretch", "center"]}
         justifyContent="space-between"
       >
-        <Flex flex={1} mr={2}>
+        <Flex
+          mr={2}
+          flexDirection={["column", "row"]}
+          alignItems={["stretch", "center"]}
+        >
           <Text
             variant="lg"
             color={variant === "active" ? "blue100" : "black100"}
           >
             {item.userAlertSettings.name}
           </Text>
+          <Spacer m={2} />
+          <Clickable textDecoration="underline" onClick={toggleExpandFilters}>
+            <Flex flexDirection="row" alignItems="center">
+              <Text variant="sm">{toggleExpandFiltersText}</Text>
+              <Icon height={18} width={18} ml={0.5} />
+            </Flex>
+          </Clickable>
         </Flex>
-        <Flex flexDirection="row" alignItems="center">
+        <Flex flexDirection="row" alignItems={["flex-start", "center"]}>
           <Clickable
             textDecoration="underline"
             onClick={() => {
@@ -59,6 +96,23 @@ export const SavedSearchAlertListItem: React.FC<SavedSearchAlertListItemProps> =
           </RouterLink>
         </Flex>
       </Flex>
+      <Spacer my={2} />
+      <GridColumns>
+        <Column span={[12, 8]}>
+          {isExpanded &&
+            item.labels.map(label => (
+              <AlertPill
+                key={label.value}
+                variant="textSquare"
+                active
+                mr={1}
+                mb={1}
+              >
+                {label.value}
+              </AlertPill>
+            ))}
+        </Column>
+      </GridColumns>
     </Box>
   )
 }
@@ -71,6 +125,9 @@ export const SavedSearchAlertListItemFragmentContainer = createFragmentContainer
         internalID
         artistIDs
         href
+        labels {
+          value
+        }
         userAlertSettings {
           name
         }

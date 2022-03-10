@@ -11,7 +11,6 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import { getNamePlaceholder } from "./Utils/getNamePlaceholder"
 import { createSavedSearchAlert } from "./Mutations/createSavedSearchAlert"
 import { useSystemContext } from "v2/System"
 import { useArtworkFilterContext } from "../ArtworkFilter/ArtworkFilterContext"
@@ -55,7 +54,7 @@ export const SavedSearchAlertModal: React.FC<SavedSearchAlertFormProps> = ({
 }) => {
   const { relayEnvironment } = useSystemContext()
   const { pills, criteria, removeCriteriaValue } = useSavedSearchAlertContext()
-  const namePlaceholder = getNamePlaceholder(entity.name, pills)
+  const namePlaceholder = entity.name
 
   const handleRemovePillPress = (pill: FilterPill) => {
     if (pill.isDefault) {

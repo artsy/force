@@ -88,6 +88,7 @@ export const FairsIndex: React.FC<FairsIndexProps> = ({
 
             <Text
               variant="lg"
+              as="h1"
               color="white100"
               position="absolute"
               top={0}
