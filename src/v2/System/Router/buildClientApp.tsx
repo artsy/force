@@ -76,6 +76,12 @@ export function buildClientApp(config: RouterConfig): Promise<Resolve> {
             // @see https://github.com/artsy/force/blob/2c0db041fa6cb50e9f747ea95860ad5c38290653/src/v2/Apps/Artwork/ArtworkApp.tsx#L117-L121
             "/artwork(.*)",
           ],
+          abTestRouteMap: [
+            {
+              abTest: "artist_grid_manual_curation_trial_qa",
+              routes: ["/artist/banksy/works-for-sale"],
+            },
+          ],
         }),
       ]
       const resolver = new Resolver(relayEnvironment)
