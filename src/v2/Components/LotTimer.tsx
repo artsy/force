@@ -2,7 +2,6 @@ import { LotTimer_saleArtwork } from "v2/__generated__/LotTimer_saleArtwork.grap
 import { LotTimerQuery } from "v2/__generated__/LotTimerQuery.graphql"
 import { SystemContext } from "v2/System"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
-import { DateTime } from "luxon"
 import { useContext } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import * as React from "react"
@@ -44,6 +43,7 @@ export const LotTimerFragmentContainer = createFragmentContainer(LotTimer, {
   saleArtwork: graphql`
     fragment LotTimer_saleArtwork on SaleArtwork {
       endAt
+      endedAt
       formattedStartDateTime
       sale {
         startAt

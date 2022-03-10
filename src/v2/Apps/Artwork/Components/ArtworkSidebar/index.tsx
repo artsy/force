@@ -54,13 +54,15 @@ export const ArtworkSidebar: React.FC<ArtworkSidebarProps> = ({
             />
           </Join>
 
-          {artwork.sale?.cascadingEndTimeInterval && artwork.saleArtwork ? (
+          {artwork.sale?.cascadingEndTimeInterval &&
+          !artwork.saleArtwork?.endedAt ? (
             <>
               <Spacer mt={2} />
               <LotTimerFragmentContainer saleArtwork={artwork.saleArtwork} />
             </>
           ) : (
-            artwork.sale && !artwork.sale.is_closed && (
+            artwork.sale &&
+            !artwork.sale.is_closed && (
               <>
                 <Spacer mt={2} />
                 <AuctionTimerFragmentContainer sale={artwork.sale} />
