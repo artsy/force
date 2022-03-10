@@ -48,7 +48,11 @@ const ArticleHeader: FC<ArticleHeaderProps> = ({ article }) => {
   switch (article.hero.layout) {
     case "FULLSCREEN": {
       return (
-        <FullBleedHeader src={article.hero.image?.url!}>
+        <FullBleedHeader
+          {...(article.hero.media
+            ? { src: article.hero.media, mode: "VIDEO" }
+            : { src: article.hero.image?.url!, mode: "IMAGE" })}
+        >
           <FullBleedHeaderOverlay
             alignItems="flex-start"
             flexDirection="column"
