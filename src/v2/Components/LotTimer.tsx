@@ -46,6 +46,7 @@ export const LotTimerFragmentContainer = createFragmentContainer(LotTimer, {
   saleArtwork: graphql`
     fragment LotTimer_saleArtwork on SaleArtwork {
       endAt
+      formattedStartDateTime
       sale {
         startAt
       }

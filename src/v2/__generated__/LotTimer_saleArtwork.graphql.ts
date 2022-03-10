@@ -6,6 +6,7 @@ import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type LotTimer_saleArtwork = {
     readonly endAt: string | null;
+    readonly formattedStartDateTime: string | null;
     readonly sale: {
         readonly startAt: string | null;
     } | null;
@@ -35,6 +36,13 @@ const node: ReaderFragment = {
     {
       "alias": null,
       "args": null,
+      "kind": "ScalarField",
+      "name": "formattedStartDateTime",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
       "concreteType": "Sale",
       "kind": "LinkedField",
       "name": "sale",
@@ -54,5 +62,5 @@ const node: ReaderFragment = {
   "type": "SaleArtwork",
   "abstractKey": null
 };
-(node as any).hash = 'f1f1505e9a8067b834dc491a2714277a';
+(node as any).hash = 'cfb577d42e71ed04fb5b59a348cf5cf7';
 export default node;
