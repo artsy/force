@@ -21,32 +21,25 @@ jest.mock("v2/System/useSystemContext")
 const mockUseSystemContext = useSystemContext as jest.Mock
 let mockFeatureFlags
 
+const ARTWORKSIDEBAR_TEST_QUERY = graphql`
+  query ArtworkSidebar_Test_Query @relay_test_operation {
+    artwork(id: "josef-albers-homage-to-the-square-85") {
+      ...ArtworkSidebar_artwork
+    }
+    me {
+      ...ArtworkSidebar_me
+    }
+  }
+`
+
 const { getWrapper } = setupTestWrapper({
   Component: ArtworkSidebarFragmentContainer,
-  query: graphql`
-    query ArtworkSidebar_Test_Query @relay_test_operation {
-      artwork(id: "josef-albers-homage-to-the-square-85") {
-        ...ArtworkSidebar_artwork
-      }
-      me {
-        ...ArtworkSidebar_me
-      }
-    }
-  `,
+  query: ARTWORKSIDEBAR_TEST_QUERY,
 })
 
 const { renderWithRelay } = setupTestWrapperTL({
   Component: ArtworkSidebarFragmentContainer,
-  query: graphql`
-    query ArtworkSidebar_Test_Query @relay_test_operation {
-      artwork(id: "josef-albers-homage-to-the-square-85") {
-        ...ArtworkSidebar_artwork
-      }
-      me {
-        ...ArtworkSidebar_me
-      }
-    }
-  `,
+  query: ARTWORKSIDEBAR_TEST_QUERY,
 })
 
 describe("ArtworkSidebar", () => {
