@@ -82,35 +82,37 @@ export const LotTimerQueryRenderer = ({
 export const getTimerCopy = (time, hasStarted) => {
   const { days, hours, minutes, seconds } = time
 
-  const pDays = parseInt(days, 10)
-  const pHours = parseInt(hours, 10)
-  const pMinutes = parseInt(minutes, 10)
-  const pSeconds = parseInt(seconds, 10)
+  const parsedDays = parseInt(days, 10)
+  const parsedHours = parseInt(hours, 10)
+  const parsedMinutes = parseInt(minutes, 10)
+  const parsedSeconds = parseInt(seconds, 10)
 
   let copy = ""
   let color = "blue100"
 
   if (!hasStarted) {
-    copy = `${pDays + 1} Day${pDays >= 1 ? "s" : ""} Until Bidding Starts`
+    copy = `${parsedDays + 1} Day${
+      parsedDays >= 1 ? "s" : ""
+    } Until Bidding Starts`
   } else {
-    if (pDays < 1 && pHours < 1 && pMinutes <= 2) {
-      copy = `${pMinutes}m ${pSeconds}s`
+    if (parsedDays < 1 && parsedHours < 1 && parsedMinutes <= 2) {
+      copy = `${parsedMinutes}m ${parsedSeconds}s`
       color = "red100"
     }
 
     // More than 24 hours until close
-    else if (pDays >= 1) {
-      copy = `${pDays}d ${pHours}h`
+    else if (parsedDays >= 1) {
+      copy = `${parsedDays}d ${parsedHours}h`
     }
 
     // 1-24 hours until close
-    else if (pDays < 1 && pHours >= 1) {
-      copy = `${pHours}h ${pMinutes}m`
+    else if (parsedDays < 1 && parsedHours >= 1) {
+      copy = `${parsedHours}h ${parsedMinutes}m`
     }
 
     // 2-60 mins until close
-    else if (pDays < 1 && pHours < 1 && pMinutes > 2) {
-      copy = `${pMinutes}m ${pSeconds}s`
+    else if (parsedDays < 1 && parsedHours < 1 && parsedMinutes > 2) {
+      copy = `${parsedMinutes}m ${parsedSeconds}s`
     }
   }
 
