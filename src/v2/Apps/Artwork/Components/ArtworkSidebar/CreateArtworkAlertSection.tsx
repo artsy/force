@@ -1,10 +1,17 @@
 import React from "react"
-import { Separator, Spacer, Flex, Button, BellIcon, Text } from "@artsy/palette"
+import {
+  Separator,
+  Spacer,
+  Flex,
+  Button,
+  BellIcon,
+  Text,
+  Box,
+} from "@artsy/palette"
 
 export const CreateArtworkAlertSection: React.FC = () => {
   return (
-    <>
-      <Spacer m={2} />
+    <Box my={2}>
       <Separator />
       <Spacer m={2} />
       <Flex
@@ -13,7 +20,7 @@ export const CreateArtworkAlertSection: React.FC = () => {
         alignItems="center"
         justifyContent="space-between"
       >
-        <Flex flex={1} justifyContent="flex-start">
+        <Flex flex={1}>
           <Text variant="xs">
             Be notified when a similar piece is available
           </Text>
@@ -25,7 +32,6 @@ export const CreateArtworkAlertSection: React.FC = () => {
           </Button>
         </Flex>
       </Flex>
-      <Spacer m={2} />
-    </>
+    </Box>
   )
 }
