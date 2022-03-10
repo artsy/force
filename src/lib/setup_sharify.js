@@ -34,7 +34,7 @@ sharify.data = _.extend(
     "APP_URL",
     "APPLICATION_NAME",
     "ARTSY_EDITORIAL_CHANNEL",
-    "ARTIST_GRID_MANUAL_CURATION_TRIAL_QA",
+    "ARTIST_GRID_MANUAL_CURATION_TRIAL_QA", // TODO: remove once "artist_grid_manual_curation_trial" A/B test is over
     "AUCTION_ZENDESK_KEY",
     "AUTO_GRAVITY_LOGIN",
     "CDN_URL",

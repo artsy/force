@@ -183,7 +183,7 @@ export interface ArtworkFilterContextProps {
   /** The current artwork filter state (which determines the network request and the url querystring) */
   filters?: ArtworkFiltersState
 
-  // TODO: remove once A/B test is over
+  // TODO: remove once "artist_grid_manual_curation_trial" A/B test is over
   /** Correctly restore sort value depending on A/B test (for example, when the "Clear All" button was pressed) */
   defaultFilters?: ArtworkFiltersState
 
@@ -594,7 +594,7 @@ const artworkFilterReducer = (
 
 export const getSelectedFiltersCounts = (
   selectedFilters: ArtworkFilters = {},
-  defaultFilters: ArtworkFilters = {} // TODO: remove once A/B test is over
+  defaultFilters: ArtworkFilters = {} // TODO: remove once "artist_grid_manual_curation_trial" A/B test is over
 ) => {
   const counts: Partial<SelectedFiltersCounts> = {}
   const filtersParams = Object.values(FilterParamName)

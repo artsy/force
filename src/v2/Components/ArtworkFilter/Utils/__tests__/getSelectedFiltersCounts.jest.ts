@@ -90,7 +90,7 @@ describe("getSelectedFiltersCounts helper", () => {
     })
   })
 
-  // TODO: remove once A/B test is over
+  // TODO: remove once "artist_grid_manual_curation_trial" A/B test is over
   describe("sort option", () => {
     it("counts options correctly", () => {
       const result = getSelectedFiltersCounts({
