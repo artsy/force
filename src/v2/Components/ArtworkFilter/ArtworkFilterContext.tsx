@@ -183,6 +183,8 @@ export interface ArtworkFilterContextProps {
   /** The current artwork filter state (which determines the network request and the url querystring) */
   filters?: ArtworkFiltersState
 
+  // TODO: remove once A/B test is over
+  /** Correctly restore sort value depending on A/B test (for example, when the "Clear All" button was pressed) */
   defaultFilters?: ArtworkFiltersState
 
   /** Interim filter state, to be manipulated before being applied to the current filter state */
@@ -256,11 +258,11 @@ export type SharedArtworkFilterContextProps = Pick<
   ArtworkFilterContextProps,
   | "aggregations"
   | "counts"
+  | "defaultFilters"
   | "filters"
   | "sortOptions"
   | "onFilterClick"
   | "ZeroState"
-  | "defaultFilters"
 > & {
   onChange?: (filterState) => void
 }
@@ -592,7 +594,7 @@ const artworkFilterReducer = (
 
 export const getSelectedFiltersCounts = (
   selectedFilters: ArtworkFilters = {},
-  defaultFilters: ArtworkFilters = {}
+  defaultFilters: ArtworkFilters = {} // TODO: remove once A/B test is over
 ) => {
   const counts: Partial<SelectedFiltersCounts> = {}
   const filtersParams = Object.values(FilterParamName)
