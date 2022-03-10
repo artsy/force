@@ -90,9 +90,11 @@ if (process.env.ALLOW_CONSOLE_LOGS !== "true") {
         // eslint-disable-next-line no-console
         if (console[type] === originalLoggers[type]) {
           const handler = (...args) => {
-            // FIXME: React 16.8.x doesn't support async `act` testing hooks and so this
-            // suppresses for now. Remove once we upgrade to React 16.9.
-            // @see https://github.com/facebook/react/issues/14769
+            const runtimeErrorStackTrace = args[1]
+            if (runtimeErrorStackTrace) {
+              originalLoggers.error(runtimeErrorStackTrace)
+            }
+
             if (
               args[0] &&
               args[0].includes &&
