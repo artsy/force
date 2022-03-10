@@ -1,4 +1,4 @@
-import { BoxProps, Flex, HTML, FullBleed } from "@artsy/palette"
+import { BoxProps, Flex, HTML, FullBleed, Box } from "@artsy/palette"
 import * as React from "react"
 import styled from "styled-components"
 import { useSizeAndPosition } from "v2/Utils/Hooks/useSizeAndPosition"
@@ -6,11 +6,12 @@ import { cropped } from "v2/Utils/resized"
 import { useNavBarHeight } from "./NavBar/useNavBarHeight"
 
 export interface FullBleedHeaderProps extends BoxProps {
-  /** Should the biggest size image available */
-  src: string
   caption?: string
   children?: React.ReactNode
   fixed?: boolean
+  mode?: "IMAGE" | "VIDEO"
+  /** Should the biggest size image available */
+  src: string
 }
 
 export const FullBleedHeader: React.FC<FullBleedHeaderProps> = ({
@@ -18,6 +19,7 @@ export const FullBleedHeader: React.FC<FullBleedHeaderProps> = ({
   children,
   caption,
   fixed = true,
+  mode = "IMAGE",
   ...rest
 }) => {
   const xs = cropped(src, { width: 450, height: 320 })
@@ -40,27 +42,55 @@ export const FullBleedHeader: React.FC<FullBleedHeaderProps> = ({
       position="relative"
       {...rest}
     >
-      <picture
-        style={
-          fixed
-            ? {
-                top: `${top}px`,
-                height: `${height}px`,
-                position: "fixed",
-                width: "100%",
-                left: 0,
-              }
-            : {}
-        }
-      >
-        <source srcSet={xl.srcSet} media="(min-width: 1720px)" />
-        <source srcSet={lg.srcSet} media="(min-width: 1232px)" />
-        <source srcSet={md.srcSet} media="(min-width: 896px)" />
-        <source srcSet={sm.srcSet} media="(min-width: 767px)" />
-        <source srcSet={xs.srcSet} media="(max-width: 766px)" />
+      {mode === "IMAGE" && (
+        <picture
+          style={
+            fixed
+              ? {
+                  top: `${top}px`,
+                  height: `${height}px`,
+                  position: "fixed",
+                  width: "100%",
+                  left: 0,
+                }
+              : {}
+          }
+        >
+          <source srcSet={xl.srcSet} media="(min-width: 1720px)" />
+          <source srcSet={lg.srcSet} media="(min-width: 1232px)" />
+          <source srcSet={md.srcSet} media="(min-width: 896px)" />
+          <source srcSet={sm.srcSet} media="(min-width: 767px)" />
+          <source srcSet={xs.srcSet} media="(max-width: 766px)" />
 
-        <Image src={sm.src} alt="" loading="lazy" />
-      </picture>
+          <Image src={sm.src} alt="" loading="lazy" />
+        </picture>
+      )}
+
+      {mode === "VIDEO" && (
+        <Box
+          display="block"
+          width="100%"
+          style={
+            fixed
+              ? {
+                  top: `${top}px`,
+                  height: `${height}px`,
+                  position: "fixed",
+                  width: "100%",
+                  left: 0,
+                  objectFit: "cover",
+                }
+              : { objectFit: "cover" }
+          }
+          as="video"
+          // @ts-ignore
+          src={src}
+          autoPlay
+          loop
+          playsInline
+          muted
+        />
+      )}
 
       {caption && (
         <FullBleedHeaderOverlay display={["none", "flex"]}>
