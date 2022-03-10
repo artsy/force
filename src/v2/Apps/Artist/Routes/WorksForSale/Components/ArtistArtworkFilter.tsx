@@ -15,6 +15,7 @@ import { useRouter } from "v2/System/Router/useRouter"
 import { SavedSearchEntity } from "v2/Components/SavedSearchAlert/types"
 import { getSupportedMetric } from "v2/Components/ArtworkFilter/Utils/metrics"
 import { getDefaultSortValueByVariant } from "v2/Utils/merchandisingTrial"
+import { updateUrl } from "v2/Components/ArtworkFilter/Utils/urlBuilder"
 
 interface ArtistArtworkFilterProps {
   aggregations: SharedArtworkFilterContextProps["aggregations"]
@@ -48,12 +49,21 @@ const ArtistArtworkFilter: React.FC<ArtistArtworkFilterProps> = props => {
     sort: defaultSort,
     ...match.location.query,
   }
+  const defaultFilters: ArtworkFiltersState = {
+    sort: defaultSort,
+  }
 
   return (
     <ArtworkFilterContextProvider
       aggregations={aggregations}
       counts={artist.counts as Counts}
       filters={filters}
+      defaultFilters={defaultFilters}
+      onChange={filterState => {
+        updateUrl(filterState, {
+          defaultValues: defaultFilters,
+        })
+      }}
       sortOptions={[
         { value: defaultSort, text: "Default" },
         { value: "-has_price,-prices", text: "Price (desc.)" },

@@ -183,6 +183,8 @@ export interface ArtworkFilterContextProps {
   /** The current artwork filter state (which determines the network request and the url querystring) */
   filters?: ArtworkFiltersState
 
+  defaultFilters?: ArtworkFiltersState
+
   /** Interim filter state, to be manipulated before being applied to the current filter state */
   stagedFilters?: ArtworkFiltersState
 
@@ -258,6 +260,7 @@ export type SharedArtworkFilterContextProps = Pick<
   | "sortOptions"
   | "onFilterClick"
   | "ZeroState"
+  | "defaultFilters"
 > & {
   onChange?: (filterState) => void
 }
@@ -271,6 +274,7 @@ export const ArtworkFilterContextProvider: React.FC<
   children,
   counts = {},
   filters = {},
+  defaultFilters = {},
   onChange = updateUrl,
   onFilterClick,
   sortOptions,
@@ -314,7 +318,8 @@ export const ArtworkFilterContextProvider: React.FC<
   }
 
   const currentlySelectedFiltersCounts = getSelectedFiltersCounts(
-    currentlySelectedFilters()
+    currentlySelectedFilters(),
+    defaultFilters
   )
 
   const artworkFilterContext = {
@@ -376,6 +381,7 @@ export const ArtworkFilterContextProvider: React.FC<
       const action: ArtworkFiltersAction = {
         type: "RESET",
         payload: {
+          ...defaultFilters,
           metric: initialFilterState.metric,
         },
       }
@@ -585,7 +591,8 @@ const artworkFilterReducer = (
 }
 
 export const getSelectedFiltersCounts = (
-  selectedFilters: ArtworkFilters = {}
+  selectedFilters: ArtworkFilters = {},
+  defaultFilters: ArtworkFilters = {}
 ) => {
   const counts: Partial<SelectedFiltersCounts> = {}
   const filtersParams = Object.values(FilterParamName)
@@ -622,7 +629,10 @@ export const getSelectedFiltersCounts = (
         break
       }
       case paramName === FilterParamName.sort: {
-        if (paramValue !== initialArtworkFilterState.sort) {
+        if (
+          paramValue !== initialArtworkFilterState.sort &&
+          paramValue !== defaultFilters.sort
+        ) {
           counts[paramName] = 1
         }
         break

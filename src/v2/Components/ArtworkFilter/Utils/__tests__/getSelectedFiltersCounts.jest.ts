@@ -89,4 +89,39 @@ describe("getSelectedFiltersCounts helper", () => {
       ...artistsFiltersExpectedResult,
     })
   })
+
+  describe("sort option", () => {
+    it("counts options correctly", () => {
+      const result = getSelectedFiltersCounts({
+        sort: "year",
+      })
+
+      expect(result).toEqual({
+        sort: 1,
+      })
+    })
+
+    it("counts options correctly when defaultFilters are passed", () => {
+      const result = getSelectedFiltersCounts(
+        {
+          sort: "year",
+        },
+        {
+          sort: "year",
+        }
+      )
+
+      expect(result).toEqual({})
+    })
+
+    it("counts options correctly when filter and defaultFilters are passed", () => {
+      const result = getSelectedFiltersCounts(singleOptionFilters, {
+        sort: "year",
+      })
+
+      expect(result).toEqual({
+        priceRange: 1,
+      })
+    })
+  })
 })
