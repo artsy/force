@@ -21,7 +21,7 @@ interface HomeTroveArtworksRailProps {
 export const HomeTroveArtworksRail: React.FC<HomeTroveArtworksRailProps> = ({
   viewer,
 }) => {
-  const artworks = extractNodes(viewer.saleArtworksConnection)
+  const artworks = extractNodes(viewer.artworksConnection)
 
   if (artworks.length === 0) {
     return null
@@ -50,16 +50,13 @@ export const HomeTroveArtworksRailFragmentContainer = createFragmentContainer(
   {
     viewer: graphql`
       fragment HomeTroveArtworksRail_viewer on Viewer {
-        saleArtworksConnection(first: 12, geneIDs: "trove") {
+        artworksConnection(first: 12, geneIDs: "trove") {
           edges {
             node {
               ...ShelfArtwork_artwork @arguments(width: 210)
               internalID
               slug
               href
-              sale {
-                isClosed
-              }
             }
           }
         }
