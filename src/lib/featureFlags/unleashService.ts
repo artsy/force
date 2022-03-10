@@ -12,7 +12,9 @@ export class UnleashFeatureFlagService implements FeatureFlagService {
   constructor(
     private url = UNLEASH_API,
     private appName = UNLEASH_APP_NAME,
-    private serverKey = UNLEASH_SERVER_KEY
+    private serverKey = UNLEASH_SERVER_KEY,
+    private environment = process.env.NODE_ENV,
+    private refreshInterval = 60000
   ) {}
 
   async init(): Promise<void> {
@@ -23,8 +25,8 @@ export class UnleashFeatureFlagService implements FeatureFlagService {
     this._unleash = await startUnleash({
       url: this.url,
       appName: this.appName,
-      refreshInterval: 60000,
-      environment: process.env.NODE_ENV,
+      refreshInterval: this.refreshInterval,
+      environment: this.environment,
       customHeaders: {
         Authorization: this.serverKey,
       },
