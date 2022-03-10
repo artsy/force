@@ -4,6 +4,7 @@ import { Separator, Spacer, Flex, Button, BellIcon, Text } from "@artsy/palette"
 export const CreateArtworkAlertSection: React.FC = () => {
   return (
     <>
+      <Spacer m={2} />
       <Separator />
       <Spacer m={2} />
       <Flex
