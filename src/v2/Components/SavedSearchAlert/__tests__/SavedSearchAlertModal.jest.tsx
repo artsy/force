@@ -83,7 +83,7 @@ describe("SavedSearchAlertModal", () => {
     render(<TestComponent />)
     expect(screen.getByRole("textbox")).toHaveAttribute(
       "placeholder",
-      "Test Artist • 2 filters"
+      "Test Artist"
     )
   })
 
