@@ -28,6 +28,7 @@ import { trackingMiddleware } from "v2/System/Analytics/trackingMiddleware"
 import { RenderError, RenderPending, RenderReady } from "./RenderStatus"
 import { shouldUpdateScroll } from "./Utils/shouldUpdateScroll"
 import { buildClientAppContext } from "desktop/lib/buildClientAppContext"
+import { TARGETED_ARTIST_ROUTES } from "v2/Utils/merchandisingTrial"
 
 interface Resolve {
   ClientApp: ComponentType<any>
@@ -79,7 +80,7 @@ export function buildClientApp(config: RouterConfig): Promise<Resolve> {
           abTestRouteMap: [
             {
               abTest: "artist_grid_manual_curation_trial_qa",
-              routes: ["/artist/banksy/works-for-sale"],
+              routes: TARGETED_ARTIST_ROUTES,
             },
           ],
         }),
