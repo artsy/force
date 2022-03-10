@@ -63,7 +63,9 @@ export const ArtworkSidebar: React.FC<ArtworkSidebarProps> = ({
             </>
           ) : (
             artwork.sale &&
-            !artwork.sale.is_closed && (
+            !artwork.sale.is_closed &&
+            artwork.saleArtwork &&
+            !artwork.saleArtwork.endedAt && (
               <>
                 <Spacer mt={2} />
                 <AuctionTimerFragmentContainer sale={artwork.sale} />

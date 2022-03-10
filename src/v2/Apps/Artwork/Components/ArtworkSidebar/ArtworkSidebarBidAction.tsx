@@ -148,7 +148,7 @@ export class ArtworkSidebarBidAction extends React.Component<
       me,
     } = this.props
 
-    if (!sale || sale.is_closed) return null
+    if (!sale || sale.is_closed || artwork.sale_artwork?.endedAt) return null
 
     /**
      * NOTE: This is making an incorrect assumption that there could only ever
@@ -396,6 +396,7 @@ export const ArtworkSidebarBidActionFragmentContainer = createFragmentContainer(
             cents
             display
           }
+          endedAt
         }
       }
     `,

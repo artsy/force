@@ -70,7 +70,6 @@ export const ArtworkSidebarCurrentBidInfo: React.FC<ArtworkSidebarCurrentBidInfo
     return null
   }
 
-  // TODO: Add a condition to check if the sale artwork is closed based on endedAt (coming from MP on SaleArtwork)
   if (artwork.sale?.is_closed || artwork.sale_artwork?.endedAt) {
     return (
       <>
