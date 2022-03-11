@@ -21,7 +21,6 @@ import { ArticleSeries_article } from "v2/__generated__/ArticleSeries_article.gr
 import { ArticleAd } from "./ArticleAd"
 import { ArticleSponsorFragmentContainer } from "./ArticleSponsor"
 import styled from "styled-components"
-import { themeGet } from "@styled-system/theme-get"
 
 interface ArticleSeriesProps {
   article: ArticleSeries_article

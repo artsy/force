@@ -34,8 +34,8 @@ const ArticleZoomGalleryFigure: FC<ArticleZoomGalleryFigureProps> = ({
 
   return (
     <ArticleZoomGalleryResponsiveBox
-      aspectWidth={figure.image.width || 1}
-      aspectHeight={figure.image.height || 1}
+      aspectWidth={figure.image?.width || 1}
+      aspectHeight={figure.image?.height || 1}
     >
       <picture key={src} style={{ width: "100%", height: "100%" }}>
         <source srcSet={xl.srcSet} media="(min-width: 1720px)" />

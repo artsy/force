@@ -1,12 +1,4 @@
-import {
-  Box,
-  Column,
-  EntityHeader,
-  GridColumns,
-  Join,
-  Spacer,
-  Text,
-} from "@artsy/palette"
+import { Box, EntityHeader, Join, Spacer, Text } from "@artsy/palette"
 import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArticleByline_article } from "v2/__generated__/ArticleByline_article.graphql"
