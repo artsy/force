@@ -171,6 +171,15 @@ const OfferArtworkOrEditionSetNode_Artwork = {
   },
 }
 
+const OfferArtworkOrEditionSetNode_EditionSet = {
+  artworkOrEditionSet: {
+    __typename: "EditionSet",
+    displayPriceRange: false,
+    id: "ed123",
+    price: "$14,000",
+  },
+}
+
 const OfferArtworkOrEditionSetNode_ArtworkInPounds = {
   artworkOrEditionSet: {
     __typename: "Artwork",
@@ -585,6 +594,31 @@ export const UntouchedOfferOrder = {
   totalListPriceCents: 1600000,
 } as const
 
+export const UntouchedOfferOrderEditionSet = {
+  ...UntouchedOfferOrder,
+  lineItems: {
+    edges: [
+      {
+        node: {
+          editionSetId: null,
+          id: "line-item-node-id",
+          selectedShippingQuote: null,
+          shippingQuoteOptions: null,
+          __isCommerceOrder: "CommerceOfferOrder",
+          artwork: {
+            ...OrderArtworkNode.artwork,
+            isEdition: true,
+          },
+          ...OrderArtworkVersionNode,
+          ...OfferArtworkOrEditionSetNode_EditionSet,
+          ...OrderArtworkFulfillmentsNode,
+          ...ArtaShipmentNode,
+        },
+      },
+    ],
+  },
+}
+
 export const UntouchedInquiryOfferOrder = {
   ...UntouchedOfferOrder,
   source: "inquiry",
@@ -647,9 +681,11 @@ export const UntouchedOfferOrderWithRange = {
           id: "line-item-node-id",
           selectedShippingQuote: null,
           shippingQuoteOptions: null,
-          ...OrderArtworkNode,
+          artwork: {
+            ...OrderArtworkNode.artwork,
+            isEdition: true,
+          },
           ...OrderArtworkVersionNode,
-
           ...OfferArtworkOrEditionSetNode_Range,
           ...OrderArtworkFulfillmentsNode,
           ...ArtaShipmentNode,

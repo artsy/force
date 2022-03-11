@@ -48,7 +48,6 @@ describe("ArtworkSidebar", () => {
       featureFlags: {
         "artwork-page-create-alert": {
           flagEnabled: false,
-          variant: { name: "enabled", enabled: false },
         },
       },
     }
@@ -71,7 +70,6 @@ describe("ArtworkSidebar", () => {
       featureFlags: {
         "artwork-page-create-alert": {
           flagEnabled: true,
-          variant: { name: "enabled", enabled: false },
         },
       },
     }
@@ -86,7 +84,7 @@ describe("ArtworkSidebar", () => {
     ).toBeInTheDocument()
   })
 
-  it("does not render the create alert section when artwork-page-create-alert ff is enabled", () => {
+  it("does not render the create alert section when artwork-page-create-alert ff is disabled", () => {
     renderWithRelay()
 
     expect(screen.queryByText(/Create Alert/i)).not.toBeInTheDocument()

@@ -31,6 +31,7 @@ export type ArtworkSidebarBidAction_artwork = {
             readonly cents: number | null;
             readonly display: string | null;
         } | null> | null;
+        readonly endedAt: string | null;
     } | null;
     readonly " $refType": "ArtworkSidebarBidAction_artwork";
 };
@@ -209,6 +210,13 @@ return {
             }
           ],
           "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "endedAt",
+          "storageKey": null
         }
       ],
       "storageKey": null
@@ -218,5 +226,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '5880223b32e8a4a3808623584d46c8bb';
+(node as any).hash = 'ef98ba696c44f0d74e28be6047ea4ce3';
 export default node;

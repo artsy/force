@@ -5,6 +5,7 @@
 import { ConcreteRequest } from "relay-runtime";
 export type ConsignmentAttributionClass = "LIMITED_EDITION" | "OPEN_EDITION" | "UNIQUE" | "UNKNOWN_EDITION" | "%future added value";
 export type ConsignmentSubmissionCategoryAggregation = "ARCHITECTURE" | "DESIGN_DECORATIVE_ART" | "DRAWING_COLLAGE_OR_OTHER_WORK_ON_PAPER" | "FASHION_DESIGN_AND_WEARABLE_ART" | "INSTALLATION" | "JEWELRY" | "MIXED_MEDIA" | "OTHER" | "PAINTING" | "PERFORMANCE_ART" | "PHOTOGRAPHY" | "PRINT" | "SCULPTURE" | "TEXTILE_ARTS" | "VIDEO_FILM_ANIMATION" | "%future added value";
+export type ConsignmentSubmissionSource = "ADMIN" | "APP_INBOUND" | "MY_COLLECTION" | "PARTNER" | "WEB_INBOUND" | "%future added value";
 export type ConsignmentSubmissionStateAggregation = "APPROVED" | "DRAFT" | "REJECTED" | "SUBMITTED" | "%future added value";
 export type CreateSubmissionMutationInput = {
     additionalInfo?: string | null;
@@ -31,6 +32,7 @@ export type CreateSubmissionMutationInput = {
     provenance?: string | null;
     sessionID?: string | null;
     signature?: boolean | null;
+    source?: ConsignmentSubmissionSource | null;
     sourceArtworkID?: string | null;
     state?: ConsignmentSubmissionStateAggregation | null;
     title?: string | null;

@@ -151,18 +151,21 @@ export class OfferRoute extends Component<OfferProps, OfferState> {
       return
     }
 
+    const artwork = this?.props?.order?.lineItems?.edges?.[0]?.node?.artwork
     const listPriceCents = this.props.order.totalListPriceCents
-    const artworkPrice = this?.props?.order?.lineItems?.edges?.[0]?.node
-      ?.artwork?.price
+    const artworkPrice = artwork?.price
+    const isInquiryCheckout = !artwork?.isPriceRange && !artwork?.price
+    const isEdition = artwork?.isEdition
     const isPriceHidden = isNil(artworkPrice) || artworkPrice === ""
     const isRangeOffer = getOfferItemFromOrder(this.props.order.lineItems)
       ?.displayPriceRange
 
     if (
       !isPriceHidden &&
+      !isRangeOffer &&
+      (isInquiryCheckout || isEdition) &&
       !lowSpeedBumpEncountered &&
-      offerValue * 100 < listPriceCents * 0.8 &&
-      !isRangeOffer
+      offerValue * 100 < listPriceCents * 0.8
     ) {
       this.showLowSpeedbump()
       return

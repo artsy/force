@@ -14,6 +14,7 @@ import {
 import { useDialog } from "v2/Utils/Hooks/useDialog"
 import { AuctionBuyersPremiumDialogQueryRenderer } from "v2/Components/AuctionBuyersPremiumDialog"
 import styled, { keyframes } from "styled-components"
+import { lotIsClosed } from "../../Utils/lotIsClosed"
 
 export interface ArtworkSidebarCurrentBidInfoProps {
   artwork: ArtworkSidebarCurrentBidInfo_artwork
@@ -70,7 +71,7 @@ export const ArtworkSidebarCurrentBidInfo: React.FC<ArtworkSidebarCurrentBidInfo
     return null
   }
 
-  if (artwork.sale?.is_closed) {
+  if (lotIsClosed(artwork.sale, artwork.sale_artwork)) {
     return (
       <>
         <Separator my={2} />
@@ -208,6 +209,7 @@ export const ArtworkSidebarCurrentBidInfoFragmentContainer = createFragmentConta
           is_with_reserve: isWithReserve
           reserve_message: reserveMessage
           reserve_status: reserveStatus
+          endedAt
           current_bid: currentBid {
             display
           }
