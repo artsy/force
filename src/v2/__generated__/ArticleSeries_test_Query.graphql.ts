@@ -25,6 +25,24 @@ query ArticleSeries_test_Query {
   }
 }
 
+fragment ArticleSeriesItem_article on Article {
+  href
+  title
+  thumbnailTitle
+  byline
+  description
+  publishedAt(format: "MMM DD, YYYY")
+  thumbnailImage {
+    display: cropped(width: 869, height: 580) {
+      src
+      srcSet
+    }
+  }
+  media {
+    duration
+  }
+}
+
 fragment ArticleSeries_article on Article {
   title
   byline
@@ -36,22 +54,8 @@ fragment ArticleSeries_article on Article {
     ...ArticleSponsor_sponsor
   }
   relatedArticles {
+    ...ArticleSeriesItem_article
     internalID
-    href
-    title
-    thumbnailTitle
-    byline
-    description
-    publishedAt(format: "MMM DD, YYYY")
-    thumbnailImage {
-      display: cropped(width: 869, height: 580) {
-        src
-        srcSet
-      }
-    }
-    media {
-      duration
-    }
     id
   }
 }
@@ -220,13 +224,6 @@ return {
             "name": "relatedArticles",
             "plural": true,
             "selections": [
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "internalID",
-                "storageKey": null
-              },
               (v3/*: any*/),
               (v1/*: any*/),
               {
@@ -316,6 +313,13 @@ return {
                 ],
                 "storageKey": null
               },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "internalID",
+                "storageKey": null
+              },
               (v5/*: any*/)
             ],
             "storageKey": null
@@ -327,7 +331,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "ed8daca58eb80cc9d9393280078f4e64",
+    "cacheID": "edc5d6324a9d6c520e3c37623e9e2846",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -396,7 +400,7 @@ return {
     },
     "name": "ArticleSeries_test_Query",
     "operationKind": "query",
-    "text": "query ArticleSeries_test_Query {\n  article(id: \"example\") {\n    ...ArticleSeries_article\n    id\n  }\n}\n\nfragment ArticleSeries_article on Article {\n  title\n  byline\n  href\n  series {\n    description\n  }\n  sponsor {\n    ...ArticleSponsor_sponsor\n  }\n  relatedArticles {\n    internalID\n    href\n    title\n    thumbnailTitle\n    byline\n    description\n    publishedAt(format: \"MMM DD, YYYY\")\n    thumbnailImage {\n      display: cropped(width: 869, height: 580) {\n        src\n        srcSet\n      }\n    }\n    media {\n      duration\n    }\n    id\n  }\n}\n\nfragment ArticleSponsor_sponsor on ArticleSponsor {\n  partnerLightLogo\n  partnerDarkLogo\n  partnerLogoLink\n}\n"
+    "text": "query ArticleSeries_test_Query {\n  article(id: \"example\") {\n    ...ArticleSeries_article\n    id\n  }\n}\n\nfragment ArticleSeriesItem_article on Article {\n  href\n  title\n  thumbnailTitle\n  byline\n  description\n  publishedAt(format: \"MMM DD, YYYY\")\n  thumbnailImage {\n    display: cropped(width: 869, height: 580) {\n      src\n      srcSet\n    }\n  }\n  media {\n    duration\n  }\n}\n\nfragment ArticleSeries_article on Article {\n  title\n  byline\n  href\n  series {\n    description\n  }\n  sponsor {\n    ...ArticleSponsor_sponsor\n  }\n  relatedArticles {\n    ...ArticleSeriesItem_article\n    internalID\n    id\n  }\n}\n\nfragment ArticleSponsor_sponsor on ArticleSponsor {\n  partnerLightLogo\n  partnerDarkLogo\n  partnerLogoLink\n}\n"
   }
 };
 })();
