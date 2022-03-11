@@ -21,6 +21,7 @@ import { MetaTags } from "v2/Components/MetaTags"
 import { useLoadScript } from "v2/Utils/Hooks/useLoadScript"
 import { resized } from "v2/Utils/resized"
 import * as Yup from "yup"
+import { SHOULD_WARN_PRODUCTION_ENVIRONMENT } from "v2/Utils/Hooks/useProductionEnvironmentWarning"
 
 export const AuctionPartnershipsApp: React.FC = () => {
   return (
@@ -115,15 +116,18 @@ const MarketplaceExperience: React.FC = () => {
 }
 
 const PartnerWithArtsyForm: React.FC = () => {
-  // onSubmit send data to marketo:
-  // https://nation.marketo.com/t5/marketo-whisperer-blogs/make-a-marketo-form-submission-in-the-background/ba-p/246490
-
   useLoadScript({
     id: "marketo-form",
     src: "https://app-ab14.marketo.com/js/forms2/js/forms2.min.js",
     onReady: () => {
       // @ts-ignore
-      window.MktoForms2.loadForm("//app-ab14.marketo.com", "609-FDY-207", 4419)
+      window.MktoForms2.loadForm(
+        "//app-ab14.marketo.com",
+        "609-FDY-207",
+        SHOULD_WARN_PRODUCTION_ENVIRONMENT
+          ? MARKETO_FORM_IDS.production
+          : MARKETO_FORM_IDS.development
+      )
     },
   })
 
@@ -136,7 +140,7 @@ const PartnerWithArtsyForm: React.FC = () => {
         <Text variant="sm">Apply to host your auctions on Artsy</Text>
       </Column>
       <Column span={6}>
-        <form id="mktoForm_4419"></form>
+        <form id="mktoForm_4419" style={{ display: "none" }}></form>
         <Formik
           initialValues={{
             Company: "",
@@ -169,7 +173,7 @@ const PartnerWithArtsyForm: React.FC = () => {
             Type__c: Yup.string(),
           })}
         >
-          {({ values, handleChange, setFieldValue, errors }) => (
+          {({ values, handleChange, setFieldValue, errors, isSubmitting }) => (
             <Form id="#mktoForm_1240">
               <Join separator={<Spacer mb={2} />}>
                 <Input
@@ -299,7 +303,9 @@ const PartnerWithArtsyForm: React.FC = () => {
                     , and to receive emails from Artsy.
                   </Text>
                 </Checkbox>
-                <Button type="submit">Apply</Button>
+                <Button type="submit" loading={isSubmitting}>
+                  Apply
+                </Button>
               </Join>
             </Form>
           )}
@@ -635,6 +641,11 @@ const AuctionsSupportTeam: React.FC = () => {
       </Column>
     </GridColumns>
   )
+}
+
+const MARKETO_FORM_IDS = {
+  production: 1240,
+  development: 4419,
 }
 
 const AUCTIONS_PARTNERSHIPS_SPECIALISTS = [
