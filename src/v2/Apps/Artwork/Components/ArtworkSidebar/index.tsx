@@ -19,6 +19,7 @@ import { ArtworkSidebarAuctionPollingRefetchContainer } from "./ArtworkSidebarAu
 import { useFeatureFlag } from "v2/System/useFeatureFlag"
 import { CreateArtworkAlertSection } from "./CreateArtworkAlertSection"
 import { LotTimerFragmentContainer } from "v2/Components/LotTimer"
+import { lotIsClosed } from "../../Utils/helpers"
 
 export interface ArtworkSidebarProps {
   artwork: ArtworkSidebar_artwork
@@ -34,6 +35,8 @@ export const ArtworkSidebar: React.FC<ArtworkSidebarProps> = ({
   const shouldShowCreateAlertSection = useFeatureFlag(
     "artwork-page-create-alert"
   )
+
+  const { sale, saleArtwork } = artwork
 
   return (
     <ArtworkSidebarContainer data-test={ContextModule.artworkSidebar}>
@@ -54,19 +57,18 @@ export const ArtworkSidebar: React.FC<ArtworkSidebarProps> = ({
             />
           </Join>
 
-          {artwork.saleArtwork &&
-            !artwork.saleArtwork.endedAt &&
-            artwork.sale &&
-            !artwork.sale.is_closed &&
-            (artwork.sale?.cascadingEndTimeInterval ? (
+          {sale &&
+            saleArtwork &&
+            lotIsClosed(sale, saleArtwork) &&
+            (sale?.cascadingEndTimeInterval ? (
               <>
                 <Spacer mt={2} />
-                <LotTimerFragmentContainer saleArtwork={artwork.saleArtwork} />
+                <LotTimerFragmentContainer saleArtwork={saleArtwork} />
               </>
             ) : (
               <>
                 <Spacer mt={2} />
-                <AuctionTimerFragmentContainer sale={artwork.sale} />
+                <AuctionTimerFragmentContainer sale={sale} />
               </>
             ))}
         </>

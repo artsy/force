@@ -24,6 +24,7 @@ import { useRouter } from "v2/System/Router/useRouter"
 import { openAuthModal } from "desktop/lib/openAuthModal"
 import { ModalType } from "v2/Components/Authentication/Types"
 import { ContextModule, Intent } from "@artsy/cohesion"
+import { lotIsClosed } from "../../Utils/helpers"
 
 export interface ArtworkSidebarBidActionProps {
   artwork: ArtworkSidebarBidAction_artwork
@@ -144,11 +145,11 @@ export class ArtworkSidebarBidAction extends React.Component<
   render() {
     const {
       artwork,
-      artwork: { sale },
+      artwork: { sale, sale_artwork },
       me,
     } = this.props
 
-    if (!sale || sale.is_closed || artwork.sale_artwork?.endedAt) return null
+    if (!sale || lotIsClosed(sale, sale_artwork)) return null
 
     /**
      * NOTE: This is making an incorrect assumption that there could only ever
