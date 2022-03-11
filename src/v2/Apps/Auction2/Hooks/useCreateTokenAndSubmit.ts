@@ -5,6 +5,7 @@ import {
   AuctionFormHelpers,
   AuctionFormValues,
   errorMessageForCard,
+  stripeCardElementNotFound,
   stripeNotLoadedErrorMessage,
 } from "v2/Apps/Auction2/Components/Form/Utils"
 import createLogger from "v2/Utils/logger"
@@ -17,7 +18,7 @@ import { toStripeAddress } from "v2/Components/AddressForm"
 
 const logger = createLogger("useCreateTokenAndSubmit")
 
-interface UseCreateTokenAndSubmitProps {
+export interface UseCreateTokenAndSubmitProps {
   me: Auction2RegistrationRoute_me | Auction2BidRoute_me
   sale: Auction2RegistrationRoute_sale | Auction2BidRoute_sale
   onSuccess?: () => void
@@ -60,6 +61,7 @@ export const useCreateTokenAndSubmit = ({
     const element = elements.getElement(CardElement)
 
     if (!element) {
+      logger.error(stripeCardElementNotFound)
       helpers.setStatus("SUBMISSION_FAILED")
       return
     }

@@ -110,7 +110,7 @@ const Auction2BidRoute: React.FC<Auction2BidRouteProps> = ({
                   saleArtwork={artwork.saleArtwork!}
                 />
 
-                <Text variant="lg">Set your max bid</Text>
+                <Text variant="lg">Set Your Max Bid</Text>
 
                 <Select
                   selected={values.selectedBid}
@@ -139,7 +139,7 @@ const Auction2BidRoute: React.FC<Auction2BidRouteProps> = ({
                   disabled={!isValid}
                   type="submit"
                 >
-                  Confirm bid
+                  Confirm Bid
                 </Button>
 
                 <ErrorStatus />
@@ -202,15 +202,15 @@ export const Auction2BidRouteFragmentContainer = createRefetchContainer(
     `,
   },
   graphql`
-    query Auction2BidRouteQuery($saleID: String!, $artworkID: String!) {
-      sale(id: $saleID) {
-        ...Auction2BidRoute_sale
-      }
+    query Auction2BidRouteQuery($artworkID: String!, $saleID: String!) {
       artwork(id: $artworkID) {
         ...Auction2BidRoute_artwork
       }
       me {
         ...Auction2BidRoute_me
+      }
+      sale(id: $saleID) {
+        ...Auction2BidRoute_sale
       }
     }
   `

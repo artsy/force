@@ -91,7 +91,7 @@ if (process.env.ALLOW_CONSOLE_LOGS !== "true") {
         if (console[type] === originalLoggers[type]) {
           const handler = (...args) => {
             const runtimeErrorStackTrace = args[1]
-            if (runtimeErrorStackTrace) {
+            if (runtimeErrorStackTrace && runtimeErrorStackTrace !== "false") {
               originalLoggers.error(runtimeErrorStackTrace)
             }
 

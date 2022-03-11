@@ -71,3 +71,5 @@ export const errorMessageForSystem = (
 }
 
 export const stripeNotLoadedErrorMessage = "Error: Stripe.js has not loaded."
+export const stripeCardElementNotFound =
+  "Error: Cannot find Stripe.js CardElement."
