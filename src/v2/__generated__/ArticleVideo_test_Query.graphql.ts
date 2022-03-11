@@ -50,6 +50,7 @@ fragment ArticleSponsor_sponsor on ArticleSponsor {
 }
 
 fragment ArticleVideo_article on Article {
+  vertical
   title
   href
   description
@@ -72,7 +73,7 @@ fragment ArticleVideo_article on Article {
     }
     id
   }
-  seriesRelatedArticles: relatedArticles(size: 4) {
+  moreRelatedArticles: relatedArticles(size: 4) {
     ...ArticleSeriesItem_article
     internalID
     id
@@ -207,6 +208,13 @@ return {
         "name": "article",
         "plural": false,
         "selections": [
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "vertical",
+            "storageKey": null
+          },
           (v1/*: any*/),
           (v2/*: any*/),
           (v3/*: any*/),
@@ -304,7 +312,7 @@ return {
             "storageKey": null
           },
           {
-            "alias": "seriesRelatedArticles",
+            "alias": "moreRelatedArticles",
             "args": [
               {
                 "kind": "Literal",
@@ -424,7 +432,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "dc3f742a8d208fd2c46ae1693074066e",
+    "cacheID": "d37772601c2619995498be367b0ebbd5",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -440,6 +448,31 @@ return {
         "article.media.duration": (v8/*: any*/),
         "article.media.releaseDate": (v8/*: any*/),
         "article.media.url": (v8/*: any*/),
+        "article.moreRelatedArticles": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": true,
+          "type": "Article"
+        },
+        "article.moreRelatedArticles.byline": (v8/*: any*/),
+        "article.moreRelatedArticles.description": (v8/*: any*/),
+        "article.moreRelatedArticles.href": (v8/*: any*/),
+        "article.moreRelatedArticles.id": (v9/*: any*/),
+        "article.moreRelatedArticles.internalID": (v9/*: any*/),
+        "article.moreRelatedArticles.media": (v10/*: any*/),
+        "article.moreRelatedArticles.media.duration": (v8/*: any*/),
+        "article.moreRelatedArticles.publishedAt": (v8/*: any*/),
+        "article.moreRelatedArticles.thumbnailImage": (v11/*: any*/),
+        "article.moreRelatedArticles.thumbnailImage.display": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "CroppedImageUrl"
+        },
+        "article.moreRelatedArticles.thumbnailImage.display.src": (v12/*: any*/),
+        "article.moreRelatedArticles.thumbnailImage.display.srcSet": (v12/*: any*/),
+        "article.moreRelatedArticles.thumbnailTitle": (v8/*: any*/),
+        "article.moreRelatedArticles.title": (v8/*: any*/),
         "article.seriesArticle": (v7/*: any*/),
         "article.seriesArticle.description": (v8/*: any*/),
         "article.seriesArticle.href": (v8/*: any*/),
@@ -454,37 +487,13 @@ return {
         "article.seriesArticle.sponsor.partnerLightLogo": (v8/*: any*/),
         "article.seriesArticle.sponsor.partnerLogoLink": (v8/*: any*/),
         "article.seriesArticle.title": (v8/*: any*/),
-        "article.seriesRelatedArticles": {
-          "enumValues": null,
-          "nullable": false,
-          "plural": true,
-          "type": "Article"
-        },
-        "article.seriesRelatedArticles.byline": (v8/*: any*/),
-        "article.seriesRelatedArticles.description": (v8/*: any*/),
-        "article.seriesRelatedArticles.href": (v8/*: any*/),
-        "article.seriesRelatedArticles.id": (v9/*: any*/),
-        "article.seriesRelatedArticles.internalID": (v9/*: any*/),
-        "article.seriesRelatedArticles.media": (v10/*: any*/),
-        "article.seriesRelatedArticles.media.duration": (v8/*: any*/),
-        "article.seriesRelatedArticles.publishedAt": (v8/*: any*/),
-        "article.seriesRelatedArticles.thumbnailImage": (v11/*: any*/),
-        "article.seriesRelatedArticles.thumbnailImage.display": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "CroppedImageUrl"
-        },
-        "article.seriesRelatedArticles.thumbnailImage.display.src": (v12/*: any*/),
-        "article.seriesRelatedArticles.thumbnailImage.display.srcSet": (v12/*: any*/),
-        "article.seriesRelatedArticles.thumbnailTitle": (v8/*: any*/),
-        "article.seriesRelatedArticles.title": (v8/*: any*/),
-        "article.title": (v8/*: any*/)
+        "article.title": (v8/*: any*/),
+        "article.vertical": (v8/*: any*/)
       }
     },
     "name": "ArticleVideo_test_Query",
     "operationKind": "query",
-    "text": "query ArticleVideo_test_Query {\n  article(id: \"example\") {\n    ...ArticleVideo_article\n    id\n  }\n}\n\nfragment ArticleSeriesItem_article on Article {\n  href\n  title\n  thumbnailTitle\n  byline\n  description\n  publishedAt(format: \"MMM DD, YYYY\")\n  thumbnailImage {\n    display: cropped(width: 869, height: 580) {\n      src\n      srcSet\n    }\n  }\n  media {\n    duration\n  }\n}\n\nfragment ArticleSponsor_sponsor on ArticleSponsor {\n  partnerLightLogo\n  partnerDarkLogo\n  partnerLogoLink\n}\n\nfragment ArticleVideo_article on Article {\n  title\n  href\n  description\n  media {\n    coverImage {\n      url\n    }\n    credits\n    description\n    duration\n    releaseDate(format: \"MMM DD, YYYY h:mma\")\n    url\n  }\n  seriesArticle {\n    title\n    href\n    description\n    sponsor {\n      ...ArticleSponsor_sponsor\n    }\n    id\n  }\n  seriesRelatedArticles: relatedArticles(size: 4) {\n    ...ArticleSeriesItem_article\n    internalID\n    id\n  }\n}\n"
+    "text": "query ArticleVideo_test_Query {\n  article(id: \"example\") {\n    ...ArticleVideo_article\n    id\n  }\n}\n\nfragment ArticleSeriesItem_article on Article {\n  href\n  title\n  thumbnailTitle\n  byline\n  description\n  publishedAt(format: \"MMM DD, YYYY\")\n  thumbnailImage {\n    display: cropped(width: 869, height: 580) {\n      src\n      srcSet\n    }\n  }\n  media {\n    duration\n  }\n}\n\nfragment ArticleSponsor_sponsor on ArticleSponsor {\n  partnerLightLogo\n  partnerDarkLogo\n  partnerLogoLink\n}\n\nfragment ArticleVideo_article on Article {\n  vertical\n  title\n  href\n  description\n  media {\n    coverImage {\n      url\n    }\n    credits\n    description\n    duration\n    releaseDate(format: \"MMM DD, YYYY h:mma\")\n    url\n  }\n  seriesArticle {\n    title\n    href\n    description\n    sponsor {\n      ...ArticleSponsor_sponsor\n    }\n    id\n  }\n  moreRelatedArticles: relatedArticles(size: 4) {\n    ...ArticleSeriesItem_article\n    internalID\n    id\n  }\n}\n"
   }
 };
 })();

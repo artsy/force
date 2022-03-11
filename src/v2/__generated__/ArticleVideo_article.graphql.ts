@@ -5,6 +5,7 @@
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type ArticleVideo_article = {
+    readonly vertical: string | null;
     readonly title: string | null;
     readonly href: string | null;
     readonly description: string | null;
@@ -26,7 +27,7 @@ export type ArticleVideo_article = {
             readonly " $fragmentRefs": FragmentRefs<"ArticleSponsor_sponsor">;
         } | null;
     } | null;
-    readonly seriesRelatedArticles: ReadonlyArray<{
+    readonly moreRelatedArticles: ReadonlyArray<{
         readonly internalID: string;
         readonly " $fragmentRefs": FragmentRefs<"ArticleSeriesItem_article">;
     }>;
@@ -75,6 +76,13 @@ return {
   "metadata": null,
   "name": "ArticleVideo_article",
   "selections": [
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "vertical",
+      "storageKey": null
+    },
     (v0/*: any*/),
     (v1/*: any*/),
     (v2/*: any*/),
@@ -161,7 +169,7 @@ return {
       "storageKey": null
     },
     {
-      "alias": "seriesRelatedArticles",
+      "alias": "moreRelatedArticles",
       "args": [
         {
           "kind": "Literal",
@@ -194,5 +202,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '714e0e70baadb156d93d4b2fc5dc6de4';
+(node as any).hash = 'f2619340e6e8033695245026b3b0de16';
 export default node;

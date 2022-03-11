@@ -171,18 +171,22 @@ const ArticleVideo: FC<ArticleVideoProps> = ({ article }) => {
           </Column>
         )}
 
-        {article.seriesArticle && article.seriesRelatedArticles.length > 0 && (
+        {article.moreRelatedArticles.length > 0 && (
           <>
             <Column span={8} start={3}>
               <Text variant="lg">
                 More in{" "}
-                <RouterLink to={article.seriesArticle.href}>
-                  {article.seriesArticle.title}
-                </RouterLink>
+                {article.seriesArticle ? (
+                  <RouterLink to={article.seriesArticle.href}>
+                    {article.seriesArticle.title}
+                  </RouterLink>
+                ) : (
+                  article.vertical
+                )}
               </Text>
             </Column>
 
-            {article.seriesRelatedArticles.map(relatedArticle => {
+            {article.moreRelatedArticles.map(relatedArticle => {
               return (
                 <Column span={12} key={relatedArticle.internalID}>
                   <ArticleSeriesItemFragmentContainer
@@ -234,6 +238,7 @@ export const ArticleVideoFragmentContainer = createFragmentContainer(
   {
     article: graphql`
       fragment ArticleVideo_article on Article {
+        vertical
         title
         href
         description
@@ -255,7 +260,7 @@ export const ArticleVideoFragmentContainer = createFragmentContainer(
             ...ArticleSponsor_sponsor
           }
         }
-        seriesRelatedArticles: relatedArticles(size: 4) {
+        moreRelatedArticles: relatedArticles(size: 4) {
           ...ArticleSeriesItem_article
           internalID
         }
