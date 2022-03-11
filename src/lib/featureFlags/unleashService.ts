@@ -1,5 +1,10 @@
 import { startUnleash, Unleash } from "unleash-client"
-import { UNLEASH_API, UNLEASH_APP_NAME, UNLEASH_SERVER_KEY } from "../../config"
+import {
+  UNLEASH_API,
+  UNLEASH_APP_NAME,
+  UNLEASH_SERVER_KEY,
+  NODE_ENV,
+} from "../../config"
 import { FeatureFlagService } from "./featureFlagService"
 
 // Pass in as argument to registerFeatureFlagProvideder() when using unleash as feature flag service
@@ -12,7 +17,9 @@ export class UnleashFeatureFlagService implements FeatureFlagService {
   constructor(
     private url = UNLEASH_API,
     private appName = UNLEASH_APP_NAME,
-    private serverKey = UNLEASH_SERVER_KEY
+    private serverKey = UNLEASH_SERVER_KEY,
+    private environment = NODE_ENV,
+    private refreshInterval = 60000
   ) {}
 
   async init(): Promise<void> {
@@ -23,7 +30,8 @@ export class UnleashFeatureFlagService implements FeatureFlagService {
     this._unleash = await startUnleash({
       url: this.url,
       appName: this.appName,
-      refreshInterval: 60000,
+      refreshInterval: this.refreshInterval,
+      environment: this.environment,
       customHeaders: {
         Authorization: this.serverKey,
       },
