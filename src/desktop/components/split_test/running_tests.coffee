@@ -36,4 +36,5 @@ module.exports = {
     control_group: 'control'
     edge: 'experiment'
     weighting: 'equal'
+    scope: 'local'
 }
