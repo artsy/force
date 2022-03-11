@@ -1,9 +1,9 @@
-import { Box } from "@artsy/palette"
+import { Box, BoxProps } from "@artsy/palette"
 import { FC, useEffect, useState } from "react"
 import { useSizeAndPosition } from "v2/Utils/Hooks/useSizeAndPosition"
 import { scale } from "proportional-scale"
 
-interface ArticleZoomGalleryResponsiveBoxProps {
+interface ArticleZoomGalleryResponsiveBoxProps extends BoxProps {
   aspectWidth: number
   aspectHeight: number
 }
@@ -17,6 +17,7 @@ export const ArticleZoomGalleryResponsiveBox: FC<ArticleZoomGalleryResponsiveBox
   aspectWidth,
   aspectHeight,
   children,
+  ...rest
 }) => {
   const { ref, width, height } = useSizeAndPosition({ debounce: 50 })
 
@@ -40,7 +41,13 @@ export const ArticleZoomGalleryResponsiveBox: FC<ArticleZoomGalleryResponsiveBox
 
   return (
     <Box ref={ref as any} width="100%" height="100%" display="flex">
-      <Box width={scaledWidth} height={scaledHeight} m="auto" bg="black10">
+      <Box
+        width={scaledWidth}
+        height={scaledHeight}
+        m="auto"
+        bg="black10"
+        {...rest}
+      >
         {children}
       </Box>
     </Box>

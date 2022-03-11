@@ -34,6 +34,7 @@ const ArticleZoomGalleryFigure: FC<ArticleZoomGalleryFigureProps> = ({
 
   return (
     <ArticleZoomGalleryResponsiveBox
+      position="relative"
       aspectWidth={figure.image?.width || 1}
       aspectHeight={figure.image?.height || 1}
     >
@@ -105,6 +106,7 @@ const Image: FC<ImgHTMLAttributes<HTMLImageElement>> = props => {
         alt=""
         onLoad={() => setMode("Ready")}
         onError={() => setMode("Error")}
+        style={{ display: mode === "Error" ? "none" : "block" }}
         {...props}
       />
     </>
@@ -117,4 +119,8 @@ const ImgError = styled(CloseIcon).attrs({
   height: 30,
 })`
   border: 1px solid ${themeGet("colors.red100")};
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 `
