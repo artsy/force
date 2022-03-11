@@ -5,6 +5,7 @@ import { mount } from "enzyme"
 import { NavBar } from "../NavBar"
 import { NavBarMobileMenuInboxNotificationCount } from "../NavBarMobileMenu/NavBarMobileMenuInboxNotificationCount"
 import { mediator } from "lib/mediator"
+import { MockBoot } from "v2/DevTools"
 
 jest.mock("v2/Components/Search/SearchBar", () => {
   return {
@@ -34,9 +35,11 @@ describe("NavBar", () => {
 
   const getWrapper = ({ user = null, isEigen = false } = {}) => {
     return mount(
-      <SystemContextProvider user={user} isEigen={isEigen}>
-        <NavBar />
-      </SystemContextProvider>
+      <MockBoot>
+        <SystemContextProvider user={user} isEigen={isEigen}>
+          <NavBar />
+        </SystemContextProvider>
+      </MockBoot>
     )
   }
 
