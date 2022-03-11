@@ -32,14 +32,16 @@ export const useSizeAndPosition = (
     if (!ref.current) return
 
     const handleResize = () => {
-      if (!ref.current) return
+      setTimeout(() => {
+        if (!ref.current) return
 
-      setGeometry({
-        top: ref.current.offsetTop,
-        left: ref.current.offsetLeft,
-        width: ref.current.offsetWidth,
-        height: ref.current.offsetHeight,
-      })
+        setGeometry({
+          top: ref.current.offsetTop,
+          left: ref.current.offsetLeft,
+          width: ref.current.offsetWidth,
+          height: ref.current.offsetHeight,
+        })
+      }, 0)
     }
 
     handleResize()

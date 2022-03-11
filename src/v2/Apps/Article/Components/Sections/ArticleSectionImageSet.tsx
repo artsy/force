@@ -122,37 +122,37 @@ const ArticleSectionImageSet: FC<ArticleSectionImageSetProps> = ({
                     alt=""
                   />
 
-                  <Box
-                    display="flex"
-                    alignItems="center"
-                    position="absolute"
-                    bottom={2}
-                    left={2}
-                    bg="white100"
-                    p={2}
-                    style={{ boxShadow: DROP_SHADOW }}
-                  >
-                    <Box>
-                      <Text variant="lg">
-                        {section.title ? (
-                          <>
-                            {section.title}{" "}
-                            <Sup color="brand">{section.counts.figures}</Sup>
-                          </>
-                        ) : (
-                          <>
-                            {section.counts.figures} Image
-                            {section.counts.figures === 1 ? "" : "s"}
-                          </>
-                        )}
-                      </Text>
+                  <Box position="absolute" bottom={2} left={2} right={2}>
+                    <Box
+                      display="flex"
+                      alignItems="center"
+                      bg="white100"
+                      p={2}
+                      width="fit-content"
+                      style={{ boxShadow: DROP_SHADOW }}
+                    >
+                      <Box>
+                        <Text variant="lg">
+                          {section.title ? (
+                            <>
+                              {section.title}{" "}
+                              <Sup color="brand">{section.counts.figures}</Sup>
+                            </>
+                          ) : (
+                            <>
+                              {section.counts.figures} Image
+                              {section.counts.figures === 1 ? "" : "s"}
+                            </>
+                          )}
+                        </Text>
 
-                      <Text variant="lg" color="black60">
-                        View Slideshow
-                      </Text>
+                        <Text variant="lg" color="black60">
+                          View Slideshow
+                        </Text>
+                      </Box>
+
+                      <ImageSetIcon width={40} height={40} ml={2} />
                     </Box>
-
-                    <ImageSetIcon width={40} height={40} ml={2} />
                   </Box>
                 </Clickable>
               </ResponsiveBox>

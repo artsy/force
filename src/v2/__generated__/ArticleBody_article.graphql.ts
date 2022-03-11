@@ -8,6 +8,7 @@ export type ArticleLayout = "CLASSIC" | "FEATURE" | "NEWS" | "SERIES" | "STANDAR
 export type ArticleBody_article = {
     readonly internalID: string;
     readonly layout: ArticleLayout;
+    readonly leadParagraph: string | null;
     readonly title: string | null;
     readonly newsSource: {
         readonly title: string | null;
@@ -76,6 +77,13 @@ return {
       "args": null,
       "kind": "ScalarField",
       "name": "layout",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "leadParagraph",
       "storageKey": null
     },
     (v1/*: any*/),
@@ -223,5 +231,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = 'f6f648e1965eeb48c2d3d46d77cd07d3';
+(node as any).hash = 'b8972497704bd06bd42116f0ba9d79b8';
 export default node;
