@@ -46,7 +46,7 @@ export const useAuctionTracking = () => {
         user_id: userID,
       })
     },
-    registerButtonClick: ({ auctionSlug, auctionState, userID }) => {
+    clickedRegisterButton: ({ auctionSlug, auctionState, userID }) => {
       trackEvent({
         auction_slug: auctionSlug,
         auction_state: auctionState,
