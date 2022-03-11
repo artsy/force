@@ -59,7 +59,7 @@ describe("getTimerCopy", () => {
       })
     })
 
-    describe("when the open time is more than one day way", () => {
+    describe("when the open time is more than one day away", () => {
       const time = { days: "02", hours: "23", minutes: "01", seconds: "59" }
       it("shows '2 Days Until Bidding Starts'", () => {
         expect(getTimerCopy(time, hasStarted).copy).toEqual(

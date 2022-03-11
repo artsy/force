@@ -59,7 +59,7 @@ export const ArtworkSidebar: React.FC<ArtworkSidebarProps> = ({
 
           {sale &&
             saleArtwork &&
-            lotIsClosed(sale, saleArtwork) &&
+            !lotIsClosed(sale, saleArtwork) &&
             (sale?.cascadingEndTimeInterval ? (
               <>
                 <Spacer mt={2} />
