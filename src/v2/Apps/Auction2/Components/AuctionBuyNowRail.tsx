@@ -20,24 +20,22 @@ const AuctionBuyNowRail: React.FC<AuctionBuyNowRailProps> = ({ sale }) => {
   }
 
   return (
-    <>
-      <Rail
-        title="Buy Now"
-        getItems={() => {
-          return nodes.map((node, index) => {
-            return (
-              <ShelfArtworkFragmentContainer
-                artwork={node.artwork!}
-                key={index}
-                lazyLoad
-                // TODO
-                // contextModule=""
-              />
-            )
-          })
-        }}
-      />
-    </>
+    <Rail
+      title="Buy Now"
+      getItems={() => {
+        return nodes.map((node, index) => {
+          return (
+            <ShelfArtworkFragmentContainer
+              artwork={node.artwork!}
+              key={index}
+              lazyLoad
+              // TODO
+              // contextModule=""
+            />
+          )
+        })
+      }}
+    />
   )
 }
 

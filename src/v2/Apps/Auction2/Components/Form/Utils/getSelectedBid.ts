@@ -12,12 +12,9 @@ export const getSelectedBid = ({
   if (!initialSelectedBid) {
     selectedIncrement = displayIncrements[0]
   } else {
-    const selectedNum = Number(initialSelectedBid)
-    const lastGoodIncrement = find(
-      displayIncrements,
-      i => Number(i.value) === selectedNum
-    )
-    selectedIncrement = lastGoodIncrement || displayIncrements[0]
+    const bid = Number(initialSelectedBid)
+    const foundIncrement = find(displayIncrements, i => Number(i.value) === bid)
+    selectedIncrement = foundIncrement || displayIncrements[0]
   }
 
   return selectedIncrement.value
