@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"
 import { ColorFilter } from "./ColorFilter"
 import { MediumFilter } from "./MediumFilter"
 import { PriceRangeFilter } from "./PriceRangeFilter"
@@ -12,6 +12,7 @@ import { MaterialsFilter } from "./MaterialsFilter"
 import { PartnersFilter } from "./PartnersFilter"
 import { ArtistsFilter } from "./ArtistsFilter"
 import type RelayModernEnvironment from "relay-runtime/lib/store/RelayModernEnvironment"
+import { useFeatureVariant } from "v2/System/useFeatureFlag"
 
 interface ArtworkFiltersProps {
   user?: User
@@ -21,6 +22,9 @@ interface ArtworkFiltersProps {
 // Some filters will be rendered only if there is the necessary data in aggregations (for example, ArtistsFilter)
 export const ArtworkFilters: React.FC<ArtworkFiltersProps> = props => {
   const { user, relayEnvironment } = props
+  const variant = useFeatureVariant("filters-expanded-experiment")
+
+  const isExpanded = variant?.name === "experiment" && !!variant?.enabled
 
   return (
     <>
@@ -30,12 +34,12 @@ export const ArtworkFilters: React.FC<ArtworkFiltersProps> = props => {
       <PriceRangeFilter expanded />
       <SizeFilter expanded />
       <WaysToBuyFilter expanded />
-      <MaterialsFilter />
-      <ArtistNationalityFilter />
-      <ArtworkLocationFilter />
-      <TimePeriodFilter />
-      <ColorFilter />
-      <PartnersFilter />
+      <MaterialsFilter expanded={isExpanded} />
+      <ArtistNationalityFilter expanded={isExpanded} />
+      <ArtworkLocationFilter expanded={isExpanded} />
+      <TimePeriodFilter expanded={isExpanded} />
+      <ColorFilter expanded={isExpanded} />
+      <PartnersFilter expanded={isExpanded} />
     </>
   )
 }
