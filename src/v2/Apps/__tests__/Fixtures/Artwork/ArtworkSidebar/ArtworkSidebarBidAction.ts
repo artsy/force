@@ -16,6 +16,7 @@ export const ArtworkFromAuctionPreview: ArtworkSidebarBidAction_Test_QueryRawRes
     requireIdentityVerification: false,
   },
   sale_artwork: {
+    endedAt: null,
     id: "sdfsdfsdf",
     increments: [
       { cents: 400000, display: "CHF4,000" },
@@ -43,6 +44,7 @@ export const ArtworkFromTimedAuctionRegistrationOpen: ArtworkSidebarBidAction_Te
     requireIdentityVerification: false,
   },
   sale_artwork: {
+    endedAt: null,
     id: "sdfsdfsdf",
     increments: [
       { cents: 90000, display: "$900" },
@@ -70,6 +72,7 @@ export const ArtworkFromTimedAuctionRegistrationClosed: ArtworkSidebarBidAction_
     requireIdentityVerification: false,
   },
   sale_artwork: {
+    endedAt: null,
     id: "sdfsdfsdf",
     increments: [
       { cents: 90000, display: "$900" },
@@ -126,6 +129,7 @@ export const ArtworkFromLiveAuctionRegistrationOpen: ArtworkSidebarBidAction_Tes
     requireIdentityVerification: false,
   },
   sale_artwork: {
+    endedAt: null,
     id: "sdfsdfsdf",
     increments: [
       { cents: 320000, display: "€3,200" },
@@ -153,6 +157,7 @@ export const ArtworkFromLiveAuctionRegistrationClosed: ArtworkSidebarBidAction_T
     requireIdentityVerification: false,
   },
   sale_artwork: {
+    endedAt: null,
     id: "sdfsdfsdf",
     increments: [
       { cents: 320000, display: "€3,200" },
@@ -180,6 +185,7 @@ export const ArtworkFromClosedAuction: ArtworkSidebarBidAction_Test_QueryRawResp
     requireIdentityVerification: false,
   },
   sale_artwork: {
+    endedAt: null,
     id: "sdfsdfsdf",
     increments: [
       { cents: 425000, display: "£4,250" },

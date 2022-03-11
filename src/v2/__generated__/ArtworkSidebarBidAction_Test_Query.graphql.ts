@@ -44,6 +44,7 @@ export type ArtworkSidebarBidAction_Test_QueryRawResponse = {
                 readonly cents: number | null;
                 readonly display: string | null;
             }) | null> | null;
+            readonly endedAt: string | null;
             readonly id: string;
         }) | null;
         readonly id: string;
@@ -107,6 +108,7 @@ fragment ArtworkSidebarBidAction_artwork on Artwork {
       cents
       display
     }
+    endedAt
     id
   }
 }
@@ -173,6 +175,12 @@ v7 = {
   "nullable": true,
   "plural": false,
   "type": "Boolean"
+},
+v8 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "String"
 };
 return {
   "fragment": {
@@ -375,6 +383,13 @@ return {
                 ],
                 "storageKey": null
               },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "endedAt",
+                "storageKey": null
+              },
               (v2/*: any*/)
             ],
             "storageKey": null
@@ -418,7 +433,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "c753daef542a160483841275700ccbcb",
+    "cacheID": "ea15b5cac3d99c5cb1723fa8559dfaca",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -478,6 +493,7 @@ return {
           "plural": false,
           "type": "SaleArtwork"
         },
+        "artwork.sale_artwork.endedAt": (v8/*: any*/),
         "artwork.sale_artwork.id": (v5/*: any*/),
         "artwork.sale_artwork.increments": {
           "enumValues": null,
@@ -486,12 +502,7 @@ return {
           "type": "BidIncrementsFormatted"
         },
         "artwork.sale_artwork.increments.cents": (v6/*: any*/),
-        "artwork.sale_artwork.increments.display": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "String"
-        },
+        "artwork.sale_artwork.increments.display": (v8/*: any*/),
         "artwork.slug": (v5/*: any*/),
         "me": {
           "enumValues": null,
@@ -513,7 +524,7 @@ return {
     },
     "name": "ArtworkSidebarBidAction_Test_Query",
     "operationKind": "query",
-    "text": "query ArtworkSidebarBidAction_Test_Query {\n  artwork(id: \"auction_artwork\") {\n    ...ArtworkSidebarBidAction_artwork\n    id\n  }\n  me {\n    ...ArtworkSidebarBidAction_me\n    id\n  }\n}\n\nfragment ArtworkSidebarBidAction_artwork on Artwork {\n  myLotStanding(live: true) {\n    most_recent_bid: mostRecentBid {\n      max_bid: maxBid {\n        cents\n      }\n      id\n    }\n  }\n  slug\n  internalID\n  sale {\n    slug\n    registrationStatus {\n      qualified_for_bidding: qualifiedForBidding\n      id\n    }\n    is_preview: isPreview\n    is_open: isOpen\n    is_live_open: isLiveOpen\n    is_closed: isClosed\n    is_registration_closed: isRegistrationClosed\n    requireIdentityVerification\n    id\n  }\n  sale_artwork: saleArtwork {\n    increments {\n      cents\n      display\n    }\n    id\n  }\n}\n\nfragment ArtworkSidebarBidAction_me on Me {\n  identityVerified\n  pendingIdentityVerification {\n    internalID\n    id\n  }\n}\n"
+    "text": "query ArtworkSidebarBidAction_Test_Query {\n  artwork(id: \"auction_artwork\") {\n    ...ArtworkSidebarBidAction_artwork\n    id\n  }\n  me {\n    ...ArtworkSidebarBidAction_me\n    id\n  }\n}\n\nfragment ArtworkSidebarBidAction_artwork on Artwork {\n  myLotStanding(live: true) {\n    most_recent_bid: mostRecentBid {\n      max_bid: maxBid {\n        cents\n      }\n      id\n    }\n  }\n  slug\n  internalID\n  sale {\n    slug\n    registrationStatus {\n      qualified_for_bidding: qualifiedForBidding\n      id\n    }\n    is_preview: isPreview\n    is_open: isOpen\n    is_live_open: isLiveOpen\n    is_closed: isClosed\n    is_registration_closed: isRegistrationClosed\n    requireIdentityVerification\n    id\n  }\n  sale_artwork: saleArtwork {\n    increments {\n      cents\n      display\n    }\n    endedAt\n    id\n  }\n}\n\nfragment ArtworkSidebarBidAction_me on Me {\n  identityVerified\n  pendingIdentityVerification {\n    internalID\n    id\n  }\n}\n"
   }
 };
 })();
