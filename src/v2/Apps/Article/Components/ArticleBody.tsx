@@ -79,6 +79,16 @@ const ArticleBody: FC<ArticleBodyProps> = ({ article }) => {
 
           <Spacer mt={4} />
 
+          {article.leadParagraph && (
+            <HTML
+              variant="sm"
+              html={article.leadParagraph}
+              maxWidth={OPTIMAL_READING_WIDTH}
+              mx="auto"
+              mb={4}
+            />
+          )}
+
           <Join separator={<Spacer mt={4} />}>
             {article.sections.map((section, i) => {
               const isFirst = article.layout === "FEATURE" && i === 0
@@ -189,6 +199,7 @@ export const ArticleBodyFragmentContainer = createFragmentContainer(
         ...ArticleSectionAd_article
         internalID
         layout
+        leadParagraph
         title
         newsSource {
           title
