@@ -14,7 +14,7 @@ import {
 import { useDialog } from "v2/Utils/Hooks/useDialog"
 import { AuctionBuyersPremiumDialogQueryRenderer } from "v2/Components/AuctionBuyersPremiumDialog"
 import styled, { keyframes } from "styled-components"
-import { lotIsClosed } from "../../Utils/helpers"
+import { lotIsClosed } from "../../Utils/lotIsClosed"
 
 export interface ArtworkSidebarCurrentBidInfoProps {
   artwork: ArtworkSidebarCurrentBidInfo_artwork

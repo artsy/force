@@ -19,7 +19,7 @@ import { ArtworkSidebarAuctionPollingRefetchContainer } from "./ArtworkSidebarAu
 import { useFeatureFlag } from "v2/System/useFeatureFlag"
 import { CreateArtworkAlertSection } from "./CreateArtworkAlertSection"
 import { LotTimerFragmentContainer } from "v2/Components/LotTimer"
-import { lotIsClosed } from "../../Utils/helpers"
+import { lotIsClosed } from "../../Utils/lotIsClosed"
 
 export interface ArtworkSidebarProps {
   artwork: ArtworkSidebar_artwork

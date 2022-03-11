@@ -24,7 +24,7 @@ import { useRouter } from "v2/System/Router/useRouter"
 import { openAuthModal } from "desktop/lib/openAuthModal"
 import { ModalType } from "v2/Components/Authentication/Types"
 import { ContextModule, Intent } from "@artsy/cohesion"
-import { lotIsClosed } from "../../Utils/helpers"
+import { lotIsClosed } from "../../Utils/lotIsClosed"
 
 export interface ArtworkSidebarBidActionProps {
   artwork: ArtworkSidebarBidAction_artwork

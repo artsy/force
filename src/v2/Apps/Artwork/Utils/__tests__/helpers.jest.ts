@@ -1,4 +1,4 @@
-import { lotIsClosed } from "../helpers"
+import { lotIsClosed } from "../lotIsClosed"
 
 const closedSale = { is_closed: true }
 const openSale = { is_closed: false }
