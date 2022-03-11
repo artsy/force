@@ -20,11 +20,16 @@ export type ArticleVideo_article = {
     } | null;
     readonly seriesArticle: {
         readonly title: string | null;
+        readonly href: string | null;
         readonly description: string | null;
         readonly sponsor: {
             readonly " $fragmentRefs": FragmentRefs<"ArticleSponsor_sponsor">;
         } | null;
     } | null;
+    readonly seriesRelatedArticles: ReadonlyArray<{
+        readonly internalID: string;
+        readonly " $fragmentRefs": FragmentRefs<"ArticleSeriesItem_article">;
+    }>;
     readonly " $refType": "ArticleVideo_article";
 };
 export type ArticleVideo_article$data = ArticleVideo_article;
@@ -47,10 +52,17 @@ v1 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "description",
+  "name": "href",
   "storageKey": null
 },
 v2 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "description",
+  "storageKey": null
+},
+v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -64,14 +76,8 @@ return {
   "name": "ArticleVideo_article",
   "selections": [
     (v0/*: any*/),
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "href",
-      "storageKey": null
-    },
     (v1/*: any*/),
+    (v2/*: any*/),
     {
       "alias": null,
       "args": null,
@@ -88,7 +94,7 @@ return {
           "name": "coverImage",
           "plural": false,
           "selections": [
-            (v2/*: any*/)
+            (v3/*: any*/)
           ],
           "storageKey": null
         },
@@ -99,7 +105,7 @@ return {
           "name": "credits",
           "storageKey": null
         },
-        (v1/*: any*/),
+        (v2/*: any*/),
         {
           "alias": null,
           "args": null,
@@ -120,7 +126,7 @@ return {
           "name": "releaseDate",
           "storageKey": "releaseDate(format:\"MMM DD, YYYY h:mma\")"
         },
-        (v2/*: any*/)
+        (v3/*: any*/)
       ],
       "storageKey": null
     },
@@ -134,6 +140,7 @@ return {
       "selections": [
         (v0/*: any*/),
         (v1/*: any*/),
+        (v2/*: any*/),
         {
           "alias": null,
           "args": null,
@@ -152,11 +159,40 @@ return {
         }
       ],
       "storageKey": null
+    },
+    {
+      "alias": "seriesRelatedArticles",
+      "args": [
+        {
+          "kind": "Literal",
+          "name": "size",
+          "value": 4
+        }
+      ],
+      "concreteType": "Article",
+      "kind": "LinkedField",
+      "name": "relatedArticles",
+      "plural": true,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "internalID",
+          "storageKey": null
+        },
+        {
+          "args": null,
+          "kind": "FragmentSpread",
+          "name": "ArticleSeriesItem_article"
+        }
+      ],
+      "storageKey": "relatedArticles(size:4)"
     }
   ],
   "type": "Article",
   "abstractKey": null
 };
 })();
-(node as any).hash = '19bec5e7a262d2410e443300c222c643';
+(node as any).hash = '714e0e70baadb156d93d4b2fc5dc6de4';
 export default node;
