@@ -249,9 +249,13 @@ const SavedSearchAlertEditFormContainer: React.FC<SavedSearchAlertEditFormProps>
   const metric = getSupportedMetric(me.lengthUnitPreference)
   const entity: SavedSearchEntity = {
     type: "artist",
-    id: artist.internalID,
-    name: artist.name ?? "",
-    slug: artist.slug ?? "",
+    artists: [
+      {
+        id: artist.internalID,
+        name: artist.name ?? "",
+        slug: artist.slug ?? "",
+      },
+    ],
   }
 
   return (

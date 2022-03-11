@@ -1,10 +1,25 @@
 import { ArtworkFilters } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
+import { SavedSearchEntity } from "../../types"
 import {
   getSearchCriteriaFromFilters,
   isDefaultValue,
 } from "../savedSearchCriteria"
 
-const mockedArtistId = "artist-id"
+const mockedSavedSearchEntity: SavedSearchEntity = {
+  type: "artist",
+  artists: [
+    {
+      id: "artistOneId",
+      name: "artistOneName",
+      slug: "artistOneSlug",
+    },
+    {
+      id: "artistTwoId",
+      name: "artistTwoName",
+      slug: "artistTwoSlug",
+    },
+  ],
+}
 
 const mockedFilters: ArtworkFilters = {
   additionalGeneIDs: [],
@@ -21,12 +36,39 @@ const mockedFilters: ArtworkFilters = {
 }
 
 describe("getSearchCriteriaFromFilters", () => {
-  it("returns object only containing artist ids and criteria that has been changed", () => {
-    const result = getSearchCriteriaFromFilters(mockedArtistId, mockedFilters)
+  it("returns correct criteria", () => {
+    const result = getSearchCriteriaFromFilters(
+      mockedSavedSearchEntity,
+      mockedFilters
+    )
 
     expect(result).toEqual(
       expect.objectContaining({
-        artistIDs: ["artist-id"],
+        artistIDs: ["artistOneId", "artistTwoId"],
+        attributionClass: ["limited edition", "unique", "open edition"],
+        colors: ["black"],
+        inquireableOnly: true,
+        priceRange: "1000-5000",
+      })
+    )
+  })
+
+  it("returns correct criteria when a single artist is passed to entity", () => {
+    const entity: SavedSearchEntity = {
+      type: "artist",
+      artists: [
+        {
+          id: "artistOneId",
+          name: "artistOneName",
+          slug: "artistOneSlug",
+        },
+      ],
+    }
+    const result = getSearchCriteriaFromFilters(entity, mockedFilters)
+
+    expect(result).toEqual(
+      expect.objectContaining({
+        artistIDs: ["artistOneId"],
         attributionClass: ["limited edition", "unique", "open edition"],
         colors: ["black"],
         inquireableOnly: true,

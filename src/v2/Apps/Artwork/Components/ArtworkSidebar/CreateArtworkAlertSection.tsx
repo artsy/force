@@ -78,13 +78,14 @@ export const CreateArtworkAlertSectionContainer: React.FC<CreateArtworkAlertSect
   const attributionClass = getAttributionClassIdByLabel(
     artwork.attributionClass?.name ?? ""
   )
-  const artist = artists[0]
 
   const entity: SavedSearchEntity = {
     type: "artist", // TODO: Update it
-    id: artist.internalID,
-    name: artist.name ?? "",
-    slug: artist.slug,
+    artists: artists.map(artist => ({
+      id: artist.internalID,
+      name: artist.name ?? "",
+      slug: artist.slug,
+    })),
   }
   const criteria: SearchCriteriaAttributes = {
     artistIDs,

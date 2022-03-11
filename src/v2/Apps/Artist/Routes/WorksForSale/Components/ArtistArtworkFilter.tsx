@@ -38,9 +38,13 @@ const ArtistArtworkFilter: React.FC<ArtistArtworkFilterProps> = props => {
 
   const savedSearchEntity: SavedSearchEntity = {
     type: "artist",
-    id: artist.internalID,
-    name: artist.name ?? "",
-    slug: artist.slug,
+    artists: [
+      {
+        id: artist.internalID,
+        name: artist.name ?? "",
+        slug: artist.slug,
+      },
+    ],
   }
 
   const metric = getSupportedMetric(me?.lengthUnitPreference)

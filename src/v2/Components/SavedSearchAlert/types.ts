@@ -18,12 +18,16 @@ export interface SearchCriteriaAttributes {
   priceRange?: string | null
 }
 
-export interface SavedSearchEntity {
-  // possible entity types for creating alert
-  type: "artist"
+export interface SavedSearchEntityArtist {
   id: string
   name: string
   slug: string
+}
+
+export interface SavedSearchEntity {
+  // possible entity types for creating alert
+  type: "artist"
+  artists: SavedSearchEntityArtist[]
 }
 
 export type SearchCriteriaAttributeKeys = keyof SearchCriteriaAttributes

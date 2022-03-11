@@ -185,7 +185,7 @@ export const SavedSearchAlertModalContainer: React.FC<SavedSearchAlertFormContai
   const { aggregations, filters } = useArtworkFilterContext()
 
   if (visible) {
-    const criteria = getSearchCriteriaFromFilters(entity.id, filters ?? {})
+    const criteria = getSearchCriteriaFromFilters(entity, filters ?? {})
 
     return (
       <SavedSearchAlertContextProvider

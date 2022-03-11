@@ -17,9 +17,13 @@ const formInitialValues = {
 
 const savedSearchEntity: SavedSearchEntity = {
   type: "artist",
-  id: "test-artist-id",
-  name: "Test Artist",
-  slug: "test-artist-slug",
+  artists: [
+    {
+      id: "test-artist-id",
+      name: "Test Artist",
+      slug: "test-artist-slug",
+    },
+  ],
 }
 
 const defaultFilters: ArtworkFiltersState = {

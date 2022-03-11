@@ -24,6 +24,7 @@ export const DownloadAppBanner: React.FC<DownloadAppBannerProps> = ({
 }) => {
   const tracking = useTracking()
   const { device } = useDeviceDetection()
+  const artistEntity = entity.artists[0]
 
   const handleClick = (platform: "iOS" | "Android") => {
     let destinationPath
@@ -43,8 +44,8 @@ export const DownloadAppBanner: React.FC<DownloadAppBannerProps> = ({
       action: ActionType.clickedAppDownload,
       context_module: ContextModule.createAlert,
       context_page_owner_type: OwnerType.artist,
-      context_page_owner_slug: entity.slug,
-      context_page_owner_id: entity.id,
+      context_page_owner_slug: artistEntity.slug,
+      context_page_owner_id: artistEntity.id,
       destination_path: destinationPath,
       subject,
     }
