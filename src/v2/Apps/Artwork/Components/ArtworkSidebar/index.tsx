@@ -17,9 +17,9 @@ import { BuyerGuaranteeFragmentContainer } from "../TrustSignals/BuyerGuarantee"
 import { ArtworkSidebarExtraLinksFragmentContainer } from "./ArtworkSidebarExtraLinks"
 import { ArtworkSidebarAuctionPollingRefetchContainer } from "./ArtworkSidebarAuctionInfoPolling"
 import { useFeatureFlag } from "v2/System/useFeatureFlag"
-import { CreateArtworkAlertSection } from "./CreateArtworkAlertSection"
 import { LotTimerFragmentContainer } from "v2/Components/LotTimer"
 import { lotIsClosed } from "../../Utils/lotIsClosed"
+import { CreateArtworkAlertSectionFragmentContainer } from "./CreateArtworkAlertSection"
 
 export interface ArtworkSidebarProps {
   artwork: ArtworkSidebar_artwork
@@ -85,7 +85,9 @@ export const ArtworkSidebar: React.FC<ArtworkSidebarProps> = ({
         <VerifiedSellerFragmentContainer artwork={artwork} />
         <BuyerGuaranteeFragmentContainer artwork={artwork} />
       </Join>
-      {!!shouldShowCreateAlertSection && <CreateArtworkAlertSection />}
+      {!!shouldShowCreateAlertSection && (
+        <CreateArtworkAlertSectionFragmentContainer artwork={artwork} me={me} />
+      )}
       <ArtworkSidebarExtraLinksFragmentContainer artwork={artwork} />
     </ArtworkSidebarContainer>
   )
@@ -108,6 +110,7 @@ export const ArtworkSidebarFragmentContainer = createFragmentContainer(
         ...VerifiedSeller_artwork
         ...AuthenticityCertificate_artwork
         ...BuyerGuarantee_artwork
+        ...CreateArtworkAlertSection_artwork
         sale {
           cascadingEndTimeInterval
           is_closed: isClosed
@@ -122,6 +125,7 @@ export const ArtworkSidebarFragmentContainer = createFragmentContainer(
     me: graphql`
       fragment ArtworkSidebar_me on Me {
         ...ArtworkSidebarAuctionInfoPolling_me
+        ...CreateArtworkAlertSection_me
       }
     `,
   }
