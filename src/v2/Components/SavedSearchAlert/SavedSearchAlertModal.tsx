@@ -54,7 +54,6 @@ export const SavedSearchAlertModal: React.FC<SavedSearchAlertFormProps> = ({
 }) => {
   const { relayEnvironment } = useSystemContext()
   const { pills, criteria, removeCriteriaValue } = useSavedSearchAlertContext()
-  const namePlaceholder = entity.name
 
   const handleRemovePillPress = (pill: FilterPill) => {
     if (pill.isDefault) {
@@ -72,7 +71,7 @@ export const SavedSearchAlertModal: React.FC<SavedSearchAlertFormProps> = ({
       return null
     }
 
-    const alertName = values.name || namePlaceholder
+    const alertName = values.name || entity.placeholder
 
     const userAlertSettings: SavedSearchAleftFormValues = {
       name: alertName,
@@ -132,7 +131,7 @@ export const SavedSearchAlertModal: React.FC<SavedSearchAlertFormProps> = ({
               <Input
                 title="Alert Name"
                 name="name"
-                placeholder={namePlaceholder}
+                placeholder={entity.placeholder}
                 value={values.name}
                 onChange={handleChange("name")}
                 onBlur={handleBlur("name")}

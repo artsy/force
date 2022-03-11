@@ -15,6 +15,7 @@ jest.mock("v2/System/Analytics/useTracking")
 
 const savedSearchEntity: SavedSearchEntity = {
   type: "artist",
+  placeholder: "test-artist-name",
   artists: [
     {
       id: "test-artist-id",

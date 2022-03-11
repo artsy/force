@@ -27,6 +27,7 @@ export interface SavedSearchEntityArtist {
 export interface SavedSearchEntity {
   // possible entity types for creating alert
   type: "artist"
+  placeholder: string
   artists: SavedSearchEntityArtist[]
 }
 

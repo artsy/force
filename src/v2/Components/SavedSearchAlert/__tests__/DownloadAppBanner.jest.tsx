@@ -9,9 +9,14 @@ describe("DownloadAppBanner", () => {
     render(
       <DownloadAppBanner
         entity={{
-          id: "artistId",
-          name: "artistName",
-          slug: "artistSlug",
+          artists: [
+            {
+              id: "artistId",
+              name: "artistName",
+              slug: "artistSlug",
+            },
+          ],
+          placeholder: "placeholder",
           type: "artist",
         }}
       />

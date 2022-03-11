@@ -7,6 +7,7 @@ import {
 
 const mockedSavedSearchEntity: SavedSearchEntity = {
   type: "artist",
+  placeholder: "alertName",
   artists: [
     {
       id: "artistOneId",
@@ -56,6 +57,7 @@ describe("getSearchCriteriaFromFilters", () => {
   it("returns correct criteria when a single artist is passed to entity", () => {
     const entity: SavedSearchEntity = {
       type: "artist",
+      placeholder: "",
       artists: [
         {
           id: "artistOneId",

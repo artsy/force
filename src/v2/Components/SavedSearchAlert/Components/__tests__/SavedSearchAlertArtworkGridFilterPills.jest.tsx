@@ -9,6 +9,7 @@ import { SavedSearchAlertArtworkGridFilterPills } from "../SavedSearchAlertArtwo
 
 const savedSearchEntity: SavedSearchEntity = {
   type: "artist",
+  placeholder: "Banksy",
   artists: [
     {
       id: "test-artist-id",

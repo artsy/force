@@ -75,12 +75,14 @@ export const CreateArtworkAlertSectionContainer: React.FC<CreateArtworkAlertSect
   const metric = getSupportedMetric(me.lengthUnitPreference)
   const artists = compact(artwork.artists)
   const artistIDs = artists.map(artist => artist.internalID)
+  const placeholder = `Artworks like: ${artwork.title!}`
   const attributionClass = getAttributionClassIdByLabel(
     artwork.attributionClass?.name ?? ""
   )
 
   const entity: SavedSearchEntity = {
     type: "artist", // TODO: Update it
+    placeholder,
     artists: artists.map(artist => ({
       id: artist.internalID,
       name: artist.name ?? "",
