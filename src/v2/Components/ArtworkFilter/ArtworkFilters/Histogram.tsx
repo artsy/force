@@ -19,6 +19,14 @@ const isSelected = (value: number, min: number, max: number) => {
   return value >= min && value <= max
 }
 
+const getPercentByEntity = (maxValue: number, entityCount: number) => {
+  if (maxValue === 0) {
+    return 100
+  }
+
+  return (100 / maxValue) * entityCount
+}
+
 export const Histogram: React.FC<HistogramProps> = ({
   bars,
   selectedRange,
@@ -29,7 +37,7 @@ export const Histogram: React.FC<HistogramProps> = ({
   return (
     <Flex height={110} justifyContent="space-between" alignItems="flex-end">
       {bars.map((entity, index) => {
-        const percent = (100 / maxValue) * entity.count
+        const percent = getPercentByEntity(maxValue, entity.count)
         const selected = isSelected(entity.value, min, max)
 
         return (
