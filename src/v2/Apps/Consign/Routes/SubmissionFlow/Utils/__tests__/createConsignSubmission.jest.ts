@@ -38,6 +38,7 @@ describe("createOrUpdateConsignSubmission", () => {
     expect(mockCreateMutation).toHaveBeenCalledWith(relayEnvironment, {
       ...submission,
       userAgent: userAgent,
+      source: "WEB_INBOUND",
     })
     expect(result).toEqual("111")
   })
