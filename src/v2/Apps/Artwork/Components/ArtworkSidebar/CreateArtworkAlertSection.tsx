@@ -76,7 +76,7 @@ export const CreateArtworkAlertSectionContainer: React.FC<CreateArtworkAlertSect
   )
 
   const entity: SavedSearchEntity = {
-    type: "artist", // TODO: Update it
+    type: "artist", // TODO: Use OwnerType
     placeholder,
     artists: artists.map(artist => ({
       id: artist.internalID,
