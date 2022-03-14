@@ -44,7 +44,7 @@ export const PriceDatabaseBenefits: React.FC = () => {
             alt=""
             artistName="Kehinde Wiley"
             artworkName="Portrait of Nelly Moudime II, 2020"
-            artworkDetail="Courtesy of Stephen Friedman Gallery."
+            artworkCopyright="Courtesy of Stephen Friedman Gallery."
           />
         }
         jsxPosition="right"
@@ -62,7 +62,7 @@ export const PriceDatabaseBenefits: React.FC = () => {
             alt=""
             artistName="Damien Hirst"
             artworkName="Kindness, 2011"
-            artworkDetail="© Damien Hirst and Science Ltd. All rights reserved/DACS, London/ARS, NY."
+            artworkCopyright="© Damien Hirst and Science Ltd. All rights reserved/DACS, London/ARS, NY."
           />
         }
       />
@@ -123,8 +123,8 @@ const SectionImage: React.FC<{
   alt: string
   artistName?: string
   artworkName?: string
-  artworkDetail?: string
-}> = ({ src, srcSet, alt, artistName, artworkName, artworkDetail }) => {
+  artworkCopyright?: string
+}> = ({ src, srcSet, alt, artistName, artworkName, artworkCopyright }) => {
   return (
     <ResponsiveBox
       aspectWidth={800}
@@ -143,7 +143,7 @@ const SectionImage: React.FC<{
       />
       {!!artistName && (
         <Text variant="xs" color="black60">
-          {artistName}, <i>{artworkName}</i>. {artworkDetail}
+          {artistName}, <i>{artworkName}</i>. {artworkCopyright}
         </Text>
       )}
     </ResponsiveBox>
