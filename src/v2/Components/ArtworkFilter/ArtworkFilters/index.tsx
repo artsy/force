@@ -12,7 +12,11 @@ import { MaterialsFilter } from "./MaterialsFilter"
 import { PartnersFilter } from "./PartnersFilter"
 import { ArtistsFilter } from "./ArtistsFilter"
 import type RelayModernEnvironment from "relay-runtime/lib/store/RelayModernEnvironment"
-import { useFeatureVariant } from "v2/System/useFeatureFlag"
+import {
+  useFeatureVariant,
+  useTrackVariantView,
+} from "v2/System/useFeatureFlag"
+import { useAnalyticsContext } from "v2/System"
 
 interface ArtworkFiltersProps {
   user?: User
@@ -22,7 +26,21 @@ interface ArtworkFiltersProps {
 // Some filters will be rendered only if there is the necessary data in aggregations (for example, ArtistsFilter)
 export const ArtworkFilters: React.FC<ArtworkFiltersProps> = props => {
   const { user, relayEnvironment } = props
+  const {
+    contextPageOwnerId,
+    contextPageOwnerSlug,
+    contextPageOwnerType,
+  } = useAnalyticsContext()
+
   const variant = useFeatureVariant("filters-expanded-experiment")
+
+  useTrackVariantView({
+    experiment_name: "filters-expanded-experiment",
+    variant_name: variant?.name!,
+    context_owner_id: contextPageOwnerId,
+    context_owner_slug: contextPageOwnerSlug,
+    context_owner_type: contextPageOwnerType,
+  })
 
   const isExpanded = variant?.name === "experiment" && !!variant?.enabled
 
