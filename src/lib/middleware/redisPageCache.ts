@@ -14,6 +14,7 @@ import {
 } from "../../config"
 import { RequestRecorder } from "./requestRecorder"
 import util from "util"
+import { createFeatureFlagsCachePrefix } from "./featureFlagMiddleware"
 
 const debugLog = util.debuglog("redisCache")
 
@@ -69,10 +70,22 @@ export function redisPageCacheMiddleware(
       return `${test}:${outcome}`
     }).join("|") || "none"
 
+  // Generate cache key that indlues all currently enabled featureFlags and
+  // variants
+  const featureFlagsCacheKey = createFeatureFlagsCachePrefix(
+    res.locals.FEATURE_FLAGS
+  )
+
   // `key` should be a full URL w/ query params, and not a path.
   // This is to separate URL's like `/collect` and `/collect?acquireable=true`.
   const cacheKey = (key: string) => {
-    return [PAGE_CACHE_NAMESPACE, abTestPrefix, PAGE_CACHE_VERSION, key]
+    return [
+      PAGE_CACHE_NAMESPACE,
+      abTestPrefix,
+      featureFlagsCacheKey,
+      PAGE_CACHE_VERSION,
+      key,
+    ]
       .filter(Boolean)
       .join("|")
   }
