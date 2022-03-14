@@ -127,6 +127,10 @@ export function initializeMiddleware(app) {
     app.use(splitTestMiddleware)
   }
 
+  // Need sharify for unleash
+  registerFeatureFlagService(UnleashService, UnleashFeatureFlagService)
+  app.use(featureFlagMiddleware(UnleashService))
+
   // Initialize caches
   applyCacheMiddleware(app)
 
@@ -152,10 +156,6 @@ export function initializeMiddleware(app) {
 
   // Static assets
   applyStaticAssetMiddlewares(app)
-
-  // Need sharify for unleash
-  registerFeatureFlagService(UnleashService, UnleashFeatureFlagService)
-  app.use(featureFlagMiddleware(UnleashService))
 }
 
 function applySecurityMiddleware(app) {
