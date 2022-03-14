@@ -1,7 +1,6 @@
 import { FullBleed, Join, Separator, Spacer } from "@artsy/palette"
 import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { MetaTags } from "v2/Components/MetaTags"
 import { ArticleApp_article } from "v2/__generated__/ArticleApp_article.graphql"
 import { ArticleBodyFragmentContainer } from "./Components/ArticleBody"
 import { ArticleChannelRelatedArticlesQueryRenderer } from "./Components/ArticleChannelRelatedArticles"
@@ -11,6 +10,7 @@ import { ArticleVerticalRelatedArticlesQueryRenderer } from "./Components/Articl
 import { ArticleVideoFragmentContainer } from "./Components/ArticleVideo"
 import { ArticleAdProvider } from "./Components/ArticleAd"
 import { ArticleVisibilityMetadataFragmentContainer } from "./Components/ArticleVisibilityMetadata"
+import { ArticleMetaTagsFragmentContainer } from "./Components/ArticleMetaTags"
 
 interface ArticleAppProps {
   article: ArticleApp_article
@@ -19,10 +19,7 @@ interface ArticleAppProps {
 const ArticleApp: FC<ArticleAppProps> = ({ article }) => {
   return (
     <ArticleAdProvider>
-      <MetaTags
-        title={`${article.title} | Artsy`}
-        // TODO: Add description, remaining tags
-      />
+      <ArticleMetaTagsFragmentContainer article={article} />
 
       <Join separator={<Spacer mt={4} />}>
         {(() => {
@@ -89,8 +86,8 @@ export const ArticleAppFragmentContainer = createFragmentContainer(ArticleApp, {
       ...ArticleSeries_article
       ...ArticleVideo_article
       ...ArticleVisibilityMetadata_article
+      ...ArticleMetaTags_article
       internalID
-      title
       layout
       channelID
     }
