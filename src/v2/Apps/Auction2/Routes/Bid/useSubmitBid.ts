@@ -20,7 +20,7 @@ import { useToasts } from "@artsy/palette"
 
 const logger = createLogger("useSubmitBid")
 
-interface UseSubmitBidProps {
+export interface UseSubmitBidProps {
   artwork: Auction2BidRoute_artwork
   bidderID: string
   me: Auction2BidRoute_me
@@ -81,8 +81,9 @@ export const useSubmitBid = ({
       try {
         await createToken(values, helpers)
       } catch (error) {
-        // TODO better error handling here
+        helpers.setStatus("SUBMISSION_FAILED")
         logger.error("Error creating token", error)
+        throw error
       }
     }
 
@@ -99,22 +100,25 @@ export const useSubmitBid = ({
         },
       })
     } catch (error) {
+      helpers.setStatus("SUBMISSION_FAILED")
       logger.error("Error creating bidder position", error)
+      throw error
     }
 
     const result = bidderPositionResponse?.createBidderPosition?.result!
 
     tracking.maybeTrackNewBidder({
       bidderID,
-      result,
-      registrationTracked,
-      sale,
       me,
+      registrationTracked,
+      result,
+      sale,
     })
 
     try {
       await checkBidStatus(result)
     } catch (error) {
+      helpers.setStatus("SUBMISSION_FAILED")
       logger.error("Error checking bid status", error)
     }
   }
@@ -173,6 +177,7 @@ const setupCheckBidStatus = (props: {
         return checkBidStatus(response?.me?.bidderPosition)
       } catch (error) {
         helpers.setSubmitting(false)
+        helpers.setStatus("SUBMISSION_FAILED")
         logger.error("Error fetching bidder position", error)
       }
     }
@@ -202,12 +207,12 @@ const setupCheckBidStatus = (props: {
       }
 
       case "WINNING": {
-        tracking.confirmBidSuccess(bidderID, bidderPositionID)
+        tracking.confirmBidSuccess({ bidderID, positionID: bidderPositionID })
 
         setTimeout(() => {
           sendToast({
             variant: "success",
-            message: `Bid sucessfully placed.`,
+            message: "Bid sucessfully placed.",
           })
           // Time is arbitrary, but we need to wait for the page to finish
           // transitioning to artwork/id
@@ -268,11 +273,13 @@ const setupCheckBidStatus = (props: {
       }
 
       case "ERROR": {
-        // TODO: set a field error
-        console.error("Error placing bid:", result)
+        logger.error("Error placing bid:", result)
 
         if (result.messageHeader === "Bid not placed") {
           router.push(`/auction2/${sale.slug}/confirm-registration`)
+        } else {
+          helpers.setStatus("SUBMISSION_FAILED")
+          helpers.setSubmitting(false)
         }
         break
       }

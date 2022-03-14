@@ -64,7 +64,7 @@ export const useAuctionTracking = () => {
         user_id: userID,
       })
     },
-    confirmBidSuccess: (bidderID: string, positionID: string) => {
+    confirmBidSuccess: ({ bidderID, positionID }) => {
       trackEvent({
         action_type: AnalyticsSchema.ActionType.ConfirmBidSubmitted,
         bidder_id: bidderID,

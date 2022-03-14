@@ -4,11 +4,8 @@
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type Auction2BidRouteQueryVariables = {
-    artworkID: string;
-    saleID: string;
-};
-export type Auction2BidRouteQueryResponse = {
+export type Auction2BidRouteTestQueryVariables = {};
+export type Auction2BidRouteTestQueryResponse = {
     readonly artwork: {
         readonly " $fragmentRefs": FragmentRefs<"Auction2BidRoute_artwork">;
     } | null;
@@ -19,19 +16,16 @@ export type Auction2BidRouteQueryResponse = {
         readonly " $fragmentRefs": FragmentRefs<"Auction2BidRoute_sale">;
     } | null;
 };
-export type Auction2BidRouteQuery = {
-    readonly response: Auction2BidRouteQueryResponse;
-    readonly variables: Auction2BidRouteQueryVariables;
+export type Auction2BidRouteTestQuery = {
+    readonly response: Auction2BidRouteTestQueryResponse;
+    readonly variables: Auction2BidRouteTestQueryVariables;
 };
 
 
 
 /*
-query Auction2BidRouteQuery(
-  $artworkID: String!
-  $saleID: String!
-) {
-  artwork(id: $artworkID) {
+query Auction2BidRouteTestQuery {
+  artwork(id: "foo") {
     ...Auction2BidRoute_artwork
     id
   }
@@ -39,7 +33,7 @@ query Auction2BidRouteQuery(
     ...Auction2BidRoute_me
     id
   }
-  sale(id: $saleID) {
+  sale(id: "foo") {
     ...Auction2BidRoute_sale
     id
   }
@@ -114,75 +108,110 @@ fragment AuctionLotInfo_saleArtwork on SaleArtwork {
 const node: ConcreteRequest = (function(){
 var v0 = [
   {
-    "defaultValue": null,
-    "kind": "LocalArgument",
-    "name": "artworkID"
-  },
-  {
-    "defaultValue": null,
-    "kind": "LocalArgument",
-    "name": "saleID"
-  }
-],
-v1 = [
-  {
-    "kind": "Variable",
+    "kind": "Literal",
     "name": "id",
-    "variableName": "artworkID"
+    "value": "foo"
   }
 ],
-v2 = [
-  {
-    "kind": "Variable",
-    "name": "id",
-    "variableName": "saleID"
-  }
-],
-v3 = {
+v1 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "slug",
   "storageKey": null
 },
-v4 = {
+v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "internalID",
   "storageKey": null
 },
-v5 = {
+v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "display",
   "storageKey": null
 },
-v6 = {
+v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v7 = {
+v5 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "cents",
   "storageKey": null
+},
+v6 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "Artwork"
+},
+v7 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "ID"
+},
+v8 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "String"
+},
+v9 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "Int"
+},
+v10 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "String"
+},
+v11 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "Float"
+},
+v12 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "Sale"
+},
+v13 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "Bidder"
+},
+v14 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "Boolean"
 };
 return {
   "fragment": {
-    "argumentDefinitions": (v0/*: any*/),
+    "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
-    "name": "Auction2BidRouteQuery",
+    "name": "Auction2BidRouteTestQuery",
     "selections": [
       {
         "alias": null,
-        "args": (v1/*: any*/),
+        "args": (v0/*: any*/),
         "concreteType": "Artwork",
         "kind": "LinkedField",
         "name": "artwork",
@@ -194,7 +223,7 @@ return {
             "name": "Auction2BidRoute_artwork"
           }
         ],
-        "storageKey": null
+        "storageKey": "artwork(id:\"foo\")"
       },
       {
         "alias": null,
@@ -214,7 +243,7 @@ return {
       },
       {
         "alias": null,
-        "args": (v2/*: any*/),
+        "args": (v0/*: any*/),
         "concreteType": "Sale",
         "kind": "LinkedField",
         "name": "sale",
@@ -226,7 +255,7 @@ return {
             "name": "Auction2BidRoute_sale"
           }
         ],
-        "storageKey": null
+        "storageKey": "sale(id:\"foo\")"
       }
     ],
     "type": "Query",
@@ -234,20 +263,20 @@ return {
   },
   "kind": "Request",
   "operation": {
-    "argumentDefinitions": (v0/*: any*/),
+    "argumentDefinitions": [],
     "kind": "Operation",
-    "name": "Auction2BidRouteQuery",
+    "name": "Auction2BidRouteTestQuery",
     "selections": [
       {
         "alias": null,
-        "args": (v1/*: any*/),
+        "args": (v0/*: any*/),
         "concreteType": "Artwork",
         "kind": "LinkedField",
         "name": "artwork",
         "plural": false,
         "selections": [
-          (v3/*: any*/),
-          (v4/*: any*/),
+          (v1/*: any*/),
+          (v2/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -289,7 +318,7 @@ return {
                 "name": "currentBid",
                 "plural": false,
                 "selections": [
-                  (v5/*: any*/)
+                  (v3/*: any*/)
                 ],
                 "storageKey": null
               },
@@ -301,7 +330,7 @@ return {
                 "name": "artwork",
                 "plural": false,
                 "selections": [
-                  (v4/*: any*/),
+                  (v2/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -396,8 +425,8 @@ return {
                     "name": "artistNames",
                     "storageKey": null
                   },
-                  (v3/*: any*/),
-                  (v6/*: any*/)
+                  (v1/*: any*/),
+                  (v4/*: any*/)
                 ],
                 "storageKey": null
               },
@@ -409,7 +438,7 @@ return {
                 "name": "minimumNextBid",
                 "plural": false,
                 "selections": [
-                  (v7/*: any*/)
+                  (v5/*: any*/)
                 ],
                 "storageKey": null
               },
@@ -427,8 +456,8 @@ return {
                 "name": "increments",
                 "plural": true,
                 "selections": [
-                  (v7/*: any*/),
-                  (v5/*: any*/)
+                  (v5/*: any*/),
+                  (v3/*: any*/)
                 ],
                 "storageKey": "increments(useMyMaxBid:true)"
               },
@@ -440,7 +469,7 @@ return {
                 "name": "sale",
                 "plural": false,
                 "selections": [
-                  (v4/*: any*/),
+                  (v2/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -449,11 +478,11 @@ return {
                     "name": "bidder",
                     "plural": false,
                     "selections": [
-                      (v6/*: any*/)
+                      (v4/*: any*/)
                     ],
                     "storageKey": null
                   },
-                  (v3/*: any*/),
+                  (v1/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -469,21 +498,21 @@ return {
                         "name": "qualifiedForBidding",
                         "storageKey": null
                       },
-                      (v6/*: any*/)
+                      (v4/*: any*/)
                     ],
                     "storageKey": null
                   },
-                  (v6/*: any*/)
+                  (v4/*: any*/)
                 ],
                 "storageKey": null
               },
-              (v6/*: any*/)
+              (v4/*: any*/)
             ],
             "storageKey": null
           },
-          (v6/*: any*/)
+          (v4/*: any*/)
         ],
-        "storageKey": null
+        "storageKey": "artwork(id:\"foo\")"
       },
       {
         "alias": null,
@@ -493,7 +522,7 @@ return {
         "name": "me",
         "plural": false,
         "selections": [
-          (v4/*: any*/),
+          (v2/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -501,35 +530,130 @@ return {
             "name": "hasQualifiedCreditCards",
             "storageKey": null
           },
-          (v6/*: any*/)
+          (v4/*: any*/)
         ],
         "storageKey": null
       },
       {
         "alias": null,
-        "args": (v2/*: any*/),
+        "args": (v0/*: any*/),
         "concreteType": "Sale",
         "kind": "LinkedField",
         "name": "sale",
         "plural": false,
         "selections": [
-          (v4/*: any*/),
-          (v3/*: any*/),
-          (v6/*: any*/)
+          (v2/*: any*/),
+          (v1/*: any*/),
+          (v4/*: any*/)
         ],
-        "storageKey": null
+        "storageKey": "sale(id:\"foo\")"
       }
     ]
   },
   "params": {
-    "cacheID": "5877ec19748c39d7ffde2afa883c5dde",
+    "cacheID": "4d38083ba91a7a6267d8fe58890ee109",
     "id": null,
-    "metadata": {},
-    "name": "Auction2BidRouteQuery",
+    "metadata": {
+      "relayTestingSelectionTypeInfo": {
+        "artwork": (v6/*: any*/),
+        "artwork.id": (v7/*: any*/),
+        "artwork.internalID": (v7/*: any*/),
+        "artwork.saleArtwork": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "SaleArtwork"
+        },
+        "artwork.saleArtwork.artwork": (v6/*: any*/),
+        "artwork.saleArtwork.artwork.artistNames": (v8/*: any*/),
+        "artwork.saleArtwork.artwork.date": (v8/*: any*/),
+        "artwork.saleArtwork.artwork.id": (v7/*: any*/),
+        "artwork.saleArtwork.artwork.image": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Image"
+        },
+        "artwork.saleArtwork.artwork.image.resized": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "ResizedImageUrl"
+        },
+        "artwork.saleArtwork.artwork.image.resized.height": (v9/*: any*/),
+        "artwork.saleArtwork.artwork.image.resized.src": (v10/*: any*/),
+        "artwork.saleArtwork.artwork.image.resized.srcSet": (v10/*: any*/),
+        "artwork.saleArtwork.artwork.image.resized.width": (v9/*: any*/),
+        "artwork.saleArtwork.artwork.imageUrl": (v8/*: any*/),
+        "artwork.saleArtwork.artwork.internalID": (v7/*: any*/),
+        "artwork.saleArtwork.artwork.slug": (v7/*: any*/),
+        "artwork.saleArtwork.artwork.title": (v8/*: any*/),
+        "artwork.saleArtwork.counts": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "SaleArtworkCounts"
+        },
+        "artwork.saleArtwork.counts.bidderPositions": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "FormattedNumber"
+        },
+        "artwork.saleArtwork.currentBid": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "SaleArtworkCurrentBid"
+        },
+        "artwork.saleArtwork.currentBid.display": (v8/*: any*/),
+        "artwork.saleArtwork.id": (v7/*: any*/),
+        "artwork.saleArtwork.increments": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": true,
+          "type": "BidIncrementsFormatted"
+        },
+        "artwork.saleArtwork.increments.cents": (v11/*: any*/),
+        "artwork.saleArtwork.increments.display": (v8/*: any*/),
+        "artwork.saleArtwork.lotLabel": (v8/*: any*/),
+        "artwork.saleArtwork.minimumNextBid": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "SaleArtworkMinimumNextBid"
+        },
+        "artwork.saleArtwork.minimumNextBid.cents": (v11/*: any*/),
+        "artwork.saleArtwork.sale": (v12/*: any*/),
+        "artwork.saleArtwork.sale.bidder": (v13/*: any*/),
+        "artwork.saleArtwork.sale.bidder.id": (v7/*: any*/),
+        "artwork.saleArtwork.sale.id": (v7/*: any*/),
+        "artwork.saleArtwork.sale.internalID": (v7/*: any*/),
+        "artwork.saleArtwork.sale.registrationStatus": (v13/*: any*/),
+        "artwork.saleArtwork.sale.registrationStatus.id": (v7/*: any*/),
+        "artwork.saleArtwork.sale.registrationStatus.qualifiedForBidding": (v14/*: any*/),
+        "artwork.saleArtwork.sale.slug": (v7/*: any*/),
+        "artwork.slug": (v7/*: any*/),
+        "me": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Me"
+        },
+        "me.hasQualifiedCreditCards": (v14/*: any*/),
+        "me.id": (v7/*: any*/),
+        "me.internalID": (v7/*: any*/),
+        "sale": (v12/*: any*/),
+        "sale.id": (v7/*: any*/),
+        "sale.internalID": (v7/*: any*/),
+        "sale.slug": (v7/*: any*/)
+      }
+    },
+    "name": "Auction2BidRouteTestQuery",
     "operationKind": "query",
-    "text": "query Auction2BidRouteQuery(\n  $artworkID: String!\n  $saleID: String!\n) {\n  artwork(id: $artworkID) {\n    ...Auction2BidRoute_artwork\n    id\n  }\n  me {\n    ...Auction2BidRoute_me\n    id\n  }\n  sale(id: $saleID) {\n    ...Auction2BidRoute_sale\n    id\n  }\n}\n\nfragment Auction2BidRoute_artwork on Artwork {\n  slug\n  internalID\n  saleArtwork {\n    ...AuctionLotInfo_saleArtwork\n    minimumNextBid {\n      cents\n    }\n    increments(useMyMaxBid: true) {\n      cents\n      display\n    }\n    sale {\n      internalID\n      bidder {\n        id\n      }\n      slug\n      registrationStatus {\n        qualifiedForBidding\n        id\n      }\n      id\n    }\n    id\n  }\n}\n\nfragment Auction2BidRoute_me on Me {\n  internalID\n  hasQualifiedCreditCards\n}\n\nfragment Auction2BidRoute_sale on Sale {\n  internalID\n  slug\n}\n\nfragment AuctionLotInfo_saleArtwork on SaleArtwork {\n  counts {\n    bidderPositions\n  }\n  lotLabel\n  currentBid {\n    display\n  }\n  artwork {\n    internalID\n    date\n    title\n    image {\n      resized(width: 150, height: 150, version: \"square\") {\n        src\n        srcSet\n        width\n        height\n      }\n    }\n    imageUrl\n    artistNames\n    slug\n    id\n  }\n}\n"
+    "text": "query Auction2BidRouteTestQuery {\n  artwork(id: \"foo\") {\n    ...Auction2BidRoute_artwork\n    id\n  }\n  me {\n    ...Auction2BidRoute_me\n    id\n  }\n  sale(id: \"foo\") {\n    ...Auction2BidRoute_sale\n    id\n  }\n}\n\nfragment Auction2BidRoute_artwork on Artwork {\n  slug\n  internalID\n  saleArtwork {\n    ...AuctionLotInfo_saleArtwork\n    minimumNextBid {\n      cents\n    }\n    increments(useMyMaxBid: true) {\n      cents\n      display\n    }\n    sale {\n      internalID\n      bidder {\n        id\n      }\n      slug\n      registrationStatus {\n        qualifiedForBidding\n        id\n      }\n      id\n    }\n    id\n  }\n}\n\nfragment Auction2BidRoute_me on Me {\n  internalID\n  hasQualifiedCreditCards\n}\n\nfragment Auction2BidRoute_sale on Sale {\n  internalID\n  slug\n}\n\nfragment AuctionLotInfo_saleArtwork on SaleArtwork {\n  counts {\n    bidderPositions\n  }\n  lotLabel\n  currentBid {\n    display\n  }\n  artwork {\n    internalID\n    date\n    title\n    image {\n      resized(width: 150, height: 150, version: \"square\") {\n        src\n        srcSet\n        width\n        height\n      }\n    }\n    imageUrl\n    artistNames\n    slug\n    id\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'e4ac7b308b2606e1dd32e313ecc49b2d';
+(node as any).hash = 'b222f13d2f85474df06afc9c3587eefb';
 export default node;
