@@ -72,8 +72,8 @@ export function redisPageCacheMiddleware(
 
   // Generate cache key that indlues all currently enabled featureFlags and
   // variants
-  const featureFlagsCacheKey = createFeatureFlagsCachePrefix(
-    res.locals.FEATURE_FLAGS
+  const featureFlagsCachePrefix = createFeatureFlagsCachePrefix(
+    res.locals.sd.FEATURE_FLAGS
   )
 
   // `key` should be a full URL w/ query params, and not a path.
@@ -82,7 +82,7 @@ export function redisPageCacheMiddleware(
     return [
       PAGE_CACHE_NAMESPACE,
       abTestPrefix,
-      featureFlagsCacheKey,
+      featureFlagsCachePrefix,
       PAGE_CACHE_VERSION,
       key,
     ]
