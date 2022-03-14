@@ -63,7 +63,7 @@ const ArticleZoomGallery: FC<ArticleZoomGalleryProps> = ({
     initialCursor: initialCursor === -1 ? 0 : initialCursor,
   })
 
-  const figure = figures[index]
+  const activeFigure = figures[index]
 
   const { containerRef } = useNextPrevious({
     onNext: handleNext,
@@ -90,15 +90,23 @@ const ArticleZoomGallery: FC<ArticleZoomGalleryProps> = ({
         )}
 
         <Flex flexDirection="column" height="100%">
-          {figure.section.__typename === "ArticleSectionImageSet" &&
-            figure.section.title && (
+          {activeFigure.section.__typename === "ArticleSectionImageSet" &&
+            activeFigure.section.title && (
               <Text variant="xl" mt={2} mx={2}>
-                {figure.section.title}
+                {activeFigure.section.title}
               </Text>
             )}
 
           <Box position="relative" flex={1} minHeight={0} p={2}>
-            <ArticleZoomGalleryFigureFragmentContainer figure={figure} />
+            {figures.map((figure, i) => {
+              return (
+                <ArticleZoomGalleryFigureFragmentContainer
+                  key={i}
+                  figure={figure}
+                  active={i === index}
+                />
+              )
+            })}
           </Box>
 
           <Flex
@@ -107,7 +115,7 @@ const ArticleZoomGallery: FC<ArticleZoomGalleryProps> = ({
             justifyContent="space-between"
             alignItems="center"
           >
-            <ArticleZoomGalleryCaptionFragmentContainer figure={figure} />
+            <ArticleZoomGalleryCaptionFragmentContainer figure={activeFigure} />
 
             <Text variant="sm" ml={2} flexShrink={0}>
               {index + 1} of {figures.length}
