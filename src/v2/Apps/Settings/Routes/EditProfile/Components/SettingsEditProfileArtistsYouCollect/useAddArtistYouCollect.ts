@@ -25,7 +25,6 @@ export const useAddArtistYouCollect = () => {
               clientMutationId
               me {
                 ...SettingsEditProfileArtistsYouCollect_me
-                ...SettingsEditProfileYourGalleryIntro_me
               }
             }
           }
